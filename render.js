@@ -32,7 +32,11 @@ const bobState = []
   let walk = 0, bob = 0
   for (let i = 0; i < P.length; i++) {
     const a = P[Math.max(0, i - 1)], b = P[i]
-    const h = Math.hypot(b[1] - a[1], b[3] - a[3])
+    // a teleport (a cut: over a block in one tick, faster than any sprint) moves the player without
+    // move(), so vanilla adds no walkDist; counting it bobbed the view for a few ticks after every cut
+    // and the whole frame swayed (worker 5, story_runaway f297-300, f939-942)
+    let h = Math.hypot(b[1] - a[1], b[3] - a[3])
+    if (h > 1) h = 0
     const onGround = Math.abs(b[2] - a[2]) < 1e-4
     walk += h * 0.6
     bob += ((onGround ? Math.min(0.1, h) : 0) - bob) * 0.4
