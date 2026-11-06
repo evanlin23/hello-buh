@@ -239,6 +239,7 @@ window.HB = {
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
     entities = new EntityLayer(scene, regs)
+    entities.itemFactory = thirdPersonItem
     return true
   },
 
@@ -496,6 +497,33 @@ async function handObject (h) {
   if (out) { out.obj.add(inner); out.obj.matrixAutoUpdate = false }
   handCache.set(h.key, out)
   return out
+}
+// Third-person held item (ItemInHandLayer -> ItemRenderer, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND):
+// the model's display transform (translation in pixels, rotation XYZ in degrees, scale; resolved from
+// the jar's model parents by render.js), then translate(-0.5) for block models. Sprite items use the
+// same 1-pixel-thick extruded geometry as the first-person hand (already centred).
+async function thirdPersonItem (h) {
+  const d = h.display || { rotation: [0, 0, 0], translation: [0, 3, 1], scale: [0.55, 0.55, 0.55] }
+  let inner = null, mat = null
+  if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
+    const bm = entities.blockModels.get(h.state)
+    const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, -0.5, -0.5); mat = m.material
+    inner = new THREE.Group(); inner.add(m)
+  } else if (h.tex) {
+    let t = null
+    try { t = await loadTexture(`/assets/env/${h.tex}.png`) } catch (e) {}
+    if (!t) return null
+    t.flipY = true; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true
+    mat = new THREE.MeshBasicMaterial({ map: t, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
+    inner = new THREE.Group(); inner.add(new THREE.Mesh(extrudedItemGeometry(t.image), mat))
+  }
+  if (!inner) return null
+  const obj = new THREE.Group(), tr = d.translation || [0, 0, 0], ro = d.rotation || [0, 0, 0], sc = d.scale || [1, 1, 1]
+  obj.position.set(tr[0] / 16, tr[1] / 16, tr[2] / 16)
+  obj.rotation.set(ro[0] * D2R, ro[1] * D2R, ro[2] * D2R, 'XYZ')
+  obj.scale.set(sc[0], sc[1], sc[2])
+  obj.add(inner)
+  return { obj, mat }
 }
 // The bare arm when nothing is held (ItemInHandRenderer.renderPlayerArm + PlayerModel.rightArm,
 // default wide Steve skin). Model units are pixels (1/16 block), used as-is like the game does.

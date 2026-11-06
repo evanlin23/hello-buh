@@ -276,6 +276,67 @@ function hurtTilt (t) {
   return { roll, pitch }
 }
 
+// The player seen from outside (third person: any CAM= override, or SHOW_PLAYER=1). Per tick like
+// LivingEntity.tick: the body turns 0.3 of the way toward the walking direction (walking backwards
+// keeps it facing forward; swinging faces the look direction) and never more than 50 degrees from
+// the head (tickHeadTurn); the limb swing follows WalkAnimationState (speed eases 0.4 toward
+// min(1, horizontal distance * 4), position advances by speed).
+const THIRD = !!process.env.CAM || process.env.SHOW_PLAYER === '1'
+const PBODY = [], PWALK = []
+{
+  const wrap = (a) => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
+  let body = P.length ? P[0][4] : 0, wpos = 0, wspd = 0
+  for (let i = 0; i < P.length; i++) {
+    const a = P[Math.max(0, i - 1)], b = P[i]
+    const dx = b[1] - a[1], dz = b[3] - a[3], d2 = dx * dx + dz * dz
+    let target = body
+    if (d2 > 0.0025 && d2 < 16) {
+      target = 1.5 * Math.PI - Math.atan2(dz, dx)
+      if (Math.abs(wrap(b[4] - target)) > 95 * Math.PI / 180) target += Math.PI
+    }
+    if (SWINGS.some(s => i >= s && i - s < 6)) target = b[4]
+    if (d2 >= 16) body = b[4]
+    body += wrap(target - body) * 0.3
+    const off = wrap(b[4] - body), MAX = 50 * Math.PI / 180
+    if (Math.abs(off) > MAX) body += off - Math.sign(off) * MAX
+    body = wrap(body)
+    PBODY.push(body)
+    if (d2 < 16) { wspd += (Math.min(1, Math.sqrt(d2) * 4) - wspd) * 0.4; wpos += wspd }
+    PWALK.push([wpos, wspd])
+  }
+}
+// an item's display.thirdperson_righthand, following the model's parents in the client jar
+const DISPLAY = new Map()
+function thirdPersonDisplay (item) {
+  if (DISPLAY.has(item)) return DISPLAY.get(item)
+  const jar = path.join(__dirname, 'work', 'client', `${rec.version}.jar`)
+  let name = `item/${item}`, out = null
+  for (let k = 0; k < 8 && name && !out; k++) {
+    let m = null
+    try { m = JSON.parse(require('child_process').execFileSync('unzip', ['-p', jar, `assets/minecraft/models/${name.replace(/^minecraft:/, '')}.json`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch (e) { break }
+    if (m.display && m.display.thirdperson_righthand) out = m.display.thirdperson_righthand
+    name = m.parent
+  }
+  DISPLAY.set(item, out)
+  return out
+}
+// the vanilla F5 camera (Camera.setup, detached): back along the look, or in front looking back,
+// pulled in so it stays out of blocks (getMaxZoom)
+function detachedCam (eye, mode, dist, world) {
+  const yaw = mode === 'front' ? eye.yaw + Math.PI : eye.yaw, pitch = mode === 'front' ? -eye.pitch : eye.pitch
+  const f = { x: -Math.sin(yaw) * Math.cos(pitch), y: Math.sin(pitch), z: -Math.cos(yaw) * Math.cos(pitch) }
+  let d = dist
+  for (let s = 0.05; s <= dist; s += 0.05) {
+    let hit = false
+    for (const [ox, oy, oz] of [[-0.1, -0.1, -0.1], [0.1, -0.1, -0.1], [-0.1, 0.1, -0.1], [0.1, 0.1, -0.1], [-0.1, -0.1, 0.1], [0.1, -0.1, 0.1], [-0.1, 0.1, 0.1], [0.1, 0.1, 0.1]]) {
+      const b = world.getBlock(new Vec3(Math.floor(eye.x - f.x * s + ox), Math.floor(eye.y - f.y * s + oy), Math.floor(eye.z - f.z * s + oz)))
+      if (b && b.boundingBox === 'block') { hit = true; break }
+    }
+    if (hit) { d = Math.max(0, s - 0.05); break }
+  }
+  return { x: eye.x - f.x * d, y: eye.y - f.y * d, z: eye.z - f.z * d, yaw, pitch }
+}
+
 let deathSim = null
 function bodyAfterDeath (d, t) {
   // vanilla LivingEntity.travel for a body with no input: gravity 0.08 and drag 0.98 in air,
@@ -470,9 +531,16 @@ function camAtLive (t) {
     if (dirty.size) await send([...dirty.values()])
     const cam = camAt(t)
     cam.dayTime = curDayTime
-    if (process.env.CAM) {   // debug: CAM="dx,dy,dz,yawDeg,pitchDeg" relative to the set origin
-      const [dx, dy, dz, yw, pt] = process.env.CAM.split(',').map(Number)
-      Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0 })
+    const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
+    // CAM="dx,dy,dz,yawDeg,pitchDeg": a fixed camera relative to the set origin (no bob)
+    // CAM=back[:dist] / CAM=front[:dist]: vanilla's F5 views (default 4 blocks), bob and hurt tilt kept
+    if (process.env.CAM) {
+      const m = /^(back|front)(?::([\d.]+))?$/.exec(process.env.CAM)
+      if (m) Object.assign(cam, detachedCam(eye, m[1], Number(m[2] || 4), mesher.world))
+      else {
+        const [dx, dy, dz, yw, pt] = process.env.CAM.split(',').map(Number)
+        Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0 })
+      }
     }
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
@@ -481,7 +549,7 @@ function camAtLive (t) {
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
     // block outline under the crosshair + the crack overlay while digging
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
-      cam.target = targetBlock(cam, mesher.world, entitiesAt(t, mesher))
+      cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
       if (process.env.DEBUG_TARGET && cam.target) console.log("target", t, cam.target.x, cam.target.y, cam.target.z)
       const dg = DIGS.find(([a, b]) => t >= a && t < b)
       if (dg) {
@@ -494,7 +562,7 @@ function camAtLive (t) {
     }
     const ents = entitiesAt(t, mesher)
     // first-person held item
-    const hd = HIDE_HAND ? null : handAt(t)
+    const hd = HIDE_HAND || THIRD ? null : handAt(t)
     if (hd) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${hd.name}.png`))
@@ -506,6 +574,31 @@ function camAtLive (t) {
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
       }
       cam.dead = !!DEATHS.find(([a, b]) => t >= a && t < b)
+    }
+    if (THIRD) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
+      const dw = DEATHS.find(([a, b]) => t >= a && t < b), deathTime = dw ? t - dw[0] + 1 : 0
+      const ph = handAt(t)
+      if (deathTime < 21) {
+        const i = Math.max(0, Math.min(P.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
+        const body = lerpAngle(PBODY[i], PBODY[i + 1], f), wk = [0, 1].map(k => PWALK[i][k] + (PWALK[i + 1][k] - PWALK[i][k]) * f)
+        const [ls, lb] = mesher.world.getLight(new Vec3(eye.x, eye.y - EYE + 0.5, eye.z))
+        let held = null
+        if (ph && ph.name) {
+          held = { key: ph.name, display: thirdPersonDisplay(ph.name) }
+          const bl = MC.blocksByName[ph.name]
+          if (fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${ph.name}.png`))) held.tex = `item/${ph.name}`
+          else if (bl) {
+            held.state = bl.defaultState
+            if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+          }
+        }
+        const sw = SWINGS.find(s0 => s0 <= t && t - s0 < 6)
+        ents.push({
+          id: -1, name: 'player', x: eye.x, y: eye.y - EYE, z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body, pitch: eye.pitch, headYaw: eye.yaw,
+          extra: { skin: process.env.SKIN || 'steve' }, light: lightmap(ls, lb),
+          player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10) }
+        })
+      }
     }
     // falling blocks (sand, anvils): the server sends their position about once a second, so the
     // recording hovers then jumps. Simulate vanilla's fall from where each appeared: gravity 0.04,
@@ -567,7 +660,7 @@ function camAtLive (t) {
     // the bot (mineflayer) has no entity push, so a creeper could end up inside the camera. Keep
     // mobs at least their half width + the player's (0.3 + 0.3) plus a little, horizontally.
     for (const e of ents) {
-      if (['falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb'].includes(e.name)) continue
+      if (['player', 'falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb'].includes(e.name)) continue
       if (/_boat$|_raft$|minecart$|^boat$/.test(e.name)) continue   // vehicles: the camera may be riding one (it stays under the camera)
       const dx = e.x - cam.x, dz = e.z - cam.z, d = Math.hypot(dx, dz), min = 0.85
       if (d < min && d > 1e-6 && Math.abs(e.y - (cam.y - 1.62)) < 2) { e.x = cam.x + dx / d * min; e.z = cam.z + dz / d * min }

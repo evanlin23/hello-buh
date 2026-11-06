@@ -63,6 +63,7 @@ each section.
   with one texture. Place things so the key object stays in frame.
 
 ## Renderer (our own; `renderer/`)
+- **Third-person player** (worker 11): any `CAM=` override (or `SHOW_PLAYER=1`) draws the bot as wide Steve (`SKIN=alex` etc. for the other default skins) and drops the first-person hand. `CAM=back[:dist]` / `CAM=front[:dist]` are vanilla's two F5 views (4 blocks, pulled in out of walls); `CAM=dx,dy,dz,yaw,pitch` is a fixed camera. The model is built in Java model space (PlayerRenderer: Ry(180-bodyYaw), S(-1,-1,1), scale 0.9375, T(0,-1.501,0)) so HumanoidModel.setupAnim, the attack swing, ArmPose.ITEM and ItemInHandLayer + the item's `thirdperson_righthand` display (read from the jar's model parents) apply as written. The body yaw follows LivingEntity.tickHeadTurn (0.3 toward the walk direction, at most 50° from the head). Hurt = red overlay (mix 0.302), death = Rz flip to 90° and gone at deathTime 20. Note: the old Bedrock-geometry mobs are drawn x-mirrored (Bedrock x used as world x); invisible on symmetric mobs.
 - **Lava is opaque** in vanilla (solid render type). In the translucent pass with depthWrite off, a
   lava top face under stone (lit 0, so black) painted over nearer lava: the black square seen
   from below. Lava goes in the opaque pass, and fluid faces against a full opaque block are culled

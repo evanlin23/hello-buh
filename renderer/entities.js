@@ -139,6 +139,123 @@ function look (name, extra, regs) {
   return null
 }
 
+// ---------------------------------------------------------------------------------------------
+// The player (third person): built in Java model space so PlayerRenderer's pose chain,
+// HumanoidModel.setupAnim and ItemInHandLayer apply exactly as written in the game.
+// ModelPart.Cube box UVs (down, up, west, north, east, south), positions in pixels relative to the
+// part's pivot, y down. Model space -> world: T(pos) Ry(180 - bodyYaw) Rz(death flip)
+// S(-1,-1,1) S(0.9375) T(0,-1.501,0), then pixels/16.
+const PSHADE = { down: 1.0, up: 0.5, north: 0.8, south: 0.8, west: 0.6, east: 0.6 }   // visual top is model -y
+function javaCube (min, size, uv, grow, texW, texH, out) {
+  const [x0, y0, z0] = min.map(v => v - grow), [x1, y1, z1] = [min[0] + size[0] + grow, min[1] + size[1] + grow, min[2] + size[2] + grow]
+  const [dx, dy, dz] = size, [u, v] = uv
+  const V = { a: [x0, y0, z0], b: [x1, y0, z0], c: [x1, y1, z0], d: [x0, y1, z0], e: [x0, y0, z1], f: [x1, y0, z1], g: [x1, y1, z1], h: [x0, y1, z1] }
+  const f4 = u, f5 = u + dz, f6 = u + dz + dx, f7 = u + dz + dx + dx, f8 = u + dz + dx + dz, f9 = u + dz + dx + dz + dx
+  const f10 = v, f11 = v + dz, f12 = v + dz + dy
+  // Polygon(verts, u1, v1, u2, v2): verts[0] (u2,v1), [1] (u1,v1), [2] (u1,v2), [3] (u2,v2)
+  const polys = [
+    ['down', [V.f, V.e, V.a, V.b], f5, f10, f6, f11],
+    ['up', [V.c, V.d, V.h, V.g], f6, f11, f7, f10],
+    ['west', [V.a, V.e, V.h, V.d], f4, f11, f5, f12],
+    ['north', [V.b, V.a, V.d, V.c], f5, f11, f6, f12],
+    ['east', [V.f, V.b, V.c, V.g], f6, f11, f8, f12],
+    ['south', [V.e, V.f, V.g, V.h], f8, f11, f9, f12]
+  ]
+  for (const [face, vs, u1, v1, u2, v2] of polys) {
+    const n = out.pos.length / 3
+    const uvs = [[u2, v1], [u1, v1], [u1, v2], [u2, v2]]
+    for (let k = 0; k < 4; k++) { out.pos.push(...vs[k]); out.uv.push(uvs[k][0] / texW, uvs[k][1] / texH); const s = PSHADE[face]; out.col.push(s, s, s) }
+    out.idx.push(n, n + 1, n + 2, n, n + 2, n + 3)
+  }
+}
+// PlayerModel parts (wide arms): [name, parent, pivot, cubes [[min, size, uv, grow]]]
+const PLAYER_PARTS = [
+  ['head', null, [0, 0, 0], [[[-4, -8, -4], [8, 8, 8], [0, 0], 0]]],
+  ['hat', 'head', [0, 0, 0], [[[-4, -8, -4], [8, 8, 8], [32, 0], 0.5]]],
+  ['body', null, [0, 0, 0], [[[-4, 0, -2], [8, 12, 4], [16, 16], 0]]],
+  ['jacket', 'body', [0, 0, 0], [[[-4, 0, -2], [8, 12, 4], [16, 32], 0.25]]],
+  ['rightArm', null, [-5, 2, 0], [[[-3, -2, -2], [4, 12, 4], [40, 16], 0]]],
+  ['rightSleeve', 'rightArm', [0, 0, 0], [[[-3, -2, -2], [4, 12, 4], [40, 32], 0.25]]],
+  ['leftArm', null, [5, 2, 0], [[[-1, -2, -2], [4, 12, 4], [32, 48], 0]]],
+  ['leftSleeve', 'leftArm', [0, 0, 0], [[[-1, -2, -2], [4, 12, 4], [48, 48], 0.25]]],
+  ['rightLeg', null, [-1.9, 12, 0], [[[-2, 0, -2], [4, 12, 4], [0, 16], 0]]],
+  ['rightPants', 'rightLeg', [0, 0, 0], [[[-2, 0, -2], [4, 12, 4], [0, 32], 0.25]]],
+  ['leftLeg', null, [1.9, 12, 0], [[[-2, 0, -2], [4, 12, 4], [16, 48], 0]]],
+  ['leftPants', 'leftLeg', [0, 0, 0], [[[-2, 0, -2], [4, 12, 4], [0, 48], 0.25]]]
+]
+function buildPlayer (texInfo) {
+  const root = new THREE.Group()            // world: position + Ry + death Rz
+  const model = new THREE.Group()           // S(-1,-1,1) S(0.9375) T(0,-1.501,0) S(1/16)
+  model.matrixAutoUpdate = false
+  model.matrix.makeScale(-0.9375, -0.9375, 0.9375).multiply(new THREE.Matrix4().makeTranslation(0, -1.501, 0)).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
+  root.add(model)
+  // the overlay layers (hat, jacket, sleeves, pants) are cut out by alpha; draw both sides
+  const mat = new THREE.MeshBasicMaterial({ map: texInfo.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
+  mat.userData.red = { value: 0 }
+  mat.onBeforeCompile = (sh) => {   // OverlayTexture red (hurt / dying): mix(red, colour, 178/255)
+    sh.uniforms.uRed = mat.userData.red
+    sh.fragmentShader = 'uniform float uRed;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.0, 0.0) * diffuse * vColor.rgb, uRed * 0.302);')
+  }
+  const bones = {}
+  for (const [name, parent, pivot, cubes] of PLAYER_PARTS) {
+    const g = new THREE.Group(); g.rotation.order = 'ZYX'   // ModelPart: rotationZYX(zRot, yRot, xRot)
+    g.position.set(...pivot)
+    const all = { pos: [], uv: [], col: [], idx: [] }
+    for (const [min, size, uv, grow] of cubes) javaCube(min, size, uv, grow, texInfo.w, texInfo.h, all)
+    const geom = new THREE.BufferGeometry()
+    geom.setAttribute('position', new THREE.Float32BufferAttribute(all.pos, 3))
+    geom.setAttribute('uv', new THREE.Float32BufferAttribute(all.uv, 2))
+    geom.setAttribute('color', new THREE.Float32BufferAttribute(all.col, 3))
+    geom.setIndex(all.idx)
+    g.add(new THREE.Mesh(geom, mat))
+    ;(parent ? bones[parent] : model).add(g)
+    bones[name] = g
+  }
+  // ItemInHandLayer: the arm's transform, then Rx(-90) Ry(180) T(1/16, 0.125, -0.625) (blocks)
+  const hand = new THREE.Group(); hand.matrixAutoUpdate = false
+  hand.matrix.makeRotationX(-Math.PI / 2).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
+  bones.rightArm.add(hand)
+  bones.hand = hand
+  return { root, bones, mat }
+}
+// HumanoidModel.setupAnim (+ setupAttackAnimation, ArmPose.ITEM, AnimationUtils.bobModelPart) and
+// LivingEntityRenderer.setupRotations for a player state s: yaw = body yaw, headYaw, pitch
+// (mineflayer radians), s.player = { walkPos, walkSpeed, attack, holding, age, deathTime, hurt }
+function posePlayer (r, s) {
+  const B = r.bones, p = s.player || {}
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  // setupRotations: Ry(180 - javaYaw) with javaYaw = PI - mineflayer yaw is a three.js Ry(s.yaw);
+  // dying: Rz(min(1, sqrt((deathTime - 1) / 20 * 1.6)) * 90 degrees)
+  const death = p.deathTime > 0 ? Math.min(1, Math.sqrt(Math.max(0, (p.deathTime - 1) / 20 * 1.6))) * Math.PI / 2 : 0
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(death)))
+  for (const k of ['head', 'body', 'rightArm', 'leftArm', 'rightLeg', 'leftLeg']) B[k].rotation.set(0, 0, 0)
+  B.rightArm.position.set(-5, 2, 0); B.leftArm.position.set(5, 2, 0)
+  B.head.rotation.y = net; B.head.rotation.x = -(s.pitch || 0)
+  const pos = p.walkPos || 0, spd = p.walkSpeed || 0
+  B.rightArm.rotation.x = Math.cos(pos * 0.6662 + Math.PI) * 2 * spd * 0.5
+  B.leftArm.rotation.x = Math.cos(pos * 0.6662) * 2 * spd * 0.5
+  B.rightLeg.rotation.x = Math.cos(pos * 0.6662) * 1.4 * spd
+  B.leftLeg.rotation.x = Math.cos(pos * 0.6662 + Math.PI) * 1.4 * spd
+  if (p.holding) B.rightArm.rotation.x = B.rightArm.rotation.x * 0.5 - Math.PI / 10   // ArmPose.ITEM
+  const a = p.attack || 0
+  if (a > 0) {
+    const by = Math.sin(Math.sqrt(a) * Math.PI * 2) * 0.2
+    B.body.rotation.y = by
+    B.rightArm.position.set(-Math.cos(by) * 5, 2, Math.sin(by) * 5)
+    B.leftArm.position.set(Math.cos(by) * 5, 2, -Math.sin(by) * 5)
+    B.rightArm.rotation.y += by; B.leftArm.rotation.y += by; B.leftArm.rotation.x += by
+    let f = 1 - a; f *= f; f *= f; f = 1 - f
+    const f2 = Math.sin(f * Math.PI), f3 = Math.sin(a * Math.PI) * -(B.head.rotation.x - 0.7) * 0.75
+    B.rightArm.rotation.x -= f2 * 1.2 + f3
+    B.rightArm.rotation.y += by * 2
+    B.rightArm.rotation.z += Math.sin(a * Math.PI) * -0.4
+  }
+  const age = p.age || 0
+  B.rightArm.rotation.z += Math.cos(age * 0.09) * 0.05 + 0.05; B.rightArm.rotation.x += Math.sin(age * 0.067) * 0.05
+  B.leftArm.rotation.z -= Math.cos(age * 0.09) * 0.05 + 0.05; B.leftArm.rotation.x -= Math.sin(age * 0.067) * 0.05
+  r.mat.userData.red.value = (p.hurt || p.deathTime > 0) ? 1 : 0
+}
+
 export class EntityLayer {
   constructor (scene, regs) { this.scene = scene; this.regs = regs || {}; this.live = new Map(); this.pending = new Set(); this.blockModels = new Map() }
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
@@ -158,6 +275,9 @@ export class EntityLayer {
         w.position.set(-0.5, 0, -0.5); w.visible = !!extra.flash; obj.add(w)
       }
       if (extra.scale) obj.scale.setScalar(extra.scale)
+    } else if (name === 'player') {
+      const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
+      if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'ender_pearl' || name === 'snowball' || name === 'egg' || name === 'item') {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       const t = await texture([`item/${itemName}`])
@@ -208,6 +328,19 @@ export class EntityLayer {
           c = a.map((v, i) => v * (1 - f) + b[i] * f)
         } else c = woolColor(s.extra?.color || 0)
         r.woolMat.color.setRGB(c[0] * LL[0], c[1] * LL[1], c[2] * LL[2])
+      }
+      if (s.name === 'player') {
+        posePlayer(r, s)
+        // the held item (ItemInHandLayer), built by the page (block models / extruded sprites)
+        const held = s.player && s.player.held, hk = held ? held.key : null
+        if (r.heldKey !== hk) {
+          if (r.heldObj) r.bones.hand.remove(r.heldObj.obj)
+          r.heldObj = hk && this.itemFactory ? await this.itemFactory(held) : null
+          if (r.heldObj) r.bones.hand.add(r.heldObj.obj)
+          r.heldKey = hk
+        }
+        if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
+        continue
       }
       if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
