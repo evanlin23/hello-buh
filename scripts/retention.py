@@ -2,7 +2,7 @@
 
 Every feature is optional and comes from the stunt's `edit` block (scripts/edit_args.js):
 
-  punch:   [EVENT | [EVENT, NTH, SCALE]]          zoom punch on the game view: 1.0 -> 1.12 -> 1.0
+  punch:   [EVENT | [EVENT, NTH, SCALE]]          (SCALE 0.12 or 1.12, same thing) zoom punch on the game view: 1.0 -> 1.12 -> 1.0
                                                    in ~0.4 s (the HUD and caption don't zoom, like
                                                    a FOV kick)
   slowmo:  [[EVENT, BEFORE_S, AFTER_S, FACTOR]]    slow motion around a mark (scripts/timewarp.py;
@@ -151,7 +151,8 @@ def apply_frame_fx(args, timeline):
     zoom punches, screen shakes, white flashes, and a slow push-in on freeze frames. Runs after the
     speed/slowmo/freeze map, so `timeline` is in output time and frame i is t = i / fps. The HUD,
     caption and overlays are drawn later, so they stay still (like a FOV kick in the game)."""
-    punches = _marks(args.punch, timeline, 0.12)
+    # punch SCALE: an increment (0.12) or an absolute zoom (1.12); 1.08 used to mean a 2.08x zoom
+    punches = [(m, v - 1 if v >= 1 else v) for m, v in _marks(args.punch, timeline, 0.12)]
     shakes = _marks(args.shake, timeline, 16.0)
     flashes = _marks(args.flash, timeline, 0.7)
     pushes = [(ts[0], float(f[1]) if len(f) > 1 else 0.6) for f in _load(args.freeze)

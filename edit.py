@@ -919,6 +919,12 @@ def main():
            "-t", f"{dur:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
            "-movflags", "+faststart", args.out]
     subprocess.run(cmd, check=True)
+    got = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.out], capture_output=True, text=True).stdout or 0)
+    if got > dur + 0.1:   # never run past --end_after (worker 7 saw a 1.5 s tail with punch/cards/counter)
+        print(f"WARNING: encoded {got:.2f}s but the edit is {dur:.2f}s; trimming")
+        fixed = tmp / "trim.mp4"
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.out, "-t", f"{dur:.3f}", "-c", "copy", "-movflags", "+faststart", str(fixed)], check=True)
+        pathlib.Path(fixed).replace(args.out)
     if args.story:   # single-pass loudnorm lands ~2 dB short: measure and correct to -14 LUFS exactly
         story_track.master_gain(args.out, -14.0)
     if args.replay and frames_dir0:   # instant replay from the third-person pass (scripts/render_replay.py)
