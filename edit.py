@@ -9,8 +9,8 @@ Layout (measured from a real HelloBuh Short): equal black bands top and bottom (
 white bold centered caption in the top band, gameplay 1080x1011 in the middle, center-cropped. The HUD (hotbar, hearts,
 food) is drawn from the client jar's own GUI sprites at GUI scale 3, because the renderers we
 use either don't draw it (prismarine-viewer) or we choose to keep it consistent. The slot
-highlight and the bucket item follow the bot's timeline. Audio is loudness-normalized to about
--18 LUFS so a library song added at upload has headroom. No music is ever added here.
+highlight and the bucket item follow the bot's timeline. Audio: game sounds alone at -18 LUFS, or
+with --song the owner's song baked in under them, mastered to -10 LUFS like the reference Short.
 """
 import argparse
 import io
@@ -152,6 +152,8 @@ def main():
     ap.add_argument("--red")
     ap.add_argument("--timeline")
     ap.add_argument("--audio")
+    ap.add_argument("--song", help="music file to bake in (owner-supplied; keep the Short under 60 s)")
+    ap.add_argument("--song_start", type=float, default=0.0, help="seconds into the song to start (e.g. the drop)")
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--out", required=True)
@@ -179,9 +181,24 @@ def main():
                 last, n_in = f"h{k}", n_in + 1
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     maps = ["-map", "[v]"]
-    if args.audio:
+    if args.audio and not args.song:
+        # Game audio only: leave headroom for a song added at upload.
         inputs += ["-ss", str(args.start), "-i", args.audio]
         graph.append(f"[{n_in}:a]loudnorm=I=-18:TP=-3:LRA=11,aresample=48000[a]")
+        maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
+    elif args.song:
+        # Song baked in under the game sounds, mastered like the reference Short (-10 LUFS overall).
+        # Shorts under 1 minute with a Content ID match follow the rights holder's policy
+        # (usually monetize/track); see README "Owner decisions".
+        inputs += ["-ss", str(args.song_start), "-i", args.song]
+        song = f"[{n_in}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song]"
+        graph.append(song)
+        if args.audio:
+            inputs += ["-ss", str(args.start), "-i", args.audio]
+            graph.append(f"[{n_in + 1}:a]loudnorm=I=-15:TP=-2,aresample=48000[game]")
+            graph.append("[song][game]amix=inputs=2:normalize=0,loudnorm=I=-10:TP=-1:LRA=11[a]")
+        else:
+            graph.append("[song]loudnorm=I=-10:TP=-1:LRA=11[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     cmd = ["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", ";".join(graph), *maps,
            "-t", f"{dur:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",

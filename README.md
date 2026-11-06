@@ -19,7 +19,8 @@ Needs Java 21, Node 22, Python 3 + Pillow, ffmpeg, and Playwright's Chromium.
 
 ## Owner decisions
 - 2026-11-06: **"close match is fine"**. HUD and sound don't have to be pixel-exact; a drawn HUD is OK.
-- 2026-11-06: **"audio is just the game audio + whatever random viral song"**. Export real game sound at about -18 LUFS (the reference Short measures -10 LUFS *with* its song) so a song added at upload sits on top. Never bake a copyrighted song into the export (Content ID; the upload API can't attach a YouTube library track): the song is a manual step at upload.
+- 2026-11-06: **"audio is just the game audio + whatever random viral song"**, and later the same day: **bake recognizable songs in** (the channel's top Shorts already do: their sound shows as "Original Sound"). Rules: keep every Short under 60 s (a Short over 1 min with any active Content ID claim is blocked); under 60 s a match follows the rights holder's policy, usually monetize/track, rarely block. A claim is not a strike. Songs are owner-supplied files in `songs/` (gitignored: never commit copyrighted audio). `edit.py --song FILE --song_start SEC` mixes it under the game sounds at -10 LUFS like the reference; without `--song` the game audio stays at -18 LUFS.
+- Monetization note: on a Short that uses music, part of the revenue allocated to that Short goes to music licensing, so the creator gets roughly half on one-track Shorts. Shorts revenue per view is small either way; the trade is more reach vs. a smaller cut.
 - 2026-11-06: **skip the real Minecraft client**; the prismarine-viewer render "looks decent enough". So no Microsoft login and no account token anywhere.
 - 2026-11-06: this repo (`evanlin23/hello-buh`) is the channel's home. The earlier trial lives on `evanlin23/buh-explains` branch `claude/hellobuh-trial`.
 
