@@ -160,7 +160,10 @@
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
     "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal \ud83d\ude33\" --red nether --end_after lit:2.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "frame QA pass (reviewer 2026-11-06): nitpicks only (0.55 s still opening, portal particles column)",
-  "published_at": "2026-11-06T17:56:46.539Z"
+  "published_at": "2026-11-06T17:56:46.539Z",
+  "qa_notes": [
+    "2026-11-06: held back - under the owner's 30 s minimum (single-stunt, ~10 s); needs a multi-beat format and both audits."
+  ]
 }
