@@ -353,7 +353,10 @@
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
     "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 \ud83d\ude2d\" --start 0.3 --end_after complete:1.7 --out out/creeper_art.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker QA (qa_frames + independent review): ready. Nitpicks: held block vanishes on slot switch with ~6 frozen frames (f146, f311; engine), swinging block hides part of the art while building, near-still last 1.8 s hold",
-  "published_at": "2026-11-06T18:08:02.267Z"
+  "published_at": "2026-11-06T18:08:02.267Z",
+  "qa_notes": [
+    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
+  ]
 }

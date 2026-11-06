@@ -189,7 +189,10 @@
     "python3 audio.py work/sword_art.rec.json work/sword_art.wav",
     "python3 edit.py --frames work/sword_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sword_art.rec.json --audio work/sword_art.wav --caption \"can you guess what I'm building? \ud83e\udd14\" --start 0.3 --end_after complete:1.7 --out out/sword_art.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker QA (qa_frames + independent review): ready. Nitpicks: frequent slot switches f86-140 keep the held item mostly lowered; fill starts before the outline is complete",
-  "published_at": "2026-11-06T18:17:13.144Z"
+  "published_at": "2026-11-06T18:17:13.144Z",
+  "qa_notes": [
+    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
+  ]
 }

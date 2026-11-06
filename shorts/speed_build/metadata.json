@@ -620,7 +620,10 @@
     "python3 audio.py work/speed_build.rec.json work/speed_build.wav",
     "python3 edit.py --frames work/speed_build.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/speed_build.rec.json --audio work/speed_build.wav --caption \"Fastest house build \ud83d\udc80\" --timer build_start:done --end_after done:1.3 --out out/speed_build.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker QA (qa_frames + independent review): ready. Nitpicks: 0.37 s still opening before the timer, last ~0.5 s nearly still; held item pops on slot switches (engine: no lower/raise animation)",
-  "published_at": "2026-11-06T17:50:32.702Z"
+  "published_at": "2026-11-06T17:50:32.702Z",
+  "qa_notes": [
+    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
+  ]
 }

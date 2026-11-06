@@ -281,7 +281,10 @@
     "python3 audio.py work/heart_art.rec.json work/heart_art.wav",
     "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building \ud83d\ude2d\" --start 0.7 --end_after complete:1.7 --out out/heart_art.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker QA (qa_frames + independent review): ready after trimming the blank opening. Scrambled build order is intentional (mystery until ~5.7 s). Nitpick: one fast hand swing f168",
-  "published_at": "2026-11-06T18:25:20.378Z"
+  "published_at": "2026-11-06T18:25:20.378Z",
+  "qa_notes": [
+    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
+  ]
 }

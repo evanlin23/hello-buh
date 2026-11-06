@@ -198,7 +198,10 @@
     "python3 audio.py work/rainbow_wool.rec.json work/rainbow_wool.wav",
     "python3 edit.py --frames work/rainbow_wool.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/rainbow_wool.rec.json --audio work/rainbow_wool.wav --caption \"dyeing it until it's a rainbow \ud83c\udf08\" --red rainbow --subs \"[[\\\"dye\\\",\\\"red\\\",1,0],[\\\"dye\\\",\\\"orange\\\",1,1],[\\\"dye\\\",\\\"yellow\\\",1,2],[\\\"dye\\\",\\\"green\\\",1,3],[\\\"dye\\\",\\\"light blue\\\",1,4],[\\\"dye\\\",\\\"blue\\\",1,5],[\\\"dye\\\",\\\"purple\\\",1,6]]\" --start_at dye:-0.5 --out out/rainbow_wool.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker re-render (new engine, frame QA): no blockers; nitpicks: held dye pops in at the right edge on swings, band labels sit over the dyed spot",
-  "published_at": "2026-11-06T17:56:56.238Z"
+  "published_at": "2026-11-06T17:56:56.238Z",
+  "qa_notes": [
+    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
+  ]
 }

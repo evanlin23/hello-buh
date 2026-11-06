@@ -373,7 +373,10 @@
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
     "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start 0.3 --end_after complete:1.0 --out out/looks_wrong.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "worker frame QA (qa_frames + independent review) passed on the pull-back render. Nitpicks: ends 1.2 s after completion; 0.35 s near-still opening",
-  "published_at": "2026-11-06T20:28:33.826Z"
+  "published_at": "2026-11-06T20:28:33.826Z",
+  "qa_notes": [
+    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
+  ]
 }
