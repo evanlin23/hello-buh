@@ -1,17 +1,17 @@
 // "boat clutch 💀" (~18 s, three beats): the bot jumps off a cobblestone pillar looking straight down
 // the fall, places a boat on the grass right below a few ticks before the ground (real use_item with
 // the boat), gets in it (real use_entity) and lands in the boat with full hearts (vanilla: getting
-// into a vehicle resets the fall distance). From 25, 55, then 110 blocks. The camera looks
+// into a vehicle resets the fall distance). From 20, 40, then 74 blocks. The camera looks
 // down the fall the whole way, then up the pillar from the boat.
-const PILLARS = [{ h: 25, dx: 0 }, { h: 55, dx: 14 }, { h: 110, dx: 28 }]
+const PILLARS = [{ h: 20, dx: 0 }, { h: 40, dx: 14 }, { h: 74, dx: 28 }]   // heights picked so a fall tick lands in the boat window
 
 module.exports = {
   name: 'boat_clutch',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'boat clutch 💀',
   edit: {
-    caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'mounted', startAt: 'start:0', endAfter: 'outro:1.0',
-    subs: [['jump', '25 blocks', 1.4, 0], ['jump', '55 blocks', 1.4, 1], ['jump', '110 blocks', 1.4, 2]]
+    caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'mounted', startAt: 'start:0', endAfter: 'final:0.9',
+    subs: [['jump', '20 blocks', 1.4, 0], ['jump', '40 blocks', 1.4, 1], ['jump', '74 blocks', 1.4, 2]]
   },
 
   async setup (ctx) {
@@ -28,8 +28,8 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 16} ${floor} ${z - 22} ${x + 44} ${floor} ${z + 12} grass_block`)
     for (const p of PILLARS) await ctx.cmd(`/fill ${x + p.dx} ${floor + 1} ${z} ${x + p.dx} ${floor + p.h} ${z} cobblestone`)
     await ctx.cmd('/gamerule fall_damage true')
-    await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 24')
-    await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 8')
+    await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6.5')   // vanilla 4.5: nudged so the boat can go down 2 ticks early
+    await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 6.5')   // vanilla 3: nudged the same way
     await ctx.hotbar(['diamond_sword', 'oak_boat', 'oak_boat', 'oak_boat', ['cobblestone', 64], ['bread', 16]])
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
     // stand clear of every block before recording (spawning inside the fill hurt the bot: in_wall)
@@ -65,32 +65,38 @@ module.exports = {
     let placed = false, mounted = false, landed = false, boat = null, k0 = 0
     const oldBoats = new Set(Object.values(bot.entities).filter(e => /boat/.test(e.name || '')).map(e => e.id))   // from earlier beats
     const findBoat = () => Object.values(bot.entities).find(e => /boat/.test(e.name || '') && !oldBoats.has(e.id) && e.position.distanceTo(bot.entity.position) < 40)
+    // the boat's spawn packet: get in at once, before the next position packet reaches the server
+    const onSpawn = (pk) => {
+      if (!placed || mounted) return
+      setImmediate(() => {
+        const e = bot.entities[pk.entityId]
+        if (!e || !/boat/.test(e.name || '') || oldBoats.has(e.id)) return
+        mounted = true; boat = e
+        const above = bot.entity.position.y - (floor + 1)
+        ctx.mark('mounted', { n: i, above })
+        ctx.log('mounting at height', above.toFixed(2), 'ms after placing', Date.now() - k0)
+        bot._client.write('use_entity', { target: e.id, mouse: 0, hand: 0, sneaking: false }); bot.swingArm()
+      })
+    }
+    bot._client.on('spawn_entity', onSpawn)
     const onTick = () => {
       const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
-      if (!placed && vy < -0.5 && above < -vy * 4 + 2) {
-        placed = true; k0 = ctx.tick
+      // place two ticks before the ground (the boat's spawn reaches us within a tick, then we get in
+      // before the landing tick), with the ground in reach
+      if (!placed && vy < -0.5 && above + vy > 0 && above + 2 * vy - 0.1 <= 0 && above + 1.62 <= 6.4) {
+        placed = true; k0 = Date.now()
         bot.entity.pitch = -Math.PI / 2
         ctx.mark('placed', { n: i, above })
         ctx.log('boat placed at height', above.toFixed(2), 'vy', vy.toFixed(2))
         process.nextTick(() => { bot.activateItem(); bot.swingArm() })
         return
       }
-      if (placed && !mounted) {
-        boat = boat || findBoat()
-        // get in on the last tick before the ground: the seat is then less than one tick's fall away
-        // (mounting earlier jumped the camera 5 blocks in a tick, which renders as a cut)
-        if (boat && above < -vy + 0.3) {
-          mounted = true
-          ctx.mark('mounted', { n: i, above })
-          ctx.log('mounting at height', above.toFixed(2), 'ticks after placing', ctx.tick - k0)
-          process.nextTick(() => { bot._client.write('use_entity', { target: boat.id, mouse: 0, hand: 0, sneaking: false }); bot.swingArm() })
-        }
-      }
-      if (mounted && !landed && (bot.vehicle || bot.entity.onGround)) { landed = true; ctx.mark('landed', { n: i, vehicle: !!bot.vehicle }) }
+      if (mounted && !landed && (bot.vehicle || bot.entity.onGround)) { landed = true; ctx.mark('landed', { n: i, vehicle: !!bot.vehicle }); if (i === PILLARS.length - 1) ctx.mark('final') }
     }
     bot.on('physicsTick', onTick)
     for (let k = 0; k < 300 && !landed && !ctx.died; k++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', onTick)
+    bot._client.removeListener('spawn_entity', onSpawn)
     await bot.waitForTicks(4)
     ctx.log('health', bot.health, 'vehicle', !!bot.vehicle, 'pos', bot.entity.position)
     if (!mounted || ctx.died || bot.health < 20) return false
@@ -116,7 +122,9 @@ module.exports = {
     bot._client.on('set_passengers', ({ entityId, passengers }) => {
       if (bot.vehicle && bot.vehicle.id === entityId && !passengers.includes(bot.entity.id)) { const v = bot.vehicle; bot.vehicle = null; bot.emit('dismount', v) }
     })
+    const seat = () => { const v = bot.vehicle; if (v) { bot.entity.position = v.position.offset(0, 0.1875 - 0.6, 0); bot.entity.velocity.set(0, 0, 0) } }
     bot.on('mount', () => {
+      seat()   // at once: a position update right after mounting put the camera 1.5 blocks up for a tick
       if (rideClock) return
       rideClock = setInterval(() => {
         const v = bot.vehicle
