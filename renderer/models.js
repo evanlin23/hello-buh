@@ -31,11 +31,15 @@ function biomeTint (world, pos, kind) {
 const FIXED = { spruce_leaves: 0x619961, birch_leaves: 0x80a755, mangrove_leaves: 0x92c648, lily_pad: 0x208030 }
 
 // Lightmap: light level -> brightness, as LightTexture does at noon with default gamma (0.5).
+// Options > Video > Brightness (gamma): 0 = Moody, 0.5 = the default, 1 = Bright. A stunt can pick
+// it (`brightness: 1` for caves: at the default an ore-filled cavern read as black walls).
+let GAMMA = 0.5
+function setBrightness (g) { GAMMA = Math.max(0, Math.min(1, Number(g))) }
 function lightmap (level) {
   const f = level / 15
   const b = f / (4 - 3 * f)
   const g = 1 - Math.pow(1 - b, 4)
-  return Math.max(0.04, (b + (g - b) * 0.5) * 0.96 + 0.04)
+  return Math.max(0.04, (b + (g - b) * GAMMA) * 0.96 + 0.04)
 }
 function lightOf (world, pos) { const [s, b] = world.getLight(pos); return Math.max(s, b) }
 
@@ -185,7 +189,9 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
   const own = h(0, 0)
   const hN = h(0, -1), hS = h(0, 1), hE = h(1, 0), hW = h(-1, 0)
   // cornerHeights index = z*2 + x  (x,z in {0,1})
-  const cornerHeights = [
+  // the same fluid above (a lava/waterfall): every corner is full height (vanilla); averaging with the
+  // air around the column left a dark seam at each block of the fall
+  const cornerHeights = own >= 1 ? [1, 1, 1, 1] : [
     cornerHeight(own, hN, hW, () => h(-1, -1)),
     cornerHeight(own, hN, hE, () => h(1, -1)),
     cornerHeight(own, hS, hW, () => h(-1, 1)),
@@ -601,4 +607,4 @@ function getModelVariants (block, blockStates) {
   return []
 }
 
-module.exports = { getSectionGeometry, setBiomeColors, lightmap }
+module.exports = { getSectionGeometry, setBiomeColors, lightmap, setBrightness }

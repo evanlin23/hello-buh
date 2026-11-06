@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap } = require('./renderer/models')
+const { lightmap, setBrightness } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -16,6 +16,7 @@ const [recPath, outDir, fpsArg, wArg, hArg] = process.argv.slice(2)
 const FPS = Number(fpsArg || 60), W = Number(wArg || 1080), H = Number(hArg || 1011)
 const EYE = 1.62
 const rec = JSON.parse(fs.readFileSync(recPath))
+{ let st = {}; try { st = require(`./stunts/${rec.stunt}`) } catch (e) {} setBrightness(process.env.BRIGHTNESS ?? st.brightness ?? 0.5) }   // the Brightness option (renderer/models.js)
 const P = rec.poses
 
 function lerpAngle (a, b, f) { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return a + d * f }
@@ -318,6 +319,7 @@ function camAtLive (t) {
   const only = process.env.ONLY ? process.env.ONLY.split(',').map(Number) : null
   let bi = 0
   const sentBlocks = new Set()
+  let relightBB = null, lastRelight = -99
   const t1 = Date.now()
   for (let f = 0; f < (only ? only.length : frames); f++) {
     const t = only ? only[f] : f * 20 / FPS
@@ -334,9 +336,12 @@ function camAtLive (t) {
         dirty.set(`${sx},${sy},${sz}`, { key: `${sx},${sy},${sz}`, sx, sy, sz })
       }
     }
-    // a big change at once (an explosion, a crater): light from before is badly wrong there (the
-    // exposed walls stayed black), so relight the world and re-mesh everything around the change
-    if (nChanged >= 24) {
+    // relight after block changes: light from before is wrong around them (a dug shaft stayed
+    // pitch black, lava placed during a stunt lit nothing, crater walls stayed black). Any change
+    // marks the light dirty; it's recomputed at once for big changes, else at most every 4 ticks.
+    if (bb) relightBB = relightBB ? [Math.min(relightBB[0], bb[0]), Math.min(relightBB[1], bb[1]), Math.min(relightBB[2], bb[2]), Math.max(relightBB[3], bb[3]), Math.max(relightBB[4], bb[4]), Math.max(relightBB[5], bb[5])] : bb
+    if (relightBB && (nChanged >= 24 || t - lastRelight >= 4)) {
+      bb = relightBB; relightBB = null; lastRelight = t
       mesher.computeLight(minVisibleY)
       for (let sx = Math.floor((bb[0] - 16) / 16) * 16; sx <= bb[3] + 16; sx += 16) {
         for (let sy = Math.floor((bb[1] - 16) / 16) * 16; sy <= bb[4] + 16; sy += 16) {

@@ -18,6 +18,7 @@ function blobCmds (cx, cy, cz, r, block) {
 
 module.exports = {
   name: 'cave_reveal',
+  brightness: 1,   // Options > Brightness: Bright, so the ores and walls read (at the default the cavern was black)
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'never dig straight down 💀',
   edit: { caption: 'never dig straight down 💀', red: 'never', song: 'songs/misery.mp3', dropAt: 'reveal' , startAt: 'reveal:-2.2'},
@@ -109,10 +110,13 @@ module.exports = {
       if (splashed && i > 4) break
     }
     await lift
-    await bot.waitForTicks(10)
-    await ctx.easeLook(2.2, -0.1, 1600)                      // pan across the lavafall
-    await ctx.easeLook(3.6, 0.05, 1400)                      // ...to the waterfall
-    await bot.waitForTicks(16)
+    // look around the cavern from the pool, never still: up across the ore walls, along the
+    // lavafall, and end drifting on the lavafall (the waterfall corner was the darkest shot)
+    await ctx.easeLook(1.6, 0.25, 1100)                      // up at the ore walls
+    await ctx.easeLook(2.6, 0.1, 1100)                       // across to the waterfall
+    await ctx.easeLook(1.2, 0.0, 1300)                       // back to the lavafall
+    ctx.easeLook(0.9, 0.12, 1600)                            // slow drift to the end
+    await bot.waitForTicks(20)
     return splashed && !ctx.died
   }
 }
