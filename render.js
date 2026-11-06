@@ -513,6 +513,8 @@ function camAtLive (t) {
       if (e.name !== 'creeper') continue
       const ex = EXPLOSIONS.find(x => x.t >= t && x.t - t <= 30 && Math.hypot(x.x - e.x, x.z - e.z) < 3)
       if (ex) e.swell = Math.min(1, Math.max(0, 1 - (ex.t - t) / 30))
+      // gone on the tick it blows (the entity's removal reaches the recording a tick or two later)
+      if (EXPLOSIONS.some(x => t >= x.t && t - x.t < 10 && Math.hypot(x.x - e.x, x.z - e.z) < 3)) e.hidden = true
     }
     // primed TNT (TntRenderer): the TNT block, white flash while (fuse / 5) % 2 == 0, swelling 30%
     // over the last 10 ticks. Fuse from when the entity appeared (80 ticks by default).

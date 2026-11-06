@@ -6,7 +6,7 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/funk_abnormal.mp3', dropAt: 'hiss', startAt: 'hiss:-1.6', deathScreen: true, endAfter: 'death:1.8' },
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/funk_abnormal.mp3', dropAt: 'hiss', startAt: 'glance:-0.2', deathScreen: true, endAfter: 'death:1.8' },
   expectDeath: true,
 
   async setup (ctx) {
@@ -39,6 +39,12 @@ module.exports = {
     // building a little wall in front: 4 planks wide, 2 high
     const wall = []
     for (const dy of [0, 1]) for (const dx of [-2, -1, 0, 1]) wall.push([x + dx, floor + 1 + dy, z - 2])
+    // the hook: a glance over the shoulder at the start shows it walking up (the viewer knows, the
+    // player doesn't), then back to building until the hiss
+    for (let i = 0; i < 40; i++) { const c = Object.values(bot.entities).find(e => e.name === 'creeper'); if (c && c.position.distanceTo(bot.entity.position) < 8.5) break; await bot.waitForTicks(1) }
+    const c0 = Object.values(bot.entities).find(e => e.name === 'creeper')
+    ctx.mark('glance')
+    if (c0) { await ctx.easeLookAt(c0.position.offset(0, 1.2, 0), 350); await bot.waitForTicks(14) }
     let hissed = false
     const near = () => {
       const c = Object.values(bot.entities).find(e => e.name === 'creeper')

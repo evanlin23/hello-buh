@@ -228,7 +228,7 @@ export class EntityLayer {
         const dt = tick - r.last.t
         if (dt > 0) {
           const per = Math.hypot(s.x - r.last.x, s.z - r.last.z) / dt
-          const target = Math.min(1, per * 4)
+          const target = s.swell !== undefined ? 0 : Math.min(1, per * 4)   // a swelling creeper stands still (SwellGoal stops its navigation)
           r.amt = (r.amt || 0) + (target - (r.amt || 0)) * Math.min(1, 0.4 * dt)
           r.walk += (r.amt || 0) * dt
         }
