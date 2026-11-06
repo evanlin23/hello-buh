@@ -5,8 +5,8 @@
 // The pearl is aimed by simulating vanilla's projectile physics (1.5 b/t launch + the thrower's
 // momentum, drag 0.99, gravity 0.03).
 const TOWER = Number(process.env.TOWER || 30)     // tower height above the lava
-const LEDGE_DIST = Number(process.env.LEDGE_DIST || 22)
-const LEDGE_UP = Number(process.env.LEDGE_UP || 10)     // ledge height above the lava
+const LEDGE_DIST = Number(process.env.LEDGE_DIST || 16)
+const LEDGE_UP = Number(process.env.LEDGE_UP || 8)     // ledge height above the lava
 
 module.exports = {
   name: 'pearl_clutch',
@@ -90,9 +90,11 @@ module.exports = {
     // the block under the feet is gone: falling toward the lava
     await ctx.cmd(`/setblock ${x} ${lava + TOWER} ${z - 1} air`)
     ctx.mark('fall'); ctx.sound('block.stone.break', 1)
-    await ctx.easeLook(0.15, -1.25, 350)                      // look down: lava
-    for (let i = 0; i < 8; i++) await bot.waitForTicks(1)
-    await ctx.easeLookAt(this.ledge, 250)                     // the island
+    // throw early: the pearl inherits the player's velocity, and ~20 ticks into the fall (-1.3 b/t)
+    // it dove into the lava short of the island (aim error 17-21 blocks, 5/5 failed)
+    await ctx.easeLook(0.15, -1.25, 220)                      // look down: lava
+    await bot.waitForTicks(2)
+    await ctx.easeLookAt(this.ledge, 180)                     // the island
     const a = this.aim(bot, this.ledge)
     if (!a) { ctx.log('no pearl solution'); return false }
     ctx.log('pearl aim err', a.err.toFixed(2), 'flight', a.t, 'ticks')

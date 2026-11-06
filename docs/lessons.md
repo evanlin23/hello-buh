@@ -235,3 +235,4 @@ each section.
 - **Captions switch on the cut,** not on the first word. The old line held 0.17 s over the new scene and read as lagging.
 - **A still death screen is a still shot.** Bring something on screen: the villagers creep back to look at the crater.
 - **A dead player can't be targeted** by `facing entity <name>`. Use where they stood.
+- **Throw a pearl early in a fall.** The pearl inherits the player's velocity, so about 20 ticks into a fall (-1.3 blocks/tick) it dives short of the target (pearl_clutch: aim error 17–21 blocks, failed 5/5). Throw within about 10 ticks, and check feasibility with `simulate()` before rendering.
