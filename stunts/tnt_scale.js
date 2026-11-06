@@ -26,7 +26,7 @@ module.exports = {
     await ctx.defaultRules()
     for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 24} ${y0} ${z - 30} ${x + 24} ${y0 + 5} ${z + 8} air`)
     await ctx.cmd(`/fill ${x - 24} ${floor} ${z - 30} ${x + 24} ${floor} ${z + 8} grass_block`)
-    await ctx.cmd(`/fill ${x - 24} ${floor - 6} ${z - 30} ${x + 24} ${floor - 1} ${z + 8} dirt`)
+    await ctx.cmd(`/fill ${x - 24} ${floor - 12} ${z - 30} ${x + 24} ${floor - 1} ${z + 8} dirt`)   // deep: craters into groundwater flood
     this.pz = z - 18
     for (const p of PILES) {
       const [w, h, d] = p.size
