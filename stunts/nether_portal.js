@@ -20,7 +20,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 7} ${floor + 1} ${z - 9} ${x + 7} ${floor + 10} ${z + 3} air`)
     this.pz = z - 4                       // portal plane
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 8')
-    await ctx.hotbar([['obsidian', 14], 'flint_and_steel', 'diamond_pickaxe', ['bread', 12]])
+    await ctx.hotbar([['obsidian', 18], 'flint_and_steel', 'diamond_pickaxe', ['bread', 12]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 0)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -31,17 +31,18 @@ module.exports = {
   async perform (ctx) {
     const { bot, Vec3 } = ctx
     const y0 = this.floor + 1, pz = this.pz, x0 = this.x - 1
-    // frame 4 wide x 5 tall (corners skipped, like most players build it)
+    // frame 4 wide x 5 tall with corners (every block then has a solid neighbour to click; clicking
+    // the air inside the frame would put obsidian in the opening - air is replaceable)
     const frame = []
-    for (let i = 1; i <= 2; i++) frame.push([x0 + i, y0])                 // bottom
+    for (let i = 0; i <= 3; i++) frame.push([x0 + i, y0])                 // bottom
     for (let j = 1; j <= 3; j++) frame.push([x0, y0 + j], [x0 + 3, y0 + j])   // sides
-    for (let i = 1; i <= 2; i++) frame.push([x0 + i, y0 + 4])             // top
+    for (let i = 0; i <= 3; i++) frame.push([x0 + i, y0 + 4])             // top
     const center = new Vec3(x0 + 2, y0 + 2.5, pz + 0.5)
     let aim = center.clone()
     const look = async (t, n = 1) => { for (let k = 0; k < n; k++) { aim = aim.plus(t.minus(aim).scaled(0.3)); const e = bot.entity.position.offset(0, 1.62, 0), d = aim.minus(e); await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true); await bot.waitForTicks(1) } }
     const solid = (x, y, z) => { const b = bot.blockAt(new Vec3(x, y, z)); return b && b.boundingBox === 'block' }
     await bot.waitForTicks(10)
-    for (const [fx, fy] of frame.sort((a, b) => a[1] - b[1])) {
+    for (const [fx, fy] of frame.sort((a, b) => a[1] - b[1] || a[0] - b[0])) {
       // click the block below, or the side neighbour for the top row
       let loc, face
       if (solid(fx, fy - 1, pz)) { loc = { x: fx, y: fy - 1, z: pz }; face = 1 } else if (solid(fx - 1, fy, pz)) { loc = { x: fx - 1, y: fy, z: pz }; face = 5 } else { loc = { x: fx + 1, y: fy, z: pz }; face = 4 }
