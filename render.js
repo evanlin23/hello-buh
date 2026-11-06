@@ -54,15 +54,28 @@ function entitiesAt (t, mesher) {
 
 // Death: the camera stays where the player died (mineflayer respawns the bot elsewhere) and
 // keels over like the vanilla death animation.
-const deathEv = (rec.timeline || []).find(e => e.event === 'death')
-const DEATH_TICK = deathEv ? deathEv.t / 50 : Infinity
+// Each death holds the camera (with the keel-over) until the next respawn.
+const DEATHS = []
+{
+  let open = null
+  for (const e of rec.timeline || []) {
+    if (e.event === 'death' && open === null) open = e.t / 50
+    if (e.event === 'respawn' && open !== null) { DEATHS.push([open, e.t / 50]); open = null }
+  }
+  if (open !== null) DEATHS.push([open, Infinity])
+}
 
 function camAt (t) {
-  if (t >= DEATH_TICK) {
-    const c = camAt(DEATH_TICK - 0.001)
-    const k = Math.min(1, (t - DEATH_TICK) / 20)
+  const d = DEATHS.find(([a, b]) => t >= a && t < b)
+  if (d) {
+    const c = camAtLive(d[0] - 0.001)
+    const k = Math.min(1, (t - d[0]) / 20)
     return { ...c, y: c.y - 1.1 * k, roll: c.roll + 0.75 * k * k, bobX: 0, bobY: 0, bobPitch: 0 }
   }
+  return camAtLive(t)
+}
+
+function camAtLive (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
   const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f

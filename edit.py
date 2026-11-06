@@ -325,6 +325,32 @@ def timer_frames(t0, t1, start_shift, outdir, hold=1.5):
     return t0 - start_shift, str(outdir / "timer_%04d.png")
 
 
+def subtitle_png(text, path):
+    """Green glowing in-world subtitle (like HelloBuh's re:zero Short): light green text with a
+    soft green glow, centred in the game area, wrapped to 2 lines if long."""
+    from PIL import ImageFilter
+    font = ImageFont.truetype(FONT.replace("ExtraBold", "Medium") if pathlib.Path(FONT.replace("ExtraBold", "Medium")).exists() else FONT, 64)
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    words, lines, cur = text.split(), [], ""
+    for w_ in words:
+        t = (cur + " " + w_).strip()
+        if d.textlength(t, font=font) > W * 0.7 and cur:
+            lines.append(cur); cur = w_
+        else:
+            cur = t
+    lines.append(cur)
+    y = BAND + int(GAME_H * 0.42) - len(lines) * 36
+    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0)); gd = ImageDraw.Draw(glow)
+    for i, ln in enumerate(lines):
+        tw = d.textlength(ln, font=font)
+        gd.text(((W - tw) / 2, y + i * 72), ln, font=font, fill=(60, 255, 60, 255), stroke_width=6, stroke_fill=(60, 255, 60, 255))
+        d.text(((W - tw) / 2, y + i * 72), ln, font=font, fill=(190, 255, 170, 255))
+    glow = glow.filter(ImageFilter.GaussianBlur(10))
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0)); out.alpha_composite(glow); out.alpha_composite(img)
+    out.save(path)
+
+
 def probe_duration(args):
     if args.video:
         out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.video], capture_output=True, text=True).stdout
@@ -345,6 +371,7 @@ def main():
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
+    ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
     ap.add_argument("--timeline")
     ap.add_argument("--audio")
@@ -424,6 +451,20 @@ def main():
         graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[tmv]")
         graph.append(f"[{last}][tmv]overlay=0:0:eof_action=repeat[tmo]")
         last, n_in = "tmo", n_in + 1
+    if args.subs and args.timeline:
+        all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        for k, sub in enumerate(json.loads(args.subs)):
+            ev_name, text = sub[0], sub[1]
+            dur_s = sub[2] if len(sub) > 2 else 1.8
+            nth = sub[3] if len(sub) > 3 else 0                 # which occurrence of the event
+            ts = [e["t"] / 1000 for e in all_ev if e["event"] == ev_name]
+            if len(ts) <= nth:
+                continue
+            t0 = ts[nth] - args.start
+            subtitle_png(text, tmp / f"sub{k}.png")
+            inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
+            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{t0:.3f},{t0 + dur_s:.3f})'[sb{k}]")
+            last, n_in = f"sb{k}", n_in + 1
     if args.death_screen and args.death_screen in tl_ev:
         with zipfile.ZipFile(CLIENT_JAR) as jar:
             death_screen_png(jar, tmp / "death.png")

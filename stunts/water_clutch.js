@@ -36,9 +36,10 @@ module.exports = {
   async perform (ctx) {
     const { bot } = ctx
     const floor = this.floor
-    await bot.waitForTicks(30)                         // standing on the pillar
-    await ctx.easeLook(0, -1.0, 600)                   // peek over the edge
-    await ctx.easeLook(0, -0.25, 400)
+    const mode = this.mode || 'ok'                     // ok | skip (never places) | late (too late)
+    await bot.waitForTicks(this.fast ? 6 : 30)         // standing on the pillar
+    if (!this.fast) await ctx.easeLook(0, -1.0, 600)   // peek over the edge
+    await ctx.easeLook(0, -0.25, this.fast ? 250 : 400)
     ctx.select(1)                                      // pull out the water bucket
     await bot.waitForTicks(6)
     bot.setControlState('forward', true); bot.setControlState('jump', true)
@@ -52,7 +53,8 @@ module.exports = {
     let placed = false, landed = false, splashed = false
     const onTick = () => {
       const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
-      if (!placed && vy < -0.5 && above + 1.62 < 4.45) {
+      const inReach = mode === 'late' ? above < 0.3 : above + 1.62 < 4.45
+      if (!placed && mode !== 'skip' && vy < -0.5 && inReach) {
         ctx.select(1)
         bot.entity.pitch = -Math.PI / 2
         placed = true
@@ -62,7 +64,7 @@ module.exports = {
         ctx.log('water placed at height', above.toFixed(2))
       }
       if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 30 }) }
-      if (placed && (bot.entity.onGround || bot.entity.isInWater)) landed = true
+      if ((placed || mode !== 'ok') && (bot.entity.onGround || bot.entity.isInWater)) landed = true
     }
     bot.on('physicsTick', onTick)
     for (let i = 0; i < 200 && !landed && !ctx.died; i++) await bot.waitForTicks(1)
