@@ -20,9 +20,9 @@ module.exports = {
     const set = await clutch.setup.call(this, ctx)
     const top = set.y + Number(process.env.FALL_HEIGHT || 60) + 1
     await ctx.cmd(`/spawnpoint @s ${set.x} ${top} ${set.z}`)
-    await ctx.cmd('/gamerule doImmediateRespawn true')
+    await ctx.cmd('/gamerule immediate_respawn true')
     ctx.immediateRespawn = true
-    await ctx.cmd('/gamerule keepInventory true')
+    await ctx.cmd('/gamerule keep_inventory true')
     this.top = top
     return set
   },

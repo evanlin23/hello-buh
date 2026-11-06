@@ -24,7 +24,7 @@ module.exports = {
     const { x, z } = g, lava = g.y
     this.x = x; this.z = z; this.lava = lava
     await ctx.defaultRules()
-    await ctx.cmd('/gamerule doFireTick false')
+    await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
     // lake: x-14..x+14, z-(LEDGE_DIST+12)..z+6, one layer of lava on stone, air above
     const x0 = x - 14, x1 = x + 14, z0 = z - LEDGE_DIST - 12, z1 = z + 6
     await ctx.cmd(`/fill ${x0} ${lava - 3} ${z0} ${x1} ${lava - 1} ${z1} stone`)

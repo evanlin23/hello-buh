@@ -22,6 +22,11 @@ each section.
   audio; the owner supplies files into `songs/` (gitignored).
 
 ## Bot (mineflayer 4.39 on vanilla 1.21.11)
+- **1.21.11 renamed every game rule** to snake_case ids: `advance_time`, `advance_weather`,
+  `send_command_feedback`, `spawn_mobs`, `immediate_respawn`, `keep_inventory`,
+  `natural_health_regeneration`, `fire_spread_radius_around_player` (instead of `doFireTick`).
+  The old names fail silently. The harness now logs `COMMAND ERROR:` for any error the server
+  returns, so check the logs for it.
 - `physicsTick` fires **before** mineflayer sends that tick's position. An action sent from
   the handler is checked against the previous position (2.3 blocks off when falling), so defer
   it with `process.nextTick`.
