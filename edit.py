@@ -807,7 +807,7 @@ def main():
             mix.append("[game]")
         if args.song:
             inputs += ["-ss", str(args.song_start), "-i", args.song]
-            graph.append(f"[{n_in + len(mix)}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.8):.3f}:d=0.8,aresample=48000[song]")
+            graph.append(f"[{n_in + len(mix)}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.3):.3f}:d=0.3,aresample=48000[song]")
             mix.append("[song]")
         graph.append(f"{''.join(mix)}amix=inputs={len(mix)}:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]

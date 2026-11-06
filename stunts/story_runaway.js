@@ -116,7 +116,7 @@ module.exports = {
     await vil(-25.5, -5.4, 0, 'farmer', 'farmer')
     // L04: the fisherman on the end of the dock, his boat beside it (he jumps in; mineflayer
     // doesn't move passengers, so he isn't one: both are teleported together)
-    await c(`/summon oak_boat ${X + 23.9} ${F - 0.2} ${Z - 6.6} {NoGravity:1b,Invulnerable:1b,Rotation:[-90f,0f],Tags:["boat"]}`)
+    await c(`/summon oak_boat ${X + 23.9} ${F + 0.52} ${Z - 6.6} {NoGravity:1b,Invulnerable:1b,Rotation:[-90f,0f],Tags:["boat"]}`)
     await vil(22.0, -4.5, -90, 'fisherman', 'fisher')
     // L05: five sheep in the pen
     for (let i = 0; i < 5; i++) await c(`/summon sheep ${(X - 4.8 + (i % 3) * 2.4).toFixed(2)} ${F + 1} ${(Z - 28.6 + Math.floor(i / 3) * 1.6 + (i % 2) * 0.5).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:${[0, 0, 8, 0, 15][i]}b,Tags:["chick"],Rotation:[${i * 40}f,0f]}`)
@@ -137,6 +137,7 @@ module.exports = {
     await c(`/summon sheep ${X + PX - 2.0} ${F + 1} ${Z + PZ - 2.4} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:6b,Tags:["party_sheep"],Rotation:[-60f,0f]}`)
     await c(`/summon sheep ${X + PX - 2.6} ${F + 1} ${Z + PZ + 1.9} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:3b,Tags:["party_sheep"],Rotation:[120f,0f]}`)
 
+    await c('/tag @e[tag=nitwit] add warm'); await c('/tag @e[tag=golem] add warm')
     await c('/clear @s')                                // nothing in hand, ever (he has no arms)
     await ctx.tpCheck(X, F + 1, Z + 38, 180, 0)
     await c('/gamemode survival')
@@ -162,7 +163,7 @@ module.exports = {
       const x = X + dx, z = Z + dz
       const d = target.minus(new ctx.Vec3(x, F + dy + 1.62, z))   // arrive already aimed (no 2-frame snap after the cut)
       base = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
-      say(`/tp @s ${x} ${F + dy} ${z} ${(180 - base.yaw * 180 / Math.PI).toFixed(2)} ${(-base.pitch * 180 / Math.PI).toFixed(2)}`)
+      say(`/tp @s ${x.toFixed(3)} ${(F + dy).toFixed(3)} ${z.toFixed(3)} ${(180 - base.yaw * 180 / Math.PI).toFixed(2)} ${(-base.pitch * 180 / Math.PI).toFixed(2)}`)
       for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break }
       await bot.look(base.yaw, base.pitch, true)
     }
@@ -174,7 +175,10 @@ module.exports = {
       const L = S.line(id)
       const ticks = Math.round((L.dur + S.gap + extra) * 20)
       ctx.mark('line', { id })
-      for (let k = 0; k < ticks; k++) { await scene(k, L.at); await bot.waitForTicks(1) }
+      for (let k = 0; k < ticks; k++) {
+        say(`/execute as @e[tag=warm] at @s run tp @s ~${k % 2 ? 0.002 : -0.002} ~ ~`)   // idle actors stay awake: a long-idle mob's first move reaches the client ~1 s late
+        await scene(k, L.at); await bot.waitForTicks(1)
+      }
     }
 
     // L01: the crowd up the street runs from me
@@ -213,8 +217,8 @@ module.exports = {
       base = aim(P(fx, 1.3 + Math.max(0, -6.5 - fz) * 0.02, Math.max(fz, -12))); look(k)
     })
     // L04: the fisherman rows away for good
-    // the boat floats up while submerged (NoGravity or not): hold it at its drawn height every tick
-    const holdBoat = () => say(`/tp @e[tag=boat,limit=1] ${(X + 23.9).toFixed(3)} ${F - 0.2} ${Z - 6.6} -90 0`)
+    // hold the boat still on the water every tick until he's in
+    const holdBoat = () => say(`/tp @e[tag=boat,limit=1] ${(X + 23.9).toFixed(3)} ${F + 0.52} ${Z - 6.6} -90 0`)
     holdBoat()
     await cut(19.2, -3.4, P(23.0, 0.9, -5.6))
     let bx = 23.9, bz = -6.6, vx = 22.0, vz = -4.5, vy = 1
@@ -223,13 +227,13 @@ module.exports = {
       if (k < go) holdBoat()
       if (k >= jump && k < go) {            // hop off the dock into the boat
         const u = (k - jump + 1) / 10
-        vx = 22.0 + (bx - 22.0) * u; vz = -4.5 + (bz + 4.5) * u; vy = 1 + Math.sin(u * Math.PI) * 1.1 - u * 0.05
+        vx = 22.0 + (bx - 22.0) * u; vz = -4.5 + (bz + 4.5) * u; vy = 1 + Math.sin(u * Math.PI) * 1.1 - u * 0.38
         say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${(F + vy).toFixed(3)} ${(Z + vz).toFixed(3)} -90 0`)
       }
       if (k >= go) {                        // and off he rows, for good
-        bx += Math.min(0.22, (k - go + 1) * 0.03); vx = bx; vz = bz; vy = 0.95
-        say(`/tp @e[tag=boat,limit=1] ${(X + bx).toFixed(3)} ${F - 0.2} ${Z + bz} -90 0`)
-        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${F + 0.95} ${Z + bz} -90 0`)
+        bx += Math.min(0.22, (k - go + 1) * 0.03); vx = bx; vz = bz; vy = 0.62
+        say(`/tp @e[tag=boat,limit=1] ${(X + bx).toFixed(3)} ${F + 0.52} ${Z + bz} -90 0`)
+        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${F + 0.62} ${Z + bz} -90 0`)
       }
       base = aim(P((vx + bx) / 2, 0.9, (vz + bz) / 2)); look(k)
     })
@@ -242,8 +246,8 @@ module.exports = {
     // L06: only the nitwit stays, walking in a little circle
     await cut(-14.5, 25.5, P(-14.5, 1.6, 20.5))
     await line('L06', async (k) => {
-      const a = k / 9
-      say(`/tp @e[tag=nitwit,limit=1] ${(X - 14.5 + Math.sin(a) * 0.9).toFixed(3)} ${F + 1} ${(Z + 20.5 + Math.cos(a) * 0.9 - 0.9).toFixed(3)} ${((-a * 180 / Math.PI) + 90).toFixed(1)} 0`)
+      const a = k / 6
+      say(`/tp @e[tag=nitwit,limit=1] ${(X - 14.5 + Math.sin(a) * 1.4).toFixed(3)} ${F + 1} ${(Z + 20.5 + Math.cos(a) * 1.4 - 1.4).toFixed(3)} ${((-a * 180 / Math.PI) + 90).toFixed(1)} 0`)
       look(k)
     })
     // L07: mom. She's the only one who hugs me (walk right up to her)
@@ -256,13 +260,15 @@ module.exports = {
     bot.setControlState('forward', false)
     ctx.mark('face_off')
     // L08: and the iron golem... right behind me
-    ctx.mark('face_on', { near: [X + 19.5, Z + 4.6, 1.5], head: true })
+    ctx.mark('face_on', { near: [X + 19.5, Z + 5.6, 2.2], head: true })
     const from = { ...base }
+    let gz = 4.6
     await line('L08', async (k, at) => {
+      if (k >= at(2) && gz < 6.4) { gz += 0.09; say(`/tp @e[tag=golem,limit=1] ${X + 19.5} ${F + 1} ${(Z + gz).toFixed(3)} 0 0`) }
       const turn = at(1) - 6
       if (k >= turn) {
         const u = Math.min(1, (k - turn) / 9), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2
-        const to = aim(P(19.5, 2.6, 4.6))
+        const to = aim(P(19.5, 2.6, Math.min(gz, 5.4)))
         let dy = to.yaw - from.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy <= -Math.PI) dy += 2 * Math.PI
         base = { yaw: from.yaw + dy * e, pitch: from.pitch + (to.pitch - from.pitch) * e }
       }
@@ -302,13 +308,20 @@ module.exports = {
     say(`/execute at @s run summon tnt ~ ~ ~ {fuse:0s}`)
     ctx.mark('boom')
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
-    await bot.waitForTicks(16)
-    ctx.mark('face_on', { near: [X + 20.5, Z - 26.5, 40] })
-    const cam = `${boomAt.x.toFixed(2)} ${F + 1} ${boomAt.z.toFixed(2)}`   // a dead player can't be targeted: use where I stood
-    const still = async () => say(`/execute as @e[tag=party] at @s facing ${cam} positioned ^ ^ ^0.07 run tp @s ~ ${F + 1} ~ facing ${cam}`)
-    await line('L15', still, 0.25)
-    await line('L16', still)
-    await line('L17', still, 0.2)
+    // a dead player stops getting mob updates after ~1 s (the villagers froze): the crater smokes instead
+    const fwd = { x: -Math.sin(bot.entity.yaw), z: -Math.cos(bot.entity.yaw) }
+    let sk = 0
+    const still = async () => {
+      if (sk++ % 2) return
+      for (let j = 0; j < 2; j++) {
+        const d = 1.6 + Math.random() * 3.2, side = (Math.random() - 0.5) * 3.5
+        ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, F + 0.2 + Math.random() * 0.6, boomAt.z + fwd.z * d + fwd.x * side), { count: 3 })
+      }
+    }
+    for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
+    await line('L15', still)
+    await line('L16', still, -0.15)
+    await line('L17', still, -0.1)
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return ctx.died

@@ -55,7 +55,7 @@ module.exports = {
       await house(ctx, A, -9, z0, -4, z0 + 2, 'west')
       await house(ctx, A, 4, z0, 4, z0 + 2, 'east')
     }
-    await c(`/setblock ${A(0, 0, 4)} lava`)
+    await c(`/setblock ${A(0, 0, 4)} lava_cauldron`)   // the only block of lava in the village, sunk in the path: you fall in, but the eye stays above it (a lava block sinks the body and the death screen goes solid orange)
     for (const [dx, dz, b] of [[-2, 16, 'poppy'], [2, 24, 'dandelion'], [-2, 31, 'cornflower'], [2, 34, 'oxeye_daisy']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
     // the cliff (L02): a stone column 27 high, west of the village
     await c(`/fill ${A(-33, 1, -2)} ${A(-28, 27, 3)} stone`)
@@ -233,8 +233,13 @@ module.exports = {
       if (!dead) { K.base = K.aim(P(0.5, k > at(1) ? 0.4 : 1.6, k > at(1) ? 4.5 : 0.5)); look(k) }
     }, 0.2)
     go(false)
-    // L18: she just smiled and said, go on. Respawn. (the death screen, the Respawn button)
-    await line('L18', async () => {}, 0.25)
+    // L18: she just smiled and said, go on. Respawn. (the death screen, the Respawn button). Mob moves stop
+    // reaching a dead player after ~1 s, so the motion comes from particles: she sparkles (a happy
+    // villager), the cauldron smokes
+    await line('L18', async (k, at) => {
+      if (k >= at(1) && k % 3 === 0) ctx.particles('happy', P(0.5, 1.6 + Math.random() * 0.6, 0.5), { count: 2 })
+      if (k % 2 === 0) ctx.particles('smoke', P(0.5, 1.0, 4.5), { count: 2 })
+    }, 0.25)
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return ctx.died
