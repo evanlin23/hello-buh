@@ -15,7 +15,7 @@ all four steps.
      - `report.txt`;
      - `sheet_NN.jpg`: every 6th frame (10 per second), labelled with frame number and time;
      - `flag_<frame>_<kind>.jpg`: the frame before, the frame and the frame after.
-2. **Frame review by independent agents.** Each reviewer:
+2. **Frame review by independent agents** (prompt: `docs/reviewer_prompt.md`). Each reviewer:
    - gets only the stunt's intent (caption plus one sentence), never the known issues;
    - reads `report.txt`, every sheet and every flag image;
    - opens full-resolution frames (`ffmpeg -ss T -i out/<name>.mp4 -frames:v 1 x.png`) for anything it is unsure of;

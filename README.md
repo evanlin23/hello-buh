@@ -62,11 +62,11 @@ monetize its tracks on YouTube with no claim or strike, provided the credit is t
 Target length is 10-15 s, or 20-30 s for build-up stories, with the stunt visible in the first
 second (`research/music_and_length_2026-11-06.md`).
 
-## QA (every Short, before publishing)
-1. `python3 scripts/qa.py out/<name>.mp4` flags stuck, dark and black stretches.
-2. Frame review: contact sheets (`fps=2`, 8x2 tiles) read by independent reviewer agents, which
-   are not told the known issues. Two rounds so far; their findings and the fixes are in the
-   git log and `docs/lessons.md`.
+## Process and QA (every Short, before publishing)
+The loop is in `docs/process.md`: make, render, frame QA, independent review, classify each finding as engine or stunt, fix, re-render, publish, freshness check.
+- `python3 scripts/qa_frames.py out/<name>.mp4` checks every frame and makes labelled sheets (`docs/qa.md`).
+- An independent reviewer agent reads every sheet (`docs/reviewer_prompt.md`).
+- Each fix adds a rule to `docs/lessons.md`.
 
 ## Uploading (automated)
 `.github/workflows/upload.yml` uploads the next ready Short from the `videos` branch 3 times a day
