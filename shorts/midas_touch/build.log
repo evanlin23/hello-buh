@@ -1,0 +1,19 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+08:19:11.612 spawned at Vec3 { x: 136.5, y: 70, z: 13.5 }
+08:19:11.872 nearest minecraft:forest at [ 424, -83 ]
+08:19:23.892 set at { x: 424, y: 70, z: -83 }
+08:19:35.094 STUNT OK
+meshing from y 8
+light computed in 0.5 s
+meshed + uploaded world in 13.0 s
+rendered 639 frames (10.65 s of video) in 261.9 s = 24.6 s per video second
+wrote work/midas_touch.wav 10.70s
+song drop at 10.50s lands on 0.70s of the Short (song starts at 9.80s)
+no 3D block icons needed
+wrote out/midas_touch.mp4 10.15s
+
+real	5m52.313s
+user	5m11.315s
+sys	0m13.308s
+exit=0

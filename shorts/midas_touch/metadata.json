@@ -1,0 +1,106 @@
+{
+  "name": "midas_touch",
+  "caption": "POV: you got the midas touch 🤑",
+  "youtube": {
+    "title": "POV: you got the midas touch 🤑 #minecraft #shorts",
+    "description": "POV: you got the midas touch 🤑\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "touch",
+    "drop_in_song_s": 10.5,
+    "drop_in_short_s": 0.7,
+    "song_start_s": 9.8
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 10.15,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 20871119,
+    "sha256": "9554fa6a20722692e638575a2e1a1b6afa3abeefd68dc2b85f6038d354ac7bec"
+  },
+  "edit": {
+    "caption": "POV: you got the midas touch 🤑",
+    "red": "midas",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "touch",
+    "start": 0.5,
+    "args": [
+      "--caption",
+      "POV: you got the midas touch 🤑",
+      "--red",
+      "midas",
+      "--start",
+      "0.5",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "touch"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 424,
+      "y": 70,
+      "z": -83
+    },
+    "biome": "minecraft:forest",
+    "ticks": 214,
+    "seconds": 10.7,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 1.2,
+        "event": "touch"
+      },
+      {
+        "t": 10.7,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "90afab9875a9f8d371bb9deb2489f804634fe0ae",
+    "rendered_at": "2026-11-06T08:24:46.328Z",
+    "head_at_publish": "90afab9875a9f8d371bb9deb2489f804634fe0ae",
+    "stunt": "stunts/midas_touch.js",
+    "source_snapshot": [
+      "source/midas_touch.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 90afab9875a9",
+    "gunzip -c shorts/midas_touch/recording.json.gz > work/midas_touch.rec.json",
+    "node render.js work/midas_touch.rec.json work/midas_touch.frames 60 1080 1011",
+    "python3 audio.py work/midas_touch.rec.json work/midas_touch.wav",
+    "python3 edit.py --frames work/midas_touch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/midas_touch.rec.json --audio work/midas_touch.wav --caption \"POV: you got the midas touch 🤑\" --red midas --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at touch --out out/midas_touch.mp4"
+  ],
+  "status": "ready",
+  "notes": "",
+  "published_at": "2026-11-06T08:25:18.413Z"
+}
