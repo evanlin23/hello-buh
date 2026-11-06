@@ -32,10 +32,11 @@ module.exports = {
     for (const dz of [1, -4, -10]) await ctx.cmd(`/setblock ${x - 1} ${y + 1} ${z + dz} wall_torch[facing=east]`)
     // the lava pocket over the spot the bot will stand
     this.sz = z - 7
-    await ctx.cmd(`/fill ${x - 1} ${y + 3} ${this.sz - 1} ${x + 1} ${y + 4} ${this.sz + 1} lava`)
+    await ctx.cmd(`/fill ${x - 1} ${y + 3} ${this.sz - 2} ${x + 1} ${y + 4} ${this.sz + 2} lava`)
     await ctx.hotbar(['diamond_pickaxe', ['torch', 40], ['cobblestone', 64], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, y, z + 1.5, 180, 0)
     await ctx.cmd('/gamemode survival')
+    await ctx.cmd('/effect give @s haste infinite 2 true')   // strip-mining pace (no particles)
     ctx.select(0)
     await bot.waitForTicks(30)
     return { x, y, z }
@@ -57,13 +58,14 @@ module.exports = {
     try { await bot.dig(d, true) } catch (e) { ctx.log('dig', e.message) }
     ctx.sound('block.stone.break', 1); ctx.particles('block', d.position, { block: 'diamond_ore' })
     ctx.sound('entity.experience_orb.pickup', 0.8)
-    await bot.waitForTicks(10)
+    await bot.waitForTicks(6)
+    await ctx.easeLook(0, -0.05, 300)                         // back down the tunnel
     // one more step, then up
     bot.setControlState('forward', true)
     for (let i = 0; i < 80 && bot.entity.position.z > this.sz + 0.6; i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
     await bot.waitForTicks(4)
-    const up = bot.blockAt(new Vec3(x, y + 2, this.sz))
+    const up = bot.blockAt(new Vec3(x, y + 2, Math.floor(bot.entity.position.z)))   // right above the head
     await ctx.easeLookAt(up.position.offset(0.5, 0, 0.5), 600)
     try { await bot.dig(up, true) } catch (e) { ctx.log('dig', e.message) }
     ctx.sound('block.stone.break', 1); ctx.particles('block', up.position, { block: 'stone' })
