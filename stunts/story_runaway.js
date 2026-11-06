@@ -33,6 +33,9 @@ module.exports = {
     const A = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     await ctx.defaultRules()
     await c('/gamerule mob_griefing true')
+    // every per-tick `execute as <mob> run tp` was broadcast to ops ("[Mason: Teleported...]"), the bot
+    // included: ~140 chat packets a second backed the client up and mob moves arrived in bursts
+    await c('/gamerule log_admin_commands false')
     await c('/difficulty normal')                      // creepers need it to exist, and the explosion only hurts above peaceful
     // a big flat clearing: 81 x 81, in slabs under the 32768-block /fill cap
     for (let y0 = 1; y0 <= 24; y0 += 4) await c(`/fill ${A(-40, y0, -40)} ${A(40, y0 + 3, 40)} air`)
@@ -49,7 +52,7 @@ module.exports = {
       for (const [x, z] of [[x0, z0], [x1, z0], [x0, z1], [x1, z1]]) await c(`/fill ${A(x, 1, z)} ${A(x, 3, z)} oak_log`)
       await c(`/fill ${A(x0 - 1, 4, z0 - 1)} ${A(x1 + 1, 4, z1 + 1)} spruce_planks`)
       await c(`/fill ${A(x0, 5, z0)} ${A(x1, 5, z1)} spruce_slab`)
-      await c(`/setblock ${A(x0 + 2, 3, z0 + 2)} lantern[hanging=true]`)
+      await c(`/setblock ${A(x0 + 2, 4, z0 + 2)} glowstone`); await c(`/setblock ${A(x0 + 3, 4, z0 + 3)} glowstone`)   // lit inside (a lantern left it black)
       // windows on the two walls that run along x
       await c(`/fill ${A(x0 + 2, 2, z0)} ${A(x0 + 3, 2, z0)} glass`)
       await c(`/fill ${A(x0 + 2, 2, z1)} ${A(x0 + 3, 2, z1)} glass`)
@@ -108,15 +111,15 @@ module.exports = {
     // L01: seven villagers up the street, facing the camera (south)
     for (let i = 0; i < 7; i++) await vil(-2.2 + (i % 4) * 1.4 + (i >= 4 ? 0.7 : 0), 29 + (i >= 4 ? 2.2 : 0) + (i % 2) * 0.4, 0, PROFS[i], 'crowd', ['plains', 'taiga', 'savanna'][i % 3])
     // L02: just inside the open door, facing out (east wall door of the house at x 4: he faces west)
-    await vil(5.5, 24.5, 90, 'librarian', 'door')
+    await vil(4.5, 24.5, 90, 'librarian', 'door')        // standing in the doorway
     // L03: the farmer in the wheat, facing the camera (east)
     await vil(-25.5, -5.4, 0, 'farmer', 'farmer')
     // L04: the fisherman on the end of the dock, his boat beside it (he jumps in; mineflayer
     // doesn't move passengers, so he isn't one: both are teleported together)
-    await c(`/summon oak_boat ${X + 23.9} ${F + 0.52} ${Z - 6.6} {NoGravity:1b,Invulnerable:1b,Rotation:[-90f,0f],Tags:["boat"]}`)
+    await c(`/summon oak_boat ${X + 23.9} ${F - 0.2} ${Z - 6.6} {NoGravity:1b,Invulnerable:1b,Rotation:[-90f,0f],Tags:["boat"]}`)
     await vil(22.0, -4.5, -90, 'fisherman', 'fisher')
-    // L05: six chickens in the pen
-    for (let i = 0; i < 6; i++) await c(`/summon chicken ${(X - 4.5 + (i % 3) * 2.2).toFixed(2)} ${F + 1} ${(Z - 28.6 + Math.floor(i / 3) * 1.6 + (i % 2) * 0.5).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["chick"],Rotation:[${i * 40}f,0f]}`)
+    // L05: five sheep in the pen
+    for (let i = 0; i < 5; i++) await c(`/summon sheep ${(X - 4.8 + (i % 3) * 2.4).toFixed(2)} ${F + 1} ${(Z - 28.6 + Math.floor(i / 3) * 1.6 + (i % 2) * 0.5).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:${[0, 0, 8, 0, 15][i]}b,Tags:["chick"],Rotation:[${i * 40}f,0f]}`)
     // L06: the nitwit by the lamp post
     await vil(-14.5, 20.5, 90, 'nitwit', 'nitwit')
     // L07: mom (a creeper) in front of the house; L08: the golem behind the camera
@@ -153,14 +156,13 @@ module.exports = {
       const eye = bot.entity.position.offset(0, 1.62, 0), d = p.minus(eye)
       return { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
     }
-    const look = (k, dyaw = 0, dpitch = 0) => bot.look(base.yaw + dyaw + Math.sin(k / 23) * 0.045 * sway, base.pitch + dpitch + Math.sin(k / 31 + 1) * 0.02 * sway, true)
+    const look = (k, dyaw = 0, dpitch = 0) => bot.look(base.yaw + dyaw + Math.sin(k / 19) * 0.09 * sway, base.pitch + dpitch + Math.sin(k / 27 + 1) * 0.035 * sway, true)
     // a cut: teleport, wait for it to land, aim
     const cut = async (dx, dz, target, dy = 1) => {
       const x = X + dx, z = Z + dz
       const d = target.minus(new ctx.Vec3(x, F + dy + 1.62, z))   // arrive already aimed (no 2-frame snap after the cut)
       base = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
       say(`/tp @s ${x} ${F + dy} ${z} ${(180 - base.yaw * 180 / Math.PI).toFixed(2)} ${(-base.pitch * 180 / Math.PI).toFixed(2)}`)
-      await bot.look(base.yaw, base.pitch, true)
       for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break }
       await bot.look(base.yaw, base.pitch, true)
     }
@@ -187,6 +189,7 @@ module.exports = {
     await cut(-1.5, 24.5, P(4.5, 1.9, 24.5))
     ctx.mark('face_on', { near: [X + 5.5, Z + 24.5, 1.5], head: true })
     await line('L02', async (k, at) => {
+      if (k >= at(2) - 3 && k < at(2) + 4) say(`/tp @e[tag=door,limit=1] ${(X + 4.5 + (k - at(2) + 3) * 0.16).toFixed(3)} ${F + 1} ${Z + 24.5} 90 0`)   // steps back in
       if (k === at(2) + 4) {
         say(`/setblock ${X + 4} ${F + 2} ${Z + 24} oak_door[half=upper,facing=east,open=false]`)
         say(`/setblock ${X + 4} ${F + 1} ${Z + 24} oak_door[half=lower,facing=east,open=false]`)
@@ -210,19 +213,23 @@ module.exports = {
       base = aim(P(fx, 1.3 + Math.max(0, -6.5 - fz) * 0.02, Math.max(fz, -12))); look(k)
     })
     // L04: the fisherman rows away for good
+    // the boat floats up while submerged (NoGravity or not): hold it at its drawn height every tick
+    const holdBoat = () => say(`/tp @e[tag=boat,limit=1] ${(X + 23.9).toFixed(3)} ${F - 0.2} ${Z - 6.6} -90 0`)
+    holdBoat()
     await cut(19.2, -3.4, P(23.0, 0.9, -5.6))
     let bx = 23.9, bz = -6.6, vx = 22.0, vz = -4.5, vy = 1
     await line('L04', async (k, at) => {
       const jump = at(1) - 2, go = jump + 10
+      if (k < go) holdBoat()
       if (k >= jump && k < go) {            // hop off the dock into the boat
         const u = (k - jump + 1) / 10
-        vx = 22.0 + (bx - 22.0) * u; vz = -4.5 + (bz + 4.5) * u; vy = 1 + Math.sin(u * Math.PI) * 1.1 - u * 0.75
+        vx = 22.0 + (bx - 22.0) * u; vz = -4.5 + (bz + 4.5) * u; vy = 1 + Math.sin(u * Math.PI) * 1.1 - u * 0.05
         say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${(F + vy).toFixed(3)} ${(Z + vz).toFixed(3)} -90 0`)
       }
       if (k >= go) {                        // and off he rows, for good
-        bx += Math.min(0.22, (k - go + 1) * 0.03); vx = bx; vz = bz; vy = 0.25
-        say(`/tp @e[tag=boat,limit=1] ${(X + bx).toFixed(3)} ${F + 0.52} ${Z + bz} -90 0`)
-        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${F + 0.25} ${Z + bz} -90 0`)
+        bx += Math.min(0.22, (k - go + 1) * 0.03); vx = bx; vz = bz; vy = 0.95
+        say(`/tp @e[tag=boat,limit=1] ${(X + bx).toFixed(3)} ${F - 0.2} ${Z + bz} -90 0`)
+        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${F + 0.95} ${Z + bz} -90 0`)
       }
       base = aim(P((vx + bx) / 2, 0.9, (vz + bz) / 2)); look(k)
     })
@@ -272,22 +279,23 @@ module.exports = {
     bot.setControlState('forward', false)
     // L10-L14: the party
     await cut(20.5, -12.5, P(20.5, 1.2, -27))
-    await line('L10', async (k) => { bot.setControlState('forward', true); look(k) })
-    await line('L11', async (k) => { bot.setControlState('sprint', true); bot.setControlState('forward', bot.entity.position.z > Z - 20.6); look(k) })
+    await line('L10', async (k) => { bot.setControlState('forward', bot.entity.position.z > Z - 15.5); look(k) })
+    await line('L11', async (k) => { bot.setControlState('sprint', true); bot.setControlState('forward', bot.entity.position.z > Z - 19.6); look(k) })   // stop ~5 blocks out: a camera inside the ring froze their moves
     bot.setControlState('sprint', false); bot.setControlState('forward', false)
     ctx.mark('face_on', { near: [X + 20.5, Z - 26.5, 5] })
-    await line('L12', async (k) => { look(k, 0, Math.min(1, k / 10) * 0.08) })
+    await line('L12', async (k) => { say(`/execute as @e[tag=party] at @s facing entity ${bot.username} feet positioned ^ ^ ^0.012 run tp @s ~ ${F + 1} ~ facing entity ${bot.username} eyes`); bot.setControlState('forward', k % 12 < 5 && bot.entity.position.z > Z - 20.4); look(k, Math.sin(k / 6) * 0.06, Math.min(1, k / 10) * 0.08) })
+    bot.setControlState('forward', false)
     let fled = false
     await line('L13', async (k, at) => {
       if (k === at(4)) { hiss(1); ctx.mark('face_off'); fled = true }
       if (fled) flee('party', 0.28)
       sway = 1.5
-      look(k, fled ? Math.sin(k * 1.9) * 0.012 : 0, fled ? Math.cos(k * 2.3) * 0.01 : 0)
+      look(k, fled ? Math.sin(k * 0.8) * 0.03 : 0, fled ? Math.sin(k * 0.6 + 1) * 0.02 : 0)
     })
     await line('L14', async (k) => {
       flee('party', 0.3)
       if (k === 20) hiss(1)
-      look(k, Math.sin(k * 1.9) * 0.02, Math.cos(k * 2.3) * 0.015)
+      look(k, Math.sin(k * 0.8) * 0.045, Math.sin(k * 0.6 + 1) * 0.03)
     }, -0.05)
     // BOOM
     const boomAt = bot.entity.position.clone()

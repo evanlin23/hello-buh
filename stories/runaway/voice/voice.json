@@ -152,10 +152,10 @@
    ]
   },
   "L05": {
-   "text": "Even the chickens pack up and leave.",
-   "dur": 1.81,
+   "text": "Even the sheep pack up and leave.",
+   "dur": 1.621,
    "onset": 0.172,
-   "end": 1.603,
+   "end": 1.414,
    "chunks": [
     [
      0.172,
@@ -163,20 +163,20 @@
     ],
     [
      0.388,
-     0.733
+     0.569
     ],
     [
-     0.733,
-     1.026
+     0.569,
+     0.836
     ],
     [
-     1.026,
-     1.603
+     0.836,
+     1.414
     ]
    ],
    "captions": [
     "Even the",
-    "CHICKENS",
+    "SHEEP",
     "pack up",
     "and LEAVE."
    ]
@@ -552,5 +552,5 @@
    ]
   }
  },
- "total": 38.23
+ "total": 38.04
 }

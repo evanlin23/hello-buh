@@ -33,6 +33,7 @@ module.exports = {
     await ctx.defaultRules()
     await c('/difficulty normal')
     await c('/gamerule natural_health_regeneration true')
+    await c('/gamerule log_admin_commands false')   // per-tick `execute as` tps flooded the bot with op broadcasts
     for (let y0 = 1; y0 <= 28; y0 += 4) await c(`/fill ${A(-40, y0, -40)} ${A(40, y0 + 3, 40)} air`)
     await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
     await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
