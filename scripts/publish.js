@@ -48,6 +48,16 @@ for (const name of names) {
   const dir = path.join(VID, 'shorts', name)
   fs.mkdirSync(path.join(dir, 'source'), { recursive: true })
   fs.copyFileSync(mp4, path.join(dir, 'short.mp4'))
+  // the same Short with game audio only, for adding the song in the YouTube app's Shorts audio
+  // picker (licensed, no Content ID claim): research/music_and_length_2026-11-06.md
+  const frames = path.join(ROOT, 'work', `${name}.frames`)
+  const recFile = path.join(ROOT, 'work', `${name}.rec.json`), wavFile = path.join(ROOT, 'work', `${name}.wav`)
+  if (fs.existsSync(frames) && fs.existsSync(recFile) && fs.existsSync(wavFile)) {
+    try {
+      const a = execFileSync('node', ['scripts/edit_args.js', name], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, SONG: 'none' } }).trim().split('\n').filter(Boolean)
+      execFileSync('python3', ['edit.py', '--frames', path.join(frames, 'f%05d.png'), '--fps', '60', '--out_fps', '60', '--timeline', recFile, '--audio', wavFile, ...a, '--out', path.join(dir, 'short_nosong.mp4')], { cwd: ROOT, stdio: 'ignore' })
+    } catch (e) { console.error(`no-song version of ${name} failed: ${e.message}`) }
+  }
 
   // stunt module + the local stunt/lib modules it requires
   const stuntFile = path.join(ROOT, 'stunts', `${name}.js`)
