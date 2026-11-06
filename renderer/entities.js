@@ -198,16 +198,16 @@ export class EntityLayer {
       const r = await this.ensure(s.id, s.name, s.extra)
       if (!r.obj) continue
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
-      if (r.mat) r.mat.color.setScalar(s.light ?? 1)
+      const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
+      if (r.mat) r.mat.color.setRGB(...LL)
       if (r.woolMat) {   // Sheep.getColor: dye colour x 0.75 (white x 0.9); jeb_ blends through all 16, 25 ticks each
-        const L = s.light ?? 1
         let c
         if (s.extra?.jeb) {
           const k = Math.floor(tick / 25) + s.id, f = (tick % 25) / 25
           const a = woolColor(k % 16), b = woolColor((k + 1) % 16)
           c = a.map((v, i) => v * (1 - f) + b[i] * f)
         } else c = woolColor(s.extra?.color || 0)
-        r.woolMat.color.setRGB(c[0] * L, c[1] * L, c[2] * L)
+        r.woolMat.color.setRGB(c[0] * LL[0], c[1] * LL[1], c[2] * LL[2])
       }
       if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue

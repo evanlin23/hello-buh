@@ -94,7 +94,7 @@ function entitiesAt (t, mesher) {
     const L = (k) => ra[k] + (rb[k] - ra[k]) * f
     const pos = { x: L(3), y: L(4), z: L(5) }
     const [sky, blk] = mesher.world.getLight(new Vec3(pos.x, pos.y + 0.5, pos.z))
-    out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(Math.max(sky, blk)) })
+    out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(sky, blk) })
   }
   return out
 }
@@ -357,21 +357,22 @@ function camAtLive (t) {
       if (cam && Math.hypot(s.x - cam.x, s.y - cam.y, s.z - cam.z) < (s.size < 0.2 ? 0.25 : 1.0)) continue
       // light is computed once, before the stunt's block changes: crumbs of a just-broken block sit
       // in what was a solid (light 0) cell, so take the brightest of the cell and its neighbours
-      let lv = 0
+      let ls = 0, lb = 0
       for (const [dx, dy, dz] of [[0, 0, 0], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
         const [sky, blk] = mesher.world.getLight(new Vec3(s.x + dx, s.y + dy, s.z + dz))
-        lv = Math.max(lv, sky, blk)
+        ls = Math.max(ls, sky); lb = Math.max(lb, blk)
       }
       // still unlit (a hole dug into a wall: every neighbour was solid when light was computed):
       // light spreads in once the block is gone, so take the brightest within 2 blocks, minus the distance
-      if (lv === 0) {
+      if (ls === 0 && lb === 0) {
         for (let dx = -2; dx <= 2; dx++) for (let dy = -2; dy <= 2; dy++) for (let dz = -2; dz <= 2; dz++) {
           const [sky, blk] = mesher.world.getLight(new Vec3(s.x + dx, s.y + dy, s.z + dz))
-          lv = Math.max(lv, Math.max(sky, blk) - Math.abs(dx) - Math.abs(dy) - Math.abs(dz))
+          const d = Math.abs(dx) + Math.abs(dy) + Math.abs(dz)
+          ls = Math.max(ls, sky - d); lb = Math.max(lb, blk - d)
         }
       }
-      const l = p.bright ? 1 : lightmap(lv)
-      out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: s.tex || p.tex, uv: p.uv, color: p.color.map(c => c * l) })
+      const l = p.bright ? [1, 1, 1] : lightmap(ls, lb)
+      out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: s.tex || p.tex, uv: p.uv, color: p.color.map((c, i) => c * l[i]) })
     }
     return out
   }
@@ -446,7 +447,7 @@ function camAtLive (t) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${hd.name}.png`))
       const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
-      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(Math.max(hs, hb)) }
+      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb) }
       if (hasSprite) cam.hand.tex = `item/${hd.name}`
       else if (bl) {
         cam.hand.state = bl.defaultState

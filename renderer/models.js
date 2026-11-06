@@ -35,13 +35,20 @@ const FIXED = { spruce_leaves: 0x619961, birch_leaves: 0x80a755, mangrove_leaves
 // it (`brightness: 1` for caves: at the default an ore-filled cavern read as black walls).
 let GAMMA = 0.5
 function setBrightness (g) { GAMMA = Math.max(0, Math.min(1, Number(g))) }
-function lightmap (level) {
-  const f = level / 15
-  const b = f / (4 - 3 * f)
-  const g = 1 - Math.pow(1 - b, 4)
-  return Math.max(0.04, (b + (g - b) * GAMMA) * 0.96 + 0.04)
+// lightmap.fsh from the 1.21.11 client, at noon in the overworld: SkyFactor 1, SkyLightColor white,
+// BlockFactor 1.5 (the red flicker averages out), BrightnessFactor = gamma. Sky and block light stay
+// separate: block light is warm ("dips to yellowish in the middle"), so torch- and lava-lit caves read
+// orange, not grey. Returns [r, g, b].
+function lightmap (sky, block = 0) {
+  const gb = (l) => { const x = Math.min(1, Math.max(0, l / 15)); return x / (4 - 3 * x) }
+  const bb = gb(block) * 1.5, sb = gb(sky)
+  let c = [bb, bb * ((bb * 0.6 + 0.4) * 0.6 + 0.4), bb * (bb * bb * 0.6 + 0.4)].map(v => v + sb)
+  c = c.map(v => Math.min(1, Math.max(0, v * 0.96 + 0.03)))
+  const mx = Math.max(c[0], c[1], c[2])
+  if (mx > 0) { const inv = 1 - mx, k = (1 - inv * inv * inv * inv) / mx; c = c.map(v => v + (v * k - v) * GAMMA) }
+  return c.map(v => v * 0.96 + 0.03)
 }
-function lightOf (world, pos) { const [s, b] = world.getLight(pos); return Math.max(s, b) }
+function lightOf (world, pos) { return world.getLight(pos) }
 
 for (const key of Object.keys(tints)) {
   tints[key] = prepareTints(tints[key])
@@ -210,13 +217,13 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
     if (neighbor.isCube && !neighbor.transparent) continue
 
     let tint = [1, 1, 1]
-    const lm = lightmap(lightOf(world, isUp ? cursor.offset(0, 1, 0) : cursor))
+    const lm = lightmap(...lightOf(world, isUp ? cursor.offset(0, 1, 0) : cursor))
     if (water) {
-      const m = faceShade(dir) * lm
+      const m = faceShade(dir)
       tint = biomeTint(world, cursor, 'water')
-      tint = [tint[0] * m, tint[1] * m, tint[2] * m]
+      tint = [tint[0] * m * lm[0], tint[1] * m * lm[1], tint[2] * m * lm[2]]
     } else {
-      tint = [lm, lm, lm]
+      tint = lm
     }
 
     const u = texture.u
@@ -424,7 +431,7 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
       attr.uvs.push(baseu * su + u, basev * sv + v)
 
       let light = 1
-      let vlight = lightmap(centerLight)
+      let vlight = lightmap(...centerLight)
       if (doAO) {
         const dx = pos[0] * 2 - 1
         const dy = pos[1] * 2 - 1
@@ -444,7 +451,7 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
           side1Block ? centerLight : lightOf(world, cursor.offset(...side1Dir)),
           side2Block ? centerLight : lightOf(world, cursor.offset(...side2Dir)),
           (cornerBlock || (side1Block && side2Block)) ? centerLight : lightOf(world, cursor.offset(...cornerDir))]
-        vlight = lightmap((ls[0] + ls[1] + ls[2] + ls[3]) / 4)
+        vlight = lightmap((ls[0][0] + ls[1][0] + ls[2][0] + ls[3][0]) / 4, (ls[0][1] + ls[1][1] + ls[2][1] + ls[3][1]) / 4)
 
         // TODO: correctly interpolate ao light based on pos (evaluate once for each corner of the block)
 
@@ -453,7 +460,7 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
         aos.push(ao)
       }
 
-      attr.colors.push(tint[0] * light * shade * vlight, tint[1] * light * shade * vlight, tint[2] * light * shade * vlight)
+      attr.colors.push(tint[0] * light * shade * vlight[0], tint[1] * light * shade * vlight[1], tint[2] * light * shade * vlight[2])
     }
 
     if (doAO && aos[0] + aos[3] >= aos[1] + aos[2]) {

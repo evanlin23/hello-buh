@@ -492,7 +492,7 @@ async function drawHand (cam) {
     M.multiply(new THREE.Matrix4().makeRotationY(-135 * D2R))
     M.multiply(new THREE.Matrix4().makeTranslation(5.6, 0, 0))
     r.obj.matrix.copy(M)
-    r.mat.color.setScalar(h.light ?? 1)
+    r.mat.color.setRGB(...(Array.isArray(h.light) ? h.light : [h.light ?? 1, h.light ?? 1, h.light ?? 1]))
     handScene.add(r.obj); handObj = { obj: r.obj }
     handCam.position.set(0, 0, 0)
     handCam.rotation.set(-(cam.bobPitch || 0), 0, cam.roll || 0)
@@ -515,7 +515,7 @@ async function drawHand (cam) {
   M.multiply(new THREE.Matrix4().makeRotationX(sa * -80 * D2R))
   M.multiply(new THREE.Matrix4().makeRotationY(-45 * D2R))
   r.obj.matrix.copy(M)
-  if (r.mat) r.mat.color.setScalar(h.light ?? 1)
+  if (r.mat) r.mat.color.setRGB(...(Array.isArray(h.light) ? h.light : [h.light ?? 1, h.light ?? 1, h.light ?? 1]))
   handScene.add(r.obj); handObj = r
   handCam.position.set(0, 0, 0)
   handCam.rotation.set(-(cam.bobPitch || 0), 0, cam.roll || 0)
