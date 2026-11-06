@@ -2,6 +2,14 @@
 // demand. Driven by render.js through window.HB; nothing animates on its own.
 import * as THREE from 'three'
 import { EntityLayer } from '/entities.js'
+// Terrain fog is cylindrical in vanilla (FogShape.CYLINDER since 1.18): it fades by horizontal
+// distance only, so looking straight down from build limit still shows the ground. three.js fogs by
+// view depth, and every fall from 200+ blocks faded into a blank sky colour (one_in_a_million).
+THREE.ShaderChunk.fog_vertex = `
+#ifdef USE_FOG
+	vFogDepth = length( ( modelMatrix * vec4( transformed, 1.0 ) ).xz - cameraPosition.xz );
+#endif
+`
 
 const W = window.innerWidth, H = window.innerHeight
 const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true })
@@ -397,7 +405,8 @@ window.HB = {
     // FogRenderer: lava 0.25..1.0. (This else chain once sat behind a // comment on one line, so
     // underwater fog never applied and lava fog was never cleared.)
     if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = 0.25; scene.fog.far = 1.0 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(env.fogColorC); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
-    const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under; sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
+    const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under && env.clouds !== false;   // a stunt can set `clouds: false` (Video Settings > Clouds: OFF)
+    sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
     scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : env.fogColorC.clone()
     sky.position.copy(camera.position)
     if (window.DEBUG_MAGENTA) { sky.visible = false; scene.background = new THREE.Color(1, 0, 1) }

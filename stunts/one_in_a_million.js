@@ -21,6 +21,7 @@ module.exports = {
   name: 'one_in_a_million',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing, but it gets harder 😳',
+  clouds: false,   // Video Settings > Clouds: OFF (vanilla). At y 192 the falls went through a white cloud wall, and from build limit the clouds hid the target
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
     song: 'songs/misery.mp3', dropAt: 'splash5',
@@ -59,7 +60,7 @@ module.exports = {
       await ctx.cmd(`/fill ${x - k} ${floor} ${z - k} ${x + k} ${floor} ${z + k} water`)
       await ctx.cmd(`/setblock ${x} ${t.top} ${z} glass`)
     }
-    await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16], 'diamond_pickaxe'])
+    await ctx.hotbar([null, ['cobblestone', 64], ['bread', 16], 'diamond_pickaxe'])   // slot 0 empty: the falls are filmed with a bare hand, not a sword across the view
     await ctx.tpCheck(TIERS[0].x + 0.5, TIERS[0].top + 1, z + 0.5, 0, 30)
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
     ctx.select(0)
@@ -83,13 +84,18 @@ module.exports = {
       // a quick glance out (how high), then down at the target: slightly off straight-down so
       // the target sits just above the crosshair instead of hiding under it
       ctx.mark(`look${n}`)
+      if (t.lava) { await ctx.easeLook(0, -1.2, 700); await bot.waitForTicks(4) }   // the finale: look down at the lava lake first
       await ctx.easeLook(0.5 * (i % 2 ? -1 : 1), -0.5, 450)
       await ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.1, 550)
       ctx.mark(`drop${n}`); ctx.sound('block.glass.break', 1)
       ctx.particles('block', { x: t.x, y: t.top, z }, { block: 'glass' })
       await ctx.cmd(`/setblock ${t.x} ${t.top} ${z} air`)
       let splashed = false
+      // a slow spin while falling: straight down at a far-off field barely changes frame to frame
+      // (beat audit: 1.1-1.8 s STILL stretches in every long fall); the ground turning reads as speed
+      const spinDir = i % 2 ? -1 : 1
       for (let k = 0; k < 400 && !ctx.died; k++) {
+        if (!splashed && bot.entity.position.y > floor + 6) await bot.look(bot.entity.yaw + spinDir * 0.045, -Math.PI / 2 + 0.1, true)
         await bot.waitForTicks(1)
         if (!splashed && bot.entity.position.y < floor + 1.2) {
           splashed = true; ctx.mark(`splash${n}`); ctx.sound('entity.player.splash.high_speed')

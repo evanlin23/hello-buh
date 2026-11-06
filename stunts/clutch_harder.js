@@ -54,6 +54,7 @@ module.exports = {
     const origTp = ctx.tpCheck
     for (let i = 0; i < n; i++) {
       const t = TIERS[i]
+      await ctx.cmd('/gamemode creative')   // the previous set's setup ended in survival: a mid-air tp would kill
       await ctx.cmd(`/tp @s ${g.x + i * GAP + 0.5} ${g.y + 40} ${g.z + 0.5}`)
       await bot.waitForTicks(30)
       const st = Object.assign(Object.create(t.mod), t.opts)
@@ -64,6 +65,7 @@ module.exports = {
       this.states.push(st)
     }
     await ctx.cmd('/gamerule natural_health_regeneration false')   // the half heart has to stay half
+    await ctx.cmd('/gamemode creative')
     // stand over the middle set while the recording starts: it keeps the chunks the bot has loaded
     await ctx.cmd(`/tp @s ${g.x + 2 * GAP + 0.5} ${g.y + 40} ${g.z + 0.5}`)
     await bot.waitForTicks(40)
