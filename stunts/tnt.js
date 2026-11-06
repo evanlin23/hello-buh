@@ -6,7 +6,7 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', start: 0.4, endAfter: 'boom:5.0' },
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:4.6' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -17,9 +17,14 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // a flat field (each /fill under the 32768-block cap)
-    await ctx.cmd(`/fill ${x - 20} ${floor + 1} ${z - 36} ${x + 20} ${floor + 12} ${z + 6} air`)
-    await ctx.cmd(`/fill ${x - 20} ${floor - 12} ${z - 36} ${x + 20} ${floor - 1} ${z + 6} dirt`)   // deep: a crater into groundwater flooded
-    await ctx.cmd(`/fill ${x - 20} ${floor} ${z - 36} ${x + 20} ${floor} ${z + 6} grass_block`)
+    // a big flat field, deep solid ground and no water anywhere near (a crater that reached the sea
+    // or groundwater flooded with seagrass): 61 x 81 blocks, filled in slabs under the /fill cap
+    for (let z0 = z - 64; z0 <= z + 16; z0 += 9) {
+      const z1 = Math.min(z + 16, z0 + 8)
+      await ctx.cmd(`/fill ${x - 30} ${floor + 1} ${z0} ${x + 30} ${floor + 14} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 30} ${floor - 14} ${z0} ${x + 30} ${floor - 1} ${z1} dirt`)
+      await ctx.cmd(`/fill ${x - 30} ${floor} ${z0} ${x + 30} ${floor} ${z1} grass_block`)
+    }
     this.pz = z - 24                                          // pile centre
     await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${this.pz - 2} ${x + 2} ${floor + 3} ${this.pz + 2} tnt`)
     await ctx.hotbar(['diamond_sword', 'flint_and_steel', ['tnt', 64], ['bread', 16]])
@@ -34,8 +39,7 @@ module.exports = {
     const { bot, Vec3 } = ctx
     const { x, floor, pz } = this
     await bot.waitForTicks(8)
-    await ctx.easeLook(0.5, 0.05, 600)                        // look at all that TNT
-    await ctx.easeLook(-0.4, -0.1, 700)
+    await ctx.easeLook(0.3, 0.05, 450)                        // look at all that TNT
     // walk up and light the front block
     bot.setControlState('forward', true)
     for (let i = 0; i < 60 && bot.entity.position.z > pz + 4.6; i++) await bot.waitForTicks(1)
@@ -50,19 +54,27 @@ module.exports = {
     // RUN
     await ctx.easeLook(Math.PI, 0, 350)
     bot.setControlState('sprint', true); bot.setControlState('forward', true); bot.setControlState('jump', true)
-    await bot.waitForTicks(34)
+    await bot.waitForTicks(22)
     bot.setControlState('forward', false); bot.setControlState('sprint', false); bot.setControlState('jump', false)
-    await ctx.easeLook(0, 0.05, 500)                          // turn round to watch
-    // the blast: wait for the first explosion
+    // back off a few more steps while facing it, so the flashing pile is on screen the whole wait
+    await ctx.easeLook(0, 0.05, 350)                          // turn round to watch
+    bot.setControlState('back', true)
     let boomed = false
     const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
     bot._client.once('explosion', onBoom)
-    for (let i = 0; i < 120 && !boomed; i++) await bot.waitForTicks(1)
+    for (let i = 0; i < 14 && !boomed; i++) await bot.waitForTicks(1)
+    bot.setControlState('back', false)
+    // the wait: small nervous glances so the shot never freezes
+    for (let i = 0; i < 120 && !boomed; i++) {
+      if (i % 16 === 0) ctx.easeLook((i % 32 ? 0.08 : -0.08), 0.04 + (i % 32 ? 0.02 : 0), 600)
+      await bot.waitForTicks(1)
+    }
     await bot.waitForTicks(40)                                // the chain goes off
-    // no walking up (knockback + a flooded crater put the camera underwater): look down into it from here
+    // look down into the crater from here, drifting slowly to the end
     await ctx.easeLook(0, -0.35, 900)
-    await ctx.easeLook(0.5, -0.6, 900)
-    await bot.waitForTicks(10)
+    await ctx.easeLook(0.45, -0.55, 1100)
+    ctx.easeLook(0.6, -0.5, 1500)
+    await bot.waitForTicks(16)
     return boomed && !ctx.died
   }
 }

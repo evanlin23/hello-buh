@@ -157,3 +157,9 @@ each section.
 - **Mob walk animation runs per game tick, not per frame** (WalkAnimationState). Quadrupeds swing `leg0`-`leg3` in diagonal pairs. Positions ease over 3 ticks like `Entity.lerpTo`. Mobs are kept 0.85 blocks from the camera.
 - **`ctx.tpCheck` with whole-number x/z:** vanilla `/tp` centres those on the block (+0.5), so the check compares against the centred value.
 - **One batch at a time, really:** a helper started a run while a batch was going. Its server died and orphaned another server, and every later stunt failed with "FAILED TO BIND TO PORT". Before any run, check `ps` for `server.jar`.
+- **Falling blocks are simulated per frame,** including the fraction of the next tick. Whole ticks only made sand hang for 3 frames and then jump.
+- **Captions can put emoji next to each other** ("⛏️💀"): edit.py splits them, since Twemoji has one file per emoji.
+- **Crumbs in a hole dug into a wall** found no lit neighbour and drew black. They now take the brightest light within 2 blocks, minus the distance.
+- **mineflayer `bot.dig` throws "enchantments is not iterable" with an enchanted tool on 1.21.11.** Send the start-digging packet yourself, as pickaxe_race does.
+- **Clear a big area around a crater:** tnt's crater reached the ocean beyond a 41-block field and flooded with seagrass. The field is now 61 x 81, with 14 blocks of dirt underneath.
+- **Never leave a shot frozen.** Waiting for a fuse needs small glances, and endings need a slow drift: the reviewer read 1.2 s without motion as a stuck bot.

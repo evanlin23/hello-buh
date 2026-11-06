@@ -283,6 +283,14 @@ function camAtLive (t) {
         const [sky, blk] = mesher.world.getLight(new Vec3(s.x + dx, s.y + dy, s.z + dz))
         lv = Math.max(lv, sky, blk)
       }
+      // still unlit (a hole dug into a wall: every neighbour was solid when light was computed):
+      // light spreads in once the block is gone, so take the brightest within 2 blocks, minus the distance
+      if (lv === 0) {
+        for (let dx = -2; dx <= 2; dx++) for (let dy = -2; dy <= 2; dy++) for (let dz = -2; dz <= 2; dz++) {
+          const [sky, blk] = mesher.world.getLight(new Vec3(s.x + dx, s.y + dy, s.z + dz))
+          lv = Math.max(lv, Math.max(sky, blk) - Math.abs(dx) - Math.abs(dy) - Math.abs(dz))
+        }
+      }
       const l = p.bright ? 1 : lightmap(lv)
       out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: s.tex || p.tex, uv: p.uv, color: p.color.map(c => c * l) })
     }
@@ -356,13 +364,16 @@ function camAtLive (t) {
     for (const e of ents) {
       if (e.name !== 'falling_block') continue
       const s0 = FALL_START.get(e.id); if (!s0) continue
-      let y = s0.y, vy = s0.vy
-      for (let k = 0; k < Math.floor(t - s0.t); k++) {
-        vy = (vy - 0.04) * 0.98
-        const ny = y + vy
+      let y = s0.y, vy = s0.vy, landed = false
+      const steps = Math.max(0, t - s0.t), whole = Math.floor(steps)
+      for (let k = 0; k <= whole; k++) {   // whole ticks, then the fraction of the next (60 fps between 20 Hz ticks)
+        const part = k < whole ? 1 : steps - whole
+        if (part <= 0) break
+        const nvy = (vy - 0.04) * 0.98
+        const ny = y + nvy * part
         const below = mesher.world.getBlock(new Vec3(Math.floor(s0.x), Math.floor(ny), Math.floor(s0.z)))
-        if (below && below.boundingBox === 'block' && Math.floor(ny) < Math.floor(y)) { y = Math.floor(y); break }
-        y = ny
+        if (below && below.boundingBox === 'block' && Math.floor(ny) < Math.floor(y)) { y = Math.floor(y); landed = true; break }
+        y = ny; if (part === 1) vy = nvy
       }
       e.x = s0.x; e.z = s0.z; e.y = Math.min(e.y, y)
     }

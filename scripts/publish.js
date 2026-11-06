@@ -156,6 +156,7 @@ for (const name of names) {
   console.log(`packaged ${name}: ${(meta.video.bytes / 1e6).toFixed(1)} MB, ${meta.video.duration_s}s, recording ${recording ? 'yes' : 'MISSING'}`)
   // the upload gets an NCS track with its official credit, never the stunt's reference song
   // (that one stays in out/ for review only): see README "Music"
+  if (!fs.existsSync(path.join(ROOT, 'songs', 'ncs')) || !fs.readdirSync(path.join(ROOT, 'songs', 'ncs')).length) execFileSync('python3', ['scripts/ncs.py', '--download'], { cwd: ROOT, stdio: 'inherit' })
   execFileSync('python3', ['scripts/add_song.py', name, '--ncs'], { cwd: ROOT, stdio: 'inherit' })
 }
 

@@ -58,13 +58,28 @@ def emoji_png(ch):
     return Image.open(cache).convert("RGBA")
 
 
+def split_emoji(tok):
+    """'⛏️💀' -> ['⛏️', '💀'] (Twemoji has one file per emoji; ZWJ sequences and skin tones stay whole).
+    Tokens with any ordinary text are left alone."""
+    if not tok or any(ord(c) <= 0x2500 and c not in "\u200d\ufe0f" for c in tok):
+        return [tok]
+    out = []
+    for i, c in enumerate(tok):
+        joiner = c in "\u200d\ufe0f" or 0x1F3FB <= ord(c) <= 0x1F3FF or (i > 0 and tok[i - 1] == "\u200d")
+        if out and joiner:
+            out[-1] += c
+        else:
+            out.append(c)
+    return out
+
+
 def caption_png(text, red_word, path, colors=None):
     """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     d.rectangle((0, 0, W, BAND), fill=(0, 0, 0, 255))
     d.rectangle((0, BAND + GAME_H, W, H), fill=(0, 0, 0, 255))
-    tokens = text.split(" ")
+    tokens = [t for tok in text.split(" ") for t in split_emoji(tok)]
 
     def is_emoji(tok):
         return any(ord(c) > 0x2500 for c in tok)
