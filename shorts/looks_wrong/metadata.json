@@ -1,0 +1,103 @@
+{
+  "name": "looks_wrong",
+  "caption": "Bro this looks wrong?",
+  "youtube": {
+    "title": "Bro this looks wrong? #minecraft #shorts",
+    "description": "Bro this looks wrong?\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "complete",
+    "drop_in_song_s": 10.5,
+    "drop_in_short_s": 8.05,
+    "song_start_s": 2.45
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 9.7,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 8677111,
+    "sha256": "c3fc398e568c4f5f994e73e70b9fca156edfcc1f1230d9142798b60db5e03e2a"
+  },
+  "edit": {
+    "caption": "Bro this looks wrong?",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "complete",
+    "start": 0.3,
+    "args": [
+      "--caption",
+      "Bro this looks wrong?",
+      "--start",
+      "0.3",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "complete"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 432,
+      "y": 71,
+      "z": -86
+    },
+    "biome": "minecraft:forest",
+    "ticks": 201,
+    "seconds": 10.05,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 8.35,
+        "event": "complete"
+      },
+      {
+        "t": 10.05,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "17ecd2d3c787a7fed75e06ebb94e58ff627bd989",
+    "rendered_at": "2026-11-06T06:38:54.884Z",
+    "head_at_publish": "16bae51236be5020192b0e80c33489833c82c2ad",
+    "stunt": "stunts/looks_wrong.js",
+    "source_snapshot": [
+      "source/looks_wrong.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 17ecd2d3c787",
+    "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
+    "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
+    "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
+    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start 0.3 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/looks_wrong.mp4"
+  ],
+  "status": "ready",
+  "notes": "",
+  "published_at": "2026-11-06T08:15:55.242Z"
+}

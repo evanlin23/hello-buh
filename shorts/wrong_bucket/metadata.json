@@ -1,0 +1,185 @@
+{
+  "name": "wrong_bucket",
+  "caption": "POV: you grabbed the wrong bucket 💀",
+  "youtube": {
+    "title": "POV: you grabbed the wrong bucket 💀 #minecraft #shorts",
+    "description": "POV: you grabbed the wrong bucket 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "death",
+    "drop_in_song_s": 10.5,
+    "drop_in_short_s": 7.65,
+    "song_start_s": 2.85
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 9.85,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 18458500,
+    "sha256": "4f155a8114b640c88707dd35ada757760220a2426e9a9f9a1bb23b6301bb17b9"
+  },
+  "edit": {
+    "caption": "POV: you grabbed the wrong bucket 💀",
+    "red": "wrong",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "death",
+    "start": 1.2,
+    "onFire": "placed:death",
+    "deathScreen": true,
+    "args": [
+      "--caption",
+      "POV: you grabbed the wrong bucket 💀",
+      "--red",
+      "wrong",
+      "--on_fire",
+      "placed:death",
+      "--death_screen",
+      "death",
+      "--start",
+      "1.2",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "death"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 423,
+      "y": 81,
+      "z": -20
+    },
+    "biome": "minecraft:forest",
+    "ticks": 222,
+    "seconds": 11.1,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava"
+    },
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 5.35,
+        "event": "placed"
+      },
+      {
+        "t": 5.35,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 5.85,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 6.35,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 6.85,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 7.35,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 7.85,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 8.35,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 8.85,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 8.85,
+        "event": "death"
+      },
+      {
+        "t": 9.1,
+        "event": "death_screen"
+      },
+      {
+        "t": 11.1,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "cf14cb281a1c2096a536c1bf40e245a4c4c18447",
+    "rendered_at": "2026-11-06T07:47:15.436Z",
+    "head_at_publish": "16bae51236be5020192b0e80c33489833c82c2ad",
+    "stunt": "stunts/wrong_bucket.js",
+    "source_snapshot": [
+      "source/wrong_bucket.js",
+      "source/water_clutch.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout cf14cb281a1c",
+    "gunzip -c shorts/wrong_bucket/recording.json.gz > work/wrong_bucket.rec.json",
+    "node render.js work/wrong_bucket.rec.json work/wrong_bucket.frames 60 1080 1011",
+    "python3 audio.py work/wrong_bucket.rec.json work/wrong_bucket.wav",
+    "python3 edit.py --frames work/wrong_bucket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/wrong_bucket.rec.json --audio work/wrong_bucket.wav --caption \"POV: you grabbed the wrong bucket 💀\" --red wrong --on_fire placed:death --death_screen death --start 1.2 --song songs/funk_abnormal.mp3 --song_drop_at death --out out/wrong_bucket.mp4"
+  ],
+  "status": "ready",
+  "notes": "",
+  "published_at": "2026-11-06T08:15:53.645Z"
+}

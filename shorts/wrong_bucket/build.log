@@ -1,0 +1,17 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+07:42:06.554 spawned at Vec3 { x: 135.5, y: 70, z: 12.5 }
+07:42:06.838 nearest minecraft:forest at [ 423, -20 ]
+07:42:22.332 set at { x: 423, y: 81, z: -20 }
+07:42:27.663 water placed at height 2.48
+07:42:31.197 died
+07:42:33.959 STUNT OK
+meshing from y 8
+light computed in 0.9 s
+meshed + uploaded world in 19.4 s
+page: Failed to load resource: the server responded with a status of 404 (Not Found)
+rendered 663 frames (11.05 s of video) in 215.8 s = 19.5 s per video second
+wrote work/wrong_bucket.wav 11.10s
+song drop at 10.50s lands on 7.65s of the Short (song starts at 2.85s)
+no 3D block icons needed
+wrote out/wrong_bucket.mp4 9.85s

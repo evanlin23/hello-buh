@@ -1,0 +1,20 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+07:50:43.056 spawned at Vec3 { x: 136.5, y: 70, z: 12.5 }
+07:50:43.322 nearest minecraft:plains at [ 360, -52 ]
+07:50:55.814 set at { x: 360, y: 62, z: -52 }
+07:51:05.274 STUNT OK
+meshing from y 8
+light computed in 0.7 s
+meshed + uploaded world in 17.0 s
+94 particles
+rendered 534 frames (8.90 s of video) in 262.1 s = 29.5 s per video second
+wrote work/one_in_a_million.wav 8.95s
+song drop at 16.25s lands on 5.55s of the Short (song starts at 10.70s)
+no 3D block icons needed
+wrote out/one_in_a_million.mp4 8.30s
+
+real	5m47.320s
+user	4m59.497s
+sys	0m15.021s
+exit=0

@@ -1,0 +1,14 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+06:44:45.687 spawned at Vec3 { x: 130.5, y: 71, z: 21.5 }
+06:44:45.990 nearest minecraft:forest at [ 450, -107 ]
+06:45:00.336 set at { x: 450, y: 69, z: -107 }
+06:45:04.622 elytra broke after 40 ticks at Vec3 { x: 450.5, y: 94.25300383516593, z: -132.09455001589242 }
+06:45:05.057 pearl aim err 0.04 flight 12 ticks
+06:45:08.848 STUNT OK
+./run.sh: line 43: syntax error near unexpected token `}'
+
+real	0m44.479s
+user	2m2.807s
+sys	0m2.926s
+exit=2
