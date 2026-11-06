@@ -1,5 +1,5 @@
 // "building a castle in 1 second vs 1 minute vs 1 hour 💀" (lib/time_lapse.js): a dirt arch, a
-// little cobblestone tower, then a 49x49 castle rising as a time-lapse in stages: a moat floods in,
+// little cobblestone fort, then a 49x49 castle rising as a time-lapse in stages: a moat floods in,
 // curtain walls and four round towers, the keep and its spire, blue cone roofs, a village of
 // houses around the moat, flags on every tower and last the keep's red flag.
 const { makeStunt } = require('../lib/time_lapse')
@@ -7,26 +7,20 @@ const { makeStunt } = require('../lib/time_lapse')
 // 1 second: a dirt "castle" (two stubby pillars with a lintel)
 const small = { blocks: [[0, 0, 0, 'dirt'], [2, 0, 0, 'dirt'], [0, 1, 0, 'dirt'], [2, 1, 0, 'dirt'], [1, 1, 0, 'dirt'], [1, 2, 0, 'dirt']], slots: { dirt: 0 } }
 
-// 1 minute: a 5x5 cobblestone tower with a doorway, a window band, a crenellated top
-function tower () {
+// 1 minute: a 7x7 cobblestone fort, three blocks high (a player can top it from the ground with a
+// jump), a doorway, stone-brick corners and a crenellated top row
+function fort () {
   const out = []
-  for (let y = 0; y < 6; y++) {
-    for (let x = 0; x < 5; x++) {
-      for (let z = 0; z < 5; z++) {
-        const ex = x === 0 || x === 4, ez = z === 0 || z === 4
+  for (let y = 0; y < 3; y++) {
+    for (let x = 0; x < 7; x++) {
+      for (let z = 0; z < 7; z++) {
+        const ex = x === 0 || x === 6, ez = z === 0 || z === 6
         if (!ex && !ez) continue
-        if (z === 4 && x === 2 && y < 2) continue                        // doorway
+        if (z === 6 && x === 3 && y < 2) continue                        // doorway
         const corner = ex && ez
-        const win = !corner && y === 3 && (x === 2 || z === 2)
-        out.push([x, y, z, corner ? 'stone_bricks' : win ? 'glass' : 'cobblestone'])
+        if (y === 2 && !corner && (ez ? x : z) % 2 === 1) continue          // crenels
+        out.push([x, y, z, corner || y === 2 ? 'stone_bricks' : 'cobblestone'])
       }
-    }
-  }
-  for (let x = 0; x < 5; x++) for (let z = 0; z < 5; z++) out.push([x, 6, z, 'stone_bricks'])     // floor of the top
-  for (let x = 0; x < 5; x++) {
-    for (let z = 0; z < 5; z++) {
-      const ex = x === 0 || x === 4, ez = z === 0 || z === 4
-      if ((ex || ez) && (x + z) % 2 === 0) out.push([x, 7, z, 'stone_bricks'])                // merlons
     }
   }
   return out
@@ -76,7 +70,7 @@ function castle () {
         if (!edge) continue
         const along = Math.abs(x) === 7 ? z - KZ : x
         const win = !corner && (y % 7 === 3 || y % 7 === 4) && Math.abs(along) % 4 === 2
-        put(x, y, z, win ? 'black_stained_glass' : (y % 7 === 6 ? 'chiseled_stone_bricks' : 'stone_bricks'), 1)
+        put(x, y, z, win ? 'glass' : (y % 7 === 6 ? 'chiseled_stone_bricks' : 'stone_bricks'), 1)
       }
       put(x, 22, z, 'stone_bricks', 1)
       if (edge && (x + z) % 2 === 0) put(x, 23, z, 'stone_bricks', 2)
@@ -149,9 +143,9 @@ module.exports = makeStunt({
   name: 'lapse_castle',
   caption: 'building a castle in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
-  hotbar: [['dirt', 64], ['cobblestone', 64], ['stone_bricks', 64], ['glass', 64], ['cobblestone', 64]],
+  hotbar: [['dirt', 64], ['cobblestone', 64], ['stone_bricks', 64]],
   small,
-  mid: { blocks: tower(), w: 5, d: 5, perTick: 2, slots: { cobblestone: [1, 4], stone_bricks: 2, glass: 3 } },
+  mid: { blocks: fort(), w: 7, d: 7, front: -1, perTick: 2, speed: 2, slots: { cobblestone: 1, stone_bricks: 2 } },
   big: {
     blocks: castle(),
     hold: 'stone_bricks', slot: 2,

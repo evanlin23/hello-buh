@@ -768,11 +768,26 @@ def main():
         first = int(shift * 20)
         pngs, runs = {}, []                      # unique HUD images, and (png, n_ticks) runs
         with zipfile.ZipFile(CLIENT_JAR) as jar:
-            for st in ticks[first:]:
+            # F1 (hide GUI): no HUD between an f1_on mark and the next f1_off (a cinematic shot, the
+            # time-lapse beat of a build Short)
+            f1, on_ = [], None
+            for e in tl:
+                if e["event"] == "f1_on" and on_ is None:
+                    on_ = e["t"] / 1000
+                elif e["event"] == "f1_off" and on_ is not None:
+                    f1.append((on_, e["t"] / 1000)); on_ = None
+            if on_ is not None:
+                f1.append((on_, 1e9))
+            for k_, st in enumerate(ticks[first:]):
+                if any(a <= (first + k_) / 20 < b for a, b in f1):
+                    st = "F1"
                 if st not in pngs:
                     pngs[st] = tmp / f"hud{len(pngs)}.png"
-                    slot, items, health, display, blink, shake = st
-                    hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None)
+                    if st == "F1":
+                        Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(pngs[st])
+                    else:
+                        slot, items, health, display, blink, shake = st
+                        hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None)
                 if runs and runs[-1][0] == pngs[st]:
                     runs[-1][1] += 1
                 else:
