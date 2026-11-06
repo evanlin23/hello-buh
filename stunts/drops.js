@@ -16,8 +16,13 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing... x7 😳',
   edit: {
-    caption: '1 in a million landing... x7 😳', red: 'x7', song: 'songs/misery.mp3', dropAt: 'drop', startAt: 'drop:-0.4',
-    subs: DROPS.map((d, i) => ['drop', d.sub, 1.8, i]), deathScreen: true, endAfter: 'death:1.0'
+    caption: '1 in a million landing... x7 😳', red: 'x7', song: 'songs/misery.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
+    subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, 1.6]), deathScreen: true, endAfter: 'death:0.8',
+    // cut the teleport turnarounds (the look up + tp read as a still), speed up the top of the 250 fall,
+    // and a live blocks-fallen counter on every drop
+    speed: [...DROPS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
+      [`drop${DROPS.length}:0.4`, `drop${DROPS.length}:4.0`, 1.5]],   // only the longest fall's empty top: the 30 s minimum stands
+    fallen: DROPS.map((d, i) => [`drop${i + 1}`, i === DROPS.length - 1 ? 'death' : `splash${i + 1}`])
   },
   expectDeath: true,
   clouds: false,                // the 200-250 block falls cross y 192: the camera went through a white cloud wall
@@ -30,12 +35,9 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    const R = 10
-    await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R} dirt`)
-    await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R} grass_block`)
+    // only the shaft is cleared: a 21x21 pit carved into the hill read as command-built in every landing
     const H = Math.min(DROPS[DROPS.length - 1].h + 4, 318 - floor)
     for (let y0 = floor + 1; y0 <= floor + H; y0 += 40) await ctx.cmd(`/fill ${x - 2} ${y0} ${z - 2} ${x + 2} ${Math.min(y0 + 39, floor + H)} ${z + 2} air`)
-    await ctx.cmd(`/fill ${x - R} ${floor + 1} ${z - R} ${x + R} ${floor + 8} ${z + R} air`)
     await ctx.cmd(`/setblock ${x} ${floor} ${z} water`)
     await ctx.cmd(`/setblock ${x} ${floor - 1} ${z} stone`)
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16], 'diamond_pickaxe'])
@@ -48,7 +50,8 @@ module.exports = {
     const { bot } = ctx
     const { x, z, floor } = this
     for (let i = 0; i < DROPS.length; i++) {
-      const d = DROPS[i], top = floor + d.h
+      const d = DROPS[i], top = floor + d.h, n = i + 1
+      if (i > 0) ctx.mark(`cut${i}b`)   // (the cut span starts at the previous look-up)
       const gx = x + Math.floor(0.5 + d.off)        // the glass sits under the bot (the offset drop missed its block and fell)
       await ctx.cmd(`/setblock ${gx} ${top} ${z} glass`)
       // on the glass, looking straight down. A fast tp: tpCheck's 1 s settle was a 1.8 s still between drops
@@ -61,22 +64,29 @@ module.exports = {
         if (a === 4) throw new Error('teleport did not stick')
       }
       bot.chat('/effect give @s instant_health 1 5 true')
-      await bot.waitForTicks(4)
-      ctx.mark('drop', { n: i, h: d.h }); ctx.sound('block.glass.break', 1)
+      // break the glass under your feet for real (swing + crack stages; it used to vanish by command)
+      ctx.mark(`dig${n}`)
+      try { await bot.dig(bot.blockAt(new ctx.Vec3(gx, top, z)), 'ignore') } catch (e) { ctx.log('dig', e.message); await ctx.cmd(`/setblock ${gx} ${top} ${z} air`) }
+      ctx.mark(`drop${n}`, { h: d.h }); ctx.mark('drop'); ctx.sound('block.glass.break', 1)
       ctx.particles('block', { x: gx, y: top, z }, { block: 'glass' })
-      await ctx.cmd(`/setblock ${gx} ${top} ${z} air`)
       let splashed = false
       for (let k = 0; k < 260 && !ctx.died; k++) {
         await bot.waitForTicks(1)
         if (!splashed && bot.entity.position.y < floor + 1.2) {
           splashed = true
-          if (!d.off) { ctx.mark('splash', { n: i }); ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: x + 0.5, y: floor + 0.95, z: z + 0.5 }, { count: 30 }) }
+          if (!d.off) { ctx.mark(`splash${n}`); ctx.mark('splash'); ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: x + 0.5, y: floor + 0.95, z: z + 0.5 }, { count: 30 }) }
         }
         if (splashed && k > 4 && (bot.entity.onGround || bot.entity.isInWater)) break
       }
-      if (ctx.died) break
-      await bot.waitForTicks(4)
-      await ctx.easeLook(bot.entity.yaw, 0.9, 450)                       // look up: from up there?!
+      if (ctx.died) {
+        // the fatal landing: vanilla throws a burst of the ground block's particles
+        const p = bot.entity.position
+        for (let k = 0; k < 4; k++) ctx.particles('block', { x: Math.floor(p.x) + (k % 2) - 0.5, y: floor, z: Math.floor(p.z) + (k >> 1) - 0.5 }, { block: 'grass_block' })
+        break
+      }
+      await bot.waitForTicks(3)
+      await ctx.easeLook(bot.entity.yaw, 0.9, 400)                       // look up: from up there?!
+      ctx.mark(`cut${n}a`)
     }
     for (let k = 0; k < 40 && !ctx.died; k++) await bot.waitForTicks(1)
     await bot.waitForTicks(50)                                           // the death screen
