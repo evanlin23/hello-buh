@@ -24,7 +24,7 @@ HERE = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(HERE / "scripts"))
 from qa_frames import gray_frames, probe, runs  # noqa: E402
 
-SKIP = {"sound", "particles", "hotbar", "start", "end", "face_on", "face_off", "line"}
+SKIP = {"sound", "particles", "hotbar", "start", "end", "face_on", "face_off", "line", "cut"}
 
 
 def edit_config(name):

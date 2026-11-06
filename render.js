@@ -554,11 +554,15 @@ function camAt (t) {
   return { ...c, roll: c.roll + h.roll, bobPitch: c.bobPitch + h.pitch }
 }
 
+// cut marks (harness: every /tp while recording; stunts may mark 'cut' themselves): a pose step of
+// more than 0.8 blocks within 4 ticks after one is a hard cut, never a glide (below the 4-block rule)
+const CUT_TICKS = (rec.timeline || []).filter(e => e.event === 'cut').map(e => e.t / 50)
+const isCutStep = (i, a, b) => { const d = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]); return d > 4 || (d > 0.8 && CUT_TICKS.some(c => i + 1 >= c && i + 1 <= c + 4)) }
 function camAtLive (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t)))
   const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
   // a teleport (over 4 blocks in one tick) is a cut, never a glide through the in-between spots
-  const f = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) > 4 ? 0 : Math.min(1, Math.max(0, t - i))
+  const f = isCutStep(i, a, b) ? 0 : Math.min(1, Math.max(0, t - i))
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f
   return {
     x: a[1] + (b[1] - a[1]) * f, y: a[2] + (b[2] - a[2]) * f + EYE, z: a[3] + (b[3] - a[3]) * f,
