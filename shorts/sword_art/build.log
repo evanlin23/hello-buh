@@ -1,0 +1,21 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+11:29:45.364 spawned at Vec3 { x: 120.5, y: 71, z: 21.5 }
+11:29:45.632 nearest minecraft:forest at [ 440, -107 ]
+11:29:57.485 set at { x: 440, y: 70, z: -107 }
+11:30:01.736 placed 27, correct 27/27
+11:30:03.576 STUNT OK
+meshing from y 8
+light computed in 0.6 s
+meshed + uploaded world in 15.1 s
+rendered 330 frames (5.50 s of video) in 96.7 s = 17.6 s per video second
+wrote work/sword_art.wav 5.55s
+song drop at 16.25s lands on 3.65s of the Short (song starts at 12.60s)
+icon brown_wool
+icon light_blue_wool
+wrote out/sword_art.mp4 5.20s
+
+real	2m51.344s
+user	3m13.734s
+sys	0m9.187s
+exit=0
