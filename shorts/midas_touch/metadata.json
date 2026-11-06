@@ -100,7 +100,7 @@
     "python3 audio.py work/midas_touch.rec.json work/midas_touch.wav",
     "python3 edit.py --frames work/midas_touch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/midas_touch.rec.json --audio work/midas_touch.wav --caption \"POV: you got the midas touch \ud83e\udd11\" --red midas --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at touch --out out/midas_touch.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
   "published_at": "2026-11-06T08:25:18.413Z"
 }

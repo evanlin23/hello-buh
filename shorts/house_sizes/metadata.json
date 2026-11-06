@@ -1,9 +1,9 @@
 {
   "name": "house_sizes",
-  "caption": "building a house in 5s vs 10s vs 20s 💀",
+  "caption": "building a house in 5s vs 10s vs 20s \ud83d\udc80",
   "youtube": {
-    "title": "building a house in 5s vs 10s vs 20s 💀 #minecraft #shorts",
-    "description": "building a house in 5s vs 10s vs 20s 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "building a house in 5s vs 10s vs 20s \ud83d\udc80 #minecraft #shorts",
+    "description": "building a house in 5s vs 10s vs 20s \ud83d\udc80\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -30,7 +30,7 @@
     "sha256": "8436dcf9642b3a502eb9b84c91e76e8cb68d3e4068a9c4e50074d0ffb5bd1c23"
   },
   "edit": {
-    "caption": "building a house in 5s vs 10s vs 20s 💀",
+    "caption": "building a house in 5s vs 10s vs 20s \ud83d\udc80",
     "red": "20s",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "all_done",
@@ -58,7 +58,7 @@
     ],
     "args": [
       "--caption",
-      "building a house in 5s vs 10s vs 20s 💀",
+      "building a house in 5s vs 10s vs 20s \ud83d\udc80",
       "--red",
       "20s",
       "--subs",
@@ -1332,9 +1332,9 @@
     "gunzip -c shorts/house_sizes/recording.json.gz > work/house_sizes.rec.json",
     "node render.js work/house_sizes.rec.json work/house_sizes.frames 60 1080 1011",
     "python3 audio.py work/house_sizes.rec.json work/house_sizes.wav",
-    "python3 edit.py --frames work/house_sizes.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/house_sizes.rec.json --audio work/house_sizes.wav --caption \"building a house in 5s vs 10s vs 20s 💀\" --red 20s --subs \"[[\\\"build_start\\\",\\\"5 seconds\\\",9,0],[\\\"build_start\\\",\\\"10 seconds\\\",9,1],[\\\"build_start\\\",\\\"20 seconds\\\",9,2]]\" --start_at build_start:-0.15 --end_after backed_up:1.1 --out out/house_sizes.mp4"
+    "python3 edit.py --frames work/house_sizes.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/house_sizes.rec.json --audio work/house_sizes.wav --caption \"building a house in 5s vs 10s vs 20s \ud83d\udc80\" --red 20s --subs \"[[\\\"build_start\\\",\\\"5 seconds\\\",9,0],[\\\"build_start\\\",\\\"10 seconds\\\",9,1],[\\\"build_start\\\",\\\"20 seconds\\\",9,2]]\" --start_at build_start:-0.15 --end_after backed_up:1.1 --out out/house_sizes.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: dirt hut vs plank cottage vs two-colour house, real block placements, ends on all three",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); worker: dirt hut vs plank cottage vs two-colour house, real block placements, ends on all three",
   "published_at": "2026-11-06T17:05:04.286Z"
 }

@@ -100,7 +100,7 @@
     "python3 audio.py work/sand_tower.rec.json work/sand_tower.wav",
     "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old \ud83d\ude2d\" --red torch --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at break --out out/sand_tower.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
   "published_at": "2026-11-06T11:15:12.445Z"
 }

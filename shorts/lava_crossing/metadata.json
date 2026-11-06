@@ -304,7 +304,7 @@
     "python3 audio.py work/lava_crossing.rec.json work/lava_crossing.wav",
     "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --on_fire in_lava:death --death_screen death --start_at beat:-0.3 --end_after death:1.15 --out out/lava_crossing.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: bridge 6/10, water bucket->obsidian 9/10, pearl 10/10, walking in 0/10 (death screen)",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); worker: bridge 6/10, water bucket->obsidian 9/10, pearl 10/10, walking in 0/10 (death screen)",
   "published_at": "2026-11-06T17:30:00.032Z"
 }

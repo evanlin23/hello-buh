@@ -178,7 +178,7 @@
     "python3 audio.py work/villager_crowd.rec.json work/villager_crowd.wav",
     "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"1 villager vs 10 vs 100 staring at me \ud83d\udc80\" --red 100 --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,1],[\\\"beat\\\",\\\"100 villagers\\\",1.6,2],[\\\"turn\\\",\\\"they all turned\\\",1.4,2],[\\\"back\\\",\\\"nope\\\",1.2,0]]\" --start_at beat:-0.05 --out out/villager_crowd.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats",
   "published_at": "2026-11-06T16:37:39.117Z"
 }

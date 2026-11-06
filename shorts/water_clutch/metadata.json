@@ -104,7 +104,7 @@
     "python3 audio.py work/water_clutch.rec.json work/water_clutch.wav",
     "python3 edit.py --frames work/water_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_clutch.rec.json --audio work/water_clutch.wav --caption \"water bucket clutch \ud83d\udc80\" --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/water_clutch.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
   "published_at": "2026-11-06T15:38:29.457Z"
 }

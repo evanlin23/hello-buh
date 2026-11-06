@@ -128,7 +128,7 @@
     "python3 audio.py work/cave_reveal.rec.json work/cave_reveal.wav",
     "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down \ud83d\udc80\" --red never --start_at reveal:-2.2 --song songs/misery.mp3 --song_drop_at reveal --out out/cave_reveal.mp4"
   ],
-  "status": "ready",
-  "notes": "QA2: still dark; lavafall render gaps",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); QA2: still dark; lavafall render gaps",
   "published_at": "2026-11-06T15:41:02.076Z"
 }

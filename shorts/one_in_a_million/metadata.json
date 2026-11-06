@@ -104,7 +104,7 @@
     "python3 audio.py work/one_in_a_million.rec.json work/one_in_a_million.wav",
     "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing \ud83d\ude33\" --start_at drop:-1.2 --end_after splash:2.6 --song songs/misery.mp3 --song_drop_at splash --out out/one_in_a_million.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
   "published_at": "2026-11-06T15:37:26.545Z"
 }

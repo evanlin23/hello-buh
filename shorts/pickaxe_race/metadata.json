@@ -423,7 +423,7 @@
     "python3 audio.py work/pickaxe_race.rec.json work/pickaxe_race.wav",
     "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe \u26cf\ufe0f \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: 5.8s\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: 2.9s\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: 1.9s\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: 1.5s\\\",9,3],[\\\"beat\\\",\\\"netherite + efficiency V...\\\",9,4],[\\\"mined\\\",\\\"netherite + efficiency V: 0.5s\\\",9,4]]\" --start_at beat:-0.2 --end_after finale_end:-0.5 --out out/pickaxe_race.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: 5 pickaxes mine 3x3 stone sections, real dig times as subs (Haste V, netherite eff V instamine)",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); worker: 5 pickaxes mine 3x3 stone sections, real dig times as subs (Haste V, netherite eff V instamine)",
   "published_at": "2026-11-06T17:31:39.471Z"
 }

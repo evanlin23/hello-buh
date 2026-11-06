@@ -98,7 +98,7 @@
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
     "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"the skull emoji irl \ud83d\udc80\" --start 0.3 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
   "published_at": "2026-11-06T08:59:58.495Z"
 }

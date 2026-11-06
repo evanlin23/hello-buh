@@ -128,7 +128,7 @@
     "python3 audio.py work/villager_job.rec.json work/villager_job.wav",
     "python3 edit.py --frames work/villager_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_job.rec.json --audio work/villager_job.wav --caption \"POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80\" --colors pov=red,villager=green --start 0.5 --song songs/payphone.mp3 --song_drop_at hired --out out/villager_job.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
   "published_at": "2026-11-06T15:39:41.586Z"
 }

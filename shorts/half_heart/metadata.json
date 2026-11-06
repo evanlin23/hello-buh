@@ -108,7 +108,7 @@
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
     "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart \ud83d\udc80\" --red half --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "pending-qa",
+  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
   "published_at": "2026-11-06T15:37:59.395Z"
 }
