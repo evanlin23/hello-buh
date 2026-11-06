@@ -78,7 +78,7 @@ function mansion () {
         let name = 'white_concrete'
         if (y === 0) name = 'stone_bricks'
         else if (y === 4 || y === 8 || corner) name = 'dark_oak_log'
-        else if ((y === 2 || y === 6) && ((ez && x !== 4 && x % 2 === 0) || (ex && z % 2 === 0))) name = 'glass'
+        else if ([2, 3, 6, 7].includes(y) && ((ez && x !== 4 && x % 2 === 0) || (ex && z % 2 === 0))) name = 'glass'   // two-high windows
         else if ((y === 5 || y === 6 || y === 7) && z === 8 && x === 4) name = y === 6 ? 'glass' : 'white_concrete'
         out.push([x, y, z, name])
       }
@@ -86,7 +86,7 @@ function mansion () {
   }
   const rows = [[9, [-1, 0, 1, 7, 8, 9]], [10, [1, 2, 6, 7]], [11, [2, 3, 5, 6]], [12, [3, 4, 5]]]
   for (const [y, zs] of rows) for (const z of zs) for (let x = 0; x < 9; x++) out.push([x, y, z, 'dark_oak_planks'])
-  for (const x of [0, 8]) { for (const z of [2, 3, 4, 5, 6]) out.push([x, 9, z, 'white_concrete']); for (const z of [3, 4, 5]) out.push([x, 10, z, 'white_concrete']); out.push([x, 11, 4, 'white_concrete']) }
+  for (const x of [0, 8]) { for (const z of [2, 3, 4, 5, 6]) out.push([x, 9, z, 'dark_oak_planks']); for (const z of [3, 4, 5]) out.push([x, 10, z, 'dark_oak_planks']); out.push([x, 11, 4, 'dark_oak_planks']) }
   return out
 }
 
