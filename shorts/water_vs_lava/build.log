@@ -1,0 +1,31 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+19:15:29.740 spawned at Vec3 { x: 119.5, y: 69, z: 15.5 }
+19:15:29.980 nearest minecraft:plains at [ 375, -49 ]
+19:15:43.046 set at { x: 375, y: 70, z: -49 }
+19:15:43.969 pour 0 converted so far 0
+19:15:46.885 pour 1 converted so far 64
+19:15:49.370 pour 2 converted so far 120
+19:15:51.255 pour 3 converted so far 176
+19:15:52.368 pour 4 converted so far 200
+19:15:53.629 converted after pours 225
+19:15:54.188 scoop 4 buckets 1
+19:15:54.801 scoop 3 buckets 2
+19:15:55.503 scoop 2 buckets 3
+19:15:56.208 scoop 1 buckets 4
+19:15:56.909 scoop 0 buckets 5
+19:16:02.980 lake: obsidian 225, lava left 0, water left 0, water buckets 5
+19:16:03.481 STUNT OK
+meshing from y 8
+light computed in 0.9 s
+meshed + uploaded world in 18.5 s
+1562 particles
+rendered 1194 frames (19.90 s of video) in 1273.8 s = 64.0 s per video second
+wrote work/water_vs_lava.wav 19.95s
+no 3D block icons needed
+wrote out/water_vs_lava.mp4 19.75s
+
+real	23m6.402s
+user	20m36.304s
+sys	0m47.145s
+exit=0
