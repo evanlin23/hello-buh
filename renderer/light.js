@@ -44,7 +44,26 @@ class LightEngine {
   }
 
   compute () {
-    const { SX, SZ, SY, op, emit, sky, blk } = this
+    this.fill()
+    return this.propagate()
+  }
+
+  // a block changed: refresh its cell's opacity/emission (then propagate() again). Refilling the
+  // whole area from the chunks was ~60% of every relight while blocks changed.
+  update (x, y, z) {
+    if (!this.inside(x, y, z)) return
+    const cx = Math.floor(x / 16) * 16, cz = Math.floor(z / 16) * 16
+    const col = this.world.columns[`${cx},${cz}`]
+    if (!col) return
+    const p = new Vec3(x - cx, y, z - cz)
+    const s = col.getBlockStateId(p)
+    const inf = s ? this.info(s, col, p) : { op: 0, emit: 0 }
+    const i = this.idx(x, y, z)
+    this.op[i] = inf.op; this.emit[i] = inf.emit
+  }
+
+  fill () {
+    const { op, emit } = this
     const p = new Vec3(0, 0, 0)
     // fill opacity/emission from the chunks
     for (const key of Object.keys(this.world.columns)) {
@@ -63,6 +82,13 @@ class LightEngine {
         }
       }
     }
+  }
+
+  // sky and block light from op/emit, into fresh arrays (callers may still hold the previous ones)
+  propagate () {
+    const { SX, SZ, SY, op, emit } = this
+    const sky = this.sky = new Uint8Array(SX * SZ * SY)
+    const blk = this.blk = new Uint8Array(SX * SZ * SY)
     const queue = new Int32Array(SX * SZ * SY + 16)
     // sky: straight down from the top
     let qh = 0, qt = 0

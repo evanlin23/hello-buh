@@ -611,6 +611,7 @@ function camAtLive (t) {
   await page.goto(`http://127.0.0.1:${server.address().port}/`)
   await page.waitForFunction(() => window.HB_READY)
   if (process.env.DEBUG_MAGENTA) await page.evaluate(() => { window.DEBUG_MAGENTA = true })
+
   if (process.env.DEBUG_NOSUN) await page.evaluate(() => { window.DEBUG_NOSUN = true })
   if (process.env.DEBUG_NOFAN) await page.evaluate(() => { window.DEBUG_NOFAN = true })
   { // the enchantment glint texture (not in the asset build)
@@ -643,7 +644,16 @@ function camAtLive (t) {
   const minVisibleY = Math.min(mesher.lowestSurface(), Math.floor(Math.min(...P.map(p => p[2]))) - 24) - 8
   console.log('meshing from y', minVisibleY)
   console.log(`light computed in ${(mesher.computeLight(minVisibleY) / 1000).toFixed(1)} s`)
-  await send(mesher.sections(minVisibleY))
+  {
+    // the first mesh of the whole area, split over worker threads (MESH_WORKERS, default: the core
+    // count, at most 4); each slice is byte-identical to meshing it here. 1 = the old single thread.
+    const list = mesher.sections(minVisibleY)
+    const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
+    if (nw > 1) {
+      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(0), rain: weatherLight(0)[0], thunder: weatherLight(0)[1] })
+      for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
+    } else await send(list)
+  }
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
 
   // particles from recorded events (block crumbs use the block's particle texture in the atlas)
@@ -696,7 +706,11 @@ function camAtLive (t) {
   let relightBB = null, lastRelight = -99
   let curDayTime = dayTimeAt(0), curWeather = weatherKey(0)
   const t1 = Date.now()
+  // PROFILE=1: where the time goes, per section, printed at the end
+  const PROF = {}; let profT = 0
+  const prof = (k) => { if (!process.env.PROFILE) return; const n = performance.now(); if (k) PROF[k] = (PROF[k] || 0) + n - profT; profT = n }
   for (let f = 0; f < (only ? only.length : frames); f++) {
+    prof()
     const t = only ? only[f] : f * 20 / FPS
     // block changes due by this frame -> re-mesh the touched sections (and neighbours at edges)
     const dirty = new Map()
@@ -718,12 +732,31 @@ function camAtLive (t) {
     if (bb) relightBB = relightBB ? [Math.min(relightBB[0], bb[0]), Math.min(relightBB[1], bb[1]), Math.min(relightBB[2], bb[2]), Math.max(relightBB[3], bb[3]), Math.max(relightBB[4], bb[4]), Math.max(relightBB[5], bb[5])] : bb
     if (relightBB && (nChanged >= 24 || t - lastRelight >= 4)) {
       bb = relightBB; relightBB = null; lastRelight = t
+      const Lw = mesher.world.light
+      const L0 = Lw && { sky: Lw.sky, blk: Lw.blk, x0: Lw.x0, z0: Lw.z0, yMin: Lw.yMin }   // propagate() makes new arrays
       mesher.computeLight(minVisibleY)
-      for (let sx = Math.floor((bb[0] - 16) / 16) * 16; sx <= bb[3] + 16; sx += 16) {
-        for (let sy = Math.floor((bb[1] - 16) / 16) * 16; sy <= bb[4] + 16; sy += 16) {
-          for (let sz = Math.floor((bb[2] - 16) / 16) * 16; sz <= bb[5] + 16; sz += 16) {
-            if (sy + 16 < minVisibleY) continue
-            dirty.set(`${sx},${sy},${sz}`, { key: `${sx},${sy},${sz}`, sx, sy, sz })
+      const L1 = mesher.world.light
+      const mark = (sx, sy, sz) => { if (sy + 16 >= minVisibleY) dirty.set(`${sx},${sy},${sz}`, { key: `${sx},${sy},${sz}`, sx, sy, sz }) }
+      if (L0 && L0.sky.length === L1.sky.length && L0.x0 === L1.x0 && L0.z0 === L1.z0 && L0.yMin === L1.yMin) {
+        // re-mesh only the sections whose light changed (a section's mesh reads light one block past
+        // its edges, so a changed cell marks the sections of its 26 neighbours too). Re-meshing the
+        // bounding box of all changes re-did ~2000 sections per relight when a recording had block
+        // changes scattered far apart (water_clutch: 12 s per relight)
+        const { SX, SZ, x0, z0, yMin } = L1, plane = SX * SZ, a0 = L0.sky, b0 = L0.blk, a1 = L1.sky, b1 = L1.blk
+        const seen = new Set()
+        for (let i = 0; i < a1.length; i++) {
+          if (a0[i] === a1[i] && b0[i] === b1[i]) continue
+          const x = x0 + i % SX, z = z0 + Math.floor(i / SX) % SZ, y = yMin + Math.floor(i / plane)
+          for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
+            const sx = Math.floor((x + dx) / 16) * 16, sy = Math.floor((y + dy) / 16) * 16, sz = Math.floor((z + dz) / 16) * 16
+            const k = `${sx},${sy},${sz}`
+            if (!seen.has(k)) { seen.add(k); mark(sx, sy, sz) }
+          }
+        }
+      } else {
+        for (let sx = Math.floor((bb[0] - 16) / 16) * 16; sx <= bb[3] + 16; sx += 16) {
+          for (let sy = Math.floor((bb[1] - 16) / 16) * 16; sy <= bb[4] + 16; sy += 16) {
+            for (let sz = Math.floor((bb[2] - 16) / 16) * 16; sz <= bb[5] + 16; sz += 16) mark(sx, sy, sz)
           }
         }
       }
@@ -732,7 +765,10 @@ function camAtLive (t) {
       curDayTime = dayTimeAt(t); curWeather = weatherKey(t); setDayTime(curDayTime, ...weatherLight(t)); dirty.clear()
       await send(mesher.sections(minVisibleY))
     }
+    prof('blocks+relight')
+    if (dirty.size && process.env.PROFILE) console.log("send", t.toFixed(1), dirty.size)
     if (dirty.size) await send([...dirty.values()])
+    prof('remesh+upload')
     const cam = camAt(t)
     cam.dayTime = curDayTime
     cam.rain = levelAt(RAIN, t); cam.thunder = levelAt(THUNDER, t)
@@ -765,6 +801,7 @@ function camAtLive (t) {
         if (stage >= 0 && db && !/^(air|cave_air|void_air)$/.test(db.name)) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
       }
     }
+    prof('camera+target')
     const ents = entitiesAt(t, mesher)
     // first-person held item
     const hd = HIDE_HAND || THIRD ? null : handAt(t)
@@ -893,6 +930,7 @@ function camAtLive (t) {
         await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.state, mesher.meshSingle(e.extra.state)])
       }
     }
+    prof('entities+hand')
     cam.weather = weatherColumns(cam, t, cam.rain)
     const parts = partsAt(t, cam)
     if (cam.rain > 0 && !process.env.NOPARTS) {
@@ -904,7 +942,10 @@ function camAtLive (t) {
         parts.push(p)
       }
     }
+    prof('particles+weather')
     await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), parts])
+    prof('page frame (GL)')
+    if (process.env.PROFILE) { await page.evaluate(() => { const c = document.querySelector('canvas'); const g = c.getContext('webgl2') || c.getContext('webgl'); const px = new Uint8Array(4); g.readPixels(0, 0, 1, 1, g.RGBA, g.UNSIGNED_BYTE, px) }); prof('gl finish (1px read)') }
     // let the compositor present the finished frame before capturing (else: tearing lines)
     const outPng = `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png`
     if (process.env.SCREENSHOT) {   // the old capture: let the compositor present the frame, then screenshot
@@ -917,9 +958,11 @@ function camAtLive (t) {
       const url = await page.evaluate(() => document.querySelector('canvas').toDataURL('image/png'))
       fs.writeFileSync(outPng, Buffer.from(url.slice(url.indexOf(',') + 1), 'base64'))
     }
+    prof('capture+png')
     if (f % 60 === 0) console.log(`frame ${f}/${frames}`)
   }
   const secs = (Date.now() - t1) / 1000
+  if (process.env.PROFILE) { const tot = Object.values(PROF).reduce((x, y) => x + y, 0); for (const [k, v] of Object.entries(PROF).sort((x, y) => y[1] - x[1])) console.log(`  ${k.padEnd(20)} ${(v / 1000).toFixed(1)} s  ${(v / tot * 100).toFixed(0)}%`) }
   console.log(`rendered ${frames} frames (${(frames / FPS).toFixed(2)} s of video) in ${secs.toFixed(1)} s = ${(secs / (frames / FPS)).toFixed(1)} s per video second`)
   await browser.close(); server.close(); process.exit(0)
 })()

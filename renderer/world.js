@@ -80,28 +80,43 @@ class World {
   }
 
   getBlock (pos) {
-    const key = columnKey(Math.floor(pos.x / 16) * 16, Math.floor(pos.z / 16) * 16)
-
-    const column = this.columns[key]
+    // hot path of the mesher (every face, AO corner and light sample asks): the last column is
+    // cached, the in-chunk position reuses one scratch vector, and the biome is looked up only when
+    // someone reads block.biome (tints). Same results as before (mesh blob sha1-identical).
+    const cx = Math.floor(pos.x / 16) * 16, cz = Math.floor(pos.z / 16) * 16
+    let column
+    if (cx === this._lcx && cz === this._lcz) column = this._lcol
+    else { column = this.columns[columnKey(cx, cz)]; this._lcx = cx; this._lcz = cz; this._lcol = column }
     // null column means chunk not loaded
     if (!column) return null
 
     const loc = pos.floored()
-    const locInChunk = posInChunk(loc)
-    const stateId = column.getBlockStateId(locInChunk)
+    const lp = this._lp || (this._lp = loc.clone())
+    lp.x = loc.x & 15; lp.y = loc.y; lp.z = loc.z & 15
+    const stateId = column.getBlockStateId(lp)
 
-    if (!this.blockCache[stateId]) {
-      const b = column.getBlock(locInChunk)
-      b.isCube = isCube(b.shapes)
-      this.blockCache[stateId] = b
+    let block = this.blockCache[stateId]
+    if (!block) {
+      block = column.getBlock(lp)
+      block.isCube = isCube(block.shapes)
+      const world = this
+      Object.defineProperty(block, 'biome', {
+        configurable: true,
+        enumerable: true,
+        get () {
+          if (this._biome !== undefined) return this._biome
+          const b = world.biomeCache[this._col.getBiome(this._lp)]
+          this._biome = b === undefined ? world.biomeCache[1] : b
+          return this._biome
+        },
+        set (v) { this._biome = v }
+      })
+      this.blockCache[stateId] = block
     }
-
-    const block = this.blockCache[stateId]
     block.position = loc
-    block.biome = this.biomeCache[column.getBiome(locInChunk)]
-    if (block.biome === undefined) {
-      block.biome = this.biomeCache[1]
-    }
+    block._col = column
+    block._lp = { x: loc.x & 15, y: loc.y, z: loc.z & 15 }
+    block._biome = undefined
     return block
   }
 }

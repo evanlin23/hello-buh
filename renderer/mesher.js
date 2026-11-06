@@ -65,15 +65,26 @@ class Mesher {
   }
 
   // Compute our own light for everything from minVisibleY up (see light.js).
+  // Later calls with the same area only refresh the cells setBlock changed, then propagate again.
   computeLight (minVisibleY) {
     const t = Date.now()
-    const eng = new LightEngine(this.world, require('minecraft-data')(this.version), minVisibleY - 16, this.minY + this.height)
-    this.world.light = eng.compute()
+    const eng = this.lightEngine
+    if (eng && eng.yMinArg === minVisibleY) {
+      for (const [x, y, z] of this.changed) eng.update(x, y, z)
+      eng.propagate()
+    } else {
+      this.lightEngine = new LightEngine(this.world, require('minecraft-data')(this.version), minVisibleY - 16, this.minY + this.height)
+      this.lightEngine.yMinArg = minVisibleY
+      this.lightEngine.compute()
+    }
+    this.changed = []
+    this.world.light = this.lightEngine
     return Date.now() - t
   }
 
   setBlock (x, y, z, stateId) {
     this.world.setBlockStateId(new Vec3(x, y, z), stateId)
+    ;(this.changed || (this.changed = [])).push([x, y, z])
   }
 
   // Sections that hold anything; returns [{key, sx, sy, sz}]. minVisibleY skips the deep
@@ -91,6 +102,20 @@ class Mesher {
       }
     }
     return out
+  }
+
+  // pack(list) split over worker threads (renderer/mesh_worker.js), in order: one blob per slice.
+  // opts: { recPath, minVisibleY, brightness, dayTime, rain, thunder }
+  async packParallel (list, n, opts) {
+    const { Worker } = require('worker_threads')
+    const per = Math.ceil(list.length / n), parts = []
+    for (let i = 0; i < list.length; i += per) parts.push(list.slice(i, i + per))
+    return Promise.all(parts.map(part => new Promise((resolve, reject) => {
+      const w = new Worker(path.join(__dirname, 'mesh_worker.js'), { workerData: { ...opts, list: part } })
+      w.once('message', (ab) => resolve(Buffer.from(ab)))
+      w.once('error', reject)
+      w.once('exit', (code) => { if (code) reject(new Error(`mesh worker exited ${code}`)) })
+    })))
   }
 
   // Pack sections into one binary blob for the page: a JSON header, then for each section
