@@ -6,7 +6,7 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', start: 0.4, endAfter: 'boom:7.6' },
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', start: 0.4, endAfter: 'boom:5.0' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -18,7 +18,7 @@ module.exports = {
     await ctx.defaultRules()
     // a flat field (each /fill under the 32768-block cap)
     await ctx.cmd(`/fill ${x - 20} ${floor + 1} ${z - 36} ${x + 20} ${floor + 12} ${z + 6} air`)
-    await ctx.cmd(`/fill ${x - 20} ${floor - 6} ${z - 36} ${x + 20} ${floor - 1} ${z + 6} dirt`)
+    await ctx.cmd(`/fill ${x - 20} ${floor - 12} ${z - 36} ${x + 20} ${floor - 1} ${z + 6} dirt`)   // deep: a crater into groundwater flooded
     await ctx.cmd(`/fill ${x - 20} ${floor} ${z - 36} ${x + 20} ${floor} ${z + 6} grass_block`)
     this.pz = z - 24                                          // pile centre
     await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${this.pz - 2} ${x + 2} ${floor + 3} ${this.pz + 2} tnt`)
@@ -59,11 +59,8 @@ module.exports = {
     bot._client.once('explosion', onBoom)
     for (let i = 0; i < 120 && !boomed; i++) await bot.waitForTicks(1)
     await bot.waitForTicks(40)                                // the chain goes off
-    // walk up to the crater
-    bot.setControlState('forward', true); bot.setControlState('sprint', true)
-    for (let i = 0; i < 80 && bot.entity.position.z > pz + 11; i++) await bot.waitForTicks(1)   // stop short: the crater can be wide (and flooded)
-    bot.setControlState('forward', false); bot.setControlState('sprint', false)
-    await ctx.easeLook(0, -0.75, 900)
+    // no walking up (knockback + a flooded crater put the camera underwater): look down into it from here
+    await ctx.easeLook(0, -0.35, 900)
     await ctx.easeLook(0.5, -0.6, 900)
     await bot.waitForTicks(10)
     return boomed && !ctx.died
