@@ -4,8 +4,8 @@ Samples the game area (between the black bands) 10x a second at low resolution:
   stuck  - motion (mean abs frame difference) below MOTION for over STUCK_S seconds
   dark   - mean brightness below DARK for over 0.5 s
   black  - over BLACK_FRAC of the pixels near-black (lighting holes, missing faces)
-Death screens and end holds are expected to be still, so a stretch is labelled with what the
-timeline says is happening when a recording is given.
+Death screens and end holds are expected to be still. Only .mp4 arguments are read. For the
+frame-by-frame pass, use scripts/qa_frames.py (docs/qa.md).
 
   python3 scripts/qa.py out/a.mp4 [out/b.mp4 ...] [--sheets work/qa]
 """
@@ -82,6 +82,8 @@ if __name__ == "__main__":
     args = ap.parse_args()
     report = []
     for v in args.videos:
+        if not v.endswith(".mp4"):
+            print("skipping", v, "(not an .mp4)"); continue
         r = qa(v)
         report.append(r)
         name = pathlib.Path(v).parent.name if pathlib.Path(v).stem == "short" else pathlib.Path(v).stem

@@ -191,7 +191,16 @@ if (push) {
   g(['add', '-A'])
   if (g(['status', '--porcelain'])) {
     g(['commit', '-q', '-m', `Package ${names.join(', ')}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_019n1tKFAZAV7uPEWDxhJzEt`])
-    g(['push', '-q', 'origin', 'videos'])
+    // other sessions publish too: rebase onto theirs and retry (README conflicts: regenerate it)
+    for (let i = 0; ; i++) {
+      try { g(['push', '-q', 'origin', 'videos']); break } catch (e) {
+        if (i === 3) throw e
+        try { g(['pull', '-q', '--rebase', 'origin', 'videos']) } catch (_) {
+          g(['checkout', '--theirs', 'README.md']); g(['add', 'README.md'])
+          execFileSync('git', ['-c', 'core.editor=true', 'rebase', '--continue'], { cwd: VID })
+        }
+      }
+    }
     console.log('pushed videos branch:', g(['log', '--oneline', '-1']))
   } else console.log('nothing new to push')
 }

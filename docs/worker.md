@@ -33,7 +33,7 @@ adds songs.
   second, several beats that escalate, the payoff at the end.
 
 ## QA before publishing (required)
-1. `python3 scripts/qa.py out/<name>.mp4`: no unexplained stuck, dark or black stretches.
+1. `python3 scripts/qa_frames.py out/<name>.mp4`, then read every sheet and flag image (docs/qa.md): no unexplained flags.
 2. Look at the frames yourself: `ffmpeg -i out/<name>.mp4 -vf "fps=2,scale=270:480,tile=8x2" sheet_%02d.jpg`,
    read every sheet, and check full-res frames at anything suspicious. Look for rendering glitches,
    lighting, camera (staring at nothing, jerky), the bot stuck, the HUD, pacing, and whether the
