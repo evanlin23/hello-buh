@@ -177,10 +177,21 @@ const DIGS = []
 }
 const ATLAS_UV = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(__dirname, 'work', 'assets', rec.version, 'atlas.json'))); return a.textures || a } catch (e) { return {} } })()
 // the block under the crosshair within reach (4.5, survival): vanilla outlines it in black
-function targetBlock (cam, world) {
+// hitbox [width, height] of mobs that can be targeted (EntityType sizes); an entity under the crosshair
+// within the 3-block entity reach is the target, and vanilla draws no outline for it
+const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
+function targetBlock (cam, world, ents = []) {
   const d = { x: -Math.sin(cam.yaw) * Math.cos(cam.pitch), y: Math.sin(cam.pitch), z: -Math.cos(cam.yaw) * Math.cos(cam.pitch) }
   const v = new Vec3(0, 0, 0)
+  const mobs = ents.filter(e => HITBOX[e.name] && !e.hidden)
   for (let s = 0.05; s <= 4.5; s += 0.05) {
+    if (s <= 3.0) {
+      const qx = cam.x + d.x * s, qy = cam.y + d.y * s, qz = cam.z + d.z * s
+      for (const e of mobs) {
+        const [w, h] = HITBOX[e.name]
+        if (Math.abs(qx - e.x) <= w / 2 && Math.abs(qz - e.z) <= w / 2 && qy >= e.y && qy <= e.y + h) return null
+      }
+    }
     v.x = Math.floor(cam.x + d.x * s); v.y = Math.floor(cam.y + d.y * s); v.z = Math.floor(cam.z + d.z * s)
     const b = world.getBlock(v)
     if (!b || /^(air|cave_air|void_air|water|lava|light|bubble_column)$/.test(b.name)) continue
@@ -218,6 +229,20 @@ const DEATHS = []
     for (let i = Math.ceil(d[0]) + 1; i < Math.min(P.length, d[1]); i++) {
       const a = P[i - 1], b = P[i]
       if ((b[1] - a[1]) ** 2 + (b[2] - a[2]) ** 2 + (b[3] - a[3]) ** 2 > 64) { d[1] = i; break }
+    }
+  }
+  // while dead, vanilla keeps drawing the world's entities (frozen once updates stop), but the server
+  // stops tracking them for a dead player ~18 ticks after the death, so the recording loses them and
+  // every mob popped out behind the death screen (worker 5, story_runaway). Hold the last row of
+  // anything that vanishes 10+ ticks into a death (earlier removals are real: an exploded creeper).
+  for (const [a, b] of DEATHS) {
+    const end = Math.min(b, P.length)
+    let prev = ENT.get(Math.floor(a)) || new Map()
+    for (let tk = Math.floor(a) + 1; tk < end; tk++) {
+      let cur = ENT.get(tk)
+      if (!cur) { cur = new Map(); ENT.set(tk, cur) }
+      if (tk - a >= 10) for (const [id, row] of prev) if (!cur.has(id)) { const r2 = row.slice(); r2[0] = tk; cur.set(id, r2) }
+      prev = cur
     }
   }
 }
@@ -456,7 +481,7 @@ function camAtLive (t) {
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
     // block outline under the crosshair + the crack overlay while digging
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
-      cam.target = targetBlock(cam, mesher.world)
+      cam.target = targetBlock(cam, mesher.world, entitiesAt(t, mesher))
       if (process.env.DEBUG_TARGET && cam.target) console.log("target", t, cam.target.x, cam.target.y, cam.target.z)
       const dg = DIGS.find(([a, b]) => t >= a && t < b)
       if (dg) {

@@ -163,7 +163,7 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
     food_e, food = big(sprite(jar, "gui/sprites/hud/food_empty")), big(sprite(jar, "gui/sprites/hud/food_full"))
     xp_bg, xp = big(sprite(jar, "gui/sprites/hud/experience_bar_background")), big(sprite(jar, "gui/sprites/hud/experience_bar_progress"))
     img.alpha_composite(xp_bg, (bx + GUI, by - 7 * GUI))
-    img.alpha_composite(xp.crop((0, 0, int(xp.width * 0.35), xp.height)), (bx + GUI, by - 7 * GUI))
+    # no XP progress: a fresh player (the death screen says "Score: 0"; a 35% bar contradicted it)
     hy = by - 17 * GUI
     hc_blink = big(sprite(jar, "gui/sprites/hud/heart/container_blinking"))
     full_b, half_b = big(sprite(jar, "gui/sprites/hud/heart/full_blinking")), big(sprite(jar, "gui/sprites/hud/heart/half_blinking"))
@@ -285,7 +285,7 @@ def hud_ticks(timeline, duration):
         while si < len(states) - 1 and t >= states[si][1]:
             si += 1
         _, _, slot, items, health = states[si]
-        if any(a <= t + 1e-6 < b for a, b in deaths):
+        if any(a - 0.05 <= t + 1e-6 < b for a, b in deaths):   # from the death frame on (the screen starts a frame early)
             health = 0
             items = (None,) * len(items)   # the inventory drops on the death tick (keepInventory off)
         cur = math.ceil(health)
