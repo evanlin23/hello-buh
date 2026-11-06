@@ -1,0 +1,181 @@
+{
+  "name": "villager_crowd",
+  "caption": "1 villager vs 10 vs 100 staring at me 💀",
+  "youtube": {
+    "title": "1 villager vs 10 vs 100 staring at me 💀 #minecraft #shorts",
+    "description": "1 villager vs 10 vs 100 staring at me 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": null,
+    "drop_on_event": "turn"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 15.9,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 15146120,
+    "sha256": "03df854dfe169ba355b837707a4805275d45eb7c442e8bd6e08839a4e1de4276"
+  },
+  "edit": {
+    "caption": "1 villager vs 10 vs 100 staring at me 💀",
+    "red": "100",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "turn",
+    "startAt": "beat:-0.05",
+    "subs": [
+      [
+        "beat",
+        "1 villager",
+        1.6,
+        0
+      ],
+      [
+        "beat",
+        "10 villagers",
+        1.6,
+        1
+      ],
+      [
+        "beat",
+        "100 villagers",
+        1.6,
+        2
+      ],
+      [
+        "turn",
+        "they all turned",
+        1.4,
+        2
+      ],
+      [
+        "back",
+        "nope",
+        1.2,
+        0
+      ]
+    ],
+    "args": [
+      "--caption",
+      "1 villager vs 10 vs 100 staring at me 💀",
+      "--red",
+      "100",
+      "--subs",
+      "[[\"beat\",\"1 villager\",1.6,0],[\"beat\",\"10 villagers\",1.6,1],[\"beat\",\"100 villagers\",1.6,2],[\"turn\",\"they all turned\",1.4,2],[\"back\",\"nope\",1.2,0]]",
+      "--start_at",
+      "beat:-0.05"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 377,
+      "y": 66,
+      "z": -53
+    },
+    "biome": "minecraft:plains",
+    "ticks": 319,
+    "seconds": 15.95,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 0,
+        "event": "beat"
+      },
+      {
+        "t": 1.75,
+        "event": "turn"
+      },
+      {
+        "t": 1.75,
+        "event": "face_on"
+      },
+      {
+        "t": 3.45,
+        "event": "face_off"
+      },
+      {
+        "t": 3.6,
+        "event": "beat"
+      },
+      {
+        "t": 5.35,
+        "event": "turn"
+      },
+      {
+        "t": 5.35,
+        "event": "face_on"
+      },
+      {
+        "t": 7.15,
+        "event": "face_off"
+      },
+      {
+        "t": 7.3,
+        "event": "beat"
+      },
+      {
+        "t": 9.15,
+        "event": "turn"
+      },
+      {
+        "t": 9.15,
+        "event": "face_on"
+      },
+      {
+        "t": 13.45,
+        "event": "back"
+      },
+      {
+        "t": 15.95,
+        "event": "face_off"
+      },
+      {
+        "t": 15.95,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "c66ae8c9f161e4ab606424327e17920d4ae31b02",
+    "rendered_at": "2026-11-06T16:36:02.322Z",
+    "head_at_publish": "0bb3147a3073a8d9650b08e14a53ed7588029b6a",
+    "stunt": "stunts/villager_crowd.js",
+    "source_snapshot": [
+      "source/villager_crowd.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout c66ae8c9f161",
+    "gunzip -c shorts/villager_crowd/recording.json.gz > work/villager_crowd.rec.json",
+    "node render.js work/villager_crowd.rec.json work/villager_crowd.frames 60 1080 1011",
+    "python3 audio.py work/villager_crowd.rec.json work/villager_crowd.wav",
+    "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"1 villager vs 10 vs 100 staring at me 💀\" --red 100 --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,1],[\\\"beat\\\",\\\"100 villagers\\\",1.6,2],[\\\"turn\\\",\\\"they all turned\\\",1.4,2],[\\\"back\\\",\\\"nope\\\",1.2,0]]\" --start_at beat:-0.05 --out out/villager_crowd.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats",
+  "published_at": "2026-11-06T16:37:39.117Z"
+}
