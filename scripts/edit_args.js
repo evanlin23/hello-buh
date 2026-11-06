@@ -9,6 +9,8 @@ if (e.colors) out.push('--colors', e.colors)
 if (e.countdown) out.push('--countdown', e.countdown)
 if (e.subs) out.push('--subs', JSON.stringify(e.subs))
 if (e.timer) out.push('--timer', e.timer)
+if (e.speed) out.push('--speed', JSON.stringify(e.speed))    // time-lapse spans / cuts (scripts/timewarp.py)
+if (e.clock) out.push('--clock', JSON.stringify(e.clock))    // clocks counting to a target time
 if (e.onFire) out.push('--on_fire', e.onFire)
 if (e.deathScreen) out.push('--death_screen', 'death')
 if (e.story) out.push('--story', e.story)            // narrated story Short (docs/stories.md)
