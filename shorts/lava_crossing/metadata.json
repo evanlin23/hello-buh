@@ -1,0 +1,310 @@
+{
+  "name": "lava_crossing",
+  "caption": "every way to cross lava (rated) \ud83d\udc80",
+  "youtube": {
+    "title": "every way to cross lava (rated) \ud83d\udc80 #minecraft #shorts",
+    "description": "every way to cross lava (rated) \ud83d\udc80\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "sky_verse.mp3",
+    "title": "Sky Verse",
+    "artist": "Lieless, Luuna, Yarimov",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "in_lava",
+    "drop_in_song_s": 4.0,
+    "drop_in_short_s": 15.2,
+    "song_start_s": 0.0
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 19.85,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 22835517,
+    "sha256": "7274c2196e6eb2bde26c18092ddde297cefe9be538560da29704d2efc4fab13a"
+  },
+  "edit": {
+    "caption": "every way to cross lava (rated) \ud83d\udc80",
+    "red": "every",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "in_lava",
+    "onFire": "in_lava:death",
+    "deathScreen": true,
+    "startAt": "beat:-0.3",
+    "endAfter": "death:1.15",
+    "subs": [
+      [
+        "beat",
+        "bridging...",
+        9,
+        0
+      ],
+      [
+        "crossed",
+        "bridging: 6/10",
+        9,
+        0
+      ],
+      [
+        "beat",
+        "water bucket...",
+        9,
+        1
+      ],
+      [
+        "crossed",
+        "water bucket: 9/10",
+        9,
+        1
+      ],
+      [
+        "beat",
+        "ender pearl...",
+        9,
+        2
+      ],
+      [
+        "crossed",
+        "ender pearl: 10/10",
+        9,
+        2
+      ],
+      [
+        "beat",
+        "walking...",
+        9,
+        3
+      ],
+      [
+        "in_lava",
+        "walking: 0/10",
+        9,
+        0
+      ],
+      [
+        "death",
+        " ",
+        0.05,
+        0
+      ]
+    ],
+    "args": [
+      "--caption",
+      "every way to cross lava (rated) \ud83d\udc80",
+      "--red",
+      "every",
+      "--subs",
+      "[[\"beat\",\"bridging...\",9,0],[\"crossed\",\"bridging: 6/10\",9,0],[\"beat\",\"water bucket...\",9,1],[\"crossed\",\"water bucket: 9/10\",9,1],[\"beat\",\"ender pearl...\",9,2],[\"crossed\",\"ender pearl: 10/10\",9,2],[\"beat\",\"walking...\",9,3],[\"in_lava\",\"walking: 0/10\",9,0],[\"death\",\" \",0.05,0]]",
+      "--on_fire",
+      "in_lava:death",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "beat:-0.3",
+      "--end_after",
+      "death:1.15"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 360,
+      "y": 70,
+      "z": -39
+    },
+    "biome": "minecraft:plains",
+    "ticks": 415,
+    "seconds": 20.75,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava"
+    },
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 0,
+        "event": "beat"
+      },
+      {
+        "t": 0.75,
+        "event": "swing"
+      },
+      {
+        "t": 0.9,
+        "event": "swing"
+      },
+      {
+        "t": 1.7,
+        "event": "swing"
+      },
+      {
+        "t": 2.45,
+        "event": "swing"
+      },
+      {
+        "t": 3.25,
+        "event": "swing"
+      },
+      {
+        "t": 5.45,
+        "event": "crossed"
+      },
+      {
+        "t": 6.6,
+        "event": "beat"
+      },
+      {
+        "t": 6.9,
+        "event": "swing"
+      },
+      {
+        "t": 6.9,
+        "event": "poured"
+      },
+      {
+        "t": 8.35,
+        "event": "swing"
+      },
+      {
+        "t": 11.35,
+        "event": "crossed"
+      },
+      {
+        "t": 12.4,
+        "event": "beat"
+      },
+      {
+        "t": 12.85,
+        "event": "swing"
+      },
+      {
+        "t": 12.85,
+        "event": "pearl_thrown"
+      },
+      {
+        "t": 13.2,
+        "event": "hurt",
+        "type": "ender_pearl"
+      },
+      {
+        "t": 13.4,
+        "event": "crossed"
+      },
+      {
+        "t": 14.6,
+        "event": "beat"
+      },
+      {
+        "t": 15.2,
+        "event": "in_lava"
+      },
+      {
+        "t": 15.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 15.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 16.25,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 16.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 17.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 17.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 18.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 18.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 18.7,
+        "event": "death"
+      },
+      {
+        "t": 20.75,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "62b7c60327ed5b73a2b675adc3d199781e29ab07",
+    "rendered_at": "2026-11-06T17:21:50.804Z",
+    "head_at_publish": "8d4cc28d1a74110e3daea758117d24d6d982b53b",
+    "stunt": "stunts/lava_crossing.js",
+    "source_snapshot": [
+      "source/lava_crossing.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 62b7c60327ed",
+    "gunzip -c shorts/lava_crossing/recording.json.gz > work/lava_crossing.rec.json",
+    "node render.js work/lava_crossing.rec.json work/lava_crossing.frames 60 1080 1011",
+    "python3 audio.py work/lava_crossing.rec.json work/lava_crossing.wav",
+    "python3 edit.py --frames work/lava_crossing.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_crossing.rec.json --audio work/lava_crossing.wav --caption \"every way to cross lava (rated) \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"bridging...\\\",9,0],[\\\"crossed\\\",\\\"bridging: 6/10\\\",9,0],[\\\"beat\\\",\\\"water bucket...\\\",9,1],[\\\"crossed\\\",\\\"water bucket: 9/10\\\",9,1],[\\\"beat\\\",\\\"ender pearl...\\\",9,2],[\\\"crossed\\\",\\\"ender pearl: 10/10\\\",9,2],[\\\"beat\\\",\\\"walking...\\\",9,3],[\\\"in_lava\\\",\\\"walking: 0/10\\\",9,0],[\\\"death\\\",\\\" \\\",0.05,0]]\" --on_fire in_lava:death --death_screen death --start_at beat:-0.3 --end_after death:1.15 --out out/lava_crossing.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker: bridge 6/10, water bucket->obsidian 9/10, pearl 10/10, walking in 0/10 (death screen)",
+  "published_at": "2026-11-06T17:30:00.032Z"
+}
