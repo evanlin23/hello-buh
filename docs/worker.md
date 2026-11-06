@@ -43,7 +43,7 @@ adds songs.
 ## Publish
 ```bash
 git add stunts/<name>.js && git commit -m "New format <name>: ..." && git pull --rebase origin main && git push origin main
-node scripts/publish.js <name> --notes "worker: <one line>"     # pushes the package to the videos branch
+node scripts/publish.js <name> --pass --notes "worker: <one line>"   # only after the frame review passes; without --pass it stays pending-qa
 ```
 If the videos push is rejected (another worker pushed), run `cd ../hb-videos && git pull --rebase
 origin videos && git push origin videos`.
