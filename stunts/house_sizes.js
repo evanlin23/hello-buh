@@ -91,6 +91,8 @@ function mansion () {
 }
 
 const BUILDS = [
+  { name: 'block', blocks: [[0, 0, 0, 'dirt']], w: 1, d: 1, dx: -13, rate: 0.5, sub: '1 second',
+    slots: { dirt: [0] } },
   { name: 'hut', blocks: hut(), w: 3, d: 3, dx: -9, rate: 0.5, sub: '5 seconds',
     slots: { dirt: [0] } },
   { name: 'cottage', blocks: cottage(), w: 5, d: 5, dx: -2, rate: 1, sub: '10 seconds',
@@ -123,16 +125,17 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (let y0 = floor + 1; y0 <= floor + 21; y0 += 7) await ctx.cmd(`/fill ${x - 22} ${y0} ${z - 26} ${x + 34} ${y0 + 6} ${z + 20} air`)
-    await ctx.cmd(`/fill ${x - 22} ${floor} ${z - 26} ${x + 34} ${floor} ${z + 20} grass_block`)
-    await ctx.cmd(`/fill ${x - 22} ${floor - 3} ${z - 26} ${x + 34} ${floor - 1} ${z + 20} dirt`)
+    // a wide clearing: a cut hillside at its edge read as a command-built box behind the builds
+    for (let y0 = floor + 1; y0 <= floor + 28; y0 += 4) await ctx.cmd(`/fill ${x - 30} ${y0} ${z - 45} ${x + 42} ${y0 + 3} ${z + 22} air`)
+    await ctx.cmd(`/fill ${x - 30} ${floor} ${z - 45} ${x + 42} ${floor} ${z + 22} grass_block`)
+    await ctx.cmd(`/fill ${x - 30} ${floor - 3} ${z - 45} ${x + 42} ${floor - 1} ${z + 22} dirt`)
     // the wide shot at the end: a dirt mound in front of the middle of the four plots
     this.view = { x: x + 8, z: z + 18 }
     await ctx.cmd(`/fill ${x + 7} ${floor + 1} ${z + 17} ${x + 9} ${floor + 3} ${z + 19} dirt`)
     await ctx.cmd(`/fill ${x + 7} ${floor + 3} ${z + 17} ${x + 9} ${floor + 3} ${z + 19} grass_block`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 30')
     await ctx.hotbar([['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['cobblestone', 64], ['dark_oak_log', 64], ['birch_planks', 64], ['dark_oak_planks', 64]])
-    await ctx.tpCheck(x - 7.5, floor + 1, z + 0.5, 180, 15)
+    await ctx.tpCheck(x - 12.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
@@ -200,7 +203,7 @@ module.exports = {
         while (budget >= 1) { await bot.waitForTicks(1); budget -= 1; await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5)) }
       }
       ctx.mark('build_done', { build: B.name })
-      if (bi === 0) bot.chat('/item replace entity @s hotbar.0 with dark_oak_planks 64')   // the roof needs a second stack
+      if (B.name === 'hut') bot.chat('/item replace entity @s hotbar.0 with dark_oak_planks 64')   // the roof needs a second stack
       if (bi < BUILDS.length - 1) await glide(center(B), 6)   // a beat to look at it
       await bot.waitForTicks(1)
       for (const [bx, by, bz, name] of B.blocks) {
@@ -212,11 +215,16 @@ module.exports = {
     // the payoff: cut to the wide shot of all four from the mound, a slow drift across them
     tgt = null; bot.removeListener('physicsTick', steer)
     for (const c of ['left', 'right', 'forward', 'back']) bot.setControlState(c, false)
-    const mid = new Vec3(x + 8, floor + 3, z - FRONT - 4)
-    bot.chat(`/tp @s ${this.view.x + 0.5} ${floor + 4} ${this.view.z + 0.5} 180 18`)
+    const mid = new Vec3(x + 6, floor + 5, z - FRONT - 4)
+    aim = mid.offset(-3, 0, 0)
+    // the cut lands already aimed (the first look after a plain tp jumped the camera)
+    const eyeV = new Vec3(this.view.x + 0.5, floor + 4 + 1.62, this.view.z + 0.5), dv = aim.minus(eyeV)
+    const tpYaw = -Math.atan2(dv.x, dv.z) * 180 / Math.PI,   // vanilla yaw: 0 = south, 90 = west
+      tpPitch = -Math.atan2(dv.y, Math.hypot(dv.x, dv.z)) * 180 / Math.PI
+    bot.chat(`/tp @s ${this.view.x + 0.5} ${floor + 4} ${this.view.z + 0.5} ${tpYaw.toFixed(1)} ${tpPitch.toFixed(1)}`)
     await bot.waitForTicks(2)
     ctx.mark('all_done')
-    aim = mid.offset(-3, 0, 0)
+    ctx.sound('entity.player.levelup', 1, 1); ctx.sound('ui.toast.challenge_complete', 0.6, 1)
     for (let i = 0; i < 40; i++) { await look(mid.offset(3, 0, 0), 0.04); await bot.waitForTicks(1) }
     ctx.log('wrong blocks:', wrong)
     return wrong <= 2 && !ctx.died
