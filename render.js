@@ -126,6 +126,10 @@ const ASSETS_DIR = path.join(__dirname, 'work', 'assets', rec.version)
 // Held item over time: hotbar contents + selected slot from the timeline, the tick the held item last
 // changed (equip animation) and the arm swings (6-tick attack animation).
 const HELD = []          // [tick, itemName|null]
+const GLINTS = []        // [tick, glint] for the selected stack
+let curGlint = false
+// items that always shine (enchantment_glint_override in their default components)
+const GLINT_ITEMS = new Set(['enchanted_golden_apple', 'experience_bottle', 'nether_star', 'enchanted_book', 'end_crystal', 'debug_stick', 'written_book'])
 const SWINGS = []
 {
   let items = null, slot = 0, cur
@@ -138,8 +142,12 @@ const SWINGS = []
     if (!items) continue
     const it = items[slot], name = it ? (Array.isArray(it) ? it[0] : it) : null
     if (name !== cur) { HELD.push([e.t / 50, name]); cur = name }
+    const g = !!(it && ((Array.isArray(it) && it[2]) || GLINT_ITEMS.has(name)))
+    if (g !== curGlint) { GLINTS.push([e.t / 50, g]); curGlint = g }
   }
 }
+// the held stack's enchantment glint over time (hotbar entries [name, count, 1] are enchanted)
+function glintAt (t) { let g = false; for (const [a, v] of GLINTS) if (a <= t) g = v; return g }
 // Equip animation, per tick like ItemInHandRenderer.tick: the shown item's height moves toward 1
 // (shown == wanted) or 0 (a different item wanted) by at most 0.4 a tick, and the shown item only
 // swaps once the height is under 0.1. So the old item lowers, then the new one rises (instead of
@@ -431,6 +439,22 @@ function thirdPersonDisplay (item) {
   DISPLAY.set(item, out)
   return out
 }
+// an item's flat sprite ('item/<texture>'), or null for block items: its own name, else the
+// layer0 of its item model in the jar (enchanted_golden_apple draws item/golden_apple)
+const SPRITE = new Map()
+function spriteOf (item) {
+  if (SPRITE.has(item)) return SPRITE.get(item)
+  let out = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${item}.png`)) ? `item/${item}` : null
+  if (!out) {
+    try {
+      const m = JSON.parse(require('child_process').execFileSync('unzip', ['-p', path.join(__dirname, 'work', 'client', `${rec.version}.jar`), `assets/minecraft/models/item/${item}.json`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString())
+      const l0 = m.textures && m.textures.layer0 && m.textures.layer0.replace(/^minecraft:/, '')
+      if (l0 && l0.startsWith('item/') && fs.existsSync(path.join(ASSETS_DIR, 'env', `${l0}.png`))) out = l0
+    } catch (e) {}
+  }
+  SPRITE.set(item, out)
+  return out
+}
 // the vanilla F5 camera (Camera.setup, detached): back along the look, or in front looking back,
 // pulled in so it stays out of blocks (getMaxZoom)
 function detachedCam (eye, mode, dist, world) {
@@ -535,6 +559,12 @@ function camAtLive (t) {
   if (process.env.DEBUG_MAGENTA) await page.evaluate(() => { window.DEBUG_MAGENTA = true })
   if (process.env.DEBUG_NOSUN) await page.evaluate(() => { window.DEBUG_NOSUN = true })
   if (process.env.DEBUG_NOFAN) await page.evaluate(() => { window.DEBUG_NOFAN = true })
+  { // the enchantment glint texture (not in the asset build)
+    const gl = path.join(ASSETS_DIR, 'env', 'misc', 'enchanted_glint_item.png')
+    if (!fs.existsSync(gl)) {
+      try { fs.mkdirSync(path.dirname(gl), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/misc/enchanted_glint_item.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), gl]) } catch (e) { console.error('no glint texture:', e.message) }
+    }
+  }
   { // the snow texture (weather; not in the asset build)
     const snow = path.join(ASSETS_DIR, 'env', 'snow.png')
     if (!fs.existsSync(snow)) {
@@ -686,10 +716,10 @@ function camAtLive (t) {
     const hd = HIDE_HAND || THIRD ? null : handAt(t)
     if (hd) {
       const bl = MC.blocksByName[hd.name]
-      const hasSprite = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${hd.name}.png`))
+      const hasSprite = !!spriteOf(hd.name)
       const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
-      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb) }
-      if (hasSprite) cam.hand.tex = `item/${hd.name}`
+      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb), glint: !!hd.name && glintAt(t) }
+      if (hasSprite) cam.hand.tex = spriteOf(hd.name)
       else if (bl) {
         cam.hand.state = bl.defaultState
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
@@ -705,9 +735,9 @@ function camAtLive (t) {
         const [ls, lb] = mesher.world.getLight(new Vec3(eye.x, eye.y - EYE + 0.5, eye.z))
         let held = null
         if (ph && ph.name) {
-          held = { key: ph.name, display: thirdPersonDisplay(ph.name) }
+          held = { key: ph.name + (glintAt(t) ? '#glint' : ''), display: thirdPersonDisplay(ph.name), glint: glintAt(t) }
           const bl = MC.blocksByName[ph.name]
-          if (fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${ph.name}.png`))) held.tex = `item/${ph.name}`
+          if (spriteOf(ph.name)) held.tex = spriteOf(ph.name)
           else if (bl) {
             held.state = bl.defaultState
             if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
@@ -751,14 +781,14 @@ function camAtLive (t) {
     for (const e of ents) {
       if (e.name !== 'item' || !e.extra || !e.extra.item) continue
       const it = e.extra.item
-      if (fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${it}.png`))) continue
+      if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
       const bl = MC.blocksByName[it]
       if (!bl) continue
       const age = t - (FIRST_SEEN.get(e.id) ?? t)
       e.name = 'falling_block'
       e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.125
       e.yaw = age / 20 + (e.id % 7)
-      e.extra = { state: bl.defaultState, scale: 0.25, spin: true }
+      e.extra = { state: bl.defaultState, scale: 0.25, spin: true, glint: !!(e.extra.glint || GLINT_ITEMS.has(it)) }
     }
     // mobs made to face the player by command (tp facing entity <bot> eyes) between face_on and
     // face_off marks: the recorded entity yaw lags the server by seconds, so face them here

@@ -286,6 +286,8 @@ window.HB = {
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
     entities = new EntityLayer(scene, regs)
     entities.itemFactory = thirdPersonItem
+    entities.glintify = glintify
+    await loadGlint()
     return true
   },
 
@@ -408,6 +410,7 @@ window.HB = {
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawParticles(parts)
     await drawWeather(cam)
+    GLINT.ms.value = (tick || 0) * 50
     END_TIME.value = ((tick || 0) % 4000) / 4000 * 0.6   // the shader's GameTime drift, slow
     drawSelection(cam)
     renderer.render(scene, camera)
@@ -581,7 +584,8 @@ function extrudedItemGeometry (img) {
   return g
 }
 async function handObject (h) {
-  if (handCache.has(h.key)) return handCache.get(h.key)
+  const ck = h.key + (h.glint ? '#glint' : '')
+  if (handCache.has(ck)) return handCache.get(ck)
   let inner = null, mat = null
   if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
     const bm = entities.blockModels.get(h.state)
@@ -605,8 +609,42 @@ async function handObject (h) {
   }
   const out = inner ? { obj: new THREE.Group(), mat } : null
   if (out) { out.obj.add(inner); out.obj.matrixAutoUpdate = false }
-  handCache.set(h.key, out)
+  if (out && h.glint && mat) glintify(mat, h.state !== undefined ? 8 : 0.25)
+  handCache.set(ck, out)
   return out
+}
+// Enchantment glint (RenderType.glint: glint.fsh + GLINT_TEXTURING): enchanted_glint_item.png (blur:
+// linear filtering), uv = translate(-fx, fy) * rotZ(10 deg) * scale(8) * the item's atlas uv, with
+// ms * glintSpeed 0.5 * 8 giving fx = (t % 110000) / 110000 and fy = (t % 30000) / 30000; blended
+// SRC_COLOR, ONE (adds glint^2) and faded by fog. Our sprites have their own 0..1 uv instead of the
+// item atlas's 16/512, so they scale by 8 * 16/512 = 0.25; block items keep the atlas uv x 8.
+const GLINT = { tex: null, ms: { value: 0 } }
+async function loadGlint () {   // at init: a texture still loading when a frame is drawn samples black
+  try { GLINT.tex = await new THREE.TextureLoader().loadAsync('/assets/env/misc/enchanted_glint_item.png') } catch (e) { GLINT.tex = new THREE.Texture() }
+  GLINT.tex.wrapS = GLINT.tex.wrapT = THREE.RepeatWrapping; GLINT.tex.colorSpace = THREE.NoColorSpace
+  GLINT.tex.magFilter = THREE.LinearFilter; GLINT.tex.minFilter = THREE.LinearFilter; GLINT.tex.generateMipmaps = false
+}
+function glintify (mat, scale) {
+  if (!GLINT.tex) {
+    GLINT.tex = new THREE.TextureLoader().load('/assets/env/misc/enchanted_glint_item.png')
+    GLINT.tex.wrapS = GLINT.tex.wrapT = THREE.RepeatWrapping; GLINT.tex.colorSpace = THREE.NoColorSpace
+    GLINT.tex.magFilter = THREE.LinearFilter; GLINT.tex.minFilter = THREE.LinearFilter; GLINT.tex.generateMipmaps = false
+  }
+  mat.onBeforeCompile = (sh) => {
+    sh.uniforms.uGlint = { value: GLINT.tex }; sh.uniforms.uGlintMs = GLINT.ms; sh.uniforms.uGlintS = { value: scale }
+    sh.fragmentShader = 'uniform sampler2D uGlint;\nuniform float uGlintMs;\nuniform float uGlintS;\n' + sh.fragmentShader.replace('#include <fog_fragment>', `{
+      float gt = uGlintMs * 4.0;
+      vec2 guv = vMapUv * uGlintS;
+      float gc = cos(0.17453), gs = sin(0.17453);
+      guv = vec2(gc * guv.x - gs * guv.y, gs * guv.x + gc * guv.y) + vec2(-mod(gt, 110000.0) / 110000.0, mod(gt, 30000.0) / 30000.0);
+      vec3 gl = texture2D(uGlint, guv).rgb;
+      gl_FragColor.rgb += gl * gl;
+    }
+    #include <fog_fragment>`)
+  }
+  mat.customProgramCacheKey = () => `glint${scale}`
+  mat.needsUpdate = true
+  return mat
 }
 // Third-person held item (ItemInHandLayer -> ItemRenderer, ItemDisplayContext.THIRD_PERSON_RIGHT_HAND):
 // the model's display transform (translation in pixels, rotation XYZ in degrees, scale; resolved from
@@ -628,6 +666,7 @@ async function thirdPersonItem (h) {
     inner = new THREE.Group(); inner.add(new THREE.Mesh(extrudedItemGeometry(t.image), mat))
   }
   if (!inner) return null
+  if (h.glint && mat) glintify(mat, h.state !== undefined ? 8 : 0.25)
   const obj = new THREE.Group(), tr = d.translation || [0, 0, 0], ro = d.rotation || [0, 0, 0], sc = d.scale || [1, 1, 1]
   obj.position.set(tr[0] / 16, tr[1] / 16, tr[2] / 16)
   obj.rotation.set(ro[0] * D2R, ro[1] * D2R, ro[2] * D2R, 'XYZ')

@@ -280,7 +280,7 @@ export class EntityLayer {
       if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'ender_pearl' || name === 'snowball' || name === 'egg' || name === 'item') {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
-      const t = await texture([`item/${itemName}`])
+      const t = await texture([(name === 'item' && extra?.tex) || `item/${itemName}`])
       if (t) {
         mat = new THREE.SpriteMaterial({ map: t.tex, alphaTest: 0.1, fog: true })
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
@@ -304,6 +304,7 @@ export class EntityLayer {
         }
       }
     }
+    if (extra && extra.glint && mat && this.glintify) this.glintify(mat, name === 'falling_block' ? 8 : 0.25)
     const rec = { key, obj, bones, mat, woolMat, yOff: (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
     if (obj) this.scene.add(obj)
     this.live.set(id, rec)
