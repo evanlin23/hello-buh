@@ -11,6 +11,7 @@ came from and under what licence before committing it.
 | `kenney/interface-sounds` | kenney.nl/assets/interface-sounds | CC0 | Clicks, pops, confirmations: counters, cards, subtitles |
 | `kenney/sci-fi-sounds` | kenney.nl/assets/sci-fi-sounds | CC0 | Explosions (explosionCrunch), lasers, force fields, engines: risers and booms |
 | `kenney/digital-audio` | kenney.nl/assets/digital-audio | CC0 | Retro tones, power-ups, highUp/highDown sweeps |
+| `mixkit/<category>/` | mixkit.co/free-sound-effects/<category>/ (167 short clips; `mixkit/manifest.json` lists title, id and source URL for each) | Mixkit Sound Effects Free License ("sfxFree" on every page): commercial use incl. YouTube videos, no attribution. Don't redistribute the files on their own or register them with Content ID | The classics: sad trombone, boing, clown horn, falling whistle, fail piano, crowd laugh, cinematic whooshes, movie impacts, drum hits, game-over/win jingles |
 | (generated) | `scripts/sfx.py` (worker 10) | ours | Synthesised whooshes, risers, sub booms, wind |
 
 `License.txt` from each pack is kept next to its files. Kenney: "free to use in personal,
