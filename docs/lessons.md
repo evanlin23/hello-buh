@@ -63,6 +63,11 @@ each section.
   with one texture. Place things so the key object stays in frame.
 
 ## Renderer (our own; `renderer/`)
+- **The Nether and the End render** (worker 11). The harness records `rec.dimension`; `DIMENSION=` overrides it. Before this a Nether recording drew no terrain at all: the mesher assumed the overworld's y -64..320, and Nether/End chunks are y 0..256, so every section index was off by four. Now the mesher takes the height from the columns.
+  - Lighting: no sky light in either; the Nether has ambient light 0.1, the End a bright lightmap.
+  - Nether: no sky, sun or clouds; the clear colour is the biome fog colour; thick fog.
+  - End: the end_sky.png box tinted 0x282828; fog 0xA080A0 x 0.15 (our biome table has the overworld fog for the End).
+  - Teleport with `/execute in minecraft:the_nether run tp @s x y z`, then build the set.
 - **Block entities** (worker 11, `renderer/blockentities.js`): signs (standing and wall, every wood, with their text in the vanilla font), chests (single, double, trapped, ender, with the lid opening while someone looks in), and beds. Hanging signs, banners, heads, pots and shulker boxes aren't drawn yet.
   - **Sign text in 1.21.11 is a text component, and a plain string is literal.** Write `oak_sign{front_text:{messages:['DONT OPEN','THE BARREL','-BUH','']}}`, not `'"DONT OPEN"'` (the game shows those quotes, and so do we). Colour: `front_text:{color:"red",...}`. Without `has_glowing_text:1b` the text is darkened to 0.4, as in vanilla.
   - The harness records `block_entity` (sign text set mid-stunt) and `block_action` (chest lid) marks. Chests and beds carry no NBT, so render.js finds them by block state.

@@ -95,7 +95,7 @@ class LightEngine {
     const plane = SX * SZ
     for (let z = 0; z < SZ; z++) {
       for (let x = 0; x < SX; x++) {
-        let l = 15
+        let l = this.noSky ? 0 : 15   // the Nether and the End have no sky light
         for (let yy = SY - 1; yy >= 0; yy--) {
           const i = yy * plane + z * SX + x
           const o = op[i]

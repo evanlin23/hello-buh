@@ -4,13 +4,15 @@
 const { parentPort, workerData } = require('worker_threads')
 const fs = require('fs')
 const { Mesher } = require('./mesher')
-const { setBrightness, setDayTime } = require('./models')
+const { setBrightness, setDayTime, setDimension } = require('./models')
 
-const { recPath, minVisibleY, brightness, dayTime, rain, thunder, list } = workerData
+const { recPath, minVisibleY, brightness, dayTime, rain, thunder, list, dimension } = workerData
 setBrightness(brightness)
+setDimension(dimension)
 setDayTime(dayTime, rain, thunder)
 const rec = JSON.parse(fs.readFileSync(recPath))
 const m = new Mesher(rec.version)
+m.noSky = dimension === 'the_nether' || dimension === 'the_end'
 m.addColumns(rec.columns)
 m.computeLight(minVisibleY)
 const b = m.pack(list)

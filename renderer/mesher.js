@@ -22,6 +22,10 @@ class Mesher {
 
   addColumns (columns) {
     for (const c of columns) this.world.addColumn(c.x, c.z, c.chunk)
+    // the dimension's own height (the Nether and the End are y 0..256; the overworld -64..320):
+    // with the overworld's numbers every section index was off by four and the Nether drew nothing
+    const first = Object.values(this.world.columns)[0]
+    if (first && typeof first.minY === 'number' && first.worldHeight) { this.minY = first.minY; this.height = first.worldHeight }
   }
 
   // Lowest block you can see from above anywhere in the area (ocean floors included): the top
@@ -74,6 +78,7 @@ class Mesher {
       eng.propagate()
     } else {
       this.lightEngine = new LightEngine(this.world, require('minecraft-data')(this.version), minVisibleY - 16, this.minY + this.height)
+      this.lightEngine.noSky = !!this.noSky
       this.lightEngine.yMinArg = minVisibleY
       this.lightEngine.compute()
     }

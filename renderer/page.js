@@ -208,6 +208,17 @@ function drawSunrise () {
     .multiply(new THREE.Matrix4().makeRotationZ(flip)).multiply(new THREE.Matrix4().makeRotationZ(Math.PI / 2))
   sunriseFan.matrixWorldNeedsUpdate = true
 }
+// SkyRenderer.renderEndSky: six faces of a 200-block cube around the camera, end_sky.png repeated 16
+// times on each, colour 0x282828, no fog
+let endSky = null
+async function makeEndSky () {
+  const t = await new THREE.TextureLoader().loadAsync('/assets/env/end_sky.png').catch(() => null)
+  if (t) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace; t.repeat.set(16, 16) }
+  const m = new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), new THREE.MeshBasicMaterial({ map: t, color: srgb(0x282828), side: THREE.BackSide, fog: false, depthWrite: false }))
+  m.renderOrder = -10; m.frustumCulled = false
+  scene.add(m)
+  return m
+}
 function placeSun () {
   // the celestial angle: 0 = noon (sun straight up); the sky turns around the X axis, east to west.
   // The moon is opposite the sun; stars turn with them.
@@ -440,6 +451,19 @@ window.HB = {
     sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
     scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : env.fogColorC.clone()
     sky.position.copy(camera.position)
+    // the Nether (DimensionSpecialEffects NETHER: no sky, sun or clouds; the clear colour is the biome
+    // fog colour, not darkened by time; thick fog from renderDistance * 0.05 to min(renderDistance,
+    // 192) / 2) and the End (the end_sky box tinted 0x282828; fog = biome fog x 0.15; no clouds or sun)
+    const dim = cam.dimension || 'overworld'
+    if (endSky) endSky.visible = false
+    if (dim !== 'overworld' && !cam.inLava && !cam.underwater) {
+      // (the End's biome fog is 0xA080A0; our biome table only has the overworld default for it)
+      const fc = dim === 'the_end' ? srgb(0xA080A0).multiplyScalar(0.15) : srgb(env.fogColor0 ?? env.fogColor)
+      scene.fog.color.copy(fc); scene.background = fc.clone()
+      if (dim === 'the_nether') { scene.fog.near = blocks * 0.05; scene.fog.far = Math.min(blocks, 192) * 0.5 }
+      sky.visible = false; clouds.visible = false; sun.visible = false; if (moon) moon.visible = false; if (stars) stars.visible = false
+      if (dim === 'the_end') { if (!endSky) endSky = await makeEndSky(); endSky.visible = true; endSky.position.copy(camera.position) }
+    } else if (dim !== 'overworld') { clouds.visible = false; sun.visible = false; if (moon) moon.visible = false; if (stars) stars.visible = false }
     if (window.DEBUG_MAGENTA) { sky.visible = false; scene.background = new THREE.Color(1, 0, 1) }
     placeSun()
     drawSunrise()

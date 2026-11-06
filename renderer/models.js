@@ -60,10 +60,18 @@ function setDayTime (dayTime, rain = 0, thunder = 0) {
 // BlockFactor 1.5 (the red flicker averages out), BrightnessFactor = gamma. Sky and block light stay
 // separate: block light is warm ("dips to yellowish in the middle"), so torch- and lava-lit caves read
 // orange, not grey. Returns [r, g, b].
+// Dimension (lightmap.fsh's AmbientLightFactor / AmbientColor): the Nether's ambient light 0.1 toward
+// white; the End (forceBrightLightmap) pulled 0.25 toward (0.99, 1.12, 1.0). Neither has sky light.
+let AMBIENT = 0, AMBIENT_COL = [1, 1, 1]
+function setDimension (dim) {
+  if (dim === 'the_nether') { AMBIENT = 0.1; AMBIENT_COL = [1, 1, 1] } else if (dim === 'the_end') { AMBIENT = 0.25; AMBIENT_COL = [0.99, 1.12, 1.0] } else { AMBIENT = 0; AMBIENT_COL = [1, 1, 1] }
+}
 function lightmap (sky, block = 0) {
   const gb = (l) => { const x = Math.min(1, Math.max(0, l / 15)); return x / (4 - 3 * x) }
   const bb = gb(block) * 1.5, sb = gb(sky)
-  let c = [bb, bb * ((bb * 0.6 + 0.4) * 0.6 + 0.4), bb * (bb * bb * 0.6 + 0.4)].map((v, i) => v + SKY_COL[i] * sb * SKY_FACTOR)
+  let c = [bb, bb * ((bb * 0.6 + 0.4) * 0.6 + 0.4), bb * (bb * bb * 0.6 + 0.4)]
+  if (AMBIENT) c = c.map((v, i) => v + (AMBIENT_COL[i] - v) * AMBIENT)
+  c = c.map((v, i) => v + SKY_COL[i] * sb * SKY_FACTOR)
   c = c.map(v => Math.min(1, Math.max(0, v * 0.96 + 0.03)))
   const mx = Math.max(c[0], c[1], c[2])
   if (mx > 0) { const inv = 1 - mx, k = (1 - inv * inv * inv * inv) / mx; c = c.map(v => v + (v * k - v) * GAMMA) }
@@ -644,4 +652,4 @@ function getModelVariants (block, blockStates) {
   return []
 }
 
-module.exports = { getSectionGeometry, setBiomeColors, lightmap, setBrightness, setDayTime, dayInfo }
+module.exports = { getSectionGeometry, setBiomeColors, lightmap, setBrightness, setDayTime, dayInfo, setDimension }

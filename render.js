@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap, setBrightness, setDayTime } = require('./renderer/models')
+const { lightmap, setBrightness, setDayTime, setDimension } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -26,6 +26,9 @@ const HIDE_HAND = !!STUNT_MOD.hideHand
 const F1 = []
 { let on = null; for (const e of rec.timeline || []) { if (e.event === 'f1_on' && on === null) on = e.t / 50; if (e.event === 'f1_off' && on !== null) { F1.push([on, e.t / 50]); on = null } } if (on !== null) F1.push([on, Infinity]) }
 const P = rec.poses
+// the dimension (harness: rec.dimension; DIMENSION= overrides): the Nether and the End light, sky and fog
+const DIM = String(process.env.DIMENSION || rec.dimension || STUNT_MOD.dimension || 'overworld').replace(/^minecraft:/, '')
+setDimension(DIM)
 
 function lerpAngle (a, b, f) { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return a + d * f }
 
@@ -256,7 +259,7 @@ const dayTimeAt = (t) => { let v = TIMES[0][1]; for (const [a, d] of TIMES) if (
 // WEATHER=clear|rain|thunder overrides the whole recording.
 const RAIN = [], THUNDER = []
 {
-  const w0 = process.env.WEATHER || rec.weather || STUNT_MOD.weather || 'clear'
+  const w0 = DIM !== 'overworld' ? 'clear' : (process.env.WEATHER || rec.weather || STUNT_MOD.weather || 'clear')
   const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather])
   let r = w0 !== 'clear' ? 1 : 0, th = w0 === 'thunder' ? 1 : 0, w = w0, k = 0
   for (let i = 0; i <= P.length + 2; i++) {
@@ -592,6 +595,7 @@ function camAtLive (t) {
 
 ;(async () => {
   const mesher = new Mesher(rec.version)
+  mesher.noSky = DIM === 'the_nether' || DIM === 'the_end'
   mesher.addColumns(rec.columns)
   solidWorld = mesher.world
   hmapWorld = mesher.world
@@ -631,6 +635,12 @@ function camAtLive (t) {
       try { fs.mkdirSync(path.dirname(fnt), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/font/ascii.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), fnt]) } catch (e) { console.error('no font texture:', e.message) }
     }
   }
+  { // the End sky texture (not in the asset build)
+    const es = path.join(ASSETS_DIR, 'env', 'end_sky.png')
+    if (!fs.existsSync(es)) {
+      try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/end_sky.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), es]) } catch (e) { console.error('no end sky texture:', e.message) }
+    }
+  }
   { // the snow texture (weather; not in the asset build)
     const snow = path.join(ASSETS_DIR, 'env', 'snow.png')
     if (!fs.existsSync(snow)) {
@@ -661,7 +671,7 @@ function camAtLive (t) {
     const list = mesher.sections(minVisibleY)
     const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
     if (nw > 1) {
-      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(0), rain: weatherLight(0)[0], thunder: weatherLight(0)[1] })
+      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(0), rain: weatherLight(0)[0], thunder: weatherLight(0)[1], dimension: DIM })
       for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
     } else await send(list)
   }
@@ -1030,6 +1040,7 @@ function camAtLive (t) {
     }
     prof('entities+hand')
     cam.blockEntities = blockEntitiesAt(t, cam)
+    cam.dimension = DIM
     cam.weather = weatherColumns(cam, t, cam.rain)
     const parts = partsAt(t, cam)
     if (cam.rain > 0 && !process.env.NOPARTS) {
