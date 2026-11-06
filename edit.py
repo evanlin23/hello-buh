@@ -626,19 +626,27 @@ def main():
     if args.death_screen and args.death_screen in tl_ev:
         # DeathScreen opens on the tick the client gets the death packet; buttons enable after 20 ticks
         all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
-        t_d = tl_ev[args.death_screen] - args.start
-        t_r = next((e["t"] / 1000 - args.start for e in all_ev if e["event"] == "respawn" and e["t"] / 1000 >= tl_ev[args.death_screen]), 1e6)
-        msg = next((e.get("message") for e in all_ev if e["event"] == "death_message"), None)
+        # every death gets its own screen (rated-deaths formats, tries): from the death to the next
+        # respawn, with the death_message nearest that death; buttons disabled for the first 1 s
+        deaths = [e["t"] / 1000 for e in all_ev if e["event"] == args.death_screen]
+        msgs = [(e["t"] / 1000, e.get("message")) for e in all_ev if e["event"] == "death_message"]
         with zipfile.ZipFile(CLIENT_JAR) as jar:
-            cause = death_message(jar, msg) if msg else None
-            death_screen_png(jar, tmp / "death0.png", cause, active=False)
-            death_screen_png(jar, tmp / "death1.png", cause, active=True)
-        for k, (a, b) in enumerate([(t_d, min(t_r, t_d + 1.0)), (t_d + 1.0, t_r)]):
-            if b <= a:
-                continue
-            inputs += ["-loop", "1", "-i", str(tmp / f"death{k}.png")]
-            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{a:.3f})*lt(t,{b:.3f})'[ds{k}]")
-            last, n_in = f"ds{k}", n_in + 1
+            for di, td_abs in enumerate(deaths):
+                t_d = td_abs - args.start
+                t_r = next((e["t"] / 1000 - args.start for e in all_ev if e["event"] == "respawn" and e["t"] / 1000 >= td_abs), 1e6)
+                if di + 1 < len(deaths):
+                    t_r = min(t_r, deaths[di + 1] - args.start)
+                near = [m for m in msgs if abs(m[0] - td_abs) < 1.0]
+                msg = min(near, key=lambda m: abs(m[0] - td_abs))[1] if near else (msgs[0][1] if msgs and len(deaths) == 1 else None)
+                cause = death_message(jar, msg) if msg else None
+                death_screen_png(jar, tmp / f"death{di}_0.png", cause, active=False)
+                death_screen_png(jar, tmp / f"death{di}_1.png", cause, active=True)
+                for k, (a, b) in enumerate([(t_d, min(t_r, t_d + 1.0)), (t_d + 1.0, t_r)]):
+                    if b <= a or b < 0:
+                        continue
+                    inputs += ["-loop", "1", "-i", str(tmp / f"death{di}_{k}.png")]
+                    graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
+                    last, n_in = f"ds{di}_{k}", n_in + 1
     if args.story and args.timeline:   # narrated story: big word-chunk captions over the game (and the death screen)
         sys.path.insert(0, str(HERE / "scripts"))
         import story_track
