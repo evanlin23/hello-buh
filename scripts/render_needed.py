@@ -51,15 +51,25 @@ def main(stunt, rec_path, out_dir, fps=60):
     need = sorted(need)
     print(f"rendering {len(need)} of {n} frames")
     out = pathlib.Path(out_dir)
-    subprocess.run(["rm", "-rf", str(out)], check=True)
-    env = {**os.environ, "FRAMES": ",".join(map(str, need))}   # render.js names them by frame number
-    subprocess.run(["node", "render.js", rec_path, str(out), str(fps), "1080", "1011"], cwd=HERE.parent, env=env, check=True)
+    todo = need
+    if os.environ.get("RESUME") and out.exists():   # RESUME=1: keep the frames already rendered (a killed run)
+        done = sorted(f for f in need if (out / f"f{f:05d}.png").exists())
+        if done:   # the last one may be half-written
+            (out / f"f{done[-1]:05d}.png").unlink(); done.pop()
+        todo = [f for f in need if f not in set(done)]
+        print(f"resume: {len(done)} kept, {len(todo)} to render")
+    else:
+        subprocess.run(["rm", "-rf", str(out)], check=True)
+    env = {**os.environ, "FRAMES": ",".join(map(str, todo))}   # render.js names them by frame number
+    if todo:
+        subprocess.run(["node", "render.js", rec_path, str(out), str(fps), "1080", "1011"], cwd=HERE.parent, env=env, check=True)
     rendered, have = set(need), need[0]
     for f in range(n):
         if f in rendered:
             have = f
         else:
-            os.link(out / f"f{have:05d}.png", out / f"f{f:05d}.png")
+            if not (out / f"f{f:05d}.png").exists():
+                os.link(out / f"f{have:05d}.png", out / f"f{f:05d}.png")
     print(f"{n} frame names, {len(need)} rendered")
 
 

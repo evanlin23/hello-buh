@@ -147,6 +147,7 @@ Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chro
 | `cards` | `[['splash5', 'NO WAY 💀', 1.0, 'red']]` | big impact text popping on a mark (white/red/green/yellow/blue/gold) |
 | `hook` | `{ at: 'splash5', before: 0.5, text: 'wait for the last one 😳' }` | a flash of the finale (cut before it lands) in front of beat 1 |
 
+More: `shake`, `flash`, `freeze`, `fallen`, `replay`, `loop` and `sfx` (see `docs/process.md`).
 Try one on rendered frames without touching the stunt: `EDIT_EXTRA='{"punch":["boom"]}' scripts/reedit.sh <name> /tmp/x.mp4`.
 `beat_audit.py` and `add_song.py` follow the same time map (slow-mo and the hook offset).
 

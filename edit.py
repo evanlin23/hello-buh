@@ -642,6 +642,7 @@ def main():
     ap.add_argument("--fallen", help='JSON list of [EVENT_A, EVENT_B, LABEL?] live "blocks fallen" counters (from the poses)')
     ap.add_argument("--sfx", help='JSON list of [KIND, EVENT, (EVENT2), {opts}] sound effects (scripts/sfx.py)')
     ap.add_argument("--replay", help='JSON {"at": EVENT, ...}: append work/<name>.replay (scripts/render_replay.py) after the payoff')
+    ap.add_argument("--loop", help='true or SECONDS: the last 0.25 s dissolve into the first frame')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 0.5, "after": 0, "text": ...} finale preview in front')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
@@ -921,6 +922,8 @@ def main():
         if h.get("at") in tl_ev:
             retention.hook_prepend(args.out, h, tl_ev[h["at"]] - args.start, args.out_fps)
             dur += retention.hook_len({"hook": h})
+    if args.loop:   # the end dissolves into the first frame (a seamless re-watch)
+        retention.loop_end(args.out, json.loads(args.loop), args.out_fps)
     print("wrote", args.out, f"{dur:.2f}s")
 
 

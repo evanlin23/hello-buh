@@ -432,3 +432,21 @@ def replay_append(out, replay_dir, caption_png, audio, fps=60):
     shutil.move(str(res), out)
     print(f"replay: {d:.2f}s appended ({a:.2f}-{b:.2f}s of the recording at {speed:g}x, CAM={spec.get('cam')})")
     return d
+
+
+# ---------------------------------------------------------------- loop ending
+def loop_end(out, secs=0.25, fps=60):
+    """Dissolve the last `secs` into the Short's first frame, so the loop back to the start is seamless
+    (the length stays the same). Rewrites `out` in place."""
+    secs = float(secs if secs is not True else 0.25)
+    dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", out], capture_output=True, text=True).stdout)
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-loop-"))
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", out, "-frames:v", "1", str(tmp / "first.png")], check=True)
+    res = tmp / "out.mp4"
+    g = (f"[1:v]fps={fps},format=yuv420p,setsar=1,settb=1/{fps}[f];[0:v]fps={fps},format=yuv420p,setsar=1,settb=1/{fps}[m];"
+         f"[m][f]xfade=transition=fade:duration={secs:.3f}:offset={dur - secs:.3f}[v]")
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", out, "-loop", "1", "-framerate", str(fps), "-t", f"{secs + 0.05:.3f}", "-i", str(tmp / "first.png"),
+                    "-filter_complex", g, "-map", "[v]", "-map", "0:a?", "-c:a", "copy", "-t", f"{dur:.3f}", "-c:v", "libx264", "-preset", "medium",
+                    "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(res)], check=True)
+    shutil.move(str(res), out)
+    print(f"loop: last {secs:.2f}s dissolve into the first frame")
