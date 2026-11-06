@@ -35,7 +35,7 @@ module.exports = {
     subs,
     speed: TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     // retention toolkit (scripts/retention.py, scripts/sfx.py; worker 10)
-    hook: { at: 'splash5', before: 0.7, after: -0.2, text: 'wait for the last one 😳' },   // a flash of the finale before tier 1
+    hook: { at: 'splash5', before: 1.7, after: -0.2, text: 'wait for the last one 😳' },   // a flash of the finale before tier 1: 1.5 s (owner: 0.5 s was "too quick")
     counter: { at: TIERS.map((_, i) => `look${i + 1}`), total: TIERS.length },
     fallen: TIERS.map((_, i) => [`drop${i + 1}`, `splash${i + 1}`]),         // live blocks-fallen count on every drop
     punch: TIERS.map((_, i) => `splash${i + 1}`),
