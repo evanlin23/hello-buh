@@ -33,7 +33,9 @@ function spawn (ev, blockTex) {
     for (let i = 0; i < (ev.count || 40); i++) {
       const f = r() * 0.6 + 0.4
       // PortalParticle: starts offset and is pulled to the origin along a curve
-      P({ x: ev.x, y: ev.y + r() * 2, z: ev.z, ox: (r() - 0.5) * 2, oy: (r() - 0.5) * 2, oz: (r() - 0.5) * 2, portal: true,
+      // face: ambient particles of a lit portal (NetherPortalBlock.animateTick): from a point on the
+      // portal surface, drifting just off the face. Otherwise a pearl landing: a 2-block column.
+      P({ x: ev.x, y: ev.face ? ev.y - 0.5 : ev.y + r() * 2, z: ev.z, ox: (r() - 0.5) * (ev.face ? 1 : 2), oy: (r() - 0.5) * (ev.face ? 1 : 2), oz: (r() - 0.5) * (ev.face ? 0.6 : 2), portal: true,
         life: Math.floor(r() * 10) + 40, size: 0.1 * (r() * 0.2 + 0.5) * 1.6, tex: `particle/generic_${Math.floor(r() * 8)}`, color: [0.9 * f, 0.3 * f, f] })
     }
   } else if (ev.type === 'happy' || ev.type === 'angry') {

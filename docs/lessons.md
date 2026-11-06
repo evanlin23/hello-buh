@@ -190,3 +190,7 @@ each section.
   - the lava rises a layer every 0.7 s and stops one cobblestone face below the top block;
   - it ends on that downward view, drifting.
 - **General rule: show the mechanic.** If the caption is about a block, the gap or the placement has to be on screen. Pitch the camera at it.
+- **Portal particles of a lit portal** spawn on the portal face (`face: true`) and drift just off it. Passing a point plus the pearl-landing column offset pushed them up to 2 blocks above the frame.
+- **Enchanted tools on 1.21.11:** `Item#enchants` is patched in the harness to always return `[{ name, lvl }]`, since the component isn't a plain list. That fixes `bot.dig` / `digTime` throwing "enchantments is not iterable".
+- **pearl_clutch redesign:** the breaking-elytra glide buried the joke. It's now a block vanishing over a lava lake, a look down at the lava, a look up at the island, the pearl mid-fall and the teleport.
+- **The held item as a sliver at the right edge is deliberate.** The reference Shorts are centre crops of 16:9 footage, where the hand sits at the edge of the crop. Reviewers flag it every time: treat it as a nitpick, not a bug.

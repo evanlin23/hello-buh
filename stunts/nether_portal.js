@@ -72,7 +72,7 @@ module.exports = {
     ctx.sound('block.portal.trigger', 0.6)
     // the portal's ambient particles (NetherPortalBlock.animateTick: a few a tick over the surface)
     let pt = 0
-    const portalParts = () => { if (pt++ % 4 === 0) ctx.particles('portal', { x: x0 + 1 + Math.random() * 2, y: y0 + 1 + Math.random() * 3, z: pz + 0.5 }, { count: 6 }) }
+    const portalParts = () => { if (pt++ % 4 === 0) ctx.particles('portal', { x: x0 + 1 + Math.random() * 2, y: y0 + 1 + Math.random() * 2.5, z: pz + 0.5 }, { count: 6, face: true }) }
     bot.on('physicsTick', portalParts)
     const lit = bot.blockAt(new Vec3(x0 + 1, y0 + 1, pz))
     ctx.log('portal block:', lit && lit.name)
