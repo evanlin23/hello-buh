@@ -43,7 +43,8 @@ Each concept is marked with a status and who builds it.
 22. **Pushing a whole house with pistons.**
 23. **Minecraft gravity is fake.** Sand falls, a floating 50-block dirt island stays, the bot pokes it.
 
-## Narrated stories (owner: twist and mystery, bursty, deep lore) *(worker 5)*
+## Narrated MYSTERY stories: the priority (owner 2026-11-06: "I think we should focus a lot of mysteries")
+A mystery stated plainly in line 1, clues that build up, then a twist that makes every clue click, a sting, and a loop back to line 1. Workers 5 and 8 build these.
 24. **Respawn Tax.** *(building)*
 25. **The first player in 3,000 years.** *(next)*
 26. **The sheep that has stared at one block for 412 days.**
@@ -52,5 +53,5 @@ Each concept is marked with a status and who builds it.
 
 ## Status
 - Built: everything in stunts/.
-- Building: 10 (worker 6), 11 boat/ladder (worker 4), 24 (worker 5).
+- Building: 10 (worker 6), 11 boat/ladder (worker 4), mysteries (workers 5 and 8).
 - Next to assign: 1, 2, 3, 8, 9, 14, 19 (worker 7).
