@@ -57,17 +57,25 @@ is 10-15 s, or 20-30 s for build-up stories, with the stunt visible in the first
 `.github/workflows/upload.yml` uploads the next ready Short from the `videos` branch 3 times a day
 (`scripts/youtube_upload.py`, YouTube Data API v3) with the package's title, description and
 hashtags, and records it in `uploads.json` on that branch so nothing goes up twice.
-One-time setup by the owner: a Google Cloud project with YouTube Data API v3, an OAuth "Desktop
-app" client, then `scripts/youtube_auth.py` on your own computer to get a refresh token. Save
+One-time setup by the owner: reuse the existing Google Cloud project (YouTube Data API v3 already
+enabled, OAuth client already made). If you don't already have a refresh token with the
+`youtube.upload` scope *for the HelloBuh channel*, run `scripts/youtube_auth.py` on your own
+computer and sign in as HelloBuh (a token is per channel). Save
 `YT_CLIENT_ID`, `YT_CLIENT_SECRET` and `YT_REFRESH_TOKEN` as repo secrets. Optional repo
 variables: `YT_AUDIO` (`song` = baked-in track, `nosong`) and `YT_PRIVACY`.
 - **Music can't be added through the API.** Picker audio only exists inside the YouTube app, at
   creation time. Automated uploads therefore carry the baked-in song (a standard Content ID claim:
   usually monetized by the label under 60 s, but it can be blocked) or an Audio Library track
   (no claim). For picker audio, upload `short_nosong.mp4` from the phone app by hand.
-- Uploads from an unaudited API project are forced **private** until Google's API audit passes
-  (apply in the Google Cloud console). Until then, flip them public in YouTube Studio.
-- Quota: one upload costs about 1,600 units out of a default 10,000 a day (about 6 uploads a day).
+- Quota (checked against the official docs 2026-11-06, developers.google.com/youtube/v3/determine_quota_cost):
+  uploads have their own bucket, **100 `videos.insert` calls per day per Google Cloud project** at
+  1 unit each. It's shared by every channel that uploads through the project (the owner's other
+  channels use the same one: 9 uploads a day in total) and resets at midnight Pacific. `videos.update`
+  and `thumbnails.set` cost 50 of the separate 10,000 general units. More quota: the YouTube API
+  Services audit and quota extension form.
+- Per the current `videos.insert` page, uploads from unverified projects are *not* restricted to
+  private. The workflow defaults to private to be safe: set the repo variable `YT_PRIVACY=public`
+  to publish directly.
 - Packages with a metadata `status` other than `ready` (e.g. pearl_clutch) are skipped.
 
 ## Parallel workers
