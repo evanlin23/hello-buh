@@ -57,6 +57,12 @@ function entitiesAt (t, mesher) {
 // 40 - 8000/(deathTime + 200) degrees (0 -> 3.6 over a second), and the body keeps its
 // physics (it falls, or sinks in lava/water) until the respawn. mineflayer teleports the bot to
 // the respawn point the same tick, so the camera is simulated from the death pose on.
+// first tick each entity was seen (TNT fuse timing) and the TNT block state
+const FIRST_SEEN = new Map()
+for (const r of rec.entities || []) if (!FIRST_SEEN.has(r[1])) FIRST_SEEN.set(r[1], r[0])
+const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a lit one 80)
+for (const r of rec.entities || []) if (r[2] === 'tnt' && r[9] && r[9].fuse !== undefined && TNT_FUSE[r[1]] === undefined && FIRST_SEEN.get(r[1]) === r[0]) TNT_FUSE[r[1]] = r[9].fuse
+const TNT_STATE = require('minecraft-data')(rec.version).blocksByName.tnt.defaultState
 const DEATHS = []
 {
   let open = null
@@ -213,8 +219,8 @@ function camAtLive (t) {
         const [sky, blk] = mesher.world.getLight(new Vec3(s.x + dx, s.y + dy, s.z + dz))
         lv = Math.max(lv, sky, blk)
       }
-      const l = lightmap(lv)
-      out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: p.tex, uv: p.uv, color: p.color.map(c => c * l) })
+      const l = p.bright ? 1 : lightmap(lv)
+      out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: s.tex || p.tex, uv: p.uv, color: p.color.map(c => c * l) })
     }
     return out
   }
@@ -250,6 +256,15 @@ function camAtLive (t) {
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
     const ents = entitiesAt(t, mesher)
+    // primed TNT (TntRenderer): the TNT block, white flash while (fuse / 5) % 2 == 0, swelling 30%
+    // over the last 10 ticks. Fuse from when the entity appeared (80 ticks by default).
+    for (const e of ents) {
+      if (e.name !== 'tnt') continue
+      const fuse = (TNT_FUSE[e.id] ?? 80) - (t - (FIRST_SEEN.get(e.id) ?? t))
+      let k = fuse < 10 ? 1 - Math.max(0, fuse) / 10 : 0; k *= k; k *= k
+      e.name = 'falling_block'
+      e.extra = { state: TNT_STATE, flash: Math.floor(Math.max(0, fuse) / 5) % 2 === 0, scale: 1 + k * 0.3 }
+    }
     for (const e of ents) {   // falling blocks: send each block type's mesh once
       if (e.name === 'falling_block' && e.extra && e.extra.state !== undefined && !sentBlocks.has(e.extra.state)) {
         sentBlocks.add(e.extra.state)

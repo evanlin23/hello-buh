@@ -40,6 +40,23 @@ function spawn (ev, blockTex) {
         g: 0, drag: 0.96, life: ev.type === 'angry' ? 16 + r() * 10 : 20 + r() * 20, size: ev.type === 'angry' ? 0.2 : 0.1, tex: ev.type === 'angry' ? 'particle/angry' : 'particle/glint', color: [1, 1, 1] })
     }
   }
+  if (ev.type === 'explosion') {
+    // HugeExplosionSeedParticle: for 8 ticks, 6 HugeExplosionParticles a tick within +-2 blocks;
+    // each lives 6-9 ticks, flips through explosion_0..15, size 2*(1 - r*0.5), grey, full bright
+    const big = (ev.radius || 4) >= 2
+    for (let k = 0; k < (big ? 8 : 1); k++) {
+      for (let i = 0; i < (big ? 6 : 1); i++) {
+        const g = r() * 0.6 + 0.4
+        out.push({ t0: T0 + k, x: ev.x + (r() - r()) * 4 * (big ? 1 : 0), y: ev.y + (r() - r()) * 4 * (big ? 1 : 0), z: ev.z + (r() - r()) * 4 * (big ? 1 : 0),
+          vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 6 + Math.floor(r() * 4), size: 2 * (1 - r() * 0.5), anim: ['particle/explosion_', 16], bright: true, color: [g, g, g] })
+      }
+    }
+    // smoke drifting up afterwards (poof / smoke from the blast)
+    for (let i = 0; i < 16; i++) {
+      out.push({ t0: T0 + 2 + Math.floor(r() * 6), x: ev.x + (r() - 0.5) * 5, y: ev.y + (r() - 0.5) * 3, z: ev.z + (r() - 0.5) * 5, vx: (r() - 0.5) * 0.05, vy: 0.04 + r() * 0.04, vz: (r() - 0.5) * 0.05,
+        g: 0, drag: 0.96, life: 20 + r() * 20, size: 0.5 + r() * 0.5, anim: ['particle/big_smoke_', 12], color: [0.7, 0.7, 0.7] })
+    }
+  }
   return out
 }
 
@@ -61,7 +78,8 @@ function state (p, t, solidAt) {
     vx *= p.drag; vy *= p.drag; vz *= p.drag
   }
   const f = age - steps
-  return { x: x + vx * f, y: y + vy * f, z: z + vz * f, size: p.size }
+  const frame = p.anim ? Math.min(p.anim[1] - 1, Math.floor(age * p.anim[1] / p.life)) : null
+  return { x: x + vx * f, y: y + vy * f, z: z + vz * f, size: p.size, tex: p.anim ? p.anim[0] + frame : undefined }
 }
 
 module.exports = { spawn, state }

@@ -135,6 +135,11 @@ export class EntityLayer {
       const bm = this.blockModels.get(extra.state)
       const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, 0, -0.5)
       obj = new THREE.Group(); obj.add(m); mat = m.material
+      if (extra.flash !== undefined) {   // primed TNT: white overlay that blinks
+        const w = new THREE.Mesh(bm.geo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, depthFunc: THREE.LessEqualDepth }))
+        w.position.set(-0.5, 0, -0.5); w.visible = !!extra.flash; obj.add(w)
+      }
+      if (extra.scale) obj.scale.setScalar(extra.scale)
     } else if (name === 'ender_pearl' || name === 'snowball' || name === 'egg' || name === 'item') {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       const t = await texture([`item/${itemName}`])
