@@ -237,3 +237,10 @@ each section.
 - **A dead player can't be targeted** by `facing entity <name>`. Use where they stood.
 - **Throw a pearl early in a fall.** The pearl inherits the player's velocity, so about 20 ticks into a fall (-1.3 blocks/tick) it dives short of the target (pearl_clutch: aim error 17–21 blocks, failed 5/5). Throw within about 10 ticks, and check feasibility with `simulate()` before rendering.
 - **Boats sit at the entity's feet:** the Bedrock boat geometry puts its hull bottom 15 px up, so the model is shifted down 1 block (worker 5: a villager "hung under" the hull). **Chickens are unreliable**: the converted model renders in pieces (body, wings and head separated), so don't use chickens in a stunt until it's fixed. Sheep, cows and pigs are fine.
+
+## Engine, round 3 (orchestrator)
+- **Check vanilla shaders straight from the jar.** `unzip -p work/client/1.21.11.jar assets/minecraft/shaders/core/<name>.fsh` gives the exact maths. Our lightmap had been a guess (one grey scalar); the real one keeps sky and block light apart and makes block light warm.
+- **Scale every part of a transform you rescale.** HAND_X moved the held item's rest position inward but not the swing's sideways lunge, so placements ballooned to the centre of the view.
+- **Items are 1 pixel thick** (ItemModelGenerator). A flat plane goes edge-on mid-swing and vanishes.
+- **Bedrock cube rotation without a pivot turns about the cube's centre.** The chicken was the only model that used it, and it rendered broken until this was fixed.
+- **Test entity models with a hand-made recording**: copy any .rec.json, inject entity rows at t=0..5 in front of the camera, and render with `ONLY=1`.
