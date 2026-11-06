@@ -41,6 +41,10 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         print(name, "no song file"); return
     src = d / "short_nosong.mp4"
     tl = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))["timeline"]
+    if stunt.get("speed"):   # time-lapse spans: the drop lands on the event in output time, as edit.py does
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from timewarp import Warp
+        tl = Warp(stunt["speed"], tl).timeline(tl)
     ev = {}
     for e in tl:
         ev.setdefault(e["event"], e["t"] / 1000)

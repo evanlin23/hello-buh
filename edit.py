@@ -441,6 +441,109 @@ def timer_frames(t0, t1, start_shift, outdir, hold=1.5):
     return t0 - start_shift, str(outdir / "timer_%04d.png")
 
 
+def clock_fmt(v, target, done):
+    """'0:00.47' while a clock of a minute or less runs, '37:12' for longer ones; '0:01', '1:00',
+    '60:00' once it reaches the target."""
+    if done:
+        v = target
+    m, sec = divmod(v, 60)
+    if done or target > 60:
+        return f"{int(m)}:{int(sec):02d}"
+    return f"{int(m)}:{sec:05.2f}"
+
+
+def clock_concat(spec, tl_ev, start, dur, outdir, fps=30):
+    """Big on-screen clocks for 'x in 1 second vs 1 minute vs 1 hour' Shorts. spec is a JSON list
+    of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL]: from the start event the clock counts from
+    0 to TARGET linearly over the span (so a sped-up time-lapse reads as that much time), then
+    turns green with a small pop and holds until the next clock starts. Returns an ffconcat list."""
+    clocks = []
+    for c in json.loads(spec):
+        a, b, target = c[0], c[1], float(c[2])
+        if a in tl_ev and b in tl_ev:
+            clocks.append((tl_ev[a] - start, tl_ev[b] - start, target, c[3] if len(c) > 3 else ""))
+    if not clocks:
+        return None
+    clocks.sort()
+    font = ImageFont.truetype(FONT, 124)
+    lfont = ImageFont.truetype(FONT, 54)
+    cache, runs = {}, []
+    n = int(math.ceil(dur * fps)) + 1
+    for i in range(n):
+        t = i / fps
+        cur = [c for c in clocks if c[0] <= t + 1e-6]
+        if not cur:
+            key = None
+        else:
+            t0, t1, target, label = cur[-1]
+            done = t >= t1 - 1e-6
+            v = target * min(1.0, max(0.0, (t - t0) / max(1e-6, t1 - t0)))
+            pop = 1.0
+            if done:   # a quick pop when it lands: 1.22 -> 1.0 over 0.25 s
+                k = (t - t1) / 0.25
+                pop = 1.0 + 0.22 * max(0.0, 1 - k) if k < 1 else 1.0
+            key = (clock_fmt(v, target, done), label, done, round(pop, 2))
+        if key not in cache:
+            path = outdir / f"clock{len(cache)}.png"
+            img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+            if key:
+                txt, label, done, pop = key
+                f_ = ImageFont.truetype(FONT, int(124 * pop)) if pop != 1.0 else font
+                d = ImageDraw.Draw(img)
+                y = BAND + 28
+                if label:
+                    lw = d.textlength(label, font=lfont)
+                    d.text(((W - lw) / 2, y), label, font=lfont, fill=(255, 220, 40, 255), stroke_width=6, stroke_fill=(0, 0, 0, 255))
+                    y += 66
+                tw = d.textlength(txt, font=f_)
+                color = (80, 255, 80, 255) if done else (255, 255, 255, 255)
+                d.text(((W - tw) / 2, y - (int(124 * pop) - 124) / 2), txt, font=f_, fill=color, stroke_width=8, stroke_fill=(0, 0, 0, 255))
+            img.save(path)
+            cache[key] = path
+        if runs and runs[-1][0] == cache[key]:
+            runs[-1][1] += 1
+        else:
+            runs.append([cache[key], 1])
+    lst = outdir / "clock.txt"
+    lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {k / fps:.4f}\n" for p, k in runs) + f"file '{runs[-1][0]}'\n")
+    return lst
+
+
+def apply_speed(args):
+    """--speed: rebuild the footage, the timeline and the game audio on the time-lapse map
+    (scripts/timewarp.py), so everything after this works in output time unchanged."""
+    sys.path.insert(0, str(HERE / "scripts"))
+    from timewarp import Warp, atempo
+    rec = json.loads(pathlib.Path(args.timeline).read_text())
+    warp = Warp(args.speed, rec["timeline"])
+    if not warp:
+        return
+    if not args.frames:
+        sys.exit("--speed needs --frames (a rendered frame sequence)")
+    wd = pathlib.Path(tempfile.mkdtemp(prefix="hb-speed-"))
+    src_dir = pathlib.Path(args.frames).parent
+    n_src = len(list(src_dir.glob("*" + pathlib.Path(args.frames).suffix)))
+    k = 0
+    while True:
+        i = int(round(warp.src(k / args.fps) * args.fps))
+        if i >= n_src:
+            break
+        (wd / (pathlib.Path(args.frames).name % k)).symlink_to((src_dir / (pathlib.Path(args.frames).name % i)).resolve())
+        k += 1
+    print(f"speed: {n_src} frames -> {k} ({', '.join(f'{a:.2f}-{b:.2f}s x{f:g}' for a, b, f in warp.spans)})")
+    args.frames = str(wd / pathlib.Path(args.frames).name)
+    (wd / "timeline.json").write_text(json.dumps({"timeline": warp.timeline(rec["timeline"])}))
+    args.timeline = str(wd / "timeline.json")
+    if args.audio:
+        segs = [s for s in warp.segments(n_src / args.fps) if s[2] != math.inf]
+        graph = [f"[0:a]asplit={len(segs)}" + "".join(f"[s{j}]" for j in range(len(segs)))] if len(segs) > 1 else ["[0:a]anull[s0]"]
+        for j, (a, b, f) in enumerate(segs):
+            graph.append(f"[s{j}]atrim={a:.4f}:{b:.4f},asetpts=PTS-STARTPTS" + (f",{atempo(f)}" if f != 1 else "") + f"[t{j}]")
+        graph.append("".join(f"[t{j}]" for j in range(len(segs))) + f"concat=n={len(segs)}:v=0:a=1[a]")
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.audio, "-filter_complex", ";".join(graph), "-map", "[a]", str(wd / "audio.wav")], check=True)
+        args.audio = str(wd / "audio.wav")
+
+
 def subtitle_png(text, path):
     """Green glowing in-world subtitle (like HelloBuh's re:zero Short): light green text with a
     soft green glow, centred in the game area, wrapped to 2 lines if long."""
@@ -487,6 +590,8 @@ def main():
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
+    ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
+    ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
     ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
     ap.add_argument("--timeline")
@@ -501,6 +606,8 @@ def main():
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    if args.speed and args.timeline:
+        apply_speed(args)
     _tl = {}
     if args.timeline:
         for e in json.loads(pathlib.Path(args.timeline).read_text())["timeline"]:
@@ -600,6 +707,13 @@ def main():
         graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[tmv]")
         graph.append(f"[{last}][tmv]overlay=0:0:eof_action=repeat[tmo]")
         last, n_in = "tmo", n_in + 1
+    if args.clock and args.timeline:
+        lst = clock_concat(args.clock, tl_ev, args.start, dur, tmp)
+        if lst:
+            inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
+            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[clv]")
+            graph.append(f"[{last}][clv]overlay=0:0:eof_action=repeat[clo]")
+            last, n_in = "clo", n_in + 1
     if args.subs and args.timeline:
         all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
         sub_starts = []
