@@ -5,7 +5,7 @@ const MID = ['..YYYYY..', '.YYYYYYY.', 'YYBYYYBYY', 'YYBYYYBYY', 'YYYYYYYYY', 'Y
 module.exports = pixelArt({
   name: 'looks_wrong',
   stages: [
-    { art: ['.YYYYY.', 'YYYYYYY', 'YYBYBYY', 'YYYYYYY', 'YBYYYBY', 'YYBBBYY', '.YYYYY.'], first: 'B', scatter: true },
+    { art: ['.YYY.', 'YBYBY', 'YYYYY', 'BYYYB', '.BBB.'], first: 'B', scatter: true },
     { art: MID, first: 'B', scatter: true },
     { art: pixelArt.upscale(MID, 2), first: 'B', scatter: true }
   ],
