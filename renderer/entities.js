@@ -129,7 +129,7 @@ function look (name, extra, regs) {
     // the converted model lacks the hat layer that profession outfits draw on
     return { model: 'villager', layers, rest: { arms: [0.75, 0, 0] }, extra: { head: [{ origin: [-4, 24, -4], size: [8, 10, 8], uv: [32, 0], inflate: 0.5 }] } }
   }
-  if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`] }
+  if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`], yOff: -1.0 }   // the Bedrock boat geometry sits its hull ~15 px up; Java's hull bottom is at the entity's feet
   if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
   if (name === 'chicken') return { model: 'chicken', layers: ['entity/chicken/temperate_chicken'], rest: { body: [-Math.PI / 2, 0, 0] } }   // the converted model lost the body's 90° turn
   if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
@@ -183,7 +183,7 @@ export class EntityLayer {
         }
       }
     }
-    const rec = { key, obj, bones, mat, woolMat, walk: 0, last: null }
+    const rec = { key, obj, bones, mat, woolMat, yOff: (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
     if (obj) this.scene.add(obj)
     this.live.set(id, rec)
     return rec
@@ -196,7 +196,7 @@ export class EntityLayer {
       seen.add(s.id)
       const r = await this.ensure(s.id, s.name, s.extra)
       if (!r.obj) continue
-      r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0), s.z)
+      r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       if (r.mat) r.mat.color.setScalar(s.light ?? 1)
       if (r.woolMat) {   // Sheep.getColor: dye colour x 0.75 (white x 0.9); jeb_ blends through all 16, 25 ticks each
         const L = s.light ?? 1
