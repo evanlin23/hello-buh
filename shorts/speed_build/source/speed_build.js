@@ -33,7 +33,7 @@ module.exports = {
   name: 'speed_build',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'Fastest house build 💀',
-  edit: { caption: 'Fastest house build 💀', song: 'songs/funk_abnormal.mp3', dropAt: 'done', start: 0.5, timer: 'build_start:done' },
+  edit: { caption: 'Fastest house build 💀', song: 'songs/funk_abnormal.mp3', dropAt: 'done', timer: 'build_start:done' , endAfter: 'done:1.3'},
 
   async setup (ctx) {
     const { bot } = ctx
