@@ -1,6 +1,6 @@
 // "rating every MLG clutch 💀" (~30 s, seven beats): the bot jumps off a glass block higher each time
 // (24 -> 56 blocks) and saves itself a different way, each with the height and a rating:
-// water bucket, slime block (bounce), hay bale (80% less damage), honey block, cobweb, powder snow...
+// water bucket, slime block (bounce), hay bale (80% less damage), honey block, cobweb, water again...
 // then a milk bucket: 0/10, death screen. Real survival placements, timed like water_clutch (place
 // when the ground comes into reach; heights stay under ~60 so the reach window isn't skipped at
 // fall speed, docs/clutch-timing.md). Back up by teleport (hard cuts).
@@ -10,7 +10,7 @@ const CLUTCHES = [
   { item: 'hay_block', h: 36, sub: 'hay bale: 7/10 (ouch)' },
   { item: 'honey_block', h: 42, sub: 'honey block: 6/10' },
   { item: 'cobweb', h: 48, sub: 'cobweb: 11/10' },
-  { item: 'powder_snow_bucket', h: 52, sub: 'powder snow: 10/10' },
+  { item: 'water_bucket', h: 52, sub: 'water bucket (again): 10/10' },   // powder snow killed the bot every try (mineflayer doesn't sink into it)
   { item: 'milk_bucket', h: 56, sub: 'milk bucket: 0/10' }
 ]
 const TOP = 60
