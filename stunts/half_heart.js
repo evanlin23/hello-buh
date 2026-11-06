@@ -4,7 +4,7 @@ module.exports = {
   ...clutch,
   name: 'half_heart',
   caption: "POV: you're on half a heart 💀",
-  edit: { caption: "POV: you're on half a heart 💀", red: 'half', song: 'songs/misery.mp3', dropAt: 'placed' , startAt: 'jump:-1.0', endAfter: 'placed:2.4'},
+  edit: { caption: "POV: you're on half a heart 💀", red: 'half', song: 'songs/misery.mp3', dropAt: 'placed' , startAt: 'jump:-0.8', endAfter: 'placed:2.4'},
   async setup (ctx) {
     const set = await clutch.setup.call(this, ctx)
     await ctx.cmd('/gamerule natural_health_regeneration false')        // or full saturation heals it right back

@@ -174,3 +174,7 @@ each section.
   - there's no equip animation when the held item changes (the old item should lower and the new one rise);
   - portal particles rise in a column above the frame instead of drifting over the portal face;
   - a standing bot gets no idle hand sway, so even short waits look frozen.
+- **Translucent quads are one-sided (outward), like vanilla.** The only exception is a water top surface, which also gets its back face so it shows from underwater. Both windings everywhere made a lone water block show its inside walls from above, like a glass box.
+- **Landing splashes spread wide** (count ≥ 30 → 2.6 blocks). The eye sits right above the splash, and particles within 1 block of it are culled.
+- **Clutch openings look straight down the pillar** (pitch -1.35). At -0.6 from 60 blocks up, the first second was ocean horizon, and nobody could tell you were on a pillar.
+- **A reviewer's "physics" finding can be a camera finding.** The half_heart "hover above the water" was the bot already landed (the recording shows y=70 from the next tick) with the eye 1.6 above the water. The real problem was what the water looked like. Check the recording before changing physics.

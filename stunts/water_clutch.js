@@ -8,7 +8,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'water bucket clutch 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'water bucket clutch 💀', song: 'songs/misery.mp3', dropAt: 'placed' , startAt: 'jump:-1.0', endAfter: 'placed:2.4'},
+  edit: { caption: 'water bucket clutch 💀', song: 'songs/misery.mp3', dropAt: 'placed' , startAt: 'jump:-0.8', endAfter: 'placed:2.4'},
 
   async setup (ctx) {
     const { bot } = ctx
@@ -38,8 +38,10 @@ module.exports = {
     const floor = this.floor
     const mode = this.mode || 'ok'                     // ok | skip (never places) | late (too late)
     await bot.waitForTicks(this.fast ? 6 : 30)         // standing on the pillar
-    if (!this.fast) await ctx.easeLook(0, -1.0, 600)   // peek over the edge
-    await ctx.easeLook(0, -0.6, this.fast ? 250 : 400)       // eyes on the drop while jumping off
+    // peek straight down the pillar (at -0.6 from 60 up the view was just the horizon: the frame
+    // review read 1 s of ocean as "idle, can't tell you're on a pillar")
+    if (!this.fast) await ctx.easeLook(0, -1.35, 500)
+    await ctx.easeLook(0, -1.0, this.fast ? 250 : 300)       // eyes on the drop while jumping off
     ctx.select(1)                                      // pull out the water bucket
     await bot.waitForTicks(6)
     ctx.mark('jump')
@@ -68,7 +70,7 @@ module.exports = {
         process.nextTick(() => bot.activateItem())
         ctx.log('water placed at height', above.toFixed(2))
       }
-      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 30 }) }
+      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 60, spread: 2.6 })   // wide: particles within 1 block of the eye are culled, and the eye is right above the water }
       if ((placed || mode !== 'ok') && (bot.entity.onGround || bot.entity.isInWater)) landed = true
     }
     bot.on('physicsTick', onTick)

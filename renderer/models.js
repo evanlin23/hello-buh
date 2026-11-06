@@ -224,6 +224,9 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
     const P = opaque ? attr.positions : attr.t_positions, N = opaque ? attr.normals : attr.t_normals
     const UV = opaque ? attr.uvs : attr.t_uvs, C = opaque ? attr.colors : attr.t_colors
     const n0 = P.length / 3
+    // vanilla LiquidBlockRenderer: sides and bottom face outward only (culled from inside); the
+    // top surface also gets its backward face so it shows from underwater
+    if (!opaque && isUp) { if (!attr.t_double) attr.t_double = new Set(); attr.t_double.add(n0 / 4) }
     for (const pos of corners) {
       const height = cornerHeights[pos[2] * 2 + pos[0]]
       P.push(
@@ -528,14 +531,17 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
     }
   }
 
-  // Keep translucent (water/lava) quads separate so the page can draw them blended, after the
-  // opaque pass. Both windings, so water surfaces show from below too.
+  // Keep translucent quads separate so the page can draw them blended, after the opaque pass.
+  // One winding (outward), except water top surfaces, which get both (seen from underwater too).
+  // Both windings everywhere showed a lone water block's inside walls from above, like a glass box.
   attr.t_indices = []
   let ndx = 0
   for (let i = 0; i < attr.t_positions.length / 12; i++) {
-    attr.t_indices.push(ndx, ndx + 1, ndx + 2, ndx + 2, ndx + 1, ndx + 3, ndx, ndx + 2, ndx + 1, ndx + 2, ndx + 3, ndx + 1)
+    attr.t_indices.push(ndx, ndx + 1, ndx + 2, ndx + 2, ndx + 1, ndx + 3)
+    if (attr.t_double && attr.t_double.has(i)) attr.t_indices.push(ndx, ndx + 2, ndx + 1, ndx + 2, ndx + 3, ndx + 1)
     ndx += 4
   }
+  delete attr.t_double
   return attr
 }
 
