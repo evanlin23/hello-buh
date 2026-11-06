@@ -1,0 +1,106 @@
+{
+  "name": "sand_tower",
+  "caption": "the torch trick never gets old 😭",
+  "youtube": {
+    "title": "the torch trick never gets old 😭 #minecraft #shorts",
+    "description": "the torch trick never gets old 😭\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "break",
+    "drop_in_song_s": 10.5,
+    "drop_in_short_s": 1.75,
+    "song_start_s": 8.75
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 5.85,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 2574167,
+    "sha256": "45076933e592e09c2f87684855b25d23db366398df50443d589cb3fe09daf6cf"
+  },
+  "edit": {
+    "caption": "the torch trick never gets old 😭",
+    "red": "torch",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "break",
+    "start": 0.4,
+    "args": [
+      "--caption",
+      "the torch trick never gets old 😭",
+      "--red",
+      "torch",
+      "--start",
+      "0.4",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "break"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 388,
+      "y": 62,
+      "z": -57
+    },
+    "biome": "minecraft:plains",
+    "ticks": 126,
+    "seconds": 6.3,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 2.15,
+        "event": "break"
+      },
+      {
+        "t": 6.3,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "c4cd22e63c697a1c5f0c8c7daa19015fcd7329f3",
+    "rendered_at": "2026-11-06T11:14:50.061Z",
+    "head_at_publish": "c4cd22e63c697a1c5f0c8c7daa19015fcd7329f3",
+    "stunt": "stunts/sand_tower.js",
+    "source_snapshot": [
+      "source/sand_tower.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout c4cd22e63c69",
+    "gunzip -c shorts/sand_tower/recording.json.gz > work/sand_tower.rec.json",
+    "node render.js work/sand_tower.rec.json work/sand_tower.frames 60 1080 1011",
+    "python3 audio.py work/sand_tower.rec.json work/sand_tower.wav",
+    "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old 😭\" --red torch --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at break --out out/sand_tower.mp4"
+  ],
+  "status": "ready",
+  "notes": "",
+  "published_at": "2026-11-06T11:15:12.445Z"
+}

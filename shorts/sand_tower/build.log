@@ -1,0 +1,21 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+11:11:51.765 spawned at Vec3 { x: 132.5, y: 70, z: 7.5 }
+11:11:52.036 nearest minecraft:plains at [ 388, -57 ]
+11:12:04.115 set at { x: 388, y: 62, z: -57 }
+11:12:10.937 STUNT OK
+meshing from y 8
+light computed in 0.6 s
+meshed + uploaded world in 13.6 s
+64 particles
+page: Failed to load resource: the server responded with a status of 404 (Not Found)
+rendered 375 frames (6.25 s of video) in 125.1 s = 20.0 s per video second
+wrote work/sand_tower.wav 6.30s
+song drop at 10.50s lands on 1.75s of the Short (song starts at 8.75s)
+no 3D block icons needed
+wrote out/sand_tower.mp4 5.85s
+
+real	3m15.866s
+user	3m12.370s
+sys	0m9.434s
+exit=0
