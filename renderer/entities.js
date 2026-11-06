@@ -91,7 +91,7 @@ function build (geo, texInfo, extraCubes = {}) {
     const piv = new THREE.Vector3(...(b.pivot || [0, 0, 0]))
     const parent = b.parent && defs[b.parent] ? make(defs[b.parent]) : null
     const ppiv = parent ? parent.userData.pivot : new THREE.Vector3()
-    g.position.copy(piv.clone().sub(ppiv))
+    g.position.copy(piv.clone().sub(ppiv)); g.userData.restPos = g.position.clone()
     g.userData.pivot = piv
     // bind_pose_rotation turns only this bone's own cubes (Bedrock legacy geometry: a pig's body
     // lies flat, its legs and head don't); rotation turns the bone with its children
@@ -140,8 +140,17 @@ function look (name, extra, regs) {
   if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
+  // any other mob with converted geometry: its default texture (checked by eye in a line-up render)
+  // not yet: the witch draws only its hat and the horse family gets stray saddle/bag parts (their
+  // converted geometry needs animation-placed bones); better hidden than broken
+  if (/^(witch|horse|donkey|mule|skeleton_horse|zombie_horse)$/.test(name)) return null
+  const m = MODELS && MODELS[name]
+  const t = m && m.textures && (m.textures.default || Object.values(m.textures)[0])
+  if (t && m.geometry && m.geometry.default) return { model: name, layers: [FALLBACK_TEX[name] || t.replace(/^textures\//, '')] }
   return null
 }
+// textures that moved since the converted models were made
+const FALLBACK_TEX = { squid: 'entity/squid/squid', cat: 'entity/cat/tabby', ocelot: 'entity/cat/ocelot', wolf: 'entity/wolf/wolf', horse: 'entity/horse/horse_brown', fox: 'entity/fox/fox', rabbit: 'entity/rabbit/brown', parrot: 'entity/parrot/parrot_red_blue', llama: 'entity/llama/creamy', panda: 'entity/panda/panda' }
 
 // ---------------------------------------------------------------------------------------------
 // The player (third person): built in Java model space so PlayerRenderer's pose chain,
@@ -382,6 +391,17 @@ export class EntityLayer {
       r.last = { x: s.x, z: s.z, t: tick }
       const swing = Math.cos(r.walk * 0.6662) * 1.4 * (r.amt || 0)
       const B = r.bones
+      if (s.name === 'blaze' && B.upperBodyParts0) {
+        // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
+        // part positions are y-down from 24 px up; the converted rods sit at that origin
+        const age = tick + (s.id % 97) * 3
+        const ring = (i0, f0, r, yOf) => { let f = f0; for (let i = i0; i < i0 + 4; i++, f++) { const b = B['upperBodyParts' + i]; if (b) b.position.set(b.userData.restPos.x + Math.cos(f) * r, b.userData.restPos.y - yOf(i), b.userData.restPos.z + Math.sin(f) * r) } }
+        ring(0, age * Math.PI * -0.1, 9, (i) => -2 + Math.cos((i * 2 + age) * 0.25))
+        ring(4, Math.PI / 4 + age * Math.PI * 0.03, 7, (i) => 2 + Math.cos((i * 2 + age) * 0.25))
+        ring(8, 0.47123894 + age * Math.PI * -0.05, 5, (i) => 11 + Math.cos((i * 1.5 + age) * 0.5))
+      }
+      // SlimeRenderer.scale: 0.999 x size (metadata), drawn from the size-1 model
+      if ((s.name === 'slime' || s.name === 'magma_cube') && s.extra && s.extra.size) r.obj.scale.setScalar(0.999 * s.extra.size)
       // bipeds: legs opposite, arms against the legs. Quadrupeds (QuadrupedModel: creeper, pig):
       // leg0/leg1 hind right/left, leg2/leg3 front right/left; diagonal pairs move together.
       if (!B.leg4) for (const [n, sign] of [['leg0', 1], ['rightLeg', 1], ['leg1', -1], ['leftLeg', -1], ['leg2', -1], ['leg3', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
