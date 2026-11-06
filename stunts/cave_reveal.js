@@ -61,7 +61,9 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 3} ${F} ${z - 3} ${x + 3} ${F} ${z + 3} water`)
     // lava pits around it: contained by the stone floor, and they light the cave (an unlit cave is
     // ~3% brightness in vanilla, i.e. black)
-    for (const [dx, dz] of [[8, 0], [-8, 2], [1, 8], [-2, -8], [7, -7], [-7, 7]]) {
+    // 13 pits, spread out toward the walls: with 6 the far half of the cavern sat at light 0, which is
+    // black even on Bright (frame review). Lava is the cave's lighting rig.
+    for (const [dx, dz] of [[8, 0], [-8, 2], [1, 8], [-2, -8], [7, -7], [-7, 7], [10, 5], [-10, -3], [4, 11], [-5, -11], [11, -4], [-11, 9], [5, -12]]) {
       await ctx.cmd(`/fill ${x + dx - 1} ${F} ${z + dz - 1} ${x + dx + 1} ${F} ${z + dz + 1} lava replace stone`)
     }
     // lavafall in the west chamber and a waterfall in the north one: source at the top, falling
@@ -113,10 +115,12 @@ module.exports = {
     // look around the cavern from the pool, never still: up across the ore walls, along the
     // lavafall, and end drifting on the lavafall (the waterfall corner was the darkest shot)
     await ctx.easeLook(1.6, 0.25, 1100)                      // up at the ore walls
-    await ctx.easeLook(2.6, 0.1, 1100)                       // across to the waterfall
-    await ctx.easeLook(1.2, 0.0, 1300)                       // back to the lavafall
-    ctx.easeLook(0.9, 0.12, 1600)                            // slow drift to the end
-    await bot.waitForTicks(20)
+    await ctx.easeLook(2.6, 0.1, 1000)                       // across to the waterfall
+    // end ON the lavafall, drifting up it (the old ending panned off it into the dark corner)
+    const fall = new Vec3(this.x - 9 + 0.5, this.floor - 14, this.z + 7 + 0.5)
+    await ctx.easeLookAt(fall, 900)
+    ctx.easeLookAt(fall.offset(0, 4, 0), 1500)
+    await bot.waitForTicks(22)
     return splashed && !ctx.died
   }
 }
