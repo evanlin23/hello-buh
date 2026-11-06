@@ -21,7 +21,7 @@ module.exports = {
   name: 'story_same_spot',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'ALWAYS', story: 'stories/same_spot', startAt: 'line:0', endAfter: 'story_end:0' },
+  edit: { caption: CAPTION, red: 'ALWAYS', story: 'stories/same_spot', startAt: 'line:0', endAfter: 'sting:0.5' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -115,10 +115,10 @@ module.exports = {
     const ticks = (id) => Math.round((S.line(id).dur + S.gap) * 20)
 
     // camera: a sway on a global clock that eases in after every cut (no lurch on the first frames)
-    let g = 0, since = 0, amp = 1
+    let g = 0, since = 0, amp = 1, hold = false
     const look = (k, dyaw = 0, dpitch = 0) => {
       g++; since++
-      amp += ((running ? 1 : 0) - amp) * 0.25          // the camera holds still while the world is frozen
+      amp += ((hold ? 0 : 1) - amp) * 0.25             // the camera holds still at the village edge while it's frozen
       const a = Math.min(1, since / 14) * amp
       return bot.look(K.base.yaw + dyaw + Math.sin(g / 21) * 0.08 * a, K.base.pitch + dpitch + Math.sin(g / 29 + 1) * 0.03 * a, true)
     }
@@ -171,7 +171,7 @@ module.exports = {
         s.vy -= 0.08; s.y = Math.max(1, s.y + s.vy)
         if (s.y <= 1) { s.mode = 'walk'; s.t = 0 }
       } else if (s.mode === 'walk') {
-        s.t++; s.x = 3.6 + Math.min(s.t / 20, 1) * 0.6 + Math.sin(s.t / 25) * 0.5; s.yaw = 50 - 140 * Math.max(-1, Math.min(1, Math.cos(s.t / 25) * 3)) / 2
+        s.t++; s.x = 3.6 + Math.min(s.t / 20, 1) * 0.6 + Math.sin(s.t / 25) * 0.5; s.yaw = -90 * Math.max(-1, Math.min(1, Math.cos(s.t / 25) * 3))
       } else if (s.mode === 'hop') {
         s.t++; s.y = 1 + Math.sin(Math.min(s.t, 6) / 12 * Math.PI) * 1.2      // rises to its apex... and stops there
         if (s.t >= 6) { s.mode = 'frozen'; s.t = 0 }
@@ -209,7 +209,7 @@ module.exports = {
     await line('L05', async (k) => {
       world()
       if (k === 3) ctx.sound('block.furnace.fire_crackle', 1, 1)
-      go(k > 2 && bot.entity.position.x > X - 0.2)
+      go(k > 2 && k % 3 !== 0 && bot.entity.position.x > X + 0.4)   // a slow push in
       aimAt(P(-1.5, 2.5, -4.5)); look(k)
     })
     // L06: I walk up and everything starts at once: the sheep lands, Mom turns to me
@@ -220,7 +220,7 @@ module.exports = {
         ctx.mark('face_on', { near: [X + MOM[0], Z + MOM[1], 1], head: true })
         ctx.sound('entity.sheep.ambient', 0.8, 1)
       }
-      world(); go(bot.entity.position.z > Z + 2.4); aimAt(P(1.8, 2.0, -1.4)); look(k)
+      world(); go(bot.entity.position.z > Z + 2.4); aimAt(P(2.6, 2.0, -1.2)); look(k)
     })
     // L07: "back already? you just left"
     await cut(1.4, 1.0, momFace())
@@ -246,14 +246,14 @@ module.exports = {
     await line('L11', async (k, at) => {
       back((k >= at(0) + 2 && bot.entity.position.z < Z + 34.0) || (k > at(3) && k % 10 < 2))
       if (k === at(3) - 6) hopUp()
-      if (k === at(3)) { running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
+      if (k === at(3)) { running = false; hold = true; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
       world(); look(k, k > at(3) ? Math.sin(k / 6) * 0.04 : 0)
     })
     back(false)
     // L12: one step back in, and it all kept going (the two land)
     await line('L12', async (k, at) => {
       go(k >= at(0) && bot.entity.position.z > Z + 32.6)
-      if (k === at(0) + 4) running = true                // the village starts on BACK
+      if (k === at(0) + 4) { running = true; hold = false }   // the village starts on BACK
       world(); look(k)
     })
     go(false)
@@ -267,9 +267,6 @@ module.exports = {
       look(k)
     })
     ctx.mark('face_off')
-    // L14: she's only ever lived the minutes I was home (from inside, past her, out the door)
-    await cut(-1.0, -6.5, P(1.3, 2.2, -1.9))   // through the doorway to her
-    await line('L14', async (k) => { world(); go(k > 2 && bot.entity.position.z < Z - 4.6); aimAt(P(1.3, 2.2, -1.9)); look(k) })
     // L15: I left at seven (beside her: the empty street). For her, that was this morning (turn to her).
     await cut(2.6, -0.6, P(0.5, 1.7, 26))
     ctx.mark('face_on', { near: [X + MOM[0], Z + MOM[1], 1], head: true })
@@ -302,7 +299,7 @@ module.exports = {
       } else {                                             // hard cut: looking back at her from down the street
         if (phase === 1) { phase = 2; await cut(2.2, 6.6, P(2.4, 2.1, -1.2)); dsheep.mode = 'hop'; dsheep.t = 0 }
         back(k < at(5) - 2)
-        if (k === at(5)) { ctx.mark('face_off'); running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
+        if (k === at(5)) { ctx.mark('face_off'); ctx.mark('sting'); running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
       }
       world(); look(k)
     }, -0.1)
