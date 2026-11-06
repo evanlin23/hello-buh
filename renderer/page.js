@@ -408,10 +408,61 @@ async function handObject (h) {
   handCache.set(h.key, out)
   return out
 }
+// The bare arm when nothing is held (ItemInHandRenderer.renderPlayerArm + PlayerModel.rightArm,
+// default wide Steve skin). Model units are pixels (1/16 block), used as-is like the game does.
+let ARM = null
+async function armObject () {
+  if (ARM) return ARM
+  const t = await loadTexture('/assets/env/entity/player/wide/steve.png')
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
+  const g = new THREE.BoxGeometry(4 / 16, 12 / 16, 4 / 16)
+  // box UV at (40,16), size 4x12x4 on a 64x64 skin; BoxGeometry face order: +x, -x, +y, -y, +z, -z
+  // model space is y-down: y=0 (the shoulder, the skin's sleeve rows) is our -y end, so side faces run
+  // top-down from -y and the 'top' rect goes on -y, the 'bottom' (the fist) on +y
+  const rect = { px: [48, 20, 4, 12], nx: [40, 20, 4, 12], py: [48, 16, 4, 4], ny: [44, 16, 4, 4], pz: [44, 20, 4, 12], nz: [52, 20, 4, 12] }
+  const uv = g.attributes.uv, order = ['px', 'nx', 'py', 'ny', 'pz', 'nz']
+  for (let f = 0; f < 6; f++) {
+    const [u, v, w, h] = rect[order[f]]
+    for (let k = 0; k < 4; k++) {
+      const i = f * 4 + k, a = uv.array[i * 2], b = uv.array[i * 2 + 1]
+      uv.array[i * 2] = (u + a * w) / 64; uv.array[i * 2 + 1] = (v + (f === 2 || f === 3 ? 1 - b : b) * h) / 64   // flipY off: v runs top-down; sides flipped (y-down model)
+    }
+  }
+  uv.needsUpdate = true
+  const mat = new THREE.MeshBasicMaterial({ map: t, alphaTest: 0.1 })
+  const mesh = new THREE.Mesh(g, mat)
+  mesh.position.set(-6 / 16, 6 / 16, 0)      // the cube's centre: pivot (-5,2,0) + (-3..1, -2..10, -2..2)
+  const obj = new THREE.Group(); obj.add(mesh); obj.matrixAutoUpdate = false
+  ARM = { obj, mat }
+  return ARM
+}
+
 async function drawHand (cam) {
   if (handObj) { handScene.remove(handObj.obj); handObj = null }
   const h = cam.hand
   if (!h || cam.dead) return false
+  if (!h.key) {   // empty hand: the arm
+    const r = await armObject()
+    const a = h.swing || 0, g = Math.sqrt(a)
+    const M = new THREE.Matrix4().makeTranslation((-0.3 * Math.sin(g * Math.PI) + 0.64) * HAND_X, 0.4 * Math.sin(g * Math.PI * 2) - 0.6 + (h.equip || 0) * -0.6, -0.4 * Math.sin(a * Math.PI) - 0.72)
+    M.multiply(new THREE.Matrix4().makeRotationY(45 * D2R))
+    M.multiply(new THREE.Matrix4().makeRotationY(Math.sin(g * Math.PI) * 70 * D2R))
+    M.multiply(new THREE.Matrix4().makeRotationZ(Math.sin(a * a * Math.PI) * -20 * D2R))
+    M.multiply(new THREE.Matrix4().makeTranslation(-1, 3.6, 3.5))
+    M.multiply(new THREE.Matrix4().makeRotationZ(120 * D2R))
+    M.multiply(new THREE.Matrix4().makeRotationX(200 * D2R))
+    M.multiply(new THREE.Matrix4().makeRotationY(-135 * D2R))
+    M.multiply(new THREE.Matrix4().makeTranslation(5.6, 0, 0))
+    r.obj.matrix.copy(M)
+    r.mat.color.setScalar(h.light ?? 1)
+    handScene.add(r.obj); handObj = { obj: r.obj }
+    handCam.position.set(0, 0, 0)
+    handCam.rotation.set(-(cam.bobPitch || 0), 0, cam.roll || 0)
+    if (cam.bobX) handCam.translateX(cam.bobX)
+    if (cam.bobY) handCam.translateY(cam.bobY)
+    handCam.updateMatrixWorld()
+    return true
+  }
   const r = await handObject(h)
   if (!r) return false
   // swing (renderArmWithItem + applyItemArmAttackTransform), equip drop (applyItemArmTransform)

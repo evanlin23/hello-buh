@@ -155,7 +155,6 @@ function handAt (t) {
   if (!HAND.length) return null
   const i = Math.max(0, Math.min(HAND.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
   const [name, h0] = HAND[i], h1 = HAND[i + 1][1]
-  if (!name) return null
   const h = HAND[i + 1][0] === name ? h0 + (h1 - h0) * f : h0
   let swing = 0
   for (const s of SWINGS) if (s <= t && t - s < 6) swing = (t - s) / 6
