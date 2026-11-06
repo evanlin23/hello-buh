@@ -284,6 +284,7 @@ window.HB = {
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawParticles(parts)
+    drawSelection(cam)
     renderer.render(scene, camera)
     if (await drawHand(cam)) {
       const ac = renderer.autoClear; renderer.autoClear = false
@@ -291,6 +292,38 @@ window.HB = {
       renderer.autoClear = ac
     }
     return true
+  }
+}
+
+// Block outline (LevelRenderer.renderHitOutline: black lines, alpha 0.4, the block's shape grown by
+// 0.002) and the crack overlay while mining (ModelBakery.DESTROY_TYPES: destroy_stage_N drawn over
+// the block with DST_COLOR x SRC_COLOR x 2 blending, so the cracks darken and the rest is unchanged)
+let outline = null, crack = null
+function drawSelection (cam) {
+  if (!outline) {
+    outline = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1, 1, 1)), new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.4, fog: false }))
+    outline.renderOrder = 2; scene.add(outline)
+    const mat = new THREE.MeshBasicMaterial({ map: opaqueMat.map, transparent: true, alphaTest: 0.1, depthWrite: false, fog: false,
+      blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.DstColorFactor, blendDst: THREE.SrcColorFactor,
+      polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 })
+    crack = new THREE.Mesh(new THREE.BoxGeometry(1.002, 1.002, 1.002), mat)
+    crack.userData.uv0 = Float32Array.from(crack.geometry.attributes.uv.array)
+    crack.renderOrder = 2; scene.add(crack)
+  }
+  const tg = cam.target
+  outline.visible = !!tg
+  if (tg) {
+    const [x0, y0, z0, x1, y1, z1] = tg.box
+    outline.scale.set(x1 - x0 + 0.004, y1 - y0 + 0.004, z1 - z0 + 0.004)
+    outline.position.set(tg.x + (x0 + x1) / 2, tg.y + (y0 + y1) / 2, tg.z + (z0 + z1) / 2)
+  }
+  const ck = cam.crack
+  crack.visible = !!(ck && ck.uv)
+  if (crack.visible) {
+    crack.position.set(ck.x + 0.5, ck.y + 0.5, ck.z + 0.5)
+    const a = crack.geometry.attributes.uv, u0 = crack.userData.uv0, { u, v, su, sv } = ck.uv
+    for (let i = 0; i < a.count; i++) { a.array[i * 2] = u + u0[i * 2] * su; a.array[i * 2 + 1] = v + (1 - u0[i * 2 + 1]) * sv }
+    a.needsUpdate = true
   }
 }
 

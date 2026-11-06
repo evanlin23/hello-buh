@@ -132,6 +132,35 @@ function handAt (t) {
   for (const s of SWINGS) if (s <= t && t - s < 6) swing = (t - s) / 6
   return { name, equip: 1 - h, swing }
 }
+// Digging (from the harness's block_dig marks): [startTick, endTick, x, y, z, digTicks]. The client
+// shows destroy_stage_(floor(progress * 10) - 1) on the block, like LevelRenderer.destroyBlockProgress.
+const DIGS = []
+{
+  let cur = null
+  for (const e of rec.timeline || []) {
+    if (e.event === 'dig') { if (cur) DIGS.push(cur); cur = [e.t / 50, Infinity, e.x, e.y, e.z, Math.max(1, e.ms / 50)] }
+    if (e.event === 'dig_end' && cur) { cur[1] = e.t / 50; DIGS.push(cur); cur = null }
+  }
+  if (cur) DIGS.push(cur)
+}
+const ATLAS_UV = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(__dirname, 'work', 'assets', rec.version, 'atlas.json'))); return a.textures || a } catch (e) { return {} } })()
+// the block under the crosshair within reach (4.5, survival): vanilla outlines it in black
+function targetBlock (cam, world) {
+  const d = { x: -Math.sin(cam.yaw) * Math.cos(cam.pitch), y: Math.sin(cam.pitch), z: -Math.cos(cam.yaw) * Math.cos(cam.pitch) }
+  const v = new Vec3(0, 0, 0)
+  for (let s = 0.05; s <= 4.5; s += 0.05) {
+    v.x = Math.floor(cam.x + d.x * s); v.y = Math.floor(cam.y + d.y * s); v.z = Math.floor(cam.z + d.z * s)
+    const b = world.getBlock(v)
+    if (!b || /^(air|cave_air|void_air|water|lava|light|bubble_column)$/.test(b.name)) continue
+    const sh = b.shapes && b.shapes.length ? b.shapes : null
+    if (!sh) continue
+    const box = [Math.min(...sh.map(q => q[0])), Math.min(...sh.map(q => q[1])), Math.min(...sh.map(q => q[2])), Math.max(...sh.map(q => q[3])), Math.max(...sh.map(q => q[4])), Math.max(...sh.map(q => q[5]))]
+    const px = cam.x + d.x * s - v.x, py = cam.y + d.y * s - v.y, pz = cam.z + d.z * s - v.z
+    if (px < box[0] - 0.01 || px > box[3] + 0.01 || py < box[1] - 0.01 || py > box[4] + 0.01 || pz < box[2] - 0.01 || pz > box[5] + 0.01) continue
+    return { x: v.x, y: v.y, z: v.z, box }
+  }
+  return null
+}
 const DEATHS = []
 {
   let open = null
@@ -363,6 +392,16 @@ function camAtLive (t) {
     cam.inLava = !!(inBlock && inBlock.name === 'lava')
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
+    // block outline under the crosshair + the crack overlay while digging
+    if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
+      cam.target = targetBlock(cam, mesher.world)
+      if (process.env.DEBUG_TARGET && cam.target) console.log("target", t, cam.target.x, cam.target.y, cam.target.z)
+      const dg = DIGS.find(([a, b]) => t >= a && t < b)
+      if (dg) {
+        const stage = Math.floor(Math.min(1, (t - dg[0]) / dg[5]) * 10) - 1
+        if (stage >= 0) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
+      }
+    }
     const ents = entitiesAt(t, mesher)
     // first-person held item
     const hd = handAt(t)
