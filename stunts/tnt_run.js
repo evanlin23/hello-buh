@@ -36,6 +36,13 @@ module.exports = {
     const wave = () => {
       if (n++ % 3) return
       const w = 2 + Math.min(4, Math.floor(n / 30))
+      const pz = bot.entity.position.z
+      if (pz - front < 4) {   // caught up (the blasts knock the bot back, so it'd escape otherwise)
+        const px = bot.entity.position.x
+        for (const [dx, dz] of [[0, 0], [1, 0], [-1, 0], [0, 1]]) bot.chat(`/summon tnt ${(px + dx).toFixed(1)} ${floor + 1} ${(pz + dz).toFixed(1)} {fuse:6}`)
+        front = pz - 1
+        return
+      }
       for (const dx of [-w, 0, w]) bot.chat(`/summon tnt ${x + dx + 0.5} ${floor + 1} ${front + 0.5} {fuse:10}`)
       front += 1
     }
