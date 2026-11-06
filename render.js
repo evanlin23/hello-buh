@@ -852,8 +852,17 @@ function camAtLive (t) {
     }
     await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), parts])
     // let the compositor present the finished frame before capturing (else: tearing lines)
-    await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
-    await page.screenshot({ path: `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png` })
+    const outPng = `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png`
+    if (process.env.SCREENSHOT) {   // the old capture: let the compositor present the frame, then screenshot
+      await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
+      await page.screenshot({ path: outPng })
+    } else {
+      // read the WebGL drawing buffer itself (preserveDrawingBuffer, alpha off). A screenshot comes
+      // from the compositor, and on a busy machine it sometimes returned the previous frame: walks
+      // juddered with 1-3 repeated ticks (worker 5, story_runaway, rendered next to a bot run)
+      const url = await page.evaluate(() => document.querySelector('canvas').toDataURL('image/png'))
+      fs.writeFileSync(outPng, Buffer.from(url.slice(url.indexOf(',') + 1), 'base64'))
+    }
     if (f % 60 === 0) console.log(`frame ${f}/${frames}`)
   }
   const secs = (Date.now() - t1) / 1000
