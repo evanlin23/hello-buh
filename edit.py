@@ -480,7 +480,8 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
     of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL]: from the start event the clock counts from
     0 to TARGET linearly over the span (so a sped-up time-lapse reads as that much time), then
     turns green with a small pop and holds until the next clock starts. The first clock shows
-    at 0 for `lead` seconds before its start, so the first block never lands before the clock. Returns an ffconcat list."""
+    at 0 for `lead` seconds before its start, so the first block never lands before the clock. Returns
+    an image-sequence pattern, one frame per output frame at `fps`."""
     clocks = []
     for c in json.loads(spec):
         a, b, target = c[0], c[1], float(c[2])
@@ -491,7 +492,9 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
     clocks.sort()
     font = ImageFont.truetype(FONT, 124)
     lfont = ImageFont.truetype(FONT, 54)
-    cache, runs = {}, []
+    cache = {}
+    seq = outdir / "clockseq"
+    seq.mkdir()
     n = int(math.ceil(dur * fps)) + 1
     for i in range(n):
         t = i / fps
@@ -524,13 +527,10 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
                 d.text(((W - tw) / 2, y - (int(124 * pop) - 124) / 2), txt, font=f_, fill=color, stroke_width=8, stroke_fill=(0, 0, 0, 255))
             img.save(path)
             cache[key] = path
-        if runs and runs[-1][0] == cache[key]:
-            runs[-1][1] += 1
-        else:
-            runs.append([cache[key], 1])
-    lst = outdir / "clock.txt"
-    lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {k / fps:.4f}\n" for p, k in runs) + f"file '{runs[-1][0]}'\n")
-    return lst
+        # one image per output frame (hardlinks): an ffconcat list with per-image durations went
+        # through the fps filter's rounding and repeated a clock frame now and then
+        (seq / f"c{i:05d}.png").hardlink_to(cache[key])
+    return seq / "c%05d.png"
 
 
 def apply_speed(args):
@@ -768,10 +768,10 @@ def main():
         graph.append(f"[{last}][tmv]overlay=0:0:eof_action=repeat[tmo]")
         last, n_in = "tmo", n_in + 1
     if args.clock and args.timeline:
-        lst = clock_concat(args.clock, tl_ev, args.start, dur, tmp)
-        if lst:
-            inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
-            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[clv]")
+        seq = clock_concat(args.clock, tl_ev, args.start, dur, tmp, fps=args.out_fps)
+        if seq:
+            inputs += ["-framerate", str(args.out_fps), "-i", str(seq)]
+            graph.append(f"[{n_in}:v]format=rgba[clv]")
             graph.append(f"[{last}][clv]overlay=0:0:eof_action=repeat[clo]")
             last, n_in = "clo", n_in + 1
     deferred_subs = []
