@@ -104,7 +104,7 @@
     "python3 audio.py work/tnt.rec.json work/tnt.wav",
     "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT \ud83d\udc80\" --red 75 --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at boom --out out/tnt.mp4"
   ],
-  "status": "ready",
-  "notes": "walk to the crater could be shorter (sprint)",
+  "status": "needs-fix",
+  "notes": "user: ground dark + bot stuck; re-render queued with the fixed stunt",
   "published_at": "2026-11-06T12:27:15.580Z"
 }
