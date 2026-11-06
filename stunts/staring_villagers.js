@@ -49,15 +49,15 @@ module.exports = {
     const { bot } = ctx
     await bot.waitForTicks(10)
     // walk up behind them
-    bot.setControlState('forward', true)
-    while (bot.entity.position.z > this.z - 0.8) await bot.waitForTicks(1)   // ~3 blocks behind the front row
-    bot.setControlState('forward', false)
-    await bot.waitForTicks(14)
-    // they all turn round at once
-    await ctx.cmd(`/tag ${bot.username} add turn`)
-    // the command block can take a while to start: mark the turn when the heads actually move
+    // the turn lands ~3.5 s after the tag (server-side lag we couldn't pin down), so tag on the
+    // way in: they spin round just as the bot gets there
     const vills = Object.values(bot.entities).filter(e => e.name === 'villager')
     const yaw0 = vills.map(e => e.yaw)
+    bot.setControlState('forward', true)
+    bot.chat(`/tag ${bot.username} add turn`)
+    while (bot.entity.position.z > this.z - 0.8) await bot.waitForTicks(1)   // ~3 blocks behind the front row
+    bot.setControlState('forward', false)
+    // mark the turn when the heads actually move
     for (let i = 0; i < 120 && vills.every((e, k) => Math.abs(e.yaw - yaw0[k]) < 0.05); i++) await bot.waitForTicks(1)
     ctx.mark('turn')
     for (let i = 0; i < 4; i++) ctx.sound('entity.villager.ambient', 0.8, 0.8 + i * 0.12)
