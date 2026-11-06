@@ -16,7 +16,11 @@ const [recPath, outDir, fpsArg, wArg, hArg] = process.argv.slice(2)
 const FPS = Number(fpsArg || 60), W = Number(wArg || 1080), H = Number(hArg || 1011)
 const EYE = 1.62
 const rec = JSON.parse(fs.readFileSync(recPath))
-{ let st = {}; try { st = require(`./stunts/${rec.stunt}`) } catch (e) {} setBrightness(process.env.BRIGHTNESS ?? st.brightness ?? 0.5) }   // the Brightness option (renderer/models.js)
+let STUNT_MOD = {}
+try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {}
+setBrightness(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5)   // the Brightness option (renderer/models.js)
+// `hideHand: true`: no first-person hand or held item (vanilla F1), for narrators who aren't Steve
+const HIDE_HAND = !!STUNT_MOD.hideHand
 const P = rec.poses
 
 function lerpAngle (a, b, f) { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return a + d * f }
@@ -465,7 +469,7 @@ function camAtLive (t) {
     }
     const ents = entitiesAt(t, mesher)
     // first-person held item
-    const hd = handAt(t)
+    const hd = HIDE_HAND ? null : handAt(t)
     if (hd) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${hd.name}.png`))
