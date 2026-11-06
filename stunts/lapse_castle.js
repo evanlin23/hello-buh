@@ -1,6 +1,7 @@
 // "building a castle in 1 second vs 1 minute vs 1 hour 💀" (lib/time_lapse.js): a dirt arch, a
-// little cobblestone tower, then a 49x49 castle (curtain walls, four round towers with blue cone
-// roofs, a keep with a spire and a red flag) rising as a time-lapse.
+// little cobblestone tower, then a 49x49 castle rising as a time-lapse in stages: a moat floods in,
+// curtain walls and four round towers, the keep and its spire, blue cone roofs, a village of
+// houses around the moat, flags on every tower and last the keep's red flag.
 const { makeStunt } = require('../lib/time_lapse')
 
 // 1 second: a dirt "castle" (two stubby pillars with a lintel)
@@ -87,7 +88,45 @@ function castle () {
   for (const [y, r] of pyr) for (let x = -r; x <= r; x++) for (let z = KZ - r; z <= KZ + r; z++) put(x, y, z, 'blue_concrete', 2)
   for (let y = 42; y <= 45; y++) put(0, y, KZ, 'oak_fence', 3)
   for (let y = 44; y <= 45; y++) for (let x = 1; x <= 3; x++) put(x, y, KZ, 'red_wool', 3)
-  return [...out.values()]
+  const STAGE = { 0: 1, 1: 2, 2: 3, 3: 5 }   // walls 1, keep 2, roofs 3, (village 4), flags 5
+  for (const b of out.values()) b[4] = STAGE[b[4]]
+  // stage 0: the moat, flooded into the ground around everything, with a plank bridge at the gate
+  for (let x = -35; x <= 35; x++) {
+    for (let z = -35; z <= 35; z++) {
+      if (Math.max(Math.abs(x), Math.abs(z)) < 33) continue
+      const bridge = z > 0 && Math.abs(x) <= 2
+      for (const y of [-1, -2]) put(x, y, z, bridge ? (y === -1 ? 'spruce_planks' : 'dirt') : 'water', 0)
+      if (z > 0 && Math.abs(x) === 3) put(x, 0, z, 'oak_fence', 4)                                  // bridge rails
+    }
+  }
+  for (let z = 36; z <= 52; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'dirt_path', 4)        // the road in
+  for (let z = 25; z <= 32; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'dirt_path', 4)
+  // stage 4: a village around the moat (sides and back; the front stays open for the reveal)
+  const HOUSES = [[-46, -22], [-46, 4], [41, -22], [41, 4], [-20, -44], [15, -44], [-46, 28], [41, 28]]
+  for (const [hx, hz] of HOUSES) {
+    for (let y = 0; y < 4; y++) {
+      for (let x = 0; x < 5; x++) {
+        for (let z = 0; z < 5; z++) {
+          const ex = x === 0 || x === 4, ez = z === 0 || z === 4
+          if (!ex && !ez) continue
+          if (z === 4 && x === 2 && y < 2) continue
+          const corner = ex && ez
+          const win = !corner && y === 1 && (x === 1 || x === 3 || z === 2)
+          put(hx + x, y, hz + z, corner ? 'oak_log' : win ? 'glass' : 'oak_planks', 4)
+        }
+      }
+    }
+    for (const [y, lo, hi] of [[4, -1, 5], [5, 0, 4], [6, 1, 3], [7, 2, 2]]) for (let z = lo; z <= hi; z++) for (let x = -1; x <= 5; x++) put(hx + x, y, hz + z, 'spruce_planks', 4)
+    for (const [y, lo, hi] of [[4, 0, 4], [5, 1, 3], [6, 2, 2]]) for (let z = lo; z <= hi; z++) for (const x of [0, 4]) put(hx + x, y, hz + z, 'oak_planks', 4)
+  }
+  // stage 5: a flag on every tower (the keep's flag is the last block of all)
+  for (const [tx, tz] of TOW) {
+    for (let y = 33; y <= 36; y++) put(tx, y, tz, 'oak_fence', 5)
+    for (let y = 35; y <= 36; y++) for (let x = 1; x <= 2; x++) put(tx + x, y, tz, 'red_wool', 5)
+  }
+  const list = [...out.values()]
+  const last = list.filter(b => b[4] === 5 && b[1] >= 42)                                          // the keep's flag goes in last
+  return list.filter(b => !last.includes(b)).concat(last.map(b => [b[0], b[1], b[2], b[3], 6]))
 }
 
 module.exports = makeStunt({
@@ -100,20 +139,26 @@ module.exports = makeStunt({
   big: {
     blocks: castle(),
     hold: 'stone_bricks', slot: 2,
-    ticks: 540,
-    // [s of the build 0..1, camera, look-at], local to the castle centre (y from the ground)
+    // ticks of the build each stage gets: moat, walls, keep, roofs, village, tower flags, the last flag
+    stageTicks: { 0: 120, 1: 300, 2: 180, 3: 180, 4: 240, 5: 50, 6: 40 },
+    // [tick of the build, camera, look-at], local to the castle centre (y from the ground)
     keys: [
-      [0.0, [-34, 10, 42], [0, 3, 0]],
-      [0.3, [-14, 15, 50], [0, 8, 0]],
-      [0.55, [10, 22, 46], [0, 12, -2]],
-      [0.8, [20, 33, 33], [0, 22, -3]],
-      [1.0, [16, 42, 19], [0, 38, -3]]
+      [0, [-30, 22, 58], [0, -2, 20]],
+      [120, [-34, 13, 46], [0, 3, 0]],
+      [270, [-14, 16, 50], [0, 8, 0]],
+      [420, [10, 22, 46], [0, 12, -2]],
+      [600, [20, 33, 33], [0, 22, -3]],
+      [760, [14, 42, 26], [0, 30, -3]],
+      [850, [-12, 46, 40], [-24, 18, 0]],
+      [960, [-64, 26, 24], [-44, 3, 2]],
+      [1060, [-28, 46, 30], [0, 40, -3]],
+      [1118, [8, 50, 10], [0, 44, -3]]
     ],
     // [ticks after the build, camera, look-at]: pull back over the walls to the small builds
     reveal: [
-      [30, [12, 30, 52], [0, 22, -5]],
-      [60, [2, 20, 90], [0, 20, -4]],
-      [100, [1, 20.6, 94], [0, 20, -4]]
+      [30, [12, 34, 54], [0, 22, -5]],
+      [60, [2, 24, 100], [0, 18, -4]],
+      [100, [1, 24.6, 104], [0, 18, -4]]
     ]
   }
 })
