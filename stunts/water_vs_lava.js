@@ -24,7 +24,7 @@ module.exports = {
   caption: 'pouring water on a lava lake 😳',
   edit: {
     caption: 'pouring water on a lava lake 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'reveal',
-    startAt: 'go:-0.3', endAfter: 'end_look:2.3'
+    startAt: 'pour:-0.35', endAfter: 'end_look:1.7'
   },
 
   async setup (ctx) {
@@ -113,11 +113,11 @@ module.exports = {
     await strafeTo(POURS[2].at, cell(11, 6))
     await pour(2, 300)
     await bot.waitForTicks(22)
-    await pour(3, 350)
+    await pour(3, 600)            // a slower turn (350 ms read as a jerk)
     await bot.waitForTicks(10)
-    await pour(4, 300)
-    await ctx.easeLookAt(cell(7, 7), 900)
-    await bot.waitForTicks(26)
+    await pour(4, 450)
+    await ctx.easeLookAt(cell(7, 7), 650)
+    await bot.waitForTicks(10)
     ctx.log('converted after pours', converted)
 
     // refill every bucket: scoop the five sources back up, the flows drain away
@@ -125,24 +125,34 @@ module.exports = {
     for (const k of order) {
       const [lx, lz] = POURS[k].cell
       ctx.select(k)
-      await aimAt(cell(lx, lz, 0.45), k >= 3 ? 280 : 320)
+      await aimAt(cell(lx, lz, 0.45), k >= 3 ? 320 : 380)
       bot.activateItem(); bot.swingArm()
       ctx.sound('item.bucket.fill', 1, 1)
       ctx.mark('scoop', { k })
       setTimeout(() => ctx.log('scoop', k, 'buckets', bot.inventory.items().filter(i => i.name === 'water_bucket').length), 200)
-      await bot.waitForTicks(3)
+      await bot.waitForTicks(5)
     }
     ctx.mark('reveal')
     await ctx.easeLookAt(cell(4, 6, -0.5), 1000)
     // slow pan across the finished field while the last of the water drains
-    for (let i = 0; i < 90; i++) {
-      const f = i / 89, e = f * f * (3 - 2 * f)
-      const pt = cell(4 + 7 * e, 6 - 1.5 * e, -0.5), eye = bot.entity.position.offset(0, 1.62, 0), d = pt.minus(eye)
+    for (let i = 0; i < 50; i++) {
+      const f = i / 49, e = f * f * (3 - 2 * f)
+      const pt = cell(4 + 4 * e, 6 - 1 * e, -0.5), eye = bot.entity.position.offset(0, 1.62, 0), d = pt.minus(eye)
       await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
-      if (i === 40) ctx.mark('end_look')
       await bot.waitForTicks(1)
     }
-    await bot.waitForTicks(10)
+    // the payoff: step down and walk out onto the lake that was lava
+    ctx.mark('end_look')
+    bot.setControlState('forward', true)
+    for (let i = 0; i < 44; i++) {
+      const pt = cell(8, 2, -0.2), eye = bot.entity.position.offset(0, 1.62, 0), d = pt.minus(eye)
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      await bot.look(bot.entity.yaw + dy * 0.15, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.15, true)
+      await bot.waitForTicks(1)
+    }
+    bot.setControlState('forward', false)
+    await bot.waitForTicks(6)
     bot.removeListener('blockUpdate', onBlock)
 
     let lava = 0, water = 0, obs = 0
