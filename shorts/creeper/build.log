@@ -1,0 +1,21 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+15:17:35.219 spawned at Vec3 { x: 131.5, y: 73, z: 24.5 }
+15:17:35.490 nearest minecraft:plains at [ 387, -40 ]
+15:17:48.922 set at { x: 387, y: 72, z: -40 }
+15:17:54.404 died
+15:17:57.533 STUNT OK
+meshing from y 8
+light computed in 0.5 s
+meshed + uploaded world in 11.7 s
+64 particles
+rendered 477 frames (7.95 s of video) in 408.0 s = 51.3 s per video second
+wrote work/creeper.wav 8.00s
+song drop at 10.50s lands on 3.65s of the Short (song starts at 6.85s)
+no 3D block icons needed
+wrote out/creeper.mp4 6.85s
+
+real	8m13.160s
+user	7m15.216s
+sys	0m16.929s
+exit=0
