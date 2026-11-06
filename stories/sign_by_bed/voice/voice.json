@@ -1,0 +1,471 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "In my world, every player finds a sign from their future self on their first night.",
+   "dur": 3.552,
+   "onset": 0.172,
+   "end": 3.345,
+   "chunks": [
+    [
+     0.172,
+     0.672
+    ],
+    [
+     0.724,
+     1.224
+    ],
+    [
+     1.224,
+     1.707
+    ],
+    [
+     1.707,
+     2.44
+    ],
+    [
+     2.44,
+     3.345
+    ]
+   ],
+   "captions": [
+    "In my world,",
+    "EVERY player",
+    "finds a SIGN",
+    "from their FUTURE self",
+    "on their FIRST night."
+   ]
+  },
+  "L02": {
+   "text": "My cousin's said, don't dig down. Under him was lava.",
+   "dur": 2.672,
+   "onset": 0.172,
+   "end": 2.466,
+   "chunks": [
+    [
+     0.172,
+     0.569
+    ],
+    [
+     0.569,
+     0.914
+    ],
+    [
+     0.914,
+     1.397
+    ],
+    [
+     1.483,
+     1.81
+    ],
+    [
+     1.81,
+     2.466
+    ]
+   ],
+   "captions": [
+    "My cousin's",
+    "said, DON'T",
+    "DIG DOWN.",
+    "Under him",
+    "was LAVA."
+   ]
+  },
+  "L03": {
+   "text": "My friend's said, sleep in the hay. That night a creeper blew up her bed.",
+   "dur": 3.0,
+   "onset": 0.172,
+   "end": 2.793,
+   "chunks": [
+    [
+     0.172,
+     0.483
+    ],
+    [
+     0.483,
+     0.888
+    ],
+    [
+     0.888,
+     1.345
+    ],
+    [
+     1.448,
+     1.698
+    ],
+    [
+     1.698,
+     2.017
+    ],
+    [
+     2.017,
+     2.25
+    ],
+    [
+     2.25,
+     2.793
+    ]
+   ],
+   "captions": [
+    "My friend's",
+    "said, SLEEP",
+    "in the HAY.",
+    "That night",
+    "a CREEPER",
+    "blew up",
+    "her BED."
+   ]
+  },
+  "L04": {
+   "text": "Tonight I found mine.",
+   "dur": 1.397,
+   "onset": 0.172,
+   "end": 1.19,
+   "chunks": [
+    [
+     0.172,
+     0.388
+    ],
+    [
+     0.388,
+     1.19
+    ]
+   ],
+   "captions": [
+    "Tonight",
+    "I found MINE."
+   ]
+  },
+  "L05": {
+   "text": "Don't open the barrel under your bed.",
+   "dur": 1.707,
+   "onset": 0.172,
+   "end": 1.5,
+   "chunks": [
+    [
+     0.172,
+     0.526
+    ],
+    [
+     0.526,
+     0.828
+    ],
+    [
+     0.828,
+     0.957
+    ],
+    [
+     0.957,
+     1.5
+    ]
+   ],
+   "captions": [
+    "DON'T OPEN",
+    "the BARREL",
+    "under",
+    "your BED."
+   ]
+  },
+  "L06": {
+   "text": "I never placed a barrel.",
+   "dur": 1.483,
+   "onset": 0.172,
+   "end": 1.293,
+   "chunks": [
+    [
+     0.172,
+     0.483
+    ],
+    [
+     0.483,
+     0.698
+    ],
+    [
+     0.698,
+     1.293
+    ]
+   ],
+   "captions": [
+    "I never",
+    "PLACED",
+    "a barrel."
+   ]
+  },
+  "L07": {
+   "text": "The sign was by the door. Right where mom stands.",
+   "dur": 2.345,
+   "onset": 0.155,
+   "end": 2.155,
+   "chunks": [
+    [
+     0.155,
+     0.44
+    ],
+    [
+     0.44,
+     0.647
+    ],
+    [
+     0.647,
+     1.034
+    ],
+    [
+     1.103,
+     1.345
+    ],
+    [
+     1.345,
+     2.155
+    ]
+   ],
+   "captions": [
+    "The sign",
+    "was by",
+    "the DOOR.",
+    "Right where",
+    "MOM stands."
+   ]
+  },
+  "L08": {
+   "text": "She was smiling. She hasn't blinked all night.",
+   "dur": 2.017,
+   "onset": 0.19,
+   "end": 1.828,
+   "chunks": [
+    [
+     0.19,
+     0.336
+    ],
+    [
+     0.336,
+     0.707
+    ],
+    [
+     0.741,
+     1.017
+    ],
+    [
+     1.017,
+     1.216
+    ],
+    [
+     1.216,
+     1.828
+    ]
+   ],
+   "captions": [
+    "She was",
+    "SMILING.",
+    "She hasn't",
+    "BLINKED",
+    "all night."
+   ]
+  },
+  "L09": {
+   "text": "So I locked the door.",
+   "dur": 1.31,
+   "onset": 0.172,
+   "end": 1.121,
+   "chunks": [
+    [
+     0.172,
+     0.345
+    ],
+    [
+     0.345,
+     0.552
+    ],
+    [
+     0.552,
+     1.121
+    ]
+   ],
+   "captions": [
+    "So I",
+    "LOCKED",
+    "the door."
+   ]
+  },
+  "L10": {
+   "text": "Then the barrel knocked.",
+   "dur": 1.276,
+   "onset": 0.172,
+   "end": 1.086,
+   "chunks": [
+    [
+     0.172,
+     0.362
+    ],
+    [
+     0.362,
+     0.603
+    ],
+    [
+     0.603,
+     1.086
+    ]
+   ],
+   "captions": [
+    "Then the",
+    "BARREL",
+    "KNOCKED."
+   ]
+  },
+  "L11": {
+   "text": "And a second sign was on the wall. inside my locked room.",
+   "dur": 2.81,
+   "onset": 0.155,
+   "end": 2.621,
+   "chunks": [
+    [
+     0.155,
+     0.276
+    ],
+    [
+     0.276,
+     0.681
+    ],
+    [
+     0.681,
+     0.836
+    ],
+    [
+     0.836,
+     1.259
+    ],
+    [
+     1.353,
+     1.759
+    ],
+    [
+     1.759,
+     2.621
+    ]
+   ],
+   "captions": [
+    "And a",
+    "SECOND sign",
+    "was on",
+    "the wall.",
+    "INSIDE",
+    "my locked room."
+   ]
+  },
+  "L12": {
+   "text": "In my handwriting.",
+   "dur": 1.293,
+   "onset": 0.172,
+   "end": 1.103,
+   "chunks": [
+    [
+     0.172,
+     0.388
+    ],
+    [
+     0.388,
+     1.103
+    ]
+   ],
+   "captions": [
+    "In MY",
+    "handwriting."
+   ]
+  },
+  "L13": {
+   "text": "Open it. That isn't mom. She's in the barrel.",
+   "dur": 2.155,
+   "onset": 0.172,
+   "end": 1.966,
+   "chunks": [
+    [
+     0.172,
+     0.448
+    ],
+    [
+     0.483,
+     0.759
+    ],
+    [
+     0.759,
+     1.069
+    ],
+    [
+     1.147,
+     1.336
+    ],
+    [
+     1.336,
+     1.966
+    ]
+   ],
+   "captions": [
+    "OPEN IT.",
+    "That isn't",
+    "MOM.",
+    "She's in",
+    "the BARREL."
+   ]
+  },
+  "L14": {
+   "text": "But it spelled my name wrong.",
+   "dur": 1.586,
+   "onset": 0.155,
+   "end": 1.397,
+   "chunks": [
+    [
+     0.155,
+     0.293
+    ],
+    [
+     0.293,
+     0.534
+    ],
+    [
+     0.534,
+     0.879
+    ],
+    [
+     0.879,
+     1.397
+    ]
+   ],
+   "captions": [
+    "But it",
+    "spelled",
+    "my name",
+    "WRONG."
+   ]
+  },
+  "L15": {
+   "text": "Sign one, or sign two?",
+   "dur": 1.5,
+   "onset": 0.19,
+   "end": 1.276,
+   "chunks": [
+    [
+     0.19,
+     0.5
+    ],
+    [
+     0.526,
+     0.853
+    ],
+    [
+     0.853,
+     1.276
+    ]
+   ],
+   "captions": [
+    "Sign ONE,",
+    "or sign",
+    "TWO?"
+   ]
+  }
+ },
+ "total": 31.6
+}
