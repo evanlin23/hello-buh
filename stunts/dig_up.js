@@ -7,6 +7,7 @@ module.exports = {
   caption: 'never dig straight up 💀',
   edit: { caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened', onFire: 'hurt:death', deathScreen: true , startAt: 'diamond:-0.8', endAfter: 'death:1.8'},
   expectDeath: true,
+  brightness: 1,   // Options > Brightness: Bright: the ceiling shot read as flat dark grey at the default
 
   async setup (ctx) {
     const { bot } = ctx
@@ -73,9 +74,17 @@ module.exports = {
     ctx.sound('block.stone.break', 1); ctx.particles('block', up.position, { block: 'stone' })
     ctx.mark('opened')
     ctx.sound('block.lava.pop', 1)
-    // frozen, staring up as it pours down (lava spreads a block every 30 ticks, so it takes a
-    // moment), then panicking in place; in lava you barely move anyway
-    for (let i = 0; i < 70 && !ctx.died; i++) await bot.waitForTicks(1)
+    // it pours straight down: vanilla lava waits 30 ticks per block of flow (3 s of a still hole on
+    // camera), so drop the falling column ourselves, a block every few ticks, fed by the pocket
+    const bz = up.position.z
+    await bot.waitForTicks(8)
+    for (const dy of [2, 1, 0]) {
+      bot.chat(`/setblock ${x} ${y + dy} ${bz} lava[level=8]`)
+      ctx.sound('block.lava.pop', 0.8, 0.9 + dy * 0.1)
+      if (dy === 2) ctx.mark('pour')
+      await bot.waitForTicks(5)
+    }
+    for (let i = 0; i < 10 && !ctx.died; i++) await bot.waitForTicks(1)
     const yaw = bot.entity.yaw
     for (const [dy, p] of [[0.6, 0.2], [-0.7, 0.1], [0.3, -0.3]]) { if (!ctx.died) await ctx.easeLook(yaw + dy, p, 450) }
     for (let i = 0; i < 160 && !ctx.died; i++) await bot.waitForTicks(1)
