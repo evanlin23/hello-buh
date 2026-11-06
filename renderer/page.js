@@ -16,7 +16,7 @@ const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 1000)   // vanilla FOV 70 (vertical)
 camera.rotation.order = 'YXZ'
 const sections = new Map()
-let opaqueMat, translucentMat, clouds, sky, sun, entities
+let opaqueMat, translucentMat, clouds, sky, sun, moon, stars, entities
 const env = { skyColor: 0x78a7ff, fogColor: 0xc0d8ff, renderDistance: 12, cloudHeight: 192.33, time: 6000 }
 
 function srgb (hex) { return new THREE.Color().setHex(hex, THREE.LinearSRGBColorSpace) }
@@ -94,12 +94,45 @@ async function makeSun (url) {
   return m
 }
 
+// Vanilla time of day (same maths as renderer/models.js dayInfo; the node side bakes the lightmap).
+function dayInfo (dayTime) {
+  const d = (((dayTime / 24000) - 0.25) % 1 + 1) % 1
+  const angle = (d * 2 + (0.5 - Math.cos(d * Math.PI) / 2)) / 3
+  const c = Math.cos(angle * Math.PI * 2)
+  const cl = (v) => Math.min(1, Math.max(0, v))
+  return { angle, bright: cl(c * 2 + 0.5), star: cl(1 - (c * 2 + 0.25)) ** 2 * 0.5 }
+}
+// Stars (LevelRenderer.buildStarsBuffer): 1500 random points on a sphere, small quads, drawn
+// white x star brightness and turned with the sky.
+function makeStars () {
+  let seed = 10842
+  const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff }
+  const pos = []
+  for (let i = 0; i < 1500; i++) {
+    let x = rnd() * 2 - 1, y = rnd() * 2 - 1, z = rnd() * 2 - 1
+    const sz = 0.15 + rnd() * 0.1, l = x * x + y * y + z * z
+    if (l < 0.01 || l >= 1) continue
+    const n = Math.sqrt(l); x /= n; y /= n; z /= n
+    const c = new THREE.Vector3(x, y, z).multiplyScalar(100)
+    const u = new THREE.Vector3(0, 1, 0).cross(c).normalize(); if (u.lengthSq() < 0.5) u.set(1, 0, 0)
+    const v = new THREE.Vector3().crossVectors(c, u).normalize()
+    const a = rnd() * Math.PI * 2, cu = u.clone().multiplyScalar(Math.cos(a)).add(v.clone().multiplyScalar(Math.sin(a))), cv = new THREE.Vector3().crossVectors(c.clone().normalize(), cu)
+    const s4 = [[-1, -1], [1, -1], [1, 1], [-1, -1], [1, 1], [-1, 1]]
+    for (const [p, q] of s4) { const w = c.clone().addScaledVector(cu, p * sz).addScaledVector(cv, q * sz); pos.push(w.x, w.y, w.z) }
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, side: THREE.DoubleSide }))
+  m.renderOrder = -9; m.frustumCulled = false
+  return m
+}
 function placeSun () {
-  // time 6000 = noon (sun straight up); the sun moves around the X axis, east to west.
-  const a = ((env.time - 6000) / 24000) * Math.PI * 2
+  // the celestial angle: 0 = noon (sun straight up); the sky turns around the X axis, east to west.
+  // The moon is opposite the sun; stars turn with them.
+  const a = dayInfo(env.time).angle * Math.PI * 2
   const d = new THREE.Vector3(-Math.sin(a), Math.cos(a), 0).multiplyScalar(400)
-  sun.position.copy(camera.position).add(d)
-  sun.lookAt(camera.position)
+  sun.position.copy(camera.position).add(d); sun.lookAt(camera.position)
+  if (moon) { moon.position.copy(camera.position).sub(d); moon.lookAt(camera.position) }
+  if (stars) { stars.position.copy(camera.position); stars.rotation.set(0, 0, a) }
 }
 
 // The block atlas as a canvas, so animated textures (water, lava, kelp, fire...) can be redrawn
@@ -200,6 +233,8 @@ window.HB = {
     scene.background = srgb(env.fogColor)
     sky = makeSky(); scene.add(sky)
     sun = await makeSun('/assets/env/sun.png'); scene.add(sun)
+    try { moon = await makeSun('/assets/env/moon.png'); moon.scale.setScalar(20 / 30); scene.add(moon) } catch (e) { moon = null }
+    stars = makeStars(); scene.add(stars)
     clouds = await makeClouds('/assets/env/clouds.png'); scene.add(clouds)
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
@@ -277,12 +312,22 @@ window.HB = {
     camera.updateMatrixWorld()
     // Underwater: vanilla swaps to the biome's water fog colour and a short fog distance.
     const blocks = env.renderDistance * 16
-    if (cam.sky !== undefined) { sky.material.uniforms.top.value.copy(srgb(cam.sky)); env.fogColor = cam.fog; sky.material.uniforms.horizon.value.copy(srgb(cam.fog)) }
+    if (cam.sky !== undefined) { env.skyColor = cam.sky; env.fogColor0 = cam.fog }
+    // time of day: sky colour x brightness, fog colour x (0.94|0.91)b + (0.06|0.09) (FogRenderer),
+    // clouds (getCloudColor) x (0.9b + 0.1), stars fade in at dusk
+    env.time = cam.dayTime ?? 6000
+    const day = dayInfo(env.time), fog0 = srgb(env.fogColor0 ?? env.fogColor)
+    const skyC = srgb(env.skyColor).multiplyScalar(day.bright)
+    const fogC = new THREE.Color(fog0.r * (day.bright * 0.94 + 0.06), fog0.g * (day.bright * 0.94 + 0.06), fog0.b * (day.bright * 0.91 + 0.09))
+    sky.material.uniforms.top.value.copy(skyC); sky.material.uniforms.horizon.value.copy(fogC)
+    env.fogColorC = fogC
+    clouds.traverse(o => { if (o.material) o.material.color.setScalar(day.bright * 0.9 + 0.1) })
+    if (stars) stars.material.opacity = day.star
     // FogRenderer: lava 0.25..1.0. (This else chain once sat behind a // comment on one line, so
     // underwater fog never applied and lava fog was never cleared.)
-    if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = 0.25; scene.fog.far = 1.0 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(srgb(env.fogColor)); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
-    const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under; sun.visible = !under && !window.DEBUG_NOSUN
-    scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : srgb(env.fogColor)
+    if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = 0.25; scene.fog.far = 1.0 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(env.fogColorC); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
+    const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under; sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
+    scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : env.fogColorC.clone()
     sky.position.copy(camera.position)
     if (window.DEBUG_MAGENTA) { sky.visible = false; scene.background = new THREE.Color(1, 0, 1) }
     placeSun()

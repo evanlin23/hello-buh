@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap, setBrightness } = require('./renderer/models')
+const { lightmap, setBrightness, setDayTime } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -193,6 +193,11 @@ function targetBlock (cam, world) {
   }
   return null
 }
+// Time of day: the recording's start time (harness: stunt.time, default noon) and `time` marks
+// (ctx.setTime) - [tick, dayTime]. A change re-lights the whole world (the lightmap's sky factor).
+const TIMES = [[0, rec.time ?? 6000], ...(rec.timeline || []).filter(e => e.event === 'time').map(e => [e.t / 50, e.time])]
+const dayTimeAt = (t) => { let v = TIMES[0][1]; for (const [a, d] of TIMES) if (t >= a) v = d; return v }
+setDayTime(dayTimeAt(0))
 const DEATHS = []
 {
   let open = null
@@ -327,6 +332,12 @@ function camAtLive (t) {
   await page.waitForFunction(() => window.HB_READY)
   if (process.env.DEBUG_MAGENTA) await page.evaluate(() => { window.DEBUG_MAGENTA = true })
   if (process.env.DEBUG_NOSUN) await page.evaluate(() => { window.DEBUG_NOSUN = true })
+  { // the moon texture (assets built before night support lack it)
+    const moon = path.join(ASSETS_DIR, 'env', 'moon.png')
+    if (!fs.existsSync(moon)) {
+      try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/celestial/moon/full_moon.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), moon]) } catch (e) { console.error('no moon texture:', e.message) }
+    }
+  }
   await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || 8) })
 
   const send = async (list) => {
@@ -390,6 +401,7 @@ function camAtLive (t) {
   let bi = 0
   const sentBlocks = new Set()
   let relightBB = null, lastRelight = -99
+  let curDayTime = dayTimeAt(0)
   const t1 = Date.now()
   for (let f = 0; f < (only ? only.length : frames); f++) {
     const t = only ? only[f] : f * 20 / FPS
@@ -422,8 +434,13 @@ function camAtLive (t) {
         }
       }
     }
+    if (dayTimeAt(t) !== curDayTime) {   // the time changed (a story cut to night): re-light everything
+      curDayTime = dayTimeAt(t); setDayTime(curDayTime); dirty.clear()
+      await send(mesher.sections(minVisibleY))
+    }
     if (dirty.size) await send([...dirty.values()])
     const cam = camAt(t)
+    cam.dayTime = curDayTime
     if (process.env.CAM) {   // debug: CAM="dx,dy,dz,yawDeg,pitchDeg" relative to the set origin
       const [dx, dy, dz, yw, pt] = process.env.CAM.split(',').map(Number)
       Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0 })

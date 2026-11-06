@@ -103,7 +103,8 @@ def main(ver):
 
     for src, dst in [("environment/clouds.png", "clouds.png"), ("environment/celestial/sun.png", "sun.png"),
                      ("environment/sun.png", "sun.png"), ("entity/player/wide/steve.png", "steve.png"),
-                     ("environment/weather/rain.png", "rain.png"), ("environment/rain.png", "rain.png")]:
+                     ("environment/weather/rain.png", "rain.png"), ("environment/rain.png", "rain.png"),
+                     ("environment/celestial/moon/full_moon.png", "moon.png")]:
         p = f"assets/minecraft/textures/{src}"
         if p in names and not (out / "env" / dst).exists():
             (out / "env" / dst).write_bytes(jar.read(p))

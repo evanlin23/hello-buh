@@ -35,6 +35,25 @@ const FIXED = { spruce_leaves: 0x619961, birch_leaves: 0x80a755, mangrove_leaves
 // it (`brightness: 1` for caves: at the default an ore-filled cavern read as black walls).
 let GAMMA = 0.5
 function setBrightness (g) { GAMMA = Math.max(0, Math.min(1, Number(g))) }
+// Time of day (vanilla): DimensionType.timeOfDay -> the celestial angle; Level.getSkyDarken; the
+// sky, fog, cloud and star brightness the client derives from it. 6000 = noon, 18000 = midnight.
+function dayInfo (dayTime) {
+  const d = (((dayTime / 24000) - 0.25) % 1 + 1) % 1
+  const angle = (d * 2 + (0.5 - Math.cos(d * Math.PI) / 2)) / 3
+  const c = Math.cos(angle * Math.PI * 2)
+  const cl = (v) => Math.min(1, Math.max(0, v))
+  const dark = (1 - cl(1 - (c * 2 + 0.2))) * 0.8 + 0.2           // getSkyDarken: 0.2 (night) .. 1 (day)
+  const bright = cl(c * 2 + 0.5)                                  // sky and fog colour factor
+  const star = cl(1 - (c * 2 + 0.25)) ** 2 * 0.5                  // getStarBrightness
+  return { angle, dark, bright, star }
+}
+// LightTexture: SkyFactor = darken * 0.95 + 0.05, SkyLightColor = (darken, darken, 1) -> white by 0.35
+let SKY_FACTOR = 1, SKY_COL = [1, 1, 1]
+function setDayTime (dayTime) {
+  const { dark } = dayInfo(dayTime)
+  SKY_FACTOR = dark * 0.95 + 0.05
+  SKY_COL = [dark + (1 - dark) * 0.35, dark + (1 - dark) * 0.35, 1]
+}
 // lightmap.fsh from the 1.21.11 client, at noon in the overworld: SkyFactor 1, SkyLightColor white,
 // BlockFactor 1.5 (the red flicker averages out), BrightnessFactor = gamma. Sky and block light stay
 // separate: block light is warm ("dips to yellowish in the middle"), so torch- and lava-lit caves read
@@ -42,7 +61,7 @@ function setBrightness (g) { GAMMA = Math.max(0, Math.min(1, Number(g))) }
 function lightmap (sky, block = 0) {
   const gb = (l) => { const x = Math.min(1, Math.max(0, l / 15)); return x / (4 - 3 * x) }
   const bb = gb(block) * 1.5, sb = gb(sky)
-  let c = [bb, bb * ((bb * 0.6 + 0.4) * 0.6 + 0.4), bb * (bb * bb * 0.6 + 0.4)].map(v => v + sb)
+  let c = [bb, bb * ((bb * 0.6 + 0.4) * 0.6 + 0.4), bb * (bb * bb * 0.6 + 0.4)].map((v, i) => v + SKY_COL[i] * sb * SKY_FACTOR)
   c = c.map(v => Math.min(1, Math.max(0, v * 0.96 + 0.03)))
   const mx = Math.max(c[0], c[1], c[2])
   if (mx > 0) { const inv = 1 - mx, k = (1 - inv * inv * inv * inv) / mx; c = c.map(v => v + (v * k - v) * GAMMA) }
@@ -621,4 +640,4 @@ function getModelVariants (block, blockStates) {
   return []
 }
 
-module.exports = { getSectionGeometry, setBiomeColors, lightmap, setBrightness }
+module.exports = { getSectionGeometry, setBiomeColors, lightmap, setBrightness, setDayTime, dayInfo }
