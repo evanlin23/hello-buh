@@ -63,6 +63,9 @@ each section.
   with one texture. Place things so the key object stays in frame.
 
 ## Renderer (our own; `renderer/`)
+- **Block entities** (worker 11, `renderer/blockentities.js`): signs (standing and wall, every wood, with their text in the vanilla font), chests (single, double, trapped, ender, with the lid opening while someone looks in), and beds. Hanging signs, banners, heads, pots and shulker boxes aren't drawn yet.
+  - **Sign text in 1.21.11 is a text component, and a plain string is literal.** Write `oak_sign{front_text:{messages:['DONT OPEN','THE BARREL','-BUH','']}}`, not `'"DONT OPEN"'` (the game shows those quotes, and so do we). Colour: `front_text:{color:"red",...}`. Without `has_glowing_text:1b` the text is darkened to 0.4, as in vanilla.
+  - The harness records `block_entity` (sign text set mid-stunt) and `block_action` (chest lid) marks. Chests and beds carry no NBT, so render.js finds them by block state.
 - **Render speed** (worker 11, all pixel-checked against the old code: water_clutch 695 s -> 148 s full, story_runaway 600 frames 431 s -> 162 s, identical except hairline-crack specks that move with draw order). `PROFILE=1` prints where the time went.
   - A relight re-meshed the bounding box of every change since the last one. A recording with block changes far apart (fluids underground) re-meshed ~2000 sections every 4 ticks. Now the old and new light arrays are diffed, and only sections whose light changed (plus their neighbours) re-mesh. The light engine also keeps its opacity grid and refreshes only changed cells.
   - The first world mesh runs on worker threads (`renderer/mesh_worker.js`, `MESH_WORKERS`, default 4): startup went from ~25 s to ~9 s. `World.getBlock` caches the last column and looks up biomes lazily.

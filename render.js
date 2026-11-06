@@ -602,6 +602,7 @@ function camAtLive (t) {
   app.get('/', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'page.html')))
   app.get('/page.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'page.js')))
   app.get('/entities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entities.js')))
+  app.get('/blockentities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'blockentities.js')))
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
   app.use('/assets', express.static(path.join(__dirname, 'work', 'assets', rec.version)))
@@ -622,6 +623,12 @@ function camAtLive (t) {
     const gl = path.join(ASSETS_DIR, 'env', 'misc', 'enchanted_glint_item.png')
     if (!fs.existsSync(gl)) {
       try { fs.mkdirSync(path.dirname(gl), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/misc/enchanted_glint_item.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), gl]) } catch (e) { console.error('no glint texture:', e.message) }
+    }
+  }
+  { // the vanilla font (sign text; not in the asset build)
+    const fnt = path.join(ASSETS_DIR, 'env', 'font', 'ascii.png')
+    if (!fs.existsSync(fnt)) {
+      try { fs.mkdirSync(path.dirname(fnt), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/font/ascii.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), fnt]) } catch (e) { console.error('no font texture:', e.message) }
     }
   }
   { // the snow texture (weather; not in the asset build)
@@ -710,6 +717,92 @@ function camAtLive (t) {
   let relightBB = null, lastRelight = -99
   let curDayTime = dayTimeAt(0), curWeather = weatherKey(0)
   const t1 = Date.now()
+  // Block entities drawn by entity renderers (renderer/blockentities.js): signs with their text,
+  // chests (lid from block_action marks), beds. Signs carry NBT in the chunk data and in
+  // block_entity marks; chests and beds have none, so they're found by block state (sections whose
+  // palette can't hold one are skipped).
+  const BE = new Map()   // 'x,y,z' -> { x, y, z, nbt }
+  const beKind = (name) => /_hanging_sign$/.test(name) ? null : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
+  const BE_STATES = new Set()
+  for (const b of MC.blocksArray) if (beKind(b.name)) for (let sid = b.minStateId; sid <= b.maxStateId; sid++) BE_STATES.add(sid)
+  {
+    const v = new Vec3(0, 0, 0)
+    for (const [key, col] of Object.entries(mesher.world.columns)) {
+      const [cx, cz] = key.split(',').map(Number)
+      ;(col.sections || []).forEach((sec, si) => {
+        if (!sec || (sec.palette && !sec.palette.some(id => BE_STATES.has(id)))) return
+        const y0 = mesher.minY + si * 16
+        for (let y = y0; y < y0 + 16; y++) for (let z = 0; z < 16; z++) for (let x = 0; x < 16; x++) {
+          v.x = x; v.y = y; v.z = z
+          if (BE_STATES.has(col.getBlockStateId(v))) BE.set(`${cx + x},${y},${cz + z}`, { x: cx + x, y, z: cz + z, nbt: null })
+        }
+      })
+      for (const [k, nbt] of Object.entries(col.blockEntities || {})) {
+        const [x, y, z] = k.split(',').map(Number), wk = `${cx + x},${y},${cz + z}`
+        if (BE.has(wk)) BE.get(wk).nbt = nbt
+      }
+    }
+  }
+  const BE_MARKS = (rec.timeline || []).filter(e => e.event === 'block_entity').map(e => ({ t: e.t / 50, key: `${e.x},${e.y},${e.z}`, nbt: e.nbt }))
+  let beMi = 0
+  // ChestLidController: openness moves 0.1 a tick toward 1 while anyone looks in (block action b > 0)
+  const LID = new Map()
+  {
+    const acts = new Map()
+    for (const e of rec.timeline || []) if (e.event === 'block_action' && e.a === 1) { const k = `${e.x},${e.y},${e.z}`; if (!acts.has(k)) acts.set(k, []); acts.get(k).push([e.t / 50, e.b > 0]) }
+    for (const [k, list] of acts) {
+      const arr = []; let o = 0, open = false, i = 0
+      for (let tick = 0; tick <= P.length + 2; tick++) { while (i < list.length && list[i][0] <= tick) open = list[i++][1]; arr.push(o); o = Math.max(0, Math.min(1, o + (open ? 0.1 : -0.1))) }
+      LID.set(k, arr)
+    }
+  }
+  const lidAt = (k, t) => { const a = LID.get(k); if (!a) return 0; const i = Math.max(0, Math.min(a.length - 2, Math.floor(t))), f = t - i; return a[i] + (a[i + 1] - a[i]) * Math.max(0, Math.min(1, f)) }
+  // DyeColor.getTextColor; a sign without glowing text darkens it to 0.4 (SignRenderer.getDarkColor)
+  const DYE_TEXT = { white: 0xFFFFFF, orange: 0xFF681F, magenta: 0xFF00FF, light_blue: 0x9AC0CD, yellow: 0xFFFF00, lime: 0xBFFF00, pink: 0xFF69B4, gray: 0x808080, light_gray: 0xD3D3D3, cyan: 0x00FFFF, purple: 0xA020F0, blue: 0x0000FF, brown: 0x8B4513, green: 0x00FF00, red: 0xFF0000, black: 0x000000 }
+  const nbtVal = (n) => n && typeof n === 'object' && 'value' in n && 'type' in n ? n.value : n
+  const plainText = (c) => {   // a text component (1.21.5+: a string is literal text) -> plain text
+    c = nbtVal(c)
+    if (typeof c === 'string') return c
+    if (Array.isArray(c)) return c.map(plainText).join('')
+    if (c && typeof c === 'object') return (plainText(c.text) || '') + (c.extra ? plainText(c.extra) : '')
+    return ''
+  }
+  const signFace = (nbt) => {
+    const ft = nbtVal(nbtVal(nbt) && nbtVal(nbt).front_text) || {}
+    let msgs = nbtVal(ft.messages); msgs = msgs && (Array.isArray(msgs) ? msgs : nbtVal(msgs)) || []
+    const glow = !!nbtVal(ft.has_glowing_text), hex = DYE_TEXT[nbtVal(ft.color) || 'black'] ?? 0
+    const k = glow ? 1 : 0.4
+    return { text: [0, 1, 2, 3].map(i => plainText(msgs[i] ?? '').slice(0, 30)), textColor: [((hex >> 16) & 255) / 255 * k, ((hex >> 8) & 255) / 255 * k, (hex & 255) / 255 * k] }
+  }
+  const FACING_DEG = { south: 0, west: 90, north: 180, east: 270 }
+  let beLast = ''
+  const blockEntitiesAt = (t, cam) => {
+    while (beMi < BE_MARKS.length && BE_MARKS[beMi].t <= t) { const m = BE_MARKS[beMi++]; if (BE.has(m.key)) BE.get(m.key).nbt = m.nbt; else BE.set(m.key, { ...m, x: +m.key.split(',')[0], y: +m.key.split(',')[1], z: +m.key.split(',')[2] }) }
+    const out = []
+    for (const [key, e] of BE) {
+      if (Math.abs(e.x - cam.x) > 96 || Math.abs(e.z - cam.z) > 96) continue
+      const b = mesher.world.getBlock(new Vec3(e.x, e.y, e.z)), kind = b && beKind(b.name)
+      if (!kind) continue
+      const pr = b.getProperties ? b.getProperties() : {}
+      const [ls, lb] = mesher.world.getLight(new Vec3(e.x, e.y, e.z))
+      const o = { key, kind, x: e.x, y: e.y, z: e.z, light: lightmap(ls, lb).map(v => +v.toFixed(3)) }
+      if (kind === 'sign') Object.assign(o, { rot: Number(pr.rotation || 0) * 22.5, wood: b.name.replace(/_sign$/, '') }, signFace(e.nbt))
+      if (kind === 'wall_sign') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, wood: b.name.replace(/_wall_sign$/, '') }, signFace(e.nbt))
+      if (kind === 'chest') {
+        const type = pr.type || 'single', base = b.name === 'trapped_chest' ? 'trapped' : b.name === 'ender_chest' ? 'ender' : 'normal'
+        // a double chest opens both halves (DoubleBlockCombiner): the brighter of the two lids
+        let open = lidAt(key, t)
+        if (type !== 'single') for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) open = Math.max(open, lidAt(`${e.x + dx},${e.y},${e.z + dz}`, t))
+        Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, type, tex: type === 'single' || base === 'ender' ? base : `${base}_${type}`, open: +open.toFixed(3) })
+      }
+      if (kind === 'bed') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, head: pr.part === 'head', color: b.name.replace(/_bed$/, '') })
+      out.push(o)
+    }
+    const j = JSON.stringify(out)
+    if (j === beLast) return undefined
+    beLast = j
+    return out
+  }
   // PROFILE=1: where the time goes, per section, printed at the end
   const PROF = {}; let profT = 0
   const prof = (k) => { if (!process.env.PROFILE) return; const n = performance.now(); if (k) PROF[k] = (PROF[k] || 0) + n - profT; profT = n }
@@ -723,6 +816,7 @@ function camAtLive (t) {
       const [, x, y, z, stateId] = rec.blocks[bi++]
       mesher.setBlock(x, y, z, stateId)
       HMAP.delete(`${x},${z}`)
+      if (BE_STATES.has(stateId)) { if (!BE.has(`${x},${y},${z}`)) BE.set(`${x},${y},${z}`, { x, y, z, nbt: null }) } else BE.delete(`${x},${y},${z}`)
       nChanged++
       bb = bb ? [Math.min(bb[0], x), Math.min(bb[1], y), Math.min(bb[2], z), Math.max(bb[3], x), Math.max(bb[4], y), Math.max(bb[5], z)] : [x, y, z, x, y, z]
       for (const [dx, dy, dz] of [[0, 0, 0], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
@@ -935,6 +1029,7 @@ function camAtLive (t) {
       }
     }
     prof('entities+hand')
+    cam.blockEntities = blockEntitiesAt(t, cam)
     cam.weather = weatherColumns(cam, t, cam.rain)
     const parts = partsAt(t, cam)
     if (cam.rain > 0 && !process.env.NOPARTS) {
