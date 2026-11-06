@@ -55,7 +55,9 @@ module.exports = {
     const d = bot.blockAt(new Vec3(x + 1, y + 1, this.z - 6))
     await ctx.easeLookAt(d.position.offset(0.5, 0.5, 0.5), 500)
     ctx.mark('diamond')
-    try { await bot.dig(d, true) } catch (e) { ctx.log('dig', e.message) }
+    // a few swings, then the server breaks it with drops (bot.dig took ~3 s here even with haste)
+    for (let i = 0; i < 4; i++) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.5); await bot.waitForTicks(2) }
+    bot.chat(`/setblock ${d.position.x} ${d.position.y} ${d.position.z} air destroy`)
     ctx.sound('block.stone.break', 1); ctx.particles('block', d.position, { block: 'diamond_ore' })
     ctx.sound('entity.experience_orb.pickup', 0.8)
     await bot.waitForTicks(6)

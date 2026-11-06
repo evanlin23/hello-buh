@@ -273,7 +273,7 @@ window.HB = {
     const blocks = env.renderDistance * 16
     if (cam.sky !== undefined) { sky.material.uniforms.top.value.copy(srgb(cam.sky)); env.fogColor = cam.fog; sky.material.uniforms.horizon.value.copy(srgb(cam.fog)) }
     if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = 0; scene.fog.far = 2 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(srgb(env.fogColor)); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
-    const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under; sun.visible = !under
+    const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under; sun.visible = !under && !window.DEBUG_NOSUN
     scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : srgb(env.fogColor)
     sky.position.copy(camera.position)
     if (window.DEBUG_MAGENTA) { sky.visible = false; scene.background = new THREE.Color(1, 0, 1) }

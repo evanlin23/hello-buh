@@ -184,6 +184,7 @@ function camAtLive (t) {
   await page.goto(`http://127.0.0.1:${server.address().port}/`)
   await page.waitForFunction(() => window.HB_READY)
   if (process.env.DEBUG_MAGENTA) await page.evaluate(() => { window.DEBUG_MAGENTA = true })
+  if (process.env.DEBUG_NOSUN) await page.evaluate(() => { window.DEBUG_NOSUN = true })
   await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || 8) })
 
   const send = async (list) => {
@@ -209,6 +210,7 @@ function camAtLive (t) {
   const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
   const partsAt = (t, cam) => {
     const out = []
+    if (process.env.NOPARTS) return out   // debug: frames without particles
     for (const p of PARTS) {
       const s = particles.state(p, t, solidAt); if (!s) continue
       if (cam && Math.hypot(s.x - cam.x, s.y - cam.y, s.z - cam.z) < 0.6) continue   // too close: would fill the screen

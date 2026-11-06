@@ -199,7 +199,9 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
     const neighbor = world.getBlock(cursor.offset(...dir))
     if (!neighbor) continue
     if (sameFluid(neighbor, type, water)) continue
-    if (neighbor.isCube && !isUp) continue
+    // vanilla isFaceOccludedByNeighbor: a full opaque block hides the face, the top one included
+    // (a lava top under stone was drawn, lit 0 = black, and showed through from below)
+    if (neighbor.isCube && !neighbor.transparent) continue
 
     let tint = [1, 1, 1]
     const lm = lightmap(lightOf(world, isUp ? cursor.offset(0, 1, 0) : cursor))
@@ -216,16 +218,23 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
     const su = texture.su
     const sv = texture.sv
 
+    // lava is opaque in vanilla (solid render type): draw it in the opaque pass so depth sorts
+    // it; water stays translucent
+    const opaque = !water
+    const P = opaque ? attr.positions : attr.t_positions, N = opaque ? attr.normals : attr.t_normals
+    const UV = opaque ? attr.uvs : attr.t_uvs, C = opaque ? attr.colors : attr.t_colors
+    const n0 = P.length / 3
     for (const pos of corners) {
       const height = cornerHeights[pos[2] * 2 + pos[0]]
-      attr.t_positions.push(
+      P.push(
         (pos[0] ? 1 : 0) + (cursor.x & 15) - 8,
         (pos[1] ? height : 0) + (cursor.y & 15) - 8,
         (pos[2] ? 1 : 0) + (cursor.z & 15) - 8)
-      attr.t_normals.push(...dir)
-      attr.t_uvs.push(pos[3] * su + u, pos[4] * sv * (pos[1] ? 1 : height) + v)
-      attr.t_colors.push(tint[0], tint[1], tint[2])
+      N.push(...dir)
+      UV.push(pos[3] * su + u, pos[4] * sv * (pos[1] ? 1 : height) + v)
+      C.push(tint[0], tint[1], tint[2])
     }
+    if (opaque) attr.indices.push(n0, n0 + 1, n0 + 2, n0 + 2, n0 + 1, n0 + 3, n0, n0 + 2, n0 + 1, n0 + 2, n0 + 3, n0 + 1)
   }
 }
 
