@@ -241,7 +241,7 @@ def _pop(dt, dur=0.18, over=0.75):
 
 def stamp_img(text, color):
     """A rubber-stamp label: bold text in a thick rounded frame, tilted."""
-    t = rich_text(text.upper(), 120, color, stroke=(255, 255, 255, 255), stroke_w=6)
+    t = rich_text(text.upper(), 100, color, stroke=(255, 255, 255, 255), stroke_w=6)
     pad = 26
     im = Image.new("RGBA", (t.width + 2 * pad, t.height + 2 * pad), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
@@ -321,7 +321,7 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
                     im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BICUBIC)
                 if fade < 1:
                     im = im.copy(); im.putalpha(im.split()[3].point(lambda v: int(v * fade)))
-                cy = BAND + int(GAME_H * 0.27)
+                cy = BAND + int(GAME_H * 0.36)   # below the corner counters
                 img.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))
             if fk:
                 v, label, done = fk
@@ -355,7 +355,7 @@ def hook_prepend(out, spec, t_video, fps=60):
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-hook-"))
     d = b - a
     txt = block_text(text, 104, COLORS["white"])
-    cy = BAND + int(GAME_H * 0.24)
+    cy = BAND + int(GAME_H * 0.68)   # lower third: clear of the corner counters and the crosshair
     for i in range(int(math.ceil(d * fps)) + 1):   # the text pops in over the first 0.15 s
         s = _pop(i / fps, 0.15, 0.5)
         im = txt if s == 1.0 else txt.resize((int(txt.width * s), int(txt.height * s)), Image.BICUBIC)

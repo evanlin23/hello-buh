@@ -90,6 +90,17 @@ class Warp:
         frame and skipped the next in real-time stretches (duplicate frames)."""
         return int(math.floor(self.src(k / fps) * fps + 1e-6))
 
+    def factor_at(self, t_out):
+        """Speed factor at output time t_out (1 outside every span)."""
+        lost = 0.0
+        for a, b, f in self.spans:
+            oa = a - lost
+            ob = oa + (b - a) / f
+            if oa <= t_out < ob:
+                return f
+            lost += (b - a) * (1 - 1 / f)
+        return 1.0
+
     def timeline(self, timeline):
         return [{**e, "t": self.out(e["t"] / 1000) * 1000} for e in timeline]
 

@@ -115,7 +115,15 @@ def main():
         pt = first[pay] - start
         tail = dur - pt
         verdict = "OK" if tail <= 1.0 else "LONG: end sooner after the payoff"
-        print(f"payoff '{pay}' at {pt:.2f}s; the video ends {tail:.2f}s after it -> {verdict}")
+        rp = ed.get("replay")
+        if rp:   # an instant replay after the payoff: the replay's own payoff is the end that counts
+            rlen = (float(rp.get("before", 1.5)) + float(rp.get("after", 0.5))) / float(rp.get("speed", 0.5))
+            rtail = float(rp.get("after", 0.5)) / float(rp.get("speed", 0.5))
+            print(f"payoff '{pay}' at {pt:.2f}s, then a {rlen:.2f}s replay from {dur - rlen:.2f}s (its payoff at {dur - rtail:.2f}s)")
+            tail, verdict = rtail, ("OK" if rtail <= 1.0 else "LONG: shorten the replay's `after`")
+            pre = dur - rlen - pt
+            print(f"  before the replay: {pre:.2f}s after the payoff -> {'OK' if pre <= 1.0 else 'LONG: end sooner after the payoff'}")
+        print(f"payoff '{pay}' at {pt:.2f}s; the video ends {tail:.2f}s after {'the replay payoff' if rp else 'it'} -> {verdict}")
     else:
         print("payoff: no mark given (--payoff EVENT); judge the tail from the frames")
 
