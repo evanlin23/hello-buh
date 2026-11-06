@@ -252,23 +252,29 @@ class JavaRandom:
 
 
 def death_windows(timeline, event="death"):
-    """[(death, respawn)] in seconds. One death is one window: a second death mark within 1.5 s
-    (health packet + combat-kill packet) is the same death, and a respawn mark under 0.5 s after the
-    death is the client's early respawn report, not the player clicking Respawn. Split windows
-    made the death screen blink off for 2 frames (dig_up, worker 2's review)."""
-    out, open_ = [], None
+    """[(death, respawn)] in seconds: each death runs to the next respawn (any length; with
+    immediate_respawn it's a tick). Windows that touch (the next death within 0.25 s of a respawn:
+    death, a spurious instant respawn, death again) are one death, so the screen doesn't blink off
+    (dig_up). An earlier rule ignored respawns under 0.5 s, which, with immediate_respawn, kept every
+    other try dead for its whole length (tries: empty HUD on tries 2, 4 and 6)."""
+    raw, open_ = [], None
     for e in timeline or []:
         t = e["t"] / 1000
-        if e["event"] == event:
-            if open_ is None and not (out and out[-1][1] >= t - 0.05 and t - out[-1][0] < 1.5):
-                open_ = t
-            elif open_ is None:   # re-opened right after a bogus close: extend the last window
-                open_ = out.pop()[0]
-        elif e["event"] == "respawn" and open_ is not None and t - open_ >= 0.5:
-            out.append((open_, t)); open_ = None
+        if e["event"] == event and open_ is None:
+            open_ = t
+        elif e["event"] == event and t - open_ > 1.5:   # older recordings: no respawn mark (instant respawn)
+            raw.append([open_, open_ + 0.05]); open_ = t
+        elif e["event"] == "respawn" and open_ is not None:
+            raw.append([open_, t]); open_ = None
     if open_ is not None:
-        out.append((open_, 1e9))
-    return out
+        raw.append([open_, 1e9])
+    out = []
+    for w in raw:
+        if out and w[0] - out[-1][1] < 0.25:
+            out[-1][1] = w[1]
+        else:
+            out.append(w)
+    return [tuple(w) for w in out]
 
 
 def hud_ticks(timeline, duration):
@@ -287,7 +293,10 @@ def hud_ticks(timeline, duration):
         _, _, slot, items, health = states[si]
         if any(a - 0.05 <= t + 1e-6 < b for a, b in deaths):   # from the death frame on (the screen starts a frame early)
             health = 0
-            items = (None,) * len(items)   # the inventory drops on the death tick (keepInventory off)
+            # the inventory drops on the death tick, but only show it for a real death screen: with
+            # immediate_respawn (+ keep_inventory) the window is a tick and blanked the hotbar (tries)
+            if any(b - a >= 0.5 and a - 0.05 <= t + 1e-6 < b for a, b in deaths):
+                items = (None,) * len(items)
         cur = math.ceil(health)
         if cur < last:
             blink_until, last_change, last_hurt = tick + 20, tick, tick

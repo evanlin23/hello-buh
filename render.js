@@ -173,7 +173,9 @@ function handAt (t) {
   const [name, h0] = HAND[i], h1 = HAND[i + 1][1]
   const h = HAND[i + 1][0] === name ? h0 + (h1 - h0) * f : h0
   let swing = 0
-  for (const s of SWINGS) if (s <= t && t - s < 6) swing = (t - s) / 6
+  // a death or respawn makes a new player entity, which starts at rest: no swing carries over (tries)
+  const reset = DEATHS.reduce((m, [a, b]) => Math.max(m, a <= t ? a : -1, b <= t ? b : -1), -1)
+  for (const s of SWINGS) if (s <= t && t - s < 6 && s >= reset) swing = (t - s) / 6
   return { name, equip: 1 - h, swing }
 }
 // Digging (from the harness's block_dig marks): [startTick, endTick, x, y, z, digTicks]. The client
@@ -360,14 +362,16 @@ function rainSplashes (t, camOf) {
 const DEATHS = []
 {
   let open = null
-  // one death = one window (same rule as edit.py death_windows): a second death mark within 30 ticks
-  // is the same death, and a respawn mark under 10 ticks after it is the client's early report
+  // same rule as edit.py death_windows: each death runs to the next respawn (any length), and
+  // windows that touch (the next death within 5 ticks of a respawn) are one death
   for (const e of rec.timeline || []) {
-    const t = e.t / 50, last = DEATHS[DEATHS.length - 1]
-    if (e.event === 'death' && open === null) open = (last && last[1] >= t - 1 && t - last[0] < 30) ? DEATHS.pop()[0] : t
-    if (e.event === 'respawn' && open !== null && t - open >= 10) { DEATHS.push([open, t]); open = null }
+    const t = e.t / 50
+    if (e.event === 'death' && open === null) open = t
+    else if (e.event === 'death' && t - open > 30) { DEATHS.push([open, open + 1]); open = t }   // older recordings: no respawn mark
+    if (e.event === 'respawn' && open !== null) { DEATHS.push([open, t]); open = null }
   }
   if (open !== null) DEATHS.push([open, Infinity])
+  for (let k = DEATHS.length - 1; k > 0; k--) if (DEATHS[k][0] - DEATHS[k - 1][1] < 5) { DEATHS[k - 1][1] = DEATHS[k][1]; DEATHS.splice(k, 1) }
   // a missing respawn mark (older recordings): the death ends where the pose jumps (respawn teleport)
   for (const d of DEATHS) {
     for (let i = Math.ceil(d[0]) + 1; i < Math.min(P.length, d[1]); i++) {
@@ -556,8 +560,16 @@ function camAt (t) {
 
 // cut marks (harness: every /tp while recording; stunts may mark 'cut' themselves): a pose step of
 // more than 0.8 blocks within 4 ticks after one is a hard cut, never a glide (below the 4-block rule)
-const CUT_TICKS = (rec.timeline || []).filter(e => e.event === 'cut').map(e => e.t / 50)
-const isCutStep = (i, a, b) => { const d = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]); return d > 4 || (d > 0.8 && CUT_TICKS.some(c => i + 1 >= c && i + 1 <= c + 4)) }
+const CUT_TICKS = (rec.timeline || []).filter(e => e.event === 'cut' || e.event === 'respawn').map(e => e.t / 50)
+// ...and a turn of over 20 degrees in one tick right after a cut or respawn is the server's
+// rotation landing a tick late: snap it too (tries: the view whipped down from the sky on respawn)
+const isCutStep = (i, a, b) => {
+  const d = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3])
+  if (d > 4) return true
+  if (!CUT_TICKS.some(c => i + 1 >= c && i + 1 <= c + 4)) return false
+  let dy = Math.abs(b[4] - a[4]) % (2 * Math.PI); if (dy > Math.PI) dy = 2 * Math.PI - dy
+  return d > 0.8 || dy > 0.35 || Math.abs(b[5] - a[5]) > 0.35
+}
 function camAtLive (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t)))
   const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
