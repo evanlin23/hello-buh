@@ -103,6 +103,13 @@ const DEATHS = []
     if (e.event === 'respawn' && open !== null) { DEATHS.push([open, e.t / 50]); open = null }
   }
   if (open !== null) DEATHS.push([open, Infinity])
+  // a missing respawn mark (older recordings): the death ends where the pose jumps (respawn teleport)
+  for (const d of DEATHS) {
+    for (let i = Math.ceil(d[0]) + 1; i < Math.min(P.length, d[1]); i++) {
+      const a = P[i - 1], b = P[i]
+      if ((b[1] - a[1]) ** 2 + (b[2] - a[2]) ** 2 + (b[3] - a[3]) ** 2 > 64) { d[1] = i; break }
+    }
+  }
 }
 // Hurt tilt (bobHurt): each hit sets hurtTime = 10; the view rolls by -sin(h^4 pi) * 14 degrees
 // around the hit direction (yaw from the hurt_animation packet, 0 for undirected damage).
