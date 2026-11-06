@@ -55,24 +55,23 @@ module.exports = {
       }
     }
     bot.on('physicsTick', rain)
-    // frozen in place, looking around as they slam down; the pitch stays 0.2-0.4 up so each anvil
-    // is seen from the sky to the ground. One quick sidestep.
-    await ctx.easeLook(Math.PI, 0.35, 500)                    // they're coming down
-    await ctx.easeLook(Math.PI + 0.35, 0.25, 800)
-    await ctx.easeLook(Math.PI + 0.7, 0.3, 900)
-    await ctx.easeLook(Math.PI + 0.2, 0.4, 800)
-    bot.setControlState('left', true); await bot.waitForTicks(6); bot.setControlState('left', false)
-    await ctx.easeLook(Math.PI - 0.6, 0.25, 900)
-    await ctx.easeLook(Math.PI - 0.2, 0.3, 800)
-    bot.removeListener('physicsTick', rain)
-    await bot.waitForTicks(30)                                // let the last ones land
-    // phew... then the one with its name on it
-    await ctx.easeLook(bot.entity.yaw, -0.2, 500)
+    // never still: glancing round and side-stepping between anvils the whole time, with the rain
+    // still coming down when the one with its name on it arrives (an empty sky before the finale
+    // read as staged, and 1.75 s of standing still read as a frozen video)
+    await ctx.easeLook(Math.PI, 0.35, 450)                    // they're coming down
+    const step = async (dir, ticks) => { bot.setControlState(dir, true); await bot.waitForTicks(ticks); bot.setControlState(dir, false) }
+    ctx.easeLook(Math.PI + 0.35, 0.25, 700); await step('left', 8)
+    ctx.easeLook(Math.PI + 0.65, 0.3, 700); await bot.waitForTicks(6); await step('back', 6)
+    ctx.easeLook(Math.PI + 0.15, 0.4, 700); await step('right', 10)
+    ctx.easeLook(Math.PI - 0.5, 0.25, 700); await bot.waitForTicks(4); await step('forward', 6)
+    ctx.easeLook(Math.PI - 0.15, 0.3, 600); await step('left', 6)
+    // phew... then the one with its name on it (lower, so the stare up is short), rain still falling
     ctx.mark('phew')
     const p = bot.entity.position
-    drop(p.x, p.z)
-    await ctx.easeLook(bot.entity.yaw, 1.3, 700)              // look up: oh no
+    bot.chat(`/summon falling_block ${p.x.toFixed(2)} ${(this.floor + 9).toFixed(1)} ${p.z.toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,HurtEntities:1b,FallHurtAmount:2f,FallHurtMax:40}`)
+    await ctx.easeLook(bot.entity.yaw, 1.2, 350)              // look up: oh no
     for (let i = 0; i < 80 && !ctx.died; i++) await bot.waitForTicks(1)
+    bot.removeListener('physicsTick', rain)
     await bot.waitForTicks(50)                                // the death screen
     bot.removeListener('blockUpdate', landed)
     return ctx.died

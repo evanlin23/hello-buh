@@ -376,6 +376,9 @@ function camAtLive (t) {
         y = ny; if (part === 1) vy = nvy
       }
       e.x = s0.x; e.z = s0.z; e.y = Math.min(e.y, y)
+      // the camera inside the block (it fell onto the player's head): vanilla culls the faces you'd
+      // see from inside, so draw nothing rather than a screen of the block's dark underside
+      if (Math.abs(cam.x - e.x) < 0.5 && Math.abs(cam.z - e.z) < 0.5 && cam.y > e.y - 0.05 && cam.y < e.y + 1.05) e.hidden = true
     }
     // dropped items (ItemEntityRenderer): items with a flat sprite stay sprites; block items are a
     // quarter-size 3D block, bobbing sin(age/10)*0.1+0.1 and spinning age/20 rad
@@ -431,7 +434,7 @@ function camAtLive (t) {
         await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.state, mesher.meshSingle(e.extra.state)])
       }
     }
-    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents, partsAt(t, cam)])
+    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), partsAt(t, cam)])
     // let the compositor present the finished frame before capturing (else: tearing lines)
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })

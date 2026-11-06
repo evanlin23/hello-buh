@@ -619,7 +619,7 @@ def main():
                 dur_s = min(dur_s, starts[0] - t0 - 0.05)
             subtitle_png(text, tmp / f"sub{k}.png")
             inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
-            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{t0:.3f},{t0 + dur_s:.3f})'[sb{k}]")
+            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sb{k}]")
             last, n_in = f"sb{k}", n_in + 1
     if args.death_screen and args.death_screen in tl_ev:
         # DeathScreen opens on the tick the client gets the death packet; buttons enable after 20 ticks
@@ -635,7 +635,7 @@ def main():
             if b <= a:
                 continue
             inputs += ["-loop", "1", "-i", str(tmp / f"death{k}.png")]
-            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{a:.3f},{b:.3f})'[ds{k}]")
+            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{a:.3f})*lt(t,{b:.3f})'[ds{k}]")
             last, n_in = f"ds{k}", n_in + 1
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     maps = ["-map", "[v]"]

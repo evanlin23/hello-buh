@@ -163,3 +163,7 @@ each section.
 - **mineflayer `bot.dig` throws "enchantments is not iterable" with an enchanted tool on 1.21.11.** Send the start-digging packet yourself, as pickaxe_race does.
 - **Clear a big area around a crater:** tnt's crater reached the ocean beyond a 41-block field and flooded with seagrass. The field is now 61 x 81, with 14 blocks of dirt underneath.
 - **Never leave a shot frozen.** Waiting for a fuse needs small glances, and endings need a slow drift: the reviewer read 1.2 s without motion as a stuck bot.
+- **Overlay windows are half-open,** `gte(t,a)*lt(t,b)`, never `between()`, which includes both ends. The death screen's two images overlapped for one frame at the 1 s mark and showed a doubled red flash.
+- **A falling block that reaches the camera isn't drawn** (vanilla culls its inside faces). Otherwise the screen shows a few frames of the block's dark underside.
+- **A render that started before an engine fix doesn't have it.** Check the frame mtimes against the fix commit time before blaming the fix. anvil_rain at 17:32 predated the 17:36 smoothing fix.
+- **anvil_rain:** keep the rain falling through the finale and keep the bot moving (side-steps and glances). An empty sky before the last anvil read as staged, and 1.75 s of standing still read as a frozen video.
