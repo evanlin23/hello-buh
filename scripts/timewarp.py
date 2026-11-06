@@ -10,17 +10,47 @@ import json
 import math
 
 
+def _load(x):
+    return (json.loads(x) if isinstance(x, str) else x) or []
+
+
+def edit_spans(speed=None, slowmo=None):
+    """One span list for the time map: the stunt's `edit.speed` spans plus its `edit.slowmo`
+    windows ([EVENT, BEFORE_S, AFTER_S, FACTOR=0.5]: FACTOR-times speed from BEFORE_S ahead of the
+    event to AFTER_S after it, e.g. ["splash5", 0.15, 0.35] plays 0.5 s of footage over 1 s)."""
+    out = [list(s) for s in _load(speed)]
+    for s in _load(slowmo):
+        out.append([f"{s[0]}:{-abs(float(s[1]))}", f"{s[0]}:{float(s[2])}", float(s[3]) if len(s) > 3 else 0.5])
+    return out
+
+
+def edit_timeline(edit, timeline):
+    """The recording's timeline in output time for a stunt's `edit` block (speed + slowmo)."""
+    spans = edit_spans(edit.get("speed"), edit.get("slowmo"))
+    return Warp(spans, timeline).timeline(timeline) if spans else timeline
+
+
 class Warp:
     def __init__(self, spec, timeline):
         ev = {}
         for e in timeline:
             ev.setdefault(e["event"], e["t"] / 1000)
+
+        def at(name):                       # "EVENT" or "EVENT:OFFSET_S"
+            if name in ev:
+                return ev[name]
+            k, _, off = str(name).rpartition(":")
+            try:
+                return ev[k] + float(off) if k in ev else None
+            except ValueError:
+                return None
         self.spans = []                     # (src_a, src_b, factor) with factor inf for cuts
-        for a, b, f in (json.loads(spec) if isinstance(spec, str) else spec):
-            if a not in ev or b not in ev or ev[b] <= ev[a]:
+        for a, b, f in _load(spec):
+            ta, tb = at(a), at(b)
+            if ta is None or tb is None or tb <= ta:
                 print(f"speed span {a}..{b} skipped (event missing or empty)")
                 continue
-            self.spans.append((ev[a], ev[b], math.inf if f == "cut" else float(f)))
+            self.spans.append((ta, tb, math.inf if f == "cut" else float(f)))
         self.spans.sort()
         for (a0, b0, _), (a1, _, _) in zip(self.spans, self.spans[1:]):
             if a1 < b0:

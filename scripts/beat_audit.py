@@ -30,7 +30,8 @@ SKIP = {"sound", "particles", "hotbar", "start", "end", "face_on", "face_off", "
 def edit_config(name):
     js = f"const s=require('./stunts/{name}.js');console.log(JSON.stringify(s.edit||{{}}))"
     out = subprocess.run(["node", "-e", js], cwd=HERE, capture_output=True, text=True)
-    return json.loads(out.stdout or "{}")
+    import os
+    return {**json.loads(out.stdout or "{}"), **json.loads(os.environ.get("EDIT_EXTRA") or "{}")}   # same override as edit_args.js
 
 
 def main():
@@ -43,9 +44,9 @@ def main():
     ed = edit_config(a.name)
     rec_p = HERE / "work" / f"{a.name}.rec.json"
     tl = json.loads(rec_p.read_text())["timeline"] if rec_p.exists() else []
-    if ed.get("speed") and tl:   # time-lapse spans and cuts: marks in output time, as edit.py places them
-        from timewarp import Warp
-        tl = Warp(ed["speed"], tl).timeline(tl)
+    if tl:   # time-lapse spans, cuts and slow-mo: marks in output time, as edit.py places them
+        from timewarp import edit_timeline
+        tl = edit_timeline(ed, tl)
     first = {}
     for e in tl:
         first.setdefault(e["event"], e["t"] / 1000)
@@ -55,6 +56,10 @@ def main():
         if ev in first:
             start = max(0.0, first[ev] + float(off))
     fps, dur = probe(video)
+    from retention import hook_len
+    if hook_len(ed):   # the hook preview plays first: every mark is that much later in the video
+        start -= hook_len(ed)
+        print(f"hook preview: the first {hook_len(ed):.2f}s are the finale flash (marks shifted)")
 
     print(f"{a.name}: {dur:.2f}s video, recording trimmed from {start:.2f}s")
     marks = []

@@ -528,9 +528,9 @@ def apply_speed(args):
     """--speed: rebuild the footage, the timeline and the game audio on the time-lapse map
     (scripts/timewarp.py), so everything after this works in output time unchanged."""
     sys.path.insert(0, str(HERE / "scripts"))
-    from timewarp import Warp, atempo
+    from timewarp import Warp, atempo, edit_spans
     rec = json.loads(pathlib.Path(args.timeline).read_text())
-    warp = Warp(args.speed, rec["timeline"])
+    warp = Warp(edit_spans(args.speed, args.slowmo), rec["timeline"])
     if not warp:
         return
     if not args.frames:
@@ -538,13 +538,24 @@ def apply_speed(args):
     wd = pathlib.Path(tempfile.mkdtemp(prefix="hb-speed-"))
     src_dir = pathlib.Path(args.frames).parent
     n_src = len(list(src_dir.glob("*" + pathlib.Path(args.frames).suffix)))
-    k = 0
+    k, blended = 0, 0
+    pat = pathlib.Path(args.frames).name
     while True:
-        i = int(round(warp.src(k / args.fps) * args.fps))
+        x = warp.src(k / args.fps) * args.fps
+        i = int(round(x))
         if i >= n_src:
             break
-        (wd / (pathlib.Path(args.frames).name % k)).symlink_to((src_dir / (pathlib.Path(args.frames).name % i)).resolve())
+        frac = x - math.floor(x)
+        if 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # slow motion: blend the two neighbours (no duplicate frames)
+            lo = Image.open(src_dir / (pat % math.floor(x))).convert("RGB")
+            hi = Image.open(src_dir / (pat % (math.floor(x) + 1))).convert("RGB")
+            Image.blend(lo, hi, frac).save(wd / (pat % k), compress_level=1)
+            blended += 1
+        else:
+            (wd / (pat % k)).symlink_to((src_dir / (pat % i)).resolve())
         k += 1
+    if blended:
+        print(f"slow-mo: {blended} blended in-between frames")
     print(f"speed: {n_src} frames -> {k} ({', '.join(f'{a:.2f}-{b:.2f}s x{f:g}' for a, b, f in warp.spans)})")
     args.frames = str(wd / pathlib.Path(args.frames).name)
     (wd / "timeline.json").write_text(json.dumps({"timeline": warp.timeline(rec["timeline"])}))
@@ -615,13 +626,19 @@ def main():
     ap.add_argument("--song_start", type=float, default=0.0, help="seconds into the song to start (e.g. the drop)")
     ap.add_argument("--song_drop_at", help="timeline event (or seconds into the Short) where the song's drop should land; the drop is found by scripts/song_drop.py")
     ap.add_argument("--story", help="stories/<name>: narrated story Short (docs/stories.md): the line wavs and word-chunk captions on the `line` marks, game audio turned down under the voice")
+    # retention toolkit (scripts/retention.py): all optional, from the stunt's `edit` block
+    ap.add_argument("--slowmo", help='JSON list of [EVENT, BEFORE_S, AFTER_S, FACTOR=0.5] slow-motion windows')
+    ap.add_argument("--punch", help='JSON list of EVENT or [EVENT, NTH, SCALE] zoom punches on the game view')
+    ap.add_argument("--counter", help='JSON {"at": [EVENT, ...], "total": N} "3/5" beat counter')
+    ap.add_argument("--cards", help='JSON list of [EVENT, TEXT, SECONDS?, COLOR?, NTH?] impact cards')
+    ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 0.5, "after": 0, "text": ...} finale preview in front')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
-    if args.speed and args.timeline:
+    if (args.speed or args.slowmo) and args.timeline:
         apply_speed(args)
     _tl = {}
     if args.timeline:
@@ -631,6 +648,10 @@ def main():
         ev_, off_ = args.start_at.rsplit(":", 1)
         if ev_ in _tl:
             args.start = max(0.0, _tl[ev_] + float(off_))
+    sys.path.insert(0, str(HERE / "scripts"))
+    import retention
+    if args.punch and args.timeline and args.frames:
+        retention.apply_punch(args, args.punch, json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))
     if args.song and args.song_drop_at:
@@ -778,6 +799,13 @@ def main():
                     inputs += ["-loop", "1", "-i", str(tmp / f"death{di}_{k}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
                     last, n_in = f"ds{di}_{k}", n_in + 1
+    if (args.counter or args.cards) and args.timeline:   # beat counter + impact cards (scripts/retention.py)
+        lst = retention.fx_concat(args.counter, args.cards, json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.start, dur, tmp, args.out_fps)
+        if lst:
+            inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
+            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[fxv]")
+            graph.append(f"[{last}][fxv]overlay=0:0:eof_action=repeat[fxo]")
+            last, n_in = "fxo", n_in + 1
     if args.story and args.timeline:   # narrated story: big word-chunk captions over the game (and the death screen)
         sys.path.insert(0, str(HERE / "scripts"))
         import story_track
@@ -842,6 +870,11 @@ def main():
     subprocess.run(cmd, check=True)
     if args.story:   # single-pass loudnorm lands ~2 dB short: measure and correct to -14 LUFS exactly
         story_track.master_gain(args.out, -14.0)
+    if args.hook and args.timeline:   # finale preview in front of beat 1 (after mastering: it reuses the final mix)
+        h = json.loads(args.hook)
+        if h.get("at") in tl_ev:
+            retention.hook_prepend(args.out, h, tl_ev[h["at"]] - args.start, args.out_fps)
+            dur += retention.hook_len({"hook": h})
     print("wrote", args.out, f"{dur:.2f}s")
 
 

@@ -16,7 +16,7 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from timewarp import Warp  # noqa: E402
+from timewarp import Warp, edit_spans  # noqa: E402
 
 
 def main(stunt, rec_path, out_dir, fps=60):
@@ -25,7 +25,7 @@ def main(stunt, rec_path, out_dir, fps=60):
     rec = json.loads(pathlib.Path(rec_path).read_text())
     tl = rec["timeline"]
     n = int((len(rec["poses"]) - 1) / 20 * fps)
-    warp = Warp(edit.get("speed") or [], tl)
+    warp = Warp(edit_spans(edit.get("speed"), edit.get("slowmo")), tl)
     ev = {}
     for e in warp.timeline(tl):
         ev.setdefault(e["event"], e["t"] / 1000)

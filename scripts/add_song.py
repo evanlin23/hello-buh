@@ -41,10 +41,10 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         print(name, "no song file"); return
     src = d / "short_nosong.mp4"
     tl = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))["timeline"]
-    if stunt.get("speed"):   # time-lapse spans: the drop lands on the event in output time, as edit.py does
-        sys.path.insert(0, str(ROOT / "scripts"))
-        from timewarp import Warp
-        tl = Warp(stunt["speed"], tl).timeline(tl)
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from timewarp import edit_timeline
+    from retention import hook_len
+    tl = edit_timeline(stunt, tl)   # time-lapse spans and slow-mo: the drop lands on the event in output time, as edit.py does
     ev = {}
     for e in tl:
         ev.setdefault(e["event"], e["t"] / 1000)
@@ -60,7 +60,7 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                         "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(src)], check=True)
         print(name, "made short_nosong.mp4 from game_audio.flac")
     drop_at = stunt.get("dropAt")
-    at = (ev[drop_at] - start) if drop_at in ev else 0.0
+    at = (ev[drop_at] - start + hook_len(stunt)) if drop_at in ev else 0.0   # a hook preview pushes the Short back
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)], capture_output=True, text=True, check=True).stdout)
     if gen:   # our own synthesized phonk (scripts/phonk.py): the drop lands exactly on the event
         (ROOT / "work").mkdir(exist_ok=True)
