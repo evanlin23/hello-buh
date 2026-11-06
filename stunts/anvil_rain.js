@@ -17,7 +17,8 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     const R = 18
-    await ctx.cmd(`/fill ${x - R} ${floor + 1} ${z - R} ${x + R} ${floor + 26} ${z + R} air`)
+    // /fill caps at 32768 blocks: clear the air in slabs
+    for (let y0 = floor + 1; y0 <= floor + 26; y0 += 12) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 11, floor + 26)} ${z + R} air`)
     await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R} grass_block`)
     await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R} dirt`)
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16]])
@@ -39,27 +40,29 @@ module.exports = {
     await bot.waitForTicks(10)
     await ctx.easeLook(Math.PI, 0.6, 600)                     // something in the sky?
     ctx.mark('rain')
-    // the rain: a few anvils every few ticks, never within 1.6 blocks of where the bot will be
+    // the rain: a few anvils every few ticks, mostly in front of the camera so they land in shot,
+    // never within 3.5 blocks of the bot (it walks ~2 blocks while one falls)
     let n = 0
     const rain = () => {
       if (n++ % 3) return
-      const p = bot.entity.position, v = bot.entity.velocity
+      const p = bot.entity.position, yaw = bot.entity.yaw
       for (let k = 0; k < 2; k++) {
-        const a = rnd() * Math.PI * 2, d = 1.8 + rnd() * 7
-        const ax = p.x + v.x * 10 + Math.cos(a) * d, az = p.z + v.z * 10 + Math.sin(a) * d
-        drop(ax, az)
+        const a = yaw + Math.PI + (rnd() - 0.5) * (rnd() < 0.75 ? 1.6 : 6), d = 3.5 + rnd() * 7
+        drop(p.x - Math.sin(a + Math.PI) * d, p.z - Math.cos(a + Math.PI) * d)
       }
     }
     bot.on('physicsTick', rain)
-    await ctx.easeLook(Math.PI, -0.15, 500)
-    // dodge: sprint, strafe, turn
-    bot.setControlState('sprint', true); bot.setControlState('forward', true)
-    await ctx.easeLook(Math.PI + 0.8, -0.1, 900)
-    bot.setControlState('left', true); await ctx.easeLook(Math.PI - 0.4, -0.05, 900); bot.setControlState('left', false)
-    await ctx.easeLook(Math.PI - 1.4, -0.1, 900)
-    bot.setControlState('right', true); await ctx.easeLook(Math.PI - 0.6, 0.2, 800); bot.setControlState('right', false)
-    bot.setControlState('forward', false); bot.setControlState('sprint', false)
+    await ctx.easeLook(Math.PI, 0.35, 500)                    // they're coming down
+    await ctx.easeLook(Math.PI + 0.3, -0.2, 700)
+    // dodge: walk, strafe, look up at the next ones
+    bot.setControlState('forward', true)
+    await ctx.easeLook(Math.PI + 0.8, -0.15, 900)
+    bot.setControlState('left', true); await ctx.easeLook(Math.PI + 0.2, 0.3, 900); bot.setControlState('left', false)
+    await ctx.easeLook(Math.PI - 0.6, -0.2, 900)
+    bot.setControlState('right', true); await ctx.easeLook(Math.PI - 0.2, 0.25, 800); bot.setControlState('right', false)
+    bot.setControlState('forward', false)
     bot.removeListener('physicsTick', rain)
+    await bot.waitForTicks(30)                                // let the last ones land
     // phew... then the one with its name on it
     await ctx.easeLook(bot.entity.yaw, -0.2, 500)
     ctx.mark('phew')
