@@ -9,7 +9,7 @@ const NAME = process.env.BOT_NAME || 'HelloBuh'
 const HEIGHT = Number(process.env.FALL_HEIGHT || 60)   // blocks above the floor
 const sleep = (ms) => new Promise(r => setTimeout(r, ms))
 
-const bot = mineflayer.createBot({ host: '127.0.0.1', port: Number(process.env.MC_PORT || 25565), username: NAME, auth: 'offline', version: process.env.MC_VERSION || '1.21.1' })
+const bot = mineflayer.createBot({ host: '127.0.0.1', port: Number(process.env.MC_PORT || 25565), username: NAME, auth: 'offline', viewDistance: 12, version: process.env.MC_VERSION || '1.21.11' })
 const log = (...a) => console.log(new Date().toISOString().slice(11, 23), ...a)
 bot.on('kicked', r => { log('kicked', r); process.exit(2) })
 bot.on('error', e => { log('error', e); process.exit(2) })
@@ -26,15 +26,16 @@ async function easeLook (yaw, pitch, ms) {
 }
 // Event timeline for the HUD overlay and the audio mix, in ms since recording started (tick * 50).
 let rec = null, tick = 0, recording = false
+const RADIUS = Number(process.env.RECORD_RADIUS || 160)   // blocks of world to snapshot around the set
 const timeline = []
 const mark = (event, extra = {}) => { if (recording) timeline.push({ t: tick * 50, event, slot: bot.quickBarSlot, health: bot.health, ...extra }) }
-function startRecording (cx, cz) {
+function startRecording (cx, cz, floor) {
   const columns = []
   for (const { chunkX, chunkZ, column: col } of bot.world.getColumns()) {
     const x = Number(chunkX), z = Number(chunkZ)
-    if (Math.abs(x * 16 - cx) <= 96 && Math.abs(z * 16 - cz) <= 96) columns.push({ x: x * 16, z: z * 16, chunk: col.toJson() })
+    if (Math.abs(x * 16 + 8 - cx) <= RADIUS && Math.abs(z * 16 + 8 - cz) <= RADIUS) columns.push({ x: x * 16, z: z * 16, chunk: col.toJson() })
   }
-  rec = { version: bot.version, columns, poses: [], blocks: [], sounds: [] }
+  rec = { version: bot.version, set: { x: cx, y: floor, z: cz }, columns, poses: [], blocks: [], sounds: [] }
   tick = 0; recording = true
   const onTick = () => {
     const e = bot.entity
@@ -52,22 +53,52 @@ const cmd = async (c) => { bot.chat(c); await bot.waitForTicks(4) }
 bot.once('spawn', async () => {
   try {
     log('spawned at', bot.entity.position)
-    // The set floats at FLOOR_Y (prismarine-viewer's meshing assumes y >= 0).
-    const x = Number(process.env.SET_X || 0), z = Number(process.env.SET_Z || 0), floor = Number(process.env.FLOOR_Y || 100), top = floor + HEIGHT
+    // The set: a natural world (fixed seed). Find dry land near spawn, flatten a small landing
+    // area at the surface, clear the air column above it, and build the pillar there.
+    // Go to the nearest BIOME (default forest, like most HelloBuh clips) with /locate.
+    const BIOME = process.env.BIOME || 'minecraft:forest'
+    await cmd('/gamemode creative')
+    const located = new Promise((resolve) => {
+      const on = (m) => { const r = /nearest .* is at \[(-?\d+), [^,]+, (-?\d+)\]/.exec(m); if (r) { bot.removeListener('messagestr', on); resolve([+r[1], +r[2]]) } }
+      bot.on('messagestr', on); setTimeout(() => resolve(null), 20000)
+    })
+    bot.chat(`/locate biome ${BIOME}`)
+    const loc = await located
+    if (loc) { log('nearest', BIOME, 'at', loc); await cmd(`/tp @s ${loc[0]} 200 ${loc[1]}`); await bot.waitForTicks(40) }
+    await bot.waitForChunksToLoad()
+    const NATURAL = new Set(['air', 'cave_air', 'short_grass', 'tall_grass', 'fern', 'large_fern', 'snow', 'dandelion', 'poppy', 'bush'])
+    const isTree = (n) => n.endsWith('_leaves') || n.endsWith('_log') || n === 'vine'
+    function surface (sx, sz) {
+      for (let y = 200; y > -60; y--) {
+        const b = bot.blockAt(new Vec3(sx, y, sz))
+        if (!b) return null
+        if (NATURAL.has(b.name) || isTree(b.name)) continue
+        return b
+      }
+      return null
+    }
+    const sp = bot.entity.position.floored()
+    let x = Number(process.env.SET_X ?? sp.x), z = Number(process.env.SET_Z ?? sp.z), floor = null
+    for (let r = 0; r <= 48 && floor === null; r += 8) {   // spiral out until we hit grass/dirt
+      for (const [dx, dz] of [[0, 0], [r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, -r], [r, -r], [-r, r]]) {
+        const b = surface(x + dx, z + dz)
+        if (b && ['grass_block', 'dirt', 'podzol', 'coarse_dirt'].includes(b.name) && b.position.y >= 62) { x += dx; z += dz; floor = b.position.y; break }
+      }
+    }
+    if (floor === null) throw new Error('no dry land near spawn; try another seed')
+    const top = floor + HEIGHT
+    log('set at', x, floor, z)
     await cmd('/gamemode creative'); await cmd('/time set 6000'); await cmd('/weather clear')
     await cmd('/gamerule doDaylightCycle false'); await cmd('/gamerule doWeatherCycle false')
     await cmd('/gamerule sendCommandFeedback false'); await cmd('/gamerule showDeathMessages true')
-    // The set: a grass landing pad ringed with some scenery, a stone pillar to jump from.
-    const R = 16   // set radius
+    const R = 10   // flattened radius around the pillar (the bot lands ~7 blocks out)
     await cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R} dirt`)
     await cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R} grass_block`)
-    // Clear the whole set volume (in slabs: /fill is capped at 32768 blocks per command).
+    // Clear the column above (in slabs: /fill is capped at 32768 blocks per command).
     for (let y0 = floor + 1; y0 <= top + 4; y0 += 30) await cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 29, top + 4)} ${z + R} air`)
     await cmd(`/fill ${x} ${floor + 1} ${z} ${x} ${top} ${z} cobblestone`)
     const LAYERS = Number(process.env.TOP_LAYERS || 5)   // snow cap: shifts the fall phase by (LAYERS-1)/8 block (snow collision height)
     if (LAYERS > 0) await cmd(`/setblock ${x} ${top + 1} ${z} snow[layers=${LAYERS}]`)
-    await cmd(`/fill ${x - 6} ${floor + 1} ${z + 4} ${x - 6} ${floor + 5} ${z + 4} oak_log`)
-    await cmd(`/fill ${x - 8} ${floor + 5} ${z + 2} ${x - 4} ${floor + 7} ${z + 6} oak_leaves keep`)
     await cmd(`/clear @s`)
     await cmd(`/item replace entity @s hotbar.0 with diamond_sword`)
     await cmd(`/item replace entity @s hotbar.1 with water_bucket`)
@@ -88,7 +119,7 @@ bot.once('spawn', async () => {
     await bot.waitForTicks(30)
     log('on top at', bot.entity.position, 'health', bot.health)
 
-    startRecording(x, z); mark('start')
+    startRecording(x, z, floor); mark('start')
     await bot.waitForTicks(30)                     // ~1.5 s of "standing on the pillar"
     await easeLook(0, -1.0, 600)                   // peek over the edge (mineflayer: negative pitch = down)
     await easeLook(0, -0.25, 400)

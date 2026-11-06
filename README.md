@@ -6,7 +6,7 @@ and the clip is edited into the channel's format. No human at the keyboard, no M
 ```bash
 ./run.sh          # -> out/water_clutch.mp4 (1080x1920, 60 fps)
 ```
-Needs Java 21, Node 22, Python 3 + Pillow, ffmpeg, and Playwright's Chromium.
+Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chromium.
 
 ## The format (from the channel, 2026-11-06)
 - 72 Shorts, 553 subscribers. Most get 20–40K views; the best is "re:zero instant respawn" (`PdcbpRxYKlc`) at 191K.
@@ -30,15 +30,14 @@ Needs Java 21, Node 22, Python 3 + Pillow, ffmpeg, and Playwright's Chromium.
 | fetch | `scripts/fetch.py` | vanilla 1.21.1 server jar, client jar (HUD sprites), asset index (sounds); sha1-pinned in `versions.env` |
 | server | `run.sh`, `server.properties` | offline-mode server on 127.0.0.1, fresh superflat world each run |
 | stunt | `bot.js` | Mineflayer bot builds the set with commands, does the stunt, records chunks + per-tick pose + block changes + sounds; exits 1 on a failed clutch so `run.sh` retries |
-| render | `render.js` | drives prismarine-viewer in headless Chromium **per frame** from the recording: frame-exact 60 fps, ~18 s of render per video second on 4 CPUs |
+| assets | `renderer/build_assets.py`, `renderer/prepare.js` | texture atlas, block models and environment textures straight from the version's client jar |
+| render | `render.js`, `renderer/` | meshes the recorded world in Node (block models vendored from prismarine-viewer, MIT, with vanilla face shading + AO), draws each frame in headless Chromium with three.js: vanilla FOV 70, sky + fog, fancy clouds, sun, view bobbing, underwater fog. Frame-exact 60 fps, ~20 s of render per video second on 4 CPUs |
 | audio | `audio.py` | rebuilds the game sound from the recorded events and the game's own sound files |
 | edit | `edit.py` | 1080x1920 layout, caption (Twemoji for emoji), HUD drawn from the client jar's sprites, loudness -18 LUFS |
 
-`scripts/patch_deps.sh` (runs on `npm install`) fixes two bugs in the pinned dependencies; see the comments there.
-
 ## Known gaps vs real HelloBuh frames
-- Renderer is prismarine-viewer, not the game: flatter lighting, no clouds, some missing textures (pink specks), snow layers draw as full blocks, no hand/held item, no particles.
-- HUD is drawn, not rendered: no level number text, static XP bar.
-- Renderer only supports up to 1.21.4 data, so the server runs 1.21.1.
+- Our renderer is a re-implementation, not the game: no particles, rain, entities (mobs, dropped items), block light (torches/caves), animated textures, or first-person hand. (HelloBuh crops the centre of a 16:9 window, so the hand is mostly out of frame anyway.)
+- HUD is drawn from the real sprites, not rendered: no level number text, static XP bar.
+- The world is real: vanilla 1.21.11 server, real terrain (the set is built in the nearest forest), real physics.
 
 See `docs/trial.md` for the trial report (speed, gaps, Actions costs), `docs/clutch-timing.md` for why the water clutch lands every time, and `research/formats.md` for what to make next.

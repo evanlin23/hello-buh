@@ -13,6 +13,9 @@ mkdir -p work out
 
 [ -d node_modules ] || npm ci --no-audit --no-fund
 python3 scripts/fetch.py
+VER=$(grep '^MC_VERSION=' versions.env | cut -d= -f2)
+# renderer assets straight from this version's client jar (cached)
+[ -f "work/assets/$VER/resolved.json" ] || { python3 renderer/build_assets.py "$VER" && node renderer/prepare.js "$VER"; }
 
 # --- private local server (offline mode, 127.0.0.1 only; the bot is the only player) ---
 S=work/server
