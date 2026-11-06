@@ -40,12 +40,27 @@ STUNT=pearl_clutch ./run.sh       # any stunt in stunts/
 | `golem` | POV: you **hit** a villager 💀 | FUNK ABNORMAL | the iron golem launches you |
 | `pearl_clutch` | (needs a redesign: QA couldn't read the stunt) | | |
 
-## Music and length (see `research/music_and_length_2026-11-06.md`)
-Each package has `short.mp4` (song baked in) **and** `short_nosong.mp4` (game audio only). Upload the
-no-song one and add the song with the YouTube app's Shorts audio picker: it's licensed with no
-standard Content ID claim, and the creator's 45% share is the same either way. A claimed Short over
-60 s gets blocked. `metadata.json` gives the second the song's drop should land on. Target length
-is 10-15 s, or 20-30 s for build-up stories, with the stunt visible in the first second.
+## Music (decided 2026-11-06: only music that can't get the channel claimed)
+Uploaded Shorts carry **NCS (NoCopyrightSounds) Brazilian phonk** with NCS's official credit in the
+description. NCS's usage policy (https://ncs.io/usage-policy) lets independent creators use and
+monetize its tracks on YouTube with no claim or strike, provided the credit is there.
+- `python3 scripts/ncs.py` refreshes `music/ncs.json` (16 tracks, with the credit block copied
+  verbatim from each track's ncs.io page) and downloads the mp3s to `songs/ncs/` (gitignored).
+- `python3 scripts/add_song.py <name> --ncs` bakes the least-used track into the package. The drop
+  lands on the stunt's `dropAt` event, and the description becomes caption + credit + hashtags.
+  `publish.js` runs this for every package it makes. Packages without `short_nosong.mp4` get one
+  made from `short.mp4`'s picture and `game_audio.flac`.
+- The stunts' `edit.song` (FUNK ABNORMAL, misery., Payphone) is only a reference for the edit in
+  `out/`; it never goes up. `youtube_upload.py` skips any package whose `song.licence` isn't NCS
+  or original.
+- Fallback that's fully ours: `add_song.py <name> --gen montagem|drift|slowed|funk` (synthesized
+  phonk, `scripts/phonk.py`).
+- Not allowed: Suno/Udio free tiers (non-commercial), MusicGen (non-commercial), any label song
+  baked in. Details are in `research/free_music_2026-11-06.md`.
+- If a claim ever appears on an NCS Short, check the credit matches `music/ncs.json` and dispute it.
+
+Target length is 10-15 s, or 20-30 s for build-up stories, with the stunt visible in the first
+second (`research/music_and_length_2026-11-06.md`).
 
 ## QA (every Short, before publishing)
 1. `python3 scripts/qa.py out/<name>.mp4` flags stuck, dark and black stretches.
@@ -62,11 +77,8 @@ enabled, OAuth client already made). If you don't already have a refresh token w
 `youtube.upload` scope *for the HelloBuh channel*, run `scripts/youtube_auth.py` on your own
 computer and sign in as HelloBuh (a token is per channel). Save
 `YT_CLIENT_ID`, `YT_CLIENT_SECRET` and `YT_REFRESH_TOKEN` as repo secrets. Optional repo
-variables: `YT_AUDIO` (`song` = baked-in track, `nosong`) and `YT_PRIVACY`.
-- **Music can't be added through the API.** Picker audio only exists inside the YouTube app, at
-  creation time. Automated uploads therefore carry the baked-in song (a standard Content ID claim:
-  usually monetized by the label under 60 s, but it can be blocked) or an Audio Library track
-  (no claim). For picker audio, upload `short_nosong.mp4` from the phone app by hand.
+variables: `YT_AUDIO` (`song` = baked-in NCS track, `nosong`) and `YT_PRIVACY`.
+- Uploads carry the baked-in NCS track (see Music). `YT_AUDIO=nosong` uploads game audio only.
 - Quota (checked against the official docs 2026-11-06, developers.google.com/youtube/v3/determine_quota_cost):
   uploads have their own bucket, **100 `videos.insert` calls per day per Google Cloud project** at
   1 unit each. It's shared by every channel that uploads through the project (the owner's other

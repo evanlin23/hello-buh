@@ -10,8 +10,7 @@ Credentials come from the environment, never from files in the repo:
 Options (environment):
   YT_AUDIO=song|nosong      which file to upload (default song: the baked-in track; see README
                             "Music and length" - picker audio can't be added through the API)
-  YT_PRIVACY=private|public|unlisted   (default private; API uploads from an unaudited Google
-                            project are forced private anyway)
+  YT_PRIVACY=private|public|unlisted   (default private)
   YT_PUBLISH_AT=ISO time    schedule (requires privacy private; YouTube makes it public then)
   YT_DRY_RUN=1              show what would be uploaded
 
@@ -45,6 +44,10 @@ def next_package(vid):
             continue
         meta = json.loads(m.read_text())
         if meta.get("status", "ready") != "ready":
+            continue
+        lic = (meta.get("song") or {}).get("licence", "")
+        if os.environ.get("YT_AUDIO", "song") != "nosong" and meta.get("song") and not lic.startswith(("NCS", "original")):
+            print(f"skip {d.name}: its song isn't cleared ({meta['song'].get('file')}); run scripts/add_song.py {d.name} --ncs")
             continue
         cands.append((meta.get("published_at", ""), d, meta))
     cands.sort()

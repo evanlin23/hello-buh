@@ -154,6 +154,9 @@ for (const name of names) {
   const old = path.join(VID, `${name}.mp4`)
   if (fs.existsSync(old)) fs.rmSync(old)
   console.log(`packaged ${name}: ${(meta.video.bytes / 1e6).toFixed(1)} MB, ${meta.video.duration_s}s, recording ${recording ? 'yes' : 'MISSING'}`)
+  // the upload gets an NCS track with its official credit, never the stunt's reference song
+  // (that one stays in out/ for review only): see README "Music"
+  execFileSync('python3', ['scripts/add_song.py', name, '--ncs'], { cwd: ROOT, stdio: 'inherit' })
 }
 
 // README index from every package

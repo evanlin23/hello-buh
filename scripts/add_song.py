@@ -12,19 +12,34 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 VID = ROOT.parent / "hb-videos"
+NCS = {t["file"]: t for t in json.loads((ROOT / "music" / "ncs.json").read_text())} if (ROOT / "music" / "ncs.json").exists() else {}
 SONGS = {"misery.mp3": ("misery.", "pupsies"), "payphone.mp3": ("Payphone", "Radio Top Singers"), "funk_abnormal.mp3": ("FUNK ABNORMAL (ULTRA SLOWED)", "")}
 
 
-def main(name, song_override=None, out_override=None, gen=None, seed=None):
+def pick_ncs(name):
+    """The NCS track used least across the packages so far (ties: a fixed per-Short choice)."""
+    used = {}
+    for m in (VID / "shorts").glob("*/metadata.json"):
+        f = (json.loads(m.read_text()).get("song") or {}).get("file")
+        if m.parent.name != name and f in NCS:
+            used[f] = used.get(f, 0) + 1
+    have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists()]
+    if not have:
+        sys.exit("no NCS tracks downloaded: python3 scripts/ncs.py --download")
+    h = sum(map(ord, name))
+    return "songs/ncs/" + min(have, key=lambda f: (used.get(f, 0), (sorted(have).index(f) - h) % len(have)))
+
+
+def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=False):
     d = VID / "shorts" / name
     meta = json.loads((d / "metadata.json").read_text())
+    if ncs and not song_override:
+        song_override = pick_ncs(name)
     stunt = json.loads(subprocess.run(["node", "-e", f"console.log(JSON.stringify(require('./stunts/{name}').edit||{{}}))"], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
     song = song_override or stunt.get("song")
     if not gen and (not song or not (ROOT / song).exists()):
         print(name, "no song file"); return
     src = d / "short_nosong.mp4"
-    if not src.exists():
-        print(name, "no short_nosong.mp4"); return
     tl = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))["timeline"]
     ev = {}
     for e in tl:
@@ -34,6 +49,12 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None):
         k, off = stunt["startAt"].rsplit(":", 1)
         if k in ev:
             start = max(0.0, ev[k] + float(off))
+    if not src.exists():   # older package: same picture, game audio from game_audio.flac
+        if not (d / "game_audio.flac").exists():
+            print(name, "no short_nosong.mp4 or game_audio.flac"); return
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(d / "short.mp4"), "-ss", f"{start:.3f}", "-i", str(d / "game_audio.flac"),
+                        "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", str(src)], check=True)
+        print(name, "made short_nosong.mp4 from game_audio.flac")
     drop_at = stunt.get("dropAt")
     at = (ev[drop_at] - start) if drop_at in ev else 0.0
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)], capture_output=True, text=True, check=True).stdout)
@@ -56,11 +77,18 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None):
     t, a = SONGS.get(f, (f, ""))
     if gen:
         t, a = f"HelloBuh phonk ({gen}, original)", ""
-    meta["song"] = {"file": f, "title": t, "artist": a, "drop_on_event": drop_at, "drop_in_song_s": round(drop, 2), "drop_in_short_s": round(at, 2), "song_start_s": round(song_start, 2)}
-    credit = f"\n\nSong: {t}{' · ' + a if a else ''}"
-    if "Song:" not in meta["youtube"]["description"]:
-        cap, rest = meta["youtube"]["description"].split("\n\n", 1)
-        meta["youtube"]["description"] = cap + credit + "\n\n" + rest
+    if f in NCS:   # the credit exactly as NCS gives it (their usage policy requires it)
+        t, a = NCS[f]["title"], NCS[f]["artist"]
+        credit = NCS[f]["credit"]
+        licence = "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy"
+    elif gen:
+        credit, licence = "", "original (scripts/phonk.py), ours"
+    else:
+        credit, licence = f"Song: {t}{' · ' + a if a else ''}", "unlicensed: owner-supplied, expect a Content ID claim"
+    meta["song"] = {"file": f, "title": t, "artist": a, "licence": licence, "drop_on_event": drop_at, "drop_in_song_s": round(drop, 2), "drop_in_short_s": round(at, 2), "song_start_s": round(song_start, 2)}
+    # rebuild the description: caption, credit, hashtags (any older song credit goes)
+    yt = meta["youtube"]
+    yt["description"] = meta.get("caption", name) + (f"\n\n{credit}" if credit else "") + "\n\n" + " ".join(yt.get("hashtags", []))
     if not out_override:   # a demo mix doesn't touch the package
         (d / "metadata.json").write_text(json.dumps(meta, indent=2) + "\n")
     print(name, f"song in: drop at {at:.2f}s of the Short -> {out}")
@@ -74,6 +102,7 @@ if __name__ == "__main__":
     ap.add_argument("--out", help="write here instead of the package's short.mp4 (for comparing songs)")
     ap.add_argument("--gen", choices=["montagem", "drift", "slowed", "funk"], help="generate our own phonk (scripts/phonk.py) in this style")
     ap.add_argument("--seed", type=int)
+    ap.add_argument("--ncs", action="store_true", help="pick an NCS phonk track (music/ncs.json) and put its official credit in the description")
     a = ap.parse_args()
     for n in a.names:
-        main(n, a.song, a.out, a.gen, a.seed)
+        main(n, a.song, a.out, a.gen, a.seed, a.ncs)
