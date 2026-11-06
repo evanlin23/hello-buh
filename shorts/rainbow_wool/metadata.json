@@ -1,9 +1,9 @@
 {
   "name": "rainbow_wool",
-  "caption": "dyeing it until it's a rainbow 🌈",
+  "caption": "dyeing it until it's a rainbow \ud83c\udf08",
   "youtube": {
-    "title": "dyeing it until it's a rainbow 🌈 #minecraft #shorts",
-    "description": "dyeing it until it's a rainbow 🌈\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "dyeing it until it's a rainbow \ud83c\udf08 #minecraft #shorts",
+    "description": "dyeing it until it's a rainbow \ud83c\udf08\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,11 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": null,
-    "drop_on_event": "reveal"
+    "file": "favela.mp3",
+    "title": "FAVELA",
+    "artist": "MXZI, Deno",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "reveal",
+    "drop_in_song_s": 4.5,
+    "drop_in_short_s": 11.35,
+    "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
@@ -30,7 +33,7 @@
     "sha256": "2c4dff915146b6b31063e0dd115f98c6dc73632e48aab112ef0342d49589ee1c"
   },
   "edit": {
-    "caption": "dyeing it until it's a rainbow 🌈",
+    "caption": "dyeing it until it's a rainbow \ud83c\udf08",
     "red": "rainbow",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "reveal",
@@ -87,7 +90,7 @@
     ],
     "args": [
       "--caption",
-      "dyeing it until it's a rainbow 🌈",
+      "dyeing it until it's a rainbow \ud83c\udf08",
       "--red",
       "rainbow",
       "--subs",
@@ -199,7 +202,7 @@
     "gunzip -c shorts/rainbow_wool/recording.json.gz > work/rainbow_wool.rec.json",
     "node render.js work/rainbow_wool.rec.json work/rainbow_wool.frames 60 1080 1011",
     "python3 audio.py work/rainbow_wool.rec.json work/rainbow_wool.wav",
-    "python3 edit.py --frames work/rainbow_wool.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/rainbow_wool.rec.json --audio work/rainbow_wool.wav --caption \"dyeing it until it's a rainbow 🌈\" --red rainbow --subs \"[[\\\"dye\\\",\\\"red\\\",1,0],[\\\"dye\\\",\\\"orange\\\",1,1],[\\\"dye\\\",\\\"yellow\\\",1,2],[\\\"dye\\\",\\\"green\\\",1,3],[\\\"dye\\\",\\\"light blue\\\",1,4],[\\\"dye\\\",\\\"blue\\\",1,5],[\\\"dye\\\",\\\"purple\\\",1,6],[\\\"reveal\\\",\\\"perfect\\\",1.8,0]]\" --start_at dye:-0.5 --out out/rainbow_wool.mp4"
+    "python3 edit.py --frames work/rainbow_wool.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/rainbow_wool.rec.json --audio work/rainbow_wool.wav --caption \"dyeing it until it's a rainbow \ud83c\udf08\" --red rainbow --subs \"[[\\\"dye\\\",\\\"red\\\",1,0],[\\\"dye\\\",\\\"orange\\\",1,1],[\\\"dye\\\",\\\"yellow\\\",1,2],[\\\"dye\\\",\\\"green\\\",1,3],[\\\"dye\\\",\\\"light blue\\\",1,4],[\\\"dye\\\",\\\"blue\\\",1,5],[\\\"dye\\\",\\\"purple\\\",1,6],[\\\"reveal\\\",\\\"perfect\\\",1.8,0]]\" --start_at dye:-0.5 --out out/rainbow_wool.mp4"
   ],
   "status": "ready",
   "notes": "worker: white wool arch dyed band by band into a rainbow (sheep not renderable)",

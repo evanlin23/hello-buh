@@ -1,9 +1,9 @@
 {
   "name": "villager_crowd",
-  "caption": "1 villager vs 10 vs 100 staring at me 💀",
+  "caption": "1 villager vs 10 vs 100 staring at me \ud83d\udc80",
   "youtube": {
-    "title": "1 villager vs 10 vs 100 staring at me 💀 #minecraft #shorts",
-    "description": "1 villager vs 10 vs 100 staring at me 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "1 villager vs 10 vs 100 staring at me \ud83d\udc80 #minecraft #shorts",
+    "description": "1 villager vs 10 vs 100 staring at me \ud83d\udc80\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,11 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": null,
-    "drop_on_event": "turn"
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "turn",
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 1.75,
+    "song_start_s": 14.75
   },
   "video": {
     "file": "short.mp4",
@@ -30,7 +33,7 @@
     "sha256": "03df854dfe169ba355b837707a4805275d45eb7c442e8bd6e08839a4e1de4276"
   },
   "edit": {
-    "caption": "1 villager vs 10 vs 100 staring at me 💀",
+    "caption": "1 villager vs 10 vs 100 staring at me \ud83d\udc80",
     "red": "100",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "turn",
@@ -69,7 +72,7 @@
     ],
     "args": [
       "--caption",
-      "1 villager vs 10 vs 100 staring at me 💀",
+      "1 villager vs 10 vs 100 staring at me \ud83d\udc80",
       "--red",
       "100",
       "--subs",
@@ -173,7 +176,7 @@
     "gunzip -c shorts/villager_crowd/recording.json.gz > work/villager_crowd.rec.json",
     "node render.js work/villager_crowd.rec.json work/villager_crowd.frames 60 1080 1011",
     "python3 audio.py work/villager_crowd.rec.json work/villager_crowd.wav",
-    "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"1 villager vs 10 vs 100 staring at me 💀\" --red 100 --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,1],[\\\"beat\\\",\\\"100 villagers\\\",1.6,2],[\\\"turn\\\",\\\"they all turned\\\",1.4,2],[\\\"back\\\",\\\"nope\\\",1.2,0]]\" --start_at beat:-0.05 --out out/villager_crowd.mp4"
+    "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"1 villager vs 10 vs 100 staring at me \ud83d\udc80\" --red 100 --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,1],[\\\"beat\\\",\\\"100 villagers\\\",1.6,2],[\\\"turn\\\",\\\"they all turned\\\",1.4,2],[\\\"back\\\",\\\"nope\\\",1.2,0]]\" --start_at beat:-0.05 --out out/villager_crowd.mp4"
   ],
   "status": "ready",
   "notes": "worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats",

@@ -1,9 +1,9 @@
 {
   "name": "pickaxe_race",
-  "caption": "ranking every pickaxe ⛏️ 💀",
+  "caption": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80",
   "youtube": {
-    "title": "ranking every pickaxe ⛏️ 💀 #minecraft #shorts",
-    "description": "ranking every pickaxe ⛏️ 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80 #minecraft #shorts",
+    "description": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,11 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": null,
-    "drop_on_event": "instamine"
+    "file": "x2.mp3",
+    "title": "X2",
+    "artist": "MUPP",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "instamine",
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 18.0,
+    "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
@@ -30,7 +33,7 @@
     "sha256": "d3e4fd009bdb971a8df813256ca6bc90de949dd89c74b559f918c52e01acf2e6"
   },
   "edit": {
-    "caption": "ranking every pickaxe ⛏️ 💀",
+    "caption": "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80",
     "red": "every",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "instamine",
@@ -100,7 +103,7 @@
     ],
     "args": [
       "--caption",
-      "ranking every pickaxe ⛏️ 💀",
+      "ranking every pickaxe \u26cf\ufe0f \ud83d\udc80",
       "--red",
       "every",
       "--subs",
@@ -418,7 +421,7 @@
     "gunzip -c shorts/pickaxe_race/recording.json.gz > work/pickaxe_race.rec.json",
     "node render.js work/pickaxe_race.rec.json work/pickaxe_race.frames 60 1080 1011",
     "python3 audio.py work/pickaxe_race.rec.json work/pickaxe_race.wav",
-    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe ⛏️ 💀\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: 5.8s\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: 2.9s\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: 1.9s\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: 1.5s\\\",9,3],[\\\"beat\\\",\\\"netherite + efficiency V...\\\",9,4],[\\\"mined\\\",\\\"netherite + efficiency V: 0.5s\\\",9,4]]\" --start_at beat:-0.2 --end_after finale_end:-0.5 --out out/pickaxe_race.mp4"
+    "python3 edit.py --frames work/pickaxe_race.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pickaxe_race.rec.json --audio work/pickaxe_race.wav --caption \"ranking every pickaxe \u26cf\ufe0f \ud83d\udc80\" --red every --subs \"[[\\\"beat\\\",\\\"wooden...\\\",9,0],[\\\"mined\\\",\\\"wooden: 5.8s\\\",9,0],[\\\"beat\\\",\\\"stone...\\\",9,1],[\\\"mined\\\",\\\"stone: 2.9s\\\",9,1],[\\\"beat\\\",\\\"iron...\\\",9,2],[\\\"mined\\\",\\\"iron: 1.9s\\\",9,2],[\\\"beat\\\",\\\"diamond...\\\",9,3],[\\\"mined\\\",\\\"diamond: 1.5s\\\",9,3],[\\\"beat\\\",\\\"netherite + efficiency V...\\\",9,4],[\\\"mined\\\",\\\"netherite + efficiency V: 0.5s\\\",9,4]]\" --start_at beat:-0.2 --end_after finale_end:-0.5 --out out/pickaxe_race.mp4"
   ],
   "status": "ready",
   "notes": "worker: 5 pickaxes mine 3x3 stone sections, real dig times as subs (Haste V, netherite eff V instamine)",
