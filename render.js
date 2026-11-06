@@ -348,7 +348,9 @@ function camAtLive (t) {
     if (process.env.NOPARTS) return out   // debug: frames without particles
     for (const p of PARTS) {
       const s = particles.state(p, t, solidAt); if (!s) continue
-      if (cam && Math.hypot(s.x - cam.x, s.y - cam.y, s.z - cam.z) < 1.0) continue   // too close: would fill the screen
+      // too close: a big sprite would fill the screen. Small ones (splash drops, crumbs) are fine up
+      // to 0.25 blocks, or a splash right under the eye was culled away entirely
+      if (cam && Math.hypot(s.x - cam.x, s.y - cam.y, s.z - cam.z) < (s.size < 0.2 ? 0.25 : 1.0)) continue
       // light is computed once, before the stunt's block changes: crumbs of a just-broken block sit
       // in what was a solid (light 0) cell, so take the brightest of the cell and its neighbours
       let lv = 0
