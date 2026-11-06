@@ -29,7 +29,7 @@ module.exports = {
       ['hire', 'job 3: fisherman', 1.2, 2], ['fire', 'FIRED AGAIN', 1.2, 2],
       ['every', 'fine. EVERY job', 1.6, 0],
       ['job', 'job 4: armorer', 1.1, 3], ['job', 'job 5: butcher', 1.0, 4], ['job', 'job 6: cartographer', 1.0, 5],
-      ['job', 'job 7: cleric', 0.9, 6], ['job', 'jobs 8, 9, 10...', 1.4, 7], ['job', '13 JOBS', 1.4, 12],
+      ['job', 'job 7: cleric', 0.9, 6], ['job', 'job 8: fletcher', 0.9, 7], ['job', 'jobs 9, 10, 11...', 1.4, 8], ['job', '13 JOBS', 1.4, 12],
       ['all_jobs', 'all 13 at once', 2.8, 0],
       ['crowd', 'the rest of the village: 0 jobs', 1.9, 0],
       ['tnt', 'one problem...', 1.6, 0],
@@ -120,11 +120,11 @@ module.exports = {
     for (let i = 0; i < 3; i++) {
       await place(i, i === 0 ? 120 : 220, this.spots[0])
       ctx.mark('hire', { job: JOBS[i][1] })
-      await ctx.easeLookAt(head, 300); await bot.waitForTicks([12, 8, 4][i])
+      await ctx.easeLookAt(head, 300); await bot.waitForTicks([16, 11, 6][i])
       await breakAt(this.spots[0], JOBS[i][0])
       ctx.mark('fire')
       ctx.particles('angry', { x: x + 0.5, y: floor + 2.5, z: vz + 0.5 }, { count: 3 + i * 2 })
-      await ctx.easeLookAt(head.offset([0.3, -0.3, 0][i], i === 2 ? 0.25 : 0, 0), 300); await bot.waitForTicks([10, 6, 8][i])
+      await ctx.easeLookAt(head.offset([0.3, -0.3, 0][i], i === 2 ? 0.25 : 0, 0), 300); await bot.waitForTicks([12, 8, 10][i])
     }
     // ---- act 2: every job, faster and faster ----
     ctx.mark('every')
@@ -137,17 +137,17 @@ module.exports = {
       }
       await place(i, i < 7 ? 260 : Math.max(90, 240 - (i - 7) * 30))
       ctx.mark('job', { n: i, job: JOBS[i][1] })
-      if (i >= 3 && i < 7) { await ctx.easeLookAt(head, 250); await bot.waitForTicks(8 - i) }
+      if (i >= 2 && i < 8) { await ctx.easeLookAt(head.offset((i & 1) ? 0.25 : -0.25, 0, 0), 280); await bot.waitForTicks(12 - i) }
       if (i === 12) await bot.waitForTicks(4)
     }
     // all 13 at once: the outfit cycles faster and faster
     await ctx.easeLookAt(head.offset(0, -0.2, 0), 250)
     ctx.mark('all_jobs')
     let gap = 5
-    for (let k = 0; k < 40; k++) {
+    for (let k = 0; k < 46; k++) {
       setJob(JOBS[k % 13][1])
       if (k % 2 === 0) ctx.particles('happy', vpos, { count: 3 })
-      if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 40)
+      if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 46)
       await bot.waitForTicks(Math.max(1, Math.round(gap)))
       gap *= 0.9
       if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.35 : -0.35), -0.2, 0), 200)
@@ -156,7 +156,7 @@ module.exports = {
     // meanwhile, the crowd behind him: still unemployed, all staring
     await ctx.easeLookAt(new Vec3(x - 3, floor + 1.7, vz - 5), 400)
     ctx.mark('crowd')
-    await ctx.easeLookAt(new Vec3(x + 4, floor + 1.7, vz - 5), 1100)
+    await ctx.easeLookAt(new Vec3(x + 5, floor + 1.7, vz - 5), 1500)
     // ---- act 3: the TNT under the job sites ----
     await ctx.easeLookAt(new Vec3(x - 1.5, floor + 0.9, vz + 2.5), 400)    // down at the base of the front row
     ctx.mark('tnt')
@@ -176,16 +176,18 @@ module.exports = {
     await ctx.easeLookAt(head.offset(0, -0.5, 0), 400)
     await bot.waitForTicks(8)
     ctx.mark('fuse_a')
-    for (let k = 0; k < 40; k++) { await bot.waitForTicks(1); if (k === 18) bot.setControlState('back', false) }
+    for (let k = 0; k < 14; k++) { await bot.waitForTicks(1); if (k === 10) bot.setControlState('back', false) }
     bot.setControlState('back', false)
-    while (ctx.tick - litAt < 62) await bot.waitForTicks(1)
+    while (ctx.tick - litAt < 40) await bot.waitForTicks(1)
     await ctx.easeLookAt(head.offset(0, -0.6, 0), 100)
     ctx.mark('fuse_b')
     // the fuse line goes, then the ring: FIRED
     let booms = 0
     bot._client.on('explosion', () => { booms++ })
-    ctx.easeLookAt(head.offset(-0.6, -0.4, 0), 600)
-    for (let k = 0; k < 60 && booms === 0; k++) await bot.waitForTicks(1)
+    for (let k = 0; k < 80 && booms === 0; k++) {
+      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.6, 0.5, -0.2, 0.7][(k / 10) % 4], [-0.4, -0.7, -0.3, -0.6][(k / 10) % 4], 0), 450)
+      await bot.waitForTicks(1)
+    }
     // wait for the ring itself to go (the 4th blast on), then he's unemployed
     for (let k = 0; k < 60 && booms < 4; k++) await bot.waitForTicks(1)
     ctx.mark('ring_boom')
