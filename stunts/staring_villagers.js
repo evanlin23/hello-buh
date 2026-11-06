@@ -8,7 +8,7 @@ module.exports = {
   name: 'staring_villagers',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'why are they all staring at me 💀',
-  edit: { caption: 'why are they all staring at me 💀', red: 'staring', song: 'songs/funk_abnormal.mp3', dropAt: 'turn', start: 0.5 },
+  edit: { caption: 'why are they all staring at me 💀', red: 'staring', song: 'songs/funk_abnormal.mp3', dropAt: 'turn', startAt: 'turn:-1.2' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -56,7 +56,12 @@ module.exports = {
     this.untrack = () => bot.removeListener('physicsTick', track)
     ctx.mark('turn'); ctx.mark('face_on')     // the renderer turns them on this tick (mineflayer's entity yaw lags the tp by seconds)
     for (let i = 0; i < 4; i++) ctx.sound('entity.villager.ambient', 0.8, 0.8 + i * 0.12)
-    await bot.waitForTicks(26)
+    // a nervous half-step back and a glance along the crowd (holding still here was a dead second)
+    const y0 = bot.entity.yaw, p0 = bot.entity.pitch
+    bot.setControlState('back', true); await bot.waitForTicks(5); bot.setControlState('back', false)
+    await ctx.easeLook(y0 + 0.25, p0, 400)
+    await ctx.easeLook(y0 - 0.2, p0, 500)
+    await ctx.easeLook(y0, p0, 300)
     // sidestep left, right: every head follows
     bot.setControlState('left', true); await bot.waitForTicks(22); bot.setControlState('left', false)
     await bot.waitForTicks(8)
