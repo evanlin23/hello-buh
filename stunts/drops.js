@@ -1,5 +1,5 @@
-// "1 in a million landing... x6 😳" (~30 s, escalating): the 1x1 water hole, six drops from a
-// glass block: 30, 60, 100, 150 and 200 blocks land; 250 blocks (clouds off: the fall crosses the cloud layer)
+// "1 in a million landing... x7 😳" (~32 s, escalating): the 1x1 water hole, seven drops from a
+// glass block: 30, 60, 100, 150, 200 and 230 blocks land; 250 blocks (clouds off: the fall crosses the cloud layer)
 // misses by a block (death screen, "HelloBuh hit the ground too hard").
 const DROPS = [   // six drops, ~30 s (owner: 30 s minimum); the last misses by a block
   { h: 30, off: 0, sub: '30 blocks' },
@@ -7,16 +7,17 @@ const DROPS = [   // six drops, ~30 s (owner: 30 s minimum); the last misses by 
   { h: 100, off: 0, sub: '100 blocks' },
   { h: 150, off: 0, sub: '150 blocks' },
   { h: 200, off: 0, sub: '200 blocks' },
+  { h: 230, off: 0, sub: '230 blocks' },
   { h: 250, off: 1.6, sub: '250 blocks...' }
 ]
 
 module.exports = {
   name: 'drops',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: '1 in a million landing... x6 😳',
+  caption: '1 in a million landing... x7 😳',
   edit: {
-    caption: '1 in a million landing... x6 😳', red: 'x6', song: 'songs/misery.mp3', dropAt: 'drop', startAt: 'drop:-0.4',
-    subs: DROPS.map((d, i) => ['drop', d.sub, 1.8, i]), deathScreen: true, endAfter: 'death:1.1'
+    caption: '1 in a million landing... x7 😳', red: 'x7', song: 'songs/misery.mp3', dropAt: 'drop', startAt: 'drop:-0.4',
+    subs: DROPS.map((d, i) => ['drop', d.sub, 1.8, i]), deathScreen: true, endAfter: 'death:1.0'
   },
   expectDeath: true,
   clouds: false,                // the 200-250 block falls cross y 192: the camera went through a white cloud wall
