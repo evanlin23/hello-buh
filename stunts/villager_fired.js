@@ -13,7 +13,7 @@ const JOBS = [
   ['fletching_table', 'fletcher'], ['grindstone', 'weaponsmith'], ['loom', 'shepherd'],
   ['smithing_table', 'toolsmith'], ['cauldron', 'leatherworker'], ['stonecutter', 'mason']
 ]
-const DIST = 7          // player to villager (blocks, north)
+const DIST = 6          // player to villager (blocks, north)
 const STONEY = /furnace|smoker|brewing|grindstone|cauldron|stonecutter/
 
 module.exports = {
@@ -53,7 +53,7 @@ module.exports = {
     const vz = z - DIST
     this.vz = vz
     for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 16} ${y0} ${vz - 16} ${x + 16} ${y0 + 5} ${z + 10} air`)
-    await ctx.cmd(`/fill ${x - 16} ${floor - 8} ${vz - 16} ${x + 16} ${floor - 1} ${z + 10} dirt`)
+    await ctx.cmd(`/fill ${x - 16} ${floor - 14} ${vz - 16} ${x + 16} ${floor - 1} ${z + 10} dirt`)
     await ctx.cmd(`/fill ${x - 16} ${floor} ${vz - 16} ${x + 16} ${floor} ${z + 10} grass_block`)
     await ctx.cmd(`/fill ${x - 1} ${floor + 1} ${vz - 1} ${x + 1} ${floor + 1} ${vz + 1} oak_fence`)
     await ctx.cmd(`/setblock ${x} ${floor + 1} ${vz} air`)
@@ -76,7 +76,9 @@ module.exports = {
     this.spots = [2, 1, 3, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => spots[i])
     // TNT in the ground under every spot, and a 3-block fuse line toward the player
     for (const [sx, sz] of this.spots) await ctx.cmd(`/setblock ${sx} ${floor} ${sz} tnt`)
-    for (let k = 3; k <= 5; k++) await ctx.cmd(`/setblock ${x} ${floor} ${vz + k} tnt`)
+    for (let k = 3; k <= 4; k++) await ctx.cmd(`/setblock ${x} ${floor} ${vz + k} tnt`)
+    // he stands on blast-proof obsidian: after the blast he's left alone on a pillar in the crater
+    await ctx.cmd(`/fill ${x} ${floor - 10} ${vz} ${x} ${floor} ${vz} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 9')
     await ctx.hotbar([['lectern', 2], ['composter', 2], ['barrel', 2], ['blast_furnace', 1], ['smoker', 1],
       ['cartography_table', 1], ['brewing_stand', 1], ['fletching_table', 1], 'diamond_axe'])
@@ -115,16 +117,18 @@ module.exports = {
       if (b && b.name === name) { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }
       setJob('none'); ctx.sound('entity.villager.no', 1, 1)
     }
+    // a hold that still moves: a slow drift of the look, never a frozen frame
+    const drift = async (ticks) => { await ctx.easeLook(bot.entity.yaw + (Math.random() < 0.5 ? 0.07 : -0.07), bot.entity.pitch + 0.03, Math.max(50, ticks * 50)) }
     ctx.mark('beat')
     // ---- act 1: hired, fired, hired, fired ----
     for (let i = 0; i < 3; i++) {
       await place(i, i === 0 ? 120 : 220, this.spots[0])
       ctx.mark('hire', { job: JOBS[i][1] })
-      await ctx.easeLookAt(head, 300); await bot.waitForTicks([16, 11, 6][i])
+      await ctx.easeLookAt(head, 300); await drift([16, 11, 6][i])
       await breakAt(this.spots[0], JOBS[i][0])
       ctx.mark('fire')
       ctx.particles('angry', { x: x + 0.5, y: floor + 2.5, z: vz + 0.5 }, { count: 3 + i * 2 })
-      await ctx.easeLookAt(head.offset([0.3, -0.3, 0][i], i === 2 ? 0.25 : 0, 0), 300); await bot.waitForTicks([12, 8, 10][i])
+      await ctx.easeLookAt(head.offset([0.3, -0.3, 0][i], i === 2 ? 0.25 : 0, 0), 300); await drift([12, 8, 10][i])
     }
     // ---- act 2: every job, faster and faster ----
     ctx.mark('every')
@@ -137,12 +141,13 @@ module.exports = {
       }
       await place(i, i < 7 ? 260 : Math.max(90, 240 - (i - 7) * 30))
       ctx.mark('job', { n: i, job: JOBS[i][1] })
-      if (i >= 2 && i < 8) { await ctx.easeLookAt(head.offset((i & 1) ? 0.25 : -0.25, 0, 0), 280); await bot.waitForTicks(12 - i) }
-      if (i === 12) await bot.waitForTicks(4)
+      if (i >= 2 && i < 8) { await ctx.easeLookAt(head.offset((i & 1) ? 0.25 : -0.25, 0, 0), 280); await drift(12 - i) }
+      if (i === 12) await drift(4)
     }
     // all 13 at once: the outfit cycles faster and faster
     await ctx.easeLookAt(head.offset(0, -0.2, 0), 250)
     ctx.mark('all_jobs')
+    bot.setControlState('sneak', true); bot.setControlState('forward', true)    // a slow push-in on him
     let gap = 5
     for (let k = 0; k < 46; k++) {
       setJob(JOBS[k % 13][1])
@@ -150,8 +155,10 @@ module.exports = {
       if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 46)
       await bot.waitForTicks(Math.max(1, Math.round(gap)))
       gap *= 0.9
-      if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.35 : -0.35), -0.2, 0), 200)
+      if (bot.entity.position.z < vz + 5.6) bot.setControlState('forward', false)
+      if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.45 : -0.45), -0.25, 0), 300)
     }
+    bot.setControlState('forward', false); bot.setControlState('sneak', false)
     setJob('mason')
     // meanwhile, the crowd behind him: still unemployed, all staring
     await ctx.easeLookAt(new Vec3(x - 3, floor + 1.7, vz - 5), 400)
@@ -161,11 +168,11 @@ module.exports = {
     await ctx.easeLookAt(new Vec3(x - 1.5, floor + 0.9, vz + 2.5), 400)    // down at the base of the front row
     ctx.mark('tnt')
     await ctx.easeLookAt(new Vec3(x + 1.5, floor + 0.9, vz + 2.5), 500)
-    await ctx.easeLookAt(new Vec3(x + 0.5, floor + 0.9, vz + 4.5), 400)    // ...and the fuse line
+    await ctx.easeLookAt(new Vec3(x + 0.5, floor + 0.9, vz + 3.5), 400)    // ...and the fuse line
     bot.chat('/item replace entity @s hotbar.5 with flint_and_steel 1')
     await bot.waitForTicks(2)
     ctx.select(5); await bot.waitForTicks(6)
-    const L = [x, floor, vz + 5]
+    const L = [x, floor, vz + 4]
     await ctx.easeLookAt(new Vec3(L[0] + 0.5, L[1] + 1, L[2] + 0.5), 200)
     bot._client.write('block_place', { hand: 0, location: { x: L[0], y: L[1], z: L[2] }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
@@ -176,7 +183,7 @@ module.exports = {
     await ctx.easeLookAt(head.offset(0, -0.5, 0), 400)
     await bot.waitForTicks(8)
     ctx.mark('fuse_a')
-    for (let k = 0; k < 14; k++) { await bot.waitForTicks(1); if (k === 10) bot.setControlState('back', false) }
+    for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 16) bot.setControlState('back', false) }
     bot.setControlState('back', false)
     while (ctx.tick - litAt < 40) await bot.waitForTicks(1)
     await ctx.easeLookAt(head.offset(0, -0.6, 0), 100)
@@ -195,15 +202,19 @@ module.exports = {
     setJob('none'); ctx.sound('entity.villager.no', 1, 0.9)
     ctx.mark('fired_all')
     const v = Object.values(bot.entities).find(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 3 && Math.abs(e.position.z - (vz + 0.5)) < 3)
-    await ctx.easeLookAt(v ? v.position.offset(0, 1.5, 0) : head.offset(0, -1.5, 0), 400)
-    ctx.easeLookAt(v ? v.position.offset(0.4, 1.4, 0) : head.offset(0.4, -1.5, 0), 900)
-    await bot.waitForTicks(22)
+    // him, alone on his pillar in the crater: a slow look down the pillar and back up
+    const top = new Vec3(x + 0.5, floor + 1.4, vz + 0.5)
+    await ctx.easeLookAt(top, 400)
+    await ctx.easeLookAt(top.offset(0.3, -2.2, 0), 700)
+    ctx.easeLookAt(top.offset(-0.2, 0.2, 0), 700)
+    await bot.waitForTicks(4)
     // ...and he gives up on work for good: nitwit
     setJob('nitwit'); ctx.sound('entity.villager.no', 1, 0.7)
-    ctx.particles('angry', { x: v ? v.position.x : x + 0.5, y: (v ? v.position.y : floor) + 2.3, z: v ? v.position.z : vz + 0.5 }, { count: 4 })
+    ctx.particles('angry', { x: x + 0.5, y: floor + 3.3, z: vz + 0.5 }, { count: 4 })
     ctx.mark('nitwit')
-    ctx.easeLookAt(v ? v.position.offset(-0.3, 1.5, 0) : head, 900)
-    await bot.waitForTicks(24)
+    await bot.waitForTicks(10)
+    ctx.easeLookAt(top.offset(0.4, 0.1, 0), 900)
+    await bot.waitForTicks(16)
     return booms >= 4 && !ctx.died && !!v
   }
 }
