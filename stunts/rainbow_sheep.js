@@ -1,7 +1,9 @@
-// "dyeing sheep until it's a rainbow 🌈": a fenced line of 7 white sheep (NoAI). The bot strafes
-// along the line and uses a dye on each one (real use_entity packets with the dye held; vanilla
-// dyes the sheep), red to purple, backs up to show the rainbow, then puts a "jeb_" name tag on
-// the 8th sheep, which vanilla (and the renderer) turns into a colour-cycling sheep.
+// "dyeing sheep until it's a rainbow 🌈" (~30 s): a fenced line of 8 white sheep (NoAI). The bot
+// strafes along the line using a dye on each (real use_entity packets with the dye held; vanilla dyes
+// the sheep), red to purple, and backs up to show the rainbow. Then a "jeb_" name tag on the 8th
+// (vanilla turns it into a colour-cycling sheep)... "what if they were ALL jeb_": it tags the other
+// seven, backs up to the whole line cycling, then shears them all for a shower of rainbow wool that
+// fills the hotbar. (Merges the old rainbow_wool and rainbow_sheep into one Short.)
 const COLORS = [
   { dye: 'red_dye', id: 14, sub: 'red' },
   { dye: 'orange_dye', id: 1, sub: 'orange' },
@@ -21,7 +23,9 @@ module.exports = {
   edit: {
     caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'reveal',
     startAt: 'dye:-0.45',
-    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['jeb', 'and jeb_', 2.0, 0]]
+    endAfter: 'final:1.0',
+    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['jeb', 'and jeb_', 1.6, 0],
+      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['shear', 'free rainbow wool', 1.6, 0]]
   },
 
   async setup (ctx) {
@@ -153,7 +157,72 @@ module.exports = {
       bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.2, true)
     }
     bot.setControlState('back', false)
-    await bot.waitForTicks(36)
+
+    // "what if they were ALL jeb_": tag the other seven, walking back down the line
+    ctx.mark('alljeb')
+    bot.chat('/item replace entity @s hotbar.7 with name_tag[custom_name="jeb_"] 7')
+    await bot.waitForTicks(2)
+    ctx.select(7)
+    for (let i = N - 2; i >= 0; i--) {
+      await this.moveTo(ctx, i, z + 3.0)
+      await this.use(ctx, this.sheepAt(ctx, i))
+      ctx.sound('entity.sheep.ambient', 0.5, 1.0 + i * 0.05)
+      await bot.waitForTicks(3)
+    }
+    // the whole line cycling
+    await this.backReveal(ctx, 'alljeb_reveal', 22)
+    // shear them all: a rainbow of wool pops out and gets picked up on the way
+    bot.chat('/item replace entity @s hotbar.8 with shears')
+    await bot.waitForTicks(2)
+    ctx.select(8)
+    bot.on('playerCollect', (c) => { if (c === bot.entity) ctx.sound('entity.item.pickup', 0.25, 0.8 + Math.random() * 0.6) })
+    ctx.mark('shear')
+    for (let i = 0; i < N; i++) {
+      await this.moveTo(ctx, i, z + 2.2)
+      await this.use(ctx, this.sheepAt(ctx, i))
+      ctx.sound('entity.sheep.shear', 1, 1)
+      await bot.waitForTicks(4)
+    }
+    // sweep back through the wool to pick it up
+    await this.moveTo(ctx, N - 4, z + 1.6)
+    ctx.mark('final')
+    await bot.waitForTicks(20)
+    ctx.log('hotbar', JSON.stringify(bot.inventory.items().map(i => [i.name, i.count])))
     return true
+  },
+
+  // strafe along the line to stand in front of sheep i at row distance zt, eyes on it
+  async moveTo (ctx, i, zt) {
+    const { bot } = ctx
+    const tx = this.x0 + i * STEP + 0.5, target = new ctx.Vec3(tx, this.floor + 1.5, this.z + 0.5)
+    for (let k = 0; k < 60 && (Math.abs(bot.entity.position.x - tx) > 0.6 || Math.abs(bot.entity.position.z - zt) > 0.3); k++) {
+      const e = bot.entity.position, d = target.minus(e.offset(0, 1.62, 0))
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      await bot.look(bot.entity.yaw + dy * 0.4, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.4, true)
+      // roughly facing north: right = +x, forward = -z
+      bot.setControlState('right', e.x < tx - 0.3); bot.setControlState('left', e.x > tx + 0.3)
+      bot.setControlState('forward', e.z > zt + 0.15); bot.setControlState('back', e.z < zt - 0.15)
+      await bot.waitForTicks(1)
+    }
+    for (const c of ['right', 'left', 'forward', 'back']) bot.setControlState(c, false)
+    await ctx.easeLookAt(target, 120)
+  },
+
+  // back up and take in the whole line
+  async backReveal (ctx, mark, ticks) {
+    const { bot } = ctx
+    const mid = new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, this.z + 0.5)
+    bot.setControlState('back', true)
+    for (let t = 0; t < ticks; t++) {
+      if (t === 6) ctx.mark(mark)
+      const e = bot.entity.position, d = mid.minus(e.offset(0, 1.62, 0))
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
+      bot.setControlState('left', e.x > mid.x + 0.5); bot.setControlState('right', e.x < mid.x - 0.5)
+      await bot.waitForTicks(1)
+    }
+    for (const c of ['right', 'left', 'back']) bot.setControlState(c, false)
   }
 }
