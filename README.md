@@ -138,6 +138,18 @@ Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chro
 | icons | `renderer/icons.js` | 3D inventory icons for block items, rendered with our block mesher at the GUI angle |
 | edit | `edit.py` | 1080x1920 layout, caption (Twemoji, per-word colours), HUD from the jar's sprites (3D block icons, stack counts in the game font), countdown overlay, song with its drop on a chosen event (~-10 LUFS like the references; game audio alone -18 LUFS) |
 
+## Retention toolkit (optional `edit` keys, `scripts/retention.py`)
+| key | example | what |
+|---|---|---|
+| `punch` | `['splash5']` | game-view zoom 1.0 -> 1.12 -> 1.0 on a mark (~0.4 s); the HUD and caption stay put |
+| `slowmo` | `[['splash5', 0.15, 0.35]]` | 0.5x around a mark (keep it ~0.5 s of footage: never dead space); frames blended |
+| `counter` | `{ at: ['look1', 'look2', 'look3'], total: 3 }` | "2/3" beat counter in the game view's top-left, pops on each mark |
+| `cards` | `[['splash5', 'NO WAY 💀', 1.0, 'red']]` | big impact text popping on a mark (white/red/green/yellow/blue/gold) |
+| `hook` | `{ at: 'splash5', before: 0.5, text: 'wait for the last one 😳' }` | a flash of the finale (cut before it lands) in front of beat 1 |
+
+Try one on rendered frames without touching the stunt: `EDIT_EXTRA='{"punch":["boom"]}' scripts/reedit.sh <name> /tmp/x.mp4`.
+`beat_audit.py` and `add_song.py` follow the same time map (slow-mo and the hook offset).
+
 ## Known gaps vs real HelloBuh frames
 - Our renderer is a re-implementation, not the game: no particles, rain, animated textures, or first-person hand (HelloBuh crops the centre of a 16:9 window, so the hand is mostly out of frame anyway). Mobs: only those with a converted model; no armour/held items on mobs.
 - HUD is drawn from the real sprites, not rendered: no level number text, static XP bar.
