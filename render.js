@@ -106,15 +106,30 @@ const SWINGS = []
     if (name !== cur) { HELD.push([e.t / 50, name]); cur = name }
   }
 }
+// Equip animation, per tick like ItemInHandRenderer.tick: the shown item's height moves toward 1
+// (shown == wanted) or 0 (a different item wanted) by at most 0.4 a tick, and the shown item only
+// swaps once the height is under 0.1. So the old item lowers, then the new one rises (instead of
+// the old one vanishing and the hand sitting empty for 6 frames: frame review, speed_build).
+const HAND = []          // per tick: [shownItem, height]
+{
+  const last = Math.ceil((rec.poses && rec.poses.length ? rec.poses[rec.poses.length - 1][0] : 0)) + 2
+  let shown = HELD.length ? HELD[0][1] : null, h = 1, k = 0, want = shown
+  for (let tick = 0; tick <= last; tick++) {
+    while (k < HELD.length && HELD[k][0] <= tick) want = HELD[k++][1]
+    h += Math.max(-0.4, Math.min(0.4, (shown === want ? 1 : 0) - h))
+    if (h < 0.1) shown = want
+    HAND.push([shown, h])
+  }
+}
 function handAt (t) {
-  let h = null
-  for (const x of HELD) { if (x[0] <= t) h = x; else break }
-  if (!h || !h[1]) return null
-  const since = t - h[0]
-  const equip = HELD[0] === h ? 0 : Math.max(0, 1 - since / 3)     // ~3 ticks to raise a new item
+  if (!HAND.length) return null
+  const i = Math.max(0, Math.min(HAND.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
+  const [name, h0] = HAND[i], h1 = HAND[i + 1][1]
+  if (!name) return null
+  const h = HAND[i + 1][0] === name ? h0 + (h1 - h0) * f : h0
   let swing = 0
   for (const s of SWINGS) if (s <= t && t - s < 6) swing = (t - s) / 6
-  return { name: h[1], equip, swing }
+  return { name, equip: 1 - h, swing }
 }
 const DEATHS = []
 {
