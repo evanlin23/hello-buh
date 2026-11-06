@@ -1,0 +1,110 @@
+{
+  "name": "speed_build",
+  "caption": "Fastest house build 💀",
+  "youtube": {
+    "title": "Fastest house build 💀 #minecraft #shorts",
+    "description": "Fastest house build 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "done",
+    "drop_in_song_s": 10.5,
+    "drop_in_short_s": 6.65,
+    "song_start_s": 3.85
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 8.85,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 7250900,
+    "sha256": "e2ba373ffd0c6917677f1ae501e2f2c5e367453998ab99d81ee8fed6f712e679"
+  },
+  "edit": {
+    "caption": "Fastest house build 💀",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "done",
+    "start": 0.5,
+    "timer": "build_start:done",
+    "args": [
+      "--caption",
+      "Fastest house build 💀",
+      "--timer",
+      "build_start:done",
+      "--start",
+      "0.5",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "done"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 361,
+      "y": 62,
+      "z": -52
+    },
+    "biome": "minecraft:plains",
+    "ticks": 188,
+    "seconds": 9.4,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 0.4,
+        "event": "build_start"
+      },
+      {
+        "t": 7.15,
+        "event": "done"
+      },
+      {
+        "t": 9.4,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "9a5edf270b3b00f37e9a14b12b18a59968dbdacc",
+    "rendered_at": "2026-11-06T08:45:29.570Z",
+    "head_at_publish": "9a5edf270b3b00f37e9a14b12b18a59968dbdacc",
+    "stunt": "stunts/speed_build.js",
+    "source_snapshot": [
+      "source/speed_build.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 9a5edf270b3b",
+    "gunzip -c shorts/speed_build/recording.json.gz > work/speed_build.rec.json",
+    "node render.js work/speed_build.rec.json work/speed_build.frames 60 1080 1011",
+    "python3 audio.py work/speed_build.rec.json work/speed_build.wav",
+    "python3 edit.py --frames work/speed_build.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/speed_build.rec.json --audio work/speed_build.wav --caption \"Fastest house build 💀\" --timer build_start:done --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at done --out out/speed_build.mp4"
+  ],
+  "status": "ready",
+  "notes": "",
+  "published_at": "2026-11-06T08:45:39.457Z"
+}

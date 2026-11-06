@@ -1,0 +1,22 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+08:40:56.016 spawned at Vec3 { x: 129.5, y: 70, z: 12.5 }
+08:40:56.266 nearest minecraft:plains at [ 353, -52 ]
+08:41:08.495 set at { x: 361, y: 62, z: -52 }
+08:41:17.871 house: 130/130 blocks correct
+08:41:18.374 STUNT OK
+meshing from y 8
+light computed in 0.7 s
+meshed + uploaded world in 17.6 s
+rendered 561 frames (9.35 s of video) in 183.8 s = 19.7 s per video second
+wrote work/speed_build.wav 9.40s
+song drop at 10.50s lands on 6.65s of the Short (song starts at 3.85s)
+icon glass
+icon oak_planks
+icon spruce_planks
+wrote out/speed_build.mp4 8.85s
+
+real	4m51.340s
+user	4m32.032s
+sys	0m13.584s
+exit=0
