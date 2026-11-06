@@ -21,6 +21,7 @@ module.exports = {
   caption: 'why does everyone run from me 💀',
   edit: { caption: 'why does everyone run from me 💀', red: 'run', story: 'stories/runaway', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true },
   expectDeath: true,
+  hideHand: true,          // no Steve arm: the narrator isn't Steve
 
   async setup (ctx) {
     const { bot } = ctx
