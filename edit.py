@@ -312,13 +312,20 @@ def death_windows(timeline, event="death"):
     return [tuple(w) for w in out]
 
 
-def hud_ticks(timeline, duration):
+def hud_ticks(timeline, duration, keep_inventory=False):
     """Per game tick: (slot, items, health, display_health, blink, shake) the way Gui draws it.
     A drop in health blinks the hearts for 20 ticks (white = health just lost, shown until 1 s
     after the last change); health <= 4 shakes each heart by 0-1 px, seeded with tick * 312871.
     Between death and respawn health is 0 (mineflayer reports the respawn health early)."""
     states = hud_states(timeline, duration)
     deaths = death_windows(timeline)
+    kis = [(e["t"] / 1000, bool(e.get("on"))) for e in timeline or [] if e["event"] == "keep_inventory"]
+    def keep_now(t):
+        v = keep_inventory
+        for tt, on in kis:
+            if tt <= t:
+                v = on
+        return v
     out, last, blink_until, last_change, display, last_hurt = [], 20, -1, 0, 20, -99
     si = 0
     for tick in range(int(duration * 20) + 2):
@@ -328,10 +335,22 @@ def hud_ticks(timeline, duration):
         _, _, slot, items, health = states[si]
         if any(a - 0.05 <= t + 1e-6 < b for a, b in deaths):   # from the death frame on (the screen starts a frame early)
             health = 0
-            # the inventory drops on the death tick, but only show it for a real death screen: with
-            # immediate_respawn (+ keep_inventory) the window is a tick and blanked the hotbar (tries)
-            if any(b - a >= 0.5 and a - 0.05 <= t + 1e-6 < b for a, b in deaths):
+            # the inventory drops on the death tick (unless keep_inventory), shown only for a real
+            # death screen: with immediate_respawn the window is a tick and blanked the hotbar (tries)
+            if not keep_now(t) and any(b - a >= 0.5 and a - 0.05 <= t + 1e-6 < b for a, b in deaths):
                 items = (None,) * len(items)
+        else:
+            # just respawned: mineflayer's health/hotbar updates land a few ticks late, and the HUD sat
+            # on 0 hearts and an empty hotbar for ~0.4 s (worker 7). Take the next values from the respawn.
+            rb = next((b for a, b in deaths if b <= t + 1e-6 < b + 1.5), None)
+            if rb is not None and health <= 0:
+                nh = next((e.get("health") for e in timeline or [] if e["t"] / 1000 >= t and e.get("health") is not None and e["health"] > 0), None)
+                if nh is not None:
+                    health = nh
+            if rb is not None and not any(items):
+                nxt = next((st for st in states if st[0] >= t and any(st[3])), None)
+                if nxt is not None and nxt[0] - t < 1.5:
+                    items = nxt[3]
         cur = math.ceil(health)
         if cur < last:
             blink_until, last_change, last_hurt = tick + 20, tick, tick
@@ -775,7 +794,7 @@ def main():
         need = sorted({it[0] for st in states for it in st[3] if isinstance(it, tuple) and it and it[0] and not (ICONS / f"{it[0]}.png").exists()})
         if need:   # 3D icons for block items (skips non-block items itself)
             subprocess.run(["node", str(HERE / "renderer" / "icons.js"), CLIENT_JAR.stem, *need], check=True)
-        ticks = hud_ticks(tl, dur + shift)
+        ticks = hud_ticks(tl, dur + shift, bool(json.loads(pathlib.Path(args.timeline).read_text()).get('keepInventory')) if args.timeline else False)
         first = int(shift * 20)
         pngs, runs = {}, []                      # unique HUD images, and (png, n_ticks) runs
         with zipfile.ZipFile(CLIENT_JAR) as jar:
