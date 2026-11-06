@@ -70,7 +70,7 @@ module.exports = {
         process.nextTick(() => bot.activateItem())
         ctx.log('water placed at height', above.toFixed(2))
       }
-      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 60, spread: 2.6 })   // wide: particles within 1 block of the eye are culled, and the eye is right above the water }
+      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 60, spread: 2.6 }) }   // wide: particles within 1 block of the eye are culled, and the eye is right above the water
       if ((placed || mode !== 'ok') && (bot.entity.onGround || bot.entity.isInWater)) landed = true
     }
     bot.on('physicsTick', onTick)
