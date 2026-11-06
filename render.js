@@ -266,12 +266,28 @@ function camAtLive (t) {
     const t = only ? only[f] : f * 20 / FPS
     // block changes due by this frame -> re-mesh the touched sections (and neighbours at edges)
     const dirty = new Map()
+    let nChanged = 0, bb = null
     while (bi < rec.blocks.length && rec.blocks[bi][0] <= t) {
       const [, x, y, z, stateId] = rec.blocks[bi++]
       mesher.setBlock(x, y, z, stateId)
+      nChanged++
+      bb = bb ? [Math.min(bb[0], x), Math.min(bb[1], y), Math.min(bb[2], z), Math.max(bb[3], x), Math.max(bb[4], y), Math.max(bb[5], z)] : [x, y, z, x, y, z]
       for (const [dx, dy, dz] of [[0, 0, 0], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
         const sx = Math.floor((x + dx) / 16) * 16, sy = Math.floor((y + dy) / 16) * 16, sz = Math.floor((z + dz) / 16) * 16
         dirty.set(`${sx},${sy},${sz}`, { key: `${sx},${sy},${sz}`, sx, sy, sz })
+      }
+    }
+    // a big change at once (an explosion, a crater): light from before is badly wrong there (the
+    // exposed walls stayed black), so relight the world and re-mesh everything around the change
+    if (nChanged >= 24) {
+      mesher.computeLight(minVisibleY)
+      for (let sx = Math.floor((bb[0] - 16) / 16) * 16; sx <= bb[3] + 16; sx += 16) {
+        for (let sy = Math.floor((bb[1] - 16) / 16) * 16; sy <= bb[4] + 16; sy += 16) {
+          for (let sz = Math.floor((bb[2] - 16) / 16) * 16; sz <= bb[5] + 16; sz += 16) {
+            if (sy + 16 < minVisibleY) continue
+            dirty.set(`${sx},${sy},${sz}`, { key: `${sx},${sy},${sz}`, sx, sy, sz })
+          }
+        }
       }
     }
     if (dirty.size) await send([...dirty.values()])

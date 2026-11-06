@@ -61,7 +61,7 @@ module.exports = {
     await bot.waitForTicks(40)                                // the chain goes off
     // walk up to the crater
     bot.setControlState('forward', true); bot.setControlState('sprint', true)
-    for (let i = 0; i < 80 && bot.entity.position.z > pz + 7; i++) await bot.waitForTicks(1)
+    for (let i = 0; i < 80 && bot.entity.position.z > pz + 11; i++) await bot.waitForTicks(1)   // stop short: the crater can be wide (and flooded)
     bot.setControlState('forward', false); bot.setControlState('sprint', false)
     await ctx.easeLook(0, -0.75, 900)
     await ctx.easeLook(0.5, -0.6, 900)
