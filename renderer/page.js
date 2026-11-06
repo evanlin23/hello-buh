@@ -371,6 +371,10 @@ function drawSelection (cam) {
 
 // First-person held item (ItemInHandRenderer, right hand). Drawn in its own scene after the world
 // with the depth buffer cleared, from a camera that only carries the view bob / hurt roll.
+// the hand sits where vanilla puts it relative to a 16:9 view: same fraction of the half-width from
+// the centre. Unscaled, our near-square game view cut tools and torches down to a sliver at the
+// edge (every frame review flagged it).
+const HAND_X = Math.min(1, (W / H) / (16 / 9))
 const handScene = new THREE.Scene()
 const handCam = new THREE.PerspectiveCamera(70, W / H, 0.05, 10)
 const handCache = new Map()
@@ -413,7 +417,7 @@ async function drawHand (cam) {
   // swing (renderArmWithItem + applyItemArmAttackTransform), equip drop (applyItemArmTransform)
   const a = h.swing || 0, sa = Math.sin(Math.sqrt(a) * Math.PI)
   const M = new THREE.Matrix4().makeTranslation(-0.4 * sa, 0.2 * Math.sin(Math.sqrt(a) * Math.PI * 2), -0.2 * Math.sin(a * Math.PI))
-  M.multiply(new THREE.Matrix4().makeTranslation(0.56, -0.52 + (h.equip || 0) * -0.6, -0.72))
+  M.multiply(new THREE.Matrix4().makeTranslation(0.56 * HAND_X, -0.52 + (h.equip || 0) * -0.6, -0.72))
   const f = Math.sin(a * a * Math.PI)
   M.multiply(new THREE.Matrix4().makeRotationY((45 + f * -20) * D2R))
   M.multiply(new THREE.Matrix4().makeRotationZ(sa * -20 * D2R))

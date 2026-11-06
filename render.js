@@ -128,7 +128,9 @@ const SWINGS = []
   for (const e of rec.timeline || []) {
     if (e.event === 'hotbar') items = e.items
     if (e.slot !== undefined) slot = e.slot
-    if (e.event === 'swing') SWINGS.push(e.t / 50)
+    // LivingEntity.swing: a new swing restarts the animation only once the current one is at least
+    // half done (3 of 6 ticks); a swing every tick (block placing) used to strobe the hand
+    if (e.event === 'swing' && !(SWINGS.length && e.t / 50 - SWINGS[SWINGS.length - 1] < 3)) SWINGS.push(e.t / 50)
     if (!items) continue
     const it = items[slot], name = it ? (Array.isArray(it) ? it[0] : it) : null
     if (name !== cur) { HELD.push([e.t / 50, name]); cur = name }
