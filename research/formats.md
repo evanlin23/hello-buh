@@ -55,3 +55,11 @@ so the bait only works if a recognisable meme song is added. That stays a manual
 Each needs its own set builder + action script in `bot.js` (or a sibling); the server, render,
 audio and edit stay the same. The channel needs a distinct angle per video (house rule: YouTube
 reviews "templated" content channel-wide), so vary the set, the stunt and the caption every time.
+
+## Songs (research/sounds_survey.py → sounds.json)
+Checked the sound attribution of the top 4 Shorts for each query (120 Shorts, 1.7B views
+combined): **118 show "Original Sound"**. Viral Minecraft Shorts bake the song into the upload
+(like HelloBuh), so YouTube doesn't name the song and we can't scrape song names. Song choice
+has to come from the owner or from listening to the clips. We don't rip audio from
+YouTube/TikTok (terms of service; the downloads are also blocked from the cloud); song files are
+owner-supplied into `songs/`.
