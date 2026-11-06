@@ -9,6 +9,8 @@ module.exports = {
   name: 'villager_job',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀',
+  // edit.py settings for this format (song files are owner-supplied, in songs/)
+  edit: { caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀', colors: 'pov=red,villager=green', song: 'songs/payphone.mp3', dropAt: 'hired', start: 0.5 },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -53,6 +55,7 @@ module.exports = {
       bot.swingArm(); ctx.sound('block.wood.place', 1, 0.8)
       await bot.waitForTicks(4)
       await setJob('librarian'); ctx.sound('entity.villager.work_librarian', 1, 1)
+      if (!this.hiredOnce) { this.hiredOnce = true; ctx.mark('hired') }
     }
     const breakIt = async () => {
       ctx.select(1); await bot.waitForTicks(2)

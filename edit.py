@@ -205,6 +205,39 @@ def hud_states(timeline, duration):
     return states
 
 
+def countdown_frames(spec, timeline, start_shift, outdir, jar_path):
+    """Overlay frames for 'START_EVENT:END_EVENT:Label:item/icon' (like the ender-pearl Shorts'
+    "Elytra About To Break: 2.14"), 20 per second from the start event until 0.6 s after the end.
+    Returns (offset_seconds, pattern) or None."""
+    a, b, label, icon = (spec.split(":") + ["", ""])[:4]
+    ev = {e["event"]: e["t"] / 1000 for e in timeline}
+    if a not in ev or b not in ev:
+        return None
+    t0, t1 = ev[a], ev[b]
+    font = ImageFont.truetype(FONT, 58)
+    icon_im = None
+    if icon:
+        with zipfile.ZipFile(jar_path) as jar:
+            with jar.open(f"assets/minecraft/textures/{icon}.png") as f:
+                icon_im = Image.open(io.BytesIO(f.read())).convert("RGBA").resize((128, 128), Image.NEAREST)
+    n = int((t1 - t0 + 0.6) * 20)
+    for i in range(n):
+        t = t0 + i / 20
+        left = max(0.0, t1 - t)
+        img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        txt = f"{label}: {left:.2f}"
+        tw = d.textlength(txt, font=font)
+        y = BAND + 70
+        if icon_im:
+            img.alpha_composite(icon_im, ((W - 128) // 2, y))
+            y += 140
+        color = (255, 255, 255, 255) if left > 0.5 else (255, 60, 60, 255)
+        d.text(((W - tw) / 2, y), txt, font=font, fill=color, stroke_width=6, stroke_fill=(0, 0, 0, 255))
+        img.save(outdir / f"cd_{i:04d}.png")
+    return t0 - start_shift, str(outdir / "cd_%04d.png")
+
+
 def probe_duration(args):
     if args.video:
         out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.video], capture_output=True, text=True).stdout
@@ -222,16 +255,27 @@ def main():
     ap.add_argument("--caption", required=True)
     ap.add_argument("--red")
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
+    ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--timeline")
     ap.add_argument("--audio")
     ap.add_argument("--song", help="music file to bake in (owner-supplied; keep the Short under 60 s)")
     ap.add_argument("--song_start", type=float, default=0.0, help="seconds into the song to start (e.g. the drop)")
+    ap.add_argument("--song_drop_at", help="timeline event (or seconds into the Short) where the song's drop should land; the drop is found by scripts/song_drop.py")
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))
+    if args.song and args.song_drop_at:
+        drop = float(subprocess.run(["python3", str(HERE / "scripts" / "song_drop.py"), args.song], capture_output=True, text=True, check=True).stdout.split()[0])
+        try:
+            at = float(args.song_drop_at)
+        except ValueError:
+            tl_ev = {e["event"]: e["t"] / 1000 for e in json.loads(pathlib.Path(args.timeline).read_text())["timeline"]}
+            at = tl_ev[args.song_drop_at] - args.start
+        args.song_start = max(0.0, drop - at)
+        print(f"song drop at {drop:.2f}s lands on {at:.2f}s of the Short (song starts at {args.song_start:.2f}s)")
     named = {"red": (235, 40, 40, 255), "green": (60, 220, 60, 255), "yellow": (255, 220, 40, 255), "blue": (80, 160, 255, 255)}
     colors = {}
     for pair in (args.colors or "").split(","):
@@ -261,6 +305,15 @@ def main():
                 inputs += ["-loop", "1", "-i", str(p)]
                 graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{max(0, a - shift):.3f},{b - shift:.3f})'[h{k}]")
                 last, n_in = f"h{k}", n_in + 1
+    if args.countdown and args.timeline:
+        tl_all = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        cd = countdown_frames(args.countdown, tl_all, args.start, tmp, CLIENT_JAR)
+        if cd:
+            off, pattern = cd
+            inputs += ["-framerate", "20", "-i", pattern]
+            graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[cdv]")
+            graph.append(f"[{last}][cdv]overlay=0:0:eof_action=pass[cdo]")
+            last, n_in = "cdo", n_in + 1
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     maps = ["-map", "[v]"]
     if args.audio and not args.song:

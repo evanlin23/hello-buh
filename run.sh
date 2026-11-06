@@ -2,13 +2,12 @@
 # One command, no human: fetch -> local server -> bot does the stunt (retries until it lands)
 # -> offline 60 fps render -> audio -> edit. Output: out/<name>.mp4
 #   ./run.sh                       # water bucket clutch, default caption
-#   CAPTION="mlg water 💀" ./run.sh
-#   STUNT=looks_wrong CAPTION="Bro this looks wrong?" ./run.sh    (stunts/<name>.js)
+#   STUNT=pearl_clutch ./run.sh          (any stunts/<name>.js; caption/song/drop come from its `edit`)
+#   CAPTION="..." SONG=songs/x.mp3 ./run.sh   (overrides)
 set -euo pipefail
 cd "$(dirname "$0")"
 STUNT=${STUNT:-water_clutch}
 NAME=${NAME:-$STUNT}
-CAPTION=${CAPTION:-"water bucket clutch 💀"}
 FPS=${FPS:-60}
 TRIES=${TRIES:-5}
 mkdir -p work out
@@ -48,5 +47,6 @@ stop_server; trap - EXIT
 rm -rf "work/$NAME.frames"
 node render.js "$REC" "work/$NAME.frames" "$FPS" 1080 1011
 python3 audio.py "$REC" "work/$NAME.wav"
+mapfile -t EDIT_ARGS < <(node scripts/edit_args.js "$STUNT")   # caption, song, drop, countdown... from stunts/<name>.js
 python3 edit.py --frames "work/$NAME.frames/f%05d.png" --fps "$FPS" --out_fps "$FPS" \
-  --caption "$CAPTION" --timeline "$REC" --audio "work/$NAME.wav" --start 1.2 --out "out/$NAME.mp4"
+  --timeline "$REC" --audio "work/$NAME.wav" "${EDIT_ARGS[@]}" --out "out/$NAME.mp4"

@@ -21,6 +21,8 @@ module.exports = {
   name: 'looks_wrong',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'Bro this looks wrong?',
+  // edit.py settings for this format (song files are owner-supplied, in songs/)
+  edit: { caption: 'Bro this looks wrong?', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', start: 0.3 },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -98,6 +100,7 @@ module.exports = {
         placed++
       }
     }
+    ctx.mark('complete')
     await bot.waitForTicks(6)
     // check the result
     let ok = 0
