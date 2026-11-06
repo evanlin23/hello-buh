@@ -39,14 +39,18 @@ module.exports = {
     const profs = ['librarian', 'farmer', 'cleric', 'armorer', 'fletcher', 'toolsmith', 'weaponsmith', 'cartographer', 'butcher', 'shepherd', 'mason', 'fisherman', 'nitwit', 'none']
     const types = ['plains', 'plains', 'plains', 'taiga', 'desert', 'savanna', 'snow']
     // one big flat field for all the crowds (slabs under the 32768-block /fill cap)
+    // The server stalls for seconds on fills this big, and mineflayer's tick waits time out (5 s) while
+    // it does ("Timeout waiting for 1 ticks"): pace the heavy commands by wall-clock time instead.
+    const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     for (let z0 = z - 40; z0 <= z + 26; z0 += 4) {
       const z1 = Math.min(z0 + 3, z + 26)
-      await ctx.cmd(`/fill ${x - 110} ${floor + 1} ${z0} ${x + 110} ${floor + 30} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 110} ${floor} ${z0} ${x + 110} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 110} ${floor - 3} ${z0} ${x + 110} ${floor - 1} ${z1} dirt`)
+      await heavy(`/fill ${x - 110} ${floor + 1} ${z0} ${x + 110} ${floor + 14} ${z1} air`)
+      await heavy(`/fill ${x - 110} ${floor} ${z0} ${x + 110} ${floor} ${z1} grass_block`)
+      await heavy(`/fill ${x - 110} ${floor - 3} ${z0} ${x + 110} ${floor - 1} ${z1} dirt`)
       // one biome everywhere (a crowd stood on a duller grass tint)
-      await ctx.cmd(`/fillbiome ${x - 110} ${floor - 4} ${z0} ${x + 110} ${floor + 20} ${z1} minecraft:plains`)
+      await heavy(`/fillbiome ${x - 110} ${floor - 4} ${z0} ${x + 110} ${floor + 14} ${z1} minecraft:plains`)
     }
+    await ctx.sleep(3000)
     // mineflayer ignores the biome update packet: go far away and come back to reload the chunks
     await ctx.cmd(`/tp @s ${x + 1000} 200 ${z}`); await bot.waitForTicks(60)
     await ctx.cmd(`/tp @s ${x} ${floor + 1} ${z + 8}`); await bot.waitForTicks(20); await bot.waitForChunksToLoad()
@@ -54,7 +58,7 @@ module.exports = {
     const summon = async (vx, vz, rot, tag) => {
       const p = profs[(k * 5 + 3) % profs.length], t = types[(k * 3 + 1) % types.length]
       bot.chat(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${rot}f,0f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
-      if (++k % 20 === 0) await bot.waitForTicks(1)          // ~700 summons: no per-command wait
+      if (++k % 10 === 0) await ctx.sleep(250)              // ~780 summons: paced by wall-clock (tick waits time out under the load)
     }
     for (let i = 0; i < CROWDS.length; i++) {
       const c = CROWDS[i], sx = crowdX(x, i), big = c.n >= 50
@@ -70,7 +74,7 @@ module.exports = {
     for (let r = 0; r < BEHIND.rows; r++) {
       for (let q = 0; q < BEHIND.cols; q++) await summon(lx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 9.5 + r * 1.3, 180, `crowd${CROWDS.length - 1}`)
     }
-    await bot.waitForTicks(20)
+    await ctx.sleep(3000)
     ctx.log('villagers', Object.values(bot.entities).filter(e => e.name === 'villager').length)
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 4.5, 180, -4)   // the middle: all crowds' chunks loaded for the recording
