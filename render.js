@@ -380,6 +380,9 @@ function camAtLive (t) {
       // see from inside, so draw nothing rather than a screen of the block's dark underside
       if (Math.abs(cam.x - e.x) < 0.5 && Math.abs(cam.z - e.z) < 0.5 && cam.y > e.y - 0.05 && cam.y < e.y + 1.05) e.hidden = true
     }
+    // dropped items right at the camera (a death scatters the inventory from the eyes): vanilla
+    // throws them out of view at once; our 3-tick easing kept them in the lens for half a second
+    for (const e of ents) if (e.name === 'item' && Math.hypot(e.x - cam.x, e.y + 0.25 - cam.y, e.z - cam.z) < 1.2) e.hidden = true
     // dropped items (ItemEntityRenderer): items with a flat sprite stay sprites; block items are a
     // quarter-size 3D block, bobbing sin(age/10)*0.1+0.1 and spinning age/20 rad
     for (const e of ents) {

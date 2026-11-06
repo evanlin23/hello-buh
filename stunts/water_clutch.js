@@ -15,7 +15,7 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const ground = ctx.findLand(sp.x, sp.z)
     if (!ground) throw new Error('no dry land near spawn')
-    const { x, z } = ground, floor = ground.y, top = floor + HEIGHT
+    const { x, z } = ground, floor = ground.y, top = floor + (this.height || HEIGHT)
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // flattened pad: the bot lands ~7 blocks out and water flows toward any drop within 4 blocks
@@ -48,7 +48,7 @@ module.exports = {
     bot.setControlState('jump', false)
     await bot.waitForTicks(8)
     // drift forward for the first ~14 blocks so we come down clear of the pillar
-    const stopDrift = () => { if (bot.entity.position.y - (floor + 1) < HEIGHT - 14) { bot.setControlState('forward', false); bot.removeListener('physicsTick', stopDrift) } }
+    const stopDrift = () => { if (bot.entity.position.y - (floor + 1) < (this.height || HEIGHT) - 14) { bot.setControlState('forward', false); bot.removeListener('physicsTick', stopDrift) } }
     bot.on('physicsTick', stopDrift)
     ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.01, 500)
     let placed = false, landed = false, splashed = false

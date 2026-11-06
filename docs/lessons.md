@@ -167,3 +167,6 @@ each section.
 - **A falling block that reaches the camera isn't drawn** (vanilla culls its inside faces). Otherwise the screen shows a few frames of the block's dark underside.
 - **A render that started before an engine fix doesn't have it.** Check the frame mtimes against the fix commit time before blaming the fix. anvil_rain at 17:32 predated the 17:36 smoothing fix.
 - **anvil_rain:** keep the rain falling through the finale and keep the bot moving (side-steps and glances). An empty sky before the last anvil read as staged, and 1.75 s of standing still read as a frozen video.
+- **Dropped items at the camera are hidden.** A death scatters the inventory from the eyes, and with 3-tick easing the item textures filled the death screen for 0.7 s.
+- **A "wrong bucket" death has to be a lava death.** From 60 blocks the fall itself killed the bot ("doomed to fall") and the lava was on screen for one frame. From 21 blocks the landing leaves 2 HP and the lava kills. Any stunt's punchline has to be what actually kills it: check the death message.
+- **The held item mostly sits off the right edge** in our near-square game view, because vanilla hand placement assumes 16:9. The reference Shorts crop 16:9 the same way, so it's expected. Don't build a joke that depends on seeing the held item.
