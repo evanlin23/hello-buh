@@ -47,20 +47,20 @@ module.exports = {
       if (n++ % 3) return
       const p = bot.entity.position, yaw = bot.entity.yaw
       for (let k = 0; k < 2; k++) {
-        const a = yaw + Math.PI + (rnd() - 0.5) * (rnd() < 0.75 ? 1.6 : 6), d = 3.5 + rnd() * 7
+        const a = yaw + Math.PI + (rnd() - 0.5) * (rnd() < 0.75 ? 1.8 : 6), d = 3 + rnd() * 7
         drop(p.x - Math.sin(a + Math.PI) * d, p.z - Math.cos(a + Math.PI) * d)
       }
     }
     bot.on('physicsTick', rain)
     await ctx.easeLook(Math.PI, 0.35, 500)                    // they're coming down
     await ctx.easeLook(Math.PI + 0.3, -0.2, 700)
-    // dodge: walk, strafe, look up at the next ones
-    bot.setControlState('forward', true)
+    // frozen in place, looking around as they slam down (walking forward would walk into the
+    // ones landing in front); one quick sidestep
     await ctx.easeLook(Math.PI + 0.8, -0.15, 900)
-    bot.setControlState('left', true); await ctx.easeLook(Math.PI + 0.2, 0.3, 900); bot.setControlState('left', false)
-    await ctx.easeLook(Math.PI - 0.6, -0.2, 900)
-    bot.setControlState('right', true); await ctx.easeLook(Math.PI - 0.2, 0.25, 800); bot.setControlState('right', false)
-    bot.setControlState('forward', false)
+    await ctx.easeLook(Math.PI + 0.2, 0.35, 800)
+    bot.setControlState('left', true); await bot.waitForTicks(6); bot.setControlState('left', false)
+    await ctx.easeLook(Math.PI - 0.7, -0.2, 900)
+    await ctx.easeLook(Math.PI - 0.2, 0.3, 800)
     bot.removeListener('physicsTick', rain)
     await bot.waitForTicks(30)                                // let the last ones land
     // phew... then the one with its name on it
