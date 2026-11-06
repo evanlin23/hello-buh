@@ -60,7 +60,8 @@ module.exports = {
   async perform (ctx) {
     const { bot, Vec3 } = ctx
     const o = this.origin
-    const todo = plan(o.x, o.y, o.z).sort((a, b) => a.y - b.y || Math.abs(a.x - this.x) - Math.abs(b.x - this.x) || a.z - b.z)
+    // one material at a time within a layer: a slot switch every few blocks kept the held item lowered
+    const todo = plan(o.x, o.y, o.z).sort((a, b) => a.y - b.y || a.name.localeCompare(b.name) || Math.abs(a.x - this.x) - Math.abs(b.x - this.x) || a.z - b.z)
     const slot = { oak_log: 0, oak_planks: 1, glass: 2, spruce_planks: 3 }
     const placed = new Set()
     let spruceUsed = 0
