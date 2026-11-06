@@ -7,5 +7,5 @@ module.exports = require('../lib/pixel_art')({
   first: 'K',
   wall: 'smooth_stone',
   caption: 'rate my pixel art 1-10 😭',
-  edit: { caption: 'rate my pixel art 1-10 😭', song: 'songs/misery.mp3', dropAt: 'complete', start: 0.3 }
+  edit: { caption: 'rate my pixel art 1-10 😭', song: 'songs/misery.mp3', dropAt: 'complete', start: 0.3, endAfter: 'complete:1.7' }
 })
