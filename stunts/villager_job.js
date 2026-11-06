@@ -10,7 +10,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀', colors: 'pov=red,villager=green', song: 'songs/payphone.mp3', dropAt: 'hired', start: 0.75, endAfter: 'rehired:1.3' },
+  edit: { caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀', colors: 'pov=red,villager=green', song: 'songs/payphone.mp3', dropAt: 'hired', start: 0.75, endAfter: 'rehired:1.0' },
 
   async setup (ctx) {
     const { bot } = ctx

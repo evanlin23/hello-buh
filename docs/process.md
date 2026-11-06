@@ -14,7 +14,7 @@ idea -> stunt module -> run.sh (bot + render + edit) -> qa_frames.py -> independ
 - One stunt module per Short in `stunts/`. See `docs/worker.md` for the brief and the harness helpers.
 - The format must read **in the first second**: the thing the caption promises is on screen (or audible, e.g. the hiss) by ~1 s. Use `startAt: 'EVENT:-1.5'` to trim.
 - **Length:** aim for 15–30 s, multi-beat. Owner, 2026-11-06: "probbaly need longer ones to go viral, without any dead space". Build several escalating beats, like the 19–20 s worker formats (rated / ranked / X vs Y vs Z), with something new every ~2 s.
-- **No dead space.** Never a still shot of 1 s or more: waits get glances, endings get motion. A reveal lands with a move (a pull-back or a drift), and the Short ends within ~1 s of the payoff. Owner, 2026-11-06, on pixel art: "we land on the reveal for the pixel art for a while, which idk how good that is".
+- **No dead space.** Never a still shot of 1 s or more: waits get glances, endings get motion. A reveal lands with a move (a pull-back or a drift), and the Short ends **<= 1.0 s after the payoff** (owner: "we should end as soon as the payoff comes"). No frozen pause of 0.5 s or more anywhere, the payoff included. Owner, 2026-11-06, on pixel art: "we land on the reveal for the pixel art for a while, which idk how good that is".
 - Build in a big cleared area: water, caves and hills at the edge show up in craters, behind crowds and in long shots.
 
 ## 2. Render (one batch at a time)
@@ -25,7 +25,10 @@ idea -> stunt module -> run.sh (bot + render + edit) -> qa_frames.py -> independ
 ## 3. QA (docs/qa.md)
 1. `python3 scripts/qa_frames.py out/<name>.mp4` checks all 60 fps frames for jumps, duplicate frames, flicker, holes, darkness and the bot standing still.
 2. **Independent reviewer agent**, using the prompt in `docs/reviewer_prompt.md`. It gets the caption, the intent and any owner complaints, and nothing about known issues. It reads every sheet and flag image and opens full-resolution frames.
-3. Read the review critically. Reviewers sometimes report vanilla behaviour as a bug. Not bugs:
+3. **Retention audit** (`.claude/skills/retention-audit`): hook by 1 s, a beat every ~2 s that escalates, a payoff that lands while the camera moves, and an end <= 1.0 s after it. `python3 scripts/beat_audit.py <name>` gives the marks, the motion and the tail.
+4. **Minecraft audit** (`.claude/skills/minecraft-audit`): mechanics, mobs, physics, HUD and look are approximately vanilla, and every on-camera action is survival-legal.
+   Steps 2-4 can be one independent agent per audit, or one agent that runs all three. A Short passes only when all three say ready.
+5. Read the reviews critically. Reviewers sometimes report vanilla behaviour as a bug. Not bugs:
    - the death screen's red tint over the HUD and particles;
    - the small death roll;
    - our caption/game/black-band layout.

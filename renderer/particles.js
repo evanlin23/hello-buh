@@ -19,7 +19,7 @@ function spawn (ev, blockTex) {
     for (let i = 0; i < (ev.count || 24); i++) {
       const sp = ev.spread || ((ev.count || 24) >= 30 ? 2.6 : 1.2)   // big landing splashes spread wide: the eye is right above them and particles within 1 block are culled
       P({ x: ev.x + (r() - 0.5) * sp, y: ev.y, z: ev.z + (r() - 0.5) * sp, vx: (r() - 0.5) * 0.25, vy: 0.1 + r() * 0.25, vz: (r() - 0.5) * 0.25,
-        g: 0.06, drag: 0.98, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5), tex: `particle/splash_${Math.floor(r() * 4)}`, color: [1, 1, 1] })
+        g: 0.06, drag: 0.98, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2, tex: `particle/splash_${Math.floor(r() * 4)}`, color: [1, 1, 1] })
     }
   } else if (ev.type === 'block' && blockTex) {
     for (let a = 0; a < 4; a++) for (let b = 0; b < 4; b++) for (let c = 0; c < 4; c++) {

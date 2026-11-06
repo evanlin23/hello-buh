@@ -7,7 +7,7 @@ module.exports = {
   name: 'one_in_a_million',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing 😳',
-  edit: { caption: '1 in a million landing 😳', song: 'songs/misery.mp3', dropAt: 'splash' , startAt: 'drop:-1.2', endAfter: 'splash:2.6'},
+  edit: { caption: '1 in a million landing 😳', song: 'songs/misery.mp3', dropAt: 'splash' , startAt: 'drop:-1.2', endAfter: 'splash:0.9'},
 
   async setup (ctx) {
     const { bot } = ctx
@@ -39,8 +39,10 @@ module.exports = {
     await bot.waitForTicks(14)
     await ctx.easeLook(0.6, -0.4, 500)                      // look around: very high up
     await ctx.easeLook(-0.6, -0.6, 600)
-    await ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.01, 700)   // straight down at the tiny hole
-    await bot.waitForTicks(10)
+    // down at the tiny hole, slightly off straight-down so the target sits just above the crosshair
+    // (retention review: dead centre, the 4 px hole hid under the crosshair until the last second)
+    await ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.1, 700)
+    await bot.waitForTicks(4)                              // no held shot before the drop (beat audit: 0.5 s PAUSE)
     ctx.mark('drop'); ctx.sound('block.glass.break', 1)
     ctx.particles('block', { x: this.x, y: this.top, z: this.z }, { block: 'glass' })
     await ctx.cmd(`/setblock ${this.x} ${this.top} ${this.z} air`)
@@ -53,10 +55,10 @@ module.exports = {
       }
       if (splashed && i > 4 && (bot.entity.onGround || bot.entity.isInWater)) break
     }
-    await bot.waitForTicks(16)
-    await ctx.easeLook(bot.entity.yaw, -0.25, 700)          // up from the water to the landing spot's surroundings
-    await ctx.easeLook(bot.entity.yaw + 0.7, -0.15, 700)
-    await bot.waitForTicks(12)
+    // straight into a look-up: a held shot on the water after the splash read as a freeze (review:
+    // 0.8 s frozen); the Short ends ~0.9 s after the splash, mid-move
+    await ctx.easeLook(bot.entity.yaw + 0.5, -0.35, 900)
+    await bot.waitForTicks(6)
     return splashed && !ctx.died
   }
 }
