@@ -1,6 +1,7 @@
 // Renders pre-meshed Minecraft sections the way the game's default settings look, one frame on
 // demand. Driven by render.js through window.HB; nothing animates on its own.
 import * as THREE from 'three'
+import { EntityLayer } from '/entities.js'
 
 const W = window.innerWidth, H = window.innerHeight
 const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true })
@@ -15,7 +16,7 @@ const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 1000)   // vanilla FOV 70 (vertical)
 camera.rotation.order = 'YXZ'
 const sections = new Map()
-let opaqueMat, translucentMat, clouds, sky, sun
+let opaqueMat, translucentMat, clouds, sky, sun, entities
 const env = { skyColor: 0x78a7ff, fogColor: 0xc0d8ff, renderDistance: 12, cloudHeight: 192.33, time: 6000 }
 
 function srgb (hex) { return new THREE.Color().setHex(hex, THREE.LinearSRGBColorSpace) }
@@ -113,6 +114,9 @@ window.HB = {
     sky = makeSky(); scene.add(sky)
     sun = await makeSun('/assets/env/sun.png'); scene.add(sun)
     clouds = await makeClouds('/assets/env/clouds.png'); scene.add(clouds)
+    await EntityLayer.loadModels()
+    const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
+    entities = new EntityLayer(scene, regs)
     return true
   },
 
@@ -160,7 +164,8 @@ window.HB = {
   },
 
   // pos = eye position; yaw/pitch in mineflayer convention; bob = {x,y,roll,pitch} offsets
-  frame (cam, tick) {
+  async frame (cam, tick, ents) {
+    if (entities) await entities.update(ents || [])
     camera.position.set(cam.x, cam.y, cam.z)
     camera.rotation.set(cam.pitch - (cam.bobPitch || 0), cam.yaw, cam.roll || 0)
     if (cam.bobX) camera.translateX(cam.bobX)

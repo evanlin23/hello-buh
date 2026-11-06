@@ -55,7 +55,7 @@ def emoji_png(ch):
     return Image.open(cache).convert("RGBA")
 
 
-def caption_png(text, red_word, path):
+def caption_png(text, red_word, path, colors=None):
     """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
@@ -78,7 +78,12 @@ def caption_png(text, red_word, path):
             e = emoji_png(tok).resize((size, size), Image.LANCZOS)
             img.alpha_composite(e, (int(x + 3), int(y + 4)))
         else:
-            color = (235, 40, 40, 255) if red_word and tok.strip("?!.,").lower() == red_word.lower() else (255, 255, 255, 255)
+            key = tok.strip("?!.,:").lower()
+            color = (255, 255, 255, 255)
+            if red_word and key == red_word.lower():
+                color = (235, 40, 40, 255)
+            if colors and key in colors:
+                color = colors[key]
             d.text((x, y), tok, font=font, fill=color)
         x += w + space
     img.save(path)
@@ -174,6 +179,7 @@ def main():
     ap.add_argument("--out_fps", type=int, default=30)
     ap.add_argument("--caption", required=True)
     ap.add_argument("--red")
+    ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--timeline")
     ap.add_argument("--audio")
     ap.add_argument("--song", help="music file to bake in (owner-supplied; keep the Short under 60 s)")
@@ -184,7 +190,13 @@ def main():
     args = ap.parse_args()
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))
-    caption_png(args.caption, args.red, tmp / "caption.png")
+    named = {"red": (235, 40, 40, 255), "green": (60, 220, 60, 255), "yellow": (255, 220, 40, 255), "blue": (80, 160, 255, 255)}
+    colors = {}
+    for pair in (args.colors or "").split(","):
+        if "=" in pair:
+            w, c = pair.split("=", 1)
+            colors[w.strip().lower()] = named.get(c.strip().lower(), (255, 255, 255, 255))
+    caption_png(args.caption, args.red, tmp / "caption.png", colors)
     dur = probe_duration(args) - args.start
     inputs = (["-ss", str(args.start), "-i", args.video] if args.video else
               ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps)), "-i", args.frames])

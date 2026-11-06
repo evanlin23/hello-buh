@@ -8,6 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
+const { lightmap } = require('./renderer/models')
 const { Vec3 } = require('vec3')
 
 const [recPath, outDir, fpsArg, wArg, hArg] = process.argv.slice(2)
@@ -33,6 +34,23 @@ const bobState = []
   }
 }
 
+// Entities by tick: Map(tick -> Map(id -> row)); rows are [tick, id, name, x, y, z, yaw, pitch, headYaw, extra]
+const ENT = new Map()
+for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], new Map()); ENT.get(row[0]).set(row[1], row) }
+function entitiesAt (t, mesher) {
+  const i = Math.floor(t), f = t - i
+  const a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
+  const out = []
+  for (const [id, ra] of a) {
+    const rb = b.get(id) || ra
+    const L = (k) => ra[k] + (rb[k] - ra[k]) * f
+    const pos = { x: L(3), y: L(4), z: L(5) }
+    const [sky, blk] = mesher.world.getLight(new Vec3(pos.x, pos.y + 0.5, pos.z))
+    out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(Math.max(sky, blk)) })
+  }
+  return out
+}
+
 function camAt (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
   const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
@@ -56,6 +74,8 @@ function camAt (t) {
   app.get('/mesh/:id', (req, res) => { const b = blobs.get(req.params.id); blobs.delete(req.params.id); res.type('application/octet-stream').send(b) })
   app.get('/', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'page.html')))
   app.get('/page.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'page.js')))
+  app.get('/entities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entities.js')))
+  app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
   app.use('/assets', express.static(path.join(__dirname, 'work', 'assets', rec.version)))
   const server = http.createServer(app)
@@ -102,11 +122,15 @@ function camAt (t) {
     }
     if (dirty.size) await send([...dirty.values()])
     const cam = camAt(t)
+    if (process.env.CAM) {   // debug: CAM="dx,dy,dz,yawDeg,pitchDeg" relative to the set origin
+      const [dx, dy, dz, yw, pt] = process.env.CAM.split(',').map(Number)
+      Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0 })
+    }
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
-    await page.evaluate(([c, tick]) => window.HB.frame(c, tick), [cam, t])
+    await page.evaluate(([c, tick, e]) => window.HB.frame(c, tick, e), [cam, t, entitiesAt(t, mesher)])
     // let the compositor present the finished frame before capturing (else: tearing lines)
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })

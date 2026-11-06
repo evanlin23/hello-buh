@@ -581,4 +581,4 @@ function getModelVariants (block, blockStates) {
   return []
 }
 
-module.exports = { getSectionGeometry, setBiomeColors }
+module.exports = { getSectionGeometry, setBiomeColors, lightmap }

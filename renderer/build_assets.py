@@ -86,6 +86,27 @@ def main(ver):
         p = f"assets/minecraft/textures/{src}"
         if p in names and not (out / "env" / dst).exists():
             (out / "env" / dst).write_bytes(jar.read(p))
+    for n in names:  # entity textures (mobs, villager outfits, ...)
+        if n.startswith("assets/minecraft/textures/entity/") and n.endswith(".png"):
+            dst = out / "env" / n[len("assets/minecraft/textures/"):]
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_bytes(jar.read(n))
+    # Registry ids -> names for entity data (villager type/profession), from the vanilla server's
+    # own data report.
+    server_jar = ROOT / "work" / "server" / "server.jar"
+    rep = ROOT / "work" / "datagen" / ver / "reports" / "registries.json"
+    if server_jar.exists() and not rep.exists():
+        import subprocess, tempfile
+        tmp = pathlib.Path(tempfile.mkdtemp())
+        subprocess.run(["java", "-DbundlerMainClass=net.minecraft.data.Main", "-jar", str(server_jar), "--reports",
+                        "--output", str(ROOT / "work" / "datagen" / ver)], cwd=tmp, check=True, capture_output=True)
+    if rep.exists():
+        regs = json.loads(rep.read_text())
+        keep = {}
+        for k in ("minecraft:villager_type", "minecraft:villager_profession", "minecraft:entity_type"):
+            if k in regs:
+                keep[k] = {str(v["protocol_id"]): name.split(":")[1] for name, v in regs[k]["entries"].items()}
+        (out / "registries.json").write_text(json.dumps(keep))
     for n in names:  # item textures for the held item
         if n.startswith("assets/minecraft/textures/item/") and n.endswith(".png") and n.count("/") == 4:
             (out / "env" / "item").mkdir(exist_ok=True)
