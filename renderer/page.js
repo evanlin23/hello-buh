@@ -285,7 +285,73 @@ window.HB = {
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawParticles(parts)
     renderer.render(scene, camera)
+    if (await drawHand(cam)) {
+      const ac = renderer.autoClear; renderer.autoClear = false
+      renderer.clearDepth(); renderer.render(handScene, handCam)
+      renderer.autoClear = ac
+    }
     return true
   }
+}
+
+// First-person held item (ItemInHandRenderer, right hand). Drawn in its own scene after the world
+// with the depth buffer cleared, from a camera that only carries the view bob / hurt roll.
+const handScene = new THREE.Scene()
+const handCam = new THREE.PerspectiveCamera(70, W / H, 0.05, 10)
+const handCache = new Map()
+const D2R = Math.PI / 180
+let handObj = null
+async function handObject (h) {
+  if (handCache.has(h.key)) return handCache.get(h.key)
+  let inner = null, mat = null
+  if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
+    const bm = entities.blockModels.get(h.state)
+    const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, -0.5, -0.5); mat = m.material
+    inner = new THREE.Group(); inner.add(m)
+    // models/block/block.json display.firstperson_righthand: rotation [0, 45, 0], scale 0.4
+    inner.rotation.set(0, 45 * D2R, 0); inner.scale.setScalar(0.4)
+  } else if (h.tex) {
+    let t = null
+    try { t = await loadTexture(`/assets/env/${h.tex}.png`) } catch (e) {}
+    if (t) {
+      t.flipY = true; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true
+      mat = new THREE.MeshBasicMaterial({ map: t, alphaTest: 0.1, side: THREE.DoubleSide })
+      const q = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat)
+      inner = new THREE.Group(); inner.add(q)
+      // models/item/generated.json display.firstperson_righthand: rotation [0, -90, 25],
+      // translation [1.13, 3.2, 1.13] (pixels), scale 0.68
+      inner.position.set(1.13 / 16, 3.2 / 16, 1.13 / 16)
+      inner.rotation.set(0, -90 * D2R, 25 * D2R, 'XYZ'); inner.scale.setScalar(0.68)
+    }
+  }
+  const out = inner ? { obj: new THREE.Group(), mat } : null
+  if (out) { out.obj.add(inner); out.obj.matrixAutoUpdate = false }
+  handCache.set(h.key, out)
+  return out
+}
+async function drawHand (cam) {
+  if (handObj) { handScene.remove(handObj.obj); handObj = null }
+  const h = cam.hand
+  if (!h || cam.dead) return false
+  const r = await handObject(h)
+  if (!r) return false
+  // swing (renderArmWithItem + applyItemArmAttackTransform), equip drop (applyItemArmTransform)
+  const a = h.swing || 0, sa = Math.sin(Math.sqrt(a) * Math.PI)
+  const M = new THREE.Matrix4().makeTranslation(-0.4 * sa, 0.2 * Math.sin(Math.sqrt(a) * Math.PI * 2), -0.2 * Math.sin(a * Math.PI))
+  M.multiply(new THREE.Matrix4().makeTranslation(0.56, -0.52 + (h.equip || 0) * -0.6, -0.72))
+  const f = Math.sin(a * a * Math.PI)
+  M.multiply(new THREE.Matrix4().makeRotationY((45 + f * -20) * D2R))
+  M.multiply(new THREE.Matrix4().makeRotationZ(sa * -20 * D2R))
+  M.multiply(new THREE.Matrix4().makeRotationX(sa * -80 * D2R))
+  M.multiply(new THREE.Matrix4().makeRotationY(-45 * D2R))
+  r.obj.matrix.copy(M)
+  if (r.mat) r.mat.color.setScalar(h.light ?? 1)
+  handScene.add(r.obj); handObj = r
+  handCam.position.set(0, 0, 0)
+  handCam.rotation.set(-(cam.bobPitch || 0), 0, cam.roll || 0)
+  if (cam.bobX) handCam.translateX(cam.bobX)
+  if (cam.bobY) handCam.translateY(cam.bobY)
+  handCam.updateMatrixWorld()
+  return true
 }
 window.HB_READY = true

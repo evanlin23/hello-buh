@@ -12,6 +12,8 @@ if (e.timer) out.push('--timer', e.timer)
 if (e.onFire) out.push('--on_fire', e.onFire)
 if (e.deathScreen) out.push('--death_screen', 'death')
 if (e.start !== undefined) out.push('--start', String(e.start))
+if (e.startAt) out.push('--start_at', e.startAt)       // 'event:offset'
+if (e.endAfter) out.push('--end_after', e.endAfter)    // 'event:seconds'
 const song = process.env.SONG || e.song
 if (song && fs.existsSync(song)) { out.push('--song', song); if (e.dropAt !== undefined) out.push('--song_drop_at', String(e.dropAt)) }
 console.log(out.join('\n'))

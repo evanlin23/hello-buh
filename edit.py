@@ -122,6 +122,8 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
     sel = big(sprite(jar, "gui/sprites/hud/hotbar_selection"))
     bx, by = (W - bar.width) // 2, BAND + GAME_H - bar.height - GUI   # hotbar sits at the bottom edge of the game
     img.alpha_composite(bar, (bx, by))
+    # selection box before the items and counts (Gui.renderItemHotbar), so counts stay readable
+    img.alpha_composite(sel, (bx - GUI + 20 * GUI * slot, by - GUI))
     for i, it in enumerate(items):
         if not it:
             continue
@@ -136,7 +138,6 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
                 img.alpha_composite(big(sprite(jar, sp)), (ix, iy))
         if count and count > 1:                   # stack count, like GuiGraphics.renderItemDecorations
             draw_text(img, jar, str(count), ix + (19 - 2) * GUI, iy + (6 + 3) * GUI, align_right=True)
-    img.alpha_composite(sel, (bx - GUI + 20 * GUI * slot, by - GUI))
     heart_c, heart = big(sprite(jar, "gui/sprites/hud/heart/container")), big(sprite(jar, "gui/sprites/hud/heart/full"))
     half = big(sprite(jar, "gui/sprites/hud/heart/half"))
     food_e, food = big(sprite(jar, "gui/sprites/hud/food_empty")), big(sprite(jar, "gui/sprites/hud/food_full"))
@@ -424,7 +425,7 @@ def subtitle_png(text, path):
     """Green glowing in-world subtitle (like HelloBuh's re:zero Short): light green text with a
     soft green glow, centred in the game area, wrapped to 2 lines if long."""
     from PIL import ImageFilter
-    font = ImageFont.truetype(FONT.replace("ExtraBold", "Medium") if pathlib.Path(FONT.replace("ExtraBold", "Medium")).exists() else FONT, 64)
+    font = ImageFont.truetype(FONT.replace("ExtraBold", "Medium") if pathlib.Path(FONT.replace("ExtraBold", "Medium")).exists() else FONT, 76)
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     words, lines, cur = text.split(), [], ""
@@ -439,8 +440,8 @@ def subtitle_png(text, path):
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0)); gd = ImageDraw.Draw(glow)
     for i, ln in enumerate(lines):
         tw = d.textlength(ln, font=font)
-        gd.text(((W - tw) / 2, y + i * 72), ln, font=font, fill=(60, 255, 60, 255), stroke_width=6, stroke_fill=(60, 255, 60, 255))
-        d.text(((W - tw) / 2, y + i * 72), ln, font=font, fill=(190, 255, 170, 255))
+        gd.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(60, 255, 60, 255), stroke_width=6, stroke_fill=(60, 255, 60, 255))
+        d.text(((W - tw) / 2, y + i * 84), ln, font=font, fill=(190, 255, 170, 255), stroke_width=4, stroke_fill=(10, 40, 10, 255))   # dark edge: readable on pale sky
     glow = glow.filter(ImageFilter.GaussianBlur(10))
     out = Image.new("RGBA", (W, H), (0, 0, 0, 0)); out.alpha_composite(glow); out.alpha_composite(img)
     out.save(path)
@@ -475,8 +476,18 @@ def main():
     ap.add_argument("--song_drop_at", help="timeline event (or seconds into the Short) where the song's drop should land; the drop is found by scripts/song_drop.py")
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
+    ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
+    ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    _tl = {}
+    if args.timeline:
+        for e in json.loads(pathlib.Path(args.timeline).read_text())["timeline"]:
+            _tl.setdefault(e["event"], e["t"] / 1000)
+    if args.start_at:
+        ev_, off_ = args.start_at.rsplit(":", 1)
+        if ev_ in _tl:
+            args.start = max(0.0, _tl[ev_] + float(off_))
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))
     if args.song and args.song_drop_at:
@@ -496,6 +507,10 @@ def main():
             colors[w.strip().lower()] = named.get(c.strip().lower(), (255, 255, 255, 255))
     caption_png(args.caption, args.red, tmp / "caption.png", colors)
     dur = probe_duration(args) - args.start
+    if args.end_after:
+        ev_, secs_ = args.end_after.rsplit(":", 1)
+        if ev_ in _tl:
+            dur = min(dur, _tl[ev_] + float(secs_) - args.start)
     inputs = (["-ss", str(args.start), "-i", args.video] if args.video else
               ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps)), "-i", args.frames])
     inputs += ["-loop", "1", "-i", str(tmp / "caption.png")]
@@ -565,6 +580,12 @@ def main():
         last, n_in = "tmo", n_in + 1
     if args.subs and args.timeline:
         all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        sub_starts = []
+        for sub in json.loads(args.subs):
+            tts = [e["t"] / 1000 for e in all_ev if e["event"] == sub[0]]
+            nth_ = sub[3] if len(sub) > 3 else 0
+            if len(tts) > nth_:
+                sub_starts.append(tts[nth_] - args.start)
         for k, sub in enumerate(json.loads(args.subs)):
             ev_name, text = sub[0], sub[1]
             dur_s = sub[2] if len(sub) > 2 else 1.8
@@ -573,6 +594,9 @@ def main():
             if len(ts) <= nth:
                 continue
             t0 = ts[nth] - args.start
+            starts = sorted(x for x in sub_starts if x > t0 + 1e-3)
+            if starts:                       # never overlap the next line (they doubled up)
+                dur_s = min(dur_s, starts[0] - t0 - 0.05)
             subtitle_png(text, tmp / f"sub{k}.png")
             inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
             graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{t0:.3f},{t0 + dur_s:.3f})'[sb{k}]")

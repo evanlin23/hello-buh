@@ -171,6 +171,7 @@ export class EntityLayer {
       if (!r.obj) continue
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0), s.z)
       if (r.mat) r.mat.color.setScalar(s.light ?? 1)
+      if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
       r.obj.rotation.set(0, s.yaw, 0)
       // limb swing from horizontal speed, like LivingEntity.walkAnimation

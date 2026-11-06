@@ -63,6 +63,33 @@ for (const r of rec.entities || []) if (!FIRST_SEEN.has(r[1])) FIRST_SEEN.set(r[
 const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a lit one 80)
 for (const r of rec.entities || []) if (r[2] === 'tnt' && r[9] && r[9].fuse !== undefined && TNT_FUSE[r[1]] === undefined && FIRST_SEEN.get(r[1]) === r[0]) TNT_FUSE[r[1]] = r[9].fuse
 const TNT_STATE = require('minecraft-data')(rec.version).blocksByName.tnt.defaultState
+const MC = require('minecraft-data')(rec.version)
+const ASSETS_DIR = path.join(__dirname, 'work', 'assets', rec.version)
+// Held item over time: hotbar contents + selected slot from the timeline, the tick the held item last
+// changed (equip animation) and the arm swings (6-tick attack animation).
+const HELD = []          // [tick, itemName|null]
+const SWINGS = []
+{
+  let items = null, slot = 0, cur
+  for (const e of rec.timeline || []) {
+    if (e.event === 'hotbar') items = e.items
+    if (e.slot !== undefined) slot = e.slot
+    if (e.event === 'swing') SWINGS.push(e.t / 50)
+    if (!items) continue
+    const it = items[slot], name = it ? (Array.isArray(it) ? it[0] : it) : null
+    if (name !== cur) { HELD.push([e.t / 50, name]); cur = name }
+  }
+}
+function handAt (t) {
+  let h = null
+  for (const x of HELD) { if (x[0] <= t) h = x; else break }
+  if (!h || !h[1]) return null
+  const since = t - h[0]
+  const equip = HELD[0] === h ? 0 : Math.max(0, 1 - since / 3)     // ~3 ticks to raise a new item
+  let swing = 0
+  for (const s of SWINGS) if (s <= t && t - s < 6) swing = (t - s) / 6
+  return { name: h[1], equip, swing }
+}
 const DEATHS = []
 {
   let open = null
@@ -258,6 +285,34 @@ function camAtLive (t) {
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
     const ents = entitiesAt(t, mesher)
+    // first-person held item
+    const hd = handAt(t)
+    if (hd) {
+      const bl = MC.blocksByName[hd.name]
+      const hasSprite = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${hd.name}.png`))
+      const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
+      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(Math.max(hs, hb)) }
+      if (hasSprite) cam.hand.tex = `item/${hd.name}`
+      else if (bl) {
+        cam.hand.state = bl.defaultState
+        if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+      }
+      cam.dead = !!DEATHS.find(([a, b]) => t >= a && t < b)
+    }
+    // dropped items (ItemEntityRenderer): items with a flat sprite stay sprites; block items are a
+    // quarter-size 3D block, bobbing sin(age/10)*0.1+0.1 and spinning age/20 rad
+    for (const e of ents) {
+      if (e.name !== 'item' || !e.extra || !e.extra.item) continue
+      const it = e.extra.item
+      if (fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${it}.png`))) continue
+      const bl = MC.blocksByName[it]
+      if (!bl) continue
+      const age = t - (FIRST_SEEN.get(e.id) ?? t)
+      e.name = 'falling_block'
+      e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.125
+      e.yaw = age / 20 + (e.id % 7)
+      e.extra = { state: bl.defaultState, scale: 0.25, spin: true }
+    }
     // primed TNT (TntRenderer): the TNT block, white flash while (fuse / 5) % 2 == 0, swelling 30%
     // over the last 10 ticks. Fuse from when the entity appeared (80 ticks by default).
     for (const e of ents) {
