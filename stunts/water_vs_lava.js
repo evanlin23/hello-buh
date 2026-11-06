@@ -13,7 +13,7 @@ module.exports = {
   caption: 'pouring water on a lava lake 😳',
   edit: {
     caption: 'pouring water on a lava lake 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'finale',
-    startAt: 'pour:-0.4', endAfter: 'end_look:1.0'
+    startAt: 'pour:-0.4', endAfter: 'end_look:1.05'
   },
 
   async setup (ctx) {
@@ -110,20 +110,32 @@ module.exports = {
       lz = front
     }
     await walkTo(1)
-    // across: turn round and let two big pours run either side of the path
+    // across. Turn round and walk back down the path, pouring either side of it at each stop, each pour
+    // left to run longer than the last: the black spreads wider until the lake is gone (~30 s total)
     ctx.mark('finale')
-    const here = Math.round(bot.entity.position.z - 0.5) - z0
-    await ctx.easeLook(0, -0.75, 450)                     // facing back south, down at the path
-    for (const lx of [4, 10]) {
-      // a fresh obsidian cell next to the path on that side, a few rows back
-      let tz = here + 4
-      if (at(lx, tz, G - 1)?.name !== 'obsidian') tz = here + 2
-      const tgt = at(lx, tz, G - 1)?.name === 'obsidian' ? cell(lx, tz, -0.04) : cell(lx > 7 ? 9 : 5, here + 3, -0.04)
-      await pourScoop(lx, tz, tgt, 22, 320)
+    await ctx.easeLook(Math.PI, -0.75, 450)               // facing back south (mineflayer yaw 0 = north), down at the path
+    const stops = [3, 6, 9, 12]
+    let flow = 10
+    for (const sz of stops) {
+      // walk back (south = +z, facing it) to this row
+      const tz = z0 + sz + 0.5
+      bot.setControlState('forward', true)
+      for (let k = 0; k < 40 && bot.entity.position.z < tz - 0.55; k++) await bot.waitForTicks(1)
+      bot.setControlState('forward', false)
+      for (const lx of [9, 5]) {                             // facing south: +x is on the left
+        // the outermost obsidian on that side of this row
+        let ox = 7
+        const dir = lx > 7 ? 1 : -1
+        while (ox + dir >= 0 && ox + dir <= 14 && at(ox + dir, sz, G - 1)?.name === 'obsidian') ox += dir
+        if (ox === 7) continue
+        await pourScoop(ox, sz, cell(ox, sz, -0.04), flow, 280)
+        flow = Math.min(24, flow + 2)
+      }
+      await ctx.easeLook(Math.PI, -0.6, 250)
     }
     // stand on it: look out over the black field
     ctx.mark('end_look')
-    await ctx.easeLook(0.5, -0.35, 900)
+    await ctx.easeLook(0.35, -0.4, 1000)                  // turn round: the whole lake behind is black
     bot.removeListener('blockUpdate', onBlock)
 
     let lava = 0, obs = 0
