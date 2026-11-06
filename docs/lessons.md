@@ -235,6 +235,10 @@ each section.
 - **Captions switch on the cut,** not on the first word. The old line held 0.17 s over the new scene and read as lagging.
 - **A still death screen is a still shot.** Bring something on screen: the villagers creep back to look at the crater.
 - **A dead player can't be targeted** by `facing entity <name>`. Use where they stood.
+- **Mob updates stop reaching a dead player ~0.9 s after the death** (the server stops tracking for it after the death animation). The recording loses every mob and item then, even with the camera at the crater, so they pop out behind the death screen (reported to the engine: hold the last rows until the respawn). Don't stage mob motion behind a long death screen; use particles (smoke, happy).
+- **`/fill ... hollow` from y1 makes a room with one air layer** (a plank floor at y1, the ceiling at y3). Villagers "inside" stood in planks and drew black. Fill the shell from y0 to the ceiling, then the floor.
+- **mineflayer ignores the `chunk_biomes` packet,** so a `/fillbiome` never reaches the recording. Teleport ~600 blocks away and back after it so the chunks come again. `/fillbiome` is capped like `/fill` (32,768 blocks, counted in biome cells): fill in thin slabs.
+- **`/spawnpoint` takes whole numbers** ("Invalid integer '400.35'").
 - **Throw a pearl early in a fall.** The pearl inherits the player's velocity, so about 20 ticks into a fall (-1.3 blocks/tick) it dives short of the target (pearl_clutch: aim error 17–21 blocks, failed 5/5). Throw within about 10 ticks, and check feasibility with `simulate()` before rendering.
 - **Boats sit at the entity's feet:** the Bedrock boat geometry puts its hull bottom 15 px up, so the model is shifted down 1 block (worker 5: a villager "hung under" the hull). Chickens rendered in pieces until 55b5e50 (cube pivot fix); they're fine now. Sheep, cows and pigs are fine.
 
