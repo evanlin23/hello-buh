@@ -449,12 +449,25 @@ const PBODY = [], PWALK = []
     PWALK.push([wpos, wspd])
   }
 }
+// the model an item draws with: its item definition (items/<name>.json, 1.21.4+; many block items
+// have no models/item/<name>.json, e.g. lectern -> block/lectern), else item/<name>
+const jarJson = (p) => { try { return JSON.parse(require('child_process').execFileSync('unzip', ['-p', path.join(__dirname, 'work', 'client', `${rec.version}.jar`), p], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch (e) { return null } }
+function itemModel (item) {
+  const def = jarJson(`assets/minecraft/items/${item}.json`)
+  const find = (o) => {
+    if (!o || typeof o !== 'object') return null
+    if (typeof o.model === 'string') return o.model
+    for (const v of Object.values(o)) { const r = find(v); if (r) return r }
+    return null
+  }
+  return ((def && find(def)) || `item/${item}`).replace(/^minecraft:/, '')
+}
 // an item's display.thirdperson_righthand, following the model's parents in the client jar
 const DISPLAY = new Map()
 function thirdPersonDisplay (item) {
   if (DISPLAY.has(item)) return DISPLAY.get(item)
   const jar = path.join(__dirname, 'work', 'client', `${rec.version}.jar`)
-  let name = `item/${item}`, out = null
+  let name = itemModel(item), out = null
   for (let k = 0; k < 8 && name && !out; k++) {
     let m = null
     try { m = JSON.parse(require('child_process').execFileSync('unzip', ['-p', jar, `assets/minecraft/models/${name.replace(/^minecraft:/, '')}.json`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch (e) { break }
@@ -472,7 +485,7 @@ function spriteOf (item) {
   let out = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${item}.png`)) ? `item/${item}` : null
   if (!out) {
     try {
-      const m = JSON.parse(require('child_process').execFileSync('unzip', ['-p', path.join(__dirname, 'work', 'client', `${rec.version}.jar`), `assets/minecraft/models/item/${item}.json`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString())
+      const m = jarJson(`assets/minecraft/models/${itemModel(item)}.json`) || {}
       const l0 = m.textures && m.textures.layer0 && m.textures.layer0.replace(/^minecraft:/, '')
       if (l0 && l0.startsWith('item/') && fs.existsSync(path.join(ASSETS_DIR, 'env', `${l0}.png`))) out = l0
     } catch (e) {}
