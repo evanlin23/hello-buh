@@ -1,0 +1,556 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.12,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "All fourteen villagers in my village run when they see me.",
+   "dur": 2.517,
+   "onset": 0.172,
+   "end": 2.328,
+   "chunks": [
+    [
+     0.172,
+     0.672
+    ],
+    [
+     0.672,
+     1.009
+    ],
+    [
+     1.009,
+     1.388
+    ],
+    [
+     1.388,
+     1.664
+    ],
+    [
+     1.664,
+     2.328
+    ]
+   ],
+   "captions": [
+    "All FOURTEEN",
+    "villagers in",
+    "my village",
+    "RUN when",
+    "they see ME."
+   ]
+  },
+  "L02": {
+   "text": "I say good morning. They slam the door.",
+   "dur": 2.103,
+   "onset": 0.155,
+   "end": 1.897,
+   "chunks": [
+    [
+     0.155,
+     0.379
+    ],
+    [
+     0.379,
+     0.862
+    ],
+    [
+     0.931,
+     1.319
+    ],
+    [
+     1.319,
+     1.897
+    ]
+   ],
+   "captions": [
+    "I say",
+    "GOOD MORNING.",
+    "They SLAM",
+    "the DOOR."
+   ]
+  },
+  "L03": {
+   "text": "I tell the farmer his wheat looks great. He jumps the fence and sprints.",
+   "dur": 3.138,
+   "onset": 0.155,
+   "end": 2.948,
+   "chunks": [
+    [
+     0.155,
+     0.388
+    ],
+    [
+     0.388,
+     0.716
+    ],
+    [
+     0.716,
+     0.983
+    ],
+    [
+     0.983,
+     1.517
+    ],
+    [
+     1.586,
+     1.931
+    ],
+    [
+     1.931,
+     2.276
+    ],
+    [
+     2.276,
+     2.948
+    ]
+   ],
+   "captions": [
+    "I tell",
+    "the farmer",
+    "his wheat",
+    "looks GREAT.",
+    "He JUMPS",
+    "the fence",
+    "and SPRINTS."
+   ]
+  },
+  "L04": {
+   "text": "The fisherman jumps in his boat and never comes back.",
+   "dur": 2.431,
+   "onset": 0.155,
+   "end": 2.224,
+   "chunks": [
+    [
+     0.155,
+     0.56
+    ],
+    [
+     0.56,
+     0.853
+    ],
+    [
+     0.853,
+     1.267
+    ],
+    [
+     1.267,
+     1.552
+    ],
+    [
+     1.552,
+     2.224
+    ]
+   ],
+   "captions": [
+    "The fisherman",
+    "jumps in",
+    "his BOAT",
+    "and never",
+    "comes BACK."
+   ]
+  },
+  "L05": {
+   "text": "Even the chickens pack up and leave.",
+   "dur": 1.81,
+   "onset": 0.172,
+   "end": 1.603,
+   "chunks": [
+    [
+     0.172,
+     0.388
+    ],
+    [
+     0.388,
+     0.733
+    ],
+    [
+     0.733,
+     1.026
+    ],
+    [
+     1.026,
+     1.603
+    ]
+   ],
+   "captions": [
+    "Even the",
+    "CHICKENS",
+    "pack up",
+    "and LEAVE."
+   ]
+  },
+  "L06": {
+   "text": "Only the nitwit stays. But I don't think he knows where he is.",
+   "dur": 2.793,
+   "onset": 0.172,
+   "end": 2.603,
+   "chunks": [
+    [
+     0.172,
+     0.431
+    ],
+    [
+     0.431,
+     1.121
+    ],
+    [
+     1.19,
+     1.466
+    ],
+    [
+     1.466,
+     1.879
+    ],
+    [
+     1.879,
+     2.603
+    ]
+   ],
+   "captions": [
+    "Only the",
+    "NITWIT stays.",
+    "But I don't",
+    "think he knows",
+    "where he IS."
+   ]
+  },
+  "L07": {
+   "text": "My mom says I'm just shy. She's the only one who hugs me.",
+   "dur": 2.759,
+   "onset": 0.172,
+   "end": 2.552,
+   "chunks": [
+    [
+     0.172,
+     0.483
+    ],
+    [
+     0.483,
+     0.741
+    ],
+    [
+     0.741,
+     1.241
+    ],
+    [
+     1.353,
+     1.552
+    ],
+    [
+     1.552,
+     1.871
+    ],
+    [
+     1.871,
+     2.552
+    ]
+   ],
+   "captions": [
+    "My MOM",
+    "says I'm",
+    "just SHY.",
+    "She's the",
+    "ONLY one",
+    "who HUGS me."
+   ]
+  },
+  "L08": {
+   "text": "And the iron golem follows me everywhere. I think he likes me.",
+   "dur": 2.897,
+   "onset": 0.155,
+   "end": 2.69,
+   "chunks": [
+    [
+     0.155,
+     0.319
+    ],
+    [
+     0.319,
+     0.888
+    ],
+    [
+     0.888,
+     1.241
+    ],
+    [
+     1.241,
+     1.741
+    ],
+    [
+     1.828,
+     2.043
+    ],
+    [
+     2.043,
+     2.69
+    ]
+   ],
+   "captions": [
+    "And the",
+    "IRON GOLEM",
+    "follows me",
+    "EVERYWHERE.",
+    "I think",
+    "he LIKES me."
+   ]
+  },
+  "L09": {
+   "text": "Weird thing though. When I get excited, I hear this hissing.",
+   "dur": 2.621,
+   "onset": 0.172,
+   "end": 2.431,
+   "chunks": [
+    [
+     0.172,
+     0.534
+    ],
+    [
+     0.534,
+     0.81
+    ],
+    [
+     0.897,
+     1.164
+    ],
+    [
+     1.164,
+     1.466
+    ],
+    [
+     1.491,
+     1.741
+    ],
+    [
+     1.741,
+     2.431
+    ]
+   ],
+   "captions": [
+    "Weird thing",
+    "though.",
+    "When I get",
+    "EXCITED,",
+    "I hear",
+    "this HISSING."
+   ]
+  },
+  "L10": {
+   "text": "Today was the village party. Nobody invited me.",
+   "dur": 2.517,
+   "onset": 0.172,
+   "end": 2.31,
+   "chunks": [
+    [
+     0.172,
+     0.517
+    ],
+    [
+     0.517,
+     0.862
+    ],
+    [
+     0.862,
+     1.224
+    ],
+    [
+     1.319,
+     1.586
+    ],
+    [
+     1.586,
+     2.31
+    ]
+   ],
+   "captions": [
+    "Today was",
+    "the village",
+    "PARTY.",
+    "Nobody",
+    "INVITED me."
+   ]
+  },
+  "L11": {
+   "text": "So I invited myself.",
+   "dur": 1.552,
+   "onset": 0.172,
+   "end": 1.362,
+   "chunks": [
+    [
+     0.172,
+     0.379
+    ],
+    [
+     0.379,
+     0.741
+    ],
+    [
+     0.741,
+     1.362
+    ]
+   ],
+   "captions": [
+    "So I",
+    "invited",
+    "MYSELF."
+   ]
+  },
+  "L12": {
+   "text": "Everyone stopped. Everyone stared.",
+   "dur": 1.897,
+   "onset": 0.172,
+   "end": 1.69,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.759
+    ],
+    [
+     0.81,
+     1.121
+    ],
+    [
+     1.121,
+     1.69
+    ]
+   ],
+   "captions": [
+    "Everyone",
+    "STOPPED.",
+    "Everyone",
+    "STARED."
+   ]
+  },
+  "L13": {
+   "text": "I was so happy. And there it was again.",
+   "dur": 2.069,
+   "onset": 0.172,
+   "end": 1.879,
+   "chunks": [
+    [
+     0.172,
+     0.31
+    ],
+    [
+     0.31,
+     0.793
+    ],
+    [
+     0.862,
+     1.138
+    ],
+    [
+     1.138,
+     1.328
+    ],
+    [
+     1.328,
+     1.879
+    ]
+   ],
+   "captions": [
+    "I was",
+    "SO happy.",
+    "And there",
+    "it was",
+    "AGAIN."
+   ]
+  },
+  "L14": {
+   "text": "Why does that always happen when I'm happy?",
+   "dur": 1.931,
+   "onset": 0.172,
+   "end": 1.724,
+   "chunks": [
+    [
+     0.172,
+     0.371
+    ],
+    [
+     0.371,
+     0.759
+    ],
+    [
+     0.759,
+     1.078
+    ],
+    [
+     1.078,
+     1.724
+    ]
+   ],
+   "captions": [
+    "Why does",
+    "that ALWAYS",
+    "happen when",
+    "I'm HAPPY?"
+   ]
+  },
+  "L15": {
+   "text": "Oh.",
+   "dur": 0.724,
+   "onset": 0.19,
+   "end": 0.431,
+   "chunks": [
+    [
+     0.19,
+     0.431
+    ]
+   ],
+   "captions": [
+    "Oh."
+   ]
+  },
+  "L16": {
+   "text": "I'm the creeper.",
+   "dur": 1.103,
+   "onset": 0.172,
+   "end": 0.897,
+   "chunks": [
+    [
+     0.172,
+     0.345
+    ],
+    [
+     0.345,
+     0.897
+    ]
+   ],
+   "captions": [
+    "I'm the",
+    "CREEPER."
+   ]
+  },
+  "L17": {
+   "text": "Which explains why",
+   "dur": 1.328,
+   "onset": 0.155,
+   "end": 1.069,
+   "chunks": [
+    [
+     0.155,
+     0.276
+    ],
+    [
+     0.276,
+     0.69
+    ],
+    [
+     0.69,
+     1.069
+    ]
+   ],
+   "captions": [
+    "Which",
+    "explains",
+    "why"
+   ]
+  }
+ },
+ "total": 38.23
+}
