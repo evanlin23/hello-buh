@@ -410,7 +410,7 @@
     "branch": "main",
     "commit": "0bb3147a3073a8d9650b08e14a53ed7588029b6a",
     "rendered_at": "2026-11-06T16:38:16.012Z",
-    "head_at_publish": "956a01780853a73ee32f8bf065b5923ef0fb56cd",
+    "head_at_publish": "8d4cc28d1a74110e3daea758117d24d6d982b53b",
     "stunt": "stunts/pickaxe_race.js",
     "source_snapshot": [
       "source/pickaxe_race.js"
@@ -425,5 +425,5 @@
   ],
   "status": "ready",
   "notes": "worker: 5 pickaxes mine 3x3 stone sections, real dig times as subs (Haste V, netherite eff V instamine)",
-  "published_at": "2026-11-06T16:42:00.978Z"
+  "published_at": "2026-11-06T17:31:39.471Z"
 }
