@@ -4,7 +4,7 @@
 // the island across it, throw an ender pearl mid-fall and get teleported onto it.
 // The pearl is aimed by simulating vanilla's projectile physics (1.5 b/t launch + the thrower's
 // momentum, drag 0.99, gravity 0.03).
-const TOWER = Number(process.env.TOWER || 30)     // tower height above the lava
+const TOWER_DEFAULT = Number(process.env.TOWER || 30)     // tower height above the lava
 const LEDGE_DIST = Number(process.env.LEDGE_DIST || 16)
 const LEDGE_UP = Number(process.env.LEDGE_UP || 8)     // ledge height above the lava
 
@@ -22,6 +22,7 @@ module.exports = {
     if (!g) throw new Error('no dry land near spawn')
     const { x, z } = g, lava = g.y
     this.x = x; this.z = z; this.lava = lava
+    const TOWER = this.tower || TOWER_DEFAULT   // per-instance (clutch_harder runs two towers)
     await ctx.defaultRules()
     await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
     // lake: x-14..x+14, z-(LEDGE_DIST+12)..z+6, one layer of lava on stone, air above
@@ -85,6 +86,7 @@ module.exports = {
   async perform (ctx) {
     const { bot } = ctx
     const { x, z, lava } = this
+    const TOWER = this.tower || TOWER_DEFAULT
     await bot.waitForTicks(10)
     await ctx.easeLook(0, -0.35, 400)                         // the island across the lava
     // the block under the feet is gone: falling toward the lava
