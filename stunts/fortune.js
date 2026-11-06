@@ -18,7 +18,7 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'burst', startAt: 'burst:-0.6', endAfter: 'finale:3.3' },
+  edit: { caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'dig:-0.1', endAfter: 'finale:2.4' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -37,7 +37,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 10} ${floor + 6} ${this.wz - 2} ${x + 10} ${floor + 6} ${this.wz} grass_block`)
     this.ores = ORES.map((o, i) => ({ ...o, x: x - 7 + i * 2, y: floor + 2 }))
     for (const o of this.ores) await ctx.cmd(`/setblock ${o.x} ${o.y} ${this.wz} ${o.block}`)
-    await ctx.hotbar(['diamond_pickaxe'])
+    await ctx.hotbar(['diamond_pickaxe[enchantments={fortune:3}]'])   // enchanted: it glints
     await ctx.tpCheck(x - 6.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -65,8 +65,9 @@ module.exports = {
       bot.setControlState('left', false); bot.setControlState('right', false)
       const p = new Vec3(o.x, o.y, this.wz)
       await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), 250)
-      for (let k = 0; k < 3; k++) { bot.swingArm(); ctx.sound('block.stone.hit', 0.6, 0.7); await bot.waitForTicks(2) }
-      bot.chat(`/setblock ${o.x} ${o.y} ${this.wz} air`)
+      // a real survival dig (crack stages, the pickaxe's real break time) instead of swings + a command
+      ctx.mark('dig')
+      try { await bot.dig(bot.blockAt(p), 'ignore') } catch (e) { ctx.log('dig', e.message); bot.chat(`/setblock ${o.x} ${o.y} ${this.wz} air`) }
       ctx.sound('block.stone.break', 1); ctx.particles('block', p, { block: o.block })
       if (i === 0) ctx.mark('burst')
       if (i === this.ores.length - 1) ctx.mark('finale')
@@ -76,14 +77,19 @@ module.exports = {
       const me = bot.entity.position, ground = this.floor + 1
       for (let k = 0; k < o.n; k++) {
         const sx = o.x + 0.5 + (rnd() - 0.5) * 1.0, sy = o.y + 0.5 + (rnd() - 0.5) * 0.8, sz = this.wz + 1.1 + rnd() * 0.3
-        const tx = me.x + (rnd() - 0.5) * 2.6, tz = me.z - 0.6 + rnd() * 2.0
+        const tx = me.x + (rnd() - 0.5) * 1.6, tz = me.z - 0.4 + rnd() * 1.2          // all of them come down within reach
         const vy = 0.3 + rnd() * 0.3
         let y = sy, T = 0
         for (let v = vy; T < 80; T++) { v -= 0.04; y += v; v *= 0.98; if (y <= ground && T > 2) break }
         const f = (1 - Math.pow(0.98, T)) / 0.02
-        bot.chat(`/summon item ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {Item:{id:"minecraft:${o.drop}",count:1},PickupDelay:8,Motion:[${((tx - sx) / f).toFixed(3)},${vy.toFixed(3)},${((tz - sz) / f).toFixed(3)}]}`)
+        // PickupDelay 32767 = never merge (vanilla merged 64 emeralds into ~6 stacks within 7 ticks, so no
+        // fountain showed); it drops to 0 once they're in the air, so they land as single items and get picked up
+        bot.chat(`/summon item ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {Item:{id:"minecraft:${o.drop}",count:1},PickupDelay:32767,Tags:["fd${i}"],Motion:[${((tx - sx) / f).toFixed(3)},${vy.toFixed(3)},${((tz - sz) / f).toFixed(3)}]}`)
       }
-      ctx.sound('entity.experience_orb.pickup', 0.8, 1.2)
+      // release them for pickup once they're up and apart
+      { let t = 0; const tag = `fd${i}`; const rel = () => { if (++t === 12) { bot.chat(`/execute as @e[type=item,tag=${tag}] run data merge entity @s {PickupDelay:0}`); bot.removeListener('physicsTick', rel) } }; bot.on('physicsTick', rel) }
+      // the ore's own XP (vanilla: coal, lapis, redstone, diamond, emerald drop orbs)
+      if (/coal|lapis|redstone|diamond|emerald/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${o.y + 0.5} ${this.wz + 1.2} {Value:3}`)
       await ctx.easeLook((rnd() - 0.5) * 0.3, 0.15, 350)   // look at the shower
       await bot.waitForTicks(8)
       // watch it rain down around your feet, and step back and forth through it picking it up
