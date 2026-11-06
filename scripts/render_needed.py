@@ -53,7 +53,17 @@ def main(stunt, rec_path, out_dir, fps=60):
     out = pathlib.Path(out_dir)
     todo = need
     if os.environ.get("RESUME") and out.exists():   # RESUME=1: keep the frames already rendered (a killed run)
-        done = sorted(f for f in need if (out / f"f{f:05d}.png").exists())
+        # a frame counts as rendered only if it's the lowest-numbered name of its file: after a
+        # finished run every skipped number is a hardlink filler, which must not count
+        first = {}
+        for f in sorted(int(q.stem[1:]) for q in out.glob("f*.png")):
+            first.setdefault((out / f"f{f:05d}.png").stat().st_ino, f)
+        real = set(first.values())
+        for f in need:
+            q = out / f"f{f:05d}.png"
+            if q.exists() and f not in real:
+                q.unlink()   # a filler where a real frame is now wanted
+        done = sorted(f for f in need if f in real)
         if done:   # the last one may be half-written
             (out / f"f{done[-1]:05d}.png").unlink(); done.pop()
         todo = [f for f in need if f not in set(done)]
