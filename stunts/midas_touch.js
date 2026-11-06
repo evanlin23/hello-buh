@@ -5,7 +5,7 @@ module.exports = {
   name: 'midas_touch',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: you got the midas touch 🤑',
-  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', song: 'songs/funk_abnormal.mp3', dropAt: 'touch', startAt: 'touch:0.3', endAfter: 'touch:8.0' },
+  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', song: 'songs/funk_abnormal.mp3', dropAt: 'touch', startAt: 'touch:-0.35', endAfter: 'touch:7.6' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -40,6 +40,9 @@ module.exports = {
       ctx.sound('block.amethyst_block.chime', 1, 0.8 + (n % 7) * 0.08)
     }
     bot.on('physicsTick', touch)
+    // walking through a forest: hop over whatever we bump into instead of standing against it
+    const hop = () => bot.setControlState('jump', !!(bot.controlState.forward && bot.entity.isCollidedHorizontally))
+    bot.on('physicsTick', hop)
     await bot.waitForTicks(10)
     await ctx.easeLook(Math.PI + 0.2, -0.3, 700)              // a normal day in the forest...
     on = true; ctx.mark('touch')
@@ -48,13 +51,13 @@ module.exports = {
     await ctx.easeLook(Math.PI + 0.9, 0.15, 900)              // up a tree
     await ctx.easeLook(Math.PI - 0.6, 0.05, 1600)             // sweep across the trees
     bot.setControlState('forward', true)
-    await ctx.easeLook(Math.PI - 0.3, -0.35, 1400)            // walk on, gilding the path
-    await ctx.easeLook(Math.PI + 0.7, -0.15, 1600)
+    await ctx.easeLook(Math.PI - 0.3, -0.25, 1200)            // walk on, gilding the path
+    await ctx.easeLook(Math.PI + 0.7, 0.05, 1400)             // ...and the trees alongside
     bot.setControlState('forward', false)
     await ctx.easeLook(Math.PI + 2.4, 0.0, 1800)              // turn round: the golden trail behind
     on = false
     await bot.waitForTicks(24)
-    bot.removeListener('physicsTick', touch)
+    bot.removeListener('physicsTick', touch); bot.removeListener('physicsTick', hop)
     return true
   }
 }
