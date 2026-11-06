@@ -18,7 +18,7 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'burst', startAt: 'burst:-0.6', endAfter: 'finale:2.6' },
+  edit: { caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'burst', startAt: 'burst:-0.6', endAfter: 'finale:3.3' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -86,9 +86,11 @@ module.exports = {
       ctx.sound('entity.experience_orb.pickup', 0.8, 1.2)
       await ctx.easeLook((rnd() - 0.5) * 0.3, 0.15, 350)   // look at the shower
       await bot.waitForTicks(8)
-      // watch it rain down around your feet and get picked up
+      // watch it rain down around your feet, and step back and forth through it picking it up
       await ctx.easeLook((rnd() - 0.5) * 0.4, -0.85, 300)
-      await bot.waitForTicks(i === this.ores.length - 1 ? 26 : 8)
+      bot.setControlState('back', true); await bot.waitForTicks(11); bot.setControlState('back', false)
+      bot.setControlState('forward', true); await bot.waitForTicks(11); bot.setControlState('forward', false)
+      await bot.waitForTicks(i === this.ores.length - 1 ? 12 : 2)
       await ctx.easeLook(0, -0.3, 300)
     }
     await bot.waitForTicks(20)
