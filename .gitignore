@@ -3,3 +3,6 @@ work/
 out/
 __pycache__/
 songs/
+
+# Mixkit audio: licence forbids standalone redistribution (public repo); fetch with scripts/fetch_sfx.py
+sfx/mixkit/*/

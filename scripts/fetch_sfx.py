@@ -1,0 +1,26 @@
+"""Download the Mixkit sound effects listed in sfx/mixkit/manifest.json into sfx/mixkit/<category>/.
+
+The repo is public and Mixkit's Sound Effects Free License forbids redistributing the files on their
+own, so the audio is not committed (gitignored); every machine fetches it from Mixkit instead.
+Already-downloaded files are skipped.
+
+  python3 scripts/fetch_sfx.py
+"""
+import json
+import pathlib
+import subprocess
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent / "sfx" / "mixkit"
+items = json.loads((ROOT / "manifest.json").read_text())
+got = 0
+for it in items:
+    dst = ROOT / it["file"]
+    if dst.exists() and dst.stat().st_size > 0:
+        continue
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    r = subprocess.run(["curl", "-s", "-f", "-A", "Mozilla/5.0", "-m", "30", "-o", str(dst), it["url"]])
+    if r.returncode == 0:
+        got += 1
+    else:
+        print("failed:", it["title"], it["url"])
+print(f"{got} downloaded, {len(items)} listed")
