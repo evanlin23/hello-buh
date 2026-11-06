@@ -211,6 +211,13 @@ export class EntityLayer {
       }
       if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
+      // BodyRotationControl: the body is dragged so the head never turns more than 75° from it
+      // (a fast turn had heads spun round while bodies still faced away: staring_villagers review)
+      if (s.headYaw != null) {
+        let d = s.headYaw - s.yaw; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI
+        const MAXD = 75 * Math.PI / 180
+        if (Math.abs(d) > MAXD) s.yaw = s.headYaw - Math.sign(d) * MAXD
+      }
       r.obj.rotation.set(0, s.yaw, 0)
       if (s.swell !== undefined) {   // CreeperRenderer.scale
         let f = s.swell; const g = 1 + Math.sin(f * 100) * f * 0.01
