@@ -1,0 +1,641 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "Every day, one more block of my house is back.",
+   "dur": 2.31,
+   "onset": 0.172,
+   "end": 2.103,
+   "chunks": [
+    [
+     0.172,
+     0.603
+    ],
+    [
+     0.655,
+     1.164
+    ],
+    [
+     1.164,
+     1.534
+    ],
+    [
+     1.534,
+     2.103
+    ]
+   ],
+   "captions": [
+    "Every DAY,",
+    "ONE more block",
+    "of my HOUSE",
+    "is BACK."
+   ]
+  },
+  "L02": {
+   "text": "A creeper blew it up three years ago.",
+   "dur": 1.897,
+   "onset": 0.172,
+   "end": 1.69,
+   "chunks": [
+    [
+     0.172,
+     0.509
+    ],
+    [
+     0.509,
+     0.853
+    ],
+    [
+     0.853,
+     1.233
+    ],
+    [
+     1.233,
+     1.69
+    ]
+   ],
+   "captions": [
+    "A CREEPER",
+    "blew it up",
+    "THREE YEARS",
+    "ago."
+   ]
+  },
+  "L03": {
+   "text": "Every block is the exact one I lost. Even the cracked ones.",
+   "dur": 2.983,
+   "onset": 0.172,
+   "end": 2.776,
+   "chunks": [
+    [
+     0.172,
+     0.612
+    ],
+    [
+     0.612,
+     1.095
+    ],
+    [
+     1.095,
+     1.69
+    ],
+    [
+     1.776,
+     2.0
+    ],
+    [
+     2.0,
+     2.776
+    ]
+   ],
+   "captions": [
+    "Every block",
+    "is the EXACT",
+    "one I LOST.",
+    "Even the",
+    "CRACKED ones."
+   ]
+  },
+  "L04": {
+   "text": "There are purple sparkles on the grass. Every day.",
+   "dur": 2.414,
+   "onset": 0.172,
+   "end": 2.207,
+   "chunks": [
+    [
+     0.172,
+     0.328
+    ],
+    [
+     0.328,
+     0.569
+    ],
+    [
+     0.569,
+     0.888
+    ],
+    [
+     0.888,
+     1.414
+    ],
+    [
+     1.491,
+     2.207
+    ]
+   ],
+   "captions": [
+    "There are",
+    "PURPLE",
+    "SPARKLES",
+    "on the grass.",
+    "Every DAY."
+   ]
+  },
+  "L05": {
+   "text": "The villagers walk past it staring at their feet.",
+   "dur": 2.121,
+   "onset": 0.155,
+   "end": 1.931,
+   "chunks": [
+    [
+     0.155,
+     0.517
+    ],
+    [
+     0.517,
+     0.983
+    ],
+    [
+     0.983,
+     1.302
+    ],
+    [
+     1.302,
+     1.931
+    ]
+   ],
+   "captions": [
+    "The VILLAGERS",
+    "walk past it",
+    "staring at",
+    "their FEET."
+   ]
+  },
+  "L06": {
+   "text": "And it started with my brother's room.",
+   "dur": 1.828,
+   "onset": 0.155,
+   "end": 1.638,
+   "chunks": [
+    [
+     0.155,
+     0.319
+    ],
+    [
+     0.319,
+     0.741
+    ],
+    [
+     0.741,
+     1.155
+    ],
+    [
+     1.155,
+     1.638
+    ]
+   ],
+   "captions": [
+    "And it",
+    "started with",
+    "my BROTHER'S",
+    "ROOM."
+   ]
+  },
+  "L07": {
+   "text": "He went to the end to fight the dragon. He never came back.",
+   "dur": 2.534,
+   "onset": 0.155,
+   "end": 2.328,
+   "chunks": [
+    [
+     0.155,
+     0.336
+    ],
+    [
+     0.336,
+     0.647
+    ],
+    [
+     0.647,
+     0.871
+    ],
+    [
+     0.871,
+     1.362
+    ],
+    [
+     1.431,
+     1.672
+    ],
+    [
+     1.672,
+     2.328
+    ]
+   ],
+   "captions": [
+    "He went",
+    "to the END",
+    "to fight",
+    "the DRAGON.",
+    "He never",
+    "came BACK."
+   ]
+  },
+  "L08": {
+   "text": "He used to hum the same song all day.",
+   "dur": 1.845,
+   "onset": 0.155,
+   "end": 1.638,
+   "chunks": [
+    [
+     0.155,
+     0.397
+    ],
+    [
+     0.397,
+     0.603
+    ],
+    [
+     0.603,
+     1.034
+    ],
+    [
+     1.034,
+     1.638
+    ]
+   ],
+   "captions": [
+    "He used to",
+    "HUM the",
+    "SAME song",
+    "ALL day."
+   ]
+  },
+  "L09": {
+   "text": "So today I pretended to nap.",
+   "dur": 1.793,
+   "onset": 0.172,
+   "end": 1.586,
+   "chunks": [
+    [
+     0.172,
+     0.603
+    ],
+    [
+     0.603,
+     1.052
+    ],
+    [
+     1.052,
+     1.586
+    ]
+   ],
+   "captions": [
+    "So today",
+    "I PRETENDED",
+    "to NAP."
+   ]
+  },
+  "L10": {
+   "text": "Something tall walked up to the wall.",
+   "dur": 1.828,
+   "onset": 0.172,
+   "end": 1.638,
+   "chunks": [
+    [
+     0.172,
+     0.405
+    ],
+    [
+     0.405,
+     0.698
+    ],
+    [
+     0.698,
+     1.017
+    ],
+    [
+     1.017,
+     1.638
+    ]
+   ],
+   "captions": [
+    "Something",
+    "TALL",
+    "walked up",
+    "to the WALL."
+   ]
+  },
+  "L11": {
+   "text": "And put a block back.",
+   "dur": 1.293,
+   "onset": 0.155,
+   "end": 1.086,
+   "chunks": [
+    [
+     0.155,
+     0.353
+    ],
+    [
+     0.353,
+     0.638
+    ],
+    [
+     0.638,
+     1.086
+    ]
+   ],
+   "captions": [
+    "And put",
+    "a block",
+    "BACK."
+   ]
+  },
+  "L12": {
+   "text": "An enderman.",
+   "dur": 1.069,
+   "onset": 0.172,
+   "end": 0.879,
+   "chunks": [
+    [
+     0.172,
+     0.879
+    ]
+   ],
+   "captions": [
+    "An ENDERMAN."
+   ]
+  },
+  "L13": {
+   "text": "I opened my eyes a little. It turned its whole body away.",
+   "dur": 2.724,
+   "onset": 0.172,
+   "end": 2.534,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.853
+    ],
+    [
+     0.853,
+     1.19
+    ],
+    [
+     1.259,
+     1.509
+    ],
+    [
+     1.509,
+     1.759
+    ],
+    [
+     1.759,
+     2.534
+    ]
+   ],
+   "captions": [
+    "I opened",
+    "my eyes",
+    "a little.",
+    "It turned",
+    "its WHOLE",
+    "body AWAY."
+   ]
+  },
+  "L14": {
+   "text": "And then it hummed. The song my brother always hummed.",
+   "dur": 2.5,
+   "onset": 0.155,
+   "end": 2.293,
+   "chunks": [
+    [
+     0.155,
+     0.319
+    ],
+    [
+     0.319,
+     0.724
+    ],
+    [
+     0.793,
+     1.121
+    ],
+    [
+     1.121,
+     1.5
+    ],
+    [
+     1.5,
+     2.293
+    ]
+   ],
+   "captions": [
+    "And then",
+    "it HUMMED.",
+    "The song",
+    "my brother",
+    "ALWAYS hummed."
+   ]
+  },
+  "L15": {
+   "text": "It's him.",
+   "dur": 0.983,
+   "onset": 0.172,
+   "end": 0.776,
+   "chunks": [
+    [
+     0.172,
+     0.776
+    ]
+   ],
+   "captions": [
+    "It's HIM."
+   ]
+  },
+  "L16": {
+   "text": "He came back from the End. As one of them.",
+   "dur": 2.155,
+   "onset": 0.155,
+   "end": 1.966,
+   "chunks": [
+    [
+     0.155,
+     0.414
+    ],
+    [
+     0.414,
+     0.603
+    ],
+    [
+     0.603,
+     1.138
+    ],
+    [
+     1.224,
+     1.474
+    ],
+    [
+     1.474,
+     1.966
+    ]
+   ],
+   "captions": [
+    "He came",
+    "BACK",
+    "from the End.",
+    "As one",
+    "of THEM."
+   ]
+  },
+  "L17": {
+   "text": "If our eyes meet, he has to hurt me.",
+   "dur": 1.931,
+   "onset": 0.155,
+   "end": 1.724,
+   "chunks": [
+    [
+     0.155,
+     0.362
+    ],
+    [
+     0.362,
+     0.793
+    ],
+    [
+     0.845,
+     1.086
+    ],
+    [
+     1.086,
+     1.724
+    ]
+   ],
+   "captions": [
+    "If our",
+    "EYES meet,",
+    "he HAS",
+    "to hurt me."
+   ]
+  },
+  "L18": {
+   "text": "So he only comes when my eyes are shut.",
+   "dur": 1.931,
+   "onset": 0.172,
+   "end": 1.741,
+   "chunks": [
+    [
+     0.172,
+     0.328
+    ],
+    [
+     0.328,
+     0.784
+    ],
+    [
+     0.784,
+     0.991
+    ],
+    [
+     0.991,
+     1.741
+    ]
+   ],
+   "captions": [
+    "So he",
+    "only comes",
+    "when my",
+    "eyes are SHUT."
+   ]
+  },
+  "L19": {
+   "text": "And he's been fixing our home one block a day.",
+   "dur": 2.138,
+   "onset": 0.155,
+   "end": 1.948,
+   "chunks": [
+    [
+     0.155,
+     0.319
+    ],
+    [
+     0.319,
+     0.698
+    ],
+    [
+     0.698,
+     1.026
+    ],
+    [
+     1.026,
+     1.422
+    ],
+    [
+     1.422,
+     1.948
+    ]
+   ],
+   "captions": [
+    "And he's",
+    "been fixing",
+    "our HOME",
+    "one block",
+    "a DAY."
+   ]
+  },
+  "L20": {
+   "text": "So now I nap every day. And I never peek.",
+   "dur": 2.379,
+   "onset": 0.19,
+   "end": 2.172,
+   "chunks": [
+    [
+     0.19,
+     0.466
+    ],
+    [
+     0.466,
+     0.733
+    ],
+    [
+     0.733,
+     1.207
+    ],
+    [
+     1.293,
+     1.483
+    ],
+    [
+     1.483,
+     2.172
+    ]
+   ],
+   "captions": [
+    "So now",
+    "I nap",
+    "EVERY day.",
+    "And I",
+    "NEVER peek."
+   ]
+  },
+  "L21": {
+   "text": "Which is why",
+   "dur": 1.121,
+   "onset": 0.172,
+   "end": 0.828,
+   "chunks": [
+    [
+     0.172,
+     0.457
+    ],
+    [
+     0.457,
+     0.828
+    ]
+   ],
+   "captions": [
+    "Which is",
+    "why"
+   ]
+  }
+ },
+ "total": 43.88
+}

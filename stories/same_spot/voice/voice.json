@@ -1,0 +1,661 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "Every time I come home, my mom is standing in the exact same spot.",
+   "dur": 3.276,
+   "onset": 0.172,
+   "end": 3.086,
+   "chunks": [
+    [
+     0.172,
+     0.526
+    ],
+    [
+     0.526,
+     1.121
+    ],
+    [
+     1.19,
+     1.474
+    ],
+    [
+     1.474,
+     1.836
+    ],
+    [
+     1.836,
+     2.31
+    ],
+    [
+     2.31,
+     3.086
+    ]
+   ],
+   "captions": [
+    "Every time",
+    "I come HOME,",
+    "my MOM",
+    "is standing",
+    "in the EXACT",
+    "same SPOT."
+   ]
+  },
+  "L02": {
+   "text": "Same door. Same stare. Same half a word.",
+   "dur": 2.155,
+   "onset": 0.19,
+   "end": 1.948,
+   "chunks": [
+    [
+     0.19,
+     0.517
+    ],
+    [
+     0.552,
+     1.017
+    ],
+    [
+     1.095,
+     1.422
+    ],
+    [
+     1.422,
+     1.948
+    ]
+   ],
+   "captions": [
+    "Same DOOR.",
+    "Same STARE.",
+    "Same HALF",
+    "a WORD."
+   ]
+  },
+  "L03": {
+   "text": "I was gone three years. Her wheat didn't grow one stage.",
+   "dur": 2.621,
+   "onset": 0.155,
+   "end": 2.414,
+   "chunks": [
+    [
+     0.155,
+     0.509
+    ],
+    [
+     0.509,
+     1.017
+    ],
+    [
+     1.086,
+     1.328
+    ],
+    [
+     1.328,
+     1.672
+    ],
+    [
+     1.672,
+     2.414
+    ]
+   ],
+   "captions": [
+    "I was gone",
+    "THREE YEARS.",
+    "Her WHEAT",
+    "didn't grow",
+    "ONE STAGE."
+   ]
+  },
+  "L04": {
+   "text": "The sheep by the door was mid-jump. Still in the air.",
+   "dur": 2.466,
+   "onset": 0.155,
+   "end": 2.276,
+   "chunks": [
+    [
+     0.155,
+     0.414
+    ],
+    [
+     0.414,
+     0.759
+    ],
+    [
+     0.759,
+     1.328
+    ],
+    [
+     1.405,
+     1.664
+    ],
+    [
+     1.664,
+     2.276
+    ]
+   ],
+   "captions": [
+    "The SHEEP",
+    "by the door",
+    "was MID-JUMP.",
+    "Still in",
+    "the AIR."
+   ]
+  },
+  "L05": {
+   "text": "My birthday cake still had one bite missing.",
+   "dur": 2.155,
+   "onset": 0.172,
+   "end": 1.966,
+   "chunks": [
+    [
+     0.172,
+     0.534
+    ],
+    [
+     0.534,
+     0.724
+    ],
+    [
+     0.724,
+     1.069
+    ],
+    [
+     1.069,
+     1.431
+    ],
+    [
+     1.431,
+     1.966
+    ]
+   ],
+   "captions": [
+    "My birthday",
+    "CAKE",
+    "still had",
+    "ONE bite",
+    "missing."
+   ]
+  },
+  "L06": {
+   "text": "Then I walked up, and everything started at once.",
+   "dur": 2.293,
+   "onset": 0.172,
+   "end": 2.086,
+   "chunks": [
+    [
+     0.172,
+     0.345
+    ],
+    [
+     0.345,
+     0.759
+    ],
+    [
+     0.81,
+     1.207
+    ],
+    [
+     1.207,
+     1.491
+    ],
+    [
+     1.491,
+     2.086
+    ]
+   ],
+   "captions": [
+    "Then I",
+    "walked UP,",
+    "and EVERYTHING",
+    "started",
+    "at ONCE."
+   ]
+  },
+  "L07": {
+   "text": "Mom said, back already? You just left.",
+   "dur": 2.017,
+   "onset": 0.172,
+   "end": 1.81,
+   "chunks": [
+    [
+     0.172,
+     0.483
+    ],
+    [
+     0.509,
+     1.017
+    ],
+    [
+     1.086,
+     1.328
+    ],
+    [
+     1.328,
+     1.81
+    ]
+   ],
+   "captions": [
+    "Mom said,",
+    "BACK already?",
+    "You just",
+    "LEFT."
+   ]
+  },
+  "L08": {
+   "text": "And she still thinks I'm seven.",
+   "dur": 1.655,
+   "onset": 0.155,
+   "end": 1.448,
+   "chunks": [
+    [
+     0.155,
+     0.362
+    ],
+    [
+     0.362,
+     0.767
+    ],
+    [
+     0.767,
+     1.448
+    ]
+   ],
+   "captions": [
+    "And she",
+    "still thinks",
+    "I'm SEVEN."
+   ]
+  },
+  "L09": {
+   "text": "She still cuts my bread into squares.",
+   "dur": 1.914,
+   "onset": 0.172,
+   "end": 1.707,
+   "chunks": [
+    [
+     0.172,
+     0.431
+    ],
+    [
+     0.431,
+     0.759
+    ],
+    [
+     0.759,
+     0.94
+    ],
+    [
+     0.94,
+     1.707
+    ]
+   ],
+   "captions": [
+    "She still",
+    "cuts my",
+    "BREAD",
+    "into SQUARES."
+   ]
+  },
+  "L10": {
+   "text": "So I tested it. I walked to the edge of the village.",
+   "dur": 2.414,
+   "onset": 0.172,
+   "end": 2.207,
+   "chunks": [
+    [
+     0.172,
+     0.353
+    ],
+    [
+     0.353,
+     0.828
+    ],
+    [
+     0.897,
+     1.207
+    ],
+    [
+     1.207,
+     1.543
+    ],
+    [
+     1.543,
+     2.207
+    ]
+   ],
+   "captions": [
+    "So I",
+    "TESTED it.",
+    "I walked",
+    "to the EDGE",
+    "of the village."
+   ]
+  },
+  "L11": {
+   "text": "One more step, and the whole village froze.",
+   "dur": 2.086,
+   "onset": 0.172,
+   "end": 1.879,
+   "chunks": [
+    [
+     0.172,
+     0.69
+    ],
+    [
+     0.724,
+     0.862
+    ],
+    [
+     0.862,
+     1.267
+    ],
+    [
+     1.267,
+     1.879
+    ]
+   ],
+   "captions": [
+    "One more STEP,",
+    "and the",
+    "whole village",
+    "FROZE."
+   ]
+  },
+  "L12": {
+   "text": "One step back, and it all kept going.",
+   "dur": 1.966,
+   "onset": 0.172,
+   "end": 1.776,
+   "chunks": [
+    [
+     0.172,
+     0.759
+    ],
+    [
+     0.784,
+     0.905
+    ],
+    [
+     0.905,
+     1.224
+    ],
+    [
+     1.224,
+     1.776
+    ]
+   ],
+   "captions": [
+    "One step BACK,",
+    "and it",
+    "all kept",
+    "GOING."
+   ]
+  },
+  "L13": {
+   "text": "Nothing here moves unless I'm close.",
+   "dur": 1.948,
+   "onset": 0.19,
+   "end": 1.759,
+   "chunks": [
+    [
+     0.19,
+     0.578
+    ],
+    [
+     0.578,
+     0.879
+    ],
+    [
+     0.879,
+     1.095
+    ],
+    [
+     1.095,
+     1.759
+    ]
+   ],
+   "captions": [
+    "Nothing here",
+    "MOVES",
+    "unless",
+    "I'm CLOSE."
+   ]
+  },
+  "L14": {
+   "text": "Mom never waited three years. For her, I left a second ago.",
+   "dur": 2.862,
+   "onset": 0.19,
+   "end": 2.655,
+   "chunks": [
+    [
+     0.19,
+     0.552
+    ],
+    [
+     0.552,
+     0.802
+    ],
+    [
+     0.802,
+     1.328
+    ],
+    [
+     1.397,
+     1.621
+    ],
+    [
+     1.647,
+     1.888
+    ],
+    [
+     1.888,
+     2.655
+    ]
+   ],
+   "captions": [
+    "Mom never",
+    "WAITED",
+    "three years.",
+    "For HER,",
+    "I left",
+    "a SECOND ago."
+   ]
+  },
+  "L15": {
+   "text": "She's only ever lived the minutes I was home.",
+   "dur": 2.086,
+   "onset": 0.172,
+   "end": 1.897,
+   "chunks": [
+    [
+     0.172,
+     0.526
+    ],
+    [
+     0.526,
+     0.888
+    ],
+    [
+     0.888,
+     1.172
+    ],
+    [
+     1.172,
+     1.897
+    ]
+   ],
+   "captions": [
+    "She's only",
+    "ever LIVED",
+    "the minutes",
+    "I was HOME."
+   ]
+  },
+  "L16": {
+   "text": "I left at seven. For her, that was this morning.",
+   "dur": 2.345,
+   "onset": 0.172,
+   "end": 2.155,
+   "chunks": [
+    [
+     0.172,
+     0.422
+    ],
+    [
+     0.422,
+     0.897
+    ],
+    [
+     0.983,
+     1.224
+    ],
+    [
+     1.25,
+     1.466
+    ],
+    [
+     1.466,
+     2.155
+    ]
+   ],
+   "captions": [
+    "I left",
+    "at SEVEN.",
+    "For HER,",
+    "that was",
+    "this MORNING."
+   ]
+  },
+  "L17": {
+   "text": "I'm the only clock she has.",
+   "dur": 1.586,
+   "onset": 0.172,
+   "end": 1.379,
+   "chunks": [
+    [
+     0.172,
+     0.362
+    ],
+    [
+     0.362,
+     0.793
+    ],
+    [
+     0.793,
+     1.379
+    ]
+   ],
+   "captions": [
+    "I'm the",
+    "only CLOCK",
+    "she HAS."
+   ]
+  },
+  "L18": {
+   "text": "So I never tell her how long I was gone.",
+   "dur": 2.017,
+   "onset": 0.172,
+   "end": 1.828,
+   "chunks": [
+    [
+     0.172,
+     0.31
+    ],
+    [
+     0.31,
+     0.741
+    ],
+    [
+     0.741,
+     1.095
+    ],
+    [
+     1.095,
+     1.828
+    ]
+   ],
+   "captions": [
+    "So I",
+    "never tell her",
+    "how LONG",
+    "I was GONE."
+   ]
+  },
+  "L19": {
+   "text": "She asks where I've been. I say, outside.",
+   "dur": 2.103,
+   "onset": 0.19,
+   "end": 1.897,
+   "chunks": [
+    [
+     0.19,
+     0.491
+    ],
+    [
+     0.491,
+     0.914
+    ],
+    [
+     0.983,
+     1.241
+    ],
+    [
+     1.267,
+     1.897
+    ]
+   ],
+   "captions": [
+    "She asks",
+    "where I've BEEN.",
+    "I say,",
+    "OUTSIDE."
+   ]
+  },
+  "L20": {
+   "text": "I say hi, I hug her, and I leave again. Which is why",
+   "dur": 2.552,
+   "onset": 0.155,
+   "end": 2.293,
+   "chunks": [
+    [
+     0.155,
+     0.569
+    ],
+    [
+     0.595,
+     0.897
+    ],
+    [
+     0.922,
+     1.069
+    ],
+    [
+     1.069,
+     1.534
+    ],
+    [
+     1.621,
+     1.862
+    ],
+    [
+     1.862,
+     2.293
+    ]
+   ],
+   "captions": [
+    "I say HI,",
+    "I hug her,",
+    "and I",
+    "LEAVE again.",
+    "Which is",
+    "why"
+   ]
+  }
+ },
+ "total": 46.52
+}

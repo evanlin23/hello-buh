@@ -1,0 +1,100 @@
+{
+  "name": "put_back",
+  "stunt": "story_put_back",
+  "caption": "who keeps FIXING my house \ud83d\ude33",
+  "premise": "A creeper blew up the narrator's house three years ago. Every day one more block of it is back, exactly where it was, even the cracked ones. There are purple sparkles on the grass, and the rebuilding started with his big brother's room. His brother went to the End to fight the dragon and never came back.",
+  "twist": "He pretends to nap and catches an enderman putting a block back. It turns its whole body away from him. It's his brother, who came back from the End as one of them. He can only come while the narrator's eyes are shut, because if their eyes meet, he has to hurt him. So the narrator keeps his eyes shut.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#C77DFF",
+  "lines": [
+    {
+      "id": "L01",
+      "text": "Every DAY, / ONE more block / of my HOUSE / is BACK."
+    },
+    {
+      "id": "L02",
+      "text": "A CREEPER / blew it up / THREE YEARS / ago."
+    },
+    {
+      "id": "L03",
+      "text": "Every block / is the EXACT / one I LOST. / Even the / CRACKED ones."
+    },
+    {
+      "id": "L04",
+      "text": "There are / PURPLE / SPARKLES / on the grass. / Every DAY."
+    },
+    {
+      "id": "L05",
+      "text": "The VILLAGERS / walk past it / staring at / their FEET."
+    },
+    {
+      "id": "L06",
+      "text": "And it / started with / my BROTHER'S / ROOM."
+    },
+    {
+      "id": "L07",
+      "text": "He went / to the END / to fight / the DRAGON. / He never / came BACK."
+    },
+    {
+      "id": "L08",
+      "text": "He used to / HUM the / SAME song / ALL day."
+    },
+    {
+      "id": "L09",
+      "text": "So today / I PRETENDED / to NAP."
+    },
+    {
+      "id": "L10",
+      "text": "Something / TALL / walked up / to the WALL."
+    },
+    {
+      "id": "L11",
+      "text": "And put / a block / BACK."
+    },
+    {
+      "id": "L12",
+      "text": "An ENDERMAN."
+    },
+    {
+      "id": "L13",
+      "text": "I opened / my eyes / a little. / It turned / its WHOLE / body AWAY."
+    },
+    {
+      "id": "L14",
+      "text": "And then / it HUMMED. / The song / my brother / ALWAYS hummed."
+    },
+    {
+      "id": "L15",
+      "text": "It's HIM."
+    },
+    {
+      "id": "L16",
+      "text": "He came / BACK / from the End. / As one / of THEM."
+    },
+    {
+      "id": "L17",
+      "text": "If our / EYES meet, / he HAS / to hurt me."
+    },
+    {
+      "id": "L18",
+      "text": "So he / only comes / when my / eyes are SHUT."
+    },
+    {
+      "id": "L19",
+      "text": "And he's / been fixing / our HOME / one block / a DAY."
+    },
+    {
+      "id": "L20",
+      "text": "So now / I nap / EVERY day. / And I / NEVER peek."
+    },
+    {
+      "id": "L21",
+      "text": "Which is / why"
+    }
+  ]
+}

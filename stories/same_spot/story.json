@@ -1,0 +1,96 @@
+{
+  "name": "same_spot",
+  "stunt": "story_same_spot",
+  "caption": "why is my mom ALWAYS in the same spot \ud83d\ude33",
+  "premise": "Every time the narrator comes home from adventuring, his mom is standing in the exact same spot at the door, mid-word. Her wheat hasn't grown, the sheep by the door is frozen mid-jump, his birthday cake still has one bite missing.",
+  "twist": "The world only runs near him. Past a certain line the whole village freezes. His mom never waited three years: she has only ever lived the minutes he was home. He left at seven, and for her that was this morning. He's the only clock she has, so he never tells her how long he was gone.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#5CE1E6",
+  "lines": [
+    {
+      "id": "L01",
+      "text": "Every time / I come HOME, / my MOM / is standing / in the EXACT / same SPOT."
+    },
+    {
+      "id": "L02",
+      "text": "Same DOOR. / Same STARE. / Same HALF / a WORD."
+    },
+    {
+      "id": "L03",
+      "text": "I was gone / THREE YEARS. / Her WHEAT / didn't grow / ONE STAGE."
+    },
+    {
+      "id": "L04",
+      "text": "The SHEEP / by the door / was MID-JUMP. / Still in / the AIR."
+    },
+    {
+      "id": "L05",
+      "text": "My birthday / CAKE / still had / ONE bite / missing."
+    },
+    {
+      "id": "L06",
+      "text": "Then I / walked UP, / and EVERYTHING / started / at ONCE."
+    },
+    {
+      "id": "L07",
+      "text": "Mom said, / BACK already? / You just / LEFT."
+    },
+    {
+      "id": "L08",
+      "text": "And she / still thinks / I'm SEVEN."
+    },
+    {
+      "id": "L09",
+      "text": "She still / cuts my / BREAD / into SQUARES."
+    },
+    {
+      "id": "L10",
+      "text": "So I / TESTED it. / I walked / to the EDGE / of the village."
+    },
+    {
+      "id": "L11",
+      "text": "One more STEP, / and the / whole village / FROZE."
+    },
+    {
+      "id": "L12",
+      "text": "One step BACK, / and it / all kept / GOING."
+    },
+    {
+      "id": "L13",
+      "text": "Nothing here / MOVES / unless / I'm CLOSE."
+    },
+    {
+      "id": "L14",
+      "text": "Mom never / WAITED / three years. / For HER, / I left / a SECOND ago."
+    },
+    {
+      "id": "L15",
+      "text": "She's only / ever LIVED / the minutes / I was HOME."
+    },
+    {
+      "id": "L16",
+      "text": "I left / at SEVEN. / For HER, / that was / this MORNING."
+    },
+    {
+      "id": "L17",
+      "text": "I'm the / only CLOCK / she HAS."
+    },
+    {
+      "id": "L18",
+      "text": "So I / never tell her / how LONG / I was GONE."
+    },
+    {
+      "id": "L19",
+      "text": "She asks / where I've BEEN. / I say, / OUTSIDE."
+    },
+    {
+      "id": "L20",
+      "text": "I say HI, / I hug her, / and I / LEAVE again. / Which is / why"
+    }
+  ]
+}
