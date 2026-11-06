@@ -43,6 +43,9 @@ def main():
     ed = edit_config(a.name)
     rec_p = HERE / "work" / f"{a.name}.rec.json"
     tl = json.loads(rec_p.read_text())["timeline"] if rec_p.exists() else []
+    if ed.get("speed") and tl:   # time-lapse spans and cuts: marks in output time, as edit.py places them
+        from timewarp import Warp
+        tl = Warp(ed["speed"], tl).timeline(tl)
     first = {}
     for e in tl:
         first.setdefault(e["event"], e["t"] / 1000)
@@ -52,8 +55,6 @@ def main():
         if ev in first:
             start = max(0.0, first[ev] + float(off))
     fps, dur = probe(video)
-    if ed.get("speed"):
-        print("note: this Short is time-warped (speed); mark times below are approximate")
 
     print(f"{a.name}: {dur:.2f}s video, recording trimmed from {start:.2f}s")
     marks = []
