@@ -192,6 +192,27 @@ const ATLAS_UV = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(_
 // hitbox [width, height] of mobs that can be targeted (EntityType sizes); an entity under the crosshair
 // within the 3-block entity reach is the target, and vanilla draws no outline for it
 const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
+// outline shapes (Block.getShape) where they differ from the collision shape: fences, walls and
+// gates outline 1 block tall (their collision is 1.5), and blocks you walk through still get targeted
+// and outlined: crops by age, plants, torches (a ray used to pass through wheat and outline the
+// fence behind it, 1.5 tall: worker 5, story_runaway)
+const px16 = (a, b, c, d, e, f) => [[a / 16, b / 16, c / 16, d / 16, e / 16, f / 16]]
+function outlineShape (b) {
+  const n = b.name, pr = (b.getProperties && b.getProperties()) || {}
+  if (/(_fence|_wall|_fence_gate)$/.test(n) && b.shapes && b.shapes.length) return b.shapes.map(q => [q[0], q[1], q[2], q[3], Math.min(1, q[4]), q[5]])
+  if (b.shapes && b.shapes.length) return null
+  const age = Number(pr.age || 0)
+  if (/^(wheat|carrots|potatoes)$/.test(n)) return px16(0, 0, 0, 16, (age + 1) * 2, 16)
+  if (n === 'beetroots') return px16(0, 0, 0, 16, (age + 1) * 2, 16)
+  if (/^(short_grass|fern|dead_bush|short_dry_grass)$/.test(n)) return px16(2, 0, 2, 14, 13, 14)
+  if (/^(tall_grass|large_fern|tall_dry_grass)$/.test(n)) return px16(2, 0, 2, 14, 16, 14)
+  if (/_sapling$/.test(n)) return px16(2, 0, 2, 14, 12, 14)
+  if (/^(dandelion|poppy|blue_orchid|allium|azure_bluet|oxeye_daisy|cornflower|lily_of_the_valley|wither_rose|torchflower|open_eyeblossom|closed_eyeblossom)$|_tulip$/.test(n)) return px16(5, 0, 5, 11, 10, 11)
+  if (/^(torch|soul_torch|redstone_torch|copper_torch)$/.test(n)) return px16(6, 0, 6, 10, 10, 10)
+  if (/^(sunflower|lilac|rose_bush|peony)$/.test(n)) return px16(0, 0, 0, 16, 16, 16)
+  if (n === 'sugar_cane') return px16(2, 0, 2, 14, 16, 14)
+  return null
+}
 function targetBlock (cam, world, ents = []) {
   const d = { x: -Math.sin(cam.yaw) * Math.cos(cam.pitch), y: Math.sin(cam.pitch), z: -Math.cos(cam.yaw) * Math.cos(cam.pitch) }
   const v = new Vec3(0, 0, 0)
@@ -207,7 +228,7 @@ function targetBlock (cam, world, ents = []) {
     v.x = Math.floor(cam.x + d.x * s); v.y = Math.floor(cam.y + d.y * s); v.z = Math.floor(cam.z + d.z * s)
     const b = world.getBlock(v)
     if (!b || /^(air|cave_air|void_air|water|lava|light|bubble_column)$/.test(b.name)) continue
-    let sh = b.shapes && b.shapes.length ? b.shapes : null
+    let sh = outlineShape(b) || (b.shapes && b.shapes.length ? b.shapes : null)
     if (!sh && b.name === 'nether_portal') {   // no collision, but vanilla outlines its slab-shaped outline shape
       const ax = (b.getProperties && b.getProperties().axis) || 'x'
       sh = [ax === 'z' ? [0.375, 0, 0, 0.625, 1, 1] : [0, 0, 0.375, 1, 1, 0.625]]
