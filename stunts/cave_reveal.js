@@ -30,10 +30,10 @@ module.exports = {
     const { x, z } = g, floor = g.y
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    // tidy flat surface around the spot
-    await ctx.cmd(`/fill ${x - 10} ${floor + 1} ${z - 10} ${x + 10} ${floor + 12} ${z + 10} air`)
-    await ctx.cmd(`/fill ${x - 10} ${floor} ${z - 10} ${x + 10} ${floor} ${z + 10} grass_block`)
-    await ctx.cmd(`/fill ${x - 10} ${floor - 2} ${z - 10} ${x + 10} ${floor - 1} ${z + 10} dirt`)
+    // just the spot itself: keep the natural surface around (flattening leaves cut walls in view)
+    await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${z - 2} ${x + 2} ${floor + 8} ${z + 2} air`)
+    await ctx.cmd(`/fill ${x - 1} ${floor} ${z - 1} ${x + 1} ${floor} ${z + 1} grass_block`)
+    await ctx.cmd(`/fill ${x - 1} ${floor - 2} ${z - 1} ${x + 1} ${floor - 1} ${z + 1} dirt`)
     await ctx.cmd(`/fill ${x - 16} ${floor - 30} ${z - 16} ${x + 16} ${floor - 3} ${z + 16} stone`)
     // the cavern: one big chamber under the player plus side chambers
     const B = this.floor - 14
@@ -51,6 +51,11 @@ module.exports = {
       const o = ores[Math.floor(rnd() * ores.length)]
       await ctx.cmd(`/fill ${ox} ${oy} ${oz} ${ox + 1} ${oy + 1} ${oz} ${o} replace stone`)
     }
+    // lava lakes on the side chambers' floors: deep caves are lit by them (an unlit cave is ~3%
+    // brightness in vanilla, i.e. black)
+    for (const [cx, cy, cz, r] of blobs.slice(1)) {
+      await ctx.cmd(`/fill ${cx - r} ${cy - r + 1} ${cz - r} ${cx + r} ${cy - r + 2} ${cz + r} lava replace cave_air`)
+    }
     // landing pool right under the player (water cancels the fall damage)
     await ctx.cmd(`/fill ${x - 4} ${B - 12} ${z - 4} ${x + 4} ${B - 9} ${z + 4} stone`)
     await ctx.cmd(`/fill ${x - 3} ${B - 11} ${z - 3} ${x + 3} ${B - 9} ${z + 3} water`)
@@ -65,7 +70,7 @@ module.exports = {
     await ctx.cmd(`/fill ${wX} ${B - 5 - 6} ${wZ} ${wX} ${wTop} ${wZ} water[level=8]`)
     // a lava pool on the east chamber floor
     await ctx.cmd(`/fill ${x + 8} ${B - 3 - 7} ${z - 8} ${x + 12} ${B - 3 - 7} ${z - 4} lava replace cave_air`)
-    await ctx.hotbar(['diamond_pickaxe', 'diamond_sword', ['torch', 64], ['cobblestone', 64], ['bread', 16]])
+    await ctx.hotbar(['diamond_shovel', 'diamond_pickaxe', ['torch', 64], ['cobblestone', 64], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 0, 0)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -83,6 +88,8 @@ module.exports = {
       const p = new Vec3(this.x, this.floor + dy, this.z)
       const b = bot.blockAt(p)
       if (!b || b.name === 'air' || b.name === 'cave_air') continue
+      const tool = /grass|dirt/.test(b.name) ? 0 : 1
+      if (bot.quickBarSlot !== tool) { ctx.select(tool); await bot.waitForTicks(2) }
       try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) }
       ctx.sound(`block.${ctx.soundGroup(b.name)}.break`, 1, 0.9); ctx.particles('block', p, { block: b.name })
       for (let k = 0; k < 10 && bot.entity.position.y > this.floor + dy + 0.6; k++) await bot.waitForTicks(1)
