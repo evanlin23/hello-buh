@@ -40,6 +40,11 @@ module.exports = {
       await ctx.cmd(`/fill ${x - 72} ${floor} ${z0} ${x + 72} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 72} ${floor - 3} ${z0} ${x + 72} ${floor - 1} ${z1} dirt`)
     }
+    // one biome for the whole clearing (the first crowd stood on a duller grass tint), then reload the
+    // chunks: mineflayer ignores the biome update packet, so go far away and come back
+    for (let z0 = z - 70; z0 <= z + 14; z0 += 8) await ctx.cmd(`/fillbiome ${x - 72} ${floor - 4} ${z0} ${x + 72} ${floor + 20} ${Math.min(z0 + 7, z + 19)} minecraft:plains`)
+    await ctx.cmd(`/tp @s ${x + 1000} 200 ${z}`); await bot.waitForTicks(60)
+    await ctx.cmd(`/tp @s ${x} ${floor + 1} ${z + 8}`); await bot.waitForTicks(20); await bot.waitForChunksToLoad()
     let k = 0
     for (let i = 0; i < CROWDS.length; i++) {
       const c = CROWDS[i], sx = x + (i - 1) * GAP
@@ -109,9 +114,9 @@ module.exports = {
       for (let v = 0; v < voices; v++) ctx.sound('entity.villager.ambient', 0.5 + 0.1 * voices, 0.75 + v * 0.1)
       aim = new ctx.Vec3(sx + 0.5, floor + 2.3, z - 3.5 - (c.rows - 1) * 0.6)
       if (i < 2) {
-        await bot.waitForTicks(12)
-        bot.setControlState('left', true); await bot.waitForTicks(i === 0 ? 10 : 12); bot.setControlState('left', false)
-        await bot.waitForTicks(12)
+        await bot.waitForTicks(8)
+        bot.setControlState('left', true); await bot.waitForTicks(10); bot.setControlState('left', false)
+        await bot.waitForTicks(5)
         ctx.mark('face_off')
         bot.chat(`/tag @e[type=villager,tag=on] remove on`)
       } else {
@@ -123,8 +128,8 @@ module.exports = {
         await bot.waitForTicks(8)
         ctx.mark('back')
         ctx.sound('entity.villager.no', 1)
-        bot.setControlState('back', true); await bot.waitForTicks(34); bot.setControlState('back', false)
-        await bot.waitForTicks(16)
+        bot.setControlState('back', true); await bot.waitForTicks(16); bot.setControlState('back', false)
+        await bot.waitForTicks(8)
         ctx.mark('face_off')
       }
     }
