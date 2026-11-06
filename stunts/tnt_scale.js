@@ -2,9 +2,9 @@
 // set off in turn while the camera watches: one block, a 5x2 slab, a 5x4x5 cube. Explosions come
 // from the server (packets -> particles + sound); craters relight in the renderer.
 const PILES = [
-  { n: 1, dx: -14, size: [1, 1, 1], sub: '1 TNT' },
+  { n: 1, dx: -11, size: [1, 1, 1], sub: '1 TNT' },
   { n: 10, dx: 0, size: [5, 2, 1], sub: '10 TNT' },
-  { n: 100, dx: 14, size: [5, 4, 5], sub: '100 TNT' }
+  { n: 100, dx: 18, size: [5, 4, 5], sub: '100 TNT' }    // far enough that the slab's blast can't set it off early
 ]
 
 module.exports = {
@@ -27,7 +27,7 @@ module.exports = {
     for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 24} ${y0} ${z - 30} ${x + 24} ${y0 + 5} ${z + 8} air`)
     await ctx.cmd(`/fill ${x - 24} ${floor} ${z - 30} ${x + 24} ${floor} ${z + 8} grass_block`)
     await ctx.cmd(`/fill ${x - 24} ${floor - 12} ${z - 30} ${x + 24} ${floor - 1} ${z + 8} dirt`)   // deep: craters into groundwater flood
-    this.pz = z - 18
+    this.pz = z - 12               // close enough that the single block reads
     for (const p of PILES) {
       const [w, h, d] = p.size
       const x0 = x + p.dx - (w >> 1), z0 = this.pz - (d >> 1)
@@ -60,8 +60,18 @@ module.exports = {
       ctx.mark('boom', { n: p.n })
       await bot.waitForTicks(i === 2 ? 50 : 24)                  // let it play out (the big one longer)
     }
-    await ctx.easeLookAt(new Vec3(this.x + 14.5, this.floor - 2, this.pz + 0.5), 800)   // the crater
-    await bot.waitForTicks(16)
+    // walk up to the big crater and look into it
+    const crater = new Vec3(this.x + 18.5, this.floor - 2, this.pz + 0.5)
+    await ctx.easeLookAt(crater, 600)
+    bot.setControlState('forward', true)
+    for (let k = 0; k < 34 && bot.entity.position.distanceTo(crater) > 9; k++) {
+      const eye = bot.entity.position.offset(0, 1.62, 0), d = crater.minus(eye)
+      await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+      await bot.waitForTicks(1)
+    }
+    bot.setControlState('forward', false)
+    ctx.mark('rim')
+    await bot.waitForTicks(14)
     return booms >= 3 && !ctx.died
   }
 }

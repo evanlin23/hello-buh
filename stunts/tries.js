@@ -11,7 +11,7 @@ module.exports = {
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
     caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'landed', startAt: 'jump:-1.0', endAfter: 'landed:2.2',
-    subs: [['attempt', 'easy', 1.5, 0], ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'ok for real this time', 1.8, 1],
+    subs: [['jump', 'easy', 1.0, 0], ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'ok for real this time', 1.8, 1],
       ['death', 'bro.', 1.5, 1], ['attempt', "let's do it again", 1.6, 2], ['death', 'ONE more', 1.4, 2],
       ['attempt', 'locked in.', 1.6, 3], ['landed', 'oh wow that was very close', 2.2, 0]]
   },
@@ -29,6 +29,10 @@ module.exports = {
 
   async perform (ctx) {
     const { bot } = ctx
+    // on the respawn teleport, take the over-the-edge look in the same tick: a look set a tick later
+    // showed the respawn pose (sky) and a 2-3 frame swing down after every cut
+    let respawning = false
+    bot.on('forcedMove', () => { if (respawning) bot.look(0, -0.7, true) })
     for (let i = 0; i < MODES.length; i++) {
       this.mode = MODES[i]; this.fast = i > 0
       ctx.mark('attempt', { n: i + 1, mode: this.mode })
@@ -40,13 +44,17 @@ module.exports = {
       if (this.mode === 'ok') { if (ok) ctx.mark('landed'); return ok && ctx.deaths === MODES.length - 1 }
       // wait for the death and the instant respawn back on the pillar
       for (let k = 0; k < 100 && ctx.deaths === deathsBefore; k++) await bot.waitForTicks(1)
+      respawning = true
       for (let k = 0; k < 60 && bot.entity.position.y < this.top - 0.5; k++) await bot.waitForTicks(1)
+      respawning = false
       ctx.revive()
       ctx.log('revived at tick', ctx.tick, 'pos', bot.entity.position.toString())
       await bot.look(0, -0.7, true)                     // straight back to staring over the edge
       bot.chat('/item replace entity @s hotbar.1 with water_bucket')
       bot.setQuickBarSlot(1)
-      await bot.waitForTicks(2)
+      // a beat on the pillar for the death line to land (the next try's line cut it to 0.15 s)
+      await ctx.easeLook(0.25, -0.95, 600)
+      await ctx.easeLook(-0.1, -0.7, 500)
     }
     return false
   }

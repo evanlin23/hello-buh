@@ -2,32 +2,25 @@
 // diamond and netherite pickaxe each mine a fresh 3x3 section of it (side by side), with real
 // survival digging (bot.dig, the server checks the dig time). Each beat gets a subtitle with the
 // dig time measured in the recording. The netherite one has efficiency V: an instant-mine finale.
-// Everything is mined under Haste V (beacon-style, invisible) so the five beats fit in a Short;
+// Everything is mined under Haste X (invisible) so the five beats fit in a Short;
 // the ranking and the ratios between the tools are vanilla's.
-const fs = require('fs')
-const path = require('path')
 
 const TOOLS = [
-  { item: 'wooden_pickaxe', label: 'wooden' },
-  { item: 'stone_pickaxe', label: 'stone' },
-  { item: 'iron_pickaxe', label: 'iron' },
-  { item: 'diamond_pickaxe', label: 'diamond' },
-  { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'netherite + efficiency V' }
+  { item: 'wooden_pickaxe', label: 'wooden', tier: 'D' },
+  { item: 'stone_pickaxe', label: 'stone', tier: 'C' },
+  { item: 'iron_pickaxe', label: 'iron', tier: 'B' },
+  { item: 'diamond_pickaxe', label: 'diamond', tier: 'A' },
+  { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'netherite + efficiency V', tier: 'S' }
 ]
 const SPACING = 4             // wall sections: 3 wide + a 1-block pillar between them
 
-// subtitles from the recorded dig times (the edit runs after the bot, from the recording)
+// subtitles: the tool, then its tier once its section is open. (Measured times were shown before,
+// but under the invisible Haste they ran ~2x vanilla and read as fake.)
 function subs () {
   const out = []
-  let times = []
-  try {
-    const rec = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'work', 'pickaxe_race.rec.json'), 'utf8'))
-    times = rec.timeline.filter(e => e.event === 'mined')
-  } catch (e) {}
   TOOLS.forEach((t, i) => {
     out.push(['beat', `${t.label}...`, 9, i])
-    const m = times.find(e => e.n === i)
-    if (m) out.push(['mined', `${t.label}: ${m.secs}s`, 9, i])
+    out.push(['mined', `${t.label.split(' ')[0]}: ${t.tier} tier`, 9, i])
   })
   return out
 }
@@ -37,7 +30,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'instamine', startAt: 'beat:-0.2', endAfter: 'finale_end:-0.5', subs: subs() }
+    return { caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'instamine', startAt: 'beat:-0.2', endAfter: 'finale:1.2', subs: subs() }
   },
 
   async setup (ctx) {
@@ -48,9 +41,11 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    await ctx.cmd(`/fill ${x - 14} ${floor + 1} ${z - 12} ${x + 16} ${floor + 12} ${z + 8} air`)
-    await ctx.cmd(`/fill ${x - 14} ${floor} ${z - 12} ${x + 16} ${floor} ${z + 8} grass_block`)
-    await ctx.cmd(`/fill ${x - 14} ${floor - 3} ${z - 12} ${x + 16} ${floor - 1} ${z + 8} dirt`)
+    for (const [z0, z1] of [[z - 12, z + 8], [z + 9, z + 24]]) {   // room behind to back up for the finale
+      await ctx.cmd(`/fill ${x - 14} ${floor + 1} ${z0} ${x + 16} ${floor + 12} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 14} ${floor} ${z0} ${x + 16} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 14} ${floor - 3} ${z0} ${x + 16} ${floor - 1} ${z1} dirt`)
+    }
     // the wall: one block thick (mining a section opens a window onto the field), 4 high
     this.wz = z - 4
     this.x0 = x - 8                                        // first section: x0..x0+2
@@ -59,7 +54,7 @@ module.exports = {
     // pillars between the sections in cobblestone, so each 3x3 reads as its own wall
     for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 4} ${this.wz} cobblestone`)
     await ctx.hotbar(TOOLS.map(t => t.item))
-    await ctx.cmd('/effect give @s haste infinite 4 true')
+    await ctx.cmd('/effect give @s haste infinite 9 true')
     await ctx.cmd('/effect give @s saturation infinite 1 true')
     // stand back so the whole section stays in frame (reach raised to match, invisible on screen)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 7')
@@ -83,7 +78,7 @@ module.exports = {
     bot.on('physicsTick', onTick)
     bot.on('playerCollect', (collector) => { if (collector === bot.entity) ctx.sound('entity.item.pickup', 0.2, 1.4 + Math.random() * 0.6) })
     await bot.look(0, -0.15, true)
-    await bot.waitForTicks(4)
+    await bot.waitForTicks(2)
     for (let i = 0; i < TOOLS.length; i++) {
       const fast = i === TOOLS.length - 1
       if (i > 0) {
@@ -99,7 +94,7 @@ module.exports = {
         bot.setControlState('right', false); bot.setControlState('left', false)
       } else ctx.select(i)
       ctx.mark('beat', { n: i })   // (the last result stays up during the strafe)
-      await bot.waitForTicks(fast ? 6 : 2)
+      await bot.waitForTicks(fast ? 6 : 1)
       const xs = this.x0 + i * SPACING
       // snake: top row left->right, middle right->left, bottom left->right
       const order = []
@@ -121,7 +116,7 @@ module.exports = {
           await bot.waitForTicks(1)
         } else {
           // eased aim at the block centre, then a real survival dig (no mineflayer look snap)
-          await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), 50)
+          await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), p === order[0] ? 250 : 100)   // first aim of a beat: a turn, not a snap
           try { await bot.dig(bot.blockAt(p), 'ignore') } catch (e) { ctx.log('dig', e.message) }
         }
         ctx.sound('block.stone.break', 1, 0.8); ctx.particles('block', p, { block: 'stone' })
@@ -136,8 +131,19 @@ module.exports = {
       await ctx.easeLook(0, -0.1, fast ? 250 : 150)
       if (fast) await bot.waitForTicks(14)
     }
-    // finale: step back to see all five windows
-    await ctx.easeLook(0.35, -0.08, 600)
+    // finale: back up and left until all five windows are in frame, eyes on the middle of the wall
+    ctx.mark('finale')
+    const mid = new Vec3(this.x0 + SPACING * 2 + 1.5, floor + 2.5, wz)
+    bot.setControlState('back', true); bot.setControlState('left', true)
+    for (let k = 0; k < 30; k++) {
+      if (k === 20) bot.setControlState('left', false)
+      const eye = bot.entity.position.offset(0, 1.62, 0), d = mid.minus(eye)
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.2, true)
+      await bot.waitForTicks(1)
+    }
+    bot.setControlState('back', false); bot.setControlState('left', false)
     await bot.waitForTicks(4)
     ctx.mark('finale_end')
     bot.removeListener('physicsTick', onTick)

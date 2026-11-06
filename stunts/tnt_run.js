@@ -16,6 +16,9 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    // TNT's explosion damage scales with difficulty ("scaling": "always"): on the server's default
+    // peaceful it does nothing, the blasts only flung the bot about and it never died
+    await ctx.cmd('/difficulty normal')
     for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 12} ${y0} ${z - 30} ${x + 12} ${y0 + 5} ${z + 30} air`)
     await ctx.cmd(`/fill ${x - 12} ${floor} ${z - 30} ${x + 12} ${floor} ${z + 30} grass_block`)
     await ctx.cmd(`/fill ${x - 12} ${floor - 4} ${z - 30} ${x + 12} ${floor - 1} ${z + 30} dirt`)

@@ -43,13 +43,14 @@ module.exports = {
     const { x, z, floor } = this
     for (let i = 0; i < DROPS.length; i++) {
       const d = DROPS[i], top = floor + d.h
-      await ctx.cmd(`/setblock ${x} ${top} ${z} glass`)
+      const gx = x + Math.floor(0.5 + d.off)        // the glass sits under the bot (the offset drop missed its block and fell)
+      await ctx.cmd(`/setblock ${gx} ${top} ${z} glass`)
       await ctx.tpCheck(x + 0.5 + d.off, top + 1, z + 0.5, 0, 89)       // on the glass, looking straight down
       await ctx.cmd(`/effect give @s instant_health 1 5 true`)
       await bot.waitForTicks(8)
       ctx.mark('drop', { n: i, h: d.h }); ctx.sound('block.glass.break', 1)
-      ctx.particles('block', { x, y: top, z }, { block: 'glass' })
-      await ctx.cmd(`/setblock ${x} ${top} ${z} air`)
+      ctx.particles('block', { x: gx, y: top, z }, { block: 'glass' })
+      await ctx.cmd(`/setblock ${gx} ${top} ${z} air`)
       let splashed = false
       for (let k = 0; k < 260 && !ctx.died; k++) {
         await bot.waitForTicks(1)
