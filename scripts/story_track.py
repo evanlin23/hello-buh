@@ -148,6 +148,73 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     return lst
 
 
+def meter_image(label, value, key, s=1.0, hot=0.0):
+    """The story's rule meter ("VILLAGERS 5"): top-left of the game view, the number in the key colour
+    (red while it has just changed, `hot` 1 -> 0), scaled by s for its pop."""
+    f = ImageFont.truetype(str(FONT), int(60 * s))
+    lab = ImageFont.truetype(str(FONT), 44)
+    num = str(value)
+    red = (235, 50, 50, 255)
+    col = tuple(int(key[i] + (red[i] - key[i]) * hot) for i in range(4))
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    x, y = 44, BAND + 34
+    d.text((x, y + 10), label, font=lab, fill=(255, 255, 255, 255), stroke_width=6, stroke_fill=INK)
+    nx = x + lab.getlength(label) + 18
+    d.text((nx, y + 30 - 30 * s), num, font=f, fill=col, stroke_width=7, stroke_fill=INK)
+    return img
+
+
+def meter_concat(story_dir, timeline, start, dur, tmp):
+    """ffconcat of the meter (story.json "meter": {"label": ...}) following the stunt's `meter` marks, or None."""
+    story, _ = _lines(story_dir)
+    if not story.get("meter"):
+        return None
+    marks = [(e["t"] / 1000 - start, e["value"]) for e in timeline if e["event"] == "meter"]
+    if not marks:
+        return None
+    key = tuple(int(story.get("key_color", "#ffd640")[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
+    label = story["meter"].get("label", "")
+    tmp = pathlib.Path(tmp)
+    total = int(round(dur * FPS))
+    # value at frame 0 = the last mark at or before the start
+    cur = None
+    for t, v in marks:
+        if t <= 0:
+            cur = v
+    changes = [(int(round(t * FPS)), v) for t, v in marks if t > 0]
+    runs, frame, k = [], 0, 0
+    def still(v):
+        p = tmp / f"meter_{v}.png"
+        if not p.exists():
+            meter_image(label, v, key).save(p)
+        return p
+    blank = tmp / "meter_blank.png"
+    Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
+    for f0, v in changes + [(total, None)]:
+        f0 = min(f0, total)
+        if f0 > frame:
+            runs.append((still(cur) if cur is not None else blank, f0 - frame))
+            frame = f0
+        if v is None:
+            break
+        n = min(30, total - frame)               # 0.5 s: pop and a red flash fading back
+        for j in range(n):
+            u = j / 30
+            s = 1.0 + 0.45 * max(0.0, 1 - u * 3) if j >= 2 else 1.0 + 0.45 * j / 2
+            p = tmp / f"meter_{k}_{j}.png"
+            meter_image(label, v, key, s, max(0.0, 1 - u)).save(p)
+            runs.append((p, 1))
+        frame += n
+        k += 1
+        cur = v
+    if frame < total:
+        runs.append((still(cur), total - frame))
+    lst = tmp / "meter.txt"
+    lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {n / FPS:.6f}\n" for p, n in runs) + f"file '{runs[-1][0]}'\n")
+    return lst
+
+
 if __name__ == "__main__":     # preview: python3 scripts/story_track.py stories/<name> "SOME text" out.png
     import sys
     story, _ = _lines(sys.argv[1])
