@@ -92,6 +92,10 @@ each section.
   3D icon (GUI rotation 30/225, scale 0.625), drawn with the default plains tint.
 
 ## Pipeline / ops
+- **One batch at a time.** Two runs fight over the server port ("FAILED TO BIND TO PORT", "server
+  did not start") and every later run fails. Don't chain queued `run_all.sh` waiters (they
+  overlapped when the same stunt was queued twice). Run one `STUNTS="a b c" ./scripts/run_all.sh`
+  and start the next only after it ends. TODO: a lock in run.sh (edit it only when nothing is running).
 - **Finished Shorts live on the `videos` branch** (worktree at `../hb-videos`), one package per
   Short with everything that made it, plus metadata (see that branch's README). After reviewing a
   Short: `node scripts/publish.js <name>`. `out/` and `work/` stay gitignored on main.
