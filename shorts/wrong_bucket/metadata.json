@@ -1,9 +1,9 @@
 {
   "name": "wrong_bucket",
-  "caption": "POV: you grabbed the wrong bucket 💀",
+  "caption": "POV: you grabbed the wrong bucket \ud83d\udc80",
   "youtube": {
-    "title": "POV: you grabbed the wrong bucket 💀 #minecraft #shorts",
-    "description": "POV: you grabbed the wrong bucket 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you grabbed the wrong bucket \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you grabbed the wrong bucket \ud83d\udc80\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "royalty_funk.mp3",
+    "title": "Royalty Funk",
+    "artist": "LXNGVX",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "death",
-    "drop_in_song_s": 10.5,
-    "drop_in_short_s": 7.65,
-    "song_start_s": 2.85
+    "drop_in_song_s": 47.5,
+    "drop_in_short_s": 8.85,
+    "song_start_s": 38.65
   },
   "video": {
     "file": "short.mp4",
@@ -33,7 +33,7 @@
     "sha256": "4f155a8114b640c88707dd35ada757760220a2426e9a9f9a1bb23b6301bb17b9"
   },
   "edit": {
-    "caption": "POV: you grabbed the wrong bucket 💀",
+    "caption": "POV: you grabbed the wrong bucket \ud83d\udc80",
     "red": "wrong",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "death",
@@ -42,7 +42,7 @@
     "deathScreen": true,
     "args": [
       "--caption",
-      "POV: you grabbed the wrong bucket 💀",
+      "POV: you grabbed the wrong bucket \ud83d\udc80",
       "--red",
       "wrong",
       "--on_fire",
@@ -177,7 +177,7 @@
     "gunzip -c shorts/wrong_bucket/recording.json.gz > work/wrong_bucket.rec.json",
     "node render.js work/wrong_bucket.rec.json work/wrong_bucket.frames 60 1080 1011",
     "python3 audio.py work/wrong_bucket.rec.json work/wrong_bucket.wav",
-    "python3 edit.py --frames work/wrong_bucket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/wrong_bucket.rec.json --audio work/wrong_bucket.wav --caption \"POV: you grabbed the wrong bucket 💀\" --red wrong --on_fire placed:death --death_screen death --start 1.2 --song songs/funk_abnormal.mp3 --song_drop_at death --out out/wrong_bucket.mp4"
+    "python3 edit.py --frames work/wrong_bucket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/wrong_bucket.rec.json --audio work/wrong_bucket.wav --caption \"POV: you grabbed the wrong bucket \ud83d\udc80\" --red wrong --on_fire placed:death --death_screen death --start 1.2 --song songs/funk_abnormal.mp3 --song_drop_at death --out out/wrong_bucket.mp4"
   ],
   "status": "ready",
   "notes": "",

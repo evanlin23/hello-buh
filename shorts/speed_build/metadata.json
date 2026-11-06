@@ -1,9 +1,9 @@
 {
   "name": "speed_build",
-  "caption": "Fastest house build 💀",
+  "caption": "Fastest house build \ud83d\udc80",
   "youtube": {
-    "title": "Fastest house build 💀 #minecraft #shorts",
-    "description": "Fastest house build 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "Fastest house build \ud83d\udc80 #minecraft #shorts",
+    "description": "Fastest house build \ud83d\udc80\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "favela.mp3",
+    "title": "FAVELA",
+    "artist": "MXZI, Deno",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "done",
-    "drop_in_song_s": 10.5,
-    "drop_in_short_s": 6.65,
-    "song_start_s": 3.85
+    "drop_in_song_s": 4.5,
+    "drop_in_short_s": 7.15,
+    "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
@@ -33,14 +33,14 @@
     "sha256": "e2ba373ffd0c6917677f1ae501e2f2c5e367453998ab99d81ee8fed6f712e679"
   },
   "edit": {
-    "caption": "Fastest house build 💀",
+    "caption": "Fastest house build \ud83d\udc80",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "done",
     "start": 0.5,
     "timer": "build_start:done",
     "args": [
       "--caption",
-      "Fastest house build 💀",
+      "Fastest house build \ud83d\udc80",
       "--timer",
       "build_start:done",
       "--start",
@@ -102,7 +102,7 @@
     "gunzip -c shorts/speed_build/recording.json.gz > work/speed_build.rec.json",
     "node render.js work/speed_build.rec.json work/speed_build.frames 60 1080 1011",
     "python3 audio.py work/speed_build.rec.json work/speed_build.wav",
-    "python3 edit.py --frames work/speed_build.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/speed_build.rec.json --audio work/speed_build.wav --caption \"Fastest house build 💀\" --timer build_start:done --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at done --out out/speed_build.mp4"
+    "python3 edit.py --frames work/speed_build.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/speed_build.rec.json --audio work/speed_build.wav --caption \"Fastest house build \ud83d\udc80\" --timer build_start:done --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at done --out out/speed_build.mp4"
   ],
   "status": "ready",
   "notes": "",

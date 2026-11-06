@@ -1,9 +1,9 @@
 {
   "name": "one_in_a_million",
-  "caption": "1 in a million landing 😳",
+  "caption": "1 in a million landing \ud83d\ude33",
   "youtube": {
-    "title": "1 in a million landing 😳 #minecraft #shorts",
-    "description": "1 in a million landing 😳\n\nSong: misery. · pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "1 in a million landing \ud83d\ude33 #minecraft #shorts",
+    "description": "1 in a million landing \ud83d\ude33\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "misery.mp3",
-    "title": "misery.",
-    "artist": "pupsies",
-    "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
+    "file": "sky_verse.mp3",
+    "title": "Sky Verse",
+    "artist": "Lieless, Luuna, Yarimov",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "splash",
-    "drop_in_song_s": 16.25,
+    "drop_in_song_s": 4.0,
     "drop_in_short_s": 4.25,
-    "song_start_s": 12
+    "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
@@ -33,14 +33,14 @@
     "sha256": "20a020cf0fbc41a9c936dde2ecb98fb19a48e08dcec334bdbbc170777627c90a"
   },
   "edit": {
-    "caption": "1 in a million landing 😳",
+    "caption": "1 in a million landing \ud83d\ude33",
     "song": "songs/misery.mp3",
     "dropAt": "splash",
     "startAt": "drop:-1.2",
     "endAfter": "splash:2.6",
     "args": [
       "--caption",
-      "1 in a million landing 😳",
+      "1 in a million landing \ud83d\ude33",
       "--start_at",
       "drop:-1.2",
       "--end_after",
@@ -102,7 +102,7 @@
     "gunzip -c shorts/one_in_a_million/recording.json.gz > work/one_in_a_million.rec.json",
     "node render.js work/one_in_a_million.rec.json work/one_in_a_million.frames 60 1080 1011",
     "python3 audio.py work/one_in_a_million.rec.json work/one_in_a_million.wav",
-    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing 😳\" --start_at drop:-1.2 --end_after splash:2.6 --song songs/misery.mp3 --song_drop_at splash --out out/one_in_a_million.mp4"
+    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing \ud83d\ude33\" --start_at drop:-1.2 --end_after splash:2.6 --song songs/misery.mp3 --song_drop_at splash --out out/one_in_a_million.mp4"
   ],
   "status": "ready",
   "notes": "",

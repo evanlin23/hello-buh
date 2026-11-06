@@ -1,9 +1,9 @@
 {
   "name": "skull_art",
-  "caption": "the skull emoji irl 💀",
+  "caption": "the skull emoji irl \ud83d\udc80",
   "youtube": {
-    "title": "the skull emoji irl 💀 #minecraft #shorts",
-    "description": "the skull emoji irl 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the skull emoji irl \ud83d\udc80 #minecraft #shorts",
+    "description": "the skull emoji irl \ud83d\udc80\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "com_bota.mp3",
+    "title": "COM BOTA",
+    "artist": "cape, crysstales",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 10.5,
+    "drop_in_song_s": 16.75,
     "drop_in_short_s": 7.15,
-    "song_start_s": 3.35
+    "song_start_s": 9.6
   },
   "video": {
     "file": "short.mp4",
@@ -33,13 +33,13 @@
     "sha256": "8ad4666f1e683745c2e73660aede5a81c69fd9cd3c503937bca68b166b517b1d"
   },
   "edit": {
-    "caption": "the skull emoji irl 💀",
+    "caption": "the skull emoji irl \ud83d\udc80",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
     "start": 0.3,
     "args": [
       "--caption",
-      "the skull emoji irl 💀",
+      "the skull emoji irl \ud83d\udc80",
       "--start",
       "0.3",
       "--song",
@@ -96,7 +96,7 @@
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
-    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"the skull emoji irl 💀\" --start 0.3 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
+    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"the skull emoji irl \ud83d\udc80\" --start 0.3 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
   ],
   "status": "ready",
   "notes": "",

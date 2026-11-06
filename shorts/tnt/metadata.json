@@ -1,9 +1,9 @@
 {
   "name": "tnt",
-  "caption": "POV: you lit 75 TNT 💀",
+  "caption": "POV: you lit 75 TNT \ud83d\udc80",
   "youtube": {
-    "title": "POV: you lit 75 TNT 💀 #minecraft #shorts",
-    "description": "POV: you lit 75 TNT 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you lit 75 TNT \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you lit 75 TNT \ud83d\udc80\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "mortals_funk_remix.mp3",
+    "title": "Mortals Funk Remix",
+    "artist": "Warriyo, LXNGVX",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "boom",
-    "drop_in_song_s": 10.5,
+    "drop_in_song_s": 113.75,
     "drop_in_short_s": 6.5,
-    "song_start_s": 4
+    "song_start_s": 107.25
   },
   "video": {
     "file": "short.mp4",
@@ -33,14 +33,14 @@
     "sha256": "312e86229227836ed912e9dfa9fc45b0287f552ae6ee99505ae9d4749e9d0b12"
   },
   "edit": {
-    "caption": "POV: you lit 75 TNT 💀",
+    "caption": "POV: you lit 75 TNT \ud83d\udc80",
     "red": "75",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "boom",
     "start": 0.4,
     "args": [
       "--caption",
-      "POV: you lit 75 TNT 💀",
+      "POV: you lit 75 TNT \ud83d\udc80",
       "--red",
       "75",
       "--start",
@@ -102,7 +102,7 @@
     "gunzip -c shorts/tnt/recording.json.gz > work/tnt.rec.json",
     "node render.js work/tnt.rec.json work/tnt.frames 60 1080 1011",
     "python3 audio.py work/tnt.rec.json work/tnt.wav",
-    "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT 💀\" --red 75 --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at boom --out out/tnt.mp4"
+    "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT \ud83d\udc80\" --red 75 --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at boom --out out/tnt.mp4"
   ],
   "status": "ready",
   "notes": "walk to the crater could be shorter (sprint)",

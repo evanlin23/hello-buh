@@ -1,9 +1,9 @@
 {
   "name": "sand_tower",
-  "caption": "the torch trick never gets old 😭",
+  "caption": "the torch trick never gets old \ud83d\ude2d",
   "youtube": {
-    "title": "the torch trick never gets old 😭 #minecraft #shorts",
-    "description": "the torch trick never gets old 😭\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the torch trick never gets old \ud83d\ude2d #minecraft #shorts",
+    "description": "the torch trick never gets old \ud83d\ude2d\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "montagem_toma.mp3",
+    "title": "Montagem Toma",
+    "artist": "X972, sk3tch01, MXZI",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "break",
-    "drop_in_song_s": 10.5,
-    "drop_in_short_s": 1.75,
-    "song_start_s": 8.75
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 2.15,
+    "song_start_s": 12.35
   },
   "video": {
     "file": "short.mp4",
@@ -33,14 +33,14 @@
     "sha256": "45076933e592e09c2f87684855b25d23db366398df50443d589cb3fe09daf6cf"
   },
   "edit": {
-    "caption": "the torch trick never gets old 😭",
+    "caption": "the torch trick never gets old \ud83d\ude2d",
     "red": "torch",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "break",
     "start": 0.4,
     "args": [
       "--caption",
-      "the torch trick never gets old 😭",
+      "the torch trick never gets old \ud83d\ude2d",
       "--red",
       "torch",
       "--start",
@@ -98,7 +98,7 @@
     "gunzip -c shorts/sand_tower/recording.json.gz > work/sand_tower.rec.json",
     "node render.js work/sand_tower.rec.json work/sand_tower.frames 60 1080 1011",
     "python3 audio.py work/sand_tower.rec.json work/sand_tower.wav",
-    "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old 😭\" --red torch --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at break --out out/sand_tower.mp4"
+    "python3 edit.py --frames work/sand_tower.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sand_tower.rec.json --audio work/sand_tower.wav --caption \"the torch trick never gets old \ud83d\ude2d\" --red torch --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at break --out out/sand_tower.mp4"
   ],
   "status": "ready",
   "notes": "",

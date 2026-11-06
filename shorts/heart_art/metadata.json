@@ -1,9 +1,9 @@
 {
   "name": "heart_art",
-  "caption": "built this for my girlfriend 🥺",
+  "caption": "built this for my girlfriend \ud83e\udd7a",
   "youtube": {
-    "title": "built this for my girlfriend 🥺 #minecraft #shorts",
-    "description": "built this for my girlfriend 🥺\n\nSong: Payphone · Radio Top Singers\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "built this for my girlfriend \ud83e\udd7a #minecraft #shorts",
+    "description": "built this for my girlfriend \ud83e\udd7a\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "payphone.mp3",
-    "title": "Payphone",
-    "artist": "Radio Top Singers",
-    "sha256": "3c3b32f904fa4ff2f98fc80fa90a2ac18be42041bf94dbf3dd4cdb0b5d37df34",
+    "file": "royalty_funk.mp3",
+    "title": "Royalty Funk",
+    "artist": "LXNGVX",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 18.75,
+    "drop_in_song_s": 47.5,
     "drop_in_short_s": 5.25,
-    "song_start_s": 13.5
+    "song_start_s": 42.25
   },
   "video": {
     "file": "short.mp4",
@@ -33,13 +33,13 @@
     "sha256": "bcf25d64908ec9c8c9cbc6a77148e1a2e45cdc01bda118409580e000fa597f47"
   },
   "edit": {
-    "caption": "built this for my girlfriend 🥺",
+    "caption": "built this for my girlfriend \ud83e\udd7a",
     "song": "songs/payphone.mp3",
     "dropAt": "complete",
     "start": 0.3,
     "args": [
       "--caption",
-      "built this for my girlfriend 🥺",
+      "built this for my girlfriend \ud83e\udd7a",
       "--start",
       "0.3",
       "--song",
@@ -96,7 +96,7 @@
     "gunzip -c shorts/heart_art/recording.json.gz > work/heart_art.rec.json",
     "node render.js work/heart_art.rec.json work/heart_art.frames 60 1080 1011",
     "python3 audio.py work/heart_art.rec.json work/heart_art.wav",
-    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"built this for my girlfriend 🥺\" --start 0.3 --song songs/payphone.mp3 --song_drop_at complete --out out/heart_art.mp4"
+    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"built this for my girlfriend \ud83e\udd7a\" --start 0.3 --song songs/payphone.mp3 --song_drop_at complete --out out/heart_art.mp4"
   ],
   "status": "ready",
   "notes": "",

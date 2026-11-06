@@ -1,9 +1,9 @@
 {
   "name": "nether_portal",
-  "caption": "POV: your first nether portal 😳",
+  "caption": "POV: your first nether portal \ud83d\ude33",
   "youtube": {
-    "title": "POV: your first nether portal 😳 #minecraft #shorts",
-    "description": "POV: your first nether portal 😳\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: your first nether portal \ud83d\ude33 #minecraft #shorts",
+    "description": "POV: your first nether portal \ud83d\ude33\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "lit",
-    "drop_in_song_s": 10.5,
-    "drop_in_short_s": 3.9,
-    "song_start_s": 6.6
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 4.3,
+    "song_start_s": 33.95
   },
   "video": {
     "file": "short.mp4",
@@ -33,14 +33,14 @@
     "sha256": "deffc8e8e356e411311c2b28ffd9b27c40176d18ac99e220a57c707dc4ff60b4"
   },
   "edit": {
-    "caption": "POV: your first nether portal 😳",
+    "caption": "POV: your first nether portal \ud83d\ude33",
     "red": "nether",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "lit",
     "start": 0.4,
     "args": [
       "--caption",
-      "POV: your first nether portal 😳",
+      "POV: your first nether portal \ud83d\ude33",
       "--red",
       "nether",
       "--start",
@@ -98,7 +98,7 @@
     "gunzip -c shorts/nether_portal/recording.json.gz > work/nether_portal.rec.json",
     "node render.js work/nether_portal.rec.json work/nether_portal.frames 60 1080 1011",
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
-    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal 😳\" --red nether --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
+    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal \ud83d\ude33\" --red nether --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
   ],
   "status": "ready",
   "notes": "",

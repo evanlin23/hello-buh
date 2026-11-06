@@ -1,9 +1,9 @@
 {
   "name": "half_heart",
-  "caption": "POV: you're on half a heart 💀",
+  "caption": "POV: you're on half a heart \ud83d\udc80",
   "youtube": {
-    "title": "POV: you're on half a heart 💀 #minecraft #shorts",
-    "description": "POV: you're on half a heart 💀\n\nSong: misery. · pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you're on half a heart \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you're on half a heart \ud83d\udc80\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "misery.mp3",
-    "title": "misery.",
-    "artist": "pupsies",
-    "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
+    "file": "vem_lenta.mp3",
+    "title": "VEM LENTA!",
+    "artist": "KPHK, Eluvo, Sayfalse",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "placed",
-    "drop_in_song_s": 16.25,
+    "drop_in_song_s": 36.75,
     "drop_in_short_s": 3.5,
-    "song_start_s": 12.75
+    "song_start_s": 33.25
   },
   "video": {
     "file": "short.mp4",
@@ -33,7 +33,7 @@
     "sha256": "436f11229970df0e77c0e2c32fbf462495d066b156fdebc84521d41713a02df4"
   },
   "edit": {
-    "caption": "POV: you're on half a heart 💀",
+    "caption": "POV: you're on half a heart \ud83d\udc80",
     "red": "half",
     "song": "songs/misery.mp3",
     "dropAt": "placed",
@@ -41,7 +41,7 @@
     "endAfter": "placed:2.4",
     "args": [
       "--caption",
-      "POV: you're on half a heart 💀",
+      "POV: you're on half a heart \ud83d\udc80",
       "--red",
       "half",
       "--start_at",
@@ -106,7 +106,7 @@
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart \ud83d\udc80\" --red half --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
   ],
   "status": "ready",
   "notes": "",

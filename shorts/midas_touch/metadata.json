@@ -1,9 +1,9 @@
 {
   "name": "midas_touch",
-  "caption": "POV: you got the midas touch 🤑",
+  "caption": "POV: you got the midas touch \ud83e\udd11",
   "youtube": {
-    "title": "POV: you got the midas touch 🤑 #minecraft #shorts",
-    "description": "POV: you got the midas touch 🤑\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you got the midas touch \ud83e\udd11 #minecraft #shorts",
+    "description": "POV: you got the midas touch \ud83e\udd11\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "ayuda.mp3",
+    "title": "AYUDA",
+    "artist": "MXRCVRY",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "touch",
-    "drop_in_song_s": 10.5,
-    "drop_in_short_s": 0.7,
-    "song_start_s": 9.8
+    "drop_in_song_s": 9.0,
+    "drop_in_short_s": -0.3,
+    "song_start_s": 9.3
   },
   "video": {
     "file": "short.mp4",
@@ -33,14 +33,14 @@
     "sha256": "9554fa6a20722692e638575a2e1a1b6afa3abeefd68dc2b85f6038d354ac7bec"
   },
   "edit": {
-    "caption": "POV: you got the midas touch 🤑",
+    "caption": "POV: you got the midas touch \ud83e\udd11",
     "red": "midas",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "touch",
     "start": 0.5,
     "args": [
       "--caption",
-      "POV: you got the midas touch 🤑",
+      "POV: you got the midas touch \ud83e\udd11",
       "--red",
       "midas",
       "--start",
@@ -98,7 +98,7 @@
     "gunzip -c shorts/midas_touch/recording.json.gz > work/midas_touch.rec.json",
     "node render.js work/midas_touch.rec.json work/midas_touch.frames 60 1080 1011",
     "python3 audio.py work/midas_touch.rec.json work/midas_touch.wav",
-    "python3 edit.py --frames work/midas_touch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/midas_touch.rec.json --audio work/midas_touch.wav --caption \"POV: you got the midas touch 🤑\" --red midas --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at touch --out out/midas_touch.mp4"
+    "python3 edit.py --frames work/midas_touch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/midas_touch.rec.json --audio work/midas_touch.wav --caption \"POV: you got the midas touch \ud83e\udd11\" --red midas --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at touch --out out/midas_touch.mp4"
   ],
   "status": "ready",
   "notes": "",

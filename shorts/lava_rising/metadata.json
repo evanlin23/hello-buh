@@ -1,9 +1,9 @@
 {
   "name": "lava_rising",
-  "caption": "the lava stopped 1 block below me 😳",
+  "caption": "the lava stopped 1 block below me \ud83d\ude33",
   "youtube": {
-    "title": "the lava stopped 1 block below me 😳 #minecraft #shorts",
-    "description": "the lava stopped 1 block below me 😳\n\nSong: misery. · pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the lava stopped 1 block below me \ud83d\ude33 #minecraft #shorts",
+    "description": "the lava stopped 1 block below me \ud83d\ude33\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "misery.mp3",
-    "title": "misery.",
-    "artist": "pupsies",
-    "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
+    "file": "x2.mp3",
+    "title": "X2",
+    "artist": "MUPP",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "stopped",
-    "drop_in_song_s": 16.25,
+    "drop_in_song_s": 14.5,
     "drop_in_short_s": 9.9,
-    "song_start_s": 6.35
+    "song_start_s": 4.6
   },
   "video": {
     "file": "short.mp4",
@@ -33,7 +33,7 @@
     "sha256": "a2fea0ea69e04e6be72d50ce3c0a7f51073c8db207634ad0e8cb7aaef731c018"
   },
   "edit": {
-    "caption": "the lava stopped 1 block below me 😳",
+    "caption": "the lava stopped 1 block below me \ud83d\ude33",
     "red": "1 block",
     "song": "songs/misery.mp3",
     "dropAt": "stopped",
@@ -41,7 +41,7 @@
     "endAfter": "stopped:2.6",
     "args": [
       "--caption",
-      "the lava stopped 1 block below me 😳",
+      "the lava stopped 1 block below me \ud83d\ude33",
       "--red",
       "1 block",
       "--start_at",
@@ -153,7 +153,7 @@
     "gunzip -c shorts/lava_rising/recording.json.gz > work/lava_rising.rec.json",
     "node render.js work/lava_rising.rec.json work/lava_rising.frames 60 1080 1011",
     "python3 audio.py work/lava_rising.rec.json work/lava_rising.wav",
-    "python3 edit.py --frames work/lava_rising.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_rising.rec.json --audio work/lava_rising.wav --caption \"the lava stopped 1 block below me 😳\" --red \"1 block\" --start_at rising:-0.3 --end_after stopped:2.6 --song songs/misery.mp3 --song_drop_at stopped --out out/lava_rising.mp4"
+    "python3 edit.py --frames work/lava_rising.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_rising.rec.json --audio work/lava_rising.wav --caption \"the lava stopped 1 block below me \ud83d\ude33\" --red \"1 block\" --start_at rising:-0.3 --end_after stopped:2.6 --song songs/misery.mp3 --song_drop_at stopped --out out/lava_rising.mp4"
   ],
   "status": "ready",
   "notes": "QA2: payoff framing of the 1-block gap could be clearer",
