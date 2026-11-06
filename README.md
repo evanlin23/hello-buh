@@ -23,7 +23,7 @@ checked out at `../hb-videos`.
 | [house_sizes](shorts/house_sizes/short.mp4) | building a house in 5s vs 10s vs 20s 💀 | 18.65s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 9d412b3 | worker: dirt hut vs plank cottage vs two-colour house, real block placements, ends on all three |
 | [lava_crossing](shorts/lava_crossing/short.mp4) | every way to cross lava (rated) 💀 | 19.85s | Sky Verse · Lieless, Luuna, Yarimov | ready | 62b7c60 | worker: bridge 6/10, water bucket->obsidian 9/10, pearl 10/10, walking in 0/10 (death screen) |
 | [lava_rising](shorts/lava_rising/short.mp4) | the lava stopped 1 block below me 😳 | 12.5s | X2 · MUPP | ready | 799e77f | QA2: payoff framing of the 1-block gap could be clearer |
-| [looks_wrong](shorts/looks_wrong/short.mp4) | Bro this looks wrong? | 9.7s | Feel Good Funk · Syn Cole, Nakama | ready | 17ecd2d |  |
+| [looks_wrong](shorts/looks_wrong/short.mp4) | Bro this looks wrong? | 9.6s | Feel Good Funk · Syn Cole, Nakama | ready | 97bba2b | worker QA (qa_frames + independent review): ready. Nitpicks: last stone-brick gap renders very dark f444-459; held yellow block covers the lower mouth during the fill |
 | [midas_touch](shorts/midas_touch/short.mp4) | POV: you got the midas touch 🤑 | 10.15s | AYUDA · MXRCVRY | ready | 90afab9 |  |
 | [nether_portal](shorts/nether_portal/short.mp4) | POV: your first nether portal 😳 | 6.95s | MONTAGEM FAVELA · CHASHKAKEFIRA | ready | 38ccca9 | frame QA pass (reviewer 2026-11-06): nitpicks only (0.55 s still opening, portal particles column) |
 | [one_in_a_million](shorts/one_in_a_million/short.mp4) | 1 in a million landing 😳 | 6.85s | Sky Verse · Lieless, Luuna, Yarimov | ready | f655187 |  |
