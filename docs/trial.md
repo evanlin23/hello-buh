@@ -4,7 +4,8 @@
 > prismarine-viewer bundle was replaced by our own renderer (`renderer/`). Textures, block
 > models and environment art now come from the 1.21.11 client jar. It adds vanilla face shading
 > and AO, sky, fog, fancy clouds, sun, view bobbing and underwater fog, with the set built in a
-> real generated forest. Render ~20 s per video second; world upload 7–14 s. The sections below
+> real generated forest. Render ~20 s per video second; world upload 7–14 s. From scratch with the new renderer, `./run.sh` took
+> **4 min 2 s** (asset build included, first-try clutch, 7.85 s at 60 fps, -18.8 LUFS). The sections below
 > describe the first version where they differ.
 
 **Verdict: go, with caveats.** Measured from scratch in this container (4 CPUs, no GPU): `./run.sh`
