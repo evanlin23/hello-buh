@@ -1,7 +1,8 @@
-// "building a house in 5s vs 10s vs 20s 💀": three builds side by side, each placed block by block
+// "building a house in 5s vs 10s vs 20s vs 60s 💀": four builds side by side, each placed block by block
 // with real survival placements (block_place on a face of an already-placed or ground block):
 // a sad 3x3 dirt hut, a 5x5 plank cottage, then a 7x7 two-colour house (cobblestone base, dark
-// oak frame, birch walls, glass windows, a stepped gable roof). A subtitle names each build's
+// oak frame, birch walls, glass windows, a stepped gable roof), then a 9x9 two-storey mansion.
+// It cuts to a raised wide shot of all four the moment the mansion is done. A subtitle names each build's
 // time; the camera follows the placements and ends backing up to show all three side by side.
 // The planner orders blocks bottom-up and finds, for each, a face of something solid to click.
 
@@ -65,26 +66,53 @@ function house () {
   return out
 }
 
+function mansion () {
+  const out = []
+  for (let y = 0; y < 9; y++) {
+    for (let x = 0; x < 9; x++) {
+      for (let z = 0; z < 9; z++) {
+        const ex = x === 0 || x === 8, ez = z === 0 || z === 8
+        if (!ex && !ez) continue
+        if (z === 8 && x === 4 && (y === 1 || y === 2)) continue               // doorway
+        const corner = ex && ez
+        let name = 'white_concrete'
+        if (y === 0) name = 'stone_bricks'
+        else if (y === 4 || y === 8 || corner) name = 'dark_oak_log'
+        else if ((y === 2 || y === 6) && ((ez && x !== 4 && x % 2 === 0) || (ex && z % 2 === 0))) name = 'glass'
+        else if ((y === 5 || y === 6 || y === 7) && z === 8 && x === 4) name = y === 6 ? 'glass' : 'white_concrete'
+        out.push([x, y, z, name])
+      }
+    }
+  }
+  const rows = [[9, [-1, 0, 1, 7, 8, 9]], [10, [1, 2, 6, 7]], [11, [2, 3, 5, 6]], [12, [3, 4, 5]]]
+  for (const [y, zs] of rows) for (const z of zs) for (let x = 0; x < 9; x++) out.push([x, y, z, 'dark_oak_planks'])
+  for (const x of [0, 8]) { for (const z of [2, 3, 4, 5, 6]) out.push([x, 9, z, 'white_concrete']); for (const z of [3, 4, 5]) out.push([x, 10, z, 'white_concrete']); out.push([x, 11, 4, 'white_concrete']) }
+  return out
+}
+
 const BUILDS = [
   { name: 'hut', blocks: hut(), w: 3, d: 3, dx: -9, rate: 0.5, sub: '5 seconds',
-    slot: { dirt: 0 } },
+    slots: { dirt: [0] } },
   { name: 'cottage', blocks: cottage(), w: 5, d: 5, dx: -2, rate: 1, sub: '10 seconds',
-    slot: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
+    slots: { oak_log: [1], oak_planks: [2], glass: [3], spruce_planks: [4] } },
   { name: 'house', blocks: house(), w: 7, d: 7, dx: 6, rate: 1.5, sub: '20 seconds',
-    slot: { cobblestone: 5, dark_oak_log: 6, birch_planks: 7, glass: 3, dark_oak_planks: 8 } }
+    slots: { cobblestone: [5], dark_oak_log: [6], birch_planks: [7], glass: [3], dark_oak_planks: [8, 0] } },
+  { name: 'mansion', blocks: mansion(), w: 9, d: 9, dx: 16, rate: 1.75, sub: '60 seconds',
+    hotbar: [['stone_bricks', 64], ['white_concrete', 64], ['white_concrete', 64], ['dark_oak_log', 64], ['dark_oak_log', 64], ['glass', 64], ['dark_oak_planks', 64], ['dark_oak_planks', 64], ['dark_oak_planks', 64]],
+    slots: { stone_bricks: [0], white_concrete: [1, 2], dark_oak_log: [3, 4], glass: [5], dark_oak_planks: [6, 7, 8] } }
 ]
 const FRONT = 9   // every build's front wall is this far north of the player
 
-const SOUND = (n) => n === 'dirt' ? 'block.gravel.place' : n === 'glass' ? 'block.glass.place' : n === 'cobblestone' ? 'block.stone.place' : 'block.wood.place'
+const SOUND = (n) => n === 'dirt' ? 'block.gravel.place' : n === 'glass' ? 'block.glass.place' : /cobblestone|stone_bricks|concrete/.test(n) ? 'block.stone.place' : 'block.wood.place'
 
 module.exports = {
   name: 'house_sizes',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: 'building a house in 5s vs 10s vs 20s 💀',
+  caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀',
   edit: {
-    caption: 'building a house in 5s vs 10s vs 20s 💀', red: '20s', song: 'songs/funk_abnormal.mp3', dropAt: 'all_done',
-    startAt: 'build_start:-0.15', endAfter: 'backed_up:1.1',
-    subs: BUILDS.map((b, i) => ['build_start', b.sub, i === 2 ? 6.4 : 9, i])   // the last label ends with its build (it sat on the cottage in the wide shot)
+    caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀', red: '60s', song: 'songs/funk_abnormal.mp3', dropAt: 'all_done',
+    startAt: 'build_start:-0.15', endAfter: 'all_done:0.9',
+    subs: BUILDS.map((b, i) => ['build_start', b.sub, 30, i]).concat([['all_done', 'all four', 0.9]])   // each label runs until the next
   },
 
   async setup (ctx) {
@@ -95,10 +123,14 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (let y0 = floor + 1; y0 <= floor + 14; y0 += 7) await ctx.cmd(`/fill ${x - 20} ${y0} ${z - 24} ${x + 20} ${y0 + 6} ${z + 10} air`)
-    await ctx.cmd(`/fill ${x - 20} ${floor} ${z - 24} ${x + 20} ${floor} ${z + 10} grass_block`)
-    await ctx.cmd(`/fill ${x - 20} ${floor - 3} ${z - 24} ${x + 20} ${floor - 1} ${z + 10} dirt`)
-    await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 24')
+    for (let y0 = floor + 1; y0 <= floor + 21; y0 += 7) await ctx.cmd(`/fill ${x - 22} ${y0} ${z - 26} ${x + 34} ${y0 + 6} ${z + 20} air`)
+    await ctx.cmd(`/fill ${x - 22} ${floor} ${z - 26} ${x + 34} ${floor} ${z + 20} grass_block`)
+    await ctx.cmd(`/fill ${x - 22} ${floor - 3} ${z - 26} ${x + 34} ${floor - 1} ${z + 20} dirt`)
+    // the wide shot at the end: a dirt mound in front of the middle of the four plots
+    this.view = { x: x + 8, z: z + 18 }
+    await ctx.cmd(`/fill ${x + 7} ${floor + 1} ${z + 17} ${x + 9} ${floor + 3} ${z + 19} dirt`)
+    await ctx.cmd(`/fill ${x + 7} ${floor + 3} ${z + 17} ${x + 9} ${floor + 3} ${z + 19} grass_block`)
+    await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 30')
     await ctx.hotbar([['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['cobblestone', 64], ['dark_oak_log', 64], ['birch_planks', 64], ['dark_oak_planks', 64]])
     await ctx.tpCheck(x - 7.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
@@ -138,12 +170,16 @@ module.exports = {
     for (let bi = 0; bi < BUILDS.length; bi++) {
       const B = BUILDS[bi]
       const o = origin(B)
-      tgt = { x: o.x + B.w / 2, z: z + 0.5 }              // walk over in front of this plot while building
+      if (B.hotbar) {                                    // a fresh hotbar for the big one (as the walk starts)
+        for (let k = 0; k < 9; k++) bot.chat(`/item replace entity @s hotbar.${k} with ${B.hotbar[k][0]} ${B.hotbar[k][1]}`)
+        ctx.mark('hotbar_swap')
+      }
+      tgt = { x: o.x + B.w / 2, z: z + 0.5 + (B.d > 7 ? 2 : 0) }   // walk over in front of this plot while building
       await glide(center(B), bi === 0 ? 2 : 4)
       const todo = B.blocks.map(([bx, by, bz, name]) => ({ x: o.x + bx, y: o.y + by, z: o.z + bz, name }))
         .sort((a, b) => a.y - b.y || a.name.localeCompare(b.name) || b.z - a.z || a.x - b.x)   // a material at a time per layer (fewer slot switches)
-      const slot = { ...B.slot }
       const used = {}
+      const slotFor = (name) => B.slots[name][Math.min(B.slots[name].length - 1, Math.floor((used[name] - 1) / 64))]
       ctx.mark('build_start', { build: B.name, blocks: todo.length })
       let budget = 0, guard = 0
       while (todo.length && guard++ < 1000) {
@@ -152,8 +188,7 @@ module.exports = {
         const b = todo.splice(i, 1)[0]
         const [dx, dy, dz, face] = FACES.find(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz }))
         used[b.name] = (used[b.name] || 0) + 1
-        if (b.name === 'dark_oak_planks' && used[b.name] === 65) slot.dark_oak_planks = 0    // first stack used up
-        if (bot.quickBarSlot !== slot[b.name]) ctx.select(slot[b.name])
+        if (bot.quickBarSlot !== slotFor(b.name)) ctx.select(slotFor(b.name))   // next stack once one runs out
         await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5))
         bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,
           cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
@@ -166,7 +201,7 @@ module.exports = {
       }
       ctx.mark('build_done', { build: B.name })
       if (bi === 0) bot.chat('/item replace entity @s hotbar.0 with dark_oak_planks 64')   // the roof needs a second stack
-      await glide(center(B), bi === 2 ? 4 : 6)             // a beat to look at it
+      if (bi < BUILDS.length - 1) await glide(center(B), 6)   // a beat to look at it
       await bot.waitForTicks(1)
       for (const [bx, by, bz, name] of B.blocks) {
         const bl = bot.blockAt(new Vec3(o.x + bx, o.y + by, o.z + bz))
@@ -174,15 +209,15 @@ module.exports = {
       }
     }
 
-    // back up and look over all three
-    ctx.mark('all_done')
-    const mid = new Vec3(x + 1.5, floor + 2.5, z - FRONT - 3)
-    tgt = { x: x + 1.5, z: z + 9 }
-    for (let i = 0; i < 80; i++) { await look(mid, 0.12); await bot.waitForTicks(1); if (i > 20 && Math.hypot(tgt.x - bot.entity.position.x, tgt.z - bot.entity.position.z) < 0.4) break }
-    ctx.mark('backed_up')
+    // the payoff: cut to the wide shot of all four from the mound, a slow drift across them
     tgt = null; bot.removeListener('physicsTick', steer)
     for (const c of ['left', 'right', 'forward', 'back']) bot.setControlState(c, false)
-    for (let i = 0; i < 30; i++) { await look(mid, 0.15); await bot.waitForTicks(1) }
+    const mid = new Vec3(x + 8, floor + 3, z - FRONT - 4)
+    bot.chat(`/tp @s ${this.view.x + 0.5} ${floor + 4} ${this.view.z + 0.5} 180 18`)
+    await bot.waitForTicks(2)
+    ctx.mark('all_done')
+    aim = mid.offset(-3, 0, 0)
+    for (let i = 0; i < 40; i++) { await look(mid.offset(3, 0, 0), 0.04); await bot.waitForTicks(1) }
     ctx.log('wrong blocks:', wrong)
     return wrong <= 2 && !ctx.died
   }
