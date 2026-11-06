@@ -16,7 +16,10 @@ mkdir -p work out
 python3 scripts/fetch.py
 VER=$(grep '^MC_VERSION=' versions.env | cut -d= -f2)
 # renderer assets straight from this version's client jar (cached)
-[ -f "work/assets/$VER/resolved.json" ] || { python3 renderer/build_assets.py "$VER" && node renderer/prepare.js "$VER"; }
+# (rebuilt whenever the asset scripts change, so new extractions - particles, animations - land)
+if [ ! -f "work/assets/$VER/resolved.json" ] || [ renderer/build_assets.py -nt "work/assets/$VER/resolved.json" ] || [ renderer/prepare.js -nt "work/assets/$VER/resolved.json" ]; then
+  python3 renderer/build_assets.py "$VER" && node renderer/prepare.js "$VER"
+fi
 
 # --- private local server (offline mode, 127.0.0.1 only; the bot is the only player) ---
 S=work/server

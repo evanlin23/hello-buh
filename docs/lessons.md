@@ -76,3 +76,4 @@ each section.
   gets view counts without an API key.
 - The GitHub Actions workflow (`.github/workflows/render.yml`) is manual and has not been run
   yet. Expect about 7 to 8 minutes per Short on a 4-vCPU runner.
+- Never edit `run.sh` (or any bash script) while it is running: bash reads scripts incrementally and the running copy breaks mid-file.

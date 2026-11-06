@@ -121,10 +121,11 @@ function camAt (t) {
     PARTS.push(...particles.spawn(ev, bt))
   }
   const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
-  const partsAt = (t) => {
+  const partsAt = (t, cam) => {
     const out = []
     for (const p of PARTS) {
       const s = particles.state(p, t, solidAt); if (!s) continue
+      if (cam && Math.hypot(s.x - cam.x, s.y - cam.y, s.z - cam.z) < 0.6) continue   // too close: would fill the screen
       const [sky, blk] = mesher.world.getLight(new Vec3(s.x, s.y, s.z))
       const l = lightmap(Math.max(sky, blk))
       out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: p.tex, uv: p.uv, color: p.color.map(c => c * l) })
@@ -161,7 +162,7 @@ function camAt (t) {
     cam.inLava = !!(inBlock && inBlock.name === 'lava')
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
-    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, entitiesAt(t, mesher), partsAt(t)])
+    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, entitiesAt(t, mesher), partsAt(t, cam)])
     // let the compositor present the finished frame before capturing (else: tearing lines)
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })
