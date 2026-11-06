@@ -424,8 +424,13 @@ function camAtLive (t) {
       for (const e of ents) {
         if (which ? !((which.ids && which.ids.includes(e.id)) || (which.near && Math.hypot(e.x - which.near[0], e.z - which.near[1]) <= which.near[2])) : e.name !== 'villager') continue
         const dx = cam.x - e.x, dz = cam.z - e.z, dy = cam.y - (e.y + 1.62)
-        e.yaw = Math.atan2(-dx, -dz); e.headYaw = e.yaw
-        e.pitch = Math.atan2(dy, Math.hypot(dx, dz))
+        const yaw = Math.atan2(-dx, -dz), pitch = Math.atan2(dy, Math.hypot(dx, dz))
+        // the turn eases like Entity.lerpTo (3 ticks), head leading the body (2 ticks): a one-frame
+        // 180 flip of the whole crowd read as a glitch (frame review, staring_villagers)
+        const fb = Math.min(1, (t - fa) / 3), fh = Math.min(1, (t - fa) / 2)
+        const hy = e.headYaw ?? e.yaw
+        e.yaw = lerpAngle(e.yaw, yaw, fb); e.headYaw = lerpAngle(hy, yaw, fh)
+        e.pitch = e.pitch + (pitch - e.pitch) * fh
       }
     }
     // mobs never walk into the player: the server and client push overlapping entities apart, but

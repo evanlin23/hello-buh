@@ -183,3 +183,4 @@ each section.
 - **A fluid with the same fluid above has every corner at full height** (vanilla). Averaging with the air beside the column left a dark seam at each block of a lavafall or waterfall.
 - **Brightness is a stunt option:** `brightness: 1` is Options > Brightness: Bright (default 0.5; `BRIGHTNESS=` overrides it). Use it for caves. At the default, an ore-filled cavern lit only by lava read as black walls.
 - **Identical neighbouring frames on water or lava are vanilla.** Fluid textures change every 2 ticks (6 video frames). Don't "fix" them.
+- **Forced facing (face_on) eases in** over 3 ticks for the body and 2 for the head, like Entity.lerpTo. A whole crowd flipping 180° in one frame read as a glitch (found by worker 2 on staring_villagers).
