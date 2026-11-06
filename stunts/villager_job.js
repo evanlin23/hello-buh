@@ -10,7 +10,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀', colors: 'pov=red,villager=green', song: 'songs/payphone.mp3', dropAt: 'hired', start: 0.5 },
+  edit: { caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀', colors: 'pov=red,villager=green', song: 'songs/payphone.mp3', dropAt: 'hired', start: 0.75, endAfter: 'rehired:1.3' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -30,7 +30,7 @@ module.exports = {
     await ctx.cmd(`/setblock ${x} ${floor + 1} ${vz} air`)
     await ctx.cmd('/kill @e[type=villager]')
     await ctx.cmd(`/summon villager ${x + 0.5} ${floor + 1} ${vz + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b}`)
-    this.lectern = new ctx.Vec3(x, floor + 1, vz + 2)        // in front of the pen, toward the player
+    this.lectern = new ctx.Vec3(x + 2, floor + 1, vz)        // beside the pen: in front, its slanted top hid the villager's outfit (frame review)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 8')
     await ctx.hotbar([['lectern', 16], 'diamond_axe', ['bookshelf', 16], ['bread', 12]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 15)
@@ -55,7 +55,7 @@ module.exports = {
       bot.swingArm(); ctx.sound('block.wood.place', 1, 0.8)
       await bot.waitForTicks(4)
       await setJob('librarian'); ctx.sound('entity.villager.work_librarian', 1, 1)
-      ctx.particles('happy', { x: this.x + 0.5, y: this.floor + 2.0, z: this.vz + 0.5 }, { count: 14 })
+      ctx.particles('happy', { x: this.x + 0.5, y: this.floor + 2.0, z: this.vz + 0.5 }, { count: 8 })
       if (!this.hiredOnce) { this.hiredOnce = true; ctx.mark('hired') }
     }
     const breakIt = async () => {
@@ -67,12 +67,14 @@ module.exports = {
       await setJob('none'); ctx.sound('entity.villager.no', 1, 1)
       ctx.particles('angry', { x: this.x + 0.5, y: this.floor + 2.5, z: this.vz + 0.5 }, { count: 4 })
     }
+    // the villager watches the player (LookAtPlayerGoal: the head follows the eyes)
+    ctx.mark('face_on', { near: [this.x + 0.5, this.vz + 0.5, 1.5], head: true })
     await bot.waitForTicks(16)
     for (const pause of [12, 6]) {                     // two cycles (QA: 3.5 repeats dragged)
       await place(); await lookV(); await bot.waitForTicks(pause)
       await breakIt(); await lookV(); await bot.waitForTicks(pause)
     }
-    await place(); await lookV()
+    await place(); ctx.mark('rehired'); await lookV()
     ctx.sound('entity.villager.yes', 1, 1)
     await bot.waitForTicks(24)
     const v = bot.nearestEntity(e => e.name === 'villager')

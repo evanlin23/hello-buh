@@ -89,7 +89,7 @@ for (const r of rec.entities || []) if (r[2] === 'falling_block' && !FALL_START.
 const FACE = []
 // [start tick, end tick, which]: which = { ids: [...] } or { near: [x, z, r] } from the face_on mark,
 // or null for every villager (older recordings)
-{ let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = [e.t / 50, e.ids || e.near ? { ids: e.ids, near: e.near } : null]; if (e.event === 'face_off' && a !== null) { FACE.push([a[0], e.t / 50, a[1]]); a = null } } if (a !== null) FACE.push([a[0], Infinity, a[1]]) }
+{ let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = [e.t / 50, e.ids || e.near ? { ids: e.ids, near: e.near, head: e.head } : null]; if (e.event === 'face_off' && a !== null) { FACE.push([a[0], e.t / 50, a[1]]); a = null } } if (a !== null) FACE.push([a[0], Infinity, a[1]]) }
 const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, z: e.z }))
 const ASSETS_DIR = path.join(__dirname, 'work', 'assets', rec.version)
 // Held item over time: hotbar contents + selected slot from the timeline, the tick the held item last
@@ -468,7 +468,8 @@ function camAtLive (t) {
         // 180 flip of the whole crowd read as a glitch (frame review, staring_villagers)
         const fb = Math.min(1, (t - fa) / 3), fh = Math.min(1, (t - fa) / 2)
         const hy = e.headYaw ?? e.yaw
-        e.yaw = lerpAngle(e.yaw, yaw, fb); e.headYaw = lerpAngle(hy, yaw, fh)
+        if (!(which && which.head)) e.yaw = lerpAngle(e.yaw, yaw, fb)   // head: true = LookAtPlayerGoal, only the head follows
+        e.headYaw = lerpAngle(hy, yaw, fh)
         e.pitch = e.pitch + (pitch - e.pitch) * fh
       }
     }
