@@ -383,7 +383,10 @@ function camAtLive (t) {
   fs.mkdirSync(outDir, { recursive: true })
   const ticks = P.length - 1, frames = Math.floor(ticks / 20 * FPS)
   // ONLY=t1,t2,... renders just those ticks (for checking looks quickly)
-  const only = process.env.ONLY ? process.env.ONLY.split(',').map(Number) : null
+  // FRAMES=f1,f2,... renders just those video frames (at FPS) under their real numbers: f01234.png
+  // stays frame 1234, so a sparse render drops into a full frames dir (worker 6, time-lapse edits)
+  const frameList = process.env.FRAMES ? process.env.FRAMES.split(',').map(Number) : null
+  const only = frameList ? frameList.map(f => f * 20 / FPS) : process.env.ONLY ? process.env.ONLY.split(',').map(Number) : null
   let bi = 0
   const sentBlocks = new Set()
   let relightBB = null, lastRelight = -99
@@ -549,7 +552,7 @@ function camAtLive (t) {
     await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), partsAt(t, cam)])
     // let the compositor present the finished frame before capturing (else: tearing lines)
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
-    await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })
+    await page.screenshot({ path: `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png` })
     if (f % 60 === 0) console.log(`frame ${f}/${frames}`)
   }
   const secs = (Date.now() - t1) / 1000
