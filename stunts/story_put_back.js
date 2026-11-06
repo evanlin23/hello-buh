@@ -40,8 +40,8 @@ module.exports = {
     await c('/kill @e[type=!player]')
 
     // --- my house: stone bricks (x -3..3, z -8..-2), the south-east corner still blown open
+    await c(`/fill ${A(-3, 0, -8)} ${A(3, 4, -2)} stone_bricks hollow`)   // y0-y4 shell: a room y1-y3 (from y1, hollow left one air layer)
     await c(`/fill ${A(-3, 0, -8)} ${A(3, 0, -2)} cobblestone`)
-    await c(`/fill ${A(-3, 1, -8)} ${A(3, 3, -2)} stone_bricks hollow`)
     for (const [dx, dy, dz] of [[-3, 1, -5], [-1, 3, -8], [1, 2, -8], [3, 2, -6], [-2, 2, -2], [-3, 3, -3], [0, 1, -8], [3, 1, -7]]) await c(`/setblock ${A(dx, dy, dz)} cracked_stone_bricks`)
     for (const [dx, dy, dz] of [[-3, 2, -7], [2, 3, -8], [-1, 1, -2], [3, 3, -5]]) await c(`/setblock ${A(dx, dy, dz)} mossy_stone_bricks`)
     await c(`/fill ${A(-1, 2, -2)} ${A(-1, 2, -2)} air`)                       // a window...
@@ -64,8 +64,8 @@ module.exports = {
     await c(`/setblock ${A(0, 1, -7)} crafting_table`)
 
     // --- my brother's room: a dark oak annex on the west side, rebuilt first, so it's perfect
+    await c(`/fill ${A(-9, 0, -8)} ${A(-4, 4, -3)} dark_oak_planks hollow`)
     await c(`/fill ${A(-9, 0, -8)} ${A(-4, 0, -3)} spruce_planks`)
-    await c(`/fill ${A(-9, 1, -8)} ${A(-4, 3, -3)} dark_oak_planks hollow`)
     await c(`/fill ${A(-10, 4, -9)} ${A(-3, 4, -2)} dark_oak_slab`)
     await c(`/setblock ${A(-7, 4, -6)} glowstone`); await c(`/setblock ${A(-6, 4, -5)} glowstone`)
     await c(`/fill ${A(-7, 1, -3)} ${A(-6, 2, -3)} air`)                       // its open front
