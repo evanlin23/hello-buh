@@ -10,7 +10,7 @@
 // wav and its captions on that tick. Teleports between scenes are cuts in the renderer.
 const fs = require('fs')
 const path = require('path')
-const { storyLines } = require('../lib/story')
+const { storyLines, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'runaway')
 const PROFS = ['farmer', 'librarian', 'cleric', 'armorer', 'fletcher', 'toolsmith', 'weaponsmith', 'cartographer', 'butcher', 'shepherd', 'mason', 'leatherworker']
@@ -39,11 +39,9 @@ module.exports = {
     await c('/gamerule log_admin_commands false')
     await c('/difficulty normal')                      // creepers need it to exist, and the explosion only hurts above peaceful
     // a big flat clearing: 81 x 81, in slabs under the 32768-block /fill cap
-    for (let y0 = 1; y0 <= 24; y0 += 4) await c(`/fill ${A(-40, y0, -40)} ${A(40, y0 + 3, 40)} air`)
-    await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
-    await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
+    await clearSet(ctx, A, 64, 24)              // a wide flat clearing (lib/story.js)
     await c('/kill @e[type=!player]')
-    for (let y0 = -4; y0 <= 24; y0 += 2) await c(`/fillbiome ${A(-40, y0, -40)} ${A(40, y0 + 1, 40)} minecraft:plains`)   // one grass colour over the set (capped like /fill: slabs)
+    await plainsBiome(ctx, A, 64, -4, 24)       // one grass colour over the set (lib/story.js)
 
     // --- the street (L01, L02, L09): a path north-south, four little houses with doors on it
     await c(`/fill ${A(-1, 0, 6)} ${A(1, 0, 40)} dirt_path`)
@@ -142,7 +140,7 @@ module.exports = {
     await c('/tag @e[tag=nitwit] add warm'); await c('/tag @e[tag=golem] add warm')
     await c('/clear @s')                                // nothing in hand, ever (he has no arms)
     // mineflayer ignores the biome-update packet: go out of range and back so the chunks come again with plains
-    await c(`/tp @s ${X + 600} 200 ${Z}`); await ctx.sleep(3000)   // wall clock: physics ticks stop while the chunks there load
+    await resendChunks(ctx, X, Z)
     await ctx.tpCheck(X, F + 1, Z + 38, 180, 0)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')

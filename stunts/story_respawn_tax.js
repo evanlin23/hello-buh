@@ -10,7 +10,7 @@
 // caption chunks (at(k)), deaths are real (fall, lava, cactus) with the vanilla death screen, and
 // the meter is marked as `meter` { value } for edit.py.
 const path = require('path')
-const { storyLines, storyKit, house } = require('../lib/story')
+const { storyLines, storyKit, house, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'respawn_tax')
 
@@ -34,11 +34,9 @@ module.exports = {
     await c('/difficulty normal')
     await c('/gamerule natural_health_regeneration true')
     await c('/gamerule log_admin_commands false')   // per-tick `execute as` tps flooded the bot with op broadcasts
-    for (let y0 = 1; y0 <= 28; y0 += 4) await c(`/fill ${A(-40, y0, -40)} ${A(40, y0 + 3, 40)} air`)
-    await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
-    await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
+    await clearSet(ctx, A, 64, 28)              // a wide flat clearing (lib/story.js)
     await c('/kill @e[type=!player]')
-    for (let y0 = -4; y0 <= 30; y0 += 2) await c(`/fillbiome ${A(-40, y0, -40)} ${A(40, y0 + 1, 40)} minecraft:plains`)   // one grass colour over the set (capped like /fill: slabs)
+    await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set (lib/story.js)
 
     // the spawn: a cobblestone plaza with a gold block where I respawn, lantern posts at the corners
     await c(`/fill ${A(-3, 0, -3)} ${A(3, 0, 3)} cobblestone`)
@@ -88,7 +86,7 @@ module.exports = {
 
     await c('/clear @s')
     // mineflayer ignores the biome-update packet: go out of range and back so the chunks come again with plains
-    await c(`/tp @s ${X + 600} 200 ${Z}`); await ctx.sleep(3000)   // wall clock: physics ticks stop while the chunks there load
+    await resendChunks(ctx, X, Z)
     await ctx.tpCheck(X, F + 1, Z + 9, 180, 0)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')
