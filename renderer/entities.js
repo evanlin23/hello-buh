@@ -70,7 +70,11 @@ function cubeGeometry (cube, pivot, texW, texH, mirror) {
 // Build a model: returns { root, bones } with bones as THREE.Groups pivoting like the game.
 function build (geo, texInfo, extraCubes = {}) {
   const root = new THREE.Group()
-  const inner = new THREE.Group(); inner.scale.setScalar(1 / 16); root.add(inner)
+  // Java renders entity models through S(-1,-1,1) (LivingEntityRenderer); Bedrock geometry shares
+  // Java's y-up-flipped coordinates, so x has to be negated too, or every mob is drawn as its mirror
+  // image (the right arm on the left, profession badges and faces flipped). Turns about y made on top
+  // of the rest pose (head yaw) change sign inside the mirror.
+  const inner = new THREE.Group(); inner.scale.set(-1 / 16, 1 / 16, 1 / 16); root.add(inner)
   const mat = new THREE.MeshBasicMaterial({ map: texInfo.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
   // white overlay (creeper fuse flash, LivingEntityRenderer overlay): mix toward white by uWhite
   mat.userData.white = { value: 0 }
@@ -384,7 +388,7 @@ export class EntityLayer {
       for (const [n, sign] of [['rightArm', -1], ['leftArm', 1], ['arm0', -1], ['arm1', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
       if (B.head) {
         let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-        B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y + dy, B.head.userData.rest.z)
+        B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y - dy, B.head.userData.rest.z)
       }
     }
     for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); this.live.delete(id) }
