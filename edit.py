@@ -32,7 +32,7 @@ CAPTION_Y = 271                    # vertical center of the caption line
 GUI = 3  # Minecraft GUI scale
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 TWEMOJI = "https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/{}.png"
-CLIENT_JAR = HERE / "work" / "client" / "1.21.1.jar"
+CLIENT_JAR = HERE / "work" / "client" / (dict(l.split("=", 1) for l in (HERE / "versions.env").read_text().splitlines() if "=" in l and not l.startswith("#"))["MC_VERSION"] + ".jar")
 HOTBAR = ["item/diamond_sword", "item/water_bucket", "block/cobblestone", "item/bread", None, None, None, None, None]
 
 
@@ -115,17 +115,41 @@ def hud_png(jar, slot, items, health, path):
     img.save(path)
 
 
+def item_sprite(name):
+    """Inventory icon path for an item/block name (flat icons; blocks use their texture)."""
+    if not name:
+        return None
+    names = JAR_NAMES()
+    for p in (f"item/{name}", f"block/{name}", f"block/{name}_top", f"block/{name}_front"):
+        if f"assets/minecraft/textures/{p}.png" in names:
+            return p
+    return None
+
+
+_jar_names = None
+def JAR_NAMES():
+    global _jar_names
+    if _jar_names is None:
+        with zipfile.ZipFile(CLIENT_JAR) as z:
+            _jar_names = set(z.namelist())
+    return _jar_names
+
+
 def hud_states(timeline, duration):
     """[(t0, t1, slot, items, health)] from the bot timeline (ms since recording start)."""
     items = list(HOTBAR)
+    if any(e["event"] == "hotbar" for e in timeline or []):
+        items = [None] * 9
     slot, health = 0, 20
     states, last_t = [], 0.0
     for ev in timeline or []:
         t = ev["t"] / 1000
         new_items, new_slot, new_health = list(items), ev.get("slot", slot), ev.get("health", health)
-        if ev["event"] == "placed":
+        if ev["event"] == "hotbar":
+            new_items = [item_sprite(n) for n in ev["items"]]
+        if ev["event"] == "placed" and not any(e["event"] == "hotbar" for e in timeline):
             new_items[1] = "item/bucket"
-        if ev["event"] == "scooped" and ev.get("ok"):
+        if ev["event"] == "scooped" and ev.get("ok") and not any(e["event"] == "hotbar" for e in timeline):
             new_items[1] = "item/water_bucket"
         if (new_items, new_slot, round(new_health)) != (items, slot, round(health)):
             states.append((last_t, t, slot, items, health))

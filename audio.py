@@ -69,6 +69,12 @@ def main(rec_path, out_path):
     seconds = len(poses) * TICK
     m = Mixer(seconds, seed=len(poses))
     ev = {e["event"]: e for e in tl if e["event"] not in ("health",)}
+    sound_events = [e for e in tl if e["event"] == "sound"]
+    if sound_events:   # current recordings: the harness logs every sound with its tick
+        for e in sound_events:
+            m.play(e["sound"], e["t"] / 1000, volume=e.get("volume", 1.0), pitch=e.get("pitch", 1.0))
+        return finish(m, seconds, out_path)
+    # (older recordings: rebuild the clutch sounds from the poses and events below)
 
     # Footsteps: vanilla plays a step every ~1.67 blocks walked on the ground (distance * 0.6 > 1).
     # On the pillar top the block underfoot is the snow cap; on the floor it's grass.
@@ -99,6 +105,10 @@ def main(rec_path, out_path):
     if "scooped" in ev and ev["scooped"].get("ok"):
         m.play("item.bucket.fill", ev["scooped"]["t"] / 1000)
 
+    return finish(m, seconds, out_path)
+
+
+def finish(m, seconds, out_path):
     x = m.buf[: int(seconds * SR)]
     peak = float(np.max(np.abs(x))) or 1.0
     x = (x / peak * 0.7).astype(np.float32)          # leave the real level-setting to edit.py
