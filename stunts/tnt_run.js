@@ -28,9 +28,9 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    // TNT's explosion damage scales with difficulty ("scaling": "always"): on the server's default
-    // peaceful it does nothing, the blasts only flung the bot about and it never died
-    await ctx.cmd('/difficulty normal')
+    // TNT's explosion damage scales with difficulty ("scaling": "always"): on peaceful it does nothing.
+    // Waves 1-3 run on peaceful (the near misses mustn't kill it); wave 4 switches to normal.
+    await ctx.cmd('/difficulty peaceful')
     for (let z0 = z - 36; z0 <= z + 40; z0 += 6) {   // four lanes side by side (slabs under the /fill cap)
       const z1 = Math.min(z0 + 5, z + 40)
       for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 36} ${y0} ${z0} ${x + 36} ${y0 + 5} ${z1} air`)
@@ -59,6 +59,7 @@ module.exports = {
         if (ok) break
         if (a === 4) throw new Error('teleport did not stick')
       }
+      if (last) { bot.chat('/difficulty normal'); bot.chat('/effect give @s instant_health 1 5 true') }
       let front = tz - W.gap, n = 0, on = true
       const wave = () => {
         if (!on || n++ % W.every) return
