@@ -88,28 +88,30 @@ module.exports = {
         // ---- the finale: on top of 1000 TNT ----
         ctx.mark(`cut${n}a`)
         await ctx.cmd('/difficulty normal')
-        await ctx.tpCheck(t.cx + 0.5, floor + t.h + 1, t.zf - 4.5, 180, 55)
+        // stand at the east end facing west, down the field (the other way the cleared field's walls show)
+        await ctx.tpCheck(t.cx + 3.5, floor + t.h + 1, t.zf - 4.5, 90, 55)
         await ctx.cmd('/effect give @s instant_health 1 10 true')
         await bot.waitForTicks(4)
         ctx.mark(`cut${n}b`)
         ctx.mark(`tier${n}`)
-        // TNT under the feet... a look out west over the edge (how high; the big crater far off), back down
-        await ctx.easeLook(1.05, -0.3, 550)
-        await ctx.easeLook(-0.9, -0.4, 700)
-        await ctx.easeLook(0.15, -1.15, 450)
-        const bx = t.cx, by = floor + t.h, bz = t.zf - 6                // the block in front of the feet
-        await ctx.easeLookAt(new Vec3(bx + 0.5, by + 1, bz + 0.5), 250)
+        const W = Math.PI / 2
+        // TNT under the feet... a look out west over the edge (how high; the craters far off), back down
+        await ctx.easeLook(W + 0.35, -0.3, 550)
+        await ctx.easeLook(W - 0.4, -0.45, 700)
+        await ctx.easeLook(W - 0.1, -1.15, 450)
+        const bx = t.cx + 4, by = floor + t.h, bz = t.zf - 5                // the edge block right behind the feet
+        await ctx.easeLookAt(new Vec3(bx + 0.5, by + 1, bz + 0.5), 350)
         light(bx, by, bz, 1, [0.5, 1, 0.5])
         ctx.mark(`lit${n}`)
         const litAt = ctx.tick
-        await ctx.easeLook(bot.entity.yaw - 0.2, -1.2, 350)
+        await ctx.easeLook(bot.entity.yaw + 0.2, -1.2, 350)
         ctx.mark(`fuse${n}a`)
         while (ctx.tick - litAt < 50) await bot.waitForTicks(1)          // skipped by the cut
         ctx.mark(`fuse${n}b`)
-        // ~1.5 s left: spin round and sprint for the south edge... not fast enough
-        await ctx.easeLook(Math.PI, -0.45, 300)
+        // ~1.5 s left: spin round and sprint west across the top... not fast enough
+        await ctx.easeLook(W, -0.45, 300)
         bot.setControlState('sprint', true); bot.setControlState('forward', true)
-        ctx.easeLook(Math.PI + 0.1, -0.2, 500)
+        ctx.easeLook(W + 0.1, -0.2, 500)
         for (let k = 0; k < 80 && !ctx.died; k++) await bot.waitForTicks(1)
         bot.setControlState('forward', false); bot.setControlState('sprint', false)
         ctx.mark('boom5')
