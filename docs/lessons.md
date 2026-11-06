@@ -87,6 +87,13 @@ each section.
   3D icon (GUI rotation 30/225, scale 0.625), drawn with the default plains tint.
 
 ## Pipeline / ops
+- mineflayer auto-respawns on the death tick by default (`respawn: true`), so every death lasted 0
+  ticks. The harness uses `respawn: false`: it respawns at once only when the server says
+  doImmediateRespawn (game_state_change `immediate_respawn`), otherwise a stunt calls `ctx.respawn()`.
+  mineflayer's physicsTick stops while dead; the harness ticks on its own so recording and
+  `waitForTicks` continue. A retry can log in as the dead player, so respawn it at login.
+- Particle light: light is computed before the stunt's block changes, so use the brightest of the
+  cell and its six neighbours (crumbs of a broken block came out black).
 - Writing to the server console FIFO blocks forever if the server is gone: always `timeout`.
 - YouTube search pages (not downloads) are readable from the cloud: `research/yt_survey.py`
   gets view counts without an API key.

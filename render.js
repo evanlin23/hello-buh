@@ -103,8 +103,10 @@ function bodyAfterDeath (d, t) {
   if (!deathSim || deathSim.d !== d) {
     const i = Math.max(1, Math.min(P.length - 1, Math.floor(d[0])))
     const a = P[i - 1], b = P[i]
-    const start = (b[1] - a[1]) ** 2 + (b[3] - a[3]) ** 2 + (b[2] - a[2]) ** 2 > 4 ? a : b   // b may already be the respawn point
-    const prev = start === a ? P[Math.max(0, i - 2)] : a
+    // older recordings: mineflayer auto-respawned on the death tick, so b may be the respawn point
+    const tele = (b[1] - a[1]) ** 2 + (b[3] - a[3]) ** 2 > 64
+    const start = tele ? a : b
+    const prev = tele ? P[Math.max(0, i - 2)] : a
     let x = start[1], y = start[2], z = start[3], vx = start[1] - prev[1], vy = start[2] - prev[2], vz = start[3] - prev[3]
     const pts = [[x, y, z]]
     const blk = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return bl ? bl.name : 'air' }
@@ -203,8 +205,14 @@ function camAtLive (t) {
     for (const p of PARTS) {
       const s = particles.state(p, t, solidAt); if (!s) continue
       if (cam && Math.hypot(s.x - cam.x, s.y - cam.y, s.z - cam.z) < 0.6) continue   // too close: would fill the screen
-      const [sky, blk] = mesher.world.getLight(new Vec3(s.x, s.y, s.z))
-      const l = lightmap(Math.max(sky, blk))
+      // light is computed once, before the stunt's block changes: crumbs of a just-broken block sit
+      // in what was a solid (light 0) cell, so take the brightest of the cell and its neighbours
+      let lv = 0
+      for (const [dx, dy, dz] of [[0, 0, 0], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
+        const [sky, blk] = mesher.world.getLight(new Vec3(s.x + dx, s.y + dy, s.z + dz))
+        lv = Math.max(lv, sky, blk)
+      }
+      const l = lightmap(lv)
       out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: p.tex, uv: p.uv, color: p.color.map(c => c * l) })
     }
     return out

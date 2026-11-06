@@ -97,7 +97,9 @@ module.exports = {
     for (let i = 0; i < 20; i++) { await look(center); await bot.waitForTicks(1) }
     await bot.waitForTicks(20)
     let ok = 0, all = plan(o.x, o.y, o.z)
-    for (const b of all) { const bl = bot.blockAt(new Vec3(b.x, b.y, b.z)); if (bl && bl.name === b.name) ok++ }
+    const bad = []
+    for (const b of all) { const bl = bot.blockAt(new Vec3(b.x, b.y, b.z)); if (bl && bl.name === b.name) ok++; else bad.push(`${b.x - o.x},${b.y - o.y},${b.z - o.z}:${b.name}->${bl && bl.name}`) }
+    if (bad.length) ctx.log('wrong:', bad.join(' '))
     ctx.log(`house: ${ok}/${all.length} blocks correct`)
     return ok >= all.length - 2
   }
