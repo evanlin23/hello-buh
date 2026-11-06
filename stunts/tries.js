@@ -21,6 +21,7 @@ module.exports = {
     const top = set.y + Number(process.env.FALL_HEIGHT || 60) + 1
     await ctx.cmd(`/spawnpoint @s ${set.x} ${top} ${set.z}`)
     await ctx.cmd('/gamerule doImmediateRespawn true')
+    ctx.immediateRespawn = true
     await ctx.cmd('/gamerule keepInventory true')
     this.top = top
     return set
