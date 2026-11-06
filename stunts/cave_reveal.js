@@ -51,25 +51,25 @@ module.exports = {
       const o = ores[Math.floor(rnd() * ores.length)]
       await ctx.cmd(`/fill ${ox} ${oy} ${oz} ${ox + 1} ${oy + 1} ${oz} ${o} replace stone`)
     }
-    // lava lakes on the side chambers' floors: deep caves are lit by them (an unlit cave is ~3%
-    // brightness in vanilla, i.e. black)
-    for (const [cx, cy, cz, r] of blobs.slice(1)) {
-      await ctx.cmd(`/fill ${cx - r} ${cy - r + 1} ${cz - r} ${cx + r} ${cy - r + 2} ${cz + r} lava replace cave_air`)
+    // a flat cavern floor (blob bottoms are bowls, so loose lava would run down onto the landing
+    // pool): stone up to B-6, walkable at B-5
+    const F = B - 6
+    await ctx.cmd(`/fill ${x - 18} ${B - 14} ${z - 18} ${x + 18} ${F} ${z + 18} stone replace cave_air`)
+    // the landing pool: a 7x7 pit, 3 deep (water cancels the fall damage)
+    await ctx.cmd(`/fill ${x - 3} ${F - 2} ${z - 3} ${x + 3} ${F} ${z + 3} water`)
+    // lava pits around it: contained by the stone floor, and they light the cave (an unlit cave is
+    // ~3% brightness in vanilla, i.e. black)
+    for (const [dx, dz] of [[8, 0], [-8, 2], [1, 8], [-2, -8], [7, -7], [-7, 7]]) {
+      await ctx.cmd(`/fill ${x + dx - 1} ${F} ${z + dz - 1} ${x + dx + 1} ${F} ${z + dz + 1} lava replace stone`)
     }
-    // landing pool right under the player (water cancels the fall damage)
-    await ctx.cmd(`/fill ${x - 4} ${B - 12} ${z - 4} ${x + 4} ${B - 9} ${z + 4} stone`)
-    await ctx.cmd(`/fill ${x - 3} ${B - 11} ${z - 3} ${x + 3} ${B - 9} ${z + 3} water`)
     // lavafall in the west chamber and a waterfall in the north one: source at the top, falling
-    // fluid all the way down so they're there at once (flowing lava takes 30 ticks per block)
+    // fluid down to the floor so they're there at once (flowing lava takes 30 ticks per block)
     const lavaX = x - 9, lavaZ = z + 7, lavaTop = B - 2 + 7
     await ctx.cmd(`/setblock ${lavaX} ${lavaTop + 1} ${lavaZ} lava`)
-    await ctx.cmd(`/fill ${lavaX} ${B - 2 - 7} ${lavaZ} ${lavaX} ${lavaTop} ${lavaZ} lava[level=8]`)
-    await ctx.cmd(`/fill ${lavaX - 2} ${B - 2 - 8} ${lavaZ - 2} ${lavaX + 2} ${B - 2 - 8} ${lavaZ + 2} lava replace cave_air`)
+    await ctx.cmd(`/fill ${lavaX} ${F + 1} ${lavaZ} ${lavaX} ${lavaTop} ${lavaZ} lava[level=8] replace cave_air`)
     const wX = x + 3, wZ = z + 12, wTop = B - 5 + 6
     await ctx.cmd(`/setblock ${wX} ${wTop + 1} ${wZ} water`)
-    await ctx.cmd(`/fill ${wX} ${B - 5 - 6} ${wZ} ${wX} ${wTop} ${wZ} water[level=8]`)
-    // a lava pool on the east chamber floor
-    await ctx.cmd(`/fill ${x + 8} ${B - 3 - 7} ${z - 8} ${x + 12} ${B - 3 - 7} ${z - 4} lava replace cave_air`)
+    await ctx.cmd(`/fill ${wX} ${F + 1} ${wZ} ${wX} ${wTop} ${wZ} water[level=8] replace cave_air`)
     await ctx.hotbar(['diamond_shovel', 'diamond_pickaxe', ['torch', 64], ['cobblestone', 64], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 0, 0)
     await ctx.cmd('/gamemode survival')
@@ -97,7 +97,7 @@ module.exports = {
     ctx.mark('reveal'); ctx.sound('ambient.cave', 1)
     // falling: lift the eyes from the floor to the cavern as it opens up
     let splashed = false
-    const pool = this.floor - 14 - 9
+    const pool = this.floor - 14 - 6                        // the pool surface (top of F)
     const lift = ctx.easeLook(0.8, -0.35, 1300)
     for (let i = 0; i < 120 && !ctx.died; i++) {
       await bot.waitForTicks(1)
