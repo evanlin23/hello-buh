@@ -40,4 +40,4 @@ Needs Java 21, Node 22, Python 3 + Pillow, ffmpeg, and Playwright's Chromium.
 - HUD is drawn, not rendered: no level number text, static XP bar.
 - Renderer only supports up to 1.21.4 data, so the server runs 1.21.1.
 
-See `docs/clutch-timing.md` for why the water clutch now lands every time.
+See `docs/trial.md` for the trial report (speed, gaps, Actions costs), `docs/clutch-timing.md` for why the water clutch lands every time, and `research/formats.md` for what to make next.
