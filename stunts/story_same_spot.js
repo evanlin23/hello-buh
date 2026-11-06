@@ -12,7 +12,7 @@
 // start on a word keeps getting invisible micro-moves while it's "frozen" (an idle mob's first
 // move reaches the client ~1 s late, docs/lessons.md "Story Shorts").
 const path = require('path')
-const { storyLines, storyKit } = require('../lib/story')
+const { storyLines, storyKit, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'same_spot')
 const CAPTION = 'why is my mom ALWAYS in the same spot 😳'
@@ -35,15 +35,10 @@ module.exports = {
     await ctx.defaultRules()
     await c('/gamerule log_admin_commands false')
     await c('/gamerule random_tick_speed 0')            // her wheat really doesn't grow
-    for (let y0 = 1; y0 <= 24; y0 += 4) await c(`/fill ${A(-40, y0, -40)} ${A(40, y0 + 3, 40)} air`)
-    await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
-    await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
+    await clearSet(ctx, A, 64, 28)              // a wide flat clearing (lib/story.js)
+    await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
     await c('/kill @e[type=!player]')
-    await c(`/fillbiome ${A(-40, -4, -40)} ${A(40, 20, 40)} minecraft:plains`)   // one grass colour everywhere
-    // the edge of the village: a wood of oaks behind a leafy hedge hides the cut terrain past the clearing
-    await c(`/fill ${A(-40, 1, 37)} ${A(40, 7, 40)} oak_leaves[persistent=true]`)
-    await c(`/fill ${A(-40, 1, -40)} ${A(-37, 7, 40)} oak_leaves[persistent=true]`)
-    await c(`/fill ${A(37, 1, -40)} ${A(40, 7, 40)} oak_leaves[persistent=true]`)
+    // the edge of the village: a line of oaks past the end of the street
     for (let x = -36; x <= 36; x += 6) await c(`/place feature minecraft:oak ${A(x, 1, 35)}`)
     for (let z = -6; z <= 30; z += 6) { await c(`/place feature minecraft:oak ${A(-34, 1, z)}`); await c(`/place feature minecraft:oak ${A(34, 1, z)}`) }
 
@@ -103,8 +98,10 @@ module.exports = {
     await mob('sheep', -6.0, 1, 26.8, 90, 0, 'ws0', ',Color:4b')
     await mob('cow', 7.5, 1, 28.5, 90, 0, 'ws1')
 
+    await resendChunks(ctx, X, Z)               // mineflayer ignores biome updates: reload the chunks
     await c('/clear @s')
     await ctx.tpCheck(X, F + 1, Z + 8, 180, 0)
+    await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await bot.waitForTicks(40)
     return { x: X, y: F, z: Z }

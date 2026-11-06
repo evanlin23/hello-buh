@@ -12,7 +12,7 @@
 // chunks (at(k)). Every mob is NoAI/NoGravity and moved by /tp; the enderman and the villagers get
 // invisible micro-moves while waiting off stage, so their first real move isn't late.
 const path = require('path')
-const { storyLines, storyKit } = require('../lib/story')
+const { storyLines, storyKit, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'put_back')
 const CAPTION = 'who keeps FIXING my house 😳'
@@ -35,9 +35,8 @@ module.exports = {
     const A = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     await ctx.defaultRules()
     await c('/gamerule log_admin_commands false')
-    for (let y0 = 1; y0 <= 24; y0 += 4) await c(`/fill ${A(-40, y0, -40)} ${A(40, y0 + 3, 40)} air`)
-    await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
-    await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
+    await clearSet(ctx, A, 64, 28)              // a wide flat clearing (lib/story.js)
+    await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
     await c('/kill @e[type=!player]')
 
     // --- my house: stone bricks (x -3..3, z -8..-2), the south-east corner still blown open
@@ -94,8 +93,10 @@ module.exports = {
     const vd = (prof, type) => `,VillagerData:{profession:"minecraft:${prof}",type:"minecraft:${type}",level:2},Xp:1`
     for (let i = 0; i < 3; i++) await mob('villager', -22 - i * 1.6, 1, 3.0, -90, `v${i}`, vd(['farmer', 'librarian', 'mason'][i], ['plains', 'taiga', 'savanna'][i]))
 
+    await resendChunks(ctx, X, Z)               // mineflayer ignores biome updates: reload the chunks
     await c('/clear @s')
     await ctx.tpCheck(X, F + 1, Z + 8, 180, 0)
+    await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await bot.waitForTicks(40)
     return { x: X, y: F, z: Z }
