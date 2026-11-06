@@ -1,0 +1,20 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+08:59:34.733 spawned at Vec3 { x: 121.5, y: 71, z: 20.5 }
+08:59:35.052 nearest minecraft:forest at [ 441, -108 ]
+08:59:46.368 set at { x: 449, y: 69, z: -108 }
+08:59:52.231 placed 46, correct 46/46
+08:59:54.076 STUNT OK
+meshing from y 8
+light computed in 0.6 s
+meshed + uploaded world in 14.8 s
+rendered 429 frames (7.15 s of video) in 129.0 s = 18.0 s per video second
+wrote work/heart_art.wav 7.20s
+song drop at 18.75s lands on 5.25s of the Short (song starts at 13.50s)
+icon red_wool
+wrote out/heart_art.mp4 6.85s
+
+real	3m28.909s
+user	3m40.886s
+sys	0m10.114s
+exit=0
