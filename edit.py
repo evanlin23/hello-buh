@@ -653,7 +653,7 @@ def main():
     ap.add_argument("--sfx", help='JSON list of [KIND, EVENT, (EVENT2), {opts}] sound effects (scripts/sfx.py)')
     ap.add_argument("--replay", help='JSON {"at": EVENT, ...}: append work/<name>.replay (scripts/render_replay.py) after the payoff')
     ap.add_argument("--loop", help='true or SECONDS: the last 0.25 s dissolve into the first frame')
-    ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 0.5, "after": 0, "text": ...} finale preview in front')
+    ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 1.5, "after": 0, "text": ...} finale preview in front (1.2-1.5 s)')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")

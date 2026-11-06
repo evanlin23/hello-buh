@@ -145,7 +145,7 @@ Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chro
 | `slowmo` | `[['splash5', 0.15, 0.35]]` | 0.5x around a mark (keep it ~0.5 s of footage: never dead space); frames blended |
 | `counter` | `{ at: ['look1', 'look2', 'look3'], total: 3 }` | "2/3" beat counter in the game view's top-left, pops on each mark |
 | `cards` | `[['splash5', 'NO WAY 💀', 1.0, 'red']]` | big impact text popping on a mark (white/red/green/yellow/blue/gold) |
-| `hook` | `{ at: 'splash5', before: 0.5, text: 'wait for the last one 😳' }` | a flash of the finale (cut before it lands) in front of beat 1 |
+| `hook` | `{ at: 'splash5', before: 1.7, after: -0.2, text: 'wait for the last one 😳' }` | 1.2-1.5 s of the finale (cut before it lands) in front of beat 1; owner: 0.5 s was "too quick" |
 
 More: `shake`, `flash`, `freeze`, `fallen`, `replay`, `loop` and `sfx` (see `docs/process.md`).
 Try one on rendered frames without touching the stunt: `EDIT_EXTRA='{"punch":["boom"]}' scripts/reedit.sh <name> /tmp/x.mp4`.

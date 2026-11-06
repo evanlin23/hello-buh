@@ -18,7 +18,7 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
                                                    stamped label ("1 IN A MILLION"); it adds SECONDS
   fallen:  [[EVENT_A, EVENT_B, LABEL?]]           live "blocks fallen" counter (top right) from the
                                                    recorded altitude, turning green on EVENT_B
-  hook:    {"at": EVENT, "before": 0.5, "after": 0.0, "text": "wait for the last one"}
+  hook:    {"at": EVENT, "before": 1.5, "after": 0.0, "text": "wait for the last one"}
                                                    a flash of the finale before beat 1: the clip
                                                    [at-before, at+after] of the finished Short
                                                    plays first with the text over it, then the
@@ -59,7 +59,7 @@ def hook_len(edit):
     h = _load(edit.get("hook")) if edit else None
     if not h:
         return 0.0
-    return float(h.get("before", 0.5)) + float(h.get("after", 0.0))
+    return float(h.get("before", 1.5)) + float(h.get("after", 0.0))
 
 
 # ---------------------------------------------------------------- text
@@ -349,7 +349,7 @@ def hook_prepend(out, spec, t_video, fps=60):
     """Put [t_video-before, t_video+after] of the finished Short in front of it, with the hook text
     over it and a quick zoom-in, then cut to the start. Rewrites `out` in place."""
     h = _load(spec)
-    before, after = float(h.get("before", 0.5)), float(h.get("after", 0.0))
+    before, after = float(h.get("before", 1.5)), float(h.get("after", 0.0))
     text = h.get("text", "wait for the last one 😳")
     a, b = max(0.0, t_video - before), t_video + after
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-hook-"))
