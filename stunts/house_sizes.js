@@ -84,7 +84,7 @@ module.exports = {
   edit: {
     caption: 'building a house in 5s vs 10s vs 20s 💀', red: '20s', song: 'songs/funk_abnormal.mp3', dropAt: 'all_done',
     startAt: 'build_start:-0.15', endAfter: 'backed_up:1.1',
-    subs: BUILDS.map((b, i) => ['build_start', b.sub, 9, i])
+    subs: BUILDS.map((b, i) => ['build_start', b.sub, i === 2 ? 6.4 : 9, i])   // the last label ends with its build (it sat on the cottage in the wide shot)
   },
 
   async setup (ctx) {
@@ -123,7 +123,7 @@ module.exports = {
       await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
     }
     const glide = async (target, ticks) => { for (let i = 0; i < ticks; i++) { await look(target, 0.18); await bot.waitForTicks(1) } }
-    let wrong = 0
+    let wrong = 0, lastSwing = -99
     // strafe toward tgt (the bot faces roughly north the whole time: right = +x, back = +z)
     let tgt = null
     const steer = () => {
@@ -157,7 +157,8 @@ module.exports = {
         await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5))
         bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,
           cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-        bot.swingArm()
+        // one continuous swing loop, not a swing restarted every tick (that strobed the hand)
+        if (bot.time.age - lastSwing >= 6) { bot.swingArm(); lastSwing = bot.time.age }
         ctx.sound(SOUND(b.name), 1, 0.8 + (guard % 3) * 0.05)
         placed.add(key(b))
         budget += 1 / B.rate                                // ticks this block "costs"

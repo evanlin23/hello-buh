@@ -77,7 +77,7 @@ module.exports = {
     }
     await bot.waitForTicks(8)
     ctx.mark('build_start')
-    let guard = 0
+    let guard = 0, lastSwing = -99
     while (todo.length && guard++ < 2000) {
       const i = todo.findIndex(b => FACES.some(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz })))
       if (i < 0) { ctx.log('stuck with', todo.length, 'blocks left'); break }
@@ -88,7 +88,7 @@ module.exports = {
       await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5))
       bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,
         cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      bot.swingArm()
+      if (bot.time.age - lastSwing >= 6) { bot.swingArm(); lastSwing = bot.time.age }   // one continuous swing loop (a swing per tick strobed the hand)
       ctx.sound(b.name === 'glass' ? 'block.glass.place' : 'block.wood.place', 1, 0.9 + (guard % 3) * 0.05)
       placed.add(key(b))
       await bot.waitForTicks(1)
