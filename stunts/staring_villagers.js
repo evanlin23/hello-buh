@@ -1,7 +1,7 @@
 // "why are they all staring at me 💀": a crowd of villagers stands in a field with their backs to
 // the player. The bot walks up... and every head snaps round at once, then follows the bot as it
 // sidesteps and backs away. The tracking is a repeating command block running
-// `tp @s ~ ~ ~ facing entity <bot> eyes` on every (NoAI) villager each tick, switched on at the turn.
+// `tp @s ~ ~ ~ facing entity <bot> eyes` on every (NoAI) villager, sent by the bot every tick from the turn on.
 const ROWS = 5, COLS = 7
 
 module.exports = {
@@ -33,10 +33,6 @@ module.exports = {
         k++
       }
     }
-    // the tracker runs from the start, gated on a tag: a command block placed later takes seconds
-    // to start ticking, a tag applies on the next tick
-    await ctx.cmd(`/tag ${bot.username} remove turn`)
-    await ctx.cmd(`/setblock ${x} ${floor - 2} ${z + 14} repeating_command_block[facing=up]{auto:1b,Command:"execute if entity @a[tag=turn] as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${bot.username} eyes"}`)
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 9.5, 180, -8)
     await ctx.cmd('/gamemode survival')
@@ -49,16 +45,15 @@ module.exports = {
     const { bot } = ctx
     await bot.waitForTicks(10)
     // walk up behind them
-    // the turn lands ~3.5 s after the tag (server-side lag we couldn't pin down), so tag on the
-    // way in: they spin round just as the bot gets there
-    const vills = Object.values(bot.entities).filter(e => e.name === 'villager')
-    const yaw0 = vills.map(e => e.yaw)
     bot.setControlState('forward', true)
-    bot.chat(`/tag ${bot.username} add turn`)
     while (bot.entity.position.z > this.z - 0.8) await bot.waitForTicks(1)   // ~3 blocks behind the front row
     bot.setControlState('forward', false)
-    // mark the turn when the heads actually move
-    for (let i = 0; i < 120 && vills.every((e, k) => Math.abs(e.yaw - yaw0[k]) < 0.05); i++) await bot.waitForTicks(1)
+    await bot.waitForTicks(12)
+    // they all turn round at once and keep tracking: the bot runs the tp-facing command itself every
+    // tick (a command block took seconds to start ticking; ops aren't chat-rate-limited)
+    const track = () => bot.chat(`/execute as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${bot.username} eyes`)
+    bot.on('physicsTick', track)
+    this.untrack = () => bot.removeListener('physicsTick', track)
     ctx.mark('turn')
     for (let i = 0; i < 4; i++) ctx.sound('entity.villager.ambient', 0.8, 0.8 + i * 0.12)
     await bot.waitForTicks(26)
@@ -71,6 +66,7 @@ module.exports = {
     // back away slowly
     bot.setControlState('back', true); await bot.waitForTicks(30); bot.setControlState('back', false)
     await bot.waitForTicks(20)
+    this.untrack()
     return true
   }
 }
