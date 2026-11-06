@@ -127,14 +127,18 @@ module.exports = function pixelArt ({ name, art, palette, first = '', order = 'f
       await bot.waitForTicks(2)
     }
     ctx.mark('complete')
-    await bot.waitForTicks(6)
-    // check the result
+    // the reveal lands with motion, never a still hold (owner 2026-11-06: "we land on the reveal for
+    // the pixel art for a while, which idk how good that is"): the step back and re-centre start on
+    // the completing tick (a 6-tick wait before them left a ~0.6 s dead hold: worker 2), and the
+    // Short ends ~1 s after the last block (edit: endAfter 'complete:1.0')
+    const recentre = lookToward(center.offset(0, -0.8, 0), 18)   // centre a bit low: the art sits above the hotbar
+    bot.setControlState('back', true); await bot.waitForTicks(12); bot.setControlState('back', false)
+    // check the result (after the move: the last placements have long arrived by now)
     let ok = 0
     for (const cell of cells) { const b = bot.blockAt(cell.p); if (b && b.name === PALETTE[cell.ch]) ok++ }
     ctx.log(`placed ${placed}, correct ${ok}/${cells.length}`)
-    // hold on the finished face, slight drift back to centre
-    await lookToward(center.offset(0, -0.8, 0), 24)   // centre a bit low: the art sits above the hotbar
-    await bot.waitForTicks(28)                         // hold the finished picture
+    await recentre
+    await bot.waitForTicks(8)
     return ok === cells.length
   }
 }

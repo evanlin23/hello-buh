@@ -19,32 +19,32 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 16.5,
-    "drop_in_short_s": 7.9,
-    "song_start_s": 8.6
+    "drop_in_short_s": 7.8,
+    "song_start_s": 8.7
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 9.6,
+    "duration_s": 8.8,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 7948184,
-    "sha256": "d95633c035130f997e6b06a831a2a155de26ea77e2b79be6ed2f458778f76807"
+    "bytes": 11242058,
+    "sha256": "c189f8598c3ae3dbd8d562b7a3c74bcbe557043e4f6919a4202755bc793577b5"
   },
   "edit": {
     "caption": "Bro this looks wrong?",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
     "start": 0.3,
-    "endAfter": "complete:1.7",
+    "endAfter": "complete:1.0",
     "args": [
       "--caption",
       "Bro this looks wrong?",
       "--start",
       "0.3",
       "--end_after",
-      "complete:1.7"
+      "complete:1.0"
     ]
   },
   "recording": {
@@ -55,13 +55,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 429,
-      "y": 70,
-      "z": -103
+      "x": 439,
+      "y": 71,
+      "z": -90
     },
     "biome": "minecraft:forest",
-    "ticks": 222,
-    "seconds": 11.1,
+    "ticks": 188,
+    "seconds": 9.4,
     "deaths": 0,
     "events": [
       {
@@ -69,43 +69,43 @@
         "event": "start"
       },
       {
-        "t": 0.7,
+        "t": 0.75,
         "event": "swing"
       },
       {
-        "t": 0.8,
+        "t": 0.85,
         "event": "swing"
       },
       {
-        "t": 0.9,
+        "t": 0.95,
         "event": "swing"
       },
       {
-        "t": 1,
+        "t": 1.05,
         "event": "swing"
       },
       {
-        "t": 1.1,
+        "t": 1.15,
         "event": "swing"
       },
       {
-        "t": 1.2,
+        "t": 1.25,
         "event": "swing"
       },
       {
-        "t": 1.3,
+        "t": 1.35,
         "event": "swing"
       },
       {
-        "t": 1.4,
+        "t": 1.45,
         "event": "swing"
       },
       {
-        "t": 1.5,
+        "t": 1.55,
         "event": "swing"
       },
       {
-        "t": 1.6,
+        "t": 1.65,
         "event": "swing"
       },
       {
@@ -121,31 +121,31 @@
         "event": "swing"
       },
       {
-        "t": 2.2,
+        "t": 2.25,
         "event": "swing"
       },
       {
-        "t": 2.3,
+        "t": 2.35,
         "event": "swing"
       },
       {
-        "t": 2.4,
+        "t": 2.45,
         "event": "swing"
       },
       {
-        "t": 2.5,
+        "t": 2.55,
         "event": "swing"
       },
       {
-        "t": 2.6,
+        "t": 2.65,
         "event": "swing"
       },
       {
-        "t": 2.7,
+        "t": 2.75,
         "event": "swing"
       },
       {
-        "t": 2.8,
+        "t": 2.85,
         "event": "swing"
       },
       {
@@ -189,79 +189,83 @@
         "event": "swing"
       },
       {
-        "t": 4,
+        "t": 3.95,
         "event": "swing"
       },
       {
-        "t": 4.1,
+        "t": 4.05,
         "event": "swing"
       },
       {
-        "t": 4.2,
+        "t": 4.15,
         "event": "swing"
       },
       {
-        "t": 4.3,
+        "t": 4.25,
         "event": "swing"
       },
       {
-        "t": 4.4,
+        "t": 4.35,
         "event": "swing"
       },
       {
-        "t": 4.55,
+        "t": 4.5,
         "event": "swing"
       },
       {
-        "t": 4.65,
+        "t": 4.6,
         "event": "swing"
       },
       {
-        "t": 4.75,
+        "t": 4.7,
         "event": "swing"
       },
       {
-        "t": 4.85,
+        "t": 4.8,
         "event": "swing"
       },
       {
-        "t": 4.95,
+        "t": 4.9,
         "event": "swing"
       },
       {
-        "t": 5.05,
+        "t": 5,
         "event": "swing"
       },
       {
-        "t": 5.15,
+        "t": 5.1,
         "event": "swing"
       },
       {
-        "t": 5.25,
+        "t": 5.2,
         "event": "swing"
       },
       {
-        "t": 5.35,
+        "t": 5.3,
         "event": "swing"
       },
       {
-        "t": 5.45,
+        "t": 5.4,
         "event": "swing"
       },
       {
-        "t": 5.55,
+        "t": 5.5,
         "event": "swing"
       },
       {
-        "t": 5.65,
+        "t": 5.6,
         "event": "swing"
       },
       {
-        "t": 5.75,
+        "t": 5.7,
         "event": "swing"
       },
       {
-        "t": 5.85,
+        "t": 5.8,
+        "event": "swing"
+      },
+      {
+        "t": 5.9,
         "event": "swing"
       },
       {
@@ -309,15 +313,15 @@
         "event": "swing"
       },
       {
-        "t": 7.1,
+        "t": 7.15,
         "event": "swing"
       },
       {
-        "t": 7.2,
+        "t": 7.25,
         "event": "swing"
       },
       {
-        "t": 7.3,
+        "t": 7.35,
         "event": "swing"
       },
       {
@@ -341,15 +345,11 @@
         "event": "swing"
       },
       {
-        "t": 7.95,
-        "event": "swing"
-      },
-      {
-        "t": 8.2,
+        "t": 8.1,
         "event": "complete"
       },
       {
-        "t": 11.1,
+        "t": 9.4,
         "event": "end"
       }
     ]
@@ -357,9 +357,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "97bba2b210b2b47cea20a9c9ebc23d799671d12f",
-    "rendered_at": "2026-11-06T17:55:25.553Z",
-    "head_at_publish": "97bba2b210b2b47cea20a9c9ebc23d799671d12f",
+    "commit": "de1d029c0e3050e141b42a19193a5d7fa9b4fed8",
+    "rendered_at": "2026-11-06T20:25:35.074Z",
+    "head_at_publish": "de1d029c0e3050e141b42a19193a5d7fa9b4fed8",
     "stunt": "stunts/looks_wrong.js",
     "source_snapshot": [
       "source/looks_wrong.js",
@@ -367,13 +367,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 97bba2b210b2",
+    "git checkout de1d029c0e30",
     "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
     "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
-    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start 0.3 --end_after complete:1.7 --out out/looks_wrong.mp4"
+    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start 0.3 --end_after complete:1.0 --out out/looks_wrong.mp4"
   ],
   "status": "ready",
-  "notes": "worker QA (qa_frames + independent review): ready. Nitpicks: last stone-brick gap renders very dark f444-459; held yellow block covers the lower mouth during the fill",
-  "published_at": "2026-11-06T17:57:38.056Z"
+  "notes": "worker frame QA (qa_frames + independent review) passed on the pull-back render. Nitpicks: ends 1.2 s after completion; 0.35 s near-still opening",
+  "published_at": "2026-11-06T20:28:33.826Z"
 }
