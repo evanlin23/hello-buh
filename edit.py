@@ -447,7 +447,7 @@ def clock_fmt(v, target, done):
     if done:
         v = target
     m, sec = divmod(v, 60)
-    if done or target > 60:
+    if (done and target == int(target)) or target > 60:   # a sub-second or fractional target keeps its hundredths ("0:00.50", not "0:00")
         return f"{int(m)}:{int(sec):02d}"
     return f"{int(m)}:{sec:05.2f}"
 
