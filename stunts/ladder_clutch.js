@@ -2,19 +2,25 @@
 // down the drop, walks off, turns to face the wall while falling and, a couple of ticks before the
 // ground, places one ladder on the wall (real block_place) in the row of its last airborne tick. It
 // grabs it (vanilla: a climbable block clamps the fall to 0.15 b/t and resets the fall distance) and
-// lands with full hearts, then looks up the wall. First from 20 blocks too late (it hits the ground
-// first and loses most of its hearts), then from 25, 30, 40, 50, 60, 70 and 80 blocks, all clean. Placements use vanilla reach (4.5,
+// lands without damage, then looks up the wall. First from 20 blocks too late (it hits the ground
+// first and is left on 3 hearts; the ladder goes up 4 ticks later), then from 25, 30, 40, 50, 60,
+// 70 and 80 blocks, all clean on those 3 hearts, each wall a fancier material. Placements use vanilla reach (4.5,
 // nudged to 5 so an 80-block fall always has a tick in reach), one tick ahead.
-const WALLS = [{ h: 20, late: true }, { h: 25 }, { h: 30 }, { h: 40 }, { h: 50 }, { h: 60 }, { h: 70 }, { h: 80 }].map((w, i) => ({ ...w, dz: i * 9 }))
-const SPAN = (WALLS.length - 1) * 9
+// each wall a different, fancier material: the beats look different and escalate
+const WALLS = [
+  { h: 20, late: true, mat: 'stone_bricks', base: 'mossy_stone_bricks' }, { h: 25, mat: 'cobblestone', base: 'mossy_cobblestone' },
+  { h: 30, mat: 'bricks' }, { h: 40, mat: 'sandstone' }, { h: 50, mat: 'deepslate_bricks' },
+  { h: 60, mat: 'quartz_bricks' }, { h: 70, mat: 'polished_blackstone_bricks' }, { h: 80, mat: 'obsidian' }
+].map((w, i) => ({ ...w, dz: i * 7 }))   // 7 apart: the whole cleared area must stay within the loaded chunks
+const SPAN = (WALLS.length - 1) * 7
 
 module.exports = {
   name: 'ladder_clutch',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ladder clutch 😳',
   edit: {
-    caption: 'ladder clutch 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'start:0.3', endAfter: 'final:0.9',
-    subs: [['jump', '20 blocks', 1.4, 0], ['landed', 'too late', 1.2, 0], ...WALLS.slice(1).map((w, i) => ['jump', `${w.h} blocks`, 1.4, i + 1])]
+    caption: 'ladder clutch 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.9',
+    subs: [['top', '20 blocks', 3, 0], ['landed', 'too late', 1.3, 0], ...WALLS.slice(1).map((w, i) => ['top', `${w.h} blocks`, 2.4 + w.h / 40, i + 1])]
   },
 
   async setup (ctx) {
@@ -25,15 +31,22 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    const R = 22, top = floor + Math.max(...WALLS.map(w => w.h))
-    for (let y0 = floor + 1; y0 <= top + 6; y0 += 6) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 5, top + 6)} ${z + R + SPAN} air`)   // 45x108x6 < the 32768 cap
+    const R = 26, top = floor + Math.max(...WALLS.map(w => w.h))
+    for (let y0 = floor + 1; y0 <= top + 6; y0 += 4) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 3, top + 6)} ${z + R + SPAN} air`)   // 53x101x4 < the 32768 cap
     await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R + SPAN} dirt`)
     await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R + SPAN} grass_block`)
-    // two walls, 1 thick (x), 5 wide (z): the bot falls down their east faces
+    // the walls, 1 thick (x), 5 wide (z): the bot falls down their east faces
     for (const w of WALLS) {
-      await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + w.h} ${z + w.dz + 2} stone_bricks`)
-      await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + 3} ${z + w.dz + 2} mossy_stone_bricks`)
+      await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + w.h} ${z + w.dz + 2} ${w.mat}`)
+      if (w.base) await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + 3} ${z + w.dz + 2} ${w.base}`)
     }
+    // mineflayer misses the updates of big /fills (its own copy of the world kept the old hills: the
+    // bot stood on them and the recording snapshot had them): go far away and come back so the
+    // client gets fresh chunks
+    await ctx.cmd(`/tp @s ${x + 3000} 200 ${z}`); await bot.waitForTicks(40)
+    await ctx.cmd(`/tp @s ${x + 2} ${floor + 2} ${z}`); await bot.waitForTicks(40); await bot.waitForChunksToLoad()
+    // check the ground is level beside every wall (run.sh retries on a throw)
+    for (const w of WALLS) { const b = ctx.surface(x + 2, z + w.dz); if (!b || b.position.y !== floor) throw new Error(`ground beside the ${w.h} wall is not level (${b && b.position.y - floor} ${b && b.name})`) }
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 5')
     await ctx.hotbar([['ladder', 16], ['cobblestone', 64], 'stone_pickaxe', ['bread', 12]])
@@ -53,12 +66,15 @@ module.exports = {
     const E = -Math.PI / 2, W = Math.PI / 2   // yaw facing east / west
     if (i > 0) {   // quick tp: the cut lands straight on the glance down the drop
       for (let t = 0; ; t++) {
-        await ctx.cmd(`/tp @s ${x + 0.75} ${floor + w.h + 1} ${z + 0.5} -90 70`)
-        if (Math.abs(bot.entity.position.y - (floor + w.h + 1)) < 0.1) break
-        if (t > 20) throw new Error('teleport did not stick')
+        bot.chat(`/tp @s ${x + 0.75} ${floor + w.h + 1} ${z + 0.5} -90 70`)
+        let ok = false
+        for (let k = 0; k < 6 && !ok; k++) { await bot.waitForTicks(1); ok = Math.abs(bot.entity.position.y - (floor + w.h + 1)) < 0.1 }
+        if (ok) break
+        if (t > 10) throw new Error('teleport did not stick')
       }
     }
-    ctx.mark(i === 0 ? 'start' : 'top', { n: i })
+    if (i === 0) ctx.mark('start')
+    ctx.mark('top', { n: i })
     await ctx.easeLook(E + 0.2, -1.2, 300)
     await ctx.easeLook(E - 0.15, -1.3, 350)
     ctx.mark('jump', { n: i })
@@ -71,14 +87,16 @@ module.exports = {
     ctx.log('falling at x', (bot.entity.position.x - x).toFixed(3))
     // turn around in the air to face the wall, looking down its face
     ctx.easeLook(W, -1.2, 450)
-    let placed = false, landed = false, row = null
+    let placed = false, landed = false, row = null, lateAt = null
     const onTick = () => {
       const p = bot.entity.position, vy = bot.entity.velocity.y
       if (placed) { if (!landed && bot.entity.onGround) { landed = true; ctx.mark('landed', { n: i }); if (i === WALLS.length - 1) ctx.mark('final') } return }
-      if (w.late) {   // the near miss: the ladder only goes up once the ground has already hit
+      if (w.late) {   // the near miss: the ladder only goes up 4 ticks after the ground has hit
         if (!bot.entity.onGround) return
+        if (lateAt === null) { lateAt = ctx.tick; ctx.mark('landed', { n: i }); return }
+        if (ctx.tick - lateAt < 4) return
         placed = true; landed = true; row = floor + 1
-        ctx.mark('landed', { n: i }); ctx.mark('late_placed', { n: i }); ctx.sound('block.ladder.place')
+        ctx.mark('late_placed', { n: i }); ctx.sound('block.ladder.place')
         process.nextTick(() => { bot._client.write('block_place', { hand: 0, location: { x, y: row, z: Math.floor(p.z) }, direction: 5, cursorX: 1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 }); bot.swingArm() })
         return
       }
@@ -88,7 +106,7 @@ module.exports = {
       while (y > floor + 1 && k < 40) { last = { y, k }; y += v; v = (v - 0.08) * 0.98; k++ }
       // vanilla reach: the ray from the eye to the ladder's spot on the wall face must be <= 4.5
       const reach = last && Math.hypot(p.x - (x + 1), p.y + 1.62 - (Math.floor(last.y) + 0.5))
-      if (last && last.k <= 2 && last.k >= 1 && reach <= 4.95) {
+      if (last && ((last.k === 2 && reach <= 4.5) || (last.k === 1 && reach <= 4.95))) {
         placed = true
         row = Math.floor(last.y)
         ctx.mark('placed', { n: i, row: row - floor })
@@ -112,8 +130,8 @@ module.exports = {
     const last = i === WALLS.length - 1
     await ctx.easeLook(W - 0.1, last ? 1.1 : 0.75, last ? 900 : 500)
     if (last) { ctx.mark('outro'); await ctx.easeLook(W - 0.45, 1.25, 1100) }
-    if (w.late) { ctx.log('late health', bot.health); const ok = !ctx.died && bot.health < 20; await ctx.cmd('/effect give @s instant_health 1 10 true'); return ok }
-    return !ctx.died && bot.health >= 20
+    if (w.late) { this.hp = bot.health; ctx.log('late health', bot.health); return !ctx.died && bot.health < 20 }
+    return !ctx.died && bot.health >= this.hp   // no heal: every later clutch on the hearts left, no damage
   },
 
   async perform (ctx) {

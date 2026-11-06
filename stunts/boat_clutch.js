@@ -34,7 +34,11 @@ module.exports = {
     await ctx.hotbar(['diamond_sword', ...PILLARS.map(() => 'oak_boat'), ['bread', 16]])   // boats don't stack: one per slot
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
     // stand clear of every block before recording (spawning inside the fill hurt the bot: in_wall)
+    // mineflayer misses the updates of big /fills (its copy of the world, and so the recording's
+    // snapshot, kept the old terrain): go far away and back so the client gets fresh chunks
+    await ctx.cmd(`/tp @s ${x + 3000} 200 ${z}`); await bot.waitForTicks(40)
     await ctx.tpCheck(x + 0.5, floor + PILLARS[0].h + 1, z + 0.5, 180, 60)
+    await bot.waitForChunksToLoad()
     ctx.select(0)
     return { x, y: floor, z }
   },

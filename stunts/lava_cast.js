@@ -57,7 +57,11 @@ module.exports = {
     await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
     await ctx.hotbar([...STREAMS.map(() => 'lava_bucket'), 'water_bucket', ...STREAMS.slice(0, 3).map(() => 'lava_bucket')])
     // on the platform's edge above the west end of the lip, facing south down the hill
-    await ctx.tpCheck(x - 1.5, T + 3, z - 1.3, 0, 55)   // not x-2.5: from there the first pour's ray clipped the channel's west rail
+    // mineflayer misses the updates of big /fills (its copy of the world, and so the recording's
+    // snapshot, kept the old terrain): go far away and back so the client gets fresh chunks
+    await ctx.cmd(`/tp @s ${x + 3000} 200 ${z}`); await bot.waitForTicks(40)
+    await ctx.tpCheck(x - 1.5, T + 3, z - 1.3, 0, 55)
+    await bot.waitForChunksToLoad()   // not x-2.5: from there the first pour's ray clipped the channel's west rail
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(10)
