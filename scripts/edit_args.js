@@ -22,6 +22,7 @@ if (e.shake) out.push('--shake', JSON.stringify(e.shake))
 if (e.flash) out.push('--flash', JSON.stringify(e.flash))
 if (e.freeze) out.push('--freeze', JSON.stringify(e.freeze))
 if (e.fallen) out.push('--fallen', JSON.stringify(e.fallen))
+if (e.replay) out.push('--replay', JSON.stringify(e.replay))   // needs scripts/render_replay.py first
 if (e.sfx) out.push('--sfx', JSON.stringify(e.sfx))       // sound effects (scripts/sfx.py)
 if (e.onFire) out.push('--on_fire', e.onFire)
 if (e.deathScreen) out.push('--death_screen', 'death')

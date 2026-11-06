@@ -386,3 +386,49 @@ def hook_prepend(out, spec, t_video, fps=60):
                     "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(res)], check=True)
     shutil.move(str(res), out)
     print(f"hook: {d:.2f}s of the finale ({a:.2f}-{b:.2f}s) in front, \"{text}\"")
+
+
+# ---------------------------------------------------------------- instant replay
+def replay_append(out, replay_dir, caption_png, audio, fps=60):
+    """Append the third-person instant replay (scripts/render_replay.py) after the Short: the replay
+    frames in the game view under the caption, a "REPLAY" tag, a white flash on the cut, the game
+    audio of the window slowed to match. Rewrites `out` in place; returns the seconds added."""
+    rd = pathlib.Path(replay_dir)
+    meta = json.loads((rd / "replay.json").read_text())
+    spec, (a, b), rfps = meta["spec"], meta["src"], meta["fps"]
+    speed = float(spec.get("speed", 0.5))
+    frames = sorted(rd.glob("f*.png"))
+    if not frames:
+        return 0.0
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-replay-"))
+    for k, f in enumerate(frames):
+        (tmp / f"r{k:05d}.png").symlink_to(f.resolve())
+    d = len(frames) / fps
+    tag = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    lab = rich_text(spec.get("label", "REPLAY"), 64, COLORS["white"])
+    dot = Image.new("RGBA", (40, 40), (0, 0, 0, 0)); ImageDraw.Draw(dot).ellipse((2, 2, 37, 37), fill=(255, 50, 40, 255), outline=(0, 0, 0, 255), width=4)
+    tag.alpha_composite(dot, (40, BAND + 38)); tag.alpha_composite(lab, (90, BAND + 22))
+    tag.save(tmp / "tag.png")
+    sys.path.insert(0, str(HERE / "scripts"))
+    from timewarp import atempo
+    g = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase,crop={W}:{GAME_H},pad={W}:{H}:0:{BAND}:black,"
+         f"fade=t=in:st=0:d=0.12:color=white,format=rgba[r0]",
+         "[r0][1:v]overlay=0:0[r1]", "[r1][2:v]overlay=0:0,setsar=1,format=yuv420p[rv]",
+         "[3:v]setsar=1,format=yuv420p[mv]",
+         "[3:a]aresample=48000,aformat=channel_layouts=stereo[ma]"]
+    ins = ["-framerate", str(fps), "-i", str(tmp / "r%05d.png"), "-loop", "1", "-i", str(caption_png), "-loop", "1", "-i", str(tmp / "tag.png"), "-i", out]
+    if audio:
+        ins += ["-i", audio]
+        g.append(f"[4:a]atrim={a:.4f}:{b:.4f},asetpts=PTS-STARTPTS,{atempo(speed)},loudnorm=I=-16:TP=-2,aresample=48000,"
+                 f"aformat=channel_layouts=stereo,apad=whole_dur={d:.4f},atrim=0:{d:.4f}[ra]")
+    else:
+        g.append(f"anullsrc=r=48000:cl=stereo,atrim=0:{d:.4f}[ra]")
+    g.append("[mv][ma][rv][ra]concat=n=2:v=1:a=1[v][a]")
+    res = tmp / "out.mp4"
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", *ins, "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]",
+                    "-t", f"{float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', out], capture_output=True, text=True).stdout) + d:.3f}",
+                    "-r", str(fps), "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
+                    "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(res)], check=True)
+    shutil.move(str(res), out)
+    print(f"replay: {d:.2f}s appended ({a:.2f}-{b:.2f}s of the recording at {speed:g}x, CAM={spec.get('cam')})")
+    return d

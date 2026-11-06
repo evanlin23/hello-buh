@@ -641,6 +641,7 @@ def main():
     ap.add_argument("--freeze", help='JSON list of [EVENT, SECONDS, TEXT?, COLOR?] freeze frames with a stamped text')
     ap.add_argument("--fallen", help='JSON list of [EVENT_A, EVENT_B, LABEL?] live "blocks fallen" counters (from the poses)')
     ap.add_argument("--sfx", help='JSON list of [KIND, EVENT, (EVENT2), {opts}] sound effects (scripts/sfx.py)')
+    ap.add_argument("--replay", help='JSON {"at": EVENT, ...}: append work/<name>.replay (scripts/render_replay.py) after the payoff')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 0.5, "after": 0, "text": ...} finale preview in front')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
@@ -648,7 +649,8 @@ def main():
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
-    args.warp, args.rec_path = None, args.timeline
+    args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
+    frames_dir0 = pathlib.Path(args.frames).parent if args.frames else None
     if (args.speed or args.slowmo or args.freeze) and args.timeline:
         apply_speed(args)
     _tl = {}
@@ -907,6 +909,12 @@ def main():
     subprocess.run(cmd, check=True)
     if args.story:   # single-pass loudnorm lands ~2 dB short: measure and correct to -14 LUFS exactly
         story_track.master_gain(args.out, -14.0)
+    if args.replay and frames_dir0:   # instant replay from the third-person pass (scripts/render_replay.py)
+        rdir = frames_dir0.with_suffix(".replay")
+        if (rdir / "replay.json").exists():
+            dur += retention.replay_append(args.out, rdir, tmp / "caption.png", args.audio0, args.out_fps)
+        else:
+            print(f"replay: {rdir} not rendered (python3 scripts/render_replay.py <name>), skipped")
     if args.hook and args.timeline:   # finale preview in front of beat 1 (after mastering: it reuses the final mix)
         h = json.loads(args.hook)
         if h.get("at") in tl_ev:
