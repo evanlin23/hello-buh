@@ -2,7 +2,7 @@
   "name": "same_spot",
   "stunt": "story_same_spot",
   "caption": "why is my mom ALWAYS in the same spot \ud83d\ude33",
-  "premise": "Every time the narrator comes home from adventuring, his mom is standing in the exact same spot at the door, mid-word. Her wheat hasn't grown, the sheep by the door is frozen mid-jump, his birthday cake still has one bite missing.",
+  "premise": "Every time the narrator comes home from adventuring, his mom is standing in the exact same spot at the door, mid-word. Her wheat hasn't grown, the sheep by the door is frozen mid-jump, the furnace he lit three years ago is still burning.",
   "twist": "The world only runs near him. Past a certain line the whole village freezes. His mom never waited three years: she has only ever lived the minutes he was home. He left at seven, and for her that was this morning. He's the only clock she has, so he never tells her how long he was gone.",
   "voice": {
     "voice": "am_adam",
@@ -30,7 +30,7 @@
     },
     {
       "id": "L05",
-      "text": "My birthday / CAKE / still had / ONE bite / missing."
+      "text": "The FURNACE / I lit / THREE YEARS ago / was still / BURNING."
     },
     {
       "id": "L06",

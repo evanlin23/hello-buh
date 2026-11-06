@@ -147,38 +147,38 @@
    ]
   },
   "L05": {
-   "text": "My birthday cake still had one bite missing.",
-   "dur": 2.155,
-   "onset": 0.172,
-   "end": 1.966,
+   "text": "The furnace I lit three years ago was still burning.",
+   "dur": 2.259,
+   "onset": 0.155,
+   "end": 2.069,
    "chunks": [
     [
-     0.172,
-     0.534
+     0.155,
+     0.491
     ],
     [
-     0.534,
-     0.724
+     0.491,
+     0.716
     ],
     [
-     0.724,
-     1.069
+     0.716,
+     1.207
     ],
     [
-     1.069,
-     1.431
+     1.207,
+     1.491
     ],
     [
-     1.431,
-     1.966
+     1.491,
+     2.069
     ]
    ],
    "captions": [
-    "My birthday",
-    "CAKE",
-    "still had",
-    "ONE bite",
-    "missing."
+    "The FURNACE",
+    "I lit",
+    "THREE YEARS ago",
+    "was still",
+    "BURNING."
    ]
   },
   "L06": {
@@ -657,5 +657,5 @@
    ]
   }
  },
- "total": 46.52
+ "total": 46.62
 }

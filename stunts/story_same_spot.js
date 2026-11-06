@@ -36,6 +36,9 @@ module.exports = {
     await c('/gamerule log_admin_commands false')
     await c('/gamerule random_tick_speed 0')            // her wheat really doesn't grow
     for (let y0 = 1; y0 <= 24; y0 += 4) await c(`/fill ${A(-40, y0, -40)} ${A(40, y0 + 3, 40)} air`)
+    // the far side of the street gets a long view (no hills behind the village edge)
+    for (let y0 = 1; y0 <= 44; y0 += 4) for (const z0 of [41, 71]) await c(`/fill ${A(-40, y0, z0)} ${A(40, y0 + 3, z0 + 29)} air`)
+    for (const z0 of [41, 71]) { await c(`/fill ${A(-40, 0, z0)} ${A(40, 0, z0 + 29)} grass_block`); await c(`/fill ${A(-40, -4, z0)} ${A(40, -1, z0 + 29)} dirt`) }
     await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
     await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
     await c('/kill @e[type=!player]')
@@ -58,7 +61,8 @@ module.exports = {
     await house(-3, -8, 0, -3, 'south', 'birch_planks')
     for (const [dx, dz, b] of [[-2, -2, 'poppy'], [2, -2, 'cornflower'], [-3, -1, 'oxeye_daisy']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
     // inside: the birthday cake with one bite gone, and the table where she cuts my bread
-    await c(`/setblock ${A(-1, 1, -5)} cake[bites=1]`)
+    await c(`/setblock ${A(-2, 1, -5)} furnace[facing=east,lit=true]`)
+    await c(`/setblock ${A(-2, 2, -5)} furnace[facing=east,lit=true]`)
     await c(`/fill ${A(0, 1, -7)} ${A(1, 1, -6)} oak_slab`)
     await c(`/setblock ${A(-2, 1, -7)} crafting_table`)
     await c(`/setblock ${A(1, 1, -4)} barrel[facing=up]`)
@@ -89,8 +93,8 @@ module.exports = {
     // the village: walkers back and forth, a hopping villager and a hopping sheep
     const W = [['armorer', -4.5, 24.0, 'plains'], ['librarian', 4.5, 26.5, 'taiga'], ['cleric', -3.8, 28.6, 'desert'], ['mason', 5.2, 22.4, 'savanna'], ['shepherd', 3.6, 30.4, 'plains']]
     for (let i = 0; i < W.length; i++) await mob('villager', W[i][1], 1, W[i][2], 90, 0, `w${i}`, vd(W[i][0], W[i][3]))
-    await mob('villager', -2.6, 1, 26.0, 180, 0, 'hop', vd('fletcher', 'snow'))
-    await mob('sheep', 2.6, 1, 28.0, 0, 0, 'hops', ',Color:14b')
+    await mob('villager', -2.2, 1, 28.6, 180, 0, 'hop', vd('fletcher', 'snow'))
+    await mob('sheep', 2.4, 1, 29.4, 0, 0, 'hops', ',Color:14b')
     await mob('sheep', -6.0, 1, 26.8, 90, 0, 'ws0', ',Color:4b')
     await mob('cow', 7.5, 1, 28.5, 90, 0, 'ws1')
 
@@ -126,9 +130,9 @@ module.exports = {
         const a = vt / 22 + ph, x = cx + Math.sin(a) * amp + j
         tp(`w${i}`, x, 1, cz, Math.cos(a) > 0 ? -90 : 90)
       }
-      const hy = (o) => { const u = ((vt + o) % HOP) / HOP; return 1 + Math.sin(u * Math.PI) * 1.15 }
-      tp('hop', -2.6 + j, hy(0), 26.0, 180)
-      tp('hops', 2.6 + j, hy(HOP / 2), 28.0, 0)
+      const hy = (o) => { const u = ((vt + o) % HOP) / HOP; return 1 + Math.sin(u * Math.PI) * 1.4 }
+      tp('hop', -2.2 + j, hy(0), 28.6, 0)
+      tp('hops', 2.4 + j, hy(HOP / 2), 29.4, 0)
       const s0 = vt / 30
       tp('ws0', -6.0 + Math.sin(s0) * 1.5 + j, 1, 26.8, Math.cos(s0) > 0 ? -90 : 90)
       tp('ws1', 7.5 - Math.sin(s0 + 1) * 1.2 + j, 1, 28.5, Math.cos(s0 + 1) > 0 ? 90 : -90)
@@ -142,7 +146,7 @@ module.exports = {
         s.vy -= 0.08; s.y = Math.max(1, s.y + s.vy)
         if (s.y <= 1) { s.mode = 'walk'; s.t = 0 }
       } else if (s.mode === 'walk') {
-        s.t++; s.x = 2.4 + Math.sin(s.t / 25) * 0.9; s.yaw = Math.cos(s.t / 25) > 0 ? -90 : 90
+        s.t++; s.x = 2.4 + Math.min(s.t / 20, 1) + Math.sin(s.t / 25) * 0.6; s.yaw = Math.cos(s.t / 25) > 0 ? -90 : 90
       } else if (s.mode === 'hop') {
         s.t++; s.y = 1 + Math.sin(Math.min(s.t, 6) / 12 * Math.PI) * 1.25      // rises to its apex... and stops there
         if (s.t >= 6) { s.mode = 'frozen'; s.t = 0 }
@@ -155,7 +159,7 @@ module.exports = {
     // L01: Mom at the door, frozen, the sheep beside her hanging in the air
     await cut(1.6, 1.6, P(1.2, 2.2, -1.7))
     for (let k = 0; k < 6; k++) { world(); look(k); await bot.waitForTicks(1) }
-    await line('L01', async (k) => { world(); go(k > 2 && k < 14); K.base = K.aim(P(1.25, 2.25 - Math.min(k, 40) * 0.003, -1.7)); look(k) })
+    await line('L01', async (k) => { world(); K.base = K.aim(P(1.25, 2.25 - Math.min(k, 40) * 0.003, -1.7)); look(k) })
     go(false)
     // L02: same door (wide), same stare (her face), same half a word (side, close)
     await cut(4.6, 3.6, P(0.5, 2.2, -2.6))
@@ -172,9 +176,13 @@ module.exports = {
     // L04: the sheep by the door, mid-jump, still in the air (low, looking up at it)
     await cut(3.6, 0.9, P(2.4, 2.6, -1.3))
     await line('L04', async (k) => { world(); look(k) })
-    // L05: the birthday cake, one bite missing (inside, over the table)
-    await cut(1.0, -4.6, P(-0.5, 1.25, -4.5))
-    await line('L05', async (k, at) => { world(); K.base = K.aim(P(-0.5, 1.25 - Math.min(k, 30) * 0.004, -4.5)); look(k, 0, k > at(3) ? -0.05 : 0) })
+    // L05: the furnace I lit three years ago, still burning (inside)
+    await cut(0.6, -4.5, P(-1.5, 2.0, -4.5))
+    await line('L05', async (k, at) => {
+      world()
+      if (k % 5 === 0) ctx.particles('smoke', P(-1.1, 1.5, -4.5), { count: 3 })
+      K.base = K.aim(P(-1.5, 2.0 - Math.min(k, 30) * 0.006, -4.5)); look(k, 0, k > at(3) ? -0.04 : 0)
+    })
     // L06: I walk up and everything starts at once: the sheep lands, Mom turns, the wheat pops up
     await cut(0.6, 7.5, P(0.6, 2.0, -1.9))
     await line('L06', async (k, at) => {
