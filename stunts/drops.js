@@ -12,8 +12,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing... x3 😳',
   edit: {
-    caption: '1 in a million landing... x3 😳', red: 'x3', song: 'songs/misery.mp3', dropAt: 'drop', startAt: 'drop:-1.0',
-    subs: DROPS.map((d, i) => ['drop', d.sub, 1.8, i]), deathScreen: true, endAfter: 'death:1.8'
+    caption: '1 in a million landing... x3 😳', red: 'x3', song: 'songs/misery.mp3', dropAt: 'drop', startAt: 'drop:-0.4',
+    subs: DROPS.map((d, i) => ['drop', d.sub, 1.8, i]), deathScreen: true, endAfter: 'death:1.1'
   },
   expectDeath: true,
 
@@ -45,9 +45,17 @@ module.exports = {
       const d = DROPS[i], top = floor + d.h
       const gx = x + Math.floor(0.5 + d.off)        // the glass sits under the bot (the offset drop missed its block and fell)
       await ctx.cmd(`/setblock ${gx} ${top} ${z} glass`)
-      await ctx.tpCheck(x + 0.5 + d.off, top + 1, z + 0.5, 0, 89)       // on the glass, looking straight down
-      await ctx.cmd(`/effect give @s instant_health 1 5 true`)
-      await bot.waitForTicks(8)
+      // on the glass, looking straight down. A fast tp: tpCheck's 1 s settle was a 1.8 s still between drops
+      const tx = x + 0.5 + d.off, ty = top + 1, tz = z + 0.5
+      for (let a = 0; ; a++) {
+        bot.chat(`/tp @s ${tx} ${ty} ${tz} 0 89`)
+        let ok = false
+        for (let t = 0; t < 10 && !ok; t++) { await bot.waitForTicks(1); ok = Math.abs(bot.entity.position.y - ty) < 0.1 && Math.abs(bot.entity.position.x - tx) < 0.1 }
+        if (ok) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.y - ty) < 0.1) break }
+        if (a === 4) throw new Error('teleport did not stick')
+      }
+      bot.chat('/effect give @s instant_health 1 5 true')
+      await bot.waitForTicks(4)
       ctx.mark('drop', { n: i, h: d.h }); ctx.sound('block.glass.break', 1)
       ctx.particles('block', { x: gx, y: top, z }, { block: 'glass' })
       await ctx.cmd(`/setblock ${gx} ${top} ${z} air`)
@@ -61,9 +69,8 @@ module.exports = {
         if (splashed && k > 4 && (bot.entity.onGround || bot.entity.isInWater)) break
       }
       if (ctx.died) break
-      await bot.waitForTicks(10)
-      await ctx.easeLook(bot.entity.yaw, 0.9, 500)                       // look up: from up there?!
-      await bot.waitForTicks(6)
+      await bot.waitForTicks(4)
+      await ctx.easeLook(bot.entity.yaw, 0.9, 450)                       // look up: from up there?!
     }
     for (let k = 0; k < 40 && !ctx.died; k++) await bot.waitForTicks(1)
     await bot.waitForTicks(50)                                           // the death screen
