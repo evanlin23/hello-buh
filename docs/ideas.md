@@ -50,8 +50,8 @@ A mystery stated plainly in line 1, clues that build up, then a twist that makes
 26. **The sheep that has stared at one block for 412 days.**
 27. **The friend who quit, waiting at the edge of render distance.**
 28. **Every block I place makes a villager forget something.**
-29. **Same Spot** *(worker 8, building)*. Every time I come home, Mom is standing in the exact same spot, mid-word, the sheep by the door frozen mid-jump. Twist: the world only runs near me. She has only lived the minutes I was home; I left at seven, and for her that was this morning. "I'm the only clock she has."
-30. **Put Back** *(worker 8, next)*. Every morning, one more block of my blown-up house is back where it was. An enderman does it, and it never looks at me. Twist: it's my brother, who went to the End and came back as one. He can only come while my eyes are shut, because if I look at him, he has to hurt me.
+29. **Same Spot** *(worker 8, in QA)*. Every time I come home, Mom is standing in the exact same spot, mid-word, the sheep by the door frozen mid-jump. Twist: the world only runs near me. She has only lived the minutes I was home; I left at seven, and for her that was this morning. "I'm the only clock she has."
+30. **Put Back** *(worker 8, in QA)*. Every morning, one more block of my blown-up house is back where it was. An enderman does it, and it never looks at me. Twist: it's my brother, who went to the End and came back as one. He can only come while my eyes are shut, because if I look at him, he has to hurt me.
 
 ## More ridiculous ones (worker 7)
 29. **Every block I place doubles.** One dirt block becomes 2, 4, 8... until 1,024 blocks bury the field and the sky. Real placements; the doubling is commands.

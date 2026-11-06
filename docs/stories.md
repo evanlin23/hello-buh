@@ -130,7 +130,7 @@ in case a part 2 answers it. The Short itself never answers.
 contradiction, `counter` not needed, `hook` can flash the question card at the start.
 
 **Original premises (Minecraft-native):**
-- **The Sign by the Bed.** Every player finds a sign from their future self on their first night.
+- **The Sign by the Bed.** *(worker 8, building as `sign_by_bed`: a barrel instead of the chest)* Every player finds a sign from their future self on their first night.
   Proof: Steve's said "don't dig down" (lava under him); Alex's said "pet the wolf" (it saved her).
   Ours: "DON'T OPEN THE CHEST UNDER YOUR BED." We never placed a chest. Our villager mom watches
   from the doorway, not blinking. We lock the door. A new sign appears INSIDE the locked room, in
