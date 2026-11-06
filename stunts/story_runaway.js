@@ -33,7 +33,7 @@ module.exports = {
     const c = (s) => ctx.cmd(s)
     const A = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     await ctx.defaultRules()
-    await c('/gamerule mob_griefing true')
+    await c('/gamerule mob_griefing false')   // the blast leaves no crater: the dead camera stays at eye level on the party
     // every per-tick `execute as <mob> run tp` was broadcast to ops ("[Mason: Teleported...]"), the bot
     // included: ~140 chat packets a second backed the client up and mob moves arrived in bursts
     await c('/gamerule log_admin_commands false')
@@ -317,7 +317,9 @@ module.exports = {
     }, -0.05)
     // BOOM
     const boomAt = bot.entity.position.clone()
-    say(`/execute at @s run summon tnt ~ ~ ~ {fuse:0s}`)
+    // he goes off like a creeper: a creeper exploding exactly where he stands (Fuse 0, inside the camera, so it's
+    // never seen). The death screen reads "HelloBuh was blown up by Creeper", the twist in the game's own words.
+    say(`/execute at @s run summon creeper ~ ~ ~ {Fuse:0s,ignited:1b,NoAI:1b,Silent:1b}`)
     ctx.mark('boom')
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
     // a dead player stops getting mob updates after ~1 s (the villagers froze): the crater smokes instead
