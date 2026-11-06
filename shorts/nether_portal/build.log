@@ -1,0 +1,20 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+10:41:37.848 spawned at Vec3 { x: 124.5, y: 70, z: 14.5 }
+10:41:38.171 nearest minecraft:forest at [ 412, 14 ]
+10:41:50.252 set at { x: 420, y: 85, z: 14 }
+10:41:54.790 portal block: nether_portal
+10:41:57.493 STUNT OK
+meshing from y 23
+light computed in 0.5 s
+meshed + uploaded world in 13.3 s
+rendered 402 frames (6.70 s of video) in 132.2 s = 19.7 s per video second
+wrote work/nether_portal.wav 6.75s
+song drop at 10.50s lands on 3.90s of the Short (song starts at 6.60s)
+no 3D block icons needed
+wrote out/nether_portal.mp4 6.30s
+
+real	3m29.051s
+user	3m26.865s
+sys	0m9.880s
+exit=0

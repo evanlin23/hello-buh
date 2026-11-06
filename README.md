@@ -18,6 +18,7 @@ checked out at `../hb-videos`.
 | [heart_art](shorts/heart_art/short.mp4) | built this for my girlfriend 🥺 | 6.85s | Payphone · Radio Top Singers | ready | 5617e57 |  |
 | [looks_wrong](shorts/looks_wrong/short.mp4) | Bro this looks wrong? | 9.7s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 17ecd2d |  |
 | [midas_touch](shorts/midas_touch/short.mp4) | POV: you got the midas touch 🤑 | 10.15s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 90afab9 |  |
+| [nether_portal](shorts/nether_portal/short.mp4) | POV: your first nether portal 😳 | 6.3s | FUNK ABNORMAL (ULTRA SLOWED) | ready | e657d18 |  |
 | [one_in_a_million](shorts/one_in_a_million/short.mp4) | 1 in a million landing 😳 | 8.3s | misery. · pupsies | ready | 482d834 |  |
 | [pearl_clutch](shorts/pearl_clutch/short.mp4) | POV: You Throw an Ender Pearl But... | 7.15s | misery. · pupsies | ready | 46ecd24 |  |
 | [skull_art](shorts/skull_art/short.mp4) | the skull emoji irl 💀 | 8.75s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 46cab20 |  |
