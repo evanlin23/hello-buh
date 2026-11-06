@@ -70,3 +70,8 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
 - No block entities render (beds, bells, chests, signs): build sets without them.
+- Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands.
+- Pre-roll motion that must start on a word (mobs idle for a while update ~1 s late), keep the camera out of
+  crowds, and set `/gamerule log_admin_commands false` for per-tick `execute as` moves.
+- Captions switch on the cut. A death screen needs something moving behind it.
+- Chickens render broken and boats draw ~1.1 blocks high (both reported); see docs/lessons.md "Story Shorts".
