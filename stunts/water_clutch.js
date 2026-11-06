@@ -39,7 +39,7 @@ module.exports = {
     const mode = this.mode || 'ok'                     // ok | skip (never places) | late (too late)
     await bot.waitForTicks(this.fast ? 6 : 30)         // standing on the pillar
     if (!this.fast) await ctx.easeLook(0, -1.0, 600)   // peek over the edge
-    await ctx.easeLook(0, -0.25, this.fast ? 250 : 400)
+    await ctx.easeLook(0, -0.6, this.fast ? 250 : 400)       // eyes on the drop while jumping off
     ctx.select(1)                                      // pull out the water bucket
     await bot.waitForTicks(6)
     ctx.mark('jump')
