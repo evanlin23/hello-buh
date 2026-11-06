@@ -402,6 +402,11 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
       if (eFace.tintindex === 0) {
         if (block.name === 'redstone_wire') {
           tint = tints.redstone[`${block.getProperties().power}`]
+        } else if (block.name === 'water_cauldron') {
+          tint = biomeTint(world, cursor, 'water')
+        } else if (block.name === 'lava_cauldron' || block.name === 'powder_snow_cauldron') {
+          // no BlockColors provider: the content face's tintindex is ignored (it was tinted grass
+          // green, and the lava came out dull brown: worker 5, story_respawn_tax)
         } else if (FIXED[block.name] !== undefined) {
           tint = hexToGl(FIXED[block.name])
         } else if (block.name.includes('leaves') || block.name === 'vine') {

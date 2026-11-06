@@ -63,6 +63,11 @@ each section.
   with one texture. Place things so the key object stays in frame.
 
 ## Renderer (our own; `renderer/`)
+- **What renders among the blocks vanilla draws specially** (checked 2026-11-07 by placing each in front of the camera):
+  - Renders: chest, trapped chest, ender chest (single and double, lid animation), beds, standing and wall signs (text), lectern (without the book), enchanting table (without the floating book), spawner, campfire, cauldrons (water, lava), end portal frame, end portal/gateway surface.
+  - Draws nothing yet: shulker boxes, banners, skulls/heads, decorated pots, the conduit core, the bell body (only its frame), hanging signs, the enchanting table and lectern books. Stage around them, or ask the engine worker.
+  - A conduit (or any waterlogged block) set in air keeps waterlogged=true and shows a water block around it, in vanilla too.
+- **Lava cauldron**: its content face has tintindex 0 but no BlockColors provider. We tinted it grass green, so the lava read dull brown. Only the water cauldron is tinted (biome water colour).
 - **The Nether and the End render** (worker 11). The harness records `rec.dimension`; `DIMENSION=` overrides it. Before this a Nether recording drew no terrain at all: the mesher assumed the overworld's y -64..320, and Nether/End chunks are y 0..256, so every section index was off by four. Now the mesher takes the height from the columns.
   - Lighting: no sky light in either; the Nether has ambient light 0.1, the End a bright lightmap.
   - Nether: no sky, sun or clouds; the clear colour is the biome fog colour; thick fog.
