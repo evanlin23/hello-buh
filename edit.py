@@ -96,9 +96,19 @@ def hud_png(jar, slot, items, health, path):
     bx, by = (W - bar.width) // 2, BAND + GAME_H - bar.height - GUI   # hotbar sits at the bottom edge of the game
     img.alpha_composite(bar, (bx, by))
     for i, it in enumerate(items):
-        if it:
-            icon = big(sprite(jar, it))
-            img.alpha_composite(icon, (bx + (3 + 20 * i) * GUI, by + 3 * GUI))
+        if not it:
+            continue
+        name, count, path_ = (it[0], it[1], None) if isinstance(it, (list, tuple)) else (None, 1, it)
+        ix, iy = bx + (3 + 20 * i) * GUI, by + 3 * GUI
+        icon3d = ICONS / f"{name}.png" if name else None
+        if icon3d and icon3d.exists():            # block items: 3D icon rendered by renderer/icons.js
+            img.alpha_composite(Image.open(icon3d).convert("RGBA").resize((16 * GUI, 16 * GUI), Image.NEAREST), (ix, iy))
+        else:
+            sp = path_ or item_sprite(name)
+            if sp:
+                img.alpha_composite(big(sprite(jar, sp)), (ix, iy))
+        if count and count > 1:                   # stack count, like GuiGraphics.renderItemDecorations
+            draw_text(img, jar, str(count), ix + (19 - 2) * GUI, iy + (6 + 3) * GUI, align_right=True)
     img.alpha_composite(sel, (bx - GUI + 20 * GUI * slot, by - GUI))
     heart_c, heart = big(sprite(jar, "gui/sprites/hud/heart/container")), big(sprite(jar, "gui/sprites/hud/heart/full"))
     half = big(sprite(jar, "gui/sprites/hud/heart/half"))
@@ -140,6 +150,38 @@ def JAR_NAMES():
     return _jar_names
 
 
+ICONS = HERE / "work" / "assets" / CLIENT_JAR.stem / "icons"
+_font = None
+
+
+def draw_text(img, jar, text, x, y, align_right=False):
+    """Minecraft's default font (textures/font/ascii.png, 8x8 cells) at GUI scale, white with the
+    1px dark-grey shadow the game draws under HUD text."""
+    global _font
+    if _font is None:
+        with jar.open("assets/minecraft/textures/font/ascii.png") as f:
+            _font = Image.open(io.BytesIO(f.read())).convert("RGBA")
+    glyphs = []
+    for ch in text:
+        c = ord(ch)
+        cell = _font.crop(((c % 16) * 8, (c // 16) * 8, (c % 16) * 8 + 8, (c // 16) * 8 + 8))
+        w = 0
+        for xx in range(8):
+            if any(cell.getpixel((xx, yy))[3] > 0 for yy in range(8)):
+                w = xx + 1
+        glyphs.append((cell, w if ch != " " else 4))
+    width = sum(w + 1 for _, w in glyphs) - 1
+    if align_right:
+        x -= width * GUI
+    for color, off in (((63, 63, 63, 255), 1), ((255, 255, 255, 255), 0)):
+        cx = x
+        for cell, w in glyphs:
+            mask = cell.split()[3].resize((8 * GUI, 8 * GUI), Image.NEAREST)
+            layer = Image.new("RGBA", (8 * GUI, 8 * GUI), color)
+            img.paste(layer, (cx + off * GUI, y + off * GUI), mask)
+            cx += (w + 1) * GUI
+
+
 def hud_states(timeline, duration):
     """[(t0, t1, slot, items, health)] from the bot timeline (ms since recording start)."""
     items = list(HOTBAR)
@@ -151,7 +193,7 @@ def hud_states(timeline, duration):
         t = ev["t"] / 1000
         new_items, new_slot, new_health = list(items), ev.get("slot", slot), ev.get("health", health)
         if ev["event"] == "hotbar":
-            new_items = [item_sprite(n) for n in ev["items"]]
+            new_items = [(tuple(n) if isinstance(n, list) else ((n, 1) if n else None)) for n in ev["items"]]
         if ev["event"] == "placed" and not any(e["event"] == "hotbar" for e in timeline):
             new_items[1] = "item/bucket"
         if ev["event"] == "scooped" and ev.get("ok") and not any(e["event"] == "hotbar" for e in timeline):
@@ -208,8 +250,12 @@ def main():
     if args.hud:
         tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"] if args.timeline else []
         shift = args.start
+        states = hud_states(tl, dur + shift)
+        need = sorted({it[0] for st in states for it in st[3] if isinstance(it, tuple) and it and it[0] and not (ICONS / f"{it[0]}.png").exists()})
+        if need:   # 3D icons for block items (skips non-block items itself)
+            subprocess.run(["node", str(HERE / "renderer" / "icons.js"), CLIENT_JAR.stem, *need], check=True)
         with zipfile.ZipFile(CLIENT_JAR) as jar:
-            for k, (a, b, slot, items, health) in enumerate(hud_states(tl, dur + shift)):
+            for k, (a, b, slot, items, health) in enumerate(states):
                 p = tmp / f"hud{k}.png"
                 hud_png(jar, slot, items, health, p)
                 inputs += ["-loop", "1", "-i", str(p)]
