@@ -10,7 +10,7 @@ module.exports = {
   name: 'tries',
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
-    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'landed', startAt: 'jump:-1.0', endAfter: 'landed:1.0',
+    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'landed', startAt: 'jump:-1.0', endAfter: 'placed:2.3',
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
     subs: [['jump', 'easy', 1.0, 0],
       ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'ok for real this time', 1.8, 1],
@@ -19,7 +19,7 @@ module.exports = {
       ['death', 'that one was lag', 1.5, 3], ['attempt', 'ONE more', 1.4, 4],
       ['death', 'why is this so hard', 1.5, 4], ['attempt', 'I swear', 1.4, 5],
       ['death', '...', 1.2, 5], ['attempt', 'locked in.', 1.6, 6],
-      ['landed', 'oh wow that was very close', 1.0, 0]]
+      ['placed', 'oh wow that was very close', 2.3, 0]]
   },
 
   async setup (ctx) {
