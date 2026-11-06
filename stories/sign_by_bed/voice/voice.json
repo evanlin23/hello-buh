@@ -142,10 +142,10 @@
    ]
   },
   "L05": {
-   "text": "Don't open the barrel under your bed.",
-   "dur": 1.707,
+   "text": "Don't open the chest under your bed.",
+   "dur": 1.741,
    "onset": 0.172,
-   "end": 1.5,
+   "end": 1.534,
    "chunks": [
     [
      0.172,
@@ -153,47 +153,47 @@
     ],
     [
      0.526,
-     0.828
+     0.871
     ],
     [
-     0.828,
-     0.957
+     0.871,
+     0.991
     ],
     [
-     0.957,
-     1.5
+     0.991,
+     1.534
     ]
    ],
    "captions": [
     "DON'T OPEN",
-    "the BARREL",
+    "the CHEST",
     "under",
     "your BED."
    ]
   },
   "L06": {
-   "text": "I never placed a barrel.",
-   "dur": 1.483,
+   "text": "I never placed a chest.",
+   "dur": 1.431,
    "onset": 0.172,
-   "end": 1.293,
+   "end": 1.224,
    "chunks": [
     [
      0.172,
-     0.483
+     0.466
     ],
     [
-     0.483,
-     0.698
+     0.466,
+     0.664
     ],
     [
-     0.698,
-     1.293
+     0.664,
+     1.224
     ]
    ],
    "captions": [
     "I never",
     "PLACED",
-    "a barrel."
+    "a chest."
    ]
   },
   "L07": {
@@ -292,27 +292,27 @@
    ]
   },
   "L10": {
-   "text": "Then the barrel knocked.",
-   "dur": 1.276,
+   "text": "Then the chest knocked.",
+   "dur": 1.328,
    "onset": 0.172,
-   "end": 1.086,
+   "end": 1.138,
    "chunks": [
     [
      0.172,
-     0.362
+     0.388
     ],
     [
-     0.362,
-     0.603
+     0.388,
+     0.638
     ],
     [
-     0.603,
-     1.086
+     0.638,
+     1.138
     ]
    ],
    "captions": [
     "Then the",
-    "BARREL",
+    "CHEST",
     "KNOCKED."
    ]
   },
@@ -377,10 +377,10 @@
    ]
   },
   "L13": {
-   "text": "Open it. That isn't mom. She's in the barrel.",
-   "dur": 2.155,
+   "text": "Open it. That isn't mom. She's in the chest.",
+   "dur": 2.086,
    "onset": 0.172,
-   "end": 1.966,
+   "end": 1.879,
    "chunks": [
     [
      0.172,
@@ -392,15 +392,15 @@
     ],
     [
      0.759,
-     1.069
+     1.034
     ],
     [
-     1.147,
-     1.336
+     1.095,
+     1.284
     ],
     [
-     1.336,
-     1.966
+     1.284,
+     1.879
     ]
    ],
    "captions": [
@@ -408,7 +408,7 @@
     "That isn't",
     "MOM.",
     "She's in",
-    "the BARREL."
+    "the CHEST."
    ]
   },
   "L14": {
@@ -467,5 +467,5 @@
    ]
   }
  },
- "total": 31.6
+ "total": 31.57
 }

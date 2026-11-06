@@ -2,27 +2,76 @@
   "name": "sign_by_bed",
   "stunt": "story_sign_by_bed",
   "format": "who_do_you_trust",
-  "caption": "which sign do I TRUST? 😳",
-  "premise": "In this world every player finds a sign from their future self on their first night. It saved my cousin from lava and my friend from a creeper. Mine says DON'T OPEN THE BARREL UNDER YOUR BED, but I never placed a barrel. Mom stands in the doorway smiling and doesn't blink. I lock the door, something knocks from inside the barrel, and a second sign appears inside the locked room in my handwriting: OPEN IT. THAT ISN'T MOM. SHE'S IN THE BARREL. It spells my name wrong.",
-  "answer": "Sign 1. Part 2: villagers never blink (that clue is just Minecraft), and the thing in the barrel wrote sign 2: it can put signs through walls but has never seen my name written down. Clues for 1: sign 2 appeared through a locked door, it misspells my name, the knocking starts right after I lock the door. Clues for 2: sign 1 stood by the door where only Mom could reach, Mom never blinks, the barrel knocks back. Shared clue: sign 2 is in my handwriting (proof it's me, or proof something has been watching me write).",
-  "voice": {"voice": "am_adam", "tempo": 1.03, "rate": 1.45},
+  "caption": "which sign do I TRUST? \ud83d\ude33",
+  "premise": "In this world every player finds a sign from their future self on their first night. It saved my cousin from lava and my friend from a creeper. Mine says DON'T OPEN THE CHEST UNDER YOUR BED, but I never placed a chest. Mom stands in the doorway smiling and doesn't blink. I lock the door, something knocks from inside the chest, and a second sign appears inside the locked room in my handwriting: OPEN IT. THAT ISN'T MOM. SHE'S IN THE CHEST. It spells my name wrong.",
+  "answer": "Sign 1. Part 2: villagers never blink (that clue is just Minecraft), and the thing in the chest wrote sign 2: it can put signs through walls but has never seen my name written down. Clues for 1: sign 2 appeared through a locked door, it misspells my name, the knocking starts right after I lock the door. Clues for 2: sign 1 stood by the door where only Mom could reach, Mom never blinks, the chest knocks back. Shared clue: sign 2 is in my handwriting (proof it's me, or proof something has been watching me write).",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
   "gap": 0.1,
   "key_color": "#FFB347",
   "lines": [
-    {"id": "L01", "text": "In my world, / EVERY player / finds a SIGN / from their FUTURE self / on their FIRST night."},
-    {"id": "L02", "text": "My cousin's / said, DON'T / DIG DOWN. / Under him / was LAVA."},
-    {"id": "L03", "text": "My friend's / said, SLEEP / in the HAY. / That night / a CREEPER / blew up / her BED."},
-    {"id": "L04", "text": "Tonight / I found MINE."},
-    {"id": "L05", "text": "DON'T OPEN / the BARREL / under / your BED."},
-    {"id": "L06", "text": "I never / PLACED / a barrel."},
-    {"id": "L07", "text": "The sign / was by / the DOOR. / Right where / MOM stands."},
-    {"id": "L08", "text": "She was / SMILING. / She hasn't / BLINKED / all night."},
-    {"id": "L09", "text": "So I / LOCKED / the door."},
-    {"id": "L10", "text": "Then the / BARREL / KNOCKED."},
-    {"id": "L11", "text": "And a / SECOND sign / was on / the wall. / INSIDE / my locked room."},
-    {"id": "L12", "text": "In MY / handwriting."},
-    {"id": "L13", "text": "OPEN IT. / That isn't / MOM. / She's in / the BARREL."},
-    {"id": "L14", "text": "But it / spelled / my name / WRONG."},
-    {"id": "L15", "text": "Sign ONE, / or sign / TWO?"}
+    {
+      "id": "L01",
+      "text": "In my world, / EVERY player / finds a SIGN / from their FUTURE self / on their FIRST night."
+    },
+    {
+      "id": "L02",
+      "text": "My cousin's / said, DON'T / DIG DOWN. / Under him / was LAVA."
+    },
+    {
+      "id": "L03",
+      "text": "My friend's / said, SLEEP / in the HAY. / That night / a CREEPER / blew up / her BED."
+    },
+    {
+      "id": "L04",
+      "text": "Tonight / I found MINE."
+    },
+    {
+      "id": "L05",
+      "text": "DON'T OPEN / the CHEST / under / your BED."
+    },
+    {
+      "id": "L06",
+      "text": "I never / PLACED / a chest."
+    },
+    {
+      "id": "L07",
+      "text": "The sign / was by / the DOOR. / Right where / MOM stands."
+    },
+    {
+      "id": "L08",
+      "text": "She was / SMILING. / She hasn't / BLINKED / all night."
+    },
+    {
+      "id": "L09",
+      "text": "So I / LOCKED / the door."
+    },
+    {
+      "id": "L10",
+      "text": "Then the / CHEST / KNOCKED."
+    },
+    {
+      "id": "L11",
+      "text": "And a / SECOND sign / was on / the wall. / INSIDE / my locked room."
+    },
+    {
+      "id": "L12",
+      "text": "In MY / handwriting."
+    },
+    {
+      "id": "L13",
+      "text": "OPEN IT. / That isn't / MOM. / She's in / the CHEST."
+    },
+    {
+      "id": "L14",
+      "text": "But it / spelled / my name / WRONG."
+    },
+    {
+      "id": "L15",
+      "text": "Sign ONE, / or sign / TWO?"
+    }
   ]
 }

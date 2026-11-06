@@ -4,28 +4,27 @@
 //
 // Rule: every player finds a sign from their future self on their first night. Proof: my cousin's
 // said DON'T DIG DOWN (lava under him), my friend's said SLEEP IN THE HAY (a creeper blew up her bed).
-// Mine: "DON'T OPEN THE BARREL UNDER YOUR BED. -BUH". I never placed a barrel. The sign stood by the
+// Mine: "DON'T OPEN THE CHEST UNDER YOUR BED. -BUH". I never placed a chest. The sign stood by the
 // door, right where Mom stands; she's smiling and hasn't blinked all night. I lock the door, the
-// barrel knocks, and a second sign is inside my locked room, in my handwriting: "OPEN IT. THAT ISN'T
-// MOM. SHE'S IN THE BARREL. -BHU". It spelled my name wrong. Sign one, or sign two?
+// chest knocks, and a second sign is inside my locked room, in my handwriting: "OPEN IT. THAT ISN'T
+// MOM. SHE'S IN THE CHEST. -BHU". It spelled my name wrong. Sign one, or sign two?
 //
 // THE INTENDED ANSWER (for a possible part 2; never said in this Short): trust sign 1. Villagers never
-// blink, so that clue is just Minecraft. The thing in the barrel wrote sign 2: it can put a sign
+// blink, so that clue is just Minecraft. The thing in the chest wrote sign 2: it can put a sign
 // through a locked door, it copied my handwriting from watching me, but it has never seen my name
 // written down, so it spelled it BHU. Clues for 1: sign 2 got through a locked door; it misspells my
 // name; the knocking starts the moment I lock the door. Clues for 2: sign 1 stood where only Mom
-// could reach; Mom never blinks; something in the barrel knocks like it wants out. Both ways: sign 2
+// could reach; Mom never blinks; something in the chest knocks like it wants out. Both ways: sign 2
 // is in my handwriting.
 //
-// Signs, beds and chests don't render yet (block entities): a sign is a fence post with a trapdoor
-// on top, its text an on-screen card; the bed is red carpet on a barrel and a plank.
+// Real signs (text in the game font), a real bed on a real chest; each sign's text is also a card.
 const path = require('path')
 const { storyLines, storyKit, house, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'sign_by_bed')
 const CAPTION = 'which sign do I TRUST? 😳'
-const SIGN1 = "DON'T OPEN THE BARREL UNDER YOUR BED. -BUH"
-const SIGN2 = "OPEN IT. THAT ISN'T MOM. SHE'S IN THE BARREL. -BHU"
+const SIGN1 = "DON'T OPEN THE CHEST UNDER YOUR BED. -BUH"
+const SIGN2 = "OPEN IT. THAT ISN'T MOM. SHE'S IN THE CHEST. -BHU"
 
 module.exports = {
   name: 'story_sign_by_bed',
@@ -41,7 +40,7 @@ module.exports = {
       ['name_wrong', 'BUH? ...BHU?', 1.5, 'red'],
       ['question', 'WHO DO YOU TRUST? 1 OR 2? COMMENT 👇', 1.8, 'gold']
     ],
-    sfx: [['scratch', 'barrel_none'], ['impact', 'knock'], ['dip', 'question', 0.3]]
+    sfx: [['scratch', 'chest_none'], ['impact', 'knock'], ['dip', 'question', 0.3]]
   },
 
   async setup (ctx) {
@@ -59,27 +58,28 @@ module.exports = {
     await clearSet(ctx, A, 64, 28)
     await plainsBiome(ctx, A, 64, -4, 30)
     await c('/kill @e[type=!player]')
-    const sign = async (x, z) => { await c(`/setblock ${A(x, 1, z)} oak_fence`); await c(`/setblock ${A(x, 2, z)} oak_trapdoor[open=true,facing=south]`) }
+    // a real sign (1.21.11: messages are literal strings); glowing text so it reads at night
+    const sign = (x, z, rot, lines, glow = false) => c(`/setblock ${A(x, 1, z)} oak_sign[rotation=${rot}]{front_text:{${glow ? 'has_glowing_text:1b,' : ''}messages:[${lines.map(t => JSON.stringify(t)).join(',')}]}}`)
 
     // --- my cousin's sign (L01, L02): in a field, by a 1x1 hole with lava two blocks down
-    await sign(-20, -20)
+    await sign(-20, -20, 0, ["DON'T", 'DIG DOWN', '', '-SAM'])
     await c(`/fill ${A(-19, -3, -21)} ${A(-17, -1, -19)} stone`)
     await c(`/setblock ${A(-18, 0, -20)} air`); await c(`/setblock ${A(-18, -1, -20)} air`)
     await c(`/setblock ${A(-18, -2, -20)} lava`)
     // --- my friend's sign (L03): her bed by a hay pile in the open
-    await sign(20, -20)
+    await sign(20, -20, 0, ['SLEEP IN', 'THE HAY', '', '-MIA'])
     await c(`/fill ${A(22, 1, -21)} ${A(23, 1, -21)} red_wool`)
     await c(`/fill ${A(20, 1, -24)} ${A(21, 2, -23)} hay_block`)
-    // --- my room (L04-L15): a little house, door on the south wall; my "bed" is red carpet on a
-    // barrel and a plank against the north wall
+    // --- my room (L04-L15): a little house, door on the south wall; my bed against the north wall,
+    // its head on a chest (the chest under my bed), its foot on planks
     await house(ctx, A, -3, -8, 0, -3, 'south', true, 'oak_planks')
-    await c(`/setblock ${A(-1, 1, -7)} barrel[facing=south]`)
+    await c(`/setblock ${A(-1, 1, -7)} chest[facing=south]`)
     await c(`/setblock ${A(0, 1, -7)} oak_planks`)
-    await c(`/setblock ${A(-1, 2, -7)} white_carpet`)
-    await c(`/setblock ${A(0, 2, -7)} red_carpet`)
+    await c(`/setblock ${A(-1, 2, -7)} red_bed[facing=west,part=head]`)
+    await c(`/setblock ${A(0, 2, -7)} red_bed[facing=west,part=foot]`)
     await c(`/setblock ${A(1, 1, -7)} crafting_table`)
     await c(`/setblock ${A(-2, 1, -7)} bookshelf`)
-    await sign(1, -4)                                     // sign 1: inside, by the door
+    await sign(1, -4, 6, ["DON'T OPEN", 'THE CHEST', 'UNDER YOUR BED', '-BUH'], true)   // sign 1: inside, by the door
     for (const [dx, dz, b] of [[-2, -2, 'poppy'], [2, -2, 'dandelion']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
 
     const mob = (type, x, y, z, yaw, tag, more = '') => c(`/summon ${type} ${(X + x).toFixed(2)} ${(F + y).toFixed(2)} ${(Z + z).toFixed(2)} {NoAI:1b,NoGravity:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[${yaw}f,0f]${more}}`)
@@ -153,17 +153,17 @@ module.exports = {
     await ctx.setTime(18000)
     await cut(-0.5, -6.0, P(1.5, 2.2, -4.5))
     await line('L04', async (k) => { cast(); go(k > 2 && bot.entity.position.z < Z - 5.0); aimAt(P(1.5, 2.2, -4.5)); look(k) })
-    // L05: DON'T OPEN THE BARREL UNDER YOUR BED (card, yellow)
+    // L05: DON'T OPEN THE CHEST UNDER YOUR BED (card, yellow)
     ctx.mark('sign_mine')
     await line('L05', async (k, at) => {
       cast()
       if (k === at(1)) { from = { ...K.base } }
-      if (k >= at(1)) turn(from, P(-0.5, 1.5, -6.5), (k - at(1)) / 10)   // down at the barrel under the bed
+      if (k >= at(1)) turn(from, P(-0.5, 1.5, -6.5), (k - at(1)) / 10)   // down at the chest under the bed
       look(k)
     })
-    // L06: I never placed a barrel (closer, the scratch)
+    // L06: I never placed a chest (closer, the scratch)
     await cut(-0.4, -5.3, P(-0.5, 1.4, -6.5))
-    ctx.mark('barrel_none')
+    ctx.mark('chest_none')
     await line('L06', async (k) => { cast(); look(k) })
     // L07: the sign was by the door, right where Mom stands (she's there, in the doorway)
     await cut(-1.0, -5.0, P(1.5, 2.0, -4.0))
@@ -187,7 +187,7 @@ module.exports = {
       }
       look(k)
     })
-    // L10: then the barrel knocked (a snap turn to it)
+    // L10: then the chest knocked (a snap turn to it)
     from = null
     await line('L10', async (k, at) => {
       cast()
@@ -197,14 +197,13 @@ module.exports = {
       look(k)
     })
     // L11: and a second sign was on the wall, inside my locked room
-    say(`/setblock ${X - 2} ${F + 1} ${Z - 5} oak_fence`)
-    say(`/setblock ${X - 2} ${F + 2} ${Z - 5} oak_trapdoor[open=true,facing=east]`)
+    say(`/setblock ${X - 2} ${F + 2} ${Z - 5} oak_wall_sign[facing=east]{front_text:{has_glowing_text:1b,color:"red",messages:["OPEN IT.","THAT ISN'T MOM.","SHE'S IN THE","CHEST. -BHU"]}}`)
     await cut(0.8, -5.0, P(-1.5, 2.0, -4.5))
     await line('L11', async (k) => { cast(); go(k > 4 && bot.entity.position.x > X - 0.2); look(k) })
     // L12: in my handwriting (closer)
     await cut(-0.6, -4.2, P(-1.5, 2.4, -4.5))
     await line('L12', async (k) => { cast(); look(k) })
-    // L13: OPEN IT. THAT ISN'T MOM. SHE'S IN THE BARREL. (card, red)
+    // L13: OPEN IT. THAT ISN'T MOM. SHE'S IN THE CHEST. (card, red)
     ctx.mark('sign_two')
     await line('L13', async (k) => { cast(); look(k, Math.sin(k / 10) * 0.04) })
     // L14: but it spelled my name wrong (BUH? BHU?) and Mom, through the door's window
