@@ -52,7 +52,7 @@ module.exports = {
       await bot.waitForTicks(1)
       const top = bot.blockAt(new Vec3(this.x, this.floor + 1, this.tz))
       if (i % 3 === 0) ctx.sound('block.sand.place', 0.7, 0.8 + (i % 5) * 0.05)
-      if (i === 8) await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + H * 0.5, this.tz + 0.5), 400)
+      if (i === 8) await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 3.5, this.tz + 0.5), 400)   // the torch and the column coming down onto it
       last = top
     }
     await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 1.5, this.tz + 0.5), 600)
