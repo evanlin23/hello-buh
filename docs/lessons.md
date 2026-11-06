@@ -198,3 +198,4 @@ each section.
 - **`face_on` with `head: true`** turns only the head (LookAtPlayerGoal). A villager that never looked at the player read as frozen.
 - **villager_job:** the lectern goes beside the pen, since in front its slanted top hid the outfit change. Trim the still start and end with `endAfter`. Angry particles when a villager loses its job site are vanilla; keep them.
 - **End portal and end gateway surfaces** have no block model (vanilla draws them with TheEndPortalRenderer). The mesher emits a plane at 0.75 (gateway: 1.0), and the page draws it with a screen-space starfield shader: 15 layers of end_portal.png, rotated, scaled and drifting, with the vanilla shader's colour table.
+- **Boats (all woods), cows and chickens render.** The converted chicken model lost its body's 90° turn, so it's restored as a rest pose.

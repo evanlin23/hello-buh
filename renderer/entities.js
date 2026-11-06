@@ -129,6 +129,9 @@ function look (name, extra, regs) {
     // the converted model lacks the hat layer that profession outfits draw on
     return { model: 'villager', layers, rest: { arms: [0.75, 0, 0] }, extra: { head: [{ origin: [-4, 24, -4], size: [8, 10, 8], uv: [32, 0], inflate: 0.5 }] } }
   }
+  if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`] }
+  if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
+  if (name === 'chicken') return { model: 'chicken', layers: ['entity/chicken/temperate_chicken'], rest: { body: [-Math.PI / 2, 0, 0] } }   // the converted model lost the body's 90° turn
   if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
