@@ -14,19 +14,22 @@ def _load(x):
     return (json.loads(x) if isinstance(x, str) else x) or []
 
 
-def edit_spans(speed=None, slowmo=None):
+def edit_spans(speed=None, slowmo=None, freeze=None):
     """One span list for the time map: the stunt's `edit.speed` spans plus its `edit.slowmo`
     windows ([EVENT, BEFORE_S, AFTER_S, FACTOR=0.5]: FACTOR-times speed from BEFORE_S ahead of the
     event to AFTER_S after it, e.g. ["splash5", 0.15, 0.35] plays 0.5 s of footage over 1 s)."""
     out = [list(s) for s in _load(speed)]
     for s in _load(slowmo):
         out.append([f"{s[0]}:{-abs(float(s[1]))}", f"{s[0]}:{float(s[2])}", float(s[3]) if len(s) > 3 else 0.5])
+    for s in _load(freeze):   # freeze frame: [EVENT, SECONDS, ...] holds one frame (a 1-frame span stretched)
+        f = 1 / 60
+        out.append([f"{s[0]}:0", f"{s[0]}:{f:.6f}", f / float(s[1] if len(s) > 1 else 0.6)])
     return out
 
 
 def edit_timeline(edit, timeline):
     """The recording's timeline in output time for a stunt's `edit` block (speed + slowmo)."""
-    spans = edit_spans(edit.get("speed"), edit.get("slowmo"))
+    spans = edit_spans(edit.get("speed"), edit.get("slowmo"), edit.get("freeze"))
     return Warp(spans, timeline).timeline(timeline) if spans else timeline
 
 
@@ -103,5 +106,8 @@ def atempo(f):
     while f > 2:
         stages.append(2.0)
         f /= 2
+    while f < 0.5:
+        stages.append(0.5)
+        f /= 0.5
     stages.append(f)
     return ",".join(f"atempo={s:.6f}" for s in stages)

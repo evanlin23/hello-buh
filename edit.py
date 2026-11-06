@@ -530,7 +530,7 @@ def apply_speed(args):
     sys.path.insert(0, str(HERE / "scripts"))
     from timewarp import Warp, atempo, edit_spans
     rec = json.loads(pathlib.Path(args.timeline).read_text())
-    warp = Warp(edit_spans(args.speed, args.slowmo), rec["timeline"])
+    warp = Warp(edit_spans(args.speed, args.slowmo, args.freeze), rec["timeline"])
     if not warp:
         return
     if not args.frames:
@@ -556,6 +556,7 @@ def apply_speed(args):
         k += 1
     if blended:
         print(f"slow-mo: {blended} blended in-between frames")
+    args.warp = warp
     print(f"speed: {n_src} frames -> {k} ({', '.join(f'{a:.2f}-{b:.2f}s x{f:g}' for a, b, f in warp.spans)})")
     args.frames = str(wd / pathlib.Path(args.frames).name)
     (wd / "timeline.json").write_text(json.dumps({"timeline": warp.timeline(rec["timeline"])}))
@@ -564,6 +565,9 @@ def apply_speed(args):
         segs = [s for s in warp.segments(n_src / args.fps) if s[2] != math.inf]
         graph = [f"[0:a]asplit={len(segs)}" + "".join(f"[s{j}]" for j in range(len(segs)))] if len(segs) > 1 else ["[0:a]anull[s0]"]
         for j, (a, b, f) in enumerate(segs):
+            if f < 0.2:   # a freeze frame: the sound holds its breath (silence) for the frozen time
+                graph.append(f"[s{j}]atrim={a:.4f}:{b:.4f},asetpts=PTS-STARTPTS,volume=0,apad=whole_dur={(b - a) / f:.4f}[t{j}]")
+                continue
             graph.append(f"[s{j}]atrim={a:.4f}:{b:.4f},asetpts=PTS-STARTPTS" + (f",{atempo(f)}" if f != 1 else "") + f"[t{j}]")
         graph.append("".join(f"[t{j}]" for j in range(len(segs))) + f"concat=n={len(segs)}:v=0:a=1[a]")
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.audio, "-filter_complex", ";".join(graph), "-map", "[a]", str(wd / "audio.wav")], check=True)
@@ -632,6 +636,10 @@ def main():
     ap.add_argument("--punch", help='JSON list of EVENT or [EVENT, NTH, SCALE] zoom punches on the game view')
     ap.add_argument("--counter", help='JSON {"at": [EVENT, ...], "total": N} "3/5" beat counter')
     ap.add_argument("--cards", help='JSON list of [EVENT, TEXT, SECONDS?, COLOR?, NTH?] impact cards')
+    ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
+    ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
+    ap.add_argument("--freeze", help='JSON list of [EVENT, SECONDS, TEXT?, COLOR?] freeze frames with a stamped text')
+    ap.add_argument("--fallen", help='JSON list of [EVENT_A, EVENT_B, LABEL?] live "blocks fallen" counters (from the poses)')
     ap.add_argument("--sfx", help='JSON list of [KIND, EVENT, (EVENT2), {opts}] sound effects (scripts/sfx.py)')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 0.5, "after": 0, "text": ...} finale preview in front')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
@@ -640,7 +648,8 @@ def main():
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
-    if (args.speed or args.slowmo) and args.timeline:
+    args.warp, args.rec_path = None, args.timeline
+    if (args.speed or args.slowmo or args.freeze) and args.timeline:
         apply_speed(args)
     _tl = {}
     if args.timeline:
@@ -652,8 +661,8 @@ def main():
             args.start = max(0.0, _tl[ev_] + float(off_))
     sys.path.insert(0, str(HERE / "scripts"))
     import retention
-    if args.punch and args.timeline and args.frames:
-        retention.apply_punch(args, args.punch, json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
+    if (args.punch or args.shake or args.flash or args.freeze) and args.timeline and args.frames:
+        retention.apply_frame_fx(args, json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))
     if args.song and args.song_drop_at:
@@ -809,8 +818,9 @@ def main():
                     inputs += ["-loop", "1", "-i", str(tmp / f"death{di}_{k}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
                     last, n_in = f"ds{di}_{k}", n_in + 1
-    if (args.counter or args.cards) and args.timeline:   # beat counter + impact cards (scripts/retention.py)
-        lst = retention.fx_concat(args.counter, args.cards, json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.start, dur, tmp, args.out_fps)
+    if (args.counter or args.cards or args.freeze or args.fallen) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
+        lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
+                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args))
         if lst:
             inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
             graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[fxv]")

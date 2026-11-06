@@ -12,6 +12,12 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
            or [EVENT, ...]                         view, popping up on each mark
   cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?]]  big impact text popping on a mark ("10/10",
                                                    "NO WAY"); COLOR: white|red|green|yellow|blue|gold
+  shake:   [EVENT | [EVENT, NTH, PX]]             screen shake on the game view (default 16 px, 0.35 s)
+  flash:   [EVENT | [EVENT, NTH, ALPHA]]          white flash on the game view (0.7, ~0.2 s)
+  freeze:  [[EVENT, SECONDS, TEXT?, COLOR?]]      freeze frame on a mark with a slow push-in and a
+                                                   stamped label ("1 IN A MILLION"); it adds SECONDS
+  fallen:  [[EVENT_A, EVENT_B, LABEL?]]           live "blocks fallen" counter (top right) from the
+                                                   recorded altitude, turning green on EVENT_B
   hook:    {"at": EVENT, "before": 0.5, "after": 0.0, "text": "wait for the last one"}
                                                    a flash of the finale before beat 1: the clip
                                                    [at-before, at+after] of the finished Short
@@ -120,21 +126,41 @@ def punch_curve(dt, peak=0.12, attack=0.07, decay=0.33):
     return 1 + peak * (1 - (3 * k * k - 2 * k * k * k))
 
 
-def apply_punch(args, spec, timeline):
-    """Rewrite the frame sequence with the game view zoomed on each punch mark (symlinks for the
-    rest). Runs after the speed/slowmo map, so `timeline` is in output time and frame i is t=i/fps."""
-    marks = []
+def _marks(spec, timeline, default):
+    out = []
     for p in _load(spec):
         p = [p] if isinstance(p, str) else list(p)
         ts = event_times(timeline, p[0])
         nth = int(p[1]) if len(p) > 1 else 0
         if len(ts) > nth:
-            marks.append((ts[nth], float(p[2]) if len(p) > 2 else 0.12))
-    if not marks:
+            out.append((ts[nth], float(p[2]) if len(p) > 2 else default))
+    return out
+
+
+def shake_offset(dt, px, dur=0.35, seed=0):
+    """Screen-shake offset (dx, dy) in px dt seconds after the mark: decaying, jittered every frame."""
+    if dt < 0 or dt > dur:
+        return 0.0, 0.0
+    a = px * math.exp(-dt / (dur * 0.35))
+    k = int(dt * 60) + seed * 101
+    return a * math.sin(k * 2.39 + 0.7), a * math.cos(k * 1.71 + 2.1)
+
+
+def apply_frame_fx(args, timeline):
+    """Rewrite the frame sequence with the game-view effects (symlinks for untouched frames):
+    zoom punches, screen shakes, white flashes, and a slow push-in on freeze frames. Runs after the
+    speed/slowmo/freeze map, so `timeline` is in output time and frame i is t = i / fps. The HUD,
+    caption and overlays are drawn later, so they stay still (like a FOV kick in the game)."""
+    punches = _marks(args.punch, timeline, 0.12)
+    shakes = _marks(args.shake, timeline, 16.0)
+    flashes = _marks(args.flash, timeline, 0.7)
+    pushes = [(ts[0], float(f[1]) if len(f) > 1 else 0.6) for f in _load(args.freeze)
+              for ts in [event_times(timeline, f[0])] if ts]
+    if not (punches or shakes or flashes or pushes):
         return
     src = pathlib.Path(args.frames)
     files = sorted(src.parent.glob("*" + src.suffix))
-    wd = pathlib.Path(tempfile.mkdtemp(prefix="hb-punch-"))
+    wd = pathlib.Path(tempfile.mkdtemp(prefix="hb-fx-"))
     n = 0
     for f in files:
         try:
@@ -142,18 +168,66 @@ def apply_punch(args, spec, timeline):
         except ValueError:
             continue
         t = i / args.fps
-        z = max(punch_curve(t - m, peak) for m, peak in marks)
+        z = max([punch_curve(t - m, peak) for m, peak in punches] + [1.0])
+        for m, secs in pushes:   # freeze: a slow push-in so the held frame never sits still
+            if m - 1e-6 <= t < m + secs:
+                z = max(z, 1 + 0.10 * (1 - (1 - (t - m) / secs) ** 2))
+        dx = dy = 0.0
+        for j, (m, px) in enumerate(shakes):
+            ox, oy = shake_offset(t - m, px, seed=j)
+            dx += ox; dy += oy
+        fl = max([a * math.exp(-(t - m) / 0.07) for m, a in flashes if 0 <= t - m < 0.3] + [0.0])
         out = wd / f.name
-        if z > 1.0005:
+        if z > 1.0005 or abs(dx) > 0.3 or abs(dy) > 0.3 or fl > 0.01:
             im = Image.open(f.resolve()).convert("RGB")
+            if abs(dx) > 0.3 or abs(dy) > 0.3:
+                z = max(z, 1 + 2 * (abs(dx) + abs(dy) + 2) / im.width)   # zoom just enough to hide the edges
             cw, ch = im.width / z, im.height / z
-            x0, y0 = (im.width - cw) / 2, (im.height - ch) / 2
-            im.resize(im.size, Image.BICUBIC, box=(x0, y0, x0 + cw, y0 + ch)).save(out, compress_level=1)
+            x0 = (im.width - cw) / 2 + dx / z; y0 = (im.height - ch) / 2 + dy / z
+            im = im.resize(im.size, Image.BICUBIC, box=(x0, y0, x0 + cw, y0 + ch))
+            if fl > 0.01:
+                im = Image.blend(im, Image.new("RGB", im.size, (255, 255, 255)), min(1.0, fl))
+            im.save(out, compress_level=1)
             n += 1
         else:
             out.symlink_to(f.resolve())
-    print(f"punch: {n} frames zoomed on {len(marks)} marks")
+    print(f"frame fx: {n} frames ({len(punches)} punches, {len(shakes)} shakes, {len(flashes)} flashes, {len(pushes)} freezes)")
     args.frames = str(wd / src.name)
+
+
+def stamp_cards(cards, freeze):
+    """Impact cards plus the freeze frames' stamped text (style 'stamp')."""
+    out = [list(c) for c in _load(cards)]
+    for f in _load(freeze):
+        if len(f) > 2 and f[2]:
+            out.append([f[0], f[2], float(f[1] if len(f) > 1 else 0.6) + 0.15, f[3] if len(f) > 3 else "red", 0, "stamp"])
+    return out
+
+
+def fallen_fn(args):
+    """[(t0, t1, label, blocks_at(t))] for the live "blocks fallen" counters, in Short time:
+    altitude from the recording's poses (tick, x, y, z, ...), through the speed map."""
+    spec = _load(args.fallen)
+    if not spec:
+        return []
+    rec = json.loads(pathlib.Path(args.rec_path).read_text())
+    poses, src_tl = rec["poses"], rec["timeline"]
+    warp = getattr(args, "warp", None)
+    out_tl = warp.timeline(src_tl) if warp else src_tl
+    def y_at(t_src):
+        k = min(len(poses) - 1, max(0, t_src * 20))
+        a = poses[int(k)][2]; b = poses[min(len(poses) - 1, int(k) + 1)][2]
+        return a + (b - a) * (k - int(k))
+    res = []
+    for sp in spec:
+        ta, tb = event_times(out_tl, sp[0]), event_times(out_tl, sp[1])
+        if not ta or not tb:
+            continue
+        t0, t1 = ta[0] - args.start, tb[0] - args.start
+        y0 = y_at(warp.src(ta[0]) if warp else ta[0])
+        fn = (lambda t, y0=y0: max(0, int(round(y0 - y_at(warp.src(t + args.start) if warp else t + args.start)))))
+        res.append((t0, t1, sp[2] if len(sp) > 2 else "blocks", fn))
+    return res
 
 
 # ---------------------------------------------------------------- counter + cards track
@@ -165,7 +239,19 @@ def _pop(dt, dur=0.18, over=0.75):
     return 1 + over * (1 - k) ** 2 * math.cos(k * math.pi * 1.2)
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60):
+def stamp_img(text, color):
+    """A rubber-stamp label: bold text in a thick rounded frame, tilted."""
+    t = rich_text(text.upper(), 120, color, stroke=(255, 255, 255, 255), stroke_w=6)
+    pad = 26
+    im = Image.new("RGBA", (t.width + 2 * pad, t.height + 2 * pad), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle((6, 6, im.width - 7, im.height - 7), 24, outline=(255, 255, 255, 255), width=20)
+    d.rounded_rectangle((10, 10, im.width - 11, im.height - 11), 20, outline=tuple(color) + (255,), width=12)
+    im.alpha_composite(t, (pad, pad))
+    return im.rotate(-8, Image.BICUBIC, expand=True)
+
+
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -186,8 +272,9 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60):
         if len(ts) > nth:
             t0 = ts[nth] - start
             cds.append((t0, t0 + (float(cd[2]) if len(cd) > 2 and cd[2] else 1.0), cd[1],
-                        COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]), -5 if j % 2 == 0 else 4))
-    if not marks and not cds:
+                        COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]),
+                        "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4)))
+    if not marks and not cds and not fallen:
         return None
     cache, runs, imgs = {}, [], {}
     n = int(math.ceil(dur * fps)) + 1
@@ -204,7 +291,11 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60):
             t0, t1, text, color, tilt = on[-1]
             fade = min(1.0, (t1 - t) / 0.12)
             cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1))
-        key = (ck, cc)
+        fk = None
+        for t0, t1, label, fn in fallen:     # live "blocks fallen" counter, held 0.6 s after the landing
+            if t0 <= t + 1e-6 < t1 + 0.6:
+                fk = (fn(min(t, t1)), label, t >= t1)
+        key = (ck, cc, fk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             if ck:
@@ -223,7 +314,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60):
             if cc:
                 text, color, tilt, s, fade = cc
                 if ("t", text, color) not in imgs:
-                    imgs[("t", text, color)] = block_text(text, 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
+                    imgs[("t", text, color)] = stamp_img(text, color) if tilt == "stamp" else \
+                        block_text(text, 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
                 im = imgs[("t", text, color)]
                 if s != 1.0:
                     im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BICUBIC)
@@ -231,6 +323,13 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60):
                     im = im.copy(); im.putalpha(im.split()[3].point(lambda v: int(v * fade)))
                 cy = BAND + int(GAME_H * 0.27)
                 img.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))
+            if fk:
+                v, label, done = fk
+                num = rich_text(f"{v}", 92, COLORS["green"] if done else COLORS["white"])
+                lab = rich_text(label, 48, COLORS["white"])
+                x1 = W - 40
+                img.alpha_composite(num, (x1 - num.width, BAND + 22))
+                img.alpha_composite(lab, (x1 - lab.width, BAND + 22 + num.height - 14))
             img.paste((0, 0, 0, 0), (0, 0, W, BAND))          # keep it in the game view
             img.paste((0, 0, 0, 0), (0, BAND + GAME_H, W, H))
             path = outdir / f"fx{len(cache)}.png"

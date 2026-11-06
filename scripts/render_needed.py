@@ -25,7 +25,7 @@ def main(stunt, rec_path, out_dir, fps=60):
     rec = json.loads(pathlib.Path(rec_path).read_text())
     tl = rec["timeline"]
     n = int((len(rec["poses"]) - 1) / 20 * fps)
-    warp = Warp(edit_spans(edit.get("speed"), edit.get("slowmo")), tl)
+    warp = Warp(edit_spans(edit.get("speed"), edit.get("slowmo"), edit.get("freeze")), tl)
     ev = {}
     for e in warp.timeline(tl):
         ev.setdefault(e["event"], e["t"] / 1000)
