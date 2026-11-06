@@ -120,6 +120,9 @@ module.exports = {
       // respawn at the next set: spawn point and world spawn both there (the bot came back at the
       // world spawn with only /spawnpoint set)
       const sy = DEATHS[i + 1].id === 'stalagmite' ? F + 5 : F + 1
+      // the next station's creeper is there before I respawn (summoned in view it popped in), with
+      // the vanilla 30-tick fuse (the renderer's swell assumes it; Fuse:20 flashed before it was lit)
+      if (DEATHS[i + 1].id === 'creeper') bot.chat(`/summon creeper ${this.sx(i + 1) + 0.5} ${F + 1} ${z + 1.5} {NoAI:1b,Rotation:[0f,0f]}`)
       bot.chat(`/spawnpoint @s ${this.sx(i + 1)} ${sy} ${z + 4} 180 0`)
       bot.chat(`/setworldspawn ${this.sx(i + 1)} ${sy} ${z + 4} 180 0`)
       await bot.waitForTicks(2)
@@ -133,7 +136,7 @@ module.exports = {
       const d = DEATHS[i].id, s = this.sx(i)
       ctx.mark('beat', { n: i, id: d })
       if (d === 'zombie') { bot.chat(`/summon zombie ${s + 0.5} ${F + 1} ${z + 1.5} {PersistenceRequired:1b,Rotation:[0f,0f],active_effects:[{id:"minecraft:fire_resistance",duration:-1,show_particles:0b}]}`); await bot.waitForTicks(2) }
-      if (d === 'creeper') { bot.chat(`/summon creeper ${s + 0.5} ${F + 1} ${z + 1.5} {NoAI:1b,Rotation:[0f,0f],Fuse:20s}`); await bot.waitForTicks(2) }
+
       if (d === 'fall') {
         // on top of the pillar, looking down: step off
         await ctx.easeLook(N + Math.PI, -0.85, 150)   // over the edge: the ground far below
