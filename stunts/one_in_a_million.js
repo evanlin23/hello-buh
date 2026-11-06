@@ -39,7 +39,8 @@ module.exports = {
     const z = this.z, floor = this.floor
     // stand over the middle tier while building: the recording keeps the chunks the bot has loaded,
     // and the far tiers need terrain out to the fog in every direction
-    await ctx.tpCheck(this.x0 + 2 * GAP + 0.5, floor + 30, z + 0.5, 0, 0)
+    // (a plain /tp: tpCheck fails mid-air because the bot falls in creative; position doesn't matter here)
+    await ctx.cmd(`/tp @s ${this.x0 + 2 * GAP + 0.5} ${floor + 30} ${z + 0.5}`)
     await bot.waitForTicks(60)
     for (let i = 0; i < TIERS.length; i++) {
       const t = TIERS[i], x = this.x0 + i * GAP
