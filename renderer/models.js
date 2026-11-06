@@ -483,6 +483,7 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
     t_normals: [],
     t_colors: [],
     t_uvs: [],
+    e_positions: [],   // end portal / end gateway surfaces (TheEndPortalRenderer): drawn with the starfield shader
     indices: []
   }
 
@@ -492,6 +493,12 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
       for (cursor.x = sx; cursor.x < sx + 16; cursor.x++) {
         const block = world.getBlock(cursor)
         const biome = block.biome.name
+        if (block.name === 'end_portal' || block.name === 'end_gateway') {
+          // the portal surface: a horizontal plane at 0.75 (end gateway: a full cube's top), local coords
+          const lx = (cursor.x & 15) - 8, ly = (cursor.y & 15) - 8, lz = (cursor.z & 15) - 8, h = block.name === 'end_portal' ? 0.75 : 1
+          attr.e_positions.push(lx, ly + h, lz, lx + 1, ly + h, lz, lx, ly + h, lz + 1, lx + 1, ly + h, lz + 1)
+          continue
+        }
         if (block.variant === undefined) {
           block.variant = getModelVariants(block, blocksStates)
         }

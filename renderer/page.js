@@ -217,7 +217,7 @@ window.HB = {
     for (const h of header) {
       if (!h.o) { this.removeSection(h.key); continue }
       const part = (p) => ({ positions: view(p[0], Float32Array), colors: view(p[1], Float32Array), uvs: view(p[2], Float32Array), indices: view(p[3], Uint32Array) })
-      this.setSection(h.key, { x: h.x, y: h.y, z: h.z, opaque: part(h.o), translucent: part(h.t) })
+      this.setSection(h.key, { x: h.x, y: h.y, z: h.z, opaque: part(h.o), translucent: part(h.t), endPortal: h.e ? { positions: view(h.e[0], Float32Array), indices: view(h.e[1], Uint32Array) } : null })
     }
     return header.length
   },
@@ -246,6 +246,12 @@ window.HB = {
       const m = new THREE.Mesh(geo, mat)
       if (part === 'translucent') m.renderOrder = 1
       grp.add(m)
+    }
+    if (s.endPortal && s.endPortal.positions.length) {
+      const geo = new THREE.BufferGeometry()
+      geo.setAttribute('position', new THREE.BufferAttribute(s.endPortal.positions, 3))
+      geo.setIndex(new THREE.BufferAttribute(s.endPortal.indices, 1))
+      grp.add(new THREE.Mesh(geo, endPortalMaterial()))
     }
     scene.add(grp)
     sections.set(key, grp)
@@ -284,6 +290,7 @@ window.HB = {
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawParticles(parts)
+    END_TIME.value = ((tick || 0) % 4000) / 4000 * 0.6   // the shader's GameTime drift, slow
     drawSelection(cam)
     renderer.render(scene, camera)
     if (await drawHand(cam)) {
@@ -293,6 +300,41 @@ window.HB = {
     }
     return true
   }
+}
+
+// The end portal surface (TheEndPortalRenderer + the rendertype_end_portal shader): end_sky.png
+// darkness plus 15 layers of end_portal.png sampled in screen space, each scaled, rotated and
+// drifting with time, tinted with the shader's colour table. Double-sided (seen from below too).
+let END_MAT = null
+const END_TIME = { value: 0 }
+function endPortalMaterial () {
+  if (END_MAT) return END_MAT
+  const tex = new THREE.TextureLoader().load('/assets/env/entity/end_portal.png')
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; tex.colorSpace = THREE.NoColorSpace
+  END_MAT = new THREE.ShaderMaterial({
+    side: THREE.DoubleSide,
+    uniforms: { tex: { value: tex }, time: END_TIME, res: { value: new THREE.Vector2(W, H) } },
+    vertexShader: 'void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `
+      uniform sampler2D tex; uniform float time; uniform vec2 res;
+      const vec3 C[16] = vec3[](vec3(0.022087,0.098399,0.110818), vec3(0.011892,0.095924,0.089485), vec3(0.027636,0.101689,0.100326), vec3(0.046564,0.109883,0.114838),
+        vec3(0.064901,0.117696,0.097189), vec3(0.063761,0.086895,0.123646), vec3(0.084817,0.111994,0.166380), vec3(0.097489,0.154120,0.091064),
+        vec3(0.106152,0.131144,0.195191), vec3(0.097721,0.110188,0.187229), vec3(0.133516,0.138278,0.148582), vec3(0.070006,0.243332,0.235792),
+        vec3(0.196766,0.142899,0.214696), vec3(0.047281,0.315338,0.321970), vec3(0.204675,0.390010,0.302066), vec3(0.080955,0.314821,0.661491));
+      mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
+      void main() {
+        vec2 p = gl_FragCoord.xy / res.y;
+        vec3 col = vec3(0.07, 0.09, 0.10) * 0.3;
+        for (int i = 0; i < 15; i++) {
+          float fi = float(i + 1);
+          vec2 q = rot(radians((fi * fi * 4321.0 + fi * 9.0) * 2.0)) * p * (4.5 - fi / 4.0);
+          q += vec2(17.0 / fi, (2.0 + fi / 1.5) * (time * 1.5));
+          col += texture2D(tex, q).rgb * C[i];
+        }
+        gl_FragColor = vec4(col, 1.0);
+      }`
+  })
+  return END_MAT
 }
 
 // Block outline (LevelRenderer.renderHitOutline: black lines, alpha 0.4, the block's shape grown by

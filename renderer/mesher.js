@@ -109,6 +109,10 @@ class Mesher {
         g.positions = shift(Array.from(g.positions)); g.t_positions = shift(g.t_positions)
         h.o = [put(g.positions, Float32Array), put(g.colors, Float32Array), put(g.uvs, Float32Array), put(g.indices, Uint32Array)]
         h.t = [put(g.t_positions, Float32Array), put(g.t_colors, Float32Array), put(g.t_uvs, Float32Array), put(g.t_indices, Uint32Array)]
+        if (g.e_positions.length) {
+          const ei = []; for (let q = 0; q < g.e_positions.length / 12; q++) ei.push(q * 4, q * 4 + 2, q * 4 + 1, q * 4 + 1, q * 4 + 2, q * 4 + 3)
+          h.e = [put(shift(g.e_positions), Float32Array), put(ei, Uint32Array)]
+        }
       }
       header.push(h)
     }
