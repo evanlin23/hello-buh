@@ -380,6 +380,44 @@ const handCam = new THREE.PerspectiveCamera(70, W / H, 0.05, 10)
 const handCache = new Map()
 const D2R = Math.PI / 180
 let handObj = null
+// ItemModelGenerator: a generated item is 1 pixel thick: the sprite front and back, plus a 1-pixel-wide
+// side quad on every opaque pixel edge that borders transparency. A flat plane turned edge-on in the
+// swing and vanished to a sliver (nether_portal review, flint and steel).
+function extrudedItemGeometry (img) {
+  const W0 = img.width, H0 = img.height, F = Math.min(W0, H0)   // animated sprites: first frame
+  const c = document.createElement('canvas'); c.width = W0; c.height = H0
+  const cx = c.getContext('2d'); cx.drawImage(img, 0, 0)
+  const px = cx.getImageData(0, 0, F, F).data
+  const opaque = (x, y) => x >= 0 && y >= 0 && x < F && y < F && px[(y * F + x) * 4 + 3] > 25
+  const pos = [], uv = [], nor = [], idx = []
+  const T = 0.5 / 16, s = 1 / F
+  // pixel (x, y) from the top-left -> plane coords in [-0.5, 0.5], +y up; uv with flipY: v = 1 - y/H0
+  const U = x => x / W0, V = y => 1 - y / H0
+  function quad (a, b, cc, d, n, uvs) {
+    const i = pos.length / 3
+    for (const p of [a, b, cc, d]) pos.push(...p)
+    for (let k = 0; k < 4; k++) nor.push(...n)
+    uv.push(...uvs); idx.push(i, i + 1, i + 2, i, i + 2, i + 3)
+  }
+  const X = x => -0.5 + x * s, Y = y => 0.5 - y * s
+  // front and back faces
+  quad([X(0), Y(F), T], [X(F), Y(F), T], [X(F), Y(0), T], [X(0), Y(0), T], [0, 0, 1], [U(0), V(F), U(F), V(F), U(F), V(0), U(0), V(0)])
+  quad([X(F), Y(F), -T], [X(0), Y(F), -T], [X(0), Y(0), -T], [X(F), Y(0), -T], [0, 0, -1], [U(F), V(F), U(0), V(F), U(0), V(0), U(F), V(0)])
+  for (let y = 0; y < F; y++) for (let x = 0; x < F; x++) {
+    if (!opaque(x, y)) continue
+    const uc = (x + 0.5) / W0, vc = 1 - (y + 0.5) / H0, cu = [uc, vc, uc, vc, uc, vc, uc, vc]
+    if (!opaque(x, y - 1)) quad([X(x), Y(y), T], [X(x + 1), Y(y), T], [X(x + 1), Y(y), -T], [X(x), Y(y), -T], [0, 1, 0], cu)
+    if (!opaque(x, y + 1)) quad([X(x), Y(y + 1), -T], [X(x + 1), Y(y + 1), -T], [X(x + 1), Y(y + 1), T], [X(x), Y(y + 1), T], [0, -1, 0], cu)
+    if (!opaque(x - 1, y)) quad([X(x), Y(y + 1), -T], [X(x), Y(y + 1), T], [X(x), Y(y), T], [X(x), Y(y), -T], [-1, 0, 0], cu)
+    if (!opaque(x + 1, y)) quad([X(x + 1), Y(y + 1), T], [X(x + 1), Y(y + 1), -T], [X(x + 1), Y(y), -T], [X(x + 1), Y(y), T], [1, 0, 0], cu)
+  }
+  const g = new THREE.BufferGeometry()
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3))
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+  g.setIndex(idx)
+  return g
+}
 async function handObject (h) {
   if (handCache.has(h.key)) return handCache.get(h.key)
   let inner = null, mat = null
@@ -395,7 +433,7 @@ async function handObject (h) {
     if (t) {
       t.flipY = true; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true
       mat = new THREE.MeshBasicMaterial({ map: t, alphaTest: 0.1, side: THREE.DoubleSide })
-      const q = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat)
+      const q = new THREE.Mesh(extrudedItemGeometry(t.image), mat)
       inner = new THREE.Group(); inner.add(q)
       // models/item/generated.json display.firstperson_righthand: rotation [0, -90, 25],
       // translation [1.13, 3.2, 1.13] (pixels), scale 0.68
