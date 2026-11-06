@@ -19,6 +19,7 @@ checked out at `../hb-videos`.
 | [midas_touch](shorts/midas_touch/short.mp4) | POV: you got the midas touch 🤑 | 10.15s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 90afab9 |  |
 | [one_in_a_million](shorts/one_in_a_million/short.mp4) | 1 in a million landing 😳 | 8.3s | misery. · pupsies | ready | 482d834 |  |
 | [pearl_clutch](shorts/pearl_clutch/short.mp4) | POV: You Throw an Ender Pearl But... | 7.15s | misery. · pupsies | ready | 46ecd24 |  |
+| [skull_art](shorts/skull_art/short.mp4) | the skull emoji irl 💀 | 8.75s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 46cab20 |  |
 | [speed_build](shorts/speed_build/short.mp4) | Fastest house build 💀 | 8.85s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 9a5edf2 |  |
 | [villager_job](shorts/villager_job/short.mp4) | POV: THE VILLAGER IS UNEMPLOYED 💀 | 12.4s | Payphone · Radio Top Singers | ready | 17ecd2d |  |
 | [water_clutch](shorts/water_clutch/short.mp4) | water bucket clutch 💀 | 7.8s | misery. · pupsies | ready | 17ecd2d |  |

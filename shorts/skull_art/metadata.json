@@ -1,0 +1,104 @@
+{
+  "name": "skull_art",
+  "caption": "the skull emoji irl 💀",
+  "youtube": {
+    "title": "the skull emoji irl 💀 #minecraft #shorts",
+    "description": "the skull emoji irl 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "complete",
+    "drop_in_song_s": 10.5,
+    "drop_in_short_s": 7.15,
+    "song_start_s": 3.35
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 8.75,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 6438250,
+    "sha256": "8ad4666f1e683745c2e73660aede5a81c69fd9cd3c503937bca68b166b517b1d"
+  },
+  "edit": {
+    "caption": "the skull emoji irl 💀",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "complete",
+    "start": 0.3,
+    "args": [
+      "--caption",
+      "the skull emoji irl 💀",
+      "--start",
+      "0.3",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "complete"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 426,
+      "y": 85,
+      "z": 15
+    },
+    "biome": "minecraft:forest",
+    "ticks": 182,
+    "seconds": 9.1,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 7.45,
+        "event": "complete"
+      },
+      {
+        "t": 9.1,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "46cab20a69e0cc25da8bf28f65f8e4c8c37ff680",
+    "rendered_at": "2026-11-06T08:57:30.843Z",
+    "head_at_publish": "5617e570187ac62847a8839cdb03dab29625b2fc",
+    "stunt": "stunts/skull_art.js",
+    "source_snapshot": [
+      "source/skull_art.js",
+      "source/pixel_art.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 46cab20a69e0",
+    "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
+    "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
+    "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
+    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"the skull emoji irl 💀\" --start 0.3 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
+  ],
+  "status": "ready",
+  "notes": "",
+  "published_at": "2026-11-06T08:59:58.495Z"
+}

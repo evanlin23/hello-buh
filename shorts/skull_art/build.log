@@ -1,0 +1,20 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+08:53:42.273 spawned at Vec3 { x: 130.5, y: 70, z: 15.5 }
+08:53:42.596 nearest minecraft:forest at [ 418, 15 ]
+08:53:54.961 set at { x: 426, y: 85, z: 15 }
+08:54:02.717 placed 65, correct 65/65
+08:54:04.553 STUNT OK
+meshing from y 23
+light computed in 0.5 s
+meshed + uploaded world in 13.0 s
+rendered 543 frames (9.05 s of video) in 160.3 s = 17.7 s per video second
+wrote work/skull_art.wav 9.10s
+song drop at 10.50s lands on 7.15s of the Short (song starts at 3.35s)
+icon white_concrete
+wrote out/skull_art.mp4 8.75s
+
+real	4m6.171s
+user	4m0.639s
+sys	0m11.708s
+exit=0
