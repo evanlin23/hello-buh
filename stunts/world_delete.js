@@ -15,19 +15,23 @@ const TOP = 14       // and this much above (trees)
 const SUBS = [
   ['gone', '1 block = 1 chunk', 2.2, 0],
   ['gone', '10 chunks', 2.2, 1],
-  ['gone', '130 chunks', 2.2, 2],
-  ['gone', 'the whole world', 3.0, 3],
-  ['gone', 'my own chunk', 2.0, 4],
-  ['last', 'skyblock', 2.0, 0]
+  ['gone', '50 chunks', 2.2, 2],
+  ['gone', '100 chunks', 2.2, 3],
+  ['gone', 'the whole world', 3.2, 4],
+  ['gone', 'my own chunk', 2.2, 5],
+  ['last', 'skyblock', 1.6, 0],
+  ['final', 'the last block', 9, 0]
 ]
 
 module.exports = {
   name: 'world_delete',
+  expectDeath: true,
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every block I mine deletes the world 💀',
   edit: {
     caption: 'every block I mine deletes the world 💀', red: 'world', song: 'songs/funk_abnormal.mp3', dropAt: 'gone',
-    startAt: 'beat:-0.05', endAfter: 'last:1.0', subs: SUBS
+    startAt: 'beat:-0.05', endAfter: 'death:1.5', subs: SUBS, deathScreen: true,
+    speed: [['cut_a', 'cut_b', 'cut']]     // the empty fall through the void: the middle is cut (identical sky)
   },
 
   async setup (ctx) {
@@ -201,9 +205,15 @@ module.exports = {
       const list = fresh(chunks)
       const d = ([i, k]) => Math.hypot(i * 16 + 8 - X0, k * 16 + 8 - Z0)
       list.sort((a, b) => d(b) - d(a))
-      for (const [i, k] of list) { gone.add(key(i, k)); bot.chat(`/fill ${i * 16} ${yLo} ${k * 16} ${i * 16 + 15} ${yHi} ${k * 16 + 15} air`) }
-      for (const c of extra) bot.chat(c)
-      bot.chat(`/setblock ${bx} ${floor} ${bz} air`)
+      // big waves go out while aiming (they land 1-2 s later); small ones at the end of the dig
+      // (they land at once: sent early, the block vanished before the crack finished)
+      const send = () => {
+        for (const [i, k] of list) { gone.add(key(i, k)); bot.chat(`/fill ${i * 16} ${yLo} ${k * 16} ${i * 16 + 15} ${yHi} ${k * 16 + 15} air`) }
+        for (const c of extra) bot.chat(c)
+        bot.chat(`/setblock ${bx} ${floor} ${bz} air`)
+      }
+      const early = list.length > 0
+      if (early) send()
       await aim
       const b = bot.blockAt(p)
       const need = b ? Math.max(1, Math.ceil(bot.digTime(b) / 50)) : 4
@@ -212,6 +222,7 @@ module.exports = {
       for (let t = 0; t < 70; t++) {
         if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.grass.hit', 0.25, 0.5) }
         if (t % 8 === 0) drift((t % 16 ? -1 : 1) * 0.03, 0, 400)       // the small fidget of someone holding the button
+        if (!early && t === need - 1) send()
         await bot.waitForTicks(1)
         const nb = bot.blockAt(p)
         const arrived = (!nb || nb.name === 'air') && (!watch || watch.some(isGone))
@@ -235,19 +246,24 @@ module.exports = {
     list = await beat(1, X0 - 2, Z0, chunksIn(cx - 2, cx - 1, cz - 2, cz + 2), [], 450)
     await glide(W + 0.4, -0.3, 650)            // sweep along the cut edge
     await glide(W - 0.3, -0.22, 700)
-    // 3. south: everything south of my chunk row, then up to the empty horizon
-    list = await beat(2, X0, Z0 + 4, chunksIn(cx - R, cx + R, cz + 1, cz + R), [], 500)
+    // 3. east: a 3-chunk band, north to south
+    list = await beat(2, X0 + 4, Z0, chunksIn(cx + 1, cx + 3, cz - R, cz + R), [], 550)
+    await glide(E + 0.4, -0.12, 600)
+    await settle(list)
+    await glide(E - 0.4, -0.15, 800)
+    // 4. south: everything south of my chunk row, then up to the empty horizon
+    list = await beat(3, X0, Z0 + 4, chunksIn(cx - R, cx + R, cz + 1, cz + R), [], 600)
     await glide(S - 0.3, -0.12, 550)
     await settle(list)
     await glide(S + 0.35, -0.2, 800)
-    // 4. east: the whole world but my chunk; look out at the nothing, then all the way round
-    list = await beat(3, X0 + 4, Z0, chunksIn(cx - R, cx + R, cz - R, cz + R), [], 550)
-    await glide(E - 0.25, -0.1, 500)
+    // 5. the whole world but my chunk (watching the far east go); then all the way round
+    list = await beat(4, X0 + 4, Z0 + 3, chunksIn(cx - R, cx + R, cz - R, cz + R), [], 550)
+    await glide(E + 0.5, -0.1, 500)
     await settle(list)
     await glide(bot.entity.yaw + 2 * Math.PI, -0.35, 2400, { abs: true })
     // 5. my own chunk, down to 3x3
     const x1 = cx * 16, z1 = cz * 16
-    await beat(4, X0 + 3, Z0 + 2, [], [`/fill ${X0 + 2} ${yLo} ${z1} ${x1 + 15} ${yHi} ${z1 + 15} air`, `/fill ${x1} ${yLo} ${Z0 + 2} ${X0 + 1} ${yHi} ${z1 + 15} air`], 450)
+    await beat(5, X0 + 3, Z0 + 2, [], [`/fill ${X0 + 2} ${yLo} ${z1} ${x1 + 15} ${yHi} ${z1 + 15} air`, `/fill ${x1} ${yLo} ${Z0 + 2} ${X0 + 1} ${yHi} ${z1 + 15} air`], 450)
     for (let t = 0; t < 40; t++) { const b = bot.blockAt(new Vec3(X0 + 8, floor, Z0 + 8)); if (!b || b.name === 'air') break; await bot.waitForTicks(1) }
     await glide(bot.entity.yaw + 0.8, -0.6, 500)     // the edge, the void past it
     await glide(bot.entity.yaw + 1.2, -0.7, 550)
@@ -257,15 +273,27 @@ module.exports = {
       const [dx, dz] = ring[j]
       const extra = [`/fill ${X0 + dx} ${yLo} ${Z0 + dz} ${X0 + dx} ${floor - 1} ${Z0 + dz} air`]
       if (j === ring.length - 1) extra.push(`/fill ${X0} ${yLo} ${Z0} ${X0} ${floor - 1} ${Z0} air`)
-      await beat(5 + j, X0 + dx, Z0 + dz, [], extra, j === 0 ? 350 : 260)
+      await beat(6 + j, X0 + dx, Z0 + dz, [], extra, j === 0 ? 350 : 300)
       if (j === ring.length - 1) ctx.mark('last')
     }
-    // payoff: look down at the one block left, then out over the void
+    // skyblock: look down at the one block left, then out over the void
     await glide(bot.entity.yaw + 0.3, -1.45, 450)
-    await glide(bot.entity.yaw + 0.6, -1.05, 800)
+    await glide(bot.entity.yaw + 0.6, -0.9, 800)
     let left = 0
     for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) for (let y = yLo; y <= floor; y++) { const b = bot.blockAt(new Vec3(X0 + dx, y, Z0 + dz)); if (b && b.name !== 'air') left++ }
     ctx.log('blocks left around the bot:', left)
-    return left === 1 && !ctx.died
+    // 7. ...and the last block, the one I'm standing on
+    ctx.mark('final')
+    await beat(14, X0, Z0, [], [], 450)
+    ctx.mark('fall')
+    glide(bot.entity.yaw + 0.8, 1.2, 1400, { noWait: true })   // looking up as I drop: nothing up there either
+    for (let t = 0; t < 22; t++) await bot.waitForTicks(1)
+    ctx.mark('cut_a')
+    for (let t = 0; t < 200 && !ctx.died && bot.entity.position.y > -112; t++) await bot.waitForTicks(1)
+    ctx.mark('cut_b')
+    for (let t = 0; t < 120 && !ctx.died; t++) await bot.waitForTicks(1)
+    ctx.log('fell out of the world:', ctx.died)
+    await bot.waitForTicks(40)
+    return left === 1 && ctx.died
   }
 }
