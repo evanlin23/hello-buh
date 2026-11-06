@@ -13,7 +13,7 @@ the Short is the worst judge of their own pacing.
 Owner rules (2026-11-06):
 - "without any dead space";
 - "we should end as soon as the payoff comes";
-- longer Shorts (15-30 s) with several beats, not one long wait;
+- at least 30 s, built from several escalating beats, not one long wait ("I would prefer like 30 seconds at least");
 - held reveals are bad ("we land on the reveal for the pixel art for a while").
 
 ## Inputs
@@ -67,10 +67,13 @@ change of shot.
   makes people re-watch. Stories should loop back to line 1.
 
 **5. Length and density.**
-- Multi-beat formats: 15-30 s.
-- A single-beat stunt under 10 s is only OK if it is all motion (hook <= 1 s, tail <= 1 s); say so,
-  and suggest how to add beats if it could have them.
-- Count beats per 10 s. Under 3 is thin.
+- **30 s minimum** (owner rule). Under 30 s is a FAIL. The fix is more beats, not slower ones: turn the
+  stunt into an escalating series, a ranked list, X vs Y vs Z, or a story.
+- Over 30 s, every beat must still earn its place. If a beat could be cut without losing anything, it's
+  padding: FAIL, and name it.
+- Count the beats: aim for 3+ per 10 s. A 30 s Short with only one payoff at the end needs visible tension
+  the whole way (a timer, a counter, a growing threat).
+- Each beat has its own mini hook -> payoff, and the beats escalate toward the final payoff.
 
 **6. Re-watch value.** One line: why would someone watch it twice or send it to a friend? (The
 ridiculous scale, the twist, the close call.) If you can't name it, the concept needs work. Say so;
@@ -82,7 +85,7 @@ A beat timeline (timestamp, beat, motion OK?). Then each check with PASS/FAIL an
 - a beat to add or cut;
 - where the camera should move instead of holding.
 
-Verdict: **ready** or **not ready**. Any FAIL in checks 1-4 means not ready.
+Verdict: **ready** or **not ready**. Any FAIL in checks 1-5 means not ready.
 
 ## Common fixes
 - **Late hook:** `startAt: 'EVENT:-1.0'`, aim the camera so the subject sits beside the crosshair, not under it.
