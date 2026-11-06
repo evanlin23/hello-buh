@@ -31,8 +31,13 @@ module.exports = {
   expectDeath: true,
   edit: {
     caption: 'rating every way to die 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'death',
-    startAt: 'beat:-0.1', endAfter: 'last_death:1.1', deathScreen: true,
-    subs: DEATHS.map((d, i) => ['death', d.sub, 1.4, i])
+    startAt: 'beat:-0.1', endAfter: 'last_death:0.8', deathScreen: true,
+    // the name in green (under the death screen's buttons), the score as a card popping on the
+    // death, a zoom punch on every death (the death screen otherwise holds still) and a counter
+    subs: DEATHS.map((d, i) => ['death', d.sub.split(':')[0], 1.4, i]),
+    cards: DEATHS.map((d, i) => ['death', d.sub.split(': ')[1], 0.9, i === DEATHS.length - 1 ? 'gold' : i < 5 ? 'white' : i < 10 ? 'yellow' : 'red', i]),
+    punch: DEATHS.map((d, i) => ['death', i, i === DEATHS.length - 1 ? 1.2 : 1.08]),
+    counter: { at: ['death'], total: DEATHS.length }
   },
 
   async setup (ctx) {
