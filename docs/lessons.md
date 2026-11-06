@@ -221,3 +221,17 @@ each section.
 - **Pixel art pull-back starts on the completing tick**, with the result check after it. A 6-tick wait before the move left a 0.6 s dead hold (worker 2). Clocks with a fractional or sub-second target keep their hundredths when done ("0:00.50", not "0:00").
 - **You can't see your own pillar's sides from first person.** Standing in the middle of a 1x1 column, its side faces point away from the eye. lava_rising's "1 block below" gap existed in the recording (lava y72, top block y73) but never showed. To show it: sneak to the edge (prismarine-physics does vanilla sneak edge protection, and lava has no collision box) and look down past it. Pillar at about 60° down, not 75°.
 - **Reviewers also report vanilla as bugs:** "no player arm while holding a block" (vanilla draws only the item), and "the held block looks big" (our near-square view makes the same angular size a larger share of the width). Check against vanilla before acting.
+
+## Story Shorts (worker 5, 2026-11-06; the format is in docs/stories.md)
+- **A cut has to carry its aim.** Put yaw/pitch in the `/tp` itself and don't `bot.look` until it lands. Aiming after the teleport showed the new place at the old angle and then a snap. Looking before it lands turned the old shot for a tick (the renderer eases yaw between ticks), giving 2-3 frames spinning through other scenes, which spoiled later ones (story_runaway frames 159, 294, 495, 651, 951).
+- **A mob that hasn't moved for a long time reaches the client ~1 s late** once it starts moving, and then jumps there: 19-51 ticks with no position updates, then 5-14 blocks at once. A few ticks of tiny moves first (a lean-in) bring it down to 1-2 ticks. Pre-roll any motion that has to start on a word.
+- **Never park the camera inside a group of mobs.** In story_runaway the party camera walked into the ring, and those villagers' updates froze until they were 15 blocks away.
+- **`execute as <mob> run tp ...` every tick broadcasts "[Mob: Teleported ...]" to ops**, the bot included (7 mobs = 140 chat packets a second). Set `/gamerule log_admin_commands false`.
+- **mineflayer doesn't move passengers:** a villager riding a boat stays where he mounted. Teleport boat and "passenger" side by side.
+- **Boats draw ~1.1 blocks above their entity y** (converted geometry: hull bottom at +1.0, sides to +1.7). Workaround: a NoGravity boat at water level minus 1.1, teleported every tick (a submerged boat floats up even with NoGravity). Reported to the orchestrator.
+- **Chickens render in pieces** (body, wings and head apart). Use sheep, pigs or cows until it's fixed. Reported.
+- **A house lit by one hanging lantern renders its inside black** through an open door. Put glowstone in the ceiling.
+- **Single-pass `loudnorm` lands ~2 dB short** on a narrated mix (-16.4 for a -14 target). `story_track.master_gain` measures and corrects (gain, then a -1.5 dBTP limiter, repeated until it lands within 0.3 dB).
+- **Captions switch on the cut,** not on the first word. The old line held 0.17 s over the new scene and read as lagging.
+- **A still death screen is a still shot.** Bring something on screen: the villagers creep back to look at the crater.
+- **A dead player can't be targeted** by `facing entity <name>`. Use where they stood.
