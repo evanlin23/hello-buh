@@ -69,8 +69,13 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         drop = float(subprocess.run(["python3", str(ROOT / "scripts" / "song_drop.py"), str(ROOT / song)], capture_output=True, text=True, check=True).stdout.split()[0])
     song_start = max(0.0, drop - at)
     out = pathlib.Path(out_override) if out_override else d / "short.mp4"
-    graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
-             f"[0:a]loudnorm=I=-15:TP=-2,aresample=48000[game];[song][game]amix=inputs=2:normalize=0,loudnorm=I=-10:TP=-1:LRA=11[a]")
+    if stunt.get("story"):   # narrated story (docs/stories.md): the song is a quiet bed under the voice, master -14 LUFS
+        song_start = max(0.0, drop - 1.0) if not gen else 0.0   # start a little before the drop: the bed builds into it
+        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.8):.3f}:d=0.8,aresample=48000[song];"
+                 f"[0:a]aresample=48000[voice];[voice][song]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
+    else:
+        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+                 f"[0:a]loudnorm=I=-15:TP=-2,aresample=48000[game];[song][game]amix=inputs=2:normalize=0,loudnorm=I=-10:TP=-1:LRA=11[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
     f = pathlib.Path(song).name

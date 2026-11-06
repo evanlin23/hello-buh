@@ -19,6 +19,7 @@ import re
 import math
 import pathlib
 import subprocess
+import sys
 import tempfile
 import urllib.request
 import zipfile
@@ -493,6 +494,7 @@ def main():
     ap.add_argument("--song", help="music file to bake in (owner-supplied; keep the Short under 60 s)")
     ap.add_argument("--song_start", type=float, default=0.0, help="seconds into the song to start (e.g. the drop)")
     ap.add_argument("--song_drop_at", help="timeline event (or seconds into the Short) where the song's drop should land; the drop is found by scripts/song_drop.py")
+    ap.add_argument("--story", help="stories/<name>: narrated story Short (docs/stories.md): the line wavs and word-chunk captions on the `line` marks, game audio turned down under the voice")
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
@@ -637,9 +639,34 @@ def main():
             inputs += ["-loop", "1", "-i", str(tmp / f"death{k}.png")]
             graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{a:.3f})*lt(t,{b:.3f})'[ds{k}]")
             last, n_in = f"ds{k}", n_in + 1
+    if args.story and args.timeline:   # narrated story: big word-chunk captions over the game (and the death screen)
+        sys.path.insert(0, str(HERE / "scripts"))
+        import story_track
+        story_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        inputs += ["-f", "concat", "-safe", "0", "-i", str(story_track.caption_concat(args.story, story_tl, args.start, dur, tmp))]
+        graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[capv]")
+        graph.append(f"[{last}][capv]overlay=0:0:eof_action=pass[capo]")
+        last, n_in = "capo", n_in + 1
+        narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     maps = ["-map", "[v]"]
-    if args.audio and not args.song:
+    if args.story and args.timeline:
+        # the voice leads (-15 LUFS), the game sits well under it (-27) and a song is a quiet bed (-31);
+        # the master is -14 LUFS like the story channel's
+        inputs += ["-i", str(narration)]
+        graph.append(f"[{n_in}:a]loudnorm=I=-15:TP=-2,aresample=48000[nar]")
+        mix = ["[nar]"]
+        if args.audio:
+            inputs += ["-ss", str(args.start), "-i", args.audio]
+            graph.append(f"[{n_in + 1}:a]loudnorm=I=-27:TP=-6,aresample=48000[game]")
+            mix.append("[game]")
+        if args.song:
+            inputs += ["-ss", str(args.song_start), "-i", args.song]
+            graph.append(f"[{n_in + len(mix)}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.8):.3f}:d=0.8,aresample=48000[song]")
+            mix.append("[song]")
+        graph.append(f"{''.join(mix)}amix=inputs={len(mix)}:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
+        maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
+    elif args.audio and not args.song:
         # Game audio only: leave headroom for a song added at upload.
         inputs += ["-ss", str(args.start), "-i", args.audio]
         graph.append(f"[{n_in}:a]loudnorm=I=-18:TP=-3:LRA=11,aresample=48000[a]")

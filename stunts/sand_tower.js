@@ -8,7 +8,7 @@ module.exports = {
   name: 'sand_tower',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'the torch trick never gets old 😭',
-  edit: { caption: 'the torch trick never gets old 😭', red: 'torch', song: 'songs/funk_abnormal.mp3', dropAt: 'break', startAt: 'tower:-0.1', endAfter: 'gone:1.0' },
+  edit: { caption: 'the torch trick never gets old 😭', red: 'torch', song: 'songs/funk_abnormal.mp3', dropAt: 'break', startAt: 'tower:-0.1', endAfter: 'gone:0.4' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -37,8 +37,8 @@ module.exports = {
     const mid = new Vec3(this.x + 0.5, this.floor + 6.2, this.tz + 0.5)   // whole tower + its base in frame
     await ctx.easeLookAt(mid, 100)
     ctx.mark('tower')
-    await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 5.5, this.tz + 0.5), 500)
     const b = bot.blockAt(new Vec3(this.x, this.floor + 1, this.tz))
+    await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 1.5, this.tz + 0.5), 450)   // down to the base (bot.dig would snap there)
     ctx.mark('break')
     try { await bot.dig(b, false) } catch (e) { ctx.log('dig', e.message) }
     ctx.sound('block.sand.break', 1); ctx.particles('block', b.position, { block: 'sand' })
@@ -54,7 +54,13 @@ module.exports = {
     for (let i = 0; i < 120; i++) {
       await bot.waitForTicks(1)
       if (i % 3 === 0) ctx.sound('block.sand.place', 0.7, 0.8 + (i % 5) * 0.05)
-      if (i < 30) { const t = (i + 1) / 30; const e = t * t * (3 - 2 * t); await bot.look(bot.entity.yaw, Math.atan2(this.floor + 5.5 - e * 3 - (this.floor + 2.62), BACK - 0.5), true) }
+      // ease from the base up to the falling column, then follow it down
+      if (i < 50) {
+        const t = (i + 1) / 50, e = t * t * (3 - 2 * t)
+        const aimY = i < 18 ? 1.5 + 3.5 * Math.sin((i + 1) / 18 * Math.PI / 2) : 5 - 2.5 * ((i - 17) / 32)
+        const want = Math.atan2(this.floor + aimY - (this.floor + 2.62), BACK - 0.5)
+        await bot.look(bot.entity.yaw, bot.entity.pitch + (want - bot.entity.pitch) * (0.25 + 0.5 * e), true)
+      }
       const left = Object.values(bot.entities).some(en => en.name === 'falling_block')
       let sand = 0
       for (let y = 1; y <= H; y++) if (bot.blockAt(new Vec3(this.x, this.floor + y, this.tz)).name === 'sand') sand++

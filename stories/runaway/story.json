@@ -1,0 +1,29 @@
+{
+  "name": "runaway",
+  "stunt": "story_runaway",
+  "caption": "why does everyone run from me 💀",
+  "premise": "Every villager, chicken and fisherman flees from the narrator, who thinks he's just unlucky. Only his mom hugs him and the iron golem never lets him out of its sight.",
+  "twist": "When he gets excited he hears hissing. At the village party it happens again and he blows up: he's the creeper. His mom is a creeper too.",
+  "voice": {"voice": "am_adam", "tempo": 1.03, "rate": 1.45},
+  "gap": 0.12,
+  "key_color": "#7CFC4A",
+  "lines": [
+    {"id": "L01", "text": "All FOURTEEN / villagers in / my village / RUN when / they see ME."},
+    {"id": "L02", "text": "I say / GOOD MORNING. / They SLAM / the DOOR."},
+    {"id": "L03", "text": "I tell / the farmer / his wheat / looks GREAT. / He JUMPS / the fence / and SPRINTS."},
+    {"id": "L04", "text": "The fisherman / jumps in / his BOAT / and never / comes BACK."},
+    {"id": "L05", "text": "Even the / CHICKENS / pack up / and LEAVE."},
+    {"id": "L06", "text": "Only the / NITWIT stays. / But I don't / think he knows / where he IS."},
+    {"id": "L07", "text": "My MOM / says I'm / just SHY. / She's the / ONLY one / who HUGS me."},
+    {"id": "L08", "text": "And the / IRON GOLEM / follows me / EVERYWHERE. / I think / he LIKES me."},
+    {"id": "L09", "text": "Weird thing / though. / When I get / EXCITED, / I hear / this HISSING."},
+    {"id": "L10", "text": "Today was / the village / PARTY. / Nobody / INVITED me."},
+    {"id": "L11", "text": "So I / invited / MYSELF."},
+    {"id": "L12", "text": "Everyone / STOPPED. / Everyone / STARED."},
+    {"id": "L13", "text": "I was / SO happy. / And there / it was / AGAIN."},
+    {"id": "L14", "text": "Why does / that ALWAYS / happen when / I'm HAPPY?"},
+    {"id": "L15", "text": "Oh."},
+    {"id": "L16", "text": "I'm the / CREEPER."},
+    {"id": "L17", "text": "Which / explains / why"}
+  ]
+}
