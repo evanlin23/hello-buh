@@ -112,8 +112,8 @@ module.exports = makeStunt({
     // [ticks after the build, camera, look-at]: pull back over the walls to the small builds
     reveal: [
       [30, [12, 30, 52], [0, 22, -5]],
-      [60, [2, 15, 78], [0, 14, -4]],
-      [100, [1, 15.6, 82], [0, 14, -4]]
+      [60, [2, 20, 90], [0, 20, -4]],
+      [100, [1, 20.6, 94], [0, 20, -4]]
     ]
   }
 })

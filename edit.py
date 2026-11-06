@@ -452,11 +452,12 @@ def clock_fmt(v, target, done):
     return f"{int(m)}:{sec:05.2f}"
 
 
-def clock_concat(spec, tl_ev, start, dur, outdir, fps=30):
+def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
     """Big on-screen clocks for 'x in 1 second vs 1 minute vs 1 hour' Shorts. spec is a JSON list
     of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL]: from the start event the clock counts from
     0 to TARGET linearly over the span (so a sped-up time-lapse reads as that much time), then
-    turns green with a small pop and holds until the next clock starts. Returns an ffconcat list."""
+    turns green with a small pop and holds until the next clock starts. The first clock shows
+    at 0 for `lead` seconds before its start, so the first block never lands before the clock. Returns an ffconcat list."""
     clocks = []
     for c in json.loads(spec):
         a, b, target = c[0], c[1], float(c[2])
@@ -471,7 +472,7 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=30):
     n = int(math.ceil(dur * fps)) + 1
     for i in range(n):
         t = i / fps
-        cur = [c for c in clocks if c[0] <= t + 1e-6]
+        cur = [c for j, c in enumerate(clocks) if c[0] - (lead if j == 0 else 0) <= t + 1e-6]
         if not cur:
             key = None
         else:
