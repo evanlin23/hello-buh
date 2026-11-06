@@ -125,6 +125,52 @@ function makeStars () {
   m.renderOrder = -9; m.frustumCulled = false
   return m
 }
+// Sunrise / sunset glow (DimensionSpecialEffects.getSunriseOrSunsetColor + SkyRenderer
+// renderSunriseAndSunset): while cos(angle * 2pi) is within +-0.4, a triangle fan centred on the
+// horizon at the sun's side, colour (f*0.3+0.7, f*f*0.7+0.2, 0.2) with alpha (1-(1-sin(f*pi))*0.99)^2
+// at the centre and 0 at the rim, f = cos/0.4*0.5+0.5. Scaled out to sit behind the terrain.
+// The fan surrounds the camera and its centre lies nearly in the camera plane when looking sideways;
+// swiftshader then interpolated the centre's colour over everything (a hard orange edge looking
+// north at sunrise), so each triangle is cut into 12 radial strips (the same surface and colours).
+function sunriseColor (angle) {
+  const c = Math.cos(angle * Math.PI * 2)
+  if (c < -0.4 || c > 0.4) return null
+  const f = c / 0.4 * 0.5 + 0.5, a = (1 - (1 - Math.sin(f * Math.PI)) * 0.99) ** 2
+  return [f * 0.3 + 0.7, f * f * 0.7 + 0.2, 0.2, a]
+}
+let sunriseFan = null
+function drawSunrise () {
+  const angle = dayInfo(env.time).angle, sc = sunriseColor(angle)
+  const N = 12
+  if (!sunriseFan) {
+    const g = new THREE.BufferGeometry()
+    g.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(17 * (N + 1) * 3), 3))
+    g.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(17 * (N + 1) * 4), 4))
+    const idx = []
+    for (let j = 0; j < 16; j++) for (let k = 0; k < N; k++) { const p = j * (N + 1) + k, q = (j + 1) * (N + 1) + k; idx.push(p, q, q + 1, p, q + 1, p + 1) }
+    g.setIndex(idx)
+    sunriseFan = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, depthWrite: false, fog: false, side: THREE.DoubleSide }))
+    sunriseFan.renderOrder = -9.5; sunriseFan.frustumCulled = false; sunriseFan.matrixAutoUpdate = false
+    scene.add(sunriseFan)
+  }
+  sunriseFan.visible = !!sc && sky.visible && !window.DEBUG_MAGENTA && !window.DEBUG_NOFAN
+  if (!sunriseFan.visible) return
+  const pos = sunriseFan.geometry.attributes.position.array, col = sunriseFan.geometry.attributes.color.array
+  for (let j = 0; j <= 16; j++) {
+    const f2 = j * Math.PI * 2 / 16, s = Math.sin(f2), c = Math.cos(f2), R = [s * 120, c * 120, -c * 40 * sc[3]]
+    for (let k = 0; k <= N; k++) {
+      const t = k / N, i = j * (N + 1) + k
+      pos.set([R[0] * t, 100 + (R[1] - 100) * t, R[2] * t], i * 3); col.set([sc[0], sc[1], sc[2], sc[3] * (1 - t)], i * 4)
+    }
+  }
+  sunriseFan.geometry.attributes.position.needsUpdate = true; sunriseFan.geometry.attributes.color.needsUpdate = true
+  // PoseStack: Rx(90) Rz(sin(sunAngle) < 0 ? 180 : 0) Rz(90), around the camera, x3.4 out
+  const flip = Math.sin(angle * Math.PI * 2) < 0 ? Math.PI : 0
+  sunriseFan.matrix.makeTranslation(camera.position.x, camera.position.y, camera.position.z)
+    .multiply(new THREE.Matrix4().makeScale(3.4, 3.4, 3.4)).multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2))
+    .multiply(new THREE.Matrix4().makeRotationZ(flip)).multiply(new THREE.Matrix4().makeRotationZ(Math.PI / 2))
+  sunriseFan.matrixWorldNeedsUpdate = true
+}
 function placeSun () {
   // the celestial angle: 0 = noon (sun straight up); the sky turns around the X axis, east to west.
   // The moon is opposite the sun; stars turn with them.
@@ -320,10 +366,32 @@ window.HB = {
     const day = dayInfo(env.time), fog0 = srgb(env.fogColor0 ?? env.fogColor)
     const skyC = srgb(env.skyColor).multiplyScalar(day.bright)
     const fogC = new THREE.Color(fog0.r * (day.bright * 0.94 + 0.06), fog0.g * (day.bright * 0.94 + 0.06), fog0.b * (day.bright * 0.91 + 0.09))
+    // weather (ClientLevel.getSkyColor / getCloudColor, FogRenderer): rain pulls the sky toward 0.6 x its
+    // grey by rain * 0.75 (thunder: 0.2 x grey), the fog dims (rg x (1 - rain/2), b x (1 - 0.4 rain),
+    // thunder x (1 - thunder/2)), clouds go grey by 0.95, and the sun, moon and stars fade by 1 - rain
+    const rain = cam.rain || 0, thunder = cam.thunder || 0
+    const grey = (c, k, lv, s) => { const g = (c.r * 0.3 + c.g * 0.59 + c.b * 0.11) * k, f = 1 - lv * s; c.setRGB(c.r * f + g * (1 - f), c.g * f + g * (1 - f), c.b * f + g * (1 - f)) }
+    if (rain > 0) { grey(skyC, 0.6, rain, 0.75); fogC.setRGB(fogC.r * (1 - rain * 0.5), fogC.g * (1 - rain * 0.5), fogC.b * (1 - rain * 0.4)) }
+    if (thunder > 0) { grey(skyC, 0.2, thunder, 0.75); fogC.multiplyScalar(1 - thunder * 0.5) }
     sky.material.uniforms.top.value.copy(skyC); sky.material.uniforms.horizon.value.copy(fogC)
+    // FogRenderer: looking toward the sunrise/sunset side tints the fog by its colour (x the glow alpha)
+    {
+      const ang = day.angle * Math.PI * 2, sc = sunriseColor(day.angle)
+      if (sc) {
+        camera.updateMatrixWorld()
+        const look = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion)
+        let k = look.x * (Math.sin(ang) > 0 ? -1 : 1)
+        if (k > 0) { k *= sc[3]; fogC.setRGB(fogC.r * (1 - k) + sc[0] * k, fogC.g * (1 - k) + sc[1] * k, fogC.b * (1 - k) + sc[2] * k) }
+        sky.material.uniforms.horizon.value.copy(fogC)
+      }
+    }
     env.fogColorC = fogC
-    clouds.traverse(o => { if (o.material) o.material.color.setScalar(day.bright * 0.9 + 0.1) })
-    if (stars) stars.material.opacity = day.star
+    const cloudC = new THREE.Color().setScalar(day.bright * 0.9 + 0.1)
+    if (rain > 0) grey(cloudC, 0.6, rain, 0.95)
+    if (thunder > 0) grey(cloudC, 0.2, thunder, 0.95)
+    clouds.traverse(o => { if (o.material) o.material.color.copy(cloudC) })
+    if (stars) stars.material.opacity = day.star * (1 - rain)
+    sun.material.opacity = 1 - rain; if (moon) moon.material.opacity = 1 - rain
     // FogRenderer: lava 0.25..1.0. (This else chain once sat behind a // comment on one line, so
     // underwater fog never applied and lava fog was never cleared.)
     if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = 0.25; scene.fog.far = 1.0 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(env.fogColorC); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
@@ -332,12 +400,14 @@ window.HB = {
     sky.position.copy(camera.position)
     if (window.DEBUG_MAGENTA) { sky.visible = false; scene.background = new THREE.Color(1, 0, 1) }
     placeSun()
+    drawSunrise()
     // clouds drift +X at vanilla speed (0.03 blocks/tick); keep them centered on the camera
     const span = 256 * 12
     const drift = (tick || 0) * 0.03
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawParticles(parts)
+    await drawWeather(cam)
     END_TIME.value = ((tick || 0) % 4000) / 4000 * 0.6   // the shader's GameTime drift, slow
     drawSelection(cam)
     renderer.render(scene, camera)
@@ -347,6 +417,46 @@ window.HB = {
       renderer.autoClear = ac
     }
     return true
+  }
+}
+
+// Rain and snow columns (WeatherEffectRenderer): one quad per column, 1 block wide, turned to face
+// the camera, from the heightmap to camera + 10. The texture spans the quad's width; v runs 0.25 per
+// block plus the column's scroll; alpha fades with distance. Columns come from render.js.
+let weatherMats = null, weatherMeshes = []
+async function drawWeather (cam) {
+  for (const m of weatherMeshes) { scene.remove(m); m.geometry.dispose() }
+  weatherMeshes = []
+  const cols = cam.weather
+  if (!cols || !cols.length) return
+  if (!weatherMats) {   // the weather pipeline uses particle.fsh: discards alpha below 0.1
+    weatherMats = []
+    for (const n of ['rain', 'snow']) {
+      const t = await new THREE.TextureLoader().loadAsync(`/assets/env/${n}.png`).catch(() => null)
+      if (t) { t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace; t.flipY = false; t.wrapS = t.wrapT = THREE.RepeatWrapping }
+      weatherMats.push(t ? new THREE.MeshBasicMaterial({ map: t, vertexColors: true, transparent: true, depthWrite: false, side: THREE.DoubleSide, fog: true, alphaTest: 0.1 }) : null)
+    }
+  }
+  for (const kind of [0, 1]) {
+    const mat = weatherMats[kind]; if (!mat) continue
+    const pos = [], uv = [], col = [], idx = []
+    for (const [x, z, b, t, u, v, a, snow, lr, lg, lbl] of cols) {
+      if (snow !== kind) continue
+      const dx = x + 0.5 - cam.x, dz = z + 0.5 - cam.z, d = Math.hypot(dx, dz) || 1
+      const hx = -dz / d * 0.5, hz = dx / d * 0.5, n = pos.length / 3
+      pos.push(x + 0.5 - hx, t, z + 0.5 - hz, x + 0.5 + hx, t, z + 0.5 + hz, x + 0.5 + hx, b, z + 0.5 + hz, x + 0.5 - hx, b, z + 0.5 - hz)
+      uv.push(u, b * 0.25 + v, u + 1, b * 0.25 + v, u + 1, t * 0.25 + v, u, t * 0.25 + v)
+      for (let k = 0; k < 4; k++) col.push(lr, lg, lbl, a)
+      idx.push(n, n + 1, n + 2, n, n + 2, n + 3)
+    }
+    if (!pos.length) continue
+    const g = new THREE.BufferGeometry()
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+    g.setAttribute('color', new THREE.Float32BufferAttribute(col, 4))
+    g.setIndex(idx)
+    const m = new THREE.Mesh(g, mat); m.frustumCulled = false; m.renderOrder = 3
+    scene.add(m); weatherMeshes.push(m)
   }
 }
 

@@ -37,20 +37,22 @@ let GAMMA = 0.5
 function setBrightness (g) { GAMMA = Math.max(0, Math.min(1, Number(g))) }
 // Time of day (vanilla): DimensionType.timeOfDay -> the celestial angle; Level.getSkyDarken; the
 // sky, fog, cloud and star brightness the client derives from it. 6000 = noon, 18000 = midnight.
-function dayInfo (dayTime) {
+// rain = Level.getRainLevel (0..1), thunder = getThunderLevel: getSkyDarken scales the daylight by
+// (1 - rain * 5/16) and (1 - thunder * 5/16) before the 0.8/0.2 mix
+function dayInfo (dayTime, rain = 0, thunder = 0) {
   const d = (((dayTime / 24000) - 0.25) % 1 + 1) % 1
   const angle = (d * 2 + (0.5 - Math.cos(d * Math.PI) / 2)) / 3
   const c = Math.cos(angle * Math.PI * 2)
   const cl = (v) => Math.min(1, Math.max(0, v))
-  const dark = (1 - cl(1 - (c * 2 + 0.2))) * 0.8 + 0.2           // getSkyDarken: 0.2 (night) .. 1 (day)
+  const dark = (1 - cl(1 - (c * 2 + 0.2))) * (1 - rain * 5 / 16) * (1 - thunder * 5 / 16) * 0.8 + 0.2   // getSkyDarken: 0.2 (night) .. 1 (day)
   const bright = cl(c * 2 + 0.5)                                  // sky and fog colour factor
   const star = cl(1 - (c * 2 + 0.25)) ** 2 * 0.5                  // getStarBrightness
   return { angle, dark, bright, star }
 }
 // LightTexture: SkyFactor = darken * 0.95 + 0.05, SkyLightColor = (darken, darken, 1) -> white by 0.35
 let SKY_FACTOR = 1, SKY_COL = [1, 1, 1]
-function setDayTime (dayTime) {
-  const { dark } = dayInfo(dayTime)
+function setDayTime (dayTime, rain = 0, thunder = 0) {
+  const { dark } = dayInfo(dayTime, rain, thunder)
   SKY_FACTOR = dark * 0.95 + 0.05
   SKY_COL = [dark + (1 - dark) * 0.35, dark + (1 - dark) * 0.35, 1]
 }

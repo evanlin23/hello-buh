@@ -212,7 +212,118 @@ function targetBlock (cam, world, ents = []) {
 // (ctx.setTime) - [tick, dayTime]. A change re-lights the whole world (the lightmap's sky factor).
 const TIMES = [[0, rec.time ?? 6000], ...(rec.timeline || []).filter(e => e.event === 'time').map(e => [e.t / 50, e.time])]
 const dayTimeAt = (t) => { let v = TIMES[0][1]; for (const [a, d] of TIMES) if (t >= a) v = d; return v }
-setDayTime(dayTimeAt(0))
+// Weather (Level.getRainLevel / getThunderLevel): the recording's start weather (harness: stunt.weather)
+// and `weather` marks (ctx.setWeather); the client moves each level 0.01 a tick toward its target.
+// WEATHER=clear|rain|thunder overrides the whole recording.
+const RAIN = [], THUNDER = []
+{
+  const w0 = process.env.WEATHER || rec.weather || STUNT_MOD.weather || 'clear'
+  const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather])
+  let r = w0 !== 'clear' ? 1 : 0, th = w0 === 'thunder' ? 1 : 0, w = w0, k = 0
+  for (let i = 0; i <= P.length + 2; i++) {
+    while (k < marks.length && marks[k][0] <= i) w = marks[k++][1]
+    if (i > 0) { r = Math.max(0, Math.min(1, r + (w !== 'clear' ? 0.01 : -0.01))); th = Math.max(0, Math.min(1, th + (w === 'thunder' ? 0.01 : -0.01))) }
+    RAIN.push(r); THUNDER.push(th)
+  }
+}
+const levelAt = (A, t) => { const i = Math.max(0, Math.min(A.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i)); return A[i] + (A[i + 1] - A[i]) * f }
+// the lightmap's sky darkening follows the rain in 1/16 steps (each step re-lights the whole world)
+const weatherKey = (t) => `${Math.round(levelAt(RAIN, t) * 16)},${Math.round(levelAt(THUNDER, t) * 16)}`
+const weatherLight = (t) => [Math.round(levelAt(RAIN, t) * 16) / 16, Math.round(levelAt(THUNDER, t) * 16) / 16]
+setDayTime(dayTimeAt(0), ...weatherLight(0))
+// LevelRenderer rain: columns within 10 blocks (fancy) of the camera, from the MOTION_BLOCKING
+// heightmap up to camera + 10, a texture that scrolls per column, and splash particles where drops land.
+const HMAP = new Map()
+let hmapWorld = null
+function motionBlockingY (x, z) {
+  const key = `${x},${z}`
+  if (HMAP.has(key)) return HMAP.get(key)
+  let y = 319, out = -64
+  const v = new Vec3(x, 0, z)
+  for (; y > -64; y--) {
+    v.y = y
+    const b = hmapWorld.getBlock(v)
+    if (!b || b.name === 'air' || b.name === 'cave_air' || b.name === 'void_air') continue
+    if (b.boundingBox === 'block' || b.name === 'water' || b.name === 'lava' || /_leaves$/.test(b.name) || (b.getProperties && b.getProperties().waterlogged)) { out = y + 1; break }
+  }
+  const bio = hmapWorld.getBlock(new Vec3(x, Math.max(-63, out), z))
+  const bd = bio && bio.biome && MC.biomesByName[bio.biome.name]
+  const r = { y: out, rain: !bd || bd.has_precipitation !== false, snow: !!(bd && bd.temperature < 0.15), top: bio }
+  HMAP.set(key, r)
+  return r
+}
+// java.util.Random (LegacyRandomSource) nextFloat, for the per-column streak speed
+const JRAND = new Map()
+function columnRand (x, z) {
+  const key = `${x},${z}`
+  if (JRAND.has(key)) return JRAND.get(key)
+  const seed32 = ((Math.imul(Math.imul(x, x), 3121) + Math.imul(x, 45238971)) | 0) ^ ((Math.imul(Math.imul(z, z), 418711) + Math.imul(z, 13761)) | 0)
+  const M = (1n << 48n) - 1n
+  let sd = (BigInt(seed32) ^ 0x5DEECE66Dn) & M
+  const next = (bits) => { sd = (sd * 0x5DEECE66Dn + 0xBn) & M; return Number(sd >> BigInt(48 - bits)) }
+  const f = [next(24) / (1 << 24), next(24) / (1 << 24), next(24) / (1 << 24)]
+  const j = (Math.imul(Math.imul(x, x), 3121) + Math.imul(x, 45238971) + Math.imul(Math.imul(z, z), 418711) + Math.imul(z, 13761)) & 255
+  const out = { f, j }
+  JRAND.set(key, out)
+  return out
+}
+function weatherColumns (cam, t, rain) {
+  if (rain <= 0) return null
+  const R = 10, cx = Math.floor(cam.x), cy = Math.floor(cam.y), cz = Math.floor(cam.z), out = []
+  const ticks = Math.floor(t), part = t - ticks
+  for (let z = cz - R; z <= cz + R; z++) {
+    for (let x = cx - R; x <= cx + R; x++) {
+      const h = motionBlockingY(x, z)
+      if (!h.rain) continue
+      const bottom = Math.max(cy - R, h.y), top = Math.max(cy + R, h.y)
+      if (top === bottom) continue
+      const dx = x + 0.5 - cam.x, dz = z + 0.5 - cam.z, d2 = dx * dx + dz * dz
+      const { f, j } = columnRand(x, z)
+      const [ls, lb] = hmapWorld.getLight(new Vec3(x, Math.max(cy, h.y), z))
+      let u = 0, v, a
+      if (h.snow) {   // snow: slow fall (512 ticks per texture), a slight per-column drift
+        v = -((ticks & 511) + part) / 512 + (f[1] - 0.5) * 0.002 * (ticks & 511)
+        u = f[0] + (f[2] - 0.5) * 0.01 * (ticks & 511) * 0.01
+        a = ((1 - d2 / (R * R)) * 0.3 + 0.5) * rain
+      } else {
+        v = (-(((ticks & 131071) + j) + part) / 32 * (3 + f[0])) % 32
+        a = ((1 - d2 / (R * R)) * 0.5 + 0.5) * rain
+      }
+      if (a <= 0) continue
+      out.push([x, z, bottom, top, u, v, a, h.snow ? 1 : 0, ...lightmap(h.snow ? Math.min(15, (ls * 3 + 15) / 4) : ls, lb)])
+    }
+  }
+  return out
+}
+// rain splashes (LevelRenderer.tickRainParticles): 100 * rain^2 a tick at random heightmap spots
+// within 10 blocks, if within 10 blocks of the camera's height; WaterDropParticle (splash_0..3):
+// up at 0.1-0.3, gravity 0.06, gone when it lands back or after 8 / (r * 0.8 + 0.2) ticks
+function rainSplashes (t, camOf) {
+  const out = []
+  for (let k = Math.max(0, Math.floor(t) - 12); k <= Math.floor(t); k++) {
+    const rain = levelAt(RAIN, k)
+    if (rain <= 0) continue
+    const c = camOf(k), cx = Math.floor(c.x), cy = Math.floor(c.y), cz = Math.floor(c.z)
+    let sd = (k * 2654435761) >>> 0
+    const rnd = () => { sd ^= sd << 13; sd >>>= 0; sd ^= sd >>> 17; sd ^= sd << 5; sd >>>= 0; return sd / 4294967296 }
+    const n = Math.floor(100 * rain * rain)
+    for (let i = 0; i < n; i++) {
+      const x = cx + Math.floor(rnd() * 21) - 10, z = cz + Math.floor(rnd() * 21) - 10
+      const ox = rnd(), oz = rnd(), vy = rnd() * 0.2 + 0.1, life = Math.floor(8 / (rnd() * 0.8 + 0.2)), vx = (rnd() - 0.5) * 0.04, vz = (rnd() - 0.5) * 0.04, size = 0.1 * (rnd() * 0.5 + 0.5) * 2, tex = Math.floor(rnd() * 4)
+      const a = t - k
+      if (a < 0 || a >= life) continue
+      const h = motionBlockingY(x, z)
+      if (!h.rain || h.snow || h.y - 1 < cy - 10 || h.y - 1 > cy + 10) continue
+      const tb = h.top, name = tb ? tb.name : ''
+      if (/^(lava|magma_block|campfire|soul_campfire)$/.test(name)) continue
+      const sh = tb && tb.shapes && tb.shapes.length ? Math.max(...tb.shapes.map(q => q[4])) : (name === 'water' ? 0.89 : 1)
+      const y0 = h.y - 1 + sh, y = y0 + vy * a - 0.03 * a * a
+      if (y < y0 - 0.01) continue
+      out.push({ x: x + ox + vx * a, y, z: z + oz + vz * a, size, tex: `particle/splash_${tex}`, color: [1, 1, 1] })
+    }
+  }
+  return out
+}
 const DEATHS = []
 {
   let open = null
@@ -401,6 +512,7 @@ function camAtLive (t) {
   const mesher = new Mesher(rec.version)
   mesher.addColumns(rec.columns)
   solidWorld = mesher.world
+  hmapWorld = mesher.world
 
   const app = express()
   const blobs = new Map(); let blobId = 0
@@ -422,6 +534,13 @@ function camAtLive (t) {
   await page.waitForFunction(() => window.HB_READY)
   if (process.env.DEBUG_MAGENTA) await page.evaluate(() => { window.DEBUG_MAGENTA = true })
   if (process.env.DEBUG_NOSUN) await page.evaluate(() => { window.DEBUG_NOSUN = true })
+  if (process.env.DEBUG_NOFAN) await page.evaluate(() => { window.DEBUG_NOFAN = true })
+  { // the snow texture (weather; not in the asset build)
+    const snow = path.join(ASSETS_DIR, 'env', 'snow.png')
+    if (!fs.existsSync(snow)) {
+      try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/snow.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), snow]) } catch (e) { console.error('no snow texture:', e.message) }
+    }
+  }
   { // the moon texture (assets built before night support lack it)
     const moon = path.join(ASSETS_DIR, 'env', 'moon.png')
     if (!fs.existsSync(moon)) {
@@ -491,7 +610,7 @@ function camAtLive (t) {
   let bi = 0
   const sentBlocks = new Set()
   let relightBB = null, lastRelight = -99
-  let curDayTime = dayTimeAt(0)
+  let curDayTime = dayTimeAt(0), curWeather = weatherKey(0)
   const t1 = Date.now()
   for (let f = 0; f < (only ? only.length : frames); f++) {
     const t = only ? only[f] : f * 20 / FPS
@@ -501,6 +620,7 @@ function camAtLive (t) {
     while (bi < rec.blocks.length && rec.blocks[bi][0] <= t) {
       const [, x, y, z, stateId] = rec.blocks[bi++]
       mesher.setBlock(x, y, z, stateId)
+      HMAP.delete(`${x},${z}`)
       nChanged++
       bb = bb ? [Math.min(bb[0], x), Math.min(bb[1], y), Math.min(bb[2], z), Math.max(bb[3], x), Math.max(bb[4], y), Math.max(bb[5], z)] : [x, y, z, x, y, z]
       for (const [dx, dy, dz] of [[0, 0, 0], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
@@ -524,13 +644,14 @@ function camAtLive (t) {
         }
       }
     }
-    if (dayTimeAt(t) !== curDayTime) {   // the time changed (a story cut to night): re-light everything
-      curDayTime = dayTimeAt(t); setDayTime(curDayTime); dirty.clear()
+    if (dayTimeAt(t) !== curDayTime || weatherKey(t) !== curWeather) {   // the time or the rain changed: re-light everything
+      curDayTime = dayTimeAt(t); curWeather = weatherKey(t); setDayTime(curDayTime, ...weatherLight(t)); dirty.clear()
       await send(mesher.sections(minVisibleY))
     }
     if (dirty.size) await send([...dirty.values()])
     const cam = camAt(t)
     cam.dayTime = curDayTime
+    cam.rain = levelAt(RAIN, t); cam.thunder = levelAt(THUNDER, t)
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
     // CAM="dx,dy,dz,yawDeg,pitchDeg": a fixed camera relative to the set origin (no bob)
     // CAM=back[:dist] / CAM=front[:dist]: vanilla's F5 views (default 4 blocks), bob and hurt tilt kept
@@ -688,7 +809,18 @@ function camAtLive (t) {
         await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.state, mesher.meshSingle(e.extra.state)])
       }
     }
-    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), partsAt(t, cam)])
+    cam.weather = weatherColumns(cam, t, cam.rain)
+    const parts = partsAt(t, cam)
+    if (cam.rain > 0 && !process.env.NOPARTS) {
+      for (const p of rainSplashes(t, camAt)) {
+        if (Math.hypot(p.x - cam.x, p.y - cam.y, p.z - cam.z) < 0.25) continue
+        const [ls, lb] = mesher.world.getLight(new Vec3(p.x, p.y + 0.1, p.z))
+        const l = lightmap(ls, lb)
+        p.color = l
+        parts.push(p)
+      }
+    }
+    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), parts])
     // let the compositor present the finished frame before capturing (else: tearing lines)
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     await page.screenshot({ path: `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png` })
