@@ -33,7 +33,7 @@ checked out at `../hb-videos`.
 | [sand_tower](shorts/sand_tower/short.mp4) | the torch trick never gets old 😭 | 5.85s | Montagem Toma · X972, sk3tch01, MXZI | ready | c4cd22e |  |
 | [skull_art](shorts/skull_art/short.mp4) | the skull emoji irl 💀 | 8.75s | COM BOTA · cape, crysstales | ready | 46cab20 |  |
 | [speed_build](shorts/speed_build/short.mp4) | Fastest house build 💀 | 8.35s | AYUDA · MXRCVRY | ready | 97bba2b | worker QA (qa_frames + independent review): ready. Nitpicks: 0.37 s still opening before the timer, last ~0.5 s nearly still; held item pops on slot switches (engine: no lower/raise animation) |
-| [sword_art](shorts/sword_art/short.mp4) | can you guess what I'm building? 🤔 | 5.2s | INDUSTRY KISS · DIPIENS, HRXSTAL | ready | d95a743 |  |
+| [sword_art](shorts/sword_art/short.mp4) | can you guess what I'm building? 🤔 | 5.8s | INDUSTRY KISS · DIPIENS, HRXSTAL | ready | eaaf65d | worker QA (qa_frames + independent review): ready. Nitpicks: frequent slot switches f86-140 keep the held item mostly lowered; fill starts before the outline is complete |
 | [tnt](shorts/tnt/short.mp4) | POV: you lit 75 TNT 💀 | 15.4s | Mortals Funk Remix · Warriyo, LXNGVX | needs-fix | 1cb03ec | user: ground dark + bot stuck; re-render queued with the fixed stunt |
 | [villager_crowd](shorts/villager_crowd/short.mp4) | 1 villager vs 10 vs 100 staring at me 💀 | 15.9s | Feel Good Funk · Syn Cole, Nakama | ready | c66ae8c | worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats |
 | [villager_job](shorts/villager_job/short.mp4) | POV: THE VILLAGER IS UNEMPLOYED 💀 | 9.6s | Fearless Funk · DR MØB, Chris Linton | ready | 99d866a |  |
