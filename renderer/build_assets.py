@@ -57,13 +57,20 @@ def main(ver):
                 miss.putpixel((x, y), (248, 0, 248, 255))
     textures = {"missing_texture": miss, **textures}
 
+    # Each 16px tile sits in a 32px cell padded with copies of its own edge pixels, so mipmapping
+    # never blends in a neighbouring texture (that bleeding showed up as seams on water).
+    PAD, CELL = 8, TILE + 16
     grid = 2 ** math.ceil(math.log2(math.ceil(math.sqrt(len(textures)))))
-    size = grid * TILE
+    size = grid * CELL
     atlas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     index = {}
     for i, (name, im) in enumerate(textures.items()):
-        x, y = (i % grid) * TILE, (i // grid) * TILE
-        atlas.paste(im, (x, y))
+        cx, cy = (i % grid) * CELL, (i // grid) * CELL
+        # edge-extend: wrap-around tiling of the tile itself fills the padding like texture repeat
+        for oy in (-1, 0, 1):
+            for ox in (-1, 0, 1):
+                atlas.paste(im, (cx + PAD + ox * TILE, cy + PAD + oy * TILE))
+        x, y = cx + PAD, cy + PAD
         index[name] = {"u": x / size, "v": y / size, "su": TILE / size, "sv": TILE / size}
     atlas.save(out / "atlas.png")
     (out / "atlas.json").write_text(json.dumps({"size": TILE / size, "textures": index}))
@@ -80,7 +87,42 @@ def main(ver):
         if n.startswith("assets/minecraft/textures/item/") and n.endswith(".png") and n.count("/") == 4:
             (out / "env" / "item").mkdir(exist_ok=True)
             (out / "env" / "item" / n.rsplit("/", 1)[1]).write_bytes(jar.read(n))
-    print(f"{len(textures)} textures -> {size}x{size} atlas, {len(blockstates)} blockstates, {len(models)} models;",
+    # Biome colours exactly as the client computes them (BiomeColors / GrassColor / FoliageColor):
+    # colormap lookup by temperature and downfall*temperature, unless the biome overrides it.
+    grass_map = Image.open(io.BytesIO(jar.read("assets/minecraft/textures/colormap/grass.png"))).convert("RGB")
+    foliage_map = Image.open(io.BytesIO(jar.read("assets/minecraft/textures/colormap/foliage.png"))).convert("RGB")
+
+    def colormap(im, temp, down):
+        t = min(max(temp, 0.0), 1.0)
+        d = min(max(down, 0.0), 1.0) * t
+        x, y = int((1.0 - t) * 255), int((1.0 - d) * 255)
+        r, g, b = im.getpixel((x, y))
+        return (r << 16) | (g << 8) | b
+
+    def hexcol(v):
+        return int(v.lstrip("#"), 16) if isinstance(v, str) else v
+
+    biomes = {}
+    for n in names:
+        if n.startswith("data/minecraft/worldgen/biome/") and n.endswith(".json"):
+            d = json.loads(jar.read(n))
+            eff, attr = d.get("effects", {}), d.get("attributes", {})
+            t, dn = d.get("temperature", 0.5), d.get("downfall", 0.5)
+            grass = hexcol(eff["grass_color"]) if "grass_color" in eff else colormap(grass_map, t, dn)
+            mod = eff.get("grass_color_modifier", "none")
+            if mod == "dark_forest":
+                grass = ((grass & 0xFEFEFE) + 0x28340A) >> 1
+            elif mod == "swamp":
+                grass = 0x6A7039   # vanilla alternates 0x4C763C / 0x6A7039 by noise; pick one
+            foliage = hexcol(eff["foliage_color"]) if "foliage_color" in eff else colormap(foliage_map, t, dn)
+            biomes[n.rsplit("/", 1)[1][:-5]] = {
+                "grass": grass, "foliage": foliage, "water": hexcol(eff.get("water_color", "#3f76e4")),
+                "sky": hexcol(attr.get("minecraft:visual/sky_color", eff.get("sky_color", "#78a7ff"))),
+                "fog": hexcol(attr.get("minecraft:visual/fog_color", eff.get("fog_color", "#c0d8ff"))),
+                "water_fog": hexcol(attr.get("minecraft:visual/water_fog_color", eff.get("water_fog_color", "#050533")))}
+    (out / "biomes.json").write_text(json.dumps(biomes))
+
+    print(f"{len(biomes)} biomes;", f"{len(textures)} textures -> {size}x{size} atlas, {len(blockstates)} blockstates, {len(models)} models;",
           "env:", sorted(p.name for p in (out / "env").iterdir()))
 
 

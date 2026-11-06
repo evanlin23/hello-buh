@@ -169,7 +169,8 @@ window.HB = {
     camera.updateMatrixWorld()
     // Underwater: vanilla swaps to the biome's water fog colour and a short fog distance.
     const blocks = env.renderDistance * 16
-    if (cam.underwater) { scene.fog.color.copy(srgb(0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(srgb(env.fogColor)); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
+    if (cam.sky !== undefined) { sky.material.uniforms.top.value.copy(srgb(cam.sky)); env.fogColor = cam.fog; sky.material.uniforms.horizon.value.copy(srgb(cam.fog)) }
+    if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(srgb(env.fogColor)); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
     sky.visible = !cam.underwater; clouds.visible = !cam.underwater; sun.visible = !cam.underwater
     scene.background = cam.underwater ? srgb(0x050533) : srgb(env.fogColor)
     sky.position.copy(camera.position)

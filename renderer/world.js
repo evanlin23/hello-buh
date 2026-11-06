@@ -53,6 +53,15 @@ class World {
     return true
   }
 
+  // Sky/block light levels (0-15). Unloaded columns count as open daylight.
+  getLight (pos) {
+    if (this.light) return this.light.get(pos)
+    const column = this.columns[columnKey(Math.floor(pos.x / 16) * 16, Math.floor(pos.z / 16) * 16)]
+    if (!column) return [15, 0]
+    const p = posInChunk(pos.floored())
+    return [column.getSkyLight(p), column.getBlockLight(p)]
+  }
+
   getBlock (pos) {
     const key = columnKey(Math.floor(pos.x / 16) * 16, Math.floor(pos.z / 16) * 16)
 

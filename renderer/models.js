@@ -2,7 +2,42 @@
 // vanilla face shading + AO curve baked into vertex colors, no y<0 culling, shade:false support.
 const { Vec3 } = require('vec3')
 
-const tints = require('minecraft-data')('1.16.2').tints
+const tints = require('minecraft-data')('1.16.2').tints   // only redstone + constant tints are used now
+
+// Biome colours from the client jar (build_assets.py -> biomes.json), blended over a 5x5 area like
+// vanilla's default biome blend (radius 2).
+let BIOMES = {}
+function setBiomeColors (b) { BIOMES = b }
+const tintCache = new Map()
+function hexToGl (c) { return [((c >> 16) & 255) / 255, ((c >> 8) & 255) / 255, (c & 255) / 255] }
+function biomeTint (world, pos, kind) {
+  const key = `${kind}|${pos.x}|${pos.y}|${pos.z}`
+  let v = tintCache.get(key)
+  if (v) return v
+  let r = 0, g = 0, b = 0, n = 0
+  for (let dx = -2; dx <= 2; dx++) {
+    for (let dz = -2; dz <= 2; dz++) {
+      const bl = world.getBlock(pos.offset(dx, 0, dz))
+      const bio = bl && bl.biome && BIOMES[bl.biome.name]
+      if (!bio) continue
+      const c = hexToGl(bio[kind]); r += c[0]; g += c[1]; b += c[2]; n++
+    }
+  }
+  v = n ? [r / n, g / n, b / n] : hexToGl(kind === 'water' ? 0x3f76e4 : kind === 'grass' ? 0x91bd59 : 0x77ab2f)
+  tintCache.set(key, v)
+  return v
+}
+// Fixed foliage colours (FoliageColor): evergreen, birch, mangrove; lily pad.
+const FIXED = { spruce_leaves: 0x619961, birch_leaves: 0x80a755, mangrove_leaves: 0x92c648, lily_pad: 0x208030 }
+
+// Lightmap: light level -> brightness, as LightTexture does at noon with default gamma (0.5).
+function lightmap (level) {
+  const f = level / 15
+  const b = f / (4 - 3 * f)
+  const g = 1 - Math.pow(1 - b, 4)
+  return Math.max(0.04, (b + (g - b) * 0.5) * 0.96 + 0.04)
+}
+function lightOf (world, pos) { const [s, b] = world.getLight(pos); return Math.max(s, b) }
 
 for (const key of Object.keys(tints)) {
   tints[key] = prepareTints(tints[key])
@@ -134,10 +169,13 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
     if ((neighbor.isCube && !isUp) || neighbor.material === 'plant' || neighbor.getProperties().waterlogged) continue
 
     let tint = [1, 1, 1]
+    const lm = lightmap(lightOf(world, isUp ? cursor.offset(0, 1, 0) : cursor))
     if (water) {
-      const m = faceShade(dir)
-      tint = tints.water[biome]
+      const m = faceShade(dir) * lm
+      tint = biomeTint(world, cursor, 'water')
       tint = [tint[0] * m, tint[1] * m, tint[2] * m]
+    } else {
+      tint = [lm, lm, lm]
     }
 
     const u = texture.u
@@ -236,7 +274,7 @@ function faceShade (dir) {
 }
 // Vanilla smooth-lighting AO: each solid occluder darkens a corner (0.2 per block, like
 // Block.getShadeBrightness); ao = number of open neighbours (3 = fully open).
-const AO_CURVE = [0.45, 0.6, 0.8, 1.0]
+const AO_CURVE = [0.4, 0.6, 0.8, 1.0]
 
 function renderElement (world, cursor, element, doAO, attr, globalMatrix, globalShift, block, biome) {
   const cullIfIdentical = block.name.indexOf('glass') >= 0
@@ -267,20 +305,22 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
 
     const ndx = Math.floor(attr.positions.length / 3)
     const shade = element.shade === false ? 1 : faceShade(dir)
+    // Smooth lighting: light is sampled outside the face (the neighbour it faces) for faces on
+    // the block boundary, and at the block itself for inner faces (plants, etc).
+    const centerPos = eFace.cullface ? cursor.offset(...dir) : cursor
+    const centerLight = lightOf(world, centerPos)
 
     let tint = [1, 1, 1]
     if (eFace.tintindex !== undefined) {
       if (eFace.tintindex === 0) {
         if (block.name === 'redstone_wire') {
           tint = tints.redstone[`${block.getProperties().power}`]
-        } else if (block.name === 'birch_leaves' ||
-          block.name === 'spruce_leaves' ||
-          block.name === 'lily_pad') {
-          tint = tints.constant[block.name]
+        } else if (FIXED[block.name] !== undefined) {
+          tint = hexToGl(FIXED[block.name])
         } else if (block.name.includes('leaves') || block.name === 'vine') {
-          tint = tints.foliage[biome]
+          tint = biomeTint(world, cursor, 'foliage')
         } else {
-          tint = tints.grass[biome]
+          tint = biomeTint(world, cursor, 'grass')
         }
       }
     }
@@ -333,6 +373,7 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
       attr.uvs.push(baseu * su + u, basev * sv + v)
 
       let light = 1
+      let vlight = lightmap(centerLight)
       if (doAO) {
         const dx = pos[0] * 2 - 1
         const dy = pos[1] * 2 - 1
@@ -347,6 +388,12 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
         const side1Block = (side1 && side1.isCube) ? 1 : 0
         const side2Block = (side2 && side2.isCube) ? 1 : 0
         const cornerBlock = (corner && corner.isCube) ? 1 : 0
+        // vanilla blend: average the 4 light samples, opaque ones borrow the centre's light
+        const ls = [centerLight,
+          side1Block ? centerLight : lightOf(world, cursor.offset(...side1Dir)),
+          side2Block ? centerLight : lightOf(world, cursor.offset(...side2Dir)),
+          (cornerBlock || (side1Block && side2Block)) ? centerLight : lightOf(world, cursor.offset(...cornerDir))]
+        vlight = lightmap((ls[0] + ls[1] + ls[2] + ls[3]) / 4)
 
         // TODO: correctly interpolate ao light based on pos (evaluate once for each corner of the block)
 
@@ -355,7 +402,7 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
         aos.push(ao)
       }
 
-      attr.colors.push(tint[0] * light * shade, tint[1] * light * shade, tint[2] * light * shade)
+      attr.colors.push(tint[0] * light * shade * vlight, tint[1] * light * shade * vlight, tint[2] * light * shade * vlight)
     }
 
     if (doAO && aos[0] + aos[3] >= aos[1] + aos[2]) {
@@ -497,4 +544,4 @@ function getModelVariants (block, blockStates) {
   return []
 }
 
-module.exports = { getSectionGeometry }
+module.exports = { getSectionGeometry, setBiomeColors }

@@ -5,7 +5,8 @@ const fs = require('fs')
 const path = require('path')
 const { Vec3 } = require('vec3')
 const { World } = require('./world')
-const { getSectionGeometry } = require('./models')
+const { getSectionGeometry, setBiomeColors } = require('./models')
+const { LightEngine } = require('./light')
 
 class Mesher {
   constructor (version) {
@@ -13,12 +14,22 @@ class Mesher {
     this.world = new World(version)
     const dir = path.join(__dirname, '..', 'work', 'assets', version)
     this.blockStates = JSON.parse(fs.readFileSync(path.join(dir, 'resolved.json')))
+    this.biomes = JSON.parse(fs.readFileSync(path.join(dir, 'biomes.json')))
+    setBiomeColors(this.biomes)
     this.minY = require('minecraft-data')(version).version['>=']('1.18') ? -64 : 0
     this.height = this.minY === -64 ? 384 : 256
   }
 
   addColumns (columns) {
     for (const c of columns) this.world.addColumn(c.x, c.z, c.chunk)
+  }
+
+  // Compute our own light for everything from minVisibleY up (see light.js).
+  computeLight (minVisibleY) {
+    const t = Date.now()
+    const eng = new LightEngine(this.world, require('minecraft-data')(this.version), minVisibleY - 16, this.minY + this.height)
+    this.world.light = eng.compute()
+    return Date.now() - t
   }
 
   setBlock (x, y, z, stateId) {

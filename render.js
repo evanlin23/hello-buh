@@ -75,7 +75,9 @@ function camAt (t) {
     await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`)
   }
   const t0 = Date.now()
-  await send(mesher.sections(rec.set ? rec.set.y - 24 : -Infinity))
+  const minVisibleY = rec.set ? rec.set.y - 24 : -64
+  console.log(`light computed in ${(mesher.computeLight(minVisibleY) / 1000).toFixed(1)} s`)
+  await send(mesher.sections(minVisibleY))
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
 
   fs.mkdirSync(outDir, { recursive: true })
@@ -100,6 +102,8 @@ function camAt (t) {
     const cam = camAt(t)
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
+    const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
+    if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
     await page.evaluate(([c, tick]) => window.HB.frame(c, tick), [cam, t])
     await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })
     if (f % 60 === 0) console.log(`frame ${f}/${frames}`)
