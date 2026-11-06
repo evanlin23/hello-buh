@@ -79,18 +79,27 @@ module.exports = {
     ctx.mark('opened')
     ctx.sound('block.lava.pop', 1)
     // it pours straight down: vanilla lava waits 30 ticks per block of flow (3 s of a still hole on
-    // camera), so drop the falling column ourselves, a block every few ticks, fed by the pocket
+    // camera), so drop the falling column ourselves, a block every few ticks, fed by the pocket.
+    // The bot backs off a step first so the column falls in front of the camera, then it floods
+    // across the floor onto the bot.
     const bz = up.position.z
-    await bot.waitForTicks(8)
+    bot.setControlState('back', true)
+    for (let i = 0; i < 6; i++) { await bot.waitForTicks(1); await bot.look(bot.entity.yaw, Math.max(-0.6, bot.entity.pitch - 0.25), true) }
+    bot.setControlState('back', false)
     for (const dy of [2, 1, 0]) {
       bot.chat(`/setblock ${x} ${y + dy} ${bz} lava[level=8]`)
       ctx.sound('block.lava.pop', 0.8, 0.9 + dy * 0.1)
       if (dy === 2) ctx.mark('pour')
-      await bot.waitForTicks(5)
+      await bot.waitForTicks(4)
+      await bot.look(bot.entity.yaw, Math.max(-0.6, bot.entity.pitch - 0.2), true)   // eyes follow it down
     }
-    for (let i = 0; i < 10 && !ctx.died; i++) await bot.waitForTicks(1)
+    ctx.sound('block.lava.ambient', 1)
+    const fz = Math.floor(bot.entity.position.z)
+    bot.chat(`/setblock ${x} ${y} ${fz} lava[level=1]`)          // it spreads onto us
+    await bot.waitForTicks(3)
+    bot.chat(`/setblock ${x} ${y + 1} ${fz} lava[level=8]`)
     const yaw = bot.entity.yaw
-    for (const [dy, p] of [[0.6, 0.2], [-0.7, 0.1], [0.3, -0.3]]) { if (!ctx.died) await ctx.easeLook(yaw + dy, p, 450) }
+    for (const [dy, p] of [[0.6, 0.2], [-0.7, 0.1], [0.3, -0.3], [-0.5, 0.25], [0.8, 0.0], [-0.3, -0.2]]) { if (!ctx.died) await ctx.easeLook(yaw + dy, p, 380) }   // panic, never a still red screen
     for (let i = 0; i < 160 && !ctx.died; i++) await bot.waitForTicks(1)
     await bot.waitForTicks(50)                                // the death screen
     return ctx.died
