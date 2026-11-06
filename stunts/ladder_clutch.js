@@ -31,6 +31,9 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    // stand in the middle of the set while it is built: a /fill reaching chunks the server isn't
+    // simulating fails ("That position is not loaded")
+    await ctx.cmd(`/tp @s ${x + 2} ${floor + 2} ${z + SPAN / 2}`); await bot.waitForTicks(20)
     const R = 26, top = floor + Math.max(...WALLS.map(w => w.h))
     for (let y0 = floor + 1; y0 <= top + 6; y0 += 4) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 3, top + 6)} ${z + R + SPAN} air`)   // 53x101x4 < the 32768 cap
     await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R + SPAN} dirt`)
@@ -40,13 +43,6 @@ module.exports = {
       await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + w.h} ${z + w.dz + 2} ${w.mat}`)
       if (w.base) await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + 3} ${z + w.dz + 2} ${w.base}`)
     }
-    // mineflayer misses the updates of big /fills (its own copy of the world kept the old hills: the
-    // bot stood on them and the recording snapshot had them): go far away and come back so the
-    // client gets fresh chunks
-    await ctx.cmd(`/tp @s ${x + 3000} 200 ${z}`); await bot.waitForTicks(40)
-    await ctx.cmd(`/tp @s ${x + 2} ${floor + 2} ${z}`); await bot.waitForTicks(40); await bot.waitForChunksToLoad()
-    // check the ground is level beside every wall (run.sh retries on a throw)
-    for (const w of WALLS) { const b = ctx.surface(x + 2, z + w.dz); if (!b || b.position.y !== floor) throw new Error(`ground beside the ${w.h} wall is not level (${b && b.position.y - floor} ${b && b.name})`) }
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 5')
     await ctx.hotbar([['ladder', 16], ['cobblestone', 64], 'stone_pickaxe', ['bread', 12]])

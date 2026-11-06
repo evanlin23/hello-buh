@@ -24,6 +24,9 @@ module.exports = {
     await ctx.defaultRules()
     const top = floor + Math.max(...PILLARS.map(p => p.h))
     const X1 = x + PILLARS[PILLARS.length - 1].dx + 16
+    // stand in the middle of the set while it is built: a /fill reaching chunks the server isn't
+    // simulating fails ("That position is not loaded")
+    await ctx.cmd(`/tp @s ${Math.round((x - 16 + X1) / 2)} ${floor + 2} ${z}`); await bot.waitForTicks(20)
     for (let y0 = floor + 1; y0 <= top + 6; y0 += 9) await ctx.cmd(`/fill ${x - 16} ${y0} ${z - 22} ${X1} ${Math.min(y0 + 8, top + 6)} ${z + 12} air`)   // 93x35x9 < the 32768 cap
     await ctx.cmd(`/fill ${x - 16} ${floor - 3} ${z - 22} ${X1} ${floor - 1} ${z + 12} dirt`)
     await ctx.cmd(`/fill ${x - 16} ${floor} ${z - 22} ${X1} ${floor} ${z + 12} grass_block`)
@@ -34,11 +37,7 @@ module.exports = {
     await ctx.hotbar(['diamond_sword', ...PILLARS.map(() => 'oak_boat'), ['bread', 16]])   // boats don't stack: one per slot
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
     // stand clear of every block before recording (spawning inside the fill hurt the bot: in_wall)
-    // mineflayer misses the updates of big /fills (its copy of the world, and so the recording's
-    // snapshot, kept the old terrain): go far away and back so the client gets fresh chunks
-    await ctx.cmd(`/tp @s ${x + 3000} 200 ${z}`); await bot.waitForTicks(40)
     await ctx.tpCheck(x + 0.5, floor + PILLARS[0].h + 1, z + 0.5, 180, 60)
-    await bot.waitForChunksToLoad()
     ctx.select(0)
     return { x, y: floor, z }
   },

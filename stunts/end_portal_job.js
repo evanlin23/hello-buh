@@ -41,11 +41,7 @@ module.exports = {
     await ctx.hotbar([['ender_eye', 64], 'iron_pickaxe', ['bread', 7]])
     await ctx.cmd('/gamemode survival')
     // in the middle of the first ring, facing its first frame (north-west)
-    // mineflayer misses the updates of big /fills (its copy of the world, and so the recording's
-    // snapshot, kept the old terrain): go far away and back so the client gets fresh chunks
-    await ctx.cmd(`/tp @s ${x + 3000} 200 ${z}`); await bot.waitForTicks(40)
     await ctx.tpCheck(x + 2.5, floor + 1, z + 2.5, 160, 40)
-    await bot.waitForChunksToLoad()
     ctx.select(0)
     return { x, y: floor, z }
   },
