@@ -125,7 +125,9 @@ module.exports = {
       bot.setControlState('forward', false)
       await bot.waitForTicks(6)
       // they all turn round at once (the last face_on also covers the crowd behind, which turns with it)
-      bot.chat(`/tag @e[type=villager,tag=crowd${i}] add on`)
+      // server-side tracking (tp facing every tick) for the small crowds; the 500 + 100 would stall the server,
+      // and the renderer turns every villager in the face_on window toward the camera anyway
+      if (!last) bot.chat(`/tag @e[type=villager,tag=crowd${i}] add on`)
       const depth = (c.rows - 1) * (c.n >= 50 ? 1.3 : 1.8)
       ctx.mark('turn', { n: c.n }); ctx.mark('face_on', { near: last ? [sx + 0.5, z - 3, 34] : [sx + 0.5, z - 3.5 - depth / 2, 8 + depth] })
       const voices = Math.min(c.n, 6)
