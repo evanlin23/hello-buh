@@ -53,6 +53,20 @@ A mystery stated plainly in line 1, clues that build up, then a twist that makes
 29. **Same Spot** *(worker 8, building)*. Every time I come home, Mom is standing in the exact same spot, mid-word, the sheep by the door frozen mid-jump. Twist: the world only runs near me. She has only lived the minutes I was home; I left at seven, and for her that was this morning. "I'm the only clock she has."
 30. **Put Back** *(worker 8, next)*. Every morning, one more block of my blown-up house is back where it was. An enderman does it, and it never looks at me. Twist: it's my brother, who went to the End and came back as one. He can only come while my eyes are shut, because if I look at him, he has to hurt me.
 
+## More ridiculous ones (worker 7)
+29. **Every block I place doubles.** One dirt block becomes 2, 4, 8... until 1,024 blocks bury the field and the sky. Real placements; the doubling is commands.
+30. **Every time I jump, the world gets taller.** Each jump raises every column around by one block, until I'm in a canyon of my own making.
+31. **Every wrong way to light a nether portal.** Lava bucket, fire charge, a burning arrow, TNT... the last one deletes the portal.
+32. **My whole house is TNT.** A cosy build, then the camera finds the one torch someone put on the wrong block.
+33. **The villager that copies me.** Every block I place, he places one too, until he out-builds me (villager + `face_on`).
+
+## Built by worker 7 (premises sharpened)
+- #1 as `world_delete`: "every block I mine deletes the world": each dug grass block deletes more (1 chunk, 10, 130, everything but my chunk), then the last 8 blocks around me, mined by hand, until I stand on 1 block.
+- #8 as `die_rating`: fall, cactus, lava, berry bush, anvil, 30 pigs (entity cramming), and the respawn anchor in the Overworld ("[Intentional Game Design]") as the 11/10.
+- #9 as `diamond_tools`: fist and hoe dig for the full 15 s (shown at 10x), the gold pickaxe is fast but drops nothing, then iron, diamond, netherite, and a raw cod with a `tool` component that instamines a 5x5 wall of diamond ore.
+- #14 as `every_job`: all 13 job sites placed by hand, faster and faster; then every job at once, and he quits (nitwit).
+- #19 as `water_everything`: me on fire, a lava pool, a burning house, TNT in water (no crater), then a 50-block fall.
+
 ## Status
 - Built: everything in stunts/.
 - Building: 10 (worker 6), 11 boat/ladder (worker 4), mysteries (workers 5 and 8).
