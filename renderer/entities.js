@@ -71,6 +71,12 @@ function build (geo, texInfo, extraCubes = {}) {
   const root = new THREE.Group()
   const inner = new THREE.Group(); inner.scale.setScalar(1 / 16); root.add(inner)
   const mat = new THREE.MeshBasicMaterial({ map: texInfo.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
+  // white overlay (creeper fuse flash, LivingEntityRenderer overlay): mix toward white by uWhite
+  mat.userData.white = { value: 0 }
+  mat.onBeforeCompile = (sh) => {
+    sh.uniforms.uWhite = mat.userData.white
+    sh.fragmentShader = 'uniform float uWhite;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0), uWhite);')
+  }
   const bones = {}
   const defs = {}
   for (const b of geo.bones) defs[b.name] = b
@@ -206,7 +212,12 @@ export class EntityLayer {
         let f = s.swell; const g = 1 + Math.sin(f * 100) * f * 0.01
         f = Math.min(1, Math.max(0, f)); f *= f; f *= f
         r.obj.scale.set((1 + f * 0.4) * g, (1 + f * 0.1) / g, (1 + f * 0.4) * g)
-      } else if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
+        // CreeperRenderer.getWhiteOverlayProgress: blinks with (int)(swell * 10) odd, strength swell in [0.5, 1]
+        if (r.mat?.userData.white) r.mat.userData.white.value = Math.floor(s.swell * 10) % 2 ? Math.min(1, Math.max(0.5, s.swell)) : 0
+      } else {
+        if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
+        if (r.mat?.userData.white) r.mat.userData.white.value = 0
+      }
       // limb swing like WalkAnimationState: per game tick, target = min(1, distance * 4), speed eases
       // toward it by 0.4 and the phase advances by speed. Frames come at 60 fps (3 per tick), so
       // measure over elapsed ticks, not per frame (per frame read a third of the speed).

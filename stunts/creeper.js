@@ -6,7 +6,7 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/funk_abnormal.mp3', dropAt: 'hiss', start: 0.4, deathScreen: true, endAfter: 'death:1.8' },
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', song: 'songs/funk_abnormal.mp3', dropAt: 'hiss', startAt: 'hiss:-1.6', deathScreen: true, endAfter: 'death:1.8' },
   expectDeath: true,
 
   async setup (ctx) {
@@ -60,7 +60,11 @@ module.exports = {
     ctx.mark('hiss'); ctx.sound('entity.creeper.primed', 1, 1)
     await bot.waitForTicks(8)                                   // ...what's that sound
     const c = Object.values(bot.entities).find(e => e.name === 'creeper')
-    if (c) await ctx.easeLookAt(c.position.offset(0, 1.3, 0), 350)   // spin round: oh no
+    if (c) await ctx.easeLookAt(c.position.offset(0, 0.9, 0), 300)   // spin round: oh no
+    // stumble back a step or two so the whole creeper (legs, swelling, white flashes) is in frame
+    bot.setControlState('back', true)
+    for (let i = 0; i < 9; i++) { await bot.waitForTicks(1); const cc = Object.values(bot.entities).find(e => e.name === 'creeper'); if (cc) bot.lookAt(cc.position.offset(0, 0.9, 0), true) }
+    bot.setControlState('back', false)
     for (let i = 0; i < 60 && !ctx.died; i++) await bot.waitForTicks(1)
     await bot.waitForTicks(50)                                  // the death screen
     return ctx.died
