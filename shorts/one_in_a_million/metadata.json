@@ -19,29 +19,32 @@
     "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
     "drop_on_event": "splash",
     "drop_in_song_s": 16.25,
-    "drop_in_short_s": 5.55,
-    "song_start_s": 10.7
+    "drop_in_short_s": 4.25,
+    "song_start_s": 12
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.3,
+    "duration_s": 6.85,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 17958195,
-    "sha256": "cfb74840ca36e1b9982f064c45223a8f4a22c8465fde696781e9785d9821ac3e"
+    "bytes": 18574878,
+    "sha256": "20a020cf0fbc41a9c936dde2ecb98fb19a48e08dcec334bdbbc170777627c90a"
   },
   "edit": {
     "caption": "1 in a million landing 😳",
     "song": "songs/misery.mp3",
     "dropAt": "splash",
-    "start": 0.6,
+    "startAt": "drop:-1.2",
+    "endAfter": "splash:2.6",
     "args": [
       "--caption",
       "1 in a million landing 😳",
-      "--start",
-      "0.6",
+      "--start_at",
+      "drop:-1.2",
+      "--end_after",
+      "splash:2.6",
       "--song",
       "songs/misery.mp3",
       "--song_drop_at",
@@ -56,13 +59,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 360,
-      "y": 62,
-      "z": -52
+      "x": 377,
+      "y": 67,
+      "z": -57
     },
     "biome": "minecraft:plains",
-    "ticks": 179,
-    "seconds": 8.95,
+    "ticks": 181,
+    "seconds": 9.05,
     "deaths": 0,
     "events": [
       {
@@ -78,7 +81,7 @@
         "event": "splash"
       },
       {
-        "t": 8.95,
+        "t": 9.05,
         "event": "end"
       }
     ]
@@ -86,22 +89,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "482d8340f495f9032d37c9fc91aa893d75bf9d2f",
-    "rendered_at": "2026-11-06T07:56:13.012Z",
-    "head_at_publish": "16bae51236be5020192b0e80c33489833c82c2ad",
+    "commit": "f6551876fc91b737069e41c91c39e475defac6b5",
+    "rendered_at": "2026-11-06T13:06:24.062Z",
+    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
     "stunt": "stunts/one_in_a_million.js",
     "source_snapshot": [
       "source/one_in_a_million.js"
     ]
   },
   "rebuild": [
-    "git checkout 482d8340f495",
+    "git checkout f6551876fc91",
     "gunzip -c shorts/one_in_a_million/recording.json.gz > work/one_in_a_million.rec.json",
     "node render.js work/one_in_a_million.rec.json work/one_in_a_million.frames 60 1080 1011",
     "python3 audio.py work/one_in_a_million.rec.json work/one_in_a_million.wav",
-    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing 😳\" --start 0.6 --song songs/misery.mp3 --song_drop_at splash --out out/one_in_a_million.mp4"
+    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing 😳\" --start_at drop:-1.2 --end_after splash:2.6 --song songs/misery.mp3 --song_drop_at splash --out out/one_in_a_million.mp4"
   ],
   "status": "ready",
   "notes": "",
-  "published_at": "2026-11-06T08:15:54.533Z"
+  "published_at": "2026-11-06T15:27:29.992Z"
 }

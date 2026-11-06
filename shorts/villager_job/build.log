@@ -1,24 +1,20 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-06:39:12.439 spawned at Vec3 { x: 125.5, y: 69, z: 10.5 }
-06:39:12.667 nearest minecraft:forest at [ 413, 10 ]
-06:39:25.602 set at { x: 413, y: 85, z: 10 }
-06:39:39.054 STUNT OK
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-meshing from y 23
-light computed in 0.5 s
-meshed + uploaded world in 11.4 s
-232 particles
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-rendered 774 frames (12.90 s of video) in 220.7 s = 17.1 s per video second
-wrote work/villager_job.wav 12.95s
-song drop at 18.75s lands on 1.05s of the Short (song starts at 17.70s)
+14:57:12.155 spawned at Vec3 { x: 137.5, y: 71, z: 18.5 }
+14:57:12.464 nearest minecraft:forest at [ 425, -78 ]
+14:57:25.302 set at { x: 425, y: 71, z: -78 }
+14:57:35.934 STUNT OK
+meshing from y 8
+light computed in 0.7 s
+meshed + uploaded world in 16.7 s
+178 particles
+rendered 606 frames (10.10 s of video) in 349.2 s = 34.6 s per video second
+wrote work/villager_job.wav 10.15s
+song drop at 18.75s lands on 1.15s of the Short (song starts at 17.60s)
 no 3D block icons needed
-wrote out/villager_job.mp4 12.40s
+wrote out/villager_job.mp4 9.60s
 
-real	5m32.918s
-user	5m25.830s
-sys	0m13.202s
+real	7m15.811s
+user	6m26.548s
+sys	0m16.923s
 exit=0

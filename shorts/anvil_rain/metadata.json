@@ -17,28 +17,26 @@
     "title": "FUNK ABNORMAL (ULTRA SLOWED)",
     "artist": "",
     "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
-    "drop_on_event": "rain",
-    "drop_in_song_s": 10.5,
-    "drop_in_short_s": 0.6,
-    "song_start_s": 9.9
+    "drop_on_event": "rain"
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 11.85,
+    "duration_s": 10.05,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 14869574,
-    "sha256": "d0103ef895d05d543fe8b0d75ea57b9eb9c269ddcb06a006fe1bdbdbf8eded51"
+    "bytes": 12994073,
+    "sha256": "d09a576faec8ff9b4912ae27098c289da71a42a7ba2c685daf058316b12017a0"
   },
   "edit": {
     "caption": "minecraft but it rains anvils 💀",
     "red": "anvils",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "rain",
-    "start": 0.5,
     "deathScreen": true,
+    "startAt": "rain:0.2",
+    "endAfter": "death:1.8",
     "args": [
       "--caption",
       "minecraft but it rains anvils 💀",
@@ -46,8 +44,10 @@
       "anvils",
       "--death_screen",
       "death",
-      "--start",
-      "0.5",
+      "--start_at",
+      "rain:0.2",
+      "--end_after",
+      "death:1.8",
       "--song",
       "songs/funk_abnormal.mp3",
       "--song_drop_at",
@@ -62,13 +62,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 381,
-      "y": 72,
-      "z": -38
+      "x": 365,
+      "y": 69,
+      "z": -49
     },
     "biome": "minecraft:plains",
-    "ticks": 248,
-    "seconds": 12.4,
+    "ticks": 243,
+    "seconds": 12.15,
     "deaths": 1,
     "death_message": {
       "with": [
@@ -97,7 +97,7 @@
               "translate": "block.minecraft.anvil"
             }
           ],
-          "insertion": "ec27580a-0a11-4a82-b6e2-147ea023b668",
+          "insertion": "bdca3741-d291-4b0e-b297-9c73b62a1142",
           "hover_event": {
             "name": {
               "with": [
@@ -110,10 +110,10 @@
             "action": "show_entity",
             "id": "minecraft:falling_block",
             "uuid": [
-              -332965878,
-              168905346,
-              -1226697602,
-              -1608272280
+              -1110821055,
+              -762230002,
+              -1298686861,
+              -1238757054
             ]
           },
           "translate": "entity.minecraft.falling_block_type"
@@ -127,24 +127,24 @@
         "event": "start"
       },
       {
-        "t": 1.1,
+        "t": 1.15,
         "event": "rain"
       },
       {
-        "t": 8.1,
+        "t": 8.2,
         "event": "phew"
       },
       {
-        "t": 9.85,
+        "t": 9.6,
         "event": "hurt",
         "type": "falling_anvil"
       },
       {
-        "t": 9.85,
+        "t": 9.6,
         "event": "death"
       },
       {
-        "t": 12.4,
+        "t": 12.15,
         "event": "end"
       }
     ]
@@ -152,22 +152,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "d95a743fc13f2eef1de4c4e04703395b2fec39b2",
-    "rendered_at": "2026-11-06T11:37:55.605Z",
-    "head_at_publish": "d95a743fc13f2eef1de4c4e04703395b2fec39b2",
+    "commit": "799e77f934f35cf6754ce7a958ba1968e08abbff",
+    "rendered_at": "2026-11-06T13:52:37.365Z",
+    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
     "stunt": "stunts/anvil_rain.js",
     "source_snapshot": [
       "source/anvil_rain.js"
     ]
   },
   "rebuild": [
-    "git checkout d95a743fc13f",
+    "git checkout 799e77f934f3",
     "gunzip -c shorts/anvil_rain/recording.json.gz > work/anvil_rain.rec.json",
     "node render.js work/anvil_rain.rec.json work/anvil_rain.frames 60 1080 1011",
     "python3 audio.py work/anvil_rain.rec.json work/anvil_rain.wav",
-    "python3 edit.py --frames work/anvil_rain.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/anvil_rain.rec.json --audio work/anvil_rain.wav --caption \"minecraft but it rains anvils 💀\" --red anvils --death_screen death --start 0.5 --song songs/funk_abnormal.mp3 --song_drop_at rain --out out/anvil_rain.mp4"
+    "python3 edit.py --frames work/anvil_rain.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/anvil_rain.rec.json --audio work/anvil_rain.wav --caption \"minecraft but it rains anvils 💀\" --red anvils --death_screen death --start_at rain:0.2 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at rain --out out/anvil_rain.mp4"
   ],
   "status": "ready",
   "notes": "",
-  "published_at": "2026-11-06T11:38:16.118Z"
+  "published_at": "2026-11-06T15:27:32.760Z"
 }

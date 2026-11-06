@@ -47,14 +47,15 @@ module.exports = {
     const villagerSel = '@e[type=villager,limit=1,sort=nearest]'
     // (Xp > 0 keeps the job: an unclaimed level-1 villager with no XP reverts to none next tick)
     const setJob = (p) => ctx.cmd(`/data merge entity ${villagerSel} {VillagerData:{profession:"minecraft:${p}"},Xp:${p === 'none' ? 0 : 1}}`)
-    const lookV = () => ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 1.7, this.vz + 0.5), 250)
+    const lookV = () => ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 1.5, this.vz + 0.5), 350)
     const place = async () => {
       ctx.select(0); await bot.waitForTicks(2)
-      await ctx.easeLookAt(L.offset(0.5, 0, 0.5), 250)
+      await ctx.easeLookAt(L.offset(0.5, 0.4, 0.5), 350)
       bot._client.write('block_place', { hand: 0, location: L.offset(0, -1, 0), direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound('block.wood.place', 1, 0.8)
       await bot.waitForTicks(4)
       await setJob('librarian'); ctx.sound('entity.villager.work_librarian', 1, 1)
+      ctx.particles('happy', { x: this.x + 0.5, y: this.floor + 2.0, z: this.vz + 0.5 }, { count: 14 })
       if (!this.hiredOnce) { this.hiredOnce = true; ctx.mark('hired') }
     }
     const breakIt = async () => {
@@ -62,11 +63,12 @@ module.exports = {
       await ctx.easeLookAt(L.offset(0.5, 0.6, 0.5), 200)
       const b = bot.blockAt(L)
       if (b && b.name === 'lectern') { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }
-      ctx.sound('block.wood.break', 1, 0.8)
+      ctx.sound('block.wood.break', 1, 0.8); ctx.particles('block', L, { block: 'lectern' })
       await setJob('none'); ctx.sound('entity.villager.no', 1, 1)
+      ctx.particles('angry', { x: this.x + 0.5, y: this.floor + 2.5, z: this.vz + 0.5 }, { count: 4 })
     }
     await bot.waitForTicks(16)
-    for (const pause of [16, 10, 6]) {
+    for (const pause of [12, 6]) {                     // two cycles (QA: 3.5 repeats dragged)
       await place(); await lookV(); await bot.waitForTicks(pause)
       await breakIt(); await lookV(); await bot.waitForTicks(pause)
     }

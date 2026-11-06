@@ -19,18 +19,18 @@
     "sha256": "3c3b32f904fa4ff2f98fc80fa90a2ac18be42041bf94dbf3dd4cdb0b5d37df34",
     "drop_on_event": "hired",
     "drop_in_song_s": 18.75,
-    "drop_in_short_s": 1.05,
-    "song_start_s": 17.7
+    "drop_in_short_s": 1.15,
+    "song_start_s": 17.6
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 12.4,
+    "duration_s": 9.6,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 8739441,
-    "sha256": "c9867ff575b9ee739f7c5c5186ffab70dcd5a57f41ced2f4aabb30128ac9e223"
+    "bytes": 9043736,
+    "sha256": "2c96727787d8622d1b4e825ab222cf7b32432fa35e5417e54bbb4b552cbedba0"
   },
   "edit": {
     "caption": "POV: THE VILLAGER IS UNEMPLOYED 💀",
@@ -59,13 +59,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 413,
-      "y": 85,
-      "z": 10
+      "x": 425,
+      "y": 71,
+      "z": -78
     },
     "biome": "minecraft:forest",
-    "ticks": 259,
-    "seconds": 12.95,
+    "ticks": 203,
+    "seconds": 10.15,
     "deaths": 0,
     "events": [
       {
@@ -73,11 +73,39 @@
         "event": "start"
       },
       {
-        "t": 1.55,
+        "t": 1.25,
+        "event": "swing"
+      },
+      {
+        "t": 1.65,
         "event": "hired"
       },
       {
-        "t": 12.95,
+        "t": 2.9,
+        "event": "swing"
+      },
+      {
+        "t": 3.25,
+        "event": "swing"
+      },
+      {
+        "t": 5,
+        "event": "swing"
+      },
+      {
+        "t": 6.35,
+        "event": "swing"
+      },
+      {
+        "t": 6.7,
+        "event": "swing"
+      },
+      {
+        "t": 8.2,
+        "event": "swing"
+      },
+      {
+        "t": 10.15,
         "event": "end"
       }
     ]
@@ -85,16 +113,16 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "17ecd2d3c787a7fed75e06ebb94e58ff627bd989",
-    "rendered_at": "2026-11-06T06:44:28.000Z",
-    "head_at_publish": "16bae51236be5020192b0e80c33489833c82c2ad",
+    "commit": "99d866aeebb6bf76d66784a5a5142eb06bf7e51f",
+    "rendered_at": "2026-11-06T15:04:10.655Z",
+    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
     "stunt": "stunts/villager_job.js",
     "source_snapshot": [
       "source/villager_job.js"
     ]
   },
   "rebuild": [
-    "git checkout 17ecd2d3c787",
+    "git checkout 99d866aeebb6",
     "gunzip -c shorts/villager_job/recording.json.gz > work/villager_job.rec.json",
     "node render.js work/villager_job.rec.json work/villager_job.frames 60 1080 1011",
     "python3 audio.py work/villager_job.rec.json work/villager_job.wav",
@@ -102,5 +130,5 @@
   ],
   "status": "ready",
   "notes": "",
-  "published_at": "2026-11-06T08:15:56.017Z"
+  "published_at": "2026-11-06T15:27:33.607Z"
 }

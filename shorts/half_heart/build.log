@@ -1,24 +1,21 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-10:45:06.768 spawned at Vec3 { x: 129.5, y: 70, z: 17.5 }
-10:45:07.016 nearest minecraft:forest at [ 417, 49 ]
-10:45:23.172 set at { x: 417, y: 84, z: 49 }
-10:45:28.476 water placed at height 2.48
-10:45:32.681 STUNT OK
-meshing from y 38
-light computed in 0.8 s
-meshed + uploaded world in 15.0 s
+13:06:41.295 spawned at Vec3 { x: 135.5, y: 72, z: 26.5 }
+13:06:41.597 nearest minecraft:forest at [ 423, -102 ]
+13:06:56.431 set at { x: 431, y: 70, z: -102 }
+13:07:01.738 water placed at height 2.48
+13:07:05.984 STUNT OK
+meshing from y 8
+light computed in 0.9 s
+meshed + uploaded world in 20.8 s
 38 particles
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-rendered 537 frames (8.95 s of video) in 182.8 s = 20.4 s per video second
-wrote work/half_heart.wav 9.00s
-song drop at 16.25s lands on 4.10s of the Short (song starts at 12.15s)
+rendered 540 frames (9.00 s of video) in 206.7 s = 23.0 s per video second
+wrote work/half_heart.wav 9.05s
+song drop at 16.25s lands on 3.50s of the Short (song starts at 12.75s)
 no 3D block icons needed
-wrote out/half_heart.mp4 7.75s
+wrote out/half_heart.mp4 5.90s
 
-real	4m35.215s
-user	4m30.144s
-sys	0m12.748s
+real	4m58.526s
+user	4m32.055s
+sys	0m12.321s
 exit=0

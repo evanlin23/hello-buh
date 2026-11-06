@@ -8,7 +8,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'water bucket clutch 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'water bucket clutch 💀', song: 'songs/misery.mp3', dropAt: 'placed', start: 1.2 },
+  edit: { caption: 'water bucket clutch 💀', song: 'songs/misery.mp3', dropAt: 'placed' , startAt: 'jump:-1.0', endAfter: 'placed:2.4'},
 
   async setup (ctx) {
     const { bot } = ctx
@@ -39,9 +39,10 @@ module.exports = {
     const mode = this.mode || 'ok'                     // ok | skip (never places) | late (too late)
     await bot.waitForTicks(this.fast ? 6 : 30)         // standing on the pillar
     if (!this.fast) await ctx.easeLook(0, -1.0, 600)   // peek over the edge
-    await ctx.easeLook(0, -0.25, this.fast ? 250 : 400)
+    await ctx.easeLook(0, -0.6, this.fast ? 250 : 400)       // eyes on the drop while jumping off
     ctx.select(1)                                      // pull out the water bucket
     await bot.waitForTicks(6)
+    ctx.mark('jump')
     bot.setControlState('forward', true); bot.setControlState('jump', true)
     await bot.waitForTicks(6)
     bot.setControlState('jump', false)
@@ -73,6 +74,7 @@ module.exports = {
     bot.on('physicsTick', onTick)
     for (let i = 0; i < 200 && !landed && !ctx.died; i++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', onTick)
+    if (ctx.died) return false                       // a failed attempt: nothing more to film (tries respawns)
     await bot.waitForTicks(8)
     const below = bot.blockAt(bot.entity.position.floored())
     if (below && below.name === 'water') {

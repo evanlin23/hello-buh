@@ -1,22 +1,21 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-06:29:03.737 spawned at Vec3 { x: 121.5, y: 68, z: 8.5 }
-06:29:04.006 nearest minecraft:forest at [ 409, 40 ]
-06:29:18.258 set at { x: 409, y: 87, z: 40 }
-06:29:23.617 water placed at height 2.48
-06:29:27.826 STUNT OK
-meshing from y 38
-light computed in 0.6 s
-meshed + uploaded world in 11.3 s
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-rendered 540 frames (9.00 s of video) in 153.9 s = 17.1 s per video second
-wrote work/water_clutch.wav 9.05s
-song drop at 16.25s lands on 4.15s of the Short (song starts at 12.10s)
+13:11:39.995 spawned at Vec3 { x: 127.5, y: 70, z: 19.5 }
+13:11:40.250 nearest minecraft:forest at [ 447, -109 ]
+13:11:53.165 set at { x: 455, y: 69, z: -109 }
+13:11:58.511 water placed at height 2.48
+13:12:02.765 STUNT OK
+meshing from y 8
+light computed in 0.7 s
+meshed + uploaded world in 15.7 s
+38 particles
+rendered 543 frames (9.05 s of video) in 198.8 s = 22.0 s per video second
+wrote work/water_clutch.wav 9.10s
+song drop at 16.25s lands on 3.50s of the Short (song starts at 12.75s)
 no 3D block icons needed
-wrote out/water_clutch.mp4 7.80s
+wrote out/water_clutch.mp4 5.90s
 
-real	4m1.020s
-user	4m20.338s
-sys	0m11.414s
+real	4m39.067s
+user	4m15.810s
+sys	0m12.419s
 exit=0

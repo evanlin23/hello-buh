@@ -8,7 +8,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'water bucket clutch 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'water bucket clutch 💀', song: 'songs/misery.mp3', dropAt: 'placed', start: 1.2 },
+  edit: { caption: 'water bucket clutch 💀', song: 'songs/misery.mp3', dropAt: 'placed' , startAt: 'jump:-1.0', endAfter: 'placed:2.4'},
 
   async setup (ctx) {
     const { bot } = ctx
@@ -36,11 +36,13 @@ module.exports = {
   async perform (ctx) {
     const { bot } = ctx
     const floor = this.floor
-    await bot.waitForTicks(30)                         // standing on the pillar
-    await ctx.easeLook(0, -1.0, 600)                   // peek over the edge
-    await ctx.easeLook(0, -0.25, 400)
+    const mode = this.mode || 'ok'                     // ok | skip (never places) | late (too late)
+    await bot.waitForTicks(this.fast ? 6 : 30)         // standing on the pillar
+    if (!this.fast) await ctx.easeLook(0, -1.0, 600)   // peek over the edge
+    await ctx.easeLook(0, -0.6, this.fast ? 250 : 400)       // eyes on the drop while jumping off
     ctx.select(1)                                      // pull out the water bucket
     await bot.waitForTicks(6)
+    ctx.mark('jump')
     bot.setControlState('forward', true); bot.setControlState('jump', true)
     await bot.waitForTicks(6)
     bot.setControlState('jump', false)
@@ -52,7 +54,12 @@ module.exports = {
     let placed = false, landed = false, splashed = false
     const onTick = () => {
       const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
-      if (!placed && vy < -0.5 && above + 1.62 < 4.45) {
+      const inReach = above + 1.62 < 4.45
+      // too late: any water that lands before the player saves them (the server sees it first), so
+      // a real "too late" never gets the water down - just the swing as the ground arrives
+      if (mode === 'late' && !placed && above < 0.8) { placed = true; bot.swingArm(); ctx.mark('too_late') }
+      if (mode === 'late') return
+      if (!placed && mode !== 'skip' && vy < -0.5 && inReach) {
         ctx.select(1)
         bot.entity.pitch = -Math.PI / 2
         placed = true
@@ -61,17 +68,18 @@ module.exports = {
         process.nextTick(() => bot.activateItem())
         ctx.log('water placed at height', above.toFixed(2))
       }
-      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed') }
-      if (placed && (bot.entity.onGround || bot.entity.isInWater)) landed = true
+      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 30 }) }
+      if ((placed || mode !== 'ok') && (bot.entity.onGround || bot.entity.isInWater)) landed = true
     }
     bot.on('physicsTick', onTick)
     for (let i = 0; i < 200 && !landed && !ctx.died; i++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', onTick)
+    if (ctx.died) return false                       // a failed attempt: nothing more to film (tries respawns)
     await bot.waitForTicks(8)
     const below = bot.blockAt(bot.entity.position.floored())
     if (below && below.name === 'water') {
       await bot.look(bot.entity.yaw, -Math.PI / 2, true); bot.activateItem(); await bot.waitForTicks(4)
-      ctx.sound('item.bucket.fill')
+      ctx.sound('item.bucket.fill'); ctx.particles('splash', { x: bot.entity.position.x, y: this.floor + 1.9, z: bot.entity.position.z }, { count: 8 })
     }
     await bot.waitForTicks(6)
     const dx = this.x + 0.5 - bot.entity.position.x, dz = this.z + 0.5 - bot.entity.position.z

@@ -19,32 +19,35 @@
     "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
     "drop_on_event": "placed",
     "drop_in_song_s": 16.25,
-    "drop_in_short_s": 4.1,
-    "song_start_s": 12.15
+    "drop_in_short_s": 3.5,
+    "song_start_s": 12.75
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 7.75,
+    "duration_s": 5.9,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 16486530,
-    "sha256": "b2d9ac857a280cb6c58a9d5dedf330b52d0edda5cb3343b51f44738119176cce"
+    "bytes": 11258027,
+    "sha256": "436f11229970df0e77c0e2c32fbf462495d066b156fdebc84521d41713a02df4"
   },
   "edit": {
     "caption": "POV: you're on half a heart 💀",
     "red": "half",
     "song": "songs/misery.mp3",
     "dropAt": "placed",
-    "start": 1.2,
+    "startAt": "jump:-1.0",
+    "endAfter": "placed:2.4",
     "args": [
       "--caption",
       "POV: you're on half a heart 💀",
       "--red",
       "half",
-      "--start",
-      "1.2",
+      "--start_at",
+      "jump:-1.0",
+      "--end_after",
+      "placed:2.4",
       "--song",
       "songs/misery.mp3",
       "--song_drop_at",
@@ -59,13 +62,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 417,
-      "y": 84,
-      "z": 49
+      "x": 431,
+      "y": 70,
+      "z": -102
     },
     "biome": "minecraft:forest",
-    "ticks": 180,
-    "seconds": 9,
+    "ticks": 181,
+    "seconds": 9.05,
     "deaths": 0,
     "events": [
       {
@@ -73,11 +76,15 @@
         "event": "start"
       },
       {
+        "t": 2.8,
+        "event": "jump"
+      },
+      {
         "t": 5.3,
         "event": "placed"
       },
       {
-        "t": 9,
+        "t": 9.05,
         "event": "end"
       }
     ]
@@ -85,9 +92,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
-    "rendered_at": "2026-11-06T10:49:24.549Z",
-    "head_at_publish": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
+    "commit": "f6551876fc91b737069e41c91c39e475defac6b5",
+    "rendered_at": "2026-11-06T13:11:22.587Z",
+    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
     "stunt": "stunts/half_heart.js",
     "source_snapshot": [
       "source/half_heart.js",
@@ -95,13 +102,13 @@
     ]
   },
   "rebuild": [
-    "git checkout e657d1802459",
+    "git checkout f6551876fc91",
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --start 1.2 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
   ],
   "status": "ready",
   "notes": "",
-  "published_at": "2026-11-06T10:49:53.394Z"
+  "published_at": "2026-11-06T15:27:31.024Z"
 }

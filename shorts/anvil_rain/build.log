@@ -1,26 +1,20 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-11:32:44.803 spawned at Vec3 { x: 125.5, y: 74, z: 26.5 }
-11:32:45.041 nearest minecraft:plains at [ 381, -38 ]
-11:32:56.852 set at { x: 381, y: 72, z: -38 }
-11:33:06.731 died
-11:33:09.796 STUNT OK
+13:47:26.015 spawned at Vec3 { x: 133.5, y: 71, z: 15.5 }
+13:47:26.303 nearest minecraft:plains at [ 357, -49 ]
+13:47:38.291 set at { x: 365, y: 69, z: -49 }
+13:47:47.928 died
+13:47:50.956 STUNT OK
 meshing from y 8
-light computed in 0.5 s
-meshed + uploaded world in 15.1 s
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-rendered 741 frames (12.35 s of video) in 229.3 s = 18.6 s per video second
-wrote work/anvil_rain.wav 12.40s
-song drop at 10.50s lands on 0.60s of the Short (song starts at 9.90s)
+light computed in 0.7 s
+meshed + uploaded world in 17.8 s
+rendered 726 frames (12.10 s of video) in 230.6 s = 19.1 s per video second
+wrote work/anvil_rain.wav 12.15s
+song drop at 10.50s lands on -0.20s of the Short (song starts at 10.70s)
 no 3D block icons needed
-wrote out/anvil_rain.mp4 11.85s
+wrote out/anvil_rain.mp4 10.05s
 
-real	5m28.072s
-user	4m52.946s
-sys	0m13.374s
+real	5m28.929s
+user	4m46.139s
+sys	0m14.025s
 exit=0

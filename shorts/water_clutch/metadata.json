@@ -19,29 +19,32 @@
     "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
     "drop_on_event": "placed",
     "drop_in_song_s": 16.25,
-    "drop_in_short_s": 4.15,
-    "song_start_s": 12.1
+    "drop_in_short_s": 3.5,
+    "song_start_s": 12.75
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 7.8,
+    "duration_s": 5.9,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15228117,
-    "sha256": "fbfff1f37cf0fefc2543334590e2b6ec26f4445fcbfb375fc9139bd9badc23b3"
+    "bytes": 12079081,
+    "sha256": "c38874d951c30b63fa1c282cfaa0fba800b0ac27753bc1629fd13267eb832939"
   },
   "edit": {
     "caption": "water bucket clutch 💀",
     "song": "songs/misery.mp3",
     "dropAt": "placed",
-    "start": 1.2,
+    "startAt": "jump:-1.0",
+    "endAfter": "placed:2.4",
     "args": [
       "--caption",
       "water bucket clutch 💀",
-      "--start",
-      "1.2",
+      "--start_at",
+      "jump:-1.0",
+      "--end_after",
+      "placed:2.4",
       "--song",
       "songs/misery.mp3",
       "--song_drop_at",
@@ -56,13 +59,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 409,
-      "y": 87,
-      "z": 40
+      "x": 455,
+      "y": 69,
+      "z": -109
     },
     "biome": "minecraft:forest",
-    "ticks": 181,
-    "seconds": 9.05,
+    "ticks": 182,
+    "seconds": 9.1,
     "deaths": 0,
     "events": [
       {
@@ -70,11 +73,15 @@
         "event": "start"
       },
       {
+        "t": 2.85,
+        "event": "jump"
+      },
+      {
         "t": 5.35,
         "event": "placed"
       },
       {
-        "t": 9.05,
+        "t": 9.1,
         "event": "end"
       }
     ]
@@ -82,22 +89,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "17ecd2d3c787a7fed75e06ebb94e58ff627bd989",
-    "rendered_at": "2026-11-06T06:33:34.532Z",
-    "head_at_publish": "16bae51236be5020192b0e80c33489833c82c2ad",
+    "commit": "f6551876fc91b737069e41c91c39e475defac6b5",
+    "rendered_at": "2026-11-06T13:16:01.614Z",
+    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
     "stunt": "stunts/water_clutch.js",
     "source_snapshot": [
       "source/water_clutch.js"
     ]
   },
   "rebuild": [
-    "git checkout 17ecd2d3c787",
+    "git checkout f6551876fc91",
     "gunzip -c shorts/water_clutch/recording.json.gz > work/water_clutch.rec.json",
     "node render.js work/water_clutch.rec.json work/water_clutch.frames 60 1080 1011",
     "python3 audio.py work/water_clutch.rec.json work/water_clutch.wav",
-    "python3 edit.py --frames work/water_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_clutch.rec.json --audio work/water_clutch.wav --caption \"water bucket clutch 💀\" --start 1.2 --song songs/misery.mp3 --song_drop_at placed --out out/water_clutch.mp4"
+    "python3 edit.py --frames work/water_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_clutch.rec.json --audio work/water_clutch.wav --caption \"water bucket clutch 💀\" --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/water_clutch.mp4"
   ],
   "status": "ready",
   "notes": "",
-  "published_at": "2026-11-06T08:15:57.894Z"
+  "published_at": "2026-11-06T15:27:31.864Z"
 }

@@ -1,22 +1,20 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-11:53:27.371 spawned at Vec3 { x: 135.5, y: 70, z: 11.5 }
-11:53:27.678 nearest minecraft:plains at [ 359, -53 ]
-11:55:11.915 set at { x: 359, y: 69, z: -45 }
-11:55:22.481 STUNT OK
+13:33:16.731 spawned at Vec3 { x: 132.5, y: 71, z: 15.5 }
+13:33:17.009 nearest minecraft:plains at [ 356, -49 ]
+13:35:03.235 set at { x: 364, y: 69, z: -49 }
+13:35:13.858 STUNT OK
 meshing from y -13
-light computed in 1.4 s
+light computed in 1.5 s
 meshed + uploaded world in 39.0 s
 286 particles
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-page: Failed to load resource: the server responded with a status of 404 (Not Found)
-rendered 603 frames (10.05 s of video) in 255.6 s = 25.4 s per video second
-wrote work/cave_reveal.wav 10.10s
-song drop at 16.25s lands on 3.95s of the Short (song starts at 12.30s)
+rendered 606 frames (10.10 s of video) in 248.4 s = 24.6 s per video second
+wrote work/cave_reveal.wav 10.15s
+song drop at 16.25s lands on 2.20s of the Short (song starts at 14.05s)
 no 3D block icons needed
-wrote out/cave_reveal.mp4 9.55s
+wrote out/cave_reveal.mp4 7.85s
 
-real	7m37.543s
-user	5m14.706s
-sys	0m13.765s
+real	7m30.562s
+user	4m57.320s
+sys	0m13.254s
 exit=0

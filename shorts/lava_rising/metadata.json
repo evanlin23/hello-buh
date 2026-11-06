@@ -19,32 +19,35 @@
     "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
     "drop_on_event": "stopped",
     "drop_in_song_s": 16.25,
-    "drop_in_short_s": 10.05,
-    "song_start_s": 6.2
+    "drop_in_short_s": 9.9,
+    "song_start_s": 6.35
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 13,
+    "duration_s": 12.5,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 30415025,
-    "sha256": "31cb88ac0dd7b459f7a57f61223379b089449b18f7435867fb23c38488650a8a"
+    "bytes": 26986454,
+    "sha256": "a2fea0ea69e04e6be72d50ce3c0a7f51073c8db207634ad0e8cb7aaef731c018"
   },
   "edit": {
     "caption": "the lava stopped 1 block below me 😳",
     "red": "1 block",
     "song": "songs/misery.mp3",
     "dropAt": "stopped",
-    "start": 0.5,
+    "startAt": "rising:-0.3",
+    "endAfter": "stopped:2.6",
     "args": [
       "--caption",
       "the lava stopped 1 block below me 😳",
       "--red",
       "1 block",
-      "--start",
-      "0.5",
+      "--start_at",
+      "rising:-0.3",
+      "--end_after",
+      "stopped:2.6",
       "--song",
       "songs/misery.mp3",
       "--song_drop_at",
@@ -59,13 +62,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 362,
+      "x": 359,
       "y": 69,
-      "z": -48
+      "z": -45
     },
     "biome": "minecraft:plains",
-    "ticks": 271,
-    "seconds": 13.55,
+    "ticks": 272,
+    "seconds": 13.6,
     "deaths": 0,
     "events": [
       {
@@ -77,7 +80,51 @@
         "event": "rising"
       },
       {
-        "t": 6.5,
+        "t": 1.8,
+        "event": "swing"
+      },
+      {
+        "t": 2.25,
+        "event": "swing"
+      },
+      {
+        "t": 2.7,
+        "event": "swing"
+      },
+      {
+        "t": 3.15,
+        "event": "swing"
+      },
+      {
+        "t": 3.6,
+        "event": "swing"
+      },
+      {
+        "t": 4.05,
+        "event": "swing"
+      },
+      {
+        "t": 4.5,
+        "event": "swing"
+      },
+      {
+        "t": 4.95,
+        "event": "swing"
+      },
+      {
+        "t": 5.4,
+        "event": "swing"
+      },
+      {
+        "t": 5.85,
+        "event": "swing"
+      },
+      {
+        "t": 6.3,
+        "event": "swing"
+      },
+      {
+        "t": 6.55,
         "event": "top"
       },
       {
@@ -85,7 +132,7 @@
         "event": "stopped"
       },
       {
-        "t": 13.55,
+        "t": 13.6,
         "event": "end"
       }
     ]
@@ -93,22 +140,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
-    "rendered_at": "2026-11-06T10:56:44.673Z",
-    "head_at_publish": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
+    "commit": "799e77f934f35cf6754ce7a958ba1968e08abbff",
+    "rendered_at": "2026-11-06T13:32:57.158Z",
+    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
     "stunt": "stunts/lava_rising.js",
     "source_snapshot": [
       "source/lava_rising.js"
     ]
   },
   "rebuild": [
-    "git checkout e657d1802459",
+    "git checkout 799e77f934f3",
     "gunzip -c shorts/lava_rising/recording.json.gz > work/lava_rising.rec.json",
     "node render.js work/lava_rising.rec.json work/lava_rising.frames 60 1080 1011",
     "python3 audio.py work/lava_rising.rec.json work/lava_rising.wav",
-    "python3 edit.py --frames work/lava_rising.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_rising.rec.json --audio work/lava_rising.wav --caption \"the lava stopped 1 block below me 😳\" --red \"1 block\" --start 0.5 --song songs/misery.mp3 --song_drop_at stopped --out out/lava_rising.mp4"
+    "python3 edit.py --frames work/lava_rising.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_rising.rec.json --audio work/lava_rising.wav --caption \"the lava stopped 1 block below me 😳\" --red \"1 block\" --start_at rising:-0.3 --end_after stopped:2.6 --song songs/misery.mp3 --song_drop_at stopped --out out/lava_rising.mp4"
   ],
   "status": "ready",
-  "notes": "",
-  "published_at": "2026-11-06T10:56:58.642Z"
+  "notes": "QA2: payoff framing of the 1-block gap could be clearer",
+  "published_at": "2026-11-06T15:27:34.668Z"
 }
