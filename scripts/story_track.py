@@ -34,10 +34,26 @@ def _lines(story_dir):
     return story, voice
 
 
+POSES = None   # the recording's poses (edit.py sets them): line starts snap to the camera cut
+
+
 def _marks(timeline, start):
-    """[(seconds into the Short, line id)] for every `line` mark. A line is marked the tick after its cut lands
-    (the stunt sees the new position a tick late), so it starts one tick earlier: captions change on the cut."""
-    return [(e["t"] / 1000 - 0.05 - start, e["id"]) for e in timeline if e["event"] == "line"]
+    """[(seconds into the Short, line id)] for every `line` mark. A line is marked a tick or two after its cut
+    lands (the stunt sees the new position late), so it starts on the cut itself: the first tick whose pose
+    is over 4 blocks from the one before (render.js shows that pose from exactly that tick)."""
+    out = []
+    for e in timeline:
+        if e["event"] != "line":
+            continue
+        m = e["t"] // 50
+        t = m
+        if POSES:
+            for i in range(m, max(0, m - 4), -1):
+                if i < len(POSES) and ((POSES[i][1] - POSES[i - 1][1]) ** 2 + (POSES[i][2] - POSES[i - 1][2]) ** 2 + (POSES[i][3] - POSES[i - 1][3]) ** 2) > 16:
+                    t = i
+                    break
+        out.append((t / 20 - start, e["id"]))
+    return out
 
 
 def narration_wav(story_dir, timeline, start, dur, out):
@@ -102,7 +118,7 @@ def caption_image(text, key):
 def caption_events(story_dir, timeline, start, dur):
     """[(t0, t1, text)] in seconds of the Short: each chunk from its first word until the next chunk starts.
     A line's first chunk appears on its cut (the line's mark), and its last chunk ends on the next line's cut, at
-    most 0.5 s past its last word: an old line hanging over a new scene read as lagging (frame review)."""
+    most 0.3 s past its last word: an old line hanging over a new scene read as lagging (frame review)."""
     story, voice = _lines(story_dir)
     marks = _marks(timeline, start)
     ev = []
@@ -111,7 +127,7 @@ def caption_events(story_dir, timeline, start, dur):
         nxt = marks[n + 1][0] if n + 1 < len(marks) else dur
         for i, ((a, b), text) in enumerate(zip(v["chunks"], v["captions"])):
             t0 = t if i == 0 else t + a
-            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else min(nxt, t + b + 0.5)
+            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else min(nxt, t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text))
     return [e for e in ev if e[1] > e[0]]
 

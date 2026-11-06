@@ -123,7 +123,8 @@ module.exports = {
     // L06: the nitwit by the lamp post
     await vil(-14.5, 20.5, 90, 'nitwit', 'nitwit')
     // L07: mom (a creeper) in front of the house; L08: the golem behind the camera
-    await c(`/summon creeper ${X + 19.5} ${F + 1} ${Z + 10.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["mom"],Rotation:[180f,0f]}`)
+    // (buried under her spot until L06: she showed behind the house in the door scene and gave the twist away)
+    await c(`/summon creeper ${X + 19.5} ${F - 3} ${Z + 10.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["mom"],Rotation:[180f,0f]}`)
     await c(`/summon iron_golem ${X + 19.5} ${F + 1} ${Z + 4.6} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["golem"],Rotation:[0f,0f]}`)
     // L10-L14: the party ring, facing the middle; rainbow sheep (jeb_) and two dyed sheep
     const ring = 7
@@ -137,7 +138,7 @@ module.exports = {
     await c(`/summon sheep ${X + PX - 2.0} ${F + 1} ${Z + PZ - 2.4} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:6b,Tags:["party_sheep"],Rotation:[-60f,0f]}`)
     await c(`/summon sheep ${X + PX - 2.6} ${F + 1} ${Z + PZ + 1.9} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:3b,Tags:["party_sheep"],Rotation:[120f,0f]}`)
 
-    await c('/tag @e[tag=nitwit] add warm'); await c('/tag @e[tag=golem] add warm')
+    await c('/tag @e[tag=nitwit] add warm'); await c('/tag @e[tag=golem] add warm'); await c('/tag @e[tag=mom] add warm')
     await c('/clear @s')                                // nothing in hand, ever (he has no arms)
     // mineflayer ignores the biome-update packet: go out of range and back so the chunks come again with plains
     await resendChunks(ctx, X, Z)
@@ -246,7 +247,8 @@ module.exports = {
       if (k >= at(2) - 6) say(`/execute as @e[tag=chick] at @s run tp @s ~${((Math.random() - 0.5) * 0.02).toFixed(3)} ~ ~-0.22 180 0`)
       look(k)
     })
-    // L06: only the nitwit stays, walking in a little circle
+    // L06: only the nitwit stays, walking in a little circle (mom comes up to her spot, out of shot)
+    say(`/tp @e[tag=mom,limit=1] ${X + 19.5} ${F + 1} ${Z + 10.5} 180 0`)
     await cut(-14.5, 25.5, P(-14.5, 1.6, 20.5))
     await line('L06', async (k) => {
       const a = k / 6

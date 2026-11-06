@@ -835,7 +835,8 @@ def main():
     if args.story and args.timeline:   # narrated story: big word-chunk captions over the game (and the death screen)
         sys.path.insert(0, str(HERE / "scripts"))
         import story_track
-        story_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        story_rec = json.loads(pathlib.Path(args.timeline).read_text())
+        story_tl, story_track.POSES = story_rec["timeline"], story_rec.get("poses")
         flash = story_track.flash_concat(story_tl, args.start, dur, tmp)   # white flashes on `flash` marks (under the captions)
         if flash:
             inputs += ["-f", "concat", "-safe", "0", "-i", str(flash)]
