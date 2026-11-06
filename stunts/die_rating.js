@@ -32,7 +32,7 @@ module.exports = {
   expectDeath: true,
   edit: {
     caption: 'rating every way to die 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'last_death',
-    startAt: 'death:-1.0', endAfter: 'last_death:1.5', deathScreen: true,
+    startAt: 'death:-1.0', endAfter: 'last_death:1.5', deathScreen: true, onFire: 'fire_in:death,lava_in:death',
     // the name in green (under the death screen's buttons, gone before the respawn), the score as a
     // card popping on the death, a zoom punch on every death (the screen otherwise holds still), a
     // death counter; the 11/10 finale gets a bigger card, a flash and a shake
@@ -148,6 +148,8 @@ module.exports = {
       } else if (d === 'lava') {
         await ctx.easeLook(N, -0.5, 200)
         walk(true)
+        const onL = () => { if (bot.entity.position.z < z + 2.3) { ctx.mark('lava_in'); bot.removeListener('physicsTick', onL) } }
+        bot.on('physicsTick', onL)
         ctx.easeLook(N, -0.9, 400)
       } else if (d === 'stalagmite') {
         await ctx.easeLook(N, -0.7, 250)
@@ -158,6 +160,9 @@ module.exports = {
       } else if (d === 'fire') {
         await ctx.easeLook(N, -0.45, 200)
         walk(true)
+        // the burning overlay starts as I step into the fire (edit.onFire: fire_in -> death)
+        const onT = () => { if (bot.entity.position.z < z + 3.3) { ctx.mark('fire_in'); bot.removeListener('physicsTick', onT) } }
+        bot.on('physicsTick', onT)
       } else if (d === 'rose') {
         await ctx.easeLookAt(new Vec3(s + 0.5, F + 1.3, z + 2.5), 250)
         walk(true); await bot.waitForTicks(6); walk(false)
