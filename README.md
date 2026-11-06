@@ -53,6 +53,23 @@ is 10-15 s, or 20-30 s for build-up stories, with the stunt visible in the first
    are not told the known issues. Two rounds so far; their findings and the fixes are in the
    git log and `docs/lessons.md`.
 
+## Uploading (automated)
+`.github/workflows/upload.yml` uploads the next ready Short from the `videos` branch 3 times a day
+(`scripts/youtube_upload.py`, YouTube Data API v3) with the package's title, description and
+hashtags, and records it in `uploads.json` on that branch so nothing goes up twice.
+One-time setup by the owner: a Google Cloud project with YouTube Data API v3, an OAuth "Desktop
+app" client, then `scripts/youtube_auth.py` on your own computer to get a refresh token. Save
+`YT_CLIENT_ID`, `YT_CLIENT_SECRET` and `YT_REFRESH_TOKEN` as repo secrets. Optional repo
+variables: `YT_AUDIO` (`song` = baked-in track, `nosong`) and `YT_PRIVACY`.
+- **Music can't be added through the API.** Picker audio only exists inside the YouTube app, at
+  creation time. Automated uploads therefore carry the baked-in song (a standard Content ID claim:
+  usually monetized by the label under 60 s, but it can be blocked) or an Audio Library track
+  (no claim). For picker audio, upload `short_nosong.mp4` from the phone app by hand.
+- Uploads from an unaudited API project are forced **private** until Google's API audit passes
+  (apply in the Google Cloud console). Until then, flip them public in YouTube Studio.
+- Quota: one upload costs about 1,600 units out of a default 10,000 a day (about 6 uploads a day).
+- Packages with a metadata `status` other than `ready` (e.g. pearl_clutch) are skipped.
+
 ## Parallel workers
 The orchestrator session spawns worker cloud sessions (Claude Code `create_session`) that each
 build new formats end to end by following `docs/worker.md`. Workers only add `stunts/<name>.js`

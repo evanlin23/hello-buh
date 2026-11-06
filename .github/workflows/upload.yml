@@ -1,0 +1,38 @@
+# Uploads the next ready Short from the videos branch, 3 times a day (or on demand).
+# Needs repo secrets YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN (see scripts/youtube_auth.py).
+# Optional repo variables: YT_AUDIO (song|nosong), YT_PRIVACY (private|public|unlisted).
+name: upload-short
+on:
+  schedule:
+    - cron: '17 14 * * *'   # times in UTC; adjust to the audience's peak hours
+    - cron: '17 19 * * *'
+    - cron: '17 23 * * *'
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: upload-short
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main, path: main }
+      - uses: actions/checkout@v4
+        with: { ref: videos, path: hb-videos }
+      - name: Upload next Short
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_AUDIO: ${{ vars.YT_AUDIO || 'song' }}
+          YT_PRIVACY: ${{ vars.YT_PRIVACY || 'private' }}
+        run: |
+          if [ -z "$YT_REFRESH_TOKEN" ]; then echo "No YouTube secrets set yet (see scripts/youtube_auth.py)"; exit 0; fi
+          python3 main/scripts/youtube_upload.py hb-videos
+      - name: Record the upload
+        run: |
+          cd hb-videos
+          git config user.name evanlin23
+          git config user.email 113861384+evanlin23@users.noreply.github.com
+          git add uploads.json
+          git diff --cached --quiet || (git commit -m "Uploaded a Short" && git push origin videos)
