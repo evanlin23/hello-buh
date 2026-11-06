@@ -88,7 +88,7 @@ function castle () {
   for (const [y, r] of pyr) for (let x = -r; x <= r; x++) for (let z = KZ - r; z <= KZ + r; z++) put(x, y, z, 'blue_concrete', 2)
   for (let y = 42; y <= 45; y++) put(0, y, KZ, 'oak_fence', 3)
   for (let y = 44; y <= 45; y++) for (let x = 1; x <= 3; x++) put(x, y, KZ, 'red_wool', 3)
-  const STAGE = { 0: 1, 1: 2, 2: 3, 3: 5 }   // walls 1, keep 2, roofs 3, (village 4), flags 5
+  const STAGE = { 0: 1, 1: 2, 2: 3, 3: 6 }   // walls 1, keep 2, roofs 3, (village 4, courtyard 5), flags 6
   for (const b of out.values()) b[4] = STAGE[b[4]]
   // stage 0: the moat, flooded into the ground around everything, with a plank bridge at the gate
   for (let x = -35; x <= 35; x++) {
@@ -119,14 +119,30 @@ function castle () {
     for (const [y, lo, hi] of [[4, -1, 5], [5, 0, 4], [6, 1, 3], [7, 2, 2]]) for (let z = lo; z <= hi; z++) for (let x = -1; x <= 5; x++) put(hx + x, y, hz + z, 'spruce_planks', 4)
     for (const [y, lo, hi] of [[4, 0, 4], [5, 1, 3], [6, 2, 2]]) for (let z = lo; z <= hi; z++) for (const x of [0, 4]) put(hx + x, y, hz + z, 'oak_planks', 4)
   }
-  // stage 5: a flag on every tower (the keep's flag is the last block of all)
+  // stage 5: the courtyard - trees, a well and gravel paths from the gate to the keep
+  for (let z = 4; z <= 22; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'gravel', 5)
+  for (const [tx, tz] of [[-14, 12], [14, 12], [-15, -12], [15, -12], [-14, -1], [14, -1]]) {
+    for (let y = 0; y < 4; y++) put(tx, y, tz, 'oak_log', 5)
+    for (let y = 2; y <= 5; y++) {
+      const r = y <= 3 ? 2 : 1
+      for (let x = -r; x <= r; x++) for (let z = -r; z <= r; z++) if (!(x === 0 && z === 0 && y < 4) && Math.abs(x) + Math.abs(z) <= r + 1) put(tx + x, y, tz + z, 'oak_leaves', 5)
+    }
+  }
+  for (let x = -2; x <= 2; x++) {
+    for (let z = 13; z <= 17; z++) {
+      const rim = Math.abs(x) === 2 || z === 13 || z === 17
+      if (rim) { put(x, 0, z, 'cobblestone', 5); if ((Math.abs(x) === 2) && (z === 13 || z === 17)) for (let y = 1; y <= 2; y++) put(x, y, z, 'oak_fence', 5) } else put(x, -1, z, 'water', 5)
+    }
+  }
+  for (let x = -2; x <= 2; x++) for (let z = 13; z <= 17; z++) put(x, 3, z, 'spruce_planks', 5)
+  // stage 6: a flag on every tower (the keep's flag is the last block of all)
   for (const [tx, tz] of TOW) {
-    for (let y = 33; y <= 36; y++) put(tx, y, tz, 'oak_fence', 5)
-    for (let y = 35; y <= 36; y++) for (let x = 1; x <= 2; x++) put(tx + x, y, tz, 'red_wool', 5)
+    for (let y = 33; y <= 36; y++) put(tx, y, tz, 'oak_fence', 6)
+    for (let y = 35; y <= 36; y++) for (let x = 1; x <= 2; x++) put(tx + x, y, tz, 'red_wool', 6)
   }
   const list = [...out.values()]
-  const last = list.filter(b => b[4] === 5 && b[1] >= 42)                                          // the keep's flag goes in last
-  return list.filter(b => !last.includes(b)).concat(last.map(b => [b[0], b[1], b[2], b[3], 6]))
+  const last = list.filter(b => b[4] === 6 && b[1] >= 42)                                          // the keep's flag goes in last
+  return list.filter(b => !last.includes(b)).concat(last.map(b => [b[0], b[1], b[2], b[3], 7]))
 }
 
 module.exports = makeStunt({
@@ -139,8 +155,8 @@ module.exports = makeStunt({
   big: {
     blocks: castle(),
     hold: 'stone_bricks', slot: 2,
-    // ticks of the build each stage gets: moat, walls, keep, roofs, village, tower flags, the last flag
-    stageTicks: { 0: 120, 1: 300, 2: 180, 3: 180, 4: 240, 5: 50, 6: 40 },
+    // ticks of the build each stage gets: moat, walls, keep, roofs, village, courtyard, tower flags, the last flag
+    stageTicks: { 0: 120, 1: 300, 2: 180, 3: 180, 4: 240, 5: 120, 6: 50, 7: 40 },
     // [tick of the build, camera, look-at], local to the castle centre (y from the ground)
     keys: [
       [0, [-30, 22, 58], [0, -2, 20]],
@@ -151,14 +167,16 @@ module.exports = makeStunt({
       [760, [14, 42, 26], [0, 30, -3]],
       [850, [-12, 46, 40], [-24, 18, 0]],
       [960, [-64, 26, 24], [-44, 3, 2]],
-      [1060, [-28, 46, 30], [0, 40, -3]],
-      [1118, [8, 50, 10], [0, 44, -3]]
+      [1080, [-32, 40, 40], [0, 6, -3]],
+      [1150, [-14, 46, 34], [0, 36, -3]],
+      [1238, [0, 12, 78], [0, 21, 0]]
     ],
-    // [ticks after the build, camera, look-at]: pull back over the walls to the small builds
+    // [ticks after the build, camera, look-at]: the pull-back lands on the wide shot at 60:00 (the
+    // castle behind the dirt arch and the tower) and drifts sideways to the end (backwards it ran into
+    // the fog: the renderer's 8-chunk fog starts ~115 blocks out and faded the rear towers)
     reveal: [
-      [30, [12, 34, 54], [0, 22, -5]],
-      [60, [2, 24, 100], [0, 18, -4]],
-      [100, [1, 24.6, 104], [0, 18, -4]]
+      [20, [-2.5, 12.6, 79], [0, 21, 0]],
+      [40, [-6, 13.4, 80], [-1, 21, 0]]
     ]
   }
 })
