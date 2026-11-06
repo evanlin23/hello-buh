@@ -73,6 +73,7 @@ module.exports = {
     bot.on('physicsTick', onTick)
     for (let i = 0; i < 200 && !landed && !ctx.died; i++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', onTick)
+    if (ctx.died) return false                       // a failed attempt: nothing more to film (tries respawns)
     await bot.waitForTicks(8)
     const below = bot.blockAt(bot.entity.position.floored())
     if (below && below.name === 'water') {
