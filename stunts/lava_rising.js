@@ -7,7 +7,7 @@ module.exports = {
   name: 'lava_rising',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'the lava stopped 1 block below me 😳',
-  edit: { caption: 'the lava stopped 1 block below me 😳', red: '1 block', song: 'songs/misery.mp3', dropAt: 'stopped' , startAt: 'rising:-0.2', endAfter: 'stopped:2.0'},
+  edit: { caption: 'the lava stopped 1 block below me 😳', red: '1 block', song: 'songs/misery.mp3', dropAt: 'stopped' , startAt: 'rising:-0.2', endAfter: 'edge:2.0'},
 
   async setup (ctx) {
     const { bot } = ctx
@@ -53,11 +53,13 @@ module.exports = {
     // pillar while looking down the side of the column: each block appears under the feet, the
     // lava climbs the cobblestone below (the old version looked out at the horizon and never
     // showed a block placed or the pillar)
-    await ctx.easeLook(Math.PI + 0.25, -1.3, 350)
+    // ~60 deg down, not 75: from straight above the 1x1 column only its top face shows, so the lava
+    // sea and its rise need a shallower look (frame review round 2)
+    await ctx.easeLook(Math.PI + 0.25, -1.05, 350)
     for (let k = 0; k < LAYERS; k++) {
       const base = floor + 2 + k                               // block we stand on
       bot.setControlState('jump', true)
-      ctx.easeLook(Math.PI + 0.25 + 0.2 * Math.sin(k * 0.9), -1.3 + 0.08 * Math.cos(k * 0.7), 450)
+      ctx.easeLook(Math.PI + 0.25 + 0.45 * Math.sin(k * 0.9), -1.05 + 0.12 * Math.cos(k * 0.7), 450)
       for (let i = 0; i < 20 && bot.entity.position.y < base + 2.1; i++) await bot.waitForTicks(1)
       bot.setControlState('jump', false)
       bot._client.write('block_place', { hand: 0, location: { x, y: base, z }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
@@ -70,9 +72,17 @@ module.exports = {
     await ctx.easeLook(Math.PI - 0.6, -0.7, 700)
     ctx.easeLook(Math.PI + 0.2, -1.25, 600)
     for (let i = 0; i < 200 && lavaY < TOP - 1; i++) await bot.waitForTicks(1)
-    // it stopped: one cobblestone face between the lava and the feet. Hold on it, drifting.
-    ctx.easeLook(Math.PI + 0.35, -1.15, 1800)
-    await bot.waitForTicks(40)
+    // it stopped. From the middle of a 1x1 column you can never see its sides, so sneak to the edge
+    // (sneaking stops you stepping off) and look down past it: the one exposed cobblestone face,
+    // then the lava, a block down. Then a real drift to the end, not a near-still one.
+    bot.setControlState('sneak', true)
+    await ctx.easeLook(Math.PI, -1.2, 300)
+    bot.setControlState('forward', true); await bot.waitForTicks(8); bot.setControlState('forward', false)
+    ctx.mark('edge')
+    await ctx.easeLook(Math.PI + 0.5, -1.35, 900)
+    ctx.easeLook(Math.PI - 0.4, -1.25, 1500)
+    await bot.waitForTicks(30)
+    bot.setControlState('sneak', false)
     bot.removeListener('physicsTick', rise)
     return !ctx.died && bot.entity.position.y > TOP
   }

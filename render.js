@@ -429,7 +429,10 @@ function camAtLive (t) {
       const dg = DIGS.find(([a, b]) => t >= a && t < b)
       if (dg) {
         const stage = Math.floor(Math.min(1, (t - dg[0]) / dg[5]) * 10) - 1
-        if (stage >= 0) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
+        // only on a block that's still there: under Haste the block breaks before the dig_end mark
+        // arrives, and the overlay drawn over empty air read as lace with the sky through it
+        const db = mesher.world.getBlock(new Vec3(dg[2], dg[3], dg[4]))
+        if (stage >= 0 && db && !/^(air|cave_air|void_air)$/.test(db.name)) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
       }
     }
     const ents = entitiesAt(t, mesher)
