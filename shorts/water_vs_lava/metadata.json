@@ -1,0 +1,190 @@
+{
+  "name": "water_vs_lava",
+  "caption": "pouring water on a lava lake 😳",
+  "youtube": {
+    "title": "pouring water on a lava lake 😳 #minecraft #shorts",
+    "description": "pouring water on a lava lake 😳\n\nSong: misery. · pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "misery.mp3",
+    "title": "misery.",
+    "artist": "pupsies",
+    "sha256": null,
+    "drop_on_event": "reveal"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 19.05,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 19963733,
+    "sha256": "510a47f73133868b21963277ea2e0b2510c45d16e6e9df33c9d48c4cfe4fe2d0"
+  },
+  "edit": {
+    "caption": "pouring water on a lava lake 😳",
+    "red": "lava",
+    "song": "songs/misery.mp3",
+    "dropAt": "reveal",
+    "startAt": "go:-0.3",
+    "endAfter": "end_look:2.3",
+    "args": [
+      "--caption",
+      "pouring water on a lava lake 😳",
+      "--red",
+      "lava",
+      "--start_at",
+      "go:-0.3",
+      "--end_after",
+      "end_look:2.3"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 378,
+      "y": 71,
+      "z": -40
+    },
+    "biome": "minecraft:plains",
+    "ticks": 397,
+    "seconds": 19.85,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 0.4,
+        "event": "go"
+      },
+      {
+        "t": 1.1,
+        "event": "swing"
+      },
+      {
+        "t": 1.1,
+        "event": "pour"
+      },
+      {
+        "t": 4.05,
+        "event": "swing"
+      },
+      {
+        "t": 4.05,
+        "event": "pour"
+      },
+      {
+        "t": 6.5,
+        "event": "swing"
+      },
+      {
+        "t": 6.5,
+        "event": "pour"
+      },
+      {
+        "t": 8.1,
+        "event": "swing"
+      },
+      {
+        "t": 8.1,
+        "event": "pour"
+      },
+      {
+        "t": 9.05,
+        "event": "swing"
+      },
+      {
+        "t": 9.05,
+        "event": "pour"
+      },
+      {
+        "t": 11.7,
+        "event": "swing"
+      },
+      {
+        "t": 11.7,
+        "event": "scoop"
+      },
+      {
+        "t": 12.2,
+        "event": "swing"
+      },
+      {
+        "t": 12.2,
+        "event": "scoop"
+      },
+      {
+        "t": 12.7,
+        "event": "swing"
+      },
+      {
+        "t": 12.7,
+        "event": "scoop"
+      },
+      {
+        "t": 13.2,
+        "event": "swing"
+      },
+      {
+        "t": 13.2,
+        "event": "scoop"
+      },
+      {
+        "t": 13.7,
+        "event": "swing"
+      },
+      {
+        "t": 13.7,
+        "event": "scoop"
+      },
+      {
+        "t": 13.85,
+        "event": "reveal"
+      },
+      {
+        "t": 16.85,
+        "event": "end_look"
+      },
+      {
+        "t": 19.85,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "19b1cc9c8f5c96fcd62de0fa1b5531d262414acd",
+    "rendered_at": "2026-11-06T16:50:54.821Z",
+    "head_at_publish": "19b1cc9c8f5c96fcd62de0fa1b5531d262414acd",
+    "stunt": "stunts/water_vs_lava.js",
+    "source_snapshot": [
+      "source/water_vs_lava.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 19b1cc9c8f5c",
+    "gunzip -c shorts/water_vs_lava/recording.json.gz > work/water_vs_lava.rec.json",
+    "node render.js work/water_vs_lava.rec.json work/water_vs_lava.frames 60 1080 1011",
+    "python3 audio.py work/water_vs_lava.rec.json work/water_vs_lava.wav",
+    "python3 edit.py --frames work/water_vs_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_vs_lava.rec.json --audio work/water_vs_lava.wav --caption \"pouring water on a lava lake 😳\" --red lava --start_at go:-0.3 --end_after end_look:2.3 --out out/water_vs_lava.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker: 5 water buckets turn a 15x15 lava lake to obsidian, scooped back up to reveal the field",
+  "published_at": "2026-11-06T16:52:22.684Z"
+}

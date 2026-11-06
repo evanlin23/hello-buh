@@ -35,4 +35,5 @@ checked out at `../hb-videos`.
 | [villager_crowd](shorts/villager_crowd/short.mp4) | 1 villager vs 10 vs 100 staring at me 💀 | 15.9s | FUNK ABNORMAL (ULTRA SLOWED) | ready | c66ae8c | worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats |
 | [villager_job](shorts/villager_job/short.mp4) | POV: THE VILLAGER IS UNEMPLOYED 💀 | 9.6s | Payphone · Radio Top Singers | ready | 99d866a |  |
 | [water_clutch](shorts/water_clutch/short.mp4) | water bucket clutch 💀 | 5.9s | misery. · pupsies | ready | f655187 |  |
+| [water_vs_lava](shorts/water_vs_lava/short.mp4) | pouring water on a lava lake 😳 | 19.05s | misery. · pupsies | ready | 19b1cc9 | worker: 5 water buckets turn a 15x15 lava lake to obsidian, scooped back up to reveal the field |
 | [wrong_bucket](shorts/wrong_bucket/short.mp4) | POV: you grabbed the wrong bucket 💀 | 9.85s | FUNK ABNORMAL (ULTRA SLOWED) | ready | cf14cb2 |  |
