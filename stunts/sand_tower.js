@@ -1,13 +1,14 @@
 // "the torch trick never gets old 😭": a tall sand tower; the bot breaks the bottom block and
 // instantly places a torch there, so every sand block that falls onto the torch pops into an
 // item - the tower melts into the ground (falling-block entities + item drops).
-const H = Number(process.env.TOWER || 22)
+const H = Number(process.env.TOWER || 14)
+const BACK = 10   // the bot stands this far from the tower: base and top both in frame
 
 module.exports = {
   name: 'sand_tower',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'the torch trick never gets old 😭',
-  edit: { caption: 'the torch trick never gets old 😭', red: 'torch', song: 'songs/funk_abnormal.mp3', dropAt: 'break' , endAfter: 'break:3.2'},
+  edit: { caption: 'the torch trick never gets old 😭', red: 'torch', song: 'songs/funk_abnormal.mp3', dropAt: 'break', startAt: 'tower:-0.1', endAfter: 'gone:1.0' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -17,14 +18,14 @@ module.exports = {
     const { x, z } = g, floor = g.y
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    await ctx.cmd(`/fill ${x - 6} ${floor - 2} ${z - 8} ${x + 6} ${floor - 1} ${z + 3} dirt`)
-    await ctx.cmd(`/fill ${x - 6} ${floor} ${z - 8} ${x + 6} ${floor} ${z + 3} grass_block`)
-    await ctx.cmd(`/fill ${x - 6} ${floor + 1} ${z - 8} ${x + 6} ${floor + H + 6} ${z + 3} air`)
-    this.tz = z - 3
-    // a fat 2x2 sand tower with a sandstone cap so it reads as built, not natural
+    await ctx.cmd(`/fill ${x - 6} ${floor - 2} ${z - 14} ${x + 6} ${floor - 1} ${z + 3} dirt`)
+    await ctx.cmd(`/fill ${x - 6} ${floor} ${z - 14} ${x + 6} ${floor} ${z + 3} grass_block`)
+    await ctx.cmd(`/fill ${x - 6} ${floor + 1} ${z - 14} ${x + 6} ${floor + H + 6} ${z + 3} air`)
+    this.tz = z - BACK
     await ctx.cmd(`/fill ${x} ${floor + 1} ${this.tz} ${x} ${floor + H} ${this.tz} sand`)
     await ctx.hotbar(['diamond_shovel', ['torch', 64], ['sand', 64], ['bread', 12]])
-    await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, -40)
+    await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 14')
+    await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, -19)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
@@ -33,12 +34,13 @@ module.exports = {
 
   async perform (ctx) {
     const { bot, Vec3 } = ctx
-    await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + H * 0.8, this.tz + 0.5), 900)   // look up the tower
-    await bot.waitForTicks(6)
-    await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 1.5, this.tz + 0.5), 700)
+    const mid = new Vec3(this.x + 0.5, this.floor + 6.2, this.tz + 0.5)   // whole tower + its base in frame
+    await ctx.easeLookAt(mid, 100)
+    ctx.mark('tower')
+    await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 5.5, this.tz + 0.5), 500)
     const b = bot.blockAt(new Vec3(this.x, this.floor + 1, this.tz))
     ctx.mark('break')
-    try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) }
+    try { await bot.dig(b, false) } catch (e) { ctx.log('dig', e.message) }
     ctx.sound('block.sand.break', 1); ctx.particles('block', b.position, { block: 'sand' })
     // sand checks for a free space 2 ticks after the update: let the column start falling, then put
     // the torch in the gap so each falling block lands on it and pops off as an item
@@ -47,15 +49,20 @@ module.exports = {
     bot._client.write('block_place', { hand: 0, location: { x: this.x, y: this.floor, z: this.tz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm(); ctx.sound('block.wood.place', 1)
     // follow the column down; each landing makes a sound
-    let last = null
-    for (let i = 0; i < 45; i++) {                             // the whole column comes down in ~1 s
+    // watch the column come down onto the torch, the camera easing down with it
+    let gone = false
+    for (let i = 0; i < 120; i++) {
       await bot.waitForTicks(1)
-      const top = bot.blockAt(new Vec3(this.x, this.floor + 1, this.tz))
       if (i % 3 === 0) ctx.sound('block.sand.place', 0.7, 0.8 + (i % 5) * 0.05)
-      last = top
+      if (i < 30) { const t = (i + 1) / 30; const e = t * t * (3 - 2 * t); await bot.look(bot.entity.yaw, Math.atan2(this.floor + 5.5 - e * 3 - (this.floor + 2.62), BACK - 0.5), true) }
+      const left = Object.values(bot.entities).some(en => en.name === 'falling_block')
+      let sand = 0
+      for (let y = 1; y <= H; y++) if (bot.blockAt(new Vec3(this.x, this.floor + y, this.tz)).name === 'sand') sand++
+      if (i > 10 && !left && sand === 0) { gone = true; break }
     }
-    await ctx.easeLookAt(new Vec3(this.x + 0.5, this.floor + 1.5, this.tz + 0.5), 600)
-    await bot.waitForTicks(20)
-    return true
+    ctx.mark('gone')
+    ctx.log('tower gone:', gone)
+    await bot.waitForTicks(30)
+    return gone
   }
 }
