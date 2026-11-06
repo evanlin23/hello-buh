@@ -1,0 +1,15 @@
+{
+  "name": "hello-buh",
+  "private": true,
+  "description": "Automated Minecraft stunt Shorts for @HelloBuh",
+  "scripts": { "postinstall": "bash scripts/patch_deps.sh" },
+  "dependencies": {
+    "express": "4.22.3",
+    "mineflayer": "4.26.0",
+    "playwright": "1.63.0",
+    "prismarine-viewer": "1.33.0",
+    "socket.io": "4.8.4",
+    "vec3": "0.1.10"
+  },
+  "overrides": { "prismarine-chunk": "1.38.1" }
+}
