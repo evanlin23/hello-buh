@@ -1,0 +1,22 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+08:49:30.935 spawned at Vec3 { x: 133.5, y: 70, z: 7.5 }
+08:49:31.145 nearest minecraft:forest at [ 421, -89 ]
+08:49:43.456 set at { x: 421, y: 69, z: -89 }
+08:49:51.302 placed 64, correct 64/64
+08:49:53.135 STUNT OK
+meshing from y 8
+light computed in 0.6 s
+meshed + uploaded world in 15.2 s
+rendered 546 frames (9.10 s of video) in 162.7 s = 17.9 s per video second
+wrote work/creeper_art.wav 9.15s
+song drop at 16.25s lands on 7.25s of the Short (song starts at 9.00s)
+icon black_concrete
+icon green_concrete
+icon lime_concrete
+wrote out/creeper_art.mp4 8.80s
+
+real	4m11.036s
+user	4m11.804s
+sys	0m11.981s
+exit=0

@@ -14,6 +14,7 @@ checked out at `../hb-videos`.
 
 | Short | Caption | Length | Song | Status | Commit | Notes |
 |---|---|---|---|---|---|---|
+| [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 8.8s | misery. · pupsies | ready | 46cab20 |  |
 | [looks_wrong](shorts/looks_wrong/short.mp4) | Bro this looks wrong? | 9.7s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 17ecd2d |  |
 | [midas_touch](shorts/midas_touch/short.mp4) | POV: you got the midas touch 🤑 | 10.15s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 90afab9 |  |
 | [one_in_a_million](shorts/one_in_a_million/short.mp4) | 1 in a million landing 😳 | 8.3s | misery. · pupsies | ready | 482d834 |  |
