@@ -6,7 +6,7 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:4.6' },
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'lit:-1.3', endAfter: 'boom:5.2' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -51,30 +51,26 @@ module.exports = {
     bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     await bot.waitForTicks(6)
-    // RUN
-    await ctx.easeLook(Math.PI, 0, 350)
-    bot.setControlState('sprint', true); bot.setControlState('forward', true); bot.setControlState('jump', true)
-    await bot.waitForTicks(22)
-    bot.setControlState('forward', false); bot.setControlState('sprint', false); bot.setControlState('jump', false)
-    // back off a few more steps while facing it, so the flashing pile is on screen the whole wait
-    await ctx.easeLook(0, 0.05, 350)                          // turn round to watch
+    // back away the whole fuse while FACING the flashing pile (turning to sprint off hid the TNT for
+    // 1.7 s of the 4 s fuse), with clear nervous glances that come back to it
     bot.setControlState('back', true)
     let boomed = false
     const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
     bot._client.once('explosion', onBoom)
-    for (let i = 0; i < 14 && !boomed; i++) await bot.waitForTicks(1)
-    bot.setControlState('back', false)
-    // the wait: small nervous glances so the shot never freezes
+    const glances = [[0.35, 0.12], [-0.3, 0.05], [0.0, 0.25], [0.25, 0.0], [-0.2, 0.15], [0.0, 0.05]]
     for (let i = 0; i < 120 && !boomed; i++) {
-      if (i % 16 === 0) ctx.easeLook((i % 32 ? 0.08 : -0.08), 0.04 + (i % 32 ? 0.02 : 0), 600)
+      if (i === 64) bot.setControlState('back', false)     // ~14 blocks back: far enough to watch
+      if (i % 14 === 0) ctx.easeLook(glances[(i / 14) % glances.length][0], glances[(i / 14) % glances.length][1], 450)
       await bot.waitForTicks(1)
     }
+    bot.setControlState('back', false)
+    await ctx.easeLook(0, 0.08, 300)
     await bot.waitForTicks(40)                                // the chain goes off
-    // look down into the crater from here, drifting slowly to the end
-    await ctx.easeLook(0, -0.35, 900)
-    await ctx.easeLook(0.45, -0.55, 1100)
-    ctx.easeLook(0.6, -0.5, 1500)
-    await bot.waitForTicks(16)
+    // walk up to the rim and look down INTO the crater (the old ending stayed level on the grass)
+    bot.setControlState('forward', true); await bot.waitForTicks(14); bot.setControlState('forward', false)
+    await ctx.easeLook(0, -0.95, 800)
+    ctx.easeLook(0.4, -0.85, 1600)
+    await bot.waitForTicks(28)
     return boomed && !ctx.died
   }
 }

@@ -202,3 +202,4 @@ each section.
 - **Peaceful difficulty does no TNT damage** (the explosion damage type scales with difficulty; fall damage doesn't). Any stunt where a blast should hurt or kill needs `/difficulty normal` (found by worker 3: tnt_run's bot was flung to y≈110 unharmed).
 - **Dropped items move smoothly between server syncs.** The server sends an item's position about every 20 ticks, so the recording froze each item and then jumped it. The renderer now eases between synced positions, with an arc when the item comes down.
 - **Cross-session messages can arrive over an hour late.** Workers must `git pull` before every render anyway; never rely on a message to deliver an engine fix.
+- **Back away from danger facing it**, never sprint away facing elsewhere (tnt: the TNT was off screen for 1.7 s of a 4 s fuse). Glances need ±0.25–0.35 rad to read; ±0.08 looked like a locked camera. "Look into the crater" needs pitch around -0.9 from the rim.
