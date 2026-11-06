@@ -632,6 +632,7 @@ def main():
     ap.add_argument("--punch", help='JSON list of EVENT or [EVENT, NTH, SCALE] zoom punches on the game view')
     ap.add_argument("--counter", help='JSON {"at": [EVENT, ...], "total": N} "3/5" beat counter')
     ap.add_argument("--cards", help='JSON list of [EVENT, TEXT, SECONDS?, COLOR?, NTH?] impact cards')
+    ap.add_argument("--sfx", help='JSON list of [KIND, EVENT, (EVENT2), {opts}] sound effects (scripts/sfx.py)')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 0.5, "after": 0, "text": ...} finale preview in front')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
@@ -841,6 +842,19 @@ def main():
             last, n_in = "mto", n_in + 1
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
+    audio_ss, duck = args.start, ""
+    if args.sfx and args.timeline:   # sound effects (scripts/sfx.py) premixed into the game audio, in Short time
+        import sfx
+        sfx_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        track = sfx.build_track(args.sfx, sfx_tl, args.start, dur, tmp / "sfx.wav", args.cards, args.counter)
+        duck = sfx.duck_filter(sfx.dips(args.sfx, sfx_tl, args.start))
+        if track and args.audio:
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-i", str(track), "-filter_complex",
+                            f"[0:a]atrim=0:{dur + 0.5:.3f},loudnorm=I=-20:TP=-3,aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
+                            "-map", "[a]", "-ar", str(sfx.SR), str(tmp / "game_sfx.wav")], check=True)
+            args.audio, audio_ss = str(tmp / "game_sfx.wav"), 0.0
+        elif track:
+            args.audio, audio_ss = str(track), 0.0
     maps = ["-map", "[v]"]
     if args.story and args.timeline:
         # the voice leads (-15 LUFS), the game sits well under it (-27) and a song is a quiet bed (-31);
@@ -849,18 +863,18 @@ def main():
         graph.append(f"[{n_in}:a]loudnorm=I=-15:TP=-2,aresample=48000[nar]")
         mix = ["[nar]"]
         if args.audio:
-            inputs += ["-ss", str(args.start), "-i", args.audio]
+            inputs += ["-ss", str(audio_ss), "-i", args.audio]
             graph.append(f"[{n_in + 1}:a]loudnorm=I=-27:TP=-6,aresample=48000[game]")
             mix.append("[game]")
         if args.song:
             inputs += ["-ss", str(args.song_start), "-i", args.song]
-            graph.append(f"[{n_in + len(mix)}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.3):.3f}:d=0.3,aresample=48000[song]")
+            graph.append(f"[{n_in + len(mix)}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.3):.3f}:d=0.3,aresample=48000[song]")
             mix.append("[song]")
         graph.append(f"{''.join(mix)}amix=inputs={len(mix)}:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     elif args.audio and not args.song:
         # Game audio only: leave headroom for a song added at upload.
-        inputs += ["-ss", str(args.start), "-i", args.audio]
+        inputs += ["-ss", str(audio_ss), "-i", args.audio]
         graph.append(f"[{n_in}:a]loudnorm=I=-18:TP=-3:LRA=11,aresample=48000[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     elif args.song:
@@ -868,10 +882,10 @@ def main():
         # Shorts under 1 minute with a Content ID match follow the rights holder's policy
         # (usually monetize/track); see README "Owner decisions".
         inputs += ["-ss", str(args.song_start), "-i", args.song]
-        song = f"[{n_in}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS,loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song]"
+        song = f"[{n_in}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song]"
         graph.append(song)
         if args.audio:
-            inputs += ["-ss", str(args.start), "-i", args.audio]
+            inputs += ["-ss", str(audio_ss), "-i", args.audio]
             graph.append(f"[{n_in + 1}:a]loudnorm=I=-15:TP=-2,aresample=48000[game]")
             graph.append("[song][game]amix=inputs=2:normalize=0,loudnorm=I=-10:TP=-1:LRA=11[a]")
         else:
