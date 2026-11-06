@@ -47,12 +47,12 @@ module.exports = {
     await ctx.easeLook(Math.PI, -0.2, 500)
     rising = true; ctx.mark('rising')
     ctx.sound('block.lava.ambient', 1)
-    await ctx.easeLook(Math.PI, -0.95, 600)                   // look down and out: pillar!
+    await ctx.easeLook(Math.PI, -0.5, 600)                    // look out over it: pillar!
     // pillar: jump, and at the top of the jump place cobblestone where the feet were
     for (let k = 0; k < LAYERS; k++) {
       const base = floor + k                                   // block we stand on
       bot.setControlState('jump', true)
-      ctx.easeLook(Math.PI + 0.35 * Math.sin(k * 0.7), -0.95 - 0.1 * Math.cos(k * 0.5), 500)   // keep glancing at the lava sea
+      ctx.easeLook(Math.PI + 0.5 * Math.sin(k * 0.7), -0.45 - 0.15 * Math.cos(k * 0.5), 500)   // keep glancing at the lava sea
       for (let i = 0; i < 20 && bot.entity.position.y < base + 2.1; i++) await bot.waitForTicks(1)
       bot.setControlState('jump', false)
       bot._client.write('block_place', { hand: 0, location: { x, y: base, z }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
