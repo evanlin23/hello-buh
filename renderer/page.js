@@ -375,6 +375,10 @@ function drawSelection (cam) {
 // the centre. Unscaled, our near-square game view cut tools and torches down to a sliver at the
 // edge (every frame review flagged it).
 const HAND_X = Math.min(1, (W / H) / (16 / 9))
+// ...but moved by turning the whole rig about the eye, not by sliding it sideways: a slide changes the
+// angle we see the item from, so tools went edge-on and the swing stretched toward the crosshair.
+// Turning keeps vanilla's exact view of the item (its rest point lands where HAND_X puts it).
+const HAND_TURN = new THREE.Matrix4().makeRotationY(Math.atan(0.56 / 0.72) - Math.atan(0.56 * HAND_X / 0.72))
 const handScene = new THREE.Scene()
 const handCam = new THREE.PerspectiveCamera(70, W / H, 0.05, 10)
 const handCache = new Map()
@@ -482,7 +486,7 @@ async function drawHand (cam) {
   if (!h.key) {   // empty hand: the arm
     const r = await armObject()
     const a = h.swing || 0, g = Math.sqrt(a)
-    const M = new THREE.Matrix4().makeTranslation((-0.3 * Math.sin(g * Math.PI) + 0.64) * HAND_X, 0.4 * Math.sin(g * Math.PI * 2) - 0.6 + (h.equip || 0) * -0.6, -0.4 * Math.sin(a * Math.PI) - 0.72)
+    const M = HAND_TURN.clone().multiply(new THREE.Matrix4().makeTranslation(-0.3 * Math.sin(g * Math.PI) + 0.64, 0.4 * Math.sin(g * Math.PI * 2) - 0.6 + (h.equip || 0) * -0.6, -0.4 * Math.sin(a * Math.PI) - 0.72))
     M.multiply(new THREE.Matrix4().makeRotationY(45 * D2R))
     M.multiply(new THREE.Matrix4().makeRotationY(Math.sin(g * Math.PI) * 70 * D2R))
     M.multiply(new THREE.Matrix4().makeRotationZ(Math.sin(a * a * Math.PI) * -20 * D2R))
@@ -505,10 +509,8 @@ async function drawHand (cam) {
   if (!r) return false
   // swing (renderArmWithItem + applyItemArmAttackTransform), equip drop (applyItemArmTransform)
   const a = h.swing || 0, sa = Math.sin(Math.sqrt(a) * Math.PI)
-  // the swing's sideways lunge scales with the rest position (HAND_X): unscaled, the held block lunged to
-  // the centre of our narrower view and ballooned over the target on every placement
-  const M = new THREE.Matrix4().makeTranslation(-0.4 * sa * HAND_X, 0.2 * Math.sin(Math.sqrt(a) * Math.PI * 2), -0.2 * Math.sin(a * Math.PI))
-  M.multiply(new THREE.Matrix4().makeTranslation(0.56 * HAND_X, -0.52 + (h.equip || 0) * -0.6, -0.72))
+  const M = HAND_TURN.clone().multiply(new THREE.Matrix4().makeTranslation(-0.4 * sa, 0.2 * Math.sin(Math.sqrt(a) * Math.PI * 2), -0.2 * Math.sin(a * Math.PI)))
+  M.multiply(new THREE.Matrix4().makeTranslation(0.56, -0.52 + (h.equip || 0) * -0.6, -0.72))
   const f = Math.sin(a * a * Math.PI)
   M.multiply(new THREE.Matrix4().makeRotationY((45 + f * -20) * D2R))
   M.multiply(new THREE.Matrix4().makeRotationZ(sa * -20 * D2R))
