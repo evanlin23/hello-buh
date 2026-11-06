@@ -21,6 +21,10 @@ try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {}
 setBrightness(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5)   // the Brightness option (renderer/models.js)
 // `hideHand: true`: no first-person hand or held item (vanilla F1), for narrators who aren't Steve
 const HIDE_HAND = !!STUNT_MOD.hideHand
+// F1 (hide GUI) between f1_on / f1_off marks: edit.py drops the HUD there, and vanilla F1 hides the
+// hand too (worker 6, lapse_castle)
+const F1 = []
+{ let on = null; for (const e of rec.timeline || []) { if (e.event === 'f1_on' && on === null) on = e.t / 50; if (e.event === 'f1_off' && on !== null) { F1.push([on, e.t / 50]); on = null } } if (on !== null) F1.push([on, Infinity]) }
 const P = rec.poses
 
 function lerpAngle (a, b, f) { let d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return a + d * f }
@@ -632,7 +636,7 @@ function camAtLive (t) {
       try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/celestial/moon/full_moon.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), moon]) } catch (e) { console.error('no moon texture:', e.message) }
     }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || 8), clouds: STUNT_MOD.clouds !== false })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false })
 
   const send = async (list) => {
     const id = String(blobId++)
@@ -804,7 +808,7 @@ function camAtLive (t) {
     prof('camera+target')
     const ents = entitiesAt(t, mesher)
     // first-person held item
-    const hd = HIDE_HAND || THIRD ? null : handAt(t)
+    const hd = HIDE_HAND || THIRD || F1.some(([a, b]) => t >= a && t < b) ? null : handAt(t)
     if (hd) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = !!spriteOf(hd.name)

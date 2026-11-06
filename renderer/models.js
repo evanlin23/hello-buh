@@ -558,9 +558,11 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
               globalShift = vecsub3(globalShift, matmul3(globalMatrix, globalShift))
             }
 
-            // translucent blocks (nether portal): their quads go to the blended pass
+            // translucent blocks (RenderType.translucent in vanilla: nether portal, stained glass and
+            // panes, tinted glass, ice, slime, honey): blended pass. Stained glass drawn opaque with an
+            // alpha test came out a solid flat colour, black_stained_glass solid black (worker 6)
             let A = attr
-            if (block.name === 'nether_portal') {
+            if (block.name === 'nether_portal' || /stained_glass(_pane)?$/.test(block.name) || /^(tinted_glass|ice|slime_block|honey_block)$/.test(block.name)) {
               A = { positions: attr.t_positions, normals: attr.t_normals, uvs: attr.t_uvs, colors: attr.t_colors, indices: [] }
             }
             for (const element of variant.model.elements) {
