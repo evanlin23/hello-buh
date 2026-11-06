@@ -596,7 +596,7 @@ def apply_speed(args):
         if step < 0.99 and 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # slow motion: blend the two neighbours (no duplicate frames)
             lo = Image.open(src_dir / (pat % math.floor(x))).convert("RGB")
             hi = Image.open(src_dir / (pat % (math.floor(x) + 1))).convert("RGB")
-            Image.blend(lo, hi, frac).save(wd / (pat % k), compress_level=1)
+            Image.blend(lo, hi, frac).convert(Image.open(src_dir / (pat % math.floor(x))).mode).save(wd / (pat % k), compress_level=1)   # same pixel format as the sequence
             blended += 1
         else:
             (wd / (pat % k)).symlink_to((src_dir / (pat % i)).resolve())

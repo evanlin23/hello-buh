@@ -180,7 +180,9 @@ def apply_frame_fx(args, timeline):
         fl = max([a * math.exp(-(t - m) / 0.07) for m, a in flashes if 0 <= t - m < 0.3] + [0.0])
         out = wd / f.name
         if z > 1.0005 or abs(dx) > 0.3 or abs(dy) > 0.3 or fl > 0.01:
-            im = Image.open(f.resolve()).convert("RGB")
+            src_im = Image.open(f.resolve())
+            mode = src_im.mode   # keep the renderer's pixel format: an RGB frame inside an RGBA
+            im = src_im.convert("RGB")   # sequence made ffmpeg re-init the graph and drop every overlay on it
             if abs(dx) > 0.3 or abs(dy) > 0.3:
                 z = max(z, 1 + 2 * (abs(dx) + abs(dy) + 2) / im.width)   # zoom just enough to hide the edges
             cw, ch = im.width / z, im.height / z
@@ -188,7 +190,7 @@ def apply_frame_fx(args, timeline):
             im = im.resize(im.size, Image.BICUBIC, box=(x0, y0, x0 + cw, y0 + ch))
             if fl > 0.01:
                 im = Image.blend(im, Image.new("RGB", im.size, (255, 255, 255)), min(1.0, fl))
-            im.save(out, compress_level=1)
+            im.convert(mode).save(out, compress_level=1)
             n += 1
         else:
             out.symlink_to(f.resolve())
@@ -260,6 +262,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
         at = c["at"] if isinstance(c, dict) else c
         total = int(c.get("total", len(at))) if isinstance(c, dict) else len(at)
         prefix = c.get("label", "") if isinstance(c, dict) else ""
+        if len(at) == 1 and total > 1 and isinstance(at[0], str):   # {at: ['death'], total: 14}: every occurrence counts
+            at = [[at[0], j] for j in range(len(event_times(timeline, at[0])))]
         for k, ev in enumerate(at):
             ts = event_times(timeline, ev[0] if isinstance(ev, list) else ev)
             nth = ev[1] if isinstance(ev, list) else 0
