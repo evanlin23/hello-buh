@@ -7,5 +7,5 @@ module.exports = require('../lib/pixel_art')({
   palette: { K: 'black_wool', C: 'light_blue_wool', B: 'brown_wool' },
   wall: 'oak_planks',
   caption: "can you guess what I'm building? 🤔",
-  edit: { caption: "can you guess what I'm building? 🤔", song: 'songs/misery.mp3', dropAt: 'complete', start: 0.3, endAfter: 'complete:1.7' }
+  edit: { caption: "can you guess what I'm building? 🤔", song: 'songs/misery.mp3', dropAt: 'complete', start: 0.3, endAfter: 'complete:1.0' }
 })

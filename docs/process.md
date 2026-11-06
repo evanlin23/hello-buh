@@ -13,7 +13,8 @@ idea -> stunt module -> run.sh (bot + render + edit) -> qa_frames.py -> independ
 ## 1. Make
 - One stunt module per Short in `stunts/`. See `docs/worker.md` for the brief and the harness helpers.
 - The format must read **in the first second**: the thing the caption promises is on screen (or audible, e.g. the hiss) by ~1 s. Use `startAt: 'EVENT:-1.5'` to trim.
-- Aim for 10-20 s with something new every ~2 s. Never a still shot of 1 s or more: waits get small glances, endings get a slow drift.
+- **Length:** aim for 15–30 s, multi-beat. Owner, 2026-11-06: "probbaly need longer ones to go viral, without any dead space". Build several escalating beats, like the 19–20 s worker formats (rated / ranked / X vs Y vs Z), with something new every ~2 s.
+- **No dead space.** Never a still shot of 1 s or more: waits get glances, endings get motion. A reveal lands with a move (a pull-back or a drift), and the Short ends within ~1 s of the payoff. Owner, 2026-11-06, on pixel art: "we land on the reveal for the pixel art for a while, which idk how good that is".
 - Build in a big cleared area: water, caves and hills at the edge show up in craters, behind crowds and in long shots.
 
 ## 2. Render (one batch at a time)
