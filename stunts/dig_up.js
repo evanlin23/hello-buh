@@ -5,7 +5,7 @@ module.exports = {
   name: 'dig_up',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'never dig straight up 💀',
-  edit: { caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened', onFire: 'hurt:death', deathScreen: true , endAfter: 'death:1.8'},
+  edit: { caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened', onFire: 'hurt:death', deathScreen: true , startAt: 'diamond:-0.8', endAfter: 'death:1.8'},
   expectDeath: true,
 
   async setup (ctx) {
@@ -22,14 +22,14 @@ module.exports = {
     let seed = 3
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
     const ores = ['coal_ore', 'coal_ore', 'iron_ore', 'copper_ore', 'iron_ore', 'gold_ore', 'redstone_ore', 'lapis_ore']
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 12; i++) {                          // a few, like real stone (30 looked like an ore museum)
       const ox = x + (rnd() < 0.5 ? -1 : 1), oy = y + Math.floor(rnd() * 2), oz = z - Math.floor(rnd() * 12)
       await ctx.cmd(`/setblock ${ox} ${oy} ${oz} ${ores[Math.floor(rnd() * ores.length)]}`)
     }
     await ctx.cmd(`/fill ${x} ${y} ${z - 12} ${x} ${y + 1} ${z + 2} air`)          // the tunnel
     await ctx.cmd(`/setblock ${x} ${y} ${z - 13} stone`)
     await ctx.cmd(`/setblock ${x + 1} ${y + 1} ${z - 6} diamond_ore`)               // the find
-    for (const dz of [1, -4, -10]) await ctx.cmd(`/setblock ${x - 1} ${y + 1} ${z + dz} wall_torch[facing=east]`)
+    for (const dz of [1, -4, -8, -11]) await ctx.cmd(`/setblock ${x - 1} ${y + 1} ${z + dz} wall_torch[facing=east]`)   // one right by the dig-up spot: it has to be seen
     // the lava pocket over the spot the bot will stand
     this.sz = z - 7
     await ctx.cmd(`/fill ${x - 1} ${y + 3} ${this.sz - 2} ${x + 1} ${y + 4} ${this.sz + 2} lava`)

@@ -4,7 +4,7 @@ module.exports = require('../lib/pixel_art')({
   art: ['..WWWWW..', '.WWWWWWW.', 'WWWWWWWWW', 'WKKWWWKKW', 'WKKWWWKKW', 'WWWWKWWWW', '.WWWWWWW.', '..WKWKW..', '..WWWWW..'],
   palette: { W: 'white_concrete', K: 'black_concrete' },
   first: 'K',
-  wall: 'deepslate_bricks',
+  wall: 'oak_planks',
   caption: 'why is he building THIS 😨',
-  edit: { caption: 'why is he building THIS 😨', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', start: 0.3 }
+  edit: { caption: 'why is he building THIS 😨', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', start: 0.3, endAfter: 'complete:1.7' }
 })

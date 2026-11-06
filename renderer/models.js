@@ -514,8 +514,13 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
               globalShift = vecsub3(globalShift, matmul3(globalMatrix, globalShift))
             }
 
+            // translucent blocks (nether portal): their quads go to the blended pass
+            let A = attr
+            if (block.name === 'nether_portal') {
+              A = { positions: attr.t_positions, normals: attr.t_normals, uvs: attr.t_uvs, colors: attr.t_colors, indices: [] }
+            }
             for (const element of variant.model.elements) {
-              renderElement(world, cursor, element, variant.model.ao, attr, globalMatrix, globalShift, block, biome)
+              renderElement(world, cursor, element, variant.model.ao, A, globalMatrix, globalShift, block, biome)
             }
           }
         }

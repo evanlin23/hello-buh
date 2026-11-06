@@ -54,7 +54,7 @@ module.exports = {
     const track = () => bot.chat(`/execute as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${bot.username} eyes`)
     bot.on('physicsTick', track)
     this.untrack = () => bot.removeListener('physicsTick', track)
-    ctx.mark('turn')
+    ctx.mark('turn'); ctx.mark('face_on')     // the renderer turns them on this tick (mineflayer's entity yaw lags the tp by seconds)
     for (let i = 0; i < 4; i++) ctx.sound('entity.villager.ambient', 0.8, 0.8 + i * 0.12)
     await bot.waitForTicks(26)
     // sidestep left, right: every head follows
@@ -66,7 +66,7 @@ module.exports = {
     // back away slowly
     bot.setControlState('back', true); await bot.waitForTicks(30); bot.setControlState('back', false)
     await bot.waitForTicks(20)
-    this.untrack()
+    this.untrack(); ctx.mark('face_off')
     return true
   }
 }

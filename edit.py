@@ -522,6 +522,20 @@ def main():
              f"pad={W}:{H}:0:{BAND}:black,fps={args.out_fps},format=rgba[g0]"]
     last = "g0"
     n_in = 2
+    # on-fire overlay first: vanilla draws the HUD on top of the flames
+    if args.on_fire and args.timeline:
+        a_, b_ = args.on_fire.split(":")
+        if a_ in _tl and b_ in _tl:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                end = _tl[b_] + 0.6
+                if b_ == "death":   # a dead body stays on fire (and in view) until the respawn
+                    tl_all_ = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+                    end = next((e["t"] / 1000 for e in tl_all_ if e["event"] == "respawn" and e["t"] / 1000 > _tl[b_]), dur + args.start + 1)
+                pat = fire_frames(jar, _tl[a_], end, tmp)
+            inputs += ["-framerate", "20", "-i", pat]
+            graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, _tl[a_] - args.start):.3f}/TB[firev]")
+            graph.append(f"[{last}][firev]overlay=0:0:eof_action=pass[fireo]")
+            last, n_in = "fireo", n_in + 1
     if args.hud:
         tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"] if args.timeline else []
         shift = args.start
@@ -562,19 +576,6 @@ def main():
     if args.timeline:
         for e in json.loads(pathlib.Path(args.timeline).read_text())["timeline"]:
             tl_ev.setdefault(e["event"], e["t"] / 1000)
-    if args.on_fire and args.timeline:
-        a_, b_ = args.on_fire.split(":")
-        if a_ in tl_ev and b_ in tl_ev:
-            with zipfile.ZipFile(CLIENT_JAR) as jar:
-                end = tl_ev[b_] + 0.6
-                if b_ == "death":   # a dead body stays on fire (and in view) until the respawn
-                    tl_all_ = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
-                    end = next((e["t"] / 1000 for e in tl_all_ if e["event"] == "respawn" and e["t"] / 1000 > tl_ev[b_]), dur + args.start + 1)
-                pat = fire_frames(jar, tl_ev[a_], end, tmp)
-            inputs += ["-framerate", "20", "-i", pat]
-            graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, tl_ev[a_] - args.start):.3f}/TB[firev]")
-            graph.append(f"[{last}][firev]overlay=0:0:eof_action=pass[fireo]")
-            last, n_in = "fireo", n_in + 1
     if args.timer and args.timer.split(":")[0] in tl_ev and args.timer.split(":")[1] in tl_ev:
         a_, b_ = args.timer.split(":")
         off, pat = timer_frames(tl_ev[a_], tl_ev[b_], args.start, tmp)

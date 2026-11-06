@@ -64,6 +64,10 @@ const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a
 for (const r of rec.entities || []) if (r[2] === 'tnt' && r[9] && r[9].fuse !== undefined && TNT_FUSE[r[1]] === undefined && FIRST_SEEN.get(r[1]) === r[0]) TNT_FUSE[r[1]] = r[9].fuse
 const TNT_STATE = require('minecraft-data')(rec.version).blocksByName.tnt.defaultState
 const MC = require('minecraft-data')(rec.version)
+const FALL_START = new Map()   // falling_block id -> where it appeared
+for (const r of rec.entities || []) if (r[2] === 'falling_block' && !FALL_START.has(r[1])) FALL_START.set(r[1], { t: r[0], x: r[3], y: r[4], z: r[5], vy: 0 })
+const FACE = []
+{ let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = e.t / 50; if (e.event === 'face_off' && a !== null) { FACE.push([a, e.t / 50]); a = null } } if (a !== null) FACE.push([a, Infinity]) }
 const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, z: e.z }))
 const ASSETS_DIR = path.join(__dirname, 'work', 'assets', rec.version)
 // Held item over time: hotbar contents + selected slot from the timeline, the tick the held item last
@@ -316,6 +320,22 @@ function camAtLive (t) {
       }
       cam.dead = !!DEATHS.find(([a, b]) => t >= a && t < b)
     }
+    // falling blocks (sand, anvils): the server sends their position about once a second, so the
+    // recording hovers then jumps. Simulate vanilla's fall from where each appeared: gravity 0.04,
+    // drag 0.98, stopping on a solid block.
+    for (const e of ents) {
+      if (e.name !== 'falling_block') continue
+      const s0 = FALL_START.get(e.id); if (!s0) continue
+      let y = s0.y, vy = s0.vy
+      for (let k = 0; k < Math.floor(t - s0.t); k++) {
+        vy = (vy - 0.04) * 0.98
+        const ny = y + vy
+        const below = mesher.world.getBlock(new Vec3(Math.floor(s0.x), Math.floor(ny), Math.floor(s0.z)))
+        if (below && below.boundingBox === 'block' && Math.floor(ny) < Math.floor(y)) { y = Math.floor(y); break }
+        y = ny
+      }
+      e.x = s0.x; e.z = s0.z; e.y = Math.min(e.y, y)
+    }
     // dropped items (ItemEntityRenderer): items with a flat sprite stay sprites; block items are a
     // quarter-size 3D block, bobbing sin(age/10)*0.1+0.1 and spinning age/20 rad
     for (const e of ents) {
@@ -329,6 +349,16 @@ function camAtLive (t) {
       e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.125
       e.yaw = age / 20 + (e.id % 7)
       e.extra = { state: bl.defaultState, scale: 0.25, spin: true }
+    }
+    // mobs made to face the player by command (tp facing entity <bot> eyes) between face_on and
+    // face_off marks: the recorded entity yaw lags the server by seconds, so face them here
+    if (FACE.some(([a, b]) => t >= a && t < b)) {
+      for (const e of ents) {
+        if (e.name !== 'villager') continue
+        const dx = cam.x - e.x, dz = cam.z - e.z, dy = cam.y - (e.y + 1.62)
+        e.yaw = Math.atan2(-dx, -dz); e.headYaw = e.yaw
+        e.pitch = Math.atan2(dy, Math.hypot(dx, dz))
+      }
     }
     // creeper swelling (CreeperRenderer.scale): 30-tick fuse ending in its explosion
     for (const e of ents) {
