@@ -24,13 +24,13 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 15.9,
+    "duration_s": 13.5,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15146120,
-    "sha256": "03df854dfe169ba355b837707a4805275d45eb7c442e8bd6e08839a4e1de4276"
+    "bytes": 13360352,
+    "sha256": "604ee748fd860fb7bda80eec1ebb5f150d37a4ef7d7f56c702683b0130346c07"
   },
   "edit": {
     "caption": "1 villager vs 10 vs 100 staring at me \ud83d\udc80",
@@ -89,13 +89,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 377,
-      "y": 66,
-      "z": -53
+      "x": 352,
+      "y": 63,
+      "z": -43
     },
     "biome": "minecraft:plains",
-    "ticks": 319,
-    "seconds": 15.95,
+    "ticks": 271,
+    "seconds": 13.55,
     "deaths": 0,
     "events": [
       {
@@ -115,47 +115,47 @@
         "event": "face_on"
       },
       {
-        "t": 3.45,
+        "t": 2.9,
         "event": "face_off"
       },
       {
-        "t": 3.6,
+        "t": 3.05,
         "event": "beat"
       },
       {
-        "t": 5.35,
+        "t": 4.8,
         "event": "turn"
       },
       {
-        "t": 5.35,
+        "t": 4.8,
         "event": "face_on"
       },
       {
-        "t": 7.15,
+        "t": 5.95,
         "event": "face_off"
       },
       {
-        "t": 7.3,
+        "t": 6.15,
         "event": "beat"
       },
       {
-        "t": 9.15,
+        "t": 8,
         "event": "turn"
       },
       {
-        "t": 9.15,
+        "t": 8,
         "event": "face_on"
       },
       {
-        "t": 13.45,
+        "t": 12.35,
         "event": "back"
       },
       {
-        "t": 15.95,
+        "t": 13.55,
         "event": "face_off"
       },
       {
-        "t": 15.95,
+        "t": 13.55,
         "event": "end"
       }
     ]
@@ -163,22 +163,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "c66ae8c9f161e4ab606424327e17920d4ae31b02",
-    "rendered_at": "2026-11-06T16:36:02.322Z",
-    "head_at_publish": "0bb3147a3073a8d9650b08e14a53ed7588029b6a",
+    "commit": "8889968160f5599042bd15cd57eaec88e8aa49ec",
+    "rendered_at": "2026-11-06T19:14:59.166Z",
+    "head_at_publish": "ecc7a4c637de62fc16ddebfe246610ed7c8b5cb2",
     "stunt": "stunts/villager_crowd.js",
     "source_snapshot": [
       "source/villager_crowd.js"
     ]
   },
   "rebuild": [
-    "git checkout c66ae8c9f161",
+    "git checkout 8889968160f5",
     "gunzip -c shorts/villager_crowd/recording.json.gz > work/villager_crowd.rec.json",
     "node render.js work/villager_crowd.rec.json work/villager_crowd.frames 60 1080 1011",
     "python3 audio.py work/villager_crowd.rec.json work/villager_crowd.wav",
     "python3 edit.py --frames work/villager_crowd.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_crowd.rec.json --audio work/villager_crowd.wav --caption \"1 villager vs 10 vs 100 staring at me \ud83d\udc80\" --red 100 --subs \"[[\\\"beat\\\",\\\"1 villager\\\",1.6,0],[\\\"beat\\\",\\\"10 villagers\\\",1.6,1],[\\\"beat\\\",\\\"100 villagers\\\",1.6,2],[\\\"turn\\\",\\\"they all turned\\\",1.4,2],[\\\"back\\\",\\\"nope\\\",1.2,0]]\" --start_at beat:-0.05 --out out/villager_crowd.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md); worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats",
-  "published_at": "2026-11-06T16:37:39.117Z"
+  "status": "ready",
+  "notes": "worker frame QA (fresh engine, independent review): ready. Nitpicks: held emerald mostly off the right edge of the crop; ~0.7 s pause after the 100-crowd turn; packed-ice mound on the horizon in beat 1",
+  "published_at": "2026-11-06T19:26:36.510Z"
 }

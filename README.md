@@ -17,9 +17,9 @@ checked out at `../hb-videos`.
 | [anvil_rain](shorts/anvil_rain/short.mp4) | minecraft but it rains anvils 💀 | 10.05s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 799e77f |  |
 | [cave_reveal](shorts/cave_reveal/short.mp4) | never dig straight down 💀 | 7.85s | THE REDEEMER · BVSSL7ON, ANIZYZ | ready | 799e77f | QA2: still dark; lavafall render gaps |
 | [creeper](shorts/creeper/short.mp4) | POV: you hear tssss 💀 | 6.85s | Intranet Crush · hiræth, Willix | needs-fix | 502c8b2 | frame QA: creeper not on screen until 4.2 s, no fuse flash; re-render queued |
-| [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 9.35s | Take The Sky · crysstales, DJ YHR, HRXSTAL | ready | c9278fc | worker QA (qa_frames + independent review): ready. Nitpicks: held block vanishes on slot switch with ~6 frozen frames (f146, f311; engine), swinging block hides part of the art while building, near-still last 1.8 s hold |
+| [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 8.8s | Take The Sky · crysstales, DJ YHR, HRXSTAL | ready | 46cab20 |  |
 | [half_heart](shorts/half_heart/short.mp4) | POV: you're on half a heart 💀 | 5.9s | VEM LENTA! · KPHK, Eluvo, Sayfalse | ready | f655187 |  |
-| [heart_art](shorts/heart_art/short.mp4) | my gf asked what I was building 😭 | 9.9s | Royalty Funk · LXNGVX | ready | eaaf65d | worker QA (qa_frames + independent review): ready after trimming the blank opening. Scrambled build order is intentional (mystery until ~5.7 s). Nitpick: one fast hand swing f168 |
+| [heart_art](shorts/heart_art/short.mp4) | built this for my girlfriend 🥺 | 6.85s | Royalty Funk · LXNGVX | ready | 5617e57 |  |
 | [house_sizes](shorts/house_sizes/short.mp4) | building a house in 5s vs 10s vs 20s 💀 | 18.65s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 9d412b3 | worker: dirt hut vs plank cottage vs two-colour house, real block placements, ends on all three |
 | [lava_crossing](shorts/lava_crossing/short.mp4) | every way to cross lava (rated) 💀 | 19.85s | Sky Verse · Lieless, Luuna, Yarimov | ready | 62b7c60 | worker: bridge 6/10, water bucket->obsidian 9/10, pearl 10/10, walking in 0/10 (death screen) |
 | [lava_rising](shorts/lava_rising/short.mp4) | the lava stopped 1 block below me 😳 | 12.5s | X2 · MUPP | ready | 799e77f | QA2: payoff framing of the 1-block gap could be clearer |
@@ -33,9 +33,9 @@ checked out at `../hb-videos`.
 | [sand_tower](shorts/sand_tower/short.mp4) | the torch trick never gets old 😭 | 5.85s | Montagem Toma · X972, sk3tch01, MXZI | ready | c4cd22e |  |
 | [skull_art](shorts/skull_art/short.mp4) | the skull emoji irl 💀 | 8.75s | COM BOTA · cape, crysstales | ready | 46cab20 |  |
 | [speed_build](shorts/speed_build/short.mp4) | Fastest house build 💀 | 8.35s | AYUDA · MXRCVRY | ready | 97bba2b | worker QA (qa_frames + independent review): ready. Nitpicks: 0.37 s still opening before the timer, last ~0.5 s nearly still; held item pops on slot switches (engine: no lower/raise animation) |
-| [sword_art](shorts/sword_art/short.mp4) | can you guess what I'm building? 🤔 | 5.8s | INDUSTRY KISS · DIPIENS, HRXSTAL | ready | eaaf65d | worker QA (qa_frames + independent review): ready. Nitpicks: frequent slot switches f86-140 keep the held item mostly lowered; fill starts before the outline is complete |
+| [sword_art](shorts/sword_art/short.mp4) | can you guess what I'm building? 🤔 | 5.2s | INDUSTRY KISS · DIPIENS, HRXSTAL | ready | d95a743 |  |
 | [tnt](shorts/tnt/short.mp4) | POV: you lit 75 TNT 💀 | 15.4s | Mortals Funk Remix · Warriyo, LXNGVX | needs-fix | 1cb03ec | user: ground dark + bot stuck; re-render queued with the fixed stunt |
-| [villager_crowd](shorts/villager_crowd/short.mp4) | 1 villager vs 10 vs 100 staring at me 💀 | 15.9s | Feel Good Funk · Syn Cole, Nakama | ready | c66ae8c | worker: 1/10/100 NoAI villager crowds turn to stare, teleport cuts between beats |
+| [villager_crowd](shorts/villager_crowd/short.mp4) | 1 villager vs 10 vs 100 staring at me 💀 | 13.5s | Feel Good Funk · Syn Cole, Nakama | ready | 8889968 | worker frame QA (fresh engine, independent review): ready. Nitpicks: held emerald mostly off the right edge of the crop; ~0.7 s pause after the 100-crowd turn; packed-ice mound on the horizon in beat 1 |
 | [villager_job](shorts/villager_job/short.mp4) | POV: THE VILLAGER IS UNEMPLOYED 💀 | 9.6s | Fearless Funk · DR MØB, Chris Linton | ready | 99d866a |  |
 | [water_clutch](shorts/water_clutch/short.mp4) | water bucket clutch 💀 | 5.9s | INDUSTRY KISS · DIPIENS, HRXSTAL | ready | f655187 |  |
 | [water_vs_lava](shorts/water_vs_lava/short.mp4) | pouring water on a lava lake 😳 | 19.05s | VEM LENTA! · KPHK, Eluvo, Sayfalse | ready | 19b1cc9 | worker: 5 water buckets turn a 15x15 lava lake to obsidian, scooped back up to reveal the field |
