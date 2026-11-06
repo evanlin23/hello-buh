@@ -120,6 +120,7 @@ module.exports = {
     const cut = async (dx, dz, target, dy = 1) => {
       for (const c of ['forward', 'back', 'left', 'right', 'sprint']) ctl(c, false)
       since = 0
+      ctx.mark('cut')                                  // K.cut teleports by bot.chat, which doesn't mark the cut itself
       await K.cut(dx, dz, target, dy)
     }
     const aimAt = (p) => { K.base = K.aim(p) }

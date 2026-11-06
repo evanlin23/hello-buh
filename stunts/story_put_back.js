@@ -107,7 +107,8 @@ module.exports = {
     const { X, Z, F } = this
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F })
-    const { P, say, look, line, cut } = K
+    const { P, say, look, line } = K
+    const cut = (...a) => { ctx.mark('cut'); return K.cut(...a) }   // K.cut teleports by bot.chat, which doesn't mark the cut
     const tp = (tag, x, y, z, yaw, pitch = 0) => say(`/tp @e[tag=${tag},limit=1] ${(X + x).toFixed(3)} ${(F + y).toFixed(3)} ${(Z + z).toFixed(3)} ${yaw.toFixed(1)} ${pitch}`)
     const go = (on) => bot.setControlState('forward', on)
     const put = (dx, dy, dz, block) => {                  // a block comes back: puff of purple, a soft place sound
