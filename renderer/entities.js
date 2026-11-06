@@ -405,7 +405,12 @@ export class EntityLayer {
       // bipeds: legs opposite, arms against the legs. Quadrupeds (QuadrupedModel: creeper, pig):
       // leg0/leg1 hind right/left, leg2/leg3 front right/left; diagonal pairs move together.
       if (!B.leg4) for (const [n, sign] of [['leg0', 1], ['rightLeg', 1], ['leg1', -1], ['leftLeg', -1], ['leg2', -1], ['leg3', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
-      for (const [n, sign] of [['rightArm', -1], ['leftArm', 1], ['arm0', -1], ['arm1', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
+      // zombies hold their arms out (AnimationUtils.animateZombieArms: xRot -pi/2.25, replacing the
+      // walk swing; the converted space flips the sign), with the vanilla idle bob
+      if (/^(zombie|husk|drowned|zombie_villager)$/.test(s.name)) {
+        const age = tick + (s.id % 97) * 3
+        for (const [n, k] of [['rightArm', 1], ['leftArm', -1]]) if (B[n]) { B[n].rotation.x = Math.PI / 2.25 - k * Math.sin(age * 0.067) * 0.05; B[n].rotation.z = B[n].userData.rest.z + k * (Math.cos(age * 0.09) * 0.05 + 0.05) }
+      } else for (const [n, sign] of [['rightArm', -1], ['leftArm', 1], ['arm0', -1], ['arm1', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
       if (B.head) {
         let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
         B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y - dy, B.head.userData.rest.z)
