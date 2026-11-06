@@ -115,7 +115,7 @@
     "branch": "main",
     "commit": "99d866aeebb6bf76d66784a5a5142eb06bf7e51f",
     "rendered_at": "2026-11-06T15:04:10.655Z",
-    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
+    "head_at_publish": "652d220588272d75edce682e83351e4cde23af15",
     "stunt": "stunts/villager_job.js",
     "source_snapshot": [
       "source/villager_job.js"
@@ -130,5 +130,5 @@
   ],
   "status": "ready",
   "notes": "",
-  "published_at": "2026-11-06T15:27:33.607Z"
+  "published_at": "2026-11-06T15:39:41.586Z"
 }

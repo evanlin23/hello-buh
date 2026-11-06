@@ -154,7 +154,7 @@
     "branch": "main",
     "commit": "799e77f934f35cf6754ce7a958ba1968e08abbff",
     "rendered_at": "2026-11-06T13:52:37.365Z",
-    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
+    "head_at_publish": "652d220588272d75edce682e83351e4cde23af15",
     "stunt": "stunts/anvil_rain.js",
     "source_snapshot": [
       "source/anvil_rain.js"
@@ -169,5 +169,5 @@
   ],
   "status": "ready",
   "notes": "",
-  "published_at": "2026-11-06T15:27:32.760Z"
+  "published_at": "2026-11-06T15:39:14.919Z"
 }

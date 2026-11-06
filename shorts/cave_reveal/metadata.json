@@ -115,7 +115,7 @@
     "branch": "main",
     "commit": "799e77f934f35cf6754ce7a958ba1968e08abbff",
     "rendered_at": "2026-11-06T13:40:27.719Z",
-    "head_at_publish": "bee82be131d49bc6497d27099e98486228c6e8e9",
+    "head_at_publish": "652d220588272d75edce682e83351e4cde23af15",
     "stunt": "stunts/cave_reveal.js",
     "source_snapshot": [
       "source/cave_reveal.js"
@@ -130,5 +130,5 @@
   ],
   "status": "ready",
   "notes": "QA2: still dark; lavafall render gaps",
-  "published_at": "2026-11-06T15:27:36.165Z"
+  "published_at": "2026-11-06T15:41:02.076Z"
 }
