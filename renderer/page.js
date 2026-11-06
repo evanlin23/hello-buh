@@ -102,10 +102,97 @@ function placeSun () {
   sun.lookAt(camera.position)
 }
 
+// The block atlas as a canvas, so animated textures (water, lava, kelp, fire...) can be redrawn
+// in place: frames and timings come from each texture's .mcmeta (build_assets.py -> anims.json).
+let ANIM = null
+async function loadAnimatedAtlas () {
+  const base = await new Promise((resolve) => { const i = new Image(); i.onload = () => resolve(i); i.src = '/assets/atlas.png' })
+  const c = document.createElement('canvas'); c.width = base.width; c.height = base.height
+  const g = c.getContext('2d'); g.drawImage(base, 0, 0)
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestMipmapLinearFilter; t.generateMipmaps = true
+  t.colorSpace = THREE.NoColorSpace; t.flipY = false
+  try {
+    const meta = await (await fetch('/assets/anims.json')).json()
+    const strips = {}
+    await Promise.all(Object.keys(meta.anims).map(k => new Promise((resolve) => { const i = new Image(); i.onload = () => { strips[k] = i; resolve() }; i.onerror = resolve; i.src = `/assets/env/anim/${k}.png` })))
+    ANIM = { meta, strips, g, tex: t, shown: {} }
+  } catch (e) { ANIM = null }
+  return t
+}
+function animate (tick) {
+  if (!ANIM) return
+  const { meta, strips, g, shown } = ANIM
+  const T = meta.tile, P = meta.pad
+  let dirty = false
+  for (const [k, a] of Object.entries(meta.anims)) {
+    const img = strips[k]; if (!img) continue
+    const total = a.frames.reduce((s, f) => s + f[1], 0)
+    let tt = Math.floor(tick) % total, idx = a.frames[0][0]
+    for (const [fi, ft] of a.frames) { if (tt < ft) { idx = fi; break } tt -= ft }
+    if (shown[k] === idx) continue
+    shown[k] = idx; dirty = true
+    const [cx, cy] = a.cell
+    g.clearRect(cx, cy, meta.cell, meta.cell)
+    for (let oy = -1; oy <= 1; oy++) for (let ox = -1; ox <= 1; ox++) {
+      // wrap-padded copy of the frame, clipped to this cell
+      g.save(); g.beginPath(); g.rect(cx, cy, meta.cell, meta.cell); g.clip()
+      g.drawImage(img, 0, idx * T, T, T, cx + P + ox * T, cy + P + oy * T, T, T)
+      g.restore()
+    }
+  }
+  if (dirty) ANIM.tex.needsUpdate = true
+}
+
+// Particles: camera-facing quads, one batch per texture, rebuilt every frame.
+const partTex = new Map(); const partMeshes = []
+async function particleMaterial (tex) {
+  if (partTex.has(tex)) return partTex.get(tex)
+  let map
+  if (tex === 'atlas') map = opaqueMat.map
+  else {
+    map = await new THREE.TextureLoader().loadAsync(`/assets/env/${tex}.png`).catch(() => null)
+    if (map) { map.magFilter = THREE.NearestFilter; map.minFilter = THREE.NearestFilter; map.generateMipmaps = false; map.colorSpace = THREE.NoColorSpace; map.flipY = false }
+  }
+  const m = map ? new THREE.MeshBasicMaterial({ map, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true }) : null
+  partTex.set(tex, m)
+  return m
+}
+async function drawParticles (parts) {
+  for (const m of partMeshes) { scene.remove(m); m.geometry.dispose() }
+  partMeshes.length = 0
+  if (!parts || !parts.length) return
+  camera.updateMatrixWorld()
+  const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0)
+  const up = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 1)
+  const groups = new Map()
+  for (const p of parts) { if (!groups.has(p.tex)) groups.set(p.tex, []); groups.get(p.tex).push(p) }
+  for (const [tex, list] of groups) {
+    const mat = await particleMaterial(tex); if (!mat) continue
+    const pos = [], uv = [], col = [], idx = []
+    for (const p of list) {
+      const n = pos.length / 3, h = p.size
+      const [u, v, su, sv] = p.uv || [0, 0, 1, 1]
+      for (const [a, b, uu, vv] of [[-1, -1, u, v + sv], [1, -1, u + su, v + sv], [1, 1, u + su, v], [-1, 1, u, v]]) {
+        pos.push(p.x + (right.x * a + up.x * b) * h, p.y + (right.y * a + up.y * b) * h, p.z + (right.z * a + up.z * b) * h)
+        uv.push(uu, vv); col.push(...p.color)
+      }
+      idx.push(n, n + 1, n + 2, n, n + 2, n + 3)
+    }
+    const g = new THREE.BufferGeometry()
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+    g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3))
+    g.setIndex(idx)
+    const mesh = new THREE.Mesh(g, mat); mesh.frustumCulled = false; mesh.renderOrder = 2
+    scene.add(mesh); partMeshes.push(mesh)
+  }
+}
+
 window.HB = {
   async init (opts) {
     Object.assign(env, opts || {})
-    const atlas = await loadTexture('/assets/atlas.png')
+    const atlas = await loadAnimatedAtlas()
     opaqueMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, alphaTest: 0.1, fog: true })
     translucentMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, transparent: true, depthWrite: false, fog: true })
     const blocks = env.renderDistance * 16
@@ -164,7 +251,8 @@ window.HB = {
   },
 
   // pos = eye position; yaw/pitch in mineflayer convention; bob = {x,y,roll,pitch} offsets
-  async frame (cam, tick, ents) {
+  async frame (cam, tick, ents, parts) {
+    animate(tick || 0)
     if (entities) await entities.update(ents || [])
     camera.position.set(cam.x, cam.y, cam.z)
     camera.rotation.set(cam.pitch - (cam.bobPitch || 0), cam.yaw, cam.roll || 0)
@@ -175,9 +263,9 @@ window.HB = {
     // Underwater: vanilla swaps to the biome's water fog colour and a short fog distance.
     const blocks = env.renderDistance * 16
     if (cam.sky !== undefined) { sky.material.uniforms.top.value.copy(srgb(cam.sky)); env.fogColor = cam.fog; sky.material.uniforms.horizon.value.copy(srgb(cam.fog)) }
-    if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(srgb(env.fogColor)); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
-    sky.visible = !cam.underwater; clouds.visible = !cam.underwater; sun.visible = !cam.underwater
-    scene.background = cam.underwater ? srgb(0x050533) : srgb(env.fogColor)
+    if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = 0; scene.fog.far = 2 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(srgb(env.fogColor)); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
+    const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under; sun.visible = !under
+    scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : srgb(env.fogColor)
     sky.position.copy(camera.position)
     if (window.DEBUG_MAGENTA) { sky.visible = false; scene.background = new THREE.Color(1, 0, 1) }
     placeSun()
@@ -186,6 +274,7 @@ window.HB = {
     const drift = (tick || 0) * 0.03
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
+    await drawParticles(parts)
     renderer.render(scene, camera)
     return true
   }

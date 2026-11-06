@@ -55,6 +55,7 @@ module.exports = {
       bot.swingArm(); ctx.sound('block.wood.place', 1, 0.8)
       await bot.waitForTicks(4)
       await setJob('librarian'); ctx.sound('entity.villager.work_librarian', 1, 1)
+      ctx.particles('happy', { x: this.x + 0.5, y: this.floor + 2.4, z: this.vz + 0.5 })
       if (!this.hiredOnce) { this.hiredOnce = true; ctx.mark('hired') }
     }
     const breakIt = async () => {
@@ -62,8 +63,9 @@ module.exports = {
       await ctx.easeLookAt(L.offset(0.5, 0.6, 0.5), 200)
       const b = bot.blockAt(L)
       if (b && b.name === 'lectern') { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }
-      ctx.sound('block.wood.break', 1, 0.8)
+      ctx.sound('block.wood.break', 1, 0.8); ctx.particles('block', L, { block: 'lectern' })
       await setJob('none'); ctx.sound('entity.villager.no', 1, 1)
+      ctx.particles('angry', { x: this.x + 0.5, y: this.floor + 2.5, z: this.vz + 0.5 }, { count: 4 })
     }
     await bot.waitForTicks(16)
     for (const pause of [16, 10, 6]) {

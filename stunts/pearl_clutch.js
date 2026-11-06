@@ -125,6 +125,7 @@ module.exports = {
       if (bot.entity.position.distanceTo(this.ledge) < 6 && bot.entity.position.distanceTo(before) > 5) break
     }
     ctx.mark('teleported'); ctx.sound('entity.player.teleport', 1); ctx.sound('entity.player.hurt', 1)
+    ctx.particles('portal', bot.entity.position, { count: 48 })
     await ctx.easeLook(bot.entity.yaw, -0.05, 300)               // look up to the horizon
     await bot.waitForTicks(6)
     // turn around to look back at the tower across the lava

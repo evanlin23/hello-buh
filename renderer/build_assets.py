@@ -42,7 +42,25 @@ def main(ver):
     tex_names = sorted(n for n in names if n.startswith("assets/minecraft/textures/block/") and n.endswith(".png")
                        and n.count("/") == 4)
     textures = {}
+    anims = {}   # animated textures: full strips + timing from .mcmeta (water, lava, kelp, fire...)
     for n in tex_names:
+        meta = n + ".mcmeta"
+        if meta in names:
+            try:
+                a = json.loads(jar.read(meta)).get("animation")
+            except Exception:
+                a = None
+            if a is not None:
+                strip = Image.open(io.BytesIO(jar.read(n))).convert("RGBA")
+                w = strip.width
+                count = strip.height // w
+                frames = []
+                for f in a.get("frames", list(range(count))):
+                    frames.append((f["index"], f.get("time", a.get("frametime", 1))) if isinstance(f, dict) else (f, a.get("frametime", 1)))
+                key = n.rsplit("/", 1)[1][:-4]
+                (out / "env" / "anim").mkdir(parents=True, exist_ok=True)
+                strip.resize((TILE, TILE * count), Image.NEAREST).save(out / "env" / "anim" / f"{key}.png")
+                anims[key] = {"frames": frames, "count": count}
         im = Image.open(io.BytesIO(jar.read(n))).convert("RGBA")
         w = im.width
         if w != TILE:  # a few non-16 textures: scale to the tile
@@ -76,6 +94,9 @@ def main(ver):
         x, y = cx + PAD, cy + PAD
         index[name] = {"u": x / size, "v": y / size, "su": TILE / size, "sv": TILE / size}
     atlas.save(out / "atlas.png")
+    for key in anims:
+        anims[key]["cell"] = [int(index[key]["u"] * size) - PAD, int(index[key]["v"] * size) - PAD]
+    (out / "anims.json").write_text(json.dumps({"cell": CELL, "pad": PAD, "tile": TILE, "anims": anims}))
     (out / "atlas.json").write_text(json.dumps({"size": TILE / size, "textures": index}))
     (out / "blockstates.json").write_text(json.dumps(blockstates))
     (out / "models.json").write_text(json.dumps(models))
@@ -86,8 +107,8 @@ def main(ver):
         p = f"assets/minecraft/textures/{src}"
         if p in names and not (out / "env" / dst).exists():
             (out / "env" / dst).write_bytes(jar.read(p))
-    for n in names:  # entity textures (mobs, villager outfits, ...)
-        if n.startswith("assets/minecraft/textures/entity/") and n.endswith(".png"):
+    for n in names:  # entity + particle textures
+        if (n.startswith("assets/minecraft/textures/entity/") or n.startswith("assets/minecraft/textures/particle/")) and n.endswith(".png"):
             dst = out / "env" / n[len("assets/minecraft/textures/"):]
             dst.parent.mkdir(parents=True, exist_ok=True)
             dst.write_bytes(jar.read(n))

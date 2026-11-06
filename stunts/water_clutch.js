@@ -61,7 +61,7 @@ module.exports = {
         process.nextTick(() => bot.activateItem())
         ctx.log('water placed at height', above.toFixed(2))
       }
-      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed') }
+      if (placed && !splashed && above < 1.0) { splashed = true; ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 30 }) }
       if (placed && (bot.entity.onGround || bot.entity.isInWater)) landed = true
     }
     bot.on('physicsTick', onTick)
@@ -71,7 +71,7 @@ module.exports = {
     const below = bot.blockAt(bot.entity.position.floored())
     if (below && below.name === 'water') {
       await bot.look(bot.entity.yaw, -Math.PI / 2, true); bot.activateItem(); await bot.waitForTicks(4)
-      ctx.sound('item.bucket.fill')
+      ctx.sound('item.bucket.fill'); ctx.particles('splash', { x: bot.entity.position.x, y: this.floor + 1.9, z: bot.entity.position.z }, { count: 8 })
     }
     await bot.waitForTicks(6)
     const dx = this.x + 0.5 - bot.entity.position.x, dz = this.z + 0.5 - bot.entity.position.z

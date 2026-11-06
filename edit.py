@@ -179,7 +179,7 @@ ICONS = HERE / "work" / "assets" / CLIENT_JAR.stem / "icons"
 _font = None
 
 
-def draw_text(img, jar, text, x, y, align_right=False):
+def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 255, 255, 255), center=False):
     """Minecraft's default font (textures/font/ascii.png, 8x8 cells) at GUI scale, white with the
     1px dark-grey shadow the game draws under HUD text."""
     global _font
@@ -195,16 +195,20 @@ def draw_text(img, jar, text, x, y, align_right=False):
             if any(cell.getpixel((xx, yy))[3] > 0 for yy in range(8)):
                 w = xx + 1
         glyphs.append((cell, w if ch != " " else 4))
+    S = scale or GUI
     width = sum(w + 1 for _, w in glyphs) - 1
     if align_right:
-        x -= width * GUI
-    for color, off in (((63, 63, 63, 255), 1), ((255, 255, 255, 255), 0)):
+        x -= width * S
+    if center:
+        x -= width * S // 2
+    shadow = tuple(int(c * 0.25) for c in color[:3]) + (255,)
+    for col, off in ((shadow, 1), (color, 0)):
         cx = x
         for cell, w in glyphs:
-            mask = cell.split()[3].resize((8 * GUI, 8 * GUI), Image.NEAREST)
-            layer = Image.new("RGBA", (8 * GUI, 8 * GUI), color)
-            img.paste(layer, (cx + off * GUI, y + off * GUI), mask)
-            cx += (w + 1) * GUI
+            mask = cell.split()[3].resize((8 * S, 8 * S), Image.NEAREST)
+            layer = Image.new("RGBA", (8 * S, 8 * S), col)
+            img.paste(layer, (cx + off * S, y + off * S), mask)
+            cx += (w + 1) * S
 
 
 def hud_states(timeline, duration):
@@ -263,6 +267,64 @@ def countdown_frames(spec, timeline, start_shift, outdir, jar_path):
     return t0 - start_shift, str(outdir / "cd_%04d.png")
 
 
+def death_screen_png(jar, path):
+    """Vanilla DeathScreen at GUI scale 3, laid out on the 16:9 window the game area crops."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    top, bot = (0x50, 0x00, 0x00, 0x60), (0x80, 0x30, 0x30, 0xA0)
+    grad = Image.new("RGBA", (1, GAME_H))
+    for y in range(GAME_H):
+        f = y / (GAME_H - 1)
+        grad.putpixel((0, y), tuple(int(top[i] + (bot[i] - top[i]) * f) for i in range(4)))
+    img.alpha_composite(grad.resize((W, GAME_H)), (0, BAND))
+    gh = GAME_H // GUI                                     # GUI-space height of the window
+    draw_text(img, jar, "You Died!", W // 2, BAND + 30 * GUI, scale=2 * GUI, center=True)
+    draw_text(img, jar, "Score: ", W // 2 - 4 * GUI, BAND + 85 * GUI, center=True)
+    draw_text(img, jar, "0", W // 2 + 16 * GUI, BAND + 85 * GUI, color=(255, 255, 85, 255))
+    btn = big(sprite(jar, "gui/sprites/widget/button"))
+    for i, label in enumerate(["Respawn", "Title Screen"]):
+        by_ = BAND + (gh // 4 + 72 + 24 * i) * GUI
+        img.alpha_composite(btn, ((W - btn.width) // 2, by_))
+        draw_text(img, jar, label, W // 2, by_ + 6 * GUI, center=True)
+    img.save(path)
+
+
+def fire_frames(jar, t0, t1, outdir):
+    """On-fire screen overlay (ScreenEffectRenderer.renderFire): the animated fire texture over
+    both lower corners at 90% opacity, 20 frames per second from t0 to t1."""
+    with jar.open("assets/minecraft/textures/block/fire_1.png") as f:
+        strip = Image.open(io.BytesIO(f.read())).convert("RGBA")
+    n_frames = strip.height // strip.width
+    size = int(GAME_H * 0.5)
+    for i in range(int((t1 - t0) * 20)):
+        fr = strip.crop((0, (i % n_frames) * strip.width, strip.width, (i % n_frames + 1) * strip.width)).resize((size, size), Image.NEAREST)
+        a = fr.split()[3].point(lambda v: int(v * 0.9))
+        fr.putalpha(a)
+        img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        y = BAND + GAME_H - int(size * 0.62)
+        img.alpha_composite(fr, (-int(size * 0.18), y))
+        img.alpha_composite(fr.transpose(Image.FLIP_LEFT_RIGHT), (W - size + int(size * 0.18), y))
+        # keep inside the game area
+        img.paste((0, 0, 0, 0), (0, BAND + GAME_H, W, H))
+        img.save(outdir / f"fire_{i:04d}.png")
+    return str(outdir / "fire_%04d.png")
+
+
+def timer_frames(t0, t1, start_shift, outdir, hold=1.5):
+    """Speed-run style timer (RedW1ngs): big white numbers counting up from t0, frozen at t1."""
+    font = ImageFont.truetype(FONT, 110)
+    n = int((t1 - t0 + hold) * 20)
+    for i in range(n):
+        el = min(t1 - t0, i / 20)
+        img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        txt = f"{el:.2f}"
+        tw = d.textlength(txt, font=font)
+        color = (255, 255, 255, 255) if i / 20 < t1 - t0 else (80, 255, 80, 255)
+        d.text(((W - tw) / 2, BAND + 40), txt, font=font, fill=color, stroke_width=7, stroke_fill=(0, 0, 0, 255))
+        img.save(outdir / f"timer_{i:04d}.png")
+    return t0 - start_shift, str(outdir / "timer_%04d.png")
+
+
 def probe_duration(args):
     if args.video:
         out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.video], capture_output=True, text=True).stdout
@@ -281,6 +343,9 @@ def main():
     ap.add_argument("--red")
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
+    ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
+    ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
+    ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
     ap.add_argument("--timeline")
     ap.add_argument("--audio")
     ap.add_argument("--song", help="music file to bake in (owner-supplied; keep the Short under 60 s)")
@@ -339,6 +404,32 @@ def main():
             graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[cdv]")
             graph.append(f"[{last}][cdv]overlay=0:0:eof_action=pass[cdo]")
             last, n_in = "cdo", n_in + 1
+    tl_ev = {}
+    if args.timeline:
+        for e in json.loads(pathlib.Path(args.timeline).read_text())["timeline"]:
+            tl_ev.setdefault(e["event"], e["t"] / 1000)
+    if args.on_fire and args.timeline:
+        a_, b_ = args.on_fire.split(":")
+        if a_ in tl_ev and b_ in tl_ev:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                pat = fire_frames(jar, tl_ev[a_], tl_ev[b_] + 0.6, tmp)
+            inputs += ["-framerate", "20", "-i", pat]
+            graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, tl_ev[a_] - args.start):.3f}/TB[firev]")
+            graph.append(f"[{last}][firev]overlay=0:0:eof_action=pass[fireo]")
+            last, n_in = "fireo", n_in + 1
+    if args.timer and args.timer.split(":")[0] in tl_ev and args.timer.split(":")[1] in tl_ev:
+        a_, b_ = args.timer.split(":")
+        off, pat = timer_frames(tl_ev[a_], tl_ev[b_], args.start, tmp)
+        inputs += ["-framerate", "20", "-i", pat]
+        graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[tmv]")
+        graph.append(f"[{last}][tmv]overlay=0:0:eof_action=repeat[tmo]")
+        last, n_in = "tmo", n_in + 1
+    if args.death_screen and args.death_screen in tl_ev:
+        with zipfile.ZipFile(CLIENT_JAR) as jar:
+            death_screen_png(jar, tmp / "death.png")
+        inputs += ["-loop", "1", "-i", str(tmp / "death.png")]
+        graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{tl_ev[args.death_screen] - args.start + 0.6:.3f})'[dso]")
+        last, n_in = "dso", n_in + 1
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     maps = ["-map", "[v]"]
     if args.audio and not args.song:

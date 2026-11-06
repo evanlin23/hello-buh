@@ -9,6 +9,7 @@ const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
 const { lightmap } = require('./renderer/models')
+const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
 const [recPath, outDir, fpsArg, wArg, hArg] = process.argv.slice(2)
@@ -51,7 +52,17 @@ function entitiesAt (t, mesher) {
   return out
 }
 
+// Death: the camera stays where the player died (mineflayer respawns the bot elsewhere) and
+// keels over like the vanilla death animation.
+const deathEv = (rec.timeline || []).find(e => e.event === 'death')
+const DEATH_TICK = deathEv ? deathEv.t / 50 : Infinity
+
 function camAt (t) {
+  if (t >= DEATH_TICK) {
+    const c = camAt(DEATH_TICK - 0.001)
+    const k = Math.min(1, (t - DEATH_TICK) / 20)
+    return { ...c, y: c.y - 1.1 * k, roll: c.roll + 0.75 * k * k, bobX: 0, bobY: 0, bobPitch: 0 }
+  }
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
   const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f
@@ -102,6 +113,25 @@ function camAt (t) {
   await send(mesher.sections(minVisibleY))
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
 
+  // particles from recorded events (block crumbs use the block's particle texture in the atlas)
+  const PARTS = []
+  for (const ev of (rec.timeline || []).filter(e => e.event === 'particles')) {
+    let bt = null
+    if (ev.block) { const st = mesher.blockStates[ev.block]; const v = st && (st.variants ? Object.values(st.variants)[0] : st.multipart && st.multipart[0].apply); const m = Array.isArray(v) ? v[0] : v; bt = m && m.model && m.model.textures && m.model.textures.particle }
+    PARTS.push(...particles.spawn(ev, bt))
+  }
+  const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
+  const partsAt = (t) => {
+    const out = []
+    for (const p of PARTS) {
+      const s = particles.state(p, t, solidAt); if (!s) continue
+      const [sky, blk] = mesher.world.getLight(new Vec3(s.x, s.y, s.z))
+      const l = lightmap(Math.max(sky, blk))
+      out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: p.tex, uv: p.uv, color: p.color.map(c => c * l) })
+    }
+    return out
+  }
+  if (PARTS.length) console.log(`${PARTS.length} particles`)
   fs.mkdirSync(outDir, { recursive: true })
   const ticks = P.length - 1, frames = Math.floor(ticks / 20 * FPS)
   // ONLY=t1,t2,... renders just those ticks (for checking looks quickly)
@@ -128,9 +158,10 @@ function camAt (t) {
     }
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
+    cam.inLava = !!(inBlock && inBlock.name === 'lava')
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
-    await page.evaluate(([c, tick, e]) => window.HB.frame(c, tick, e), [cam, t, entitiesAt(t, mesher)])
+    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, entitiesAt(t, mesher), partsAt(t)])
     // let the compositor present the finished frame before capturing (else: tearing lines)
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })
