@@ -3,7 +3,7 @@
   "caption": "POV: You Throw an Ender Pearl But...",
   "youtube": {
     "title": "POV: You Throw an Ender Pearl But... #minecraft #shorts",
-    "description": "POV: You Throw an Ender Pearl But...\n\nSong: misery. · pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "POV: You Throw an Ender Pearl But...\n\nSong: misery. \u00b7 pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -112,7 +112,7 @@
     "python3 audio.py work/pearl_clutch.rec.json work/pearl_clutch.wav",
     "python3 edit.py --frames work/pearl_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/pearl_clutch.rec.json --audio work/pearl_clutch.wav --caption \"POV: You Throw an Ender Pearl But...\" --red Throw --countdown \"glide_start:elytra_broke:Elytra About To Break:item/elytra\" --start 0.8 --song songs/misery.mp3 --song_drop_at teleported --out out/pearl_clutch.mp4"
   ],
-  "status": "ready",
-  "notes": "",
+  "status": "needs-fix",
+  "notes": "QA: the stunt (breaking elytra -> pearl) does not read; redesign before uploading",
   "published_at": "2026-11-06T08:15:57.010Z"
 }
