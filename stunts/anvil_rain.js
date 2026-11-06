@@ -65,10 +65,11 @@ module.exports = {
     ctx.easeLook(Math.PI + 0.15, 0.4, 700); await step('right', 10)
     ctx.easeLook(Math.PI - 0.5, 0.25, 700); await bot.waitForTicks(4); await step('forward', 6)
     ctx.easeLook(Math.PI - 0.15, 0.3, 600); await step('left', 6)
-    // phew... then the one with its name on it (lower, so the stare up is short), rain still falling
+    // phew... then the one with its name on it (lower, so the stare up is short: 4 damage a block so
+    // ~8 blocks of fall still kills; at 2/block from 9 up it did 16 of 20 HP and the stunt failed 5/5)
     ctx.mark('phew')
     const p = bot.entity.position
-    bot.chat(`/summon falling_block ${p.x.toFixed(2)} ${(this.floor + 9).toFixed(1)} ${p.z.toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,HurtEntities:1b,FallHurtAmount:2f,FallHurtMax:40}`)
+    bot.chat(`/summon falling_block ${p.x.toFixed(2)} ${(this.floor + 10).toFixed(1)} ${p.z.toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,HurtEntities:1b,FallHurtAmount:4f,FallHurtMax:40}`)
     await ctx.easeLook(bot.entity.yaw, 1.2, 350)              // look up: oh no
     for (let i = 0; i < 80 && !ctx.died; i++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', rain)
