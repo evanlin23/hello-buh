@@ -41,9 +41,10 @@ module.exports = {
       for (let k = 0; k < 100 && ctx.deaths === deathsBefore; k++) await bot.waitForTicks(1)
       for (let k = 0; k < 60 && bot.entity.position.y < this.top - 0.5; k++) await bot.waitForTicks(1)
       ctx.revive()
-      await ctx.cmd('/item replace entity @s hotbar.1 with water_bucket')
+      await bot.look(0, -0.7, true)                     // straight back to staring over the edge
+      bot.chat('/item replace entity @s hotbar.1 with water_bucket')
       bot.setQuickBarSlot(1)
-      await bot.waitForTicks(4)
+      await bot.waitForTicks(2)
     }
     return false
   }
