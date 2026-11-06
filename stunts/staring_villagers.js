@@ -33,7 +33,10 @@ module.exports = {
         k++
       }
     }
-    this.cb = { x: x, y: floor - 2, z: z + 14 }
+    // the tracker runs from the start, gated on a tag: a command block placed later takes seconds
+    // to start ticking, a tag applies on the next tick
+    await ctx.cmd(`/tag ${bot.username} remove turn`)
+    await ctx.cmd(`/setblock ${x} ${floor - 2} ${z + 14} repeating_command_block[facing=up]{auto:1b,Command:"execute if entity @a[tag=turn] as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${bot.username} eyes"}`)
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 9.5, 180, -8)
     await ctx.cmd('/gamemode survival')
@@ -51,8 +54,7 @@ module.exports = {
     bot.setControlState('forward', false)
     await bot.waitForTicks(14)
     // they all turn round at once
-    const name = bot.username
-    await ctx.cmd(`/setblock ${this.cb.x} ${this.cb.y} ${this.cb.z} repeating_command_block[facing=up]{auto:1b,Command:"execute as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${name} eyes"}`)
+    await ctx.cmd(`/tag ${bot.username} add turn`)
     // the command block can take a while to start: mark the turn when the heads actually move
     const vills = Object.values(bot.entities).filter(e => e.name === 'villager')
     const yaw0 = vills.map(e => e.yaw)
