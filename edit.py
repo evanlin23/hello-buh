@@ -132,6 +132,35 @@ def caption_png(text, red_word, path, colors=None):
     img.save(path)
 
 
+_GLINT = {}
+# items that always shine (the same list as render.js)
+GLINT_ITEMS = {"enchanted_golden_apple", "experience_bottle", "nether_star", "enchanted_book", "end_crystal", "debug_stick", "written_book"}
+
+
+def glint_icon(jar, icon, tick):
+    """Enchantment glint on a hotbar icon (RenderType.glint, worker 11): enchanted_glint_item.png
+    sampled at the item-atlas uv x 8 (a 16 px sprite on the 512 px atlas: 0.25 of the glint per icon),
+    turned 10 degrees and scrolled by time (ms * glintSpeed 0.5 * 8: x every 110000, y every 30000),
+    added as glint^2 (SRC_COLOR, ONE) where the icon is drawn."""
+    import numpy as np
+    if "tex" not in _GLINT:
+        _GLINT["tex"] = np.asarray(sprite(jar, "misc/enchanted_glint_item").convert("RGB"), dtype=np.float32) / 255
+    tex = _GLINT["tex"]
+    th, tw = tex.shape[:2]
+    a = np.asarray(icon, dtype=np.float32) / 255
+    h, w = a.shape[:2]
+    py, px = np.mgrid[0:h, 0:w].astype(np.float32)
+    u, v = (px + 0.5) / w * 0.25, (py + 0.5) / h * 0.25
+    c, s_ = math.cos(math.pi / 18), math.sin(math.pi / 18)
+    gt = tick * 50 * 4
+    gu = c * u - s_ * v - (gt % 110000) / 110000
+    gv = s_ * u + c * v + (gt % 30000) / 30000
+    g = tex[(np.floor(gv * th).astype(int)) % th, (np.floor(gu * tw).astype(int)) % tw]
+    mask = (a[..., 3:4] > 0.1)
+    a[..., :3] = np.clip(a[..., :3] + g * g * mask, 0, 1)
+    return Image.fromarray((a * 255 + 0.5).astype(np.uint8), "RGBA")
+
+
 def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bar = big(sprite(jar, "gui/sprites/hud/hotbar"))
@@ -150,12 +179,18 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
         name, count, path_ = (it[0], it[1], None) if isinstance(it, (list, tuple)) else (None, 1, it)
         ix, iy = bx + (3 + 20 * i) * GUI, by + 3 * GUI
         icon3d = ICONS / f"{name}.png" if name else None
+        icon = None
         if icon3d and icon3d.exists():            # block items: 3D icon rendered by renderer/icons.js
-            img.alpha_composite(Image.open(icon3d).convert("RGBA").resize((16 * GUI, 16 * GUI), Image.NEAREST), (ix, iy))
+            icon = Image.open(icon3d).convert("RGBA").resize((16 * GUI, 16 * GUI), Image.NEAREST)
         else:
             sp = path_ or item_sprite(name)
             if sp:
-                img.alpha_composite(big(sprite(jar, sp)), (ix, iy))
+                icon = big(sprite(jar, sp))
+        if icon is not None:
+            g = it[2] if isinstance(it, (list, tuple)) and len(it) > 2 else None
+            if isinstance(g, tuple) and g[0] == "glint":   # enchanted stack (hud_ticks puts the tick here)
+                icon = glint_icon(jar, icon, g[1])
+            img.alpha_composite(icon, (ix, iy))
         if count and count > 1:                   # stack count, like GuiGraphics.renderItemDecorations
             draw_text(img, jar, str(count), ix + (19 - 2) * GUI, iy + (6 + 3) * GUI, align_right=True)
     heart_c, heart = big(sprite(jar, "gui/sprites/hud/heart/container")), big(sprite(jar, "gui/sprites/hud/heart/full"))
@@ -312,6 +347,8 @@ def hud_ticks(timeline, duration):
             shake = [0] * 10
             for i in range(9, -1, -1):
                 shake[i] = r.next_int2()
+        # enchanted stacks ([name, count, 1]) carry the tick for the moving glint
+        items = tuple((it[0], it[1], ("glint", tick)) if isinstance(it, tuple) and ((len(it) > 2 and it[2] == 1) or it[0] in GLINT_ITEMS) else it for it in items)
         out.append((slot, tuple(items), health, display, blink, tuple(shake) if shake else None))
     return out
 
