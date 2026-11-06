@@ -53,7 +53,11 @@ module.exports = {
     let placed = false, landed = false, splashed = false
     const onTick = () => {
       const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
-      const inReach = mode === 'late' ? above < 0.3 : above + 1.62 < 4.45
+      const inReach = above + 1.62 < 4.45
+      // too late: any water that lands before the player saves them (the server sees it first), so
+      // a real "too late" never gets the water down - just the swing as the ground arrives
+      if (mode === 'late' && !placed && above < 0.8) { placed = true; bot.swingArm(); ctx.mark('too_late') }
+      if (mode === 'late') return
       if (!placed && mode !== 'skip' && vy < -0.5 && inReach) {
         ctx.select(1)
         bot.entity.pitch = -Math.PI / 2
