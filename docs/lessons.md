@@ -184,3 +184,9 @@ each section.
 - **Brightness is a stunt option:** `brightness: 1` is Options > Brightness: Bright (default 0.5; `BRIGHTNESS=` overrides it). Use it for caves. At the default, an ore-filled cavern lit only by lava read as black walls.
 - **Identical neighbouring frames on water or lava are vanilla.** Fluid textures change every 2 ticks (6 video frames). Don't "fix" them.
 - **Forced facing (face_on) eases in** over 3 ticks for the body and 2 for the head, like Entity.lerpTo. A whole crowd flipping 180° in one frame read as a glitch (found by worker 2 on staring_villagers).
+- **lava_rising redesign (frame review):** the lava popped in over the whole plain 2 s in, the pillaring happened with the camera on the horizon (no block ever seen under the feet), and the lava stopped level with the top block. Now:
+  - the bot starts on a 2-high pillar already in lava;
+  - it pillars looking down the column (pitch -1.3);
+  - the lava rises a layer every 0.7 s and stops one cobblestone face below the top block;
+  - it ends on that downward view, drifting.
+- **General rule: show the mechanic.** If the caption is about a block, the gap or the placement has to be on screen. Pitch the camera at it.
