@@ -6,13 +6,13 @@
 // HelloBuh". Peaceful (no TNT damage to the player) until the finale, normal for it.
 // Owner rules: 30 s minimum from more beats, no dead space, end <= 1 s after the payoff.
 const TIERS = [
-  { n: 1, dx: -92, size: [1, 1, 1], view: 7, label: '1 TNT' },
-  { n: 10, dx: -70, size: [5, 2, 1], view: 11, label: '10 TNT' },
-  { n: 100, dx: -42, size: [5, 4, 5], view: 17, label: '100 TNT' },
-  { n: 1000, dx: 8, size: [10, 10, 10], view: 32, label: '1000 TNT' },
+  { n: 1, dx: -60, size: [1, 1, 1], view: 7, label: '1 TNT' },
+  { n: 10, dx: -45, size: [5, 2, 1], view: 11, label: '10 TNT' },
+  { n: 100, dx: -24, size: [5, 4, 5], view: 17, label: '100 TNT' },
+  { n: 1000, dx: 16, size: [10, 10, 10], view: 32, label: '1000 TNT' },
   { n: 1000, dx: 92, size: [10, 10, 10], on: true, label: "1000 TNT... but I'm ON it" }
 ]
-const XL = -104, XR = 108, ZB = -26, ZF = 40    // the cleared field around the piles (relative)
+const XL = -72, XR = 108, ZB = -26, ZF = 40    // the cleared field around the piles (relative)
 
 const speed = []
 for (let i = 1; i <= TIERS.length; i++) {
@@ -122,6 +122,11 @@ module.exports = {
         ctx.mark(`cut${n}b`)
       }
       ctx.mark(`tier${n}`)
+      if (n === 1) {   // the hook: from the one block... to the 1000 cube down the field, and back
+        const big = this.tiers[3]
+        await ctx.easeLookAt(new Vec3(big.cx + 0.5, floor + 6, big.zf - 4), 650)
+        await ctx.easeLook(bot.entity.yaw + 0.08, bot.entity.pitch + 0.05, 300)
+      }
       // size it up (a big pile gets a look up its height), then light the front block
       if (t.h > 2) { await ctx.easeLook(-0.15, Math.min(1.15, Math.atan2(t.h - 0.6, 2.5)), 450); await ctx.easeLook(0.1, 0.15, 300) } else await ctx.easeLook(0.2, -0.25, 300)
       const target = new Vec3(t.cx, floor + 1, t.zf)
@@ -138,13 +143,20 @@ module.exports = {
       ctx.mark(`fuse${n}b`)
       // nervous glances while it flashes, coming back to the pile
       const before = booms
-      ctx.easeLookAt(mid.offset(-1.5, t.h * 0.2, 0), 400)
-      for (let k = 0; k < 60 && booms === before; k++) await bot.waitForTicks(1)
+      const y0 = bot.entity.yaw, p0 = bot.entity.pitch
+      for (let k = 0; k < 60 && booms === before; k++) {
+        if (k % 8 === 0) ctx.easeLook(y0 + [0.3, -0.25, 0.15, -0.3][(k / 8) % 4], p0 + [0.12, 0.02, 0.18, 0.05][(k / 8) % 4], 380)
+        await bot.waitForTicks(1)
+      }
       ctx.mark(`boom${n}`)
       // watch the chain: the look rises with the blast (flung TNT), the bigger the higher
       const up = Math.min(0.55, 0.12 + t.h * 0.045)
       ctx.easeLook(bot.entity.yaw + 0.15, up, 700)
-      for (let k = 0; k < 160 && ctx.tick - lastBoom < 14; k++) await bot.waitForTicks(1)
+      const cap = [20, 26, 40, 54][i]       // ticks of chain on screen at most (3 s+ read as a gap)
+      for (let k = 0; k < cap && ctx.tick - lastBoom < 14; k++) {
+        if (k === 22) ctx.easeLook(bot.entity.yaw - 0.3, up * 0.6, 600)
+        await bot.waitForTicks(1)
+      }
       if (n === 4) {
         // the big crater: cut to its rim (find where the ground stops along the line in)
         ctx.mark('rim4a')

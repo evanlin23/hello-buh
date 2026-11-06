@@ -22,17 +22,20 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', song: 'songs/payphone.mp3', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'fired_all:1.4',
+    startAt: 'beat:-0.05', endAfter: 'nitwit:1.0',
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
+      ['hire', 'job 3: fisherman', 1.2, 2], ['fire', 'FIRED AGAIN', 1.2, 2],
       ['every', 'fine. EVERY job', 1.6, 0],
-      ['job', 'job 3: fisherman', 1.0, 2], ['job', 'job 4: armorer', 1.0, 3], ['job', 'job 5: butcher', 0.9, 4],
-      ['job', 'jobs 6, 7, 8...', 1.5, 5], ['job', '10 jobs', 1.0, 9], ['job', '13 JOBS', 1.4, 12],
-      ['all_jobs', 'all 13 at once', 2.6, 0],
-      ['tnt', 'one problem...', 1.5, 0],
+      ['job', 'job 4: armorer', 1.1, 3], ['job', 'job 5: butcher', 1.0, 4], ['job', 'job 6: cartographer', 1.0, 5],
+      ['job', 'job 7: cleric', 0.9, 6], ['job', 'jobs 8, 9, 10...', 1.4, 7], ['job', '13 JOBS', 1.4, 12],
+      ['all_jobs', 'all 13 at once', 2.8, 0],
+      ['crowd', 'the rest of the village: 0 jobs', 1.9, 0],
+      ['tnt', 'one problem...', 1.6, 0],
       ['lit', 'he is about to get FIRED', 2.2, 0],
-      ['fired_all', 'fired from 13 jobs at once', 2.0, 0]
+      ['fired_all', 'fired from 13 jobs at once', 1.5, 0],
+      ['nitwit', 'now he is unemployable', 2.0, 0]
     ],
     speed: [['fuse_a', 'fuse_b', 'cut']]
   },
@@ -75,7 +78,7 @@ module.exports = {
     for (const [sx, sz] of this.spots) await ctx.cmd(`/setblock ${sx} ${floor} ${sz} tnt`)
     for (let k = 3; k <= 5; k++) await ctx.cmd(`/setblock ${x} ${floor} ${vz + k} tnt`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 9')
-    await ctx.hotbar([['lectern', 2], ['composter', 2], ['barrel', 1], ['blast_furnace', 1], ['smoker', 1],
+    await ctx.hotbar([['lectern', 2], ['composter', 2], ['barrel', 2], ['blast_furnace', 1], ['smoker', 1],
       ['cartography_table', 1], ['brewing_stand', 1], ['fletching_table', 1], 'diamond_axe'])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
@@ -89,7 +92,7 @@ module.exports = {
     const { bot, Vec3 } = ctx
     const { x, floor, vz } = this
     const sel = `@e[type=villager,limit=1,sort=nearest,x=${x + 0.5},y=${floor + 1},z=${vz + 0.5}]`
-    const setJob = (p) => bot.chat(`/data merge entity ${sel} {VillagerData:{profession:"minecraft:${p}"},Xp:${p === 'none' ? 0 : 1}}`)
+    const setJob = (p) => bot.chat(`/data merge entity ${sel} {VillagerData:{profession:"minecraft:${p}"},Xp:${p === 'none' || p === 'nitwit' ? 0 : 1}}`)
     const head = new Vec3(x + 0.5, floor + 1.7, vz + 0.5)
     const vpos = { x: x + 0.5, y: floor + 2.0, z: vz + 0.5 }
     ctx.mark('face_on', { near: [x + 0.5, vz - 2, 8.5], head: true })
@@ -114,13 +117,14 @@ module.exports = {
     }
     ctx.mark('beat')
     // ---- act 1: hired, fired, hired, fired ----
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
       await place(i, i === 0 ? 120 : 220, this.spots[0])
       ctx.mark('hire', { job: JOBS[i][1] })
-      await ctx.easeLookAt(head, 300); await bot.waitForTicks(i === 0 ? 10 : 6)
+      await ctx.easeLookAt(head, 300); await bot.waitForTicks([12, 8, 4][i])
       await breakAt(this.spots[0], JOBS[i][0])
       ctx.mark('fire')
-      await ctx.easeLookAt(head.offset(i ? -0.3 : 0.3, 0, 0), 300); await bot.waitForTicks(i === 0 ? 8 : 4)
+      ctx.particles('angry', { x: x + 0.5, y: floor + 2.5, z: vz + 0.5 }, { count: 3 + i * 2 })
+      await ctx.easeLookAt(head.offset([0.3, -0.3, 0][i], i === 2 ? 0.25 : 0, 0), 300); await bot.waitForTicks([10, 6, 8][i])
     }
     // ---- act 2: every job, faster and faster ----
     ctx.mark('every')
@@ -131,28 +135,33 @@ module.exports = {
         for (let k = 8; k < 13; k++) bot.chat(`/item replace entity @s hotbar.${k - 8} with ${JOBS[k][0]} 1`)
         await bot.waitForTicks(2)
       }
-      await place(i, i < 5 ? 260 : Math.max(80, 220 - (i - 5) * 20))
+      await place(i, i < 7 ? 260 : Math.max(90, 240 - (i - 7) * 30))
       ctx.mark('job', { n: i, job: JOBS[i][1] })
-      if (i >= 2 && i < 5) { await ctx.easeLookAt(head, 220); await bot.waitForTicks(3) }
+      if (i >= 3 && i < 7) { await ctx.easeLookAt(head, 250); await bot.waitForTicks(8 - i) }
       if (i === 12) await bot.waitForTicks(4)
     }
     // all 13 at once: the outfit cycles faster and faster
     await ctx.easeLookAt(head.offset(0, -0.2, 0), 250)
     ctx.mark('all_jobs')
     let gap = 5
-    for (let k = 0; k < 34; k++) {
+    for (let k = 0; k < 40; k++) {
       setJob(JOBS[k % 13][1])
       if (k % 2 === 0) ctx.particles('happy', vpos, { count: 3 })
-      if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 34)
+      if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 40)
       await bot.waitForTicks(Math.max(1, Math.round(gap)))
       gap *= 0.9
       if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.35 : -0.35), -0.2, 0), 200)
     }
     setJob('mason')
+    // meanwhile, the crowd behind him: still unemployed, all staring
+    await ctx.easeLookAt(new Vec3(x - 3, floor + 1.7, vz - 5), 400)
+    ctx.mark('crowd')
+    await ctx.easeLookAt(new Vec3(x + 4, floor + 1.7, vz - 5), 1100)
     // ---- act 3: the TNT under the job sites ----
-    await ctx.easeLookAt(new Vec3(x - 1.5, floor + 0.9, vz + 2.5), 350)    // down at the base of the front row
+    await ctx.easeLookAt(new Vec3(x - 1.5, floor + 0.9, vz + 2.5), 400)    // down at the base of the front row
     ctx.mark('tnt')
-    await ctx.easeLookAt(new Vec3(x + 0.5, floor + 0.9, vz + 4.5), 350)    // ...and the fuse line
+    await ctx.easeLookAt(new Vec3(x + 1.5, floor + 0.9, vz + 2.5), 500)
+    await ctx.easeLookAt(new Vec3(x + 0.5, floor + 0.9, vz + 4.5), 400)    // ...and the fuse line
     bot.chat('/item replace entity @s hotbar.5 with flint_and_steel 1')
     await bot.waitForTicks(2)
     ctx.select(5); await bot.waitForTicks(6)
@@ -185,8 +194,14 @@ module.exports = {
     ctx.mark('fired_all')
     const v = Object.values(bot.entities).find(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 3 && Math.abs(e.position.z - (vz + 0.5)) < 3)
     await ctx.easeLookAt(v ? v.position.offset(0, 1.5, 0) : head.offset(0, -1.5, 0), 400)
-    ctx.easeLookAt(v ? v.position.offset(0.5, 1.3, 0) : head.offset(0.5, -1.5, 0), 1000)
-    await bot.waitForTicks(30)
+    ctx.easeLookAt(v ? v.position.offset(0.4, 1.4, 0) : head.offset(0.4, -1.5, 0), 900)
+    await bot.waitForTicks(22)
+    // ...and he gives up on work for good: nitwit
+    setJob('nitwit'); ctx.sound('entity.villager.no', 1, 0.7)
+    ctx.particles('angry', { x: v ? v.position.x : x + 0.5, y: (v ? v.position.y : floor) + 2.3, z: v ? v.position.z : vz + 0.5 }, { count: 4 })
+    ctx.mark('nitwit')
+    ctx.easeLookAt(v ? v.position.offset(-0.3, 1.5, 0) : head, 900)
+    await bot.waitForTicks(24)
     return booms >= 4 && !ctx.died && !!v
   }
 }
