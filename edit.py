@@ -570,9 +570,10 @@ def apply_speed(args):
         args.audio = str(wd / "audio.wav")
 
 
-def subtitle_png(text, path):
+def subtitle_png(text, path, yfrac=0.42):
     """Green glowing in-world subtitle (like HelloBuh's re:zero Short): light green text with a
-    soft green glow, centred in the game area, wrapped to 2 lines if long."""
+    soft green glow, centred in the game area, wrapped to 2 lines if long. yfrac: vertical centre
+    as a fraction of the game height (0.76 = below the death screen's buttons)."""
     from PIL import ImageFilter
     font = ImageFont.truetype(FONT.replace("ExtraBold", "Medium") if pathlib.Path(FONT.replace("ExtraBold", "Medium")).exists() else FONT, 76)
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
@@ -585,7 +586,7 @@ def subtitle_png(text, path):
         else:
             cur = t
     lines.append(cur)
-    y = BAND + int(GAME_H * 0.42) - len(lines) * 36
+    y = BAND + int(GAME_H * yfrac) - len(lines) * 36
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0)); gd = ImageDraw.Draw(glow)
     for i, ln in enumerate(lines):
         tw = d.textlength(ln, font=font)
@@ -750,6 +751,7 @@ def main():
             graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[clv]")
             graph.append(f"[{last}][clv]overlay=0:0:eof_action=repeat[clo]")
             last, n_in = "clo", n_in + 1
+    deferred_subs = []
     if args.subs and args.timeline:
         all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
         sub_starts = []
@@ -769,6 +771,13 @@ def main():
             starts = sorted(x for x in sub_starts if x > t0 + 1e-3)
             if starts:                       # never overlap the next line (they doubled up)
                 dur_s = min(dur_s, starts[0] - t0 - 0.05)
+            # a line shown during a death screen goes below its buttons, drawn over the screen (it sat on
+            # "Respawn" at 42% of the game height: worker 7, die_rating)
+            dws = [(a - args.start, b - args.start) for a, b in death_windows(all_ev)] if args.death_screen else []
+            if any(a < t0 + dur_s and t0 < b for a, b in dws):
+                subtitle_png(text, tmp / f"sub{k}.png", yfrac=0.76)
+                deferred_subs.append((k, t0, dur_s))
+                continue
             subtitle_png(text, tmp / f"sub{k}.png")
             inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
             graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sb{k}]")
@@ -806,6 +815,10 @@ def main():
             graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[fxv]")
             graph.append(f"[{last}][fxv]overlay=0:0:eof_action=repeat[fxo]")
             last, n_in = "fxo", n_in + 1
+    for k, t0, dur_s in deferred_subs:   # subtitles over a death screen: above it, below its buttons
+        inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
+        graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sbd{k}]")
+        last, n_in = f"sbd{k}", n_in + 1
     if args.story and args.timeline:   # narrated story: big word-chunk captions over the game (and the death screen)
         sys.path.insert(0, str(HERE / "scripts"))
         import story_track
