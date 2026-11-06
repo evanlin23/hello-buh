@@ -13,12 +13,14 @@ const CRUST = 5      // layers kept under the surface (floor-4..floor): thinner,
 const TOP = 14       // and this much above (trees)
 
 const SUBS = [
-  ['gone', '1 block = 1 chunk', 2.2, 0],
-  ['gone', '10 chunks', 2.2, 1],
-  ['gone', '50 chunks', 2.2, 2],
-  ['gone', '100 chunks', 2.2, 3],
-  ['gone', 'the whole world', 3.2, 4],
-  ['gone', 'my own chunk', 2.2, 5],
+  ['gone', '1 block = 1 chunk', 1.9, 0],
+  ['gone', '4 chunks', 1.9, 1],
+  ['gone', '10 chunks', 1.9, 2],
+  ['gone', '24 chunks', 1.9, 3],
+  ['gone', '50 chunks', 2.2, 4],
+  ['gone', '100 chunks', 2.2, 5],
+  ['gone', 'the whole world', 3.2, 6],
+  ['gone', 'my own chunk', 2.2, 7],
   ['last', 'skyblock', 1.6, 0],
   ['final', 'the last block', 9, 0]
 ]
@@ -30,8 +32,8 @@ module.exports = {
   caption: 'every block I mine deletes the world 💀',
   edit: {
     caption: 'every block I mine deletes the world 💀', red: 'world', song: 'songs/funk_abnormal.mp3', dropAt: 'gone',
-    startAt: 'beat:-0.05', endAfter: 'death:1.5', subs: SUBS, deathScreen: true,
-    speed: [['cut_a', 'cut_b', 'cut']]     // the empty fall through the void: the middle is cut (identical sky)
+    startAt: 'beat:-0.05', endAfter: 'death:1.0', subs: SUBS, deathScreen: true,
+    speed: [['cut_a', 'death', 'cut']]     // the empty fall through the void, cut to the death (the void kills slowly)
   },
 
   async setup (ctx) {
@@ -241,29 +243,36 @@ module.exports = {
     // 1. north: one chunk
     let list = await beat(0, X0, Z0 - 2, [[cx, cz - 1]], [], 250)
     await glide(N + 0.15, -1.0, 600)            // down into the hole: the void
-    await glide(N - 0.2, -0.6, 600)
-    // 2. west: ten chunks
-    list = await beat(1, X0 - 2, Z0, chunksIn(cx - 2, cx - 1, cz - 2, cz + 2), [], 450)
-    await glide(W + 0.4, -0.3, 650)            // sweep along the cut edge
-    await glide(W - 0.3, -0.22, 700)
-    // 3. east: a 3-chunk band, north to south
-    list = await beat(2, X0 + 4, Z0, chunksIn(cx + 1, cx + 3, cz - R, cz + R), [], 550)
+    await glide(N - 0.2, -0.6, 500)
+    // 2. west: the 4 chunks beside it
+    list = await beat(1, X0 - 2, Z0, chunksIn(cx - 1, cx - 1, cz - 2, cz + 1), [], 450)
+    await glide(W + 0.35, -0.45, 600)
+    // 3. further west: 10 chunks (an edge block of my own chunk, facing west)
+    list = await beat(2, X0 - 1, Z0 + 3, chunksIn(cx - 3, cx - 2, cz - 2, cz + 2), [], 450)
+    await glide(W + 0.4, -0.25, 600)            // sweep along the cut edge
+    await glide(W - 0.3, -0.2, 600)
+    // 4. north: 24 chunks out to the horizon
+    list = await beat(3, X0 + 2, Z0 - 1, chunksIn(cx - 3, cx, cz - R, cz - 3), [], 500)
+    await glide(N + 0.2, -0.12, 550)
+    await settle(list)
+    // 5. east: a 3-chunk band, north to south (51)
+    list = await beat(4, X0 + 4, Z0, chunksIn(cx + 1, cx + 3, cz - R, cz + R), [], 550)
     await glide(E + 0.4, -0.12, 600)
     await settle(list)
-    await glide(E - 0.4, -0.15, 800)
-    // 4. south: everything south of my chunk row, then up to the empty horizon
-    list = await beat(3, X0, Z0 + 4, chunksIn(cx - R, cx + R, cz + 1, cz + R), [], 600)
+    await glide(E - 0.4, -0.15, 700)
+    // 6. south: everything south of my chunk row (~100), then up to the empty horizon
+    list = await beat(5, X0, Z0 + 4, chunksIn(cx - R, cx + R, cz + 1, cz + R), [], 600)
     await glide(S - 0.3, -0.12, 550)
     await settle(list)
-    await glide(S + 0.35, -0.2, 800)
-    // 5. the whole world but my chunk (watching the far east go); then all the way round
-    list = await beat(4, X0 + 4, Z0 + 3, chunksIn(cx - R, cx + R, cz - R, cz + R), [], 550)
+    await glide(S + 0.35, -0.2, 700)
+    // 7. the whole world but my chunk (watching the far east go); then all the way round
+    list = await beat(6, X0 + 4, Z0 + 3, chunksIn(cx - R, cx + R, cz - R, cz + R), [], 550)
     await glide(E + 0.5, -0.1, 500)
     await settle(list)
     await glide(bot.entity.yaw + 2 * Math.PI, -0.35, 2400, { abs: true })
     // 5. my own chunk, down to 3x3
     const x1 = cx * 16, z1 = cz * 16
-    await beat(5, X0 + 3, Z0 + 2, [], [`/fill ${X0 + 2} ${yLo} ${z1} ${x1 + 15} ${yHi} ${z1 + 15} air`, `/fill ${x1} ${yLo} ${Z0 + 2} ${X0 + 1} ${yHi} ${z1 + 15} air`], 450)
+    await beat(7, X0 + 3, Z0 + 2, [], [`/fill ${X0 + 2} ${yLo} ${z1} ${x1 + 15} ${yHi} ${z1 + 15} air`, `/fill ${x1} ${yLo} ${Z0 + 2} ${X0 + 1} ${yHi} ${z1 + 15} air`], 450)
     for (let t = 0; t < 40; t++) { const b = bot.blockAt(new Vec3(X0 + 8, floor, Z0 + 8)); if (!b || b.name === 'air') break; await bot.waitForTicks(1) }
     await glide(bot.entity.yaw + 0.8, -0.6, 500)     // the edge, the void past it
     await glide(bot.entity.yaw + 1.2, -0.7, 550)
@@ -273,7 +282,7 @@ module.exports = {
       const [dx, dz] = ring[j]
       const extra = [`/fill ${X0 + dx} ${yLo} ${Z0 + dz} ${X0 + dx} ${floor - 1} ${Z0 + dz} air`]
       if (j === ring.length - 1) extra.push(`/fill ${X0} ${yLo} ${Z0} ${X0} ${floor - 1} ${Z0} air`)
-      await beat(6 + j, X0 + dx, Z0 + dz, [], extra, j === 0 ? 350 : 300)
+      await beat(8 + j, X0 + dx, Z0 + dz, [], extra, j === 0 ? 400 : 420)
       if (j === ring.length - 1) ctx.mark('last')
     }
     // skyblock: look down at the one block left, then out over the void
@@ -284,7 +293,7 @@ module.exports = {
     ctx.log('blocks left around the bot:', left)
     // 7. ...and the last block, the one I'm standing on
     ctx.mark('final')
-    await beat(14, X0, Z0, [], [], 450)
+    await beat(16, X0, Z0, [], [], 450)
     ctx.mark('fall')
     glide(bot.entity.yaw + 0.8, 1.2, 1400, { noWait: true })   // looking up as I drop: nothing up there either
     for (let t = 0; t < 22; t++) await bot.waitForTicks(1)
