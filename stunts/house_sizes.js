@@ -141,7 +141,7 @@ module.exports = {
       tgt = { x: o.x + B.w / 2, z: z + 0.5 }              // walk over in front of this plot while building
       await glide(center(B), bi === 0 ? 2 : 4)
       const todo = B.blocks.map(([bx, by, bz, name]) => ({ x: o.x + bx, y: o.y + by, z: o.z + bz, name }))
-        .sort((a, b) => a.y - b.y || b.z - a.z || a.x - b.x)
+        .sort((a, b) => a.y - b.y || a.name.localeCompare(b.name) || b.z - a.z || a.x - b.x)   // a material at a time per layer (fewer slot switches)
       const slot = { ...B.slot }
       const used = {}
       ctx.mark('build_start', { build: B.name, blocks: todo.length })

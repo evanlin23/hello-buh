@@ -1,0 +1,621 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "Every time I respawn, one villager in my village disappears.",
+   "dur": 3.034,
+   "onset": 0.172,
+   "end": 2.845,
+   "chunks": [
+    [
+     0.172,
+     0.543
+    ],
+    [
+     0.543,
+     1.172
+    ],
+    [
+     1.267,
+     1.698
+    ],
+    [
+     1.698,
+     2.121
+    ],
+    [
+     2.121,
+     2.845
+    ]
+   ],
+   "captions": [
+    "Every time",
+    "I RESPAWN,",
+    "one villager",
+    "in my village",
+    "DISAPPEARS."
+   ]
+  },
+  "L02": {
+   "text": "First, I fell off a cliff.",
+   "dur": 1.517,
+   "onset": 0.172,
+   "end": 1.328,
+   "chunks": [
+    [
+     0.172,
+     0.379
+    ],
+    [
+     0.405,
+     0.655
+    ],
+    [
+     0.655,
+     1.328
+    ]
+   ],
+   "captions": [
+    "First,",
+    "I fell",
+    "off a CLIFF."
+   ]
+  },
+  "L03": {
+   "text": "Respawn. The fisherman was gone. His boat just floating there.",
+   "dur": 2.81,
+   "onset": 0.172,
+   "end": 2.621,
+   "chunks": [
+    [
+     0.172,
+     0.517
+    ],
+    [
+     0.543,
+     0.888
+    ],
+    [
+     0.888,
+     1.379
+    ],
+    [
+     1.448,
+     1.759
+    ],
+    [
+     1.759,
+     2.155
+    ],
+    [
+     2.155,
+     2.621
+    ]
+   ],
+   "captions": [
+    "Respawn.",
+    "The FISHERMAN",
+    "was gone.",
+    "His boat",
+    "just FLOATING",
+    "there."
+   ]
+  },
+  "L04": {
+   "text": "Then lava. Respawn. The butcher's door was wide open.",
+   "dur": 2.845,
+   "onset": 0.172,
+   "end": 2.638,
+   "chunks": [
+    [
+     0.172,
+     0.603
+    ],
+    [
+     0.638,
+     1.121
+    ],
+    [
+     1.207,
+     1.552
+    ],
+    [
+     1.552,
+     1.871
+    ],
+    [
+     1.871,
+     2.638
+    ]
+   ],
+   "captions": [
+    "Then LAVA.",
+    "Respawn.",
+    "The BUTCHER'S",
+    "door was",
+    "wide OPEN."
+   ]
+  },
+  "L05": {
+   "text": "A cactus took the fletcher.",
+   "dur": 1.534,
+   "onset": 0.172,
+   "end": 1.345,
+   "chunks": [
+    [
+     0.172,
+     0.586
+    ],
+    [
+     0.586,
+     0.776
+    ],
+    [
+     0.776,
+     1.345
+    ]
+   ],
+   "captions": [
+    "A CACTUS",
+    "took the",
+    "FLETCHER."
+   ]
+  },
+  "L06": {
+   "text": "So I stopped dying. I moved into a house made of hay.",
+   "dur": 2.586,
+   "onset": 0.172,
+   "end": 2.379,
+   "chunks": [
+    [
+     0.172,
+     0.328
+    ],
+    [
+     0.328,
+     0.948
+    ],
+    [
+     1.017,
+     1.284
+    ],
+    [
+     1.284,
+     1.483
+    ],
+    [
+     1.483,
+     1.836
+    ],
+    [
+     1.836,
+     2.379
+    ]
+   ],
+   "captions": [
+    "So I",
+    "stopped DYING.",
+    "I moved",
+    "into a",
+    "house made",
+    "of HAY."
+   ]
+  },
+  "L07": {
+   "text": "The librarian raised me. She kept giving me bread. One more, just in case.",
+   "dur": 3.31,
+   "onset": 0.172,
+   "end": 3.103,
+   "chunks": [
+    [
+     0.172,
+     0.621
+    ],
+    [
+     0.621,
+     0.983
+    ],
+    [
+     1.034,
+     1.241
+    ],
+    [
+     1.241,
+     1.5
+    ],
+    [
+     1.5,
+     1.845
+    ],
+    [
+     1.94,
+     2.293
+    ],
+    [
+     2.328,
+     3.103
+    ]
+   ],
+   "captions": [
+    "The LIBRARIAN",
+    "raised me.",
+    "She kept",
+    "giving me",
+    "BREAD.",
+    "One more,",
+    "just in CASE."
+   ]
+  },
+  "L08": {
+   "text": "And the iron golem always stood exactly where I respawn.",
+   "dur": 2.724,
+   "onset": 0.155,
+   "end": 2.534,
+   "chunks": [
+    [
+     0.155,
+     0.319
+    ],
+    [
+     0.319,
+     0.888
+    ],
+    [
+     0.888,
+     1.284
+    ],
+    [
+     1.284,
+     1.767
+    ],
+    [
+     1.767,
+     2.534
+    ]
+   ],
+   "captions": [
+    "And the",
+    "IRON GOLEM",
+    "always stood",
+    "EXACTLY where",
+    "I respawn."
+   ]
+  },
+  "L09": {
+   "text": "Then I tripped.",
+   "dur": 1.103,
+   "onset": 0.172,
+   "end": 0.914,
+   "chunks": [
+    [
+     0.172,
+     0.422
+    ],
+    [
+     0.422,
+     0.914
+    ]
+   ],
+   "captions": [
+    "Then I",
+    "TRIPPED."
+   ]
+  },
+  "L10": {
+   "text": "Into the only block of lava in the whole village.",
+   "dur": 2.276,
+   "onset": 0.172,
+   "end": 2.069,
+   "chunks": [
+    [
+     0.172,
+     0.414
+    ],
+    [
+     0.414,
+     0.819
+    ],
+    [
+     0.819,
+     1.216
+    ],
+    [
+     1.216,
+     1.345
+    ],
+    [
+     1.345,
+     2.069
+    ]
+   ],
+   "captions": [
+    "Into the",
+    "ONLY block",
+    "of lava",
+    "in the",
+    "whole VILLAGE."
+   ]
+  },
+  "L11": {
+   "text": "This time I was fast. I saw the nitwit walk up to my spawn point.",
+   "dur": 3.052,
+   "onset": 0.172,
+   "end": 2.862,
+   "chunks": [
+    [
+     0.172,
+     0.457
+    ],
+    [
+     0.457,
+     0.621
+    ],
+    [
+     0.621,
+     1.034
+    ],
+    [
+     1.121,
+     1.371
+    ],
+    [
+     1.371,
+     1.638
+    ],
+    [
+     1.638,
+     1.897
+    ],
+    [
+     1.897,
+     2.069
+    ],
+    [
+     2.069,
+     2.862
+    ]
+   ],
+   "captions": [
+    "This time",
+    "I was",
+    "FAST.",
+    "I saw",
+    "the NITWIT",
+    "walk up",
+    "to my",
+    "spawn point."
+   ]
+  },
+  "L12": {
+   "text": "He wasn't taken. He volunteered.",
+   "dur": 1.845,
+   "onset": 0.172,
+   "end": 1.638,
+   "chunks": [
+    [
+     0.172,
+     0.431
+    ],
+    [
+     0.431,
+     0.741
+    ],
+    [
+     0.776,
+     1.638
+    ]
+   ],
+   "captions": [
+    "He wasn't",
+    "TAKEN.",
+    "He VOLUNTEERED."
+   ]
+  },
+  "L13": {
+   "text": "Every respawn costs one life. They've been paying for mine since I was born.",
+   "dur": 3.5,
+   "onset": 0.172,
+   "end": 3.293,
+   "chunks": [
+    [
+     0.172,
+     0.707
+    ],
+    [
+     0.707,
+     1.121
+    ],
+    [
+     1.121,
+     1.517
+    ],
+    [
+     1.586,
+     1.828
+    ],
+    [
+     1.828,
+     2.069
+    ],
+    [
+     2.069,
+     2.397
+    ],
+    [
+     2.397,
+     2.612
+    ],
+    [
+     2.612,
+     3.293
+    ]
+   ],
+   "captions": [
+    "Every respawn",
+    "costs ONE",
+    "life.",
+    "They've been",
+    "PAYING",
+    "for mine",
+    "since I",
+    "was BORN."
+   ]
+  },
+  "L14": {
+   "text": "The golem wasn't guarding me. He was keeping the line.",
+   "dur": 2.466,
+   "onset": 0.172,
+   "end": 2.276,
+   "chunks": [
+    [
+     0.172,
+     0.534
+    ],
+    [
+     0.534,
+     0.724
+    ],
+    [
+     0.724,
+     1.19
+    ],
+    [
+     1.259,
+     1.431
+    ],
+    [
+     1.431,
+     1.707
+    ],
+    [
+     1.707,
+     2.276
+    ]
+   ],
+   "captions": [
+    "The golem",
+    "wasn't",
+    "guarding ME.",
+    "He was",
+    "keeping the",
+    "LINE."
+   ]
+  },
+  "L15": {
+   "text": "Now it's just her.",
+   "dur": 1.259,
+   "onset": 0.19,
+   "end": 1.052,
+   "chunks": [
+    [
+     0.19,
+     0.466
+    ],
+    [
+     0.466,
+     1.052
+    ]
+   ],
+   "captions": [
+    "Now it's",
+    "just HER."
+   ]
+  },
+  "L16": {
+   "text": "She's already standing on my spawn.",
+   "dur": 1.759,
+   "onset": 0.172,
+   "end": 1.569,
+   "chunks": [
+    [
+     0.172,
+     0.534
+    ],
+    [
+     0.534,
+     0.802
+    ],
+    [
+     0.802,
+     0.991
+    ],
+    [
+     0.991,
+     1.569
+    ]
+   ],
+   "captions": [
+    "She's already",
+    "standing",
+    "on my",
+    "SPAWN."
+   ]
+  },
+  "L17": {
+   "text": "And today, I tripped again.",
+   "dur": 1.569,
+   "onset": 0.155,
+   "end": 1.379,
+   "chunks": [
+    [
+     0.155,
+     0.534
+    ],
+    [
+     0.569,
+     0.862
+    ],
+    [
+     0.862,
+     1.379
+    ]
+   ],
+   "captions": [
+    "And today,",
+    "I tripped",
+    "AGAIN."
+   ]
+  },
+  "L18": {
+   "text": "And she just smiled and said, go on. respawn.",
+   "dur": 2.397,
+   "onset": 0.155,
+   "end": 2.19,
+   "chunks": [
+    [
+     0.155,
+     0.328
+    ],
+    [
+     0.328,
+     0.733
+    ],
+    [
+     0.733,
+     0.966
+    ],
+    [
+     1.0,
+     1.414
+    ],
+    [
+     1.509,
+     2.19
+    ]
+   ],
+   "captions": [
+    "And she",
+    "just SMILED",
+    "and said,",
+    "go on.",
+    "RESPAWN."
+   ]
+  }
+ },
+ "total": 43.39
+}
