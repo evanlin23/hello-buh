@@ -915,7 +915,13 @@ def main():
     if args.replay and frames_dir0:   # instant replay from the third-person pass (scripts/render_replay.py)
         rdir = frames_dir0.with_suffix(".replay")
         if (rdir / "replay.json").exists():
-            dur += retention.replay_append(args.out, rdir, tmp / "caption.png", args.audio0, args.out_fps)
+            ra, rb = json.loads((rdir / "replay.json").read_text())["src"]
+            if audio_ss == 0.0 and args.audio:   # the premixed game+sfx track is in Short time: map the window
+                wo = args.warp.out if args.warp else (lambda x: x)
+                dur += retention.replay_append(args.out, rdir, tmp / "caption.png", args.audio, args.out_fps,
+                                               (max(0.0, wo(ra) - args.start), wo(rb) - args.start))
+            else:
+                dur += retention.replay_append(args.out, rdir, tmp / "caption.png", args.audio0, args.out_fps)
         else:
             print(f"replay: {rdir} not rendered (python3 scripts/render_replay.py <name>), skipped")
     if args.hook and args.timeline:   # finale preview in front of beat 1 (after mastering: it reuses the final mix)

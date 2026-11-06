@@ -25,9 +25,27 @@ module.exports = {
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
     song: 'songs/misery.mp3', dropAt: 'splash5',
-    startAt: 'look1:-0.2', endAfter: 'splash5:0.9',
+    startAt: 'drop1:-1.0', endAfter: 'splash5:0.9',
     subs,
-    speed: TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut'])
+    speed: TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
+    // retention toolkit (scripts/retention.py, scripts/sfx.py; worker 10)
+    hook: { at: 'splash5', before: 0.7, after: -0.2, text: 'wait for the last one 😳' },   // a flash of the finale before tier 1
+    counter: { at: TIERS.map((_, i) => `look${i + 1}`), total: TIERS.length },
+    fallen: TIERS.map((_, i) => [`drop${i + 1}`, `splash${i + 1}`]),         // live blocks-fallen count on every drop
+    punch: TIERS.map((_, i) => `splash${i + 1}`),
+    shake: ['splash5'], flash: [['splash5', 0, 0.5]],
+    slowmo: [['splash5', 0.25, 0.25]],                                       // 0.5 s of the 1x1 entry over 1 s
+    cards: [['splash1', 'EASY', 0.8, 'green'], ['splash2', 'CLEAN', 0.8, 'green'], ['splash3', 'TIGHT 😬', 0.8, 'yellow'],
+      ['splash4', 'INSANE', 0.8, 'orange'], ['splash5', '1 IN A MILLION', 1.2, 'red', 0, 'stamp']],
+    replay: { at: 'splash5', before: 0.8, after: 0.45, cam: 'back:6', speed: 0.6 },   // third-person, after the payoff
+    loop: true,
+    sfx: [
+      ...TIERS.slice(1).map((_, i) => ['whoosh', `cut${i + 1}b`]),
+      ...TIERS.map((_, i) => ['wind', `drop${i + 1}`, `splash${i + 1}`]),
+      ['riser', 'drop5', 'splash5'],
+      ...TIERS.slice(0, 4).map((_, i) => ['impact', `splash${i + 1}`, { gain: 0.5 + 0.1 * i }]),
+      ['boom', 'splash5'], ['dip', 'splash5', 0.3], ['pops']
+    ]
   },
 
   async setup (ctx) {

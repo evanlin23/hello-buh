@@ -225,7 +225,7 @@ def fallen_fn(args):
             continue
         t0, t1 = ta[0] - args.start, tb[0] - args.start
         y0 = y_at(warp.src(ta[0]) if warp else ta[0])
-        fn = (lambda t, y0=y0: max(0, int(round(y0 - y_at(warp.src(t + args.start) if warp else t + args.start)))))
+        fn = (lambda t, y0=y0: max(0, int(math.floor(y0 - y_at(warp.src(t + args.start) if warp else t + args.start)))))
         res.append((t0, t1, sp[2] if len(sp) > 2 else "blocks", fn))
     return res
 
@@ -365,9 +365,14 @@ def hook_prepend(out, spec, t_video, fps=60):
     has_audio = bool(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", out],
                                     capture_output=True, text=True).stdout.strip())
     # the hook clip: a slow push-in on the game view (crop from 1.0 to 1.06), the text popping in
+    # the counters live in the top ~140 px of the game view: crop below them (same aspect), then push
+    # in 1.0 -> 1.06, so the flash reads as the finale alone, not "5/5" before "1/5" (retention audit)
+    top = 190
+    cw = int(W * (GAME_H - top) / GAME_H) // 2 * 2
     zoom = f"1+0.06*t/{d:.3f}"
     g = [f"[0:v]trim={a:.4f}:{b:.4f},setpts=PTS-STARTPTS,split[hk][hb]",
-         f"[hk]crop=w={W}:h={GAME_H}:x=0:y={BAND},scale=w='trunc({W}*({zoom})/2+1)*2':h='trunc({GAME_H}*({zoom})/2+1)*2':eval=frame,"
+         f"[hk]crop=w={cw}:h={GAME_H - top}:x={(W - cw) // 2}:y={BAND + top},scale={W}:{GAME_H},"
+         f"scale=w='trunc({W}*({zoom})/2+1)*2':h='trunc({GAME_H}*({zoom})/2+1)*2':eval=frame,"
          f"crop={W}:{GAME_H},format=rgba[hz]",
          f"[hb][hz]overlay=0:{BAND}[hc]",
          f"[2:v]format=rgba[tx]",
@@ -389,7 +394,7 @@ def hook_prepend(out, spec, t_video, fps=60):
 
 
 # ---------------------------------------------------------------- instant replay
-def replay_append(out, replay_dir, caption_png, audio, fps=60):
+def replay_append(out, replay_dir, caption_png, audio, fps=60, audio_window=None):
     """Append the third-person instant replay (scripts/render_replay.py) after the Short: the replay
     frames in the game view under the caption, a "REPLAY" tag, a white flash on the cut, the game
     audio of the window slowed to match. Rewrites `out` in place; returns the seconds added."""
@@ -413,13 +418,14 @@ def replay_append(out, replay_dir, caption_png, audio, fps=60):
     from timewarp import atempo
     g = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase,crop={W}:{GAME_H},pad={W}:{H}:0:{BAND}:black,"
          f"fade=t=in:st=0:d=0.12:color=white,format=rgba[r0]",
-         "[r0][1:v]overlay=0:0[r1]", "[r1][2:v]overlay=0:0,setsar=1,format=yuv420p[rv]",
+         "[r0][1:v]overlay=0:0[r1]", f"[r1][2:v]overlay=0:0:enable='lt(t,{max(0.0, d - 0.35):.3f})',setsar=1,format=yuv420p[rv]",   # the tag goes before the loop dissolve
          "[3:v]setsar=1,format=yuv420p[mv]",
          "[3:a]aresample=48000,aformat=channel_layouts=stereo[ma]"]
     ins = ["-framerate", str(fps), "-i", str(tmp / "r%05d.png"), "-loop", "1", "-i", str(caption_png), "-loop", "1", "-i", str(tmp / "tag.png"), "-i", out]
     if audio:
         ins += ["-i", audio]
-        g.append(f"[4:a]atrim={a:.4f}:{b:.4f},asetpts=PTS-STARTPTS,{atempo(speed)},loudnorm=I=-16:TP=-2,aresample=48000,"
+        aa, ab = audio_window or (a, b)   # the edit's game+sfx track (Short time) when there is one: wind, boom
+        g.append(f"[4:a]atrim={aa:.4f}:{ab:.4f},asetpts=PTS-STARTPTS,{atempo(speed)},loudnorm=I=-16:TP=-2,aresample=48000,"
                  f"aformat=channel_layouts=stereo,apad=whole_dur={d:.4f},atrim=0:{d:.4f}[ra]")
     else:
         g.append(f"anullsrc=r=48000:cl=stereo,atrim=0:{d:.4f}[ra]")
