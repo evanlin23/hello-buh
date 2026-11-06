@@ -28,7 +28,8 @@ HERE = pathlib.Path(__file__).resolve().parent
 # black 977-1280; caption centered at y~181, ~68% of the width. Scaled to 1080x1920:
 W, H, BAND = 1080, 1920, 455
 GAME_H = 1011                      # game area 1080x1011 between equal black bands
-CAPTION_Y = 271                    # vertical center of the caption line
+CAPTION_Y = 271                    # vertical center of the caption block
+CAPTION_SIZE = 78                  # px; reference text is ~62 px tall at 1080 wide
 GUI = 3  # Minecraft GUI scale
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 TWEMOJI = "https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/{}.png"
@@ -62,30 +63,54 @@ def caption_png(text, red_word, path, colors=None):
     d.rectangle((0, 0, W, BAND), fill=(0, 0, 0, 255))
     d.rectangle((0, BAND + GAME_H, W, H), fill=(0, 0, 0, 255))
     tokens = text.split(" ")
+
     def is_emoji(tok):
         return any(ord(c) > 0x2500 for c in tok)
-    for size in range(86, 40, -2):  # largest size that fits in 72% of the width
-        font = ImageFont.truetype(FONT, size)
-        widths = [(size + 6) if is_emoji(t) else d.textlength(t, font=font) for t in tokens]
-        space = d.textlength(" ", font=font)
-        total = sum(widths) + space * (len(tokens) - 1)
-        if total <= W * 0.72:
+
+    def measure(toks, font, size):
+        ws = [(size + 6) if is_emoji(t) else d.textlength(t, font=font) for t in toks]
+        return ws, sum(ws) + d.textlength(" ", font=font) * (len(toks) - 1)
+
+    # Size measured on the reference Shorts: ~62 px tall text at 1080 wide = Inter ExtraBold 78.
+    # One line if it fits in 80% of the width at >= 70 px; otherwise two balanced lines at 78
+    # (like "instant respawn / = re:zero moment"), shrinking only if a line still won't fit.
+    lines, size = None, CAPTION_SIZE
+    for sz in range(CAPTION_SIZE, 69, -2):
+        f = ImageFont.truetype(FONT, sz)
+        if measure(tokens, f, sz)[1] <= W * 0.80:
+            lines, size = [tokens], sz
             break
+    if lines is None and len(tokens) > 1:
+        for sz in range(CAPTION_SIZE, 40, -2):
+            f = ImageFont.truetype(FONT, sz)
+            best = min(range(1, len(tokens)), key=lambda k: max(measure(tokens[:k], f, sz)[1], measure(tokens[k:], f, sz)[1]))
+            if max(measure(tokens[:best], f, sz)[1], measure(tokens[best:], f, sz)[1]) <= W * 0.86:
+                lines, size = [tokens[:best], tokens[best:]], sz
+                break
+    if lines is None:
+        lines, size = [tokens], 44
+    font = ImageFont.truetype(FONT, size)
     asc, desc = font.getmetrics()
-    x, y = (W - total) / 2, CAPTION_Y - (asc + desc) / 2
-    for tok, w in zip(tokens, widths):
-        if is_emoji(tok):
-            e = emoji_png(tok).resize((size, size), Image.LANCZOS)
-            img.alpha_composite(e, (int(x + 3), int(y + 4)))
-        else:
-            key = tok.strip("?!.,:").lower()
-            color = (255, 255, 255, 255)
-            if red_word and key == red_word.lower():
-                color = (235, 40, 40, 255)
-            if colors and key in colors:
-                color = colors[key]
-            d.text((x, y), tok, font=font, fill=color)
-        x += w + space
+    line_h = int(size * 1.12)
+    y = CAPTION_Y - (line_h * len(lines)) / 2 + (line_h - (asc + desc)) / 2
+    space = d.textlength(" ", font=font)
+    for toks in lines:
+        widths, total = measure(toks, font, size)
+        x = (W - total) / 2
+        for tok, w in zip(toks, widths):
+            if is_emoji(tok):
+                e = emoji_png(tok).resize((size, size), Image.LANCZOS)
+                img.alpha_composite(e, (int(x + 3), int(y + 4)))
+            else:
+                key = tok.strip("?!.,:").lower()
+                color = (255, 255, 255, 255)
+                if red_word and key == red_word.lower():
+                    color = (235, 40, 40, 255)
+                if colors and key in colors:
+                    color = colors[key]
+                d.text((x, y), tok, font=font, fill=color)
+            x += w + space
+        y += line_h
     img.save(path)
 
 

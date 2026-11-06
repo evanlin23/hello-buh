@@ -4,8 +4,24 @@ A bot plays a scripted stunt on a private local server, the stunt is rendered of
 and the clip is edited into the channel's format. No human at the keyboard, no Minecraft account.
 
 ```bash
-./run.sh          # -> out/water_clutch.mp4 (1080x1920, 60 fps)
+./run.sh                          # -> out/water_clutch.mp4 (1080x1920, 60 fps)
+STUNT=pearl_clutch ./run.sh       # any stunt in stunts/
+./scripts/run_all.sh              # every stunt, fresh world each
 ```
+
+## Stunts (`stunts/<name>.js`)
+| stunt | caption | song (owner-supplied, `songs/`) | reference |
+|---|---|---|---|
+| `water_clutch` | water bucket clutch 💀 | misery. (drop on the water placement) | HelloBuh's own MLG Shorts |
+| `looks_wrong` | Bro this looks wrong? | FUNK ABNORMAL (ULTRA SLOWED) (drop on the reveal) | SunuCellyClipss, 8.9M |
+| `villager_job` | POV: THE VILLAGER IS UNEMPLOYED 💀 | Payphone (Radio Top Singers) (drop on the first hire) | ZyroVaneWasTaken, 827K at 821 subs |
+| `pearl_clutch` | POV: You **Throw** an Ender Pearl But... + elytra countdown | misery. (drop on the teleport) | Henyofficial7 14M, Integer_XD 7.5M |
+
+A stunt exports `setup(ctx)` (build the set with commands, return its origin), `perform(ctx)`
+(do the stunt with real player actions, return success) and `edit` (caption, colours, song,
+which recorded event the song's drop lands on, countdown). `lib/harness.js` gives it helpers and
+records everything. Titles still follow the channel's formula: lowercase reaction + "(do not check
+the sound 💀💀)".
 Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chromium.
 
 ## The format (from the channel, 2026-11-06)
@@ -33,10 +49,12 @@ Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chro
 | assets | `renderer/build_assets.py`, `renderer/prepare.js` | texture atlas, block models and environment textures straight from the version's client jar |
 | render | `render.js`, `renderer/` | meshes the recorded world in Node (block models vendored from prismarine-viewer, MIT, with vanilla face shading + AO), draws each frame in headless Chromium with three.js: vanilla FOV 70, sky + fog, fancy clouds, sun, view bobbing, underwater fog. Frame-exact 60 fps, ~20 s of render per video second on 4 CPUs |
 | audio | `audio.py` | rebuilds the game sound from the recorded events and the game's own sound files |
-| edit | `edit.py` | 1080x1920 layout, caption (Twemoji for emoji), HUD drawn from the client jar's sprites, loudness -18 LUFS |
+| entities | `renderer/entities.js` | mobs from converted entity geometry (prismarine-viewer, MIT) with the jar's textures (villager = base + biome + profession), head tracking, walk cycle; pearls/items as sprites |
+| icons | `renderer/icons.js` | 3D inventory icons for block items, rendered with our block mesher at the GUI angle |
+| edit | `edit.py` | 1080x1920 layout, caption (Twemoji, per-word colours), HUD from the jar's sprites (3D block icons, stack counts in the game font), countdown overlay, song with its drop on a chosen event (~-10 LUFS like the references; game audio alone -18 LUFS) |
 
 ## Known gaps vs real HelloBuh frames
-- Our renderer is a re-implementation, not the game: no particles, rain, entities (mobs, dropped items), block light (torches/caves), animated textures, or first-person hand. (HelloBuh crops the centre of a 16:9 window, so the hand is mostly out of frame anyway.)
+- Our renderer is a re-implementation, not the game: no particles, rain, animated textures, or first-person hand (HelloBuh crops the centre of a 16:9 window, so the hand is mostly out of frame anyway). Mobs: only those with a converted model; no armour/held items on mobs.
 - HUD is drawn from the real sprites, not rendered: no level number text, static XP bar.
 - The world is real: vanilla 1.21.11 server, real terrain (the set is built in the nearest forest), real physics.
 
