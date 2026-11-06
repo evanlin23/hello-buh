@@ -37,7 +37,7 @@ module.exports = {
   edit: {
     caption: "dyeing it until it's a rainbow 🌈", red: 'rainbow', song: 'songs/funk_abnormal.mp3', dropAt: 'reveal',
     startAt: 'dye:-0.5',
-    subs: [...BANDS.map((b, i) => ['dye', b.sub, 1.0, i]), ['reveal', 'perfect', 1.8, 0]]
+    subs: BANDS.map((b, i) => ['dye', b.sub, 1.0, i])
   },
 
   async setup (ctx) {
