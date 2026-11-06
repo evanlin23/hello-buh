@@ -397,36 +397,6 @@
    ]
   },
   "L13": {
-   "text": "Nothing here moves unless I'm close.",
-   "dur": 1.948,
-   "onset": 0.19,
-   "end": 1.759,
-   "chunks": [
-    [
-     0.19,
-     0.578
-    ],
-    [
-     0.578,
-     0.879
-    ],
-    [
-     0.879,
-     1.095
-    ],
-    [
-     1.095,
-     1.759
-    ]
-   ],
-   "captions": [
-    "Nothing here",
-    "MOVES",
-    "unless",
-    "I'm CLOSE."
-   ]
-  },
-  "L14": {
    "text": "Mom never waited three years. For her, I left a second ago.",
    "dur": 2.862,
    "onset": 0.19,
@@ -466,7 +436,7 @@
     "a SECOND ago."
    ]
   },
-  "L15": {
+  "L14": {
    "text": "She's only ever lived the minutes I was home.",
    "dur": 2.086,
    "onset": 0.172,
@@ -496,7 +466,7 @@
     "I was HOME."
    ]
   },
-  "L16": {
+  "L15": {
    "text": "I left at seven. For her, that was this morning.",
    "dur": 2.345,
    "onset": 0.172,
@@ -531,7 +501,7 @@
     "this MORNING."
    ]
   },
-  "L17": {
+  "L16": {
    "text": "I'm the only clock she has.",
    "dur": 1.586,
    "onset": 0.172,
@@ -556,7 +526,7 @@
     "she HAS."
    ]
   },
-  "L18": {
+  "L17": {
    "text": "So I never tell her how long I was gone.",
    "dur": 2.017,
    "onset": 0.172,
@@ -586,37 +556,7 @@
     "I was GONE."
    ]
   },
-  "L19": {
-   "text": "She asks where I've been. I say, outside.",
-   "dur": 2.103,
-   "onset": 0.19,
-   "end": 1.897,
-   "chunks": [
-    [
-     0.19,
-     0.491
-    ],
-    [
-     0.491,
-     0.914
-    ],
-    [
-     0.983,
-     1.241
-    ],
-    [
-     1.267,
-     1.897
-    ]
-   ],
-   "captions": [
-    "She asks",
-    "where I've BEEN.",
-    "I say,",
-    "OUTSIDE."
-   ]
-  },
-  "L20": {
+  "L18": {
    "text": "I say hi, I hug her, and I leave again. Which is why",
    "dur": 2.552,
    "onset": 0.155,
@@ -657,5 +597,5 @@
    ]
   }
  },
- "total": 46.62
+ "total": 42.37
 }
