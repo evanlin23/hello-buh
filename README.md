@@ -15,6 +15,7 @@ checked out at `../hb-videos`.
 | Short | Caption | Length | Song | Status | Commit | Notes |
 |---|---|---|---|---|---|---|
 | [anvil_rain](shorts/anvil_rain/short.mp4) | minecraft but it rains anvils 💀 | 11.85s | FUNK ABNORMAL (ULTRA SLOWED) | ready | d95a743 |  |
+| [cave_reveal](shorts/cave_reveal/short.mp4) | never dig straight down 💀 | 9.55s | misery. · pupsies | ready | bf72141 | darker/plainer than ideal; ores barely visible |
 | [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 8.8s | misery. · pupsies | ready | 46cab20 |  |
 | [half_heart](shorts/half_heart/short.mp4) | POV: you're on half a heart 💀 | 7.75s | misery. · pupsies | ready | e657d18 |  |
 | [heart_art](shorts/heart_art/short.mp4) | built this for my girlfriend 🥺 | 6.85s | Payphone · Radio Top Singers | ready | 5617e57 |  |

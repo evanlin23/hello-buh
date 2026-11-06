@@ -1,0 +1,110 @@
+{
+  "name": "cave_reveal",
+  "caption": "never dig straight down 💀",
+  "youtube": {
+    "title": "never dig straight down 💀 #minecraft #shorts",
+    "description": "never dig straight down 💀\n\nSong: misery. · pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "misery.mp3",
+    "title": "misery.",
+    "artist": "pupsies",
+    "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
+    "drop_on_event": "reveal",
+    "drop_in_song_s": 16.25,
+    "drop_in_short_s": 3.95,
+    "song_start_s": 12.3
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 9.55,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 7377741,
+    "sha256": "049237707956355ab960dc169693b186219b21a396d9aad613b0acbf9546b805"
+  },
+  "edit": {
+    "caption": "never dig straight down 💀",
+    "red": "never",
+    "song": "songs/misery.mp3",
+    "dropAt": "reveal",
+    "start": 0.5,
+    "args": [
+      "--caption",
+      "never dig straight down 💀",
+      "--red",
+      "never",
+      "--start",
+      "0.5",
+      "--song",
+      "songs/misery.mp3",
+      "--song_drop_at",
+      "reveal"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 359,
+      "y": 69,
+      "z": -45
+    },
+    "biome": "minecraft:plains",
+    "ticks": 202,
+    "seconds": 10.1,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 4.45,
+        "event": "reveal"
+      },
+      {
+        "t": 5.4,
+        "event": "splash"
+      },
+      {
+        "t": 10.1,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "bf72141c4a315ddb13fccec7eb8f21f3d46f6cd0",
+    "rendered_at": "2026-11-06T12:00:47.561Z",
+    "head_at_publish": "bf72141c4a315ddb13fccec7eb8f21f3d46f6cd0",
+    "stunt": "stunts/cave_reveal.js",
+    "source_snapshot": [
+      "source/cave_reveal.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout bf72141c4a31",
+    "gunzip -c shorts/cave_reveal/recording.json.gz > work/cave_reveal.rec.json",
+    "node render.js work/cave_reveal.rec.json work/cave_reveal.frames 60 1080 1011",
+    "python3 audio.py work/cave_reveal.rec.json work/cave_reveal.wav",
+    "python3 edit.py --frames work/cave_reveal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/cave_reveal.rec.json --audio work/cave_reveal.wav --caption \"never dig straight down 💀\" --red never --start 0.5 --song songs/misery.mp3 --song_drop_at reveal --out out/cave_reveal.mp4"
+  ],
+  "status": "ready",
+  "notes": "darker/plainer than ideal; ores barely visible",
+  "published_at": "2026-11-06T12:01:07.607Z"
+}
