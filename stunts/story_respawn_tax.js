@@ -42,7 +42,7 @@ module.exports = {
     await c(`/fill ${A(-3, 0, -3)} ${A(3, 0, 3)} cobblestone`)
     await c(`/setblock ${A(0, 0, 0)} gold_block`)
     for (const [dx, dz] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) { await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} oak_fence`); await c(`/setblock ${A(dx, 3, dz)} lantern`) }
-    await c(`/spawnpoint @s ${A(0, 1, 0)}`)
+    await c(`/spawnpoint @s ${A(2, 1, 2)} 135`)   // beside the gold block, facing it: a respawn shows who's standing on it
     // the line: a fenced queue lane running north from the plaza, lanterns along it
     await c(`/fill ${A(-1, 1, -14)} ${A(-1, 1, -4)} oak_fence[north=true,south=true]`)
     await c(`/fill ${A(1, 1, -14)} ${A(1, 1, -4)} oak_fence[north=true,south=true]`)
@@ -64,7 +64,7 @@ module.exports = {
     // the pond and dock (L03), the fisherman's empty boat
     await c(`/fill ${A(22, -2, -10)} ${A(38, 0, 4)} water`)
     await c(`/fill ${A(17, 0, -5)} ${A(22, 0, -3)} oak_planks`)
-    await c(`/summon oak_boat ${X + 26.5} ${F + 0.52} ${Z - 3.5} {NoGravity:1b,Invulnerable:1b,Rotation:[-60f,0f],Tags:["boat"]}`)
+    await c(`/summon oak_boat ${X + 26.5} ${F + 0.52} ${Z - 3.5} {Invulnerable:1b,Rotation:[-60f,0f],Tags:["boat"]}`)
     // the cactus (L05)
     await c(`/fill ${A(-15, 0, -23)} ${A(-10, 0, -18)} sand`)
     await c(`/fill ${A(-12, 1, -21)} ${A(-12, 3, -21)} cactus`)
@@ -104,7 +104,10 @@ module.exports = {
     const setMeter = (v) => { meter = v; ctx.mark('meter', { value: v }) }
     const kill = (type) => say(`/damage @s 100 minecraft:${type}`)
     const gone = (tag) => say(`/tp @e[tag=${tag}] ${X} ${F - 30} ${Z}`)   // off the set, out of sight
-    const respawn = async () => {   // click Respawn, wait for the spawn
+    let deadAt = -99
+    bot.on('death', () => { deadAt = ctx.tick })
+    const respawn = async () => {   // click Respawn (enabled 20 ticks after the death), wait for the spawn
+      while (ctx.tick < deadAt + 21) await bot.waitForTicks(1)
       const spawned = new Promise(r => { bot.once('spawn', r); setTimeout(r, 3000) })
       ctx.respawn(); await spawned; ctx.revive()
     }
@@ -133,9 +136,9 @@ module.exports = {
     let dead = false
     await line('L04', async (k, at) => {
       if (!dead && bot.entity.position.y < F + 1.0) { kill('lava'); dead = true }
-      if (k === at(1)) { await respawn(); setMeter(3) }
-      if (k === at(1) + 3) await cut(-1.5, 12.5, P(4.5, 1.8, 12.5))
-      if (k < at(1)) K.base = { yaw: K.base.yaw, pitch: -1.3 }
+      if (k === at(2) - 3) { await respawn(); setMeter(3) }
+      if (k === at(2)) await cut(-1.5, 12.5, P(4.5, 1.8, 12.5))
+      if (k < at(2)) K.base = { yaw: K.base.yaw, pitch: -1.3 }
       look(k)
     })
     // L05: a cactus took the fletcher
@@ -198,17 +201,22 @@ module.exports = {
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)
       if (k === at(2) + 4) {
         gone('v_nitwit'); setMeter(1)
-        ctx.particles('smoke', P(0.5, 1.0, 0.5), { count: 30 })
+        for (const y of [0.6, 1.2, 1.8]) ctx.particles('smoke', P(0.5, y, 0.5), { count: 20 })
         ctx.sound('entity.generic.extinguish_fire', 0.7, 1.2)
       }
       look(k)
     })
     // L13: every respawn costs one life; they've paid for mine since I was born (the empty street)
     await cut(0.5, 37.5, P(0.5, 1.5, 10))
-    await line('L13', async (k) => { go(k > 4 && k < 50); look(k, Math.sin(k / 12) * 0.18) })
+    let from13 = null
+    await line('L13', async (k, at) => {
+      go(k > 4 && k < at(4))
+      if (k >= at(4) - 2) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(5.5, 1.6, 28.5), (k - at(4) + 3) / 9) }
+      look(k)
+    })
     go(false)
     // L14: the golem wasn't guarding me. He was keeping the line
-    await cut(4.2, -1.0, P(2.4, 2.4, -4.2))
+    await cut(1.9, -0.6, P(2.4, 2.4, -4.2))
     ctx.mark('face_on', { near: [X + 2.4, Z - 4.2, 1], head: true })
     let from = null
     await line('L14', async (k, at) => {
@@ -232,7 +240,7 @@ module.exports = {
       go(!dead)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       if (!dead && bot.entity.position.y < F + 0.9) { kill('lava'); dead = true; go(false) }
-      if (!dead) { K.base = K.aim(P(0.5, k > at(1) ? 0.4 : 1.6, k > at(1) ? 4.5 : 0.5)); look(k) }
+      if (!dead) { K.base = K.aim(k > at(1) && k < at(2) ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5)); look(k) }
     }, 0.2)
     go(false)
     // L18: she just smiled and said, go on. Respawn. (the death screen, the Respawn button). Mob moves stop
@@ -240,7 +248,6 @@ module.exports = {
     // villager), the cauldron smokes
     await line('L18', async (k, at) => {
       if (k >= at(1) && k % 3 === 0) ctx.particles('happy', P(0.5, 1.6 + Math.random() * 0.6, 0.5), { count: 2 })
-      if (k % 2 === 0) ctx.particles('smoke', P(0.5, 1.0, 4.5), { count: 2 })
     }, 0.25)
     ctx.mark('story_end')
     await bot.waitForTicks(4)
