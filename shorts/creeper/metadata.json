@@ -1,9 +1,9 @@
 {
   "name": "creeper",
-  "caption": "POV: you hear tssss 💀",
+  "caption": "POV: you hear tssss \ud83d\udc80",
   "youtube": {
-    "title": "POV: you hear tssss 💀 #minecraft #shorts",
-    "description": "POV: you hear tssss 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you hear tssss \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you hear tssss \ud83d\udc80\n\nSong: Willix, Hiraeth - Intranet Crush\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/IntranetCrush\nWatch: http://ncs.lnk.to/IntranetCrushAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "funk_abnormal.mp3",
-    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
-    "artist": "",
-    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "file": "intranet_crush.mp3",
+    "title": "Intranet Crush",
+    "artist": "hir\u00e6th, Willix",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "hiss",
-    "drop_in_song_s": 10.5,
+    "drop_in_song_s": 3.0,
     "drop_in_short_s": 3.65,
-    "song_start_s": 6.85
+    "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
@@ -29,11 +29,11 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 5670198,
-    "sha256": "4a77c35b8defb4dd525c0e59970cc270e8459ca4c0d1366188ebce7b0d77e251"
+    "bytes": 5757369,
+    "sha256": "6669dcc4d58ad72bdf684c4ff0e8d503f2c1946f66c29759706680877150eef6"
   },
   "edit": {
-    "caption": "POV: you hear tssss 💀",
+    "caption": "POV: you hear tssss \ud83d\udc80",
     "red": "tssss",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "hiss",
@@ -42,7 +42,7 @@
     "endAfter": "death:1.8",
     "args": [
       "--caption",
-      "POV: you hear tssss 💀",
+      "POV: you hear tssss \ud83d\udc80",
       "--red",
       "tssss",
       "--death_screen",
@@ -165,22 +165,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "99d866aeebb6bf76d66784a5a5142eb06bf7e51f",
-    "rendered_at": "2026-11-06T15:25:28.917Z",
-    "head_at_publish": "652d220588272d75edce682e83351e4cde23af15",
+    "commit": "502c8b221cdc53c7fd34de7d41062ae1a31f19c3",
+    "rendered_at": "2026-11-06T17:18:18.576Z",
+    "head_at_publish": "502c8b221cdc53c7fd34de7d41062ae1a31f19c3",
     "stunt": "stunts/creeper.js",
     "source_snapshot": [
       "source/creeper.js"
     ]
   },
   "rebuild": [
-    "git checkout 99d866aeebb6",
+    "git checkout 502c8b221cdc",
     "gunzip -c shorts/creeper/recording.json.gz > work/creeper.rec.json",
     "node render.js work/creeper.rec.json work/creeper.frames 60 1080 1011",
     "python3 audio.py work/creeper.rec.json work/creeper.wav",
-    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss 💀\" --red tssss --death_screen death --start 0.4 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at hiss --out out/creeper.mp4"
+    "python3 edit.py --frames work/creeper.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper.rec.json --audio work/creeper.wav --caption \"POV: you hear tssss \ud83d\udc80\" --red tssss --death_screen death --start 0.4 --end_after death:1.8 --song songs/funk_abnormal.mp3 --song_drop_at hiss --out out/creeper.mp4"
   ],
-  "status": "ready",
-  "notes": "",
-  "published_at": "2026-11-06T15:36:56.084Z"
+  "status": "needs-fix",
+  "notes": "frame QA: creeper not on screen until 4.2 s, no fuse flash; re-render queued",
+  "published_at": "2026-11-06T17:19:00.311Z"
 }

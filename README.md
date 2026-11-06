@@ -16,12 +16,10 @@ checked out at `../hb-videos`.
 |---|---|---|---|---|---|---|
 | [anvil_rain](shorts/anvil_rain/short.mp4) | minecraft but it rains anvils 💀 | 10.05s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 799e77f |  |
 | [cave_reveal](shorts/cave_reveal/short.mp4) | never dig straight down 💀 | 7.85s | THE REDEEMER · BVSSL7ON, ANIZYZ | ready | 799e77f | QA2: still dark; lavafall render gaps |
-| [creeper](shorts/creeper/short.mp4) | POV: you hear tssss 💀 | 6.85s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 99d866a |  |
+| [creeper](shorts/creeper/short.mp4) | POV: you hear tssss 💀 | 6.85s | Intranet Crush · hiræth, Willix | ready | 502c8b2 |  |
 | [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 8.8s | Take The Sky · crysstales, DJ YHR, HRXSTAL | ready | 46cab20 |  |
 | [half_heart](shorts/half_heart/short.mp4) | POV: you're on half a heart 💀 | 5.9s | VEM LENTA! · KPHK, Eluvo, Sayfalse | ready | f655187 |  |
 | [heart_art](shorts/heart_art/short.mp4) | built this for my girlfriend 🥺 | 6.85s | Royalty Funk · LXNGVX | ready | 5617e57 |  |
-| [house_sizes](shorts/house_sizes/short.mp4) | building a house in 5s vs 10s vs 20s 💀 | 18.65s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 9d412b3 | worker: dirt hut vs plank cottage vs two-colour house, real block placements, ends on all three |
-| [lava_crossing](shorts/lava_crossing/short.mp4) | every way to cross lava (rated) 💀 | 19.85s | Sky Verse · Lieless, Luuna, Yarimov | ready | 62b7c60 | worker: bridge 6/10, water bucket->obsidian 9/10, pearl 10/10, walking in 0/10 (death screen) |
 | [lava_rising](shorts/lava_rising/short.mp4) | the lava stopped 1 block below me 😳 | 12.5s | X2 · MUPP | ready | 799e77f | QA2: payoff framing of the 1-block gap could be clearer |
 | [looks_wrong](shorts/looks_wrong/short.mp4) | Bro this looks wrong? | 9.7s | Feel Good Funk · Syn Cole, Nakama | ready | 17ecd2d |  |
 | [midas_touch](shorts/midas_touch/short.mp4) | POV: you got the midas touch 🤑 | 10.15s | AYUDA · MXRCVRY | ready | 90afab9 |  |
