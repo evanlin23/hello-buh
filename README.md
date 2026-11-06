@@ -30,6 +30,34 @@ STUNT=pearl_clutch ./run.sh       # any stunt in stunts/
 | `anvil_rain` | minecraft but it rains **anvils** 💀 | FUNK ABNORMAL | death screen |
 | `staring_villagers` | why are they all **staring** at me 💀 | FUNK ABNORMAL (drop on the turn) | crowd turns as one |
 | `creeper_art`, `skull_art`, `sword_art`, `heart_art` | pixel-art reveals (`lib/pixel_art.js`) | | looks_wrong variants |
+| `tnt` | POV: you lit **75** TNT 💀 | FUNK ABNORMAL (drop on the boom) | primed-TNT flash, chain explosion, crater |
+| `creeper` | POV: you hear **tssss** 💀 | FUNK ABNORMAL (drop on the hiss) | real creeper AI, vanilla swell, death screen |
+| `tnt_run` | POV: the floor is **TNT** 💀 | FUNK ABNORMAL | a TNT wave catches the bot |
+| `every_clutch` | rating **every** MLG clutch 💀 (~15 s) | FUNK ABNORMAL | water / slime / hay / cobweb, rated |
+| `fortune` | POV: fortune **1000** 💀 (~13 s) | FUNK ABNORMAL | ore fountains fill the hotbar |
+| `tnt_scale` | 1 TNT vs 10 TNT vs **100** TNT 💀 (~15 s) | FUNK ABNORMAL | three escalating blasts |
+| `drops` | 1 in a million landing... **x3** 😳 (~14 s) | misery. | 30 / 80 / 160 blocks, the last misses |
+| `golem` | POV: you **hit** a villager 💀 | FUNK ABNORMAL | the iron golem launches you |
+| `pearl_clutch` | (needs a redesign: QA couldn't read the stunt) | | |
+
+## Music and length (see `research/music_and_length_2026-11-06.md`)
+Each package has `short.mp4` (song baked in) **and** `short_nosong.mp4` (game audio only). Upload the
+no-song one and add the song with the YouTube app's Shorts audio picker: it's licensed with no
+standard Content ID claim, and the creator's 45% share is the same either way. A claimed Short over
+60 s gets blocked. `metadata.json` gives the second the song's drop should land on. Target length
+is 10-15 s, or 20-30 s for build-up stories, with the stunt visible in the first second.
+
+## QA (every Short, before publishing)
+1. `python3 scripts/qa.py out/<name>.mp4` flags stuck, dark and black stretches.
+2. Frame review: contact sheets (`fps=2`, 8x2 tiles) read by independent reviewer agents, which
+   are not told the known issues. Two rounds so far; their findings and the fixes are in the
+   git log and `docs/lessons.md`.
+
+## Parallel workers
+The orchestrator session spawns worker cloud sessions (Claude Code `create_session`) that each
+build new formats end to end by following `docs/worker.md`. Workers only add `stunts/<name>.js`
+and publish no-song packages. The orchestrator bakes the songs in with
+`python3 scripts/add_song.py <name>` (songs/ only exists in the orchestrator's container).
 
 Finished, reviewed Shorts live on the **`videos` branch**, one folder per Short with everything
 that made it (video, metadata with title/description/hashtags/song credit, the bot recording,

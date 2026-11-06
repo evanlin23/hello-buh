@@ -22,6 +22,19 @@ each section.
   audio; the owner supplies files into `songs/` (gitignored).
 
 ## Bot (mineflayer 4.39 on vanilla 1.21.11)
+- **Deaths**: mineflayer's default `respawn: true` ended every death on the same tick (the death
+  screen never showed). The harness uses `respawn: false`, respawns at once only with
+  `immediate_respawn` (the stunt also sets `ctx.immediateRespawn = true`), and ticks on its own
+  while dead. The `respawn` mark has its own flag: a stunt's `revive()` can come before
+  mineflayer's spawn event, and the death camera then held across two attempts.
+- A purposely failed clutch must stop at the impact. The ground can register a tick before the
+  death does, and the clutch's "look up the pillar" ending then played after the respawn.
+- Command-block timing is unreliable (it started ticking seconds late). For per-tick commands the
+  bot sends them itself: ops aren't chat-rate-limited.
+- TNT and explosions next to an ocean flood the crater, and knockback can push the bot in: fill
+  deep solid ground under the set.
+- Stray item drops from the set-up get picked up mid-stunt (mystery hotbar stacks): the harness
+  kills item entities before recording.
 - **1.21.11 renamed every game rule** to snake_case ids: `advance_time`, `advance_weather`,
   `send_command_feedback`, `spawn_mobs`, `immediate_respawn`, `keep_inventory`,
   `natural_health_regeneration`, `fire_spread_radius_around_player` (instead of `doFireTick`).
@@ -50,6 +63,27 @@ each section.
   with one texture. Place things so the key object stays in frame.
 
 ## Renderer (our own; `renderer/`)
+- **Lava is opaque** in vanilla (solid render type). In the translucent pass with depthWrite off, a
+  lava top face under stone (lit 0, so black) painted over nearer lava: the black square seen
+  from below. Lava goes in the opaque pass, and fluid faces against a full opaque block are culled
+  (`isFaceOccludedByNeighbor`).
+- **Big block changes need a relight** (explosion craters stayed black): when 24 or more blocks
+  change in one frame, render.js recomputes light (~1 s) and re-meshes the sections around the
+  change. Small changes use the neighbour-light fallback in `world.getLight`.
+- **Falling blocks**: the server sends their position about once a second (they hovered, then
+  jumped). render.js simulates the fall from where each appeared (gravity 0.04, drag 0.98, stops
+  on solid blocks).
+- **Mob rotation from /tp** reaches mineflayer's entity yaw seconds late. Stunts that turn mobs by
+  command mark `face_on`/`face_off`, and the renderer faces them at the camera between the marks.
+- **First-person held item** follows vanilla ItemInHandRenderer: (0.56, -0.52, -0.72), block
+  display 45° at 0.4 scale, flat items with the `generated` firstperson transform, a 6-tick swing,
+  a 3-tick equip. In our crop of the 16:9 window it only shows partly at the bottom right. That
+  is correct: reviewers called the swing "a stick across the screen", but it is vanilla's.
+- Dropped block items are quarter-size spinning blocks (ItemEntityRenderer). Primed TNT flashes
+  white every 5 ticks and swells over the last 10. Creeper swell comes from the explosion time.
+- Explosion particles: explosion_emitter (6 huge sprites a tick for 8 ticks), full bright.
+- Nether portal is translucent, with ambient portal particles from the stunt.
+- Lava fog when the eye is in lava: 0.25 to 1.0 blocks. The fire overlay draws *under* the HUD.
 - **Death, as vanilla shows it** (owner: "the death is kinda odd and delayed"): the camera does
   NOT drop or keel over. Pose.DYING keeps eye height 1.62; `GameRenderer.bobHurt` rolls the view
   by `40 - 8000/(deathTime+200)` degrees (0 to 3.6 over 20 ticks). Each hit rolls
