@@ -279,3 +279,11 @@ each section.
 - **Blend in-between frames only inside slow spans.** A 2.5x speed-up also lands on half frames, and blending there smeared it.
 - **A long fall above the clouds (night) is a still frame.** beat_audit read 1.1-1.7 s STILL on one_in_a_million's build-limit drops. Fix it in the edit: speed up the empty high stretch (`speed: [['drop5:0.5', 'drop5:3.3', 2.5]]`), and keep a live counter (`fallen`) and wind on the fall.
 - **Bit-identical check:** with no new keys, an edit must match the pre-change code byte for byte. Compare against a worktree of the old commit on the same frames, not against an mp4 made before a pull (the HUD/encoder can change in between).
+- **Worker 7, 1.21.11 server behaviour** (world_delete, die_rating):
+  - `/fill` around 90-100 blocks from the bot fails silently (the harness's error regex misses the message). Keep a set within ~80 blocks of where the bot stands, e.g. centre a row of stations on it.
+  - `/spawnpoint @s x y z` takes **two** numbers for the angle (yaw pitch). The respawn still came back at the world spawn: use `/setworldspawn x y z yaw pitch` plus `/gamerule respawn_radius 0` for each station.
+  - `doTileDrops` is `block_drops`. `keep_inventory true` keeps a death-chain's tools (the anchor's glowstone was dropped at the first death).
+  - mineflayer applies gravity in spectator and creative too: a bot hovering over ground that's being deleted falls into the void and dies. Set `bot.physicsEnabled = false` and emit `physicsTick` yourself (waitForTicks counts it).
+  - Hollowing a big area under the surface lets outside oceans and aquifers pour in at the edges: wall it with barrier outside the recorded area, clear twice, and verify each chunk.
+  - Big `/fill` waves reach the client 1-2 s late (server lighting). Send them as the bot starts aiming and break the block only when the deletion arrives. A camera awaiting one look per tick stutters while the client catches up on ticks; drive it from a physicsTick handler instead.
+  - Walking right after a respawn sometimes goes nowhere: wait ~6 ticks, and walk until a position or death condition rather than for a fixed number of ticks. Sweet berry bushes never hurt the bot (dripstone/fall damage is reliable).
