@@ -467,7 +467,9 @@ async function drawHand (cam) {
   if (!r) return false
   // swing (renderArmWithItem + applyItemArmAttackTransform), equip drop (applyItemArmTransform)
   const a = h.swing || 0, sa = Math.sin(Math.sqrt(a) * Math.PI)
-  const M = new THREE.Matrix4().makeTranslation(-0.4 * sa, 0.2 * Math.sin(Math.sqrt(a) * Math.PI * 2), -0.2 * Math.sin(a * Math.PI))
+  // the swing's sideways lunge scales with the rest position (HAND_X): unscaled, the held block lunged to
+  // the centre of our narrower view and ballooned over the target on every placement
+  const M = new THREE.Matrix4().makeTranslation(-0.4 * sa * HAND_X, 0.2 * Math.sin(Math.sqrt(a) * Math.PI * 2), -0.2 * Math.sin(a * Math.PI))
   M.multiply(new THREE.Matrix4().makeTranslation(0.56 * HAND_X, -0.52 + (h.equip || 0) * -0.6, -0.72))
   const f = Math.sin(a * a * Math.PI)
   M.multiply(new THREE.Matrix4().makeRotationY((45 + f * -20) * D2R))

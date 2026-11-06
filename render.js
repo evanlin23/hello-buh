@@ -180,7 +180,11 @@ function targetBlock (cam, world) {
     v.x = Math.floor(cam.x + d.x * s); v.y = Math.floor(cam.y + d.y * s); v.z = Math.floor(cam.z + d.z * s)
     const b = world.getBlock(v)
     if (!b || /^(air|cave_air|void_air|water|lava|light|bubble_column)$/.test(b.name)) continue
-    const sh = b.shapes && b.shapes.length ? b.shapes : null
+    let sh = b.shapes && b.shapes.length ? b.shapes : null
+    if (!sh && b.name === 'nether_portal') {   // no collision, but vanilla outlines its slab-shaped outline shape
+      const ax = (b.getProperties && b.getProperties().axis) || 'x'
+      sh = [ax === 'z' ? [0.375, 0, 0, 0.625, 1, 1] : [0, 0, 0.375, 1, 1, 0.625]]
+    }
     if (!sh) continue
     const box = [Math.min(...sh.map(q => q[0])), Math.min(...sh.map(q => q[1])), Math.min(...sh.map(q => q[2])), Math.max(...sh.map(q => q[3])), Math.max(...sh.map(q => q[4])), Math.max(...sh.map(q => q[5]))]
     const px = cam.x + d.x * s - v.x, py = cam.y + d.y * s - v.y, pz = cam.z + d.z * s - v.z
