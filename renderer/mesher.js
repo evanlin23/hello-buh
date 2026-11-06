@@ -45,6 +45,25 @@ class Mesher {
     return low
   }
 
+  // One block on its own (for falling-block entities): geometry relative to the block's min
+  // corner, fully lit, plains tint.
+  meshSingle (stateId) {
+    const Chunk = require('prismarine-chunk')(this.version)
+    const mcData = require('minecraft-data')(this.version)
+    const w = new World(this.version)
+    const col = new Chunk({ minY: this.minY, worldHeight: this.height })
+    const p = new Vec3(8, 64, 8)
+    col.setBlockStateId(p, stateId)
+    for (let y = 48; y < 80; y++) for (let x = 0; x < 16; x++) for (let z = 0; z < 16; z++) col.setSkyLight(new Vec3(x, y, z), 15)
+    const plains = mcData.biomesByName.plains.id
+    for (let y = 48; y < 80; y += 4) for (let x = 0; x < 16; x += 4) for (let z = 0; z < 16; z += 4) col.setBiome(new Vec3(x, y, z), plains)
+    w.addColumn(0, 0, col.toJson())
+    const g = getSectionGeometry(0, 64, 0, w, this.blockStates)
+    const pos = Array.from(g.positions)
+    for (let i = 0; i < pos.length; i += 3) { pos[i] += 0; pos[i + 1] += 8; pos[i + 2] += 0 }   // -> block min corner at 0
+    return { positions: pos, colors: Array.from(g.colors), uvs: Array.from(g.uvs), indices: Array.from(g.indices) }
+  }
+
   // Compute our own light for everything from minVisibleY up (see light.js).
   computeLight (minVisibleY) {
     const t = Date.now()

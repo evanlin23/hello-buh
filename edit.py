@@ -15,6 +15,8 @@ with --song the owner's song baked in under them, mastered to -10 LUFS like the 
 import argparse
 import io
 import json
+import re
+import math
 import pathlib
 import subprocess
 import tempfile
@@ -114,7 +116,7 @@ def caption_png(text, red_word, path, colors=None):
     img.save(path)
 
 
-def hud_png(jar, slot, items, health, path):
+def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bar = big(sprite(jar, "gui/sprites/hud/hotbar"))
     sel = big(sprite(jar, "gui/sprites/hud/hotbar_selection"))
@@ -142,13 +144,20 @@ def hud_png(jar, slot, items, health, path):
     img.alpha_composite(xp_bg, (bx + GUI, by - 7 * GUI))
     img.alpha_composite(xp.crop((0, 0, int(xp.width * 0.35), xp.height)), (bx + GUI, by - 7 * GUI))
     hy = by - 17 * GUI
-    for i in range(10):
+    hc_blink = big(sprite(jar, "gui/sprites/hud/heart/container_blinking"))
+    full_b, half_b = big(sprite(jar, "gui/sprites/hud/heart/full_blinking")), big(sprite(jar, "gui/sprites/hud/heart/half_blinking"))
+    cur = math.ceil(health)
+    disp = cur if display is None else display
+    for i in range(9, -1, -1):                     # vanilla draws from the last heart down
         hx = bx + 8 * GUI * i
-        img.alpha_composite(heart_c, (hx, hy))
-        if health >= 2 * i + 2:
-            img.alpha_composite(heart, (hx, hy))
-        elif health >= 2 * i + 1:
-            img.alpha_composite(half, (hx, hy))
+        y_ = hy + (shake[i] * GUI if shake else 0)
+        img.alpha_composite(hc_blink if blink else heart_c, (hx, y_))
+        q = 2 * i
+        if blink and q < disp:                     # recently lost health flashes white
+            img.alpha_composite(half_b if q + 1 == disp else full_b, (hx, y_))
+        if q < cur:
+            img.alpha_composite(half if q + 1 == cur else heart, (hx, y_))
+    for i in range(10):
         fx = bx + bar.width - 9 * GUI - 8 * GUI * i
         img.alpha_composite(food_e, (fx, hy))
         img.alpha_composite(food, (fx, hy))
@@ -211,6 +220,58 @@ def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 2
             cx += (w + 1) * S
 
 
+class JavaRandom:
+    """java.util.Random / LegacyRandomSource, for the exact low-health heart shake."""
+    def __init__(self, seed):
+        self.s = (seed ^ 0x5DEECE66D) & ((1 << 48) - 1)
+
+    def next_int2(self):
+        self.s = (self.s * 0x5DEECE66D + 0xB) & ((1 << 48) - 1)
+        return (2 * (self.s >> 17)) >> 31
+
+
+def hud_ticks(timeline, duration):
+    """Per game tick: (slot, items, health, display_health, blink, shake) the way Gui draws it.
+    A drop in health blinks the hearts for 20 ticks (white = health just lost, shown until 1 s
+    after the last change); health <= 4 shakes each heart by 0-1 px, seeded with tick * 312871.
+    Between death and respawn health is 0 (mineflayer reports the respawn health early)."""
+    states = hud_states(timeline, duration)
+    deaths, open_ = [], None
+    for e in timeline or []:
+        if e["event"] == "death" and open_ is None:
+            open_ = e["t"] / 1000
+        if e["event"] == "respawn" and open_ is not None:
+            deaths.append((open_, e["t"] / 1000)); open_ = None
+    if open_ is not None:
+        deaths.append((open_, 1e9))
+    out, last, blink_until, last_change, display, last_hurt = [], 20, -1, 0, 20, -99
+    si = 0
+    for tick in range(int(duration * 20) + 2):
+        t = tick / 20
+        while si < len(states) - 1 and t >= states[si][1]:
+            si += 1
+        _, _, slot, items, health = states[si]
+        if any(a <= t + 1e-6 < b for a, b in deaths):
+            health = 0
+        cur = math.ceil(health)
+        if cur < last:
+            blink_until, last_change, last_hurt = tick + 20, tick, tick
+        elif cur > last and tick - last_hurt < 10:
+            blink_until, last_change = tick + 10, tick
+        if tick - last_change > 20:
+            display, last_change = cur, tick
+        last = cur
+        blink = blink_until > tick and ((blink_until - tick) // 3) % 2 == 1
+        shake = None
+        if cur <= 4:
+            r = JavaRandom(tick * 312871)
+            shake = [0] * 10
+            for i in range(9, -1, -1):
+                shake[i] = r.next_int2()
+        out.append((slot, tuple(items), health, display, blink, tuple(shake) if shake else None))
+    return out
+
+
 def hud_states(timeline, duration):
     """[(t0, t1, slot, items, health)] from the bot timeline (ms since recording start)."""
     items = list(HOTBAR)
@@ -267,8 +328,40 @@ def countdown_frames(spec, timeline, start_shift, outdir, jar_path):
     return t0 - start_shift, str(outdir / "cd_%04d.png")
 
 
-def death_screen_png(jar, path):
-    """Vanilla DeathScreen at GUI scale 3, laid out on the 16:9 window the game area crops."""
+def death_message(jar, comp):
+    """Plain text of a death message chat component, using the game's en_us.json."""
+    global _lang
+    if _lang is None:
+        _lang = json.loads(jar.read("assets/minecraft/lang/en_us.json"))
+    if isinstance(comp, str):
+        return comp
+    if isinstance(comp, list):
+        return "".join(death_message(jar, c) for c in comp)
+    if not isinstance(comp, dict):
+        return str(comp)
+    if "translate" in comp:
+        args = [death_message(jar, a) for a in comp.get("with", [])]
+        fmt = _lang.get(comp["translate"], comp.get("fallback", comp["translate"]))
+        k = 0
+        def sub(m):
+            nonlocal k
+            if m.group(1):
+                return args[int(m.group(1)) - 1] if int(m.group(1)) <= len(args) else ""
+            k += 1
+            return args[k - 1] if k <= len(args) else ""
+        text = re.sub(r"%(?:(\d+)\$)?s", sub, fmt)
+    else:
+        text = comp.get("text", comp.get("", ""))
+    return text + "".join(death_message(jar, c) for c in comp.get("extra", []))
+
+
+_lang = None
+
+
+def death_screen_png(jar, path, cause=None, active=True):
+    """Vanilla DeathScreen at GUI scale 3, laid out on the 16:9 window the game area crops:
+    red gradient, "You Died!" at 2x (y 30), the death message (y 85), the score (y 100), and the
+    two buttons, greyed out for the first 20 ticks (delayTicker)."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     top, bot = (0x50, 0x00, 0x00, 0x60), (0x80, 0x30, 0x30, 0xA0)
     grad = Image.new("RGBA", (1, GAME_H))
@@ -278,13 +371,15 @@ def death_screen_png(jar, path):
     img.alpha_composite(grad.resize((W, GAME_H)), (0, BAND))
     gh = GAME_H // GUI                                     # GUI-space height of the window
     draw_text(img, jar, "You Died!", W // 2, BAND + 30 * GUI, scale=2 * GUI, center=True)
-    draw_text(img, jar, "Score: ", W // 2 - 4 * GUI, BAND + 85 * GUI, center=True)
-    draw_text(img, jar, "0", W // 2 + 16 * GUI, BAND + 85 * GUI, color=(255, 255, 85, 255))
-    btn = big(sprite(jar, "gui/sprites/widget/button"))
+    if cause:
+        draw_text(img, jar, cause, W // 2, BAND + 85 * GUI, center=True)
+    draw_text(img, jar, "Score: ", W // 2 - 4 * GUI, BAND + 100 * GUI, center=True)
+    draw_text(img, jar, "0", W // 2 + 16 * GUI, BAND + 100 * GUI, color=(255, 255, 85, 255))
+    btn = big(sprite(jar, "gui/sprites/widget/button" if active else "gui/sprites/widget/button_disabled"))
     for i, label in enumerate(["Respawn", "Title Screen"]):
         by_ = BAND + (gh // 4 + 72 + 24 * i) * GUI
         img.alpha_composite(btn, ((W - btn.width) // 2, by_))
-        draw_text(img, jar, label, W // 2, by_ + 6 * GUI, center=True)
+        draw_text(img, jar, label, W // 2, by_ + 6 * GUI, center=True, color=(255, 255, 255, 255) if active else (160, 160, 160, 255))
     img.save(path)
 
 
@@ -415,13 +510,26 @@ def main():
         need = sorted({it[0] for st in states for it in st[3] if isinstance(it, tuple) and it and it[0] and not (ICONS / f"{it[0]}.png").exists()})
         if need:   # 3D icons for block items (skips non-block items itself)
             subprocess.run(["node", str(HERE / "renderer" / "icons.js"), CLIENT_JAR.stem, *need], check=True)
+        ticks = hud_ticks(tl, dur + shift)
+        first = int(shift * 20)
+        pngs, runs = {}, []                      # unique HUD images, and (png, n_ticks) runs
         with zipfile.ZipFile(CLIENT_JAR) as jar:
-            for k, (a, b, slot, items, health) in enumerate(states):
-                p = tmp / f"hud{k}.png"
-                hud_png(jar, slot, items, health, p)
-                inputs += ["-loop", "1", "-i", str(p)]
-                graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{max(0, a - shift):.3f},{b - shift:.3f})'[h{k}]")
-                last, n_in = f"h{k}", n_in + 1
+            for st in ticks[first:]:
+                if st not in pngs:
+                    pngs[st] = tmp / f"hud{len(pngs)}.png"
+                    slot, items, health, display, blink, shake = st
+                    hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None)
+                if runs and runs[-1][0] == pngs[st]:
+                    runs[-1][1] += 1
+                else:
+                    runs.append([pngs[st], 1])
+        lst = tmp / "hud.txt"
+        lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {n / 20:.3f}\n" for p, n in runs) + f"file '{runs[-1][0]}'\n")
+        lead = shift - first / 20                # start isn't always on a tick
+        inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
+        graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba,trim=start={lead:.3f},setpts=PTS-STARTPTS[hudv]")
+        graph.append(f"[{last}][hudv]overlay=0:0:eof_action=repeat[hudo]")
+        last, n_in = "hudo", n_in + 1
     if args.countdown and args.timeline:
         tl_all = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
         cd = countdown_frames(args.countdown, tl_all, args.start, tmp, CLIENT_JAR)
@@ -439,7 +547,11 @@ def main():
         a_, b_ = args.on_fire.split(":")
         if a_ in tl_ev and b_ in tl_ev:
             with zipfile.ZipFile(CLIENT_JAR) as jar:
-                pat = fire_frames(jar, tl_ev[a_], tl_ev[b_] + 0.6, tmp)
+                end = tl_ev[b_] + 0.6
+                if b_ == "death":   # a dead body stays on fire (and in view) until the respawn
+                    tl_all_ = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+                    end = next((e["t"] / 1000 for e in tl_all_ if e["event"] == "respawn" and e["t"] / 1000 > tl_ev[b_]), dur + args.start + 1)
+                pat = fire_frames(jar, tl_ev[a_], end, tmp)
             inputs += ["-framerate", "20", "-i", pat]
             graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, tl_ev[a_] - args.start):.3f}/TB[firev]")
             graph.append(f"[{last}][firev]overlay=0:0:eof_action=pass[fireo]")
@@ -466,11 +578,21 @@ def main():
             graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{t0:.3f},{t0 + dur_s:.3f})'[sb{k}]")
             last, n_in = f"sb{k}", n_in + 1
     if args.death_screen and args.death_screen in tl_ev:
+        # DeathScreen opens on the tick the client gets the death packet; buttons enable after 20 ticks
+        all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        t_d = tl_ev[args.death_screen] - args.start
+        t_r = next((e["t"] / 1000 - args.start for e in all_ev if e["event"] == "respawn" and e["t"] / 1000 >= tl_ev[args.death_screen]), 1e6)
+        msg = next((e.get("message") for e in all_ev if e["event"] == "death_message"), None)
         with zipfile.ZipFile(CLIENT_JAR) as jar:
-            death_screen_png(jar, tmp / "death.png")
-        inputs += ["-loop", "1", "-i", str(tmp / "death.png")]
-        graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{tl_ev[args.death_screen] - args.start + 0.6:.3f})'[dso]")
-        last, n_in = "dso", n_in + 1
+            cause = death_message(jar, msg) if msg else None
+            death_screen_png(jar, tmp / "death0.png", cause, active=False)
+            death_screen_png(jar, tmp / "death1.png", cause, active=True)
+        for k, (a, b) in enumerate([(t_d, min(t_r, t_d + 1.0)), (t_d + 1.0, t_r)]):
+            if b <= a:
+                continue
+            inputs += ["-loop", "1", "-i", str(tmp / f"death{k}.png")]
+            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{a:.3f},{b:.3f})'[ds{k}]")
+            last, n_in = f"ds{k}", n_in + 1
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     maps = ["-map", "[v]"]
     if args.audio and not args.song:

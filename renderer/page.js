@@ -222,6 +222,15 @@ window.HB = {
     return header.length
   },
 
+  addBlockModel (id, g) {
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(g.positions, 3))
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(g.colors, 3))
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(g.uvs, 2))
+    geo.setIndex(g.indices)
+    if (entities) entities.blockModels.set(id, { geo, mat: opaqueMat })
+  },
+
   setSection (key, s) {
     this.removeSection(key)
     const grp = new THREE.Group()

@@ -122,7 +122,7 @@ function look (name, extra, regs) {
 }
 
 export class EntityLayer {
-  constructor (scene, regs) { this.scene = scene; this.regs = regs || {}; this.live = new Map(); this.pending = new Set() }
+  constructor (scene, regs) { this.scene = scene; this.regs = regs || {}; this.live = new Map(); this.pending = new Set(); this.blockModels = new Map() }
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
 
   async ensure (id, name, extra) {
@@ -131,7 +131,11 @@ export class EntityLayer {
     if (cur && cur.key === key) return cur
     if (cur) { this.scene.remove(cur.obj); this.live.delete(id) }
     let obj = null, bones = {}, mat = null
-    if (name === 'ender_pearl' || name === 'snowball' || name === 'egg' || name === 'item') {
+    if (name === 'falling_block' && extra && this.blockModels.has(extra.state)) {
+      const bm = this.blockModels.get(extra.state)
+      const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, 0, -0.5)
+      obj = new THREE.Group(); obj.add(m); mat = m.material
+    } else if (name === 'ender_pearl' || name === 'snowball' || name === 'egg' || name === 'item') {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       const t = await texture([`item/${itemName}`])
       if (t) {
@@ -162,7 +166,7 @@ export class EntityLayer {
       if (!r.obj) continue
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0), s.z)
       if (r.mat) r.mat.color.setScalar(s.light ?? 1)
-      if (r.obj.isSprite) continue
+      if (r.obj.isSprite || s.name === 'falling_block') continue
       r.obj.rotation.set(0, s.yaw, 0)
       // limb swing from horizontal speed, like LivingEntity.walkAnimation
       if (r.last) { const sp = Math.hypot(s.x - r.last.x, s.z - r.last.z); r.walk += sp * 4; r.amt = Math.min(1, sp * 4) } else r.amt = 0

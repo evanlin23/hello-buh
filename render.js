@@ -52,9 +52,11 @@ function entitiesAt (t, mesher) {
   return out
 }
 
-// Death: the camera stays where the player died (mineflayer respawns the bot elsewhere) and
-// keels over like the vanilla death animation.
-// Each death holds the camera (with the keel-over) until the next respawn.
+// Death, as the vanilla client shows it in first person (GameRenderer.bobHurt + Pose.DYING):
+// the eye stays at 1.62 (the dying pose keeps the eye height), the view rolls by
+// 40 - 8000/(deathTime + 200) degrees (0 -> 3.6 over a second), and the body keeps its
+// physics (it falls, or sinks in lava/water) until the respawn. mineflayer teleports the bot to
+// the respawn point the same tick, so the camera is simulated from the death pose on.
 const DEATHS = []
 {
   let open = null
@@ -64,15 +66,76 @@ const DEATHS = []
   }
   if (open !== null) DEATHS.push([open, Infinity])
 }
+// Hurt tilt (bobHurt): each hit sets hurtTime = 10; the view rolls by -sin(h^4 pi) * 14 degrees
+// around the hit direction (yaw from the hurt_animation packet, 0 for undirected damage).
+const HURTS = []
+{
+  const tl = rec.timeline || []
+  const hasHurt = tl.some(e => e.event === 'hurt')
+  let hp = 20
+  for (const e of tl) {
+    if (hasHurt && e.event === 'hurt') {
+      const d = tl.find(x => x.event === 'hurt_dir' && Math.abs(x.t - e.t) <= 50)
+      HURTS.push({ t: e.t / 50, dir: d ? d.yaw * Math.PI / 180 : 0 })
+    }
+    if (!hasHurt && e.event === 'health' && e.health < hp - 0.01 && e.health > 0) HURTS.push({ t: e.t / 50, dir: 0 })
+    if (e.event === 'health' && e.health > 0) hp = e.health
+    if (!hasHurt && e.event === 'death') HURTS.push({ t: e.t / 50, dir: 0 })
+  }
+}
+function hurtTilt (t) {
+  let roll = 0, pitch = 0
+  for (const h of HURTS) {
+    const e = t - h.t
+    if (e < 0 || e >= 10) continue
+    let k = (10 - e) / 10
+    k = Math.sin(k * k * k * k * Math.PI)
+    const j = -k * 14 * Math.PI / 180
+    roll += j * Math.cos(h.dir); pitch += -j * Math.sin(h.dir)
+  }
+  return { roll, pitch }
+}
+
+let deathSim = null
+function bodyAfterDeath (d, t) {
+  // vanilla LivingEntity.travel for a body with no input: gravity 0.08 and drag 0.98 in air,
+  // (0.5, 0.8, 0.5) and gravity 0.02 in lava, 0.8 and gravity 0.02 in water; stops on blocks
+  if (!deathSim || deathSim.d !== d) {
+    const i = Math.max(1, Math.min(P.length - 1, Math.floor(d[0])))
+    const a = P[i - 1], b = P[i]
+    const start = (b[1] - a[1]) ** 2 + (b[3] - a[3]) ** 2 + (b[2] - a[2]) ** 2 > 4 ? a : b   // b may already be the respawn point
+    const prev = start === a ? P[Math.max(0, i - 2)] : a
+    let x = start[1], y = start[2], z = start[3], vx = start[1] - prev[1], vy = start[2] - prev[2], vz = start[3] - prev[3]
+    const pts = [[x, y, z]]
+    const blk = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return bl ? bl.name : 'air' }
+    const solid = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(bl && bl.boundingBox === 'block') }
+    for (let k = 0; k < 400; k++) {
+      const m = blk(x, y + 0.1, z)
+      if (m === 'lava') { vx *= 0.5; vy *= 0.8; vz *= 0.5; vy -= 0.02 } else if (m === 'water') { vx *= 0.8; vy *= 0.8; vz *= 0.8; vy -= 0.02 } else { vy -= 0.08; vy *= 0.98; vx *= 0.91; vz *= 0.91 }
+      if (solid(x + vx, y, z)) vx = 0
+      if (solid(x, y, z + vz)) vz = 0
+      x += vx; z += vz
+      if (vy < 0 && solid(x, y + vy, z)) { y = Math.floor(y + vy) + 1; vy = 0 } else y += vy
+      pts.push([x, y, z])
+    }
+    deathSim = { d, pts, yaw: start[4], pitch: start[5] }
+  }
+  const e = Math.max(0, t - d[0]), i = Math.min(deathSim.pts.length - 2, Math.floor(e)), f = e - i
+  const A = deathSim.pts[i], B = deathSim.pts[i + 1]
+  return { x: A[0] + (B[0] - A[0]) * f, y: A[1] + (B[1] - A[1]) * f, z: A[2] + (B[2] - A[2]) * f, yaw: deathSim.yaw, pitch: deathSim.pitch }
+}
+let solidWorld = null   // set once the mesher exists
 
 function camAt (t) {
   const d = DEATHS.find(([a, b]) => t >= a && t < b)
+  const h = hurtTilt(t)
   if (d) {
-    const c = camAtLive(d[0] - 0.001)
-    const k = Math.min(1, (t - d[0]) / 20)
-    return { ...c, y: c.y - 1.1 * k, roll: c.roll + 0.75 * k * k, bobX: 0, bobY: 0, bobPitch: 0 }
+    const b = bodyAfterDeath(d, t)
+    const g = Math.min(t - d[0], 20)
+    return { ...b, y: b.y + EYE, roll: (40 - 8000 / (g + 200)) * Math.PI / 180 + h.roll, bobX: 0, bobY: 0, bobPitch: h.pitch }
   }
-  return camAtLive(t)
+  const c = camAtLive(t)
+  return { ...c, roll: c.roll + h.roll, bobPitch: c.bobPitch + h.pitch }
 }
 
 function camAtLive (t) {
@@ -92,6 +155,7 @@ function camAtLive (t) {
 ;(async () => {
   const mesher = new Mesher(rec.version)
   mesher.addColumns(rec.columns)
+  solidWorld = mesher.world
 
   const app = express()
   const blobs = new Map(); let blobId = 0
@@ -151,6 +215,7 @@ function camAtLive (t) {
   // ONLY=t1,t2,... renders just those ticks (for checking looks quickly)
   const only = process.env.ONLY ? process.env.ONLY.split(',').map(Number) : null
   let bi = 0
+  const sentBlocks = new Set()
   const t1 = Date.now()
   for (let f = 0; f < (only ? only.length : frames); f++) {
     const t = only ? only[f] : f * 20 / FPS
@@ -175,7 +240,14 @@ function camAtLive (t) {
     cam.inLava = !!(inBlock && inBlock.name === 'lava')
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
-    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, entitiesAt(t, mesher), partsAt(t, cam)])
+    const ents = entitiesAt(t, mesher)
+    for (const e of ents) {   // falling blocks: send each block type's mesh once
+      if (e.name === 'falling_block' && e.extra && e.extra.state !== undefined && !sentBlocks.has(e.extra.state)) {
+        sentBlocks.add(e.extra.state)
+        await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.state, mesher.meshSingle(e.extra.state)])
+      }
+    }
+    await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents, partsAt(t, cam)])
     // let the compositor present the finished frame before capturing (else: tearing lines)
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })

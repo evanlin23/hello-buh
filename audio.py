@@ -70,7 +70,11 @@ def main(rec_path, out_path):
     m = Mixer(seconds, seed=len(poses))
     ev = {e["event"]: e for e in tl if e["event"] not in ("health",)}
     sound_events = [e for e in tl if e["event"] == "sound"]
-    if sound_events:   # current recordings: the harness logs every sound with its tick
+    if sound_events or any(e["event"] == "hurt" for e in tl):   # current recordings: the harness logs every sound with its tick
+        auto = any(e["event"] == "hurt" for e in tl)
+        if auto:   # real damage events: play hurt/death sounds from them, not hand-placed ones
+            sound_events = [e for e in sound_events if not e["sound"].startswith(("entity.player.hurt", "entity.player.death"))]
+            player_damage_sounds(m, tl)
         for e in sound_events:
             m.play(e["sound"], e["t"] / 1000, volume=e.get("volume", 1.0), pitch=e.get("pitch", 1.0))
         return finish(m, seconds, out_path)
@@ -106,6 +110,43 @@ def main(rec_path, out_path):
         m.play("item.bucket.fill", ev["scooped"]["t"] / 1000)
 
     return finish(m, seconds, out_path)
+
+
+EFFECT_SOUND = {"hurt": "entity.player.hurt", "burning": "entity.player.hurt_on_fire", "drowning": "entity.player.hurt_drown",
+                "freezing": "entity.player.hurt_freeze", "poking": "entity.player.hurt_sweet_berry_bush", "thorns": "enchant.thorns.hit"}
+
+
+def player_damage_sounds(m, tl):
+    """Vanilla LivingEntity.hurt: a hit plays the damage type's effect sound (DamageEffects), or the
+    death sound instead on the killing hit; fall damage also plays small_fall/big_fall (> 4 dmg).
+    Voice pitch is (r - r) * 0.2 + 1."""
+    import zipfile
+    jar = zipfile.ZipFile(next((WORK / "client").glob("1.21.11.jar")))
+    effects = {}
+    hp, deaths = 20.0, [e["t"] for e in tl if e["event"] == "death"]
+    for e in tl:
+        if e["event"] == "hurt":
+            typ = e.get("type", "generic")
+            if typ not in effects:
+                try:
+                    effects[typ] = json.loads(jar.read(f"data/minecraft/damage_type/{typ}.json")).get("effects", "hurt")
+                except KeyError:
+                    effects[typ] = "hurt"
+            t = e["t"] / 1000
+            pitch = (m.rng.random() - m.rng.random()) * 0.2 + 1.0
+            if any(abs(d - e["t"]) <= 50 for d in deaths):
+                m.play("entity.player.death", t, pitch=pitch)
+            else:
+                m.play(EFFECT_SOUND.get(effects[typ], "entity.player.hurt"), t, pitch=pitch)
+            if typ == "fall":
+                after = next((x["health"] for x in tl if x["event"] == "health" and x["t"] >= e["t"]), hp)
+                m.play("entity.player.big_fall" if hp - after > 4 else "entity.player.small_fall", t)
+        if e["event"] == "health" and e.get("health", 0) > 0:
+            hp = e["health"]
+    # a death with no damage packet (old recordings): still play the death sound
+    for d in deaths:
+        if not any(x["event"] == "hurt" and abs(x["t"] - d) <= 50 for x in tl):
+            m.play("entity.player.death", d / 1000)
 
 
 def finish(m, seconds, out_path):

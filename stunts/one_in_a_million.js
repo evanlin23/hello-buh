@@ -54,8 +54,9 @@ module.exports = {
       if (splashed && i > 4 && (bot.entity.onGround || bot.entity.isInWater)) break
     }
     await bot.waitForTicks(16)
-    await ctx.easeLook(bot.entity.yaw, 1.2, 1200)           // look back up: "from up there?!"
-    await bot.waitForTicks(24)
+    await ctx.easeLook(bot.entity.yaw, -0.25, 700)          // up from the water to the landing spot's surroundings
+    await ctx.easeLook(bot.entity.yaw + 0.7, -0.15, 700)
+    await bot.waitForTicks(12)
     return splashed && !ctx.died
   }
 }
