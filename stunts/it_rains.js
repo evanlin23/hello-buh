@@ -19,8 +19,8 @@ module.exports = {
     song: 'songs/funk_abnormal.mp3', dropAt: 'tnt', deathScreen: true,
     startAt: 'hook:-0.05', endAfter: 'death:1.6',
     subs: [
-      ['hook', 'it rains anvils', 2.0, 0], ['wall', 'uhh', 1.2, 0], ['above', 'wait...', 1.2, 0], ['dodged', 'TOO close', 1.4, 0],
-      ['tnt', 'then TNT', 2.0, 0], ['close_tnt', 'ow', 1.0, 0],
+      ['hook', 'it rains anvils', 2.0, 0], ['wall', 'uhh', 1.2, 0], ['ring', 'they are surrounding me', 1.6, 0], ['above', 'wait...', 1.2, 0], ['dodged', 'TOO close', 1.4, 0],
+      ['tnt', 'then TNT', 2.0, 0], ['tnt_wall', 'a TNT wall??', 1.6, 0], ['close_tnt', 'ow', 1.0, 0],
       ['creepers', 'then CREEPERS', 2.0, 0], ['run', 'nope nope nope', 1.6, 0],
       ['everything', 'then EVERYTHING', 2.4, 0], ['hiss', 'tssss', 1.2, 0]
     ]
@@ -73,7 +73,7 @@ module.exports = {
       n++
       if (rain.anvil && n % rain.anvil === 0) { const [ax, az] = ahead(9, 16, 0.6); anvil(ax, az) }
       if (rain.tnt && n % rain.tnt === 0) { const [ax, az] = ahead(9, 15, 0.55); tnt(ax, az, 32 + Math.floor(rnd() * 10)) }
-      if (rain.creeper && n % rain.creeper === 0) { const [ax, az] = ahead(9, 13, 0.5); creeper(ax, az) }
+      if (rain.creeper && n % rain.creeper === 0) { const [ax, az] = ahead(rain.far ? 14 : 9, rain.far ? 18 : 13, 0.5); creeper(ax, az) }
     }
     bot.on('physicsTick', onTick)
     let booms = 0
@@ -115,6 +115,15 @@ module.exports = {
     await ctx.easeLookAt(new Vec3(p0.x, floor + 1.2, p0.z), 300)
     rain.anvil = 2
     await dodge([[0.2, 0.35, ['left'], 8], [-0.25, 0.3, ['back'], 6]])
+    // a ring of them, all the way round: a full spin to watch them come down
+    {
+      const p = bot.entity.position
+      for (let k = 0; k < 14; k++) { const a = k / 14 * Math.PI * 2; anvil(p.x + Math.sin(a) * 4.5, p.z + Math.cos(a) * 4.5, H - 3, 2) }
+    }
+    ctx.mark('ring')
+    const ys = bot.entity.yaw
+    for (let k = 1; k <= 4; k++) await ctx.easeLook(ys + k * Math.PI / 2, 0.45 - k * 0.08, 380)
+    await dodge([[0.3, 0.3, ['left'], 8]])
 
     // ---- phase 2: TNT ----
     ctx.mark('tnt')
@@ -122,6 +131,17 @@ module.exports = {
     await dodge([[-0.2, 0.4, ['right'], 10], [0.3, 0.3, ['left', 'back'], 10], [-0.1, 0.35, ['left'], 8]])
     rain.tnt = 6
     await dodge([[-0.25, 0.2, ['right'], 12], [0.2, 0.3, ['back'], 8]])
+    // a wall of TNT across the front, going off left to right
+    {
+      const p = bot.entity.position, yy = bot.entity.yaw
+      const fx = -Math.sin(yy), fz = -Math.cos(yy), rx = Math.cos(yy), rz = -Math.sin(yy)
+      for (let k = -4; k <= 4; k++) tnt(p.x + fx * 11 + rx * k * 2.2, p.z + fz * 11 + rz * k * 2.2, 30 + (k + 4) * 3)
+    }
+    rain.tnt = 0
+    ctx.mark('tnt_wall')
+    await ctx.easeLook(bot.entity.yaw - 0.45, 0.5, 400)
+    await ctx.easeLook(bot.entity.yaw + 0.9, 0.1, 1500)
+    rain.tnt = 6
     // a close one: knocked back, hearts gone
     if (bot.health >= 16) {
       const [cx, cz] = [bot.entity.position.x - Math.sin(bot.entity.yaw) * 7.5, bot.entity.position.z - Math.cos(bot.entity.yaw) * 7.5]
@@ -180,10 +200,10 @@ module.exports = {
 
     // ---- finale: everything at once ----
     ctx.mark('everything')
-    rain.anvil = 2; rain.tnt = 5; rain.creeper = 8
+    rain.anvil = 2; rain.tnt = 5; rain.creeper = 8; rain.far = true
     await ctx.easeLook(bot.entity.yaw, 0.45, 400)
     const yf = bot.entity.yaw
-    for (const [dy, dirs, t] of [[0.3, ['left'], 10], [-0.4, ['right'], 10], [0.1, ['back'], 8], [0.4, ['left'], 8]]) { ctx.easeLook(yf + dy, 0.3, 500); await step(dirs, t) }
+    for (const [dy, dirs, t] of [[0.3, ['left'], 10], [-0.4, ['right'], 10], [0.1, ['back'], 8], [0.4, ['left'], 8], [-0.2, ['back'], 8], [0.25, ['right'], 8]]) { ctx.easeLook(yf + dy, 0.3, 500); await step(dirs, t) }
     // the one that lands right behind
     const p = bot.entity.position, yb = bot.entity.yaw
     bot.chat(`/summon creeper ${(p.x + Math.sin(yb) * 1.6).toFixed(2)} ${(floor + 1).toFixed(1)} ${(p.z + Math.cos(yb) * 1.6).toFixed(2)} {PersistenceRequired:1b,ignited:1b,Fuse:30}`)
