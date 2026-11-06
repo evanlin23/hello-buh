@@ -1,9 +1,9 @@
-// "boat clutch 💀" (~18 s, three beats): the bot jumps off a cobblestone pillar looking straight down
+// "boat clutch 💀" (~33 s, seven beats): the bot jumps off a cobblestone pillar looking straight down
 // the fall, places a boat on the grass right below a few ticks before the ground (real use_item with
 // the boat), gets in it (real use_entity) and lands in the boat with full hearts (vanilla: getting
-// into a vehicle resets the fall distance). From 20, 40, then 74 blocks. The camera looks
+// into a vehicle resets the fall distance). From 15 blocks up to 79, seven drops. The camera looks
 // down the fall the whole way, then up the pillar from the boat.
-const PILLARS = [{ h: 20, dx: 0 }, { h: 40, dx: 14 }, { h: 74, dx: 28 }]   // heights picked so a fall tick lands in the boat window
+const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 }))   // heights where a fall tick lands in the boat window (fall phases simulated)
 
 module.exports = {
   name: 'boat_clutch',
@@ -11,7 +11,7 @@ module.exports = {
   caption: 'boat clutch 💀',
   edit: {
     caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'mounted', startAt: 'start:0', endAfter: 'final:0.9',
-    subs: [['jump', '20 blocks', 1.4, 0], ['jump', '40 blocks', 1.4, 1], ['jump', '74 blocks', 1.4, 2]]
+    subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.4, i])
   },
 
   async setup (ctx) {
@@ -23,14 +23,15 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     const top = floor + Math.max(...PILLARS.map(p => p.h))
-    for (let y0 = floor + 1; y0 <= top + 6; y0 += 15) await ctx.cmd(`/fill ${x - 16} ${y0} ${z - 22} ${x + 44} ${Math.min(y0 + 14, top + 6)} ${z + 12} air`)
-    await ctx.cmd(`/fill ${x - 16} ${floor - 3} ${z - 22} ${x + 44} ${floor - 1} ${z + 12} dirt`)
-    await ctx.cmd(`/fill ${x - 16} ${floor} ${z - 22} ${x + 44} ${floor} ${z + 12} grass_block`)
+    const X1 = x + PILLARS[PILLARS.length - 1].dx + 16
+    for (let y0 = floor + 1; y0 <= top + 6; y0 += 9) await ctx.cmd(`/fill ${x - 16} ${y0} ${z - 22} ${X1} ${Math.min(y0 + 8, top + 6)} ${z + 12} air`)   // 93x35x9 < the 32768 cap
+    await ctx.cmd(`/fill ${x - 16} ${floor - 3} ${z - 22} ${X1} ${floor - 1} ${z + 12} dirt`)
+    await ctx.cmd(`/fill ${x - 16} ${floor} ${z - 22} ${X1} ${floor} ${z + 12} grass_block`)
     for (const p of PILLARS) await ctx.cmd(`/fill ${x + p.dx} ${floor + 1} ${z} ${x + p.dx} ${floor + p.h} ${z} cobblestone`)
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6.5')   // vanilla 4.5: nudged so the boat can go down 2 ticks early
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 6.5')   // vanilla 3: nudged the same way
-    await ctx.hotbar(['diamond_sword', 'oak_boat', 'oak_boat', 'oak_boat', ['cobblestone', 64], ['bread', 16]])
+    await ctx.hotbar(['diamond_sword', ...PILLARS.map(() => 'oak_boat'), ['bread', 16]])   // boats don't stack: one per slot
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
     // stand clear of every block before recording (spawning inside the fill hurt the bot: in_wall)
     await ctx.tpCheck(x + 0.5, floor + PILLARS[0].h + 1, z + 0.5, 180, 60)
@@ -53,7 +54,7 @@ module.exports = {
     // the drop first: straight down the pillar
     await ctx.easeLook(0.15, -1.3, 350)
     await ctx.easeLook(-0.1, -1.1, 300)
-    ctx.select(1 + i)                      // the boat
+    ctx.select(1 + i)                      // this beat's boat
     await bot.waitForTicks(3)
     ctx.mark('jump', { n: i })
     bot.setControlState('forward', true); bot.setControlState('jump', true)

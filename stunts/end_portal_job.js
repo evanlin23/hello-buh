@@ -1,12 +1,12 @@
-// "POV: your job is filling end portals" (~20 s): a row of empty end portal rings on a field. The bot
+// "POV: your job is filling end portals" (~30 s): a row of empty end portal rings on a field. The bot
 // works them like a shift worker, within vanilla reach. It stands in the middle of a ring and puts
 // eyes of ender into 11 frames, turning round the ring (real block_place with the eye, vanilla fill
 // sound). Then it hops out over the south frame, turns and puts the 12th eye in from outside: the
 // portal opens in front of it (the server builds the end_portal blocks). Then it walks to the next
-// ring and does it again, faster, and the third one faster still. It ends looking down the row:
+// ring and does it again, faster each time, five rings. It ends looking down the row:
 // more empty rings. The job never ends.
-const RINGS = [0, 7, 14, 21, 28]   // ring origins along x (each ring is 5x5 with a 3x3 portal inside)
-const FILL = [{ ms: 230, wait: 2 }, { ms: 140, wait: 1 }, { ms: 75, wait: 0 }]   // each shift faster
+const RINGS = [0, 7, 14, 21, 28, 35, 42]   // ring origins along x (each ring is 5x5 with a 3x3 portal inside)
+const FILL = [{ ms: 230, wait: 2 }, { ms: 140, wait: 1 }, { ms: 80, wait: 0 }, { ms: 50, wait: 0 }, { ms: 35, wait: 0 }]   // each shift faster
 
 module.exports = {
   name: 'end_portal_job',
@@ -14,7 +14,7 @@ module.exports = {
   caption: 'POV: your job is filling end portals',
   edit: {
     caption: 'POV: your job is filling end portals', red: 'job', song: 'songs/payphone.mp3', dropAt: 'portal', startAt: 'start:0', endAfter: 'outro:1.4',
-    subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['outro', 'it never ends', 1.6, 0]]
+    subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['outro', 'it never ends', 1.6, 0]]
   },
 
   async setup (ctx) {
@@ -25,9 +25,9 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (let y0 = floor + 1; y0 <= floor + 16; y0 += 8) await ctx.cmd(`/fill ${x - 14} ${y0} ${z - 12} ${x + 44} ${y0 + 7} ${z + 18} air`)
-    await ctx.cmd(`/fill ${x - 14} ${floor - 3} ${z - 12} ${x + 44} ${floor - 1} ${z + 18} dirt`)
-    await ctx.cmd(`/fill ${x - 14} ${floor} ${z - 12} ${x + 44} ${floor} ${z + 18} grass_block`)
+    for (let y0 = floor + 1; y0 <= floor + 16; y0 += 8) await ctx.cmd(`/fill ${x - 14} ${y0} ${z - 12} ${x + 56} ${y0 + 7} ${z + 18} air`)
+    await ctx.cmd(`/fill ${x - 14} ${floor - 3} ${z - 12} ${x + 56} ${floor - 1} ${z + 18} dirt`)
+    await ctx.cmd(`/fill ${x - 14} ${floor} ${z - 12} ${x + 56} ${floor} ${z + 18} grass_block`)
     // empty rings, every frame facing the middle (vanilla needs that for the portal to form)
     for (const rx of RINGS) {
       const X = x + rx, y = floor + 1
@@ -113,12 +113,12 @@ module.exports = {
       for (let k = 0; k < 20 && portalAt === null; k++) await bot.waitForTicks(1)
       ctx.log('ring', r, 'portal', portalAt !== null, 'at', bot.entity.position)
       if (portalAt === null) return false
-      await ctx.easeLookAt(c.offset(0.8, 0, -0.6), r === 2 ? 400 : 600)
+      await ctx.easeLookAt(c.offset(0.8, 0, -0.6), r >= 2 ? 400 : 600)
     }
     // the rest of the row: more empty rings waiting
     ctx.mark('outro')
-    await ctx.easeLookAt(new Vec3(x + RINGS[4] + 2.5, floor + 1, z + 2.5), 900)
-    await ctx.easeLookAt(new Vec3(x + RINGS[3] + 2.5, floor + 1, z + 2.5), 800)
+    await ctx.easeLookAt(new Vec3(x + RINGS[6] + 2.5, floor + 1, z + 2.5), 900)
+    await ctx.easeLookAt(new Vec3(x + RINGS[5] + 2.5, floor + 1, z + 2.5), 800)
     bot.removeListener('blockUpdate', onBlock)
     return !ctx.died
   }

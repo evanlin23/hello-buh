@@ -1,19 +1,20 @@
-// "ladder clutch 😳" (~16 s, four beats): the bot stands on the edge of a stone-brick wall looking
+// "ladder clutch 😳" (~31 s, seven beats): the bot stands on the edge of a stone-brick wall looking
 // down the drop, walks off, turns to face the wall while falling and, a couple of ticks before the
 // ground, places one ladder on the wall (real block_place) in the row of its last airborne tick. It
 // grabs it (vanilla: a climbable block clamps the fall to 0.15 b/t and resets the fall distance) and
 // lands with full hearts, then looks up the wall. First from 20 blocks too late (it hits the ground
-// first and loses most of its hearts), then from 30, 45 and 60 blocks, all clean. Placements use vanilla reach (4.5,
-// nudged to 5 so a 60-block fall always has a tick in reach), one tick ahead.
-const WALLS = [{ h: 20, dz: 0, late: true }, { h: 30, dz: 9 }, { h: 45, dz: 18 }, { h: 60, dz: 27 }]
+// first and loses most of its hearts), then from 25, 30, 40, 50, 60 and 70 blocks, all clean. Placements use vanilla reach (4.5,
+// nudged to 5 so a 70-block fall always has a tick in reach), one tick ahead.
+const WALLS = [{ h: 20, late: true }, { h: 25 }, { h: 30 }, { h: 40 }, { h: 50 }, { h: 60 }, { h: 70 }].map((w, i) => ({ ...w, dz: i * 9 }))
+const SPAN = (WALLS.length - 1) * 9
 
 module.exports = {
   name: 'ladder_clutch',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ladder clutch 😳',
   edit: {
-    caption: 'ladder clutch 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'start:0', endAfter: 'final:0.9',
-    subs: [['jump', '20 blocks', 1.4, 0], ['landed', 'too late', 1.2, 0], ['jump', '30 blocks', 1.4, 1], ['jump', '45 blocks', 1.4, 2], ['jump', '60 blocks', 1.4, 3]]
+    caption: 'ladder clutch 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'start:0.3', endAfter: 'final:0.9',
+    subs: [['jump', '20 blocks', 1.4, 0], ['landed', 'too late', 1.2, 0], ...WALLS.slice(1).map((w, i) => ['jump', `${w.h} blocks`, 1.4, i + 1])]
   },
 
   async setup (ctx) {
@@ -25,9 +26,9 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     const R = 22, top = floor + Math.max(...WALLS.map(w => w.h))
-    for (let y0 = floor + 1; y0 <= top + 6; y0 += 10) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 9, top + 6)} ${z + R + 27} air`)   // 45x72x10 < the 32768 cap
-    await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R + 27} dirt`)
-    await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R + 27} grass_block`)
+    for (let y0 = floor + 1; y0 <= top + 6; y0 += 7) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 6, top + 6)} ${z + R + SPAN} air`)   // 45x98x7 < the 32768 cap
+    await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R + SPAN} dirt`)
+    await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R + SPAN} grass_block`)
     // two walls, 1 thick (x), 5 wide (z): the bot falls down their east faces
     for (const w of WALLS) {
       await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + w.h} ${z + w.dz + 2} stone_bricks`)
