@@ -55,7 +55,21 @@ class World {
 
   // Sky/block light levels (0-15). Unloaded columns count as open daylight.
   getLight (pos) {
-    if (this.light) return this.light.get(pos)
+    if (this.light) {
+      const l = this.light.get(pos)
+      if (l[0] || l[1]) return l
+      // light was computed before the stunt changed blocks: a cell that was solid then (0) and is
+      // open now (a torch placed, a block broken) takes its brightest neighbour, less one
+      const b = this.getBlock(pos)
+      if (!b || (b.isCube && !b.transparent)) return l
+      let sky = 0, blk = 0
+      for (const [dx, dy, dz] of [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
+        const n = this.light.get(pos.offset(dx, dy, dz))
+        sky = Math.max(sky, n[0] - 1); blk = Math.max(blk, n[1] - 1)
+      }
+      if (b.name === 'torch' || b.name === 'wall_torch') blk = Math.max(blk, 14)
+      return [Math.max(0, sky), Math.max(0, blk)]
+    }
     const column = this.columns[columnKey(Math.floor(pos.x / 16) * 16, Math.floor(pos.z / 16) * 16)]
     if (!column) return [15, 0]
     const p = posInChunk(pos.floored())

@@ -40,7 +40,9 @@ module.exports = {
     ctx.mark('break')
     try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) }
     ctx.sound('block.sand.break', 1); ctx.particles('block', b.position, { block: 'sand' })
-    // torch into the gap right away, before the column lands
+    // sand checks for a free space 2 ticks after the update: let the column start falling, then put
+    // the torch in the gap so each falling block lands on it and pops off as an item
+    await bot.waitForTicks(3)
     bot.setQuickBarSlot(1)
     bot._client.write('block_place', { hand: 0, location: { x: this.x, y: this.floor, z: this.tz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm(); ctx.sound('block.wood.place', 1)
