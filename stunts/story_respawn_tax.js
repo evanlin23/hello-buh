@@ -128,9 +128,12 @@ module.exports = {
     gone('v_fisher')
     await line('L03', async (k, at) => {
       if (k === 0) { await respawn(); setMeter(4) }
-      if (k === at(1) - 2) await cut(19.5, -3.5, P(25.5, -0.6, -3.5))
+      if (k === at(1) - 2) await cut(18.5, -3.5, P(25.5, -0.6, -3.5))
+      go(k > at(1) && bot.entity.position.x < X + 21.2)
+      if (k > at(1)) K.base = K.aim(P(26.5, 0.4, -3.5))
       look(k)
     })
+    go(false)
     // L04: then lava. Respawn. The butcher's door, wide open
     await cut(-19.5, 10.5, P(-19.5, 0, 12.5), 2.2)
     hurt(5)
@@ -238,7 +241,8 @@ module.exports = {
     await cut(0.5, 7.4, P(0.5, 1.7, 0.5))
     hurt(5)
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
-    await line('L16', async (k) => { look(k) })
+    await line('L16', async (k) => { go(k > 6 && k < 16); look(k) })
+    go(false)
     // L17: and today, I tripped again
     dead = false
     await line('L17', async (k, at) => {
