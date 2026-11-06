@@ -1,18 +1,21 @@
-// "1 in a million landing... x3 😳" (~14 s, escalating): the 1x1 water hole, three drops from a
-// glass block: 30 blocks (lands), 80 blocks (lands), 160 blocks, falling through the cloud
-// layer (misses by a block: death screen, "HelloBuh hit the ground too hard").
-const DROPS = [
+// "1 in a million landing... x6 😳" (~30 s, escalating): the 1x1 water hole, six drops from a
+// glass block: 30, 60, 100, 150 and 200 blocks land; 250 blocks, down through the cloud layer,
+// misses by a block (death screen, "HelloBuh hit the ground too hard").
+const DROPS = [   // six drops, ~30 s (owner: 30 s minimum); the last misses by a block
   { h: 30, off: 0, sub: '30 blocks' },
-  { h: 80, off: 0, sub: '80 blocks' },
-  { h: 160, off: 1.6, sub: '160 blocks...' }
+  { h: 60, off: 0, sub: '60 blocks' },
+  { h: 100, off: 0, sub: '100 blocks' },
+  { h: 150, off: 0, sub: '150 blocks' },
+  { h: 200, off: 0, sub: '200 blocks' },
+  { h: 250, off: 1.6, sub: '250 blocks...' }
 ]
 
 module.exports = {
   name: 'drops',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: '1 in a million landing... x3 😳',
+  caption: '1 in a million landing... x6 😳',
   edit: {
-    caption: '1 in a million landing... x3 😳', red: 'x3', song: 'songs/misery.mp3', dropAt: 'drop', startAt: 'drop:-0.4',
+    caption: '1 in a million landing... x6 😳', red: 'x6', song: 'songs/misery.mp3', dropAt: 'drop', startAt: 'drop:-0.4',
     subs: DROPS.map((d, i) => ['drop', d.sub, 1.8, i]), deathScreen: true, endAfter: 'death:1.1'
   },
   expectDeath: true,
@@ -28,7 +31,8 @@ module.exports = {
     const R = 10
     await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R} dirt`)
     await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R} grass_block`)
-    for (let y0 = floor + 1; y0 <= floor + 164; y0 += 40) await ctx.cmd(`/fill ${x - 2} ${y0} ${z - 2} ${x + 2} ${Math.min(y0 + 39, floor + 164)} ${z + 2} air`)
+    const H = Math.min(DROPS[DROPS.length - 1].h + 4, 318 - floor)
+    for (let y0 = floor + 1; y0 <= floor + H; y0 += 40) await ctx.cmd(`/fill ${x - 2} ${y0} ${z - 2} ${x + 2} ${Math.min(y0 + 39, floor + H)} ${z + 2} air`)
     await ctx.cmd(`/fill ${x - R} ${floor + 1} ${z - R} ${x + R} ${floor + 8} ${z + R} air`)
     await ctx.cmd(`/setblock ${x} ${floor} ${z} water`)
     await ctx.cmd(`/setblock ${x} ${floor - 1} ${z} stone`)

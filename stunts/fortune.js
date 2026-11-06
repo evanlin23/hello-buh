@@ -3,19 +3,22 @@
 // up, so the hotbar fills with stacks. Escalates: coal, iron, gold, diamond, then an emerald finale.
 // The drops get spread spawn points (items summoned at one point merged into one stack) and real
 // launch velocities aimed to come down around the player, who picks them up for real.
-const ORES = [
-  { block: 'coal_ore', drop: 'coal', n: 18 },
+const ORES = [   // eight beats (~30 s, owner: 30 s minimum), filling the 8 free hotbar slots
+  { block: 'coal_ore', drop: 'coal', n: 10 },
+  { block: 'copper_ore', drop: 'raw_copper', n: 16 },
   { block: 'iron_ore', drop: 'raw_iron', n: 22 },
-  { block: 'gold_ore', drop: 'raw_gold', n: 26 },
-  { block: 'diamond_ore', drop: 'diamond', n: 34 },
-  { block: 'emerald_ore', drop: 'emerald', n: 48 }
+  { block: 'lapis_ore', drop: 'lapis_lazuli', n: 28 },
+  { block: 'redstone_ore', drop: 'redstone', n: 34 },
+  { block: 'gold_ore', drop: 'raw_gold', n: 40 },
+  { block: 'diamond_ore', drop: 'diamond', n: 52 },
+  { block: 'emerald_ore', drop: 'emerald', n: 64 }
 ]
 
 module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'burst', startAt: 'burst:-0.6', endAfter: 'finale:2.4' },
+  edit: { caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'burst', startAt: 'burst:-0.6', endAfter: 'finale:2.6' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -25,17 +28,17 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    await ctx.cmd(`/fill ${x - 10} ${floor + 1} ${z - 8} ${x + 10} ${floor + 10} ${z + 6} air`)
-    await ctx.cmd(`/fill ${x - 10} ${floor} ${z - 8} ${x + 10} ${floor} ${z + 6} grass_block`)
-    await ctx.cmd(`/fill ${x - 10} ${floor - 3} ${z - 8} ${x + 10} ${floor - 1} ${z + 6} dirt`)
+    await ctx.cmd(`/fill ${x - 13} ${floor + 1} ${z - 8} ${x + 13} ${floor + 10} ${z + 6} air`)
+    await ctx.cmd(`/fill ${x - 13} ${floor} ${z - 8} ${x + 13} ${floor} ${z + 6} grass_block`)
+    await ctx.cmd(`/fill ${x - 13} ${floor - 3} ${z - 8} ${x + 13} ${floor - 1} ${z + 6} dirt`)
     // the rock face: stone wall 3 deep, ores at chest height, 2 apart
     this.wz = z - 3
-    await ctx.cmd(`/fill ${x - 7} ${floor + 1} ${this.wz - 2} ${x + 7} ${floor + 5} ${this.wz} stone`)
-    await ctx.cmd(`/fill ${x - 7} ${floor + 6} ${this.wz - 2} ${x + 7} ${floor + 6} ${this.wz} grass_block`)
-    this.ores = ORES.map((o, i) => ({ ...o, x: x - 4 + i * 2, y: floor + 2 }))
+    await ctx.cmd(`/fill ${x - 10} ${floor + 1} ${this.wz - 2} ${x + 10} ${floor + 5} ${this.wz} stone`)
+    await ctx.cmd(`/fill ${x - 10} ${floor + 6} ${this.wz - 2} ${x + 10} ${floor + 6} ${this.wz} grass_block`)
+    this.ores = ORES.map((o, i) => ({ ...o, x: x - 7 + i * 2, y: floor + 2 }))
     for (const o of this.ores) await ctx.cmd(`/setblock ${o.x} ${o.y} ${this.wz} ${o.block}`)
-    await ctx.hotbar(['diamond_pickaxe', ['torch', 16], ['bread', 8]])
-    await ctx.tpCheck(x - 3.5, floor + 1, z + 0.5, 180, 15)
+    await ctx.hotbar(['diamond_pickaxe'])
+    await ctx.tpCheck(x - 6.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
@@ -82,7 +85,10 @@ module.exports = {
       }
       ctx.sound('entity.experience_orb.pickup', 0.8, 1.2)
       await ctx.easeLook((rnd() - 0.5) * 0.3, 0.15, 350)   // look at the shower
-      await bot.waitForTicks(i === this.ores.length - 1 ? 30 : 10)   // short tails; the finale rains on
+      await bot.waitForTicks(8)
+      // watch it rain down around your feet and get picked up
+      await ctx.easeLook((rnd() - 0.5) * 0.4, -0.85, 300)
+      await bot.waitForTicks(i === this.ores.length - 1 ? 26 : 8)
       await ctx.easeLook(0, -0.3, 300)
     }
     await bot.waitForTicks(20)

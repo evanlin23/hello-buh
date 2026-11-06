@@ -3,17 +3,23 @@
 // pillar (doImmediateRespawn, the "instant respawn" gag) and goes again until it lands.
 // Green narration subtitles carry the story.
 const clutch = require('./water_clutch')
-const MODES = (process.env.TRIES_MODES || 'skip,late,late,ok').split(',')
+const MODES = (process.env.TRIES_MODES || 'skip,late,skip,late,late,skip,ok').split(',')   // 7 tries: ~30 s (owner: 30 s minimum)
 
 module.exports = {
   ...clutch,
   name: 'tries',
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
-    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'landed', startAt: 'jump:-1.0', endAfter: 'landed:2.2',
-    subs: [['jump', 'easy', 1.0, 0], ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'ok for real this time', 1.8, 1],
-      ['death', 'bro.', 1.5, 1], ['attempt', "let's do it again", 1.6, 2], ['death', 'ONE more', 1.4, 2],
-      ['attempt', 'locked in.', 1.6, 3], ['landed', 'oh wow that was very close', 2.2, 0]]
+    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'landed', startAt: 'jump:-1.0', endAfter: 'landed:1.0',
+    // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
+    subs: [['jump', 'easy', 1.0, 0],
+      ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'ok for real this time', 1.8, 1],
+      ['death', 'bro.', 1.5, 1], ['attempt', "let's do it again", 1.6, 2],
+      ['death', 'I FORGOT AGAIN', 1.5, 2], ['attempt', 'focus.', 1.4, 3],
+      ['death', 'that one was lag', 1.5, 3], ['attempt', 'ONE more', 1.4, 4],
+      ['death', 'why is this so hard', 1.5, 4], ['attempt', 'I swear', 1.4, 5],
+      ['death', '...', 1.2, 5], ['attempt', 'locked in.', 1.6, 6],
+      ['landed', 'oh wow that was very close', 1.0, 0]]
   },
 
   async setup (ctx) {
