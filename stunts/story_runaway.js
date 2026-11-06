@@ -167,6 +167,7 @@ module.exports = {
       const x = X + dx, z = Z + dz
       const d = target.minus(new ctx.Vec3(x, F + dy + 1.62, z))   // arrive already aimed (no 2-frame snap after the cut)
       base = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
+      ctx.mark('cut')   // the renderer snaps to the new spot at any distance (short cuts glided; worker 8)
       say(`/tp @s ${x.toFixed(3)} ${(F + dy).toFixed(3)} ${z.toFixed(3)} ${(180 - base.yaw * 180 / Math.PI).toFixed(2)} ${(-base.pitch * 180 / Math.PI).toFixed(2)}`)
       for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break }
       await bot.look(base.yaw, base.pitch, true)
