@@ -35,7 +35,7 @@ module.exports = {
     }
     this.cb = { x: x, y: floor - 2, z: z + 14 }
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
-    await ctx.tpCheck(x + 0.5, floor + 1, z + 9.5, 180, -0.05 * 180 / Math.PI)
+    await ctx.tpCheck(x + 0.5, floor + 1, z + 9.5, 180, -8)
     await ctx.cmd('/gamemode survival')
     ctx.select(1)
     await bot.waitForTicks(30)
@@ -47,12 +47,16 @@ module.exports = {
     await bot.waitForTicks(10)
     // walk up behind them
     bot.setControlState('forward', true)
-    while (bot.entity.position.z > this.z + 4.2) await bot.waitForTicks(1)
+    while (bot.entity.position.z > this.z - 0.8) await bot.waitForTicks(1)   // ~3 blocks behind the front row
     bot.setControlState('forward', false)
     await bot.waitForTicks(14)
     // they all turn round at once
     const name = bot.username
     await ctx.cmd(`/setblock ${this.cb.x} ${this.cb.y} ${this.cb.z} repeating_command_block[facing=up]{auto:1b,Command:"execute as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${name} eyes"}`)
+    // the command block can take a while to start: mark the turn when the heads actually move
+    const vills = Object.values(bot.entities).filter(e => e.name === 'villager')
+    const yaw0 = vills.map(e => e.yaw)
+    for (let i = 0; i < 120 && vills.every((e, k) => Math.abs(e.yaw - yaw0[k]) < 0.05); i++) await bot.waitForTicks(1)
     ctx.mark('turn')
     for (let i = 0; i < 4; i++) ctx.sound('entity.villager.ambient', 0.8, 0.8 + i * 0.12)
     await bot.waitForTicks(26)
