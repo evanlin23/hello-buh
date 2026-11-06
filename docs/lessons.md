@@ -87,6 +87,9 @@ each section.
   3D icon (GUI rotation 30/225, scale 0.625), drawn with the default plains tint.
 
 ## Pipeline / ops
+- **Finished Shorts live on the `videos` branch** (worktree at `../hb-videos`), one package per
+  Short with everything that made it, plus metadata (see that branch's README). After reviewing a
+  Short: `node scripts/publish.js <name>`. `out/` and `work/` stay gitignored on main.
 - mineflayer auto-respawns on the death tick by default (`respawn: true`), so every death lasted 0
   ticks. The harness uses `respawn: false`: it respawns at once only when the server says
   doImmediateRespawn (game_state_change `immediate_respawn`), otherwise a stunt calls `ctx.respawn()`.
