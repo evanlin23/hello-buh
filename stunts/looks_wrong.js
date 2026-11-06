@@ -5,9 +5,9 @@ const MID = ['..YYYYY..', '.YYYYYYY.', 'YYBYYYBYY', 'YYBYYYBYY', 'YYYYYYYYY', 'Y
 module.exports = pixelArt({
   name: 'looks_wrong',
   stages: [
-    { art: ['.YYY.', 'YBYBY', 'YYYYY', 'YBBBY', '.YYY.'], first: 'B' },
-    { art: MID, first: 'B' },
-    { art: pixelArt.upscale(MID, 2), first: 'B' }
+    { art: ['.YYY.', 'YBYBY', 'YYYYY', 'YBBBY', '.YYY.'], first: 'B', scatter: true },
+    { art: MID, first: 'B', scatter: true },
+    { art: pixelArt.upscale(MID, 2), first: 'B', scatter: true }
   ],
   palette: { Y: 'yellow_wool', B: 'black_wool' },
   caption: 'Bro this looks wrong?',
