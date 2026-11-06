@@ -76,13 +76,13 @@ module.exports = {
     // --- the cast: all NoAI, NoGravity (they only move when a scene moves them)
     const mob = (type, x, y, z, yaw, pitch, tag, more = '') => c(`/summon ${type} ${(X + x).toFixed(2)} ${(F + y).toFixed(2)} ${(Z + z).toFixed(2)} {NoAI:1b,NoGravity:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[${yaw}f,${pitch}f]${more}}`)
     const vd = (prof, type = 'plains') => `,VillagerData:{profession:"minecraft:${prof}",type:"minecraft:${type}",level:2},Xp:1`
-    await mob('villager', 0.5, 1, -1.9, 20, 18, 'mom', vd('farmer'))                    // Mom, frozen at the door
+    await mob('villager', 1.3, 1, -1.9, 20, 18, 'mom', vd('farmer'))                    // Mom, frozen at the door
     await mob('sheep', 3.6, 2.2, -0.6, 50, 0, 'dsheep', ',Color:0b')                    // the sheep by the door, mid-jump
     // the village: walkers back and forth, a hopping villager and a hopping sheep
     const W = [['armorer', -5.0, 24.0, 'plains'], ['librarian', 4.5, 26.5, 'taiga'], ['cleric', -4.5, 28.6, 'desert'], ['mason', 5.5, 22.4, 'savanna'], ['shepherd', 5.5, 30.4, 'plains']]
     for (let i = 0; i < W.length; i++) await mob('villager', W[i][1], 1, W[i][2], 90, 0, `w${i}`, vd(W[i][0], W[i][3]))
     await mob('villager', 0.2, 1, 28.0, 0, 0, 'hop', vd('fletcher', 'snow'))
-    await mob('sheep', -1.8, 1, 30.2, 0, 0, 'hops', ',Color:14b')
+    await mob('sheep', 2.8, 1, 31.0, 0, 0, 'hops', ',Color:12b')
     await mob('sheep', -6.0, 1, 26.8, 90, 0, 'ws0', ',Color:4b')
     await mob('cow', 7.5, 1, 28.5, 90, 0, 'ws1')
 
@@ -105,15 +105,16 @@ module.exports = {
     const ctl = (name, on) => bot.setControlState(name, on)
     const go = (on) => ctl('forward', on)
     const back = (on) => ctl('back', on)
-    const MOM = [0.5, -1.9]
+    const MOM = [1.3, -1.9]   // beside the door, so the door reads
     const momFace = () => P(MOM[0], 2.55, MOM[1])
     const ticks = (id) => Math.round((S.line(id).dur + S.gap) * 20)
 
     // camera: a sway on a global clock that eases in after every cut (no lurch on the first frames)
-    let g = 0, since = 0
+    let g = 0, since = 0, amp = 1
     const look = (k, dyaw = 0, dpitch = 0) => {
       g++; since++
-      const a = Math.min(1, since / 14)
+      amp += ((running ? 1 : 0) - amp) * 0.25          // the camera holds still while the world is frozen
+      const a = Math.min(1, since / 14) * amp
       return bot.look(K.base.yaw + dyaw + Math.sin(g / 21) * 0.08 * a, K.base.pitch + dpitch + Math.sin(g / 29 + 1) * 0.03 * a, true)
     }
     const cut = async (dx, dz, target, dy = 1) => {
@@ -127,20 +128,27 @@ module.exports = {
     // ---- the village clock: it only runs while `running`; frozen mobs get invisible micro-moves
     let running = true, vt = 0, jig = 0
     const W = [[-5.0, 24.0, 2.0, 0], [4.5, 26.5, 2.2, 1.7], [-4.5, 28.6, 1.8, 3.1], [5.5, 22.4, 2.0, 4.4], [5.5, 30.4, 1.5, 0.8]]
-    const hops = { hop: { x: 0.2, z: 28.0, t: -1 }, hops: { x: -1.8, z: 30.2, t: -1 } }
-    const hopUp = () => { for (const h of Object.values(hops)) h.t = 0 }   // a single jump, ~0.6 s; apex 6 ticks in
+    const hops = { hop: { x: 0.2, y: 0.9375, z: 28.0, t: -1 }, hops: { x: 2.8, y: 1, z: 31.0, t: -1 } }
+    const wt = W.map(() => -1)
+    const hopCurve = (t) => t >= 0 ? Math.sin(Math.min(t, 12) / 12 * Math.PI) * 1.2 : 0
+    const hopUp = () => {                                // a single jump, ~0.6 s; apex 6 ticks in
+      for (const h of Object.values(hops)) h.t = 0
+      for (let i = 0; i < W.length; i++) wt[i] = i % 2 ? 1 : 2   // the walkers hop too, a tick or two apart
+    }
     const village = () => {
       if (running) vt++
       jig = (jig + 1) % 4
       const j = running ? 0 : (jig < 2 ? 0.004 : -0.004)
       for (let i = 0; i < W.length; i++) {
         const [cx, cz, amp, ph] = W[i]
-        const a = vt / 22 + ph, x = cx + Math.sin(a) * amp + j
-        tp(`w${i}`, x, 1, cz, -90 * Math.max(-1, Math.min(1, Math.cos(a) * 3)))   // turns through facing south, not a snap
+        if (wt[i] >= 0 && running) wt[i]++
+        if (wt[i] >= 12) wt[i] = -1
+        const a = vt / 14 + ph, x = cx + Math.sin(a) * amp + j
+        tp(`w${i}`, x, 1 + hopCurve(wt[i]), cz, -90 * Math.max(-1, Math.min(1, Math.cos(a) * 3)))   // turns through facing south, not a snap
       }
       for (const [tag, h] of Object.entries(hops)) {
         if (h.t >= 0 && running) h.t++
-        const y = h.t >= 0 ? 1 + Math.sin(Math.min(h.t, 12) / 12 * Math.PI) * 1.2 : 1
+        const y = h.y + hopCurve(h.t)
         if (h.t >= 12) h.t = -1
         tp(tag, h.x + j, y, h.z, 0)
       }
@@ -254,10 +262,10 @@ module.exports = {
     })
     ctx.mark('face_off')
     // L14: she's only ever lived the minutes I was home (from inside, past her, out the door)
-    await cut(-0.5, -6.5, P(0.5, 2.2, -1.9))
+    await cut(-0.5, -6.5, P(1.3, 2.2, -1.9))
     await line('L14', async (k) => { world(); go(k > 2 && bot.entity.position.z < Z - 4.4); look(k, Math.sin(k / 12) * 0.08) })
     // L15: I left at seven (beside her: the empty street). For her, that was this morning (turn to her).
-    await cut(1.6, -1.6, P(0.5, 1.7, 26))
+    await cut(2.6, -0.6, P(0.5, 1.7, 26))
     ctx.mark('face_on', { near: [X + MOM[0], Z + MOM[1], 1], head: true })
     let from = null
     await line('L15', async (k, at) => {
@@ -279,20 +287,17 @@ module.exports = {
     // L18: I say hi, I hug her, and I leave again (down the street, past the line)... which is why
     // (I look back from the street: Mom and the sheep stop, mid-jump)
     await cut(0.5, 1.6, momFace())
-    const END = P(2.0, 2.3, -1.2)
+    const END = P(2.4, 2.0, -1.2)
     let phase = 0, tf = null
     await line('L18', async (k, at) => {
       if (k < at(2)) { go(bot.entity.position.z > Z - 0.95); aimAt(momFace()) }
-      else if (k < at(3)) {                               // turn round
-        if (phase === 0) { phase = 1; go(false); tf = { ...K.base } }
-        turn(tf, P(0.5, 1.6, 30), (k - at(2) + 1) / 6)
-      } else if (k < at(5) - 6) {                         // walking off down the street (a cut: further along)
-        if (phase === 1) { phase = 2; await cut(0.5, 7.5, P(0.5, 1.6, 30)) }
+      else if (k < at(3) + 4) {                           // hard cut: already walking off down the street
+        if (phase === 0) { phase = 1; await cut(0.5, 10.5, P(0.5, 1.6, 30)) }
         go(true)
-      } else {                                             // look back: the sheep jumps and stops
-        if (phase === 2) { phase = 3; go(false); tf = { ...K.base }; dsheep.mode = 'hop'; dsheep.t = 0 }
-        back(true)
-        turn(tf, END, (k - at(5) + 7) / 7)
+      } else {                                             // look back over 10 ticks: the sheep jumps... and stops
+        if (phase === 1) { phase = 2; go(false); tf = { ...K.base } }
+        turn(tf, END, (k - at(3) - 3) / 10)
+        if (k === at(5) - 6) { dsheep.mode = 'hop'; dsheep.t = 0 }
         if (k === at(5)) { ctx.mark('face_off'); running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
       }
       world(); look(k)
