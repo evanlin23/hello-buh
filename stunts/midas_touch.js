@@ -16,6 +16,8 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     await ctx.cmd(`/fill ${x - 1} ${floor + 1} ${z - 1} ${x + 1} ${floor + 6} ${z + 1} air`)
+    // the walk (south, +z) goes through here: no tree trunks to walk face-first into (trees beside it stay)
+    for (const t of ['#minecraft:logs', '#minecraft:leaves']) await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${z + 1} ${x + 3} ${floor + 12} ${z + 9} air replace ${t}`)
     await ctx.hotbar(['diamond_sword', 'diamond_pickaxe', ['bread', 16], ['gold_ingot', 7]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
@@ -28,16 +30,26 @@ module.exports = {
     const { bot } = ctx
     let on = false, n = 0
     const tags = ['#minecraft:mineable/shovel', '#minecraft:mineable/axe', '#minecraft:leaves', '#minecraft:mineable/pickaxe']
+    // every few ticks the block under the crosshair starts a blob that grows outward a ring a tick
+    // (all at once in one frame read as a swap, not a spread)
+    const blobs = []
     const touch = () => {
-      if (!on || n++ % 2) return
-      const b = bot.blockAtCursor(48)
-      if (!b || b.name === 'gold_block') return
-      const p = b.position
-      const r = n > 120 ? 2 : 1                                  // it gets stronger
-      for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r} ${p.z + r} gold_block replace ${t}`)
-      // ground cover sitting on top would stay green on the gold (leaf litter, grass): clear it
-      for (const c of ['leaf_litter', 'short_grass', 'fern', 'bush']) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r + 1} ${p.z + r} air replace ${c}`)
-      ctx.sound('block.amethyst_block.chime', 1, 0.8 + (n % 7) * 0.08)
+      if (on && n++ % 4 === 0) {
+        const b = bot.blockAtCursor(48)
+        if (b && b.name !== 'gold_block') {
+          blobs.push({ p: b.position, r: 0, max: n > 100 ? 2 : 1 })
+          ctx.sound('block.amethyst_block.chime', 1, 0.8 + (n % 7) * 0.08)
+        }
+      }
+      for (const bl of blobs) {
+        const { p, r } = bl
+        for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r} ${p.z + r} gold_block replace ${t}`)
+        if (r === bl.max) {   // ground cover on top would stay green on the gold (leaf litter, grass): clear it
+          for (const c of ['leaf_litter', 'short_grass', 'fern', 'bush']) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r + 1} ${p.z + r} air replace ${c}`)
+        }
+        bl.r++
+      }
+      for (let i = blobs.length - 1; i >= 0; i--) if (blobs[i].r > blobs[i].max) blobs.splice(i, 1)
     }
     bot.on('physicsTick', touch)
     // walking through a forest: hop over whatever we bump into instead of standing against it
@@ -54,7 +66,7 @@ module.exports = {
     await ctx.easeLook(Math.PI - 0.3, -0.25, 1200)            // walk on, gilding the path
     await ctx.easeLook(Math.PI + 0.7, 0.05, 1400)             // ...and the trees alongside
     bot.setControlState('forward', false)
-    await ctx.easeLook(Math.PI + 2.4, 0.0, 1800)              // turn round: the golden trail behind
+    await ctx.easeLook(Math.PI + 2.6, -0.42, 1800)            // turn round, looking down the golden trail behind
     on = false
     await bot.waitForTicks(24)
     bot.removeListener('physicsTick', touch); bot.removeListener('physicsTick', hop)
