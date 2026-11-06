@@ -82,6 +82,10 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
                  f"[0:a]loudnorm=I=-15:TP=-2,aresample=48000[game];[song][game]amix=inputs=2:normalize=0,loudnorm=I=-10:TP=-1:LRA=11[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+    if stunt.get("story"):   # single-pass loudnorm lands short: correct the story master to -14 LUFS exactly
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import story_track
+        story_track.master_gain(out, -14.0)
     f = pathlib.Path(song).name
     t, a = SONGS.get(f, (f, ""))
     if gen:

@@ -110,13 +110,13 @@ module.exports = {
     // L02: just inside the open door, facing out (east wall door of the house at x 4: he faces west)
     await vil(5.5, 24.5, 90, 'librarian', 'door')
     // L03: the farmer in the wheat, facing the camera (east)
-    await vil(-24.5, 1.5, -90, 'farmer', 'farmer')
+    await vil(-25.5, -5.4, 0, 'farmer', 'farmer')
     // L04: the fisherman on the end of the dock, his boat beside it (he jumps in; mineflayer
     // doesn't move passengers, so he isn't one: both are teleported together)
-    await c(`/summon oak_boat ${X + 24.5} ${F + 0.52} ${Z - 4.5} {NoGravity:1b,Invulnerable:1b,Rotation:[-90f,0f],Tags:["boat"]}`)
+    await c(`/summon oak_boat ${X + 23.9} ${F + 0.52} ${Z - 6.6} {NoGravity:1b,Invulnerable:1b,Rotation:[-90f,0f],Tags:["boat"]}`)
     await vil(22.0, -4.5, -90, 'fisherman', 'fisher')
     // L05: six chickens in the pen
-    for (let i = 0; i < 6; i++) await c(`/summon chicken ${(X - 4.5 + (i % 3) * 2.2).toFixed(2)} ${F + 1} ${(Z - 27.2 + Math.floor(i / 3) * 2.0 + (i % 2) * 0.5).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["chick"],Rotation:[${i * 40}f,0f]}`)
+    for (let i = 0; i < 6; i++) await c(`/summon chicken ${(X - 4.5 + (i % 3) * 2.2).toFixed(2)} ${F + 1} ${(Z - 28.6 + Math.floor(i / 3) * 1.6 + (i % 2) * 0.5).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["chick"],Rotation:[${i * 40}f,0f]}`)
     // L06: the nitwit by the lamp post
     await vil(-14.5, 20.5, 90, 'nitwit', 'nitwit')
     // L07: mom (a creeper) in front of the house; L08: the golem behind the camera
@@ -157,9 +157,11 @@ module.exports = {
     // a cut: teleport, wait for it to land, aim
     const cut = async (dx, dz, target, dy = 1) => {
       const x = X + dx, z = Z + dz
-      say(`/tp @s ${x} ${F + dy} ${z}`)
+      const d = target.minus(new ctx.Vec3(x, F + dy + 1.62, z))   // arrive already aimed (no 2-frame snap after the cut)
+      base = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
+      say(`/tp @s ${x} ${F + dy} ${z} ${(180 - base.yaw * 180 / Math.PI).toFixed(2)} ${(-base.pitch * 180 / Math.PI).toFixed(2)}`)
+      await bot.look(base.yaw, base.pitch, true)
       for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break }
-      base = aim(target)
       await bot.look(base.yaw, base.pitch, true)
     }
     // move a tagged group one step away from the bot (they turn to run, then keep running)
@@ -194,39 +196,38 @@ module.exports = {
       look(k, k > at(2) + 4 ? Math.sin((k - at(2)) / 2) * 0.01 : 0)
     })
     // L03: the farmer, then he jumps the far fence and sprints
-    await cut(-19.5, 2.5, P(-24.5, 1.5, 1.5))
-    ctx.mark('face_on', { near: [X - 24.5, Z + 1.5, 1.5], head: true })
-    let fx = -24.5, fz = 1.5
+    await cut(-24.6, -2.2, P(-25.5, 1.5, -5.4))
+    ctx.mark('face_on', { near: [X - 25.5, Z - 5.4, 1.5], head: true })
+    let fx = -25.5, fz = -5.4
     await line('L03', async (k, at) => {
-      const go = at(4)
+      const go = at(4) - 2
       if (k === go) ctx.mark('face_off')
-      if (k >= go) {
-        fx -= k < go + 3 ? 0.1 : 0.36
-        const hop = Math.max(0, 1 - Math.abs(fx + 31) / 1.6)   // over the fence at x -31
-        const bob = fx > -29.5 ? Math.abs(Math.sin((k - go) / 3)) * 0.25 : 0   // bounding through the wheat
-        say(`/tp @e[tag=farmer,limit=1] ${(X + fx).toFixed(3)} ${(F + 1 + hop * 1.3 + bob).toFixed(3)} ${(Z + fz).toFixed(3)} 90 0`)
+      if (k >= go) {                          // turn, hop the north fence (z -7), sprint off
+        fz -= k < go + 2 ? 0.12 : 0.34
+        const hop = Math.max(0, 1 - Math.abs(fz + 6.5) / 1.3)
+        say(`/tp @e[tag=farmer,limit=1] ${(X + fx).toFixed(3)} ${(F + 1 + hop * 1.4).toFixed(3)} ${(Z + fz).toFixed(3)} 180 0`)
       }
-      base = aim(P(fx, 1.5, fz)); look(k)
+      base = aim(P(fx, 1.3 + Math.max(0, -6.5 - fz) * 0.02, Math.max(fz, -12))); look(k)
     })
     // L04: the fisherman rows away for good
-    await cut(18.5, -4.5, P(23.5, 1.0, -4.5))
-    let bx = 24.5, vx = 22.0
+    await cut(19.2, -3.4, P(23.0, 0.9, -5.6))
+    let bx = 23.9, bz = -6.6, vx = 22.0, vz = -4.5, vy = 1
     await line('L04', async (k, at) => {
-      const jump = at(1) - 2, go = jump + 9
+      const jump = at(1) - 2, go = jump + 10
       if (k >= jump && k < go) {            // hop off the dock into the boat
-        const u = (k - jump + 1) / 9
-        vx = 22.0 + (bx - 22.0) * u
-        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${(F + 1 + Math.sin(u * Math.PI) * 0.9 - u * 0.75).toFixed(3)} ${Z - 4.5} -90 0`)
+        const u = (k - jump + 1) / 10
+        vx = 22.0 + (bx - 22.0) * u; vz = -4.5 + (bz + 4.5) * u; vy = 1 + Math.sin(u * Math.PI) * 1.1 - u * 0.75
+        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${(F + vy).toFixed(3)} ${(Z + vz).toFixed(3)} -90 0`)
       }
       if (k >= go) {                        // and off he rows, for good
-        bx += Math.min(0.24, (k - go + 1) * 0.03); vx = bx
-        say(`/tp @e[tag=boat,limit=1] ${(X + bx).toFixed(3)} ${F + 0.52} ${Z - 4.5} -90 0`)
-        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${F + 0.25} ${Z - 4.5} -90 0`)
+        bx += Math.min(0.22, (k - go + 1) * 0.03); vx = bx; vz = bz; vy = 0.25
+        say(`/tp @e[tag=boat,limit=1] ${(X + bx).toFixed(3)} ${F + 0.52} ${Z + bz} -90 0`)
+        say(`/tp @e[tag=fisher,limit=1] ${(X + vx).toFixed(3)} ${F + 0.25} ${Z + bz} -90 0`)
       }
-      base = aim(P(Math.min(bx, vx + 1), 1.0, -4.5)); look(k)
+      base = aim(P((vx + bx) / 2, 0.9, (vz + bz) / 2)); look(k)
     })
     // L05: the chickens pack up and leave, single file out of the pen
-    await cut(-1.5, -19.5, P(-1.5, 0.6, -27))
+    await cut(-1.5, -23.7, P(-1.5, 0.5, -28))
     await line('L05', async (k, at) => {
       if (k >= at(2) - 6) say(`/execute as @e[tag=chick] at @s run tp @s ~${((Math.random() - 0.5) * 0.02).toFixed(3)} ~ ~-0.22 180 0`)
       look(k)
@@ -289,11 +290,14 @@ module.exports = {
       look(k, Math.sin(k * 1.9) * 0.02, Math.cos(k * 2.3) * 0.015)
     }, -0.05)
     // BOOM
+    const boomAt = bot.entity.position.clone()
     say(`/execute at @s run summon tnt ~ ~ ~ {fuse:0s}`)
     ctx.mark('boom')
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
     await bot.waitForTicks(16)
-    const still = async () => {}
+    ctx.mark('face_on', { near: [X + 20.5, Z - 26.5, 40] })
+    const cam = `${boomAt.x.toFixed(2)} ${F + 1} ${boomAt.z.toFixed(2)}`   // a dead player can't be targeted: use where I stood
+    const still = async () => say(`/execute as @e[tag=party] at @s facing ${cam} positioned ^ ^ ^0.07 run tp @s ~ ${F + 1} ~ facing ${cam}`)
     await line('L15', still, 0.25)
     await line('L16', still)
     await line('L17', still, 0.2)
