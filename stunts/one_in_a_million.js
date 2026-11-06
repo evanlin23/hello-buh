@@ -7,7 +7,7 @@ module.exports = {
   name: 'one_in_a_million',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing 😳',
-  edit: { caption: '1 in a million landing 😳', song: 'songs/misery.mp3', dropAt: 'splash', start: 0.6 },
+  edit: { caption: '1 in a million landing 😳', song: 'songs/misery.mp3', dropAt: 'splash' , startAt: 'drop:-1.2', endAfter: 'splash:2.6'},
 
   async setup (ctx) {
     const { bot } = ctx

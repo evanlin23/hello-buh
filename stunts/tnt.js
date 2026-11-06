@@ -6,7 +6,7 @@ module.exports = {
   name: 'tnt',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you lit 75 TNT 💀',
-  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', start: 0.4 },
+  edit: { caption: 'POV: you lit 75 TNT 💀', red: '75', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', start: 0.4, endAfter: 'boom:7.6' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -58,11 +58,11 @@ module.exports = {
     const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
     bot._client.once('explosion', onBoom)
     for (let i = 0; i < 120 && !boomed; i++) await bot.waitForTicks(1)
-    await bot.waitForTicks(50)                                // the chain goes off
+    await bot.waitForTicks(40)                                // the chain goes off
     // walk up to the crater
-    bot.setControlState('forward', true)
+    bot.setControlState('forward', true); bot.setControlState('sprint', true)
     for (let i = 0; i < 80 && bot.entity.position.z > pz + 7; i++) await bot.waitForTicks(1)
-    bot.setControlState('forward', false)
+    bot.setControlState('forward', false); bot.setControlState('sprint', false)
     await ctx.easeLook(0, -0.75, 900)
     await ctx.easeLook(0.5, -0.6, 900)
     await bot.waitForTicks(10)

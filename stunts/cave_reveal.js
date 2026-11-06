@@ -20,7 +20,7 @@ module.exports = {
   name: 'cave_reveal',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'never dig straight down 💀',
-  edit: { caption: 'never dig straight down 💀', red: 'never', song: 'songs/misery.mp3', dropAt: 'reveal', start: 0.5 },
+  edit: { caption: 'never dig straight down 💀', red: 'never', song: 'songs/misery.mp3', dropAt: 'reveal' , startAt: 'reveal:-2.2'},
 
   async setup (ctx) {
     const { bot } = ctx

@@ -7,7 +7,7 @@ module.exports = {
   name: 'lava_rising',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'the lava stopped 1 block below me 😳',
-  edit: { caption: 'the lava stopped 1 block below me 😳', red: '1 block', song: 'songs/misery.mp3', dropAt: 'stopped', start: 0.5 },
+  edit: { caption: 'the lava stopped 1 block below me 😳', red: '1 block', song: 'songs/misery.mp3', dropAt: 'stopped' , startAt: 'rising:-0.3', endAfter: 'stopped:2.6'},
 
   async setup (ctx) {
     const { bot } = ctx
@@ -47,12 +47,12 @@ module.exports = {
     await ctx.easeLook(Math.PI, -0.2, 500)
     rising = true; ctx.mark('rising')
     ctx.sound('block.lava.ambient', 1)
-    await ctx.easeLook(Math.PI, -0.5, 600)                    // look out over it: pillar!
+    await ctx.easeLook(Math.PI, -0.75, 600)                   // down and out: pillar!
     // pillar: jump, and at the top of the jump place cobblestone where the feet were
     for (let k = 0; k < LAYERS; k++) {
       const base = floor + k                                   // block we stand on
       bot.setControlState('jump', true)
-      ctx.easeLook(Math.PI + 0.5 * Math.sin(k * 0.7), -0.45 - 0.15 * Math.cos(k * 0.5), 500)   // keep glancing at the lava sea
+      ctx.easeLook(Math.PI + 0.5 * Math.sin(k * 0.7), -0.75 - 0.1 * Math.cos(k * 0.5), 500)   // the pillar side and the lava climbing   // keep glancing at the lava sea
       for (let i = 0; i < 20 && bot.entity.position.y < base + 2.1; i++) await bot.waitForTicks(1)
       bot.setControlState('jump', false)
       bot._client.write('block_place', { hand: 0, location: { x, y: base, z }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
@@ -63,7 +63,7 @@ module.exports = {
     // nerves: look around at the lava sea, then down as the last layers come up
     await ctx.easeLook(Math.PI + 0.9, -0.35, 900)
     await ctx.easeLook(Math.PI - 0.9, -0.4, 1100)
-    await ctx.easeLook(Math.PI, -1.35, 700)
+    await ctx.easeLook(Math.PI + 0.3, -1.0, 700)                // the gap: lava one block under the feet
     for (let i = 0; i < 200 && layer < LAYERS; i++) await bot.waitForTicks(1)
     await bot.waitForTicks(30)
     bot.removeListener('physicsTick', rise)

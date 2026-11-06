@@ -5,7 +5,7 @@ module.exports = {
   name: 'anvil_rain',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'minecraft but it rains anvils 💀',
-  edit: { caption: 'minecraft but it rains anvils 💀', red: 'anvils', song: 'songs/funk_abnormal.mp3', dropAt: 'rain', start: 0.5, deathScreen: true },
+  edit: { caption: 'minecraft but it rains anvils 💀', red: 'anvils', song: 'songs/funk_abnormal.mp3', dropAt: 'rain', deathScreen: true , startAt: 'rain:0.2', endAfter: 'death:1.8'},
   expectDeath: true,
 
   async setup (ctx) {
@@ -31,7 +31,7 @@ module.exports = {
 
   async perform (ctx) {
     const { bot } = ctx
-    const H = 22
+    const H = 14   // anvils from 22 up were dots that barely moved; 14 reads (and lands in ~1.4 s)
     let seed = 5
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
     const landed = (o, n) => { if (n && /anvil/.test(n.name) && !(o && /anvil/.test(o.name))) ctx.sound('block.anvil.land', 0.5, 0.9 + rnd() * 0.2) }

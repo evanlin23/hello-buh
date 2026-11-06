@@ -5,7 +5,7 @@ module.exports = {
   name: 'midas_touch',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: you got the midas touch 🤑',
-  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', song: 'songs/funk_abnormal.mp3', dropAt: 'touch', start: 0.5 },
+  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', song: 'songs/funk_abnormal.mp3', dropAt: 'touch', startAt: 'touch:-0.4' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -35,6 +35,8 @@ module.exports = {
       const p = b.position
       const r = n > 120 ? 2 : 1                                  // it gets stronger
       for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r} ${p.z + r} gold_block replace ${t}`)
+      // ground cover sitting on top would stay green on the gold (leaf litter, grass): clear it
+      for (const c of ['leaf_litter', 'short_grass', 'fern', 'bush']) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r + 1} ${p.z + r} air replace ${c}`)
       ctx.sound('block.amethyst_block.chime', 1, 0.8 + (n % 7) * 0.08)
     }
     bot.on('physicsTick', touch)

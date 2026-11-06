@@ -122,6 +122,10 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
     sel = big(sprite(jar, "gui/sprites/hud/hotbar_selection"))
     bx, by = (W - bar.width) // 2, BAND + GAME_H - bar.height - GUI   # hotbar sits at the bottom edge of the game
     img.alpha_composite(bar, (bx, by))
+    # crosshair in the middle of the game view (vanilla draws it inverted against the scene; plain
+    # white reads the same on sky and terrain)
+    ch = big(sprite(jar, "gui/sprites/hud/crosshair"))
+    img.alpha_composite(ch, ((W - ch.width) // 2, BAND + (GAME_H - ch.height) // 2))
     # selection box before the items and counts (Gui.renderItemHotbar), so counts stay readable
     img.alpha_composite(sel, (bx - GUI + 20 * GUI * slot, by - GUI))
     for i, it in enumerate(items):

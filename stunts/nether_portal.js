@@ -5,7 +5,7 @@ module.exports = {
   name: 'nether_portal',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: your first nether portal 😳',
-  edit: { caption: 'POV: your first nether portal 😳', red: 'nether', song: 'songs/funk_abnormal.mp3', dropAt: 'lit', start: 0.4 },
+  edit: { caption: 'POV: your first nether portal 😳', red: 'nether', song: 'songs/funk_abnormal.mp3', dropAt: 'lit' , endAfter: 'lit:2.8'},
 
   async setup (ctx) {
     const { bot } = ctx

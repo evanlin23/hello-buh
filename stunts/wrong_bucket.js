@@ -7,7 +7,7 @@ module.exports = {
   ...clutch,
   name: 'wrong_bucket',
   caption: 'POV: you grabbed the wrong bucket 💀',
-  edit: { caption: 'POV: you grabbed the wrong bucket 💀', red: 'wrong', song: 'songs/funk_abnormal.mp3', dropAt: 'death', start: 1.2, onFire: 'placed:death', deathScreen: true },
+  edit: { caption: 'POV: you grabbed the wrong bucket 💀', red: 'wrong', song: 'songs/funk_abnormal.mp3', dropAt: 'death', onFire: 'placed:death', deathScreen: true , startAt: 'jump:-1.0', endAfter: 'death:1.8'},
   expectDeath: true,
 
   async setup (ctx) {

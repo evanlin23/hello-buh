@@ -5,7 +5,7 @@ module.exports = {
   name: 'dig_up',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'never dig straight up 💀',
-  edit: { caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened', start: 0.5, onFire: 'hurt:death', deathScreen: true },
+  edit: { caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened', onFire: 'hurt:death', deathScreen: true , endAfter: 'death:1.8'},
   expectDeath: true,
 
   async setup (ctx) {

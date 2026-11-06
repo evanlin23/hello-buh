@@ -7,7 +7,7 @@ module.exports = {
   name: 'sand_tower',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'the torch trick never gets old 😭',
-  edit: { caption: 'the torch trick never gets old 😭', red: 'torch', song: 'songs/funk_abnormal.mp3', dropAt: 'break', start: 0.4 },
+  edit: { caption: 'the torch trick never gets old 😭', red: 'torch', song: 'songs/funk_abnormal.mp3', dropAt: 'break' , endAfter: 'break:3.2'},
 
   async setup (ctx) {
     const { bot } = ctx

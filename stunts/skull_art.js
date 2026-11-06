@@ -5,6 +5,6 @@ module.exports = require('../lib/pixel_art')({
   palette: { W: 'white_concrete', K: 'black_concrete' },
   first: 'K',
   wall: 'deepslate_bricks',
-  caption: 'the skull emoji irl 💀',
-  edit: { caption: 'the skull emoji irl 💀', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', start: 0.3 }
+  caption: 'why is he building THIS 😨',
+  edit: { caption: 'why is he building THIS 😨', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', start: 0.3 }
 })

@@ -10,7 +10,7 @@ module.exports = {
   name: 'tries',
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
-    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'landed', start: 1.2,
+    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'landed', startAt: 'jump:-1.0', endAfter: 'landed:2.2',
     subs: [['attempt', 'easy', 1.5, 0], ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'ok for real this time', 1.8, 1],
       ['death', 'bro.', 1.5, 1], ['attempt', "let's do it again", 1.6, 2], ['death', 'ONE more', 1.4, 2],
       ['attempt', 'locked in.', 1.6, 3], ['landed', 'oh wow that was very close', 2.2, 0]]
