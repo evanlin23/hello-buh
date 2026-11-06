@@ -1,5 +1,5 @@
 // "1 in a million landing... x6 😳" (~30 s, escalating): the 1x1 water hole, six drops from a
-// glass block: 30, 60, 100, 150 and 200 blocks land; 250 blocks, down through the cloud layer,
+// glass block: 30, 60, 100, 150 and 200 blocks land; 250 blocks (clouds off: the fall crosses the cloud layer)
 // misses by a block (death screen, "HelloBuh hit the ground too hard").
 const DROPS = [   // six drops, ~30 s (owner: 30 s minimum); the last misses by a block
   { h: 30, off: 0, sub: '30 blocks' },
@@ -19,6 +19,7 @@ module.exports = {
     subs: DROPS.map((d, i) => ['drop', d.sub, 1.8, i]), deathScreen: true, endAfter: 'death:1.1'
   },
   expectDeath: true,
+  clouds: false,                // the 200-250 block falls cross y 192: the camera went through a white cloud wall
 
   async setup (ctx) {
     const { bot } = ctx
