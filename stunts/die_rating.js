@@ -1,28 +1,29 @@
-// "rating every way to die 💀" (docs/ideas.md #8, ~30 s): fourteen deaths in a row, each with the
-// vanilla death screen and its real death message, rated from boring to ridiculous:
-// fall, fire, cactus, magma, lava, a wither rose, gravel on the head, a harming potion at my own feet, pointed
-// dripstone, a creeper I lit myself, a firework under a low ceiling, a falling anvil, crammed by pigs, and the respawn anchor
-// in the Overworld ("[Intentional Game Design]"). The bot plays on half a heart (max health 1) so
-// each death is quick; every death is a real survival action (walking, digging, throwing,
-// lighting, using the anchor). After each death screen it clicks Respawn and the next set is its spawn point.
+// "rating every way to die 💀" (docs/ideas.md #8, ~30 s): thirteen deaths in a row, each with the
+// vanilla death screen and its real death message, rated 0/10 to 11/10 with a card: a fall off a
+// pillar, fire, cactus, magma, lava, a zombie, a wither rose, the void (the long drop is cut), pointed
+// dripstone, a creeper I lit myself, a falling anvil, crammed by 30 pigs, and the respawn anchor in
+// the Overworld ("[Intentional Game Design]"). The bot plays on half a heart (max health 1) so each
+// death is quick; every death is a real survival action (walking, jumping, lighting, using the
+// anchor). After each death screen it clicks Respawn and the next station is its spawn point.
+// (Frame review: a thrown potion, a firework rocket and gravel suffocation didn't read, so they went.)
 const GAP = 11     // sets are this far apart along x (the whole field stays within ~80 blocks: fills ~100 out failed silently)
 
 const DEATHS = [
-  { id: 'fall', sub: 'fall damage: 1/10' },
-  { id: 'fire', sub: 'fire: 2/10' },
-  { id: 'cactus', sub: 'cactus: 3/10' },
-  { id: 'magma', sub: 'magma block: 3/10' },
-  { id: 'lava', sub: 'lava: 4/10' },
-  { id: 'rose', sub: 'wither rose: 5/10' },
-  { id: 'gravel', sub: 'gravel: 5/10' },
-  { id: 'potion', sub: 'harming potion: 6/10' },
-  { id: 'stalagmite', sub: 'stalagmite: 7/10' },
-  { id: 'creeper', sub: 'creeper: 7/10' },
-  { id: 'firework', sub: 'firework: 8/10' },
-  { id: 'anvil', sub: 'anvil: 8/10' },
-  { id: 'pigs', sub: '30 pigs: 9/10' },
-  { id: 'anchor', sub: 'anchor: 11/10' }
+  { id: 'fall', name: 'fall damage', score: '0/10' },
+  { id: 'fire', name: 'fire', score: '1/10' },
+  { id: 'cactus', name: 'cactus', score: '2/10' },
+  { id: 'magma', name: 'magma block', score: '3/10' },
+  { id: 'lava', name: 'lava', score: '4/10' },
+  { id: 'zombie', name: 'a zombie', score: '5/10' },
+  { id: 'rose', name: 'wither rose', score: '6/10' },
+  { id: 'void', name: 'the void', score: '7/10' },
+  { id: 'stalagmite', name: 'stalagmite', score: '7.5/10' },
+  { id: 'creeper', name: 'creeper', score: '8/10' },
+  { id: 'anvil', name: 'anvil', score: '9/10' },
+  { id: 'pigs', name: '30 pigs', score: '10/10' },
+  { id: 'anchor', name: '[Intentional Game Design]', score: '11/10' }
 ]
+const LAST = DEATHS.length - 1
 
 module.exports = {
   name: 'die_rating',
@@ -30,14 +31,18 @@ module.exports = {
   caption: 'rating every way to die 💀',
   expectDeath: true,
   edit: {
-    caption: 'rating every way to die 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'death',
-    startAt: 'beat:-0.1', endAfter: 'last_death:0.8', deathScreen: true,
-    // the name in green (under the death screen's buttons), the score as a card popping on the
-    // death, a zoom punch on every death (the death screen otherwise holds still) and a counter
-    subs: DEATHS.map((d, i) => ['death', d.sub.split(':')[0], 1.4, i]),
-    cards: DEATHS.map((d, i) => ['death', d.sub.split(': ')[1], 0.9, i === DEATHS.length - 1 ? 'gold' : i < 5 ? 'white' : i < 10 ? 'yellow' : 'red', i]),
-    punch: DEATHS.map((d, i) => ['death', i, i === DEATHS.length - 1 ? 1.2 : 1.08]),
-    counter: { at: ['death'], total: DEATHS.length }
+    caption: 'rating every way to die 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'last_death',
+    startAt: 'death:-1.0', endAfter: 'last_death:1.5', deathScreen: true,
+    // the name in green (under the death screen's buttons, gone before the respawn), the score as a
+    // card popping on the death, a zoom punch on every death (the screen otherwise holds still), a
+    // death counter; the 11/10 finale gets a bigger card, a flash and a shake
+    subs: DEATHS.map((d, i) => ['death', d.name, i === LAST ? 1.6 : 0.7, i]),
+    cards: DEATHS.map((d, i) => ['death', d.score, i === LAST ? 1.5 : 0.7, i === LAST ? 'gold' : i < 4 ? 'white' : i < 9 ? 'yellow' : 'red', i]),
+    punch: DEATHS.map((d, i) => ['death', i, i === LAST ? 1.2 : 1.08]),
+    flash: [['death', LAST, 0.8]],
+    shake: [['death', LAST, 24]],
+    counter: { at: DEATHS.map((d, i) => ['death', i]), total: DEATHS.length },
+    speed: [['void_a', 'void_dead', 'cut']]       // the long drop through the void, cut to the death
   },
 
   async setup (ctx) {
@@ -60,31 +65,22 @@ module.exports = {
     this.sx = (i) => xs + i * GAP
     for (let i = 0; i < DEATHS.length; i++) {
       const s = this.sx(i), d = DEATHS[i].id
-      if (d === 'fall') {                         // a 6-high cobblestone pillar to step off
-        await ctx.cmd(`/fill ${s} ${F + 1} ${z + 4} ${s} ${F + 6} ${z + 4} cobblestone`)
+      if (d === 'fall') {                         // a 10-high cobblestone pillar to step off
+        await ctx.cmd(`/fill ${s} ${F + 1} ${z + 4} ${s} ${F + 10} ${z + 4} cobblestone`)
       } else if (d === 'fire') {                  // a strip of fire on netherrack
         await ctx.cmd(`/fill ${s - 1} ${F} ${z + 1} ${s + 1} ${F} ${z + 2} netherrack`)
         await ctx.cmd(`/fill ${s - 1} ${F + 1} ${z + 1} ${s + 1} ${F + 1} ${z + 2} fire`)
       } else if (d === 'rose') {
         await ctx.cmd(`/setblock ${s} ${F + 1} ${z + 2} wither_rose`)
-      } else if (d === 'firework') {              // a 1x2 nook with a low stone ceiling
-        await ctx.cmd(`/fill ${s - 1} ${F + 1} ${z + 2} ${s + 1} ${F + 3} ${z + 5} stone`)
-        await ctx.cmd(`/fill ${s} ${F + 1} ${z + 3} ${s} ${F + 2} ${z + 4} air`)
-      } else if (d === 'magma') {
-        await ctx.cmd(`/fill ${s - 1} ${F} ${z} ${s + 1} ${F} ${z + 2} magma_block`)
-      } else if (d === 'gravel') {                // a 1x1 nook: dirt over my head, gravel over that
-        await ctx.cmd(`/fill ${s - 1} ${F + 1} ${z + 3} ${s + 1} ${F + 6} ${z + 5} cobblestone`)
-        await ctx.cmd(`/fill ${s} ${F + 1} ${z + 4} ${s} ${F + 2} ${z + 4} air`)
-        await ctx.cmd(`/fill ${s} ${F + 1} ${z + 5} ${s} ${F + 2} ${z + 5} air`)
-        await ctx.cmd(`/setblock ${s} ${F + 3} ${z + 4} dirt`)
-        await ctx.cmd(`/fill ${s} ${F + 4} ${z + 4} ${s} ${F + 6} ${z + 4} gravel`)
+      } else if (d === 'void') {                  // a 1x1 hole straight down out of the world
+        await ctx.cmd(`/fill ${s} -64 ${z + 1} ${s} ${F} ${z + 1} air`)
       } else if (d === 'cactus') {
-        await ctx.cmd(`/setblock ${s} ${F} ${z + 1} sand`)
+        await ctx.cmd(`/fill ${s - 1} ${F} ${z} ${s + 1} ${F} ${z + 2} sand`)   // cactus only grows on sand
         await ctx.cmd(`/fill ${s} ${F + 1} ${z + 1} ${s} ${F + 3} ${z + 1} cactus`)
       } else if (d === 'lava') {
         await ctx.cmd(`/fill ${s - 2} ${F - 1} ${z - 2} ${s + 2} ${F} ${z + 1} lava`)
-      } else if (d === 'stalagmite') {           // a 3-high step, pointed dripstone below it
-        await ctx.cmd(`/fill ${s} ${F + 1} ${z + 4} ${s} ${F + 3} ${z + 4} cobblestone`)
+      } else if (d === 'stalagmite') {           // a 4-high step, pointed dripstone below it
+        await ctx.cmd(`/fill ${s} ${F + 1} ${z + 4} ${s} ${F + 4} ${z + 4} cobblestone`)
         await ctx.cmd(`/fill ${s - 1} ${F + 1} ${z + 1} ${s + 1} ${F + 1} ${z + 3} pointed_dripstone[vertical_direction=up,thickness=tip]`)
       } else if (d === 'pigs') {                   // a 1x1 glass shaft the pigs get poured into
         await ctx.cmd(`/fill ${s - 1} ${F + 1} ${z + 3} ${s + 1} ${F + 3} ${z + 5} glass`)
@@ -97,9 +93,9 @@ module.exports = {
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/gamerule max_entity_cramming 24')
     await ctx.cmd('/difficulty normal')                       // explosions do no damage on peaceful
-    await ctx.hotbar([['glowstone', 4], null, 'splash_potion[potion_contents={potion:"minecraft:harming"}]', 'iron_shovel', 'flint_and_steel', 'firework_rocket[fireworks={flight_duration:1,explosions:[{shape:"large_ball",colors:[I;16711680,16776960]}]}]'])
+    await ctx.hotbar([['glowstone', 4], null, null, null, 'flint_and_steel'])
     const s0 = this.sx(0)
-    await ctx.tpCheck(s0 + 0.5, F + 7, z + 4.5, 0, 60)
+    await ctx.tpCheck(s0 + 0.5, F + 11, z + 4.5, 0, 45)
     await ctx.cmd('/gamerule respawn_radius 0')
     await ctx.cmd('/gamerule keep_inventory true')       // the glowstone for the last death (and no item scatter)
     await ctx.cmd('/gamemode survival')
@@ -118,12 +114,12 @@ module.exports = {
     const after = async (i) => {
       walk(false); bot.clearControlStates()
       ctx.mark('rated', { n: i })
-      if (i === DEATHS.length - 1) { ctx.mark('last_death'); await bot.waitForTicks(30); return }
-      await bot.waitForTicks(18)               // the death screen, 0.9 s (1.3 s each dragged; the message needs reading time)
+      if (i === DEATHS.length - 1) { ctx.mark('last_death'); await bot.waitForTicks(40); return }
+      await bot.waitForTicks(14)               // the death screen, 0.7 s (with its card and punch; 1.3 s each dragged)
       // the next set is the spawn point; set the one after before clicking Respawn
       // respawn at the next set: spawn point and world spawn both there (the bot came back at the
       // world spawn with only /spawnpoint set)
-      const sy = DEATHS[i + 1].id === 'stalagmite' ? F + 4 : F + 1      // (the gravel nook's spawn is inside it)
+      const sy = DEATHS[i + 1].id === 'stalagmite' ? F + 5 : F + 1
       bot.chat(`/spawnpoint @s ${this.sx(i + 1)} ${sy} ${z + 4} 180 0`)
       bot.chat(`/setworldspawn ${this.sx(i + 1)} ${sy} ${z + 4} 180 0`)
       await bot.waitForTicks(2)
@@ -136,10 +132,11 @@ module.exports = {
     for (let i = 0; i < DEATHS.length; i++) {
       const d = DEATHS[i].id, s = this.sx(i)
       ctx.mark('beat', { n: i, id: d })
+      if (d === 'zombie') { bot.chat(`/summon zombie ${s + 0.5} ${F + 1} ${z + 1.5} {PersistenceRequired:1b,Rotation:[0f,0f],active_effects:[{id:"minecraft:fire_resistance",duration:-1,show_particles:0b}]}`); await bot.waitForTicks(2) }
       if (d === 'creeper') { bot.chat(`/summon creeper ${s + 0.5} ${F + 1} ${z + 1.5} {NoAI:1b,Rotation:[0f,0f],Fuse:20s}`); await bot.waitForTicks(2) }
       if (d === 'fall') {
         // on top of the pillar, looking down: step off
-        await ctx.easeLook(N + Math.PI, -1.15, 150)   // already looking over the edge, down the pillar
+        await ctx.easeLook(N + Math.PI, -0.85, 150)   // over the edge: the ground far below
         walk(true); await bot.waitForTicks(4); walk(false)
         ctx.easeLook(N + Math.PI, -1.35, 300)
       } else if (d === 'cactus') {
@@ -152,7 +149,7 @@ module.exports = {
       } else if (d === 'stalagmite') {
         await ctx.easeLook(N, -0.7, 250)
         walk(true)
-        for (let k = 0; k < 30 && bot.entity.position.y > F + 3.6; k++) await bot.waitForTicks(1)   // until I'm off the step
+        for (let k = 0; k < 30 && bot.entity.position.y > F + 4.6; k++) await bot.waitForTicks(1)   // until I'm off the step
         walk(false)
         ctx.easeLook(N, -1.1, 300)
       } else if (d === 'fire') {
@@ -166,33 +163,26 @@ module.exports = {
           if (k === 24) ctx.easeLook(bot.entity.yaw - 0.4, -0.6, 900)
           await bot.waitForTicks(1)
         }
-      } else if (d === 'firework') {
-        // in the nook: a rocket on the floor in front of me, under a stone ceiling. It hits the
-        // ceiling and goes off right in my face.
-        ctx.select(5)
-        const f = new Vec3(s, F, z + 3)
-        await ctx.easeLookAt(f.offset(0.5, 1, 0.5), 300)
-        await bot.waitForTicks(2)
-        bot._client.write('block_place', { hand: 0, location: f, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-        bot.swingArm(); ctx.sound('entity.firework_rocket.launch', 1)
-        ctx.easeLook(N, 0.6, 400)
       } else if (d === 'magma') {
         await ctx.easeLook(N, -0.75, 200)
         walk(true)                                  // across the magma until it gets me
         ctx.easeLook(N, -1.2, 400)
-      } else if (d === 'gravel') {
-        // in the nook: look up at the dirt and dig it out. The gravel above comes down on my head.
-        ctx.select(3)
-        const b = new Vec3(s, F + 3, z + 4)
-        await ctx.easeLookAt(b.offset(0.5, 0.1, 0.5), 350)
-        try { await bot.dig(bot.blockAt(b), 'ignore') } catch (e) { ctx.log('dig', e.message) }
-        ctx.sound('block.gravel.break', 1, 0.8); ctx.particles('block', b, { block: 'dirt' })
-      } else if (d === 'potion') {
-        // a splash potion of harming, thrown straight down at my own feet
-        ctx.select(2)
-        await ctx.easeLook(N, -1.5, 350)
-        await bot.waitForTicks(3)
-        bot.activateItem(); bot.swingArm(); ctx.sound('entity.splash_potion.throw', 1)
+      } else if (d === 'zombie') {
+        // walk up to a zombie (it got here before me)
+        await ctx.easeLook(N, -0.1, 200)
+        walk(true)
+        for (let k = 0; k < 40 && !ctx.died; k++) { await bot.waitForTicks(1); if (k === 10) walk(false) }
+      } else if (d === 'void') {
+        // step into the hole: straight down, out of the world
+        await ctx.easeLook(N, -1.2, 250)
+        walk(true)
+        for (let k = 0; k < 20 && bot.entity.position.y > F - 1; k++) await bot.waitForTicks(1)
+        walk(false)
+        ctx.easeLook(N, 1.3, 900)                    // look up: the hole of daylight shrinking
+        await bot.waitForTicks(20)
+        ctx.mark('void_a')
+        for (let k = 0; k < 400 && !ctx.died; k++) await bot.waitForTicks(1)
+        ctx.mark('void_dead')
       } else if (d === 'creeper') {
         // light a creeper with flint and steel (vanilla: it ignites)
         ctx.select(4)

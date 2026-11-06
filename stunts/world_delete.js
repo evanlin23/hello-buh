@@ -78,20 +78,7 @@ module.exports = {
     const tops = {}
     for (let i = -R; i <= R; i++) for (let k = -R; k <= R; k++) tops[`${i},${k}`] = top((cx + i) * 16, (cz + k) * 16)
     const yMax = Math.max(...Object.values(tops))
-    // a barrier wall just outside the area, so oceans and aquifers outside can't pour in under
-    // the crust (outside the recording, so it's never drawn)
-    const lo = (cx - R) * 16 - 1, hi = (cx + R + 1) * 16, loz = (cz - R) * 16 - 1, hiz = (cz + R + 1) * 16
-    for (let y0 = -64; y0 <= yMax; y0 += 100) {
-      const y1 = Math.min(y0 + 99, yMax)
-      for (let a = lo; a <= hi; a += 300) {
-        const b = Math.min(a + 299, hi)
-        bot.chat(`/fill ${lo} ${y0} ${a} ${lo} ${y1} ${b} barrier`); bot.chat(`/fill ${hi} ${y0} ${a} ${hi} ${y1} ${b} barrier`)
-        bot.chat(`/fill ${a} ${y0} ${loz} ${b} ${y1} ${loz} barrier`); bot.chat(`/fill ${a} ${y0} ${hiz} ${b} ${y1} ${hiz} barrier`)
-        await bot.waitForTicks(1)
-      }
-    }
-    await bot.waitForTicks(10)
-    for (let pass = 0; pass < 2; pass++) {    // twice: water still flowing during the first pass gets cleared by the second
+    for (let pass = 0; pass < 1; pass++) {    // (a barrier wall outside the area failed: not loaded; the check below catches leftovers)
       for (let i = -R; i <= R; i++) {
         for (let k = -R; k <= R; k++) {
           const x1 = (cx + i) * 16, z1 = (cz + k) * 16, yTop = pass ? floor : tops[`${i},${k}`]
@@ -152,7 +139,7 @@ module.exports = {
       bot.chat(`/place feature minecraft:${n % 2 ? 'flower_plain' : 'patch_grass'} ${tx} ${floor + 1} ${tz}`)
       await bot.waitForTicks(1)
     }
-    await bot.waitForTicks(200)                     // let the server finish lighting before the stunt
+    await bot.waitForTicks(80)                      // let the server finish lighting before the stunt
     clearInterval(clock); bot.physicsEnabled = true
     // reach 6 (invisible on screen): the far blocks keep the horizon in frame as the world goes
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6')
