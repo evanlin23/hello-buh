@@ -16,6 +16,24 @@ STUNT=pearl_clutch ./run.sh       # any stunt in stunts/
 | `looks_wrong` | Bro this looks wrong? | FUNK ABNORMAL (ULTRA SLOWED) (drop on the reveal) | SunuCellyClipss, 8.9M |
 | `villager_job` | POV: THE VILLAGER IS UNEMPLOYED 💀 | Payphone (Radio Top Singers) (drop on the first hire) | ZyroVaneWasTaken, 827K at 821 subs |
 | `pearl_clutch` | POV: You **Throw** an Ender Pearl But... + elytra countdown | misery. (drop on the teleport) | Henyofficial7 14M, Integer_XD 7.5M |
+| `wrong_bucket` | POV: you grabbed the **wrong** bucket 💀 | FUNK ABNORMAL (drop on the death) | lava MLG fail, vanilla death screen |
+| `one_in_a_million` | 1 in a million landing 😳 | misery. (drop on the splash) | 100-block drop into a 1x1 hole |
+| `half_heart` | POV: you're on **half** a heart 💀 | misery. | water clutch at half a heart |
+| `tries` | it took me 4 tries 💀 (~30 s, subtitles) | misery. (drop on the landing) | re:zero instant-respawn story |
+| `speed_build` | Fastest house build 💀 + timer | FUNK ABNORMAL (drop on done) | RedW1ngs 36M |
+| `nether_portal` | POV: your first **nether** portal 😳 | FUNK ABNORMAL (drop on lighting) | |
+| `midas_touch` | POV: you got the **midas** touch 🤑 | FUNK ABNORMAL | everything looked at turns gold |
+| `lava_rising` | the lava stopped **1 block** below me 😳 | misery. | pillar vs rising lava |
+| `sand_tower` | the torch trick never gets old 😭 | | satisfying |
+| `cave_reveal` | **never** dig straight down 💀 | misery. (drop on the reveal) | dig into a huge cavern |
+| `dig_up` | **never** dig straight up 💀 | FUNK ABNORMAL | lava pocket, death screen |
+| `anvil_rain` | minecraft but it rains **anvils** 💀 | FUNK ABNORMAL | death screen |
+| `staring_villagers` | why are they all **staring** at me 💀 | FUNK ABNORMAL (drop on the turn) | crowd turns as one |
+| `creeper_art`, `skull_art`, `sword_art`, `heart_art` | pixel-art reveals (`lib/pixel_art.js`) | | looks_wrong variants |
+
+Finished, reviewed Shorts live on the **`videos` branch**, one folder per Short with everything
+that made it (video, metadata with title/description/hashtags/song credit, the bot recording,
+game audio, stunt source, build log). Package one with `node scripts/publish.js <name>`.
 
 A stunt exports `setup(ctx)` (build the set with commands, return its origin), `perform(ctx)`
 (do the stunt with real player actions, return success) and `edit` (caption, colours, song,
