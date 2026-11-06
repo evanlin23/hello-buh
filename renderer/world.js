@@ -55,6 +55,9 @@ class World {
 
   // Sky/block light levels (0-15). Unloaded columns count as open daylight.
   getLight (pos) {
+    // below the world (falling into the void): vanilla lights it like open sky; the light grid read 0
+    // and the held item went black against a lit sky (worker 7, world_delete)
+    if (pos.y < -64) return [15, 0]
     if (this.light) {
       const l = this.light.get(pos)
       if (l[0] || l[1]) return l
