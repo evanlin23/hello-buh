@@ -45,7 +45,8 @@ function cubeGeometry (cube, pivot, texW, texH, mirror) {
   const pos = [], uv = [], col = [], idx = []
   const inf = cube.inflate || 0
   const rot = cube.rotation ? new THREE.Euler(-cube.rotation[0] * Math.PI / 180, -cube.rotation[1] * Math.PI / 180, -cube.rotation[2] * Math.PI / 180) : null
-  const cpiv = cube.pivot ? new THREE.Vector3(...cube.pivot) : null
+  // Bedrock: a cube without its own pivot rotates about its centre (the chicken's body is the only user)
+  const cpiv = cube.pivot ? new THREE.Vector3(...cube.pivot) : new THREE.Vector3(cube.origin[0] + cube.size[0] / 2, cube.origin[1] + cube.size[1] / 2, cube.origin[2] + cube.size[2] / 2)
   for (const f of Object.values(FACES)) {
     const n = pos.length / 3
     for (const c of f.corners) {
@@ -131,7 +132,7 @@ function look (name, extra, regs) {
   }
   if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`], yOff: -1.0 }   // the Bedrock boat geometry sits its hull ~15 px up; Java's hull bottom is at the entity's feet
   if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
-  if (name === 'chicken') return { model: 'chicken', layers: ['entity/chicken/temperate_chicken'], rest: { body: [-Math.PI / 2, 0, 0] } }   // the converted model lost the body's 90° turn
+  if (name === 'chicken') return { model: 'chicken', layers: ['entity/chicken/temperate_chicken'] }
   if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
