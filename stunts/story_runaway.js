@@ -42,13 +42,14 @@ module.exports = {
     await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
     await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
     await c('/kill @e[type=!player]')
+    for (let y0 = -4; y0 <= 24; y0 += 2) await c(`/fillbiome ${A(-40, y0, -40)} ${A(40, y0 + 1, 40)} minecraft:plains`)   // one grass colour over the set (capped like /fill: slabs)
 
     // --- the street (L01, L02, L09): a path north-south, four little houses with doors on it
     await c(`/fill ${A(-1, 0, 6)} ${A(1, 0, 40)} dirt_path`)
     const house = async (x0, z0, doorX, doorZ, facing) => {
       const x1 = x0 + 5, z1 = z0 + 5
+      await c(`/fill ${A(x0, 0, z0)} ${A(x1, 4, z1)} oak_planks hollow`)   // a room y1-y3 (shell from y0 to the ceiling at y4)
       await c(`/fill ${A(x0, 0, z0)} ${A(x1, 0, z1)} cobblestone`)
-      await c(`/fill ${A(x0, 1, z0)} ${A(x1, 3, z1)} oak_planks hollow`)
       for (const [x, z] of [[x0, z0], [x1, z0], [x0, z1], [x1, z1]]) await c(`/fill ${A(x, 1, z)} ${A(x, 3, z)} oak_log`)
       await c(`/fill ${A(x0 - 1, 4, z0 - 1)} ${A(x1 + 1, 4, z1 + 1)} spruce_planks`)
       await c(`/fill ${A(x0, 5, z0)} ${A(x1, 5, z1)} spruce_slab`)
@@ -139,7 +140,10 @@ module.exports = {
 
     await c('/tag @e[tag=nitwit] add warm'); await c('/tag @e[tag=golem] add warm')
     await c('/clear @s')                                // nothing in hand, ever (he has no arms)
+    // mineflayer ignores the biome-update packet: go out of range and back so the chunks come again with plains
+    await c(`/tp @s ${X + 600} 200 ${Z}`); await bot.waitForTicks(60)
     await ctx.tpCheck(X, F + 1, Z + 38, 180, 0)
+    await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await bot.waitForTicks(40)
     return { x: X, y: F, z: Z }
@@ -157,7 +161,7 @@ module.exports = {
       const eye = bot.entity.position.offset(0, 1.62, 0), d = p.minus(eye)
       return { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
     }
-    const look = (k, dyaw = 0, dpitch = 0) => bot.look(base.yaw + dyaw + Math.sin(k / 19) * 0.09 * sway, base.pitch + dpitch + Math.sin(k / 27 + 1) * 0.035 * sway, true)
+    const look = (k, dyaw = 0, dpitch = 0) => bot.look(base.yaw + dyaw + Math.sin(k / 19) * 0.09 * sway, base.pitch + dpitch + Math.sin(k / 27) * 0.035 * sway, true)
     // a cut: teleport, wait for it to land, aim
     const cut = async (dx, dz, target, dy = 1) => {
       const x = X + dx, z = Z + dz
@@ -183,9 +187,9 @@ module.exports = {
 
     // L01: the crowd up the street runs from me
     await cut(0.5, 38.5, P(0.5, 1.4, 22))
-    for (let k = 0; k < 10; k++) { flee('crowd', 0.08 + k * 0.02); look(k); await bot.waitForTicks(1) }   // entity moves reach the client a few ticks late
+    for (let k = 0; k < 10; k++) { say(`/execute as @e[tag=crowd] at @s run tp @s ~ ~ ~${(-0.06 - k * 0.018).toFixed(3)} 180 0`); look(k); await bot.waitForTicks(1) }   // entity moves reach the client a few ticks late
     await line('L01', async (k) => {
-      flee('crowd', k < 6 ? 0.12 : 0.3)
+      say(`/execute as @e[tag=crowd] at @s run tp @s ~ ~ ~-0.25 180 0`)
       bot.setControlState('forward', k > 8 && k < 40); look(k)
     })
     bot.setControlState('forward', false)
@@ -289,18 +293,21 @@ module.exports = {
     await line('L11', async (k) => { bot.setControlState('sprint', true); bot.setControlState('forward', bot.entity.position.z > Z - 19.6); look(k) })   // stop ~5 blocks out: a camera inside the ring froze their moves
     bot.setControlState('sprint', false); bot.setControlState('forward', false)
     ctx.mark('face_on', { near: [X + 20.5, Z - 26.5, 5] })
-    await line('L12', async (k) => { say(`/execute as @e[tag=party] at @s facing entity ${bot.username} feet positioned ^ ^ ^0.012 run tp @s ~ ${F + 1} ~ facing entity ${bot.username} eyes`); bot.setControlState('forward', k % 12 < 5 && bot.entity.position.z > Z - 20.4); look(k, Math.sin(k / 6) * 0.06, Math.min(1, k / 10) * 0.08) })
+    await line('L12', async (k) => { say(`/execute as @e[tag=party] at @s facing entity ${bot.username} feet positioned ^ ^ ^0.006 run tp @s ~ ${F + 1} ~ facing entity ${bot.username} eyes`); look(k, Math.sin(k / 9) * 0.07, Math.min(1, k / 10) * 0.06) })
     bot.setControlState('forward', false)
     let fled = false
     await line('L13', async (k, at) => {
       if (k === at(4)) { hiss(1); ctx.mark('face_off'); fled = true }
-      if (fled) flee('party', 0.28)
+      if (fled) flee('party', 0.25)
       sway = 1.5
       look(k, fled ? Math.sin(k * 0.8) * 0.03 : 0, fled ? Math.sin(k * 0.6 + 1) * 0.02 : 0)
     })
     await line('L14', async (k) => {
-      flee('party', 0.3)
+      flee('party', 0.25)
       if (k === 20) hiss(1)
+      // the creeper's swell from the inside: white flashes, faster and faster, into the blast (edit.py draws `flash`)
+      const T = Math.round((S.line('L14').dur + S.gap - 0.05) * 20)
+      if ([T - 16, T - 9, T - 4, T - 1].includes(k)) ctx.mark('flash')
       look(k, Math.sin(k * 0.8) * 0.045, Math.sin(k * 0.6 + 1) * 0.03)
     }, -0.05)
     // BOOM

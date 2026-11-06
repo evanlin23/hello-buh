@@ -782,6 +782,12 @@ def main():
         sys.path.insert(0, str(HERE / "scripts"))
         import story_track
         story_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        flash = story_track.flash_concat(story_tl, args.start, dur, tmp)   # white flashes on `flash` marks (under the captions)
+        if flash:
+            inputs += ["-f", "concat", "-safe", "0", "-i", str(flash)]
+            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[flv]")
+            graph.append(f"[{last}][flv]overlay=0:0:eof_action=pass[flo]")
+            last, n_in = "flo", n_in + 1
         inputs += ["-f", "concat", "-safe", "0", "-i", str(story_track.caption_concat(args.story, story_tl, args.start, dur, tmp))]
         graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[capv]")
         graph.append(f"[{last}][capv]overlay=0:0:eof_action=pass[capo]")

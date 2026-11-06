@@ -35,8 +35,9 @@ def _lines(story_dir):
 
 
 def _marks(timeline, start):
-    """[(seconds into the Short, line id)] for every `line` mark."""
-    return [(e["t"] / 1000 - start, e["id"]) for e in timeline if e["event"] == "line"]
+    """[(seconds into the Short, line id)] for every `line` mark. A line is marked the tick after its cut lands
+    (the stunt sees the new position a tick late), so it starts one tick earlier: captions change on the cut."""
+    return [(e["t"] / 1000 - 0.05 - start, e["id"]) for e in timeline if e["event"] == "line"]
 
 
 def narration_wav(story_dir, timeline, start, dur, out):
@@ -242,6 +243,37 @@ def master_gain(path, target=-14.0):
             break
         gain += miss
     os.replace(tmp, path)
+
+
+def flash_concat(timeline, start, dur, tmp):
+    """White flashes over the game view on `flash` marks (a creeper's swell seen from inside): 55% white,
+    fading over 0.1 s. An ffconcat list, or None without marks."""
+    fl = sorted(int(round((e["t"] / 1000 - start) * FPS)) for e in timeline if e["event"] == "flash")
+    fl = [f for f in fl if 0 <= f < dur * FPS]
+    if not fl:
+        return None
+    tmp = pathlib.Path(tmp)
+    blank = tmp / "flash_blank.png"
+    Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
+    steps = [0.55, 0.42, 0.3, 0.18, 0.08]
+    for j, a in enumerate(steps):
+        im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        im.paste((255, 255, 255, int(255 * a)), (0, BAND, W, BAND + GAME_H))
+        im.save(tmp / f"flash_{j}.png")
+    runs, frame, total = [], 0, int(round(dur * FPS))
+    for f0 in fl:
+        if f0 < frame:
+            continue
+        if f0 > frame:
+            runs.append((blank, f0 - frame))
+        for j in range(min(len(steps), total - f0)):
+            runs.append((tmp / f"flash_{j}.png", 1))
+        frame = f0 + len(steps)
+    if frame < total:
+        runs.append((blank, total - frame))
+    lst = tmp / "flash.txt"
+    lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {n / FPS:.6f}\n" for p, n in runs) + f"file '{runs[-1][0]}'\n")
+    return lst
 
 
 if __name__ == "__main__":     # preview: python3 scripts/story_track.py stories/<name> "SOME text" out.png

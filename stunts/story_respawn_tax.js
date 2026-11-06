@@ -38,6 +38,7 @@ module.exports = {
     await c(`/fill ${A(-40, 0, -40)} ${A(40, 0, 40)} grass_block`)
     await c(`/fill ${A(-40, -4, -40)} ${A(40, -1, 40)} dirt`)
     await c('/kill @e[type=!player]')
+    for (let y0 = -4; y0 <= 30; y0 += 2) await c(`/fillbiome ${A(-40, y0, -40)} ${A(40, y0 + 1, 40)} minecraft:plains`)   // one grass colour over the set (capped like /fill: slabs)
 
     // the spawn: a cobblestone plaza with a gold block where I respawn, lantern posts at the corners
     await c(`/fill ${A(-3, 0, -3)} ${A(3, 0, 3)} cobblestone`)
@@ -86,7 +87,10 @@ module.exports = {
     await c(`/summon iron_golem ${X + 0.5} ${F + 1} ${Z + 0.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["golem"],Rotation:[0f,0f]}`)
 
     await c('/clear @s')
+    // mineflayer ignores the biome-update packet: go out of range and back so the chunks come again with plains
+    await c(`/tp @s ${X + 600} 200 ${Z}`); await bot.waitForTicks(60)
     await ctx.tpCheck(X, F + 1, Z + 9, 180, 0)
+    await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await bot.waitForTicks(40)
     return { x: X, y: F, z: Z }
