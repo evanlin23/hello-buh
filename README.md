@@ -29,7 +29,7 @@ checked out at `../hb-videos`.
 | [one_in_a_million](shorts/one_in_a_million/short.mp4) | 1 in a million landing 😳 | 6.85s | Sky Verse · Lieless, Luuna, Yarimov | ready | f655187 |  |
 | [pearl_clutch](shorts/pearl_clutch/short.mp4) | POV: You Throw an Ender Pearl But... | 7.15s | Intranet Crush · hiræth, Willix | needs-fix | 46ecd24 | QA: the stunt (breaking elytra -> pearl) does not read; redesign before uploading |
 | [pickaxe_race](shorts/pickaxe_race/short.mp4) | ranking every pickaxe ⛏️ 💀 | 19.9s | X2 · MUPP | ready | 0bb3147 | worker: 5 pickaxes mine 3x3 stone sections, real dig times as subs (Haste V, netherite eff V instamine) |
-| [rainbow_wool](shorts/rainbow_wool/short.mp4) | dyeing it until it's a rainbow 🌈 | 14.2s | FAVELA · MXZI, Deno | ready | 9d412b3 | worker: white wool arch dyed band by band into a rainbow (sheep not renderable) |
+| [rainbow_wool](shorts/rainbow_wool/short.mp4) | dyeing it until it's a rainbow 🌈 | 14.25s | FAVELA · MXZI, Deno | ready | 38ccca9 | worker re-render (new engine, frame QA): no blockers; nitpicks: held dye pops in at the right edge on swings, band labels sit over the dyed spot |
 | [sand_tower](shorts/sand_tower/short.mp4) | the torch trick never gets old 😭 | 5.85s | Montagem Toma · X972, sk3tch01, MXZI | ready | c4cd22e |  |
 | [skull_art](shorts/skull_art/short.mp4) | the skull emoji irl 💀 | 8.75s | COM BOTA · cape, crysstales | ready | 46cab20 |  |
 | [speed_build](shorts/speed_build/short.mp4) | Fastest house build 💀 | 8.85s | FAVELA · MXZI, Deno | ready | 9a5edf2 |  |

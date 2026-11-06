@@ -19,18 +19,18 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "reveal",
     "drop_in_song_s": 4.5,
-    "drop_in_short_s": 11.35,
+    "drop_in_short_s": 11.4,
     "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 14.2,
+    "duration_s": 14.25,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 14057108,
-    "sha256": "2c4dff915146b6b31063e0dd115f98c6dc73632e48aab112ef0342d49589ee1c"
+    "bytes": 14548779,
+    "sha256": "6ba2a2a9ba7ffd94b58da8806144966806269ed21ed3d3d14023e28adeacfa01"
   },
   "edit": {
     "caption": "dyeing it until it's a rainbow \ud83c\udf08",
@@ -80,12 +80,6 @@
         "purple",
         1,
         6
-      ],
-      [
-        "reveal",
-        "perfect",
-        1.8,
-        0
       ]
     ],
     "args": [
@@ -94,7 +88,7 @@
       "--red",
       "rainbow",
       "--subs",
-      "[[\"dye\",\"red\",1,0],[\"dye\",\"orange\",1,1],[\"dye\",\"yellow\",1,2],[\"dye\",\"green\",1,3],[\"dye\",\"light blue\",1,4],[\"dye\",\"blue\",1,5],[\"dye\",\"purple\",1,6],[\"reveal\",\"perfect\",1.8,0]]",
+      "[[\"dye\",\"red\",1,0],[\"dye\",\"orange\",1,1],[\"dye\",\"yellow\",1,2],[\"dye\",\"green\",1,3],[\"dye\",\"light blue\",1,4],[\"dye\",\"blue\",1,5],[\"dye\",\"purple\",1,6]]",
       "--start_at",
       "dye:-0.5"
     ]
@@ -107,13 +101,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 359,
-      "y": 70,
-      "z": -41
+      "x": 362,
+      "y": 63,
+      "z": -51
     },
     "biome": "minecraft:plains",
-    "ticks": 294,
-    "seconds": 14.7,
+    "ticks": 295,
+    "seconds": 14.75,
     "deaths": 0,
     "events": [
       {
@@ -153,35 +147,35 @@
         "event": "dye"
       },
       {
-        "t": 5.55,
+        "t": 5.6,
         "event": "swing"
       },
       {
-        "t": 5.55,
+        "t": 5.6,
         "event": "dye"
       },
       {
-        "t": 6.7,
+        "t": 6.75,
         "event": "swing"
       },
       {
-        "t": 6.7,
+        "t": 6.75,
         "event": "dye"
       },
       {
-        "t": 7.85,
+        "t": 7.9,
         "event": "swing"
       },
       {
-        "t": 7.85,
+        "t": 7.9,
         "event": "dye"
       },
       {
-        "t": 11.8,
+        "t": 11.85,
         "event": "reveal"
       },
       {
-        "t": 14.7,
+        "t": 14.75,
         "event": "end"
       }
     ]
@@ -189,22 +183,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "9d412b3a1fe97dcf3ab82b656eb0030a698d9752",
-    "rendered_at": "2026-11-06T16:54:24.247Z",
-    "head_at_publish": "340a7f0db43e4a71c1f808e33f9c24a0ccadbef2",
+    "commit": "38ccca975e4120387012207653a8f289aaf8e7ba",
+    "rendered_at": "2026-11-06T17:55:03.531Z",
+    "head_at_publish": "b0f3a4287daf2cf68e4777f29f36f207caf2891f",
     "stunt": "stunts/rainbow_wool.js",
     "source_snapshot": [
       "source/rainbow_wool.js"
     ]
   },
   "rebuild": [
-    "git checkout 9d412b3a1fe9",
+    "git checkout 38ccca975e41",
     "gunzip -c shorts/rainbow_wool/recording.json.gz > work/rainbow_wool.rec.json",
     "node render.js work/rainbow_wool.rec.json work/rainbow_wool.frames 60 1080 1011",
     "python3 audio.py work/rainbow_wool.rec.json work/rainbow_wool.wav",
-    "python3 edit.py --frames work/rainbow_wool.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/rainbow_wool.rec.json --audio work/rainbow_wool.wav --caption \"dyeing it until it's a rainbow \ud83c\udf08\" --red rainbow --subs \"[[\\\"dye\\\",\\\"red\\\",1,0],[\\\"dye\\\",\\\"orange\\\",1,1],[\\\"dye\\\",\\\"yellow\\\",1,2],[\\\"dye\\\",\\\"green\\\",1,3],[\\\"dye\\\",\\\"light blue\\\",1,4],[\\\"dye\\\",\\\"blue\\\",1,5],[\\\"dye\\\",\\\"purple\\\",1,6],[\\\"reveal\\\",\\\"perfect\\\",1.8,0]]\" --start_at dye:-0.5 --out out/rainbow_wool.mp4"
+    "python3 edit.py --frames work/rainbow_wool.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/rainbow_wool.rec.json --audio work/rainbow_wool.wav --caption \"dyeing it until it's a rainbow \ud83c\udf08\" --red rainbow --subs \"[[\\\"dye\\\",\\\"red\\\",1,0],[\\\"dye\\\",\\\"orange\\\",1,1],[\\\"dye\\\",\\\"yellow\\\",1,2],[\\\"dye\\\",\\\"green\\\",1,3],[\\\"dye\\\",\\\"light blue\\\",1,4],[\\\"dye\\\",\\\"blue\\\",1,5],[\\\"dye\\\",\\\"purple\\\",1,6]]\" --start_at dye:-0.5 --out out/rainbow_wool.mp4"
   ],
   "status": "ready",
-  "notes": "worker: white wool arch dyed band by band into a rainbow (sheep not renderable)",
-  "published_at": "2026-11-06T16:55:43.404Z"
+  "notes": "worker re-render (new engine, frame QA): no blockers; nitpicks: held dye pops in at the right edge on swings, band labels sit over the dyed spot",
+  "published_at": "2026-11-06T17:56:56.238Z"
 }
