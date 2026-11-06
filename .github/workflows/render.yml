@@ -27,6 +27,7 @@ jobs:
           path: |
             work/server/server.jar
             work/client
+            work/assets
             work/sounds
             work/emoji
           key: mc-${{ hashFiles('versions.env') }}

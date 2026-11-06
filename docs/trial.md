@@ -1,5 +1,12 @@
 # Trial report: can a bot make a HelloBuh Short with no human? (2026-11-06)
 
+> **Update (same day): realism pass.** Per the owner ("make sure it's very realistic"), the
+> prismarine-viewer bundle was replaced by our own renderer (`renderer/`). Textures, block
+> models and environment art now come from the 1.21.11 client jar. It adds vanilla face shading
+> and AO, sky, fog, fancy clouds, sun, view bobbing and underwater fog, with the set built in a
+> real generated forest. Render ~20 s per video second; world upload 7–14 s. The sections below
+> describe the first version where they differ.
+
 **Verdict: go, with caveats.** Measured from scratch in this container (4 CPUs, no GPU): `./run.sh`
 took **3 min 31 s** end to end, the clutch landed on the first attempt, and the output is 7.75 s,
 1080x1920, 60 fps, audio at -18.2 LUFS (`docs/contact-sheet.jpg`).
