@@ -290,7 +290,7 @@ module.exports = {
     bot.setControlState('forward', false)
     // L10-L14: the party
     await cut(20.5, -12.5, P(20.5, 1.2, -27))
-    await line('L10', async (k) => { bot.setControlState('forward', bot.entity.position.z > Z - 15.5); look(k) })
+    await line('L10', async (k) => { bot.setControlState('forward', bot.entity.position.z > Z - 17.0); look(k) })
     await line('L11', async (k) => { bot.setControlState('sprint', true); bot.setControlState('forward', bot.entity.position.z > Z - 19.6); look(k) })   // stop ~5 blocks out: a camera inside the ring froze their moves
     bot.setControlState('sprint', false); bot.setControlState('forward', false)
     ctx.mark('face_on', { near: [X + 20.5, Z - 26.5, 5] })
@@ -299,6 +299,9 @@ module.exports = {
     let fled = false
     await line('L13', async (k, at) => {
       if (k === at(4)) { hiss(1); ctx.mark('face_off'); fled = true }
+      if (k === at(1)) { bot.setControlState('jump', true); for (let j = 0; j < 3; j++) ctx.particles('happy', bot.entity.position.offset((j - 1) * 0.6, 1.8, -1.0), { count: 4 }) }
+      if (k === at(1) + 2) bot.setControlState('jump', false)
+      if (k >= at(1) + 2 && k < at(1) + 6) flee('party', 0.08)
       if (fled) flee('party', 0.25)
       sway = 1.5
       look(k, fled ? Math.sin(k * 0.8) * 0.03 : 0, fled ? Math.sin(k * 0.6 + 1) * 0.02 : 0)
@@ -319,15 +322,14 @@ module.exports = {
     // a dead player stops getting mob updates after ~1 s (the villagers froze): the crater smokes instead
     const fwd = { x: -Math.sin(bot.entity.yaw), z: -Math.cos(bot.entity.yaw) }
     let sk = 0
+    const eyeY = boomAt.y + 1.62   // the dead camera sits in the crater: smoke at its eye level, in front of it
     const still = async () => {
-      if (sk++ % 2) return
-      for (let j = 0; j < 2; j++) {
-        const d = 1.6 + Math.random() * 3.2, side = (Math.random() - 0.5) * 3.5
-        ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, F + 0.2 + Math.random() * 0.6, boomAt.z + fwd.z * d + fwd.x * side), { count: 3 })
-      }
+      sk++
+      const d = 1.2 + Math.random() * 1.8, side = (Math.random() - 0.5) * 3
+      ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.4 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 6 })
     }
     for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
-    await line('L15', still)
+    await line('L15', still, -0.15)
     await line('L16', still, -0.15)
     await line('L17', still, -0.1)
     ctx.mark('story_end')
