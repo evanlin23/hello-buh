@@ -7,5 +7,5 @@ module.exports = require('../lib/pixel_art')({
   order: 'random',
   wall: 'white_wool',
   caption: 'my gf asked what I was building 😭',
-  edit: { caption: 'my gf asked what I was building 😭', song: 'songs/payphone.mp3', dropAt: 'complete', start: 0.7, endAfter: 'complete:1.0' }
+  edit: { caption: 'my gf asked what I was building 😭', song: 'songs/payphone.mp3', dropAt: 'complete', start: 0.7, endAfter: 'complete:0.9' }
 })
