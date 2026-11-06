@@ -3,8 +3,7 @@
 // 10, then 100. Each time the bot walks up behind them and they all turn at once and keep
 // staring. Same approach as staring_villagers: NoAI villagers, the bot runs
 // `tp @s ~ ~ ~ facing entity <bot> eyes` on the crowds that have turned, every tick, and
-// face_on/face_off marks tell the renderer to turn them (it turns every villager in the window,
-// so a beat's face_off comes before the cut to the next crowd). Hard cut (teleport) between beats.
+// face_on (with near: this crowd only) / face_off marks tell the renderer to turn them. Hard cut (teleport) between beats.
 const GAP = 40
 const CROWDS = [
   { n: 1, sub: '1 villager', cols: 1, rows: 1 },
@@ -105,7 +104,7 @@ module.exports = {
       await bot.waitForTicks(i === 2 ? 10 : 8)
       // they all turn round at once
       bot.chat(`/tag @e[type=villager,tag=crowd${i}] add on`)
-      ctx.mark('turn', { n: c.n }); ctx.mark('face_on')
+      ctx.mark('turn', { n: c.n }); ctx.mark('face_on', { near: [sx + 0.5, z - 3.5 - (c.rows - 1) * 0.6, 12] })   // only this crowd turns
       const voices = Math.min(c.n, 6)
       for (let v = 0; v < voices; v++) ctx.sound('entity.villager.ambient', 0.5 + 0.1 * voices, 0.75 + v * 0.1)
       aim = new ctx.Vec3(sx + 0.5, floor + 2.3, z - 3.5 - (c.rows - 1) * 0.6)

@@ -48,7 +48,8 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
       if (row[2] === 'falling_block' || row[2] === 'item') continue
       let c = cur.get(id)
       if (!c || c.last !== tick - 1) c = { x: row[3], y: row[4], z: row[5], tx: row[3], ty: row[4], tz: row[5], steps: 0 }
-      if (row[3] !== c.tx || row[4] !== c.ty || row[5] !== c.tz) { c.tx = row[3]; c.ty = row[4]; c.tz = row[5]; c.steps = 3 }
+      if (Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz) > 4) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }   // teleport: no easing
+      else if (row[3] !== c.tx || row[4] !== c.ty || row[5] !== c.tz) { c.tx = row[3]; c.ty = row[4]; c.tz = row[5]; c.steps = 3 }
       if (c.steps > 0) { c.x += (c.tx - c.x) / c.steps; c.y += (c.ty - c.y) / c.steps; c.z += (c.tz - c.z) / c.steps; c.steps-- }
       c.last = tick; cur.set(id, c)
       const r = row.slice(); r[3] = c.x; r[4] = c.y; r[5] = c.z; ENT.get(tick).set(id, r)
@@ -60,7 +61,8 @@ function entitiesAt (t, mesher) {
   const a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
   const out = []
   for (const [id, ra] of a) {
-    const rb = b.get(id) || ra
+    let rb = b.get(id) || ra
+    if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4) rb = ra   // teleport: hold, then snap on the next tick
     const L = (k) => ra[k] + (rb[k] - ra[k]) * f
     const pos = { x: L(3), y: L(4), z: L(5) }
     const [sky, blk] = mesher.world.getLight(new Vec3(pos.x, pos.y + 0.5, pos.z))
@@ -84,7 +86,9 @@ const MC = require('minecraft-data')(rec.version)
 const FALL_START = new Map()   // falling_block id -> where it appeared
 for (const r of rec.entities || []) if (r[2] === 'falling_block' && !FALL_START.has(r[1])) FALL_START.set(r[1], { t: r[0], x: r[3], y: r[4], z: r[5], vy: 0 })
 const FACE = []
-{ let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = e.t / 50; if (e.event === 'face_off' && a !== null) { FACE.push([a, e.t / 50]); a = null } } if (a !== null) FACE.push([a, Infinity]) }
+// [start tick, end tick, which]: which = { ids: [...] } or { near: [x, z, r] } from the face_on mark,
+// or null for every villager (older recordings)
+{ let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = [e.t / 50, e.ids || e.near ? { ids: e.ids, near: e.near } : null]; if (e.event === 'face_off' && a !== null) { FACE.push([a[0], e.t / 50, a[1]]); a = null } } if (a !== null) FACE.push([a[0], Infinity, a[1]]) }
 const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, z: e.z }))
 const ASSETS_DIR = path.join(__dirname, 'work', 'assets', rec.version)
 // Held item over time: hotbar contents + selected slot from the timeline, the tick the held item last
@@ -203,8 +207,10 @@ function camAt (t) {
 }
 
 function camAtLive (t) {
-  const i = Math.min(P.length - 2, Math.max(0, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
+  const i = Math.min(P.length - 2, Math.max(0, Math.floor(t)))
   const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
+  // a teleport (over 4 blocks in one tick) is a cut, never a glide through the in-between spots
+  const f = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) > 4 ? 0 : Math.min(1, Math.max(0, t - i))
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f
   return {
     x: a[1] + (b[1] - a[1]) * f, y: a[2] + (b[2] - a[2]) * f + EYE, z: a[3] + (b[3] - a[3]) * f,
@@ -376,9 +382,10 @@ function camAtLive (t) {
     }
     // mobs made to face the player by command (tp facing entity <bot> eyes) between face_on and
     // face_off marks: the recorded entity yaw lags the server by seconds, so face them here
-    if (FACE.some(([a, b]) => t >= a && t < b)) {
+    for (const [fa, fb, which] of FACE) {
+      if (t < fa || t >= fb) continue
       for (const e of ents) {
-        if (e.name !== 'villager') continue
+        if (which ? !((which.ids && which.ids.includes(e.id)) || (which.near && Math.hypot(e.x - which.near[0], e.z - which.near[1]) <= which.near[2])) : e.name !== 'villager') continue
         const dx = cam.x - e.x, dz = cam.z - e.z, dy = cam.y - (e.y + 1.62)
         e.yaw = Math.atan2(-dx, -dz); e.headYaw = e.yaw
         e.pitch = Math.atan2(dy, Math.hypot(dx, dz))

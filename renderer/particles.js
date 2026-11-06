@@ -7,6 +7,7 @@
 //   portal  - PortalParticle: purple specks drifting in to where a pearl lands
 //   happy   - happy_villager sparkles (glint) around a villager's head
 //   angry   - angry_villager clouds rising from a villager's head
+//   smoke   - large_smoke puffs where water meets lava (LevelEvent.LAVA_FIZZ: 8 per block, rising)
 function rng (seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000 } }
 
 function spawn (ev, blockTex) {
@@ -38,6 +39,15 @@ function spawn (ev, blockTex) {
     for (let i = 0; i < (ev.count || 7); i++) {
       P({ x: ev.x + (r() - 0.5) * 1.0, y: ev.y + r() * 0.8, z: ev.z + (r() - 0.5) * 1.0, vx: (r() - 0.5) * 0.02, vy: ev.type === 'angry' ? 0.03 : 0.01, vz: (r() - 0.5) * 0.02,
         g: 0, drag: 0.96, life: ev.type === 'angry' ? 16 + r() * 10 : 20 + r() * 20, size: ev.type === 'angry' ? 0.2 : 0.16, tex: ev.type === 'angry' ? 'particle/angry' : 'particle/glint', color: [1, 1, 1] })
+    }
+  }
+  if (ev.type === 'smoke') {
+    // LargeSmokeParticle (BaseAshSmokeParticle, scale 2.5): grey 0..0.3, rises ~0.01-0.05/tick,
+    // lives 8/(r*0.8+0.2) ticks x 2.5, sprite runs big_smoke_0..11 over its life
+    for (let i = 0; i < (ev.count || 8); i++) {
+      const g = r() * 0.3
+      P({ x: ev.x + (r() - 0.5) * 0.9, y: ev.y + r() * 0.3, z: ev.z + (r() - 0.5) * 0.9, vx: (r() - 0.5) * 0.02, vy: 0.02 + r() * 0.04, vz: (r() - 0.5) * 0.02,
+        g: -0.002, drag: 0.96, life: Math.min(60, 8 / (r() * 0.8 + 0.2) * 2.5), size: 0.25 * (r() * 0.5 + 0.5) * 2.5, anim: ['particle/big_smoke_', 12], color: [g + 0.35, g + 0.35, g + 0.35] })
     }
   }
   if (ev.type === 'explosion') {

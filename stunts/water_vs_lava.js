@@ -69,7 +69,7 @@ module.exports = {
       if (fizzN++ < 2) ctx.sound('block.lava.extinguish', 0.5, 2.6 + (Math.random() - Math.random()) * 0.8)
       ctx.particles('splash', new Vec3(p.x + 0.5, p.y + 1.15, p.z + 0.5), { count: 6 })
       // a few smoke puffs, never close to the camera (they fill the screen)
-      if (bot.entity.position.distanceTo(p) > 9 && puff++ % 10 === 0) ctx.particles('explosion', new Vec3(p.x + 0.5, p.y + 1.6, p.z + 0.5), { radius: 0.5 })
+      if (bot.entity.position.distanceTo(p) > 9 && puff++ % 10 === 0) ctx.particles('smoke', new Vec3(p.x + 0.5, p.y + 1.1, p.z + 0.5), { count: 8 })
     }
     bot.on('blockUpdate', onBlock)
 

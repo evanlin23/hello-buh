@@ -16,6 +16,9 @@ const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
 const SHADE = (d) => d[1] > 0.5 ? 1.0 : d[1] < -0.5 ? 0.5 : Math.abs(d[2]) > 0.5 ? 0.8 : 0.6
 
 let MODELS = null
+// DyeColor texture diffuse colours, by id (white, orange, magenta, ... black)
+const DYE = [0xF9FFFE, 0xF9801D, 0xC74EBD, 0x3AB3DA, 0xFED83D, 0x80C71F, 0xF38BAA, 0x474F52, 0x9D9D97, 0x169C9C, 0x8932B8, 0x3C44AA, 0x835432, 0x5E7C16, 0xB02E26, 0x1D1D21]
+const woolColor = (i) => { const d = DYE[i] ?? DYE[0], m = i === 0 ? 0.9 : 0.75; return [((d >> 16) & 255) / 255 * m, ((d >> 8) & 255) / 255 * m, (d & 255) / 255 * m] }
 const texCache = new Map()
 
 async function img (url) {
@@ -79,8 +82,10 @@ function build (geo, texInfo, extraCubes = {}) {
     const ppiv = parent ? parent.userData.pivot : new THREE.Vector3()
     g.position.copy(piv.clone().sub(ppiv))
     g.userData.pivot = piv
-    const r = b.bind_pose_rotation || b.rotation
-    if (r) g.rotation.set(-r[0] * Math.PI / 180, -r[1] * Math.PI / 180, -r[2] * Math.PI / 180)
+    // bind_pose_rotation turns only this bone's own cubes (Bedrock legacy geometry: a pig's body
+    // lies flat, its legs and head don't); rotation turns the bone with its children
+    if (b.rotation) g.rotation.set(-b.rotation[0] * Math.PI / 180, -b.rotation[1] * Math.PI / 180, -b.rotation[2] * Math.PI / 180)
+    const bind = b.bind_pose_rotation
     g.userData.rest = g.rotation.clone()
     const cubes = [...(b.cubes || []), ...(extraCubes[b.name] || [])]
     if (cubes.length) {
@@ -95,7 +100,9 @@ function build (geo, texInfo, extraCubes = {}) {
       geom.setAttribute('uv', new THREE.Float32BufferAttribute(all.uv, 2))
       geom.setAttribute('color', new THREE.Float32BufferAttribute(all.col, 3))
       geom.setIndex(all.idx)
-      g.add(new THREE.Mesh(geom, mat))
+      const mesh = new THREE.Mesh(geom, mat)
+      if (bind) mesh.rotation.set(-bind[0] * Math.PI / 180, -bind[1] * Math.PI / 180, -bind[2] * Math.PI / 180)
+      g.add(mesh)
     }
     ;(parent || inner).add(g)
     bones[b.name] = g
@@ -116,6 +123,7 @@ function look (name, extra, regs) {
     // the converted model lacks the hat layer that profession outfits draw on
     return { model: 'villager', layers, rest: { arms: [0.75, 0, 0] }, extra: { head: [{ origin: [-4, 24, -4], size: [8, 10, 8], uv: [32, 0], inflate: 0.5 }] } }
   }
+  if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
   return null
@@ -130,7 +138,7 @@ export class EntityLayer {
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
     if (cur) { this.scene.remove(cur.obj); this.live.delete(id) }
-    let obj = null, bones = {}, mat = null
+    let obj = null, bones = {}, mat = null, woolMat = null
     if (name === 'falling_block' && extra && this.blockModels.has(extra.state)) {
       const bm = this.blockModels.get(extra.state)
       const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, 0, -0.5)
@@ -149,14 +157,24 @@ export class EntityLayer {
       }
     } else {
       const l = look(name, extra, this.regs)
-      const geo = l && MODELS[l.model]?.geometry?.default
+      const geo = l && MODELS[l.model]?.geometry?.[l.geo || 'default']
       const t = l && await texture(l.layers)
       if (geo && t) {
         const b = build(geo, t, l.extra); obj = b.root; bones = b.bones; mat = b.mat
         for (const [bn, r] of Object.entries(l.rest || {})) if (bones[bn]) { bones[bn].rotation.set(...r); bones[bn].userData.rest = bones[bn].rotation.clone() }
+        if (l.wool) {   // SheepWoolLayer: same bones and pivots, inflated cubes, Java wool texture (Bedrock uv minus 32 rows)
+          const wt = await texture(['entity/sheep/sheep_wool'])
+          const fur = MODELS.sheep.geometry.default
+          const wgeo = { bones: fur.bones.map(bo => ({ ...bo, cubes: (bo.cubes || []).map(c => ({ ...c, uv: [c.uv[0], c.uv[1] - 32] })) })) }
+          if (wt) {
+            const w = build(wgeo, wt)
+            for (const [bn, g] of Object.entries(w.bones)) if (bones[bn]) for (const m of [...g.children].filter(c => c.isMesh)) bones[bn].add(m)
+            woolMat = w.mat
+          }
+        }
       }
     }
-    const rec = { key, obj, bones, mat, walk: 0, last: null }
+    const rec = { key, obj, bones, mat, woolMat, walk: 0, last: null }
     if (obj) this.scene.add(obj)
     this.live.set(id, rec)
     return rec
@@ -171,6 +189,16 @@ export class EntityLayer {
       if (!r.obj) continue
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0), s.z)
       if (r.mat) r.mat.color.setScalar(s.light ?? 1)
+      if (r.woolMat) {   // Sheep.getColor: dye colour x 0.75 (white x 0.9); jeb_ blends through all 16, 25 ticks each
+        const L = s.light ?? 1
+        let c
+        if (s.extra?.jeb) {
+          const k = Math.floor(tick / 25) + s.id, f = (tick % 25) / 25
+          const a = woolColor(k % 16), b = woolColor((k + 1) % 16)
+          c = a.map((v, i) => v * (1 - f) + b[i] * f)
+        } else c = woolColor(s.extra?.color || 0)
+        r.woolMat.color.setRGB(c[0] * L, c[1] * L, c[2] * L)
+      }
       if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
       r.obj.rotation.set(0, s.yaw, 0)
