@@ -21,7 +21,9 @@ adds songs.
 
 ## Rules
 - **Only add new files** (`stunts/<name>.js`, and helpers under `lib/` only if new). Do NOT edit
-  shared files (`render.js`, `renderer/*`, `edit.py`, `lib/harness.js`, `run.sh`, other stunts).
+  shared files (`render.js`, `renderer/*`, `edit.py`, `lib/harness.js`, `run.sh`, other stunts)
+  unless your assignment says you own them (the engine worker owns its renderer features, the
+  retention worker owns its edit.py features). Pull main often; commit small.
   If you find an engine bug, describe it with a reproduction in your final report instead.
 - One run at a time in your container (the server port is fixed). Never edit `run.sh` while it runs.
 - Copy the patterns of existing stunts: `tnt_scale.js`, `every_clutch.js`, `creeper.js`,
@@ -29,10 +31,16 @@ adds songs.
   for beat labels (no emoji in subs), `deathScreen` + `expectDeath` for deaths.
 - 1.21.11 game rules are snake_case (`immediate_respawn`, `spawn_mobs`...). `/fill` is capped
   at 32768 blocks. Check logs for `COMMAND ERROR:`.
-- Target 12-20 s with something happening the whole time: the stunt visible in the first
-  second, several beats that escalate, the payoff at the end.
+- **30 s minimum** (owner rule, 2026-11-06), reached with MORE escalating beats, never by stretching
+  one. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
+  Short ends <= 1.0 s after the final payoff. Owner: "We don't want any deadspace and we should end
+  as soon as the payoff comes" / "I would prefer like 30 seconds at least".
+- Creative freedom (owner): "We can have creative freedom as well to make it more eye catching or
+  anything for retention". Ridiculous, escalating, eye-catching beats beat safe ones.
 
 ## QA before publishing (required)
+0. Both audits must say ready: `.claude/skills/retention-audit/SKILL.md` (with `python3 scripts/beat_audit.py <name>`)
+   and `.claude/skills/minecraft-audit/SKILL.md`. Then the frame review below.
 1. `python3 scripts/qa_frames.py out/<name>.mp4`, then read every sheet and flag image (docs/qa.md): no unexplained flags.
 2. Look at the frames yourself: `ffmpeg -i out/<name>.mp4 -vf "fps=2,scale=270:480,tile=8x2" sheet_%02d.jpg`,
    read every sheet, and check full-res frames at anything suspicious. Look for rendering glitches,
