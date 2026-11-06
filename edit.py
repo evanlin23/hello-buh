@@ -542,11 +542,12 @@ def apply_speed(args):
     pat = pathlib.Path(args.frames).name
     while True:
         x = warp.src(k / args.fps) * args.fps
-        i = int(round(x))
+        i = warp.frame(k, args.fps)
         if i >= n_src:
             break
         frac = x - math.floor(x)
-        if 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # slow motion: blend the two neighbours (no duplicate frames)
+        step = warp.src((k + 1) / args.fps) * args.fps - x      # < 1 only inside a slow-motion span
+        if step < 0.99 and 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # slow motion: blend the two neighbours (no duplicate frames)
             lo = Image.open(src_dir / (pat % math.floor(x))).convert("RGB")
             hi = Image.open(src_dir / (pat % (math.floor(x) + 1))).convert("RGB")
             Image.blend(lo, hi, frac).save(wd / (pat % k), compress_level=1)

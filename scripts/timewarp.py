@@ -84,6 +84,12 @@ class Warp:
             lost += (b - a) * (1 - 1 / f)
         return t_out + lost
 
+    def frame(self, k, fps):
+        """The source frame shown as output frame k. Floor, not round: past a sped-up span the
+        source times can sit on half frames, and round-half-to-even then repeated every other
+        frame and skipped the next in real-time stretches (duplicate frames)."""
+        return int(math.floor(self.src(k / fps) * fps + 1e-6))
+
     def timeline(self, timeline):
         return [{**e, "t": self.out(e["t"] / 1000) * 1000} for e in timeline]
 

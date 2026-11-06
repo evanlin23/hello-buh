@@ -38,11 +38,11 @@ def main(stunt, rec_path, out_dir, fps=60):
         k, secs = edit["endAfter"].rsplit(":", 1)
         if k in ev:
             end = min(end, ev[k] + float(secs))
-    # the source frames edit.py will pick (same rounding as edit.py's apply_speed), with a little margin
+    # the source frames edit.py will pick (Warp.frame, as edit.py's apply_speed does), with a little margin
     need = set()
     k = 0
     while True:
-        i = int(round(warp.src(k / fps) * fps))
+        i = warp.frame(k, fps)
         if i >= n:
             break
         if start - 0.5 <= k / fps <= end + 0.5:
