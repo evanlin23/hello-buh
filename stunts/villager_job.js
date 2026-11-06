@@ -70,10 +70,9 @@ module.exports = {
     // the villager watches the player (LookAtPlayerGoal: the head follows the eyes)
     ctx.mark('face_on', { near: [this.x + 0.5, this.vz + 0.5, 1.5], head: true })
     await bot.waitForTicks(16)
-    for (const pause of [12, 6]) {                     // two cycles (QA: 3.5 repeats dragged)
-      await place(); await lookV(); await bot.waitForTicks(pause)
-      await breakIt(); await lookV(); await bot.waitForTicks(pause)
-    }
+    // one cycle: hired -> fired -> rehired (QA round 2: a second break/re-place looked looped)
+    await place(); await lookV(); await bot.waitForTicks(12)
+    await breakIt(); await lookV(); await bot.waitForTicks(12)
     await place(); ctx.mark('rehired'); await lookV()
     ctx.sound('entity.villager.yes', 1, 1)
     await bot.waitForTicks(24)
