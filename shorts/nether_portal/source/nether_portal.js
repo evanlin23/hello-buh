@@ -5,7 +5,7 @@ module.exports = {
   name: 'nether_portal',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: your first nether portal 😳',
-  edit: { caption: 'POV: your first nether portal 😳', red: 'nether', song: 'songs/funk_abnormal.mp3', dropAt: 'lit', start: 0.4 },
+  edit: { caption: 'POV: your first nether portal 😳', red: 'nether', song: 'songs/funk_abnormal.mp3', dropAt: 'lit' , endAfter: 'lit:2.4'},
 
   async setup (ctx) {
     const { bot } = ctx
@@ -70,12 +70,17 @@ module.exports = {
     bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.mark('lit')
     await bot.waitForTicks(4)
     ctx.sound('block.portal.trigger', 0.6)
+    // the portal's ambient particles (NetherPortalBlock.animateTick: a few a tick over the surface)
+    let pt = 0
+    const portalParts = () => { if (pt++ % 4 === 0) ctx.particles('portal', { x: x0 + 1 + Math.random() * 2, y: y0 + 1 + Math.random() * 3, z: pz + 0.5 }, { count: 6 }) }
+    bot.on('physicsTick', portalParts)
     const lit = bot.blockAt(new Vec3(x0 + 1, y0 + 1, pz))
     ctx.log('portal block:', lit && lit.name)
     await look(center, 10)
     // step back to admire it
     bot.setControlState('back', true); await bot.waitForTicks(10); bot.setControlState('back', false)
     await look(center, 24)
+    bot.removeListener('physicsTick', portalParts)
     return !!(lit && lit.name === 'nether_portal')
   }
 }

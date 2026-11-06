@@ -1,20 +1,26 @@
 fetched server, client jar and asset index for 1.21.11
 attempt 1
-10:41:37.848 spawned at Vec3 { x: 124.5, y: 70, z: 14.5 }
-10:41:38.171 nearest minecraft:forest at [ 412, 14 ]
-10:41:50.252 set at { x: 420, y: 85, z: 14 }
-10:41:54.790 portal block: nether_portal
-10:41:57.493 STUNT OK
-meshing from y 23
-light computed in 0.5 s
-meshed + uploaded world in 13.3 s
-rendered 402 frames (6.70 s of video) in 132.2 s = 19.7 s per video second
-wrote work/nether_portal.wav 6.75s
-song drop at 10.50s lands on 3.90s of the Short (song starts at 6.60s)
+16:05:12.183 spawned at Vec3 { x: 134.5, y: 70, z: 8.5 }
+16:05:12.410 nearest minecraft:forest at [ 422, -88 ]
+16:05:24.157 set at { x: 422, y: 70, z: -88 }
+16:05:29.503 portal block: fire
+16:05:32.214 STUNT FAILED
+attempt 2
+16:05:33.972 spawned at Vec3 { x: 422.2457381927629, y: 71, z: -85.36076219842231 }
+16:06:00.112 set at { x: 422, y: 70, z: -86 }
+16:06:04.726 portal block: nether_portal
+16:06:07.436 STUNT OK
+meshing from y 8
+light computed in 1.4 s
+meshed + uploaded world in 34.7 s
+66 particles
+rendered 405 frames (6.75 s of video) in 136.4 s = 20.2 s per video second
+wrote work/nether_portal.wav 6.80s
+song drop at 10.50s lands on 4.40s of the Short (song starts at 6.10s)
 no 3D block icons needed
-wrote out/nether_portal.mp4 6.30s
+wrote out/nether_portal.mp4 6.75s
 
-real	3m29.051s
-user	3m26.865s
-sys	0m9.880s
+real	4m30.181s
+user	4m24.081s
+sys	0m12.465s
 exit=0

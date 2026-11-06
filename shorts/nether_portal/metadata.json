@@ -19,32 +19,32 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "lit",
     "drop_in_song_s": 38.25,
-    "drop_in_short_s": 4.3,
-    "song_start_s": 33.95
+    "drop_in_short_s": 4.55,
+    "song_start_s": 33.7
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 6.3,
+    "duration_s": 6.95,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 7237017,
-    "sha256": "deffc8e8e356e411311c2b28ffd9b27c40176d18ac99e220a57c707dc4ff60b4"
+    "bytes": 7413348,
+    "sha256": "da12e6fb87bdc9e778d4192d7395b506b401b1cec9867c23abaf4ad4e94ea9f3"
   },
   "edit": {
     "caption": "POV: your first nether portal \ud83d\ude33",
     "red": "nether",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "lit",
-    "start": 0.4,
+    "endAfter": "lit:2.4",
     "args": [
       "--caption",
       "POV: your first nether portal \ud83d\ude33",
       "--red",
       "nether",
-      "--start",
-      "0.4",
+      "--end_after",
+      "lit:2.4",
       "--song",
       "songs/funk_abnormal.mp3",
       "--song_drop_at",
@@ -59,13 +59,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 420,
+      "x": 416,
       "y": 85,
-      "z": 14
+      "z": 13
     },
     "biome": "minecraft:forest",
-    "ticks": 135,
-    "seconds": 6.75,
+    "ticks": 141,
+    "seconds": 7.05,
     "deaths": 0,
     "events": [
       {
@@ -73,11 +73,71 @@
         "event": "start"
       },
       {
-        "t": 4.3,
+        "t": 0.7,
+        "event": "swing"
+      },
+      {
+        "t": 0.95,
+        "event": "swing"
+      },
+      {
+        "t": 1.15,
+        "event": "swing"
+      },
+      {
+        "t": 1.35,
+        "event": "swing"
+      },
+      {
+        "t": 1.6,
+        "event": "swing"
+      },
+      {
+        "t": 1.8,
+        "event": "swing"
+      },
+      {
+        "t": 2,
+        "event": "swing"
+      },
+      {
+        "t": 2.2,
+        "event": "swing"
+      },
+      {
+        "t": 2.4,
+        "event": "swing"
+      },
+      {
+        "t": 2.65,
+        "event": "swing"
+      },
+      {
+        "t": 2.85,
+        "event": "swing"
+      },
+      {
+        "t": 3.05,
+        "event": "swing"
+      },
+      {
+        "t": 3.25,
+        "event": "swing"
+      },
+      {
+        "t": 3.45,
+        "event": "swing"
+      },
+      {
+        "t": 4.55,
+        "event": "swing"
+      },
+      {
+        "t": 4.55,
         "event": "lit"
       },
       {
-        "t": 6.75,
+        "t": 7.05,
         "event": "end"
       }
     ]
@@ -85,22 +145,22 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
-    "rendered_at": "2026-11-06T10:44:47.297Z",
-    "head_at_publish": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
+    "commit": "38ccca975e4120387012207653a8f289aaf8e7ba",
+    "rendered_at": "2026-11-06T17:52:48.848Z",
+    "head_at_publish": "38ccca975e4120387012207653a8f289aaf8e7ba",
     "stunt": "stunts/nether_portal.js",
     "source_snapshot": [
       "source/nether_portal.js"
     ]
   },
   "rebuild": [
-    "git checkout e657d1802459",
+    "git checkout 38ccca975e41",
     "gunzip -c shorts/nether_portal/recording.json.gz > work/nether_portal.rec.json",
     "node render.js work/nether_portal.rec.json work/nether_portal.frames 60 1080 1011",
     "python3 audio.py work/nether_portal.rec.json work/nether_portal.wav",
-    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal \ud83d\ude33\" --red nether --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
+    "python3 edit.py --frames work/nether_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/nether_portal.rec.json --audio work/nether_portal.wav --caption \"POV: your first nether portal \ud83d\ude33\" --red nether --end_after lit:2.4 --song songs/funk_abnormal.mp3 --song_drop_at lit --out out/nether_portal.mp4"
   ],
   "status": "ready",
-  "notes": "",
-  "published_at": "2026-11-06T10:44:56.939Z"
+  "notes": "frame QA pass (reviewer 2026-11-06): nitpicks only (0.55 s still opening, portal particles column)",
+  "published_at": "2026-11-06T17:56:46.539Z"
 }
