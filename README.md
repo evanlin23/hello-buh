@@ -17,6 +17,7 @@ checked out at `../hb-videos`.
 | [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 8.8s | misery. · pupsies | ready | 46cab20 |  |
 | [half_heart](shorts/half_heart/short.mp4) | POV: you're on half a heart 💀 | 7.75s | misery. · pupsies | ready | e657d18 |  |
 | [heart_art](shorts/heart_art/short.mp4) | built this for my girlfriend 🥺 | 6.85s | Payphone · Radio Top Singers | ready | 5617e57 |  |
+| [lava_rising](shorts/lava_rising/short.mp4) | the lava stopped 1 block below me 😳 | 13s | misery. · pupsies | ready | e657d18 |  |
 | [looks_wrong](shorts/looks_wrong/short.mp4) | Bro this looks wrong? | 9.7s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 17ecd2d |  |
 | [midas_touch](shorts/midas_touch/short.mp4) | POV: you got the midas touch 🤑 | 10.15s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 90afab9 |  |
 | [nether_portal](shorts/nether_portal/short.mp4) | POV: your first nether portal 😳 | 6.3s | FUNK ABNORMAL (ULTRA SLOWED) | ready | e657d18 |  |

@@ -1,0 +1,22 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+10:49:52.927 spawned at Vec3 { x: 138.5, y: 70, z: 8.5 }
+10:49:53.248 nearest minecraft:plains at [ 362, -56 ]
+10:50:05.565 set at { x: 362, y: 69, z: -48 }
+10:50:19.605 STUNT OK
+meshing from y 8
+light computed in 0.6 s
+meshed + uploaded world in 15.7 s
+page: Failed to load resource: the server responded with a status of 404 (Not Found)
+page: Failed to load resource: the server responded with a status of 404 (Not Found)
+page: Failed to load resource: the server responded with a status of 404 (Not Found)
+rendered 810 frames (13.50 s of video) in 327.3 s = 24.2 s per video second
+wrote work/lava_rising.wav 13.55s
+song drop at 16.25s lands on 10.05s of the Short (song starts at 6.20s)
+no 3D block icons needed
+wrote out/lava_rising.mp4 13.00s
+
+real	7m11.307s
+user	6m4.371s
+sys	0m15.309s
+exit=0
