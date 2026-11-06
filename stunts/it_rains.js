@@ -19,7 +19,7 @@ module.exports = {
     song: 'songs/funk_abnormal.mp3', dropAt: 'tnt', deathScreen: true,
     startAt: 'hook:-0.05', endAfter: 'death:1.6',
     subs: [
-      ['hook', 'it rains anvils', 2.0, 0], ['above', 'wait...', 1.2, 0], ['dodged', 'TOO close', 1.4, 0],
+      ['hook', 'it rains anvils', 2.0, 0], ['wall', 'uhh', 1.2, 0], ['above', 'wait...', 1.2, 0], ['dodged', 'TOO close', 1.4, 0],
       ['tnt', 'then TNT', 2.0, 0], ['close_tnt', 'ow', 1.0, 0],
       ['creepers', 'then CREEPERS', 2.0, 0], ['run', 'nope nope nope', 1.6, 0],
       ['everything', 'then EVERYTHING', 2.4, 0], ['hiss', 'tssss', 1.2, 0]
@@ -81,15 +81,26 @@ module.exports = {
     const step = async (dirs, ticks) => { for (const d of dirs) bot.setControlState(d, true); await bot.waitForTicks(ticks); for (const d of dirs) bot.setControlState(d, false) }
     const yaw0 = 0    // north
 
-    // ---- phase 1: anvils ----
-    rain.anvil = 4
+    // ---- phase 1: anvils, thicker and thicker ----
+    rain.anvil = 5
     await ctx.easeLook(yaw0, 0.35, 500)
     for (let k = 0; k < 16; k++) await bot.waitForTicks(1)       // pre-roll: anvils already mid-air at the first frame
     ctx.mark('hook')
-    ctx.easeLook(yaw0 + 0.35, 0.3, 600); await step(['left'], 8)
-    ctx.easeLook(yaw0 - 0.3, 0.38, 600); await step(['right'], 10)
+    const dodge = async (moves) => {
+      for (const [dy, dp, dirs, t] of moves) { ctx.easeLook(yaw0 + dy, dp, Math.max(300, t * 50)); await step(dirs, t) }
+    }
+    await dodge([[0.35, 0.3, ['left'], 9], [-0.3, 0.38, ['right'], 11], [0.15, 0.3, ['back'], 7]])
     rain.anvil = 3
-    ctx.easeLook(yaw0 + 0.15, 0.3, 500); await step(['back'], 6)
+    await dodge([[-0.35, 0.32, ['left'], 8], [0.3, 0.36, ['right'], 10], [0.0, 0.3, ['back'], 6]])
+    // a whole wall of them, right across the front
+    ctx.mark('wall')
+    {
+      const p = bot.entity.position
+      for (let k = -5; k <= 5; k++) anvil(p.x + k * 1.1, p.z - 8.5, H - 1 + (k & 1), 2)
+    }
+    await ctx.easeLook(yaw0, 0.6, 350)
+    await ctx.easeLook(yaw0, 0.05, 900)                           // follow them down
+    await dodge([[0.3, 0.3, ['right'], 8]])
     // one straight down at us: look up, see it, side-step
     const p0 = bot.entity.position.clone()
     anvil(p0.x, p0.z, H - 2, 2)
@@ -103,18 +114,17 @@ module.exports = {
     ctx.mark('dodged')
     await ctx.easeLookAt(new Vec3(p0.x, floor + 1.2, p0.z), 300)
     rain.anvil = 2
-    ctx.easeLook(yaw0 + 0.2, 0.35, 500); await step(['left'], 8)
+    await dodge([[0.2, 0.35, ['left'], 8], [-0.25, 0.3, ['back'], 6]])
 
     // ---- phase 2: TNT ----
     ctx.mark('tnt')
     rain.tnt = 9; rain.anvil = 4
-    ctx.easeLook(yaw0 - 0.2, 0.4, 600); await step(['right'], 10)
-    ctx.easeLook(yaw0 + 0.3, 0.3, 600); await step(['left', 'back'], 10)
+    await dodge([[-0.2, 0.4, ['right'], 10], [0.3, 0.3, ['left', 'back'], 10], [-0.1, 0.35, ['left'], 8]])
     rain.tnt = 6
-    ctx.easeLook(yaw0 - 0.25, 0.2, 600); await step(['right'], 12)
+    await dodge([[-0.25, 0.2, ['right'], 12], [0.2, 0.3, ['back'], 8]])
     // a close one: knocked back, hearts gone
     if (bot.health >= 16) {
-      const [cx, cz] = [bot.entity.position.x - Math.sin(bot.entity.yaw) * 6.5, bot.entity.position.z - Math.cos(bot.entity.yaw) * 6.5]
+      const [cx, cz] = [bot.entity.position.x - Math.sin(bot.entity.yaw) * 7.5, bot.entity.position.z - Math.cos(bot.entity.yaw) * 7.5]
       tnt(cx, cz, 30)
       await ctx.easeLookAt(new Vec3(cx, floor + 3, cz), 400)
       const b0 = booms, h0 = bot.health
@@ -122,8 +132,7 @@ module.exports = {
       if (booms > b0 || bot.health < h0) ctx.mark('close_tnt')
     }
     rain.tnt = 4
-    ctx.easeLook(yaw0 + 0.3, 0.3, 600); await step(['left'], 10)
-    ctx.easeLook(yaw0 - 0.1, 0.35, 500); await step(['back'], 8)
+    await dodge([[0.3, 0.3, ['left'], 10], [-0.1, 0.35, ['back'], 8], [-0.35, 0.3, ['right'], 10], [0.15, 0.3, ['back'], 8]])
 
     // ---- phase 3: creepers ----
     ctx.mark('creepers')
@@ -136,8 +145,8 @@ module.exports = {
       return [best, bd]
     }
     let ran = false
-    for (let k = 0; k < 150; k++) {
-      const [c, d] = nearest()
+    for (let k = 0; k < 170; k++) {
+      const [c] = nearest()
       const phase = Math.floor(k / 20) % 2
       bot.setControlState('back', true)
       bot.setControlState('left', phase === 0); bot.setControlState('right', phase === 1)
@@ -145,20 +154,26 @@ module.exports = {
         const target = c ? c.position.offset(0, 1.0, 0) : null
         if (target) ctx.easeLookAt(target, 400); else ctx.easeLook(yaw0 + (phase ? 0.25 : -0.25), 0.1, 400)
       }
-      if (!ran && c && d < 4.5 && k > 40) {
-        // too close: it's hissing. Sprint away (facing away), then turn back for the blast
+      if (!ran && k === 80) {
+        // one lands right beside us, already hissing: sprint off, turn back for the blast
         ran = true
-        ctx.mark('run')
         bot.clearControlStates()
-        await ctx.easeLook(bot.entity.yaw + Math.PI, 0.0, 250)
+        const p = bot.entity.position, yy = bot.entity.yaw + 0.9
+        const sx = p.x - Math.sin(yy) * 3.2, sz = p.z - Math.cos(yy) * 3.2
+        bot.chat(`/summon creeper ${sx.toFixed(2)} ${floor + 3} ${sz.toFixed(2)} {PersistenceRequired:1b,ignited:1b,Fuse:34}`)
+        await bot.waitForTicks(3)
+        ctx.sound('entity.creeper.primed', 1, 1)
+        await ctx.easeLookAt(new Vec3(sx, floor + 1.3, sz), 250)
+        ctx.mark('run')
+        await bot.waitForTicks(4)
+        await ctx.easeLook(yy + Math.PI, 0.0, 250)
         bot.setControlState('sprint', true); bot.setControlState('forward', true)
-        await bot.waitForTicks(18)
+        await bot.waitForTicks(16)
         bot.setControlState('forward', false); bot.setControlState('sprint', false)
-        const [c2] = nearest()
-        await ctx.easeLookAt(c2 ? c2.position.offset(0, 1, 0) : bot.entity.position.offset(0, 1, -6), 300)
-        k += 30
+        await ctx.easeLookAt(new Vec3(sx, floor + 1.3, sz), 300)
+        await bot.waitForTicks(8)
+        k += 32
       }
-      if (k > 110 && ran) break
       await bot.waitForTicks(1)
     }
     bot.clearControlStates()
@@ -167,8 +182,8 @@ module.exports = {
     ctx.mark('everything')
     rain.anvil = 2; rain.tnt = 5; rain.creeper = 8
     await ctx.easeLook(bot.entity.yaw, 0.45, 400)
-    ctx.easeLook(bot.entity.yaw + 0.3, 0.35, 600); await step(['left'], 10)
-    ctx.easeLook(bot.entity.yaw - 0.5, 0.3, 600); await step(['right'], 10)
+    const yf = bot.entity.yaw
+    for (const [dy, dirs, t] of [[0.3, ['left'], 10], [-0.4, ['right'], 10], [0.1, ['back'], 8], [0.4, ['left'], 8]]) { ctx.easeLook(yf + dy, 0.3, 500); await step(dirs, t) }
     // the one that lands right behind
     const p = bot.entity.position, yb = bot.entity.yaw
     bot.chat(`/summon creeper ${(p.x + Math.sin(yb) * 1.6).toFixed(2)} ${(floor + 1).toFixed(1)} ${(p.z + Math.cos(yb) * 1.6).toFixed(2)} {PersistenceRequired:1b,ignited:1b,Fuse:30}`)
