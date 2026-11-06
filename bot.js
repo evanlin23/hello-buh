@@ -91,7 +91,8 @@ bot.once('spawn', async () => {
     await cmd('/gamemode creative'); await cmd('/time set 6000'); await cmd('/weather clear')
     await cmd('/gamerule doDaylightCycle false'); await cmd('/gamerule doWeatherCycle false')
     await cmd('/gamerule sendCommandFeedback false'); await cmd('/gamerule showDeathMessages true')
-    const R = 10   // flattened radius around the pillar (the bot lands ~7 blocks out)
+    const R = 16   // flattened radius around the pillar: the bot lands ~7 blocks out, and water
+    // flows toward any drop-off within 4 blocks, so keep the pad edge well away (33x33x30 < /fill cap)
     await cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R} dirt`)
     await cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R} grass_block`)
     // Clear the column above (in slabs: /fill is capped at 32768 blocks per command).

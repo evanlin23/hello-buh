@@ -67,6 +67,7 @@ function camAt (t) {
   page.on('console', m => { if (m.type() === 'error') console.error('page:', m.text()) })
   await page.goto(`http://127.0.0.1:${server.address().port}/`)
   await page.waitForFunction(() => window.HB_READY)
+  if (process.env.DEBUG_MAGENTA) await page.evaluate(() => { window.DEBUG_MAGENTA = true })
   await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || 8) })
 
   const send = async (list) => {
@@ -75,7 +76,8 @@ function camAt (t) {
     await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`)
   }
   const t0 = Date.now()
-  const minVisibleY = rec.set ? rec.set.y - 24 : -64
+  const minVisibleY = mesher.lowestSurface() - 8
+  console.log('meshing from y', minVisibleY)
   console.log(`light computed in ${(mesher.computeLight(minVisibleY) / 1000).toFixed(1)} s`)
   await send(mesher.sections(minVisibleY))
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
@@ -105,6 +107,8 @@ function camAt (t) {
     const bio = inBlock && inBlock.biome && mesher.biomes[inBlock.biome.name]
     if (bio) { cam.sky = bio.sky; cam.fog = bio.fog; cam.waterFog = bio.water_fog }
     await page.evaluate(([c, tick]) => window.HB.frame(c, tick), [cam, t])
+    // let the compositor present the finished frame before capturing (else: tearing lines)
+    await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     await page.screenshot({ path: `${outDir}/f${String(f).padStart(5, '0')}.png` })
     if (f % 60 === 0) console.log(`frame ${f}/${frames}`)
   }

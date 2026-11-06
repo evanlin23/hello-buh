@@ -174,6 +174,7 @@ window.HB = {
     sky.visible = !cam.underwater; clouds.visible = !cam.underwater; sun.visible = !cam.underwater
     scene.background = cam.underwater ? srgb(0x050533) : srgb(env.fogColor)
     sky.position.copy(camera.position)
+    if (window.DEBUG_MAGENTA) { sky.visible = false; scene.background = new THREE.Color(1, 0, 1) }
     placeSun()
     // clouds drift +X at vanilla speed (0.03 blocks/tick); keep them centered on the camera
     const span = 256 * 12

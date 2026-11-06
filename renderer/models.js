@@ -145,19 +145,52 @@ function getLiquidRenderHeight (world, block, type) {
   return ((block.metadata >= 8 ? 8 : 7 - block.metadata) + 1) / 9
 }
 
-function renderLiquid (world, cursor, texture, type, biome, water, attr) {
-  const heights = []
-  for (let z = -1; z <= 1; z++) {
-    for (let x = -1; x <= 1; x++) {
-      heights.push(getLiquidRenderHeight(world, world.getBlock(cursor.offset(x, 0, z)), type))
-    }
+// Vanilla LiquidBlockRenderer heights: a block's own height (source 8/9, flowing (8-level)/9,
+// 1 with the same fluid above), 0 for non-solid non-fluid, -1 for solid (ignored). Each surface
+// corner is the weighted average of the 4 blocks sharing it (sources weigh 10x).
+// Blocks that hold water in vanilla (fluid state = water): water itself, the always-waterlogged
+// plants, and anything with waterlogged=true. They render water and never get water walls.
+const WATER_PLANTS = new Set(['kelp', 'kelp_plant', 'seagrass', 'tall_seagrass', 'bubble_column'])
+function isWaterish (b) {
+  if (!b) return false
+  if (b.name === 'water' || WATER_PLANTS.has(b.name)) return true
+  const p = b.getProperties()
+  return p.waterlogged === true || p.waterlogged === 'true'
+}
+function sameFluid (b, type, water) { return b && (water ? isWaterish(b) : b.type === type) }
+
+function fluidHeight (world, pos, type, water) {
+  const b = world.getBlock(pos)
+  if (!b) return 0
+  if (sameFluid(b, type, water)) {
+    const above = world.getBlock(pos.offset(0, 1, 0))
+    if (sameFluid(above, type, water)) return 1
+    if (b.name !== 'water' && b.name !== 'lava') return 8 / 9
+    const lvl = b.metadata
+    return lvl === 0 || lvl >= 8 ? 8 / 9 : (8 - lvl) / 9
   }
+  return b.isCube && !b.transparent ? -1 : 0
+}
+function cornerHeight (center, a, b, cornerFn) {
+  if (a >= 1 || b >= 1) return 1
+  let sum = 0, w = 0
+  const add = (h) => { if (h >= 0.8) { sum += h * 10; w += 10 } else if (h >= 0) { sum += h; w += 1 } }
+  if (a > 0 || b > 0) { const c = cornerFn(); if (c >= 1) return 1; add(c) }
+  add(center); add(a); add(b)
+  return w ? sum / w : 0
+}
+
+function renderLiquid (world, cursor, texture, type, biome, water, attr) {
+  const h = (dx, dz) => fluidHeight(world, cursor.offset(dx, 0, dz), type, water)
+  const own = h(0, 0)
+  const hN = h(0, -1), hS = h(0, 1), hE = h(1, 0), hW = h(-1, 0)
+  // cornerHeights index = z*2 + x  (x,z in {0,1})
   const cornerHeights = [
-    Math.max(Math.max(heights[0], heights[1]), Math.max(heights[3], heights[4])),
-    Math.max(Math.max(heights[1], heights[2]), Math.max(heights[4], heights[5])),
-    Math.max(Math.max(heights[3], heights[4]), Math.max(heights[6], heights[7])),
-    Math.max(Math.max(heights[4], heights[5]), Math.max(heights[7], heights[8]))
-  ]
+    cornerHeight(own, hN, hW, () => h(-1, -1)),
+    cornerHeight(own, hN, hE, () => h(1, -1)),
+    cornerHeight(own, hS, hW, () => h(-1, 1)),
+    cornerHeight(own, hS, hE, () => h(1, 1))
+  ].map(v => Math.min(1, v) - (v < 1 ? 0.001 : 0))
 
   for (const face in elemFaces) {
     const { dir, corners } = elemFaces[face]
@@ -165,8 +198,8 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
 
     const neighbor = world.getBlock(cursor.offset(...dir))
     if (!neighbor) continue
-    if (neighbor.type === type) continue
-    if ((neighbor.isCube && !isUp) || neighbor.material === 'plant' || neighbor.getProperties().waterlogged) continue
+    if (sameFluid(neighbor, type, water)) continue
+    if (neighbor.isCube && !isUp) continue
 
     let tint = [1, 1, 1]
     const lm = lightmap(lightOf(world, isUp ? cursor.offset(0, 1, 0) : cursor))
@@ -445,6 +478,10 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
           block.variant = getModelVariants(block, blocksStates)
         }
 
+        if (block.name !== 'water' && isWaterish(block) && blocksStates.water) {
+          const wv = getModelVariants(world.getBlock(cursor).name === 'water' ? block : { name: 'water', getProperties: () => ({ level: '0' }) }, blocksStates)[0]
+          if (wv && wv.model) renderLiquid(world, cursor, wv.model.textures.particle, world.getBlock(cursor).type, biome, true, attr)
+        }
         for (const variant of block.variant) {
           if (!variant || !variant.model) continue
 

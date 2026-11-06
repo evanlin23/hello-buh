@@ -66,10 +66,13 @@ def main(ver):
     index = {}
     for i, (name, im) in enumerate(textures.items()):
         cx, cy = (i % grid) * CELL, (i // grid) * CELL
-        # edge-extend: wrap-around tiling of the tile itself fills the padding like texture repeat
+        # build the padded cell on its own (wrap-around copies of the tile, cropped to the cell)
+        # so nothing spills into a neighbour's padding
+        cell = Image.new("RGBA", (CELL, CELL), (0, 0, 0, 0))
         for oy in (-1, 0, 1):
             for ox in (-1, 0, 1):
-                atlas.paste(im, (cx + PAD + ox * TILE, cy + PAD + oy * TILE))
+                cell.paste(im, (PAD + ox * TILE, PAD + oy * TILE))
+        atlas.paste(cell, (cx, cy))
         x, y = cx + PAD, cy + PAD
         index[name] = {"u": x / size, "v": y / size, "su": TILE / size, "sv": TILE / size}
     atlas.save(out / "atlas.png")

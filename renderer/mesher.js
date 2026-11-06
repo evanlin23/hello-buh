@@ -24,6 +24,27 @@ class Mesher {
     for (const c of columns) this.world.addColumn(c.x, c.z, c.chunk)
   }
 
+  // Lowest block you can see from above anywhere in the area (ocean floors included): the top
+  // solid, non-fluid block of each column, sampled every 2 blocks. Meshing starts below it.
+  lowestSurface () {
+    const { Vec3 } = require('vec3')
+    let low = Infinity
+    for (const key of Object.keys(this.world.columns)) {
+      const [x0, z0] = key.split(',').map(Number)
+      for (let dz = 0; dz < 16; dz += 2) {
+        for (let dx = 0; dx < 16; dx += 2) {
+          for (let y = this.minY + this.height - 1; y > this.minY; y--) {
+            const b = this.world.getBlock(new Vec3(x0 + dx, y, z0 + dz))
+            if (!b || b.name === 'air' || b.name === 'water' || b.name === 'lava' || b.name === 'cave_air' || b.name === 'kelp' || b.name === 'kelp_plant' || b.name === 'seagrass' || b.name === 'tall_seagrass' || b.name.endsWith('_leaves')) continue
+            if (y < low) low = y
+            break
+          }
+        }
+      }
+    }
+    return low
+  }
+
   // Compute our own light for everything from minVisibleY up (see light.js).
   computeLight (minVisibleY) {
     const t = Date.now()
@@ -60,9 +81,13 @@ class Mesher {
     let offset = 0
     const put = (arr, T) => { const a = new T(arr); const b = Buffer.from(a.buffer, a.byteOffset, a.byteLength); const o = offset; chunks.push(b); offset += b.length; return [o, arr.length] }
     for (const { key, sx, sy, sz } of list) {
-      const h = { key, x: sx + 8, y: sy + 8, z: sz + 8 }
+      // Vertices go out in absolute world coordinates (group at the origin): neighbouring
+      // sections then share bit-identical edge vertices, so no hairline cracks between them.
+      const h = { key, x: 0, y: 0, z: 0 }
       if (this.world.getColumn(sx, sz)) {
         const g = getSectionGeometry(sx, sy, sz, this.world, this.blockStates)
+        const shift = (a) => { for (let i = 0; i < a.length; i += 3) { a[i] += sx + 8; a[i + 1] += sy + 8; a[i + 2] += sz + 8 } return a }
+        g.positions = shift(Array.from(g.positions)); g.t_positions = shift(g.t_positions)
         h.o = [put(g.positions, Float32Array), put(g.colors, Float32Array), put(g.uvs, Float32Array), put(g.indices, Uint32Array)]
         h.t = [put(g.t_positions, Float32Array), put(g.t_colors, Float32Array), put(g.t_uvs, Float32Array), put(g.t_indices, Uint32Array)]
       }
