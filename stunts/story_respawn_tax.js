@@ -71,8 +71,8 @@ module.exports = {
     await c(`/fill ${A(-14, 1, -19)} ${A(-14, 2, -19)} cactus`)
     await c(`/setblock ${A(-11, 1, -18)} dead_bush`)
     // the house made of hay (L06, L07): roofless so it's lit, a gap for a door on the south side
-    await c(`/fill ${A(12, 0, -21)} ${A(17, 0, -16)} hay_block`)
-    await c(`/fill ${A(12, 1, -21)} ${A(17, 3, -16)} hay_block hollow`)
+    await c(`/fill ${A(12, 0, -21)} ${A(17, 4, -16)} hay_block hollow`)   // floor y0, walls y1-y3...
+    await c(`/fill ${A(12, 4, -21)} ${A(17, 4, -16)} air`)                  // ...and no roof, so it's lit
     await c(`/fill ${A(14, 1, -16)} ${A(15, 2, -16)} air`)
 
     // the cast, all NoAI
@@ -112,6 +112,7 @@ module.exports = {
       ctx.respawn(); await spawned; ctx.revive()
     }
     const go = (on) => bot.setControlState('forward', on)
+    const hurt = (hp) => say(`/damage @s ${20 - hp} minecraft:generic`)   // start a deadly scene already hurt
     setMeter(5)
 
     // L01: the rule, over the five villagers left and the golem on the gold block
@@ -119,19 +120,20 @@ module.exports = {
     await line('L01', async (k) => { go(k > 4 && k < 20); K.base = K.aim(P(0.5, 1.6, -1)); look(k) })
     go(false)
     // L02: first, I fell off a cliff (in the air beside it, looking down at the ground)
-    await cut(-26.5, 0.5, P(-21, 0, 0.5), 27)
-    await line('L02', async (k) => { K.base = { yaw: K.base.yaw, pitch: Math.max(-1.25, K.base.pitch - 0.03) }; look(k) })
+    await cut(-26.5, 0.5, P(-26.5, 0, 9), 27)   // looking down along the cliff face (on the right)
+    await line('L02', async (k) => { K.base = { yaw: K.base.yaw, pitch: Math.max(-1.15, K.base.pitch - 0.02) }; look(k) })
     for (let i = 0; i < 40 && !ctx.died; i++) await bot.waitForTicks(1)
     await bot.waitForTicks(6)
     // L03: respawn; the fisherman is gone, his boat just floating there
     gone('v_fisher')
     await line('L03', async (k, at) => {
       if (k === 0) { await respawn(); setMeter(4) }
-      if (k === at(1) - 2) await cut(19.5, -3.5, P(26.5, 0.6, -3.5))
+      if (k === at(1) - 2) await cut(19.5, -3.5, P(25.5, -0.6, -3.5))
       look(k)
     })
     // L04: then lava. Respawn. The butcher's door, wide open
     await cut(-19.5, 10.5, P(-19.5, 0, 12.5), 2.2)
+    hurt(5)
     gone('v_butcher')
     let dead = false
     await line('L04', async (k, at) => {
@@ -143,11 +145,12 @@ module.exports = {
     })
     // L05: a cactus took the fletcher
     await cut(-12.5, -17.4, P(-12.5, 1.5, -21))
+    hurt(2)
     gone('v_fletcher')
     dead = false
     await line('L05', async (k) => {
       go(!dead)
-      if (!dead && bot.entity.position.z < Z - 19.55) { kill('cactus'); dead = true; go(false) }
+      if (!dead && bot.entity.position.z < Z - 19.6) { kill('cactus'); dead = true; go(false) }
       look(k)
     }, 0.25)
     go(false)
@@ -177,6 +180,7 @@ module.exports = {
     // L09: then I tripped (walking up the street, eyes on the lava block); L10: into it
     say(`/tp @e[tag=golem] ${X + 2.4} ${F + 1} ${Z - 4.2} 0 0`)
     await cut(0.5, 11.8, P(0.5, 0.5, 4.5))
+    hurt(5)
     await line('L09', async (k, at) => {
       go(k > 2)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
@@ -232,6 +236,7 @@ module.exports = {
     // L16: she's already standing on my spawn
     say(`/tp @e[tag=v_lib] ${X + 0.5} ${F + 1} ${Z + 0.5} 0 0`)
     await cut(0.5, 7.4, P(0.5, 1.7, 0.5))
+    hurt(5)
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
     await line('L16', async (k) => { look(k) })
     // L17: and today, I tripped again
