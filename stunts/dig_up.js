@@ -46,8 +46,9 @@ module.exports = {
     const { x, y } = this
     await bot.waitForTicks(8)
     // strip-mining along
+    ctx.log('start', bot.entity.position.toString(), 'yaw', bot.entity.yaw.toFixed(2), 'ahead', bot.blockAt(bot.entity.position.offset(0, 0, -1)).name, bot.blockAt(bot.entity.position.offset(0, 1, -1)).name)
     bot.setControlState('forward', true)
-    while (bot.entity.position.z > this.z - 5.2) await bot.waitForTicks(1)
+    for (let i = 0; i < 120 && bot.entity.position.z > this.z - 5.2; i++) { await bot.waitForTicks(1); if (i % 30 === 29) ctx.log('walk', bot.entity.position.toString()) }
     bot.setControlState('forward', false)
     // the diamond
     const d = bot.blockAt(new Vec3(x + 1, y + 1, this.z - 6))
@@ -59,7 +60,7 @@ module.exports = {
     await bot.waitForTicks(10)
     // one more step, then up
     bot.setControlState('forward', true)
-    while (bot.entity.position.z > this.sz + 0.6) await bot.waitForTicks(1)
+    for (let i = 0; i < 80 && bot.entity.position.z > this.sz + 0.6; i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
     await bot.waitForTicks(4)
     const up = bot.blockAt(new Vec3(x, y + 2, this.sz))
