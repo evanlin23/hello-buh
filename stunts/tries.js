@@ -12,13 +12,14 @@ module.exports = {
   edit: {
     caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-1.0', endAfter: 'placed:2.3',
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
-    subs: [['jump', 'easy', 1.0, 0],
-      ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'ok for real this time', 1.8, 1],
-      ['death', 'bro.', 1.5, 1], ['attempt', "let's do it again", 1.6, 2],
-      ['death', 'I FORGOT AGAIN', 1.5, 2], ['attempt', 'focus.', 1.4, 3],
-      ['death', 'that one was lag', 1.5, 3], ['attempt', 'ONE more', 1.4, 4],
-      ['death', 'why is this so hard', 1.5, 4], ['attempt', 'I swear', 1.4, 5],
-      ['death', '...', 1.2, 5], ['attempt', 'locked in.', 1.6, 6],
+    // each try looks different (review: six identical falls read as a loop) and the counter shows on screen
+    subs: [['jump', 'try 1/7: easy', 1.0, 0],
+      ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'try 2/7: for real this time', 1.8, 1],
+      ['death', 'bro.', 1.5, 1], ['attempt', 'try 3/7', 1.6, 2],
+      ['death', 'IT WAS EMPTY', 1.5, 2], ['attempt', 'try 4/7: focus.', 1.4, 3],
+      ['death', 'that one was lag', 1.5, 3], ['attempt', 'try 5/7', 1.4, 4],
+      ['death', 'WRONG BUCKET', 1.5, 4], ['attempt', 'try 6/7: I swear', 1.4, 5],
+      ['death', '...', 1.2, 5], ['attempt', 'try 7/7: locked in.', 1.6, 6],
       ['placed', 'oh wow that was very close', 2.3, 0]]
   },
 
@@ -45,6 +46,9 @@ module.exports = {
       ctx.log('attempt', i + 1, this.mode)
       const deathsBefore = ctx.deaths
       let ok = false
+      // what's in the bucket slot this try: an empty bucket (try 3), a milk bucket (try 5)
+      const wrong = { 2: 'bucket', 4: 'milk_bucket' }[i]
+      if (wrong) { bot.chat(`/item replace entity @s hotbar.1 with ${wrong}`); await bot.waitForTicks(2) }
       try { ok = await clutch.perform.call(this, ctx) } catch (e) { ctx.log('attempt error', e.message) }
       ctx.log('perform returned at tick', ctx.tick, 'died', ctx.died, 'pitch', bot.entity.pitch.toFixed(2))
       if (this.mode === 'ok') { if (ok) ctx.mark('landed'); return ok && ctx.deaths === MODES.length - 1 }
