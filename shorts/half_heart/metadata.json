@@ -1,0 +1,107 @@
+{
+  "name": "half_heart",
+  "caption": "POV: you're on half a heart 💀",
+  "youtube": {
+    "title": "POV: you're on half a heart 💀 #minecraft #shorts",
+    "description": "POV: you're on half a heart 💀\n\nSong: misery. · pupsies\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "misery.mp3",
+    "title": "misery.",
+    "artist": "pupsies",
+    "sha256": "e78327e5b8c9b7d2786579160d60fcf9da5b529b7f65df1697b76512e558e8a1",
+    "drop_on_event": "placed",
+    "drop_in_song_s": 16.25,
+    "drop_in_short_s": 4.1,
+    "song_start_s": 12.15
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 7.75,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 16486530,
+    "sha256": "b2d9ac857a280cb6c58a9d5dedf330b52d0edda5cb3343b51f44738119176cce"
+  },
+  "edit": {
+    "caption": "POV: you're on half a heart 💀",
+    "red": "half",
+    "song": "songs/misery.mp3",
+    "dropAt": "placed",
+    "start": 1.2,
+    "args": [
+      "--caption",
+      "POV: you're on half a heart 💀",
+      "--red",
+      "half",
+      "--start",
+      "1.2",
+      "--song",
+      "songs/misery.mp3",
+      "--song_drop_at",
+      "placed"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 417,
+      "y": 84,
+      "z": 49
+    },
+    "biome": "minecraft:forest",
+    "ticks": 180,
+    "seconds": 9,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 5.3,
+        "event": "placed"
+      },
+      {
+        "t": 9,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
+    "rendered_at": "2026-11-06T10:49:24.549Z",
+    "head_at_publish": "e657d1802459fe5c3f4f3f8419a9588d1c6d4322",
+    "stunt": "stunts/half_heart.js",
+    "source_snapshot": [
+      "source/half_heart.js",
+      "source/water_clutch.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout e657d1802459",
+    "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
+    "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
+    "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --start 1.2 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
+  ],
+  "status": "ready",
+  "notes": "",
+  "published_at": "2026-11-06T10:49:53.394Z"
+}
