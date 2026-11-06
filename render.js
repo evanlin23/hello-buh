@@ -508,6 +508,7 @@ function camAtLive (t) {
     // mobs at least their half width + the player's (0.3 + 0.3) plus a little, horizontally.
     for (const e of ents) {
       if (['falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb'].includes(e.name)) continue
+      if (/_boat$|_raft$|minecart$|^boat$/.test(e.name)) continue   // vehicles: the camera may be riding one (it stays under the camera)
       const dx = e.x - cam.x, dz = e.z - cam.z, d = Math.hypot(dx, dz), min = 0.85
       if (d < min && d > 1e-6 && Math.abs(e.y - (cam.y - 1.62)) < 2) { e.x = cam.x + dx / d * min; e.z = cam.z + dz / d * min }
     }

@@ -214,3 +214,4 @@ each section.
 - **Every death gets its own death screen** (`--death_screen`). It runs from that death to the next respawn, with the death message nearest that death. Before, only the first death was drawn, which multi-death formats (rated deaths, tries) need.
 - **Particle culling near the eye depends on size:** small particles (splash drops, crumbs) are culled only within 0.25 blocks, big sprites within 1 block. A 1-block cull for everything removed a splash right under the eye.
 - **Clutch openings keep pitch -1.45 through the jump.** At -1.0 the pillar under the feet was out of shot, and the review read "high up" but not "on a pillar".
+- **Vehicles are never pushed away from the camera.** The mob push-out (0.85 blocks) shoved a boat the camera was riding sideways, and its wall filled the screen (worker 4). Note: mineflayer 4.39 never clears `bot.vehicle` on dismount and pauses physicsTick while mounted; boat_clutch works around both.
