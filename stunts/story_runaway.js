@@ -142,7 +142,7 @@ module.exports = {
     await c('/tag @e[tag=nitwit] add warm'); await c('/tag @e[tag=golem] add warm')
     await c('/clear @s')                                // nothing in hand, ever (he has no arms)
     // mineflayer ignores the biome-update packet: go out of range and back so the chunks come again with plains
-    await c(`/tp @s ${X + 600} 200 ${Z}`); await bot.waitForTicks(60)
+    await c(`/tp @s ${X + 600} 200 ${Z}`); await ctx.sleep(3000)   // wall clock: physics ticks stop while the chunks there load
     await ctx.tpCheck(X, F + 1, Z + 38, 180, 0)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')

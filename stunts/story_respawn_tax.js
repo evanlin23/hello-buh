@@ -88,7 +88,7 @@ module.exports = {
 
     await c('/clear @s')
     // mineflayer ignores the biome-update packet: go out of range and back so the chunks come again with plains
-    await c(`/tp @s ${X + 600} 200 ${Z}`); await bot.waitForTicks(60)
+    await c(`/tp @s ${X + 600} 200 ${Z}`); await ctx.sleep(3000)   // wall clock: physics ticks stop while the chunks there load
     await ctx.tpCheck(X, F + 1, Z + 9, 180, 0)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')
