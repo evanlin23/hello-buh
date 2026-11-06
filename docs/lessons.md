@@ -170,3 +170,7 @@ each section.
 - **Dropped items at the camera are hidden.** A death scatters the inventory from the eyes, and with 3-tick easing the item textures filled the death screen for 0.7 s.
 - **A "wrong bucket" death has to be a lava death.** From 60 blocks the fall itself killed the bot ("doomed to fall") and the lava was on screen for one frame. From 21 blocks the landing leaves 2 HP and the lava kills. Any stunt's punchline has to be what actually kills it: check the death message.
 - **The held item mostly sits off the right edge** in our near-square game view, because vanilla hand placement assumes 16:9. The reference Shorts crop 16:9 the same way, so it's expected. Don't build a joke that depends on seeing the held item.
+- **First passes under the new process** (2026-11-06): nether_portal (orchestrator) and speed_build (worker 2). Engine nitpicks reviewers raised that are still open:
+  - there's no equip animation when the held item changes (the old item should lower and the new one rise);
+  - portal particles rise in a column above the frame instead of drifting over the portal face;
+  - a standing bot gets no idle hand sway, so even short waits look frozen.
