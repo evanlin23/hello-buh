@@ -20,6 +20,7 @@ checked out at `../hb-videos`.
 | [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 8.8s | misery. · pupsies | ready | 46cab20 |  |
 | [half_heart](shorts/half_heart/short.mp4) | POV: you're on half a heart 💀 | 5.9s | misery. · pupsies | ready | f655187 |  |
 | [heart_art](shorts/heart_art/short.mp4) | built this for my girlfriend 🥺 | 6.85s | Payphone · Radio Top Singers | ready | 5617e57 |  |
+| [house_sizes](shorts/house_sizes/short.mp4) | building a house in 5s vs 10s vs 20s 💀 | 18.65s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 9d412b3 | worker: dirt hut vs plank cottage vs two-colour house, real block placements, ends on all three |
 | [lava_rising](shorts/lava_rising/short.mp4) | the lava stopped 1 block below me 😳 | 12.5s | misery. · pupsies | ready | 799e77f | QA2: payoff framing of the 1-block gap could be clearer |
 | [looks_wrong](shorts/looks_wrong/short.mp4) | Bro this looks wrong? | 9.7s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 17ecd2d |  |
 | [midas_touch](shorts/midas_touch/short.mp4) | POV: you got the midas touch 🤑 | 10.15s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 90afab9 |  |
