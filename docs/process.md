@@ -36,7 +36,7 @@ idea -> stunt module -> run.sh (bot + render + edit) -> qa_frames.py -> independ
 - Re-render and review again until there are no blocker or visible findings left. Nitpicks go in the package notes.
 
 ## 5. Publish and send
-- `node scripts/publish.js <name>` packages the Short and bakes in an NCS track with its official credit. It never uses a label song.
+- `node scripts/publish.js <name> --pass` packages the Short and bakes in an NCS track with its official credit. It never uses a label song. Without `--pass` the package is `pending-qa`, and the uploader only posts `ready` ones.
 - **Freshness:** before sending anything to the owner, check that the package is the newest render (`metadata.json` `code.rendered_at` against the mtime of `out/<name>.mp4`), and say when it was rendered.
 - Packages that aren't ready get `status: needs-fix`, which the uploader skips.
 

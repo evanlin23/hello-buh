@@ -9,7 +9,9 @@
 //   shorts/<name>/build.log            bot + render + edit log
 // and regenerates the branch README index. The song file itself is not stored (owner-supplied,
 // in songs/); metadata names it and its sha256.
-// usage: node scripts/publish.js <name> [<name>...] [--notes "text"] [--no-push]
+// usage: node scripts/publish.js <name> [<name>...] [--pass] [--notes "text"] [--no-push]
+//   --pass: the Short passed the frame review (docs/qa.md); without it the package is pending-qa
+//   and the uploader skips it
 //   (the videos branch must be checked out as a worktree at ../hb-videos)
 const fs = require('fs')
 const path = require('path')
@@ -145,7 +147,7 @@ for (const name of names) {
       `python3 audio.py work/${name}.rec.json work/${name}.wav`,
       `python3 edit.py --frames work/${name}.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/${name}.rec.json --audio work/${name}.wav ${editArgs.map(a => /\s/.test(a) ? JSON.stringify(a) : a).join(' ')} --out out/${name}.mp4`
     ],
-    status: prev.status || 'ready',
+    status: args.includes('--pass') ? 'ready' : 'pending-qa',   // ready only after a frame review passed (docs/qa.md)
     notes: notes || prev.notes || '',
     published_at: new Date().toISOString()
   }
