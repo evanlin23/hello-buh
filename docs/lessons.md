@@ -199,3 +199,6 @@ each section.
 - **villager_job:** the lectern goes beside the pen, since in front its slanted top hid the outfit change. Trim the still start and end with `endAfter`. Angry particles when a villager loses its job site are vanilla; keep them.
 - **End portal and end gateway surfaces** have no block model (vanilla draws them with TheEndPortalRenderer). The mesher emits a plane at 0.75 (gateway: 1.0), and the page draws it with a screen-space starfield shader: 15 layers of end_portal.png, rotated, scaled and drifting, with the vanilla shader's colour table.
 - **Boats (all woods), cows and chickens render.** The converted chicken model lost its body's 90° turn, so it's restored as a rest pose.
+- **Peaceful difficulty does no TNT damage** (the explosion damage type scales with difficulty; fall damage doesn't). Any stunt where a blast should hurt or kill needs `/difficulty normal` (found by worker 3: tnt_run's bot was flung to y≈110 unharmed).
+- **Dropped items move smoothly between server syncs.** The server sends an item's position about every 20 ticks, so the recording froze each item and then jumped it. The renderer now eases between synced positions, with an arc when the item comes down.
+- **Cross-session messages can arrive over an hour late.** Workers must `git pull` before every render anyway; never rely on a message to deliver an engine fix.

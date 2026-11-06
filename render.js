@@ -57,6 +57,33 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
     }
   }
 }
+// Dropped items: the server syncs an item's position only every ~20 ticks (ItemEntity is client-
+// simulated in vanilla), so the recording holds each item still, then jumps. Between two synced
+// positions (under 2 s apart, under 8 blocks), move it smoothly: a straight line plus the arc a
+// thrown item makes (gravity 0.04/tick) when it went up then down, instead of freeze-and-jump.
+{
+  const keys = new Map()   // id -> [[tick, x, y, z]] where the position changed
+  for (const tick of [...ENT.keys()].sort((a, b) => a - b)) {
+    for (const [id, row] of ENT.get(tick)) {
+      if (row[2] !== 'item') continue
+      if (!keys.has(id)) keys.set(id, [])
+      const k = keys.get(id), last = k[k.length - 1]
+      if (!last || last[1] !== row[3] || last[2] !== row[4] || last[3] !== row[5]) k.push([tick, row[3], row[4], row[5]])
+    }
+  }
+  for (const [id, k] of keys) {
+    for (let i = 0; i + 1 < k.length; i++) {
+      const [t0, x0, y0, z0] = k[i], [t1, x1, y1, z1] = k[i + 1], n = t1 - t0
+      if (n <= 1 || n > 40 || Math.hypot(x1 - x0, y1 - y0, z1 - z0) > 8) continue
+      for (let tt = t0 + 1; tt < t1; tt++) {
+        const row = ENT.get(tt) && ENT.get(tt).get(id); if (!row) continue
+        const f = (tt - t0) / n, arc = 0.02 * (tt - t0) * (t1 - tt) * (y1 >= y0 - 0.1 ? 0 : 1)
+        const r = row.slice(); r[3] = x0 + (x1 - x0) * f; r[4] = y0 + (y1 - y0) * f + arc; r[5] = z0 + (z1 - z0) * f
+        ENT.get(tt).set(id, r)
+      }
+    }
+  }
+}
 function entitiesAt (t, mesher) {
   const i = Math.floor(t), f = t - i
   const a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
