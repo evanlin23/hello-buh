@@ -52,7 +52,16 @@ module.exports = {
       await look(new Vec3(fx + 0.5, fy + 0.5, pz + 0.5), 2)
     }
     // the top row has no support yet when built left-to-right: place any missing again
-    for (const [fx, fy] of frame) if (!solid(fx, fy, pz)) { await look(new Vec3(fx + 0.5, fy + 0.5, pz + 0.5), 2); bot._client.write('block_place', { hand: 0, location: { x: fx - 1, y: fy, z: pz }, direction: 5, cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 }); bot.swingArm(); await bot.waitForTicks(2) }
+    await bot.waitForTicks(3)
+    for (const [fx, fy] of frame) {
+      if (solid(fx, fy, pz)) continue
+      // click a solid neighbour (clicking air would place the block in that air instead)
+      const n = [[0, -1, 1], [-1, 0, 5], [1, 0, 4], [0, 1, 0]].find(([dx, dy]) => solid(fx + dx, fy + dy, pz))
+      if (!n) continue
+      await look(new Vec3(fx + 0.5, fy + 0.5, pz + 0.5), 2)
+      bot._client.write('block_place', { hand: 0, location: { x: fx + n[0], y: fy + n[1], z: pz }, direction: n[2], cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+      bot.swingArm(); await bot.waitForTicks(2)
+    }
     await bot.waitForTicks(6)
     // light it: flint and steel on the top of a bottom obsidian block, inside the frame
     ctx.select(1); await bot.waitForTicks(4)
