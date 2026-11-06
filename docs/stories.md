@@ -98,3 +98,52 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 10 | **The Sun Won't Set** | "The sun hasn't set in my world for 300 days." | villagers yawning; a bed nobody sleeps in; my grandpa asks every day if tonight's the night | I froze the time (`advance_time false`) because zombies come at night and grandpa is too slow to run | grandpa asks me to let the night come | open |
 | 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | open |
 | 12 | **Last Seen** | "My friend's armor stand has stood at the village gate for 900 days. Today it turned around." | his armor gets one more scratch a day; a bed still warm; the golem salutes it | (armor stands don't render yet: needs an engine model) | | parked: engine |
+
+## Format: "Who do you trust?" (interactive mystery). Owner, 2026-11-06
+Owner, describing a Short he liked: someone turns 13 and gets a call from themselves 10 years in
+the future. Others' calls saved them. His call says "don't go to the basement", Mom smiles, but
+they've never had a basement. He locks himself in, and a second call says the opposite. "you pose
+the question for the user to figure out, and ask them who to trust. I think this sort of
+interactive is good. And the clues are in all different directions so its ambigous."
+
+We build **original** stories in this structure. Don't retell the one he watched.
+
+**Beats (30-50 s, narrated, with clues on screen):**
+1. **The rule, line 1, in under 2 s.** A strange law of this world, stated plainly ("Every player
+   gets one sign from their future self on their first night.").
+2. **Proof the rule is real: 2-3 bursts of about 3 s each.** Other people's messages came true
+   and saved them. This builds trust in the rule, so the betrayal lands.
+3. **Our message.** It warns us, and one detail contradicts reality (the creepy hook: "we never had
+   a basement"). Someone close reacts wrong (Mom smiles).
+4. **We hide.** Tension, a locked room, a sound outside.
+5. **A second message, also "from us", saying the opposite** and giving a reason to doubt the
+   first.
+6. **The question card:** "WHO DO YOU TRUST? 1 = the first message, 2 = the second. Comment." End
+   on the card, under 1 s after the question (the question is the payoff).
+
+**The clue rule:** plant at least 2 clues for each side, each visible on screen. The best clue
+supports both readings (e.g. the second message knows something only we know: proof it's us, or
+proof something has been watching us). Write down the intended answer and why in the stunt file,
+in case a part 2 answers it. The Short itself never answers.
+**Part 2** (optional, later): "you voted 2..." resolves it and loops back to line 1.
+**Retention tools:** worker 10's `cards` for the question card, `dip` + `scratch` SFX on the
+contradiction, `counter` not needed, `hook` can flash the question card at the start.
+
+**Original premises (Minecraft-native):**
+- **The Sign by the Bed.** Every player finds a sign from their future self on their first night.
+  Proof: Steve's said "don't dig down" (lava under him); Alex's said "pet the wolf" (it saved her).
+  Ours: "DON'T OPEN THE CHEST UNDER YOUR BED." We never placed a chest. Our villager mom watches
+  from the doorway, not blinking. We lock the door. A new sign appears INSIDE the locked room, in
+  our handwriting: "OPEN IT. THAT ISN'T MOM. SHE'S IN THE CHEST." Clues for 1: sign 2 appeared
+  through a locked door (who can do that?), and it misspells our name. Clues for 2: sign 1 is placed
+  where only mom could reach, and mom's shadow is wrong / she never blinks. Ask: which sign do you
+  trust?
+- **The Respawn Voice.** On your first death you hear one sentence from your future self. Proof:
+  two players whose sentence saved them. Ours: "Don't sleep in the new bed." Dad just built us a
+  new bed. That night a second voice (also us, but we're alive): "Sleep in the bed, or you'll
+  respawn somewhere that isn't home." Clues both ways: the bed's respawn point (vanilla mechanics!),
+  dad nailing the door shut "for safety", the first voice sounding older than 10 years.
+- **Two Ender Pearls.** On your 13th birthday an ender pearl lands at your feet with a note from
+  future you. Proof bursts. Ours: "Don't follow the enderman home." There are no endermen in our
+  village... until tonight, when one stands at the window holding our house's door. A second pearl
+  lands inside the house: "Follow him. He's the only one who remembers you." Clues both ways.
