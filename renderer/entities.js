@@ -174,6 +174,11 @@ export class EntityLayer {
       if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
       r.obj.rotation.set(0, s.yaw, 0)
+      if (s.swell !== undefined) {   // CreeperRenderer.scale
+        let f = s.swell; const g = 1 + Math.sin(f * 100) * f * 0.01
+        f = Math.min(1, Math.max(0, f)); f *= f; f *= f
+        r.obj.scale.set((1 + f * 0.4) * g, (1 + f * 0.1) / g, (1 + f * 0.4) * g)
+      } else if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
       // limb swing from horizontal speed, like LivingEntity.walkAnimation
       if (r.last) { const sp = Math.hypot(s.x - r.last.x, s.z - r.last.z); r.walk += sp * 4; r.amt = Math.min(1, sp * 4) } else r.amt = 0
       r.last = { x: s.x, z: s.z }

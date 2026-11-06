@@ -64,6 +64,7 @@ const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a
 for (const r of rec.entities || []) if (r[2] === 'tnt' && r[9] && r[9].fuse !== undefined && TNT_FUSE[r[1]] === undefined && FIRST_SEEN.get(r[1]) === r[0]) TNT_FUSE[r[1]] = r[9].fuse
 const TNT_STATE = require('minecraft-data')(rec.version).blocksByName.tnt.defaultState
 const MC = require('minecraft-data')(rec.version)
+const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, z: e.z }))
 const ASSETS_DIR = path.join(__dirname, 'work', 'assets', rec.version)
 // Held item over time: hotbar contents + selected slot from the timeline, the tick the held item last
 // changed (equip animation) and the arm swings (6-tick attack animation).
@@ -312,6 +313,12 @@ function camAtLive (t) {
       e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.125
       e.yaw = age / 20 + (e.id % 7)
       e.extra = { state: bl.defaultState, scale: 0.25, spin: true }
+    }
+    // creeper swelling (CreeperRenderer.scale): 30-tick fuse ending in its explosion
+    for (const e of ents) {
+      if (e.name !== 'creeper') continue
+      const ex = EXPLOSIONS.find(x => x.t >= t && x.t - t <= 30 && Math.hypot(x.x - e.x, x.z - e.z) < 3)
+      if (ex) e.swell = Math.min(1, Math.max(0, 1 - (ex.t - t) / 30))
     }
     // primed TNT (TntRenderer): the TNT block, white flash while (fuse / 5) % 2 == 0, swelling 30%
     // over the last 10 ticks. Fuse from when the entity appeared (80 ticks by default).
