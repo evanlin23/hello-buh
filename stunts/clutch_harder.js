@@ -1,10 +1,8 @@
-// "clutches, but each one is harder 😳": five clutches in one Short, each harder, then a joke.
-//   1. water bucket clutch, 50 blocks
-//   2. the same, from 90 blocks, on HALF A HEART (the HUD shows it)
-//   3. ender pearl over a lava lake, 30-block tower
-//   4. ender pearl over a lava lake, 70-block tower
-//   5. a confident water clutch... it's a lava bucket 💀 (real death; 21 blocks so the lava kills,
-//      not the fall)
+// "clutches, but each one is harder 😳": seven clutches in one Short, each harder, then a joke.
+//   water 40, water 70, water 90 on HALF A HEART, pearl over lava (30), pearl 70 AT NIGHT, pearl 70 at
+//   night in a THUNDERSTORM, then back in daylight a confident water clutch... it's a lava bucket 💀
+//   (real death; 21 blocks so the lava kills, not the fall). First cut was 22.4 s with no dead
+//   space: the fix was more beats, not slower ones.
 // Every clutch reuses the stunt that already passes on its own (water_clutch, pearl_clutch,
 // wrong_bucket), each on its own set, side by side. Between clutches: a teleport cut (edit.speed),
 // so there is no wait on screen. Owner rules: 30 s minimum from more beats, no dead space, end
@@ -13,13 +11,15 @@ const water = require('./water_clutch')
 const pearl = require('./pearl_clutch')
 const wrong = require('./wrong_bucket')
 
-const GAP = 48
+const GAP = 40
 const TIERS = [
-  { mod: water, opts: { height: 50, fast: true }, label: '50 blocks', end: 'placed', hotbar: 'water' },
+  { mod: water, opts: { height: 40, fast: true }, label: '40 blocks', end: 'placed', hotbar: 'water' },
+  { mod: water, opts: { height: 70, fast: true }, label: '70 blocks', end: 'placed', hotbar: 'water' },
   { mod: water, opts: { height: 90, fast: true }, label: '90 blocks... HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
   { mod: pearl, opts: { tower: 30 }, label: 'ender pearl over lava', end: 'teleported', hotbar: 'pearl' },
-  { mod: pearl, opts: { tower: 70 }, label: '70 blocks over lava', end: 'teleported', hotbar: 'pearl' },
-  { mod: wrong, opts: { height: 21, fast: true }, label: 'easy one to finish', end: null, hotbar: 'lava' }
+  { mod: pearl, opts: { tower: 70 }, label: '70 blocks... AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
+  { mod: pearl, opts: { tower: 70 }, label: 'night + THUNDERSTORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
+  { mod: wrong, opts: { height: 21, fast: true }, label: 'easy one to finish', end: null, hotbar: 'lava', time: 6000, weather: 'clear' }
 ]
 const HOTBARS = {
   water: ['diamond_sword', 'water_bucket', ['cobblestone', 64], ['bread', 16]],
@@ -37,9 +37,9 @@ module.exports = {
   expectDeath: true,
   edit: {
     caption: 'clutches, but each one is harder 😳', red: 'harder',
-    song: 'songs/misery.mp3', dropAt: 'placed5',
+    song: 'songs/misery.mp3', dropAt: `placed${TIERS.length}`,
     startAt: 'look1:-0.1', endAfter: 'death:1.6',
-    onFire: 'placed5:death', deathScreen: true,
+    onFire: `placed${TIERS.length}:death`, deathScreen: true,
     subs: TIERS.map((t, i) => [`look${i + 1}`, t.label, 2.4, 0]),
     speed: TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut'])
   },
@@ -67,15 +67,17 @@ module.exports = {
     await ctx.cmd('/gamerule natural_health_regeneration false')   // the half heart has to stay half
     await ctx.cmd('/gamemode creative')
     // stand over the middle set while the recording starts: it keeps the chunks the bot has loaded
-    await ctx.cmd(`/tp @s ${g.x + 2 * GAP + 0.5} ${g.y + 40} ${g.z + 0.5}`)
+    await ctx.cmd(`/tp @s ${g.x + Math.floor(n / 2) * GAP + 0.5} ${g.y + 40} ${g.z + 0.5}`)
     await bot.waitForTicks(40)
     await this.goTo(ctx, 0)
-    return { x: g.x + 2 * GAP, y: g.y, z: g.z }
+    return { x: g.x + Math.floor(n / 2) * GAP, y: g.y, z: g.z }
   },
 
   async goTo (ctx, i) {
     const t = TIERS[i]
     await ctx.cmd('/gamemode creative')
+    if (t.time !== undefined && t.time !== ctx.dayTime) await ctx.setTime(t.time)
+    if (t.weather && t.weather !== (ctx.weather || 'clear')) await ctx.setWeather(t.weather)
     await ctx.hotbar(HOTBARS[t.hotbar])
     await ctx.tpCheck(...this.states[i].start)
     await ctx.cmd('/gamemode survival')
