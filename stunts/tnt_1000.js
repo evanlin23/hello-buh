@@ -95,6 +95,7 @@ module.exports = {
         ctx.mark(`tier${n}`)
         // TNT under the feet... a look out west over the edge (how high; the big crater far off), back down
         await ctx.easeLook(1.05, -0.3, 550)
+        await ctx.easeLook(-0.9, -0.4, 700)
         await ctx.easeLook(0.15, -1.15, 450)
         const bx = t.cx, by = floor + t.h, bz = t.zf - 6                // the block in front of the feet
         await ctx.easeLookAt(new Vec3(bx + 0.5, by + 1, bz + 0.5), 250)
@@ -139,7 +140,7 @@ module.exports = {
       const litAt = ctx.tick - 8
       await ctx.tpCheck(t.cx + 0.5, floor + 1, t.zf + t.view + 0.5, 180, 0)
       await ctx.easeLookAt(mid.offset(0.8, -t.h * 0.15, 0), 50)
-      while (ctx.tick - litAt < 58) await bot.waitForTicks(1)
+      while (ctx.tick - litAt < (n === 4 ? 38 : 58)) await bot.waitForTicks(1)
       ctx.mark(`fuse${n}b`)
       // nervous glances while it flashes, coming back to the pile
       const before = booms
@@ -152,9 +153,10 @@ module.exports = {
       // watch the chain: the look rises with the blast (flung TNT), the bigger the higher
       const up = Math.min(0.55, 0.12 + t.h * 0.045)
       ctx.easeLook(bot.entity.yaw + 0.15, up, 700)
-      const cap = [20, 26, 40, 54][i]       // ticks of chain on screen at most (3 s+ read as a gap)
+      const cap = [20, 26, 40, 72][i]       // ticks of chain on screen at most (3 s+ read as a gap)
       for (let k = 0; k < cap && ctx.tick - lastBoom < 14; k++) {
         if (k === 22) ctx.easeLook(bot.entity.yaw - 0.3, up * 0.6, 600)
+        if (k === 44 && n === 4) ctx.easeLook(bot.entity.yaw + 0.2, 0.9, 700)      // flung TNT coming back down
         await bot.waitForTicks(1)
       }
       if (n === 4) {
