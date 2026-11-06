@@ -244,3 +244,5 @@ each section.
 - **Items are 1 pixel thick** (ItemModelGenerator). A flat plane goes edge-on mid-swing and vanishes.
 - **Bedrock cube rotation without a pivot turns about the cube's centre.** The chicken was the only model that used it, and it rendered broken until this was fixed.
 - **Test entity models with a hand-made recording**: copy any .rec.json, inject entity rows at t=0..5 in front of the camera, and render with `ONLY=1`.
+- **A trailing `//` comment can swallow code on the same line.** It happened twice: water_clutch's brace, and page.js's fog `else` chain, which left underwater fog dead and lava fog stuck on from 15:26 onward. Never put code after a `//` comment on one line; `node --check` doesn't catch this.
+- **One death = one death window.** Duplicate death marks and an instant "respawn" mark split the window, and the death screen blinked off for 2 frames (dig_up). `edit.py death_windows()` and render.js now merge them the same way, and the screen starts 1 frame early to cover rounding in the frame start. The hotbar empties on death (the inventory drops).

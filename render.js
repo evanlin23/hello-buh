@@ -196,9 +196,12 @@ function targetBlock (cam, world) {
 const DEATHS = []
 {
   let open = null
+  // one death = one window (same rule as edit.py death_windows): a second death mark within 30 ticks
+  // is the same death, and a respawn mark under 10 ticks after it is the client's early report
   for (const e of rec.timeline || []) {
-    if (e.event === 'death' && open === null) open = e.t / 50
-    if (e.event === 'respawn' && open !== null) { DEATHS.push([open, e.t / 50]); open = null }
+    const t = e.t / 50, last = DEATHS[DEATHS.length - 1]
+    if (e.event === 'death' && open === null) open = (last && last[1] >= t - 1 && t - last[0] < 30) ? DEATHS.pop()[0] : t
+    if (e.event === 'respawn' && open !== null && t - open >= 10) { DEATHS.push([open, t]); open = null }
   }
   if (open !== null) DEATHS.push([open, Infinity])
   // a missing respawn mark (older recordings): the death ends where the pose jumps (respawn teleport)

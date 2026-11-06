@@ -251,20 +251,33 @@ class JavaRandom:
         return (2 * (self.s >> 17)) >> 31
 
 
+def death_windows(timeline, event="death"):
+    """[(death, respawn)] in seconds. One death is one window: a second death mark within 1.5 s
+    (health packet + combat-kill packet) is the same death, and a respawn mark under 0.5 s after the
+    death is the client's early respawn report, not the player clicking Respawn. Split windows
+    made the death screen blink off for 2 frames (dig_up, worker 2's review)."""
+    out, open_ = [], None
+    for e in timeline or []:
+        t = e["t"] / 1000
+        if e["event"] == event:
+            if open_ is None and not (out and out[-1][1] >= t - 0.05 and t - out[-1][0] < 1.5):
+                open_ = t
+            elif open_ is None:   # re-opened right after a bogus close: extend the last window
+                open_ = out.pop()[0]
+        elif e["event"] == "respawn" and open_ is not None and t - open_ >= 0.5:
+            out.append((open_, t)); open_ = None
+    if open_ is not None:
+        out.append((open_, 1e9))
+    return out
+
+
 def hud_ticks(timeline, duration):
     """Per game tick: (slot, items, health, display_health, blink, shake) the way Gui draws it.
     A drop in health blinks the hearts for 20 ticks (white = health just lost, shown until 1 s
     after the last change); health <= 4 shakes each heart by 0-1 px, seeded with tick * 312871.
     Between death and respawn health is 0 (mineflayer reports the respawn health early)."""
     states = hud_states(timeline, duration)
-    deaths, open_ = [], None
-    for e in timeline or []:
-        if e["event"] == "death" and open_ is None:
-            open_ = e["t"] / 1000
-        if e["event"] == "respawn" and open_ is not None:
-            deaths.append((open_, e["t"] / 1000)); open_ = None
-    if open_ is not None:
-        deaths.append((open_, 1e9))
+    deaths = death_windows(timeline)
     out, last, blink_until, last_change, display, last_hurt = [], 20, -1, 0, 20, -99
     si = 0
     for tick in range(int(duration * 20) + 2):
@@ -274,6 +287,7 @@ def hud_ticks(timeline, duration):
         _, _, slot, items, health = states[si]
         if any(a <= t + 1e-6 < b for a, b in deaths):
             health = 0
+            items = (None,) * len(items)   # the inventory drops on the death tick (keepInventory off)
         cur = math.ceil(health)
         if cur < last:
             blink_until, last_change, last_hurt = tick + 20, tick, tick
@@ -743,14 +757,16 @@ def main():
         all_ev = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
         # every death gets its own screen (rated-deaths formats, tries): from the death to the next
         # respawn, with the death_message nearest that death; buttons disabled for the first 1 s
-        deaths = [e["t"] / 1000 for e in all_ev if e["event"] == args.death_screen]
+        windows = death_windows(all_ev, args.death_screen)
         msgs = [(e["t"] / 1000, e.get("message")) for e in all_ev if e["event"] == "death_message"]
+        deaths = [a for a, _ in windows]
         with zipfile.ZipFile(CLIENT_JAR) as jar:
-            for di, td_abs in enumerate(deaths):
-                t_d = td_abs - args.start
-                t_r = next((e["t"] / 1000 - args.start for e in all_ev if e["event"] == "respawn" and e["t"] / 1000 >= td_abs), 1e6)
-                if di + 1 < len(deaths):
-                    t_r = min(t_r, deaths[di + 1] - args.start)
+            for di, (td_abs, tr_abs) in enumerate(windows):
+                # one frame early: the game frames start on a whole frame (int(start * fps)), so the
+                # death tick can land a frame before the overlay's exact time (2 frames of sky with
+                # full hearts before the screen in anvil_rain)
+                t_d = td_abs - args.start - 1.0 / args.out_fps
+                t_r = min(tr_abs - args.start, 1e6)
                 near = [m for m in msgs if abs(m[0] - td_abs) < 1.0]
                 msg = min(near, key=lambda m: abs(m[0] - td_abs))[1] if near else (msgs[0][1] if msgs and len(deaths) == 1 else None)
                 cause = death_message(jar, msg) if msg else None
