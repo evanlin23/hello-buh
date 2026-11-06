@@ -1,12 +1,14 @@
-// "why are they all staring at me 💀": a trading hall, two rows of villagers in cells; the bot
-// walks down the aisle and every villager turns its head to follow (vanilla LookAtPlayerGoal).
-const N = Number(process.env.CELLS || 6)
+// "why are they all staring at me 💀": a crowd of villagers stands in a field with their backs to
+// the player. The bot walks up... and every head snaps round at once, then follows the bot as it
+// sidesteps and backs away. The tracking is a repeating command block running
+// `tp @s ~ ~ ~ facing entity <bot> eyes` on every (NoAI) villager each tick, switched on at the turn.
+const ROWS = 5, COLS = 7
 
 module.exports = {
   name: 'staring_villagers',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'why are they all staring at me 💀',
-  edit: { caption: 'why are they all staring at me 💀', song: 'songs/funk_abnormal.mp3', dropAt: 'turn', start: 0.5 },
+  edit: { caption: 'why are they all staring at me 💀', red: 'staring', song: 'songs/funk_abnormal.mp3', dropAt: 'turn', start: 0.5 },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -16,33 +18,24 @@ module.exports = {
     const { x, z } = g, floor = g.y
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    const L = N * 2 + 4
-    await ctx.cmd(`/fill ${x - 6} ${floor - 1} ${z - L} ${x + 6} ${floor} ${z + 4} stone_bricks`)
-    await ctx.cmd(`/fill ${x - 6} ${floor + 1} ${z - L} ${x + 6} ${floor + 8} ${z + 4} air`)
-    // hall: spruce walls/roof, aisle 3 wide down the middle (x-1..x+1), cells at x-3 and x+3
-    await ctx.cmd(`/fill ${x - 5} ${floor + 1} ${z - L + 1} ${x + 5} ${floor + 4} ${z + 2} spruce_planks hollow`)
-    await ctx.cmd(`/fill ${x - 1} ${floor + 1} ${z + 2} ${x + 1} ${floor + 2} ${z + 2} air`)            // entrance
-    await ctx.cmd(`/fill ${x - 4} ${floor + 1} ${z - L + 2} ${x + 4} ${floor + 3} ${z + 1} air`)
+    await ctx.cmd(`/fill ${x - 14} ${floor + 1} ${z - 16} ${x + 14} ${floor + 14} ${z + 16} air`)
+    await ctx.cmd(`/fill ${x - 14} ${floor} ${z - 16} ${x + 14} ${floor} ${z + 16} grass_block`)
+    await ctx.cmd(`/fill ${x - 14} ${floor - 3} ${z - 16} ${x + 14} ${floor - 1} ${z + 16} dirt`)
     await ctx.cmd('/kill @e[type=villager]')
-    const profs = ['librarian', 'farmer', 'cleric', 'armorer', 'fletcher', 'toolsmith', 'weaponsmith', 'cartographer', 'butcher', 'shepherd', 'mason', 'fisherman']
-    for (let i = 0; i < N; i++) {
-      const cz = z - 1 - i * 2
-      for (const [side, cx] of [[0, x - 3], [1, x + 3]]) {
-        // 1x1 cell: walls between cells, glass toward the aisle
-        await ctx.cmd(`/fill ${cx - 1} ${floor + 1} ${cz - 1} ${cx + 1} ${floor + 2} ${cz + 1} spruce_planks`)
-        await ctx.cmd(`/setblock ${cx} ${floor + 1} ${cz} air`); await ctx.cmd(`/setblock ${cx} ${floor + 2} ${cz} air`)
-        const gx = side ? cx - 1 : cx + 1
-        await ctx.cmd(`/setblock ${gx} ${floor + 2} ${cz} glass_pane`)
-        await ctx.cmd(`/setblock ${gx} ${floor + 1} ${cz} spruce_trapdoor`)
-        const p = profs[(i * 2 + side) % profs.length]
-        await ctx.cmd(`/summon villager ${cx + 0.5} ${floor + 1} ${cz + 0.5} {VillagerData:{profession:"minecraft:${p}",type:"minecraft:plains",level:2},Xp:1,PersistenceRequired:1b,Rotation:[${side ? 90 : -90}f,0f]}`)
+    const profs = ['librarian', 'farmer', 'cleric', 'armorer', 'fletcher', 'toolsmith', 'weaponsmith', 'cartographer', 'butcher', 'shepherd', 'mason', 'fisherman', 'nitwit', 'none']
+    const types = ['plains', 'plains', 'plains', 'taiga', 'desert', 'savanna', 'snow']
+    let k = 0
+    for (let r = 0; r < ROWS; r++) {
+      for (let c = 0; c < COLS; c++) {
+        const vx = x - (COLS - 1) + c * 2 + (r % 2) * 0.6, vz = z - 4 - r * 2 + ((c * 7 + r * 3) % 3) * 0.3
+        const p = profs[(k * 5 + 3) % profs.length], t = types[(k * 3 + 1) % types.length]
+        await ctx.cmd(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[180f,0f],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
+        k++
       }
     }
-    // lanterns along the aisle
-    for (let i = 0; i < N; i += 2) await ctx.cmd(`/setblock ${x} ${floor + 4} ${z - 1 - i * 2} lantern[hanging=true]`)
-    this.L = L
-    await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16]])
-    await ctx.tpCheck(x + 0.5, floor + 1, z + 4.5, 180, 0)
+    this.cb = { x: x, y: floor - 2, z: z + 14 }
+    await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
+    await ctx.tpCheck(x + 0.5, floor + 1, z + 9.5, 180, -0.05 * 180 / Math.PI)
     await ctx.cmd('/gamemode survival')
     ctx.select(1)
     await bot.waitForTicks(30)
@@ -50,24 +43,28 @@ module.exports = {
   },
 
   async perform (ctx) {
-    const { bot, Vec3 } = ctx
+    const { bot } = ctx
     await bot.waitForTicks(10)
-    // walk slowly down the aisle, glancing left and right
-    bot.setControlState('sneak', true); bot.setControlState('forward', true)
-    const end = this.z - this.L + 4
-    let glance = 0
-    while (bot.entity.position.z > end + 0.5) {
-      glance++
-      const yaw = 0 + Math.sin(glance / 14) * 0.7
-      await bot.look(yaw, -0.05, true)
-      await bot.waitForTicks(1)
-      if (glance > 400) break
-    }
-    bot.setControlState('forward', false); bot.setControlState('sneak', false)
-    await bot.waitForTicks(6)
+    // walk up behind them
+    bot.setControlState('forward', true)
+    while (bot.entity.position.z > this.z + 4.2) await bot.waitForTicks(1)
+    bot.setControlState('forward', false)
+    await bot.waitForTicks(14)
+    // they all turn round at once
+    const name = bot.username
+    await ctx.cmd(`/setblock ${this.cb.x} ${this.cb.y} ${this.cb.z} repeating_command_block[facing=up]{auto:1b,Command:"execute as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${name} eyes"}`)
     ctx.mark('turn')
-    await ctx.easeLook(Math.PI, -0.05, 700)                 // turn around: they're all still staring
-    await bot.waitForTicks(30)
+    for (let i = 0; i < 4; i++) ctx.sound('entity.villager.ambient', 0.8, 0.8 + i * 0.12)
+    await bot.waitForTicks(26)
+    // sidestep left, right: every head follows
+    bot.setControlState('left', true); await bot.waitForTicks(22); bot.setControlState('left', false)
+    await bot.waitForTicks(8)
+    bot.setControlState('right', true); await bot.waitForTicks(40); bot.setControlState('right', false)
+    await bot.waitForTicks(8)
+    ctx.sound('entity.villager.no', 1)
+    // back away slowly
+    bot.setControlState('back', true); await bot.waitForTicks(30); bot.setControlState('back', false)
+    await bot.waitForTicks(20)
     return true
   }
 }

@@ -49,7 +49,7 @@ module.exports = {
     // house footprint: x-2..x+2, z from z-DIST-4 .. z-DIST (front wall at z-DIST)
     this.origin = { x: x - 2, y: floor + 1, z: z - DIST - 4 }
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 14')
-    await ctx.hotbar([['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], 'diamond_axe'])
+    await ctx.hotbar([['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['spruce_planks', 64], 'diamond_axe'])   // the roof takes 84
     await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 10)
     await ctx.cmd('/gamemode survival')
     ctx.select(1)
@@ -63,6 +63,7 @@ module.exports = {
     const todo = plan(o.x, o.y, o.z).sort((a, b) => a.y - b.y || Math.abs(a.x - this.x) - Math.abs(b.x - this.x) || a.z - b.z)
     const slot = { oak_log: 0, oak_planks: 1, glass: 2, spruce_planks: 3 }
     const placed = new Set()
+    let spruceUsed = 0
     const key = (p) => `${p.x},${p.y},${p.z}`
     const solid = (p) => { if (placed.has(key(p))) return true; const b = bot.blockAt(new Vec3(p.x, p.y, p.z)); return !!(b && b.boundingBox === 'block') }
     // faces: [dx,dy,dz of support relative to target, protocol face of the support]
@@ -82,6 +83,7 @@ module.exports = {
       if (i < 0) { ctx.log('stuck with', todo.length, 'blocks left'); break }
       const b = todo.splice(i, 1)[0]
       const [dx, dy, dz, face] = FACES.find(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz }))
+      if (b.name === 'spruce_planks' && ++spruceUsed === 65) slot.spruce_planks = 4   // first stack used up
       if (bot.quickBarSlot !== slot[b.name]) ctx.select(slot[b.name])
       await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5))
       bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,

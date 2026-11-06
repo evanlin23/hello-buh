@@ -186,7 +186,8 @@ function camAtLive (t) {
     await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`)
   }
   const t0 = Date.now()
-  const minVisibleY = mesher.lowestSurface() - 8
+  // the lowest surface, or deeper when the player goes underground (caves)
+  const minVisibleY = Math.min(mesher.lowestSurface(), Math.floor(Math.min(...P.map(p => p[2]))) - 24) - 8
   console.log('meshing from y', minVisibleY)
   console.log(`light computed in ${(mesher.computeLight(minVisibleY) / 1000).toFixed(1)} s`)
   await send(mesher.sections(minVisibleY))

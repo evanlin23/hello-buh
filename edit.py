@@ -106,7 +106,7 @@ def caption_png(text, red_word, path, colors=None):
             else:
                 key = tok.strip("?!.,:").lower()
                 color = (255, 255, 255, 255)
-                if red_word and key == red_word.lower():
+                if red_word and key in red_word.lower().split():   # one word or a phrase
                     color = (235, 40, 40, 255)
                 if colors and key in colors:
                     color = colors[key]
