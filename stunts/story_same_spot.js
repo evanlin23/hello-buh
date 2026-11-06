@@ -39,7 +39,8 @@ module.exports = {
     await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
     await c('/kill @e[type=!player]')
     // the edge of the village: a line of oaks past the end of the street
-    for (let x = -36; x <= 36; x += 6) await c(`/place feature minecraft:oak ${A(x, 1, 35)}`)
+    for (let x = -36; x <= 36; x += 6) if (Math.abs(x) > 8) await c(`/place feature minecraft:oak ${A(x, 1, 40)}`)   // clear of the edge camera
+    for (const x of [-6, 6]) await c(`/place feature minecraft:oak ${A(x, 1, 44)}`)
     for (let z = -6; z <= 30; z += 6) { await c(`/place feature minecraft:oak ${A(-34, 1, z)}`); await c(`/place feature minecraft:oak ${A(34, 1, z)}`) }
 
     const house = async (x0, z0, doorX, doorZ, facing, wall = 'oak_planks') => {
