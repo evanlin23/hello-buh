@@ -55,8 +55,9 @@ module.exports = {
     // pool): stone up to B-6, walkable at B-5
     const F = B - 6
     await ctx.cmd(`/fill ${x - 18} ${B - 14} ${z - 18} ${x + 18} ${F} ${z + 18} stone replace cave_air`)
-    // the landing pool: a 7x7 pit, 3 deep (water cancels the fall damage)
-    await ctx.cmd(`/fill ${x - 3} ${F - 2} ${z - 3} ${x + 3} ${F} ${z + 3} water`)
+    // the landing pool: 7x7, one deep (any water cancels the fall damage, and the eyes stay above
+    // the surface to see the cave)
+    await ctx.cmd(`/fill ${x - 3} ${F} ${z - 3} ${x + 3} ${F} ${z + 3} water`)
     // lava pits around it: contained by the stone floor, and they light the cave (an unlit cave is
     // ~3% brightness in vanilla, i.e. black)
     for (const [dx, dz] of [[8, 0], [-8, 2], [1, 8], [-2, -8], [7, -7], [-7, 7]]) {
