@@ -74,7 +74,10 @@ module.exports = {
     bot.on('physicsTick', onTick)
     for (let i = 0; i < 200 && !landed && !ctx.died; i++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', onTick)
-    if (ctx.died) return false                       // a failed attempt: nothing more to film (tries respawns)
+    // a failed attempt: nothing more to film (tries respawns). The ground can register a tick
+    // before the death does, so wait for it on purpose-failed modes
+    if (mode !== 'ok') { for (let i = 0; i < 10 && !ctx.died; i++) await bot.waitForTicks(1); return false }
+    if (ctx.died) return false
     await bot.waitForTicks(8)
     const below = bot.blockAt(bot.entity.position.floored())
     if (below && below.name === 'water') {
