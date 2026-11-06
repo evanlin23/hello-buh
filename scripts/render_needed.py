@@ -4,7 +4,7 @@
 
 A stunt with `edit.speed` spans (scripts/timewarp.py) keeps 1 frame in FACTOR inside a sped-up span
 and none inside a cut, and nothing before `startAt` or after `endAfter`, so most of a 3x
-time-lapse never reaches the Short. This renders just the frames the edit picks (render.js ONLY=)
+time-lapse never reaches the Short. This renders just the frames the edit picks (render.js FRAMES=)
 and hardlinks every skipped frame number to the nearest rendered one, so the folder looks like a
 full render to edit.py and publish.js. A 50 s recording with a 27 s 3x span: ~1400 frames, not 3100.
 """
@@ -51,14 +51,9 @@ def main(stunt, rec_path, out_dir, fps=60):
     need = sorted(need)
     print(f"rendering {len(need)} of {n} frames")
     out = pathlib.Path(out_dir)
-    tmp = out.with_name(out.name + ".sparse")
-    subprocess.run(["rm", "-rf", str(out), str(tmp)], check=True)
-    env = {**os.environ, "ONLY": ",".join(f"{f * 20 / fps:.6f}" for f in need)}
-    subprocess.run(["node", "render.js", rec_path, str(tmp), str(fps), "1080", "1011"], cwd=HERE.parent, env=env, check=True)
-    out.mkdir(parents=True)
-    for j, f in enumerate(need):
-        os.replace(tmp / f"f{j:05d}.png", out / f"f{f:05d}.png")
-    tmp.rmdir()
+    subprocess.run(["rm", "-rf", str(out)], check=True)
+    env = {**os.environ, "FRAMES": ",".join(map(str, need))}   # render.js names them by frame number
+    subprocess.run(["node", "render.js", rec_path, str(out), str(fps), "1080", "1011"], cwd=HERE.parent, env=env, check=True)
     rendered, have = set(need), need[0]
     for f in range(n):
         if f in rendered:
