@@ -29,6 +29,7 @@ checked out at `../hb-videos`.
 | [skull_art](shorts/skull_art/short.mp4) | the skull emoji irl 💀 | 8.75s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 46cab20 |  |
 | [speed_build](shorts/speed_build/short.mp4) | Fastest house build 💀 | 8.85s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 9a5edf2 |  |
 | [sword_art](shorts/sword_art/short.mp4) | can you guess what I'm building? 🤔 | 5.2s | misery. · pupsies | ready | d95a743 |  |
+| [tnt](shorts/tnt/short.mp4) | POV: you lit 75 TNT 💀 | 15.4s | FUNK ABNORMAL (ULTRA SLOWED) | ready | 1cb03ec | walk to the crater could be shorter (sprint) |
 | [villager_job](shorts/villager_job/short.mp4) | POV: THE VILLAGER IS UNEMPLOYED 💀 | 12.4s | Payphone · Radio Top Singers | ready | 17ecd2d |  |
 | [water_clutch](shorts/water_clutch/short.mp4) | water bucket clutch 💀 | 7.8s | misery. · pupsies | ready | 17ecd2d |  |
 | [wrong_bucket](shorts/wrong_bucket/short.mp4) | POV: you grabbed the wrong bucket 💀 | 9.85s | FUNK ABNORMAL (ULTRA SLOWED) | ready | cf14cb2 |  |

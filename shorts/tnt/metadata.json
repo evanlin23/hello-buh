@@ -1,0 +1,110 @@
+{
+  "name": "tnt",
+  "caption": "POV: you lit 75 TNT 💀",
+  "youtube": {
+    "title": "POV: you lit 75 TNT 💀 #minecraft #shorts",
+    "description": "POV: you lit 75 TNT 💀\n\nSong: FUNK ABNORMAL (ULTRA SLOWED)\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "funk_abnormal.mp3",
+    "title": "FUNK ABNORMAL (ULTRA SLOWED)",
+    "artist": "",
+    "sha256": "587d5f38b9bc1d7e837170664ce8814cd9f922e731549a098533f69ff08c6621",
+    "drop_on_event": "boom",
+    "drop_in_song_s": 10.5,
+    "drop_in_short_s": 6.5,
+    "song_start_s": 4
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 15.4,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 14377071,
+    "sha256": "312e86229227836ed912e9dfa9fc45b0287f552ae6ee99505ae9d4749e9d0b12"
+  },
+  "edit": {
+    "caption": "POV: you lit 75 TNT 💀",
+    "red": "75",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "boom",
+    "start": 0.4,
+    "args": [
+      "--caption",
+      "POV: you lit 75 TNT 💀",
+      "--red",
+      "75",
+      "--start",
+      "0.4",
+      "--song",
+      "songs/funk_abnormal.mp3",
+      "--song_drop_at",
+      "boom"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 358,
+      "y": 67,
+      "z": -45
+    },
+    "biome": "minecraft:plains",
+    "ticks": 317,
+    "seconds": 15.85,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "start"
+      },
+      {
+        "t": 2.85,
+        "event": "lit"
+      },
+      {
+        "t": 6.9,
+        "event": "boom"
+      },
+      {
+        "t": 15.85,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "1cb03ec77062dee5ed2e3738dde0d951a52bc95f",
+    "rendered_at": "2026-11-06T12:24:19.381Z",
+    "head_at_publish": "815fcf6bc1cf9ed5cbca522c457baf5b71e32126",
+    "stunt": "stunts/tnt.js",
+    "source_snapshot": [
+      "source/tnt.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 1cb03ec77062",
+    "gunzip -c shorts/tnt/recording.json.gz > work/tnt.rec.json",
+    "node render.js work/tnt.rec.json work/tnt.frames 60 1080 1011",
+    "python3 audio.py work/tnt.rec.json work/tnt.wav",
+    "python3 edit.py --frames work/tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/tnt.rec.json --audio work/tnt.wav --caption \"POV: you lit 75 TNT 💀\" --red 75 --start 0.4 --song songs/funk_abnormal.mp3 --song_drop_at boom --out out/tnt.mp4"
+  ],
+  "status": "ready",
+  "notes": "walk to the crater could be shorter (sprint)",
+  "published_at": "2026-11-06T12:27:15.580Z"
+}
