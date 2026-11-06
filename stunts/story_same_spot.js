@@ -35,7 +35,11 @@ module.exports = {
     await ctx.defaultRules()
     await c('/gamerule log_admin_commands false')
     await c('/gamerule random_tick_speed 0')            // her wheat really doesn't grow
-    await clearSet(ctx, A, 64, 28)              // a wide flat clearing (lib/story.js)
+    await clearSet(ctx, A, 64, 64)              // a wide flat clearing (lib/story.js), high: a mountain stood south of the set
+    // ...and on past the end of the street, where most shots look: x -64..64, z 65..128, up to y 64
+    for (let y0 = 1; y0 <= 64; y0 += 3) await c(`/fill ${A(-64, y0, 65)} ${A(64, Math.min(64, y0 + 2), 128)} air`)
+    await c(`/fill ${A(-64, 0, 65)} ${A(64, 0, 128)} grass_block`)
+    for (let y0 = -4; y0 <= -1; y0 += 3) await c(`/fill ${A(-64, y0, 65)} ${A(64, Math.min(-1, y0 + 2), 128)} dirt`)
     await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
     await c('/kill @e[type=!player]')
     // the edge of the village: a line of oaks past the end of the street
@@ -50,7 +54,8 @@ module.exports = {
     await c(`/setblock ${A(-2, 4, -4)} glowstone`); await c(`/setblock ${A(1, 4, -7)} glowstone`)   // brighter inside
     for (const [dx, dz, b] of [[-2, -2, 'poppy'], [2, -2, 'cornflower'], [-3, -1, 'oxeye_daisy']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
     // inside: the furnace I lit, and the table where she cuts my bread
-    await c(`/setblock ${A(-2, 1, -5)} furnace[facing=east,lit=true]`)
+    await c(`/setblock ${A(-2, 1, -5)} cobblestone`)
+    await c(`/setblock ${A(-2, 2, -5)} furnace[facing=east,lit=true]`)   // at eye height: the flames face the camera
     await c(`/fill ${A(0, 1, -7)} ${A(1, 1, -6)} oak_slab`)
     await c(`/setblock ${A(-2, 1, -7)} crafting_table`)
     await c(`/setblock ${A(1, 1, -4)} barrel[facing=up]`)
@@ -82,7 +87,7 @@ module.exports = {
     const W = [['armorer', -5.0, 24.0, 'plains'], ['librarian', 4.5, 26.5, 'taiga'], ['cleric', -4.5, 28.6, 'desert'], ['mason', 5.5, 22.4, 'savanna'], ['shepherd', 5.5, 30.4, 'plains']]
     for (let i = 0; i < W.length; i++) await mob('villager', W[i][1], 1, W[i][2], 90, 0, `w${i}`, vd(W[i][0], W[i][3]))
     await mob('villager', 0.2, 1, 28.0, 0, 0, 'hop', vd('fletcher', 'snow'))
-    await mob('sheep', 2.8, 1, 31.0, 0, 0, 'hops', ',Color:12b')
+    await mob('sheep', 3.4, 1, 28.8, 0, 0, 'hops', ',Color:12b')
     await mob('sheep', -6.0, 1, 26.8, 90, 0, 'ws0', ',Color:4b')
     await mob('cow', 7.5, 1, 28.5, 90, 0, 'ws1')
 
@@ -129,7 +134,7 @@ module.exports = {
     // ---- the village clock: it only runs while `running`; frozen mobs get invisible micro-moves
     let running = true, vt = 0, jig = 0
     const W = [[-5.0, 24.0, 2.0, 0], [4.5, 26.5, 2.2, 1.7], [-4.5, 28.6, 1.8, 3.1], [5.5, 22.4, 2.0, 4.4], [5.5, 30.4, 1.5, 0.8]]
-    const hops = { hop: { x: 0.2, y: 0.9375, z: 28.0, t: -1 }, hops: { x: 2.8, y: 1, z: 31.0, t: -1 } }
+    const hops = { hop: { x: 0.2, y: 0.9375, z: 28.0, t: -1 }, hops: { x: 3.4, y: 1, z: 28.8, t: -1 } }
     const wt = W.map(() => -1)
     const hopCurve = (t) => t >= 0 ? Math.sin(Math.min(t, 12) / 12 * Math.PI) * 1.2 : 0
     const hopUp = () => {                                // a single jump, ~0.6 s; apex 6 ticks in
@@ -200,12 +205,12 @@ module.exports = {
     await cut(5.2, 0.6, P(3.6, 2.0, -0.6))
     await line('L04', async (k) => { world(); ctl('left', k > 2 && k < 22); aimAt(P(3.6, 2.0, -0.6)); look(k) })
     // L05: the furnace I lit three years ago, still burning (inside)
-    await cut(1.4, -4.5, P(-1.5, 1.5, -4.5))
+    await cut(1.4, -4.5, P(-1.5, 2.5, -4.5))
     await line('L05', async (k) => {
       world()
       if (k === 3) ctx.sound('block.furnace.fire_crackle', 1, 1)
       go(k > 2 && bot.entity.position.x > X - 0.2)
-      aimAt(P(-1.5, 1.5, -4.5)); look(k)
+      aimAt(P(-1.5, 2.5, -4.5)); look(k)
     })
     // L06: I walk up and everything starts at once: the sheep lands, Mom turns to me
     await cut(0.6, 7.5, P(1.8, 2.0, -1.4))
@@ -229,13 +234,13 @@ module.exports = {
     // L08: she still thinks I'm seven (a kid's eye height: standing in a hole, looking up at her)
     say(`/setblock ${X} ${F} ${Z - 1} air`)
     await cut(0.5, -0.5, momFace(), 0)
-    await line('L08', async (k) => { world(); aimAt(P(0.5, 2.5 + Math.min(k, 30) * 0.008, -1.9)); look(k, Math.sin(k / 9) * 0.05) })
+    await line('L08', async (k) => { world(); aimAt(P(MOM[0], 2.5 + Math.min(k, 30) * 0.008, MOM[1])); look(k, Math.sin(k / 9) * 0.05) })
     ctx.mark('face_off')
     // L10: so I tested it: down the street to the edge of the village, everyone going about their day
     await cut(0.5, 13.5, P(0.5, 1.6, 30))
     say(`/setblock ${X} ${F} ${Z - 1} dirt_path`)   // the hole goes once I'm out of it
     const t10 = ticks('L10')
-    await line('L10', async (k) => { world(); go(k < t10 - 6); ctl('sprint', k < t10 - 6); look(k, Math.sin(k / 9) * 0.15) })
+    await line('L10', async (k) => { world(); go(k < t10 - 6 && bot.entity.position.z < Z + 22); ctl('sprint', k < t10 - 6); look(k, Math.sin(k / 9) * 0.15) })
     // L11: one more step (backwards, facing them), and the whole village froze, two of them mid-jump
     await cut(0.5, 33.0, P(0.5, 1.5, 25))
     await line('L11', async (k, at) => {
@@ -248,7 +253,7 @@ module.exports = {
     // L12: one step back in, and it all kept going (the two land)
     await line('L12', async (k, at) => {
       go(k >= at(0) && bot.entity.position.z > Z + 32.6)
-      if (k === at(2)) running = true
+      if (k === at(0) + 4) running = true                // the village starts on BACK
       world(); look(k)
     })
     go(false)
@@ -263,15 +268,15 @@ module.exports = {
     })
     ctx.mark('face_off')
     // L14: she's only ever lived the minutes I was home (from inside, past her, out the door)
-    await cut(-0.5, -6.5, P(1.3, 2.2, -1.9))
-    await line('L14', async (k) => { world(); go(k > 2 && bot.entity.position.z < Z - 4.4); look(k, Math.sin(k / 12) * 0.08) })
+    await cut(-1.0, -6.5, P(1.3, 2.2, -1.9))   // through the doorway to her
+    await line('L14', async (k) => { world(); go(k > 2 && bot.entity.position.z < Z - 4.6); aimAt(P(1.3, 2.2, -1.9)); look(k) })
     // L15: I left at seven (beside her: the empty street). For her, that was this morning (turn to her).
     await cut(2.6, -0.6, P(0.5, 1.7, 26))
     ctx.mark('face_on', { near: [X + MOM[0], Z + MOM[1], 1], head: true })
     let from = null
     await line('L15', async (k, at) => {
       world()
-      if (k >= at(3) - 4) { from = from || { ...K.base }; turn(from, momFace(), (k - at(3) + 5) / 20) }
+      if (k >= at(2)) { from = from || { ...K.base }; turn(from, momFace(), (k - at(2) + 1) / 34) }
       look(k)
     })
     // L16: I'm the only clock she has (close, a slow push in)
@@ -288,21 +293,19 @@ module.exports = {
     // L18: I say hi, I hug her, and I leave again (down the street, past the line)... which is why
     // (I look back from the street: Mom and the sheep stop, mid-jump)
     await cut(0.5, 1.6, momFace())
-    const END = P(2.4, 2.0, -1.2)
-    let phase = 0, tf = null
+    let phase = 0
     await line('L18', async (k, at) => {
       if (k < at(2)) { go(bot.entity.position.z > Z - 0.95); aimAt(momFace()) }
-      else if (k < at(3) + 4) {                           // hard cut: already walking off down the street
+      else if (k < at(4)) {                               // hard cut: already walking off down the street
         if (phase === 0) { phase = 1; await cut(0.5, 10.5, P(0.5, 1.6, 30)) }
         go(true)
-      } else {                                             // look back over 10 ticks: the sheep jumps... and stops
-        if (phase === 1) { phase = 2; go(false); tf = { ...K.base } }
-        turn(tf, END, (k - at(3) - 3) / 10)
-        if (k === at(5) - 6) { dsheep.mode = 'hop'; dsheep.t = 0 }
+      } else {                                             // hard cut: looking back at her from down the street
+        if (phase === 1) { phase = 2; await cut(2.2, 6.6, P(2.4, 2.1, -1.2)); dsheep.mode = 'hop'; dsheep.t = 0 }
+        back(k < at(5) - 2)
         if (k === at(5)) { ctx.mark('face_off'); running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
       }
       world(); look(k)
-    }, 0.15)
+    }, -0.1)
     back(false)
     ctx.mark('story_end')
     await bot.waitForTicks(4)
