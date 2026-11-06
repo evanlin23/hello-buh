@@ -45,6 +45,22 @@ each section.
   with one texture. Place things so the key object stays in frame.
 
 ## Renderer (our own; `renderer/`)
+- **Death, as vanilla shows it** (owner: "the death is kinda odd and delayed"): the camera does
+  NOT drop or keel over. Pose.DYING keeps eye height 1.62; `GameRenderer.bobHurt` rolls the view
+  by `40 - 8000/(deathTime+200)` degrees (0 to 3.6 over 20 ticks). Each hit rolls
+  `-sin(h^4 pi) * 14` degrees with h = hurtTime/10. The body keeps falling or sinking (lava:
+  velocity x(0.5, 0.8, 0.5), gravity 0.02) until the respawn. mineflayer teleports the bot to the
+  respawn point on the death tick, so render.js simulates the body from the death pose.
+- **Death screen** opens on the death tick (no delay): the death message at y 85, "Score" at y
+  100, and buttons greyed out for 20 ticks. The HUD stays drawn under it with empty, shaking hearts.
+  mineflayer reports the respawn health (20) on the death tick, so force health 0 until `respawn`.
+- **Hearts** (`Gui.renderHearts`): a health drop blinks the row for 20 ticks, alternating every 3
+  (white = health just lost, kept for 1 s). Health <= 4 shakes each heart by 0-1 px, using
+  java.util.Random seeded with tick*312871. edit.py renders the HUD per tick through an ffconcat
+  list.
+- Hurt sounds come from the `damage_event` packet (damage type → `data/minecraft/damage_type/*.json`
+  `effects` → hurt / hurt_on_fire / hurt_drown...). The killing hit plays `entity.player.death`
+  instead. Don't hand-place hurt sounds in stunts.
 - Visible lines across the ground were **atlas padding spilling into neighbour tiles**. With
   alpha test, sampling a neighbour's transparent texels punched 1 px holes. Build each padded
   cell on its own. To find holes, render with `DEBUG_MAGENTA=1`.
