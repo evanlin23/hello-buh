@@ -57,7 +57,11 @@ module.exports = {
     await ctx.easeLookAt(d.position.offset(0.5, 0.5, 0.5), 500)
     ctx.mark('diamond')
     // a few swings, then the server breaks it with drops (bot.dig took ~3 s here even with haste)
-    for (let i = 0; i < 4; i++) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.5); await bot.waitForTicks(2) }
+    // (real start/cancel dig packets around it, so the crack overlay shows)
+    const loc = { x: d.position.x, y: d.position.y, z: d.position.z }
+    bot._client.write('block_dig', { status: 0, location: loc, face: 4, sequence: 0 })
+    for (let i = 0; i < 6; i++) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.5); await bot.waitForTicks(2) }
+    bot._client.write('block_dig', { status: 1, location: loc, face: 4, sequence: 0 })
     bot.chat(`/setblock ${d.position.x} ${d.position.y} ${d.position.z} air destroy`)
     ctx.sound('block.stone.break', 1); ctx.particles('block', d.position, { block: 'diamond_ore' })
     ctx.sound('entity.experience_orb.pickup', 0.8)
