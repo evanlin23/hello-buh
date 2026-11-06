@@ -268,3 +268,12 @@ each section.
 - **Clouds sit at y 192.** Falls from build limit go through a white cloud wall, and from above the clouds hide the target. Use `clouds: false` on the stunt module (Video Settings > Clouds: OFF, a real vanilla option) for high drops.
 - **A multi-set stunt must switch to creative before each mid-air teleport.** Each reused setup() ends in survival, so the next set's tp dropped the bot to its death (clutch_harder, 5/5 failed).
 - **Big /fills can leave ghost terrain in mineflayer's world** (worker 4). The harness now does a far-tp refresh before recording (`noChunkRefresh: true` opts out), and "not loaded" counts as a command error.
+
+## Retention toolkit (worker 10: scripts/retention.py, scripts/sfx.py)
+- **Overlays share the game view's corners.** The counter sits top left, blocks-fallen top right; cards and stamps go at 36% of the game height and the hook text in the lower third. At 27% the "1 IN A MILLION" stamp covered "5/5".
+- **The game area is 1011 px tall (odd).** A scale to `trunc(h/2)*2` came out 1 px short of the crop that followed it, and ffmpeg failed. Round up instead (`trunc(h/2+1)*2`).
+- **xfade needs matching timebases.** The mp4 is 1/15360 and a looped PNG is 1/fps: put `fps=..,settb=1/fps` on both inputs.
+- **atempo takes 0.5-2 per stage.** A freeze frame is a 1-frame span stretched ~36x, so its audio is silence padded to length, not atempo.
+- **Blend in-between frames only inside slow spans.** A 2.5x speed-up also lands on half frames, and blending there smeared it.
+- **A long fall above the clouds (night) is a still frame.** beat_audit read 1.1-1.7 s STILL on one_in_a_million's build-limit drops. Fix it in the edit: speed up the empty high stretch (`speed: [['drop5:0.5', 'drop5:3.3', 2.5]]`), and keep a live counter (`fallen`) and wind on the fall.
+- **Bit-identical check:** with no new keys, an edit must match the pre-change code byte for byte. Compare against a worktree of the old commit on the same frames, not against an mp4 made before a pull (the HUD/encoder can change in between).
