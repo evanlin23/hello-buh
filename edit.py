@@ -464,7 +464,7 @@ def death_screen_png(jar, path, cause=None, active=True):
     img.save(path)
 
 
-def fire_frames(jar, t0, t1, outdir):
+def fire_frames(jar, t0, t1, outdir, prefix="fire"):
     """On-fire screen overlay (ScreenEffectRenderer.renderFire): the animated fire texture over
     both lower corners at 90% opacity, 20 frames per second from t0 to t1."""
     with jar.open("assets/minecraft/textures/block/fire_1.png") as f:
@@ -481,8 +481,8 @@ def fire_frames(jar, t0, t1, outdir):
         img.alpha_composite(fr.transpose(Image.FLIP_LEFT_RIGHT), (W - size + int(size * 0.18), y))
         # keep inside the game area
         img.paste((0, 0, 0, 0), (0, BAND + GAME_H, W, H))
-        img.save(outdir / f"fire_{i:04d}.png")
-    return str(outdir / "fire_%04d.png")
+        img.save(outdir / f"{prefix}_{i:04d}.png")
+    return str(outdir / f"{prefix}_%04d.png")
 
 
 def timer_frames(t0, t1, start_shift, outdir, hold=1.5):
@@ -745,18 +745,29 @@ def main():
     n_in = 2
     # on-fire overlay first: vanilla draws the HUD on top of the flames
     if args.on_fire and args.timeline:
-        a_, b_ = args.on_fire.split(":")
-        if a_ in _tl and b_ in _tl:
-            with zipfile.ZipFile(CLIENT_JAR) as jar:
-                end = _tl[b_] + 0.6
+        # START:END, or several comma-separated: every occurrence of START pairs with the next END
+        # after it, so a multi-death Short burns once per burn (worker 7, die_rating)
+        tl_all_ = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+        times = lambda ev: [e["t"] / 1000 for e in tl_all_ if e["event"] == ev]
+        wins = []
+        for spec in args.on_fire.split(","):
+            a_, b_ = spec.strip().split(":")
+            for ta in times(a_):
+                tb = next((x for x in times(b_) if x >= ta), None)
+                if tb is None:
+                    continue
+                end = tb + 0.6
                 if b_ == "death":   # a dead body stays on fire (and in view) until the respawn
-                    tl_all_ = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
-                    end = next((e["t"] / 1000 for e in tl_all_ if e["event"] == "respawn" and e["t"] / 1000 > _tl[b_]), dur + args.start + 1)
-                pat = fire_frames(jar, _tl[a_], end, tmp)
-            inputs += ["-framerate", "20", "-i", pat]
-            graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, _tl[a_] - args.start):.3f}/TB[firev]")
-            graph.append(f"[{last}][firev]overlay=0:0:eof_action=pass[fireo]")
-            last, n_in = "fireo", n_in + 1
+                    end = next((x for x in times("respawn") if x > tb), dur + args.start + 1)
+                if not any(abs(ta - w[0]) < 1e-3 for w in wins):
+                    wins.append((ta, end))
+        with zipfile.ZipFile(CLIENT_JAR) as jar:
+            for wi, (t0_, t1_) in enumerate(sorted(wins)):
+                pat = fire_frames(jar, t0_, t1_, tmp, prefix=f"fire{wi}")
+                inputs += ["-framerate", "20", "-i", pat]
+                graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, t0_ - args.start):.3f}/TB[firev{wi}]")
+                graph.append(f"[{last}][firev{wi}]overlay=0:0:eof_action=pass[fireo{wi}]")
+                last, n_in = f"fireo{wi}", n_in + 1
     if args.hud:
         tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"] if args.timeline else []
         shift = args.start
