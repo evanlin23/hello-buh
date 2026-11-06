@@ -769,6 +769,12 @@ def main():
         graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[capv]")
         graph.append(f"[{last}][capv]overlay=0:0:eof_action=pass[capo]")
         last, n_in = "capo", n_in + 1
+        meter = story_track.meter_concat(args.story, story_tl, args.start, dur, tmp)   # the story's rule meter, if it has one
+        if meter:
+            inputs += ["-f", "concat", "-safe", "0", "-i", str(meter)]
+            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[mtv]")
+            graph.append(f"[{last}][mtv]overlay=0:0:eof_action=repeat[mto]")
+            last, n_in = "mto", n_in + 1
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     maps = ["-map", "[v]"]
@@ -811,6 +817,8 @@ def main():
            "-t", f"{dur:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
            "-movflags", "+faststart", args.out]
     subprocess.run(cmd, check=True)
+    if args.story:   # single-pass loudnorm lands ~2 dB short: measure and correct to -14 LUFS exactly
+        story_track.master_gain(args.out, -14.0)
     print("wrote", args.out, f"{dur:.2f}s")
 
 

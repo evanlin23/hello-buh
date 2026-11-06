@@ -215,6 +215,34 @@ def meter_concat(story_dir, timeline, start, dur, tmp):
     return lst
 
 
+def loudness(path):
+    """Integrated loudness (LUFS) of a file's audio, by ffmpeg's ebur128."""
+    import re
+    import subprocess
+    err = subprocess.run(["ffmpeg", "-nostats", "-i", str(path), "-map", "0:a", "-af", "ebur128", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    return float(re.findall(r"I:\s+(-?[\d.]+) LUFS", err)[-1])
+
+
+def master_gain(path, target=-14.0):
+    """Correct a finished Short's audio to `target` LUFS (gain, then a -1.5 dBTP limiter), video copied."""
+    import os
+    import subprocess
+    gain = target - loudness(path)
+    if abs(gain) < 0.3:
+        return
+    tmp = str(path) + ".gain.mp4"
+    for _ in range(4):   # the limiter eats some of the gain: re-measure and push again (from the original)
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(path), "-map", "0:v", "-map", "0:a", "-c:v", "copy",
+                        "-af", f"volume={gain:.2f}dB,alimiter=limit=0.84:level=false", "-c:a", "aac", "-b:a", "192k",
+                        "-movflags", "+faststart", tmp], check=True)
+        miss = target - loudness(tmp)
+        if abs(miss) < 0.3:
+            break
+        gain += miss
+    os.replace(tmp, path)
+
+
 if __name__ == "__main__":     # preview: python3 scripts/story_track.py stories/<name> "SOME text" out.png
     import sys
     story, _ = _lines(sys.argv[1])

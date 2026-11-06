@@ -18,7 +18,7 @@ module.exports = {
   name: 'story_respawn_tax',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every time I respawn, someone disappears 😳',
-  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: 'all' },
+  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true },
   expectDeath: true,
 
   async setup (ctx) {
