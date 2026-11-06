@@ -262,7 +262,7 @@ window.HB = {
   // pos = eye position; yaw/pitch in mineflayer convention; bob = {x,y,roll,pitch} offsets
   async frame (cam, tick, ents, parts) {
     animate(tick || 0)
-    if (entities) await entities.update(ents || [])
+    if (entities) await entities.update(ents || [], tick || 0)
     camera.position.set(cam.x, cam.y, cam.z)
     camera.rotation.set(cam.pitch - (cam.bobPitch || 0), cam.yaw, cam.roll || 0)
     if (cam.bobX) camera.translateX(cam.bobX)

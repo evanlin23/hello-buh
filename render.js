@@ -38,6 +38,23 @@ const bobState = []
 // Entities by tick: Map(tick -> Map(id -> row)); rows are [tick, id, name, x, y, z, yaw, pitch, headYaw, extra]
 const ENT = new Map()
 for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], new Map()); ENT.get(row[0]).set(row[1], row) }
+// The server sends mob moves every few ticks, so recorded positions are steps (a creeper "glided"
+// in 0.4-block hops). The vanilla client eases toward each new position over 3 ticks
+// (Entity.lerpTo / lerpSteps); do the same, per tick, before the per-frame interpolation.
+{
+  const cur = new Map()   // id -> { x, y, z, tx, ty, tz, steps }
+  for (const tick of [...ENT.keys()].sort((a, b) => a - b)) {
+    for (const [id, row] of ENT.get(tick)) {
+      if (row[2] === 'falling_block' || row[2] === 'item') continue
+      let c = cur.get(id)
+      if (!c || c.last !== tick - 1) c = { x: row[3], y: row[4], z: row[5], tx: row[3], ty: row[4], tz: row[5], steps: 0 }
+      if (row[3] !== c.tx || row[4] !== c.ty || row[5] !== c.tz) { c.tx = row[3]; c.ty = row[4]; c.tz = row[5]; c.steps = 3 }
+      if (c.steps > 0) { c.x += (c.tx - c.x) / c.steps; c.y += (c.ty - c.y) / c.steps; c.z += (c.tz - c.z) / c.steps; c.steps-- }
+      c.last = tick; cur.set(id, c)
+      const r = row.slice(); r[3] = c.x; r[4] = c.y; r[5] = c.z; ENT.get(tick).set(id, r)
+    }
+  }
+}
 function entitiesAt (t, mesher) {
   const i = Math.floor(t), f = t - i
   const a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
@@ -366,6 +383,14 @@ function camAtLive (t) {
         e.yaw = Math.atan2(-dx, -dz); e.headYaw = e.yaw
         e.pitch = Math.atan2(dy, Math.hypot(dx, dz))
       }
+    }
+    // mobs never walk into the player: the server and client push overlapping entities apart, but
+    // the bot (mineflayer) has no entity push, so a creeper could end up inside the camera. Keep
+    // mobs at least their half width + the player's (0.3 + 0.3) plus a little, horizontally.
+    for (const e of ents) {
+      if (['falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb'].includes(e.name)) continue
+      const dx = e.x - cam.x, dz = e.z - cam.z, d = Math.hypot(dx, dz), min = 0.85
+      if (d < min && d > 1e-6 && Math.abs(e.y - (cam.y - 1.62)) < 2) { e.x = cam.x + dx / d * min; e.z = cam.z + dz / d * min }
     }
     // creeper swelling (CreeperRenderer.scale): 30-tick fuse ending in its explosion
     for (const e of ents) {

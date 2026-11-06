@@ -41,25 +41,28 @@ module.exports = {
     await ctx.easeLook(Math.PI, 0.6, 600)                     // something in the sky?
     ctx.mark('rain')
     // the rain: a few anvils every few ticks, mostly in front of the camera so they land in shot,
-    // never within 3.5 blocks of the bot (it walks ~2 blocks while one falls)
+    // never close to the bot
     let n = 0
     const rain = () => {
       if (n++ % 3) return
       const p = bot.entity.position, yaw = bot.entity.yaw
       for (let k = 0; k < 2; k++) {
-        const a = yaw + Math.PI + (rnd() - 0.5) * (rnd() < 0.75 ? 1.8 : 6), d = 3 + rnd() * 7
+        // 9-15 blocks out and inside the view cone: with the camera pitched ~0.3 up, an anvil from 14
+        // up is in frame for its whole fall (closer ones started above the top edge, so they seemed
+        // to pop onto the ground: "the anvils aren't actually falling")
+        const a = yaw + Math.PI + (rnd() - 0.5) * (rnd() < 0.8 ? 1.1 : 2.2), d = 9 + rnd() * 6
         drop(p.x - Math.sin(a + Math.PI) * d, p.z - Math.cos(a + Math.PI) * d)
       }
     }
     bot.on('physicsTick', rain)
+    // frozen in place, looking around as they slam down; the pitch stays 0.2-0.4 up so each anvil
+    // is seen from the sky to the ground. One quick sidestep.
     await ctx.easeLook(Math.PI, 0.35, 500)                    // they're coming down
-    await ctx.easeLook(Math.PI + 0.3, -0.2, 700)
-    // frozen in place, looking around as they slam down (walking forward would walk into the
-    // ones landing in front); one quick sidestep
-    await ctx.easeLook(Math.PI + 0.8, -0.15, 900)
-    await ctx.easeLook(Math.PI + 0.2, 0.35, 800)
+    await ctx.easeLook(Math.PI + 0.35, 0.25, 800)
+    await ctx.easeLook(Math.PI + 0.7, 0.3, 900)
+    await ctx.easeLook(Math.PI + 0.2, 0.4, 800)
     bot.setControlState('left', true); await bot.waitForTicks(6); bot.setControlState('left', false)
-    await ctx.easeLook(Math.PI - 0.7, -0.2, 900)
+    await ctx.easeLook(Math.PI - 0.6, 0.25, 900)
     await ctx.easeLook(Math.PI - 0.2, 0.3, 800)
     bot.removeListener('physicsTick', rain)
     await bot.waitForTicks(30)                                // let the last ones land

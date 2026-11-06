@@ -163,7 +163,7 @@ export class EntityLayer {
   }
 
   // states: [{id, name, x, y, z, yaw, pitch, headYaw, extra, light}]
-  async update (states) {
+  async update (states, tick = 0) {
     const seen = new Set()
     for (const s of states) {
       seen.add(s.id)
@@ -179,13 +179,25 @@ export class EntityLayer {
         f = Math.min(1, Math.max(0, f)); f *= f; f *= f
         r.obj.scale.set((1 + f * 0.4) * g, (1 + f * 0.1) / g, (1 + f * 0.4) * g)
       } else if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
-      // limb swing from horizontal speed, like LivingEntity.walkAnimation
-      if (r.last) { const sp = Math.hypot(s.x - r.last.x, s.z - r.last.z); r.walk += sp * 4; r.amt = Math.min(1, sp * 4) } else r.amt = 0
-      r.last = { x: s.x, z: s.z }
+      // limb swing like WalkAnimationState: per game tick, target = min(1, distance * 4), speed eases
+      // toward it by 0.4 and the phase advances by speed. Frames come at 60 fps (3 per tick), so
+      // measure over elapsed ticks, not per frame (per frame read a third of the speed).
+      if (r.last) {
+        const dt = tick - r.last.t
+        if (dt > 0) {
+          const per = Math.hypot(s.x - r.last.x, s.z - r.last.z) / dt
+          const target = Math.min(1, per * 4)
+          r.amt = (r.amt || 0) + (target - (r.amt || 0)) * Math.min(1, 0.4 * dt)
+          r.walk += (r.amt || 0) * dt
+        }
+      } else r.amt = 0
+      r.last = { x: s.x, z: s.z, t: tick }
       const swing = Math.cos(r.walk * 0.6662) * 1.4 * (r.amt || 0)
       const B = r.bones
-      for (const [n, sign] of [['leg0', 1], ['rightLeg', 1], ['leg1', -1], ['leftLeg', -1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
-      for (const [n, sign] of [['rightArm', -1], ['leftArm', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
+      // bipeds: legs opposite, arms against the legs. Quadrupeds (QuadrupedModel: creeper, pig):
+      // leg0/leg1 hind right/left, leg2/leg3 front right/left; diagonal pairs move together.
+      if (!B.leg4) for (const [n, sign] of [['leg0', 1], ['rightLeg', 1], ['leg1', -1], ['leftLeg', -1], ['leg2', -1], ['leg3', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
+      for (const [n, sign] of [['rightArm', -1], ['leftArm', 1], ['arm0', -1], ['arm1', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
       if (B.head) {
         let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
         B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y + dy, B.head.userData.rest.z)
