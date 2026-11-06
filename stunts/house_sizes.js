@@ -100,7 +100,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 20} ${floor - 3} ${z - 24} ${x + 20} ${floor - 1} ${z + 10} dirt`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 24')
     await ctx.hotbar([['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['cobblestone', 64], ['dark_oak_log', 64], ['birch_planks', 64], ['dark_oak_planks', 64]])
-    await ctx.tpCheck(x - 7.5 + 0.5, floor + 1, z + 0.5, 180, 15)
+    await ctx.tpCheck(x - 7.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
