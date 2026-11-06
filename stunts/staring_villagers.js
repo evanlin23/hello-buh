@@ -34,7 +34,7 @@ module.exports = {
       }
     }
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
-    await ctx.tpCheck(x + 0.5, floor + 1, z + 9.5, 180, -8)
+    await ctx.tpCheck(x + 0.5, floor + 1, z + 5.5, 180, -8)   // close: the stare lands by ~1.5 s
     await ctx.cmd('/gamemode survival')
     ctx.select(1)
     await bot.waitForTicks(30)
@@ -48,7 +48,7 @@ module.exports = {
     bot.setControlState('forward', true)
     while (bot.entity.position.z > this.z - 0.8) await bot.waitForTicks(1)   // ~3 blocks behind the front row
     bot.setControlState('forward', false)
-    await bot.waitForTicks(12)
+    await bot.waitForTicks(6)
     // they all turn round at once and keep tracking: the bot runs the tp-facing command itself every
     // tick (a command block took seconds to start ticking; ops aren't chat-rate-limited)
     const track = () => bot.chat(`/execute as @e[type=villager] at @s run tp @s ~ ~ ~ facing entity ${bot.username} eyes`)
@@ -64,8 +64,8 @@ module.exports = {
     await bot.waitForTicks(8)
     ctx.sound('entity.villager.no', 1)
     // back away slowly
-    bot.setControlState('back', true); await bot.waitForTicks(30); bot.setControlState('back', false)
-    await bot.waitForTicks(20)
+    bot.setControlState('back', true); await bot.waitForTicks(26); bot.setControlState('back', false)
+    await bot.waitForTicks(12)
     this.untrack(); ctx.mark('face_off')
     return true
   }
