@@ -49,7 +49,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - **The twist turns the whole story over,** planted at least twice where a rewatch catches it, and said plainly
   in one short line, or shown by the game itself. Owner, 2026-11-07, on runaway: "the big reveal ... just boom,
   ending ... don't say I'm the creeper, it's just the explosion." So the creeper twist ends on the blast and the
-  death message "blown up by Creeper" (held ~1.3 s to read, a push-in on it), no spoken reveal after it. The POV
+  death message "blown up by Creeper" (held ~1.3 s to read, the world pushing in behind it), no spoken reveal after it. The POV
   camera is the twist machine: who "I" am is never shown.
 - **The last line loops into the first:** as one sentence, or as cause and effect (runaway now ends "...when I'm
   HAPPY?" [BOOM] -> "All FOURTEEN villagers RUN when they see ME").

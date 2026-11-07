@@ -360,7 +360,7 @@ module.exports = {
     }
     for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
     // the owner: the reveal is the boom itself, no "Oh. I'm the creeper." The Short ends 1.35 s after the blast
-    // (edit endAfter boom:1.35: reading time for "blown up by Creeper", with a push-in onto it); a couple of seconds
+    // (edit endAfter boom:1.35: reading time for "blown up by Creeper"; the world behind the death screen pushes in, the GUI stays put); a couple of seconds
     // of smoke are recorded so the edit has frames to end on
     for (let i = 0; i < 40; i++) { await still(); await bot.waitForTicks(1) }
     ctx.mark('story_end')
