@@ -13,6 +13,8 @@ const JOBS = [
   ['fletching_table', 'fletcher'], ['grindstone', 'weaponsmith'], ['loom', 'shepherd'],
   ['smithing_table', 'toolsmith'], ['cauldron', 'leatherworker'], ['stonecutter', 'mason']
 ]
+const { plateau } = require('../lib/plateau')
+const { plainsBiome } = require('../lib/story')
 const DIST = 6          // player to villager (blocks, north)
 const STONEY = /furnace|smoker|brewing|grindstone|cauldron|stonecutter/
 
@@ -31,7 +33,8 @@ module.exports = {
       ['job', 'job 4: armorer', 1.1, 3], ['job', 'job 5: butcher', 1.0, 4], ['job', 'job 6: cartographer', 1.0, 5],
       ['job', 'job 7: cleric', 0.9, 6], ['job', 'job 8: fletcher', 0.9, 7], ['job', 'jobs 9, 10, 11...', 1.4, 8], ['job', '13 JOBS', 1.4, 12],
       ['all_jobs', 'all 13 at once', 2.8, 0],
-      ['crowd', 'the rest of the village: 0 jobs', 1.9, 0],
+      ['faster', 'FASTER', 1.2, 0],
+      ['crowd', 'the rest of the village: 0 jobs', 2.2, 0],
       ['tnt', 'one problem...', 1.6, 0],
       ['lit', 'he is about to get FIRED', 2.2, 0],
       ['fired_all', 'fired from 13 jobs at once', 1.5, 0],
@@ -45,16 +48,17 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z, y: floor } = g
-    Object.assign(this, { x, z, floor })
+    const { x, z } = g
     await ctx.defaultRules()
     await ctx.cmd('/difficulty peaceful')
     await ctx.cmd('/gamerule tnt_explosion_drop_decay true')
     const vz = z - DIST
     this.vz = vz
-    for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 16} ${y0} ${vz - 16} ${x + 16} ${y0 + 5} ${z + 10} air`)
-    await ctx.cmd(`/fill ${x - 16} ${floor - 14} ${vz - 16} ${x + 16} ${floor - 1} ${z + 10} dirt`)
-    await ctx.cmd(`/fill ${x - 16} ${floor} ${vz - 16} ${x + 16} ${floor} ${z + 10} grass_block`)
+    // a plateau (dug down to the start point, the field's cut wall stood behind the pen) with deep
+    // dirt for the crater, and one biome so the grass is one colour
+    const floor = await plateau(ctx, { x0: x - 30, x1: x + 30, z0: vz - 30, z1: z + 24, above: 24, below: 14 })
+    Object.assign(this, { x, z, floor })
+    await plainsBiome(ctx, (dx, dy, dz) => `${x + dx} ${floor + dy} ${z - 3 + dz}`, 30, -8, 16)
     await ctx.cmd(`/fill ${x - 1} ${floor + 1} ${vz - 1} ${x + 1} ${floor + 1} ${vz + 1} oak_fence`)
     await ctx.cmd(`/setblock ${x} ${floor + 1} ${vz} air`)
     await ctx.cmd('/kill @e[type=!player]')
@@ -96,7 +100,7 @@ module.exports = {
     const { x, floor, vz } = this
     const sel = `@e[type=villager,limit=1,sort=nearest,x=${x + 0.5},y=${floor + 1},z=${vz + 0.5}]`
     const setJob = (p) => bot.chat(`/data merge entity ${sel} {VillagerData:{profession:"minecraft:${p}"},Xp:${p === 'none' || p === 'nitwit' ? 0 : 1}}`)
-    const head = new Vec3(x + 0.5, floor + 2.6, vz + 0.5)    // aimed above him: the subtitles sit at his head otherwise
+    const head = new Vec3(x + 0.5, floor + 3.0, vz + 0.5)    // aimed above him: the subtitles sit at his head otherwise
     const vpos = { x: x + 0.5, y: floor + 2.0, z: vz + 0.5 }
     ctx.mark('face_on', { near: [x + 0.5, vz - 2, 8.5], head: true })
     const slotOf = (i) => (i < 8 ? i : i - 8)
@@ -156,6 +160,7 @@ module.exports = {
       if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 46)
       await bot.waitForTicks(Math.max(1, Math.round(gap)))
       gap *= 0.9
+      if (k === 22) ctx.mark('faster')
       if (bot.entity.position.z < vz + 5.6) bot.setControlState('forward', false)
       if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.45 : -0.45), -0.25, 0), 300)
     }
@@ -164,11 +169,11 @@ module.exports = {
     // meanwhile, the crowd behind him: still unemployed, all staring
     await ctx.easeLookAt(new Vec3(x - 3, floor + 1.7, vz - 5), 400)
     ctx.mark('crowd')
-    await ctx.easeLookAt(new Vec3(x + 5, floor + 1.7, vz - 5), 1500)
+    await ctx.easeLookAt(new Vec3(x + 5, floor + 1.7, vz - 5), 1800)
     // ---- act 3: the TNT under the job sites ----
     await ctx.easeLookAt(new Vec3(x - 1.5, floor + 0.9, vz + 2.5), 400)    // down at the base of the front row
     ctx.mark('tnt')
-    await ctx.easeLookAt(new Vec3(x + 1.5, floor + 0.9, vz + 2.5), 500)
+    await ctx.easeLookAt(new Vec3(x + 1.5, floor + 0.9, vz + 2.5), 800)
     await ctx.easeLookAt(new Vec3(x + 0.5, floor + 0.9, vz + 3.5), 400)    // ...and the fuse line
     bot.chat('/item replace entity @s hotbar.5 with flint_and_steel 1')
     await bot.waitForTicks(2)
@@ -204,7 +209,7 @@ module.exports = {
     ctx.mark('fired_all')
     const v = Object.values(bot.entities).find(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 3 && Math.abs(e.position.z - (vz + 0.5)) < 3)
     // him, alone on his pillar in the crater: a slow look down the pillar and back up
-    const top = new Vec3(x + 0.5, floor + 3.2, vz + 0.5)      // above him, so he's below the subtitle
+    const top = new Vec3(x + 0.5, floor + 4.3, vz + 0.5)      // above him, so he's below the subtitle
     await ctx.easeLookAt(top, 400)
     await ctx.easeLookAt(top.offset(0.3, -2.2, 0), 700)
     ctx.easeLookAt(top.offset(-0.2, 0.2, 0), 700)
