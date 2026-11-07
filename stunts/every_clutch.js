@@ -7,7 +7,7 @@
 const CLUTCHES = [   // nine beats, ~33 s (seven ran 25.9 s; owner: 30 s minimum). All tested on the server:
   { item: 'water_bucket', h: 24, sub: 'water bucket: 10/10' },
   { item: 'slime_block', h: 28, sub: 'slime block: 9/10' },
-  { item: 'red_bed', h: 32, sub: 'bed: 4/10 (half the damage)' },        // fallOn x0.5: lands on ~5 hearts
+  { item: 'red_bed', h: 32, sub: 'bed: 4/10 (half the damage)' },        // fallOn x0.5: lands on ~2.5 hearts
   { item: 'hay_block', h: 36, sub: 'hay bale: 7/10 (ouch)' },
   { item: 'honey_block', h: 40, sub: 'honey block: 6/10' },
   { item: 'sweet_berries', h: 44, sub: 'berry bush: 8/10 (pokey)' },    // stuck-in-block resets the fall, like cobweb
@@ -41,6 +41,12 @@ module.exports = {
     // read as command-built in every fall
     await ctx.cmd(`/fill ${x - 3} ${floor} ${z - 1} ${x + 3} ${floor} ${z + 5} grass_block`)
     await ctx.cmd(`/fill ${x - 3} ${floor - 2} ${z - 1} ${x + 3} ${floor - 1} ${z + 5} dirt`)
+    // a snowy spot: the cleared box cut the snow layer into a square with a hard cyan edge. Take the snow
+    // off the whole area round the tower (and the snowy grass), so there is no edge to see
+    for (let y0 = floor - 3; y0 <= floor + 9; y0 += 3) {
+      await ctx.cmd(`/fill ${x - 48} ${y0} ${z - 48} ${x + 48} ${y0 + 2} ${z + 48} air replace snow`)
+      await ctx.cmd(`/fill ${x - 48} ${y0} ${z - 48} ${x + 48} ${y0 + 2} ${z + 48} grass_block replace grass_block[snowy=true]`)
+    }
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.hotbar(CLUTCHES.map(c => c.item))
     await ctx.cmd('/gamemode survival')
@@ -131,12 +137,23 @@ module.exports = {
       if (ctx.died) return false
       if (c.item === 'water_bucket') {
         // the classic MLG pickup: scoop the water back into the bucket (it used to vanish by command, on camera)
-        await ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.05, 150)
-        bot.activateItem(); bot.swingArm(); ctx.sound('item.bucket.fill', 1, 1)
-        await bot.waitForTicks(3)
+        // aim at the source's centre (straight down from where it slid to missed it once: empty bucket, water left)
+        for (let t = 0; t < 3 && bot.inventory.slots[36 + i]?.name !== 'water_bucket'; t++) {
+          await ctx.easeLookAt(new ctx.Vec3(spot.x + 0.5, floor + 1.1, spot.z + 0.5), t ? 100 : 150)
+          bot.activateItem(); bot.swingArm()
+          await bot.waitForTicks(3)
+        }
+        if (bot.inventory.slots[36 + i]?.name === 'water_bucket') ctx.sound('item.bucket.fill', 1, 1); else ctx.log('scoop missed', i)
       }
-      // look up at the glass it fell from (the still landings read as pauses)
-      await ctx.easeLookAt(new ctx.Vec3(x + 0.5, floor + c.h, z + 0.5), 550)
+      // step back off it, eyes on what saved you (the look up at the glass ended every beat on blank sky)
+      const keep = new ctx.Vec3(spot.x + 0.5, floor + 1, spot.z + 0.5)
+      bot.setControlState('back', true)
+      for (let k = 0; k < 11; k++) {
+        const e = bot.entity.position.offset(0, 1.62, 0), d = keep.minus(e)
+        await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+        await bot.waitForTicks(1)
+      }
+      bot.setControlState('back', false)
       pending = spot                                   // cleared after the next cut, off camera
     }
     return ctx.died
