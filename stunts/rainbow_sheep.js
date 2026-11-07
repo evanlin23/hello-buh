@@ -21,11 +21,11 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'lastshear',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'collected',
     startAt: 'dye:-0.45',
-    endAfter: 'collected:0.6',
-    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['jeb', 'and jeb_', 1.6, 0],
-      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['shear', 'free rainbow wool', 1.6, 0]]
+    endAfter: 'collected:0.55',      // mid-turn back onto the sheared line (it ended still on grass)
+    subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
+      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0]]
   },
 
   async setup (ctx) {
@@ -192,12 +192,14 @@ module.exports = {
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
-      bot.setControlState('right', e.z > z + 1.4); bot.setControlState('left', e.z < z + 1.1)
+      bot.setControlState('right', e.z > z + 2.2); bot.setControlState('left', e.z < z + 1.9)   // 1.1-1.4 ran the camera through every head
       await bot.waitForTicks(1)
     }
     for (const c of ['left', 'right', 'forward']) bot.setControlState(c, false)
+    // the payoff: turn back onto the sheared, cycling line with the full hotbar (the cut lands mid-turn)
     ctx.mark('collected')
-    await bot.waitForTicks(16)
+    ctx.easeLookAt(new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5), 800)
+    await bot.waitForTicks(18)
     ctx.log('hotbar', JSON.stringify(bot.inventory.items().map(i => [i.name, i.count])))
     return true
   },
