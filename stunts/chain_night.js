@@ -140,9 +140,9 @@ module.exports = {
     // (3 apart: a whole cube's blast reaches ~6 blocks, so each gap is three single TNTs long)
     // (the 5x5x5 and the pile sit 20+ blocks north of the U: the player can't back off south past
     // the lamp path, and a cube's blast flings primed TNT 15-20 blocks)
-    for (const [e, n] of [[-17, 14], [-14, 16], [-11, 18]]) await put(e, 1, n, 'tnt')
+    for (const [e, n] of [[-18, 14], [-16, 15], [-14, 16], [-12, 17], [-10, 18]]) await put(e, 1, n, 'tnt')   // ~2.5 apart: at 3.6 a single TNT didn't reliably light the next
     await fill(-9, 1, 19, -5, 5, 23, 'tnt')
-    for (const [e, n] of [[-2, 23], [1, 25], [4, 26]]) await put(e, 1, n, 'tnt')
+    for (const [e, n] of [[-3, 23], [-1, 24], [1, 25], [3, 25], [5, 26]]) await put(e, 1, n, 'tnt')
     await fill(7, 1, 26, 15, 5, 34, 'tnt')
     // deep dirt under the TNT (a crater that reaches an aquifer fills with water)
     for (let n0 = -12; n0 <= 38; n0 += 3) await fill(-28, -30, n0, 22, -11, n0 + 2, 'dirt')
