@@ -39,7 +39,7 @@ module.exports = {
     // flat, dry ground: a lake beside a pit cut into a hill read as "landing in a pond", not a 1x1 hole
     const flat = (cx, cz) => {
       const c = ctx.surface(cx, cz)
-      if (!c || !['grass_block', 'dirt'].includes(c.name) || c.position.y < 62) return null
+      if (!c || !['grass_block', 'dirt'].includes(c.name) || c.position.y < 62 || c.position.y > 67) return null   // > 67: the 250 glass (floor + 250) went past the 319 build limit, never placed: no break on the last drop
       for (let dx = -6; dx <= 6; dx++) {
         for (let dz = -6; dz <= 6; dz++) {
           const b = ctx.surface(cx + dx, cz + dz)
@@ -101,7 +101,7 @@ module.exports = {
         await bot.waitForTicks(1)
         // long falls: a look out over the land rushing up (each high drop turns a different way), then back down
         // at the hole (the glance UP showed the same empty sky four times)
-        if (!glanced && d.h >= 150 && k === 30) { glanced = true; const turn = [1.3, -1.3, 2.4, -2.4][i % 4]; ctx.easeLook(bot.entity.yaw + turn, -0.35, 450).then(() => ctx.easeLook(bot.entity.yaw, -1.4, 450)) }
+        if (!glanced && d.h >= 150 && k === 30) { glanced = true; const turn = [1.3, -1.3, 2.4, -2.4][i % 4]; ctx.easeLook(bot.entity.yaw + turn, -0.75, 450).then(() => ctx.easeLook(bot.entity.yaw, -1.4, 450)) }   // (-0.35 put the horizon, and the loaded area's edge, in frame)
         if (!splashed && bot.entity.position.y < floor + 1.2) {
           splashed = true
           if (!d.off) { ctx.mark(`splash${n}`); ctx.mark('splash'); ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: x + 0.5, y: floor + 0.95, z: z + 0.5 }, { count: 30 }) }
