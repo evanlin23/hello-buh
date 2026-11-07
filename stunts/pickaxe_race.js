@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:1.0', subs: subs() }
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:1.0', speed: [['tntrun', 'lit', 1.5]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
 
   async setup (ctx) {
@@ -210,7 +210,7 @@ module.exports = {
       const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
       const yaw = Math.atan2(-d.x, -d.z)
       await bot.look(yaw, Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
-      const go = bot.entity.position.z < wz + 14
+      const go = bot.entity.position.z < wz + 22   // (wz + 14 stopped it 0.9 s before the first blast: a PAUSE)
       const fz = -Math.cos(yaw), rz = -Math.sin(yaw)        // forward / right vectors' z (want +z)
       bot.setControlState('back', go && fz < -0.3); bot.setControlState('forward', go && fz > 0.3)
       bot.setControlState('right', go && rz > 0.3); bot.setControlState('left', go && rz < -0.3)
