@@ -289,7 +289,7 @@ module.exports = {
         const ph = k / 22
         await lookStep(step(4 + Math.round(2 * Math.sin(ph * 0.7))).offset((last ? 1 : 0) + 3 * Math.sin(ph), 2, 0), 0.1)
         const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 5
-        bot.setControlState('forward', last ? Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 9 : far)   // the last: a short push in, stopping well out from the foot
+        bot.setControlState('forward', !last && far)   // the last stands where it lands (the ridges read from there; a push in ended against the hill's west foot looking up)
         await bot.waitForTicks(1)
       }
       bot.clearControlStates()
