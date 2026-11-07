@@ -314,19 +314,20 @@ def countdown_windows(spec, timeline, start):
     for c in _load(spec):
         a, b = event_times(timeline, c[0]), event_times(timeline, c[1])
         label = c[2] if len(c) > 2 and c[2] is not None else ""
+        red = float(c[4]) if len(c) > 4 and c[4] is not None else 0.5   # red under this many seconds
         if len(c) > 3 and c[3] is not None:
             n = int(c[3]); a = a[n:n + 1]
         for ta in a:
             tb = next((x for x in b if x > ta + 1e-6), None)
             if tb is not None:
-                out.append((ta - start, tb - start, label))
+                out.append((ta - start, tb - start, label, red))
     return out
 
 
-def countdown_img(left, total, label, since):
+def countdown_img(left, total, label, since, red_under=0.5):
     """A live round countdown: the label, a big digit (ceil of the time left, popping on each
     change), and a bar draining every frame; red under 0.5 s."""
-    red = left < 0.5
+    red = left < red_under
     color = COLORS["red"] if red else COLORS["white"]
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     cy = BAND + int(GAME_H * 0.42)
@@ -348,7 +349,107 @@ def countdown_img(left, total, label, since):
     return img
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None):
+def ring_windows(spec, timeline, start):
+    """[(t0, t1, xf, yf, r)] for ring: [[EVENT[:off], SECONDS, X_FRAC?, Y_FRAC?, RADIUS_PX?]]."""
+    out = []
+    for r in _load(spec):
+        t = event_at(timeline, r[0])
+        if t is None:
+            print(f"ring {r} skipped (event missing)"); continue
+        out.append((t - start, t - start + float(r[1] if len(r) > 1 else 1.5), float(r[2]) if len(r) > 2 and r[2] is not None else 0.5,
+                    float(r[3]) if len(r) > 3 and r[3] is not None else 0.5, int(r[4]) if len(r) > 4 and r[4] else 110))
+    return out
+
+
+def ring_img(xf, yf, r, scale, alpha, pulse):
+    """A thick red highlight ring with a white edge (spot-the-difference style)."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    rr = r * scale * (1 + 0.04 * pulse)
+    cx, cy = xf * W, BAND + yf * GAME_H
+    d = ImageDraw.Draw(img)
+    d.ellipse((cx - rr - 4, cy - rr - 4, cx + rr + 4, cy + rr + 4), outline=(255, 255, 255, 255), width=22)
+    d.ellipse((cx - rr, cy - rr, cx + rr, cy + rr), outline=(235, 30, 30, 255), width=14)
+    if alpha < 1:
+        img.putalpha(img.split()[3].point(lambda v: int(v * alpha)))
+    return img
+
+
+def tag_windows(spec, timeline, start, dur):
+    """[(t0, t1, text, color)] for tags: [[START, END|null, TEXT, COLOR, NTH?]]; a null END runs to the
+    next tag's start (or the end)."""
+    raw = []
+    for tg in _load(spec):
+        ts = event_times(timeline, tg[0])
+        nth = int(tg[4]) if len(tg) > 4 and tg[4] is not None else 0
+        if len(ts) <= nth:
+            print(f"tag {tg[:3]} skipped (event missing)"); continue
+        t0 = ts[nth] - start
+        t1 = None
+        if tg[1]:
+            te = next((x for x in event_times(timeline, tg[1]) if x > ts[nth] + 1e-6), None)
+            t1 = te - start if te is not None else None
+        raw.append([t0, t1, tg[2], COLORS.get(tg[3] if len(tg) > 3 else "white", COLORS["white"])])
+    raw.sort(key=lambda x: x[0])
+    for j, tg in enumerate(raw):
+        if tg[1] is None:
+            tg[1] = raw[j + 1][0] if j + 1 < len(raw) else dur + 1
+    return [tuple(x) for x in raw]
+
+
+def tag_img(text, color, scale):
+    """A persistent role label at the top centre of the game view: bold text in a dark box."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    t = rich_text(text, 84, color)
+    pad = 18
+    box = Image.new("RGBA", (t.width + 2 * pad, t.height + pad), (0, 0, 0, 0))
+    ImageDraw.Draw(box).rounded_rectangle((0, 0, box.width - 1, box.height - 1), 22, fill=(0, 0, 0, 170))
+    box.alpha_composite(t, (pad, pad // 2))
+    if scale != 1.0:
+        box = box.resize((max(1, int(box.width * scale)), max(1, int(box.height * scale))), Image.BICUBIC)
+    img.alpha_composite(box, ((W - box.width) // 2, BAND + 30 + int(box.height * (1 - scale) / 2)))
+    return img
+
+
+def chat_windows(spec, timeline, start):
+    """[(t_type, t_enter, t_close, text, feedback)] for chat: [[EVENT, TEXT, TYPE_S?, HOLD_S?, FEEDBACK?]]."""
+    out = []
+    for c in _load(spec):
+        t = event_at(timeline, c[0])
+        if t is None:
+            print(f"chat {c[:2]} skipped (event missing)"); continue
+        typ = float(c[2]) if len(c) > 2 and c[2] is not None else 1.2
+        hold = float(c[3]) if len(c) > 3 and c[3] is not None else 0.0
+        out.append((t - start - typ, t - start, t - start + hold, c[1], c[4] if len(c) > 4 else None))
+    return out
+
+
+_jar = None
+def chat_img(typed, cursor, feedback, fb_alpha):
+    """Vanilla ChatScreen at GUI scale 3: the translucent input box along the bottom of the game view
+    (fill(2, h-14, w-2, h-2, 0x80000000)), the typed text in the game font at (4, h-12) with a
+    blinking '_', and an optional feedback line above it in the chat history."""
+    global _jar
+    import zipfile
+    from edit import draw_text, CLIENT_JAR, GUI
+    if _jar is None:
+        _jar = zipfile.ZipFile(CLIENT_JAR)
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    bottom = BAND + GAME_H
+    if typed is not None:
+        d.rectangle((2 * GUI, bottom - 14 * GUI, W - 2 * GUI, bottom - 2 * GUI), fill=(0, 0, 0, 128))
+        draw_text(img, _jar, typed + ("_" if cursor else ""), 4 * GUI, bottom - 12 * GUI)
+    if feedback and fb_alpha > 0.01:
+        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        ImageDraw.Draw(layer).rectangle((0, bottom - 49 * GUI, 320 * GUI, bottom - 40 * GUI), fill=(0, 0, 0, 128))
+        draw_text(layer, _jar, feedback, 2 * GUI, bottom - 48 * GUI, color=(220, 220, 220, 255))
+        if fb_alpha < 1:
+            layer.putalpha(layer.split()[3].point(lambda v: int(v * fb_alpha)))
+        img.alpha_composite(layer)
+    return img
+
+
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -374,7 +475,10 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                         COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]),
                         "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4)))
     cdw = countdown_windows(countdowns, timeline, start)
-    if not marks and not cds and not fallen and not cdw:
+    rgw = ring_windows(rings, timeline, start)
+    tgw = tag_windows(tags, timeline, start, dur)
+    chw = chat_windows(chat, timeline, start)
+    if not marks and not cds and not fallen and not cdw and not rgw and not tgw and not chw:
         return None
     cache, runs, imgs = {}, [], {}
     n = int(math.ceil(dur * fps)) + 1
@@ -396,12 +500,33 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             if t0 <= t + 1e-6 < hold - 1e-6:
                 fk = (fn(min(t, t1)), label, t >= t1)
         cwk = None
-        for c0, c1, clabel in cdw:            # live round countdowns (a new image every frame)
+        for c0, c1, clabel, cred in cdw:      # live round countdowns (a new image every frame)
             if c0 <= t + 1e-6 < c1 - 1e-6:
                 left = c1 - t
                 since = t - max(c0, c1 - math.ceil(left - 1e-6))   # time since the digit last changed
-                cwk = (round(left, 3), round(c1 - c0, 3), clabel, round(since, 3))
-        key = (ck, cc, fk, cwk)
+                cwk = (round(left, 3), round(c1 - c0, 3), clabel, round(since, 3), cred)
+        rk = None
+        for r0, r1, xf, yf, rad in rgw:       # highlight ring: pops in, pulses, fades over the last 0.12 s
+            if r0 <= t + 1e-6 < r1 - 1e-6:
+                rk = (xf, yf, rad, round(_pop(t - r0, 0.2, 0.5), 2), round(min(1.0, (r1 - t) / 0.12), 2),
+                      round(math.sin((t - r0) * 2 * math.pi * 1.5), 2))
+        tk = None
+        for g0, g1, gtext, gcolor in tgw:    # persistent role tag (no fade between consecutive tags)
+            if g0 <= t + 1e-6 < g1 - 1e-6:
+                tk = (gtext, gcolor, round(_pop(t - g0, 0.18, 0.5), 2))
+        chk = None
+        for c0, c1, c2, ctext, cfb in chw:   # chat: typed letter by letter up to Enter, held, closed
+            typed = None
+            if c0 <= t + 1e-6 < c1:
+                typed = ctext[:int(len(ctext) * max(0.0, (t - c0) / max(1e-6, c1 - c0)))]
+            elif c1 <= t + 1e-6 < c2:
+                typed = ctext
+            fb_a = 0.0
+            if cfb and t >= c1 - 1e-6 and t < c1 + 2.0:
+                fb_a = 1.0 if t < c1 + 1.5 else max(0.0, 1 - (t - c1 - 1.5) / 0.5)
+            if typed is not None or fb_a > 0:
+                chk = (typed, (int(t / 0.3) % 2 == 0) if typed is not None else False, cfb if fb_a > 0 else None, round(fb_a, 2))
+        key = (ck, cc, fk, cwk, rk, tk, chk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             if ck:
@@ -432,6 +557,12 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 img.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))
             if cwk:
                 img.alpha_composite(countdown_img(*cwk))
+            if rk:
+                img.alpha_composite(ring_img(*rk))
+            if tk:
+                img.alpha_composite(tag_img(*tk))
+            if chk:
+                img.alpha_composite(chat_img(*chk))
             if fk:
                 v, label, done = fk
                 num = rich_text(f"{v}", 92, COLORS["green"] if done else COLORS["white"])
