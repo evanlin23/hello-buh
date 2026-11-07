@@ -88,7 +88,8 @@ module.exports = {
     const { x, z, lava } = this
     const TOWER = this.tower || TOWER_DEFAULT
     await bot.waitForTicks(this.fast ? 2 : 10)   // fast: in a series, no standing still at the start
-    await ctx.easeLook(0, -0.35, 400)                         // the island across the lava
+    // openPitch: at night the island shot (-0.35) is black sky and treeline; open on the lit lava instead
+    await ctx.easeLook(0, this.openPitch ?? -0.35, 400)        // the island across the lava
     // the block under the feet is gone: falling toward the lava
     await ctx.cmd(`/setblock ${x} ${lava + TOWER} ${z - 1} air`)
     ctx.mark('fall'); ctx.sound('block.stone.break', 1)

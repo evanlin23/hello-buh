@@ -17,8 +17,8 @@ const TIERS = [
   { mod: water, opts: { height: 70, fast: true }, label: '70 BLOCKS', end: 'placed', hotbar: 'water' },
   { mod: water, opts: { height: 90, fast: true }, label: 'HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
   { mod: pearl, opts: { tower: 30, fast: true }, label: 'PEARL OVER LAVA', end: 'teleported', hotbar: 'pearl' },
-  { mod: pearl, opts: { tower: 70, fast: true }, label: 'AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
-  { mod: pearl, opts: { tower: 100, fast: true }, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
+  { mod: pearl, opts: { tower: 70, fast: true, openPitch: -0.85 }, label: 'AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
+  { mod: pearl, opts: { tower: 100, fast: true, openPitch: -0.85 }, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
   { mod: wrong, opts: { height: 21, fast: true }, label: 'EASY ONE', end: null, hotbar: 'lava', time: 6000, weather: 'clear' }
 ]
 const HOTBARS = {
@@ -35,6 +35,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'clutches, but each one is harder 😳',
   expectDeath: true,
+  recordRadius: 224,   // 7 sets over 240 blocks: the ends need terrain out to the fog
+  chunkStops: set => [{ x: set.x - 3 * GAP, z: set.z }, { x: set.x + 3 * GAP, z: set.z }],   // the first and last sets (the last rendered over the void)
   edit: {
     caption: 'clutches, but each one is harder 😳', red: 'harder',
     song: 'songs/misery.mp3', dropAt: `placed${TIERS.length}`,
@@ -104,6 +106,7 @@ module.exports = {
         origMark(`cut${i}b`)
       }
       origMark(`look${k}`)
+      if (t.weather === 'thunder') ctx.sound('entity.lightning_bolt.thunder', 1, 0.9)   // the storm has to sound like one
       // the clutch's own marks get the tier number (jump3, placed3, teleported4...). ~1.4 s after the
       // beat's payoff the cut starts: the clutch's slow outro (scoop, look back, hold) and the
       // teleport to the next set are cut out by edit.speed
@@ -111,7 +114,7 @@ module.exports = {
       let countdown = null
       ctx.mark = (ev, extra) => {
         origMark(KEEP.has(ev) ? ev : `${ev}${k}`, extra)
-        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = 28
+        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = t.time === 18000 ? 12 : 28   // at night the look back is 1.4 s of black (review)
       }
       const tick = () => { if (countdown !== null && --countdown === 0) { origMark(`cut${k}a`); this.cutMarked = true } }
       bot.on('physicsTick', tick)
