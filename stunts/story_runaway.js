@@ -205,10 +205,10 @@ module.exports = {
         ctx.sound('block.wooden_door.close', 1, 0.8)
         ctx.mark('face_off')
       }
-      look(k, k > at(2) + 4 ? Math.sin((k - at(2)) / 2) * 0.01 : 0)
+      look(k, k > at(2) + 4 ? Math.sin((k - at(2)) / 2.2) * 0.07 * Math.max(0, 1 - (k - at(2) - 4) / 30) : 0)   // a little rejected head-shake after the slam
     })
     // L03: the farmer, then he jumps the far fence and sprints
-    await cut(-24.6, -2.2, P(-25.5, 1.5, -5.4))
+    await cut(-24.6, -2.2, P(-25.5, 1.3, -5.4))
     ctx.mark('face_on', { near: [X - 25.5, Z - 5.4, 1.5], head: true })
     let fx = -25.5, fz = -5.4
     await line('L03', async (k, at) => {
@@ -225,7 +225,7 @@ module.exports = {
     // hold the boat still on the water every tick until he's in
     const holdBoat = () => say(`/tp @e[tag=boat,limit=1] ${(X + 23.9).toFixed(3)} ${F + 0.52} ${Z - 6.6} -90 0`)
     holdBoat()
-    await cut(19.2, -3.4, P(23.0, 0.9, -5.6))
+    await cut(19.2, -3.4, P(22.95, 0.9, -5.55))
     let bx = 23.9, bz = -6.6, vx = 22.0, vz = -4.5, vy = 1
     await line('L04', async (k, at) => {
       const jump = at(1) - 2, go = jump + 10
@@ -242,7 +242,9 @@ module.exports = {
       }
       base = aim(P((vx + bx) / 2, 0.9, (vz + bz) / 2)); look(k)
     })
-    // L05: the chickens pack up and leave, single file out of the pen
+    // the boat and fisherman leave the set (a NoGravity boat floats up: it showed in the sky behind the golem)
+    say(`/tp @e[tag=boat] ${X} ${F - 30} ${Z}`); say(`/tp @e[tag=fisher] ${X} ${F - 30} ${Z}`)
+    // L05: the sheep pack up and leave, single file out of the pen
     await cut(-1.5, -23.7, P(-1.5, 0.5, -28))
     await line('L05', async (k, at) => {
       if (k >= at(2) - 6) say(`/execute as @e[tag=chick] at @s run tp @s ~${((Math.random() - 0.5) * 0.02).toFixed(3)} ~ ~-0.22 180 0`)
@@ -257,7 +259,7 @@ module.exports = {
       look(k)
     })
     // L07: mom. She's the only one who hugs me (walk right up to her)
-    await cut(19.5, 7.7, P(19.5, 1.5, 10.5))
+    await cut(19.5, 7.7, P(19.5, 1.35, 10.5))
     ctx.mark('face_on', { near: [X + 19.5, Z + 10.5, 1.5] })
     await line('L07', async (k, at) => {
       bot.setControlState('forward', k >= at(3) && bot.entity.position.z < Z + 9.0)
@@ -307,15 +309,15 @@ module.exports = {
     let fled = false
     await line('L13', async (k, at) => {
       if (k === at(4)) { hiss(1); ctx.mark('face_off'); fled = true }
-      if (k === at(1)) { bot.setControlState('jump', true); for (let j = 0; j < 3; j++) ctx.particles('happy', bot.entity.position.offset((j - 1) * 0.8, 1.8, -2.5), { count: 2 }) }
+      if (k === at(1)) bot.setControlState('jump', true)
       if (k === at(1) + 2) bot.setControlState('jump', false)
       if (k >= at(1) + 2 && k < at(1) + 6) flee('party', 0.15)
-      if (fled) flee('party', 0.25)
+      if (fled) flee('party', 0.32)
       sway = 1.5
       look(k, fled ? Math.sin(k * 0.8) * 0.03 : 0, fled ? Math.sin(k * 0.6 + 1) * 0.02 : 0)
     })
     await line('L14', async (k) => {
-      flee('party', 0.25)
+      flee('party', 0.32)
       if (k === 20) hiss(1)
       // the creeper's swell from the inside: white flashes, faster and faster, into the blast (edit.py draws `flash`)
       const T = Math.round((S.line('L14').dur + S.gap - 0.05) * 20)
@@ -326,7 +328,7 @@ module.exports = {
     const boomAt = bot.entity.position.clone()
     // he goes off like a creeper: a creeper exploding exactly where he stands (Fuse 0, inside the camera, so it's
     // never seen). The death screen reads "HelloBuh was blown up by Creeper", the twist in the game's own words.
-    say(`/execute at @s run summon creeper ~ ~ ~ {Fuse:0s,ignited:1b,NoAI:1b,Silent:1b}`)
+    say(`/execute at @s rotated as @s positioned ^ ^ ^-0.9 run summon creeper ~ ~ ~ {Fuse:0s,ignited:1b,NoAI:1b,Silent:1b}`)   // just behind the camera: inside it, its white swell drew as a flat white shape
     ctx.mark('boom')
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
     // a dead player stops getting mob updates after ~1 s (the villagers froze): the crater smokes instead
@@ -335,7 +337,7 @@ module.exports = {
     const eyeY = boomAt.y + 1.62   // the dead camera sits in the crater: smoke at its eye level, in front of it
     const still = async () => {   // a few puffs every 3 ticks: 6 a tick filled the whole view with smoke
       if (sk++ % 3) return
-      const d = 1.2 + Math.random() * 1.8, side = (Math.random() - 0.5) * 3
+      const d = 3 + Math.random() * 3, side = (Math.random() - 0.5) * 5
       ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.4 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 2 })
     }
     for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
