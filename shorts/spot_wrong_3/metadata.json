@@ -1,0 +1,1138 @@
+{
+  "name": "spot_wrong_3",
+  "caption": "find the mistake \ud83e\udd14",
+  "youtube": {
+    "title": "find the mistake \ud83e\udd14 #minecraft #shorts",
+    "description": "find the mistake \ud83e\udd14\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "fearless_funk.mp3",
+    "title": "Fearless Funk",
+    "artist": "DR M\u00d8B, Chris Linton",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "reveal3_2",
+    "drop_in_song_s": 29.5,
+    "drop_in_short_s": 29.05,
+    "song_start_s": 0.45
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 30.55,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 31015999,
+    "sha256": "f42ef059f6b0ddbc4c5fda4f0d3faeb89fdf6588464d3a98bfa83ad48f4ea952"
+  },
+  "edit": {
+    "caption": "find the mistake \ud83e\udd14",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "reveal3_2",
+    "startAt": "round1:0",
+    "endAfter": "reveal3_2:1.5",
+    "subs": [
+      [
+        "round1",
+        "EASY",
+        5.15
+      ],
+      [
+        "zoom1_1",
+        "a melon",
+        3
+      ],
+      [
+        "round2",
+        "MEDIUM",
+        4.15
+      ],
+      [
+        "hint2",
+        "hint: not the tree",
+        4.1
+      ],
+      [
+        "zoom2_1",
+        "upside-down slab",
+        3
+      ],
+      [
+        "round3",
+        "only 1% can find it",
+        4.65
+      ],
+      [
+        "hint3",
+        "hint: look closer",
+        5.6
+      ],
+      [
+        "zoom3_1",
+        "raw gold, not gold",
+        3
+      ],
+      [
+        "pre3_2",
+        "wait... there is another one",
+        0.8999999999999999
+      ],
+      [
+        "zoom3_2",
+        "crying obsidian can't make a portal",
+        3
+      ]
+    ],
+    "subsY": 0.765,
+    "counter": {
+      "at": [
+        "round1",
+        "round2",
+        "round3"
+      ],
+      "total": 3
+    },
+    "ring": [
+      [
+        "zoom1_1:0.2",
+        1.3,
+        0.5,
+        0.5,
+        120
+      ],
+      [
+        "zoom2_1:0.2",
+        1.3,
+        0.5,
+        0.5,
+        120
+      ],
+      [
+        "zoom3_1:0.2",
+        1.3,
+        0.5,
+        0.5,
+        120
+      ],
+      [
+        "zoom3_2:0.2",
+        4.699999999999999,
+        0.5,
+        0.5,
+        150
+      ]
+    ],
+    "countdowns": [
+      [
+        "t1_5",
+        "time_up1",
+        null,
+        null,
+        1,
+        0.13
+      ],
+      [
+        "t2_8",
+        "time_up2",
+        null,
+        null,
+        1,
+        0.13
+      ],
+      [
+        "t3_10",
+        "time_up3",
+        null,
+        null,
+        1,
+        0.13
+      ]
+    ],
+    "sfx": [
+      [
+        "impact",
+        "zoom1_1"
+      ],
+      [
+        "whoosh",
+        "round2"
+      ],
+      [
+        "impact",
+        "zoom2_1"
+      ],
+      [
+        "whoosh",
+        "round3"
+      ],
+      [
+        "impact",
+        "zoom3_1"
+      ],
+      [
+        "whoosh",
+        "pre3_2"
+      ],
+      [
+        "impact",
+        "zoom3_2"
+      ]
+    ],
+    "args": [
+      "--caption",
+      "find the mistake \ud83e\udd14",
+      "--subs",
+      "[[\"round1\",\"EASY\",5.15],[\"zoom1_1\",\"a melon\",3],[\"round2\",\"MEDIUM\",4.15],[\"hint2\",\"hint: not the tree\",4.1],[\"zoom2_1\",\"upside-down slab\",3],[\"round3\",\"only 1% can find it\",4.65],[\"hint3\",\"hint: look closer\",5.6],[\"zoom3_1\",\"raw gold, not gold\",3],[\"pre3_2\",\"wait... there is another one\",0.8999999999999999],[\"zoom3_2\",\"crying obsidian can't make a portal\",3]]",
+      "--subs_y",
+      "0.765",
+      "--counter",
+      "{\"at\":[\"round1\",\"round2\",\"round3\"],\"total\":3}",
+      "--countdowns",
+      "[[\"t1_5\",\"time_up1\",null,null,1,0.13],[\"t2_8\",\"time_up2\",null,null,1,0.13],[\"t3_10\",\"time_up3\",null,null,1,0.13]]",
+      "--ring",
+      "[[\"zoom1_1:0.2\",1.3,0.5,0.5,120],[\"zoom2_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_2:0.2\",4.699999999999999,0.5,0.5,150]]",
+      "--sfx",
+      "[[\"impact\",\"zoom1_1\"],[\"whoosh\",\"round2\"],[\"impact\",\"zoom2_1\"],[\"whoosh\",\"round3\"],[\"impact\",\"zoom3_1\"],[\"whoosh\",\"pre3_2\"],[\"impact\",\"zoom3_2\"]]",
+      "--start_at",
+      "round1:0",
+      "--end_after",
+      "reveal3_2:1.5"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 1792,
+      "y": 72,
+      "z": 1792
+    },
+    "biome": "minecraft:plains",
+    "ticks": 671,
+    "seconds": 33.55,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "cut"
+      },
+      {
+        "t": 0.75,
+        "event": "round1"
+      },
+      {
+        "t": 0.75,
+        "event": "round"
+      },
+      {
+        "t": 0.75,
+        "event": "tick"
+      },
+      {
+        "t": 0.75,
+        "event": "t1_5"
+      },
+      {
+        "t": 1.75,
+        "event": "tick"
+      },
+      {
+        "t": 1.75,
+        "event": "t1_4"
+      },
+      {
+        "t": 2.75,
+        "event": "tick"
+      },
+      {
+        "t": 2.75,
+        "event": "t1_3"
+      },
+      {
+        "t": 3.75,
+        "event": "tick"
+      },
+      {
+        "t": 3.75,
+        "event": "t1_2"
+      },
+      {
+        "t": 4.75,
+        "event": "tick"
+      },
+      {
+        "t": 4.75,
+        "event": "t1_1"
+      },
+      {
+        "t": 5.75,
+        "event": "time_up1"
+      },
+      {
+        "t": 5.75,
+        "event": "reveal1_1"
+      },
+      {
+        "t": 5.9,
+        "event": "zoom1_1"
+      },
+      {
+        "t": 7.4,
+        "event": "zoom1_1_end"
+      },
+      {
+        "t": 7.65,
+        "event": "cut"
+      },
+      {
+        "t": 7.65,
+        "event": "round2"
+      },
+      {
+        "t": 7.65,
+        "event": "round"
+      },
+      {
+        "t": 7.65,
+        "event": "tick"
+      },
+      {
+        "t": 7.65,
+        "event": "t2_8"
+      },
+      {
+        "t": 8.65,
+        "event": "tick"
+      },
+      {
+        "t": 8.65,
+        "event": "t2_7"
+      },
+      {
+        "t": 9.65,
+        "event": "tick"
+      },
+      {
+        "t": 9.65,
+        "event": "t2_6"
+      },
+      {
+        "t": 10.65,
+        "event": "tick"
+      },
+      {
+        "t": 10.65,
+        "event": "t2_5"
+      },
+      {
+        "t": 11.65,
+        "event": "tick"
+      },
+      {
+        "t": 11.65,
+        "event": "t2_4"
+      },
+      {
+        "t": 11.65,
+        "event": "hint2"
+      },
+      {
+        "t": 12.65,
+        "event": "tick"
+      },
+      {
+        "t": 12.65,
+        "event": "t2_3"
+      },
+      {
+        "t": 13.65,
+        "event": "tick"
+      },
+      {
+        "t": 13.65,
+        "event": "t2_2"
+      },
+      {
+        "t": 14.65,
+        "event": "tick"
+      },
+      {
+        "t": 14.65,
+        "event": "t2_1"
+      },
+      {
+        "t": 15.65,
+        "event": "time_up2"
+      },
+      {
+        "t": 15.65,
+        "event": "reveal2_1"
+      },
+      {
+        "t": 15.8,
+        "event": "zoom2_1"
+      },
+      {
+        "t": 17.3,
+        "event": "zoom2_1_end"
+      },
+      {
+        "t": 17.55,
+        "event": "cut"
+      },
+      {
+        "t": 17.55,
+        "event": "round3"
+      },
+      {
+        "t": 17.55,
+        "event": "round"
+      },
+      {
+        "t": 17.55,
+        "event": "tick"
+      },
+      {
+        "t": 17.55,
+        "event": "t3_10"
+      },
+      {
+        "t": 18.55,
+        "event": "tick"
+      },
+      {
+        "t": 18.55,
+        "event": "t3_9"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19.15,
+        "event": "vel"
+      },
+      {
+        "t": 19.2,
+        "event": "vel"
+      },
+      {
+        "t": 19.3,
+        "event": "vel"
+      },
+      {
+        "t": 19.35,
+        "event": "vel"
+      },
+      {
+        "t": 19.4,
+        "event": "vel"
+      },
+      {
+        "t": 19.45,
+        "event": "vel"
+      },
+      {
+        "t": 19.45,
+        "event": "vel"
+      },
+      {
+        "t": 19.5,
+        "event": "vel"
+      },
+      {
+        "t": 19.55,
+        "event": "tick"
+      },
+      {
+        "t": 19.55,
+        "event": "t3_8"
+      },
+      {
+        "t": 19.55,
+        "event": "vel"
+      },
+      {
+        "t": 19.65,
+        "event": "vel"
+      },
+      {
+        "t": 19.7,
+        "event": "vel"
+      },
+      {
+        "t": 19.75,
+        "event": "vel"
+      },
+      {
+        "t": 19.8,
+        "event": "vel"
+      },
+      {
+        "t": 19.85,
+        "event": "vel"
+      },
+      {
+        "t": 19.9,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 20,
+        "event": "vel"
+      },
+      {
+        "t": 20.05,
+        "event": "vel"
+      },
+      {
+        "t": 20.1,
+        "event": "vel"
+      },
+      {
+        "t": 20.15,
+        "event": "vel"
+      },
+      {
+        "t": 20.2,
+        "event": "vel"
+      },
+      {
+        "t": 20.25,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.35,
+        "event": "vel"
+      },
+      {
+        "t": 20.4,
+        "event": "vel"
+      },
+      {
+        "t": 20.45,
+        "event": "vel"
+      },
+      {
+        "t": 20.5,
+        "event": "vel"
+      },
+      {
+        "t": 20.55,
+        "event": "tick"
+      },
+      {
+        "t": 20.55,
+        "event": "t3_7"
+      },
+      {
+        "t": 20.75,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.1,
+        "event": "vel"
+      },
+      {
+        "t": 21.15,
+        "event": "vel"
+      },
+      {
+        "t": 21.2,
+        "event": "vel"
+      },
+      {
+        "t": 21.25,
+        "event": "vel"
+      },
+      {
+        "t": 21.3,
+        "event": "vel"
+      },
+      {
+        "t": 21.35,
+        "event": "vel"
+      },
+      {
+        "t": 21.4,
+        "event": "vel"
+      },
+      {
+        "t": 21.45,
+        "event": "vel"
+      },
+      {
+        "t": 21.5,
+        "event": "vel"
+      },
+      {
+        "t": 21.55,
+        "event": "tick"
+      },
+      {
+        "t": 21.55,
+        "event": "t3_6"
+      },
+      {
+        "t": 21.55,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.65,
+        "event": "vel"
+      },
+      {
+        "t": 21.7,
+        "event": "vel"
+      },
+      {
+        "t": 21.75,
+        "event": "vel"
+      },
+      {
+        "t": 21.8,
+        "event": "vel"
+      },
+      {
+        "t": 21.85,
+        "event": "vel"
+      },
+      {
+        "t": 21.9,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 22,
+        "event": "vel"
+      },
+      {
+        "t": 22.05,
+        "event": "hint3"
+      },
+      {
+        "t": 22.05,
+        "event": "vel"
+      },
+      {
+        "t": 22.1,
+        "event": "vel"
+      },
+      {
+        "t": 22.15,
+        "event": "vel"
+      },
+      {
+        "t": 22.2,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.4,
+        "event": "vel"
+      },
+      {
+        "t": 22.45,
+        "event": "vel"
+      },
+      {
+        "t": 22.5,
+        "event": "vel"
+      },
+      {
+        "t": 22.55,
+        "event": "tick"
+      },
+      {
+        "t": 22.55,
+        "event": "t3_5"
+      },
+      {
+        "t": 22.55,
+        "event": "vel"
+      },
+      {
+        "t": 22.6,
+        "event": "vel"
+      },
+      {
+        "t": 22.65,
+        "event": "vel"
+      },
+      {
+        "t": 22.7,
+        "event": "vel"
+      },
+      {
+        "t": 22.75,
+        "event": "vel"
+      },
+      {
+        "t": 22.8,
+        "event": "vel"
+      },
+      {
+        "t": 22.85,
+        "event": "vel"
+      },
+      {
+        "t": 22.9,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.1,
+        "event": "vel"
+      },
+      {
+        "t": 23.15,
+        "event": "vel"
+      },
+      {
+        "t": 23.2,
+        "event": "vel"
+      },
+      {
+        "t": 23.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.3,
+        "event": "vel"
+      },
+      {
+        "t": 23.4,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
+        "event": "vel"
+      },
+      {
+        "t": 23.55,
+        "event": "tick"
+      },
+      {
+        "t": 23.55,
+        "event": "t3_4"
+      },
+      {
+        "t": 23.6,
+        "event": "vel"
+      },
+      {
+        "t": 23.7,
+        "event": "vel"
+      },
+      {
+        "t": 23.8,
+        "event": "vel"
+      },
+      {
+        "t": 23.9,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "vel"
+      },
+      {
+        "t": 24.1,
+        "event": "vel"
+      },
+      {
+        "t": 24.2,
+        "event": "vel"
+      },
+      {
+        "t": 24.3,
+        "event": "vel"
+      },
+      {
+        "t": 24.4,
+        "event": "vel"
+      },
+      {
+        "t": 24.5,
+        "event": "vel"
+      },
+      {
+        "t": 24.55,
+        "event": "tick"
+      },
+      {
+        "t": 24.55,
+        "event": "t3_3"
+      },
+      {
+        "t": 24.6,
+        "event": "vel"
+      },
+      {
+        "t": 24.7,
+        "event": "vel"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.9,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "vel"
+      },
+      {
+        "t": 25.2,
+        "event": "vel"
+      },
+      {
+        "t": 25.35,
+        "event": "vel"
+      },
+      {
+        "t": 25.5,
+        "event": "vel"
+      },
+      {
+        "t": 25.55,
+        "event": "tick"
+      },
+      {
+        "t": 25.55,
+        "event": "t3_2"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 25.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.15,
+        "event": "vel"
+      },
+      {
+        "t": 26.35,
+        "event": "vel"
+      },
+      {
+        "t": 26.55,
+        "event": "tick"
+      },
+      {
+        "t": 26.55,
+        "event": "t3_1"
+      },
+      {
+        "t": 26.55,
+        "event": "vel"
+      },
+      {
+        "t": 26.8,
+        "event": "vel"
+      },
+      {
+        "t": 27.05,
+        "event": "vel"
+      },
+      {
+        "t": 27.35,
+        "event": "vel"
+      },
+      {
+        "t": 27.55,
+        "event": "time_up3"
+      },
+      {
+        "t": 27.55,
+        "event": "reveal3_1"
+      },
+      {
+        "t": 27.65,
+        "event": "vel"
+      },
+      {
+        "t": 27.7,
+        "event": "zoom3_1"
+      },
+      {
+        "t": 28,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
+        "event": "vel"
+      },
+      {
+        "t": 28.9,
+        "event": "vel"
+      },
+      {
+        "t": 29.2,
+        "event": "zoom3_1_end"
+      },
+      {
+        "t": 29.2,
+        "event": "pre3_2"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "reveal3_2"
+      },
+      {
+        "t": 29.85,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "zoom3_2"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
+        "event": "vel"
+      },
+      {
+        "t": 31.95,
+        "event": "vel"
+      },
+      {
+        "t": 32,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.1,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.2,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.3,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "zoom3_2_end"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 33,
+        "event": "vel"
+      },
+      {
+        "t": 33.1,
+        "event": "vel"
+      },
+      {
+        "t": 33.1,
+        "event": "vel"
+      },
+      {
+        "t": 33.15,
+        "event": "vel"
+      },
+      {
+        "t": 33.2,
+        "event": "vel"
+      },
+      {
+        "t": 33.25,
+        "event": "vel"
+      },
+      {
+        "t": 33.3,
+        "event": "vel"
+      },
+      {
+        "t": 33.35,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.45,
+        "event": "vel"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.55,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "054ab6ecb64bf994cb0bd32dc9674632f3096dcf",
+    "rendered_at": "2026-11-07T13:50:41.638Z",
+    "head_at_publish": "054ab6ecb64bf994cb0bd32dc9674632f3096dcf",
+    "stunt": "stunts/spot_wrong_3.js",
+    "source_snapshot": [
+      "source/spot_wrong_3.js",
+      "source/spot_wrong.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 054ab6ecb64b",
+    "gunzip -c shorts/spot_wrong_3/recording.json.gz > work/spot_wrong_3.rec.json",
+    "node render.js work/spot_wrong_3.rec.json work/spot_wrong_3.frames 60 1080 1011",
+    "python3 audio.py work/spot_wrong_3.rec.json work/spot_wrong_3.wav",
+    "python3 edit.py --frames work/spot_wrong_3.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/spot_wrong_3.rec.json --audio work/spot_wrong_3.wav --caption \"find the mistake \ud83e\udd14\" --subs \"[[\\\"round1\\\",\\\"EASY\\\",5.15],[\\\"zoom1_1\\\",\\\"a melon\\\",3],[\\\"round2\\\",\\\"MEDIUM\\\",4.15],[\\\"hint2\\\",\\\"hint: not the tree\\\",4.1],[\\\"zoom2_1\\\",\\\"upside-down slab\\\",3],[\\\"round3\\\",\\\"only 1% can find it\\\",4.65],[\\\"hint3\\\",\\\"hint: look closer\\\",5.6],[\\\"zoom3_1\\\",\\\"raw gold, not gold\\\",3],[\\\"pre3_2\\\",\\\"wait... there is another one\\\",0.8999999999999999],[\\\"zoom3_2\\\",\\\"crying obsidian can't make a portal\\\",3]]\" --subs_y 0.765 --counter {\"at\":[\"round1\",\"round2\",\"round3\"],\"total\":3} --countdowns [[\"t1_5\",\"time_up1\",null,null,1,0.13],[\"t2_8\",\"time_up2\",null,null,1,0.13],[\"t3_10\",\"time_up3\",null,null,1,0.13]] --ring [[\"zoom1_1:0.2\",1.3,0.5,0.5,120],[\"zoom2_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_2:0.2\",4.699999999999999,0.5,0.5,150]] --sfx [[\"impact\",\"zoom1_1\"],[\"whoosh\",\"round2\"],[\"impact\",\"zoom2_1\"],[\"whoosh\",\"round3\"],[\"impact\",\"zoom3_1\"],[\"whoosh\",\"pre3_2\"],[\"impact\",\"zoom3_2\"]] --start_at round1:0 --end_after reveal3_2:1.5 --out out/spot_wrong_3.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 12: find the mistake #3 (pumpkin patch, bridge, nether portal room; crying obsidian payoff with tears). Retention, Minecraft and frame reviews: ready (6 review rounds)",
+  "published_at": "2026-11-07T14:03:58.747Z"
+}
