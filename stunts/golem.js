@@ -7,12 +7,13 @@
 // player-attributed /damage so its retaliation fires at once (left alone, a golem wandered for ~4 s).
 const BEATS = [
   // launches: how many times the golems juggle you before the cut (escalates; the last beat kills)
-  { villagers: 1, golems: 1, dx: -80, launches: 1, sub: '1 villager' },
-  { villagers: 3, golems: 3, dx: -48, launches: 2, sub: '3 villagers' },
-  { villagers: 5, golems: 5, dx: -16, launches: 3, sub: '5 villagers' },
-  { villagers: 7, golems: 7, dx: 16, launches: 4, sub: '7 villagers' },      // (3, like the 5: padding)
-  { villagers: 10, golems: 10, dx: 48, launches: 5, sub: '10 villagers' },
-  { villagers: 20, golems: 20, dx: 80, launches: 1, sub: '20 villagers...' }
+  { villagers: 1, golems: 1, dx: -96, launches: 1, sub: '1 villager' },
+  { villagers: 3, golems: 3, dx: -64, launches: 2, sub: '3 villagers' },
+  { villagers: 5, golems: 5, dx: -32, launches: 3, sub: '5 villagers' },
+  { villagers: 7, golems: 7, dx: 0, launches: 4, sub: '7 villagers' },      // (3, like the 5: padding)
+  { villagers: 10, golems: 10, dx: 32, launches: 5, sub: '10 villagers' },
+  { villagers: 15, golems: 15, dx: 64, launches: 6, sub: '15 villagers' },   // (closer golems: six beats ran 27.3 s; owner: 30 s minimum)
+  { villagers: 20, golems: 20, dx: 96, launches: 1, sub: '20 villagers...' }
 ]
 // a juggle counter: x1, x2... on each launch (the escalation in launches didn't read)
 function juggleSubs () {
@@ -42,9 +43,9 @@ module.exports = {
     await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
     for (let z0 = z - 80; z0 <= z + 26; z0 += 6) {   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
       const z1 = Math.min(z0 + 5, z + 26)
-      for (let y0 = floor + 1; y0 <= floor + 48; y0 += 8) await ctx.cmd(`/fill ${x - 100} ${y0} ${z0} ${x + 100} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
-      await ctx.cmd(`/fill ${x - 100} ${floor} ${z0} ${x + 100} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 100} ${floor - 3} ${z0} ${x + 100} ${floor - 1} ${z1} dirt`)
+      for (let y0 = floor + 1; y0 <= floor + 48; y0 += 8) await ctx.cmd(`/fill ${x - 124} ${y0} ${z0} ${x + 124} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
+      await ctx.cmd(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
