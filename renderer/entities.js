@@ -669,7 +669,9 @@ export class EntityLayer {
         }
       } else r.amt = 0
       r.last = { x: s.x, z: s.z, t: tick }
-      const swing = Math.cos(r.walk * 0.6662) * 1.4 * (r.amt || 0)
+      // VillagerModel.setupAnim swings the legs at half the humanoid amount (max ~40 degrees); the full
+      // swing put a /tp-circled nitwit in the splits (worker 5, story_runaway f834)
+      const swing = Math.cos(r.walk * 0.6662) * 1.4 * (r.amt || 0) * (/^(villager|wandering_trader)$/.test(s.name) ? 0.5 : 1)
       const B = r.bones
       if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); if (B.carriedMat) B.carriedMat.color.setRGB(...LL); continue }
       if (s.name === 'witch' && B.hat4) { poseWitch(r, s, r.walk, r.amt || 0); continue }
