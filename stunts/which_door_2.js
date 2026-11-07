@@ -1,11 +1,11 @@
 // "which door would you survive? 🚪" (worker 14, the which_door series, Short 2): five numbered
 // doors, diamonds behind every one:
 //   1 no floor, a 25-block drop (dead), 2 endermen (survived: eyes on the floor the whole way),
-//   3 big magma cubes (dead), 4 a dripstone cave whose stalactites drop (survived: backed out),
+//   3 an angry iron golem (dead), 4 a dripstone cave whose stalactites drop (survived: backed out),
 //   5 "the safe one": a cosy room with a cat, its trapdoor floor over a pit of lava (the worst).
 // lib/door_run.js plays it; lib/doors.js builds it.
 const R = require('../lib/door_run')
-const ROOMS = ['drop', 'endermen', 'magma', 'dripstone', 'trapdoor']
+const ROOMS = process.env.ROOMS ? process.env.ROOMS.split(',') : ['drop', 'endermen', 'golem', 'dripstone', 'trapdoor']
 
 module.exports = R.makeStunt({
   name: 'which_door_2',
