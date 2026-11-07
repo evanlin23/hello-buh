@@ -18,7 +18,7 @@ module.exports = {
   name: 'story_respawn_tax',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every time I respawn, someone disappears 😳',
-  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true },
+  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true, onFire: 'burn:death' },
   expectDeath: true,
 
   async setup (ctx) {
@@ -102,7 +102,7 @@ module.exports = {
     const { P, say, look, line, cut } = K
     let meter = 5
     const setMeter = (v) => { meter = v; ctx.mark('meter', { value: v }) }
-    const kill = (type) => say(`/damage @s 100 minecraft:${type}`)
+    const kill = (type) => { if (type === 'lava') ctx.mark('burn'); say(`/damage @s 100 minecraft:${type}`) }   // lava: the fire overlay burns from here to the respawn
     const gone = (tag) => say(`/tp @e[tag=${tag}] ${X} ${F - 30} ${Z}`)   // off the set, out of sight
     let deadAt = -99
     bot.on('death', () => { deadAt = ctx.tick })
