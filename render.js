@@ -32,6 +32,38 @@ const HIDE_HAND = !!STUNT_MOD.hideHand
 const F1 = []
 { let on = null; for (const e of rec.timeline || []) { if (e.event === 'f1_on' && on === null) on = e.t / 50; if (e.event === 'f1_off' && on !== null) { F1.push([on, e.t / 50]); on = null } } if (on !== null) F1.push([on, Infinity]) }
 const P = rec.poses
+// Dropped ticks in the recording: after a far teleport the bot's event loop can block on chunk
+// decoding, physicsTicks bunch up and a pose repeats the one before it while the look is mid-turn
+// (every_clutch: 3-frame freezes inside a fast easeLook). A run of 1-3 poses identical to the one before,
+// with motion into the run and out of it, is filled in linearly from its neighbours. Holds (no motion on
+// one side), cuts, respawns and teleport-sized steps are left alone.
+{
+  const cutT = new Set((rec.timeline || []).filter(e => e.event === 'cut' || e.event === 'respawn').map(e => Math.round(e.t / 50)))
+  const wrap = (a) => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
+  const same = (a, b) => a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5]
+  const step = (a, b) => Math.max(Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]), Math.abs(wrap(b[4] - a[4])), Math.abs(b[5] - a[5]))
+  const near = (a, b) => Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) < 3
+  let fixed = []
+  for (let a = 2; a < P.length - 1; a++) {
+    if (!same(P[a], P[a - 1])) continue
+    let b = a; while (b + 1 < P.length && b - a < 3 && same(P[b + 1], P[a])) b++
+    if (b - a >= 3 || b + 1 >= P.length) { a = b; continue }
+    const p0 = P[a - 1], p1 = P[b + 1], pre = P[a - 2]
+    let cut = false
+    for (let k = P[a - 2][0]; k <= p1[0]; k++) if (cutT.has(k)) cut = true
+    if (!cut && step(pre, p0) > 1e-3 && step(P[b], p1) > 1e-3 && near(p0, p1) && near(pre, p0)) {
+      const n = b - a + 2
+      for (let i = a; i <= b; i++) {
+        const u = (i - a + 1) / n, q = P[i]
+        q[1] = p0[1] + (p1[1] - p0[1]) * u; q[2] = p0[2] + (p1[2] - p0[2]) * u; q[3] = p0[3] + (p1[3] - p0[3]) * u
+        q[4] = p0[4] + wrap(p1[4] - p0[4]) * u; q[5] = p0[5] + (p1[5] - p0[5]) * u
+        fixed.push(q[0])
+      }
+    }
+    a = b
+  }
+  if (fixed.length) console.log(`filled ${fixed.length} dropped pose tick(s): ${fixed.slice(0, 20).join(' ')}${fixed.length > 20 ? ' ...' : ''}`)
+}
 // client-side placement prediction: a stunt can mark('place', {x, y, z}) on the tick it uses an item
 // on a block. The block change the server sends back 1-3 ticks later is moved to that tick, as
 // BlockItem.place predicts on the client; an eye of ender is not predicted (EnderEyeItem.useOn returns
