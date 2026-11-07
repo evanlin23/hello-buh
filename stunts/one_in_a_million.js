@@ -7,13 +7,14 @@
 // off: how far out from the pool the jump starts (it has to be steered in mid-air); bias: the
 // mid-air drift toward the edge that gets corrected late (owner: "we just break but theres no
 // movement so theres no tension about making it"). Steering simulated in lib/air_steer.js with
-// prismarine-physics, incl. a tick of input lag: every tier lands within 0.11 of the centre.
+// a vanilla air sim, incl. a tick of input lag: the drift peaks 2.3-3.5 degrees off the crosshair
+// 50-70 blocks up (air control can't undo more at terminal velocity) and lands within 0.1.
 const TIERS = [
-  { h: 40, pool: 5, off: 3, bias: 1, label: '40 blocks, 5x5' },
-  { h: 100, pool: 3, off: 5, bias: -1.5, label: '100 blocks, 3x3' },
-  { h: 160, pool: 1, off: 7, bias: 2, label: '160 blocks, 1x1' },
-  { h: 'max', pool: 1, off: 9, bias: -2.5, label: 'BUILD LIMIT, 1x1' },
-  { h: 'max', pool: 1, off: 11, bias: 3, lava: true, night: true, label: 'BUILD LIMIT... INTO LAVA' }
+  { h: 40, pool: 5, off: 3, bias: 2, label: '40 blocks, 5x5' },
+  { h: 100, pool: 3, off: 5, bias: -3, label: '100 blocks, 3x3' },
+  { h: 160, pool: 1, off: 7, bias: 4, label: '160 blocks, 1x1' },
+  { h: 'max', pool: 1, off: 9, bias: -4.5, label: 'BUILD LIMIT, 1x1' },
+  { h: 'max', pool: 1, off: 11, bias: 4.5, lava: true, night: true, label: 'BUILD LIMIT... INTO LAVA' }
 ]
 const { steer } = require('../lib/air_steer')
 const YAW = Math.PI / 2   // facing -x (west), toward the pool; MC yaw 90
@@ -31,7 +32,7 @@ module.exports = {
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
     song: 'songs/misery.mp3', dropAt: 'splash5',
-    startAt: 'drop1:-1.0', endAfter: 'splash5:0.9',
+    startAt: 'drop1:-0.85', endAfter: 'splash5:0.9',
     subs,
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
       ['look5:0.15', 'look5:0.95', 'cut'],      // the finale's first glance at -0.7 was black night sky (beat audit PAUSE 0.8 s)
