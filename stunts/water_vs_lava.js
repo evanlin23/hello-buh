@@ -119,7 +119,7 @@ module.exports = {
     // left to run longer than the last: the black spreads wider until the lake is gone (~30 s total)
     ctx.mark('finale')
     await ctx.easeLook(Math.PI, -0.75, 450)               // facing back south (mineflayer yaw 0 = north), down at the path
-    const stops = [5, 15]   // two stops, both sides, long runs: 6 stops of short pours were 4-5 s of walking apart, mostly off screen
+    const stops = [4, 16]   // every corner within 6 flow steps (from 5/15 two corner cells survived)   // two stops, both sides, long runs: 6 stops of short pours were 4-5 s of walking apart, mostly off screen
     const flow = 40
     const lavaLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (at(a, b, G - 1)?.name === 'lava') n++; return n }
     // walk on the world axis to (lx, lz) whatever the view (controls picked against it), eyes on `aim`
@@ -168,7 +168,7 @@ module.exports = {
       await ctx.easeLook(Math.PI, -0.6, 250)
     }
     // the payoff lands on the last lava going (on screen), then a wide look over the whole black lake
-    for (let k = 0; k < 60 && lavaLeft(); k++) await bot.waitForTicks(1)
+    for (let k = 0; k < 10 && lavaLeft(); k++) await bot.waitForTicks(1)   // (60 waited out a 2.8 s STILL when two cells survived)
     ctx.log('lava left', lavaLeft())
     // stand on it: look out over the black field
     ctx.mark('end_look')
