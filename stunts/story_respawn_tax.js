@@ -111,6 +111,7 @@ module.exports = {
       while (ctx.tick < deadAt + 21) await bot.waitForTicks(1)
       const spawned = new Promise(r => { bot.once('spawn', r); setTimeout(r, 3000) })
       ctx.respawn(); await spawned; ctx.revive()
+      K.base = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }   // the spawn angle: facing the gold block
     }
     const go = (on) => bot.setControlState('forward', on)
     // respawn without stalling the line (an awaited respawn held each scene ~1 s past its voice)
@@ -136,11 +137,11 @@ module.exports = {
       if (!trip && (bot.entity.position.y < F + 0.9 || overCauldron())) { trip = 0; go(false); fallIn(); ctx.mark('burn'); ctx.sound('entity.generic.burn', 1, 1) }
       if (trip === null) return false
       trip++
+      if (trip === 7) say('/effect clear @s minecraft:fire_resistance')
       if (trip === 7) say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 1).toFixed(3)} ${(Z + 3.4).toFixed(3)} facing ${t.x.toFixed(2)} ${t.y.toFixed(2)} ${t.z.toFixed(2)}`)
-      if (trip === 10) { say('/damage @s 100 minecraft:on_fire'); return 'dead' }
+      if (trip === 12) { if (!ctx.died) say('/damage @s 100 minecraft:on_fire'); return 'dead' }
       return true
     }
-    const hurt = (hp) => say(`/damage @s ${20 - hp} minecraft:generic`)   // start a deadly scene already hurt
     setMeter(5)
 
     // L01: the rule, over the five villagers left and the golem on the gold block
@@ -151,6 +152,9 @@ module.exports = {
     await cut(-26.5, 0.5, P(-26.5, 0, 9), 27)   // looking down along the cliff face (on the right)
     await line('L02', async (k) => { K.base = { yaw: K.base.yaw, pitch: Math.max(-1.15, K.base.pitch - 0.02) }; look(k) })
     for (let i = 0; i < 40 && !ctx.died; i++) await bot.waitForTicks(1)
+    // from now on he respawns on half a heart: the max health is set while he's dead, so no scene opens on an
+    // unexplained hit, and one real touch of lava or a cactus kills him the vanilla way
+    say('/attribute @s minecraft:max_health base set 1')
     await bot.waitForTicks(6)
     // L03: respawn; the fisherman is gone, his boat just floating there
     gone('v_fisher')
@@ -165,25 +169,25 @@ module.exports = {
     go(false)
     // L04: then lava. Respawn. The butcher's door, wide open
     await cut(-19.5, 10.5, P(-19.5, 0, 12.5), 2.2)
-    hurt(5)
     gone('v_butcher')
     let dead = false, door = false, burnAt = 0
     await line('L04', async (k, at) => {
       if (!burnAt && bot.entity.position.y < F + 1.0) { burnAt = k; ctx.mark('burn') }
-      if (!dead && burnAt && k >= burnAt + 7) { kill('lava'); dead = true }
+      if (!dead && burnAt && (ctx.died || k >= burnAt + 10)) { if (!ctx.died) say('/damage @s 100 minecraft:lava'); dead = true }
       if (dead && k >= at(1)) respawnSoon(() => setMeter(3))
       if (dead && !door && k >= at(2) - 1 && alive()) { door = true; await cut(-1.5, 12.5, P(4.5, 1.8, 12.5)) }
       if (!door) K.base = { yaw: K.base.yaw, pitch: -1.3 }
       if (alive()) look(k)
     })
     // L05: a cactus took the fletcher
-    await cut(-12.5, -17.4, P(-12.5, 1.5, -21))
-    hurt(2)
+    await cut(-11.5, -17.4, P(-11.5, 1.5, -21))
     gone('v_fletcher')
     dead = false
+    let pressed = 0
     await line('L05', async (k) => {
       go(!dead)
-      if (!dead && bot.entity.position.z < Z - 19.6) { kill('cactus'); dead = true; go(false) }
+      if (!dead && bot.entity.position.z < Z - 19.55) pressed++
+      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false) }
       if (alive()) look(k)
     })
     go(false)
@@ -214,7 +218,7 @@ module.exports = {
     // L09: then I tripped (walking up the street, eyes on the lava block); L10: into it
     say(`/tp @e[tag=golem] ${X + 2.4} ${F + 1} ${Z - 4.2} 0 0`)
     await cut(0.5, 11.8, P(0.5, 0.5, 4.5))
-    hurt(5)
+    say('/effect give @s minecraft:fire_resistance 30 0 true')   // the cauldron burns him only once he's out (no particles)
     await line('L09', async (k, at) => {
       go(k > 2)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
@@ -268,9 +272,9 @@ module.exports = {
     await line('L15', async (k) => { go(k < 14); look(k) })
     go(false)
     // L16: she's already standing on my spawn
+    say('/effect give @s minecraft:fire_resistance 30 0 true')
     say(`/tp @e[tag=v_lib] ${X + 0.5} ${F + 1} ${Z + 0.5} 0 0`)
     await cut(0.5, 7.4, P(0.5, 1.7, 0.5))
-    hurt(5)
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
     await line('L16', async (k) => { go(k > 6 && k < 12); look(k) })
     go(false)
