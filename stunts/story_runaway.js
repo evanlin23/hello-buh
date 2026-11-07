@@ -41,7 +41,7 @@ module.exports = {
     // a big flat clearing: 81 x 81, in slabs under the 32768-block /fill cap
     await clearSet(ctx, A, 64, 24)              // a wide flat clearing (lib/story.js)
     await c('/kill @e[type=!player]')
-    await plainsBiome(ctx, A, 64, -4, 24)       // one grass colour over the set (lib/story.js)
+    await plainsBiome(ctx, A, 80, -4, 24)       // one grass colour over the set (lib/story.js)
 
     // --- the street (L01, L02, L09): a path north-south, four little houses with doors on it
     await c(`/fill ${A(-1, 0, 6)} ${A(1, 0, 40)} dirt_path`)

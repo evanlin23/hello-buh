@@ -36,7 +36,7 @@ module.exports = {
     await c('/gamerule log_admin_commands false')   // per-tick `execute as` tps flooded the bot with op broadcasts
     await clearSet(ctx, A, 64, 28)              // a wide flat clearing (lib/story.js)
     await c('/kill @e[type=!player]')
-    await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set (lib/story.js)
+    await plainsBiome(ctx, A, 80, -4, 30)       // one grass colour over the set (lib/story.js)
 
     // the spawn: a cobblestone plaza with a gold block where I respawn, lantern posts at the corners
     await c(`/fill ${A(-3, 0, -3)} ${A(3, 0, 3)} cobblestone`)
