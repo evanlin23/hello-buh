@@ -42,7 +42,7 @@ module.exports = {
     await c(`/fill ${A(-3, 0, -3)} ${A(3, 0, 3)} cobblestone`)
     await c(`/setblock ${A(0, 0, 0)} gold_block`)
     for (const [dx, dz] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) { await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} oak_fence`); await c(`/setblock ${A(dx, 3, dz)} lantern`) }
-    await c(`/spawnpoint @s ${A(2, 1, 2)} 135`)   // beside the gold block, facing it: a respawn shows who's standing on it
+    await c(`/spawnpoint @s ${A(2, 1, 2)} 135 0`)   // beside the gold block, facing it: a respawn shows who's standing on it
     // the line: a fenced queue lane running north from the plaza, lanterns along it
     await c(`/fill ${A(-1, 1, -14)} ${A(-1, 1, -4)} oak_fence[north=true,south=true]`)
     await c(`/fill ${A(1, 1, -14)} ${A(1, 1, -4)} oak_fence[north=true,south=true]`)
@@ -112,6 +112,9 @@ module.exports = {
       ctx.respawn(); await spawned; ctx.revive()
     }
     const go = (on) => bot.setControlState('forward', on)
+    // the trip: over the sunken cauldron, drop into it (walking can step across its rim) and die
+    const overCauldron = () => { const p = bot.entity.position; return p.z < Z + 5.0 && p.z > Z + 4.0 && p.x > X && p.x < X + 1 }
+    const fallIn = () => say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 0.3).toFixed(3)} ${(Z + 4.5).toFixed(3)}`)
     const hurt = (hp) => say(`/damage @s ${20 - hp} minecraft:generic`)   // start a deadly scene already hurt
     setMeter(5)
 
@@ -192,7 +195,7 @@ module.exports = {
     dead = false
     await line('L10', async (k) => {
       go(!dead)
-      if (!dead && bot.entity.position.y < F + 0.9) { kill('lava'); dead = true; go(false) }
+      if (!dead && (bot.entity.position.y < F + 0.9 || overCauldron())) { fallIn(); kill('lava'); dead = true; go(false) }
       if (!dead) { K.base = K.aim(P(0.5, 0.2, 4.5)); look(k) }
     })
     go(false)
@@ -248,7 +251,7 @@ module.exports = {
     await line('L17', async (k, at) => {
       go(!dead)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
-      if (!dead && bot.entity.position.y < F + 0.9) { kill('lava'); dead = true; go(false) }
+      if (!dead && (bot.entity.position.y < F + 0.9 || overCauldron())) { fallIn(); kill('lava'); dead = true; go(false) }
       if (!dead) { K.base = K.aim(k > at(1) && k < at(2) ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5)); look(k) }
     }, 0.2)
     go(false)
