@@ -38,7 +38,7 @@ module.exports = {
     // rim's north-facing inner face, so the bucket hit the rim's top and the water source sat on the rim
     await ctx.cmd(`/setblock ${x0 + 7} ${G - 1} ${z0 + L - 1} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 24')
-    await ctx.hotbar(['water_bucket', 'water_bucket', ['bread', 8]])
+    await ctx.hotbar(['water_bucket', ['bread', 8]])   // ONE bucket, as the caption says (two in the hotbar: 'he had two')
     await ctx.tpCheck(x0 + 7.5, G + 1, z0 + L + 0.6, 180, 35)        // on the south rim, in line with the middle column
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -120,7 +120,7 @@ module.exports = {
     ctx.mark('finale')
     await ctx.easeLook(Math.PI, -0.75, 450)               // facing back south (mineflayer yaw 0 = north), down at the path
     const stops = [4, 16]   // every corner within 6 flow steps (from 5/15 two corner cells survived)   // two stops, both sides, long runs: 6 stops of short pours were 4-5 s of walking apart, mostly off screen
-    const flow = 40
+    const flow = 34   // ~6.8 blocks of spread, the corners are 6 steps (40 left the strip under a water sheet for 2 s)
     const lavaLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (at(a, b, G - 1)?.name === 'lava') n++; return n }
     // walk on the world axis to (lx, lz) whatever the view (controls picked against it), eyes on `aim`
     const stepTo = async (lx, lz, aim) => {
@@ -161,9 +161,13 @@ module.exports = {
         const sx = Math.abs(ox - 7) > 2 ? ox - 2 * dir : 7
         if (sx !== 7) await stepTo(sx, sz, cell(ox, sz, -0.3))
         await pourScoop(ox, sz, cell(ox, sz, -0.04), flow, 280)
+        // hold on the strip as it drains: the new black is the beat (it turned away with the strip still under water)
+        for (let k = 0; k < 12; k++) { await ctx.easeLookAt(cell(Math.max(0, Math.min(14, ox + dir * 3)), sz, -0.6), 50) }
         if (!lavaLeft()) break
-        // back to the path eyes on the other side's lava (looking at the path turned away from the action)
-        if (sx !== 7) await stepTo(7, sz, cell(dir > 0 ? 2 : 12, sz, -0.3))
+        // back to the path, eyes on lava that's still there (it swung to the finished side and off the lake)
+        let tgt = null
+        for (let b2 = 0; b2 < L && !tgt; b2++) for (let a2 = 0; a2 < 15 && !tgt; a2++) if (at(a2, b2, G - 1)?.name === 'lava') tgt = cell(a2, b2, -0.3)
+        if (sx !== 7) await stepTo(7, sz, tgt || cell(7, Math.min(L - 1, sz + 4), -0.3))
       }
       await ctx.easeLook(Math.PI, -0.6, 250)
     }
@@ -172,7 +176,7 @@ module.exports = {
     ctx.log('lava left', lavaLeft())
     // stand on it: look out over the black field
     ctx.mark('end_look')
-    await ctx.easeLook(0.35, -0.25, 1000)                 // turn round, wide: the whole lake behind is black
+    await ctx.easeLook(0.35, -0.55, 1000)                 // turn round, looking down over the whole black lake
     bot.removeListener('blockUpdate', onBlock)
 
     let lava = 0, obs = 0
