@@ -322,10 +322,10 @@ module.exports = {
     await cut(0.5, 37.5, P(0.5, 1.5, 10))
     let from13 = null
     await line('L13', async (k, at) => {
-      go(k > 4 && k < at(4))
+      go((k > 4 && k < at(4)) || k >= at(6))   // after the turn, he walks toward the open doorway (it held still 1 s after the turn)
       // the one shut door swings open at the right edge, and the camera turns to it (the turn had no reason: retention check 7)
       if (k === at(3)) { say(`/setblock ${X + 4} ${F + 2} ${Z + 28} oak_door[half=upper,facing=east,open=true]`); say(`/setblock ${X + 4} ${F + 1} ${Z + 28} oak_door[half=lower,facing=east,open=true]`); ctx.sound('block.wooden_door.open', 1, 1) }
-      if (k >= at(3) - 5) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(4.5, 1.6, 28.5), (k - at(3) + 6) / 20) }   // the door is in frame when it swings
+      if (k >= at(3) - 5) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(4.5, 1.6, 28.5), (k - at(3) + 6) / 30) }   // the door is in frame when it swings
       look(k)
     })
     go(false)
