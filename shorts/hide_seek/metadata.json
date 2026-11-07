@@ -1,0 +1,1120 @@
+{
+  "name": "hide_seek",
+  "caption": "hide and seek but the villagers cheated \ud83d\ude2d",
+  "youtube": {
+    "title": "hide and seek but the villagers cheated \ud83d\ude2d #minecraft #shorts",
+    "description": "hide and seek but the villagers cheated \ud83d\ude2d\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "industry_kiss.mp3",
+    "title": "INDUSTRY KISS",
+    "artist": "DIPIENS, HRXSTAL",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "r5_zoom",
+    "drop_in_song_s": 39.75,
+    "drop_in_short_s": 31.13,
+    "song_start_s": 8.62
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 32.05,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 49317499,
+    "sha256": "bcb11d299250d2b591821cb52015b4ddfd95922f5b8643ad3712bf33c5935b0d"
+  },
+  "edit": {
+    "caption": "hide and seek but the villagers cheated \ud83d\ude2d",
+    "red": "cheated",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "r5_zoom",
+    "startAt": "r1_go:0",
+    "endAfter": "r5_found:-0.3",
+    "replay": {
+      "at": "r5_found",
+      "before": 0.05,
+      "after": 0.85,
+      "cam": "1.5,324.5,10.5,45,-35",
+      "speed": 1,
+      "label": "MEANWHILE AT Y 320"
+    },
+    "speed": [
+      [
+        "cut1a",
+        "cut1b",
+        "cut"
+      ],
+      [
+        "cut2a",
+        "cut2b",
+        "cut"
+      ],
+      [
+        "cut3a",
+        "cut3b",
+        "cut"
+      ],
+      [
+        "cut4a",
+        "cut4b",
+        "cut"
+      ]
+    ],
+    "clock": [
+      [
+        "r1_go",
+        "r1_end",
+        5,
+        "ROUND 1",
+        "down"
+      ],
+      [
+        "r2_go",
+        "r2_end",
+        4,
+        "ROUND 2",
+        "down"
+      ],
+      [
+        "r3_go",
+        "r3_end",
+        4,
+        "ROUND 3",
+        "down"
+      ],
+      [
+        "r4_go",
+        "r4_end",
+        4,
+        "ROUND 4",
+        "down"
+      ],
+      [
+        "r5_go",
+        "r5_end",
+        3,
+        "ROUND 5",
+        "down"
+      ]
+    ],
+    "counter": {
+      "at": [
+        "r1_found",
+        "r2_found",
+        "r3_found",
+        "r4_found",
+        "r5_zoom"
+      ],
+      "total": 5
+    },
+    "cards": [
+      [
+        "r1_found",
+        "IN A TREE \ud83d\ude2d",
+        0.8,
+        "yellow"
+      ],
+      [
+        "r2_found",
+        "IN THE POND \ud83d\ude2d",
+        0.7,
+        "blue"
+      ],
+      [
+        "r3_found",
+        "UNDER ME \ud83d\ude2d",
+        0.9,
+        "orange"
+      ],
+      [
+        "r4_found",
+        "IN LAVA \ud83d\udd25",
+        0.9,
+        "gold"
+      ]
+    ],
+    "punch": [
+      "r1_found",
+      "r2_found",
+      "r3_found",
+      "r4_found",
+      "r5_zoom"
+    ],
+    "subs": [
+      [
+        "r1_end",
+        "where did he go",
+        0.9
+      ],
+      [
+        "r2_end",
+        "nothing again",
+        0.9
+      ],
+      [
+        "r3_end",
+        "I give up",
+        0.9
+      ],
+      [
+        "r4_end",
+        "not again",
+        0.9
+      ],
+      [
+        "r5_end",
+        "seriously?",
+        0.9
+      ]
+    ],
+    "subsY": 0.62,
+    "args": [
+      "--caption",
+      "hide and seek but the villagers cheated \ud83d\ude2d",
+      "--red",
+      "cheated",
+      "--subs",
+      "[[\"r1_end\",\"where did he go\",0.9],[\"r2_end\",\"nothing again\",0.9],[\"r3_end\",\"I give up\",0.9],[\"r4_end\",\"not again\",0.9],[\"r5_end\",\"seriously?\",0.9]]",
+      "--subs_y",
+      "0.62",
+      "--speed",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"]]",
+      "--clock",
+      "[[\"r1_go\",\"r1_end\",5,\"ROUND 1\",\"down\"],[\"r2_go\",\"r2_end\",4,\"ROUND 2\",\"down\"],[\"r3_go\",\"r3_end\",4,\"ROUND 3\",\"down\"],[\"r4_go\",\"r4_end\",4,\"ROUND 4\",\"down\"],[\"r5_go\",\"r5_end\",3,\"ROUND 5\",\"down\"]]",
+      "--punch",
+      "[\"r1_found\",\"r2_found\",\"r3_found\",\"r4_found\",\"r5_zoom\"]",
+      "--counter",
+      "{\"at\":[\"r1_found\",\"r2_found\",\"r3_found\",\"r4_found\",\"r5_zoom\"],\"total\":5}",
+      "--cards",
+      "[[\"r1_found\",\"IN A TREE \ud83d\ude2d\",0.8,\"yellow\"],[\"r2_found\",\"IN THE POND \ud83d\ude2d\",0.7,\"blue\"],[\"r3_found\",\"UNDER ME \ud83d\ude2d\",0.9,\"orange\"],[\"r4_found\",\"IN LAVA \ud83d\udd25\",0.9,\"gold\"]]",
+      "--replay",
+      "{\"at\":\"r5_found\",\"before\":0.05,\"after\":0.85,\"cam\":\"1.5,324.5,10.5,45,-35\",\"speed\":1,\"label\":\"MEANWHILE AT Y 320\"}",
+      "--start_at",
+      "r1_go:0",
+      "--end_after",
+      "r5_found:-0.3"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": -1370,
+      "y": 0,
+      "z": 1055
+    },
+    "biome": "minecraft:plains",
+    "ticks": 844,
+    "seconds": 42.2,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 1.2,
+        "event": "r1_go"
+      },
+      {
+        "t": 3.7,
+        "event": "swing"
+      },
+      {
+        "t": 6.05,
+        "event": "swing"
+      },
+      {
+        "t": 7.2,
+        "event": "r1_end"
+      },
+      {
+        "t": 7.2,
+        "event": "vel"
+      },
+      {
+        "t": 7.6,
+        "event": "r1_zoom"
+      },
+      {
+        "t": 7.95,
+        "event": "vel"
+      },
+      {
+        "t": 8.2,
+        "event": "vel"
+      },
+      {
+        "t": 8.5,
+        "event": "r1_chop"
+      },
+      {
+        "t": 8.5,
+        "event": "dig"
+      },
+      {
+        "t": 8.5,
+        "event": "swing"
+      },
+      {
+        "t": 8.5,
+        "event": "vel"
+      },
+      {
+        "t": 8.7,
+        "event": "swing"
+      },
+      {
+        "t": 8.7,
+        "event": "vel"
+      },
+      {
+        "t": 8.9,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.9,
+        "event": "swing"
+      },
+      {
+        "t": 8.9,
+        "event": "vel"
+      },
+      {
+        "t": 9.05,
+        "event": "dig"
+      },
+      {
+        "t": 9.05,
+        "event": "swing"
+      },
+      {
+        "t": 9.1,
+        "event": "vel"
+      },
+      {
+        "t": 9.2,
+        "event": "vel"
+      },
+      {
+        "t": 9.25,
+        "event": "swing"
+      },
+      {
+        "t": 9.3,
+        "event": "vel"
+      },
+      {
+        "t": 9.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 9.45,
+        "event": "swing"
+      },
+      {
+        "t": 9.45,
+        "event": "r1_found"
+      },
+      {
+        "t": 9.45,
+        "event": "vel"
+      },
+      {
+        "t": 9.6,
+        "event": "vel"
+      },
+      {
+        "t": 9.6,
+        "event": "vel"
+      },
+      {
+        "t": 9.9,
+        "event": "vel"
+      },
+      {
+        "t": 9.9,
+        "event": "vel"
+      },
+      {
+        "t": 10.15,
+        "event": "vel"
+      },
+      {
+        "t": 10.2,
+        "event": "vel"
+      },
+      {
+        "t": 10.3,
+        "event": "cut1a"
+      },
+      {
+        "t": 10.3,
+        "event": "cut"
+      },
+      {
+        "t": 10.3,
+        "event": "vel"
+      },
+      {
+        "t": 10.35,
+        "event": "vel"
+      },
+      {
+        "t": 10.45,
+        "event": "vel"
+      },
+      {
+        "t": 10.65,
+        "event": "vel"
+      },
+      {
+        "t": 10.75,
+        "event": "vel"
+      },
+      {
+        "t": 10.9,
+        "event": "vel"
+      },
+      {
+        "t": 10.95,
+        "event": "vel"
+      },
+      {
+        "t": 11.05,
+        "event": "vel"
+      },
+      {
+        "t": 11.2,
+        "event": "vel"
+      },
+      {
+        "t": 11.3,
+        "event": "vel"
+      },
+      {
+        "t": 11.8,
+        "event": "cut1b"
+      },
+      {
+        "t": 11.8,
+        "event": "r2_go"
+      },
+      {
+        "t": 11.9,
+        "event": "vel"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 12.2,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.9,
+        "event": "vel"
+      },
+      {
+        "t": 12.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.2,
+        "event": "vel"
+      },
+      {
+        "t": 13.3,
+        "event": "vel"
+      },
+      {
+        "t": 13.35,
+        "event": "swing"
+      },
+      {
+        "t": 13.9,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 14.2,
+        "event": "vel"
+      },
+      {
+        "t": 14.3,
+        "event": "vel"
+      },
+      {
+        "t": 14.9,
+        "event": "vel"
+      },
+      {
+        "t": 14.95,
+        "event": "vel"
+      },
+      {
+        "t": 15.2,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.9,
+        "event": "vel"
+      },
+      {
+        "t": 15.95,
+        "event": "vel"
+      },
+      {
+        "t": 16.2,
+        "event": "r2_end"
+      },
+      {
+        "t": 16.2,
+        "event": "vel"
+      },
+      {
+        "t": 16.25,
+        "event": "vel"
+      },
+      {
+        "t": 16.55,
+        "event": "r2_zoom"
+      },
+      {
+        "t": 16.85,
+        "event": "vel"
+      },
+      {
+        "t": 16.9,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.3,
+        "event": "vel"
+      },
+      {
+        "t": 17.9,
+        "event": "r2_found"
+      },
+      {
+        "t": 17.9,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.2,
+        "event": "vel"
+      },
+      {
+        "t": 18.3,
+        "event": "vel"
+      },
+      {
+        "t": 18.6,
+        "event": "cut2a"
+      },
+      {
+        "t": 18.8,
+        "event": "cut"
+      },
+      {
+        "t": 18.9,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.2,
+        "event": "vel"
+      },
+      {
+        "t": 19.3,
+        "event": "vel"
+      },
+      {
+        "t": 19.9,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.2,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "cut2b"
+      },
+      {
+        "t": 20.3,
+        "event": "r3_go"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.9,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.2,
+        "event": "vel"
+      },
+      {
+        "t": 21.3,
+        "event": "vel"
+      },
+      {
+        "t": 21.9,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.2,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.9,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.2,
+        "event": "vel"
+      },
+      {
+        "t": 23.3,
+        "event": "vel"
+      },
+      {
+        "t": 23.85,
+        "event": "vel"
+      },
+      {
+        "t": 23.9,
+        "event": "vel"
+      },
+      {
+        "t": 24.15,
+        "event": "vel"
+      },
+      {
+        "t": 24.25,
+        "event": "vel"
+      },
+      {
+        "t": 24.6,
+        "event": "r3_end"
+      },
+      {
+        "t": 24.9,
+        "event": "vel"
+      },
+      {
+        "t": 24.95,
+        "event": "vel"
+      },
+      {
+        "t": 25.15,
+        "event": "r3_zoom"
+      },
+      {
+        "t": 25.2,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "r3_dig"
+      },
+      {
+        "t": 25.65,
+        "event": "dig"
+      },
+      {
+        "t": 25.65,
+        "event": "swing"
+      },
+      {
+        "t": 25.8,
+        "event": "dig_end"
+      },
+      {
+        "t": 25.8,
+        "event": "swing"
+      },
+      {
+        "t": 25.8,
+        "event": "r3_found"
+      },
+      {
+        "t": 25.9,
+        "event": "vel"
+      },
+      {
+        "t": 25.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.2,
+        "event": "vel"
+      },
+      {
+        "t": 26.3,
+        "event": "vel"
+      },
+      {
+        "t": 26.7,
+        "event": "cut3a"
+      },
+      {
+        "t": 26.9,
+        "event": "cut"
+      },
+      {
+        "t": 26.9,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 27.2,
+        "event": "vel"
+      },
+      {
+        "t": 27.3,
+        "event": "vel"
+      },
+      {
+        "t": 27.9,
+        "event": "vel"
+      },
+      {
+        "t": 27.95,
+        "event": "vel"
+      },
+      {
+        "t": 28.2,
+        "event": "vel"
+      },
+      {
+        "t": 28.3,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
+        "event": "cut3b"
+      },
+      {
+        "t": 28.4,
+        "event": "r4_go"
+      },
+      {
+        "t": 28.9,
+        "event": "vel"
+      },
+      {
+        "t": 28.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.2,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
+        "event": "vel"
+      },
+      {
+        "t": 29.9,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "vel"
+      },
+      {
+        "t": 30.2,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "r4_end"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.95,
+        "event": "vel"
+      },
+      {
+        "t": 31.1,
+        "event": "r4_zoom"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.3,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "r4_found"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 33.2,
+        "event": "vel"
+      },
+      {
+        "t": 33.3,
+        "event": "vel"
+      },
+      {
+        "t": 33.75,
+        "event": "cut4a"
+      },
+      {
+        "t": 33.9,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 34.2,
+        "event": "vel"
+      },
+      {
+        "t": 34.3,
+        "event": "vel"
+      },
+      {
+        "t": 34.75,
+        "event": "cut"
+      },
+      {
+        "t": 34.9,
+        "event": "vel"
+      },
+      {
+        "t": 34.95,
+        "event": "vel"
+      },
+      {
+        "t": 35.2,
+        "event": "vel"
+      },
+      {
+        "t": 35.3,
+        "event": "vel"
+      },
+      {
+        "t": 35.9,
+        "event": "vel"
+      },
+      {
+        "t": 35.95,
+        "event": "vel"
+      },
+      {
+        "t": 36.2,
+        "event": "vel"
+      },
+      {
+        "t": 36.3,
+        "event": "vel"
+      },
+      {
+        "t": 36.9,
+        "event": "vel"
+      },
+      {
+        "t": 36.95,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "cut4b"
+      },
+      {
+        "t": 37.15,
+        "event": "r5_go"
+      },
+      {
+        "t": 37.2,
+        "event": "vel"
+      },
+      {
+        "t": 37.3,
+        "event": "vel"
+      },
+      {
+        "t": 37.9,
+        "event": "vel"
+      },
+      {
+        "t": 37.95,
+        "event": "vel"
+      },
+      {
+        "t": 38.2,
+        "event": "vel"
+      },
+      {
+        "t": 38.3,
+        "event": "vel"
+      },
+      {
+        "t": 38.5,
+        "event": "swing"
+      },
+      {
+        "t": 38.9,
+        "event": "vel"
+      },
+      {
+        "t": 38.95,
+        "event": "vel"
+      },
+      {
+        "t": 39.2,
+        "event": "vel"
+      },
+      {
+        "t": 39.3,
+        "event": "vel"
+      },
+      {
+        "t": 39.9,
+        "event": "r5_end"
+      },
+      {
+        "t": 39.9,
+        "event": "vel"
+      },
+      {
+        "t": 39.9,
+        "event": "vel"
+      },
+      {
+        "t": 39.95,
+        "event": "vel"
+      },
+      {
+        "t": 40.2,
+        "event": "vel"
+      },
+      {
+        "t": 40.3,
+        "event": "vel"
+      },
+      {
+        "t": 40.5,
+        "event": "vel"
+      },
+      {
+        "t": 40.7,
+        "event": "r5_zoom"
+      },
+      {
+        "t": 40.9,
+        "event": "vel"
+      },
+      {
+        "t": 40.9,
+        "event": "vel"
+      },
+      {
+        "t": 40.95,
+        "event": "vel"
+      },
+      {
+        "t": 40.95,
+        "event": "vel"
+      },
+      {
+        "t": 41,
+        "event": "r5_found"
+      },
+      {
+        "t": 41,
+        "event": "vel"
+      },
+      {
+        "t": 41.2,
+        "event": "vel"
+      },
+      {
+        "t": 41.2,
+        "event": "vel"
+      },
+      {
+        "t": 41.3,
+        "event": "vel"
+      },
+      {
+        "t": 41.4,
+        "event": "face_on"
+      },
+      {
+        "t": 41.4,
+        "event": "vel"
+      },
+      {
+        "t": 41.6,
+        "event": "vel"
+      },
+      {
+        "t": 41.8,
+        "event": "vel"
+      },
+      {
+        "t": 41.9,
+        "event": "vel"
+      },
+      {
+        "t": 41.9,
+        "event": "vel"
+      },
+      {
+        "t": 41.95,
+        "event": "vel"
+      },
+      {
+        "t": 41.95,
+        "event": "vel"
+      },
+      {
+        "t": 42,
+        "event": "vel"
+      },
+      {
+        "t": 42,
+        "event": "vel"
+      },
+      {
+        "t": 42.15,
+        "event": "vel"
+      },
+      {
+        "t": 42.15,
+        "event": "vel"
+      },
+      {
+        "t": 42.2,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "29a21caf9fda6ebfaa77bf76f247941b555dd6ff",
+    "rendered_at": "2026-11-07T15:19:19.233Z",
+    "head_at_publish": "6b7e56b7575c342cf9a78109196c0467b53aef9f",
+    "stunt": "stunts/hide_seek.js",
+    "source_snapshot": [
+      "source/hide_seek.js",
+      "source/hide_seek.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 29a21caf9fda",
+    "gunzip -c shorts/hide_seek/recording.json.gz > work/hide_seek.rec.json",
+    "node render.js work/hide_seek.rec.json work/hide_seek.frames 60 1080 1011",
+    "python3 audio.py work/hide_seek.rec.json work/hide_seek.wav",
+    "python3 edit.py --frames work/hide_seek.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/hide_seek.rec.json --audio work/hide_seek.wav --caption \"hide and seek but the villagers cheated \ud83d\ude2d\" --red cheated --subs \"[[\\\"r1_end\\\",\\\"where did he go\\\",0.9],[\\\"r2_end\\\",\\\"nothing again\\\",0.9],[\\\"r3_end\\\",\\\"I give up\\\",0.9],[\\\"r4_end\\\",\\\"not again\\\",0.9],[\\\"r5_end\\\",\\\"seriously?\\\",0.9]]\" --subs_y 0.62 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"]] --clock \"[[\\\"r1_go\\\",\\\"r1_end\\\",5,\\\"ROUND 1\\\",\\\"down\\\"],[\\\"r2_go\\\",\\\"r2_end\\\",4,\\\"ROUND 2\\\",\\\"down\\\"],[\\\"r3_go\\\",\\\"r3_end\\\",4,\\\"ROUND 3\\\",\\\"down\\\"],[\\\"r4_go\\\",\\\"r4_end\\\",4,\\\"ROUND 4\\\",\\\"down\\\"],[\\\"r5_go\\\",\\\"r5_end\\\",3,\\\"ROUND 5\\\",\\\"down\\\"]]\" --punch [\"r1_found\",\"r2_found\",\"r3_found\",\"r4_found\",\"r5_zoom\"] --counter {\"at\":[\"r1_found\",\"r2_found\",\"r3_found\",\"r4_found\",\"r5_zoom\"],\"total\":5} --cards \"[[\\\"r1_found\\\",\\\"IN A TREE \ud83d\ude2d\\\",0.8,\\\"yellow\\\"],[\\\"r2_found\\\",\\\"IN THE POND \ud83d\ude2d\\\",0.7,\\\"blue\\\"],[\\\"r3_found\\\",\\\"UNDER ME \ud83d\ude2d\\\",0.9,\\\"orange\\\"],[\\\"r4_found\\\",\\\"IN LAVA \ud83d\udd25\\\",0.9,\\\"gold\\\"]]\" --replay \"{\\\"at\\\":\\\"r5_found\\\",\\\"before\\\":0.05,\\\"after\\\":0.85,\\\"cam\\\":\\\"1.5,324.5,10.5,45,-35\\\",\\\"speed\\\":1,\\\"label\\\":\\\"MEANWHILE AT Y 320\\\"}\" --start_at r1_go:0 --end_after r5_found:-0.3 --out out/hide_seek.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 16: 5-round hide and seek (tree, pond shaft, under me, lava, build limit + y 320 zoom-out); passed review 7 on frame/retention/minecraft, nitpicks: apple from intact leaves, no dirt drop in round 3 (block_drops off on purpose), stray leaf_litter x8 in hotbar slot 5, villager faces camera ~0.45 s into the y 320 shot",
+  "published_at": "2026-11-07T15:35:34.719Z"
+}
