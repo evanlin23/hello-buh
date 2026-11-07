@@ -37,7 +37,7 @@
     "red": "run",
     "story": "stories/runaway",
     "startAt": "line:0",
-    "endAfter": "story_end:0",
+    "endAfter": "boom:1.0",
     "deathScreen": true,
     "args": [
       "--caption",
@@ -51,7 +51,7 @@
       "--start_at",
       "line:0",
       "--end_after",
-      "story_end:0"
+      "boom:1.0"
     ]
   },
   "recording": {
@@ -308,7 +308,7 @@
     "branch": "main",
     "commit": "15b75d74de96373a8ea93b0e564cf05d2a4728af",
     "rendered_at": "2026-11-07T05:11:41.158Z",
-    "head_at_publish": "aa7f9184292b1958d75b79da3df8f6a83700605b",
+    "head_at_publish": "1e25ca07ddb12f668ca06e05af0c979336058621",
     "stunt": "stunts/story_runaway.js",
     "source_snapshot": [
       "source/story_runaway.js",
@@ -320,9 +320,9 @@
     "gunzip -c shorts/story_runaway/recording.json.gz > work/story_runaway.rec.json",
     "node render.js work/story_runaway.rec.json work/story_runaway.frames 60 1080 1011",
     "python3 audio.py work/story_runaway.rec.json work/story_runaway.wav",
-    "python3 edit.py --frames work/story_runaway.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_runaway.rec.json --audio work/story_runaway.wav --caption \"why does everyone run from me \ud83d\udc80\" --red run --death_screen death --story stories/runaway --start_at line:0 --end_after story_end:0 --out out/story_runaway.mp4"
+    "python3 edit.py --frames work/story_runaway.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_runaway.rec.json --audio work/story_runaway.wav --caption \"why does everyone run from me \ud83d\udc80\" --red run --death_screen death --story stories/runaway --start_at line:0 --end_after boom:1.0 --out out/story_runaway.mp4"
   ],
-  "status": "ready",
-  "notes": "Narrated creeper-twist story (pilot). Passed frame review r9 (ready), retention r7 (ready), minecraft-audit r8 + follow-up on the 4808177 render (ready). Recording 03:23 with post-blast smoke moved toward the knockback landing.",
-  "published_at": "2026-11-07T05:21:12.782Z"
+  "status": "pending-qa",
+  "notes": "PENDING: owner asked to end on the boom (cut L15-L17); re-edit and re-audit in progress.",
+  "published_at": "2026-11-07T06:06:00.538Z"
 }
