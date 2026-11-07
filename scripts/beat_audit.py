@@ -34,16 +34,59 @@ def edit_config(name):
     return {**json.loads(out.stdout or "{}"), **json.loads(os.environ.get("EDIT_EXTRA") or "{}")}   # same override as edit_args.js
 
 
+def camera_turns(poses, cuts):
+    """[(tick, degrees, out_and_back)] for big look swings in the recording (pose: [tick, x, y, z, yaw, pitch, ...])."""
+    import math
+    if len(poses) < 3:
+        return []
+    ticks = [p[0] for p in poses]
+    yaw = [math.degrees(p[4]) for p in poses]
+    for i in range(1, len(yaw)):   # unwrap
+        while yaw[i] - yaw[i - 1] > 180: yaw[i] -= 360
+        while yaw[i] - yaw[i - 1] < -180: yaw[i] += 360
+    near_cut = lambda t: any(abs(t - c) <= 3 for c in cuts)
+    out, last = [], -99
+    for i in range(len(yaw)):
+        if ticks[i] - last < 30 or near_cut(ticks[i]):
+            continue
+        j1 = next((j for j in range(i, len(yaw)) if ticks[j] - ticks[i] > 20), len(yaw) - 1)
+        seg = yaw[i:j1 + 1]
+        k = max(range(len(seg)), key=lambda k: abs(seg[k] - yaw[i]))
+        d = seg[k] - yaw[i]
+        if any(near_cut(ticks[i + m]) for m in range(len(seg))):
+            continue
+        if abs(d) >= 70:
+            out.append((ticks[i], d, False)); last = ticks[i]; continue
+        j2 = next((j for j in range(i, len(yaw)) if ticks[j] - ticks[i] > 30), len(yaw) - 1)
+        seg2 = yaw[i:j2 + 1]
+        k2 = max(range(len(seg2)), key=lambda k: abs(seg2[k] - yaw[i]))
+        if abs(seg2[k2] - yaw[i]) >= 40 and abs(seg2[-1] - yaw[i]) < 15:
+            out.append((ticks[i], seg2[k2] - yaw[i], True)); last = ticks[i]
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("name")
     ap.add_argument("--payoff", help="timeline event that is the payoff (default: the edit's endAfter event)")
     ap.add_argument("--video")
+    ap.add_argument("--rec", help="recording (default work/<name>.rec.json; .gz works, e.g. a videos-branch package)")
     a = ap.parse_args()
     video = pathlib.Path(a.video or HERE / "out" / f"{a.name}.mp4")
     ed = edit_config(a.name)
     rec_p = HERE / "work" / f"{a.name}.rec.json"
-    tl = json.loads(rec_p.read_text())["timeline"] if rec_p.exists() else []
+    if a.rec:
+        rec_p = pathlib.Path(a.rec)
+    import gzip
+    rec = (json.loads(gzip.decompress(rec_p.read_bytes())) if rec_p.suffix == ".gz" else json.loads(rec_p.read_text())) if rec_p.exists() else {}
+    tl = rec.get("timeline", [])
+    # camera turns: the look swinging 40+ degrees and back within 1.5 s, or 70+ degrees one way within
+    # 1 s, outside a cut. The pixel-art Shorts all had a scripted mid-build glance to the left that
+    # every review passed as planned; the owner read it as an inexplicable turn. Each one is listed
+    # with its video time, and the reviewer has to name what on screen motivates it.
+    turns = camera_turns(rec.get("poses", []), [e["t"] / 50 for e in tl if e["event"] in ("cut", "respawn", "teleported")])
+    tl = tl + [{"t": t * 50, "event": f"TURN {d:+.0f}deg{' and back' if back else ''}"} for t, d, back in turns]
+    tl.sort(key=lambda e: e["t"])
     if tl:   # time-lapse spans, cuts and slow-mo: marks in output time, as edit.py places them
         from timewarp import edit_timeline
         tl = edit_timeline(ed, tl)
@@ -112,6 +155,9 @@ def main():
             print(f"  {kind:<5} {s_ / fps:5.2f}s - {e_ / fps:5.2f}s ({(e_ - s_) / fps:.1f}s)")
     if not found:
         print("  none")
+    tn = [(vt, ev) for vt, ev in marks if ev.startswith("TURN")]
+    print("\ncamera turns (each needs an on-screen reason; an unmotivated turn reads as weird):")
+    print("\n".join(f"  {vt:6.2f}s  {ev}" for vt, ev in tn) if tn else "  none")
 
     pay = a.payoff or (ed.get("endAfter", "").rsplit(":", 1)[0] if ed.get("endAfter") else None)
     print()

@@ -79,6 +79,15 @@ change of shot.
 ridiculous scale, the twist, the close call.) If you can't name it, the concept needs work. Say so;
 it's not something the renderer can fix.
 
+**7. Camera motivation (watch it once at real speed, as a viewer, before any frame review).** Every
+camera move has to have a reason the viewer can see: a sound, a mob, the next beat, the thing being
+built. `beat_audit.py` lists every big look swing ("camera turns": 40+ degrees out and back, or 70+
+one way, outside cuts). For each one, name what on screen motivates it, or FAIL it. A move that was
+*scripted on purpose* still fails if the viewer can't see why (the owner, 2026-11-07, on all five
+pixel-art Shorts: "a weird moment where you turn to the left while creating the big one". It was a
+planned "glance back for scale" that every review had passed). Turning away from the subject in the
+middle of building it, or from the payoff, is a FAIL.
+
 ## Report
 A beat timeline (timestamp, beat, motion OK?). Then each check with PASS/FAIL and the exact fix:
 - new `startAt` / `endAfter` values;
