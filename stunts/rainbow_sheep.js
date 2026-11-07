@@ -23,7 +23,7 @@ module.exports = {
   edit: {
     subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'collected',
     startAt: 'dye:-0.45',
-    endAfter: 'collected:0.55',      // mid-turn back onto the sheared line (it ended still on grass)
+    endAfter: 'collected:0.4',      // still backing off the sheared line
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
       ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0]]
   },
@@ -36,10 +36,10 @@ module.exports = {
     const { x, z } = g, floor = g.y
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (const [z0, z1] of [[z - 22, z - 2], [z - 1, z + 20]]) {
-      await ctx.cmd(`/fill ${x - 24} ${floor + 1} ${z0} ${x + 24} ${floor + 14} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 24} ${floor} ${z0} ${x + 24} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 24} ${floor - 3} ${z0} ${x + 24} ${floor - 1} ${z1} dirt`)
+    for (const [z0, z1] of [[z - 30, z - 17], [z - 16, z - 3], [z - 2, z + 11], [z + 12, z + 24]]) {   // wide and high: the old box's cut wall showed behind the line
+      await ctx.cmd(`/fill ${x - 40} ${floor + 1} ${z0} ${x + 40} ${floor + 20} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 40} ${floor} ${z0} ${x + 40} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 40} ${floor - 3} ${z0} ${x + 40} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=sheep]')
     // sheep stand at x0 + i*STEP, z; a fence behind and posts between them, open at the front
@@ -170,7 +170,7 @@ module.exports = {
       await bot.waitForTicks(3)
     }
     // the whole line cycling
-    await this.backReveal(ctx, 'alljeb_reveal', 30)   // the cycling flock is the money shot (22 ran the Short 29.9 s)
+    await this.backReveal(ctx, 'alljeb_reveal', 20)   // (30 left a long walk back to sheep 0)
     // shear them all: a rainbow of wool pops out and gets picked up on the way
     ctx.select(8)
     bot.on('playerCollect', (c) => { if (c === bot.entity) ctx.sound('entity.item.pickup', 0.25, 0.8 + Math.random() * 0.6) })
@@ -182,24 +182,38 @@ module.exports = {
       await bot.waitForTicks(2)
     }
     ctx.mark('lastshear')
-    // sweep back along the line right in front of the sheep, eyes on the row ahead (not a sheep's face),
-    // collecting the wool: the hotbar fills with the rainbow
-    const row = new ctx.Vec3(this.x0 - 2, this.floor + 0.6, z + 0.6)
-    // facing west along the line: forward moves along it, right (north) / left (south) hold the distance
-    bot.setControlState('forward', true)
-    for (let k = 0; k < 80 && bot.entity.position.x > this.x0 + 0.5; k++) {
-      const e = bot.entity.position, d = row.minus(e.offset(0, 1.62, 0))
+    // sweep west along the line ~2 out (pickup range), eyes on the line ~2.5 ahead at an angle so the sheep and
+    // the wool on the grass are in frame (looking straight down the row crammed them on the right edge).
+    // Controls are picked against the view each tick: the motion stays due west whatever the look
+    bot.setControlState('sprint', false)
+    for (let k = 0; k < 100 && bot.entity.position.x > this.x0 + 0.5; k++) {
+      const e = bot.entity.position, tgt = new ctx.Vec3(e.x - 2.5, this.floor + 0.7, z + 0.5), d = tgt.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-      bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
-      bot.setControlState('right', e.z > z + 2.2); bot.setControlState('left', e.z < z + 1.9)   // 1.1-1.4 ran the camera through every head
+      const ny = bot.entity.yaw + dy * 0.3
+      await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.3, true)
+      // wanted motion: west (-x), plus a z correction to hold z + 1.9..2.2
+      const wz = e.z > z + 2.2 ? -0.5 : e.z < z + 1.9 ? 0.5 : 0
+      const fx = -Math.sin(ny), fz = -Math.cos(ny), rx = Math.cos(ny), rz = -Math.sin(ny)
+      const f = -1 * fx + wz * fz, rr = -1 * rx + wz * rz
+      bot.setControlState('forward', f > 0.3); bot.setControlState('back', f < -0.3)
+      bot.setControlState('right', rr > 0.3); bot.setControlState('left', rr < -0.3)
       await bot.waitForTicks(1)
     }
-    for (const c of ['left', 'right', 'forward']) bot.setControlState(c, false)
-    // the payoff: turn back onto the sheared, cycling line with the full hotbar (the cut lands mid-turn)
-    ctx.mark('collected')
-    ctx.easeLookAt(new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5), 800)
-    await bot.waitForTicks(18)
+    for (const c of ['left', 'right', 'forward', 'back']) bot.setControlState(c, false)
+    // the payoff: back off with the whole sheared, cycling line coming into frame (the full hotbar below); the
+    // mark lands once the line fills the view (at the sweep's end the camera faced the grass past the line)
+    const lineMid = new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5)
+    bot.setControlState('back', true)
+    for (let k = 0; k < 22; k++) {
+      const e = bot.entity.position, d = lineMid.minus(e.offset(0, 1.62, 0))
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
+      if (k === 13) ctx.mark('collected')
+      await bot.waitForTicks(1)
+    }
+    bot.setControlState('back', false)
     ctx.log('hotbar', JSON.stringify(bot.inventory.items().map(i => [i.name, i.count])))
     return true
   },
