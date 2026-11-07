@@ -584,23 +584,70 @@ def death_screen_png(jar, path, cause=None, active=True):
     img.save(path)
 
 
+def _solve8(src, dst):
+    """Coefficients for PIL's PERSPECTIVE transform mapping output points dst to input points src."""
+    A, b = [], []
+    for (x, y), (u, v) in zip(dst, src):
+        A.append([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.append(u)
+        A.append([0, 0, 0, x, y, 1, -v * x, -v * y]); b.append(v)
+    n = 8
+    M = [row[:] + [b[k]] for k, row in enumerate(A)]
+    for c in range(n):   # Gaussian elimination with partial pivoting
+        piv = max(range(c, n), key=lambda r: abs(M[r][c]))
+        M[c], M[piv] = M[piv], M[c]
+        for r in range(n):
+            if r != c and M[r][c]:
+                f = M[r][c] / M[c][c]
+                M[r] = [a - f * bb for a, bb in zip(M[r], M[c])]
+    return [M[k][n] / M[k][k] for k in range(n)]
+
+
+def fire_quads():
+    """Screen corners of ScreenEffectRenderer.renderFire's two quads: for i in 0, 1 a 1x1 quad at
+    z -0.5, rotated (i*2-1)*10 deg about Y, then moved by (-(i*2-1)*0.24, -0.3, 0), drawn with the
+    hand's projection (FOV 70, not the dynamic one) over the game area. Vertex (-0.5, -0.5) takes
+    (u1, v1): the texture is mirrored in x on both. Returns [(corners px, uv corners)] per quad."""
+    th = math.tan(math.radians(70) / 2)
+    asp = W / GAME_H
+    out = []
+    for i in (0, 1):
+        a = math.radians((i * 2 - 1) * 10.0)
+        tx = -(i * 2 - 1) * 0.24
+        pts = []
+        for (x, y) in ((-0.5, -0.5), (0.5, -0.5), (0.5, 0.5), (-0.5, 0.5)):
+            z = -0.5
+            xr, zr = x * math.cos(a) + z * math.sin(a), -x * math.sin(a) + z * math.cos(a)
+            xw, yw = xr + tx, y - 0.3
+            nx, ny = xw / (-zr * th * asp), yw / (-zr * th)
+            pts.append(((nx + 1) / 2 * W, (1 - ny) / 2 * GAME_H))
+        out.append(pts)
+    return out
+
+
 def fire_frames(jar, t0, t1, outdir, prefix="fire"):
-    """On-fire screen overlay (ScreenEffectRenderer.renderFire): the animated fire texture over
-    both lower corners at 90% opacity, 20 frames per second from t0 to t1."""
+    """On-fire screen overlay (ScreenEffectRenderer.renderFire): the animated fire_1 sprite on two
+    quads in front of the eye (fire_quads), colour (1, 1, 1, 0.9), 20 frames per second from t0 to
+    t1. The flames reach about 3/4 of the way up the view and overlap in the middle (the old corner
+    squares showed only tips along the bottom edge: worker 5, story_respawn_tax f1464)."""
     with jar.open("assets/minecraft/textures/block/fire_1.png") as f:
         strip = Image.open(io.BytesIO(f.read())).convert("RGBA")
     n_frames = strip.height // strip.width
-    size = int(GAME_H * 0.5)
+    S = strip.width
+    quads = fire_quads()
+    coeffs = []
+    for pts in quads:
+        # texture corners for (-.5,-.5) (.5,-.5) (.5,.5) (-.5,.5): (u1,v1) (u0,v1) (u0,v0) (u1,v0)
+        src = [(S, S), (0, S), (0, 0), (S, 0)]
+        coeffs.append(_solve8(src, pts))
     for i in range(int((t1 - t0) * 20)):
-        fr = strip.crop((0, (i % n_frames) * strip.width, strip.width, (i % n_frames + 1) * strip.width)).resize((size, size), Image.NEAREST)
+        fr = strip.crop((0, (i % n_frames) * S, S, (i % n_frames + 1) * S))
         a = fr.split()[3].point(lambda v: int(v * 0.9))
         fr.putalpha(a)
+        game = Image.new("RGBA", (W, GAME_H), (0, 0, 0, 0))
+        for c in coeffs:
+            game.alpha_composite(fr.transform((W, GAME_H), Image.PERSPECTIVE, c, Image.NEAREST))
         img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        y = BAND + GAME_H - int(size * 0.62)
-        img.alpha_composite(fr, (-int(size * 0.18), y))
-        img.alpha_composite(fr.transpose(Image.FLIP_LEFT_RIGHT), (W - size + int(size * 0.18), y))
-        # keep inside the game area
-        img.paste((0, 0, 0, 0), (0, BAND + GAME_H, W, H))
+        img.paste(game, (0, BAND))
         img.save(outdir / f"{prefix}_{i:04d}.png")
     return str(outdir / f"{prefix}_%04d.png")
 
