@@ -705,6 +705,7 @@ def main():
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
     ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
+    ap.add_argument("--subs_y", type=float, default=0.42, help="subtitle height as a fraction of the game view (0.15 = top third; default 0.42, mid view)")
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")
     ap.add_argument("--timeline")
     ap.add_argument("--audio")
@@ -898,7 +899,7 @@ def main():
                 subtitle_png(text, tmp / f"sub{k}.png", yfrac=0.76)
                 deferred_subs.append((k, t0, dur_s))
                 continue
-            subtitle_png(text, tmp / f"sub{k}.png")
+            subtitle_png(text, tmp / f"sub{k}.png", yfrac=args.subs_y)
             inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
             graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sb{k}]")
             last, n_in = f"sb{k}", n_in + 1

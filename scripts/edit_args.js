@@ -10,6 +10,7 @@ if (e.red) out.push('--red', e.red)
 if (e.colors) out.push('--colors', e.colors)
 if (e.countdown) out.push('--countdown', e.countdown)
 if (e.subs) out.push('--subs', JSON.stringify(e.subs))
+if (e.subsY !== undefined) out.push('--subs_y', String(e.subsY))   // subtitle height: fraction of the game view (0.15 = top, default 0.42)
 if (e.timer) out.push('--timer', e.timer)
 if (e.speed) out.push('--speed', JSON.stringify(e.speed))    // time-lapse spans / cuts (scripts/timewarp.py)
 if (e.clock) out.push('--clock', JSON.stringify(e.clock))    // clocks counting to a target time
