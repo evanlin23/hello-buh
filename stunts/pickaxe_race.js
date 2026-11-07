@@ -3,7 +3,7 @@
 // digging (bot.dig, the server checks the dig time). Each beat gets a subtitle with the tier per tool.
 // Gold (fastest plain pickaxe) breaks on its last block; netherite + efficiency V (with the Haste)
 // instamines; then a TNT at every pillar chains down the wall and takes it out: "TNT: ??? tier".
-// Everything is mined under Haste V (invisible) so the beats fit in a Short;
+// Everything is mined under Haste II (invisible; a beacon gives it) so the beats fit in a Short;
 // the ranking and the ratios between the tools are vanilla's.
 
 const TOOLS = [   // six beats + the TNT run, ~30 s (owner: 30 s minimum; netherite repeated diamond: cut)
@@ -59,7 +59,7 @@ module.exports = {
     // pillars between the sections in cobblestone, so each 3x3 reads as its own wall
     for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 4} ${this.wz} cobblestone`)
     await ctx.hotbar([...TOOLS.map(t => t.item), ['tnt', TOOLS.length + 1], 'flint_and_steel'])
-    await ctx.cmd('/effect give @s haste infinite 4 true')
+    await ctx.cmd('/effect give @s haste infinite 1 true')   // Haste II (a beacon's best; V was command-only, every plain tool ~2x vanilla): netherite + efficiency V still instamines
     await ctx.cmd('/effect give @s saturation infinite 1 true')
     // stand back so the whole section stays in frame (reach raised to match, invisible on screen)
     this.stand = (i) => ({ x: this.x0 + i * SPACING + 1.5, z: this.wz + 4.0 })   // within vanilla's 4.5-block reach
@@ -210,10 +210,16 @@ module.exports = {
       const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
       const yaw = Math.atan2(-d.x, -d.z)
       await bot.look(yaw, Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
-      const go = bot.entity.position.z < wz + 22   // (wz + 14 stopped it 0.9 s before the first blast: a PAUSE)
-      const fz = -Math.cos(yaw), rz = -Math.sin(yaw)        // forward / right vectors' z (want +z)
-      bot.setControlState('back', go && fz < -0.3); bot.setControlState('forward', go && fz > 0.3)
-      bot.setControlState('right', go && rz > 0.3); bot.setControlState('left', go && rz < -0.3)
+      // back off to ~10 out (further, the blasts were small and far), then walk east alongside the chain, ~7
+      // behind the newest blast: a tracking shot down the wall. Controls picked against the view.
+      const e0 = bot.entity.position
+      let wx = 0, wzz = 0
+      if (e0.z < wz + 10) wzz = 1
+      else if (booms > 0 && boomAt && e0.x < boomAt.x - 5) wx = 1
+      const fx = -Math.sin(yaw), fz = -Math.cos(yaw), rx = Math.cos(yaw), rz = -Math.sin(yaw)
+      const f = wx * fx + wzz * fz, rr = wx * rx + wzz * rz
+      bot.setControlState('forward', f > 0.3); bot.setControlState('back', f < -0.3)
+      bot.setControlState('right', rr > 0.3); bot.setControlState('left', rr < -0.3)
       if (booms > 0) quiet = booms === last ? quiet + 1 : 0
       last = booms
       await bot.waitForTicks(1)
