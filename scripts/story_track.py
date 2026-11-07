@@ -43,6 +43,7 @@ def _marks(timeline, start):
     is over 4 blocks from the one before (render.js shows that pose from exactly that tick)."""
     out = []
     cuts = [e["t"] // 50 for e in timeline if e["event"] == "cut"]
+    respawns = [e["t"] // 50 for e in timeline if e["event"] == "respawn"]
     for e in timeline:
         if e["event"] != "line":
             continue
@@ -53,10 +54,17 @@ def _marks(timeline, start):
             # caption came a tick late: frame review, story_respawn_tax f948)
             near = bool(out) and any(m - 12 <= c <= m for c in cuts)   # not line 1: the Short starts on its mark
             lim = 0.36 if near else 16
-            for i in range(m, max(0, m - (12 if near else 4)), -1):
+            fwd = None
+            if any(m <= r <= m + 4 for r in respawns):
+                # a line that opens on a respawn starts on the respawn's camera jump, a few ticks after its mark
+                # (its caption came 3 frames early over the death screen: frame review, story_respawn_tax f1557)
+                fwd = next((i for i in range(m + 1, min(len(POSES), m + 7)) if ((POSES[i][1] - POSES[i - 1][1]) ** 2 + (POSES[i][2] - POSES[i - 1][2]) ** 2 + (POSES[i][3] - POSES[i - 1][3]) ** 2) > 0.36), None)   # (a respawn near the death spot moves only ~2 blocks)
+            for i in ([] if fwd else range(m, max(0, m - (12 if near else 4)), -1)):
                 if i < len(POSES) and ((POSES[i][1] - POSES[i - 1][1]) ** 2 + (POSES[i][2] - POSES[i - 1][2]) ** 2 + (POSES[i][3] - POSES[i - 1][3]) ** 2) > lim:
                     t = i
                     break
+            if fwd:
+                t = fwd
         out.append((t / 20 - start, e["id"]))
     return out
 

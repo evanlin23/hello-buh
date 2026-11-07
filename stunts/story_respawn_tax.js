@@ -119,7 +119,7 @@ module.exports = {
     // she slid onto the gold block on camera): out past 64 blocks and back, both snap
     const put = async (tag, x, z, yaw) => {
       say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} ${yaw} 0`); await bot.waitForTicks(2)
-      say(`/tp @e[tag=${tag}] ${X + x} ${F + 1} ${Z + z} ${yaw} 0`); await bot.waitForTicks(1)
+      say(`/tp @e[tag=${tag}] ${X + x} ${F + 1} ${Z + z} ${yaw} 0`); await bot.waitForTicks(5)   // she re-enters tracking a few ticks after the hop back (popped in 3 frames after the cut)
     }
     // respawn without stalling the line (an awaited respawn held each scene ~1 s past its voice)
     let respawning = false
@@ -199,7 +199,7 @@ module.exports = {
     await line('L04', async (k, at) => {
       if (!burnAt && (bot.entity.position.y < F + 1.6 || ctx.died)) { burnAt = k || 1; ctx.mark('burn') }   // just before the touch: on half a heart the lava kills on the touching tick, and a burn mark after the death paired with the next death
       if (!dead && burnAt && (ctx.died || k >= burnAt + 10)) { if (!ctx.died) say('/damage @s 100 minecraft:lava'); dead = true }
-      if (dead && k >= at(1)) respawnSoon(null, 3)
+      if (dead && k >= at(1) - 10) respawnSoon(null, 3)   // early enough that the door cut lands on "The BUTCHER'S" (the caption came 9 frames before it)
       if (dead && !door && k >= at(2) - 1 && alive()) { door = true; await cut(-1.5, 12.5, P(4.5, 1.8, 12.5)) }
       if (!door) K.base = { yaw: K.base.yaw, pitch: Math.max(-1.3, K.base.pitch - 0.03) }   // eased down (a one-tick pitch whip after the cut)
       if (alive()) look(k)
@@ -252,7 +252,7 @@ module.exports = {
     say('/effect give @s minecraft:fire_resistance 30 0 true')   // the cauldron burns him only once he's out (no particles)
     // the next respawn lands straight in L11's shot, facing the lane (a cut there was undone by the server's late
     // respawn placement 1.5 s into the shot: Minecraft audit)
-    await ctx.cmd(`/spawnpoint @s ${X + 3} ${F + 1} ${Z + 4} 155 10`)
+    await ctx.cmd(`/spawnpoint @s ${X + 1} ${F + 1} ${Z + 5} 172 9`)   // off the lantern post (at 3/4 it filled a quarter of the frame)
     await line('L09', async (k, at) => {
       go(k > 2)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
@@ -273,7 +273,7 @@ module.exports = {
     go(false)
     // L11: this time I was fast: respawn and watch the nitwit walk up to my spawn
     await line('L11', async (k, at) => {
-      if (k === 0) while (!alive()) await bot.waitForTicks(1)   // the respawn lands in this shot (the spawnpoint moved there in L09)
+      if (k === 0) { while (!alive()) await bot.waitForTicks(1); say('/kill @e[type=item]') }   // the respawn lands in this shot (the spawnpoint moved there in L09); his dropped bread goes (it came back into the hotbar in L16 with no pickup seen)
       if (k >= at(2)) { nz = Math.min(0.5, nz + 0.2); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
       K.base = K.aim(P(0.5, 1.4, nz)); look(k)
     }, -0.2)   // the cut waits for the respawn: the line ran 0.2 s long (0.9 s of silence before L12)
@@ -320,7 +320,7 @@ module.exports = {
     await line('L16', async (k) => { go(k > 6 && k < 12); look(k) })
     go(false)
     // her sparkles around her, not on her face (they hid it under the death text: retention audit)
-    const sparkle = () => { for (let i = 0; i < 2; i++) { const a = Math.PI + Math.random() * Math.PI; ctx.particles('happy', P(0.5 + Math.cos(a) * 0.85, 1.0 + Math.random() * 1.7, 0.5 + Math.sin(a) * 0.85), { count: 2 }) } }   // the far half of a ring: none across her face
+    const sparkle = (n = 2) => { for (let i = 0; i < n; i++) { const a = Math.PI + Math.random() * Math.PI; ctx.particles('happy', P(0.5 + Math.cos(a) * 0.85, 1.0 + Math.random() * 1.7, 0.5 + Math.sin(a) * 0.85), { count: 1 }) } }   // the far half of a ring: none across her face
     // L17: and today, I tripped again
     dead = false; trip = null; landed = 0
     let aim17 = -1, from17 = null, k17 = 0   // -1: the first tick eases from L16's aim too (it slid over 3 frames at the line change)
@@ -328,7 +328,7 @@ module.exports = {
       go(!dead && trip === null && k >= at(2) - 11)   // the fall lands on "AGAIN."
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       if (!dead) {
-        const st = tripStep(P(0.5, 2.45, 0.5))   // dies facing her: her face in the clear band between the Score line and the buttons
+        const st = tripStep(P(0.5, 2.32, 0.5))   // dies facing her: her face in the clear band between the Score line and the buttons
         if (st === 'dead') { dead = true; deadView = null; noSmoke = true; tripEnd = ctx.tick }   // nothing between us: she sparkles instead
       }
       if (dead && k % 2 === 0) sparkle()
@@ -344,7 +344,7 @@ module.exports = {
     // reaching a dead player after ~1 s, so the motion comes from particles: she sparkles (a happy
     // villager), the cauldron smokes
     await line('L18', async (k, at) => {
-      sparkle()   // every tick: the last second read nearly still
+      if (k % 2 === 0) sparkle(1)   // a few at a time, like vanilla's (a wall of them hid her face), still moving to the end
       if (k === at(4)) ctx.mark('respawn_word')
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)   // "just SMILED": the nitwit's nod again
       if (k === at(3)) ctx.mark('go_on')                         // the view pushes in on "go on."
