@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.8', speed: [['tntrun', 'lit', 1.5]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.8', speed: [['woodcut_a', 'woodcut_b', 'cut'], ['tntrun', 'lit', 1.5]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
 
   async setup (ctx) {
@@ -105,7 +105,12 @@ module.exports = {
       for (const [r, dir] of [[3, 1], [2, -1], [1, 1]]) for (let c = 0; c < 3; c++) order.push(new Vec3(xs + (dir > 0 ? c : 2 - c), floor + r, wz))
       const t0 = ctx.tick
       if (fast) ctx.mark('instamine')
+      let nb = 0
       for (const p of order) {
+        // wooden: blocks 4-7 jump-cut (nine identical 0.9 s digs were 8.6 s of the video; the ranking keeps the real speed)
+        if (i === 0 && nb === 3) ctx.mark('woodcut_a')
+        if (i === 0 && nb === 7) ctx.mark('woodcut_b')
+        nb++
         const b = bot.blockAt(p)
         if (!b || b.name === 'air') continue
         if (fast) {
@@ -205,7 +210,8 @@ module.exports = {
     let look = boomAt || new Vec3(pil(0).x + 0.5, floor + 1.5, wz + 1)   // the lit one, then each blast down the wall
     let quiet = 0, last = booms
     for (let k = 0; k < 360 && booms < NP && quiet < 60; k++) {
-      const goal = boomAt || look
+      // before the first blast: a slow pan east along the row of lit TNT (it stood frozen ~1.7 s on the fuse)
+      const goal = boomAt || new Vec3(pil(0).x + 0.5 + Math.min(k * 0.2, 16), floor + 1.2, wz + 1)
       look = look.plus(goal.minus(look).scaled(0.12))
       const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
       const yaw = Math.atan2(-d.x, -d.z)
