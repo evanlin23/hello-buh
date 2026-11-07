@@ -1,5 +1,5 @@
 // "building a house in 1 second vs 1 minute vs 1 hour 💀" (lib/time_lapse.js): a dirt hut, a little
-// plank cottage, then a three-storey quartz mansion rising as a time-lapse in stages: a pool and a
+// plank cottage (roofed from inside), then a three-storey quartz mansion rising as a time-lapse in stages: a pool and a
 // road that runs up between the two small builds, three floors with window bands, two side wings,
 // a roof with a glass penthouse, a garden of trees and hedges, and last a gold crown on top.
 const { makeStunt } = require('../lib/time_lapse')
@@ -7,24 +7,23 @@ const { makeStunt } = require('../lib/time_lapse')
 // 1 second: a dirt hut (two stubs and a lintel)
 const small = { blocks: [[0, 0, 0, 'dirt'], [2, 0, 0, 'dirt'], [0, 1, 0, 'dirt'], [2, 1, 0, 'dirt'], [1, 1, 0, 'dirt']], slots: { dirt: 0 } }
 
-// 1 minute: a 5x5 plank cottage, log corners, windows, a stepped roof
+// 1 minute: a 5x5 plank cottage a player can build from the ground: log corners, walls two high
+// with a doorway and windows, and a flat spruce roof put on from inside (lib/time_lapse.js roofY)
 function cottage () {
   const out = []
-  for (let y = 0; y < 3; y++) {
+  for (let y = 0; y < 2; y++) {
     for (let x = 0; x < 5; x++) {
       for (let z = 0; z < 5; z++) {
         const ex = x === 0 || x === 4, ez = z === 0 || z === 4
         if (!ex && !ez) continue
-        if (z === 4 && x === 2 && y < 2) continue
+        if (z === 4 && x === 2) continue                                   // doorway
         const corner = ex && ez
-        const win = !corner && y === 1 && ((z === 4 && (x === 1 || x === 3)) || (ex && z === 2))
+        const win = !corner && y === 1 && ((z === 4 && (x === 1 || x === 3)) || (ex && z === 2) || (z === 0 && x === 2))
         out.push([x, y, z, corner ? 'oak_log' : win ? 'glass' : 'oak_planks'])
       }
     }
   }
-  for (let x = 0; x < 5; x++) for (let z = 0; z < 5; z++) out.push([x, 3, z, 'spruce_planks'])
-  for (let x = 1; x < 4; x++) for (let z = 1; z < 4; z++) out.push([x, 4, z, 'spruce_planks'])
-  out.push([2, 5, 2, 'spruce_planks'])
+  for (let x = 0; x < 5; x++) for (let z = 0; z < 5; z++) out.push([x, 2, z, 'spruce_planks'])   // the roof
   return out
 }
 
@@ -114,14 +113,16 @@ function mansion () {
 
 module.exports = makeStunt({
   name: 'lapse_house',
+  recordRadius: 200,          // the whole loaded area: the 8-chunk fog from any camera ends inside recorded terrain
+  endAfter: 'big_done:0.5',
   caption: 'building a house in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
-  hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['spruce_planks', 64], ['quartz_block', 64]],
+  hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
   small,
-  mid: { blocks: cottage(), w: 5, d: 5, perTick: 2, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: [4, 5] } },
+  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 3, backTicks: 14, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
   big: {
     blocks: mansion(),
-    hold: 'quartz_block', slot: 6,
+    hold: 'quartz_block', slot: 5,
     // ticks each stage gets: pool + road, floor 1, floor 2, floor 3, wings, roof + penthouse, garden, crown
     stageTicks: { 0: 110, 1: 200, 2: 180, 3: 180, 4: 150, 5: 180, 6: 180, 7: 40 },
     // [tick of the build, camera, look-at], local to the mansion centre (y from the ground)
@@ -133,14 +134,15 @@ module.exports = makeStunt({
       [670, [26, 22, 32], [6, 10, 0]],
       [820, [42, 18, 30], [22, 5, 0]],
       [1000, [12, 34, 26], [0, 17, -1]],
-      [1180, [-30, 16, 40], [-15, 3, 20]],
-      [1228, [-6, 30, 16], [0, 21, -1]]
+      [1100, [-30, 16, 40], [-15, 3, 20]],   // the garden going in
+      [1180, [-6, 30, 16], [0, 21, -1]],     // the crown
+      [1210, [-1, 15, 80], [0, 10, 0]],      // the pull-back arrives early and creeps into 60:00
+      [1228, [0, 14, 76], [0, 10, 0]]
     ],
-    // [ticks after the build, camera, look-at]: pull back down the road to the hut and the cottage
+    // [ticks after the build, camera, look-at]: a push-in after 60:00 (the Short ends 0.5 s in)
     reveal: [
-      [30, [8, 24, 46], [0, 10, 0]],
-      [60, [1, 14, 76], [0, 8, 0]],
-      [100, [0.5, 14.4, 80], [0, 8, 0]]
+      [8, [-4, 15, 70], [0, 10, 0]],
+      [16, [-8, 17, 64], [-1, 10, 0]]
     ]
   }
 })
