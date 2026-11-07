@@ -6,6 +6,30 @@
 //  - block light spreads from emitting blocks (torches, glowstone, lava...) the same way
 const { Vec3 } = require('vec3')
 
+// Light emission that depends on the block state (Blocks.java lightLevel functions); minecraft-data
+// has one value per block (a lit redstone lamp gave 0, an unlit redstone torch 7: worker 17).
+// Returns undefined for blocks whose emission doesn't depend on state.
+const truthy = (v) => v === true || v === 'true'
+const COPPER_BULB = { copper_bulb: 15, exposed_copper_bulb: 12, weathered_copper_bulb: 8, oxidized_copper_bulb: 4 }
+function stateEmit (name, p) {
+  const lit = truthy(p.lit)
+  if (name === 'redstone_lamp') return lit ? 15 : 0
+  const bulb = COPPER_BULB[name.replace(/^waxed_/, '')]
+  if (bulb !== undefined) return lit ? bulb : 0
+  if (name === 'redstone_torch' || name === 'redstone_wall_torch') return lit ? 7 : 0
+  if (name === 'furnace' || name === 'blast_furnace' || name === 'smoker') return lit ? 13 : 0
+  if (name === 'redstone_ore' || name === 'deepslate_redstone_ore') return lit ? 9 : 0
+  if (name === 'campfire') return lit ? 15 : 0
+  if (name === 'soul_campfire') return lit ? 10 : 0
+  if (name === 'sea_pickle') return truthy(p.waterlogged) ? 3 + 3 * Number(p.pickles || 1) : 0
+  if (name === 'light') return Number(p.level ?? 15)
+  if (/candle_cake$/.test(name)) return lit ? 3 : 0
+  if (/candle$/.test(name)) return lit ? 3 * Number(p.candles || 1) : 0
+  if (name === 'respawn_anchor') return Math.floor(Number(p.charges || 0) / 4 * 15)
+  if (name === 'cave_vines' || name === 'cave_vines_plant') return truthy(p.berries) ? 14 : 0
+  return undefined
+}
+
 class LightEngine {
   constructor (world, mcData, yMin, yMax) {
     this.world = world
@@ -38,7 +62,8 @@ class LightEngine {
     if (b.isCube && !b.transparent) op = 15
     else if (name.endsWith('_leaves') || name === 'water' || name === 'ice' || name === 'frosted_ice' || name === 'cobweb' || name === 'bubble_column') op = 1
     const md = this.mcData.blocksByName[name]
-    v = { op, emit: (md && md.emitLight) || 0 }
+    const st = stateEmit(name, b.getProperties ? b.getProperties() : {})
+    v = { op, emit: st ?? ((md && md.emitLight) || 0) }
     this.stateInfo.set(stateId, v)
     return v
   }
