@@ -723,13 +723,25 @@ const SMOOTH = (() => {
 })()
 function camAtLive (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t)))
-  const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
-  // a teleport (over 4 blocks in one tick) is a cut, never a glide through the in-between spots
-  const f = isCutStep(i, a, b) ? 0 : Math.min(1, Math.max(0, t - i))
+  let a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
+  let yaw0 = SMOOTH.yaw[i], yaw1 = SMOOTH.yaw[i + 1], pit0 = SMOOTH.pitch[i], pit1 = SMOOTH.pitch[i + 1]
+  // a teleport (over 4 blocks in one tick) is a cut, never a glide through the in-between spots. The
+  // tick before it keeps the motion going (extrapolated from i-1 -> i): holding pose i froze 3
+  // frames before every hard cut (worker 5, story_runaway f1374)
+  if (isCutStep(i, a, b)) {
+    const p0 = i > 0 ? P[i - 1] : null
+    if (p0 && !isCutStep(i - 1, p0, a)) {
+      b = a.map((v, k) => k >= 1 && k <= 5 ? v + (v - p0[k]) : v)
+      let dy = SMOOTH.yaw[i] - SMOOTH.yaw[i - 1]; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      yaw1 = yaw0 + dy; pit1 = pit0 + (pit0 - SMOOTH.pitch[i - 1])
+      const A0 = bobState[i - 1]; B = { walk: A.walk + (A.walk - A0.walk), bob: A.bob + (A.bob - A0.bob) }
+    } else { b = a; B = A; yaw1 = yaw0; pit1 = pit0 }
+  }
+  const f = Math.min(1, Math.max(0, t - i))
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f
   return {
     x: a[1] + (b[1] - a[1]) * f, y: a[2] + (b[2] - a[2]) * f + EYE, z: a[3] + (b[3] - a[3]) * f,
-    yaw: lerpAngle(SMOOTH.yaw[i], SMOOTH.yaw[i + 1], f), pitch: SMOOTH.pitch[i] + (SMOOTH.pitch[i + 1] - SMOOTH.pitch[i]) * f,
+    yaw: lerpAngle(yaw0, yaw1, f), pitch: pit0 + (pit1 - pit0) * f,
     bobX: Math.sin(g * Math.PI) * h * 0.5,
     bobY: -Math.abs(Math.cos(g * Math.PI) * h),
     roll: Math.sin(g * Math.PI) * h * 3 * Math.PI / 180,

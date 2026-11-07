@@ -362,6 +362,8 @@ const BOAT_PARTS = [
   ['right', null, [0, 4, -9], [[[-14, -7, -1], [28, 6, 2], [0, 35], 0]], [0, Math.PI, 0]],
   ['left', null, [0, 4, 9], [[[-14, -7, -1], [28, 6, 2], [0, 43], 0]]],
   ['leftPaddle', null, [3, -5, 9], [[[-1, 0, -5], [2, 2, 18], [62, 0], 0], [[-1.001, -3, 8], [1, 6, 7], [62, 0], 0]], [0, 0, Math.PI / 16]],
+  // water_patch (RenderType.waterMask: depth only): hides the water inside the hull
+  ['waterPatch', null, [0, -3, 1], [[[-14, -9, -3], [28, 16, 3], [0, 0], 0]], [BH, 0, 0]],
   ['rightPaddle', null, [3, -5, -9], [[[-1, 0, -5], [2, 2, 18], [62, 20], 0], [[0.001, -3, 8], [1, 6, 7], [62, 20], 0]], [0, Math.PI, Math.PI / 16]]
 ]
 // BoatModel.animatePaddle: rowing time f (0 when not paddling, + PI/8 a tick while paddling)
@@ -479,6 +481,9 @@ export class EntityLayer {
         const M = obj.children[0].matrix
         M.makeTranslation(0, 0.375, 0).multiply(new THREE.Matrix4().makeScale(-1, -1, 1)).multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
         bones.boat = true
+        // the water mask writes depth only, before the translucent water, so the water inside the boat
+        // fails the depth test and the floor shows (vanilla RenderType.waterMask)
+        if (bones.waterPatch) for (const m of bones.waterPatch.children) if (m.isMesh) { m.material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); m.renderOrder = 0.5 }
         poseBoatPaddle(bones.leftPaddle, 0, false); poseBoatPaddle(bones.rightPaddle, 0, true)
       }
     } else if (name === 'warden') {

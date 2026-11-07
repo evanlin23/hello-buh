@@ -7,6 +7,7 @@
 //   portal  - PortalParticle: purple specks drifting in to where a pearl lands
 //   happy   - happy_villager sparkles (glint) around a villager's head
 //   angry   - angry_villager clouds rising from a villager's head
+//   poof    - a mob vanishing: 20 light-grey poof clouds in its box (ev.w, ev.h)
 //   smoke   - large_smoke puffs where water meets lava (LevelEvent.LAVA_FIZZ: 8 per block, rising)
 function rng (seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000 } }
 
@@ -87,7 +88,20 @@ function spawn (ev, blockTex) {
       const poof = r() < 0.5, g = poof ? 0.7 + r() * 0.3 : r() * 0.3, rad = ev.radius || 4
       const dx = (r() - 0.5) * rad, dy = (r() - 0.5) * rad * 0.6, dz = (r() - 0.5) * rad, d = Math.hypot(dx, dy, dz) || 1
       out.push({ t0: T0 + Math.floor(r() * 3), x: ev.x + dx, y: ev.y + dy, z: ev.z + dz, vx: dx / d * 0.05, vy: dy / d * 0.05 + 0.02, vz: dz / d * 0.05,
-        g: -0.004, drag: 0.9, life: poof ? 16 / (r() * 0.8 + 0.2) + 2 : 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * (poof ? 1.5 : 0.75), anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
+        g: -0.004, drag: 0.9, life: poof ? 16 / (r() * 0.8 + 0.2) + 2 : 8 / (r() * 0.8 + 0.2), size: poof ? 0.1 * (r() * r() * 6 + 1) : 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
+    }
+  }
+  if (ev.type === 'poof') {
+    // a mob vanishing (LivingEntity.makePoofParticles): 20 ExplodeParticles (poof) at random points in
+    // its box (ev.w, ev.h; default a player-sized 0.6 x 1.8, from ev.y up), gaussian x 0.02 plus +-0.05
+    // drift, light grey 0.7-1, half-size 0.1 x (r^2 x 6 + 1), friction 0.9, gravity -0.1, lives
+    // 16/(r*0.8+0.2)+2 ticks, generic_7 -> generic_0
+    const w = ev.w || 0.6, h = ev.h || 1.8
+    const gauss = () => { let u = 0, v = 0; while (!u) u = r(); while (!v) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v) }
+    for (let i = 0; i < (ev.count || 20); i++) {
+      const g = r() * 0.3 + 0.7
+      P({ x: ev.x + (r() * 2 - 1) * w / 2, y: ev.y + r() * h, z: ev.z + (r() * 2 - 1) * w / 2, vx: gauss() * 0.02 + (r() * 2 - 1) * 0.05, vy: gauss() * 0.02 + (r() * 2 - 1) * 0.05, vz: gauss() * 0.02 + (r() * 2 - 1) * 0.05,
+        g: -0.004, drag: 0.9, life: Math.floor(16 / (r() * 0.8 + 0.2)) + 2, size: 0.1 * (r() * r() * 6 + 1), anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
     }
   }
   if (ev.type === 'potion') {
