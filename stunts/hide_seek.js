@@ -27,7 +27,7 @@ module.exports = {
     song: 'songs/funk_abnormal.mp3', dropAt: 'r4_found',
     startAt: 'r1_go:-0.35', endAfter: 'r4_found:0.9',
     speed: [1, 2, 3].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
-    clock: [1, 2, 3, 4].map(n => [`r${n}_go`, `r${n}_end`, 5, `ROUND ${n}`]),
+    clock: [1, 2, 3, 4].map(n => [`r${n}_go`, `r${n}_end`, 5, `ROUND ${n}`, "down"]),
     counter: { at: [1, 2, 3, 4].map(n => `r${n}_found`), total: ROUNDS },
     cards: [['r1_found', 'INSIDE THE TREE 😭', 1.0, 'yellow'], ['r2_found', 'UNDER THE POND 😭', 1.0, 'blue'],
       ['r3_found', 'UNDER MY FEET 😭', 1.0, 'orange'], ['r4_found', 'AT BUILD LIMIT 💀', 0.9, 'red']],
