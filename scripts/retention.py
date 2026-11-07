@@ -13,7 +13,11 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
   cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?]]  big impact text popping on a mark ("10/10",
                                                    "NO WAY"); COLOR: white|red|green|yellow|blue|gold
   zoom:    [[START[:off], END[:off], SCALE]]       a held push-in on the crosshair (eases in 0.4 s,
-                                                   back out over 0.25 s after END); multiplies with punch
+                                                   back out over 0.25 s after END); multiplies with punch.
+                                                   It upscales the rendered frame, so above ~1.3-1.4x
+                                                   pixel art goes soft: for big push-ins use the
+                                                   stunt's `fovZoom` (same spec, recording time), which
+                                                   narrows the render camera's FOV and stays sharp
   shake:   [EVENT | [EVENT, NTH, PX]]             screen shake on the game view (default 16 px, 0.35 s)
   flash:   [EVENT | [EVENT, NTH, ALPHA]]          white flash on the game view (0.7, ~0.2 s)
   freeze:  [[EVENT, SECONDS, TEXT?, COLOR?]]      freeze frame on a mark with a slow push-in and a
