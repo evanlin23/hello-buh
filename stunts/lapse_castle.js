@@ -141,7 +141,10 @@ function castle () {
 
 module.exports = makeStunt({
   name: 'lapse_castle',
-  renderDistance: 12, recordRadius: 220,   // high shots: the horizon fogs out at 12 chunks instead of a domed edge at 8
+  // the recording reaches the bot's whole loaded area (12 chunks ~ 192 blocks), and the default 8-chunk
+  // fog (128) from cameras up to ~60 blocks off the set then always ends inside recorded terrain. At
+  // renderDistance 12 the high shots saw past the recorded edge: a hard terrain edge and a dark band
+  recordRadius: 200,
   caption: 'building a castle in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   hotbar: [['dirt', 64], ['cobblestone', 64], ['stone_bricks', 64]],
