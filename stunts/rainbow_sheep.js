@@ -23,9 +23,9 @@ module.exports = {
   edit: {
     subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'collected',
     startAt: 'dye:-0.45',
-    endAfter: 'collected:0.6',      // (the 30 s minimum: 29.9 at :0.4)
+    endAfter: 'collected:0.9',      // (the 30 s minimum: 29.9 at :0.4)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
-      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'rainbow hotbar 🌈', 0.6, 0]]   // (not 'every colour': wool landing behind the sheep can't be reached)
+      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'rainbow hotbar', 0.6, 0]]   // (not 'every colour': wool landing behind the sheep can't be reached)
   },
 
   async setup (ctx) {
@@ -116,9 +116,9 @@ module.exports = {
     }
     // back up and take in the rainbow (the last, white sheep at the end of the line)
     const mid = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 0.5)
-    bot.setControlState('back', true); bot.setControlState('left', true)
+    bot.setControlState('back', true)   // straight back (the strafe left too took the line into a corner)
     let rev = false
-    for (let t = 0; t < 20; t++) {                      // a short back-up: the rainbow stays big in frame
+    for (let t = 0; t < 16; t++) {                      // a short back-up: the rainbow stays big in frame
       await bot.waitForTicks(1)
       if (t === 8) { ctx.mark('reveal'); ctx.sound('entity.player.levelup', 0.5, 1.2); rev = true }
       const e = bot.entity.position, d = mid.minus(e.offset(0, 1.62, 0))
@@ -204,6 +204,7 @@ module.exports = {
     // the payoff: back off with the whole sheared, cycling line coming into frame (the full hotbar below); the
     // mark lands once the line fills the view (at the sweep's end the camera faced the grass past the line)
     const lineMid = new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5)
+    await ctx.easeLookAt(lineMid, 280)   // onto the line first (the back-off swung over empty grass and whipped to it)
     bot.setControlState('back', true)
     for (let k = 0; k < 14; k++) {   // a short back-off: the line stays big (22 ticks left it a receding strip)
       const e = bot.entity.position, d = lineMid.minus(e.offset(0, 1.62, 0))
