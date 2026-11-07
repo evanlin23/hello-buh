@@ -149,7 +149,8 @@ module.exports = makeStunt({
   red: 'hour',
   hotbar: [['dirt', 64], ['cobblestone', 64], ['stone_bricks', 64]],
   small,
-  mid: { blocks: fort(), w: 7, d: 7, front: -1, perTick: 2, speed: 3, slots: { cobblestone: 1, stone_bricks: 2 } },
+  endAfter: 'big_done:0.5',   // the wide shot is up from ~0.2 s before 60:00: end before it reads as held
+  mid: { blocks: fort(), w: 7, d: 7, front: -1, perTick: 2, speed: 3, backTicks: 14, slots: { cobblestone: 1, stone_bricks: 2 } },
   big: {
     blocks: castle(),
     hold: 'stone_bricks', slot: 2,
@@ -164,22 +165,22 @@ module.exports = makeStunt({
       [240, [-30, 18, 40], [0, 8, 0]],
       [300, [-40, 24, 42], [-22, 16, 22]],   // a tower rising above the finished walls
       [360, [10, 22, 46], [0, 12, -2]],
-      [540, [20, 30, 33], [0, 22, -3]],
-      [700, [14, 36, 26], [0, 30, -3]],
+      [540, [6, 30, 50], [20, 26, 20]],      // the cones growing on the front towers
+      [680, [10, 34, 30], [0, 32, -3]],      // then the keep's pyramid
       [745, [-18, 40, 54], [-20, 10, 10]],   // round in front of the south-west tower, not past its cone
       [810, [-58, 30, 40], [-36, 4, 6]],     // the village rising beside the castle
       [960, [-6, 44, 46], [-2, 0, 4]],       // over the front wall into the courtyard as it fills
       [1080, [16, 40, 40], [0, 10, -3]],
       [1140, [8, 40, 50], [0, 34, -3]],      // the flags going up
-      [1175, [-1, 14, 84], [0, 21, 0]],     // arrive early, then creep: at 3x the pull-back would otherwise
+      [1182, [-1, 14, 84], [0, 21, 0]],     // arrive early, then creep: at 3x the pull-back would otherwise
       [1188, [0, 12, 78], [0, 21, 0]]       // hit 60:00 at full speed and drop to real time in one frame
     ],
     // [ticks after the build, camera, look-at]: the pull-back lands on the wide shot at 60:00 (the
     // castle behind the dirt arch and the fort) and pushes in and round to the end (backwards it ran
     // into the fog: the renderer's 8-chunk fog starts ~115 blocks out and faded the rear towers)
     reveal: [
-      [15, [-6, 15, 70], [0, 21, 0]],
-      [40, [-14, 19, 60], [-1, 21, 0]]
+      [8, [-5, 14, 72], [0, 21, 0]],
+      [16, [-10, 17, 64], [-1, 21, 0]]
     ]
   }
 })
