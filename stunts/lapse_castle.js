@@ -152,17 +152,17 @@ module.exports = makeStunt({
     hold: 'stone_bricks', slot: 2,
     // ticks of the build each stage gets (each 3 s or less on screen): moat, walls, towers, keep, roofs,
     // village, courtyard, tower flags, the last flag
-    stageTicks: { 0: 120, 1: 180, 2: 120, 3: 180, 4: 180, 5: 150, 6: 150, 7: 60, 8: 40 },
+    stageTicks: { 0: 60, 1: 240, 2: 120, 3: 180, 4: 180, 5: 150, 6: 150, 7: 60, 8: 40 },
     // [tick of the build, camera, look-at], local to the castle centre (y from the ground)
     keys: [
       [0, [-24, 13, 52], [0, -1, 26]],
-      [120, [-34, 14, 46], [0, 3, 0]],
+      [60, [-34, 14, 46], [0, 3, 0]],
       [300, [-30, 18, 40], [0, 8, 0]],
       [420, [10, 22, 46], [0, 12, -2]],
       [600, [20, 30, 33], [0, 22, -3]],
       [760, [14, 36, 26], [0, 30, -3]],
       [850, [-30, 30, 44], [-26, 8, 0]],
-      [960, [-50, 24, 30], [-22, 6, 0]],
+      [960, [-44, 40, 30], [-6, 0, 6]],   // over the wall into the courtyard as it fills
       [1080, [-30, 34, 40], [0, 8, -3]],
       [1140, [-14, 38, 34], [0, 34, -3]],
       [1188, [0, 12, 78], [0, 21, 0]]
@@ -171,8 +171,8 @@ module.exports = makeStunt({
     // castle behind the dirt arch and the fort) and pushes in and round to the end (backwards it ran
     // into the fog: the renderer's 8-chunk fog starts ~115 blocks out and faded the rear towers)
     reveal: [
-      [15, [-3, 13, 73], [0, 21, 0]],
-      [40, [-8, 15, 67], [-1, 21, 0]]
+      [15, [-6, 15, 70], [0, 21, 0]],
+      [40, [-14, 19, 60], [-1, 21, 0]]
     ]
   }
 })
