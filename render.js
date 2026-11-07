@@ -339,11 +339,17 @@ const HAND = []          // per tick: [shownItem, height]
   // a respawn is a new player: the hand comes up fresh with the current item (no lowering of the
   // previous life's item first: worker 3, tries f717)
   const RESP = (rec.timeline || []).filter(e => e.event === 'respawn').map(e => Math.ceil(e.t / 50))
+  let lastResp = -Infinity, respWant = null
   for (let tick = 0; tick <= last; tick++) {
     while (k < HELD.length && HELD[k][0] <= tick) want = HELD[k++][1]
-    if (RESP.includes(tick)) { shown = want; h = 0 }
-    h += Math.max(-0.4, Math.min(0.4, (shown === want ? 1 : 0) - h))
-    if (h < 0.1) shown = want
+    // the respawned player's inventory can arrive a tick or two after the respawn mark (an /item
+    // replace at the death): for 3 ticks after a respawn the hand wants what is held at its end, so
+    // the fresh hand comes up with that item, no lower-and-raise of the old life's (worker 3, tries
+    // f678: empty bucket -> water bucket)
+    if (RESP.includes(tick)) { h = 0; lastResp = tick; respWant = want; for (let j = k; j < HELD.length && HELD[j][0] <= tick + 3; j++) respWant = HELD[j][1]; shown = respWant }
+    const w = tick - lastResp <= 3 ? respWant : want
+    h += Math.max(-0.4, Math.min(0.4, (shown === w ? 1 : 0) - h))
+    if (h < 0.1) shown = w
     HAND.push([shown, h])
   }
 }
