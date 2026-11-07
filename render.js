@@ -90,10 +90,20 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
     for (let i = 0; i + 1 < k.length; i++) {
       const [t0, x0, y0, z0] = k[i], [t1, x1, y1, z1] = k[i + 1], n = t1 - t0
       if (n <= 1 || n > 40 || Math.hypot(x1 - x0, y1 - y0, z1 - z0) > 8) continue
+      // coming down (a drop from a broken block, Block.popResource): vanilla's ItemEntity goes up at
+      // ~0.2 a tick, gravity 0.04, drag 0.98, about half a block, then rests where the next sync puts
+      // it. The old fixed arc 0.02 * a * (n - a) peaked ~2 blocks high on a 20-tick sync gap.
+      const ys = []
+      let land = -1
+      if (y1 < y0 - 0.1) {
+        let y = y0, vy = 0.2
+        for (let k = 1; k < n; k++) { vy -= 0.04; y += vy; vy *= 0.98; if (vy < 0 && y <= y1) { y = y1; if (land < 0) land = k } ys.push(land >= 0 ? y1 : y) }
+      }
       for (let tt = t0 + 1; tt < t1; tt++) {
         const row = ENT.get(tt) && ENT.get(tt).get(id); if (!row) continue
-        const f = (tt - t0) / n, arc = 0.02 * (tt - t0) * (t1 - tt) * (y1 >= y0 - 0.1 ? 0 : 1)
-        const r = row.slice(); r[3] = x0 + (x1 - x0) * f; r[4] = y0 + (y1 - y0) * f + arc; r[5] = z0 + (z1 - z0) * f
+        const k = tt - t0, f = k / n
+        const r = row.slice()
+        if (land > 0) { const h = Math.min(1, k / land); r[3] = x0 + (x1 - x0) * h; r[4] = ys[k - 1]; r[5] = z0 + (z1 - z0) * h } else { r[3] = x0 + (x1 - x0) * f; r[4] = y0 + (y1 - y0) * f; r[5] = z0 + (z1 - z0) * f }
         ENT.get(tt).set(id, r)
       }
     }
