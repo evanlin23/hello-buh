@@ -35,8 +35,9 @@ module.exports = {
     subs,
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
       ['look5:0.15', 'look5:0.95', 'cut'],      // the finale's first glance at -0.7 was black night sky (beat audit PAUSE 0.8 s)
+      ['drop4:0.5', 'drop4:2.4', 2],           // the high part of the build-limit fall: from 250 up the target barely changes (review: LOW 1.2 s)
       ['drop5:-0.6', 'drop5:0.6', 2],          // the held breath and the jump's rise before the last fall (PAUSE 0.6 s)
-      ['drop5:0.6', 'drop5:2.4', 1.6]],         // the high, dark part of the last fall (LOW 2.3 s); the lava rushing up stays real-time
+      ['drop5:0.6', 'drop5:3.3', 2.5]],        // the high, dark part of the last fall (review: LOW 1.9 s); the lava rushing up stays real-time
     // retention toolkit (scripts/retention.py, scripts/sfx.py; worker 10)
     hook: { at: 'splash5', before: 1.7, after: -0.2, text: 'wait for the last one 😳' },   // a flash of the finale before tier 1: 1.5 s (owner: 0.5 s was "too quick")
     counter: { at: TIERS.map((_, i) => `look${i + 1}`), total: TIERS.length },
