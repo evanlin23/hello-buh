@@ -126,9 +126,14 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // a wide clearing: a cut hillside at its edge read as a command-built box behind the builds
-    for (let y0 = floor + 1; y0 <= floor + 28; y0 += 4) await ctx.cmd(`/fill ${x - 30} ${y0} ${z - 45} ${x + 42} ${y0 + 3} ${z + 34} air`)
-    await ctx.cmd(`/fill ${x - 30} ${floor} ${z - 45} ${x + 42} ${floor} ${z + 34} grass_block`)
-    await ctx.cmd(`/fill ${x - 30} ${floor - 3} ${z - 45} ${x + 42} ${floor - 1} ${z + 34} dirt`)
+    // (pieces under the 32768-block /fill cap; the edge sits out in the fog: at x+42 a cut hillside showed)
+    const fillBig = async (x0, y0, z0, x1, y1, z1, block) => {
+      const per = Math.max(1, Math.floor(32768 / ((y1 - y0 + 1) * (z1 - z0 + 1))))
+      for (let xa = x0; xa <= x1; xa += per) await ctx.cmd(`/fill ${xa} ${y0} ${z0} ${Math.min(x1, xa + per - 1)} ${y1} ${z1} ${block}`)
+    }
+    for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await fillBig(x - 70, y0, z - 90, x + 85, y0 + 7, z + 45, 'air')
+    await fillBig(x - 70, floor, z - 90, x + 85, floor, z + 45, 'grass_block')
+    await fillBig(x - 70, floor - 3, z - 90, x + 85, floor - 1, z + 45, 'dirt')
     // the wide shot at the end: a dirt mound in front of the middle of the four plots
     this.view = { x: x + 6, z: z + 27 }   // far and high enough for all five
     await ctx.cmd(`/fill ${x + 5} ${floor + 1} ${z + 26} ${x + 7} ${floor + 5} ${z + 28} dirt`)
@@ -215,15 +220,16 @@ module.exports = {
     // the payoff: cut to the wide shot of all four from the mound, a slow drift across them
     tgt = null; bot.removeListener('physicsTick', steer)
     for (const c of ['left', 'right', 'forward', 'back']) bot.setControlState(c, false)
-    const mid = new Vec3(x + 6, floor + 5, z - FRONT - 4)
+    const mid = new Vec3(x + 6, floor + 5.6, z - FRONT - 4)
     aim = mid.offset(-3, 0, 0)
     // the cut lands already aimed (the first look after a plain tp jumped the camera)
     const eyeV = new Vec3(this.view.x + 0.5, floor + 6 + 1.62, this.view.z + 0.5), dv = aim.minus(eyeV)
     const tpYaw = -Math.atan2(dv.x, dv.z) * 180 / Math.PI,   // vanilla yaw: 0 = south, 90 = west
       tpPitch = -Math.atan2(dv.y, Math.hypot(dv.x, dv.z)) * 180 / Math.PI
     bot.chat(`/tp @s ${this.view.x + 0.5} ${floor + 6} ${this.view.z + 0.5} ${tpYaw.toFixed(1)} ${tpPitch.toFixed(1)}`)
-    await bot.waitForTicks(2)
-    ctx.mark('all_done')
+    await bot.waitForTicks(1)
+    ctx.mark('all_done')                                    // on the cut (a tick later left the old label up on the wide shot)
+    await bot.waitForTicks(1)
     ctx.sound('entity.player.levelup', 1, 1); ctx.sound('ui.toast.challenge_complete', 0.6, 1)
     for (let i = 0; i < 40; i++) { await look(mid.offset(3, 0, 0), 0.04); await bot.waitForTicks(1) }
     ctx.log('wrong blocks:', wrong)
