@@ -657,4 +657,13 @@ function getModelVariants (block, blockStates) {
   return []
 }
 
-module.exports = { getSectionGeometry, setBiomeColors, lightmap, setBrightness, setDayTime, dayInfo, setDimension }
+// TerrainParticle's colour: the block's BlockColors tint at the spot (0 = foliage / grass by biome,
+// or a fixed colour), or null for untinted blocks. Grass blocks are left out, as vanilla does (their
+// particle sprite is the dirt side)
+function particleTint (world, pos, name, tinted) {
+  if (!tinted || name === 'grass_block') return null
+  if (FIXED[name] !== undefined) return hexToGl(FIXED[name])
+  return biomeTint(world, pos, name.includes('leaves') || name === 'vine' ? 'foliage' : 'grass')
+}
+
+module.exports = { particleTint, getSectionGeometry, setBiomeColors, lightmap, setBrightness, setDayTime, dayInfo, setDimension }

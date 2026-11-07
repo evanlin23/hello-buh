@@ -37,7 +37,7 @@ function spawn (ev, blockTex) {
       const uo = r() * 3, vo = r() * 3   // TerrainParticle: a quarter of the sprite at a continuous random offset
       P({ x: ev.x + ox, y: ev.y + oy, z: ev.z + oz, vx: (ox - 0.5) * 0.2 + (r() - 0.5) * 0.1, vy: (oy - 0.5) * 0.2 + r() * 0.1, vz: (oz - 0.5) * 0.2 + (r() - 0.5) * 0.1,
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.05 * (r() * 0.5 + 0.5) * 2, collide: true,
-        tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: [0.6, 0.6, 0.6] })
+        tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: ev.tint ? ev.tint.map(c => c * 0.6) : [0.6, 0.6, 0.6] })
     }
   } else if (ev.type === 'portal') {
     for (let i = 0; i < (ev.count || 40); i++) {

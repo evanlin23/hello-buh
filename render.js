@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap, setBrightness, setDayTime, setDimension } = require('./renderer/models')
+const { lightmap, setBrightness, setDayTime, setDimension, particleTint } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -1198,7 +1198,13 @@ function camAtLive (t) {
   const mcDataR = require('minecraft-data')(rec.version)
   for (let ev of (rec.timeline || []).filter(e => e.event === 'particles')) {
     let bt = null
-    if (ev.block) { const st = mesher.blockStates[ev.block]; const v = st && (st.variants ? Object.values(st.variants)[0] : st.multipart && st.multipart[0].apply); const m = Array.isArray(v) ? v[0] : v; bt = m && m.model && m.model.textures && m.model.textures.particle }
+    if (ev.block) {
+      const st = mesher.blockStates[ev.block]; const v = st && (st.variants ? Object.values(st.variants)[0] : st.multipart && st.multipart[0].apply); const m = Array.isArray(v) ? v[0] : v; bt = m && m.model && m.model.textures && m.model.textures.particle
+      // TerrainParticle multiplies the crumbs by the block's tint (leaves foliage-green; worker 16)
+      const tinted = !!(m && m.model && (m.model.elements || []).some(el => Object.values(el.faces || {}).some(f => f.tintindex !== undefined)))
+      const tint = particleTint(mesher.world, new Vec3(Math.floor(ev.x), Math.floor(ev.y), Math.floor(ev.z)), ev.block, tinted)
+      if (tint) ev = { ...ev, tint }
+    }
     // an explosion from before the harness kept the packet's blockCount / particle: count the blocks
     // the recording turned to air within its radius over the next 3 ticks. None broken = the blast
     // kept its blocks (mobGriefing false), so the small explosion particle, not the emitter.
