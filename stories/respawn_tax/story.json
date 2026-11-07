@@ -1,91 +1,95 @@
 {
- "name": "respawn_tax",
- "stunt": "story_respawn_tax",
- "caption": "every time I respawn, someone disappears 😳",
- "premise": "Every time the narrator dies and respawns, one villager in his village is gone. He tries to stop dying; the librarian keeps feeding him bread and the iron golem always stands on his respawn point.",
- "twist": "Nobody is taking them. They volunteer: a respawn costs one life, and the village has been paying for his since he was born. The last one left is the librarian who raised him, and she's already standing on his spawn point.",
- "voice": {
-  "voice": "am_adam",
-  "tempo": 1.03,
-  "rate": 1.45
- },
- "gap": 0.1,
- "key_color": "#FFD640",
- "meter": {
-  "label": "VILLAGERS"
- },
- "lines": [
-  {
-   "id": "L01",
-   "text": "Every time / I RESPAWN, / one villager / in my village / DISAPPEARS."
+  "name": "respawn_tax",
+  "stunt": "story_respawn_tax",
+  "caption": "every time I respawn, someone disappears 😳",
+  "premise": "Every time the narrator dies and respawns, one villager in his village is gone. He tries to stop dying; the librarian keeps feeding him bread and the iron golem always stands on his respawn point.",
+  "twist": "Nobody is taking them. They volunteer: a respawn costs one life, and the village has been paying for his since he was born. The last one left is the librarian who raised him, and she's already standing on his spawn point.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
   },
-  {
-   "id": "L02",
-   "text": "First, / I fell / off a CLIFF."
+  "gap": 0.1,
+  "key_color": "#FFD640",
+  "meter": {
+    "label": "VILLAGERS"
   },
-  {
-   "id": "L03",
-   "text": "Respawn. / The FISHERMAN / was gone. / His boat / just FLOATING / there."
-  },
-  {
-   "id": "L04",
-   "text": "Then LAVA. / Respawn. / The BUTCHER'S / door was / wide OPEN."
-  },
-  {
-   "id": "L05",
-   "text": "A CACTUS / took the / FLETCHER."
-  },
-  {
-   "id": "L06",
-   "text": "So I / stopped DYING. / I moved / into a / house made / of HAY."
-  },
-  {
-   "id": "L07",
-   "text": "The LIBRARIAN / raised me. / She kept / giving me / BREAD. / One more, / just in CASE."
-  },
-  {
-   "id": "L08",
-   "text": "And the / IRON GOLEM / always stood / EXACTLY where / I respawn."
-  },
-  {
-   "id": "L09",
-   "text": "Then I / TRIPPED."
-  },
-  {
-   "id": "L10",
-   "text": "Into the / ONLY block / of lava / in the / whole VILLAGE."
-  },
-  {
-   "id": "L11",
-   "text": "This time / I was / FAST. / I saw / the NITWIT / walk up / to my / spawn point."
-  },
-  {
-   "id": "L12",
-   "text": "He wasn't / TAKEN. / He VOLUNTEERED."
-  },
-  {
-   "id": "L13",
-   "text": "Every respawn / costs ONE / life. / They've been / PAYING / for mine / since I / was BORN."
-  },
-  {
-   "id": "L14",
-   "text": "The golem / wasn't / guarding ME. / He was / keeping the / LINE."
-  },
-  {
-   "id": "L15",
-   "text": "Now it's / just HER."
-  },
-  {
-   "id": "L16",
-   "text": "She's already / standing / on my / SPAWN."
-  },
-  {
-   "id": "L17",
-   "text": "And today, / I tripped / AGAIN."
-  },
-  {
-   "id": "L18",
-   "text": "And she / just SMILED / and said, / go on. / RESPAWN."
-  }
- ]
+  "lines": [
+    {
+      "id": "L01",
+      "text": "Every time / I RESPAWN, / one villager / in my village / DISAPPEARS."
+    },
+    {
+      "id": "L02",
+      "text": "First, / I fell / off a CLIFF."
+    },
+    {
+      "id": "L03",
+      "text": "Respawn. / The FISHERMAN / was gone. / His boat / just FLOATING / there."
+    },
+    {
+      "id": "L04",
+      "text": "Then LAVA. / Respawn. / The BUTCHER'S / door was / wide OPEN."
+    },
+    {
+      "id": "L05",
+      "text": "A CACTUS / took the / FLETCHER."
+    },
+    {
+      "id": "L06",
+      "text": "So I / stopped DYING. / I moved / into a / house made / of HAY."
+    },
+    {
+      "id": "L07",
+      "text": "The LIBRARIAN / raised me. / She kept / giving me / BREAD. / One more, / just in CASE."
+    },
+    {
+      "id": "L08",
+      "text": "And the / IRON GOLEM / always stood / EXACTLY where / I respawn."
+    },
+    {
+      "id": "L09",
+      "text": "Then I / TRIPPED."
+    },
+    {
+      "id": "L10",
+      "text": "Into the / ONLY block / of lava / in the / whole VILLAGE."
+    },
+    {
+      "id": "L11",
+      "text": "This time / I was / FAST. / I saw / the NITWIT / walk up / to my / spawn point."
+    },
+    {
+      "id": "L12",
+      "text": "He wasn't / TAKEN. / He VOLUNTEERED."
+    },
+    {
+      "id": "L13",
+      "text": "Every respawn / costs ONE / life. / They've been / PAYING / for mine / since I / was BORN."
+    },
+    {
+      "id": "L14",
+      "text": "The golem / wasn't / guarding ME. / He was / keeping the / LINE."
+    },
+    {
+      "id": "L15",
+      "text": "Now it's / just HER."
+    },
+    {
+      "id": "L16",
+      "text": "She's already / standing / on my / SPAWN."
+    },
+    {
+      "id": "L17",
+      "text": "And today, / I tripped / AGAIN."
+    },
+    {
+      "id": "L18",
+      "text": "And she / just SMILED / and said, / go on. / RESPAWN."
+    }
+  ],
+  "start_on_respawn": [
+    "L03",
+    "L11"
+  ]
 }

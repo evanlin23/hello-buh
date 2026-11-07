@@ -37,7 +37,7 @@ def _lines(story_dir):
 POSES = None   # the recording's poses (edit.py sets them): line starts snap to the camera cut
 
 
-def _marks(timeline, start, ids=None):
+def _marks(timeline, start, ids=None, on_respawn=()):
     """[(seconds into the Short, line id)] for every `line` mark. A line is marked a tick or two after its cut
     lands (the stunt sees the new position late), so it starts on the cut itself: the first tick whose pose
     is over 4 blocks from the one before (render.js shows that pose from exactly that tick)."""
@@ -55,7 +55,7 @@ def _marks(timeline, start, ids=None):
             near = bool(out) and any(m - 12 <= c <= m for c in cuts)   # not line 1: the Short starts on its mark
             lim = 0.36 if near else 16
             fwd = None
-            if any(m <= r <= m + 4 for r in respawns):
+            if e["id"] in on_respawn and any(m <= r <= m + 4 for r in respawns):   # story.json start_on_respawn: L06 talks over the death screen on purpose
                 # a line that opens on a respawn starts on the respawn's camera jump, a few ticks after its mark
                 # (its caption came 3 frames early over the death screen: frame review, story_respawn_tax f1557)
                 fwd = next((i for i in range(m + 1, min(len(POSES), m + 7)) if ((POSES[i][1] - POSES[i - 1][1]) ** 2 + (POSES[i][2] - POSES[i - 1][2]) ** 2 + (POSES[i][3] - POSES[i - 1][3]) ** 2) > 0.36), None)   # (a respawn near the death spot moves only ~2 blocks)
@@ -73,7 +73,7 @@ def narration_wav(story_dir, timeline, start, dur, out):
     story, voice = _lines(story_dir)
     sr = 48000
     track = np.zeros(int((dur + 1) * sr), np.float32)
-    for t, lid in _marks(timeline, start, {l["id"] for l in story["lines"]}):
+    for t, lid in _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ())):
         with wave.open(str(pathlib.Path(story_dir) / "voice" / f"{lid}.wav")) as w:
             x = np.frombuffer(w.readframes(w.getnframes()), np.int16 if w.getsampwidth() == 2 else np.int32).astype(np.float32)
             x /= 32768.0 if w.getsampwidth() == 2 else 2 ** 31
@@ -133,7 +133,7 @@ def caption_events(story_dir, timeline, start, dur):
     A line's first chunk appears on its cut (the line's mark), and its last chunk holds until the next line's cut
     (0.3 s past its last word only when the next line is over 1.2 s away)."""
     story, voice = _lines(story_dir)
-    marks = _marks(timeline, start, {l["id"] for l in story["lines"]})
+    marks = _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ()))
     ev = []
     for n, (t, lid) in enumerate(marks):
         v = voice["lines"][lid]
