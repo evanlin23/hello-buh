@@ -66,51 +66,70 @@ module.exports = {
       for (let i = blobs.length - 1; i >= 0; i--) if (blobs[i].r > blobs[i].max) blobs.splice(i, 1)
     }
     bot.on('physicsTick', touch)
-    // walking through a forest: hop over whatever we bump into instead of standing against it
-    const hop = () => bot.setControlState('jump', !!(bot.controlState.forward && bot.entity.isCollidedHorizontally))
-    bot.on('physicsTick', hop)
+    // walking is steered toward waypoints on the cleared path, whatever the camera looks at (moving
+    // along the look direction walked the bot off the path into walls and a pit)
+    let wp = null
+    const steer = () => {
+      for (const c of ['forward', 'back', 'left', 'right']) bot.setControlState(c, false)
+      bot.setControlState('jump', false)
+      if (!wp) return
+      const dx = wp.x - bot.entity.position.x, dz = wp.z - bot.entity.position.z
+      if (Math.hypot(dx, dz) < 0.4) { wp = null; return }
+      let rel = Math.atan2(-dx, -dz) - bot.entity.yaw
+      while (rel > Math.PI) rel -= 2 * Math.PI; while (rel < -Math.PI) rel += 2 * Math.PI
+      const a = Math.abs(rel)
+      if (a < 1.2) bot.setControlState('forward', true); else if (a > 1.95) bot.setControlState('back', true)
+      if (rel > 0.4 && rel < 2.75) bot.setControlState('left', true); else if (rel < -0.4 && rel > -2.75) bot.setControlState('right', true)
+      if (bot.entity.isCollidedHorizontally) bot.setControlState('jump', true)
+    }
+    bot.on('physicsTick', steer)
+    const P = (dz) => ({ x: this.x + 0.5, z: this.z + 0.5 + dz })
     await bot.waitForTicks(10)
     await ctx.easeLook(Math.PI + 0.2, -0.3, 700)              // a normal day in the forest...
     on = true; ctx.mark('touch')
     ctx.sound('entity.player.levelup', 0.7)
-    ctx.sound('entity.player.levelup', 0.7)
-    await ctx.easeLook(Math.PI + 0.6, -0.45, 1680)            // the ground in front
-    await ctx.easeLook(Math.PI + 0.9, 0.15, 1819)             // up a tree
-    await ctx.easeLook(Math.PI - 0.6, 0.05, 3080)             // sweep across the trees
-    bot.setControlState('forward', true)
-    await ctx.easeLook(Math.PI - 0.3, -0.25, 2520)            // walk on, gilding the path
-    await ctx.easeLook(Math.PI + 0.7, 0.05, 2800)             // ...and the trees alongside
-    await ctx.easeLook(Math.PI - 0.5, -0.1, 2520)
-    // the cabin beside the path
+    await ctx.easeLook(Math.PI + 0.6, -0.45, 1800)            // the ground in front
+    await ctx.easeLook(Math.PI + 0.9, 0.15, 2000)             // up a tree
+    await ctx.easeLook(Math.PI - 0.6, 0.05, 3800)             // sweep across the trees
+    wp = P(8); ctx.mark('walk')                               // walk on, gilding the path and the trees alongside
+    await ctx.easeLook(Math.PI - 0.3, -0.25, 1600)
+    await ctx.easeLook(Math.PI + 0.7, 0.05, 1800)
+    // a big tree on the right, top to bottom
+    await ctx.easeLook(Math.PI + 1.0, 0.45, 2200)
+    await ctx.easeLook(Math.PI + 0.8, -0.2, 1500)
+    // on to the cabin, stopping beside it to watch it go gold
+    wp = P(16)
     const cab = new ctx.Vec3(this.cabin.x + 0.5, this.cabin.y + 1.5, this.cabin.z + 0.5)
-    await ctx.easeLookAt(cab, 1680)
-    bot.setControlState('forward', false)
+    await ctx.easeLook(Math.PI - 0.2, -0.15, 1500)
+    await ctx.easeLookAt(cab, 900)
     ctx.mark('cabin')
-    const cyaw = bot.entity.yaw
-    await ctx.easeLook(cyaw - 0.35, bot.entity.pitch + 0.15, 1819)
-    await ctx.easeLook(cyaw + 0.35, bot.entity.pitch - 0.25, 2100)
+    const cyaw = bot.entity.yaw, cp = bot.entity.pitch
+    await ctx.easeLook(cyaw - 0.3, cp + 0.25, 1500)
+    await ctx.easeLook(cyaw + 0.3, cp - 0.15, 1700)
+    await ctx.easeLook(cyaw, cp + 0.1, 1400)
     // on: it's stronger now, whole trees at a glance
-    bot.setControlState('forward', true)
-    await ctx.easeLook(Math.PI + 0.5, 0.25, 2520)
-    await ctx.easeLook(Math.PI - 0.6, 0.3, 2800)
-    await ctx.easeLook(Math.PI, -0.2, 2100)
-    bot.setControlState('forward', false)
-    // turn round: the golden trail behind... and one last wave
-    await ctx.easeLook(Math.PI + 2.6, -0.3, 2520)
-    const b = bot.blockAtCursor(48)
+    wp = P(27); ctx.mark('stronger')
+    await ctx.easeLook(Math.PI + 0.5, 0.25, 2000)
+    await ctx.easeLook(Math.PI - 0.6, 0.3, 2200)
+    await ctx.easeLook(Math.PI, -0.1, 1000)
+    wp = null
+    // turn round to the untouched forest to the side... and one last wave, while the camera drifts
+    await ctx.easeLook(Math.PI / 2 + 0.3, 0.12, 1600)          // west-ish, over the green trees
+    const b = bot.blockAtCursor(64)
     ctx.mark('wave')
+    ctx.sound('entity.player.levelup', 1, 0.8); ctx.sound('block.amethyst_block.chime', 1, 0.6)
+    const drift = ctx.easeLook(Math.PI / 2 + 0.6, 0.2, 1100)
     if (b) {   // the wave grows out from where it looks, a ring every couple of ticks
       const p = b.position
-      for (const r of [2, 3, 4, 5, 6]) {
-        for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - 4} ${p.z - r} ${p.x + r} ${p.y + r + 2} ${p.z + r} gold_block replace ${t}`)
+      for (const r of [2, 4, 6, 8, 10]) {
+        for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - 5} ${p.z - r} ${p.x + r} ${p.y + r + 2} ${p.z + r} gold_block replace ${t}`)
         await bot.waitForTicks(2)
       }
     }
-    ctx.sound('entity.player.levelup', 1, 0.8); ctx.sound('block.amethyst_block.chime', 1, 0.6)
-    await ctx.easeLook(Math.PI + 2.9, -0.18, 1000)            // drifting over it
+    await drift
     on = false
     await bot.waitForTicks(24)
-    bot.removeListener('physicsTick', touch); bot.removeListener('physicsTick', hop)
+    bot.removeListener('physicsTick', touch); bot.removeListener('physicsTick', steer)
     return true
   }
 }
