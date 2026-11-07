@@ -292,6 +292,28 @@ def flash_concat(timeline, start, dur, tmp):
     return lst
 
 
+def as_sequence(lst, name):
+    """An ffconcat list (whole 60 fps frames) as one symlink per output frame, read as an exact image sequence
+    (`-framerate 60 -i <pattern>`). Through ffconcat + fps the track landed a frame early at most change
+    points, so captions switched a frame before their cut (worker 10, scripts/retention.py fx_concat)."""
+    lst = pathlib.Path(lst)
+    seq = lst.parent / f"{name}seq"
+    seq.mkdir(exist_ok=True)
+    entries, cur = [], None
+    for ln in lst.read_text().splitlines():
+        if ln.startswith("file "):
+            cur = ln[5:].strip().strip("'")
+        elif ln.startswith("duration ") and cur:
+            entries.append((cur, int(round(float(ln.split()[1]) * FPS))))
+            cur = None
+    i = 0
+    for p, n in entries:
+        for _ in range(n):
+            (seq / f"{name}{i:05d}.png").symlink_to(pathlib.Path(p).resolve())
+            i += 1
+    return str(seq / f"{name}%05d.png")
+
+
 if __name__ == "__main__":     # preview: python3 scripts/story_track.py stories/<name> "SOME text" out.png
     import sys
     story, _ = _lines(sys.argv[1])

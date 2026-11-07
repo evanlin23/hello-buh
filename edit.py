@@ -1006,18 +1006,18 @@ def main():
         story_tl, story_track.POSES = story_rec["timeline"], story_rec.get("poses")
         flash = story_track.flash_concat(story_tl, args.start, dur, tmp)   # white flashes on `flash` marks (under the captions)
         if flash:
-            inputs += ["-f", "concat", "-safe", "0", "-i", str(flash)]
-            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[flv]")
+            inputs += ["-framerate", str(args.out_fps), "-i", story_track.as_sequence(flash, "fl")]   # exact frames (ffconcat + fps landed a frame early)
+            graph.append(f"[{n_in}:v]format=rgba[flv]")
             graph.append(f"[{last}][flv]overlay=0:0:eof_action=pass[flo]")
             last, n_in = "flo", n_in + 1
-        inputs += ["-f", "concat", "-safe", "0", "-i", str(story_track.caption_concat(args.story, story_tl, args.start, dur, tmp))]
-        graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[capv]")
+        inputs += ["-framerate", str(args.out_fps), "-i", story_track.as_sequence(story_track.caption_concat(args.story, story_tl, args.start, dur, tmp), "cap")]
+        graph.append(f"[{n_in}:v]format=rgba[capv]")
         graph.append(f"[{last}][capv]overlay=0:0:eof_action=pass[capo]")
         last, n_in = "capo", n_in + 1
         meter = story_track.meter_concat(args.story, story_tl, args.start, dur, tmp)   # the story's rule meter, if it has one
         if meter:
-            inputs += ["-f", "concat", "-safe", "0", "-i", str(meter)]
-            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[mtv]")
+            inputs += ["-framerate", str(args.out_fps), "-i", story_track.as_sequence(meter, "mt")]
+            graph.append(f"[{n_in}:v]format=rgba[mtv]")
             graph.append(f"[{last}][mtv]overlay=0:0:eof_action=repeat[mto]")
             last, n_in = "mto", n_in + 1
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
