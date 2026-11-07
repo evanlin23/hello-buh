@@ -39,7 +39,9 @@ function mh (dx, dz) {
   const th = Math.atan2(dz, dx)
   const k = Math.max(1.1, 1.35 * (1 + 0.2 * Math.sin(3 * th + 1.3) + 0.12 * Math.sin(5 * th + 0.4)))   // blocks of drop per block out
   const ridge = 1.2 * Math.abs(Math.sin(th * 4 + r * 0.25))
-  const h = MH - (r - 3.2) * k + ridge + 1.0 * Math.sin(dx * 0.7 + 0.3) * Math.cos(dz * 0.6) + 0.7 * Math.sin((dx - dz) * 1.1)
+  // + broad lumps and per-column jitter: an even slope read as terraces (review 7)
+  const lumps = 1.8 * Math.sin(dx * 0.31 + 1.7) * Math.sin(dz * 0.27 + 0.4) + 1.2 * Math.sin(dx * 0.17 - dz * 0.23 + 2.1)
+  const h = MH - (r - 3.2) * k + ridge + lumps + 1.0 * Math.sin(dx * 0.7 + 0.3) * Math.cos(dz * 0.6) + 0.7 * Math.sin((dx - dz) * 1.1) + (hash(dx, dz) - 0.5) * 1.4
   return Math.max(0, Math.min(MH - 1, Math.round(h)))
 }
 function cliff (dx) { return dx === 0 ? 3 : 3 + Math.round(0.6 * Math.sin(dx * 0.9) + 0.8 * Math.sin(dx * 0.37 + 1)) }
@@ -93,6 +95,15 @@ module.exports = {
         const hv = hash(X, Z)
         const top = h >= 21 ? 'snow_block' : steep > 2 ? (hv < 0.3 ? 'andesite' : hv < 0.4 ? 'gravel' : 'stone') : (hv < 0.12 ? 'coarse_dirt' : 'grass_block')
         if (h >= 2) bot.chat(`/fill ${X} ${F + 1} ${Z} ${X} ${F + h - 1} ${Z} stone`)
+        // the side faces: runs of 1-3 blocks of andesite, tuff, gravel, cobbled stone, diorite and
+        // calcite through the stone (plain stone flanks read as a built ziggurat: review 7)
+        for (let y = F + 1; y <= F + h - 2;) {
+          const len = 1 + Math.floor(hash(X * 3 + y, Z * 7 - y) * 3), q = hash(X + y * 13, Z - y * 5)
+          const mat = q < 0.2 ? 'andesite' : q < 0.3 ? 'tuff' : q < 0.37 ? 'gravel' : q < 0.44 ? 'cobblestone' : q < 0.5 ? 'diorite' : q < 0.55 ? 'calcite' : null
+          if (mat) bot.chat(`/fill ${X} ${y} ${Z} ${X} ${Math.min(y + len - 1, F + h - 2)} ${Z} ${mat}`)
+          y += len
+          if (++n % 8 === 0) await bot.waitForTicks(1)
+        }
         if (h >= 3 && /grass|dirt|snow/.test(top)) bot.chat(`/setblock ${X} ${F + h - 1} ${Z} ${top === 'snow_block' ? 'snow_block' : 'dirt'}`)
         bot.chat(`/setblock ${X} ${F + h} ${Z} ${top}`)
         if (top === 'grass_block' && steep <= 1 && h < 16 && dz < cliff(dx) - 4 && hv > 0.965) trees.push([X, F + h + 1, Z])
@@ -410,7 +421,7 @@ module.exports = {
     for (let i = 0; i < 3; i++) {
       if (i) await bot.waitForTicks(6)
       k.typed()
-      ctx.easeLook(N + (i % 2 ? -0.3 : 0.3), -0.75 + (i === 1 ? 0.12 : -0.1), 300)   // glances between sends (a locked camera read as a freeze)
+      if (!i) ctx.easeLook(N - 0.3, -0.6, 900)   // one slow drift over the three sends (a locked camera read as a freeze; quick glances as a wobble)
       bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:${FUSES[i]},explosion_power:6}`)
       if (!i) { ctx.sound('entity.tnt.primed', 1); ctx.mark('hack') }
     }
