@@ -23,7 +23,8 @@ const LADDERS = 10
 const FUSES = [20, 14, 8]
 const TNT = (f) => `/summon tnt ~ ~ ~ {fuse:${f},explosion_power:6}`
 const CMDS = ['/effect give @s levitation 5 39 true', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.15], [TNT(8), 0.15]]
-const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
+// (no feedback line for the levitation: its 1.5 s hold ran across the cut into the next beat)
+const FEEDBACK = [null, 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
 
 // the mountain: an uneven peak (lobed outline, ridges down the flanks) of stone with grass, gravel and
 // snow on top, cut by a sheer cliff on the side we start at (where the noob puts his ladders), with a
@@ -255,7 +256,7 @@ module.exports = {
       const [ya, pa] = k.angTo(peak)
       k.lerpLook(ya, Math.max(-1.45, pa - 0.15), 0.18)
       await bot.waitForTicks(1)
-      if (bot.entity.position.y - F > 50) break      // higher, and the field's edges show
+      if (bot.entity.position.y - F > MH + 11) break   // just past the peak: from 50 up the field's edges showed
     }
     ctx.log('hacker up', (bot.entity.position.y - F).toFixed(1))
     k.endBeat()
@@ -285,7 +286,7 @@ module.exports = {
     }
     bot.clearControlStates()
     if (!ctx.died) { ctx.log('noob did not die in the lava'); return false }
-    await bot.waitForTicks(18)                                    // the death screen
+    await bot.waitForTicks(9)                                     // the death screen (0.95 s held a locked camera)
     k.endBeat()
     ctx.revive(); ctx.respawn()
     await new Promise(r => bot.once('spawn', r))
@@ -293,7 +294,7 @@ module.exports = {
 
     // PRO: speed-bridges across backwards (facing back, walking off the edge, each block placed on the
     // exposed face of the one I'm on: the face you can actually see from there)
-    await k.cutTo(lmx, F + 1, bank + 0.7, 0, 72, { hotbar: [['cobblestone', 64]] })
+    await k.cutTo(lmx, F + 1, bank + 0.7, 0, 80, { hotbar: [['cobblestone', 64]] })
     k.beat()
     const stone = bot.registry.blocksByName.cobblestone.defaultState
     const bx = Math.floor(lmx)
@@ -306,7 +307,7 @@ module.exports = {
       k.placeAt(ref, 2, [0.5, 0.5, 0], at)
       bot.world.setBlockStateId(at, stone)                       // the client predicts its own placement
       ctx.sound('block.stone.place', 1, 0.8)
-      if (i === 1) ctx.easeLook(Math.PI + 0.12, -1.2, 900)       // a touch to the side: lava both ways
+      if (i === 1) ctx.easeLook(Math.PI + 0.12, -1.36, 900)      // a touch to the side: lava both ways (about 80 deg down, at the edge)
     }
     for (let w = 0; w < 40 && bot.entity.position.z > lz0 - 1.4; w++) await bot.waitForTicks(1)
     bot.clearControlStates()
@@ -351,6 +352,7 @@ module.exports = {
     }
     await look(N, -1.45, 400)                                     // ...the floor then
     const floorB = bot.blockAt(new Vec3(px, F - 7, pz))
+    ctx.easeLook(N + 0.2, -1.3, 700)                              // a drift while he digs (0.7 s locked on the dirt)
     try { await bot.dig(floorB, 'ignore') } catch (e) { ctx.log('dig failed', e.message); return false }
     ctx.mark('dug')
     ctx.easeLook(N + 0.2, 1.45, 700)                              // falling: the square of sky shrinking
