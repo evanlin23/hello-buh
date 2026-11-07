@@ -65,8 +65,11 @@ module.exports = {
     await ctx.cmd(`/summon villager ${x + 0.5} ${floor + 1} ${vz + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b}`)
     // the crowd: unemployed villagers behind the pen, watching
     this.crowd = []
-    for (let i = 0; i < 7; i++) {
-      const cxp = x - 6 + i * 2, czp = vz - 5 - (i % 2)
+    // two groups with a gap straight behind him: in the last shot he stood against the crowd and
+    // blended into it; with the gap he's alone on his pillar against the sky
+    const DX = [-8, -6, -4, 4, 6, 8]
+    for (let i = 0; i < DX.length; i++) {
+      const cxp = x + DX[i], czp = vz - 5 - (i % 2)
       await ctx.cmd(`/summon villager ${cxp + 0.5} ${floor + 1} ${czp + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b,NoAI:1b}`)
     }
     // nobody dies and nobody flies: resistance V and no explosion knockback for every villager
@@ -102,7 +105,7 @@ module.exports = {
     const setJob = (p) => bot.chat(`/data merge entity ${sel} {VillagerData:{profession:"minecraft:${p}"},Xp:${p === 'none' || p === 'nitwit' ? 0 : 1}}`)
     const head = new Vec3(x + 0.5, floor + 3.0, vz + 0.5)    // aimed above him: the subtitles sit at his head otherwise
     const vpos = { x: x + 0.5, y: floor + 2.0, z: vz + 0.5 }
-    ctx.mark('face_on', { near: [x + 0.5, vz - 2, 8.5], head: true })
+    ctx.mark('face_on', { near: [x + 0.5, vz - 2, 10.5], head: true })
     const slotOf = (i) => (i < 8 ? i : i - 8)
     const place = async (i, lookMs, spot) => {
       const [bx, bz] = spot || this.spots[i]
@@ -167,9 +170,9 @@ module.exports = {
     bot.setControlState('forward', false); bot.setControlState('sneak', false)
     setJob('mason')
     // meanwhile, the crowd behind him: still unemployed, all staring
-    await ctx.easeLookAt(new Vec3(x - 3, floor + 1.7, vz - 5), 400)
+    await ctx.easeLookAt(new Vec3(x - 7, floor + 1.7, vz - 5), 400)
     ctx.mark('crowd')
-    await ctx.easeLookAt(new Vec3(x + 5, floor + 1.7, vz - 5), 1800)
+    await ctx.easeLookAt(new Vec3(x + 7, floor + 1.7, vz - 5), 1800)
     // ---- act 3: the TNT under the job sites ----
     await ctx.easeLookAt(new Vec3(x - 1.5, floor + 0.9, vz + 2.5), 400)    // down at the base of the front row
     ctx.mark('tnt')
