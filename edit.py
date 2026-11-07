@@ -16,6 +16,7 @@ import argparse
 import io
 import json
 import re
+import bisect
 import math
 import pathlib
 import subprocess
@@ -1088,9 +1089,18 @@ def main():
             # (video start of each death screen, the first tick hud_ticks shows as dead)
             ds_ticks = [(death_start(a_, args), int(math.ceil(a_ * 20 - 2e-5))) for a_, _b in death_windows(tl, args.death_screen)] \
                 if args.death_screen else []
+            # the hotbar and slot at the frame's own time, not its tick's: in a time-lapse span a tick
+            # of the (warped) timeline is several source ticks, and the counts changed up to 2 frames
+            # after the block appeared (lapse_statue). Not around deaths (hud_ticks' death handling)
+            # or enchanted stacks (the glint's tick)
+            exact = not death_windows(tl)
+            st_t0 = [a for a, *_ in states]
             for j in range(int(math.ceil(dur * args.out_fps)) + 1):
                 t_out = shift + j / args.out_fps
                 st = ticks[min(len(ticks) - 1, int(math.floor(t_out * 20 + 1e-6)))]
+                if exact and not any(isinstance(it, tuple) and len(it) > 2 for it in st[1]):
+                    k = max(0, bisect.bisect_right(st_t0, t_out + 1e-6) - 1)
+                    st = (states[k][2], tuple(states[k][3])) + tuple(st[2:])
                 for ds0, dtick in ds_ticks:   # the death screen starts on the frame grid (up to a frame
                     if ds0 <= j / args.out_fps < dtick / 20 - shift:   # early): empty the HUD on the same frame
                         st = ticks[min(len(ticks) - 1, dtick)]
