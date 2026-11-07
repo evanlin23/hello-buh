@@ -99,7 +99,7 @@ const BUILDS = [
     slots: { oak_log: [1], oak_planks: [2], glass: [3], spruce_planks: [4] } },
   { name: 'house', blocks: house(), w: 7, d: 7, dx: 6, rate: 1.5, sub: '20 seconds',
     slots: { cobblestone: [5], dark_oak_log: [6], birch_planks: [7], glass: [3], dark_oak_planks: [8, 0] } },
-  { name: 'mansion', blocks: mansion(), w: 9, d: 9, dx: 16, rate: 1.75, sub: '60 seconds',
+  { name: 'mansion', blocks: mansion(), w: 9, d: 9, dx: 16, rate: 1.6, sub: '60 seconds',
     hotbar: [['stone_bricks', 64], ['white_concrete', 64], ['white_concrete', 64], ['dark_oak_log', 64], ['dark_oak_log', 64], ['glass', 64], ['dark_oak_planks', 64], ['dark_oak_planks', 64], ['dark_oak_planks', 64]],
     slots: { stone_bricks: [0], white_concrete: [1, 2], dark_oak_log: [3, 4], glass: [5], dark_oak_planks: [6, 7, 8] } }
 ]
@@ -114,7 +114,7 @@ module.exports = {
   edit: {
     caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀', red: '60s', song: 'songs/funk_abnormal.mp3', dropAt: 'all_done',
     startAt: 'build_start:-0.15', endAfter: 'all_done:0.9',
-    subs: BUILDS.map((b, i) => ['build_start', b.sub, 30, i]).concat([['all_done', 'all four', 0.9]])   // each label runs until the next
+    subs: BUILDS.map((b, i) => ['build_start', b.sub, 30, i]).concat([['all_done', 'all of them', 0.9]])   // each label runs until the next
   },
 
   async setup (ctx) {
@@ -126,13 +126,13 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // a wide clearing: a cut hillside at its edge read as a command-built box behind the builds
-    for (let y0 = floor + 1; y0 <= floor + 28; y0 += 4) await ctx.cmd(`/fill ${x - 30} ${y0} ${z - 45} ${x + 42} ${y0 + 3} ${z + 22} air`)
-    await ctx.cmd(`/fill ${x - 30} ${floor} ${z - 45} ${x + 42} ${floor} ${z + 22} grass_block`)
-    await ctx.cmd(`/fill ${x - 30} ${floor - 3} ${z - 45} ${x + 42} ${floor - 1} ${z + 22} dirt`)
+    for (let y0 = floor + 1; y0 <= floor + 28; y0 += 4) await ctx.cmd(`/fill ${x - 30} ${y0} ${z - 45} ${x + 42} ${y0 + 3} ${z + 34} air`)
+    await ctx.cmd(`/fill ${x - 30} ${floor} ${z - 45} ${x + 42} ${floor} ${z + 34} grass_block`)
+    await ctx.cmd(`/fill ${x - 30} ${floor - 3} ${z - 45} ${x + 42} ${floor - 1} ${z + 34} dirt`)
     // the wide shot at the end: a dirt mound in front of the middle of the four plots
-    this.view = { x: x + 8, z: z + 18 }
-    await ctx.cmd(`/fill ${x + 7} ${floor + 1} ${z + 17} ${x + 9} ${floor + 3} ${z + 19} dirt`)
-    await ctx.cmd(`/fill ${x + 7} ${floor + 3} ${z + 17} ${x + 9} ${floor + 3} ${z + 19} grass_block`)
+    this.view = { x: x + 6, z: z + 27 }   // far and high enough for all five
+    await ctx.cmd(`/fill ${x + 5} ${floor + 1} ${z + 26} ${x + 7} ${floor + 5} ${z + 28} dirt`)
+    await ctx.cmd(`/fill ${x + 5} ${floor + 5} ${z + 26} ${x + 7} ${floor + 5} ${z + 28} grass_block`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 30')
     await ctx.hotbar([['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['cobblestone', 64], ['dark_oak_log', 64], ['birch_planks', 64], ['dark_oak_planks', 64]])
     await ctx.tpCheck(x - 12.5, floor + 1, z + 0.5, 180, 15)
@@ -218,10 +218,10 @@ module.exports = {
     const mid = new Vec3(x + 6, floor + 5, z - FRONT - 4)
     aim = mid.offset(-3, 0, 0)
     // the cut lands already aimed (the first look after a plain tp jumped the camera)
-    const eyeV = new Vec3(this.view.x + 0.5, floor + 4 + 1.62, this.view.z + 0.5), dv = aim.minus(eyeV)
+    const eyeV = new Vec3(this.view.x + 0.5, floor + 6 + 1.62, this.view.z + 0.5), dv = aim.minus(eyeV)
     const tpYaw = -Math.atan2(dv.x, dv.z) * 180 / Math.PI,   // vanilla yaw: 0 = south, 90 = west
       tpPitch = -Math.atan2(dv.y, Math.hypot(dv.x, dv.z)) * 180 / Math.PI
-    bot.chat(`/tp @s ${this.view.x + 0.5} ${floor + 4} ${this.view.z + 0.5} ${tpYaw.toFixed(1)} ${tpPitch.toFixed(1)}`)
+    bot.chat(`/tp @s ${this.view.x + 0.5} ${floor + 6} ${this.view.z + 0.5} ${tpYaw.toFixed(1)} ${tpPitch.toFixed(1)}`)
     await bot.waitForTicks(2)
     ctx.mark('all_done')
     ctx.sound('entity.player.levelup', 1, 1); ctx.sound('ui.toast.challenge_complete', 0.6, 1)
