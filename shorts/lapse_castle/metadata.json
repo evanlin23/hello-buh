@@ -1,9 +1,9 @@
 {
   "name": "lapse_castle",
-  "caption": "building a castle in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+  "caption": "building a castle in 1 second vs 1 minute vs 1 hour 💀",
   "youtube": {
-    "title": "building a castle in 1 second vs 1 minute vs 1 hour \ud83d\udc80 #minecraft #shorts",
-    "description": "building a castle in 1 second vs 1 minute vs 1 hour \ud83d\udc80\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "building a castle in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
+    "description": "building a castle in 1 second vs 1 minute vs 1 hour 💀\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -33,7 +33,7 @@
     "sha256": "4f84caad518ab609efb692d17fe0632c703039f797e507a940aed3ae016c76ac"
   },
   "edit": {
-    "caption": "building a castle in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+    "caption": "building a castle in 1 second vs 1 minute vs 1 hour 💀",
     "red": "hour",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "big_done",
@@ -83,7 +83,7 @@
     ],
     "args": [
       "--caption",
-      "building a castle in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
+      "building a castle in 1 second vs 1 minute vs 1 hour 💀",
       "--red",
       "hour",
       "--speed",
@@ -4776,9 +4776,14 @@
     "gunzip -c shorts/lapse_castle/recording.json.gz > work/lapse_castle.rec.json",
     "node render.js work/lapse_castle.rec.json work/lapse_castle.frames 60 1080 1011",
     "python3 audio.py work/lapse_castle.rec.json work/lapse_castle.wav",
-    "python3 edit.py --frames work/lapse_castle.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_castle.rec.json --audio work/lapse_castle.wav --caption \"building a castle in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_castle.mp4"
+    "python3 edit.py --frames work/lapse_castle.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_castle.rec.json --audio work/lapse_castle.wav --caption \"building a castle in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_castle.mp4"
   ],
-  "status": "ready",
+  "status": "posted",
   "notes": "worker (time-lapse): 7 review rounds; frame review, retention and minecraft audits ready. Nitpicks: clock holds 0:00.00 for ~6 frames before the first block; wool-cube flags; horizon fog band from high shots; 3x first-person whip-pans in the minute",
-  "published_at": "2026-11-07T05:07:08.176Z"
+  "published_at": "2026-11-07T05:07:08.176Z",
+  "posted": {
+    "date": "2026-11-07",
+    "platform": "YouTube Shorts",
+    "by": "owner (manual upload)"
+  }
 }
