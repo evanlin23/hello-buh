@@ -15,7 +15,9 @@ module.exports = {
   caption: 'can ONE water bucket delete a lava lake? 😳',
   edit: {
     subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'end_look',
-    startAt: 'pour:-0.4', endAfter: 'end_look:1.05'
+    startAt: 'pour:-0.4', endAfter: 'end_look:1.05',
+    // the long side-pour runs at 1.8x (about 12 s of the Short was a blue water sheet) and the walk between the stops at 2x
+    speed: [...[...Array(12).keys()].map(i => [`run${i}a`, `run${i}b`, 1.8]), ['walk_a', 'walk_b', 2]]
   },
 
   async setup (ctx) {
@@ -65,6 +67,7 @@ module.exports = {
     bot.on('blockUpdate', onBlock)
 
     // one pour/scoop: water lands in cell (lx, lz) at G, runs `flow` ticks, back in the bucket
+    let runs = 0
     const pourScoop = async (lx, lz, clickPt, flow, ms = 260) => {
       await ctx.easeLookAt(clickPt, ms)
       bot.activateItem(); bot.swingArm()
@@ -73,7 +76,10 @@ module.exports = {
       await bot.waitForTicks(3)
       // watch it run (eyes slightly ahead of the source)
       ctx.easeLookAt(cell(lx, lz - 1, -0.6), Math.max(100, flow * 50 - 150))
+      const long = flow > 10, rn = runs
+      if (long) { runs++; ctx.mark(`run${rn}a`) }
       await bot.waitForTicks(flow)
+      if (long) ctx.mark(`run${rn}b`)
       await ctx.easeLookAt(cell(lx, lz, 0.45), 150)        // the source (an empty bucket picks up fluids)
       bot.activateItem(); bot.swingArm()
       ctx.sound('item.bucket.fill', 1, 1)
@@ -118,7 +124,7 @@ module.exports = {
     // across. Turn round and walk back down the path, pouring either side of it at each stop, each pour
     // left to run longer than the last: the black spreads wider until the lake is gone (~30 s total)
     ctx.mark('finale')
-    await ctx.easeLook(Math.PI, -0.75, 450)               // facing back south (mineflayer yaw 0 = north), down at the path
+    await ctx.easeLook(Math.PI, -0.4, 450)               // facing back south (mineflayer yaw 0 = north) over the lake (-0.75: 0.8 s of solid black obsidian)
     const stops = [4, 16]   // every corner within 6 flow steps (from 5/15 two corner cells survived)   // two stops, both sides, long runs: 6 stops of short pours were 4-5 s of walking apart, mostly off screen
     const flow = 34   // ~6.8 blocks of spread, the corners are 6 steps (40 left the strip under a water sheet for 2 s)
     const lavaLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (at(a, b, G - 1)?.name === 'lava') n++; return n }
@@ -145,9 +151,12 @@ module.exports = {
       if (!lavaLeft()) break                                 // the lake is gone: no pours on finished obsidian
       // walk back (south = +z, facing it) to this row
       const tz = z0 + sz + 0.5
+      const far = bot.entity.position.z < tz - 4
+      if (far) ctx.mark('walk_a')   // (the 3 s walk between the stops was a gap with no beat)
       bot.setControlState('forward', true)
       for (let k = 0; k < 40 && bot.entity.position.z < tz - 0.55; k++) await bot.waitForTicks(1)
       bot.setControlState('forward', false)
+      if (far) ctx.mark('walk_b')
       for (const dir of [1, -1]) {
         // the outermost obsidian on that side of this row; skip the side if no lava borders it
         let ox = 7
@@ -169,14 +178,35 @@ module.exports = {
         for (let b2 = 0; b2 < L && !tgt; b2++) for (let a2 = 0; a2 < 15 && !tgt; a2++) if (at(a2, b2, G - 1)?.name === 'lava') tgt = cell(a2, b2, -0.3)
         if (sx !== 7) await stepTo(7, sz, tgt || cell(7, Math.min(L - 1, sz + 4), -0.3))
       }
-      await ctx.easeLook(Math.PI, -0.6, 250)
+    }
+    // mop-up: lava the side pours missed (4 cells were still orange in the final reveal) gets a pour of its
+    // own, nearest first: walk to 2 cells short of it on obsidian, pour, watch it go black
+    for (let m = 0; m < 4 && lavaLeft(); m++) {
+      const e = bot.entity.position
+      let best = null, bd = 1e9
+      for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) {
+        if (at(a, b, G - 1)?.name !== 'lava') continue
+        const d = Math.hypot(x0 + a + 0.5 - e.x, z0 + b + 0.5 - e.z); if (d < bd) { bd = d; best = [a, b] }
+      }
+      const [a, b] = best
+      // pour on the top of an obsidian neighbour (a full bucket ignores fluids: clicking the lava cell would hit
+      // the stone under it); the water runs off onto the lava. Stand one further cell back on obsidian.
+      const nbs = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([da, db]) => [a + da, b + db, da, db])
+        .filter(([na, nb2, da, db]) => at(na, nb2, G - 1)?.name === 'obsidian' && at(na + da, nb2 + db, G - 1)?.name === 'obsidian')
+      if (!nbs.length) { ctx.log('mop-up: no obsidian next to lava at', a, b); break }
+      nbs.sort((p1, p2) => Math.hypot(x0 + p1[0] - e.x, z0 + p1[1] - e.z) - Math.hypot(x0 + p2[0] - e.x, z0 + p2[1] - e.z))
+      const [na, nb2, da, db] = nbs[0]
+      await stepTo(na + da, nb2 + db, cell(a, b, -0.3))
+      ctx.log('mop-up pour on', na, nb2, 'for lava at', a, b)
+      await pourScoop(na, nb2, cell(na, nb2, -0.04), 14, 300)
     }
     // the payoff lands on the last lava going (on screen), then a wide look over the whole black lake
-    for (let k = 0; k < 10 && lavaLeft(); k++) await bot.waitForTicks(1)   // (60 waited out a 2.8 s STILL when two cells survived)
+    for (let k = 0; k < 10 && lavaLeft(); k++) await bot.waitForTicks(1)
     ctx.log('lava left', lavaLeft())
     // stand on it: look out over the black field
     ctx.mark('end_look')
-    await ctx.easeLook(0.35, -0.55, 1000)                 // turn round, looking down over the whole black lake
+    // straight onto the middle of the black lake, wide (it opened on the rim's dirt wall after a whip south)
+    await ctx.easeLookAt(cell(7, Math.floor(L / 2), 0), 900)
     bot.removeListener('blockUpdate', onBlock)
 
     let lava = 0, obs = 0
