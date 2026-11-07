@@ -162,7 +162,7 @@ def glint_icon(jar, icon, tick):
     return Image.fromarray((a * 255 + 0.5).astype(np.uint8), "RGBA")
 
 
-def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None, max_health=20):
+def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None, max_health=20, xp_state=None):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bar = big(sprite(jar, "gui/sprites/hud/hotbar"))
     sel = big(sprite(jar, "gui/sprites/hud/hotbar_selection"))
@@ -211,6 +211,13 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
     food_e, food = big(sprite(jar, "gui/sprites/hud/food_empty")), big(sprite(jar, "gui/sprites/hud/food_full"))
     xp_bg, xp = big(sprite(jar, "gui/sprites/hud/experience_bar_background")), big(sprite(jar, "gui/sprites/hud/experience_bar_progress"))
     img.alpha_composite(xp_bg, (bx + GUI, by - 7 * GUI))
+    if xp_state:   # Gui.renderExperienceBar: progress * 182 px of the bar, the level centred above it in
+        level, progress = xp_state   # 0x80FF20 with a 1 px black outline (drawn 4x offset); no number at level 0
+        fill = int(progress * 183)
+        if fill > 0:
+            img.alpha_composite(xp.crop((0, 0, min(xp.width, fill * GUI), xp.height)), (bx + GUI, by - 7 * GUI))
+        if level > 0:
+            draw_text(img, jar, str(level), W // 2, by - 13 * GUI, center=True, color=(0x80, 0xFF, 0x20, 255), outline=True)
     # no XP progress: a fresh player (the death screen says "Score: 0"; a 35% bar contradicted it)
     hy = by - 17 * GUI
     hc_blink = big(sprite(jar, "gui/sprites/hud/heart/container_blinking"))
@@ -262,7 +269,7 @@ ICONS = HERE / "work" / "assets" / CLIENT_JAR.stem / "icons"
 _font = None
 
 
-def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 255, 255, 255), center=False):
+def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 255, 255, 255), center=False, outline=False):
     """Minecraft's default font (textures/font/ascii.png, 8x8 cells) at GUI scale, white with the
     1px dark-grey shadow the game draws under HUD text."""
     global _font
@@ -285,12 +292,14 @@ def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 2
     if center:
         x -= width * S // 2
     shadow = tuple(int(c * 0.25) for c in color[:3]) + (255,)
-    for col, off in ((shadow, 1), (color, 0)):
+    # outline (the XP level): black at the 4 neighbours, no shadow; else the usual drop shadow
+    passes = ([((0, 0, 0, 255), (dx, dy)) for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))] if outline else [(shadow, (1, 1))]) + [(color, (0, 0))]
+    for col, (ox, oy) in passes:
         cx = x
         for cell, w in glyphs:
             mask = cell.split()[3].resize((8 * S, 8 * S), Image.NEAREST)
             layer = Image.new("RGBA", (8 * S, 8 * S), col)
-            img.paste(layer, (cx + off * S, y + off * S), mask)
+            img.paste(layer, (cx + ox * S, y + oy * S), mask)
             cx += (w + 1) * S
 
 
@@ -377,6 +386,15 @@ def hud_ticks(timeline, duration, keep_inventory=False):
             if tt <= t:
                 v = m
         return v
+    xps = [(e["t"] / 1000, e.get("level", 0), e.get("progress", 0)) for e in timeline or [] if e["event"] == "xp"]
+    def xp_now(t):   # (level, progress) from the harness's 'xp' marks; None without any (an empty bar)
+        if not xps:
+            return None
+        v = (0, 0.0)
+        for tt, lv, pr in xps:
+            if tt <= t + 1e-6:
+                v = (lv, round(pr, 3))
+        return v
     out, last, blink_until, last_change, display, last_hurt = [], h0, -1, 0, h0, -99
     si = 0
     for tick in range(int(duration * 20) + 2):
@@ -423,7 +441,7 @@ def hud_ticks(timeline, duration, keep_inventory=False):
                 shake[i] = r.next_int2()
         # enchanted stacks ([name, count, 1]) carry the tick for the moving glint
         items = tuple((it[0], it[1], ("glint", tick)) + tuple(it[3:]) if isinstance(it, tuple) and ((len(it) > 2 and it[2] == 1) or it[0] in GLINT_ITEMS) else it for it in items)
-        out.append((slot, tuple(items), health, display, blink, tuple(shake) if shake else None, max_now(t)))
+        out.append((slot, tuple(items), health, display, blink, tuple(shake) if shake else None, max_now(t), xp_now(t)))
     return out
 
 
@@ -953,8 +971,8 @@ def main():
                     if st == "F1":
                         Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(pngs[st])
                     else:
-                        slot, items, health, display, blink, shake, max_health = st
-                        hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None, max_health=max_health)
+                        slot, items, health, display, blink, shake, max_health, xp = st
+                        hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None, max_health=max_health, xp_state=xp)
                 (seq / f"h{j:05d}.png").symlink_to(pngs[st].resolve())
         inputs += ["-framerate", str(args.out_fps), "-i", str(seq / "h%05d.png")]
         graph.append(f"[{n_in}:v]format=rgba[hudv]")
