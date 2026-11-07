@@ -894,6 +894,12 @@ function thirdPersonDisplay (item) {
 // an item's flat sprite ('item/<texture>'), or null for block items: its own name, else the
 // layer0 of its item model in the jar (enchanted_golden_apple draws item/golden_apple)
 const SPRITE = new Map()
+const EMPTY_MODEL = new Map()
+function blockModelEmpty (state) {
+  if (!EMPTY_MODEL.has(state)) { let empty = true; try { empty = !(mesherRef && mesherRef.meshSingle(state).positions.length) } catch (e) {} EMPTY_MODEL.set(state, empty) }
+  return EMPTY_MODEL.get(state)
+}
+let mesherRef = null
 function spriteOf (item) {
   if (SPRITE.has(item)) return SPRITE.get(item)
   let out = fs.existsSync(path.join(ASSETS_DIR, 'env', 'item', `${item}.png`)) ? `item/${item}` : null
@@ -1247,6 +1253,7 @@ function camAtLive (t) {
   solidWorld = mesher.world
   hmapWorld = mesher.world
   simulateDrops(mesher.world)
+  mesherRef = mesher
 
   const app = express()
   const blobs = new Map(); let blobId = 0
@@ -1793,7 +1800,9 @@ function camAtLive (t) {
       const it = e.extra.item
       if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
       const bl = MC.blocksByName[it]
-      if (!bl) continue
+      // an item we can't draw (special item models: beds, chests, heads, banners, shields; no sprite
+      // and an empty block model): no model, so no shadow either (a red bed was a lone shadow: every_clutch)
+      if (!bl || blockModelEmpty(bl.defaultState)) { e.hidden = true; continue }
       const age = t - (FIRST_SEEN.get(e.id) ?? t)
       // the shadow stays the item's (ItemEntityRenderer.shadowRadius 0.15, from the entity's own y,
       // not the bobbing model): drawn as a falling block it cast a 0.5 one, 3x vanilla (lapse_statue)
