@@ -6,11 +6,12 @@
 // HelloBuh". Peaceful (no TNT damage to the player) until the finale, normal for it.
 // Owner rules: 30 s minimum from more beats, no dead space, end <= 1 s after the payoff.
 const { plateau } = require('../lib/plateau')
+const { plainsBiome } = require('../lib/story')
 const TIERS = [
   { n: 1, dx: -60, size: [1, 1, 1], view: 7, label: '1 TNT' },
   { n: 10, dx: -45, size: [5, 2, 1], view: 11, label: '10 TNT' },
   { n: 100, dx: -24, size: [5, 4, 5], view: 17, label: '100 TNT' },
-  { n: 1000, dx: 16, size: [10, 10, 10], view: 40, label: '1000 TNT' },
+  { n: 1000, dx: 16, size: [10, 10, 10], view: 27, label: '1000 TNT' },
   { n: 1000, dx: 92, size: [10, 10, 10], on: true, label: "1000 TNT... but I'm ON it" }
 ]
 const XL = -100, XR = 140, ZB = -60, ZF = 60    // the cleared field around the piles (relative)
@@ -29,7 +30,7 @@ module.exports = {
   edit: {
     caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'boom4',
     startAt: 'tier1:-0.05', endAfter: 'death:1.4', deathScreen: true,
-    subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
+    subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]).concat([['compare', 'vs the 1 TNT crater', 1.3, 0]]),
     speed
   },
   expectDeath: true,
@@ -50,6 +51,9 @@ module.exports = {
     // point, its cut walls showed in the wide shots), deep dirt below (craters that reach
     // groundwater flood)
     const floor = await plateau(ctx, { x0: x + XL, x1: x + XR, z0: z + ZB, z1: z + ZF, above: 30, below: 20 })
+    // one biome over the field (a taiga border tinted the first two tiers' grass teal); the
+    // harness re-sends the chunks before recording, so the new biome reaches the recording
+    await plainsBiome(ctx, (dx, dy, dz) => `${x + 20 + dx} ${floor + dy} ${z + dz}`, 128, -8, 24)
     Object.assign(this, { x, z, floor })
     await ctx.cmd('/kill @e[type=!player]')
     this.tiers = TIERS.map(t => {
@@ -157,7 +161,7 @@ module.exports = {
       // watch the chain: the look rises with the blast (flung TNT), the bigger the higher
       const up = n === 4 ? 0.12 : Math.min(0.5, 0.12 + t.h * 0.045)   // the 1000 blast stays in frame
       ctx.easeLook(bot.entity.yaw + 0.15, up, 700)
-      const cap = [20, 26, 40, 72][i]       // ticks of chain on screen at most (3 s+ read as a gap)
+      const cap = [20, 26, 28, 50][i]       // ticks of chain on screen at most (3 s+ read as a gap)
       for (let k = 0; k < cap && ctx.tick - lastBoom < 14; k++) {
         if (k === 22) ctx.easeLook(bot.entity.yaw - 0.3, n === 4 ? 0.05 : up * 0.6, 600)
         if (k === 46 && n === 4) ctx.easeLook(bot.entity.yaw + 0.35, 0.0, 700)
@@ -171,12 +175,18 @@ module.exports = {
           const b = bot.blockAt(new Vec3(t.cx, floor, zz))
           if (b && b.name !== 'air') { rz = zz; break }
         }
-        await ctx.tpCheck(t.cx + 0.5, floor + 1, rz + 2.5, 180, 40)
+        await ctx.tpCheck(t.cx + 0.5, floor + 1, rz + 1.5, 180, 50)
         await bot.waitForTicks(2)
         ctx.mark('rim4b')
         ctx.mark(`crater${n}`)
-        await ctx.easeLook(0.45, -0.95, 700)
-        await ctx.easeLook(-0.35, -0.85, 800)
+        const pit = new Vec3(t.cx + 0.5, floor - 5, t.zf - 4.5)        // the middle of the big crater
+        await ctx.easeLookAt(pit.offset(3, 0, 0), 500)
+        await ctx.easeLookAt(pit.offset(-3, 0, 0), 800)
+        // ...and back down the field at the 1 TNT crater for scale
+        const t1 = this.tiers[0]
+        await ctx.easeLookAt(new Vec3(t1.cx + 0.5, floor, t1.zf), 650)
+        ctx.mark('compare')
+        await ctx.easeLookAt(new Vec3(t1.cx + 4.5, floor - 0.5, t1.zf), 800)
       } else {
         // walk up to the crater, looking into it
         await ctx.easeLook(bot.entity.yaw - 0.15, -0.2, 300)
