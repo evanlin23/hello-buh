@@ -1048,6 +1048,7 @@ function bodyAfterDeath (d, t) {
 // ExperienceOrb: gravity 0.03, pulled toward a player within 8 blocks ((1 - d/8)^2 x 0.1), a -0.9
 // bounce. A synced position snaps. A pickup ('collect') flies the item to the collector over 3 ticks
 // (ItemPickupParticle), then it's gone: they froze at the spawn and blinked out (fortune f1613).
+const THROWN = new Set(['ender_pearl', 'snowball', 'egg', 'splash_potion', 'lingering_potion', 'experience_bottle', 'potion'])
 function simulateDrops (world) {
   const tl = rec.timeline || []
   const vel = new Map(), coll = new Map()
@@ -1068,10 +1069,10 @@ function simulateDrops (world) {
     return !!(b && b.boundingBox === 'block')
   }
   const rowsOf = new Map()
-  for (const tick of [...ENT.keys()].sort((a, b) => a - b)) for (const [id, row] of ENT.get(tick)) if (vel.has(id) && (row[2] === 'item' || row[2] === 'experience_orb')) { if (!rowsOf.has(id)) rowsOf.set(id, []); rowsOf.get(id).push(row) }
+  for (const tick of [...ENT.keys()].sort((a, b) => a - b)) for (const [id, row] of ENT.get(tick)) if (vel.has(id) && (row[2] === 'item' || row[2] === 'experience_orb' || THROWN.has(row[2]))) { if (!rowsOf.has(id)) rowsOf.set(id, []); rowsOf.get(id).push(row) }
   let n = 0
   for (const [id, rows] of rowsOf) {
-    const orb = rows[0][2] === 'experience_orb', vs = vel.get(id)
+    const orb = rows[0][2] === 'experience_orb', thrown = THROWN.has(rows[0][2]), vs = vel.get(id)
     let x = rows[0][3], y = rows[0][4], z = rows[0][5], vx = 0, vy = 0, vz = 0, onGround = false, vi = 0, last = rows[0]
     const t0 = rows[0][0], t1 = rows[rows.length - 1][0]
     const byTick = new Map(rows.map(r => [r[0], r]))
@@ -1081,7 +1082,14 @@ function simulateDrops (world) {
       if (row && (row[3] !== last[3] || row[4] !== last[4] || row[5] !== last[5])) { x = row[3]; y = row[4]; z = row[5] }   // a sync
       if (row) last = row
       if (row) { const r = row.slice(); r[3] = x; r[4] = y; r[5] = z; ENT.get(tick).set(id, r) }
-      // the tick's physics
+      // the tick's physics. Thrown projectiles (ThrowableProjectile.tick): move by the velocity, then
+      // x 0.99 and y - 0.03; it stops where it hits (the server removes it a tick later). They sat at
+      // the thrower's eye until the first position sync, ~9 ticks (worker 15, noob_pro_hacker)
+      if (thrown) {
+        if (solid(x + vx, y + vy, z + vz, tick)) { vx = vy = vz = 0; continue }
+        x += vx; y += vy; z += vz; vx *= 0.99; vy = vy * 0.99 - 0.03; vz *= 0.99
+        continue
+      }
       if (orb) {
         vy -= 0.03
         const p = P[Math.min(P.length - 1, tick)]
