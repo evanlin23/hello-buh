@@ -364,7 +364,10 @@ function faceShade (dir) {
 const AO_CURVE = [0.4, 0.6, 0.8, 1.0]
 
 function renderElement (world, cursor, element, doAO, attr, globalMatrix, globalShift, block, biome) {
-  const cullIfIdentical = block.name.indexOf('glass') >= 0
+  // HalfTransparentBlock.skipRendering: glass (and panes), ice, frosted ice, slime and honey hide the
+  // face against the same block. Ice drew every inner face: stripes per block and bright seams at
+  // section borders across a frozen ocean (worker 3, every_clutch)
+  const cullIfIdentical = block.name.indexOf('glass') >= 0 || /^(ice|frosted_ice|slime_block|honey_block)$/.test(block.name)
 
   for (const face in element.faces) {
     const eFace = element.faces[face]
