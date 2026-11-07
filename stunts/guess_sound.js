@@ -13,9 +13,9 @@ module.exports = guessSound({
   rounds: [
     { mob: 'cow', room: 'barn', sound: 'entity.cow.ambient', label: 'EASY', answer: 'COW', react: 'moo', leanTicks: 6, lookY: 1.2 },
     { mob: 'llama', room: 'savanna', sound: 'entity.llama.ambient', label: 'MEDIUM', answer: 'LLAMA', react: 'call', reactSound: 'entity.llama.angry', lean: 0, back: 4, lookY: 1.7, color: 'gold' },
-    { mob: 'polar_bear', room: 'ice', sound: 'entity.polar_bear.warning', label: 'HARD', answer: 'POLAR BEAR', react: 'growl', ai: (u) => `AngerTime:400,AngryAt:${u}`, lean: 0, lookY: 1.1, color: 'white' },
+    { mob: 'polar_bear', room: 'ice', sound: 'entity.polar_bear.warning', label: 'HARD', answer: 'POLAR BEAR', react: 'growl', ai: (u, age) => `angry_at:${u},anger_end_time:${age + 400}L`,   /* 1.21.11 NeutralMob keys: it charges and rears up */ lean: 0, lookY: 1.1, color: 'white' },
     { mob: 'enderman', room: 'cave', sound: 'entity.enderman.ambient', label: 'VERY HARD', answer: 'ENDERMAN', react: 'stare', ai: true, lean: 0, lookY: 2.55, lookDown: -0.05, color: 'blue' },   // eyes within ~8 deg of the look: it has to see you stare
-    { mob: 'warden', room: 'deep_dark', sound: 'entity.warden.heartbeat', label: 'EXPERT', answer: 'WARDEN', react: 'roar', ai: (u) => `anger:{suspects:[{uuid:${u},anger:150}]}`, lean: 0, lookY: 2.4, color: 'red' },
+    { mob: 'warden', room: 'deep_dark', sound: 'entity.warden.heartbeat', label: 'EXPERT', answer: 'WARDEN', react: 'roar', lean: 0, lookY: 2.4, color: 'red' },
     { mob: 'parrot', room: 'jungle', sound: 'entity.creeper.primed', pitch: 1.8, volume: 1.0, label: 'IMPOSSIBLE', answer: 'PARROT??', react: 'imitate', hint: 'parrots copy creepers', lookY: 0.3, mobDx: 0, mobDy: 1, nbt: 'Variant:0', setup: (x, y, z) => [`/setblock ${x} ${y + 1} ${z + 2} jungle_log`, `/setblock ${x - 3} ${y + 1} ${z + 3} jungle_leaves[persistent=true]`, `/setblock ${x - 3} ${y + 2} ${z + 3} jungle_leaves[persistent=true]`, `/setblock ${x + 3} ${y + 1} ${z + 4} jungle_leaves[persistent=true]`, `/setblock ${x + 2} ${y + 1} ${z + 4} moss_block`], color: 'red' }
   ]
 })

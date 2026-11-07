@@ -13,10 +13,10 @@ module.exports = guessSound({
   edit: { deathScreen: true, endAfter: 'death:1.3' },
   rounds: [
     { mob: 'chicken', room: 'farm', sound: 'entity.chicken.ambient', label: 'EASY', answer: 'CHICKEN', react: 'call', leanTicks: 5, lookY: 0.6 },
-    { mob: 'turtle', room: 'beach', sound: 'entity.turtle.ambient_land', label: 'MEDIUM', answer: 'TURTLE', react: 'call', leanTicks: 5, lookY: 0.3, lookDown: 0.05, color: 'green' },
-    { mob: 'magma_cube', room: 'nether', sound: 'entity.magma_cube.squish', label: 'HARD', answer: 'MAGMA CUBE', react: 'call', reactSound: 'entity.magma_cube.jump', lean: 0, back: 4, lookY: 0.6, nbt: 'Size:1', color: 'orange' },
-    { mob: 'skeleton', room: 'cave', sound: 'entity.skeleton.ambient', label: 'VERY HARD', answer: 'SKELETON', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'white' },
+    { mob: 'turtle', room: 'beach', sound: 'entity.turtle.ambient_land', volume: 2.5,   /* a very quiet sample: +8 dB so it carries like the others */ label: 'MEDIUM', answer: 'TURTLE', react: 'call', leanTicks: 3, mobDx: 1.2, lookY: 0.3, lookDown: -0.1, color: 'green' },
+    { mob: 'magma_cube', room: 'nether', sound: 'entity.magma_cube.squish', label: 'HARD', answer: 'MAGMA CUBE', react: 'call', reactSound: 'entity.magma_cube.jump', ai: true, lean: 0, back: 4, lookY: 0.6, nbt: 'Size:1', color: 'orange' },
+    { mob: 'skeleton', room: 'cave', sound: 'entity.skeleton.ambient', label: 'VERY HARD', answer: 'SKELETON', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'white', nbt: 'equipment:{mainhand:{id:"minecraft:bow",count:1}}' },
     { mob: 'blaze', room: 'nether', sound: 'entity.blaze.ambient', label: 'EXPERT', answer: 'BLAZE', react: 'call', reactSound: 'entity.blaze.burn', lean: 0, back: 5, lookY: 1.5, mobDy: 0.5, nbt: 'NoGravity:1b', color: 'gold' },
-    { mob: 'creeper', room: 'jungle', sound: 'entity.creeper.primed', label: 'IMPOSSIBLE', answer: 'NOT A PARROT', react: 'boom', lean: 0, lookY: 1.3, color: 'red', cardSeconds: 1.0 }
+    { mob: 'creeper', room: 'jungle', sound: 'entity.creeper.primed', pitch: 0.5, label: 'IMPOSSIBLE', answer: 'NOT A PARROT', react: 'boom', lean: 0, lookY: 1.3, color: 'red', cardSeconds: 0.8 }   // Creeper.ignite's fuse sound is at pitch 0.5
   ]
 })
