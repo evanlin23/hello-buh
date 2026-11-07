@@ -26,7 +26,9 @@ module.exports = {
   edit: {
     caption: 'hide and seek but the villagers cheated 😭', red: 'cheated',
     song: 'songs/funk_abnormal.mp3', dropAt: 'r4_found',
-    startAt: 'r1_go:-0.35', endAfter: 'r4_found:0.9',
+    startAt: 'r1_go:-0.35', endAfter: 'r4_found:0.45',
+    // the zoom-out: a fixed camera up at y 320 beside him as he tosses an emerald down (appended after the zoom)
+    replay: { at: 'r4_found', before: 0.1, after: 1.4, cam: '1.0,260.0,9.5,43.5,-28', speed: 1, label: 'MEANWHILE AT Y 320' },
     speed: [1, 2, 3].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
     clock: [1, 2, 3, 4].map(n => [`r${n}_go`, `r${n}_end`, 5, `ROUND ${n}`, "down"]),
     counter: { at: [1, 2, 3, 4].map(n => `r${n}_found`), total: ROUNDS },
@@ -45,6 +47,8 @@ module.exports = {
     if (!g) throw new Error('no dry land')
     const X = g.x, Z = g.z, F = g.y
     Object.assign(this, { X, Z, F })
+    // edit.replay's fixed camera is relative to the set origin: it assumes the ground at y 62 (the hellobuh seed's plains)
+    if (F !== 62) throw new Error(`ground at y ${F}, not 62: fix edit.replay.cam's height`)
     await ctx.defaultRules()
     await ctx.cmd('/gamerule log_admin_commands false')
     await ctx.cmd('/gamerule random_tick_speed 0')
@@ -170,6 +174,8 @@ module.exports = {
     }
     const hmm = (pitch = 1) => ctx.sound('entity.villager.ambient', 1, pitch)
     const found = (n) => { ctx.mark(`r${n}_found`); ctx.sound('entity.villager.yes', 1, 1); ctx.sound('entity.player.levelup', 0.5, 1.4) }
+    // a slow drift after each find, so the shot never freezes while the card is up
+    const drift = async (ticks, amt = 0.05) => { const y0 = bot.entity.yaw, p0 = bot.entity.pitch; for (let i = 1; i <= ticks; i++) { await bot.look(y0 + amt * Math.sin(i / ticks * Math.PI), p0 + amt * 0.4 * (i / ticks), true); await bot.waitForTicks(1) } }
     const tp = async (dx, dz, yaw, pitch) => { await ctx.tpCheck(X + dx, F + 1, Z + dz, yaw, pitch) }
 
     // ---- round 1: the tree (north side)
@@ -198,7 +204,7 @@ module.exports = {
     hmm(1.1)
     found(1)
     await look(7.0, 2.4, -4.3, 300)
-    await bot.waitForTicks(16)
+    await drift(16)
 
     // ---- round 2: the pond (south-east)
     ctx.mark('cut1a')
@@ -261,7 +267,7 @@ module.exports = {
     hmm(1.2)
     found(3)
     await look(-8.5, -0.3, -0.5, 300)
-    await bot.waitForTicks(18)
+    await drift(18)
 
     // ---- round 4: the pillar (built now, off camera)
     ctx.mark('cut3a')
@@ -296,7 +302,10 @@ module.exports = {
     await look(-1.85, 321.4 - F, 6.5, 450)
     hmm(0.9)
     found(4)
-    for (let i = 0; i < 24; i++) { await bot.look(bot.entity.yaw + 0.002 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1) }
+    // up there: he tosses an emerald down at the seeker and laughs (happy particles)
+    bot.chat(`/summon item ${X - 1.5} ${321.3} ${Z + 6.6} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[0.12,0.22,0.06]}`)
+    for (let i = 0; i < 3; i++) ctx.particles('happy', W(-1.85, 321.6 - F, 6.5))
+    for (let i = 0; i < 36; i++) { await bot.look(bot.entity.yaw + 0.002 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1) }
     return true
   }
 }
