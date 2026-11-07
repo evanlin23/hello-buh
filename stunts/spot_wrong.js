@@ -3,7 +3,7 @@
 //  2 MEDIUM  a farm and barn: one log in the corner post laid on its side
 //  3 "only 1% can find it"  a bedroom: a lantern hanging from nothing, then "wait, there's another
 //            one": the double door's right half has its hinge on the wrong side, so both handles
-//            sit on the right.
+//            sit on the right; the player opens it and both halves swing the same way.
 const spotWrong = require('../lib/spot_wrong')
 
 // --- round 1: a house front (front wall z 0, depth to z -6, x 0..8) ---
@@ -91,17 +91,17 @@ function bedroom (b) {
   // the second mistake: the right door's hinge is on the same side as the left one's
   b.set(6, 0, -9, 'spruce_door[facing=south,half=lower,hinge=right]'); b.set(6, 1, -9, 'spruce_door[facing=south,half=upper,hinge=right]')
   b.set(4, 2, -8, 'wall_torch[facing=south]'); b.set(7, 2, -8, 'wall_torch[facing=south]')
-  // hanging lanterns; the first mistake: one hangs from nothing, a block below the ceiling
-  b.set(2, 3, -3, 'lantern[hanging=true]'); b.set(9, 3, -3, 'lantern[hanging=true]')
+  // lanterns hanging from chains; the first mistake: one has no chain, it hangs from nothing
+  for (const [lx, lz] of [[2, -3], [9, -3], [3, -6]]) { b.set(lx, 3, lz, 'iron_chain[axis=y]'); b.set(lx, 2, lz, 'lantern[hanging=true]') }
   b.set(8, 2, -6, 'lantern[hanging=true]')
   // the bed, a nightstand, bookshelves, a carpet, a work corner and chests
   b.set(2, 0, -8, 'red_bed[facing=north,part=head]'); b.set(2, 0, -7, 'red_bed[facing=north,part=foot]')
   b.set(3, 0, -8, 'barrel[facing=up]'); b.set(3, 1, -8, 'lantern')
   b.set(1, 0, -8, 'potted_poppy')
   b.fill(0, 0, -6, 0, 2, -3, 'bookshelf')
-  b.fill(4, -0, -6, 7, 0, -4, 'red_carpet'); b.fill(5, 0, -5, 6, 0, -5, 'white_carpet')
+  b.fill(4, 0, -6, 7, 0, -4, 'cyan_carpet')
   b.set(10, 0, -2, 'furnace[facing=west]'); b.set(10, 0, -3, 'crafting_table'); b.set(10, 1, -3, 'potted_dandelion')
-  b.set(10, 0, -5, 'chest[facing=west,type=right]'); b.set(10, 0, -6, 'chest[facing=west,type=left]')
+  b.set(10, 0, -5, 'chest[facing=west,type=left]'); b.set(10, 0, -6, 'chest[facing=west,type=right]')   // left connects clockwise from its facing (review: swapped halves rendered as two broken chests)
 }
 
 module.exports = spotWrong({
@@ -112,10 +112,10 @@ module.exports = spotWrong({
     { at: [-45, -12], build: house, seconds: 7,
       cam: { pos: [0, 13], walk: 'right' },
       scan: [[0, [3.5, 3.5, 0]], [2.5, [1, 2, 1]], [5, [6, 4.5, 0]], [7, [5.5, 3, 0]]],
-      tag: 'EASY',
+      tag: 'EASY', hint: [3.5, 'hint: not the flowers'],
       reveals: [{ at: [5.5, 2.5, 1.0], zoom: 3, sub: 'oak plank in birch', check: [[5, 2, 0], 'oak_planks'] }] },
     { at: [0, -12], build: farm, seconds: 8,
-      cam: { pos: [15, 21], walk: 'forward' },
+      cam: { pos: [12, 15], walk: 'forward' },
       scan: [[0, [-6, 1, 4]], [2.5, [0, 2, 0]], [5, [3, 4.5, -3]], [8, [5, 3, 0]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the field'],
       reveals: [{ at: [6.5, 2.5, 1.0], zoom: 3.2, sub: 'a sideways log', check: [[6, 2, 0], 'dark_oak_log'] }] },
@@ -124,8 +124,8 @@ module.exports = spotWrong({
       scan: [[0, [2, 1, -8]], [2.2, [0.5, 1.5, -4.5]], [4.2, [5, 1.3, -9]], [6.2, [10, 1, -4.5]], [9, [7, 1.5, -8.5]]],
       tag: 'only 1% can find it', hint: [4, 'hint: not the bed'],
       reveals: [
-        { at: [8.5, 2.35, -5.5], zoom: 3.2, sub: 'it hangs on nothing', check: [[8, 2, -6], 'lantern'] },
-        { pre: 'wait... there is another one', at: [6.5, 1.1, -8.6], zoom: 2.6, ring: 170, sub: 'hinge on the wrong side', check: [[6, 0, -9], 'spruce_door'] }
+        { at: [8.5, 2.75, -5.5], zoom: 3.2, strafe: 'left', sub: 'no chain: it floats', check: [[8, 2, -6], 'lantern'] },
+        { pre: 'wait... there is another one', approach: 0.8, at: [6.35, 1.0, -8.6], zoom: 1.3, ring: 250, hold: 2.2, use: [[5, 0, -9], [6, 0, -9]], useAt: 0.7, tail: 1.0, sub: 'the hinges are the same', check: [[6, 0, -9], 'spruce_door'] }
       ] }
   ]
 })
