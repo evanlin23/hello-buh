@@ -36,7 +36,7 @@ module.exports = {
     await ctx.defaultRules()
     await c('/gamerule log_admin_commands false')
     await c('/difficulty normal')                      // an enderman is a monster: refused on peaceful (spawn_mobs stays off)
-    await clearSet(ctx, A, 64, 28)              // a wide flat clearing (lib/story.js)
+    await clearSet(ctx, A, 64, 64)              // a wide flat clearing (lib/story.js), high (no cut hillsides)
     await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
     await c('/kill @e[type=!player]')
 
@@ -52,9 +52,9 @@ module.exports = {
     await c(`/fill ${A(1, 1, -4)} ${A(3, 4, -2)} air`)
     await c(`/fill ${A(2, 3, -5)} ${A(3, 4, -5)} air`)
     await c(`/fill ${A(0, 4, -3)} ${A(0, 4, -2)} air`)
-    await c(`/fill ${A(1, 0, -3)} ${A(4, 0, 0)} coarse_dirt`)
+    await c(`/fill ${A(1, 0, -3)} ${A(4, 0, 0)} dirt`)
     await c(`/fill ${A(2, -1, -2)} ${A(3, 0, -1)} air`)
-    await c(`/fill ${A(2, -2, -2)} ${A(3, -2, -1)} coarse_dirt`)
+    await c(`/fill ${A(2, -2, -2)} ${A(3, -2, -1)} dirt`)
     // ... and the blocks that are already back: the first two wall blocks of the corner
     await c(`/setblock ${A(1, 1, -2)} stone_bricks`)
     await c(`/setblock ${A(1, 1, -3)} cracked_stone_bricks`)
@@ -81,13 +81,17 @@ module.exports = {
     await c(`/fill ${A(-14, 0, 2)} ${A(14, 0, 4)} dirt_path`)
     for (const [dx, dz, b] of [[-5, 0, 'poppy'], [5, 1, 'dandelion'], [-2, 1, 'cornflower'], [7, -3, 'oxeye_daisy'], [-11, -1, 'poppy']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
     const PX = -10, PZ = 12
-    await c(`/fill ${A(PX - 3, 0, PZ - 3)} ${A(PX + 3, 0, PZ + 3)} stone_bricks`)
-    await c(`/fill ${A(PX - 1, 1, PZ - 2)} ${A(PX + 1, 1, PZ - 2)} end_portal_frame[facing=south,eye=true]`)
-    await c(`/fill ${A(PX - 1, 1, PZ + 2)} ${A(PX + 1, 1, PZ + 2)} end_portal_frame[facing=north,eye=true]`)
-    await c(`/fill ${A(PX - 2, 1, PZ - 1)} ${A(PX - 2, 1, PZ + 1)} end_portal_frame[facing=east,eye=true]`)
-    await c(`/fill ${A(PX + 2, 1, PZ - 1)} ${A(PX + 2, 1, PZ + 1)} end_portal_frame[facing=west,eye=true]`)
-    await c(`/fill ${A(PX - 1, 1, PZ - 1)} ${A(PX + 1, 1, PZ + 1)} end_portal`)
-    await c(`/fill ${A(PX - 1, 1, PZ - 4)} ${A(PX - 1, 2, PZ - 4)} stone_bricks`)   // a step to look down into it from
+    // a sunken stone-brick room (a stronghold's portal room, dug open), frames on its floor (y -5)
+    await c(`/fill ${A(PX - 4, -6, PZ - 4)} ${A(PX + 4, 0, PZ + 4)} stone_bricks`)
+    await c(`/fill ${A(PX - 3, -5, PZ - 3)} ${A(PX + 3, 0, PZ + 3)} air`)
+    for (const [dx, dz] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) await c(`/setblock ${A(PX + dx, -5, PZ + dz)} torch`)
+    for (const [dx, dy, dz] of [[-4, -2, 0], [4, -3, 1], [0, -1, 4], [-2, -4, -4], [2, -1, -4]]) await c(`/setblock ${A(PX + dx, dy, PZ + dz)} cracked_stone_bricks`)
+    for (const [dx, dy, dz] of [[-4, -4, 2], [4, -1, -2], [1, -3, 4]]) await c(`/setblock ${A(PX + dx, dy, PZ + dz)} mossy_stone_bricks`)
+    await c(`/fill ${A(PX - 1, -5, PZ - 2)} ${A(PX + 1, -5, PZ - 2)} end_portal_frame[facing=south,eye=true]`)
+    await c(`/fill ${A(PX - 1, -5, PZ + 2)} ${A(PX + 1, -5, PZ + 2)} end_portal_frame[facing=north,eye=true]`)
+    await c(`/fill ${A(PX - 2, -5, PZ - 1)} ${A(PX - 2, -5, PZ + 1)} end_portal_frame[facing=east,eye=true]`)
+    await c(`/fill ${A(PX + 2, -5, PZ - 1)} ${A(PX + 2, -5, PZ + 1)} end_portal_frame[facing=west,eye=true]`)
+    await c(`/fill ${A(PX - 1, -5, PZ - 1)} ${A(PX + 1, -5, PZ + 1)} end_portal`)
 
     // --- the cast, all NoAI and NoGravity, waiting off stage
     const mob = (type, x, y, z, yaw, tag, more = '') => c(`/summon ${type} ${(X + x).toFixed(2)} ${(F + y).toFixed(2)} ${(Z + z).toFixed(2)} {NoAI:1b,NoGravity:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[${yaw}f,0f]${more}}`)
@@ -123,11 +127,12 @@ module.exports = {
     // the enderman and the villagers: state that's re-sent every tick (micro-moves while idle)
     let jig = 0
     const E = { x: 20, y: 1, z: 20, yaw: 0 }
-    const V = [0, 1, 2].map(i => ({ x: -22 - i * 1.6, z: 3.0 }))
+    const V = [0, 1, 2].map(i => ({ x: -22 - i * 1.6, z: 2.4 + i * 0.9 }))
     const cast = () => {
       jig = (jig + 1) % 4
       const j = jig < 2 ? 0.004 : -0.004
       tp('ender', E.x + j, E.y, E.z, E.yaw)
+      if (E.x < 12 && jig === 0) ctx.particles('portal', P(E.x, 1.6 + Math.random(), E.z), { count: 4 })   // endermen trail purple
       for (let i = 0; i < 3; i++) tp(`v${i}`, V[i].x + j, 1, V[i].z, -90, 45)   // heads down: nobody looks at it
     }
 
@@ -135,8 +140,8 @@ module.exports = {
     await cut(2.6, 2.6, P(1.8, 2.0, -2))
     await line('L01', async (k, at) => {
       cast()
-      if (k === at(3)) put(1, 2, -2, 'stone_bricks')
-      bot.setControlState('forward', k > 2 && k < 10)
+      if (k === at(1)) put(1, 2, -2, 'stone_bricks')
+      bot.setControlState('forward', k > 2 && k < 6)
       K.base = K.aim(P(1.8, 2.0, -2)); look(k)
     })
     bot.setControlState('forward', false)
@@ -148,8 +153,13 @@ module.exports = {
       look(k, k > at(1) && k < at(1) + 8 ? Math.sin(k * 1.9) * 0.02 : 0)
     })
     // L03: the exact ones I lost, even the cracked ones (along the west wall)
-    await cut(-0.6, 0.4, P(-1.5, 2.2, -2))
-    await line('L03', async (k, at) => { cast(); K.base = K.aim(k < at(3) ? P(-1.5 + Math.min(k, 30) * 0.02, 2.2, -2) : P(-2.4, 3.2, -2)); look(k) })
+    await cut(-1.6, -0.6, P(-1.5, 1.6, -2))
+    await line('L03', async (k, at) => {
+      cast()
+      if (k === at(3) - 1) await cut(0.6, -0.9, P(0.5, 3.4, -2))      // "even the cracked ones": up at the top row
+      go(k > 2 && k < 8)
+      look(k)
+    })
     for (let i = 0; i < 3; i++) V[i].x = -9 - i * 1.7   // into place off shot, a line early
     // L04: purple sparkles on the grass, every day (low, in front of the crater)
     await cut(4.6, 2.6, P(2.5, 0.9, 0))
@@ -171,29 +181,31 @@ module.exports = {
     await line('L06', async (k) => { cast(); go(k > 3 && bot.entity.position.z > Z - 2.4); look(k) })
     go(false)
     // L07: he went to the End to fight the dragon (the portal); he never came back
-    await cut(-10.5, 8.5, P(-9.5, 1, 12.5), 3)
-    await line('L07', async (k, at) => { cast(); K.base = K.aim(P(-9.5, 1.2, 12.5 - Math.min(k, 50) * 0.01)); look(k, 0, k > at(4) ? -0.08 : 0) })
+    await cut(-9.5, 7.5, P(-9.5, -4.2, 12.5))
+    await line('L07', async (k) => { cast(); go(k > 2 && bot.entity.position.z < Z + 7.9); K.base = K.aim(P(-9.5, -4.2, 12.5)); look(k) })
     // L08: he used to hum the same song all day (his room, the note block)
     await cut(-5.5, -4.2, P(-7.5, 1.4, -6.5))
-    await line('L08', async (k, at) => { cast(); song(at(1), k); look(k) })
+    await line('L08', async (k, at) => { cast(); song(at(1), k); go(k > 2 && k % 2 === 0 && bot.entity.position.x > X - 6.6); K.base = K.aim(P(-7.5, 1.4, -6.5)); look(k) })
     // L09: so today I pretended to nap (on my bed, looking up, then out at the open corner)
     E.x = 6; E.z = 2.5; E.yaw = 45
     await cut(0.5, -5.5, P(-1.5, 1.2, -6.5))
     let from = null
     await line('L09', async (k, at) => {
       cast()
-      if (k >= at(2) - 2) { from = from || { ...K.base }; K.turnTo(from, P(2.4, 2.0, -1.5), (k - at(2) + 3) / 12) }
+      if (k < at(2) - 2) K.base = { yaw: K.base.yaw, pitch: K.base.pitch - 0.006 }   // eyes drifting shut...
+      if (k >= at(2) - 2) { from = from || { ...K.base }; K.turnTo(from, P(3.0, 2.6, 1.0), Math.min(1, (k - at(2) + 3) / 14)) }   // ...then a peek out the hole
       look(k)
     })
     // L10: something tall walked up to the wall (out through the hole: it comes into view)
     await line('L10', async (k) => {
       if (E.x > 3.0) { E.x -= 0.11; E.z -= 0.035 } else E.yaw = 150
-      cast(); look(k)
+      K.base = K.aim(P(E.x, 2.6, E.z)); cast(); look(k)
     })
     // L11: and put a block back
     await line('L11', async (k, at) => { cast(); if (k === at(2)) put(2, 1, -2, 'cracked_stone_bricks'); look(k) })
     // L12: an enderman (cut outside, close, it stands at the wall facing it)
     E.x = 2.6; E.z = -0.6; E.yaw = 180
+    for (let i = 0; i < 3; i++) { cast(); await bot.waitForTicks(1) }   // in place before the cut (no slide)
     await cut(5.5, 1.2, P(2.6, 2.6, -0.6))
     await line('L12', async (k) => { cast(); look(k) })
     // L13: I opened my eyes a little (it faces me)... it turned its whole body away
@@ -208,13 +220,14 @@ module.exports = {
       cast()
       if (k === at(1)) ctx.sound('entity.enderman.ambient', 0.5, 1.2)
       song(at(1) + 4, k, 0.84)
-      look(k, Math.sin(k / 8) * 0.05)
+      go(k % 3 === 0 && bot.entity.position.z > Z + 2.3)      // creeping closer as it hums
+      look(k, Math.sin(k / 5) * 0.05, Math.sin(k / 4) * 0.02)
     })
     // L15: it's him (closer on his back)
     await cut(2.6, 1.3, P(2.6, 2.4, -0.6))
-    await line('L15', async (k) => { cast(); look(k) })
+    await line('L15', async (k, at) => { cast(); go(k >= at(1) && k < at(1) + 5); look(k) })
     // L16: he came back from the End (the portal), as one of them (him again)
-    await cut(-10.5, 8.5, P(-9.5, 1.0, 12.5), 3)
+    await cut(-13.5, 12.5, P(-9.5, -4.2, 12.5))
     await line('L16', async (k, at) => {
       cast()
       if (k === at(3) - 1) await cut(4.4, 2.6, P(2.6, 2.6, -0.6))
@@ -238,20 +251,27 @@ module.exports = {
     })
     // L19: he's been fixing our home one block a day (wide: he sets another one in)
     E.x = 4.5; E.z = -3.5; E.yaw = 90
+    for (let i = 0; i < 3; i++) { cast(); await bot.waitForTicks(1) }
     await cut(8.5, 4.5, P(3.5, 2, -3.5))
     await line('L19', async (k, at) => { cast(); if (k === at(3)) put(3, 1, -4, 'mossy_stone_bricks'); look(k) })
     // L20: so now I nap every day, and I never peek (on the bed, looking at the ceiling; purple drifts in)
     E.x = 20; E.z = 20
-    await cut(0.5, -5.5, P(-0.6, 4.0, -5.2))
-    await line('L20', async (k, at) => {
+    await cut(0.5, -5.5, P(-1.5, 2.6, -7))
+    let pitch0 = null
+    await line('L20', async (k, at) => {                  // face down into the pillow, eyes shut; behind me, purple and a block going in
       cast()
-      if (k % 7 === 0) ctx.particles('portal', P(0.8 + Math.sin(k) * 0.6, 2.6, -4.6 + Math.cos(k) * 0.5), { count: 12 })
+      if (pitch0 === null) pitch0 = K.base.pitch
+      K.base = { yaw: K.base.yaw, pitch: Math.max(-1.45, pitch0 - k * 0.05) }
+      if (k >= at(3) && k % 5 === 0) ctx.particles('portal', P(0.2 + Math.sin(k) * 0.4, 2.2, -6.2), { count: 10 })
+      if (k === at(3)) ctx.sound('block.stone.place', 0.6, 0.9)
+      song(at(3) + 2, k, 0.84, 0.35)
       look(k)
     })
     // L21: which is why... (the sound of a block going back in, purple at the corner)
     say(`/setblock ${X + 1} ${F + 2} ${Z - 2} air`)   // the gap is open again, as in L01
-    await cut(1.7, 0.6, P(1.5, 1.8, -2))
-    await line('L21', async (k) => { cast(); if (k === 4) ctx.particles('portal', P(1.6, 3.0, -1.6), { count: 30 }); look(k) }, 0.25)
+    await cut(2.6, 2.6, P(1.8, 2.0, -2))                // the opening shot again
+    await line('L21', async (k) => { cast(); bot.setControlState('forward', k > 2 && k < 6); if (k === 4) ctx.particles('portal', P(1.6, 3.0, -1.6), { count: 30 }); look(k) })
+    bot.setControlState('forward', false)
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return true
