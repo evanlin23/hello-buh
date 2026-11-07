@@ -124,8 +124,8 @@ module.exports = {
     ctx.mark('vein')
     // step in and scoop up the drops (they pop out at the foot of the wall)
     ctx.easeLookAt(new Vec3(cx + 0.5, R0, cz - 3.5), 300)
-    await walkTo(cz - 2.6, 20)
-    await bot.waitForTicks(10)
+    await walkTo(cz - 3.4, 25)
+    for (let w = 0; w < 20 && bot.inventory.items().filter(i => i.name === 'diamond').reduce((a, i) => a + i.count, 0) < 4; w++) await bot.waitForTicks(1)
     const dia = bot.inventory.items().filter(i => i.name === 'diamond').reduce((a, i) => a + i.count, 0)
     ctx.log('pro diamonds', dia)
     if (dia < 4) return false
@@ -161,6 +161,10 @@ module.exports = {
     await k.cutTo(cs[0], cs[1], cs[2], 180, 5)
     bot.chat(`/spawnpoint @s ${x} ${F + 1} ${z - 3} 180 0`); bot.chat(`/setworldspawn ${x} ${F + 1} ${z - 3} 180 0`)
     await ctx.hotbar([])
+    // half his hearts gone before the beat (inside the cut, the blink over by the first frame): the
+    // blast does ~12 on normal, and a noob who survives a point-blank creeper isn't the joke
+    bot.chat('/damage @s 11 minecraft:generic')
+    await bot.waitForTicks(24)
     k.beat({ task: 1 })
     const creeperHead = () => { const c = k.mob('creeper'); return c ? c.position.offset(0, 1.1, 0) : null }
     bot.setControlState('forward', true)
