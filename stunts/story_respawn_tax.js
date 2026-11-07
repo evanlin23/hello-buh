@@ -79,7 +79,7 @@ module.exports = {
     const vil = (x, z, yaw, prof, tag) => c(`/summon villager ${(X + x).toFixed(2)} ${F + 1} ${(Z + z).toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[${yaw}f,0f],VillagerData:{profession:"minecraft:${prof}",type:"minecraft:plains",level:2},Xp:1}`)
     await vil(-1.6, -1.8, 20, 'fisherman', 'v_fisher')       // L01: the five villagers around the plaza
     await vil(2.0, -2.2, -30, 'butcher', 'v_butcher')
-    await vil(-2.4, 1.6, 150, 'fletcher', 'v_fletcher')
+    await vil(-2.8, -0.4, 120, 'fletcher', 'v_fletcher')   // clear of the respawn turn (at -2.4/1.6 he filled the frame)
     await vil(0.5, -6.5, 0, 'nitwit', 'v_nitwit')            // already in the line
     await vil(2.4, 1.9, -150, 'librarian', 'v_lib')
     await c(`/summon iron_golem ${X + 0.5} ${F + 1} ${Z + 0.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["golem"],Rotation:[0f,0f]}`)
@@ -106,17 +106,24 @@ module.exports = {
     const gone = (tag) => say(`/tp @e[tag=${tag}] ${X} ${F - 30} ${Z}`)   // off the set, out of sight
     let deadAt = -99
     bot.on('death', () => { deadAt = ctx.tick })
-    const respawn = async () => {   // click Respawn (enabled 20 ticks after the death), wait for the spawn
+    const respawn = async (m) => {   // click Respawn (enabled 20 ticks after the death), wait for the spawn
       if (!ctx.died) return
       while (ctx.tick < deadAt + 21) await bot.waitForTicks(1)
       const spawned = new Promise(r => { bot.once('spawn', r); setTimeout(r, 3000) })
-      ctx.respawn(); await spawned; ctx.revive()
+      ctx.respawn(); if (m) setMeter(m)   // the counter drops on the respawn cut (set after the spawn event it came 6 frames late)
+      await spawned; ctx.revive()
       K.base = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }   // the spawn angle: facing the gold block
     }
     const go = (on) => bot.setControlState('forward', on)
+    // move a mob between scenes without the client's 3-tick glide (vanilla lerps any teleport under 64 blocks:
+    // she slid onto the gold block on camera): out past 64 blocks and back, both snap
+    const put = async (tag, x, z, yaw) => {
+      say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} ${yaw} 0`); await bot.waitForTicks(2)
+      say(`/tp @e[tag=${tag}] ${X + x} ${F + 1} ${Z + z} ${yaw} 0`); await bot.waitForTicks(1)
+    }
     // respawn without stalling the line (an awaited respawn held each scene ~1 s past its voice)
     let respawning = false
-    const respawnSoon = (then) => { if (respawning || !ctx.died) return; respawning = true; respawn().then(() => { respawning = false; if (then) then() }) }
+    const respawnSoon = (then, m) => { if (respawning || !ctx.died) return; respawning = true; respawn(m).then(() => { respawning = false; if (then) then() }) }
     const alive = () => !ctx.died && !respawning
     // something moving behind every death screen: smoke at a point in view, every 3 ticks while dead
     let deadView = null
@@ -126,7 +133,7 @@ module.exports = {
       const e = bot.entity, c = Math.cos(e.pitch), f = { x: -Math.sin(e.yaw) * c, z: -Math.cos(e.yaw) * c }
       const d = 2.5
       // not on a cauldron death: the fire can kill before tripStep returns 'dead', and the smoke sat on the gold block
-      if (!noSmoke && trip === null) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z + f.z * d)
+      if (!noSmoke && trip === null && ctx.tick - tripEnd > 10) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z + f.z * d)
     })
     let noSmoke = false
     bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 3 === 0) ctx.particles('smoke', deadView, { count: 2 }) })
@@ -135,7 +142,7 @@ module.exports = {
     const fallIn = () => say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 0.3).toFixed(3)} ${(Z + 4.5).toFixed(3)}`)
     // the trip, as a sequence: drop into the cauldron (burning), scramble out onto the plaza facing `t`, burn to
     // death there. Dying inside it sank the dead camera to the cauldron's floor (its walls filled the screen).
-    let trip = null, landed = 0
+    let trip = null, landed = 0, tripEnd = -99
     const tripStep = (t) => {
       if (!trip && (bot.entity.position.y < F + 0.9 || overCauldron())) { trip = 0; go(false); fallIn(); ctx.mark('burn'); ctx.sound('entity.generic.burn', 1, 1) }
       if (trip === null) return false
@@ -171,7 +178,7 @@ module.exports = {
     await line('L03', async (k, at) => {
       kNow = k
       // where the fisherman stood: empty. Turned to over 6 ticks (a one-tick snap after 3 frames of the golem read as a flash cut)
-      if (k === 0) respawnSoon(() => { setMeter(4); from3 = { ...K.base }; k3 = kNow })
+      if (k === 0) respawnSoon(() => { from3 = { ...K.base }; k3 = kNow }, 4)
       if (from3 && !docked) K.turnTo(from3, P(-1.6, 1.0, -1.8), (k - k3) / 6)
       if (!docked && k >= at(3) - 2 && alive()) { docked = true; await cut(18.5, -3.5, P(26.5, 0.4, -3.5)) }   // arrive on the aim the walk keeps (it whipped on 4 frames)
       go(docked && bot.entity.position.x < X + 21.2)
@@ -186,7 +193,7 @@ module.exports = {
     await line('L04', async (k, at) => {
       if (!burnAt && (bot.entity.position.y < F + 1.6 || ctx.died)) { burnAt = k || 1; ctx.mark('burn') }   // just before the touch: on half a heart the lava kills on the touching tick, and a burn mark after the death paired with the next death
       if (!dead && burnAt && (ctx.died || k >= burnAt + 10)) { if (!ctx.died) say('/damage @s 100 minecraft:lava'); dead = true }
-      if (dead && k >= at(1)) respawnSoon(() => setMeter(3))
+      if (dead && k >= at(1)) respawnSoon(null, 3)
       if (dead && !door && k >= at(2) - 1 && alive()) { door = true; await cut(-1.5, 12.5, P(4.5, 1.8, 12.5)) }
       if (!door) K.base = { yaw: K.base.yaw, pitch: Math.max(-1.3, K.base.pitch - 0.03) }   // eased down (a one-tick pitch whip after the cut)
       if (alive()) look(k)
@@ -209,14 +216,14 @@ module.exports = {
     // L06: so I stopped dying (over the cactus death screen). I moved into a house made of hay
     let hay = false
     await line('L06', async (k, at) => {
-      respawnSoon(() => setMeter(2))
+      respawnSoon(null, 2)
       if (!hay && k >= at(2) - 1 && alive()) { hay = true; await cut(14.5, -11.5, P(14.5, 1.5, -19)) }
       go(hay && bot.entity.position.z > Z - 17.4)
       if (alive()) look(k)
     })
     go(false)
     // L07: the librarian raised me. Bread. One more, just in case.
-    say(`/tp @e[tag=v_lib] ${X + 14.5} ${F + 1} ${Z - 14.6} 180 0`)
+    await put('v_lib', 14.5, -14.6, 180)
     await cut(14.5, -18.5, P(14.5, 1.6, -14.6))
     ctx.mark('face_on', { near: [X + 14.5, Z - 14.6, 1.2], head: true })
     let bread = 0
@@ -241,21 +248,21 @@ module.exports = {
       K.base = K.aim(P(0.5, 0.5, 4.5)); look(k, 0, k > at(1) ? -0.25 : 0)
     })
     dead = false; trip = null; landed = 0
-    let nz = -6.5
+    let nz = -6.5, cut11 = null
     await line('L10', async (k) => {
       go(!dead && trip === null)
-      if (!dead) { const st = tripStep(P(0.5, 1.4, -3)); if (st === 'dead') { dead = true; trip = null; deadView = null } }   // dies facing the spawn and the lane
+      if (!dead) { const st = tripStep(P(0.5, 1.4, -3)); if (st === 'dead') { dead = true; trip = null; deadView = null; tripEnd = ctx.tick } }   // dies facing the spawn and the lane
       // behind this death screen the nitwit starts down the lane (the smoke 2.5 blocks ahead sat on the gold block
       // and was still rising there after the respawn: Minecraft audit)
       if (dead) { nz = Math.min(-3.5, nz + 0.1); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
-      if (dead) respawnSoon()   // respawn inside L10: done in L11 it stretched the line 0.4 s (0.8 s of silence)
+      if (dead) respawnSoon(() => { cut11 = cut(3.5, 3.6, P(0.5, 1.4, -2)) })   // the L11 shot straight from the respawn // a 3-frame spawn view read as stray frames. Respawn inside L10: done in L11 it stretched the line 0.4 s (0.8 s of silence)
       if (!dead && trip === null) { K.base = K.aim(P(0.5, 0.2, 4.5)); look(k) }
       if (dead && alive()) look(k)
     })
     go(false)
     // L11: this time I was fast: respawn and watch the nitwit walk up to my spawn
     await line('L11', async (k, at) => {
-      if (k === 0) { while (!alive()) await bot.waitForTicks(1); await cut(3.5, 3.6, P(0.5, 1.4, -2)) }
+      if (k === 0) { while (!alive() || !cut11) await bot.waitForTicks(1); await cut11 }
       if (k >= at(2)) { nz = Math.min(0.5, nz + 0.2); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
       K.base = K.aim(P(0.5, 1.4, nz)); look(k)
     }, -0.2)   // the cut waits for the respawn: the line ran 0.2 s long (0.9 s of silence before L12)
@@ -288,19 +295,19 @@ module.exports = {
     })
     ctx.mark('face_off')
     // L15: now it's just her (alone in the line)
-    say(`/tp @e[tag=v_lib] ${X + 0.5} ${F + 1} ${Z - 11.5} 0 0`)
+    await put('v_lib', 0.5, -11.5, 0)
     await cut(0.5, -2.5, P(0.5, 1.6, -11.5))
     await line('L15', async (k) => { go(k < 14); look(k) })
     go(false)
     // L16: she's already standing on my spawn
     say('/effect give @s minecraft:fire_resistance 30 0 true')
-    say(`/tp @e[tag=v_lib] ${X + 0.5} ${F + 1} ${Z + 0.5} 0 0`)
+    await put('v_lib', 0.5, 0.5, 0)
     await cut(0.5, 7.4, P(0.5, 1.7, 0.5))
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
     await line('L16', async (k) => { go(k > 6 && k < 12); look(k) })
     go(false)
     // her sparkles around her, not on her face (they hid it under the death text: retention audit)
-    const sparkle = () => { for (let i = 0; i < 2; i++) { const a = Math.random() * Math.PI * 2; ctx.particles('happy', P(0.5 + Math.cos(a) * 0.55, 1.2 + Math.random() * 1.3, 0.5 + Math.sin(a) * 0.55), { count: 2 }) } }
+    const sparkle = () => { for (let i = 0; i < 2; i++) { const a = Math.PI + Math.random() * Math.PI; ctx.particles('happy', P(0.5 + Math.cos(a) * 0.85, 1.0 + Math.random() * 1.7, 0.5 + Math.sin(a) * 0.85), { count: 2 }) } }   // the far half of a ring: none across her face
     // L17: and today, I tripped again
     dead = false; trip = null; landed = 0
     let aim17 = 0, from17 = null, k17 = 0
@@ -308,12 +315,12 @@ module.exports = {
       go(!dead && trip === null && k >= at(2) - 11)   // the fall lands on "AGAIN."
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       if (!dead) {
-        const st = tripStep(P(0.5, 2.3, 0.5))   // dies facing her: her face in the clear band between the Score line and the buttons
-        if (st === 'dead') { dead = true; deadView = null; noSmoke = true }   // nothing between us: she sparkles instead
+        const st = tripStep(P(0.5, 2.45, 0.5))   // dies facing her: her face in the clear band between the Score line and the buttons
+        if (st === 'dead') { dead = true; deadView = null; noSmoke = true; tripEnd = ctx.tick }   // nothing between us: she sparkles instead
       }
       if (dead && k % 2 === 0) sparkle()
       if (!dead && trip === null) {   // her, then a tilt down to the cauldron, then back: eased (a 3-frame whip)
-        const want = k > at(1) && k < at(2) ? 1 : 0
+        const want = k > at(1) ? 1 : 0   // eyes on the cauldron until he falls in (looking up at her he walked over it unseen)
         if (want !== aim17) { aim17 = want; from17 = { ...K.base }; k17 = k }
         if (from17) K.turnTo(from17, want ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5), (k - k17) / 7); else K.base = K.aim(P(0.5, 1.5, 0.5))
         look(k)

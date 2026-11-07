@@ -42,14 +42,19 @@ def _marks(timeline, start):
     lands (the stunt sees the new position late), so it starts on the cut itself: the first tick whose pose
     is over 4 blocks from the one before (render.js shows that pose from exactly that tick)."""
     out = []
+    cuts = [e["t"] // 50 for e in timeline if e["event"] == "cut"]
     for e in timeline:
         if e["event"] != "line":
             continue
         m = e["t"] // 50
         t = m
         if POSES:
-            for i in range(m, max(0, m - 4), -1):
-                if i < len(POSES) and ((POSES[i][1] - POSES[i - 1][1]) ** 2 + (POSES[i][2] - POSES[i - 1][2]) ** 2 + (POSES[i][3] - POSES[i - 1][3]) ** 2) > 16:
+            # after a `cut` mark any step over 0.6 block is the teleport (a short cut moved 1-2 blocks and the
+            # caption came a tick late: frame review, story_respawn_tax f948)
+            near = bool(out) and any(m - 12 <= c <= m for c in cuts)   # not line 1: the Short starts on its mark
+            lim = 0.36 if near else 16
+            for i in range(m, max(0, m - (12 if near else 4)), -1):
+                if i < len(POSES) and ((POSES[i][1] - POSES[i - 1][1]) ** 2 + (POSES[i][2] - POSES[i - 1][2]) ** 2 + (POSES[i][3] - POSES[i - 1][3]) ** 2) > lim:
                     t = i
                     break
         out.append((t / 20 - start, e["id"]))

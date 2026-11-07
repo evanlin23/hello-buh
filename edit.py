@@ -901,7 +901,7 @@ def main():
                     continue
                 end = tb + 0.6
                 if b_ == "death":   # a dead body stays on fire (and in view) until the respawn
-                    end = next((x for x in times("respawn") if x > tb), dur + args.start + 1)
+                    end = next((_snap_respawn(x) for x in times("respawn") if x > tb), dur + args.start + 1)   # on the respawn's camera jump (it burned 3 frames into the respawn view)
                 if not any(abs(ta - w[0]) < 1e-3 for w in wins):
                     wins.append((ta, end))
         with zipfile.ZipFile(CLIENT_JAR) as jar:
