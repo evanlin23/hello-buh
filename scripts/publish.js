@@ -46,6 +46,9 @@ const head = sh('git', ['rev-parse', 'HEAD'])
 for (const name of names) {
   const mp4 = path.join(ROOT, 'out', `${name}.mp4`)
   if (!fs.existsSync(mp4)) { console.error(`skip ${name}: no out/${name}.mp4`); continue }
+  // GitHub rejects files over 100 MB (GH001): a rejected push leaves a local package commit that blocks
+  // every later publish (worker 4, boat_clutch at 106 MB). edit.py caps the bitrate at 18 Mbit/s now.
+  if (fs.statSync(mp4).size > 95e6) { console.error(`skip ${name}: out/${name}.mp4 is ${(fs.statSync(mp4).size / 1e6).toFixed(1)} MB (GitHub's limit is 100 MB): re-edit it (scripts/reedit.sh) to get the bitrate cap`); continue }
   const commit = commitAt(mp4)
   const dir = path.join(VID, 'shorts', name)
   fs.mkdirSync(path.join(dir, 'source'), { recursive: true })
