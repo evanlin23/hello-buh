@@ -70,6 +70,34 @@ function spawn (ev, blockTex) {
         g: 0, drag: 0.96, life: 20 + r() * 20, size: 0.5 + r() * 0.5, anim: ['particle/big_smoke_', 12], color: [0.7, 0.7, 0.7] })
     }
   }
+  if (ev.type === 'potion') {
+    // LevelEvent 2002/2007 (a splash potion breaks): 100 SpellParticles (effect_0..7, rising: gravity
+    // -0.1 x 0.04, friction 0.96) thrown out up to 4 blocks' power, tinted the potion colour x 0.75-1
+    const c = ev.color ?? 0x385DC6, cr = ((c >> 16) & 255) / 255, cg = ((c >> 8) & 255) / 255, cb = (c & 255) / 255
+    for (let i = 0; i < 100; i++) {
+      const d = r() * 4, a = r() * Math.PI, dx = Math.cos(a) * d, dz = Math.sin(a) * d * (r() < 0.5 ? 1 : -1), f = 0.75 + r() * 0.25
+      const vy0 = (0.01 + r() * 0.5) * 0.2
+      P({ x: ev.x + dx * 0.1, y: ev.y + 0.3, z: ev.z + dz * 0.1, vx: dx * 0.05, vy: ((vy0 - 0.1) * d + 0.1) * 0.5, vz: dz * 0.05,
+        g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/effect_', 8], bright: !!ev.instant, color: [cr * f, cg * f, cb * f] })
+    }
+  }
+  if (ev.type === 'firework') {
+    // FireworkParticles.Starter: a flash, then per explosion a ball of sparks (small ball: speed 0.25,
+    // size 2; large ball: 0.5, 4; others drawn as a ball too) in its colours; SparkParticle: friction
+    // 0.91, lives 48-60 ticks, falls slowly, full bright
+    const exps = (ev.explosions && ev.explosions.length) ? ev.explosions : []
+    if (exps.length) P({ x: ev.x, y: ev.y, z: ev.z, vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 4, size: 2.0, tex: 'particle/flash', bright: true, color: [1, 1, 1] })
+    for (const e of exps) {
+      const big = /large|creeper|star/.test(e.shape || ''), speed = big ? 0.5 : 0.25, size = big ? 4 : 2
+      const cols = (e.colors && e.colors.length ? e.colors : [0xFFFFFF]).map(c => [((c >> 16) & 255) / 255, ((c >> 8) & 255) / 255, (c & 255) / 255])
+      for (let i = -size; i <= size; i++) for (let j = -size; j <= size; j++) for (let k = -size; k <= size; k++) {
+        const dx = k + (r() - r()) * 0.5, dy = j + (r() - r()) * 0.5, dz = i + (r() - r()) * 0.5
+        const n = Math.sqrt(dx * dx + dy * dy + dz * dz) / speed + (r() - 0.5) * 0.1
+        P({ x: ev.x, y: ev.y, z: ev.z, vx: dx / n, vy: dy / n, vz: dz / n, g: 0.004, drag: 0.91, life: 48 + Math.floor(r() * 12), size: 0.1 * 0.75 * 2, anim: ['particle/spark_', 8], bright: true, color: cols[Math.floor(r() * cols.length)] })
+        if (i !== -size && i !== size && j !== -size && j !== size) k += size * 2 - 1   // only the shell
+      }
+    }
+  }
   return out
 }
 

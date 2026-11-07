@@ -120,6 +120,17 @@ function entitiesAt (t, mesher) {
 // physics (it falls, or sinks in lava/water) until the respawn. mineflayer teleports the bot to
 // the respawn point the same tick, so the camera is simulated from the death pose on.
 // first tick each entity was seen (TNT fuse timing) and the TNT block state
+// a thrown potion's colour: the splash (LevelEvent 2002) it makes where it was last seen
+const POTION_COLOR = new Map()
+{
+  const last = new Map()
+  for (const r of rec.entities || []) if (/^(splash|lingering)_potion$/.test(r[2])) last.set(r[1], r)
+  const splashes = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'potion')
+  for (const [id, r] of last) {
+    const sp = splashes.find(e => e.t / 50 >= r[0] - 1 && e.t / 50 <= r[0] + 4 && Math.hypot(e.x - r[3], e.z - r[5]) < 3)
+    if (sp && typeof sp.color === 'number') POTION_COLOR.set(id, sp.color & 0xFFFFFF)
+  }
+}
 const FIRST_SEEN = new Map()
 for (const r of rec.entities || []) if (!FIRST_SEEN.has(r[1])) FIRST_SEEN.set(r[1], r[0])
 const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a lit one 80)
@@ -994,6 +1005,7 @@ function camAtLive (t) {
       e.yaw = age / 20 + (e.id % 7)
       e.extra = { state: bl.defaultState, scale: 0.25, spin: true, glint: !!(e.extra.glint || GLINT_ITEMS.has(it)) }
     }
+    for (const e of ents) if (POTION_COLOR.has(e.id)) e.extra = { ...(e.extra || {}), color: POTION_COLOR.get(e.id) }
     // mobs made to face the player by command (tp facing entity <bot> eyes) between face_on and
     // face_off marks: the recorded entity yaw lags the server by seconds, so face them here
     for (const [fa, fb, which] of FACE) {
@@ -1015,7 +1027,7 @@ function camAtLive (t) {
     // the bot (mineflayer) has no entity push, so a creeper could end up inside the camera. Keep
     // mobs at least their half width + the player's (0.3 + 0.3) plus a little, horizontally.
     for (const e of ents) {
-      if (['player', 'falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb'].includes(e.name)) continue
+      if (['player', 'falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb', 'splash_potion', 'lingering_potion', 'experience_bottle', 'firework_rocket'].includes(e.name)) continue
       if (/_boat$|_raft$|minecart$|^boat$/.test(e.name)) continue   // vehicles: the camera may be riding one (it stays under the camera)
       const dx = e.x - cam.x, dz = e.z - cam.z, d = Math.hypot(dx, dz), min = 0.85
       if (d < min && d > 1e-6 && Math.abs(e.y - (cam.y - 1.62)) < 2) { e.x = cam.x + dx / d * min; e.z = cam.z + dz / d * min }

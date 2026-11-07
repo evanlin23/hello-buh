@@ -41,6 +41,28 @@ async function texture (layers) {
   return out
 }
 
+async function potionTexture (name, color) {
+  const key = `potion|${name}|${color}`
+  if (texCache.has(key)) return texCache.get(key)
+  const [base, ov] = await Promise.all([img(`/assets/env/item/${name}.png`), img('/assets/env/item/potion_overlay.png')])
+  if (!base) { texCache.set(key, null); return null }
+  const c = document.createElement('canvas'); c.width = base.width; c.height = base.height
+  const g = c.getContext('2d')
+  if (ov) {
+    const o = document.createElement('canvas'); o.width = ov.width; o.height = ov.height
+    const og = o.getContext('2d'); og.drawImage(ov, 0, 0); og.globalCompositeOperation = 'multiply'
+    og.fillStyle = '#' + color.toString(16).padStart(6, '0'); og.fillRect(0, 0, o.width, o.height)
+    og.globalCompositeOperation = 'destination-in'; og.drawImage(ov, 0, 0)
+    g.drawImage(o, 0, 0, c.width, c.height)
+  }
+  g.drawImage(base, 0, 0)
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false; t.colorSpace = THREE.NoColorSpace
+  const out = { tex: t, w: c.width, h: c.height }
+  texCache.set(key, out)
+  return out
+}
+
 function cubeGeometry (cube, pivot, texW, texH, mirror) {
   const pos = [], uv = [], col = [], idx = []
   const inf = cube.inflate || 0
@@ -294,9 +316,10 @@ export class EntityLayer {
     } else if (name === 'player') {
       const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
       if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
-    } else if (name === 'ender_pearl' || name === 'snowball' || name === 'egg' || name === 'item') {
+    } else if (/^(ender_pearl|snowball|egg|item|splash_potion|lingering_potion|experience_bottle|firework_rocket)$/.test(name)) {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
-      const t = await texture([(name === 'item' && extra?.tex) || `item/${itemName}`])
+      // thrown potions: the bottle plus potion_overlay tinted with the potion colour (ThrownItemRenderer)
+      const t = /_potion$/.test(name) ? await potionTexture(name, extra?.color ?? 0x385DC6) : await texture([(name === 'item' && extra?.tex) || `item/${itemName}`])
       if (t) {
         mat = new THREE.SpriteMaterial({ map: t.tex, alphaTest: 0.1, fog: true })
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)

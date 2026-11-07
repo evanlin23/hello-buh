@@ -11,6 +11,12 @@ THREE.ShaderChunk.fog_vertex = `
 	vFogDepth = length( ( modelMatrix * vec4( transformed, 1.0 ) ).xz - cameraPosition.xz );
 #endif
 `
+// sprites (dropped items, pearls, thrown potions, rockets) have no 'transformed' in their vertex
+// shader: the override above failed to compile for them, so give them the same horizontal distance
+// measured to the sprite's centre
+THREE.ShaderLib.sprite.vertexShader = THREE.ShaderLib.sprite.vertexShader.replace('#include <fog_vertex>', `#ifdef USE_FOG
+	vFogDepth = length( ( modelMatrix * vec4( 0.0, 0.0, 0.0, 1.0 ) ).xz - cameraPosition.xz );
+#endif`)
 
 const W = window.innerWidth, H = window.innerHeight
 const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true })
