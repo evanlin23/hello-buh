@@ -756,6 +756,17 @@ function darknessAt (t) {
   const b = (DARK[k] || 0) * (1 - u) + (DARK[k + 1] ?? DARK[k] ?? 0) * u
   return { darkBlend: b, darkScale: Math.max(0, Math.cos(t * Math.PI * 0.025) * 0.45 * b) }
 }
+// a warden's roar: the tick each run of the roar flag starts (the animation runs from there)
+const ROAR_START = new Map()   // id -> [[startTick, endTick]]
+{
+  const open = new Map()
+  for (const row of rec.entities || []) {
+    if (row[2] !== 'warden') continue
+    const on = !!(row[9] && row[9].roar), cur = open.get(row[1])
+    if (on && !cur) { const run = [row[0], Infinity]; open.set(row[1], run); if (!ROAR_START.has(row[1])) ROAR_START.set(row[1], []); ROAR_START.get(row[1]).push(run) }
+    if (!on && cur) { cur[1] = row[0]; open.delete(row[1]) }
+  }
+}
 // TNT minecarts primed (harness cart_primed marks, entity status 10): id -> tick
 const CART_PRIMED = new Map()
 for (const e of rec.timeline || []) if (e.event === 'cart_primed' && !CART_PRIMED.has(e.id)) CART_PRIMED.set(e.id, e.t / 50)
@@ -1743,6 +1754,11 @@ function camAtLive (t) {
       let k = fuse < 10 ? 1 - Math.max(0, fuse) / 10 : 0; k *= k; k *= k
       e.name = 'falling_block'
       e.extra = { state: TNT_STATE, flash: Math.floor(Math.max(0, fuse) / 5) % 2 === 0, scale: 1 + k * 0.3 }
+    }
+    for (const e of ents) {
+      if (e.name !== 'warden' || !ROAR_START.has(e.id)) continue
+      const run = ROAR_START.get(e.id).find(([a, b]) => t >= a && t < b)
+      if (run) e.extra = { ...(e.extra || {}), roar: true, roarT: run[0] }
     }
     for (const e of ents) {   // falling blocks: send each block type's mesh once
       // minecart contents (MinecartRenderer display block)

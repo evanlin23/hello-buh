@@ -346,6 +346,19 @@ function poseWarden (r, s, walkPos, walkSpeed, tick) {
   B.rightArm.rotation.set(-sw * f, 0, 0); B.leftArm.rotation.set(sw * f, 0, 0)
   const tw = Math.sin((tick || 0) * 0.15) * 0.1
   B.rightTendril.rotation.set(0, tw, 0); B.leftTendril.rotation.set(0, -tw, 0)
+  // roaring (Pose.ROARING, WardenAnimation.WARDEN_ROAR, 4.2 s): leans back, the head thrown up and
+  // the arms flung out and up; eases in over 0.5 s, holds, eases out over the last 0.7 s
+  if (s.extra && s.extra.roar) { if (r.roarT === undefined) r.roarT = s.extra.roarT ?? tick } else r.roarT = undefined
+  if (r.roarT !== undefined) {
+    const e = (tick - r.roarT) / 20
+    const k = e < 0.5 ? e / 0.5 : e < 3.5 ? 1 : Math.max(0, 1 - (e - 3.5) / 0.7)
+    const q = k * k * (3 - 2 * k)
+    B.body.rotation.x = 0.35 * q
+    B.head.rotation.x += 0.9 * q
+    B.rightArm.rotation.set(1.4 * q, 0, 0.5 * q); B.leftArm.rotation.set(1.4 * q, 0, -0.5 * q)
+    const shake = q * Math.sin(tick * 2.1) * 0.04
+    B.head.rotation.z = shake
+  } else if (B.body) B.body.rotation.x = 0
   if (B.layers) {
     // spots: max(0, cos(age * 0.045) * 0.25) and its opposite phase; the heart flashes to 1 every
     // 40 ticks (a calm warden's heartbeat) and fades over 10
@@ -423,6 +436,15 @@ function poseEnderman (r, s, walkPos, walkSpeed) {
   if (B.carried) { B.rightArm.rotation.set(-0.5, 0, 0.05); B.leftArm.rotation.set(-0.5, 0, -0.05) }   // carrying: arms out
   B.rightLeg.rotation.set(c(Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed), 0, 0)
   B.leftLeg.rotation.set(c(Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed), 0, 0)
+  // creepy (screaming at you, EnderMan.DATA_CREEPY): the head rises 5 px off the jaw (the hat layer
+  // stays: the mouth gapes), and EndermanRenderer.getRenderOffset shakes it by gaussian x 0.02
+  const creepy = !!(s.extra && s.extra.creepy)
+  B.head.position.y = -13 - (creepy ? 5 : 0)
+  if (B.hat) B.hat.position.y = creepy ? 5 : 0
+  if (creepy) {
+    const g = () => { const u = Math.random() || 1e-9; return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * Math.random()) }
+    r.obj.position.x += g() * 0.02; r.obj.position.z += g() * 0.02
+  }
 }
 // HumanoidModel.setupAnim (+ setupAttackAnimation, ArmPose.ITEM, AnimationUtils.bobModelPart) and
 // LivingEntityRenderer.setupRotations for a player state s: yaw = body yaw, headYaw, pitch
@@ -510,7 +532,7 @@ export class EntityLayer {
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
 
   async ensure (id, name, extra) {
-    const key = `${id}|${name}|${JSON.stringify(extra, (k, v) => k === 'paddle' ? undefined : v)}`
+    const key = `${id}|${name}|${JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'roar' || k === 'roarT' ? undefined : v)}`
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
     if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
@@ -873,6 +895,20 @@ export class EntityLayer {
       if (B.head) {
         let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
         B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y - dy, B.head.userData.rest.z)
+      }
+      // a polar bear rearing up (PolarBear.DATA_STANDING_ID; clientSideStandAnimation moves 1 a tick
+      // toward 6). PolarBearModel: the body tips back by f x 0.35 pi about the hips, the front legs reach
+      // forward (0.45 pi), the head tips down 0.15 pi. Here the legs and head hang from the body, so
+      // the hind legs turn back by the body's angle to stay on the ground
+      if (s.name === 'polar_bear' && B.body) {
+        const dt = Math.max(0, Math.min(6, tick - (r.standT ?? tick))); r.standT = tick
+        const want = s.extra && s.extra.standing ? 1 : 0, cur = r.stand || 0
+        r.stand = want > cur ? Math.min(want, cur + dt / 6) : Math.max(want, cur - dt / 6)
+        const f = r.stand, a = f * Math.PI * 0.35
+        B.body.rotation.x = B.body.userData.rest.x + a
+        for (const n of ['leg0', 'leg1']) if (B[n]) B[n].rotation.x -= a
+        for (const n of ['leg2', 'leg3']) if (B[n]) B[n].rotation.x = B[n].userData.rest.x * (1 - f) + f * Math.PI * 0.1
+        if (B.head) B.head.rotation.x -= f * Math.PI * 0.15 + a
       }
     }
     for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); if (r.fire) this.scene.remove(r.fire); this.live.delete(id) }
