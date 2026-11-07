@@ -13,13 +13,13 @@ const wrong = require('./wrong_bucket')
 
 const GAP = 40
 const TIERS = [
-  { mod: water, opts: { height: 40, fast: true }, label: '40 blocks', end: 'placed', hotbar: 'water' },
-  { mod: water, opts: { height: 70, fast: true }, label: '70 blocks', end: 'placed', hotbar: 'water' },
-  { mod: water, opts: { height: 90, fast: true }, label: '90 blocks... HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
-  { mod: pearl, opts: { tower: 30 }, label: 'ender pearl over lava', end: 'teleported', hotbar: 'pearl' },
-  { mod: pearl, opts: { tower: 70 }, label: '70 blocks... AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
-  { mod: pearl, opts: { tower: 70 }, label: 'night + THUNDERSTORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
-  { mod: wrong, opts: { height: 21, fast: true }, label: 'easy one to finish', end: null, hotbar: 'lava', time: 6000, weather: 'clear' }
+  { mod: water, opts: { height: 40, fast: true }, label: '40 BLOCKS', end: 'placed', hotbar: 'water' },
+  { mod: water, opts: { height: 70, fast: true }, label: '70 BLOCKS', end: 'placed', hotbar: 'water' },
+  { mod: water, opts: { height: 90, fast: true }, label: 'HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
+  { mod: pearl, opts: { tower: 30, fast: true }, label: 'PEARL OVER LAVA', end: 'teleported', hotbar: 'pearl' },
+  { mod: pearl, opts: { tower: 70, fast: true }, label: 'AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
+  { mod: pearl, opts: { tower: 100, fast: true }, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
+  { mod: wrong, opts: { height: 21, fast: true }, label: 'EASY ONE', end: null, hotbar: 'lava', time: 6000, weather: 'clear' }
 ]
 const HOTBARS = {
   water: ['diamond_sword', 'water_bucket', ['cobblestone', 64], ['bread', 16]],
@@ -38,7 +38,7 @@ module.exports = {
   edit: {
     caption: 'clutches, but each one is harder 😳', red: 'harder',
     song: 'songs/misery.mp3', dropAt: `placed${TIERS.length}`,
-    startAt: 'look1:-0.1', endAfter: 'death:1.6',
+    startAt: 'look1:0.3', endAfter: 'death:1.6',   // startAt: the first 0.37 s were a frozen frame
     onFire: `placed${TIERS.length}:death`, deathScreen: true,
     subs: TIERS.map((t, i) => [`look${i + 1}`, t.label, 2.4, 0]),
     speed: TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut'])
@@ -77,9 +77,14 @@ module.exports = {
     const t = TIERS[i]
     await ctx.cmd('/gamemode creative')
     if (t.time !== undefined && t.time !== ctx.dayTime) await ctx.setTime(t.time)
-    if (t.weather && t.weather !== (ctx.weather || 'clear')) await ctx.setWeather(t.weather)
+    // rain fades 0.01 a tick like the client: wait it out inside the cut, or the 'daylight' tier was
+    // still pouring and the storm tier only half there (review)
+    if (t.weather && t.weather !== (ctx.weather || 'clear')) { await ctx.setWeather(t.weather); await ctx.bot.waitForTicks(105) }
     await ctx.hotbar(HOTBARS[t.hotbar])
-    await ctx.tpCheck(...this.states[i].start)
+    // pearl tiers open looking down at the lava, not across a dark sky (night/storm openings were 1 s of black)
+    const st = this.states[i].start.slice()
+    if (t.hotbar === 'pearl') st[4] = 40
+    await ctx.tpCheck(...st)
     await ctx.cmd('/gamemode survival')
     await ctx.cmd('/effect give @s instant_health 1 10 true')
     if (t.halfHeart) await ctx.cmd('/damage @s 19 minecraft:generic')

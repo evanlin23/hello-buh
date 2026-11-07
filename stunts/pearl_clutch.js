@@ -87,7 +87,7 @@ module.exports = {
     const { bot } = ctx
     const { x, z, lava } = this
     const TOWER = this.tower || TOWER_DEFAULT
-    await bot.waitForTicks(10)
+    await bot.waitForTicks(this.fast ? 2 : 10)   // fast: in a series, no standing still at the start
     await ctx.easeLook(0, -0.35, 400)                         // the island across the lava
     // the block under the feet is gone: falling toward the lava
     await ctx.cmd(`/setblock ${x} ${lava + TOWER} ${z - 1} air`)
