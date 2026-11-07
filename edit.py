@@ -695,6 +695,20 @@ def subtitle_png(text, path, yfrac=0.42):
     out.save(path)
 
 
+def death_start(td_abs, args):
+    """Video time the death screen starts: the first output frame whose SOURCE time is within one
+    frame of the death (the death tick can land a frame before the overlay's exact time), on the
+    frame grid. Through the speed map, so a cut that ends on the death doesn't get the screen over
+    the last frames before the cut (worker 7, world_delete: it flickered on and off)."""
+    fps = args.out_fps
+    warp = getattr(args, "warp", None)
+    src = warp.src if warp else (lambda x: x)
+    td_src = src(td_abs + 1e-6)   # a mark on a cut's boundary warps to 2.3999999 s: map it past the cut
+    k = max(0, int(math.floor(td_abs * fps)) - 3)
+    while src(k / fps) < td_src - 1.0 / fps - 1e-6:
+        k += 1
+    return (k - int(args.start * fps)) / fps - 0.5 / fps
+
 def probe_duration(args):
     if args.video:
         out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.video], capture_output=True, text=True).stdout
@@ -786,7 +800,7 @@ def main():
             dur = min(dur, _tl[ev_] + float(secs_) - args.start)
     inputs = (["-ss", str(args.start), "-i", args.video] if args.video else
               ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps)), "-i", args.frames])
-    inputs += ["-loop", "1", "-i", str(tmp / "caption.png")]
+    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / "caption.png")]
     graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},"
              f"pad={W}:{H}:0:{BAND}:black,fps={args.out_fps},format=rgba[g0]"]
     last = "g0"
@@ -913,7 +927,7 @@ def main():
                 deferred_subs.append((k, t0, dur_s))
                 continue
             subtitle_png(text, tmp / f"sub{k}.png", yfrac=args.subs_y)
-            inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
+            inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"sub{k}.png")]
             graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sb{k}]")
             last, n_in = f"sb{k}", n_in + 1
     if args.death_screen and args.death_screen in tl_ev:
@@ -929,7 +943,7 @@ def main():
                 # one frame early: the game frames start on a whole frame (int(start * fps)), so the
                 # death tick can land a frame before the overlay's exact time (2 frames of sky with
                 # full hearts before the screen in anvil_rain)
-                t_d = td_abs - args.start - 1.0 / args.out_fps
+                t_d = death_start(td_abs, args)
                 t_r = min(tr_abs - args.start, 1e6)
                 near = [m for m in msgs if abs(m[0] - td_abs) < 1.0]
                 msg = min(near, key=lambda m: abs(m[0] - td_abs))[1] if near else (msgs[0][1] if msgs and len(deaths) == 1 else None)
@@ -939,7 +953,7 @@ def main():
                 for k, (a, b) in enumerate([(t_d, min(t_r, t_d + 1.0)), (t_d + 1.0, t_r)]):
                     if b <= a or b < 0:
                         continue
-                    inputs += ["-loop", "1", "-i", str(tmp / f"death{di}_{k}.png")]
+                    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"death{di}_{k}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
                     last, n_in = f"ds{di}_{k}", n_in + 1
     if (args.counter or args.cards or args.freeze or args.fallen) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
@@ -951,7 +965,7 @@ def main():
             graph.append(f"[{last}][fxv]overlay=0:0:eof_action=repeat[fxo]")
             last, n_in = "fxo", n_in + 1
     for k, t0, dur_s in deferred_subs:   # subtitles over a death screen: above it, below its buttons
-        inputs += ["-loop", "1", "-i", str(tmp / f"sub{k}.png")]
+        inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"sub{k}.png")]
         graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sbd{k}]")
         last, n_in = f"sbd{k}", n_in + 1
     if args.story and args.timeline:   # narrated story: big word-chunk captions over the game (and the death screen)

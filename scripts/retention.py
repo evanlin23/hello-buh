@@ -426,7 +426,7 @@ def replay_append(out, replay_dir, caption_png, audio, fps=60, audio_window=None
          "[r0][1:v]overlay=0:0[r1]", f"[r1][2:v]overlay=0:0:enable='lt(t,{max(0.0, d - 0.35):.3f})',setsar=1,format=yuv420p[rv]",   # the tag goes before the loop dissolve
          "[3:v]setsar=1,format=yuv420p[mv]",
          "[3:a]aresample=48000,aformat=channel_layouts=stereo[ma]"]
-    ins = ["-framerate", str(fps), "-i", str(tmp / "r%05d.png"), "-loop", "1", "-i", str(caption_png), "-loop", "1", "-i", str(tmp / "tag.png"), "-i", out]
+    ins = ["-framerate", str(fps), "-i", str(tmp / "r%05d.png"), "-loop", "1", "-framerate", str(fps), "-i", str(caption_png), "-loop", "1", "-framerate", str(fps), "-i", str(tmp / "tag.png"), "-i", out]
     if audio:
         ins += ["-i", audio]
         aa, ab = audio_window or (a, b)   # the edit's game+sfx track (Short time) when there is one: wind, boom
