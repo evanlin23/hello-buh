@@ -16,7 +16,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hit a villager 💀',
   edit: {
-    caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/funk_abnormal.mp3', dropAt: 'launched', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:1.1',
+    caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/funk_abnormal.mp3', dropAt: 'launched', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:0.8',
     subs: [...BEATS.map((b, i) => ['beat', b.sub, 1.4, i]), ...BEATS.map((b, i) => ['golem', b.golems === 1 ? '1 golem' : `${b.golems} golems`, 1.2, i])]
   },
   expectDeath: true,
@@ -50,7 +50,7 @@ module.exports = {
         await ctx.cmd(`/summon villager ${(sx + 0.5 + Math.sin(a) * r * 1.6).toFixed(2)} ${floor + 1} ${(z + 0.5 - Math.cos(a) * r).toFixed(2)} {VillagerData:{profession:"minecraft:${profs[v % profs.length]}",type:"minecraft:plains",level:2},Xp:1,PersistenceRequired:1b,NoAI:1b,Rotation:[0f,0f],Tags:["v${i}"]}`)
       }
       for (let g = 0; g < B.golems; g++) {
-        const gx = sx + 0.5 + (g - (B.golems - 1) / 2) * 2.2, gz = z - 7.5 - (g % 2) * 1.5
+        const gx = sx + 0.5 + (g - (B.golems - 1) / 2) * 2.2, gz = z - 5.0 - (g % 2) * 1.2   // 7.5 back + the bot backing off: the golems never caught it
         await ctx.cmd(`/summon iron_golem ${gx.toFixed(2)} ${floor + 1} ${gz.toFixed(2)} {PlayerCreated:0b,PersistenceRequired:1b,Rotation:[${(g * 47) % 360}f,0f],Tags:["g${i}"]}`)
       }
     }
@@ -103,17 +103,18 @@ module.exports = {
         if (g) {
           const e = bot.entity.position.offset(0, 1.62, 0), d = g.position.offset(0, 2.2, 0).minus(e)
           await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
-          bot.setControlState('back', !launched && g.position.distanceTo(bot.entity.position) < 6)
+          // stand and take it (backing off outran the golems: beats 1-2 never launched); step in if one hangs back
+          bot.setControlState('forward', !launched && k > 10 && g.position.distanceTo(bot.entity.position) > 3)
           if (k % 14 === 0) ctx.sound('entity.iron_golem.step', 0.6)
         }
         if (!launched && (bot.entity.velocity.y > 0.25 || bot.health < hp0 - 0.5)) {
           launched = true; ctx.mark('launched'); ctx.sound('entity.iron_golem.attack', 1)
-          if (!last) { bot.setControlState('back', false); await bot.waitForTicks(26); break }
+          if (!last) { bot.setControlState('forward', false); await bot.waitForTicks(26); break }
         }
         await bot.waitForTicks(1)
       }
-      bot.setControlState('back', false)
-      if (!launched) ctx.log('beat', i, 'no launch')
+      bot.setControlState('forward', false)
+      if (!launched) { ctx.log('beat', i, 'no launch'); return false }
     }
     await bot.waitForTicks(40)                                   // the death screen
     return ctx.died
