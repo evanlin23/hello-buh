@@ -90,9 +90,10 @@ module.exports = {
     for (let k = 2; k <= 4; k++) await ctx.cmd(`/setblock ${x} ${floor} ${vz + k} tnt`)
     // he stands on blast-proof obsidian: after the blast he's left alone on a pillar in the crater
     await ctx.cmd(`/fill ${x} ${floor - 10} ${vz} ${x} ${floor} ${vz} obsidian`)
-    // and the player's spot has a blast-proof pad under the topsoil: the ring's crater reached it and
-    // the player fell 4 blocks (fall damage on camera); now it's a drop of 1 block at most
-    await ctx.cmd(`/fill ${x - 2} ${floor - 2} ${z - 3} ${x + 2} ${floor - 1} ${z + 3} obsidian`)
+    // and a small blast-proof pad deep under the player's spot: the ring's crater dropped the player
+    // 4 blocks (fall damage on camera). 2 blocks down, a drop is at most 2 (no damage); kept small
+    // and deep (a wide shallow pad was stripped bare and showed as a sharp obsidian slab)
+    await ctx.cmd(`/fill ${x - 1} ${floor - 3} ${z - 1} ${x + 1} ${floor - 2} ${z + 1} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 9')
     await ctx.hotbar([['lectern', 2], ['composter', 2], ['barrel', 2], ['blast_furnace', 1], ['smoker', 1],
       ['cartography_table', 1], ['brewing_stand', 1], ['fletching_table', 1], 'diamond_axe'])
@@ -203,20 +204,20 @@ module.exports = {
     // a single short step back (it used to walk back ~19 ticks: a wide shot with FIRED on his head)
     // (a step and a half: from nearer, the fuse line's crater opened under the player)
     bot.setControlState('back', true); await bot.waitForTicks(7); bot.setControlState('back', false)
-    await ctx.easeLookAt(head.offset(0, 1.6, 0), 300)          // aimed well above him: he sits clear under the subtitle
-    await ctx.easeLookAt(head.offset(0.3, 1.7, 0), 400)        // still drifting into the cut
+    await ctx.easeLookAt(head.offset(0, 1.1, 0), 300)          // aimed above him: under the subtitle, pen and fuse still in view
+    await ctx.easeLookAt(head.offset(0.3, 1.15, 0), 400)       // still drifting into the cut
     ctx.mark('fuse_a')
     for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 3) bot.setControlState('back', false) }
     bot.setControlState('back', false)
     while (ctx.tick - litAt < 40) await bot.waitForTicks(1)
-    await ctx.easeLookAt(head.offset(0, 1.6, 0), 100)
+    await ctx.easeLookAt(head.offset(0, 1.1, 0), 100)
     ctx.mark('fuse_b')
     // the fuse line goes, then the ring: FIRED
     let booms = 0
     bot._client.on('explosion', () => { booms++ })
     // glances while it burns, eyes on him (no walking: the player stays well back on the rim)
     for (let k = 0; k < 80 && booms === 0; k++) {
-      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [1.6, 1.4, 1.7, 1.5][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
+      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [1.1, 0.95, 1.2, 1.0][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
       await bot.waitForTicks(1)
     }
     // wait for the ring itself to go (the 4th blast on), then he's unemployed
