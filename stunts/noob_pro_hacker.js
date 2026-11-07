@@ -22,7 +22,7 @@ const LADDERS = 10
 // re-sent with the up arrow and a shorter fuse each time, so all three go off on the same tick
 const FUSES = [20, 14, 8]
 const TNT = (f) => `/summon tnt ~ ~ ~ {fuse:${f},explosion_power:6}`
-const CMDS = ['/effect give @s levitation 5 39', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.22], [TNT(8), 0.22]]
+const CMDS = ['/effect give @s levitation 5 39 true', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.22], [TNT(8), 0.22]]
 const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
 
 // the mountain: an uneven peak (lobed outline, ridges down the flanks) of stone with grass, gravel and
@@ -54,7 +54,8 @@ module.exports = {
     caption: 'noob vs pro vs hacker 💀', red: 'hacker', tasks: TASKS, cmds: CMDS, feedback: FEEDBACK,
     dropAt: 'hack', endAfter: 'boom:0.95',
     // the ladder climb at 1.6x, the pearl's flight cut (a dot on a held shot), the noob burning in the lava cut to the death
-    speed: [['climb_a', 'ladders_out', 1.6], ['pearl:0.45', 'summit:-0.15', 'cut'], ['burn_a', 'death:-0.2', 'cut']],
+    deathBeats: [3, 6],
+    speed: [['climb_a', 'ladders_out', 1.6], ['pillar_a', 'pillared', 1.4], ['pearl:0.45', 'summit:-0.15', 'cut'], ['burn_a', 'death:-0.2', 'cut']],
     extra: {
       deathScreen: true, onFire: 'in_lava:death',
       // a preview of the finale before beat 1 (the launch, cut before it lands)
@@ -229,7 +230,7 @@ module.exports = {
     const path = best.hit.path
     for (let w = 0; w < 120 && bot.entity.position.distanceTo(p0) < 4; w++) {
       const q = path[Math.min(path.length - 1, w + 2)]
-      if (q) { const [ya, pa] = k.angTo(new Vec3(q.x, q.y, q.z)); k.lerpLook(ya, Math.min(pa, 1.15), 0.35) }   // eyes on the pearl, the cliff top kept in frame
+      if (q) { const [ya, pa] = k.angTo(new Vec3(q.x, q.y, q.z)); k.lerpLook(ya, Math.min(pa, 0.7), 0.35) }   // eyes on the pearl, held low enough that the landing faces the summit
       await bot.waitForTicks(1)
     }
     ctx.sound('entity.player.teleport', 1); ctx.particles('portal', bot.entity.position, { count: 40 })
@@ -354,18 +355,22 @@ module.exports = {
     ctx.easeLook(N + 0.2, 1.45, 700)                              // falling: the square of sky shrinking
     for (let w = 0; w < 80 && !ctx.died; w++) await bot.waitForTicks(1)
     if (!ctx.died) { ctx.log('noob survived the shaft'); return false }
-    await bot.waitForTicks(13)                                    // the death screen (0.9 s read as a pause here)
+    await bot.waitForTicks(7)                                     // the death screen (0.7 s read as a frozen hold here)
     k.endBeat()
-    bot.chat(`/setblock ${px} ${F - 7} ${pz} dirt`)
     ctx.revive(); ctx.respawn()
     await new Promise(r => bot.once('spawn', r))
     await bot.waitForTicks(4)
 
     // PRO: pillars up (looking down at the block under his feet) and jumps out
+    // the dug hole, closed again after the respawn (a setblock while dead never reached the recording,
+    // and one on a block already dirt sends nothing: stone first, then dirt)
+    await ctx.cmd(`/setblock ${px} ${F - 7} ${pz} stone`)
     await ctx.cmd(`/setblock ${px} ${F - 7} ${pz} dirt`)
+    for (let w = 0; w < 20 && bot.blockAt(new Vec3(px, F - 7, pz))?.name !== 'dirt'; w++) await bot.waitForTicks(1)
     await k.cutTo(pfx, F - 6, pfz, 180, 70, { hotbar: [['cobblestone', 64]] })
     k.beat()
     await bot.waitForTicks(3)
+    ctx.mark('pillar_a')
     for (let i = 0; i < 7; i++) {
       const base = F - 7 + i                                      // the block I stand on
       bot.setControlState('jump', true)
@@ -381,12 +386,13 @@ module.exports = {
     bot.setControlState('forward', true); bot.setControlState('jump', true)
     await bot.waitForTicks(5)
     bot.setControlState('jump', false)
+    await bot.waitForTicks(4)
+    k.endBeat()                                                   // mid-jump onto the rim (landing on flat grass was 0.75 s of nothing)
     for (let w = 0; w < 30 && !(bot.entity.onGround && bot.entity.position.z < pz - 1); w++) await bot.waitForTicks(1)
     bot.clearControlStates()
     ctx.mark('out')
     ctx.log('pro out, y', (bot.entity.position.y - F).toFixed(1))
     if (bot.entity.position.y < F + 0.9) return false
-    k.endBeat()
 
     // HACKER: /summon tnt at his feet, three times (up arrow, Enter), launched out of the pit
     await ctx.cmd(`/fill ${px - 1} ${F - 6} ${pz - 1} ${px + 1} ${F} ${pz + 1} air`)   // the pro's pillar (before the cut: it stood where I land)

@@ -31,7 +31,7 @@ module.exports = {
   botTimeout: 420,
   edit: nph.edit({
     caption: 'noob vs pro vs hacker 💀 part 2', red: 'hacker', tasks: TASKS, cmds: CMDS, feedback: FEEDBACK,
-    dropAt: 'hack', endAfter: 'bounce:1.0',
+    dropAt: 'hack', endAfter: 'bounce:1.0', deathBeats: [3, 6],
     // the wooden pickaxe's 7.5 s on diamond ore at 8x; the creeper and fall deaths cut to the death
     speed: [['ndig_a', 'ndig_b', 8]],
     extra: {
