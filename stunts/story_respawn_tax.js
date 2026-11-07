@@ -194,7 +194,7 @@ module.exports = {
       kNow = k
       // where the fisherman stood: empty. Turned to over 6 ticks (a one-tick snap after 3 frames of the golem read as a flash cut)
       if (k === 0) respawnSoon(() => { from3 = { ...K.base }; k3 = kNow }, 4)
-      if (from3 && !docked) K.turnTo(from3, P(-1.6, 1.0, -1.8), (k - k3) / 6)
+      if (from3 && !docked) K.turnTo(from3, P(-1.6, 1.0, -1.8), (k - k3) / 15)   // ~0.75 s, eased (6 ticks read as a whip)
       if (!docked && k >= at(3) && alive()) { docked = true; await cut(18.5, -3.5, P(26.5, 0.4, -3.5)) }   // arrive on the aim the walk keeps (it whipped on 4 frames)
       go(docked && bot.entity.position.x < X + 21.2)
       if (docked) K.base = K.aim(P(26.5, 0.4, -3.5))
@@ -283,7 +283,7 @@ module.exports = {
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       // the golem walks off the spawn to his place by the lane (a /tp before the cut landed 2 ticks into the shot)
       if (k === 0) golemWalk()
-      K.base = K.aim(P(0.5, 0.5, 4.5)); look(k, 0, k > at(1) ? -0.25 : 0)
+      K.base = K.aim(P(0.5, 0.5, 4.5)); look(k, 0, -0.25 * Math.max(0, Math.min(1, (k - at(1)) / 8)))   // eased dip on TRIPPED (a 3-frame jolt)
     })
     dead = false; trip = null; landed = 0
     let nz = -6.5, itemsGone = false
@@ -366,9 +366,9 @@ module.exports = {
       }
       if (dead && k % 2 === 0) sparkle()
       if (!dead && trip === null) {   // her, then a tilt down to the cauldron, then back: eased (a 3-frame whip)
-        const want = k > at(1) - 7 ? 1 : 0   // eyes on the cauldron until he falls in (looking up at her he walked over it unseen)
+        const want = k > at(1) - 16 ? 1 : 0   // eyes on the cauldron until he falls in (looking up at her he walked over it unseen)
         if (want !== aim17) { aim17 = want; from17 = { ...K.base }; k17 = k }
-        K.turnTo(from17, want ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5), (k - k17) / 7)
+        K.turnTo(from17, want ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5), (k - k17) / 16)   // ~0.8 s down to the cauldron (7 ticks read as a whip)
         look(k)
       }
     })
