@@ -36,6 +36,19 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
+    // a retry runs in the same world: build 600 blocks away from the last attempt's set (its
+    // leftover piles and taper showed in the shots). Attempts are counted per world (run.sh makes a fresh one).
+    const fs = require('fs'), path = require('path')
+    const cf = path.join(__dirname, '..', 'work', 'tnt_1000.attempt.json')
+    let mt = 0; try { mt = fs.statSync(path.join(__dirname, '..', 'work', 'server', 'world')).ino } catch (e) {}   // a fresh world each run.sh
+    let n = 0; try { const c = JSON.parse(fs.readFileSync(cf, 'utf8')); if (c.mt === mt) n = c.n + 1 } catch (e) {}
+    try { fs.writeFileSync(cf, JSON.stringify({ mt, n })) } catch (e) {}
+    if (n > 0) {
+      const p0 = bot.entity.position
+      await ctx.cmd(`/tp @s ${Math.floor(p0.x) + 600 * n} 200 ${Math.floor(p0.z)}`)
+      await bot.waitForTicks(40)
+      await ctx.locateBiome(this.biome)
+    }
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
@@ -75,6 +88,17 @@ module.exports = {
     const floor = this.floor
     let booms = 0, lastBoom = -99
     bot._client.on('explosion', () => { booms++; lastBoom = ctx.tick })
+    // a teleport that tolerates a nudge: flung TNT still going off knocked the bot after /tp and
+    // tpCheck threw, the attempt failed, and the retry built its field beside the old one
+    const tp = async (x, y, z, yawDeg, pitchDeg) => {
+      for (let i = 0; i < 8; i++) {
+        await ctx.cmd(`/tp @s ${x} ${y} ${z} ${yawDeg} ${pitchDeg}`)
+        await bot.waitForTicks(8)
+        const p = bot.entity.position
+        if (Math.hypot(p.x - x, p.z - z) < 1.5 && Math.abs(p.y - y) < 2) return
+      }
+      ctx.log('teleport only roughly stuck', bot.entity.position)
+    }
     // one tick of a smooth look toward (yaw, pitch); the caller loops it every tick
     const aimStep = async (gy, gp, f = 0.2) => {
       let dy = gy - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
@@ -93,7 +117,7 @@ module.exports = {
         ctx.mark(`cut${n}a`)
         await ctx.cmd('/difficulty normal')
         // stand at the east end facing west, down the field (the other way the cleared field's walls show)
-        await ctx.tpCheck(t.cx + 3.5, floor + t.h + 1, t.zf - 4.5, 90, 55)
+        await tp(t.cx + 3.5, floor + t.h + 1, t.zf - 4.5, 90, 55)
         await ctx.cmd('/effect give @s instant_health 1 10 true')
         await bot.waitForTicks(4)
         ctx.mark(`cut${n}b`)
@@ -129,7 +153,7 @@ module.exports = {
       }
       if (i > 0) {   // cut to the next pile
         ctx.mark(`cut${n}a`)
-        await ctx.tpCheck(t.cx + 0.5, floor + 1, t.zf + 2.5, 180, 15)
+        await tp(t.cx + 0.5, floor + 1, t.zf + 2.5, 180, 15)
         await bot.waitForTicks(4)
         ctx.mark(`cut${n}b`)
       }
@@ -149,7 +173,7 @@ module.exports = {
       // cut to the vantage point with ~1.1 s of fuse left
       ctx.mark(`fuse${n}a`)
       const litAt = ctx.tick - 8
-      await ctx.tpCheck(t.cx + 0.5, floor + 1, t.zf + t.view + 0.5, 180, 0)
+      await tp(t.cx + 0.5, floor + 1, t.zf + t.view + 0.5, 180, 0)
       await ctx.easeLookAt(mid.offset(0.8, -t.h * 0.15, 0), 50)
       while (ctx.tick - litAt < (n === 4 ? 52 : 58)) await bot.waitForTicks(1)
       ctx.mark(`fuse${n}b`)
@@ -180,14 +204,14 @@ module.exports = {
         const solid = (zz) => { const bb = bot.blockAt(new Vec3(t.cx, floor, zz)); return bb && bb.name !== 'air' }
         let edge = t.zf + 2
         for (let zz = t.zf + t.view; zz >= t.zf; zz--) { if (!solid(zz)) { edge = zz; break } }
-        let rz = edge + 3
+        let rz = edge + 2
         while (rz < t.zf + t.view && !(solid(rz) && solid(rz + 1))) rz++
-        await ctx.tpCheck(t.cx + 0.5, floor + 1, rz + 0.5, 180, 45)
+        await tp(t.cx + 0.5, floor + 1, rz + 0.5, 180, 45)
         await bot.waitForTicks(2)
         ctx.mark('rim4b')
         ctx.mark(`crater${n}`)
         // sweep across the middle of the crater and down into it
-        const mid4 = new Vec3(t.cx + 0.5, floor - 8, t.zf - 4.5)
+        const mid4 = new Vec3(t.cx + 0.5, floor - 10, t.zf - 2.5)
         await ctx.easeLookAt(mid4.offset(6, 0, 0), 500)
         await ctx.easeLookAt(mid4.offset(-6, 0, 0), 900)
         await ctx.easeLookAt(mid4.offset(0, -4, 3), 900)
