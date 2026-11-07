@@ -55,6 +55,10 @@ def main():
         ev, off = ed["startAt"].rsplit(":", 1)
         if ev in first:
             start = max(0.0, first[ev] + float(off))
+    elif ed.get("start") is None and "start" in first:
+        # the same origin as edit.py: edit_args.js passes --start_at start:0 when a stunt sets none
+        # (every mark and the tail were off by the pre-roll: worker 2, speed_build)
+        start = first["start"]
     fps, dur = probe(video)
     from retention import hook_len
     if hook_len(ed):   # the hook preview plays first: every mark is that much later in the video
