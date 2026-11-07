@@ -35,8 +35,8 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     for (let y0 = floor + 1; y0 <= floor + TOP + 4; y0 += 10) await ctx.cmd(`/fill ${x - 8} ${y0} ${z - 8} ${x + 8} ${Math.min(y0 + 9, floor + TOP + 4)} ${z + 8} air`)
-    await ctx.cmd(`/fill ${x - 8} ${floor} ${z - 8} ${x + 8} ${floor} ${z + 8} grass_block`)
-    await ctx.cmd(`/fill ${x - 8} ${floor - 3} ${z - 8} ${x + 8} ${floor - 1} ${z + 8} dirt`)
+    // (no flat grass pad: its sharp square edges read as command-built in every fall)
+    await ctx.cmd(`/setblock ${x} ${floor} ${z} grass_block`)
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.hotbar(CLUTCHES.map(c => c.item))
     await ctx.cmd('/gamemode survival')
@@ -47,6 +47,7 @@ module.exports = {
   async perform (ctx) {
     const { bot } = ctx
     const { x, z, floor } = this
+    let pending = null
     for (let i = 0; i < CLUTCHES.length; i++) {
       const c = CLUTCHES[i]
       // up on a glass block at this beat's height, facing south, looking out and down; a fast tp
@@ -55,13 +56,18 @@ module.exports = {
       await ctx.cmd(`/setblock ${x} ${floor + c.h} ${z} glass`)
       const tx = x + 0.5, ty = floor + c.h + 1, tz = z + 0.5
       for (let a = 0; ; a++) {
-        bot.chat(`/tp @s ${tx} ${ty} ${tz} 0 30`)
+        bot.chat(`/tp @s ${tx} ${ty} ${tz} 0 60`)   // looking down off the glass from the first frame
         let ok = false
         for (let t = 0; t < 10 && !ok; t++) { await bot.waitForTicks(1); ok = Math.abs(bot.entity.position.y - ty) < 0.1 && Math.abs(bot.entity.position.x - tx) < 0.1 }
         if (ok) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.y - ty) < 0.1) break }
         if (a === 4) throw new Error('teleport did not stick')
       }
       bot.chat('/effect give @s instant_health 1 5 true')     // after the cut: hearts refill off screen
+      if (pending) {   // the last beat's clutch block and any water it left, now that the camera is up here
+        const sp = pending; pending = null
+        bot.chat(`/fill ${sp.x - 1} ${floor + 1} ${sp.z - 1} ${sp.x + 1} ${floor + 2} ${sp.z + 1} air`)
+        bot.chat(`/fill ${sp.x - 8} ${floor - 2} ${sp.z - 8} ${sp.x + 8} ${floor + 2} ${sp.z + 8} air replace water`)
+      }
       ctx.select(i)
       ctx.mark('clutch', { n: i, item: c.item })
       await ctx.easeLook(0, -0.85, 500)                  // a look over the edge: that's how high this one is
@@ -74,9 +80,10 @@ module.exports = {
       let placed = false, landed = false, spot = null
       const onTick = () => {
         const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
-        if (!placed && vy < -0.5 && above + 1.62 < 4.45) {
+        const drink = c.item === 'milk_bucket' && !placed && vy < -0.3 && above < 30   // drinking takes 1.6 s: start it early so it shows
+        if (drink || (!placed && c.item !== 'milk_bucket' && vy < -0.5 && above + 1.62 < 4.45)) {
           placed = true
-          bot.entity.pitch = -Math.PI / 2
+          if (!drink) bot.entity.pitch = -Math.PI / 2
           spot = { x: Math.floor(p.x), y: floor, z: Math.floor(p.z) }
           if (c.item === 'water_bucket' || c.item === 'powder_snow_bucket') {
             ctx.sound(c.item === 'water_bucket' ? 'item.bucket.empty' : 'item.bucket.empty_powder_snow')
@@ -104,16 +111,24 @@ module.exports = {
       for (let k = 0; k < 120 && !landed && !ctx.died; k++) await bot.waitForTicks(1)
       bot.removeListener('physicsTick', onTick)
       if (c.item === 'milk_bucket') { for (let k = 0; k < 60 && !ctx.died; k++) await bot.waitForTicks(1); await bot.waitForTicks(30); break }
-      await bot.waitForTicks(c.item === 'slime_block' ? 14 : 3)     // the bounce plays out
+      if (c.item === 'slime_block') {
+        // cut at the top of the bounce (it came down beside the slime, on grass, and took damage)
+        for (let k = 0; k < 40 && !(bot.entity.velocity.y < 0 && bot.entity.position.y > floor + 3); k++) await bot.waitForTicks(1)
+        ctx.mark('apex')
+        pending = spot
+        continue
+      }
+      await bot.waitForTicks(3)
       if (ctx.died) return false
+      if (c.item === 'water_bucket') {
+        // the classic MLG pickup: scoop the water back into the bucket (it used to vanish by command, on camera)
+        await ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.05, 150)
+        bot.activateItem(); bot.swingArm(); ctx.sound('item.bucket.fill', 1, 1)
+        await bot.waitForTicks(3)
+      }
       // look up at the glass it fell from (the still landings read as pauses)
       await ctx.easeLookAt(new ctx.Vec3(x + 0.5, floor + c.h, z + 0.5), 550)
-      // clear the clutch block and ALL the water it left (leftover flow drained in a checkerboard on screen)
-      if (spot) {
-        await ctx.cmd(`/fill ${spot.x - 1} ${floor + 1} ${spot.z - 1} ${spot.x + 1} ${floor + 2} ${spot.z + 1} air`)
-        await ctx.cmd(`/fill ${spot.x - 8} ${floor} ${spot.z - 8} ${spot.x + 8} ${floor + 2} ${spot.z + 8} air replace water`)
-        await ctx.cmd(`/setblock ${spot.x} ${floor} ${spot.z} grass_block`)
-      }
+      pending = spot                                   // cleared after the next cut, off camera
     }
     return ctx.died
   }
