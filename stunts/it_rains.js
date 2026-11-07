@@ -38,7 +38,7 @@ module.exports = {
     await ctx.defaultRules()
     await ctx.cmd('/gamerule tnt_explosion_drop_decay true')
     // a plateau, never a pit: at the start point's height the field's cut walls showed in every spin
-    const floor = await plateau(ctx, { x0: x - R, x1: x + R, z0: z - R, z1: z + R, above: H + 14, below: 8 })
+    const floor = await plateau(ctx, { x0: x - R, x1: x + R, z0: z - R, z1: z + R, above: H + 14, below: 8, pct: 0.97 })   // high: hills above the floor got sliced into walls
     Object.assign(this, { x, z, floor })
     // one biome over the field (a biome border tinted half the grass teal); the harness re-sends
     // the chunks before recording
@@ -75,7 +75,7 @@ module.exports = {
     const onTick = () => {
       n++
       if (rain.anvil && n % rain.anvil === 0) { const [ax, az] = ahead(9, 16, 0.6); anvil(ax, az) }
-      if (rain.tnt && n % rain.tnt === 0) { const [ax, az] = ahead(9, 15, 0.55); tnt(ax, az, 32 + Math.floor(rnd() * 10)) }
+      if (rain.tnt && n % rain.tnt === 0) { const [ax, az] = ahead(rain.far ? 12 : 9, rain.far ? 18 : 15, 0.55); tnt(ax, az, 32 + Math.floor(rnd() * 10)) }
       if (rain.creeper && n % rain.creeper === 0) { const [ax, az] = ahead(rain.far ? 14 : 9, rain.far ? 18 : 13, 0.5); creeper(ax, az) }
     }
     bot.on('physicsTick', onTick)
@@ -109,7 +109,7 @@ module.exports = {
     anvil(p0.x, p0.z, H - 2, 2)
     await ctx.easeLook(yaw0 + 0.1, 1.25, 300)
     ctx.mark('above')
-    await bot.waitForTicks(8)
+    await ctx.easeLook(yaw0 + 0.3, 1.05, 400)                    // eyes on it (a held look up read as frozen)
     bot.setControlState('sprint', true)
     ctx.easeLook(yaw0 - 0.35, 0.05, 500); await step(['right'], 9)
     bot.setControlState('sprint', false)
@@ -161,7 +161,7 @@ module.exports = {
     ctx.mark('creepers')
     // the chaos can hurt but not kill until the one with his name on it (resistance IV: 80% off,
     // hearts still drop); a stray creeper ended it early twice and the finale never played
-    bot.chat('/effect give @s resistance infinite 3 true')
+    bot.chat('/effect give @s resistance infinite 1 true')
     rain.tnt = 0; rain.anvil = 6; rain.creeper = 14
     ctx.easeLook(yaw0, 0.15, 500); await bot.waitForTicks(6)
     // backpedal, weaving, watching them come
@@ -176,7 +176,7 @@ module.exports = {
       const phase = Math.floor(k / 20) % 2
       bot.setControlState('back', true)
       bot.setControlState('left', phase === 0); bot.setControlState('right', phase === 1)
-      if (k % 10 === 0) {
+      if (k % 10 === 0 && k !== 80) {   // (not on the close call's tick: two looks fought and it never showed)
         const target = c ? c.position.offset(0, 1.0, 0) : null
         if (target) ctx.easeLookAt(target, 400); else ctx.easeLook(yaw0 + (phase ? 0.25 : -0.25), 0.1, 400)
       }
@@ -189,8 +189,8 @@ module.exports = {
         // one lands right beside us, already hissing: sprint off, turn back for the blast
         ran = true
         bot.clearControlStates()
-        const p = bot.entity.position, yy = bot.entity.yaw + 0.9
-        const sx = p.x - Math.sin(yy) * 3.2, sz = p.z - Math.cos(yy) * 3.2
+        const p = bot.entity.position, yy = bot.entity.yaw + 0.3   // inside the view cone
+        const sx = p.x - Math.sin(yy) * 3.5, sz = p.z - Math.cos(yy) * 3.5
         bot.chat(`/summon creeper ${sx.toFixed(2)} ${floor + 3} ${sz.toFixed(2)} {PersistenceRequired:1b,ignited:1b,Fuse:34}`)
         await bot.waitForTicks(3)
         ctx.sound('entity.creeper.primed', 1, 1)
@@ -221,10 +221,14 @@ module.exports = {
     const p = bot.entity.position, yb = bot.entity.yaw
     bot.chat(`/summon creeper ${(p.x + Math.sin(yb) * 1.6).toFixed(2)} ${(floor + 1).toFixed(1)} ${(p.z + Math.cos(yb) * 1.6).toFixed(2)} {PersistenceRequired:1b,ignited:1b,Fuse:30}`)
     await bot.waitForTicks(3)
+    if (ctx.died) return false                                    // killed early by the chaos: retry
     ctx.mark('hiss'); ctx.sound('entity.creeper.primed', 1, 1)
     rain.anvil = 0; rain.tnt = 0; rain.creeper = 0
     await bot.waitForTicks(6)
-    await ctx.easeLook(yb + Math.PI, -0.15, 350)                 // spin round: oh no
+    // spin round onto IT (a fixed 180 deg turn ended with the face in a crater wall)
+    const cb = Object.values(bot.entities).filter(e => e.name === 'creeper').sort((a, b) => a.position.distanceTo(p) - b.position.distanceTo(p))[0]
+    if (cb) await ctx.easeLookAt(cb.position.offset(0, 1.1, 0), 350); else await ctx.easeLook(yb + Math.PI, -0.15, 350)
+    for (let i = 0; i < 12 && !ctx.died; i++) { await bot.waitForTicks(1); if (cb) bot.lookAt(cb.position.offset(0, 1.1, 0), true) }
     for (let i = 0; i < 60 && !ctx.died; i++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', onTick)
     await bot.waitForTicks(40)                                    // the death screen
