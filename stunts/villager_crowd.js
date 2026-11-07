@@ -1,6 +1,6 @@
-// "1 vs 10 vs 100 vs 200 villagers staring at me 💀" (~30 s): the escalating staring_villagers. Six
-// crowds side by side in one big field, 34 blocks apart (out of each other's view): 1, 5, 20, 50, 100,
-// then 200 villagers. Each time the bot walks up behind them, they all turn at once and their heads
+// "1 vs 10 vs 100 vs 200 villagers staring at me 💀" (~30 s): the escalating staring_villagers. Eight
+// crowds side by side in one big field, 34 blocks apart (out of each other's view): 1, 5, 10, 20, 50,
+// 100, 150, then 200 villagers. Each time the bot walks up behind them, they all turn at once and their heads
 // follow it as it sidesteps. Finale: it backs off from the 200... turns round, and 40 more were
 // standing right behind it, staring. NoAI villagers; the bot runs `tp @s ~ ~ ~ facing entity <bot>
 // eyes` every tick on the crowds that have turned; face_on (near: this crowd) / face_off marks tell
@@ -10,9 +10,11 @@ const GAP = 30
 const CROWDS = [
   { n: 1, sub: '1 villager', cols: 1, rows: 1 },
   { n: 5, sub: '5 villagers', cols: 5, rows: 1 },
+  { n: 10, sub: '10 villagers', cols: 5, rows: 2 },
   { n: 20, sub: '20 villagers', cols: 5, rows: 4 },
   { n: 50, sub: '50 villagers', cols: 10, rows: 5 },
   { n: 100, sub: '100 villagers', cols: 10, rows: 10 },
+  { n: 150, sub: '150 villagers', cols: 15, rows: 10 },
   { n: 200, sub: '200 villagers', cols: 20, rows: 10 }   // (500 + 100 behind slowed the server below 1 tick/s)
 ]
 const BEHIND = { cols: 10, rows: 4 }        // the finale crowd behind the start of the last walk
@@ -23,7 +25,7 @@ module.exports = {
   caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
   edit: {
     caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
-    startAt: 'beat:-0.05', endAfter: 'behind:1.0',
+    startAt: 'beat:-0.05', endAfter: 'behind:0.8',
     speed: CROWDS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'THEY WERE BEHIND ME', 1.0, 0]]
   },
@@ -45,11 +47,11 @@ module.exports = {
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     for (let z0 = z - 40; z0 <= z + 26; z0 += 4) {
       const z1 = Math.min(z0 + 3, z + 26)
-      await heavy(`/fill ${x - 96} ${floor + 1} ${z0} ${x + 96} ${floor + 14} ${z1} air`)
-      await heavy(`/fill ${x - 96} ${floor} ${z0} ${x + 96} ${floor} ${z1} grass_block`)
-      await heavy(`/fill ${x - 96} ${floor - 3} ${z0} ${x + 96} ${floor - 1} ${z1} dirt`)
+      await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + 14} ${z1} air`)
+      await heavy(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
+      await heavy(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
       // one biome everywhere (a crowd stood on a duller grass tint)
-      await heavy(`/fillbiome ${x - 96} ${floor - 4} ${z0} ${x + 96} ${floor + 14} ${z1} minecraft:plains`)
+      await heavy(`/fillbiome ${x - 124} ${floor - 4} ${z0} ${x + 124} ${floor + 14} ${z1} minecraft:plains`)
     }
     await ctx.sleep(3000)
     // mineflayer ignores the biome update packet: go far away and come back to reload the chunks
@@ -177,7 +179,8 @@ module.exports = {
       await ctx.easeLook(Math.PI * 0.999, -0.05, 850)   // mineflayer yaw 0 = north; the crowd behind is south
       ctx.mark('behind')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.ambient', 1.1, 0.7 + v * 0.1)
-      await bot.waitForTicks(24)
+      // back away from them too: every head follows (no still hold on the reveal)
+      bot.setControlState('back', true); await bot.waitForTicks(20); bot.setControlState('back', false)
       ctx.mark('face_off')
     }
     bot.removeListener('physicsTick', track); bot.removeListener('physicsTick', aimTick)
