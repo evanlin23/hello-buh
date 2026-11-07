@@ -21,9 +21,9 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'reveal',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'lastshear',
     startAt: 'dye:-0.45',
-    endAfter: 'final:1.0',
+    endAfter: 'collected:0.6',
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['jeb', 'and jeb_', 1.6, 0],
       ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['shear', 'free rainbow wool', 1.6, 0]]
   },
@@ -51,8 +51,9 @@ module.exports = {
       await ctx.cmd(`/summon sheep ${x0 + i * STEP + 0.5} ${floor + 1} ${z + 0.5} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Color:0b,Rotation:[0f,0f],Tags:["rs${i}"]}`)
     }
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 5')
-    await ctx.hotbar([...COLORS.map(c => c.dye), 'name_tag'])
-    await ctx.cmd('/item replace entity @s hotbar.7 with name_tag[custom_name="jeb_"]')
+    // everything it uses is in the hotbar from the start (items used to appear from nowhere mid-video)
+    await ctx.hotbar([...COLORS.map(c => c.dye), 'name_tag', 'shears'])
+    await ctx.cmd('/item replace entity @s hotbar.7 with name_tag[custom_name="jeb_"] 8')
     await bot.waitForTicks(4)
     await ctx.tpCheck(x0 + 0.5 - 1.2, floor + 1, z + 3.3, 200, 20)
     await ctx.cmd('/gamemode survival')
@@ -117,7 +118,7 @@ module.exports = {
     const mid = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 0.5)
     bot.setControlState('back', true); bot.setControlState('left', true)
     let rev = false
-    for (let t = 0; t < 30; t++) {
+    for (let t = 0; t < 16; t++) {                      // a short back-up: the rainbow stays big in frame
       await bot.waitForTicks(1)
       if (t === 8) { ctx.mark('reveal'); ctx.sound('entity.player.levelup', 0.5, 1.2); rev = true }
       const e = bot.entity.position, d = mid.minus(e.offset(0, 1.62, 0))
@@ -160,7 +161,6 @@ module.exports = {
 
     // "what if they were ALL jeb_": tag the other seven, walking back down the line
     ctx.mark('alljeb')
-    bot.chat('/item replace entity @s hotbar.7 with name_tag[custom_name="jeb_"] 7')
     await bot.waitForTicks(2)
     ctx.select(7)
     for (let i = N - 2; i >= 0; i--) {
@@ -172,21 +172,31 @@ module.exports = {
     // the whole line cycling
     await this.backReveal(ctx, 'alljeb_reveal', 22)
     // shear them all: a rainbow of wool pops out and gets picked up on the way
-    bot.chat('/item replace entity @s hotbar.8 with shears')
-    await bot.waitForTicks(2)
     ctx.select(8)
     bot.on('playerCollect', (c) => { if (c === bot.entity) ctx.sound('entity.item.pickup', 0.25, 0.8 + Math.random() * 0.6) })
     ctx.mark('shear')
-    for (let i = 0; i < N; i++) {
+    for (let i = 0; i < N; i++) {                       // quick, so the wool is in the air together
       await this.moveTo(ctx, i, z + 2.2)
       await this.use(ctx, this.sheepAt(ctx, i))
       ctx.sound('entity.sheep.shear', 1, 1)
-      await bot.waitForTicks(4)
+      await bot.waitForTicks(2)
     }
-    // sweep back through the wool to pick it up
-    await this.moveTo(ctx, N - 4, z + 1.6)
-    ctx.mark('final')
-    await bot.waitForTicks(20)
+    ctx.mark('lastshear')
+    // sweep back along the line right in front of the sheep, eyes on the row ahead (not a sheep's face),
+    // collecting the wool: the hotbar fills with the rainbow
+    const row = new ctx.Vec3(this.x0 - 2, this.floor + 0.6, z + 0.6)
+    bot.setControlState('left', true)
+    for (let k = 0; k < 80 && bot.entity.position.x > this.x0 + 0.5; k++) {
+      const e = bot.entity.position, d = row.minus(e.offset(0, 1.62, 0))
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
+      bot.setControlState('forward', e.z > z + 1.4); bot.setControlState('back', e.z < z + 1.1)
+      await bot.waitForTicks(1)
+    }
+    for (const c of ['left', 'forward', 'back']) bot.setControlState(c, false)
+    ctx.mark('collected')
+    await bot.waitForTicks(16)
     ctx.log('hotbar', JSON.stringify(bot.inventory.items().map(i => [i.name, i.count])))
     return true
   },
