@@ -1885,6 +1885,10 @@ function camAtLive (t) {
       let k = fuse < 10 ? 1 - Math.max(0, fuse) / 10 : 0; k *= k; k *= k
       e.name = 'falling_block'
       e.extra = { state: TNT_STATE, flash: Math.floor(Math.max(0, fuse) / 5) % 2 === 0, scale: 1 + k * 0.3 }
+      // the camera inside the (swelling) block: back faces are culled in vanilla, nothing shows; drawn,
+      // it filled the screen with red, white and pink planes (worker 14, which_door f1317)
+      const hs = 0.5 * e.extra.scale
+      if (Math.abs(cam.x - e.x) < hs && Math.abs(cam.z - e.z) < hs && cam.y > e.y - 0.05 - (hs - 0.5) && cam.y < e.y + 1.05 + (hs - 0.5)) e.hidden = true
     }
     // mobs' main-hand items (harness: entity_equipment -> extra.held): the same item objects as the
     // player's (ItemInHandLayer), drawn in the right arm
