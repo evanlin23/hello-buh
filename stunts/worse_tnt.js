@@ -38,7 +38,7 @@ module.exports = {
     for (let y0 = G + 1; y0 <= G + 30; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} air`)
     await ctx.cmd(`/fill ${x - C} ${G} ${z - C} ${x + C} ${G} ${z + C} grass_block`)
     // deep solid ground (no caves or water for the craters to open into)
-    for (let y0 = G - 24; y0 <= G - 1; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} dirt`)
+    for (let y0 = G - 24; y0 <= G - 1; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} ${y0 + 2 < G - 4 ? 'stone' : 'dirt'}`)
     // the set must really be there: corners cleared, floor laid
     await bot.waitForTicks(20)
     for (const [cx, cz] of [[x - R, z - R], [x + R, z + R], [x - R, z + R], [x + R, z - R], [x, z]]) {
@@ -159,7 +159,7 @@ module.exports = {
     ctx.mark('l7')
     const p = pos()
     for (let i = 0; i < 64; i++) {
-      const a = (i / 64) * 2 * Math.PI, d = 7.5 + (i % 3) * 0.6
+      const a = (i / 64) * 2 * Math.PI, d = 7.9 + (i % 3) * 0.6
       bot.chat(`/summon tnt ${(p.x + Math.sin(a) * d).toFixed(2)} ${G + 12 + (i % 5)} ${(p.z + Math.cos(a) * d).toFixed(2)} {fuse:${Math.round(4.95 * 20)}}`)
     }
     ctx.sound('entity.tnt.primed', 1, 0.9); ctx.sound('entity.tnt.primed', 1, 1.1)
@@ -169,7 +169,7 @@ module.exports = {
     const bx = Math.floor(pos().x), bz = Math.floor(pos().z)
     let top = G
     const yaw0 = bot.entity.yaw
-    await ctx.easeLook(yaw0, -1.2, 300)
+    await ctx.easeLook(yaw0, -0.55, 350)   // the ring coming down all round it
     for (let k = 0; k < 8 && ctx.tick < K.at(34.3); k++) {
       await ctx.easeLook(yaw0 + 0.22 * (k + 1), -1.15, 150)   // aim at the top it's placed on
       bot.setControlState('jump', true)
@@ -179,7 +179,7 @@ module.exports = {
       bot.swingArm(); ctx.sound('block.stone.place', 1, 0.9)
       top++
       // eyes up between blocks: the ring of TNT below, shrinking as it climbs (one steady sweep round it)
-      const up = ctx.easeLook(yaw0 + 0.22 * (k + 1.5), -0.8, 250)
+      const up = ctx.easeLook(yaw0 + 0.22 * (k + 1.5), -0.55, 250)
       for (let i = 0; i < 20 && !bot.entity.onGround; i++) await bot.waitForTicks(1)
       await up
     }
