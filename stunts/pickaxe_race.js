@@ -38,7 +38,8 @@ module.exports = {
       // one block boundary each (the recorded dig_end times): the beats get shorter tier by tier on screen. Cutting
       // stone 4 blocks ran it 2.8 s against iron's 3.65 and diamond's 3.2: stone looked faster than both
       ['stonecut_a', 'stonecut_a:1.05', 'cut'], ['stonecut_a:5.70', 'stonecut_a:6.05', 'cut'], ['stonecut_a:10.20', 'stonecut_a:10.55', 'cut'],
-      ['tntwalk', 'lit', 2.2], ['lit', 'boom', 2],
+      ['tntwalk', 'lit', 2.2], ['lit', 'boom:-1.6', 2],
+      ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
       ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
@@ -51,10 +52,12 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (const [z0, z1] of [[z - 40, z - 24], [z - 23, z - 7], [z - 6, z + 10], [z + 11, z + 22]]) {   // a deep field: no cliff or snowy hill shows through the windows
-      await ctx.cmd(`/fill ${x - 34} ${floor + 1} ${z0} ${x + 38} ${floor + 12} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 34} ${floor} ${z0} ${x + 38} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 34} ${floor - 3} ${z0} ${x + 38} ${floor - 1} ${z1} dirt`)
+    // a wide, deep field, cleared 24 up: the old 72x62 clear left cut dirt faces on the horizon in the TNT walk (review)
+    for (let z0 = z - 60; z0 <= z + 40; z0 += 8) {
+      const z1 = Math.min(z0 + 7, z + 40)
+      await ctx.cmd(`/fill ${x - 70} ${floor + 1} ${z0} ${x + 74} ${floor + 24} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 70} ${floor} ${z0} ${x + 74} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 70} ${floor - 3} ${z0} ${x + 74} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=!player,distance=..150]')   // polar bears and pigs wandered through the finale
     // the wall: one block thick (mining a section opens a window onto the field), 4 high
