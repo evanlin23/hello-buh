@@ -276,7 +276,7 @@ module.exports = {
       ctx.mark(`rv${n}a`)
       // layer 1 from the front; the final low from the south-west, where the second shell's raised edge
       // shows over the first (from the front the two reveals looked the same)
-      if (last) await tpTo(x + 0.5, T + 3, z - 1.4, 0, 55)   // up on the platform's south edge at the centre line, looking straight down the slope: the second shell's ridges stand on the first (from the field the bot ended against the hill's side; from the platform's back, or its west end past the end rails, the lip hid the slope)
+      if (last) await tpTo(x - 12.5, this.floor + 1, z + STEPS + 7.5, -128, -10)   // a 3/4 view from well back in the field to the south-west, standing (walking in pressed the camera against the hill's side; from the platform the layer-2 columns and the obsidian line filled the view)
       else await tpTo(...FRONT(), 180, -12)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
