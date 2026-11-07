@@ -105,6 +105,7 @@ module.exports = {
       await ctx.easeLookAt(new Vec3(fx + 0.5, fy + 0.8, fz + 0.5), ms)
       if (settle) await bot.waitForTicks(settle)   // the look on the frame before the click
       ctx.sound('block.end_portal_frame.fill')
+      ctx.mark('place', { x: fx, y: fy, z: fz, eye: true })   // vanilla timing: the eye shows 1 tick after the use
       bot._client.write('block_place', { hand: 0, location: { x: fx, y: fy, z: fz }, direction: 1, cursorX: 0.5, cursorY: 0.8125, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm()
       if (wait) await bot.waitForTicks(wait)

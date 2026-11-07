@@ -90,6 +90,7 @@ module.exports = {
       const isBlock = /^cobblestone/.test(before)
       if (isBlock) {   // a block: place it against the face under the crosshair
         const b = bot.blockAtCursor(5)
+        if (b) ctx.mark('place', { x: b.position.x, y: b.position.y + 1, z: b.position.z })   // predicted, as a vanilla client shows it
         if (b) bot._client.write('block_place', { hand: 0, location: b.position, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
         ctx.sound('block.stone.place')
       } else bot.activateItem()
