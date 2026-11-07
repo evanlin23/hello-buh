@@ -59,9 +59,6 @@ module.exports = {
         if (t > 20) throw new Error('teleport did not stick')
       }
       ctx.mark(`cut${i}b`)
-    } else {
-      // pre-roll (trimmed by startAt): the first ticks of a recording come in bursts
-      await ctx.easeLook(0.1, -1.0, 600)
     }
     ctx.select(0)
     ctx.mark(i === 0 ? 'start' : 'top', { n: i })

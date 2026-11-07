@@ -16,7 +16,8 @@ module.exports = {
   edit: {
     caption: 'POV: your job is filling end portals', red: 'job', song: 'songs/payphone.mp3', dropAt: 'portal', startAt: 'start:0', endAfter: 'outro:1.4',
     subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['ring', 'double shift', 1.6, 5], ['ring', 'no breaks', 1.6, 6]],
-    cards: [['outro', 'IT NEVER ENDS 💀', 1.4, 'red']]
+    cards: [['outro', 'IT NEVER ENDS 💀', 1.4, 'red']],
+    speed: [1, 2, 3, 4, 5, 6].map(r => [`walk${r}`, `in${r}`, 'cut'])
   },
 
   async setup (ctx) {
@@ -100,15 +101,14 @@ module.exports = {
       if (wait) await bot.waitForTicks(wait)
     }
     const { x, z, floor } = this
-    // pre-roll (trimmed by startAt): the first ticks of a recording come in bursts
-    await ctx.easeLook(bot.entity.yaw + 0.15, bot.entity.pitch, 600)
     ctx.mark('start')
     for (let r = 0; r < FILL.length; r++) {
       const X = x + RINGS[r], fr = this.frames(RINGS[r]), { ms, wait } = FILL[r]
       if (r > 0) {
         // walk east along the front of the row to the next ring, then hop in over its south frame
-        ctx.mark('walk', { n: r })
+        ctx.mark('walk', { n: r }); ctx.mark(`walk${r}`)
         await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.4, z + 2.5), false, 0.25, true)
+        ctx.mark(`in${r}`)   // the walk is cut out in the edit: a jump cut to stepping into the next ring
         await goTo(X + 2.5, z + 2.5, new Vec3(X + 0.5, floor + 1.5, z + 4.5), true, 0.3)
       }
       ctx.mark('ring', { n: r })
@@ -118,10 +118,10 @@ module.exports = {
       // backwards out over the south frame, eyes on the ring, and the 12th eye from outside
       ctx.mark('hop', { n: r })
       await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.2, z + 3.5), true, 0.35)
-      for (let k = 0; k < 10 && Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.01; k++) await bot.waitForTicks(1)
-      await eye(fr[11], 250, 0, 2)
+      for (let k = 0; k < 4 && Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.03; k++) await bot.waitForTicks(1)
+      await eye(fr[11], 200, 0, 1)
       const c = new Vec3(X + 2.5, floor + 1.75, z + 2.5)
-      await ctx.easeLookAt(c, 350)
+      await ctx.easeLookAt(c, 250)
       for (let k = 0; k < 20 && portalAt === null; k++) await bot.waitForTicks(1)
       ctx.log('ring', r, 'portal', portalAt !== null, 'at', bot.entity.position)
       if (portalAt === null) return false
