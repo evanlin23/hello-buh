@@ -16,7 +16,7 @@ module.exports = R.makeStunt({
   caption: 'which door would you pick? 🚪',
   edit: {
     caption: 'which door would you pick? 🚪', red: 'door', song: 'songs/funk_abnormal.mp3', dropAt: 'reveal',
-    endAfter: 'last_death:1.0', deathScreen: true, onFire: 'lava_in:death',
+    endAfter: 'last_death:0.9', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
       ['intro', 'PICK ONE 👀', 1.2, 'yellow'],
