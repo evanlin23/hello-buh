@@ -971,6 +971,17 @@ def main():
         # every death gets its own screen (rated-deaths formats, tries): from the death to the next
         # respawn, with the death_message nearest that death; buttons disabled for the first 1 s
         windows = death_windows(all_ev, args.death_screen)
+        # end each screen on the respawn's camera jump: the respawn mark can land a tick after the renderer
+        # already shows the spawn, and the death screen hung over the respawned world for a frame (frame review,
+        # story_respawn_tax f783)
+        _poses = json.loads(pathlib.Path(args.timeline).read_text()).get("poses") or []
+        def _snap_respawn(tr):
+            m = int(tr * 20 + 1e-6)
+            for i in range(min(m, len(_poses) - 1), max(0, m - 4), -1):
+                if sum((_poses[i][j] - _poses[i - 1][j]) ** 2 for j in (1, 2, 3)) > 16:
+                    return min(tr, i / 20)
+            return tr
+        windows = [(a, _snap_respawn(b) if b < 1e6 else b) for a, b in windows]
         msgs = [(e["t"] / 1000, e.get("message")) for e in all_ev if e["event"] == "death_message"]
         deaths = [a for a, _ in windows]
         with zipfile.ZipFile(CLIENT_JAR) as jar:

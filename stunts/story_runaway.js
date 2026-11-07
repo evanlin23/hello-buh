@@ -312,7 +312,8 @@ module.exports = {
     await line('L11', async (k) => { bot.setControlState('sprint', true); bot.setControlState('forward', bot.entity.position.z > Z - 19.6); look(k) })   // stop ~5 blocks out: a camera inside the ring froze their moves
     bot.setControlState('sprint', false); bot.setControlState('forward', false)
     ctx.mark('face_on', { near: [X + 20.5, Z - 26.5, 5] })
-    await line('L12', async (k) => { say(`/execute as @e[tag=party] at @s facing entity ${bot.username} feet positioned ^ ^ ^0.006 run tp @s ~ ${F + 1} ~ facing entity ${bot.username} eyes`); look(k, Math.sin(k / 9) * 0.07, Math.min(1, k / 10) * 0.06) })
+    let off12 = [0, 0]
+    await line('L12', async (k) => { say(`/execute as @e[tag=party] at @s facing entity ${bot.username} feet positioned ^ ^ ^0.006 run tp @s ~ ${F + 1} ~ facing entity ${bot.username} eyes`); off12 = [Math.sin(k / 9) * 0.07, Math.min(1, k / 10) * 0.06]; look(k, off12[0], off12[1]) })
     bot.setControlState('forward', false)
     let fled = false
     await line('L13', async (k, at) => {
@@ -321,8 +322,10 @@ module.exports = {
       if (k === at(1) + 2) bot.setControlState('jump', false)
       if (k >= at(1) + 2 && k < at(1) + 6) flee('party', 0.15)
       if (fled) flee('party', 0.32)
-      sway = 1.5
-      look(k, fled ? Math.sin(k * 0.8) * 0.03 : 0, fled ? Math.sin(k * 0.6 + 1) * 0.02 : 0)
+      // ease out of L12's lean and into the bigger sway: dropping them on the line change jumped the view (frame review f1849)
+      const e = Math.max(0, 1 - k / 8)
+      sway = 1 + 0.5 * Math.min(1, k / 8)
+      look(k, e * off12[0] + (fled ? Math.sin(k * 0.8) * 0.03 : 0), e * off12[1] + (fled ? Math.sin(k * 0.6 + 1) * 0.02 : 0))
     })
     await line('L14', async (k) => {
       flee('party', 0.32)
