@@ -15,7 +15,16 @@ function spawn (ev, blockTex) {
   const T0 = ev.t / 50
   const out = []
   const P = (o) => out.push({ t0: T0, ...o })
-  if (ev.type === 'splash') {
+  if (ev.type === 'splash' && (ev.count || 24) >= 30 && !ev.spread) {
+    // a player landing in water (Entity.doWaterSplashEffect): 1 + width * 20 = 13 WaterDropParticles
+    // within +-width (0.6) of the player at the surface, drifting at 0.3 x a small random speed and
+    // rising 0.1-0.3 (stunts ask for 30; the old wide 2.6-block spread put drops right at the eye,
+    // big blue squares: every_clutch f105)
+    for (let i = 0; i < 13; i++) {
+      P({ x: ev.x + (r() * 2 - 1) * 0.6, y: ev.y, z: ev.z + (r() * 2 - 1) * 0.6, vx: (r() - 0.5) * 0.05, vy: 0.1 + r() * 0.2, vz: (r() - 0.5) * 0.05,
+        g: 0.06, drag: 0.98, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2, tex: `particle/splash_${Math.floor(r() * 4)}`, color: [1, 1, 1] })
+    }
+  } else if (ev.type === 'splash') {
     for (let i = 0; i < (ev.count || 24); i++) {
       const sp = ev.spread || ((ev.count || 24) >= 30 ? 2.6 : 1.2)   // big landing splashes spread wide: the eye is right above them and particles within 1 block are culled
       P({ x: ev.x + (r() - 0.5) * sp, y: ev.y, z: ev.z + (r() - 0.5) * sp, vx: (r() - 0.5) * 0.25, vy: 0.1 + r() * 0.25, vz: (r() - 0.5) * 0.25,
