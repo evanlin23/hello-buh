@@ -3,7 +3,7 @@
   "caption": "can you guess what I'm building? \ud83e\udd14",
   "youtube": {
     "title": "can you guess what I'm building? \ud83e\udd14 #minecraft #shorts",
-    "description": "can you guess what I'm building? \ud83e\udd14\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "can you guess what I'm building? \ud83e\udd14\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,38 +13,38 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "industry_kiss.mp3",
-    "title": "INDUSTRY KISS",
-    "artist": "DIPIENS, HRXSTAL",
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 39.75,
-    "drop_in_short_s": 4.1,
-    "song_start_s": 35.65
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 31.2,
+    "song_start_s": 7.05
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 5.8,
+    "duration_s": 32.1,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 4512160,
-    "sha256": "cff80171b87239b7477a3a013bd2dda3cc2abce9fbd1123a2367fd9eb03f491f"
+    "bytes": 60972732,
+    "sha256": "8f748cca05bd1b21d2519afbe4dc1c3e2d142b9c7c8b045dcb7b5e400818fbf3"
   },
   "edit": {
     "caption": "can you guess what I'm building? \ud83e\udd14",
     "song": "songs/misery.mp3",
     "dropAt": "complete",
-    "start": 0.3,
-    "endAfter": "complete:1.7",
+    "startAt": "stage:0.1",
+    "endAfter": "complete:0.9",
     "args": [
       "--caption",
       "can you guess what I'm building? \ud83e\udd14",
-      "--start",
-      "0.3",
+      "--start_at",
+      "stage:0.1",
       "--end_after",
-      "complete:1.7"
+      "complete:0.9"
     ]
   },
   "recording": {
@@ -55,69 +55,49 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 406,
-      "y": 85,
-      "z": 13
+      "x": 361,
+      "y": 69,
+      "z": -46
     },
-    "biome": "minecraft:forest",
-    "ticks": 147,
-    "seconds": 7.35,
+    "biome": "minecraft:plains",
+    "ticks": 686,
+    "seconds": 34.3,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 0.7,
-        "event": "swing"
-      },
-      {
         "t": 0.8,
-        "event": "swing"
-      },
-      {
-        "t": 0.9,
-        "event": "swing"
+        "event": "stage"
       },
       {
         "t": 1,
         "event": "swing"
       },
       {
-        "t": 1.15,
+        "t": 1.4,
         "event": "swing"
       },
       {
-        "t": 1.25,
+        "t": 1.75,
         "event": "swing"
       },
       {
-        "t": 1.5,
+        "t": 2,
         "event": "swing"
       },
       {
-        "t": 1.6,
+        "t": 2.25,
         "event": "swing"
       },
       {
-        "t": 1.7,
+        "t": 2.4,
         "event": "swing"
       },
       {
-        "t": 1.95,
-        "event": "swing"
-      },
-      {
-        "t": 2.2,
-        "event": "swing"
-      },
-      {
-        "t": 2.45,
-        "event": "swing"
-      },
-      {
-        "t": 2.7,
+        "t": 2.55,
         "event": "swing"
       },
       {
@@ -125,27 +105,15 @@
         "event": "swing"
       },
       {
-        "t": 2.9,
+        "t": 3.05,
         "event": "swing"
       },
       {
-        "t": 3,
+        "t": 3.3,
         "event": "swing"
       },
       {
-        "t": 3.25,
-        "event": "swing"
-      },
-      {
-        "t": 3.5,
-        "event": "swing"
-      },
-      {
-        "t": 3.6,
-        "event": "swing"
-      },
-      {
-        "t": 3.7,
+        "t": 3.55,
         "event": "swing"
       },
       {
@@ -153,19 +121,563 @@
         "event": "swing"
       },
       {
-        "t": 3.9,
+        "t": 4.05,
         "event": "swing"
       },
       {
-        "t": 4.15,
+        "t": 4.3,
         "event": "swing"
       },
       {
         "t": 4.4,
+        "event": "reveal"
+      },
+      {
+        "t": 5.55,
+        "event": "stage"
+      },
+      {
+        "t": 5.6,
+        "event": "swing"
+      },
+      {
+        "t": 5.8,
+        "event": "swing"
+      },
+      {
+        "t": 6,
+        "event": "swing"
+      },
+      {
+        "t": 6.2,
+        "event": "swing"
+      },
+      {
+        "t": 6.4,
+        "event": "swing"
+      },
+      {
+        "t": 6.6,
+        "event": "swing"
+      },
+      {
+        "t": 6.8,
+        "event": "swing"
+      },
+      {
+        "t": 7,
+        "event": "swing"
+      },
+      {
+        "t": 7.2,
+        "event": "swing"
+      },
+      {
+        "t": 7.4,
+        "event": "swing"
+      },
+      {
+        "t": 7.6,
+        "event": "swing"
+      },
+      {
+        "t": 7.8,
+        "event": "swing"
+      },
+      {
+        "t": 8,
+        "event": "swing"
+      },
+      {
+        "t": 8.2,
+        "event": "swing"
+      },
+      {
+        "t": 8.4,
+        "event": "swing"
+      },
+      {
+        "t": 8.6,
+        "event": "swing"
+      },
+      {
+        "t": 8.8,
+        "event": "swing"
+      },
+      {
+        "t": 9,
+        "event": "swing"
+      },
+      {
+        "t": 9.2,
+        "event": "swing"
+      },
+      {
+        "t": 9.4,
+        "event": "swing"
+      },
+      {
+        "t": 9.6,
+        "event": "swing"
+      },
+      {
+        "t": 9.8,
+        "event": "swing"
+      },
+      {
+        "t": 9.95,
+        "event": "swing"
+      },
+      {
+        "t": 10.15,
+        "event": "swing"
+      },
+      {
+        "t": 10.35,
+        "event": "swing"
+      },
+      {
+        "t": 10.55,
+        "event": "swing"
+      },
+      {
+        "t": 10.75,
+        "event": "swing"
+      },
+      {
+        "t": 10.95,
+        "event": "swing"
+      },
+      {
+        "t": 11.15,
+        "event": "swing"
+      },
+      {
+        "t": 11.35,
+        "event": "swing"
+      },
+      {
+        "t": 11.55,
+        "event": "swing"
+      },
+      {
+        "t": 11.75,
+        "event": "swing"
+      },
+      {
+        "t": 11.95,
+        "event": "swing"
+      },
+      {
+        "t": 12.15,
+        "event": "swing"
+      },
+      {
+        "t": 12.35,
+        "event": "swing"
+      },
+      {
+        "t": 12.55,
+        "event": "swing"
+      },
+      {
+        "t": 12.75,
+        "event": "swing"
+      },
+      {
+        "t": 12.95,
+        "event": "swing"
+      },
+      {
+        "t": 13.15,
+        "event": "swing"
+      },
+      {
+        "t": 13.35,
+        "event": "swing"
+      },
+      {
+        "t": 13.55,
+        "event": "swing"
+      },
+      {
+        "t": 13.75,
+        "event": "swing"
+      },
+      {
+        "t": 13.95,
+        "event": "swing"
+      },
+      {
+        "t": 14.15,
+        "event": "swing"
+      },
+      {
+        "t": 14.35,
+        "event": "swing"
+      },
+      {
+        "t": 14.55,
+        "event": "swing"
+      },
+      {
+        "t": 14.75,
+        "event": "swing"
+      },
+      {
+        "t": 14.85,
+        "event": "reveal"
+      },
+      {
+        "t": 15.9,
+        "event": "stage"
+      },
+      {
+        "t": 15.95,
+        "event": "swing"
+      },
+      {
+        "t": 16.15,
+        "event": "swing"
+      },
+      {
+        "t": 16.35,
+        "event": "swing"
+      },
+      {
+        "t": 16.5,
+        "event": "swing"
+      },
+      {
+        "t": 16.7,
+        "event": "swing"
+      },
+      {
+        "t": 16.85,
+        "event": "swing"
+      },
+      {
+        "t": 17.05,
+        "event": "swing"
+      },
+      {
+        "t": 17.2,
+        "event": "swing"
+      },
+      {
+        "t": 17.4,
+        "event": "swing"
+      },
+      {
+        "t": 17.55,
+        "event": "swing"
+      },
+      {
+        "t": 17.75,
+        "event": "swing"
+      },
+      {
+        "t": 17.9,
+        "event": "swing"
+      },
+      {
+        "t": 18.15,
+        "event": "swing"
+      },
+      {
+        "t": 18.3,
+        "event": "swing"
+      },
+      {
+        "t": 18.5,
+        "event": "swing"
+      },
+      {
+        "t": 18.65,
+        "event": "swing"
+      },
+      {
+        "t": 18.85,
+        "event": "swing"
+      },
+      {
+        "t": 19,
+        "event": "swing"
+      },
+      {
+        "t": 19.2,
+        "event": "swing"
+      },
+      {
+        "t": 19.35,
+        "event": "swing"
+      },
+      {
+        "t": 19.55,
+        "event": "swing"
+      },
+      {
+        "t": 19.7,
+        "event": "swing"
+      },
+      {
+        "t": 19.9,
+        "event": "swing"
+      },
+      {
+        "t": 20.05,
+        "event": "swing"
+      },
+      {
+        "t": 20.25,
+        "event": "swing"
+      },
+      {
+        "t": 20.4,
+        "event": "swing"
+      },
+      {
+        "t": 20.6,
+        "event": "swing"
+      },
+      {
+        "t": 20.75,
+        "event": "swing"
+      },
+      {
+        "t": 20.95,
+        "event": "swing"
+      },
+      {
+        "t": 21.1,
+        "event": "swing"
+      },
+      {
+        "t": 21.3,
+        "event": "swing"
+      },
+      {
+        "t": 21.45,
+        "event": "swing"
+      },
+      {
+        "t": 21.65,
+        "event": "swing"
+      },
+      {
+        "t": 21.8,
+        "event": "swing"
+      },
+      {
+        "t": 22,
+        "event": "swing"
+      },
+      {
+        "t": 22.15,
+        "event": "swing"
+      },
+      {
+        "t": 22.35,
+        "event": "swing"
+      },
+      {
+        "t": 22.5,
+        "event": "swing"
+      },
+      {
+        "t": 22.7,
+        "event": "swing"
+      },
+      {
+        "t": 22.85,
+        "event": "swing"
+      },
+      {
+        "t": 23.05,
+        "event": "swing"
+      },
+      {
+        "t": 23.2,
+        "event": "swing"
+      },
+      {
+        "t": 23.4,
+        "event": "swing"
+      },
+      {
+        "t": 23.55,
+        "event": "swing"
+      },
+      {
+        "t": 23.75,
+        "event": "swing"
+      },
+      {
+        "t": 23.85,
+        "event": "glance"
+      },
+      {
+        "t": 25.55,
+        "event": "swing"
+      },
+      {
+        "t": 25.75,
+        "event": "swing"
+      },
+      {
+        "t": 25.9,
+        "event": "swing"
+      },
+      {
+        "t": 26.1,
+        "event": "swing"
+      },
+      {
+        "t": 26.25,
+        "event": "swing"
+      },
+      {
+        "t": 26.45,
+        "event": "swing"
+      },
+      {
+        "t": 26.6,
+        "event": "swing"
+      },
+      {
+        "t": 26.8,
+        "event": "swing"
+      },
+      {
+        "t": 26.95,
+        "event": "swing"
+      },
+      {
+        "t": 27.15,
+        "event": "swing"
+      },
+      {
+        "t": 27.3,
+        "event": "swing"
+      },
+      {
+        "t": 27.5,
+        "event": "swing"
+      },
+      {
+        "t": 27.65,
+        "event": "swing"
+      },
+      {
+        "t": 27.85,
+        "event": "swing"
+      },
+      {
+        "t": 28,
+        "event": "swing"
+      },
+      {
+        "t": 28.2,
+        "event": "swing"
+      },
+      {
+        "t": 28.35,
+        "event": "swing"
+      },
+      {
+        "t": 28.55,
+        "event": "swing"
+      },
+      {
+        "t": 28.7,
+        "event": "swing"
+      },
+      {
+        "t": 28.9,
+        "event": "swing"
+      },
+      {
+        "t": 29.05,
+        "event": "swing"
+      },
+      {
+        "t": 29.1,
+        "event": "backup"
+      },
+      {
+        "t": 29.25,
+        "event": "swing"
+      },
+      {
+        "t": 29.4,
+        "event": "swing"
+      },
+      {
+        "t": 29.6,
+        "event": "swing"
+      },
+      {
+        "t": 29.75,
+        "event": "swing"
+      },
+      {
+        "t": 29.95,
+        "event": "swing"
+      },
+      {
+        "t": 30.1,
+        "event": "swing"
+      },
+      {
+        "t": 30.3,
+        "event": "swing"
+      },
+      {
+        "t": 30.45,
+        "event": "swing"
+      },
+      {
+        "t": 30.65,
+        "event": "swing"
+      },
+      {
+        "t": 30.8,
+        "event": "swing"
+      },
+      {
+        "t": 31,
+        "event": "swing"
+      },
+      {
+        "t": 31.15,
+        "event": "swing"
+      },
+      {
+        "t": 31.35,
+        "event": "swing"
+      },
+      {
+        "t": 31.5,
+        "event": "swing"
+      },
+      {
+        "t": 31.7,
+        "event": "swing"
+      },
+      {
+        "t": 31.85,
+        "event": "swing"
+      },
+      {
+        "t": 32.05,
+        "event": "swing"
+      },
+      {
+        "t": 32.1,
         "event": "complete"
       },
       {
-        "t": 7.35,
+        "t": 34.3,
         "event": "end"
       }
     ]
@@ -173,9 +685,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "eaaf65d3dd15d17ac24193b96ee1bffe181a0a04",
-    "rendered_at": "2026-11-06T18:14:47.557Z",
-    "head_at_publish": "eaaf65d3dd15d17ac24193b96ee1bffe181a0a04",
+    "commit": "ecab0085456688bec23019477bed29cba912b2cc",
+    "rendered_at": "2026-11-07T03:33:40.768Z",
+    "head_at_publish": "31bfb61883f8113656deae6bf40fef25c712fab5",
     "stunt": "stunts/sword_art.js",
     "source_snapshot": [
       "source/sword_art.js",
@@ -183,16 +695,13 @@
     ]
   },
   "rebuild": [
-    "git checkout eaaf65d3dd15",
+    "git checkout ecab00854566",
     "gunzip -c shorts/sword_art/recording.json.gz > work/sword_art.rec.json",
     "node render.js work/sword_art.rec.json work/sword_art.frames 60 1080 1011",
     "python3 audio.py work/sword_art.rec.json work/sword_art.wav",
-    "python3 edit.py --frames work/sword_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sword_art.rec.json --audio work/sword_art.wav --caption \"can you guess what I'm building? \ud83e\udd14\" --start 0.3 --end_after complete:1.7 --out out/sword_art.mp4"
+    "python3 edit.py --frames work/sword_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sword_art.rec.json --audio work/sword_art.wav --caption \"can you guess what I'm building? \ud83e\udd14\" --start_at stage:0.1 --end_after complete:0.9 --out out/sword_art.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "worker QA (qa_frames + independent review): ready. Nitpicks: frequent slot switches f86-140 keep the held item mostly lowered; fill starts before the outline is complete",
-  "published_at": "2026-11-06T18:17:13.144Z",
-  "qa_notes": [
-    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
-  ]
+  "status": "ready",
+  "notes": "worker: 32 s three-sword scrambled format; frame review + retention + minecraft audits passed. Nitpicks: pommel cut at the left edge in the last frames, medium sword reads before its reveal",
+  "published_at": "2026-11-07T03:37:16.636Z"
 }
