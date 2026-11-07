@@ -1,7 +1,7 @@
 // "POV: you hit a villager 💀" (~30 s, five escalating beats, hard cuts between them):
 //   1 villager hit -> 1 iron golem launches you; 3 -> 3 golems juggle you twice; 5 -> three times;
 //   10 -> four times; 20 villagers -> 20 golems swarm you: "HelloBuh was slain by Iron Golem" (death screen).
-// Real mobs with vanilla AI, normal difficulty. Beats 1-4 under Resistance V (100% damage reduction): the
+// Real mobs with vanilla AI, normal difficulty. Beats 1-4 under Resistance IV + Regeneration V (V's 100% reduction stopped the hit registering at all): the
 // hit still registers and knocks you up, no damage; cleared for the last. (On peaceful the hit did 0 damage,
 // didn't register at all, and nothing launched.) Each golem is provoked with a
 // player-attributed /damage so its retaliation fires at once (left alone, a golem wandered for ~4 s).
@@ -84,7 +84,9 @@ module.exports = {
         }
         bot.chat('/effect give @s instant_health 1 5 true')
       }
-      bot.chat(last ? '/effect clear @s resistance' : '/effect give @s resistance 30 4 true')
+      // Resistance V absorbed the whole hit, which then didn't register: no launch in 320 ticks (5 failed runs).
+      // IV (80% off) lets the hit land and launch you; Regeneration V heals it back between hits
+      if (last) { bot.chat('/effect clear @s resistance'); bot.chat('/effect clear @s regeneration') } else { bot.chat('/effect give @s resistance 30 3 true'); bot.chat('/effect give @s regeneration 30 4 true') }
       ctx.mark('beat', { n: i })
       // smack every villager here
       for (const v of near('villager').slice(0, B.villagers)) {
