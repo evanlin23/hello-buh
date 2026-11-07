@@ -109,8 +109,8 @@ module.exports = {
       }
       // watch it rain down around your feet, and step back and forth through it picking it up
       ctx.easeLook((rnd() - 0.5) * 0.4, -0.45, 550)          // follow them down as they land round your feet
-      bot.setControlState('back', true); await bot.waitForTicks(9); bot.setControlState('back', false)   // (11+11 ran the beats 3.2 s apart)
-      bot.setControlState('forward', true); await bot.waitForTicks(9); bot.setControlState('forward', false)
+      bot.setControlState('back', true); await bot.waitForTicks(10); bot.setControlState('back', false)   // (11+11 ran the beats 3.2 s apart; 9+9 ran the Short 29.7 s)
+      bot.setControlState('forward', true); await bot.waitForTicks(10); bot.setControlState('forward', false)
       if (i === this.ores.length - 1) ctx.mark('collected')
       await bot.waitForTicks(i === this.ores.length - 1 ? 14 : 2)
       await ctx.easeLook(0, -0.3, 300)
