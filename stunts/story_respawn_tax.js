@@ -144,6 +144,7 @@ module.exports = {
       // on the cauldron, so the death screen showed only cobblestone)
       if (trip > 7 && bot.entity.position.z < Z + 3.8 && bot.entity.position.y > F + 0.9) { landed = landed || trip; K.base = K.aim(t); bot.look(K.base.yaw, K.base.pitch, true) }
       if (trip === 10) say('/effect clear @s minecraft:fire_resistance')
+      if (trip === 7) ctx.mark('cut')   // a /tp is a cut: the 1-block step out of the cauldron glided up through the rim (Minecraft audit)
       if (trip === 7) say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 1).toFixed(3)} ${(Z + 3.4).toFixed(3)} facing ${t.x.toFixed(2)} ${t.y.toFixed(2)} ${t.z.toFixed(2)}`)
       // the body must be at rest on the plaza before it dies: a death on the landing tick read the teleport as
       // speed and the dead camera slid 11 blocks up the lane, past the librarian (retention audit)
