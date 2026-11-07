@@ -157,6 +157,7 @@ def glint_icon(jar, icon, tick):
     gv = s_ * u + c * v + (gt % 30000) / 30000
     g = tex[(np.floor(gv * th).astype(int)) % th, (np.floor(gu * tw).astype(int)) % tw]
     mask = (a[..., 3:4] > 0.1)
+    g = g * 0.75                                    # GlintAlpha: Glint Strength defaults to 0.75
     a[..., :3] = np.clip(a[..., :3] + g * g * mask, 0, 1)
     return Image.fromarray((a * 255 + 0.5).astype(np.uint8), "RGBA")
 
@@ -191,6 +192,18 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
             if isinstance(g, tuple) and g[0] == "glint":   # enchanted stack (hud_ticks puts the tick here)
                 icon = glint_icon(jar, icon, g[1])
             img.alpha_composite(icon, (ix, iy))
+        # durability bar (ItemStack.getBarWidth / getBarColor, GuiGraphics.renderItemDecorations): from the
+        # first point of damage, a black 13x2 strip at (2, 13) with round(13 - 13 * damage / max) px in
+        # hue (max - damage) / max / 3 (green -> red)
+        if isinstance(it, (list, tuple)) and len(it) > 4 and it[3] and it[4]:
+            import colorsys
+            dmg, mx = it[3], it[4]
+            w = round(13 - dmg * 13 / mx)
+            r_, g_, b_ = colorsys.hsv_to_rgb(max(0.0, (mx - dmg) / mx) / 3, 1, 1)
+            draw = ImageDraw.Draw(img)
+            draw.rectangle([ix + 2 * GUI, iy + 13 * GUI, ix + 15 * GUI - 1, iy + 15 * GUI - 1], fill=(0, 0, 0, 255))
+            if w > 0:
+                draw.rectangle([ix + 2 * GUI, iy + 13 * GUI, ix + (2 + w) * GUI - 1, iy + 14 * GUI - 1], fill=(round(r_ * 255), round(g_ * 255), round(b_ * 255), 255))
         if count and count > 1:                   # stack count, like GuiGraphics.renderItemDecorations
             draw_text(img, jar, str(count), ix + (19 - 2) * GUI, iy + (6 + 3) * GUI, align_right=True)
     heart_c, heart = big(sprite(jar, "gui/sprites/hud/heart/container")), big(sprite(jar, "gui/sprites/hud/heart/full"))
@@ -382,7 +395,7 @@ def hud_ticks(timeline, duration, keep_inventory=False):
             for i in range(9, -1, -1):
                 shake[i] = r.next_int2()
         # enchanted stacks ([name, count, 1]) carry the tick for the moving glint
-        items = tuple((it[0], it[1], ("glint", tick)) if isinstance(it, tuple) and ((len(it) > 2 and it[2] == 1) or it[0] in GLINT_ITEMS) else it for it in items)
+        items = tuple((it[0], it[1], ("glint", tick)) + tuple(it[3:]) if isinstance(it, tuple) and ((len(it) > 2 and it[2] == 1) or it[0] in GLINT_ITEMS) else it for it in items)
         out.append((slot, tuple(items), health, display, blink, tuple(shake) if shake else None, max_now(t)))
     return out
 

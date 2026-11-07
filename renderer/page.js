@@ -708,7 +708,7 @@ function glintify (mat, scale) {
       vec2 guv = vMapUv * uGlintS;
       float gc = cos(0.17453), gs = sin(0.17453);
       guv = vec2(gc * guv.x - gs * guv.y, gs * guv.x + gc * guv.y) + vec2(-mod(gt, 110000.0) / 110000.0, mod(gt, 30000.0) / 30000.0);
-      vec3 gl = texture2D(uGlint, guv).rgb;
+      vec3 gl = texture2D(uGlint, guv).rgb * 0.75;   // glint.fsh x GlintAlpha (Glint Strength, default 0.75), then SRC_COLOR squares it
       gl_FragColor.rgb += gl * gl;
     }
     #include <fog_fragment>`)
