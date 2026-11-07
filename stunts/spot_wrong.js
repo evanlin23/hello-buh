@@ -127,7 +127,7 @@ module.exports = spotWrong({
       tag: 'only 1% can find it', hint: [4, 'hint: not the bed'],
       reveals: [
         { at: [8.5, 2.6, -5.5], zoom: 3.2, ring: 170, strafe: 'left', sub: 'no chain: it floats', check: [[8, 2, -6], 'lantern'] },
-        { pre: 'wait... there is another one', approach: 1.4, approachTo: [6.0, -6.3], select: 4, strafe: 'back', strafeSpeed: 0.012, at: [6.0, 1.0, -8.8], useAim: [6.0, 1.0, -8.8], zoom: 1.3, useZoom: 1.5, ring: 230, hold: 2.3, use: [[5, 0, -9], [6, 0, -9]], useAt: 0.8, tail: 1.0, sub: 'both handles on the right', useSub: 'both swing left!', check: [[6, 0, -9], 'spruce_door'] }
+        { pre: 'wait... there is another one', approach: 1.4, approachTo: [6.0, -6.3], select: 4, strafe: 'back', strafeSpeed: 0.012, at: [6.0, 1.0, -8.8], useAim: [6.0, 1.0, -8.8], zoom: 1.3, useZoom: 1.5, ring: 230, ringX: 0.61, ringR: 260, hold: 2.3, use: [[5, 0, -9], [6, 0, -9]], useAt: 0.8, tail: 1.0, sub: 'both handles right', useSub: 'both swing left!', check: [[6, 0, -9], 'spruce_door'] }
       ] }
   ]
 })
