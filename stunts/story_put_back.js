@@ -165,15 +165,15 @@ module.exports = {
     await cut(4.6, 2.6, P(2.5, 0.9, 0))
     await line('L04', async (k, at) => {
       cast()
-      if (k % 6 === 0) ctx.particles('portal', P(2.6 + Math.sin(k) * 0.8, 1.05, 0.2 + Math.cos(k * 1.3) * 0.8), { count: 18 })
-      if (k === at(1)) ctx.particles('portal', P(2.5, 1.1, 0.5), { count: 50 })
+      if (k % 6 === 0) ctx.particles('portal', P(2.6 + Math.sin(k) * 0.8, 1.05, 0.6 + Math.cos(k * 1.3) * 0.8), { count: 6 })
+      if (k === at(1)) ctx.particles('portal', P(2.5, 1.1, 0.8), { count: 20 })
       look(k)
     })
     // L05: the villagers walk past it staring at their feet
-    await cut(4.5, 7.5, P(-9.5, 1.6, 3))
+    await cut(-3.5, 7.0, P(-8.5, 1.4, 3.3))
     await line('L05', async (k) => {
       for (let i = 0; i < 3; i++) V[i].x += 0.16
-      cast(); K.base = K.aim(P(V[1].x + 0.5, 1.6, 3)); look(k)
+      cast(); K.base = K.aim(P(V[1].x + 0.5, 1.4, 3.3)); look(k)
     })
     for (let i = 0; i < 3; i++) V[i].x = -30 - i * 1.6
     // L06: and it started with my brother's room (the annex, perfect)
@@ -193,26 +193,28 @@ module.exports = {
     await line('L09', async (k, at) => {
       cast()
       if (k < at(2) - 2) K.base = { yaw: K.base.yaw, pitch: K.base.pitch - 0.006 }   // eyes drifting shut...
-      if (k >= at(2) - 2) { from = from || { ...K.base }; K.turnTo(from, P(3.0, 2.6, 1.0), Math.min(1, (k - at(2) + 3) / 14)) }   // ...then a peek out the hole
+      if (k >= at(2) - 2) { from = from || { ...K.base }; K.turnTo(from, P(3.0, 2.6, 1.0), Math.min(1, (k - at(2) + 3) / 22)) }   // ...then a peek out the hole
       look(k)
     })
     // L10: something tall walked up to the wall (out through the hole: it comes into view)
     await line('L10', async (k) => {
-      if (E.x > 3.0) { E.x -= 0.11; E.z -= 0.035 } else E.yaw = 150
+      const dx = 2.5 - E.x, dz = -0.9 - E.z, d = Math.hypot(dx, dz)   // to its spot at the wall, facing it
+      if (d > 0.11) { E.x += dx / d * 0.11; E.z += dz / d * 0.11; E.yaw = Math.atan2(-dx, dz) * 180 / Math.PI } else E.yaw = 180
       K.base = K.aim(P(E.x, 2.6, E.z)); cast(); look(k)
     })
     // L11: and put a block back
+    E.yaw = 180
+    await cut(6.2, -2.6, P(2.5, 1.8, -1.4))
     await line('L11', async (k, at) => { cast(); if (k === at(2)) put(2, 1, -2, 'cracked_stone_bricks'); look(k) })
     // L12: an enderman (cut outside, close, it stands at the wall facing it)
-    E.x = 2.6; E.z = -0.6; E.yaw = 180
-    for (let i = 0; i < 3; i++) { cast(); await bot.waitForTicks(1) }   // in place before the cut (no slide)
-    await cut(5.5, 1.2, P(2.6, 2.6, -0.6))
+    E.x = 2.6; E.z = -0.9; E.yaw = 180
+    await cut(5.5, 1.2, P(2.6, 2.6, -0.9))
     await line('L12', async (k) => { cast(); look(k) })
     // L13: I opened my eyes a little (it faces me)... it turned its whole body away
     await cut(2.1, 3.4, P(2.6, 2.6, -0.6))
     await line('L13', async (k, at) => {
-      if (k < at(3)) E.yaw = 0                              // facing me (south)
-      else E.yaw = Math.min(180, (k - at(3)) * 30)          // swings round to the wall
+      if (k < at(3)) E.yaw = 100                            // side on, never looking at me
+      else E.yaw = Math.min(180, 100 + (k - at(3)) * 8)     // and it turns its whole body away, smoothly
       cast(); look(k, 0, k >= at(3) ? -0.04 : 0)
     })
     // L14: and then it hummed: the song my brother always hummed (lower, with its warble)
@@ -236,9 +238,9 @@ module.exports = {
     // L17: if our eyes meet he has to hurt me (his head starts to turn; I look away fast)
     await cut(1.0, 2.4, P(2.6, 2.7, -0.6))
     await line('L17', async (k, at) => {
-      if (k >= at(1) && k < at(3)) E.yaw = 180 - Math.min(70, (k - at(1)) * 6)
+      if (k >= at(1) && k < at(3)) E.yaw = 180 - Math.min(60, (k - at(1)) * 4)   // it starts to turn...
       if (k === at(3)) ctx.sound('entity.enderman.stare', 0.25, 1)
-      if (k >= at(3)) { E.yaw = 180; K.base = { yaw: K.base.yaw + 0.06, pitch: Math.max(-1.1, K.base.pitch - 0.08) } }
+      if (k >= at(3)) { E.yaw = Math.min(180, E.yaw + 10); K.base = { yaw: K.base.yaw + 0.03, pitch: Math.max(-0.55, K.base.pitch - 0.04) } }   // ...and turns back as I look away
       cast(); look(k)
     })
     // L18: so he only comes when my eyes are shut (back on the bed, eyes down to the floor)
@@ -246,7 +248,7 @@ module.exports = {
     await cut(0.5, -5.5, P(2.4, 2.0, -1.5))
     await line('L18', async (k, at) => {
       cast()
-      if (k >= at(2)) K.base = { yaw: K.base.yaw, pitch: Math.max(-1.4, K.base.pitch - 0.07) }
+      if (k >= at(2)) K.base = { yaw: K.base.yaw, pitch: Math.max(-0.9, K.base.pitch - 0.035) }
       look(k)
     })
     // L19: he's been fixing our home one block a day (wide: he sets another one in)
