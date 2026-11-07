@@ -146,30 +146,30 @@ module.exports = makeStunt({
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
   small,
-  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 3, roofSpeed: 'cut', backTicks: 8, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
+  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 3, roofSpeed: 'cut', backTicks: 12, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
   big: {
     blocks: mansion(),
     hold: 'quartz_block', slot: 5,
     // ticks each stage gets: pool + road, floors 1-3 (short, each its own camera move), wings + garden,
     // roof + penthouse, the rooftop pool, the helipad, the wall round the grounds, the crown
-    stageTicks: { 0: 105, 1: 105, 2: 105, 3: 105, 4: 350, 5: 180, 6: 110, 7: 80, 8: 150, 9: 50 },
+    stageTicks: { 0: 105, 1: 105, 2: 105, 3: 105, 4: 390, 5: 180, 6: 110, 7: 80, 8: 150, 9: 50 },
     // [tick of the build, camera, look-at], local to the mansion centre (y from the ground)
     keys: [
       [0, [-2, 13, 27], [0, -1, 15]],        // the pool fills the frame from the cut (stills-checked)
-      [45, [-7, 11, 27], [0, 0, 14]],
-      [105, [-26, 5, 22], [-6, 4, 8]],       // floor 1: low along the facade
+      [70, [-6, 11, 27], [0, 0, 14]],        // (stays close: a pull-back here left a small pool in an empty field)
+      [140, [-26, 5, 22], [-6, 4, 8]],       // floor 1: low along the facade
       [210, [4, 9, 22], [0, 7, 8]],          // floor 2: across the front, close
       [315, [22, 22, 24], [0, 12, 0]],       // floor 3: up and looking down on it
       [420, [30, 18, 28], [12, 10, 0]],
-      [590, [40, 16, 22], [22, 6, 0]],       // the east wing
-      [740, [-30, 16, 40], [-15, 3, 20]],    // the west wing and the garden
-      [920, [16, 30, 24], [0, 17, -1]],      // roof and penthouse
-      [1040, [-30, 30, 20], [-12, 15, 0]],   // the rooftop pool filling
-      [1075, [4, 42, 34], [8, 14, 0]],       // up and over the front (crossing the roof low read as a wall of dark planks)
-      [1110, [32, 30, 18], [24, 11, 0]],     // the helipad, from above
-      [1230, [-62, 36, 66], [0, 2, 8]],      // the wall going round the grounds, wide
-      [1318, [-2, 11, 70], [0, 10, 0]],      // the pull-back through the gates, the crown going on
-      [1348, [0, 10, 64], [0, 10, 0]]
+      [630, [40, 16, 22], [22, 6, 0]],       // the east wing
+      [780, [-30, 16, 40], [-15, 3, 20]],    // the west wing and the garden
+      [960, [16, 30, 24], [0, 17, -1]],      // roof and penthouse
+      [1080, [-30, 30, 20], [-12, 15, 0]],   // the rooftop pool filling
+      [1115, [4, 42, 34], [8, 14, 0]],       // up and over the front (crossing the roof low read as a wall of dark planks)
+      [1150, [32, 30, 18], [24, 11, 0]],     // the helipad, from above
+      [1270, [-62, 36, 66], [0, 2, 8]],      // the wall going round the grounds, wide
+      [1358, [-2, 11, 70], [0, 10, 0]],      // the pull-back through the gates, the crown going on
+      [1388, [0, 10, 64], [0, 10, 0]]
     ],
     // [ticks after the build, camera, look-at]: a push-in after 60:00 (the Short ends 0.5 s in)
     reveal: [
