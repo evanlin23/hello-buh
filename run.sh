@@ -38,12 +38,14 @@ grep -q 'Done (' work/server.log || { echo "server did not start"; tail -20 work
 
 # --- the stunt, retried until it lands ---
 REC=work/$NAME.rec.json
+# a long multi-set stunt (stunt.botTimeout, seconds) can need more than the default 3 minutes per try
+BOT_TIMEOUT=${BOT_TIMEOUT:-$(node -e "process.stdout.write(String(require('./stunts/'+process.argv[1]).botTimeout||180))" "$STUNT")}
 ok=0
 for t in $(seq 1 "$TRIES"); do
   echo "attempt $t"
   # a success has to have written a NEW recording: a silent exit 0 once re-rendered yesterday's (worker 3)
   STAMP=$(mktemp); sleep 1
-  if STUNT=$STUNT RECORD=$REC timeout 180 node bot.js && [ "$REC" -nt "$STAMP" ]; then ok=1; rm -f "$STAMP"; break; fi
+  if STUNT=$STUNT RECORD=$REC timeout "$BOT_TIMEOUT" node bot.js && [ "$REC" -nt "$STAMP" ]; then ok=1; rm -f "$STAMP"; break; fi
   rm -f "$STAMP"
 done
 [ "$ok" = 1 ] || { echo "stunt failed $TRIES times"; exit 1; }

@@ -41,6 +41,7 @@ module.exports = {
   // crop at 2.2x was a blur): a 1x1 at 160+ blocks is a few px, and the drift (physics caps it near 3-4
   // degrees at terminal velocity) only reads magnified (review)
   fovZoom: TIERS.slice(1).map((_, i) => [`drop${i + 2}:0.4`, `splash${i + 2}:-0.2`, 2.2]),
+  botTimeout: 600,   // 6 chunk stops and a cactus field: past the default 180 s per try
   clouds: false,   // Video Settings > Clouds: OFF (vanilla). At y 192 the falls went through a white cloud wall, and from build limit the clouds hid the target
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',

@@ -37,6 +37,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'clutches, but each one is harder 😳',
   expectDeath: true,
+  botTimeout: 600,   // 8 sets plus the chunk stops: the setup alone ran past the default 180 s (4 tries timed out)
   recordRadius: 300,   // 8 sets over 280 blocks: the ends need terrain out to the fog
   chunkStops: set => [{ x: set.x - Math.floor(TIERS.length / 2) * GAP, z: set.z }, { x: set.x + (TIERS.length - 1 - Math.floor(TIERS.length / 2)) * GAP, z: set.z }],   // the first and last sets (the last rendered over the void)
   edit: {

@@ -19,14 +19,14 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // flattened pad: the bot lands ~7 blocks out and water flows toward any drop within 4 blocks
-    // a round clearing, not a 33x33 square: the sharp-edged square pad read as command-built in
-    // every fall (worker 3, tries review)
+    // a rounded clearing, not a 33x33 square: the sharp-edged square pad read as command-built in
+    // every fall (worker 3, tries review). Three overlapping rectangles make an octagon: a row-by-row
+    // circle took 175+ commands a set and clutch_harder's 8-set setup ran past the bot's timeout
     const R = 12
-    for (let dz = -R; dz <= R; dz++) {
-      const w = Math.floor(Math.sqrt(R * R - dz * dz + R)), zz = z + dz
-      await ctx.cmd(`/fill ${x - w} ${floor - 3} ${zz} ${x + w} ${floor - 1} ${zz} dirt`)
-      await ctx.cmd(`/fill ${x - w} ${floor} ${zz} ${x + w} ${floor} ${zz} grass_block`)
-      for (let y0 = floor + 1; y0 <= top + 4; y0 += 30) await ctx.cmd(`/fill ${x - w} ${y0} ${zz} ${x + w} ${Math.min(y0 + 29, top + 4)} ${zz} air`)
+    for (const [hx, hz] of [[R, 7], [7, R], [10, 10]]) {
+      await ctx.cmd(`/fill ${x - hx} ${floor - 3} ${z - hz} ${x + hx} ${floor - 1} ${z + hz} dirt`)
+      await ctx.cmd(`/fill ${x - hx} ${floor} ${z - hz} ${x + hx} ${floor} ${z + hz} grass_block`)
+      for (let y0 = floor + 1; y0 <= top + 4; y0 += 30) await ctx.cmd(`/fill ${x - hx} ${y0} ${z - hz} ${x + hx} ${Math.min(y0 + 29, top + 4)} ${z + hz} air`)
     }
     await ctx.cmd(`/fill ${x} ${floor + 1} ${z} ${x} ${top} ${z} cobblestone`)
     if (LAYERS > 0) await ctx.cmd(`/setblock ${x} ${top + 1} ${z} snow[layers=${LAYERS}]`)
