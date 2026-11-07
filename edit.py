@@ -938,8 +938,15 @@ def main():
                     f1.append((on_, e["t"] / 1000)); on_ = None
             if on_ is not None:
                 f1.append((on_, 1e9))
-            for k_, st in enumerate(ticks[first:]):
-                if any(a <= (first + k_) / 20 < b for a, b in f1):
+            # one HUD image per OUTPUT frame, picked by that frame's tick (floor(t * 20), the same
+            # time the game frame shows): through ffconcat with tick durations + fps the HUD changed a
+            # frame late (black hearts on the first frame after an instant respawn: worker 3, tries)
+            seq = tmp / "hudseq"
+            seq.mkdir(exist_ok=True)
+            for j in range(int(math.ceil(dur * args.out_fps)) + 1):
+                t_out = shift + j / args.out_fps
+                st = ticks[min(len(ticks) - 1, int(math.floor(t_out * 20 + 1e-6)))]
+                if any(a <= t_out + 1e-6 < b for a, b in f1):   # F1 spans, frame-exact
                     st = "F1"
                 if st not in pngs:
                     pngs[st] = tmp / f"hud{len(pngs)}.png"
@@ -948,18 +955,10 @@ def main():
                     else:
                         slot, items, health, display, blink, shake, max_health = st
                         hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None, max_health=max_health)
-                if runs and runs[-1][0] == pngs[st]:
-                    runs[-1][1] += 1
-                else:
-                    runs.append([pngs[st], 1])
-        lst = tmp / "hud.txt"
-        lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {n / 20:.3f}\n" for p, n in runs) + f"file '{runs[-1][0]}'\n")
-        lead = shift - first / 20                # start isn't always on a tick
-        inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
-        graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba,trim=start={lead:.3f},setpts=PTS-STARTPTS[hudv]")
-        # F1 spans off frame-exactly too (the tick grid left the HUD up for 2 frames after a cut)
-        f1_en = "".join(f"*(lt(t,{a_ - shift:.4f})+gte(t,{b_ - shift:.4f}))" for a_, b_ in (f1 if args.hud else []) if b_ - shift > 0)
-        graph.append(f"[{last}][hudv]overlay=0:0:eof_action=repeat" + (f":enable='1{f1_en}'" if f1_en else "") + "[hudo]")
+                (seq / f"h{j:05d}.png").symlink_to(pngs[st].resolve())
+        inputs += ["-framerate", str(args.out_fps), "-i", str(seq / "h%05d.png")]
+        graph.append(f"[{n_in}:v]format=rgba[hudv]")
+        graph.append(f"[{last}][hudv]overlay=0:0:eof_action=repeat[hudo]")
         last, n_in = "hudo", n_in + 1
     if args.countdown and args.timeline:
         tl_all = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
