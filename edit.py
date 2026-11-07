@@ -1110,7 +1110,11 @@ def main():
             off, pattern = cd
             inputs += ["-framerate", "20", "-i", pattern]
             graph.append(f"[{n_in}:v]fps={args.out_fps},setpts=PTS+{max(0, off):.3f}/TB[cdv]")
-            graph.append(f"[{last}][cdv]overlay=0:0:eof_action=pass[cdo]")
+            # never over a death screen: the 0.6 s hold after the end mark sat on "You Died!" when the
+            # end was a death (worker 18, worse_sky: "SUYou Died!00")
+            dsw = [(death_start(a_, args), b_ - args.start) for a_, b_ in death_windows(tl_all, args.death_screen)] if args.death_screen else []
+            en = "".join(f"*(1-between(t,{a_:.4f},{min(b_, 1e5):.4f}))" for a_, b_ in dsw)
+            graph.append(f"[{last}][cdv]overlay=0:0:eof_action=pass" + (f":enable='1{en}'" if en else "") + "[cdo]")
             last, n_in = "cdo", n_in + 1
     tl_ev = {}
     if args.timeline:
