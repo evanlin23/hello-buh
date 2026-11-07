@@ -1,17 +1,16 @@
-// "ranking every pickaxe ⛏️ 💀" (~18 s, five beats): a stone wall in a field; wooden, stone, iron,
-// diamond and netherite pickaxe each mine a fresh 3x3 section of it (side by side), with real
-// survival digging (bot.dig, the server checks the dig time). Each beat gets a subtitle with the
-// tier per tool. Gold (fastest plain pickaxe) breaks on its last block; netherite + efficiency V
-// (with the Haste) instamines; then a TNT takes the whole wall out: "TNT: ??? tier".
-// Everything is mined under Haste V (invisible) so the five beats fit in a Short;
+// "ranking every pickaxe ⛏️ 💀" (~30 s, six beats + a finale): a stone wall in a field; wooden, stone,
+// iron and diamond pickaxe each mine a fresh 3x3 section of it (side by side), with real survival
+// digging (bot.dig, the server checks the dig time). Each beat gets a subtitle with the tier per tool.
+// Gold (fastest plain pickaxe) breaks on its last block; netherite + efficiency V (with the Haste)
+// instamines; then a TNT at every pillar chains down the wall and takes it out: "TNT: ??? tier".
+// Everything is mined under Haste V (invisible) so the beats fit in a Short;
 // the ranking and the ratios between the tools are vanilla's.
 
-const TOOLS = [   // seven beats, ~30 s (owner: 30 s minimum)
+const TOOLS = [   // six beats + the TNT run, ~30 s (owner: 30 s minimum; netherite repeated diamond: cut)
   { item: 'wooden_pickaxe', label: 'wooden', result: 'wooden: D tier' },
   { item: 'stone_pickaxe', label: 'stone', result: 'stone: C tier' },
   { item: 'iron_pickaxe', label: 'iron', result: 'iron: B tier' },
   { item: 'diamond_pickaxe', label: 'diamond', result: 'diamond: A tier' },
-  { item: 'netherite_pickaxe', label: 'netherite', result: 'netherite: A tier' },
   { item: 'golden_pickaxe[damage=23]', label: 'gold', result: 'gold: S tier?? it broke' },    // fastest plain pickaxe; 9 uses left: it breaks on the last block
   { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'efficiency V + haste', result: 'efficiency V + haste: GOD tier' }   // the instamine needs the Haste: say so
 ]
@@ -25,7 +24,8 @@ function subs () {
     out.push(['beat', `${t.label}...`, 9, i])
     out.push(['mined', t.result, 9, i])
   })
-  out.push(['boom', 'TNT: ??? tier', 1.6, 0])
+  out.push(['tntrun', 'TNT...', 9, 0])   // a beat after the light, so 'GOD tier' gets read
+  out.push(['boom', 'TNT: ??? tier', 9, 0])
   return out
 }
 
@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'boom:1.0', subs: subs() }
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:1.0', subs: subs() }
   },
 
   async setup (ctx) {
@@ -57,7 +57,7 @@ module.exports = {
     await ctx.cmd(`/fill ${xa} ${floor + 1} ${this.wz} ${xb} ${floor + 4} ${this.wz} stone`)
     // pillars between the sections in cobblestone, so each 3x3 reads as its own wall
     for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 4} ${this.wz} cobblestone`)
-    await ctx.hotbar([...TOOLS.map(t => t.item), 'tnt', 'flint_and_steel'])
+    await ctx.hotbar([...TOOLS.map(t => t.item), ['tnt', TOOLS.length + 1], 'flint_and_steel'])
     await ctx.cmd('/effect give @s haste infinite 4 true')
     await ctx.cmd('/effect give @s saturation infinite 1 true')
     // stand back so the whole section stays in frame (reach raised to match, invisible on screen)
@@ -135,33 +135,73 @@ module.exports = {
       await ctx.easeLook(0, -0.1, fast ? 250 : 150)
       if (fast) await bot.waitForTicks(4)        // (14 read as a 0.7 s pause before the finale)
     }
-    // finale: "TNT: ??? tier". Place a TNT at the foot of the wall, light it, back off, and it takes the wall out
+    // finale: "TNT: ??? tier". A TNT at the foot of every pillar: light the far one first, then strafe
+    // back along the wall placing the rest while its fuse runs; the chain follows the bot down the wall
+    // and takes it all out (no fuse stare: the 4 s fuse is spent placing)
     ctx.mark('finale')
-    const tp = { x: this.x0 + SPACING * (TOOLS.length - 1) - 1, y: floor, z: wz + 1 }   // the grass in front of the pillar left of the last section
-    ctx.select(TOOLS.length)
-    await ctx.easeLookAt(new Vec3(tp.x + 0.5, floor + 1, tp.z + 0.5), 300)
-    bot._client.write('block_place', { hand: 0, location: tp, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm(); ctx.sound('block.grass.place', 1)
-    await bot.waitForTicks(5)
-    ctx.select(TOOLS.length + 1)
-    await bot.waitForTicks(3)
-    bot._client.write('block_place', { hand: 0, location: { x: tp.x, y: floor + 1, z: tp.z }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-    bot.swingArm(); ctx.sound('item.flintandsteel.use', 1)
-    ctx.mark('lit')
-    // back off watching the fuse (4 s)
-    const tntAt = new Vec3(tp.x + 0.5, floor + 1.5, tp.z + 0.5)
-    let boomed = false
-    const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
+    const NP = TOOLS.length + 1                       // pillars 0..TOOLS.length
+    const pil = (j) => ({ x: this.x0 - 1 + j * SPACING, y: floor, z: wz + 1 })   // the grass in front of pillar j
+    const T = TOOLS.length, F = TOOLS.length + 1      // hotbar slots: tnt, flint and steel
+    let booms = 0, boomAt = null
+    const onBoom = (p) => {
+      const c = p.center || p
+      boomAt = new Vec3(+c.x, +c.y, +c.z)
+      if (++booms === 1) ctx.mark('boom')
+      if (booms === NP) ctx.mark('lastboom')
+      ctx.log('boom', booms, 'tick', ctx.tick)
+    }
     bot._client.on('explosion', onBoom)
-    bot.setControlState('back', true)
-    for (let k = 0; k < 110 && !boomed; k++) {
-      if (k === 30) bot.setControlState('back', false)
-      const eye = bot.entity.position.offset(0, 1.62, 0), d = tntAt.minus(eye)
-      await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+    const place = (q) => {
+      bot._client.write('block_place', { hand: 0, location: q, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+      bot.swingArm()
+    }
+    ctx.select(T)
+    for (let j = NP - 1; j >= 0; j--) {
+      const q = pil(j)
+      // strafe left (west, facing north) until the pillar is in easy reach
+      for (let k = 0; k < 40 && bot.entity.position.x > q.x + 1.6; k++) {
+        bot.setControlState('left', true)
+        if (k === 0) ctx.easeLookAt(new Vec3(q.x + 0.5, floor + 0.6, q.z + 0.5), 140)
+        await bot.waitForTicks(1)
+      }
+      bot.setControlState('left', false)
+      await ctx.easeLookAt(new Vec3(q.x + 0.5, floor + 0.6, q.z + 0.5), j === NP - 1 ? 250 : 90)
+      place(q); ctx.sound('block.grass.place', 1)
+      await bot.waitForTicks(2)
+      if (j === NP - 2) ctx.mark('tntrun')
+      if (j === NP - 1) {
+        // light this first one: its fuse runs while the rest go down
+        ctx.select(F)
+        await bot.waitForTicks(3)
+        place({ x: q.x, y: floor + 1, z: q.z })
+        ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+        ctx.mark('lit')
+        await bot.waitForTicks(3)
+        ctx.select(T)
+      }
+    }
+    const placed = [...Array(NP).keys()].filter(j => bot.blockAt(new Vec3(pil(j).x, floor + 1, pil(j).z))?.name === 'tnt').length
+    ctx.log('tnt placed', placed, 'of', NP - 1, 'unlit (+1 lit); booms so far', booms)
+    // back away south (whatever the view: controls chosen against it), following the chain with the camera
+    let look = boomAt || new Vec3(pil(NP - 1).x + 0.5, floor + 1.5, wz + 1)
+    let quiet = 0, last = booms
+    for (let k = 0; k < 360 && booms < NP && quiet < 60; k++) {
+      const goal = boomAt || look
+      look = look.plus(goal.minus(look).scaled(0.12))
+      const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
+      const yaw = Math.atan2(-d.x, -d.z)
+      await bot.look(yaw, Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+      const go = bot.entity.position.z < wz + 14
+      const fz = -Math.cos(yaw), rz = -Math.sin(yaw)        // forward / right vectors' z (want +z)
+      bot.setControlState('back', go && fz < -0.3); bot.setControlState('forward', go && fz > 0.3)
+      bot.setControlState('right', go && rz > 0.3); bot.setControlState('left', go && rz < -0.3)
+      if (booms > 0) quiet = booms === last ? quiet + 1 : 0
+      last = booms
       await bot.waitForTicks(1)
     }
-    bot.setControlState('back', false)
-    if (!boomed) { ctx.log('no explosion'); return false }
+    for (const c of ['back', 'forward', 'left', 'right']) bot.setControlState(c, false)
+    ctx.log('booms', booms, 'of', NP)
+    if (booms < NP) { ctx.log('chain broke'); return false }
     await bot.waitForTicks(24)
     bot.removeListener('physicsTick', onTick)
     await bot.waitForTicks(10)
