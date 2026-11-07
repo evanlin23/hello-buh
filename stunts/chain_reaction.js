@@ -205,6 +205,9 @@ module.exports = {
     // deep dirt under the TNT: the pile's crater went past the 10-block base into an aquifer (water
     // in the crater on the payoff)
     for (let n0 = nH - 10; n0 <= nH + 14; n0 += 4) await fill(-24, -30, n0, 44, -11, n0 + 3, 'dirt')   // (a fallback site by the sea: aquifer water poured into the crater)
+    // the finale's watch spot is an obsidian floor (flush with the grass): primed TNT flung by the
+    // cubes lands 25+ blocks out, and three takes ended with the player down a crater
+    await fill(-8, 0, nH - 29, -2, 0, nH - 23, 'obsidian')
     for (let x = eStop + 1; x <= -5; x += 2) await put(x, 1, nH, 'tnt')
     // each stage is lit by one TNT 3 blocks out from the last, so every stage gets its own boom
     await fill(-1, 1, nH - 1, 1, 3, nH + 1, 'tnt')

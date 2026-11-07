@@ -144,6 +144,8 @@ module.exports = {
     await fill(-9, 1, 19, -5, 5, 23, 'tnt')
     for (const [e, n] of [[-3, 23], [-1, 24], [1, 25], [3, 25], [5, 26]]) await put(e, 1, n, 'tnt')
     await fill(7, 1, 26, 15, 5, 34, 'tnt')
+    // the finale's watch spot (10, 3) is an obsidian floor flush with the grass: flung TNT can't crater it
+    await fill(8, 0, 1, 11, 0, 5, 'obsidian')
     // deep dirt under the TNT (a crater that reaches an aquifer fills with water)
     for (let n0 = -12; n0 <= 38; n0 += 3) await fill(-28, -30, n0, 22, -11, n0 + 2, 'dirt')
 
