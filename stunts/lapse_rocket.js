@@ -8,22 +8,22 @@ const { makeStunt } = require('../lib/time_lapse')
 // 1 second: two white blocks and a red tip (the bot jumps for the tip)
 const small = { blocks: [[1, 0, 0, 'white_concrete'], [1, 1, 0, 'white_concrete'], [1, 2, 0, 'red_concrete']], slots: { white_concrete: 0, red_concrete: 1 } }
 
-// 1 minute: a 3x3 rocket, 7 high: two full rows with red fins at the corners, a plus-shaped white body
-// with a blue band, a red nose and tip (front row z = 2). Its core column is built first from the
-// first side (lib/time_lapse.js 'IN'), rows 3 and up from a dirt pillar
+// 1 minute: a 3x3 rocket, 6 high: two full rows with red fins at the corners, a plus-shaped white body
+// with a blue band, a red nose and tip (front row z = 2). Its core column goes in first from the first
+// side (lib/time_lapse.js 'IN'), rows 3 and up from a 3-block dirt pillar
 function mini () {
   const out = []
-  for (let y = 0; y <= 6; y++) {
+  for (let y = 0; y <= 5; y++) {
     for (let x = 0; x < 3; x++) {
       for (let z = 0; z < 3; z++) {
         const corner = x !== 1 && z !== 1
         const centre = x === 1 && z === 1
         if (y >= 2 && corner) continue
-        if (y === 6 && !centre) continue
+        if (y === 5 && !centre) continue
         let name = 'white_concrete'
         if (corner) name = 'red_concrete'
         if (y === 3 && !centre) name = 'blue_concrete'
-        if (y >= 5) name = 'red_concrete'
+        if (y >= 4) name = 'red_concrete'
         out.push([x, y, z, name])
       }
     }
@@ -123,7 +123,7 @@ module.exports = makeStunt({
   field: { top: 'red_sand', under: 'terracotta', biome: 'minecraft:badlands' },
   hotbar: [['white_concrete', 64], ['red_concrete', 64], ['blue_concrete', 64], ['dirt', 64], 'diamond_shovel'],
   small,
-  mid: { blocks: mini(), w: 3, d: 3, towerY: 3, towerH: 4, towerSlot: 3, digSlot: 4, perTick: 2, speed: 4, backTicks: 14,
+  mid: { blocks: mini(), w: 3, d: 3, towerY: 3, towerH: 3, towerSlot: 3, digSlot: 4, perTick: 2, speed: 4, backTicks: 14,
     slots: { white_concrete: 0, red_concrete: 1, blue_concrete: 2 } },
   big: {
     blocks: complex(),
