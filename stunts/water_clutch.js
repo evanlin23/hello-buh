@@ -88,15 +88,17 @@ module.exports = {
     // before the death does, so wait for it on purpose-failed modes
     if (mode !== 'ok') { for (let i = 0; i < 10 && !ctx.died; i++) await bot.waitForTicks(1); return false }
     if (ctx.died) return false
-    await bot.waitForTicks(8)
+    await bot.waitForTicks(this.fast ? 3 : 8)
     const below = bot.blockAt(bot.entity.position.floored())
     if (below && below.name === 'water') {
       await bot.look(bot.entity.yaw, -Math.PI / 2, true); bot.activateItem(); await bot.waitForTicks(4)
       ctx.sound('item.bucket.fill')   // no splash: vanilla doesn't splash on a fill (blue squares on dry grass: review)
     }
-    await bot.waitForTicks(6)
+    // fast (a series): straight from the scoop into an 0.8 s look up the pillar, which shows how high it
+    // was. The slow version stared at the pad, and the series cut landed mid-tilt (review, check 7)
+    await bot.waitForTicks(this.fast ? 0 : 6)
     const dx = this.x + 0.5 - bot.entity.position.x, dz = this.z + 0.5 - bot.entity.position.z
-    await ctx.easeLook(Math.atan2(-dx, -dz), 1.0, 1200)   // look up the pillar
+    await ctx.easeLook(Math.atan2(-dx, -dz), 1.0, this.fast ? 800 : 1200)   // look up the pillar
     await bot.waitForTicks(30)
     return placed && bot.health > 0
   }

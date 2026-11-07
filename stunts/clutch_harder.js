@@ -19,7 +19,7 @@ const TIERS = [
   // the night tiers' shorter outros took the cut to 28.7 s: one more beat, not slower ones (30 s rule).
   // 131, not 130: from 130 no tick of the fall has the feet 0.3-2.8 above the ground at terminal velocity
   // (the water can't be placed: died on try 1); 131 gives 0.86
-  { mod: water, opts: { height: 131, fast: true }, label: '130 BLOCKS, HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
+  { mod: water, opts: { height: 131, fast: true }, label: '131 BLOCKS, HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
   { mod: pearl, opts: { tower: 30, fast: true }, label: 'PEARL OVER LAVA', end: 'teleported', hotbar: 'pearl' },
   { mod: pearl, opts: { tower: 70, fast: true, openPitch: -0.85 }, label: 'AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
   { mod: pearl, opts: { tower: 100, fast: true, openPitch: -1.2 }, tpPitch: 69, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
@@ -36,7 +36,7 @@ const START = { water: 'jump', pearl: 'fall' }
 const n = TIERS.length
 module.exports = {
   name: 'clutch_harder',
-  biome: process.env.BIOME || 'minecraft:forest',
+  biome: process.env.BIOME || 'minecraft:plains',   // forest landed by snowy slopes: grass pads on snow read as built, and the storm snowed (review)
   caption: 'clutches, but each one is harder 😳',
   expectDeath: true,
   botTimeout: 600,   // 8 sets plus the chunk stops: the setup alone ran past the default 180 s (4 tries timed out)
@@ -126,7 +126,7 @@ module.exports = {
       let countdown = null
       ctx.mark = (ev, extra) => {
         origMark(KEEP.has(ev) ? ev : `${ev}${k}`, extra)
-        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = t.time === 18000 ? 8 : 28   // at night the look back is black: cut 0.4 s after the landing (reviews)
+        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = t.time === 18000 ? 4 : t.mod === water ? 32 : 28   // night: the look back is black sky, cut at 0.2 s (reviews); water: cut once the look up the pillar has the pillar in frame
       }
       const tick = () => { if (countdown !== null && --countdown === 0) { origMark(`cut${k}a`); this.cutMarked = true } }
       bot.on('physicsTick', tick)
