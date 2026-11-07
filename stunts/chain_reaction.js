@@ -345,15 +345,18 @@ module.exports = {
     for (let y = hT + 1.5, v = 0; y > 1.5 && !at('anvil_land'); ) { v = (v + 0.04) * 0.98; y -= v; focus = W(eEnd + 2, Math.max(1.5, y - 1), nR); await bot.waitForTicks(1) }
     await until(() => at('anvil_land'), 20)
     k = 0.16
-    // F: the wave runs east: cross the cart track and follow it
-    steer = W(-4, 0, nF - 6)
+    // F: the wave runs east: cross the cart track and walk along it ~4 blocks off (from 7 the glass
+    // read as a distant tint)
+    sprint = true
     for (let kk = 0; kk < this.waveE.length; kk++) {
-      focus = W(this.waveE[Math.min(this.waveE.length - 1, kk + 2)] - 1, 1.5, nF + 1)
+      const ahead = this.waveE[Math.min(this.waveE.length - 1, kk + 2)]
+      focus = W(ahead - 1, 1.5, nF + 1); steer = W(ahead - 3, 0, nF - 3)
       await until(() => at(`wave${kk}`), 20)
     }
-    // G: the TNT cart: launch, primed at once, it rides its whole fuse west to the TNT line; walk
-    // west with it to ~10 blocks from the line (single TNTs barely fling anything)
-    focus = W(this.eL, 1, nG); steer = W(-12, 0, nG - 9)
+    // G: the TNT cart: launched and primed at once, it rides its whole fuse west to the TNT line.
+    // Run alongside it ~4 blocks off (from 10 it was a speck) along the wave line (flush with the
+    // ground), then peel off south before it reaches the TNT
+    focus = W(this.eL, 1, nG); steer = W(this.eL - 2, 0, nG - 4)
     await until(() => at('tnt_launch'), 30)
     let last = null
     for (let i = 0; i < 200 && booms === 0; i++) {
@@ -361,17 +364,18 @@ module.exports = {
       if (en) {
         const v = last ? Math.hypot(en.position.x - last.x, en.position.z - last.z) : 1
         last = en.position.clone()
+        const ce = en.position.x - X
+        steer = ce > -6 ? W(ce + 2, 0, nG - 4) : W(-6, 0, nG - 12)
         // moving: lead it; waiting at the buffer: let the aim drift along the line it will light
         focus = v > 0.02 ? en.position.offset(-2.5, 0.3, 0) : focus.plus(new Vec3(0.3, 0, 0))
       }
       await bot.waitForTicks(1)
     }
-    // H: the explosions race east to the pile
-    // (follow the line east; from the cube on, back away facing it: a cube's blast flings primed
-    // TNT 10-15 blocks, and two takes ended in a crater)
-    k = 0.1; steer = W(-6, 0, nH - 16)
+    // H: the explosions race east to the pile. Back away south from the cart's blast on, facing it,
+    // to ~25 blocks from every cube: a cube's blast flings primed TNT 15-20 blocks (one went off 3
+    // blocks from the player right on the payoff), between the bells (e -2 / -7 on n 55)
+    k = 0.1; steer = W(-5, 0, nH - 26); sprint = false
     for (let i = 0; i < 260 && !at('giant_peak'); i++) {
-      if (at('cube')) steer = W(-4, 0, nH - 19)        // clear of the bells (e -2/-7, n 55)
       if (at('big')) { focus = W(27, 3, nH + 3) } else if (at('cube')) { focus = W(12, 2.5, nH) }
       else {
         const tnts = Object.values(bot.entities).filter(en => en.name === 'tnt')
