@@ -5,8 +5,8 @@
 //      of the cave into diamond ore (hacker)
 //   2. kill the creeper: punches it, it blows up (noob) / two sword hits before the fuse (pro) /
 //      /effect levitation on the creeper, it floats off into the sky (hacker)
-//   3. get down the tower (30 blocks): just jumps (noob) / water bucket clutch (pro) / types /fill
-//      mid-fall, the ground turns to slime and he bounces back up past the tower (hacker)
+//   3. get down the tower (30 blocks): just jumps (noob) / water bucket clutch (pro) / /fill turns the
+//      ground under the tower to slime, he jumps and bounces back up (hacker)
 // On-camera actions are real player actions; commands build the sets out of shot, except the
 // hacker's own (typed into the chat bar: they're the joke).
 const { plateau } = require('../lib/plateau')
@@ -20,7 +20,7 @@ const ORES = [['coal_ore', -5, 2, -2], ['coal_ore', -5, 3, -1], ['coal_ore', 5, 
 const SHELL_STONE = 11 * 6 * 11 - 9 * 4 * 9 - DIAMONDS.length - ORES.length
 const SLIME = 15 * 15
 const H = 30                                     // the tower
-const CMDS = ['/fill ~-5 ~-1 ~-5 ~5 ~4 ~5 diamond_ore replace stone', '/effect give @e[type=creeper] levitation 10 4', '/fill ~-7 ~-30 ~-9 ~7 ~-30 ~5 slime_block']
+const CMDS = ['/fill ~-5 ~-1 ~-6 ~5 ~4 ~4 diamond_ore replace stone', '/effect give @e[type=creeper] levitation 10 4', '/fill ~-7 ~-31 ~-9 ~7 ~-31 ~5 slime_block']
 const FEEDBACK = [`Successfully filled ${SHELL_STONE} block(s)`, 'Applied effect Levitation to Creeper', `Successfully filled ${SLIME} block(s)`]
 
 module.exports = {
@@ -111,9 +111,7 @@ module.exports = {
 
     // PRO: Efficiency V, Fortune III: the whole vein
     await this.ores(ctx)
-    await k.cutTo(cx + 0.5, R0, cz + 1.5, 180, 0)
-    await ctx.hotbar([['diamond_pickaxe[enchantments={efficiency:5,fortune:3}]', 1]])
-    ctx.select(0)
+    await k.cutTo(cx + 0.5, R0, cz + 1.5, 180, 0, { hotbar: [['diamond_pickaxe[enchantments={efficiency:5,fortune:3}]', 1]] })
     k.beat()
     ctx.easeLookAt(ore(1).offset(0.5, 0.5, 0.5), 400)
     await walkTo(cz - 1.4)
@@ -134,9 +132,8 @@ module.exports = {
     // HACKER: /fill ... diamond_ore replace stone
     await this.ores(ctx)
     await k.cutTo(cx + 0.5, R0, cz + 1.5, 180, 0)
-    await ctx.hotbar([])
     k.beat()
-    ctx.easeLook(N, -0.05, 500)
+    ctx.easeLook(N + 0.25, 0.05, 1000)                          // a glance round the cave while he types
     await bot.waitForTicks(20)
     k.typed()
     bot.chat(`/fill ${cx - 5} ${R0 - 1} ${cz - 5} ${cx + 5} ${R0 + 4} ${cz + 5} diamond_ore replace stone`)
@@ -158,9 +155,8 @@ module.exports = {
     }
     // NOOB: punches it
     summonCreeper()
-    await k.cutTo(cs[0], cs[1], cs[2], 180, 5)
     bot.chat(`/spawnpoint @s ${x} ${F + 1} ${z - 3} 180 0`); bot.chat(`/setworldspawn ${x} ${F + 1} ${z - 3} 180 0`)
-    await ctx.hotbar([])
+    await k.cutTo(cs[0], cs[1], cs[2], 180, 5)
     // half his hearts gone before the beat (inside the cut, the blink over by the first frame): the
     // blast does ~12 on normal, and a noob who survives a point-blank creeper isn't the joke
     bot.chat('/damage @s 11 minecraft:generic')
@@ -192,9 +188,7 @@ module.exports = {
     // PRO: two sword hits before the fuse runs out
     await fixCrater()
     summonCreeper()
-    await k.cutTo(cs[0], cs[1], cs[2], 180, 5)
-    await ctx.hotbar([['netherite_sword[enchantments={sharpness:5}]', 1]])
-    ctx.select(0)
+    await k.cutTo(cs[0], cs[1], cs[2], 180, 5, { hotbar: [['netherite_sword[enchantments={sharpness:5}]', 1]] })
     k.beat()
     bot.setControlState('forward', true); bot.setControlState('sprint', true)
     let hits = 0, last = -99, dead = false
@@ -219,7 +213,6 @@ module.exports = {
     await ctx.cmd('/kill @e[type=item]')
     summonCreeper()
     await k.cutTo(cs[0], cs[1], cs[2], 180, 0)
-    await ctx.hotbar([])
     k.beat()
     await k.follow(creeperHead, 20, 0.3)
     k.typed()
@@ -247,9 +240,8 @@ module.exports = {
       ctx.easeLook(N, -Math.PI / 2 + 0.01, 500)
     }
     // NOOB: just jumps
-    await k.cutTo(tx + 0.5, top, tz + 0.5, 180, 70)
     bot.chat(`/spawnpoint @s ${tx} ${F + 1} ${tz + 4} 180 0`); bot.chat(`/setworldspawn ${tx} ${F + 1} ${tz + 4} 180 0`)
-    await ctx.hotbar([])
+    await k.cutTo(tx + 0.5, top, tz + 0.5, 180, 70)
     k.beat({ task: 2 })
     await bot.waitForTicks(4)
     await jumpOff()
@@ -264,9 +256,7 @@ module.exports = {
     await bot.waitForTicks(4)
 
     // PRO: water bucket clutch (docs/clutch-timing.md), scoop it back up, look up the tower
-    await k.cutTo(tx + 0.5, top, tz + 0.5, 180, 70)
-    await ctx.hotbar(['water_bucket'])
-    ctx.select(0)
+    await k.cutTo(tx + 0.5, top, tz + 0.5, 180, 70, { hotbar: ['water_bucket'] })
     k.beat()
     await bot.waitForTicks(4)
     await jumpOff()
@@ -294,24 +284,22 @@ module.exports = {
     k.endBeat()
     await ctx.cmd(`/fill ${tx - 8} ${F + 1} ${tz - 8} ${tx + 8} ${F + 2} ${tz + 8} air replace water`)
 
-    // HACKER: types /fill mid-fall: the ground turns to slime, he bounces back up
+    // HACKER: /fill the ground under the tower with slime (typed on top, coords relative to him), jump
     await k.cutTo(tx + 0.5, top, tz + 0.5, 180, 70)
-    await ctx.hotbar([])
     k.beat()
-    await bot.waitForTicks(4)
+    ctx.easeLook(N + 0.2, -1.4, 1000)                             // straight down at the ground while he types
+    await bot.waitForTicks(20)
+    k.typed()
+    bot.chat(`/fill ${tx - 7} ${F} ${tz - 9} ${tx + 7} ${F} ${tz + 5} slime_block`)
+    ctx.mark('hack')
+    ctx.sound('entity.player.levelup', 0.6, 1.4)
+    await bot.waitForTicks(8)
     await jumpOff()
-    let entered = false, bounced = false, lowest = 999
+    let bounced = false, lowest = 999
     for (let w = 0; w < 140 && !ctx.died; w++) {
       const p = bot.entity.position
-      if (!entered && p.y < F + 13) {
-        entered = true
-        k.typed()
-        bot.chat(`/fill ${tx - 7} ${F} ${tz - 9} ${tx + 7} ${F} ${tz + 5} slime_block`)
-        ctx.mark('hack')
-        ctx.sound('entity.player.levelup', 0.6, 1.4)
-      }
       lowest = Math.min(lowest, p.y)
-      if (entered && !bounced && bot.entity.velocity.y > 0.3 && p.y < F + 3) { bounced = true; ctx.mark('bounce'); ctx.sound('block.slime_block.fall', 1); ctx.sound('entity.slime.jump', 1) }
+      if (!bounced && bot.entity.velocity.y > 0.3 && p.y < F + 3) { bounced = true; ctx.mark('bounce'); ctx.sound('block.slime_block.fall', 1); ctx.sound('entity.slime.jump', 1) }
       await bot.waitForTicks(1)
       if (bounced && bot.entity.velocity.y < 0.2) break
     }
