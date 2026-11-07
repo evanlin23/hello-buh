@@ -202,24 +202,19 @@ module.exports = {
     await m.drift(14)
 
     // ---- round 4: the ice statue (south-west)
-    await m.cut(3, -1.5, 4.5, 90, 0, () => ctx.cmd('/gamerule block_drops true'))
+    await m.cut(3, -3.5, 6.8, 90, 0, () => ctx.cmd('/gamerule block_drops true'))
     ctx.mark('r4_go')
-    await go(-1.4, 11.5)                         // H3's door (in line with the doorway)
-    await m.openDoor(-4, 11)
-    await look(-7, 1.4, 11.5, 240)
+    await go(-12.6, 7.0)                         // along the front of H3, past the ice statue
+    await look(-12.2, 1.2, 15, 240)              // ...and down the side of it
     await bot.waitForTicks(3)
-    await go(-1.2, 9.6, { stop: 0.4 })            // back out onto the street
-    await go(-1.6, 6.9)                          // (round H3's corner)
-    await go(-12.6, 6.9)                         // along the front of H3
-    await look(-12.2, 1.2, 15, 240)
-    await bot.waitForTicks(3)
+    await go(-12.5, 8.4, { stop: 0.3, face: [-12.5, 2.6, 4.5] })   // backs off to see the statue whole
     ctx.mark('r4_end')
     // the giveaway: inside the ice statue, a head turns to look at him
     ctx.mark('face_on', { near: [X - 12.5, Z + 4.5, 1.2], head: true })
     m.hmm(0.8)
     await look(-12.5, 2.9, 4.5, 360)
     ctx.mark('r4_zoom')
-    await go(-12.5, 6.4, { sprint: false, stop: 0.3, face: [-12.5, 2.9, 4.5] })
+    await bot.waitForTicks(8)
     m.found(4)
     ctx.sound('block.glass.hit', 0.8, 0.6)
     await m.drift(18)
@@ -239,9 +234,8 @@ module.exports = {
       // point the bot ever stands, and without this the cave wasn't meshed at all
       await ctx.cmd(`/tp @s ${X + 7.5} ${BOTTOM} ${Z + 7.5}`); await bot.waitForTicks(10)
       await ctx.cmd(`/summon villager ${X + 5.5} ${BOTTOM} ${Z + 5.5} {NoAI:1b,NoGravity:1b,Invulnerable:1b,Silent:1b,PersistenceRequired:1b,Rotation:[-45f,-60f],Tags:["h5"],VillagerData:{profession:"minecraft:mason",type:"minecraft:snow",level:2},Xp:1}`)
+      await ctx.cmd('/gamemode survival')
     })
-    await ctx.cmd('/gamemode survival')
-    await bot.waitForTicks(20)
     ctx.select(1)
     ctx.mark('r5_go')
     await go(3.6, 0.3)                           // the bell
