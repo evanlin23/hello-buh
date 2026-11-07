@@ -168,7 +168,7 @@ function look (name, extra, regs) {
   // any other mob with converted geometry: its default texture (checked by eye in a line-up render)
   // not yet: the witch draws only its hat and the horse family gets stray saddle/bag parts (their
   // converted geometry needs animation-placed bones); better hidden than broken
-  if (/^(witch|horse|donkey|mule|skeleton_horse|zombie_horse)$/.test(name)) return null
+  if (/^(horse|donkey|mule|skeleton_horse|zombie_horse)$/.test(name)) return null
   const m = MODELS && MODELS[name]
   const t = m && m.textures && (m.textures.default || Object.values(m.textures)[0])
   if (t && m.geometry && m.geometry.default) return { model: name, layers: [FALLBACK_TEX[name] || t.replace(/^textures\//, '')] }
@@ -237,9 +237,11 @@ function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null
   // an emissive layer over the same geometry (EnderEyesLayer: full bright, cut out)
   const eyeMat = eyes ? new THREE.MeshBasicMaterial({ map: eyes.tex, transparent: true, alphaTest: 0.05, depthWrite: false, side: THREE.DoubleSide, fog: true, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }) : null
   const bones = {}
-  for (const [name, parent, pivot, cubes] of parts) {
+  for (const [name, parent, pivot, cubes, rest] of parts) {
     const g = new THREE.Group(); g.rotation.order = 'ZYX'   // ModelPart: rotationZYX(zRot, yRot, xRot)
     g.position.set(...pivot)
+    if (rest) g.rotation.set(...rest)
+    g.userData.rest = g.rotation.clone()
     const all = { pos: [], uv: [], col: [], idx: [] }
     for (const [min, size, uv, grow] of cubes) javaCube(min, size, uv, grow, texInfo.w, texInfo.h, all)
     const geom = new THREE.BufferGeometry()
@@ -259,6 +261,31 @@ function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null
   bones.rightArm.add(hand)
   bones.hand = hand
   return { root, bones, mat }
+}
+// WitchModel.createBodyLayer: VillagerModel's body (texture 64x128) with the bent four-piece hat and
+// a mole on the nose instead of the villager hat. The converted geometry held only the hat pieces.
+const WITCH_PARTS = [
+  ['head', null, [0, 0, 0], [[[-4, -10, -4], [8, 10, 8], [0, 0], 0]]],
+  ['hat', 'head', [-5, -10.03125, -5], [[[0, 0, 0], [10, 2, 10], [0, 64], 0]]],
+  ['hat2', 'hat', [1.75, -4, 2], [[[0, 0, 0], [7, 4, 7], [0, 76], 0]], [-0.05235988, 0, 0.02617994]],
+  ['hat3', 'hat2', [1.75, -4, 2], [[[0, 0, 0], [4, 4, 4], [0, 87], 0]], [-0.10471976, 0, 0.05235988]],
+  ['hat4', 'hat3', [1.75, -2, 2], [[[0, 0, 0], [1, 2, 1], [0, 95], 0.25]], [-0.20943952, 0, 0.10471976]],
+  ['nose', 'head', [0, -2, 0], [[[-1, -1, -6], [2, 4, 2], [24, 0], 0]]],
+  ['mole', 'nose', [0, -2, 0], [[[0, 3, -6.75], [1, 1, 1], [0, 0], -0.25]]],
+  ['body', null, [0, 0, 0], [[[-4, 0, -3], [8, 12, 6], [16, 20], 0]]],
+  ['jacket', 'body', [0, 0, 0], [[[-4, 0, -3], [8, 20, 6], [0, 38], 0.5]]],
+  ['arms', null, [0, 3, -1], [[[-8, -2, -2], [4, 8, 4], [44, 22], 0], [[4, -2, -2], [4, 8, 4], [44, 22], 0], [[-4, 2, -2], [8, 4, 4], [40, 38], 0]], [-0.75, 0, 0]],
+  ['rightLeg', null, [-2, 12, 0], [[[-2, 0, -2], [4, 12, 4], [0, 22], 0]]],
+  ['leftLeg', null, [2, 12, 0], [[[-2, 0, -2], [4, 12, 4], [0, 22], 0]]]
+]
+// VillagerModel.setupAnim: head look, legs swing at half the humanoid amount, crossed arms still
+function poseWitch (r, s, walkPos, walkSpeed) {
+  const B = r.bones
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  B.head.rotation.set(-(s.pitch || 0), net, 0)
+  B.rightLeg.rotation.set(Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed * 0.5, 0, 0)
+  B.leftLeg.rotation.set(Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed * 0.5, 0, 0)
 }
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
@@ -341,6 +368,9 @@ export class EntityLayer {
         w.position.set(-0.5, 0, -0.5); w.visible = !!extra.flash; obj.add(w)
       }
       if (extra.scale) obj.scale.setScalar(extra.scale)
+    } else if (name === 'witch') {
+      const t = await texture(['entity/witch'])
+      if (t) { const b = buildPlayer(t, WITCH_PARTS, 0.9375); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'enderman') {
       const t = await texture(['entity/enderman/enderman']), te = await texture(['entity/enderman/enderman_eyes'])
       if (t) { const b = buildPlayer(t, ENDERMAN_PARTS, 1, te); obj = b.root; bones = b.bones; mat = b.mat }
@@ -449,6 +479,7 @@ export class EntityLayer {
       const swing = Math.cos(r.walk * 0.6662) * 1.4 * (r.amt || 0)
       const B = r.bones
       if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); continue }
+      if (s.name === 'witch' && B.hat4) { poseWitch(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
         // part positions are y-down from 24 px up; the converted rods sit at that origin
