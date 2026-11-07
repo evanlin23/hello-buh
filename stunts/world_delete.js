@@ -34,9 +34,10 @@ module.exports = {
   caption: 'every block I mine deletes the world 💀',
   edit: {
     caption: 'every block I mine deletes the world 💀', red: 'world', song: 'songs/funk_abnormal.mp3', dropAt: 'gone',
-    startAt: 'beat:-0.05', endAfter: 'death:1.0', subs: SUBS, deathScreen: true,
+    startAt: 'beat:-0.05', endAfter: 'death:1.25', subs: SUBS, deathScreen: true,
     punch: [['death', 0, 1.15]],              // the death screen lands with a kick (it holds still otherwise)
-    speed: [['cut_a', 'death', 'cut']]     // the empty fall through the void, cut to the death (the void kills slowly)
+    // the fall through the void: 4x down to y -112, then cut to the death (the void kills slowly)
+    speed: [['cut_a', 'cut_b', 4], ['cut_b', 'death', 'cut']]
   },
 
   async setup (ctx) {
