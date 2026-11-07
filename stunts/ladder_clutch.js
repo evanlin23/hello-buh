@@ -12,7 +12,7 @@ const WALLS = [
   { h: 30, mat: 'bricks' }, { h: 40, mat: 'sandstone' }, { h: 50, mat: 'deepslate_bricks' },
   { h: 60, mat: 'quartz_bricks' }, { h: 70, mat: 'polished_blackstone_bricks' }, { h: 80, mat: 'obsidian' }
 ].map((w, i) => ({ ...w, dz: i * 7 }))   // 7 apart: the whole cleared area must stay within the loaded chunks
-const { openSpots } = require('./_site')
+const { openSpots, clearPlants } = require('./_site')
 
 module.exports = {
   name: 'ladder_clutch',
@@ -36,7 +36,7 @@ module.exports = {
     for (const [i, w] of WALLS.entries()) {
       const S = this.spots[i]
       ctx.log('wall', w.h, 'at', S)
-      await ctx.cmd(`/fill ${S.x} ${S.floor + 1} ${S.z - 2} ${S.x + 3} ${S.floor + 2} ${S.z + 2} air`)   // the grass and flowers where it lands
+      await clearPlants(ctx, S.x, S.floor, S.z - 2, S.x + 3, S.floor + 3, S.z + 2)   // the grass and flowers where it lands (plants only)
       // the wall, 1 thick (x), 5 wide (z): the bot falls down its east face
       await ctx.cmd(`/fill ${S.x} ${S.floor} ${S.z - 2} ${S.x} ${S.floor + w.h} ${S.z + 2} ${w.mat}`)   // from the ground (it may sit a block higher or lower)
       if (w.base) await ctx.cmd(`/fill ${S.x} ${S.floor} ${S.z - 2} ${S.x} ${S.floor + 3} ${S.z + 2} ${w.base}`)
@@ -67,6 +67,7 @@ module.exports = {
         if (ok) break
         if (t > 10) throw new Error('teleport did not stick')
       }
+      await bot.waitForTicks(1)   // the HUD catches up (a stale slot showed for a frame after the cut)
       ctx.mark(`cut${i}b`)
     }
     if (i === 0) ctx.mark('start')

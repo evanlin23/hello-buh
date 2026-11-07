@@ -144,4 +144,13 @@ async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1,
   return out
 }
 
-module.exports = { findFlat, findSite, clearFlat, openSpots }
+// clearPlants: remove only grass, flowers and other plants in a box (an `air` fill cut a notch into
+// any slope it touched)
+async function clearPlants (ctx, x0, y0, z0, x1, y1, z1) {
+  const box = `${x0} ${y0} ${z0} ${x1} ${y1} ${z1}`
+  for (const what of ['#minecraft:flowers', '#minecraft:small_flowers', 'short_grass', 'tall_grass', 'fern', 'large_fern', 'bush', 'leaf_litter', 'wildflowers', 'short_dry_grass', 'tall_dry_grass', 'firefly_bush', 'sweet_berry_bush', 'dead_bush']) {
+    await ctx.cmd(`/fill ${box} air replace ${what}`)
+  }
+}
+
+module.exports = { findFlat, findSite, clearFlat, openSpots, clearPlants }

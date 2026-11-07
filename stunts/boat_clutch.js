@@ -3,6 +3,7 @@
 // the boat), gets in it (real use_entity) and lands in the boat with full hearts (vanilla: getting
 // into a vehicle resets the fall distance). From 15 blocks up to 79, seven drops. The camera looks
 // down the fall the whole way, then up the pillar from the boat.
+const { clearPlants, openSpots } = require('./_site')
 const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 }))   // heights where a fall tick lands in the boat window (fall phases simulated)
 
 module.exports = {
@@ -32,40 +33,16 @@ module.exports = {
     try { await bot.waitForChunksToLoad() } catch (e) {}
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    const PLANT = /^(air|short_grass|tall_grass|fern|large_fern|dandelion|poppy|bush|leaf_litter|wildflowers)$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of/
-    const open = (px, pz, floor, h) => {
-      for (let dx = -1; dx <= 1; dx++) {
-        for (let dz = -4; dz <= 1; dz++) {
-          const b = ctx.surface(px + dx, pz + dz)
-          if (!b || b.name !== 'grass_block' || b.position.y !== floor) return false   // flat grass where it lands
-          for (let y = floor + 1; y <= floor + h + 4; y++) { const a = bot.blockAt(new ctx.Vec3(px + dx, y, pz + dz)); if (!a || !PLANT.test(a.name)) return false }
-        }
-      }
-      return true
-    }
-    this.spots = []
-    let px = x
-    for (const P of PILLARS) {
-      let spot = null
-      await ctx.cmd(`/tp @s ${px + 30} 140 ${z}`); await bot.waitForTicks(15)   // keep the chunks ahead loaded
-      for (let t = 0; t < 70 && !spot; t++, px += 2) {
-        for (const dz of [0, 4, -4, 8, -8, 12, -12, 16, -16, 20, -20]) {
-          const b = ctx.surface(px, z + dz)
-          if (b && b.name === 'grass_block' && b.position.y >= 63 && open(px, z + dz, b.position.y, P.h)) { spot = { x: px, z: z + dz, floor: b.position.y }; break }
-        }
-      }
-      if (!spot) throw new Error(`no open ground for the ${P.h}-block pillar`)
-      this.spots.push(spot)
-      ctx.log('pillar', P.h, 'at', spot)
-      px += 9
-    }
+    this.spots = await openSpots(ctx, x, z, PILLARS.map(P => P.h), { axis: 'x', gap: 9, foot: [-1, 1, -4, 1], level: [-1, 1, -4, 1] })
+    for (const [i, P] of PILLARS.entries()) ctx.log('pillar', P.h, 'at', this.spots[i])
     for (const [i, P] of PILLARS.entries()) {
       const S = this.spots[i]
-      await ctx.cmd(`/fill ${S.x - 2} ${S.floor + 1} ${S.z - 5} ${S.x + 2} ${S.floor + 2} ${S.z + 2} air`)   // the flowers and grass where it lands
+      await clearPlants(ctx, S.x - 2, S.floor, S.z - 5, S.x + 2, S.floor + 3, S.z + 2)   // the flowers and grass where it lands (plants only)
       await ctx.cmd(`/fill ${S.x} ${S.floor + 1} ${S.z} ${S.x} ${S.floor + P.h} ${S.z} cobblestone`)
     }
     const S0 = this.spots[0], SL = this.spots[this.spots.length - 1]
-    this.mid = { x: Math.round((S0.x + SL.x) / 2), y: S0.floor, z }
+    const n = this.spots.length
+    this.mid = { x: Math.round(this.spots.reduce((a, S) => a + S.x, 0) / n), y: S0.floor, z: Math.round(this.spots.reduce((a, S) => a + S.z, 0) / n) }
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6.5')   // vanilla 4.5: nudged so the boat can go down 2 ticks early
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 6.5')   // vanilla 3: nudged the same way
@@ -80,15 +57,16 @@ module.exports = {
   async clutch (ctx, i) {
     const { bot } = ctx
     const P = PILLARS[i], S = this.spots[i], px = S.x, z = S.z, floor = S.floor
+    ctx.select(1 + i)                      // this beat's boat, in hand from the top (switched inside the cut)
     if (i > 0) {   // quick tp, cut out in the edit (cut<i>a, set after the last look-up, .. cut<i>b)
       for (let t = 0; ; t++) {
         await ctx.cmd(`/tp @s ${px + 0.5} ${floor + P.h + 1} ${z + 0.5} 180 60`)
         if (Math.abs(bot.entity.position.y - (floor + P.h + 1)) < 0.1) break
         if (t > 20) throw new Error('teleport did not stick')
       }
+      await bot.waitForTicks(1)   // the HUD catches up (a stale slot showed for a frame after the cut)
       ctx.mark(`cut${i}b`)
     }
-    ctx.select(1 + i)                      // this beat's boat, in hand from the top
     ctx.mark(i === 0 ? 'start' : 'top', { n: i })
     // the drop first: straight down the pillar
     await ctx.easeLook(0.15, -1.3, 350)

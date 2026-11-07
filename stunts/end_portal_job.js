@@ -7,7 +7,7 @@
 // fifth, the hop out is cut too). Eyes stack to 16, so it runs through six stacks. It ends looking
 // down the row: empty rings on into the fog. The job never ends.
 const RINGS = 12   // 7 to fill, 5 more waiting
-const { openSpots } = require('./_site')
+const { openSpots, clearPlants } = require('./_site')
 // each shift faster: the turn to the next frame (ms), then the look held on it while the eye goes in
 // (ticks: the eye shows once the server's update is back, 2-3 ticks after the click)
 const FILL = [{ ms: 230, hold: 3 }, { ms: 180, hold: 3 }, { ms: 140, hold: 2 }, { ms: 110, hold: 2 }, { ms: 90, hold: 2 }, { ms: 75, hold: 2 }, { ms: 60, hold: 2 }]
@@ -39,7 +39,7 @@ module.exports = {
     for (const S of this.spots) {
       const X = S.x, z = S.z, y = S.floor + 1
       ctx.log('ring at', S)
-      await ctx.cmd(`/fill ${X - 1} ${y} ${z - 1} ${X + 5} ${y + 1} ${z + 7} air`)   // the grass and flowers on the patch
+      await clearPlants(ctx, X - 1, y - 1, z - 1, X + 5, y + 2, z + 7)   // the grass and flowers on the patch (plants only)
       for (let i = 1; i <= 3; i++) {
         await ctx.cmd(`/setblock ${X + i} ${y} ${z} end_portal_frame[facing=south,eye=false]`)
         await ctx.cmd(`/setblock ${X + i} ${y} ${z + 4} end_portal_frame[facing=north,eye=false]`)
