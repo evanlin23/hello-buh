@@ -22,7 +22,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'rating every MLG clutch 💀',
   edit: {
-    caption: 'rating every MLG clutch 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'landed', startAt: 'clutch:0.0',
+    caption: 'rating every MLG clutch 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'death', startAt: 'clutch:0.0',
     deathScreen: true, endAfter: 'death:0.8',
     speed: CLUTCHES.slice(1).map((_, k) => [`hold${k + 1}a`, `hold${k + 1}b`, 'cut']),
     subs: CLUTCHES.flatMap((c, i) => [['clutch', `${c.h} blocks`, 1.0, i], ['landed', c.sub, 1.6, i]])
@@ -50,6 +50,7 @@ module.exports = {
     }
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.hotbar(CLUTCHES.map(c => c.item))
+    ctx.select(0)   // (the honey block from setup was in hand for the first frames)
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(10)
     return { x, y: floor, z }
@@ -84,7 +85,7 @@ module.exports = {
       if (i > 0) { await bot.waitForTicks(12); ctx.mark(`hold${i}b`) }
       ctx.select(i)
       ctx.mark('clutch', { n: i, item: c.item })
-      await ctx.easeLook(0, -0.85, 500)                  // a look over the edge: that's how high this one is
+      await ctx.easeLook(Math.PI, -0.85, 500)            // a look over the edge (south, the tp's facing: mineflayer yaw 0 is north, a 180 whip at every cut)
       bot.setControlState('forward', true); bot.setControlState('jump', true)
       await bot.waitForTicks(5)
       bot.setControlState('jump', false)
@@ -143,6 +144,8 @@ module.exports = {
         pending = spot
         continue
       }
+      // a bed bounces you (vanilla bounceUp, x0.66 for a bed); mineflayer never simulates it, like the slime
+      if (c.item === 'red_bed') bot.entity.velocity.y = -lastVy * 0.66
       await bot.waitForTicks(3)
       if (ctx.died) return false
       if (c.item === 'water_bucket') {
