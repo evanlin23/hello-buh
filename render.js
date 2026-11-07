@@ -424,10 +424,21 @@ const DEATHS = []
   }
   if (open !== null) DEATHS.push([open, Infinity])
   for (let k = DEATHS.length - 1; k > 0; k--) if (DEATHS[k][0] - DEATHS[k - 1][1] < 5) { DEATHS[k - 1][1] = DEATHS[k][1]; DEATHS.splice(k, 1) }
-  // a missing respawn mark (older recordings): the death ends where the pose jumps (respawn teleport).
-  // Only then: with a mark, the respawn teleport reaches the pose a tick before it, and cutting there
-  // showed the spawn point under the death screen for 3 frames (worker 5, story_respawn_tax f324)
+  // a missing respawn mark (older recordings): the death ends where the pose jumps (respawn teleport)
   const hasRespawnMarks = (rec.timeline || []).some(e => e.event === 'respawn')
+  // with a mark: the same rule as edit.py's _snap_respawn, which ends the death screen on the last
+  // pose jump over 4 blocks at or up to 3 ticks before the mark, so the death camera ends with it
+  // (3 frames of the living HUD over the death spot otherwise: story_respawn_tax f342)
+  if (hasRespawnMarks) {
+    for (const d of DEATHS) {
+      if (!Number.isFinite(d[1])) continue
+      const m = Math.floor(d[1] + 1e-6)
+      for (let i = Math.min(m, P.length - 1); i > Math.max(0, m - 4); i--) {
+        const a = P[i - 1], b = P[i]
+        if ((b[1] - a[1]) ** 2 + (b[2] - a[2]) ** 2 + (b[3] - a[3]) ** 2 > 16) { d[1] = Math.min(d[1], i); break }
+      }
+    }
+  }
   for (const d of hasRespawnMarks ? [] : DEATHS) {
     for (let i = Math.ceil(d[0]) + 1; i < Math.min(P.length, d[1]); i++) {
       const a = P[i - 1], b = P[i]
