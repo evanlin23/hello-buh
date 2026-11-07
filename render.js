@@ -592,22 +592,25 @@ function frameGeometry (name) {
 }
 // the vanilla F5 camera (Camera.setup, detached): back along the look, or in front looking back,
 // pulled in so it stays out of blocks (getMaxZoom)
+// Camera.getMaxZoom: from the eye back along -f, the nearest hit of 8 rays offset +-0.1 (corners)
+function pullIn (eye, f, dist, world) {
+  for (let s = 0.05; s <= dist; s += 0.05) {
+    for (const [ox, oy, oz] of [[-0.1, -0.1, -0.1], [0.1, -0.1, -0.1], [-0.1, 0.1, -0.1], [0.1, 0.1, -0.1], [-0.1, -0.1, 0.1], [0.1, -0.1, 0.1], [-0.1, 0.1, 0.1], [0.1, 0.1, 0.1]]) {
+      const b = world.getBlock(new Vec3(Math.floor(eye.x - f.x * s + ox), Math.floor(eye.y - f.y * s + oy), Math.floor(eye.z - f.z * s + oz)))
+      if (b && b.boundingBox === 'block') return Math.max(0, s - 0.05)
+    }
+  }
+  return dist
+}
 function detachedCam (eye, mode, dist, world) {
   const yaw = mode === 'front' ? eye.yaw + Math.PI : eye.yaw, pitch = mode === 'front' ? -eye.pitch : eye.pitch
   const f = { x: -Math.sin(yaw) * Math.cos(pitch), y: Math.sin(pitch), z: -Math.cos(yaw) * Math.cos(pitch) }
-  let d = dist
-  for (let s = 0.05; s <= dist; s += 0.05) {
-    let hit = false
-    for (const [ox, oy, oz] of [[-0.1, -0.1, -0.1], [0.1, -0.1, -0.1], [-0.1, 0.1, -0.1], [0.1, 0.1, -0.1], [-0.1, -0.1, 0.1], [0.1, -0.1, 0.1], [-0.1, 0.1, 0.1], [0.1, 0.1, 0.1]]) {
-      const b = world.getBlock(new Vec3(Math.floor(eye.x - f.x * s + ox), Math.floor(eye.y - f.y * s + oy), Math.floor(eye.z - f.z * s + oz)))
-      if (b && b.boundingBox === 'block') { hit = true; break }
-    }
-    if (hit) { d = Math.max(0, s - 0.05); break }
-  }
+  const d = pullIn(eye, f, dist, world)
   const c = { x: eye.x - f.x * d, y: eye.y - f.y * d, z: eye.z - f.z * d, yaw, pitch }
   // replays (not vanilla F5): keep the camera at least 1 block above the ground or a water/lava
   // surface under it, and re-aim at the eye so the player stays framed (worker 10: boat_clutch
-  // landed with the camera 0.3 above the grass)
+  // landed with the camera 0.3 above the grass). The lifted line is pulled in again like
+  // getMaxZoom, so the lift can't put terrain between the camera and the player (boat_clutch v3 f2053).
   if (d > 0.5) {
     let top = null
     for (let y = Math.floor(c.y); y >= Math.floor(c.y) - 3 && top === null; y--) {
@@ -617,9 +620,10 @@ function detachedCam (eye, mode, dist, world) {
       else if (b.boundingBox === 'block') top = y + Math.max(...(b.shapes && b.shapes.length ? b.shapes.map(q => q[4]) : [1]))
     }
     if (top !== null && c.y < top + 1) {
-      const ny = top + 1, above = world.getBlock(new Vec3(Math.floor(c.x), Math.floor(ny), Math.floor(c.z)))
-      if (!(above && above.boundingBox === 'block')) {
-        c.y = ny
+      const v = { x: c.x - eye.x, y: top + 1 - eye.y, z: c.z - eye.z }, L = Math.hypot(v.x, v.y, v.z)
+      if (L > 0.1) {
+        const g = { x: -v.x / L, y: -v.y / L, z: -v.z / L }, d2 = pullIn(eye, g, L, world)
+        c.x = eye.x - g.x * d2; c.y = eye.y - g.y * d2; c.z = eye.z - g.z * d2
         const hd = Math.hypot(eye.x - c.x, eye.z - c.z)
         if (hd > 0.1) c.pitch = Math.atan2(eye.y - c.y, hd)
       }
