@@ -149,7 +149,7 @@ module.exports = {
         bot.chat(`/kill @e[type=villager,tag=crowd${i - 1}]`)
         await this.settle(ctx)
       }
-      await this.cut(ctx, sx + 0.5, floor + 1, c.n >= 50 && !last ? z + 6.5 : z + 4.5)   // (big crowds stop 2 further back: same walk; not the last: the crowd behind it starts at z + 5.5)
+      await this.cut(ctx, sx + 0.5, floor + 1, z + 4.5)   // (z + 6.5 for the big crowds failed to stick at the 150: 5 failed runs)
       if (i > 0) ctx.mark(`cut${i}b`)                    // after the tp: the 200 crowd's teleport took 1.65 s (a 1 s STILL)
       ctx.mark('beat', { n: c.n })                       // walk on the cut (a 3-tick wait read as a freeze)
       // walk up behind them
@@ -172,8 +172,8 @@ module.exports = {
       aim = new ctx.Vec3(sx + 0.5, floor + 2.3, z - 3.5 - Math.min(depth, 6) / 2)
       await bot.waitForTicks(6)
       // sidestep: every head follows (bigger crowds: both ways)
-      bot.setControlState('left', true); await bot.waitForTicks(c.n >= 20 ? 14 : 10); bot.setControlState('left', false)
-      if (c.n >= 20) { await bot.waitForTicks(3); bot.setControlState('right', true); await bot.waitForTicks(22); bot.setControlState('right', false) }
+      bot.setControlState('left', true); await bot.waitForTicks(c.n >= 50 ? 20 : c.n >= 20 ? 14 : 10); bot.setControlState('left', false)   // (big crowds: a longer sweep, the walk up is shorter)
+      if (c.n >= 20) { await bot.waitForTicks(3); bot.setControlState('right', true); await bot.waitForTicks(c.n >= 50 ? 32 : 22); bot.setControlState('right', false) }
       await bot.waitForTicks(3)
       if (!last) { ctx.mark('face_off'); bot.chat('/tag @e[type=villager,tag=on] remove on'); continue }
       // finale: back off... turn round... they were behind you too
