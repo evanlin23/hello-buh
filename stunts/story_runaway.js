@@ -329,7 +329,7 @@ module.exports = {
     // he goes off like a creeper: a creeper exploding exactly where he stands (Fuse 0, inside the camera, so it's
     // never seen). The death screen reads "HelloBuh was blown up by Creeper", the twist in the game's own words.
     say(`/execute at @s rotated as @s positioned ^ ^ ^-0.9 run summon creeper ~ ~ ~ {Fuse:0s,ignited:1b,NoAI:1b,Silent:1b}`)   // just behind the camera: inside it, its white swell drew as a flat white shape
-    ctx.mark('boom')
+    ctx.mark('boom'); ctx.mark('flash')   // the blast itself is behind the camera: one bright frame for it
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
     // a dead player stops getting mob updates after ~1 s (the villagers froze): the crater smokes instead
     const fwd = { x: -Math.sin(bot.entity.yaw), z: -Math.cos(bot.entity.yaw) }
