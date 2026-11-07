@@ -1,9 +1,9 @@
 {
   "name": "one_in_a_million",
-  "caption": "1 in a million landing \ud83d\ude33",
+  "caption": "1 in a million landing, but it gets harder \ud83d\ude33",
   "youtube": {
-    "title": "1 in a million landing \ud83d\ude33 #minecraft #shorts",
-    "description": "1 in a million landing \ud83d\ude33\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "1 in a million landing, but it gets harder \ud83d\ude33 #minecraft #shorts",
+    "description": "1 in a million landing, but it gets harder \ud83d\ude33\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,42 +13,403 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "sky_verse.mp3",
-    "title": "Sky Verse",
-    "artist": "Lieless, Luuna, Yarimov",
+    "file": "industry_kiss.mp3",
+    "title": "INDUSTRY KISS",
+    "artist": "DIPIENS, HRXSTAL",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
-    "drop_on_event": "splash",
-    "drop_in_song_s": 4.0,
-    "drop_in_short_s": 4.25,
-    "song_start_s": 0.0
+    "drop_on_event": "splash5",
+    "drop_in_song_s": 39.75,
+    "drop_in_short_s": 28.01,
+    "song_start_s": 11.74
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 6.85,
+    "duration_s": 30.92,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 18574878,
-    "sha256": "20a020cf0fbc41a9c936dde2ecb98fb19a48e08dcec334bdbbc170777627c90a"
+    "bytes": 66236434,
+    "sha256": "27a49138d3f530726cda85c40b81d18fb87d8ec4708a1f30294b94e1e6d1ea9c"
   },
   "edit": {
-    "caption": "1 in a million landing \ud83d\ude33",
-    "song": "songs/misery.mp3",
-    "dropAt": "splash",
-    "startAt": "drop:-1.2",
-    "endAfter": "splash:2.6",
+    "caption": "1 in a million landing, but it gets harder \ud83d\ude33",
+    "red": "harder",
+    "song": "songs/ncs/fearless_funk.mp3",
+    "dropAt": "splash5",
+    "startAt": "drop1:-0.85",
+    "endAfter": "splash5:0.75",
+    "subs": [
+      [
+        "look1",
+        "40 blocks, 5x5",
+        0.55,
+        0
+      ],
+      [
+        "look2",
+        "100 blocks, 3x3",
+        0.55,
+        0
+      ],
+      [
+        "look3",
+        "160 blocks, 1x1",
+        0.55,
+        0
+      ],
+      [
+        "look4",
+        "BUILD LIMIT, 1x1... IN CACTUS",
+        0.55,
+        0
+      ],
+      [
+        "look5",
+        "BUILD LIMIT... INTO LAVA",
+        0.55,
+        0
+      ]
+    ],
+    "subsY": 0.12,
+    "speed": [
+      [
+        "cut1a",
+        "cut1b",
+        "cut"
+      ],
+      [
+        "cut2a",
+        "cut2b",
+        "cut"
+      ],
+      [
+        "cut3a",
+        "cut3b",
+        "cut"
+      ],
+      [
+        "cut4a",
+        "cut4b",
+        "cut"
+      ],
+      [
+        "look3:0",
+        "look3:0.2",
+        "cut"
+      ],
+      [
+        "look4:0",
+        "look4:0.6",
+        "cut"
+      ],
+      [
+        "look5:0",
+        "look5:1.2",
+        "cut"
+      ],
+      [
+        "drop4:0.5",
+        "drop4:2.4",
+        2
+      ],
+      [
+        "drop5:0",
+        "drop5:0.6",
+        2
+      ],
+      [
+        "drop5:0.6",
+        "drop5:3.3",
+        2.5
+      ]
+    ],
+    "hook": {
+      "at": "splash5",
+      "before": 1.7,
+      "after": -0.2,
+      "text": "wait for the last one \ud83d\ude33"
+    },
+    "counter": {
+      "at": [
+        "look1",
+        "look2",
+        "look3",
+        "look4",
+        "look5"
+      ],
+      "total": 5
+    },
+    "fallen": [
+      [
+        "drop1",
+        "splash1",
+        "blocks",
+        -1
+      ],
+      [
+        "drop2",
+        "splash2",
+        "blocks",
+        -1
+      ],
+      [
+        "drop3",
+        "splash3",
+        "blocks",
+        -1
+      ],
+      [
+        "drop4",
+        "splash4",
+        "blocks",
+        -1
+      ],
+      [
+        "drop5",
+        "splash5",
+        "blocks",
+        -1
+      ]
+    ],
+    "punch": [
+      "splash1",
+      "splash2",
+      "splash3",
+      "splash4",
+      "splash5"
+    ],
+    "shake": [
+      "splash5"
+    ],
+    "flash": [
+      [
+        "splash5",
+        0,
+        0.5
+      ]
+    ],
+    "slowmo": [
+      [
+        "drift3",
+        0,
+        0.6
+      ],
+      [
+        "drift4",
+        0,
+        0.6
+      ],
+      [
+        "drift5",
+        0,
+        0.6
+      ],
+      [
+        "splash5",
+        0.25,
+        0.25
+      ]
+    ],
+    "cards": [
+      [
+        "splash1",
+        "EASY",
+        0.8,
+        "green"
+      ],
+      [
+        "splash2",
+        "CLEAN",
+        0.8,
+        "green"
+      ],
+      [
+        "splash3",
+        "TIGHT \ud83d\ude2c",
+        0.8,
+        "yellow"
+      ],
+      [
+        "splash4",
+        "INSANE",
+        0.8,
+        "orange"
+      ],
+      [
+        "splash5",
+        "1 IN A MILLION",
+        1.2,
+        "red",
+        0,
+        "stamp"
+      ]
+    ],
+    "replay": {
+      "at": "splash5",
+      "before": 0.8,
+      "after": 0.45,
+      "cam": "back:6",
+      "speed": 0.6
+    },
+    "loop": true,
+    "sfx": [
+      [
+        "whoosh",
+        "cut1b"
+      ],
+      [
+        "whoosh",
+        "cut2b"
+      ],
+      [
+        "whoosh",
+        "cut3b"
+      ],
+      [
+        "whoosh",
+        "cut4b"
+      ],
+      [
+        "wind",
+        "drop1",
+        "splash1"
+      ],
+      [
+        "wind",
+        "drop2",
+        "splash2"
+      ],
+      [
+        "wind",
+        "drop3",
+        "splash3"
+      ],
+      [
+        "wind",
+        "drop4",
+        "splash4"
+      ],
+      [
+        "wind",
+        "drop5",
+        "splash5"
+      ],
+      [
+        "riser",
+        "drop5",
+        "splash5"
+      ],
+      [
+        "impact",
+        "splash1",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "impact",
+        "splash2",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "impact",
+        "splash3",
+        {
+          "gain": 0.7
+        }
+      ],
+      [
+        "impact",
+        "splash4",
+        {
+          "gain": 0.8
+        }
+      ],
+      [
+        "boom",
+        "splash5"
+      ],
+      [
+        "dip",
+        "splash5",
+        0.3
+      ],
+      [
+        "pops"
+      ],
+      [
+        "whoosh",
+        "drift2",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "whoosh",
+        "drift3",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "whoosh",
+        "drift4",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "whoosh",
+        "drift5",
+        {
+          "gain": 0.6
+        }
+      ]
+    ],
     "args": [
       "--caption",
-      "1 in a million landing \ud83d\ude33",
+      "1 in a million landing, but it gets harder \ud83d\ude33",
+      "--red",
+      "harder",
+      "--subs",
+      "[[\"look1\",\"40 blocks, 5x5\",0.55,0],[\"look2\",\"100 blocks, 3x3\",0.55,0],[\"look3\",\"160 blocks, 1x1\",0.55,0],[\"look4\",\"BUILD LIMIT, 1x1... IN CACTUS\",0.55,0],[\"look5\",\"BUILD LIMIT... INTO LAVA\",0.55,0]]",
+      "--subs_y",
+      "0.12",
+      "--speed",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"look3:0\",\"look3:0.2\",\"cut\"],[\"look4:0\",\"look4:0.6\",\"cut\"],[\"look5:0\",\"look5:1.2\",\"cut\"],[\"drop4:0.5\",\"drop4:2.4\",2],[\"drop5:0\",\"drop5:0.6\",2],[\"drop5:0.6\",\"drop5:3.3\",2.5]]",
+      "--slowmo",
+      "[[\"drift3\",0,0.6],[\"drift4\",0,0.6],[\"drift5\",0,0.6],[\"splash5\",0.25,0.25]]",
+      "--punch",
+      "[\"splash1\",\"splash2\",\"splash3\",\"splash4\",\"splash5\"]",
+      "--counter",
+      "{\"at\":[\"look1\",\"look2\",\"look3\",\"look4\",\"look5\"],\"total\":5}",
+      "--cards",
+      "[[\"splash1\",\"EASY\",0.8,\"green\"],[\"splash2\",\"CLEAN\",0.8,\"green\"],[\"splash3\",\"TIGHT \ud83d\ude2c\",0.8,\"yellow\"],[\"splash4\",\"INSANE\",0.8,\"orange\"],[\"splash5\",\"1 IN A MILLION\",1.2,\"red\",0,\"stamp\"]]",
+      "--hook",
+      "{\"at\":\"splash5\",\"before\":1.7,\"after\":-0.2,\"text\":\"wait for the last one \ud83d\ude33\"}",
+      "--shake",
+      "[\"splash5\"]",
+      "--flash",
+      "[[\"splash5\",0,0.5]]",
+      "--fallen",
+      "[[\"drop1\",\"splash1\",\"blocks\",-1],[\"drop2\",\"splash2\",\"blocks\",-1],[\"drop3\",\"splash3\",\"blocks\",-1],[\"drop4\",\"splash4\",\"blocks\",-1],[\"drop5\",\"splash5\",\"blocks\",-1]]",
+      "--replay",
+      "{\"at\":\"splash5\",\"before\":0.8,\"after\":0.45,\"cam\":\"back:6\",\"speed\":0.6}",
+      "--loop",
+      "true",
+      "--sfx",
+      "[[\"whoosh\",\"cut1b\"],[\"whoosh\",\"cut2b\"],[\"whoosh\",\"cut3b\"],[\"whoosh\",\"cut4b\"],[\"wind\",\"drop1\",\"splash1\"],[\"wind\",\"drop2\",\"splash2\"],[\"wind\",\"drop3\",\"splash3\"],[\"wind\",\"drop4\",\"splash4\"],[\"wind\",\"drop5\",\"splash5\"],[\"riser\",\"drop5\",\"splash5\"],[\"impact\",\"splash1\",{\"gain\":0.5}],[\"impact\",\"splash2\",{\"gain\":0.6}],[\"impact\",\"splash3\",{\"gain\":0.7}],[\"impact\",\"splash4\",{\"gain\":0.8}],[\"boom\",\"splash5\"],[\"dip\",\"splash5\",0.3],[\"pops\"],[\"whoosh\",\"drift2\",{\"gain\":0.6}],[\"whoosh\",\"drift3\",{\"gain\":0.6}],[\"whoosh\",\"drift4\",{\"gain\":0.6}],[\"whoosh\",\"drift5\",{\"gain\":0.6}]]",
       "--start_at",
-      "drop:-1.2",
+      "drop1:-0.85",
       "--end_after",
-      "splash:2.6",
+      "splash5:0.75",
       "--song",
-      "songs/misery.mp3",
+      "songs/ncs/fearless_funk.mp3",
       "--song_drop_at",
-      "splash"
+      "splash5"
     ]
   },
   "recording": {
@@ -59,29 +420,1565 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 377,
-      "y": 67,
-      "z": -57
+      "x": 429,
+      "y": 70,
+      "z": -41
     },
     "biome": "minecraft:plains",
-    "ticks": 181,
-    "seconds": 9.05,
+    "ticks": 769,
+    "seconds": 38.45,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 3.1,
-        "event": "drop"
+        "t": 0.8,
+        "event": "look1"
       },
       {
-        "t": 6.15,
-        "event": "splash"
+        "t": 1.75,
+        "event": "drop1"
+      },
+      {
+        "t": 2.4,
+        "event": "drift1"
+      },
+      {
+        "t": 2.4,
+        "event": "aim"
+      },
+      {
+        "t": 2.45,
+        "event": "aim"
+      },
+      {
+        "t": 2.5,
+        "event": "aim"
+      },
+      {
+        "t": 2.55,
+        "event": "aim"
+      },
+      {
+        "t": 2.6,
+        "event": "aim"
+      },
+      {
+        "t": 2.65,
+        "event": "aim"
+      },
+      {
+        "t": 2.7,
+        "event": "aim"
+      },
+      {
+        "t": 2.75,
+        "event": "aim"
+      },
+      {
+        "t": 2.8,
+        "event": "aim"
+      },
+      {
+        "t": 2.85,
+        "event": "aim"
+      },
+      {
+        "t": 2.9,
+        "event": "aim"
+      },
+      {
+        "t": 2.95,
+        "event": "aim"
+      },
+      {
+        "t": 3,
+        "event": "aim"
+      },
+      {
+        "t": 3.05,
+        "event": "aim"
+      },
+      {
+        "t": 3.1,
+        "event": "aim"
+      },
+      {
+        "t": 3.15,
+        "event": "aim"
+      },
+      {
+        "t": 3.2,
+        "event": "aim"
+      },
+      {
+        "t": 3.25,
+        "event": "aim"
+      },
+      {
+        "t": 3.3,
+        "event": "aim"
+      },
+      {
+        "t": 3.35,
+        "event": "aim"
+      },
+      {
+        "t": 3.4,
+        "event": "aim"
+      },
+      {
+        "t": 3.45,
+        "event": "aim"
+      },
+      {
+        "t": 3.85,
+        "event": "splash1"
+      },
+      {
+        "t": 4.7,
+        "event": "cut1a"
+      },
+      {
+        "t": 4.7,
+        "event": "cut"
+      },
+      {
+        "t": 5.9,
+        "event": "effect"
+      },
+      {
+        "t": 5.9,
+        "event": "effect_end"
+      },
+      {
+        "t": 6.4,
+        "event": "cut1b"
+      },
+      {
+        "t": 6.4,
+        "event": "look2"
+      },
+      {
+        "t": 7.25,
+        "event": "drop2"
+      },
+      {
+        "t": 7.9,
+        "event": "aim"
+      },
+      {
+        "t": 7.95,
+        "event": "aim"
+      },
+      {
+        "t": 8,
+        "event": "aim"
+      },
+      {
+        "t": 8.05,
+        "event": "aim"
+      },
+      {
+        "t": 8.1,
+        "event": "aim"
+      },
+      {
+        "t": 8.15,
+        "event": "aim"
+      },
+      {
+        "t": 8.2,
+        "event": "aim"
+      },
+      {
+        "t": 8.25,
+        "event": "aim"
+      },
+      {
+        "t": 8.3,
+        "event": "aim"
+      },
+      {
+        "t": 8.35,
+        "event": "aim"
+      },
+      {
+        "t": 8.4,
+        "event": "aim"
+      },
+      {
+        "t": 8.45,
+        "event": "aim"
+      },
+      {
+        "t": 8.5,
+        "event": "aim"
+      },
+      {
+        "t": 8.55,
+        "event": "aim"
+      },
+      {
+        "t": 8.6,
+        "event": "aim"
+      },
+      {
+        "t": 8.65,
+        "event": "aim"
+      },
+      {
+        "t": 8.7,
+        "event": "aim"
+      },
+      {
+        "t": 8.75,
+        "event": "drift2"
+      },
+      {
+        "t": 8.75,
+        "event": "aim"
+      },
+      {
+        "t": 8.8,
+        "event": "aim"
+      },
+      {
+        "t": 8.85,
+        "event": "aim"
+      },
+      {
+        "t": 8.9,
+        "event": "aim"
+      },
+      {
+        "t": 8.95,
+        "event": "aim"
+      },
+      {
+        "t": 9,
+        "event": "aim"
       },
       {
         "t": 9.05,
+        "event": "aim"
+      },
+      {
+        "t": 9.1,
+        "event": "aim"
+      },
+      {
+        "t": 9.15,
+        "event": "aim"
+      },
+      {
+        "t": 9.2,
+        "event": "aim"
+      },
+      {
+        "t": 9.25,
+        "event": "aim"
+      },
+      {
+        "t": 9.3,
+        "event": "aim"
+      },
+      {
+        "t": 9.35,
+        "event": "aim"
+      },
+      {
+        "t": 9.4,
+        "event": "aim"
+      },
+      {
+        "t": 9.45,
+        "event": "aim"
+      },
+      {
+        "t": 9.5,
+        "event": "aim"
+      },
+      {
+        "t": 9.55,
+        "event": "aim"
+      },
+      {
+        "t": 9.6,
+        "event": "aim"
+      },
+      {
+        "t": 9.65,
+        "event": "aim"
+      },
+      {
+        "t": 9.7,
+        "event": "aim"
+      },
+      {
+        "t": 9.75,
+        "event": "aim"
+      },
+      {
+        "t": 9.8,
+        "event": "aim"
+      },
+      {
+        "t": 9.85,
+        "event": "aim"
+      },
+      {
+        "t": 9.9,
+        "event": "aim"
+      },
+      {
+        "t": 9.95,
+        "event": "aim"
+      },
+      {
+        "t": 10,
+        "event": "aim"
+      },
+      {
+        "t": 10.05,
+        "event": "aim"
+      },
+      {
+        "t": 10.1,
+        "event": "aim"
+      },
+      {
+        "t": 10.15,
+        "event": "aim"
+      },
+      {
+        "t": 10.2,
+        "event": "aim"
+      },
+      {
+        "t": 10.6,
+        "event": "splash2"
+      },
+      {
+        "t": 11.4,
+        "event": "cut2a"
+      },
+      {
+        "t": 11.4,
+        "event": "cut"
+      },
+      {
+        "t": 12.65,
+        "event": "effect"
+      },
+      {
+        "t": 12.65,
+        "event": "effect_end"
+      },
+      {
+        "t": 13.15,
+        "event": "cut2b"
+      },
+      {
+        "t": 13.15,
+        "event": "look3"
+      },
+      {
+        "t": 14,
+        "event": "drop3"
+      },
+      {
+        "t": 14.65,
+        "event": "aim"
+      },
+      {
+        "t": 14.7,
+        "event": "aim"
+      },
+      {
+        "t": 14.75,
+        "event": "aim"
+      },
+      {
+        "t": 14.8,
+        "event": "aim"
+      },
+      {
+        "t": 14.85,
+        "event": "aim"
+      },
+      {
+        "t": 14.9,
+        "event": "aim"
+      },
+      {
+        "t": 14.95,
+        "event": "aim"
+      },
+      {
+        "t": 15,
+        "event": "aim"
+      },
+      {
+        "t": 15.05,
+        "event": "aim"
+      },
+      {
+        "t": 15.1,
+        "event": "aim"
+      },
+      {
+        "t": 15.15,
+        "event": "aim"
+      },
+      {
+        "t": 15.2,
+        "event": "aim"
+      },
+      {
+        "t": 15.25,
+        "event": "aim"
+      },
+      {
+        "t": 15.3,
+        "event": "aim"
+      },
+      {
+        "t": 15.35,
+        "event": "aim"
+      },
+      {
+        "t": 15.4,
+        "event": "aim"
+      },
+      {
+        "t": 15.45,
+        "event": "aim"
+      },
+      {
+        "t": 15.5,
+        "event": "aim"
+      },
+      {
+        "t": 15.55,
+        "event": "aim"
+      },
+      {
+        "t": 15.6,
+        "event": "aim"
+      },
+      {
+        "t": 15.65,
+        "event": "aim"
+      },
+      {
+        "t": 15.7,
+        "event": "aim"
+      },
+      {
+        "t": 15.75,
+        "event": "aim"
+      },
+      {
+        "t": 15.8,
+        "event": "aim"
+      },
+      {
+        "t": 15.85,
+        "event": "aim"
+      },
+      {
+        "t": 15.9,
+        "event": "aim"
+      },
+      {
+        "t": 15.95,
+        "event": "aim"
+      },
+      {
+        "t": 16,
+        "event": "aim"
+      },
+      {
+        "t": 16.05,
+        "event": "aim"
+      },
+      {
+        "t": 16.1,
+        "event": "aim"
+      },
+      {
+        "t": 16.15,
+        "event": "aim"
+      },
+      {
+        "t": 16.2,
+        "event": "aim"
+      },
+      {
+        "t": 16.25,
+        "event": "aim"
+      },
+      {
+        "t": 16.3,
+        "event": "aim"
+      },
+      {
+        "t": 16.35,
+        "event": "aim"
+      },
+      {
+        "t": 16.4,
+        "event": "aim"
+      },
+      {
+        "t": 16.45,
+        "event": "aim"
+      },
+      {
+        "t": 16.5,
+        "event": "aim"
+      },
+      {
+        "t": 16.55,
+        "event": "drift3"
+      },
+      {
+        "t": 16.55,
+        "event": "aim"
+      },
+      {
+        "t": 16.6,
+        "event": "aim"
+      },
+      {
+        "t": 16.65,
+        "event": "aim"
+      },
+      {
+        "t": 16.7,
+        "event": "aim"
+      },
+      {
+        "t": 16.75,
+        "event": "aim"
+      },
+      {
+        "t": 16.8,
+        "event": "aim"
+      },
+      {
+        "t": 16.85,
+        "event": "aim"
+      },
+      {
+        "t": 16.9,
+        "event": "aim"
+      },
+      {
+        "t": 16.95,
+        "event": "aim"
+      },
+      {
+        "t": 17,
+        "event": "aim"
+      },
+      {
+        "t": 17.05,
+        "event": "aim"
+      },
+      {
+        "t": 17.1,
+        "event": "aim"
+      },
+      {
+        "t": 17.15,
+        "event": "aim"
+      },
+      {
+        "t": 17.2,
+        "event": "aim"
+      },
+      {
+        "t": 17.25,
+        "event": "aim"
+      },
+      {
+        "t": 17.3,
+        "event": "aim"
+      },
+      {
+        "t": 17.35,
+        "event": "aim"
+      },
+      {
+        "t": 17.4,
+        "event": "aim"
+      },
+      {
+        "t": 17.45,
+        "event": "aim"
+      },
+      {
+        "t": 17.5,
+        "event": "aim"
+      },
+      {
+        "t": 17.55,
+        "event": "aim"
+      },
+      {
+        "t": 17.6,
+        "event": "aim"
+      },
+      {
+        "t": 17.65,
+        "event": "aim"
+      },
+      {
+        "t": 17.7,
+        "event": "aim"
+      },
+      {
+        "t": 17.75,
+        "event": "aim"
+      },
+      {
+        "t": 17.8,
+        "event": "aim"
+      },
+      {
+        "t": 17.85,
+        "event": "aim"
+      },
+      {
+        "t": 17.9,
+        "event": "aim"
+      },
+      {
+        "t": 17.95,
+        "event": "aim"
+      },
+      {
+        "t": 18.35,
+        "event": "splash3"
+      },
+      {
+        "t": 19.15,
+        "event": "cut3a"
+      },
+      {
+        "t": 19.15,
+        "event": "cut"
+      },
+      {
+        "t": 19.15,
+        "event": "vel"
+      },
+      {
+        "t": 20.35,
+        "event": "effect"
+      },
+      {
+        "t": 20.35,
+        "event": "effect_end"
+      },
+      {
+        "t": 20.85,
+        "event": "cut3b"
+      },
+      {
+        "t": 20.85,
+        "event": "look4"
+      },
+      {
+        "t": 21.7,
+        "event": "drop4"
+      },
+      {
+        "t": 22.35,
+        "event": "aim"
+      },
+      {
+        "t": 22.4,
+        "event": "aim"
+      },
+      {
+        "t": 22.45,
+        "event": "aim"
+      },
+      {
+        "t": 22.5,
+        "event": "aim"
+      },
+      {
+        "t": 22.55,
+        "event": "aim"
+      },
+      {
+        "t": 22.6,
+        "event": "aim"
+      },
+      {
+        "t": 22.65,
+        "event": "aim"
+      },
+      {
+        "t": 22.7,
+        "event": "aim"
+      },
+      {
+        "t": 22.75,
+        "event": "aim"
+      },
+      {
+        "t": 22.8,
+        "event": "aim"
+      },
+      {
+        "t": 22.85,
+        "event": "aim"
+      },
+      {
+        "t": 22.9,
+        "event": "aim"
+      },
+      {
+        "t": 22.95,
+        "event": "aim"
+      },
+      {
+        "t": 23,
+        "event": "aim"
+      },
+      {
+        "t": 23.05,
+        "event": "aim"
+      },
+      {
+        "t": 23.1,
+        "event": "aim"
+      },
+      {
+        "t": 23.15,
+        "event": "aim"
+      },
+      {
+        "t": 23.2,
+        "event": "aim"
+      },
+      {
+        "t": 23.25,
+        "event": "aim"
+      },
+      {
+        "t": 23.3,
+        "event": "aim"
+      },
+      {
+        "t": 23.35,
+        "event": "aim"
+      },
+      {
+        "t": 23.4,
+        "event": "aim"
+      },
+      {
+        "t": 23.45,
+        "event": "aim"
+      },
+      {
+        "t": 23.5,
+        "event": "aim"
+      },
+      {
+        "t": 23.55,
+        "event": "aim"
+      },
+      {
+        "t": 23.6,
+        "event": "aim"
+      },
+      {
+        "t": 23.65,
+        "event": "aim"
+      },
+      {
+        "t": 23.7,
+        "event": "aim"
+      },
+      {
+        "t": 23.75,
+        "event": "aim"
+      },
+      {
+        "t": 23.8,
+        "event": "aim"
+      },
+      {
+        "t": 23.85,
+        "event": "aim"
+      },
+      {
+        "t": 23.9,
+        "event": "aim"
+      },
+      {
+        "t": 23.95,
+        "event": "aim"
+      },
+      {
+        "t": 24,
+        "event": "aim"
+      },
+      {
+        "t": 24.05,
+        "event": "aim"
+      },
+      {
+        "t": 24.1,
+        "event": "aim"
+      },
+      {
+        "t": 24.15,
+        "event": "aim"
+      },
+      {
+        "t": 24.2,
+        "event": "aim"
+      },
+      {
+        "t": 24.25,
+        "event": "aim"
+      },
+      {
+        "t": 24.3,
+        "event": "aim"
+      },
+      {
+        "t": 24.35,
+        "event": "aim"
+      },
+      {
+        "t": 24.4,
+        "event": "aim"
+      },
+      {
+        "t": 24.45,
+        "event": "aim"
+      },
+      {
+        "t": 24.5,
+        "event": "aim"
+      },
+      {
+        "t": 24.55,
+        "event": "aim"
+      },
+      {
+        "t": 24.6,
+        "event": "aim"
+      },
+      {
+        "t": 24.65,
+        "event": "aim"
+      },
+      {
+        "t": 24.7,
+        "event": "aim"
+      },
+      {
+        "t": 24.75,
+        "event": "aim"
+      },
+      {
+        "t": 24.8,
+        "event": "aim"
+      },
+      {
+        "t": 24.85,
+        "event": "aim"
+      },
+      {
+        "t": 24.9,
+        "event": "aim"
+      },
+      {
+        "t": 24.95,
+        "event": "aim"
+      },
+      {
+        "t": 25,
+        "event": "aim"
+      },
+      {
+        "t": 25.05,
+        "event": "aim"
+      },
+      {
+        "t": 25.1,
+        "event": "aim"
+      },
+      {
+        "t": 25.15,
+        "event": "aim"
+      },
+      {
+        "t": 25.2,
+        "event": "aim"
+      },
+      {
+        "t": 25.25,
+        "event": "aim"
+      },
+      {
+        "t": 25.3,
+        "event": "aim"
+      },
+      {
+        "t": 25.35,
+        "event": "aim"
+      },
+      {
+        "t": 25.4,
+        "event": "aim"
+      },
+      {
+        "t": 25.45,
+        "event": "aim"
+      },
+      {
+        "t": 25.5,
+        "event": "aim"
+      },
+      {
+        "t": 25.55,
+        "event": "drift4"
+      },
+      {
+        "t": 25.55,
+        "event": "aim"
+      },
+      {
+        "t": 25.6,
+        "event": "aim"
+      },
+      {
+        "t": 25.65,
+        "event": "aim"
+      },
+      {
+        "t": 25.7,
+        "event": "aim"
+      },
+      {
+        "t": 25.75,
+        "event": "aim"
+      },
+      {
+        "t": 25.8,
+        "event": "aim"
+      },
+      {
+        "t": 25.85,
+        "event": "aim"
+      },
+      {
+        "t": 25.9,
+        "event": "aim"
+      },
+      {
+        "t": 25.95,
+        "event": "aim"
+      },
+      {
+        "t": 26,
+        "event": "aim"
+      },
+      {
+        "t": 26.05,
+        "event": "aim"
+      },
+      {
+        "t": 26.1,
+        "event": "aim"
+      },
+      {
+        "t": 26.15,
+        "event": "aim"
+      },
+      {
+        "t": 26.2,
+        "event": "aim"
+      },
+      {
+        "t": 26.25,
+        "event": "aim"
+      },
+      {
+        "t": 26.3,
+        "event": "aim"
+      },
+      {
+        "t": 26.35,
+        "event": "aim"
+      },
+      {
+        "t": 26.4,
+        "event": "aim"
+      },
+      {
+        "t": 26.45,
+        "event": "aim"
+      },
+      {
+        "t": 26.5,
+        "event": "aim"
+      },
+      {
+        "t": 26.55,
+        "event": "aim"
+      },
+      {
+        "t": 26.6,
+        "event": "aim"
+      },
+      {
+        "t": 26.65,
+        "event": "aim"
+      },
+      {
+        "t": 26.7,
+        "event": "aim"
+      },
+      {
+        "t": 26.75,
+        "event": "aim"
+      },
+      {
+        "t": 26.8,
+        "event": "aim"
+      },
+      {
+        "t": 26.85,
+        "event": "aim"
+      },
+      {
+        "t": 26.9,
+        "event": "aim"
+      },
+      {
+        "t": 26.95,
+        "event": "aim"
+      },
+      {
+        "t": 27.35,
+        "event": "splash4"
+      },
+      {
+        "t": 28.15,
+        "event": "cut4a"
+      },
+      {
+        "t": 28.35,
+        "event": "time"
+      },
+      {
+        "t": 28.35,
+        "event": "cut"
+      },
+      {
+        "t": 28.35,
+        "event": "vel"
+      },
+      {
+        "t": 28.35,
+        "event": "vel"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
+      },
+      {
+        "t": 28.85,
+        "event": "vel"
+      },
+      {
+        "t": 29.55,
+        "event": "effect"
+      },
+      {
+        "t": 29.55,
+        "event": "effect_end"
+      },
+      {
+        "t": 29.7,
+        "event": "vel"
+      },
+      {
+        "t": 29.85,
+        "event": "vel"
+      },
+      {
+        "t": 30.05,
+        "event": "cut4b"
+      },
+      {
+        "t": 30.05,
+        "event": "look5"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "drop5"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "aim"
+      },
+      {
+        "t": 32.4,
+        "event": "aim"
+      },
+      {
+        "t": 32.45,
+        "event": "aim"
+      },
+      {
+        "t": 32.5,
+        "event": "aim"
+      },
+      {
+        "t": 32.55,
+        "event": "aim"
+      },
+      {
+        "t": 32.6,
+        "event": "aim"
+      },
+      {
+        "t": 32.65,
+        "event": "aim"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "aim"
+      },
+      {
+        "t": 32.75,
+        "event": "aim"
+      },
+      {
+        "t": 32.8,
+        "event": "aim"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "aim"
+      },
+      {
+        "t": 32.9,
+        "event": "aim"
+      },
+      {
+        "t": 32.95,
+        "event": "aim"
+      },
+      {
+        "t": 33,
+        "event": "aim"
+      },
+      {
+        "t": 33.05,
+        "event": "aim"
+      },
+      {
+        "t": 33.1,
+        "event": "aim"
+      },
+      {
+        "t": 33.15,
+        "event": "aim"
+      },
+      {
+        "t": 33.2,
+        "event": "aim"
+      },
+      {
+        "t": 33.25,
+        "event": "aim"
+      },
+      {
+        "t": 33.3,
+        "event": "aim"
+      },
+      {
+        "t": 33.35,
+        "event": "aim"
+      },
+      {
+        "t": 33.4,
+        "event": "aim"
+      },
+      {
+        "t": 33.45,
+        "event": "aim"
+      },
+      {
+        "t": 33.5,
+        "event": "aim"
+      },
+      {
+        "t": 33.55,
+        "event": "aim"
+      },
+      {
+        "t": 33.6,
+        "event": "aim"
+      },
+      {
+        "t": 33.65,
+        "event": "aim"
+      },
+      {
+        "t": 33.65,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "aim"
+      },
+      {
+        "t": 33.75,
+        "event": "aim"
+      },
+      {
+        "t": 33.8,
+        "event": "aim"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "aim"
+      },
+      {
+        "t": 33.9,
+        "event": "aim"
+      },
+      {
+        "t": 33.95,
+        "event": "aim"
+      },
+      {
+        "t": 34,
+        "event": "aim"
+      },
+      {
+        "t": 34.05,
+        "event": "aim"
+      },
+      {
+        "t": 34.1,
+        "event": "aim"
+      },
+      {
+        "t": 34.15,
+        "event": "aim"
+      },
+      {
+        "t": 34.2,
+        "event": "aim"
+      },
+      {
+        "t": 34.25,
+        "event": "aim"
+      },
+      {
+        "t": 34.3,
+        "event": "aim"
+      },
+      {
+        "t": 34.35,
+        "event": "aim"
+      },
+      {
+        "t": 34.4,
+        "event": "aim"
+      },
+      {
+        "t": 34.45,
+        "event": "aim"
+      },
+      {
+        "t": 34.5,
+        "event": "aim"
+      },
+      {
+        "t": 34.55,
+        "event": "aim"
+      },
+      {
+        "t": 34.6,
+        "event": "aim"
+      },
+      {
+        "t": 34.65,
+        "event": "aim"
+      },
+      {
+        "t": 34.65,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "aim"
+      },
+      {
+        "t": 34.75,
+        "event": "aim"
+      },
+      {
+        "t": 34.8,
+        "event": "aim"
+      },
+      {
+        "t": 34.8,
+        "event": "vel"
+      },
+      {
+        "t": 34.85,
+        "event": "aim"
+      },
+      {
+        "t": 34.9,
+        "event": "aim"
+      },
+      {
+        "t": 34.95,
+        "event": "aim"
+      },
+      {
+        "t": 35,
+        "event": "aim"
+      },
+      {
+        "t": 35.05,
+        "event": "aim"
+      },
+      {
+        "t": 35.1,
+        "event": "aim"
+      },
+      {
+        "t": 35.15,
+        "event": "aim"
+      },
+      {
+        "t": 35.2,
+        "event": "aim"
+      },
+      {
+        "t": 35.25,
+        "event": "aim"
+      },
+      {
+        "t": 35.3,
+        "event": "aim"
+      },
+      {
+        "t": 35.35,
+        "event": "aim"
+      },
+      {
+        "t": 35.4,
+        "event": "aim"
+      },
+      {
+        "t": 35.45,
+        "event": "aim"
+      },
+      {
+        "t": 35.5,
+        "event": "aim"
+      },
+      {
+        "t": 35.55,
+        "event": "drift5"
+      },
+      {
+        "t": 35.55,
+        "event": "aim"
+      },
+      {
+        "t": 35.6,
+        "event": "aim"
+      },
+      {
+        "t": 35.65,
+        "event": "aim"
+      },
+      {
+        "t": 35.7,
+        "event": "aim"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.75,
+        "event": "aim"
+      },
+      {
+        "t": 35.8,
+        "event": "aim"
+      },
+      {
+        "t": 35.85,
+        "event": "aim"
+      },
+      {
+        "t": 35.85,
+        "event": "vel"
+      },
+      {
+        "t": 35.9,
+        "event": "aim"
+      },
+      {
+        "t": 35.95,
+        "event": "aim"
+      },
+      {
+        "t": 36,
+        "event": "aim"
+      },
+      {
+        "t": 36.05,
+        "event": "aim"
+      },
+      {
+        "t": 36.1,
+        "event": "aim"
+      },
+      {
+        "t": 36.15,
+        "event": "aim"
+      },
+      {
+        "t": 36.2,
+        "event": "aim"
+      },
+      {
+        "t": 36.25,
+        "event": "aim"
+      },
+      {
+        "t": 36.3,
+        "event": "aim"
+      },
+      {
+        "t": 36.35,
+        "event": "aim"
+      },
+      {
+        "t": 36.4,
+        "event": "aim"
+      },
+      {
+        "t": 36.45,
+        "event": "aim"
+      },
+      {
+        "t": 36.5,
+        "event": "aim"
+      },
+      {
+        "t": 36.55,
+        "event": "aim"
+      },
+      {
+        "t": 36.6,
+        "event": "aim"
+      },
+      {
+        "t": 36.65,
+        "event": "aim"
+      },
+      {
+        "t": 36.7,
+        "event": "aim"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.75,
+        "event": "aim"
+      },
+      {
+        "t": 36.8,
+        "event": "aim"
+      },
+      {
+        "t": 36.85,
+        "event": "aim"
+      },
+      {
+        "t": 36.85,
+        "event": "vel"
+      },
+      {
+        "t": 36.9,
+        "event": "aim"
+      },
+      {
+        "t": 36.95,
+        "event": "aim"
+      },
+      {
+        "t": 37.35,
+        "event": "splash5"
+      },
+      {
+        "t": 37.7,
+        "event": "vel"
+      },
+      {
+        "t": 37.85,
+        "event": "vel"
+      },
+      {
+        "t": 38.45,
         "event": "end"
       }
     ]
@@ -89,22 +1986,23 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "f6551876fc91b737069e41c91c39e475defac6b5",
-    "rendered_at": "2026-11-06T13:06:24.062Z",
-    "head_at_publish": "652d220588272d75edce682e83351e4cde23af15",
+    "commit": "369d6681fd8ee565f66de641ba18506d3fd10f97",
+    "rendered_at": "2026-11-07T23:33:01.854Z",
+    "head_at_publish": "369d6681fd8ee565f66de641ba18506d3fd10f97",
     "stunt": "stunts/one_in_a_million.js",
     "source_snapshot": [
-      "source/one_in_a_million.js"
+      "source/one_in_a_million.js",
+      "source/air_steer.js"
     ]
   },
   "rebuild": [
-    "git checkout f6551876fc91",
+    "git checkout 369d6681fd8e",
     "gunzip -c shorts/one_in_a_million/recording.json.gz > work/one_in_a_million.rec.json",
     "node render.js work/one_in_a_million.rec.json work/one_in_a_million.frames 60 1080 1011",
     "python3 audio.py work/one_in_a_million.rec.json work/one_in_a_million.wav",
-    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing \ud83d\ude33\" --start_at drop:-1.2 --end_after splash:2.6 --song songs/misery.mp3 --song_drop_at splash --out out/one_in_a_million.mp4"
+    "python3 edit.py --frames work/one_in_a_million.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/one_in_a_million.rec.json --audio work/one_in_a_million.wav --caption \"1 in a million landing, but it gets harder \ud83d\ude33\" --red harder --subs \"[[\\\"look1\\\",\\\"40 blocks, 5x5\\\",0.55,0],[\\\"look2\\\",\\\"100 blocks, 3x3\\\",0.55,0],[\\\"look3\\\",\\\"160 blocks, 1x1\\\",0.55,0],[\\\"look4\\\",\\\"BUILD LIMIT, 1x1... IN CACTUS\\\",0.55,0],[\\\"look5\\\",\\\"BUILD LIMIT... INTO LAVA\\\",0.55,0]]\" --subs_y 0.12 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"look3:0\",\"look3:0.2\",\"cut\"],[\"look4:0\",\"look4:0.6\",\"cut\"],[\"look5:0\",\"look5:1.2\",\"cut\"],[\"drop4:0.5\",\"drop4:2.4\",2],[\"drop5:0\",\"drop5:0.6\",2],[\"drop5:0.6\",\"drop5:3.3\",2.5]] --slowmo [[\"drift3\",0,0.6],[\"drift4\",0,0.6],[\"drift5\",0,0.6],[\"splash5\",0.25,0.25]] --punch [\"splash1\",\"splash2\",\"splash3\",\"splash4\",\"splash5\"] --counter {\"at\":[\"look1\",\"look2\",\"look3\",\"look4\",\"look5\"],\"total\":5} --cards \"[[\\\"splash1\\\",\\\"EASY\\\",0.8,\\\"green\\\"],[\\\"splash2\\\",\\\"CLEAN\\\",0.8,\\\"green\\\"],[\\\"splash3\\\",\\\"TIGHT \ud83d\ude2c\\\",0.8,\\\"yellow\\\"],[\\\"splash4\\\",\\\"INSANE\\\",0.8,\\\"orange\\\"],[\\\"splash5\\\",\\\"1 IN A MILLION\\\",1.2,\\\"red\\\",0,\\\"stamp\\\"]]\" --hook \"{\\\"at\\\":\\\"splash5\\\",\\\"before\\\":1.7,\\\"after\\\":-0.2,\\\"text\\\":\\\"wait for the last one \ud83d\ude33\\\"}\" --shake [\"splash5\"] --flash [[\"splash5\",0,0.5]] --fallen [[\"drop1\",\"splash1\",\"blocks\",-1],[\"drop2\",\"splash2\",\"blocks\",-1],[\"drop3\",\"splash3\",\"blocks\",-1],[\"drop4\",\"splash4\",\"blocks\",-1],[\"drop5\",\"splash5\",\"blocks\",-1]] --replay {\"at\":\"splash5\",\"before\":0.8,\"after\":0.45,\"cam\":\"back:6\",\"speed\":0.6} --loop true --sfx [[\"whoosh\",\"cut1b\"],[\"whoosh\",\"cut2b\"],[\"whoosh\",\"cut3b\"],[\"whoosh\",\"cut4b\"],[\"wind\",\"drop1\",\"splash1\"],[\"wind\",\"drop2\",\"splash2\"],[\"wind\",\"drop3\",\"splash3\"],[\"wind\",\"drop4\",\"splash4\"],[\"wind\",\"drop5\",\"splash5\"],[\"riser\",\"drop5\",\"splash5\"],[\"impact\",\"splash1\",{\"gain\":0.5}],[\"impact\",\"splash2\",{\"gain\":0.6}],[\"impact\",\"splash3\",{\"gain\":0.7}],[\"impact\",\"splash4\",{\"gain\":0.8}],[\"boom\",\"splash5\"],[\"dip\",\"splash5\",0.3],[\"pops\"],[\"whoosh\",\"drift2\",{\"gain\":0.6}],[\"whoosh\",\"drift3\",{\"gain\":0.6}],[\"whoosh\",\"drift4\",{\"gain\":0.6}],[\"whoosh\",\"drift5\",{\"gain\":0.6}]] --start_at drop1:-0.85 --end_after splash5:0.75 --song songs/ncs/fearless_funk.mp3 --song_drop_at splash5 --out out/one_in_a_million.mp4"
   ],
-  "status": "pending-qa",
+  "status": "ready",
   "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
-  "published_at": "2026-11-06T15:37:26.545Z"
+  "published_at": "2026-11-07T23:43:27.227Z"
 }
