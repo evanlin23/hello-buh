@@ -15,7 +15,7 @@ function subs () {
     const t = i === n - 1 ? 'locked in.' : TRY_LINES[i] || ''
     out.push(['attempt', `try ${i + 1}/${n}${t ? ': ' + t : ''}`, 1.5, i])
   }
-  out.push(['placed', 'oh wow that was very close', 0.8, 0])
+  out.push(['saved', 'oh wow that was very close', 0.8, 0])
   return out
 }
 
@@ -24,7 +24,7 @@ module.exports = {
   name: 'tries',
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
-    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-1.0', endAfter: 'placed:0.8',
+    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'saved', startAt: 'jump:-1.0', endAfter: 'saved:0.8',   // 'saved', not 'placed': the lava try places too
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
     // each try looks different (review: six identical falls read as a loop) and the counter shows on screen
     subs: subs()
@@ -61,7 +61,11 @@ module.exports = {
         drink = () => { const p = bot.entity.position; if (!drank && bot.entity.velocity.y < -0.3 && p.y < this.top - 4) { drank = true; ctx.sound('entity.generic.drink', 1); process.nextTick(() => bot.activateItem()) } }
         bot.on('physicsTick', drink)
       }
+      // the last try's placement is the payoff: mark it 'saved' (the lava try's 'placed' ended the video early)
+      const mark0 = ctx.mark
+      if (MODES[i] === 'ok') ctx.mark = (e, d) => { mark0(e, d); if (e === 'placed') mark0('saved') }
       try { ok = await clutch.perform.call(this, ctx) } catch (e) { ctx.log('attempt error', e.message) }
+      ctx.mark = mark0
       if (drink) bot.removeListener('physicsTick', drink)
       ctx.log('perform returned at tick', ctx.tick, 'died', ctx.died, 'pitch', bot.entity.pitch.toFixed(2))
       if (MODES[i] === 'ok') { if (ok) ctx.mark('landed'); return ok && ctx.deaths === MODES.length - 1 }
