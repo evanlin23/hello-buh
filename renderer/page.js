@@ -712,8 +712,8 @@ function drawAim (cam) {
   if (!aimMesh) {
     const c = document.createElement('canvas'); c.width = c.height = 32
     const g = c.getContext('2d')
-    g.fillStyle = 'rgba(255,40,40,0.35)'; g.fillRect(0, 0, 32, 32)
-    g.strokeStyle = 'rgba(255,60,60,0.95)'; g.lineWidth = 4; g.strokeRect(2, 2, 28, 28)
+    g.fillStyle = 'rgba(255,40,40,0.25)'; g.fillRect(0, 0, 32, 32)
+    g.strokeStyle = 'rgba(255,50,50,1)'; g.lineWidth = 6; g.strokeRect(3, 3, 26, 26)   // a rim of ~1/5 of the width
     const tex = new THREE.CanvasTexture(c); tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.LinearFilter; tex.colorSpace = THREE.NoColorSpace
     const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, fog: true, side: THREE.DoubleSide,
       polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })
@@ -722,6 +722,11 @@ function drawAim (cam) {
   }
   aimMesh.visible = true
   aimMesh.position.set(a.x, a.y + 0.01, a.z)
+  // never under ~48 px across on a 1080-wide frame: from 60-120 blocks up a 1-block square was a
+  // 6-10 px speck. Size in blocks for that fraction of the width at this distance and FOV
+  const d = camera.position.distanceTo(aimMesh.position)
+  const minS = 2 * d * Math.tan(camera.fov * Math.PI / 360) * camera.aspect * (48 / 1080)
+  aimMesh.scale.setScalar(Math.max(1, minS))
   aimMesh.material.opacity = Math.min(1, a.a)
 }
 let outline = null, crack = null
