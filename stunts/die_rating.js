@@ -74,6 +74,8 @@ module.exports = {
         await ctx.cmd(`/setblock ${s} ${F + 1} ${z + 2} wither_rose`)
       } else if (d === 'void') {                  // a 1x1 hole straight down out of the world
         await ctx.cmd(`/fill ${s} -64 ${z + 1} ${s} ${F} ${z + 1} air`)
+      } else if (d === 'magma') {
+        await ctx.cmd(`/fill ${s - 1} ${F} ${z} ${s + 1} ${F} ${z + 2} magma_block`)
       } else if (d === 'cactus') {
         await ctx.cmd(`/fill ${s - 1} ${F} ${z} ${s + 1} ${F} ${z + 2} sand`)   // cactus only grows on sand
         await ctx.cmd(`/fill ${s} ${F + 1} ${z + 1} ${s} ${F + 3} ${z + 1} cactus`)
@@ -173,7 +175,9 @@ module.exports = {
         }
       } else if (d === 'magma') {
         await ctx.easeLook(N, -0.75, 200)
-        walk(true)                                  // across the magma until it gets me
+        walk(true)                                  // onto the magma and stand there (walking across it never hurt)
+        for (let k = 0; k < 80 && bot.entity.position.z > z + 1.6; k++) await bot.waitForTicks(1)
+        walk(false)
         ctx.easeLook(N, -1.2, 400)
       } else if (d === 'zombie') {
         // walk up to a zombie (it got here before me)
@@ -226,7 +230,7 @@ module.exports = {
         await bot.waitForTicks(6)
         use()
       }
-      if (!(await waitDeath(100))) { ctx.log('no death at', d, bot.entity.position, 'health', bot.health, 'set x', s); return false }
+      if (!(await waitDeath(100))) { ctx.log('under me:', bot.blockAt(bot.entity.position.offset(0, -0.5, 0))?.name, 'F', F, 'z', z); ctx.log('no death at', d, bot.entity.position, 'health', bot.health, 'set x', s); return false }
       ctx.log('died:', d)
       await after(i)
     }

@@ -9,7 +9,7 @@
 // matches the deleted area, so nothing is left at the horizon.
 process.env.RECORD_RADIUS = process.env.RECORD_RADIUS || '132'   // with the set centred on the bot's chunk: exactly the 17x17 chunks rebuilt below
 const R = 8          // chunks deleted around the bot's chunk: cx-R..cx+R
-const CRUST = 5      // layers kept under the surface (floor-4..floor): thinner, so the fills land sooner
+const CRUST = 8      // layers kept under the surface (floor-7..floor): a 5-deep crust read as a pancake set
 const TOP = 14       // and this much above (trees)
 
 const SUBS = [
@@ -24,7 +24,7 @@ const SUBS = [
   ['gone', '5x5', 1.9, 8],
   ['gone', '3x3', 1.9, 9],
   ['last', 'skyblock', 1.6, 0],
-  ['final', 'the last block', 9, 0]
+  ['final', 'the last block', 2.4, 0]
 ]
 
 module.exports = {
@@ -34,8 +34,10 @@ module.exports = {
   caption: 'every block I mine deletes the world 💀',
   edit: {
     caption: 'every block I mine deletes the world 💀', red: 'world', song: 'songs/funk_abnormal.mp3', dropAt: 'gone',
-    startAt: 'beat:-0.05', endAfter: 'death:1.25', subs: SUBS, deathScreen: true,
-    punch: [['death', 0, 1.15]],              // the death screen lands with a kick (it holds still otherwise)
+    startAt: 'beat:-0.05', endAfter: 'death:1.3', subs: SUBS, deathScreen: true,
+    punch: [['death', 0, 1.15]],              // the death screen lands with a zoom kick (1.15x)
+    freeze: [['death', 1.0]],                 // then a held, slowly pushed-in death screen (it sat still)
+    counter: { at: [8, 9, 10, 11, 12, 13, 14, 15].map(n => ['gone', n + 2]), total: 8 },   // the 8 blocks around me
     // the fall through the void: 4x down to y -112, then cut to the death (the void kills slowly)
     speed: [['cut_a', 'cut_b', 4], ['cut_b', 'death', 'cut']]
   },
@@ -53,6 +55,8 @@ module.exports = {
     Object.assign(this, { cx, cz, X0, Z0, floor })
     await ctx.defaultRules()
     await ctx.cmd('/gamerule block_drops false')    // no dirt items (they hovered while the server lagged)
+    await ctx.cmd('/gamerule water_source_conversion false')   // no new water sources forming under the crust
+    await ctx.cmd('/gamerule lava_source_conversion false')
     // the ground under the bot is about to go: hover (mineflayer simulates gravity in every game
     // mode, and the void kills even in creative)
     await ctx.cmd(`/tp @s ${X0 + 0.5} ${floor + 20} ${Z0 + 0.5}`)
@@ -61,7 +65,7 @@ module.exports = {
     // The land is rebuilt flat inside the area (the real terrain here had mountains and a frozen
     // ocean: peaks stuck out of the deleted area and the ocean poured into the void). Each chunk:
     // everything from the bottom of the world to its highest block becomes air (one /fill is
-    // capped at 32768 blocks), then a 5-deep crust of stone, dirt and grass goes back, so a
+    // capped at 32768 blocks), then an 8-deep crust of stone, dirt and grass goes back, so a
     // deleted chunk opens onto the void and only ~10 layers change per chunk.
     const top = (x1, z1) => {
       let m = floor + 4
@@ -79,7 +83,7 @@ module.exports = {
     const tops = {}
     for (let i = -R; i <= R; i++) for (let k = -R; k <= R; k++) tops[`${i},${k}`] = top((cx + i) * 16, (cz + k) * 16)
     const yMax = Math.max(...Object.values(tops))
-    for (let pass = 0; pass < 1; pass++) {    // (a barrier wall outside the area failed: not loaded; the check below catches leftovers)
+    for (let pass = 0; pass < 2; pass++) {    // twice: water still flowing during the first pass (aquifers, the ocean at the edge) is cleared by the second
       for (let i = -R; i <= R; i++) {
         for (let k = -R; k <= R; k++) {
           const x1 = (cx + i) * 16, z1 = (cz + k) * 16, yTop = pass ? floor : tops[`${i},${k}`]
@@ -98,7 +102,7 @@ module.exports = {
           const x1 = (cx + i) * 16, z1 = (cz + k) * 16
           let full = false
           for (let dx = 1; dx < 16 && !full; dx += 3) for (let dz = 1; dz < 16 && !full; dz += 3) {
-            for (const y of [floor - 20, floor - 6, floor + 1, floor + 3, floor + 6, floor + 10, floor + 16, floor + 24, floor + 34]) {
+            for (const y of [-63, -40, -10, floor - 30, floor - 20, floor - 6, floor + 1, floor + 3, floor + 6, floor + 10, floor + 16, floor + 24, floor + 34]) {
               const b = bot.blockAt(new Vec3(x1 + dx, y, z1 + dz))
               if (b && b.name !== 'air') { full = true; break }
             }
@@ -132,13 +136,13 @@ module.exports = {
       const tx = x0 + Math.floor(rnd() * span), tz = z0 + Math.floor(rnd() * span)
       if (Math.abs(tx - X0) < 22 && Math.abs(tz - Z0) < 22) continue
       bot.chat(`/place feature minecraft:${rnd() < 0.8 ? 'oak' : 'birch'} ${tx} ${floor + 1} ${tz}`)
-      await bot.waitForTicks(1)
+      if (n % 6 === 5) await bot.waitForTicks(1)
     }
     for (let n = 0; n < 60; n++) {
       const tx = x0 + Math.floor(rnd() * span), tz = z0 + Math.floor(rnd() * span)
       if (Math.abs(tx - X0) < 6 && Math.abs(tz - Z0) < 6) continue
       bot.chat(`/place feature minecraft:${n % 2 ? 'flower_plain' : 'patch_grass'} ${tx} ${floor + 1} ${tz}`)
-      await bot.waitForTicks(1)
+      if (n % 6 === 5) await bot.waitForTicks(1)
     }
     await bot.waitForTicks(80)                      // let the server finish lighting before the stunt
     clearInterval(clock); bot.physicsEnabled = true
@@ -198,31 +202,31 @@ module.exports = {
       const list = fresh(chunks)
       const d = ([i, k]) => Math.hypot(i * 16 + 8 - X0, k * 16 + 8 - Z0)
       list.sort((a, b) => d(b) - d(a))
-      // big waves go out while aiming (they land 1-2 s later); small ones at the end of the dig
-      // (they land at once: sent early, the block vanished before the crack finished)
+      // The block always breaks by a real survival dig (it's in my own chunk, which no fill touches;
+      // a /setblock stand-in made blocks vanish before the shovel reached them). Big waves are sent
+      // while aiming (the server applies them 1-2 s late) and the dig is held until the first chunk
+      // goes; small deletions are sent in the same tick as the break, so they land with it.
       const send = () => {
         for (const [i, k] of list) { gone.add(key(i, k)); bot.chat(`/fill ${i * 16} ${yLo} ${k * 16} ${i * 16 + 15} ${yHi} ${k * 16 + 15} air`) }
         for (const c of extra) bot.chat(c)
-        bot.chat(`/setblock ${bx} ${floor} ${bz} air`)
       }
-      const early = list.length > 0
+      const early = list.length >= 8
       if (early) send()
       await aim
       const b = bot.blockAt(p)
       const need = b ? Math.max(1, Math.ceil(bot.digTime(b) / 50)) : 4
       bot._client.write('block_dig', { status: 0, location: p, face: 1, sequence: 0 })
-      const watch = list.length ? list : null
       for (let t = 0; t < 70; t++) {
         if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.grass.hit', 0.25, 0.5) }
-        if (t % 8 === 0) drift((t % 16 ? -1 : 1) * 0.03, 0, 400)       // the small fidget of someone holding the button
-        if (!early && t === need - 1) send()
+        if (t % 8 === 0) drift((t % 16 ? -1 : 1) * 0.06, 0, 400)       // the small fidget of someone holding the button
         await bot.waitForTicks(1)
-        const nb = bot.blockAt(p)
-        const arrived = (!nb || nb.name === 'air') && (!watch || watch.some(isGone))
-        if (t >= need && arrived) break
+        if (t + 1 >= need && (!early || list.some(isGone))) break
       }
       bot._client.write('block_dig', { status: 2, location: p, face: 1, sequence: 0 })
+      if (!early) send()
       bot.swingArm()
+      for (let t = 0; t < 12; t++) { const nb = bot.blockAt(p); if (!nb || nb.name === 'air') break; await bot.waitForTicks(1) }
+      { const nb = bot.blockAt(p); if (nb && nb.name !== 'air') { ctx.log('dig refused at', p, '- breaking by command'); bot.chat(`/setblock ${bx} ${floor} ${bz} air`); await bot.waitForTicks(1) } }
       ctx.sound('block.grass.break', 1, 0.8); ctx.particles('block', p, { block: 'grass_block' })
       ctx.mark('gone', { n, chunks: list.length })
       return list
@@ -232,18 +236,18 @@ module.exports = {
     const N = 0, W = Math.PI / 2, S = Math.PI, E = -Math.PI / 2
 
     // 1. north: one chunk
-    let list = await beat(0, X0, Z0 - 2, [[cx, cz - 1]], [], 250)
+    let list = await beat(0, X0 + 2, Z0 - 1, [[cx, cz - 1]], [], 250)     // (targets are all in my own chunk)
     await glide(N + 0.15, -1.0, 600)            // down into the hole: the void
     await glide(N - 0.2, -0.6, 500)
     // 2. west: the 4 chunks beside it
-    list = await beat(1, X0 - 2, Z0, chunksIn(cx - 1, cx - 1, cz - 2, cz + 1), [], 450)
+    list = await beat(1, X0 - 1, Z0 + 2, chunksIn(cx - 1, cx - 1, cz - 2, cz + 1), [], 450)
     await glide(W + 0.35, -0.45, 600)
     // 3. further west: 10 chunks (an edge block of my own chunk, facing west)
     list = await beat(2, X0 - 1, Z0 + 3, chunksIn(cx - 3, cx - 2, cz - 2, cz + 2), [], 450)
     await glide(W + 0.4, -0.25, 600)            // sweep along the cut edge
     await glide(W - 0.3, -0.2, 600)
     // 4. north: 24 chunks out to the horizon
-    list = await beat(3, X0 + 2, Z0 - 1, chunksIn(cx - 3, cx, cz - R, cz - 3), [], 500)
+    list = await beat(3, X0 + 3, Z0 - 1, chunksIn(cx - 3, cx, cz - R, cz - 3), [], 500)
     await glide(N + 0.2, -0.12, 550)
     await settle(list)
     // 5. east: a 3-chunk band, north to south (51)
@@ -257,14 +261,14 @@ module.exports = {
     await settle(list)
     await glide(S + 0.35, -0.2, 700)
     // 7. the whole world but my chunk (watching the far east go); then all the way round
-    list = await beat(6, X0 + 4, Z0 + 3, chunksIn(cx - R, cx + R, cz - R, cz + R), [], 550)
-    await glide(E + 0.5, -0.1, 500)
-    await settle(list)
-    await glide(bot.entity.yaw + 2 * Math.PI, -0.35, 2800, { abs: true })
+    // (facing west, where the land that's left is: facing the empty east nobody saw it go)
+    list = await beat(6, X0 - 1, Z0 + 4, chunksIn(cx - R, cx + R, cz - R, cz + R), [], 550)
+    await glide(W + 0.3, -0.1, 450)
+    await glide(bot.entity.yaw + 2 * Math.PI, -0.35, 2000, { abs: true })
     // 8-10. my own chunk, in three cuts: half (8x8), 5x5, 3x3 (I stand one block in from its corner)
     const x1 = cx * 16, z1 = cz * 16, f = (xa, za, xb, zb) => `/fill ${xa} ${yLo} ${za} ${xb} ${yHi} ${zb} air`
     const cuts = [
-      { n: 7, b: [X0 + 5, Z0 + 2], fills: [f(X0 + 7, z1, x1 + 15, z1 + 15), f(x1, Z0 + 7, X0 + 6, z1 + 15)], probe: [X0 + 10, Z0 + 10] },
+      { n: 7, b: [X0 + 4, Z0 + 2], fills: [f(X0 + 7, z1, x1 + 15, z1 + 15), f(x1, Z0 + 7, X0 + 6, z1 + 15)], probe: [X0 + 10, Z0 + 10] },
       { n: 8, b: [X0 + 3, Z0 + 4], fills: [f(X0 + 4, z1, X0 + 6, Z0 + 6), f(x1, Z0 + 4, X0 + 3, Z0 + 6)], probe: [X0 + 5, Z0 + 5] },
       { n: 9, b: [X0 + 2, Z0 + 2], fills: [f(X0 + 2, z1, X0 + 3, Z0 + 3), f(x1, Z0 + 2, X0 + 1, Z0 + 3)], probe: [X0 + 3, Z0 + 3] }
     ]
