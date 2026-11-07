@@ -1143,7 +1143,10 @@ function camAtLive (t) {
     }
     if (THIRD) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
       const dw = DEATHS.find(([a, b]) => t >= a && t < b), deathTime = dw ? t - dw[0] + 1 : 0
+      // ItemInHandLayer draws the entity's current main-hand item at once: no first-person lowering
+      // and raising (the placed boat stayed in the replay hand for ~3 ticks: boat_clutch v3 f1993)
       const ph = handAt(t)
+      if (ph) { let cur = HELD.length ? HELD[0][1] : null; for (const [tk, n] of HELD) { if (tk <= t) cur = n; else break } ph.name = cur }
       if (deathTime < 21) {
         const i = Math.max(0, Math.min(P.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
         const body = lerpAngle(PBODY[i], PBODY[i + 1], f), wk = [0, 1].map(k => PWALK[i][k] + (PWALK[i + 1][k] - PWALK[i][k]) * f)
