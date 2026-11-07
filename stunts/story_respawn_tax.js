@@ -18,7 +18,7 @@ module.exports = {
   name: 'story_respawn_tax',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every time I respawn, someone disappears 😳',
-  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true, onFire: 'burn:death' },
+  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:-0.2', deathScreen: true, onFire: 'burn:death' },
   expectDeath: true,
 
   async setup (ctx) {
@@ -137,9 +137,11 @@ module.exports = {
       if (!trip && (bot.entity.position.y < F + 0.9 || overCauldron())) { trip = 0; go(false); fallIn(); ctx.mark('burn'); ctx.sound('entity.generic.burn', 1, 1) }
       if (trip === null) return false
       trip++
-      if (trip === 7) say('/effect clear @s minecraft:fire_resistance')
+      if (trip === 10) say('/effect clear @s minecraft:fire_resistance')
       if (trip === 7) say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 1).toFixed(3)} ${(Z + 3.4).toFixed(3)} facing ${t.x.toFixed(2)} ${t.y.toFixed(2)} ${t.z.toFixed(2)}`)
-      if (trip === 12) { if (!ctx.died) say('/damage @s 100 minecraft:on_fire'); return 'dead' }
+      // the body must be at rest on the plaza before it dies: a death on the landing tick read the teleport as
+      // speed and the dead camera slid 11 blocks up the lane, past the librarian (retention audit)
+      if (trip === 16) { if (!ctx.died) say('/damage @s 100 minecraft:on_fire'); return 'dead' }
       return true
     }
     setMeter(5)
@@ -187,7 +189,10 @@ module.exports = {
     await line('L05', async (k) => {
       go(!dead)
       if (!dead && bot.entity.position.z < Z - 19.55) pressed++
-      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false) }
+      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-11.5, 3.4, -20.3) }
+      // pressed against it, look up its side: the top and the sky in frame, the smoke above it in view (the
+      // screen was all cactus texture and froze behind the death screen)
+      if (pressed > 0) K.base = K.aim(P(-11.5, 4.2, -21))
       if (alive()) look(k)
     })
     go(false)
@@ -228,13 +233,15 @@ module.exports = {
     await line('L10', async (k) => {
       go(!dead && trip === null)
       if (!dead) { const st = tripStep(P(0.5, 1.4, -3)); if (st === 'dead') { dead = true; trip = null } }   // dies facing the spawn and the lane
+      if (dead) respawnSoon()   // respawn inside L10: done in L11 it stretched the line 0.4 s (0.8 s of silence)
       if (!dead && trip === null) { K.base = K.aim(P(0.5, 0.2, 4.5)); look(k) }
+      if (dead && alive()) look(k)
     })
     go(false)
     // L11: this time I was fast: respawn and watch the nitwit walk up to my spawn
     let nz = -6.5
     await line('L11', async (k, at) => {
-      if (k === 0) { await respawn(); await bot.look(bot.entity.yaw, -1.3, true); await bot.waitForTicks(6); await cut(3.5, 3.6, P(0.5, 1.4, -2)) }
+      if (k === 0) { while (!alive()) await bot.waitForTicks(1); await cut(3.5, 3.6, P(0.5, 1.4, -2)) }
       if (k >= at(2)) { nz = Math.min(0.5, nz + 0.2); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
       K.base = K.aim(P(0.5, 1.4, nz)); look(k)
     })
@@ -253,7 +260,7 @@ module.exports = {
     let from13 = null
     await line('L13', async (k, at) => {
       go(k > 4 && k < at(4))
-      if (k >= at(4) - 2) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(5.5, 1.6, 28.5), (k - at(4) + 3) / 9) }
+      if (k >= at(4) - 2) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(4.5, 1.6, 28.5), (k - at(4) + 3) / 9) }
       look(k)
     })
     go(false)
@@ -281,7 +288,7 @@ module.exports = {
     // L17: and today, I tripped again
     dead = false
     await line('L17', async (k, at) => {
-      go(!dead && trip === null && k >= at(2) - 7)   // the fall lands on "AGAIN."
+      go(!dead && trip === null && k >= at(2) - 11)   // the fall lands on "AGAIN."
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       if (!dead) {
         const st = tripStep(P(0.5, 2.0, 0.5))   // dies facing her: her face between the title and the buttons
