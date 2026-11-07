@@ -12,7 +12,7 @@ function lighthouse (b) {
     b.fill(0, y, -4, 4, y, 0, band)
     b.fill(1, y, -3, 3, y, -1, 'air')
   }
-  b.fill(0, 0, -4, 4, 0, 0, 'stone_bricks')
+  b.fill(0, 0, -4, 4, 1, 0, 'stone_bricks')   // 2 high, so every visible stripe is 2 high
   b.set(2, 0, 0, 'air'); b.set(2, 1, 0, 'air')
   b.set(2, 0, 0, 'oak_door[facing=south,half=lower,hinge=left]'); b.set(2, 1, 0, 'oak_door[facing=south,half=upper,hinge=left]')
   b.set(2, 5, 0, 'glass_pane[east=true,west=true]'); b.set(2, 9, 0, 'glass_pane[east=true,west=true]')
@@ -42,15 +42,16 @@ function cottage (b) {
   b.set(4, 0, 0, 'spruce_door[facing=south,half=lower,hinge=left]'); b.set(4, 1, 0, 'spruce_door[facing=south,half=upper,hinge=left]')
   b.fill(1, -1, -5, 7, -1, -1, 'spruce_planks'); b.set(4, 3, -3, 'glowstone'); b.set(2, 3, -2, 'glowstone'); b.set(6, 3, -2, 'glowstone')
   b.set(2, 0, -4, 'crafting_table'); b.set(6, 0, -4, 'furnace[facing=south,lit=true]')
-  const rows = [[4, 1, 'south'], [5, 0, 'south'], [6, -1, 'south'], [7, -2, 'south'], [7, -4, 'north'], [6, -5, 'north'], [5, -6, 'north'], [4, -7, 'north']]
+  // a stair's facing is its tall side: the front slope rises to the north (review: all were inverted)
+  const rows = [[4, 1, 'north'], [5, 0, 'north'], [6, -1, 'north'], [7, -2, 'north'], [7, -4, 'south'], [6, -5, 'south'], [5, -6, 'south'], [4, -7, 'south']]
   for (const [y, z, f] of rows) b.fill(-1, y, z, 9, y, z, `oak_stairs[facing=${f}]`)
   b.fill(-1, 8, -3, 9, 8, -3, 'oak_slab')
   for (const gx of [0, 8]) { b.fill(gx, 5, -5, gx, 5, -1, 'oak_planks'); b.fill(gx, 6, -4, gx, 6, -2, 'oak_planks'); b.set(gx, 7, -3, 'oak_planks') }
   b.fill(1, 4, -5, 7, 4, -1, 'oak_planks')
   // the chimney
-  b.fill(7, 4, -4, 7, 9, -4, 'bricks'); b.set(7, 10, -4, 'campfire[lit=true,signal_fire=false]')
-  // the mistake: one stair in the second row turned the wrong way
-  b.set(3, 5, 0, 'oak_stairs[facing=north]')
+  b.fill(7, 4, -4, 7, 9, -4, 'bricks')   // (no campfire on top: we draw no campfire smoke yet)
+  // the mistake: one eave stair turned the wrong way (its tall back faces the street)
+  b.set(3, 4, 1, 'oak_stairs[facing=south]')
   // the porch and the garden
   b.fill(-1, 0, 1, -1, 0, 3, 'oak_fence[north=true,south=true]'); b.fill(9, 0, 1, 9, 0, 3, 'oak_fence[north=true,south=true]')
   b.fill(0, -1, 1, 8, -1, 3, 'cobblestone'); b.fill(4, -1, 4, 4, -1, 12, 'dirt_path')
@@ -94,19 +95,19 @@ module.exports = spotWrong({
       cam: { pos: [-1, 17], walk: 'right' },
       scan: [[0, [2.5, 6, 0]], [2.5, [0, 3, 2]], [5, [2.5, 13, 0]], [7, [2, 10, 0]]],
       tag: 'EASY',
-      reveals: [{ at: [1.5, 12.5, 1.0], zoom: 3.4, sub: 'white in a red stripe', check: [[1, 12, 0], 'white_concrete'] }] },
+      reveals: [{ at: [1.5, 12.5, 1.0], zoom: 3.4, hold: 1.0, sub: 'white in a red stripe', check: [[1, 12, 0], 'white_concrete'] }] },
     { at: [0, -12], build: cottage, seconds: 8,
       cam: { pos: [-6, 15], walk: 'right' },
-      scan: [[0, [-4, 1, 6]], [2.5, [4, 2, 0]], [5, [4, 6, -1]], [8, [5, 4.5, 0]]],
+      scan: [[0, [-4, 1, 6]], [2.5, [4, 2, 0]], [5, [4, 6, -1]], [8, [5, 3.5, 0]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the garden'],
-      reveals: [{ at: [3.5, 5.5, 0.5], zoom: 3.2, sub: 'a backwards stair', check: [[3, 5, 0], 'oak_stairs'] }] },
+      reveals: [{ at: [3.5, 4.6, 1.5], zoom: 3.6, sub: 'a backwards stair', check: [[3, 4, 1], 'oak_stairs'] }] },
     { at: [-45, 40], build: storage, seconds: 9,
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [3, 0.5, -8]], [2.2, [1, 0.8, -4]], [4.2, [6, 1, -8.5]], [6.2, [10, 0.8, -3.5]], [9, [8, 0.6, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: not the chests'],
       reveals: [
         { at: [8.5, 1.5, -7.0], zoom: 3.2, sub: 'a barrel on its side', check: [[8, 1, -8], 'barrel'] },
-        { pre: 'wait... there is another one', at: [5.5, 2.5, -7.9], zoom: 3, ring: 190, hold: 2.3, tail: 1.5, sub: 'it says TOUHC', check: [[5, 2, -8], 'oak_wall_sign'] }
+        { pre: 'wait... there is another one', at: [5.5, 2.5, -7.9], zoom: 5, ring: 150, hold: 2.3, tail: 1.5, sub: 'it says TOUHC', check: [[5, 2, -8], 'oak_wall_sign'] }
       ] }
   ]
 })
