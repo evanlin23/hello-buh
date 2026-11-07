@@ -54,7 +54,7 @@ module.exports = {
   botTimeout: 360,
   edit: {
     caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'giant',
-    startAt: 'go:-0.1', endAfter: 'giant_peak:0.8'
+    startAt: 'press:-0.5', endAfter: 'giant_peak:0.8'
   },
 
   async setup (ctx) {
