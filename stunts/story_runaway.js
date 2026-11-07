@@ -355,8 +355,8 @@ module.exports = {
     const eyeY = boomAt.y + 1.62
     const still = async () => {   // a few puffs every 3 ticks: 6 a tick filled the whole view with smoke
       if (sk++ % 3) return
-      const d = 7 + Math.random() * 3, side = (Math.random() - 0.5) * 5
-      ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.4 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 2 })
+      const d = 5 + Math.random() * 3, side = (Math.random() - 0.5) * 5
+      ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.7 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 3 })
     }
     for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
     await line('L15', still, -0.15)
