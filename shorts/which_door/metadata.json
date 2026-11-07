@@ -1,9 +1,9 @@
 {
   "name": "which_door",
-  "caption": "which door would you pick? \ud83d\udeaa",
+  "caption": "which door would you pick? 🚪",
   "youtube": {
-    "title": "which door would you pick? \ud83d\udeaa #minecraft #shorts",
-    "description": "which door would you pick? \ud83d\udeaa\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "which door would you pick? 🚪 #minecraft #shorts",
+    "description": "which door would you pick? 🚪\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -34,7 +34,7 @@
   },
   "edit": {
     "startAt": "intro:0",
-    "caption": "which door would you pick? \ud83d\udeaa",
+    "caption": "which door would you pick? 🚪",
     "red": "door",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "reveal",
@@ -69,47 +69,47 @@
     "cards": [
       [
         "intro",
-        "PICK ONE \ud83d\udc40",
+        "PICK ONE 👀",
         1.2,
         "yellow"
       ],
       [
         "death",
-        "DEAD \u274c",
+        "DEAD ❌",
         0.7,
         "red",
         0
       ],
       [
         "survive",
-        "SURVIVED \u2705",
+        "SURVIVED ✅",
         0.6,
         "green",
         0
       ],
       [
         "survive",
-        "SURVIVED \u2705",
+        "SURVIVED ✅",
         0.6,
         "green",
         1
       ],
       [
         "death",
-        "DEAD \u274c",
+        "DEAD ❌",
         0.7,
         "red",
         1
       ],
       [
         "safe",
-        "THE SAFE ONE \ud83d\ude07",
+        "THE SAFE ONE 😇",
         1,
         "green"
       ],
       [
         "death",
-        "THE WORST ONE \ud83d\udc80",
+        "THE WORST ONE 💀",
         1,
         "red",
         2
@@ -188,7 +188,7 @@
     ],
     "args": [
       "--caption",
-      "which door would you pick? \ud83d\udeaa",
+      "which door would you pick? 🚪",
       "--red",
       "door",
       "--speed",
@@ -198,7 +198,7 @@
       "--counter",
       "{\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5}",
       "--cards",
-      "[[\"intro\",\"PICK ONE \ud83d\udc40\",1.2,\"yellow\"],[\"death\",\"DEAD \u274c\",0.7,\"red\",0],[\"survive\",\"SURVIVED \u2705\",0.6,\"green\",0],[\"survive\",\"SURVIVED \u2705\",0.6,\"green\",1],[\"death\",\"DEAD \u274c\",0.7,\"red\",1],[\"safe\",\"THE SAFE ONE \ud83d\ude07\",1,\"green\"],[\"death\",\"THE WORST ONE \ud83d\udc80\",1,\"red\",2]]",
+      "[[\"intro\",\"PICK ONE 👀\",1.2,\"yellow\"],[\"death\",\"DEAD ❌\",0.7,\"red\",0],[\"survive\",\"SURVIVED ✅\",0.6,\"green\",0],[\"survive\",\"SURVIVED ✅\",0.6,\"green\",1],[\"death\",\"DEAD ❌\",0.7,\"red\",1],[\"safe\",\"THE SAFE ONE 😇\",1,\"green\"],[\"death\",\"THE WORST ONE 💀\",1,\"red\",2]]",
       "--shake",
       "[[\"death\",2,24]]",
       "--flash",
@@ -3446,9 +3446,9 @@
     "gunzip -c shorts/which_door/recording.json.gz > work/which_door.rec.json",
     "node render.js work/which_door.rec.json work/which_door.frames 60 1080 1011",
     "python3 audio.py work/which_door.rec.json work/which_door.wav",
-    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? \ud83d\udeaa\" --red door --speed [[\"lava_a\",\"lava_dead\",2.5],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK ONE \ud83d\udc40\\\",1.2,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD \u274c\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED \u2705\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED \u2705\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD \u274c\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE \ud83d\ude07\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE \ud83d\udc80\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.8]] --replay {\"at\":\"big_blast\",\"before\":0.55,\"after\":0.28,\"cam\":\"12.5,14,-2,0,-72\",\"speed\":0.3,\"label\":\"REPLAY\"} --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after last_death:0.97 --out out/which_door.mp4"
+    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --red door --speed [[\"lava_a\",\"lava_dead\",2.5],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK ONE 👀\\\",1.2,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.8]] --replay {\"at\":\"big_blast\",\"before\":0.55,\"after\":0.28,\"cam\":\"12.5,14,-2,0,-72\",\"speed\":0.3,\"label\":\"REPLAY\"} --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after last_death:0.97 --out out/which_door.mp4"
   ],
-  "status": "ready",
-  "notes": "worker 14: which door would you pick? 5 doors (lava, zombies, arrow corridor, creepers, the safe one = TNT floor) + slow-mo replay of the blast; review 9 ready (nitpicks: creeper target is entity-order, cleared TNT pocket visible in replay, hiss quiet)",
+  "status": "needs-fix",
+  "notes": "worker 14: which door would you pick? 5 doors (lava, zombies, arrow corridor, creepers, the safe one = TNT floor) + slow-mo replay of the blast; review 9 ready (nitpicks: creeper target is entity-order, cleared TNT pocket visible in replay, hiss quiet) | owner 2026-11-07: drop the replay, open on a wide shot of all five doors; re-render pending",
   "published_at": "2026-11-07T16:26:59.921Z"
 }
