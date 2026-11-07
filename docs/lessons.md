@@ -326,3 +326,7 @@ each section.
 - **A waiter must not pgrep for its own command text.** `pgrep -f 'bash -c while kill -0 N'` inside that same bash -c matches itself, so it waits forever. Wait on PIDs (kill -0), or on patterns your own command line can't contain (the [s]erver.jar trick).
 - **Placement timing** (render.js): the server's block update comes back 1-3 ticks after a use. Mark the use tick with `ctx.mark('place', { x, y, z })` (block coordinates of the placed block; add `eye: true` for an eye of ender) and the renderer moves that block change to the mark: BlockItem placement is predicted by the vanilla client, an eye in a portal frame is not (EnderEyeItem.useOn returns early client-side), so it lands one tick after the use.
 - **"Planned" isn't "motivated".** The pixel-art glance back for scale (lib/pixel_art.js) passed every frame review and both audits because reviewers checked it against the script, not against a viewer. The owner saw "a weird turn to the left" in all five. Reviews now watch at real speed first and justify every big look swing that `beat_audit.py` lists (retention-audit check 7).
+
+- Stairs never rendered (any wood or stone, any facing): renderer/models.js getModelVariants skipped
+  blocks with `name.includes('air')`, and "stairs" contains "air". Match air, cave_air and void_air
+  by exact name. Beware substring tests on block names.
