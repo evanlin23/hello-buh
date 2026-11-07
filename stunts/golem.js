@@ -14,13 +14,20 @@ const BEATS = [
   { villagers: 10, golems: 10, dx: 48, launches: 5, sub: '10 villagers' },
   { villagers: 20, golems: 20, dx: 80, launches: 1, sub: '20 villagers...' }
 ]
+// a juggle counter: x1, x2... on each launch (the escalation in launches didn't read)
+function juggleSubs () {
+  const out = []; let occ = 0
+  BEATS.slice(0, -1).forEach(b => { for (let j = 0; j < b.launches; j++) out.push(['launched', `x${j + 1}`, 0.6, occ++]) })
+  return out
+}
 module.exports = {
   name: 'golem',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hit a villager 💀',
   edit: {
     caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/funk_abnormal.mp3', dropAt: 'death', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:0.8',
-    subs: [...BEATS.map((b, i) => ['beat', b.sub, 1.4, i]), ...BEATS.map((b, i) => ['golem', b.golems === 1 ? '1 golem' : `${b.golems} golems`, 1.2, i])]
+    subs: [...BEATS.map((b, i) => ['beat', b.sub, 1.4, i]), ...BEATS.map((b, i) => ['golem', b.golems === 1 ? '1 golem' : `${b.golems} golems`, 1.2, i]), ...juggleSubs()],
+    speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b`, 'cut'])
   },
   expectDeath: true,
 
@@ -32,8 +39,8 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (let z0 = z - 16; z0 <= z + 14; z0 += 6) {   // five village sites in one field (slabs under the /fill cap)
-      const z1 = Math.min(z0 + 5, z + 14)
+    for (let z0 = z - 50; z0 <= z + 26; z0 += 6) {   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
+      const z1 = Math.min(z0 + 5, z + 26)
       for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await ctx.cmd(`/fill ${x - 100} ${y0} ${z0} ${x + 100} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
       await ctx.cmd(`/fill ${x - 100} ${floor} ${z0} ${x + 100} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 100} ${floor - 3} ${z0} ${x + 100} ${floor - 1} ${z1} dirt`)
@@ -47,19 +54,22 @@ module.exports = {
       await ctx.cmd(`/fill ${sx - 1} ${floor} ${z - 12} ${sx + 1} ${floor} ${z + 6} dirt_path`)
       await ctx.cmd(`/setblock ${sx + 5} ${floor + 1} ${z - 6} hay_block`)
       await ctx.cmd(`/setblock ${sx - 5} ${floor + 1} ${z - 8} bell[attachment=floor]`)
-      // villagers in a loose arc right in front, golems behind them in the shot from the first frame
+    }
+    // villagers and golems are spawned when their beat starts (spawned at setup, the golems wandered off for a
+    // minute and walked back in from ~12 out); the villagers keep their AI so a hit one flinches and flees
+    this.spawnBeat = async (i) => {
+      const B = BEATS[i], sx = x + B.dx
       for (let v = 0; v < B.villagers; v++) {
         const a = (v - (B.villagers - 1) / 2) * Math.min(0.32, 3 / B.villagers), r = 2.0 + (v % 3) * 0.45
-        await ctx.cmd(`/summon villager ${(sx + 0.5 + Math.sin(a) * r * 1.6).toFixed(2)} ${floor + 1} ${(z + 0.5 - Math.cos(a) * r).toFixed(2)} {VillagerData:{profession:"minecraft:${profs[v % profs.length]}",type:"minecraft:plains",level:2},Xp:1,PersistenceRequired:1b,NoAI:1b,Rotation:[0f,0f],Tags:["v${i}"]}`)
+        bot.chat(`/summon villager ${(sx + 0.5 + Math.sin(a) * r * 1.6).toFixed(2)} ${floor + 1} ${(z + 0.5 - Math.cos(a) * r).toFixed(2)} {VillagerData:{profession:"minecraft:${profs[v % profs.length]}",type:"minecraft:plains",level:2},Xp:1,PersistenceRequired:1b,Rotation:[0f,0f],Tags:["v${i}"]}`)
       }
       for (let g = 0; g < B.golems; g++) {
-        // a ring round the bot's sides and back, 60-300 deg from the front (behind the villagers they got stuck and
-        // came one at a time: the swarm never showed); a second, wider ring past 12
         const ring = g < 12 ? 0 : 1, inRing = ring ? B.golems - 12 : Math.min(12, B.golems), k = ring ? g - 12 : g
         const ang = Math.PI / 3 + (k + 0.5) / inRing * (4 * Math.PI / 3), rad = 5.0 + ring * 2.2
         const gx = sx + 0.5 + Math.sin(ang) * rad, gz = z + 0.5 - Math.cos(ang) * rad
-        await ctx.cmd(`/summon iron_golem ${gx.toFixed(2)} ${floor + 1} ${gz.toFixed(2)} {PlayerCreated:0b,PersistenceRequired:1b,Rotation:[${(g * 47) % 360}f,0f],Tags:["g${i}"]}`)
+        bot.chat(`/summon iron_golem ${gx.toFixed(2)} ${floor + 1} ${gz.toFixed(2)} {PlayerCreated:0b,PersistenceRequired:1b,Rotation:[${(g * 47) % 360}f,0f],Tags:["g${i}"]}`)
       }
+      await bot.waitForTicks(4)
     }
     await ctx.hotbar(['wooden_sword', ['bread', 16], ['oak_planks', 32]])
     await ctx.tpCheck(x + BEATS[0].dx + 0.5, floor + 1, z + 0.5, 180, 10)
@@ -91,6 +101,10 @@ module.exports = {
       // Resistance V absorbed the whole hit, which then didn't register: no launch in 320 ticks (5 failed runs).
       // IV (80% off) lets the hit land and launch you; Regeneration V heals it back between hits
       if (last) { bot.chat('/effect clear @s resistance'); bot.chat('/effect clear @s regeneration') } else { bot.chat('/effect give @s resistance 30 3 true'); bot.chat('/effect give @s regeneration 30 4 true') }
+      // this village's villagers and golems now (a cut span hides them appearing)
+      if (i > 0) ctx.mark(`spawn${i}a`)
+      await this.spawnBeat(i)
+      if (i > 0) ctx.mark(`spawn${i}b`)
       ctx.mark('beat', { n: i })
       // smack every villager here
       for (const v of near('villager').slice(0, B.villagers)) {
@@ -112,7 +126,8 @@ module.exports = {
         const gs = near('iron_golem').filter(e => e.position.distanceTo(bot.entity.position) < 14)
         const g = gs.length ? { position: gs.reduce((a, e) => a.plus(e.position), new ctx.Vec3(0, 0, 0)).scaled(1 / gs.length).offset(0, -0.6, 0) } : null
         if (g) {
-          const e = bot.entity.position.offset(0, 1.62, 0), d = g.position.offset(0, 2.2, 0).minus(e)
+          // in the air: look down at the ring falling away (the launch reads); on the ground: over their heads, not into a golem's chest
+          const e = bot.entity.position.offset(0, 1.62, 0), d = (airborne ? bot.entity.position.offset(0, -4, -2.5) : g.position.offset(0, 3.6, 0)).minus(e)
           { const ty = Math.atan2(-d.x, -d.z), tp = Math.atan2(d.y, Math.hypot(d.x, d.z))   // eased: switching golems isn't a snap
             let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
             await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (tp - bot.entity.pitch) * 0.25, true) }
