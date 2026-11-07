@@ -28,11 +28,15 @@ module.exports = {
   name: 'one_in_a_million',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing, but it gets harder 😳',
-  renderDistance: 12, recordRadius: 200,   // vanilla's default 12 chunks: fog is max(xz, |y|) (fog.glsl), so at 8 the ground stayed fogged until 128 blocks above it
+  // fog is max(xz, |y|) (fog.glsl): at 12 chunks (192) the ground under build limit (246 up) was
+  // fully fogged, 2 s of blank white on tier 4 (beat audit PAUSE/LOW). 16 chunks (256) shows it;
+  // the recording has to reach 256 past the camera, so the chunk refresh also stops around the sets
+  renderDistance: 16, recordRadius: 310,
+  chunkStops: set => [[-116, 0], [116, 0], [-52, -64], [-52, 64], [52, -64], [52, 64]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })),
   clouds: false,   // Video Settings > Clouds: OFF (vanilla). At y 192 the falls went through a white cloud wall, and from build limit the clouds hid the target
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
-    song: 'songs/misery.mp3', dropAt: 'splash5',
+    song: 'songs/ncs/fearless_funk.mp3', dropAt: 'splash5',   // its drop (29.5 s) comes after splash5 (~25.5 s): misery's 16.25 s drop played on tier 4
     startAt: 'drop1:-0.85', endAfter: 'splash5:0.9',
     subs,
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
