@@ -669,6 +669,29 @@ function hurtTilt (t) {
 // keeps it facing forward; swinging faces the look direction) and never more than 50 degrees from
 // the head (tickHeadTurn); the limb swing follows WalkAnimationState (speed eases 0.4 toward
 // min(1, horizontal distance * 4), position advances by speed).
+// The Darkness effect (warden, sculk shrieker) from the harness's effect marks. MobEffectInstance's
+// blend factor steps toward 1 while the effect is on and back to 0 after, 1/22 a tick (darkness
+// fades in and out over 22 ticks). LightTexture.calculateDarknessScale pulses the lightmap down by
+// max(0, cos(tickCount * PI * 0.025) * 0.45 * blend) (a 4 s period).
+const DARK = []
+{
+  const evs = (rec.timeline || []).filter(e => (e.event === 'effect' || e.event === 'effect_end') && e.effect === 'darkness').map(e => ({ k: Math.round(e.t / 50), on: e.event === 'effect', dur: e.dur })).sort((a, b) => a.k - b.k)
+  if (evs.length) {
+    let f = 0, until = -1, j = 0
+    for (let k = 0; k <= P.length + 1; k++) {
+      while (j < evs.length && evs[j].k <= k) { const e = evs[j++]; until = e.on ? (e.dur < 0 ? Infinity : k + e.dur) : k }
+      const target = k < until ? 1 : 0
+      f = target > f ? Math.min(1, f + 1 / 22) : Math.max(0, f - 1 / 22)
+      DARK[k] = f
+    }
+  }
+}
+function darknessAt (t) {
+  if (!DARK.length) return { darkBlend: 0, darkScale: 0 }
+  const k = Math.max(0, Math.floor(t)), u = t - k
+  const b = (DARK[k] || 0) * (1 - u) + (DARK[k + 1] ?? DARK[k] ?? 0) * u
+  return { darkBlend: b, darkScale: Math.max(0, Math.cos(t * Math.PI * 0.025) * 0.45 * b) }
+}
 const THIRD = !!process.env.CAM || process.env.SHOW_PLAYER === '1'
 const PBODY = [], PWALK = []
 {
@@ -1345,6 +1368,7 @@ function camAtLive (t) {
     const cam = camAt(t)
     cam.dayTime = curDayTime
     cam.rain = levelAt(RAIN, t); cam.thunder = levelAt(THUNDER, t)
+    Object.assign(cam, darknessAt(t))
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
     // stunt.fovZoom [[EVENT[:s], EVENT[:s], SCALE]]: a sharp zoom rendered as a narrower FOV (a 2.2x crop
     // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.

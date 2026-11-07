@@ -330,3 +330,9 @@ each section.
 - Stairs never rendered (any wood or stone, any facing): renderer/models.js getModelVariants skipped
   blocks with `name.includes('air')`, and "stairs" contains "air". Match air, cave_air and void_air
   by exact name. Beware substring tests on block names.
+
+- **Darkness (warden, sculk shrieker)** is recorded: the harness marks the bot's `effect` / `effect_end`
+  (entity_effect packets, any effect). The renderer fades it in and out over 22 ticks, closes the fog
+  to 15 blocks and turns it black (DarknessFogFunction), and pulses the picture darker by
+  max(0, cos(tick * PI * 0.025) * 0.45 * blend), a 4 s beat. Light is baked into vertex colours, so the
+  pulse multiplies the finished frame (exact in full light, a bit bright in the dark). The HUD is not darkened.

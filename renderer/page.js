@@ -522,7 +522,8 @@ window.HB = {
     }
     // FogRenderer: near the bottom of the world the clear/fog colour darkens by ((y - minY) / 32)^2
     if ((cam.dimension || 'overworld') === 'overworld') {
-      const d = (cam.y - (env.minY ?? -64)) / 32
+      // (DarknessFogFunction.getModifiedVoidDarkness replaces it with 1 - blend: the fog fades to black)
+      const d = cam.darkBlend > 0 ? 1 - cam.darkBlend : (cam.y - (env.minY ?? -64)) / 32
       if (d < 1) fogC.multiplyScalar(Math.max(0, d) ** 2)
     }
     sky.material.uniforms.below.value = (cam.dimension || 'overworld') === 'overworld' && cam.y < 63 ? 1 : 0
@@ -530,12 +531,22 @@ window.HB = {
     const cloudC = new THREE.Color().setScalar(day.bright * 0.9 + 0.1)
     if (rain > 0) grey(cloudC, 0.6, rain, 0.95)
     if (thunder > 0) grey(cloudC, 0.2, thunder, 0.95)
+    // darkness: the short fog swallows the clouds, sun, moon and stars (they fade with the blend)
+    const db = cam.darkBlend || 0
+    if (db > 0) cloudC.lerp(fogC, db)
     clouds.traverse(o => { if (o.material) o.material.color.copy(cloudC) })
-    if (stars) stars.material.opacity = day.star * (1 - rain)
-    sun.material.opacity = 1 - rain; if (moon) moon.material.opacity = 1 - rain
+    if (stars) stars.material.opacity = day.star * (1 - rain) * (1 - db)
+    sun.material.opacity = (1 - rain) * (1 - db); if (moon) moon.material.opacity = (1 - rain) * (1 - db)
     // FogRenderer: lava 0.25..1.0. (This else chain once sat behind a // comment on one line, so
     // underwater fog never applied and lava fog was never cleared.)
     if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = envFog(0.25); scene.fog.far = 1.0 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = envFog(0); scene.fog.far = 24 } else { scene.fog.color.copy(env.fogColorC); scene.fog.near = rdFogStart(blocks); scene.fog.far = blocks }
+    // FogRenderer DarknessFogFunction: the fog end closes in to lerp(blend, renderDistance, 15), start
+    // at 0.75 of it (the sky's at 0: it fades to the fog colour)
+    if (cam.darkBlend > 0 && !cam.inLava && !cam.underwater) {
+      const b = cam.darkBlend, end = blocks + (15 - blocks) * b
+      scene.fog.far = Math.min(scene.fog.far, end); scene.fog.near = Math.min(scene.fog.near, end * 0.75)
+      sky.material.uniforms.top.value.lerp(fogC, b); sky.material.uniforms.horizon.value.lerp(fogC, b)
+    }
     const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under && env.clouds !== false;   // a stunt can set `clouds: false` (Video Settings > Clouds: OFF)
     sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
     scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : env.fogColorC.clone()
@@ -584,6 +595,18 @@ window.HB = {
       const ac = renderer.autoClear; renderer.autoClear = false
       renderer.clearDepth(); renderer.render(handScene, handCam)
       renderer.autoClear = ac
+    }
+    // the Darkness pulse: the lightmap minus darknessScale. Our light is baked into the vertex
+    // colours, so this darkens the finished world + hand by (1 - scale) (exact in full light,
+    // a bit brighter than vanilla in the dark). The HUD is drawn later, by edit.py, unaffected.
+    if (cam.darkScale > 0) {
+      if (!darkQuad) {
+        darkQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, depthTest: false, depthWrite: false }))
+        darkScene = new THREE.Scene(); darkScene.add(darkQuad); darkCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
+      }
+      darkQuad.material.opacity = Math.min(1, cam.darkScale)
+      const ac = renderer.autoClear; renderer.autoClear = false
+      renderer.render(darkScene, darkCam); renderer.autoClear = ac
     }
     return true
   }
@@ -880,6 +903,7 @@ async function armObject () {
   return ARM
 }
 
+let darkQuad = null, darkScene = null, darkCam = null
 async function drawHand (cam) {
   if (handObj) { handScene.remove(handObj.obj); handObj = null }
   const h = cam.hand
