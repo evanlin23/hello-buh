@@ -26,7 +26,7 @@ module.exports = {
     fallen: DROPS.map((d, i) => [`drop${i + 1}`, i === DROPS.length - 1 ? 'death' : `splash${i + 1}`])
   },
   expectDeath: true,
-  renderDistance: 12, recordRadius: 200,   // vanilla's default 12: the ground stays in sight under the high drops (fog is max(xz, |y|))
+  renderDistance: 20, recordRadius: 320,   // the ground has to stay in sight from 251 up (fog is max(xz, |y|)): at 12 (192 blocks) the 230/250 drops opened on ~1 s of blank fog
   clouds: false,                // the 200-250 block falls cross y 192: the camera went through a white cloud wall
 
   async setup (ctx) {
