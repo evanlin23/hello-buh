@@ -1,0 +1,578 @@
+{
+  "name": "clutch_harder",
+  "caption": "clutches, but each one is harder \ud83d\ude33",
+  "youtube": {
+    "title": "clutches, but each one is harder \ud83d\ude33 #minecraft #shorts",
+    "description": "clutches, but each one is harder \ud83d\ude33\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "fearless_funk.mp3",
+    "title": "Fearless Funk",
+    "artist": "DR M\u00d8B, Chris Linton",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "placed8",
+    "drop_in_song_s": 29.5,
+    "drop_in_short_s": 29.23,
+    "song_start_s": 0.27
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 31.08,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 68441314,
+    "sha256": "d39bfa42119128ec724aa15e2ebce3df790a7ee20d44403007aaff97ca3250cd"
+  },
+  "edit": {
+    "caption": "clutches, but each one is harder \ud83d\ude33",
+    "red": "harder",
+    "song": "songs/ncs/vem_lenta.mp3",
+    "dropAt": "placed8",
+    "startAt": "look1:0.3",
+    "endAfter": "death:1.3",
+    "onFire": "placed8:death",
+    "deathScreen": true,
+    "subs": [
+      [
+        "look1",
+        "40 BLOCKS",
+        2.4,
+        0
+      ],
+      [
+        "look2",
+        "70 BLOCKS",
+        2.4,
+        0
+      ],
+      [
+        "look3",
+        "HALF A HEART",
+        2.4,
+        0
+      ],
+      [
+        "look4",
+        "131 BLOCKS, HALF A HEART",
+        2.4,
+        0
+      ],
+      [
+        "look5",
+        "PEARL OVER LAVA",
+        2.4,
+        0
+      ],
+      [
+        "look6",
+        "AT NIGHT",
+        2.4,
+        0
+      ],
+      [
+        "look7",
+        "100 BLOCKS + STORM",
+        2.4,
+        0
+      ],
+      [
+        "look8",
+        "EASY ONE",
+        2.4,
+        0
+      ]
+    ],
+    "speed": [
+      [
+        "cut1a",
+        "cut1b",
+        "cut"
+      ],
+      [
+        "cut2a",
+        "cut2b",
+        "cut"
+      ],
+      [
+        "cut3a",
+        "cut3b",
+        "cut"
+      ],
+      [
+        "cut4a",
+        "cut4b",
+        "cut"
+      ],
+      [
+        "cut5a",
+        "cut5b",
+        "cut"
+      ],
+      [
+        "cut6a",
+        "cut6b",
+        "cut"
+      ],
+      [
+        "cut7a",
+        "cut7b",
+        "cut"
+      ]
+    ],
+    "fallen": [
+      [
+        "jump2",
+        "placed2",
+        "blocks"
+      ],
+      [
+        "jump3",
+        "placed3",
+        "blocks"
+      ],
+      [
+        "jump4",
+        "placed4",
+        "blocks"
+      ]
+    ],
+    "sfx": [
+      [
+        "boom",
+        "look7",
+        {
+          "gain": 0.8
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "clutches, but each one is harder \ud83d\ude33",
+      "--red",
+      "harder",
+      "--subs",
+      "[[\"look1\",\"40 BLOCKS\",2.4,0],[\"look2\",\"70 BLOCKS\",2.4,0],[\"look3\",\"HALF A HEART\",2.4,0],[\"look4\",\"131 BLOCKS, HALF A HEART\",2.4,0],[\"look5\",\"PEARL OVER LAVA\",2.4,0],[\"look6\",\"AT NIGHT\",2.4,0],[\"look7\",\"100 BLOCKS + STORM\",2.4,0],[\"look8\",\"EASY ONE\",2.4,0]]",
+      "--speed",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"cut7a\",\"cut7b\",\"cut\"]]",
+      "--fallen",
+      "[[\"jump2\",\"placed2\",\"blocks\"],[\"jump3\",\"placed3\",\"blocks\"],[\"jump4\",\"placed4\",\"blocks\"]]",
+      "--sfx",
+      "[[\"boom\",\"look7\",{\"gain\":0.8}]]",
+      "--on_fire",
+      "placed8:death",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "look1:0.3",
+      "--end_after",
+      "death:1.3",
+      "--song",
+      "songs/ncs/vem_lenta.mp3",
+      "--song_drop_at",
+      "placed8"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 536,
+      "y": 71,
+      "z": -41
+    },
+    "biome": "minecraft:plains",
+    "ticks": 1613,
+    "seconds": 80.65,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "look1"
+      },
+      {
+        "t": 1.15,
+        "event": "jump1"
+      },
+      {
+        "t": 3.2,
+        "event": "placed1"
+      },
+      {
+        "t": 4.55,
+        "event": "cut1a"
+      },
+      {
+        "t": 7.3,
+        "event": "cut"
+      },
+      {
+        "t": 8.7,
+        "event": "effect"
+      },
+      {
+        "t": 8.7,
+        "event": "effect_end"
+      },
+      {
+        "t": 9.2,
+        "event": "cut1b"
+      },
+      {
+        "t": 9.2,
+        "event": "look2"
+      },
+      {
+        "t": 9.6,
+        "event": "jump2"
+      },
+      {
+        "t": 12.35,
+        "event": "placed2"
+      },
+      {
+        "t": 13.7,
+        "event": "cut2a"
+      },
+      {
+        "t": 16.45,
+        "event": "cut"
+      },
+      {
+        "t": 17.85,
+        "event": "effect"
+      },
+      {
+        "t": 17.9,
+        "event": "effect_end"
+      },
+      {
+        "t": 18.05,
+        "event": "hurt",
+        "type": "generic"
+      },
+      {
+        "t": 18.55,
+        "event": "cut2b"
+      },
+      {
+        "t": 18.55,
+        "event": "look3"
+      },
+      {
+        "t": 18.95,
+        "event": "jump3"
+      },
+      {
+        "t": 22.05,
+        "event": "placed3"
+      },
+      {
+        "t": 23.4,
+        "event": "cut3a"
+      },
+      {
+        "t": 26.15,
+        "event": "cut"
+      },
+      {
+        "t": 27.55,
+        "event": "effect"
+      },
+      {
+        "t": 27.55,
+        "event": "effect_end"
+      },
+      {
+        "t": 27.75,
+        "event": "hurt",
+        "type": "generic"
+      },
+      {
+        "t": 28.25,
+        "event": "cut3b"
+      },
+      {
+        "t": 28.25,
+        "event": "look4"
+      },
+      {
+        "t": 28.65,
+        "event": "jump4"
+      },
+      {
+        "t": 32.5,
+        "event": "placed4"
+      },
+      {
+        "t": 33.85,
+        "event": "cut4a"
+      },
+      {
+        "t": 36.6,
+        "event": "cut"
+      },
+      {
+        "t": 38,
+        "event": "effect"
+      },
+      {
+        "t": 38,
+        "event": "effect_end"
+      },
+      {
+        "t": 38.55,
+        "event": "cut4b"
+      },
+      {
+        "t": 38.55,
+        "event": "look5"
+      },
+      {
+        "t": 39.25,
+        "event": "fall5"
+      },
+      {
+        "t": 39.8,
+        "event": "swing"
+      },
+      {
+        "t": 39.8,
+        "event": "pearl_thrown5"
+      },
+      {
+        "t": 40.3,
+        "event": "hurt",
+        "type": "ender_pearl"
+      },
+      {
+        "t": 40.35,
+        "event": "teleported5"
+      },
+      {
+        "t": 41.75,
+        "event": "cut5a"
+      },
+      {
+        "t": 43.15,
+        "event": "time"
+      },
+      {
+        "t": 44.35,
+        "event": "cut"
+      },
+      {
+        "t": 45.75,
+        "event": "effect"
+      },
+      {
+        "t": 45.75,
+        "event": "effect_end"
+      },
+      {
+        "t": 46.25,
+        "event": "cut5b"
+      },
+      {
+        "t": 46.25,
+        "event": "look6"
+      },
+      {
+        "t": 46.95,
+        "event": "fall6"
+      },
+      {
+        "t": 47.5,
+        "event": "swing"
+      },
+      {
+        "t": 47.5,
+        "event": "pearl_thrown6"
+      },
+      {
+        "t": 48.65,
+        "event": "hurt",
+        "type": "ender_pearl"
+      },
+      {
+        "t": 48.7,
+        "event": "teleported6"
+      },
+      {
+        "t": 48.9,
+        "event": "cut6a"
+      },
+      {
+        "t": 51.5,
+        "event": "weather"
+      },
+      {
+        "t": 57.95,
+        "event": "cut"
+      },
+      {
+        "t": 59.35,
+        "event": "effect"
+      },
+      {
+        "t": 59.35,
+        "event": "effect_end"
+      },
+      {
+        "t": 59.85,
+        "event": "cut6b"
+      },
+      {
+        "t": 59.85,
+        "event": "look7"
+      },
+      {
+        "t": 60.55,
+        "event": "fall7"
+      },
+      {
+        "t": 61.1,
+        "event": "swing"
+      },
+      {
+        "t": 61.1,
+        "event": "pearl_thrown7"
+      },
+      {
+        "t": 62.75,
+        "event": "hurt",
+        "type": "ender_pearl"
+      },
+      {
+        "t": 62.8,
+        "event": "teleported7"
+      },
+      {
+        "t": 63,
+        "event": "cut7a"
+      },
+      {
+        "t": 65.65,
+        "event": "time"
+      },
+      {
+        "t": 65.85,
+        "event": "weather"
+      },
+      {
+        "t": 72.3,
+        "event": "cut"
+      },
+      {
+        "t": 73.7,
+        "event": "effect"
+      },
+      {
+        "t": 73.7,
+        "event": "effect_end"
+      },
+      {
+        "t": 74.2,
+        "event": "cut7b"
+      },
+      {
+        "t": 74.2,
+        "event": "look8"
+      },
+      {
+        "t": 74.6,
+        "event": "jump8"
+      },
+      {
+        "t": 76.1,
+        "event": "placed8"
+      },
+      {
+        "t": 76.2,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 76.65,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 76.65,
+        "event": "death"
+      },
+      {
+        "t": 78.65,
+        "event": "death_screen"
+      },
+      {
+        "t": 80.65,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "17715044d50c33cb70bbd931abc54481d8a08fc0",
+    "rendered_at": "2026-11-07T14:58:19.457Z",
+    "head_at_publish": "e2a8f01d8ba58bd5622238d56db5564d5618c182",
+    "stunt": "stunts/clutch_harder.js",
+    "source_snapshot": [
+      "source/clutch_harder.js",
+      "source/water_clutch.js",
+      "source/pearl_clutch.js",
+      "source/wrong_bucket.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 17715044d50c",
+    "gunzip -c shorts/clutch_harder/recording.json.gz > work/clutch_harder.rec.json",
+    "node render.js work/clutch_harder.rec.json work/clutch_harder.frames 60 1080 1011",
+    "python3 audio.py work/clutch_harder.rec.json work/clutch_harder.wav",
+    "python3 edit.py --frames work/clutch_harder.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/clutch_harder.rec.json --audio work/clutch_harder.wav --caption \"clutches, but each one is harder \ud83d\ude33\" --red harder --subs \"[[\\\"look1\\\",\\\"40 BLOCKS\\\",2.4,0],[\\\"look2\\\",\\\"70 BLOCKS\\\",2.4,0],[\\\"look3\\\",\\\"HALF A HEART\\\",2.4,0],[\\\"look4\\\",\\\"131 BLOCKS, HALF A HEART\\\",2.4,0],[\\\"look5\\\",\\\"PEARL OVER LAVA\\\",2.4,0],[\\\"look6\\\",\\\"AT NIGHT\\\",2.4,0],[\\\"look7\\\",\\\"100 BLOCKS + STORM\\\",2.4,0],[\\\"look8\\\",\\\"EASY ONE\\\",2.4,0]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"cut7a\",\"cut7b\",\"cut\"]] --fallen [[\"jump2\",\"placed2\",\"blocks\"],[\"jump3\",\"placed3\",\"blocks\"],[\"jump4\",\"placed4\",\"blocks\"]] --sfx [[\"boom\",\"look7\",{\"gain\":0.8}]] --on_fire placed8:death --death_screen death --start_at look1:0.3 --end_after death:1.3 --song songs/ncs/vem_lenta.mp3 --song_drop_at placed8 --out out/clutch_harder.mp4"
+  ],
+  "status": "ready",
+  "notes": "orchestrator: 8 escalating clutches, 31 s; independent review v6 PASS (frame review, retention incl. camera check, minecraft). Nitpicks: label wraps, ~0.4 s near-still at the 131 opening, night opening mostly dark treeline",
+  "published_at": "2026-11-07T15:50:07.341Z"
+}
