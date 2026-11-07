@@ -849,6 +849,20 @@ const SMOOTH = (() => {
   }
   return { yaw, pitch }
 })()
+// sneaking and sprinting (pose field 7 flags: 1 sneak, 2 sprint). Camera: the eye height eases
+// halfway to its target each tick (standing 1.62, crouching 1.27); GameRenderer: the FOV modifier eases
+// the same way toward getFieldOfViewModifier (sprinting: (1.3 + 1) / 2 = 1.15, only while moving)
+const HAS_FLAGS = P.some(q => q[7])
+const EYEH = [], FOVM = []
+{
+  let eh = EYE, fm = 1
+  for (let i = 0; i < P.length; i++) {
+    const fl = P[i][7] || 0, moving = i > 0 && Math.hypot(P[i][1] - P[i - 1][1], P[i][3] - P[i - 1][3]) > 0.05
+    eh += ((fl & 1 ? 1.27 : EYE) - eh) * 0.5
+    fm += ((fl & 2 && moving ? 1.15 : 1) - fm) * 0.5
+    EYEH.push(eh); FOVM.push(fm)
+  }
+}
 function camAtLive (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t)))
   let a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
@@ -868,7 +882,8 @@ function camAtLive (t) {
   const f = Math.min(1, Math.max(0, t - i))
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f
   return {
-    x: a[1] + (b[1] - a[1]) * f, y: a[2] + (b[2] - a[2]) * f + EYE, z: a[3] + (b[3] - a[3]) * f,
+    x: a[1] + (b[1] - a[1]) * f, y: a[2] + (b[2] - a[2]) * f + (HAS_FLAGS ? EYEH[i] + (EYEH[Math.min(EYEH.length - 1, i + 1)] - EYEH[i]) * f : EYE), z: a[3] + (b[3] - a[3]) * f,
+    fov: HAS_FLAGS ? 70 * (FOVM[i] + (FOVM[Math.min(FOVM.length - 1, i + 1)] - FOVM[i]) * f) : undefined,
     yaw: lerpAngle(yaw0, yaw1, f), pitch: pit0 + (pit1 - pit0) * f,
     bobX: Math.sin(g * Math.PI) * h * 0.5,
     bobY: -Math.abs(Math.cos(g * Math.PI) * h),
@@ -1227,7 +1242,7 @@ function camAtLive (t) {
       if (m) { detachedCam.t = t; Object.assign(cam, detachedCam(eye, m[1], Number(m[2] || 4), mesher.world)) }
       else {
         const [dx, dy, dz, yw, pt] = process.env.CAM.split(',').map(Number)
-        Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0 })
+        Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0, fov: undefined })
       }
     }
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))

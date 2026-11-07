@@ -490,7 +490,7 @@ window.HB = {
     camera.rotation.set(cam.pitch - (cam.bobPitch || 0), cam.yaw, cam.roll || 0)
     if (cam.bobX) camera.translateX(cam.bobX)
     if (cam.bobY) camera.translateY(cam.bobY)
-    if (cam.fov) { camera.fov = cam.fov; camera.updateProjectionMatrix() }
+    { const fv = cam.fov || 70; if (camera.fov !== fv) { camera.fov = fv; camera.updateProjectionMatrix() } }
     camera.updateMatrixWorld()
     // Underwater: vanilla swaps to the biome's water fog colour and a short fog distance.
     const blocks = env.renderDistance * 16
