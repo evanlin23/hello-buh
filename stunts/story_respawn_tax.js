@@ -125,7 +125,7 @@ module.exports = {
     const away = (tag) => say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} 0 0`)
     // lead: ticks between the move and the cut. One arriving from past 64 blocks shows 2 ticks after its /tp, one
     // leaving vanishes 1 tick after (the lane librarian left 3 frames early with 2)
-    const onCut = async (moves, ...cutArgs) => { const lead = typeof cutArgs[0] === 'object' && cutArgs[0].lead ? cutArgs.shift().lead : 2; moves(); for (let i = 0; i < lead; i++) { await bot.waitForTicks(1); K.look(0) } await cut(...cutArgs) }   // keep swaying while it waits (5 identical frames before the cut)
+    const onCut = async (moves, ...cutArgs) => { const lead = cutArgs[0] && cutArgs[0].lead !== undefined ? cutArgs.shift().lead : 2; moves(); for (let i = 0; i < lead; i++) { await bot.waitForTicks(1); K.look(0) } await cut(...cutArgs) }   // keep swaying while it waits (5 identical frames before the cut)
     const put = async (tag, x, z, yaw) => {
       say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} ${yaw} 0`); await bot.waitForTicks(2)
       say(`/tp @e[tag=${tag}] ${X + x} ${F + 1} ${Z + z} ${yaw} 0`); await bot.waitForTicks(5)   // she re-enters tracking a few ticks after the hop back (popped in 3 frames after the cut)
@@ -339,7 +339,7 @@ module.exports = {
     }, -0.1)   // onCut adds 2 ticks before L15
     ctx.mark('face_off')
     // L15: now it's just her (alone in the line)
-    await onCut(() => say(`/tp @e[tag=v_lib] ${X + 0.5} ${F + 1} ${Z - 11.5} 0 0`), 0.5, -2.5, P(0.5, 1.6, -11.5))
+    await onCut(() => say(`/tp @e[tag=v_lib] ${X + 0.5} ${F + 1} ${Z - 11.5} 0 0`), { lead: 1 }, 0.5, -2.5, P(0.5, 1.6, -11.5))   // she showed 1 tick after it in the last run (2 earlier): visible behind the golem
     await line('L15', async (k, at) => {
       go(k < 14); look(k)
       if (k === 2) say(`/tp @e[tag=v_lib2] ${X + 0.5} ${F + 1} ${Z + 0.5} 0 0`)   // her twin onto the gold block, behind this shot
@@ -347,7 +347,7 @@ module.exports = {
     go(false)
     // L16: she's already standing on my spawn
     say('/effect give @s minecraft:fire_resistance 30 0 true')
-    await onCut(() => away('v_lib'), { lead: 1 }, 0.5, 7.4, P(0.5, 1.7, 0.5))   // the lane one leaves on the cut (one slid onto the gold block, then popped)
+    await onCut(() => away('v_lib'), { lead: 0 }, 0.5, 7.4, P(0.5, 1.7, 0.5))   // she vanished 1 tick after her /tp in the last run   // the lane one leaves on the cut (one slid onto the gold block, then popped)
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
     let from16 = null
     await line('L16', async (k) => { go(k > 6 && k < 12); if (k > 12) { from16 = from16 || { ...K.base }; K.turnTo(from16, P(0.5, 1.0, 2.5), (k - 12) / 40) } look(k) })   // a slow tilt from her face toward the cauldron (a near-hold: retention)
