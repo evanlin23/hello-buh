@@ -159,7 +159,7 @@ module.exports = {
     await k.cutTo(cs[0], cs[1], cs[2], 180, 5)
     // half his hearts gone before the beat (inside the cut, the blink over by the first frame): the
     // blast does ~12 on normal, and a noob who survives a point-blank creeper isn't the joke
-    bot.chat('/damage @s 11 minecraft:generic')
+    bot.chat('/damage @s 14 minecraft:generic')
     await bot.waitForTicks(24)
     k.beat({ task: 1 })
     const creeperHead = () => { const c = k.mob('creeper'); return c ? c.position.offset(0, 1.1, 0) : null }
@@ -197,9 +197,9 @@ module.exports = {
       if (!c) { dead = true; break }
       const [ya, pa] = k.angTo(c.position.offset(0, 1.1, 0)); k.lerpLook(ya, pa, 0.35)
       const d = c.position.distanceTo(bot.entity.position)
-      if (d < 4) { bot.setControlState('sprint', false); bot.setControlState('forward', false) }
-      if (d < 3.1 && w - last >= 13) { bot.attack(c); last = w; hits++; ctx.mark('hit', { n: hits }); ctx.sound(hits === 1 ? 'entity.player.attack.knockback' : 'entity.player.attack.crit', 1) }
-      if (hits >= 2 && w - last > 2 && (!c.metadata || c.health === 0)) { /* waiting for it to drop */ }
+      // close in (and chase it after the knockback of the first hit), stop at sword's length
+      bot.setControlState('forward', d > 2.6); if (d < 4) bot.setControlState('sprint', false)
+      if (d < 3.2 && w - last >= 12) { bot.attack(c); last = w; hits++; ctx.mark('hit', { n: hits }); ctx.sound(hits === 1 ? 'entity.player.attack.knockback' : 'entity.player.attack.crit', 1) }
       await bot.waitForTicks(1)
     }
     bot.clearControlStates()
