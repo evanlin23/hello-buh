@@ -112,9 +112,22 @@ module.exports = {
       ctx.respawn(); await spawned; ctx.revive()
     }
     const go = (on) => bot.setControlState('forward', on)
+    // respawn without stalling the line (an awaited respawn held each scene ~1 s past its voice)
+    let respawning = false
+    const respawnSoon = (then) => { if (respawning) return; respawning = true; respawn().then(() => { respawning = false; if (then) then() }) }
+    const alive = () => !ctx.died && !respawning
+    // something moving behind every death screen: smoke at a point in view, every 3 ticks while dead
+    let deadView = null
+    bot.on('death', () => {
+      const e = bot.entity, f = { x: -Math.sin(e.yaw), z: -Math.cos(e.yaw) }
+      const d = 2.5
+      if (!noSmoke) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 - 1.6), e.position.z + f.z * d)
+    })
+    let noSmoke = false
+    bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 3 === 0) ctx.particles('smoke', deadView, { count: 2 }) })
     // the trip: over the sunken cauldron, drop into it (walking can step across its rim) and die
     const overCauldron = () => { const p = bot.entity.position; return p.z < Z + 5.0 && p.z > Z + 4.0 && p.x > X && p.x < X + 1 }
-    const fallIn = () => say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 0.3).toFixed(3)} ${(Z + 4.5).toFixed(3)}`)
+    const fallIn = (t) => say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 0.3).toFixed(3)} ${(Z + 4.5).toFixed(3)} facing ${t.x.toFixed(2)} ${t.y.toFixed(2)} ${t.z.toFixed(2)}`)
     const hurt = (hp) => say(`/damage @s ${20 - hp} minecraft:generic`)   // start a deadly scene already hurt
     setMeter(5)
 
@@ -129,25 +142,26 @@ module.exports = {
     await bot.waitForTicks(6)
     // L03: respawn; the fisherman is gone, his boat just floating there
     gone('v_fisher')
+    let docked = false
     await line('L03', async (k, at) => {
-      if (k === 0) { await respawn(); setMeter(4) }
-      if (k === at(1) - 2) await cut(18.5, -3.5, P(25.5, -0.6, -3.5))
-      go(k > at(1) && bot.entity.position.x < X + 21.2)
-      if (k > at(1)) K.base = K.aim(P(26.5, 0.4, -3.5))
-      look(k)
+      if (k === 0) respawnSoon(() => { setMeter(4); K.base = K.aim(P(-1.6, 1.0, -1.8)) })   // where the fisherman stood: empty
+      if (!docked && k >= at(3) - 2 && alive()) { docked = true; await cut(18.5, -3.5, P(25.5, -0.6, -3.5)) }
+      go(docked && bot.entity.position.x < X + 21.2)
+      if (docked) K.base = K.aim(P(26.5, 0.4, -3.5))
+      if (alive()) look(k)
     })
     go(false)
     // L04: then lava. Respawn. The butcher's door, wide open
     await cut(-19.5, 10.5, P(-19.5, 0, 12.5), 2.2)
     hurt(5)
     gone('v_butcher')
-    let dead = false
+    let dead = false, door = false
     await line('L04', async (k, at) => {
       if (!dead && bot.entity.position.y < F + 1.0) { kill('lava'); dead = true }
-      if (k === at(2) - 3) { await respawn(); setMeter(3) }
-      if (k === at(2)) await cut(-1.5, 12.5, P(4.5, 1.8, 12.5))
-      if (k < at(2)) K.base = { yaw: K.base.yaw, pitch: -1.3 }
-      look(k)
+      if (dead && k >= at(1)) respawnSoon(() => setMeter(3))
+      if (dead && !door && k >= at(2) - 1 && alive()) { door = true; await cut(-1.5, 12.5, P(4.5, 1.8, 12.5)) }
+      if (!door) K.base = { yaw: K.base.yaw, pitch: -1.3 }
+      if (alive()) look(k)
     })
     // L05: a cactus took the fletcher
     await cut(-12.5, -17.4, P(-12.5, 1.5, -21))
@@ -157,15 +171,16 @@ module.exports = {
     await line('L05', async (k) => {
       go(!dead)
       if (!dead && bot.entity.position.z < Z - 19.6) { kill('cactus'); dead = true; go(false) }
-      look(k)
-    }, 0.25)
+      if (alive()) look(k)
+    })
     go(false)
-    for (let i = 0; i < 10 && !ctx.died; i++) await bot.waitForTicks(1)
-    // L06: so I stopped dying. I moved into a house made of hay
-    await line('L06', async (k) => {
-      if (k === 0) { await respawn(); setMeter(2); await cut(14.5, -11.5, P(14.5, 1.5, -19)) }
-      go(k > 2 && bot.entity.position.z > Z - 17.4)
-      look(k)
+    // L06: so I stopped dying (over the cactus death screen). I moved into a house made of hay
+    let hay = false
+    await line('L06', async (k, at) => {
+      respawnSoon(() => setMeter(2))
+      if (!hay && k >= at(2) - 1 && alive()) { hay = true; await cut(14.5, -11.5, P(14.5, 1.5, -19)) }
+      go(hay && bot.entity.position.z > Z - 17.4)
+      if (alive()) look(k)
     })
     go(false)
     // L07: the librarian raised me. Bread. One more, just in case.
@@ -195,7 +210,7 @@ module.exports = {
     dead = false
     await line('L10', async (k) => {
       go(!dead)
-      if (!dead && (bot.entity.position.y < F + 0.9 || overCauldron())) { fallIn(); kill('lava'); dead = true; go(false) }
+      if (!dead && (bot.entity.position.y < F + 0.9 || overCauldron())) { fallIn(P(0.5, 1.4, -3)); kill('lava'); dead = true; go(false) }   // dies facing the spawn and the lane
       if (!dead) { K.base = K.aim(P(0.5, 0.2, 4.5)); look(k) }
     })
     go(false)
@@ -244,23 +259,27 @@ module.exports = {
     await cut(0.5, 7.4, P(0.5, 1.7, 0.5))
     hurt(5)
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
-    await line('L16', async (k) => { go(k > 6 && k < 16); look(k) })
+    await line('L16', async (k) => { go(k > 6 && k < 12); look(k) })
     go(false)
     // L17: and today, I tripped again
     dead = false
     await line('L17', async (k, at) => {
-      go(!dead)
+      go(!dead && k >= at(2) - 7)   // the fall lands on "AGAIN."
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
-      if (!dead && (bot.entity.position.y < F + 0.9 || overCauldron())) { fallIn(); kill('lava'); dead = true; go(false) }
+      if (!dead && (bot.entity.position.y < F + 0.9 || overCauldron())) {
+        fallIn(P(0.5, 2.0, 0.5)); kill('lava'); dead = true; go(false)   // facing her: her face between the title and the buttons
+        deadView = null; noSmoke = true                                   // nothing between us: she sparkles instead
+      }
+      if (dead && k % 3 === 0) ctx.particles('happy', P(0.5, 1.6 + Math.random() * 0.6, 0.5), { count: 2 })
       if (!dead) { K.base = K.aim(k > at(1) && k < at(2) ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5)); look(k) }
-    }, 0.2)
+    })
     go(false)
     // L18: she just smiled and said, go on. Respawn. (the death screen, the Respawn button). Mob moves stop
     // reaching a dead player after ~1 s, so the motion comes from particles: she sparkles (a happy
     // villager), the cauldron smokes
     await line('L18', async (k, at) => {
-      if (k >= at(1) && k % 3 === 0) ctx.particles('happy', P(0.5, 1.6 + Math.random() * 0.6, 0.5), { count: 2 })
-    }, 0.25)
+      if (k % 3 === 0) ctx.particles('happy', P(0.5, 1.6 + Math.random() * 0.6, 0.5), { count: 2 })
+    })
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return ctx.died
