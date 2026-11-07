@@ -514,6 +514,10 @@ def snap_hotbar(timeline):
                 emit(t, e, shown)
             continue
         if e["event"] == "place" and shown is not None:
+            # an ender eye isn't predicted (EnderEyeItem.useOn returns early on the client): the count
+            # drops with the server's update, the tick the eye shows in the frame (worker 4)
+            if e.get("eye"):
+                t = t + 50
             sl = e.get("slot", 0)
             it = shown[sl] if sl < len(shown) else None
             if it:

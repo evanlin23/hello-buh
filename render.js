@@ -70,8 +70,10 @@ const P = rec.poses
 // early client-side), so it lands one tick after the use (worker 4, end_portal_job)
 if (rec.blocks && rec.timeline) {
   for (const m of rec.timeline.filter(e => e.event === 'place' && Number.isFinite(e.x))) {
+    // (an eye's frame update can reach the recording on the use tick itself: it showed before the
+    // swing started; it goes in one tick after the use either way: worker 4, end_portal_job v7)
     const t0 = m.t / 50 + (m.eye ? 1 : 0), x = Math.floor(m.x), y = Math.floor(m.y), z = Math.floor(m.z)
-    const b = rec.blocks.find(b => b[1] === x && b[2] === y && b[3] === z && b[0] > t0 && b[0] <= t0 + 5)
+    const b = rec.blocks.find(b => b[1] === x && b[2] === y && b[3] === z && (m.eye ? b[0] >= m.t / 50 : b[0] > t0) && b[0] <= t0 + 5)
     if (b) b[0] = Math.ceil(t0)
   }
   rec.blocks.sort((a, b) => a[0] - b[0])
@@ -1360,6 +1362,11 @@ function camAtLive (t) {
         for (let k = b[0]; k <= last[0]; k++) { const u = (k - b[0]) / n; PARTS.push(...particles.spawn({ type: 'firework_trail', t: k * 50, x: b[3] + (b[3] - a[3]) * u, y: b[4] + (b[4] - a[4]) * u, z: b[5] + (b[5] - a[5]) * u, vy: (b[4] - a[4]) / n })) }
       }
     }
+  }
+  // an eye going into a portal frame (LevelEvent 1503 END_PORTAL_FRAME_FILL): 16 small smoke puffs on
+  // the frame top (x, z at (5 + r * 6) / 16, y + 0.8125), when the eye appears (use tick + 1)
+  for (const m of (rec.timeline || []).filter(e => e.event === 'place' && e.eye && Number.isFinite(e.x))) {
+    for (let k = 0; k < 16; k++) PARTS.push(...particles.spawn({ type: 'tnt_smoke', t: m.t + 50, x: Math.floor(m.x) + (5 + Math.random() * 6) / 16, y: Math.floor(m.y) + 0.8125, z: Math.floor(m.z) + (5 + Math.random() * 6) / 16 }))
   }
   // Blaze.aiStep (client): two large_smoke puffs a tick at random spots in its box (0.6 x 1.8)
   for (const row of rec.entities || []) {
