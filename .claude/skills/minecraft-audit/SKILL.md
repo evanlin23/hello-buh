@@ -16,6 +16,11 @@ player would notice is.
   actions on camera must be survival-legal.
 - The death screen's red tint over the HUD and particles, and the small death roll.
 - Biome tint gradients across a biome border.
+- Particles close to the eye that look big, checked against the jar (worker 11, 2026-11-07); don't flag these again:
+  - **Glass shards are thin slivers:** TerrainParticle takes a random 4x4-texel quarter of block/glass.png, which is
+    a 1-texel border around a transparent middle. Near the camera they read as grey-blue bars up to ~100x15 px, as in vanilla.
+  - **Water splash drops are saturated dark-blue opaque squares:** the splash_0..3 texels are (0..71, 54..106, 204) at
+    alpha 255, untinted. A drop half a block from the eye is ~50 px a texel, as in vanilla.
 
 ## Checks (each PASS / FAIL with frame numbers)
 
