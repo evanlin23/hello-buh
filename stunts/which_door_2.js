@@ -2,7 +2,7 @@
 // doors, diamonds behind every one:
 //   1 no floor, a 25-block drop (dead), 2 endermen (survived: eyes on the floor the whole way),
 //   3 an angry iron golem (dead), 4 a dripstone cave whose stalactites drop (survived: backed out),
-//   5 "the safe one": a cosy room with a cat, its trapdoor floor over a pit of lava (the worst).
+//   5 "the safe one": a cosy room with a cat (open to the sky), its trapdoor floor over a pit of lava (the worst).
 // lib/door_run.js plays it; lib/doors.js builds it.
 const R = require('../lib/door_run')
 const ROOMS = process.env.ROOMS ? process.env.ROOMS.split(',') : ['drop', 'endermen', 'golem', 'dripstone', 'trapdoor']
@@ -28,6 +28,8 @@ module.exports = R.makeStunt({
     punch: [['death', 0, 1.08], ['death', 1, 1.08], ['death', 2, 1.2]],
     flash: [['death', 2, 0.8]],
     shake: [['death', 2, 24]],
-    speed: [['fall_a', 'fall_dead', 2.0]]     // the long fall down the shaft
+    speed: [['fall_a', 'fall_dead', 2.0]],    // the long fall down the shaft
+    // the floor opening and the drop into the lava, seen from above, slowed (first person only sees it go)
+    replay: { at: 'lava_in', before: 1.6, after: 0.3, cam: '12.5,9,-1,0,-66', speed: 0.5, label: 'REPLAY' }
   }
 })
