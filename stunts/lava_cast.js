@@ -22,9 +22,10 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'satisfying lava cast 😌',
   edit: {
-    caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.3', endAfter: 'final:1.0',
+    caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.3', endAfter: 'final:0.95',
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
-    speed: [['drain0', 'reveal', 2], ['drain1', 'final', 2]]   // the drains at 2x (they wait for the whole field to dry)
+    // the first cast and the drains at 2x (the drains wait for the whole field to dry)
+    speed: [['follow', 'scoop', 2], ['drain0', 'reveal', 2], ['drain1', 'final', 2]]
   },
 
   async setup (ctx) {
