@@ -10,7 +10,7 @@ const RINGS = 12   // 7 to fill, 5 more waiting
 const { openSpots, clearPlants } = require('./_site')
 // each shift faster: the turn to the next frame (ms), then the look held on it while the eye goes in
 // (ticks: the eye shows once the server's update is back, 2-3 ticks after the click)
-const FILL = [{ ms: 230, hold: 3 }, { ms: 180, hold: 2 }, { ms: 140, hold: 2 }, { ms: 110, hold: 2 }, { ms: 90, hold: 1 }, { ms: 70, hold: 1 }, { ms: 50, hold: 1 }]   // the eye shows a tick after the click (place mark): a 1-tick hold sees it
+const FILL = [{ ms: 230, hold: 3 }, { ms: 180, hold: 2 }, { ms: 140, hold: 2 }, { ms: 110, hold: 2 }, { ms: 90, hold: 2 }, { ms: 75, hold: 2 }, { ms: 60, hold: 2 }]   // the eye shows a tick after the click: the look holds 2 ticks so it's still there
 const N = FILL.length
 
 module.exports = {
@@ -43,6 +43,27 @@ module.exports = {
       try { this.spots = await openSpots(ctx, g.x + dx, g.z + dz, Array(RINGS).fill(2), { axis: 'x', gap: 8, foot: [0, 4, 0, 6], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N, spread: 96 }); break } catch (e) { lastErr = e; ctx.log('rings from', dx, dz, ':', e.message) }
     }
     if (!this.spots) throw lastErr
+    // the last ring filled next to a spare empty ring that can be seen from in front of it (the ending
+    // looks at it: a spare hidden behind a step left IT NEVER ENDS over finished portals)
+    if (this.spots.length > N) {
+      const seen = (A, B) => {   // a clear line from A's front, eye height, to B's middle
+        const fy = (ctx.surface(A.x + 2, A.z + 5) || { position: { y: A.floor } }).position.y
+        const a = new Vec3(A.x + 2.5, fy + 2.62, A.z + 5.6), b = new Vec3(B.x + 2.5, B.floor + 1.5, B.z + 2.5)
+        const n = Math.ceil(a.distanceTo(b) * 4)
+        for (let i = 1; i < n; i++) { const p = a.plus(b.minus(a).scaled(i / n)); const k = bot.blockAt(p.floored()); if (k && k.boundingBox === 'block' && !/end_portal/.test(k.name)) return false }
+        return true
+      }
+      let best = null
+      for (let i = 0; i < N; i++) for (let j = N; j < this.spots.length; j++) {
+        const A = this.spots[i], B = this.spots[j], d = Math.hypot(A.x - B.x, A.z - B.z)
+        if (d <= 40 && (!best || d < best.d) && seen(A, B)) best = { i, j, d }
+      }
+      if (best) {
+        const A = this.spots[best.i], B = this.spots[best.j]
+        this.spots = [...this.spots.slice(0, N).filter((_, k) => k !== best.i), A, B, ...this.spots.slice(N).filter((_, k) => k + N !== best.j)]
+        ctx.log('last ring', A, 'next to spare', B, 'seen, distance', best.d.toFixed(1))
+      } else ctx.log('no spare ring in sight of a filled one')
+    }
     // empty rings, every frame facing the middle (vanilla needs that for the portal to form)
     for (const S of this.spots) {
       const X = S.x, z = S.z, y = S.floor + 1
@@ -113,7 +134,10 @@ module.exports = {
     const eye = async ([fx, fy, fz], ms, wait, settle = 0) => {
       if (used % 16 === 0) ctx.select(used / 16)   // a stack ran out: straight onto the next
       used++
-      await ctx.easeLookAt(new Vec3(fx + 0.5, fy + 0.8, fz + 0.5), ms)
+      const tgt = new Vec3(fx + 0.5, fy + 0.8, fz + 0.5)
+      if (settle) for (let k = 0; k < 10 && (Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.01 || !bot.entity.onGround); k++) await bot.waitForTicks(1)   // still from the hop in
+      await ctx.easeLookAt(tgt, ms)
+      await bot.lookAt(tgt, true)   // exactly on the frame (the ease aims from where it started)
       if (settle) await bot.waitForTicks(settle)   // the look on the frame before the click
       ctx.sound('block.end_portal_frame.fill')
       ctx.mark('place', { x: fx, y: fy, z: fz, eye: true })   // vanilla timing: the eye shows 1 tick after the use
@@ -165,7 +189,7 @@ module.exports = {
     // the nearest spare empty ring (if any), then a slow turn to the farthest other ring: two different
     // targets, so the camera keeps moving to the end (one spare only gave the same target twice: a hold)
     const P = (S) => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)
-    const spare = this.spots.slice(N).map(P).sort((a, b) => a.distanceTo(here) - b.distanceTo(here))
+    const spare = this.spots.slice(N).map(P)   // the first is the one in sight (picked in setup)
     const others = this.spots.slice(0, N - 1).map(P).sort((a, b) => b.distanceTo(here) - a.distanceTo(here))
     await ctx.easeLookAt(spare[0] || others[others.length - 1], 700)
     await ctx.easeLookAt(others[0], 1100)
