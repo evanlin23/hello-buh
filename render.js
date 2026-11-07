@@ -1371,6 +1371,20 @@ function camAtLive (t) {
     }
     for (const [fa0, fb, which] of FACE) {
       const fa = fa0 - 1   // from the last tick before face_on: the frames after it already interpolate toward the turned yaw
+      // after face_off the mobs turn back to their recorded look over the same 3 ticks (head 2): the
+      // party ring flipped away in one frame (worker 5, story_runaway f1931)
+      if (t >= fb && t < fb + 3) {
+        for (const e of ents) {
+          if (which ? !((which.ids && which.ids.includes(e.id)) || (which.near && Math.hypot(e.x - which.near[0], e.z - which.near[1]) <= which.near[2])) : e.name !== 'villager') continue
+          const dx = cam.x - e.x, dz = cam.z - e.z, dy = cam.y - (e.y + 1.62)
+          const yaw = Math.atan2(-dx, -dz), pitch = Math.atan2(dy, Math.hypot(dx, dz))
+          const kb = Math.min(1, (t - fb) / 3), kh = Math.min(1, (t - fb) / 2)
+          if (!(which && which.head)) e.yaw = lerpAngle(yaw, e.yaw, kb)
+          e.headYaw = lerpAngle(yaw, e.headYaw ?? e.yaw, kh)
+          e.pitch = pitch + (e.pitch - pitch) * kh
+        }
+        continue
+      }
       if (t <= fa || t >= fb) continue
       for (const e of ents) {
         if (which ? !((which.ids && which.ids.includes(e.id)) || (which.near && Math.hypot(e.x - which.near[0], e.z - which.near[1]) <= which.near[2])) : e.name !== 'villager') continue
