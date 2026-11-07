@@ -251,9 +251,9 @@ module.exports = {
     // L06: only the nitwit stays, walking in a little circle (mom comes up to her spot, out of shot)
     say(`/tp @e[tag=mom,limit=1] ${X + 19.5} ${F + 1} ${Z + 10.5} 180 0`)
     await cut(-14.5, 25.5, P(-14.5, 1.6, 20.5))
-    await line('L06', async (k) => {
-      const a = k / 6
-      say(`/tp @e[tag=nitwit,limit=1] ${(X - 14.5 + Math.sin(a) * 1.4).toFixed(3)} ${F + 1} ${(Z + 20.5 + Math.cos(a) * 1.4 - 1.4).toFixed(3)} ${((-a * 180 / Math.PI) + 90).toFixed(1)} 0`)
+    await line('L06', async (k, at) => {
+      const a = k < at(2) ? k / 6 : at(2) / 6 - (k - at(2)) / 5   // a stumble: he turns round on 'But I don't'
+      say(`/tp @e[tag=nitwit,limit=1] ${(X - 14.5 + Math.sin(a) * 1.4).toFixed(3)} ${F + 1} ${(Z + 20.5 + Math.cos(a) * 1.4 - 1.4).toFixed(3)} ${((-a * 180 / Math.PI) + 90 + (k < at(2) ? 0 : 180)).toFixed(1)} 0`)
       look(k)
     })
     // L07: mom. She's the only one who hugs me (walk right up to her)
@@ -270,7 +270,7 @@ module.exports = {
     const from = { ...base }
     let gz = 4.6
     await line('L08', async (k, at) => {
-      if (k >= at(2) && gz < 6.4) { gz += 0.09; say(`/tp @e[tag=golem,limit=1] ${X + 19.5} ${F + 1} ${(Z + gz).toFixed(3)} 0 0`) }
+      if (k >= at(2) && gz < 7.0) { gz += 0.07; say(`/tp @e[tag=golem,limit=1] ${X + 19.5} ${F + 1} ${(Z + gz).toFixed(3)} 0 0`) }
       const turn = at(1) - 6
       if (k >= turn) {
         const u = Math.min(1, (k - turn) / 9), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2
@@ -291,7 +291,14 @@ module.exports = {
     bot.setControlState('forward', false)
     // L10-L14: the party
     await cut(20.5, -12.5, P(20.5, 1.2, -27))
-    await line('L10', async (k) => { bot.setControlState('forward', bot.entity.position.z > Z - 17.0); look(k) })
+    // L10: creep up sneaking (walking got there 1.4 s early and stood still); on "Nobody INVITED me" the
+    // whole ring turns its back on me (L12's stare turns them round again)
+    await line('L10', async (k, at) => {
+      bot.setControlState('sneak', true); bot.setControlState('forward', bot.entity.position.z > Z - 17.0)
+      if (k >= at(3) && k < at(3) + 3) say(`/execute as @e[tag=party] at @s facing entity ${bot.username} feet rotated ~180 0 positioned ^ ^ ^0.02 run tp @s ~ ${F + 1} ~ facing ^ ^ ^5`)
+      look(k)
+    })
+    bot.setControlState('sneak', false)
     await line('L11', async (k) => { bot.setControlState('sprint', true); bot.setControlState('forward', bot.entity.position.z > Z - 19.6); look(k) })   // stop ~5 blocks out: a camera inside the ring froze their moves
     bot.setControlState('sprint', false); bot.setControlState('forward', false)
     ctx.mark('face_on', { near: [X + 20.5, Z - 26.5, 5] })
@@ -300,9 +307,9 @@ module.exports = {
     let fled = false
     await line('L13', async (k, at) => {
       if (k === at(4)) { hiss(1); ctx.mark('face_off'); fled = true }
-      if (k === at(1)) { bot.setControlState('jump', true); for (let j = 0; j < 3; j++) ctx.particles('happy', bot.entity.position.offset((j - 1) * 0.6, 1.8, -1.0), { count: 4 }) }
+      if (k === at(1)) { bot.setControlState('jump', true); for (let j = 0; j < 3; j++) ctx.particles('happy', bot.entity.position.offset((j - 1) * 0.8, 1.8, -2.5), { count: 2 }) }
       if (k === at(1) + 2) bot.setControlState('jump', false)
-      if (k >= at(1) + 2 && k < at(1) + 6) flee('party', 0.08)
+      if (k >= at(1) + 2 && k < at(1) + 6) flee('party', 0.15)
       if (fled) flee('party', 0.25)
       sway = 1.5
       look(k, fled ? Math.sin(k * 0.8) * 0.03 : 0, fled ? Math.sin(k * 0.6 + 1) * 0.02 : 0)
