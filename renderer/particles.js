@@ -54,6 +54,31 @@ function spawn (ev, blockTex) {
         g: 0, drag: 0.96, life: ev.type === 'angry' ? 16 + r() * 10 : 20 + r() * 20, size: ev.type === 'angry' ? 0.2 : 0.16, tex: ev.type === 'angry' ? 'particle/angry' : 'particle/glint', color: [1, 1, 1] })
     }
   }
+  if (ev.type === 'lava') {
+    // LavaParticle (LavaFluid.animateTick: a spark off the lava surface): up at 0.05-0.45, gravity
+    // 0.75 (0.03 a tick), friction 0.999, size x (0.2..2.2), lives 16 / (r * 0.8 + 0.2), full bright,
+    // lands on blocks
+    for (let i = 0; i < (ev.count || 1); i++) {
+      const sp = ev.spread ?? 0
+      P({ x: ev.x + (r() - 0.5) * sp, y: ev.y, z: ev.z + (r() - 0.5) * sp, vx: (r() * 2 - 1) * 0.06, vy: r() * 0.4 + 0.05, vz: (r() * 2 - 1) * 0.06,
+        g: 0.03, drag: 0.999, life: 16 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * (r() * 2 + 0.2) * 0.5, tex: 'particle/lava', bright: true, collide: true, color: [1, 1, 1] })
+    }
+  }
+  if (ev.type === 'bubble') {
+    // BubbleParticle: rises (yd + 0.002 a tick), friction 0.85, size x (0.2..0.8), lives 8 / (r * 0.8 + 0.2)
+    for (let i = 0; i < (ev.count || 1); i++) {
+      const sp = ev.spread ?? 0
+      P({ x: ev.x + (r() - 0.5) * sp, y: ev.y + (r() - 0.5) * sp, z: ev.z + (r() - 0.5) * sp, vx: (ev.vx || 0) * 0.2 + (r() * 2 - 1) * 0.02, vy: (ev.vy ?? 0.1) * 0.2 + (r() * 2 - 1) * 0.02, vz: (ev.vz || 0) * 0.2 + (r() * 2 - 1) * 0.02,
+        g: -0.002, drag: 0.85, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * (r() * 0.6 + 0.2), tex: 'particle/bubble', color: [1, 1, 1] })
+    }
+  }
+  if (ev.type === 'bubble_pop') {
+    // BubblePopParticle: bubble_pop_0..4 over 4 ticks, barely falling
+    for (let i = 0; i < (ev.count || 1); i++) {
+      const sp = ev.spread ?? 0
+      P({ x: ev.x + (r() - 0.5) * sp, y: ev.y, z: ev.z + (r() - 0.5) * sp, vx: ev.vx || 0, vy: ev.vy || 0, vz: ev.vz || 0, g: 0.008 * 0.04, drag: 0.98, life: 4, size: 0.1 * (r() * 0.5 + 0.5) * 2, anim: ['particle/bubble_pop_', 5], color: [1, 1, 1] })
+    }
+  }
   if (ev.type === 'note') {
     // NoteParticle (NoteBlock.triggerEvent: at the block's centre, y + 1.2, xd = note / 24): rises at
     // 0.2 with friction 0.66, lives 6 ticks, 1.5x the base size; colour from the note's hue
