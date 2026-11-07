@@ -93,14 +93,17 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
     else:
         import sfx   # edit.sfx 'dip' entries: the song ducks before the payoff (same windows as edit.py, + the hook)
         duck = sfx.duck_filter(sfx.dips(stunt.get("sfx"), tl, start, hook_len(stunt)))
-        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
-                 f"[0:a]loudnorm=I=-15:TP=-2,aresample=48000[game];[song][game]amix=inputs=2:normalize=0,loudnorm=I=-10:TP=-1:LRA=11[a]")
+        import loud   # static stem gains + a measured master (dynamic loudnorm flattened build-ups: worker 17)
+        graph = (f"[1:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(ROOT / song, -13, song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song];"
+                 f"[0:a]{loud.static(src, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0[a]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-ss", f"{song_start:.3f}", "-i", str(ROOT / song), "-filter_complex", graph,
                     "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
     if stunt.get("story"):   # single-pass loudnorm lands short: correct the story master to -14 LUFS exactly
         sys.path.insert(0, str(ROOT / "scripts"))
         import story_track
         story_track.master_gain(out, -14.0)
+    else:
+        loud.master(out, -10.0, -1.0)
     f = pathlib.Path(song).name
     t, a = SONGS.get(f, (f, ""))
     if gen:

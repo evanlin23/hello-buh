@@ -1256,6 +1256,7 @@ def main():
     # with a replay or a hook the song goes in LAST, over the whole finished video, so it plays on
     # under the appended replay instead of cutting out (one_in_a_million: the bass fell 35 dB 1 s
     # after the drop), its drop still on the event (+ the hook's length)
+    import loud   # static gains + a measured master: dynamic loudnorm flattened build-ups (worker 17)
     late_song = args.song if (args.song and not args.story and (args.replay or args.hook)) else None
     if late_song:
         args.song = None
@@ -1266,7 +1267,7 @@ def main():
         duck = sfx.duck_filter(sfx.dips(args.sfx, sfx_tl, args.start))
         if track and args.audio:
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-i", str(track), "-filter_complex",
-                            f"[0:a]atrim=0:{dur + 0.5:.3f},loudnorm=I=-20:TP=-3,aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
+                            f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)},aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
                             "-map", "[a]", "-ar", str(sfx.SR), str(tmp / "game_sfx.wav")], check=True)
             args.audio, audio_ss = str(tmp / "game_sfx.wav"), 0.0
         elif track:
@@ -1296,21 +1297,22 @@ def main():
     elif args.audio and not args.song:
         # Game audio only: leave headroom for a song added at upload.
         inputs += ["-ss", str(audio_ss), "-i", args.audio]
-        graph.append(f"[{n_in}:a]loudnorm=I=-18:TP=-3:LRA=11,aresample=48000[a]")
+        graph.append(f"[{n_in}:a]{loud.static(args.audio, -18, audio_ss, dur)},aresample=48000,"
+                     f"afade=t=out:st={max(0, dur - 0.15):.3f}:d=0.15[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     elif args.song:
         # Song baked in under the game sounds, mastered like the reference Short (-10 LUFS overall).
         # Shorts under 1 minute with a Content ID match follow the rights holder's policy
         # (usually monetize/track); see README "Owner decisions".
         inputs += ["-ss", str(args.song_start), "-i", args.song]
-        song = f"[{n_in}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song]"
+        song = f"[{n_in}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},{loud.static(args.song, -13, args.song_start, dur)},afade=t=in:d=0.08,afade=t=out:st={max(0, dur - 0.6):.3f}:d=0.6,aresample=48000[song]"
         graph.append(song)
         if args.audio:
             inputs += ["-ss", str(audio_ss), "-i", args.audio]
-            graph.append(f"[{n_in + 1}:a]loudnorm=I=-15:TP=-2,aresample=48000[game]")
-            graph.append("[song][game]amix=inputs=2:normalize=0,loudnorm=I=-10:TP=-1:LRA=11[a]")
+            graph.append(f"[{n_in + 1}:a]{loud.static(args.audio, -15, audio_ss, dur)},aresample=48000[game]")
+            graph.append("[song][game]amix=inputs=2:normalize=0[a]")
         else:
-            graph.append("[song]loudnorm=I=-10:TP=-1:LRA=11[a]")
+            graph.append("[song]anull[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     cmd = ["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", ";".join(graph), *maps,
            "-t", f"{dur:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-maxrate", "18M", "-bufsize", "36M", "-pix_fmt", "yuv420p",
@@ -1324,6 +1326,8 @@ def main():
         pathlib.Path(fixed).replace(args.out)
     if args.story:   # single-pass loudnorm lands ~2 dB short: measure and correct to -14 LUFS exactly
         story_track.master_gain(args.out, -14.0)
+    elif args.audio or args.song:   # the master: a static gain and a true-peak limiter, measured to target
+        loud.master(args.out, -10.0 if args.song else -18.0, -1.0 if args.song else -3.0)
     if args.replay and frames_dir0:   # instant replay from the third-person pass (scripts/render_replay.py)
         rdir = frames_dir0.with_suffix(".replay")
         if (rdir / "replay.json").exists():
@@ -1353,11 +1357,12 @@ def main():
         delay = max(0.0, -ss)
         res = tmp / "song_mix.mp4"
         g = (f"[1:a]atrim=0:{total - delay:.3f},asetpts=PTS-STARTPTS" + (f",adelay={int(delay * 1000)}:all=1" if delay > 0 else "") +
-             f"{lduck},loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, total - 0.6):.3f}:d=0.6,aresample=48000[song];"
-             f"[0:a]loudnorm=I=-15:TP=-2,aresample=48000[game];[song][game]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-10:TP=-1:LRA=11[a]")
+             f"{lduck},{loud.static(late_song, -13, max(0.0, ss), total - delay)},afade=t=in:d=0.08,afade=t=out:st={max(0, total - 0.6):.3f}:d=0.6,aresample=48000[song];"
+             f"[0:a]{loud.static(args.out, -15)},aresample=48000[game];[song][game]amix=inputs=2:normalize=0:duration=first[a]")
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.out, "-ss", f"{max(0.0, ss):.3f}", "-i", late_song, "-filter_complex", g,
                         "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(res)], check=True)
         pathlib.Path(res).replace(args.out)
+        loud.master(args.out, -10.0, -1.0)
         print(f"song: mixed over the whole {total:.2f}s (it plays on under the replay; hook {h_len:.2f}s)")
     if args.loop:   # the end dissolves into the first frame (a seamless re-watch)
         retention.loop_end(args.out, json.loads(args.loop), args.out_fps)

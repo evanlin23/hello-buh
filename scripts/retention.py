@@ -716,7 +716,7 @@ def replay_append(out, replay_dir, caption_png, audio, fps=60, audio_window=None
     if audio:
         ins += ["-i", audio]
         aa, ab = audio_window or (a, b)   # the edit's game+sfx track (Short time) when there is one: wind, boom
-        g.append(f"[4:a]atrim={aa:.4f}:{ab:.4f},asetpts=PTS-STARTPTS,{atempo(speed)},loudnorm=I=-16:TP=-2,aresample=48000,"
+        g.append(f"[4:a]atrim={aa:.4f}:{ab:.4f},asetpts=PTS-STARTPTS,{atempo(speed)},{__import__("loud").static(audio, -18, aa, ab - aa)},aresample=48000,"
                  f"aformat=channel_layouts=stereo,apad=whole_dur={d:.4f},atrim=0:{d:.4f}[ra]")
     else:
         g.append(f"anullsrc=r=48000:cl=stereo,atrim=0:{d:.4f}[ra]")
