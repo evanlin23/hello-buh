@@ -23,7 +23,7 @@ module.exports = {
     subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['ring', 'double shift', 1.6, 5], ['ring', 'no breaks', 1.6, 6]],
     cards: [['outro', 'IT NEVER ENDS 💀', 1.4, 'red']],
     // the walks between rings are cut, and from ring 5 on the hop out too (the shift speeds up)
-    speed: [0, 1, 2, 3, 4, 5, 6].flatMap(r => [...(r ? [[`walk${r}`, `in${r}`, 'cut']] : []), [`hopA${r}`, `hopB${r}`, 'cut']])
+    speed: [...[0, 1, 2, 3, 4, 5, 6].flatMap(r => [...(r ? [[`walk${r}`, `in${r}`, 'cut']] : []), [`hopA${r}`, `hopB${r}`, 'cut']]), ['outroA', 'outroB', 'cut']]
   },
 
   async setup (ctx) {
@@ -184,15 +184,29 @@ module.exports = {
       await ctx.easeLookAt(c.offset(0.8, 0, -0.6), r >= 2 ? 300 : 500)
     }
     // the rest of the field: empty rings waiting, near and far
-    ctx.mark('outro')
-    const here = bot.entity.position
-    // the nearest spare empty ring (if any), then a slow turn to the farthest other ring: two different
-    // targets, so the camera keeps moving to the end (one spare only gave the same target twice: a hold)
-    const P = (S) => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)
-    const spare = this.spots.slice(N).map(P)   // the first is the one in sight (picked in setup)
-    const others = this.spots.slice(0, N - 1).map(P).sort((a, b) => b.distanceTo(here) - a.distanceTo(here))
-    await ctx.easeLookAt(spare[0] || others[others.length - 1], 700)
-    await ctx.easeLookAt(others[0], 1100)
+    // the ending: a jump cut to the next empty ring (outroA..outroB), standing at it as at every other
+    // ring, and a slow push across its empty frames (from 24 blocks off the spare didn't read on screen)
+    const sp = this.spots[N]
+    if (sp) {
+      const g2 = ctx.surface(sp.x + 2, sp.z + 5), fy = (g2 ? g2.position.y : sp.floor) + 1
+      ctx.mark('outroA')
+      for (let t = 0; ; t++) {
+        await ctx.cmd(`/tp @s ${sp.x + 2.5} ${fy} ${sp.z + 6.6} 180 35`)
+        if (Math.abs(bot.entity.position.z - (sp.z + 6.6)) < 0.1) break
+        if (t > 20) throw new Error('teleport did not stick')
+      }
+      for (let k = 0; k < 10 && !bot.entity.onGround; k++) await bot.waitForTicks(1)
+      ctx.mark('outroB')
+      ctx.mark('outro')
+      await ctx.easeLookAt(new Vec3(sp.x + 1.5, sp.floor + 1.5, sp.z + 2.5), 700)
+      await ctx.easeLookAt(new Vec3(sp.x + 3.5, sp.floor + 1.5, sp.z + 1.5), 1300)
+    } else {   // no spare: across the filled ones
+      ctx.mark('outro')
+      const here = bot.entity.position
+      const others = this.spots.slice(0, N - 1).map(S => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)).sort((a, b) => b.distanceTo(here) - a.distanceTo(here))
+      await ctx.easeLookAt(others[others.length - 1], 700)
+      await ctx.easeLookAt(others[0], 1300)
+    }
     bot.removeListener('blockUpdate', onBlock)
     return !ctx.died
   }
