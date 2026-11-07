@@ -8,10 +8,10 @@ const LANES = [-64, -32, 0, 32, 64]   // 32 apart: blasts and flung TNT don't wr
 // stop: the front stops this far from the bot (a real near miss, outside TNT's ~8-block damage range,
 // and its smoke stays off the camera); waves 1-3 stop, wave 4 doesn't
 const WAVES = [
-  { every: 4, dxs: [-2, 0, 2], gap: 14, stop: 9, sub: 'wave 1: easy' },
+  { every: 3, dxs: [-2, 0, 2], gap: 20, stop: 9, sub: 'wave 1: easy' },   // (every 4 from 14 out crept: 4 s of smoke wall)
   { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 25, stop: 9, sub: 'wave 2: faster' },
-  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 24, stop: 9, sub: 'wave 3: wider' },
-  { every: 2, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 38, stop: 9, sub: 'wave 4: faster AND wider' },   // stop 7 + the blasts' knockback held the gap inside the damage range: dead in wave 3
+  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 26, stop: 9, sub: 'wave 3: wider' },
+  { every: 2, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 38, stop: 8, sub: 'wave 4: faster AND wider' },   // stop 7 + the blasts' knockback held the gap inside the damage range: dead in wave 3
   { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 32, stop: 0, sub: 'wave 5...' }      // a real chase that catches you
 ]
 // (waves 3-5 start further back: with 18/30/26 the Short ran 25.95 s, waves 3-4 ~3 s each)
@@ -38,7 +38,7 @@ module.exports = {
     await ctx.cmd('/difficulty normal')
     for (let z0 = z - 40; z0 <= z + 40; z0 += 4) {   // four lanes side by side (slabs under the /fill cap)
       const z1 = Math.min(z0 + 3, z + 40)
-      for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 78} ${y0} ${z0} ${x + 78} ${y0 + 5} ${z1} air`)
+      for (let y0 = floor + 1; y0 <= floor + 42; y0 += 6) await ctx.cmd(`/fill ${x - 78} ${y0} ${z0} ${x + 78} ${y0 + 5} ${z1} air`)   // (to +12 left floating grass and trees over cut hills)
       await ctx.cmd(`/fill ${x - 78} ${floor} ${z0} ${x + 78} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 78} ${floor - 4} ${z0} ${x + 78} ${floor - 1} ${z1} dirt`)
     }
