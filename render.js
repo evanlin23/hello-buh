@@ -1667,6 +1667,9 @@ function camAtLive (t) {
       const bl = MC.blocksByName[it]
       if (!bl) continue
       const age = t - (FIRST_SEEN.get(e.id) ?? t)
+      // the shadow stays the item's (ItemEntityRenderer.shadowRadius 0.15, from the entity's own y,
+      // not the bobbing model): drawn as a falling block it cast a 0.5 one, 3x vanilla (lapse_statue)
+      e.shadowName = 'item'; e.shadowY = e.y
       e.name = 'falling_block'
       e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.125
       e.yaw = age / 20 + (e.id % 7)
@@ -1857,8 +1860,9 @@ function camAtLive (t) {
       }
       for (const e of ents) {
         if (e.hidden) continue
-        const r = SHADOW_R[e.name] ?? (/_boat$|^boat$/.test(e.name) ? 0.8 : null)
-        if (r) shadowOf(e.x, e.y, e.z, r * (e.name === 'slime' || e.name === 'magma_cube' ? (e.extra && e.extra.size || 1) : 1) * (e.extra && e.extra.baby ? 0.5 : 1))
+        const sn = e.shadowName || e.name
+        const r = SHADOW_R[sn] ?? (/_boat$|^boat$/.test(sn) ? 0.8 : null)
+        if (r) shadowOf(e.x, e.shadowY ?? e.y, e.z, r * (e.name === 'slime' || e.name === 'magma_cube' ? (e.extra && e.extra.size || 1) : 1) * (e.extra && e.extra.baby ? 0.5 : 1))
       }
     }
     await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), parts])
