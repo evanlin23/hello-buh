@@ -22,7 +22,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'rating every MLG clutch 💀',
   edit: {
-    caption: 'rating every MLG clutch 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'death', startAt: 'clutch:0.0',
+    caption: 'rating every MLG clutch 💀', red: 'every', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'death', startAt: 'clutch:0.0',
     deathScreen: true, endAfter: 'death:0.8',
     speed: CLUTCHES.slice(1).map((_, k) => [`hold${k + 1}a`, `hold${k + 1}b`, 'cut']),
     subs: CLUTCHES.flatMap((c, i) => [['clutch', `${c.h} blocks`, 1.0, i], ['landed', c.sub, 1.6, i]])

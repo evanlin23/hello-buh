@@ -20,7 +20,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: the floor is TNT 💀',
   edit: {
-    subsY: 0.15, caption: 'POV: the floor is TNT 💀', red: 'TNT', song: 'songs/funk_abnormal.mp3', dropAt: 'death', startAt: 'wave:0.0', deathScreen: true, endAfter: 'death:1.0',
+    subsY: 0.15, caption: 'POV: the floor is TNT 💀', red: 'TNT', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'death', startAt: 'wave:0.0', deathScreen: true, endAfter: 'death:1.0',
     subs: SUBS.map((s, i) => ['wave', s, 1.4, i])
   },
   expectDeath: true,

@@ -21,7 +21,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'collected',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'collected',
     startAt: 'dye:-0.45',
     endAfter: 'collected:0.9',      // (the 30 s minimum: 29.9 at :0.4)
     speed: [['tagfast_a', 'tagfast_b', 1.6]],   // the middle of the tag round: seven near-identical tags dragged

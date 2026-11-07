@@ -6,6 +6,7 @@ const DROPS = [   // six drops, ~30 s (owner: 30 s minimum); the last misses by 
   { h: 30, off: 0, sub: '30 blocks' },
   { h: 60, off: 0, sub: '60 blocks' },
   { h: 100, off: 0, sub: '100 blocks' },
+  { h: 125, off: 0, sub: '125 blocks' },   // eight landings, then the miss: the caption's x8
   { h: 150, off: 0, sub: '150 blocks' },
   { h: 200, off: 0, sub: '200 blocks' },
   { h: 230, off: 0, sub: '230 blocks' },
@@ -17,13 +18,15 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing... x8 😳',
   edit: {
-    subsY: 0.15, caption: '1 in a million landing... x8 😳', red: 'x8', song: 'songs/misery.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
+    subsY: 0.15, caption: '1 in a million landing... x8 😳', red: 'x8', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
     // (the 10-block drop is over in 1.2 s: 1.6 ran its sub over the cut)
     subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, i === 0 ? 1.1 : 1.6]), deathScreen: true, endAfter: 'death:0.8',
     // cut the teleport turnarounds (the look up + tp read as a still), speed up the top of the 250 fall,
     // and a live blocks-fallen counter on every drop
     speed: [...DROPS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
-    ],                                   // falls run at real speed (a mid-fall glance up is the beat; 30 s minimum)
+      // the top of every long fall at 1.5x (3.2-4.7 s between beats on the high drops); the approach to the hole is real speed
+      ...DROPS.map((d, i) => d.h >= 100 ? [`fast${i + 1}a`, `fast${i + 1}b`, 1.5] : null).filter(Boolean)
+    ],
     fallen: DROPS.map((d, i) => i === DROPS.length - 1 ? [`drop${i + 1}`, 'death'] : [`drop${i + 1}`, `splash${i + 1}`, 'blocks', -1])   // -1: the splash fires with the feet in the water block (read 11/31/...; the miss lands on the grass, no offset)
   },
   expectDeath: true,
@@ -50,11 +53,22 @@ module.exports = {
       return c.position
     }
     let g = null
-    for (let r = 0; r <= 96 && !g; r += 8) {
-      for (const [dx, dz] of [[0, 0], [r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, -r], [r, -r], [-r, r]]) { if ((g = flat(sp.x + dx, sp.z + dz))) break }
+    // no fallback: findLand put the hole on a shoreline and the lawn read as a platform built out into the sea.
+    // Nothing near spawn: move on 160 blocks at a time (the area round the bot is what's loaded) and look again
+    let cx = sp.x, cz = sp.z
+    for (let hop = 0; hop < 8 && !g; hop++) {
+      if (hop > 0) {
+        cx = sp.x + [160, 0, -160, 0, 320, 0, -320, 0][hop - 1] * 1; cz = sp.z + [0, 160, 0, -160, 0, 320, 0, -320][hop - 1]
+        await ctx.cmd('/gamemode creative'); await ctx.cmd(`/tp @s ${cx} 200 ${cz}`)
+        await bot.waitForTicks(20); try { await bot.waitForChunksToLoad() } catch (e) {}
+        await bot.waitForTicks(20)
+      }
+      for (let r = 0; r <= 96 && !g; r += 8) {
+        for (const [dx, dz] of [[0, 0], [r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, -r], [r, -r], [-r, r]]) { if ((g = flat(cx + dx, cz + dz))) break }
+      }
+      if (!g) ctx.log('no flat dry spot near', cx, cz)
     }
-    if (!g) { ctx.log('no flat dry spot: falling back to findLand'); g = ctx.findLand(sp.x, sp.z) }
-    if (!g) throw new Error('no dry land')
+    if (!g) throw new Error('no flat dry land')
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
@@ -98,24 +112,29 @@ module.exports = {
       try { await bot.dig(bot.blockAt(new ctx.Vec3(gx, top, z)), 'ignore') } catch (e) { ctx.log('dig', e.message); await ctx.cmd(`/setblock ${gx} ${top} ${z} air`) }
       ctx.mark(`drop${n}`, { h: d.h }); ctx.mark('drop'); ctx.sound('block.glass.break', 1)
       ctx.particles('block', { x: gx, y: top, z }, { block: 'glass' })
-      let splashed = false, glanced = false
+      let splashed = false, fast = false
       for (let k = 0; k < 260 && !ctx.died; k++) {
         await bot.waitForTicks(1)
-        // long falls: a look out over the land rushing up (each high drop turns a different way), then back down
-        // at the hole (the glance UP showed the same empty sky four times)
-        if (!glanced && d.h >= 150 && k === 30) { glanced = true; const turn = [1.3, -1.3, 2.4, -2.4][i % 4]; ctx.easeLook(bot.entity.yaw + turn, -0.75, 450).then(() => ctx.easeLook(bot.entity.yaw, -1.4, 450)) }   // (-0.35 put the horizon, and the loaded area's edge, in frame)
+        // eyes stay on the hole all the way down (the mid-fall glances lost it on the 250, the one that misses,
+        // and put the loaded area's edge in frame); the top of a long fall plays faster instead
+        if (d.h >= 100 && k === 6) { fast = true; ctx.mark(`fast${n}a`) }
+        if (fast && bot.entity.position.y < floor + 60) { fast = false; ctx.mark(`fast${n}b`) }
+        if (d.off && !splashed && bot.entity.position.y < floor + 1.4) {
+          // the fatal landing: vanilla throws a burst of the ground block's particles, on the grass top (it was
+          // emitted after the death, which the recording had stopped taking, and inside the block)
+          splashed = true
+          const p = bot.entity.position
+          for (let q = 0; q < 4; q++) ctx.particles('block', { x: Math.floor(p.x) + (q % 2) - 0.5, y: floor + 1, z: Math.floor(p.z) + (q >> 1) - 0.5 }, { block: 'grass_block' })
+          ctx.sound('entity.player.big_fall', 1)
+        }
         if (!splashed && bot.entity.position.y < floor + 1.2) {
           splashed = true
           if (!d.off) { ctx.mark(`splash${n}`); ctx.mark('splash'); ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: x + 0.5, y: floor + 0.95, z: z + 0.5 }, { count: 30 }) }
         }
         if (splashed && k > 4 && (bot.entity.onGround || bot.entity.isInWater)) break
       }
-      if (ctx.died) {
-        // the fatal landing: vanilla throws a burst of the ground block's particles
-        const p = bot.entity.position
-        for (let k = 0; k < 4; k++) ctx.particles('block', { x: Math.floor(p.x) + (k % 2) - 0.5, y: floor, z: Math.floor(p.z) + (k >> 1) - 0.5 }, { block: 'grass_block' })
-        break
-      }
+      if (fast) ctx.mark(`fast${n}b`)
+      if (ctx.died) break
       await bot.waitForTicks(6)
       ctx.mark(`cut${n}a`)                                               // cut 0.3 s after the splash
     }

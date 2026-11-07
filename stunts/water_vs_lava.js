@@ -14,7 +14,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'can ONE water bucket delete a lava lake? 😳',
   edit: {
-    subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'end_look',
+    subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'end_look',
     startAt: 'pour:-0.4', endAfter: 'end_look:1.05'
   },
 

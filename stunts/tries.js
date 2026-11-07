@@ -24,7 +24,7 @@ module.exports = {
   name: 'tries',
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
-    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'saved', startAt: 'jump:-1.0', endAfter: 'saved:0.8',   // 'saved', not 'placed': the lava try places too
+    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/ncs/industry_kiss.mp3', dropAt: 'saved', startAt: 'jump:-1.0', endAfter: 'saved:0.8',   // 'saved', not 'placed': the lava try places too
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
     // each try looks different (review: six identical falls read as a loop) and the counter shows on screen
     subs: subs()

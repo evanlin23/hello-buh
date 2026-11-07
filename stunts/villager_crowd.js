@@ -23,7 +23,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
   edit: {
-    subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
+    subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:1.0',
     speed: CROWDS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]]

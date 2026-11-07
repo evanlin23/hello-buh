@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.8', speed: [['woodcut_a', 'woodcut_b', 'cut'], ['tntrun', 'lit', 1.5]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.8', speed: [['woodcut_a', 'woodcut_b', 'cut'], ['tntrun', 'lit', 1.5]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
 
   async setup (ctx) {
