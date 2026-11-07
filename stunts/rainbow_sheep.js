@@ -25,7 +25,7 @@ module.exports = {
     startAt: 'dye:-0.45',
     endAfter: 'collected:0.4',      // still backing off the sheared line
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
-      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0]]
+      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'every colour 🌈', 0.6, 0]]
   },
 
   async setup (ctx) {
@@ -37,9 +37,9 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     for (const [z0, z1] of [[z - 30, z - 17], [z - 16, z - 3], [z - 2, z + 11], [z + 12, z + 24]]) {   // wide and high: the old box's cut wall showed behind the line
-      await ctx.cmd(`/fill ${x - 40} ${floor + 1} ${z0} ${x + 40} ${floor + 20} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 40} ${floor} ${z0} ${x + 40} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 40} ${floor - 3} ${z0} ${x + 40} ${floor - 1} ${z1} dirt`)
+      await ctx.cmd(`/fill ${x - 56} ${floor + 1} ${z0} ${x + 56} ${floor + 20} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 56} ${floor} ${z0} ${x + 56} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 56} ${floor - 3} ${z0} ${x + 56} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=sheep]')
     // sheep stand at x0 + i*STEP, z; a fence behind and posts between them, open at the front
@@ -124,7 +124,7 @@ module.exports = {
       const e = bot.entity.position, d = mid.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-      bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
+      bot.look(bot.entity.yaw + dy * 0.4, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.4, true)   // (0.25 left the line in a corner)
       if (t === 18) bot.setControlState('left', false)
     }
     bot.setControlState('back', false); bot.setControlState('left', false)
@@ -205,12 +205,12 @@ module.exports = {
     // mark lands once the line fills the view (at the sweep's end the camera faced the grass past the line)
     const lineMid = new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5)
     bot.setControlState('back', true)
-    for (let k = 0; k < 22; k++) {
+    for (let k = 0; k < 12; k++) {   // a short back-off: the line stays big (22 ticks left it a receding strip)
       const e = bot.entity.position, d = lineMid.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
-      if (k === 13) ctx.mark('collected')
+      if (k === 6) ctx.mark('collected')
       await bot.waitForTicks(1)
     }
     bot.setControlState('back', false)
