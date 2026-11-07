@@ -909,8 +909,21 @@ async function drawHand (cam) {
   const r = await handObject(h)
   if (!r) return false
   // swing (renderArmWithItem + applyItemArmAttackTransform), equip drop (applyItemArmTransform)
-  const a = h.swing || 0, sa = Math.sin(Math.sqrt(a) * Math.PI)
+  // eating / drinking (applyEatTransform before applyItemArmTransform, no swing): f = remaining use
+  // ticks + 1, g = f / duration; a bob of |cos(f / 4 pi)| x 0.1 while g < 0.8, and h = 1 - g^27 raises
+  // the item to the mouth: T(0.6 h, -0.5 h, 0) Ry(90 h) Rx(10 h) Rz(30 h)
+  const use = h.use
+  const a = use ? 0 : (h.swing || 0), sa = Math.sin(Math.sqrt(a) * Math.PI)
   const M = HAND_TURN.clone().multiply(new THREE.Matrix4().makeTranslation(-0.4 * sa, 0.2 * Math.sin(Math.sqrt(a) * Math.PI * 2), -0.2 * Math.sin(a * Math.PI)))
+  if (use) {
+    const f = Math.max(0, use.d - use.e) + 1, g = f / use.d
+    if (g < 0.8) M.multiply(new THREE.Matrix4().makeTranslation(0, Math.abs(Math.cos(f / 4 * Math.PI) * 0.1), 0))
+    const k = 1 - Math.pow(Math.min(1, g), 27)
+    M.multiply(new THREE.Matrix4().makeTranslation(k * 0.6, k * -0.5, 0))
+    M.multiply(new THREE.Matrix4().makeRotationY(k * 90 * D2R))
+    M.multiply(new THREE.Matrix4().makeRotationX(k * 10 * D2R))
+    M.multiply(new THREE.Matrix4().makeRotationZ(k * 30 * D2R))
+  }
   M.multiply(new THREE.Matrix4().makeTranslation(0.56, -0.52 + (h.equip || 0) * -0.6, -0.72))
   const f = Math.sin(a * a * Math.PI)
   M.multiply(new THREE.Matrix4().makeRotationY((45 + f * -20) * D2R))

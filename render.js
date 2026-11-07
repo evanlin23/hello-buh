@@ -240,12 +240,33 @@ const HAND = []          // per tick: [shownItem, height]
 {
   const last = Math.ceil((rec.poses && rec.poses.length ? rec.poses[rec.poses.length - 1][0] : 0)) + 2
   let shown = HELD.length ? HELD[0][1] : null, h = 1, k = 0, want = shown
+  // a respawn is a new player: the hand comes up fresh with the current item (no lowering of the
+  // previous life's item first: worker 3, tries f717)
+  const RESP = (rec.timeline || []).filter(e => e.event === 'respawn').map(e => Math.ceil(e.t / 50))
   for (let tick = 0; tick <= last; tick++) {
     while (k < HELD.length && HELD[k][0] <= tick) want = HELD[k++][1]
+    if (RESP.includes(tick)) { shown = want; h = 0 }
     h += Math.max(-0.4, Math.min(0.4, (shown === want ? 1 : 0) - h))
     if (h < 0.1) shown = want
     HAND.push([shown, h])
   }
+}
+// eating / drinking (harness use_start / use_stop marks): [startTick, stopTick, useDuration]
+const EAT_ITEMS = /^(.*_stew|.*_soup|apple|golden_apple|enchanted_golden_apple|bread|.*cookie|cake|melon_slice|.*carrot|.*potato|beetroot|.*_beef|.*_porkchop|.*_mutton|.*_chicken|.*_rabbit|.*_cod|.*_salmon|tropical_fish|pufferfish|sweet_berries|glow_berries|dried_kelp|chorus_fruit|pumpkin_pie|rotten_flesh|spider_eye|poisonous_potato|suspicious_stew|potion|milk_bucket|honey_bottle|ominous_bottle)$/
+const USES = []
+{
+  let open = null
+  for (const e of rec.timeline || []) {
+    if (e.event === 'use_start') open = e.t / 50
+    if ((e.event === 'use_stop' || e.event === 'death') && open !== null) { USES.push([open, e.t / 50]); open = null }
+  }
+  if (open !== null) USES.push([open, Infinity])
+}
+function useAt (t, name) {
+  if (!name || !EAT_ITEMS.test(name)) return null
+  const u = USES.find(([a, b]) => t >= a && t < b)
+  if (!u) return null
+  return { e: t - u[0], d: name === 'honey_bottle' ? 40 : name === 'dried_kelp' ? 16 : 32 }
 }
 function handAt (t) {
   if (!HAND.length) return null
@@ -1278,7 +1299,7 @@ function camAtLive (t) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = !!spriteOf(hd.name)
       const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
-      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb), glint: !!hd.name && glintAt(t) }
+      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
       else if (bl) {
         cam.hand.state = bl.defaultState
@@ -1286,7 +1307,9 @@ function camAtLive (t) {
       }
       // the hand goes with the death screen, which edit.py starts up to a frame before the death
       // tick and on the output frame grid: hide it 2 frames early (it showed under the screen, drops f1972)
-      cam.dead = !!DEATHS.find(([a, b]) => t >= a - 2 * 20 / FPS && t < b)
+      // (only when a death screen shows, a death of 0.5 s or more: with immediate respawn there is
+      // none, and the hand vanished before each cut with the hearts still full: worker 3, tries f214)
+      cam.dead = !!DEATHS.find(([a, b]) => t >= (b - a >= 10 ? a - 2 * 20 / FPS : a) && t < b)
     }
     if (THIRD) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
       const dw = DEATHS.find(([a, b]) => t >= a && t < b), deathTime = dw ? t - dw[0] + 1 : 0
