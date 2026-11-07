@@ -18,7 +18,7 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'dig:-0.1', endAfter: 'finale:2.4' },
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'dig:-0.1', endAfter: 'finale:2.4' },
 
   async setup (ctx) {
     const { bot } = ctx

@@ -12,7 +12,7 @@ const TOOLS = [   // seven beats, ~30 s (owner: 30 s minimum)
   { item: 'iron_pickaxe', label: 'iron', result: 'iron: B tier' },
   { item: 'diamond_pickaxe', label: 'diamond', result: 'diamond: A tier' },
   { item: 'netherite_pickaxe', label: 'netherite', result: 'netherite: A tier' },
-  { item: 'golden_pickaxe[damage=23]', label: 'gold', result: 'gold: S tier?? (broke)' },    // fastest plain pickaxe; 9 uses left: it breaks on the last block
+  { item: 'golden_pickaxe[damage=23]', label: 'gold', result: 'gold: S tier?? it broke' },    // fastest plain pickaxe; 9 uses left: it breaks on the last block
   { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'efficiency V + haste', result: 'efficiency V + haste: GOD tier' }   // the instamine needs the Haste: say so
 ]
 const SPACING = 4             // wall sections: 3 wide + a 1-block pillar between them
@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'boom:1.0', subs: subs() }
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'boom:1.0', subs: subs() }
   },
 
   async setup (ctx) {

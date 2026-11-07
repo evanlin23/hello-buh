@@ -12,7 +12,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'pouring water on a lava lake 😳',
   edit: {
-    caption: 'pouring water on a lava lake 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'finale',
+    subsY: 0.15, caption: 'pouring water on a lava lake 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'finale',
     startAt: 'pour:-0.4', endAfter: 'end_look:1.05'
   },
 

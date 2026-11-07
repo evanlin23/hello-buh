@@ -21,7 +21,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'reveal',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'reveal',
     startAt: 'dye:-0.45',
     endAfter: 'final:1.0',
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]), ['jeb', 'and jeb_', 1.6, 0],

@@ -16,7 +16,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing... x7 😳',
   edit: {
-    caption: '1 in a million landing... x7 😳', red: 'x7', song: 'songs/misery.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
+    subsY: 0.15, caption: '1 in a million landing... x7 😳', red: 'x7', song: 'songs/misery.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
     subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, 1.6]), deathScreen: true, endAfter: 'death:0.8',
     // cut the teleport turnarounds (the look up + tp read as a still), speed up the top of the 250 fall,
     // and a live blocks-fallen counter on every drop
