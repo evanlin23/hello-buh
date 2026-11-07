@@ -428,6 +428,25 @@ def hud_ticks(timeline, duration, keep_inventory=False):
 
 def hud_states(timeline, duration):
     """[(t0, t1, slot, items, health)] from the bot timeline (ms since recording start)."""
+    # client-side placement prediction: a stunt's 'place' mark is the tick the item was used; the
+    # server's slot update (one fewer in the stack) lands 1-4 ticks later. Move it onto the mark, as
+    # render.js does with the placed block (the count dropped a tick after the block: lapse_castle)
+    places = sorted(e["t"] for e in timeline or [] if e["event"] == "place")
+    if places:
+        timeline = [dict(e) for e in timeline]
+        prev = None
+        for e in sorted(timeline, key=lambda e: e["t"]):
+            if e["event"] != "hotbar":
+                continue
+            if prev is not None:
+                sl = e.get("slot", 0)
+                a, b = prev["items"][sl] if sl < len(prev["items"]) else None, e["items"][sl] if sl < len(e["items"]) else None
+                dropped = a and (not b or (b[0] == a[0] and b[1] == a[1] - 1))
+                tp = next((p for p in places if 0 < e["t"] - p <= 200), None)
+                if dropped and tp is not None:
+                    e["t"] = tp
+            prev = e
+        timeline.sort(key=lambda e: e["t"])
     items = list(HOTBAR)
     if any(e["event"] == "hotbar" for e in timeline or []):
         items = [None] * 9
