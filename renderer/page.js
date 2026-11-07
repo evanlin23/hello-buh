@@ -51,12 +51,15 @@ function makeSky () {
   const geo = new THREE.SphereGeometry(500, 32, 16)
   const mat = new THREE.ShaderMaterial({
     side: THREE.BackSide, depthWrite: false, fog: false,
-    uniforms: { top: { value: srgb(env.skyColor) }, horizon: { value: srgb(env.fogColor) } },
+    uniforms: { top: { value: srgb(env.skyColor) }, horizon: { value: srgb(env.fogColor) }, below: { value: 0 } },
     vertexShader: 'varying vec3 vDir; void main(){ vDir = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-    fragmentShader: `uniform vec3 top; uniform vec3 horizon; varying vec3 vDir;
+    fragmentShader: `uniform vec3 top; uniform vec3 horizon; uniform float below; varying vec3 vDir;
       void main(){ float h = clamp(vDir.y, -1.0, 1.0);
         float t = smoothstep(-0.02, 0.35, h);
         vec3 c = mix(horizon, top, t);
+        // LevelRenderer's dark disc: with the eye below the horizon height (y 63) the sky under the
+        // horizon is black (the disc sits 4 blocks below the eye, 512 out)
+        if (below > 0.5 && h < -0.0078) c = vec3(0.0);
         gl_FragColor = vec4(c, 1.0);
       }`
   })
@@ -443,6 +446,12 @@ window.HB = {
         sky.material.uniforms.horizon.value.copy(fogC)
       }
     }
+    // FogRenderer: near the bottom of the world the clear/fog colour darkens by ((y - minY) / 32)^2
+    if ((cam.dimension || 'overworld') === 'overworld') {
+      const d = (cam.y - (env.minY ?? -64)) / 32
+      if (d < 1) fogC.multiplyScalar(Math.max(0, d) ** 2)
+    }
+    sky.material.uniforms.below.value = (cam.dimension || 'overworld') === 'overworld' && cam.y < 63 ? 1 : 0
     env.fogColorC = fogC
     const cloudC = new THREE.Color().setScalar(day.bright * 0.9 + 0.1)
     if (rain > 0) grey(cloudC, 0.6, rain, 0.95)
