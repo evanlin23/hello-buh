@@ -227,8 +227,16 @@ def fallen_fn(args):
         if not ta or not tb:
             continue
         t0, t1 = ta[0] - args.start, tb[0] - args.start
-        y0 = y_at(warp.src(ta[0]) if warp else ta[0])
-        fn = (lambda t, y0=y0: max(0, int(math.floor(y0 - y_at(warp.src(t + args.start) if warp else t + args.start)))))
+        sa, sb = event_times(src_tl, sp[0]), event_times(src_tl, sp[1])   # the marks' own recording times
+        ts0 = sa[0] if sa else (warp.src(ta[0] + 1e-6) if warp else ta[0])
+        # the standing height: the highest pose in the 0.25 s before the drop mark (at the mark the
+        # player can already be 0.08 below the block top, which read 99 under a "100 blocks" label)
+        y0 = max(y_at(ts0 - k / 20) for k in range(0, 6))
+        off = int(sp[3]) if len(sp) > 3 else 0   # e.g. -1 for a water landing: the end mark fires with the feet inside the water block
+        final = max(0, int(math.floor(y0 - y_at(sb[0]))) + off) if sb else None   # the landing value, from the mark itself
+        fn = (lambda t, y0=y0, off=off, t1=t1, final=final:
+              final if final is not None and t >= t1 - 1e-6 else
+              max(0, int(math.floor(y0 - y_at(warp.src(t + args.start) if warp else t + args.start))) + off))
         res.append((t0, t1, sp[2] if len(sp) > 2 else "blocks", fn))
     return res
 
@@ -322,6 +330,7 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
                     imgs[("t", text, color)] = stamp_img(text, color) if tilt == "stamp" else \
                         block_text(text, 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
                 im = imgs[("t", text, color)]
+                s = min(s, W * 0.95 / im.width)   # the slam-in never clips the frame edges (the stamp did for 3 frames)
                 if s != 1.0:
                     im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BICUBIC)
                 if fade < 1:
@@ -373,9 +382,9 @@ def hook_prepend(out, spec, t_video, fps=60, frames=None, start_index=0, caption
     n = int(round(d * fps))
     txt = block_text(text, 104, COLORS["white"], max_w=W * 0.8)
     smax = W * 0.95 / txt.width                 # the pop never grows past 95% of the view (it was cut off)
-    cy = BAND + int(GAME_H * 0.68)              # lower third: clear of the crosshair
+    cy = BAND + int(GAME_H * 0.2)               # high in the view: the hook has no counters, and lower it covered the target
     for i in range(n + 1):                      # the text pops in over the first 0.15 s
-        sc = min(_pop(i / fps, 0.15, 0.5), smax)
+        sc = min(1.0, smax)   # no pop: frame 0 must match the loop's last frame (the pop made the loop end jump)
         im = txt if sc == 1.0 else txt.resize((int(txt.width * sc), int(txt.height * sc)), Image.BICUBIC)
         ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         ov.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))

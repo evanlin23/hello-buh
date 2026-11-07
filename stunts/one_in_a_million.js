@@ -42,7 +42,7 @@ module.exports = {
     // retention toolkit (scripts/retention.py, scripts/sfx.py; worker 10)
     hook: { at: 'splash5', before: 1.7, after: -0.2, text: 'wait for the last one 😳' },   // a flash of the finale before tier 1: 1.5 s (owner: 0.5 s was "too quick")
     counter: { at: TIERS.map((_, i) => `look${i + 1}`), total: TIERS.length },
-    fallen: TIERS.map((_, i) => [`drop${i + 1}`, `splash${i + 1}`]),         // live blocks-fallen count on every drop
+    fallen: TIERS.map((_, i) => [`drop${i + 1}`, `splash${i + 1}`, 'blocks', -1]),   // live blocks-fallen count; -1: the splash mark fires with the feet in the water block
     punch: TIERS.map((_, i) => `splash${i + 1}`),
     shake: ['splash5'], flash: [['splash5', 0, 0.5]],
     slowmo: [['splash5', 0.25, 0.25]],                                       // 0.5 s of the 1x1 entry over 1 s
