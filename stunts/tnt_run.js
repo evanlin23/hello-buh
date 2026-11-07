@@ -167,13 +167,13 @@ module.exports = {
       }
     })
     // 4 FLOOR: it backs south off a TNT floor; the far end is lit and the chain runs down it after it
-    await cut(3, 180, 20, -6)           // standing on the near end of the TNT floor (z - 34 .. z - 14)
+    await cut(3, 180, 20, -4)           // on the near edge of the TNT floor (z - 34 .. z - 14); (-6, 2 further on, died 3 runs in 3: primed TNT flung down the line)
     await lane(3, async () => {
       for (let k = 0; k < 66 && !ctx.died; k++) {
         // lit once it's ~9 away, so the first blast can't reach it; then the chain chases it down the floor
         if (k === 0) { bot.chat(`/setblock ${L(3)} ${floor} ${z - 34} air`); tnt(L(3) + 0.5, floor + 0.5, z - 34 + 0.5, 1) }   // the far end, ~18 away: the chain runs about as fast as it backs
         await lookAt(new Vec3(L(3) + 0.5, floor, bot.entity.position.z - 9), 0.2)
-        steer(0, bot.entity.position.z < z - 2 ? 1 : 0)
+        steer(0, bot.entity.position.z < z + 8 ? 1 : 0)   // keeps backing (stopping at z - 2 let the flung TNT catch it)
         await bot.waitForTicks(1)
       }
     })
