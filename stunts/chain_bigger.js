@@ -11,7 +11,7 @@
 //                                                  centre: every block is within 14 of the feed)
 //   bus out: from the grid's near east corner, a repeater line east, south and east into the next
 //   tier's spine (visible: it lights up as it goes)
-// Tiers (e0): lamps -50, pistons -36, diamond blocks -22, rockets -8, TNT 6. The TNT tier is different:
+// Tiers (e0): lamps -50, splash potions -36, diamond blocks -22, rockets -8, TNT 6. The TNT tier is different:
 // redstone primes only its x1, and each bigger stage (x10 row, x100 grid, x1000 cube) is lit by the
 // last one's blast. The player watches from a stone walkway 3 blocks up along n = -4, walking east with the chain.
 const { relaySounds, clearMobs, rig } = require('../lib/chain')
@@ -21,7 +21,7 @@ const T = 'polished_andesite'
 const S = 'stone_bricks'
 const TIERS = [
   { name: 'lamps', e0: -50, block: () => 'redstone_lamp' },
-  { name: 'pistons', e0: -36, block: () => 'piston[facing=up]' },
+  { name: 'potions', e0: -36, block: (i) => `dispenser[facing=up]{Items:[{Slot:4b,id:"minecraft:splash_potion",count:1,components:{"minecraft:potion_contents":{potion:"minecraft:${['leaping', 'swiftness', 'fire_resistance', 'water_breathing', 'night_vision', 'regeneration', 'strength', 'healing'][i % 8]}"}}}]}` },
   { name: 'diamonds', e0: -22, block: () => 'dropper[facing=up]{Items:[{Slot:4b,id:"minecraft:diamond_block",count:1}]}' },
   { name: 'rockets', e0: -8, block: (i) => `dispenser[facing=up]{Items:[{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:${1 + (i % 2)},explosions:[{shape:"${i % 3 ? 'large_ball' : 'star'}",colors:[I;${[16711680, 65280, 3381759, 16766720, 16711935][i % 5]},16777215]}]}}}]}` },
   { name: 'tnt', e0: 6, block: () => 'tnt' }
@@ -98,11 +98,12 @@ module.exports = {
       if (t === TIERS.length - 1) break
       // bus out: (e0+9,2,11) is grid dust; dust east onto a support, repeaters east, south, east
       const nx = TIERS[t + 1].e0 + 4
-      await put(e0 + 10, 1, 11, T); await put(e0 + 10, 2, 11, 'redstone_wire')
+      // (the dust's supports along the bus are lamps: dust powers the block under it, so the bus lights up as it goes)
+      await put(e0 + 10, 1, 11, 'redstone_lamp'); await put(e0 + 10, 2, 11, 'redstone_wire')
       await put(e0 + 11, 1, 11, T); await put(e0 + 11, 2, 11, 'repeater[facing=west,delay=4]')
-      await put(e0 + 12, 1, 11, T); await put(e0 + 12, 2, 11, 'redstone_wire')
-      for (let n = 10; n >= 1; n--) { await put(e0 + 12, 1, n, T); await put(e0 + 12, 2, n, n % 2 ? 'redstone_wire' : 'repeater[facing=north,delay=4]') }
-      for (let e = e0 + 13; e < nx; e++) { await put(e, 1, 1, T); await put(e, 2, 1, (e - e0) % 2 ? 'repeater[facing=west,delay=4]' : 'redstone_wire') }
+      await put(e0 + 12, 1, 11, 'redstone_lamp'); await put(e0 + 12, 2, 11, 'redstone_wire')
+      for (let n = 10; n >= 1; n--) { await put(e0 + 12, 1, n, n % 2 ? 'redstone_lamp' : T); await put(e0 + 12, 2, n, n % 2 ? 'redstone_wire' : 'repeater[facing=north,delay=4]') }
+      for (let e = e0 + 13; e < nx; e++) { await put(e, 1, 1, (e - e0) % 2 ? T : 'redstone_lamp'); await put(e, 2, 1, (e - e0) % 2 ? 'repeater[facing=west,delay=4]' : 'redstone_wire') }
       await put(nx, 1, 1, T); await put(nx, 2, 1, 'redstone_wire')    // into the next spine's start (nx,2,2)
     }
     // the first tier's button: on the south face of the first spine support's west neighbour
@@ -166,8 +167,8 @@ module.exports = {
       for (let i = 1; i <= ticks && !done(); i++) { const u = i / ticks, e = u * u * (3 - 2 * u); r.focus = from.plus(to.minus(from).scaled(e)); await bot.waitForTicks(1) }
     }
     const view = (t, s) => W(t.e0 + 4.5, s === 100 ? 1 : 1.5, s === 1 ? 3 : s === 10 ? 7 : 15)
-    const up = (t) => t.name === 'diamonds' || t.name === 'rockets' || t.name === 'pistons'
-    const lift = (t, s) => t.name === 'rockets' ? (s === 100 ? 10 : 6) : t.name === 'diamonds' ? 2.5 : 1.2
+    const up = (t) => t.name === 'diamonds' || t.name === 'rockets' || t.name === 'potions'
+    const lift = (t, s) => t.name === 'rockets' ? (s === 100 ? 10 : 6) : t.name === 'diamonds' ? 2.5 : 4
 
     ctx.mark('go')
     r.focus = W(c0, HW + 0.4, -2)
