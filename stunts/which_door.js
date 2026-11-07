@@ -16,13 +16,13 @@ module.exports = R.makeStunt({
   caption: 'which door would you pick? 🚪',
   edit: {
     caption: 'which door would you pick? 🚪', red: 'door', song: 'songs/funk_abnormal.mp3', dropAt: 'reveal',
-    endAfter: 'last_death:0.9', deathScreen: true, onFire: 'lava_in:death',
+    endAfter: 'last_death:0.97', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
       ['intro', 'PICK ONE 👀', 1.2, 'yellow'],
       ['death', 'DEAD ❌', 0.7, 'red', 0],
-      ['survive', 'SURVIVED ✅', 0.9, 'green', 0],
-      ['survive', 'SURVIVED ✅', 0.9, 'green', 1],
+      ['survive', 'SURVIVED ✅', 0.6, 'green', 0],
+      ['survive', 'SURVIVED ✅', 0.6, 'green', 1],
       ['death', 'DEAD ❌', 0.7, 'red', 1],
       ['safe', 'THE SAFE ONE 😇', 1.0, 'green'],
       ['death', 'THE WORST ONE 💀', 1.0, 'red', 2]
@@ -31,7 +31,7 @@ module.exports = R.makeStunt({
     flash: [['death', 2, 0.8]],
     shake: [['death', 2, 24]],
     // the blast from above, slowed (first person, the death screen covers it on the tick it lands)
-    replay: { at: 'big_blast', before: 0.8, after: 0.3, cam: '12.5,14,-2,0,-72', speed: 0.35, label: 'REPLAY' },
+    replay: { at: 'big_blast', before: 0.55, after: 0.28, cam: '12.5,14,-2,0,-72', speed: 0.3, label: 'REPLAY' },
     speed: [['lava_a', 'lava_dead', 2.5]]     // the burn in the lava, sped up to the death
   }
 })
