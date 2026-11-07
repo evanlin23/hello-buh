@@ -2,6 +2,7 @@
 // by prismarine-viewer, MIT) built into three.js bone groups, textured with the client jar's
 // own entity textures. Unlit like Minecraft: per-face fixed shading x light at the entity.
 import * as THREE from 'three'
+import { nameTagTexture } from '/blockentities.js'
 
 // box-UV layout per face (same as prismarine-viewer's Entity.js, Bedrock/Java box mapping)
 const FACES = {
@@ -434,6 +435,14 @@ function posePlayer (r, s) {
   r.mat.userData.red.value = (p.hurt || p.deathTime > 0) ? 1 : 0
 }
 
+function sheepColor (s, tick) {
+  if (s.extra?.jeb) {
+    const k = Math.floor(tick / 25) + s.id, f = (tick % 25) / 25
+    const a = woolColor(k % 16), b = woolColor((k + 1) % 16)
+    return a.map((v, i) => v * (1 - f) + b[i] * f)
+  }
+  return woolColor(s.extra?.color || 0)
+}
 export class EntityLayer {
   constructor (scene, regs) { this.scene = scene; this.regs = regs || {}; this.live = new Map(); this.pending = new Set(); this.blockModels = new Map() }
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
@@ -442,8 +451,8 @@ export class EntityLayer {
     const key = `${id}|${name}|${JSON.stringify(extra, (k, v) => k === 'paddle' ? undefined : v)}`
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
-    if (cur) { this.scene.remove(cur.obj); this.live.delete(id) }
-    let obj = null, bones = {}, mat = null, woolMat = null
+    if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); this.live.delete(id) }
+    let obj = null, bones = {}, mat = null, woolMat = null, underMat = null
     if (name === 'falling_block' && extra && this.blockModels.has(extra.state)) {
       const bm = this.blockModels.get(extra.state)
       const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, 0, -0.5)
@@ -521,6 +530,17 @@ export class EntityLayer {
       if (geo && t) {
         const b = build(geo, t, l.extra); obj = b.root; bones = b.bones; mat = b.mat
         for (const [bn, r] of Object.entries(l.rest || {})) if (bones[bn]) { bones[bn].rotation.set(...r); bones[bn].userData.rest = bones[bn].rotation.clone() }
+        if (name === 'sheep' && extra && (extra.jeb || extra.color)) {
+          // SheepWoolUndercoatLayer (1.21.5+): a dyed or jeb_ sheep's body gets the undercoat over
+          // the skin, tinted with the wool colour, sheared or not (the coloured stubble)
+          const ut = await texture(['entity/sheep/sheep_wool_undercoat'])
+          if (ut) {
+            const u = build(geo, ut, l.extra)
+            u.mat.polygonOffset = true; u.mat.polygonOffsetFactor = -1; u.mat.polygonOffsetUnits = -1
+            for (const [bn, g] of Object.entries(u.bones)) if (bones[bn]) for (const m of [...g.children].filter(c => c.isMesh)) bones[bn].add(m)
+            underMat = u.mat
+          }
+        }
         if (l.wool) {   // SheepWoolLayer: same bones and pivots, inflated cubes, Java wool texture (Bedrock uv minus 32 rows)
           const wt = await texture(['entity/sheep/sheep_wool'])
           const fur = MODELS.sheep.geometry.default
@@ -534,7 +554,7 @@ export class EntityLayer {
       }
     }
     if (extra && extra.glint && mat && this.glintify) this.glintify(mat, name === 'falling_block' ? 8 : 0.25)
-    const rec = { key, obj, bones, mat, woolMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
+    const rec = { key, obj, bones, mat, woolMat, underMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
     if (obj) this.scene.add(obj)
     this.live.set(id, rec)
     return rec
@@ -551,14 +571,29 @@ export class EntityLayer {
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
       if (r.woolMat) {   // Sheep.getColor: dye colour x 0.75 (white x 0.9); jeb_ blends through all 16, 25 ticks each
-        let c
-        if (s.extra?.jeb) {
-          const k = Math.floor(tick / 25) + s.id, f = (tick % 25) / 25
-          const a = woolColor(k % 16), b = woolColor((k + 1) % 16)
-          c = a.map((v, i) => v * (1 - f) + b[i] * f)
-        } else c = woolColor(s.extra?.color || 0)
+        const c = sheepColor(s, tick)
         r.woolMat.color.setRGB(c[0] * LL[0], c[1] * LL[1], c[2] * LL[2])
       }
+      // nameplate: screen-aligned (the camera's orientation), 0.025 blocks a font pixel, the text's
+      // top 0.5 above the hitbox (render.js sets nameTag / nameY)
+      if (s.nameTag || r.tag) {
+        if (s.nameTag && (!r.tag || r.tagText !== s.nameTag)) {
+          if (r.tag) { this.scene.remove(r.tag); r.tag.material.map?.dispose(); r.tag.material.dispose() }
+          r.tag = null; r.tagText = s.nameTag
+          const nt = await nameTagTexture(s.nameTag)
+          if (nt) {
+            r.tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: nt.tex, transparent: true, depthWrite: false, fog: false }))
+            r.tag.scale.set(nt.w * 0.025, nt.h * 0.025, 1); r.tag.center.set(0.5, 1 - 1 / nt.h); r.tag.renderOrder = 3
+            this.scene.add(r.tag)
+          }
+        }
+        if (r.tag) {
+          r.tag.visible = !!s.nameTag
+          r.tag.position.set(s.x, s.y + (s.nameY || 2.3), s.z)
+          r.tag.material.color.setRGB(...LL)
+        }
+      }
+      if (r.underMat) r.underMat.color.setRGB(...sheepColor(s, tick).map((v, i) => v * LL[i]))
       if ((s.name === 'item_frame' || s.name === 'glow_item_frame') && r.bones.inner) {
         // ItemFrameRenderer: back to the block centre (+dir * 0.46875), Rx(xRot) Ry(180 - yRot); the item
         // at z 0.4375, turned rotation * 45 degrees, scale 0.5, with its 'fixed' display
@@ -667,6 +702,6 @@ export class EntityLayer {
         B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y - dy, B.head.userData.rest.z)
       }
     }
-    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); this.live.delete(id) }
+    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); this.live.delete(id) }
   }
 }

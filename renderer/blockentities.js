@@ -112,6 +112,30 @@ async function textTexture (lines, rgb, LH = 10, TW = 96) {
   return t
 }
 
+// A nameplate (EntityRenderer.renderNameTag / Font with a background): white text on black at 25%,
+// 1 px of background around it. Returns the texture and its size in font pixels.
+export async function nameTagTexture (text) {
+  const F = await font()
+  if (!F.img) return null
+  const w = [...text].reduce((s, ch) => s + advance(F, ch), 0) - 1
+  const SC = 4, W = w + 2, H = 10
+  const c = document.createElement('canvas'); c.width = W * SC; c.height = H * SC
+  const g = c.getContext('2d'); g.imageSmoothingEnabled = false
+  g.fillStyle = 'rgba(0,0,0,0.25)'; g.fillRect(0, 0, c.width, c.height)
+  const tint = document.createElement('canvas'); tint.width = F.img.width; tint.height = F.img.height
+  const tg = tint.getContext('2d'); tg.drawImage(F.img, 0, 0); tg.globalCompositeOperation = 'source-in'
+  tg.fillStyle = '#fff'; tg.fillRect(0, 0, tint.width, tint.height)
+  let x = 1
+  for (const ch of text) {
+    const code = ch.charCodeAt(0)
+    if (code < 256 && ch !== ' ') g.drawImage(tint, (code % 16) * F.cw, Math.floor(code / 16) * F.cw, F.cw, F.cw, x * SC, 1 * SC, 8 * SC, 8 * SC)
+    x += advance(F, ch)
+  }
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
+  return { tex: t, w: W, h: H }
+}
+
 // --- models (pixels, as the Java model layers define them)
 function signParts (standing) {
   const p = [{ cubes: [[[-12, -14, -1], [24, 12, 2], [0, 0]]] }]

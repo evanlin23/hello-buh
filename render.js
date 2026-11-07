@@ -118,7 +118,18 @@ function entitiesAt (t, mesher) {
     if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4) rb = ra   // teleport: hold, then snap on the next tick
     const L = (k) => ra[k] + (rb[k] - ra[k]) * f
     const pos = { x: L(3), y: L(4), z: L(5) }
-    const [sky, blk] = mesher.world.getLight(new Vec3(pos.x, pos.y + 0.5, pos.z))
+    const cell = new Vec3(Math.floor(pos.x), Math.floor(pos.y + 0.5), Math.floor(pos.z))
+    const inBlock = mesher.world.getBlock(cell)
+    // primed TNT (and a falling block) can arrive a tick before its block is removed: the block still
+    // shows, so skip the entity; drawn over it, it z-fought in black and white (tnt_1000 f459)
+    if (inBlock && ((ra[2] === 'tnt' && inBlock.name === 'tnt') || (ra[2] === 'falling_block' && ra[9] && inBlock.stateId === ra[9].state))) continue
+    let [sky, blk] = mesher.world.getLight(cell)
+    // a cell that is still solid (or not yet relit) reads light 0: take the brightest neighbour
+    if (inBlock && inBlock.boundingBox === 'block' && sky === 0 && blk === 0) {
+      for (const [dx, dy, dz] of [[0, 1, 0], [0, -1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]]) {
+        const [s2, b2] = mesher.world.getLight(cell.offset(dx, dy, dz)); sky = Math.max(sky, s2); blk = Math.max(blk, b2)
+      }
+    }
     out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(sky, blk) })
   }
   return out
@@ -252,7 +263,7 @@ function targetBlock (cam, world, ents = []) {
       const qx = cam.x + d.x * s, qy = cam.y + d.y * s, qz = cam.z + d.z * s
       for (const e of mobs) {
         const [w, h] = HITBOX[e.name]
-        if (Math.abs(qx - e.x) <= w / 2 && Math.abs(qz - e.z) <= w / 2 && qy >= e.y && qy <= e.y + h) return null
+        if (Math.abs(qx - e.x) <= w / 2 && Math.abs(qz - e.z) <= w / 2 && qy >= e.y && qy <= e.y + h) return { entity: e.id }
       }
     }
     v.x = Math.floor(cam.x + d.x * s); v.y = Math.floor(cam.y + d.y * s); v.z = Math.floor(cam.z + d.z * s)
@@ -1031,6 +1042,7 @@ function camAtLive (t) {
     // block outline under the crosshair + the crack overlay while digging
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
       cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
+      if (cam.target && cam.target.entity !== undefined) { cam.targetEntity = cam.target.entity; cam.target = null }
       // an eye inside the targeted shape (a respawn inside a lantern post): the block is culled from
       // in there, and its outline's edges ran past the eye as lines from sky to ground (respawn_tax f1647)
       if (cam.target) {
@@ -1210,6 +1222,14 @@ function camAtLive (t) {
       }
     }
     prof('particles+weather')
+    // nameplates (EntityRenderer.renderNameTag): a custom-named mob under the crosshair, or any with
+    // CustomNameVisible, within 64 blocks; anchored 0.5 above its hitbox top
+    for (const e of ents) {
+      if (!e.extra || !(e.extra.name || e.extra.jeb)) continue
+      if (!e.extra.name) e.extra = { ...e.extra, name: 'jeb_' }   // recordings from before names were recorded
+      const near = Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) < 64
+      if (near && (e.extra.nameVisible || e.id === cam.targetEntity)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
+    }
     await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), parts])
     prof('page frame (GL)')
     if (process.env.PROFILE) { await page.evaluate(() => { const c = document.querySelector('canvas'); const g = c.getContext('webgl2') || c.getContext('webgl'); const px = new Uint8Array(4); g.readPixels(0, 0, 1, 1, g.RGBA, g.UNSIGNED_BYTE, px) }); prof('gl finish (1px read)') }
