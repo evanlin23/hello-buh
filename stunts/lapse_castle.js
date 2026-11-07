@@ -166,11 +166,11 @@ module.exports = makeStunt({
       [1238, [0, 12, 78], [0, 21, 0]]
     ],
     // [ticks after the build, camera, look-at]: the pull-back lands on the wide shot at 60:00 (the
-    // castle behind the dirt arch and the tower) and drifts sideways to the end (backwards it ran into
-    // the fog: the renderer's 8-chunk fog starts ~115 blocks out and faded the rear towers)
+    // castle behind the dirt arch and the fort) and pushes in and round to the end (backwards it ran
+    // into the fog: the renderer's 8-chunk fog starts ~115 blocks out and faded the rear towers)
     reveal: [
-      [20, [-2.5, 12.6, 79], [0, 21, 0]],
-      [40, [-6, 13.4, 80], [-1, 21, 0]]
+      [15, [-3, 13, 73], [0, 21, 0]],
+      [40, [-8, 15, 67], [-1, 21, 0]]
     ]
   }
 })
