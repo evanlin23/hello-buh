@@ -1,0 +1,23 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+18:12:30.929 spawned at Vec3 { x: 129.5, y: 71, z: 19.5 }
+18:12:31.199 nearest minecraft:plains at [ 353, -45 ]
+18:12:44.376 plateau floor 88 terrain 37 .. 93
+18:13:27.886 set at { x: 361, y: 88, z: -45 }
+18:13:36.539 chunks refreshed; back at start within 0.00 blocks
+18:14:23.564 died
+18:14:26.140 STUNT OK
+rendering 1944 of 2937 frames
+filled 6 dropped pose tick(s): 292 295 696 701 741 850
+simulated 1182 dropped item / xp orb paths
+meshing from y -13
+light computed in 1.0 s
+meshed + uploaded world in 13.3 s
+191534 particles
+rendered 2937 frames (48.95 s of video) in 1412.7 s = 28.9 s per video second
+2937 frame names, 1944 rendered
+wrote work/tnt_1000.wav 49.00s
+speed: 2937 frames -> 1961 (2.65-5.17s xinf, 9.05-9.87s xinf, 10.80-13.32s xinf, 18.10-18.92s xinf, 20.30-22.82s xinf, 27.20-28.02s xinf, 29.40-31.62s xinf, 35.60-36.32s xinf, 38.65-39.87s xinf, 42.80-44.92s xinf)
+no 3D block icons needed
+wrote out/tnt_1000.mp4 31.38s
+EXIT 0
