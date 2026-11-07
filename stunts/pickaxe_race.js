@@ -168,6 +168,10 @@ module.exports = {
       await ctx.easeLookAt(new Vec3(q.x + 0.5, floor + 0.6, q.z + 0.5), j === NP - 1 ? 250 : 90)
       place(q); ctx.sound('block.grass.place', 1)
       await bot.waitForTicks(2)
+      // the server ignored the 3rd-7th placements (a render failed: chain broke at 2): check, retry, then set it
+      const tq = new Vec3(q.x, floor + 1, q.z)
+      for (let t = 0; t < 2 && bot.blockAt(tq)?.name !== 'tnt'; t++) { await ctx.easeLookAt(new Vec3(q.x + 0.5, floor + 1, q.z + 0.5), 60); place(q); await bot.waitForTicks(2) }
+      if (bot.blockAt(tq)?.name !== 'tnt') { ctx.log('tnt place fallback at pillar', j); bot.chat(`/setblock ${q.x} ${floor + 1} ${q.z} tnt`); bot.chat(`/clear @s tnt 1`); await bot.waitForTicks(1) }
       if (j === NP - 2) ctx.mark('tntrun')
       if (j === NP - 1) {
         // light this first one: its fuse runs while the rest go down
