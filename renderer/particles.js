@@ -66,17 +66,21 @@ function spawn (ev, blockTex) {
   if (ev.type === 'explosion') {
     // HugeExplosionSeedParticle: for 8 ticks, 6 HugeExplosionParticles a tick within +-2 blocks;
     // each lives 6-9 ticks, flips through explosion_0..15, size 2*(1 - r*0.5), grey, full bright
-    const big = (ev.radius || 4) >= 2
+    // the packet's particle: explosion_emitter only when ServerExplosion.isSmall() is false (radius >= 2
+    // AND the blast interacts with blocks); a creeper with mobGriefing false sends the single small
+    // `explosion` (story_runaway f2108: the emitter's big discs behind the death screen)
+    const big = ev.particle ? ev.particle === 'explosion_emitter' : ev.emitter ?? (ev.radius || 4) >= 2
     for (let k = 0; k < (big ? 8 : 1); k++) {
       for (let i = 0; i < (big ? 6 : 1); i++) {
         const g = r() * 0.6 + 0.4
         out.push({ t0: T0 + k, x: ev.x + (r() - r()) * 4 * (big ? 1 : 0), y: ev.y + (r() - r()) * 4 * (big ? 1 : 0), z: ev.z + (r() - r()) * 4 * (big ? 1 : 0),
-          vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 6 + Math.floor(r() * 4), size: 2 * (1 - r() * 0.5), anim: ['particle/explosion_', 16], bright: true, color: [g, g, g] })
+          vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 6 + Math.floor(r() * 4), size: big ? 2 * (1 - r() * 0.5) : 1, anim: ['particle/explosion_', 16], bright: true, color: [g, g, g] })
       }
     }
-    // block particles (ServerExplosion's defaults: poof, and smoke): only when the blast broke
-    // blocks (the packet's blockCount; recordings from before it was kept: assume it did). A blast
-    // that breaks nothing (mobGriefing false) leaves no smoke. Poof (ExplodeParticle): light grey
+    // block particles (ServerExplosion's defaults: poof, and smoke), as many as the packet's
+    // blockCount: the size of calculateExplodedPositions(), sent even when the blast keeps the blocks
+    // (mobGriefing false), so vanilla shows them then too. Older recordings without the count use the
+    // blocks they turned to air (render.js). Poof (ExplodeParticle): light grey
     // 0.7-1, lives 16/(r*0.8+0.2)+2; smoke (SmokeParticle): grey 0-0.3, scale 1; both generic_7 -> 0
     const nb = ev.blocks === undefined ? 16 : Math.min(ev.blocks, 32)
     for (let i = 0; i < nb; i++) {

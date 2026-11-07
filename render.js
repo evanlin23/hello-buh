@@ -823,12 +823,14 @@ function camAtLive (t) {
   for (let ev of (rec.timeline || []).filter(e => e.event === 'particles')) {
     let bt = null
     if (ev.block) { const st = mesher.blockStates[ev.block]; const v = st && (st.variants ? Object.values(st.variants)[0] : st.multipart && st.multipart[0].apply); const m = Array.isArray(v) ? v[0] : v; bt = m && m.model && m.model.textures && m.model.textures.particle }
-    // an explosion from before the harness kept the packet's blockCount: count the blocks the
-    // recording turned to air within its radius over the next 3 ticks (no smoke when none broke)
-    if (ev.type === 'explosion' && ev.blocks === undefined) {
+    // an explosion from before the harness kept the packet's blockCount / particle: count the blocks
+    // the recording turned to air within its radius over the next 3 ticks. None broken = the blast
+    // kept its blocks (mobGriefing false), so the small explosion particle, not the emitter.
+    if (ev.type === 'explosion' && (ev.blocks === undefined || ev.particle === undefined)) {
       const t0 = ev.t / 50, R = (ev.radius || 4) + 1
       const AIR = new Set(['air', 'cave_air', 'void_air'].map(n => mcDataR.blocksByName[n] && mcDataR.blocksByName[n].defaultState))
-      ev = { ...ev, blocks: (rec.blocks || []).filter(b => b[0] >= t0 - 1 && b[0] <= t0 + 3 && AIR.has(b[4]) && Math.hypot(b[1] + 0.5 - ev.x, b[2] + 0.5 - ev.y, b[3] + 0.5 - ev.z) <= R).length }
+      const broke = (rec.blocks || []).filter(b => b[0] >= t0 - 1 && b[0] <= t0 + 3 && AIR.has(b[4]) && Math.hypot(b[1] + 0.5 - ev.x, b[2] + 0.5 - ev.y, b[3] + 0.5 - ev.z) <= R).length
+      ev = { ...ev, blocks: ev.blocks ?? broke, particle: ev.particle ?? ((ev.radius || 4) >= 2 && broke > 0 ? 'explosion_emitter' : 'explosion') }
     }
     PARTS.push(...particles.spawn(ev, bt))
   }
