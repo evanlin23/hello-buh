@@ -30,7 +30,7 @@ module.exports = {
     // lava at tick rate 40 (2x: a 7.5x lava next to a 1x player read as fast lava, not a time-lapse); the
     // walks back up and out to the field are jump cuts; the casts (under a water sheet) at 2x; the drains
     // (a slow sneak in on the slope) at 1x
-    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
+    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
   },
 
   async setup (ctx) {
