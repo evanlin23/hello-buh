@@ -32,6 +32,9 @@ module.exports = {
     await ctx.cmd(`/fill ${x0} ${G - 2} ${z0} ${x0 + 14} ${G - 2} ${z0 + 14} stone`)
     await ctx.cmd(`/fill ${x0} ${G} ${z0} ${x0 + 14} ${G} ${z0 + 14} air`)
     await ctx.cmd(`/fill ${x0} ${G - 1} ${z0} ${x0 + 14} ${G - 1} ${z0 + 14} lava`)
+    // one cooled cell at the edge to stand the first pour on: from the south rim the bot can't click the
+    // rim's north-facing inner face, so the bucket hit the rim's top and the water source sat on the rim
+    await ctx.cmd(`/setblock ${x0 + 7} ${G - 1} ${z0 + 14} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 24')
     await ctx.hotbar(['water_bucket', 'water_bucket', ['bread', 8]])
     await ctx.tpCheck(x0 + 7.5, G + 1, z0 + 15.6, 180, 35)        // on the south rim, in line with the middle column
@@ -97,7 +100,7 @@ module.exports = {
 
     await bot.waitForTicks(4)
     // first pour: the rim's inner face, water lands in (7, 14)
-    await pourScoop(7, 14, new Vec3(x0 + 7.5, G + 0.5, z0 + 14.96), 10, 300)
+    await pourScoop(7, 14, cell(7, 14, -0.04), 10, 300)
     let lz = 14
     for (let step = 0; step < 8; step++) {
       // the newest obsidian at the front of the patch: stand two cells behind it, pour on its top face
@@ -141,6 +144,6 @@ module.exports = {
     let lava = 0, obs = 0
     for (let a = 0; a < 15; a++) for (let b = 0; b < 15; b++) { const n = at(a, b, G - 1).name; if (n === 'lava') lava++; if (n === 'obsidian') obs++ }
     ctx.log(`lake: obsidian ${obs}, lava ${lava}, converted ${converted}, at z ${(bot.entity.position.z - z0).toFixed(1)}`)
-    return bot.entity.position.z - z0 < 4 && obs > 60 && !ctx.died
+    return obs > 200 && !ctx.died                          // (it walks back south now: no end position check)
   }
 }
