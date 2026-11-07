@@ -111,7 +111,7 @@ function spawn (ev, blockTex) {
     }
     for (let i = 0; i < 5; i++) {
       const v = rot([(r() - 0.5) * 0.1, r() * 0.1 + 0.1, 0]), o = rot([(r() - 0.5) * 0.3, -r() * 0.6 - 0.3, 0.6])
-      const uo = Math.floor(r() * 4), vo = Math.floor(r() * 4)
+      const uo = r() * 3, vo = r() * 3
       P({ x: ev.x + o[0], y: ev.y + o[1], z: ev.z + o[2], vx: v[0], vy: v[1] + 0.05, vz: v[2],
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * 2 / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
     }
