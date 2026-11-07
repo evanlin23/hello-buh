@@ -39,7 +39,7 @@ REC=work/$NAME.rec.json
 ok=0
 for t in $(seq 1 "$TRIES"); do
   echo "attempt $t"
-  if STUNT=$STUNT RECORD=$REC timeout 180 node bot.js; then ok=1; break; fi
+  if STUNT=$STUNT RECORD=$REC timeout 300 node bot.js; then ok=1; break; fi
 done
 [ "$ok" = 1 ] || { echo "stunt failed $TRIES times"; exit 1; }
 stop_server; trap - EXIT
