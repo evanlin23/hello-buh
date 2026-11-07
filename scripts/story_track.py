@@ -37,7 +37,7 @@ def _lines(story_dir):
 POSES = None   # the recording's poses (edit.py sets them): line starts snap to the camera cut
 
 
-def _marks(timeline, start):
+def _marks(timeline, start, ids=None):
     """[(seconds into the Short, line id)] for every `line` mark. A line is marked a tick or two after its cut
     lands (the stunt sees the new position late), so it starts on the cut itself: the first tick whose pose
     is over 4 blocks from the one before (render.js shows that pose from exactly that tick)."""
@@ -45,7 +45,7 @@ def _marks(timeline, start):
     cuts = [e["t"] // 50 for e in timeline if e["event"] == "cut"]
     respawns = [e["t"] // 50 for e in timeline if e["event"] == "respawn"]
     for e in timeline:
-        if e["event"] != "line":
+        if e["event"] != "line" or (ids is not None and e["id"] not in ids):   # a line cut from story.json stays silent
             continue
         m = e["t"] // 50
         t = m
@@ -73,7 +73,7 @@ def narration_wav(story_dir, timeline, start, dur, out):
     story, voice = _lines(story_dir)
     sr = 48000
     track = np.zeros(int((dur + 1) * sr), np.float32)
-    for t, lid in _marks(timeline, start):
+    for t, lid in _marks(timeline, start, {l["id"] for l in story["lines"]}):
         with wave.open(str(pathlib.Path(story_dir) / "voice" / f"{lid}.wav")) as w:
             x = np.frombuffer(w.readframes(w.getnframes()), np.int16 if w.getsampwidth() == 2 else np.int32).astype(np.float32)
             x /= 32768.0 if w.getsampwidth() == 2 else 2 ** 31
@@ -133,7 +133,7 @@ def caption_events(story_dir, timeline, start, dur):
     A line's first chunk appears on its cut (the line's mark), and its last chunk holds until the next line's cut
     (0.3 s past its last word only when the next line is over 1.2 s away)."""
     story, voice = _lines(story_dir)
-    marks = _marks(timeline, start)
+    marks = _marks(timeline, start, {l["id"] for l in story["lines"]})
     ev = []
     for n, (t, lid) in enumerate(marks):
         v = voice["lines"][lid]
