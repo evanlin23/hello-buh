@@ -239,7 +239,7 @@ module.exports = {
     await line('L06', async (k, at) => {
       // "So I stopped DYING" over the cactus death screen; the respawn lands straight in the hay-house shot on "I moved"
       // (a spawnpoint there: a plaza respawn held 0.6 s still before the cut)
-      if (k >= at(2) - 2) respawnSoon(null, 2)
+      if (k >= at(2)) respawnSoon(null, 2)   // lands on "I moved" (at(2) - 2 landed 7 frames before it)
       if (!hay && alive()) hay = true
       go(hay && bot.entity.position.z > Z - 17.4)
       if (alive()) look(k)
