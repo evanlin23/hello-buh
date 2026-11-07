@@ -760,7 +760,7 @@ if (STUNT_MOD.aimMarker || process.env.AIM_MARKER === '1') {
   for (const [tier, pts] of byTier) {
     pts.sort((a, b) => a.t - b.t)
     const sp = (rec.timeline || []).find(e => e.event === `splash${tier}`)
-    AIMS.push({ pts, t0: pts[0].t, t1: Math.min(pts[pts.length - 1].t, sp ? sp.t / 50 : Infinity) })
+    AIMS.push({ pts, t0: pts[0].t, t1: Math.min(pts[pts.length - 1].t, sp ? sp.t / 50 - 16 : Infinity) })   // gone 12 ticks before the splash: fading over the zoomed-in water tinted it purple (review v9)
   }
 }
 function aimAt (t) {
@@ -1677,7 +1677,7 @@ function camAtLive (t) {
     cam.dayTime = curDayTime
     cam.rain = levelAt(RAIN, t); cam.thunder = levelAt(THUNDER, t)
     Object.assign(cam, darknessAt(t))
-    cam.aim = AIMS.length ? aimAt(t) : null
+    cam.aim = AIMS.length && !process.env.CAM ? aimAt(t) : null   // first person only: in the third-person replay it showed as red bars under the player
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
     // stunt.fovZoom [[EVENT[:s], EVENT[:s], SCALE]]: a sharp zoom rendered as a narrower FOV (a 2.2x crop
     // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.

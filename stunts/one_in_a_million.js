@@ -49,10 +49,10 @@ module.exports = {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
     song: 'songs/ncs/fearless_funk.mp3', dropAt: 'splash5',   // its drop (29.5 s) comes after splash5 (~25.5 s): misery's 16.25 s drop played on tier 4
     startAt: 'drop1:-0.85', endAfter: 'splash5:0.75',
-    subs,
+    subs, subsY: 0.12,   // up top over the far terrain: at mid view the tier 4 label lay on the cactus field (review v9)
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
       ['look3:0', 'look3:0.2', 'cut'], ['look4:0', 'look4:0.6', 'cut'],   // the openings' first look out at build limit was a pale fog void over the top 40% (review v8)
-      ['look5:0.15', 'look5:0.95', 'cut'],      // the finale's first glance at -0.7 was black night sky (beat audit PAUSE 0.8 s)
+      ['look5:0', 'look5:1.2', 'cut'],   // until the lava lake is in view (the first look was black night sky: review v9)      // the finale's first glance at -0.7 was black night sky (beat audit PAUSE 0.8 s)
       ['drop4:0.5', 'drop4:2.4', 2],           // the high part of the build-limit fall: from 250 up the target barely changes (review: LOW 1.2 s)
       ['drop5:0', 'drop5:0.6', 2],   // from the jump, so the tier 5 label is read before it (review)          // the held breath and the jump's rise before the last fall (PAUSE 0.6 s)
       ['drop5:0.6', 'drop5:3.3', 2.5]],        // the high, dark part of the last fall (review: LOW 1.9 s); the lava rushing up stays real-time
