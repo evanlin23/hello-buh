@@ -106,9 +106,11 @@ function kit (ctx, X, Z, F, rooms) {
     if (marked) k.cutEnd = 'strafe_b' + i     // ends in open(), after the re-centring
   }
   // walk to (tx, tz), steering toward it (the view follows the way; `ease` < 1 turns gradually)
-  k.walkTo = async (tx, tz, ease = 0.35) => {
+  k.walkTo = async (tx, tz, ease = 0.35, maxTicks = 80, sprint = false) => {
     bot.setControlState('forward', true)
-    for (let j = 0; j < 80; j++) {
+    bot.setControlState('sprint', sprint)
+    for (let j = 0; j < maxTicks; j++) {
+      if (sprint && Math.hypot(tx - bot.entity.position.x, tz - bot.entity.position.z) < 2.5) bot.setControlState('sprint', false)
       const p = bot.entity.position, ddx = tx - p.x, ddz = tz - p.z, d = Math.hypot(ddx, ddz)
       if (d < 0.2) break
       if (d < 0.9) bot.setControlState('forward', d > 0.3)
@@ -499,7 +501,7 @@ const PLAY = {
 // The stunt module for a list of rooms. `edit` comes from the stunt (cards and caption).
 function makeStunt ({ name, rooms, caption, edit, biome }) {
   // the walk over to the next door after a survival is cut (two ~4 s strafes read as dead loops)
-  edit = { startAt: 'intro:0', ...edit, speed: [...(edit.speed || []), ...rooms.map((r, i) => ['strafe_a' + i, 'strafe_b' + i, 'cut'])] }
+  edit = { startAt: 'intro:0', ...edit, speed: [...(edit.speed || []), ['walk_a:0.25', 'walk_b', 'cut'], ...rooms.map((r, i) => ['strafe_a' + i, 'strafe_b' + i, 'cut'])] }
   return {
     name,
     biome: process.env.BIOME || biome || 'minecraft:plains',
@@ -512,12 +514,12 @@ function makeStunt ({ name, rooms, caption, edit, biome }) {
       const site = require('../stunts/_site')
       const n = rooms.length
       const half = Math.ceil(((n - 1) / 2) * D.GAP) + 18
-      const g = await site.findSite(ctx, [-half, half, -D.DEPTH - 8, 22])
+      const g = await site.findSite(ctx, [-half, half, -D.DEPTH - 8, 34])
       if (!g) throw new Error('no site')
       const { x: X, z: Z, y: F } = g
       Object.assign(this, { X, Z, F })
       await ctx.defaultRules()
-      await ctx.cmd(`/forceload add ${X - half} ${Z - D.DEPTH - 8} ${X + half} ${Z + 22}`)
+      await ctx.cmd(`/forceload add ${X - half - 12} ${Z - D.DEPTH - 8} ${X + half + 12} ${Z + 36}`)   // the clearing reaches 36 past the facade
       await ctx.cmd('/gamerule random_tick_speed 0')
       await ctx.cmd('/gamerule log_admin_commands false')
       await ctx.cmd('/kill @e[type=!player]')
@@ -530,7 +532,9 @@ function makeStunt ({ name, rooms, caption, edit, biome }) {
       await ctx.cmd('/gamerule fall_damage true')
       // the start: off to the left of the row, the doors receding to the right
       const d0 = D.doorX(X, n, 0)
-      await ctx.tpCheck(d0 - 3.5, F + 1, Z + 8.5, 180 + 40, -6)
+      // the start: back in the middle of the yard, all five numbered doors in one wide shot (owner:
+      // "start further back so people can choose")
+      await ctx.tpCheck(X + 0.5, F + 1, Z + 27.5, 180, -11)   // far enough back that all five doors fit with margin; the door row above the hand, the numbers under the PICK card
       await ctx.cmd('/gamemode survival')
       await ctx.cmd('/effect give @s instant_health 1 5 true')
       ctx.select(8)   // an empty slot that isn't the first free one (pickups mustn't land in the hand)
@@ -543,13 +547,30 @@ function makeStunt ({ name, rooms, caption, edit, biome }) {
       await ctx.hotbar(['iron_sword', ['bread', 16], ['torch', 32]])   // again: the set-up's fills dropped seeds the bot picked up
       ctx.select(8)   // an empty slot that isn't the first free one (pickups mustn't land in the hand)
       ctx.mark('intro')
-      await k.walkTo(k.dx(0) + 0.5, this.Z + 2.5, 0.1)
+      // ~1.8 s to pick: a slow creep forward on the wide shot (never a frozen frame)
+      bot.setControlState('sneak', true); bot.setControlState('back', true)   // easing back: the shot widens (creeping in cut doors 1 and 5 off)
+      await bot.waitForTicks(36)
+      bot.setControlState('sneak', false); bot.setControlState('back', false)
+      ctx.mark('picked')
+      // then over to door 1 (the edit cuts the walk: walk_a .. walk_b)
+      let walkMarked = 0
+      const onWalk = () => {
+        const p = bot.entity.position, d = Math.hypot(k.dx(0) + 0.5 - p.x, this.Z + 2.5 - p.z)
+        if (walkMarked === 0) { walkMarked = 1; ctx.mark('walk_a') } else if (walkMarked === 1 && d < 1.1) { walkMarked = 2; ctx.mark('walk_b') }
+      }
+      bot.on('physicsTick', onWalk)
+      await k.walkTo(k.dx(0) + 0.6, this.Z + 2.5, 0.35, 200, true)   // straight to the lined-up spot (re-centring was a 1.5 s stare); ~21 blocks, cut in the edit
+      bot.removeListener('physicsTick', onWalk)
       await ctx.easeLook(N, bot.entity.pitch, 250)
-      await k.centre(k.dx(0) + 0.5)
       let last = null
       for (let i = 0; i < rooms.length; i++) {
         if (last === 'dead') await k.respawnAt(i, D.ROOMS[rooms[i - 1]].mob)
         else if (last === 'survived') await k.strafeTo(i)
+        if (rooms[i] === 'safe') {   // a creeper blast at the door before can set this floor off early (it left a crater): retry
+          let tnt = 0
+          for (let z = this.Z - 12; z <= this.Z - 3; z++) for (let x = k.dx(i) - 2; x <= k.dx(i) + 2; x++) for (const y of [this.F - 1, this.F]) { const b = bot.blockAt(new k.Vec3(x, y, z)); if (b && b.name === 'tnt') tnt++ }
+          if (tnt < 95) { ctx.log('the safe room lost its TNT floor:', tnt); return false }
+        }
         if (i === rooms.length - 1) ctx.mark('safe')   // after the respawn (its card goes on the new door)
         const deathsBefore = ctx.deaths
         try { last = await PLAY[rooms[i]](ctx, k, i) } catch (e) { ctx.log('room', i, rooms[i], 'failed:', e.message, bot.entity.position, 'hp', bot.health); return false }
