@@ -62,6 +62,31 @@ async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16 } = {})
   return best
 }
 
+// findSite: findFlat around the bot once its chunks have loaded; if nothing fits, hop 256 blocks
+// along a ring and look again (still in creative, high up)
+async function findSite (ctx, area, opts = {}) {
+  const { bot } = ctx
+  const hops = [[0, 0], [256, 0], [0, 256], [-256, 0], [0, -256], [512, 0], [0, 512], [-512, 0], [0, -512], [384, 384], [-384, -384]]
+  const flatEnough = opts.flatEnough ?? 8
+  let best = null
+  const p0 = bot.entity.position.clone()
+  for (const [dx, dz] of hops) {
+    if (dx || dz) await ctx.cmd(`/tp @s ${Math.round(p0.x + dx)} 180 ${Math.round(p0.z + dz)}`)
+    let n = -1
+    for (let k = 0; k < 30; k++) {   // until the loaded chunks stop growing (max ~15 s)
+      await bot.waitForTicks(10)
+      const m = bot.world.getColumns().length
+      if (m === n) break
+      n = m
+    }
+    const g = await findFlat(ctx, area, opts)
+    ctx.log('findSite at', dx, dz, g)
+    if (g && (!best || g.range < best.range)) best = g
+    if (best && best.range <= flatEnough) return best
+  }
+  return best   // the flattest seen
+}
+
 async function clearFlat (ctx, x, z, y, area, height = 24) {
   const [X0, X1, Z0, Z1] = [x + area[0], x + area[1], z + area[2], z + area[3]]
   const per = Math.max(1, Math.floor(32768 / ((X1 - X0 + 1) * (Z1 - Z0 + 1))))   // layers per /fill under the cap
@@ -71,4 +96,4 @@ async function clearFlat (ctx, x, z, y, area, height = 24) {
   await ctx.cmd(`/fill ${X0} ${y} ${Z0} ${X1} ${y} ${Z1} grass_block`)
 }
 
-module.exports = { findFlat, clearFlat }
+module.exports = { findFlat, findSite, clearFlat }

@@ -3,12 +3,11 @@
 // the boat), gets in it (real use_entity) and lands in the boat with full hearts (vanilla: getting
 // into a vehicle resets the fall distance). From 15 blocks up to 79, seven drops. The camera looks
 // down the fall the whole way, then up the pillar from the boat.
-const { findFlat, clearFlat } = require('./_site')
 const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 }))   // heights where a fall tick lands in the boat window (fall phases simulated)
 
 module.exports = {
   name: 'boat_clutch',
-  biome: process.env.BIOME || 'minecraft:plains',   // flat: the cleared set's edges don't cut into hills
+  biome: process.env.BIOME || 'minecraft:plains',
   caption: 'boat clutch 💀',
   edit: {
     caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
@@ -22,38 +21,64 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
-    // the flattest dry grassland around, levelled over a wide area: no dug-out box in the shots
-    const span = PILLARS[PILLARS.length - 1].dx
-    const AREA = [-44, span + 40, -48, 40]
-    const g = await findFlat(ctx, AREA)
-    if (!g) throw new Error('no flat dry land')
-    ctx.log('site', g)
-    const { x, z, y: floor } = g
-    this.x = x; this.z = z; this.floor = floor
+    // no cleared box: each pillar stands on the natural ground, on an open patch of grass (nothing
+    // overhead up to its top, the ground where the bot lands at the pillar's own level)
+    const g = ctx.findLand(bot.entity.position.x | 0, bot.entity.position.z | 0)
+    if (!g) throw new Error('no dry land')
+    const { x, z } = g
+    this.x = x; this.z = z
+    await ctx.cmd(`/tp @s ${x + 35} 140 ${z}`); await bot.waitForTicks(20)   // over the middle of the row, chunks loaded
+    try { await bot.waitForChunksToLoad() } catch (e) {}
     await ctx.defaultRules()
-    const top = floor + Math.max(...PILLARS.map(p => p.h))
-    const X1 = x + span + 16
-    // stand in the middle of the set while it is built: a /fill reaching chunks the server isn't
-    // simulating fails ("That position is not loaded")
-    await ctx.cmd(`/tp @s ${Math.round((x - 16 + X1) / 2)} ${floor + 2} ${z}`); await bot.waitForTicks(20)
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    await clearFlat(ctx, x, z, floor, AREA, 24)
-    for (let y0 = floor + 25; y0 <= top + 6; y0 += 9) await ctx.cmd(`/fill ${x - 16} ${y0} ${z - 22} ${X1} ${Math.min(y0 + 8, top + 6)} ${z + 12} air`)   // the pillars' airspace
-    for (const p of PILLARS) await ctx.cmd(`/fill ${x + p.dx} ${floor + 1} ${z} ${x + p.dx} ${floor + p.h} ${z} cobblestone`)
+    const PLANT = /^(air|short_grass|tall_grass|fern|large_fern|dandelion|poppy|bush|leaf_litter|wildflowers)$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of/
+    const open = (px, pz, floor, h) => {
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dz = -4; dz <= 1; dz++) {
+          const b = ctx.surface(px + dx, pz + dz)
+          if (!b || b.name !== 'grass_block' || b.position.y !== floor) return false   // flat grass where it lands
+          for (let y = floor + 1; y <= floor + h + 4; y++) { const a = bot.blockAt(new ctx.Vec3(px + dx, y, pz + dz)); if (!a || !PLANT.test(a.name)) return false }
+        }
+      }
+      return true
+    }
+    this.spots = []
+    let px = x
+    for (const P of PILLARS) {
+      let spot = null
+      await ctx.cmd(`/tp @s ${px + 30} 140 ${z}`); await bot.waitForTicks(15)   // keep the chunks ahead loaded
+      for (let t = 0; t < 70 && !spot; t++, px += 2) {
+        for (const dz of [0, 4, -4, 8, -8, 12, -12, 16, -16, 20, -20]) {
+          const b = ctx.surface(px, z + dz)
+          if (b && b.name === 'grass_block' && b.position.y >= 63 && open(px, z + dz, b.position.y, P.h)) { spot = { x: px, z: z + dz, floor: b.position.y }; break }
+        }
+      }
+      if (!spot) throw new Error(`no open ground for the ${P.h}-block pillar`)
+      this.spots.push(spot)
+      ctx.log('pillar', P.h, 'at', spot)
+      px += 9
+    }
+    for (const [i, P] of PILLARS.entries()) {
+      const S = this.spots[i]
+      await ctx.cmd(`/fill ${S.x - 2} ${S.floor + 1} ${S.z - 5} ${S.x + 2} ${S.floor + 2} ${S.z + 2} air`)   // the flowers and grass where it lands
+      await ctx.cmd(`/fill ${S.x} ${S.floor + 1} ${S.z} ${S.x} ${S.floor + P.h} ${S.z} cobblestone`)
+    }
+    const S0 = this.spots[0], SL = this.spots[this.spots.length - 1]
+    this.mid = { x: Math.round((S0.x + SL.x) / 2), y: S0.floor, z }
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6.5')   // vanilla 4.5: nudged so the boat can go down 2 ticks early
     await ctx.cmd('/attribute @s minecraft:entity_interaction_range base set 6.5')   // vanilla 3: nudged the same way
     await ctx.hotbar(['diamond_sword', ...PILLARS.map(() => 'oak_boat'), ['bread', 16]])   // boats don't stack: one per slot
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
     // stand clear of every block before recording (spawning inside the fill hurt the bot: in_wall)
-    await ctx.tpCheck(x + 0.5, floor + PILLARS[0].h + 1, z + 0.5, 180, 60)
+    await ctx.tpCheck(S0.x + 0.5, S0.floor + PILLARS[0].h + 1, S0.z + 0.5, 180, 60)
     ctx.select(0)
-    return { x: Math.round((x - 16 + X1) / 2), y: floor, z }   // the set's middle: the harness records the world around it
+    return this.mid   // the row's middle: the harness records the world around it
   },
 
   async clutch (ctx, i) {
     const { bot } = ctx
-    const { x, z, floor } = this, P = PILLARS[i], px = x + P.dx
+    const P = PILLARS[i], S = this.spots[i], px = S.x, z = S.z, floor = S.floor
     if (i > 0) {   // quick tp, cut out in the edit (cut<i>a, set after the last look-up, .. cut<i>b)
       for (let t = 0; ; t++) {
         await ctx.cmd(`/tp @s ${px + 0.5} ${floor + P.h + 1} ${z + 0.5} 180 60`)
