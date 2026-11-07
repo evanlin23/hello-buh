@@ -35,8 +35,10 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     for (let y0 = floor + 1; y0 <= floor + TOP + 4; y0 += 10) await ctx.cmd(`/fill ${x - 8} ${y0} ${z - 8} ${x + 8} ${Math.min(y0 + 9, floor + TOP + 4)} ${z + 8} air`)
-    // (no flat grass pad: its sharp square edges read as command-built in every fall)
-    await ctx.cmd(`/setblock ${x} ${floor} ${z} grass_block`)
+    // a small flat landing patch (the placements assume ground at floor); the old 17x17 pad's sharp edges
+    // read as command-built in every fall
+    await ctx.cmd(`/fill ${x - 3} ${floor} ${z - 1} ${x + 3} ${floor} ${z + 5} grass_block`)
+    await ctx.cmd(`/fill ${x - 3} ${floor - 2} ${z - 1} ${x + 3} ${floor - 1} ${z + 5} dirt`)
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.hotbar(CLUTCHES.map(c => c.item))
     await ctx.cmd('/gamemode survival')
