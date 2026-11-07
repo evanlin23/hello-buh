@@ -78,6 +78,7 @@ module.exports = {
     await c('/difficulty peaceful')
     await c('/gamerule random_tick_speed 0')
     await c('/gamerule fire_spread_radius_around_player 0')
+    await c('/gamerule block_drops false')              // no explosion loot filling the hotbar
     await c(`/forceload add ${X + AREA[0]} ${Z + AREA[2]} ${X + AREA[1]} ${Z + AREA[3]}`)
     // clear the field in slabs (under the /fill cap): air above, grass, deep dirt for the craters
     for (let z0 = Z + AREA[2]; z0 <= Z + AREA[3]; z0 += 4) {
@@ -153,15 +154,16 @@ module.exports = {
     }
     await fill(eEnd - 2, 1, nR, eEnd - 2, hT, nR, 'stone_bricks')   // the tower
     await put(eEnd - 1, hT, nR, 'target')               // overhanging the last dispenser
-    await fill(eEnd - 1, 1, nR + 1, eEnd - 1, hT - 1, nR + 1, 'stone_bricks')
-    await put(eEnd - 1, hT, nR + 1, 'piston[facing=north]')
-    // (pistons can't push anvils: the piston shoves the ledge block the anvil stands on)
-    await put(eEnd - 1, hT, nR + 2, 'stone_bricks')
-    await put(eEnd - 1, hT + 1, nR + 2, 'anvil[facing=east]')
-    // F: the anvil lands at (eEnd-1,1,nR+2); an observer north of it -> wire into a ground-level
+    // the target -> a repeater (0.4 s: the anvil leaves once the burst has opened) -> the piston,
+    // which shoves the ledge the anvil stands on (pistons can't push anvils)
+    await fill(eEnd - 1, 1, nR + 1, eEnd - 1, hT - 1, nR + 2, 'stone_bricks')
+    await put(eEnd - 1, hT, nR + 1, 'repeater[facing=south,delay=4]')
+    await put(eEnd - 1, hT, nR + 2, 'piston[facing=north]')
+    await put(eEnd - 1, hT, nR + 3, 'stone_bricks')
+    await put(eEnd - 1, hT + 1, nR + 3, 'anvil[facing=east]')
+    // F: the anvil lands at (eEnd-1,1,nR+3); an observer north of it -> wire into a ground-level
     // line going east along nF; pistons in the ground north of it push rainbow glass up
-    await put(eEnd - 1, 1, nR + 3, 'observer[facing=south]')
-    await put(eEnd - 1, 1, nR + 4, 'redstone_wire')
+    await put(eEnd - 1, 1, nR + 4, 'observer[facing=south]')
     await put(eEnd - 1, 1, nR + 5, 'redstone_wire')
     await put(eEnd - 1, 0, nF, 'redstone_wire')
     let gi = 0, e = eEnd
@@ -233,8 +235,8 @@ module.exports = {
       { name: 'cart_end', pos: B(eEnd, 1, nD), test: prop('powered', true) },
       ...dn.map((n, k) => ({ name: `rocket${k}`, pos: B(eEnd - 1, 1, n), test: prop('triggered', true) })),
       { name: 'rocket_hit', pos: B(eEnd - 1, hT, nR), test: (b) => b.getProperties().power > 0 },
-      { name: 'anvil_push', pos: B(eEnd - 1, hT, nR + 1), test: prop('extended', true) },
-      { name: 'anvil_land', pos: B(eEnd - 1, 1, nR + 3), test: prop('powered', true) },
+      { name: 'anvil_push', pos: B(eEnd - 1, hT, nR + 2), test: prop('extended', true) },
+      { name: 'anvil_land', pos: B(eEnd - 1, 1, nR + 4), test: prop('powered', true) },
       ...this.waveE.map((e, k) => ({ name: `wave${k}`, pos: B(e, 0, nF + 1), test: prop('extended', true) })),
       { name: 'tnt_launch', pos: B(this.eW + 3, 1, nF), test: prop('extended', true) },
       { name: 'primed', pos: B(this.eAct, 1, nG), test: () => false }   // marked from the entity below
@@ -323,16 +325,25 @@ module.exports = {
     }
     await until(() => at('rocket_hit'), 30)
     await bot.waitForTicks(4)
-    focus = W(eEnd - 1, hT + 1, nR + 2)
-    await follow('falling_block', [0, -1.5, 0], () => at('anvil_land'), 40)
+    // the anvil: the server sends a falling block's position about once a second, so the aim
+    // follows the fall as vanilla simulates it (gravity 0.04, drag 0.98) from the push
+    focus = W(eEnd - 1, hT + 1, nR + 3)
+    await until(() => at('anvil_push'), 20)
+    await bot.waitForTicks(1)
+    k = 0.3
+    for (let y = hT + 1.5, v = 0; y > 1.5 && !at('anvil_land'); ) { v = (v + 0.04) * 0.98; y -= v; focus = W(eEnd - 1, Math.max(1.5, y - 1), nR + 3); await bot.waitForTicks(1) }
+    await until(() => at('anvil_land'), 20)
+    k = 0.16
     // F: the wave runs east: cross the cart track and follow it
     steer = W(-4, 0, nF - 6)
     for (let kk = 0; kk < this.waveE.length; kk++) {
       focus = W(this.waveE[Math.min(this.waveE.length - 1, kk + 2)], 1.5, nF + 1)
       await until(() => at(`wave${kk}`), 20)
     }
-    // G: the TNT cart: launch, ride, primed (flashing), and on into the TNT
-    focus = W(this.eL, 1, nG)
+    // G: the TNT cart: launch, ride, primed (flashing), and on into the TNT. Meanwhile back away,
+    // facing it, to ~24 blocks from the TNT: explosions fling primed TNT 10-15 blocks (two takes
+    // ended in a crater)
+    focus = W(this.eL, 1, nG); steer = W(4, 0, nD - 1)
     await until(() => at('tnt_launch'), 30)
     let last = null
     for (let i = 0; i < 200 && booms === 0; i++) {
@@ -348,7 +359,7 @@ module.exports = {
     // H: the explosions race east to the pile
     k = 0.1
     for (let i = 0; i < 200 && !at('giant'); i++) {
-      if (at('big')) { focus = W(27, 3, nH + 3); steer = W(6, 0, nF - 15) } else if (at('cube')) { focus = W(12, 2.5, nH); steer = W(3, 0, nF - 11) }   // back away facing it: flung TNT
+      if (at('big')) { focus = W(27, 3, nH + 3) } else if (at('cube')) { focus = W(12, 2.5, nH) }
       else {
         const tnts = Object.values(bot.entities).filter(en => en.name === 'tnt')
         const front = tnts.reduce((a, en) => (!a || en.position.x > a.position.x) ? en : a, null)
