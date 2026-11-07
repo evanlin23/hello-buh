@@ -92,7 +92,7 @@ module.exports = {
       await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5))
       bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,
         cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      if (bot.time.age - lastSwing >= 6) { bot.swingArm(); lastSwing = bot.time.age }   // one continuous swing loop (a swing per tick strobed the hand)
+      if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second   // one continuous swing loop (a swing per tick strobed the hand)
       ctx.sound(b.name === 'glass' ? 'block.glass.place' : b.name === 'cobblestone' ? 'block.stone.place' : 'block.wood.place', 1, 0.9 + (guard % 3) * 0.05)
       placed.add(key(b))
       budget += TPB

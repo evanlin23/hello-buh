@@ -196,7 +196,7 @@ module.exports = {
         bot._client.write('block_place', { hand: 0, location: { x: b.x + dx, y: b.y + dy, z: b.z + dz }, direction: face,
           cursorX: 0.5, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
         // one continuous swing loop, not a swing restarted every tick (that strobed the hand)
-        if (bot.time.age - lastSwing >= 6) { bot.swingArm(); lastSwing = bot.time.age }
+        if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second
         ctx.sound(SOUND(b.name), 1, 0.8 + (guard % 3) * 0.05)
         placed.add(key(b))
         budget += 1 / B.rate                                // ticks this block "costs"

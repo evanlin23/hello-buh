@@ -70,7 +70,7 @@ module.exports = {
       ctx.select(0)
       bot._client.write('block_dig', { status: 0, location: loc, face: 3, sequence: 0 })
       ctx.sound('block.sand.break', 1); ctx.particles('block', new Vec3(cx, floor + 1, cz), { block: 'sand' })
-      if (bot.time.age - lastSwing >= 4) { bot.swingArm(); lastSwing = bot.time.age }
+      if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second
       ctx.select(1)
       bot._client.write('block_place', { hand: 0, location: { x: cx, y: floor, z: cz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       ctx.sound('block.wood.place', 1)
