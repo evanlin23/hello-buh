@@ -12,7 +12,7 @@
 // Normal difficulty (TNT damage scales with it; peaceful zeroes it). Hearts refill across each cut.
 // mineflayer yaw 0 = north: threats come from the north, the bot starts facing them.
 const N = 9
-const LANES = [...Array(N).keys()].map(i => (i - (N - 1) / 2) * 24)   // 24 apart: blasts (8) don't reach the next lane; at 32 lane 9 sat at the loaded edge and opened on missing terrain
+const LANES = [...Array(N).keys()].map(i => (i - (N - 1) / 2) * 32)   // 32 apart: blasts don't reach the next lane (at 24, lane 3's blasts set off lane 4's TNT floor early: died twice)
 const SUBS = ['1/9: run', '2/9: dodge it', '3/9: from the SKY', '4/9: the floor is TNT', '5/9: TNT minecart', '6/9: wall it off', '7/9: dig down', '8/9: drop', '9/9: EVERYTHING']
 
 module.exports = {
@@ -24,6 +24,10 @@ module.exports = {
     subs: SUBS.map((s, i) => ['wave', s, 2.6, i])   // most of each lane (1.4 left half of every lane with no counter)
   },
   expectDeath: true,
+  // lane 9 is 128 out: its view (8 chunks) ran past the default 160 recorded, and opened on missing terrain.
+  // Record wider, and load both ends of the field first (the server only sends chunks round the bot)
+  recordRadius: 280,
+  chunkStops: set => [{ x: set.x + 150, z: set.z - 30 }, { x: set.x - 150, z: set.z - 30 }],
 
   async setup (ctx) {
     const { bot } = ctx
