@@ -33,11 +33,11 @@ module.exports = {
     song: 'songs/funk_abnormal.mp3', dropAt: 'r5_found',
     startAt: 'r1_go:0', endAfter: 'r5_found:0.25',
     // the zoom-out: a fixed camera up at y 320 beside him, appended after the look up the pillar
-    replay: { at: 'r5_found', before: 0.05, after: 0.85, cam: '1.5,322.3,10.5,45,-16', speed: 1, label: 'MEANWHILE AT Y 320' },
+    replay: { at: 'r5_found', before: 0.05, after: 0.85, cam: '1.5,324.5,10.5,45,-35', speed: 1, label: 'MEANWHILE AT Y 320' },
     speed: [1, 2, 3, 4].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
     clock: R.map((n, i) => [`r${n}_go`, `r${n}_end`, [5, 4, 4, 4, 3][i], `ROUND ${n}`, 'down']),
     counter: { at: R.map(n => `r${n}_found`), total: ROUNDS },
-    cards: [['r1_found', 'IN A TREE 😭', 0.9, 'yellow'], ['r2_found', 'IN THE POND 😭', 0.9, 'blue'],
+    cards: [['r1_found', 'IN A TREE 😭', 0.9, 'yellow'], ['r2_found', 'IN THE POND 😭', 0.7, 'blue'],
       ['r3_found', 'UNDER ME 😭', 0.9, 'orange'], ['r4_found', 'IN LAVA 🔥', 0.9, 'gold']],
     punch: R.map(n => `r${n}_found`),
     subs: [['r1_end', 'where did he go', 0.9], ['r2_end', 'nothing again', 0.9], ['r3_end', 'I give up', 0.9],
@@ -250,9 +250,9 @@ module.exports = {
     await bot.waitForTicks(6)
     ctx.mark('cut1b')
     ctx.mark('r2_go')
-    await go(2.6, 10.3)                          // H4's door
+    await go(2.4, 11.5)                          // H4's door (in line with the doorway, so the peek sees the room)
     await openDoor(4, 11)
-    await look(7, 1.4, 10.5, 240)
+    await look(7, 1.4, 11.5, 240)
     await bot.waitForTicks(3)
     await go(2.4, 6.9)                           // (round H4's corner)
     await go(8.0, 7.2)                           // behind the hay
@@ -342,14 +342,14 @@ module.exports = {
     await ctx.cmd('/gamemode creative')
     // the pillar: (-3, 6), from the ground to build limit (y 319); the villager stands on top, looking down
     for (let y = 1; y <= 319 - F; y += 100) await ctx.cmd(`/fill ${X - 3} ${F + y} ${Z + 6} ${X - 3} ${Math.min(319, F + y + 99)} ${Z + 6} dirt`)
-    await this.hider('h5', -2.5, 320 - F, 6.5, -135, 70, 'librarian')   // side-on to the replay camera, looking down
+    await this.hider('h5', -2.5, 320 - F, 6.5, -135, 40, 'librarian')   // side-on to the replay camera, looking down
     await tp(-0.5, 5.5, 70, 0)                   // the pillar ahead on the right: it's in shot from the start
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(20)
     ctx.select(0)
     ctx.mark('cut4b')
     ctx.mark('r5_go')
-    await go(-1.6, 10.3)                         // H3's door
+    await go(-1.4, 11.5)                         // H3's door (in line with the doorway)
     await openDoor(-4, 11)
     await look(-7, 1.4, 11.5, 240)
     await bot.waitForTicks(3)

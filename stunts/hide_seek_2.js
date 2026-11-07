@@ -156,9 +156,9 @@ module.exports = {
     // ---- round 2: the frozen lake (south-east)
     await m.cut(1, 0.5, 6.5, 180, 10)
     ctx.mark('r2_go')
-    await go(2.6, 10.3)                          // H4's door
+    await go(2.4, 11.5)                          // H4's door (in line with the doorway, so the peek sees the room)
     await m.openDoor(4, 11)
-    await look(7, 1.4, 10.5, 240)
+    await look(7, 1.4, 11.5, 240)
     await bot.waitForTicks(3)
     await go(2.4, 6.6)                           // (round H4's corner)
     await go(8.0, 6.6)                           // behind the barrels
@@ -204,11 +204,11 @@ module.exports = {
     // ---- round 4: the ice statue (south-west)
     await m.cut(3, -1.5, 4.5, 90, 0, () => ctx.cmd('/gamerule block_drops true'))
     ctx.mark('r4_go')
-    await go(-1.6, 10.3)                         // H3's door
+    await go(-1.4, 11.5)                         // H3's door (in line with the doorway)
     await m.openDoor(-4, 11)
     await look(-7, 1.4, 11.5, 240)
     await bot.waitForTicks(3)
-    await go(-1.4, 9.4, { stop: 0.4 })            // back out onto the street
+    await go(-1.2, 9.6, { stop: 0.4 })            // back out onto the street
     await go(-1.6, 6.9)                          // (round H3's corner)
     await go(-12.6, 6.9)                         // along the front of H3
     await look(-12.2, 1.2, 15, 240)
