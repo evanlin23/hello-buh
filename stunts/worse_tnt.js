@@ -154,6 +154,7 @@ module.exports = {
       [3.0, 9, 15, 1.4, 14]
     ]
     for (let w = 0; w < 6; w++) {
+      if (ctx.tick > K.at(w * 5) + 1) throw new Error(`wave ${w + 1} late`)   // the 5 s grid must hold
       ctx.mark(`l${w + 1}`)
       const [fuse, dmin, dmax, spread, safe] = plan[w]
       const pts = drop(WAVES[w], dmin, dmax, spread, fuse)
@@ -178,6 +179,7 @@ module.exports = {
     }
 
     // wave 7: 64 in a ring all round it, 7.5 blocks out: no way through, so up
+    if (ctx.tick > K.at(30) + 1) throw new Error('wave 7 late')
     ctx.mark('l7')
     const p = pos()
     for (let i = 0; i < 64; i++) {

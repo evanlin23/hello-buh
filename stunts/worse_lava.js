@@ -138,6 +138,7 @@ module.exports = {
     await until(at(5), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 2. a creeper ----
+    if (ctx.tick > at(5) + 1) throw new Error('level 2 late')   // the 5 s grid must hold
     ctx.mark('l2')
     bot.chat(`/summon creeper ${x + 0.5} ${G + 5} ${z - 0.5} {PersistenceRequired:1b,Rotation:[0f,0f]}`)
     await bot.waitForTicks(2)
@@ -150,6 +151,7 @@ module.exports = {
     await until(at(10), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 3. TNT rain ----
+    if (ctx.tick > at(10) + 1) throw new Error('level 3 late')   // the 5 s grid must hold
     ctx.mark('l3')
     const tnts = [[-4, -4], [0, -6], [4, -3]]
     for (const [dx, dz] of tnts) bot.chat(`/summon tnt ${x + dx + 0.5} ${G + 17} ${z + dz + 0.5} {fuse:52}`)
@@ -178,6 +180,7 @@ module.exports = {
     await until(at(15), () => bot.look(bot.entity.yaw - 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 4. night falls ----
+    if (ctx.tick > at(15) + 1) throw new Error('level 4 late')   // the 5 s grid must hold
     ctx.mark('l4')
     // the sun goes down in the west: the camera follows it
     const easeSun = ctx.easeLook(Math.PI / 2 + 0.2, 0.25, 850)
@@ -204,6 +207,7 @@ module.exports = {
     await until(at(20), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 5. two creepers ----
+    if (ctx.tick > at(20) + 1) throw new Error('level 5 late')   // the 5 s grid must hold
     ctx.mark('l5')
     const p0 = bot.entity.position
     // one ahead-left, one ahead-right, each on grass that's still there (not a crater)
@@ -224,6 +228,7 @@ module.exports = {
     await until(at(25), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 6. the floor breaks ----
+    if (ctx.tick > at(25) + 1) throw new Error('level 6 late')   // the 5 s grid must hold
     ctx.mark('l6')
     const bx = Math.floor(bot.entity.position.x), bz = Math.floor(bot.entity.position.z)
     // face the biggest stretch of island left: the rings come toward the camera across it
@@ -257,6 +262,7 @@ module.exports = {
     await until(at(30))
 
     // ---- 7. lava every second: pillar ----
+    if (ctx.tick > at(30) + 1) throw new Error('level 7 late')   // the 5 s grid must hold
     ctx.mark('l7')
     riseTo(G + 4)
     let nextRise = at(30) + 14
