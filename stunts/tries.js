@@ -5,6 +5,20 @@
 const clutch = require('./water_clutch')
 const MODES = (process.env.TRIES_MODES || 'skip,late,skip,late,late,skip,late,ok').split(',')   // 8 tries: ~33 s (7 ran 29.4 s; owner: 30 s minimum)
 
+// the narration escalates with the frustration; the counter shows on screen; the last line is always 'locked in.'
+const DEATH_LINES = ['wait where was the bucket', 'bro.', 'IT WAS EMPTY', 'that one was lag', 'WRONG BUCKET', '...', 'I am going to lose it']
+const TRY_LINES = ['easy', 'for real this time', '', 'focus.', '', 'I swear', 'one more.']
+function subs () {
+  const n = MODES.length, out = [['jump', `try 1/${n}: ${TRY_LINES[0]}`, 1.0, 0]]
+  for (let i = 1; i < n; i++) {
+    out.push(['death', DEATH_LINES[Math.min(i - 1, DEATH_LINES.length - 1)], 1.5, i - 1])
+    const t = i === n - 1 ? 'locked in.' : TRY_LINES[i] || ''
+    out.push(['attempt', `try ${i + 1}/${n}${t ? ': ' + t : ''}`, 1.5, i])
+  }
+  out.push(['placed', 'oh wow that was very close', 0.8, 0])
+  return out
+}
+
 module.exports = {
   ...clutch,
   name: 'tries',
@@ -13,14 +27,7 @@ module.exports = {
     caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-1.0', endAfter: 'placed:0.8',
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
     // each try looks different (review: six identical falls read as a loop) and the counter shows on screen
-    subs: [['jump', 'try 1/7: easy', 1.0, 0],
-      ['death', 'wait where was the bucket', 1.8, 0], ['attempt', 'try 2/7: for real this time', 1.8, 1],
-      ['death', 'bro.', 1.5, 1], ['attempt', 'try 3/7', 1.6, 2],
-      ['death', 'IT WAS EMPTY', 1.5, 2], ['attempt', 'try 4/7: focus.', 1.4, 3],
-      ['death', 'that one was lag', 1.5, 3], ['attempt', 'try 5/7', 1.4, 4],
-      ['death', 'WRONG BUCKET', 1.5, 4], ['attempt', 'try 6/7: I swear', 1.4, 5],
-      ['death', '...', 1.2, 5], ['attempt', 'try 7/7: locked in.', 1.6, 6],
-      ['placed', 'oh wow that was very close', 0.8, 0]]
+    subs: subs()
   },
 
   async setup (ctx) {
@@ -70,8 +77,8 @@ module.exports = {
       await bot.look(0, -0.7, true)                     // straight back to staring over the edge
       bot.setQuickBarSlot(1)
       // a beat on the pillar for the death line to land (the next try's line cut it to 0.15 s)
-      await ctx.easeLook(0.25, -0.95, 600)
-      await ctx.easeLook(-0.1, -0.7, 500)
+      await ctx.easeLook(0.25, -0.95, 400)              // (600 + 500 read as ~1.1 s of dead air per respawn)
+      await ctx.easeLook(-0.1, -0.7, 350)
     }
     return false
   }
