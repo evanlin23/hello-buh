@@ -639,8 +639,12 @@ def apply_speed(args):
     wd = pathlib.Path(tempfile.mkdtemp(prefix="hb-speed-"))
     src_dir = pathlib.Path(args.frames).parent
     n_src = len(list(src_dir.glob("*" + pathlib.Path(args.frames).suffix)))
-    k, blended = 0, 0
+    k, blended, rendered = 0, 0, 0
     pat = pathlib.Path(args.frames).name
+    # real slow-motion frames: scripts/render_replay.py renders slow spans at 60/factor fps into
+    # work/<name>.slowmo (blends turned a placed boat into a 50% double exposure: worker 4)
+    slow_dir = src_dir.with_suffix(".slowmo")
+    slow_fps = json.loads((slow_dir / "slowmo.json").read_text())["fps"] if (slow_dir / "slowmo.json").exists() else None
     while True:
         x = warp.src(k / args.fps) * args.fps
         i = warp.frame(k, args.fps)
@@ -648,7 +652,15 @@ def apply_speed(args):
             break
         frac = x - math.floor(x)
         step = warp.src((k + 1) / args.fps) * args.fps - x      # < 1 only inside a slow-motion span
-        if step < 0.99 and 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # slow motion: blend the two neighbours (no duplicate frames)
+        real = None
+        if step < 0.99 and 0.2 < frac < 0.8 and slow_fps:   # slow motion: a real in-between frame from the high-fps pass
+            j = int(round(x / args.fps * slow_fps))
+            real = slow_dir / f"f{j:05d}.png"
+            real = real if real.exists() else None
+        if real:
+            (wd / (pat % k)).symlink_to(real.resolve())
+            rendered += 1
+        elif step < 0.99 and 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # fallback: blend the two neighbours (fast things ghost)
             lo = Image.open(src_dir / (pat % math.floor(x))).convert("RGB")
             hi = Image.open(src_dir / (pat % (math.floor(x) + 1))).convert("RGB")
             Image.blend(lo, hi, frac).convert(Image.open(src_dir / (pat % math.floor(x))).mode).save(wd / (pat % k), compress_level=1)   # same pixel format as the sequence
@@ -656,8 +668,10 @@ def apply_speed(args):
         else:
             (wd / (pat % k)).symlink_to((src_dir / (pat % i)).resolve())
         k += 1
+    if rendered:
+        print(f"slow-mo: {rendered} real in-between frames ({slow_fps} fps pass)")
     if blended:
-        print(f"slow-mo: {blended} blended in-between frames")
+        print(f"slow-mo: {blended} blended in-between frames" + ("" if slow_fps else " (run scripts/render_replay.py <name> for real ones)"))
     args.warp = warp
     print(f"speed: {n_src} frames -> {k} ({', '.join(f'{a:.2f}-{b:.2f}s x{f:g}' for a, b, f in warp.spans)})")
     args.frames = str(wd / pathlib.Path(args.frames).name)
@@ -1105,9 +1119,9 @@ def main():
             if audio_ss == 0.0 and args.audio:   # the premixed game+sfx track is in Short time: map the window
                 wo = args.warp.out if args.warp else (lambda x: x)
                 dur += retention.replay_append(args.out, rdir, tmp / "caption.png", args.audio, args.out_fps,
-                                               (max(0.0, wo(ra) - args.start), wo(rb) - args.start))
+                                               (max(0.0, wo(ra) - args.start), wo(rb) - args.start), tag_off=0.25 if args.loop else 0.0)
             else:
-                dur += retention.replay_append(args.out, rdir, tmp / "caption.png", args.audio0, args.out_fps)
+                dur += retention.replay_append(args.out, rdir, tmp / "caption.png", args.audio0, args.out_fps, tag_off=0.25 if args.loop else 0.0)
         else:
             print(f"replay: {rdir} not rendered (python3 scripts/render_replay.py <name>), skipped")
     if args.hook and args.timeline:   # finale preview in front of beat 1 (after mastering: it reuses the final mix)

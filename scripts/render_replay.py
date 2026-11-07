@@ -8,7 +8,8 @@
                      fps, so slow motion gets real in-between frames, not blends.
     skin             optional SKIN= for render.js
 
-  python3 scripts/render_replay.py <name>      -> work/<name>.replay/ (frames) + replay.json
+  python3 scripts/render_replay.py <name>      -> work/<name>.replay/ (frames) + replay.json, and
+                                                  work/<name>.slowmo/ (real slow-mo frames for edit.slowmo)
 run.sh calls this after the main render when the stunt has `edit.replay`; edit.py then appends the
 replay after the payoff (scripts/retention.py replay_append).
 """
@@ -29,16 +30,45 @@ def window(spec, timeline):
     return t - float(spec.get("before", 1.5)), t + float(spec.get("after", 0.5)), t
 
 
+def slowmo_pass(name, edit, rec_path, rec):
+    """Real in-between frames for the slow-motion spans (edit.slowmo, edit.freeze): the first-person
+    view rendered at 60/factor fps for just those source times -> work/<name>.slowmo/f%05d.png."""
+    sys.path.insert(0, str(HERE / "scripts"))
+    from timewarp import Warp, edit_spans
+    warp = Warp(edit_spans(edit.get("speed"), edit.get("slowmo")), rec["timeline"])
+    slow = [f for a, b, f in warp.spans if f < 1]
+    if not slow:
+        return
+    fps = int(round(60 / min(slow)))
+    need, k = set(), 0
+    n = int((len(rec["poses"]) - 1) / 20 * 60)
+    while True:
+        t = warp.src(k / 60)
+        if t * 60 >= n:
+            break
+        if warp.factor_at(k / 60) < 1:
+            need.add(int(round(t * fps)))
+        k += 1
+    out = HERE / "work" / f"{name}.slowmo"
+    subprocess.run(["rm", "-rf", str(out)], check=True)
+    env = {k_: v for k_, v in os.environ.items() if k_ not in ("CAM", "SHOW_PLAYER")}
+    env["FRAMES"] = ",".join(map(str, sorted(need)))
+    print(f"slow-mo: {len(need)} frames at {fps} fps")
+    subprocess.run(["node", "render.js", str(rec_path), str(out), str(fps), "1080", "1011"], cwd=HERE, env=env, check=True)
+    (out / "slowmo.json").write_text(json.dumps({"fps": fps}))
+
+
 def main(name, stunt=None):
     stunt = stunt or name
     edit = json.loads(subprocess.run(["node", "-e", f"console.log(JSON.stringify(require('./stunts/{stunt}').edit||{{}}))"],
                                      cwd=HERE, capture_output=True, text=True, check=True).stdout)
     edit.update(json.loads(os.environ.get("EDIT_EXTRA") or "{}"))
-    spec = edit.get("replay")
-    if not spec:
-        print("no edit.replay"); return
     rec_path = HERE / "work" / f"{name}.rec.json"
     rec = json.loads(rec_path.read_text())
+    slowmo_pass(name, edit, rec_path, rec)
+    spec = edit.get("replay")
+    if not spec:
+        return
     w = window(spec, rec["timeline"])
     if not w:
         print(f"replay: no '{spec['at']}' mark"); return

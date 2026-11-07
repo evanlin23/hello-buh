@@ -54,7 +54,8 @@ rm -rf "work/$NAME.frames"
 node render.js "$REC" "work/$NAME.frames" "$FPS" 1080 1011
 python3 audio.py "$REC" "work/$NAME.wav"
 # instant replay (edit.replay): a second, third-person pass over the payoff window (scripts/render_replay.py)
-if node -e "process.exit((require('./stunts/'+process.argv[1]).edit||{}).replay?0:1)" "$STUNT"; then python3 scripts/render_replay.py "$NAME" "$STUNT"; fi
+# (and real in-between frames for edit.slowmo spans)
+if node -e "const e=require('./stunts/'+process.argv[1]).edit||{};process.exit(e.replay||e.slowmo?0:1)" "$STUNT"; then python3 scripts/render_replay.py "$NAME" "$STUNT"; fi
 mapfile -t EDIT_ARGS < <(node scripts/edit_args.js "$STUNT")   # caption, song, drop, countdown... from stunts/<name>.js
 python3 edit.py --frames "work/$NAME.frames/f%05d.png" --fps "$FPS" --out_fps "$FPS" \
   --timeline "$REC" --audio "work/$NAME.wav" "${EDIT_ARGS[@]}" --out "out/$NAME.mp4"

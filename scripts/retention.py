@@ -395,8 +395,11 @@ def hook_prepend(out, spec, t_video, fps=60, frames=None, start_index=0, caption
     push = (f"scale=w='trunc({W}*({zoom})/2+1)*2':h='trunc({GAME_H}*({zoom})/2+1)*2':eval=frame,"
             f"crop={W}:{GAME_H},format=rgba")
     if frames and caption:
-        ins = ["-framerate", str(fps), "-start_number", str(start_index + int(round(a * fps))), "-i", frames,
-               "-i", out, "-framerate", str(fps), "-i", str(tmp / "hook%03d.png"), "-loop", "1", "-framerate", str(fps), "-i", str(caption)]
+        # -t on the clip's inputs: read only the hook's frames (decoding the whole sequence while the
+        # main video queued behind the concat took 5+ GB and many minutes)
+        ins = ["-framerate", str(fps), "-start_number", str(start_index + int(round(a * fps))), "-t", f"{d + 0.05:.4f}", "-i", frames,
+               "-i", out, "-framerate", str(fps), "-i", str(tmp / "hook%03d.png"),
+               "-loop", "1", "-framerate", str(fps), "-t", f"{d + 0.05:.4f}", "-i", str(caption)]
         g = [f"[0:v]trim=end_frame={n},setpts=PTS-STARTPTS,scale={W}:{GAME_H}:force_original_aspect_ratio=increase,crop={W}:{GAME_H},"
              f"{push},pad={W}:{H}:0:{BAND}:black[hc0]",
              "[hc0][3:v]overlay=0:0[hc]"]
@@ -429,7 +432,7 @@ def hook_prepend(out, spec, t_video, fps=60, frames=None, start_index=0, caption
 
 
 # ---------------------------------------------------------------- instant replay
-def replay_append(out, replay_dir, caption_png, audio, fps=60, audio_window=None):
+def replay_append(out, replay_dir, caption_png, audio, fps=60, audio_window=None, tag_off=0.0):
     """Append the third-person instant replay (scripts/render_replay.py) after the Short: the replay
     frames in the game view under the caption, a "REPLAY" tag, a white flash on the cut, the game
     audio of the window slowed to match. Rewrites `out` in place; returns the seconds added."""
@@ -453,7 +456,8 @@ def replay_append(out, replay_dir, caption_png, audio, fps=60, audio_window=None
     from timewarp import atempo
     g = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase,crop={W}:{GAME_H},pad={W}:{H}:0:{BAND}:black,"
          f"fade=t=in:st=0:d=0.12:color=white,format=rgba[r0]",
-         "[r0][1:v]overlay=0:0[r1]", f"[r1][2:v]overlay=0:0:enable='lt(t,{max(0.0, d - 0.35):.3f})',setsar=1,format=yuv420p[rv]",   # the tag goes before the loop dissolve
+         "[r0][1:v]overlay=0:0[r1]", (f"[r1][2:v]overlay=0:0:enable='lt(t,{max(0.0, d - tag_off):.4f})',setsar=1,format=yuv420p[rv]" if tag_off else
+          "[r1][2:v]overlay=0:0,setsar=1,format=yuv420p[rv]"),   # the tag clears only for the loop dissolve
          "[3:v]setsar=1,format=yuv420p[mv]",
          "[3:a]aresample=48000,aformat=channel_layouts=stereo[ma]"]
     ins = ["-framerate", str(fps), "-i", str(tmp / "r%05d.png"), "-loop", "1", "-framerate", str(fps), "-i", str(caption_png), "-loop", "1", "-framerate", str(fps), "-i", str(tmp / "tag.png"), "-i", out]
