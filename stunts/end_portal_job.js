@@ -34,7 +34,7 @@ module.exports = {
     if (!g) throw new Error('no dry land')
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    this.spots = await openSpots(ctx, g.x, g.z, Array(RINGS).fill(4), { axis: 'x', gap: 8, foot: [-1, 5, -1, 6], level: [0, 4, 0, 4], side: Array.from({ length: 31 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 90, min: 8 })
+    this.spots = await openSpots(ctx, g.x, g.z, Array(RINGS).fill(4), { axis: 'x', gap: 8, foot: [-1, 5, -1, 6], level: [0, 4, 0, 4], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N })
     // empty rings, every frame facing the middle (vanilla needs that for the portal to form)
     for (const S of this.spots) {
       const X = S.x, z = S.z, y = S.floor + 1
@@ -142,7 +142,8 @@ module.exports = {
     // the rest of the field: empty rings waiting, near and far
     ctx.mark('outro')
     const here = bot.entity.position
-    const spare = this.spots.slice(N).map(S => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)).sort((a, b) => a.distanceTo(here) - b.distanceTo(here))
+    // the spare empty rings if there are any, else the ones it already filled
+    const spare = (this.spots.length > N ? this.spots.slice(N) : this.spots.slice(0, N - 1)).map(S => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)).sort((a, b) => a.distanceTo(here) - b.distanceTo(here))
     await ctx.easeLookAt(spare[0], 700)
     await ctx.easeLookAt(spare[spare.length - 1], 1000)
     bot.removeListener('blockUpdate', onBlock)
