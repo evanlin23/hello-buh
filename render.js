@@ -221,6 +221,8 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
     }
   }
 }
+// entity heights (EntityType sizes) for the light probe at the eye
+const ENT_H = { zombie: 1.95, husk: 1.95, drowned: 1.95, zombie_villager: 1.95, skeleton: 1.99, stray: 1.99, wither_skeleton: 2.4, creeper: 1.7, villager: 1.95, wandering_trader: 1.95, witch: 1.95, pillager: 1.95, vindicator: 1.95, evoker: 1.95, enderman: 2.9, iron_golem: 2.7, snow_golem: 1.9, cow: 1.4, mooshroom: 1.4, sheep: 1.3, pig: 0.9, goat: 1.3, chicken: 0.7, spider: 0.9, cave_spider: 0.5, wolf: 0.85, cat: 0.7, ocelot: 0.7, fox: 0.7, rabbit: 0.5, horse: 1.6, donkey: 1.5, mule: 1.6, llama: 1.87, camel: 2.375, polar_bear: 1.4, panda: 1.25, warden: 2.9, blaze: 1.8, bee: 0.6, frog: 0.55, axolotl: 0.42, turtle: 0.4, parrot: 0.9, allay: 0.6, sniffer: 1.75, armadillo: 0.65, piglin: 1.95, zombified_piglin: 1.95, hoglin: 1.4, strider: 1.7, player: 1.9 }
 function entitiesAt (t, mesher) {
   const i = Math.floor(t), f = t - i
   const a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
@@ -230,7 +232,11 @@ function entitiesAt (t, mesher) {
     if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4) rb = ra   // teleport: hold, then snap on the next tick
     const L = (k) => ra[k] + (rb[k] - ra[k]) * f
     const pos = { x: L(3), y: L(4), z: L(5) }
-    const cell = new Vec3(Math.floor(pos.x), Math.floor(pos.y + 0.5), Math.floor(pos.z))
+    // EntityRenderer.getPackedLightCoords samples at getLightProbePosition = the eye (0.85 x height
+    // for most mobs). At the feet (+0.5), a bear stepping onto a torch's block read light 14 there
+    // (whiter, lightmap.fsh) instead of 13 at its eye: the colour popped (worker 13, guess_sound f953)
+    const hh = ENT_H[ra[2]]
+    const cell = new Vec3(Math.floor(pos.x), Math.floor(pos.y + (hh ? hh * 0.85 : 0.5)), Math.floor(pos.z))
     const inBlock = mesher.world.getBlock(cell)
     // primed TNT (and a falling block) can arrive a tick before its block is removed: the block still
     // shows, so skip the entity; drawn over it, it z-fought in black and white (tnt_1000 f459)
