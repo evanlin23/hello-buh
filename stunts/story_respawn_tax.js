@@ -42,7 +42,7 @@ module.exports = {
     await c(`/fill ${A(-3, 0, -3)} ${A(3, 0, 3)} cobblestone`)
     await c(`/setblock ${A(0, 0, 0)} gold_block`)
     for (const [dx, dz] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) { await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} oak_fence`); await c(`/setblock ${A(dx, 3, dz)} lantern`) }
-    await c(`/spawnpoint @s ${A(-1, 1, 2)} -153 0`)   // beside the gold block, facing it (clear of the lantern posts: a respawn put the head inside one)
+    await c(`/spawnpoint @s ${A(-2, 1, 3)} -146 0`)   // a step back from the gold block, facing it: at (-1, 2) the golem's arm cut through the camera (frame review); clear of the lantern posts (a respawn put the head inside one)
     // the line: a fenced queue lane running north from the plaza, lanterns along it
     await c(`/fill ${A(-1, 1, -14)} ${A(-1, 1, -4)} oak_fence[north=true,south=true]`)
     await c(`/fill ${A(1, 1, -14)} ${A(1, 1, -4)} oak_fence[north=true,south=true]`)
@@ -303,6 +303,7 @@ module.exports = {
     const sparkle = () => { for (let i = 0; i < 2; i++) { const a = Math.random() * Math.PI * 2; ctx.particles('happy', P(0.5 + Math.cos(a) * 0.55, 1.2 + Math.random() * 1.3, 0.5 + Math.sin(a) * 0.55), { count: 2 }) } }
     // L17: and today, I tripped again
     dead = false; trip = null; landed = 0
+    let aim17 = 0, from17 = null, k17 = 0
     await line('L17', async (k, at) => {
       go(!dead && trip === null && k >= at(2) - 11)   // the fall lands on "AGAIN."
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
@@ -311,7 +312,12 @@ module.exports = {
         if (st === 'dead') { dead = true; deadView = null; noSmoke = true }   // nothing between us: she sparkles instead
       }
       if (dead && k % 2 === 0) sparkle()
-      if (!dead && trip === null) { K.base = K.aim(k > at(1) && k < at(2) ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5)); look(k) }
+      if (!dead && trip === null) {   // her, then a tilt down to the cauldron, then back: eased (a 3-frame whip)
+        const want = k > at(1) && k < at(2) ? 1 : 0
+        if (want !== aim17) { aim17 = want; from17 = { ...K.base }; k17 = k }
+        if (from17) K.turnTo(from17, want ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5), (k - k17) / 7); else K.base = K.aim(P(0.5, 1.5, 0.5))
+        look(k)
+      }
     })
     go(false)
     // L18: she just smiled and said, go on. Respawn. (the death screen, the Respawn button). Mob moves stop
