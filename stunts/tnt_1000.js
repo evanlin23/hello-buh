@@ -28,7 +28,7 @@ module.exports = {
   caption: '1 TNT vs 10 vs 100 vs 1000 💀',
   edit: {
     caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'boom4',
-    startAt: 'tier1:-0.05', endAfter: 'death:1.6', deathScreen: true,
+    startAt: 'tier1:-0.05', endAfter: 'death:1.4', deathScreen: true,
     subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
   },
