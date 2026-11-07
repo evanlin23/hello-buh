@@ -46,15 +46,20 @@ module.exports = {
     // it does ("Timeout waiting for 1 ticks"): pace the heavy commands by wall-clock time instead.
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     // deep and high enough that no cut hillside or trunkless canopy shows, even in the turnaround south
+    // the rows past ~z + 90 are outside what the bot keeps loaded: force-load them for the fills
+    await ctx.cmd(`/forceload add ${x - 124} ${z + 60} ${x + 124} ${z + 150}`)
+    await ctx.sleep(3000)
     for (let z0 = z - 72; z0 <= z + 150; z0 += 4) {   // (z - 40 left a cut cliff face in the 200 shot; z + 90 one behind the payoff)
       const z1 = Math.min(z0 + 3, z + 150)
-      await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + (z0 > z + 60 ? 45 : 30)} ${z1} air`)
+      await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + 30} ${z1} air`)
+      if (z0 > z + 60) await heavy(`/fill ${x - 124} ${floor + 31} ${z0} ${x + 124} ${floor + 45} ${z1} air`)   // (one fill to +45 is over the 32768 cap)
       await heavy(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
       await heavy(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
       // one biome everywhere (a crowd stood on a duller grass tint)
       await heavy(`/fillbiome ${x - 124} ${floor - 4} ${z0} ${x + 124} ${floor + 14} ${z1} minecraft:plains`)
     }
     await ctx.sleep(3000)
+    await ctx.cmd(`/forceload remove ${x - 124} ${z + 60} ${x + 124} ${z + 150}`)
     // mineflayer ignores the biome update packet: go far away and come back to reload the chunks
     await ctx.cmd(`/tp @s ${x + 1000} 200 ${z}`); await bot.waitForTicks(60)
     await ctx.cmd(`/tp @s ${x} ${floor + 1} ${z + 8}`); await this.settle(ctx); await bot.waitForChunksToLoad()
