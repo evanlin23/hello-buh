@@ -10,10 +10,11 @@ const LANES = [-64, -32, 0, 32, 64]   // 32 apart: blasts and flung TNT don't wr
 const WAVES = [
   { every: 4, dxs: [-2, 0, 2], gap: 14, stop: 9, sub: 'wave 1: easy' },
   { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 25, stop: 9, sub: 'wave 2: faster' },
-  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 18, stop: 9, sub: 'wave 3: wider' },
-  { every: 2, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 30, stop: 9, sub: 'wave 4: faster AND wider' },   // stop 7 + the blasts' knockback held the gap inside the damage range: dead in wave 3
-  { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 26, stop: 0, sub: 'wave 5...' }      // a real chase that catches you
+  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 24, stop: 9, sub: 'wave 3: wider' },
+  { every: 2, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 38, stop: 9, sub: 'wave 4: faster AND wider' },   // stop 7 + the blasts' knockback held the gap inside the damage range: dead in wave 3
+  { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 32, stop: 0, sub: 'wave 5...' }      // a real chase that catches you
 ]
+// (waves 3-5 start further back: with 18/30/26 the Short ran 25.95 s, waves 3-4 ~3 s each)
 module.exports = {
   name: 'tnt_run',
   biome: process.env.BIOME || 'minecraft:plains',
