@@ -90,7 +90,7 @@ module.exports = spotWrong({
   caption: 'find the mistake 🤔',
   searchFrom: [1600, 1600],
   rounds: [
-    { at: [-45, -12], build: lighthouse, seconds: 7,
+    { at: [45, -12], build: lighthouse, seconds: 7,
       cam: { pos: [-1, 17], walk: 'right' },
       scan: [[0, [2.5, 6, 0]], [2.5, [0, 3, 2]], [5, [2.5, 13, 0]], [7, [2, 10, 0]]],
       tag: 'EASY',
@@ -100,7 +100,7 @@ module.exports = spotWrong({
       scan: [[0, [-4, 1, 6]], [2.5, [4, 2, 0]], [5, [4, 6, -1]], [8, [5, 4.5, 0]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the garden'],
       reveals: [{ at: [3.5, 5.5, 0.5], zoom: 3.2, sub: 'a backwards stair', check: [[3, 5, 0], 'oak_stairs'] }] },
-    { at: [45, -12], build: storage, seconds: 9,
+    { at: [-45, 40], build: storage, seconds: 9,
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [3, 0.5, -8]], [2.2, [1, 0.8, -4]], [4.2, [6, 1, -8.5]], [6.2, [10, 0.8, -3.5]], [9, [8, 0.6, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: not the chests'],

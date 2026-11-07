@@ -36,6 +36,7 @@ function house (b) {
   for (let fx = 0; fx <= 8; fx++) if (fx !== 4) b.set(fx, 0, 1, flowers[fx % flowers.length])
   b.fill(12, 0, -3, 12, 4, -3, 'oak_log')
   b.fill(10, 4, -5, 14, 5, -1, 'oak_leaves[persistent=true]'); b.fill(11, 6, -4, 13, 6, -2, 'oak_leaves[persistent=true]')
+  for (const [tx, tz] of [[10, -5], [14, -5], [10, -1], [14, -1]]) b.set(tx, 5, tz, 'air')   // rounded corners (a 5x5 box read as fake)
   b.set(12, 4, -3, 'oak_log'); b.set(12, 5, -3, 'oak_log')
   b.set(-2, 0, 0, 'composter'); b.set(-2, 0, -1, 'hay_block')
   for (const [gx, gz] of [[-4, 4], [10, 3], [13, 6], [-3, 8], [7, 7], [1, 6]]) b.set(gx, 0, gz, 'short_grass')
@@ -51,7 +52,7 @@ function farm (b) {
   b.fill(2, 0, 0, 4, 2, 0, 'air')                                       // the big doorway
   b.fill(1, -1, -7, 5, -1, -1, 'spruce_planks')
   b.set(1, 0, -6, 'hay_block'); b.set(1, 1, -6, 'hay_block'); b.set(2, 0, -6, 'hay_block'); b.set(5, 0, -6, 'hay_block'); b.set(5, 0, -5, 'hay_block')
-  b.set(3, 3, -3, 'glowstone'); b.set(3, 3, -6, 'glowstone')
+  b.fill(1, 4, -7, 5, 4, -1, 'spruce_planks'); b.set(3, 4, -3, 'glowstone'); b.set(3, 4, -6, 'glowstone')   // a hay loft floor holds the lights (they floated)
   // front and back gables
   for (const [gx, top] of [[1, 4], [2, 4], [3, 5], [4, 4], [5, 4]]) { b.fill(gx, 4, 0, gx, top, 0, 'spruce_planks'); b.fill(gx, 4, -8, gx, top, -8, 'spruce_planks') }
   b.set(3, 4, 0, 'glass_pane[east=true,west=true]')
@@ -109,23 +110,23 @@ module.exports = spotWrong({
   caption: 'find the mistake 🤔',
   searchFrom: [1600, 1600],
   rounds: [
-    { at: [-45, -12], build: house, seconds: 7,
+    { at: [45, -12], build: house, seconds: 7,
       cam: { pos: [0, 13], walk: 'right' },
       scan: [[0, [3.5, 3.5, 0]], [2.5, [1, 2, 1]], [5, [6, 4.5, 0]], [7, [5.5, 3, 0]]],
       tag: 'EASY', hint: [3.5, 'hint: not the flowers'],
       reveals: [{ at: [5.5, 2.5, 1.0], zoom: 3, sub: 'oak plank in birch', check: [[5, 2, 0], 'oak_planks'] }] },
     { at: [0, -12], build: farm, seconds: 8,
       cam: { pos: [12, 15], walk: 'forward' },
-      scan: [[0, [-6, 1, 4]], [2.5, [0, 2, 0]], [5, [3, 4.5, -3]], [8, [5, 3, 0]]],
+      scan: [[0, [-6, 1, 4]], [2.2, [0, 2, 0]], [4.2, [3, 4.5, -3]], [5.8, [-4, 1, 3]], [8, [3, 2.5, 0]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the field'],
-      reveals: [{ at: [6.5, 2.5, 1.0], zoom: 3.2, sub: 'a sideways log', check: [[6, 2, 0], 'dark_oak_log'] }] },
-    { at: [45, -12], build: bedroom, seconds: 9,
+      reveals: [{ at: [6.5, 2.5, 1.0], zoom: 2.6, ring: 170, sub: 'a sideways log', check: [[6, 2, 0], 'dark_oak_log'] }] },
+    { at: [-45, 40], build: bedroom, seconds: 9,
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [2, 1, -8]], [2.2, [0.5, 1.5, -4.5]], [4.2, [5, 1.3, -9]], [6.2, [10, 1, -4.5]], [9, [7, 1.5, -8.5]]],
       tag: 'only 1% can find it', hint: [4, 'hint: not the bed'],
       reveals: [
         { at: [8.5, 2.75, -5.5], zoom: 3.2, strafe: 'left', sub: 'no chain: it floats', check: [[8, 2, -6], 'lantern'] },
-        { pre: 'wait... there is another one', approach: 0.8, at: [6.35, 1.0, -8.6], zoom: 1.3, ring: 250, hold: 2.2, use: [[5, 0, -9], [6, 0, -9]], useAt: 0.7, tail: 1.0, sub: 'the hinges are the same', check: [[6, 0, -9], 'spruce_door'] }
+        { pre: 'wait... there is another one', approach: 1.4, approachTo: [7.5, -6.5], at: [5.9, 1.0, -8.6], zoom: 1.6, useZoom: 2.2, ring: 190, hold: 2.3, use: [[5, 0, -9], [6, 0, -9]], useAt: 0.8, tail: 1.0, sub: 'both handles on the right', useSub: 'both swing left!', check: [[6, 0, -9], 'spruce_door'] }
       ] }
   ]
 })

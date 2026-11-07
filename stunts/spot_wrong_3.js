@@ -82,7 +82,7 @@ module.exports = spotWrong({
   caption: 'find the mistake 🤔',
   searchFrom: [1600, 1600],
   rounds: [
-    { at: [-45, -12], build: patch, seconds: 7,
+    { at: [45, -12], build: patch, seconds: 7,
       cam: { pos: [-3, 16], walk: 'right' },
       scan: [[0, [-2, 0.5, 4]], [3, [1, 0.5, 4]], [6, [2, 0.8, 2]]],
       tag: 'EASY',
@@ -92,7 +92,7 @@ module.exports = spotWrong({
       scan: [[0, [-9, 3, -5]], [2.5, [0, 0.5, 0]], [5, [0, 0.5, 2.5]], [8, [1, 0.5, 2]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the tree'],
       reveals: [{ at: [0.5, 0.75, 3.5], zoom: 3.2, sub: 'an upside-down slab', check: [[0, 0, 3], 'stone_brick_slab'] }] },
-    { at: [45, -12], build: portal, seconds: 9,
+    { at: [-45, 40], build: portal, seconds: 9,
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [9, [5, 2, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: look closer'],

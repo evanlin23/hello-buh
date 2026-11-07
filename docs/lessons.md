@@ -336,3 +336,14 @@ each section.
   to 15 blocks and turns it black (DarknessFogFunction), and pulses the picture darker by
   max(0, cos(tick * PI * 0.025) * 0.45 * blend), a 4 s beat. Light is baked into vertex colours, so the
   pulse multiplies the finished frame (exact in full light, a bit bright in the dark). The HUD is not darkened.
+
+## Spot what's wrong (worker 12: lib/spot_wrong.js, stunts/spot_wrong*.js)
+- **prismarine-physics ignores `/attribute ... movement_speed` on 1.21.11** (the bot walked at full speed into the builds). Set `bot.entity.attributes['minecraft:movement_speed'] = { value, modifiers: [] }` as well; the server's own value can stay as it is.
+- **Stairs never rendered before bc25696** (the mesher's `includes('air')` matched "st-air-s"). A missing block that is in the recording (check with prismarine-chunk on `rec.columns`) is an engine bug: report it, don't redesign around it for long.
+- **Time a countdown on `ctx.tick`, not on a `waitForTicks(1)` loop.** The loop ran 2 ticks long, and the countdown opened on 7 in a 6-second round. Start `countdowns` from the first per-second mark: the round mark lands a tick or two earlier, and ceil() shows one number too many.
+- **Write a round's overlay marks before the cut's `/tp`.** Written after it landed, the counter, the subtitle and the countdown switched 0.1 s after the picture.
+- **A `fovZoom` eases out over 5 ticks after its end mark.** End it 5 ticks before a cut; otherwise the next set opens zooming out.
+- **No aim drift on small reveal targets:** the ring is drawn on the crosshair, so a drifting aim slid the lantern out of it. Side-step while the look stays locked for motion (parallax).
+- **A "wrong" detail needs a right one beside it to read.** A lantern hanging from nothing was ambiguous against the wall until the room's other lanterns hung from chains. Likewise a wrong door hinge only lands when the doors are opened and both swing the same way. Show the mistake with an action when you can.
+- **Puzzle sets: check every block for accidental mistakes.** Swapped chest halves (`type=left` connects clockwise from its facing) rendered as two broken half-chests, a second "mistake" in the hardest round. Floating glowstone in a roofless barn read as one too. Kill wild animals and regrow the grass they grazed (`random_tick_speed 0` keeps the bare squares).
+- **Sets 45 blocks apart are visible from each other.** Lay them out so no camera faces another set (round 1's house sat on round 2's horizon).
