@@ -14,7 +14,7 @@ module.exports = {
   edit: {
     caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened_lava', onFire: 'hurt:death', deathScreen: true,
     startAt: 'dig1:-0.4', endAfter: 'death:0.9',
-    subs: [['dig1', 'dig up #1', 5], ['dig2', 'dig up #2', 6], ['dig3', 'dig up #3', 3.5]]
+    subs: [['dig1', 'dig up #1', 5], ['dig2', 'dig up #2', 6], ['dig3', 'dig up #3', 5], ['dig4', 'dig up #4', 3.5]]
   },
   expectDeath: true,
   brightness: 1,   // Options > Brightness: Bright: the ceiling shots read as flat dark grey at the default
@@ -28,23 +28,25 @@ module.exports = {
     const y = g.y - 16                                        // tunnel floor (feet level)
     this.x = x; this.z = z; this.y = y
     await ctx.defaultRules()
-    for (let y0 = y - 3; y0 <= y + 7; y0 += 5) await ctx.cmd(`/fill ${x - 6} ${y0} ${z - 24} ${x + 6} ${Math.min(y + 7, y0 + 4)} ${z + 4} stone`)
+    for (let y0 = y - 3; y0 <= y + 11; y0 += 4) await ctx.cmd(`/fill ${x - 6} ${y0} ${z - 30} ${x + 6} ${Math.min(y + 11, y0 + 3)} ${z + 4} stone`)
     // a few ores in the walls, like real stone
     let seed = 3
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
     const ores = ['coal_ore', 'coal_ore', 'iron_ore', 'copper_ore', 'iron_ore', 'gold_ore', 'redstone_ore', 'lapis_ore']
     for (let i = 0; i < 16; i++) {
-      const ox = x + (rnd() < 0.5 ? -1 : 1), oy = y + Math.floor(rnd() * 2), oz = z - Math.floor(rnd() * 22)
+      const ox = x + (rnd() < 0.5 ? -1 : 1), oy = y + Math.floor(rnd() * 2), oz = z - Math.floor(rnd() * 28)
       await ctx.cmd(`/setblock ${ox} ${oy} ${oz} ${ores[Math.floor(rnd() * ores.length)]}`)
     }
-    await ctx.cmd(`/fill ${x} ${y} ${z - 21} ${x} ${y + 1} ${z + 2} air`)          // the tunnel
-    this.s1 = z - 2; this.s2 = z - 10; this.s3 = z - 17                             // the three dig-up spots
+    await ctx.cmd(`/fill ${x} ${y} ${z - 27} ${x} ${y + 1} ${z + 2} air`)          // the tunnel
+    this.s1 = z - 2; this.s2 = z - 10; this.sa = z - 16; this.s3 = z - 23                             // the three dig-up spots
     this.dz = z - 6                                                                 // the diamond
     await ctx.cmd(`/setblock ${x + 1} ${y + 1} ${this.dz} diamond_ore`)
-    for (const dz of [1, -4, -8, -12, -15, -19]) await ctx.cmd(`/setblock ${x - 1} ${y + 1} ${z + dz} wall_torch[facing=east]`)
+    for (const dz of [1, -4, -8, -12, -14, -19, -21, -25]) await ctx.cmd(`/setblock ${x - 1} ${y + 1} ${z + dz} wall_torch[facing=east]`)
     // what waits above each spot
     await ctx.cmd(`/fill ${x} ${y + 3} ${this.s1} ${x} ${y + 4} ${this.s1} gravel`)
     await ctx.cmd(`/fill ${x - 1} ${y + 3} ${this.s2 - 1} ${x + 1} ${y + 4} ${this.s2 + 1} water`)
+    await ctx.cmd(`/fill ${x} ${y + 3} ${this.sa} ${x} ${y + 8} ${this.sa} air`)      // a shaft with an anvil at the top
+    await ctx.cmd(`/setblock ${x} ${y + 9} ${this.sa} anvil`)
     await ctx.cmd(`/fill ${x - 1} ${y + 3} ${this.s3 - 2} ${x + 1} ${y + 4} ${this.s3 + 2} lava`)
     await ctx.hotbar(['diamond_pickaxe[enchantments={efficiency:5}]', 'diamond_shovel[enchantments={efficiency:5}]', ['cobblestone', 64], ['torch', 40], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, y, z + 1.5, 180, 0)
@@ -130,10 +132,32 @@ module.exports = {
     ctx.mark('plugged')
     for (let i = 0; i < 30; i++) await bot.waitForTicks(1)    // the water drains away
     await ctx.easeLook(0, -0.05, 300)
-    // 3. lava
+    // 3. an anvil: the hole opens a shaft and it drops straight onto the bot's head
+    ctx.select(0)
+    await walkTo(this.sa + 0.2)
+    const up3 = bot.blockAt(new Vec3(x, y + 2, this.sa))
+    await ctx.easeLookAt(up3.position.offset(0.5, 0, 0.5), 450)
+    ctx.mark('dig3')
+    try { await bot.dig(up3, true) } catch (e) { ctx.log('dig', e.message) }
+    ctx.particles('block', up3.position, { block: 'stone' })
+    ctx.mark('opened_anvil')
+    for (let i = 0; i < 30 && bot.health >= 19; i++) { await bot.waitForTicks(1); await bot.look(bot.entity.yaw, Math.min(1.5, bot.entity.pitch + 0.03), true) }   // staring up the shaft
+    ctx.mark('anvil_hit', { health: bot.health })
+    await bot.waitForTicks(6)
+    await ctx.easeLook(bot.entity.yaw, -1.2, 350)              // looking down at what hit it
+    // it's in the way: mine through it
+    for (let k = 0; k < 4; k++) {
+      const a = [y, y + 1].map(yy => bot.blockAt(new Vec3(x, yy, Math.floor(bot.entity.position.z) - 1))).concat([bot.blockAt(bot.entity.position.floored())]).find(b => b && /anvil/.test(b.name))
+      if (!a) break
+      await ctx.easeLookAt(a.position.offset(0.5, 0.5, 0.5), 250)
+      try { await bot.dig(a, true) } catch (e) { ctx.log('dig anvil', e.message) }
+      await bot.waitForTicks(4)
+    }
+    await ctx.easeLook(0, -0.05, 300)
+    // 4. lava
     ctx.select(0)
     await walkTo(this.s3 + 1)
-    await digUp(this.s3, 3)
+    await digUp(this.s3, 4)
     ctx.mark('opened_lava')
     ctx.sound('block.lava.pop', 1)
     // it backs off a step and watches the column come down right in front of it (the stunt drops the
