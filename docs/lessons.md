@@ -285,6 +285,8 @@ each section.
 - **Every death window ends on the respawn's camera jump** (death screen, HUD, inventory, fire overlay: edit.py `_snap_respawn`, render.js 039594f). The respawn mark lands a tick after the renderer shows the spawn. Drop a story meter on the respawn click, not after the spawn event (6 frames late).
 - **Captions hold until the next line's cut** (no blank frames between lines). After a short `cut` (1-2 blocks) the line snaps to any >0.6-block step after the cut mark.
 - **Keep QA light while a render runs.** The container restarted once with a render, a full-video ffmpeg filter and three audit agents at once, and the render was lost. Seek with `-ss`, use `-threads 1`, decode short ranges.
+- **A mob hopping back from past 64 blocks shows ~2 ticks after its `/tp`, and one leaving vanishes ~2 ticks after.** Send cast moves 2 ticks before the cut so they land on the cut frame (`onCut` in stunts/story_respawn_tax.js). When the old spot is in the next shot and the new spot is in the old shot, use a twin waiting out past 64 blocks.
+- **On half a heart the first touch kills,** so any reaction that should play before a contact death (looking up the cactus) has to start on the approach, not on contact.
 
 ## Engine, round 3 (orchestrator)
 - **Check vanilla shaders straight from the jar.** `unzip -p work/client/1.21.11.jar assets/minecraft/shaders/core/<name>.fsh` gives the exact maths. Our lightmap had been a guess (one grey scalar); the real one keeps sky and block light apart and makes block light warm.
