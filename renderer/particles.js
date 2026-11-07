@@ -54,12 +54,13 @@ function spawn (ev, blockTex) {
     }
   }
   if (ev.type === 'smoke') {
-    // LargeSmokeParticle (BaseAshSmokeParticle, scale 2.5): grey 0..0.3, rises ~0.01-0.05/tick,
-    // lives 8/(r*0.8+0.2) ticks x 2.5, sprite runs big_smoke_0..11 over its life
+    // LargeSmokeParticle (BaseAshSmokeParticle, scale 2.5): grey 0..0.3, half-size
+    // 0.1 x (0.5..1) x 2 x 0.75 x 2.5, rises (gravity -0.1), lives 8/(r*0.8+0.2) x 2.5 ticks, sprite
+    // generic_7 -> generic_0 over its life (particles/large_smoke.json; big_smoke is the campfire's)
     for (let i = 0; i < (ev.count || 8); i++) {
       const g = r() * 0.3
       P({ x: ev.x + (r() - 0.5) * 0.9, y: ev.y + r() * 0.3, z: ev.z + (r() - 0.5) * 0.9, vx: (r() - 0.5) * 0.02, vy: 0.02 + r() * 0.04, vz: (r() - 0.5) * 0.02,
-        g: -0.002, drag: 0.96, life: Math.min(60, 8 / (r() * 0.8 + 0.2) * 2.5), size: 0.25 * (r() * 0.5 + 0.5) * 2.5, anim: ['particle/big_smoke_', 12], color: [g + 0.35, g + 0.35, g + 0.35] })
+        g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2) * 2.5, size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75 * 2.5, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
     }
   }
   if (ev.type === 'explosion') {
@@ -73,10 +74,16 @@ function spawn (ev, blockTex) {
           vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 6 + Math.floor(r() * 4), size: 2 * (1 - r() * 0.5), anim: ['particle/explosion_', 16], bright: true, color: [g, g, g] })
       }
     }
-    // smoke drifting up afterwards (poof / smoke from the blast)
-    for (let i = 0; i < 16; i++) {
-      out.push({ t0: T0 + 2 + Math.floor(r() * 6), x: ev.x + (r() - 0.5) * 5, y: ev.y + (r() - 0.5) * 3, z: ev.z + (r() - 0.5) * 5, vx: (r() - 0.5) * 0.05, vy: 0.04 + r() * 0.04, vz: (r() - 0.5) * 0.05,
-        g: 0, drag: 0.96, life: 20 + r() * 20, size: 0.5 + r() * 0.5, anim: ['particle/big_smoke_', 12], color: [0.7, 0.7, 0.7] })
+    // block particles (ServerExplosion's defaults: poof, and smoke): only when the blast broke
+    // blocks (the packet's blockCount; recordings from before it was kept: assume it did). A blast
+    // that breaks nothing (mobGriefing false) leaves no smoke. Poof (ExplodeParticle): light grey
+    // 0.7-1, lives 16/(r*0.8+0.2)+2; smoke (SmokeParticle): grey 0-0.3, scale 1; both generic_7 -> 0
+    const nb = ev.blocks === undefined ? 16 : Math.min(ev.blocks, 32)
+    for (let i = 0; i < nb; i++) {
+      const poof = r() < 0.5, g = poof ? 0.7 + r() * 0.3 : r() * 0.3, rad = ev.radius || 4
+      const dx = (r() - 0.5) * rad, dy = (r() - 0.5) * rad * 0.6, dz = (r() - 0.5) * rad, d = Math.hypot(dx, dy, dz) || 1
+      out.push({ t0: T0 + Math.floor(r() * 3), x: ev.x + dx, y: ev.y + dy, z: ev.z + dz, vx: dx / d * 0.05, vy: dy / d * 0.05 + 0.02, vz: dz / d * 0.05,
+        g: -0.004, drag: 0.9, life: poof ? 16 / (r() * 0.8 + 0.2) + 2 : 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * (poof ? 1.5 : 0.75), anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
     }
   }
   if (ev.type === 'potion') {
@@ -129,7 +136,7 @@ function state (p, t, solidAt) {
   }
   const f = age - steps
   const frame = p.anim ? Math.min(p.anim[1] - 1, Math.floor(age * p.anim[1] / p.life)) : null
-  return { x: x + vx * f, y: y + vy * f, z: z + vz * f, size: p.size, tex: p.anim ? p.anim[0] + frame : undefined }
+  return { x: x + vx * f, y: y + vy * f, z: z + vz * f, size: p.size, tex: p.anim ? p.anim[0] + (p.anim[2] === 'rev' ? p.anim[1] - 1 - frame : frame) : undefined }
 }
 
 module.exports = { spawn, state }

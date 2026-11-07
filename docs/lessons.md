@@ -182,7 +182,7 @@ each section.
 - **`face_on` can name its mobs:** `ctx.mark('face_on', { near: [x, z, r] })` or `{ ids: [...] }`. Without either, every villager turns, which is how older recordings behave.
 - **Bedrock `bind_pose_rotation` turns only that bone's own cubes,** never its children. Pig, cow and sheep bodies lie flat while their legs and head stay upright.
 - **Sheep:** the base uses the `sheared` geometry with `sheep.png`. The wool layer uses the `default` geometry with its UVs shifted 32 rows up, textured with `sheep_wool.png` and tinted with the dye colour × 0.75 (white × 0.9). A sheep named jeb_ blends through all 16 colours, 25 ticks each. The harness records the colour, sheared, baby and jeb.
-- **Water meets lava** gives the `smoke` particle (large_smoke, big_smoke_0..11). Never use `explosion` for steam: it draws white rings.
+- **Water meets lava** gives the `smoke` particle (large_smoke: sprites generic_7 -> generic_0, grey 0-0.3, half-size 0.19-0.375; big_smoke_0..11 are only the campfire's cosy/signal smoke). Never use `explosion` for steam: it draws white rings.
 - **Falling things need the camera on them for the whole fall.** Anvils dropped 3-10 blocks away start outside the 35° half-FOV and seem to pop onto the ground. Drop them 9-15 blocks out and pitch the camera up.
 - **Mob walk animation runs per game tick, not per frame** (WalkAnimationState). Quadrupeds swing `leg0`-`leg3` in diagonal pairs. Positions ease over 3 ticks like `Entity.lerpTo`. Mobs are kept 0.85 blocks from the camera.
 - **`ctx.tpCheck` with whole-number x/z:** vanilla `/tp` centres those on the block (+0.5), so the check compares against the centred value.
