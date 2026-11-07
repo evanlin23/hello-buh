@@ -305,3 +305,4 @@ each section.
   - Hollowing a big area under the surface lets outside oceans and aquifers pour in at the edges: wall it with barrier outside the recorded area, clear twice, and verify each chunk.
   - Big `/fill` waves reach the client 1-2 s late (server lighting). Send them as the bot starts aiming and break the block only when the deletion arrives. A camera awaiting one look per tick stutters while the client catches up on ticks; drive it from a physicsTick handler instead.
   - Walking right after a respawn sometimes goes nowhere: wait ~6 ticks, and walk until a position or death condition rather than for a fixed number of ticks. Sweet berry bushes never hurt the bot (dripstone/fall damage is reliable).
+- **A waiter must not pgrep for its own command text.** `pgrep -f 'bash -c while kill -0 N'` inside that same bash -c matches itself, so it waits forever. Wait on PIDs (kill -0), or on patterns your own command line can't contain (the [s]erver.jar trick).
