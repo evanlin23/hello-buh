@@ -618,6 +618,10 @@ function bodyAfterDeath (d, t) {
     const start = tele ? a : b
     const prev = tele ? P[Math.max(0, i - 2)] : a
     let x = start[1], y = start[2], z = start[3], vx = start[1] - prev[1], vy = start[2] - prev[2], vz = start[3] - prev[3]
+    // a last step no player moves on its own (a /tp of a block or so on the death tick: over 0.6
+    // sideways or 0.5 up) is not speed: start the body at rest (it launched ~11 blocks up a lane,
+    // worker 5, story_respawn_tax)
+    if (Math.hypot(vx, vz) > 0.6 || vy > 0.5) { vx = 0; vy = 0; vz = 0 }
     const pts = [[x, y, z]]
     const blk = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return bl ? bl.name : 'air' }
     const solid = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(bl && bl.boundingBox === 'block') }
