@@ -93,7 +93,7 @@ module.exports = {
     // and a small blast-proof pad deep under the player's spot: the ring's crater dropped the player
     // 4 blocks (fall damage on camera). 2 blocks down, a drop is at most 2 (no damage); kept small
     // and deep (a wide shallow pad was stripped bare and showed as a sharp obsidian slab)
-    await ctx.cmd(`/fill ${x - 1} ${floor - 3} ${z - 1} ${x + 1} ${floor - 2} ${z + 1} obsidian`)
+    await ctx.cmd(`/fill ${x - 1} ${floor - 3} ${z - 1} ${x + 1} ${floor - 2} ${z + 5} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 9')
     await ctx.hotbar([['lectern', 2], ['composter', 2], ['barrel', 2], ['blast_furnace', 1], ['smoker', 1],
       ['cartography_table', 1], ['brewing_stand', 1], ['fletching_table', 1], 'diamond_axe'])
@@ -203,7 +203,7 @@ module.exports = {
     // back off facing it, the villager in view
     // a single short step back (it used to walk back ~19 ticks: a wide shot with FIRED on his head)
     // (a step and a half: from nearer, the fuse line's crater opened under the player)
-    bot.setControlState('back', true); await bot.waitForTicks(7); bot.setControlState('back', false)
+    bot.setControlState('back', true); await bot.waitForTicks(14); bot.setControlState('back', false)   // ~3 blocks: the whole fuse line clears the HUD
     await ctx.easeLookAt(head.offset(0, 1.1, 0), 300)          // aimed above him: under the subtitle, pen and fuse still in view
     await ctx.easeLookAt(head.offset(0.3, 1.15, 0), 400)       // still drifting into the cut
     ctx.mark('fuse_a')
