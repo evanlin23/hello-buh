@@ -199,10 +199,10 @@ module.exports = {
     await line('L05', async (k) => {
       go(!dead)
       if (!dead && bot.entity.position.z < Z - 19.55) pressed++
-      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-11.5, 3.4, -20.3) }
+      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-11.5, 4.7, -20.5) }   // over its top (y 1-3: 3.4 was inside the block)
       // pressed against it, look up its side: the top and the sky in frame, the smoke above it in view (the
       // screen was all cactus texture and froze behind the death screen)
-      if (pressed > 0) K.base = K.aim(P(-11.5, 4.2, -21))
+      if (pressed > 0) K.base = K.aim(P(-11.5, 5.6, -21))   // the top, the sky and the smoke over it in frame
       if (alive()) look(k)
     })
     go(false)
