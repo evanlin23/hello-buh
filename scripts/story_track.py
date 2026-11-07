@@ -285,6 +285,10 @@ def master_gain(path, target=-14.0):
 def flash_concat(timeline, start, dur, tmp):
     """White flashes over the game view on `flash` marks (a creeper's swell seen from inside): 55% white,
     fading over 0.1 s. An ffconcat list, or None without marks."""
+    booms = {e["t"] for e in timeline if e["event"] == "boom"}
+    # a flash on a `boom` mark is the blast itself: full white, held, a longer fade (drawn like the swell flashes it
+    # read as "a 5th flash, then a cut": retention audit, story_runaway)
+    big = {int(round((e["t"] / 1000 - start) * FPS)) for e in timeline if e["event"] == "flash" and e["t"] in booms}
     fl = sorted(int(round((e["t"] / 1000 - start) * FPS)) for e in timeline if e["event"] == "flash")
     fl = [f for f in fl if 0 <= f < dur * FPS]
     if not fl:
@@ -293,20 +297,22 @@ def flash_concat(timeline, start, dur, tmp):
     blank = tmp / "flash_blank.png"
     Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
     steps = [0.55, 0.42, 0.3, 0.18, 0.08]
-    for j, a in enumerate(steps):
+    bsteps = [1.0, 1.0, 1.0, 0.95, 0.85, 0.75, 0.65, 0.55, 0.46, 0.38, 0.3, 0.23, 0.17, 0.12, 0.08, 0.05, 0.03]
+    for j, a in enumerate(sorted(set(steps + bsteps))):
         im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         im.paste((255, 255, 255, int(255 * a)), (0, BAND, W, BAND + GAME_H))
-        im.save(tmp / f"flash_{j}.png")
+        im.save(tmp / f"flash_a{int(a * 100):03d}.png")
     total = int(round(dur * FPS))
     # per frame: which fade step shows; a flash landing inside a fade restarts it (it was skipped, and the
     # blast's own flash 3 frames after the last swell never drew: retention audit, story_runaway)
     step = [None] * total
     for f0 in fl:
-        for j in range(min(len(steps), total - f0)):
-            step[f0 + j] = j
+        st = bsteps if f0 in big else steps
+        for j in range(min(len(st), total - f0)):
+            step[f0 + j] = st[j]
     runs = []
     for v in step:
-        p = blank if v is None else tmp / f"flash_{v}.png"
+        p = blank if v is None else tmp / f"flash_a{int(v * 100):03d}.png"
         if runs and runs[-1][0] == p:
             runs[-1] = (p, runs[-1][1] + 1)
         else:

@@ -47,9 +47,12 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - **The first line is a concrete mystery or threat to me, with something countable** ("All FOURTEEN villagers
   in my village RUN when they see ME."), over the picture it describes, in the first second.
 - **The twist turns the whole story over,** planted at least twice where a rewatch catches it, and said plainly
-  in one short line ("I'm the CREEPER."). The POV camera is the twist machine: who "I" am is never shown.
-- **The last line loops into the first** so a replay reads as one sentence ("Which explains why" -> "All
-  fourteen villagers...").
+  in one short line, or shown by the game itself. Owner, 2026-11-07, on runaway: "the big reveal ... just boom,
+  ending ... don't say I'm the creeper, it's just the explosion." So the creeper twist ends on the blast and the
+  death message "blown up by Creeper" (held ~1.3 s to read, a push-in on it), no spoken reveal after it. The POV
+  camera is the twist machine: who "I" am is never shown.
+- **The last line loops into the first:** as one sentence, or as cause and effect (runaway now ends "...when I'm
+  HAPPY?" [BOOM] -> "All FOURTEEN villagers RUN when they see ME").
 - **Something new on screen every 1-2 s, nothing still over 1 s.** One scene per line, a cut on almost every
   line, and inside each scene the camera sways, walks or turns and the cast moves on the line's key word.
 - **One quotable line** that's short enough to type ("Even the CHICKENS pack up and LEAVE.").
