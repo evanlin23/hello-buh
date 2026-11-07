@@ -85,15 +85,15 @@ module.exports = {
         if (a === 4) throw new Error('teleport did not stick')
       }
       bot.chat('/effect give @s instant_health 1 5 true')     // after the cut: hearts refill off screen
-      if (c.pre) {   // the bed down there before the jump (behind the cut), 2 south of the glass, foot first
-        bot.chat(`/setblock ${x} ${floor + 1} ${z + 2} red_bed[facing=south,part=foot]`)
-        bot.chat(`/setblock ${x} ${floor + 1} ${z + 3} red_bed[facing=south,part=head]`)
-      }
       if (pending) {   // the last beat's clutch block and any water it left, now that the camera is up here
         const sp = pending; pending = null
         bot.chat(`/fill ${sp.x - 1} ${floor + 1} ${sp.z - 1} ${sp.x + 1} ${floor + 2} ${sp.z + 1} air`)
         bot.chat(`/fill ${sp.x - 8} ${floor - 2} ${sp.z - 8} ${sp.x + 8} ${floor + 2} ${sp.z + 8} air replace water`)
         bot.chat(`/kill @e[type=item,x=${sp.x},y=${floor},z=${sp.z},distance=..12]`)   // (the cleared bed dropped as an item and lay there, a bare shadow, the rest of the video)
+      }
+      if (c.pre) {   // the bed down there before the jump (behind the cut), 2 south of the glass, foot first; after the last beat's cleanup (it cleared the bed)
+        bot.chat(`/setblock ${x} ${floor + 1} ${z + 2} red_bed[facing=south,part=foot]`)
+        bot.chat(`/setblock ${x} ${floor + 1} ${z + 3} red_bed[facing=south,part=head]`)
       }
       // let the chunk decoding after the far tp finish before the pan (it doubled poses: a stutter); cut out
       if (i > 0) { await bot.waitForTicks(12); ctx.mark(`hold${i}b`) }
