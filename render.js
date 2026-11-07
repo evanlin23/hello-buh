@@ -718,6 +718,32 @@ const DARK = []
     }
   }
 }
+// stunt.aimMarker: the 'aim' marks {x, y, z, tier} (the landing point if nobody steers, one per falling
+// tick) drawn as a marker on the floor, interpolated between ticks; it fades in over 4 ticks from a
+// tier's first aim mark and out over 6 ticks after that tier's splash<N> mark
+const AIMS = []
+if (STUNT_MOD.aimMarker || process.env.AIM_MARKER === '1') {
+  const byTier = new Map()
+  for (const e of rec.timeline || []) if (e.event === 'aim' && Number.isFinite(e.x)) { if (!byTier.has(e.tier)) byTier.set(e.tier, []); byTier.get(e.tier).push({ t: e.t / 50, x: e.x, y: e.y, z: e.z }) }
+  for (const [tier, pts] of byTier) {
+    pts.sort((a, b) => a.t - b.t)
+    const sp = (rec.timeline || []).find(e => e.event === `splash${tier}`)
+    AIMS.push({ pts, t0: pts[0].t, t1: sp ? sp.t / 50 : pts[pts.length - 1].t + 1 })
+  }
+}
+function aimAt (t) {
+  for (const A of AIMS) {
+    if (t < A.t0 || t > A.t1 + 6) continue
+    const a = Math.min(1, (t - A.t0) / 4) * (t > A.t1 ? Math.max(0, 1 - (t - A.t1) / 6) : 1)
+    const pts = A.pts
+    let i = 0; while (i + 1 < pts.length && pts[i + 1].t <= t) i++
+    const p = pts[i], q = pts[i + 1]
+    if (!q || q.t <= p.t) return { x: p.x, y: p.y, z: p.z, a }
+    const u = Math.min(1, Math.max(0, (t - p.t) / (q.t - p.t)))
+    return { x: p.x + (q.x - p.x) * u, y: p.y + (q.y - p.y) * u, z: p.z + (q.z - p.z) * u, a }
+  }
+  return null
+}
 function darknessAt (t) {
   if (!DARK.length) return { darkBlend: 0, darkScale: 0 }
   const k = Math.max(0, Math.floor(t)), u = t - k
@@ -1401,6 +1427,7 @@ function camAtLive (t) {
     cam.dayTime = curDayTime
     cam.rain = levelAt(RAIN, t); cam.thunder = levelAt(THUNDER, t)
     Object.assign(cam, darknessAt(t))
+    cam.aim = AIMS.length ? aimAt(t) : null
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
     // stunt.fovZoom [[EVENT[:s], EVENT[:s], SCALE]]: a sharp zoom rendered as a narrower FOV (a 2.2x crop
     // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.

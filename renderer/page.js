@@ -578,6 +578,7 @@ window.HB = {
     GLINT.ms.value = (tick || 0) * 50
     END_TIME.value = ((tick || 0) % 24000) / 24000   // GameTime: the game time as a fraction of a day
     drawSelection(cam)
+    drawAim(cam)
     cullClouds()
     renderer.render(scene, camera)
     // vanilla's mipmap chain stops at level 4 (Options mipmapLevels: 16 px -> 1 px per tile); three
@@ -701,6 +702,28 @@ function endPortalMaterial () {
 // Block outline (LevelRenderer.renderHitOutline: black lines, alpha 0.4, the block's shape grown by
 // 0.002) and the crack overlay while mining (ModelBakery.DESTROY_TYPES: destroy_stage_N drawn over
 // the block with DST_COLOR x SRC_COLOR x 2 blending, so the cracks darken and the rest is unchanged)
+// Editorial landing marker (stunt.aimMarker; one_in_a_million): a translucent red square with a
+// brighter rim, 1 block wide, lying flat on the floor at cam.aim {x, y, z, a}. Drawn after the
+// water and over it (no depth write, polygon offset), fogged like the world so it sits in it.
+let aimMesh = null
+function drawAim (cam) {
+  const a = cam.aim
+  if (!a || !(a.a > 0)) { if (aimMesh) aimMesh.visible = false; return }
+  if (!aimMesh) {
+    const c = document.createElement('canvas'); c.width = c.height = 32
+    const g = c.getContext('2d')
+    g.fillStyle = 'rgba(255,40,40,0.35)'; g.fillRect(0, 0, 32, 32)
+    g.strokeStyle = 'rgba(255,60,60,0.95)'; g.lineWidth = 4; g.strokeRect(2, 2, 28, 28)
+    const tex = new THREE.CanvasTexture(c); tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.LinearFilter; tex.colorSpace = THREE.NoColorSpace
+    const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, fog: true, side: THREE.DoubleSide,
+      polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })
+    aimMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat)
+    aimMesh.rotation.x = -Math.PI / 2; aimMesh.renderOrder = 4; scene.add(aimMesh)
+  }
+  aimMesh.visible = true
+  aimMesh.position.set(a.x, a.y + 0.01, a.z)
+  aimMesh.material.opacity = Math.min(1, a.a)
+}
 let outline = null, crack = null
 function drawSelection (cam) {
   if (!outline) {
