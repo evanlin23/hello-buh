@@ -276,7 +276,7 @@ module.exports = {
       ctx.mark(`rv${n}a`)
       // layer 1 from the front; the final low from the south-west, where the second shell's raised edge
       // shows over the first (from the front the two reveals looked the same)
-      if (last) await tpTo(x - 12.5, this.floor + 1, z + STEPS + 7.5, -128, -10)   // well back: pressed against the hill's side the shell was only an outline
+      if (last) await tpTo(x - 5.5, T + 3, z - 4.5, -70, 40)   // from up on the platform's west end, looking down the slope: the second shell's ridges stand on the first (from the field the bot ended against the hill's side and the shell was only an outline)
       else await tpTo(...FRONT(), 180, -12)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
@@ -288,8 +288,8 @@ module.exports = {
       for (let k = 0; k < 220 && ctx.tick - wetAt <= 10; k++) {
         const ph = k / 22
         await lookStep(step(4 + Math.round(2 * Math.sin(ph * 0.7))).offset((last ? 1 : 0) + 3 * Math.sin(ph), 2, 0), 0.1)
-        const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > (last ? 10 : 5)
-        bot.setControlState('forward', far)
+        const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 5
+        bot.setControlState('forward', !last && far)   // the last stands on the platform (forward would take it off the edge): the eyes sweep
         await bot.waitForTicks(1)
       }
       bot.clearControlStates()
