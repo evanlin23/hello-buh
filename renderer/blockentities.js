@@ -240,7 +240,10 @@ export class BlockEntityLayer {
     } else if (b.kind === 'bell') {
       // BellRenderer: bell_body (-3,-6,-3, 6x7x6) at (8, 12, 8) and its lip bell_base (4,4,4, 8x2x8),
       // block pixels, y up; the frame is the block model
-      await add(buildGeometry([{ pivot: [8, 12, 8], cubes: [[[-3, -6, -3], [6, 7, 6], [0, 0]]] }, { cubes: [[[4, 4, 4], [8, 2, 8], [0, 13]]] }], at.clone().multiply(S(1 / 16, 1 / 16, 1 / 16)), 32, 32), '/assets/env/entity/bell/bell_body.png')
+      // A ring swings the body and its lip about the pivot: b.swing = [xRot, zRot] in Java's y-down
+      // model space, so both flip sign here
+      const sw = b.swing || [0, 0], rot = [-sw[0], 0, -sw[1]]
+      await add(buildGeometry([{ pivot: [8, 12, 8], rot, cubes: [[[-3, -6, -3], [6, 7, 6], [0, 0]], [[-4, -8, -4], [8, 2, 8], [0, 13]]] }], at.clone().multiply(S(1 / 16, 1 / 16, 1 / 16)), 32, 32), '/assets/env/entity/bell/bell_body.png')
     } else if (b.kind === 'chest') {
       // ChestRenderer: T(0.5) Ry(-facing) T(-0.5), the model y-up in pixels
       const M = at.clone().multiply(T(0.5, 0.5, 0.5)).multiply(RY(-b.rot)).multiply(T(-0.5, -0.5, -0.5)).multiply(S(1 / 16, 1 / 16, 1 / 16))

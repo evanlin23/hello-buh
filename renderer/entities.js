@@ -668,6 +668,12 @@ export class EntityLayer {
       const bm = this.blockModels.get(extra.content)
       const m = new THREE.Mesh(bm.geo, bm.mat.clone())
       const g = new THREE.Group(); g.scale.setScalar(0.75); g.position.set(-0.375, 0.375 + 0.75 * (6 - 8) / 16, -0.375); g.add(m)
+      // a primed TNT minecart: the block swells about its centre and blinks white (TntMinecartRenderer)
+      if (extra.scale && extra.scale !== 1) { const s = extra.scale; m.position.set(-(s - 1) / 2, -(s - 1) / 2, -(s - 1) / 2); m.scale.setScalar(s) }
+      if (extra.flash) {
+        const w = new THREE.Mesh(bm.geo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, depthFunc: THREE.LessEqualDepth }))
+        w.position.copy(m.position); w.scale.copy(m.scale); g.add(w)
+      }
       obj.add(g); bones.contentMat = m.material
     }
     if (extra && extra.glint && mat && this.glintify) this.glintify(mat, name === 'falling_block' ? 8 : 0.25)

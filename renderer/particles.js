@@ -54,6 +54,12 @@ function spawn (ev, blockTex) {
         g: 0, drag: 0.96, life: ev.type === 'angry' ? 16 + r() * 10 : 20 + r() * 20, size: ev.type === 'angry' ? 0.2 : 0.16, tex: ev.type === 'angry' ? 'particle/angry' : 'particle/glint', color: [1, 1, 1] })
     }
   }
+  if (ev.type === 'note') {
+    // NoteParticle (NoteBlock.triggerEvent: at the block's centre, y + 1.2, xd = note / 24): rises at
+    // 0.2 with friction 0.66, lives 6 ticks, 1.5x the base size; colour from the note's hue
+    const f = (ev.note || 0) / 24, c = (o) => Math.max(0, Math.sin((f + o) * Math.PI * 2) * 0.65 + 0.35)
+    P({ x: ev.x, y: ev.y, z: ev.z, vx: 0, vy: 0.2, vz: 0, g: 0, drag: 0.66, life: 6, size: 0.1 * (r() * 0.5 + 0.5) * 2 * 1.5, tex: 'particle/note', color: [c(0), c(1 / 3), c(2 / 3)] })
+  }
   if (ev.type === 'smoke') {
     // LargeSmokeParticle (BaseAshSmokeParticle, scale 2.5): grey 0..0.3, half-size
     // 0.1 x (0.5..1) x 2 x 0.75 x 2.5, rises (gravity -0.1), lives 8/(r*0.8+0.2) x 2.5 ticks, sprite
@@ -139,6 +145,12 @@ function spawn (ev, blockTex) {
       P({ x: ev.x + dx * 0.1, y: ev.y + 0.3, z: ev.z + dz * 0.1, vx: dx * 0.05, vy: ((vy0 - 0.1) * d + 0.1) * 0.5, vz: dz * 0.05,
         g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/effect_', 8], bright: !!ev.instant, color: [cr * f, cg * f, cb * f] })
     }
+  }
+  if (ev.type === 'firework_trail') {
+    // FireworkRocketEntity.tick (client): a FIREWORK spark every tick at the rocket, moving
+    // (gaussian x 0.05, -yd x 0.5, gaussian x 0.05); SparkParticle as for the explosion, white
+    const gs = () => Math.sqrt(-2 * Math.log(Math.max(1e-9, r()))) * Math.cos(2 * Math.PI * r())
+    P({ x: ev.x, y: ev.y, z: ev.z, vx: gs() * 0.05, vy: -(ev.vy || 0) * 0.5, vz: gs() * 0.05, g: 0.004, drag: 0.91, life: 48 + Math.floor(r() * 12), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/spark_', 8], bright: true, color: [1, 1, 1] })
   }
   if (ev.type === 'firework') {
     // FireworkParticles.Starter: a flash, then per explosion a ball of sparks (small ball: speed 0.25,

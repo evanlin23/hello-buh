@@ -756,6 +756,19 @@ function darknessAt (t) {
   const b = (DARK[k] || 0) * (1 - u) + (DARK[k + 1] ?? DARK[k] ?? 0) * u
   return { darkBlend: b, darkScale: Math.max(0, Math.cos(t * Math.PI * 0.025) * 0.45 * b) }
 }
+// TNT minecarts primed (harness cart_primed marks, entity status 10): id -> tick
+const CART_PRIMED = new Map()
+for (const e of rec.timeline || []) if (e.event === 'cart_primed' && !CART_PRIMED.has(e.id)) CART_PRIMED.set(e.id, e.t / 50)
+if (!CART_PRIMED.size) {
+  // recordings from before the mark: a TNT minecart that ends in an explosion was primed 80 ticks before
+  const span = new Map()
+  for (const row of rec.entities || []) if (row[2] === 'tnt_minecart') { const s = span.get(row[1]); if (!s) span.set(row[1], { a: row[0], b: row[0], x: row[3], y: row[4], z: row[5] }); else Object.assign(s, { b: row[0], x: row[3], y: row[4], z: row[5] }) }
+  const booms = (rec.timeline || []).filter(e => (e.event === 'explosion' || (e.event === 'particles' && e.type === 'explosion')) && Number.isFinite(e.x))
+  for (const [id, s] of span) {
+    const ex = booms.find(e => Math.abs(e.t / 50 - s.b) <= 3 && Math.hypot(e.x - s.x, e.y - s.y, e.z - s.z) < 1.5)
+    if (ex) CART_PRIMED.set(id, Math.max(s.a, ex.t / 50 - 80))
+  }
+}
 const THIRD = !!process.env.CAM || process.env.SHOW_PLAYER === '1'
 const PBODY = [], PWALK = []
 {
@@ -1197,10 +1210,53 @@ function camAtLive (t) {
     }
     PARTS.push(...particles.spawn(ev, bt))
   }
-  // primed TNT puffs smoke every tick on the client (PrimedTnt.tick: ParticleTypes.SMOKE at y + 0.5)
+  // firework rockets trail sparks while they fly (one per tick, from the recorded positions)
+  // (the server sends a rocket's position only every few ticks: interpolate between the changes)
+  {
+    const byId = new Map()
+    for (const row of rec.entities || []) if (row[2] === 'firework_rocket') { if (!byId.has(row[1])) byId.set(row[1], []); byId.get(row[1]).push(row) }
+    for (const rows of byId.values()) {
+      const keys = [rows[0]]
+      for (const row of rows) { const l = keys[keys.length - 1]; if (row[3] !== l[3] || row[4] !== l[4] || row[5] !== l[5]) keys.push(row) }
+      const last = rows[rows.length - 1]
+      for (let i = 0; i + 1 < keys.length; i++) {
+        const a = keys[i], b = keys[i + 1], n = b[0] - a[0]
+        if (n <= 0) continue
+        const vy = (b[4] - a[4]) / n
+        for (let k = 0; k < n; k++) {
+          const u = k / n
+          PARTS.push(...particles.spawn({ type: 'firework_trail', t: (a[0] + k) * 50, x: a[3] + (b[3] - a[3]) * u, y: a[4] + (b[4] - a[4]) * u, z: a[5] + (b[5] - a[5]) * u, vy }))
+        }
+      }
+      // after the last move, keep going at the last speed until the rocket is gone
+      if (keys.length >= 2) {
+        const a = keys[keys.length - 2], b = keys[keys.length - 1], n = Math.max(1, b[0] - a[0])
+        for (let k = b[0]; k <= last[0]; k++) { const u = (k - b[0]) / n; PARTS.push(...particles.spawn({ type: 'firework_trail', t: k * 50, x: b[3] + (b[3] - a[3]) * u, y: b[4] + (b[4] - a[4]) * u, z: b[5] + (b[5] - a[5]) * u, vy: (b[4] - a[4]) / n })) }
+      }
+    }
+  }
+  // note blocks (block action at a note_block): a note particle above it, hued by its pitch, unless the
+  // instrument is a mob head (not tunable: NoteBlockInstrument.isTunable)
+  {
+    const Block = require('prismarine-block')(rec.version)
+    const changes = new Map()
+    for (const b of rec.blocks || []) { const k = `${b[1]},${b[2]},${b[3]}`; if (!changes.has(k)) changes.set(k, []); changes.get(k).push(b) }
+    for (const e of (rec.timeline || []).filter(x => x.event === 'block_action')) {
+      const tk = e.t / 50, k = `${e.x},${e.y},${e.z}`
+      let blk = mesher.world.getBlock(new Vec3(e.x, e.y, e.z))
+      for (const b of changes.get(k) || []) if (b[0] <= tk) { try { blk = Block.fromStateId(b[4], 0) } catch (err) {} }
+      if (!blk || blk.name !== 'note_block') continue
+      const pr = blk.getProperties()
+      if (/^(skeleton|zombie|creeper|dragon|wither_skeleton|piglin|custom_head)$/.test(pr.instrument)) continue
+      PARTS.push(...particles.spawn({ type: 'note', t: e.t, x: e.x + 0.5, y: e.y + 1.2, z: e.z + 0.5, note: Number(pr.note) || 0 }))
+    }
+  }
+  // primed TNT puffs smoke every tick on the client (PrimedTnt.tick: ParticleTypes.SMOKE at y + 0.5);
+  // so does a primed TNT minecart while its fuse runs (MinecartTNT.tick, 80 ticks from status 10)
   {
     for (const row of rec.entities || []) {
-      if (row[2] !== 'tnt') continue
+      const cp = row[2] === 'tnt_minecart' ? CART_PRIMED.get(row[1]) : undefined
+      if (row[2] !== 'tnt' && !(cp !== undefined && row[0] >= cp && row[0] < cp + 80)) continue
       PARTS.push(...particles.spawn({ type: 'tnt_smoke', t: row[0] * 50, x: row[3], y: row[4] + 0.5, z: row[5] }))
     }
   }
@@ -1305,6 +1361,19 @@ function camAtLive (t) {
       LID.set(k, arr)
     }
   }
+  // BellBlockEntity: a ring (block action 1, param = the struck face's 3D data value) shakes the bell
+  // for 50 ticks; BellRenderer tips the body by sin(f / pi) / (4 + f / 3) toward that face's axis
+  const BELL_RINGS = new Map()
+  for (const e of rec.timeline || []) if (e.event === 'block_action' && e.a === 1) { const k = `${e.x},${e.y},${e.z}`; if (!BELL_RINGS.has(k)) BELL_RINGS.set(k, []); BELL_RINGS.get(k).push([e.t / 50, e.b]) }
+  const bellSwing = (k, t) => {
+    const list = BELL_RINGS.get(k); if (!list) return null
+    let r = null; for (const x of list) if (x[0] <= t) r = x
+    if (!r || t - r[0] >= 50) return null
+    const f = t - r[0], f3 = Math.sin(f / Math.PI) / (4 + f / 3)
+    const dir = ['down', 'up', 'north', 'south', 'west', 'east'][r[1]]
+    const xr = dir === 'north' ? -f3 : dir === 'south' ? f3 : 0, zr = dir === 'east' ? -f3 : dir === 'west' ? f3 : 0
+    return [+xr.toFixed(4), +zr.toFixed(4)]
+  }
   const lidAt = (k, t) => { const a = LID.get(k); if (!a) return 0; const i = Math.max(0, Math.min(a.length - 2, Math.floor(t))), f = t - i; return a[i] + (a[i + 1] - a[i]) * Math.max(0, Math.min(1, f)) }
   // DyeColor.getTextColor; a sign without glowing text darkens it to 0.4 (SignRenderer.getDarkColor)
   const DYE_TEXT = { white: 0xFFFFFF, orange: 0xFF681F, magenta: 0xFF00FF, light_blue: 0x9AC0CD, yellow: 0xFFFF00, lime: 0xBFFF00, pink: 0xFF69B4, gray: 0x808080, light_gray: 0xD3D3D3, cyan: 0x00FFFF, purple: 0xA020F0, blue: 0x0000FF, brown: 0x8B4513, green: 0x00FF00, red: 0xFF0000, black: 0x000000 }
@@ -1340,6 +1409,7 @@ function camAtLive (t) {
       if (kind === 'wall_sign') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, wood: b.name.replace(/_wall_sign$/, '') }, signFace(e.nbt))
       if (kind === 'hanging') Object.assign(o, { rot: Number(pr.rotation || 0) * 22.5, attached: pr.attached === true || pr.attached === 'true', wood: b.name.replace(/_hanging_sign$/, '') }, signFace(e.nbt))
       if (kind === 'wall_hanging') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, wood: b.name.replace(/_wall_hanging_sign$/, '') }, signFace(e.nbt))
+      if (kind === 'bell') { const sw = bellSwing(key, t); if (sw) o.swing = sw }
       if (kind === 'chest') {
         const type = pr.type || 'single', base = b.name === 'trapped_chest' ? 'trapped' : b.name === 'ender_chest' ? 'ender' : 'normal'
         // a double chest opens both halves (DoubleBlockCombiner): the brighter of the two lids
@@ -1674,6 +1744,15 @@ function camAtLive (t) {
       if (CART && MC.blocksByName[CART]) {
         const st = MC.blocksByName[CART].defaultState
         e.extra = { ...(e.extra || {}), content: st }
+        // TntMinecartRenderer: a primed cart's TNT flashes white while (fuse / 5) % 2 == 0 and swells
+        // 30% over the last 10 ticks, like primed TNT
+        const cp = e.name === 'tnt_minecart' ? CART_PRIMED.get(e.id) : undefined
+        if (cp !== undefined && t >= cp) {
+          const fuse = 80 - (t - cp)
+          let k = fuse < 10 ? 1 - Math.max(0, fuse) / 10 : 0; k *= k; k *= k
+          e.extra.flash = Math.floor(Math.max(0, fuse) / 5) % 2 === 0
+          e.extra.scale = 1 + k * 0.3
+        }
         if (!sentBlocks.has(st)) { sentBlocks.add(st); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [st, mesher.meshSingle(st)]) }
       }
       if ((e.name === 'falling_block' || e.name === 'moving_block') && e.extra && e.extra.state !== undefined && !sentBlocks.has(e.extra.state)) {
