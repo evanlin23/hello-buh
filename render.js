@@ -73,8 +73,9 @@ if (rec.blocks && rec.timeline) {
     // (an eye's frame update can reach the recording on the use tick itself: it showed before the
     // swing started; it goes in one tick after the use either way: worker 4, end_portal_job v7)
     const t0 = m.t / 50 + (m.eye ? 1 : 0), x = Math.floor(m.x), y = Math.floor(m.y), z = Math.floor(m.z)
-    const b = rec.blocks.find(b => b[1] === x && b[2] === y && b[3] === z && (m.eye ? b[0] >= m.t / 50 : b[0] > t0) && b[0] <= t0 + 5)
-    if (b) b[0] = Math.ceil(t0)
+    // every update of that block in the window: the server can send the same frame update twice (an
+    // eye recorded frame, air above, frame again: the duplicate stayed on the use tick, worker 4)
+    for (const b of rec.blocks) if (b[1] === x && b[2] === y && b[3] === z && (m.eye ? b[0] >= m.t / 50 : b[0] > t0) && b[0] <= t0 + 5) b[0] = Math.ceil(t0)
   }
   rec.blocks.sort((a, b) => a[0] - b[0])
 }
