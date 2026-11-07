@@ -25,7 +25,7 @@ module.exports = {
     startAt: 'dye:-0.45',
     endAfter: 'collected:0.6',      // (the 30 s minimum: 29.9 at :0.4)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
-      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'every colour 🌈', 0.6, 0]]
+      ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'rainbow hotbar 🌈', 0.6, 0]]   // (not 'every colour': wool landing behind the sheep can't be reached)
   },
 
   async setup (ctx) {
@@ -214,6 +214,7 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     bot.setControlState('back', false)
+    await bot.waitForTicks(16)   // the recording has to run past endAfter (it stopped 0.2 s after the payoff: 29.9 s)
     ctx.log('hotbar', JSON.stringify(bot.inventory.items().map(i => [i.name, i.count])))
     return true
   },
