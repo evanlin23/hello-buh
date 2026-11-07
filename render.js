@@ -894,6 +894,11 @@ function thirdPersonDisplay (item) {
 // an item's flat sprite ('item/<texture>'), or null for block items: its own name, else the
 // layer0 of its item model in the jar (enchanted_golden_apple draws item/golden_apple)
 const SPRITE = new Map()
+const TINT_CACHE = new Map()
+function TINTED_STATE (state) {
+  if (!TINT_CACHE.has(state)) { let n = ''; try { n = require('prismarine-block')(rec.version).fromStateId(state, 0).name } catch (e) {} TINT_CACHE.set(state, /^(grass_block|short_grass|tall_grass|fern|large_fern|vine|sugar_cane)$|_leaves$/.test(n) && !/^(cherry|azalea|flowering_azalea)_leaves$/.test(n)) }
+  return TINT_CACHE.get(state)
+}
 const EMPTY_MODEL = new Map()
 function blockModelEmpty (state) {
   if (!EMPTY_MODEL.has(state)) { let empty = true; try { empty = !(mesherRef && mesherRef.meshSingle(state).positions.length) } catch (e) {} EMPTY_MODEL.set(state, empty) }
@@ -1954,9 +1959,15 @@ function camAtLive (t) {
         }
         if (!sentBlocks.has(st)) { sentBlocks.add(st); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [st, mesher.meshSingle(st)]) }
       }
-      if ((e.name === 'falling_block' || e.name === 'moving_block') && e.extra && e.extra.state !== undefined && !sentBlocks.has(e.extra.state)) {
-        sentBlocks.add(e.extra.state)
-        await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.state, mesher.meshSingle(e.extra.state)])
+      if ((e.name === 'falling_block' || e.name === 'moving_block') && e.extra && e.extra.state !== undefined) {
+        // tinted blocks (grass, leaves, vines) get their spot's biome colour: one model per state + biome
+        let key = e.extra.state, biome = 'plains'
+        if (typeof key === 'number' && !e.extra.spin && TINTED_STATE(key)) {
+          const b = mesher.world.getBlock(new Vec3(Math.floor(e.x), Math.floor(e.y), Math.floor(e.z)))
+          biome = (b && b.biome && b.biome.name) || 'plains'
+          if (biome !== 'plains') { key = `${e.extra.state}@${biome}`; e.extra = { ...e.extra, state: key } }
+        }
+        if (!sentBlocks.has(key)) { sentBlocks.add(key); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [key, mesher.meshSingle(typeof key === 'number' ? key : Number(String(key).split('@')[0]), biome)]) }
       }
     }
     prof('entities+hand')
