@@ -3,7 +3,7 @@
   "caption": "Bro this looks wrong?",
   "youtube": {
     "title": "Bro this looks wrong? #minecraft #shorts",
-    "description": "Bro this looks wrong?\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "Bro this looks wrong?\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "feel_good_funk.mp3",
-    "title": "Feel Good Funk",
-    "artist": "Syn Cole, Nakama",
+    "file": "vem_lenta.mp3",
+    "title": "VEM LENTA!",
+    "artist": "KPHK, Eluvo, Sayfalse",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 16.5,
+    "drop_in_song_s": 36.75,
     "drop_in_short_s": 31.1,
-    "song_start_s": 0.0
+    "song_start_s": 5.65
   },
   "video": {
     "file": "short.mp4",
@@ -717,9 +717,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "dc833c8395787086b1d8134a2063951add078006",
+    "commit": "7fc53eea7618562f14693ae964641461fe2d9570",
     "rendered_at": "2026-11-07T00:17:35.575Z",
-    "head_at_publish": "dc833c8395787086b1d8134a2063951add078006",
+    "head_at_publish": "e2bac70e49a07ab0066bb0ac7130664cff96607f",
     "stunt": "stunts/looks_wrong.js",
     "source_snapshot": [
       "source/looks_wrong.js",
@@ -727,13 +727,13 @@
     ]
   },
   "rebuild": [
-    "git checkout dc833c839578",
+    "git checkout 7fc53eea7618",
     "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
     "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
     "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start_at stage:-0.2 --end_after complete:0.9 --out out/looks_wrong.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: 32 s three-smiley format; frame review + retention + minecraft audits passed (round 5). Nitpicks: glance return starts with a quick flick, 8-16 placements/s speed build, no far block outline (engine)",
-  "published_at": "2026-11-07T00:22:12.240Z"
+  "status": "pending-qa",
+  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
+  "published_at": "2026-11-07T06:03:29.382Z"
 }
