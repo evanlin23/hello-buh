@@ -166,14 +166,14 @@ module.exports = {
     const swayY = () => Math.sin(ctx.tick / 19) * 0.09 * sway, swayP = () => Math.sin(ctx.tick / 27) * 0.035 * sway
     const look = (k, dyaw = 0, dpitch = 0) => bot.look(base.yaw + dyaw + swayY(), base.pitch + dpitch + swayP(), true)
     // a cut: teleport, wait for it to land, aim
-    const cut = async (dx, dz, target, dy = 1) => {
+    const cut = async (dx, dz, target, dy = 1, during = null) => {
       const x = X + dx, z = Z + dz
       const d = target.minus(new ctx.Vec3(x, F + dy + 1.62, z))   // arrive already aimed (no 2-frame snap after the cut)
       const nb = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
       ctx.mark('cut')   // the renderer snaps to the new spot at any distance (short cuts glided; worker 8)
       say(`/tp @s ${x.toFixed(3)} ${(F + dy).toFixed(3)} ${z.toFixed(3)} ${(180 - (nb.yaw + swayY()) * 180 / Math.PI).toFixed(2)} ${(-(nb.pitch + swayP()) * 180 / Math.PI).toFixed(2)}`)
       // the old shot keeps swaying while the teleport lands (it froze for 2-4 frames before every cut)
-      for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break; look(0) }
+      for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break; look(0); if (during) during() }
       base = nb
       await look(0)
     }
@@ -247,10 +247,15 @@ module.exports = {
       }
       base = aim(P((vx + bx) / 2, 0.9, (vz + bz) / 2)); look(k)
     })
+    // L05: the sheep pack up and leave, single file out of the pen. The boat rows on until the cut lands (it
+    // stopped with the line and the shot froze for 5 frames before the cut: frame review)
+    await cut(-1.5, -23.7, P(-1.5, 0.5, -28), 1, () => {
+      bx += 0.22
+      say(`/tp @e[tag=boat,limit=1] ${(X + bx).toFixed(3)} ${F + 0.52} ${Z + bz} -90 0`)
+      say(`/tp @e[tag=fisher,limit=1] ${(X + bx).toFixed(3)} ${F + 0.62} ${Z + bz} -90 0`)
+    })
     // the boat and fisherman leave the set (a NoGravity boat floats up: it showed in the sky behind the golem)
     say(`/tp @e[tag=boat] ${X} ${F - 30} ${Z}`); say(`/tp @e[tag=fisher] ${X} ${F - 30} ${Z}`)
-    // L05: the sheep pack up and leave, single file out of the pen
-    await cut(-1.5, -23.7, P(-1.5, 0.5, -28))
     await line('L05', async (k, at) => {
       if (k >= at(2) - 6) say(`/execute as @e[tag=chick] at @s run tp @s ~${((Math.random() - 0.5) * 0.02).toFixed(3)} ~ ~-0.22 180 0`)
       look(k)
@@ -345,10 +350,12 @@ module.exports = {
     // a dead player stops getting mob updates after ~1 s (the villagers froze): the crater smokes instead
     const fwd = { x: -Math.sin(bot.entity.yaw), z: -Math.cos(bot.entity.yaw) }
     let sk = 0
-    const eyeY = boomAt.y + 1.62   // the dead camera sits in the crater: smoke at its eye level, in front of it
+    // the blast flings the dead body ~4 blocks forward and it lands on the ground (vanilla knockback, renderer
+    // 717cb93): the smoke drifts in front of where it lands
+    const eyeY = boomAt.y + 1.62
     const still = async () => {   // a few puffs every 3 ticks: 6 a tick filled the whole view with smoke
       if (sk++ % 3) return
-      const d = 3 + Math.random() * 3, side = (Math.random() - 0.5) * 5
+      const d = 7 + Math.random() * 3, side = (Math.random() - 0.5) * 5
       ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.4 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 2 })
     }
     for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
