@@ -41,7 +41,10 @@ REC=work/$NAME.rec.json
 ok=0
 for t in $(seq 1 "$TRIES"); do
   echo "attempt $t"
-  if STUNT=$STUNT RECORD=$REC timeout 180 node bot.js; then ok=1; break; fi
+  # a success has to have written a NEW recording: a silent exit 0 once re-rendered yesterday's (worker 3)
+  STAMP=$(mktemp); sleep 1
+  if STUNT=$STUNT RECORD=$REC timeout 180 node bot.js && [ "$REC" -nt "$STAMP" ]; then ok=1; rm -f "$STAMP"; break; fi
+  rm -f "$STAMP"
 done
 [ "$ok" = 1 ] || { echo "stunt failed $TRIES times"; exit 1; }
 stop_server; trap - EXIT
