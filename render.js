@@ -72,6 +72,57 @@ const bobState = []
 // Entities by tick: Map(tick -> Map(id -> row)); rows are [tick, id, name, x, y, z, yaw, pitch, headYaw, extra]
 const ENT = new Map()
 for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], new Map()); ENT.get(row[0]).set(row[1], row) }
+// Pistons (PistonBaseBlock.moveBlocks / PistonMovingBlockEntity): the server never sends the
+// moving_piston blocks (setBlock flag 68 hides them from clients); the client runs the move itself
+// from the block event and slides each block in over 2 ticks, and the server's final blocks arrive
+// 2-3 ticks after the event. Rebuild it from the block_action mark (a 0 extend / 1 retract, b the
+// facing): every block change on the piston's line within 13 blocks and 5 ticks is a destination,
+// sliding in from one block back along the move; the positions involved are cleared from the event
+// tick until their final block lands, and a retracting head slides back into the base. Without
+// this, pushed blocks sat still and then jumped (worker 17, chain reactions).
+{
+  const Block = require('prismarine-block')(rec.version)
+  const nameOf = new Map()
+  const nm = (id) => { if (!nameOf.has(id)) { let n = null; try { n = Block.fromStateId(id, 0).name } catch (e) {} nameOf.set(id, n) } return nameOf.get(id) }
+  const DIRS = [[0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1], [-1, 0, 0], [1, 0, 0]]
+  const FACES = ['down', 'up', 'north', 'south', 'west', 'east']
+  const blocks = rec.blocks || []
+  const extra = []
+  let nid = -100000
+  for (const act of (rec.timeline || []).filter(e => e.event === 'block_action' && (e.a === 0 || e.a === 1) && e.b >= 0 && e.b < 6)) {
+    const t0 = Math.round(act.t / 50), d = DIRS[act.b]
+    const near = blocks.filter(b => b[0] >= t0 && b[0] <= t0 + 5)
+    const base = near.find(b => b[1] === act.x && b[2] === act.y && b[3] === act.z && /piston$/.test(nm(b[4]) || ''))
+    if (!base) continue
+    const sticky = nm(base[4]) === 'sticky_piston'
+    const onLine = (b) => { const v = [b[1] - act.x, b[2] - act.y, b[3] - act.z]; const k = v[0] * d[0] + v[1] * d[1] + v[2] * d[2]; return k >= 1 && k <= 13 && v.every((c, q) => c === d[q] * k) }
+    const dests = near.filter(b => onLine(b) && !/^(air|cave_air)$/.test(nm(b[4]) || ''))
+    const m = act.a === 0 ? d : d.map(c => -c)
+    const clear = new Set()
+    const slide = (state, from, to, t1) => {
+      const id = nid--
+      for (let tk = t0; tk <= t1; tk++) {
+        const f = Math.min(1, (tk - t0) / Math.max(1, Math.min(2, t1 - t0)))
+        if (!ENT.has(tk)) ENT.set(tk, new Map())
+        ENT.get(tk).set(id, [tk, id, 'moving_block', from[0] + (to[0] - from[0]) * f + 0.5, from[1] + (to[1] - from[1]) * f, from[2] + (to[2] - from[2]) * f + 0.5, 0, 0, null, { state }])
+      }
+    }
+    for (const b of dests) {
+      const to = [b[1], b[2], b[3]], from = to.map((c, q) => c - m[q])
+      slide(b[4], from, to, b[0])
+      clear.add(to.join(',')); if (!(from[0] === act.x && from[1] === act.y && from[2] === act.z)) clear.add(from.join(','))
+    }
+    if (act.a === 1) {   // the head slides back into the base
+      let hs = null
+      try { hs = Block.fromProperties('piston_head', { facing: FACES[act.b], short: false, type: sticky ? 'sticky' : 'normal' }, 0).stateId } catch (e) {}
+      const hp = [act.x + d[0], act.y + d[1], act.z + d[2]]
+      if (hs !== null) { slide(hs, hp, [act.x, act.y, act.z], base[0]); clear.add(hp.join(',')) }
+    }
+    // hide the blocks being moved from the event tick (their final blocks restore them)
+    for (const k of clear) { const [x, y, z] = k.split(',').map(Number); extra.push([t0, x, y, z, 0]) }
+  }
+  if (extra.length) { rec.blocks = blocks.concat(extra).sort((a, b) => a[0] - b[0]) }
+}
 // The server sends mob moves every few ticks, so recorded positions are steps (a creeper "glided"
 // in 0.4-block hops). The vanilla client eases toward each new position over 3 ticks
 // (Entity.lerpTo / lerpSteps); do the same, per tick, before the per-frame interpolation.
@@ -79,7 +130,7 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
   const cur = new Map()   // id -> { x, y, z, tx, ty, tz, steps }
   for (const tick of [...ENT.keys()].sort((a, b) => a - b)) {
     for (const [id, row] of ENT.get(tick)) {
-      if (row[2] === 'falling_block' || row[2] === 'item') continue
+      if (row[2] === 'falling_block' || row[2] === 'item' || row[2] === 'moving_block') continue
       let c = cur.get(id)
       if (!c || c.last !== tick - 1) c = { x: row[3], y: row[4], z: row[5], tx: row[3], ty: row[4], tz: row[5], steps: 0 }
       if (Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz) > 4) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }   // teleport: no easing
@@ -151,7 +202,7 @@ function entitiesAt (t, mesher) {
     const inBlock = mesher.world.getBlock(cell)
     // primed TNT (and a falling block) can arrive a tick before its block is removed: the block still
     // shows, so skip the entity; drawn over it, it z-fought in black and white (tnt_1000 f459)
-    if (inBlock && ((ra[2] === 'tnt' && inBlock.name === 'tnt') || (ra[2] === 'falling_block' && ra[9] && inBlock.stateId === ra[9].state))) continue
+    if (inBlock && ((ra[2] === 'tnt' && inBlock.name === 'tnt') || ((ra[2] === 'falling_block' || ra[2] === 'moving_block') && ra[9] && inBlock.stateId === ra[9].state))) continue
     let [sky, blk] = mesher.world.getLight(cell)
     // a cell that is still solid (or not yet relit) reads light 0: take the brightest neighbour
     if (inBlock && inBlock.boundingBox === 'block' && sky === 0 && blk === 0) {
@@ -1520,7 +1571,14 @@ function camAtLive (t) {
       e.extra = { state: TNT_STATE, flash: Math.floor(Math.max(0, fuse) / 5) % 2 === 0, scale: 1 + k * 0.3 }
     }
     for (const e of ents) {   // falling blocks: send each block type's mesh once
-      if (e.name === 'falling_block' && e.extra && e.extra.state !== undefined && !sentBlocks.has(e.extra.state)) {
+      // minecart contents (MinecartRenderer display block)
+      const CART = { tnt_minecart: 'tnt', hopper_minecart: 'hopper', furnace_minecart: 'furnace', command_block_minecart: 'command_block', spawner_minecart: 'spawner' }[e.name]
+      if (CART && MC.blocksByName[CART]) {
+        const st = MC.blocksByName[CART].defaultState
+        e.extra = { ...(e.extra || {}), content: st }
+        if (!sentBlocks.has(st)) { sentBlocks.add(st); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [st, mesher.meshSingle(st)]) }
+      }
+      if ((e.name === 'falling_block' || e.name === 'moving_block') && e.extra && e.extra.state !== undefined && !sentBlocks.has(e.extra.state)) {
         sentBlocks.add(e.extra.state)
         await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.state, mesher.meshSingle(e.extra.state)])
       }

@@ -455,7 +455,7 @@ export class EntityLayer {
     if (cur && cur.key === key) return cur
     if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); this.live.delete(id) }
     let obj = null, bones = {}, mat = null, woolMat = null, underMat = null
-    if (name === 'falling_block' && extra && this.blockModels.has(extra.state)) {
+    if ((name === 'falling_block' || name === 'moving_block') && extra && this.blockModels.has(extra.state)) {
       const bm = this.blockModels.get(extra.state)
       const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, 0, -0.5)
       obj = new THREE.Group(); obj.add(m); mat = m.material
@@ -517,6 +517,31 @@ export class EntityLayer {
           g.add(m); b.root.children[0].add(g); bones.carried = g; bones.carriedMat = m.material
         }
       }
+    } else if (name === 'arrow' || name === 'spectral_arrow') {
+      // ArrowRenderer: two crossed 16x4 px planes and a 5x5 fin at the back, 0.05625 blocks a pixel,
+      // turned by Ry(yRot - 90) Rz(xRot) (set in update from the recorded yaw/pitch)
+      const t = await texture([name === 'arrow' ? 'entity/projectiles/arrow' : 'entity/projectiles/spectral_arrow'])
+      if (t) {
+        const pos = [], uv = [], idx = []
+        const quad = (pts, u0, v0, u1, v1) => {
+          const n = pos.length / 3
+          for (const p of pts) pos.push(...p)
+          uv.push(u0, v1, u1, v1, u1, v0, u0, v0)
+          idx.push(n, n + 1, n + 2, n, n + 2, n + 3)
+        }
+        for (const a of [0, Math.PI / 2]) {   // the two crossed planes along x
+          const c = Math.cos(a + Math.PI / 4), sn = Math.sin(a + Math.PI / 4)
+          const P2 = (x, y) => [x - 4, y * c, y * sn]
+          quad([P2(-8, -2), P2(8, -2), P2(8, 2), P2(-8, 2)], 0, 0, 0.5, 5 / 32)
+        }
+        quad([[-11, -2, -2], [-11, -2, 2], [-11, 2, 2], [-11, 2, -2]], 0, 5 / 32, 5 / 32, 10 / 32)   // the fin
+        const g = new THREE.BufferGeometry()
+        g.setAttribute('position', new THREE.Float32BufferAttribute(pos.map(v => v * 0.05625), 3))
+        g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx)
+        mat = new THREE.MeshBasicMaterial({ map: t.tex, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
+        const inner = new THREE.Group(); inner.add(new THREE.Mesh(g, mat)); inner.rotation.order = 'YZX'
+        obj = new THREE.Group(); obj.add(inner); bones = { arrow: inner }
+      }
     } else if (name === 'experience_orb') {
       // ExperienceOrbRenderer: one 16x16 icon of experience_orb.png picked by the orb's value
       // (getIcon), a camera-facing quad 0.3 across from -0.25 to 0.75 of its height, alpha 128
@@ -574,6 +599,14 @@ export class EntityLayer {
         }
       }
     }
+    // MinecartRenderer: the display block (TNT, hopper, furnace...) scaled 0.75 at
+    // (-0.5, (offset - 8) / 16, 0.5) of the cart, default offset 6
+    if (obj && /minecart$/.test(name) && extra && extra.content !== undefined && this.blockModels.has(extra.content)) {
+      const bm = this.blockModels.get(extra.content)
+      const m = new THREE.Mesh(bm.geo, bm.mat.clone())
+      const g = new THREE.Group(); g.scale.setScalar(0.75); g.position.set(-0.375, 0.375 + 0.75 * (6 - 8) / 16, -0.375); g.add(m)
+      obj.add(g); bones.contentMat = m.material
+    }
     if (extra && extra.glint && mat && this.glintify) this.glintify(mat, name === 'falling_block' ? 8 : 0.25)
     const rec = { key, obj, bones, mat, woolMat, underMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
     if (obj) this.scene.add(obj)
@@ -591,6 +624,13 @@ export class EntityLayer {
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
+      if (r.bones.arrow) {
+        // Ry(javaYaw - 90) Rz(javaPitch): an arrow's yRot is atan2(vx, vz), mineflayer yaw = pi - yRot
+        r.obj.rotation.set(0, 0, 0)
+        r.bones.arrow.rotation.set(0, (Math.PI - s.yaw) - Math.PI / 2, -(s.pitch || 0))
+        continue
+      }
+      if (r.bones.contentMat) r.bones.contentMat.color.setRGB(...LL)
       if (r.bones.orb) {
         // 0.1 up; colour (sin(age/2) + 1) / 2, 1, (sin(age/2 + 4.19) + 1) / 10, lit at block light + 7
         r.obj.position.set(s.x, s.y + 0.1, s.z)
