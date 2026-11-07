@@ -29,17 +29,17 @@ const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 
 // snow on top, cut by a sheer cliff on the side we start at (where the noob puts his ladders), with a
 // flat summit (the pro's pearl lands on it). Heights are relative to the field (floor).
 // (A plain cone read as a stepped stone pyramid in the frame review.)
-const MR = 18, MH = 24, MB = 24              // MB: the loop's bounding half-width
+const MH = 24, MB = 26                     // MB: the loop's bounding half-width
+// a steady-slope peak (about 50 deg, steeper on some lobes, with ridges): a power-curve cone read as
+// a stepped stone pyramid with a snow tower on top in two reviews
 function mh (dx, dz) {
   if (dz > cliff(dx)) return 0
   const r = Math.hypot(dx, dz)
   if (r < 3.2) return MH
   const th = Math.atan2(dz, dx)
-  const R = MR * (1 + 0.18 * Math.sin(3 * th + 1.3) + 0.1 * Math.sin(5 * th + 0.4))
-  if (r > R) return 0
-  const t = r / R
-  const ridge = 2.2 * Math.abs(Math.sin(th * 4 + r * 0.25)) * (1 - t)
-  const h = MH * Math.pow(1 - t, 1.25) + ridge + 1.4 * Math.sin(dx * 0.7 + 0.3) * Math.cos(dz * 0.6) + 0.9 * Math.sin((dx - dz) * 1.1)
+  const k = Math.max(1.1, 1.35 * (1 + 0.2 * Math.sin(3 * th + 1.3) + 0.12 * Math.sin(5 * th + 0.4)))   // blocks of drop per block out
+  const ridge = 1.2 * Math.abs(Math.sin(th * 4 + r * 0.25))
+  const h = MH - (r - 3.2) * k + ridge + 1.0 * Math.sin(dx * 0.7 + 0.3) * Math.cos(dz * 0.6) + 0.7 * Math.sin((dx - dz) * 1.1)
   return Math.max(0, Math.min(MH - 1, Math.round(h)))
 }
 function cliff (dx) { return dx === 0 ? 3 : 3 + Math.round(0.6 * Math.sin(dx * 0.9) + 0.8 * Math.sin(dx * 0.37 + 1)) }
@@ -56,7 +56,7 @@ module.exports = {
     // the ladder climb at 1.6x, the pearl's flight cut (a dot on a held shot), the noob burning in the lava cut to the death
     deathBeats: [3, 6],
     // the run-in: 1.2 s with the whole mountain in shot, then cut to the wall as the first ladder goes on
-    speed: [['seg:1.2', 'climb_a:-0.35', 'cut'], ['climb_a', 'ladders_out', 1.6], ['pillar_a', 'pillared', 1.4], ['pearl:0.45', 'summit:-0.15', 'cut'], ['burn_a', 'death:-0.2', 'cut']],
+    speed: [['seg:1.2', 'climb_a:-0.35', 'cut'], ['climb_a', 'ladders_out', 1.6], ['pillar_a', 'pillared', 1.4], ['pearl:0.1', 'summit:-0.05', 'cut'], ['burn_a', 'death:-0.2', 'cut']],
     extra: {
       deathScreen: true, onFire: 'in_lava:death',
       // a preview of the finale before beat 1 (the launch, cut before it lands)
@@ -70,7 +70,7 @@ module.exports = {
     const { bot } = ctx
     const sp = bot.entity.position.floored()
     const x = sp.x, z = sp.z
-    const F = await plateau(ctx, { x0: x - 62, x1: x + 52, z0: z - 52, z1: z + 12, above: 40, below: 24, biome: 'minecraft:plains' })
+    const F = await plateau(ctx, { x0: x - 72, x1: x + 52, z0: z - 60, z1: z + 12, above: 40, below: 24, biome: 'minecraft:plains' })
     Object.assign(this, { x, z, F })
     await ctx.defaultRules()
     for (const c of ['/gamerule random_tick_speed 0', '/gamerule fire_spread_radius_around_player 0', '/gamerule fall_damage true',
@@ -79,7 +79,7 @@ module.exports = {
       '/gamerule natural_health_regeneration false']) await ctx.cmd(c)
 
     // --- 1. the mountain (column by column; ops aren't chat-rate-limited) ---
-    const mx = x - 36, mz = z - 24
+    const mx = x - 34, mz = z - 24        // the field runs 38 blocks past its west side (its edge showed from the levitation)
     Object.assign(this, { mx, mz })
     const H = (dx, dz) => mh(dx, dz)
     let n = 0
@@ -91,7 +91,7 @@ module.exports = {
         const X = mx + dx, Z = mz + dz
         const steep = Math.max(...[[1, 0], [-1, 0], [0, 1], [0, -1]].map(([a, b]) => h - H(dx + a, dz + b)))
         const hv = hash(X, Z)
-        const top = h >= 20 ? 'snow_block' : steep > 2 ? (hv < 0.3 ? 'andesite' : hv < 0.4 ? 'gravel' : 'stone') : (hv < 0.12 ? 'coarse_dirt' : 'grass_block')
+        const top = h >= 21 ? 'snow_block' : steep > 2 ? (hv < 0.3 ? 'andesite' : hv < 0.4 ? 'gravel' : 'stone') : (hv < 0.12 ? 'coarse_dirt' : 'grass_block')
         if (h >= 2) bot.chat(`/fill ${X} ${F + 1} ${Z} ${X} ${F + h - 1} ${Z} stone`)
         if (h >= 3 && /grass|dirt|snow/.test(top)) bot.chat(`/setblock ${X} ${F + h - 1} ${Z} ${top === 'snow_block' ? 'snow_block' : 'dirt'}`)
         bot.chat(`/setblock ${X} ${F + h} ${Z} ${top}`)
@@ -110,14 +110,14 @@ module.exports = {
     ctx.log('mountain: summit', H(0, 0), 'cliff at dx0', this.cliffH, 'wall z', this.wallZ)
 
     // --- 2. the lava lake: two deep on stone, flush with the grass ---
-    const lx0 = x - 6, lx1 = x + 6, lz0 = z - 27, lz1 = z - 20
+    const lx0 = x - 1, lx1 = x + 11, lz0 = z - 27, lz1 = z - 20
     Object.assign(this, { lx0, lx1, lz0, lz1 })
     await ctx.cmd(`/fill ${lx0 - 2} ${F - 4} ${lz0 - 2} ${lx1 + 2} ${F - 1} ${lz1 + 2} stone`)
     await ctx.cmd(`/fill ${lx0} ${F - 1} ${lz0} ${lx1} ${F} ${lz1} lava`)
 
     // --- 3. the pit: 3x3, 7 deep, stone walls under two layers of dirt; a hidden 1x1 shaft under
     // its dirt floor, 24 deeper (the noob digs into it: a fall that kills) ---
-    const px = x + 20, pz = z - 24          // well inside the field: its edge showed from the launch
+    const px = x + 24, pz = z - 24          // well inside the field: its edge showed from the launch
     Object.assign(this, { px, pz })
     await ctx.cmd(`/fill ${px - 4} ${F - 34} ${pz - 4} ${px + 4} ${F - 3} ${pz + 4} stone`)
     await ctx.cmd(`/fill ${px - 1} ${F - 6} ${pz - 1} ${px + 1} ${F} ${pz + 1} air`)
@@ -232,8 +232,7 @@ module.exports = {
     const p0 = bot.entity.position.clone()
     const path = best.hit.path
     for (let w = 0; w < 120 && bot.entity.position.distanceTo(p0) < 4; w++) {
-      const q = path[Math.min(path.length - 1, w + 2)]
-      if (q) { const [ya, pa] = k.angTo(new Vec3(q.x, q.y, q.z)); k.lerpLook(ya, Math.min(pa, 0.7), 0.35) }   // eyes on the pearl, held low enough that the landing faces the summit
+      if (w === 0) ctx.easeLook(N, -0.35, 1200)   // inside the cut (the pearl isn't drawn between server updates): the landing frame faces the summit
       await bot.waitForTicks(1)
     }
     ctx.sound('entity.player.teleport', 1); ctx.particles('portal', bot.entity.position, { count: 40 })
@@ -378,7 +377,7 @@ module.exports = {
     for (let i = 0; i < 7; i++) {
       const base = F - 7 + i                                      // the block I stand on
       bot.setControlState('jump', true)
-      ctx.easeLook(N + 0.3 * Math.sin(i * 1.1), -1.3 + 0.08 * Math.cos(i * 0.8), 420)
+      ctx.easeLook(N + 0.1 * Math.sin(i * 1.1), -1.3 + 0.06 * Math.cos(i * 0.8), 420)
       for (let w = 0; w < 20 && bot.entity.position.y < base + 2.1; w++) await bot.waitForTicks(1)
       bot.setControlState('jump', false)
       k.placeAt(new Vec3(px, base, pz), 1, [0.5, 1, 0.5], { x: px, y: base + 1, z: pz })
