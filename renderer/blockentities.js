@@ -90,20 +90,20 @@ async function font () {
 }
 const advance = (F, ch) => ch === ' ' ? 4 : (ch.charCodeAt(0) < 256 ? F.widths[ch.charCodeAt(0)] + 1 : 0)
 // The four lines (SignRenderer.renderSignText): line i at y = i * 10 - 20, centred, 90 px max
-async function textTexture (lines, rgb) {
+async function textTexture (lines, rgb, LH = 10, TW = 96) {
   const F = await font()
   if (!F.img) return null
-  const SC = 4, c = document.createElement('canvas'); c.width = 96 * SC; c.height = 40 * SC
+  const SC = 4, c = document.createElement('canvas'); c.width = TW * SC; c.height = LH * 4 * SC
   const g = c.getContext('2d'); g.imageSmoothingEnabled = false
   const tint = document.createElement('canvas'); tint.width = F.img.width; tint.height = F.img.height
   const tg = tint.getContext('2d'); tg.drawImage(F.img, 0, 0); tg.globalCompositeOperation = 'source-in'
   tg.fillStyle = `rgb(${rgb.map(v => Math.round(v * 255)).join(',')})`; tg.fillRect(0, 0, tint.width, tint.height)
   lines.forEach((line, i) => {
     const w = [...line].reduce((s, ch) => s + advance(F, ch), 0)
-    let x = 48 - w / 2
+    let x = TW / 2 - w / 2
     for (const ch of line) {
       const code = ch.charCodeAt(0)
-      if (code < 256 && ch !== ' ') g.drawImage(tint, (code % 16) * F.cw, Math.floor(code / 16) * F.cw, F.cw, F.cw, Math.round(x * SC), i * 10 * SC, 8 * SC, 8 * SC)
+      if (code < 256 && ch !== ' ') g.drawImage(tint, (code % 16) * F.cw, Math.floor(code / 16) * F.cw, F.cw, F.cw, Math.round(x * SC), i * LH * SC, 8 * SC, 8 * SC)
       x += advance(F, ch)
     }
   })
@@ -116,6 +116,15 @@ async function textTexture (lines, rgb) {
 function signParts (standing) {
   const p = [{ cubes: [[[-12, -14, -1], [24, 12, 2], [0, 0]]] }]
   if (standing) p.push({ cubes: [[[-1, -2, -1], [2, 14, 2], [0, 14]]] })
+  return p
+}
+// HangingSignRenderer.createHangingSignLayer: board, the plank (wall mounted), V chains (normal) or
+// straight chains (attached to a full block above)
+function hangingParts (wall, attached) {
+  const p = [{ cubes: [[[-7, 0, -1], [14, 10, 2], [0, 12]]] }]
+  if (wall) p.push({ cubes: [[[-8, -6, -2], [16, 2, 4], [0, 0]]] })
+  if (attached && !wall) p.push({ cubes: [[[-6, -6, 0], [12, 6, 0], [14, 6]]] })
+  else for (const [x, uv, ry] of [[-5, [0, 6], -Math.PI / 4], [-5, [6, 6], Math.PI / 4], [5, [0, 6], -Math.PI / 4], [5, [6, 6], Math.PI / 4]]) p.push({ pivot: [x, -6, 0], rot: [0, ry, 0], cubes: [[[-1.5, 0, 0], [3, 6, 0], uv]] })
   return p
 }
 function chestParts (type, open) {
@@ -157,6 +166,23 @@ export class BlockEntityLayer {
           q.matrixAutoUpdate = false
           q.matrix.copy(base.clone().multiply(T(0, 1 / 3, 0.046666667)).multiply(S(0.010416667, -0.010416667, 0.010416667)).multiply(S(1, -1, 1)))
           grp.add(q); mats.push(m); m.userData.text = true
+        }
+      }
+    } else if (b.kind === 'hanging' || b.kind === 'wall_hanging') {
+      // HangingSignRenderer.translateSign: T(0.5, 0.9375, 0.5) Ry(-yRot) T(0, -0.3125, 0); model
+      // scale(1, -1, -1); text at (0, -0.32, 0.073), scale 0.015625 * 0.9, lines 9 apart, 60 wide
+      const base = at.clone().multiply(T(0.5, 0.9375, 0.5)).multiply(RY(-b.rot)).multiply(T(0, -0.3125, 0))
+      await add(buildGeometry(hangingParts(b.kind === 'wall_hanging', b.attached), base.clone().multiply(S(1 / 16, -1 / 16, -1 / 16)), 64, 32), `/assets/env/entity/signs/hanging/${b.wood}.png`)
+      if (b.text && b.text.some(l => l)) {
+        const t = await textTexture(b.text, b.textColor || [0, 0, 0], 9, 64)
+        if (t) {
+          const m = new THREE.MeshBasicMaterial({ map: t, transparent: true, alphaTest: 0.1, depthWrite: false, side: THREE.DoubleSide, fog: true, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 })
+          const q = new THREE.Mesh(new THREE.PlaneGeometry(64, 36), m)
+          q.geometry.attributes.uv.array.set([0, 0, 1, 0, 0, 1, 1, 1])
+          q.matrixAutoUpdate = false
+          const k = 0.015625 * 0.9
+          q.matrix.copy(base.clone().multiply(T(0, -0.32, 0.073)).multiply(S(k, -k, k)).multiply(S(1, -1, 1)))
+          grp.add(q); mats.push(m)
         }
       }
     } else if (b.kind === 'chest') {

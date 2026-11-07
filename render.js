@@ -735,7 +735,7 @@ function camAtLive (t) {
   // block_entity marks; chests and beds have none, so they're found by block state (sections whose
   // palette can't hold one are skipped).
   const BE = new Map()   // 'x,y,z' -> { x, y, z, nbt }
-  const beKind = (name) => /_hanging_sign$/.test(name) ? null : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
+  const beKind = (name) => /_wall_hanging_sign$/.test(name) ? 'wall_hanging' : /_hanging_sign$/.test(name) ? 'hanging' : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
   const BE_STATES = new Set()
   for (const b of MC.blocksArray) if (beKind(b.name)) for (let sid = b.minStateId; sid <= b.maxStateId; sid++) BE_STATES.add(sid)
   {
@@ -801,6 +801,8 @@ function camAtLive (t) {
       const o = { key, kind, x: e.x, y: e.y, z: e.z, light: lightmap(ls, lb).map(v => +v.toFixed(3)) }
       if (kind === 'sign') Object.assign(o, { rot: Number(pr.rotation || 0) * 22.5, wood: b.name.replace(/_sign$/, '') }, signFace(e.nbt))
       if (kind === 'wall_sign') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, wood: b.name.replace(/_wall_sign$/, '') }, signFace(e.nbt))
+      if (kind === 'hanging') Object.assign(o, { rot: Number(pr.rotation || 0) * 22.5, attached: pr.attached === true || pr.attached === 'true', wood: b.name.replace(/_hanging_sign$/, '') }, signFace(e.nbt))
+      if (kind === 'wall_hanging') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, wood: b.name.replace(/_wall_hanging_sign$/, '') }, signFace(e.nbt))
       if (kind === 'chest') {
         const type = pr.type || 'single', base = b.name === 'trapped_chest' ? 'trapped' : b.name === 'ender_chest' ? 'ender' : 'normal'
         // a double chest opens both halves (DoubleBlockCombiner): the brighter of the two lids
