@@ -789,9 +789,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "ce91010eeb48389628bfb289df9d0401c69052c0",
+    "commit": "2f059349adc044bb259197f642fd141987cb65ab",
     "rendered_at": "2026-11-07T02:02:46.684Z",
-    "head_at_publish": "ce91010eeb48389628bfb289df9d0401c69052c0",
+    "head_at_publish": "f8416ac638717e4cc54497ed1c8b0946d206cdd5",
     "stunt": "stunts/heart_art.js",
     "source_snapshot": [
       "source/heart_art.js",
@@ -799,13 +799,13 @@
     ]
   },
   "rebuild": [
-    "git checkout ce91010eeb48",
+    "git checkout 2f059349adc0",
     "gunzip -c shorts/heart_art/recording.json.gz > work/heart_art.rec.json",
     "node render.js work/heart_art.rec.json work/heart_art.frames 60 1080 1011",
     "python3 audio.py work/heart_art.rec.json work/heart_art.wav",
     "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building \ud83d\ude2d\" --start_at stage:-0.2 --end_after complete:0.9 --out out/heart_art.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: 32 s three-heart scrambled format; frame review + retention + minecraft audits passed. Nitpicks: huge heart's outline reads ~14 s before the payoff, one-tick repeats f946/f1873",
-  "published_at": "2026-11-07T02:07:21.468Z"
+  "status": "pending-qa",
+  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
+  "published_at": "2026-11-07T06:15:51.721Z"
 }
