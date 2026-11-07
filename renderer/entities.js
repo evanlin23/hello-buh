@@ -234,7 +234,10 @@ function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null
     sh.fragmentShader = 'uniform float uRed;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.0, 0.0) * diffuse * vColor.rgb, uRed * 0.302);')
   }
   // an emissive layer over the same geometry (EnderEyesLayer: full bright, cut out)
-  const eyeMat = eyes ? new THREE.MeshBasicMaterial({ map: eyes.tex, transparent: true, alphaTest: 0.05, depthWrite: false, side: THREE.DoubleSide, fog: true, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }) : null
+  // eyes: one texture, or a list of { tex, parts (names drawn, all if null), opacity } layers whose
+  // materials come back as bones.layers (LivingEntityEmissiveLayer with onlyDrawSelectedParts)
+  const layers = !eyes ? [] : Array.isArray(eyes) ? eyes : [{ tex: eyes }]
+  const layerMats = layers.map((l) => new THREE.MeshBasicMaterial({ map: l.tex.tex || l.tex, transparent: true, opacity: l.opacity ?? 1, alphaTest: 0.05, depthWrite: false, side: THREE.DoubleSide, fog: true, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }))
   const bones = {}
   for (const [name, parent, pivot, cubes, rest] of parts) {
     const g = new THREE.Group(); g.rotation.order = 'ZYX'   // ModelPart: rotationZYX(zRot, yRot, xRot)
@@ -249,10 +252,11 @@ function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null
     geom.setAttribute('color', new THREE.Float32BufferAttribute(all.col, 3))
     geom.setIndex(all.idx)
     g.add(new THREE.Mesh(geom, mat))
-    if (eyeMat) { const em = new THREE.Mesh(geom, eyeMat); em.renderOrder = 1; g.add(em) }
+    layers.forEach((l, i) => { if (!l.parts || l.parts.includes(name)) { const em = new THREE.Mesh(geom, layerMats[i]); em.renderOrder = 1 + i; g.add(em) } })
     ;(parent ? bones[parent] : model).add(g)
     bones[name] = g
   }
+  if (layers.length) bones.layers = layerMats
   if (!bones.rightArm) return { root, bones, mat }
   // ItemInHandLayer: the arm's transform, then Rx(-90) Ry(180) T(1/16, 0.125, -0.625) (blocks)
   const hand = new THREE.Group(); hand.matrixAutoUpdate = false
@@ -338,6 +342,14 @@ function poseWarden (r, s, walkPos, walkSpeed, tick) {
   B.rightArm.rotation.set(-sw * f, 0, 0); B.leftArm.rotation.set(sw * f, 0, 0)
   const tw = Math.sin((tick || 0) * 0.15) * 0.1
   B.rightTendril.rotation.set(0, tw, 0); B.leftTendril.rotation.set(0, -tw, 0)
+  if (B.layers) {
+    // spots: max(0, cos(age * 0.045) * 0.25) and its opposite phase; the heart flashes to 1 every
+    // 40 ticks (a calm warden's heartbeat) and fades over 10
+    const t = tick || 0
+    B.layers[1].opacity = Math.max(0, Math.cos(t * 0.045) * 0.25)
+    B.layers[2].opacity = Math.max(0, Math.cos(t * 0.045 + Math.PI) * 0.25)
+    B.layers[3].opacity = Math.max(0, 10 - (t % 40)) / 10
+  }
 }
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
@@ -433,7 +445,17 @@ export class EntityLayer {
       if (t) { const b = buildPlayer(t, HORSE_PARTS, name === 'horse' ? 1.1 : name === 'mule' ? 0.92 : name === 'donkey' ? 0.87 : 1.0); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'warden') {
       const t = await texture(['entity/warden/warden'])
-      if (t) { const b = buildPlayer(t, WARDEN_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat }
+      // WardenRenderer's emissive layers (full bright, translucent): the bioluminescent layer on the
+      // head, arms and legs; two sets of pulsating spots; the heart on the body
+      const lay = async (n) => texture([`entity/warden/${n}`])
+      const limbs = ['head', 'leftArm', 'rightArm', 'leftLeg', 'rightLeg']
+      const ls = [
+        { tex: await lay('warden_bioluminescent_layer'), parts: limbs },
+        { tex: await lay('warden_pulsating_spots_1'), parts: ['body', ...limbs], opacity: 0 },
+        { tex: await lay('warden_pulsating_spots_2'), parts: ['body', ...limbs], opacity: 0 },
+        { tex: await lay('warden_heart'), parts: ['body'], opacity: 0 }
+      ].filter((l) => l.tex)
+      if (t) { const b = buildPlayer(t, WARDEN_PARTS, 1, ls.length === 4 ? ls : null); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'witch') {
       const t = await texture(['entity/witch'])
       if (t) { const b = buildPlayer(t, WITCH_PARTS, 0.9375); obj = b.root; bones = b.bones; mat = b.mat }
