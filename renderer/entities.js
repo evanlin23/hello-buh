@@ -168,7 +168,6 @@ function look (name, extra, regs) {
   // any other mob with converted geometry: its default texture (checked by eye in a line-up render)
   // not yet: the witch draws only its hat and the horse family gets stray saddle/bag parts (their
   // converted geometry needs animation-placed bones); better hidden than broken
-  if (/^(horse|donkey|mule|skeleton_horse|zombie_horse)$/.test(name)) return null
   const m = MODELS && MODELS[name]
   const t = m && m.textures && (m.textures.default || Object.values(m.textures)[0])
   if (t && m.geometry && m.geometry.default) return { model: name, layers: [FALLBACK_TEX[name] || t.replace(/^textures\//, '')] }
@@ -287,6 +286,31 @@ function poseWitch (r, s, walkPos, walkSpeed) {
   B.rightLeg.rotation.set(Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed * 0.5, 0, 0)
   B.leftLeg.rotation.set(Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed * 0.5, 0, 0)
 }
+// AbstractEquineModel.createBodyMesh + HorseModel ears (64x64, HorseRenderer scale 1.1). Coat and
+// markings default to brown (variant isn't recorded yet)
+const HORSE_PARTS = [
+  ['body', null, [0, 11, 5], [[[-5, -8, -17], [10, 10, 22], [0, 32], 0.05]]],
+  ['tail', 'body', [0, -5, 2], [[[-1.5, 0, 0], [3, 14, 4], [42, 36], 0]], [Math.PI / 6, 0, 0]],
+  ['neck', null, [0, 4, -12], [[[-2.05, -6, -2], [4, 12, 7], [0, 35], 0]], [Math.PI / 6, 0, 0]],
+  ['head', 'neck', [0, 0, 0], [[[-3, -11, -2], [6, 5, 7], [0, 13], 0], [[0.55, -13, 4], [2, 3, 1], [19, 16], -0.001], [[-2.55, -13, 4], [2, 3, 1], [19, 16], -0.001]]],
+  ['mane', 'neck', [0, 0, 0], [[[-1, -11, 5.01], [2, 16, 2], [56, 36], 0]]],
+  ['mouth', 'neck', [0, 0, 0], [[[-2, -11, -7], [4, 5, 5], [0, 25], 0]]],
+  ['leftHindLeg', null, [4, 14, 7], [[[-3, -1.01, -1], [4, 11, 4], [48, 21], 0]]],
+  ['rightHindLeg', null, [-4, 14, 7], [[[-1, -1.01, -1], [4, 11, 4], [48, 21], 0]]],
+  ['leftFrontLeg', null, [4, 14, -12], [[[-3, -1.01, -1.9], [4, 11, 4], [48, 21], 0]]],
+  ['rightFrontLeg', null, [-4, 14, -12], [[[-1, -1.01, -1.9], [4, 11, 4], [48, 21], 0]]]
+]
+// AbstractEquineModel.setupAnim (walking): diagonal leg pairs, the neck carries the head look
+function poseHorse (r, s, walkPos, walkSpeed) {
+  const B = r.bones
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  B.neck.rotation.set(Math.PI / 6 - (s.pitch || 0), Math.max(-0.9, Math.min(0.9, net)), 0)
+  const a = Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, b = Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed
+  B.rightHindLeg.rotation.set(a, 0, 0); B.leftFrontLeg.rotation.set(a, 0, 0)
+  B.leftHindLeg.rotation.set(b, 0, 0); B.rightFrontLeg.rotation.set(b, 0, 0)
+  B.tail.rotation.set(Math.PI / 6 + walkSpeed * 0.75, 0, 0)
+}
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
 // player (the converted Bedrock geometry had the head sunk into the body and the arms poking above it)
@@ -374,6 +398,10 @@ export class EntityLayer {
       const m = new THREE.Mesh(bm.geo, mat); m.position.set(-0.5, -0.5, -0.5)
       obj = new THREE.Group(); obj.matrixAutoUpdate = false
       const inner = new THREE.Group(); inner.add(m); obj.add(inner); bones = { inner }
+    } else if (/^(horse|donkey|mule|skeleton_horse|zombie_horse)$/.test(name)) {
+      const tex = { horse: 'entity/horse/horse_brown', donkey: 'entity/horse/donkey', mule: 'entity/horse/mule', skeleton_horse: 'entity/horse/horse_skeleton', zombie_horse: 'entity/horse/horse_zombie' }[name]
+      const t = await texture([tex])
+      if (t) { const b = buildPlayer(t, HORSE_PARTS, name === 'horse' ? 1.1 : name === 'mule' ? 0.92 : name === 'donkey' ? 0.87 : 1.0); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'witch') {
       const t = await texture(['entity/witch'])
       if (t) { const b = buildPlayer(t, WITCH_PARTS, 0.9375); obj = b.root; bones = b.bones; mat = b.mat }
@@ -510,6 +538,7 @@ export class EntityLayer {
       const B = r.bones
       if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'witch' && B.hat4) { poseWitch(r, s, r.walk, r.amt || 0); continue }
+      if (B.mane && B.rightHindLeg) { poseHorse(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
         // part positions are y-down from 24 px up; the converted rods sit at that origin
