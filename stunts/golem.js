@@ -10,7 +10,7 @@ const BEATS = [
   { villagers: 1, golems: 1, dx: -80, launches: 1, sub: '1 villager' },
   { villagers: 3, golems: 3, dx: -48, launches: 2, sub: '3 villagers' },
   { villagers: 5, golems: 5, dx: -16, launches: 3, sub: '5 villagers' },
-  { villagers: 7, golems: 7, dx: 16, launches: 3, sub: '7 villagers' },      // (five villages ran 25.9 s)
+  { villagers: 7, golems: 7, dx: 16, launches: 4, sub: '7 villagers' },      // (3, like the 5: padding)
   { villagers: 10, golems: 10, dx: 48, launches: 5, sub: '10 villagers' },
   { villagers: 20, golems: 20, dx: 80, launches: 1, sub: '20 villagers...' }
 ]
@@ -39,9 +39,9 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (let z0 = z - 50; z0 <= z + 26; z0 += 6) {   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
+    for (let z0 = z - 80; z0 <= z + 26; z0 += 6) {   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
       const z1 = Math.min(z0 + 5, z + 26)
-      for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await ctx.cmd(`/fill ${x - 100} ${y0} ${z0} ${x + 100} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
+      for (let y0 = floor + 1; y0 <= floor + 48; y0 += 8) await ctx.cmd(`/fill ${x - 100} ${y0} ${z0} ${x + 100} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
       await ctx.cmd(`/fill ${x - 100} ${floor} ${z0} ${x + 100} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 100} ${floor - 3} ${z0} ${x + 100} ${floor - 1} ${z1} dirt`)
     }
@@ -69,7 +69,7 @@ module.exports = {
         const gx = sx + 0.5 + Math.sin(ang) * rad, gz = z + 0.5 - Math.cos(ang) * rad
         bot.chat(`/summon iron_golem ${gx.toFixed(2)} ${floor + 1} ${gz.toFixed(2)} {PlayerCreated:0b,PersistenceRequired:1b,Rotation:[${(g * 47) % 360}f,0f],Tags:["g${i}"]}`)
       }
-      await bot.waitForTicks(4)
+      await bot.waitForTicks(10)   // till the client has them all (at 4 they popped in 3 frames after the cut)
     }
     await ctx.hotbar(['wooden_sword', ['bread', 16], ['oak_planks', 32]])
     await ctx.tpCheck(x + BEATS[0].dx + 0.5, floor + 1, z + 0.5, 180, 10)
@@ -85,7 +85,9 @@ module.exports = {
     const near = (n, tag) => Object.values(bot.entities).filter(e => e.name === n && e.position.distanceTo(bot.entity.position) < 20)
       .sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
     bot.on('health', () => {})
+    let beatAt = -1
     for (let i = 0; i < BEATS.length && !ctx.died; i++) {
+      beatAt = i
       const B = BEATS[i], sx = x + B.dx, last = i === BEATS.length - 1
       if (i > 0) {   // fast cut to the next village (tpCheck's 1 s settle would be dead air)
         const tx = sx + 0.5, tz = z + 0.5
@@ -100,7 +102,7 @@ module.exports = {
       }
       // Resistance V absorbed the whole hit, which then didn't register: no launch in 320 ticks (5 failed runs).
       // IV (80% off) lets the hit land and launch you; Regeneration V heals it back between hits
-      if (last) { bot.chat('/effect clear @s resistance'); bot.chat('/effect clear @s regeneration') } else { bot.chat('/effect give @s resistance 30 3 true'); bot.chat('/effect give @s regeneration 30 4 true') }
+      if (last) { bot.chat('/effect clear @s resistance'); bot.chat('/effect clear @s regeneration') } else { bot.chat(`/effect give @s resistance 30 ${i >= 2 ? 3 : 2} true`)   /* III for the 1 and 3 (hearts drop and refill), IV from the 5 (III died under 5 and 10 at once) */; bot.chat('/effect give @s regeneration 30 4 true') }   // Resistance II: the hits cost hearts on screen and regen refills them (IV: no visible damage; II killed it in beat 3)
       // this village's villagers and golems now (a cut span hides them appearing)
       if (i > 0) ctx.mark(`spawn${i}a`)
       await this.spawnBeat(i)
@@ -130,7 +132,8 @@ module.exports = {
           const e = bot.entity.position.offset(0, 1.62, 0), d = (airborne ? bot.entity.position.offset(0, -4, -2.5) : g.position.offset(0, 3.6, 0)).minus(e)
           { const ty = Math.atan2(-d.x, -d.z), tp = Math.atan2(d.y, Math.hypot(d.x, d.z))   // eased: switching golems isn't a snap
             let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-            await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (tp - bot.entity.pitch) * 0.25, true) }
+            const kf = airborne ? 0.6 : 0.25   // in the air: down at the ring fast (the ~1-block hop is over in ~0.5 s)
+            await bot.look(bot.entity.yaw + dy * kf, bot.entity.pitch + (tp - bot.entity.pitch) * kf, true) }
           // stand and take it (backing off outran the golems: beats 1-2 never launched); step in if one hangs back
           bot.setControlState('forward', !airborne && k > 10 && g.position.distanceTo(bot.entity.position) > 3)
           if (k % 14 === 0) ctx.sound('entity.iron_golem.step', 0.6)
@@ -147,9 +150,10 @@ module.exports = {
         await bot.waitForTicks(1)
       }
       bot.setControlState('forward', false)
-      if (!launched) { ctx.log('beat', i, 'no launch'); return false }
+      if (!launched && !ctx.died) { ctx.log('beat', i, 'no launch'); return false }   // (the swarm can kill with its first hit)
     }
     await bot.waitForTicks(40)                                   // the death screen
-    return ctx.died
+    ctx.log('died', ctx.died, 'in beat', beatAt + 1)
+    return ctx.died && beatAt === BEATS.length - 1   // the death has to be the swarm's
   }
 }
