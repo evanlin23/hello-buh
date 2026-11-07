@@ -54,7 +54,7 @@ module.exports = {
   botTimeout: 360,
   edit: {
     caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'giant',
-    startAt: 'go:-0.1', endAfter: 'giant:0.9'
+    startAt: 'go:-0.1', endAfter: 'giant_peak:0.8'
   },
 
   async setup (ctx) {
@@ -144,7 +144,7 @@ module.exports = {
 
     // E: wire from the end detector north along eEnd, repeaters into blocks, each block firing the
     // rocket dispenser west of it; the last rocket flies into a target on the tower
-    const rocket = (col) => `{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:1,explosions:[{shape:"large_ball",colors:[I;${col}]}]}}}`
+    const rocket = (col) => `{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:1,explosions:[{shape:"small_ball",colors:[I;${col}]}]}}}`
     const cols = ['16711680,16753920', '65280,16776960', '3381759,16711935', '16766720,16777215']
     await put(eEnd, 1, nD + 1, 'redstone_wire')
     for (let i = 0; i < 4; i++) {
@@ -154,19 +154,20 @@ module.exports = {
     }
     await fill(eEnd - 2, 1, nR, eEnd - 2, hT, nR, 'stone_bricks')   // the tower
     await put(eEnd - 1, hT, nR, 'target')               // overhanging the last dispenser
-    // the target -> a repeater (0.4 s: the anvil leaves once the burst has opened) -> the piston,
-    // which shoves the ledge the anvil stands on (pistons can't push anvils)
-    await fill(eEnd - 1, 1, nR + 1, eEnd - 1, hT - 1, nR + 2, 'stone_bricks')
-    await put(eEnd - 1, hT, nR + 1, 'repeater[facing=south,delay=4]')
-    await put(eEnd - 1, hT, nR + 2, 'piston[facing=north]')
-    await put(eEnd - 1, hT, nR + 3, 'stone_bricks')
-    await put(eEnd - 1, hT + 1, nR + 3, 'anvil[facing=east]')
-    // F: the anvil lands at (eEnd-1,1,nR+3); an observer north of it -> wire into a ground-level
-    // line going east along nF; pistons in the ground north of it push rainbow glass up
-    await put(eEnd - 1, 1, nR + 4, 'observer[facing=south]')
-    await put(eEnd - 1, 1, nR + 5, 'redstone_wire')
-    await put(eEnd - 1, 0, nF, 'redstone_wire')
-    let gi = 0, e = eEnd
+    // the target -> a repeater east (0.4 s: the anvil leaves once the burst has opened) -> a piston
+    // that shoves the ledge the anvil stands on (pistons can't push anvils). All on the tower's east
+    // side, the camera's side (on the north side the tower hid the fall)
+    await fill(eEnd, 2, nR, eEnd + 1, hT - 1, nR, 'stone_bricks')
+    await put(eEnd, hT, nR, 'repeater[facing=west,delay=4]')
+    await put(eEnd + 1, hT, nR, 'piston[facing=east]')
+    await put(eEnd + 2, hT, nR, 'stone_bricks')
+    await put(eEnd + 2, hT + 1, nR, 'anvil[facing=north]')
+    // F: the anvil lands at (eEnd+2,1,nR); an observer east of it -> wire north and down into a
+    // ground-level line going east along nF; pistons in the ground north of it push rainbow glass up
+    await put(eEnd + 3, 1, nR, 'observer[facing=west]')
+    for (let n = nR; n <= nR + 5; n++) await put(eEnd + 4, 1, n, 'redstone_wire')
+    await put(eEnd + 4, 0, nF, 'redstone_wire')
+    let gi = 0, e = eEnd + 5
     for (; e + 1 <= 12; e += 2) {
       await put(e, 0, nF, 'repeater[facing=west,delay=3]')
       await put(e + 1, 0, nF, T)
@@ -174,7 +175,7 @@ module.exports = {
       await put(e + 1, 1, nF + 1, `${GLASS[gi++ % GLASS.length]}_stained_glass`)
     }
     this.waveE = []
-    for (let k = eEnd + 1; k <= e - 1; k += 2) this.waveE.push(k)
+    for (let k = eEnd + 6; k <= e - 1; k += 2) this.waveE.push(k)
     // G: the wave's last block -> repeater -> wire up to a piston that shoves a redstone block beside
     // the TNT cart's launcher; the track runs west along nG with an activator rail part way
     const eW = e                                        // the first free column after the wave
@@ -189,7 +190,7 @@ module.exports = {
     await put(eL, 1, nG, 'powered_rail[shape=east_west]')
     const eStop = -20
     const tBoost = [eL - 2, eL - 3, eL - 4, eL - 10, eL - 16, eL - 22, eL - 28]
-    const eAct = eL - 13
+    const eAct = eL - 3                                // primed right after the launch: it rides the whole fuse
     for (let x = eL - 1; x > eStop; x--) {
       if (x === eAct) { await put(x, 0, nG, 'redstone_block'); await put(x, 1, nG, 'activator_rail[shape=east_west]') } else if (tBoost.includes(x)) { await put(x, 0, nG, 'redstone_block'); await put(x, 1, nG, 'powered_rail[shape=east_west]') } else await put(x, 1, nG, 'rail[shape=east_west]')
     }
@@ -235,8 +236,8 @@ module.exports = {
       { name: 'cart_end', pos: B(eEnd, 1, nD), test: prop('powered', true) },
       ...dn.map((n, k) => ({ name: `rocket${k}`, pos: B(eEnd - 1, 1, n), test: prop('triggered', true) })),
       { name: 'rocket_hit', pos: B(eEnd - 1, hT, nR), test: (b) => b.getProperties().power > 0 },
-      { name: 'anvil_push', pos: B(eEnd - 1, hT, nR + 2), test: prop('extended', true) },
-      { name: 'anvil_land', pos: B(eEnd - 1, 1, nR + 4), test: prop('powered', true) },
+      { name: 'anvil_push', pos: B(eEnd + 1, hT, nR), test: prop('extended', true) },
+      { name: 'anvil_land', pos: B(eEnd + 3, 1, nR), test: prop('powered', true) },
       ...this.waveE.map((e, k) => ({ name: `wave${k}`, pos: B(e, 0, nF + 1), test: prop('extended', true) })),
       { name: 'tnt_launch', pos: B(this.eW + 3, 1, nF), test: prop('extended', true) },
       { name: 'primed', pos: B(this.eAct, 1, nG), test: () => false }   // marked from the entity below
@@ -245,14 +246,14 @@ module.exports = {
     const at = (name) => w.done.get(name)
     const markOnce = (name) => { if (!at(name)) { w.done.set(name, ctx.tick); ctx.mark(name) } }
     // explosions: the cart, the line, the cubes and the pile
-    let booms = 0
+    let booms = 0, giantBooms = 0
     const onBoom = (p) => {
       booms++
       const x = +(p.center || {}).x - X, z = Z - +(p.center || {}).z
       if (booms === 1) markOnce('cart_boom')
       if (z > nH - 3 && x > -2.5 && x < 2.5) markOnce('cube')
       if (z > nH - 4 && x > 9 && x < 15.5) markOnce('big')
-      if (z > nH - 3 && x > 22) markOnce('giant')
+      if (z > nH - 3 && x > 22) { markOnce('giant'); if (++giantBooms === 60) markOnce('giant_peak') }
     }
     bot._client.on('explosion', onBoom)
 
@@ -285,31 +286,31 @@ module.exports = {
 
     // A: walk up to the button and press it; the arrow crosses
     ctx.mark('go')
-    focus = W(0.4, 1.4, 2); steer = W(0, 0, 0.3)
-    await bot.waitForTicks(12)
+    focus = W(-0.4, 1.5, 2); steer = W(0, 0, 0.3)       // the button's face (it sits on the west edge)
+    await bot.waitForTicks(16)
     bot._client.write('block_place', { hand: 0, location: B(0, 1, 2), direction: 4, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm()
     ctx.mark('press')
-    focus = W(1.5, 1.4, 6)
+    focus = W(1.5, 1.4, 6); steer = W(9, 0, 3)        // the arrow crosses; head for the east side
     await until(() => at('arrow_hit'), 40)
     // B: walk up the lane, the camera on the newest lamp
-    steer = W(1, 0, 34); sprint = true                 // keep up with the chain
+    steer = W(10, 0, 34); sprint = true                // keep up with the chain, on the east side
     for (let kk = 0; kk < lamps.length; kk++) {
       focus = W(5, 2, lamps[Math.min(lamps.length - 1, kk + 1)])
       await until(() => at(`lamp${kk}`), 40)
     }
     // C: up the staircase to the ridge, then each column as it falls
     focus = W(5, 6, towers[0].n - 3); k = 0.14
-    steer = W(1, 0, towers[0].n - 6)
+    steer = W(10, 0, towers[0].n - 6)
     await until(() => at('push0'), 40)
     for (let i = 0; i < towers.length; i++) {
-      steer = W(1, 0, towers[i].n - 5)
+      steer = W(10, 0, towers[i].n - 5)
       focus = W(7, 6 + towers[i].L * 0.4, towers[i].n + 1)
       await until(() => at(`push${i + 1}`) || (i === 2 && at('sand_land')), 40)
     }
     focus = W(7, 3, nC); await until(() => at('sand_land'), 60)
     // D: the cart rolls west across the lane: stop short of the track and follow it, walking west
-    focus = W(4, 1, nD); steer = W(0, 0, nD - 5); sprint = false
+    focus = W(4, 1, nD); steer = W(6, 0, nD - 5); sprint = false
     await until(() => at('launch'), 20)
     k = 0.2; sprint = true
     steer = W(-9, 0, nD - 5)
@@ -327,23 +328,22 @@ module.exports = {
     await bot.waitForTicks(4)
     // the anvil: the server sends a falling block's position about once a second, so the aim
     // follows the fall as vanilla simulates it (gravity 0.04, drag 0.98) from the push
-    focus = W(eEnd - 1, hT + 1, nR + 3)
+    focus = W(eEnd + 2, hT + 1, nR)
     await until(() => at('anvil_push'), 20)
     await bot.waitForTicks(1)
     k = 0.3
-    for (let y = hT + 1.5, v = 0; y > 1.5 && !at('anvil_land'); ) { v = (v + 0.04) * 0.98; y -= v; focus = W(eEnd - 1, Math.max(1.5, y - 1), nR + 3); await bot.waitForTicks(1) }
+    for (let y = hT + 1.5, v = 0; y > 1.5 && !at('anvil_land'); ) { v = (v + 0.04) * 0.98; y -= v; focus = W(eEnd + 2, Math.max(1.5, y - 1), nR); await bot.waitForTicks(1) }
     await until(() => at('anvil_land'), 20)
     k = 0.16
     // F: the wave runs east: cross the cart track and follow it
     steer = W(-4, 0, nF - 6)
     for (let kk = 0; kk < this.waveE.length; kk++) {
-      focus = W(this.waveE[Math.min(this.waveE.length - 1, kk + 2)], 1.5, nF + 1)
+      focus = W(this.waveE[Math.min(this.waveE.length - 1, kk + 2)] - 1, 1.5, nF + 1)
       await until(() => at(`wave${kk}`), 20)
     }
-    // G: the TNT cart: launch, ride, primed (flashing), and on into the TNT. Meanwhile back away,
-    // facing it, to ~24 blocks from the TNT: explosions fling primed TNT 10-15 blocks (two takes
-    // ended in a crater)
-    focus = W(this.eL, 1, nG); steer = W(4, 0, nD - 1)
+    // G: the TNT cart: launch, primed at once, it rides its whole fuse west to the TNT line; walk
+    // west with it to ~10 blocks from the line (single TNTs barely fling anything)
+    focus = W(this.eL, 1, nG); steer = W(-12, 0, nG - 9)
     await until(() => at('tnt_launch'), 30)
     let last = null
     for (let i = 0; i < 200 && booms === 0; i++) {
@@ -357,8 +357,11 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     // H: the explosions race east to the pile
-    k = 0.1
-    for (let i = 0; i < 200 && !at('giant'); i++) {
+    // (follow the line east; from the cube on, back away facing it: a cube's blast flings primed
+    // TNT 10-15 blocks, and two takes ended in a crater)
+    k = 0.1; steer = W(-6, 0, nH - 16)
+    for (let i = 0; i < 260 && !at('giant_peak'); i++) {
+      if (at('cube')) steer = W(-2, 0, nH - 21)
       if (at('big')) { focus = W(27, 3, nH + 3) } else if (at('cube')) { focus = W(12, 2.5, nH) }
       else {
         const tnts = Object.values(bot.entities).filter(en => en.name === 'tnt')
@@ -368,13 +371,13 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     focus = W(27, 5, nH + 3)
-    await bot.waitForTicks(30)
+    await bot.waitForTicks(24)
     steer = null
     await bot.waitForTicks(2)
     bot.removeListener('physicsTick', onTick)
     for (const s of ['forward', 'back', 'left', 'right', 'sprint']) bot.setControlState(s, false)
     w.stop(); stopSounds(); bot._client.removeListener('explosion', onBoom)
     ctx.log('steps', JSON.stringify([...w.done]))
-    return !!at('giant') && !ctx.died
+    return !!at('giant_peak') && !ctx.died
   }
 }
