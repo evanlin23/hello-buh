@@ -310,7 +310,7 @@ module.exports = {
     hmm(0.8)
     found(2)
     await bubbles
-    await drift(6)
+    await drift(14)
 
     // ---- round 3: under my feet (west, by the bell stall)
     ctx.mark('cut2a')
@@ -370,7 +370,7 @@ module.exports = {
     hmm(0.9)
     found(4)
     await pops
-    await drift(4)
+    await drift(18)
 
     // ---- round 5: the pillar (built now, off camera)
     ctx.mark('cut4a')
