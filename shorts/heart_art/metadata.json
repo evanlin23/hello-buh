@@ -19,32 +19,32 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 47.5,
-    "drop_in_short_s": 8.2,
-    "song_start_s": 39.3
+    "drop_in_short_s": 31.3,
+    "song_start_s": 16.2
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 9.9,
+    "duration_s": 32.2,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 8649825,
-    "sha256": "363b67f08311eceac1b5a4995280d5ca7b4fbbecc31e5ab7d2f96f5ec7942331"
+    "bytes": 36749264,
+    "sha256": "909111e9a7345209fb406855f8b5b99ec9f4e36f6870f460f2775477cfa65b97"
   },
   "edit": {
     "caption": "my gf asked what I was building \ud83d\ude2d",
     "song": "songs/payphone.mp3",
     "dropAt": "complete",
-    "start": 0.7,
-    "endAfter": "complete:1.7",
+    "startAt": "stage:-0.2",
+    "endAfter": "complete:0.9",
     "args": [
       "--caption",
       "my gf asked what I was building \ud83d\ude2d",
-      "--start",
-      "0.7",
+      "--start_at",
+      "stage:-0.2",
       "--end_after",
-      "complete:1.7"
+      "complete:0.9"
     ]
   },
   "recording": {
@@ -55,53 +55,41 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 424,
-      "y": 70,
-      "z": -89
+      "x": 387,
+      "y": 72,
+      "z": -38
     },
-    "biome": "minecraft:forest",
-    "ticks": 237,
-    "seconds": 11.85,
+    "biome": "minecraft:plains",
+    "ticks": 682,
+    "seconds": 34.1,
     "deaths": 0,
     "events": [
       {
-        "t": 0,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 1,
+        "t": 0.8,
+        "event": "stage"
+      },
+      {
+        "t": 0.95,
         "event": "swing"
       },
       {
-        "t": 1.15,
+        "t": 1.2,
         "event": "swing"
       },
       {
-        "t": 1.25,
+        "t": 1.5,
         "event": "swing"
       },
       {
-        "t": 1.35,
+        "t": 1.75,
         "event": "swing"
       },
       {
-        "t": 1.45,
-        "event": "swing"
-      },
-      {
-        "t": 1.55,
-        "event": "swing"
-      },
-      {
-        "t": 1.65,
-        "event": "swing"
-      },
-      {
-        "t": 1.95,
-        "event": "swing"
-      },
-      {
-        "t": 2.2,
+        "t": 2.05,
         "event": "swing"
       },
       {
@@ -113,31 +101,19 @@
         "event": "swing"
       },
       {
-        "t": 2.8,
+        "t": 2.65,
+        "event": "reveal"
+      },
+      {
+        "t": 3.7,
+        "event": "stage"
+      },
+      {
+        "t": 3.75,
         "event": "swing"
       },
       {
-        "t": 3.1,
-        "event": "swing"
-      },
-      {
-        "t": 3.2,
-        "event": "swing"
-      },
-      {
-        "t": 3.45,
-        "event": "swing"
-      },
-      {
-        "t": 3.55,
-        "event": "swing"
-      },
-      {
-        "t": 3.8,
-        "event": "swing"
-      },
-      {
-        "t": 3.9,
+        "t": 3.95,
         "event": "swing"
       },
       {
@@ -145,15 +121,7 @@
         "event": "swing"
       },
       {
-        "t": 4.25,
-        "event": "swing"
-      },
-      {
         "t": 4.35,
-        "event": "swing"
-      },
-      {
-        "t": 4.45,
         "event": "swing"
       },
       {
@@ -161,27 +129,27 @@
         "event": "swing"
       },
       {
-        "t": 4.65,
-        "event": "swing"
-      },
-      {
         "t": 4.75,
         "event": "swing"
       },
       {
-        "t": 5.05,
+        "t": 4.95,
         "event": "swing"
       },
       {
-        "t": 5.3,
+        "t": 5.15,
         "event": "swing"
       },
       {
-        "t": 5.4,
+        "t": 5.35,
         "event": "swing"
       },
       {
-        "t": 5.65,
+        "t": 5.55,
+        "event": "swing"
+      },
+      {
+        "t": 5.7,
         "event": "swing"
       },
       {
@@ -189,31 +157,19 @@
         "event": "swing"
       },
       {
-        "t": 6,
+        "t": 6.1,
         "event": "swing"
       },
       {
-        "t": 6.25,
+        "t": 6.3,
         "event": "swing"
       },
       {
-        "t": 6.35,
+        "t": 6.5,
         "event": "swing"
       },
       {
-        "t": 6.45,
-        "event": "swing"
-      },
-      {
-        "t": 6.55,
-        "event": "swing"
-      },
-      {
-        "t": 6.65,
-        "event": "swing"
-      },
-      {
-        "t": 6.8,
+        "t": 6.7,
         "event": "swing"
       },
       {
@@ -221,11 +177,11 @@
         "event": "swing"
       },
       {
-        "t": 7.15,
+        "t": 7.1,
         "event": "swing"
       },
       {
-        "t": 7.4,
+        "t": 7.3,
         "event": "swing"
       },
       {
@@ -233,11 +189,15 @@
         "event": "swing"
       },
       {
-        "t": 7.8,
+        "t": 7.7,
         "event": "swing"
       },
       {
-        "t": 8.05,
+        "t": 7.9,
+        "event": "swing"
+      },
+      {
+        "t": 8.1,
         "event": "swing"
       },
       {
@@ -245,19 +205,583 @@
         "event": "swing"
       },
       {
-        "t": 8.55,
+        "t": 8.4,
+        "event": "reveal"
+      },
+      {
+        "t": 9.45,
+        "event": "stage"
+      },
+      {
+        "t": 9.5,
         "event": "swing"
       },
       {
-        "t": 8.65,
+        "t": 9.65,
         "event": "swing"
       },
       {
-        "t": 8.9,
+        "t": 9.8,
+        "event": "swing"
+      },
+      {
+        "t": 9.95,
+        "event": "swing"
+      },
+      {
+        "t": 10.1,
+        "event": "swing"
+      },
+      {
+        "t": 10.25,
+        "event": "swing"
+      },
+      {
+        "t": 10.4,
+        "event": "swing"
+      },
+      {
+        "t": 10.55,
+        "event": "swing"
+      },
+      {
+        "t": 10.7,
+        "event": "swing"
+      },
+      {
+        "t": 10.85,
+        "event": "swing"
+      },
+      {
+        "t": 11,
+        "event": "swing"
+      },
+      {
+        "t": 11.15,
+        "event": "swing"
+      },
+      {
+        "t": 11.3,
+        "event": "swing"
+      },
+      {
+        "t": 11.45,
+        "event": "swing"
+      },
+      {
+        "t": 11.6,
+        "event": "swing"
+      },
+      {
+        "t": 11.75,
+        "event": "swing"
+      },
+      {
+        "t": 11.9,
+        "event": "swing"
+      },
+      {
+        "t": 12.05,
+        "event": "swing"
+      },
+      {
+        "t": 12.2,
+        "event": "swing"
+      },
+      {
+        "t": 12.35,
+        "event": "swing"
+      },
+      {
+        "t": 12.5,
+        "event": "swing"
+      },
+      {
+        "t": 12.65,
+        "event": "swing"
+      },
+      {
+        "t": 12.8,
+        "event": "swing"
+      },
+      {
+        "t": 12.95,
+        "event": "swing"
+      },
+      {
+        "t": 13.1,
+        "event": "swing"
+      },
+      {
+        "t": 13.25,
+        "event": "swing"
+      },
+      {
+        "t": 13.4,
+        "event": "swing"
+      },
+      {
+        "t": 13.55,
+        "event": "swing"
+      },
+      {
+        "t": 13.7,
+        "event": "swing"
+      },
+      {
+        "t": 13.85,
+        "event": "swing"
+      },
+      {
+        "t": 14,
+        "event": "swing"
+      },
+      {
+        "t": 14.15,
+        "event": "swing"
+      },
+      {
+        "t": 14.3,
+        "event": "swing"
+      },
+      {
+        "t": 14.45,
+        "event": "swing"
+      },
+      {
+        "t": 14.6,
+        "event": "swing"
+      },
+      {
+        "t": 14.75,
+        "event": "swing"
+      },
+      {
+        "t": 14.9,
+        "event": "swing"
+      },
+      {
+        "t": 15.05,
+        "event": "swing"
+      },
+      {
+        "t": 15.2,
+        "event": "swing"
+      },
+      {
+        "t": 15.35,
+        "event": "swing"
+      },
+      {
+        "t": 15.5,
+        "event": "swing"
+      },
+      {
+        "t": 15.65,
+        "event": "swing"
+      },
+      {
+        "t": 15.8,
+        "event": "swing"
+      },
+      {
+        "t": 15.95,
+        "event": "swing"
+      },
+      {
+        "t": 16.1,
+        "event": "swing"
+      },
+      {
+        "t": 16.25,
+        "event": "swing"
+      },
+      {
+        "t": 16.45,
+        "event": "swing"
+      },
+      {
+        "t": 16.6,
+        "event": "swing"
+      },
+      {
+        "t": 16.75,
+        "event": "swing"
+      },
+      {
+        "t": 16.9,
+        "event": "swing"
+      },
+      {
+        "t": 17.05,
+        "event": "swing"
+      },
+      {
+        "t": 17.2,
+        "event": "swing"
+      },
+      {
+        "t": 17.35,
+        "event": "swing"
+      },
+      {
+        "t": 17.5,
+        "event": "swing"
+      },
+      {
+        "t": 17.65,
+        "event": "swing"
+      },
+      {
+        "t": 17.8,
+        "event": "swing"
+      },
+      {
+        "t": 17.95,
+        "event": "swing"
+      },
+      {
+        "t": 18.1,
+        "event": "swing"
+      },
+      {
+        "t": 18.25,
+        "event": "swing"
+      },
+      {
+        "t": 18.4,
+        "event": "swing"
+      },
+      {
+        "t": 18.55,
+        "event": "swing"
+      },
+      {
+        "t": 18.7,
+        "event": "swing"
+      },
+      {
+        "t": 18.85,
+        "event": "swing"
+      },
+      {
+        "t": 19,
+        "event": "swing"
+      },
+      {
+        "t": 19.15,
+        "event": "swing"
+      },
+      {
+        "t": 19.3,
+        "event": "swing"
+      },
+      {
+        "t": 19.45,
+        "event": "swing"
+      },
+      {
+        "t": 19.6,
+        "event": "swing"
+      },
+      {
+        "t": 19.75,
+        "event": "swing"
+      },
+      {
+        "t": 19.9,
+        "event": "swing"
+      },
+      {
+        "t": 20.05,
+        "event": "swing"
+      },
+      {
+        "t": 20.2,
+        "event": "swing"
+      },
+      {
+        "t": 20.35,
+        "event": "swing"
+      },
+      {
+        "t": 20.5,
+        "event": "swing"
+      },
+      {
+        "t": 20.65,
+        "event": "swing"
+      },
+      {
+        "t": 20.8,
+        "event": "swing"
+      },
+      {
+        "t": 20.85,
+        "event": "glance"
+      },
+      {
+        "t": 22.5,
+        "event": "swing"
+      },
+      {
+        "t": 22.65,
+        "event": "swing"
+      },
+      {
+        "t": 22.8,
+        "event": "swing"
+      },
+      {
+        "t": 22.95,
+        "event": "swing"
+      },
+      {
+        "t": 23.1,
+        "event": "swing"
+      },
+      {
+        "t": 23.25,
+        "event": "swing"
+      },
+      {
+        "t": 23.4,
+        "event": "swing"
+      },
+      {
+        "t": 23.55,
+        "event": "swing"
+      },
+      {
+        "t": 23.7,
+        "event": "swing"
+      },
+      {
+        "t": 23.85,
+        "event": "swing"
+      },
+      {
+        "t": 24,
+        "event": "swing"
+      },
+      {
+        "t": 24.15,
+        "event": "swing"
+      },
+      {
+        "t": 24.3,
+        "event": "swing"
+      },
+      {
+        "t": 24.45,
+        "event": "swing"
+      },
+      {
+        "t": 24.6,
+        "event": "swing"
+      },
+      {
+        "t": 24.75,
+        "event": "swing"
+      },
+      {
+        "t": 24.9,
+        "event": "swing"
+      },
+      {
+        "t": 25.05,
+        "event": "swing"
+      },
+      {
+        "t": 25.2,
+        "event": "swing"
+      },
+      {
+        "t": 25.35,
+        "event": "swing"
+      },
+      {
+        "t": 25.5,
+        "event": "swing"
+      },
+      {
+        "t": 25.65,
+        "event": "swing"
+      },
+      {
+        "t": 25.8,
+        "event": "swing"
+      },
+      {
+        "t": 25.95,
+        "event": "swing"
+      },
+      {
+        "t": 26.1,
+        "event": "swing"
+      },
+      {
+        "t": 26.25,
+        "event": "swing"
+      },
+      {
+        "t": 26.4,
+        "event": "swing"
+      },
+      {
+        "t": 26.55,
+        "event": "swing"
+      },
+      {
+        "t": 26.7,
+        "event": "swing"
+      },
+      {
+        "t": 26.85,
+        "event": "swing"
+      },
+      {
+        "t": 27,
+        "event": "swing"
+      },
+      {
+        "t": 27.15,
+        "event": "swing"
+      },
+      {
+        "t": 27.3,
+        "event": "swing"
+      },
+      {
+        "t": 27.45,
+        "event": "swing"
+      },
+      {
+        "t": 27.6,
+        "event": "swing"
+      },
+      {
+        "t": 27.65,
+        "event": "backup"
+      },
+      {
+        "t": 27.75,
+        "event": "swing"
+      },
+      {
+        "t": 27.9,
+        "event": "swing"
+      },
+      {
+        "t": 28.05,
+        "event": "swing"
+      },
+      {
+        "t": 28.2,
+        "event": "swing"
+      },
+      {
+        "t": 28.35,
+        "event": "swing"
+      },
+      {
+        "t": 28.5,
+        "event": "swing"
+      },
+      {
+        "t": 28.65,
+        "event": "swing"
+      },
+      {
+        "t": 28.8,
+        "event": "swing"
+      },
+      {
+        "t": 28.95,
+        "event": "swing"
+      },
+      {
+        "t": 29.1,
+        "event": "swing"
+      },
+      {
+        "t": 29.25,
+        "event": "swing"
+      },
+      {
+        "t": 29.4,
+        "event": "swing"
+      },
+      {
+        "t": 29.55,
+        "event": "swing"
+      },
+      {
+        "t": 29.7,
+        "event": "swing"
+      },
+      {
+        "t": 29.85,
+        "event": "swing"
+      },
+      {
+        "t": 30,
+        "event": "swing"
+      },
+      {
+        "t": 30.15,
+        "event": "swing"
+      },
+      {
+        "t": 30.35,
+        "event": "swing"
+      },
+      {
+        "t": 30.5,
+        "event": "swing"
+      },
+      {
+        "t": 30.65,
+        "event": "swing"
+      },
+      {
+        "t": 30.8,
+        "event": "swing"
+      },
+      {
+        "t": 30.95,
+        "event": "swing"
+      },
+      {
+        "t": 31.1,
+        "event": "swing"
+      },
+      {
+        "t": 31.25,
+        "event": "swing"
+      },
+      {
+        "t": 31.4,
+        "event": "swing"
+      },
+      {
+        "t": 31.55,
+        "event": "swing"
+      },
+      {
+        "t": 31.7,
+        "event": "swing"
+      },
+      {
+        "t": 31.85,
+        "event": "swing"
+      },
+      {
+        "t": 31.9,
         "event": "complete"
       },
       {
-        "t": 11.85,
+        "t": 34.1,
         "event": "end"
       }
     ]
@@ -265,9 +789,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "eaaf65d3dd15d17ac24193b96ee1bffe181a0a04",
-    "rendered_at": "2026-11-06T18:24:13.286Z",
-    "head_at_publish": "95ceb43bab376170975d8e1083d7ae6ba9e3659d",
+    "commit": "ce91010eeb48389628bfb289df9d0401c69052c0",
+    "rendered_at": "2026-11-07T02:02:46.684Z",
+    "head_at_publish": "ce91010eeb48389628bfb289df9d0401c69052c0",
     "stunt": "stunts/heart_art.js",
     "source_snapshot": [
       "source/heart_art.js",
@@ -275,16 +799,13 @@
     ]
   },
   "rebuild": [
-    "git checkout eaaf65d3dd15",
+    "git checkout ce91010eeb48",
     "gunzip -c shorts/heart_art/recording.json.gz > work/heart_art.rec.json",
     "node render.js work/heart_art.rec.json work/heart_art.frames 60 1080 1011",
     "python3 audio.py work/heart_art.rec.json work/heart_art.wav",
-    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building \ud83d\ude2d\" --start 0.7 --end_after complete:1.7 --out out/heart_art.mp4"
+    "python3 edit.py --frames work/heart_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/heart_art.rec.json --audio work/heart_art.wav --caption \"my gf asked what I was building \ud83d\ude2d\" --start_at stage:-0.2 --end_after complete:0.9 --out out/heart_art.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "worker QA (qa_frames + independent review): ready after trimming the blank opening. Scrambled build order is intentional (mystery until ~5.7 s). Nitpick: one fast hand swing f168",
-  "published_at": "2026-11-06T18:25:20.378Z",
-  "qa_notes": [
-    "2026-11-06: held back under the new retention audit (owner: end as soon as the payoff comes, no dead space). Ending too long after the payoff (beat_audit); re-trim endAfter to <= 1.0 s and re-audit."
-  ]
+  "status": "ready",
+  "notes": "worker: 32 s three-heart scrambled format; frame review + retention + minecraft audits passed. Nitpicks: huge heart's outline reads ~14 s before the payoff, one-tick repeats f946/f1873",
+  "published_at": "2026-11-07T02:07:21.468Z"
 }
