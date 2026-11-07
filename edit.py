@@ -713,6 +713,18 @@ def death_start(td_abs, args):
         k += 1
     return (k - int(args.start * fps)) / fps - 0.5 / fps
 
+def fgrid(t, fps):
+    """An overlay window edge for `enable`: just before the first frame at or after video time t (a
+    frame exactly on t is included; half a frame of margin keeps float ties off the edge)."""
+    return math.ceil(t * fps - 1e-6) / fps - 0.5 / fps
+
+
+def cut_times(args):
+    """Video times of the hard cuts (speed "cut" spans)."""
+    w = getattr(args, "warp", None)
+    return [w.out(a) - args.start for a, b, f in (w.spans if w else []) if f == math.inf]
+
+
 def probe_duration(args):
     if args.video:
         out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.video], capture_output=True, text=True).stdout
@@ -775,6 +787,10 @@ def main():
         ev_, off_ = args.start_at.rsplit(":", 1)
         if ev_ in _tl:
             args.start = max(0.0, _tl[ev_] + float(off_))
+    # start on the frame grid: the footage starts at frame int(start * fps), so every overlay time
+    # (event - start) now lines up with the frames (a fractional start put subtitles and screens up to
+    # a frame off: workers 3 and 9)
+    args.start = math.floor(args.start * args.fps + 1e-6) / args.fps
     sys.path.insert(0, str(HERE / "scripts"))
     import retention
     if (args.punch or args.shake or args.flash or args.freeze) and args.timeline and args.frames:
@@ -929,6 +945,11 @@ def main():
             starts = sorted(x for x in sub_starts if x > t0 + 1e-3)
             if starts:                       # never overlap the next line (they doubled up)
                 dur_s = min(dur_s, starts[0] - t0 - 0.05)
+            for c in cut_times(args):        # a line ending just after a hard cut ends ON the cut (it stayed a frame on the new shot)
+                if t0 + 0.3 < c < t0 + dur_s <= c + 0.3:
+                    dur_s = c - t0
+                if c - 0.07 < t0 < c:        # a line due a frame or two before a cut starts on it
+                    dur_s -= c - t0; t0 = c
             # a line shown during a death screen goes below its buttons, drawn over the screen (it sat on
             # "Respawn" at 42% of the game height: worker 7, die_rating)
             dws = [(a - args.start, b - args.start) for a, b in death_windows(all_ev)] if args.death_screen else []
@@ -938,7 +959,7 @@ def main():
                 continue
             subtitle_png(text, tmp / f"sub{k}.png", yfrac=args.subs_y)
             inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"sub{k}.png")]
-            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sb{k}]")
+            graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(t0, args.out_fps):.4f})*lt(t,{fgrid(t0 + dur_s, args.out_fps):.4f})'[sb{k}]")
             last, n_in = f"sb{k}", n_in + 1
     if args.death_screen and args.death_screen in tl_ev:
         # DeathScreen opens on the tick the client gets the death packet; buttons enable after 20 ticks
@@ -976,7 +997,7 @@ def main():
             last, n_in = "fxo", n_in + 1
     for k, t0, dur_s in deferred_subs:   # subtitles over a death screen: above it, below its buttons
         inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"sub{k}.png")]
-        graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{t0:.3f})*lt(t,{t0 + dur_s:.3f})'[sbd{k}]")
+        graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(t0, args.out_fps):.4f})*lt(t,{fgrid(t0 + dur_s, args.out_fps):.4f})'[sbd{k}]")
         last, n_in = f"sbd{k}", n_in + 1
     if args.story and args.timeline:   # narrated story: big word-chunk captions over the game (and the death screen)
         sys.path.insert(0, str(HERE / "scripts"))

@@ -53,8 +53,15 @@ class Warp:
             if ta is None or tb is None or tb <= ta:
                 print(f"speed span {a}..{b} skipped (event missing or empty)")
                 continue
-            self.spans.append((ta, tb, math.inf if f == "cut" else float(f)))
+            # a hard cut drops one more 60 fps frame after its end mark: the renderer's particles from
+            # the previous shot still showed on the first frame of the new one (worker 9, tnt_1000).
+            # The end mark itself still lands on the cut (it's inside the span, which maps to its start).
+            self.spans.append((ta, tb + 1 / 60, math.inf) if f == "cut" else (ta, tb, float(f)))
         self.spans.sort()
+        for i in range(len(self.spans) - 1):   # the extra cut frame never runs into the next span
+            a0, b0, f0 = self.spans[i]
+            if f0 == math.inf and b0 > self.spans[i + 1][0]:
+                self.spans[i] = (a0, max(a0, self.spans[i + 1][0]), f0)
         for (a0, b0, _), (a1, _, _) in zip(self.spans, self.spans[1:]):
             if a1 < b0:
                 raise ValueError("speed spans overlap")
