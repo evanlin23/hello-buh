@@ -3,7 +3,7 @@
 // pillar (doImmediateRespawn, the "instant respawn" gag) and goes again until it lands.
 // Green narration subtitles carry the story.
 const clutch = require('./water_clutch')
-const MODES = (process.env.TRIES_MODES || 'skip,late,skip,late,late,skip,ok').split(',')   // 7 tries: ~30 s (owner: 30 s minimum)
+const MODES = (process.env.TRIES_MODES || 'skip,late,skip,late,late,skip,late,ok').split(',')   // 8 tries: ~33 s (7 ran 29.4 s; owner: 30 s minimum)
 
 module.exports = {
   ...clutch,
