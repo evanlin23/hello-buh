@@ -22,7 +22,7 @@ const GAP = 34          // blocks between landing columns (x): separate pads wit
 const R = 14            // cleared radius around each column (the jump starts up to 11 out)
 const TOP_Y = 316       // glass at 316, eyes at ~318.6 (build limit 319)
 
-const subs = TIERS.map((t, i) => [`look${i + 1}`, t.label, 1.2, 0])   // the stakes before each drop: gone by the jump (at 2.6 s the two-line labels sat on the target through the fall: review)
+const subs = TIERS.map((t, i) => [`look${i + 1}`, t.label, 0.75, 0])   // the stakes before each drop: gone by the jump (at 2.6 s the two-line labels sat on the target through the fall: review)
 
 module.exports = {
   name: 'one_in_a_million',
@@ -53,7 +53,7 @@ module.exports = {
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
       ['look5:0.15', 'look5:0.95', 'cut'],      // the finale's first glance at -0.7 was black night sky (beat audit PAUSE 0.8 s)
       ['drop4:0.5', 'drop4:2.4', 2],           // the high part of the build-limit fall: from 250 up the target barely changes (review: LOW 1.2 s)
-      ['drop5:-0.6', 'drop5:0.6', 2],          // the held breath and the jump's rise before the last fall (PAUSE 0.6 s)
+      ['drop5:0', 'drop5:0.6', 2],   // from the jump, so the tier 5 label is read before it (review)          // the held breath and the jump's rise before the last fall (PAUSE 0.6 s)
       ['drop5:0.6', 'drop5:3.3', 2.5]],        // the high, dark part of the last fall (review: LOW 1.9 s); the lava rushing up stays real-time
     // retention toolkit (scripts/retention.py, scripts/sfx.py; worker 10)
     hook: { at: 'splash5', before: 1.7, after: -0.2, text: 'wait for the last one 😳' },   // a flash of the finale before tier 1: 1.5 s (owner: 0.5 s was "too quick")
@@ -107,7 +107,7 @@ module.exports = {
         for (let dx = -R + 1; dx <= R - 1; dx += 2) {
           for (let dz = -R + 1; dz <= R - 1; dz += 2) {
             if (Math.abs(dx) <= 2 && Math.abs(dz) <= 2) continue
-            const hgt = 1 + ((dx * 7 + dz * 13 + 99) % 3)
+            const hgt = 1 + (((dx * 7 + dz * 13 + 99) % 3) + 3) % 3   // JS % goes negative for negative dx/dz: 0 or -1 tall cactus went into the floor and broke (review: holes)
             await ctx.cmd(`/fill ${x + dx} ${floor + 1} ${z + dz} ${x + dx} ${floor + hgt} ${z + dz} cactus`)
           }
         }
@@ -160,7 +160,8 @@ module.exports = {
         { // where it lands if nobody steers from here: x + v * 0.91 (1 - 0.91^L) / 0.09 (vanilla air drag). The
           // renderer can draw it as a landing marker on the ground: tension a viewer can read (review)
           const L = ticksToFall(e.position.y, e.velocity.y, floor + 1), k = 0.91 * (1 - Math.pow(0.91, L)) / 0.09
-          ctx.mark('aim', { x: +(e.position.x + e.velocity.x * k).toFixed(2), y: floor + 1, z: +(e.position.z + e.velocity.z * k).toFixed(2), tier: n })
+          // not in the last 8 ticks: near the ground the marker filled the view red/purple over the splash (review)
+          if (L >= 8) ctx.mark('aim', { x: +(e.position.x + e.velocity.x * k).toFixed(2), y: floor + 1, z: +(e.position.z + e.velocity.z * k).toFixed(2), tier: n })
         }
         const c = steer({ yaw: YAW, px: e.position.x, pz: e.position.z, vx: e.velocity.x, vz: e.velocity.z, y: e.position.y, vy: e.velocity.y, tx: t.x + 0.5, tz: t.z + 0.5, floorY: floor + 1, startY, bias: t.bias })
         for (const key of ['forward', 'back', 'left', 'right']) bot.setControlState(key, c[key])
