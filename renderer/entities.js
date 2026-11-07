@@ -368,6 +368,12 @@ export class EntityLayer {
         w.position.set(-0.5, 0, -0.5); w.visible = !!extra.flash; obj.add(w)
       }
       if (extra.scale) obj.scale.setScalar(extra.scale)
+    } else if ((name === 'item_frame' || name === 'glow_item_frame') && this.blockModels.has(`frame:${name}`)) {
+      const bm = this.blockModels.get(`frame:${name}`)
+      mat = bm.mat.clone(); mat.side = THREE.DoubleSide
+      const m = new THREE.Mesh(bm.geo, mat); m.position.set(-0.5, -0.5, -0.5)
+      obj = new THREE.Group(); obj.matrixAutoUpdate = false
+      const inner = new THREE.Group(); inner.add(m); obj.add(inner); bones = { inner }
     } else if (name === 'witch') {
       const t = await texture(['entity/witch'])
       if (t) { const b = buildPlayer(t, WITCH_PARTS, 0.9375); obj = b.root; bones = b.bones; mat = b.mat }
@@ -429,6 +435,30 @@ export class EntityLayer {
           c = a.map((v, i) => v * (1 - f) + b[i] * f)
         } else c = woolColor(s.extra?.color || 0)
         r.woolMat.color.setRGB(c[0] * LL[0], c[1] * LL[1], c[2] * LL[2])
+      }
+      if ((s.name === 'item_frame' || s.name === 'glow_item_frame') && r.bones.inner) {
+        // ItemFrameRenderer: back to the block centre (+dir * 0.46875), Rx(xRot) Ry(180 - yRot); the item
+        // at z 0.4375, turned rotation * 45 degrees, scale 0.5, with its 'fixed' display
+        const f = s.frame || {}, D = [[0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1], [-1, 0, 0], [1, 0, 0]][f.dir ?? 3] || [0, 0, 1]
+        const yRot = { 2: 180, 3: 0, 4: 90, 5: 270 }[f.dir] ?? 0, xRot = f.dir === 1 ? -90 : f.dir === 0 ? 90 : 0
+        // the spawn packet carries the frame's block position (integers): its centre; a real entity
+        // position (block centre - dir * 0.46875) goes back to the centre
+        const blockPos = Number.isInteger(s.x) && Number.isInteger(s.y) && Number.isInteger(s.z)
+        r.obj.matrix.makeTranslation(...(blockPos ? [s.x + 0.5, s.y + 0.5, s.z + 0.5] : [s.x + D[0] * 0.46875, s.y + D[1] * 0.46875, s.z + D[2] * 0.46875]))
+          .multiply(new THREE.Matrix4().makeRotationX(xRot * Math.PI / 180)).multiply(new THREE.Matrix4().makeRotationY((180 - yRot) * Math.PI / 180))
+        r.obj.matrixWorldNeedsUpdate = true
+        const held = f.held, hk = held ? held.key + '|' + (f.rot || 0) : null
+        if (r.heldKey !== hk) {
+          if (r.heldObj) r.obj.remove(r.heldWrap)
+          r.heldObj = held && this.itemFactory ? await this.itemFactory({ ...held, display: held.display || { rotation: [0, 180, 0], translation: [0, 0, 0], scale: [1, 1, 1] } }) : null
+          if (r.heldObj) {
+            r.heldWrap = new THREE.Group(); r.heldWrap.position.set(0, 0, 0.4375); r.heldWrap.rotation.z = (f.rot || 0) * Math.PI / 4; r.heldWrap.scale.setScalar(0.5)
+            r.heldWrap.add(r.heldObj.obj); r.obj.add(r.heldWrap)
+          }
+          r.heldKey = hk
+        }
+        if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
+        continue
       }
       if (s.name === 'player') {
         posePlayer(r, s)

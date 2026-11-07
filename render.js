@@ -487,6 +487,20 @@ function itemModel (item) {
   }
   return ((def && find(def)) || `item/${item}`).replace(/^minecraft:/, '')
 }
+// an item's display.fixed (item frames), following the model's parents
+const FIXED_DISPLAY = new Map()
+function fixedDisplay (item) {
+  if (FIXED_DISPLAY.has(item)) return FIXED_DISPLAY.get(item)
+  let name = itemModel(item), out = null
+  for (let k = 0; k < 8 && name && !out; k++) {
+    const m = jarJson(`assets/minecraft/models/${name.replace(/^minecraft:/, '')}.json`)
+    if (!m) break
+    if (m.display && m.display.fixed) out = m.display.fixed
+    name = m.parent
+  }
+  FIXED_DISPLAY.set(item, out)
+  return out
+}
 // an item's display.thirdperson_righthand, following the model's parents in the client jar
 const DISPLAY = new Map()
 function thirdPersonDisplay (item) {
@@ -516,6 +530,30 @@ function spriteOf (item) {
     } catch (e) {}
   }
   SPRITE.set(item, out)
+  return out
+}
+// The item frame's block model (models/block/template_item_frame.json: the back plate and four
+// sticks, 'wood' = birch planks, 'back' = item_frame / glow_item_frame) as geometry on the block atlas,
+// 0..1 in block units, faces shaded like blocks
+function frameGeometry (name) {
+  const tpl = jarJson('assets/minecraft/models/block/template_item_frame.json')
+  if (!tpl) return null
+  const tex = { wood: ATLAS_UV.birch_planks, back: ATLAS_UV[name] || ATLAS_UV.item_frame }
+  const out = { positions: [], colors: [], uvs: [], indices: [] }
+  for (const e of tpl.elements) {
+    const [x0, y0, z0] = e.from.map(v => v / 16), [x1, y1, z1] = e.to.map(v => v / 16)
+    const C = { north: [[x1, y1, z0], [x0, y1, z0], [x0, y0, z0], [x1, y0, z0]], south: [[x0, y1, z1], [x1, y1, z1], [x1, y0, z1], [x0, y0, z1]],
+      west: [[x0, y1, z0], [x0, y1, z1], [x0, y0, z1], [x0, y0, z0]], east: [[x1, y1, z1], [x1, y1, z0], [x1, y0, z0], [x1, y0, z1]],
+      up: [[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]], down: [[x0, y0, z1], [x1, y0, z1], [x1, y0, z0], [x0, y0, z0]] }
+    const SH = { up: 1, down: 0.5, north: 0.8, south: 0.8, west: 0.6, east: 0.6 }
+    for (const [dir, f] of Object.entries(e.faces)) {
+      const U = tex[f.texture.replace('#', '')]; if (!U) continue
+      const [u0, v0, u1, v1] = f.uv || [0, 0, 16, 16], n = out.positions.length / 3
+      const uv = [[u0, v0], [u1, v0], [u1, v1], [u0, v1]]
+      C[dir].forEach((c, k) => { out.positions.push(...c); out.colors.push(SH[dir], SH[dir], SH[dir]); out.uvs.push(U.u + uv[k][0] / 16 * U.su, U.v + uv[k][1] / 16 * U.sv) })
+      out.indices.push(n, n + 1, n + 2, n, n + 2, n + 3)
+    }
+  }
   return out
 }
 // the vanilla F5 camera (Camera.setup, detached): back along the look, or in front looking back,
@@ -1019,6 +1057,22 @@ function camAtLive (t) {
       e.extra = { state: bl.defaultState, scale: 0.25, spin: true, glint: !!(e.extra.glint || GLINT_ITEMS.has(it)) }
     }
     for (const e of ents) if (POTION_COLOR.has(e.id)) e.extra = { ...(e.extra || {}), color: POTION_COLOR.get(e.id) }
+    // item frames: the frame model (sent once per kind) and the held item with its 'fixed' display
+    for (const e of ents) {
+      if (e.name !== 'item_frame' && e.name !== 'glow_item_frame') continue
+      const key = `frame:${e.name}`
+      if (!sentBlocks.has(key)) { sentBlocks.add(key); const g = frameGeometry(e.name); if (g) await page.evaluate(([id, gg]) => window.HB.addBlockModel(id, gg), [key, g]) }
+      const it = e.extra && e.extra.item
+      let held = null
+      if (it) {
+        held = { key: it }
+        const bl = MC.blocksByName[it]
+        if (spriteOf(it)) held.tex = spriteOf(it)
+        else if (bl) { held.state = bl.defaultState; if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) } }
+        held.display = fixedDisplay(it)
+      }
+      e.frame = { model: key, dir: (e.extra && e.extra.dir) ?? 3, rot: (e.extra && e.extra.rot) || 0, held }
+    }
     // mobs made to face the player by command (tp facing entity <bot> eyes) between face_on and
     // face_off marks: the recorded entity yaw lags the server by seconds, so face them here
     for (const [fa, fb, which] of FACE) {
@@ -1040,7 +1094,7 @@ function camAtLive (t) {
     // the bot (mineflayer) has no entity push, so a creeper could end up inside the camera. Keep
     // mobs at least their half width + the player's (0.3 + 0.3) plus a little, horizontally.
     for (const e of ents) {
-      if (['player', 'falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb', 'splash_potion', 'lingering_potion', 'experience_bottle', 'firework_rocket'].includes(e.name)) continue
+      if (['player', 'item_frame', 'glow_item_frame', 'falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb', 'splash_potion', 'lingering_potion', 'experience_bottle', 'firework_rocket'].includes(e.name)) continue
       if (/_boat$|_raft$|minecart$|^boat$/.test(e.name)) continue   // vehicles: the camera may be riding one (it stays under the camera)
       const dx = e.x - cam.x, dz = e.z - cam.z, d = Math.hypot(dx, dz), min = 0.85
       if (d < min && d > 1e-6 && Math.abs(e.y - (cam.y - 1.62)) < 2) { e.x = cam.x + dx / d * min; e.z = cam.z + dz / d * min }

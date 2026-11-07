@@ -69,6 +69,7 @@ each section.
   - Renders: chest, trapped chest, ender chest (single and double, lid animation), beds, standing and wall signs (text), lectern (without the book), enchanting table (without the floating book), spawner, campfire, cauldrons (water, lava), end portal frame, end portal/gateway surface.
   - Skeleton, wither skeleton, zombie, creeper and player heads render (floor and wall; player heads use the default Steve skin). Piglin and dragon heads do not.
   - Shulker boxes (closed, any facing and colour) and banners (standing and wall, waving, in the base colour; patterns are not drawn yet) render.
+  - Item frames and glow item frames (any facing) with their item and its rotation render. The harness reads 1.21.11's frame metadata: 8 = direction, 9 = item, 10 = rotation. The spawn packet position is the frame's block, not the entity position.
   - Draws nothing yet: decorated pots, the conduit core, the bell body (only its frame), the enchanting table and lectern books. Hanging signs (ceiling and wall, with text) render since worker 11 added them. Stage around them, or ask the engine worker.
   - A conduit (or any waterlogged block) set in air keeps waterlogged=true and shows a water block around it, in vanilla too.
 - **Lava cauldron**: its content face has tintindex 0 but no BlockColors provider. We tinted it grass green, so the lava read dull brown. Only the water cauldron is tinted (biome water colour).
