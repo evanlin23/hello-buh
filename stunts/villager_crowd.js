@@ -1,7 +1,7 @@
-// "1 vs 10 vs 100 vs 500 villagers staring at me 💀" (~30 s): the escalating staring_villagers. Six
+// "1 vs 10 vs 100 vs 200 villagers staring at me 💀" (~30 s): the escalating staring_villagers. Six
 // crowds side by side in one big field, 34 blocks apart (out of each other's view): 1, 5, 20, 50, 100,
-// then 500 villagers. Each time the bot walks up behind them, they all turn at once and their heads
-// follow it as it sidesteps. Finale: it backs off from the 500... turns round, and 100 more were
+// then 200 villagers. Each time the bot walks up behind them, they all turn at once and their heads
+// follow it as it sidesteps. Finale: it backs off from the 200... turns round, and 40 more were
 // standing right behind it, staring. NoAI villagers; the bot runs `tp @s ~ ~ ~ facing entity <bot>
 // eyes` every tick on the crowds that have turned; face_on (near: this crowd) / face_off marks tell
 // the renderer. Hard cut (teleport) between crowds. The bot starts in the middle of the field so
@@ -13,16 +13,16 @@ const CROWDS = [
   { n: 20, sub: '20 villagers', cols: 5, rows: 4 },
   { n: 50, sub: '50 villagers', cols: 10, rows: 5 },
   { n: 100, sub: '100 villagers', cols: 10, rows: 10 },
-  { n: 500, sub: '500 villagers', cols: 25, rows: 20 }
+  { n: 200, sub: '200 villagers', cols: 20, rows: 10 }   // (500 + 100 behind slowed the server below 1 tick/s)
 ]
-const BEHIND = { cols: 10, rows: 10 }       // the finale crowd behind the start of the last walk
+const BEHIND = { cols: 10, rows: 4 }        // the finale crowd behind the start of the last walk
 const crowdX = (x, i) => x + Math.round((i - (CROWDS.length - 1) / 2) * GAP)
 module.exports = {
   name: 'villager_crowd',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: '1 vs 10 vs 100 vs 500 villagers staring at me 💀',
+  caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
   edit: {
-    caption: '1 vs 10 vs 100 vs 500 villagers staring at me 💀', red: '500', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
+    caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:1.0',
     subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'THEY WERE BEHIND ME', 1.0, 0]]
   },
@@ -74,7 +74,7 @@ module.exports = {
     for (let r = 0; r < BEHIND.rows; r++) {
       for (let q = 0; q < BEHIND.cols; q++) await summon(lx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 9.5 + r * 1.3, 180, `crowd${CROWDS.length - 1}`)
     }
-    await ctx.sleep(3000)
+    await ctx.sleep(8000)                                    // let the server settle after ~420 summons
     ctx.log('villagers', Object.values(bot.entities).filter(e => e.name === 'villager').length)
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 4.5, 180, -4)   // the middle: all crowds' chunks loaded for the recording
