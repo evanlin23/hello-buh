@@ -89,7 +89,7 @@ module.exports = {
     await ctx.hotbar([...[16, 16, 16, 16, 16, 16].map(n => ['ender_eye', n]), 'iron_pickaxe', ['bread', 7]])   // 84 eyes used, a stack still in hand at the end   // 7 rings x 12 eyes = 84: eyes stack to 16
     await ctx.cmd('/gamemode survival')
     // in the middle of the first ring, facing its first frame (north-west)
-    await ctx.tpCheck(S0.x + 2.5, S0.floor + 1, S0.z + 2.5, 160, 40)
+    await ctx.tpCheck(S0.x + 2.5, S0.floor + 1, S0.z + 2.5, 26.6, 39)   // facing the first frame
     ctx.select(0)
     return { x: mx, y: S0.floor, z: mz }   // the rings' middle: the harness records the world around it
   },
@@ -155,13 +155,15 @@ module.exports = {
       if (r > 0) {
         // to the next ring (a jump cut in the edit: walk<r>..in<r>), then hop in over its south frame
         ctx.mark('walk', { n: r }); ctx.mark(`walk${r}`)
+        // straight into the ring's middle, eyes already on its first frame (the hop in over the south
+        // frame ended on the grass floor and was the same 1.7 s clip every ring)
         for (let t = 0; ; t++) {
-          await ctx.cmd(`/tp @s ${X + 2.5} ${front} ${z + 5.6} 180 35`)
-          if (Math.abs(bot.entity.position.x - (X + 2.5)) < 0.1 && Math.abs(bot.entity.position.z - (z + 5.6)) < 0.1) break
+          await ctx.cmd(`/tp @s ${X + 2.5} ${floor + 1} ${z + 2.5} 26.6 39`)
+          if (Math.abs(bot.entity.position.x - (X + 2.5)) < 0.1 && Math.abs(bot.entity.position.z - (z + 2.5)) < 0.1) break
           if (t > 20) throw new Error('teleport did not stick')
         }
+        for (let k = 0; k < 10 && !bot.entity.onGround; k++) await bot.waitForTicks(1)
         ctx.mark(`in${r}`)
-        await goTo(X + 2.5, z + 2.5, new Vec3(X + 1.5, floor + 1.8, z + 4.5), true, 0.3)   // eyes already on the first frame (not the grass)
       }
       ctx.mark('ring', { n: r })
       portalAt = null

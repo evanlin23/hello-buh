@@ -27,10 +27,10 @@ module.exports = {
     subsY: 0.1,   // up off the pour
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
-    // lava at tick rate 40 (2x: a 7.5x lava next to a 1x player read as fast lava, not a time-lapse); the
-    // walks back up and out to the field are jump cuts; the casts (under a water sheet) at 2x; the drains
-    // (a slow sneak in on the slope) at 1x
-    speed: [['down', 'up', 2], ['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut']]
+    // every move between the platform and the field in front is a jump cut; the lava runs (watched from the
+    // front) and the casts (under a water sheet) at 2x; the first drain at 1x, the second at 2x
+    speed: [['run0a', 'run0b', 'cut'], ['run0', 'back0a', 2], ['back0a', 'back0b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['run1a', 'run1b', 'cut'], ['run1', 'back1a', 2], ['back1a', 'back1b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]],
+    hook: { at: 'final', before: 1.3, after: -0.05, text: 'wait for the end 😌' }
   },
 
   async setup (ctx) {
@@ -218,6 +218,25 @@ module.exports = {
     const FOLLOW = [[2, 550], [5, 550], [8, 550], [9, 500], [6, 550], [3, 550], [6, 550], [9, 550]]
     // the reveal, from the side: down to the walkway while the water drains, strafing down beside
     // the sheet; the reveal when the slope (not the field below) is dry, then a pan along the shell
+    // the field in front of the hill, looking up the whole slope (as at the final reveal)
+    const FRONT = () => [x + 0.5, this.floor + 1, z + STEPS + 11.5]   // non-whole x/z: /tp centres whole ones
+    const watchRun = async (n) => {
+      let front = 0, last = ctx.tick
+      const onLava = (o, b) => { if (b && b.name === 'lava') { const q = b.position; if (Math.abs(q.x - x) <= 3 && q.z >= z && q.z <= z + STEPS) { last = ctx.tick; if (q.z - z > front) front = q.z - z } } }
+      bot.on('blockUpdate', onLava)
+      ctx.mark(`run${n}a`)
+      await tpTo(...FRONT(), 180, -14)
+      ctx.mark(`run${n}b`)
+      ctx.mark(`run${n}`)
+      for (let k = 0; k < 300 && !(k > 40 && ctx.tick - last > 12); k++) {
+        await lookStep(step(Math.max(1, Math.min(STEPS, front))).offset(Math.sin(k / 20) * 1.5, 1.5, 0), 0.12)
+        await bot.waitForTicks(1)
+      }
+      bot.removeListener('blockUpdate', onLava)
+      ctx.mark(`back${n}a`)
+      await tpTo(x + 3.9, T + 3, z - 1.4, 30, 45)
+      ctx.mark(`back${n}b`)
+    }
     const reveal = async (last) => {
       const n = last ? 1 : 0
       await ctx.cmd('/tick rate 60')
@@ -227,8 +246,7 @@ module.exports = {
       // a jump cut out onto the field looking up the whole slope (from the walkway the camera was wedged
       // against the shell's side): layer 1 from the front, layer 2 from the south-west
       ctx.mark(`rv${n}a`)
-      if (last) await tpTo(x + 0.5, this.floor + 1, z + STEPS + 11.5, 180, -12)   // the final: wide, from the front (non-whole x/z: /tp centres whole ones)
-      else await tpTo(x - 9.5, this.floor + 1, z + STEPS + 11.5, -140, -10)   // further out: the slope from the side read cramped
+      await tpTo(...FRONT(), 180, -12)   // from the front (the south-west side view read cramped)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
       // the water draining off: a slow sneak in towards the hill, eyes on the slope (a moving shot, not a
@@ -257,36 +275,9 @@ module.exports = {
     ctx.mark('pour', { n: 0 })
     await pourRow(STREAMS, [0, 1, 2, 3, 4], z - 1.3, T + 1, z + 0.8)
     ctx.select(5)
-    // down to the walkway: platform -> channel row -> lip (one block each)
-    await goTo(x + 4.6, z - 1.3, step(2), { ease: 0.2 })
-    await goTo(x + 4.6, z - 0.5, step(3), { ease: 0.2 })
-    await goTo(x + 4.9, z + 0.5, step(3), { ease: 0.2 })
-    ctx.mark('down')
-    // keep pace with the lava front down the walkway, eyes on it (it was out of shot: the camera aimed
-    // at the grass ahead of it)
-    let front = 0
-    const onLava = (o, n) => { if (n && n.name === 'lava') { const q = n.position; if (Math.abs(q.x - x) <= 2 && q.z - z > front) front = Math.min(STEPS, q.z - z) } }
-    bot.on('blockUpdate', onLava)
-    for (let k = 0; k < 500 && !(front >= STEPS - 1 && bot.entity.position.z > z + STEPS - 1.5); k++) {
-      const tz = Math.min(z + STEPS - 0.6, z + front + 0.3)
-      await lookStep(step(Math.max(1, front)).offset(-0.5, -0.3, 0), 0.15)
-      const dz = tz - bot.entity.position.z
-      if (Math.abs(dz) > 0.4) keysFor(Math.atan2(-(x + 4.9 - bot.entity.position.x) * 0.8, -Math.sign(dz)))
-      else bot.clearControlStates()
-      await bot.waitForTicks(1)
-    }
-    bot.clearControlStates()
-    bot.removeListener('blockUpdate', onLava)
-    // at the bottom: a look back up the sheet, then climb back
-    await ctx.easeLookAt(step(4).offset(0, -1, 0), 500)
-    ctx.mark('up')
-    // back up on the platform, out of the water's way (a jump cut: climb1a..climb1b); from there,
-    // looking down the slope, the lava finishes running (the water must go on a finished sheet: on a
-    // half-run one the shell came out patchy; from the walkway the rail hid it)
-    ctx.mark('climb1a')
-    await tpTo(x + 3.9, T + 3, z - 1.4, 30, 45)
-    ctx.mark('climb1b')
-    ctx.log('lava settled', await watch(['lava'], [[5, 500], [8, 600], [4, 600], [9, 600], [6, 600]], 5), 'ticks ago')
+    // a jump cut out to the field in front of the hill: the lava running down the whole slope, the eyes on
+    // its front (from the walkway the rail hid it), until it stops; then a jump cut back up
+    await watchRun(0)
     await ctx.cmd('/tick rate 20')
     // water on the channel row right above the lava sources: it casts the flow from above. From the
     // platform the ray passes west of the channel's east rail (from the walkway it hit the rail)
@@ -312,8 +303,8 @@ module.exports = {
     // they spread along it and run down over the first shell
     await pourRow([-1, 1], [6, 7], z - 1.4, T + 2, z + 0.6)
     ctx.select(5)
-    await goTo(x + 3.9, z - 1.4, step(4), { ease: 0.2 })
-    for (const [k, ms] of [[6, 400], [8, 400]]) await ctx.easeLookAt(step(k).offset(-1, -1, 0), ms)
+    // out front again: the second lava running down over the first shell, then back up
+    await watchRun(1)
     await ctx.cmd('/tick rate 40')
     // the water must be one block above the new lava again, as in layer 1: a cobblestone in the
     // channel row (over the lava that ran into it), the water on top

@@ -92,11 +92,12 @@ async function findSite (ctx, area, opts = {}) {
   const p0 = bot.entity.position.clone()
   for (const [dx, dz] of hops) {
     if (dx || dz) await ctx.cmd(`/tp @s ${Math.round(p0.x + dx)} 180 ${Math.round(p0.z + dz)}`)
-    let n = -1
-    for (let k = 0; k < 30; k++) {   // until the loaded chunks stop growing (max ~15 s)
+    let n = -1, same = 0
+    for (let k = 0; k < 40; k++) {   // at least 2 s, then until the loaded chunks stop growing for two checks (max ~20 s)
       await bot.waitForTicks(10)
       const m = bot.world.getColumns().length
-      if (m === n) break
+      same = m === n ? same + 1 : 0
+      if (k >= 3 && same >= 2) break
       n = m
     }
     const g = await findFlat(ctx, area, opts)
