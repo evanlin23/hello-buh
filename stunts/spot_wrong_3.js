@@ -14,6 +14,8 @@ function patch (b) {
     else b.set(x, -1, z, 'grass_block')
   }
   for (let x = -6; x <= 6; x += 3) for (const z of [0, 2, 4, 6, 8]) b.set(x, 0, z, 'pumpkin')
+  // stems next to a pumpkin bend toward it (attached), as in vanilla
+  for (let x = -6; x <= 6; x++) for (const z of [0, 2, 4, 6, 8]) { if ((x + 6) % 3 === 1) b.set(x, 0, z, 'attached_pumpkin_stem[facing=west]'); else if ((x + 6) % 3 === 2) b.set(x, 0, z, 'attached_pumpkin_stem[facing=east]') }
   // the mistake: one melon among the pumpkins
   b.set(0, 0, 4, 'melon')
   b.fill(-7, 0, -1, 7, 0, -1, 'spruce_fence[east=true,west=true]'); b.fill(-7, 0, 9, 7, 0, 9, 'spruce_fence[east=true,west=true]')
@@ -28,7 +30,7 @@ function patch (b) {
   b.set(4, 0, 4, 'oak_fence'); b.set(4, 1, 4, 'hay_block'); b.set(4, 2, 4, 'carved_pumpkin[facing=south]')
   b.set(5, 0, -2, 'hay_block'); b.set(6, 0, -2, 'hay_block'); b.set(5, 1, -2, 'hay_block'); b.set(-5, 0, -2, 'composter'); b.set(-6, 0, -2, 'barrel[facing=up]'); b.set(-6, 1, -2, 'lantern')
   b.set(-7, 1, 9, 'lantern'); b.set(7, 1, 9, 'lantern')
-  b.fill(9, 0, -4, 9, 4, -4, 'oak_log'); b.fill(7, 4, -6, 11, 5, -2, 'orange_wool'); b.set(9, 4, -4, 'oak_log')   // an autumn tree
+  spotWrong.tree(b, 9, -4)
 }
 
 // --- round 2: a stream (x -20..20, z 0..4) and a stone brick bridge across it (x -1..1) ---
@@ -48,7 +50,7 @@ function bridge (b) {
   b.fill(0, -1, -12, 0, -1, -2, 'dirt_path'); b.fill(0, -1, 6, 0, -1, 14, 'dirt_path')
   for (const [sx, sz] of [[-6, 0], [-5, 0], [7, 4], [8, 4], [-12, 4], [12, 0]]) { b.set(sx, -1, sz, 'sand'); b.set(sx, 0, sz, 'sugar_cane'); b.set(sx, 1, sz, 'sugar_cane') }
   for (const [lx, lz] of [[-8, 2], [5, 1], [10, 3], [-3, 3]]) b.set(lx, 0, lz, 'lily_pad')
-  b.fill(-9, 0, -5, -9, 4, -5, 'oak_log'); b.fill(-11, 4, -7, -7, 5, -3, 'oak_leaves[persistent=true]'); b.fill(-10, 6, -6, -8, 6, -4, 'oak_leaves[persistent=true]'); b.set(-9, 4, -5, 'oak_log'); b.set(-9, 5, -5, 'oak_log')
+  spotWrong.tree(b, -9, -5, 5)
   const fl = ['poppy', 'dandelion', 'cornflower', 'oxeye_daisy', 'allium']
   ;[[-4, 7], [3, 8], [6, 7], [-7, 8], [9, 9], [-2, -4], [4, -3]].forEach(([fx, fz], i) => b.set(fx, 0, fz, fl[i % fl.length]))
 }
@@ -83,22 +85,27 @@ module.exports = spotWrong({
   searchFrom: [1600, 1600],
   rounds: [
     { at: [45, -12], build: patch, seconds: 7,
-      cam: { pos: [-3, 16], walk: 'right' },
+      cam: { pos: [-3, 13], walk: 'right' },
       scan: [[0, [-2, 0.5, 4]], [3, [1, 0.5, 4]], [6, [2, 0.8, 2]]],
       tag: 'EASY',
-      reveals: [{ at: [0.5, 0.6, 4.5], zoom: 3.2, sub: 'a melon', check: [[0, 0, 4], 'melon'] }] },
+      reveals: [{ at: [0.5, 0.95, 4.5], zoom: 3.2, sub: 'a melon', check: [[0, 0, 4], 'melon'] }] },
     { at: [0, -12], build: bridge, seconds: 8,
-      cam: { pos: [-14, 14], walk: 'right' },
-      scan: [[0, [-9, 3, -5]], [2.5, [0, 0.5, 0]], [5, [0, 0.5, 2.5]], [8, [1, 0.5, 2]]],
+      cam: { pos: [9, 11], walk: 'left' },   // facing away from round 1's shed (it showed in the background)
+      scan: [[0, [0, 0.5, 1]], [2.5, [-9, 3, -5]], [5, [0, 0.5, 2.5]], [8, [-1, 0.5, 2]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the tree'],
-      reveals: [{ at: [0.5, 0.75, 3.5], zoom: 3.2, sub: 'an upside-down slab', check: [[0, 0, 3], 'stone_brick_slab'] }] },
+      reveals: [{ at: [0.5, 0.75, 3.5], zoom: 3.2, sub: 'upside-down slab', check: [[0, 0, 3], 'stone_brick_slab'] }] },
     { at: [-45, 40], build: portal, seconds: 9,
+      // the lit portal's life: particles off its face and its hum (NetherPortalBlock.animateTick)
+      ambient (ctx, t, W) {
+        if (t % 4 === 0) ctx.particles('portal', W([5 + Math.random() * 2, 1 + Math.random() * 3, -7.5]), { count: 6, face: true })
+        if (t % 70 === 5) ctx.sound('block.portal.ambient', 0.35, 0.9 + Math.random() * 0.2)
+      },
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [9, [5, 2, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: look closer'],
       reveals: [
-        { at: [9.5, 0.5, -7.0], zoom: 3, strafe: 'left', sub: 'that is raw gold', check: [[9, 0, -8], 'raw_gold_block'] },
-        { pre: 'wait... there is another one', at: [7.5, 2.5, -7.0], zoom: 3.2, ring: 130, hold: 2.4, tail: 1.6, sub: 'crying obsidian: it could never light', check: [[7, 2, -8], 'crying_obsidian'] }
+        { at: [9.5, 0.5, -7.0], zoom: 3, strafe: 'left', sub: 'raw gold, not gold', check: [[9, 0, -8], 'raw_gold_block'] },
+        { pre: 'wait... there is another one', at: [7.5, 2.5, -7.0], zoom: 3.2, ring: 130, hold: 2.4, tail: 1.6, sub: 'this portal could never be lit', check: [[7, 2, -8], 'crying_obsidian'] }
       ] }
   ]
 })
