@@ -1,44 +1,73 @@
 // "the most satisfying chain reaction 😳" (worker 17, docs/ideas.md New formats #6): one long take
 // following a real vanilla redstone contraption, each step triggering the next. Everything is
 // built with commands BEFORE the recording; during the take the only input is the player pressing
-// the first button. The server runs the redstone, the camera follows what really happens (lib/chain.js
-// watches the blocks and entities and marks each step on the tick it fires), and the sounds are the
-// server's own (pistons, notes, bells, rails, fuses).
+// the first button. The server runs the redstone, the camera follows what really happens
+// (lib/chain.js watches the blocks and marks each step on the tick it fires), and the sounds are the
+// server's own (pistons, notes, bells, rails, rockets, fuses).
 //
 // Layout: n = blocks north of the start (z = Z - n), e = blocks east (x = X + e), h = height above
-// the grass (h = 1 is the first air layer). The player walks up the lane e = 0.
-//   1  button (0,1,2) -> wire -> dispenser (1,1,6) fires an arrow east -> target (7,1,6)
-//   2  8 repeaters north from the target, each into a block with a lamp on top and a note block
-//      (glockenspiel, rising scale) beside it
-//   3  wire climbs a stone staircase to a piston at h7 that shoves a sand block off a tower; the wall
-//      torch on that sand block pops and the 8-sand column standing on the torch collapses
-//   4  an observer sees the sand land -> powered-rail launcher -> a minecart rolls 20 blocks north,
-//      ringing 4 bells on detector rails
-//   5  the end detector -> a dispenser fires a firework rocket east into a target: burst
-//   6  that target -> a rainbow piston wave runs 28 blocks west along n = 53
-//   7  the wave's end primes a TNT -> a TNT line races west -> a 27-TNT cube -> a giant pile
+// the grass (h = 1 is the first air layer). The player walks north from the lane e = 0 and the
+// contraption snakes across in front of them, so the camera turns to follow each moving part.
+//   A  button (0,1,2) -> wire -> dispenser (-1,1,6) fires an arrow east across the lane -> target (3,1,6)
+//   B  14 repeaters north along e = 5, each into a block with a lamp on top and a glockenspiel note
+//      block beside it (a rising scale)
+//   C  wire climbs a staircase to a ridge at h 7; three pistons along it shove the sand blocks that
+//      hold wall torches, and the 6-, 10- and 14-sand columns standing on those torches collapse
+//   D  an observer sees the last column land and fires a piston that shoves a redstone block next to
+//      a launcher rail: a minecart rolls west across the lane, ringing 3 bells
+//   E  the end detector -> a repeater line fires 4 rocket dispensers in turn; the last rocket hits a
+//      target on a tower, which fires a piston that shoves an anvil off the top
+//   F  an observer sees the anvil land: a wave of pistons in the ground pushes rainbow glass up, east
+//   G  the wave's end launches a TNT minecart west; an activator rail half way primes it
+//   H  it blows up beside a TNT line that races east into a 3x3x3 cube, a 5x5x5 cube and a 9x6x9 pile, two
+//      single TNTs between each stage so every stage gets its own boom
 const { relaySounds, watch, clearMobs } = require('../lib/chain')
 const { findFlat } = require('./_site')
 
-const NOTES = [6, 8, 10, 11, 13, 15, 17, 18]          // C major, C to C (note block steps from F#)
-const RAINBOW = ['red', 'orange', 'yellow', 'lime', 'green', 'cyan', 'light_blue', 'blue', 'purple', 'magenta', 'pink', 'red', 'orange', 'yellow']
-const AREA = [-44, 26, -66, 6]   // x and z extents of the clear relative to the origin (z = Z - n)
+const NOTES = [1, 3, 5, 6, 8, 10, 12, 13, 15, 17, 18, 20, 22, 24]   // G major, rising (F# = 0, the top is 24)
+const GLASS = ['red', 'orange', 'yellow', 'lime', 'green', 'cyan', 'light_blue', 'blue', 'purple', 'magenta', 'pink', 'red', 'orange', 'yellow']
+const AREA = [-28, 36, -90, 6]   // x and z extents of the clear relative to the origin (z = Z - n)
+const T = 'polished_andesite'
+
+// every position, in (e, h, n)
+const L = (() => {
+  const o = {}
+  o.nB = 8 + 2 * (NOTES.length - 1)                    // 34: the lamp line's last block
+  o.towers = [{ n: o.nB + 8, L: 6 }, { n: o.nB + 12, L: 10 }, { n: o.nB + 16, L: 14 }]   // 42, 46, 50
+  o.nC = o.towers[2].n + 1                              // 51: where the last column lands (e = 7)
+  o.nD = o.nC + 3                                       // 54: the cart's row
+  o.eEnd = -16                                          // its end detector
+  o.bells = [-2, -7, -12]
+  o.dn = [1, 3, 5, 7].map(d => o.nD + 2 + d)            // the rocket dispensers (e = eEnd - 1)
+  o.nR = o.dn[3]                                        // 63: the last one, under the target
+  o.hT = 13
+  o.nF = o.nR + 6                                       // 69: the wave line (in the ground)
+  o.nG = o.nF + 4                                       // 73: the TNT cart's row
+  o.nH = o.nG + 3                                       // 76: the TNT line
+  return o
+})()
 
 module.exports = {
   name: 'chain_reaction',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'the most satisfying chain reaction 😳',
-  botTimeout: 300,
+  botTimeout: 360,
   edit: {
-    caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'pile',
-    startAt: 'go:-0.2', endAfter: 'pile:0.9'
+    caption: 'the most satisfying chain reaction 😳', red: 'satisfying', song: 'songs/funk_abnormal.mp3', dropAt: 'giant',
+    startAt: 'go:-0.1', endAfter: 'giant:0.9'
   },
 
   async setup (ctx) {
     const { bot } = ctx
     await bot.waitForTicks(60); await bot.waitForChunksToLoad()
-    const site = await findFlat(ctx, AREA, { reach: 96 })
-    if (!site) throw new Error('no flat site')
+    // the flattest dry spot for the field; failing that, build where we stand (the clear fills dirt
+    // up to the grass over the whole field, so a pond inside it becomes land)
+    let site = await findFlat(ctx, AREA, { reach: 160, stride: 24 })
+    if (!site) {
+      const p = bot.entity.position.floored(), s = ctx.surface(p.x, p.z)
+      site = { x: p.x, z: p.z, y: Math.max(64, s ? s.position.y : 64) }
+      ctx.log('no flat site: building at', site)
+    }
     const X = site.x, Z = site.z, F = site.y
     Object.assign(this, { X, Z, F })
     const P = (e, h, n) => `${X + e} ${F + h} ${Z - n}`
@@ -50,148 +79,185 @@ module.exports = {
     await c('/gamerule random_tick_speed 0')
     await c('/gamerule fire_spread_radius_around_player 0')
     await c(`/forceload add ${X + AREA[0]} ${Z + AREA[2]} ${X + AREA[1]} ${Z + AREA[3]}`)
-    // clear the field in slabs (under the /fill cap): air above, grass, deep dirt below for the craters
-    for (let z0 = Z + AREA[2]; z0 <= Z + AREA[3]; z0 += 6) {
-      const z1 = Math.min(Z + AREA[3], z0 + 5)
-      for (let y0 = F + 1; y0 <= F + 24; y0 += 8) await c(`/fill ${X + AREA[0]} ${y0} ${z0} ${X + AREA[1]} ${y0 + 7} ${z1} air`)
+    // clear the field in slabs (under the /fill cap): air above, grass, deep dirt for the craters
+    for (let z0 = Z + AREA[2]; z0 <= Z + AREA[3]; z0 += 4) {
+      const z1 = Math.min(Z + AREA[3], z0 + 3)
+      for (let y0 = F + 1; y0 <= F + 32; y0 += 16) await c(`/fill ${X + AREA[0]} ${y0} ${z0} ${X + AREA[1]} ${y0 + 15} ${z1} air`)
       await c(`/fill ${X + AREA[0]} ${F - 10} ${z0} ${X + AREA[1]} ${F - 1} ${z1} dirt`)
       await c(`/fill ${X + AREA[0]} ${F} ${z0} ${X + AREA[1]} ${F} ${z1} grass_block`)
     }
-    await clearMobs(ctx, X, Z - 30, 90)
-    const T = 'polished_andesite'
+    await clearMobs(ctx, X, Z - 40, 100)
+    const { nB, towers, nC, nD, eEnd, dn, nR, hT, nF, nG, nH } = L
 
-    // 1: the button, the wire, the arrow dispenser and its target
-    await put(1, 1, 2, T)
-    await put(0, 1, 2, 'stone_button[face=wall,facing=west]')
-    for (const n of [3, 4, 5]) await put(1, 1, n, 'redstone_wire')
-    await put(1, 1, 6, 'dispenser[facing=east]{Items:[{Slot:4b,id:"minecraft:arrow",count:1}]}')
-    await put(7, 1, 6, 'target')
+    // A: the button, the wire, the arrow dispenser and its target
+    await put(-1, 1, 2, T)
+    await put(0, 1, 2, 'stone_button[face=wall,facing=east]')
+    for (const n of [3, 4, 5]) await put(-1, 1, n, 'redstone_wire')
+    await put(-1, 1, 6, 'dispenser[facing=east]{Items:[{Slot:4b,id:"minecraft:arrow",count:1}]}')
+    await put(3, 1, 6, 'target')                        // close: a dispensed arrow drops and spreads
+    await put(4, 1, 6, 'repeater[facing=west,delay=1]')  // a target's output depends on the hit: restore 15
+    await put(5, 1, 6, 'redstone_wire')
 
-    // 2: the lamp and note line
+    // B: the lamp and note line
     for (let k = 0; k < NOTES.length; k++) {
       const n = 8 + 2 * k
-      await put(7, 1, n - 1, 'repeater[facing=south,delay=2]')
-      await put(7, 1, n, T)
-      await put(7, 2, n, 'redstone_lamp')
-      await put(8, 0, n, 'gold_block')
-      await put(8, 1, n, `note_block[instrument=bell,note=${NOTES[k]}]`)
+      await put(5, 1, n - 1, 'repeater[facing=south,delay=3]')
+      await put(5, 1, n, T)
+      await put(5, 2, n, 'redstone_lamp')
+      await put(6, 0, n, 'gold_block')
+      await put(6, 1, n, `note_block[instrument=bell,note=${NOTES[k]}]`)
     }
-    const nEnd = 8 + 2 * (NOTES.length - 1)          // 22: the last block of the line
-    // 3: the staircase, the piston, the sand on the torch
-    await put(7, 1, nEnd + 1, 'redstone_wire')
-    for (let k = 1; k <= 6; k++) {
-      await fill(7, 1, nEnd + 1 + k, 7, k, nEnd + 1 + k, 'stone_bricks')
-      await put(7, k + 1, nEnd + 1 + k, 'redstone_wire')
-    }
-    const nT = nEnd + 8                                // 30: the tower row
-    await fill(7, 1, nT, 7, 6, nT, 'stone_bricks')
-    await put(7, 7, nT, 'piston[facing=east]')
-    await fill(8, 1, nT, 8, 6, nT, 'stone_bricks')
-    await put(8, 7, nT, 'sand')
-    await put(8, 7, nT + 1, 'wall_torch[facing=north]')
-    for (let h = 8; h <= 15; h++) await put(8, h, nT + 1, 'sand')
-    this.nT = nT
-    // 4: an observer watching where the sand lands fires a piston that shoves a redstone block
-    // next to the launcher rail (an observer pulse alone is 2 ticks: the rail brakes the cart again)
-    const RE = 12, nL = nT + 3                          // the track's column and the launcher row
-    await put(8, 1, nT + 2, 'observer[facing=south]')  // looks at (8,1,nT+1), outputs north
-    await put(8, 1, nL, 'piston[facing=east]')
-    await put(9, 1, nL, T)
-    await put(10, 1, nL, 'redstone_block')
-    await put(RE, 1, nL, 'powered_rail[shape=north_south]')
-    await put(RE, 1, nL - 1, T)                         // the launcher's backstop
-    // empty carts lose 4% a tick, so boosters (powered rails on redstone blocks) every 4 blocks;
-    // a plain rail next to the launcher keeps the boosters' power from reaching it
-    const nE = nT + 24                                  // the end detector
-    this.bells = [nL + 7, nL + 11, nL + 15, nL + 19]
-    const boost = [nL + 2, nL + 3, nL + 4, nL + 9, nL + 13, nL + 17]
-    for (let n = nL + 1; n < nE; n++) {
-      if (boost.includes(n)) { await put(RE, 0, n, 'redstone_block'); await put(RE, 1, n, 'powered_rail[shape=north_south]') }
-      else if (this.bells.includes(n)) { await put(RE, 1, n, 'detector_rail[shape=north_south]'); await put(RE + 1, 1, n, 'bell[attachment=floor,facing=east]') }
-      else await put(RE, 1, n, 'rail[shape=north_south]')
-    }
-    Object.assign(this, { RE, nL })
-    await put(RE, 1, nE, 'detector_rail[shape=north_south]')
-    await put(RE, 1, nE + 1, T)                         // the buffer
-    // 5: the firework dispenser and its target
-    const rocket = '{id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:1,explosions:[{shape:"large_ball",colors:[I;16711680,16766720,65280]}]}}}'
-    await put(RE + 1, 1, nE, `dispenser[facing=east]{Items:[{Slot:4b,${rocket.slice(1)}]}`)
-    await put(24, 1, nE, 'target')
-    this.nE = nE
-    // 6: the wave: wire down from the target into a ground-level line going west along n = nE + 3
-    const nW = nE + 3
-    await put(24, 1, nE + 1, 'redstone_wire')
-    await put(24, 1, nE + 2, 'redstone_wire')
-    await put(24, 1, nW, 'redstone_wire')
-    await put(23, 1, nW, 'redstone_wire')
-    await put(22, 1, nW, 'redstone_wire')
-    let i = 0
-    for (let e = 21; e >= -6; e -= 2) {
-      await put(e, 1, nW, 'repeater[facing=east,delay=2]')
-      await put(e - 1, 1, nW, T)
-      await put(e - 1, 1, nW + 1, 'piston[facing=up]')
-      await put(e - 1, 2, nW + 1, `${RAINBOW[i++ % RAINBOW.length]}_concrete`)
-    }
-    this.nW = nW
-    // 7: the TNT: a repeater from the wave's last block into the first TNT, a spaced line west,
-    // a 3x3x3 cube, then the pile
-    const eLast = -6                                    // the wave's last block is at e = -6
-    await put(eLast - 1, 1, nW, 'repeater[facing=east,delay=2]')
-    for (let e = eLast - 2; e >= -24; e -= 2) await put(e, 1, nW, 'tnt')
-    await fill(-29, 1, nW - 1, -27, 3, nW + 1, 'tnt')
-    await fill(-41, 1, nW - 3, -35, 5, nW + 3, 'tnt')
-    this.nTnt = nW
 
-    await clearMobs(ctx, X, Z - 30, 90)
+    // C: the staircase to the ridge, three pistons, three sand-on-torch columns
+    await put(5, 1, nB + 1, 'redstone_wire')
+    for (let k = 1; k <= 6; k++) {
+      await fill(5, 1, nB + 1 + k, 5, k, nB + 1 + k, 'stone_bricks')
+      await put(5, k + 1, nB + 1 + k, 'redstone_wire')
+    }
+    await fill(5, 1, towers[0].n, 5, 6, towers[2].n, 'stone_bricks')   // the ridge
+    for (let i = 0; i < towers.length; i++) {
+      const { n, L: len } = towers[i]
+      await put(5, 7, n, T)
+      if (i < towers.length - 1) for (let d = 1; d <= 3; d++) await put(5, 7, n + d, 'repeater[facing=south,delay=1]')
+      await fill(6, 1, n, 6, 6, n, 'stone_bricks')
+      await put(6, 7, n, 'piston[facing=east]')
+      await fill(7, 1, n, 7, 6, n, 'stone_bricks')
+      await put(7, 7, n, 'sand')
+      await put(7, 7, n + 1, 'wall_torch[facing=north]')
+      await fill(7, 8, n + 1, 7, 7 + len, n + 1, 'sand')
+    }
+
+    // D: observer -> piston -> redstone block beside the launcher; the cart goes west along nD
+    await put(7, 1, nC + 1, 'observer[facing=south]')   // watches (7,1,nC); outputs north
+    await put(7, 1, nC + 2, 'piston[facing=west]')      // pushes the stone and the redstone block
+    await put(6, 1, nC + 2, T)
+    await put(5, 1, nC + 2, 'redstone_block')           // pushed to (4,1,nC+2), beside the launcher rail (4,1,nD = nC+3)
+    await put(5, 1, nD, T)                              // the launcher's backstop
+    await put(4, 1, nD, 'powered_rail[shape=east_west]')
+    const boost = [2, 1, 0, -5, -10]
+    for (let e = 3; e > eEnd; e--) {
+      if (boost.includes(e)) { await put(e, 0, nD, 'redstone_block'); await put(e, 1, nD, 'powered_rail[shape=east_west]') } else if (L.bells.includes(e)) { await put(e, 1, nD, 'detector_rail[shape=east_west]'); await put(e, 1, nD + 1, 'bell[attachment=floor,facing=north]') } else await put(e, 1, nD, 'rail[shape=east_west]')
+    }
+    await put(eEnd, 1, nD, 'detector_rail[shape=east_west]')
+    await put(eEnd - 1, 1, nD, T)                       // the buffer
+
+    // E: wire from the end detector north along eEnd, repeaters into blocks, each block firing the
+    // rocket dispenser west of it; the last rocket flies into a target on the tower
+    const rocket = (col) => `{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:2,explosions:[{shape:"large_ball",colors:[I;${col}]}]}}}`
+    const cols = ['16711680,16753920', '65280,16776960', '3381759,16711935', '16766720,16777215']
+    await put(eEnd, 1, nD + 1, 'redstone_wire')
+    for (let i = 0; i < 4; i++) {
+      await put(eEnd, 1, dn[i] - 1, `repeater[facing=south,delay=${i === 0 ? 1 : 4}]`)
+      await put(eEnd, 1, dn[i], T)
+      await put(eEnd - 1, 1, dn[i], `dispenser[facing=up]{Items:[${rocket(cols[i])}]}`)
+    }
+    await fill(eEnd - 2, 1, nR, eEnd - 2, hT, nR, 'stone_bricks')   // the tower
+    await put(eEnd - 1, hT, nR, 'target')               // overhanging the last dispenser
+    await fill(eEnd - 1, 1, nR + 1, eEnd - 1, hT - 1, nR + 1, 'stone_bricks')
+    await put(eEnd - 1, hT, nR + 1, 'piston[facing=north]')
+    // (pistons can't push anvils: the piston shoves the ledge block the anvil stands on)
+    await put(eEnd - 1, hT, nR + 2, 'stone_bricks')
+    await put(eEnd - 1, hT + 1, nR + 2, 'anvil[facing=east]')
+    // F: the anvil lands at (eEnd-1,1,nR+2); an observer north of it -> wire into a ground-level
+    // line going east along nF; pistons in the ground north of it push rainbow glass up
+    await put(eEnd - 1, 1, nR + 3, 'observer[facing=south]')
+    await put(eEnd - 1, 1, nR + 4, 'redstone_wire')
+    await put(eEnd - 1, 1, nR + 5, 'redstone_wire')
+    await put(eEnd - 1, 0, nF, 'redstone_wire')
+    let gi = 0, e = eEnd
+    for (; e + 1 <= 12; e += 2) {
+      await put(e, 0, nF, 'repeater[facing=west,delay=3]')
+      await put(e + 1, 0, nF, T)
+      await put(e + 1, 0, nF + 1, 'piston[facing=up]')
+      await put(e + 1, 1, nF + 1, `${GLASS[gi++ % GLASS.length]}_stained_glass`)
+    }
+    this.waveE = []
+    for (let k = eEnd + 1; k <= e - 1; k += 2) this.waveE.push(k)
+    // G: the wave's last block -> repeater -> wire up to a piston that shoves a redstone block beside
+    // the TNT cart's launcher; the track runs west along nG with an activator rail part way
+    const eW = e                                        // the first free column after the wave
+    await put(eW, 0, nF, 'repeater[facing=west,delay=2]')
+    await put(eW + 1, 0, nF, 'redstone_wire')
+    await put(eW + 2, 1, nF, 'redstone_wire')
+    await put(eW + 3, 1, nF, 'piston[facing=north]')
+    await put(eW + 3, 1, nF + 1, T)
+    await put(eW + 3, 1, nF + 2, 'redstone_block')      // -> nF+3, beside the launcher at (eW+3,1,nG)
+    const eL = eW + 3
+    await put(eL + 1, 1, nG, T)                         // the backstop
+    await put(eL, 1, nG, 'powered_rail[shape=east_west]')
+    const eStop = -20
+    const tBoost = [eL - 2, eL - 3, eL - 4, eL - 10, eL - 16, eL - 22, eL - 28]
+    const eAct = eL - 13
+    for (let x = eL - 1; x > eStop; x--) {
+      if (x === eAct) { await put(x, 0, nG, 'redstone_block'); await put(x, 1, nG, 'activator_rail[shape=east_west]') } else if (tBoost.includes(x)) { await put(x, 0, nG, 'redstone_block'); await put(x, 1, nG, 'powered_rail[shape=east_west]') } else await put(x, 1, nG, 'rail[shape=east_west]')
+    }
+    await put(eStop, 1, nG, T)
+    Object.assign(this, { eW, eL, eAct })
+    // H: TNT line (every 2 blocks) east along nH, then a 3x3x3, a 5x5x5 and a 9x6x9
+    for (let x = eStop + 1; x <= -5; x += 2) await put(x, 1, nH, 'tnt')
+    // each stage is lit by one TNT 3 blocks out from the last, so every stage gets its own boom
+    await fill(-1, 1, nH - 1, 1, 3, nH + 1, 'tnt')
+    await put(4, 1, nH, 'tnt'); await put(7, 1, nH, 'tnt')
+    await fill(10, 1, nH - 2, 14, 5, nH + 2, 'tnt')
+    await put(17, 1, nH, 'tnt'); await put(20, 1, nH, 'tnt')
+    await fill(23, 1, nH - 1, 31, 6, nH + 7, 'tnt')
+
+    await clearMobs(ctx, X, Z - 40, 100)
     await c('/kill @e[type=item]')
-    await ctx.hotbar([['bread', 12], null, null, null, ['torch', 23]])
-    // the minecart sits on the launcher, against its backstop
-    await c(`/summon minecart ${X + this.RE + 0.5} ${F + 1.0625} ${Z - this.nL + 0.5}`)
-    await ctx.tpCheck(X + 0.5, F + 1, Z + 0.5, 200, 15)
+    await ctx.hotbar([null, ['bread', 12]])
+    await c(`/summon minecart ${X + 4.5} ${F + 1.0625} ${Z - nD + 0.5}`)
+    await c(`/summon tnt_minecart ${X + eL + 0.5} ${F + 1.0625} ${Z - nG + 0.5}`)
+    await ctx.tpCheck(X + 0.5, F + 1, Z + 1.5, 180, 12)
     await c('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
-    return { x: X, y: F, z: Z - 30 }
+    return { x: X, y: F, z: Z - 40 }
   },
 
   async perform (ctx) {
     const { bot, Vec3 } = ctx
-    const { X, Z, F, nT, nE, nW, RE, nL } = this
+    const { X, Z, F } = this
+    const { towers, nC, nD, eEnd, dn, nR, hT, nF, nG, nH } = L
     const W = (e, h, n) => new Vec3(X + e + 0.5, F + h, Z - n + 0.5)
     const B = (e, h, n) => new Vec3(X + e, F + h, Z - n)
     const stopSounds = relaySounds(ctx)
     const lamps = NOTES.map((_, k) => 8 + 2 * k)
-    const lit = (b) => b.getProperties().lit === true
-    const powered = (b) => b.getProperties().powered === true
+    const prop = (k, v) => (b) => b.getProperties()[k] === v
     const steps = [
-      { name: 'arrow_hit', pos: B(7, 1, 6), test: (b) => b.getProperties().power > 0 },
-      ...lamps.map((n, k) => ({ name: `lamp${k}`, pos: B(7, 2, n), test: lit })),
-      { name: 'push', pos: B(7, 7, nT), test: (b) => b.getProperties().extended === true },
-      { name: 'sand_land', pos: B(8, 1, nT + 2), test: powered },        // the observer fired
-      { name: 'launch', pos: B(8, 1, nL), test: (b) => b.getProperties().extended === true },
-      ...this.bells.map((n, k) => ({ name: `bell${k}`, pos: B(RE, 1, n), test: powered })),
-      { name: 'cart_end', pos: B(RE, 1, nE), test: powered },
-      { name: 'rocket_hit', pos: B(24, 1, nE), test: (b) => b.getProperties().power > 0 },
-      ...Array.from({ length: 14 }, (_, k) => ({ name: `wave${k}`, pos: B(20 - 2 * k, 1, nW + 1), test: (b) => b.getProperties().extended === true })),
-      { name: 'tnt_lit', pos: B(-8, 1, nW), test: (b) => b.name !== 'tnt' }
+      { name: 'arrow_hit', pos: B(3, 1, 6), test: (b) => b.getProperties().power > 0 },
+      ...lamps.map((n, k) => ({ name: `lamp${k}`, pos: B(5, 2, n), test: prop('lit', true) })),
+      ...towers.map((t, i) => ({ name: `push${i}`, pos: B(6, 7, t.n), test: prop('extended', true) })),
+      { name: 'sand_land', pos: B(7, 1, nC + 1), test: prop('powered', true) },
+      { name: 'launch', pos: B(7, 1, nC + 2), test: prop('extended', true) },
+      ...L.bells.map((e, k) => ({ name: `bell${k}`, pos: B(e, 1, nD), test: prop('powered', true) })),
+      { name: 'cart_end', pos: B(eEnd, 1, nD), test: prop('powered', true) },
+      ...dn.map((n, k) => ({ name: `rocket${k}`, pos: B(eEnd - 1, 1, n), test: prop('triggered', true) })),
+      { name: 'rocket_hit', pos: B(eEnd - 1, hT, nR), test: (b) => b.getProperties().power > 0 },
+      { name: 'anvil_push', pos: B(eEnd - 1, hT, nR + 1), test: prop('extended', true) },
+      { name: 'anvil_land', pos: B(eEnd - 1, 1, nR + 3), test: prop('powered', true) },
+      ...this.waveE.map((e, k) => ({ name: `wave${k}`, pos: B(e, 0, nF + 1), test: prop('extended', true) })),
+      { name: 'tnt_launch', pos: B(this.eW + 3, 1, nF), test: prop('extended', true) },
+      { name: 'primed', pos: B(this.eAct, 1, nG), test: () => false }   // marked from the entity below
     ]
     const w = watch(ctx, steps)
     const at = (name) => w.done.get(name)
-    // explosions: the first one, the cube and the pile
+    const markOnce = (name) => { if (!at(name)) { w.done.set(name, ctx.tick); ctx.mark(name) } }
+    // explosions: the cart, the line, the cubes and the pile
     let booms = 0
     const onBoom = (p) => {
       booms++
-      const c = p.center || {}
-      if (booms === 1) ctx.mark('boom1')
-      if (+c.x < X - 26 && +c.x > X - 31 && !at('cube')) { w.done.set('cube', ctx.tick); ctx.mark('cube') }
-      if (+c.x < X - 33 && !at('pile')) { w.done.set('pile', ctx.tick); ctx.mark('pile') }
+      const x = +(p.center || {}).x - X, z = Z - +(p.center || {}).z
+      if (booms === 1) markOnce('cart_boom')
+      if (z > nH - 3 && x > -2.5 && x < 2.5) markOnce('cube')
+      if (z > nH - 4 && x > 9 && x < 15.5) markOnce('big')
+      if (z > nH - 3 && x > 22) markOnce('giant')
     }
     bot._client.on('explosion', onBoom)
 
     // the camera: an aim point eased every tick toward the current focus; the player strafes
-    // toward a spot on the lane (walking speed), whichever way the camera faces
+    // toward a spot (walking, or sprinting to keep up), whichever way the camera faces
     const look0 = () => { const y = bot.entity.yaw, p = bot.entity.pitch; return bot.entity.position.offset(-Math.sin(y) * Math.cos(p) * 4, 1.62 + Math.sin(p) * 4, -Math.cos(y) * Math.cos(p) * 4) }
-    let aim = look0(), focus = W(1, 1.2, 2.5), k = 0.18, steer = null, sprint = false
+    let aim = look0(), focus = aim, k = 0.16, steer = null, sprint = false
     const onTick = () => {
       aim = aim.plus(focus.minus(aim).scaled(k))
       const eye = bot.entity.position.offset(0, 1.62, 0), d = aim.minus(eye)
@@ -200,79 +266,93 @@ module.exports = {
       if (steer) {
         const dx = steer.x - p.x, dz = steer.z - p.z, yw = bot.entity.yaw
         const f = -Math.sin(yw) * dx - Math.cos(yw) * dz, r = Math.cos(yw) * dx - Math.sin(yw) * dz
-        const far = Math.hypot(dx, dz) > 0.6
+        const far = Math.hypot(dx, dz) > 0.5
         bot.setControlState('forward', far && f > 0.3); bot.setControlState('back', far && f < -0.3)
         bot.setControlState('right', far && r > 0.3); bot.setControlState('left', far && r < -0.3)
         bot.setControlState('sprint', far && sprint && f > 0.3)
       } else for (const s of ['forward', 'back', 'left', 'right', 'sprint']) bot.setControlState(s, false)
+      const tc = Object.values(bot.entities).find(e => e.name === 'tnt_minecart')
+      if (tc && tc.position.x - X < this.eAct + 0.5 && at('tnt_launch')) markOnce('primed')
     }
     bot.on('physicsTick', onTick)
     const until = async (cond, max = 200) => { for (let i = 0; i < max && !cond(); i++) await bot.waitForTicks(1) }
     const ent = (name) => Object.values(bot.entities).find(e => e.name === name)
+    const follow = async (name, off, done, max) => {
+      for (let i = 0; i < max && !done(); i++) { const en = ent(name); if (en) focus = en.position.offset(...off); await bot.waitForTicks(1) }
+    }
 
-    // 1: press the button
+    // A: walk up to the button and press it; the arrow crosses
     ctx.mark('go')
-    await bot.waitForTicks(6)
-    focus = W(0.3, 1.5, 2.6)
-    await bot.waitForTicks(8)
-    bot._client.write('block_place', { hand: 0, location: B(0, 1, 2), direction: 5, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+    focus = W(0.4, 1.4, 2); steer = W(0, 0, 0.3)
+    await bot.waitForTicks(12)
+    bot._client.write('block_place', { hand: 0, location: B(0, 1, 2), direction: 4, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm()
     ctx.mark('press')
-    focus = W(4, 1.4, 6)                               // the arrow's path
+    focus = W(1.5, 1.4, 6)
     await until(() => at('arrow_hit'), 40)
-    // 2: follow the lamps up the line
-    steer = W(0, 0, 14)
+    // B: walk up the lane, the camera on the newest lamp
+    steer = W(0, 0, 26)
     for (let kk = 0; kk < lamps.length; kk++) {
-      focus = W(7, 2, lamps[Math.min(lamps.length - 1, kk + 1)])
+      focus = W(5, 2, lamps[Math.min(lamps.length - 1, kk + 1)])
       await until(() => at(`lamp${kk}`), 40)
     }
-    // 3: the staircase, the push, the collapse
-    focus = W(7, 5, nT - 2); k = 0.14
-    steer = W(0, 0, nT - 6)
-    await until(() => at('push'), 60)
-    focus = W(8, 8, nT + 1)
-    await bot.waitForTicks(8)
-    focus = W(8, 2, nT + 1); k = 0.12
-    await until(() => at('sand_land'), 80)
-    // 4: the cart
-    steer = W(1, 0, nT + 18); sprint = true; k = 0.2
-    for (let i = 0; i < 160 && !at('cart_end'); i++) {
-      const cart = ent('minecart')
-      if (cart) focus = cart.position.offset(0, 0.4, -2.5)
-      await bot.waitForTicks(1)
+    // C: up the staircase to the ridge, then each column as it falls
+    focus = W(5, 6, towers[0].n - 3); k = 0.14
+    steer = W(0, 0, towers[0].n - 4)
+    await until(() => at('push0'), 40)
+    for (let i = 0; i < towers.length; i++) {
+      steer = W(0, 0, towers[i].n - 2)
+      focus = W(7, 6 + towers[i].L * 0.4, towers[i].n + 1)
+      await until(() => at(`push${i + 1}`) || (i === 2 && at('sand_land')), 40)
     }
+    focus = W(7, 3, nC); await until(() => at('sand_land'), 60)
+    // D: the cart rolls west across the lane: stop short of the track and follow it, walking west
+    focus = W(4, 1, nD); steer = W(0, 0, nD - 5)
+    await until(() => at('launch'), 20)
+    k = 0.2; sprint = true
+    steer = W(-9, 0, nD - 5)
+    await follow('minecart', [-2.0, 0.2, 0], () => at('cart_end'), 160)
     sprint = false
-    // 5: the rocket
-    focus = W(14, 1.5, nE)
-    for (let i = 0; i < 40 && !at('rocket_hit'); i++) {
-      const r = ent('firework_rocket')
-      if (r) focus = r.position.offset(1.5, 0.2, 0)
-      await bot.waitForTicks(1)
+    // E: the rockets go up one by one; the last one into the target; the anvil comes down
+    focus = W(eEnd - 1, 4, dn[0]); k = 0.12
+    for (let i = 0; i < 4; i++) {
+      await until(() => at(`rocket${i}`), 30)
+      focus = W(eEnd - 1, 7 + i * 1.5, dn[i])
+      if (i === 3) focus = W(eEnd - 1, hT - 1, nR)
     }
-    focus = W(24, 2, nE)
-    await bot.waitForTicks(6)
-    // 6: the wave going west; walk west with it
-    steer = W(-6, 0, nW - 9)
-    for (let kk = 0; kk < 14; kk++) {
-      focus = W(20 - 2 * Math.min(13, kk + 1), 2, nW + 1)
-      await until(() => at(`wave${kk}`), 30)
+    await until(() => at('rocket_hit'), 30)
+    await bot.waitForTicks(4)
+    focus = W(eEnd - 1, hT + 1, nR + 2)
+    await follow('falling_block', [0, -1.5, 0], () => at('anvil_land'), 40)
+    // F: the wave runs east: cross the cart track and follow it
+    steer = W(-4, 0, nF - 6)
+    for (let kk = 0; kk < this.waveE.length; kk++) {
+      focus = W(this.waveE[Math.min(this.waveE.length - 1, kk + 2)], 1.5, nF + 1)
+      await until(() => at(`wave${kk}`), 20)
     }
-    // 7: the TNT: watch the fuse, then the line, the cube and the pile
-    focus = W(-8, 1, nW); steer = W(-14, 0, nW - 10)
-    await until(() => booms > 0, 100)
+    // G: the TNT cart: launch, ride, primed (flashing), and on into the TNT
+    focus = W(this.eL, 1, nG)
+    await until(() => at('tnt_launch'), 30)
+    await follow('tnt_minecart', [-2.5, 0.3, 0], () => booms > 0, 200)
+    // H: the explosions race east to the pile
     k = 0.1
-    for (let i = 0; i < 160 && !at('pile'); i++) {
-      const tnts = Object.values(bot.entities).filter(e => e.name === 'tnt')
-      const front = tnts.reduce((a, e) => (!a || e.position.x < a.position.x) ? e : a, null)
-      focus = at('cube') ? W(-38, 3, nW) : front ? front.position.offset(-2, 0.5, 0) : focus
+    for (let i = 0; i < 200 && !at('giant'); i++) {
+      if (at('big')) { focus = W(27, 3, nH + 3); steer = W(9, 0, nF - 6) } else if (at('cube')) { focus = W(12, 2.5, nH); steer = W(4, 0, nF - 6) }
+      else {
+        const tnts = Object.values(bot.entities).filter(en => en.name === 'tnt')
+        const front = tnts.reduce((a, en) => (!a || en.position.x > a.position.x) ? en : a, null)
+        if (front) focus = front.position.offset(2.5, 0.5, 0)
+      }
       await bot.waitForTicks(1)
     }
+    focus = W(27, 5, nH + 3)
     await bot.waitForTicks(30)
     steer = null
+    await bot.waitForTicks(2)
     bot.removeListener('physicsTick', onTick)
     for (const s of ['forward', 'back', 'left', 'right', 'sprint']) bot.setControlState(s, false)
     w.stop(); stopSounds(); bot._client.removeListener('explosion', onBoom)
     ctx.log('steps', JSON.stringify([...w.done]))
-    return !!at('pile') && !ctx.died
+    return !!at('giant') && !ctx.died
   }
 }
