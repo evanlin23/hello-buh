@@ -1,16 +1,26 @@
-// "can you guess what I'm building? 🤔": a diamond sword, three times, each bigger, placed in a
-// scrambled order so each one is a mystery shape until it suddenly reads. The last one is huge.
+// "can you guess what I'm building? 🤔": a misdirect series (owner 2026-11-07, "do everything").
+// Three walls, each bigger. 1: a diamond sword, built in a scrambled order (the honest guess).
+// 2: it starts as the same sword, then the blade comes down with shears and it's a pickaxe.
+// 3, the huge one: it starts as the sword again... and turns into a creeper face.
 const pixelArt = require('../lib/pixel_art')
-const MID = ['.......KK', '......KCK', '.....KCK.', '....KCK..', '.K.KCK...', '..KCK....', '..BK.....', '.B..K....', 'K........']   // blade, guard, handle, pommel
+const SWORD = ['.......KK', '......KCK', '.....KCK.', '....KCK..', '.K.KCK...', '..KCK....', '..BK.....', '.B..K....', 'K........']   // blade, guard, handle, pommel
+const PICK = ['...KKKK..', '..KCCCCK.', '...KKBCCK', '....B.KCK', '...B...KK', '..B......', '.B.......', 'B........', '.........']   // head arc top right, diagonal handle
+const CREEPER = ['GLGGLGGL', 'LGLGGLLG', 'GKKLLKKG', 'LKKGGKKL', 'GLGKKGLG', 'GGKKKKLG', 'LGKKKKGL', 'GLKLLKGG']
+const pad = (art, size) => {   // centre a picture on a bigger grid
+  const H = art.length, W = art[0].length, top = (size - H) >> 1, left = (size - W) >> 1
+  const out = []
+  for (let r = 0; r < size; r++) out.push(r < top || r >= top + H ? '.'.repeat(size) : '.'.repeat(left) + art[r - top] + '.'.repeat(size - left - W))
+  return out
+}
 module.exports = pixelArt({
   name: 'sword_art',
   stages: [
-    { art: MID, order: 'random' },
-    { art: pixelArt.upscale(MID, 2), order: 'random' },
-    { art: pixelArt.upscale(MID, 3), order: 'random', tpb: 1.6 }
+    { art: SWORD, order: 'random' },
+    { art: pixelArt.upscale(PICK, 2), decoy: pixelArt.upscale(SWORD, 2), decoyFrac: 0.5, decoyTpb: 1.5, order: 'random', tpb: 1 },
+    { art: pad(pixelArt.upscale(CREEPER, 3), 27), decoy: pixelArt.upscale(SWORD, 3), decoyFrac: 0.35, decoyTpb: 1, first: 'K', scatter: true, tpb: 0.4 }
   ],
-  palette: { K: 'black_wool', C: 'light_blue_wool', B: 'brown_wool' },
+  palette: { K: 'black_wool', C: 'light_blue_wool', B: 'brown_wool', G: 'green_wool', L: 'lime_wool' },
   wall: 'oak_planks',
   caption: "can you guess what I'm building? 🤔",
-  edit: { caption: "can you guess what I'm building? 🤔", song: 'songs/misery.mp3', dropAt: 'complete', startAt: 'stage:0.1', endAfter: 'complete:0.9' }
+  edit: { caption: "can you guess what I'm building? 🤔", red: 'guess', song: 'songs/misery.mp3', dropAt: 'complete', startAt: 'stage:0.1', endAfter: 'complete:0.9' }
 })
