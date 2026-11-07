@@ -24,7 +24,6 @@ module.exports = {
     subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'collected',
     startAt: 'dye:-0.45',
     endAfter: 'collected:0.9',      // (the 30 s minimum: 29.9 at :0.4)
-    speed: [['tagfast_a', 'tagfast_b', 1.6]],   // the middle of the tag round: seven near-identical tags dragged
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
       ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'rainbow hotbar', 0.6, 0]]   // (not 'every colour': wool landing behind the sheep can't be reached)
   },
@@ -192,7 +191,9 @@ module.exports = {
       await bot.waitForTicks(1)
       // the wool pops forward, off the sheep (a vanilla roll, but always toward the player): wool that fell
       // behind the sheep, against the fence, was out of reach and the hotbar ended with 5 of 8 colours
-      bot.chat(`/execute as @e[type=item,x=${this.x0 + i * STEP + 0.5},y=${floor + 1.5},z=${z + 0.5},distance=..2] run data merge entity @s {Motion:[0.0,0.22,0.2]}`)
+      // ...and can't be picked up until the shearing's done (all of it got picked up on the shearing pass: the hotbar
+      // filled at the last shear, the sweep went and the Short ran 25.9 s): the sweep back collects the colours one by one
+      bot.chat(`/execute as @e[type=item,x=${this.x0 + i * STEP + 0.5},y=${floor + 1.5},z=${z + 0.5},distance=..2] run data merge entity @s {Motion:[0.0,0.22,0.2],PickupDelay:${14 * (N - 1 - i) + 12}}`)
       await bot.waitForTicks(1)
     }
     ctx.mark('lastshear')
