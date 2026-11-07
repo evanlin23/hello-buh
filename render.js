@@ -249,7 +249,7 @@ function entitiesAt (t, mesher) {
       }
     }
     // BlazeRenderer / MagmaCubeRenderer.getBlockLightLevel: always 15 (they glow in the dark)
-    if (ra[2] === 'blaze' || ra[2] === 'magma_cube') blk = 15
+    if (ra[2] === 'blaze' || ra[2] === 'magma_cube' || ra[2] === 'allay' || ra[2] === 'vex') blk = 15   // (AllayRenderer / VexRenderer too)
     out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(sky, blk) })
   }
   return out

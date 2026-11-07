@@ -923,6 +923,19 @@ export class EntityLayer {
       }
       if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
       if (B.spider) { poseSpider(r, s, r.walk, r.amt || 0); continue }
+      // AllayModel.setupAnim: the wings swept back 35 degrees (yRot +-0.61, xRot 0.44) and flapping with
+      // the age (cos(age x 20 deg) x 0.15 pi), NoAI too; the arms angled out a little. The converted
+      // geometry's wing planes sat edge-on to the camera and never moved (worker 13, guess_sound_2)
+      if (s.name === 'allay' && B.left_wing && B.right_wing) {
+        const age = tick + (s.id % 97) * 3, f1 = Math.cos(age * 20 * Math.PI / 180) * Math.PI * 0.15 + (r.amt || 0)
+        B.right_wing.rotation.set(0.436, -(-0.611 + f1), 0)
+        B.left_wing.rotation.set(0.436, -(0.611 - f1), 0)
+        const ab = Math.sin(age * 9 * Math.PI / 180) * 0.1
+        if (B.right_arm) B.right_arm.rotation.set(0.3, 0, 0.35 + ab)
+        if (B.left_arm) B.left_arm.rotation.set(0.3, 0, -0.35 - ab)
+        if (B.head) { let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; B.head.rotation.set(s.pitch || 0, -dy, 0) }
+        continue
+      }
       if (s.name === 'warden' && B.rightTendril) { poseWarden(r, s, r.walk, r.amt || 0, tick); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
