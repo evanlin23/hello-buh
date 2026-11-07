@@ -125,6 +125,7 @@ module.exports = {
     }
     const cut = async (dx, dz, target, dy = 1) => {
       for (const c of ['forward', 'back', 'left', 'right', 'sprint']) ctl(c, false)
+      if (dy === 1 && Math.floor(dx) >= -1 && Math.floor(dx) <= 1 && Math.floor(dz) >= -2) dy = 0.9375   // on the dirt path (15/16 high): no drop after the cut
       since = 0
       ctx.mark('cut')                                  // K.cut teleports by bot.chat, which doesn't mark the cut itself
       await K.cut(dx, dz, target, dy)
@@ -175,6 +176,7 @@ module.exports = {
         s.t++; s.x = 3.6 + Math.min(s.t / 20, 1) * 0.6 + Math.sin(s.t / 25) * 0.5; s.yaw = -90 * Math.max(-1, Math.min(1, Math.cos(s.t / 25) * 3))
       } else if (s.mode === 'hop') {
         s.t++; s.y = 1 + Math.sin(Math.min(s.t, 6) / 12 * Math.PI) * 1.2      // rises to its apex... and stops there
+        s.x += (3.6 - s.x) * 0.4; s.yaw = 50                                    // in the very pose it had at the start (the loop)
         if (s.t >= 6) { s.mode = 'frozen'; s.t = 0 }
       }
       tp('dsheep', s.x, s.y, s.z, s.yaw)
@@ -188,7 +190,7 @@ module.exports = {
     await line('L01', async (k, at) => {
       world()
       if (k === at(4) - 1) await cut(1.2, 0.5, momFace())
-      if (k < at(4) - 1) { go(k > 2 && k < 11); aimAt(OPEN_AIM) }
+      if (k < at(4) - 1) { go(k > 2 && (k < 11 || k % 3 === 0)); aimAt(OPEN_AIM) }
       look(k)
     })
     // L02: same door (wide), same stare (her face), same half a word (side, close)
@@ -211,8 +213,8 @@ module.exports = {
       aimAt(P(-1.5, 2.5, -4.5)); look(k)
     })
     // L04: the sheep by the door, mid-jump, still in the air (low, from the side, sliding past)
-    await cut(5.2, 0.6, P(3.6, 2.0, -0.6))
-    await line('L04', async (k) => { world(); ctl('left', k > 2 && k < 22); aimAt(P(3.6, 2.0, -0.6)); look(k) })
+    await cut(6.6, 1.8, P(3.6, 1.8, -0.6))
+    await line('L04', async (k) => { world(); ctl('left', k > 2 && k < 22); aimAt(P(3.6, 1.8, -0.6)); look(k) })
     // L06: I walk up and everything starts at once: the sheep lands, Mom turns to me
     await cut(0.6, 7.5, P(1.8, 2.0, -1.4))
     await line('L06', async (k, at) => {
@@ -264,7 +266,7 @@ module.exports = {
     await line('L13', async (k, at) => {
       world()
       if (k === at(5) - 1) { await cut(OPEN[0], OPEN[1], OPEN_AIM); ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
-      if (k < at(5) - 1) { go(k > 2 && k % 2 === 0 && bot.entity.position.z > Z - 0.5); aimAt(momFace()) } else aimAt(OPEN_AIM)
+      if (k < at(5) - 1) { go(k > 2 && k % 3 !== 2 && bot.entity.position.z > Z - 0.3); aimAt(momFace()) } else aimAt(OPEN_AIM)
       look(k)
     })
     ctx.mark('face_off')
@@ -274,25 +276,21 @@ module.exports = {
     await cut(-0.9, 0.9, momFace())
     await line('L16', async (k, at) => { world(); if (k === at(1)) ctx.sound('block.note_block.chime', 0.7, 0.8); go(k > at(1) && k < at(1) + 9); aimAt(momFace()); look(k) })
     // L17: so I never tell her how long I was gone (beside her, a slow look out at the world)
-    await cut(1.9, -0.9, momFace())
-    from = null
-    await line('L17', async (k, at) => {
-      world()
-      if (k >= at(1)) { from = from || { ...K.base }; turn(from, P(0.5, 2.0, 40), (k - at(1)) / 26) }
-      look(k)
-    })
+    await cut(-0.4, 0.2, momFace())                     // her face from the other side, easing back
+    await line('L17', async (k) => { world(); back(k > 3 && k % 3 === 0); aimAt(momFace()); look(k) })
+    back(false)
     // L18: I say hi, I hug her, and I leave again (down the street, past the line)... which is why
     // (I look back from the street: Mom and the sheep stop, mid-jump)
     await cut(0.5, 1.6, momFace())
     let phase = 0, hopAt = -99
     await line('L18', async (k, at) => {
-      if (k < at(2)) { go(bot.entity.position.z > Z - 0.95); aimAt(momFace()) }
+      if (k < at(2)) { go(bot.entity.position.z > Z - 0.7); aimAt(momFace()) }
       else if (k < at(4)) {                               // hard cut: already walking off down the street
         if (phase === 0) { phase = 1; await cut(0.5, 10.5, P(0.5, 1.6, 30)) }
         go(true)
       } else {                                             // hard cut: the opening shot again; the sheep jumps... and stops
         if (phase === 1) { phase = 2; await cut(OPEN[0], OPEN[1], OPEN_AIM); dsheep.mode = 'hop'; dsheep.t = 0; hopAt = k }
-        go(k % 2 === 0); aimAt(OPEN_AIM)
+        aimAt(OPEN_AIM)
         if (k === hopAt + 6) { ctx.mark('face_off'); ctx.mark('sting'); running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
       }
       world(); look(k)
