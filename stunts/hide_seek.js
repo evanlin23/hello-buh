@@ -6,12 +6,13 @@
 //   1. inside a 2x2 dark oak trunk (the leaves shake): two chops, face to face
 //   2. down a 1x1 shaft under the pond (bubbles): he rises out of the water
 //   3. right under the spot where the seeker started (crumbs knocked up from below): dig, a face looking up
-//   4. in the lava pool (it pops and smokes): he rises out of it, on fire
+//   4. in the lava pool (it pops, a burning head peeks out): he rises out of it, on fire
 //   5. on a 1x1 pillar up to build limit, right beside the start (an emerald falls from the sky): the
 //      camera follows the pillar up, and a third-person zoom-out at y 320 shows him up there
 // Hiders are NoAI, Invulnerable, NoGravity villagers; the sets are built with commands before the
 // recording (the pillar is built in the cut before round 5, so it never shows earlier). Between
 // rounds the bot teleports (a cut) and the set-up time is cut from the video (speed 'cut').
+const hs = require('../lib/hide_seek')
 const ROUNDS = 5
 const R = [1, 2, 3, 4, 5]
 
@@ -45,44 +46,11 @@ module.exports = {
   },
 
   // ---------------------------------------------------------------- set
-  // A flat site: hills sliced by the clearing fill showed as cut cliffs behind the village. Try spots
-  // around the plains location and take the first whose surface stays within a few blocks of its middle.
-  async findFlat (ctx) {
-    const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    let best = null
-    for (const [ox, oz] of [[0, 0], [160, 0], [-160, 0], [0, 160], [0, -160], [160, 160], [-160, -160], [160, -160], [-160, 160], [320, 0], [-320, 0], [0, 320], [0, -320]]) {
-      const cx = sp.x + ox, cz = sp.z + oz
-      await ctx.cmd(`/tp @s ${cx} 200 ${cz}`)
-      await bot.waitForTicks(40)
-      try { await bot.waitForChunksToLoad() } catch (e) {}
-      const g = ctx.findLand(cx, cz)
-      if (!g) continue
-      let worst = 0, wet = 0, n = 0
-      for (let dx = -96; dx <= 96; dx += 12) {
-        for (let dz = -96; dz <= 96; dz += 12) {
-          const b = ctx.surface(g.x + dx, g.z + dz)
-          if (!b) continue
-          n++
-          if (/water|ice|lava/.test(b.name)) wet++
-          worst = Math.max(worst, b.position.y - g.y)
-        }
-      }
-      const score = worst + wet * 2
-      ctx.log('site', g.x, g.y, g.z, 'hill', worst, 'wet', wet, 'of', n)
-      if (!best || score < best.score) best = { g, score }
-      if (worst <= 5 && wet <= 2) break
-    }
-    if (!best) throw new Error('no dry land')
-    ctx.log('flat site', best.g, 'score', best.score)
-    return best.g
-  },
-
+  // (the site: lib/hide_seek.js findFlat: hills sliced by the clearing fill showed as cut cliffs)
   async setup (ctx) {
     const { bot } = ctx
     await ctx.defaultRules()
-    const g = await this.findFlat(ctx)
-    const X = g.x, Z = g.z, F = g.y
+    const { X, Z, F } = await hs.findFlat(ctx, { wide: true, radius: 110, maxHill: 4 })
     Object.assign(this, { X, Z, F })
     await ctx.cmd('/gamerule log_admin_commands false')
     await ctx.cmd('/gamerule random_tick_speed 0')
@@ -165,7 +133,7 @@ module.exports = {
     await ctx.cmd('/kill @e[type=villager]')
     const hider = (tag, x, y, z, yaw, pitch, prof) => ctx.cmd(`/summon villager ${(X + x).toFixed(3)} ${(F + y).toFixed(3)} ${(Z + z).toFixed(3)} {NoAI:1b,NoGravity:1b,Invulnerable:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${yaw}f,${pitch}f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${prof}",type:"minecraft:plains",level:2},Xp:1}`)
     // 0: the runner in the opening, who hides behind the tree
-    await hider('h0', 3.5, 1, -5.2, -55, 0, 'farmer')
+    await hider('h0', 3.5, 1, -5.2, -36, 0, 'farmer')
     // 1: in the middle of the 2x2 trunk, facing north, its head in the trunk's F+2 row
     await hider('h1', 7.0, 0.55, -4.0, 180, 0, 'farmer')
     // 2: at the bottom of the shaft (he rises on the reveal), facing west, toward the seeker
@@ -254,7 +222,7 @@ module.exports = {
       const x = path[k][0] + (path[k + 1][0] - path[k][0]) * f, z = path[k][1] + (path[k + 1][1] - path[k][1]) * f
       bot.chat(`/tp @e[tag=h0,limit=1] ${(X + x).toFixed(3)} ${F + 1} ${(Z + z).toFixed(3)}`)
     })
-    for (let i = 0; i < 16; i++) { await bot.look(bot.entity.yaw + 0.004, bot.entity.pitch, true); await bot.waitForTicks(1) }   // watches him go
+    for (let i = 0; i < 22; i++) { await bot.look(bot.entity.yaw + 0.004, bot.entity.pitch, true); await bot.waitForTicks(1) }   // watches him go, until he's behind the trunk
     await go(-2.5, -10.3)                        // H1's door
     await runner
     bot.chat(`/tp @e[tag=h0,limit=1] ${X + 300} ${F + 1} ${Z}`)   // (off camera: he's in the trunk now)
@@ -291,9 +259,11 @@ module.exports = {
     await bot.waitForTicks(6)
     ctx.mark('cut1b')
     ctx.mark('r2_go')
-    await look(0.5, 1.6, 0.5, 280)              // the well
-    await go(0.5, 5.0, { sprint: false, pitch: -0.55, stop: 0.3, maxTicks: 24 })
-    await bot.waitForTicks(4)
+    await go(2.6, 10.3)                          // H4's door
+    await openDoor(4, 11)
+    await look(7, 1.4, 10.5, 240)
+    await bot.waitForTicks(3)
+    await go(2.4, 6.9)                           // (round H4's corner)
     await go(8.0, 7.2)                           // behind the hay
     await look(9.5, 0.8, 5.5, 240)
     await bot.waitForTicks(3)
@@ -303,14 +273,15 @@ module.exports = {
       if (i % 3 === 0) ctx.particles('splash', W(16.5, 1, 9.5), { count: 10, spread: 0.35 })
       if (i % 6 === 0) ctx.sound('block.bubble_column.upwards_ambient', 0.8, 0.9 + 0.05 * (i % 4))
     })
-    await go(11.6, 9.5, { sprint: false, stop: 0.35, face: [16.5, 1.3, 9.5] })
     ctx.mark('r2_zoom')
-    await rise('h2', 4.4, 22)                   // he rises out of the shaft, right in front of the seeker
+    const up2 = rise('h2', 4.4, 26)             // he rises out of the shaft as the seeker walks up
+    await go(11.6, 9.5, { sprint: false, stop: 0.35, face: [16.5, 1.3, 9.5] })
+    await up2
     ctx.particles('splash', W(16.5, 1, 9.5), { count: 24 }); ctx.sound('entity.player.splash', 0.8, 1.2)
     hmm(0.8)
     found(2)
     await bubbles
-    await drift(14)
+    await drift(18)
 
     // ---- round 3: under my feet (west, by the bell stall)
     ctx.mark('cut2a')
@@ -358,15 +329,15 @@ module.exports = {
     await look(-13, 4.0, -18, 260)               // up into the tree
     await bot.waitForTicks(3)
     ctx.mark('r4_end')
-    // the giveaway: the lava pops and smokes
-    const pops = everyTick(30, (i) => {
-      if (i % 5 === 0) ctx.sound('block.lava.pop', 1, 0.8 + 0.1 * (i % 3))
-      if (i === 4 || i === 18) ctx.particles('smoke', W(-18.5, 1.4, -12.5))
-    })
-    await look(-18.5, 0.8, -12.5, 360)
+    // the giveaway: the lava pops, and a burning head peeks out of it and sinks back
+    const pops = everyTick(30, (i) => { if (i % 5 === 0) ctx.sound('block.lava.pop', 1, 0.8 + 0.1 * (i % 3)) })
+    const peek = (async () => { await rise('h4', 1.5, 6); await bot.waitForTicks(6); await rise('h4', -1.5, 6) })()
+    await look(-18.5, 0.8, -12.5, 300)
+    await peek
     ctx.mark('r4_zoom')
+    const up4 = rise('h4', 2.6, 20)             // ...and he comes up, on fire, as the seeker walks over
     await go(-14.2, -13.0, { sprint: false, stop: 0.35, face: [-18.5, 1.2, -12.5] })
-    await rise('h4', 2.6, 18)                   // he rises out of the lava, on fire
+    await up4
     hmm(0.9)
     found(4)
     await pops

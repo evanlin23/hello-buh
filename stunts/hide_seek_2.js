@@ -44,7 +44,7 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     await ctx.defaultRules()
-    const site = await hs.findFlat(ctx)
+    const site = await hs.findFlat(ctx, { wide: true })
     const { X, Z, F } = site
     Object.assign(this, site)
     for (const c of ['/gamerule log_admin_commands false', '/gamerule random_tick_speed 0', '/gamerule fire_spread_radius_around_player 0', '/difficulty peaceful']) await ctx.cmd(c)
@@ -75,7 +75,10 @@ module.exports = {
     await ctx.cmd(`/fill ${P(9, 1, 4)} ${P(10, 1, 4)} barrel[facing=up]`); await ctx.cmd(`/setblock ${P(9, 2, 4)} barrel[facing=up]`)
     await ctx.cmd(`/fill ${P(9, 1, 5)} ${P(10, 1, 5)} stripped_spruce_log[axis=x]`)
     // 1: the snowman, 2x2 snow blocks, 2 high, a carved pumpkin head (facing west to start)
-    await ctx.cmd(`/fill ${P(6, 1, -5)} ${P(7, 2, -4)} snow_block`)
+    // (the top layer is full snow layers, not snow blocks: a carved pumpkin on two stacked snow blocks
+    // turns into a real snow golem, as in vanilla, and it walked off with the snowman)
+    await ctx.cmd(`/fill ${P(6, 1, -5)} ${P(7, 1, -4)} snow_block`)
+    await ctx.cmd(`/fill ${P(6, 2, -5)} ${P(7, 2, -4)} snow[layers=8]`)
     await ctx.cmd(`/setblock ${P(7, 3, -5)} carved_pumpkin[facing=west]`)
     // 2: the frozen lake (ice over 2 of water), uneven edges
     await ctx.cmd(`/fill ${P(11, -3, 5)} ${P(21, -1, 13)} dirt`); await ctx.cmd(`/fill ${P(11, 1, 5)} ${P(21, 1, 13)} air`)
@@ -88,7 +91,7 @@ module.exports = {
     await ctx.cmd(`/fill ${P(-13, -1, -4)} ${P(-11, 0, -2)} powder_snow`); await ctx.cmd(`/fill ${P(-13, 1, -4)} ${P(-11, 1, -2)} air`)
     // 4: the ice statue (south-west), 3x3x4 of ice
     await ctx.cmd(`/fill ${P(-14, 1, 3)} ${P(-12, 4, 5)} ice`)
-    await ctx.cmd('/kill @e[type=villager]')
+    await ctx.cmd('/kill @e[type=villager]'); await ctx.cmd('/kill @e[type=snow_golem]')
     await S.hider('h0', 3.5, 1.06, -6.2, -55, 0, 'farmer', 'snow')               // the runner
     await S.hider('h1', 7.0, 0.55, -4.0, 180, 0, 'farmer', 'snow')               // in the snowman
     await S.hider('h2', 16.5, -2.0, 9.5, 90, -60, 'fisherman', 'snow')           // under the ice, looking up
@@ -129,7 +132,7 @@ module.exports = {
     await m.openDoor(4, -11)
     await look(6.5, 1.4, -10.5, 240)
     await bot.waitForTicks(3)
-    await go(2.6, -6.9, { pitch: -0.05, stop: 0.4 })
+    await go(2.6, -6.5, { pitch: -0.05, stop: 0.4 })   // (clear of H2's porch slabs)
     ctx.mark('r1_end')
     // the giveaway: the snowman's head turns to look at him
     await ctx.cmd(`/setblock ${X + 7} ${F + 3} ${Z - 5} carved_pumpkin[facing=north]`)
@@ -137,12 +140,12 @@ module.exports = {
     await look(7.5, 3.5, -4.5, 360)
     m.hmm(1)
     ctx.mark('r1_zoom')
-    await go(5.6, -7.0, { stop: 0.3, face: [7.0, 2.4, -5.0] })
+    await go(5.6, -6.5, { stop: 0.3, face: [7.0, 2.4, -5.0] })
     await look(6.5, 2.5, -5, 160)
     ctx.mark('r1_dig'); ctx.select(0)
-    await m.dig(6, 2, -5, 2, 'snow_block', 'snow')
+    await m.dig(6, 2, -5, 2, 'snow', 'snow')
     await look(7.5, 2.5, -5, 140)
-    await m.dig(7, 2, -5, 2, 'snow_block', 'snow')
+    await m.dig(7, 2, -5, 2, 'snow', 'snow')
     m.hmm(1.1)
     m.found(1)
     await look(7.0, 2.4, -4.3, 260)
@@ -155,6 +158,7 @@ module.exports = {
     await m.openDoor(4, 11)
     await look(7, 1.4, 10.5, 240)
     await bot.waitForTicks(3)
+    await go(2.4, 6.6)                           // (round H4's corner)
     await go(8.0, 6.6)                           // behind the barrels
     await look(9.5, 0.8, 5.0, 240)
     await bot.waitForTicks(3)
@@ -162,6 +166,7 @@ module.exports = {
     // the giveaway: something knocks under the ice
     const knock = m.everyTick(30, (i) => { if (i % 6 === 0) { ctx.particles('block', W(16, 0, 9), { block: 'ice' }); ctx.sound('block.glass.hit', 1, 0.8 + 0.05 * (i % 3)) } })
     await look(16.5, 0.9, 9.5, 360)
+    await go(11.4, 6.9, { sprint: false, stop: 0.4, face: [16.5, 0.6, 9.5] })
     await go(13.8, 9.5, { sprint: false, stop: 0.35, face: [16.5, 0.6, 9.5] })   // out onto the ice
     ctx.mark('r2_zoom')
     await knock
@@ -201,8 +206,9 @@ module.exports = {
     await m.openDoor(-4, 11)
     await look(-7, 1.4, 11.5, 240)
     await bot.waitForTicks(3)
-    await go(-12.6, 7.4)                         // round the back of H3
-    await look(-12, 1.2, 15, 240)
+    await go(-2.4, 6.9)                          // (round H3's corner)
+    await go(-12.6, 6.9)                         // along the front of H3
+    await look(-12.2, 1.2, 15, 240)
     await bot.waitForTicks(3)
     ctx.mark('r4_end')
     // the giveaway: inside the ice statue, a head turns to look at him
@@ -210,7 +216,7 @@ module.exports = {
     m.hmm(0.8)
     await look(-12.5, 2.9, 4.5, 360)
     ctx.mark('r4_zoom')
-    await go(-12.5, 6.9, { sprint: false, stop: 0.3, face: [-12.5, 2.9, 4.5] })
+    await go(-12.5, 6.4, { sprint: false, stop: 0.3, face: [-12.5, 2.9, 4.5] })
     m.found(4)
     ctx.sound('block.glass.hit', 0.8, 0.6)
     await m.drift(18)
