@@ -79,6 +79,8 @@ module.exports = {
         await bot.waitForTicks(1)
         if (bot.blockAt(p)?.name !== 'air') { ctx.log('dig did not break', o.block); bot.chat(`/setblock ${o.x} ${oy} ${this.wz} air`) }
         ctx.sound('block.stone.break', 1); ctx.particles('block', p, { block: o.block })
+        // the ore's own drop fell into the recess, out of reach, and lay there all video: gone (the fountain is the drop)
+        bot.chat(`/kill @e[type=item,x=${o.x + 0.5},y=${oy + 0.5},z=${this.wz + 0.5},distance=..1.2]`)
         if (i === 0 && vi === 0) ctx.mark('burst')
         if (i === this.ores.length - 1 && vi === 0) ctx.mark('finale')
         ctx.mark('ore', { n: i, block: o.block })
@@ -97,7 +99,8 @@ module.exports = {
           bot.chat(`/summon item ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {Item:{id:"minecraft:${o.drop}",count:1},PickupDelay:32767,Tags:["fd${i}_${vi}"],Motion:[${((tx - sx) / f).toFixed(3)},${vy.toFixed(3)},${((tz - sz) / f).toFixed(3)}]}`)
         }
         // release them for pickup once they're up and apart
-        { let t = 0; const tag = `fd${i}_${vi}`; const rel = () => { if (++t === 16) {   // once they've come down (12 caught them mid-air, off screen)
+        { let t = 0; const tag = `fd${i}_${vi}`; const rel = () => { if (++t === 22) {   // after the server's first item sync (20): released at 16 they were caught before any position update and froze on screen
+              // once they've come down (12 caught them mid-air, off screen)
              bot.chat(`/execute as @e[type=item,tag=${tag}] run data merge entity @s {PickupDelay:0}`); bot.removeListener('physicsTick', rel) } }; bot.on('physicsTick', rel) }
         // the ore's own XP (vanilla: coal, lapis, redstone, diamond, emerald drop orbs)
         if (/coal|lapis|redstone|diamond|emerald/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${oy + 0.5} ${this.wz + 1.2} {Value:3}`)
