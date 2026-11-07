@@ -45,14 +45,14 @@ module.exports = {
   botTimeout: 400,
   edit: {
     caption: 'noob vs pro vs hacker 💀', red: 'hacker', song: 'songs/funk_abnormal.mp3', dropAt: 'hack',
-    startAt: 'seg:0', endAfter: 'boom:1.0', deathScreen: true, onFire: 'in_lava:death', subsY: 0.3,
+    startAt: 'seg:0', endAfter: 'boom:0.95', deathScreen: true, onFire: 'in_lava:death', subsY: 0.3,
     // the role as a label for the whole beat (top centre), the task on its noob beat, and the
     // hacker's command typed into the vanilla chat bar (Enter on the 'typed' mark) with its feedback
     tags: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ['seg', null, ROLES[i % 3][0], ROLES[i % 3][1], i]),
     subs: TASKS.map((t, i) => ['seg', `task ${i + 1}: ${t}`, 1.6, i * 3]),
     chat: CMDS.map((c, i) => [`typed${i}`, c, 0.9, 0.5, FEEDBACK[i]]),
     // a preview of the finale before beat 1 (the launch, cut before it lands)
-    hook: { at: 'boom', before: 0.5, after: 0.8, text: 'wait for the hacker 💀' },
+    hook: { at: 'boom', before: 0.3, after: 0.9, text: 'wait for the hacker 💀' },
     punch: [['hack', 0, 1.08], ['hack', 1, 1.08], ['boom', 0, 1.18]],
     shake: [['boom', 0, 22]],
     flash: [['boom', 0, 0.35]],
