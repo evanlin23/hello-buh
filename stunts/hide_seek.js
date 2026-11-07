@@ -50,15 +50,15 @@ module.exports = {
     await ctx.cmd('/gamerule random_tick_speed 0')
     await ctx.cmd('/difficulty peaceful')
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
-    await heavy(`/forceload add ${X - 48} ${Z - 48} ${X + 48} ${Z + 48}`)
+    await heavy(`/forceload add ${X - 72} ${Z - 72} ${X + 72} ${Z + 72}`)
     // a flat, cleared field (hills cut at the edge show behind houses)
-    for (let z0 = Z - 48; z0 <= Z + 48; z0 += 6) {
-      const z1 = Math.min(z0 + 5, Z + 48)
-      await heavy(`/fill ${X - 48} ${F + 1} ${z0} ${X + 48} ${F + 6} ${z1} air`)
-      await heavy(`/fill ${X - 48} ${F + 7} ${z0} ${X + 48} ${F + 30} ${z1} air`)
-      await heavy(`/fill ${X - 48} ${F} ${z0} ${X + 48} ${F} ${z1} grass_block`)
-      await heavy(`/fill ${X - 48} ${F - 4} ${z0} ${X + 48} ${F - 1} ${z1} dirt`)
-      await heavy(`/fillbiome ${X - 48} ${F - 4} ${z0} ${X + 48} ${F + 12} ${z1} minecraft:plains`)
+    for (let z0 = Z - 72; z0 <= Z + 72; z0 += 6) {
+      const z1 = Math.min(z0 + 5, Z + 72)
+      await heavy(`/fill ${X - 72} ${F + 1} ${z0} ${X + 72} ${F + 6} ${z1} air`)
+      await heavy(`/fill ${X - 72} ${F + 7} ${z0} ${X + 72} ${F + 30} ${z1} air`)
+      await heavy(`/fill ${X - 72} ${F} ${z0} ${X + 72} ${F} ${z1} grass_block`)
+      await heavy(`/fill ${X - 72} ${F - 4} ${z0} ${X + 72} ${F - 1} ${z1} dirt`)
+      await heavy(`/fillbiome ${X - 72} ${F - 4} ${z0} ${X + 72} ${F + 12} ${z1} minecraft:plains`)
     }
     await ctx.sleep(2000)
     const P = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
@@ -183,12 +183,13 @@ module.exports = {
     await openDoor(4, -11)
     await look(7, 1.4, -10.5, 260)
     await bot.waitForTicks(4)
+    await go(2.6, -6.9, { pitch: -0.05, stop: 0.4 })   // back out into the street
     ctx.mark('r1_end')
-    hmm(1)                                       // ...a "hmm" from behind: the tree
+    hmm(1)                                       // ...a "hmm" from the tree
     await look(7.0, 2.4, -5.0, 420)
     ctx.mark('r1_zoom')
     await bot.waitForTicks(14)
-    await go(7.0, -6.9, { sprint: false, pitch: -0.05, stop: 0.3 })
+    await go(5.6, -7.0, { sprint: false, pitch: -0.05, stop: 0.3 })
     await look(6.5, 2.5, -5, 180)
     ctx.mark('r1_chop'); ctx.select(0)
     await dig(6, 2, -5, 8, 'dark_oak_log', 'wood')
@@ -220,6 +221,7 @@ module.exports = {
     for (let i = 0; i < 5; i++) ctx.particles('splash', W(16.5, 1, 9.5), { count: 8, spread: 0.4 })
     await look(16.5, 0.9, 9.5, 380)
     await go(11.6, 9.5, { sprint: false, pitch: -0.2, stop: 0.35 })
+    await look(16.5, 1.3, 9.5, 220)
     ctx.mark('r2_zoom')
     // he rises out of the shaft, right in front of the seeker
     for (let i = 0; i < 22; i++) {
@@ -264,9 +266,10 @@ module.exports = {
     // ---- round 4: the pillar (built now, off camera)
     ctx.mark('cut3a')
     await ctx.cmd('/gamemode creative')
-    for (let y = 1; y <= 319 - F; y += 100) await ctx.cmd(`/fill ${X - 2} ${F + y} ${Z + 5} ${X - 2} ${Math.min(319, F + y + 99)} ${Z + 5} dirt`)
-    await this.hider('h4', -1.5, 320 - F, 5.2, 0, 60, 'librarian')
-    await tp(-0.5, 3.5, 180, 0)
+    // the pillar: (-3, 6), from the ground to build limit (y 319); the villager on top, at its east edge, looking down
+    for (let y = 1; y <= 319 - F; y += 100) await ctx.cmd(`/fill ${X - 3} ${F + y} ${Z + 6} ${X - 3} ${Math.min(319, F + y + 99)} ${Z + 6} dirt`)
+    await this.hider('h4', -2.25, 320 - F, 6.5, -90, 60, 'librarian')
+    await tp(-0.5, 5.5, 70, 0)   // the pillar ahead on the right: it's in shot from the start
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(20)
     ctx.select(0)
@@ -276,21 +279,21 @@ module.exports = {
     await openDoor(-4, 11)
     await look(-7, 1.4, 11.5, 260)
     await bot.waitForTicks(4)
-    await go(-10.5, 6.5)                         // behind H3
-    await look(-10.0, 1.2, 13, 260)
+    await go(2.6, 10.3)                          // across: H4's door
+    await openDoor(4, 11)
+    await look(7, 1.4, 10.5, 260)
     await bot.waitForTicks(4)
-    await go(-4.5, 4.0)                          // back toward the start
+    await go(0.5, 7.4, { stop: 0.4 })            // back to the start
     ctx.mark('r4_end')
-    await look(-2, 1.2, 4.5, 250)
-    // an emerald drops out of the sky, right in front of the seeker
-    await ctx.cmd(`/summon item ${X - 2.2} ${F + 9} ${Z + 3.6} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[0.0,-0.2,0.0]}`)
-    await look(-2.2, 2.5, 3.6, 300)
-    await look(-2.2, 0.3, 3.6, 300)
+    // an emerald drops out of the sky, right beside the pillar
+    bot.chat(`/summon item ${X - 1.6} ${F + 7} ${Z + 6.5} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[0.0,-0.3,0.0]}`)
+    await look(-1.6, 4.5, 6.5, 300)
+    await look(-1.6, 0.3, 6.5, 350)
     ctx.sound('entity.item.pickup', 0.4, 0.6)
     // ...and up the pillar
-    await look(-1.5, 40, 5.5, 450)
+    await look(-2.5, 40, 6.5, 450)
     ctx.mark('r4_zoom')
-    await look(-1.5, 321 - F, 5.4, 650)
+    await look(-2.2, 321 - F, 6.5, 650)
     hmm(0.9)
     found(4)
     for (let i = 0; i < 24; i++) { await bot.look(bot.entity.yaw + 0.002 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1) }
