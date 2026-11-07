@@ -116,7 +116,7 @@ module.exports = {
     const go = (on) => bot.setControlState('forward', on)
     // respawn without stalling the line (an awaited respawn held each scene ~1 s past its voice)
     let respawning = false
-    const respawnSoon = (then) => { if (respawning) return; respawning = true; respawn().then(() => { respawning = false; if (then) then() }) }
+    const respawnSoon = (then) => { if (respawning || !ctx.died) return; respawning = true; respawn().then(() => { respawning = false; if (then) then() }) }
     const alive = () => !ctx.died && !respawning
     // something moving behind every death screen: smoke at a point in view, every 3 ticks while dead
     let deadView = null
@@ -172,7 +172,7 @@ module.exports = {
     gone('v_butcher')
     let dead = false, door = false, burnAt = 0
     await line('L04', async (k, at) => {
-      if (!burnAt && bot.entity.position.y < F + 1.0) { burnAt = k; ctx.mark('burn') }
+      if (!burnAt && (bot.entity.position.y < F + 1.0 || ctx.died)) { burnAt = k || 1; ctx.mark('burn') }   // on half a heart the lava can kill on the touching tick
       if (!dead && burnAt && (ctx.died || k >= burnAt + 10)) { if (!ctx.died) say('/damage @s 100 minecraft:lava'); dead = true }
       if (dead && k >= at(1)) respawnSoon(() => setMeter(3))
       if (dead && !door && k >= at(2) - 1 && alive()) { door = true; await cut(-1.5, 12.5, P(4.5, 1.8, 12.5)) }
