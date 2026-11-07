@@ -208,14 +208,16 @@ module.exports = {
     await cut(-11.5, -17.4, P(-11.5, 1.5, -21))
     gone('v_fletcher')
     dead = false
-    let pressed = 0, from5 = null
+    let pressed = 0, from5 = null, up5 = 0
     await line('L05', async (k) => {
       go(!dead)
       if (!dead && bot.entity.position.z < Z - 19.55) pressed++
       if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-10.2, 4.6, -20.5) }   // over its top (y 1-3: 3.4 was inside the block)
       // pressed against it, look up its side: the top and the sky in frame, the smoke above it in view (the
       // screen was all cactus texture and froze behind the death screen)
-      if (pressed > 0) { from5 = from5 || { ...K.base }; K.turnTo(from5, P(-11.5, 5.6, -21), pressed / 7) }   // up its side to the top and the sky, eased (a 6-frame flick)
+      // up its side to the top and the sky, eased, starting on the approach: on half a heart the first touch kills,
+      // so an ease begun on contact never got off the cactus side (that death screen froze)
+      if (bot.entity.position.z < Z - 18.0) { from5 = from5 || { ...K.base }; up5++; K.turnTo(from5, P(-11.5, 5.6, -21), up5 / 7) }
       if (alive()) look(k)
     })
     go(false)
