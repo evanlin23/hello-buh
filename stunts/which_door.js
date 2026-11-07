@@ -19,7 +19,7 @@ module.exports = R.makeStunt({
     endAfter: 'last_death:0.97', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
-      ['intro', 'PICK ONE 👀', 1.2, 'yellow'],
+      ['intro', 'PICK A DOOR 👇', 1.8, 'yellow'],
       ['death', 'DEAD ❌', 0.7, 'red', 0],
       ['survive', 'SURVIVED ✅', 0.6, 'green', 0],
       ['survive', 'SURVIVED ✅', 0.6, 'green', 1],
@@ -30,8 +30,6 @@ module.exports = R.makeStunt({
     punch: [['death', 0, 1.08], ['death', 1, 1.08], ['death', 2, 1.2]],
     flash: [['death', 2, 0.8]],
     shake: [['death', 2, 24]],
-    // the blast from above, slowed (first person, the death screen covers it on the tick it lands)
-    replay: { at: 'big_blast', before: 0.55, after: 0.28, cam: '12.5,14,-2,0,-72', speed: 0.3, label: 'REPLAY' },
     speed: [['lava_a', 'lava_dead', 2.5]]     // the burn in the lava, sped up to the death
   }
 })
