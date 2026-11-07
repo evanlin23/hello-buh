@@ -39,7 +39,7 @@ module.exports = {
     // stand clear of every block before recording (spawning inside the fill hurt the bot: in_wall)
     await ctx.tpCheck(x + 0.5, floor + PILLARS[0].h + 1, z + 0.5, 180, 60)
     ctx.select(0)
-    return { x, y: floor, z }
+    return { x: Math.round((x - 16 + X1) / 2), y: floor, z }   // the set's middle: the harness records the world around it
   },
 
   async clutch (ctx, i) {

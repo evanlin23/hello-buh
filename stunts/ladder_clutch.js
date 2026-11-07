@@ -51,7 +51,7 @@ module.exports = {
     // on the first wall already, so the recording opens on the drop (a tp during the recording
     // showed the old view and then held still for the tp check)
     await ctx.tpCheck(x + 0.75, floor + WALLS[0].h + 1, z + 0.5, -90, 70)
-    return { x, y: floor, z }
+    return { x, y: floor, z: z + SPAN / 2 }   // the set's middle: the harness records the world around it
   },
 
   // one clutch off wall i: stand on its east edge looking down the drop, walk off, turn to face the

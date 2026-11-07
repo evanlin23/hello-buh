@@ -43,7 +43,7 @@ module.exports = {
     // in the middle of the first ring, facing its first frame (north-west)
     await ctx.tpCheck(x + 2.5, floor + 1, z + 2.5, 160, 40)
     ctx.select(0)
-    return { x, y: floor, z }
+    return { x: x + 21, y: floor, z }   // the row's middle: the harness records the world around it
   },
 
   // ring frames in fill order: round the ring clockwise from the south-west, ending on the
