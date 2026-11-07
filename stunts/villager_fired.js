@@ -242,8 +242,7 @@ module.exports = {
     setJob('nitwit'); ctx.sound('entity.villager.no', 1, 0.7)
     ctx.particles('angry', { x: x + 0.5, y: floor + 3.3, z: vz + 0.5 }, { count: 4 })
     ctx.mark('nitwit')
-    await bot.waitForTicks(10)
-    await ctx.easeLookAt(top.offset(0.9, 0.25, 0), 1000)        // a real drift to the end (a small one read as a pause)
+    await ctx.easeLookAt(top.offset(0.9, 0.25, 0), 1500)        // straight into a real drift to the end (any hold read as a pause)
     return booms >= 4 && !ctx.died && !!v
   }
 }
