@@ -64,7 +64,7 @@ module.exports = {
         if (Math.abs(bot.entity.position.y - (floor + P.h + 1)) < 0.1) break
         if (t > 20) throw new Error('teleport did not stick')
       }
-      await bot.waitForTicks(1)   // the HUD catches up (a stale slot showed for a frame after the cut)
+      await bot.waitForTicks(2)   // the HUD catches up (a stale slot showed for a frame or two after the cut)
       ctx.mark(`cut${i}b`)
     }
     ctx.mark(i === 0 ? 'start' : 'top', { n: i })
