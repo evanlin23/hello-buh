@@ -276,7 +276,7 @@ module.exports = {
       ctx.mark(`rv${n}a`)
       // layer 1 from the front; the final low from the south-west, where the second shell's raised edge
       // shows over the first (from the front the two reveals looked the same)
-      if (last) await tpTo(x - 12.5, this.floor + 1, z + STEPS + 7.5, -128, -10)   // a 3/4 view from well back in the field to the south-west, standing (walking in pressed the camera against the hill's side; from the platform the layer-2 columns and the obsidian line filled the view)
+      if (last) await tpTo(x - 3.5, this.floor + 1, z + STEPS + 11.5, -162, -12)   // the field in front, a little west of the centre line (the layer-2 run read best from there); from the south-west the hill's dirt side filled the view, from the platform the layer-2 columns did
       else await tpTo(...FRONT(), 180, -12)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
@@ -289,7 +289,7 @@ module.exports = {
         const ph = k / 22
         await lookStep(step(4 + Math.round(2 * Math.sin(ph * 0.7))).offset((last ? 1 : 0) + 3 * Math.sin(ph), 2, 0), 0.1)
         const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 5
-        bot.setControlState('forward', !last && far)   // the last stands on the platform (forward would take it off the edge): the eyes sweep
+        bot.setControlState('forward', last ? Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 9 : far)   // the last: a short push in, stopping well out from the foot
         await bot.waitForTicks(1)
       }
       bot.clearControlStates()
