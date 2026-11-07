@@ -1,0 +1,435 @@
+{
+  "name": "ladder_clutch",
+  "caption": "ladder clutch \ud83d\ude33",
+  "youtube": {
+    "title": "ladder clutch \ud83d\ude33 #minecraft #shorts",
+    "description": "ladder clutch \ud83d\ude33\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "fearless_funk.mp3",
+    "title": "Fearless Funk",
+    "artist": "DR M\u00d8B, Chris Linton",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "placed",
+    "drop_in_song_s": 29.5,
+    "drop_in_short_s": 5.03,
+    "song_start_s": 24.47
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 31.53,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 71605910,
+    "sha256": "f5f58bd5282fd3d45f66720f4c5f745a1f8ca7befb02f21288b0abb1bcb1d999"
+  },
+  "edit": {
+    "caption": "ladder clutch \ud83d\ude33",
+    "red": "ladder",
+    "song": "songs/misery.mp3",
+    "dropAt": "placed",
+    "startAt": "jump:-0.25",
+    "endAfter": "final:0.9",
+    "subsY": 0.15,
+    "speed": [
+      [
+        "cut1a",
+        "cut1b",
+        "cut"
+      ],
+      [
+        "cut2a",
+        "cut2b",
+        "cut"
+      ],
+      [
+        "cut3a",
+        "cut3b",
+        "cut"
+      ],
+      [
+        "cut4a",
+        "cut4b",
+        "cut"
+      ],
+      [
+        "cut5a",
+        "cut5b",
+        "cut"
+      ],
+      [
+        "cut6a",
+        "cut6b",
+        "cut"
+      ],
+      [
+        "cut7a",
+        "cut7b",
+        "cut"
+      ]
+    ],
+    "subs": [
+      [
+        "top",
+        "20 blocks",
+        3,
+        0
+      ],
+      [
+        "landed",
+        "too late",
+        1.3,
+        0
+      ],
+      [
+        "top",
+        "25 blocks",
+        3.025,
+        1
+      ],
+      [
+        "top",
+        "30 blocks",
+        3.15,
+        2
+      ],
+      [
+        "top",
+        "40 blocks",
+        3.4,
+        3
+      ],
+      [
+        "top",
+        "50 blocks",
+        3.65,
+        4
+      ],
+      [
+        "top",
+        "60 blocks",
+        3.9,
+        5
+      ],
+      [
+        "top",
+        "70 blocks",
+        4.15,
+        6
+      ],
+      [
+        "top",
+        "80 blocks",
+        4.4,
+        7
+      ]
+    ],
+    "args": [
+      "--caption",
+      "ladder clutch \ud83d\ude33",
+      "--red",
+      "ladder",
+      "--subs",
+      "[[\"top\",\"20 blocks\",3,0],[\"landed\",\"too late\",1.3,0],[\"top\",\"25 blocks\",3.025,1],[\"top\",\"30 blocks\",3.15,2],[\"top\",\"40 blocks\",3.4,3],[\"top\",\"50 blocks\",3.65,4],[\"top\",\"60 blocks\",3.9,5],[\"top\",\"70 blocks\",4.15,6],[\"top\",\"80 blocks\",4.4,7]]",
+      "--subs_y",
+      "0.15",
+      "--speed",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"cut7a\",\"cut7b\",\"cut\"]]",
+      "--start_at",
+      "jump:-0.25",
+      "--end_after",
+      "final:0.9"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 382,
+      "y": 72,
+      "z": -44
+    },
+    "biome": "minecraft:plains",
+    "ticks": 706,
+    "seconds": 35.3,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 0.8,
+        "event": "top"
+      },
+      {
+        "t": 1.6,
+        "event": "jump"
+      },
+      {
+        "t": 3,
+        "event": "landed"
+      },
+      {
+        "t": 3,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 3.2,
+        "event": "late_placed"
+      },
+      {
+        "t": 3.2,
+        "event": "swing"
+      },
+      {
+        "t": 4.25,
+        "event": "cut1a"
+      },
+      {
+        "t": 4.35,
+        "event": "cut1b"
+      },
+      {
+        "t": 4.35,
+        "event": "top"
+      },
+      {
+        "t": 5.05,
+        "event": "jump"
+      },
+      {
+        "t": 6.5,
+        "event": "placed"
+      },
+      {
+        "t": 6.5,
+        "event": "swing"
+      },
+      {
+        "t": 6.95,
+        "event": "landed"
+      },
+      {
+        "t": 7.95,
+        "event": "cut2a"
+      },
+      {
+        "t": 8.05,
+        "event": "cut2b"
+      },
+      {
+        "t": 8.05,
+        "event": "top"
+      },
+      {
+        "t": 8.7,
+        "event": "jump"
+      },
+      {
+        "t": 10.3,
+        "event": "placed"
+      },
+      {
+        "t": 10.3,
+        "event": "swing"
+      },
+      {
+        "t": 10.7,
+        "event": "landed"
+      },
+      {
+        "t": 11.7,
+        "event": "cut3a"
+      },
+      {
+        "t": 11.8,
+        "event": "cut3b"
+      },
+      {
+        "t": 11.8,
+        "event": "top"
+      },
+      {
+        "t": 12.5,
+        "event": "jump"
+      },
+      {
+        "t": 14.4,
+        "event": "placed"
+      },
+      {
+        "t": 14.4,
+        "event": "swing"
+      },
+      {
+        "t": 14.55,
+        "event": "landed"
+      },
+      {
+        "t": 15.55,
+        "event": "cut4a"
+      },
+      {
+        "t": 15.65,
+        "event": "cut4b"
+      },
+      {
+        "t": 15.65,
+        "event": "top"
+      },
+      {
+        "t": 16.3,
+        "event": "jump"
+      },
+      {
+        "t": 18.4,
+        "event": "placed"
+      },
+      {
+        "t": 18.4,
+        "event": "swing"
+      },
+      {
+        "t": 18.95,
+        "event": "landed"
+      },
+      {
+        "t": 20,
+        "event": "cut5a"
+      },
+      {
+        "t": 20.1,
+        "event": "cut5b"
+      },
+      {
+        "t": 20.1,
+        "event": "top"
+      },
+      {
+        "t": 20.75,
+        "event": "jump"
+      },
+      {
+        "t": 23.1,
+        "event": "placed"
+      },
+      {
+        "t": 23.1,
+        "event": "swing"
+      },
+      {
+        "t": 23.4,
+        "event": "landed"
+      },
+      {
+        "t": 24.4,
+        "event": "cut6a"
+      },
+      {
+        "t": 24.5,
+        "event": "cut6b"
+      },
+      {
+        "t": 24.5,
+        "event": "top"
+      },
+      {
+        "t": 25.15,
+        "event": "jump"
+      },
+      {
+        "t": 27.7,
+        "event": "placed"
+      },
+      {
+        "t": 27.7,
+        "event": "swing"
+      },
+      {
+        "t": 28,
+        "event": "landed"
+      },
+      {
+        "t": 29,
+        "event": "cut7a"
+      },
+      {
+        "t": 29.1,
+        "event": "cut7b"
+      },
+      {
+        "t": 29.1,
+        "event": "top"
+      },
+      {
+        "t": 29.75,
+        "event": "jump"
+      },
+      {
+        "t": 32.5,
+        "event": "placed"
+      },
+      {
+        "t": 32.5,
+        "event": "swing"
+      },
+      {
+        "t": 32.8,
+        "event": "landed"
+      },
+      {
+        "t": 32.8,
+        "event": "final"
+      },
+      {
+        "t": 34.2,
+        "event": "outro"
+      },
+      {
+        "t": 35.3,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "0ec69ab72a741af38dde0261b5fbdee66e712798",
+    "rendered_at": "2026-11-07T04:11:47.431Z",
+    "head_at_publish": "40742ccb05ae0ed8c412613db7d7ee4e18545e6a",
+    "stunt": "stunts/ladder_clutch.js",
+    "source_snapshot": [
+      "source/ladder_clutch.js",
+      "source/_site.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 0ec69ab72a74",
+    "gunzip -c shorts/ladder_clutch/recording.json.gz > work/ladder_clutch.rec.json",
+    "node render.js work/ladder_clutch.rec.json work/ladder_clutch.frames 60 1080 1011",
+    "python3 audio.py work/ladder_clutch.rec.json work/ladder_clutch.wav",
+    "python3 edit.py --frames work/ladder_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/ladder_clutch.rec.json --audio work/ladder_clutch.wav --caption \"ladder clutch \ud83d\ude33\" --red ladder --subs \"[[\\\"top\\\",\\\"20 blocks\\\",3,0],[\\\"landed\\\",\\\"too late\\\",1.3,0],[\\\"top\\\",\\\"25 blocks\\\",3.025,1],[\\\"top\\\",\\\"30 blocks\\\",3.15,2],[\\\"top\\\",\\\"40 blocks\\\",3.4,3],[\\\"top\\\",\\\"50 blocks\\\",3.65,4],[\\\"top\\\",\\\"60 blocks\\\",3.9,5],[\\\"top\\\",\\\"70 blocks\\\",4.15,6],[\\\"top\\\",\\\"80 blocks\\\",4.4,7]]\" --subs_y 0.15 --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"],[\"cut7a\",\"cut7b\",\"cut\"]] --start_at jump:-0.25 --end_after final:0.9 --out out/ladder_clutch.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 4: independent review READY (no blockers, no visible). Eight walls 20-80 blocks on natural terrain, real ladder placements within reach 3.4-4.2, first one deliberately late (17 dmg, natural regen after). Nitpicks left: same clutch repeats 7x; ladder briefly out of frame right after landing; long falls mostly wall.",
+  "published_at": "2026-11-07T04:20:12.646Z"
+}
