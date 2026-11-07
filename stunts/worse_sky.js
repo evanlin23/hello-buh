@@ -94,11 +94,18 @@ module.exports = {
 
     // ---- 1. the edge falls away ----
     ctx.mark('l1')
-    const crumbling = drop(byAngle(K.ring(x, z, 4), 0.15), 1, 2)   // one column every 2 ticks, from right ahead, round clockwise
-    await ctx.easeLook(-0.3, -0.75, 600)                 // the blocks in front dropping away
-    await ctx.easeLook(-Math.PI / 2, -0.5, 1000)         // following the crack round the island
-    await ctx.easeLook(-Math.PI + 0.2, -0.5, 1000)
-    await ctx.easeLook(Math.PI / 2 + 0.3, -0.5, 900)
+    // the side in front goes first, column by column, while it leans over that edge and watches the
+    // blocks drop the whole way (from the middle they fell behind the island's own edge: review 5)
+    const ring4 = K.ring(x, z, 4)
+    const front = ring4.filter(([cx, cz]) => cz === z - 4).sort((p, q) => Math.abs(p[0] - x) - Math.abs(q[0] - x))
+    const rest4 = ring4.filter(([cx, cz]) => cz !== z - 4)
+    const crumbling = (async () => { await drop(front, 1, 2); await drop(byAngle(rest4, 0), 3, 1) })()
+    bot.setControlState('sneak', true); bot.setControlState('forward', true)
+    await ctx.easeLook(0, -1.3, 500)
+    for (let i = 0; i < 40 && ctx.tick < K.at(3.3); i++) { await bot.look(0.25 * Math.sin(i / 12), -1.3 + 0.05 * Math.sin(i / 9), true); await bot.waitForTicks(1) }
+    bot.setControlState('forward', false)
+    await K.until(K.at(3.4), K.drift(0.004))
+    bot.setControlState('sneak', false)
     await crumbling
     // back across what's left, toward the middle
     await ctx.easeLook(Math.PI - 0.2, -0.25, 600)      // (south: the middle is behind it)
@@ -115,7 +122,7 @@ module.exports = {
     ctx.mark('off1')
     await watchFall(c)
     // where did it go: walk to that edge, sneak the last step and look over it, eyes on it all the way down
-    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-0.8, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
+    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.3, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
     bot.setControlState('forward', true)
     for (let i = 0; i < 30 && bot.entity.position.z < z + 3.1 && ctx.tick < K.at(8.0); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', true)
@@ -217,7 +224,7 @@ module.exports = {
     await bot.waitForTicks(2)
     const tnt = K.mobs('tnt')[0]
     if (!tnt) throw new Error('no tnt')
-    for (let i = 0; i < 44 && bot.entities[tnt.id]; i++) { await K.track(tnt.position.offset(0, 0.5, 0), 0.3); await bot.waitForTicks(1) }
+    for (let i = 0; i < 44 && bot.entities[tnt.id]; i++) { await K.track(tnt.position.offset(0, 0.5, 0), i < 8 ? 0.12 : 0.3); await bot.waitForTicks(1) }
     ctx.mark('landed')
     // nowhere to go: eyes on the fuse, it backs away to the far edge of its block
     bot.setControlState('sneak', true); bot.setControlState('back', true)
