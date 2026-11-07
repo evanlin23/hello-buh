@@ -31,7 +31,10 @@ module.exports = {
     await ctx.cmd(`/fill ${x} ${floor + 1} ${z} ${x} ${top} ${z} cobblestone`)
     if (LAYERS > 0) await ctx.cmd(`/setblock ${x} ${top + 1} ${z} snow[layers=${LAYERS}]`)
     await ctx.hotbar(['diamond_sword', 'water_bucket', ['cobblestone', 64], ['bread', 16]])
-    await ctx.tpCheck(x + 0.5, top + 1 + Math.max(0, LAYERS - 1) / 8, z + 0.5, 0, 20)
+    // MC yaw 180 = north = mineflayer yaw 0, the way the jump goes (perform eases to yaw 0): facing south
+    // here spun the view 180 degrees at every series cut (review), and jumping south instead failed every
+    // try in tries (b5bd3ac). The jump direction is the tested one; the start just faces it.
+    await ctx.tpCheck(x + 0.5, top + 1 + Math.max(0, LAYERS - 1) / 8, z + 0.5, 180, 20)
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
     ctx.select(1)   // the bucket from the first frame (0.85 s of a sword first: review)
     await bot.waitForTicks(30)
@@ -45,9 +48,8 @@ module.exports = {
     await bot.waitForTicks(this.fast ? 1 : 30)         // standing on the pillar (fast: in a series the cut opens looking down already)
     // peek straight down the pillar (at -0.6 from 60 up the view was just the horizon: the frame
     // review read 1 s of ocean as "idle, can't tell you're on a pillar")
-    // keep the yaw it was teleported with: setup's tp faces MC yaw 0 (south) = mineflayer pi, and easing to
-    // mineflayer 0 spun the whole world 180 degrees at every series cut (review, check 7)
-    const yaw0 = bot.entity.yaw
+    // jump north (mineflayer yaw 0): the direction every passing run used. setup faces it already, so no spin
+    const yaw0 = 0
     if (!this.fast) await ctx.easeLook(yaw0, -1.35, 500)
     await ctx.easeLook(yaw0, -1.45, this.fast ? 250 : 300)      // eyes straight down the pillar while jumping off (at -1.0 the pillar was out of shot: review)
     ctx.select(1)                                      // pull out the water bucket
