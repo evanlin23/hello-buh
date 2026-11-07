@@ -1118,6 +1118,12 @@ def main():
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     audio_ss, duck = args.start, ""
+    # with a replay or a hook the song goes in LAST, over the whole finished video, so it plays on
+    # under the appended replay instead of cutting out (one_in_a_million: the bass fell 35 dB 1 s
+    # after the drop), its drop still on the event (+ the hook's length)
+    late_song = args.song if (args.song and not args.story and (args.replay or args.hook)) else None
+    if late_song:
+        args.song = None
     if args.sfx and args.timeline:   # sound effects (scripts/sfx.py) premixed into the game audio, in Short time
         import sfx
         sfx_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
@@ -1201,6 +1207,23 @@ def main():
             retention.hook_prepend(args.out, h, tl_ev[h["at"]] - args.start, args.out_fps,
                                    frames=args.frames, start_index=int(round(args.start * args.fps)), caption=tmp / "caption.png")
             dur += retention.hook_len({"hook": h})
+    if late_song:
+        h_len = retention.hook_len({"hook": json.loads(args.hook)}) if args.hook else 0.0
+        total = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.out], capture_output=True, text=True).stdout)
+        lduck = ""
+        if args.sfx and args.timeline:
+            import sfx
+            lduck = sfx.duck_filter(sfx.dips(args.sfx, json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.start, h_len))
+        ss = args.song_start - h_len               # the song keeps running: the drop lands h_len later
+        delay = max(0.0, -ss)
+        res = tmp / "song_mix.mp4"
+        g = (f"[1:a]atrim=0:{total - delay:.3f},asetpts=PTS-STARTPTS" + (f",adelay={int(delay * 1000)}:all=1" if delay > 0 else "") +
+             f"{lduck},loudnorm=I=-13:TP=-2,afade=t=in:d=0.08,afade=t=out:st={max(0, total - 0.6):.3f}:d=0.6,aresample=48000[song];"
+             f"[0:a]loudnorm=I=-15:TP=-2,aresample=48000[game];[song][game]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-10:TP=-1:LRA=11[a]")
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.out, "-ss", f"{max(0.0, ss):.3f}", "-i", late_song, "-filter_complex", g,
+                        "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(res)], check=True)
+        pathlib.Path(res).replace(args.out)
+        print(f"song: mixed over the whole {total:.2f}s (it plays on under the replay; hook {h_len:.2f}s)")
     if args.loop:   # the end dissolves into the first frame (a seamless re-watch)
         retention.loop_end(args.out, json.loads(args.loop), args.out_fps)
     print("wrote", args.out, f"{dur:.2f}s")
