@@ -17,7 +17,8 @@ module.exports = {
     subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'end_look',
     startAt: 'pour:-0.4', endAfter: 'end_look:1.05',
     // the long side-pour runs at 1.8x (about 12 s of the Short was a blue water sheet) and the walk between the stops at 2x
-    speed: [...[...Array(12).keys()].map(i => [`run${i}a`, `run${i}b`, 1.8]), ['walk_a', 'walk_b', 2]]
+    speed: [...[...Array(12).keys()].map(i => [`run${i}a`, `run${i}b`, 1.8]), ['walk_a', 'walk_b', 2],
+      ...[...Array(4).keys()].map(m => [`mop${m}a`, `mop${m}b`, 2])]   // the walks to the mop-up pours (3.3-3.5 s gaps)
   },
 
   async setup (ctx) {
@@ -28,9 +29,10 @@ module.exports = {
     const { x, z, y: G } = g
     this.G = G
     await ctx.defaultRules()
-    for (let y0 = G + 1; y0 <= G + 13; y0 += 7) await ctx.cmd(`/fill ${x - 22} ${y0} ${z - 30} ${x + 22} ${y0 + 6} ${z + 8} air`)
-    await ctx.cmd(`/fill ${x - 22} ${G} ${z - 30} ${x + 22} ${G} ${z + 8} grass_block`)
-    await ctx.cmd(`/fill ${x - 22} ${G - 4} ${z - 30} ${x + 22} ${G - 1} ${z + 8} dirt`)
+    // wide and high (x +-22, 13 up left a cut notch in the hillside behind the field: review)
+    for (let y0 = G + 1; y0 <= G + 20; y0 += 5) await ctx.cmd(`/fill ${x - 40} ${y0} ${z - 50} ${x + 40} ${y0 + 4} ${z + 24} air`)
+    await ctx.cmd(`/fill ${x - 40} ${G} ${z - 50} ${x + 40} ${G} ${z + 24} grass_block`)
+    await ctx.cmd(`/fill ${x - 40} ${G - 4} ${z - 50} ${x + 40} ${G - 1} ${z + 24} dirt`)
     const x0 = x - 7, z0 = z - 6 - L
     this.x0 = x0; this.z0 = z0
     await ctx.cmd(`/fill ${x0} ${G - 2} ${z0} ${x0 + 14} ${G - 2} ${z0 + L - 1} stone`)
@@ -171,7 +173,7 @@ module.exports = {
         if (sx !== 7) await stepTo(sx, sz, cell(ox, sz, -0.3))
         await pourScoop(ox, sz, cell(ox, sz, -0.04), flow, 280)
         // hold on the strip as it drains: the new black is the beat (it turned away with the strip still under water)
-        for (let k = 0; k < 12; k++) { await ctx.easeLookAt(cell(Math.max(0, Math.min(14, ox + dir * 3)), sz, -0.6), 50) }
+        for (let k = 0; k < 6; k++) { await ctx.easeLookAt(cell(Math.max(0, Math.min(14, ox + dir * 3)), sz, -0.6), 50) }   // (12: a frozen hold on a blank water sheet)
         if (!lavaLeft()) break
         // back to the path, eyes on lava that's still there (it swung to the finished side and off the lake)
         let tgt = null
@@ -196,17 +198,28 @@ module.exports = {
       if (!nbs.length) { ctx.log('mop-up: no obsidian next to lava at', a, b); break }
       nbs.sort((p1, p2) => Math.hypot(x0 + p1[0] - e.x, z0 + p1[1] - e.z) - Math.hypot(x0 + p2[0] - e.x, z0 + p2[1] - e.z))
       const [na, nb2, da, db] = nbs[0]
+      ctx.mark(`mop${m}a`)
       await stepTo(na + da, nb2 + db, cell(a, b, -0.3))
+      ctx.mark(`mop${m}b`)
       ctx.log('mop-up pour on', na, nb2, 'for lava at', a, b)
       await pourScoop(na, nb2, cell(na, nb2, -0.04), 14, 300)
+      // watch it go black (the camera turned away before it did: review)
+      await ctx.easeLookAt(cell(a, b, -0.6), 250)
+      for (let k = 0; k < 12 && at(a, b, G - 1)?.name === 'lava'; k++) await bot.waitForTicks(1)
     }
     // the payoff lands on the last lava going (on screen), then a wide look over the whole black lake
     for (let k = 0; k < 10 && lavaLeft(); k++) await bot.waitForTicks(1)
     ctx.log('lava left', lavaLeft())
-    // stand on it: look out over the black field
+    // up and out over the middle of the lake while the last water drains, and the payoff once it's gone: the
+    // whole black lake (end_look on a water sheet: the song drop hit blue, review)
+    const waterLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (/water/.test(at(a, b, G)?.name || '')) n++; return n }
+    const mid = cell(7, Math.floor(L / 2), 0)
+    ctx.easeLookAt(mid, 900)
+    for (let k = 0; k < 40 && waterLeft(); k++) await bot.waitForTicks(1)
+    ctx.log('water left at end_look', waterLeft())
     ctx.mark('end_look')
-    // straight onto the middle of the black lake, wide (it opened on the rim's dirt wall after a whip south)
-    await ctx.easeLookAt(cell(7, Math.floor(L / 2), 0), 900)
+    // a slow pan along the black field (no still hold on the reveal)
+    await ctx.easeLook(bot.entity.yaw + 0.35, bot.entity.pitch + 0.05, 1000)
     bot.removeListener('blockUpdate', onBlock)
 
     let lava = 0, obs = 0
