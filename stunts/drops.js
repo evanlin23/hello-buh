@@ -20,7 +20,9 @@ module.exports = {
   edit: {
     subsY: 0.15, caption: '1 in a million landing... x8 😳', red: 'x8', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
     // (the 10-block drop is over in 1.2 s: 1.6 ran its sub over the cut)
-    subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, i === 0 ? 1.1 : 1.6]), deathScreen: true, endAfter: 'death:0.8',
+    // + a line mid-fall on the three longest (3.5-4.1 s from the break to the landing: no beat)
+    subs: [...DROPS.map((d, i) => [`drop${i + 1}`, d.sub, i === 0 ? 1.1 : 1.6]),
+      [`fast${DROPS.length - 2}b`, "it's SO small", 1.3], [`fast${DROPS.length - 1}b`, 'please please please', 1.3], [`fast${DROPS.length}b`, 'wait...', 1.3]], deathScreen: true, endAfter: 'death:0.8',
     // cut the teleport turnarounds (the look up + tp read as a still), speed up the top of the 250 fall,
     // and a live blocks-fallen counter on every drop
     speed: [...DROPS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
@@ -81,6 +83,13 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 3} ${floor} ${z - 3} ${x + 3} ${floor} ${z + 3} grass_block`)
     await ctx.cmd(`/setblock ${x} ${floor} ${z} water`)
     await ctx.cmd(`/setblock ${x} ${floor - 1} ${z} stone`)
+    // a snowy site: snow back on the lawn up to the hole (a bare 7x7 grass square read as command-built)
+    const around = [[6, 0], [-6, 0], [0, 6], [0, -6], [5, 5], [-5, -5]].map(([dx, dz]) => bot.blockAt(new ctx.Vec3(x + dx, floor + 1, z + dz))?.name)
+    if (around.filter(n => n === 'snow').length >= 2) {
+      await ctx.cmd(`/fill ${x - 3} ${floor + 1} ${z - 3} ${x + 3} ${floor + 1} ${z + 3} snow[layers=1]`)
+      await ctx.cmd(`/setblock ${x} ${floor + 1} ${z} air`)
+      ctx.log('snowy site: snow put back on the lawn')
+    }
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16], 'diamond_pickaxe'])
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(10)
@@ -125,7 +134,8 @@ module.exports = {
           // emitted after the death, which the recording had stopped taking, and inside the block)
           splashed = true
           const p = bot.entity.position
-          for (let q = 0; q < 4; q++) ctx.particles('block', { x: Math.floor(p.x) + (q % 2) - 0.5, y: floor + 1, z: Math.floor(p.z) + (q >> 1) - 0.5 }, { block: 'grass_block' })
+          // spread wide: particles within a block of the eye are culled (the burst at the feet never showed)
+          for (let q = 0; q < 8; q++) { const a = q * Math.PI / 4; ctx.particles('block', { x: p.x + Math.cos(a) * 1.8, y: floor + 1.1, z: p.z + Math.sin(a) * 1.8 }, { block: 'grass_block', count: 12 }) }
           ctx.sound('entity.player.big_fall', 1)
         }
         if (!splashed && bot.entity.position.y < floor + 1.2) {
