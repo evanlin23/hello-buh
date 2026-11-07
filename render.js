@@ -508,6 +508,22 @@ const DEATHS = []
       prev = cur
     }
   }
+  // the respawn teleport carries the spawn's default look; a stunt that turns the view on its
+  // forcedMove lands that look 1-2 ticks later, which flashed the sky or a mountain for 3 frames
+  // (worker 3, tries f219). Give the teleport tick the look of the first forced turn after it.
+  for (const [, b] of DEATHS) {
+    if (!Number.isFinite(b)) continue
+    const J = Math.ceil(b)
+    if (J < 1 || J + 2 >= P.length) continue
+    for (const k of [1, 2]) {
+      const q = P[J + k], p0 = P[J]
+      let dy = Math.abs(q[4] - p0[4]) % (2 * Math.PI); if (dy > Math.PI) dy = 2 * Math.PI - dy
+      if (Math.hypot(q[1] - p0[1], q[2] - p0[2], q[3] - p0[3]) < 0.5 && (dy > 0.3 || Math.abs(q[5] - p0[5]) > 0.3)) {
+        for (let j = J; j < J + k; j++) { P[j] = P[j].slice(); P[j][4] = q[4]; P[j][5] = q[5] }
+        break
+      }
+    }
+  }
   // after a respawn the server re-sends every tracked entity (a new ServerPlayer starts tracking), and
   // mineflayer's rows come back a few ticks late; the vanilla client keeps its level and shows them.
   // Back-fill an entity first seen within 4 ticks after the respawn to the respawn tick (the golem on
@@ -563,9 +579,11 @@ const HURTS = []
 }
 function hurtTilt (t) {
   let roll = 0, pitch = 0
+  // a respawn is a new player with hurtTime 0: the killing hit's tilt stops at the respawn
+  const reset = DEATHS.reduce((m, [, b]) => (Number.isFinite(b) && b <= t ? Math.max(m, b) : m), -Infinity)
   for (const h of HURTS) {
     const e = t - h.t
-    if (e < 0 || e >= 10) continue
+    if (e < 0 || e >= 10 || h.t < reset) continue
     let k = (10 - e) / 10
     k = Math.sin(k * k * k * k * Math.PI)
     const j = -k * 14 * Math.PI / 180
