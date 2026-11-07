@@ -360,7 +360,8 @@ def countdown_img(left, total, label, since, red_under=0.5, yf=0.42):
     bw, bh = int(W * 0.6 * k), int(26 * k)
     x0 = (W - bw) // 2
     d = ImageDraw.Draw(img)
-    d.rounded_rectangle((x0 - 6, bar_y - 6, x0 + bw + 6, bar_y + bh + 6), 16, fill=(0, 0, 0, 200))
+    # a light outline on the track: over dark scenes the bare draining bar read as "_4" or "- 1" (worker 12)
+    d.rounded_rectangle((x0 - 6, bar_y - 6, x0 + bw + 6, bar_y + bh + 6), 16, fill=(0, 0, 0, 200), outline=(235, 235, 235, 230), width=max(2, int(4 * k)))
     fw = int(bw * max(0.0, min(1.0, left / total)))
     if fw > 0:
         d.rounded_rectangle((x0, bar_y, x0 + fw, bar_y + bh), 12, fill=tuple(color) + (255,))
