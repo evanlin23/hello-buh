@@ -119,7 +119,10 @@ module.exports = {
       if (c.item === 'milk_bucket') { for (let k = 0; k < 60 && !ctx.died; k++) await bot.waitForTicks(1); await bot.waitForTicks(30); break }
       if (c.item === 'slime_block') {
         // cut at the top of the bounce (it came down beside the slime, on grass, and took damage)
-        for (let k = 0; k < 40 && !(bot.entity.velocity.y < 0 && bot.entity.position.y > floor + 3); k++) await bot.waitForTicks(1)
+        // ride the bounce looking up and out (staring down at the slime all the way up read as a 1.3 s STILL),
+        // and cut on the way up rather than at the apex
+        ctx.easeLook(bot.entity.yaw, -0.15, 450)
+        for (let k = 0; k < 14 && !(bot.entity.velocity.y < 0 && bot.entity.position.y > floor + 3); k++) await bot.waitForTicks(1)
         ctx.mark('apex')
         pending = spot
         continue
