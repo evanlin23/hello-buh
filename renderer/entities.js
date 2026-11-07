@@ -351,6 +351,26 @@ function poseWarden (r, s, walkPos, walkSpeed, tick) {
     B.layers[3].opacity = Math.max(0, 10 - (t % 40)) / 10
   }
 }
+// BoatModel.createBoatModel (texture 128x64): the hull from five planks and the two oars. Built in
+// Java space; BoatRenderer's T(0, 0.375, 0) S(-1, -1, 1) Ry(90) replaces the living-entity transform
+const BH = Math.PI / 2
+const BOAT_PARTS = [
+  ['bottom', null, [0, 3, 1], [[[-14, -9, -3], [28, 16, 3], [0, 0], 0]], [BH, 0, 0]],
+  ['back', null, [-15, 4, 4], [[[-13, -7, -1], [18, 6, 2], [0, 19], 0]], [0, 3 * BH, 0]],
+  ['front', null, [15, 4, 0], [[[-8, -7, -1], [16, 6, 2], [0, 27], 0]], [0, BH, 0]],
+  ['right', null, [0, 4, -9], [[[-14, -7, -1], [28, 6, 2], [0, 35], 0]], [0, Math.PI, 0]],
+  ['left', null, [0, 4, 9], [[[-14, -7, -1], [28, 6, 2], [0, 43], 0]]],
+  ['leftPaddle', null, [3, -5, 9], [[[-1, 0, -5], [2, 2, 18], [62, 0], 0], [[-1.001, -3, 8], [1, 6, 7], [62, 0], 0]], [0, 0, Math.PI / 16]],
+  ['rightPaddle', null, [3, -5, -9], [[[-1, 0, -5], [2, 2, 18], [62, 20], 0], [[0.001, -3, 8], [1, 6, 7], [62, 20], 0]], [0, Math.PI, Math.PI / 16]]
+]
+// BoatModel.animatePaddle: rowing time f (0 when not paddling, + PI/8 a tick while paddling)
+function poseBoatPaddle (part, f, right) {
+  const L = (a, b, t) => a + (b - a) * Math.min(1, Math.max(0, t))
+  const x = L(-Math.PI / 3, -Math.PI / 12, (Math.sin(-f) + 1) / 2)
+  let y = L(-Math.PI / 4, Math.PI / 4, (Math.sin(-f + 1) + 1) / 2)
+  if (right) y = Math.PI - y
+  part.rotation.set(x, y, Math.PI / 16)
+}
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
 // player (the converted Bedrock geometry had the head sunk into the body and the arms poking above it)
@@ -419,7 +439,7 @@ export class EntityLayer {
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
 
   async ensure (id, name, extra) {
-    const key = `${id}|${name}|${JSON.stringify(extra)}`
+    const key = `${id}|${name}|${JSON.stringify(extra, (k, v) => k === 'paddle' ? undefined : v)}`
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
     if (cur) { this.scene.remove(cur.obj); this.live.delete(id) }
@@ -443,6 +463,15 @@ export class EntityLayer {
       const tex = { horse: 'entity/horse/horse_brown', donkey: 'entity/horse/donkey', mule: 'entity/horse/mule', skeleton_horse: 'entity/horse/horse_skeleton', zombie_horse: 'entity/horse/horse_zombie' }[name]
       const t = await texture([tex])
       if (t) { const b = buildPlayer(t, HORSE_PARTS, name === 'horse' ? 1.1 : name === 'mule' ? 0.92 : name === 'donkey' ? 0.87 : 1.0); obj = b.root; bones = b.bones; mat = b.mat }
+    } else if (/^[a-z_]+_boat$/.test(name) && !/chest_boat$/.test(name) || name === 'boat') {
+      const t = await texture([`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`])
+      if (t) {
+        const b = buildPlayer(t, BOAT_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat
+        const M = obj.children[0].matrix
+        M.makeTranslation(0, 0.375, 0).multiply(new THREE.Matrix4().makeScale(-1, -1, 1)).multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
+        bones.boat = true
+        poseBoatPaddle(bones.leftPaddle, 0, false); poseBoatPaddle(bones.rightPaddle, 0, true)
+      }
     } else if (name === 'warden') {
       const t = await texture(['entity/warden/warden'])
       // WardenRenderer's emissive layers (full bright, translucent): the bioluminescent layer on the
@@ -505,7 +534,7 @@ export class EntityLayer {
       }
     }
     if (extra && extra.glint && mat && this.glintify) this.glintify(mat, name === 'falling_block' ? 8 : 0.25)
-    const rec = { key, obj, bones, mat, woolMat, yOff: (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
+    const rec = { key, obj, bones, mat, woolMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
     if (obj) this.scene.add(obj)
     this.live.set(id, rec)
     return rec
@@ -605,6 +634,13 @@ export class EntityLayer {
       if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); if (B.carriedMat) B.carriedMat.color.setRGB(...LL); continue }
       if (s.name === 'witch' && B.hat4) { poseWitch(r, s, r.walk, r.amt || 0); continue }
       if (B.mane && B.rightHindLeg) { poseHorse(r, s, r.walk, r.amt || 0); continue }
+      if (B.boat) {
+        // Boat.tick: a paddle's position advances PI/8 a tick while its paddle state is set, else 0
+        const pd = s.extra?.paddle || [false, false], dt = Math.max(0, Math.min(5, tick - (r.rowT ?? tick)))
+        r.row = (r.row || [0, 0]).map((v, i) => pd[i] ? v + dt * Math.PI / 8 : 0); r.rowT = tick
+        poseBoatPaddle(B.leftPaddle, r.row[0], false); poseBoatPaddle(B.rightPaddle, r.row[1], true)
+        continue
+      }
       if (s.name === 'warden' && B.rightTendril) { poseWarden(r, s, r.walk, r.amt || 0, tick); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
