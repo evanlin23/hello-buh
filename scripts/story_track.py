@@ -117,8 +117,8 @@ def caption_image(text, key):
 
 def caption_events(story_dir, timeline, start, dur):
     """[(t0, t1, text)] in seconds of the Short: each chunk from its first word until the next chunk starts.
-    A line's first chunk appears on its cut (the line's mark), and its last chunk ends on the next line's cut, at
-    most 0.3 s past its last word: an old line hanging over a new scene read as lagging (frame review)."""
+    A line's first chunk appears on its cut (the line's mark), and its last chunk holds until the next line's cut
+    (0.3 s past its last word only when the next line is over 1.2 s away)."""
     story, voice = _lines(story_dir)
     marks = _marks(timeline, start)
     ev = []
@@ -127,7 +127,9 @@ def caption_events(story_dir, timeline, start, dur):
         nxt = marks[n + 1][0] if n + 1 < len(marks) else dur
         for i, ((a, b), text) in enumerate(zip(v["chunks"], v["captions"])):
             t0 = t if i == 0 else t + a
-            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else min(nxt, t + b + 0.3)
+            # the last chunk holds to the next line's cut (the caption changes on the cut frame; dropping it 0.3 s after
+            # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
+            t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text))
     return [e for e in ev if e[1] > e[0]]
 
