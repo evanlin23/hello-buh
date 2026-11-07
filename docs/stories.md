@@ -151,3 +151,47 @@ contradiction, `counter` not needed, `hook` can flash the question card at the s
   future you. Proof bursts. Ours: "Don't follow the enderman home." There are no endermen in our
   village... until tonight, when one stands at the window holding our house's door. A second pearl
   lands inside the house: "Follow him. He's the only one who remembers you." Clues both ways.
+
+## Format: "The rule that erases you" (twist ending). Owner, 2026-11-07
+
+The owner's reference (someone else's story, so never retold, only its shape): a town where a rumor
+comes true once 500 of its 900 people believe it. The rule is shown with fun examples (a monster, a
+twin), then a rumor says the hero is dead. He fails several times, then wins with a loophole: he
+makes everyone believe "rumors don't come true anymore", and every rumor reverses. But he keeps
+fading. His grandma, there from the start, admits that years ago she told everyone she had a good
+grandson. He was a rumor too.
+
+The shape, beat by beat (30-45 s narrated, like story_runaway):
+1. **The rule, plainly and countably** in the first 3 s ("500 of 900 believe it, it's true"). Numbers make it real.
+2. **Proof**: 2-3 quick, fun examples that teach the rule and plant things that come back later.
+   The person who delivers the twist is introduced here, as background (grandma watering flowers).
+3. **The rule turns on the hero**: the fun rule is now the threat.
+4. **Escalating attempts that fail**, each one teaching one more thing about the rule.
+5. **The clever loophole that wins**: the rule is used to kill the rule. Payoff montage: the
+   earlier examples reverse (the monster gone, the twin gone).
+6. **The twist that turns the win into the loss**: the fix itself dooms him, through the clue planted
+   in beat 2. End on the reveal line, no explanation after it (the owner's "end as soon as the payoff comes").
+
+What makes it work: the twist follows from the rule the viewer already learned, and the clue was on
+screen from the start ("it was there the whole time" = rewatches). Check every draft against that:
+if the twist needs new information, it's the wrong twist.
+
+Original premises in this shape (ours; never retell the reference):
+- **"Every sign is law."** On this server, anything written on a sign comes true once three players
+  read it: diamonds rain, sheep turn gold. Someone writes "HelloBuh was banned" and he loses his
+  permissions block by block (can't break, can't place, can't open doors). He wins with a sign: "signs
+  do nothing". Twist: his best friend on the server (shown building with him in beat 2) was a sign
+  someone wrote years ago, and now he's fading too.
+- **"Respawn has a price."** Each respawn costs one memory, written in the village ledger. He dies
+  again and again saving the village, then burns the ledger so nobody pays again. Twist: the ledger
+  was the only record he ever lived there, and the librarian (stamping its pages in beat 2) doesn't
+  know him anymore.
+- **"The villager who trades in truths."** Whatever you trade this villager becomes true: a creeper
+  attack traded away, the rain traded away. Someone trades "HelloBuh never existed". He wins by trading
+  away the villager's power. Twist: he was the first thing the villager ever traded into being (the
+  "first trade" sign on the stall in beat 2).
+
+Staging notes: the rule needs a visible count (a sign or scoreboard "beliefs: 512/900", or a
+ledger), so the viewer can track it without narration. Fading = a staged vanilla effect we can render:
+invisibility-potion particles around a vanishing player (only what the engine draws: check with worker 11
+before scripting a "fade"). The montage of reversals is cuts between the beat-2 locations.
