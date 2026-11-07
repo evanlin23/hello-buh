@@ -86,7 +86,7 @@ function bedroom (b) {
   for (const [cx, cz] of [[0, 0], [11, 0], [0, -9], [11, -9]]) b.fill(cx, -1, cz, cx, 4, cz, 'stripped_dark_oak_log')
   for (const [gx, gz] of [[3, -3], [8, -3], [3, -6], [8, -6]]) b.set(gx, 4, gz, 'glowstone')
   // north wall: two windows and a double door
-  b.fill(2, 1, -9, 3, 2, -9, 'glass_pane[east=true,west=true]'); b.fill(8, 1, -9, 9, 2, -9, 'glass_pane[east=true,west=true]')
+  b.fill(2, 1, -9, 3, 2, -9, 'glass_pane[east=true,west=true]')   // one window: the north-east one looked out on round 2's farm
   b.fill(5, 0, -9, 6, 1, -9, 'air')
   b.set(5, 0, -9, 'spruce_door[facing=south,half=lower,hinge=right]'); b.set(5, 1, -9, 'spruce_door[facing=south,half=upper,hinge=right]')
   // the second mistake: the right door's hinge is on the same side as the left one's
@@ -98,7 +98,6 @@ function bedroom (b) {
   // the bed, a nightstand, bookshelves, a carpet, a work corner and chests
   b.set(2, 0, -8, 'red_bed[facing=north,part=head]'); b.set(2, 0, -7, 'red_bed[facing=north,part=foot]')
   b.set(3, 0, -8, 'barrel[facing=up]'); b.set(3, 1, -8, 'lantern')
-  b.set(1, 0, -8, 'potted_poppy')
   // trees outside the north windows and doors (round 2's barn showed through a window; the open doors looked out on bare flat)
   for (const [tx, tz, th] of [[2, -15, 5], [8, -17, 6], [13, -13, 5], [-3, -18, 6], [5, -24, 5]]) spotWrong.tree(b, tx, tz, th)
   b.fill(0, 0, -6, 0, 2, -3, 'bookshelf')
@@ -127,8 +126,8 @@ module.exports = spotWrong({
       scan: [[0, [2, 1, -8]], [2.2, [0.5, 1.5, -4.5]], [4.2, [5, 1.3, -9]], [6.2, [10, 1, -4.5]], [9, [7, 1.5, -8.5]]],
       tag: 'only 1% can find it', hint: [4, 'hint: not the bed'],
       reveals: [
-        { at: [8.5, 3.05, -5.5], zoom: 3.2, strafe: 'left', sub: 'no chain: it floats', check: [[8, 2, -6], 'lantern'] },
-        { pre: 'wait... there is another one', approach: 1.4, approachTo: [7.5, -6.5], select: 4, strafe: 'right', at: [6.35, 1.0, -8.6], useAim: [6.1, 1.0, -8.4], zoom: 1.6, useZoom: 2.2, ring: 190, hold: 2.3, use: [[5, 0, -9], [6, 0, -9]], useAt: 0.8, tail: 1.0, sub: 'both handles on the right', useSub: 'both swing left!', check: [[6, 0, -9], 'spruce_door'] }
+        { at: [8.5, 2.6, -5.5], zoom: 3.2, ring: 170, strafe: 'left', sub: 'no chain: it floats', check: [[8, 2, -6], 'lantern'] },
+        { pre: 'wait... there is another one', approach: 1.4, approachTo: [6.0, -6.3], select: 4, strafe: 'back', strafeSpeed: 0.012, at: [6.0, 1.0, -8.8], useAim: [6.0, 1.0, -8.8], zoom: 1.3, useZoom: 1.5, ring: 300, hold: 2.3, use: [[5, 0, -9], [6, 0, -9]], useAt: 0.8, tail: 1.0, sub: 'both handles on the right', useSub: 'both swing left!', check: [[6, 0, -9], 'spruce_door'] }
       ] }
   ]
 })
