@@ -215,7 +215,7 @@ module.exports = {
     const waterLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (/water/.test(at(a, b, G)?.name || '')) n++; return n }
     const mid = cell(7, Math.floor(L / 2), 0)
     ctx.easeLookAt(mid, 900)
-    for (let k = 0; k < 40 && waterLeft(); k++) await bot.waitForTicks(1)
+    for (let k = 0; k < 40 && (waterLeft() || k < 18); k++) await bot.waitForTicks(1)   // at least the 900 ms turn
     ctx.log('water left at end_look', waterLeft())
     ctx.mark('end_look')
     // a slow pan along the black field (no still hold on the reveal)
