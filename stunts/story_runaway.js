@@ -326,10 +326,10 @@ module.exports = {
     const fwd = { x: -Math.sin(bot.entity.yaw), z: -Math.cos(bot.entity.yaw) }
     let sk = 0
     const eyeY = boomAt.y + 1.62   // the dead camera sits in the crater: smoke at its eye level, in front of it
-    const still = async () => {
-      sk++
+    const still = async () => {   // a few puffs every 3 ticks: 6 a tick filled the whole view with smoke
+      if (sk++ % 3) return
       const d = 1.2 + Math.random() * 1.8, side = (Math.random() - 0.5) * 3
-      ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.4 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 6 })
+      ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.4 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 2 })
     }
     for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
     await line('L15', still, -0.15)
