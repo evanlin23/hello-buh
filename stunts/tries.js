@@ -10,7 +10,7 @@ module.exports = {
   name: 'tries',
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
-    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-1.0', endAfter: 'placed:2.3',
+    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-1.0', endAfter: 'placed:0.8',
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
     // each try looks different (review: six identical falls read as a loop) and the counter shows on screen
     subs: [['jump', 'try 1/7: easy', 1.0, 0],
@@ -20,7 +20,7 @@ module.exports = {
       ['death', 'that one was lag', 1.5, 3], ['attempt', 'try 5/7', 1.4, 4],
       ['death', 'WRONG BUCKET', 1.5, 4], ['attempt', 'try 6/7: I swear', 1.4, 5],
       ['death', '...', 1.2, 5], ['attempt', 'try 7/7: locked in.', 1.6, 6],
-      ['placed', 'oh wow that was very close', 2.3, 0]]
+      ['placed', 'oh wow that was very close', 0.8, 0]]
   },
 
   async setup (ctx) {
@@ -46,21 +46,28 @@ module.exports = {
       ctx.log('attempt', i + 1, this.mode)
       const deathsBefore = ctx.deaths
       let ok = false
-      // what's in the bucket slot this try: an empty bucket (try 3), a milk bucket (try 5)
-      const wrong = { 2: 'bucket', 4: 'milk_bucket' }[i]
-      if (wrong) { bot.chat(`/item replace entity @s hotbar.1 with ${wrong}`); await bot.waitForTicks(2) }
+      // try 5 has a milk bucket: it drinks it on the way down (the gag has to show, not just be said)
+      let drink = null
+      if (i === 4) {
+        let drank = false
+        drink = () => { const p = bot.entity.position; if (!drank && bot.entity.velocity.y < -0.3 && p.y < this.top - 4) { drank = true; ctx.sound('entity.generic.drink', 1); process.nextTick(() => bot.activateItem()) } }
+        bot.on('physicsTick', drink)
+      }
       try { ok = await clutch.perform.call(this, ctx) } catch (e) { ctx.log('attempt error', e.message) }
+      if (drink) bot.removeListener('physicsTick', drink)
       ctx.log('perform returned at tick', ctx.tick, 'died', ctx.died, 'pitch', bot.entity.pitch.toFixed(2))
       if (this.mode === 'ok') { if (ok) ctx.mark('landed'); return ok && ctx.deaths === MODES.length - 1 }
       // wait for the death and the instant respawn back on the pillar
       for (let k = 0; k < 100 && ctx.deaths === deathsBefore; k++) await bot.waitForTicks(1)
+      // the next try's bucket goes in at the death, before the respawn cut (it used to swap in the hand on
+      // camera): an empty bucket for try 3, a milk bucket for try 5, water otherwise
+      bot.chat(`/item replace entity @s hotbar.1 with ${{ 2: 'bucket', 4: 'milk_bucket' }[i + 1] || 'water_bucket'}`)
       respawning = true
       for (let k = 0; k < 60 && bot.entity.position.y < this.top - 0.5; k++) await bot.waitForTicks(1)
       respawning = false
       ctx.revive()
       ctx.log('revived at tick', ctx.tick, 'pos', bot.entity.position.toString())
       await bot.look(0, -0.7, true)                     // straight back to staring over the edge
-      bot.chat('/item replace entity @s hotbar.1 with water_bucket')
       bot.setQuickBarSlot(1)
       // a beat on the pillar for the death line to land (the next try's line cut it to 0.15 s)
       await ctx.easeLook(0.25, -0.95, 600)
