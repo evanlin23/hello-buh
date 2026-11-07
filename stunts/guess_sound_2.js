@@ -14,6 +14,6 @@ module.exports = guessSound({
     { mob: 'zombie', room: 'cave', sound: 'entity.zombie.ambient', label: 'HARD', answer: 'ZOMBIE', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'green' },
     { mob: 'spider', room: 'mineshaft', sound: 'entity.spider.ambient', label: 'VERY HARD', answer: 'SPIDER', react: 'call', lean: 0, back: 6, lookY: 0.6, color: 'red' },
     { mob: 'witch', room: 'swamp_hut', sound: 'entity.witch.ambient', label: 'EXPERT', answer: 'WITCH', react: 'call', reactSound: 'entity.witch.celebrate', lean: 0, back: 4, lookY: 1.7, color: 'blue' },
-    { mob: 'parrot', room: 'jungle', sound: 'entity.ghast.ambient', pitch: 1.8, volume: 0.7, label: 'IMPOSSIBLE', answer: 'THE PARROT AGAIN', react: 'imitate', hint: 'parrots copy ghasts', lookY: 0.3, lookDown: -0.24, mobDx: 0, mobDy: 1, nbt: 'Variant:0', setup: (x, y, z) => [`/setblock ${x} ${y + 1} ${z + 2} jungle_log`], color: 'red' }
+    { mob: 'parrot', room: 'jungle', sound: 'entity.ghast.ambient', pitch: 1.8, volume: 0.7, label: 'IMPOSSIBLE', answer: 'THE PARROT AGAIN', react: 'imitate', lean: 0, hint: 'parrots copy ghasts', lookY: 0.3, lookDown: -0.24, mobDx: 0, mobDy: 1, nbt: 'Variant:0', setup: (x, y, z) => [`/setblock ${x} ${y + 1} ${z + 2} jungle_log`], color: 'red' }
   ]
 })
