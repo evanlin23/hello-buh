@@ -15,7 +15,7 @@
 // The lava runs with /tick rate LAVA_RATE (vanilla lava moves 1 block per 1.5 s, too slow for a
 // Short), the water at 2x, the drains at 3x.
 const { findSite, clearFlat } = require('./_site')
-const STEPS = 9, LAVA_RATE = Number(process.env.LAVA_RATE || 40), STREAMS = [-2, -1, 0, 1, 2]
+const STEPS = 9, LAVA_RATE = Number(process.env.LAVA_RATE || 30), STREAMS = [-2, -1, 0, 1, 2]
 const HW = 6, WALK = 5   // hill from x-HW to x+WALK: the streams take x-2..x+2, a rail x+3, the bot walks x+4; the west side is wide so the second layer's spread stays on the hill
 
 module.exports = {
@@ -24,12 +24,13 @@ module.exports = {
   caption: 'satisfying lava cast 😌',
   edit: {
     caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.15', endAfter: 'final:0.95',
+    subsY: 0.1,   // up off the pour
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
     // lava at tick rate 40 (2x: a 7.5x lava next to a 1x player read as fast lava, not a time-lapse); the
     // walks back up and out to the field are jump cuts; the casts (under a water sheet) at 2x; the drains
     // (a slow sneak in on the slope) at 1x
-    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut']]
+    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
   },
 
   async setup (ctx) {
@@ -52,6 +53,16 @@ module.exports = {
     // whole trees off around it (a tree cut at the levelled edge left a floating canopy)
     for (const t of ['#minecraft:leaves', '#minecraft:logs']) {
       for (const [z0, z1] of [[AREA[2] - 5, 6], [7, AREA[3] + 5]]) await ctx.cmd(`/fill ${x + AREA[0] - 5} ${floor} ${z + z0} ${x + AREA[1] + 5} ${floor + 22} ${z + z1} air replace ${t}`)
+    }
+    // no bare dirt in sight: the cut faces at the patch's edge and the squares under the removed trunks
+    // grass over (grass_block shows grass on its sides too)
+    for (const [z0, z1] of [[AREA[2] - 6, 6], [7, AREA[3] + 6]]) await ctx.cmd(`/fill ${x + AREA[0] - 6} ${floor - 2} ${z + z0} ${x + AREA[1] + 6} ${floor + 8} ${z + z1} grass_block replace dirt`)
+    // and some grass tufts on the patch like the ground around it (not on the hill or its foot)
+    for (let dx = AREA[0]; dx <= AREA[1]; dx++) {
+      for (let dz = AREA[2]; dz <= AREA[3]; dz++) {
+        const onSet = dx >= -HW - 1 && dx <= WALK + 1 && dz >= -6 && dz <= STEPS + 3
+        if (!onSet && ((dx * 7 + dz * 13) % 9 + 9) % 9 === 0) await ctx.cmd(`/setblock ${x + dx} ${floor + 1} ${z + dz} short_grass`)
+      }
     }
     // raised platform (rows z-5..z-2, top T+2) and the channel row z-1 (top T+1)
     await ctx.cmd(`/fill ${x - HW} ${floor} ${z - 5} ${x + WALK} ${T + 1} ${z - 2} dirt`)
@@ -203,8 +214,8 @@ module.exports = {
       // a jump cut out onto the field looking up the whole slope (from the walkway the camera was wedged
       // against the shell's side): layer 1 from the front, layer 2 from the south-west
       ctx.mark(`rv${n}a`)
-      if (last) await tpTo(x - 7.5, this.floor + 1, z + STEPS + 9.5, -140, -14)   // non-whole x/z: /tp centres whole ones
-      else await tpTo(x + 0.5, this.floor + 1, z + STEPS + 13.5, 180, -12)
+      if (last) await tpTo(x + 0.5, this.floor + 1, z + STEPS + 14.5, 180, -12)   // the final: wide, from the front (non-whole x/z: /tp centres whole ones)
+      else await tpTo(x - 7.5, this.floor + 1, z + STEPS + 9.5, -140, -14)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
       // the water draining off: a slow sneak in towards the hill, eyes on the slope (a moving shot, not a
@@ -238,7 +249,21 @@ module.exports = {
     await goTo(x + 4.6, z - 0.5, step(3), { ease: 0.2 })
     await goTo(x + 4.9, z + 0.5, step(3), { ease: 0.2 })
     ctx.mark('down')
-    await strafe(+1, z + STEPS - 0.6, (dz) => Math.min(STEPS, dz + 3))
+    // keep pace with the lava front down the walkway, eyes on it (it was out of shot: the camera aimed
+    // at the grass ahead of it)
+    let front = 0
+    const onLava = (o, n) => { if (n && n.name === 'lava') { const q = n.position; if (Math.abs(q.x - x) <= 2 && q.z - z > front) front = Math.min(STEPS, q.z - z) } }
+    bot.on('blockUpdate', onLava)
+    for (let k = 0; k < 500 && !(front >= STEPS - 1 && bot.entity.position.z > z + STEPS - 1.5); k++) {
+      const tz = Math.min(z + STEPS - 0.6, z + front + 0.3)
+      await lookStep(step(Math.max(1, front)).offset(-0.5, -0.3, 0), 0.15)
+      const dz = tz - bot.entity.position.z
+      if (Math.abs(dz) > 0.4) keysFor(Math.atan2(-(x + 4.9 - bot.entity.position.x) * 0.8, -Math.sign(dz)))
+      else bot.clearControlStates()
+      await bot.waitForTicks(1)
+    }
+    bot.clearControlStates()
+    bot.removeListener('blockUpdate', onLava)
     // at the bottom: look back up the whole sheet while the lava finishes running down (the water must
     // go on a finished sheet: on a half-run one the shell came out patchy), then climb back
     await ctx.easeLookAt(step(4).offset(0, -1, 0), 500)
