@@ -307,7 +307,48 @@ def stamp_img(text, color):
     return im.rotate(-8, Image.BICUBIC, expand=True)
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
+def countdown_windows(spec, timeline, start):
+    """[(t0, t1, label)] in Short time for [START, END, LABEL?, NTH?] entries; without NTH every START
+    occurrence pairs with the next END after it (one countdown per round)."""
+    out = []
+    for c in _load(spec):
+        a, b = event_times(timeline, c[0]), event_times(timeline, c[1])
+        label = c[2] if len(c) > 2 and c[2] is not None else ""
+        if len(c) > 3 and c[3] is not None:
+            n = int(c[3]); a = a[n:n + 1]
+        for ta in a:
+            tb = next((x for x in b if x > ta + 1e-6), None)
+            if tb is not None:
+                out.append((ta - start, tb - start, label))
+    return out
+
+
+def countdown_img(left, total, label, since):
+    """A live round countdown: the label, a big digit (ceil of the time left, popping on each
+    change), and a bar draining every frame; red under 0.5 s."""
+    red = left < 0.5
+    color = COLORS["red"] if red else COLORS["white"]
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    cy = BAND + int(GAME_H * 0.42)
+    if label:
+        lab = rich_text(label, 72, COLORS["yellow"])
+        img.alpha_composite(lab, ((W - lab.width) // 2, cy - 230))
+    digit = rich_text(str(max(1, math.ceil(left - 1e-6))), 260, color, stroke_w=14)
+    sc = _pop(since, 0.2, 0.45)
+    if sc != 1.0:
+        digit = digit.resize((int(digit.width * sc), int(digit.height * sc)), Image.BICUBIC)
+    img.alpha_composite(digit, ((W - digit.width) // 2, cy - digit.height // 2))
+    bw, bh = int(W * 0.6), 26
+    x0, y0 = (W - bw) // 2, cy + 170
+    d = ImageDraw.Draw(img)
+    d.rounded_rectangle((x0 - 6, y0 - 6, x0 + bw + 6, y0 + bh + 6), 16, fill=(0, 0, 0, 200))
+    fw = int(bw * max(0.0, min(1.0, left / total)))
+    if fw > 0:
+        d.rounded_rectangle((x0, y0, x0 + fw, y0 + bh), 12, fill=tuple(color) + (255,))
+    return img
+
+
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -332,7 +373,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
             cds.append((t0, t0 + (float(cd[2]) if len(cd) > 2 and cd[2] else 1.0), cd[1],
                         COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]),
                         "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4)))
-    if not marks and not cds and not fallen:
+    cdw = countdown_windows(countdowns, timeline, start)
+    if not marks and not cds and not fallen and not cdw:
         return None
     cache, runs, imgs = {}, [], {}
     n = int(math.ceil(dur * fps)) + 1
@@ -353,7 +395,13 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
         for t0, t1, label, fn, hold in fallen:   # live "blocks fallen" counter, held after the landing
             if t0 <= t + 1e-6 < hold - 1e-6:
                 fk = (fn(min(t, t1)), label, t >= t1)
-        key = (ck, cc, fk)
+        cwk = None
+        for c0, c1, clabel in cdw:            # live round countdowns (a new image every frame)
+            if c0 <= t + 1e-6 < c1 - 1e-6:
+                left = c1 - t
+                since = t - max(c0, c1 - math.ceil(left - 1e-6))   # time since the digit last changed
+                cwk = (round(left, 3), round(c1 - c0, 3), clabel, round(since, 3))
+        key = (ck, cc, fk, cwk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             if ck:
@@ -382,6 +430,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
                     im = im.copy(); im.putalpha(im.split()[3].point(lambda v: int(v * fade)))
                 cy = BAND + int(GAME_H * 0.36)   # below the corner counters
                 img.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))
+            if cwk:
+                img.alpha_composite(countdown_img(*cwk))
             if fk:
                 v, label, done = fk
                 num = rich_text(f"{v}", 92, COLORS["green"] if done else COLORS["white"])

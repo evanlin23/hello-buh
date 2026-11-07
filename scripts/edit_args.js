@@ -20,6 +20,7 @@ if (e.counter) out.push('--counter', JSON.stringify(e.counter))
 if (e.cards) out.push('--cards', JSON.stringify(e.cards))
 if (e.hook) out.push('--hook', JSON.stringify(e.hook))
 if (e.zoom) out.push('--zoom', JSON.stringify(e.zoom))   // held push-ins (scripts/retention.py)
+if (e.countdowns) out.push('--countdowns', JSON.stringify(e.countdowns))   // live per-round countdowns
 if (e.shake) out.push('--shake', JSON.stringify(e.shake))
 if (e.flash) out.push('--flash', JSON.stringify(e.flash))
 if (e.freeze) out.push('--freeze', JSON.stringify(e.freeze))
