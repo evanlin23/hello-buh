@@ -1,0 +1,22 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+20:50:13.473 spawned at Vec3 { x: 132.5, y: 70, z: 8.5 }
+20:50:13.733 nearest minecraft:plains at [ 356, -56 ]
+20:50:23.846 plateau floor 72 terrain 62 .. 76
+20:50:58.594 set at { x: 364, y: 72, z: -48 }
+20:51:07.356 chunks refreshed; back at start within 0.00 blocks
+20:51:42.750 STUNT OK
+rendering 1933 of 2091 frames
+filled 50 dropped pose tick(s): 17 24 39 40 41 62 78 85 96 97 102 103 122 135 136 184 190 196 218 224 ...
+simulated 43 dropped item / xp orb paths
+meshing from y -13
+light computed in 1.4 s
+meshed + uploaded world in 13.9 s
+1806 particles
+rendered 2091 frames (34.85 s of video) in 590.6 s = 16.9 s per video second
+2091 frame names, 1933 rendered
+wrote work/villager_fired.wav 34.90s
+speed: 2091 frames -> 1945 (26.90-27.92s xinf, 30.80-32.22s xinf)
+no 3D block icons needed
+wrote out/villager_fired.mp4 31.67s
+EXIT 0

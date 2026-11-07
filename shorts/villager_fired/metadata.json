@@ -1,0 +1,2091 @@
+{
+  "name": "villager_fired",
+  "caption": "I gave the villager every job \ud83d\udc80",
+  "youtube": {
+    "title": "I gave the villager every job \ud83d\udc80 #minecraft #shorts",
+    "description": "I gave the villager every job \ud83d\udc80\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "all_jobs",
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 16.3,
+    "song_start_s": 0.2
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 31.67,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 35073059,
+    "sha256": "1a749e71d9b4b155cbaa2bfb5ce6d5d72f8035a69f6b5706b5b46db2e171eeb0"
+  },
+  "edit": {
+    "caption": "I gave the villager every job \ud83d\udc80",
+    "red": "every",
+    "song": "songs/payphone.mp3",
+    "dropAt": "all_jobs",
+    "startAt": "beat:-0.05",
+    "endAfter": "nitwit:1.4",
+    "subs": [
+      [
+        "hire",
+        "job 1: librarian",
+        1.6,
+        0
+      ],
+      [
+        "fire",
+        "fired",
+        1.2,
+        0
+      ],
+      [
+        "hire",
+        "job 2: farmer",
+        1.4,
+        1
+      ],
+      [
+        "fire",
+        "fired again",
+        1.2,
+        1
+      ],
+      [
+        "hire",
+        "job 3: fisherman",
+        1.2,
+        2
+      ],
+      [
+        "fire",
+        "FIRED AGAIN",
+        1.2,
+        2
+      ],
+      [
+        "every",
+        "fine. EVERY job",
+        1.6,
+        0
+      ],
+      [
+        "job",
+        "job 4: armorer",
+        1.1,
+        3
+      ],
+      [
+        "job",
+        "job 5: butcher",
+        1,
+        4
+      ],
+      [
+        "job",
+        "job 6: cartographer",
+        1,
+        5
+      ],
+      [
+        "job",
+        "job 7: cleric",
+        0.9,
+        6
+      ],
+      [
+        "job",
+        "job 8: fletcher",
+        0.9,
+        7
+      ],
+      [
+        "job",
+        "jobs 9, 10, 11...",
+        1.4,
+        8
+      ],
+      [
+        "job",
+        "13 JOBS",
+        1.4,
+        12
+      ],
+      [
+        "all_jobs",
+        "all 13 at once",
+        2.8,
+        0
+      ],
+      [
+        "faster",
+        "FASTER",
+        1.2,
+        0
+      ],
+      [
+        "crowd",
+        "the rest of the village: 0 jobs",
+        2.2,
+        0
+      ],
+      [
+        "tnt",
+        "one problem...",
+        1.6,
+        0
+      ],
+      [
+        "lit",
+        "he is about to get FIRED",
+        2.2,
+        0
+      ],
+      [
+        "fired_all",
+        "fired from 13 jobs at once",
+        1.5,
+        0
+      ],
+      [
+        "nitwit",
+        "now he is unemployable",
+        2,
+        0
+      ]
+    ],
+    "speed": [
+      [
+        "fuse_a",
+        "fuse_b",
+        "cut"
+      ],
+      [
+        "close_a",
+        "close_b",
+        "cut"
+      ]
+    ],
+    "args": [
+      "--caption",
+      "I gave the villager every job \ud83d\udc80",
+      "--red",
+      "every",
+      "--subs",
+      "[[\"hire\",\"job 1: librarian\",1.6,0],[\"fire\",\"fired\",1.2,0],[\"hire\",\"job 2: farmer\",1.4,1],[\"fire\",\"fired again\",1.2,1],[\"hire\",\"job 3: fisherman\",1.2,2],[\"fire\",\"FIRED AGAIN\",1.2,2],[\"every\",\"fine. EVERY job\",1.6,0],[\"job\",\"job 4: armorer\",1.1,3],[\"job\",\"job 5: butcher\",1,4],[\"job\",\"job 6: cartographer\",1,5],[\"job\",\"job 7: cleric\",0.9,6],[\"job\",\"job 8: fletcher\",0.9,7],[\"job\",\"jobs 9, 10, 11...\",1.4,8],[\"job\",\"13 JOBS\",1.4,12],[\"all_jobs\",\"all 13 at once\",2.8,0],[\"faster\",\"FASTER\",1.2,0],[\"crowd\",\"the rest of the village: 0 jobs\",2.2,0],[\"tnt\",\"one problem...\",1.6,0],[\"lit\",\"he is about to get FIRED\",2.2,0],[\"fired_all\",\"fired from 13 jobs at once\",1.5,0],[\"nitwit\",\"now he is unemployable\",2,0]]",
+      "--speed",
+      "[[\"fuse_a\",\"fuse_b\",\"cut\"],[\"close_a\",\"close_b\",\"cut\"]]",
+      "--start_at",
+      "beat:-0.05",
+      "--end_after",
+      "nitwit:1.4"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 364,
+      "y": 72,
+      "z": -48
+    },
+    "biome": "minecraft:plains",
+    "ticks": 698,
+    "seconds": 34.9,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "face_on"
+      },
+      {
+        "t": 0.75,
+        "event": "beat"
+      },
+      {
+        "t": 0.85,
+        "event": "swing"
+      },
+      {
+        "t": 0.9,
+        "event": "hire"
+      },
+      {
+        "t": 2.3,
+        "event": "dig"
+      },
+      {
+        "t": 2.3,
+        "event": "swing"
+      },
+      {
+        "t": 2.65,
+        "event": "swing"
+      },
+      {
+        "t": 2.8,
+        "event": "dig_end"
+      },
+      {
+        "t": 2.8,
+        "event": "fire"
+      },
+      {
+        "t": 2.8,
+        "event": "vel"
+      },
+      {
+        "t": 3.3,
+        "event": "vel"
+      },
+      {
+        "t": 3.75,
+        "event": "vel"
+      },
+      {
+        "t": 3.8,
+        "event": "vel"
+      },
+      {
+        "t": 3.9,
+        "event": "swing"
+      },
+      {
+        "t": 3.95,
+        "event": "hire"
+      },
+      {
+        "t": 3.95,
+        "event": "vel"
+      },
+      {
+        "t": 4,
+        "event": "vel"
+      },
+      {
+        "t": 4.05,
+        "event": "vel"
+      },
+      {
+        "t": 4.1,
+        "event": "vel"
+      },
+      {
+        "t": 4.15,
+        "event": "vel"
+      },
+      {
+        "t": 4.2,
+        "event": "vel"
+      },
+      {
+        "t": 4.25,
+        "event": "vel"
+      },
+      {
+        "t": 4.3,
+        "event": "vel"
+      },
+      {
+        "t": 4.8,
+        "event": "vel"
+      },
+      {
+        "t": 5.1,
+        "event": "dig"
+      },
+      {
+        "t": 5.1,
+        "event": "swing"
+      },
+      {
+        "t": 5.15,
+        "event": "vel"
+      },
+      {
+        "t": 5.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 5.2,
+        "event": "fire"
+      },
+      {
+        "t": 5.25,
+        "event": "vel"
+      },
+      {
+        "t": 5.55,
+        "event": "vel"
+      },
+      {
+        "t": 5.8,
+        "event": "vel"
+      },
+      {
+        "t": 5.85,
+        "event": "vel"
+      },
+      {
+        "t": 5.95,
+        "event": "vel"
+      },
+      {
+        "t": 6.1,
+        "event": "swing"
+      },
+      {
+        "t": 6.15,
+        "event": "hire"
+      },
+      {
+        "t": 6.25,
+        "event": "vel"
+      },
+      {
+        "t": 6.35,
+        "event": "vel"
+      },
+      {
+        "t": 6.55,
+        "event": "vel"
+      },
+      {
+        "t": 6.8,
+        "event": "vel"
+      },
+      {
+        "t": 6.95,
+        "event": "vel"
+      },
+      {
+        "t": 6.95,
+        "event": "vel"
+      },
+      {
+        "t": 7.05,
+        "event": "dig"
+      },
+      {
+        "t": 7.05,
+        "event": "swing"
+      },
+      {
+        "t": 7.25,
+        "event": "vel"
+      },
+      {
+        "t": 7.35,
+        "event": "vel"
+      },
+      {
+        "t": 7.35,
+        "event": "swing"
+      },
+      {
+        "t": 7.5,
+        "event": "dig_end"
+      },
+      {
+        "t": 7.5,
+        "event": "fire"
+      },
+      {
+        "t": 7.55,
+        "event": "vel"
+      },
+      {
+        "t": 7.8,
+        "event": "vel"
+      },
+      {
+        "t": 7.95,
+        "event": "vel"
+      },
+      {
+        "t": 8.1,
+        "event": "vel"
+      },
+      {
+        "t": 8.25,
+        "event": "vel"
+      },
+      {
+        "t": 8.3,
+        "event": "every"
+      },
+      {
+        "t": 8.35,
+        "event": "vel"
+      },
+      {
+        "t": 8.55,
+        "event": "vel"
+      },
+      {
+        "t": 8.6,
+        "event": "vel"
+      },
+      {
+        "t": 8.8,
+        "event": "vel"
+      },
+      {
+        "t": 8.8,
+        "event": "vel"
+      },
+      {
+        "t": 8.95,
+        "event": "vel"
+      },
+      {
+        "t": 9.2,
+        "event": "swing"
+      },
+      {
+        "t": 9.2,
+        "event": "vel"
+      },
+      {
+        "t": 9.25,
+        "event": "job"
+      },
+      {
+        "t": 9.25,
+        "event": "vel"
+      },
+      {
+        "t": 9.35,
+        "event": "vel"
+      },
+      {
+        "t": 9.5,
+        "event": "swing"
+      },
+      {
+        "t": 9.55,
+        "event": "job"
+      },
+      {
+        "t": 9.55,
+        "event": "vel"
+      },
+      {
+        "t": 9.55,
+        "event": "vel"
+      },
+      {
+        "t": 9.75,
+        "event": "vel"
+      },
+      {
+        "t": 9.8,
+        "event": "swing"
+      },
+      {
+        "t": 9.85,
+        "event": "job"
+      },
+      {
+        "t": 9.85,
+        "event": "vel"
+      },
+      {
+        "t": 9.95,
+        "event": "vel"
+      },
+      {
+        "t": 10.05,
+        "event": "vel"
+      },
+      {
+        "t": 10.2,
+        "event": "vel"
+      },
+      {
+        "t": 10.3,
+        "event": "vel"
+      },
+      {
+        "t": 10.5,
+        "event": "vel"
+      },
+      {
+        "t": 10.55,
+        "event": "vel"
+      },
+      {
+        "t": 10.75,
+        "event": "vel"
+      },
+      {
+        "t": 10.9,
+        "event": "swing"
+      },
+      {
+        "t": 10.9,
+        "event": "vel"
+      },
+      {
+        "t": 10.95,
+        "event": "job"
+      },
+      {
+        "t": 11.1,
+        "event": "vel"
+      },
+      {
+        "t": 11.25,
+        "event": "vel"
+      },
+      {
+        "t": 11.35,
+        "event": "vel"
+      },
+      {
+        "t": 11.55,
+        "event": "vel"
+      },
+      {
+        "t": 11.55,
+        "event": "vel"
+      },
+      {
+        "t": 11.6,
+        "event": "vel"
+      },
+      {
+        "t": 11.8,
+        "event": "vel"
+      },
+      {
+        "t": 11.95,
+        "event": "vel"
+      },
+      {
+        "t": 12,
+        "event": "swing"
+      },
+      {
+        "t": 12.05,
+        "event": "job"
+      },
+      {
+        "t": 12.05,
+        "event": "vel"
+      },
+      {
+        "t": 12.05,
+        "event": "vel"
+      },
+      {
+        "t": 12.15,
+        "event": "vel"
+      },
+      {
+        "t": 12.15,
+        "event": "vel"
+      },
+      {
+        "t": 12.2,
+        "event": "vel"
+      },
+      {
+        "t": 12.25,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.3,
+        "event": "vel"
+      },
+      {
+        "t": 12.35,
+        "event": "vel"
+      },
+      {
+        "t": 12.35,
+        "event": "vel"
+      },
+      {
+        "t": 12.4,
+        "event": "vel"
+      },
+      {
+        "t": 12.4,
+        "event": "vel"
+      },
+      {
+        "t": 12.5,
+        "event": "vel"
+      },
+      {
+        "t": 12.55,
+        "event": "vel"
+      },
+      {
+        "t": 12.6,
+        "event": "vel"
+      },
+      {
+        "t": 12.8,
+        "event": "vel"
+      },
+      {
+        "t": 12.95,
+        "event": "vel"
+      },
+      {
+        "t": 12.95,
+        "event": "vel"
+      },
+      {
+        "t": 13,
+        "event": "swing"
+      },
+      {
+        "t": 13.05,
+        "event": "job"
+      },
+      {
+        "t": 13.2,
+        "event": "vel"
+      },
+      {
+        "t": 13.25,
+        "event": "vel"
+      },
+      {
+        "t": 13.35,
+        "event": "vel"
+      },
+      {
+        "t": 13.4,
+        "event": "vel"
+      },
+      {
+        "t": 13.55,
+        "event": "vel"
+      },
+      {
+        "t": 13.6,
+        "event": "vel"
+      },
+      {
+        "t": 13.8,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "swing"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 14,
+        "event": "job"
+      },
+      {
+        "t": 14.25,
+        "event": "vel"
+      },
+      {
+        "t": 14.35,
+        "event": "vel"
+      },
+      {
+        "t": 14.55,
+        "event": "vel"
+      },
+      {
+        "t": 14.6,
+        "event": "vel"
+      },
+      {
+        "t": 14.8,
+        "event": "vel"
+      },
+      {
+        "t": 14.85,
+        "event": "swing"
+      },
+      {
+        "t": 14.9,
+        "event": "job"
+      },
+      {
+        "t": 14.95,
+        "event": "vel"
+      },
+      {
+        "t": 15.25,
+        "event": "vel"
+      },
+      {
+        "t": 15.35,
+        "event": "vel"
+      },
+      {
+        "t": 15.55,
+        "event": "vel"
+      },
+      {
+        "t": 15.6,
+        "event": "vel"
+      },
+      {
+        "t": 15.75,
+        "event": "swing"
+      },
+      {
+        "t": 15.8,
+        "event": "job"
+      },
+      {
+        "t": 15.8,
+        "event": "vel"
+      },
+      {
+        "t": 15.95,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "swing"
+      },
+      {
+        "t": 16.05,
+        "event": "job"
+      },
+      {
+        "t": 16.2,
+        "event": "swing"
+      },
+      {
+        "t": 16.25,
+        "event": "job"
+      },
+      {
+        "t": 16.25,
+        "event": "vel"
+      },
+      {
+        "t": 16.35,
+        "event": "swing"
+      },
+      {
+        "t": 16.35,
+        "event": "vel"
+      },
+      {
+        "t": 16.4,
+        "event": "job"
+      },
+      {
+        "t": 16.5,
+        "event": "swing"
+      },
+      {
+        "t": 16.55,
+        "event": "job"
+      },
+      {
+        "t": 16.55,
+        "event": "vel"
+      },
+      {
+        "t": 16.6,
+        "event": "vel"
+      },
+      {
+        "t": 16.8,
+        "event": "vel"
+      },
+      {
+        "t": 16.95,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "all_jobs"
+      },
+      {
+        "t": 17.25,
+        "event": "vel"
+      },
+      {
+        "t": 17.35,
+        "event": "vel"
+      },
+      {
+        "t": 17.55,
+        "event": "vel"
+      },
+      {
+        "t": 17.6,
+        "event": "vel"
+      },
+      {
+        "t": 17.8,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.25,
+        "event": "vel"
+      },
+      {
+        "t": 18.3,
+        "event": "vel"
+      },
+      {
+        "t": 18.5,
+        "event": "vel"
+      },
+      {
+        "t": 18.55,
+        "event": "vel"
+      },
+      {
+        "t": 18.75,
+        "event": "vel"
+      },
+      {
+        "t": 18.9,
+        "event": "vel"
+      },
+      {
+        "t": 19.2,
+        "event": "vel"
+      },
+      {
+        "t": 19.3,
+        "event": "vel"
+      },
+      {
+        "t": 19.5,
+        "event": "vel"
+      },
+      {
+        "t": 19.55,
+        "event": "vel"
+      },
+      {
+        "t": 19.75,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "faster"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.25,
+        "event": "vel"
+      },
+      {
+        "t": 20.35,
+        "event": "vel"
+      },
+      {
+        "t": 20.55,
+        "event": "vel"
+      },
+      {
+        "t": 20.6,
+        "event": "vel"
+      },
+      {
+        "t": 20.8,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.25,
+        "event": "vel"
+      },
+      {
+        "t": 21.35,
+        "event": "vel"
+      },
+      {
+        "t": 21.5,
+        "event": "crowd"
+      },
+      {
+        "t": 21.55,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.8,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.55,
+        "event": "vel"
+      },
+      {
+        "t": 22.6,
+        "event": "vel"
+      },
+      {
+        "t": 22.8,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.35,
+        "event": "vel"
+      },
+      {
+        "t": 23.55,
+        "event": "vel"
+      },
+      {
+        "t": 23.6,
+        "event": "vel"
+      },
+      {
+        "t": 23.7,
+        "event": "tnt"
+      },
+      {
+        "t": 23.8,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 24.25,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.55,
+        "event": "vel"
+      },
+      {
+        "t": 24.6,
+        "event": "vel"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.95,
+        "event": "vel"
+      },
+      {
+        "t": 25.25,
+        "event": "vel"
+      },
+      {
+        "t": 25.35,
+        "event": "vel"
+      },
+      {
+        "t": 25.5,
+        "event": "swing"
+      },
+      {
+        "t": 25.5,
+        "event": "lit"
+      },
+      {
+        "t": 25.55,
+        "event": "vel"
+      },
+      {
+        "t": 25.6,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 25.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.25,
+        "event": "vel"
+      },
+      {
+        "t": 26.35,
+        "event": "vel"
+      },
+      {
+        "t": 26.55,
+        "event": "vel"
+      },
+      {
+        "t": 26.6,
+        "event": "vel"
+      },
+      {
+        "t": 26.8,
+        "event": "vel"
+      },
+      {
+        "t": 26.9,
+        "event": "fuse_a"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 27.25,
+        "event": "vel"
+      },
+      {
+        "t": 27.35,
+        "event": "vel"
+      },
+      {
+        "t": 27.55,
+        "event": "vel"
+      },
+      {
+        "t": 27.6,
+        "event": "vel"
+      },
+      {
+        "t": 27.8,
+        "event": "vel"
+      },
+      {
+        "t": 27.9,
+        "event": "fuse_b"
+      },
+      {
+        "t": 27.95,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.35,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.8,
+        "event": "vel"
+      },
+      {
+        "t": 28.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.25,
+        "event": "vel"
+      },
+      {
+        "t": 29.35,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.7,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 29.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 29.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.25,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "ring_boom"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.45,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "close_a"
+      },
+      {
+        "t": 30.8,
+        "event": "cut"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.95,
+        "event": "vel"
+      },
+      {
+        "t": 30.95,
+        "event": "vel"
+      },
+      {
+        "t": 30.95,
+        "event": "vel"
+      },
+      {
+        "t": 30.95,
+        "event": "vel"
+      },
+      {
+        "t": 30.95,
+        "event": "vel"
+      },
+      {
+        "t": 31,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31,
+        "event": "vel"
+      },
+      {
+        "t": 31,
+        "event": "vel"
+      },
+      {
+        "t": 31,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31,
+        "event": "vel"
+      },
+      {
+        "t": 31,
+        "event": "vel"
+      },
+      {
+        "t": 31,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 31,
+        "event": "vel"
+      },
+      {
+        "t": 31,
+        "event": "vel"
+      },
+      {
+        "t": 31,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.1,
+        "event": "vel"
+      },
+      {
+        "t": 31.1,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "vel"
+      },
+      {
+        "t": 31.3,
+        "event": "vel"
+      },
+      {
+        "t": 31.35,
+        "event": "vel"
+      },
+      {
+        "t": 31.35,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.65,
+        "event": "vel"
+      },
+      {
+        "t": 31.65,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.75,
+        "event": "vel"
+      },
+      {
+        "t": 31.8,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
+        "event": "vel"
+      },
+      {
+        "t": 31.9,
+        "event": "vel"
+      },
+      {
+        "t": 31.95,
+        "event": "vel"
+      },
+      {
+        "t": 31.95,
+        "event": "vel"
+      },
+      {
+        "t": 32,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.1,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.2,
+        "event": "close_b"
+      },
+      {
+        "t": 32.2,
+        "event": "fired_all"
+      },
+      {
+        "t": 32.2,
+        "event": "vel"
+      },
+      {
+        "t": 32.2,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.3,
+        "event": "vel"
+      },
+      {
+        "t": 32.3,
+        "event": "vel"
+      },
+      {
+        "t": 32.3,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.1,
+        "event": "vel"
+      },
+      {
+        "t": 33.1,
+        "event": "vel"
+      },
+      {
+        "t": 33.15,
+        "event": "vel"
+      },
+      {
+        "t": 33.15,
+        "event": "vel"
+      },
+      {
+        "t": 33.15,
+        "event": "vel"
+      },
+      {
+        "t": 33.2,
+        "event": "vel"
+      },
+      {
+        "t": 33.25,
+        "event": "vel"
+      },
+      {
+        "t": 33.25,
+        "event": "vel"
+      },
+      {
+        "t": 33.3,
+        "event": "vel"
+      },
+      {
+        "t": 33.35,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "nitwit"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.75,
+        "event": "vel"
+      },
+      {
+        "t": 33.9,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.1,
+        "event": "vel"
+      },
+      {
+        "t": 34.15,
+        "event": "vel"
+      },
+      {
+        "t": 34.15,
+        "event": "vel"
+      },
+      {
+        "t": 34.15,
+        "event": "vel"
+      },
+      {
+        "t": 34.2,
+        "event": "vel"
+      },
+      {
+        "t": 34.25,
+        "event": "vel"
+      },
+      {
+        "t": 34.3,
+        "event": "vel"
+      },
+      {
+        "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.5,
+        "event": "vel"
+      },
+      {
+        "t": 34.6,
+        "event": "vel"
+      },
+      {
+        "t": 34.6,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.75,
+        "event": "vel"
+      },
+      {
+        "t": 34.9,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "77967d7067cc756a08de35c8b5c56b68c60d352f",
+    "rendered_at": "2026-11-07T21:07:29.582Z",
+    "head_at_publish": "77967d7067cc756a08de35c8b5c56b68c60d352f",
+    "stunt": "stunts/villager_fired.js",
+    "source_snapshot": [
+      "source/villager_fired.js",
+      "source/plateau.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 77967d7067cc",
+    "gunzip -c shorts/villager_fired/recording.json.gz > work/villager_fired.rec.json",
+    "node render.js work/villager_fired.rec.json work/villager_fired.frames 60 1080 1011",
+    "python3 audio.py work/villager_fired.rec.json work/villager_fired.wav",
+    "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job \ud83d\udc80\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"fired_all\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"nitwit\\\",\\\"now he is unemployable\\\",2,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"close_a\",\"close_b\",\"cut\"]] --start_at beat:-0.05 --end_after nitwit:1.4 --out out/villager_fired.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 9: hired/fired x3, all 13 jobs faster and faster, all at once, then a TNT ring fires him from 13 jobs at once; alone on his pillar, nitwit. Frame review + retention + minecraft audits ready (independent reviewer). Nitpicks: becoming a nitwit isn't vanilla (joke), all-dirt crater walls.",
+  "published_at": "2026-11-07T21:19:04.873Z"
+}
