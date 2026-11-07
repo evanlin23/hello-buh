@@ -68,7 +68,8 @@ module.exports = {
     const torchColumn = async (cx, cz) => {
       const loc = { x: cx, y: floor + 1, z: cz }
       ctx.select(0)
-      bot._client.write('block_dig', { status: 0, location: loc, face: 3, sequence: 0 })
+      const blk = bot.blockAt(new Vec3(cx, floor + 1, cz))
+      try { await bot.dig(blk, 'ignore') } catch (e) { ctx.log('dig', cx, cz, e.message) }   // mineflayer's own dig: raw packets only worked for the first tower
       ctx.sound('block.sand.break', 1); ctx.particles('block', new Vec3(cx, floor + 1, cz), { block: 'sand' })
       if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second
       // sand checks for a free space 2 ticks after the update (a torch isn't one): let the column
@@ -77,6 +78,7 @@ module.exports = {
       ctx.select(1)
       bot._client.write('block_place', { hand: 0, location: { x: cx, y: floor, z: cz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       ctx.sound('block.wood.place', 1)
+      setTimeout(() => ctx.log('column', cx, cz, 'now', bot.blockAt(new Vec3(cx, floor + 1, cz)).name, 'bot at', bot.entity.position.x.toFixed(1)), 300)
     }
     const sandLeft = (t) => {
       let n = 0
