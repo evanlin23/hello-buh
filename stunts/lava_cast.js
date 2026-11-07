@@ -22,10 +22,11 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'satisfying lava cast 😌',
   edit: {
-    caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.3', endAfter: 'final:0.95',
+    caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.15', endAfter: 'final:0.95',
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
-    // the first cast and the drains at 2x (the drains wait for the whole field to dry)
-    speed: [['follow', 'scoop', 2], ['drain0', 'reveal', 2], ['drain1', 'final', 2]]
+    cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
+    // the climb back up and both casts at 2x; the walk back up to the platform for layer 2 is cut
+    speed: [['up', 'water', 2], ['follow', 'scoop', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2]]
   },
 
   async setup (ctx) {
@@ -38,8 +39,9 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor; this.T = T
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..100]')   // no villager wandering through the shot
-    const R = 16
-    for (let y0 = floor + 1; y0 <= T + 12; y0 += 12) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 11, T + 12)} ${z + R + 8} air`)
+    // a wide, high clear: its cut edges stay far off in the fog
+    const R = 28, nap = () => new Promise(resolve => setTimeout(resolve, 250))   // the server needs a breath between big fills
+    for (let y0 = floor + 1; y0 <= T + 22; y0 += 5) { await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 4, T + 22)} ${z + R + 8} air`); await nap() }   // 57x65x5 < the 32768 cap
     await ctx.cmd(`/fill ${x - R} ${floor - 4} ${z - R} ${x + R} ${floor - 1} ${z + R + 8} dirt`)
     await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R + 8} grass_block`)
     // raised platform (rows z-5..z-2, top T+2) and the channel row z-1 (top T+1)
@@ -105,7 +107,7 @@ module.exports = {
       if (!n || !['cobblestone', 'obsidian', 'stone'].includes(n.name) || !o || !/lava|water/.test(o.name)) return
       const q = n.position
       if (Math.abs(q.x - x) > 8 || q.z < z - 2 || q.z > z + STEPS + 4 || q.y < T - STEPS - 1) return   // the cast only (not caves below)
-      ctx.particles('smoke', n.position.offset(0.5, 1, 0.5), { count: 6 })
+      ctx.particles('smoke', n.position.offset(0.5, 1, 0.5), { count: 3 })
       if (ctx.tick - fizzAt >= 3) { fizzAt = ctx.tick; ctx.sound('block.lava.extinguish', 0.5, 2.2 + Math.random() * 0.6) }
     }
     bot.on('blockUpdate', onConvert)
@@ -168,6 +170,25 @@ module.exports = {
       }
     }
 
+    // follow the cast down the hill: wide, slow sweeps
+    const FOLLOW = [[2, 550], [5, 550], [8, 550], [9, 500], [6, 550], [3, 550], [6, 550], [9, 550]]
+    // the reveal, from the side: down to the walkway while the water drains, strafing down beside
+    // the sheet; the reveal when the slope (not the field below) is dry, then a pan along the shell
+    const reveal = async (last) => {
+      await ctx.cmd('/tick rate 60')
+      let wetAt = ctx.tick
+      const onSlope = (o, n) => { const b = n || o; if (!b) return; const q = b.position; if (Math.abs(q.x - x) <= 3 && q.z >= z - 1 && q.z <= z + STEPS && ((n && n.name === 'water') || (o && o.name === 'water'))) wetAt = ctx.tick }
+      bot.on('blockUpdate', onSlope)
+      await goTo(x + 4.6, z - 0.5, step(3), { ease: 0.2 })
+      await goTo(x + 4.9, z + 0.5, step(3), { ease: 0.2 })
+      await strafe(+1, z + 4.6, (dz) => Math.min(STEPS, dz + 2))
+      for (let i = 0; i < 20 && ctx.tick - wetAt <= 10; i++) await ctx.easeLookAt(step(i % 2 ? 6 : 3).offset(-1, -0.5, 0), 450)
+      bot.removeListener('blockUpdate', onSlope)
+      ctx.mark(last ? 'final' : 'reveal', { n: last ? 1 : 0 })
+      await ctx.easeLookAt(step(1).offset(-1, 0, 0), 600)
+      await ctx.easeLookAt(step(8).offset(-1.5, -1, 0), last ? 900 : 700)
+    }
+
     // ---- layer 1 ----
     await ctx.cmd(`/tick rate ${LAVA_RATE}`)
     ctx.mark('pour', { n: 0 })
@@ -195,17 +216,21 @@ module.exports = {
     ctx.mark('water', { n: 0 }); ctx.sound('item.bucket.empty')
     await aimUse(new Vec3(x + 2.2, T + 2 - 0.02, z - 0.6), 5, 350)
     ctx.mark('follow', { n: 0 })
-    ctx.log('cast 1 settled', await watch(['cobblestone', 'obsidian'], [[2, 600], [4, 600], [6, 600], [8, 600], [9, 600], [7, 600], [9, 600], [6, 600]]), 'ticks ago')
+    ctx.log('cast 1 settled', await watch(['cobblestone', 'obsidian'], FOLLOW), 'ticks ago')
     ctx.mark('scoop', { n: 0 }); ctx.sound('item.bucket.fill')
     await aimUse(new Vec3(x + 2.3, T + 2.6, z - 0.6), 5, 350, new Vec3(x + 2.5, T + 2.75, z - 0.5))
-    await ctx.cmd('/tick rate 100')
-    ctx.mark('drain0')
-    await watch(['water'], [[3, 450], [5, 450], [7, 450], [8, 450], [6, 450]], 3, true)
-    ctx.mark('reveal', { n: 0 })
+    await reveal(false)
 
     // ---- layer 2 ----
-    // along the platform's edge to the west end
-    await goTo(x - 0.5, z - 1.4, step(2).offset(-2, 0, 0), { ease: 0.15, tol: 0.2 })
+    // back up to the platform's west end (cut in the edit)
+    ctx.mark('climb2a')
+    await ctx.cmd('/tick rate 20')
+    await strafe(-1, z + 0.6, (dz) => Math.max(0, dz - 3))
+    await goTo(x + 4.6, z - 0.5, step(1), { jump: true, ease: 0.2 })
+    await goTo(x + 3.9, z - 1.4, step(2), { jump: true, ease: 0.2, tol: 0.15 })
+    await goTo(x - 0.5, z - 1.4, step(2).offset(-2, 0, 0), { ease: 0.3, tol: 0.2 })
+    await ctx.easeLookAt(new Vec3(x - 0.5, T + 1.98, z + 0.6), 250)
+    ctx.mark('climb2b')
     await ctx.cmd(`/tick rate ${LAVA_RATE}`)
     ctx.mark('pour', { n: 1 })
     // two more buckets (slots 6-7; the hotbar has room for no more) onto the obsidian line (top T+2):
@@ -213,22 +238,18 @@ module.exports = {
     await pourRow([-1, 1], [6, 7], z - 1.4, T + 2, z + 0.6)
     ctx.select(5)
     await goTo(x + 3.9, z - 1.4, step(4), { ease: 0.2 })
-    for (const [k, ms] of [[6, 500], [8, 500]]) await ctx.easeLookAt(step(k).offset(-1, -1, 0), ms)
+    for (const [k, ms] of [[6, 400], [8, 400]]) await ctx.easeLookAt(step(k).offset(-1, -1, 0), ms)
     await ctx.cmd('/tick rate 40')
     // the water must be one block above the new lava again, as in layer 1: a cobblestone in the
     // channel row (over the lava that ran into it), the water on top
     await aimUse(new Vec3(x + 2.3, T + 2 - 0.02, z - 0.6), 8, 300)
     ctx.mark('water', { n: 1 }); ctx.sound('item.bucket.empty')
     await aimUse(new Vec3(x + 2.3, T + 3 - 0.02, z - 0.6), 5, 300)
-    ctx.mark('follow', { n: 1 })
-    ctx.log('cast 2 settled', await watch(['cobblestone', 'obsidian'], [[2, 600], [4, 600], [6, 600], [8, 600], [9, 600], [7, 600], [9, 600]]), 'ticks ago')
-    ctx.mark('scoop', { n: 1 }); ctx.sound('item.bucket.fill')
+    ctx.mark('follow', { n: 1 }); ctx.mark('follow1')
+    ctx.log('cast 2 settled', await watch(['cobblestone', 'obsidian'], FOLLOW), 'ticks ago')
+    ctx.mark('scoop', { n: 1 }); ctx.mark('scoop1'); ctx.sound('item.bucket.fill')
     await aimUse(new Vec3(x + 2.4, T + 3.6, z - 0.6), 5, 350, new Vec3(x + 2.5, T + 3.75, z - 0.5))
-    await ctx.cmd('/tick rate 100')
-    ctx.mark('drain1')
-    await watch(['water'], [[3, 450], [5, 450], [7, 450], [8, 450], [6, 450]], 3, true)
-    ctx.mark('final')
-    await ctx.easeLookAt(step(5).offset(-1.5, 0, 0), 1000)
+    await reveal(true)
     await ctx.cmd('/tick rate 20')
     bot.removeListener('blockUpdate', onConvert)
     // the reveals must be real: cobblestone down the slope and no water left on it
