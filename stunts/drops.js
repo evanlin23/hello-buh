@@ -78,6 +78,8 @@ module.exports = {
     for (let i = 0; i < DROPS.length; i++) {
       const d = DROPS[i], top = floor + d.h, n = i + 1
 
+      // the hole re-filled every drop: in a cold spot the water froze to ice and the 230 landed on it (death)
+      bot.chat(`/setblock ${x} ${floor} ${z} water`)
       const gx = x + Math.floor(0.5 + d.off)        // the glass sits under the bot (the offset drop missed its block and fell)
       await ctx.cmd(`/setblock ${gx} ${top} ${z} glass`)
       // on the glass, looking straight down. A fast tp: tpCheck's 1 s settle was a 1.8 s still between drops
