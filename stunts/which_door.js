@@ -1,14 +1,14 @@
 // "which door would you pick? 🚪" (worker 14, docs/ideas.md "New formats" #3, ~30 s): five numbered
 // doors in one facade, diamonds at the back of every room. The bot opens them in turn:
 //   1 a stone bridge over lava with a gap too wide to walk (dead), 2 a zombie horde (survived: it
-//   slams the door, and zombies can't break doors on Normal), 3 a pressure plate under a trapdoor roof
-//   holding anvils (survived by backing out), 4 a room of creepers (dead), 5 "the safe one", a cosy bedroom
+//   slams the door, and zombies can't break doors on Normal), 3 a corridor of dispensers: a plate sets
+//   them off (survived by backing out through the arrows), 4 a room of creepers (dead), 5 "the safe one", a cosy bedroom
 //   whose floor is TNT under the carpet (the worst).
 // Everything on camera is survival play: walking, jumping, opening doors. Mobs have their own AI.
 // The traps' redstone (under the floor, never on camera) is stood in for by commands.
 // lib/door_run.js plays it; lib/doors.js builds it.
 const R = require('../lib/door_run')
-const ROOMS = ['lava', 'zombies', 'anvils', 'creepers', 'safe']
+const ROOMS = ['lava', 'zombies', 'arrows', 'creepers', 'safe']
 
 module.exports = R.makeStunt({
   name: 'which_door',
