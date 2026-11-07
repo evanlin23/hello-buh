@@ -101,7 +101,7 @@ module.exports = {
     // B: the lamp and note line
     for (let k = 0; k < NOTES.length; k++) {
       const n = 8 + 2 * k
-      await put(5, 1, n - 1, 'repeater[facing=south,delay=3]')
+      await put(5, 1, n - 1, 'repeater[facing=south,delay=4]')
       await put(5, 1, n, T)
       await put(5, 2, n, 'redstone_lamp')
       await put(6, 0, n, 'gold_block')
@@ -291,23 +291,23 @@ module.exports = {
     focus = W(1.5, 1.4, 6)
     await until(() => at('arrow_hit'), 40)
     // B: walk up the lane, the camera on the newest lamp
-    steer = W(0, 0, 26)
+    steer = W(1, 0, 34); sprint = true                 // keep up with the chain
     for (let kk = 0; kk < lamps.length; kk++) {
       focus = W(5, 2, lamps[Math.min(lamps.length - 1, kk + 1)])
       await until(() => at(`lamp${kk}`), 40)
     }
     // C: up the staircase to the ridge, then each column as it falls
     focus = W(5, 6, towers[0].n - 3); k = 0.14
-    steer = W(0, 0, towers[0].n - 4)
+    steer = W(1, 0, towers[0].n - 6)
     await until(() => at('push0'), 40)
     for (let i = 0; i < towers.length; i++) {
-      steer = W(0, 0, towers[i].n - 2)
+      steer = W(1, 0, towers[i].n - 5)
       focus = W(7, 6 + towers[i].L * 0.4, towers[i].n + 1)
       await until(() => at(`push${i + 1}`) || (i === 2 && at('sand_land')), 40)
     }
     focus = W(7, 3, nC); await until(() => at('sand_land'), 60)
     // D: the cart rolls west across the lane: stop short of the track and follow it, walking west
-    focus = W(4, 1, nD); steer = W(0, 0, nD - 5)
+    focus = W(4, 1, nD); steer = W(0, 0, nD - 5); sprint = false
     await until(() => at('launch'), 20)
     k = 0.2; sprint = true
     steer = W(-9, 0, nD - 5)
@@ -333,11 +333,21 @@ module.exports = {
     // G: the TNT cart: launch, ride, primed (flashing), and on into the TNT
     focus = W(this.eL, 1, nG)
     await until(() => at('tnt_launch'), 30)
-    await follow('tnt_minecart', [-2.5, 0.3, 0], () => booms > 0, 200)
+    let last = null
+    for (let i = 0; i < 200 && booms === 0; i++) {
+      const en = ent('tnt_minecart')
+      if (en) {
+        const v = last ? Math.hypot(en.position.x - last.x, en.position.z - last.z) : 1
+        last = en.position.clone()
+        // moving: lead it; waiting at the buffer: let the aim drift along the line it will light
+        focus = v > 0.02 ? en.position.offset(-2.5, 0.3, 0) : focus.plus(new Vec3(0.12, 0, 0))
+      }
+      await bot.waitForTicks(1)
+    }
     // H: the explosions race east to the pile
     k = 0.1
     for (let i = 0; i < 200 && !at('giant'); i++) {
-      if (at('big')) { focus = W(27, 3, nH + 3); steer = W(9, 0, nF - 6) } else if (at('cube')) { focus = W(12, 2.5, nH); steer = W(4, 0, nF - 6) }
+      if (at('big')) { focus = W(27, 3, nH + 3); steer = W(6, 0, nF - 8) } else if (at('cube')) { focus = W(12, 2.5, nH); steer = W(3, 0, nF - 7) }
       else {
         const tnts = Object.values(bot.entities).filter(en => en.name === 'tnt')
         const front = tnts.reduce((a, en) => (!a || en.position.x > a.position.x) ? en : a, null)
