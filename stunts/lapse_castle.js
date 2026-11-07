@@ -152,22 +152,23 @@ module.exports = makeStunt({
     hold: 'stone_bricks', slot: 2,
     // ticks of the build each stage gets (each 3 s or less on screen): moat, walls, towers, keep, roofs,
     // village, courtyard, tower flags, the last flag
-    stageTicks: { 0: 60, 1: 240, 2: 120, 3: 180, 4: 180, 5: 150, 6: 150, 7: 60, 8: 40 },
+    stageTicks: { 0: 60, 1: 180, 2: 120, 3: 180, 4: 180, 5: 180, 6: 180, 7: 60, 8: 40 },
     // [tick of the build, camera, look-at], local to the castle centre (y from the ground)
     keys: [
       [0, [-24, 13, 52], [0, -1, 26]],
       [60, [-34, 14, 46], [0, 3, 0]],
-      [300, [-30, 18, 40], [0, 8, 0]],
-      [360, [-40, 24, 42], [-22, 16, 22]],   // a tower rising above the finished walls
-      [420, [10, 22, 46], [0, 12, -2]],
-      [600, [20, 30, 33], [0, 22, -3]],
-      [760, [14, 36, 26], [0, 30, -3]],
-      [805, [-18, 40, 54], [-20, 10, 10]],   // round in front of the south-west tower, not past its cone
-      [850, [-58, 30, 40], [-36, 4, 6]],     // the village rising beside the castle
+      [150, [-38, 10, 36], [-12, 4, 12]],   // low along the west wall as it rises
+      [240, [-30, 18, 40], [0, 8, 0]],
+      [300, [-40, 24, 42], [-22, 16, 22]],   // a tower rising above the finished walls
+      [360, [10, 22, 46], [0, 12, -2]],
+      [540, [20, 30, 33], [0, 22, -3]],
+      [700, [14, 36, 26], [0, 30, -3]],
+      [745, [-18, 40, 54], [-20, 10, 10]],   // round in front of the south-west tower, not past its cone
+      [810, [-58, 30, 40], [-36, 4, 6]],     // the village rising beside the castle
       [960, [-6, 44, 46], [-2, 0, 4]],       // over the front wall into the courtyard as it fills
       [1080, [16, 40, 40], [0, 10, -3]],
       [1140, [8, 40, 50], [0, 34, -3]],      // the flags going up
-      [1162, [-1, 14, 84], [0, 21, 0]],     // arrive early, then creep: at 3x the pull-back would otherwise
+      [1175, [-1, 14, 84], [0, 21, 0]],     // arrive early, then creep: at 3x the pull-back would otherwise
       [1188, [0, 12, 78], [0, 21, 0]]       // hit 60:00 at full speed and drop to real time in one frame
     ],
     // [ticks after the build, camera, look-at]: the pull-back lands on the wide shot at 60:00 (the
