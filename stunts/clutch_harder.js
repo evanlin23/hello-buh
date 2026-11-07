@@ -20,7 +20,7 @@ const TIERS = [
   { mod: water, opts: { height: 130, fast: true }, label: '130 BLOCKS, HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
   { mod: pearl, opts: { tower: 30, fast: true }, label: 'PEARL OVER LAVA', end: 'teleported', hotbar: 'pearl' },
   { mod: pearl, opts: { tower: 70, fast: true, openPitch: -0.85 }, label: 'AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
-  { mod: pearl, opts: { tower: 100, fast: true, openPitch: -0.85 }, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
+  { mod: pearl, opts: { tower: 100, fast: true, openPitch: -1.2 }, tpPitch: 69, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
   { mod: wrong, opts: { height: 21, fast: true }, label: 'EASY ONE', end: null, hotbar: 'lava', time: 6000, weather: 'clear' }
 ]
 const HOTBARS = {
@@ -41,11 +41,15 @@ module.exports = {
   chunkStops: set => [{ x: set.x - Math.floor(TIERS.length / 2) * GAP, z: set.z }, { x: set.x + (TIERS.length - 1 - Math.floor(TIERS.length / 2)) * GAP, z: set.z }],   // the first and last sets (the last rendered over the void)
   edit: {
     caption: 'clutches, but each one is harder 😳', red: 'harder',
-    song: 'songs/misery.mp3', dropAt: `placed${TIERS.length}`,
-    startAt: 'look1:0.3', endAfter: 'death:1.6',   // startAt: the first 0.37 s were a frozen frame
+    song: 'songs/ncs/vem_lenta.mp3',   // its drop (36.75 s) is after the payoff, so it lines up; misery's (16.25) played on tier 4 (review)
+    dropAt: `placed${TIERS.length}`,
+    startAt: 'look1:0.3', endAfter: 'death:1.3',   // a short death message: 1.3 s reads it   // startAt: the first 0.37 s were a frozen frame
     onFire: `placed${TIERS.length}:death`, deathScreen: true,
     subs: TIERS.map((t, i) => [`look${i + 1}`, t.label, 2.4, 0]),
-    speed: TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut'])
+    speed: TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
+    // the long water falls had 3+ s with no new beat (review): a live blocks-fallen count on each
+    fallen: TIERS.map((t, i) => t.mod === water && t.opts.height >= 70 ? [`jump${i + 1}`, `placed${i + 1}`, 'blocks'] : null).filter(Boolean),
+    sfx: [['boom', `look${TIERS.findIndex(t => t.weather === 'thunder') + 1}`, { gain: 0.8 }]]   // the storm's thunder was 10 dB under the song (review)
   },
 
   async setup (ctx) {
@@ -86,8 +90,11 @@ module.exports = {
     if (t.weather && t.weather !== (ctx.weather || 'clear')) { await ctx.setWeather(t.weather); await ctx.bot.waitForTicks(105) }
     await ctx.hotbar(HOTBARS[t.hotbar])
     // pearl tiers open looking down at the lava, not across a dark sky (night/storm openings were 1 s of black)
+    // water and lava tiers open looking straight down the pillar: at the horizon each cut opened on
+    // a 0.25 s hold and a whip down (review); the 100-block storm opens steeper (-1.2 rad = 69 deg)
+    // or it looked past the lava at dark terrain
     const st = this.states[i].start.slice()
-    if (t.hotbar === 'pearl') st[4] = 40
+    st[4] = t.hotbar === 'pearl' ? (t.tpPitch ?? 40) : 83
     await ctx.tpCheck(...st)
     await ctx.cmd('/gamemode survival')
     await ctx.cmd('/effect give @s instant_health 1 10 true')
@@ -116,7 +123,7 @@ module.exports = {
       let countdown = null
       ctx.mark = (ev, extra) => {
         origMark(KEEP.has(ev) ? ev : `${ev}${k}`, extra)
-        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = t.time === 18000 ? 12 : 28   // at night the look back is 1.4 s of black (review)
+        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = t.time === 18000 ? 8 : 28   // at night the look back is black: cut 0.4 s after the landing (reviews)
       }
       const tick = () => { if (countdown !== null && --countdown === 0) { origMark(`cut${k}a`); this.cutMarked = true } }
       bot.on('physicsTick', tick)

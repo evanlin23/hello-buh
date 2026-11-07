@@ -42,13 +42,13 @@ module.exports = {
     const { bot } = ctx
     const floor = this.floor
     const mode = this.mode || 'ok'                     // ok | skip (never places) | late (too late)
-    await bot.waitForTicks(this.fast ? 6 : 30)         // standing on the pillar
+    await bot.waitForTicks(this.fast ? 1 : 30)         // standing on the pillar (fast: in a series the cut opens looking down already)
     // peek straight down the pillar (at -0.6 from 60 up the view was just the horizon: the frame
     // review read 1 s of ocean as "idle, can't tell you're on a pillar")
     if (!this.fast) await ctx.easeLook(0, -1.35, 500)
     await ctx.easeLook(0, -1.45, this.fast ? 250 : 300)      // eyes straight down the pillar while jumping off (at -1.0 the pillar was out of shot: review)
     ctx.select(1)                                      // pull out the water bucket
-    await bot.waitForTicks(6)
+    await bot.waitForTicks(this.fast ? 2 : 6)
     ctx.mark('jump')
     bot.setControlState('forward', true); bot.setControlState('jump', true)
     await bot.waitForTicks(6)

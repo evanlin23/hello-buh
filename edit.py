@@ -823,7 +823,10 @@ def main():
             tl_ev = {e["event"]: e["t"] / 1000 for e in json.loads(pathlib.Path(args.timeline).read_text())["timeline"]}
             at = tl_ev[args.song_drop_at] - args.start
         args.song_start = max(0.0, drop - at)
-        print(f"song drop at {drop:.2f}s lands on {at:.2f}s of the Short (song starts at {args.song_start:.2f}s)")
+        if drop < at - 0.05:   # can't line up: the song starts at 0 and its drop plays early (clutch_harder review)
+            print(f"WARNING song drop at {drop:.2f}s plays {at - drop:.2f}s BEFORE the drop event at {at:.2f}s: pick a song with a later drop")
+        else:
+            print(f"song drop at {drop:.2f}s lands on {at:.2f}s of the Short (song starts at {args.song_start:.2f}s)")
     named = {"red": (235, 40, 40, 255), "green": (60, 220, 60, 255), "yellow": (255, 220, 40, 255), "blue": (80, 160, 255, 255)}
     colors = {}
     for pair in (args.colors or "").split(","):

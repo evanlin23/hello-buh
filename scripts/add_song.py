@@ -16,8 +16,14 @@ NCS = {t["file"]: t for t in json.loads((ROOT / "music" / "ncs.json").read_text(
 SONGS = {"misery.mp3": ("misery.", "pupsies"), "payphone.mp3": ("Payphone", "Radio Top Singers"), "funk_abnormal.mp3": ("FUNK ABNORMAL (ULTRA SLOWED)", "")}
 
 
-def pick_ncs(name):
-    """The NCS track used least across the packages so far (ties: a fixed per-Short choice)."""
+def song_drop(path):
+    return float(subprocess.run(["python3", str(ROOT / "scripts" / "song_drop.py"), str(path)], capture_output=True, text=True, check=True).stdout.split()[0])
+
+
+def pick_ncs(name, at=0.0):
+    """The NCS track used least across the packages so far (ties: a fixed per-Short choice), among
+    the tracks whose drop comes at or after the Short's drop event: an earlier drop can't line up
+    (song_start clamps to 0) and played the drop seconds before the payoff (clutch_harder review)."""
     used = {}
     for m in (VID / "shorts").glob("*/metadata.json"):
         f = (json.loads(m.read_text()).get("song") or {}).get("file")
@@ -26,6 +32,11 @@ def pick_ncs(name):
     have = [f for f in NCS if (ROOT / "songs" / "ncs" / f).exists()]
     if not have:
         sys.exit("no NCS tracks downloaded: python3 scripts/ncs.py --download")
+    late = [f for f in have if song_drop(ROOT / "songs" / "ncs" / f) >= at - 0.05]
+    if late:
+        have = late
+    else:
+        print(f"{name}: no NCS track drops at or after {at:.2f}s; the drop will land early")
     h = sum(map(ord, name))
     return "songs/ncs/" + min(have, key=lambda f: (used.get(f, 0), (sorted(have).index(f) - h) % len(have)))
 
@@ -33,12 +44,7 @@ def pick_ncs(name):
 def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=False):
     d = VID / "shorts" / name
     meta = json.loads((d / "metadata.json").read_text())
-    if ncs and not song_override:
-        song_override = pick_ncs(name)
     stunt = json.loads(subprocess.run(["node", "-e", f"console.log(JSON.stringify(require('./stunts/{name}').edit||{{}}))"], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
-    song = song_override or stunt.get("song")
-    if not gen and (not song or not (ROOT / song).exists()):
-        print(name, "no song file"); return
     src = d / "short_nosong.mp4"
     tl = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))["timeline"]
     sys.path.insert(0, str(ROOT / "scripts"))
@@ -61,6 +67,11 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         print(name, "made short_nosong.mp4 from game_audio.flac")
     drop_at = stunt.get("dropAt")
     at = (ev[drop_at] - start + hook_len(stunt)) if drop_at in ev else 0.0   # a hook preview pushes the Short back
+    if ncs and not song_override:
+        song_override = pick_ncs(name, at)
+    song = song_override or stunt.get("song")
+    if not gen and (not song or not (ROOT / song).exists()):
+        print(name, "no song file"); return
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(src)], capture_output=True, text=True, check=True).stdout)
     if gen:   # our own synthesized phonk (scripts/phonk.py): the drop lands exactly on the event
         (ROOT / "work").mkdir(exist_ok=True)
@@ -70,7 +81,9 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         subprocess.run(["python3", str(ROOT / "scripts" / "phonk.py"), str(ROOT / song), "--style", gen, "--seed", str(sd),
                         "--drop", f"{drop:.3f}", "--length", f"{dur + 0.5:.3f}"], check=True, capture_output=True)
     else:
-        drop = float(subprocess.run(["python3", str(ROOT / "scripts" / "song_drop.py"), str(ROOT / song)], capture_output=True, text=True, check=True).stdout.split()[0])
+        drop = song_drop(ROOT / song)
+        if drop < at - 0.05:
+            print(f"{name}: WARNING the song's drop ({drop:.2f}s) is before the drop event ({at:.2f}s): it plays {at - drop:.2f}s early")
     song_start = max(0.0, drop - at)
     out = pathlib.Path(out_override) if out_override else d / "short.mp4"
     if stunt.get("story"):   # narrated story (docs/stories.md): the song is a quiet bed under the voice, master -14 LUFS
