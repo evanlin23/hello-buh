@@ -106,7 +106,7 @@ module.exports = {
     // then the far (south) side east to west and the west side south to north, slowly, while it walks in watching them
     const south = ring4.filter(([cx, cz]) => cz === z + 4 && cx !== x + 4).sort((p, q) => q[0] - p[0])
     const west = ring4.filter(([cx, cz]) => cx === x - 4 && cz !== z + 4 && cz !== z - 4).sort((p, q) => q[1] - p[1])
-    const crumbling = (async () => { await drop(front, 1, 2); await drop(east, 1, 2); await drop(south, 1, 3); await drop(west, 1, 3) })()
+    const crumbling = (async () => { await drop(front, 1, 2); await drop(east, 1, 2); await drop(west, 3, 1); await drop(south, 1, 5) })()
     bot.setControlState('sneak', true); bot.setControlState('forward', true)
     await ctx.easeLook(0, -1.3, 500)
     for (let i = 0; i < 20; i++) { await bot.look(0.25 * Math.sin(i / 12), -1.3 + 0.05 * Math.sin(i / 9), true); await bot.waitForTicks(1) }
@@ -117,11 +117,10 @@ module.exports = {
     // into the middle (south), eyes on the far side going column by column, then the west side
     await ctx.easeLookAt(new Vec3(x + 3.5, Y - 3, z + 4.5), 350)
     bot.setControlState('forward', true)
-    const sweep = ctx.easeLookAt(new Vec3(x - 3.5, Y - 3, z + 4.5), 1100)
+    const sweep = ctx.easeLookAt(new Vec3(x - 3.5, Y - 3, z + 4.5), 1700)   // the far side goes last, slowly, in view
     for (let i = 0; i < 40 && bot.entity.position.z < z + 1.0 && ctx.tick < K.at(4.0); i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
     await sweep
-    await ctx.easeLookAt(new Vec3(x - 4.5, Y - 3, z - 1.5), 600)
     await K.until(K.at(4.95), K.drift(0.006, 0.001))
     await K.level(2, 5)
     bot.chat(`/summon creeper ${x + 0.5} ${Y + 1} ${z + 3.5} {PersistenceRequired:1b,Rotation:[180f,0f]}`)
@@ -147,7 +146,7 @@ module.exports = {
     ctx.sound('entity.lightning_bolt.thunder', 0.9, 0.85)   // a strike somewhere out of sight
     await ctx.easeLook(bot.entity.yaw + 0.3, 0.45, 500)  // up into it
     await bot.waitForTicks(3)
-    await toCenter(K.at(11.2))   // (the rail's far edge has to be in reach)
+    await toCenter(K.at(11.6))   // (the rail's far edge has to be in reach)
     // a railing on the north edge so the wind and the mobs can't knock it off that side: three real placements
     ctx.select(1)
     for (const dx of [-1, 0, 1]) {
@@ -156,6 +155,9 @@ module.exports = {
       bot._client.write('block_place', { hand: 0, location: { x: cx, y: Y, z: cz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound('block.stone.place', 1, 0.9); ctx.mark('place', { x: cx, y: Y + 1, z: cz })
       await bot.waitForTicks(4)
+      // the server can refuse a placement out of reach: no railing on screen means a failed take (review 10)
+      const rb = bot.blockAt(new Vec3(cx, Y + 1, cz))
+      if (!rb || rb.name !== 'cobblestone') throw new Error(`railing block not placed at ${cx},${cz}`)
     }
     ctx.select(0)
     await toCenter(K.at(14.6))
@@ -202,7 +204,7 @@ module.exports = {
     // all that's left: a slow look round the 3x3 from its middle (its edges against the drop on every side)
     await ctx.easeLook(bot.entity.yaw + 1.2, -1.2, 1300)
     await ctx.easeLook(bot.entity.yaw + 0.8, -1.25, 700)
-    await K.until(K.at(25))
+    await K.until(K.at(25), K.drift(0.012, 0.001))
 
     // ---- 6. two blocks left ----
     await K.level(6, 25)
