@@ -305,6 +305,25 @@ class JavaRandom:
 
 
 def death_windows(timeline, event="death"):
+    return [(a, _snap_respawn(b) if b < 1e6 else b) for a, b in _death_windows(timeline, event)]
+
+
+# the recording's poses (main sets them): each death window ends on the respawn's camera jump, the last pose jump
+# over 4 blocks at the respawn mark or up to 3 ticks before it. The mark can land a tick after the renderer shows
+# the spawn (render.js uses the same rule since 039594f), and the death screen and the empty HUD hung over the
+# respawned world (frame review, story_respawn_tax f783)
+DEATH_POSES = []
+
+
+def _snap_respawn(tr):
+    m = int(tr * 20 + 1e-6)
+    for i in range(min(m, len(DEATH_POSES) - 1), max(0, m - 4), -1):
+        if sum((DEATH_POSES[i][j] - DEATH_POSES[i - 1][j]) ** 2 for j in (1, 2, 3)) > 16:
+            return min(tr, i / 20)
+    return tr
+
+
+def _death_windows(timeline, event="death"):
     """[(death, respawn)] in seconds: each death runs to the next respawn (any length; with
     immediate_respawn it's a tick). Windows that touch (the next death within 0.25 s of a respawn:
     death, a spurious instant respawn, death again) are one death, so the screen doesn't blink off
@@ -797,6 +816,8 @@ def main():
     frames_dir0 = pathlib.Path(args.frames).parent if args.frames else None
     if (args.speed or args.slowmo or args.freeze) and args.timeline:
         apply_speed(args)
+    elif args.timeline:   # (a warped timeline's times no longer match the poses: no snapping there)
+        DEATH_POSES[:] = json.loads(pathlib.Path(args.timeline).read_text()).get("poses") or []
     _tl = {}
     if args.timeline:
         for e in json.loads(pathlib.Path(args.timeline).read_text())["timeline"]:
@@ -988,17 +1009,6 @@ def main():
         # every death gets its own screen (rated-deaths formats, tries): from the death to the next
         # respawn, with the death_message nearest that death; buttons disabled for the first 1 s
         windows = death_windows(all_ev, args.death_screen)
-        # end each screen on the respawn's camera jump: the respawn mark can land a tick after the renderer
-        # already shows the spawn, and the death screen hung over the respawned world for a frame (frame review,
-        # story_respawn_tax f783)
-        _poses = json.loads(pathlib.Path(args.timeline).read_text()).get("poses") or []
-        def _snap_respawn(tr):
-            m = int(tr * 20 + 1e-6)
-            for i in range(min(m, len(_poses) - 1), max(0, m - 4), -1):
-                if sum((_poses[i][j] - _poses[i - 1][j]) ** 2 for j in (1, 2, 3)) > 16:
-                    return min(tr, i / 20)
-            return tr
-        windows = [(a, _snap_respawn(b) if b < 1e6 else b) for a, b in windows]
         msgs = [(e["t"] / 1000, e.get("message")) for e in all_ev if e["event"] == "death_message"]
         deaths = [a for a, _ in windows]
         with zipfile.ZipFile(CLIENT_JAR) as jar:
