@@ -119,8 +119,8 @@ module.exports = {
 
     // 1 RUN: the wall is already rolling in; it turns and sprints away, glancing back over its shoulder
     await lane(0, async () => {
-      const w = wall(L(0), sz - 16, 3, [-3, -1, 1, 3], sz + 30)   // 6.7 b/s: the sprint (5.6) barely keeps ahead
-      for (let k = 0; k < 64 && !ctx.died; k++) {
+      const w = wall(L(0), sz - 24, 3, [-3, -1, 1, 3], sz + 30)   // 6.7 b/s: the sprint (5.6) barely keeps ahead (from 16 out the lane was 1.4 s)
+      for (let k = 0; k < 110 && !ctx.died; k++) {
         if (k < 10) await lookAt(new Vec3(L(0) + 0.5, floor + 1, w.front), 0.3)
         else if (k < 40) { await lookAt(bot.entity.position.offset(0, 1.62, 12), 0.25); steer(0, 1, true) }   // south, running
         else { await lookAt(new Vec3(L(0) + 0.5, floor + 1.5, w.front), 0.2); steer(0, 1) }                  // glance back: it's close
