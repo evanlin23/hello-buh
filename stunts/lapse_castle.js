@@ -162,10 +162,11 @@ module.exports = makeStunt({
       [420, [10, 22, 46], [0, 12, -2]],
       [600, [20, 30, 33], [0, 22, -3]],
       [760, [14, 36, 26], [0, 30, -3]],
-      [850, [-30, 30, 44], [-26, 8, 0]],
-      [960, [-44, 40, 30], [-6, 0, 6]],   // over the wall into the courtyard as it fills
-      [1080, [-30, 34, 40], [0, 8, -3]],
-      [1140, [-14, 38, 34], [0, 34, -3]],
+      [805, [-18, 40, 54], [-20, 10, 10]],   // round in front of the south-west tower, not past its cone
+      [850, [-58, 30, 40], [-36, 4, 6]],     // the village rising beside the castle
+      [960, [-6, 44, 46], [-2, 0, 4]],       // over the front wall into the courtyard as it fills
+      [1080, [16, 40, 40], [0, 10, -3]],
+      [1140, [8, 40, 50], [0, 34, -3]],      // the flags going up
       [1162, [-1, 14, 84], [0, 21, 0]],     // arrive early, then creep: at 3x the pull-back would otherwise
       [1188, [0, 12, 78], [0, 21, 0]]       // hit 60:00 at full speed and drop to real time in one frame
     ],
