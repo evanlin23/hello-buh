@@ -30,16 +30,16 @@ module.exports = {
     ['r4_zoom', 'r4_found:0.7', 1.7], ['r5_zoom', 'r5_found:0.3', 4]],
   edit: {
     caption: 'hide and seek but the villagers cheated 😭', red: 'cheated',
-    song: 'songs/funk_abnormal.mp3', dropAt: 'r5_found',
-    startAt: 'r1_go:0', endAfter: 'r5_found:0.1',
+    song: 'songs/funk_abnormal.mp3', dropAt: 'r5_zoom',
+    startAt: 'r1_go:0', endAfter: 'r5_found:-0.3',   // (cut to the y 320 shot as the look up the pillar ends: the tip held still 0.4 s)
     // the zoom-out: a fixed camera up at y 320 beside him, appended after the look up the pillar
     replay: { at: 'r5_found', before: 0.05, after: 0.85, cam: '1.5,324.5,10.5,45,-35', speed: 1, label: 'MEANWHILE AT Y 320' },
     speed: [1, 2, 3, 4].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
     clock: R.map((n, i) => [`r${n}_go`, `r${n}_end`, [5, 4, 4, 4, 3][i], `ROUND ${n}`, 'down']),
-    counter: { at: R.map(n => `r${n}_found`), total: ROUNDS },
+    counter: { at: [...R.slice(0, 4).map(n => `r${n}_found`), 'r5_zoom'], total: ROUNDS },
     cards: [['r1_found', 'IN A TREE 😭', 0.8, 'yellow'], ['r2_found', 'IN THE POND 😭', 0.7, 'blue'],
       ['r3_found', 'UNDER ME 😭', 0.9, 'orange'], ['r4_found', 'IN LAVA 🔥', 0.9, 'gold']],
-    punch: R.map(n => `r${n}_found`),
+    punch: [...R.slice(0, 4).map(n => `r${n}_found`), 'r5_zoom'],
     subs: [['r1_end', 'where did he go', 0.9], ['r2_end', 'nothing again', 0.9], ['r3_end', 'I give up', 0.9],
       ['r4_end', 'not again', 0.9], ['r5_end', 'seriously?', 0.9]],
     subsY: 0.62
