@@ -182,7 +182,7 @@ module.exports = {
     await look(6.5, 2.55, -5.1, 420)
     ctx.mark('r1_zoom')
     await bot.waitForTicks(14)
-    await go(6.5, -7.6, { sprint: false, pitch: -0.05, stop: 0.3 })
+    await go(6.5, -6.7, { sprint: false, pitch: -0.05, stop: 0.3 })
     await look(6.5, 2.5, -5, 180)
     ctx.mark('r1_chop'); ctx.select(0)
     await dig(6, 2, -5, 8, 'oak_log', 'wood')
@@ -224,10 +224,10 @@ module.exports = {
     await bot.waitForTicks(6)
     ctx.mark('cut2b')
     ctx.mark('r3_go')
-    await go(-15.5, -0.5)                        // the stall
+    await go(-10.8, -0.5)                        // the stall
     await look(-14, 3.2, -0.5, 260)              // up at the bell
     await look(-17.5, 1.0, 2.5, 260)
-    await go(-13.0, 6.0)                         // behind the tree
+    await go(-10.8, 6.6)                         // behind the tree
     await look(-15, 1.2, 9.5, 260)
     await bot.waitForTicks(4)
     await go(-8.5, -0.3, { stop: 0.3 })          // back to the start
