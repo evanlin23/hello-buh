@@ -83,7 +83,8 @@ module.exports = spotWrong({
   caption: 'find the mistake 🤔',
   searchFrom: [1600, 1600],
   rounds: [
-    { at: [62, -12], build: patch,   // further east: round 2's bridge showed on the horizon seconds: 7,
+    // round 1 sits further east: round 2's bridge showed on its horizon
+    { at: [62, -12], build: patch, seconds: 7,
       cam: { pos: [-3, 13], walk: 'right' },
       scan: [[0, [-2, 0.5, 4]], [3, [1, 0.5, 4]], [6, [2, 0.8, 2]]],
       tag: 'EASY',
