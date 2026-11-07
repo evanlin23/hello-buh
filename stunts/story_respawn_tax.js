@@ -154,7 +154,7 @@ module.exports = {
     // death there. Dying inside it sank the dead camera to the cauldron's floor (its walls filled the screen).
     let trip = null, landed = 0, tripEnd = -99
     const tripStep = (t) => {
-      if (!trip && (bot.entity.position.y < F + 0.9 || overCauldron())) { trip = 0; go(false); fallIn(); ctx.mark('burn'); ctx.sound('entity.generic.burn', 1, 1) }
+      if (!trip && (bot.entity.position.y < F + 0.9 || overCauldron())) { trip = 0; go(false); fallIn(); ctx.mark('burn') }   // no burn sound: with fire resistance vanilla plays none
       if (trip === null) return false
       trip++
       // once out on the plaza, face `t` ourselves (the /tp's facing never reached the recording: the pitch stayed
@@ -295,7 +295,7 @@ module.exports = {
       if (dead && !itemsGone && ctx.died && ctx.tick > deadAt + 4) { itemsGone = true; say('/kill @e[type=item]') }   // before the respawn frame (it showed for 3 frames)
       if (trip !== null || dead) { nz = Math.min(-3.5, nz + 0.1); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
       if (dead) respawnSoon()   // the L11 shot straight from the respawn // a 3-frame spawn view read as stray frames. Respawn inside L10: done in L11 it stretched the line 0.4 s (0.8 s of silence)
-      if (!dead && trip === null) { K.base = K.aim(P(0.5, 0.2, 4.5)); look(k) }
+      if (!dead && trip === null) { K.base = K.aim(P(0.5, 0.2, 4.5)); look(k, 0, -0.25 * Math.max(0, 1 - k / 8)) }   // L09's dip eases out (it snapped back up at the line change)
       if (dead && alive()) look(k)
     })
     go(false)
