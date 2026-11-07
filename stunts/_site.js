@@ -124,18 +124,28 @@ async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1,
   const out = []
   const A0 = axis === 'x' ? x : z, B0 = axis === 'x' ? z : x
   const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap)
+  const settle = async () => {   // until the loaded chunks stop growing (max ~15 s): unloaded ground rules spots out
+    let n = -1
+    for (let k = 0; k < 30; k++) { await bot.waitForTicks(10); const m = bot.world.getColumns().length; if (m === n) break; n = m }
+  }
   const [tx, tz] = at(A0 + 60, B0)
-  await ctx.cmd(`/tp @s ${tx} 140 ${tz}`); await bot.waitForTicks(20)   // over the line: its chunks loaded
-  try { await bot.waitForChunksToLoad() } catch (e) {}
+  await ctx.cmd(`/tp @s ${tx} 140 ${tz}`)
+  await settle()
+  let lineAt = null
   for (const h of heights) {
     let spot = null
+    // the line itself first, then parallel lines 64 either side (a line into the sea or the hills)
+    for (const off of [0, 64, -64, 128, -128]) {
+      if (spot) break
+      if (off && lineAt !== off) { const [ux, uz] = at(A0 + 60, B0 + off); await ctx.cmd(`/tp @s ${ux} 140 ${uz}`); await settle(); lineAt = off }
     for (let t = 0, a = A0; t < tries && !spot; t++, a += 2) {
       for (const d of side) {
-        const [sx, sz] = at(a, B0 + d)
+        const [sx, sz] = at(a, B0 + off + d)
         if (!free(sx, sz)) continue
         const b = ctx.surface(sx, sz)
         if (b && b.name === 'grass_block' && b.position.y >= 63 && open(sx, sz, b.position.y, h)) { spot = { x: sx, z: sz, floor: b.position.y }; break }
       }
+    }
     }
     if (!spot && out.length >= min) break   // enough: the rest were optional
     if (!spot) throw new Error(`no open ground for spot ${out.length} (height ${h})`)
