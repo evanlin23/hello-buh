@@ -487,6 +487,41 @@ const DEATHS = []
       prev = cur
     }
   }
+  // after a respawn the server re-sends every tracked entity (a new ServerPlayer starts tracking), and
+  // mineflayer's rows come back a few ticks late; the vanilla client keeps its level and shows them.
+  // Back-fill an entity first seen within 4 ticks after the respawn to the respawn tick (the golem on
+  // the gold block popped in 2 ticks late: worker 5, story_respawn_tax f342)
+  for (const [, b] of DEATHS) {
+    if (!Number.isFinite(b)) continue
+    const b0 = Math.ceil(b), seen = new Set()
+    for (let tk = Math.floor(b) - 30; tk < b0; tk++) for (const id of (ENT.get(tk) || new Map()).keys()) seen.add(id)
+    for (let tk = b0; tk <= b0 + 4; tk++) {
+      for (const [id, row] of ENT.get(tk) || new Map()) {
+        if (seen.has(id)) continue
+        seen.add(id)
+        for (let k = b0; k < tk; k++) { if (!ENT.has(k)) ENT.set(k, new Map()); if (!ENT.get(k).has(id)) { const r2 = row.slice(); r2[0] = k; ENT.get(k).set(id, r2) } }
+      }
+    }
+  }
+  // short dropouts (an entity's rows missing for up to 6 ticks, e.g. the re-send after a respawn):
+  // bridge them when it comes back within 2 blocks, so it doesn't blink out and back
+  {
+    const byId = new Map()
+    for (const [tk, m] of ENT) for (const [id, row] of m) { if (!byId.has(id)) byId.set(id, []); byId.get(id).push(row) }
+    for (const rows of byId.values()) {
+      rows.sort((x, y) => x[0] - y[0])
+      for (let k = 1; k < rows.length; k++) {
+        const r0 = rows[k - 1], r1 = rows[k], gap = r1[0] - r0[0]
+        if (gap <= 1 || gap > 7 || r0[2] === 'item' || Math.hypot(r1[3] - r0[3], r1[4] - r0[4], r1[5] - r0[5]) > 2) continue
+        for (let tk = r0[0] + 1; tk < r1[0]; tk++) {
+          const f = (tk - r0[0]) / gap, r2 = r0.slice()
+          r2[0] = tk; r2[3] = r0[3] + (r1[3] - r0[3]) * f; r2[4] = r0[4] + (r1[4] - r0[4]) * f; r2[5] = r0[5] + (r1[5] - r0[5]) * f
+          if (!ENT.has(tk)) ENT.set(tk, new Map())
+          ENT.get(tk).set(r0[1], r2)
+        }
+      }
+    }
+  }
 }
 // Hurt tilt (bobHurt): each hit sets hurtTime = 10; the view rolls by -sin(h^4 pi) * 14 degrees
 // around the hit direction (yaw from the hurt_animation packet, 0 for undirected damage).
