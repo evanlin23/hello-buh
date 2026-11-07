@@ -374,3 +374,7 @@ each section.
 - **Hard difficulty for a creeper kill:** a 3-block creeper blast is ~17 damage on normal (survivable), ~25 on hard.
 - **Round answer cards must end before the cut** (they spilled into the next dark room): hold the round until the card is gone.
 - **Never single-pass loudnorm a build-up.** ffmpeg's one-pass loudnorm is a dynamic compressor: it lifted chain_reaction's quiet start by ~45 dB and left the 486-TNT payoff no louder than the bells (worker 17). Stems get a static gain from their measured loudness and the master a static gain plus a true-peak limiter, re-measured to target (`scripts/loud.py`; edit.py game-only/song/late-song paths, the sfx premix, the replay, add_song.py).
+
+## Engine bugs to fix later (reported by worker 3, 2026-11-07)
+- red_bed (special block-entity item model) is not drawn in the hotbar slot or in the first-person hand.
+- Dropped item entities on the death screen draw only their shadow discs, with no item on top (every_clutch f1795-1812, drops).
