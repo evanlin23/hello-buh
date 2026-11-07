@@ -34,7 +34,7 @@ function spawn (ev, blockTex) {
   } else if (ev.type === 'block' && blockTex) {
     for (let a = 0; a < 4; a++) for (let b = 0; b < 4; b++) for (let c = 0; c < 4; c++) {
       const ox = (a + 0.5) / 4, oy = (b + 0.5) / 4, oz = (c + 0.5) / 4
-      const uo = Math.floor(r() * 4), vo = Math.floor(r() * 4)
+      const uo = r() * 3, vo = r() * 3   // TerrainParticle: a quarter of the sprite at a continuous random offset
       P({ x: ev.x + ox, y: ev.y + oy, z: ev.z + oz, vx: (ox - 0.5) * 0.2 + (r() - 0.5) * 0.1, vy: (oy - 0.5) * 0.2 + r() * 0.1, vz: (oz - 0.5) * 0.2 + (r() - 0.5) * 0.1,
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.05 * (r() * 0.5 + 0.5) * 2, collide: true,
         tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: [0.6, 0.6, 0.6] })
