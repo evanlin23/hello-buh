@@ -1,0 +1,3454 @@
+{
+  "name": "which_door",
+  "caption": "which door would you pick? \ud83d\udeaa",
+  "youtube": {
+    "title": "which door would you pick? \ud83d\udeaa #minecraft #shorts",
+    "description": "which door would you pick? \ud83d\udeaa\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "reveal",
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 22.13,
+    "song_start_s": 16.12
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 30.03,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 30141502,
+    "sha256": "5ba4e176bee628788b8a93950d4e5e068ebe2e778c8547a7243a060f7b72a108"
+  },
+  "edit": {
+    "startAt": "intro:0",
+    "caption": "which door would you pick? \ud83d\udeaa",
+    "red": "door",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "reveal",
+    "endAfter": "last_death:0.97",
+    "deathScreen": true,
+    "onFire": "lava_in:death",
+    "counter": {
+      "at": [
+        [
+          "open",
+          0
+        ],
+        [
+          "open",
+          1
+        ],
+        [
+          "open",
+          2
+        ],
+        [
+          "open",
+          3
+        ],
+        [
+          "open",
+          4
+        ]
+      ],
+      "total": 5
+    },
+    "cards": [
+      [
+        "intro",
+        "PICK ONE \ud83d\udc40",
+        1.2,
+        "yellow"
+      ],
+      [
+        "death",
+        "DEAD \u274c",
+        0.7,
+        "red",
+        0
+      ],
+      [
+        "survive",
+        "SURVIVED \u2705",
+        0.6,
+        "green",
+        0
+      ],
+      [
+        "survive",
+        "SURVIVED \u2705",
+        0.6,
+        "green",
+        1
+      ],
+      [
+        "death",
+        "DEAD \u274c",
+        0.7,
+        "red",
+        1
+      ],
+      [
+        "safe",
+        "THE SAFE ONE \ud83d\ude07",
+        1,
+        "green"
+      ],
+      [
+        "death",
+        "THE WORST ONE \ud83d\udc80",
+        1,
+        "red",
+        2
+      ]
+    ],
+    "punch": [
+      [
+        "death",
+        0,
+        1.08
+      ],
+      [
+        "death",
+        1,
+        1.08
+      ],
+      [
+        "death",
+        2,
+        1.2
+      ]
+    ],
+    "flash": [
+      [
+        "death",
+        2,
+        0.8
+      ]
+    ],
+    "shake": [
+      [
+        "death",
+        2,
+        24
+      ]
+    ],
+    "replay": {
+      "at": "big_blast",
+      "before": 0.55,
+      "after": 0.28,
+      "cam": "12.5,14,-2,0,-72",
+      "speed": 0.3,
+      "label": "REPLAY"
+    },
+    "speed": [
+      [
+        "lava_a",
+        "lava_dead",
+        2.5
+      ],
+      [
+        "strafe_a0",
+        "strafe_b0",
+        "cut"
+      ],
+      [
+        "strafe_a1",
+        "strafe_b1",
+        "cut"
+      ],
+      [
+        "strafe_a2",
+        "strafe_b2",
+        "cut"
+      ],
+      [
+        "strafe_a3",
+        "strafe_b3",
+        "cut"
+      ],
+      [
+        "strafe_a4",
+        "strafe_b4",
+        "cut"
+      ]
+    ],
+    "args": [
+      "--caption",
+      "which door would you pick? \ud83d\udeaa",
+      "--red",
+      "door",
+      "--speed",
+      "[[\"lava_a\",\"lava_dead\",2.5],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]]",
+      "--punch",
+      "[[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2]]",
+      "--counter",
+      "{\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5}",
+      "--cards",
+      "[[\"intro\",\"PICK ONE \ud83d\udc40\",1.2,\"yellow\"],[\"death\",\"DEAD \u274c\",0.7,\"red\",0],[\"survive\",\"SURVIVED \u2705\",0.6,\"green\",0],[\"survive\",\"SURVIVED \u2705\",0.6,\"green\",1],[\"death\",\"DEAD \u274c\",0.7,\"red\",1],[\"safe\",\"THE SAFE ONE \ud83d\ude07\",1,\"green\"],[\"death\",\"THE WORST ONE \ud83d\udc80\",1,\"red\",2]]",
+      "--shake",
+      "[[\"death\",2,24]]",
+      "--flash",
+      "[[\"death\",2,0.8]]",
+      "--replay",
+      "{\"at\":\"big_blast\",\"before\":0.55,\"after\":0.28,\"cam\":\"12.5,14,-2,0,-72\",\"speed\":0.3,\"label\":\"REPLAY\"}",
+      "--on_fire",
+      "lava_in:death",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "intro:0",
+      "--end_after",
+      "last_death:0.97"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 472,
+      "y": 73,
+      "z": -12
+    },
+    "biome": "minecraft:plains",
+    "ticks": 732,
+    "seconds": 36.6,
+    "deaths": 3,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 1.75,
+        "event": "intro"
+      },
+      {
+        "t": 4.15,
+        "event": "swing"
+      },
+      {
+        "t": 4.25,
+        "event": "open"
+      },
+      {
+        "t": 6.15,
+        "event": "jump1"
+      },
+      {
+        "t": 6.95,
+        "event": "jump2"
+      },
+      {
+        "t": 7.5,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 7.75,
+        "event": "lava_in"
+      },
+      {
+        "t": 8,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 8.15,
+        "event": "lava_a"
+      },
+      {
+        "t": 8.5,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 9,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 9.5,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 10,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 10.5,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 10.5,
+        "event": "death"
+      },
+      {
+        "t": 10.55,
+        "event": "lava_dead"
+      },
+      {
+        "t": 11.6,
+        "event": "xp"
+      },
+      {
+        "t": 11.7,
+        "event": "respawn"
+      },
+      {
+        "t": 11.7,
+        "event": "xp"
+      },
+      {
+        "t": 12.4,
+        "event": "swing"
+      },
+      {
+        "t": 12.5,
+        "event": "open"
+      },
+      {
+        "t": 13.7,
+        "event": "swing"
+      },
+      {
+        "t": 13.7,
+        "event": "slam"
+      },
+      {
+        "t": 14,
+        "event": "survive"
+      },
+      {
+        "t": 14.8,
+        "event": "strafe_a2"
+      },
+      {
+        "t": 17.6,
+        "event": "strafe_b2"
+      },
+      {
+        "t": 17.75,
+        "event": "swing"
+      },
+      {
+        "t": 17.85,
+        "event": "open"
+      },
+      {
+        "t": 19,
+        "event": "click"
+      },
+      {
+        "t": 20.9,
+        "event": "survive"
+      },
+      {
+        "t": 21.55,
+        "event": "strafe_a3"
+      },
+      {
+        "t": 24.35,
+        "event": "strafe_b3"
+      },
+      {
+        "t": 24.5,
+        "event": "swing"
+      },
+      {
+        "t": 24.6,
+        "event": "open"
+      },
+      {
+        "t": 25.75,
+        "event": "hiss"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "hurt",
+        "type": "player_explosion"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "vel"
+      },
+      {
+        "t": 26.95,
+        "event": "death"
+      },
+      {
+        "t": 27.05,
+        "event": "vel"
+      },
+      {
+        "t": 27.25,
+        "event": "vel"
+      },
+      {
+        "t": 27.4,
+        "event": "vel"
+      },
+      {
+        "t": 27.4,
+        "event": "vel"
+      },
+      {
+        "t": 27.5,
+        "event": "vel"
+      },
+      {
+        "t": 27.5,
+        "event": "vel"
+      },
+      {
+        "t": 27.55,
+        "event": "vel"
+      },
+      {
+        "t": 27.6,
+        "event": "vel"
+      },
+      {
+        "t": 27.6,
+        "event": "vel"
+      },
+      {
+        "t": 27.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.05,
+        "event": "xp"
+      },
+      {
+        "t": 28.05,
+        "event": "respawn"
+      },
+      {
+        "t": 28.05,
+        "event": "xp"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.15,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.35,
+        "event": "safe"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.65,
+        "event": "vel"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "swing"
+      },
+      {
+        "t": 28.85,
+        "event": "open"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.6,
+        "event": "vel"
+      },
+      {
+        "t": 29.6,
+        "event": "vel"
+      },
+      {
+        "t": 29.65,
+        "event": "vel"
+      },
+      {
+        "t": 29.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.6,
+        "event": "vel"
+      },
+      {
+        "t": 30.65,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "click"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.95,
+        "event": "reveal"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.2,
+        "event": "collect"
+      },
+      {
+        "t": 31.25,
+        "event": "vel"
+      },
+      {
+        "t": 31.25,
+        "event": "vel"
+      },
+      {
+        "t": 31.25,
+        "event": "vel"
+      },
+      {
+        "t": 31.3,
+        "event": "collect"
+      },
+      {
+        "t": 31.3,
+        "event": "collect"
+      },
+      {
+        "t": 31.3,
+        "event": "collect"
+      },
+      {
+        "t": 31.3,
+        "event": "collect"
+      },
+      {
+        "t": 31.3,
+        "event": "collect"
+      },
+      {
+        "t": 31.3,
+        "event": "collect"
+      },
+      {
+        "t": 31.35,
+        "event": "vel"
+      },
+      {
+        "t": 31.35,
+        "event": "vel"
+      },
+      {
+        "t": 31.35,
+        "event": "collect"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.5,
+        "event": "vel"
+      },
+      {
+        "t": 31.5,
+        "event": "vel"
+      },
+      {
+        "t": 31.5,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "collect"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.6,
+        "event": "vel"
+      },
+      {
+        "t": 31.65,
+        "event": "vel"
+      },
+      {
+        "t": 31.65,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.85,
+        "event": "vel"
+      },
+      {
+        "t": 31.95,
+        "event": "vel"
+      },
+      {
+        "t": 31.95,
+        "event": "vel"
+      },
+      {
+        "t": 32,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.1,
+        "event": "vel"
+      },
+      {
+        "t": 32.1,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.2,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.25,
+        "event": "vel"
+      },
+      {
+        "t": 32.3,
+        "event": "vel"
+      },
+      {
+        "t": 32.3,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.65,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.85,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 32.95,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.45,
+        "event": "vel"
+      },
+      {
+        "t": 33.45,
+        "event": "vel"
+      },
+      {
+        "t": 33.45,
+        "event": "vel"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.5,
+        "event": "vel"
+      },
+      {
+        "t": 33.55,
+        "event": "vel"
+      },
+      {
+        "t": 33.55,
+        "event": "vel"
+      },
+      {
+        "t": 33.6,
+        "event": "vel"
+      },
+      {
+        "t": 33.65,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.85,
+        "event": "vel"
+      },
+      {
+        "t": 33.9,
+        "event": "vel"
+      },
+      {
+        "t": 33.9,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 33.95,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.45,
+        "event": "vel"
+      },
+      {
+        "t": 34.45,
+        "event": "vel"
+      },
+      {
+        "t": 34.45,
+        "event": "vel"
+      },
+      {
+        "t": 34.5,
+        "event": "vel"
+      },
+      {
+        "t": 34.5,
+        "event": "vel"
+      },
+      {
+        "t": 34.5,
+        "event": "vel"
+      },
+      {
+        "t": 34.5,
+        "event": "vel"
+      },
+      {
+        "t": 34.55,
+        "event": "vel"
+      },
+      {
+        "t": 34.55,
+        "event": "vel"
+      },
+      {
+        "t": 34.6,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "hurt",
+        "type": "explosion"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "death"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "big_blast"
+      },
+      {
+        "t": 35.1,
+        "event": "last_death"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.25,
+        "event": "vel"
+      },
+      {
+        "t": 35.3,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "vel"
+      },
+      {
+        "t": 35.4,
+        "event": "vel"
+      },
+      {
+        "t": 35.45,
+        "event": "vel"
+      },
+      {
+        "t": 36.6,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "88dfd56d2af04e7233ec4fd140903be51b811f29",
+    "rendered_at": "2026-11-07T16:16:09.686Z",
+    "head_at_publish": "e56787cab43557ca51cad55c9d69da29e6575ecb",
+    "stunt": "stunts/which_door.js",
+    "source_snapshot": [
+      "source/which_door.js",
+      "source/door_run.js",
+      "source/doors.js",
+      "source/_site.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 88dfd56d2af0",
+    "gunzip -c shorts/which_door/recording.json.gz > work/which_door.rec.json",
+    "node render.js work/which_door.rec.json work/which_door.frames 60 1080 1011",
+    "python3 audio.py work/which_door.rec.json work/which_door.wav",
+    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? \ud83d\udeaa\" --red door --speed [[\"lava_a\",\"lava_dead\",2.5],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK ONE \ud83d\udc40\\\",1.2,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD \u274c\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED \u2705\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED \u2705\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD \u274c\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE \ud83d\ude07\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE \ud83d\udc80\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.8]] --replay {\"at\":\"big_blast\",\"before\":0.55,\"after\":0.28,\"cam\":\"12.5,14,-2,0,-72\",\"speed\":0.3,\"label\":\"REPLAY\"} --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after last_death:0.97 --out out/which_door.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 14: which door would you pick? 5 doors (lava, zombies, arrow corridor, creepers, the safe one = TNT floor) + slow-mo replay of the blast; review 9 ready (nitpicks: creeper target is entity-order, cleared TNT pocket visible in replay, hiss quiet)",
+  "published_at": "2026-11-07T16:26:59.921Z"
+}
