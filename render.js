@@ -603,7 +603,28 @@ function detachedCam (eye, mode, dist, world) {
     }
     if (hit) { d = Math.max(0, s - 0.05); break }
   }
-  return { x: eye.x - f.x * d, y: eye.y - f.y * d, z: eye.z - f.z * d, yaw, pitch }
+  const c = { x: eye.x - f.x * d, y: eye.y - f.y * d, z: eye.z - f.z * d, yaw, pitch }
+  // replays (not vanilla F5): keep the camera at least 1 block above the ground or a water/lava
+  // surface under it, and re-aim at the eye so the player stays framed (worker 10: boat_clutch
+  // landed with the camera 0.3 above the grass)
+  if (d > 0.5) {
+    let top = null
+    for (let y = Math.floor(c.y); y >= Math.floor(c.y) - 3 && top === null; y--) {
+      const b = world.getBlock(new Vec3(Math.floor(c.x), y, Math.floor(c.z)))
+      if (!b) continue
+      if (/^(water|lava)$/.test(b.name)) top = y + 0.9
+      else if (b.boundingBox === 'block') top = y + Math.max(...(b.shapes && b.shapes.length ? b.shapes.map(q => q[4]) : [1]))
+    }
+    if (top !== null && c.y < top + 1) {
+      const ny = top + 1, above = world.getBlock(new Vec3(Math.floor(c.x), Math.floor(ny), Math.floor(c.z)))
+      if (!(above && above.boundingBox === 'block')) {
+        c.y = ny
+        const hd = Math.hypot(eye.x - c.x, eye.z - c.z)
+        if (hd > 0.1) c.pitch = Math.atan2(eye.y - c.y, hd)
+      }
+    }
+  }
+  return c
 }
 
 let deathSim = null
