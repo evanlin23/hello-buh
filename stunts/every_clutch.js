@@ -21,7 +21,7 @@ module.exports = {
   caption: 'rating every MLG clutch 💀',
   edit: {
     caption: 'rating every MLG clutch 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'landed', startAt: 'clutch:0.0',
-    deathScreen: true, endAfter: 'death:1.1',
+    deathScreen: true, endAfter: 'death:0.8',
     subs: CLUTCHES.flatMap((c, i) => [['clutch', `${c.h} blocks`, 1.0, i], ['landed', c.sub, 1.6, i]])
   },
   expectDeath: true,
@@ -51,6 +51,7 @@ module.exports = {
       const c = CLUTCHES[i]
       // up on a glass block at this beat's height, facing south, looking out and down; a fast tp
       // (tpCheck's 1 s settle was dead air)
+      if (i > 0) bot.chat(`/setblock ${x} ${floor + CLUTCHES[i - 1].h} ${z} air`)   // the last one's glass (kept for the look up)
       await ctx.cmd(`/setblock ${x} ${floor + c.h} ${z} glass`)
       const tx = x + 0.5, ty = floor + c.h + 1, tz = z + 0.5
       for (let a = 0; ; a++) {
@@ -63,13 +64,12 @@ module.exports = {
       bot.chat('/effect give @s instant_health 1 5 true')     // after the cut: hearts refill off screen
       ctx.select(i)
       ctx.mark('clutch', { n: i, item: c.item })
-      await bot.waitForTicks(3)
+      await ctx.easeLook(0, -0.85, 500)                  // a look over the edge: that's how high this one is
       bot.setControlState('forward', true); bot.setControlState('jump', true)
       await bot.waitForTicks(5)
       bot.setControlState('jump', false)
       await bot.waitForTicks(5)
       bot.setControlState('forward', false)
-      bot.chat(`/setblock ${x} ${floor + c.h} ${z} air`)
       ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.01, 400)
       let placed = false, landed = false, spot = null
       const onTick = () => {
@@ -104,9 +104,10 @@ module.exports = {
       for (let k = 0; k < 120 && !landed && !ctx.died; k++) await bot.waitForTicks(1)
       bot.removeListener('physicsTick', onTick)
       if (c.item === 'milk_bucket') { for (let k = 0; k < 60 && !ctx.died; k++) await bot.waitForTicks(1); await bot.waitForTicks(30); break }
-      await bot.waitForTicks(c.item === 'slime_block' ? 20 : 8)     // the bounce plays out; no long dwell
+      await bot.waitForTicks(c.item === 'slime_block' ? 14 : 3)     // the bounce plays out
       if (ctx.died) return false
-      await ctx.easeLook(bot.entity.yaw, -0.2, 250)
+      // look up at the glass it fell from (the still landings read as pauses)
+      await ctx.easeLookAt(new ctx.Vec3(x + 0.5, floor + c.h, z + 0.5), 550)
       // clear the clutch block and ALL the water it left (leftover flow drained in a checkerboard on screen)
       if (spot) {
         await ctx.cmd(`/fill ${spot.x - 1} ${floor + 1} ${spot.z - 1} ${spot.x + 1} ${floor + 2} ${spot.z + 1} air`)
