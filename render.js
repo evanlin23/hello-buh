@@ -648,6 +648,19 @@ function bodyAfterDeath (d, t) {
     // sideways or 0.5 up) is not speed: start the body at rest (it launched ~11 blocks up a lane,
     // worker 5, story_respawn_tax)
     if (Math.hypot(vx, vz) > 0.6 || vy > 0.5) { vx = 0; vy = 0; vz = 0 }
+    // a blast that kills: the explosion packet's player knockback is added to the (dead) local player
+    // (ClientPacketListener.handleExplode -> addDeltaMovement), so the body is flung. Older recordings
+    // without the packet's value: ServerExplosion's (1 - dist / (2 r)) x exposure (taken as 1) along
+    // centre -> eye (worker 5, story_runaway: the dead view ignored the creeper's blast)
+    for (const e of (rec.timeline || [])) {
+      if (e.event !== 'particles' || e.type !== 'explosion' || Math.abs(e.t / 50 - d[0]) > 1) continue
+      let kb = e.kb
+      if (!kb) {
+        const ex = start[1] - e.x, ey = start[2] + EYE - e.y, ez = start[3] - e.z, dist = Math.hypot(ex, ey, ez), q = dist / (2 * (e.radius || 4))
+        if (q <= 1 && dist > 1e-4) { const k = 1 - q; kb = [ex / dist * k, ey / dist * k, ez / dist * k] }
+      }
+      if (kb) { vx += kb[0]; vy += kb[1]; vz += kb[2] }
+    }
     const pts = [[x, y, z]]
     const blk = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return bl ? bl.name : 'air' }
     const solid = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(bl && bl.boundingBox === 'block') }
@@ -667,7 +680,7 @@ function bodyAfterDeath (d, t) {
     }
     for (let k = 0; k < 400; k++) {
       const m = blk(x, y + 0.1, z)
-      if (m === 'lava') { vx *= 0.5; vy *= 0.8; vz *= 0.5; vy -= 0.02 } else if (m === 'water') { vx *= 0.8; vy *= 0.8; vz *= 0.8; vy -= 0.02 } else { vy -= 0.08; vy *= 0.98; vx *= 0.91; vz *= 0.91 }
+      if (m === 'lava') { vx *= 0.5; vy *= 0.8; vz *= 0.5; vy -= 0.02 } else if (m === 'water') { vx *= 0.8; vy *= 0.8; vz *= 0.8; vy -= 0.02 } else { const fr = groundBelow(x, y - 0.001, z) !== null && y - groundBelow(x, y - 0.001, z) < 0.01 ? 0.546 : 0.91; vy -= 0.08; vy *= 0.98; vx *= fr; vz *= fr }   // on the ground: block friction 0.6 x 0.91
       if (solid(x + vx, y, z)) vx = 0
       if (solid(x, y, z + vz)) vz = 0
       x += vx; z += vz
