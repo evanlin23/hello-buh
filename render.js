@@ -1422,7 +1422,7 @@ function camAtLive (t) {
         const i = Math.max(0, Math.min(sw.length - 2, Math.floor(t))), f = t - i
         const v = (sw[i] + (sw[i + 1] - sw[i]) * f) / 28
         if (v > 0) e.swell = Math.min(1, v)
-      } else {
+      } else if (!CREEPER_SWELL.size) {   // a recording with swell data: creepers without any never swelled
         const ex = EXPLOSIONS.find(x => x.t >= t && x.t - t <= 30 && Math.hypot(x.x - e.x, x.y - e.y, x.z - e.z) < 1.5)
         if (ex) e.swell = Math.min(1, Math.max(0, 1 - (ex.t - t) / 30))
       }

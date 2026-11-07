@@ -387,11 +387,12 @@ def hud_ticks(timeline, duration, keep_inventory=False):
         # from the death frame on (the screen starts a frame early) to the tick the respawn falls in: a
         # HUD tick is 3 frames, and the one holding the respawn showed empty hearts on the first
         # respawn frame (worker 5, story_respawn_tax f369)
-        if any(a - 0.05 <= t + 1e-6 and t + 0.05 <= b + 1e-6 for a, b in deaths):
+        # from the death tick (it emptied the hearts and hotbar a tick before the screen: it_rains f1821)
+        if any(a <= t + 1e-6 and t + 0.05 <= b + 1e-6 for a, b in deaths):
             health = 0
             # the inventory drops on the death tick (unless keep_inventory), shown only for a real
             # death screen: with immediate_respawn the window is a tick and blanked the hotbar (tries)
-            if not keep_now(t) and any(b - a >= 0.5 and a - 0.05 <= t + 1e-6 < b for a, b in deaths):
+            if not keep_now(t) and any(b - a >= 0.5 and a <= t + 1e-6 < b for a, b in deaths):
                 items = (None,) * len(items)
         else:
             # just respawned: mineflayer's health/hotbar updates land a few ticks late, and the HUD sat
