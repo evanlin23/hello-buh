@@ -18,7 +18,7 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'dig:-0.1', endAfter: 'finale:2.4' },
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'dig:-0.1', endAfter: 'finale:2.0' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -67,7 +67,14 @@ module.exports = {
       await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), 250)
       // a real survival dig (crack stages, the pickaxe's real break time) instead of swings + a command
       ctx.mark('dig')
-      try { await bot.dig(bot.blockAt(p), 'ignore') } catch (e) { ctx.log('dig', e.message); bot.chat(`/setblock ${o.x} ${o.y} ${this.wz} air`) }
+      // the vanilla packets for a real dig: start, swing through the diamond pickaxe's break time on a
+      // hardness-3 ore (12 ticks), finish. (bot.dig took 4.5 s on every ore after the first.)
+      const dig = (status) => bot._client.write('block_dig', { status, location: p, face: 3, sequence: 0 })
+      dig(0)
+      for (let t = 0; t < 12; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
+      dig(2)
+      await bot.waitForTicks(1)
+      if (bot.blockAt(p)?.name !== 'air') { ctx.log('dig did not break', o.block); bot.chat(`/setblock ${o.x} ${o.y} ${this.wz} air`) }
       ctx.sound('block.stone.break', 1); ctx.particles('block', p, { block: o.block })
       if (i === 0) ctx.mark('burst')
       if (i === this.ores.length - 1) ctx.mark('finale')
