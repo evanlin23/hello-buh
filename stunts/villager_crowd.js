@@ -24,6 +24,7 @@ module.exports = {
   edit: {
     caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:1.0',
+    speed: CROWDS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'THEY WERE BEHIND ME', 1.0, 0]]
   },
 
@@ -54,27 +55,9 @@ module.exports = {
     // mineflayer ignores the biome update packet: go far away and come back to reload the chunks
     await ctx.cmd(`/tp @s ${x + 1000} 200 ${z}`); await bot.waitForTicks(60)
     await ctx.cmd(`/tp @s ${x} ${floor + 1} ${z + 8}`); await this.settle(ctx); await bot.waitForChunksToLoad()
-    let k = 0
-    const summon = async (vx, vz, rot, tag) => {
-      const p = profs[(k * 5 + 3) % profs.length], t = types[(k * 3 + 1) % types.length]
-      bot.chat(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${rot}f,0f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
-      if (++k % 10 === 0) await ctx.sleep(250)              // ~780 summons: paced by wall-clock (tick waits time out under the load)
-    }
-    for (let i = 0; i < CROWDS.length; i++) {
-      const c = CROWDS[i], sx = crowdX(x, i), big = c.n >= 50
-      for (let r = 0; r < c.rows; r++) {
-        for (let q = 0; q < c.cols; q++) {
-          const jx = ((q * 7 + r * 3) % 5) * 0.08, jz = ((q * 5 + r * 7) % 3) * 0.2
-          await summon(sx + 0.5 + (q - (c.cols - 1) / 2) * (big ? 1.25 : 1.6) + (r % 2) * 0.4 + jx, z - 3.5 - r * (big ? 1.3 : 1.8) - jz, 180, `crowd${i}`)
-        }
-      }
-    }
-    // the finale crowd: behind where the last walk starts, already facing it
-    const lx = crowdX(x, CROWDS.length - 1)
-    for (let r = 0; r < BEHIND.rows; r++) {
-      for (let q = 0; q < BEHIND.cols; q++) await summon(lx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 9.5 + r * 1.3, 180, `crowd${CROWDS.length - 1}`)
-    }
-    await this.settle(ctx)                                   // the big field + ~420 summons stall the server for a while
+    this.profs = profs; this.types = types; this.k = 0
+    await this.spawnCrowd(ctx, 0)                            // the rest are spawned just before their beat
+    await this.settle(ctx)                                   // the big field stalls the server for a while
     ctx.log('villagers', Object.values(bot.entities).filter(e => e.name === 'villager').length)
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 4.5, 180, -4)   // the middle: all crowds' chunks loaded for the recording
@@ -82,6 +65,32 @@ module.exports = {
     ctx.select(1)
     await bot.waitForTicks(30)
     return { x, y: floor, z }
+  },
+
+  // Spawn crowd i (and, for the last, the crowd behind it). Crowds are spawned one at a time just before
+  // their beat and the previous one removed: ~420 villagers at once bogged mineflayer down so far that its
+  // tick waits timed out. The spawning time is cut from the video (cutNa..cutNb).
+  async spawnCrowd (ctx, i) {
+    const { bot } = ctx
+    const { x, z, floor } = this
+    const summon = async (vx, vz, tag) => {
+      const p = this.profs[(this.k * 5 + 3) % this.profs.length], t = this.types[(this.k * 3 + 1) % this.types.length]
+      bot.chat(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[180f,0f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
+      if (++this.k % 10 === 0) await ctx.sleep(200)
+    }
+    const c = CROWDS[i], sx = crowdX(x, i), big = c.n >= 50
+    for (let r = 0; r < c.rows; r++) {
+      for (let q = 0; q < c.cols; q++) {
+        const jx = ((q * 7 + r * 3) % 5) * 0.08, jz = ((q * 5 + r * 7) % 3) * 0.2
+        await summon(sx + 0.5 + (q - (c.cols - 1) / 2) * (big ? 1.25 : 1.6) + (r % 2) * 0.4 + jx, z - 3.5 - r * (big ? 1.3 : 1.8) - jz, `crowd${i}`)
+      }
+    }
+    if (i === CROWDS.length - 1) {   // the finale crowd: behind where the last walk starts, already facing it
+      for (let r = 0; r < BEHIND.rows; r++) {
+        for (let q = 0; q < BEHIND.cols; q++) await summon(sx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 9.5 + r * 1.3, `crowd${i}`)
+      }
+    }
+    await ctx.sleep(1500)
   },
 
   // wait (up to 90 s) until the server ticks at a normal rate again: tick waits time out (5 s) while it relights
@@ -129,6 +138,14 @@ module.exports = {
     for (let i = 0; i < CROWDS.length; i++) {
       const c = CROWDS[i], sx = crowdX(x, i), last = i === CROWDS.length - 1
       aim = null
+      if (i > 0) {
+        // off camera (cut from the video): spawn this crowd, drop the last one, let things settle
+        ctx.mark(`cut${i}a`)
+        await this.spawnCrowd(ctx, i)
+        bot.chat(`/kill @e[type=villager,tag=crowd${i - 1}]`)
+        await this.settle(ctx)
+        ctx.mark(`cut${i}b`)
+      }
       await this.cut(ctx, sx + 0.5, floor + 1, z + 4.5)
       ctx.mark('beat', { n: c.n })
       await bot.waitForTicks(3)
