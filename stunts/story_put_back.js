@@ -122,6 +122,7 @@ module.exports = {
       ctx.particles('portal', P(dx + 0.5, dy + 0.5, dz + 0.5), { count: 40 })
       ctx.sound('block.stone.place', 1, 0.9)
     }
+    const carry = (block) => say(`/data merge entity @e[tag=ender,limit=1] {carriedBlockState:{Name:"minecraft:${block}"}}`)   // arms out, a block in them
     const song = (k0, k, pitchMul = 1, vol = 0.7) => { for (const [t, p] of SONG) if (k === k0 + t) ctx.sound('block.note_block.harp', vol, p * pitchMul) }
 
     // the enderman and the villagers: state that's re-sent every tick (micro-moves while idle)
@@ -196,7 +197,8 @@ module.exports = {
       if (k >= at(2) - 2) { from = from || { ...K.base }; K.turnTo(from, P(3.0, 2.6, 1.0), Math.min(1, (k - at(2) + 3) / 22)) }   // ...then a peek out the hole
       look(k)
     })
-    // L10: something tall walked up to the wall (out through the hole: it comes into view)
+    // L10: something tall walked up to the wall (out through the hole: it comes into view), carrying a block
+    carry('cracked_stone_bricks')
     await line('L10', async (k) => {
       const dx = 2.5 - E.x, dz = -0.9 - E.z, d = Math.hypot(dx, dz)   // to its spot at the wall, facing it
       if (d > 0.11) { E.x += dx / d * 0.11; E.z += dz / d * 0.11; E.yaw = Math.atan2(-dx, dz) * 180 / Math.PI } else E.yaw = 180
@@ -205,7 +207,7 @@ module.exports = {
     // L11: and put a block back
     E.yaw = 180
     await cut(6.2, -2.6, P(2.5, 1.8, -1.4))
-    await line('L11', async (k, at) => { cast(); if (k === at(2)) put(2, 1, -2, 'cracked_stone_bricks'); look(k) })
+    await line('L11', async (k, at) => { cast(); if (k === at(2)) { put(2, 1, -2, 'cracked_stone_bricks'); carry('air') } look(k) })
     // L12: an enderman (cut outside, close, it stands at the wall facing it)
     E.x = 2.6; E.z = -0.9; E.yaw = 180
     await cut(5.5, 1.2, P(2.6, 2.6, -0.9))
@@ -255,7 +257,7 @@ module.exports = {
     E.x = 4.5; E.z = -3.5; E.yaw = 90
     for (let i = 0; i < 3; i++) { cast(); await bot.waitForTicks(1) }
     await cut(8.5, 4.5, P(3.5, 2, -3.5))
-    await line('L19', async (k, at) => { cast(); if (k === at(3)) put(3, 1, -4, 'mossy_stone_bricks'); look(k) })
+    await line('L19', async (k, at) => { cast(); if (k === 0) carry('mossy_stone_bricks'); if (k === at(3)) { put(3, 1, -4, 'mossy_stone_bricks'); carry('air') } look(k) })
     // L20: so now I nap every day, and I never peek (on the bed, looking at the ceiling; purple drifts in)
     E.x = 20; E.z = 20
     await cut(0.5, -5.5, P(-1.5, 2.6, -7))
