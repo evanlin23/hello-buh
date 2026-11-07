@@ -40,7 +40,7 @@ module.exports = {
       ['fired_all', 'fired from 13 jobs at once', 1.5, 0],
       ['nitwit', 'now he is unemployable', 2.0, 0]
     ],
-    speed: [['fuse_a', 'fuse_b', 'cut']]
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['close_a', 'close_b', 'cut']]
   },
 
   async setup (ctx) {
@@ -158,7 +158,6 @@ module.exports = {
     // all 13 at once: the outfit cycles faster and faster
     await ctx.easeLookAt(head.offset(0, -0.2, 0), 250)
     ctx.mark('all_jobs')
-    bot.setControlState('sneak', true); bot.setControlState('forward', true)    // a slow push-in on him
     let gap = 5
     for (let k = 0; k < 46; k++) {
       setJob(JOBS[k % 13][1])
@@ -168,9 +167,8 @@ module.exports = {
       gap *= 0.9
       if (k === 22) ctx.mark('faster')
       if (bot.entity.position.z < vz + 5.6) bot.setControlState('forward', false)
-      if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.45 : -0.45), -0.25, 0), 300)
+      if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.5 : -0.5), 0.3, 0), 300)   // aimed high: he sits under the subtitle
     }
-    bot.setControlState('forward', false); bot.setControlState('sneak', false)
     setJob('mason')
     // meanwhile, the crowd behind him: still unemployed, all staring
     await ctx.easeLookAt(new Vec3(x - 7, floor + 1.7, vz - 5), 400)
@@ -203,30 +201,42 @@ module.exports = {
     // the fuse line goes, then the ring: FIRED
     let booms = 0
     bot._client.on('explosion', () => { booms++ })
+    // a slow sneak forward while it burns (a static wide shot read as dead), eyes on him
+    bot.setControlState('sneak', true); bot.setControlState('forward', true)
     for (let k = 0; k < 80 && booms === 0; k++) {
-      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.6, 0.5, -0.2, 0.7][(k / 10) % 4], [-0.4, -0.7, -0.3, -0.6][(k / 10) % 4], 0), 450)
+      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [-0.2, -0.4, -0.1, -0.3][(k / 10) % 4], 0), 450)
+      if (bot.entity.position.z < vz + 7.2) bot.setControlState('forward', false)
       await bot.waitForTicks(1)
     }
+    bot.setControlState('forward', false); bot.setControlState('sneak', false)
     // wait for the ring itself to go (the 4th blast on), then he's unemployed
     for (let k = 0; k < 60 && booms < 4; k++) await bot.waitForTicks(1)
     ctx.mark('ring_boom')
-    await bot.waitForTicks(4)
+    await bot.waitForTicks(10)
+    // cut to the crater's near rim: him close and big, in the lower half, clear of the subtitles
+    ctx.mark('close_a')
+    const solid = (zz) => { const bb = bot.blockAt(new Vec3(x, floor, zz)); return bb && bb.name !== 'air' }
+    let rz = vz + 3
+    while (rz < vz + 12 && !(solid(rz) && solid(rz + 1))) rz++
+    await ctx.tpCheck(x + 0.5, floor + 1, rz + 0.5, 180, 20)
+    await bot.waitForTicks(2)
+    ctx.mark('close_b')
+    const d = rz + 0.5 - (vz + 0.5)
+    const top = new Vec3(x + 0.5, floor + 2.95 + d * 0.09, vz + 0.5)    // his head ~0.09 rad under the centre
+    await ctx.easeLookAt(top.offset(0, -0.4, 0), 100)
     setJob('none'); ctx.sound('entity.villager.no', 1, 0.9)
     ctx.mark('fired_all')
     const v = Object.values(bot.entities).find(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 3 && Math.abs(e.position.z - (vz + 0.5)) < 3)
-    // him, alone on his pillar in the crater: a slow look down the pillar and back up
-    const top = new Vec3(x + 0.5, floor + 4.3, vz + 0.5)      // above him, so he's below the subtitle
-    await ctx.easeLookAt(top, 400)
-    await ctx.easeLookAt(top.offset(0.3, -2.2, 0), 700)
-    ctx.easeLookAt(top.offset(-0.2, 0.2, 0), 700)
-    await bot.waitForTicks(4)
+    // a slow look down his pillar and back up
+    await ctx.easeLookAt(top.offset(0.3, -1.6, 0), 600)
+    await ctx.easeLookAt(top.offset(-0.2, 0, 0), 600)
     // ...and he gives up on work for good: nitwit
     setJob('nitwit'); ctx.sound('entity.villager.no', 1, 0.7)
     ctx.particles('angry', { x: x + 0.5, y: floor + 3.3, z: vz + 0.5 }, { count: 4 })
     ctx.mark('nitwit')
     await bot.waitForTicks(10)
-    ctx.easeLookAt(top.offset(0.4, 0.1, 0), 900)
-    await bot.waitForTicks(16)
+    ctx.easeLookAt(top.offset(0.35, 0.05, 0), 900)
+    await bot.waitForTicks(18)
     return booms >= 4 && !ctx.died && !!v
   }
 }
