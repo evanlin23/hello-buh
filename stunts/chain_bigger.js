@@ -122,11 +122,13 @@ module.exports = {
     // each tier's x1, x10 and x100: the dust on them powered
     const dust = (b) => +b.getProperties().power > 0
     const steps = []
+    // (a TNT primes the moment its dust powers it, and the dust on it drops at once: watch the TNT)
+    const primed = (b) => b.name !== 'tnt'
     for (const t of TIERS) {
-      const cx = t.e0 + 4
-      steps.push({ name: `${t.name}1`, pos: B(cx, 2, 3), test: dust })
-      steps.push({ name: `${t.name}10`, pos: B(cx, 2, 7), test: dust })
-      steps.push({ name: `${t.name}100`, pos: B(cx, 2, 11), test: dust })
+      const cx = t.e0 + 4, tnt = t.name === 'tnt'
+      steps.push({ name: `${t.name}1`, pos: B(cx, tnt ? 1 : 2, 3), test: tnt ? primed : dust })
+      steps.push({ name: `${t.name}10`, pos: B(cx, tnt ? 1 : 2, 7), test: tnt ? primed : dust })
+      steps.push({ name: `${t.name}100`, pos: B(cx, tnt ? 1 : 2, 11), test: tnt ? primed : dust })
     }
     const r = rig(ctx, steps)
     let booms = 0

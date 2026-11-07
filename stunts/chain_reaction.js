@@ -144,7 +144,7 @@ module.exports = {
 
     // E: wire from the end detector north along eEnd, repeaters into blocks, each block firing the
     // rocket dispenser west of it; the last rocket flies into a target on the tower
-    const rocket = (col) => `{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:2,explosions:[{shape:"large_ball",colors:[I;${col}]}]}}}`
+    const rocket = (col) => `{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:1,explosions:[{shape:"large_ball",colors:[I;${col}]}]}}}`
     const cols = ['16711680,16753920', '65280,16776960', '3381759,16711935', '16766720,16777215']
     await put(eEnd, 1, nD + 1, 'redstone_wire')
     for (let i = 0; i < 4; i++) {
