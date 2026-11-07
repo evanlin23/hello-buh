@@ -39,7 +39,9 @@ def camera_turns(poses, cuts):
     import math
     if len(poses) < 3:
         return []
-    ticks = [p[0] for p in poses]
+    # pose i is recording time i / 20 (as render.js uses it); p[0] is the bot's own tick counter,
+    # which needn't start at 0 (guess_sound: turns listed ~0.9 s early, worker 13)
+    ticks = list(range(len(poses)))
     yaw = [math.degrees(p[4]) for p in poses]
     for i in range(1, len(yaw)):   # unwrap
         while yaw[i] - yaw[i - 1] > 180: yaw[i] -= 360

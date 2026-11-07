@@ -327,28 +327,43 @@ def countdown_windows(spec, timeline, start):
 
 def countdown_img(left, total, label, since, red_under=0.5, yf=0.42):
     """A live round countdown: the label, a big digit (ceil of the time left, popping on each
-    change), and a bar draining every frame; red under 0.5 s."""
+    change), and a bar draining every frame; red under `red_under` s. The bar sits under the digit's
+    baseline and the pop is capped to the room between the label and the bar (it covered the label
+    for 1-2 frames: worker 13)."""
     red = left < red_under
     color = COLORS["red"] if red else COLORS["white"]
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     k = 1.0 if yf >= 0.3 else 0.6   # near the top: smaller, so it stays inside the game view
     cy = BAND + int(GAME_H * yf)
+    size, sw = int(260 * k), int(14 * k)
+    # never above the window's own whole seconds: a 3.15 s window (tick jitter) opened on a "4" (worker 13)
+    digit = rich_text(str(max(1, min(math.ceil(left - 1e-6), max(1, round(total))))), size, color, stroke_w=sw)
+    asc = ImageFont.truetype(FONT, size).getmetrics()[0]
+    cap_top = asc - int(size * 0.73)            # the empty space above a digit's cap height in the box
+    top0 = cy - digit.height // 2
+    baseline = top0 + sw + 2 + asc
+    bar_y = baseline + sw + int(14 * k)
+    lab_bottom = None
     if label:
         lab = rich_text(label, int(72 * k), COLORS["yellow"])
-        img.alpha_composite(lab, ((W - lab.width) // 2, max(BAND + 4, cy - int(230 * k))))
-    # never above the window's own whole seconds: a 3.15 s window (tick jitter) opened on a "4" (worker 13)
-    digit = rich_text(str(max(1, min(math.ceil(left - 1e-6), max(1, round(total))))), int(260 * k), color, stroke_w=int(14 * k))
+        ly = max(BAND + 4, top0 + cap_top - lab.height + int(10 * k))
+        img.alpha_composite(lab, ((W - lab.width) // 2, ly))
+        lab_bottom = ly + lab.height - int(10 * k)
     sc = _pop(since, 0.2, 0.45)
+    if lab_bottom is not None:                  # grow about the baseline, never over the label
+        room = baseline - lab_bottom
+        sc = min(sc, max(1.0, room / max(1, baseline - (top0 + cap_top))))
     if sc != 1.0:
         digit = digit.resize((int(digit.width * sc), int(digit.height * sc)), Image.BICUBIC)
-    img.alpha_composite(digit, ((W - digit.width) // 2, cy - digit.height // 2))
+    top = int(baseline - (sw + 2 + asc) * sc)   # keep the baseline put: the bar never gets covered
+    img.alpha_composite(digit, ((W - digit.width) // 2, top))
     bw, bh = int(W * 0.6 * k), int(26 * k)
-    x0, y0 = (W - bw) // 2, cy + int(170 * k)
+    x0 = (W - bw) // 2
     d = ImageDraw.Draw(img)
-    d.rounded_rectangle((x0 - 6, y0 - 6, x0 + bw + 6, y0 + bh + 6), 16, fill=(0, 0, 0, 200))
+    d.rounded_rectangle((x0 - 6, bar_y - 6, x0 + bw + 6, bar_y + bh + 6), 16, fill=(0, 0, 0, 200))
     fw = int(bw * max(0.0, min(1.0, left / total)))
     if fw > 0:
-        d.rounded_rectangle((x0, y0, x0 + fw, y0 + bh), 12, fill=tuple(color) + (255,))
+        d.rounded_rectangle((x0, bar_y, x0 + fw, bar_y + bh), 12, fill=tuple(color) + (255,))
     return img
 
 
