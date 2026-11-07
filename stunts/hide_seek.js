@@ -377,7 +377,7 @@ module.exports = {
     await ctx.cmd('/gamemode creative')
     // the pillar: (-3, 6), from the ground to build limit (y 319); the villager stands on top, looking down
     for (let y = 1; y <= 319 - F; y += 100) await ctx.cmd(`/fill ${X - 3} ${F + y} ${Z + 6} ${X - 3} ${Math.min(319, F + y + 99)} ${Z + 6} dirt`)
-    await this.hider('h5', -2.5, 320 - F, 6.5, -45, 70, 'librarian')
+    await this.hider('h5', -2.5, 320 - F, 6.5, -135, 70, 'librarian')   // side-on to the replay camera, looking down
     await tp(-0.5, 5.5, 70, 0)                   // the pillar ahead on the right: it's in shot from the start
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(20)
@@ -402,12 +402,13 @@ module.exports = {
     found(5)
     // up there (seen in the zoom-out replay): he tosses emeralds down, laughing (happy particles), and
     // turns his head from the seeker below to the camera
+    // (thrown at the replay camera, so they fly past the lens: a fixed shot of a still villager read as a pause)
     const up = everyTick(24, (i) => {
-      if (i % 6 === 0) bot.chat(`/summon item ${X - 2.2} ${321.3} ${Z + 6.8} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[${(0.12 + 0.03 * (i % 3)).toFixed(2)},0.24,${(0.1 + 0.02 * (i % 4)).toFixed(2)}]}`)
-      if (i % 4 === 0) ctx.particles('happy', W(-2.5, 321.9 - F, 6.5))
+      if (i % 4 === 0) bot.chat(`/summon item ${X - 2.1} ${321.4} ${Z + 6.9} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[${(0.24 + 0.03 * (i % 3)).toFixed(2)},0.3,${(0.25 + 0.02 * (i % 5)).toFixed(2)}]}`)
+      if (i % 3 === 0) ctx.particles('happy', W(-2.5, 321.9 - F, 6.5))
     })
     for (let i = 0; i < 24; i++) {
-      if (i === 14) ctx.mark('face_on', { near: [X - 2.5, Z + 6.5, 1.5], head: true })   // ...and he looks up at the camera
+      if (i === 8) ctx.mark('face_on', { near: [X - 2.5, Z + 6.5, 1.5] })   // ...and he turns round to the camera
       await bot.look(bot.entity.yaw + 0.004 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1)
     }
     await up
