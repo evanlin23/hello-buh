@@ -1,0 +1,23 @@
+09:09:25.330 spawned at Vec3 { x: 124.5, y: 70, z: 19.5 }
+09:09:25.643 nearest minecraft:plains at [ 380, -45 ]
+09:10:37.771 COMMAND ERROR: Could not set the block
+09:10:53.204 set at { x: 380, y: 72, z: -45 }
+09:11:02.261 chunks refreshed; back at start within 0.00 blocks
+09:11:07.696 died
+09:11:12.995 died
+09:11:17.944 died
+09:11:31.942 died
+09:11:33.044 COMMAND ERROR: No entity was found
+09:11:41.115 COMMAND ERROR: Could not set the block
+09:11:50.640 died
+09:11:54.038 STUNT OK
+--- render at a2bfea6 (lane rows patched) ---
+filled 20 dropped pose tick(s): 136 381 384 386 387 396 448 449 569 570 595 621 623 632 727 736 738 740 745 747
+meshing from y -11
+light computed in 1.2 s
+meshed + uploaded world in 14.2 s
+649 particles
+rendered 2721 frames (45.35 s of video) in 813.3 s = 17.9 s per video second
+wrote work/story_respawn_tax.wav 45.40s
+no 3D block icons needed
+wrote out/story_respawn_tax.mp4 44.35s

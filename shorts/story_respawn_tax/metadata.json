@@ -1,0 +1,469 @@
+{
+  "name": "story_respawn_tax",
+  "caption": "every time I respawn, someone disappears \ud83d\ude33",
+  "youtube": {
+    "title": "every time I respawn, someone disappears \ud83d\ude33 #minecraft #shorts",
+    "description": "every time I respawn, someone disappears \ud83d\ude33\n\nSong: Crysstales -  Take The Sky\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/takethesky\nWatch: http://ncs.lnk.to/taketheskyAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "take_the_sky.mp3",
+    "title": "Take The Sky",
+    "artist": "crysstales, DJ YHR, HRXSTAL",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": null,
+    "drop_in_song_s": 5.25,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 4.25
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 44.36,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 49041647,
+    "sha256": "c1b07d2ec70c6ebc2c64d83c9de453a8fe58b77e070cb672c7fe7f293d0ea4dd"
+  },
+  "edit": {
+    "caption": "every time I respawn, someone disappears \ud83d\ude33",
+    "red": "respawn,",
+    "story": "stories/respawn_tax",
+    "startAt": "line:0",
+    "endAfter": "story_end:-0.05",
+    "deathScreen": true,
+    "onFire": "burn:death",
+    "punch": [
+      [
+        "go_on",
+        0,
+        0.08
+      ],
+      [
+        "respawn_word",
+        0,
+        0.1
+      ]
+    ],
+    "zoom": [
+      [
+        "respawn_word:0.3",
+        "story_end",
+        1.05
+      ]
+    ],
+    "args": [
+      "--caption",
+      "every time I respawn, someone disappears \ud83d\ude33",
+      "--red",
+      "respawn,",
+      "--punch",
+      "[[\"go_on\",0,0.08],[\"respawn_word\",0,0.1]]",
+      "--zoom",
+      "[[\"respawn_word:0.3\",\"story_end\",1.05]]",
+      "--on_fire",
+      "burn:death",
+      "--death_screen",
+      "death",
+      "--story",
+      "stories/respawn_tax",
+      "--start_at",
+      "line:0",
+      "--end_after",
+      "story_end:-0.05"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 380,
+      "y": 72,
+      "z": -45
+    },
+    "biome": "minecraft:plains",
+    "ticks": 908,
+    "seconds": 45.4,
+    "deaths": 5,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.fell.accident.generic"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "meter"
+      },
+      {
+        "t": 0.75,
+        "event": "cut"
+      },
+      {
+        "t": 0.8,
+        "event": "line"
+      },
+      {
+        "t": 3.95,
+        "event": "cut"
+      },
+      {
+        "t": 4,
+        "event": "line"
+      },
+      {
+        "t": 5.4,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 5.4,
+        "event": "death"
+      },
+      {
+        "t": 5.9,
+        "event": "line"
+      },
+      {
+        "t": 6.45,
+        "event": "meter"
+      },
+      {
+        "t": 6.45,
+        "event": "xp"
+      },
+      {
+        "t": 6.5,
+        "event": "respawn"
+      },
+      {
+        "t": 6.5,
+        "event": "xp"
+      },
+      {
+        "t": 7.45,
+        "event": "cut"
+      },
+      {
+        "t": 8.95,
+        "event": "cut"
+      },
+      {
+        "t": 9,
+        "event": "line"
+      },
+      {
+        "t": 9.2,
+        "event": "burn"
+      },
+      {
+        "t": 9.25,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 9.25,
+        "event": "death"
+      },
+      {
+        "t": 10.3,
+        "event": "meter"
+      },
+      {
+        "t": 10.3,
+        "event": "xp"
+      },
+      {
+        "t": 10.35,
+        "event": "respawn"
+      },
+      {
+        "t": 10.35,
+        "event": "xp"
+      },
+      {
+        "t": 10.4,
+        "event": "cut"
+      },
+      {
+        "t": 12,
+        "event": "cut"
+      },
+      {
+        "t": 12.05,
+        "event": "line"
+      },
+      {
+        "t": 12.7,
+        "event": "hurt",
+        "type": "cactus"
+      },
+      {
+        "t": 12.7,
+        "event": "death"
+      },
+      {
+        "t": 13.7,
+        "event": "line"
+      },
+      {
+        "t": 14.7,
+        "event": "meter"
+      },
+      {
+        "t": 14.7,
+        "event": "xp"
+      },
+      {
+        "t": 14.7,
+        "event": "respawn"
+      },
+      {
+        "t": 14.7,
+        "event": "xp"
+      },
+      {
+        "t": 16.55,
+        "event": "cut"
+      },
+      {
+        "t": 16.6,
+        "event": "face_on"
+      },
+      {
+        "t": 16.6,
+        "event": "line"
+      },
+      {
+        "t": 20,
+        "event": "face_off"
+      },
+      {
+        "t": 20,
+        "event": "cut"
+      },
+      {
+        "t": 20.05,
+        "event": "face_on"
+      },
+      {
+        "t": 20.05,
+        "event": "line"
+      },
+      {
+        "t": 22.6,
+        "event": "face_off"
+      },
+      {
+        "t": 22.6,
+        "event": "cut"
+      },
+      {
+        "t": 22.65,
+        "event": "line"
+      },
+      {
+        "t": 22.65,
+        "event": "effect"
+      },
+      {
+        "t": 23.95,
+        "event": "line"
+      },
+      {
+        "t": 24.45,
+        "event": "burn"
+      },
+      {
+        "t": 24.75,
+        "event": "cut"
+      },
+      {
+        "t": 24.9,
+        "event": "effect_end"
+      },
+      {
+        "t": 25.2,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 25.25,
+        "event": "death"
+      },
+      {
+        "t": 26.3,
+        "event": "xp"
+      },
+      {
+        "t": 26.35,
+        "event": "line"
+      },
+      {
+        "t": 26.35,
+        "event": "respawn"
+      },
+      {
+        "t": 26.35,
+        "event": "xp"
+      },
+      {
+        "t": 29.35,
+        "event": "line"
+      },
+      {
+        "t": 30.5,
+        "event": "meter"
+      },
+      {
+        "t": 31.35,
+        "event": "cut"
+      },
+      {
+        "t": 31.4,
+        "event": "line"
+      },
+      {
+        "t": 35,
+        "event": "cut"
+      },
+      {
+        "t": 35.05,
+        "event": "face_on"
+      },
+      {
+        "t": 35.05,
+        "event": "line"
+      },
+      {
+        "t": 37.7,
+        "event": "face_off"
+      },
+      {
+        "t": 37.75,
+        "event": "cut"
+      },
+      {
+        "t": 37.8,
+        "event": "line"
+      },
+      {
+        "t": 39.15,
+        "event": "cut"
+      },
+      {
+        "t": 39.15,
+        "event": "effect"
+      },
+      {
+        "t": 39.2,
+        "event": "face_on"
+      },
+      {
+        "t": 39.2,
+        "event": "line"
+      },
+      {
+        "t": 41.05,
+        "event": "line"
+      },
+      {
+        "t": 41.75,
+        "event": "burn"
+      },
+      {
+        "t": 42.05,
+        "event": "cut"
+      },
+      {
+        "t": 42.2,
+        "event": "effect_end"
+      },
+      {
+        "t": 42.5,
+        "event": "hurt",
+        "type": "on_fire"
+      },
+      {
+        "t": 42.5,
+        "event": "death"
+      },
+      {
+        "t": 42.7,
+        "event": "line"
+      },
+      {
+        "t": 43.7,
+        "event": "go_on"
+      },
+      {
+        "t": 44.2,
+        "event": "respawn_word"
+      },
+      {
+        "t": 45.2,
+        "event": "story_end"
+      },
+      {
+        "t": 45.4,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "a2bfea66a6c8bfd59bacb4d080a78a75e9873faa",
+    "rendered_at": "2026-11-07T09:32:01.582Z",
+    "head_at_publish": "a2bfea66a6c8bfd59bacb4d080a78a75e9873faa",
+    "stunt": "stunts/story_respawn_tax.js",
+    "source_snapshot": [
+      "source/story_respawn_tax.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout a2bfea66a6c8",
+    "gunzip -c shorts/story_respawn_tax/recording.json.gz > work/story_respawn_tax.rec.json",
+    "node render.js work/story_respawn_tax.rec.json work/story_respawn_tax.frames 60 1080 1011",
+    "python3 audio.py work/story_respawn_tax.rec.json work/story_respawn_tax.wav",
+    "python3 edit.py --frames work/story_respawn_tax.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_respawn_tax.rec.json --audio work/story_respawn_tax.wav --caption \"every time I respawn, someone disappears \ud83d\ude33\" --red respawn, --punch [[\"go_on\",0,0.08],[\"respawn_word\",0,0.1]] --zoom [[\"respawn_word:0.3\",\"story_end\",1.05]] --on_fire burn:death --death_screen death --story stories/respawn_tax --start_at line:0 --end_after story_end:-0.05 --out out/story_respawn_tax.mp4"
+  ],
+  "status": "ready",
+  "notes": "Narrated mystery: every respawn costs a villager. Passed frame review r12, retention r9 and minecraft-audit r12 (all ready). Recording carries one hand edit (lane librarian rows trimmed to the cut ticks; see notes in recording.json).",
+  "published_at": "2026-11-07T09:50:10.655Z"
+}
