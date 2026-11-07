@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.8', speed: [['woodcut_a', 'woodcut_b', 'cut'], ['tntrun', 'lit', 1.5]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'lastboom:0.8', speed: [['woodcut_a', 'woodcut_b', 'cut'], ['stonecut_a', 'stonecut_b', 'cut'], ['tntwalk', 'lit', 2.2], ['lit', 'boom', 2]], subs: subs() }   // speed: the TNT walk, 1.5x (6 s at 1x)
   },
 
   async setup (ctx) {
@@ -110,6 +110,8 @@ module.exports = {
         // wooden: blocks 4-7 jump-cut (nine identical 0.9 s digs were 8.6 s of the video; the ranking keeps the real speed)
         if (i === 0 && nb === 3) ctx.mark('woodcut_a')
         if (i === 0 && nb === 7) ctx.mark('woodcut_b')
+        if (i === 1 && nb === 3) ctx.mark('stonecut_a')   // stone too: nine identical digs took as long on screen as the cut wooden
+        if (i === 1 && nb === 7) ctx.mark('stonecut_b')
         nb++
         const b = bot.blockAt(p)
         if (!b || b.name === 'air') continue
@@ -162,6 +164,7 @@ module.exports = {
       bot.swingArm()
     }
     ctx.select(T)
+    ctx.mark('tntwalk')   // the whole walk at 2.2x (6 s of the same place-swing at 1.5x)
     // walk west along the wall 3 out, controls picked against the view each tick so the motion stays on the
     // world axis (strafing 'left' while looking at a pillar foot drifted it 8-12 blocks off the wall: out of
     // reach, the server ignored the placements), eyes on the next pillar's foot
@@ -188,7 +191,7 @@ module.exports = {
     // last one: the chain runs back along the wall away from the bot, which backs off and follows it
     for (let j = NP - 1; j >= 0; j--) {
       const q = pil(j), foot = new Vec3(q.x + 0.5, floor + 0.7, q.z + 0.5)
-      await goTo(q.x + 1.5, foot)
+      await goTo(q.x + 1.5, new Vec3(q.x + 0.5, floor + 2.2, q.z))   // eyes on the pillar, not the grass at its foot (6 s of grass)
       await ctx.easeLookAt(foot, 80)
       place(q); ctx.sound('block.grass.place', 1)
       await bot.waitForTicks(2)
@@ -204,6 +207,7 @@ module.exports = {
     place({ x: q0.x, y: floor + 1, z: q0.z })
     ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
+    { const free = [...Array(9).keys()].find(h => !bot.inventory.slots[36 + h]); if (free !== undefined) ctx.select(free) }   // an empty hand: the flint and steel covered a third of every blast
     const placed = [...Array(NP).keys()].filter(j => bot.blockAt(new Vec3(pil(j).x, floor + 1, pil(j).z))?.name === 'tnt').length
     ctx.log('tnt placed', placed, 'of', NP, '(one lit); booms so far', booms)
     // back away south (whatever the view: controls chosen against it), following the chain with the camera
@@ -211,7 +215,8 @@ module.exports = {
     let quiet = 0, last = booms
     for (let k = 0; k < 360 && booms < NP && quiet < 60; k++) {
       // before the first blast: a slow pan east along the row of lit TNT (it stood frozen ~1.7 s on the fuse)
-      const goal = boomAt || new Vec3(pil(0).x + 0.5 + Math.min(k * 0.2, 16), floor + 1.2, wz + 1)
+      // before the first blast: on the lit one (the pan east put the song-drop blast at the frame's edge)
+      const goal = boomAt || new Vec3(pil(0).x + 0.5, floor + 1.4, wz + 1)
       look = look.plus(goal.minus(look).scaled(0.12))
       const eye = bot.entity.position.offset(0, 1.62, 0), d = look.minus(eye)
       const yaw = Math.atan2(-d.x, -d.z)
