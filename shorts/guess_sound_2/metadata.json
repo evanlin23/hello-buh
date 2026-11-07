@@ -1,0 +1,686 @@
+{
+  "name": "guess_sound_2",
+  "caption": "guess the mob from its sound pt 2 \ud83d\udd0a",
+  "youtube": {
+    "title": "guess the mob from its sound pt 2 \ud83d\udd0a #minecraft #shorts",
+    "description": "guess the mob from its sound pt 2 \ud83d\udd0a\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "industry_kiss.mp3",
+    "title": "INDUSTRY KISS",
+    "artist": "DIPIENS, HRXSTAL",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "final_reveal",
+    "drop_in_song_s": 39.75,
+    "drop_in_short_s": 31.95,
+    "song_start_s": 7.8
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 33.41,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 15393240,
+    "sha256": "a06bc43614c0e53e0eed906723d8ae6cfcebbc2cd1dd985542958fab4866ff4f"
+  },
+  "edit": {
+    "caption": "guess the mob from its sound pt 2 \ud83d\udd0a",
+    "red": "sound",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "final_reveal",
+    "startAt": "round:-0.05",
+    "endAfter": "final_reveal:1.45",
+    "counter": {
+      "at": [
+        [
+          "count",
+          0
+        ],
+        [
+          "count",
+          1
+        ],
+        [
+          "count",
+          2
+        ],
+        [
+          "count",
+          3
+        ],
+        [
+          "count",
+          4
+        ],
+        [
+          "count",
+          5
+        ]
+      ],
+      "total": 6
+    },
+    "countdowns": [
+      [
+        "cd3",
+        "turn",
+        "EASY",
+        0,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "MEDIUM",
+        1,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "HARD",
+        2,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "VERY HARD",
+        3,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "EXPERT",
+        4,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "IMPOSSIBLE",
+        5,
+        0.5,
+        0.42
+      ]
+    ],
+    "cards": [
+      [
+        "lit",
+        "PIG",
+        1.25,
+        "green",
+        0
+      ],
+      [
+        "lit",
+        "ZOMBIE",
+        1.25,
+        "green",
+        1
+      ],
+      [
+        "lit",
+        "SPIDER",
+        1.25,
+        "red",
+        2
+      ],
+      [
+        "lit",
+        "WITCH",
+        1.25,
+        "blue",
+        3
+      ],
+      [
+        "lit",
+        "ALLAY",
+        1.25,
+        "blue",
+        4
+      ],
+      [
+        "lit",
+        "THE PARROT AGAIN",
+        1.75,
+        "red",
+        5
+      ]
+    ],
+    "punch": [
+      [
+        "lit",
+        0,
+        1.1
+      ],
+      [
+        "lit",
+        1,
+        1.1
+      ],
+      [
+        "lit",
+        2,
+        1.1
+      ],
+      [
+        "lit",
+        3,
+        1.1
+      ],
+      [
+        "lit",
+        4,
+        1.1
+      ],
+      [
+        "lit",
+        5,
+        1.1
+      ]
+    ],
+    "subs": [
+      [
+        "hint",
+        "parrots copy ghasts",
+        1.6,
+        0
+      ]
+    ],
+    "subsY": 0.77,
+    "args": [
+      "--caption",
+      "guess the mob from its sound pt 2 \ud83d\udd0a",
+      "--red",
+      "sound",
+      "--subs",
+      "[[\"hint\",\"parrots copy ghasts\",1.6,0]]",
+      "--subs_y",
+      "0.77",
+      "--punch",
+      "[[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]]",
+      "--counter",
+      "{\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6}",
+      "--cards",
+      "[[\"lit\",\"PIG\",1.25,\"green\",0],[\"lit\",\"ZOMBIE\",1.25,\"green\",1],[\"lit\",\"SPIDER\",1.25,\"red\",2],[\"lit\",\"WITCH\",1.25,\"blue\",3],[\"lit\",\"ALLAY\",1.25,\"blue\",4],[\"lit\",\"THE PARROT AGAIN\",1.75,\"red\",5]]",
+      "--countdowns",
+      "[[\"cd3\",\"turn\",\"EASY\",0,0.5,0.42],[\"cd3\",\"turn\",\"MEDIUM\",1,0.5,0.42],[\"cd3\",\"turn\",\"HARD\",2,0.5,0.42],[\"cd3\",\"turn\",\"VERY HARD\",3,0.5,0.42],[\"cd3\",\"turn\",\"EXPERT\",4,0.5,0.42],[\"cd3\",\"turn\",\"IMPOSSIBLE\",5,0.5,0.42]]",
+      "--start_at",
+      "round:-0.05",
+      "--end_after",
+      "final_reveal:1.45"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 393,
+      "y": 72,
+      "z": -38
+    },
+    "biome": "minecraft:plains",
+    "ticks": 709,
+    "seconds": 35.45,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "count"
+      },
+      {
+        "t": 0.75,
+        "event": "round"
+      },
+      {
+        "t": 0.9,
+        "event": "hear"
+      },
+      {
+        "t": 1.05,
+        "event": "cd3"
+      },
+      {
+        "t": 2.05,
+        "event": "cd2"
+      },
+      {
+        "t": 2.05,
+        "event": "hear"
+      },
+      {
+        "t": 3.05,
+        "event": "cd1"
+      },
+      {
+        "t": 4.05,
+        "event": "turn"
+      },
+      {
+        "t": 4.45,
+        "event": "place"
+      },
+      {
+        "t": 4.45,
+        "event": "swing"
+      },
+      {
+        "t": 4.45,
+        "event": "reveal"
+      },
+      {
+        "t": 4.75,
+        "event": "react"
+      },
+      {
+        "t": 4.75,
+        "event": "face_on"
+      },
+      {
+        "t": 4.9,
+        "event": "lit"
+      },
+      {
+        "t": 5.05,
+        "event": "again"
+      },
+      {
+        "t": 5.75,
+        "event": "face_off"
+      },
+      {
+        "t": 6.2,
+        "event": "cut"
+      },
+      {
+        "t": 6.2,
+        "event": "count"
+      },
+      {
+        "t": 6.25,
+        "event": "round"
+      },
+      {
+        "t": 6.4,
+        "event": "hear"
+      },
+      {
+        "t": 6.55,
+        "event": "cd3"
+      },
+      {
+        "t": 7.55,
+        "event": "cd2"
+      },
+      {
+        "t": 7.55,
+        "event": "hear"
+      },
+      {
+        "t": 8.55,
+        "event": "cd1"
+      },
+      {
+        "t": 9.55,
+        "event": "turn"
+      },
+      {
+        "t": 9.95,
+        "event": "place"
+      },
+      {
+        "t": 9.95,
+        "event": "swing"
+      },
+      {
+        "t": 9.95,
+        "event": "reveal"
+      },
+      {
+        "t": 10.25,
+        "event": "react"
+      },
+      {
+        "t": 10.25,
+        "event": "face_on"
+      },
+      {
+        "t": 10.4,
+        "event": "lit"
+      },
+      {
+        "t": 10.55,
+        "event": "again"
+      },
+      {
+        "t": 11.55,
+        "event": "face_off"
+      },
+      {
+        "t": 11.75,
+        "event": "cut"
+      },
+      {
+        "t": 11.75,
+        "event": "count"
+      },
+      {
+        "t": 11.8,
+        "event": "round"
+      },
+      {
+        "t": 11.95,
+        "event": "hear"
+      },
+      {
+        "t": 12.1,
+        "event": "cd3"
+      },
+      {
+        "t": 13.1,
+        "event": "cd2"
+      },
+      {
+        "t": 13.1,
+        "event": "hear"
+      },
+      {
+        "t": 14.1,
+        "event": "cd1"
+      },
+      {
+        "t": 15.1,
+        "event": "turn"
+      },
+      {
+        "t": 15.5,
+        "event": "place"
+      },
+      {
+        "t": 15.5,
+        "event": "swing"
+      },
+      {
+        "t": 15.5,
+        "event": "reveal"
+      },
+      {
+        "t": 15.85,
+        "event": "react"
+      },
+      {
+        "t": 15.85,
+        "event": "face_on"
+      },
+      {
+        "t": 16,
+        "event": "lit"
+      },
+      {
+        "t": 16.15,
+        "event": "again"
+      },
+      {
+        "t": 17.15,
+        "event": "face_off"
+      },
+      {
+        "t": 17.35,
+        "event": "cut"
+      },
+      {
+        "t": 17.35,
+        "event": "count"
+      },
+      {
+        "t": 17.4,
+        "event": "round"
+      },
+      {
+        "t": 17.55,
+        "event": "hear"
+      },
+      {
+        "t": 17.7,
+        "event": "cd3"
+      },
+      {
+        "t": 18.7,
+        "event": "cd2"
+      },
+      {
+        "t": 18.7,
+        "event": "hear"
+      },
+      {
+        "t": 19.7,
+        "event": "cd1"
+      },
+      {
+        "t": 20.7,
+        "event": "turn"
+      },
+      {
+        "t": 21.1,
+        "event": "place"
+      },
+      {
+        "t": 21.1,
+        "event": "swing"
+      },
+      {
+        "t": 21.1,
+        "event": "reveal"
+      },
+      {
+        "t": 21.4,
+        "event": "react"
+      },
+      {
+        "t": 21.4,
+        "event": "face_on"
+      },
+      {
+        "t": 21.55,
+        "event": "lit"
+      },
+      {
+        "t": 21.7,
+        "event": "again"
+      },
+      {
+        "t": 22.6,
+        "event": "face_off"
+      },
+      {
+        "t": 22.85,
+        "event": "cut"
+      },
+      {
+        "t": 22.85,
+        "event": "count"
+      },
+      {
+        "t": 22.9,
+        "event": "round"
+      },
+      {
+        "t": 23.05,
+        "event": "hear"
+      },
+      {
+        "t": 23.2,
+        "event": "cd3"
+      },
+      {
+        "t": 24.2,
+        "event": "cd2"
+      },
+      {
+        "t": 24.2,
+        "event": "hear"
+      },
+      {
+        "t": 25.2,
+        "event": "cd1"
+      },
+      {
+        "t": 26.2,
+        "event": "turn"
+      },
+      {
+        "t": 26.6,
+        "event": "place"
+      },
+      {
+        "t": 26.6,
+        "event": "swing"
+      },
+      {
+        "t": 26.6,
+        "event": "reveal"
+      },
+      {
+        "t": 26.9,
+        "event": "react"
+      },
+      {
+        "t": 26.9,
+        "event": "face_on"
+      },
+      {
+        "t": 27.05,
+        "event": "lit"
+      },
+      {
+        "t": 27.2,
+        "event": "again"
+      },
+      {
+        "t": 28.4,
+        "event": "face_off"
+      },
+      {
+        "t": 28.6,
+        "event": "cut"
+      },
+      {
+        "t": 28.6,
+        "event": "count"
+      },
+      {
+        "t": 28.65,
+        "event": "round"
+      },
+      {
+        "t": 28.8,
+        "event": "hear"
+      },
+      {
+        "t": 28.95,
+        "event": "cd3"
+      },
+      {
+        "t": 29.95,
+        "event": "cd2"
+      },
+      {
+        "t": 29.95,
+        "event": "hear"
+      },
+      {
+        "t": 30.95,
+        "event": "cd1"
+      },
+      {
+        "t": 31.95,
+        "event": "turn"
+      },
+      {
+        "t": 32.35,
+        "event": "place"
+      },
+      {
+        "t": 32.35,
+        "event": "swing"
+      },
+      {
+        "t": 32.35,
+        "event": "reveal"
+      },
+      {
+        "t": 32.65,
+        "event": "final_reveal"
+      },
+      {
+        "t": 32.65,
+        "event": "react"
+      },
+      {
+        "t": 32.65,
+        "event": "face_on"
+      },
+      {
+        "t": 32.8,
+        "event": "lit"
+      },
+      {
+        "t": 32.9,
+        "event": "hint"
+      },
+      {
+        "t": 32.95,
+        "event": "again"
+      },
+      {
+        "t": 35.45,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "26a900c5927a501df4260117323d9d217e175722",
+    "rendered_at": "2026-11-07T15:33:47.516Z",
+    "head_at_publish": "26a900c5927a501df4260117323d9d217e175722",
+    "stunt": "stunts/guess_sound_2.js",
+    "source_snapshot": [
+      "source/guess_sound_2.js",
+      "source/guess_sound.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 26a900c5927a",
+    "gunzip -c shorts/guess_sound_2/recording.json.gz > work/guess_sound_2.rec.json",
+    "node render.js work/guess_sound_2.rec.json work/guess_sound_2.frames 60 1080 1011",
+    "python3 audio.py work/guess_sound_2.rec.json work/guess_sound_2.wav",
+    "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 \ud83d\udd0a\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound_2.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 13: guess the mob from its sound pt 2 (pig, zombie, spider, witch, allay, then the parrot again imitating a ghast); independent review r5 ready on retention, minecraft and frame review. Post after pt 1, before pt 3.",
+  "published_at": "2026-11-07T15:44:47.075Z"
+}
