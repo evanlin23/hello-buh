@@ -123,9 +123,9 @@ async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1,
   // every spot taken so far, so a hard spot doesn't push the rest of the set far away
   const out = []
   const A0 = axis === 'x' ? x : z, B0 = axis === 'x' ? z : x
-  // at least `gap` from every spot taken, and within `spread` of the first (a set strewn over hundreds of
-  // blocks leaves the recorded area and the fog)
-  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap) && (!out.length || Math.max(Math.abs(out[0].x - sx), Math.abs(out[0].z - sz)) <= spread)
+  // at least `gap` from every spot taken, and within `spread` of the start (x, z) (a set strewn over
+  // hundreds of blocks leaves the recorded area and the fog)
+  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap) && Math.max(Math.abs(x - sx), Math.abs(z - sz)) <= spread
   const settle = async () => {   // until the loaded chunks stop growing (max ~15 s): unloaded ground rules spots out
     let n = -1
     for (let k = 0; k < 30; k++) { await bot.waitForTicks(10); const m = bot.world.getColumns().length; if (m === n) break; n = m }
