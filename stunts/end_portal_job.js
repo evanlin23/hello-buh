@@ -41,6 +41,15 @@ module.exports = {
     if (!g) throw new Error('no dry land')
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
+    // a retry finds the last attempt's frames on the small plains patch (every spot taken): off with them
+    {
+      const nap = () => new Promise(resolve => setTimeout(resolve, 60))
+      for (const what of ['end_portal', 'end_portal_frame']) {
+        for (let za = g.z - 96; za <= g.z + 96; za += 96) {
+          for (let y = 62; y <= 110; y++) { await ctx.cmd(`/fill ${g.x - 96} ${y} ${za} ${g.x + 96} ${y} ${Math.min(g.z + 96, za + 95)} air replace ${what}`); if (y % 8 === 0) await nap() }
+        }
+      }
+    }
     // the plains patch is small and the located point moves between runs: a few starts around it
     // at least N + 1 spots: 7 rings to fill and one left empty for the ending
     let lastErr = null
