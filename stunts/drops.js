@@ -18,7 +18,8 @@ module.exports = {
   caption: '1 in a million landing... x8 😳',
   edit: {
     subsY: 0.15, caption: '1 in a million landing... x8 😳', red: 'x8', song: 'songs/misery.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
-    subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, i === 0 ? 1.1 : 1.6]),   // (the 10-block drop is over in 1.2 s: 1.6 ran over the cut) deathScreen: true, endAfter: 'death:0.8',
+    // (the 10-block drop is over in 1.2 s: 1.6 ran its sub over the cut)
+    subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, i === 0 ? 1.1 : 1.6]), deathScreen: true, endAfter: 'death:0.8',
     // cut the teleport turnarounds (the look up + tp read as a still), speed up the top of the 250 fall,
     // and a live blocks-fallen counter on every drop
     speed: [...DROPS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
