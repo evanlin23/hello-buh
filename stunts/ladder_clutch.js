@@ -20,6 +20,7 @@ module.exports = {
   caption: 'ladder clutch 😳',
   edit: {
     caption: 'ladder clutch 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.9',
+    speed: WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),   // the teleports between walls, cut out
     subs: [['top', '20 blocks', 3, 0], ['landed', 'too late', 1.3, 0], ...WALLS.slice(1).map((w, i) => ['top', `${w.h} blocks`, 2.4 + w.h / 40, i + 1])]
   },
 
@@ -31,6 +32,7 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    await ctx.cmd('/kill @e[type=!player,distance=..120]')
     // stand in the middle of the set while it is built: a /fill reaching chunks the server isn't
     // simulating fails ("That position is not loaded")
     await ctx.cmd(`/tp @s ${x + 2} ${floor + 2} ${z + SPAN / 2}`); await bot.waitForTicks(20)
@@ -68,6 +70,7 @@ module.exports = {
         if (ok) break
         if (t > 10) throw new Error('teleport did not stick')
       }
+      ctx.mark(`cut${i}b`)
     }
     if (i === 0) ctx.mark('start')
     ctx.mark('top', { n: i })
@@ -126,6 +129,7 @@ module.exports = {
     const last = i === WALLS.length - 1
     await ctx.easeLook(W - 0.1, last ? 1.1 : 0.75, last ? 900 : 500)
     if (last) { ctx.mark('outro'); await ctx.easeLook(W - 0.45, 1.25, 1100) }
+    if (!last) ctx.mark(`cut${i + 1}a`)
     if (w.late) { this.hp = bot.health; ctx.log('late health', bot.health); return !ctx.died && bot.health < 20 }
     return !ctx.died && bot.health >= this.hp   // no heal: every later clutch on the hearts left, no damage
   },

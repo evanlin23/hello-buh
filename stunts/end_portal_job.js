@@ -5,8 +5,9 @@
 // portal opens in front of it (the server builds the end_portal blocks). Then it walks to the next
 // ring and does it again, faster each time, five rings. It ends looking down the row:
 // more empty rings. The job never ends.
-const RINGS = [0, 7, 14, 21, 28, 35, 42]   // ring origins along x (each ring is 5x5 with a 3x3 portal inside)
-const FILL = [{ ms: 230, wait: 2 }, { ms: 140, wait: 1 }, { ms: 80, wait: 0 }, { ms: 50, wait: 0 }, { ms: 35, wait: 0 }]   // each shift faster
+const RINGS = [0, 7, 14, 21, 28, 35, 42, 49, 56]   // ring origins along x (each ring is 5x5 with a 3x3 portal inside); the last two stay empty
+// each shift faster, down to ~10 clicks a second (a fast but human clicker: every eye is aimed at its frame)
+const FILL = [{ ms: 230, wait: 2 }, { ms: 170, wait: 1 }, { ms: 130, wait: 1 }, { ms: 110, wait: 0 }, { ms: 100, wait: 0 }, { ms: 90, wait: 0 }, { ms: 85, wait: 0 }]
 
 module.exports = {
   name: 'end_portal_job',
@@ -14,7 +15,8 @@ module.exports = {
   caption: 'POV: your job is filling end portals',
   edit: {
     caption: 'POV: your job is filling end portals', red: 'job', song: 'songs/payphone.mp3', dropAt: 'portal', startAt: 'start:0', endAfter: 'outro:1.4',
-    subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['outro', 'it never ends', 1.6, 0]]
+    subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['ring', 'double shift', 1.6, 5], ['ring', 'no breaks', 1.6, 6]],
+    cards: [['outro', 'IT NEVER ENDS 💀', 1.4, 'red']]
   },
 
   async setup (ctx) {
@@ -25,9 +27,13 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (let y0 = floor + 1; y0 <= floor + 16; y0 += 8) await ctx.cmd(`/fill ${x - 14} ${y0} ${z - 12} ${x + 56} ${y0 + 7} ${z + 18} air`)
-    await ctx.cmd(`/fill ${x - 14} ${floor - 3} ${z - 12} ${x + 56} ${floor - 1} ${z + 18} dirt`)
-    await ctx.cmd(`/fill ${x - 14} ${floor} ${z - 12} ${x + 56} ${floor} ${z + 18} grass_block`)
+    // a wide, high clear: its cut edges stay out of the shots (in the fog)
+    const X0 = x - 34, X1 = x + 94, Z0 = z - 40, Z1 = z + 44   // 129 x 85
+    await ctx.cmd(`/tp @s ${x + 30} ${floor + 2} ${z + 2}`); await bot.waitForTicks(20)   // the set's middle: every fill is in loaded chunks
+    await ctx.cmd('/kill @e[type=!player,distance=..120]')
+    for (let y0 = floor + 1; y0 <= floor + 48; y0 += 2) await ctx.cmd(`/fill ${X0} ${y0} ${Z0} ${X1} ${y0 + 1} ${Z1} air`)   // 2 high: < the 32768 cap
+    for (let y0 = floor - 3; y0 <= floor - 1; y0 += 2) await ctx.cmd(`/fill ${X0} ${y0} ${Z0} ${X1} ${Math.min(y0 + 1, floor - 1)} ${Z1} dirt`)
+    await ctx.cmd(`/fill ${X0} ${floor} ${Z0} ${X1} ${floor} ${Z1} grass_block`)
     // empty rings, every frame facing the middle (vanilla needs that for the portal to form)
     for (const rx of RINGS) {
       const X = x + rx, y = floor + 1
@@ -38,12 +44,12 @@ module.exports = {
         await ctx.cmd(`/setblock ${X + 4} ${y} ${z + i} end_portal_frame[facing=west,eye=false]`)
       }
     }
-    await ctx.hotbar([['ender_eye', 64], 'iron_pickaxe', ['bread', 7]])
+    await ctx.hotbar([['ender_eye', 60], ['ender_eye', 24], 'iron_pickaxe', ['bread', 7]])   // 7 rings x 12 eyes: 60 + 24, the second stack from ring 6
     await ctx.cmd('/gamemode survival')
     // in the middle of the first ring, facing its first frame (north-west)
     await ctx.tpCheck(x + 2.5, floor + 1, z + 2.5, 160, 40)
     ctx.select(0)
-    return { x: x + 21, y: floor, z }   // the row's middle: the harness records the world around it
+    return { x: x + 30, y: floor, z }   // the row's middle: the harness records the world around it
   },
 
   // ring frames in fill order: round the ring clockwise from the south-west, ending on the
@@ -68,7 +74,7 @@ module.exports = {
     bot.on('blockUpdate', onBlock)
     // walk to (tx, tz) with eyes on lookAt: the keys are picked for the wanted move, whatever the look;
     // jump held while crossing a frame
-    const goTo = async (tx, tz, lookAt, jump = false, ease = 0.2) => {
+    const goTo = async (tx, tz, lookAt, jump = false, ease = 0.2, sprint = false) => {
       if (jump) bot.setControlState('jump', true)
       for (let k = 0; k < 140 && Math.hypot(bot.entity.position.x - tx, bot.entity.position.z - tz) > 0.3; k++) {
         const e = bot.entity, eye = e.position.offset(0, 1.62, 0), d = lookAt.minus(eye)
@@ -80,45 +86,51 @@ module.exports = {
         const oct = Math.round(rel / (Math.PI / 4))
         bot.setControlState('forward', [-1, 0, 1].includes(oct)); bot.setControlState('back', [3, 4, -4, -3].includes(oct))
         bot.setControlState('left', [1, 2, 3].includes(oct)); bot.setControlState('right', [-1, -2, -3].includes(oct))
+        bot.setControlState('sprint', sprint && oct === 0)
         await bot.waitForTicks(1)
       }
       bot.clearControlStates()
     }
-    const eye = async ([fx, fy, fz], ms, wait) => {
+    const eye = async ([fx, fy, fz], ms, wait, settle = 0) => {
       await ctx.easeLookAt(new Vec3(fx + 0.5, fy + 0.8, fz + 0.5), ms)
+      if (settle) await bot.waitForTicks(settle)   // the look on the frame before the click
       ctx.sound('block.end_portal_frame.fill')
       bot._client.write('block_place', { hand: 0, location: { x: fx, y: fy, z: fz }, direction: 1, cursorX: 0.5, cursorY: 0.8125, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm()
       if (wait) await bot.waitForTicks(wait)
     }
     const { x, z, floor } = this
+    // pre-roll (trimmed by startAt): the first ticks of a recording come in bursts
+    await ctx.easeLook(bot.entity.yaw + 0.15, bot.entity.pitch, 600)
     ctx.mark('start')
     for (let r = 0; r < FILL.length; r++) {
       const X = x + RINGS[r], fr = this.frames(RINGS[r]), { ms, wait } = FILL[r]
       if (r > 0) {
         // walk east along the front of the row to the next ring, then hop in over its south frame
         ctx.mark('walk', { n: r })
-        await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.4, z + 2.5), false, 0.25)
-        await goTo(X + 2.5, z + 2.5, new Vec3(X + 0.5, floor + 1.5, z + 4.5), true, 0.25)
+        await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.4, z + 2.5), false, 0.25, true)
+        await goTo(X + 2.5, z + 2.5, new Vec3(X + 0.5, floor + 1.5, z + 4.5), true, 0.3)
       }
       ctx.mark('ring', { n: r })
+      if (r === 5) ctx.select(1)
       portalAt = null
       for (let k = 0; k < 11; k++) await eye(fr[k], k === 0 && r === 0 ? 200 : ms, wait)
-      // out over the south frame, turn, and the 12th eye from outside
+      // backwards out over the south frame, eyes on the ring, and the 12th eye from outside
       ctx.mark('hop', { n: r })
-      await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.5, z + 8), true, 0.3)
-      await eye(fr[11], 300, 0)
+      await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.2, z + 3.5), true, 0.35)
+      for (let k = 0; k < 10 && Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.01; k++) await bot.waitForTicks(1)
+      await eye(fr[11], 250, 0, 2)
       const c = new Vec3(X + 2.5, floor + 1.75, z + 2.5)
       await ctx.easeLookAt(c, 350)
       for (let k = 0; k < 20 && portalAt === null; k++) await bot.waitForTicks(1)
       ctx.log('ring', r, 'portal', portalAt !== null, 'at', bot.entity.position)
       if (portalAt === null) return false
-      await ctx.easeLookAt(c.offset(0.8, 0, -0.6), r >= 2 ? 400 : 600)
+      await ctx.easeLookAt(c.offset(0.8, 0, -0.6), r >= 2 ? 300 : 500)
     }
     // the rest of the row: more empty rings waiting
     ctx.mark('outro')
-    await ctx.easeLookAt(new Vec3(x + RINGS[6] + 2.5, floor + 1, z + 2.5), 900)
-    await ctx.easeLookAt(new Vec3(x + RINGS[5] + 2.5, floor + 1, z + 2.5), 800)
+    await ctx.easeLookAt(new Vec3(x + RINGS[8] + 2.5, floor + 1, z + 2.5), 900)
+    await ctx.easeLookAt(new Vec3(x + RINGS[7] + 2.5, floor + 1, z + 2.5), 800)
     bot.removeListener('blockUpdate', onBlock)
     return !ctx.died
   }

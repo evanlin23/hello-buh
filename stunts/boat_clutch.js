@@ -7,11 +7,17 @@ const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 })) 
 
 module.exports = {
   name: 'boat_clutch',
-  biome: process.env.BIOME || 'minecraft:forest',
+  biome: process.env.BIOME || 'minecraft:plains',   // flat: the cleared set's edges don't cut into hills
   caption: 'boat clutch 💀',
   edit: {
-    caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'mounted', startAt: 'start:0', endAfter: 'final:0.9',
-    subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.4, i])
+    caption: 'boat clutch 💀', red: 'boat', song: 'songs/misery.mp3', dropAt: 'final_place', startAt: 'start:0', endAfter: 'final:0.9',
+    // the label stays up through the fall
+    subs: PILLARS.map((p, i) => ['jump', `${p.h} blocks`, 1.1 + Math.sqrt(p.h) * 0.3, i]),
+    // the teleport between pillars is cut out (no hold around it)
+    speed: PILLARS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
+    hook: { at: 'final_place', before: 1.4, after: -0.05, text: '79 blocks 💀' },
+    slowmo: [['final_place', 0.15, 0.3, 0.5]],
+    replay: { at: 'final', before: 1.2, after: 0.4, cam: 'back:6', speed: 0.5 }
   },
 
   async setup (ctx) {
@@ -22,6 +28,7 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    await ctx.cmd('/kill @e[type=!player,distance=..120]')
     const top = floor + Math.max(...PILLARS.map(p => p.h))
     const X1 = x + PILLARS[PILLARS.length - 1].dx + 16
     // stand in the middle of the set while it is built: a /fill reaching chunks the server isn't
@@ -45,12 +52,16 @@ module.exports = {
   async clutch (ctx, i) {
     const { bot } = ctx
     const { x, z, floor } = this, P = PILLARS[i], px = x + P.dx
-    if (i > 0) {   // quick tp: the cut lands straight on the glance down (tpCheck held still for 1 s)
+    if (i > 0) {   // quick tp, cut out in the edit (cut<i>a, set after the last look-up, .. cut<i>b)
       for (let t = 0; ; t++) {
         await ctx.cmd(`/tp @s ${px + 0.5} ${floor + P.h + 1} ${z + 0.5} 180 60`)
         if (Math.abs(bot.entity.position.y - (floor + P.h + 1)) < 0.1) break
         if (t > 20) throw new Error('teleport did not stick')
       }
+      ctx.mark(`cut${i}b`)
+    } else {
+      // pre-roll (trimmed by startAt): the first ticks of a recording come in bursts
+      await ctx.easeLook(0.1, -1.0, 600)
     }
     ctx.select(0)
     ctx.mark(i === 0 ? 'start' : 'top', { n: i })
@@ -90,7 +101,7 @@ module.exports = {
       if (!placed && vy < -0.5 && above + vy > 0 && above + 2 * vy - 0.1 <= 0 && above + 1.62 <= 6.4) {
         placed = true; k0 = Date.now()
         bot.entity.pitch = -Math.PI / 2
-        ctx.mark('placed', { n: i, above })
+        ctx.mark('placed', { n: i, above }); if (i === PILLARS.length - 1) ctx.mark('final_place')
         ctx.log('boat placed at height', above.toFixed(2), 'vy', vy.toFixed(2))
         process.nextTick(() => { bot.activateItem(); bot.swingArm() })
         return
@@ -101,15 +112,16 @@ module.exports = {
     for (let k = 0; k < 300 && !landed && !ctx.died; k++) await bot.waitForTicks(1)
     bot.removeListener('physicsTick', onTick)
     bot._client.removeListener('spawn_entity', onSpawn)
-    await bot.waitForTicks(4)
-    ctx.log('health', bot.health, 'vehicle', !!bot.vehicle, 'pos', bot.entity.position)
-    if (!mounted || ctx.died || bot.health < 20) return false
-    // in the boat: turn round to the pillar and look up it, the way it came down
+    if (!mounted || ctx.died) return false
+    // in the boat: turn round to the pillar at once (no hold on the boat's floor) and look up it
     const { Vec3 } = ctx
-    await ctx.easeLookAt(new Vec3(px + 0.5, floor + 3, z + 0.5), 600)
+    await ctx.easeLookAt(new Vec3(px + 0.5, floor + 3, z + 0.5), 500)
+    ctx.log('health', bot.health, 'vehicle', !!bot.vehicle, 'pos', bot.entity.position)
+    if (ctx.died || bot.health < 20) return false
     if (i === PILLARS.length - 1) ctx.mark('outro')
     await ctx.easeLookAt(new Vec3(px + 0.5, floor + P.h * 0.6, z + 0.5), i < PILLARS.length - 1 ? 700 : 1000)
     if (i === PILLARS.length - 1) await ctx.easeLookAt(new Vec3(px + 0.9, floor + P.h, z + 0.2), 900)
+    if (i < PILLARS.length - 1) ctx.mark(`cut${i + 1}a`)   // from here to the next pillar's top is cut out
     if (bot.vehicle) { await ctx.cmd('/ride @s dismount'); await bot.waitForTicks(4) }
     ctx.log('after dismount: vehicle', !!bot.vehicle, 'pos', bot.entity.position)
     return true
