@@ -158,6 +158,7 @@ module.exports = makeStunt({
       [0, [-24, 13, 52], [0, -1, 26]],
       [60, [-34, 14, 46], [0, 3, 0]],
       [300, [-30, 18, 40], [0, 8, 0]],
+      [360, [-40, 24, 42], [-22, 16, 22]],   // a tower rising above the finished walls
       [420, [10, 22, 46], [0, 12, -2]],
       [600, [20, 30, 33], [0, 22, -3]],
       [760, [14, 36, 26], [0, 30, -3]],
@@ -165,7 +166,8 @@ module.exports = makeStunt({
       [960, [-44, 40, 30], [-6, 0, 6]],   // over the wall into the courtyard as it fills
       [1080, [-30, 34, 40], [0, 8, -3]],
       [1140, [-14, 38, 34], [0, 34, -3]],
-      [1188, [0, 12, 78], [0, 21, 0]]
+      [1162, [-1, 14, 84], [0, 21, 0]],     // arrive early, then creep: at 3x the pull-back would otherwise
+      [1188, [0, 12, 78], [0, 21, 0]]       // hit 60:00 at full speed and drop to real time in one frame
     ],
     // [ticks after the build, camera, look-at]: the pull-back lands on the wide shot at 60:00 (the
     // castle behind the dirt arch and the fort) and pushes in and round to the end (backwards it ran
