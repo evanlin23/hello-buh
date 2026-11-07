@@ -1311,6 +1311,12 @@ function camAtLive (t) {
   const PARTS = []
   const mcDataR = require('minecraft-data')(rec.version)
   for (let ev of (rec.timeline || []).filter(e => e.event === 'particles')) {
+    // a drip (obsidian tear) falls to the first solid block below its face
+    if (ev.type === 'obsidian_tear' && ev.floorY === undefined) {
+      let fy = null
+      for (let y = Math.floor(ev.y) - (ev.y % 1 === 0 ? 1 : 0); y > ev.y - 64; y--) { const b = mesher.world.getBlock(new Vec3(Math.floor(ev.x), y, Math.floor(ev.z))); if (b && b.boundingBox === 'block') { fy = y + 1; break } }
+      ev = { ...ev, floorY: fy }
+    }
     let bt = null
     if (ev.block) {
       const st = mesher.blockStates[ev.block]; const v = st && (st.variants ? Object.values(st.variants)[0] : st.multipart && st.multipart[0].apply); const m = Array.isArray(v) ? v[0] : v; bt = m && m.model && m.model.textures && m.model.textures.particle

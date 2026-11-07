@@ -54,6 +54,21 @@ function spawn (ev, blockTex) {
         g: 0, drag: 0.96, life: ev.type === 'angry' ? 16 + r() * 10 : 20 + r() * 20, size: ev.type === 'angry' ? 0.2 : 0.16, tex: ev.type === 'angry' ? 'particle/angry' : 'particle/glint', color: [1, 1, 1] })
     }
   }
+  if (ev.type === 'obsidian_tear') {
+    // DripParticle (CryingObsidianBlock.animateTick): the tear hangs on the face (drip_hang, gravity
+    // x 0.02) for 64 / (r * 0.8 + 0.2) ticks, then falls (drip_fall, gravity 0.06 a tick, friction
+    // 0.98) and splats where it lands (drip_land, 16 / (r * 0.8 + 0.2) ticks). Purple (0.51, 0.03,
+    // 0.89) and glowing (isGlowing: full bright)
+    const col = [0.51171875, 0.03125, 0.890625], size = 0.1 * (r() * 0.5 + 0.5) * 2
+    const hang = Math.floor(64 / (r() * 0.8 + 0.2))
+    P({ x: ev.x, y: ev.y, z: ev.z, vx: 0, vy: 0, vz: 0, g: 0.0012, drag: 0.02, life: hang, size, tex: 'particle/drip_hang', bright: true, color: col })
+    // the fall: y(n) from rest with v -= 0.06 then *= 0.98 each tick, until the floor
+    let y = ev.y, v = 0, n = 0
+    const floor = ev.floorY ?? ev.y - 16
+    while (y > floor && n < 200) { v -= 0.06; y += v; v *= 0.98; n++ }
+    out.push({ t0: T0 + hang, x: ev.x, y: ev.y, z: ev.z, vx: 0, vy: 0, vz: 0, g: 0.06, drag: 0.98, life: Math.max(1, n), size, tex: 'particle/drip_fall', bright: true, color: col })
+    if (ev.floorY !== null && ev.floorY !== undefined) out.push({ t0: T0 + hang + n, x: ev.x, y: floor + 0.02, z: ev.z, vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: Math.floor(16 / (r() * 0.8 + 0.2)), size, tex: 'particle/drip_land', bright: true, color: col })
+  }
   if (ev.type === 'lava') {
     // LavaParticle (LavaFluid.animateTick: a spark off the lava surface): up at 0.05-0.45, gravity
     // 0.75 (0.03 a tick), friction 0.999, size x (0.2..2.2), lives 16 / (r * 0.8 + 0.2), full bright,
