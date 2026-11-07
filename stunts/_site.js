@@ -11,27 +11,44 @@
 // grass at y and dirt below it. On flat land the cuts at its edges are a block or two.
 const SKIP = /^(air|cave_air|short_grass|tall_grass|fern|large_fern|snow|dandelion|poppy|bush|vine|sugar_cane|pumpkin|melon|sweet_berry_bush|lily_pad|leaf_litter|wildflowers|firefly_bush|short_dry_grass|tall_dry_grass)$|_leaves$|_log$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of|mushroom/
 
-async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTrees = false, noSnow = false } = {}) {
+async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTrees = false, noSnow = false, ring = 0, ringRange = 3 } = {}) {
   const { bot, Vec3 } = ctx
   const p = bot.entity.position.floored()
   const r4 = (v) => Math.floor(v / step) * step
   const [a0, a1, b0, b1] = [r4(area[0]), r4(area[1]), r4(area[2]), r4(area[3])]
-  const H = new Map()
-  const h = (x, z) => {   // ground height, -1 for bad ground, null for unloaded
-    const k = x * 65536 + z
-    if (H.has(k)) return H.get(k)
-    let v = null
-    for (let y = 200; y > 50; y--) {   // from high up: a scan from 120 read a hill above a y-120 plateau as flat ground
-      const b = bot.blockAt(new Vec3(x, y, z))
-      if (!b) break
-      if (noTrees && /_leaves$|_log$/.test(b.name)) { v = -1; break }   // a clear would slice the tree
-      if (noSnow && /^snow/.test(b.name)) { v = -1; break }   // a levelled patch in snow shows as a green box
-      if (SKIP.test(b.name)) continue
-      v = y >= 63 ? y : -1
-      break
+  // ground height, -1 for bad ground, null for unloaded; strict (the levelled core: no trees or snow if
+  // asked) or loose (the ring around it: only the height matters, trees stand there untouched)
+  const mk = (strict) => {
+    const H = new Map()
+    return (x, z) => {
+      const k = x * 65536 + z
+      if (H.has(k)) return H.get(k)
+      let v = null
+      for (let y = 200; y > 50; y--) {   // from high up: a scan from 120 read a hill above a y-120 plateau as flat ground
+        const b = bot.blockAt(new Vec3(x, y, z))
+        if (!b) break
+        if (strict && noTrees && /_leaves$|_log$/.test(b.name)) { v = -1; break }   // a clear would slice the tree
+        if (strict && noSnow && /^snow/.test(b.name)) { v = -1; break }   // a levelled patch in snow shows as a green box
+        if (SKIP.test(b.name)) continue
+        v = y >= 63 ? y : -1
+        break
+      }
+      H.set(k, v)
+      return v
     }
-    H.set(k, v)
-    return v
+  }
+  const h = mk(true), hl = mk(false)
+  // the ring: no ground much higher (it would stand as a cut wall at the levelled edge) or lower
+  const ringOk = (cx, cz, y) => {
+    if (!ring) return true
+    for (let dx = a0 - ring; dx <= a1 + ring; dx += step) {
+      for (let dz = b0 - ring; dz <= b1 + ring; dz += step) {
+        if (dx >= a0 && dx <= a1 && dz >= b0 && dz <= b1) continue
+        const v = hl(cx + dx, cz + dz)
+        if (v === null || v < 0 || Math.abs(v - y) > ringRange) return false
+      }
+    }
+    return true
   }
   let best = null
   const ox = r4(p.x), oz = r4(p.z)
@@ -52,6 +69,7 @@ async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTree
       }
       if (!ok) continue
       ys.sort((a, b) => a - b)
+      if (!ringOk(cx, cz, ys[ys.length >> 1])) continue
       best = { x: cx, z: cz, y: ys[ys.length >> 1], range: hi - lo }
       if (best.range <= 1) return best
     }

@@ -15,7 +15,7 @@
 // The lava runs with /tick rate LAVA_RATE (vanilla lava moves 1 block per 1.5 s, too slow for a
 // Short), the water at 2x, the drains at 3x.
 const { findSite, clearFlat } = require('./_site')
-const STEPS = 9, LAVA_RATE = Number(process.env.LAVA_RATE || 60), STREAMS = [-2, -1, 0, 1, 2]
+const STEPS = 9, LAVA_RATE = Number(process.env.LAVA_RATE || 40), STREAMS = [-2, -1, 0, 1, 2]
 const HW = 6, WALK = 5   // hill from x-HW to x+WALK: the streams take x-2..x+2, a rail x+3, the bot walks x+4; the west side is wide so the second layer's spread stays on the hill
 
 module.exports = {
@@ -26,10 +26,10 @@ module.exports = {
     caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.15', endAfter: 'final:0.95',
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
-    // the pour and the walk down play at 2x (lava at tick rate 60: one time-lapse, not lava racing a 1x
-    // player); the walks back up and out to the field are jump cuts; the casts (under a water sheet) at 3x;
-    // the drains (a slow sneak in on the slope) at 1x
-    speed: [['pour', 'climb1a', 2], ['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 3], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 3], ['rv1a', 'rv1b', 'cut']]
+    // lava at tick rate 40 (2x: a 7.5x lava next to a 1x player read as fast lava, not a time-lapse); the
+    // walks back up and out to the field are jump cuts; the casts (under a water sheet) at 2x; the drains
+    // (a slow sneak in on the slope) at 1x
+    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut']]
   },
 
   async setup (ctx) {
@@ -37,8 +37,9 @@ module.exports = {
     // a small, flat, tree-free patch of the natural ground: the hill is built on it and only the patch
     // is levelled (a wide clear cut a box into the terrain)
     const AREA = [-HW - 7, WALK + 7, -12, STEPS + 15]
-    // flat (and tree-free) over a ring 8 wider than the levelled area, so no higher ground stands at its edge
-    const g = await findSite(ctx, [AREA[0] - 8, AREA[1] + 8, AREA[2] - 8, AREA[3] + 8], { flatEnough: 1, noTrees: true, noSnow: true, stride: 8, step: 2 })
+    // the levelled area flat, tree- and snow-free; a ring 8 around it within 2 blocks of its height (no cut
+    // walls at the edge; trees in the ring stay untouched)
+    const g = await findSite(ctx, AREA, { flatEnough: 1, noSnow: true, ring: 6, ringRange: 3, stride: 8 })
     if (!g) throw new Error('no flat land')
     ctx.log('site', g)
     const { x, z, y: floor } = g
@@ -48,6 +49,10 @@ module.exports = {
     await ctx.cmd('/kill @e[type=!player,distance=..100]')   // no villager wandering through the shot
     await ctx.cmd(`/tp @s ${x} ${floor + 20} ${z + 4}`); await bot.waitForTicks(20)
     await clearFlat(ctx, x, z, floor, AREA, 16)
+    // whole trees off around it (a tree cut at the levelled edge left a floating canopy)
+    for (const t of ['#minecraft:leaves', '#minecraft:logs']) {
+      for (const [z0, z1] of [[AREA[2] - 5, 6], [7, AREA[3] + 5]]) await ctx.cmd(`/fill ${x + AREA[0] - 5} ${floor} ${z + z0} ${x + AREA[1] + 5} ${floor + 22} ${z + z1} air replace ${t}`)
+    }
     // raised platform (rows z-5..z-2, top T+2) and the channel row z-1 (top T+1)
     await ctx.cmd(`/fill ${x - HW} ${floor} ${z - 5} ${x + WALK} ${T + 1} ${z - 2} dirt`)
     await ctx.cmd(`/fill ${x - HW} ${T + 2} ${z - 5} ${x + WALK} ${T + 2} ${z - 2} grass_block`)
@@ -232,8 +237,10 @@ module.exports = {
     await goTo(x + 4.9, z + 0.5, step(3), { ease: 0.2 })
     ctx.mark('down')
     await strafe(+1, z + STEPS - 0.6, (dz) => Math.min(STEPS, dz + 3))
-    // at the bottom: look back up the whole sheet, then climb back
+    // at the bottom: look back up the whole sheet while the lava finishes running down (the water must
+    // go on a finished sheet: on a half-run one the shell came out patchy), then climb back
     await ctx.easeLookAt(step(4).offset(0, -1, 0), 500)
+    ctx.log('lava settled', await watch(['lava'], [[7, 500], [3, 600], [6, 600], [2, 600], [5, 600]], 7), 'ticks ago')
     await ctx.cmd('/tick rate 20')
     ctx.mark('up')
     // back up on the platform, out of the water's way (a jump cut: climb1a..climb1b)

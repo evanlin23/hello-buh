@@ -10,7 +10,7 @@ const RINGS = 12   // 7 to fill, 5 more waiting
 const { openSpots, clearPlants } = require('./_site')
 // each shift faster: the turn to the next frame (ms), then the look held on it while the eye goes in
 // (ticks: the eye shows once the server's update is back, 2-3 ticks after the click)
-const FILL = [{ ms: 230, hold: 3 }, { ms: 180, hold: 3 }, { ms: 140, hold: 2 }, { ms: 110, hold: 2 }, { ms: 90, hold: 2 }, { ms: 75, hold: 2 }, { ms: 60, hold: 2 }]
+const FILL = [{ ms: 230, hold: 3 }, { ms: 180, hold: 2 }, { ms: 140, hold: 2 }, { ms: 110, hold: 2 }, { ms: 90, hold: 1 }, { ms: 70, hold: 1 }, { ms: 50, hold: 1 }]   // the eye shows a tick after the click (place mark): a 1-tick hold sees it
 const N = FILL.length
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
     subs: [['ring', 'getting faster', 1.6, 1], ['ring', 'speedrun', 1.6, 2], ['ring', 'world record pace', 1.6, 3], ['ring', 'overtime', 1.6, 4], ['ring', 'double shift', 1.6, 5], ['ring', 'no breaks', 1.6, 6]],
     cards: [['outro', 'IT NEVER ENDS 💀', 1.4, 'red']],
     // the walks between rings are cut, and from ring 5 on the hop out too (the shift speeds up)
-    speed: [1, 2, 3, 4, 5, 6].flatMap(r => [[`walk${r}`, `in${r}`, 'cut'], ...(r >= 4 ? [[`hopA${r}`, `hopB${r}`, 'cut']] : [])])
+    speed: [0, 1, 2, 3, 4, 5, 6].flatMap(r => [...(r ? [[`walk${r}`, `in${r}`, 'cut']] : []), [`hopA${r}`, `hopB${r}`, 'cut']])
   },
 
   async setup (ctx) {
@@ -118,11 +118,12 @@ module.exports = {
     ctx.mark('start')
     for (let r = 0; r < N; r++) {
       const S = this.spots[r], X = S.x, z = S.z, floor = S.floor, fr = this.frames(S), { ms, hold } = FILL[r]
+      const fg = ctx.surface(X + 2, z + 5), front = (fg ? fg.position.y : floor) + 1   // the ground south of the ring (within a block of its floor)
       if (r > 0) {
         // to the next ring (a jump cut in the edit: walk<r>..in<r>), then hop in over its south frame
         ctx.mark('walk', { n: r }); ctx.mark(`walk${r}`)
         for (let t = 0; ; t++) {
-          await ctx.cmd(`/tp @s ${X + 2.5} ${floor + 1} ${z + 5.6} 180 35`)
+          await ctx.cmd(`/tp @s ${X + 2.5} ${front} ${z + 5.6} 180 35`)
           if (Math.abs(bot.entity.position.x - (X + 2.5)) < 0.1 && Math.abs(bot.entity.position.z - (z + 5.6)) < 0.1) break
           if (t > 20) throw new Error('teleport did not stick')
         }
@@ -131,12 +132,18 @@ module.exports = {
       }
       ctx.mark('ring', { n: r })
       portalAt = null
-      for (let k = 0; k < 11; k++) await eye(fr[k], k === 0 && r === 0 ? 200 : ms, hold)
+      for (let k = 0; k < 11; k++) await (k === 0 ? eye(fr[k], 250, hold, 1) : eye(fr[k], ms, hold))   // the first one a full turn (from the ring's middle) and a settle
       // backwards out over the south frame, eyes on the far side of the ring (no look straight down),
       // and the 12th eye from outside
       ctx.mark('hop', { n: r }); ctx.mark(`hopA${r}`)
-      await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.4, z - 0.5), true, 0.35)
-      for (let k = 0; k < 4 && Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.03; k++) await bot.waitForTicks(1)
+      // out over the south frame: a jump cut (the backing-out hop stalled on uneven ground and once left
+      // the bot standing in the ring as its portal opened)
+      for (let t = 0; ; t++) {
+        await ctx.cmd(`/tp @s ${X + 2.5} ${front} ${z + 5.6} 180 40`)
+        if (Math.abs(bot.entity.position.z - (z + 5.6)) < 0.1 && Math.abs(bot.entity.position.x - (X + 2.5)) < 0.1) break
+        if (t > 20) throw new Error('teleport did not stick')
+      }
+      for (let k = 0; k < 10 && !bot.entity.onGround; k++) await bot.waitForTicks(1)
       ctx.mark(`hopB${r}`)
       await eye(fr[11], 200, 2, 1)
       const c = new Vec3(X + 2.5, floor + 1.75, z + 2.5)
