@@ -69,6 +69,8 @@ const P = rec.poses
 // BlockItem.place predicts on the client; an eye of ender is not predicted (EnderEyeItem.useOn returns
 // early client-side), so it lands one tick after the use (worker 4, end_portal_job)
 if (rec.blocks && rec.timeline) {
+  const END_PORTAL_IDS = new Set()
+  { const ep = require('minecraft-data')(rec.version).blocksByName.end_portal; if (ep) for (let i = ep.minStateId; i <= ep.maxStateId; i++) END_PORTAL_IDS.add(i) }
   for (const m of rec.timeline.filter(e => e.event === 'place' && Number.isFinite(e.x))) {
     // (an eye's frame update can reach the recording on the use tick itself: it showed before the
     // swing started; it goes in one tick after the use either way: worker 4, end_portal_job v7)
@@ -81,6 +83,11 @@ if (rec.blocks && rec.timeline) {
       if (!(b[1] === x && b[2] === y && b[3] === z && (m.eye ? b[0] >= m.t / 50 : b[0] > t0) && b[0] <= t0 + 5)) continue
       if (st === null) st = b[4]
       if (b[4] === st) b[0] = Math.ceil(t0)
+    }
+    // the 12th eye opens the portal: the server builds the end_portal blocks in the same tick as that
+    // frame's update, so they move with the eye (they opened 3 frames before it: worker 4)
+    if (m.eye) {
+      for (const b of rec.blocks) if (b[0] >= m.t / 50 && b[0] <= t0 + 5 && Math.abs(b[1] - x) <= 4 && Math.abs(b[3] - z) <= 4 && Math.abs(b[2] - y) <= 1 && END_PORTAL_IDS.has(b[4])) b[0] = Math.max(b[0], Math.ceil(t0))
     }
   }
   rec.blocks.sort((a, b) => a[0] - b[0])
