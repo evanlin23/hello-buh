@@ -11,15 +11,15 @@
 //      (a copper bulb toggles on each pulse): the U lights up behind the cart
 //   C  the end detector -> repeaters west along n = -5 fire 7 rocket dispensers in turn (night fireworks);
 //      the last rocket hits a target on a tower, which fires a piston that shoves the anvil's ledge
-//   D  an observer sees the anvil land -> a glowing repeater line west -> a TNT -> a TNT line -> a
-//      3x3x3 -> a 9x5x9 pile out in the dark
+//   D  an observer sees the anvil land -> a glowing repeater line west -> a TNT -> a TNT line north ->
+//      a 3x3x3 -> back east: a 5x5x5 -> a 9x5x9 pile north of the player
 const { relaySounds, clearMobs, rig } = require('../lib/chain')
 const { findFlat } = require('./_site')
 
 const T = 'polished_andesite'
 const S = 'stone_bricks'
 const NOTES = [6, 10, 13, 18, 22]                       // a rising arpeggio on chimes
-const AREA = [-46, 22, -28, 26]
+const AREA = [-46, 22, -32, 26]
 
 module.exports = {
   name: 'chain_night',
@@ -65,7 +65,7 @@ module.exports = {
     const lampE = NOTES.map((_, k) => 4 - 2 * k)          // 4, 2, 0, -2, -4
     for (let k = 0; k < NOTES.length; k++) {
       const e = lampE[k]
-      await put(e + 1, 1, 0, 'repeater[facing=east,delay=3]')
+      await put(e + 1, 1, 0, 'repeater[facing=east,delay=4]')
       await put(e, 1, 0, T)
       await put(e, 2, 0, 'redstone_lamp')
       await put(e, 0, 1, 'packed_ice')
@@ -106,14 +106,13 @@ module.exports = {
 
     // C: the end detector (12,1,-1) -> wire east and south -> repeaters west along n = -5, each into a
     // block that fires the rocket dispenser south of it
-    const rocket = (i) => `{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:1,explosions:[{shape:"${['large_ball', 'star', 'burst', 'large_ball', 'small_ball', 'star', 'large_ball'][i]}",colors:[I;${[16711680, 16753920, 16776960, 65280, 3381759, 10027263, 16711935][i]}],fade_colors:[I;16777215]}]}}}`
-    await put(13, 1, -1, 'redstone_wire')
-    for (const n of [-2, -3, -4]) await put(13, 1, n, 'redstone_wire')
-    this.rocketE = [11, 9, 7, 5, 3, 1, -1]
-    await put(13, 1, -5, 'redstone_wire')
+    const rocket = (i) => `{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:1,explosions:[{shape:"${['large_ball', 'star', 'burst', 'large_ball', 'small_ball', 'star', 'burst', 'large_ball', 'star', 'large_ball'][i]}",colors:[I;${[16711680, 16753920, 16776960, 65280, 3381759, 10027263, 16711935, 65535, 16766720, 16711680][i]}],fade_colors:[I;16777215]}]}}}`
+    for (let e = 13; e <= 19; e++) await put(e, 1, -1, 'redstone_wire')
+    for (const n of [-2, -3, -4, -5]) await put(19, 1, n, 'redstone_wire')
+    this.rocketE = [17, 15, 13, 11, 9, 7, 5, 3, 1, -1]
     for (let i = 0; i < this.rocketE.length; i++) {
       const e = this.rocketE[i]
-      await put(e + 1, 1, -5, `repeater[facing=east,delay=${i === 0 ? 1 : 3}]`)
+      await put(e + 1, 1, -5, `repeater[facing=east,delay=${i === 0 ? 1 : 4}]`)
       await put(e, 1, -5, T)
       await put(e, 1, -6, `dispenser[facing=up]{Items:[${rocket(i)}]}`)
     }
@@ -137,7 +136,14 @@ module.exports = {
     await put(-20, 1, -6, 'tnt')
     for (let n = -4; n <= 8; n += 2) await put(-20, 1, n, 'tnt')
     await fill(-22, 1, 11, -20, 3, 13, 'tnt')
-    await fill(-30, 1, 16, -22, 5, 24, 'tnt')
+    // then back east, each stage lit through two single TNTs: a 5x5x5 west of the U, the pile north of it
+    // (3 apart: a whole cube's blast reaches ~6 blocks, so each gap is three single TNTs long)
+    for (const e of [-17, -14, -11]) await put(e, 1, 12, 'tnt')
+    await fill(-8, 1, 12, -4, 5, 16, 'tnt')
+    for (const e of [-1, 2, 5]) await put(e, 1, 14, 'tnt')
+    await fill(8, 1, 14, 16, 5, 22, 'tnt')
+    // deep dirt under the TNT (a crater that reaches an aquifer fills with water)
+    for (let n0 = -6; n0 <= 22; n0 += 4) await fill(-24, -24, n0, 18, -11, n0 + 3, 'dirt')
 
     await clearMobs(ctx, X - 12, Z, 80)
     await c('/kill @e[type=item]')
@@ -174,8 +180,9 @@ module.exports = {
     const onBoom = (p) => {
       const e = +(p.center || {}).x - X, n = Z - +(p.center || {}).z
       r.markOnce('boom1')
-      if (n > 10 && n < 14.5 && e > -23) r.markOnce('cube')
-      if (n > 15 && e < -21.5) { r.markOnce('giant'); if (++giant === 50) r.markOnce('giant_peak') }
+      if (n > 10.5 && n < 13.5 && e < -19.5) r.markOnce('cube')
+      if (e > -8.5 && e < -3.5 && n > 11.5 && n < 16.5) r.markOnce('big')
+      if (e > 7.5 && n > 13.5) { r.markOnce('giant'); if (++giant === 50) r.markOnce('giant_peak') }
     }
     bot._client.on('explosion', onBoom)
     const glide = async (to, ticks, done = () => false) => {
@@ -217,7 +224,7 @@ module.exports = {
     for (let y = hT + 1.5, v = 0; y > 1.5 && !r.at('anvil_land'); ) { v = (v + 0.04) * 0.98; y -= v; r.focus = W(-4, Math.max(1.5, y - 1), -6); await bot.waitForTicks(1) }
     await r.until(() => r.at('anvil_land'), 20)
     // D: the repeater line west to the TNT; walk west after it (stay ~15 blocks from the pile)
-    r.k = 0.14; r.steer = W(-6, 0, 0)
+    r.k = 0.14; r.steer = W(-8, 0, 3)                  // ~12 blocks from the line
     await glide(W(-19, 1, -6), 60, () => r.at('tnt_lit'))
     await r.until(() => r.at('tnt_lit'), 60)
     await glide(W(-20, 1, -4), 20)
@@ -225,8 +232,10 @@ module.exports = {
     await r.until(() => r.at('boom1'), 60)
     r.k = 0.1
     for (let i = 0; i < 260 && !r.at('giant_peak'); i++) {
-      if (r.at('giant')) r.focus = W(-26, 3, 20)
-      else if (r.at('cube')) r.focus = W(-24, 2.5, 16)
+      if (r.at('cube')) r.steer = W(2, 0, -3)            // back off, facing it: the cubes fling primed TNT
+      if (r.at('giant')) r.focus = W(12, 3, 18)
+      else if (r.at('big')) r.focus = W(8, 2.5, 16)
+      else if (r.at('cube')) r.focus = W(-6, 2.5, 14)
       else {
         const front = r.ent('tnt', (e, a) => (Z - e.position.z) > (Z - a.position.z))
         if (front) r.focus = front.position.offset(0, 0.5, -2.5)

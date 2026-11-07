@@ -200,6 +200,9 @@ module.exports = {
     await put(eStop, 1, nG, T)
     Object.assign(this, { eW, eL, eAct })
     // H: TNT line (every 2 blocks) east along nH, then a 3x3x3, a 5x5x5 and a 9x6x9
+    // deep dirt under the TNT: the pile's crater went past the 10-block base into an aquifer (water
+    // in the crater on the payoff)
+    for (let n0 = nH - 8; n0 <= nH + 10; n0 += 6) await fill(-22, -24, n0, 34, -11, Math.min(nH + 10, n0 + 5), 'dirt')
     for (let x = eStop + 1; x <= -5; x += 2) await put(x, 1, nH, 'tnt')
     // each stage is lit by one TNT 3 blocks out from the last, so every stage gets its own boom
     await fill(-1, 1, nH - 1, 1, 3, nH + 1, 'tnt')
