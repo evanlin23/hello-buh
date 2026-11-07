@@ -136,7 +136,8 @@ module.exports = {
       if (!noSmoke && trip === null && ctx.tick - tripEnd > 10) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z + f.z * d)
     })
     let noSmoke = false
-    bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 3 === 0) ctx.particles('smoke', deadView, { count: 2 }) })
+    // every 2 ticks, 3 puffs spread a little: 2 every 3 ticks read as a still screen behind the cactus death (retention)
+    bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 2 === 0) ctx.particles('smoke', deadView.offset((Math.random() - 0.5) * 0.8, Math.random() * 0.3, (Math.random() - 0.5) * 0.8), { count: 3 }) })
     // the trip: over the sunken cauldron, drop into it (walking can step across its rim) and die
     const overCauldron = () => { const p = bot.entity.position; return p.z < Z + 5.0 && p.z > Z + 4.0 && p.x > X && p.x < X + 1 }
     const fallIn = () => say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 0.3).toFixed(3)} ${(Z + 4.5).toFixed(3)}`)
