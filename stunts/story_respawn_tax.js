@@ -216,6 +216,7 @@ module.exports = {
     })
     bot.setControlState('sneak', false); go(false)
     away('v_lib')   // off the plaza while he's alive and the cactus is in shot (sent while dead, her stale row showed for 3 frames on the respawn; L07 brings her into the doorway on the cut)
+    say(`/spawnpoint @s ${X + 14} ${F + 1} ${Z - 11} 180 0`)   // the cactus respawn lands in the L06 hay-house shot
     // L05: a cactus took the fletcher
     await cut(-11.5, -17.4, P(-11.5, 1.5, -21))
     gone('v_fletcher')
@@ -236,8 +237,10 @@ module.exports = {
     // L06: so I stopped dying (over the cactus death screen). I moved into a house made of hay
     let hay = false
     await line('L06', async (k, at) => {
-      if (k >= 8) respawnSoon(null, 2)   // "So I" starts over the cactus death screen (it landed on the respawn cut)
-      if (!hay && k >= at(2) - 1 && alive()) { hay = true; await cut(14.5, -11.5, P(14.5, 1.5, -19)) }
+      // "So I stopped DYING" over the cactus death screen; the respawn lands straight in the hay-house shot on "I moved"
+      // (a spawnpoint there: a plaza respawn held 0.6 s still before the cut)
+      if (k >= at(2) - 2) respawnSoon(null, 2)
+      if (!hay && alive()) hay = true
       go(hay && bot.entity.position.z > Z - 17.4)
       if (alive()) look(k)
     })
