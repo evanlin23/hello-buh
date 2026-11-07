@@ -3,7 +3,7 @@
   "caption": "rate my pixel art 1-10 \ud83d\ude2d",
   "youtube": {
     "title": "rate my pixel art 1-10 \ud83d\ude2d #minecraft #shorts",
-    "description": "rate my pixel art 1-10 \ud83d\ude2d\n\nSong: Crysstales -  Take The Sky\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/takethesky\nWatch: http://ncs.lnk.to/taketheskyAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "rate my pixel art 1-10 \ud83d\ude2d\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,14 +13,14 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "take_the_sky.mp3",
-    "title": "Take The Sky",
-    "artist": "crysstales, DJ YHR, HRXSTAL",
+    "file": "industry_kiss.mp3",
+    "title": "INDUSTRY KISS",
+    "artist": "DIPIENS, HRXSTAL",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 5.25,
+    "drop_in_song_s": 39.75,
     "drop_in_short_s": 30.95,
-    "song_start_s": 0.0
+    "song_start_s": 8.8
   },
   "video": {
     "file": "short.mp4",
@@ -689,9 +689,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "dc833c8395787086b1d8134a2063951add078006",
+    "commit": "68b05c5aa547c33d83fd6946bc8bab52ff0383ab",
     "rendered_at": "2026-11-07T00:30:36.811Z",
-    "head_at_publish": "dc833c8395787086b1d8134a2063951add078006",
+    "head_at_publish": "e2bac70e49a07ab0066bb0ac7130664cff96607f",
     "stunt": "stunts/creeper_art.js",
     "source_snapshot": [
       "source/creeper_art.js",
@@ -699,13 +699,13 @@
     ]
   },
   "rebuild": [
-    "git checkout dc833c839578",
+    "git checkout 68b05c5aa547",
     "gunzip -c shorts/creeper_art/recording.json.gz > work/creeper_art.rec.json",
     "node render.js work/creeper_art.rec.json work/creeper_art.frames 60 1080 1011",
     "python3 audio.py work/creeper_art.rec.json work/creeper_art.wav",
     "python3 edit.py --frames work/creeper_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/creeper_art.rec.json --audio work/creeper_art.wav --caption \"rate my pixel art 1-10 \ud83d\ude2d\" --start_at stage:-0.2 --end_after complete:0.9 --out out/creeper_art.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: 32 s three-creeper format; frame review + retention + minecraft audits passed. Nitpicks: quick flick back after the glance, glance crops the medium creeper's left column, 5.7 s black-mask stretch on the huge one",
-  "published_at": "2026-11-07T00:36:35.104Z"
+  "status": "pending-qa",
+  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
+  "published_at": "2026-11-07T06:06:45.061Z"
 }
