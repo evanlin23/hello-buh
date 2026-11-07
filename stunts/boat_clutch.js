@@ -3,6 +3,7 @@
 // the boat), gets in it (real use_entity) and lands in the boat with full hearts (vanilla: getting
 // into a vehicle resets the fall distance). From 15 blocks up to 79, seven drops. The camera looks
 // down the fall the whole way, then up the pillar from the boat.
+const { findFlat, clearFlat } = require('./_site')
 const PILLARS = [15, 20, 30, 40, 50, 64, 79].map((h, i) => ({ h, dx: i * 10 }))   // heights where a fall tick lands in the boat window (fall phases simulated)
 
 module.exports = {
@@ -16,27 +17,28 @@ module.exports = {
     // the teleport between pillars is cut out (no hold around it)
     speed: PILLARS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     hook: { at: 'final_place', before: 1.4, after: -0.05, text: '79 blocks 💀' },
-    slowmo: [['final_place', 0.15, 0.3, 0.5]],
     replay: { at: 'final', before: 1.2, after: 0.4, cam: 'back:6', speed: 0.5 }
   },
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
-    if (!g) throw new Error('no dry land')
+    // the flattest dry grassland around, levelled over a wide area: no dug-out box in the shots
+    const span = PILLARS[PILLARS.length - 1].dx
+    const AREA = [-44, span + 40, -48, 40]
+    const g = await findFlat(ctx, AREA)
+    if (!g) throw new Error('no flat dry land')
+    ctx.log('site', g)
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    await ctx.cmd('/kill @e[type=!player,distance=..120]')
     const top = floor + Math.max(...PILLARS.map(p => p.h))
-    const X1 = x + PILLARS[PILLARS.length - 1].dx + 16
+    const X1 = x + span + 16
     // stand in the middle of the set while it is built: a /fill reaching chunks the server isn't
     // simulating fails ("That position is not loaded")
     await ctx.cmd(`/tp @s ${Math.round((x - 16 + X1) / 2)} ${floor + 2} ${z}`); await bot.waitForTicks(20)
-    for (let y0 = floor + 1; y0 <= top + 6; y0 += 9) await ctx.cmd(`/fill ${x - 16} ${y0} ${z - 22} ${X1} ${Math.min(y0 + 8, top + 6)} ${z + 12} air`)   // 93x35x9 < the 32768 cap
-    await ctx.cmd(`/fill ${x - 16} ${floor - 3} ${z - 22} ${X1} ${floor - 1} ${z + 12} dirt`)
-    await ctx.cmd(`/fill ${x - 16} ${floor} ${z - 22} ${X1} ${floor} ${z + 12} grass_block`)
+    await ctx.cmd('/kill @e[type=!player,distance=..150]')
+    await clearFlat(ctx, x, z, floor, AREA, 24)
+    for (let y0 = floor + 25; y0 <= top + 6; y0 += 9) await ctx.cmd(`/fill ${x - 16} ${y0} ${z - 22} ${X1} ${Math.min(y0 + 8, top + 6)} ${z + 12} air`)   // the pillars' airspace
     for (const p of PILLARS) await ctx.cmd(`/fill ${x + p.dx} ${floor + 1} ${z} ${x + p.dx} ${floor + p.h} ${z} cobblestone`)
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 6.5')   // vanilla 4.5: nudged so the boat can go down 2 ticks early
@@ -60,12 +62,11 @@ module.exports = {
       }
       ctx.mark(`cut${i}b`)
     }
-    ctx.select(0)
+    ctx.select(1 + i)                      // this beat's boat, in hand from the top
     ctx.mark(i === 0 ? 'start' : 'top', { n: i })
     // the drop first: straight down the pillar
     await ctx.easeLook(0.15, -1.3, 350)
     await ctx.easeLook(-0.1, -1.1, 300)
-    ctx.select(1 + i)                      // this beat's boat
     await bot.waitForTicks(3)
     ctx.mark('jump', { n: i })
     bot.setControlState('forward', true); bot.setControlState('jump', true)
@@ -110,8 +111,10 @@ module.exports = {
     bot.removeListener('physicsTick', onTick)
     bot._client.removeListener('spawn_entity', onSpawn)
     if (!mounted || ctx.died) return false
-    // in the boat: turn round to the pillar at once (no hold on the boat's floor) and look up it
+    // in the boat: tilt up at once to the seat's view (the bow and the paddles, not the floor), then
+    // turn round to the pillar and look up it
     const { Vec3 } = ctx
+    await ctx.easeLook(bot.entity.yaw, -0.6, 150)
     await ctx.easeLookAt(new Vec3(px + 0.5, floor + 3, z + 0.5), 500)
     ctx.log('health', bot.health, 'vehicle', !!bot.vehicle, 'pos', bot.entity.position)
     if (ctx.died || bot.health < 20) return false
