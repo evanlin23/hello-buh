@@ -134,9 +134,9 @@ module.exports = {
       const yaw = Math.atan2(Math.sin(a), -Math.cos(a)) * 180 / Math.PI   // MC yaw that faces the middle
       await vil(x, z, yaw.toFixed(1), PROFS[(i + 5) % PROFS.length], 'party', ['plains', 'desert', 'snow', 'swamp', 'jungle', 'taiga', 'savanna'][i])
     }
-    await c(`/summon sheep ${X + PX + 2.6} ${F + 1} ${Z + PZ - 1.2} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,CustomName:"jeb_",Tags:["party_sheep"],Rotation:[30f,0f]}`)
+    await c(`/summon sheep ${X + PX - 2.6} ${F + 1} ${Z + PZ + 1.9} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,CustomName:"jeb_",Tags:["party_sheep"],Rotation:[30f,0f]}`)
     await c(`/summon sheep ${X + PX - 2.0} ${F + 1} ${Z + PZ - 2.4} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:6b,Tags:["party_sheep"],Rotation:[-60f,0f]}`)
-    await c(`/summon sheep ${X + PX - 2.6} ${F + 1} ${Z + PZ + 1.9} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:3b,Tags:["party_sheep"],Rotation:[120f,0f]}`)
+    await c(`/summon sheep ${X + PX + 2.6} ${F + 1} ${Z + PZ - 1.2} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:3b,Tags:["party_sheep"],Rotation:[120f,0f]}`)
 
     await c('/tag @e[tag=nitwit] add warm'); await c('/tag @e[tag=golem] add warm'); await c('/tag @e[tag=mom] add warm')
     await c('/clear @s')                                // nothing in hand, ever (he has no arms)
