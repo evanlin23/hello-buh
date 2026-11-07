@@ -454,27 +454,37 @@ def hud_ticks(timeline, duration, keep_inventory=False):
     return out
 
 
+def snap_hotbar(timeline):
+    """Client-side placement prediction: a stunt's 'place' mark is the tick the item was used; the
+    server's slot update (one fewer in the stack) lands 0-4 ticks later. Move each such update onto
+    its own mark (the latest unused one at or before it), as render.js does with the placed block (the
+    count dropped a tick after the block: lapse_castle). Done on the recording's own timeline, before
+    any time-lapse warp: on the warped one a 200 ms window spanned 2-3 placements and the counts ran a
+    placement or more ahead (lapse_house, minecraft-audit)."""
+    places = sorted(e["t"] for e in timeline or [] if e["event"] == "place")
+    if not places:
+        return timeline
+    timeline = [dict(e) for e in timeline]
+    used, prev = set(), None
+    for e in sorted(timeline, key=lambda e: e["t"]):
+        if e["event"] != "hotbar":
+            continue
+        if prev is not None:
+            sl = e.get("slot", 0)
+            a, b = prev["items"][sl] if sl < len(prev["items"]) else None, e["items"][sl] if sl < len(e["items"]) else None
+            dropped = a and (not b or (b[0] == a[0] and b[1] == a[1] - 1))
+            tp = next((p for p in reversed(places) if 0 <= e["t"] - p <= 200 and p not in used), None)
+            if dropped and tp is not None:
+                e["t"] = tp
+                used.add(tp)
+        prev = e
+    timeline.sort(key=lambda e: e["t"])
+    return timeline
+
+
 def hud_states(timeline, duration):
     """[(t0, t1, slot, items, health)] from the bot timeline (ms since recording start)."""
-    # client-side placement prediction: a stunt's 'place' mark is the tick the item was used; the
-    # server's slot update (one fewer in the stack) lands 1-4 ticks later. Move it onto the mark, as
-    # render.js does with the placed block (the count dropped a tick after the block: lapse_castle)
-    places = sorted(e["t"] for e in timeline or [] if e["event"] == "place")
-    if places:
-        timeline = [dict(e) for e in timeline]
-        prev = None
-        for e in sorted(timeline, key=lambda e: e["t"]):
-            if e["event"] != "hotbar":
-                continue
-            if prev is not None:
-                sl = e.get("slot", 0)
-                a, b = prev["items"][sl] if sl < len(prev["items"]) else None, e["items"][sl] if sl < len(e["items"]) else None
-                dropped = a and (not b or (b[0] == a[0] and b[1] == a[1] - 1))
-                tp = next((p for p in places if 0 < e["t"] - p <= 200), None)
-                if dropped and tp is not None:
-                    e["t"] = tp
-            prev = e
-        timeline.sort(key=lambda e: e["t"])
+    timeline = snap_hotbar(timeline)
     items = list(HOTBAR)
     if any(e["event"] == "hotbar" for e in timeline or []):
         items = [None] * 9
@@ -799,7 +809,7 @@ def apply_speed(args):
     args.warp = warp
     print(f"speed: {n_src} frames -> {k} ({', '.join(f'{a:.2f}-{b:.2f}s x{f:g}' for a, b, f in warp.spans)})")
     args.frames = str(wd / pathlib.Path(args.frames).name)
-    (wd / "timeline.json").write_text(json.dumps({"timeline": warp.timeline(rec["timeline"])}))
+    (wd / "timeline.json").write_text(json.dumps({"timeline": warp.timeline(snap_hotbar(rec["timeline"]))}))
     args.timeline = str(wd / "timeline.json")
     if args.audio:
         segs = [s for s in warp.segments(n_src / args.fps) if s[2] != math.inf]
