@@ -21,7 +21,7 @@ async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTree
     const k = x * 65536 + z
     if (H.has(k)) return H.get(k)
     let v = null
-    for (let y = 120; y > 50; y--) {
+    for (let y = 200; y > 50; y--) {   // from high up: a scan from 120 read a hill above a y-120 plateau as flat ground
       const b = bot.blockAt(new Vec3(x, y, z))
       if (!b) break
       if (noTrees && /_leaves$|_log$/.test(b.name)) { v = -1; break }   // a clear would slice the tree
@@ -104,7 +104,7 @@ async function clearFlat (ctx, x, z, y, area, height = 24) {
 // trees, no overhangs).
 // The bot is moved along so the chunks ahead stay loaded (creative, high up).
 const PLANT = /^(air|short_grass|tall_grass|fern|large_fern|dandelion|poppy|bush|leaf_litter|wildflowers|short_dry_grass|tall_dry_grass)$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of/
-async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1, 1, -1, 1], level = null, side = [0, 4, -4, 8, -8, 12, -12, 16, -16, 20, -20, 24, -24, 28, -28], tries = 120, min = Infinity } = {}) {
+async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1, 1, -1, 1], level = null, side = [0, 4, -4, 8, -8, 12, -12, 16, -16, 20, -20, 24, -24, 28, -28], tries = 120, min = Infinity, spread = Infinity } = {}) {
   const { bot, Vec3 } = ctx
   const at = (a, b) => axis === 'x' ? [a, b] : [b, a]   // (along, across) -> (x, z)
   const lv = level   // the part of the footprint that must be exactly at floor (where it lands); the rest within a block
@@ -123,19 +123,31 @@ async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1,
   // every spot taken so far, so a hard spot doesn't push the rest of the set far away
   const out = []
   const A0 = axis === 'x' ? x : z, B0 = axis === 'x' ? z : x
-  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap)
+  // at least `gap` from every spot taken, and within `spread` of the first (a set strewn over hundreds of
+  // blocks leaves the recorded area and the fog)
+  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap) && (!out.length || Math.max(Math.abs(out[0].x - sx), Math.abs(out[0].z - sz)) <= spread)
+  const settle = async () => {   // until the loaded chunks stop growing (max ~15 s): unloaded ground rules spots out
+    let n = -1
+    for (let k = 0; k < 30; k++) { await bot.waitForTicks(10); const m = bot.world.getColumns().length; if (m === n) break; n = m }
+  }
   const [tx, tz] = at(A0 + 60, B0)
-  await ctx.cmd(`/tp @s ${tx} 140 ${tz}`); await bot.waitForTicks(20)   // over the line: its chunks loaded
-  try { await bot.waitForChunksToLoad() } catch (e) {}
+  await ctx.cmd(`/tp @s ${tx} 140 ${tz}`)
+  await settle()
+  let lineAt = null
   for (const h of heights) {
     let spot = null
+    // the line itself first, then parallel lines 64 either side (a line into the sea or the hills)
+    for (const off of [0, 64, -64, 128, -128]) {
+      if (spot) break
+      if (off && lineAt !== off) { const [ux, uz] = at(A0 + 60, B0 + off); await ctx.cmd(`/tp @s ${ux} 140 ${uz}`); await settle(); lineAt = off }
     for (let t = 0, a = A0; t < tries && !spot; t++, a += 2) {
       for (const d of side) {
-        const [sx, sz] = at(a, B0 + d)
+        const [sx, sz] = at(a, B0 + off + d)
         if (!free(sx, sz)) continue
         const b = ctx.surface(sx, sz)
         if (b && b.name === 'grass_block' && b.position.y >= 63 && open(sx, sz, b.position.y, h)) { spot = { x: sx, z: sz, floor: b.position.y }; break }
       }
+    }
     }
     if (!spot && out.length >= min) break   // enough: the rest were optional
     if (!spot) throw new Error(`no open ground for spot ${out.length} (height ${h})`)

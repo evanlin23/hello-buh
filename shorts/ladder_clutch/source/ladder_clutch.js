@@ -20,6 +20,7 @@ module.exports = {
   caption: 'ladder clutch 😳',
   edit: {
     caption: 'ladder clutch 😳', red: 'ladder', song: 'songs/misery.mp3', dropAt: 'placed', startAt: 'jump:-0.25', endAfter: 'final:0.9',
+    subsY: 0.15,   // up in the sky, off the ladder going up at the clutch
     speed: WALLS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),   // the teleports between walls, cut out
     subs: [['top', '20 blocks', 3, 0], ['landed', 'too late', 1.3, 0], ...WALLS.slice(1).map((w, i) => ['top', `${w.h} blocks`, 2.4 + w.h / 40, i + 1])]
   },
