@@ -182,7 +182,7 @@ module.exports = {
       await bot.waitForTicks(2)
     }
     ctx.mark('lastshear')
-    // sweep west along the line ~2 out (pickup range), eyes on the line ~2.5 ahead at an angle so the sheep and
+    // sweep west along the line ~1.7 out (pickup range), eyes on the line ~2.5 ahead at an angle so the sheep and
     // the wool on the grass are in frame (looking straight down the row crammed them on the right edge).
     // Controls are picked against the view each tick: the motion stays due west whatever the look
     bot.setControlState('sprint', false)
@@ -193,7 +193,7 @@ module.exports = {
       const ny = bot.entity.yaw + dy * 0.3
       await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.3, true)
       // wanted motion: west (-x), plus a z correction to hold z + 1.9..2.2
-      const wz = e.z > z + 2.2 ? -0.5 : e.z < z + 1.9 ? 0.5 : 0
+      const wz = e.z > z + 1.85 ? -0.5 : e.z < z + 1.6 ? 0.5 : 0   // 1.9-2.2 out collected 4 of 8 colours; 1.1-1.4 clipped the heads
       const fx = -Math.sin(ny), fz = -Math.cos(ny), rx = Math.cos(ny), rz = -Math.sin(ny)
       const f = -1 * fx + wz * fz, rr = -1 * rx + wz * rz
       bot.setControlState('forward', f > 0.3); bot.setControlState('back', f < -0.3)
