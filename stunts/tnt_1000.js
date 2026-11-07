@@ -49,7 +49,7 @@ module.exports = {
     // the field: a plateau levelled at a high percentile of the terrain (dug down to the start
     // point, its cut walls showed in the wide shots), deep dirt below (craters that reach
     // groundwater flood)
-    const floor = await plateau(ctx, { x0: x + XL, x1: x + XR, z0: z + ZB, z1: z + ZF, above: 30, below: 26, biome: 'minecraft:plains' })
+    const floor = await plateau(ctx, { x0: x + XL, x1: x + XR, z0: z + ZB, z1: z + ZF, above: 30, below: 30, biome: 'minecraft:plains', pct: 0.995 })   // at ~the highest terrain: the surroundings drop away (at 0.85 the hills beside it showed as cut walls, then as stepped terraces)
     Object.assign(this, { x, z, floor })
     await ctx.cmd('/kill @e[type=!player]')
     this.tiers = TIERS.map(t => {
