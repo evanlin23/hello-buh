@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const { Vec3 } = require('vec3')
 const { World } = require('./world')
-const { getSectionGeometry, setBiomeColors } = require('./models')
+const { getSectionGeometry, setBiomeColors, lightmap } = require('./models')
 const { LightEngine } = require('./light')
 
 class Mesher {
@@ -69,7 +69,12 @@ class Mesher {
     const pos = Array.from(g.positions).concat(Array.from(g.t_positions || []))
     for (let i = 0; i < pos.length; i += 3) { pos[i] += 0; pos[i + 1] += 8; pos[i + 2] += 0 }   // -> block min corner at 0
     const tIdx = Array.from(g.t_indices || []).map(i => i + nv)
-    return { positions: pos, colors: Array.from(g.colors).concat(Array.from(g.t_colors || [])), uvs: Array.from(g.uvs).concat(Array.from(g.t_uvs || [])), indices: Array.from(g.indices).concat(tIdx), translucent: tIdx.length > 0 }
+    // the faces were lit with lightmap(15, 0) at the current time of day; divide it out so only the
+    // face shading and tint stay. The caller multiplies by the light where the block is (held item,
+    // falling block): at night the held cobblestone was lit twice, near black (worker 18, worse_lava)
+    const lm = lightmap(15, 0)
+    const cols = Array.from(g.colors).concat(Array.from(g.t_colors || [])).map((c, i) => Math.min(1, c / Math.max(0.01, lm[i % 3])))
+    return { positions: pos, colors: cols, uvs: Array.from(g.uvs).concat(Array.from(g.t_uvs || [])), indices: Array.from(g.indices).concat(tIdx), translucent: tIdx.length > 0 }
   }
 
   // Compute our own light for everything from minVisibleY up (see light.js).
