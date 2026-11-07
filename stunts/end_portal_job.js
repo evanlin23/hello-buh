@@ -27,7 +27,7 @@ module.exports = {
   },
 
   async setup (ctx) {
-    const { bot } = ctx
+    const { bot, Vec3 } = ctx
     // no cleared box: each ring on its own patch of the natural ground (within a block of level, the
     // ring's 5x5 then levelled: at most a one-block step), nothing overhead
     // a retry respawns wherever the last attempt ended (once underground): back to the biome first
