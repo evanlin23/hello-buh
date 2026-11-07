@@ -24,10 +24,10 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
   edit: {
-    caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
+    subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:0.8',
     speed: CROWDS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
-    subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'THEY WERE BEHIND ME', 1.0, 0]]
+    subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]]
   },
 
   async setup (ctx) {
@@ -45,9 +45,10 @@ module.exports = {
     // The server stalls for seconds on fills this big, and mineflayer's tick waits time out (5 s) while
     // it does ("Timeout waiting for 1 ticks"): pace the heavy commands by wall-clock time instead.
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
-    for (let z0 = z - 40; z0 <= z + 26; z0 += 4) {
-      const z1 = Math.min(z0 + 3, z + 26)
-      await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + 14} ${z1} air`)
+    // deep and high enough that no cut hillside or trunkless canopy shows, even in the turnaround south
+    for (let z0 = z - 40; z0 <= z + 60; z0 += 4) {
+      const z1 = Math.min(z0 + 3, z + 60)
+      await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + 30} ${z1} air`)
       await heavy(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
       await heavy(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
       // one biome everywhere (a crowd stood on a duller grass tint)
@@ -75,9 +76,9 @@ module.exports = {
   async spawnCrowd (ctx, i) {
     const { bot } = ctx
     const { x, z, floor } = this
-    const summon = async (vx, vz, tag) => {
+    const summon = async (vx, vz, tag, rot = 180) => {
       const p = this.profs[(this.k * 5 + 3) % this.profs.length], t = this.types[(this.k * 3 + 1) % this.types.length]
-      bot.chat(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[180f,0f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
+      bot.chat(`/summon villager ${vx.toFixed(2)} ${floor + 1} ${vz.toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${rot}f,0f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${p}",type:"minecraft:${t}",level:2},Xp:1}`)
       if (++this.k % 10 === 0) await ctx.sleep(200)
     }
     const c = CROWDS[i], sx = crowdX(x, i), big = c.n >= 50
@@ -89,7 +90,8 @@ module.exports = {
     }
     if (i === CROWDS.length - 1) {   // the finale crowd: behind where the last walk starts, already facing it
       for (let r = 0; r < BEHIND.rows; r++) {
-        for (let q = 0; q < BEHIND.cols; q++) await summon(sx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 9.5 + r * 1.3, `crowd${i}`)
+        // right behind where the back-off ends, backs turned: they snap round on the reveal
+        for (let q = 0; q < BEHIND.cols; q++) await summon(sx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 5.5 + r * 1.3, 'behind', 0)
       }
     }
     await ctx.sleep(1500)
@@ -149,8 +151,7 @@ module.exports = {
         ctx.mark(`cut${i}b`)
       }
       await this.cut(ctx, sx + 0.5, floor + 1, z + 4.5)
-      ctx.mark('beat', { n: c.n })
-      await bot.waitForTicks(3)
+      ctx.mark('beat', { n: c.n })                       // walk on the cut (a 3-tick wait read as a freeze)
       // walk up behind them
       bot.setControlState('forward', true)
       while (bot.entity.position.z > z - 0.2) await bot.waitForTicks(1)
@@ -161,7 +162,7 @@ module.exports = {
       // and the renderer turns every villager in the face_on window toward the camera anyway
       if (!last) bot.chat(`/tag @e[type=villager,tag=crowd${i}] add on`)
       const depth = (c.rows - 1) * (c.n >= 50 ? 1.3 : 1.8)
-      ctx.mark('turn', { n: c.n }); ctx.mark('face_on', { near: last ? [sx + 0.5, z - 3, 34] : [sx + 0.5, z - 3.5 - depth / 2, 8 + depth] })
+      ctx.mark('turn', { n: c.n }); ctx.mark('face_on', { near: [sx + 0.5, z - 3.5 - depth / 2, 8 + depth] })   // this crowd only (not the one behind)
       const voices = Math.min(c.n, 6)
       for (let v = 0; v < voices; v++) ctx.sound('entity.villager.ambient', 0.5 + 0.1 * voices, 0.75 + v * 0.1)
       aim = new ctx.Vec3(sx + 0.5, floor + 2.3, z - 3.5 - Math.min(depth, 6) / 2)
@@ -177,6 +178,9 @@ module.exports = {
       aim = null
       ctx.mark('turnaround')
       await ctx.easeLook(Math.PI * 0.999, -0.05, 850)   // mineflayer yaw 0 = north; the crowd behind is south
+      // their backs... then they all snap round too
+      await bot.waitForTicks(4)
+      ctx.mark('face_off'); ctx.mark('face_on', { near: [sx + 0.5, z + 7.5, 10] })
       ctx.mark('behind')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.ambient', 1.1, 0.7 + v * 0.1)
       // back away from them too: every head follows (no still hold on the reveal)
