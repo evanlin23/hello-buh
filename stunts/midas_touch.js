@@ -22,7 +22,7 @@ module.exports = {
     for (const t of ['#minecraft:logs', '#minecraft:leaves']) await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${z + 1} ${x + 3} ${floor + 14} ${z + 30} air replace ${t}`)
     // a little cabin beside the path, on the ground there
     const cg = ctx.surface(x + 7, z + 16)
-    const cy = cg ? cg.y : floor
+    const cy = cg ? cg.position.y : floor
     this.cabin = { x: x + 7, y: cy + 1, z: z + 16 }
     await ctx.cmd(`/fill ${x + 4} ${cy + 1} ${z + 13} ${x + 10} ${cy + 7} ${z + 19} air`)
     await ctx.cmd(`/fill ${x + 5} ${cy} ${z + 14} ${x + 9} ${cy} ${z + 18} cobblestone`)

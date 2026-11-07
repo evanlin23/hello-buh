@@ -24,9 +24,11 @@ function plan (x0, y0, z0) {
       }
     }
   }
-  const rows = [[8, [-1, 0, 1, 5, 6, 7]], [9, [1, 2, 4, 5]], [10, [2, 3, 4]]]
-  for (const [y, zs] of rows) for (const z of zs) for (let x = -1; x <= 9; x++) B(x, y, z, 'spruce_planks')
-  for (const x of [0, 8]) { for (const z of [2, 3, 4]) B(x, 8, z, 'oak_planks'); B(x, 9, 3, 'oak_planks') }
+  // the gable faces the camera (ridge front to back), so every roof layer adds to the triangle on
+  // screen (with the ridge along the front the eave hid the whole roof)
+  const rows = [[8, [-1, 0, 1, 7, 8, 9]], [9, [1, 2, 3, 5, 6, 7]], [10, [3, 4, 5]]]
+  for (const [y, xs] of rows) for (const x of xs) for (let z = -1; z <= 7; z++) B(x, y, z, 'spruce_planks')
+  for (const z of [0, 6]) { for (const x of [2, 3, 4, 5, 6]) B(x, 8, z, 'oak_planks'); B(4, 9, z, 'oak_planks') }
   return blocks
 }
 const SLOTS = { cobblestone: [0], oak_log: [1, 2], glass: [3], oak_planks: [4, 5], spruce_planks: [6, 7, 8] }
@@ -36,7 +38,7 @@ module.exports = {
   name: 'speed_build',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'Fastest house build 💀',
-  edit: { caption: 'Fastest house build 💀', song: 'songs/funk_abnormal.mp3', dropAt: 'done', timer: 'build_start:done' , endAfter: 'done:0.9'},
+  edit: { caption: 'Fastest house build 💀', song: 'songs/funk_abnormal.mp3', dropAt: 'done', timer: 'build_start:done', startAt: 'build_start:-0.05', endAfter: 'done:0.9' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -46,9 +48,10 @@ module.exports = {
     const { x, z } = g, floor = g.y
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    await ctx.cmd(`/fill ${x - 12} ${floor - 2} ${z - 22} ${x + 12} ${floor - 1} ${z + 4} dirt`)
-    await ctx.cmd(`/fill ${x - 12} ${floor} ${z - 22} ${x + 12} ${floor} ${z + 4} grass_block`)
-    for (let y0 = floor + 1; y0 <= floor + 15; y0 += 7) await ctx.cmd(`/fill ${x - 12} ${y0} ${z - 22} ${x + 12} ${y0 + 6} ${z + 4} air`)
+    // a wide clearing (its edge showed as a sliced hillside at x+12)
+    await ctx.cmd(`/fill ${x - 26} ${floor - 2} ${z - 34} ${x + 26} ${floor - 1} ${z + 6} dirt`)
+    await ctx.cmd(`/fill ${x - 26} ${floor} ${z - 34} ${x + 26} ${floor} ${z + 6} grass_block`)
+    for (let y0 = floor + 1; y0 <= floor + 20; y0 += 5) await ctx.cmd(`/fill ${x - 26} ${y0} ${z - 34} ${x + 26} ${y0 + 4} ${z + 6} air`)
     // house footprint: x-4..x+4, z from z-DIST-6 .. z-DIST (front wall at z-DIST)
     this.origin = { x: x - 4, y: floor + 1, z: z - DIST - 6 }
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 22')
@@ -73,7 +76,7 @@ module.exports = {
     // faces: [dx,dy,dz of support relative to target, protocol face of the support]
     const FACES = [[0, -1, 0, 1], [0, 0, 1, 2], [0, 0, -1, 3], [1, 0, 0, 4], [-1, 0, 0, 5], [0, 1, 0, 0]]
     const center = new Vec3(this.x + 0.5, o.y + 4.5, o.z + 3.5)
-    let aim = center.clone()
+    let aim = todo.length ? new Vec3(todo[0].x + 0.5, todo[0].y + 0.5, todo[0].z + 0.5) : center.clone()   // starts on the first block (from the centre it whipped up)
     const look = async (target) => {
       aim = aim.plus(target.minus(aim).scaled(0.3))
       const eye = bot.entity.position.offset(0, 1.62, 0), d = aim.minus(eye)
