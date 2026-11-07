@@ -104,7 +104,7 @@ async function clearFlat (ctx, x, z, y, area, height = 24) {
 // trees, no overhangs).
 // The bot is moved along so the chunks ahead stay loaded (creative, high up).
 const PLANT = /^(air|short_grass|tall_grass|fern|large_fern|dandelion|poppy|bush|leaf_litter|wildflowers|short_dry_grass|tall_dry_grass)$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of/
-async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1, 1, -1, 1], level = null, side = [0, 4, -4, 8, -8, 12, -12, 16, -16, 20, -20, 24, -24, 28, -28], tries = 120, min = Infinity } = {}) {
+async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1, 1, -1, 1], level = null, side = [0, 4, -4, 8, -8, 12, -12, 16, -16, 20, -20, 24, -24, 28, -28], tries = 120, min = Infinity, spread = Infinity } = {}) {
   const { bot, Vec3 } = ctx
   const at = (a, b) => axis === 'x' ? [a, b] : [b, a]   // (along, across) -> (x, z)
   const lv = level   // the part of the footprint that must be exactly at floor (where it lands); the rest within a block
@@ -123,7 +123,9 @@ async function openSpots (ctx, x, z, heights, { axis = 'x', gap = 9, foot = [-1,
   // every spot taken so far, so a hard spot doesn't push the rest of the set far away
   const out = []
   const A0 = axis === 'x' ? x : z, B0 = axis === 'x' ? z : x
-  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap)
+  // at least `gap` from every spot taken, and within `spread` of the first (a set strewn over hundreds of
+  // blocks leaves the recorded area and the fog)
+  const free = (sx, sz) => out.every(o => Math.max(Math.abs(o.x - sx), Math.abs(o.z - sz)) >= gap) && (!out.length || Math.max(Math.abs(out[0].x - sx), Math.abs(out[0].z - sz)) <= spread)
   const settle = async () => {   // until the loaded chunks stop growing (max ~15 s): unloaded ground rules spots out
     let n = -1
     for (let k = 0; k < 30; k++) { await bot.waitForTicks(10); const m = bot.world.getColumns().length; if (m === n) break; n = m }

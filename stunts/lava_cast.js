@@ -26,8 +26,8 @@ module.exports = {
     caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.15', endAfter: 'final:0.95',
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
-    // the climb back up and both casts at 2x; the walk back up to the platform for layer 2 is cut
-    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
+    // the walks back up and to the field in front are jump cuts; the drains at 2x (the casts at 1x)
+    speed: [['climb1a', 'climb1b', 'cut'], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
   },
 
   async setup (ctx) {
@@ -196,7 +196,7 @@ module.exports = {
       // a jump cut to the field in front of the hill's foot, looking up the whole slope (from the
       // walkway the camera was wedged against the shell's side and never saw the cast)
       ctx.mark(`rv${n}a`)
-      await tpTo(x + 0.5, this.floor + 1, z + STEPS + 9, 180, -16)
+      await tpTo(x + 0.5, this.floor + 1, z + STEPS + 9.5, 180, -16)   // non-whole x/z: /tp centres whole ones on the block
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
       // the water draining off the slope (2x in the edit), with a slow drift across it
@@ -206,6 +206,7 @@ module.exports = {
       // the shell, top to bottom
       await ctx.easeLookAt(step(1).offset(-1, 0, 0), 500)
       await ctx.easeLookAt(step(7).offset(1, -1, 0), last ? 900 : 700)
+      if (!last) await ctx.easeLookAt(step(4).offset(-2.5, 0, 0), 700)   // once more across it
     }
 
     // ---- layer 1 ----
