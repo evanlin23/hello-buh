@@ -598,13 +598,27 @@ function bodyAfterDeath (d, t) {
     const pts = [[x, y, z]]
     const blk = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return bl ? bl.name : 'air' }
     const solid = (x, y, z) => { const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(bl && bl.boundingBox === 'block') }
+    // the highest collision box top under (x, z) at or below y, in this block and the one below: a
+    // cauldron's inner floor is 0.25 up, not the block top (the body sank into it: respawn_tax f1536)
+    const groundBelow = (x, y, z) => {
+      const fx = x - Math.floor(x), fz = z - Math.floor(z)
+      for (const cy of [Math.floor(y), Math.floor(y) - 1]) {
+        const bl = solidWorld && solidWorld.getBlock(new Vec3(Math.floor(x), cy, Math.floor(z)))
+        if (!bl || bl.boundingBox !== 'block') continue
+        const sh = bl.shapes && bl.shapes.length ? bl.shapes : [[0, 0, 0, 1, 1, 1]]
+        let top = null
+        for (const q of sh) if (fx >= q[0] - 1e-3 && fx <= q[3] + 1e-3 && fz >= q[2] - 1e-3 && fz <= q[5] + 1e-3 && cy + q[4] <= y + 1e-3) top = Math.max(top ?? -Infinity, cy + q[4])
+        if (top !== null) return top
+      }
+      return null
+    }
     for (let k = 0; k < 400; k++) {
       const m = blk(x, y + 0.1, z)
       if (m === 'lava') { vx *= 0.5; vy *= 0.8; vz *= 0.5; vy -= 0.02 } else if (m === 'water') { vx *= 0.8; vy *= 0.8; vz *= 0.8; vy -= 0.02 } else { vy -= 0.08; vy *= 0.98; vx *= 0.91; vz *= 0.91 }
       if (solid(x + vx, y, z)) vx = 0
       if (solid(x, y, z + vz)) vz = 0
       x += vx; z += vz
-      if (vy < 0 && solid(x, y + vy, z)) { y = Math.floor(y + vy) + 1; vy = 0 } else y += vy
+      if (vy < 0) { const g = groundBelow(x, y, z); if (g !== null && y + vy <= g) { y = g; vy = 0 } else y += vy } else y += vy
       pts.push([x, y, z])
     }
     deathSim = { d, pts, yaw: start[4], pitch: start[5] }
@@ -1017,7 +1031,13 @@ function camAtLive (t) {
     // block outline under the crosshair + the crack overlay while digging
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
       cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
-      if (process.env.DEBUG_TARGET && cam.target) console.log("target", t, cam.target.x, cam.target.y, cam.target.z)
+      // an eye inside the targeted shape (a respawn inside a lantern post): the block is culled from
+      // in there, and its outline's edges ran past the eye as lines from sky to ground (respawn_tax f1647)
+      if (cam.target) {
+        const [x0, y0, z0, x1, y1, z1] = cam.target.box, ex = eye.x - cam.target.x, ey = eye.y - cam.target.y, ez = eye.z - cam.target.z
+        if (ex > x0 - 0.05 && ex < x1 + 0.05 && ey > y0 - 0.05 && ey < y1 + 0.05 && ez > z0 - 0.05 && ez < z1 + 0.05) cam.target = null
+      }
+      if (process.env.DEBUG_TARGET && cam.target) console.log("target", t, cam.target.x, cam.target.y, cam.target.z, JSON.stringify(cam.target.box), mesher.world.getBlock(new Vec3(cam.target.x, cam.target.y, cam.target.z))?.name)
       const dg = DIGS.find(([a, b]) => t >= a && t < b)
       if (dg) {
         const stage = Math.floor(Math.min(1, (t - dg[0]) / dg[5]) * 10) - 1
