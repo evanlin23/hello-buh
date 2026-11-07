@@ -113,7 +113,7 @@ module.exports = {
     const place = async (i, lookMs, spot) => {
       const [bx, bz] = spot || this.spots[i]
       ctx.select(slotOf(i))
-      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + 1.2, bz + 0.5), lookMs)
+      await ctx.easeLookAt(new Vec3(bx + 0.5, floor + (i >= 8 ? 2.8 : 1.2), bz + 0.5), lookMs)   // the fast ones aimed high: the subtitle clears his outfit
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: floor, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound(STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place', 1, 0.8)
       await bot.waitForTicks(1)
@@ -197,14 +197,15 @@ module.exports = {
     ctx.mark('lit')
     const litAt = ctx.tick
     // back off facing it, the villager in view
-    bot.setControlState('back', true)
-    await ctx.easeLookAt(head.offset(0, 1.0, 0), 400)          // aimed above him: he sits under the subtitle
+    // a single short step back (it used to walk back ~19 ticks: a wide shot with FIRED on his head)
+    bot.setControlState('back', true); await bot.waitForTicks(4); bot.setControlState('back', false)
+    await ctx.easeLookAt(head.offset(0, 1.6, 0), 300)          // aimed well above him: he sits clear under the subtitle
     await bot.waitForTicks(8)
     ctx.mark('fuse_a')
-    for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 3) bot.setControlState('back', false) }   // only half a step back: further, he was 50 px
+    for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 3) bot.setControlState('back', false) }
     bot.setControlState('back', false)
     while (ctx.tick - litAt < 40) await bot.waitForTicks(1)
-    await ctx.easeLookAt(head.offset(0, 1.0, 0), 100)
+    await ctx.easeLookAt(head.offset(0, 1.6, 0), 100)
     ctx.mark('fuse_b')
     // the fuse line goes, then the ring: FIRED
     let booms = 0
@@ -212,8 +213,8 @@ module.exports = {
     // a slow sneak forward while it burns (a static wide shot read as dead), eyes on him
     bot.setControlState('sneak', true); bot.setControlState('forward', true)
     for (let k = 0; k < 80 && booms === 0; k++) {
-      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [1.0, 0.8, 1.1, 0.9][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
-      if (bot.entity.position.z < vz + 5.8) bot.setControlState('forward', false)
+      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [1.6, 1.4, 1.7, 1.5][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
+      if (bot.entity.position.z < vz + 6.6) bot.setControlState('forward', false)   // not too near the fuse line's blast
       await bot.waitForTicks(1)
     }
     bot.setControlState('forward', false); bot.setControlState('sneak', false)
