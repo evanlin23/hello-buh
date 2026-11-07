@@ -1,16 +1,18 @@
-// "rating every MLG clutch 💀" (~30 s, seven beats): the bot jumps off a glass block higher each time
+// "rating every MLG clutch 💀" (~33 s, nine beats): the bot jumps off a glass block higher each time
 // (24 -> 56 blocks) and saves itself a different way, each with the height and a rating:
-// water bucket, slime block (bounce), hay bale (80% less damage), honey block, cobweb, water again...
+// water bucket, slime block (bounce), bed (half), hay bale (80% less damage), honey block, berry bush, cobweb, water again...
 // then a milk bucket: 0/10, death screen. Real survival placements, timed like water_clutch (place
 // when the ground comes into reach; heights stay under ~60 so the reach window isn't skipped at
 // fall speed, docs/clutch-timing.md). Back up by teleport (hard cuts).
-const CLUTCHES = [
+const CLUTCHES = [   // nine beats, ~33 s (seven ran 25.9 s; owner: 30 s minimum). All tested on the server:
   { item: 'water_bucket', h: 24, sub: 'water bucket: 10/10' },
-  { item: 'slime_block', h: 30, sub: 'slime block: 9/10' },
+  { item: 'slime_block', h: 28, sub: 'slime block: 9/10' },
+  { item: 'red_bed', h: 32, sub: 'bed: 4/10 (half the damage)' },        // fallOn x0.5: lands on ~5 hearts
   { item: 'hay_block', h: 36, sub: 'hay bale: 7/10 (ouch)' },
-  { item: 'honey_block', h: 42, sub: 'honey block: 6/10' },
+  { item: 'honey_block', h: 40, sub: 'honey block: 6/10' },
+  { item: 'sweet_berries', h: 44, sub: 'berry bush: 8/10 (pokey)' },    // stuck-in-block resets the fall, like cobweb
   { item: 'cobweb', h: 48, sub: 'cobweb: 11/10' },
-  { item: 'water_bucket', h: 52, sub: 'water bucket (again): 10/10' },   // powder snow killed the bot every try (mineflayer doesn't sink into it)
+  { item: 'water_bucket', h: 52, sub: 'water bucket (again): 10/10' },   // powder snow and twisting vines killed the bot (mineflayer)
   { item: 'milk_bucket', h: 56, sub: 'milk bucket: 0/10' }
 ]
 const TOP = 60
@@ -94,7 +96,7 @@ module.exports = {
             ctx.sound('entity.generic.drink')              // ...it just drinks it
             process.nextTick(() => bot.activateItem())
           } else {
-            ctx.sound(c.item === 'slime_block' ? 'block.slime_block.place' : c.item === 'hay_block' ? 'block.grass.place' : c.item === 'honey_block' ? 'block.honey_block.place' : 'block.wool.place')
+            ctx.sound({ slime_block: 'block.slime_block.place', hay_block: 'block.grass.place', honey_block: 'block.honey_block.place', red_bed: 'block.wood.place', sweet_berries: 'block.sweet_berry_bush.place' }[c.item] || 'block.wool.place')
             process.nextTick(() => { bot._client.write('block_place', { hand: 0, location: spot, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 }); bot.swingArm() })
           }
           ctx.mark('placed', { item: c.item })
@@ -106,6 +108,8 @@ module.exports = {
           if (c.item === 'slime_block') ctx.sound('block.slime_block.fall', 1)
           if (c.item === 'hay_block') ctx.sound('block.grass.fall', 1)
           if (c.item === 'honey_block') ctx.sound('block.honey_block.slide', 1)
+          if (c.item === 'red_bed') ctx.sound('block.wool.fall', 1)
+          if (c.item === 'sweet_berries') ctx.sound('block.sweet_berry_bush.break', 0.8)
           if (c.item === 'powder_snow_bucket') ctx.sound('block.powder_snow.fall', 1)
         }
       }
