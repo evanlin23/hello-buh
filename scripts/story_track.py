@@ -195,7 +195,13 @@ def meter_concat(story_dir, timeline, start, dur, tmp):
     story, _ = _lines(story_dir)
     if not story.get("meter"):
         return None
-    marks = [(e["t"] / 1000 - start, e["value"]) for e in timeline if e["event"] == "meter"]
+    def _on_jump(t):   # a drop set on the respawn click lands on the respawn's camera jump just after it (it popped
+        m = int(t * 20 + 1e-6)   # 3 frames early over the death screen: frame review, story_respawn_tax f342)
+        for i in range(m, m + 6):
+            if POSES and 0 < i < len(POSES) and sum((POSES[i][j] - POSES[i - 1][j]) ** 2 for j in (1, 2, 3)) > 16:
+                return i / 20
+        return t
+    marks = [(_on_jump(e["t"] / 1000) - start, e["value"]) for e in timeline if e["event"] == "meter"]
     if not marks:
         return None
     key = tuple(int(story.get("key_color", "#ffd640")[i:i + 2], 16) for i in (1, 3, 5)) + (255,)

@@ -112,7 +112,7 @@ module.exports = {
       const spawned = new Promise(r => { bot.once('spawn', r); setTimeout(r, 3000) })
       ctx.respawn(); if (m) setMeter(m)   // the counter drops on the respawn cut (set after the spawn event it came 6 frames late)
       await spawned; ctx.revive()
-      K.base = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }   // the spawn angle: facing the gold block
+      K.base = { yaw: bot.entity.yaw - K.swayY(), pitch: bot.entity.pitch - K.swayP() }   // the spawn angle, less the sway look() adds back (it snapped by the sway's offset over 3 frames after each respawn)
     }
     const go = (on) => bot.setControlState('forward', on)
     // move a mob between scenes without the client's 3-tick glide (vanilla lerps any teleport under 64 blocks:
@@ -321,7 +321,7 @@ module.exports = {
     const sparkle = () => { for (let i = 0; i < 2; i++) { const a = Math.PI + Math.random() * Math.PI; ctx.particles('happy', P(0.5 + Math.cos(a) * 0.85, 1.0 + Math.random() * 1.7, 0.5 + Math.sin(a) * 0.85), { count: 2 }) } }   // the far half of a ring: none across her face
     // L17: and today, I tripped again
     dead = false; trip = null; landed = 0
-    let aim17 = 0, from17 = null, k17 = 0
+    let aim17 = -1, from17 = null, k17 = 0   // -1: the first tick eases from L16's aim too (it slid over 3 frames at the line change)
     await line('L17', async (k, at) => {
       go(!dead && trip === null && k >= at(2) - 11)   // the fall lands on "AGAIN."
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
@@ -333,7 +333,7 @@ module.exports = {
       if (!dead && trip === null) {   // her, then a tilt down to the cauldron, then back: eased (a 3-frame whip)
         const want = k > at(1) - 7 ? 1 : 0   // eyes on the cauldron until he falls in (looking up at her he walked over it unseen)
         if (want !== aim17) { aim17 = want; from17 = { ...K.base }; k17 = k }
-        if (from17) K.turnTo(from17, want ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5), (k - k17) / 7); else K.base = K.aim(P(0.5, 1.5, 0.5))
+        K.turnTo(from17, want ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5), (k - k17) / 7)
         look(k)
       }
     })
