@@ -215,6 +215,7 @@ module.exports = {
       if (alive()) look(k)
     })
     bot.setControlState('sneak', false); go(false)
+    away('v_lib')   // off the plaza while he's alive and the cactus is in shot (sent while dead, her stale row showed for 3 frames on the respawn; L07 brings her into the doorway on the cut)
     // L05: a cactus took the fletcher
     await cut(-11.5, -17.4, P(-11.5, 1.5, -21))
     gone('v_fletcher')
@@ -232,7 +233,6 @@ module.exports = {
       if (alive()) look(k)
     })
     go(false)
-    away('v_lib')   // off the plaza while it's out of shot (L07 brings her into the doorway on the cut)
     // L06: so I stopped dying (over the cactus death screen). I moved into a house made of hay
     let hay = false
     await line('L06', async (k, at) => {
@@ -262,15 +262,16 @@ module.exports = {
     say('/effect give @s minecraft:fire_resistance 30 0 true')   // the cauldron burns him only once he's out (no particles)
     // the next respawn lands straight in L11's shot, facing the lane (a cut there was undone by the server's late
     // respawn placement 1.5 s into the shot: Minecraft audit)
-    say(`/spawnpoint @s ${X + 1} ${F + 1} ${Z + 7} 175 6`)   // over 4 blocks from the L10 death spot, so the respawn is a camera cut to the renderer and the edit (at 2.3 blocks the fire and a caption ended 3 frames off)   // L11's first aim (at the nitwit at -3.5): no turn on the respawn   // off the lantern post (at 3/4 it filled a quarter of the frame)
+    say(`/spawnpoint @s ${X + 1} ${F + 1} ${Z + 7} 172 6`)   // over 4 blocks from the L10 death spot, so the respawn is a camera cut to the renderer and the edit (at 2.3 blocks the fire and a caption ended 3 frames off)   // L11's first aim (at the nitwit at -3.5): no turn on the respawn   // off the lantern post (at 3/4 it filled a quarter of the frame)
     // the golem walks off the spawn to his place by the lane, on the game clock (L09 is shorter than the walk):
     // a turn in place first and back at the end, ~20 degrees a tick (a 180 snap read as a flat slab mid-turn)
     const golemWalk = () => {
       let gk = 0
       const step = () => {
-        const g = Math.max(0, Math.min(1, (gk - 8) / 36)), turn = Math.min(1, gk / 8, Math.max(0, (52 - gk) / 8))
-        say(`/tp @e[tag=golem] ${(X + 0.5 + 1.9 * g).toFixed(3)} ${F + 1} ${(Z + 0.5 - 4.7 * g).toFixed(3)} ${(-158 * turn).toFixed(1)} 0`)
-        if (++gk > 52) bot.removeListener('physicsTick', step)
+        // ~0.07 blocks a tick, a golem's stroll (0.14 was his chase speed)
+        const g = Math.max(0, Math.min(1, (gk - 8) / 72)), turn = Math.min(1, gk / 8, Math.max(0, (88 - gk) / 8))
+        say(`/tp @e[tag=golem] ${(X + 0.5 + 1.9 * g).toFixed(3)} ${F + 1} ${(Z + 0.5 - 4.7 * g).toFixed(3)} ${turn > 0 ? (-158 * turn).toFixed(1) : '0'} 0`)
+        if (++gk > 90) bot.removeListener('physicsTick', step)
       }
       bot.on('physicsTick', step)
     }
@@ -304,13 +305,13 @@ module.exports = {
     // L12: he wasn't taken. He volunteered (a nod, a puff, gone)
     await line('L12', async (k, at) => {
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)
-      if (k === at(2) + 6) {   // he vanishes on the poof's tick (gone 1 tick after the /tp: a 3-frame empty block before it)
+      if (k === at(2) + 6) {   // he vanishes on the poof's tick (his row goes on the /tp's own tick)
         gone('v_nitwit')
         ctx.sound('entity.generic.extinguish_fire', 0.7, 1.2)
       }
       // the poof as his teleport lands (2 ticks after the command: he stood inside it for 6 frames)
-      if (k === at(2) + 7) setMeter(1)   // with the poof, as he goes
-      if (k === at(2) + 7) ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
+      if (k === at(2) + 6) setMeter(1)   // with the poof, as he goes
+      if (k === at(2) + 6) ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
       look(k)
     })
     away('v_lib')   // out of the hay house while the street is in shot; L15 brings her into the lane on the cut
