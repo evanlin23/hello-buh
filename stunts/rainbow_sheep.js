@@ -23,7 +23,7 @@ module.exports = {
   edit: {
     subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'collected',
     startAt: 'dye:-0.45',
-    endAfter: 'collected:0.4',      // still backing off the sheared line
+    endAfter: 'collected:0.6',      // (the 30 s minimum: 29.9 at :0.4)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
       ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'every colour 🌈', 0.6, 0]]
   },
@@ -205,12 +205,12 @@ module.exports = {
     // mark lands once the line fills the view (at the sweep's end the camera faced the grass past the line)
     const lineMid = new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5)
     bot.setControlState('back', true)
-    for (let k = 0; k < 12; k++) {   // a short back-off: the line stays big (22 ticks left it a receding strip)
+    for (let k = 0; k < 14; k++) {   // a short back-off: the line stays big (22 ticks left it a receding strip)
       const e = bot.entity.position, d = lineMid.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
-      if (k === 6) ctx.mark('collected')
+      if (k === 9) ctx.mark('collected')
       await bot.waitForTicks(1)
     }
     bot.setControlState('back', false)
