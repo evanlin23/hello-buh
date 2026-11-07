@@ -465,11 +465,16 @@ def snap_hotbar(timeline):
     is shown as the server sent it. Done on the recording's own timeline, before any time-lapse warp."""
     if not any(e["event"] == "place" for e in timeline or []) or not any(e["event"] == "hotbar" for e in timeline or []):
         return timeline
+    # once only: apply_speed snaps the recording's timeline before the warp, and hud_states would
+    # predict every use a second time on the warped one (the counts ran one low, then expired back
+    # up during a still shot: lapse_house's 1:00)
+    if any(e.get("snapped") for e in timeline if e["event"] == "hotbar"):
+        return timeline
     norm = lambda n: (list(n) if isinstance(n, (list, tuple)) else ([n, 1] if n else None))
     out, server, shown, pend = [], None, None, {}   # pend: slot -> [use times not yet confirmed]
 
     def emit(t, base, items):
-        out.append({**base, "event": "hotbar", "t": t, "items": [list(x) if x else None for x in items]})
+        out.append({**base, "event": "hotbar", "t": t, "items": [list(x) if x else None for x in items], "snapped": True})
 
     for e in sorted(timeline, key=lambda e: e["t"]):
         t = e["t"]
