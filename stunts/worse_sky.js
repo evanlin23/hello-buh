@@ -69,6 +69,9 @@ module.exports = {
       const d = () => Math.hypot(bot.entity.position.x - x - 0.5, bot.entity.position.z - z - 0.5)
       if (d() < 0.6) return
       bot.setControlState('sneak', false)
+      // a slow turn toward the middle first (a 0.3 s whip read badly: review 8)
+      await ctx.easeLookAt(new Vec3(x + 0.5, Y + 1.4, z + 0.5), Math.max(100, Math.min(600, (deadline - ctx.tick) * 50 - 100)))
+      if (ctx.tick >= deadline) return
       bot.setControlState('forward', true)
       for (let i = 0; i < 60 && d() > 0.35 && ctx.tick < deadline; i++) { await K.track(new Vec3(x + 0.5, Y + 1.4, z + 0.5), 0.3); await bot.waitForTicks(1) }
       bot.setControlState('forward', false)
@@ -100,22 +103,26 @@ module.exports = {
     const front = ring4.filter(([cx, cz]) => cz === z - 4).sort((p, q) => Math.abs(p[0] - x) - Math.abs(q[0] - x))
     // ...then the east side, north to south, and the camera follows it along; the rest goes out of view
     const east = ring4.filter(([cx, cz]) => cx === x + 4 && cz !== z - 4).sort((p, q) => p[1] - q[1])
-    const rest4 = ring4.filter(([cx, cz]) => cz !== z - 4 && cx !== x + 4)
-    const crumbling = (async () => { await drop(front, 1, 2); await drop(east, 1, 2); await drop(byAngle(rest4, Math.PI), 3, 1) })()
+    // then the far (south) side east to west and the west side south to north, slowly, while it walks in watching them
+    const south = ring4.filter(([cx, cz]) => cz === z + 4 && cx !== x + 4).sort((p, q) => q[0] - p[0])
+    const west = ring4.filter(([cx, cz]) => cx === x - 4 && cz !== z + 4 && cz !== z - 4).sort((p, q) => q[1] - p[1])
+    const crumbling = (async () => { await drop(front, 1, 2); await drop(east, 1, 2); await drop(south, 1, 3); await drop(west, 1, 3) })()
     bot.setControlState('sneak', true); bot.setControlState('forward', true)
     await ctx.easeLook(0, -1.3, 500)
-    for (let i = 0; i < 26; i++) { await bot.look(0.25 * Math.sin(i / 12), -1.3 + 0.05 * Math.sin(i / 9), true); await bot.waitForTicks(1) }
+    for (let i = 0; i < 20; i++) { await bot.look(0.25 * Math.sin(i / 12), -1.3 + 0.05 * Math.sin(i / 9), true); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
     // along the east side as it goes
-    for (const zz of [z - 3, z - 1, z + 1, z + 3]) await ctx.easeLookAt(new Vec3(x + 4.5, Y - 3, zz + 0.5), 380)
+    for (const zz of [z - 3, z - 1, z + 1, z + 3]) await ctx.easeLookAt(new Vec3(x + 4.5, Y - 3, zz + 0.5), 250)
     bot.setControlState('sneak', false)
-    await crumbling
-    // back across what's left, toward the middle
-    await ctx.easeLook(Math.PI - 0.2, -0.25, 600)      // (south: the middle is behind it)
+    // into the middle (south), eyes on the far side going column by column, then the west side
+    await ctx.easeLookAt(new Vec3(x + 3.5, Y - 1, z + 4.5), 350)
     bot.setControlState('forward', true)
-    for (let i = 0; i < 30 && bot.entity.position.z < z - 0.2 && ctx.tick < K.at(4.8); i++) await bot.waitForTicks(1)
+    const sweep = ctx.easeLookAt(new Vec3(x - 3.5, Y - 1, z + 4.5), 1100)
+    for (let i = 0; i < 40 && bot.entity.position.z < z - 0.1 && ctx.tick < K.at(4.0); i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
-    await K.until(K.at(4.8), K.drift(0.006, 0.0015))
+    await sweep
+    await ctx.easeLookAt(new Vec3(x - 4.5, Y - 1, z - 1.5), 600)
+    await K.until(K.at(4.95), K.drift(0.006, 0.001))
     await K.level(2, 5)
     bot.chat(`/summon creeper ${x + 0.5} ${Y + 1} ${z + 3.5} {PersistenceRequired:1b,Rotation:[180f,0f]}`)
     await bot.waitForTicks(2)
@@ -125,21 +132,21 @@ module.exports = {
     ctx.mark('off1')
     await watchFall(c, 5)
     // where did it go: walk to that edge, sneak the last step and look over it, eyes on it all the way down
-    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.0, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
+    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.35, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
     bot.setControlState('forward', true)
-    for (let i = 0; i < 30 && bot.entity.position.z < z + 3.55 && ctx.tick < K.at(8.7); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 30 && bot.entity.position.z < z + 3.4 && ctx.tick < K.at(8.6); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', true)
-    for (let i = 0; i < 26 && ctx.tick < K.at(9.1); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 30 && ctx.tick < K.at(9.2); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
-    for (let i = 0; i < 10 && ctx.tick < K.at(9.25); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 10 && ctx.tick < K.at(9.35); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', false)
     await toCenter(K.at(9.85))
     await K.until(K.at(9.4))
     await ctx.setWeather('thunder')   // a moment early: the client fades the rain in, the sky had to darken under the card
     await K.level(3, 10)
     ctx.sound('entity.lightning_bolt.thunder', 0.9, 0.85)   // a strike somewhere out of sight
-    await ctx.easeLook(bot.entity.yaw + 0.3, 0.45, 600)  // up into it
-    await bot.waitForTicks(6)
+    await ctx.easeLook(bot.entity.yaw + 0.3, 0.45, 500)  // up into it
+    await bot.waitForTicks(3)
     await toCenter(K.at(11.2))   // (the rail's far edge has to be in reach)
     // a railing on the north edge so the wind and the mobs can't knock it off that side: three real placements
     ctx.select(1)
@@ -152,11 +159,13 @@ module.exports = {
     }
     ctx.select(0)
     await toCenter(K.at(14.6))
-    await ctx.easeLookAt(new Vec3(x + 0.5, Y + 1.2, z - 2.5), 400)
+    if (ctx.tick < K.at(14.4)) await ctx.easeLookAt(new Vec3(x + 0.5, Y + 1.2, z - 2.5), 400)
     // stays on the railing (testing it) until something groans behind it
     // testing it, eyes along it end to end
-    await ctx.easeLookAt(new Vec3(x - 1.2, Y + 1.3, z - 2.5), 700)
-    await ctx.easeLookAt(new Vec3(x + 2.2, Y + 1.3, z - 2.5), 900)
+    if (ctx.tick < K.at(13.6)) {
+      await ctx.easeLookAt(new Vec3(x - 1.2, Y + 1.3, z - 2.5), 500)
+      await ctx.easeLookAt(new Vec3(x + 2.2, Y + 1.3, z - 2.5), 700)
+    }
     await K.until(K.at(15), K.drift(-0.012, 0.001))
 
     // ---- 4. two zombies ----
