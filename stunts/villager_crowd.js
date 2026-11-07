@@ -6,7 +6,7 @@
 // eyes` every tick on the crowds that have turned; face_on (near: this crowd) / face_off marks tell
 // the renderer. Hard cut (teleport) between crowds. The bot starts in the middle of the field so
 // every crowd's chunks are loaded (recorded) when the recording starts.
-const GAP = 30
+const GAP = 26   // (with the west shift, the 200 ends ~30 blocks inside the field)
 const CROWDS = [
   { n: 1, sub: '1 villager', cols: 1, rows: 1 },
   { n: 5, sub: '5 villagers', cols: 5, rows: 1 },
@@ -18,14 +18,14 @@ const CROWDS = [
   { n: 200, sub: '200 villagers', cols: 20, rows: 10 }   // (500 + 100 behind slowed the server below 1 tick/s)
 ]
 const BEHIND = { cols: 10, rows: 4 }        // the finale crowd behind the start of the last walk
-const crowdX = (x, i) => x + Math.round((i - (CROWDS.length - 1) / 2) * GAP)
+const crowdX = (x, i) => x - 10 + Math.round((i - (CROWDS.length - 1) / 2) * GAP)   // shifted west: the 200 stood 6 blocks from the field's cut east edge
 module.exports = {
   name: 'villager_crowd',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
   edit: {
     subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/funk_abnormal.mp3', dropAt: 'behind',
-    startAt: 'beat:-0.05', endAfter: 'behind:0.8',
+    startAt: 'beat:-0.05', endAfter: 'behind:1.0',
     speed: CROWDS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]]
   },
@@ -178,10 +178,10 @@ module.exports = {
       if (!last) { ctx.mark('face_off'); bot.chat('/tag @e[type=villager,tag=on] remove on'); continue }
       // finale: back off... turn round... they were behind you too
       ctx.mark('back'); ctx.sound('entity.villager.no', 1)
-      bot.setControlState('back', true); await bot.waitForTicks(12); bot.setControlState('back', false)
+      bot.setControlState('back', true); await bot.waitForTicks(6); bot.setControlState('back', false)   // (12 ended the turnaround a block from the crowd behind: a robe filled the frame)
       aim = null
       ctx.mark('turnaround')
-      await ctx.easeLook(Math.PI * 0.999, -0.05, 850)   // mineflayer yaw 0 = north; the crowd behind is south
+      await ctx.easeLook(Math.PI * 0.999, -0.05, 1100)   // mineflayer yaw 0 = north; the crowd behind is south
       // their backs (seen through the turn)... then they all snap round too, at once (a 4-tick hold read as a freeze)
       ctx.mark('face_off'); ctx.mark('face_on', { near: [sx + 0.5, z + 7.5, 10] })
       ctx.mark('behind')
