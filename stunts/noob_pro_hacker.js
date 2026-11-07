@@ -51,6 +51,8 @@ module.exports = {
     tags: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ['seg', null, ROLES[i % 3][0], ROLES[i % 3][1], i]),
     subs: TASKS.map((t, i) => ['seg', `task ${i + 1}: ${t}`, 1.6, i * 3]),
     chat: CMDS.map((c, i) => [`typed${i}`, c, 0.9, 0.5, FEEDBACK[i]]),
+    // a preview of the finale before beat 1 (the launch, cut before it lands)
+    hook: { at: 'boom', before: 0.5, after: 0.8, text: 'wait for the hacker 💀' },
     punch: [['hack', 0, 1.08], ['hack', 1, 1.08], ['boom', 0, 1.18]],
     shake: [['boom', 0, 22]],
     flash: [['boom', 0, 0.35]],
@@ -99,8 +101,8 @@ module.exports = {
     this.wallZ = mz + cliff(0)                 // the cliff's face block row at dx 0
     this.cliffH = H(0, cliff(0))
     // the noob's (and the hacker's) start: back from the cliff and off to the side, looking up at it
-    this.startX = mx + 2.5; this.startZ = this.wallZ + 6.5
-    this.startYaw = 180 - Math.atan2(2, 5) * 180 / Math.PI
+    this.startX = mx + 3.5; this.startZ = this.wallZ + 10.5
+    this.startYaw = 180 - Math.atan2(3, 9) * 180 / Math.PI
     ctx.log('mountain: summit', H(0, 0), 'cliff at dx0', this.cliffH, 'wall z', this.wallZ)
 
     // --- 2. the lava lake: two deep on stone, flush with the grass ---
@@ -121,7 +123,7 @@ module.exports = {
     await ctx.cmd('/effect give @s saturation infinite 1 true')
     await ctx.hotbar([['ladder', 8]])
     // the noob's start: a step back from the cliff, facing it (north)
-    await ctx.tpCheck(this.startX, F + 1, this.startZ, this.startYaw, -22)
+    await ctx.tpCheck(this.startX, F + 1, this.startZ, this.startYaw, -28)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
@@ -220,7 +222,8 @@ module.exports = {
       if (placed === 0) {                           // the walk in: eyes up the cliff
         const n = Math.hypot(dx, dz) || 1
         steer(dx / n, dz / n)
-        if (w === 0) ctx.easeLook(bot.entity.yaw, 0.5, 700)
+        bot.setControlState('sprint', n > 2.5)       // runs at it (the whole mountain in shot)
+        if (w === 0) ctx.easeLook(bot.entity.yaw, 0.55, 900)
       } else steer(Math.max(-0.5, Math.min(0.5, dx * 2)), -1)   // into the ladders, centred on the column
       const fy = p.y
       const want = Math.floor(fy + 0.35) + (placed === 0 ? 0 : 1)   // the cell the feet climb into next
@@ -230,7 +233,7 @@ module.exports = {
         ctx.sound('block.ladder.place', 1, 0.9)
         placed++
       }
-      if (placed === 2 && !turned) { turned = true; ctx.easeLook(-0.9, -0.75, 1300) }   // looks out and down: the ground dropping away
+      if (placed === 2 && !turned) { turned = true; ctx.easeLook(-1.25, -0.95, 1300) }   // looks out and down: the ground dropping away
       await bot.waitForTicks(1)
     }
     ctx.mark('ladders_out')
@@ -285,7 +288,7 @@ module.exports = {
     endBeat()
 
     // HACKER: /effect give @s levitation, eyes on the peak as he shoots past it
-    await this.cutTo(ctx, this.startX, F + 1, this.startZ, this.startYaw, -22)
+    await this.cutTo(ctx, this.startX, F + 1, this.startZ, this.startYaw, -28)
     await ctx.hotbar([])
     beat()
     const peak = new Vec3(mx + 0.5, F + MH + 1, mz + 0.5)
