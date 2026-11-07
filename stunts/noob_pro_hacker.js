@@ -53,8 +53,8 @@ module.exports = {
   edit: nph.edit({
     caption: 'noob vs pro vs hacker 💀', red: 'hacker', tasks: TASKS, cmds: CMDS, feedback: FEEDBACK,
     dropAt: 'hack', endAfter: 'boom:0.95',
-    // the ladder climb at 1.6x, the pearl's long climb at 3x, the noob burning in the lava cut to the death
-    speed: [['climb_a', 'ladders_out', 1.6], ['pearl:0.35', 'summit:-0.25', 3], ['burn_a', 'death:-0.2', 'cut']],
+    // the ladder climb at 1.6x, the pearl's flight cut (a dot on a held shot), the noob burning in the lava cut to the death
+    speed: [['climb_a', 'ladders_out', 1.6], ['pearl:0.45', 'summit:-0.15', 'cut'], ['burn_a', 'death:-0.2', 'cut']],
     extra: {
       deathScreen: true, onFire: 'in_lava:death',
       // a preview of the finale before beat 1 (the launch, cut before it lands)
