@@ -291,8 +291,16 @@ const DIGS = []
 {
   let cur = null
   for (const e of rec.timeline || []) {
-    if (e.event === 'dig') { if (cur) DIGS.push(cur); cur = [e.t / 50, Infinity, e.x, e.y, e.z, Math.max(1, e.ms / 50)] }
-    if (e.event === 'dig_end' && cur) { cur[1] = e.t / 50; DIGS.push(cur); cur = null }
+    // (a stunt's own 'dig' mark without coordinates isn't a dig: it opened a window to Infinity that hid every crack: fortune)
+    if (e.event === 'dig' && e.x !== undefined) { if (cur) DIGS.push(cur); cur = [e.t / 50, Infinity, e.x, e.y, e.z, Math.max(1, e.ms / 50)] }
+    if (e.event === 'dig_end' && cur) {
+      cur[1] = e.t / 50
+      // a finished dig reaches stage 9 when the block breaks: bot.digTime's estimate can be far off (4550 ms
+      // for a 600 ms break: fortune ores 2-8 stayed at stage 0). Older recordings have no ok flag: a
+      // dig_end before the estimate is almost always the break
+      if (e.ok !== false) cur[5] = Math.max(1, Math.min(cur[5], cur[1] - cur[0]))
+      DIGS.push(cur); cur = null
+    }
   }
   if (cur) DIGS.push(cur)
 }
