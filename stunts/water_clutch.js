@@ -58,14 +58,16 @@ module.exports = {
     const stopDrift = () => { if (bot.entity.position.y - (floor + 1) < (this.height || HEIGHT) - 14) { bot.setControlState('forward', false); bot.removeListener('physicsTick', stopDrift) } }
     bot.on('physicsTick', stopDrift)
     ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.01, 500)
-    let placed = false, landed = false, splashed = false
+    let placed = false, landed = false, splashed = false, lateSecond = false
     const onTick = () => {
       const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
       const inReach = above + 1.62 < 4.45
       // too late: any water that lands before the player saves them (the server sees it first), so
       // a real "too late" never gets the water down - just the swing as the ground arrives
-      // just out of time, still in the air: at 0.8 it was the death frame and read as 'forgot' (review)
-      if (mode === 'late' && !placed && above < 2.2) { placed = true; bot.swingArm(); ctx.mark('too_late') }
+      // too late: frantic clicks out of reach from ~10 blocks, then again right at the ground. One swing at
+      // 2.2 landed 1-2 frames before the death cut and read as 'forgot' (tries reviews)
+      if (mode === 'late' && !placed && above < 10) { placed = true; bot.swingArm(); ctx.mark('too_late') }
+      if (mode === 'late' && placed && !lateSecond && above < 3.5) { lateSecond = true; bot.swingArm() }
       if (mode === 'late') return
       if (!placed && mode !== 'skip' && vy < -0.5 && inReach) {
         ctx.select(1)
