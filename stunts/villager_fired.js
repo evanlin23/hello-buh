@@ -179,9 +179,9 @@ module.exports = {
     }
     setJob('mason')
     // meanwhile, the crowd behind him: still unemployed, all staring
-    await ctx.easeLookAt(new Vec3(x - 7, floor + 1.7, vz - 5), 400)
+    await ctx.easeLookAt(new Vec3(x - 7, floor + 3.8, vz - 5), 400)   // aimed above the crowd: they sit under the subtitle
     ctx.mark('crowd')
-    await ctx.easeLookAt(new Vec3(x + 7, floor + 1.7, vz - 5), 1800)
+    await ctx.easeLookAt(new Vec3(x + 7, floor + 3.8, vz - 5), 1800)
     // ---- act 3: the TNT under the job sites ----
     await ctx.easeLookAt(new Vec3(x - 1.5, floor + 0.9, vz + 2.5), 400)    // down at the base of the front row
     ctx.mark('tnt')
@@ -201,7 +201,7 @@ module.exports = {
     await ctx.easeLookAt(head.offset(0, -0.5, 0), 400)
     await bot.waitForTicks(8)
     ctx.mark('fuse_a')
-    for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 16) bot.setControlState('back', false) }
+    for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 7) bot.setControlState('back', false) }   // only a step back: further, he was 50 px
     bot.setControlState('back', false)
     while (ctx.tick - litAt < 40) await bot.waitForTicks(1)
     await ctx.easeLookAt(head.offset(0, -0.6, 0), 100)
@@ -212,7 +212,7 @@ module.exports = {
     // a slow sneak forward while it burns (a static wide shot read as dead), eyes on him
     bot.setControlState('sneak', true); bot.setControlState('forward', true)
     for (let k = 0; k < 80 && booms === 0; k++) {
-      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [-0.2, -0.4, -0.1, -0.3][(k / 10) % 4], 0), 450)
+      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [0.5, 0.3, 0.6, 0.4][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
       if (bot.entity.position.z < vz + 7.2) bot.setControlState('forward', false)
       await bot.waitForTicks(1)
     }
@@ -227,16 +227,16 @@ module.exports = {
     let rz = vz + 3
     while (rz < vz + 12 && !(solid(rz) && solid(rz + 1))) rz++
     await ctx.tpCheck(x + 0.5, floor + 1, rz + 0.5, 180, 20)
-    await bot.waitForTicks(2)
-    ctx.mark('close_b')
     const d = rz + 0.5 - (vz + 0.5)
     const top = new Vec3(x + 0.5, floor + 2.95 + d * 0.09, vz + 0.5)    // his head ~0.09 rad under the centre
-    await ctx.easeLookAt(top.offset(0, -0.4, 0), 100)
+    await ctx.easeLookAt(top.offset(0, -0.4, 0), 100)                  // inside the cut (after it, it was a visible whip)
+    await bot.waitForTicks(2)
+    ctx.mark('close_b')
     setJob('none'); ctx.sound('entity.villager.no', 1, 0.9)
     ctx.mark('fired_all')
     const v = Object.values(bot.entities).find(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 3 && Math.abs(e.position.z - (vz + 0.5)) < 3)
     // a slow look down his pillar and back up
-    await ctx.easeLookAt(top.offset(0.3, -1.6, 0), 600)
+    await ctx.easeLookAt(top.offset(0.3, -0.6, 0), 600)   // a small dip (a big one pushed him up into the subtitle)
     await ctx.easeLookAt(top.offset(-0.2, 0, 0), 600)
     // ...and he gives up on work for good: nitwit
     setJob('nitwit'); ctx.sound('entity.villager.no', 1, 0.7)
