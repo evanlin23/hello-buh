@@ -7,7 +7,7 @@ module.exports = pixelArt({
   stages: [
     { art: ['KK.KK', 'KRKRK', '.KRK.', '..K..'], order: 'random' },
     { art: MID, order: 'random' },
-    { art: pixelArt.upscale(MID, 3), order: 'random', tpb: 1 }
+    { art: pixelArt.upscale(MID, 3), order: 'random', tpb: 1.1 }
   ],
   palette: { K: 'black_wool', R: 'red_wool' },
   wall: 'white_wool',

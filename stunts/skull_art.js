@@ -7,7 +7,7 @@ module.exports = pixelArt({
   stages: [
     { art: ['.WWW.', 'WKWKW', 'WWWWW', '.WKW.', '.WWW.'], first: 'K' },
     { art: MID, first: 'K' },
-    { art: pixelArt.upscale(MID, 2), first: 'K' }
+    { art: pixelArt.upscale(MID, 2), first: 'K', tpb: 1.55 }
   ],
   palette: { W: 'white_concrete', K: 'black_concrete' },
   wall: 'oak_planks',
