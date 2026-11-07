@@ -356,9 +356,9 @@ function poseWarden (r, s, walkPos, walkSpeed, tick) {
     const e = (tick - r.roarT) / 20
     const k = e < 0.5 ? e / 0.5 : e < 3.5 ? 1 : Math.max(0, 1 - (e - 3.5) / 0.7)
     const q = k * k * (3 - 2 * k)
-    B.body.rotation.x = 0.35 * q
-    B.head.rotation.x += 0.9 * q
-    B.rightArm.rotation.set(1.4 * q, 0, 0.5 * q); B.leftArm.rotation.set(1.4 * q, 0, -0.5 * q)
+    B.body.rotation.x = -0.25 * q
+    B.head.rotation.x += -0.3 * q
+    B.rightArm.rotation.set(-0.5 * q, 0, 1.1 * q); B.leftArm.rotation.set(-0.5 * q, 0, -1.1 * q)
     const shake = q * Math.sin(tick * 2.1) * 0.04
     B.head.rotation.z = shake
   } else if (B.body) B.body.rotation.x = 0
