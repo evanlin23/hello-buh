@@ -2,8 +2,9 @@
 //   1 villager hit -> 1 iron golem stomps over and launches you into the air;
 //   3 villagers    -> 3 golems, launched again;
 //   10 villagers   -> 10 golems swarm you: "HelloBuh was slain by Iron Golem" (death screen).
-// Real mobs with vanilla AI. Beats 1-2 run on peaceful: a golem's hit still knocks you up but does no
-// damage (mob damage scales with difficulty); beat 3 switches to normal. Each golem is provoked with a
+// Real mobs with vanilla AI, normal difficulty. Beats 1-2 under Resistance V (100% damage reduction): the
+// hit still registers and knocks you up, no damage; cleared for beat 3. (On peaceful the hit did 0 damage,
+// didn't register at all, and nothing launched.) Each golem is provoked with a
 // player-attributed /damage so its retaliation fires at once (left alone, a golem wandered for ~4 s).
 const BEATS = [
   { villagers: 1, golems: 1, dx: -40, sub: '1 villager' },
@@ -35,7 +36,7 @@ module.exports = {
       await ctx.cmd(`/fill ${x - 56} ${floor - 3} ${z0} ${x + 56} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=!player]')
-    await ctx.cmd('/difficulty peaceful')
+    await ctx.cmd('/difficulty normal')
     const profs = ['farmer', 'librarian', 'none', 'cleric', 'fletcher', 'mason', 'shepherd', 'butcher', 'armorer', 'toolsmith']
     for (let i = 0; i < BEATS.length; i++) {
       const B = BEATS[i], sx = x + B.dx
@@ -80,7 +81,7 @@ module.exports = {
         }
         bot.chat('/effect give @s instant_health 1 5 true')
       }
-      if (last) bot.chat('/difficulty normal')
+      bot.chat(last ? '/effect clear @s resistance' : '/effect give @s resistance 30 4 true')
       ctx.mark('beat', { n: i })
       // smack every villager here
       for (const v of near('villager').slice(0, B.villagers)) {
