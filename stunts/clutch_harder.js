@@ -1,5 +1,5 @@
-// "clutches, but each one is harder 😳": seven clutches in one Short, each harder, then a joke.
-//   water 40, water 70, water 90 on HALF A HEART, pearl over lava (30), pearl 70 AT NIGHT, pearl 70 at
+// "clutches, but each one is harder 😳": eight clutches in one Short, each harder, then a joke.
+//   water 40, water 70, water 90 on HALF A HEART, water 130 on half a heart, pearl over lava (30), pearl 70 AT NIGHT, pearl 70 at
 //   night in a THUNDERSTORM, then back in daylight a confident water clutch... it's a lava bucket 💀
 //   (real death; 21 blocks so the lava kills, not the fall). First cut was 22.4 s with no dead
 //   space: the fix was more beats, not slower ones.
@@ -16,6 +16,8 @@ const TIERS = [
   { mod: water, opts: { height: 40, fast: true }, label: '40 BLOCKS', end: 'placed', hotbar: 'water' },
   { mod: water, opts: { height: 70, fast: true }, label: '70 BLOCKS', end: 'placed', hotbar: 'water' },
   { mod: water, opts: { height: 90, fast: true }, label: 'HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
+  // the night tiers' shorter outros took the cut to 28.7 s: one more beat, not slower ones (30 s rule)
+  { mod: water, opts: { height: 130, fast: true }, label: '130 BLOCKS, HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
   { mod: pearl, opts: { tower: 30, fast: true }, label: 'PEARL OVER LAVA', end: 'teleported', hotbar: 'pearl' },
   { mod: pearl, opts: { tower: 70, fast: true, openPitch: -0.85 }, label: 'AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
   { mod: pearl, opts: { tower: 100, fast: true, openPitch: -0.85 }, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
@@ -35,8 +37,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'clutches, but each one is harder 😳',
   expectDeath: true,
-  recordRadius: 224,   // 7 sets over 240 blocks: the ends need terrain out to the fog
-  chunkStops: set => [{ x: set.x - 3 * GAP, z: set.z }, { x: set.x + 3 * GAP, z: set.z }],   // the first and last sets (the last rendered over the void)
+  recordRadius: 300,   // 8 sets over 280 blocks: the ends need terrain out to the fog
+  chunkStops: set => [{ x: set.x - Math.floor(TIERS.length / 2) * GAP, z: set.z }, { x: set.x + (TIERS.length - 1 - Math.floor(TIERS.length / 2)) * GAP, z: set.z }],   // the first and last sets (the last rendered over the void)
   edit: {
     caption: 'clutches, but each one is harder 😳', red: 'harder',
     song: 'songs/misery.mp3', dropAt: `placed${TIERS.length}`,
