@@ -108,28 +108,29 @@ module.exports = makeStunt({
   field: { top: 'sand', under: 'sandstone', biome: 'minecraft:desert' },
   hotbar: [['hay_block', 64], ['carved_pumpkin', 64], ['stone_bricks', 64], ['brown_concrete', 64], ['terracotta', 64], ['emerald_block', 64], ['dark_oak_planks', 64], ['dirt', 64], 'diamond_shovel'],
   small,
-  mid: { blocks: mini(), w: 3, d: 2, towerY: 3, towerH: 3, towerSlot: 7, digSlot: 8, perTick: 2, speed: 4, backTicks: 20,
+  mid: { blocks: mini(), w: 3, d: 2, towerY: 3, towerH: 3, towerSlot: 7, digSlot: 8, perTick: 2, speed: 3, backTicks: 12, out: 3.3,
     slots: { stone_bricks: 2, brown_concrete: 3, terracotta: 4, emerald_block: 5, dark_oak_planks: 6 } },
   big: {
     blocks: giant(),
     hold: 'terracotta', slot: 4,
     // plinth, legs, robe, arms, head, face, obelisks + oases, the pyramid, crown
-    stageTicks: { 0: 150, 1: 150, 2: 180, 3: 120, 4: 210, 5: 180, 6: 180, 7: 180, 8: 40 },
+    stageTicks: { 0: 100, 1: 100, 2: 180, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 40 },
     keys: [
-      [0, [-16, 9, 30], [0, 0, 6]],          // close on the plinth from the cut
-      [150, [-30, 14, 34], [0, 8, 0]],
-      [300, [-20, 22, 40], [0, 20, 0]],
-      [480, [18, 30, 36], [0, 28, 4]],
-      [600, [26, 40, 30], [0, 40, 0]],
-      [810, [10, 46, 34], [0, 44, 6]],       // the face going on
-      [990, [4, 42, 32], [0, 44, 6]],
-      [1080, [-44, 24, 30], [-24, 6, 0]],    // the obelisks and the west oasis
-      [1190, [-40, 34, -10], [0, 14, -40]],  // the pyramid rising behind
-      [1260, [-6, 66, -16], [0, 20, -40]],   // over the head, looking down at the pyramid
-      [1305, [32, 56, 30], [0, 30, -30]],
-      [1355, [-16, 64, 30], [0, 52, 0]],     // over the crown (further out: it passed the face at 11 blocks)
-      [1382, [-1, 16, 86], [0, 24, 0]],      // the pull-back arrives early and creeps into 60:00
-      [1398, [0, 14, 82], [0, 24, 0]]
+      [0, [-16, 9, 30], [0, 0, 6]],          // close on the plinth from the cut, then a pass across it
+      [60, [-4, 11, 26], [0, 1, 4]],
+      [100, [-20, 12, 32], [0, 6, 0]],       // the legs
+      [200, [-20, 22, 40], [0, 20, 0]],
+      [380, [18, 30, 36], [0, 28, 4]],
+      [500, [26, 40, 30], [0, 40, 0]],
+      [660, [10, 46, 34], [0, 44, 6]],       // the face going on
+      [840, [4, 42, 32], [0, 44, 6]],
+      [950, [-44, 24, 30], [-24, 6, 0]],     // the obelisks and the west oasis
+      [1080, [-40, 34, -10], [0, 14, -40]],  // the pyramid rising behind
+      [1170, [-6, 66, -16], [0, 20, -40]],   // over the head, looking down at the pyramid
+      [1225, [32, 56, 30], [0, 30, -30]],
+      [1275, [-16, 64, 30], [0, 52, 0]],     // over the crown (further out: it passed the face at 11 blocks)
+      [1302, [-1, 16, 86], [0, 24, 0]],      // the pull-back arrives early and creeps into 60:00
+      [1318, [0, 14, 82], [0, 24, 0]]
     ],
     reveal: [
       [8, [-4, 15, 76], [0, 24, 0]],
