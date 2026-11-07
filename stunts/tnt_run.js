@@ -33,6 +33,7 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
     await ctx.cmd('/difficulty normal')
     const W = 150
     for (let z0 = z - 96; z0 <= z + 28; z0 += 4) {   // (to z - 64 the cut cliff showed on lane 8's horizon)   // one field for all nine lanes, cleared high and wide (cut faces showed)

@@ -39,6 +39,7 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
     for (let z0 = z - 80; z0 <= z + 26; z0 += 6) {   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
       const z1 = Math.min(z0 + 5, z + 26)
       for (let y0 = floor + 1; y0 <= floor + 48; y0 += 8) await ctx.cmd(`/fill ${x - 100} ${y0} ${z0} ${x + 100} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)

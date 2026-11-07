@@ -7,7 +7,7 @@
 const CLUTCHES = [   // nine beats, ~33 s (seven ran 25.9 s; owner: 30 s minimum). All tested on the server:
   { item: 'water_bucket', h: 24, sub: 'water bucket: 10/10' },
   { item: 'slime_block', h: 28, sub: 'slime block: 9/10' },
-  { item: 'red_bed', h: 32, sub: 'bed: 4/10 (half the damage)' },        // fallOn x0.5: lands on ~2.5 hearts
+  { item: 'red_bed', pre: true, h: 32, sub: 'bed: 4/10 (half the damage)' },   // fallOn x0.5. Already standing on the grass, steered onto mid-fall: the engine draws no bed item (hotbar, hand)
   { item: 'hay_block', h: 36, sub: 'hay bale: 7/10 (ouch)' },
   { item: 'honey_block', h: 40, sub: 'honey block: 6/10' },
   { item: 'sweet_berries', h: 44, sub: 'berry bush: 8/10 (pokey)' },    // stuck-in-block resets the fall, like cobweb
@@ -38,6 +38,7 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
     for (let y0 = floor + 1; y0 <= floor + TOP + 4; y0 += 10) await ctx.cmd(`/fill ${x - 8} ${y0} ${z - 8} ${x + 8} ${Math.min(y0 + 9, floor + TOP + 4)} ${z + 8} air`)
     // a small flat landing patch (the placements assume ground at floor); the old 17x17 pad's sharp edges
     // read as command-built in every fall
@@ -50,7 +51,7 @@ module.exports = {
       await ctx.cmd(`/fill ${x - 48} ${y0} ${z - 48} ${x + 48} ${y0 + 2} ${z + 48} grass_block replace grass_block[snowy=true]`)
     }
     await ctx.cmd('/gamerule fall_damage true')
-    await ctx.hotbar(CLUTCHES.map(c => c.item))
+    await ctx.hotbar(CLUTCHES.map(c => c.pre ? null : c.item))
     ctx.select(0)   // (the honey block from setup was in hand for the first frames)
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(10)
@@ -84,6 +85,10 @@ module.exports = {
         if (a === 4) throw new Error('teleport did not stick')
       }
       bot.chat('/effect give @s instant_health 1 5 true')     // after the cut: hearts refill off screen
+      if (c.pre) {   // the bed down there before the jump (behind the cut), 2 south of the glass, foot first
+        bot.chat(`/setblock ${x} ${floor + 1} ${z + 2} red_bed[facing=south,part=foot]`)
+        bot.chat(`/setblock ${x} ${floor + 1} ${z + 3} red_bed[facing=south,part=head]`)
+      }
       if (pending) {   // the last beat's clutch block and any water it left, now that the camera is up here
         const sp = pending; pending = null
         bot.chat(`/fill ${sp.x - 1} ${floor + 1} ${sp.z - 1} ${sp.x + 1} ${floor + 2} ${sp.z + 1} air`)
@@ -107,7 +112,15 @@ module.exports = {
         const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
         if (vy < -0.5) lastVy = vy
         const drink = c.item === 'milk_bucket' && !placed && vy < -0.3 && above < 30   // drinking takes 1.6 s: start it early so it shows
-        if (c.item === 'ender_pearl' && !placed && vy < -0.5 && above < 20) {
+        if (c.pre) {
+          // steer through the air onto the bed (air control: the controls against the straight-down view)
+          const tx = x + 0.5 - p.x, tz = z + 2.6 - p.z, yaw = bot.entity.yaw
+          const f = tx * -Math.sin(yaw) + tz * -Math.cos(yaw), r = tx * Math.cos(yaw) + tz * -Math.sin(yaw)
+          bot.setControlState('forward', f > 0.15); bot.setControlState('back', f < -0.15)
+          bot.setControlState('right', r > 0.15); bot.setControlState('left', r < -0.15)
+          if (!placed && above < 4) { placed = true; spot = { x, y: floor, z: z + 2 }; ctx.mark('placed', { item: c.item }) }
+        }
+        if (c.pre) { /* no placement */ } else if (c.item === 'ender_pearl' && !placed && vy < -0.5 && above < 20) {
           // throw it straight down: it outruns you (your speed + 1.5), and the teleport onto the ground resets the fall
           placed = true
           bot.entity.pitch = -Math.PI / 2
@@ -133,6 +146,7 @@ module.exports = {
         }
         if (placed && !landed && (bot.entity.onGround || bot.entity.isInWater || above < 1.2)) {
           landed = true
+          if (c.pre) for (const k of ["forward", "back", "left", "right"]) bot.setControlState(k, false)
           ctx.mark('landed', { n: i })
           if (c.item === 'water_bucket') { ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: p.x, y: floor + 1.9, z: p.z }, { count: 30 }) }
           if (c.item === 'slime_block') ctx.sound('block.slime_block.fall', 1)
