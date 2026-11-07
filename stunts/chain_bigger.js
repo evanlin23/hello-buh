@@ -11,7 +11,7 @@
 //                                                  centre: every block is within 14 of the feed)
 //   bus out: from the grid's near east corner, a repeater line east, south and east into the next
 //   tier's spine (visible: it lights up as it goes)
-// Tiers (e0): lamps -50, splash potions -36, diamond blocks -22, rockets -8, TNT 6. The TNT tier is different:
+// Tiers (e0): lamps -50, diamond blocks -36, splash potions -22, rockets -8, TNT 6. The TNT tier is different:
 // redstone primes only its x1, and each bigger stage (x10 row, x100 grid, x1000 cube) is lit by the
 // last one's blast. The player watches from a stone walkway 3 blocks up along n = -4, walking east with the chain.
 const { relaySounds, clearMobs, rig } = require('../lib/chain')
@@ -21,8 +21,8 @@ const T = 'polished_andesite'
 const S = 'stone_bricks'
 const TIERS = [
   { name: 'lamps', e0: -50, block: () => 'redstone_lamp' },
-  { name: 'potions', e0: -36, block: (i) => `dispenser[facing=up]{Items:[{Slot:4b,id:"minecraft:splash_potion",count:1,components:{"minecraft:potion_contents":{potion:"minecraft:${['leaping', 'swiftness', 'fire_resistance', 'water_breathing', 'night_vision', 'regeneration', 'strength', 'healing'][i % 8]}"}}}]}` },
-  { name: 'diamonds', e0: -22, block: () => 'dropper[facing=up]{Items:[{Slot:4b,id:"minecraft:diamond_block",count:1}]}' },
+  { name: 'diamonds', e0: -36, block: () => 'dropper[facing=up]{Items:[{Slot:4b,id:"minecraft:diamond_block",count:1}]}' },
+  { name: 'potions', e0: -22, block: (i) => `dispenser[facing=up]{Items:[{Slot:4b,id:"minecraft:splash_potion",count:1,components:{"minecraft:potion_contents":{potion:"minecraft:${['leaping', 'swiftness', 'fire_resistance', 'water_breathing', 'night_vision', 'regeneration', 'strength', 'healing'][i % 8]}"}}}]}` },
   { name: 'rockets', e0: -8, block: (i) => `dispenser[facing=up]{Items:[{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:${1 + (i % 2)},explosions:[{shape:"${i % 3 ? 'large_ball' : 'star'}",colors:[I;${[16711680, 65280, 3381759, 16766720, 16711935][i % 5]},16777215]}]}}}]}` },
   { name: 'tnt', e0: 6, block: () => 'tnt' }
 ]
@@ -79,8 +79,10 @@ module.exports = {
         await put(cx, 1, 3, T); await put(cx, 2, 3, 'redstone_wire')
         await put(cx + 1, 1, 3, 'tnt')
         await fill(e0, 1, 6, e0 + 9, 1, 6, 'tnt')
-        await fill(e0, 1, 9, e0 + 9, 1, 18, 'tnt')
-        await fill(e0, 1, 21, e0 + 9, 10, 30, 'tnt')
+        // (a bridge TNT between the x10 row and the x100 grid: 3 rows apart they went off as one blast)
+        await put(cx, 1, 9, 'tnt')
+        await fill(e0, 1, 12, e0 + 9, 1, 21, 'tnt')
+        await fill(e0, 1, 24, e0 + 9, 10, 33, 'tnt')
         // deep dirt under the TNT: a crater past the 10-block base can open an aquifer (water in it)
         for (let n0 = -6; n0 <= 38; n0 += 4) await fill(e0 - 12, -30, n0, e0 + 22, -11, n0 + 3, 'dirt')
         break
@@ -141,7 +143,7 @@ module.exports = {
       if (t.name === 'tnt') {
         steps.push({ name: 'tnt1', pos: B(cx + 1, 1, 3), test: gone })
         steps.push({ name: 'tnt10', pos: B(cx, 1, 6), test: gone })
-        steps.push({ name: 'tnt100', pos: B(cx, 1, 13), test: gone })
+        steps.push({ name: 'tnt100', pos: B(cx, 1, 16), test: gone })
         continue
       }
       steps.push({ name: `${t.name}1`, pos: B(cx, 2, 3), test: dust })
@@ -155,8 +157,9 @@ module.exports = {
       booms++
       const n = Z - +(p.center || {}).z
       if (n < 4.5) r.markOnce('boom1')
-      else if (n < 7.5) r.markOnce('boom10')
-      else if (n < 19.5) r.markOnce('boom100')
+      else if (n < 8.5) r.markOnce('boom10')
+      else if (n > 10.5 && n < 22.5) r.markOnce('boom100')
+      else if (n < 22.5) return
       else { r.markOnce('x1000_first'); if (++big === 40) r.markOnce('x1000') }
     }
     bot._client.on('explosion', onBoom)
@@ -188,8 +191,8 @@ module.exports = {
       if (up(t)) await glide(view(t, 10).offset(0, lift(t, 10), 0), 6)
       await glide(view(t, 100), 18, () => r.at(`${t.name}100`))
       await r.until(() => r.at(`${t.name}100`), 40)
-      if (up(t)) await glide(view(t, 100).offset(0, lift(t, 100), 3), 10)
-      else await bot.waitForTicks(8)
+      // stay on the payoff: the potions splash ~1.5 s after they fly, the rockets burst ~1.2 s up
+      if (up(t)) { await glide(view(t, 100).offset(0, lift(t, 100), 3), 10); if (t.name === 'potions') { await glide(view(t, 100).offset(0, 1, 0), 20); await bot.waitForTicks(10) } else if (t.name === 'rockets') await bot.waitForTicks(14) } else await bot.waitForTicks(8)
       // follow the bus to the next tier: out east, south, east (the repeaters light as it goes)
       const nt = TIERS[i + 1]
       r.steer = W(nt.e0 + 4.5, 0, -4)
@@ -200,19 +203,17 @@ module.exports = {
     // the TNT: x1 primed (4 s fuse); back off along the walkway facing it, glancing at what comes next
     r.steer = W(tt.e0 + 4.5, 0, -4)
     await r.until(() => r.at('tnt1'), 120)
+    // back off along the walkway; the flashing x1 stays in the lower third the whole fuse (the aim
+    // sits just beyond it, on the row it will light), then rise stage by stage
     r.steer = W(tt.e0 - 12, 0, -4)
-    await glide(view(tt, 1), 10)
-    await glide(W(tt.e0 + 4.5, 1.5, 6), 20)
-    await glide(W(tt.e0 + 4.5, 1, 14), 20)
-    await glide(W(tt.e0 + 4.5, 6, 26), 20)
-    await glide(view(tt, 1), 18, () => booms > 0)
-    await r.until(() => booms > 0, 40)
-    await glide(W(tt.e0 + 4.5, 1.5, 6), 12, () => r.at('boom10'))
+    await glide(W(tt.e0 + 5.5, 1.2, 4.5), 16)
+    await r.until(() => booms > 0, 90)
+    await glide(W(tt.e0 + 4.5, 1.5, 7), 12, () => r.at('boom10'))
     await r.until(() => r.at('boom10'), 40)
-    await glide(W(tt.e0 + 4.5, 1.5, 14), 12, () => r.at('boom100'))
-    await r.until(() => r.at('boom100'), 40)
+    await glide(W(tt.e0 + 4.5, 1.5, 16), 14, () => r.at('boom100'))
+    await r.until(() => r.at('boom100'), 50)
     r.k = 0.1
-    await glide(W(tt.e0 + 4.5, 5, 26), 16, () => r.at('x1000'))
+    await glide(W(tt.e0 + 4.5, 5, 29), 16, () => r.at('x1000'))
     await r.until(() => r.at('x1000'), 80)
     await bot.waitForTicks(24)
     r.stop(); stopSounds(); bot._client.removeListener('explosion', onBoom)
