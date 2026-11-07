@@ -27,6 +27,9 @@ module.exports = {
     fallen: DROPS.map((d, i) => i === DROPS.length - 1 ? [`drop${i + 1}`, 'death'] : [`drop${i + 1}`, `splash${i + 1}`, 'blocks', -1])   // -1: the splash fires with the feet in the water block (read 11/31/...; the miss lands on the grass, no offset)
   },
   expectDeath: true,
+  // the server only sends chunks within 192 of where the bot stands, so the 320 fog radius needs these stops
+  // (a ring 160 out: every point to 352 is within 192 of one); without them the land ended in hard edges
+  chunkStops: set => [...Array(8).keys()].map(k => ({ x: Math.round(set.x + 160 * Math.cos(k * Math.PI / 4)), z: Math.round(set.z + 160 * Math.sin(k * Math.PI / 4)) })),
   renderDistance: 20, recordRadius: 320,   // the ground has to stay in sight from 251 up (fog is max(xz, |y|)): at 12 (192 blocks) the 230/250 drops opened on ~1 s of blank fog
   clouds: false,                // the 200-250 block falls cross y 192: the camera went through a white cloud wall
 
