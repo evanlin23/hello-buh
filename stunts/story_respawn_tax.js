@@ -144,7 +144,7 @@ module.exports = {
     })
     let noSmoke = false
     // every 2 ticks, 3 puffs spread a little: 2 every 3 ticks read as a still screen behind the cactus death (retention)
-    bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 2 === 0) ctx.particles('smoke', deadView.offset((Math.random() - 0.5) * 0.8, Math.random() * 0.3, (Math.random() - 0.5) * 0.8), { count: 3 }) })
+    bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 6 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 0.6, 0, (Math.random() - 0.5) * 0.6), { w: 0.6, h: 0.6 }) })   // light-grey poof clouds (vanilla large_smoke is near-black by design and read as black blotches under the death tint)
     // the trip: over the sunken cauldron, drop into it (walking can step across its rim) and die
     const overCauldron = () => { const p = bot.entity.position; return p.z < Z + 5.0 && p.z > Z + 4.0 && p.x > X && p.x < X + 1 }
     const fallIn = () => say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 0.3).toFixed(3)} ${(Z + 4.5).toFixed(3)}`)
