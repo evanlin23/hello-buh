@@ -155,7 +155,8 @@ module.exports = makeStunt({
     stageTicks: { 0: 105, 1: 105, 2: 105, 3: 105, 4: 350, 5: 180, 6: 110, 7: 80, 8: 150, 9: 50 },
     // [tick of the build, camera, look-at], local to the mansion centre (y from the ground)
     keys: [
-      [0, [-8, 10, 28], [0, -1, 15]],        // the pool fills the frame from the cut
+      [0, [-2, 13, 27], [0, -1, 15]],        // the pool fills the frame from the cut (stills-checked)
+      [45, [-7, 11, 27], [0, 0, 14]],
       [105, [-26, 5, 22], [-6, 4, 8]],       // floor 1: low along the facade
       [210, [4, 9, 22], [0, 7, 8]],          // floor 2: across the front, close
       [315, [22, 22, 24], [0, 12, 0]],       // floor 3: up and looking down on it
@@ -164,7 +165,8 @@ module.exports = makeStunt({
       [740, [-30, 16, 40], [-15, 3, 20]],    // the west wing and the garden
       [920, [16, 30, 24], [0, 17, -1]],      // roof and penthouse
       [1040, [-30, 30, 20], [-12, 15, 0]],   // the rooftop pool filling
-      [1110, [30, 26, 16], [24, 11, 0]],     // the helipad, from above
+      [1075, [4, 42, 34], [8, 14, 0]],       // up and over the front (crossing the roof low read as a wall of dark planks)
+      [1110, [32, 30, 18], [24, 11, 0]],     // the helipad, from above
       [1230, [-62, 36, 66], [0, 2, 8]],      // the wall going round the grounds, wide
       [1318, [-2, 11, 70], [0, 10, 0]],      // the pull-back through the gates, the crown going on
       [1348, [0, 10, 64], [0, 10, 0]]
