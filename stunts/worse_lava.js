@@ -11,7 +11,7 @@
 // Commands only build the set and play the game master (lava layers, summons, the time of day);
 // every action of the player is a real survival action.
 const L = 8            // island half-size (17 x 17)
-const R = 40           // lava sea half-size
+const R = 56           // lava sea half-size (wide: the cut hillsides at the edge of the cleared box stay far back)
 const LEVEL = 100      // ticks per level (5 s)
 
 module.exports = {
@@ -21,18 +21,19 @@ module.exports = {
   edit: {
     caption: 'every 5 seconds it gets worse 😰', red: 'worse',
     song: 'songs/funk_abnormal.mp3', dropAt: 'l7',
-    startAt: 'go:-0.25', endAfter: 'done:0.9',
+    startAt: 'go:0', endAfter: 'done:0.9',
     countdown: 'go:done:SURVIVE',
     counter: { at: ['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7'], total: 7 },
     cards: [
       ['l1', 'THE LAVA RISES', 1.0, 'orange'], ['l2', '+1 CREEPER', 1.0, 'green'], ['l3', 'TNT RAIN', 1.0, 'red'],
       ['l4', 'NIGHT FALLS', 1.0, 'blue'], ['l5', '+2 CREEPERS', 1.0, 'green'], ['l6', 'THE FLOOR BREAKS', 1.0, 'yellow'],
-      ['l7', 'LAVA EVERY SECOND', 1.0, 'red'], ['done', 'SURVIVED', 1.2, 'green']
+      ['l7', 'THE LAVA SPEEDS UP', 1.0, 'red'], ['done', 'SURVIVED', 1.2, 'green']
     ],
     punch: ['boom1', 'tntboom', 'done'],
     deathScreen: true
   },
   botTimeout: 300,
+  time: 10500,         // late afternoon: the sun is already low in the west for the night beat
 
   async setup (ctx) {
     const { bot } = ctx
@@ -45,18 +46,19 @@ module.exports = {
     await ctx.cmd('/gamerule random_tick_speed 0')
     await ctx.cmd('/gamerule log_admin_commands false')
     const C = R + 2
-    for (let y0 = G + 1; y0 <= G + 28; y0 += 4) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 3} ${z + C} air`)
+    for (let y0 = G + 1; y0 <= G + 28; y0 += 2) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 1} ${z + C} air`)
     await ctx.cmd(`/fill ${x - C} ${G} ${z - C} ${x + C} ${G} ${z + C} grass_block`)
-    for (let y0 = G - 4; y0 <= G - 1; y0 += 2) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 1} ${z + C} dirt`)
+    for (let y0 = G - 4; y0 <= G - 1; y0 += 1) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0} ${z + C} dirt`)
     // the island: dirt with a grass top, standing 2 blocks out of the lava
     await ctx.cmd(`/fill ${x - L} ${G + 1} ${z - L} ${x + L} ${G + 3} ${z + L} dirt`)
     await ctx.cmd(`/fill ${x - L} ${G + 4} ${z - L} ${x + L} ${G + 4} ${z + L} grass_block`)
     for (const y of [G + 1, G + 2]) await ctx.cmd(`/fill ${x - R} ${y} ${z - R} ${x + R} ${y} ${z + R} lava replace air`)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty easy')
-    await ctx.hotbar(['diamond_sword[enchantments={knockback:1}]', ['cobblestone', 64], ['bread', 16]])
-    // near the south edge, looking down at the south-east corner: the lava right there, 2 blocks down
-    await ctx.tpCheck(x + 0.5, G + 5, z + 5.5, 180 + 2.0 * 180 / Math.PI, 30)
+    await ctx.hotbar(['diamond_sword[enchantments={knockback:1}]', ['cobblestone', 64], ['bread', 16], ['torch', 8]])
+    // on the south edge, looking down its side: the last dirt layer above the lava, which the first
+    // rise swallows (from the middle of the island the rise couldn't be seen: review 1)
+    await ctx.tpCheck(x + 0.5, G + 5, z + 8.2, 30, 68)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(30)
@@ -101,7 +103,7 @@ module.exports = {
         if (cool > 0) cool--
         if (swell === 1) { ctx.sound('entity.creeper.primed', 1, 1); ctx.mark('hiss') }
         if (cool === 0 && d < 3.1 && (swell >= 5 || d < 2.0)) {
-          bot.attack(c)
+          bot.attack(c, false); bot.swingArm()
           ctx.sound('entity.player.attack.knockback', 1, 1); ctx.sound('entity.creeper.hurt', 1, 1)
           ctx.mark('hit'); hits++; cool = 14
         }
@@ -118,11 +120,15 @@ module.exports = {
 
     // ---- 1. the lava rises ----
     ctx.mark('l1'); riseTo(G + 3)
-    // (mineflayer yaw: 0 north, -pi/2 east, pi/2 west) a slow pan along the lava it just climbed,
-    // up the east side and round to the open island
-    await bot.waitForTicks(14)
-    await ctx.easeLook(-1.2, -0.4, 1500)
-    await ctx.easeLook(0, -0.15, 1700)
+    // (mineflayer yaw: 0 north, -pi/2 east, pi/2 west) along the side it just climbed, then away from
+    // the edge: it walks back into the middle of the island
+    await bot.waitForTicks(12)
+    await ctx.easeLook(Math.PI - 0.9, -0.75, 900)
+    await ctx.easeLook(0.3, -0.2, 900)
+    bot.setControlState('forward', true)
+    for (let i = 0; i < 60 && bot.entity.position.z > z + 5.6; i++) { await bot.look(bot.entity.yaw - 0.006, bot.entity.pitch, true); await bot.waitForTicks(1) }
+    bot.setControlState('forward', false)
+    await ctx.easeLook(0, -0.15, 500)
     await until(at(5), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 2. a creeper ----
@@ -170,13 +176,23 @@ module.exports = {
     const easeSun = ctx.easeLook(Math.PI / 2 + 0.2, 0.25, 850)
     // one step a tick (steps of 4 ticks jumped the sky visibly: qa flags f1047-1071)
     for (let k = 1; k <= 56; k++) {
-      const tm = 6000 + Math.round(7800 * k / 56)
+      const tm = 10500 + Math.round(3300 * k / 56)
       bot.chat(`/time set ${tm}`); ctx.dayTime = tm; ctx.mark('time', { time: tm })
       if (k === 20) await easeSun
       if (k > 20) await bot.look(bot.entity.yaw - 0.012, bot.entity.pitch - 0.005, true)   // following the sun down
       await bot.waitForTicks(1)
     }
-    await ctx.easeLook(Math.PI / 2 - 0.6, -0.2, 900)
+    // dark now: a torch down beside it (a real placement on the grass next to its feet)
+    ctx.select(3)
+    const fx = Math.floor(bot.entity.position.x) - 1, fz = Math.floor(bot.entity.position.z)
+    const tb = bot.blockAt(new Vec3(fx, G + 4, fz)), above = bot.blockAt(new Vec3(fx, G + 5, fz))
+    await ctx.easeLookAt(new Vec3(fx + 0.5, G + 5, fz + 0.5), 600)
+    if (tb && tb.name === 'grass_block' && above && above.name === 'air') {
+      bot._client.write('block_place', { hand: 0, location: { x: fx, y: G + 4, z: fz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+      bot.swingArm(); ctx.sound('block.wood.place', 1, 1); ctx.mark('place', { x: fx, y: G + 5, z: fz }); ctx.mark('torch')
+    }
+    await bot.waitForTicks(8)
+    ctx.select(0)
     await ctx.easeLook(0, -0.15, 1000)                       // back to the island
     await until(at(20), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
@@ -203,8 +219,11 @@ module.exports = {
     // ---- 6. the floor breaks ----
     ctx.mark('l6')
     const bx = Math.floor(bot.entity.position.x), bz = Math.floor(bot.entity.position.z)
-    const y6 = bot.entity.yaw
-    const lookDown = ctx.easeLook(y6 + 0.5, -0.35, 600)   // the island going under, ring by ring, toward it
+    // face the biggest stretch of island left: the rings come toward the camera across it
+    let gx = 0, gz = 0, gn = 0
+    for (let dx = -10; dx <= 10; dx++) for (let dz = -10; dz <= 10; dz++) { const b = bot.blockAt(new Vec3(bx + dx, G + 4, bz + dz)); if (b && b.name === 'grass_block') { gx += dx; gz += dz; gn++ } }
+    const y6 = gn ? Math.atan2(-gx / gn, -gz / gn) : bot.entity.yaw
+    const lookDown = ctx.easeLook(y6, -0.45, 600)   // the island going under, ring by ring, toward it
     let ld = false; lookDown.then(() => { ld = true })
     for (let r = 16; r >= 1; r--) {
       // the ring at Chebyshev distance r from the bot's block turns to lava, crumbs where the grass was
@@ -218,12 +237,13 @@ module.exports = {
       const sides = [[bx - r, bz - r, bx + r, bz - r], [bx - r, bz + r, bx + r, bz + r], [bx - r, bz - r + 1, bx - r, bz + r - 1], [bx + r, bz - r + 1, bx + r, bz + r - 1]]
       for (const [ax, az, cx, cz] of sides) for (const what of ['dirt', 'grass_block']) bot.chat(`/fill ${ax} ${G + 1} ${az} ${cx} ${G + 4} ${cz} lava replace ${what}`)
       ctx.sound('block.gravel.break', 1, 0.6 + r * 0.03); ctx.sound('block.lava.pop', 0.7)
-      if (r === 3) { await lookDown; ctx.easeLook(y6 - 0.6, -0.8, 900) }
-      for (let i = 0; i < 4; i++) { if (ld && r > 3) await bot.look(bot.entity.yaw - 0.012, bot.entity.pitch, true); await bot.waitForTicks(1) }
+      if (r === 3) { await lookDown; ctx.easeLook(y6 - 0.4, -0.8, 900) }
+      for (let i = 0; i < 4; i++) { if (ld && r > 3) await bot.look(bot.entity.yaw - 0.006, bot.entity.pitch, true); await bot.waitForTicks(1) }
     }
     ctx.mark('one_block')
-    await ctx.easeLook(bot.entity.yaw + 0.7, -0.9, 700)
-    await until(at(29.5), () => bot.look(bot.entity.yaw - 0.006, bot.entity.pitch, true))
+    // lava on every side of the last block: a slow look all the way round
+    await ctx.easeLook(bot.entity.yaw + 1.5, -0.75, 1000)
+    await until(at(29.5), () => bot.look(bot.entity.yaw + 0.03, bot.entity.pitch, true))
     ctx.select(1)
     await until(at(30))
 
@@ -238,11 +258,11 @@ module.exports = {
     }
     bot.on('physicsTick', rise)
     const yaw0 = bot.entity.yaw
-    await ctx.easeLook(yaw0, -1.05, 250)
-    for (let k = 0; k < 8 && ctx.tick < at(34.6); k++) {
+    await ctx.easeLook(yaw0, -1.3, 250)   // aimed at the top of the block under it (review 1: -1.05 aimed at the lava)
+    for (let k = 0; k < 8 && ctx.tick < at(34.4); k++) {
       const base = pillarTop
       bot.setControlState('jump', true)
-      ctx.easeLook(yaw0 + 0.45 * Math.sin(k * 0.9), -1.05 + 0.12 * Math.cos(k * 0.7), 400)
+      ctx.easeLook(yaw0 + 0.3 * Math.sin(k * 0.9), -1.3 + 0.08 * Math.cos(k * 0.7), 400)
       for (let i = 0; i < 20 && bot.entity.position.y < base + 2.1; i++) await bot.waitForTicks(1)
       bot.setControlState('jump', false)
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: base, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
@@ -252,15 +272,16 @@ module.exports = {
     }
     // the last rises catch up to one block below the top, on the 35 s mark
     bot.removeListener('physicsTick', rise)
-    await until(at(35) - 1, () => bot.look(bot.entity.yaw + 0.01, bot.entity.pitch, true))
+    // sneak to the edge before 0.00 and look down past it: the top block's side, then the lava a block down
+    bot.setControlState('sneak', true)
+    ctx.easeLook(bot.entity.yaw + 0.2, -1.45, 400)
+    bot.setControlState('forward', true)
+    await until(at(35) - 1, () => {})
+    bot.setControlState('forward', false)
     riseTo(pillarTop - 1)
     ctx.mark('done')
-    // sneak to the edge and look down past it: the top block's face, then the lava a block down
-    bot.setControlState('sneak', true)
-    ctx.easeLook(bot.entity.yaw + 0.3, -1.3, 600)
-    bot.setControlState('forward', true); await bot.waitForTicks(8); bot.setControlState('forward', false)
-    await ctx.easeLook(bot.entity.yaw - 0.5, -1.35, 700)
-    await bot.waitForTicks(10)
+    await ctx.easeLook(bot.entity.yaw - 0.5, -1.4, 900)
+    await bot.waitForTicks(4)
     bot.setControlState('sneak', false)
     bot._client.removeListener('damage_event', onDmg); bot._client.removeListener('entity_status', onStatus)
     ctx.log('lava', lavaY, 'top', pillarTop, 'health', bot.health)

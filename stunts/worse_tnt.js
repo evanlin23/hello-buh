@@ -15,7 +15,7 @@ module.exports = {
   edit: {
     caption: 'every 5 seconds it gets worse 😰', red: 'worse',
     song: 'songs/funk_abnormal.mp3', dropAt: 'boom7',
-    startAt: 'go:-0.25', endAfter: 'boom7:1.0',
+    startAt: 'go:0', endAfter: 'boom7:1.0',
     countdown: 'go:boom7:SURVIVE',
     counter: { at: ['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7'], total: 7 },
     cards: WAVES.map((n, i) => [`l${i + 1}`, `${n} TNT`, 0.9, i < 3 ? 'white' : i < 5 ? 'yellow' : 'red']).concat([['boom7', 'SURVIVED', 1.0, 'green']]),
@@ -39,7 +39,7 @@ module.exports = {
     for (let y0 = G + 1; y0 <= G + 30; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} air`)
     await ctx.cmd(`/fill ${x - C} ${G} ${z - C} ${x + C} ${G} ${z + C} grass_block`)
     // deep solid ground (no caves or water for the craters to open into)
-    for (let y0 = G - 12; y0 <= G - 1; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} dirt`)
+    for (let y0 = G - 24; y0 <= G - 1; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} dirt`)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16]])
@@ -105,7 +105,7 @@ module.exports = {
       for (const c of ctl) bot.setControlState(c, false)
     }
     const waitBoom = async (deadline, lookAt) => {
-      while (ctx.tick < deadline && tnts().length) { if (lookAt) await K.track(lookAt().offset(0.6 * Math.sin(ctx.tick / 9), 0.3 * Math.sin(ctx.tick / 7), 0), 0.2); await bot.waitForTicks(1) }
+      while (ctx.tick < deadline && tnts().length) { if (lookAt) await K.track(lookAt().offset(1.2 * Math.sin(ctx.tick / 8), 0.5 * Math.sin(ctx.tick / 6), 0), 0.2); await bot.waitForTicks(1) }
     }
 
     await bot.waitForTicks(6)
@@ -119,9 +119,9 @@ module.exports = {
       [3.2, 5, 6, 0.2, 9.5],
       [3.4, 5, 7, 0.5, 10],
       [3.4, 5, 8, 0.8, 10],
-      [3.5, 6, 10, 1.0, 10.5],
-      [3.6, 7, 12, 1.3, 10],
-      [3.6, 9, 15, 1.6, 9.5]
+      [3.0, 6, 10, 1.0, 10.5],
+      [3.0, 7, 12, 1.3, 10],
+      [3.0, 9, 15, 1.6, 9.5]
     ]
     for (let w = 0; w < 6; w++) {
       ctx.mark(`l${w + 1}`)
@@ -129,12 +129,13 @@ module.exports = {
       const pts = drop(WAVES[w], dmin, dmax, spread, fuse)
       if (!pts.length) throw new Error('wave fell off the field')
       const c = centroid(pts)
-      await ctx.easeLookAt(new Vec3(c[0], G + 10, c[1]), 300)    // they're coming down
-      await flee(c, safe, K.at(w * 5 + fuse) - 2)
+      await ctx.easeLookAt(new Vec3(c[0], G + 7, c[1]), 300)    // they're coming down
+      await flee(c, safe, K.at(w * 5 + fuse) - 6)   // keep moving until just before it goes
       await waitBoom(K.at(w * 5 + fuse) + 6, () => new Vec3(c[0], G + 1.5, c[1]))
       ctx.mark(`boom${w + 1}`)
       // turn back to the open field: the next wave comes where it looks
       await K.until(K.at(w * 5 + 4.2), K.drift(0.006, 0.0015))
+      if (w === 5) { await K.until(K.at(30), K.drift(0.004, 0.001)); continue }   // hold on the smoke; the 64 come from everywhere
       // face the widest stretch of ground still there, ready for the next one
       let best = null
       for (let a = bot.entity.yaw - 0.8; a <= bot.entity.yaw + 0.8; a += 0.2) {
@@ -150,7 +151,7 @@ module.exports = {
     ctx.mark('l7')
     const p = pos()
     for (let i = 0; i < 64; i++) {
-      const a = (i / 64) * 2 * Math.PI, d = 7 + (i % 3) * 0.6
+      const a = (i / 64) * 2 * Math.PI, d = 7.5 + (i % 3) * 0.6
       bot.chat(`/summon tnt ${(p.x + Math.sin(a) * d).toFixed(2)} ${G + 12 + (i % 5)} ${(p.z + Math.cos(a) * d).toFixed(2)} {fuse:${Math.round(4.95 * 20)}}`)
     }
     ctx.sound('entity.tnt.primed', 1, 0.9); ctx.sound('entity.tnt.primed', 1, 1.1)
@@ -160,10 +161,10 @@ module.exports = {
     const bx = Math.floor(pos().x), bz = Math.floor(pos().z)
     let top = G
     const yaw0 = bot.entity.yaw
-    await ctx.easeLook(yaw0, -1.05, 300)
-    for (let k = 0; k < 6 && ctx.tick < K.at(34.2); k++) {
+    await ctx.easeLook(yaw0, -1.2, 300)
+    for (let k = 0; k < 8 && ctx.tick < K.at(34.3); k++) {
       bot.setControlState('jump', true)
-      ctx.easeLook(yaw0 + 0.5 * Math.sin(k * 0.9), -1.0 + 0.12 * Math.cos(k * 0.7), 400)
+      ctx.easeLook(yaw0 + 0.22 * (k + 1), -1.2, 400)   // one steady sweep round the ring below
       for (let i = 0; i < 20 && pos().y < top + 2.1; i++) await bot.waitForTicks(1)
       bot.setControlState('jump', false)
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: top, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
@@ -173,12 +174,12 @@ module.exports = {
     }
     ctx.log('pillar top', top - G)
     // watch them come down to the ring below, then go
-    await ctx.easeLook(yaw0 + 0.4, -0.75, 500)
+    await ctx.easeLook(bot.entity.yaw + 0.25, -0.8, 500)
     await waitBoom(K.at(35) + 8, null)
     await K.until(K.at(35) + 6, K.drift(0.01))
     ctx.mark('boom7')
-    // the crater under it, round and round
-    ctx.easeLook(bot.entity.yaw + 1.2, -0.95, 1400)
+    // out across the crater from the top of the stick
+    ctx.easeLook(bot.entity.yaw + 0.9, -0.5, 1200)
     await bot.waitForTicks(30)
     ctx.log('health', bot.health)
     return !ctx.died
