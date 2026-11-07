@@ -8,7 +8,7 @@
 // Owner rules: 30 s minimum from more beats, no dead space, end <= 1 s after the payoff (death
 // screen text: ~1.6 s of reading).
 const H = 16            // drop height above the floor: in frame for the whole fall with the camera pitched up
-const R = 40            // cleared field radius
+const R = 64            // cleared field radius (at 40 the cleared pit's walls showed in every spin)
 
 module.exports = {
   name: 'it_rains',
