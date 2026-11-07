@@ -14,12 +14,13 @@
 //  Scoop, drain, the thicker shell.
 // The lava runs with /tick rate LAVA_RATE (vanilla lava moves 1 block per 1.5 s, too slow for a
 // Short), the water at 2x, the drains at 3x.
+const { findSite, clearFlat } = require('./_site')
 const STEPS = 9, LAVA_RATE = Number(process.env.LAVA_RATE || 150), STREAMS = [-2, -1, 0, 1, 2]
 const HW = 6, WALK = 5   // hill from x-HW to x+WALK: the streams take x-2..x+2, a rail x+3, the bot walks x+4; the west side is wide so the second layer's spread stays on the hill
 
 module.exports = {
   name: 'lava_cast',
-  biome: process.env.BIOME || 'minecraft:forest',
+  biome: process.env.BIOME || 'minecraft:plains',   // a flat, tree-free patch is easy to find
   caption: 'satisfying lava cast 😌',
   edit: {
     caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.15', endAfter: 'final:0.95',
@@ -31,19 +32,19 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
-    if (!g) throw new Error('no dry land')
+    // a small, flat, tree-free patch of the natural ground: the hill is built on it and only the patch
+    // is levelled (a wide clear cut a box into the terrain)
+    const AREA = [-HW - 7, WALK + 7, -12, STEPS + 15]
+    const g = await findSite(ctx, AREA, { flatEnough: 2, noTrees: true, stride: 8 })
+    if (!g) throw new Error('no flat land')
+    ctx.log('site', g)
     const { x, z, y: floor } = g
     const T = floor + STEPS          // the lip row's surface block (row z)
     this.x = x; this.z = z; this.floor = floor; this.T = T
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..100]')   // no villager wandering through the shot
-    // a wide, high clear: its cut edges stay far off in the fog
-    const R = 28, nap = () => new Promise(resolve => setTimeout(resolve, 250))   // the server needs a breath between big fills
-    for (let y0 = floor + 1; y0 <= T + 22; y0 += 5) { await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 4, T + 22)} ${z + R + 8} air`); await nap() }   // 57x65x5 < the 32768 cap
-    await ctx.cmd(`/fill ${x - R} ${floor - 4} ${z - R} ${x + R} ${floor - 1} ${z + R + 8} dirt`)
-    await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R + 8} grass_block`)
+    await ctx.cmd(`/tp @s ${x} ${floor + 20} ${z + 4}`); await bot.waitForTicks(20)
+    await clearFlat(ctx, x, z, floor, AREA, 16)
     // raised platform (rows z-5..z-2, top T+2) and the channel row z-1 (top T+1)
     await ctx.cmd(`/fill ${x - HW} ${floor} ${z - 5} ${x + WALK} ${T + 1} ${z - 2} dirt`)
     await ctx.cmd(`/fill ${x - HW} ${T + 2} ${z - 5} ${x + WALK} ${T + 2} ${z - 2} grass_block`)

@@ -12,7 +12,7 @@ const WALLS = [
   { h: 30, mat: 'bricks' }, { h: 40, mat: 'sandstone' }, { h: 50, mat: 'deepslate_bricks' },
   { h: 60, mat: 'quartz_bricks' }, { h: 70, mat: 'polished_blackstone_bricks' }, { h: 80, mat: 'obsidian' }
 ].map((w, i) => ({ ...w, dz: i * 7 }))   // 7 apart: the whole cleared area must stay within the loaded chunks
-const SPAN = (WALLS.length - 1) * 7
+const { openSpots } = require('./_site')
 
 module.exports = {
   name: 'ladder_clutch',
@@ -26,25 +26,22 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
+    // no cleared box: each wall stands on the natural ground, on an open patch of grass (the wall's
+    // column and the 3 blocks east of it where the bot falls and lands, at one level, nothing overhead)
+    const g = ctx.findLand(bot.entity.position.x | 0, bot.entity.position.z | 0)
     if (!g) throw new Error('no dry land')
-    const { x, z, y: floor } = g
-    this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    await ctx.cmd('/kill @e[type=!player,distance=..120]')
-    // stand in the middle of the set while it is built: a /fill reaching chunks the server isn't
-    // simulating fails ("That position is not loaded")
-    await ctx.cmd(`/tp @s ${x + 2} ${floor + 2} ${z + SPAN / 2}`); await bot.waitForTicks(20)
-    const R = 26, top = floor + Math.max(...WALLS.map(w => w.h))
-    for (let y0 = floor + 1; y0 <= top + 6; y0 += 4) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 3, top + 6)} ${z + R + SPAN} air`)   // 53x101x4 < the 32768 cap
-    await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R + SPAN} dirt`)
-    await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R + SPAN} grass_block`)
-    // the walls, 1 thick (x), 5 wide (z): the bot falls down their east faces
-    for (const w of WALLS) {
-      await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + w.h} ${z + w.dz + 2} ${w.mat}`)
-      if (w.base) await ctx.cmd(`/fill ${x} ${floor + 1} ${z + w.dz - 2} ${x} ${floor + 3} ${z + w.dz + 2} ${w.base}`)
+    await ctx.cmd('/kill @e[type=!player,distance=..150]')
+    this.spots = await openSpots(ctx, g.x, g.z, WALLS.map(w => w.h), { axis: 'z', gap: 6, foot: [0, 3, -2, 2], level: [1, 2, -1, 1] })
+    for (const [i, w] of WALLS.entries()) {
+      const S = this.spots[i]
+      ctx.log('wall', w.h, 'at', S)
+      await ctx.cmd(`/fill ${S.x} ${S.floor + 1} ${S.z - 2} ${S.x + 3} ${S.floor + 2} ${S.z + 2} air`)   // the grass and flowers where it lands
+      // the wall, 1 thick (x), 5 wide (z): the bot falls down its east face
+      await ctx.cmd(`/fill ${S.x} ${S.floor} ${S.z - 2} ${S.x} ${S.floor + w.h} ${S.z + 2} ${w.mat}`)   // from the ground (it may sit a block higher or lower)
+      if (w.base) await ctx.cmd(`/fill ${S.x} ${S.floor} ${S.z - 2} ${S.x} ${S.floor + 3} ${S.z + 2} ${w.base}`)
     }
+    const S0 = this.spots[0], SL = this.spots[this.spots.length - 1]
     await ctx.cmd('/gamerule fall_damage true')
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 5')
     await ctx.hotbar([['ladder', 16], ['cobblestone', 64], 'stone_pickaxe', ['bread', 12]])
@@ -52,15 +49,15 @@ module.exports = {
     ctx.select(0)
     // on the first wall already, so the recording opens on the drop (a tp during the recording
     // showed the old view and then held still for the tp check)
-    await ctx.tpCheck(x + 0.75, floor + WALLS[0].h + 1, z + 0.5, -90, 70)
-    return { x, y: floor, z: z + SPAN / 2 }   // the set's middle: the harness records the world around it
+    await ctx.tpCheck(S0.x + 0.75, S0.floor + WALLS[0].h + 1, S0.z + 0.5, -90, 70)
+    return { x: S0.x, y: S0.floor, z: Math.round((S0.z + SL.z) / 2) }   // the row's middle: the harness records the world around it
   },
 
   // one clutch off wall i: stand on its east edge looking down the drop, walk off, turn to face the
   // wall while falling, place the ladder in the row of the last airborne tick, land, look up the wall
   async clutch (ctx, i) {
     const { bot, Vec3 } = ctx
-    const { x, floor } = this, w = WALLS[i], z = this.z + w.dz
+    const w = WALLS[i], S = this.spots[i], x = S.x, z = S.z, floor = S.floor
     const E = -Math.PI / 2, W = Math.PI / 2   // yaw facing east / west
     if (i > 0) {   // quick tp: the cut lands straight on the glance down the drop
       for (let t = 0; ; t++) {

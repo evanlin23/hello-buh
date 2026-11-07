@@ -6,7 +6,8 @@
 // end_portal blocks). A jump cut to the next ring, and again, faster each time: seven rings (from the
 // fifth, the hop out is cut too). Eyes stack to 16, so it runs through six stacks. It ends looking
 // down the row: empty rings on into the fog. The job never ends.
-const RINGS = Array.from({ length: 15 }, (_, i) => i * 7)
+const RINGS = 12   // 7 to fill, 5 more waiting
+const { openSpots } = require('./_site')
 // each shift faster: the turn to the next frame (ms), then the look held on it while the eye goes in
 // (ticks: the eye shows once the server's update is back, 2-3 ticks after the click)
 const FILL = [{ ms: 230, hold: 3 }, { ms: 180, hold: 3 }, { ms: 140, hold: 2 }, { ms: 110, hold: 2 }, { ms: 90, hold: 2 }, { ms: 75, hold: 2 }, { ms: 60, hold: 2 }]
@@ -27,23 +28,18 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
+    // no cleared box: each ring on its own level patch of the natural ground (the ring and the two rows
+    // south of it where the bot stands, nothing overhead)
+    const g = ctx.findLand(bot.entity.position.x | 0, bot.entity.position.z | 0)
     if (!g) throw new Error('no dry land')
-    const { x, z, y: floor } = g
-    this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    // a wide, high clear: its cut edges stay out of the shots (in the fog)
-    const X0 = x - 40, X1 = x + 130, Z0 = z - 64, Z1 = z + 56   // 171 x 121
-    const nap = () => new Promise(resolve => setTimeout(resolve, 150))   // a breath for the server between big fills
-    await ctx.cmd(`/tp @s ${x + 45} ${floor + 2} ${z + 2}`); await bot.waitForTicks(20)   // the set's middle: every fill is in loaded chunks
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    for (let y0 = floor + 1; y0 <= floor + 44; y0++) { await ctx.cmd(`/fill ${X0} ${y0} ${Z0} ${X1} ${y0} ${Z1} air`); await nap() }   // 1 high: < the 32768 cap
-    for (let y0 = floor - 3; y0 <= floor - 1; y0++) await ctx.cmd(`/fill ${X0} ${y0} ${Z0} ${X1} ${y0} ${Z1} dirt`)
-    await ctx.cmd(`/fill ${X0} ${floor} ${Z0} ${X1} ${floor} ${Z1} grass_block`)
+    this.spots = await openSpots(ctx, g.x, g.z, Array(RINGS).fill(4), { axis: 'x', gap: 8, foot: [-1, 5, -1, 6], level: [0, 4, 0, 4], side: Array.from({ length: 31 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 90, min: 8 })
     // empty rings, every frame facing the middle (vanilla needs that for the portal to form)
-    for (const rx of RINGS) {
-      const X = x + rx, y = floor + 1
+    for (const S of this.spots) {
+      const X = S.x, z = S.z, y = S.floor + 1
+      ctx.log('ring at', S)
+      await ctx.cmd(`/fill ${X - 1} ${y} ${z - 1} ${X + 5} ${y + 1} ${z + 7} air`)   // the grass and flowers on the patch
       for (let i = 1; i <= 3; i++) {
         await ctx.cmd(`/setblock ${X + i} ${y} ${z} end_portal_frame[facing=south,eye=false]`)
         await ctx.cmd(`/setblock ${X + i} ${y} ${z + 4} end_portal_frame[facing=north,eye=false]`)
@@ -51,18 +47,20 @@ module.exports = {
         await ctx.cmd(`/setblock ${X + 4} ${y} ${z + i} end_portal_frame[facing=west,eye=false]`)
       }
     }
+    const S0 = this.spots[0]
+    const n = this.spots.length, mx = Math.round(this.spots.reduce((a, S) => a + S.x, 0) / n), mz = Math.round(this.spots.reduce((a, S) => a + S.z, 0) / n)
     await ctx.hotbar([...[16, 16, 16, 16, 16, 4].map(n => ['ender_eye', n]), 'iron_pickaxe', ['bread', 7]])   // 7 rings x 12 eyes = 84: eyes stack to 16
     await ctx.cmd('/gamemode survival')
     // in the middle of the first ring, facing its first frame (north-west)
-    await ctx.tpCheck(x + 2.5, floor + 1, z + 2.5, 160, 40)
+    await ctx.tpCheck(S0.x + 2.5, S0.floor + 1, S0.z + 2.5, 160, 40)
     ctx.select(0)
-    return { x: x + 45, y: floor, z }   // the row's middle: the harness records the world around it
+    return { x: mx, y: S0.floor, z: mz }   // the rings' middle: the harness records the world around it
   },
 
   // ring frames in fill order: round the ring clockwise from the south-west, ending on the
   // south-middle frame (the 12th, filled from outside)
-  frames (rx) {
-    const X = this.x + rx, z = this.z, y = this.floor + 1, out = []
+  frames (S) {
+    const X = S.x, z = S.z, y = S.floor + 1, out = []
     out.push([X + 1, y, z + 4])
     for (let i = 3; i >= 1; i--) out.push([X, y, z + i])
     for (let i = 1; i <= 3; i++) out.push([X + i, y, z])
@@ -110,15 +108,18 @@ module.exports = {
       bot.swingArm()
       if (wait) await bot.waitForTicks(wait)
     }
-    const { x, z, floor } = this
     ctx.mark('start')
     for (let r = 0; r < N; r++) {
-      const X = x + RINGS[r], fr = this.frames(RINGS[r]), { ms, hold } = FILL[r]
+      const S = this.spots[r], X = S.x, z = S.z, floor = S.floor, fr = this.frames(S), { ms, hold } = FILL[r]
       if (r > 0) {
-        // walk east along the front of the row to the next ring, then hop in over its south frame
+        // to the next ring (a jump cut in the edit: walk<r>..in<r>), then hop in over its south frame
         ctx.mark('walk', { n: r }); ctx.mark(`walk${r}`)
-        await goTo(X + 2.5, z + 5.6, new Vec3(X + 2.5, floor + 1.4, z + 2.5), false, 0.25, true)
-        ctx.mark(`in${r}`)   // the walk is cut out in the edit: a jump cut to stepping into the next ring
+        for (let t = 0; ; t++) {
+          await ctx.cmd(`/tp @s ${X + 2.5} ${floor + 1} ${z + 5.6} 180 35`)
+          if (Math.abs(bot.entity.position.x - (X + 2.5)) < 0.1 && Math.abs(bot.entity.position.z - (z + 5.6)) < 0.1) break
+          if (t > 20) throw new Error('teleport did not stick')
+        }
+        ctx.mark(`in${r}`)
         await goTo(X + 2.5, z + 2.5, new Vec3(X + 0.5, floor + 1.5, z + 4.5), true, 0.3)
       }
       ctx.mark('ring', { n: r })
@@ -138,10 +139,12 @@ module.exports = {
       if (portalAt === null) return false
       await ctx.easeLookAt(c.offset(0.8, 0, -0.6), r >= 2 ? 300 : 500)
     }
-    // the rest of the row: empty rings on and on into the fog
+    // the rest of the field: empty rings waiting, near and far
     ctx.mark('outro')
-    await ctx.easeLookAt(new Vec3(x + RINGS[10] + 2.5, floor + 1, z + 2.5), 700)
-    await ctx.easeLookAt(new Vec3(x + RINGS[14] + 2.5, floor + 1.5, z + 2.5), 1000)
+    const here = bot.entity.position
+    const spare = this.spots.slice(N).map(S => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)).sort((a, b) => a.distanceTo(here) - b.distanceTo(here))
+    await ctx.easeLookAt(spare[0], 700)
+    await ctx.easeLookAt(spare[spare.length - 1], 1000)
     bot.removeListener('blockUpdate', onBlock)
     return !ctx.died
   }
