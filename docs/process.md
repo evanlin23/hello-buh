@@ -60,3 +60,13 @@ Reach for these when a beat needs more punch; none of them replaces a real escal
 - Worker 9: 30 s formats from the old single stunts (tnt, villager every job, "it rains anvils... then TNT...").
 - Worker 10: retention editor; owns new edit.py features (zoom punch, slow-mo, counters, hook preview, rating cards, instant replay).
 - Worker 11: engine features; owns them in render.js/renderer (third-person player model, rain, sunrise glow, enchantment glint, reported render bugs).
+
+## Posting mix (owner, 2026-11-07)
+
+"We can't have too many of those drawing things together... we need to intersperse them with
+different things." Never post two Shorts of the same format back to back, and at most one pixel-art
+Short in any 3 posts. The owner's favourites so far, so make more of them: **time-lapse builds**
+("1 second vs 1 minute vs 1 hour", lapse_castle) on new subjects, and **narrated stories**
+(story_runaway). The pixel-art format has five Shorts already: fix those (the mid-build glance), but
+start no new pixel-art Shorts until the others have caught up. The `videos` README's ready list is
+the queue: pick the next upload from a format that wasn't the last one.
