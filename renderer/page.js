@@ -3,19 +3,23 @@
 import * as THREE from 'three'
 import { EntityLayer } from '/entities.js'
 import { BlockEntityLayer } from '/blockentities.js'
-// Terrain fog is cylindrical in vanilla (FogShape.CYLINDER since 1.18): it fades by horizontal
-// distance only, so looking straight down from build limit still shows the ground. three.js fogs by
-// view depth, and every fall from 200+ blocks faded into a blank sky colour (one_in_a_million).
+// Render-distance fog uses fog_cylindrical_distance from the jar's shaders/include/fog.glsl:
+// max(length(xz), abs(y)). three.js fogs by view depth. An earlier version here used length(xz) alone
+// ("cylindrical" read as horizontal only), so high drops showed a recorded-terrain disc floating in
+// pale sky (worker 3, drops). In vanilla the ground under a 150+ block drop fogs out at render
+// distance 8, and stunts that want it seen raise renderDistance (with recordRadius to match).
 THREE.ShaderChunk.fog_vertex = `
 #ifdef USE_FOG
-	vFogDepth = length( ( modelMatrix * vec4( transformed, 1.0 ) ).xz - cameraPosition.xz );
+	vec3 fogRel = ( modelMatrix * vec4( transformed, 1.0 ) ).xyz - cameraPosition;
+	vFogDepth = max( length( fogRel.xz ), abs( fogRel.y ) );
 #endif
 `
 // sprites (dropped items, pearls, thrown potions, rockets) have no 'transformed' in their vertex
-// shader: the override above failed to compile for them, so give them the same horizontal distance
-// measured to the sprite's centre
+// shader: the override above failed to compile for them, so give them the same distance measured
+// to the sprite's centre
 THREE.ShaderLib.sprite.vertexShader = THREE.ShaderLib.sprite.vertexShader.replace('#include <fog_vertex>', `#ifdef USE_FOG
-	vFogDepth = length( ( modelMatrix * vec4( 0.0, 0.0, 0.0, 1.0 ) ).xz - cameraPosition.xz );
+	vec3 fogRel = ( modelMatrix * vec4( 0.0, 0.0, 0.0, 1.0 ) ).xyz - cameraPosition;
+	vFogDepth = max( length( fogRel.xz ), abs( fogRel.y ) );
 #endif`)
 
 const W = window.innerWidth, H = window.innerHeight

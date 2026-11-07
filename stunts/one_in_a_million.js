@@ -28,6 +28,7 @@ module.exports = {
   name: 'one_in_a_million',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 in a million landing, but it gets harder 😳',
+  renderDistance: 12, recordRadius: 200,   // vanilla's default 12 chunks: fog is max(xz, |y|) (fog.glsl), so at 8 the ground stayed fogged until 128 blocks above it
   clouds: false,   // Video Settings > Clouds: OFF (vanilla). At y 192 the falls went through a white cloud wall, and from build limit the clouds hid the target
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
