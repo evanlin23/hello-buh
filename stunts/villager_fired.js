@@ -90,6 +90,9 @@ module.exports = {
     for (let k = 2; k <= 4; k++) await ctx.cmd(`/setblock ${x} ${floor} ${vz + k} tnt`)
     // he stands on blast-proof obsidian: after the blast he's left alone on a pillar in the crater
     await ctx.cmd(`/fill ${x} ${floor - 10} ${vz} ${x} ${floor} ${vz} obsidian`)
+    // and the player's spot has a blast-proof pad under the topsoil: the ring's crater reached it and
+    // the player fell 4 blocks (fall damage on camera); now it's a drop of 1 block at most
+    await ctx.cmd(`/fill ${x - 2} ${floor - 2} ${z - 3} ${x + 2} ${floor - 1} ${z + 3} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 9')
     await ctx.hotbar([['lectern', 2], ['composter', 2], ['barrel', 2], ['blast_furnace', 1], ['smoker', 1],
       ['cartography_table', 1], ['brewing_stand', 1], ['fletching_table', 1], 'diamond_axe'])
