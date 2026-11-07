@@ -1097,17 +1097,34 @@ def main():
             # of the (warped) timeline is several source ticks, and the counts changed up to 2 frames
             # after the block appeared (lapse_statue). Not around deaths (hud_ticks' death handling)
             # or enchanted stacks (the glint's tick)
-            exact = not death_windows(tl)
-            st_t0 = [a for a, *_ in states]
+            # With a speed map, the HUD state comes from the SOURCE recording at each output frame's
+            # source time (warp.src), like the picture: on the warped timeline the 20 Hz grid drifts
+            # off the picture after a few cuts (+1/60 s each, lengths not multiples of 50 ms), and the
+            # first frames after a cut showed the previous beat's HUD (worker 15, noob_pro_hacker)
+            warp = getattr(args, "warp", None)
+            if warp:
+                src_rec = json.loads(pathlib.Path(args.rec_path).read_text())
+                htl = src_rec["timeline"]
+                src_end = warp.src(dur + shift) + 0.1
+                hstates = hud_states(htl, src_end)
+                hticks = hud_ticks(htl, src_end, bool(src_rec.get("keepInventory")))
+                tsrc = lambda t_: warp.src(t_ + 1e-9)
+                ds_ticks = [(death_start(warp.out(a_), args), int(math.ceil(a_ * 20 - 2e-5))) for a_, _b in death_windows(htl, args.death_screen)] \
+                    if args.death_screen else []
+            else:
+                htl, hstates, hticks, tsrc = tl, states, ticks, (lambda t_: t_)
+            exact = not death_windows(htl)
+            st_t0 = [a for a, *_ in hstates]
             for j in range(int(math.ceil(dur * args.out_fps)) + 1):
                 t_out = shift + j / args.out_fps
-                st = ticks[min(len(ticks) - 1, int(math.floor(t_out * 20 + 1e-6)))]
+                ts = tsrc(t_out)
+                st = hticks[min(len(hticks) - 1, int(math.floor(ts * 20 + 1e-6)))]
                 if exact and not any(isinstance(it, tuple) and len(it) > 2 for it in st[1]):
-                    k = max(0, bisect.bisect_right(st_t0, t_out + 1e-6) - 1)
-                    st = (states[k][2], tuple(states[k][3])) + tuple(st[2:])
+                    k = max(0, bisect.bisect_right(st_t0, ts + 1e-6) - 1)
+                    st = (hstates[k][2], tuple(hstates[k][3])) + tuple(st[2:])
                 for ds0, dtick in ds_ticks:   # the death screen starts on the frame grid (up to a frame
-                    if ds0 <= j / args.out_fps < dtick / 20 - shift:   # early): empty the HUD on the same frame
-                        st = ticks[min(len(ticks) - 1, dtick)]
+                    if ds0 <= j / args.out_fps and ts < dtick / 20:   # early): empty the HUD on the same frame
+                        st = hticks[min(len(hticks) - 1, dtick)]
                 if any(a <= t_out + 1e-6 < b for a, b in f1):   # F1 spans, frame-exact
                     st = "F1"
                 if st not in pngs:
