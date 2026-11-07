@@ -62,7 +62,10 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 1} ${floor + 1} ${vz - 1} ${x + 1} ${floor + 1} ${vz + 1} oak_fence`)
     await ctx.cmd(`/setblock ${x} ${floor + 1} ${vz} air`)
     await ctx.cmd('/kill @e[type=!player]')
-    await ctx.cmd(`/summon villager ${x + 0.5} ${floor + 1} ${vz + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b}`)
+    // NoAI: once the fuse line's first blast broke his fence he walked off his pillar into the crater
+    // before the ring went (and /data then hit a crowd villager). His head still turns to the camera
+    // through the face_on mark.
+    await ctx.cmd(`/summon villager ${x + 0.5} ${floor + 1} ${vz + 0.5} {VillagerData:{profession:"minecraft:none",type:"minecraft:plains",level:1},Rotation:[0f,0f],PersistenceRequired:1b,NoAI:1b}`)
     // the crowd: unemployed villagers behind the pen, watching
     this.crowd = []
     // two groups with a gap straight behind him: in the last shot he stood against the crowd and
