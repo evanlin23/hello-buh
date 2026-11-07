@@ -22,7 +22,7 @@ const GAP = 34          // blocks between landing columns (x): separate pads wit
 const R = 14            // cleared radius around each column (the jump starts up to 11 out)
 const TOP_Y = 316       // glass at 316, eyes at ~318.6 (build limit 319)
 
-const subs = TIERS.map((t, i) => [`look${i + 1}`, t.label, 2.6, 0])   // the stakes before each drop
+const subs = TIERS.map((t, i) => [`look${i + 1}`, t.label, 1.2, 0])   // the stakes before each drop: gone by the jump (at 2.6 s the two-line labels sat on the target through the fall: review)
 
 module.exports = {
   name: 'one_in_a_million',
@@ -40,7 +40,8 @@ module.exports = {
   // a push-in on the crosshair through each fall from tier 2, rendered as a narrower FOV (sharp; an edit
   // crop at 2.2x was a blur): a 1x1 at 160+ blocks is a few px, and the drift (physics caps it near 3-4
   // degrees at terminal velocity) only reads magnified (review)
-  fovZoom: TIERS.slice(1).map((_, i) => [`drop${i + 2}:0.4`, `splash${i + 2}:-0.2`, 2.2]),
+  // more zoom on the higher tiers: the drift is physically capped near 3-4 degrees, so its size on screen is the zoom
+  fovZoom: TIERS.slice(1).map((_, i) => [`drop${i + 2}:0.4`, `splash${i + 2}:-0.2`, [2.2, 2.8, 3.2, 3.5][i]]),
   botTimeout: 600,   // 6 chunk stops and a cactus field: past the default 180 s per try
   clouds: false,   // Video Settings > Clouds: OFF (vanilla). At y 192 the falls went through a white cloud wall, and from build limit the clouds hid the target
   edit: {
@@ -59,7 +60,8 @@ module.exports = {
     fallen: TIERS.map((_, i) => [`drop${i + 1}`, `splash${i + 1}`, 'blocks', -1]),   // live blocks-fallen count; -1: the splash mark fires with the feet in the water block
     punch: TIERS.map((_, i) => `splash${i + 1}`),
     shake: ['splash5'], flash: [['splash5', 0, 0.5]],
-    slowmo: [['splash5', 0.25, 0.25]],                                       // 0.5 s of the 1x1 entry over 1 s
+    // half speed through each drift peak from tier 3 (the moment it looks like a miss), and the 1x1 entry
+    slowmo: [...TIERS.slice(2).map((_, i) => [`drift${i + 3}`, 0, 0.6]), ['splash5', 0.25, 0.25]],                                       // 0.5 s of the 1x1 entry over 1 s
     cards: [['splash1', 'EASY', 0.8, 'green'], ['splash2', 'CLEAN', 0.8, 'green'], ['splash3', 'TIGHT 😬', 0.8, 'yellow'],
       ['splash4', 'INSANE', 0.8, 'orange'], ['splash5', '1 IN A MILLION', 1.2, 'red', 0, 'stamp']],
     replay: { at: 'splash5', before: 0.8, after: 0.45, cam: 'back:6', speed: 0.6 },   // third-person, after the payoff
@@ -154,6 +156,11 @@ module.exports = {
         const e = bot.entity
         if (splashed || k0 < 3 || e.position.y > startY - 0.5) return
         if (!driftMarked && ticksToFall(e.position.y, e.velocity.y, floor + 1) <= 36) { driftMarked = true; ctx.mark(`drift${n}`) }   // the drift's peak (lib/air_steer LP)
+        { // where it lands if nobody steers from here: x + v * 0.91 (1 - 0.91^L) / 0.09 (vanilla air drag). The
+          // renderer can draw it as a landing marker on the ground: tension a viewer can read (review)
+          const L = ticksToFall(e.position.y, e.velocity.y, floor + 1), k = 0.91 * (1 - Math.pow(0.91, L)) / 0.09
+          ctx.mark('aim', { x: +(e.position.x + e.velocity.x * k).toFixed(2), y: floor + 1, z: +(e.position.z + e.velocity.z * k).toFixed(2), tier: n })
+        }
         const c = steer({ yaw: YAW, px: e.position.x, pz: e.position.z, vx: e.velocity.x, vz: e.velocity.z, y: e.position.y, vy: e.velocity.y, tx: t.x + 0.5, tz: t.z + 0.5, floorY: floor + 1, startY, bias: t.bias })
         for (const key of ['forward', 'back', 'left', 'right']) bot.setControlState(key, c[key])
       }
