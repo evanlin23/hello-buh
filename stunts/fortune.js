@@ -18,7 +18,7 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.6', subs: [['collected', '3 stacks of emeralds', 0.9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9', subs: [['collected', '3 stacks of emeralds', 0.9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
 
   async setup (ctx) {
     const { bot } = ctx
@@ -102,7 +102,7 @@ module.exports = {
         // the ore's own XP (vanilla: coal, lapis, redstone, diamond, emerald drop orbs)
         if (/coal|lapis|redstone|diamond|emerald/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${oy + 0.5} ${this.wz + 1.2} {Value:3}`)
         await ctx.easeLook((rnd() - 0.5) * 0.3, 0.0, vein.length > 1 ? 200 : 300)   // look at the shower
-        await bot.waitForTicks(vi < vein.length - 1 ? 2 : 8)
+        await bot.waitForTicks(vi < vein.length - 1 ? 4 : 8)   // (29.6 s with 2: the vein's bursts a beat apart)
       }
       // watch it rain down around your feet, and step back and forth through it picking it up
       ctx.easeLook((rnd() - 0.5) * 0.4, -0.45, 550)          // follow them down as they land round your feet
