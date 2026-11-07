@@ -164,7 +164,7 @@ module.exports = {
       if (k % 2 === 0) ctx.particles('happy', vpos, { count: 3 })
       if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 46)
       // the camera never stops: each tick eases a little toward a slowly swinging point above him
-      for (let w = 0; w < Math.max(1, Math.round(gap)); w++) {
+      for (let w = 0; w < (k < 22 ? Math.max(2, Math.round(gap)) : 1); w++) {   // every tick only from FASTER on
         ft++
         const g = head.offset(Math.sin(ft / 9) * 0.7, 0.3 + Math.cos(ft / 13) * 0.2, 0)
         const e = bot.entity.position.offset(0, 1.62, 0), dd = g.minus(e)
@@ -198,13 +198,13 @@ module.exports = {
     const litAt = ctx.tick
     // back off facing it, the villager in view
     bot.setControlState('back', true)
-    await ctx.easeLookAt(head.offset(0, -0.5, 0), 400)
+    await ctx.easeLookAt(head.offset(0, 1.0, 0), 400)          // aimed above him: he sits under the subtitle
     await bot.waitForTicks(8)
     ctx.mark('fuse_a')
-    for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 7) bot.setControlState('back', false) }   // only a step back: further, he was 50 px
+    for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 3) bot.setControlState('back', false) }   // only half a step back: further, he was 50 px
     bot.setControlState('back', false)
     while (ctx.tick - litAt < 40) await bot.waitForTicks(1)
-    await ctx.easeLookAt(head.offset(0, -0.6, 0), 100)
+    await ctx.easeLookAt(head.offset(0, 1.0, 0), 100)
     ctx.mark('fuse_b')
     // the fuse line goes, then the ring: FIRED
     let booms = 0
@@ -212,8 +212,8 @@ module.exports = {
     // a slow sneak forward while it burns (a static wide shot read as dead), eyes on him
     bot.setControlState('sneak', true); bot.setControlState('forward', true)
     for (let k = 0; k < 80 && booms === 0; k++) {
-      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [0.5, 0.3, 0.6, 0.4][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
-      if (bot.entity.position.z < vz + 7.2) bot.setControlState('forward', false)
+      if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [1.0, 0.8, 1.1, 0.9][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
+      if (bot.entity.position.z < vz + 5.8) bot.setControlState('forward', false)
       await bot.waitForTicks(1)
     }
     bot.setControlState('forward', false); bot.setControlState('sneak', false)
