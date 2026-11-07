@@ -18,7 +18,7 @@ module.exports = {
   caption: '1 in a million landing... x8 😳',
   edit: {
     subsY: 0.15, caption: '1 in a million landing... x8 😳', red: 'x8', song: 'songs/misery.mp3', dropAt: 'death', startAt: 'dig1:-0.1',
-    subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, 1.6]), deathScreen: true, endAfter: 'death:0.8',
+    subs: DROPS.map((d, i) => [`drop${i + 1}`, d.sub, i === 0 ? 1.1 : 1.6]),   // (the 10-block drop is over in 1.2 s: 1.6 ran over the cut) deathScreen: true, endAfter: 'death:0.8',
     // cut the teleport turnarounds (the look up + tp read as a still), speed up the top of the 250 fall,
     // and a live blocks-fallen counter on every drop
     speed: [...DROPS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
@@ -32,7 +32,24 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
+    // flat, dry ground: a lake beside a pit cut into a hill read as "landing in a pond", not a 1x1 hole
+    const flat = (cx, cz) => {
+      const c = ctx.surface(cx, cz)
+      if (!c || !['grass_block', 'dirt'].includes(c.name) || c.position.y < 62) return null
+      for (let dx = -6; dx <= 6; dx++) {
+        for (let dz = -6; dz <= 6; dz++) {
+          const b = ctx.surface(cx + dx, cz + dz)
+          if (!b || /water|lava|ice/.test(b.name)) return null
+          if (Math.abs(dx) <= 3 && Math.abs(dz) <= 3 && (Math.abs(b.position.y - c.position.y) > 1 || !['grass_block', 'dirt'].includes(b.name))) return null
+        }
+      }
+      return c.position
+    }
+    let g = null
+    for (let r = 0; r <= 96 && !g; r += 8) {
+      for (const [dx, dz] of [[0, 0], [r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, -r], [r, -r], [-r, r]]) { if ((g = flat(sp.x + dx, sp.z + dz))) break }
+    }
+    if (!g) { ctx.log('no flat dry spot: falling back to findLand'); g = ctx.findLand(sp.x, sp.z) }
     if (!g) throw new Error('no dry land')
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
@@ -40,6 +57,9 @@ module.exports = {
     // only the shaft is cleared: a 21x21 pit carved into the hill read as command-built in every landing
     const H = Math.min(DROPS[DROPS.length - 1].h + 4, 318 - floor)
     for (let y0 = floor + 1; y0 <= floor + H; y0 += 40) await ctx.cmd(`/fill ${x - 2} ${y0} ${z - 2} ${x + 2} ${Math.min(y0 + 39, floor + H)} ${z + 2} air`)
+    // level the patch round the hole (the flat check allows +-1) so the 1x1 reads as a hole in a lawn
+    await ctx.cmd(`/fill ${x - 3} ${floor + 1} ${z - 3} ${x + 3} ${floor + 3} ${z + 3} air`)
+    await ctx.cmd(`/fill ${x - 3} ${floor} ${z - 3} ${x + 3} ${floor} ${z + 3} grass_block`)
     await ctx.cmd(`/setblock ${x} ${floor} ${z} water`)
     await ctx.cmd(`/setblock ${x} ${floor - 1} ${z} stone`)
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16], 'diamond_pickaxe'])
@@ -75,8 +95,9 @@ module.exports = {
       let splashed = false, glanced = false
       for (let k = 0; k < 260 && !ctx.died; k++) {
         await bot.waitForTicks(1)
-        // long falls: a glance up at how far it's come and back down (a beat in the middle of the fall)
-        if (!glanced && d.h >= 150 && k === 30) { glanced = true; ctx.easeLook(bot.entity.yaw, 1.2, 350).then(() => ctx.easeLook(bot.entity.yaw, -1.4, 450)) }
+        // long falls: a look out over the land rushing up (each high drop turns a different way), then back down
+        // at the hole (the glance UP showed the same empty sky four times)
+        if (!glanced && d.h >= 150 && k === 30) { glanced = true; const turn = [1.3, -1.3, 2.4, -2.4][i % 4]; ctx.easeLook(bot.entity.yaw + turn, -0.35, 450).then(() => ctx.easeLook(bot.entity.yaw, -1.4, 450)) }
         if (!splashed && bot.entity.position.y < floor + 1.2) {
           splashed = true
           if (!d.off) { ctx.mark(`splash${n}`); ctx.mark('splash'); ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: x + 0.5, y: floor + 0.95, z: z + 0.5 }, { count: 30 }) }
