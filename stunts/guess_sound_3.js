@@ -10,7 +10,7 @@ module.exports = guessSound({
   expectDeath: true,
   difficulty: 'hard',   // a creeper blast from 3 blocks is ~17 on normal (survivable), ~25 on hard
   endAfter: null,
-  edit: { deathScreen: true, endAfter: 'death:1.6' },
+  edit: { deathScreen: true, endAfter: 'death:1.3' },
   rounds: [
     { mob: 'chicken', room: 'farm', sound: 'entity.chicken.ambient', label: 'EASY', answer: 'CHICKEN', react: 'call', leanTicks: 5, lookY: 0.6 },
     { mob: 'turtle', room: 'beach', sound: 'entity.turtle.ambient_land', label: 'MEDIUM', answer: 'TURTLE', react: 'call', leanTicks: 5, lookY: 0.3, lookDown: 0.05, color: 'green' },
