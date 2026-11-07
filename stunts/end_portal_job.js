@@ -15,7 +15,7 @@ const { openSpots, clearPlants } = require('./_site')
 // an eye every 9, 8, 7, 6, 5, 4 ticks, the last ring 3 (a 2-tick hold at its top speed)
 // the last two rings flick straight onto each frame (ms -1: no ease) and hold 4 and 3 ticks: the look
 // stays on the frame past the eye showing (a 1-tick ease + 2-tick hold left as the eye came in)
-const FILL = [{ ms: 300, hold: 3 }, { ms: 250, hold: 3 }, { ms: 200, hold: 3 }, { ms: 150, hold: 3 }, { ms: 100, hold: 3 }, { ms: -1, hold: 4 }, { ms: -1, hold: 3 }]
+const FILL = [{ ms: 300, hold: 3 }, { ms: 250, hold: 3 }, { ms: 200, hold: 3 }, { ms: 150, hold: 3 }, { ms: 100, hold: 3 }, { ms: -1, hold: 3 }, { ms: -1, hold: 2 }]   // the flicks settle a tick on the frame before the click
 const N = FILL.length
 
 module.exports = {
@@ -42,10 +42,11 @@ module.exports = {
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
     // the plains patch is small and the located point moves between runs: a few starts around it
+    // at least N + 1 spots: 7 rings to fill and one left empty for the ending
     let lastErr = null
     this.spots = null   // not a previous attempt's
     for (const [dx, dz] of [[0, 0], [-24, 0], [0, -24], [-24, -24], [24, 24], [-48, 0], [0, 24]]) {
-      try { this.spots = await openSpots(ctx, g.x + dx, g.z + dz, Array(RINGS).fill(2), { axis: 'x', gap: 8, foot: [0, 4, 0, 6], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N, spread: 96 }); break } catch (e) { lastErr = e; ctx.log('rings from', dx, dz, ':', e.message) }
+      try { this.spots = await openSpots(ctx, g.x + dx, g.z + dz, Array(RINGS).fill(2), { axis: 'x', gap: 8, foot: [0, 4, 0, 6], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N + 1, spread: 96 }); break } catch (e) { lastErr = e; ctx.log('rings from', dx, dz, ':', e.message) }
     }
     if (!this.spots) throw lastErr
     // the last ring filled next to a spare empty ring that can be seen from in front of it (the ending
@@ -147,8 +148,9 @@ module.exports = {
       ctx.mark('place', { x: fx, y: fy, z: fz, eye: true })   // vanilla timing: the eye shows 1 tick after the use
       bot.swingArm()   // the swing on the click, the eye a tick later
       bot._client.write('block_place', { hand: 0, location: { x: fx, y: fy, z: fz }, direction: 1, cursorX: 0.5, cursorY: 0.8125, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
-      if (used % 16 === 0) ctx.select(used / 16)   // the stack just ran out: straight onto the next (it waited for the next eye: 1.6 s on a bare arm)
+
       if (wait) await bot.waitForTicks(wait)
+      if (used % 16 === 0) ctx.select(used / 16)   // the stack ran out (its last eye has shown): onto the next
     }
     ctx.mark('start')
     for (let r = 0; r < N; r++) {
@@ -169,7 +171,7 @@ module.exports = {
       }
       ctx.mark('ring', { n: r })
       portalAt = null
-      for (let k = 0; k < 11; k++) await (k === 0 ? eye(fr[k], 250, hold, 1) : eye(fr[k], ms, hold))   // the first one a full turn (from the ring's middle) and a settle
+      for (let k = 0; k < 11; k++) await (k === 0 ? eye(fr[k], 250, hold, 1) : eye(fr[k], ms, hold, ms < 0 ? 1 : 0))   // the first one a full turn (from the ring's middle) and a settle
       // backwards out over the south frame, eyes on the far side of the ring (no look straight down),
       // and the 12th eye from outside
       ctx.mark('hop', { n: r }); ctx.mark(`hopA${r}`)
