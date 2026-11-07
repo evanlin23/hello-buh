@@ -107,9 +107,13 @@ module.exports = {
     // one straight down at us: look up, see it, side-step
     const p0 = bot.entity.position.clone()
     anvil(p0.x, p0.z, H - 2, 2)
-    await ctx.easeLook(yaw0 + 0.1, 1.25, 300)
+    // eyes on THE anvil: it sits beside the crosshair and grows (a fixed look up left it a dot by the sun)
+    await bot.waitForTicks(2)
+    const fall = () => Object.values(bot.entities).filter(e => e.name === 'falling_block' && Math.hypot(e.position.x - p0.x, e.position.z - p0.z) < 1.5).sort((a, b) => b.position.y - a.position.y)[0]
+    const f0 = fall()
+    if (f0) await ctx.easeLookAt(f0.position.offset(0.25, -0.3, 0), 300); else await ctx.easeLook(yaw0, 1.45, 300)
     ctx.mark('above')
-    await ctx.easeLook(yaw0 + 0.3, 1.05, 400)                    // eyes on it (a held look up read as frozen)
+    for (let k = 0; k < 8; k++) { const f = fall(); if (f) bot.lookAt(f.position.offset(0.25, -0.3, 0), true); await bot.waitForTicks(1) }
     bot.setControlState('sprint', true)
     ctx.easeLook(yaw0 - 0.35, 0.05, 500); await step(['right'], 9)
     bot.setControlState('sprint', false)
@@ -159,7 +163,7 @@ module.exports = {
 
     // ---- phase 3: creepers ----
     ctx.mark('creepers')
-    // the chaos can hurt but not kill until the one with his name on it (resistance IV: 80% off,
+    // the chaos can hurt but not kill until the one with his name on it (resistance II: 40% off,
     // hearts still drop); a stray creeper ended it early twice and the finale never played
     bot.chat('/effect give @s resistance infinite 1 true')
     rain.tnt = 0; rain.anvil = 6; rain.creeper = 14
