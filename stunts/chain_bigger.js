@@ -81,6 +81,8 @@ module.exports = {
         await fill(e0, 1, 6, e0 + 9, 1, 6, 'tnt')
         await fill(e0, 1, 9, e0 + 9, 1, 18, 'tnt')
         await fill(e0, 1, 21, e0 + 9, 10, 30, 'tnt')
+        // deep dirt under the TNT: a crater past the 10-block base can open an aquifer (water in it)
+        for (let n0 = -6; n0 <= 38; n0 += 4) await fill(e0 - 12, -30, n0, e0 + 22, -11, n0 + 3, 'dirt')
         break
       }
       // spine supports and dust/repeaters

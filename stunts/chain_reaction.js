@@ -172,7 +172,7 @@ module.exports = {
     await put(eEnd + 4, 0, nF, 'redstone_wire')
     let gi = 0, e = eEnd + 5
     for (; e + 1 <= 12; e += 2) {
-      await put(e, 0, nF, 'repeater[facing=west,delay=3]')
+      await put(e, 0, nF, 'repeater[facing=west,delay=4]')
       await put(e + 1, 0, nF, T)
       await put(e + 1, 0, nF + 1, 'piston[facing=up]')
       await put(e + 1, 1, nF + 1, `${GLASS[gi++ % GLASS.length]}_stained_glass`)
@@ -202,7 +202,7 @@ module.exports = {
     // H: TNT line (every 2 blocks) east along nH, then a 3x3x3, a 5x5x5 and a 9x6x9
     // deep dirt under the TNT: the pile's crater went past the 10-block base into an aquifer (water
     // in the crater on the payoff)
-    for (let n0 = nH - 8; n0 <= nH + 10; n0 += 6) await fill(-22, -24, n0, 34, -11, Math.min(nH + 10, n0 + 5), 'dirt')
+    for (let n0 = nH - 10; n0 <= nH + 14; n0 += 4) await fill(-24, -30, n0, 44, -11, n0 + 3, 'dirt')   // (a fallback site by the sea: aquifer water poured into the crater)
     for (let x = eStop + 1; x <= -5; x += 2) await put(x, 1, nH, 'tnt')
     // each stage is lit by one TNT 3 blocks out from the last, so every stage gets its own boom
     await fill(-1, 1, nH - 1, 1, 3, nH + 1, 'tnt')

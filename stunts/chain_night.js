@@ -143,7 +143,7 @@ module.exports = {
     for (const e of [-1, 2, 5]) await put(e, 1, 14, 'tnt')
     await fill(8, 1, 14, 16, 5, 22, 'tnt')
     // deep dirt under the TNT (a crater that reaches an aquifer fills with water)
-    for (let n0 = -6; n0 <= 22; n0 += 4) await fill(-24, -24, n0, 18, -11, n0 + 3, 'dirt')
+    for (let n0 = -8; n0 <= 30; n0 += 3) await fill(-28, -30, n0, 24, -11, n0 + 2, 'dirt')
 
     await clearMobs(ctx, X - 12, Z, 80)
     await c('/kill @e[type=item]')
