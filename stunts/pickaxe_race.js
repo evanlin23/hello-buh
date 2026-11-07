@@ -1,7 +1,8 @@
 // "ranking every pickaxe ⛏️ 💀" (~18 s, five beats): a stone wall in a field; wooden, stone, iron,
 // diamond and netherite pickaxe each mine a fresh 3x3 section of it (side by side), with real
 // survival digging (bot.dig, the server checks the dig time). Each beat gets a subtitle with the
-// dig time measured in the recording. The netherite one has efficiency V: an instant-mine finale.
+// tier per tool. Gold (fastest plain pickaxe) breaks on its last block; netherite + efficiency V
+// (with the Haste) instamines; then a TNT takes the whole wall out: "TNT: ??? tier".
 // Everything is mined under Haste V (invisible) so the five beats fit in a Short;
 // the ranking and the ratios between the tools are vanilla's.
 
@@ -11,8 +12,8 @@ const TOOLS = [   // seven beats, ~30 s (owner: 30 s minimum)
   { item: 'iron_pickaxe', label: 'iron', result: 'iron: B tier' },
   { item: 'diamond_pickaxe', label: 'diamond', result: 'diamond: A tier' },
   { item: 'netherite_pickaxe', label: 'netherite', result: 'netherite: A tier' },
-  { item: 'golden_pickaxe', label: 'gold', result: 'gold: S tier?? (it breaks)' },    // vanilla: gold is the fastest plain pickaxe
-  { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'netherite + efficiency V', result: 'efficiency V: GOD tier' }
+  { item: 'golden_pickaxe[damage=23]', label: 'gold', result: 'gold: S tier?? (broke)' },    // fastest plain pickaxe; 9 uses left: it breaks on the last block
+  { item: 'netherite_pickaxe[enchantments={efficiency:5}]', label: 'efficiency V + haste', result: 'efficiency V + haste: GOD tier' }   // the instamine needs the Haste: say so
 ]
 const SPACING = 4             // wall sections: 3 wide + a 1-block pillar between them
 
@@ -24,6 +25,7 @@ function subs () {
     out.push(['beat', `${t.label}...`, 9, i])
     out.push(['mined', t.result, 9, i])
   })
+  out.push(['boom', 'TNT: ??? tier', 1.6, 0])
   return out
 }
 
@@ -32,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'instamine', startAt: 'beat:-0.2', endAfter: 'overview:0.5', subs: subs() }
+    return { caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'boom:1.0', subs: subs() }
   },
 
   async setup (ctx) {
@@ -43,7 +45,7 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (const [z0, z1] of [[z - 12, z + 6], [z + 7, z + 28]]) {   // room behind to back up for the finale
+    for (const [z0, z1] of [[z - 40, z - 24], [z - 23, z - 7], [z - 6, z + 10], [z + 11, z + 22]]) {   // a deep field: no cliff or snowy hill shows through the windows
       await ctx.cmd(`/fill ${x - 18} ${floor + 1} ${z0} ${x + 22} ${floor + 12} ${z1} air`)
       await ctx.cmd(`/fill ${x - 18} ${floor} ${z0} ${x + 22} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 18} ${floor - 3} ${z0} ${x + 22} ${floor - 1} ${z1} dirt`)
@@ -55,12 +57,11 @@ module.exports = {
     await ctx.cmd(`/fill ${xa} ${floor + 1} ${this.wz} ${xb} ${floor + 4} ${this.wz} stone`)
     // pillars between the sections in cobblestone, so each 3x3 reads as its own wall
     for (let i = 0; i <= TOOLS.length; i++) await ctx.cmd(`/fill ${this.x0 - 1 + i * SPACING} ${floor + 1} ${this.wz} ${this.x0 - 1 + i * SPACING} ${floor + 4} ${this.wz} cobblestone`)
-    await ctx.hotbar(TOOLS.map(t => t.item))
+    await ctx.hotbar([...TOOLS.map(t => t.item), 'tnt', 'flint_and_steel'])
     await ctx.cmd('/effect give @s haste infinite 4 true')
     await ctx.cmd('/effect give @s saturation infinite 1 true')
     // stand back so the whole section stays in frame (reach raised to match, invisible on screen)
-    await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 7')
-    this.stand = (i) => ({ x: this.x0 + i * SPACING + 1.5, z: this.wz + 6.0 })
+    this.stand = (i) => ({ x: this.x0 + i * SPACING + 1.5, z: this.wz + 4.0 })   // within vanilla's 4.5-block reach
     const s = this.stand(0)
     await ctx.tpCheck(s.x, floor + 1, s.z, 180, 20)
     await ctx.cmd('/gamemode survival')
@@ -129,26 +130,39 @@ module.exports = {
       ctx.log(TOOLS[i].label, 'mined in', ticks, 'ticks; blocks left', left)
       if (left) return false
       ctx.mark('mined', { n: i, ticks, secs: (ticks / 20).toFixed(1) })
+      if (TOOLS[i].item.startsWith('golden')) { ctx.sound('entity.item.break', 1); ctx.log('gold left in hand:', bot.heldItem && bot.heldItem.name) }
       // look through the hole a moment
       await ctx.easeLook(0, -0.1, fast ? 250 : 150)
       if (fast) await bot.waitForTicks(4)        // (14 read as a 0.7 s pause before the finale)
     }
-    // finale: back up and left until all five windows are in frame, eyes on the middle of the wall
+    // finale: "TNT: ??? tier". Place a TNT at the foot of the wall, light it, back off, and it takes the wall out
     ctx.mark('finale')
-    const mid = new Vec3(this.x0 + SPACING * (TOOLS.length - 1) / 2 + 1.5, floor + 2.5, wz)
-    bot.setControlState('back', true); bot.setControlState('left', true)
-    for (let k = 0; k < 56; k++) {
-      if (k === 38) bot.setControlState('left', false)
-      const eye = bot.entity.position.offset(0, 1.62, 0), d = mid.minus(eye)
-      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
-      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-      await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.2, true)
+    const tp = { x: this.x0 + SPACING * (TOOLS.length - 1) - 1, y: floor, z: wz + 1 }   // the grass in front of the pillar left of the last section
+    ctx.select(TOOLS.length)
+    await ctx.easeLookAt(new Vec3(tp.x + 0.5, floor + 1, tp.z + 0.5), 300)
+    bot._client.write('block_place', { hand: 0, location: tp, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+    bot.swingArm(); ctx.sound('block.grass.place', 1)
+    await bot.waitForTicks(5)
+    ctx.select(TOOLS.length + 1)
+    await bot.waitForTicks(3)
+    bot._client.write('block_place', { hand: 0, location: { x: tp.x, y: floor + 1, z: tp.z }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+    bot.swingArm(); ctx.sound('item.flintandsteel.use', 1)
+    ctx.mark('lit')
+    // back off watching the fuse (4 s)
+    const tntAt = new Vec3(tp.x + 0.5, floor + 1.5, tp.z + 0.5)
+    let boomed = false
+    const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
+    bot._client.on('explosion', onBoom)
+    bot.setControlState('back', true)
+    for (let k = 0; k < 110 && !boomed; k++) {
+      if (k === 30) bot.setControlState('back', false)
+      const eye = bot.entity.position.offset(0, 1.62, 0), d = tntAt.minus(eye)
+      await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
       await bot.waitForTicks(1)
     }
-    bot.setControlState('back', false); bot.setControlState('left', false)
-    ctx.mark('overview')                          // all seven windows in frame: the payoff
-    await bot.waitForTicks(4)
-    ctx.mark('finale_end')
+    bot.setControlState('back', false)
+    if (!boomed) { ctx.log('no explosion'); return false }
+    await bot.waitForTicks(24)
     bot.removeListener('physicsTick', onTick)
     await bot.waitForTicks(10)
     return !ctx.died
