@@ -9,10 +9,10 @@ const TIERS = [
   { n: 1, dx: -60, size: [1, 1, 1], view: 7, label: '1 TNT' },
   { n: 10, dx: -45, size: [5, 2, 1], view: 11, label: '10 TNT' },
   { n: 100, dx: -24, size: [5, 4, 5], view: 17, label: '100 TNT' },
-  { n: 1000, dx: 16, size: [10, 10, 10], view: 32, label: '1000 TNT' },
+  { n: 1000, dx: 16, size: [10, 10, 10], view: 40, label: '1000 TNT' },
   { n: 1000, dx: 92, size: [10, 10, 10], on: true, label: "1000 TNT... but I'm ON it" }
 ]
-const XL = -72, XR = 108, ZB = -26, ZF = 40    // the cleared field around the piles (relative)
+const XL = -100, XR = 140, ZB = -60, ZF = 60    // the cleared field around the piles (relative)
 
 const speed = []
 for (let i = 1; i <= TIERS.length; i++) {
@@ -112,8 +112,12 @@ module.exports = {
         await ctx.easeLook(W, -0.45, 300)
         bot.setControlState('sprint', true); bot.setControlState('forward', true)
         ctx.easeLook(W + 0.1, -0.2, 500)
-        for (let k = 0; k < 80 && !ctx.died; k++) await bot.waitForTicks(1)
-        bot.setControlState('forward', false); bot.setControlState('sprint', false)
+        // a glance back over the shoulder just as it goes: the blast is on screen when it gets him
+        for (let k = 0; k < 80 && !ctx.died; k++) {
+          if (ctx.tick - litAt === 72) { bot.setControlState('forward', false); bot.setControlState('sprint', false); bot.setControlState('back', true); ctx.easeLook(W + Math.PI * 0.85, -0.35, 350) }
+          await bot.waitForTicks(1)
+        }
+        bot.clearControlStates()
         ctx.mark('boom5')
         for (let k = 0; k < 40; k++) await bot.waitForTicks(1)          // the death screen
         return booms > 0 && ctx.died
@@ -153,12 +157,12 @@ module.exports = {
       }
       ctx.mark(`boom${n}`)
       // watch the chain: the look rises with the blast (flung TNT), the bigger the higher
-      const up = Math.min(0.55, 0.12 + t.h * 0.045)
+      const up = n === 4 ? 0.12 : Math.min(0.5, 0.12 + t.h * 0.045)   // the 1000 blast stays in frame
       ctx.easeLook(bot.entity.yaw + 0.15, up, 700)
       const cap = [20, 26, 40, 72][i]       // ticks of chain on screen at most (3 s+ read as a gap)
       for (let k = 0; k < cap && ctx.tick - lastBoom < 14; k++) {
-        if (k === 22) ctx.easeLook(bot.entity.yaw - 0.3, up * 0.6, 600)
-        if (k === 44 && n === 4) ctx.easeLook(bot.entity.yaw + 0.2, 0.9, 700)      // flung TNT coming back down
+        if (k === 22) ctx.easeLook(bot.entity.yaw - 0.3, n === 4 ? 0.05 : up * 0.6, 600)
+        if (k === 46 && n === 4) ctx.easeLook(bot.entity.yaw + 0.35, 0.0, 700)
         await bot.waitForTicks(1)
       }
       if (n === 4) {
@@ -173,8 +177,8 @@ module.exports = {
         await bot.waitForTicks(2)
         ctx.mark('rim4b')
         ctx.mark(`crater${n}`)
-        await ctx.easeLook(0.45, -0.55, 700)
-        await ctx.easeLook(-0.35, -0.5, 800)
+        await ctx.easeLook(0.45, -0.95, 700)
+        await ctx.easeLook(-0.35, -0.85, 800)
       } else {
         // walk up to the crater, looking into it
         await ctx.easeLook(bot.entity.yaw - 0.15, -0.2, 300)
@@ -182,13 +186,13 @@ module.exports = {
         for (let k = 0; k < 40; k++) {
           const p = bot.entity.position
           const ahead = bot.blockAt(new Vec3(Math.floor(p.x), floor, Math.floor(p.z - 2)))
-          if (!ahead || ahead.name === 'air' || p.z < t.zf + 3) break
+          if (!ahead || ahead.name === 'air' || p.z < t.zf + 2) break
           await bot.waitForTicks(1)
         }
         bot.setControlState('forward', false)
         ctx.mark(`crater${n}`)
-        await ctx.easeLook(bot.entity.yaw + 0.3, -0.85, 450)
-        await ctx.easeLook(bot.entity.yaw - 0.4, -0.75, 400)
+        await ctx.easeLook(bot.entity.yaw + 0.3, -1.0, 450)
+        await ctx.easeLook(bot.entity.yaw - 0.4, -0.9, 400)
       }
     }
     return false
