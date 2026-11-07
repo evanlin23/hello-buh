@@ -1,0 +1,310 @@
+{
+  "name": "it_rains",
+  "caption": "minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80",
+  "youtube": {
+    "title": "minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80 #minecraft #shorts",
+    "description": "minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "ayuda.mp3",
+    "title": "AYUDA",
+    "artist": "MXRCVRY",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "tnt",
+    "drop_in_song_s": 9.0,
+    "drop_in_short_s": 8.65,
+    "song_start_s": 0.35
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 31.7,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 38697792,
+    "sha256": "540e9dc32aa0b8e45319190381a8fff6a2d953e296b7b4f25554784f3d0d68da"
+  },
+  "edit": {
+    "caption": "minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80",
+    "red": "creepers",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "tnt",
+    "deathScreen": true,
+    "startAt": "hook:-0.05",
+    "endAfter": "death:1.2",
+    "subs": [
+      [
+        "hook",
+        "it rains anvils",
+        2,
+        0
+      ],
+      [
+        "wall",
+        "uhh",
+        1.2,
+        0
+      ],
+      [
+        "ring",
+        "they are surrounding me",
+        1.6,
+        0
+      ],
+      [
+        "above",
+        "wait...",
+        1.2,
+        0
+      ],
+      [
+        "dodged",
+        "TOO close",
+        1.4,
+        0
+      ],
+      [
+        "tnt",
+        "then TNT",
+        2,
+        0
+      ],
+      [
+        "tnt_wall",
+        "a TNT wall??",
+        1.6,
+        0
+      ],
+      [
+        "close_tnt",
+        "ow",
+        1,
+        0
+      ],
+      [
+        "creepers",
+        "then CREEPERS",
+        2,
+        0
+      ],
+      [
+        "more",
+        "MORE of them",
+        1.4,
+        0
+      ],
+      [
+        "run",
+        "nope nope nope",
+        1.6,
+        0
+      ],
+      [
+        "keep",
+        "they keep coming",
+        1.6,
+        0
+      ],
+      [
+        "everything",
+        "then EVERYTHING",
+        2.4,
+        0
+      ],
+      [
+        "hiss",
+        "tssss",
+        1.2,
+        0
+      ]
+    ],
+    "args": [
+      "--caption",
+      "minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80",
+      "--red",
+      "creepers",
+      "--subs",
+      "[[\"hook\",\"it rains anvils\",2,0],[\"wall\",\"uhh\",1.2,0],[\"ring\",\"they are surrounding me\",1.6,0],[\"above\",\"wait...\",1.2,0],[\"dodged\",\"TOO close\",1.4,0],[\"tnt\",\"then TNT\",2,0],[\"tnt_wall\",\"a TNT wall??\",1.6,0],[\"close_tnt\",\"ow\",1,0],[\"creepers\",\"then CREEPERS\",2,0],[\"more\",\"MORE of them\",1.4,0],[\"run\",\"nope nope nope\",1.6,0],[\"keep\",\"they keep coming\",1.6,0],[\"everything\",\"then EVERYTHING\",2.4,0],[\"hiss\",\"tssss\",1.2,0]]",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "hook:-0.05",
+      "--end_after",
+      "death:1.2"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 387,
+      "y": 86,
+      "z": -53
+    },
+    "biome": "minecraft:plains",
+    "ticks": 693,
+    "seconds": 34.65,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        },
+        {
+          "insertion": "a4753532-4351-45db-8048-c7834a39adea",
+          "hover_event": {
+            "name": {
+              "translate": "entity.minecraft.creeper"
+            },
+            "action": "show_entity",
+            "id": "minecraft:creeper",
+            "uuid": [
+              -1535822542,
+              1129399771,
+              -2142713981,
+              1245294058
+            ]
+          },
+          "translate": "entity.minecraft.creeper"
+        }
+      ],
+      "translate": "death.attack.explosion.player"
+    },
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 2.15,
+        "event": "hook"
+      },
+      {
+        "t": 4.7,
+        "event": "wall"
+      },
+      {
+        "t": 6.75,
+        "event": "above"
+      },
+      {
+        "t": 7.75,
+        "event": "dodged"
+      },
+      {
+        "t": 8.75,
+        "event": "ring"
+      },
+      {
+        "t": 10.75,
+        "event": "tnt"
+      },
+      {
+        "t": 13.15,
+        "event": "tnt_wall"
+      },
+      {
+        "t": 16.5,
+        "event": "hurt",
+        "type": "explosion"
+      },
+      {
+        "t": 16.55,
+        "event": "close_tnt"
+      },
+      {
+        "t": 18.4,
+        "event": "creepers"
+      },
+      {
+        "t": 20.2,
+        "event": "more"
+      },
+      {
+        "t": 23.15,
+        "event": "run"
+      },
+      {
+        "t": 26.55,
+        "event": "keep"
+      },
+      {
+        "t": 28.05,
+        "event": "everything"
+      },
+      {
+        "t": 30,
+        "event": "hurt",
+        "type": "player_explosion"
+      },
+      {
+        "t": 31.25,
+        "event": "hiss"
+      },
+      {
+        "t": 32.6,
+        "event": "hurt",
+        "type": "player_explosion"
+      },
+      {
+        "t": 32.6,
+        "event": "death"
+      },
+      {
+        "t": 34.65,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "a4aa7e2dc806cb6223d50f174c5b485810f4086a",
+    "rendered_at": "2026-11-07T14:35:02.668Z",
+    "head_at_publish": "a4aa7e2dc806cb6223d50f174c5b485810f4086a",
+    "stunt": "stunts/it_rains.js",
+    "source_snapshot": [
+      "source/it_rains.js",
+      "source/plateau.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout a4aa7e2dc806",
+    "gunzip -c shorts/it_rains/recording.json.gz > work/it_rains.rec.json",
+    "node render.js work/it_rains.rec.json work/it_rains.frames 60 1080 1011",
+    "python3 audio.py work/it_rains.rec.json work/it_rains.wav",
+    "python3 edit.py --frames work/it_rains.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/it_rains.rec.json --audio work/it_rains.wav --caption \"minecraft but it rains anvils... then TNT... then creepers \ud83d\udc80\" --red creepers --subs \"[[\\\"hook\\\",\\\"it rains anvils\\\",2,0],[\\\"wall\\\",\\\"uhh\\\",1.2,0],[\\\"ring\\\",\\\"they are surrounding me\\\",1.6,0],[\\\"above\\\",\\\"wait...\\\",1.2,0],[\\\"dodged\\\",\\\"TOO close\\\",1.4,0],[\\\"tnt\\\",\\\"then TNT\\\",2,0],[\\\"tnt_wall\\\",\\\"a TNT wall??\\\",1.6,0],[\\\"close_tnt\\\",\\\"ow\\\",1,0],[\\\"creepers\\\",\\\"then CREEPERS\\\",2,0],[\\\"more\\\",\\\"MORE of them\\\",1.4,0],[\\\"run\\\",\\\"nope nope nope\\\",1.6,0],[\\\"keep\\\",\\\"they keep coming\\\",1.6,0],[\\\"everything\\\",\\\"then EVERYTHING\\\",2.4,0],[\\\"hiss\\\",\\\"tssss\\\",1.2,0]]\" --death_screen death --start_at hook:-0.05 --end_after death:1.2 --out out/it_rains.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 9: 4-phase escalating rain (anvils, TNT, creepers, everything); frame review + retention + minecraft audits ready (independent reviewer). Nitpick: ring spin shows ~0.7 s of sky before the ring drops in.",
+  "published_at": "2026-11-07T14:56:42.843Z"
+}
