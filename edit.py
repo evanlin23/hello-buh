@@ -455,31 +455,69 @@ def hud_ticks(timeline, duration, keep_inventory=False):
 
 
 def snap_hotbar(timeline):
-    """Client-side placement prediction: a stunt's 'place' mark is the tick the item was used; the
-    server's slot update (one fewer in the stack) lands 0-4 ticks later. Move each such update onto
-    its own mark (the latest unused one at or before it), as render.js does with the placed block (the
-    count dropped a tick after the block: lapse_castle). Done on the recording's own timeline, before
-    any time-lapse warp: on the warped one a 200 ms window spanned 2-3 placements and the counts ran a
-    placement or more ahead (lapse_house, minecraft-audit)."""
-    places = sorted(e["t"] for e in timeline or [] if e["event"] == "place")
-    if not places:
+    """Client-side use prediction: a stunt's 'place' mark is the tick an item was used, and the
+    client takes one off the selected stack right then (BlockItem.place / EnderEyeItem shrink the
+    stack client-side). The server's slot updates land 0-4 ticks later and in bursts at speed (two
+    uses in one update: the counts moved 4 -> 2 -> 0, end_portal_job). So: every place mark is a
+    hotbar change of exactly -1 on its own tick, and a server update that only catches up with those
+    uses (same item, count between the prediction and the prediction + the uses still unconfirmed) is
+    absorbed. Anything else (a refill, a new item, a use the server never confirmed within 500 ms)
+    is shown as the server sent it. Done on the recording's own timeline, before any time-lapse warp."""
+    if not any(e["event"] == "place" for e in timeline or []) or not any(e["event"] == "hotbar" for e in timeline or []):
         return timeline
-    timeline = [dict(e) for e in timeline]
-    used, prev = set(), None
+    norm = lambda n: (list(n) if isinstance(n, (list, tuple)) else ([n, 1] if n else None))
+    out, server, shown, pend = [], None, None, {}   # pend: slot -> [use times not yet confirmed]
+
+    def emit(t, base, items):
+        out.append({**base, "event": "hotbar", "t": t, "items": [list(x) if x else None for x in items]})
+
     for e in sorted(timeline, key=lambda e: e["t"]):
-        if e["event"] != "hotbar":
+        t = e["t"]
+        # uses the server never confirmed (no item was actually spent): back to the server's view
+        if server is not None:
+            for sl in list(pend):
+                if pend[sl] and t - pend[sl][0] > 500:
+                    t_exp = pend[sl][0] + 500
+                    pend[sl] = []
+                    if shown[sl] != server[sl]:
+                        shown = [list(x) if x else None for x in shown]
+                        shown[sl] = server[sl]
+                        emit(t_exp, e, shown)
+        if e["event"] == "hotbar":
+            items = [norm(n) for n in e["items"]]
+            if server is None:
+                server, shown = items, [list(x) if x else None for x in items]
+                out.append(e)
+                continue
+            server = items
+            new = [list(x) if x else None for x in shown]
+            for sl in range(len(items)):
+                c, p, q = items[sl], shown[sl] if sl < len(shown) else None, pend.get(sl, [])
+                pc = p[1] if p else 0
+                same = (c is None and p is None) or (c and p and c[0] == p[0]) or (c and p is None and q)
+                cc = c[1] if c else 0
+                if q and same and pc <= cc <= pc + len(q):
+                    pend[sl] = q[len(q) - (cc - pc):] if cc > pc else []   # the oldest uses are confirmed
+                    if cc == pc:
+                        new[sl] = c
+                else:
+                    pend[sl] = []
+                    new[sl] = c
+            if new != shown:
+                shown = new
+                emit(t, e, shown)
             continue
-        if prev is not None:
+        if e["event"] == "place" and shown is not None:
             sl = e.get("slot", 0)
-            a, b = prev["items"][sl] if sl < len(prev["items"]) else None, e["items"][sl] if sl < len(e["items"]) else None
-            dropped = a and (not b or (b[0] == a[0] and b[1] == a[1] - 1))
-            tp = next((p for p in reversed(places) if 0 <= e["t"] - p <= 200 and p not in used), None)
-            if dropped and tp is not None:
-                e["t"] = tp
-                used.add(tp)
-        prev = e
-    timeline.sort(key=lambda e: e["t"])
-    return timeline
+            it = shown[sl] if sl < len(shown) else None
+            if it:
+                shown = [list(x) if x else None for x in shown]
+                shown[sl] = [it[0], it[1] - 1] + list(it[2:]) if it[1] > 1 else None
+                pend.setdefault(sl, []).append(t)
+                emit(t, e, shown)
+        out.append(e)
+    out.sort(key=lambda e: e["t"])
+    return out
 
 
 def hud_states(timeline, duration):
