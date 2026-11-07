@@ -82,6 +82,7 @@ module.exports = {
     await vil(-2.8, -0.4, 120, 'fletcher', 'v_fletcher')   // clear of the respawn turn (at -2.4/1.6 he filled the frame)
     await vil(0.5, -6.5, 0, 'nitwit', 'v_nitwit')            // already in the line
     await vil(2.4, 1.9, -150, 'librarian', 'v_lib')
+    await c(`/summon villager ${X + 0.5} ${F + 30} ${Z + 72.5} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["v_lib2"],VillagerData:{profession:"minecraft:librarian",type:"minecraft:plains",level:2},Xp:1}`)   // her twin for L16 on: waits out past 64 blocks
     await c(`/summon iron_golem ${X + 0.5} ${F + 1} ${Z + 0.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["golem"],Rotation:[0f,0f]}`)
 
     await c('/clear @s')
@@ -117,6 +118,10 @@ module.exports = {
     const go = (on) => bot.setControlState('forward', on)
     // move a mob between scenes without the client's 3-tick glide (vanilla lerps any teleport under 64 blocks:
     // she slid onto the gold block on camera): out past 64 blocks and back, both snap
+    // a mob coming back from past 64 blocks shows ~2 ticks after its /tp, and one leaving vanishes ~2 ticks after:
+    // send them 2 ticks before a cut so they land on the cut frame (she popped in 3 frames after it)
+    const away = (tag) => say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} 0 0`)
+    const onCut = async (moves, ...cutArgs) => { moves(); await bot.waitForTicks(2); await cut(...cutArgs) }
     const put = async (tag, x, z, yaw) => {
       say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} ${yaw} 0`); await bot.waitForTicks(2)
       say(`/tp @e[tag=${tag}] ${X + x} ${F + 1} ${Z + z} ${yaw} 0`); await bot.waitForTicks(5)   // she re-enters tracking a few ticks after the hop back (popped in 3 frames after the cut)
@@ -221,6 +226,7 @@ module.exports = {
       if (alive()) look(k)
     })
     go(false)
+    away('v_lib')   // off the plaza while it's out of shot (L07 brings her into the doorway on the cut)
     // L06: so I stopped dying (over the cactus death screen). I moved into a house made of hay
     let hay = false
     await line('L06', async (k, at) => {
@@ -231,8 +237,7 @@ module.exports = {
     })
     go(false)
     // L07: the librarian raised me. Bread. One more, just in case.
-    await put('v_lib', 14.5, -14.6, 180)
-    await cut(14.5, -18.5, P(14.5, 1.6, -14.6))
+    await onCut(() => say(`/tp @e[tag=v_lib] ${X + 14.5} ${F + 1} ${Z - 14.6} 180 0`), 14.5, -18.5, P(14.5, 1.6, -14.6))
     ctx.mark('face_on', { near: [X + 14.5, Z - 14.6, 1.2], head: true })
     let bread = 0
     await line('L07', async (k, at) => {
@@ -247,15 +252,17 @@ module.exports = {
     await line('L08', async (k, at) => { if (k >= at(3)) { from8 = from8 || { ...K.base }; K.turnTo(from8, P(0.5, 0.6, 0.5), (k - at(3)) / 20) } look(k) }, -0.25)   // a slow tilt down to the spot, still moving as the line ends; the cut and the golem's move fill the air (it held on a still shot: retention)
     ctx.mark('face_off')
     // L09: then I tripped (walking up the street, eyes on the lava block); L10: into it
-    say(`/tp @e[tag=golem] ${X + 2.4} ${F + 1} ${Z - 4.2} 0 0`)
     await cut(0.5, 11.8, P(0.5, 0.5, 4.5))
     say('/effect give @s minecraft:fire_resistance 30 0 true')   // the cauldron burns him only once he's out (no particles)
     // the next respawn lands straight in L11's shot, facing the lane (a cut there was undone by the server's late
     // respawn placement 1.5 s into the shot: Minecraft audit)
-    await ctx.cmd(`/spawnpoint @s ${X + 1} ${F + 1} ${Z + 5} 172 9`)   // off the lantern post (at 3/4 it filled a quarter of the frame)
+    await ctx.cmd(`/spawnpoint @s ${X + 1} ${F + 1} ${Z + 5} 174 8`)   // L11's first aim (at the nitwit at -3.5): no turn on the respawn   // off the lantern post (at 3/4 it filled a quarter of the frame)
     await line('L09', async (k, at) => {
       go(k > 2)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
+      // the golem walks off the spawn to his place by the lane (a /tp before the cut landed 2 ticks into the shot)
+      const g = Math.min(1, k / 36)
+      if (k <= 40) say(`/tp @e[tag=golem] ${(X + 0.5 + 1.9 * g).toFixed(3)} ${F + 1} ${(Z + 0.5 - 4.7 * g).toFixed(3)} ${g < 1 ? -158 : 0} 0`)
       K.base = K.aim(P(0.5, 0.5, 4.5)); look(k, 0, k > at(1) ? -0.25 : 0)
     })
     dead = false; trip = null; landed = 0
@@ -289,6 +296,7 @@ module.exports = {
       if (k === at(2) + 6) ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
       look(k)
     })
+    away('v_lib')   // out of the hay house while the street is in shot; L15 brings her into the lane on the cut
     // L13: every respawn costs one life; they've paid for mine since I was born (the empty street)
     await cut(0.5, 37.5, P(0.5, 1.5, 10))
     let from13 = null
@@ -305,17 +313,18 @@ module.exports = {
     await line('L14', async (k, at) => {
       if (k >= at(3) - 4) { from = from || { ...K.base }; K.turnTo(from, P(0.5, 1.0, -13), (k - at(3) + 5) / 10) }
       look(k)
-    }, -0.15)   // put('v_lib') adds 3 ticks before L15
+    }, -0.1)   // onCut adds 2 ticks before L15
     ctx.mark('face_off')
     // L15: now it's just her (alone in the line)
-    await put('v_lib', 0.5, -11.5, 0)
-    await cut(0.5, -2.5, P(0.5, 1.6, -11.5))
-    await line('L15', async (k) => { go(k < 14); look(k) })
+    await onCut(() => say(`/tp @e[tag=v_lib] ${X + 0.5} ${F + 1} ${Z - 11.5} 0 0`), 0.5, -2.5, P(0.5, 1.6, -11.5))
+    await line('L15', async (k, at) => {
+      go(k < 14); look(k)
+      if (k === 2) say(`/tp @e[tag=v_lib2] ${X + 0.5} ${F + 1} ${Z + 0.5} 0 0`)   // her twin onto the gold block, behind this shot
+    })
     go(false)
     // L16: she's already standing on my spawn
     say('/effect give @s minecraft:fire_resistance 30 0 true')
-    await put('v_lib', 0.5, 0.5, 0)
-    await cut(0.5, 7.4, P(0.5, 1.7, 0.5))
+    await onCut(() => away('v_lib'), 0.5, 7.4, P(0.5, 1.7, 0.5))   // the lane one leaves on the cut (one slid onto the gold block, then popped)
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
     await line('L16', async (k) => { go(k > 6 && k < 12); look(k) })
     go(false)
