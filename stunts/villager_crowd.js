@@ -26,7 +26,8 @@ module.exports = {
     subsY: 0.15, caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀', red: '200', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'behind',
     startAt: 'beat:-0.05', endAfter: 'behind:1.0',
     speed: CROWDS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
-    subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['back', 'nope', 1.0, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]]
+    // 'nope' and 'wait...' both sat on 28.4 s and drew over each other: nope first, wait... on its own mark
+    subs: [...CROWDS.map((c, i) => ['beat', c.sub, 1.6, i]), ['gem', 'emerald?', 1.0, 0], ['back', 'nope', 0.5, 0], ['turnaround', 'wait...', 0.8, 0], ['behind', 'BEHIND ME TOO', 1.0, 0]]
   },
 
   async setup (ctx) {
@@ -45,9 +46,9 @@ module.exports = {
     // it does ("Timeout waiting for 1 ticks"): pace the heavy commands by wall-clock time instead.
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     // deep and high enough that no cut hillside or trunkless canopy shows, even in the turnaround south
-    for (let z0 = z - 72; z0 <= z + 90; z0 += 4) {   // (z - 40 left a cut cliff face in the 200 shot)
-      const z1 = Math.min(z0 + 3, z + 90)
-      await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + 30} ${z1} air`)
+    for (let z0 = z - 72; z0 <= z + 150; z0 += 4) {   // (z - 40 left a cut cliff face in the 200 shot; z + 90 one behind the payoff)
+      const z1 = Math.min(z0 + 3, z + 150)
+      await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + (z0 > z + 60 ? 45 : 30)} ${z1} air`)
       await heavy(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
       await heavy(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
       // one biome everywhere (a crowd stood on a duller grass tint)
@@ -148,7 +149,8 @@ module.exports = {
         bot.chat(`/kill @e[type=villager,tag=crowd${i - 1}]`)
         await this.settle(ctx)
       }
-      await this.cut(ctx, sx + 0.5, floor + 1, z + 4.5)   // (z + 6.5 for the big crowds failed to stick at the 150: 5 failed runs)
+      // the 1 starts close (a 1.5 s walk-up to one villager's back was the hook); z + 6.5 for the big crowds failed to stick (5 runs)
+      await this.cut(ctx, sx + 0.5, floor + 1, i === 0 ? z + 1.3 : z + 4.5)
       if (i > 0) ctx.mark(`cut${i}b`)                    // after the tp: the 200 crowd's teleport took 1.65 s (a 1 s STILL)
       ctx.mark('beat', { n: c.n })                       // walk on the cut (a 3-tick wait read as a freeze)
       // walk up behind them
@@ -174,10 +176,34 @@ module.exports = {
       bot.setControlState('left', true); await bot.waitForTicks(c.n >= 20 ? 14 : 10); bot.setControlState('left', false)   // (long sweeps on the big crowds were 3.2 s gaps)
       if (c.n >= 20) { await bot.waitForTicks(3); bot.setControlState('right', true); await bot.waitForTicks(22); bot.setControlState('right', false) }
       await bot.waitForTicks(3)
+      if (c.n === 20) {
+        // a beat of its own: toss an emerald at their feet... every head drops to follow it, then snaps back
+        // to you as you walk up and take it back (server-side: the heads face the item, the renderer's
+        // face-the-camera window is off for it)
+        aim = new ctx.Vec3(sx + 0.5, floor + 1, z - 1.6)
+        await bot.waitForTicks(5)
+        ctx.mark('face_off')
+        bot.removeListener('physicsTick', track)
+        const gemTrack = () => bot.chat(`/execute as @e[type=villager,tag=on] at @s run tp @s ~ ~ ~ facing entity @e[type=item,limit=1,sort=nearest] feet`)
+        bot.on('physicsTick', gemTrack)
+        const em = bot.inventory.items().find(it => it.name === 'emerald')
+        ctx.mark('gem'); ctx.sound('entity.item.pickup', 0.4, 0.6)
+        try { await bot.toss(em.type, null, 1) } catch (e) { ctx.log('toss', e.message) }
+        await bot.waitForTicks(22)
+        for (let v = 0; v < 4; v++) ctx.sound('entity.villager.ambient', 0.7, 0.9 + v * 0.1)
+        bot.setControlState('forward', true); await bot.waitForTicks(6); bot.setControlState('forward', false)
+        bot.removeListener('physicsTick', gemTrack); bot.on('physicsTick', track)
+        ctx.mark('face_on', { near: [sx + 0.5, cz, 8 + depth] }); ctx.sound('entity.villager.no', 0.8)
+        aim = new ctx.Vec3(sx + 0.5, floor + 2.3, z - 3.5 - Math.min(depth, 6) / 2)
+        await bot.waitForTicks(10)
+      }
       if (!last) { ctx.mark('face_off'); bot.chat('/tag @e[type=villager,tag=on] remove on'); continue }
       // the 200: pillar up as they stare, every head tracking you up, and the overhead view finally shows the
       // size of it (from eye level 50 to 200 all looked the same); then "behind me too" from the pillar top
       ctx.select(3)
+      // eyes down on the block under you to place on it (pillaring while looking at the crowd isn't possible)
+      aim = null
+      await ctx.easeLook(bot.entity.yaw, -1.45, 250)
       ctx.mark('pillar')
       const fx = Math.floor(bot.entity.position.x), fz = Math.floor(bot.entity.position.z)
       for (let k = 0; k < 6; k++) {   // 6 up: the whole 200 below (4 tested; the Short ran 27.4 s)
@@ -192,22 +218,25 @@ module.exports = {
       ctx.log('pillar top at', bot.entity.position.y.toFixed(2), 'floor', floor)
       // the overhead reveal: a slow pan from the near rows out over the whole crowd, every face turned up at you
       ctx.mark('overhead')
-      for (let k = 0; k < 90; k++) {   // a slow pan over every upturned face (the orchestrator: lengthen the reveal, real motion)
-        const f = k / 89
+      for (let k = 0; k < 50; k++) {   // a pan over every upturned face (90 ticks was a 4.5 s gap with no new beat)
+        const f = k / 49
         aim = new ctx.Vec3(sx + 0.5 + Math.sin(f * Math.PI * 2) * 6, floor + 1, z - 3.5 - f * depth * 0.8)
         await bot.waitForTicks(1)
       }
       // finale: nope... turn round on the pillar... they were behind you too
       ctx.mark('back'); ctx.sound('entity.villager.no', 1)
+      await bot.waitForTicks(8)
       aim = null
+      // something behind you: a villager's "hmm" from the south motivates the turn
+      ctx.sound('entity.villager.ambient', 1.2, 0.8)
       ctx.mark('turnaround')
-      await ctx.easeLook(Math.PI * 0.999, -0.55, 1100)   // mineflayer yaw 0 = north; the crowd behind is south, below
+      await ctx.easeLook(Math.PI * 0.999, -0.7, 1100)   // -0.7: the horizon (and any far hillside) stays out of the top   // mineflayer yaw 0 = north; the crowd behind is south, below
       // their backs (seen through the turn)... then they all snap round too, at once
       ctx.mark('face_off'); ctx.mark('face_on', { near: [sx + 0.5, z + 7.5, 10] })
       ctx.mark('behind')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.ambient', 1.1, 0.7 + v * 0.1)
       // a slow look along them as every head turns up (no still hold on the reveal)
-      await ctx.easeLook(Math.PI * 0.999 + 0.35, -0.55, 1000)
+      await ctx.easeLook(Math.PI * 0.999 + 0.35, -0.7, 1000)
       ctx.mark('face_off')
     }
     bot.removeListener('physicsTick', track); bot.removeListener('physicsTick', aimTick)
