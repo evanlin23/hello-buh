@@ -19,7 +19,7 @@ module.exports = {
   name: 'story_runaway',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'why does everyone run from me 💀',
-  edit: { caption: 'why does everyone run from me 💀', red: 'run', story: 'stories/runaway', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true },
+  edit: { caption: 'why does everyone run from me 💀', red: 'run', story: 'stories/runaway', startAt: 'line:0', endAfter: 'boom:1.35', zoom: [['boom:0.1', 'boom:1.35', 1.12]], deathScreen: true },
   expectDeath: true,
   hideHand: true,          // no Steve arm: the narrator isn't Steve
 
@@ -359,9 +359,10 @@ module.exports = {
       ctx.particles('smoke', new ctx.Vec3(boomAt.x + fwd.x * d - fwd.z * side, eyeY - 1.7 + Math.random() * 1.2, boomAt.z + fwd.z * d + fwd.x * side), { count: 3 })
     }
     for (let i = 0; i < 4; i++) { await still(); await bot.waitForTicks(1) }
-    await line('L15', still, -0.15)
-    await line('L16', still, -0.15)
-    await line('L17', still, -0.1)
+    // the owner: the reveal is the boom itself, no "Oh. I'm the creeper." The Short ends 1.35 s after the blast
+    // (edit endAfter boom:1.35: reading time for "blown up by Creeper", with a push-in onto it); a couple of seconds
+    // of smoke are recorded so the edit has frames to end on
+    for (let i = 0; i < 40; i++) { await still(); await bot.waitForTicks(1) }
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return ctx.died

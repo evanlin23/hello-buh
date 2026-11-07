@@ -30,3 +30,913 @@ meshed + uploaded world in 19.1 s
 rendered 2394 frames (39.90 s of video) in 761.1 s = 19.1 s per video second
 wrote work/story_runaway.wav 39.95s
 wrote out/story_runaway.mp4 38.45s
+--- re-edit (owner: end on the boom) at 1e25ca0 ---
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (-1987997323 > 20536).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 20540
+[aac @ 0x5592ab695000] channel element 2.8 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (864901141 > 14313).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 14317
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x5592ab695000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (1686696536 > 14551).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 14555
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (1171912526 > 39171).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 39175
+[aac @ 0x5592ab695000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5592ab695000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (-213262543 > 17918).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 17922
+[aac @ 0x5592ab695000] channel element 1.7 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5592ab695000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (401509283 > 13317).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 13321
+[aac @ 0x5592ab695000] channel element 2.12 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (2052064178 > 11387).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 11391
+[aac @ 0x5592ab695000] channel element 3.7 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5592ab695000] channel element 2.5 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (-206302740 > 33256).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 33260
+[aac @ 0x5592ab695000] invalid band type
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (-740014814 > 14650).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 14654
+[aac @ 0x5592ab695000] channel element 3.5 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5592ab695000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (-65507030 > 11309).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 11313
+[aac @ 0x5592ab695000] channel element 3.14 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (-272789680 > 10230).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 10234
+[aac @ 0x5592ab695000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5592ab695000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5592ab67b000] Invalid NAL unit size (1721803363 > 31805).
+[NULL @ 0x5592ab67b000] missing picture in access unit with size 31809
+[aac @ 0x5592ab695000] decode_pce: Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5592ab695000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x5592ab695e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-1987997323 > 20536).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 20540
+[aac @ 0x55c668dfb000] channel element 2.8 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (864901141 > 14313).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 14317
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x55c668dfb000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[NULL @ 0x55c668de1000] Invalid NAL unit size (1686696536 > 14551).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 14555
+[aac @ 0x55c668dfb000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (1171912526 > 39171).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 39175
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-213262543 > 17918).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 17922
+[aac @ 0x55c668dfb000] channel element 1.7 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (401509283 > 13317).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 13321
+[aac @ 0x55c668dfb000] channel element 2.12 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (2052064178 > 11387).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 11391
+[aac @ 0x55c668dfb000] channel element 3.7 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 2.5 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-206302740 > 33256).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 33260
+[aac @ 0x55c668dfb000] invalid band type
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-740014814 > 14650).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 14654
+[aac @ 0x55c668dfb000] channel element 3.5 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-65507030 > 11309).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 11313
+[aac @ 0x55c668dfb000] channel element 3.14 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-272789680 > 10230).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 10234
+[aac @ 0x55c668dfb000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (1721803363 > 31805).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 31809
+[aac @ 0x55c668dfb000] decode_pce: Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-1623009070 > 12626).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 12630
+[aac @ 0x55c668dfb000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (1286218166 > 8835).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 8839
+[aac @ 0x55c668dfb000] SBR was found before the first channel element.
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] invalid band type
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-88840838 > 8794).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 8798
+[aac @ 0x55c668dfb000] channel element 2.1 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-915127046 > 26993).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 26997
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] Number of scalefactor bands in group (45) exceeds limit (41).
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] invalid band type
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-793403400 > 13081).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 13085
+[aac @ 0x55c668dfb000] SBR was found before the first channel element.
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-828424493 > 7691).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 7695
+[aac @ 0x55c668dfb000] Number of scalefactor bands in group (15) exceeds limit (12).
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 3.2 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (803393927 > 8786).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 8790
+[aac @ 0x55c668dfb000] Number of bands (9) exceeds limit (4).
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] Number of scalefactor bands in group (49) exceeds limit (41).
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (658583186 > 33263).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 33267
+[aac @ 0x55c668dfb000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-1296416465 > 14097).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 14101
+[aac @ 0x55c668dfb000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (526978400 > 9621).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 9625
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] Number of bands (31) exceeds limit (25).
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-1364314291 > 9793).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 9797
+[aac @ 0x55c668dfb000] channel element 2.11 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 3.15 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 2.9 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (592626861 > 33238).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 33242
+[NULL @ 0x55c668de1000] Invalid NAL unit size (1439877582 > 13613).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 13617
+[aac @ 0x55c668dfb000] Number of bands (7) exceeds limit (6).
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] channel element 3.3 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-1698940744 > 9254).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 9258
+[aac @ 0x55c668dfb000] channel element 2.10 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-1963524297 > 9761).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 9765
+[aac @ 0x55c668dfb000] channel element 2.2 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (-1539109039 > 26068).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 26072
+[aac @ 0x55c668dfb000] Reserved bit set.
+[aac @ 0x55c668dfb000] Number of bands (23) exceeds limit (17).
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x55c668de1000] Invalid NAL unit size (1081685292 > 12495).
+[NULL @ 0x55c668de1000] missing picture in access unit with size 12499
+[aac @ 0x55c668dfb000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x55c668dfbe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.8 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1987997323 > 20536).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 20540
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (864901141 > 14313).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 14317
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1686696536 > 14551).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 14555
+[aac @ 0x5581a6a93000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1171912526 > 39171).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 39175
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-213262543 > 17918).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 17922
+[aac @ 0x5581a6a93000] channel element 1.7 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (401509283 > 13317).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 13321
+[aac @ 0x5581a6a93000] channel element 2.12 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (2052064178 > 11387).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 11391
+[aac @ 0x5581a6a93000] channel element 3.7 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.5 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] invalid band type
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-206302740 > 33256).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 33260
+[aac @ 0x5581a6a93000] channel element 3.5 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-740014814 > 14650).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 14654
+[aac @ 0x5581a6a93000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-65507030 > 11309).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 11313
+[aac @ 0x5581a6a93000] channel element 3.14 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-272789680 > 10230).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 10234
+[aac @ 0x5581a6a93000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1721803363 > 31805).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 31809
+[aac @ 0x5581a6a93000] decode_pce: Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1623009070 > 12626).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 12630
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1286218166 > 8835).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 8839
+[aac @ 0x5581a6a93000] SBR was found before the first channel element.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] invalid band type
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-88840838 > 8794).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 8798
+[aac @ 0x5581a6a93000] channel element 2.1 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-915127046 > 26993).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 26997
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of scalefactor bands in group (45) exceeds limit (41).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] invalid band type
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-793403400 > 13081).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 13085
+[aac @ 0x5581a6a93000] SBR was found before the first channel element.
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-828424493 > 7691).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 7695
+[aac @ 0x5581a6a93000] Number of scalefactor bands in group (15) exceeds limit (12).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.2 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (803393927 > 8786).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 8790
+[aac @ 0x5581a6a93000] Number of bands (9) exceeds limit (4).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (658583186 > 33263).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 33267
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of scalefactor bands in group (49) exceeds limit (41).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1296416465 > 14097).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 14101
+[aac @ 0x5581a6a93000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (526978400 > 9621).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9625
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of bands (31) exceeds limit (25).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1364314291 > 9793).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9797
+[aac @ 0x5581a6a93000] channel element 2.11 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.15 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (592626861 > 33238).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 33242
+[aac @ 0x5581a6a93000] channel element 2.9 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Number of bands (7) exceeds limit (6).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1439877582 > 13613).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 13617
+[aac @ 0x5581a6a93000] channel element 3.3 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1698940744 > 9254).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9258
+[aac @ 0x5581a6a93000] channel element 2.10 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1963524297 > 9761).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9765
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.2 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1539109039 > 26068).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 26072
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of bands (23) exceeds limit (17).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1081685292 > 12495).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 12499
+[aac @ 0x5581a6a93000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-325545652 > 6425).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 6429
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of scalefactor bands in group (47) exceeds limit (41).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1503934900 > 8196).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 8200
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (185391928 > 31145).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 31149
+[aac @ 0x5581a6a93000] channel element 3.0 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of bands (46) exceeds limit (41).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (700387321 > 13388).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 13392
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of bands (54) exceeds limit (31).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1126471752 > 9787).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9791
+[aac @ 0x5581a6a93000] Number of bands (7) exceeds limit (2).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (183874582 > 10174).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 10178
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1825788393 > 30995).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 30999
+[aac @ 0x5581a6a93000] channel element 3.13 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of bands (7) exceeds limit (1).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (727180839 > 13334).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 13338
+[aac @ 0x5581a6a93000] channel element 2.5 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of bands (32) exceeds limit (31).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1746025298 > 9580).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9584
+[aac @ 0x5581a6a93000] channel element 2.6 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1874486073 > 10086).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 10090
+[aac @ 0x5581a6a93000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-2017612963 > 30210).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 30214
+[aac @ 0x5581a6a93000] channel element 2.4 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (306834458 > 11901).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 11905
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Number of bands (33) exceeds limit (24).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] SBR was found before the first channel element.
+    Last message repeated 1 times
+[aac @ 0x5581a6a93000] Number of bands (14) exceeds limit (9).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1570798741 > 11065).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 11069
+[aac @ 0x5581a6a93000] Number of bands (16) exceeds limit (10).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (2091541406 > 9848).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9852
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-2133565222 > 29547).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 29551
+[aac @ 0x5581a6a93000] channel element 3.3 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] skip_data_stream_element: Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (759814810 > 13220).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 13224
+[aac @ 0x5581a6a93000] Number of scalefactor bands in group (47) exceeds limit (41).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (172782577 > 9306).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9310
+[aac @ 0x5581a6a93000] channel element 2.8 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1211485228 > 7971).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 7975
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-464386499 > 35987).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 35991
+[aac @ 0x5581a6a93000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.2 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Number of bands (36) exceeds limit (31).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1671329529 > 14442).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 14446
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-1808258187 > 10536).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 10540
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.8 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1561345078 > 10562).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 10566
+[aac @ 0x5581a6a93000] Number of bands (11) exceeds limit (10).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-403616450 > 28740).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 28744
+[aac @ 0x5581a6a93000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1276822758 > 11625).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 11629
+[aac @ 0x5581a6a93000] channel element 3.7 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.11 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (549852165 > 9457).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9461
+[aac @ 0x5581a6a93000] channel element 3.0 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Number of scalefactor bands in group (49) exceeds limit (41).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (240639380 > 9386).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9390
+[aac @ 0x5581a6a93000] channel element 2.7 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-119129602 > 32577).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 32581
+[aac @ 0x5581a6a93000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (1431145013 > 14317).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 14321
+[aac @ 0x5581a6a93000] Reserved bit set.
+[aac @ 0x5581a6a93000] Pulse data corrupt or invalid.
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (929515102 > 9918).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 9922
+[aac @ 0x5581a6a93000] Number of scalefactor bands in group (13) exceeds limit (12).
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-158703518 > 10889).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 10893
+[aac @ 0x5581a6a93000] channel element 2.12 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x5581a6a93000] channel element 2.6 is not allocated
+[aist#0:1/aac @ 0x5581a6a93e80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x5581a6a79000] Invalid NAL unit size (-642939915 > 128592).
+[NULL @ 0x5581a6a79000] missing picture in access unit with size 128596
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1987997323 > 20536).
+[NULL @ 0x557b58055000] missing picture in access unit with size 20540
+[aac @ 0x557b5806f000] channel element 2.8 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (864901141 > 14313).
+[NULL @ 0x557b58055000] missing picture in access unit with size 14317
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1686696536 > 14551).
+[NULL @ 0x557b58055000] missing picture in access unit with size 14555
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x557b5806f000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1171912526 > 39171).
+[NULL @ 0x557b58055000] missing picture in access unit with size 39175
+[aac @ 0x557b5806f000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-213262543 > 17918).
+[NULL @ 0x557b58055000] missing picture in access unit with size 17922
+[aac @ 0x557b5806f000] channel element 1.7 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (401509283 > 13317).
+[NULL @ 0x557b58055000] missing picture in access unit with size 13321
+[aac @ 0x557b5806f000] channel element 2.12 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (2052064178 > 11387).
+[NULL @ 0x557b58055000] missing picture in access unit with size 11391
+[aac @ 0x557b5806f000] channel element 3.7 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.5 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-206302740 > 33256).
+[NULL @ 0x557b58055000] missing picture in access unit with size 33260
+[aac @ 0x557b5806f000] invalid band type
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.5 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-740014814 > 14650).
+[NULL @ 0x557b58055000] missing picture in access unit with size 14654
+[aac @ 0x557b5806f000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-65507030 > 11309).
+[NULL @ 0x557b58055000] missing picture in access unit with size 11313
+[aac @ 0x557b5806f000] channel element 3.14 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-272789680 > 10230).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10234
+[aac @ 0x557b5806f000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1721803363 > 31805).
+[NULL @ 0x557b58055000] missing picture in access unit with size 31809
+[aac @ 0x557b5806f000] decode_pce: Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1623009070 > 12626).
+[NULL @ 0x557b58055000] missing picture in access unit with size 12630
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1286218166 > 8835).
+[NULL @ 0x557b58055000] missing picture in access unit with size 8839
+[aac @ 0x557b5806f000] SBR was found before the first channel element.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Not yet implemented in FFmpeg, patches welcome
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] invalid band type
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-88840838 > 8794).
+[NULL @ 0x557b58055000] missing picture in access unit with size 8798
+[aac @ 0x557b5806f000] channel element 2.1 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-915127046 > 26993).
+[NULL @ 0x557b58055000] missing picture in access unit with size 26997
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (45) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] invalid band type
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-793403400 > 13081).
+[NULL @ 0x557b58055000] missing picture in access unit with size 13085
+[aac @ 0x557b5806f000] SBR was found before the first channel element.
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-828424493 > 7691).
+[NULL @ 0x557b58055000] missing picture in access unit with size 7695
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (15) exceeds limit (12).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.2 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (803393927 > 8786).
+[NULL @ 0x557b58055000] missing picture in access unit with size 8790
+[aac @ 0x557b5806f000] Number of bands (9) exceeds limit (4).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (658583186 > 33263).
+[NULL @ 0x557b58055000] missing picture in access unit with size 33267
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (49) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1296416465 > 14097).
+[NULL @ 0x557b58055000] missing picture in access unit with size 14101
+[aac @ 0x557b5806f000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.6 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (526978400 > 9621).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9625
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (31) exceeds limit (25).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1364314291 > 9793).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9797
+[aac @ 0x557b5806f000] channel element 2.11 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.15 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (592626861 > 33238).
+[NULL @ 0x557b58055000] missing picture in access unit with size 33242
+[aac @ 0x557b5806f000] channel element 2.9 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Number of bands (7) exceeds limit (6).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1439877582 > 13613).
+[NULL @ 0x557b58055000] missing picture in access unit with size 13617
+[aac @ 0x557b5806f000] channel element 3.3 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1698940744 > 9254).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9258
+[aac @ 0x557b5806f000] channel element 2.10 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1963524297 > 9761).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9765
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.2 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1539109039 > 26068).
+[NULL @ 0x557b58055000] missing picture in access unit with size 26072
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (23) exceeds limit (17).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1081685292 > 12495).
+[NULL @ 0x557b58055000] missing picture in access unit with size 12499
+[aac @ 0x557b5806f000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-325545652 > 6425).
+[NULL @ 0x557b58055000] missing picture in access unit with size 6429
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (47) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1503934900 > 8196).
+[NULL @ 0x557b58055000] missing picture in access unit with size 8200
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (185391928 > 31145).
+[NULL @ 0x557b58055000] missing picture in access unit with size 31149
+[aac @ 0x557b5806f000] channel element 3.0 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (46) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (700387321 > 13388).
+[NULL @ 0x557b58055000] missing picture in access unit with size 13392
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (54) exceeds limit (31).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1126471752 > 9787).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9791
+[aac @ 0x557b5806f000] Number of bands (7) exceeds limit (2).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (183874582 > 10174).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10178
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1825788393 > 30995).
+[NULL @ 0x557b58055000] missing picture in access unit with size 30999
+[aac @ 0x557b5806f000] channel element 3.13 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (7) exceeds limit (1).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.5 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (727180839 > 13334).
+[NULL @ 0x557b58055000] missing picture in access unit with size 13338
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (32) exceeds limit (31).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1746025298 > 9580).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9584
+[aac @ 0x557b5806f000] channel element 2.6 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1874486073 > 10086).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10090
+[aac @ 0x557b5806f000] channel element 2.15 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-2017612963 > 30210).
+[NULL @ 0x557b58055000] missing picture in access unit with size 30214
+[aac @ 0x557b5806f000] channel element 2.4 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (33) exceeds limit (24).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (306834458 > 11901).
+[NULL @ 0x557b58055000] missing picture in access unit with size 11905
+[aac @ 0x557b5806f000] SBR was found before the first channel element.
+    Last message repeated 1 times
+[aac @ 0x557b5806f000] Number of bands (14) exceeds limit (9).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1570798741 > 11065).
+[NULL @ 0x557b58055000] missing picture in access unit with size 11069
+[aac @ 0x557b5806f000] Number of bands (16) exceeds limit (10).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (2091541406 > 9848).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9852
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-2133565222 > 29547).
+[NULL @ 0x557b58055000] missing picture in access unit with size 29551
+[aac @ 0x557b5806f000] channel element 3.3 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] skip_data_stream_element: Input buffer exhausted before END element found
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (759814810 > 13220).
+[NULL @ 0x557b58055000] missing picture in access unit with size 13224
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (47) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (172782577 > 9306).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9310
+[aac @ 0x557b5806f000] channel element 2.8 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1211485228 > 7971).
+[NULL @ 0x557b58055000] missing picture in access unit with size 7975
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-464386499 > 35987).
+[NULL @ 0x557b58055000] missing picture in access unit with size 35991
+[aac @ 0x557b5806f000] channel element 2.3 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.2 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1671329529 > 14442).
+[NULL @ 0x557b58055000] missing picture in access unit with size 14446
+[aac @ 0x557b5806f000] Number of bands (36) exceeds limit (31).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1808258187 > 10536).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10540
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.8 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1561345078 > 10562).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10566
+[aac @ 0x557b5806f000] Number of bands (11) exceeds limit (10).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-403616450 > 28740).
+[NULL @ 0x557b58055000] missing picture in access unit with size 28744
+[aac @ 0x557b5806f000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.4 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1276822758 > 11625).
+[NULL @ 0x557b58055000] missing picture in access unit with size 11629
+[aac @ 0x557b5806f000] channel element 3.7 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.11 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (549852165 > 9457).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9461
+[aac @ 0x557b5806f000] channel element 3.0 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (240639380 > 9386).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9390
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (49) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.7 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-119129602 > 32577).
+[NULL @ 0x557b58055000] missing picture in access unit with size 32581
+[aac @ 0x557b5806f000] channel element 3.1 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1431145013 > 14317).
+[NULL @ 0x557b58055000] missing picture in access unit with size 14321
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Pulse data corrupt or invalid.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (929515102 > 9918).
+[NULL @ 0x557b58055000] missing picture in access unit with size 9922
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (13) exceeds limit (12).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-158703518 > 10889).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10893
+[aac @ 0x557b5806f000] channel element 2.12 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.6 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-642939915 > 128592).
+[NULL @ 0x557b58055000] missing picture in access unit with size 128596
+[NULL @ 0x557b58055000] Invalid NAL unit size (866092546 > 39693).
+[NULL @ 0x557b58055000] missing picture in access unit with size 39697
+[NULL @ 0x557b58055000] Invalid NAL unit size (-822724625 > 12457).
+[NULL @ 0x557b58055000] missing picture in access unit with size 12461
+[NULL @ 0x557b58055000] Invalid NAL unit size (2014178841 > 10963).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10967
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (48) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-844337378 > 10108).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10112
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] invalid band type
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-1517960712 > 24463).
+[NULL @ 0x557b58055000] missing picture in access unit with size 24467
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (14) exceeds limit (12).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] Number of scalefactor bands in group (51) exceeds limit (41).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-127628632 > 13995).
+[NULL @ 0x557b58055000] missing picture in access unit with size 13999
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Number of bands (26) exceeds limit (2).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (58996627 > 8837).
+[NULL @ 0x557b58055000] missing picture in access unit with size 8841
+[aac @ 0x557b5806f000] SBR was found before the first channel element.
+[aac @ 0x557b5806f000] Reserved bit set.
+[aac @ 0x557b5806f000] Prediction is not allowed in AAC-LC.
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 2.1 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (1525855622 > 10384).
+[NULL @ 0x557b58055000] missing picture in access unit with size 10388
+[aac @ 0x557b5806f000] Number of bands (10) exceeds limit (5).
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[NULL @ 0x557b58055000] Invalid NAL unit size (-824876365 > 41183).
+[NULL @ 0x557b58055000] missing picture in access unit with size 41187
+[aac @ 0x557b5806f000] channel element 2.2 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+[aac @ 0x557b5806f000] channel element 3.7 is not allocated
+[aist#0:1/aac @ 0x557b5806fe80] Error submitting packet to decoder: Invalid data found when processing input
+wrote out/story_runaway.mp4 36.05s

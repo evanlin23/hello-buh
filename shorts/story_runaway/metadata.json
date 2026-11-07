@@ -3,7 +3,7 @@
   "caption": "why does everyone run from me \ud83d\udc80",
   "youtube": {
     "title": "why does everyone run from me \ud83d\udc80 #minecraft #shorts",
-    "description": "why does everyone run from me \ud83d\udc80\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "why does everyone run from me \ud83d\udc80\n\nSong: Crysstales -  Take The Sky\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/takethesky\nWatch: http://ncs.lnk.to/taketheskyAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,37 +13,46 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "montagem_toma.mp3",
-    "title": "Montagem Toma",
-    "artist": "X972, sk3tch01, MXZI",
+    "file": "take_the_sky.mp3",
+    "title": "Take The Sky",
+    "artist": "crysstales, DJ YHR, HRXSTAL",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": null,
-    "drop_in_song_s": 14.5,
+    "drop_in_song_s": 5.25,
     "drop_in_short_s": 0.0,
-    "song_start_s": 13.5
+    "song_start_s": 4.25
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 38.46,
+    "duration_s": 36.4,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 40655465,
-    "sha256": "b4de82a962757456c12fdefa2ef3c9d23366c97dc0cd6bbaa990c83f1f6c26ea"
+    "bytes": 39929671,
+    "sha256": "40b9362411ca63a6a05a2fde44a27c162012f4d9a8748ab114ec09a61481ae4b"
   },
   "edit": {
     "caption": "why does everyone run from me \ud83d\udc80",
     "red": "run",
     "story": "stories/runaway",
     "startAt": "line:0",
-    "endAfter": "boom:1.0",
+    "endAfter": "boom:1.35",
+    "zoom": [
+      [
+        "boom:0.1",
+        "boom:1.35",
+        1.12
+      ]
+    ],
     "deathScreen": true,
     "args": [
       "--caption",
       "why does everyone run from me \ud83d\udc80",
       "--red",
       "run",
+      "--zoom",
+      "[[\"boom:0.1\",\"boom:1.35\",1.12]]",
       "--death_screen",
       "death",
       "--story",
@@ -51,7 +60,7 @@
       "--start_at",
       "line:0",
       "--end_after",
-      "boom:1.0"
+      "boom:1.35"
     ]
   },
   "recording": {
@@ -306,9 +315,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "15b75d74de96373a8ea93b0e564cf05d2a4728af",
-    "rendered_at": "2026-11-07T05:11:41.158Z",
-    "head_at_publish": "1e25ca07ddb12f668ca06e05af0c979336058621",
+    "commit": "e81ca49119c706eb71636c0949c488b058b42533",
+    "rendered_at": "2026-11-07T06:39:11.022Z",
+    "head_at_publish": "54bd9bd7c4471f702472acf46f8b020f3d0bb529",
     "stunt": "stunts/story_runaway.js",
     "source_snapshot": [
       "source/story_runaway.js",
@@ -316,13 +325,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 15b75d74de96",
+    "git checkout e81ca49119c7",
     "gunzip -c shorts/story_runaway/recording.json.gz > work/story_runaway.rec.json",
     "node render.js work/story_runaway.rec.json work/story_runaway.frames 60 1080 1011",
     "python3 audio.py work/story_runaway.rec.json work/story_runaway.wav",
-    "python3 edit.py --frames work/story_runaway.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_runaway.rec.json --audio work/story_runaway.wav --caption \"why does everyone run from me \ud83d\udc80\" --red run --death_screen death --story stories/runaway --start_at line:0 --end_after boom:1.0 --out out/story_runaway.mp4"
+    "python3 edit.py --frames work/story_runaway.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_runaway.rec.json --audio work/story_runaway.wav --caption \"why does everyone run from me \ud83d\udc80\" --red run --zoom [[\"boom:0.1\",\"boom:1.35\",1.12]] --death_screen death --story stories/runaway --start_at line:0 --end_after boom:1.35 --out out/story_runaway.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "PENDING: owner asked to end on the boom (cut L15-L17); re-edit and re-audit in progress.",
-  "published_at": "2026-11-07T06:06:00.538Z"
+  "status": "ready",
+  "notes": "Owner's ending: the reveal is the boom itself (no spoken 'I'm the creeper'); ends 1.35 s after the blast on the death message 'blown up by Creeper'. Passed retention + frame QA of the new ending (ready), minecraft-audit on the re-edit (ready); earlier sections unchanged from the version that passed all three.",
+  "published_at": "2026-11-07T06:49:55.688Z"
 }
