@@ -68,7 +68,7 @@ module.exports = {
     await c(`/setblock ${A(-18, -2, -20)} lava`)
     // --- my friend's sign (L03): her bed by a hay pile in the open
     await sign(20, -20, 0, ['SLEEP IN', 'THE HAY', '', '-MIA'])
-    await c(`/fill ${A(22, 1, -21)} ${A(23, 1, -21)} red_wool`)
+    await c(`/setblock ${A(23, 1, -21)} red_bed[facing=east,part=head]`); await c(`/setblock ${A(22, 1, -21)} red_bed[facing=east,part=foot]`)
     await c(`/fill ${A(20, 1, -24)} ${A(21, 2, -23)} hay_block`)
     // --- my room (L04-L15): a little house, door on the south wall; my bed against the north wall,
     // its head on a chest (the chest under my bed), its foot on planks
@@ -124,14 +124,14 @@ module.exports = {
     const creeper = { x: 25, z: -18, yaw: 90 }
 
     // L01: the rule, over my cousin's sign in the field (a push in)
-    await cut(-20.5, -16.6, P(-19.5, 2.2, -19.5))
-    await line('L01', async (k) => { cast(); go(k > 2 && k < 14); aimAt(P(-19.5, 2.2, -19.5)); look(k) })
+    await cut(-19.5, -16.2, P(-19.5, 1.6, -19.5))      // 3 blocks out: the sign reads, a slow push to 2.4
+    await line('L01', async (k) => { cast(); go(k > 2 && k % 3 === 0 && bot.entity.position.z < Z - 17.0); aimAt(P(-19.5, 1.6, -19.5)); look(k) })
     // L02: his said DON'T DIG DOWN (card). Under him was lava (look down the hole)
     ctx.mark('sign_cousin')
     let from = null
     await line('L02', async (k, at) => {
       cast()
-      if (k >= at(3) - 4) { from = from || { ...K.base }; turn(from, P(-17.5, -1.5, -19.5), (k - at(3) + 5) / 10) }
+      if (k === at(3) - 1) await cut(-16.8, -19.5, P(-17.5, -2.5, -19.5))   // at the hole's edge, straight down at the lava
       look(k)
     })
     // L03: my friend's said SLEEP IN THE HAY (card). That night a creeper blew up her bed.
@@ -176,7 +176,7 @@ module.exports = {
     })
     // L08: she was smiling; she hasn't blinked all night (close on her face)
     await cut(0.5, -4.4, MOM)
-    await line('L08', async (k) => { cast(); look(k) })
+    await line('L08', async (k) => { cast(); go(k % 3 === 0 && bot.entity.position.z < Z - 3.4); aimAt(MOM); look(k) })
     // L09: so I locked the door
     await line('L09', async (k, at) => {
       cast()
@@ -197,15 +197,15 @@ module.exports = {
       look(k)
     })
     // L11: and a second sign was on the wall, inside my locked room
-    say(`/setblock ${X - 2} ${F + 2} ${Z - 5} oak_wall_sign[facing=east]{front_text:{has_glowing_text:1b,color:"red",messages:["OPEN IT.","THAT ISN'T MOM.","SHE'S IN THE","CHEST. -BHU"]}}`)
+    say(`/setblock ${X - 2} ${F + 2} ${Z - 5} dark_oak_wall_sign[facing=east]{front_text:{has_glowing_text:1b,color:"red",messages:["OPEN IT.","THAT ISN'T MOM.","SHE'S IN THE","CHEST. -BHU"]}}`)
     await cut(0.8, -5.0, P(-1.5, 2.0, -4.5))
-    await line('L11', async (k) => { cast(); go(k > 4 && bot.entity.position.x > X - 0.2); look(k) })
+    await line('L11', async (k) => { cast(); go(k > 4 && bot.entity.position.x > X - 0.2); aimAt(P(-1.5, 2.0, -4.5)); look(k) })
     // L12: in my handwriting (closer)
     await cut(-0.6, -4.2, P(-1.5, 2.4, -4.5))
-    await line('L12', async (k) => { cast(); look(k) })
+    await line('L12', async (k) => { cast(); go(k % 3 === 0 && bot.entity.position.x > X - 0.75); aimAt(P(-1.5, 2.4, -4.5)); look(k) })
     // L13: OPEN IT. THAT ISN'T MOM. SHE'S IN THE CHEST. (card, red)
     ctx.mark('sign_two')
-    await line('L13', async (k) => { cast(); look(k, Math.sin(k / 10) * 0.04) })
+    await line('L13', async (k) => { cast(); look(k, Math.sin(k / 6) * 0.08, Math.sin(k / 9) * 0.03) })
     // L14: but it spelled my name wrong (BUH? BHU?) and Mom, through the door's window
     await cut(-0.6, -5.6, P(0.5, 2.5, -3))
     ctx.mark('name_wrong')
@@ -220,7 +220,8 @@ module.exports = {
       look(k)
     })
     ctx.mark('question')
-    for (let k = 0; k < 34; k++) { cast(); look(k, Math.sin(k / 8) * 0.06); await bot.waitForTicks(1) }   // the card's reading time (1.7 s), still moving
+    from = { ...K.base }
+    for (let k = 0; k < 34; k++) { cast(); turn(from, P(-0.5, 1.6, -6.5), k / 30); look(k); await bot.waitForTicks(1) }   // the card's reading time (1.7 s): a slow turn down to the chest
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return true
