@@ -786,7 +786,7 @@ function camAtLive (t) {
   const BE = new Map()   // 'x,y,z' -> { x, y, z, nbt }
   const SKULL_TEX = { skeleton: ['entity/skeleton/skeleton', false], wither_skeleton: ['entity/skeleton/wither_skeleton', false], zombie: ['entity/zombie/zombie', true], creeper: ['entity/creeper/creeper', false], player: ['entity/player/wide/steve', true] }
   const skullOf = (name) => { const m = /^(skeleton|wither_skeleton|zombie|creeper|player)_(wall_)?(skull|head)$/.exec(name); return m && SKULL_TEX[m[1]] }
-  const beKind = (name) => /shulker_box$/.test(name) ? 'shulker' : /_wall_banner$/.test(name) ? 'wall_banner' : /_banner$/.test(name) ? 'banner' : skullOf(name) ? (/_wall_/.test(name) ? 'wall_skull' : 'skull') : /_wall_hanging_sign$/.test(name) ? 'wall_hanging' : /_hanging_sign$/.test(name) ? 'hanging' : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
+  const beKind = (name) => name === 'bell' ? 'bell' : /shulker_box$/.test(name) ? 'shulker' : /_wall_banner$/.test(name) ? 'wall_banner' : /_banner$/.test(name) ? 'banner' : skullOf(name) ? (/_wall_/.test(name) ? 'wall_skull' : 'skull') : /_wall_hanging_sign$/.test(name) ? 'wall_hanging' : /_hanging_sign$/.test(name) ? 'hanging' : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
   const BE_STATES = new Set()
   for (const b of MC.blocksArray) if (beKind(b.name)) for (let sid = b.minStateId; sid <= b.maxStateId; sid++) BE_STATES.add(sid)
   {

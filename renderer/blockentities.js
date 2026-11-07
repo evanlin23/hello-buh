@@ -213,6 +213,10 @@ export class BlockEntityLayer {
       await add(buildGeometry(parts, M, 64, 64), '/assets/env/entity/banner_base.png')
       const wave = (-0.0125 + 0.01 * Math.cos(2 * Math.PI * (b.wave || 0) / 100)) * Math.PI
       await add(buildGeometry([{ pivot: [0, -32, 0], rot: [wave, 0, 0], cubes: [[[-10, 0, -2], [20, 40, 1], [0, 0]]] }], M, 64, 64, b.tint || [1, 1, 1]), '/assets/env/entity/banner/base.png')
+    } else if (b.kind === 'bell') {
+      // BellRenderer: bell_body (-3,-6,-3, 6x7x6) at (8, 12, 8) and its lip bell_base (4,4,4, 8x2x8),
+      // block pixels, y up; the frame is the block model
+      await add(buildGeometry([{ pivot: [8, 12, 8], cubes: [[[-3, -6, -3], [6, 7, 6], [0, 0]]] }, { cubes: [[[4, 4, 4], [8, 2, 8], [0, 13]]] }], at.clone().multiply(S(1 / 16, 1 / 16, 1 / 16)), 32, 32), '/assets/env/entity/bell/bell_body.png')
     } else if (b.kind === 'chest') {
       // ChestRenderer: T(0.5) Ry(-facing) T(-0.5), the model y-up in pixels
       const M = at.clone().multiply(T(0.5, 0.5, 0.5)).multiply(RY(-b.rot)).multiply(T(-0.5, -0.5, -0.5)).multiply(S(1 / 16, 1 / 16, 1 / 16))
