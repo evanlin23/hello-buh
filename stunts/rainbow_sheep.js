@@ -214,7 +214,7 @@ module.exports = {
       const ny = bot.entity.yaw + dy * 0.3
       await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.3, true)
       // wanted motion: west (-x), plus a z correction to hold z + 1.9..2.2
-      const wz = e.z > z + 1.85 ? -0.5 : e.z < z + 1.6 ? 0.5 : 0   // 1.9-2.2 out collected 4 of 8 colours; 1.1-1.4 clipped the heads
+      const wz = e.z > z + 2.8 ? -0.5 : e.z < z + 2.5 ? 0.5 : 0   // the popped wool lies ~3 out: 1.6-1.85 collected 3 of 8 (1.1-1.4 clipped the heads)
       const fx = -Math.sin(ny), fz = -Math.cos(ny), rx = Math.cos(ny), rz = -Math.sin(ny)
       const f = -1 * fx + wz * fz, rr = -1 * rx + wz * rz
       bot.setControlState('forward', f > 0.3); bot.setControlState('back', f < -0.3)
