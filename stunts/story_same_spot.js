@@ -37,7 +37,8 @@ module.exports = {
     await c('/gamerule random_tick_speed 0')            // her wheat really doesn't grow
     await clearSet(ctx, A, 64, 64)              // a wide flat clearing (lib/story.js), high: a mountain stood south of the set
     // ...and on past the end of the street, where most shots look: x -64..64, z 65..128, up to y 64
-    for (let y0 = 1; y0 <= 64; y0 += 3) await c(`/fill ${A(-64, y0, 65)} ${A(64, Math.min(64, y0 + 2), 128)} air`)
+    for (let y0 = 1; y0 <= 120; y0 += 3) await c(`/fill ${A(-64, y0, 65)} ${A(64, Math.min(120, y0 + 2), 128)} air`)
+    for (let y0 = 65; y0 <= 120; y0++) await c(`/fill ${A(-64, y0, -64)} ${A(64, y0, 64)} air`)   // the mountain south of the set reaches past y 64
     await c(`/fill ${A(-64, 0, 65)} ${A(64, 0, 128)} grass_block`)
     for (let y0 = -4; y0 <= -1; y0 += 3) await c(`/fill ${A(-64, y0, 65)} ${A(64, Math.min(-1, y0 + 2), 128)} dirt`)
     await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
@@ -200,25 +201,25 @@ module.exports = {
     })
     // L03: gone three years; her wheat didn't grow one stage
     await cut(6.5, 0.6, P(6.6, 1.0, -7.2))
-    await line('L03', async (k, at) => { world(); go(k > at(2) && k < at(2) + 14); aimAt(P(6.6, 1.0, -7.2)); look(k) })
-    // L04: the sheep by the door, mid-jump, still in the air (low, from the side, sliding past)
-    await cut(5.2, 0.6, P(3.6, 2.0, -0.6))
-    await line('L04', async (k) => { world(); ctl('left', k > 2 && k < 22); aimAt(P(3.6, 2.0, -0.6)); look(k) })
+    await line('L03', async (k, at) => { world(); go(k > 2 && k < 16); aimAt(P(6.6, 1.0, -7.2)); look(k) })
     // L05: the furnace I lit three years ago, still burning (inside)
     await cut(1.4, -4.5, P(-1.5, 2.5, -4.5))
     await line('L05', async (k) => {
       world()
       if (k === 3) ctx.sound('block.furnace.fire_crackle', 1, 1)
-      go(k > 2 && k % 3 !== 0 && bot.entity.position.x > X + 0.4)   // a slow push in
+      go(k > 2 && bot.entity.position.x > X + 0.4)   // a push in
       aimAt(P(-1.5, 2.5, -4.5)); look(k)
     })
+    // L04: the sheep by the door, mid-jump, still in the air (low, from the side, sliding past)
+    await cut(5.2, 0.6, P(3.6, 2.0, -0.6))
+    await line('L04', async (k) => { world(); ctl('left', k > 2 && k < 22); aimAt(P(3.6, 2.0, -0.6)); look(k) })
     // L06: I walk up and everything starts at once: the sheep lands, Mom turns to me
     await cut(0.6, 7.5, P(1.8, 2.0, -1.4))
     await line('L06', async (k, at) => {
       if (k === at(2)) {
         dsheep.mode = 'fall'; dsheep.t = 0
         ctx.mark('face_on', { near: [X + MOM[0], Z + MOM[1], 1], head: true })
-        ctx.sound('entity.sheep.ambient', 0.8, 1)
+        ctx.sound('entity.sheep.ambient', 0.8, 1); ctx.sound('entity.villager.ambient', 0.9, 1)
       }
       world(); go(bot.entity.position.z > Z + 2.4); aimAt(P(2.6, 2.0, -1.2)); look(k)
     })
@@ -263,19 +264,12 @@ module.exports = {
     await line('L13', async (k, at) => {
       world()
       if (k === at(5) - 1) { await cut(OPEN[0], OPEN[1], OPEN_AIM); ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
-      if (k < at(5) - 1) { go(k > 2 && k < 6); aimAt(momFace()) } else aimAt(OPEN_AIM)
+      if (k < at(5) - 1) { go(k > 2 && k % 2 === 0 && bot.entity.position.z > Z - 0.5); aimAt(momFace()) } else aimAt(OPEN_AIM)
       look(k)
     })
     ctx.mark('face_off')
-    // L15: I left at seven (beside her: the empty street). For her, that was this morning (turn to her).
-    await cut(2.6, -0.6, P(0.5, 1.7, 26))
     ctx.mark('face_on', { near: [X + MOM[0], Z + MOM[1], 1], head: true })
     let from = null
-    await line('L15', async (k, at) => {
-      world()
-      if (k >= at(2)) { from = from || { ...K.base }; turn(from, momFace(), (k - at(2) + 1) / 34) }
-      look(k)
-    })
     // L16: I'm the only clock she has (close, a slow push in)
     await cut(-0.9, 0.9, momFace())
     await line('L16', async (k, at) => { world(); if (k === at(1)) ctx.sound('block.note_block.chime', 0.7, 0.8); go(k > at(1) && k < at(1) + 9); aimAt(momFace()); look(k) })
@@ -290,16 +284,16 @@ module.exports = {
     // L18: I say hi, I hug her, and I leave again (down the street, past the line)... which is why
     // (I look back from the street: Mom and the sheep stop, mid-jump)
     await cut(0.5, 1.6, momFace())
-    let phase = 0
+    let phase = 0, hopAt = -99
     await line('L18', async (k, at) => {
       if (k < at(2)) { go(bot.entity.position.z > Z - 0.95); aimAt(momFace()) }
       else if (k < at(4)) {                               // hard cut: already walking off down the street
         if (phase === 0) { phase = 1; await cut(0.5, 10.5, P(0.5, 1.6, 30)) }
         go(true)
-      } else {                                             // hard cut: looking back at her from down the street
-        if (phase === 1) { phase = 2; await cut(2.2, 6.6, P(2.4, 2.1, -1.2)); dsheep.mode = 'hop'; dsheep.t = 0 }
-        back(k < at(5) - 2)
-        if (k === at(5)) { ctx.mark('face_off'); ctx.mark('sting'); running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
+      } else {                                             // hard cut: the opening shot again; the sheep jumps... and stops
+        if (phase === 1) { phase = 2; await cut(OPEN[0], OPEN[1], OPEN_AIM); dsheep.mode = 'hop'; dsheep.t = 0; hopAt = k }
+        go(k % 2 === 0); aimAt(OPEN_AIM)
+        if (k === hopAt + 6) { ctx.mark('face_off'); ctx.mark('sting'); running = false; ctx.sound('block.note_block.basedrum', 0.6, 0.6) }
       }
       world(); look(k)
     }, -0.1)
