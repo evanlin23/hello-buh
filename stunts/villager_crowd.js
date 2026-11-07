@@ -14,7 +14,6 @@ const CROWDS = [
   { n: 20, sub: '20 villagers', cols: 5, rows: 4 },
   { n: 50, sub: '50 villagers', cols: 10, rows: 5 },
   { n: 100, sub: '100 villagers', cols: 10, rows: 10 },
-  { n: 150, sub: '150 villagers', cols: 15, rows: 10 },
   { n: 200, sub: '200 villagers', cols: 20, rows: 10 }   // (500 + 100 behind slowed the server below 1 tick/s)
 ]
 const BEHIND = { cols: 10, rows: 4 }        // the finale crowd behind the start of the last walk
@@ -172,22 +171,43 @@ module.exports = {
       aim = new ctx.Vec3(sx + 0.5, floor + 2.3, z - 3.5 - Math.min(depth, 6) / 2)
       await bot.waitForTicks(6)
       // sidestep: every head follows (bigger crowds: both ways)
-      bot.setControlState('left', true); await bot.waitForTicks(c.n >= 50 ? 20 : c.n >= 20 ? 14 : 10); bot.setControlState('left', false)   // (big crowds: a longer sweep, the walk up is shorter)
-      if (c.n >= 20) { await bot.waitForTicks(3); bot.setControlState('right', true); await bot.waitForTicks(c.n >= 50 ? 32 : 22); bot.setControlState('right', false) }
+      bot.setControlState('left', true); await bot.waitForTicks(c.n >= 20 ? 14 : 10); bot.setControlState('left', false)   // (long sweeps on the big crowds were 3.2 s gaps)
+      if (c.n >= 20) { await bot.waitForTicks(3); bot.setControlState('right', true); await bot.waitForTicks(22); bot.setControlState('right', false) }
       await bot.waitForTicks(3)
       if (!last) { ctx.mark('face_off'); bot.chat('/tag @e[type=villager,tag=on] remove on'); continue }
-      // finale: back off... turn round... they were behind you too
+      // the 200: pillar up as they stare, every head tracking you up, and the overhead view finally shows the
+      // size of it (from eye level 50 to 200 all looked the same); then "behind me too" from the pillar top
+      ctx.select(3)
+      ctx.mark('pillar')
+      const fx = Math.floor(bot.entity.position.x), fz = Math.floor(bot.entity.position.z)
+      for (let k = 0; k < 6; k++) {   // 6 up: the whole 200 below (4 tested; the Short ran 27.4 s)
+        const y0 = Math.round(bot.entity.position.y)
+        bot.setControlState('jump', true)
+        for (let t = 0; t < 14 && bot.entity.position.y < y0 + 1.05; t++) await bot.waitForTicks(1)
+        bot._client.write('block_place', { hand: 0, location: { x: fx, y: y0 - 1, z: fz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
+        bot.swingArm(); ctx.sound('block.wood.place', 1)
+        bot.setControlState('jump', false)
+        for (let t = 0; t < 14 && !bot.entity.onGround; t++) await bot.waitForTicks(1)
+      }
+      ctx.log('pillar top at', bot.entity.position.y.toFixed(2), 'floor', floor)
+      // the overhead reveal: a slow pan from the near rows out over the whole crowd, every face turned up at you
+      ctx.mark('overhead')
+      for (let k = 0; k < 90; k++) {   // a slow pan over every upturned face (the orchestrator: lengthen the reveal, real motion)
+        const f = k / 89
+        aim = new ctx.Vec3(sx + 0.5 + Math.sin(f * Math.PI * 2) * 6, floor + 1, z - 3.5 - f * depth * 0.8)
+        await bot.waitForTicks(1)
+      }
+      // finale: nope... turn round on the pillar... they were behind you too
       ctx.mark('back'); ctx.sound('entity.villager.no', 1)
-      bot.setControlState('back', true); await bot.waitForTicks(6); bot.setControlState('back', false)   // (12 ended the turnaround a block from the crowd behind: a robe filled the frame)
       aim = null
       ctx.mark('turnaround')
-      await ctx.easeLook(Math.PI * 0.999, -0.05, 1100)   // mineflayer yaw 0 = north; the crowd behind is south
-      // their backs (seen through the turn)... then they all snap round too, at once (a 4-tick hold read as a freeze)
+      await ctx.easeLook(Math.PI * 0.999, -0.55, 1100)   // mineflayer yaw 0 = north; the crowd behind is south, below
+      // their backs (seen through the turn)... then they all snap round too, at once
       ctx.mark('face_off'); ctx.mark('face_on', { near: [sx + 0.5, z + 7.5, 10] })
       ctx.mark('behind')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.ambient', 1.1, 0.7 + v * 0.1)
-      // back away from them too: every head follows (no still hold on the reveal)
-      bot.setControlState('back', true); await bot.waitForTicks(20); bot.setControlState('back', false)
+      // a slow look along them as every head turns up (no still hold on the reveal)
+      await ctx.easeLook(Math.PI * 0.999 + 0.35, -0.55, 1000)
       ctx.mark('face_off')
     }
     bot.removeListener('physicsTick', track); bot.removeListener('physicsTick', aimTick)
