@@ -1,0 +1,1953 @@
+{
+  "name": "noob_pro_hacker",
+  "caption": "noob vs pro vs hacker \ud83d\udc80",
+  "youtube": {
+    "title": "noob vs pro vs hacker \ud83d\udc80 #minecraft #shorts",
+    "description": "noob vs pro vs hacker \ud83d\udc80\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "com_bota.mp3",
+    "title": "COM BOTA",
+    "artist": "cape, crysstales",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "hack",
+    "drop_in_song_s": 16.75,
+    "drop_in_short_s": 10.35,
+    "song_start_s": 6.4
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 30.22,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 34799888,
+    "sha256": "092e4b97c56926d7592c1ebf9ba73029b46b483c1cb43cff3d1b060d67f17d01"
+  },
+  "edit": {
+    "caption": "noob vs pro vs hacker \ud83d\udc80",
+    "red": "hacker",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "hack",
+    "startAt": "seg:0",
+    "endAfter": "boom:0.95",
+    "subsY": 0.3,
+    "tags": [
+      [
+        "seg",
+        null,
+        "NOOB",
+        "green",
+        0
+      ],
+      [
+        "seg",
+        null,
+        "PRO",
+        "blue",
+        1
+      ],
+      [
+        "seg",
+        null,
+        "HACKER",
+        "red",
+        2
+      ],
+      [
+        "seg",
+        "death",
+        "NOOB",
+        "green",
+        3
+      ],
+      [
+        "seg",
+        null,
+        "PRO",
+        "blue",
+        4
+      ],
+      [
+        "seg",
+        null,
+        "HACKER",
+        "red",
+        5
+      ],
+      [
+        "seg",
+        "death",
+        "NOOB",
+        "green",
+        6
+      ],
+      [
+        "seg",
+        null,
+        "PRO",
+        "blue",
+        7
+      ],
+      [
+        "seg",
+        null,
+        "HACKER",
+        "red",
+        8
+      ]
+    ],
+    "subs": [
+      [
+        "seg",
+        "task 1: climb the mountain",
+        1.6,
+        0
+      ],
+      [
+        "seg",
+        "task 2: cross the lava",
+        1.6,
+        3
+      ],
+      [
+        "seg",
+        "task 3: escape the pit",
+        1.6,
+        6
+      ]
+    ],
+    "chat": [
+      [
+        "typed0",
+        "/effect give @s levitation 5 39 true",
+        0.9,
+        0,
+        "Applied effect Levitation to HelloBuh"
+      ],
+      [
+        "typed1",
+        "/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava",
+        0.9,
+        0,
+        "Successfully filled 208 block(s)"
+      ],
+      [
+        "typed2",
+        "/summon tnt ~ ~ ~ {fuse:20,explosion_power:6}",
+        0.9,
+        0,
+        "Summoned new Primed TNT"
+      ],
+      [
+        "typed3",
+        "/summon tnt ~ ~ ~ {fuse:14,explosion_power:6}",
+        0.15,
+        0,
+        "Summoned new Primed TNT"
+      ],
+      [
+        "typed4",
+        "/summon tnt ~ ~ ~ {fuse:8,explosion_power:6}",
+        0.15,
+        0,
+        "Summoned new Primed TNT"
+      ]
+    ],
+    "speed": [
+      [
+        "seg:1.2",
+        "climb_a:-0.35",
+        "cut"
+      ],
+      [
+        "climb_a",
+        "ladders_out",
+        1.6
+      ],
+      [
+        "pillar_a",
+        "pillared",
+        1.4
+      ],
+      [
+        "pearl:0.1",
+        "summit:-0.05",
+        "cut"
+      ],
+      [
+        "burn_a",
+        "death:-0.2",
+        "cut"
+      ],
+      [
+        "x1",
+        "g1",
+        "cut"
+      ],
+      [
+        "x2",
+        "g2",
+        "cut"
+      ],
+      [
+        "x3",
+        "g3",
+        "cut"
+      ],
+      [
+        "x4",
+        "g4",
+        "cut"
+      ],
+      [
+        "x5",
+        "g5",
+        "cut"
+      ],
+      [
+        "x6",
+        "g6",
+        "cut"
+      ],
+      [
+        "x7",
+        "g7",
+        "cut"
+      ],
+      [
+        "x8",
+        "g8",
+        "cut"
+      ]
+    ],
+    "deathScreen": true,
+    "onFire": "in_lava:death",
+    "hook": {
+      "at": "boom",
+      "before": 0.5,
+      "after": 0.9,
+      "text": "wait for the hacker \ud83d\udc80"
+    },
+    "punch": [
+      [
+        "hack",
+        0,
+        1.08
+      ],
+      [
+        "hack",
+        1,
+        1.08
+      ],
+      [
+        "boom",
+        0,
+        1.18
+      ]
+    ],
+    "shake": [
+      [
+        "boom",
+        0,
+        22
+      ]
+    ],
+    "args": [
+      "--caption",
+      "noob vs pro vs hacker \ud83d\udc80",
+      "--red",
+      "hacker",
+      "--subs",
+      "[[\"seg\",\"task 1: climb the mountain\",1.6,0],[\"seg\",\"task 2: cross the lava\",1.6,3],[\"seg\",\"task 3: escape the pit\",1.6,6]]",
+      "--subs_y",
+      "0.3",
+      "--speed",
+      "[[\"seg:1.2\",\"climb_a:-0.35\",\"cut\"],[\"climb_a\",\"ladders_out\",1.6],[\"pillar_a\",\"pillared\",1.4],[\"pearl:0.1\",\"summit:-0.05\",\"cut\"],[\"burn_a\",\"death:-0.2\",\"cut\"],[\"x1\",\"g1\",\"cut\"],[\"x2\",\"g2\",\"cut\"],[\"x3\",\"g3\",\"cut\"],[\"x4\",\"g4\",\"cut\"],[\"x5\",\"g5\",\"cut\"],[\"x6\",\"g6\",\"cut\"],[\"x7\",\"g7\",\"cut\"],[\"x8\",\"g8\",\"cut\"]]",
+      "--punch",
+      "[[\"hack\",0,1.08],[\"hack\",1,1.08],[\"boom\",0,1.18]]",
+      "--hook",
+      "{\"at\":\"boom\",\"before\":0.5,\"after\":0.9,\"text\":\"wait for the hacker \ud83d\udc80\"}",
+      "--tags",
+      "[[\"seg\",null,\"NOOB\",\"green\",0],[\"seg\",null,\"PRO\",\"blue\",1],[\"seg\",null,\"HACKER\",\"red\",2],[\"seg\",\"death\",\"NOOB\",\"green\",3],[\"seg\",null,\"PRO\",\"blue\",4],[\"seg\",null,\"HACKER\",\"red\",5],[\"seg\",\"death\",\"NOOB\",\"green\",6],[\"seg\",null,\"PRO\",\"blue\",7],[\"seg\",null,\"HACKER\",\"red\",8]]",
+      "--chat",
+      "[[\"typed0\",\"/effect give @s levitation 5 39 true\",0.9,0,\"Applied effect Levitation to HelloBuh\"],[\"typed1\",\"/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava\",0.9,0,\"Successfully filled 208 block(s)\"],[\"typed2\",\"/summon tnt ~ ~ ~ {fuse:20,explosion_power:6}\",0.9,0,\"Summoned new Primed TNT\"],[\"typed3\",\"/summon tnt ~ ~ ~ {fuse:14,explosion_power:6}\",0.15,0,\"Summoned new Primed TNT\"],[\"typed4\",\"/summon tnt ~ ~ ~ {fuse:8,explosion_power:6}\",0.15,0,\"Summoned new Primed TNT\"]]",
+      "--shake",
+      "[[\"boom\",0,22]]",
+      "--on_fire",
+      "in_lava:death",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "seg:0",
+      "--end_after",
+      "boom:0.95"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 383,
+      "y": 72,
+      "z": -45
+    },
+    "biome": "minecraft:plains",
+    "ticks": 1027,
+    "seconds": 51.35,
+    "deaths": 2,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "seg"
+      },
+      {
+        "t": 4.5,
+        "event": "swing"
+      },
+      {
+        "t": 4.5,
+        "event": "place"
+      },
+      {
+        "t": 4.5,
+        "event": "climb_a"
+      },
+      {
+        "t": 4.55,
+        "event": "swing"
+      },
+      {
+        "t": 4.55,
+        "event": "place"
+      },
+      {
+        "t": 5.15,
+        "event": "swing"
+      },
+      {
+        "t": 5.15,
+        "event": "place"
+      },
+      {
+        "t": 5.6,
+        "event": "swing"
+      },
+      {
+        "t": 5.6,
+        "event": "place"
+      },
+      {
+        "t": 6,
+        "event": "swing"
+      },
+      {
+        "t": 6,
+        "event": "place"
+      },
+      {
+        "t": 6.45,
+        "event": "swing"
+      },
+      {
+        "t": 6.45,
+        "event": "place"
+      },
+      {
+        "t": 6.85,
+        "event": "swing"
+      },
+      {
+        "t": 6.85,
+        "event": "place"
+      },
+      {
+        "t": 7.3,
+        "event": "swing"
+      },
+      {
+        "t": 7.3,
+        "event": "place"
+      },
+      {
+        "t": 7.7,
+        "event": "swing"
+      },
+      {
+        "t": 7.7,
+        "event": "place"
+      },
+      {
+        "t": 8.15,
+        "event": "swing"
+      },
+      {
+        "t": 8.15,
+        "event": "place"
+      },
+      {
+        "t": 8.6,
+        "event": "ladders_out"
+      },
+      {
+        "t": 9.55,
+        "event": "let_go"
+      },
+      {
+        "t": 10.65,
+        "event": "noob_fell"
+      },
+      {
+        "t": 10.65,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 11.3,
+        "event": "x1"
+      },
+      {
+        "t": 11.6,
+        "event": "effect_end"
+      },
+      {
+        "t": 11.6,
+        "event": "effect"
+      },
+      {
+        "t": 11.6,
+        "event": "effect"
+      },
+      {
+        "t": 11.6,
+        "event": "effect_end"
+      },
+      {
+        "t": 12.8,
+        "event": "cut"
+      },
+      {
+        "t": 12.9,
+        "event": "g1"
+      },
+      {
+        "t": 12.9,
+        "event": "seg"
+      },
+      {
+        "t": 13.25,
+        "event": "swing"
+      },
+      {
+        "t": 13.25,
+        "event": "pearl"
+      },
+      {
+        "t": 13.25,
+        "event": "vel"
+      },
+      {
+        "t": 13.75,
+        "event": "vel"
+      },
+      {
+        "t": 14.25,
+        "event": "vel"
+      },
+      {
+        "t": 14.75,
+        "event": "vel"
+      },
+      {
+        "t": 15.25,
+        "event": "vel"
+      },
+      {
+        "t": 15.75,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "hurt",
+        "type": "ender_pearl"
+      },
+      {
+        "t": 16.1,
+        "event": "summit"
+      },
+      {
+        "t": 16.8,
+        "event": "x2"
+      },
+      {
+        "t": 16.8,
+        "event": "effect_end"
+      },
+      {
+        "t": 16.8,
+        "event": "effect"
+      },
+      {
+        "t": 16.8,
+        "event": "effect"
+      },
+      {
+        "t": 16.85,
+        "event": "effect_end"
+      },
+      {
+        "t": 17.9,
+        "event": "cut"
+      },
+      {
+        "t": 18,
+        "event": "g2"
+      },
+      {
+        "t": 18,
+        "event": "seg"
+      },
+      {
+        "t": 19,
+        "event": "typed"
+      },
+      {
+        "t": 19,
+        "event": "typed0"
+      },
+      {
+        "t": 19,
+        "event": "hack"
+      },
+      {
+        "t": 19,
+        "event": "effect"
+      },
+      {
+        "t": 19.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 19.95,
+        "event": "x3"
+      },
+      {
+        "t": 19.95,
+        "event": "effect_end"
+      },
+      {
+        "t": 19.95,
+        "event": "effect_end"
+      },
+      {
+        "t": 19.95,
+        "event": "effect"
+      },
+      {
+        "t": 19.95,
+        "event": "effect"
+      },
+      {
+        "t": 19.95,
+        "event": "effect_end"
+      },
+      {
+        "t": 20.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 20.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 21.05,
+        "event": "cut"
+      },
+      {
+        "t": 21.15,
+        "event": "g3"
+      },
+      {
+        "t": 21.15,
+        "event": "seg"
+      },
+      {
+        "t": 22.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 22.75,
+        "event": "in_lava"
+      },
+      {
+        "t": 23.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 23.55,
+        "event": "burn_a"
+      },
+      {
+        "t": 23.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 24.2,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 24.7,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 24.7,
+        "event": "death"
+      },
+      {
+        "t": 25.2,
+        "event": "x4"
+      },
+      {
+        "t": 25.25,
+        "event": "xp"
+      },
+      {
+        "t": 25.25,
+        "event": "respawn"
+      },
+      {
+        "t": 25.25,
+        "event": "xp"
+      },
+      {
+        "t": 25.45,
+        "event": "effect"
+      },
+      {
+        "t": 25.45,
+        "event": "effect"
+      },
+      {
+        "t": 25.45,
+        "event": "effect_end"
+      },
+      {
+        "t": 26.75,
+        "event": "cut"
+      },
+      {
+        "t": 26.85,
+        "event": "g4"
+      },
+      {
+        "t": 26.85,
+        "event": "seg"
+      },
+      {
+        "t": 26.9,
+        "event": "swing"
+      },
+      {
+        "t": 26.9,
+        "event": "place"
+      },
+      {
+        "t": 27.2,
+        "event": "swing"
+      },
+      {
+        "t": 27.2,
+        "event": "place"
+      },
+      {
+        "t": 27.4,
+        "event": "swing"
+      },
+      {
+        "t": 27.4,
+        "event": "place"
+      },
+      {
+        "t": 27.65,
+        "event": "swing"
+      },
+      {
+        "t": 27.65,
+        "event": "place"
+      },
+      {
+        "t": 27.9,
+        "event": "swing"
+      },
+      {
+        "t": 27.9,
+        "event": "place"
+      },
+      {
+        "t": 28.1,
+        "event": "swing"
+      },
+      {
+        "t": 28.1,
+        "event": "place"
+      },
+      {
+        "t": 28.35,
+        "event": "swing"
+      },
+      {
+        "t": 28.35,
+        "event": "place"
+      },
+      {
+        "t": 28.6,
+        "event": "swing"
+      },
+      {
+        "t": 28.6,
+        "event": "place"
+      },
+      {
+        "t": 29.3,
+        "event": "bridged"
+      },
+      {
+        "t": 29.75,
+        "event": "x5"
+      },
+      {
+        "t": 29.95,
+        "event": "effect_end"
+      },
+      {
+        "t": 29.95,
+        "event": "effect"
+      },
+      {
+        "t": 29.95,
+        "event": "effect"
+      },
+      {
+        "t": 29.95,
+        "event": "effect_end"
+      },
+      {
+        "t": 31.05,
+        "event": "cut"
+      },
+      {
+        "t": 31.15,
+        "event": "g5"
+      },
+      {
+        "t": 31.15,
+        "event": "seg"
+      },
+      {
+        "t": 32.15,
+        "event": "typed"
+      },
+      {
+        "t": 32.15,
+        "event": "typed1"
+      },
+      {
+        "t": 32.15,
+        "event": "hack"
+      },
+      {
+        "t": 34.1,
+        "event": "diamond_run"
+      },
+      {
+        "t": 34.1,
+        "event": "x6"
+      },
+      {
+        "t": 34.1,
+        "event": "effect_end"
+      },
+      {
+        "t": 34.1,
+        "event": "effect"
+      },
+      {
+        "t": 34.1,
+        "event": "effect"
+      },
+      {
+        "t": 34.15,
+        "event": "effect_end"
+      },
+      {
+        "t": 35.2,
+        "event": "cut"
+      },
+      {
+        "t": 35.3,
+        "event": "g6"
+      },
+      {
+        "t": 35.3,
+        "event": "seg"
+      },
+      {
+        "t": 36.95,
+        "event": "dig"
+      },
+      {
+        "t": 36.95,
+        "event": "swing"
+      },
+      {
+        "t": 37.3,
+        "event": "swing"
+      },
+      {
+        "t": 37.6,
+        "event": "swing"
+      },
+      {
+        "t": 37.65,
+        "event": "dig_end"
+      },
+      {
+        "t": 37.65,
+        "event": "dug"
+      },
+      {
+        "t": 37.7,
+        "event": "vel"
+      },
+      {
+        "t": 38.7,
+        "event": "vel"
+      },
+      {
+        "t": 39,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 39,
+        "event": "death"
+      },
+      {
+        "t": 39.4,
+        "event": "x7"
+      },
+      {
+        "t": 39.4,
+        "event": "xp"
+      },
+      {
+        "t": 39.4,
+        "event": "respawn"
+      },
+      {
+        "t": 39.4,
+        "event": "xp"
+      },
+      {
+        "t": 39.4,
+        "event": "vel"
+      },
+      {
+        "t": 39.4,
+        "event": "vel"
+      },
+      {
+        "t": 39.4,
+        "event": "vel"
+      },
+      {
+        "t": 39.4,
+        "event": "vel"
+      },
+      {
+        "t": 39.4,
+        "event": "vel"
+      },
+      {
+        "t": 40,
+        "event": "effect"
+      },
+      {
+        "t": 40,
+        "event": "effect"
+      },
+      {
+        "t": 40,
+        "event": "effect_end"
+      },
+      {
+        "t": 40.2,
+        "event": "vel"
+      },
+      {
+        "t": 40.3,
+        "event": "vel"
+      },
+      {
+        "t": 41.2,
+        "event": "vel"
+      },
+      {
+        "t": 41.3,
+        "event": "cut"
+      },
+      {
+        "t": 41.3,
+        "event": "vel"
+      },
+      {
+        "t": 41.4,
+        "event": "g7"
+      },
+      {
+        "t": 41.4,
+        "event": "seg"
+      },
+      {
+        "t": 41.55,
+        "event": "pillar_a"
+      },
+      {
+        "t": 41.75,
+        "event": "swing"
+      },
+      {
+        "t": 41.75,
+        "event": "place"
+      },
+      {
+        "t": 42.15,
+        "event": "vel"
+      },
+      {
+        "t": 42.2,
+        "event": "swing"
+      },
+      {
+        "t": 42.2,
+        "event": "place"
+      },
+      {
+        "t": 42.25,
+        "event": "vel"
+      },
+      {
+        "t": 42.65,
+        "event": "swing"
+      },
+      {
+        "t": 42.65,
+        "event": "place"
+      },
+      {
+        "t": 43.1,
+        "event": "swing"
+      },
+      {
+        "t": 43.1,
+        "event": "place"
+      },
+      {
+        "t": 43.15,
+        "event": "vel"
+      },
+      {
+        "t": 43.25,
+        "event": "vel"
+      },
+      {
+        "t": 43.55,
+        "event": "swing"
+      },
+      {
+        "t": 43.55,
+        "event": "place"
+      },
+      {
+        "t": 44,
+        "event": "swing"
+      },
+      {
+        "t": 44,
+        "event": "place"
+      },
+      {
+        "t": 44.15,
+        "event": "vel"
+      },
+      {
+        "t": 44.25,
+        "event": "vel"
+      },
+      {
+        "t": 44.45,
+        "event": "swing"
+      },
+      {
+        "t": 44.45,
+        "event": "place"
+      },
+      {
+        "t": 44.7,
+        "event": "pillared"
+      },
+      {
+        "t": 45.15,
+        "event": "vel"
+      },
+      {
+        "t": 45.25,
+        "event": "x8"
+      },
+      {
+        "t": 45.25,
+        "event": "vel"
+      },
+      {
+        "t": 45.65,
+        "event": "out"
+      },
+      {
+        "t": 45.9,
+        "event": "vel"
+      },
+      {
+        "t": 46.05,
+        "event": "effect_end"
+      },
+      {
+        "t": 46.05,
+        "event": "effect"
+      },
+      {
+        "t": 46.05,
+        "event": "effect"
+      },
+      {
+        "t": 46.05,
+        "event": "vel"
+      },
+      {
+        "t": 46.05,
+        "event": "effect_end"
+      },
+      {
+        "t": 46.1,
+        "event": "vel"
+      },
+      {
+        "t": 46.15,
+        "event": "vel"
+      },
+      {
+        "t": 46.2,
+        "event": "vel"
+      },
+      {
+        "t": 46.35,
+        "event": "vel"
+      },
+      {
+        "t": 46.4,
+        "event": "vel"
+      },
+      {
+        "t": 46.55,
+        "event": "vel"
+      },
+      {
+        "t": 46.6,
+        "event": "vel"
+      },
+      {
+        "t": 47.15,
+        "event": "cut"
+      },
+      {
+        "t": 47.15,
+        "event": "vel"
+      },
+      {
+        "t": 47.25,
+        "event": "g8"
+      },
+      {
+        "t": 47.25,
+        "event": "seg"
+      },
+      {
+        "t": 47.4,
+        "event": "vel"
+      },
+      {
+        "t": 47.65,
+        "event": "vel"
+      },
+      {
+        "t": 47.7,
+        "event": "vel"
+      },
+      {
+        "t": 47.85,
+        "event": "vel"
+      },
+      {
+        "t": 48,
+        "event": "vel"
+      },
+      {
+        "t": 48.05,
+        "event": "vel"
+      },
+      {
+        "t": 48.1,
+        "event": "vel"
+      },
+      {
+        "t": 48.15,
+        "event": "vel"
+      },
+      {
+        "t": 48.2,
+        "event": "vel"
+      },
+      {
+        "t": 48.25,
+        "event": "typed"
+      },
+      {
+        "t": 48.25,
+        "event": "typed2"
+      },
+      {
+        "t": 48.25,
+        "event": "hack"
+      },
+      {
+        "t": 48.25,
+        "event": "vel"
+      },
+      {
+        "t": 48.45,
+        "event": "vel"
+      },
+      {
+        "t": 48.5,
+        "event": "vel"
+      },
+      {
+        "t": 48.6,
+        "event": "typed"
+      },
+      {
+        "t": 48.6,
+        "event": "typed3"
+      },
+      {
+        "t": 48.7,
+        "event": "vel"
+      },
+      {
+        "t": 48.8,
+        "event": "vel"
+      },
+      {
+        "t": 48.9,
+        "event": "typed"
+      },
+      {
+        "t": 48.9,
+        "event": "typed4"
+      },
+      {
+        "t": 49.2,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "boom"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.3,
+        "event": "vel"
+      },
+      {
+        "t": 49.4,
+        "event": "vel"
+      },
+      {
+        "t": 49.45,
+        "event": "vel"
+      },
+      {
+        "t": 49.45,
+        "event": "vel"
+      },
+      {
+        "t": 49.55,
+        "event": "vel"
+      },
+      {
+        "t": 49.6,
+        "event": "vel"
+      },
+      {
+        "t": 49.65,
+        "event": "vel"
+      },
+      {
+        "t": 49.7,
+        "event": "vel"
+      },
+      {
+        "t": 49.8,
+        "event": "vel"
+      },
+      {
+        "t": 49.85,
+        "event": "vel"
+      },
+      {
+        "t": 49.85,
+        "event": "vel"
+      },
+      {
+        "t": 49.85,
+        "event": "vel"
+      },
+      {
+        "t": 49.9,
+        "event": "vel"
+      },
+      {
+        "t": 49.9,
+        "event": "vel"
+      },
+      {
+        "t": 50,
+        "event": "vel"
+      },
+      {
+        "t": 50.05,
+        "event": "vel"
+      },
+      {
+        "t": 50.05,
+        "event": "vel"
+      },
+      {
+        "t": 50.05,
+        "event": "vel"
+      },
+      {
+        "t": 50.15,
+        "event": "vel"
+      },
+      {
+        "t": 50.15,
+        "event": "vel"
+      },
+      {
+        "t": 50.2,
+        "event": "vel"
+      },
+      {
+        "t": 50.25,
+        "event": "vel"
+      },
+      {
+        "t": 50.25,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.3,
+        "event": "vel"
+      },
+      {
+        "t": 50.35,
+        "event": "vel"
+      },
+      {
+        "t": 50.35,
+        "event": "vel"
+      },
+      {
+        "t": 50.4,
+        "event": "vel"
+      },
+      {
+        "t": 50.45,
+        "event": "vel"
+      },
+      {
+        "t": 50.45,
+        "event": "vel"
+      },
+      {
+        "t": 50.45,
+        "event": "vel"
+      },
+      {
+        "t": 50.5,
+        "event": "vel"
+      },
+      {
+        "t": 50.5,
+        "event": "vel"
+      },
+      {
+        "t": 50.5,
+        "event": "vel"
+      },
+      {
+        "t": 50.5,
+        "event": "vel"
+      },
+      {
+        "t": 50.55,
+        "event": "vel"
+      },
+      {
+        "t": 50.55,
+        "event": "vel"
+      },
+      {
+        "t": 50.55,
+        "event": "vel"
+      },
+      {
+        "t": 50.55,
+        "event": "vel"
+      },
+      {
+        "t": 50.55,
+        "event": "vel"
+      },
+      {
+        "t": 50.6,
+        "event": "vel"
+      },
+      {
+        "t": 50.6,
+        "event": "vel"
+      },
+      {
+        "t": 50.6,
+        "event": "vel"
+      },
+      {
+        "t": 50.65,
+        "event": "vel"
+      },
+      {
+        "t": 50.65,
+        "event": "vel"
+      },
+      {
+        "t": 50.65,
+        "event": "vel"
+      },
+      {
+        "t": 50.65,
+        "event": "vel"
+      },
+      {
+        "t": 50.65,
+        "event": "vel"
+      },
+      {
+        "t": 50.7,
+        "event": "vel"
+      },
+      {
+        "t": 50.7,
+        "event": "vel"
+      },
+      {
+        "t": 50.7,
+        "event": "vel"
+      },
+      {
+        "t": 50.7,
+        "event": "vel"
+      },
+      {
+        "t": 50.7,
+        "event": "vel"
+      },
+      {
+        "t": 50.7,
+        "event": "vel"
+      },
+      {
+        "t": 50.75,
+        "event": "vel"
+      },
+      {
+        "t": 50.75,
+        "event": "vel"
+      },
+      {
+        "t": 50.75,
+        "event": "vel"
+      },
+      {
+        "t": 50.85,
+        "event": "vel"
+      },
+      {
+        "t": 50.85,
+        "event": "vel"
+      },
+      {
+        "t": 50.85,
+        "event": "vel"
+      },
+      {
+        "t": 50.9,
+        "event": "vel"
+      },
+      {
+        "t": 50.9,
+        "event": "vel"
+      },
+      {
+        "t": 50.95,
+        "event": "vel"
+      },
+      {
+        "t": 50.95,
+        "event": "vel"
+      },
+      {
+        "t": 50.95,
+        "event": "vel"
+      },
+      {
+        "t": 50.95,
+        "event": "vel"
+      },
+      {
+        "t": 50.95,
+        "event": "vel"
+      },
+      {
+        "t": 51,
+        "event": "vel"
+      },
+      {
+        "t": 51,
+        "event": "vel"
+      },
+      {
+        "t": 51,
+        "event": "vel"
+      },
+      {
+        "t": 51.05,
+        "event": "vel"
+      },
+      {
+        "t": 51.05,
+        "event": "vel"
+      },
+      {
+        "t": 51.1,
+        "event": "vel"
+      },
+      {
+        "t": 51.1,
+        "event": "vel"
+      },
+      {
+        "t": 51.15,
+        "event": "vel"
+      },
+      {
+        "t": 51.15,
+        "event": "vel"
+      },
+      {
+        "t": 51.15,
+        "event": "vel"
+      },
+      {
+        "t": 51.15,
+        "event": "vel"
+      },
+      {
+        "t": 51.2,
+        "event": "vel"
+      },
+      {
+        "t": 51.2,
+        "event": "vel"
+      },
+      {
+        "t": 51.2,
+        "event": "vel"
+      },
+      {
+        "t": 51.2,
+        "event": "vel"
+      },
+      {
+        "t": 51.2,
+        "event": "vel"
+      },
+      {
+        "t": 51.2,
+        "event": "vel"
+      },
+      {
+        "t": 51.25,
+        "event": "vel"
+      },
+      {
+        "t": 51.25,
+        "event": "vel"
+      },
+      {
+        "t": 51.25,
+        "event": "vel"
+      },
+      {
+        "t": 51.25,
+        "event": "vel"
+      },
+      {
+        "t": 51.25,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.3,
+        "event": "vel"
+      },
+      {
+        "t": 51.35,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "4b865a8aeb15e9ba5c9e2cd067c21c6613097388",
+    "rendered_at": "2026-11-07T16:58:37.002Z",
+    "head_at_publish": "0534e6f7b88acf01176a34faf88c3ebb2f89fa40",
+    "stunt": "stunts/noob_pro_hacker.js",
+    "source_snapshot": [
+      "source/noob_pro_hacker.js",
+      "source/plateau.js",
+      "source/nph.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 4b865a8aeb15",
+    "gunzip -c shorts/noob_pro_hacker/recording.json.gz > work/noob_pro_hacker.rec.json",
+    "node render.js work/noob_pro_hacker.rec.json work/noob_pro_hacker.frames 60 1080 1011",
+    "python3 audio.py work/noob_pro_hacker.rec.json work/noob_pro_hacker.wav",
+    "python3 edit.py --frames work/noob_pro_hacker.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/noob_pro_hacker.rec.json --audio work/noob_pro_hacker.wav --caption \"noob vs pro vs hacker \ud83d\udc80\" --red hacker --subs \"[[\\\"seg\\\",\\\"task 1: climb the mountain\\\",1.6,0],[\\\"seg\\\",\\\"task 2: cross the lava\\\",1.6,3],[\\\"seg\\\",\\\"task 3: escape the pit\\\",1.6,6]]\" --subs_y 0.3 --speed [[\"seg:1.2\",\"climb_a:-0.35\",\"cut\"],[\"climb_a\",\"ladders_out\",1.6],[\"pillar_a\",\"pillared\",1.4],[\"pearl:0.1\",\"summit:-0.05\",\"cut\"],[\"burn_a\",\"death:-0.2\",\"cut\"],[\"x1\",\"g1\",\"cut\"],[\"x2\",\"g2\",\"cut\"],[\"x3\",\"g3\",\"cut\"],[\"x4\",\"g4\",\"cut\"],[\"x5\",\"g5\",\"cut\"],[\"x6\",\"g6\",\"cut\"],[\"x7\",\"g7\",\"cut\"],[\"x8\",\"g8\",\"cut\"]] --punch [[\"hack\",0,1.08],[\"hack\",1,1.08],[\"boom\",0,1.18]] --hook \"{\\\"at\\\":\\\"boom\\\",\\\"before\\\":0.5,\\\"after\\\":0.9,\\\"text\\\":\\\"wait for the hacker \ud83d\udc80\\\"}\" --tags [[\"seg\",null,\"NOOB\",\"green\",0],[\"seg\",null,\"PRO\",\"blue\",1],[\"seg\",null,\"HACKER\",\"red\",2],[\"seg\",\"death\",\"NOOB\",\"green\",3],[\"seg\",null,\"PRO\",\"blue\",4],[\"seg\",null,\"HACKER\",\"red\",5],[\"seg\",\"death\",\"NOOB\",\"green\",6],[\"seg\",null,\"PRO\",\"blue\",7],[\"seg\",null,\"HACKER\",\"red\",8]] --chat \"[[\\\"typed0\\\",\\\"/effect give @s levitation 5 39 true\\\",0.9,0,\\\"Applied effect Levitation to HelloBuh\\\"],[\\\"typed1\\\",\\\"/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava\\\",0.9,0,\\\"Successfully filled 208 block(s)\\\"],[\\\"typed2\\\",\\\"/summon tnt ~ ~ ~ {fuse:20,explosion_power:6}\\\",0.9,0,\\\"Summoned new Primed TNT\\\"],[\\\"typed3\\\",\\\"/summon tnt ~ ~ ~ {fuse:14,explosion_power:6}\\\",0.15,0,\\\"Summoned new Primed TNT\\\"],[\\\"typed4\\\",\\\"/summon tnt ~ ~ ~ {fuse:8,explosion_power:6}\\\",0.15,0,\\\"Summoned new Primed TNT\\\"]]\" --shake [[\"boom\",0,22]] --on_fire in_lava:death --death_screen death --start_at seg:0 --end_after boom:0.95 --out out/noob_pro_hacker.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 15: noob vs pro vs hacker (mountain, lava lake, pit); 8 independent review rounds, final: frame/retention/minecraft ready; engine nitpicks left: TNT entity hidden ~7 frames before the blast, hook has no HUD, shaft relight black for ~0.15 s",
+  "published_at": "2026-11-07T17:09:36.385Z"
+}
