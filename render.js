@@ -242,6 +242,8 @@ function entitiesAt (t, mesher) {
         const [s2, b2] = mesher.world.getLight(cell.offset(dx, dy, dz)); sky = Math.max(sky, s2); blk = Math.max(blk, b2)
       }
     }
+    // BlazeRenderer / MagmaCubeRenderer.getBlockLightLevel: always 15 (they glow in the dark)
+    if (ra[2] === 'blaze' || ra[2] === 'magma_cube') blk = 15
     out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(sky, blk) })
   }
   return out
@@ -766,6 +768,14 @@ const ROAR_START = new Map()   // id -> [[startTick, endTick]]
     if (on && !cur) { const run = [row[0], Infinity]; open.set(row[1], run); if (!ROAR_START.has(row[1])) ROAR_START.set(row[1], []); ROAR_START.get(row[1]).push(run) }
     if (!on && cur) { cur[1] = row[0]; open.delete(row[1]) }
   }
+  // staged by a stunt: ctx.mark('pose', { ids: [id], roar: true }) .. ctx.mark('pose_off', { ids })
+  // (a summoned warden won't roar on cue)
+  const staged = new Map()
+  for (const e of rec.timeline || []) {
+    if (e.event === 'pose' && e.roar) for (const id of e.ids || []) staged.set(id, e.t / 50)
+    if (e.event === 'pose_off') for (const id of e.ids || []) if (staged.has(id)) { if (!ROAR_START.has(id)) ROAR_START.set(id, []); ROAR_START.get(id).push([staged.get(id), e.t / 50]); staged.delete(id) }
+  }
+  for (const [id, a] of staged) { if (!ROAR_START.has(id)) ROAR_START.set(id, []); ROAR_START.get(id).push([a, a + 84]) }   // no pose_off: the 4.2 s roar
 }
 // TNT minecarts primed (harness cart_primed marks, entity status 10): id -> tick
 const CART_PRIMED = new Map()
@@ -1251,6 +1261,11 @@ function camAtLive (t) {
         for (let k = b[0]; k <= last[0]; k++) { const u = (k - b[0]) / n; PARTS.push(...particles.spawn({ type: 'firework_trail', t: k * 50, x: b[3] + (b[3] - a[3]) * u, y: b[4] + (b[4] - a[4]) * u, z: b[5] + (b[5] - a[5]) * u, vy: (b[4] - a[4]) / n })) }
       }
     }
+  }
+  // Blaze.aiStep (client): two large_smoke puffs a tick at random spots in its box (0.6 x 1.8)
+  for (const row of rec.entities || []) {
+    if (row[2] !== 'blaze') continue
+    for (let k = 0; k < 2; k++) PARTS.push(...particles.spawn({ type: 'smoke', t: row[0] * 50, x: row[3], y: row[4] + Math.random() * 1.8 - 0.15, z: row[5], count: 1 }))
   }
   // note blocks (block action at a note_block): a note particle above it, hued by its pitch, unless the
   // instrument is a mob head (not tunable: NoteBlockInstrument.isTunable)
@@ -1754,6 +1769,19 @@ function camAtLive (t) {
       let k = fuse < 10 ? 1 - Math.max(0, fuse) / 10 : 0; k *= k; k *= k
       e.name = 'falling_block'
       e.extra = { state: TNT_STATE, flash: Math.floor(Math.max(0, fuse) / 5) % 2 === 0, scale: 1 + k * 0.3 }
+    }
+    // mobs' main-hand items (harness: entity_equipment -> extra.held): the same item objects as the
+    // player's (ItemInHandLayer), drawn in the right arm
+    for (const e of ents) {
+      if (!e.extra || !e.extra.held || e.name === 'player') continue
+      const n = e.extra.held, held = { key: n, display: thirdPersonDisplay(n) }
+      const bl = MC.blocksByName[n]
+      if (spriteOf(n)) held.tex = spriteOf(n)
+      else if (bl) {
+        held.state = bl.defaultState
+        if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+      }
+      e.mobHeld = held
     }
     for (const e of ents) {
       if (e.name !== 'warden' || !ROAR_START.has(e.id)) continue

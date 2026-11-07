@@ -945,6 +945,21 @@ export class EntityLayer {
         for (const n of ['leg2', 'leg3']) if (B[n]) B[n].rotation.x = B[n].userData.rest.x * (1 - f) + f * Math.PI * 0.1
         if (B.head) B.head.rotation.x -= f * Math.PI * 0.15 + a
       }
+      // a mob's main-hand item (ItemInHandLayer): the Java hand transform Rx(-90) Ry(180)
+      // T(1/16, 0.125, -0.625) under the right arm, with the Bedrock bone's y-up flipped to Java's y-down
+      const mh = s.mobHeld, mk = mh ? mh.key : null
+      if (r.heldKey !== mk && B.rightArm) {
+        if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
+        if (!r.heldGrp) {
+          r.heldGrp = new THREE.Group(); r.heldGrp.matrixAutoUpdate = false
+          r.heldGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
+          B.rightArm.add(r.heldGrp)
+        }
+        r.heldObj = mk && this.itemFactory ? await this.itemFactory(mh) : null
+        if (r.heldObj) r.heldGrp.add(r.heldObj.obj)
+        r.heldKey = mk
+      }
+      if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
     }
     for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); if (r.fire) this.scene.remove(r.fire); this.live.delete(id) }
   }
