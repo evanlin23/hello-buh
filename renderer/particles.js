@@ -91,6 +91,31 @@ function spawn (ev, blockTex) {
         g: -0.004, drag: 0.9, life: poof ? 16 / (r() * 0.8 + 0.2) + 2 : 8 / (r() * 0.8 + 0.2), size: poof ? 0.1 * (r() * r() * 6 + 1) : 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
     }
   }
+  if (ev.type === 'tnt_smoke') {
+    // SmokeParticle (BaseAshSmokeParticle, scale 1): grey 0-0.3, half-size 0.1 x (0.5..1) x 2 x 0.75,
+    // rises (gravity -0.1), friction 0.96, lives 8/(r*0.8+0.2) ticks, generic_7 -> generic_0
+    const g = r() * 0.3
+    P({ x: ev.x, y: ev.y, z: ev.z, vx: (r() - 0.5) * 0.01, vy: 0.008 + r() * 0.006, vz: (r() - 0.5) * 0.01,
+      g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
+  }
+  if (ev.type === 'item_break') {
+    // LivingEntity.spawnItemParticles(stack, 5): velocity ((r-0.5)*0.1, r*0.1+0.1, 0) and offset
+    // ((r-0.5)*0.3, -r*0.6-0.3, 0.6), both turned by the view (xRot then yRot), + 0.05 up; each a
+    // BreakingItemParticle: a random quarter of the item sprite, half-size quadSize/2, gravity 1
+    // (0.04 a tick), friction 0.98, lives 4/(r*0.9+0.1) ticks
+    const rot = (v) => {
+      const a = -ev.jpitch, b = -ev.jyaw
+      let [x, y, z] = v; [y, z] = [y * Math.cos(a) + z * Math.sin(a), z * Math.cos(a) - y * Math.sin(a)]
+      ;[x, z] = [x * Math.cos(b) + z * Math.sin(b), z * Math.cos(b) - x * Math.sin(b)]
+      return [x, y, z]
+    }
+    for (let i = 0; i < 5; i++) {
+      const v = rot([(r() - 0.5) * 0.1, r() * 0.1 + 0.1, 0]), o = rot([(r() - 0.5) * 0.3, -r() * 0.6 - 0.3, 0.6])
+      const uo = Math.floor(r() * 4), vo = Math.floor(r() * 4)
+      P({ x: ev.x + o[0], y: ev.y + o[1], z: ev.z + o[2], vx: v[0], vy: v[1] + 0.05, vz: v[2],
+        g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * 2 / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
+    }
+  }
   if (ev.type === 'poof') {
     // a mob vanishing (LivingEntity.makePoofParticles): 20 ExplodeParticles (poof) at random points in
     // its box (ev.w, ev.h; default a player-sized 0.6 x 1.8, from ev.y up), gaussian x 0.02 plus +-0.05

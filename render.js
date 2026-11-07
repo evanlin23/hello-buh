@@ -915,11 +915,35 @@ function camAtLive (t) {
     }
     PARTS.push(...particles.spawn(ev, bt))
   }
+  // primed TNT puffs smoke every tick on the client (PrimedTnt.tick: ParticleTypes.SMOKE at y + 0.5)
+  {
+    for (const row of rec.entities || []) {
+      if (row[2] !== 'tnt') continue
+      PARTS.push(...particles.spawn({ type: 'tnt_smoke', t: row[0] * 50, x: row[3], y: row[4] + 0.5, z: row[5] }))
+    }
+  }
+  // an item breaking (LivingEntity.breakItem -> spawnItemParticles(stack, 5)): crumbs of the item's
+  // sprite thrown from in front of the eye, on the entity.item.break sound
+  for (const ev of (rec.timeline || []).filter(e => e.event === 'sound' && e.sound === 'entity.item.break')) {
+    const t0 = ev.t / 50
+    let name = null; for (const [tk, n] of HELD) { if (tk <= t0) name = n; else break }
+    if (!name) for (const [tk, n] of HELD) if (tk < t0 + 2 && n) { name = n; break }
+    const sp = name && spriteOf(name)
+    const pose = P[Math.max(0, Math.min(P.length - 1, Math.floor(t0)))]
+    if (!sp || !pose) continue
+    PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
+  }
+  PARTS.sort((a, b) => a.t0 - b.t0)
+  const MAXLIFE = PARTS.reduce((m, p) => Math.max(m, p.life || 0), 0) + 1
   const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
   const partsAt = (t, cam) => {
     const out = []
     if (process.env.NOPARTS) return out   // debug: frames without particles
-    for (const p of PARTS) {
+    // PARTS is sorted by start tick: only those started within MAXLIFE ticks can be alive
+    let lo = 0, hi = PARTS.length
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (PARTS[mid].t0 < t - MAXLIFE) lo = mid + 1; else hi = mid }
+    for (let pi = lo; pi < PARTS.length && PARTS[pi].t0 <= t; pi++) {
+      const p = PARTS[pi]
       const s = particles.state(p, t, solidAt); if (!s) continue
       // too close: a big sprite would fill the screen. Small ones (splash drops, crumbs) are fine up
       // to 0.25 blocks, or a splash right under the eye was culled away entirely
