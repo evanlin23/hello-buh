@@ -13,7 +13,9 @@ const { openSpots, clearPlants } = require('./_site')
 // in whole ticks (easeLook rounds ms to ticks, at least 1: 110/90/75 all played the same): with the look
 // held 3 ticks after the click (the eye shows a tick or two later: the look must still be on its frame),
 // an eye every 9, 8, 7, 6, 5, 4 ticks, the last ring 3 (a 2-tick hold at its top speed)
-const FILL = [{ ms: 300, hold: 3 }, { ms: 250, hold: 3 }, { ms: 200, hold: 3 }, { ms: 150, hold: 3 }, { ms: 100, hold: 3 }, { ms: 50, hold: 3 }, { ms: 50, hold: 2 }]
+// the last two rings flick straight onto each frame (ms -1: no ease) and hold 4 and 3 ticks: the look
+// stays on the frame past the eye showing (a 1-tick ease + 2-tick hold left as the eye came in)
+const FILL = [{ ms: 300, hold: 3 }, { ms: 250, hold: 3 }, { ms: 200, hold: 3 }, { ms: 150, hold: 3 }, { ms: 100, hold: 3 }, { ms: -1, hold: 4 }, { ms: -1, hold: 3 }]
 const N = FILL.length
 
 module.exports = {
@@ -138,7 +140,7 @@ module.exports = {
       used++
       const tgt = new Vec3(fx + 0.5, fy + 0.8, fz + 0.5)
       if (settle) for (let k = 0; k < 10 && (Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.01 || !bot.entity.onGround); k++) await bot.waitForTicks(1)   // still from the hop in
-      await ctx.easeLookAt(tgt, ms)
+      if (ms >= 0) await ctx.easeLookAt(tgt, ms)
       await bot.lookAt(tgt, true)   // exactly on the frame (the ease aims from where it started)
       if (settle) await bot.waitForTicks(settle)   // the look on the frame before the click
       ctx.sound('block.end_portal_frame.fill')
