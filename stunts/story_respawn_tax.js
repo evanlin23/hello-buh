@@ -152,7 +152,12 @@ module.exports = {
       if (trip > 7 && bot.entity.position.z < Z + 3.8 && bot.entity.position.y > F + 0.9) { landed = landed || trip; K.base = K.aim(t); bot.look(K.base.yaw, K.base.pitch, true) }
       if (trip === 10) say('/effect clear @s minecraft:fire_resistance')
       if (trip === 7) ctx.mark('cut')   // a /tp is a cut: the 1-block step out of the cauldron glided up through the rim (Minecraft audit)
-      if (trip === 7) say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 1).toFixed(3)} ${(Z + 3.4).toFixed(3)} facing ${t.x.toFixed(2)} ${t.y.toFixed(2)} ${t.z.toFixed(2)}`)
+      if (trip === 7) {   // the aim rides on the /tp as numbers (a `facing` /tp's rotation never reached the recording: the cut landed on the old aim)
+        const dx = t.x - (X + 0.5), dy = t.y - (F + 2.62), dz = t.z - (Z + 3.4)
+        const yaw = Math.atan2(-dx, -dz), pitch = Math.atan2(dy, Math.hypot(dx, dz))
+        K.base = { yaw, pitch }
+        say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 1).toFixed(3)} ${(Z + 3.4).toFixed(3)} ${(180 - yaw * 180 / Math.PI).toFixed(2)} ${(-pitch * 180 / Math.PI).toFixed(2)}`)
+      }
       // the body must be at rest on the plaza before it dies: a death on the landing tick read the teleport as
       // speed and the dead camera slid 11 blocks up the lane, past the librarian (retention audit)
       if (trip >= 16 && landed && trip >= landed + 6) { if (!ctx.died) say('/damage @s 100 minecraft:on_fire'); return 'dead' }
@@ -271,9 +276,10 @@ module.exports = {
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)
       if (k === at(2) + 4) {
         gone('v_nitwit'); setMeter(1)
-        ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
         ctx.sound('entity.generic.extinguish_fire', 0.7, 1.2)
       }
+      // the poof as his teleport lands (2 ticks after the command: he stood inside it for 6 frames)
+      if (k === at(2) + 6) ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
       look(k)
     })
     // L13: every respawn costs one life; they've paid for mine since I was born (the empty street)
