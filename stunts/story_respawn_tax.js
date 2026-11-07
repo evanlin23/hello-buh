@@ -123,7 +123,9 @@ module.exports = {
     // a mob coming back from past 64 blocks shows ~2 ticks after its /tp, and one leaving vanishes ~2 ticks after:
     // send them 2 ticks before a cut so they land on the cut frame (she popped in 3 frames after it)
     const away = (tag) => say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} 0 0`)
-    const onCut = async (moves, ...cutArgs) => { moves(); for (let i = 0; i < 2; i++) { await bot.waitForTicks(1); K.look(0) } await cut(...cutArgs) }   // keep swaying while it waits (5 identical frames before the cut)
+    // lead: ticks between the move and the cut. One arriving from past 64 blocks shows 2 ticks after its /tp, one
+    // leaving vanishes 1 tick after (the lane librarian left 3 frames early with 2)
+    const onCut = async (moves, ...cutArgs) => { const lead = typeof cutArgs[0] === 'object' && cutArgs[0].lead ? cutArgs.shift().lead : 2; moves(); for (let i = 0; i < lead; i++) { await bot.waitForTicks(1); K.look(0) } await cut(...cutArgs) }   // keep swaying while it waits (5 identical frames before the cut)
     const put = async (tag, x, z, yaw) => {
       say(`/tp @e[tag=${tag}] ${X + 0.5} ${F + 30} ${Z + 72.5} ${yaw} 0`); await bot.waitForTicks(2)
       say(`/tp @e[tag=${tag}] ${X + x} ${F + 1} ${Z + z} ${yaw} 0`); await bot.waitForTicks(5)   // she re-enters tracking a few ticks after the hop back (popped in 3 frames after the cut)
@@ -193,7 +195,7 @@ module.exports = {
       // where the fisherman stood: empty. Turned to over 6 ticks (a one-tick snap after 3 frames of the golem read as a flash cut)
       if (k === 0) respawnSoon(() => { from3 = { ...K.base }; k3 = kNow }, 4)
       if (from3 && !docked) K.turnTo(from3, P(-1.6, 1.0, -1.8), (k - k3) / 6)
-      if (!docked && k >= at(3) + 1 && alive()) { docked = true; await cut(18.5, -3.5, P(26.5, 0.4, -3.5)) }   // arrive on the aim the walk keeps (it whipped on 4 frames)
+      if (!docked && k >= at(3) && alive()) { docked = true; await cut(18.5, -3.5, P(26.5, 0.4, -3.5)) }   // arrive on the aim the walk keeps (it whipped on 4 frames)
       go(docked && bot.entity.position.x < X + 21.2)
       if (docked) K.base = K.aim(P(26.5, 0.4, -3.5))
       if (alive()) look(k)
@@ -234,7 +236,7 @@ module.exports = {
     // L06: so I stopped dying (over the cactus death screen). I moved into a house made of hay
     let hay = false
     await line('L06', async (k, at) => {
-      respawnSoon(null, 2)
+      if (k >= 8) respawnSoon(null, 2)   // "So I" starts over the cactus death screen (it landed on the respawn cut)
       if (!hay && k >= at(2) - 1 && alive()) { hay = true; await cut(14.5, -11.5, P(14.5, 1.5, -19)) }
       go(hay && bot.entity.position.z > Z - 17.4)
       if (alive()) look(k)
@@ -261,12 +263,22 @@ module.exports = {
     // the next respawn lands straight in L11's shot, facing the lane (a cut there was undone by the server's late
     // respawn placement 1.5 s into the shot: Minecraft audit)
     say(`/spawnpoint @s ${X + 1} ${F + 1} ${Z + 7} 175 6`)   // over 4 blocks from the L10 death spot, so the respawn is a camera cut to the renderer and the edit (at 2.3 blocks the fire and a caption ended 3 frames off)   // L11's first aim (at the nitwit at -3.5): no turn on the respawn   // off the lantern post (at 3/4 it filled a quarter of the frame)
+    // the golem walks off the spawn to his place by the lane, on the game clock (L09 is shorter than the walk):
+    // a turn in place first and back at the end, ~20 degrees a tick (a 180 snap read as a flat slab mid-turn)
+    const golemWalk = () => {
+      let gk = 0
+      const step = () => {
+        const g = Math.max(0, Math.min(1, (gk - 8) / 36)), turn = Math.min(1, gk / 8, Math.max(0, (52 - gk) / 8))
+        say(`/tp @e[tag=golem] ${(X + 0.5 + 1.9 * g).toFixed(3)} ${F + 1} ${(Z + 0.5 - 4.7 * g).toFixed(3)} ${(-158 * turn).toFixed(1)} 0`)
+        if (++gk > 52) bot.removeListener('physicsTick', step)
+      }
+      bot.on('physicsTick', step)
+    }
     await line('L09', async (k, at) => {
       go(k > 2)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       // the golem walks off the spawn to his place by the lane (a /tp before the cut landed 2 ticks into the shot)
-      const g = Math.min(1, k / 36)
-      if (k <= 40) say(`/tp @e[tag=golem] ${(X + 0.5 + 1.9 * g).toFixed(3)} ${F + 1} ${(Z + 0.5 - 4.7 * g).toFixed(3)} ${g < 1 ? -158 : 0} 0`)
+      if (k === 0) golemWalk()
       K.base = K.aim(P(0.5, 0.5, 4.5)); look(k, 0, k > at(1) ? -0.25 : 0)
     })
     dead = false; trip = null; landed = 0
@@ -292,13 +304,13 @@ module.exports = {
     // L12: he wasn't taken. He volunteered (a nod, a puff, gone)
     await line('L12', async (k, at) => {
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)
-      if (k === at(2) + 5) {   // he vanishes on the poof's tick (a 3-frame empty block before it)
+      if (k === at(2) + 6) {   // he vanishes on the poof's tick (gone 1 tick after the /tp: a 3-frame empty block before it)
         gone('v_nitwit')
         ctx.sound('entity.generic.extinguish_fire', 0.7, 1.2)
       }
       // the poof as his teleport lands (2 ticks after the command: he stood inside it for 6 frames)
-      if (k === at(2) + 6) setMeter(1)   // with the poof, as he goes
-      if (k === at(2) + 6) ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
+      if (k === at(2) + 7) setMeter(1)   // with the poof, as he goes
+      if (k === at(2) + 7) ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
       look(k)
     })
     away('v_lib')   // out of the hay house while the street is in shot; L15 brings her into the lane on the cut
@@ -309,7 +321,7 @@ module.exports = {
       go(k > 4 && k < at(4))
       // the one shut door swings open at the right edge, and the camera turns to it (the turn had no reason: retention check 7)
       if (k === at(3)) { say(`/setblock ${X + 4} ${F + 2} ${Z + 28} oak_door[half=upper,facing=east,open=true]`); say(`/setblock ${X + 4} ${F + 1} ${Z + 28} oak_door[half=lower,facing=east,open=true]`); ctx.sound('block.wooden_door.open', 1, 1) }
-      if (k >= at(3) + 2) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(4.5, 1.6, 28.5), (k - at(3) - 1) / 18) }
+      if (k >= at(3) - 5) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(4.5, 1.6, 28.5), (k - at(3) + 6) / 20) }   // the door is in frame when it swings
       look(k)
     })
     go(false)
@@ -331,7 +343,7 @@ module.exports = {
     go(false)
     // L16: she's already standing on my spawn
     say('/effect give @s minecraft:fire_resistance 30 0 true')
-    await onCut(() => away('v_lib'), 0.5, 7.4, P(0.5, 1.7, 0.5))   // the lane one leaves on the cut (one slid onto the gold block, then popped)
+    await onCut(() => away('v_lib'), { lead: 1 }, 0.5, 7.4, P(0.5, 1.7, 0.5))   // the lane one leaves on the cut (one slid onto the gold block, then popped)
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
     let from16 = null
     await line('L16', async (k) => { go(k > 6 && k < 12); if (k > 12) { from16 = from16 || { ...K.base }; K.turnTo(from16, P(0.5, 1.0, 2.5), (k - 12) / 40) } look(k) })   // a slow tilt from her face toward the cauldron (a near-hold: retention)
