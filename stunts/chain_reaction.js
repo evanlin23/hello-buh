@@ -314,7 +314,8 @@ module.exports = {
     await follow('minecart', [-2.0, 0.2, 0], () => at('cart_end'), 160)
     sprint = false
     // E: the rockets go up one by one; the last one into the target; the anvil comes down
-    focus = W(eEnd - 1, 4, dn[0]); k = 0.12
+    // (walk up to the tower: from the cart's end it is ~16 blocks off, and the anvil read as a speck)
+    focus = W(eEnd - 1, 4, dn[0]); k = 0.12; steer = W(eEnd + 6, 0, nD - 3)
     for (let i = 0; i < 4; i++) {
       await until(() => at(`rocket${i}`), 30)
       focus = W(eEnd - 1, 7 + i * 1.5, dn[i])
@@ -340,14 +341,14 @@ module.exports = {
         const v = last ? Math.hypot(en.position.x - last.x, en.position.z - last.z) : 1
         last = en.position.clone()
         // moving: lead it; waiting at the buffer: let the aim drift along the line it will light
-        focus = v > 0.02 ? en.position.offset(-2.5, 0.3, 0) : focus.plus(new Vec3(0.12, 0, 0))
+        focus = v > 0.02 ? en.position.offset(-2.5, 0.3, 0) : focus.plus(new Vec3(0.3, 0, 0))
       }
       await bot.waitForTicks(1)
     }
     // H: the explosions race east to the pile
     k = 0.1
     for (let i = 0; i < 200 && !at('giant'); i++) {
-      if (at('big')) { focus = W(27, 3, nH + 3); steer = W(6, 0, nF - 8) } else if (at('cube')) { focus = W(12, 2.5, nH); steer = W(3, 0, nF - 7) }
+      if (at('big')) { focus = W(27, 3, nH + 3); steer = W(6, 0, nF - 15) } else if (at('cube')) { focus = W(12, 2.5, nH); steer = W(3, 0, nF - 11) }   // back away facing it: flung TNT
       else {
         const tnts = Object.values(bot.entities).filter(en => en.name === 'tnt')
         const front = tnts.reduce((a, en) => (!a || en.position.x > a.position.x) ? en : a, null)
