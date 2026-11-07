@@ -245,6 +245,13 @@ const PRE_FACE = new Map()   // entity id -> [tick, yaw, headYaw, pitch] last se
 // [start tick, end tick, which]: which = { ids: [...] } or { near: [x, z, r] } from the face_on mark,
 // or null for every villager (older recordings)
 { let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = [e.t / 50, e.ids || e.near ? { ids: e.ids, near: e.near, head: e.head } : null]; if (e.event === 'face_off' && a !== null) { FACE.push([a[0], e.t / 50, a[1]]); a = null } } if (a !== null) FACE.push([a[0], Infinity, a[1]]) }
+// mobs hit and killed (harness mob_hurt / mob_death marks): the red flash lasts 10 ticks
+// (hurtTime), the death animation runs from the death on (deathTime, removed at 20)
+const MOB_HURT = new Map(), MOB_DEATH = new Map()
+for (const e of rec.timeline || []) {
+  if (e.event === 'mob_hurt') { if (!MOB_HURT.has(e.id)) MOB_HURT.set(e.id, []); MOB_HURT.get(e.id).push(e.t / 50) }
+  if (e.event === 'mob_death' && !MOB_DEATH.has(e.id)) MOB_DEATH.set(e.id, e.t / 50)
+}
 // EntityRenderer.shadowRadius per renderer (vanilla); slimes x size, babies x 0.5, boats 0.8
 const SHADOW_R = { player: 0.5, villager: 0.5, wandering_trader: 0.5, zombie: 0.5, zombie_villager: 0.5, husk: 0.5, drowned: 0.5, skeleton: 0.5, stray: 0.5, wither_skeleton: 0.7, creeper: 0.5, enderman: 0.5, witch: 0.5, pillager: 0.5, vindicator: 0.5, evoker: 0.5, cow: 0.7, mooshroom: 0.7, sheep: 0.7, pig: 0.7, goat: 0.7, chicken: 0.3, iron_golem: 0.7, snow_golem: 0.5, spider: 0.8, cave_spider: 0.7, wolf: 0.5, cat: 0.4, ocelot: 0.4, fox: 0.4, rabbit: 0.3, horse: 0.75, donkey: 0.75, mule: 0.75, skeleton_horse: 0.75, zombie_horse: 0.75, llama: 0.7, camel: 0.7, slime: 0.25, magma_cube: 0.25, blaze: 0.5, warden: 0.9, bee: 0.4, panda: 0.9, polar_bear: 0.9, frog: 0.3, axolotl: 0.3, turtle: 0.7, item: 0.15, tnt: 0.5, falling_block: 0.5, armor_stand: 0.0 }
 const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, y: e.y, z: e.z }))
@@ -1605,6 +1612,10 @@ function camAtLive (t) {
       if (!e.extra.name) e.extra = { ...e.extra, name: 'jeb_' }   // recordings from before names were recorded
       const near = Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) < 64
       if (near && (e.extra.nameVisible || e.id === cam.targetEntity)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
+    }
+    for (const e of ents) {
+      const hs = MOB_HURT.get(e.id); if (hs && hs.some(h => t >= h && t < h + 10)) e.hurt = true
+      const dt = MOB_DEATH.get(e.id); if (dt !== undefined && t >= dt) e.deathTime = t - dt + 1
     }
     // entity shadows (EntityRenderDispatcher: within 16 blocks of the camera, strength 1 - d^2/256;
     // ShadowRenderer: on the ground up to 2 blocks below, alpha (strength - drop / 2) x 0.5)

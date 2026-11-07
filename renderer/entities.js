@@ -101,9 +101,12 @@ function build (geo, texInfo, extraCubes = {}) {
   const mat = new THREE.MeshBasicMaterial({ map: texInfo.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
   // white overlay (creeper fuse flash, LivingEntityRenderer overlay): mix toward white by uWhite
   mat.userData.white = { value: 0 }
+  mat.userData.red = { value: 0 }
   mat.onBeforeCompile = (sh) => {
     sh.uniforms.uWhite = mat.userData.white
-    sh.fragmentShader = 'uniform float uWhite;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0), uWhite);')
+    sh.uniforms.uRed = mat.userData.red
+    // OverlayTexture: hurt / dying mixes 30% red into the (lit) colour, the creeper flash toward white
+    sh.fragmentShader = 'uniform float uWhite;\nuniform float uRed;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.0, 0.0) * diffuse * vColor.rgb, uRed * 0.302);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0), uWhite);')
   }
   const bones = {}
   const defs = {}
@@ -286,7 +289,7 @@ const WITCH_PARTS = [
 function poseWitch (r, s, walkPos, walkSpeed) {
   const B = r.bones
   let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
-  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(r.tilt || 0)))
   B.head.rotation.set(-(s.pitch || 0), net, 0)
   B.rightLeg.rotation.set(Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed * 0.5, 0, 0)
   B.leftLeg.rotation.set(Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed * 0.5, 0, 0)
@@ -309,7 +312,7 @@ const HORSE_PARTS = [
 function poseHorse (r, s, walkPos, walkSpeed) {
   const B = r.bones
   let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
-  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(r.tilt || 0)))
   B.neck.rotation.set(Math.PI / 6 - (s.pitch || 0), Math.max(-0.9, Math.min(0.9, net)), 0)
   const a = Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, b = Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed
   B.rightHindLeg.rotation.set(a, 0, 0); B.leftFrontLeg.rotation.set(a, 0, 0)
@@ -336,7 +339,7 @@ const WARDEN_PARTS = [
 function poseWarden (r, s, walkPos, walkSpeed, tick) {
   const B = r.bones
   let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
-  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(r.tilt || 0)))
   B.head.rotation.set(-(s.pitch || 0), net, 0)
   const sw = Math.cos(walkPos * 0.6662) * Math.min(1, walkSpeed * 2), f = 0.5
   B.rightLeg.rotation.set(sw * 1.4 * f, 0, 0); B.leftLeg.rotation.set(-sw * 1.4 * f, 0, 0)
@@ -390,7 +393,7 @@ const ENDERMAN_PARTS = [
 function poseEnderman (r, s, walkPos, walkSpeed) {
   const B = r.bones
   let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
-  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(r.tilt || 0)))
   B.head.rotation.set(-(s.pitch || 0), net, 0)
   const c = (v) => Math.max(-0.4, Math.min(0.4, v * 0.5))
   B.rightArm.rotation.set(c(Math.cos(walkPos * 0.6662 + Math.PI) * walkSpeed), 0, 0)
@@ -445,6 +448,9 @@ function sheepColor (s, tick) {
   }
   return woolColor(s.extra?.color || 0)
 }
+// hitbox width / height (EntityType sizes) for the fire overlay
+const HITBOX_W = { zombie: 0.6, skeleton: 0.6, creeper: 0.6, villager: 0.6, cow: 0.9, sheep: 0.9, pig: 0.9, chicken: 0.4, spider: 1.4, enderman: 0.6, iron_golem: 1.4, wolf: 0.6, horse: 1.3965, slime: 0.52, husk: 0.6, drowned: 0.6, witch: 0.6, pillager: 0.6, blaze: 0.6, warden: 0.9 }
+const HITBOX_H = { zombie: 1.95, skeleton: 1.99, creeper: 1.7, villager: 1.95, cow: 1.4, sheep: 1.3, pig: 0.9, chicken: 0.7, spider: 0.9, enderman: 2.9, iron_golem: 2.7, wolf: 0.85, horse: 1.6, slime: 0.52, husk: 1.95, drowned: 1.95, witch: 1.95, pillager: 1.95, blaze: 1.8, warden: 2.9 }
 export class EntityLayer {
   constructor (scene, regs) { this.scene = scene; this.regs = regs || {}; this.live = new Map(); this.pending = new Set(); this.blockModels = new Map() }
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
@@ -453,7 +459,7 @@ export class EntityLayer {
     const key = `${id}|${name}|${JSON.stringify(extra, (k, v) => k === 'paddle' ? undefined : v)}`
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
-    if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); this.live.delete(id) }
+    if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
     let obj = null, bones = {}, mat = null, woolMat = null, underMat = null
     if ((name === 'falling_block' || name === 'moving_block') && extra && this.blockModels.has(extra.state)) {
       const bm = this.blockModels.get(extra.state)
@@ -624,6 +630,35 @@ export class EntityLayer {
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
+      // on fire (EntityRenderDispatcher.renderFlame): fire_0 / fire_1 layers facing the camera, scale
+      // 1.4 x width, each 1 x 1.4 of that, 0.45 higher and 0.9 x smaller than the last, up the height
+      if (s.extra && s.extra.fire && !s.player) {
+        if (!r.fire) {
+          r.fire = new THREE.Group(); r.fireMats = []
+          const strips = [await texture(['anim/fire_0']), await texture(['anim/fire_1'])]
+          const W = (HITBOX_W[s.name] || 0.6) * 1.4, Hh = (HITBOX_H[s.name] || 1.8) / W
+          let g = 0.5, j = 0, i = Hh, l = 0
+          while (i > 0 && l < 8) {
+            const st = strips[l % 2]; if (!st) break
+            const tx = st.tex.clone(); tx.needsUpdate = true; tx.repeat.set(1, -st.w / st.h)   // (flipY false: frame k runs from (k+1)/n at the bottom to k/n at the top)
+            const m = new THREE.SpriteMaterial({ map: tx, transparent: true, alphaTest: 0.1, depthWrite: false, fog: true })
+            const sp = new THREE.Sprite(m); sp.scale.set(2 * g * W, 1.4 * W * (g / 0.5), 1); sp.center.set(0.5, 0); sp.position.y = -j * W
+            r.fire.add(sp); r.fireMats.push([m, st.h / st.w]); i -= 0.45; j -= 0.45; g *= 0.9; l++
+          }
+          this.scene.add(r.fire)
+        }
+        // translate(0, 0, 0.3 - layers x 0.02) toward the camera, so the flames sit in front of the body
+        r.fire.visible = true; r.fire.position.set(s.x, s.y, s.z)
+        if (this.camera) { const dx = this.camera.position.x - s.x, dz = this.camera.position.z - s.z, d = Math.hypot(dx, dz) || 1, k = (HITBOX_W[s.name] || 0.6) * 1.4 * 0.3; r.fire.position.x += dx / d * k; r.fire.position.z += dz / d * k }
+        for (const [m, n] of r.fireMats) m.map.offset.y = (Math.floor(tick) % n + 1) / n
+      } else if (r.fire) r.fire.visible = false
+      // mobs: hurt (10 ticks) and dying turn red; the death tips the body over min(1, sqrt((deathTime - 1)
+      // / 20 x 1.6)) x 90 degrees (LivingEntityRenderer.setupRotations; spiders 180)
+      if (!s.player) {
+        const red = (s.hurt || s.deathTime > 0) ? 1 : 0
+        for (const m of [r.mat, r.woolMat, r.underMat]) if (m && m.userData.red) m.userData.red.value = red
+        r.tilt = s.deathTime > 0 ? Math.min(1, Math.sqrt(Math.max(0, (s.deathTime - 1) / 20 * 1.6))) * (/spider$/.test(s.name) ? Math.PI : Math.PI / 2) : 0
+      }
       if (r.bones.arrow) {
         // Ry(javaYaw - 90) Rz(javaPitch): an arrow's yRot is atan2(vx, vz), mineflayer yaw = pi - yRot
         r.obj.rotation.set(0, 0, 0)
@@ -708,7 +743,7 @@ export class EntityLayer {
         const MAXD = 75 * Math.PI / 180
         if (Math.abs(d) > MAXD) s.yaw = s.headYaw - Math.sign(d) * MAXD
       }
-      r.obj.rotation.set(0, s.yaw, 0)
+      r.obj.rotation.set(0, s.yaw, r.tilt || 0)   // (XYZ order with x 0: Ry then the death tip Rz)
       if (s.swell !== undefined) {   // CreeperRenderer.scale
         let f = s.swell; const g = 1 + Math.sin(f * 100) * f * 0.01
         f = Math.min(1, Math.max(0, f)); f *= f; f *= f
@@ -772,6 +807,6 @@ export class EntityLayer {
         B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y - dy, B.head.userData.rest.z)
       }
     }
-    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); this.live.delete(id) }
+    for (const [id, r] of this.live) if (!seen.has(id)) { if (r.obj) this.scene.remove(r.obj); if (r.tag) this.scene.remove(r.tag); if (r.fire) this.scene.remove(r.fire); this.live.delete(id) }
   }
 }

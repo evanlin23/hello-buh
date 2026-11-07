@@ -414,7 +414,7 @@ window.HB = {
     clouds = await makeClouds('/assets/env/clouds.png'); scene.add(clouds)
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
-    entities = new EntityLayer(scene, regs)
+    entities = new EntityLayer(scene, regs); entities.camera = camera
     blockEntities = new BlockEntityLayer(scene)
     entities.itemFactory = thirdPersonItem
     entities.glintify = glintify
