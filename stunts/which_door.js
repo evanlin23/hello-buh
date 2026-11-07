@@ -1,8 +1,8 @@
 // "which door would you pick? 🚪" (worker 14, docs/ideas.md "New formats" #3, ~30 s): five numbered
 // doors in one facade, diamonds at the back of every room. The bot opens them in turn:
 //   1 a stone bridge over lava with a gap too wide to walk (dead), 2 a zombie horde (survived: it
-//   slams the door, and zombies can't break doors on Normal), 3 a pressure plate under open sky
-//   (anvils; survived by backing out), 4 a room of creepers (dead), 5 "the safe one", a cosy bedroom
+//   slams the door, and zombies can't break doors on Normal), 3 a pressure plate under a trapdoor roof
+//   holding anvils (survived by backing out), 4 a room of creepers (dead), 5 "the safe one", a cosy bedroom
 //   whose floor is TNT under the carpet (the worst).
 // Everything on camera is survival play: walking, jumping, opening doors. Mobs have their own AI.
 // The traps' redstone (under the floor, never on camera) is stood in for by commands.
@@ -31,7 +31,7 @@ module.exports = R.makeStunt({
     flash: [['death', 2, 0.8]],
     shake: [['death', 2, 24]],
     // the blast from above, slowed (first person, the death screen covers it on the tick it lands)
-    replay: { at: 'big_blast', before: 1.0, after: 0.4, cam: '12.5,7,-2,0,-58', speed: 0.4, label: 'REPLAY' },
+    replay: { at: 'big_blast', before: 0.6, after: 0.25, cam: '12.5,14,5,0,-52', speed: 0.4, label: 'REPLAY' },
     speed: [['lava_a', 'lava_dead', 2.5]]     // the burn in the lava, sped up to the death
   }
 })

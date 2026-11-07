@@ -29,7 +29,7 @@ module.exports = R.makeStunt({
     flash: [['death', 2, 0.8]],
     shake: [['death', 2, 24]],
     speed: [['fall_a', 'fall_dead', 2.0]],    // the long fall down the shaft
-    // the floor opening and the drop into the lava, seen from above, slowed (first person only sees it go)
-    replay: { at: 'lava_in', before: 1.6, after: 0.3, cam: '12.5,9,-1,0,-66', speed: 0.5, label: 'REPLAY' }
+    // the drop down the shaft into the lava, from straight above, slowed (first person only sees it go)
+    replay: { at: 'splash', before: 1.5, after: 0.2, cam: '12.6,6,-5.0,0,-89', speed: 0.5, label: 'REPLAY' }
   }
 })
