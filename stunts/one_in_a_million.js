@@ -42,6 +42,7 @@ module.exports = {
   // degrees at terminal velocity) only reads magnified (review)
   // more zoom on the higher tiers: the drift is physically capped near 3-4 degrees, so its size on screen is the zoom
   fovZoom: TIERS.slice(1).map((_, i) => [`drop${i + 2}:0.4`, `splash${i + 2}:-0.2`, [2.2, 2.8, 3.2, 3.5][i]]),
+  aimMarker: true,   // render the 'aim' marks as a red landing marker on the ground (worker 11, d161a20)
   botTimeout: 600,   // 6 chunk stops and a cactus field: past the default 180 s per try
   clouds: false,   // Video Settings > Clouds: OFF (vanilla). At y 192 the falls went through a white cloud wall, and from build limit the clouds hid the target
   edit: {
