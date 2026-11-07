@@ -36,7 +36,13 @@ module.exports = {
     if (!g) throw new Error('no dry land')
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    this.spots = await openSpots(ctx, g.x, g.z, Array(RINGS).fill(2), { axis: 'x', gap: 8, foot: [0, 4, 0, 6], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N, spread: 96 })
+    // the plains patch is small and the located point moves between runs: a few starts around it
+    let lastErr = null
+    this.spots = null   // not a previous attempt's
+    for (const [dx, dz] of [[0, 0], [-24, 0], [0, -24], [-24, -24], [24, 24], [-48, 0], [0, 24]]) {
+      try { this.spots = await openSpots(ctx, g.x + dx, g.z + dz, Array(RINGS).fill(2), { axis: 'x', gap: 8, foot: [0, 4, 0, 6], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N, spread: 96 }); break } catch (e) { lastErr = e; ctx.log('rings from', dx, dz, ':', e.message) }
+    }
+    if (!this.spots) throw lastErr
     // empty rings, every frame facing the middle (vanilla needs that for the portal to form)
     for (const S of this.spots) {
       const X = S.x, z = S.z, y = S.floor + 1
