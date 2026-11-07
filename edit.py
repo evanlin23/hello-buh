@@ -1236,7 +1236,7 @@ def main():
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
                                   args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat,
                                   hide=[(death_start(a_, args), b_ - args.start) for a_, b_ in death_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.death_screen)]
-                                  if args.death_screen else [])
+                                  if args.death_screen else [], cuts=cut_times(args))
         if lst:
             inputs += ["-framerate", str(args.out_fps), "-i", str(lst)]   # an exact per-frame image sequence
             graph.append(f"[{n_in}:v]format=rgba[fxv]")

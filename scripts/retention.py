@@ -445,7 +445,7 @@ def chat_windows(spec, timeline, start):
 
 
 _jar = None
-def chat_img(typed, cursor, feedback, fb_alpha):
+def chat_img(typed, cursor, feedback, fb_alpha=1.0):
     """Vanilla ChatScreen at GUI scale 3: the translucent input box along the bottom of the game view
     (fill(2, h-14, w-2, h-2, 0x80000000)), the typed text in the game font at (4, h-12) with a
     blinking '_', and an optional feedback line above it in the chat history."""
@@ -460,17 +460,22 @@ def chat_img(typed, cursor, feedback, fb_alpha):
     if typed is not None:
         d.rectangle((2 * GUI, bottom - 14 * GUI, W - 2 * GUI, bottom - 2 * GUI), fill=(0, 0, 0, 128))
         draw_text(img, _jar, typed + ("_" if cursor else ""), 4 * GUI, bottom - 12 * GUI)
-    if feedback and fb_alpha > 0.01:
+    # feedback: the chat history, newest at the bottom, stacked 9 GUI px a line like vanilla
+    lines = feedback if isinstance(feedback, tuple) else ((feedback, fb_alpha),) if feedback else ()
+    for n_, (text, a_) in enumerate(reversed(lines)):
+        if a_ <= 0.01:
+            continue
+        y_ = bottom - (49 + 9 * n_) * GUI
         layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        ImageDraw.Draw(layer).rectangle((0, bottom - 49 * GUI, 320 * GUI, bottom - 40 * GUI), fill=(0, 0, 0, 128))
-        draw_text(layer, _jar, feedback, 2 * GUI, bottom - 48 * GUI, color=(220, 220, 220, 255))
-        if fb_alpha < 1:
-            layer.putalpha(layer.split()[3].point(lambda v: int(v * fb_alpha)))
+        ImageDraw.Draw(layer).rectangle((0, y_, 320 * GUI, y_ + 9 * GUI), fill=(0, 0, 0, 128))
+        draw_text(layer, _jar, text, 2 * GUI, y_ + GUI, color=(220, 220, 220, 255))
+        if a_ < 1:
+            layer.putalpha(layer.split()[3].point(lambda v, a_=a_: int(v * a_)))
         img.alpha_composite(layer)
     return img
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=()):
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=(), cuts=()):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -535,9 +540,12 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         for g0, g1, gtext, gcolor in tgw:    # persistent role tag (no fade between consecutive tags)
             if g0 <= t + 1e-6 < g1 - 1e-6 and not any(h0 <= t + 1e-6 < h1 for h0, h1 in hide):   # not over a death screen
                 tk = (gtext, gcolor, round(_pop(t - g0, 0.18, 0.5), 2))
-        chk = None
+        chk, typed_now, fbs = None, None, []
         for c0, c1, c2, ctext, cfb, crecall in chw:   # chat: typed letter by letter up to Enter, held, closed
             typed = None
+            ccut = next((c for c in cuts if c > c0 + 1e-6), 1e9)   # it all closes at the next hard cut (worker 15)
+            if t >= ccut - 1e-6:
+                continue
             if c0 <= t + 1e-6 < c1:
                 # typing ends 0.1 s before Enter and the full line holds (the last 1-3 characters never
                 # showed: worker 15); TYPE_S <= 0.05 is a recalled line, shown whole at once
@@ -550,8 +558,12 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             fb_a = 0.0
             if cfb and t >= c1 - 1e-6 and t < c1 + 2.0:
                 fb_a = 1.0 if t < c1 + 1.5 else max(0.0, 1 - (t - c1 - 1.5) / 0.5)
-            if typed is not None or fb_a > 0:
-                chk = (typed, (int(t / 0.3) % 2 == 0) if typed is not None else False, cfb if fb_a > 0 else None, round(fb_a, 2))
+            if typed is not None:
+                typed_now = typed
+            if fb_a > 0:
+                fbs.append((cfb, round(fb_a, 2)))   # every open feedback line: vanilla stacks the history
+        if typed_now is not None or fbs:
+            chk = (typed_now, (int(t / 0.3) % 2 == 0) if typed_now is not None else False, tuple(fbs[-10:]))
         key = (ck, cc, fk, cwk, rk, tk, chk)
         if key not in cache:
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
