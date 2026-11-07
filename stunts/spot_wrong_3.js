@@ -103,7 +103,7 @@ module.exports = spotWrong({
         if (t % 70 === 5) ctx.sound('block.portal.ambient', 0.25, 0.9 + Math.random() * 0.2)
       },
       cam: { pos: [5.5, -1.5] },
-      scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [8, [3, 1, -2]], [10, [5, 2, -8]]],
+      scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [8, [2.5, 0.6, -8]], [10, [5, 2, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: look closer'],
       reveals: [
         { at: [9.5, 0.5, -7.0], zoom: 3, strafe: 'left', sub: 'raw gold, not gold', check: [[9, 0, -8], 'raw_gold_block'] },
