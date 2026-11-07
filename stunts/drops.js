@@ -23,7 +23,7 @@ module.exports = {
     // and a live blocks-fallen counter on every drop
     speed: [...DROPS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
     ],                                   // falls run at real speed (a mid-fall glance up is the beat; 30 s minimum)
-    fallen: DROPS.map((d, i) => [`drop${i + 1}`, i === DROPS.length - 1 ? 'death' : `splash${i + 1}`])
+    fallen: DROPS.map((d, i) => i === DROPS.length - 1 ? [`drop${i + 1}`, 'death'] : [`drop${i + 1}`, `splash${i + 1}`, 'blocks', -1])   // -1: the splash fires with the feet in the water block (read 11/31/...; the miss lands on the grass, no offset)
   },
   expectDeath: true,
   renderDistance: 20, recordRadius: 320,   // the ground has to stay in sight from 251 up (fog is max(xz, |y|)): at 12 (192 blocks) the 230/250 drops opened on ~1 s of blank fog
