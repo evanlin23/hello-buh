@@ -84,9 +84,9 @@ class Warp:
         for a, b, f in self.spans:
             oa = a - lost                    # output time where the span starts
             ob = oa + (b - a) / f
-            if t_out < oa:
-                break
-            if t_out < ob:
+            if t_out < oa - 1e-9:            # (a frame time a hair under a cut's start is ON the cut:
+                break                        # it showed the old shot one frame under the new overlays)
+            if f != math.inf and t_out < ob:
                 return a + (t_out - oa) * f
             lost += (b - a) * (1 - 1 / f)
         return t_out + lost

@@ -711,7 +711,7 @@ def death_start(td_abs, args):
     k = max(0, int(math.floor(td_abs * fps)) - 3)
     while src(k / fps) < td_src - 1.0 / fps - 1e-6:
         k += 1
-    return (k - int(args.start * fps)) / fps - 0.5 / fps
+    return (k - int(args.start * fps + 1e-6)) / fps - 0.5 / fps
 
 def fgrid(t, fps):
     """An overlay window edge for `enable`: just before the first frame at or after video time t (a
@@ -819,7 +819,7 @@ def main():
         if ev_ in _tl:
             dur = min(dur, _tl[ev_] + float(secs_) - args.start)
     inputs = (["-ss", str(args.start), "-i", args.video] if args.video else
-              ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps)), "-i", args.frames])
+              ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps + 1e-6)), "-i", args.frames])
     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / "caption.png")]
     graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},"
              f"pad={W}:{H}:0:{BAND}:black,fps={args.out_fps},format=rgba[g0]"]
@@ -862,7 +862,7 @@ def main():
         if need:   # 3D icons for block items (skips non-block items itself)
             subprocess.run(["node", str(HERE / "renderer" / "icons.js"), CLIENT_JAR.stem, *need], check=True)
         ticks = hud_ticks(tl, dur + shift, bool(json.loads(pathlib.Path(args.timeline).read_text()).get('keepInventory')) if args.timeline else False)
-        first = int(shift * 20)
+        first = int(shift * 20 + 1e-6)
         pngs, runs = {}, []                      # unique HUD images, and (png, n_ticks) runs
         with zipfile.ZipFile(CLIENT_JAR) as jar:
             # F1 (hide GUI): no HUD between an f1_on mark and the next f1_off (a cinematic shot, the
@@ -991,8 +991,8 @@ def main():
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
                                   args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args))
         if lst:
-            inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
-            graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba[fxv]")
+            inputs += ["-framerate", str(args.out_fps), "-i", str(lst)]   # an exact per-frame image sequence
+            graph.append(f"[{n_in}:v]format=rgba[fxv]")
             graph.append(f"[{last}][fxv]overlay=0:0:eof_action=repeat[fxo]")
             last, n_in = "fxo", n_in + 1
     for k, t0, dur_s in deferred_subs:   # subtitles over a death screen: above it, below its buttons
@@ -1098,7 +1098,8 @@ def main():
     if args.hook and args.timeline:   # finale preview in front of beat 1 (after mastering: it reuses the final mix)
         h = json.loads(args.hook)
         if h.get("at") in tl_ev:
-            retention.hook_prepend(args.out, h, tl_ev[h["at"]] - args.start, args.out_fps)
+            retention.hook_prepend(args.out, h, tl_ev[h["at"]] - args.start, args.out_fps,
+                                   frames=args.frames, start_index=int(round(args.start * args.fps)), caption=tmp / "caption.png")
             dur += retention.hook_len({"hook": h})
     if args.loop:   # the end dissolves into the first frame (a seamless re-watch)
         retention.loop_end(args.out, json.loads(args.loop), args.out_fps)

@@ -344,54 +344,75 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
             runs[-1][1] += 1
         else:
             runs.append([cache[key], 1])
-    lst = outdir / "fx.txt"
-    lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {k / fps:.4f}\n" for p, k in runs) + f"file '{runs[-1][0]}'\n")
-    return lst
+    # one symlink per output frame, read as an exact image sequence: through ffconcat + fps the
+    # track landed one frame early at most marks (the counter changed a frame before the cut)
+    seq = outdir / "fxseq"
+    seq.mkdir(exist_ok=True)
+    i = 0
+    for p, k in runs:
+        for _ in range(k):
+            (seq / f"fx{i:05d}.png").symlink_to(pathlib.Path(p).resolve())
+            i += 1
+    return str(seq / "fx%05d.png")
 
 
 # ---------------------------------------------------------------- hook preview
-def hook_prepend(out, spec, t_video, fps=60):
-    """Put [t_video-before, t_video+after] of the finished Short in front of it, with the hook text
-    over it and a quick zoom-in, then cut to the start. Rewrites `out` in place."""
+def hook_prepend(out, spec, t_video, fps=60, frames=None, start_index=0, caption=None):
+    """Put [t_video-before, t_video+after] of the Short in front of it, with the hook text over it
+    and a slow push-in, then cut to the start. Rewrites `out` in place. With `frames` (the edit's
+    game-view frame pattern, output-indexed) and `caption`, the clip is built from the clean game
+    frames + the caption, so no counter, card or HUD from the finale shows in it (the old crop of the
+    finished video left fragments of the blocks-fallen counter at the top edge); otherwise it falls
+    back to cropping the finished video."""
     h = _load(spec)
     before, after = float(h.get("before", 1.5)), float(h.get("after", 0.0))
     text = h.get("text", "wait for the last one 😳")
     a, b = max(0.0, t_video - before), t_video + after
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-hook-"))
     d = b - a
-    txt = block_text(text, 104, COLORS["white"])
-    cy = BAND + int(GAME_H * 0.68)   # lower third: clear of the corner counters and the crosshair
-    for i in range(int(math.ceil(d * fps)) + 1):   # the text pops in over the first 0.15 s
-        s = _pop(i / fps, 0.15, 0.5)
-        im = txt if s == 1.0 else txt.resize((int(txt.width * s), int(txt.height * s)), Image.BICUBIC)
+    n = int(round(d * fps))
+    txt = block_text(text, 104, COLORS["white"], max_w=W * 0.8)
+    smax = W * 0.95 / txt.width                 # the pop never grows past 95% of the view (it was cut off)
+    cy = BAND + int(GAME_H * 0.68)              # lower third: clear of the crosshair
+    for i in range(n + 1):                      # the text pops in over the first 0.15 s
+        sc = min(_pop(i / fps, 0.15, 0.5), smax)
+        im = txt if sc == 1.0 else txt.resize((int(txt.width * sc), int(txt.height * sc)), Image.BICUBIC)
         ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         ov.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))
         ov.save(tmp / f"hook{i:03d}.png", compress_level=1)
     has_audio = bool(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", out],
                                     capture_output=True, text=True).stdout.strip())
-    # the hook clip: a slow push-in on the game view (crop from 1.0 to 1.06), the text popping in
-    # the counters live in the top ~140 px of the game view: crop below them (same aspect), then push
-    # in 1.0 -> 1.06, so the flash reads as the finale alone, not "5/5" before "1/5" (retention audit)
-    top = 190
-    cw = int(W * (GAME_H - top) / GAME_H) // 2 * 2
-    zoom = f"1+0.06*t/{d:.3f}"
-    g = [f"[0:v]trim={a:.4f}:{b:.4f},setpts=PTS-STARTPTS,split[hk][hb]",
-         f"[hk]crop=w={cw}:h={GAME_H - top}:x={(W - cw) // 2}:y={BAND + top},scale={W}:{GAME_H},"
-         f"scale=w='trunc({W}*({zoom})/2+1)*2':h='trunc({GAME_H}*({zoom})/2+1)*2':eval=frame,"
-         f"crop={W}:{GAME_H},format=rgba[hz]",
-         f"[hb][hz]overlay=0:{BAND}[hc]",
-         f"[2:v]format=rgba[tx]",
-         f"[hc][tx]overlay=0:0:shortest=1,setsar=1,format=yuv420p[h1]",
-         "[1:v]setsar=1,format=yuv420p[m1]"]
+    zoom = f"1+0.08*t/{d:.3f}"                 # a slow push-in, so the flash never sits still
+    push = (f"scale=w='trunc({W}*({zoom})/2+1)*2':h='trunc({GAME_H}*({zoom})/2+1)*2':eval=frame,"
+            f"crop={W}:{GAME_H},format=rgba")
+    if frames and caption:
+        ins = ["-framerate", str(fps), "-start_number", str(start_index + int(round(a * fps))), "-i", frames,
+               "-i", out, "-framerate", str(fps), "-i", str(tmp / "hook%03d.png"), "-loop", "1", "-framerate", str(fps), "-i", str(caption)]
+        g = [f"[0:v]trim=end_frame={n},setpts=PTS-STARTPTS,scale={W}:{GAME_H}:force_original_aspect_ratio=increase,crop={W}:{GAME_H},"
+             f"{push},pad={W}:{H}:0:{BAND}:black[hc0]",
+             "[hc0][3:v]overlay=0:0[hc]"]
+        va = "1"
+    else:
+        # fallback: crop the finished video below the corner counters (same aspect), then push in
+        top = 190
+        cw = int(W * (GAME_H - top) / GAME_H) // 2 * 2
+        ins = ["-i", out, "-i", out, "-framerate", str(fps), "-i", str(tmp / "hook%03d.png")]
+        g = [f"[0:v]trim={a:.4f}:{b:.4f},setpts=PTS-STARTPTS,split[hk][hb]",
+             f"[hk]crop=w={cw}:h={GAME_H - top}:x={(W - cw) // 2}:y={BAND + top},scale={W}:{GAME_H},{push}[hz]",
+             f"[hb][hz]overlay=0:{BAND}[hc]"]
+        va = "0"
+    g += ["[2:v]format=rgba[tx]",
+          "[hc][tx]overlay=0:0:shortest=1,setsar=1,format=yuv420p[h1]",
+          "[1:v]setsar=1,format=yuv420p[m1]"]
     if has_audio:
-        g.append(f"[0:a]atrim={a:.4f}:{b:.4f},asetpts=PTS-STARTPTS,afade=t=out:st={max(0, d - 0.03):.4f}:d=0.03[ha]")
+        g.append(f"[{va}:a]atrim={a:.4f}:{b:.4f},asetpts=PTS-STARTPTS,afade=t=out:st={max(0, d - 0.03):.4f}:d=0.03[ha]")
         g.append("[h1][ha][m1][1:a]concat=n=2:v=1:a=1[v][a]")
         maps = ["-map", "[v]", "-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     else:
         g.append("[h1][m1]concat=n=2:v=1:a=0[v]")
         maps = ["-map", "[v]"]
     res = tmp / "out.mp4"
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", out, "-i", out, "-framerate", str(fps), "-i", str(tmp / "hook%03d.png"),
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", *ins,
                     "-filter_complex", ";".join(g), *maps, "-r", str(fps), "-c:v", "libx264", "-preset", "medium", "-crf", "18",
                     "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(res)], check=True)
     shutil.move(str(res), out)
