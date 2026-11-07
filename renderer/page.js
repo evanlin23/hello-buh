@@ -495,6 +495,17 @@ window.HB = {
     drawSelection(cam)
     cullClouds()
     renderer.render(scene, camera)
+    // vanilla's mipmap chain stops at level 4 (Options mipmapLevels: 16 px -> 1 px per tile); three
+    // builds it down to 1x1, where the 32 px atlas cells (8 px padding) blend into their neighbours
+    // far away. Cap the atlas at level 4 once it is on the GPU (texParameter sticks to the texture).
+    if (opaqueMat && opaqueMat.map && !opaqueMat.map.userData.maxLevel) {
+      const tp = renderer.properties.get(opaqueMat.map)
+      if (tp && tp.__webglTexture) {
+        const gl = renderer.getContext()
+        gl.bindTexture(gl.TEXTURE_2D, tp.__webglTexture); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAX_LEVEL, 4); gl.bindTexture(gl.TEXTURE_2D, null)
+        renderer.state.reset(); opaqueMat.map.userData.maxLevel = true
+      }
+    }
     if (await drawHand(cam)) {
       const ac = renderer.autoClear; renderer.autoClear = false
       renderer.clearDepth(); renderer.render(handScene, handCam)
