@@ -1146,7 +1146,9 @@ def main():
                     last, n_in = f"ds{di}_{k}", n_in + 1
     if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
-                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat)
+                                  args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat,
+                                  hide=[(death_start(a_, args), b_ - args.start) for a_, b_ in death_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.death_screen)]
+                                  if args.death_screen else [])
         if lst:
             inputs += ["-framerate", str(args.out_fps), "-i", str(lst)]   # an exact per-frame image sequence
             graph.append(f"[{n_in}:v]format=rgba[fxv]")

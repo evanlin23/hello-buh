@@ -421,7 +421,9 @@ def chat_windows(spec, timeline, start):
             print(f"chat {c[:2]} skipped (event missing)"); continue
         typ = float(c[2]) if len(c) > 2 and c[2] is not None else 1.2
         hold = float(c[3]) if len(c) > 3 and c[3] is not None else 0.0
-        out.append((t - start - typ, t - start, t - start + hold, c[1], c[4] if len(c) > 4 else None))
+        recall = typ <= 0.05               # a recalled line (up arrow): the whole line at once, on screen 0.3 s
+        typ = 0.3 if recall else typ
+        out.append((t - start - typ, t - start, t - start + hold, c[1], c[4] if len(c) > 4 else None, recall))
     return out
 
 
@@ -451,7 +453,7 @@ def chat_img(typed, cursor, feedback, fb_alpha):
     return img
 
 
-def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None):
+def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), countdowns=None, rings=None, tags=None, chat=None, hide=()):
     """One overlay track (ffconcat of cached PNGs) with the beat counter and the impact cards."""
     marks = []                                       # counter marks: (video time, index)
     c = _load(counter)
@@ -514,13 +516,18 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                       round(math.sin((t - r0) * 2 * math.pi * 1.5), 2))
         tk = None
         for g0, g1, gtext, gcolor in tgw:    # persistent role tag (no fade between consecutive tags)
-            if g0 <= t + 1e-6 < g1 - 1e-6:
+            if g0 <= t + 1e-6 < g1 - 1e-6 and not any(h0 <= t + 1e-6 < h1 for h0, h1 in hide):   # not over a death screen
                 tk = (gtext, gcolor, round(_pop(t - g0, 0.18, 0.5), 2))
         chk = None
-        for c0, c1, c2, ctext, cfb in chw:   # chat: typed letter by letter up to Enter, held, closed
+        for c0, c1, c2, ctext, cfb, crecall in chw:   # chat: typed letter by letter up to Enter, held, closed
             typed = None
             if c0 <= t + 1e-6 < c1:
-                typed = ctext[:int(len(ctext) * max(0.0, (t - c0) / max(1e-6, c1 - c0)))]
+                # typing ends 0.1 s before Enter and the full line holds (the last 1-3 characters never
+                # showed: worker 15); TYPE_S <= 0.05 is a recalled line, shown whole at once
+                c_done = c1 - 0.1
+                k_ = len(ctext) if (crecall or t >= c_done - 1e-6) else \
+                    int(len(ctext) * max(0.0, (t - c0) / max(1e-6, c_done - c0)))
+                typed = ctext[:k_]
             elif c1 <= t + 1e-6 < c2:
                 typed = ctext
             fb_a = 0.0
