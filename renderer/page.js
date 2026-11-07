@@ -139,7 +139,9 @@ function cullClouds () {
 async function makeSun (url) {
   const t = await loadTexture(url); t.generateMipmaps = false; t.minFilter = THREE.NearestFilter; t.flipY = true
   const mat = new THREE.MeshBasicMaterial({ map: t, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false })
-  const m = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), mat)
+  // vanilla SkyRenderer: the sun quad is +-30 at 100 (moon +-20), about 33 degrees across; placeSun
+  // puts it at 400, so 240 wide. It was 60 wide there, a quarter size (worker 4, boat_clutch)
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(240, 240), mat)
   m.renderOrder = -9
   return m
 }
