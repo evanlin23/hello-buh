@@ -109,23 +109,23 @@ module.exports = spotWrong({
   caption: 'find the mistake 🤔',
   searchFrom: [1600, 1600],
   rounds: [
-    { at: [-45, -12], build: house, seconds: 6,
-      cam: { pos: [1, 12], walk: 'right' },
-      scan: [[0, [3.5, 3.5, 0]], [3, [4.5, 3, 0]], [6, [5.5, 3, 0]]],
+    { at: [-45, -12], build: house, seconds: 7,
+      cam: { pos: [0, 13], walk: 'right' },
+      scan: [[0, [3.5, 3.5, 0]], [2.5, [1, 2, 1]], [5, [6, 4.5, 0]], [7, [5.5, 3, 0]]],
       tag: 'EASY',
-      reveals: [{ at: [5.5, 2.5, 1.0], zoom: 3, sub: 'an oak plank in a birch wall', check: [[5, 2, 0], 'oak_planks'] }] },
+      reveals: [{ at: [5.5, 2.5, 1.0], zoom: 3, sub: 'oak plank in birch', check: [[5, 2, 0], 'oak_planks'] }] },
     { at: [0, -12], build: farm, seconds: 8,
-      cam: { pos: [17, 21], walk: 'forward' }, stopAt: 5,
+      cam: { pos: [15, 21], walk: 'forward' },
       scan: [[0, [-6, 1, 4]], [2.5, [0, 2, 0]], [5, [3, 4.5, -3]], [8, [5, 3, 0]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the field'],
-      reveals: [{ at: [6.5, 2.5, 1.0], zoom: 3.2, sub: 'a log placed sideways', check: [[6, 2, 0], 'dark_oak_log'] }] },
+      reveals: [{ at: [6.5, 2.5, 1.0], zoom: 3.2, sub: 'a sideways log', check: [[6, 2, 0], 'dark_oak_log'] }] },
     { at: [45, -12], build: bedroom, seconds: 9,
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [2, 1, -8]], [2.2, [0.5, 1.5, -4.5]], [4.2, [5, 1.3, -9]], [6.2, [10, 1, -4.5]], [9, [7, 1.5, -8.5]]],
-      tag: 'only 1% can find it', hint: [4, 'hint: it is not the bed'],
+      tag: 'only 1% can find it', hint: [4, 'hint: not the bed'],
       reveals: [
-        { at: [8.5, 2.6, -5.5], zoom: 3.2, sub: 'the lantern hangs from nothing', drift: [0, 0.25, 0], check: [[8, 2, -6], 'lantern'] },
-        { pre: 'wait... there is another one', at: [6.5, 1.1, -8.6], zoom: 2.6, ring: 170, sub: 'the door hinge is backwards', check: [[6, 0, -9], 'spruce_door'] }
+        { at: [8.5, 2.35, -5.5], zoom: 3.2, sub: 'it hangs on nothing', check: [[8, 2, -6], 'lantern'] },
+        { pre: 'wait... there is another one', at: [6.5, 1.1, -8.6], zoom: 2.6, ring: 170, sub: 'hinge on the wrong side', check: [[6, 0, -9], 'spruce_door'] }
       ] }
   ]
 })
