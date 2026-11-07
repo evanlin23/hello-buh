@@ -22,7 +22,7 @@ const LADDERS = 10
 // re-sent with the up arrow and a shorter fuse each time, so all three go off on the same tick
 const FUSES = [20, 14, 8]
 const TNT = (f) => `/summon tnt ~ ~ ~ {fuse:${f},explosion_power:6}`
-const CMDS = ['/effect give @s levitation 5 39 true', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.22], [TNT(8), 0.22]]
+const CMDS = ['/effect give @s levitation 5 39 true', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.05], [TNT(8), 0.05]]
 const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
 
 // the mountain: an uneven peak (lobed outline, ridges down the flanks) of stone with grass, gravel and
