@@ -588,7 +588,8 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
         else:
             t0, t1, target, label = cur[-1]
             done = t >= t1 - 1e-6
-            v = target * min(1.0, max(0.0, (t - t0) / max(1e-6, t1 - t0)))
+            lag = 1.5 / fps            # the first frame after a cut can land mid-tick: it still reads 0:00
+            v = target * min(1.0, max(0.0, (t - t0 - lag) / max(1e-6, t1 - t0 - lag)))
             pop = 1.0
             if done:   # a quick pop when it lands: 1.22 -> 1.0 over 0.25 s
                 k = (t - t1) / 0.25
@@ -870,7 +871,9 @@ def main():
         lead = shift - first / 20                # start isn't always on a tick
         inputs += ["-f", "concat", "-safe", "0", "-i", str(lst)]
         graph.append(f"[{n_in}:v]fps={args.out_fps},format=rgba,trim=start={lead:.3f},setpts=PTS-STARTPTS[hudv]")
-        graph.append(f"[{last}][hudv]overlay=0:0:eof_action=repeat[hudo]")
+        # F1 spans off frame-exactly too (the tick grid left the HUD up for 2 frames after a cut)
+        f1_en = "".join(f"*(lt(t,{a_ - shift:.4f})+gte(t,{b_ - shift:.4f}))" for a_, b_ in (f1 if args.hud else []) if b_ - shift > 0)
+        graph.append(f"[{last}][hudv]overlay=0:0:eof_action=repeat" + (f":enable='1{f1_en}'" if f1_en else "") + "[hudo]")
         last, n_in = "hudo", n_in + 1
     if args.countdown and args.timeline:
         tl_all = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
