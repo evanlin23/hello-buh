@@ -19,11 +19,11 @@ module.exports = {
   edit: {
     caption: 'minecraft but it rains anvils... then TNT... then creepers 💀', red: 'creepers',
     song: 'songs/funk_abnormal.mp3', dropAt: 'tnt', deathScreen: true,
-    startAt: 'hook:-0.05', endAfter: 'death:1.6',
+    startAt: 'hook:-0.05', endAfter: 'death:1.2',
     subs: [
       ['hook', 'it rains anvils', 2.0, 0], ['wall', 'uhh', 1.2, 0], ['ring', 'they are surrounding me', 1.6, 0], ['above', 'wait...', 1.2, 0], ['dodged', 'TOO close', 1.4, 0],
       ['tnt', 'then TNT', 2.0, 0], ['tnt_wall', 'a TNT wall??', 1.6, 0], ['close_tnt', 'ow', 1.0, 0],
-      ['creepers', 'then CREEPERS', 2.0, 0], ['run', 'nope nope nope', 1.6, 0],
+      ['creepers', 'then CREEPERS', 2.0, 0], ['more', 'MORE of them', 1.4, 0], ['run', 'nope nope nope', 1.6, 0], ['keep', 'they keep coming', 1.6, 0],
       ['everything', 'then EVERYTHING', 2.4, 0], ['hiss', 'tssss', 1.2, 0]
     ]
   },
@@ -179,6 +179,11 @@ module.exports = {
       if (k % 10 === 0) {
         const target = c ? c.position.offset(0, 1.0, 0) : null
         if (target) ctx.easeLookAt(target, 400); else ctx.easeLook(yaw0 + (phase ? 0.25 : -0.25), 0.1, 400)
+      }
+      if (k === 30 || k === 140) {
+        // a burst: three at once, spread across the view
+        ctx.mark(k === 30 ? 'more' : 'keep')
+        for (const sp of [-0.45, 0, 0.45]) { const p = bot.entity.position, a = bot.entity.yaw + sp; creeper(p.x - Math.sin(a) * 12, p.z - Math.cos(a) * 12, 12) }
       }
       if (!ran && k === 80) {
         // one lands right beside us, already hissing: sprint off, turn back for the blast
