@@ -161,7 +161,7 @@ def glint_icon(jar, icon, tick):
     return Image.fromarray((a * 255 + 0.5).astype(np.uint8), "RGBA")
 
 
-def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None):
+def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None, max_health=20):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bar = big(sprite(jar, "gui/sprites/hud/hotbar"))
     sel = big(sprite(jar, "gui/sprites/hud/hotbar_selection"))
@@ -204,9 +204,14 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
     full_b, half_b = big(sprite(jar, "gui/sprites/hud/heart/full_blinking")), big(sprite(jar, "gui/sprites/hud/heart/half_blinking"))
     cur = math.ceil(health)
     disp = cur if display is None else display
-    for i in range(9, -1, -1):                     # vanilla draws from the last heart down
-        hx = bx + 8 * GUI * i
-        y_ = hy + (shake[i] * GUI if shake else 0)
+    # Gui.renderHearts: ceil(max health / 2) containers, rows of 10 stacked upward, the row step
+    # shrinking from 10 px as rows are added (max_health from the recording; 20 by default)
+    n = max(1, math.ceil(max_health / 2))
+    rows = math.ceil(n / 10)
+    row_h = max(10 - (rows - 2), 3)
+    for i in range(n - 1, -1, -1):                 # vanilla draws from the last heart down
+        hx = bx + 8 * GUI * (i % 10)
+        y_ = hy - (i // 10) * row_h * GUI + (shake[i % 10] * GUI if shake else 0)
         img.alpha_composite(hc_blink if blink else heart_c, (hx, y_))
         q = 2 * i
         if blink and q < disp:                     # recently lost health flashes white
@@ -326,7 +331,17 @@ def hud_ticks(timeline, duration, keep_inventory=False):
             if tt <= t:
                 v = on
         return v
-    out, last, blink_until, last_change, display, last_hurt = [], 20, -1, 0, 20, -99
+    # start from the recording's first health, not 20: a Short starting at 1 health (max_health 1)
+    # read as a hit on tick 0 and blinked a full row of hearts for a second (worker 7, die_rating)
+    h0 = math.ceil(next((e["health"] for e in timeline or [] if "health" in e), 20))
+    maxes = [(e["t"] / 1000, e["max_health"]) for e in timeline or [] if "max_health" in e]
+    def max_now(t):
+        v = 20
+        for tt, m in maxes:
+            if tt <= t:
+                v = m
+        return v
+    out, last, blink_until, last_change, display, last_hurt = [], h0, -1, 0, h0, -99
     si = 0
     for tick in range(int(duration * 20) + 2):
         t = tick / 20
@@ -368,7 +383,7 @@ def hud_ticks(timeline, duration, keep_inventory=False):
                 shake[i] = r.next_int2()
         # enchanted stacks ([name, count, 1]) carry the tick for the moving glint
         items = tuple((it[0], it[1], ("glint", tick)) if isinstance(it, tuple) and ((len(it) > 2 and it[2] == 1) or it[0] in GLINT_ITEMS) else it for it in items)
-        out.append((slot, tuple(items), health, display, blink, tuple(shake) if shake else None))
+        out.append((slot, tuple(items), health, display, blink, tuple(shake) if shake else None, max_now(t)))
     return out
 
 
@@ -816,8 +831,8 @@ def main():
                     if st == "F1":
                         Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(pngs[st])
                     else:
-                        slot, items, health, display, blink, shake = st
-                        hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None)
+                        slot, items, health, display, blink, shake, max_health = st
+                        hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None, max_health=max_health)
                 if runs and runs[-1][0] == pngs[st]:
                     runs[-1][1] += 1
                 else:
