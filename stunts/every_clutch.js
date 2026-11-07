@@ -59,6 +59,13 @@ module.exports = {
   async perform (ctx) {
     const { bot } = ctx
     const { x, z, floor } = this
+    // a per-tick eased look toward a point (bot.look snaps in one tick)
+    const easeTo = async (p, kf) => {
+      const d = p.minus(bot.entity.position.offset(0, 1.62, 0))
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      await bot.look(bot.entity.yaw + dy * kf, bot.entity.pitch + (pitch - bot.entity.pitch) * kf, true)
+    }
     let pending = null
     for (let i = 0; i < CLUTCHES.length; i++) {
       const c = CLUTCHES[i]
@@ -80,6 +87,7 @@ module.exports = {
         const sp = pending; pending = null
         bot.chat(`/fill ${sp.x - 1} ${floor + 1} ${sp.z - 1} ${sp.x + 1} ${floor + 2} ${sp.z + 1} air`)
         bot.chat(`/fill ${sp.x - 8} ${floor - 2} ${sp.z - 8} ${sp.x + 8} ${floor + 2} ${sp.z + 8} air replace water`)
+        bot.chat(`/kill @e[type=item,x=${sp.x},y=${floor},z=${sp.z},distance=..12]`)   // (the cleared bed dropped as an item and lay there, a bare shadow, the rest of the video)
       }
       // let the chunk decoding after the far tp finish before the pan (it doubled poses: a stutter); cut out
       if (i > 0) { await bot.waitForTicks(12); ctx.mark(`hold${i}b`) }
@@ -145,7 +153,9 @@ module.exports = {
         continue
       }
       // a bed bounces you (vanilla bounceUp, x0.66 for a bed); mineflayer never simulates it, like the slime
-      if (c.item === 'red_bed') bot.entity.velocity.y = -lastVy * 0.66
+      // touch down first (2 ticks) so the server takes the landing and the half damage; then the bounce (set on the
+      // landing tick, the server never saw a landing: no damage under 'half the damage')
+      if (c.item === 'red_bed') { await bot.waitForTicks(2); bot.entity.velocity.y = -lastVy * 0.66 }
       await bot.waitForTicks(3)
       if (ctx.died) return false
       if (c.item === 'water_bucket') {
@@ -153,7 +163,7 @@ module.exports = {
         // step half a block off the source first (standing inside it, the bucket's ray missed it: 'scoop missed 7')
         { const k0 = new ctx.Vec3(spot.x + 0.5, floor + 1, spot.z + 0.5)
           bot.setControlState('back', true)
-          for (let k = 0; k < 4; k++) { const d = k0.minus(bot.entity.position.offset(0, 1.62, 0)); await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true); await bot.waitForTicks(1) }
+          for (let k = 0; k < 4; k++) { await easeTo(k0, 0.35); await bot.waitForTicks(1) }   // eased (a snap here spun the view 180 when it slid past the source)
           bot.setControlState('back', false) }
         // aim at the source's centre (straight down from where it slid to missed it once: empty bucket, water left)
         for (let t = 0; t < 3 && bot.inventory.slots[36 + i]?.name !== 'water_bucket'; t++) {
@@ -168,7 +178,7 @@ module.exports = {
       bot.setControlState('back', true)
       for (let k = 0; k < 11; k++) {
         const e = bot.entity.position.offset(0, 1.62, 0), d = keep.minus(e)
-        await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+        await easeTo(keep, 0.35)   // eased (the first look snapped 14 deg)
         await bot.waitForTicks(1)
       }
       bot.setControlState('back', false)
