@@ -75,7 +75,8 @@ function portal (b) {
   b.set(1, 2, -8, 'wall_torch[facing=south]'); b.set(10, 2, -8, 'wall_torch[facing=south]')
   // the rest: chests, a smithing table, a respawn anchor, crimson stems
   b.set(1, 0, -4, 'chest[facing=east]'); b.set(1, 0, -5, 'barrel[facing=up]'); b.set(1, 0, -6, 'smithing_table')
-  b.set(10, 0, -4, 'respawn_anchor[charges=2]'); b.set(10, 0, -6, 'crimson_planks'); b.set(10, 1, -6, 'crimson_planks'); b.set(10, 0, -5, 'anvil[facing=north]')
+  b.set(10, 0, -4, 'lodestone');   // not a respawn anchor: it can't work in the overworld (an accidental second mistake)
+  b.set(10, 0, -6, 'crimson_planks'); b.set(10, 1, -6, 'crimson_planks'); b.set(10, 0, -5, 'anvil[facing=north]')
 }
 
 module.exports = spotWrong({
@@ -84,9 +85,10 @@ module.exports = spotWrong({
   searchFrom: [1600, 1600],
   rounds: [
     // round 1 sits further east: round 2's bridge showed on its horizon
-    { at: [62, -12], build: patch, seconds: 7,
-      cam: { pos: [-3, 13], walk: 'right' },
-      scan: [[0, [-2, 0.5, 4]], [3, [1, 0.5, 4]], [6, [2, 0.8, 2]]],
+    // (it walks left, so the zoom-out before the cut faces away from round 2's bridge)
+    { at: [62, -12], build: patch, seconds: 5,
+      cam: { pos: [7, 13], walk: 'left' },
+      scan: [[0, [2, 0.5, 4]], [2.5, [-1, 0.5, 4]], [5, [-1, 0.8, 3]]],
       tag: 'EASY',
       reveals: [{ at: [0.5, 0.95, 4.5], zoom: 3.2, sub: 'a melon', check: [[0, 0, 4], 'melon'] }] },
     { at: [0, -12], build: bridge, seconds: 8,
@@ -94,14 +96,14 @@ module.exports = spotWrong({
       scan: [[0, [0, 0.5, 1]], [2.5, [-9, 3, -5]], [5, [0, 0.5, 2.5]], [8, [-1, 0.5, 2]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the tree'],
       reveals: [{ at: [0.5, 0.75, 3.5], zoom: 3.2, sub: 'upside-down slab', check: [[0, 0, 3], 'stone_brick_slab'] }] },
-    { at: [-45, 40], build: portal, seconds: 9,
+    { at: [-45, 40], build: portal, seconds: 10,
       // the lit portal's life: particles off its face and its hum (NetherPortalBlock.animateTick)
       ambient (ctx, t, W) {
         if (t % 4 === 0) ctx.particles('portal', W([5 + Math.random() * 2, 1 + Math.random() * 3, -7.5]), { count: 6, face: true })
         if (t % 70 === 5) ctx.sound('block.portal.ambient', 0.25, 0.9 + Math.random() * 0.2)
       },
       cam: { pos: [5.5, -1.5] },
-      scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [9, [5, 2, -8]]],
+      scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [8, [3, 1, -2]], [10, [5, 2, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: look closer'],
       reveals: [
         { at: [9.5, 0.5, -7.0], zoom: 3, strafe: 'left', sub: 'raw gold, not gold', check: [[9, 0, -8], 'raw_gold_block'] },
