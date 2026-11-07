@@ -16,8 +16,10 @@ const TIERS = [
   { mod: water, opts: { height: 40, fast: true }, label: '40 BLOCKS', end: 'placed', hotbar: 'water' },
   { mod: water, opts: { height: 70, fast: true }, label: '70 BLOCKS', end: 'placed', hotbar: 'water' },
   { mod: water, opts: { height: 90, fast: true }, label: 'HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
-  // the night tiers' shorter outros took the cut to 28.7 s: one more beat, not slower ones (30 s rule)
-  { mod: water, opts: { height: 130, fast: true }, label: '130 BLOCKS, HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
+  // the night tiers' shorter outros took the cut to 28.7 s: one more beat, not slower ones (30 s rule).
+  // 131, not 130: from 130 no tick of the fall has the feet 0.3-2.8 above the ground at terminal velocity
+  // (the water can't be placed: died on try 1); 131 gives 0.86
+  { mod: water, opts: { height: 131, fast: true }, label: '130 BLOCKS, HALF A HEART', end: 'placed', hotbar: 'water', halfHeart: true },
   { mod: pearl, opts: { tower: 30, fast: true }, label: 'PEARL OVER LAVA', end: 'teleported', hotbar: 'pearl' },
   { mod: pearl, opts: { tower: 70, fast: true, openPitch: -0.85 }, label: 'AT NIGHT', end: 'teleported', hotbar: 'pearl', time: 18000 },
   { mod: pearl, opts: { tower: 100, fast: true, openPitch: -1.2 }, tpPitch: 69, label: '100 BLOCKS + STORM', end: 'teleported', hotbar: 'pearl', time: 18000, weather: 'thunder' },
