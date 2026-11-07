@@ -12,7 +12,7 @@
 // Normal difficulty (TNT damage scales with it; peaceful zeroes it). Hearts refill across each cut.
 // mineflayer yaw 0 = north: threats come from the north, the bot starts facing them.
 const N = 9
-const LANES = [...Array(N).keys()].map(i => (i - (N - 1) / 2) * 32)   // 32 apart: blasts don't reach the next lane
+const LANES = [...Array(N).keys()].map(i => (i - (N - 1) / 2) * 24)   // 24 apart: blasts (8) don't reach the next lane; at 32 lane 9 sat at the loaded edge and opened on missing terrain
 const SUBS = ['1/9: run', '2/9: dodge it', '3/9: from the SKY', '4/9: the floor is TNT', '5/9: TNT minecart', '6/9: wall it off', '7/9: dig down', '8/9: drop', '9/9: EVERYTHING']
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
   caption: 'POV: the floor is TNT 💀',
   edit: {
     subsY: 0.15, caption: 'POV: the floor is TNT 💀', red: 'TNT', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'death', startAt: 'wave:0.0', deathScreen: true, endAfter: 'death:0.9',
-    subs: SUBS.map((s, i) => ['wave', s, 1.4, i])
+    subs: SUBS.map((s, i) => ['wave', s, 2.6, i])   // most of each lane (1.4 left half of every lane with no counter)
   },
   expectDeath: true,
 
@@ -36,7 +36,7 @@ module.exports = {
     await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
     await ctx.cmd('/difficulty normal')
     const W = 150
-    for (let z0 = z - 96; z0 <= z + 28; z0 += 4) {   // (to z - 64 the cut cliff showed on lane 8's horizon)   // one field for all nine lanes, cleared high and wide (cut faces showed)
+    for (let z0 = z - 96; z0 <= z + 64; z0 += 4) {   // (to z + 28 the field's straight dirt edge showed in lane 1, running south)   // (to z - 64 the cut cliff showed on lane 8's horizon)   // one field for all nine lanes, cleared high and wide (cut faces showed)
       const z1 = z0 + 3
       for (let y0 = floor + 1; y0 <= floor + 37; y0 += 6) await ctx.cmd(`/fill ${x - W} ${y0} ${z0} ${x + W} ${y0 + 5} ${z1} air`)
       await ctx.cmd(`/fill ${x - W} ${floor} ${z0} ${x + W} ${floor} ${z1} grass_block`)
@@ -126,9 +126,9 @@ module.exports = {
       const w = wall(L(0), sz - 15, 3, [-3, -1, 1, 3], sz + 30)   // starts close: big in frame at 0.2 s (from 24 out it was a speck, then a 3.6 s smoke loop)
       for (let k = 0; k < 70 && !ctx.died; k++) {
         if (k < 10) await lookAt(new Vec3(L(0) + 0.5, floor + 1, w.front), 0.3)
-        else if (k < 40) { await lookAt(bot.entity.position.offset(0, 1.62, 12), 0.25); steer(0, 1, true) }   // south, running
-        else { await lookAt(new Vec3(L(0) + 0.5, floor + 1.5, w.front), 0.2); steer(0, 1) }                  // glance back: it's close
-        if (k >= 10 && k < 40) steer(0, 1, true)
+        else if (k < 24) { await lookAt(bot.entity.position.offset(0, 1.62, 12), 0.25); steer(0, 1, true) }   // south, running
+        else { await lookAt(new Vec3(L(0) + 0.5, floor + 1.5, w.front), 0.2); steer(0, 1) }                  // glance back: it's close (at 40 the glance never made the video)
+        if (k >= 10 && k < 24) steer(0, 1, true)
         if (w.front > bot.entity.position.z - 9) { w.stop(); break }
         await bot.waitForTicks(1)
       }
@@ -177,8 +177,10 @@ module.exports = {
     await cut(4)
     await lane(4, async () => {
       bot.chat(`/summon tnt_minecart ${L(4) + 0.5} ${floor + 1.1} ${z - 30 + 0.5} {fuse:40,Motion:[0.0,0.0,0.6]}`)   // blows ~6 from it, after the jump (from 38 out it went off 15+ away)
+      let seen = false, gone = 0
       for (let k = 0; k < 60 && !ctx.died; k++) {
         const cart = Object.values(bot.entities).find(e => e.name === 'tnt_minecart')
+        if (cart) seen = true; else if (seen && ++gone > 8) break   // cut ~0.4 s after it blows (0.5 s of empty smoke over the rail)
         await lookAt(cart ? cart.position.offset(0, 0.5, 0) : new Vec3(L(4) + 0.5, floor + 1, z - 30), 0.3)
         if (k > 12 && k < 34) { steer(-1, 0.3); bot.setControlState('jump', k === 14) }
         else stop()
@@ -200,7 +202,7 @@ module.exports = {
       }
       // step back two and watch the wave break on the far side, over the top of the wall (jammed against it the
       // screen was obsidian, then it turned round)
-      for (let k = 0; k < 34 && !ctx.died; k++) { steer(0, k < 9 ? 1 : 0); await lookAt(new Vec3(L(5) + 0.5, floor + 2.2, sz - 7), 0.25); await bot.waitForTicks(1) }
+      for (let k = 0; k < 34 && !ctx.died; k++) { steer(0, k < 9 ? 1 : 0); await lookAt(new Vec3(L(5) + 0.5, floor + 2.2, sz - 7), 0.25); if (k > 12 && w.front >= sz - 5) { await bot.waitForTicks(6); break } await bot.waitForTicks(1) }   // cut 0.3 s after the last row breaks on it (0.5 s frozen on the wall)
       stop()
       w.stop()
     })
@@ -214,7 +216,7 @@ module.exports = {
         if (b && b.name !== 'air') { try { await bot.dig(b, true) } catch (e) {} }
         await bot.waitForTicks(1)
       }
-      for (let k = 0; k < 40 && !ctx.died; k++) { await lookAt(bot.entity.position.offset(2.5, 10, -1), 0.15); if (w.front > sz + 2) { await bot.waitForTicks(10); break } await bot.waitForTicks(1) }   // cut ~0.5 s after it passes
+      for (let k = 0; k < 40 && !ctx.died; k++) { await lookAt(bot.entity.position.offset(2.5, 10, -1), 0.15); if (w.front > sz - 1) { await bot.waitForTicks(4); break } await bot.waitForTicks(1) }   // cut as it goes over (1.6 s of empty sky up the hole)
       w.stop()
     })
     // 8 DROP: the wave's on it; it runs at the shaft and drops in, the blasts going off up above
@@ -227,7 +229,7 @@ module.exports = {
         const p = bot.entity.position
         if (p.y > floor - 1) { steer(0, -1, true); await lookAt(new Vec3(L(7) + 0.5, floor, z - 13 + 0.5), 0.3) }
         else { stop(); await lookAt(p.offset(0, 20, 0.5), 0.25) }
-        if (bot.entity.isInWater && (inWater = inWater + 1) > 16) break   // cut ~0.8 s after the splash (a 2 s STILL staring up the shaft)
+        if (bot.entity.isInWater && (inWater = inWater + 1) > 5) break   // cut on the splash (0.6 s frozen up the empty shaft)
         await bot.waitForTicks(1)
       }
       w.stop()
@@ -238,7 +240,7 @@ module.exports = {
       // ~3.5 s: the sky and the sides near-missing it for 2 s while the wall comes, then it all closes in
       const w = wall(L(8), sz - 26, 3, [-4, -2, 0, 2, 4], sz + 30)
       for (let k = 0; k < 160 && !ctx.died; k++) {
-        const p = bot.entity.position, close = k > 84   // ~3 s of near misses, then it all closes in (keeps the Short at 30 s+)
+        const p = bot.entity.position, close = k > 120   // ~5 s of near misses, then it all closes in (the trimmed lane ends took ~2 s: keeps the Short at 30 s+)
         if (k % 3 === 0) { const a = R() * 2 * Math.PI, r = (close ? 3 : 10) + R() * 4; tnt(p.x + Math.sin(a) * r, floor + 18, p.z - Math.cos(a) * r, 30) }
         if (k % 6 === 0 && k > 6) { const sd = close ? 5 : 9; tnt(p.x - sd + 0.5, floor + 1, p.z + 0.5, 4); tnt(p.x + sd + 0.5, floor + 1, p.z + 0.5, 4) }
         if (close && w.front > p.z - 4) for (const [dx, dz] of [[0, 0], [1, 1], [-1, 1]]) tnt(p.x + dx, floor + 1, p.z + dz, 4)
