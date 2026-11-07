@@ -32,7 +32,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'instamine', startAt: 'beat:-0.2', endAfter: 'finale:1.2', subs: subs() }
+    return { caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'instamine', startAt: 'beat:-0.2', endAfter: 'overview:0.5', subs: subs() }
   },
 
   async setup (ctx) {
@@ -131,14 +131,14 @@ module.exports = {
       ctx.mark('mined', { n: i, ticks, secs: (ticks / 20).toFixed(1) })
       // look through the hole a moment
       await ctx.easeLook(0, -0.1, fast ? 250 : 150)
-      if (fast) await bot.waitForTicks(14)
+      if (fast) await bot.waitForTicks(4)        // (14 read as a 0.7 s pause before the finale)
     }
     // finale: back up and left until all five windows are in frame, eyes on the middle of the wall
     ctx.mark('finale')
     const mid = new Vec3(this.x0 + SPACING * (TOOLS.length - 1) / 2 + 1.5, floor + 2.5, wz)
     bot.setControlState('back', true); bot.setControlState('left', true)
-    for (let k = 0; k < 40; k++) {
-      if (k === 28) bot.setControlState('left', false)
+    for (let k = 0; k < 56; k++) {
+      if (k === 38) bot.setControlState('left', false)
       const eye = bot.entity.position.offset(0, 1.62, 0), d = mid.minus(eye)
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
@@ -146,6 +146,7 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     bot.setControlState('back', false); bot.setControlState('left', false)
+    ctx.mark('overview')                          // all seven windows in frame: the payoff
     await bot.waitForTicks(4)
     ctx.mark('finale_end')
     bot.removeListener('physicsTick', onTick)
