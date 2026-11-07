@@ -1,12 +1,14 @@
-// "pouring water on a lava lake 😳": a 15x15 lava lake one block down in a field. The bot walks
+// "pouring water on a lava lake 😳": a 15x21 lava lake one block down in a field. The bot walks
 // straight across it on its own obsidian: pour a water bucket on the front edge, let it run ~10
 // ticks (every lava source it touches fizzes into obsidian), scoop it straight back up so the fresh
 // patch shows at once, step onto it, repeat. Seven pours cross the lake; at the far side it turns
 // round and lets two bigger pours run either side of its path, scoops them, and stands on the
 // black field it made. (Owner: "nothing really happens" when a water sheet hid the obsidian for 8 s.)
 //
-// Lake cells (lx, lz) 0..14; lava at y = G-1, air above it at G (G = ground level). A full bucket
+// Lake cells lx 0..14, lz 0..L-1; lava at y = G-1, air above it at G (G = ground level). A full bucket
 // ignores fluids, so a pour clicks the rim block's inner face (first) or the top of obsidian.
+const L = 21   // lake length (rows lz 0..L-1; 15 wide). 15 rows crossed in 3 pours and ran 26 s
+
 module.exports = {
   name: 'water_vs_lava',
   biome: process.env.BIOME || 'minecraft:plains',
@@ -27,17 +29,17 @@ module.exports = {
     for (let y0 = G + 1; y0 <= G + 13; y0 += 7) await ctx.cmd(`/fill ${x - 22} ${y0} ${z - 30} ${x + 22} ${y0 + 6} ${z + 8} air`)
     await ctx.cmd(`/fill ${x - 22} ${G} ${z - 30} ${x + 22} ${G} ${z + 8} grass_block`)
     await ctx.cmd(`/fill ${x - 22} ${G - 4} ${z - 30} ${x + 22} ${G - 1} ${z + 8} dirt`)
-    const x0 = x - 7, z0 = z - 20
+    const x0 = x - 7, z0 = z - 6 - L
     this.x0 = x0; this.z0 = z0
-    await ctx.cmd(`/fill ${x0} ${G - 2} ${z0} ${x0 + 14} ${G - 2} ${z0 + 14} stone`)
-    await ctx.cmd(`/fill ${x0} ${G} ${z0} ${x0 + 14} ${G} ${z0 + 14} air`)
-    await ctx.cmd(`/fill ${x0} ${G - 1} ${z0} ${x0 + 14} ${G - 1} ${z0 + 14} lava`)
+    await ctx.cmd(`/fill ${x0} ${G - 2} ${z0} ${x0 + 14} ${G - 2} ${z0 + L - 1} stone`)
+    await ctx.cmd(`/fill ${x0} ${G} ${z0} ${x0 + 14} ${G} ${z0 + L - 1} air`)
+    await ctx.cmd(`/fill ${x0} ${G - 1} ${z0} ${x0 + 14} ${G - 1} ${z0 + L - 1} lava`)
     // one cooled cell at the edge to stand the first pour on: from the south rim the bot can't click the
     // rim's north-facing inner face, so the bucket hit the rim's top and the water source sat on the rim
-    await ctx.cmd(`/setblock ${x0 + 7} ${G - 1} ${z0 + 14} obsidian`)
+    await ctx.cmd(`/setblock ${x0 + 7} ${G - 1} ${z0 + L - 1} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 24')
     await ctx.hotbar(['water_bucket', 'water_bucket', ['bread', 8]])
-    await ctx.tpCheck(x0 + 7.5, G + 1, z0 + 15.6, 180, 35)        // on the south rim, in line with the middle column
+    await ctx.tpCheck(x0 + 7.5, G + 1, z0 + L + 0.6, 180, 35)        // on the south rim, in line with the middle column
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(30)
@@ -100,14 +102,14 @@ module.exports = {
 
     await bot.waitForTicks(4)
     // first pour: the rim's inner face, water lands in (7, 14)
-    await pourScoop(7, 14, cell(7, 14, -0.04), 6, 300)
-    let lz = 14
-    for (let step = 0; step < 8; step++) {
+    await pourScoop(7, L - 1, cell(7, L - 1, -0.04), 6, 300)
+    let lz = L - 1
+    for (let step = 0; step < 12; step++) {
       // the newest obsidian at the front of the patch: stand two cells behind it, pour on its top face
       let front = lz
       while (front > 0 && at(7, front - 1, G - 1)?.name === 'obsidian') front--
       if (front <= 0) break
-      await walkTo(Math.min(14, front + 2))
+      await walkTo(Math.min(L - 1, front + 2))
       ctx.log('step', step, 'front', front, 'z', (bot.entity.position.z - z0).toFixed(1), 'converted', converted)
       await pourScoop(7, front, cell(7, front, -0.04), 6)   // short runs: ~2 rows a pour, 5-6 pours across (10 crossed in 3 and the Short ran 29 s)
       lz = front
@@ -117,7 +119,7 @@ module.exports = {
     // left to run longer than the last: the black spreads wider until the lake is gone (~30 s total)
     ctx.mark('finale')
     await ctx.easeLook(Math.PI, -0.75, 450)               // facing back south (mineflayer yaw 0 = north), down at the path
-    const stops = [3, 6, 9, 12]
+    const stops = [3, 6, 9, 12, 15, 18]
     let flow = 10
     for (const sz of stops) {
       // walk back (south = +z, facing it) to this row
@@ -142,8 +144,8 @@ module.exports = {
     bot.removeListener('blockUpdate', onBlock)
 
     let lava = 0, obs = 0
-    for (let a = 0; a < 15; a++) for (let b = 0; b < 15; b++) { const n = at(a, b, G - 1).name; if (n === 'lava') lava++; if (n === 'obsidian') obs++ }
+    for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) { const n = at(a, b, G - 1).name; if (n === 'lava') lava++; if (n === 'obsidian') obs++ }
     ctx.log(`lake: obsidian ${obs}, lava ${lava}, converted ${converted}, at z ${(bot.entity.position.z - z0).toFixed(1)}`)
-    return obs > 200 && !ctx.died                          // (it walks back south now: no end position check)
+    return obs > 15 * L - 25 && !ctx.died                          // (it walks back south now: no end position check)
   }
 }
