@@ -22,7 +22,7 @@ module.exports = {
   caption: 'I gave the villager every job 💀',
   edit: {
     caption: 'I gave the villager every job 💀', red: 'every', song: 'songs/payphone.mp3', dropAt: 'all_jobs',
-    startAt: 'beat:-0.05', endAfter: 'nitwit:1.0',
+    startAt: 'beat:-0.05', endAfter: 'nitwit:1.4',
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],
       ['hire', 'job 2: farmer', 1.4, 1], ['fire', 'fired again', 1.2, 1],
