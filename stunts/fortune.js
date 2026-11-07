@@ -18,7 +18,7 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9', subs: [['collected', '3 stacks of emeralds', 0.9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9', subs: [['ore', '64 emeralds', 1.3, 7], ['ore', '128', 1.3, 8], ['ore', '192 emeralds', 1.6, 9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
 
   async setup (ctx) {
     const { bot } = ctx
@@ -111,8 +111,11 @@ module.exports = {
       ctx.easeLook((rnd() - 0.5) * 0.4, -0.45, 550)          // follow them down as they land round your feet
       bot.setControlState('back', true); await bot.waitForTicks(10); bot.setControlState('back', false)   // (11+11 ran the beats 3.2 s apart; 9+9 ran the Short 29.7 s)
       bot.setControlState('forward', true); await bot.waitForTicks(10); bot.setControlState('forward', false)
-      if (i === this.ores.length - 1) ctx.mark('collected')
-      await bot.waitForTicks(i === this.ores.length - 1 ? 14 : 2)
+      if (i === this.ores.length - 1) {
+        // still backing off through the last pickups (the end held near-still on the empty shaft)
+        ctx.mark('collected')
+        bot.setControlState('back', true); await bot.waitForTicks(14); bot.setControlState('back', false)
+      } else await bot.waitForTicks(2)
       await ctx.easeLook(0, -0.3, 300)
     }
     await bot.waitForTicks(20)
