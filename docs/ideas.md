@@ -71,3 +71,12 @@ A mystery stated plainly in line 1, clues that build up, then a twist that makes
 - Built: everything in stunts/.
 - Building: 10 (worker 6), 11 boat/ladder (worker 4), mysteries (workers 5 and 8).
 - Next to assign: 1, 2, 3, 8, 9, 14, 19 (worker 7).
+
+## New formats (owner, 2026-11-07: "spawn 1 worker session per type"), workers 12-18
+1. **"Spot what's wrong"** (worker 12, interactive): a normal build with one wrong block hidden in it, a countdown ("only 1% can find it"), then a zoom reveal. Escalate across 3 rounds, each harder.
+2. **"Guess the mob by its sound"** (worker 13, interactive): black screen, a real game sound, 3 s to guess, then the mob appears. Cow -> enderman -> warden -> a sound nobody knows.
+3. **"Which one would you survive?"** (worker 14, interactive): three doors, each hiding a different danger; the viewer picks before each opens.
+4. **"Noob vs Pro vs Hacker"** (worker 15, comedy series): the same task three ways (noob ladders, pro perfect route, hacker pillars to the sky). A long-running series.
+5. **"Hide and seek, but I cheated"** (worker 16, twist): the seeker searches everywhere; the zoom-out reveals an impossible hiding spot.
+6. **"One continuous chain reaction"** (worker 17, spectacle): a contraption in one take, the camera following each step to a final boom. Check pistons and redstone in the renderer with worker 11 first.
+7. **"Every 5 seconds it gets worse"** (worker 18, escalation): an on-screen timer, a new threat each tick, survive to the end.
