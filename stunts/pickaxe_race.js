@@ -46,10 +46,11 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     for (const [z0, z1] of [[z - 40, z - 24], [z - 23, z - 7], [z - 6, z + 10], [z + 11, z + 22]]) {   // a deep field: no cliff or snowy hill shows through the windows
-      await ctx.cmd(`/fill ${x - 18} ${floor + 1} ${z0} ${x + 22} ${floor + 12} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 18} ${floor} ${z0} ${x + 22} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 18} ${floor - 3} ${z0} ${x + 22} ${floor - 1} ${z1} dirt`)
+      await ctx.cmd(`/fill ${x - 34} ${floor + 1} ${z0} ${x + 38} ${floor + 12} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 34} ${floor} ${z0} ${x + 38} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 34} ${floor - 3} ${z0} ${x + 38} ${floor - 1} ${z1} dirt`)
     }
+    await ctx.cmd('/kill @e[type=!player,distance=..150]')   // polar bears and pigs wandered through the finale
     // the wall: one block thick (mining a section opens a window onto the field), 4 high
     this.wz = z - 4
     this.x0 = x - 12                                       // first section: x0..x0+2
@@ -156,38 +157,52 @@ module.exports = {
       bot.swingArm()
     }
     ctx.select(T)
-    for (let j = NP - 1; j >= 0; j--) {
-      const q = pil(j)
-      // strafe left (west, facing north) until the pillar is in easy reach
-      for (let k = 0; k < 40 && bot.entity.position.x > q.x + 1.6; k++) {
-        bot.setControlState('left', true)
-        if (k === 0) ctx.easeLookAt(new Vec3(q.x + 0.5, floor + 0.6, q.z + 0.5), 140)
+    // walk west along the wall 3 out, controls picked against the view each tick so the motion stays on the
+    // world axis (strafing 'left' while looking at a pillar foot drifted it 8-12 blocks off the wall: out of
+    // reach, the server ignored the placements), eyes on the next pillar's foot
+    const goTo = async (tx, aim) => {
+      const tz = wz + 3.0
+      for (let k = 0; k < 60; k++) {
+        const e = bot.entity.position
+        const dx = tx - e.x, dzz = tz - e.z
+        if (Math.abs(dx) < 0.35 && Math.abs(dzz) < 0.5) break
+        const eye = e.offset(0, 1.62, 0), d = aim.minus(eye)
+        const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+        let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+        const ny = bot.entity.yaw + dy * 0.35
+        await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.35, true)
+        const len = Math.hypot(dx, dzz), wx = dx / len, wzz = dzz / len
+        const f = wx * -Math.sin(ny) + wzz * -Math.cos(ny), rr = wx * Math.cos(ny) + wzz * -Math.sin(ny)
+        bot.setControlState('forward', f > 0.35); bot.setControlState('back', f < -0.35)
+        bot.setControlState('right', rr > 0.35); bot.setControlState('left', rr < -0.35)
         await bot.waitForTicks(1)
       }
-      bot.setControlState('left', false)
-      await ctx.easeLookAt(new Vec3(q.x + 0.5, floor + 0.6, q.z + 0.5), j === NP - 1 ? 250 : 90)
+      for (const c of ['forward', 'back', 'left', 'right']) bot.setControlState(c, false)
+    }
+    // a TNT at the foot of every pillar, east to west, all real placements (within reach), then light the
+    // last one: the chain runs back along the wall away from the bot, which backs off and follows it
+    for (let j = NP - 1; j >= 0; j--) {
+      const q = pil(j), foot = new Vec3(q.x + 0.5, floor + 0.7, q.z + 0.5)
+      await goTo(q.x + 1.5, foot)
+      await ctx.easeLookAt(foot, 80)
       place(q); ctx.sound('block.grass.place', 1)
       await bot.waitForTicks(2)
-      // the server ignored the 3rd-7th placements (a render failed: chain broke at 2): check, retry, then set it
       const tq = new Vec3(q.x, floor + 1, q.z)
-      for (let t = 0; t < 2 && bot.blockAt(tq)?.name !== 'tnt'; t++) { await ctx.easeLookAt(new Vec3(q.x + 0.5, floor + 1, q.z + 0.5), 60); place(q); await bot.waitForTicks(2) }
-      if (bot.blockAt(tq)?.name !== 'tnt') { ctx.log('tnt place fallback at pillar', j); bot.chat(`/setblock ${q.x} ${floor + 1} ${q.z} tnt`); bot.chat(`/clear @s tnt 1`); await bot.waitForTicks(1) }
+      for (let t = 0; t < 2 && bot.blockAt(tq)?.name !== 'tnt'; t++) { await ctx.easeLookAt(foot, 60); place(q); await bot.waitForTicks(2) }
+      if (bot.blockAt(tq)?.name !== 'tnt') { ctx.log('tnt place fallback at pillar', j, 'bot at', bot.entity.position.toString()); bot.chat(`/setblock ${q.x} ${floor + 1} ${q.z} tnt`); bot.chat(`/clear @s tnt 1`); await bot.waitForTicks(1) }
       if (j === NP - 2) ctx.mark('tntrun')
-      if (j === NP - 1) {
-        // light this first one: its fuse runs while the rest go down
-        ctx.select(F)
-        await bot.waitForTicks(3)
-        place({ x: q.x, y: floor + 1, z: q.z })
-        ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
-        ctx.mark('lit')
-        await bot.waitForTicks(3)
-        ctx.select(T)
-      }
     }
+    // light the one at your feet
+    const q0 = pil(0)
+    ctx.select(F)
+    await ctx.easeLookAt(new Vec3(q0.x + 0.5, floor + 1.5, q0.z + 0.5), 150)
+    place({ x: q0.x, y: floor + 1, z: q0.z })
+    ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
+    ctx.mark('lit')
     const placed = [...Array(NP).keys()].filter(j => bot.blockAt(new Vec3(pil(j).x, floor + 1, pil(j).z))?.name === 'tnt').length
-    ctx.log('tnt placed', placed, 'of', NP - 1, 'unlit (+1 lit); booms so far', booms)
+    ctx.log('tnt placed', placed, 'of', NP, '(one lit); booms so far', booms)
     // back away south (whatever the view: controls chosen against it), following the chain with the camera
-    let look = boomAt || new Vec3(pil(NP - 1).x + 0.5, floor + 1.5, wz + 1)
+    let look = boomAt || new Vec3(pil(0).x + 0.5, floor + 1.5, wz + 1)   // the lit one, then each blast down the wall
     let quiet = 0, last = booms
     for (let k = 0; k < 360 && booms < NP && quiet < 60; k++) {
       const goal = boomAt || look
