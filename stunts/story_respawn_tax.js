@@ -144,9 +144,9 @@ module.exports = {
       // not on a cauldron death: the fire can kill before tripStep returns 'dead', and the smoke sat on the gold block
       if (!noSmoke && trip === null && ctx.tick - tripEnd > 10) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 1.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z + f.z * d)
     })
-    let noSmoke = false
+    let noSmoke = false, bigPoof = false   // bigPoof: the cactus death's clouds, bigger and nearer the middle (that screen read nearly still)
     // every 2 ticks, 3 puffs spread a little: 2 every 3 ticks read as a still screen behind the cactus death (retention)
-    bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 3 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 0.6, 0, (Math.random() - 0.5) * 0.6), { w: 0.6, h: 0.6 }) })   // light-grey poof clouds (vanilla large_smoke is near-black by design and read as black blotches under the death tint)
+    bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 3 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 0.6, 0, (Math.random() - 0.5) * 0.6), bigPoof ? { w: 1.0, h: 1.0 } : { w: 0.6, h: 0.6 }) })   // light-grey poof clouds (vanilla large_smoke is near-black by design and read as black blotches under the death tint)
     // the trip: over the sunken cauldron, drop into it (walking can step across its rim) and die
     const overCauldron = () => { const p = bot.entity.position; return p.z < Z + 5.0 && p.z > Z + 4.0 && p.x > X && p.x < X + 1 }
     const fallIn = () => say(`/tp @s ${(X + 0.5).toFixed(3)} ${(F + 0.3).toFixed(3)} ${(Z + 4.5).toFixed(3)}`)
@@ -225,7 +225,7 @@ module.exports = {
     await line('L05', async (k) => {
       go(!dead)
       if (!dead && bot.entity.position.z < Z - 19.55) pressed++
-      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-10.2, 4.6, -20.5) }   // over its top (y 1-3: 3.4 was inside the block)
+      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-10.8, 5.0, -20.5); bigPoof = true }   // over its top (y 1-3: 3.4 was inside the block)
       // pressed against it, look up its side: the top and the sky in frame, the smoke above it in view (the
       // screen was all cactus texture and froze behind the death screen)
       // up its side to the top and the sky, eased, starting on the approach: on half a heart the first touch kills,
