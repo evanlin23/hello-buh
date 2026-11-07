@@ -1,10 +1,15 @@
-// "Bro this looks wrong?" (SunuCellyClipss 8.9M): black features first (floating dots and a line),
-// then yellow from the outside in - it turns out to be a smiley.
-module.exports = require('../lib/pixel_art')({
+// "Bro this looks wrong?" (SunuCellyClipss 8.9M): three walls, three sizes. Black features first
+// (floating dots and a line), then yellow from the outside in: a smiley each time, the last one huge.
+const pixelArt = require('../lib/pixel_art')
+const MID = ['..YYYYY..', '.YYYYYYY.', 'YYBYYYBYY', 'YYBYYYBYY', 'YYYYYYYYY', 'YBYYYYYBY', 'YYBBBBBYY', '.YYYYYYY.', '..YYYYY..']
+module.exports = pixelArt({
   name: 'looks_wrong',
-  art: ['..YYYYY..', '.YYYYYYY.', 'YYBYYYBYY', 'YYBYYYBYY', 'YYYYYYYYY', 'YBYYYYYBY', 'YYBBBBBYY', '.YYYYYYY.', '..YYYYY..'],
+  stages: [
+    { art: ['.YYY.', 'YBYBY', 'YYYYY', 'BYYYB', '.BBB.'], first: 'B', scatter: true },
+    { art: MID, first: 'B', scatter: true },
+    { art: pixelArt.upscale(MID, 2), first: 'B', scatter: true }
+  ],
   palette: { Y: 'yellow_wool', B: 'black_wool' },
-  first: 'B',
   caption: 'Bro this looks wrong?',
-  edit: { caption: 'Bro this looks wrong?', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', start: 0.3, endAfter: 'complete:0.9' }
+  edit: { caption: 'Bro this looks wrong?', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
 })

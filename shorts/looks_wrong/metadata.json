@@ -19,30 +19,30 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 16.5,
-    "drop_in_short_s": 7.8,
-    "song_start_s": 8.7
+    "drop_in_short_s": 31.1,
+    "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.7,
+    "duration_s": 32,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 11155531,
-    "sha256": "6b8380a1091e57ed59cbea57cef8a328abf67f054ab1400c7af3c939bb58a3f2"
+    "bytes": 37649331,
+    "sha256": "1927570cadadf065ebcd036eb777543fdb0b6454ffea1ce4d9cb203e34530dad"
   },
   "edit": {
     "caption": "Bro this looks wrong?",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
-    "start": 0.3,
+    "startAt": "stage:-0.2",
     "endAfter": "complete:0.9",
     "args": [
       "--caption",
       "Bro this looks wrong?",
-      "--start",
-      "0.3",
+      "--start_at",
+      "stage:-0.2",
       "--end_after",
       "complete:0.9"
     ]
@@ -55,13 +55,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 439,
-      "y": 71,
-      "z": -90
+      "x": 382,
+      "y": 72,
+      "z": -43
     },
-    "biome": "minecraft:forest",
-    "ticks": 188,
-    "seconds": 9.4,
+    "biome": "minecraft:plains",
+    "ticks": 666,
+    "seconds": 33.3,
     "deaths": 0,
     "events": [
       {
@@ -69,11 +69,19 @@
         "event": "start"
       },
       {
-        "t": 0.75,
+        "t": 0,
+        "event": "stage"
+      },
+      {
+        "t": 0.2,
         "event": "swing"
       },
       {
-        "t": 0.85,
+        "t": 0.55,
+        "event": "swing"
+      },
+      {
+        "t": 0.7,
         "event": "swing"
       },
       {
@@ -81,19 +89,7 @@
         "event": "swing"
       },
       {
-        "t": 1.05,
-        "event": "swing"
-      },
-      {
-        "t": 1.15,
-        "event": "swing"
-      },
-      {
-        "t": 1.25,
-        "event": "swing"
-      },
-      {
-        "t": 1.35,
+        "t": 1.2,
         "event": "swing"
       },
       {
@@ -101,23 +97,11 @@
         "event": "swing"
       },
       {
-        "t": 1.55,
+        "t": 1.7,
         "event": "swing"
       },
       {
-        "t": 1.65,
-        "event": "swing"
-      },
-      {
-        "t": 1.75,
-        "event": "swing"
-      },
-      {
-        "t": 2,
-        "event": "swing"
-      },
-      {
-        "t": 2.1,
+        "t": 1.95,
         "event": "swing"
       },
       {
@@ -125,31 +109,11 @@
         "event": "swing"
       },
       {
-        "t": 2.35,
-        "event": "swing"
-      },
-      {
-        "t": 2.45,
-        "event": "swing"
-      },
-      {
         "t": 2.55,
         "event": "swing"
       },
       {
-        "t": 2.65,
-        "event": "swing"
-      },
-      {
-        "t": 2.75,
-        "event": "swing"
-      },
-      {
-        "t": 2.85,
-        "event": "swing"
-      },
-      {
-        "t": 2.95,
+        "t": 2.8,
         "event": "swing"
       },
       {
@@ -158,162 +122,70 @@
       },
       {
         "t": 3.15,
-        "event": "swing"
+        "event": "reveal"
       },
       {
-        "t": 3.25,
-        "event": "swing"
-      },
-      {
-        "t": 3.35,
-        "event": "swing"
-      },
-      {
-        "t": 3.45,
-        "event": "swing"
-      },
-      {
-        "t": 3.55,
-        "event": "swing"
-      },
-      {
-        "t": 3.65,
-        "event": "swing"
-      },
-      {
-        "t": 3.75,
-        "event": "swing"
-      },
-      {
-        "t": 3.85,
-        "event": "swing"
-      },
-      {
-        "t": 3.95,
-        "event": "swing"
-      },
-      {
-        "t": 4.05,
-        "event": "swing"
-      },
-      {
-        "t": 4.15,
-        "event": "swing"
+        "t": 4.2,
+        "event": "stage"
       },
       {
         "t": 4.25,
         "event": "swing"
       },
       {
-        "t": 4.35,
+        "t": 4.45,
         "event": "swing"
       },
       {
-        "t": 4.5,
+        "t": 4.65,
         "event": "swing"
       },
       {
-        "t": 4.6,
+        "t": 4.85,
         "event": "swing"
       },
       {
-        "t": 4.7,
+        "t": 5.05,
         "event": "swing"
       },
       {
-        "t": 4.8,
+        "t": 5.25,
         "event": "swing"
       },
       {
-        "t": 4.9,
+        "t": 5.45,
         "event": "swing"
       },
       {
-        "t": 5,
+        "t": 5.65,
         "event": "swing"
       },
       {
-        "t": 5.1,
+        "t": 5.85,
         "event": "swing"
       },
       {
-        "t": 5.2,
+        "t": 6.05,
         "event": "swing"
       },
       {
-        "t": 5.3,
+        "t": 6.25,
         "event": "swing"
       },
       {
-        "t": 5.4,
+        "t": 6.45,
         "event": "swing"
       },
       {
-        "t": 5.5,
+        "t": 6.65,
         "event": "swing"
       },
       {
-        "t": 5.6,
+        "t": 6.85,
         "event": "swing"
       },
       {
-        "t": 5.7,
-        "event": "swing"
-      },
-      {
-        "t": 5.8,
-        "event": "swing"
-      },
-      {
-        "t": 5.9,
-        "event": "swing"
-      },
-      {
-        "t": 6,
-        "event": "swing"
-      },
-      {
-        "t": 6.1,
-        "event": "swing"
-      },
-      {
-        "t": 6.2,
-        "event": "swing"
-      },
-      {
-        "t": 6.3,
-        "event": "swing"
-      },
-      {
-        "t": 6.4,
-        "event": "swing"
-      },
-      {
-        "t": 6.5,
-        "event": "swing"
-      },
-      {
-        "t": 6.6,
-        "event": "swing"
-      },
-      {
-        "t": 6.7,
-        "event": "swing"
-      },
-      {
-        "t": 6.8,
-        "event": "swing"
-      },
-      {
-        "t": 6.9,
-        "event": "swing"
-      },
-      {
-        "t": 7,
-        "event": "swing"
-      },
-      {
-        "t": 7.15,
+        "t": 7.05,
         "event": "swing"
       },
       {
@@ -321,15 +193,7 @@
         "event": "swing"
       },
       {
-        "t": 7.35,
-        "event": "swing"
-      },
-      {
         "t": 7.45,
-        "event": "swing"
-      },
-      {
-        "t": 7.55,
         "event": "swing"
       },
       {
@@ -337,19 +201,515 @@
         "event": "swing"
       },
       {
-        "t": 7.75,
-        "event": "swing"
-      },
-      {
         "t": 7.85,
         "event": "swing"
       },
       {
-        "t": 8.1,
+        "t": 8.05,
+        "event": "swing"
+      },
+      {
+        "t": 8.25,
+        "event": "swing"
+      },
+      {
+        "t": 8.45,
+        "event": "swing"
+      },
+      {
+        "t": 8.65,
+        "event": "swing"
+      },
+      {
+        "t": 8.85,
+        "event": "swing"
+      },
+      {
+        "t": 9.05,
+        "event": "swing"
+      },
+      {
+        "t": 9.25,
+        "event": "swing"
+      },
+      {
+        "t": 9.45,
+        "event": "swing"
+      },
+      {
+        "t": 9.65,
+        "event": "swing"
+      },
+      {
+        "t": 9.85,
+        "event": "swing"
+      },
+      {
+        "t": 10.05,
+        "event": "swing"
+      },
+      {
+        "t": 10.25,
+        "event": "swing"
+      },
+      {
+        "t": 10.45,
+        "event": "swing"
+      },
+      {
+        "t": 10.65,
+        "event": "swing"
+      },
+      {
+        "t": 10.85,
+        "event": "swing"
+      },
+      {
+        "t": 11.05,
+        "event": "swing"
+      },
+      {
+        "t": 11.15,
+        "event": "reveal"
+      },
+      {
+        "t": 12.2,
+        "event": "stage"
+      },
+      {
+        "t": 12.25,
+        "event": "swing"
+      },
+      {
+        "t": 12.4,
+        "event": "swing"
+      },
+      {
+        "t": 12.55,
+        "event": "swing"
+      },
+      {
+        "t": 12.75,
+        "event": "swing"
+      },
+      {
+        "t": 12.9,
+        "event": "swing"
+      },
+      {
+        "t": 13.05,
+        "event": "swing"
+      },
+      {
+        "t": 13.2,
+        "event": "swing"
+      },
+      {
+        "t": 13.35,
+        "event": "swing"
+      },
+      {
+        "t": 13.55,
+        "event": "swing"
+      },
+      {
+        "t": 13.7,
+        "event": "swing"
+      },
+      {
+        "t": 13.85,
+        "event": "swing"
+      },
+      {
+        "t": 14.05,
+        "event": "swing"
+      },
+      {
+        "t": 14.2,
+        "event": "swing"
+      },
+      {
+        "t": 14.35,
+        "event": "swing"
+      },
+      {
+        "t": 14.55,
+        "event": "swing"
+      },
+      {
+        "t": 14.7,
+        "event": "swing"
+      },
+      {
+        "t": 14.85,
+        "event": "swing"
+      },
+      {
+        "t": 15.05,
+        "event": "swing"
+      },
+      {
+        "t": 15.2,
+        "event": "swing"
+      },
+      {
+        "t": 15.35,
+        "event": "swing"
+      },
+      {
+        "t": 15.55,
+        "event": "swing"
+      },
+      {
+        "t": 15.7,
+        "event": "swing"
+      },
+      {
+        "t": 15.85,
+        "event": "swing"
+      },
+      {
+        "t": 16.05,
+        "event": "swing"
+      },
+      {
+        "t": 16.2,
+        "event": "swing"
+      },
+      {
+        "t": 16.35,
+        "event": "swing"
+      },
+      {
+        "t": 16.55,
+        "event": "swing"
+      },
+      {
+        "t": 16.7,
+        "event": "swing"
+      },
+      {
+        "t": 16.85,
+        "event": "swing"
+      },
+      {
+        "t": 17.05,
+        "event": "swing"
+      },
+      {
+        "t": 17.2,
+        "event": "swing"
+      },
+      {
+        "t": 17.35,
+        "event": "swing"
+      },
+      {
+        "t": 17.55,
+        "event": "swing"
+      },
+      {
+        "t": 17.7,
+        "event": "swing"
+      },
+      {
+        "t": 17.85,
+        "event": "swing"
+      },
+      {
+        "t": 18.05,
+        "event": "swing"
+      },
+      {
+        "t": 18.2,
+        "event": "swing"
+      },
+      {
+        "t": 18.35,
+        "event": "swing"
+      },
+      {
+        "t": 18.55,
+        "event": "swing"
+      },
+      {
+        "t": 18.7,
+        "event": "swing"
+      },
+      {
+        "t": 18.85,
+        "event": "swing"
+      },
+      {
+        "t": 19.05,
+        "event": "swing"
+      },
+      {
+        "t": 19.2,
+        "event": "swing"
+      },
+      {
+        "t": 19.35,
+        "event": "swing"
+      },
+      {
+        "t": 19.55,
+        "event": "swing"
+      },
+      {
+        "t": 19.7,
+        "event": "swing"
+      },
+      {
+        "t": 19.85,
+        "event": "swing"
+      },
+      {
+        "t": 20.05,
+        "event": "swing"
+      },
+      {
+        "t": 20.2,
+        "event": "swing"
+      },
+      {
+        "t": 20.35,
+        "event": "swing"
+      },
+      {
+        "t": 20.55,
+        "event": "swing"
+      },
+      {
+        "t": 20.7,
+        "event": "swing"
+      },
+      {
+        "t": 20.85,
+        "event": "swing"
+      },
+      {
+        "t": 21.05,
+        "event": "swing"
+      },
+      {
+        "t": 21.2,
+        "event": "swing"
+      },
+      {
+        "t": 21.35,
+        "event": "swing"
+      },
+      {
+        "t": 21.55,
+        "event": "swing"
+      },
+      {
+        "t": 21.65,
+        "event": "glance"
+      },
+      {
+        "t": 23.2,
+        "event": "swing"
+      },
+      {
+        "t": 23.35,
+        "event": "swing"
+      },
+      {
+        "t": 23.55,
+        "event": "swing"
+      },
+      {
+        "t": 23.7,
+        "event": "swing"
+      },
+      {
+        "t": 23.85,
+        "event": "swing"
+      },
+      {
+        "t": 24.05,
+        "event": "swing"
+      },
+      {
+        "t": 24.2,
+        "event": "swing"
+      },
+      {
+        "t": 24.35,
+        "event": "swing"
+      },
+      {
+        "t": 24.55,
+        "event": "swing"
+      },
+      {
+        "t": 24.7,
+        "event": "swing"
+      },
+      {
+        "t": 24.85,
+        "event": "swing"
+      },
+      {
+        "t": 25.05,
+        "event": "swing"
+      },
+      {
+        "t": 25.2,
+        "event": "swing"
+      },
+      {
+        "t": 25.35,
+        "event": "swing"
+      },
+      {
+        "t": 25.55,
+        "event": "swing"
+      },
+      {
+        "t": 25.7,
+        "event": "swing"
+      },
+      {
+        "t": 25.85,
+        "event": "swing"
+      },
+      {
+        "t": 26.05,
+        "event": "swing"
+      },
+      {
+        "t": 26.2,
+        "event": "swing"
+      },
+      {
+        "t": 26.35,
+        "event": "swing"
+      },
+      {
+        "t": 26.55,
+        "event": "swing"
+      },
+      {
+        "t": 26.7,
+        "event": "swing"
+      },
+      {
+        "t": 26.85,
+        "event": "swing"
+      },
+      {
+        "t": 27.05,
+        "event": "swing"
+      },
+      {
+        "t": 27.2,
+        "event": "swing"
+      },
+      {
+        "t": 27.35,
+        "event": "swing"
+      },
+      {
+        "t": 27.5,
+        "event": "backup"
+      },
+      {
+        "t": 27.55,
+        "event": "swing"
+      },
+      {
+        "t": 27.7,
+        "event": "swing"
+      },
+      {
+        "t": 27.85,
+        "event": "swing"
+      },
+      {
+        "t": 28.05,
+        "event": "swing"
+      },
+      {
+        "t": 28.2,
+        "event": "swing"
+      },
+      {
+        "t": 28.35,
+        "event": "swing"
+      },
+      {
+        "t": 28.5,
+        "event": "swing"
+      },
+      {
+        "t": 28.65,
+        "event": "swing"
+      },
+      {
+        "t": 28.85,
+        "event": "swing"
+      },
+      {
+        "t": 29,
+        "event": "swing"
+      },
+      {
+        "t": 29.15,
+        "event": "swing"
+      },
+      {
+        "t": 29.35,
+        "event": "swing"
+      },
+      {
+        "t": 29.5,
+        "event": "swing"
+      },
+      {
+        "t": 29.65,
+        "event": "swing"
+      },
+      {
+        "t": 29.85,
+        "event": "swing"
+      },
+      {
+        "t": 30,
+        "event": "swing"
+      },
+      {
+        "t": 30.15,
+        "event": "swing"
+      },
+      {
+        "t": 30.35,
+        "event": "swing"
+      },
+      {
+        "t": 30.5,
+        "event": "swing"
+      },
+      {
+        "t": 30.65,
+        "event": "swing"
+      },
+      {
+        "t": 30.85,
+        "event": "swing"
+      },
+      {
+        "t": 31,
+        "event": "swing"
+      },
+      {
+        "t": 31.1,
         "event": "complete"
       },
       {
-        "t": 9.4,
+        "t": 33.3,
         "event": "end"
       }
     ]
@@ -357,9 +717,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "369164c44b6ee656adddc4bf54d0060b590816fe",
-    "rendered_at": "2026-11-06T20:57:04.058Z",
-    "head_at_publish": "369164c44b6ee656adddc4bf54d0060b590816fe",
+    "commit": "dc833c8395787086b1d8134a2063951add078006",
+    "rendered_at": "2026-11-07T00:17:35.575Z",
+    "head_at_publish": "dc833c8395787086b1d8134a2063951add078006",
     "stunt": "stunts/looks_wrong.js",
     "source_snapshot": [
       "source/looks_wrong.js",
@@ -367,13 +727,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 369164c44b6e",
+    "git checkout dc833c839578",
     "gunzip -c shorts/looks_wrong/recording.json.gz > work/looks_wrong.rec.json",
     "node render.js work/looks_wrong.rec.json work/looks_wrong.frames 60 1080 1011",
     "python3 audio.py work/looks_wrong.rec.json work/looks_wrong.wav",
-    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start 0.3 --end_after complete:0.9 --out out/looks_wrong.mp4"
+    "python3 edit.py --frames work/looks_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/looks_wrong.rec.json --audio work/looks_wrong.wav --caption \"Bro this looks wrong?\" --start_at stage:-0.2 --end_after complete:0.9 --out out/looks_wrong.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "worker: retention+minecraft audit FAIL: complete marked 0.25 s after the last block, step-back hides the bottom row behind the mound edge, crosshair not on placed blocks (lib/pixel_art.js, reported)",
-  "published_at": "2026-11-06T21:03:16.929Z"
+  "status": "ready",
+  "notes": "worker: 32 s three-smiley format; frame review + retention + minecraft audits passed (round 5). Nitpicks: glance return starts with a quick flick, 8-16 placements/s speed build, no far block outline (engine)",
+  "published_at": "2026-11-07T00:22:12.240Z"
 }
