@@ -268,7 +268,10 @@ module.exports = {
     ctx.mark('face_on', { near: [X + 19.5, Z + 10.5, 1.5] })
     await line('L07', async (k, at) => {
       bot.setControlState('forward', k >= at(3) && bot.entity.position.z < Z + 8.6)
-      base = aim(P(19.5, 1.35, 10.5)); look(k)
+      // "who HUGS me": she steps in and the camera dips and nuzzles (the shot stood still here: retention audit)
+      const h0 = at(5) - 4, h = k >= h0 ? Math.sin(Math.min(1, (k - h0) / 12) * Math.PI / 2) : 0
+      if (k >= h0 && k < h0 + 8) say(`/tp @e[tag=mom,limit=1] ${X + 19.5} ${F + 1} ${(Z + 10.5 - (k - h0 + 1) * 0.05).toFixed(3)} 180 0`)
+      base = aim(P(19.5, 1.35, 10.5 - 0.4 * h)); look(k, Math.sin(k / 3) * 0.025 * h, -0.07 * h)
     })
     bot.setControlState('forward', false)
     ctx.mark('face_off')

@@ -276,17 +276,20 @@ def flash_concat(timeline, start, dur, tmp):
         im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         im.paste((255, 255, 255, int(255 * a)), (0, BAND, W, BAND + GAME_H))
         im.save(tmp / f"flash_{j}.png")
-    runs, frame, total = [], 0, int(round(dur * FPS))
+    total = int(round(dur * FPS))
+    # per frame: which fade step shows; a flash landing inside a fade restarts it (it was skipped, and the
+    # blast's own flash 3 frames after the last swell never drew: retention audit, story_runaway)
+    step = [None] * total
     for f0 in fl:
-        if f0 < frame:
-            continue
-        if f0 > frame:
-            runs.append((blank, f0 - frame))
         for j in range(min(len(steps), total - f0)):
-            runs.append((tmp / f"flash_{j}.png", 1))
-        frame = f0 + len(steps)
-    if frame < total:
-        runs.append((blank, total - frame))
+            step[f0 + j] = j
+    runs = []
+    for v in step:
+        p = blank if v is None else tmp / f"flash_{v}.png"
+        if runs and runs[-1][0] == p:
+            runs[-1] = (p, runs[-1][1] + 1)
+        else:
+            runs.append((p, 1))
     lst = tmp / "flash.txt"
     lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {n / FPS:.6f}\n" for p, n in runs) + f"file '{runs[-1][0]}'\n")
     return lst
