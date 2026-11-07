@@ -147,6 +147,11 @@ module.exports = {
       if (ctx.died) return false
       if (c.item === 'water_bucket') {
         // the classic MLG pickup: scoop the water back into the bucket (it used to vanish by command, on camera)
+        // step half a block off the source first (standing inside it, the bucket's ray missed it: 'scoop missed 7')
+        { const k0 = new ctx.Vec3(spot.x + 0.5, floor + 1, spot.z + 0.5)
+          bot.setControlState('back', true)
+          for (let k = 0; k < 4; k++) { const d = k0.minus(bot.entity.position.offset(0, 1.62, 0)); await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true); await bot.waitForTicks(1) }
+          bot.setControlState('back', false) }
         // aim at the source's centre (straight down from where it slid to missed it once: empty bucket, water left)
         for (let t = 0; t < 3 && bot.inventory.slots[36 + i]?.name !== 'water_bucket'; t++) {
           await ctx.easeLookAt(new ctx.Vec3(spot.x + 0.5, floor + 1.1, spot.z + 0.5), t ? 100 : 150)
