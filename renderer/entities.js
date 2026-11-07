@@ -569,7 +569,11 @@ export class EntityLayer {
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
 
   async ensure (id, name, extra) {
-    const key = `${id}|${name}|${JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'roar' || k === 'roarT' ? undefined : v)}`
+    // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
+    // rebuilt the bear and lost its stand animation, so it snapped down: worker 13)
+    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'roar' || k === 'roarT' ? undefined : v)
+    if (ek === '{}' || ek === undefined) ek = 'null'
+    const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
     if (cur && cur.key === key) return cur
     if (cur) { this.scene.remove(cur.obj); if (cur.tag) this.scene.remove(cur.tag); if (cur.fire) this.scene.remove(cur.fire); this.live.delete(id) }
@@ -728,6 +732,9 @@ export class EntityLayer {
         }
       }
     }
+    // chested llamas / donkeys / mules only (AbstractChestedHorse.DATA_ID_CHEST): the converted
+    // geometry always carried the chest bags
+    for (const n of ['chest1', 'chest2', 'Bag1', 'Bag2']) if (bones[n]) bones[n].visible = !!(extra && extra.chest)
     // MinecartRenderer: the display block (TNT, hopper, furnace...) scaled 0.75 at
     // (-0.5, (offset - 8) / 16, 0.5) of the cart, default offset 6
     if (obj && /minecart$/.test(name) && extra && extra.content !== undefined && this.blockModels.has(extra.content)) {
@@ -951,6 +958,12 @@ export class EntityLayer {
         r.stand = want > cur ? Math.min(want, cur + dt / 6) : Math.max(want, cur - dt / 6)
         const f = r.stand, a = f * Math.PI * 0.35
         B.body.rotation.x = B.body.userData.rest.x + a
+        // rear up on the hind feet: the body turns about its own pivot (15 px up, at the back), which
+        // lifts and moves the hips (the hind legs hang 5 px lower and 6 px forward of it). Shift the body
+        // so the hips, and the vertical hind legs under them, stay where they were (it floated 0.5-1 block)
+        const hy = -5 * Math.cos(a) + 6 * Math.sin(a), hz = -5 * Math.sin(a) - 6 * Math.cos(a)
+        const rp = B.body.userData.restPos || (B.body.userData.restPos = B.body.position.clone())
+        B.body.position.set(rp.x, rp.y - (hy + 5), rp.z - (hz + 6))
         for (const n of ['leg0', 'leg1']) if (B[n]) B[n].rotation.x -= a
         for (const n of ['leg2', 'leg3']) if (B[n]) B[n].rotation.x = B[n].userData.rest.x * (1 - f) + f * Math.PI * 0.1
         if (B.head) B.head.rotation.x -= f * Math.PI * 0.15 + a
