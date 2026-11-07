@@ -117,7 +117,7 @@ module.exports = makeStunt({
     blocks: giant(),
     hold: 'terracotta', slot: 4,
     // plinth, legs, robe, arms, head, face, obelisks + oases, the pyramid, crown
-    stageTicks: { 0: 100, 1: 100, 2: 140, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 60 },
+    stageTicks: { 0: 100, 1: 100, 2: 140, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 80 },
     keys: [
       [0, [-16, 9, 30], [0, 0, 6]],          // close on the plinth from the cut, then a pass across it
       [60, [-4, 11, 26], [0, 1, 4]],
@@ -132,12 +132,12 @@ module.exports = makeStunt({
       [910, [-44, 24, 30], [-24, 6, 0]],     // the obelisks and the west oasis
       [975, [2, 26, 62], [0, 22, 0]],        // round the front (straight across went through the statue)
       [1050, [48, 18, -4], [24, 6, -34]],    // the pyramid rising, low from the side (from above it read as flat slabs)
-      [1130, [46, 22, -12], [24, 8, -34]],   // held low while it climbs
-      [1180, [-4, 62, -14], [18, 18, -34]],  // over the head, the pyramid beside it
-      [1215, [32, 56, 30], [0, 30, -30]],
-      [1250, [-12, 62, 26], [0, 52, 0]],     // over the crown going on (further out: it passed the face at 11 blocks)
-      [1278, [-1, 18, 98], [0, 31, 0]],      // the pull-back arrives early and creeps into 60:00, the head below the clock
-      [1298, [0, 16, 94], [0, 31, 0]]
+      [1130, [46, 22, -12], [24, 8, -34]],   // held low while it climbs, to its gold top (a crane over the head while it
+      [1215, [42, 26, -18], [24, 10, -34]],  // still rose showed its top half from above, flat)
+      [1255, [24, 58, 22], [0, 50, 0]],      // up to the head as the crown goes on
+      [1282, [-12, 62, 26], [0, 52, 0]],
+      [1300, [-1, 18, 98], [0, 31, 0]],      // the pull-back arrives early and creeps into 60:00, the head below the clock
+      [1318, [0, 16, 94], [0, 31, 0]]
     ],
     reveal: [
       [8, [-3, 17, 90], [0, 31, 0]],
