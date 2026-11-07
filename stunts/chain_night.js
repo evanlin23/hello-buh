@@ -12,14 +12,14 @@
 //   C  the end detector -> repeaters west along n = -5 fire 7 rocket dispensers in turn (night fireworks);
 //      the last rocket hits a target on a tower, which fires a piston that shoves the anvil's ledge
 //   D  an observer sees the anvil land -> a glowing repeater line west -> a TNT -> a TNT line north ->
-//      a 3x3x3 -> back east: a 5x5x5 -> a 9x5x9 pile north of the player
+//      a 3x3x3 -> then north-east through single TNTs: a 5x5x5 -> a 9x5x9 pile, 25 blocks off
 const { relaySounds, clearMobs, rig } = require('../lib/chain')
 const { findFlat } = require('./_site')
 
 const T = 'polished_andesite'
 const S = 'stone_bricks'
 const NOTES = [6, 10, 13, 18, 22]                       // a rising arpeggio on chimes
-const AREA = [-46, 22, -32, 26]
+const AREA = [-46, 22, -40, 26]
 
 module.exports = {
   name: 'chain_night',
@@ -138,12 +138,14 @@ module.exports = {
     await fill(-22, 1, 11, -20, 3, 13, 'tnt')
     // then back east, each stage lit through two single TNTs: a 5x5x5 west of the U, the pile north of it
     // (3 apart: a whole cube's blast reaches ~6 blocks, so each gap is three single TNTs long)
-    for (const e of [-17, -14, -11]) await put(e, 1, 12, 'tnt')
-    await fill(-8, 1, 12, -4, 5, 16, 'tnt')
-    for (const e of [-1, 2, 5]) await put(e, 1, 14, 'tnt')
-    await fill(8, 1, 14, 16, 5, 22, 'tnt')
+    // (the 5x5x5 and the pile sit 20+ blocks north of the U: the player can't back off south past
+    // the lamp path, and a cube's blast flings primed TNT 15-20 blocks)
+    for (const [e, n] of [[-17, 14], [-14, 16], [-11, 18]]) await put(e, 1, n, 'tnt')
+    await fill(-9, 1, 19, -5, 5, 23, 'tnt')
+    for (const [e, n] of [[-2, 23], [1, 25], [4, 26]]) await put(e, 1, n, 'tnt')
+    await fill(7, 1, 26, 15, 5, 34, 'tnt')
     // deep dirt under the TNT (a crater that reaches an aquifer fills with water)
-    for (let n0 = -8; n0 <= 30; n0 += 3) await fill(-28, -30, n0, 24, -11, n0 + 2, 'dirt')
+    for (let n0 = -12; n0 <= 38; n0 += 3) await fill(-28, -30, n0, 22, -11, n0 + 2, 'dirt')
 
     await clearMobs(ctx, X - 12, Z, 80)
     await c('/kill @e[type=item]')
@@ -181,8 +183,8 @@ module.exports = {
       const e = +(p.center || {}).x - X, n = Z - +(p.center || {}).z
       r.markOnce('boom1')
       if (n > 10.5 && n < 13.5 && e < -19.5) r.markOnce('cube')
-      if (e > -8.5 && e < -3.5 && n > 11.5 && n < 16.5) r.markOnce('big')
-      if (e > 7.5 && n > 13.5) { r.markOnce('giant'); if (++giant === 50) r.markOnce('giant_peak') }
+      if (e > -9.5 && e < -4.5 && n > 18.5 && n < 23.5) r.markOnce('big')
+      if (e > 6.5 && n > 25.5) { r.markOnce('giant'); if (++giant === 50) r.markOnce('giant_peak') }
     }
     bot._client.on('explosion', onBoom)
     const glide = async (to, ticks, done = () => false) => {
@@ -208,7 +210,7 @@ module.exports = {
     r.k = 0.2; r.steer = W(8, 0, 5)                      // into the U (past the button's east side): the cart passes 4-5 blocks off
     await r.follow('minecart', [0, 0.3, 0], () => r.at('cart_end'), 260)
     // C: the rockets, one after another, south of the player
-    r.k = 0.12; r.steer = W(6, 0, 1)                     // back south a little to get them all in
+    r.k = 0.12; r.steer = W(9, 0, 3)                     // east of the lamp path (it's 2 high: north of it, never across)
     await glide(W(10, 4, -10), 10)
     for (let i = 0; i < this.rocketE.length; i++) {
       await r.until(() => r.at(`rocket${i}`), 30)
@@ -224,18 +226,18 @@ module.exports = {
     for (let y = hT + 1.5, v = 0; y > 1.5 && !r.at('anvil_land'); ) { v = (v + 0.04) * 0.98; y -= v; r.focus = W(-4, Math.max(1.5, y - 1), -10); await bot.waitForTicks(1) }
     await r.until(() => r.at('anvil_land'), 20)
     // D: the repeater line west to the TNT; walk west after it (stay ~15 blocks from the pile)
-    r.k = 0.14; r.steer = W(-8, 0, 3)                  // ~12 blocks from the line
+    r.k = 0.14; r.steer = W(-6, 0, 4)                  // ~14 blocks from the line, north of the lamp path
     await glide(W(-19, 1, -10), 60, () => r.at('tnt_lit'))
     await r.until(() => r.at('tnt_lit'), 60)
     await glide(W(-20, 1, -4), 20)
-    await glide(W(-20, 1.5, 6), 40, () => r.at('boom1'))
+    await glide(W(-20, 1.5, 6), 70, () => r.at('boom1'))   // slow: the fuse is 4 s
     await r.until(() => r.at('boom1'), 60)
     r.k = 0.1
     for (let i = 0; i < 260 && !r.at('giant_peak'); i++) {
-      if (r.at('cube')) r.steer = W(2, 0, -6)            // back off, facing it: the cubes fling primed TNT 15+ blocks (it knocked the player into the lamps)
-      if (r.at('giant')) r.focus = W(12, 3, 18)
-      else if (r.at('big')) r.focus = W(8, 2.5, 16)
-      else if (r.at('cube')) r.focus = W(-6, 2.5, 14)
+      if (r.at('cube')) r.steer = W(10, 0, 3)           // back off east along the U, facing it: ~25 blocks from every cube
+      if (r.at('giant')) r.focus = W(11, 3, 30)
+      else if (r.at('big')) r.focus = W(6, 2.5, 26)
+      else if (r.at('cube')) r.focus = W(-7, 2.5, 21)
       else {
         const front = r.ent('tnt', (e, a) => (Z - e.position.z) > (Z - a.position.z))
         if (front) r.focus = front.position.offset(0, 0.5, -2.5)
