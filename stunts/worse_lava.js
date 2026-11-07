@@ -122,22 +122,25 @@ module.exports = {
     await bot.waitForTicks(6)
     go = ctx.tick + 6
     // a slow drift before go: the shot is never still
-    await until(go, () => bot.look(bot.entity.yaw + 0.004, bot.entity.pitch, true))
+    await until(go, () => bot.look(bot.entity.yaw + 0.01, bot.entity.pitch + 0.002, true))
     ctx.mark('go')
 
     // ---- 1. the lava rises ----
-    ctx.mark('l1'); riseTo(G + 3)
+    // the rise lands once the card has shrunk out of the way (under the full-size card it was missed: review 4)
+    ctx.mark('l1')
+    for (let i = 0; i < 7; i++) { await bot.look(bot.entity.yaw + 0.006, bot.entity.pitch + 0.003, true); await bot.waitForTicks(1) }
+    riseTo(G + 3)
     // (mineflayer yaw: 0 north, -pi/2 east, pi/2 west) along the side it just climbed, then away from
     // the edge: it walks back into the middle of the island
-    await bot.waitForTicks(8)
+    await bot.waitForTicks(3)
     await ctx.easeLook(Math.PI - 0.9, -0.75, 900)
     await ctx.easeLook(0.3, -0.2, 900)
     bot.setControlState('forward', true)
     for (let i = 0; i < 60 && bot.entity.position.z > z + 5.6; i++) { await bot.look(bot.entity.yaw - 0.006, bot.entity.pitch, true); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
     // the whole island, lava on every side: a look round from the middle
-    await ctx.easeLook(1.4, -0.35, 900)
-    await ctx.easeLook(0, -0.15, 700)
+    await ctx.easeLook(1.4, -0.45, 900)   // (the lava edge in the top third)
+    await ctx.easeLook(0, -0.3, 700)
     await until(at(5), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 2. a creeper ----
@@ -218,7 +221,7 @@ module.exports = {
     const spot = (cands) => cands.map(([dx, dz]) => [p0.x + dx, p0.z + dz]).find(([wx, wz]) => ground(wx, wz) && ground(wx + 0.3, wz + 0.3) && ground(wx - 0.3, wz - 0.3))
     // both in view: ahead, about 20 degrees either side of where it looks
     const yw = bot.entity.yaw
-    const around = (side) => [5, 4.5, 4, 5.5, 3.5].flatMap(d => [0.35, 0.25, 0.45].map(a => [-Math.sin(yw + side * a) * d, -Math.cos(yw + side * a) * d]))
+    const around = (side) => [5, 4.5, 4, 5.5, 3.5].flatMap(d => [0.2, 0.15, 0.28].map(a => [-Math.sin(yw + side * a) * d, -Math.cos(yw + side * a) * d]))
     const sl = spot(around(1)), sr = spot(around(-1))
     if (!sl || !sr) throw new Error('no ground for the creepers')
     bot.chat(`/summon creeper ${sl[0].toFixed(2)} ${G + 5} ${sl[1].toFixed(2)} {PersistenceRequired:1b,Rotation:[-30f,0f]}`)
@@ -236,7 +239,15 @@ module.exports = {
     // ---- 6. the floor breaks ----
     if (ctx.tick > at(25) + 1) throw new Error('level 6 late')   // the 5 s grid must hold
     ctx.mark('l6')
-    const bx = Math.floor(bot.entity.position.x), bz = Math.floor(bot.entity.position.z)
+    // the block it stands on: the solid grass cell under its feet nearest to it (it can straddle a crater edge)
+    const p6 = bot.entity.position
+    const under = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]].map(([dx, dz]) => [Math.floor(p6.x) + dx, Math.floor(p6.z) + dz])
+      .filter(([cx, cz]) => { const b = bot.blockAt(new Vec3(cx, G + 4, cz)); return b && b.name === 'grass_block' })
+      .sort((p, q) => Math.hypot(p[0] + 0.5 - p6.x, p[1] + 0.5 - p6.z) - Math.hypot(q[0] + 0.5 - p6.x, q[1] + 0.5 - p6.z))[0]
+    if (!under) throw new Error('not standing on the island')
+    const [bx, bz] = under
+    // onto the middle of its own block first: straddling two columns, the lava next door burned it (bot test)
+    await kit(ctx).stepTo(bx + 0.5, bz + 0.5, 16)
     // face the biggest stretch of island left: the rings come toward the camera across it
     let gx = 0, gz = 0, gn = 0
     for (let dx = -10; dx <= 10; dx++) for (let dz = -10; dz <= 10; dz++) { const b = bot.blockAt(new Vec3(bx + dx, G + 4, bz + dz)); if (b && b.name === 'grass_block') { gx += dx; gz += dz; gn++ } }
@@ -260,10 +271,11 @@ module.exports = {
     }
     ctx.mark('one_block')
     await ctx.easeLook(bot.entity.yaw, -1.35, 400)   // the one block it's standing on
-    await bot.waitForTicks(8)
+    await bot.waitForTicks(4)
     // the one thing still standing out there: the oak, its feet in the lava
     const tree = new Vec3(x + 0.5, G + 6, z + 13.5)
-    await ctx.easeLookAt(tree, 600)
+    await ctx.easeLookAt(new Vec3(x + 0.5, G + 12, z + 13.5), 350)   // the whole oak, crown and all
+    await ctx.easeLookAt(tree, 350)
     await until(at(29.5), () => bot.look(bot.entity.yaw + 0.004, bot.entity.pitch - 0.001, true))
     ctx.select(1)
     await until(at(30), () => bot.look(bot.entity.yaw + 0.006, bot.entity.pitch, true))
