@@ -267,11 +267,10 @@ module.exports = {
     await bot.waitForTicks(3)
     await go(2.6, -6.9, { pitch: -0.05, stop: 0.4 })   // back out into the street
     ctx.mark('r1_end')
-    // the giveaway: the tree's leaves shake
-    const shake = everyTick(20, (i) => {
-      if (i % 4 === 0) { ctx.particles('block', W(5 + (i % 3), 5, -6 + (i % 2) * 3), { block: 'dark_oak_leaves' }); ctx.sound('block.grass.hit', 0.7, 0.8 + 0.05 * (i % 3)) }
-    })
-    await look(7.0, 3.6, -5.0, 380)
+    // the giveaway: the tree rustles and an apple drops out of it (dark oak leaves drop apples)
+    bot.chat(`/summon item ${X + 5.2} ${F + 4.6} ${Z - 5.6} {Item:{id:"minecraft:apple",count:1},PickupDelay:400,Motion:[-0.04,0.05,-0.03]}`)
+    const shake = everyTick(20, (i) => { if (i % 4 === 0) ctx.sound('block.grass.hit', 0.7, 0.8 + 0.05 * (i % 3)) })
+    await look(5.6, 3.4, -5.9, 380)
     hmm(1)
     ctx.mark('r1_zoom')
     await go(5.6, -7.0, { stop: 0.3, face: [7.0, 2.4, -5.0] })
@@ -333,7 +332,7 @@ module.exports = {
     const knock = everyTick(16, (i) => { if (i % 5 === 0) { ctx.particles('block', W(-9, 0, -1), { block: 'dirt_path' }); ctx.sound('block.grass.hit', 0.9, 0.7) } })
     await look(-8.5, 0, -0.5, 280)
     ctx.mark('r3_zoom')
-    await go(-8.5, 0.45, { sprint: false, stop: 0.12, face: [-8.5, 0.9, -0.5] })   // a step back to the hole's edge
+    bot.setControlState('back', true); await bot.waitForTicks(4); bot.setControlState('back', false)   // a step back off it
     await knock
     hmm(0.7)
     ctx.select(1)
@@ -341,7 +340,10 @@ module.exports = {
     await dig(-9, 0, -1, 3, 'dirt_path', 'grass')
     hmm(1.2)
     found(3)
-    await look(-8.5, -0.3, -0.55, 220)          // straight down at his face
+    // a step forward to the hole's edge (still on the block beside it), and straight down at his face
+    for (let i = 0; i < 8 && bot.entity.position.z > Z + 0.33; i++) { bot.setControlState('forward', true); bot.setControlState('sneak', true); await bot.waitForTicks(1) }
+    bot.setControlState('forward', false); bot.setControlState('sneak', false)
+    await look(-8.5, -0.3, -0.55, 220)
     await drift(10, 0.08)
 
     // ---- round 4: the lava pool (north-west)
@@ -358,7 +360,8 @@ module.exports = {
     ctx.mark('r4_end')
     // the giveaway: the lava pops and smokes
     const pops = everyTick(30, (i) => {
-      if (i % 5 === 0) { ctx.particles('smoke', W(-18.5, 1.2, -12.5)); ctx.sound('block.lava.pop', 1, 0.8 + 0.1 * (i % 3)) }
+      if (i % 5 === 0) ctx.sound('block.lava.pop', 1, 0.8 + 0.1 * (i % 3))
+      if (i === 4 || i === 18) ctx.particles('smoke', W(-18.5, 1.4, -12.5))
     })
     await look(-18.5, 0.8, -12.5, 360)
     ctx.mark('r4_zoom')
