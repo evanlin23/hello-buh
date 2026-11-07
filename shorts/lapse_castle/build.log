@@ -1,0 +1,23 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+04:29:54.757 spawned at Vec3 { x: 119.5, y: 68, z: 9.5 }
+04:29:55.011 nearest minecraft:plains at [ 375, -55 ]
+04:30:42.902 set at { x: 375, y: 67, z: -55 }
+04:30:52.195 chunks refreshed; back at start within 0.00 blocks
+04:30:54.659 small 6/6 blocks correct
+04:31:23.106 mid 58/58 blocks correct
+04:32:23.816 big: 13490 blocks, 701 placed by the bot, 7618 fill passes
+04:32:25.041 big 13490/13490 blocks correct
+04:32:25.522 STUNT OK
+rendering 1921 of 5568 frames
+meshing from y 12
+light computed in 1.4 s
+meshed + uploaded world in 15.8 s
+rendered 5568 frames (92.80 s of video) in 1259.4 s = 13.6 s per video second
+5568 frame names, 1921 rendered
+wrote work/lapse_castle.wav 92.85s
+speed: 5568 frames -> 1949 (2.45-3.85s xinf, 3.85-30.20s x3, 30.90-32.65s xinf, 32.65-92.05s x3)
+wrote out/lapse_castle.mp4 31.28s
+EXIT 0
+lapse_castle: 1877 frames, 31.28s, mean brightness 121.1 | flags: jump x1 | 16 sheets -> work/qa_frames/lapse_castle
+QADONE
