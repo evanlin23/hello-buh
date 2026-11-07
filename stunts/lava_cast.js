@@ -209,10 +209,12 @@ module.exports = {
       ctx.mark(`drain${n}`)
       // the water draining off: a slow sneak in towards the hill, eyes on the slope (a moving shot, not a
       // rocking one), until the slope is dry
-      const aim = step(4).offset(last ? 1 : 0, 2, 0)
+      // the eyes sweep slowly across the slope (a few blocks either side, top to bottom) as it closes in,
+      // and keep sweeping once it stands at the foot (a dead stop there read as a pause)
       bot.setControlState('sneak', true)
       for (let k = 0; k < 220 && ctx.tick - wetAt <= 10; k++) {
-        await lookStep(aim, 0.12)
+        const ph = k / 22
+        await lookStep(step(4 + Math.round(2 * Math.sin(ph * 0.7))).offset((last ? 1 : 0) + 3 * Math.sin(ph), 2, 0), 0.1)
         const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 5
         bot.setControlState('forward', far)
         await bot.waitForTicks(1)
