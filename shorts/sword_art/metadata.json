@@ -687,7 +687,7 @@
     "branch": "main",
     "commit": "ecab0085456688bec23019477bed29cba912b2cc",
     "rendered_at": "2026-11-07T03:33:40.768Z",
-    "head_at_publish": "31bfb61883f8113656deae6bf40fef25c712fab5",
+    "head_at_publish": "e2bac70e49a07ab0066bb0ac7130664cff96607f",
     "stunt": "stunts/sword_art.js",
     "source_snapshot": [
       "source/sword_art.js",
@@ -701,7 +701,7 @@
     "python3 audio.py work/sword_art.rec.json work/sword_art.wav",
     "python3 edit.py --frames work/sword_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sword_art.rec.json --audio work/sword_art.wav --caption \"can you guess what I'm building? \ud83e\udd14\" --start_at stage:0.1 --end_after complete:0.9 --out out/sword_art.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: 32 s three-sword scrambled format; frame review + retention + minecraft audits passed. Nitpicks: pommel cut at the left edge in the last frames, medium sword reads before its reveal",
-  "published_at": "2026-11-07T03:37:16.636Z"
+  "status": "pending-qa",
+  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
+  "published_at": "2026-11-07T06:12:54.426Z"
 }
