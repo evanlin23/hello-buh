@@ -336,7 +336,8 @@ def countdown_img(left, total, label, since, red_under=0.5, yf=0.42):
     if label:
         lab = rich_text(label, int(72 * k), COLORS["yellow"])
         img.alpha_composite(lab, ((W - lab.width) // 2, max(BAND + 4, cy - int(230 * k))))
-    digit = rich_text(str(max(1, math.ceil(left - 1e-6))), int(260 * k), color, stroke_w=int(14 * k))
+    # never above the window's own whole seconds: a 3.15 s window (tick jitter) opened on a "4" (worker 13)
+    digit = rich_text(str(max(1, min(math.ceil(left - 1e-6), max(1, round(total))))), int(260 * k), color, stroke_w=int(14 * k))
     sc = _pop(since, 0.2, 0.45)
     if sc != 1.0:
         digit = digit.resize((int(digit.width * sc), int(digit.height * sc)), Image.BICUBIC)
