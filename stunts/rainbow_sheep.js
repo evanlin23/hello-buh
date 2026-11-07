@@ -136,7 +136,7 @@ module.exports = {
     const p = new ctx.Vec3(lx, floor + 1.7, z + 0.5)
     const look = ctx.easeLookAt(p, 500)
     bot.setControlState('forward', true)
-    for (let t = 0; t < 60 && bot.entity.position.distanceTo(new ctx.Vec3(lx, floor + 1, z + 0.5)) > 3.4; t++) {
+    for (let t = 0; t < 60 && bot.entity.position.distanceTo(new ctx.Vec3(lx, floor + 1, z + 0.5)) > 2.6; t++) {   // within 3 blocks: the jeb_ nameplate shows
       await bot.waitForTicks(1)
       if (t > 10) { const e = bot.entity.position, d = p.minus(e.offset(0, 1.62, 0)); bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true) }
     }
