@@ -91,35 +91,50 @@ module.exports = {
     await ctx.easeLook(-Math.PI + 0.2, -0.55, 600)
     await crumbling
     await ctx.easeLook(-Math.PI, -0.3, 500)              // ...to the far side: the island left
-    // away from the new edge, into the middle
+    // over to the far edge to watch the blocks it lost go all the way down (they take ~3 s to land)
     bot.setControlState('forward', true)
-    for (let i = 0; i < 50 && bot.entity.position.z < z + 0.4; i++) await bot.waitForTicks(1)
+    for (let i = 0; i < 40 && bot.entity.position.z < z + 1.6; i++) await bot.waitForTicks(1)
+    bot.setControlState('sneak', true)
+    const peek = ctx.easeLook(-Math.PI + 0.25, -1.2, 700)
+    for (let i = 0; i < 20 && bot.entity.position.z < z + 3.3; i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
-    await K.until(K.at(5), K.drift(0.006, 0.0015))
+    await peek
+    await K.until(K.at(4.2), K.drift(0.006, -0.002))
+    // and back toward the middle, away from it
+    bot.setControlState('sneak', false)
+    await ctx.easeLook(0, -0.2, 600)
+    bot.setControlState('forward', true)
+    await K.until(K.at(5))
+    bot.setControlState('forward', false)
 
     // ---- 2. a creeper ----
     ctx.mark('l2')
-    bot.chat(`/summon creeper ${x + 0.5} ${Y + 1} ${z + 3.5} {PersistenceRequired:1b,Rotation:[180f,0f]}`)
+    bot.chat(`/summon creeper ${x + 0.5} ${Y + 1} ${z - 2.5} {PersistenceRequired:1b,Rotation:[0f,0f]}`)
     await bot.waitForTicks(2)
     const c = K.mobs('creeper')[0]
     if (!c) throw new Error('no creeper')
     if (!await K.fight(c, K.at(9.5), { waitSwell: 12, gone: offIsland })) throw new Error('creeper stayed')
     ctx.mark('off1')
     await watchFall(c)
-    // where did it go: sneak to that edge and look over it, then back off into the middle
-    bot.setControlState('sneak', true); bot.setControlState('forward', true)
-    await ctx.easeLook(bot.entity.yaw, -1.15, 800)
+    // where did it go: walk to that edge, sneak the last step and look over it, eyes on it all the way down
+    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.25, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
+    bot.setControlState('forward', true)
+    for (let i = 0; i < 30 && bot.entity.position.z > z - 1.6; i++) { await followC(); await bot.waitForTicks(1) }
+    bot.setControlState('sneak', true)
+    for (let i = 0; i < 26; i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
-    for (let i = 0; i < 16; i++) { if (bot.entities[c.id]) await K.track(c.position, 0.15); await bot.waitForTicks(1) }
+    for (let i = 0; i < 10; i++) { await followC(); await bot.waitForTicks(1) }
+    bot.setControlState('sneak', false)
     bot.setControlState('back', true)
     await ctx.easeLook(bot.entity.yaw, -0.3, 600)
-    for (let i = 0; i < 16 && Math.hypot(bot.entity.position.x - x - 0.5, bot.entity.position.z - z - 0.5) > 0.5; i++) await bot.waitForTicks(1)
+    for (let i = 0; i < 60 && Math.hypot(bot.entity.position.x - x - 0.5, bot.entity.position.z - z - 0.5) > 0.4; i++) await bot.waitForTicks(1)
     bot.setControlState('back', false); bot.setControlState('sneak', false)
     await K.until(K.at(10), K.drift(-0.003))
 
     // ---- 3. thunderstorm ----
     ctx.mark('l3')
     await ctx.setWeather('thunder')
+    ctx.sound('entity.lightning_bolt.thunder', 0.9, 0.85)   // a strike somewhere out of sight
     await ctx.easeLook(bot.entity.yaw + 0.3, 0.45, 600)  // up into it
     await bot.waitForTicks(6)
     // a railing on the north edge so the wind and the mobs can't knock it off that side: three real placements
@@ -132,13 +147,14 @@ module.exports = {
       await bot.waitForTicks(4)
     }
     ctx.select(0)
-    await ctx.easeLook(Math.PI, -0.25, 1100)             // back round to the open side
-    await K.until(K.at(15), K.drift(0.006, 0.0015))
+    // stays on the railing (testing it) until something groans behind it
+    await K.until(K.at(15), K.drift(0.008, 0.001))
 
     // ---- 4. two zombies ----
     ctx.mark('l4')
     bot.chat(`/summon zombie ${x - 1.5} ${Y + 1} ${z + 3.5} {PersistenceRequired:1b,Rotation:[160f,0f]}`)
     bot.chat(`/summon zombie ${x + 2.5} ${Y + 1} ${z + 3.5} {PersistenceRequired:1b,Rotation:[-160f,0f]}`)
+    ctx.sound('entity.zombie.ambient', 1, 0.95)
     await bot.waitForTicks(2)
     const zs = K.mobs('zombie').sort((a, b) => a.position.distanceTo(bot.entity.position) - b.position.distanceTo(bot.entity.position))
     if (zs.length < 2) throw new Error('no zombies')
@@ -192,7 +208,9 @@ module.exports = {
     await ctx.easeLookAt(new Vec3(bx + (sdx > 0 ? 1.05 : -0.05), Y + 0.5, bz + 0.5), 800)
     bot._client.write('block_place', { hand: 0, location: { x: bx, y: Y, z: bz }, direction: sdx > 0 ? 5 : 4, cursorX: sdx > 0 ? 1 : 0, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm(); ctx.sound('block.stone.place', 1, 0.9); ctx.mark('place', { x: bx + sdx, y: Y, z: bz }); ctx.mark('bridge')
-    await K.until(K.at(29.6), K.drift(0.006, 0.001))
+    await bot.waitForTicks(8)
+    await ctx.easeLookAt(new Vec3(nb[0] + 0.5, Y + 0.8, nb[1] + 0.5), 700)   // three blocks now... and the corner one
+    await K.until(K.at(29.6), K.drift(0.008, 0.002))
     bot.setControlState('sneak', false)
     ctx.select(0)
     await K.until(K.at(30))
