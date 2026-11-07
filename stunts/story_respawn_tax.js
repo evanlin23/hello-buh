@@ -260,7 +260,7 @@ module.exports = {
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)
       if (k === at(2) + 4) {
         gone('v_nitwit'); setMeter(1)
-        ctx.particles('smoke', P(0.5, 1.0, 0.5), { count: 8 })
+        ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
         ctx.sound('entity.generic.extinguish_fire', 0.7, 1.2)
       }
       look(k)
