@@ -74,7 +74,7 @@ module.exports = {
         // hardness-3 ore (12 ticks), finish. (bot.dig took 4.5 s on every ore after the first.)
         const dig = (status) => bot._client.write('block_dig', { status, location: p, face: 3, sequence: 0 })
         dig(0)
-        for (let t = 0; t < 12; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
+        for (let t = 0; t < 13; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
         dig(2)
         await bot.waitForTicks(1)
         if (bot.blockAt(p)?.name !== 'air') { ctx.log('dig did not break', o.block); bot.chat(`/setblock ${o.x} ${oy} ${this.wz} air`) }
@@ -105,8 +105,8 @@ module.exports = {
       }
       // watch it rain down around your feet, and step back and forth through it picking it up
       await ctx.easeLook((rnd() - 0.5) * 0.4, -0.4, 300)   // eyes on the falling items (-0.85 stared at empty grass: they're caught mid-air)
-      bot.setControlState('back', true); await bot.waitForTicks(11); bot.setControlState('back', false)
-      bot.setControlState('forward', true); await bot.waitForTicks(11); bot.setControlState('forward', false)
+      bot.setControlState('back', true); await bot.waitForTicks(9); bot.setControlState('back', false)   // (11+11 ran the beats 3.2 s apart)
+      bot.setControlState('forward', true); await bot.waitForTicks(9); bot.setControlState('forward', false)
       if (i === this.ores.length - 1) ctx.mark('collected')
       await bot.waitForTicks(i === this.ores.length - 1 ? 12 : 2)
       await ctx.easeLook(0, -0.3, 300)
