@@ -148,9 +148,9 @@ module.exports = {
 
     // ---- 6. two blocks left ----
     ctx.mark('l6')
-    // keep the bot's own block and one beside it (east if it's there)
+    // keep the bot's own block and one corner of the 3x3 (the TNT lands there: ~2 blocks off, not in its face)
     const bx = Math.floor(bot.entity.position.x), bz = Math.floor(bot.entity.position.z)
-    const nb = [[1, 0], [0, 1], [0, -1], [-1, 0]].map(([dx, dz]) => [bx + dx, bz + dz]).find(([cx, cz]) => island.has(`${cx},${cz}`))
+    const nb = [[1, 1], [-1, 1], [1, -1], [-1, -1]].map(([dx, dz]) => [bx + dx, bz + dz]).find(([cx, cz]) => island.has(`${cx},${cz}`))
     if (!nb || !island.has(`${bx},${bz}`)) throw new Error('no two blocks to keep')
     const rest = [...island].map(k => k.split(',').map(Number)).filter(([cx, cz]) => !(cx === bx && cz === bz) && !(cx === nb[0] && cz === nb[1]))
     const last = drop(byAngle(rest, bot.entity.yaw + 0.3, bx + 0.5, bz + 0.5), 1)
@@ -173,7 +173,7 @@ module.exports = {
     await ctx.easeLook(Math.PI / 2, -1.2, 700)
     await ctx.easeLookAt(new Vec3(tx, Y + 1.5, tz), 500)
     bot.setControlState('sneak', true); bot.setControlState('back', true)
-    for (let i = 0; i < 5; i++) { await K.track(new Vec3(tx, Y + 1.5, tz), 0.4); await bot.waitForTicks(1) }
+    for (let i = 0; i < 9; i++) { await K.track(new Vec3(tx, Y + 1.5, tz), 0.4); await bot.waitForTicks(1) }
     bot.setControlState('back', false)
     let boomed = false
     await K.until(K.at(35) + 10, async () => {

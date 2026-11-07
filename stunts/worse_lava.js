@@ -167,11 +167,14 @@ module.exports = {
     // ---- 4. night falls ----
     ctx.mark('l4')
     // the sun goes down in the west: the camera follows it
-    const easeSun = ctx.easeLook(Math.PI / 2 + 0.2, 0.25, 1400)
-    for (let k = 1; k <= 12; k++) {
-      await ctx.setTime(6000 + Math.round(7800 * k / 12))
-      if (k === 6) await easeSun
-      if (k > 6) await bot.look(bot.entity.yaw - 0.05, bot.entity.pitch - 0.02, true)   // following the sun down
+    const easeSun = ctx.easeLook(Math.PI / 2 + 0.2, 0.25, 850)
+    // one step a tick (steps of 4 ticks jumped the sky visibly: qa flags f1047-1071)
+    for (let k = 1; k <= 56; k++) {
+      const tm = 6000 + Math.round(7800 * k / 56)
+      bot.chat(`/time set ${tm}`); ctx.dayTime = tm; ctx.mark('time', { time: tm })
+      if (k === 20) await easeSun
+      if (k > 20) await bot.look(bot.entity.yaw - 0.012, bot.entity.pitch - 0.005, true)   // following the sun down
+      await bot.waitForTicks(1)
     }
     await ctx.easeLook(Math.PI / 2 - 0.6, -0.2, 900)
     await ctx.easeLook(0, -0.15, 1000)                       // back to the island

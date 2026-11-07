@@ -5,7 +5,7 @@
 // The last wave lands in a ring all round it: nowhere to run, so it pillars straight up, and the 64
 // go off just under its feet at 0.00. It's left standing on a cobblestone stick in the crater.
 const kit = require('../lib/escalation')
-const R = 30           // cleared field half-size
+const R = 44           // cleared field half-size (wide: the cut hillsides at the edge stay far back)
 const WAVES = [1, 2, 4, 8, 16, 32, 64]
 
 module.exports = {
@@ -36,10 +36,10 @@ module.exports = {
     await ctx.cmd('/gamerule random_tick_speed 0')
     await ctx.cmd('/gamerule log_admin_commands false')
     const C = R + 2
-    for (let y0 = G + 1; y0 <= G + 30; y0 += 6) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 5} ${z + C} air`)
+    for (let y0 = G + 1; y0 <= G + 30; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} air`)
     await ctx.cmd(`/fill ${x - C} ${G} ${z - C} ${x + C} ${G} ${z + C} grass_block`)
     // deep solid ground (no caves or water for the craters to open into)
-    for (let y0 = G - 12; y0 <= G - 1; y0 += 6) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 5} ${z + C} dirt`)
+    for (let y0 = G - 12; y0 <= G - 1; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} dirt`)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16]])
@@ -105,7 +105,7 @@ module.exports = {
       for (const c of ctl) bot.setControlState(c, false)
     }
     const waitBoom = async (deadline, lookAt) => {
-      while (ctx.tick < deadline && tnts().length) { if (lookAt) await K.track(lookAt(), 0.2); await bot.waitForTicks(1) }
+      while (ctx.tick < deadline && tnts().length) { if (lookAt) await K.track(lookAt().offset(0.6 * Math.sin(ctx.tick / 9), 0.3 * Math.sin(ctx.tick / 7), 0), 0.2); await bot.waitForTicks(1) }
     }
 
     await bot.waitForTicks(6)
@@ -137,7 +137,7 @@ module.exports = {
       await K.until(K.at(w * 5 + 4.2), K.drift(0.006, 0.0015))
       // face the widest stretch of ground still there, ready for the next one
       let best = null
-      for (let a = -Math.PI; a < Math.PI; a += Math.PI / 12) {
+      for (let a = bot.entity.yaw - 0.8; a <= bot.entity.yaw + 0.8; a += 0.2) {
         let n = 0
         for (let d = 3; d <= 14; d += 1) if (solid(pos().x - Math.sin(a) * d, pos().z - Math.cos(a) * d)) n++; else break
         if (!best || n > best[1]) best = [a, n]
