@@ -175,22 +175,22 @@ module.exports = {
       if (n === 4) {
         // the big crater: cut to its rim (find where the ground stops along the line in)
         ctx.mark('rim4a')
-        let rz = t.zf + t.view
-        // the first spot with solid ground under it and the next 3 blocks out (a ragged edge made
-        // the teleport fall and fail)
-        const solid = (zz) => { const b = bot.blockAt(new Vec3(t.cx, floor, zz)); return b && b.name !== 'air' }
-        for (let zz = t.zf + 2; zz <= t.zf + t.view; zz++) {
-          if (solid(zz) && solid(zz + 1) && solid(zz + 2) && solid(zz + 3)) { rz = zz; break }
-        }
-        await ctx.tpCheck(t.cx + 0.5, floor + 1, rz + 1.5, 180, 50)
+        // the near edge along the line in: scan inward from the vantage point to the first air
+        // (scanning outward from the pile found grass strips inside the blast zone), stand 3 back
+        const solid = (zz) => { const bb = bot.blockAt(new Vec3(t.cx, floor, zz)); return bb && bb.name !== 'air' }
+        let edge = t.zf + 2
+        for (let zz = t.zf + t.view; zz >= t.zf; zz--) { if (!solid(zz)) { edge = zz; break } }
+        let rz = edge + 3
+        while (rz < t.zf + t.view && !(solid(rz) && solid(rz + 1))) rz++
+        await ctx.tpCheck(t.cx + 0.5, floor + 1, rz + 0.5, 180, 45)
         await bot.waitForTicks(2)
         ctx.mark('rim4b')
         ctx.mark(`crater${n}`)
-        // sweep down into it: from the near wall's floor to the bottom (steep, about -0.9 and below)
-        const near = new Vec3(t.cx + 0.5, floor - 6, rz - 4)
-        await ctx.easeLookAt(near.offset(5, 0, 0), 500)
-        await ctx.easeLookAt(near.offset(-5, -3, -2), 900)
-        await ctx.easeLookAt(near.offset(0, -8, -5), 900)              // ...all the way down
+        // sweep across the middle of the crater and down into it
+        const mid4 = new Vec3(t.cx + 0.5, floor - 8, t.zf - 4.5)
+        await ctx.easeLookAt(mid4.offset(6, 0, 0), 500)
+        await ctx.easeLookAt(mid4.offset(-6, 0, 0), 900)
+        await ctx.easeLookAt(mid4.offset(0, -4, 3), 900)
       } else {
         // walk up to the crater, looking into it
         // eyes on the crater the whole way (walking while looking at plain grass read as a frozen frame)
