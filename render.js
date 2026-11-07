@@ -1496,10 +1496,12 @@ function camAtLive (t) {
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
       }
       // the hand goes with the death screen, which edit.py starts up to a frame before the death
-      // tick and on the output frame grid: hide it 2 frames early (it showed under the screen, drops f1972)
+      // tick and on the output frame grid: edit.py's death_start takes the first frame whose source time
+      // is within one frame of the death, so hide it exactly 1 frame early (0: it showed under the screen,
+      // drops f1972; 2: it vanished a frame before the screen, drops f1938)
       // (only when a death screen shows, a death of 0.5 s or more: with immediate respawn there is
       // none, and the hand vanished before each cut with the hearts still full: worker 3, tries f214)
-      cam.dead = !!DEATHS.find(([a, b]) => t >= (b - a >= 10 ? a - 2 * 20 / FPS : a) && t < b)
+      cam.dead = !!DEATHS.find(([a, b]) => t >= (b - a >= 10 ? a - 20 / FPS - 1e-6 : a) && t < b)
     }
     if (THIRD) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
       const dw = DEATHS.find(([a, b]) => t >= a && t < b), deathTime = dw ? t - dw[0] + 1 : 0
