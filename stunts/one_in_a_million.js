@@ -22,7 +22,7 @@ const GAP = 34          // blocks between landing columns (x): separate pads wit
 const R = 14            // cleared radius around each column (the jump starts up to 11 out)
 const TOP_Y = 316       // glass at 316, eyes at ~318.6 (build limit 319)
 
-const subs = TIERS.map((t, i) => [`look${i + 1}`, t.label, 0.75, 0])   // the stakes before each drop: gone by the jump (at 2.6 s the two-line labels sat on the target through the fall: review)
+const subs = TIERS.map((t, i) => [`look${i + 1}`, t.label, 0.55, 0])   // 0.55 s: at 0.75 the tier 4/5 labels' tails lay on the target (review v8)   // the stakes before each drop: gone by the jump (at 2.6 s the two-line labels sat on the target through the fall: review)
 
 module.exports = {
   name: 'one_in_a_million',
@@ -51,6 +51,7 @@ module.exports = {
     startAt: 'drop1:-0.85', endAfter: 'splash5:0.75',
     subs,
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
+      ['look3:0', 'look3:0.2', 'cut'], ['look4:0', 'look4:0.6', 'cut'],   // the openings' first look out at build limit was a pale fog void over the top 40% (review v8)
       ['look5:0.15', 'look5:0.95', 'cut'],      // the finale's first glance at -0.7 was black night sky (beat audit PAUSE 0.8 s)
       ['drop4:0.5', 'drop4:2.4', 2],           // the high part of the build-limit fall: from 250 up the target barely changes (review: LOW 1.2 s)
       ['drop5:0', 'drop5:0.6', 2],   // from the jump, so the tier 5 label is read before it (review)          // the held breath and the jump's rise before the last fall (PAUSE 0.6 s)

@@ -750,7 +750,9 @@ const DARK = []
 }
 // stunt.aimMarker: the 'aim' marks {x, y, z, tier} (the landing point if nobody steers, one per falling
 // tick) drawn as a marker on the floor, interpolated between ticks; it fades in over 4 ticks from a
-// tier's first aim mark and out over 6 ticks after that tier's splash<N> mark
+// tier's first aim mark and out over 4 ticks from its last one (the stunt stops marking 8 ticks before
+// the splash, so the marker is gone well before the zoomed-in view reaches the water; holding it to
+// the splash made the 1-block square fill the screen and tint the landing water red)
 const AIMS = []
 if (STUNT_MOD.aimMarker || process.env.AIM_MARKER === '1') {
   const byTier = new Map()
@@ -758,13 +760,13 @@ if (STUNT_MOD.aimMarker || process.env.AIM_MARKER === '1') {
   for (const [tier, pts] of byTier) {
     pts.sort((a, b) => a.t - b.t)
     const sp = (rec.timeline || []).find(e => e.event === `splash${tier}`)
-    AIMS.push({ pts, t0: pts[0].t, t1: sp ? sp.t / 50 : pts[pts.length - 1].t + 1 })
+    AIMS.push({ pts, t0: pts[0].t, t1: Math.min(pts[pts.length - 1].t, sp ? sp.t / 50 : Infinity) })
   }
 }
 function aimAt (t) {
   for (const A of AIMS) {
-    if (t < A.t0 || t > A.t1 + 6) continue
-    const a = Math.min(1, (t - A.t0) / 4) * (t > A.t1 ? Math.max(0, 1 - (t - A.t1) / 6) : 1)
+    if (t < A.t0 || t > A.t1 + 4) continue
+    const a = Math.min(1, (t - A.t0) / 4) * (t > A.t1 ? Math.max(0, 1 - (t - A.t1) / 4) : 1)
     const pts = A.pts
     let i = 0; while (i + 1 < pts.length && pts[i + 1].t <= t) i++
     const p = pts[i], q = pts[i + 1]
