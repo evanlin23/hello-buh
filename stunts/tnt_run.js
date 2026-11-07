@@ -215,11 +215,13 @@ module.exports = {
     await cut(7, 180, 10)
     await lane(7, async () => {
       ctx.select(0)
+      let inWater = 0
       const w = wall(L(7), sz - 30, 2, [-2, 0, 2], sz + 4)   // (from 22 out it got there before the drop)
       for (let k = 0; k < 70 && !ctx.died; k++) {
         const p = bot.entity.position
         if (p.y > floor - 1) { steer(0, -1, true); await lookAt(new Vec3(L(7) + 0.5, floor, z - 13 + 0.5), 0.3) }
         else { stop(); await lookAt(p.offset(0, 20, 0.5), 0.25) }
+        if (bot.entity.isInWater && (inWater = inWater + 1) > 16) break   // cut ~0.8 s after the splash (a 2 s STILL staring up the shaft)
         await bot.waitForTicks(1)
       }
       w.stop()
