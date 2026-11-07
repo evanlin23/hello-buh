@@ -11,8 +11,9 @@
 //                                                  centre: every block is within 14 of the feed)
 //   bus out: from the grid's near east corner, a repeater line east, south and east into the next
 //   tier's spine (visible: it lights up as it goes)
-// Tiers (e0): lamps -50, arrows -36, diamonds -22, rockets -8, TNT 6 (with a 10x10x10 cube behind its
-// grid, n 23..32). The player watches from a stone walkway 3 blocks up along n = -4, walking east with the chain.
+// Tiers (e0): lamps -50, pistons -36, diamond blocks -22, rockets -8, TNT 6. The TNT tier is different:
+// redstone primes only its x1, and each bigger stage (x10 row, x100 grid, x1000 cube) is lit by the
+// last one's blast. The player watches from a stone walkway 3 blocks up along n = -4, walking east with the chain.
 const { relaySounds, clearMobs, rig } = require('../lib/chain')
 const { findFlat } = require('./_site')
 
@@ -20,8 +21,8 @@ const T = 'polished_andesite'
 const S = 'stone_bricks'
 const TIERS = [
   { name: 'lamps', e0: -50, block: () => 'redstone_lamp' },
-  { name: 'arrows', e0: -36, block: () => 'dispenser[facing=up]{Items:[{Slot:4b,id:"minecraft:arrow",count:1}]}' },
-  { name: 'diamonds', e0: -22, block: () => 'dropper[facing=up]{Items:[{Slot:4b,id:"minecraft:diamond",count:1}]}' },
+  { name: 'pistons', e0: -36, block: () => 'piston[facing=up]' },
+  { name: 'diamonds', e0: -22, block: () => 'dropper[facing=up]{Items:[{Slot:4b,id:"minecraft:diamond_block",count:1}]}' },
   { name: 'rockets', e0: -8, block: (i) => `dispenser[facing=up]{Items:[{Slot:4b,id:"minecraft:firework_rocket",count:1,components:{"minecraft:fireworks":{flight_duration:${1 + (i % 2)},explosions:[{shape:"${i % 3 ? 'large_ball' : 'star'}",colors:[I;${[16711680, 65280, 3381759, 16766720, 16711935][i % 5]},16777215]}]}}}]}` },
   { name: 'tnt', e0: 6, block: () => 'tnt' }
 ]
@@ -34,8 +35,8 @@ module.exports = {
   caption: 'chain reaction but every step gets BIGGER 😳',
   botTimeout: 360,
   edit: {
-    caption: 'chain reaction but every step gets BIGGER 😳', red: 'BIGGER', song: 'songs/funk_abnormal.mp3', dropAt: 'x1000',
-    startAt: 'go:-0.1', endAfter: 'x1000:0.9'
+    caption: 'chain reaction but every step gets BIGGER 😳', red: 'BIGGER', song: 'songs/funk_abnormal.mp3', dropAt: 'x1000_first',
+    startAt: 'go:-0.1', endAfter: 'x1000:0.8'
   },
 
   async setup (ctx) {
@@ -68,8 +69,20 @@ module.exports = {
     await fill(-54, 1, -5, 20, HW, -3, S)
 
     for (let t = 0; t < TIERS.length; t++) {
-      const { e0, block } = TIERS[t]
+      const { e0, block, name } = TIERS[t]
       const cx = e0 + 4
+      if (name === 'tnt') {
+        // a TNT primes the tick its dust powers it and the dust on it drops, before a repeater behind
+        // it can latch: so redstone primes only the x1 (from the powered block beside it), and each
+        // bigger stage sits 3 blocks from the last, lit by its blast: x1 -> x10 -> x100 -> x1000
+        await put(cx, 1, 2, T); await put(cx, 2, 2, 'redstone_wire')
+        await put(cx, 1, 3, T); await put(cx, 2, 3, 'redstone_wire')
+        await put(cx + 1, 1, 3, 'tnt')
+        await fill(e0, 1, 6, e0 + 9, 1, 6, 'tnt')
+        await fill(e0, 1, 9, e0 + 9, 1, 18, 'tnt')
+        await fill(e0, 1, 21, e0 + 9, 10, 30, 'tnt')
+        break
+      }
       // spine supports and dust/repeaters
       await put(cx, 1, 2, T); await put(cx, 2, 2, 'redstone_wire')
       await put(cx, 1, 3, block(0)); await put(cx, 2, 3, 'redstone_wire')
@@ -90,9 +103,6 @@ module.exports = {
       for (let e = e0 + 13; e < nx; e++) { await put(e, 1, 1, T); await put(e, 2, 1, (e - e0) % 2 ? 'repeater[facing=west,delay=4]' : 'redstone_wire') }
       await put(nx, 1, 1, T); await put(nx, 2, 1, 'redstone_wire')    // into the next spine's start (nx,2,2)
     }
-    // the x1000: a 10x10x10 TNT cube behind the TNT grid (lit by the grid's blast)
-    const tnt = TIERS[TIERS.length - 1].e0
-    await fill(tnt, 1, 23, tnt + 9, 10, 32, 'tnt')
     // the first tier's button: on the south face of the first spine support's west neighbour
     const c0 = TIERS[0].e0 + 4
     // the button: on the east face of a block sticking out of the walkway's north edge; dust from
@@ -119,28 +129,43 @@ module.exports = {
     const W = (e, h, n) => new Vec3(X + e + 0.5, F + h, Z - n + 0.5)
     const B = (e, h, n) => new Vec3(X + e, F + h, Z - n)
     const stopSounds = relaySounds(ctx)
-    // each tier's x1, x10 and x100: the dust on them powered
+    // each tier's x1, x10 and x100 (the dust on them powered; for the TNT, the TNT gone = primed)
     const dust = (b) => +b.getProperties().power > 0
+    const gone = (b) => b.name !== 'tnt'
     const steps = []
-    // (a TNT primes the moment its dust powers it, and the dust on it drops at once: watch the TNT)
-    const primed = (b) => b.name !== 'tnt'
     for (const t of TIERS) {
-      const cx = t.e0 + 4, tnt = t.name === 'tnt'
-      steps.push({ name: `${t.name}1`, pos: B(cx, tnt ? 1 : 2, 3), test: tnt ? primed : dust })
-      steps.push({ name: `${t.name}10`, pos: B(cx, tnt ? 1 : 2, 7), test: tnt ? primed : dust })
-      steps.push({ name: `${t.name}100`, pos: B(cx, tnt ? 1 : 2, 11), test: tnt ? primed : dust })
+      const cx = t.e0 + 4
+      if (t.name === 'tnt') {
+        steps.push({ name: 'tnt1', pos: B(cx + 1, 1, 3), test: gone })
+        steps.push({ name: 'tnt10', pos: B(cx, 1, 6), test: gone })
+        steps.push({ name: 'tnt100', pos: B(cx, 1, 13), test: gone })
+        continue
+      }
+      steps.push({ name: `${t.name}1`, pos: B(cx, 2, 3), test: dust })
+      steps.push({ name: `${t.name}10`, pos: B(cx, 2, 7), test: dust })
+      steps.push({ name: `${t.name}100`, pos: B(cx, 2, 11), test: dust })
     }
     const r = rig(ctx, steps)
-    let booms = 0
+    const tt = TIERS[TIERS.length - 1]
+    let booms = 0, big = 0
     const onBoom = (p) => {
       booms++
       const n = Z - +(p.center || {}).z
-      if (booms === 1) r.markOnce('boom1')
-      if (n > 9 && n < 21.5) r.markOnce('boom100')
-      if (n > 22.5) r.markOnce('x1000')
+      if (n < 4.5) r.markOnce('boom1')
+      else if (n < 7.5) r.markOnce('boom10')
+      else if (n < 19.5) r.markOnce('boom100')
+      else { r.markOnce('x1000_first'); if (++big === 40) r.markOnce('x1000') }
     }
     bot._client.on('explosion', onBoom)
-    const tierView = (t, stage) => W(t.e0 + 4.5, stage === 100 ? 1 : 1.5, stage === 1 ? 3 : stage === 10 ? 7 : 15)
+    // glide the aim from where it is to `to` over `ticks` (the camera follows the signal along a
+    // spine or a bus), stopping early when `done` says the next stage fired
+    const glide = async (to, ticks, done = () => false) => {
+      const from = r.focus
+      for (let i = 1; i <= ticks && !done(); i++) { const u = i / ticks, e = u * u * (3 - 2 * u); r.focus = from.plus(to.minus(from).scaled(e)); await bot.waitForTicks(1) }
+    }
+    const view = (t, s) => W(t.e0 + 4.5, s === 100 ? 1 : 1.5, s === 1 ? 3 : s === 10 ? 7 : 15)
+    const up = (t) => t.name === 'diamonds' || t.name === 'rockets' || t.name === 'pistons'
+    const lift = (t, s) => t.name === 'rockets' ? (s === 100 ? 10 : 6) : t.name === 'diamonds' ? 2.5 : 1.2
 
     ctx.mark('go')
     r.focus = W(c0, HW + 0.4, -2)
@@ -148,31 +173,45 @@ module.exports = {
     bot._client.write('block_place', { hand: 0, location: B(c0, HW, -2), direction: 5, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm()
     ctx.mark('press')
-    for (let i = 0; i < TIERS.length; i++) {
+    r.k = 0.14
+    await glide(view(TIERS[0], 1), 8)
+    for (let i = 0; i < TIERS.length - 1; i++) {
       const t = TIERS[i]
-      const up = t.name === 'arrows' || t.name === 'diamonds' || t.name === 'rockets'
-      r.steer = W(t.e0 + 4.5, 0, -4); r.k = 0.14
-      for (const s of [1, 10, 100]) {
-        r.focus = tierView(t, s)
-        await r.until(() => r.at(`${t.name}${s}`), 120)
-        if (up) { await bot.waitForTicks(4); r.focus = tierView(t, s).offset(0, s === 100 ? 9 : 6, 0) }
-      }
-      if (t.name === 'tnt') break
-      // follow the bus to the next tier
-      r.focus = W(t.e0 + 12, 2, 6)
-      await bot.waitForTicks(up ? 14 : 8)
-      r.focus = W(TIERS[i + 1].e0, 2, 1)
+      r.steer = W(t.e0 + 4.5, 0, -4)
+      await r.until(() => r.at(`${t.name}1`), 120)
+      if (up(t)) await glide(view(t, 1).offset(0, lift(t, 1), 0), 6)
+      await glide(view(t, 10), 18, () => r.at(`${t.name}10`))
+      await r.until(() => r.at(`${t.name}10`), 40)
+      if (up(t)) await glide(view(t, 10).offset(0, lift(t, 10), 0), 6)
+      await glide(view(t, 100), 18, () => r.at(`${t.name}100`))
+      await r.until(() => r.at(`${t.name}100`), 40)
+      if (up(t)) await glide(view(t, 100).offset(0, lift(t, 100), 3), 10)
+      else await bot.waitForTicks(8)
+      // follow the bus to the next tier: out east, south, east (the repeaters light as it goes)
+      const nt = TIERS[i + 1]
+      r.steer = W(nt.e0 + 4.5, 0, -4)
+      await glide(W(t.e0 + 12, 2, 6), 20)
+      await glide(W(t.e0 + 13, 2, 1), 16)
+      await glide(view(nt, 1), 24, () => r.at(`${nt.name}1`))
     }
-    // the TNT: x1, x10, x100 primed 0.8 s apart; back off along the walkway, facing it; then x1000
-    const tt = TIERS[TIERS.length - 1]
-    r.steer = W(tt.e0 - 10, 0, -4)
-    r.focus = W(tt.e0 + 4.5, 1, 3)
-    await r.until(() => booms > 0, 120)
-    r.focus = W(tt.e0 + 4.5, 2, 15)
-    await r.until(() => r.at('boom100'), 60)
-    r.focus = W(tt.e0 + 4.5, 5, 28); r.k = 0.1
+    // the TNT: x1 primed (4 s fuse); back off along the walkway facing it, glancing at what comes next
+    r.steer = W(tt.e0 + 4.5, 0, -4)
+    await r.until(() => r.at('tnt1'), 120)
+    r.steer = W(tt.e0 - 12, 0, -4)
+    await glide(view(tt, 1), 10)
+    await glide(W(tt.e0 + 4.5, 1.5, 6), 20)
+    await glide(W(tt.e0 + 4.5, 1, 14), 20)
+    await glide(W(tt.e0 + 4.5, 6, 26), 20)
+    await glide(view(tt, 1), 18, () => booms > 0)
+    await r.until(() => booms > 0, 40)
+    await glide(W(tt.e0 + 4.5, 1.5, 6), 12, () => r.at('boom10'))
+    await r.until(() => r.at('boom10'), 40)
+    await glide(W(tt.e0 + 4.5, 1.5, 14), 12, () => r.at('boom100'))
+    await r.until(() => r.at('boom100'), 40)
+    r.k = 0.1
+    await glide(W(tt.e0 + 4.5, 5, 26), 16, () => r.at('x1000'))
     await r.until(() => r.at('x1000'), 80)
-    await bot.waitForTicks(30)
+    await bot.waitForTicks(24)
     r.stop(); stopSounds(); bot._client.removeListener('explosion', onBoom)
     ctx.log('steps', JSON.stringify([...r.done]))
     return !!r.at('x1000') && !ctx.died
