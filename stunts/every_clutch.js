@@ -24,6 +24,7 @@ module.exports = {
   edit: {
     caption: 'rating every MLG clutch 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'landed', startAt: 'clutch:0.0',
     deathScreen: true, endAfter: 'death:0.8',
+    speed: CLUTCHES.slice(1).map((_, k) => [`hold${k + 1}a`, `hold${k + 1}b`, 'cut']),
     subs: CLUTCHES.flatMap((c, i) => [['clutch', `${c.h} blocks`, 1.0, i], ['landed', c.sub, 1.6, i]])
   },
   expectDeath: true,
@@ -63,6 +64,7 @@ module.exports = {
       // up on a glass block at this beat's height, facing south, looking out and down; a fast tp
       // (tpCheck's 1 s settle was dead air)
       if (i > 0) bot.chat(`/setblock ${x} ${floor + CLUTCHES[i - 1].h} ${z} air`)   // the last one's glass (kept for the look up)
+      if (i > 0) ctx.mark(`hold${i}a`)
       await ctx.cmd(`/setblock ${x} ${floor + c.h} ${z} glass`)
       const tx = x + 0.5, ty = floor + c.h + 1, tz = z + 0.5
       for (let a = 0; ; a++) {
@@ -78,6 +80,8 @@ module.exports = {
         bot.chat(`/fill ${sp.x - 1} ${floor + 1} ${sp.z - 1} ${sp.x + 1} ${floor + 2} ${sp.z + 1} air`)
         bot.chat(`/fill ${sp.x - 8} ${floor - 2} ${sp.z - 8} ${sp.x + 8} ${floor + 2} ${sp.z + 8} air replace water`)
       }
+      // let the chunk decoding after the far tp finish before the pan (it doubled poses: a stutter); cut out
+      if (i > 0) { await bot.waitForTicks(12); ctx.mark(`hold${i}b`) }
       ctx.select(i)
       ctx.mark('clutch', { n: i, item: c.item })
       await ctx.easeLook(0, -0.85, 500)                  // a look over the edge: that's how high this one is
