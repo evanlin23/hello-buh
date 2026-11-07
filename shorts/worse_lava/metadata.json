@@ -1,0 +1,2054 @@
+{
+  "name": "worse_lava",
+  "caption": "every 5 seconds it gets worse \ud83d\ude30",
+  "youtube": {
+    "title": "every 5 seconds it gets worse \ud83d\ude30 #minecraft #shorts",
+    "description": "every 5 seconds it gets worse \ud83d\ude30\n\nSong: LXNGVX, Warriyo - Mortals Funk Remix\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MortalsFunk\nWatch: http://ncs.lnk.to/MortalsFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "mortals_funk_remix.mp3",
+    "title": "Mortals Funk Remix",
+    "artist": "Warriyo, LXNGVX",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "l7",
+    "drop_in_song_s": 113.75,
+    "drop_in_short_s": 30.5,
+    "song_start_s": 83.25
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 36.35,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 55595005,
+    "sha256": "02562905f50ddd5e51ae49a48b32d1a077d101f4fff4dbd1220082b9d5aa15cf"
+  },
+  "edit": {
+    "caption": "every 5 seconds it gets worse \ud83d\ude30",
+    "red": "worse",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "l7",
+    "startAt": "go:-0.5",
+    "endAfter": "done:0.9",
+    "countdown": "go:done:SURVIVE",
+    "counter": {
+      "at": [
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5",
+        "l6",
+        "l7"
+      ],
+      "total": 7
+    },
+    "cards": [
+      [
+        "l1",
+        "THE LAVA RISES",
+        1,
+        "orange"
+      ],
+      [
+        "l2",
+        "+1 CREEPER",
+        1,
+        "green"
+      ],
+      [
+        "l3",
+        "TNT RAIN",
+        1,
+        "red"
+      ],
+      [
+        "l4",
+        "NIGHT FALLS",
+        1,
+        "blue"
+      ],
+      [
+        "l5",
+        "+2 CREEPERS",
+        1,
+        "green"
+      ],
+      [
+        "l6",
+        "THE FLOOR BREAKS",
+        1,
+        "yellow"
+      ],
+      [
+        "l7",
+        "THE LAVA SPEEDS UP",
+        1,
+        "red"
+      ],
+      [
+        "done",
+        "SURVIVED",
+        1.2,
+        "green"
+      ]
+    ],
+    "punch": [
+      "boom1",
+      "tntboom",
+      "done"
+    ],
+    "deathScreen": true,
+    "args": [
+      "--caption",
+      "every 5 seconds it gets worse \ud83d\ude30",
+      "--red",
+      "worse",
+      "--countdown",
+      "go:done:SURVIVE",
+      "--punch",
+      "[\"boom1\",\"tntboom\",\"done\"]",
+      "--counter",
+      "{\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7}",
+      "--cards",
+      "[[\"l1\",\"THE LAVA RISES\",1,\"orange\"],[\"l2\",\"+1 CREEPER\",1,\"green\"],[\"l3\",\"TNT RAIN\",1,\"red\"],[\"l4\",\"NIGHT FALLS\",1,\"blue\"],[\"l5\",\"+2 CREEPERS\",1,\"green\"],[\"l6\",\"THE FLOOR BREAKS\",1,\"yellow\"],[\"l7\",\"THE LAVA SPEEDS UP\",1,\"red\"],[\"done\",\"SURVIVED\",1.2,\"green\"]]",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "go:-0.5",
+      "--end_after",
+      "done:0.9"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 1059,
+      "y": 73,
+      "z": 245
+    },
+    "biome": "minecraft:plains",
+    "ticks": 748,
+    "seconds": 37.4,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 1.35,
+        "event": "go"
+      },
+      {
+        "t": 1.35,
+        "event": "l1"
+      },
+      {
+        "t": 6.35,
+        "event": "l2"
+      },
+      {
+        "t": 8.7,
+        "event": "hiss"
+      },
+      {
+        "t": 8.9,
+        "event": "swing"
+      },
+      {
+        "t": 8.9,
+        "event": "hit"
+      },
+      {
+        "t": 8.9,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 8.9,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 10.1,
+        "event": "vel"
+      },
+      {
+        "t": 10.15,
+        "event": "boom1"
+      },
+      {
+        "t": 10.6,
+        "event": "vel"
+      },
+      {
+        "t": 11.05,
+        "event": "vel"
+      },
+      {
+        "t": 11.1,
+        "event": "vel"
+      },
+      {
+        "t": 11.25,
+        "event": "vel"
+      },
+      {
+        "t": 11.35,
+        "event": "l3"
+      },
+      {
+        "t": 11.85,
+        "event": "vel"
+      },
+      {
+        "t": 12.1,
+        "event": "vel"
+      },
+      {
+        "t": 12.25,
+        "event": "vel"
+      },
+      {
+        "t": 13.1,
+        "event": "vel"
+      },
+      {
+        "t": 13.25,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 13.95,
+        "event": "vel"
+      },
+      {
+        "t": 14.1,
+        "event": "vel"
+      },
+      {
+        "t": 14.25,
+        "event": "vel"
+      },
+      {
+        "t": 14.35,
+        "event": "tntboom"
+      },
+      {
+        "t": 14.5,
+        "event": "vel"
+      },
+      {
+        "t": 14.5,
+        "event": "vel"
+      },
+      {
+        "t": 14.5,
+        "event": "vel"
+      },
+      {
+        "t": 14.5,
+        "event": "vel"
+      },
+      {
+        "t": 14.55,
+        "event": "vel"
+      },
+      {
+        "t": 14.65,
+        "event": "vel"
+      },
+      {
+        "t": 14.65,
+        "event": "vel"
+      },
+      {
+        "t": 14.65,
+        "event": "vel"
+      },
+      {
+        "t": 14.7,
+        "event": "vel"
+      },
+      {
+        "t": 14.7,
+        "event": "vel"
+      },
+      {
+        "t": 14.7,
+        "event": "vel"
+      },
+      {
+        "t": 14.7,
+        "event": "vel"
+      },
+      {
+        "t": 14.75,
+        "event": "vel"
+      },
+      {
+        "t": 14.8,
+        "event": "vel"
+      },
+      {
+        "t": 14.8,
+        "event": "vel"
+      },
+      {
+        "t": 14.8,
+        "event": "vel"
+      },
+      {
+        "t": 14.9,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
+        "event": "vel"
+      },
+      {
+        "t": 15.15,
+        "event": "vel"
+      },
+      {
+        "t": 15.15,
+        "event": "vel"
+      },
+      {
+        "t": 15.15,
+        "event": "vel"
+      },
+      {
+        "t": 15.2,
+        "event": "vel"
+      },
+      {
+        "t": 15.2,
+        "event": "vel"
+      },
+      {
+        "t": 15.25,
+        "event": "vel"
+      },
+      {
+        "t": 15.25,
+        "event": "vel"
+      },
+      {
+        "t": 15.25,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.35,
+        "event": "vel"
+      },
+      {
+        "t": 15.35,
+        "event": "vel"
+      },
+      {
+        "t": 15.35,
+        "event": "vel"
+      },
+      {
+        "t": 15.4,
+        "event": "vel"
+      },
+      {
+        "t": 15.4,
+        "event": "vel"
+      },
+      {
+        "t": 15.4,
+        "event": "vel"
+      },
+      {
+        "t": 15.45,
+        "event": "vel"
+      },
+      {
+        "t": 15.45,
+        "event": "vel"
+      },
+      {
+        "t": 15.45,
+        "event": "vel"
+      },
+      {
+        "t": 15.45,
+        "event": "vel"
+      },
+      {
+        "t": 15.5,
+        "event": "vel"
+      },
+      {
+        "t": 15.5,
+        "event": "vel"
+      },
+      {
+        "t": 15.5,
+        "event": "vel"
+      },
+      {
+        "t": 15.55,
+        "event": "vel"
+      },
+      {
+        "t": 15.55,
+        "event": "vel"
+      },
+      {
+        "t": 15.6,
+        "event": "vel"
+      },
+      {
+        "t": 15.65,
+        "event": "vel"
+      },
+      {
+        "t": 15.7,
+        "event": "vel"
+      },
+      {
+        "t": 15.7,
+        "event": "vel"
+      },
+      {
+        "t": 15.75,
+        "event": "vel"
+      },
+      {
+        "t": 15.75,
+        "event": "vel"
+      },
+      {
+        "t": 15.8,
+        "event": "vel"
+      },
+      {
+        "t": 15.8,
+        "event": "vel"
+      },
+      {
+        "t": 15.85,
+        "event": "vel"
+      },
+      {
+        "t": 15.85,
+        "event": "vel"
+      },
+      {
+        "t": 15.85,
+        "event": "vel"
+      },
+      {
+        "t": 15.95,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.1,
+        "event": "vel"
+      },
+      {
+        "t": 16.1,
+        "event": "vel"
+      },
+      {
+        "t": 16.1,
+        "event": "vel"
+      },
+      {
+        "t": 16.1,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "vel"
+      },
+      {
+        "t": 16.3,
+        "event": "vel"
+      },
+      {
+        "t": 16.35,
+        "event": "l4"
+      },
+      {
+        "t": 16.35,
+        "event": "time"
+      },
+      {
+        "t": 16.4,
+        "event": "time"
+      },
+      {
+        "t": 16.45,
+        "event": "time"
+      },
+      {
+        "t": 16.5,
+        "event": "time"
+      },
+      {
+        "t": 16.55,
+        "event": "time"
+      },
+      {
+        "t": 16.6,
+        "event": "time"
+      },
+      {
+        "t": 16.65,
+        "event": "time"
+      },
+      {
+        "t": 16.7,
+        "event": "time"
+      },
+      {
+        "t": 16.75,
+        "event": "time"
+      },
+      {
+        "t": 16.8,
+        "event": "time"
+      },
+      {
+        "t": 16.85,
+        "event": "time"
+      },
+      {
+        "t": 16.9,
+        "event": "time"
+      },
+      {
+        "t": 16.95,
+        "event": "time"
+      },
+      {
+        "t": 17,
+        "event": "time"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17.05,
+        "event": "time"
+      },
+      {
+        "t": 17.05,
+        "event": "vel"
+      },
+      {
+        "t": 17.05,
+        "event": "vel"
+      },
+      {
+        "t": 17.05,
+        "event": "vel"
+      },
+      {
+        "t": 17.05,
+        "event": "vel"
+      },
+      {
+        "t": 17.1,
+        "event": "time"
+      },
+      {
+        "t": 17.1,
+        "event": "vel"
+      },
+      {
+        "t": 17.1,
+        "event": "vel"
+      },
+      {
+        "t": 17.1,
+        "event": "vel"
+      },
+      {
+        "t": 17.1,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
+        "event": "time"
+      },
+      {
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.2,
+        "event": "time"
+      },
+      {
+        "t": 17.25,
+        "event": "time"
+      },
+      {
+        "t": 17.3,
+        "event": "time"
+      },
+      {
+        "t": 17.3,
+        "event": "vel"
+      },
+      {
+        "t": 17.35,
+        "event": "time"
+      },
+      {
+        "t": 17.4,
+        "event": "time"
+      },
+      {
+        "t": 17.45,
+        "event": "time"
+      },
+      {
+        "t": 17.5,
+        "event": "time"
+      },
+      {
+        "t": 17.55,
+        "event": "time"
+      },
+      {
+        "t": 17.6,
+        "event": "time"
+      },
+      {
+        "t": 17.65,
+        "event": "time"
+      },
+      {
+        "t": 17.7,
+        "event": "time"
+      },
+      {
+        "t": 17.75,
+        "event": "time"
+      },
+      {
+        "t": 17.8,
+        "event": "time"
+      },
+      {
+        "t": 17.85,
+        "event": "time"
+      },
+      {
+        "t": 17.9,
+        "event": "time"
+      },
+      {
+        "t": 17.95,
+        "event": "time"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 17.95,
+        "event": "vel"
+      },
+      {
+        "t": 18,
+        "event": "time"
+      },
+      {
+        "t": 18,
+        "event": "vel"
+      },
+      {
+        "t": 18,
+        "event": "vel"
+      },
+      {
+        "t": 18,
+        "event": "vel"
+      },
+      {
+        "t": 18,
+        "event": "vel"
+      },
+      {
+        "t": 18.05,
+        "event": "time"
+      },
+      {
+        "t": 18.05,
+        "event": "vel"
+      },
+      {
+        "t": 18.05,
+        "event": "vel"
+      },
+      {
+        "t": 18.05,
+        "event": "vel"
+      },
+      {
+        "t": 18.05,
+        "event": "vel"
+      },
+      {
+        "t": 18.1,
+        "event": "time"
+      },
+      {
+        "t": 18.1,
+        "event": "vel"
+      },
+      {
+        "t": 18.1,
+        "event": "vel"
+      },
+      {
+        "t": 18.1,
+        "event": "vel"
+      },
+      {
+        "t": 18.1,
+        "event": "vel"
+      },
+      {
+        "t": 18.15,
+        "event": "time"
+      },
+      {
+        "t": 18.2,
+        "event": "time"
+      },
+      {
+        "t": 18.25,
+        "event": "time"
+      },
+      {
+        "t": 18.25,
+        "event": "vel"
+      },
+      {
+        "t": 18.3,
+        "event": "time"
+      },
+      {
+        "t": 18.35,
+        "event": "time"
+      },
+      {
+        "t": 18.4,
+        "event": "time"
+      },
+      {
+        "t": 18.45,
+        "event": "time"
+      },
+      {
+        "t": 18.5,
+        "event": "time"
+      },
+      {
+        "t": 18.55,
+        "event": "time"
+      },
+      {
+        "t": 18.6,
+        "event": "time"
+      },
+      {
+        "t": 18.65,
+        "event": "time"
+      },
+      {
+        "t": 18.7,
+        "event": "time"
+      },
+      {
+        "t": 18.75,
+        "event": "time"
+      },
+      {
+        "t": 18.8,
+        "event": "time"
+      },
+      {
+        "t": 18.85,
+        "event": "time"
+      },
+      {
+        "t": 18.9,
+        "event": "time"
+      },
+      {
+        "t": 18.95,
+        "event": "time"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 18.95,
+        "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "time"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19.05,
+        "event": "time"
+      },
+      {
+        "t": 19.05,
+        "event": "vel"
+      },
+      {
+        "t": 19.05,
+        "event": "vel"
+      },
+      {
+        "t": 19.05,
+        "event": "vel"
+      },
+      {
+        "t": 19.05,
+        "event": "vel"
+      },
+      {
+        "t": 19.1,
+        "event": "time"
+      },
+      {
+        "t": 19.1,
+        "event": "vel"
+      },
+      {
+        "t": 19.1,
+        "event": "vel"
+      },
+      {
+        "t": 19.1,
+        "event": "vel"
+      },
+      {
+        "t": 19.1,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.75,
+        "event": "swing"
+      },
+      {
+        "t": 19.75,
+        "event": "place"
+      },
+      {
+        "t": 19.75,
+        "event": "torch"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 19.95,
+        "event": "vel"
+      },
+      {
+        "t": 20,
+        "event": "vel"
+      },
+      {
+        "t": 20,
+        "event": "vel"
+      },
+      {
+        "t": 20,
+        "event": "vel"
+      },
+      {
+        "t": 20.05,
+        "event": "vel"
+      },
+      {
+        "t": 20.05,
+        "event": "vel"
+      },
+      {
+        "t": 20.05,
+        "event": "vel"
+      },
+      {
+        "t": 20.05,
+        "event": "vel"
+      },
+      {
+        "t": 20.1,
+        "event": "vel"
+      },
+      {
+        "t": 20.1,
+        "event": "vel"
+      },
+      {
+        "t": 20.1,
+        "event": "vel"
+      },
+      {
+        "t": 20.25,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 20.95,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.1,
+        "event": "vel"
+      },
+      {
+        "t": 21.1,
+        "event": "vel"
+      },
+      {
+        "t": 21.1,
+        "event": "vel"
+      },
+      {
+        "t": 21.25,
+        "event": "vel"
+      },
+      {
+        "t": 21.35,
+        "event": "l5"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 21.95,
+        "event": "vel"
+      },
+      {
+        "t": 22,
+        "event": "vel"
+      },
+      {
+        "t": 22,
+        "event": "vel"
+      },
+      {
+        "t": 22,
+        "event": "vel"
+      },
+      {
+        "t": 22.05,
+        "event": "vel"
+      },
+      {
+        "t": 22.05,
+        "event": "vel"
+      },
+      {
+        "t": 22.05,
+        "event": "vel"
+      },
+      {
+        "t": 22.05,
+        "event": "vel"
+      },
+      {
+        "t": 22.1,
+        "event": "vel"
+      },
+      {
+        "t": 22.1,
+        "event": "vel"
+      },
+      {
+        "t": 22.1,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.1,
+        "event": "vel"
+      },
+      {
+        "t": 23.1,
+        "event": "vel"
+      },
+      {
+        "t": 23.1,
+        "event": "vel"
+      },
+      {
+        "t": 23.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.4,
+        "event": "hiss"
+      },
+      {
+        "t": 23.6,
+        "event": "swing"
+      },
+      {
+        "t": 23.6,
+        "event": "hit"
+      },
+      {
+        "t": 23.6,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 23.6,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "vel"
+      },
+      {
+        "t": 24.05,
+        "event": "vel"
+      },
+      {
+        "t": 24.05,
+        "event": "vel"
+      },
+      {
+        "t": 24.05,
+        "event": "vel"
+      },
+      {
+        "t": 24.05,
+        "event": "vel"
+      },
+      {
+        "t": 24.1,
+        "event": "vel"
+      },
+      {
+        "t": 24.1,
+        "event": "vel"
+      },
+      {
+        "t": 24.1,
+        "event": "vel"
+      },
+      {
+        "t": 24.25,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "boom2"
+      },
+      {
+        "t": 24.35,
+        "event": "hiss"
+      },
+      {
+        "t": 24.6,
+        "event": "swing"
+      },
+      {
+        "t": 24.6,
+        "event": "hit"
+      },
+      {
+        "t": 24.6,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 24.6,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 24.8,
+        "event": "hurt",
+        "type": "player_explosion"
+      },
+      {
+        "t": 24.8,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 24.8,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "boom3"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.9,
+        "event": "vel"
+      },
+      {
+        "t": 24.9,
+        "event": "vel"
+      },
+      {
+        "t": 24.95,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "vel"
+      },
+      {
+        "t": 25.1,
+        "event": "vel"
+      },
+      {
+        "t": 25.1,
+        "event": "vel"
+      },
+      {
+        "t": 25.15,
+        "event": "vel"
+      },
+      {
+        "t": 25.15,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
+        "event": "vel"
+      },
+      {
+        "t": 25.4,
+        "event": "vel"
+      },
+      {
+        "t": 25.4,
+        "event": "vel"
+      },
+      {
+        "t": 25.7,
+        "event": "vel"
+      },
+      {
+        "t": 25.7,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "vel"
+      },
+      {
+        "t": 25.9,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26.05,
+        "event": "vel"
+      },
+      {
+        "t": 26.05,
+        "event": "vel"
+      },
+      {
+        "t": 26.05,
+        "event": "vel"
+      },
+      {
+        "t": 26.1,
+        "event": "vel"
+      },
+      {
+        "t": 26.1,
+        "event": "vel"
+      },
+      {
+        "t": 26.1,
+        "event": "vel"
+      },
+      {
+        "t": 26.15,
+        "event": "vel"
+      },
+      {
+        "t": 26.15,
+        "event": "vel"
+      },
+      {
+        "t": 26.2,
+        "event": "vel"
+      },
+      {
+        "t": 26.25,
+        "event": "vel"
+      },
+      {
+        "t": 26.35,
+        "event": "l6"
+      },
+      {
+        "t": 26.45,
+        "event": "vel"
+      },
+      {
+        "t": 26.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.7,
+        "event": "one_block"
+      },
+      {
+        "t": 31.35,
+        "event": "l7"
+      },
+      {
+        "t": 31.85,
+        "event": "swing"
+      },
+      {
+        "t": 32.55,
+        "event": "swing"
+      },
+      {
+        "t": 33.3,
+        "event": "swing"
+      },
+      {
+        "t": 34.05,
+        "event": "swing"
+      },
+      {
+        "t": 34.8,
+        "event": "swing"
+      },
+      {
+        "t": 35.55,
+        "event": "swing"
+      },
+      {
+        "t": 36.3,
+        "event": "done"
+      },
+      {
+        "t": 37.4,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "29a21caf9fda6ebfaa77bf76f247941b555dd6ff",
+    "rendered_at": "2026-11-07T17:55:26.711Z",
+    "head_at_publish": "ab0e39fee4a5df46bb5814780105b9ea337d5b5a",
+    "stunt": "stunts/worse_lava.js",
+    "source_snapshot": [
+      "source/worse_lava.js",
+      "source/escalation.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 29a21caf9fda",
+    "gunzip -c shorts/worse_lava/recording.json.gz > work/worse_lava.rec.json",
+    "node render.js work/worse_lava.rec.json work/worse_lava.frames 60 1080 1011",
+    "python3 audio.py work/worse_lava.rec.json work/worse_lava.wav",
+    "python3 edit.py --frames work/worse_lava.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/worse_lava.rec.json --audio work/worse_lava.wav --caption \"every 5 seconds it gets worse \ud83d\ude30\" --red worse --countdown go:done:SURVIVE --punch [\"boom1\",\"tntboom\",\"done\"] --counter {\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7} --cards \"[[\\\"l1\\\",\\\"THE LAVA RISES\\\",1,\\\"orange\\\"],[\\\"l2\\\",\\\"+1 CREEPER\\\",1,\\\"green\\\"],[\\\"l3\\\",\\\"TNT RAIN\\\",1,\\\"red\\\"],[\\\"l4\\\",\\\"NIGHT FALLS\\\",1,\\\"blue\\\"],[\\\"l5\\\",\\\"+2 CREEPERS\\\",1,\\\"green\\\"],[\\\"l6\\\",\\\"THE FLOOR BREAKS\\\",1,\\\"yellow\\\"],[\\\"l7\\\",\\\"THE LAVA SPEEDS UP\\\",1,\\\"red\\\"],[\\\"done\\\",\\\"SURVIVED\\\",1.2,\\\"green\\\"]]\" --death_screen death --start_at go:-0.5 --end_after done:0.9 --out out/worse_lava.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 18: every 5 seconds it gets worse #1 (lava island; survives, lava one block below at 0.00); 5 independent review rounds, round 5 ready on frame/retention/minecraft",
+  "published_at": "2026-11-07T18:13:49.492Z"
+}
