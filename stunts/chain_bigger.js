@@ -178,6 +178,7 @@ module.exports = {
     await bot.waitForTicks(10)
     bot._client.write('block_place', { hand: 0, location: B(c0, HW, -2), direction: 5, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm()
+    ctx.sound('block.stone_button.click_on', 1, 0.6)   // the presser's own client plays it
     ctx.mark('press')
     r.k = 0.14
     await glide(view(TIERS[0], 1), 8)

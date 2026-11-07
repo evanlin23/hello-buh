@@ -194,7 +194,9 @@ module.exports = {
     const eStop = -20
     const tBoost = [eL - 2, eL - 3, eL - 4, eL - 10, eL - 16, eL - 22, eL - 28]
     const eAct = eL - 3                                // primed right after the launch: it rides the whole fuse
+    this.tBells = [9, 3, -3, -9, -15]                  // detector rails with bells: they ring as the primed cart passes
     for (let x = eL - 1; x > eStop; x--) {
+      if (this.tBells.includes(x)) { await put(x, 1, nG, 'detector_rail[shape=east_west]'); await put(x, 1, nG + 1, 'bell[attachment=floor,facing=south]'); continue }
       if (x === eAct) { await put(x, 0, nG, 'redstone_block'); await put(x, 1, nG, 'activator_rail[shape=east_west]') } else if (tBoost.includes(x)) { await put(x, 0, nG, 'redstone_block'); await put(x, 1, nG, 'powered_rail[shape=east_west]') } else await put(x, 1, nG, 'rail[shape=east_west]')
     }
     await put(eStop, 1, nG, T)
@@ -246,7 +248,8 @@ module.exports = {
       { name: 'anvil_land', pos: B(eEnd + 3, 1, nR), test: prop('powered', true) },
       ...this.waveE.map((e, k) => ({ name: `wave${k}`, pos: B(e, 0, nF + 1), test: prop('extended', true) })),
       { name: 'tnt_launch', pos: B(this.eW + 3, 1, nF), test: prop('extended', true) },
-      { name: 'primed', pos: B(this.eAct, 1, nG), test: () => false }   // marked from the entity below
+      { name: 'primed', pos: B(this.eAct, 1, nG), test: () => false },   // marked from the entity below
+      ...this.tBells.map((e, k) => ({ name: `tbell${k}`, pos: B(e, 1, nG), test: prop('powered', true) }))
     ]
     const w = watch(ctx, steps)
     const at = (name) => w.done.get(name)
@@ -296,10 +299,11 @@ module.exports = {
 
     // A: walk up to the button and press it; the arrow crosses
     ctx.mark('go')
-    focus = W(-0.4, 1.5, 2); steer = W(0, 0, 0.3)       // the button's face (it sits on the west edge)
-    await bot.waitForTicks(16)
+    focus = W(-0.44, 1.5, 2); steer = W(0, 0, 0.3)      // the button's face (it sits on the west edge)
+    await bot.waitForTicks(14); k = 0.35; await bot.waitForTicks(8); k = 0.16
     bot._client.write('block_place', { hand: 0, location: B(0, 1, 2), direction: 4, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm()
+    ctx.sound('block.stone_button.click_on', 1, 0.6)   // the presser's own client plays it (the server sends it to others)
     ctx.mark('press')
     focus = W(1.5, 1.4, 6)                              // the arrow crosses
     await until(() => at('arrow_hit'), 40)
@@ -314,11 +318,13 @@ module.exports = {
     steer = W(0, 0, towers[0].n - 6)
     await until(() => at('push0'), 40)
     for (let i = 0; i < towers.length; i++) {
-      steer = W(0, 0, towers[i].n - 4)
+      // the last column lands behind the bridge's pillar seen from the south: watch it from the north-west
+      steer = W(0, 0, i === 2 ? towers[i].n + 2 : towers[i].n - 4)
       focus = W(7, 6 + towers[i].L * 0.4, towers[i].n + 1)
       await until(() => at(`push${i + 1}`) || (i === 2 && at('sand_land')), 40)
     }
     focus = W(7, 3, nC); await until(() => at('sand_land'), 60)
+    await bot.waitForTicks(10)                          // see it land before turning to the cart
     // D: the cart rolls west across the lane: stop short of the track and follow it, walking west
     focus = W(4, 1, nD); steer = W(0, 0, nD - 4); sprint = false
     await until(() => at('launch'), 20)
@@ -356,7 +362,7 @@ module.exports = {
     // G: the TNT cart: launched and primed at once, it rides its whole fuse west to the TNT line.
     // Run alongside it ~4 blocks off (from 10 it was a speck) along the wave line (flush with the
     // ground), then peel off south before it reaches the TNT
-    focus = W(this.eL, 1, nG); steer = W(this.eL - 2, 0, nG - 4)
+    focus = W(this.eL, 1, nG); steer = W(this.eL - 2, 0, nG - 7)
     await until(() => at('tnt_launch'), 30)
     let last = null
     for (let i = 0; i < 200 && booms === 0; i++) {
@@ -365,7 +371,7 @@ module.exports = {
         const v = last ? Math.hypot(en.position.x - last.x, en.position.z - last.z) : 1
         last = en.position.clone()
         const ce = en.position.x - X
-        steer = ce > -6 ? W(ce + 2, 0, nG - 4) : W(-6, 0, nG - 12)
+        steer = ce > -6 ? W(ce + 2, 0, nG - 7) : W(-6, 0, nG - 12)   // 3 blocks south of the raised glass
         // moving: lead it; waiting at the buffer: let the aim drift along the line it will light
         focus = v > 0.02 ? en.position.offset(-2.5, 0.3, 0) : focus.plus(new Vec3(0.3, 0, 0))
       }

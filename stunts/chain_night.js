@@ -198,6 +198,7 @@ module.exports = {
     await bot.waitForTicks(12)
     bot._client.write('block_place', { hand: 0, location: B(7, 1, 0), direction: 5, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm()
+    ctx.sound('block.stone_button.click_on', 1, 0.6)   // the presser's own client plays it
     ctx.mark('press')
     r.steer = W(7, 0, -2)                               // a step back to take in the path
     for (let k = 0; k < lampE.length; k++) {
