@@ -22,12 +22,11 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // a wide field (its cut edges showed behind the payoff at 40 blocks)
-    for (let y0 = floor + 1; y0 <= floor + 22; y0 += 3) await ctx.cmd(`/fill ${x - 40} ${y0} ${z - 40} ${x + 70} ${y0 + 2} ${z + 40} air`)
+    for (let y0 = floor + 1; y0 <= floor + 46; y0 += 3) await ctx.cmd(`/fill ${x - 40} ${y0} ${z - 40} ${x + 70} ${y0 + 2} ${z + 40} air`)   // tall: hills cut at 22 showed as pit walls
     await ctx.cmd(`/fill ${x - 40} ${floor} ${z - 40} ${x + 70} ${floor} ${z + 40} grass_block`)
     await ctx.cmd(`/fill ${x - 40} ${floor - 3} ${z - 40} ${x + 70} ${floor - 1} ${z + 40} dirt`)
     // where the bot escapes to, and what's waiting right behind it there
     this.px = x + 40; this.pz = z + 1
-    await ctx.cmd(`/fill ${this.px + 2} ${floor + 1} ${this.pz} ${this.px + 2} ${floor + 9} ${this.pz} stone`)
     await ctx.cmd('/kill @e[type=villager]')
     const profs = ['librarian', 'farmer', 'cleric', 'armorer', 'fletcher', 'toolsmith', 'weaponsmith', 'cartographer', 'butcher', 'shepherd', 'mason', 'fisherman', 'nitwit', 'none']
     const types = ['plains', 'plains', 'plains', 'taiga', 'desert', 'savanna', 'snow']
@@ -40,7 +39,6 @@ module.exports = {
         k++
       }
     }
-    await ctx.cmd(`/summon villager ${this.px + 2.5} ${floor + 10} ${this.pz + 0.5} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Tags:["scare"],Rotation:[90f,0f],VillagerData:{profession:"minecraft:nitwit",type:"minecraft:plains",level:2},Xp:1}`)
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['cobblestone', 64]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 5.5, 180, -8)   // close: the stare lands by ~1.5 s
     await ctx.cmd('/gamemode survival')
@@ -80,6 +78,7 @@ module.exports = {
     bot._client.write('block_dig', { status: 4, location: { x: 0, y: 0, z: 0 }, face: 0, sequence: 0 })
     bot.swingArm()
     ctx.mark('offer')
+    setTimeout(() => ctx.log('emeralds after the drop:', bot.inventory.items().filter(i => i.name === 'emerald').reduce((n, i) => n + i.count, 0)), 600)
     const oy = bot.entity.yaw
     await ctx.easeLook(oy + 0.2, -0.1, 350); await ctx.easeLook(oy - 0.15, -0.12, 350)
     ctx.sound('entity.villager.no', 1)
@@ -94,11 +93,13 @@ module.exports = {
       const c = centroid(), d = bot.entity.position.minus(c); d.y = 0
       const len = Math.hypot(d.x, d.z)
       if (len < 7) return
+      if (villagers().some(e => e.position.distanceTo(bot.entity.position) < 3)) return   // they stop short of the camera
       bot.chat(`/execute as @e[type=villager,tag=!scare] at @s run tp @s ~${(d.x / len * pace).toFixed(3)} ~ ~${(d.z / len * pace).toFixed(3)}`)
     }
     bot.on('physicsTick', move)
     const lookCrowd = async () => { const c = centroid().offset(0, 1.2, 0), eye = bot.entity.position.offset(0, 1.62, 0), d = c.minus(eye); await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true) }
     // 1. backing away, facing them: they walk after it, keeping pace
+    await ctx.easeLookAt(centroid().offset(0, 1.2, 0), 300)
     pace = 0.2; ctx.mark('follow')
     bot.setControlState('back', true)
     for (let i = 0; i < 70 && bot.entity.position.x < x + 16; i++) { await lookCrowd(); await bot.waitForTicks(1) }
@@ -108,7 +109,10 @@ module.exports = {
     await ctx.easeLook(-Math.PI / 2, 0, 300)                   // east
     pace = 0.26
     bot.setControlState('sprint', true); bot.setControlState('forward', true)
-    for (let i = 0; i < 60 && bot.entity.position.x < x + 32; i++) await bot.waitForTicks(1)
+    for (let i = 0; i < 60 && bot.entity.position.x < x + 32; i++) {
+      await bot.waitForTicks(1)
+      if (i === 22) { bot.setControlState('sprint', false); await ctx.easeLook(Math.PI / 2 - 0.4, -0.05, 300); await ctx.easeLook(-Math.PI / 2, 0, 300); bot.setControlState('sprint', true) }   // a glance over the shoulder mid-run
+    }
     bot.setControlState('forward', false); bot.setControlState('sprint', false)
     // 3. a look back: they're right there
     ctx.mark('closer')
@@ -116,9 +120,11 @@ module.exports = {
     const c3 = centroid().offset(0, 1.2, 0)
     await ctx.easeLookAt(c3, 450)
     ctx.sound('entity.villager.ambient', 0.9, 0.6)
-    for (let i = 0; i < 14; i++) { await lookCrowd(); await bot.waitForTicks(1) }
+    pace = 0.12                                               // still creeping in
+    for (let i = 0; i < 18; i++) { await lookCrowd(); await bot.waitForTicks(1) }
     // 4. the last stretch backwards to the pillar spot
-    for (let i = 0; i < 80 && bot.entity.position.x < px + 0.4; i++) {
+    pace = 0.26
+    for (let i = 0; i < 200 && bot.entity.position.x < px + 0.4; i++) {
       await lookCrowd()
       const dz = pz + 0.5 - bot.entity.position.z
       bot.setControlState('back', px + 0.5 - bot.entity.position.x > 0.2)
@@ -127,6 +133,7 @@ module.exports = {
     }
     for (const c of ['back', 'left', 'right']) bot.setControlState(c, false)
     pace = 0; bot.removeListener('physicsTick', move)
+    if (Math.abs(bot.entity.position.x - (px + 0.5)) > 0.6) throw new Error(`short of the pillar spot: x ${bot.entity.position.x.toFixed(2)}`)
     // 5. pillar up 9 high while they spread round the base, each to its own place on a ring
     const ring = villagers().map((e, i, all) => ({ e, a: i / all.length * Math.PI * 2, r: 3 + (i % 3) }))
     const gather = () => {
@@ -141,7 +148,7 @@ module.exports = {
     }
     bot.on('physicsTick', gather)
     ctx.select(3)
-    await ctx.easeLook(Math.PI / 2, -0.55, 300)               // looking down-west over them
+    await ctx.easeLookAt(centroid(), 300)                       // down at them
     ctx.mark('pillar')
     const bx = Math.floor(bot.entity.position.x), bz = Math.floor(bot.entity.position.z)
     for (let k = 0; k < 9; k++) {
@@ -151,14 +158,21 @@ module.exports = {
       bot.setControlState('jump', false)
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: base, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound('block.stone.place', 1, 0.9)
-      for (let i = 0; i < 20 && !bot.entity.onGround; i++) await bot.waitForTicks(1)
+      for (let i = 0; i < 20 && !bot.entity.onGround; i++) { await bot.waitForTicks(1) }
+      const c = centroid(), eye = bot.entity.position.offset(0, 1.62, 0), d = c.minus(eye)   // the camera stays on the ring forming
+      await bot.look(bot.entity.yaw + (Math.atan2(-d.x, -d.z) - bot.entity.yaw) * 0.5, Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
     }
+    // what waits behind it (built only now, out of sight: in view during the run it gave the twist away)
+    const tx = Math.floor(bot.entity.position.x) + 2, tz = Math.floor(bot.entity.position.z), topY = Math.floor(bot.entity.position.y)
+    bot.chat(`/fill ${tx} ${floor + 1} ${tz} ${tx} ${topY - 1} ${tz} stone`)
+    bot.chat(`/summon villager ${tx + 0.5} ${topY} ${tz + 0.5} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Tags:["scare"],Rotation:[90f,0f],VillagerData:{profession:"minecraft:nitwit",type:"minecraft:plains",level:2},Xp:1}`)
     // 6. up top: they're all round the base, staring up, as the sun goes down (smoothly)
     ctx.mark('top')
     const y0b = bot.entity.yaw
-    let t = 6000
+    await ctx.easeLook(y0b - 0.3, -1.0, 300)
+    let t = 11200                                               // into sunset (6000-12000 is all day)
     for (let i = 0; i < 70; i++) {
-      t += 85; bot.chat(`/time set ${t}`); ctx.mark('time', { time: t })
+      t += 26; bot.chat(`/time set ${t}`); ctx.mark('time', { time: t })
       await bot.look(y0b + Math.PI * 1.4 * (i / 70) - 0.3, -1.0 + 0.12 * Math.sin(i / 11), true)   // looking down round the ring
       await bot.waitForTicks(1)
     }
@@ -168,8 +182,8 @@ module.exports = {
     await ctx.easeLook(-Math.PI / 2, -0.05, 450)               // east
     ctx.mark('scare')
     ctx.sound('entity.villager.no', 1.4, 0.8)
-    await ctx.easeLook(-Math.PI / 2 + 0.18, 0.22, 260)
-    await ctx.easeLook(-Math.PI / 2 - 0.08, 0.12, 400)
+    await ctx.easeLook(-Math.PI / 2 + 0.12, -0.02, 220)      // a flinch, the face kept in frame
+    await ctx.easeLook(-Math.PI / 2 - 0.06, -0.06, 500)
     for (let i = 0; i < 10; i++) await bot.waitForTicks(1)
     this.untrack(); ctx.mark('face_off')
     return true
