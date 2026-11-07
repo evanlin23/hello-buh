@@ -28,7 +28,7 @@ module.exports = {
     song: 'songs/funk_abnormal.mp3', dropAt: 'r4_found',
     startAt: 'r1_go:-0.35', endAfter: 'r4_found:0.45',
     // the zoom-out: a fixed camera up at y 320 beside him as he tosses an emerald down (appended after the zoom)
-    replay: { at: 'r4_found', before: 0.1, after: 1.4, cam: '1.0,260.0,9.5,43.5,-28', speed: 1, label: 'MEANWHILE AT Y 320' },
+    replay: { at: 'r4_found', before: 0.1, after: 1.4, cam: '1.0,322.0,9.5,43.5,-28', speed: 1, label: 'MEANWHILE AT Y 320' },
     speed: [1, 2, 3].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
     clock: [1, 2, 3, 4].map(n => [`r${n}_go`, `r${n}_end`, 5, `ROUND ${n}`, "down"]),
     counter: { at: [1, 2, 3, 4].map(n => `r${n}_found`), total: ROUNDS },
@@ -47,8 +47,6 @@ module.exports = {
     if (!g) throw new Error('no dry land')
     const X = g.x, Z = g.z, F = g.y
     Object.assign(this, { X, Z, F })
-    // edit.replay's fixed camera is relative to the set origin: it assumes the ground at y 62 (the hellobuh seed's plains)
-    if (F !== 62) throw new Error(`ground at y ${F}, not 62: fix edit.replay.cam's height`)
     await ctx.defaultRules()
     await ctx.cmd('/gamerule log_admin_commands false')
     await ctx.cmd('/gamerule random_tick_speed 0')
@@ -130,7 +128,7 @@ module.exports = {
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(30)
-    return { x: X, y: F, z: Z }
+    return { x: X, y: 0, z: Z }   // y 0: edit.replay's fixed camera is relative to this, so its height is absolute (y 322)
   },
 
   // ---------------------------------------------------------------- the rounds
