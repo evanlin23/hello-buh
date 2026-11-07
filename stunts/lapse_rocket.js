@@ -86,7 +86,7 @@ function complex () {
     for (let y = 2; y <= 25; y++) put(mx, y, mz, 'gray_concrete', 6)
     for (const [dx, dz] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]]) put(mx + dx, 26, mz + dz, 'sea_lantern', 6)
   }
-  for (let z = 19; z <= 60; z++) for (let x = -2; x <= 2; x++) put(x, -1, z, Math.abs(x) === 2 ? 'yellow_concrete' : 'gray_concrete', 6)
+  for (let z = 19; z <= 60; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, Math.abs(x) === 1 ? 'yellow_concrete' : 'gray_concrete', 6)   // (3 wide: the minute rocket stood on a 5-wide road's edge)
   // stage 7: the assembly hall out to the left, for scale: 19x23x37 with a tall door and a flag stripe
   // (back left at 140 blocks from the last shot it faded in and out at the fog edge; straight behind,
   // the rocket stood against a white wall)
