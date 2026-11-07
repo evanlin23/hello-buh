@@ -100,7 +100,7 @@ module.exports = {
 
     await bot.waitForTicks(4)
     // first pour: the rim's inner face, water lands in (7, 14)
-    await pourScoop(7, 14, cell(7, 14, -0.04), 10, 300)
+    await pourScoop(7, 14, cell(7, 14, -0.04), 6, 300)
     let lz = 14
     for (let step = 0; step < 8; step++) {
       // the newest obsidian at the front of the patch: stand two cells behind it, pour on its top face
@@ -109,7 +109,7 @@ module.exports = {
       if (front <= 0) break
       await walkTo(Math.min(14, front + 2))
       ctx.log('step', step, 'front', front, 'z', (bot.entity.position.z - z0).toFixed(1), 'converted', converted)
-      await pourScoop(7, front, cell(7, front, -0.04), 10)
+      await pourScoop(7, front, cell(7, front, -0.04), 6)   // short runs: ~2 rows a pour, 5-6 pours across (10 crossed in 3 and the Short ran 29 s)
       lz = front
     }
     await walkTo(1)
