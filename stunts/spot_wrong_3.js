@@ -18,7 +18,7 @@ function patch (b) {
   for (let x = -6; x <= 6; x++) for (const z of [0, 2, 4, 6, 8]) { if ((x + 6) % 3 === 1) b.set(x, 0, z, 'attached_pumpkin_stem[facing=west]'); else if ((x + 6) % 3 === 2) b.set(x, 0, z, 'attached_pumpkin_stem[facing=east]') }
   // the mistake: one melon among the pumpkins
   b.set(0, 0, 4, 'melon')
-  b.fill(-7, 0, -1, 7, 0, -1, 'spruce_fence[east=true,west=true]'); b.fill(-7, 0, 9, 7, 0, 9, 'spruce_fence[east=true,west=true]')
+  b.fill(-7, 0, -1, 7, 0, -1, 'spruce_fence[east=true,west=true]'); b.set(0, 0, -1, 'spruce_fence_gate[facing=south]'); b.fill(-7, 0, 9, 7, 0, 9, 'spruce_fence[east=true,west=true]')
   // the shed behind the patch (x -3..3, z -2..-6)
   b.fill(-3, 0, -6, 3, 3, -2, 'spruce_planks'); b.fill(-2, 0, -5, 2, 3, -3, 'air')
   for (const [cx, cz] of [[-3, -2], [3, -2], [-3, -6], [3, -6]]) b.fill(cx, 0, cz, cx, 3, cz, 'stripped_spruce_log')
@@ -76,7 +76,7 @@ function portal (b) {
   // the rest: chests, a smithing table, a respawn anchor, crimson stems
   b.set(1, 0, -4, 'chest[facing=east]'); b.set(1, 0, -5, 'barrel[facing=up]'); b.set(1, 0, -6, 'smithing_table')
   b.set(10, 0, -4, 'respawn_anchor[charges=2]'); b.set(10, 0, -6, 'crimson_planks'); b.set(10, 1, -6, 'crimson_planks'); b.set(10, 0, -5, 'anvil[facing=north]')
-  b.set(3, 0, -2, 'magma_block')
+  b.set(3, -1, -2, 'magma_block')
 }
 
 module.exports = spotWrong({
@@ -98,14 +98,14 @@ module.exports = spotWrong({
       // the lit portal's life: particles off its face and its hum (NetherPortalBlock.animateTick)
       ambient (ctx, t, W) {
         if (t % 4 === 0) ctx.particles('portal', W([5 + Math.random() * 2, 1 + Math.random() * 3, -7.5]), { count: 6, face: true })
-        if (t % 70 === 5) ctx.sound('block.portal.ambient', 0.35, 0.9 + Math.random() * 0.2)
+        if (t % 70 === 5) ctx.sound('block.portal.ambient', 0.25, 0.9 + Math.random() * 0.2)
       },
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [9, [5, 2, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: look closer'],
       reveals: [
         { at: [9.5, 0.5, -7.0], zoom: 3, strafe: 'left', sub: 'raw gold, not gold', check: [[9, 0, -8], 'raw_gold_block'] },
-        { pre: 'wait... there is another one', at: [7.5, 2.5, -7.0], zoom: 3.2, ring: 130, hold: 2.4, tail: 1.6, sub: 'this portal could never be lit', check: [[7, 2, -8], 'crying_obsidian'] }
+        { pre: 'wait... there is another one', at: [7.5, 2.5, -7.0], zoom: 2.1, ring: 160, hold: 2.4, tail: 1.5, sub: 'crying obsidian cant make a portal', check: [[7, 2, -8], 'crying_obsidian'] }
       ] }
   ]
 })
