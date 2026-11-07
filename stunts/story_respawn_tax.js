@@ -42,7 +42,7 @@ module.exports = {
     await c(`/fill ${A(-3, 0, -3)} ${A(3, 0, 3)} cobblestone`)
     await c(`/setblock ${A(0, 0, 0)} gold_block`)
     for (const [dx, dz] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) { await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} oak_fence`); await c(`/setblock ${A(dx, 3, dz)} lantern`) }
-    await c(`/spawnpoint @s ${A(2, 1, 2)} 135 0`)   // beside the gold block, facing it: a respawn shows who's standing on it
+    await c(`/spawnpoint @s ${A(-1, 1, 2)} -153 0`)   // beside the gold block, facing it (clear of the lantern posts: a respawn put the head inside one)
     // the line: a fenced queue lane running north from the plaza, lanterns along it
     await c(`/fill ${A(-1, 1, -14)} ${A(-1, 1, -4)} oak_fence[north=true,south=true]`)
     await c(`/fill ${A(1, 1, -14)} ${A(1, 1, -4)} oak_fence[north=true,south=true]`)
