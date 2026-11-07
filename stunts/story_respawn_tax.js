@@ -123,7 +123,8 @@ module.exports = {
     bot.on('death', () => {
       const e = bot.entity, f = { x: -Math.sin(e.yaw), z: -Math.cos(e.yaw) }
       const d = 2.5
-      if (!noSmoke) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 - 1.6), e.position.z + f.z * d)
+      // not on a cauldron death: the fire can kill before tripStep returns 'dead', and the smoke sat on the gold block
+      if (!noSmoke && trip === null) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 - 1.6), e.position.z + f.z * d)
     })
     let noSmoke = false
     bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 3 === 0) ctx.particles('smoke', deadView, { count: 2 }) })
