@@ -20,6 +20,7 @@ const HW = 6, WALK = 5   // hill from x-HW to x+WALK: the streams take x-2..x+2,
 
 module.exports = {
   name: 'lava_cast',
+  botTimeout: 480,   // the site search and set-up alone take 1-2 min: the default 180 s killed every attempt
   biome: process.env.BIOME || 'minecraft:plains',   // a flat, tree-free patch is easy to find
   caption: 'satisfying lava cast 😌',
   edit: {

@@ -20,6 +20,7 @@ const N = FILL.length
 
 module.exports = {
   name: 'end_portal_job',
+  botTimeout: 480,   // the site search and set-up alone take 1-2 min: the default 180 s killed every attempt
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: your job is filling end portals',
   edit: {
