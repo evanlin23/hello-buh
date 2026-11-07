@@ -1,15 +1,17 @@
-// "POV: you hit a villager 💀" (~28 s, three escalating beats, hard cuts between them):
-//   1 villager hit -> 1 iron golem stomps over and launches you into the air;
-//   3 villagers    -> 3 golems, launched again;
-//   10 villagers   -> 10 golems swarm you: "HelloBuh was slain by Iron Golem" (death screen).
-// Real mobs with vanilla AI, normal difficulty. Beats 1-2 under Resistance V (100% damage reduction): the
-// hit still registers and knocks you up, no damage; cleared for beat 3. (On peaceful the hit did 0 damage,
+// "POV: you hit a villager 💀" (~30 s, five escalating beats, hard cuts between them):
+//   1 villager hit -> 1 iron golem launches you; 3 -> 3 golems juggle you twice; 5 -> three times;
+//   10 -> four times; 20 villagers -> 20 golems swarm you: "HelloBuh was slain by Iron Golem" (death screen).
+// Real mobs with vanilla AI, normal difficulty. Beats 1-4 under Resistance V (100% damage reduction): the
+// hit still registers and knocks you up, no damage; cleared for the last. (On peaceful the hit did 0 damage,
 // didn't register at all, and nothing launched.) Each golem is provoked with a
 // player-attributed /damage so its retaliation fires at once (left alone, a golem wandered for ~4 s).
 const BEATS = [
-  { villagers: 1, golems: 1, dx: -40, sub: '1 villager' },
-  { villagers: 3, golems: 3, dx: 0, sub: '3 villagers' },
-  { villagers: 10, golems: 10, dx: 40, sub: '10 villagers...' }
+  // launches: how many times the golems juggle you before the cut (escalates; the last beat kills)
+  { villagers: 1, golems: 1, dx: -64, launches: 1, sub: '1 villager' },
+  { villagers: 3, golems: 3, dx: -32, launches: 2, sub: '3 villagers' },
+  { villagers: 5, golems: 5, dx: 0, launches: 3, sub: '5 villagers' },
+  { villagers: 10, golems: 10, dx: 32, launches: 4, sub: '10 villagers' },
+  { villagers: 20, golems: 20, dx: 64, launches: 1, sub: '20 villagers...' }
 ]
 module.exports = {
   name: 'golem',
@@ -29,11 +31,11 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
-    for (let z0 = z - 16; z0 <= z + 14; z0 += 6) {   // three village sites in one field (slabs under the /fill cap)
+    for (let z0 = z - 16; z0 <= z + 14; z0 += 6) {   // five village sites in one field (slabs under the /fill cap)
       const z1 = Math.min(z0 + 5, z + 14)
-      for (let y0 = floor + 1; y0 <= floor + 16; y0 += 8) await ctx.cmd(`/fill ${x - 56} ${y0} ${z0} ${x + 56} ${y0 + 7} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 56} ${floor} ${z0} ${x + 56} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 56} ${floor - 3} ${z0} ${x + 56} ${floor - 1} ${z1} dirt`)
+      for (let y0 = floor + 1; y0 <= floor + 16; y0 += 8) await ctx.cmd(`/fill ${x - 80} ${y0} ${z0} ${x + 80} ${y0 + 7} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 80} ${floor} ${z0} ${x + 80} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 80} ${floor - 3} ${z0} ${x + 80} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
@@ -46,11 +48,12 @@ module.exports = {
       await ctx.cmd(`/setblock ${sx - 5} ${floor + 1} ${z - 8} bell[attachment=floor]`)
       // villagers in a loose arc right in front, golems behind them in the shot from the first frame
       for (let v = 0; v < B.villagers; v++) {
-        const a = (v - (B.villagers - 1) / 2) * 0.32, r = 2.2 + (v % 2) * 0.6
+        const a = (v - (B.villagers - 1) / 2) * Math.min(0.32, 3 / B.villagers), r = 2.0 + (v % 3) * 0.45
         await ctx.cmd(`/summon villager ${(sx + 0.5 + Math.sin(a) * r * 1.6).toFixed(2)} ${floor + 1} ${(z + 0.5 - Math.cos(a) * r).toFixed(2)} {VillagerData:{profession:"minecraft:${profs[v % profs.length]}",type:"minecraft:plains",level:2},Xp:1,PersistenceRequired:1b,NoAI:1b,Rotation:[0f,0f],Tags:["v${i}"]}`)
       }
       for (let g = 0; g < B.golems; g++) {
-        const gx = sx + 0.5 + (g - (B.golems - 1) / 2) * 2.2, gz = z - 5.0 - (g % 2) * 1.2   // 7.5 back + the bot backing off: the golems never caught it
+        const row = Math.floor(g / 10), inRow = Math.min(10, B.golems - row * 10)
+        const gx = sx + 0.5 + (g % 10 - (inRow - 1) / 2) * 2.2, gz = z - 5.0 - (g % 2) * 1.2 - row * 2.6   // 7.5 back + the bot backing off: the golems never caught it
         await ctx.cmd(`/summon iron_golem ${gx.toFixed(2)} ${floor + 1} ${gz.toFixed(2)} {PlayerCreated:0b,PersistenceRequired:1b,Rotation:[${(g * 47) % 360}f,0f],Tags:["g${i}"]}`)
       }
     }
@@ -89,27 +92,32 @@ module.exports = {
         ctx.mark('smack')
         bot.attack(v); ctx.sound('entity.villager.hurt', 1); ctx.sound('entity.player.attack.strong', 0.8)
         ctx.particles('angry', { x: v.position.x, y: v.position.y + 2.1, z: v.position.z }, { count: 3 })
-        await bot.waitForTicks(B.villagers > 3 ? 3 : 7)
+        await bot.waitForTicks(B.villagers > 5 ? 2 : B.villagers > 1 ? 3 : 7)
       }
       // ...the golems saw that
       bot.chat(`/execute as @e[type=iron_golem,tag=g${i}] run damage @s 1 minecraft:player_attack by ${bot.username}`)
       const g0 = near('iron_golem')[0]
       if (g0) await ctx.easeLookAt(g0.position.offset(0, 2.2, 0), 300)
       ctx.mark('golem', { n: B.golems })
-      let launched = false
+      let launched = false, n = 0, airborne = false
       const hp0 = bot.health
-      for (let k = 0; k < 160 && !ctx.died; k++) {
+      for (let k = 0; k < 320 && !ctx.died; k++) {
         const g = near('iron_golem')[0]
         if (g) {
           const e = bot.entity.position.offset(0, 1.62, 0), d = g.position.offset(0, 2.2, 0).minus(e)
           await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
           // stand and take it (backing off outran the golems: beats 1-2 never launched); step in if one hangs back
-          bot.setControlState('forward', !launched && k > 10 && g.position.distanceTo(bot.entity.position) > 3)
+          bot.setControlState('forward', !airborne && k > 10 && g.position.distanceTo(bot.entity.position) > 3)
           if (k % 14 === 0) ctx.sound('entity.iron_golem.step', 0.6)
         }
-        if (!launched && (bot.entity.velocity.y > 0.25 || bot.health < hp0 - 0.5)) {
-          launched = true; ctx.mark('launched'); ctx.sound('entity.iron_golem.attack', 1)
-          if (!last) { bot.setControlState('forward', false); await bot.waitForTicks(26); break }
+        if (!airborne && (bot.entity.velocity.y > 0.25 || bot.health < hp0 - 0.5)) {
+          // a launch (the golems juggle you: count them, re-armed on landing)
+          airborne = true; launched = true; n++
+          ctx.mark('launched', { n }); ctx.sound('entity.iron_golem.attack', 1)
+          bot.setControlState('forward', false)
+        } else if (airborne && bot.entity.onGround && bot.entity.velocity.y <= 0) {
+          airborne = false
+          if (!last && n >= B.launches) { await bot.waitForTicks(6); break }
         }
         await bot.waitForTicks(1)
       }
