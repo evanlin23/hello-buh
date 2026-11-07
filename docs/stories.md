@@ -76,6 +76,10 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   crowds, and set `/gamerule log_admin_commands false` for per-tick `execute as` moves.
 - Captions switch on the cut. A death screen needs something moving behind it.
 - Chickens render broken and boats draw ~1.1 blocks high (both reported); see docs/lessons.md "Story Shorts".
+- Move cast between scenes with a >64-block hop (`put`): shorter teleports glide on camera like the vanilla client.
+- After a death, the next shot can be the respawn itself: `/spawnpoint` there with yaw and pitch before the death.
+- Don't put a death on a teleport's landing tick; carry aims as numbers on every `/tp`.
+- `punch` nth counts from 0. A push-in on the payoff word keeps a death-screen ending moving.
 
 ## Premise bank: mysteries (owner 2026-11-06: "I think we should focus a lot of mysteries")
 Each one: **a mystery stated plainly in line 1, clues that build, a twist that makes every clue click, a sting, and

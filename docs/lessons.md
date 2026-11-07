@@ -275,6 +275,16 @@ each section.
 - **Story captions snap to the camera cut** (`story_track` finds the pose jump within 4 ticks before each `line` mark); the mark itself lands 1-2 ticks after the cut.
 - **Throw a pearl early in a fall.** The pearl inherits the player's velocity, so about 20 ticks into a fall (-1.3 blocks/tick) it dives short of the target (pearl_clutch: aim error 17–21 blocks, failed 5/5). Throw within about 10 ticks, and check feasibility with `simulate()` before rendering.
 - **Boats sit at the entity's feet:** the Bedrock boat geometry puts its hull bottom 15 px up, so the model is shifted down 1 block (worker 5: a villager "hung under" the hull). Chickens rendered in pieces until 55b5e50 (cube pivot fix); they're fine now. Sheep, cows and pigs are fine.
+- **The vanilla client glides any mob teleport under 64 blocks over 3 ticks** (and the renderer now does too). A cast member moved between scenes slid across the shot (the librarian onto the gold block). Hop it out past 64 blocks and back (`put()` in stunts/story_respawn_tax.js): both hops snap.
+- **A `/tp ... facing <x y z>` turns the server player but its rotation never reaches the recording.** The climb-out cut landed on the old aim for a tick. Send yaw and pitch as numbers on the `/tp`.
+- **Don't kill on the tick a teleport lands.** The 1-block step out of the cauldron was read as speed and launched the dead body 11 blocks. Wait ~9 ticks after a `/tp` before the death (the engine now also starts such a body at rest).
+- **A cut made straight after a respawn can be undone** by the server's own respawn placement arriving later (1.5 s into the shot in respawn_tax). Put the next shot's spot in `/spawnpoint <x y z> <yaw> <pitch>` before that death instead: the respawn lands in the shot, no cut.
+- **Smoke "in front of" a death needs to clear the ground.** Points clamped to `F + 0.4` sat inside the grass, the lava pool and the cactus, and the screens froze. Use `F + 1.4`, follow the view's pitch, and stay clear of the death text.
+- **A creeper blast behind the player flings the dead body** (vanilla knockback ~0.75, ~1.9 up and ~2.6 forward; the engine applies it since 717cb93/f77b19d). Place death-screen effects where the body lands.
+- **`punch: [[event, nth, peak]]` counts nth from 0.** `['go_on', 1, 0.08]` on a mark that happens once never fired.
+- **Every death window ends on the respawn's camera jump** (death screen, HUD, inventory, fire overlay: edit.py `_snap_respawn`, render.js 039594f). The respawn mark lands a tick after the renderer shows the spawn. Drop a story meter on the respawn click, not after the spawn event (6 frames late).
+- **Captions hold until the next line's cut** (no blank frames between lines). After a short `cut` (1-2 blocks) the line snaps to any >0.6-block step after the cut mark.
+- **Keep QA light while a render runs.** The container restarted once with a render, a full-video ffmpeg filter and three audit agents at once, and the render was lost. Seek with `-ss`, use `-threads 1`, decode short ranges.
 
 ## Engine, round 3 (orchestrator)
 - **Check vanilla shaders straight from the jar.** `unzip -p work/client/1.21.11.jar assets/minecraft/shaders/core/<name>.fsh` gives the exact maths. Our lightmap had been a guess (one grey scalar); the real one keeps sky and block light apart and makes block light warm.
