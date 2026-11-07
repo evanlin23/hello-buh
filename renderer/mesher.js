@@ -63,9 +63,13 @@ class Mesher {
     for (let y = 48; y < 80; y += 4) for (let x = 0; x < 16; x += 4) for (let z = 0; z < 16; z += 4) col.setBiome(new Vec3(x, y, z), plains)
     w.addColumn(0, 0, col.toJson())
     const g = getSectionGeometry(0, 64, 0, w, this.blockStates)
-    const pos = Array.from(g.positions)
+    // translucent blocks (honey, slime, stained glass, ice) have all their quads in the t_ arrays:
+    // append them, and flag the model so it draws blended (the held honey block was invisible)
+    const nv = g.positions.length / 3
+    const pos = Array.from(g.positions).concat(Array.from(g.t_positions || []))
     for (let i = 0; i < pos.length; i += 3) { pos[i] += 0; pos[i + 1] += 8; pos[i + 2] += 0 }   // -> block min corner at 0
-    return { positions: pos, colors: Array.from(g.colors), uvs: Array.from(g.uvs), indices: Array.from(g.indices) }
+    const tIdx = Array.from(g.t_indices || []).map(i => i + nv)
+    return { positions: pos, colors: Array.from(g.colors).concat(Array.from(g.t_colors || [])), uvs: Array.from(g.uvs).concat(Array.from(g.t_uvs || [])), indices: Array.from(g.indices).concat(tIdx), translucent: tIdx.length > 0 }
   }
 
   // Compute our own light for everything from minVisibleY up (see light.js).

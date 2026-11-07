@@ -50,6 +50,8 @@ document.body.appendChild(r.domElement)
 const tex = await new THREE.TextureLoader().loadAsync('/assets/atlas.png')
 tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; tex.generateMipmaps = false; tex.flipY = false; tex.colorSpace = THREE.NoColorSpace
 const mat = new THREE.MeshBasicMaterial({ map: tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide })
+// translucent blocks (honey, slime, stained glass, ice): blended like the GUI's translucent item render type
+const tmat = new THREE.MeshBasicMaterial({ map: tex, vertexColors: true, transparent: true, depthWrite: false })
 window.icon = (d) => {
   const scene = new THREE.Scene()
   const g = new THREE.BufferGeometry()
@@ -57,7 +59,7 @@ window.icon = (d) => {
   g.setAttribute('color', new THREE.Float32BufferAttribute(d.colors, 3))
   g.setAttribute('uv', new THREE.Float32BufferAttribute(d.uvs, 2))
   g.setIndex(d.indices)
-  const m = new THREE.Mesh(g, mat)
+  const m = new THREE.Mesh(g, d.translucent ? tmat : mat)
   // block centred on the origin, then the GUI display transform: rotate y 225, x 30, scale 0.625
   const grp = new THREE.Group(); grp.add(m); m.position.set(-0.5, -0.5, -0.5)
   grp.rotation.order = 'XYZ'; grp.rotation.set(30 * Math.PI / 180, 225 * Math.PI / 180, 0); grp.scale.setScalar(0.625)
@@ -91,8 +93,11 @@ window.READY = true
     world.addColumn(0, 0, col.toJson())
     const g = getSectionGeometry(0, 64, 0, world, blockStates)
     // section-relative -> block-relative (block at local 8,0,8 -> section offset -8)
-    const pos = Array.from(g.positions); for (let i = 0; i < pos.length; i += 3) { pos[i] -= 0; pos[i + 1] += 8; pos[i + 2] -= 0 }
-    const d = { positions: pos, colors: Array.from(g.colors), uvs: Array.from(g.uvs), indices: g.indices }
+    // the translucent quads (honey, slime, stained glass, ice) are kept apart by the mesher: append them
+    const nv = g.positions.length / 3
+    const pos = Array.from(g.positions).concat(Array.from(g.t_positions || [])); for (let i = 0; i < pos.length; i += 3) { pos[i] -= 0; pos[i + 1] += 8; pos[i + 2] -= 0 }
+    const tIdx = Array.from(g.t_indices || []).map(i => i + nv)
+    const d = { positions: pos, colors: Array.from(g.colors).concat(Array.from(g.t_colors || [])), uvs: Array.from(g.uvs).concat(Array.from(g.t_uvs || [])), indices: Array.from(g.indices).concat(tIdx), translucent: tIdx.length > 0 }
     const url = await page.evaluate((d) => window.icon(d), d)
     fs.writeFileSync(path.join(A, 'icons', `${name}.png`), Buffer.from(url.split(',')[1], 'base64'))
     console.log('icon', name)

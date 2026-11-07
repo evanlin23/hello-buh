@@ -367,7 +367,7 @@ window.HB = {
     geo.setAttribute('color', new THREE.Float32BufferAttribute(g.colors, 3))
     geo.setAttribute('uv', new THREE.Float32BufferAttribute(g.uvs, 2))
     geo.setIndex(g.indices)
-    if (entities) entities.blockModels.set(id, { geo, mat: opaqueMat })
+    if (entities) entities.blockModels.set(id, { geo, mat: g.translucent ? translucentMat : opaqueMat })
   },
 
   setSection (key, s) {
