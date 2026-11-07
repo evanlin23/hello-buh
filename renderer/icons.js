@@ -26,7 +26,12 @@ function itemModel (name) {
   const { execFileSync } = require('child_process')
   try {
     const j = JSON.parse(execFileSync('unzip', ['-p', jar, `assets/minecraft/items/${name}.json`]).toString())
-    return j.model && j.model.model
+    // a plain model is {type: 'minecraft:model', model: 'minecraft:block/...'}; 'special' models (beds,
+    // chests, heads, banners, shulker boxes) have model: {type: 'minecraft:bed', ...} and the icon's
+    // model in .base, and select/condition models have neither (every_clutch crashed on red_bed)
+    const m = j.model || {}
+    const r = typeof m.model === 'string' ? m.model : typeof m.base === 'string' ? m.base : null
+    return r
   } catch { return null }
 }
 
