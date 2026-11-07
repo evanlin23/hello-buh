@@ -360,6 +360,7 @@ function poseEnderman (r, s, walkPos, walkSpeed) {
   const c = (v) => Math.max(-0.4, Math.min(0.4, v * 0.5))
   B.rightArm.rotation.set(c(Math.cos(walkPos * 0.6662 + Math.PI) * walkSpeed), 0, 0)
   B.leftArm.rotation.set(c(Math.cos(walkPos * 0.6662) * walkSpeed), 0, 0)
+  if (B.carried) { B.rightArm.rotation.set(-0.5, 0, 0.05); B.leftArm.rotation.set(-0.5, 0, -0.05) }   // carrying: arms out
   B.rightLeg.rotation.set(c(Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed), 0, 0)
   B.leftLeg.rotation.set(c(Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed), 0, 0)
 }
@@ -438,7 +439,19 @@ export class EntityLayer {
       if (t) { const b = buildPlayer(t, WITCH_PARTS, 0.9375); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'enderman') {
       const t = await texture(['entity/enderman/enderman']), te = await texture(['entity/enderman/enderman_eyes'])
-      if (t) { const b = buildPlayer(t, ENDERMAN_PARTS, 1, te); obj = b.root; bones = b.bones; mat = b.mat }
+      if (t) {
+        const b = buildPlayer(t, ENDERMAN_PARTS, 1, te); obj = b.root; bones = b.bones; mat = b.mat
+        // CarriedBlockLayer: in model space (blocks) T(0, 0.6875, -0.75) Rx(20) Ry(45) T(0.25, 0.1875, 0.25)
+        // S(-0.5, -0.5, 0.5) Ry(90), then the block model
+        if (extra && extra.carried && this.blockModels.has(extra.carried)) {
+          const bm = this.blockModels.get(extra.carried), m = new THREE.Mesh(bm.geo, bm.mat.clone())
+          const g = new THREE.Group(); g.matrixAutoUpdate = false
+          g.matrix.makeScale(16, 16, 16).multiply(new THREE.Matrix4().makeTranslation(0, 0.6875, -0.75)).multiply(new THREE.Matrix4().makeRotationX(20 * Math.PI / 180))
+            .multiply(new THREE.Matrix4().makeRotationY(45 * Math.PI / 180)).multiply(new THREE.Matrix4().makeTranslation(0.25, 0.1875, 0.25))
+            .multiply(new THREE.Matrix4().makeScale(-0.5, -0.5, 0.5)).multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2))
+          g.add(m); b.root.children[0].add(g); bones.carried = g; bones.carriedMat = m.material
+        }
+      }
     } else if (name === 'player') {
       const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
       if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
@@ -567,7 +580,7 @@ export class EntityLayer {
       r.last = { x: s.x, z: s.z, t: tick }
       const swing = Math.cos(r.walk * 0.6662) * 1.4 * (r.amt || 0)
       const B = r.bones
-      if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); continue }
+      if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); if (B.carriedMat) B.carriedMat.color.setRGB(...LL); continue }
       if (s.name === 'witch' && B.hat4) { poseWitch(r, s, r.walk, r.amt || 0); continue }
       if (B.mane && B.rightHindLeg) { poseHorse(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'warden' && B.rightTendril) { poseWarden(r, s, r.walk, r.amt || 0, tick); continue }

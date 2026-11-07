@@ -1067,6 +1067,8 @@ function camAtLive (t) {
       e.extra = { state: bl.defaultState, scale: 0.25, spin: true, glint: !!(e.extra.glint || GLINT_ITEMS.has(it)) }
     }
     for (const e of ents) if (POTION_COLOR.has(e.id)) e.extra = { ...(e.extra || {}), color: POTION_COLOR.get(e.id) }
+    // an enderman's carried block: its model, sent once
+    for (const e of ents) if (e.name === 'enderman' && e.extra && e.extra.carried && !sentBlocks.has(e.extra.carried)) { sentBlocks.add(e.extra.carried); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [e.extra.carried, mesher.meshSingle(e.extra.carried)]) }
     // item frames: the frame model (sent once per kind) and the held item with its 'fixed' display
     for (const e of ents) {
       if (e.name !== 'item_frame' && e.name !== 'glow_item_frame') continue
