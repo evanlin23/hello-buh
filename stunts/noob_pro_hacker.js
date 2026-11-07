@@ -19,8 +19,10 @@ const TASKS = ['climb the mountain', 'cross the lava', 'escape the pit']
 const LADDERS = 10
 // the hacker's commands as typed (relative to where he stands when he hits Enter); the TNT one is
 // re-sent twice with the up arrow
-const TNT = '/summon tnt ~ ~ ~ {fuse:20,explosion_power:6}'
-const CMDS = ['/effect give @s levitation 5 39', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT, [TNT, 0.1], [TNT, 0.1]]
+// re-sent with the up arrow and a shorter fuse each time, so all three go off on the same tick
+const FUSES = [20, 14, 8]
+const TNT = (f) => `/summon tnt ~ ~ ~ {fuse:${f},explosion_power:6}`
+const CMDS = ['/effect give @s levitation 5 39', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.22], [TNT(8), 0.22]]
 const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
 
 // the mountain: an uneven peak (lobed outline, ridges down the flanks) of stone with grass, gravel and
@@ -207,9 +209,8 @@ module.exports = {
     // PRO: an ender pearl onto the summit, the camera following it
     const sz = wallZ + 10
     await ctx.cmd(`/fill ${mx} ${F + 1} ${lz} ${mx} ${F + 14} ${lz} air replace ladder`)
-    await k.cutTo(mx + 0.5, F + 1, sz + 0.5, 180, -20, { hotbar: [['ender_pearl', 16]] })
-    k.beat()
-    const eye = bot.entity.position.offset(0, 1.62, 0)
+    // the throw is worked out before the cut (on camera it froze the shot for 0.6 s)
+    const eye = new Vec3(mx + 0.5, F + 1 + 1.62, sz + 0.5)
     let best = null
     for (let pitch = 0.35; pitch <= 1.4; pitch += 0.002) {
       const hit = this.pearlHit(bot, Vec3, eye, N, pitch)
@@ -219,6 +220,8 @@ module.exports = {
     }
     if (!best || best.err > 3) { ctx.log('no pearl solution', best); return false }
     ctx.log('pearl: pitch', best.pitch.toFixed(3), 'lands', best.hit.x.toFixed(1), best.hit.y, best.hit.z.toFixed(1), 'err', best.err.toFixed(2))
+    await k.cutTo(mx + 0.5, F + 1, sz + 0.5, 180, -20, { hotbar: [['ender_pearl', 16]] })
+    k.beat()
     await look(N, best.pitch, 350)
     bot.activateItem(); bot.swingArm(); ctx.sound('entity.ender_pearl.throw', 1, 0.5)
     ctx.mark('pearl')
@@ -351,7 +354,7 @@ module.exports = {
     ctx.easeLook(N + 0.2, 1.45, 700)                              // falling: the square of sky shrinking
     for (let w = 0; w < 80 && !ctx.died; w++) await bot.waitForTicks(1)
     if (!ctx.died) { ctx.log('noob survived the shaft'); return false }
-    await bot.waitForTicks(18)
+    await bot.waitForTicks(13)                                    // the death screen (0.9 s read as a pause here)
     k.endBeat()
     bot.chat(`/setblock ${px} ${F - 7} ${pz} dirt`)
     ctx.revive(); ctx.respawn()
@@ -395,11 +398,11 @@ module.exports = {
     let boomed = false
     const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
     bot._client.on('explosion', onBoom)
-    const fp = bot.entity.position
+    const fp = bot.entity.position.clone()
     for (let i = 0; i < 3; i++) {
-      if (i) await bot.waitForTicks(3)
+      if (i) await bot.waitForTicks(6)
       k.typed()
-      bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:20,explosion_power:6}`)
+      bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:${FUSES[i]},explosion_power:6}`)
       if (!i) { ctx.sound('entity.tnt.primed', 1); ctx.mark('hack') }
     }
     for (let w = 0; w < 40 && !boomed; w++) await bot.waitForTicks(1)
