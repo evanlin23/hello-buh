@@ -19,7 +19,7 @@ module.exports = {
   name: 'story_runaway',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'why does everyone run from me 💀',
-  edit: { caption: 'why does everyone run from me 💀', red: 'run', story: 'stories/runaway', startAt: 'line:0', endAfter: 'boom:1.0', deathScreen: true },
+  edit: { caption: 'why does everyone run from me 💀', red: 'run', story: 'stories/runaway', startAt: 'line:0', endAfter: 'boom:0.95', deathScreen: true },
   expectDeath: true,
   hideHand: true,          // no Steve arm: the narrator isn't Steve
 
