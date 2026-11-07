@@ -95,10 +95,10 @@ module.exports = {
     // ---- 1. the edge falls away ----
     ctx.mark('l1')
     const crumbling = drop(byAngle(K.ring(x, z, 4), 0.15), 1, 2)   // one column every 2 ticks, from right ahead, round clockwise
-    await ctx.easeLook(-0.3, -1.05, 600)                 // the blocks in front dropping away
-    await ctx.easeLook(-Math.PI / 2, -0.9, 1000)         // following the crack round the island
-    await ctx.easeLook(-Math.PI + 0.2, -0.85, 1000)
-    await ctx.easeLook(Math.PI / 2 + 0.3, -0.85, 900)
+    await ctx.easeLook(-0.3, -0.75, 600)                 // the blocks in front dropping away
+    await ctx.easeLook(-Math.PI / 2, -0.5, 1000)         // following the crack round the island
+    await ctx.easeLook(-Math.PI + 0.2, -0.5, 1000)
+    await ctx.easeLook(Math.PI / 2 + 0.3, -0.5, 900)
     await crumbling
     // back across what's left, toward the middle
     await ctx.easeLook(Math.PI - 0.2, -0.25, 600)      // (south: the middle is behind it)
@@ -115,17 +115,18 @@ module.exports = {
     ctx.mark('off1')
     await watchFall(c)
     // where did it go: walk to that edge, sneak the last step and look over it, eyes on it all the way down
-    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.25, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
+    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-0.8, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
     bot.setControlState('forward', true)
-    for (let i = 0; i < 30 && bot.entity.position.z < z + 2.6 && ctx.tick < K.at(8.0); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 30 && bot.entity.position.z < z + 3.1 && ctx.tick < K.at(8.0); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', true)
     for (let i = 0; i < 26 && ctx.tick < K.at(8.5); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
     for (let i = 0; i < 10 && ctx.tick < K.at(8.7); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', false)
     await toCenter(K.at(9.6))
+    await K.until(K.at(9.4))
+    await ctx.setWeather('thunder')   // a moment early: the client fades the rain in, the sky had to darken under the card
     await K.level(3, 10)
-    await ctx.setWeather('thunder')
     ctx.sound('entity.lightning_bolt.thunder', 0.9, 0.85)   // a strike somewhere out of sight
     await ctx.easeLook(bot.entity.yaw + 0.3, 0.45, 600)  // up into it
     await bot.waitForTicks(6)
@@ -142,7 +143,10 @@ module.exports = {
     await toCenter(K.at(14.6))
     await ctx.easeLookAt(new Vec3(x + 0.5, Y + 1.2, z - 2.5), 400)
     // stays on the railing (testing it) until something groans behind it
-    await K.until(K.at(15), K.drift(0.008, 0.001))
+    // testing it, eyes along it end to end
+    await ctx.easeLookAt(new Vec3(x - 1.2, Y + 1.3, z - 2.5), 700)
+    await ctx.easeLookAt(new Vec3(x + 2.2, Y + 1.3, z - 2.5), 900)
+    await K.until(K.at(15), K.drift(-0.012, 0.001))
 
     // ---- 4. two zombies ----
     await K.level(4, 15)
@@ -158,13 +162,13 @@ module.exports = {
       await watchFall(zs[i], 8)
     }
     // back to the middle if a hit pushed it, facing the island
-    await ctx.easeLookAt(new Vec3(x + 0.5, Y + 1, z - 2.5), 600)
+    await ctx.easeLook(bot.entity.yaw + 0.9, -0.55, 900)   // what's left of the island around it
     if (Math.hypot(bot.entity.position.x - x - 0.5, bot.entity.position.z - z - 0.5) > 0.6) {
       bot.setControlState('forward', true)
       for (let i = 0; i < 30 && Math.hypot(bot.entity.position.x - x - 0.5, bot.entity.position.z - z - 0.5) > 0.4; i++) await bot.waitForTicks(1)
       bot.setControlState('forward', false)
     }
-    await K.until(K.at(20), K.drift(0.006, 0.0015))
+    await K.until(K.at(20), K.drift(0.012, 0.001))
 
     // ---- 5. the island shrinks ----
     await K.level(5, 20)
@@ -176,8 +180,8 @@ module.exports = {
     await ctx.easeLook(bot.entity.yaw - 1.4, -0.9, 1300)
     await shrink
     // all that's left: a slow look round the 3x3 from its middle (its edges against the drop on every side)
-    await ctx.easeLook(bot.entity.yaw + 1.2, -0.9, 1400)
-    await ctx.easeLook(bot.entity.yaw + 1.2, -0.85, 1400)
+    await ctx.easeLook(bot.entity.yaw + 1.2, -0.6, 1300)
+    await ctx.easeLook(bot.entity.yaw + 0.8, -0.6, 700)
     await K.until(K.at(25))
 
     // ---- 6. two blocks left ----

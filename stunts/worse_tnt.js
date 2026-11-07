@@ -160,7 +160,7 @@ module.exports = {
       const pts = drop(WAVES[w], dmin, dmax, spread, fuse)
       if (!pts.length) throw new Error('wave fell off the field')
       const c = centroid(pts)
-      await ctx.easeLookAt(new Vec3(c[0], G + 3, c[1]), 300)    // they're coming down
+      await ctx.easeLookAt(new Vec3(c[0], G + 1.5, c[1]), 300)    // they're coming down
       await flee(c, safe, K.at(w * 5 + fuse) - 6)   // keep moving until just before it goes
       await waitBoom(K.at(w * 5 + fuse) + 6, () => new Vec3(c[0], G + 1.5, c[1]))
       ctx.mark(`boom${w + 1}`)
@@ -195,20 +195,23 @@ module.exports = {
     const yaw0 = bot.entity.yaw
     await ctx.easeLook(yaw0, -1.2, 300)
     for (let k = 0; k < 8 && ctx.tick < K.at(34.3); k++) {
+      await ctx.easeLook(yaw0 + 0.22 * (k + 1), -1.15, 150)   // aim at the top it's placed on
       bot.setControlState('jump', true)
-      ctx.easeLook(yaw0 + 0.22 * (k + 1), -1.2, 400)   // one steady sweep round the ring below
       for (let i = 0; i < 20 && pos().y < top + 2.1; i++) await bot.waitForTicks(1)
       bot.setControlState('jump', false)
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: top, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound('block.stone.place', 1, 0.9)
       top++
+      // eyes up between blocks: the ring of TNT below, shrinking as it climbs (one steady sweep round it)
+      const up = ctx.easeLook(yaw0 + 0.22 * (k + 1.5), -0.8, 250)
       for (let i = 0; i < 20 && !bot.entity.onGround; i++) await bot.waitForTicks(1)
+      await up
     }
     ctx.log('pillar top', top - G)
     // watch them come down to the ring below, then go
     await ctx.easeLook(bot.entity.yaw + 0.25, -0.8, 500)
-    await waitBoom(K.at(35) + 8, null)
-    await K.until(K.at(35) + 6, K.drift(0.01))
+    // the payoff mark on the blast itself (the countdown ends on it; it was 6 ticks late: review 4)
+    while (ctx.tick < K.at(35) + 8 && tnts().length) { await bot.look(bot.entity.yaw + 0.01, bot.entity.pitch, true); await bot.waitForTicks(1) }
     ctx.mark('boom7')
     // sneak to the edge of the stick: its side going down into the crater, then out across it
     bot.setControlState('sneak', true); bot.setControlState('forward', true)
