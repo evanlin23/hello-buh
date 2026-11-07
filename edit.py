@@ -396,6 +396,7 @@ def hud_ticks(timeline, duration, keep_inventory=False):
                 v = (lv, round(pr, 3))
         return v
     out, last, blink_until, last_change, display, last_hurt = [], h0, -1, 0, h0, -99
+    kept = None   # the last hotbar seen alive: what keep_inventory keeps through a death
     si = 0
     for tick in range(int(duration * 20) + 2):
         t = tick / 20
@@ -412,6 +413,10 @@ def hud_ticks(timeline, duration, keep_inventory=False):
             # death screen: with immediate_respawn the window is a tick and blanked the hotbar (tries)
             if not keep_now(t) and any(b - a >= 0.5 and a <= t + 1e-6 < b for a, b in deaths):
                 items = (None,) * len(items)
+            elif keep_now(t) and kept is not None:
+                # keep_inventory: mineflayer still clears its copy on death and the harness records an
+                # all-empty hotbar, so the screen showed an empty bar (worker 14, which_door): hold it
+                items = kept
         else:
             # just respawned: mineflayer's health/hotbar updates land a few ticks late, and the HUD sat
             # on 0 hearts and an empty hotbar for ~0.4 s (worker 7). Take the next values from the respawn.
@@ -424,6 +429,10 @@ def hud_ticks(timeline, duration, keep_inventory=False):
                 nxt = next((st for st in states if st[0] >= t and any(st[3])), None)
                 if nxt is not None and nxt[0] - t < 0.5:   # a late update, not a real pickup 1.5 s later (story_respawn_tax f1570)
                     items = nxt[3]
+                elif keep_now(t) and kept is not None:
+                    items = kept
+            if any(items):
+                kept = items
         cur = math.ceil(health)
         if cur < last:
             blink_until, last_change, last_hurt = tick + 20, tick, tick
