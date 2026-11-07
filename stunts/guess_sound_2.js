@@ -1,5 +1,5 @@
-// "guess the mob from its sound pt 2 🔊" (worker 13, series #2; lib/guess_sound.js): a pig, a slime's
-// squish, a zombie, a spider in a mineshaft, a witch's giggle in her swamp hut (the threat rising), and the finale: a ghast's
+// "guess the mob from its sound pt 2 🔊" (worker 13, series #2; lib/guess_sound.js): a pig, an allay
+// (the owner's rare one), a zombie, a spider in a mineshaft, a witch's giggle in her swamp hut (the threat rising), and the finale: a ghast's
 // moan in a jungle room... it's the parrot AGAIN (parrots imitate the ghast: entity.ghast.ambient at
 // pitch 1.8, volume 0.7, from sounds.json).
 const guessSound = require('../lib/guess_sound')
@@ -10,7 +10,7 @@ module.exports = guessSound({
   red: 'sound',
   rounds: [
     { mob: 'pig', room: 'farm', sound: 'entity.pig.ambient', label: 'EASY', answer: 'PIG', react: 'call', leanTicks: 5, lookY: 0.8 },
-    { mob: 'slime', room: 'swamp', sound: 'entity.slime.squish', label: 'MEDIUM', answer: 'SLIME', react: 'call', reactSound: 'entity.slime.squish', leanTicks: 5, lookY: 0.6, nbt: 'Size:1', color: 'green' },
+    { mob: 'allay', room: 'outpost', sound: 'entity.allay.ambient_without_item', label: 'MEDIUM', answer: 'ALLAY', react: 'call', reactSound: 'entity.allay.ambient_with_item', leanTicks: 5, lookY: 0.3, mobDy: 1, nbt: 'NoGravity:1b', color: 'blue' },
     { mob: 'zombie', room: 'cave', sound: 'entity.zombie.ambient', label: 'HARD', answer: 'ZOMBIE', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'green' },
     { mob: 'spider', room: 'mineshaft', sound: 'entity.spider.ambient', label: 'VERY HARD', answer: 'SPIDER', react: 'call', lean: 0, back: 6, lookY: 0.6, color: 'red' },
     { mob: 'witch', room: 'swamp_hut', sound: 'entity.witch.ambient', label: 'EXPERT', answer: 'WITCH', react: 'call', reactSound: 'entity.witch.celebrate', lean: 0, back: 4, lookY: 1.7, color: 'blue' },
