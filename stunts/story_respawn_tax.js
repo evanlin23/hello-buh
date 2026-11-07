@@ -18,7 +18,7 @@ module.exports = {
   name: 'story_respawn_tax',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every time I respawn, someone disappears 😳',
-  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:-0.2', deathScreen: true, onFire: 'burn:death', punch: [['go_on', 1, 0.08]] },
+  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:-0.05', deathScreen: true, onFire: 'burn:death', punch: [['go_on', 0, 0.08], ['respawn_word', 0, 0.1]] },
   expectDeath: true,
 
   async setup (ctx) {
@@ -133,7 +133,7 @@ module.exports = {
       const e = bot.entity, c = Math.cos(e.pitch), f = { x: -Math.sin(e.yaw) * c, z: -Math.cos(e.yaw) * c }
       const d = 2.5
       // not on a cauldron death: the fire can kill before tripStep returns 'dead', and the smoke sat on the gold block
-      if (!noSmoke && trip === null && ctx.tick - tripEnd > 10) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z + f.z * d)
+      if (!noSmoke && trip === null && ctx.tick - tripEnd > 10) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 1.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z + f.z * d)
     })
     let noSmoke = false
     // every 2 ticks, 3 puffs spread a little: 2 every 3 ticks read as a still screen behind the cactus death (retention)
@@ -208,14 +208,14 @@ module.exports = {
     await cut(-11.5, -17.4, P(-11.5, 1.5, -21))
     gone('v_fletcher')
     dead = false
-    let pressed = 0
+    let pressed = 0, from5 = null
     await line('L05', async (k) => {
       go(!dead)
       if (!dead && bot.entity.position.z < Z - 19.55) pressed++
-      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-11.5, 4.7, -20.5) }   // over its top (y 1-3: 3.4 was inside the block)
+      if (!dead && (ctx.died || pressed > 8)) { if (!ctx.died) kill('cactus'); dead = true; go(false); deadView = P(-10.2, 4.6, -20.5) }   // over its top (y 1-3: 3.4 was inside the block)
       // pressed against it, look up its side: the top and the sky in frame, the smoke above it in view (the
       // screen was all cactus texture and froze behind the death screen)
-      if (pressed > 0) K.base = K.aim(P(-11.5, 5.6, -21))   // the top, the sky and the smoke over it in frame
+      if (pressed > 0) { from5 = from5 || { ...K.base }; K.turnTo(from5, P(-11.5, 5.6, -21), pressed / 7) }   // up its side to the top and the sky, eased (a 6-frame flick)
       if (alive()) look(k)
     })
     go(false)
@@ -242,33 +242,36 @@ module.exports = {
     await cut(3.5, 6.5, P(0.5, 2.4, 0.5))
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1], head: true })
     let from8 = null
-    await line('L08', async (k, at) => { if (k >= at(3)) { from8 = from8 || { ...K.base }; K.turnTo(from8, P(0.5, 0.6, 0.5), (k - at(3)) / 8) } look(k) })   // tilt down to the spot, eased (it lurched)
+    await line('L08', async (k, at) => { if (k >= at(3)) { from8 = from8 || { ...K.base }; K.turnTo(from8, P(0.5, 0.6, 0.5), (k - at(3)) / 20) } look(k) }, -0.25)   // a slow tilt down to the spot, still moving as the line ends; the cut and the golem's move fill the air (it held on a still shot: retention)
     ctx.mark('face_off')
     // L09: then I tripped (walking up the street, eyes on the lava block); L10: into it
     say(`/tp @e[tag=golem] ${X + 2.4} ${F + 1} ${Z - 4.2} 0 0`)
     await cut(0.5, 11.8, P(0.5, 0.5, 4.5))
     say('/effect give @s minecraft:fire_resistance 30 0 true')   // the cauldron burns him only once he's out (no particles)
+    // the next respawn lands straight in L11's shot, facing the lane (a cut there was undone by the server's late
+    // respawn placement 1.5 s into the shot: Minecraft audit)
+    await ctx.cmd(`/spawnpoint @s ${X + 3} ${F + 1} ${Z + 4} 155 10`)
     await line('L09', async (k, at) => {
       go(k > 2)
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       K.base = K.aim(P(0.5, 0.5, 4.5)); look(k, 0, k > at(1) ? -0.25 : 0)
     })
     dead = false; trip = null; landed = 0
-    let nz = -6.5, cut11 = null
+    let nz = -6.5
     await line('L10', async (k) => {
       go(!dead && trip === null)
       if (!dead) { const st = tripStep(P(0.5, 1.4, -3)); if (st === 'dead') { dead = true; trip = null; deadView = null; tripEnd = ctx.tick } }   // dies facing the spawn and the lane
       // behind this death screen the nitwit starts down the lane (the smoke 2.5 blocks ahead sat on the gold block
       // and was still rising there after the respawn: Minecraft audit)
       if (dead) { nz = Math.min(-3.5, nz + 0.1); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
-      if (dead) respawnSoon(() => { cut11 = cut(3.5, 3.6, P(0.5, 1.4, -2)) })   // the L11 shot straight from the respawn // a 3-frame spawn view read as stray frames. Respawn inside L10: done in L11 it stretched the line 0.4 s (0.8 s of silence)
+      if (dead) respawnSoon()   // the L11 shot straight from the respawn // a 3-frame spawn view read as stray frames. Respawn inside L10: done in L11 it stretched the line 0.4 s (0.8 s of silence)
       if (!dead && trip === null) { K.base = K.aim(P(0.5, 0.2, 4.5)); look(k) }
       if (dead && alive()) look(k)
     })
     go(false)
     // L11: this time I was fast: respawn and watch the nitwit walk up to my spawn
     await line('L11', async (k, at) => {
-      if (k === 0) { while (!alive() || !cut11) await bot.waitForTicks(1); await cut11 }
+      if (k === 0) while (!alive()) await bot.waitForTicks(1)   // the respawn lands in this shot (the spawnpoint moved there in L09)
       if (k >= at(2)) { nz = Math.min(0.5, nz + 0.2); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
       K.base = K.aim(P(0.5, 1.4, nz)); look(k)
     }, -0.2)   // the cut waits for the respawn: the line ran 0.2 s long (0.9 s of silence before L12)
@@ -276,10 +279,11 @@ module.exports = {
     await line('L12', async (k, at) => {
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)
       if (k === at(2) + 4) {
-        gone('v_nitwit'); setMeter(1)
+        gone('v_nitwit')
         ctx.sound('entity.generic.extinguish_fire', 0.7, 1.2)
       }
       // the poof as his teleport lands (2 ticks after the command: he stood inside it for 6 frames)
+      if (k === at(2) + 6) setMeter(1)   // with the poof, as he goes
       if (k === at(2) + 6) ctx.particles('poof', P(0.5, 1, 0.5), { w: 0.6, h: 1.95 })   // vanilla's vanish cloud (a villager's box)
       look(k)
     })
@@ -299,7 +303,7 @@ module.exports = {
     await line('L14', async (k, at) => {
       if (k >= at(3) - 4) { from = from || { ...K.base }; K.turnTo(from, P(0.5, 1.0, -13), (k - at(3) + 5) / 10) }
       look(k)
-    })
+    }, -0.15)   // put('v_lib') adds 3 ticks before L15
     ctx.mark('face_off')
     // L15: now it's just her (alone in the line)
     await put('v_lib', 0.5, -11.5, 0)
@@ -327,7 +331,7 @@ module.exports = {
       }
       if (dead && k % 2 === 0) sparkle()
       if (!dead && trip === null) {   // her, then a tilt down to the cauldron, then back: eased (a 3-frame whip)
-        const want = k > at(1) ? 1 : 0   // eyes on the cauldron until he falls in (looking up at her he walked over it unseen)
+        const want = k > at(1) - 7 ? 1 : 0   // eyes on the cauldron until he falls in (looking up at her he walked over it unseen)
         if (want !== aim17) { aim17 = want; from17 = { ...K.base }; k17 = k }
         if (from17) K.turnTo(from17, want ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5), (k - k17) / 7); else K.base = K.aim(P(0.5, 1.5, 0.5))
         look(k)
@@ -338,7 +342,8 @@ module.exports = {
     // reaching a dead player after ~1 s, so the motion comes from particles: she sparkles (a happy
     // villager), the cauldron smokes
     await line('L18', async (k, at) => {
-      if (k % 2 === 0) sparkle()
+      sparkle()   // every tick: the last second read nearly still
+      if (k === at(4)) ctx.mark('respawn_word')
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)   // "just SMILED": the nitwit's nod again
       if (k === at(3)) ctx.mark('go_on')                         // the view pushes in on "go on."
     })

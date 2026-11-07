@@ -404,7 +404,7 @@ def hud_ticks(timeline, duration, keep_inventory=False):
                     health = nh
             if rb is not None and not any(items):
                 nxt = next((st for st in states if st[0] >= t and any(st[3])), None)
-                if nxt is not None and nxt[0] - t < 1.5:
+                if nxt is not None and nxt[0] - t < 0.5:   # a late update, not a real pickup 1.5 s later (story_respawn_tax f1570)
                     items = nxt[3]
         cur = math.ceil(health)
         if cur < last:
