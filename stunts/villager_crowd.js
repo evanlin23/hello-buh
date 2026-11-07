@@ -149,7 +149,7 @@ module.exports = {
         bot.chat(`/kill @e[type=villager,tag=crowd${i - 1}]`)
         await this.settle(ctx)
       }
-      await this.cut(ctx, sx + 0.5, floor + 1, z + 4.5)
+      await this.cut(ctx, sx + 0.5, floor + 1, c.n >= 50 ? z + 6.5 : z + 4.5)   // (big crowds stop 2 further back: same walk)
       if (i > 0) ctx.mark(`cut${i}b`)                    // after the tp: the 200 crowd's teleport took 1.65 s (a 1 s STILL)
       ctx.mark('beat', { n: c.n })                       // walk on the cut (a 3-tick wait read as a freeze)
       // walk up behind them
