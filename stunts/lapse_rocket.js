@@ -87,14 +87,15 @@ function complex () {
     for (const [dx, dz] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]]) put(mx + dx, 26, mz + dz, 'sea_lantern', 6)
   }
   for (let z = 19; z <= 60; z++) for (let x = -2; x <= 2; x++) put(x, -1, z, Math.abs(x) === 2 ? 'yellow_concrete' : 'gray_concrete', 6)
-  // stage 7: the assembly hall back left, for scale (off the rocket's axis: straight behind it, the
-  // final shot showed the rocket against a white wall): 25x21x37 with a tall door and a flag stripe
-  for (let x = -66; x <= -42; x++) for (let y = 0; y <= 36; y++) for (let z = -62; z <= -42; z++) {
-    if (x !== -66 && x !== -42 && y !== 36 && z !== -62 && z !== -42) continue
+  // stage 7: the assembly hall out to the left, for scale: 19x23x37 with a tall door and a flag stripe
+  // (back left at 140 blocks from the last shot it faded in and out at the fog edge; straight behind,
+  // the rocket stood against a white wall)
+  for (let x = -66; x <= -48; x++) for (let y = 0; y <= 36; y++) for (let z = 6; z <= 28; z++) {
+    if (x !== -66 && x !== -48 && y !== 36 && z !== 6 && z !== 28) continue
     let name = 'white_concrete'
-    if (z === -42 && x >= -58 && x <= -50 && y <= 30) name = 'light_gray_concrete'   // the big door
-    if (z === -42 && x >= -48 && x <= -44 && y >= 28 && y <= 33) name = (y - 28) % 2 ? 'red_concrete' : 'white_concrete'
-    if (z === -42 && x >= -48 && x <= -46 && y >= 31 && y <= 33) name = 'blue_concrete'
+    if (x === -48 && z >= 12 && z <= 20 && y <= 30) name = 'light_gray_concrete'   // the big door, facing the pad
+    if (x === -48 && z >= 22 && z <= 26 && y >= 28 && y <= 33) name = (y - 28) % 2 ? 'red_concrete' : 'white_concrete'
+    if (x === -48 && z >= 24 && z <= 26 && y >= 31 && y <= 33) name = 'blue_concrete'
     put(x, y, z, name, 7)
   }
   // stage 8: ignition - fire filling the trench and pouring out of both ends, a ring of smoke rolling
@@ -115,7 +116,7 @@ function complex () {
     const r = 21 + (k * 7 % 5)
     const x = Math.round(Math.cos(a) * r), z = Math.round(Math.sin(a) * r)
     if (z > 18 && Math.abs(x) < 10) continue               // the road and the two small builds stay clear
-    puff(x, 1 + (k * 3 % 4), z, 2 + (k % 2))
+    puff(x, 2 + (k * 3 % 5), z, 3 + (k % 2))   // big enough to read from the last shot
   }
   for (let k = 0; k < 26; k++) {                          // the plume off the back of the trench, rising
     const t = k / 25
@@ -147,14 +148,14 @@ module.exports = makeStunt({
       [340, [-22, 22, 40], [0, 20, 0]],      // stage 1
       [490, [20, 30, 42], [0, 30, 0]],       // stage 2
       [620, [28, 40, 34], [0, 42, 0]],       // stage 3
-      [740, [12, 54, 36], [0, 52, 0]],       // the nose cone
-      [830, [42, 42, 30], [12, 32, 0]],      // the launch tower
+      [740, [12, 50, 40], [0, 46, 0]],       // the nose cone (lower: the tip sat under the clock)
+      [830, [32, 40, 52], [8, 32, 0]],       // the launch tower, from the south (from the east it hid the rocket)
       [910, [46, 24, 20], [10, 28, 0]],
       [960, [-6, 30, 66], [-4, 20, 0]],      // wide round the front (straight across skimmed the rocket)
-      [1010, [-58, 24, 36], [-34, 6, 0]],    // the fuel tanks and masts
-      [1110, [-62, 20, 30], [-36, 8, 0]],
-      [1200, [-30, 36, 0], [-54, 16, -50]],  // the hall rising back left
-      [1280, [-14, 36, 46], [0, 24, 0]],     // round to the front as the engines light
+      [1010, [-12, 22, 42], [-36, 6, 0]],    // the fuel tanks and masts, from the front
+      [1110, [-18, 18, 46], [-38, 8, -4]],
+      [1200, [-22, 30, 50], [-56, 14, 17]],  // the hall rising out to the left
+      [1280, [-14, 34, 62], [0, 24, 0]],     // round to the front as the engines light (wide of the rocket)
       [1340, [-8, 21, 84], [0, 26, 0]],      // the pull-back lands, smoke rolling round the pad
       [1378, [0, 20, 80], [0, 27, 0]]
     ],
