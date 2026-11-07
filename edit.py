@@ -976,9 +976,15 @@ def main():
             # frame late (black hearts on the first frame after an instant respawn: worker 3, tries)
             seq = tmp / "hudseq"
             seq.mkdir(exist_ok=True)
+            # (video start of each death screen, the first tick hud_ticks shows as dead)
+            ds_ticks = [(death_start(a_, args), int(math.ceil(a_ * 20 - 2e-5))) for a_, _b in death_windows(tl, args.death_screen)] \
+                if args.death_screen else []
             for j in range(int(math.ceil(dur * args.out_fps)) + 1):
                 t_out = shift + j / args.out_fps
                 st = ticks[min(len(ticks) - 1, int(math.floor(t_out * 20 + 1e-6)))]
+                for ds0, dtick in ds_ticks:   # the death screen starts on the frame grid (up to a frame
+                    if ds0 <= j / args.out_fps < dtick / 20 - shift:   # early): empty the HUD on the same frame
+                        st = ticks[min(len(ticks) - 1, dtick)]
                 if any(a <= t_out + 1e-6 < b for a, b in f1):   # F1 spans, frame-exact
                     st = "F1"
                 if st not in pngs:
