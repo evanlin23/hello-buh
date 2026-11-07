@@ -126,7 +126,7 @@ module.exports = {
       let countdown = null
       ctx.mark = (ev, extra) => {
         origMark(KEEP.has(ev) ? ev : `${ev}${k}`, extra)
-        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = t.time === 18000 ? 4 : t.mod === water ? 32 : 28   // night: the look back is black sky, cut at 0.2 s (reviews); water: cut once the look up the pillar has the pillar in frame
+        if (t.end && ev === t.end && countdown === null && i < n - 1) countdown = t.time === 18000 ? 4 : t.mod === water ? 27 : 28   // night: the look back is black sky, cut at 0.2 s (reviews); water: cut once the look up the pillar has the pillar in frame
       }
       const tick = () => { if (countdown !== null && --countdown === 0) { origMark(`cut${k}a`); this.cutMarked = true } }
       bot.on('physicsTick', tick)

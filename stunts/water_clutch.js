@@ -45,8 +45,11 @@ module.exports = {
     await bot.waitForTicks(this.fast ? 1 : 30)         // standing on the pillar (fast: in a series the cut opens looking down already)
     // peek straight down the pillar (at -0.6 from 60 up the view was just the horizon: the frame
     // review read 1 s of ocean as "idle, can't tell you're on a pillar")
-    if (!this.fast) await ctx.easeLook(0, -1.35, 500)
-    await ctx.easeLook(0, -1.45, this.fast ? 250 : 300)      // eyes straight down the pillar while jumping off (at -1.0 the pillar was out of shot: review)
+    // keep the yaw it was teleported with: setup's tp faces MC yaw 0 (south) = mineflayer pi, and easing to
+    // mineflayer 0 spun the whole world 180 degrees at every series cut (review, check 7)
+    const yaw0 = bot.entity.yaw
+    if (!this.fast) await ctx.easeLook(yaw0, -1.35, 500)
+    await ctx.easeLook(yaw0, -1.45, this.fast ? 250 : 300)      // eyes straight down the pillar while jumping off (at -1.0 the pillar was out of shot: review)
     ctx.select(1)                                      // pull out the water bucket
     await bot.waitForTicks(this.fast ? 2 : 6)
     ctx.mark('jump')
