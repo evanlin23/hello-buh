@@ -119,7 +119,7 @@ module.exports = makeStunt({
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
   small,
-  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 3, backTicks: 14, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
+  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 4, backTicks: 14, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
   big: {
     blocks: mansion(),
     hold: 'quartz_block', slot: 5,
