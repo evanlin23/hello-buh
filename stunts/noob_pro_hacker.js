@@ -15,20 +15,28 @@ const { plateau } = require('../lib/plateau')
 
 const TASKS = ['climb the mountain', 'cross the lava', 'escape the pit']
 const ROLES = [['NOOB', 'green'], ['PRO', 'blue'], ['HACKER', 'red']]
-const CMDS = ['/effect give @s levitation', '/fill ~ ~ ~ diamond_block', '/summon tnt ~ ~ ~']
+const CMDS = ['/effect give @s levitation 5 39', '/fill ~-6 ~-1 ~-1 ~6 ~ ~-8 diamond_block replace lava', '/summon tnt ~ ~ ~']
+const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 208 block(s)', 'Summoned new Primed TNT']
 
-// the mountain: a cone of stone with grass and snow on top, cut by a sheer cliff on the side we start
-// at (where the noob puts his ladders). Heights are relative to the field (floor).
-const MR = 15, MH = 26
+// the mountain: an uneven peak (lobed outline, ridges down the flanks) of stone with grass, gravel and
+// snow on top, cut by a sheer cliff on the side we start at (where the noob puts his ladders), with a
+// flat summit (the pro's pearl lands on it). Heights are relative to the field (floor).
+// (A plain cone read as a stepped stone pyramid in the frame review.)
+const MR = 18, MH = 24, MB = 24              // MB: the loop's bounding half-width
 function mh (dx, dz) {
-  const r = Math.hypot(dx, dz * 1.1)
-  if (r > MR) return 0
   if (dz > cliff(dx)) return 0
-  if (r < 3.2) return MH                     // a flat summit (the pro's pearl lands on it)
-  const h = MH * (1 - Math.pow(r / MR, 1.4)) + 1.6 * Math.sin(dx * 0.55 + 0.3) * Math.cos(dz * 0.5) + 1.1 * Math.sin((dx + dz) * 0.8)
-  return Math.max(0, Math.round(h))
+  const r = Math.hypot(dx, dz)
+  if (r < 3.2) return MH
+  const th = Math.atan2(dz, dx)
+  const R = MR * (1 + 0.18 * Math.sin(3 * th + 1.3) + 0.1 * Math.sin(5 * th + 0.4))
+  if (r > R) return 0
+  const t = r / R
+  const ridge = 2.2 * Math.abs(Math.sin(th * 4 + r * 0.25)) * (1 - t)
+  const h = MH * Math.pow(1 - t, 1.25) + ridge + 1.4 * Math.sin(dx * 0.7 + 0.3) * Math.cos(dz * 0.6) + 0.9 * Math.sin((dx - dz) * 1.1)
+  return Math.max(0, Math.min(MH - 1, Math.round(h)))
 }
 function cliff (dx) { return dx === 0 ? 3 : 3 + Math.round(0.6 * Math.sin(dx * 0.9) + 0.8 * Math.sin(dx * 0.37 + 1)) }
+const hash = (X, Z) => Math.abs(Math.sin(X * 12.9898 + Z * 78.233) * 43758.5453) % 1
 
 module.exports = {
   name: 'noob_pro_hacker',
@@ -37,16 +45,15 @@ module.exports = {
   botTimeout: 400,
   edit: {
     caption: 'noob vs pro vs hacker 💀', red: 'hacker', song: 'songs/funk_abnormal.mp3', dropAt: 'hack',
-    startAt: 'seg:0', endAfter: 'boom:1.0', deathScreen: true, onFire: 'in_lava:death', subsY: 0.16,
-    // the role as a card on every beat; the task on its noob beat; the hacker's typed command
-    cards: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ['seg', ROLES[i % 3][0], 1.1, ROLES[i % 3][1], i]),
-    subs: [
-      ...TASKS.map((t, i) => ['seg', `task ${i + 1}: ${t}`, 1.6, i * 3]),
-      ...CMDS.map((c, i) => ['typed', c, 1.4, i])
-    ],
+    startAt: 'seg:0', endAfter: 'boom:1.0', deathScreen: true, onFire: 'in_lava:death', subsY: 0.3,
+    // the role as a label for the whole beat (top centre), the task on its noob beat, and the
+    // hacker's command typed into the vanilla chat bar (Enter on the 'typed' mark) with its feedback
+    tags: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => ['seg', null, ROLES[i % 3][0], ROLES[i % 3][1], i]),
+    subs: TASKS.map((t, i) => ['seg', `task ${i + 1}: ${t}`, 1.6, i * 3]),
+    chat: CMDS.map((c, i) => [`typed${i}`, c, 0.9, 0.5, FEEDBACK[i]]),
     punch: [['hack', 0, 1.08], ['hack', 1, 1.08], ['boom', 0, 1.18]],
     shake: [['boom', 0, 22]],
-    flash: [['boom', 0, 0.6]],
+    flash: [['boom', 0, 0.35]],
     // the noob burning in the lava, cut to the death; every change of beat is a hard cut straight
     // from the end of one beat's action (x<k>) to the start of the next (g<k>): no teleport waits
     speed: [['burn_a', 'death:-0.2', 'cut'], ...[1, 2, 3, 4, 5, 6, 7, 8].map(k => [`x${k}`, `g${k}`, 'cut'])]
@@ -56,7 +63,7 @@ module.exports = {
     const { bot } = ctx
     const sp = bot.entity.position.floored()
     const x = sp.x, z = sp.z
-    const F = await plateau(ctx, { x0: x - 62, x1: x + 52, z0: z - 46, z1: z + 12, above: 40, below: 24, biome: 'minecraft:plains' })
+    const F = await plateau(ctx, { x0: x - 62, x1: x + 52, z0: z - 52, z1: z + 12, above: 40, below: 24, biome: 'minecraft:plains' })
     Object.assign(this, { x, z, F })
     await ctx.defaultRules()
     for (const c of ['/gamerule random_tick_speed 0', '/gamerule fire_spread_radius_around_player 0', '/gamerule fall_damage true',
@@ -69,21 +76,30 @@ module.exports = {
     Object.assign(this, { mx, mz })
     const H = (dx, dz) => mh(dx, dz)
     let n = 0
-    for (let dx = -MR; dx <= MR; dx++) {
-      for (let dz = -MR; dz <= MR; dz++) {
+    const trees = []
+    for (let dx = -MB; dx <= MB; dx++) {
+      for (let dz = -MB; dz <= MB; dz++) {
         const h = H(dx, dz)
         if (h < 1) continue
         const X = mx + dx, Z = mz + dz
         const steep = Math.max(...[[1, 0], [-1, 0], [0, 1], [0, -1]].map(([a, b]) => h - H(dx + a, dz + b)))
-        const top = h >= 21 ? 'snow_block' : steep > 2 ? 'stone' : 'grass_block'
-        if (h >= 2) bot.chat(`/fill ${X} ${F + 1} ${Z} ${X} ${F + h - 1} ${Z} stone`)
+        const hv = hash(X, Z)
+        const top = h >= 20 ? 'snow_block' : steep > 2 ? (hv < 0.3 ? 'andesite' : hv < 0.4 ? 'gravel' : 'stone') : (hv < 0.12 ? 'coarse_dirt' : 'grass_block')
+        if (h >= 2) bot.chat(`/fill ${X} ${F + 1} ${Z} ${X} ${F + h - 1} ${Z} ${h >= 20 ? "snow_block" : "stone"}`)
+        if (h >= 3 && /grass|dirt/.test(top)) bot.chat(`/setblock ${X} ${F + h - 1} ${Z} dirt`)
         bot.chat(`/setblock ${X} ${F + h} ${Z} ${top}`)
+        if (top === 'grass_block' && steep <= 1 && h < 16 && dz < cliff(dx) - 4 && hv > 0.965) trees.push([X, F + h + 1, Z])
         if (++n % 6 === 0) await bot.waitForTicks(1)
       }
     }
     await bot.waitForTicks(20)
+    for (const [X, Y, Z] of trees.slice(0, 14)) await ctx.cmd(`/place feature minecraft:spruce ${X} ${Y} ${Z}`)
+    ctx.log('trees', trees.length)
     this.wallZ = mz + cliff(0)                 // the cliff's face block row at dx 0
     this.cliffH = H(0, cliff(0))
+    // the noob's (and the hacker's) start: back from the cliff and off to the side, looking up at it
+    this.startX = mx + 3.5; this.startZ = this.wallZ + 9.5
+    this.startYaw = 180 - Math.atan2(3, 8) * 180 / Math.PI
     ctx.log('mountain: summit', H(0, 0), 'cliff at dx0', this.cliffH, 'wall z', this.wallZ)
 
     // --- 2. the lava lake: two deep on stone, flush with the grass ---
@@ -104,7 +120,7 @@ module.exports = {
     await ctx.cmd('/effect give @s saturation infinite 1 true')
     await ctx.hotbar([['ladder', 8]])
     // the noob's start: a step back from the cliff, facing it (north)
-    await ctx.tpCheck(mx + 0.5, F + 1, this.wallZ + 2.6, 180, -20)
+    await ctx.tpCheck(this.startX, F + 1, this.startZ, this.startYaw, -22)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
@@ -131,6 +147,7 @@ module.exports = {
     const dir = { x: -Math.sin(yaw) * Math.cos(pitch), y: Math.sin(pitch), z: -Math.cos(yaw) * Math.cos(pitch) }
     let p = { x: eye.x, y: eye.y - 0.1, z: eye.z }
     let v = { x: dir.x * 1.5, y: dir.y * 1.5, z: dir.z * 1.5 }
+    const path = []
     const solid = (q) => { const b = bot.blockAt(new Vec3(Math.floor(q.x), Math.floor(q.y), Math.floor(q.z))); return b && b.boundingBox === 'block' }
     for (let t = 0; t < 200; t++) {
       for (let s = 1; s <= 10; s++) {
@@ -138,10 +155,11 @@ module.exports = {
         if (solid(q)) {
           const pq = { x: p.x + v.x * (s - 1) / 10, y: p.y + v.y * (s - 1) / 10, z: p.z + v.z * (s - 1) / 10 }
           const top = Math.floor(pq.y) > Math.floor(q.y) && Math.floor(pq.x) === Math.floor(q.x) && Math.floor(pq.z) === Math.floor(q.z)
-          return { x: q.x, y: Math.floor(q.y) + 1, z: q.z, top, t }
+          return { x: q.x, y: Math.floor(q.y) + 1, z: q.z, top, t, path }
         }
       }
       p = { x: p.x + v.x, y: p.y + v.y, z: p.z + v.z }
+      path.push(p)
       v = { x: v.x * 0.99, y: v.y * 0.99 - 0.03, z: v.z * 0.99 }
     }
     return null
@@ -161,50 +179,76 @@ module.exports = {
       ctx.mark('place', { x: at.x, y: at.y, z: at.z })
     }
     const typed = async (i) => {                   // the hacker hits Enter on his command
-      ctx.mark('typed', { n: i })
+      ctx.mark('typed', { n: i }); ctx.mark(`typed${i}`)   // chat takes an event's first occurrence
       ctx.sound('ui.button.click', 0.4, 1.4)
     }
 
+    // move toward a world direction whatever way I'm looking: the forward/back/left/right combination
+    // that points closest to (dirX, dirZ) (the camera looks out while the feet climb)
+    const steer = (dirX, dirZ) => {
+      const yaw = bot.entity.yaw
+      const fw = [-Math.sin(yaw), -Math.cos(yaw)], lf = [-Math.sin(yaw + Math.PI / 2), -Math.cos(yaw + Math.PI / 2)]
+      let best = null
+      for (const f of [-1, 0, 1]) {
+        for (const l of [-1, 0, 1]) {
+          if (!f && !l) continue
+          const vx = f * fw[0] + l * lf[0], vz = f * fw[1] + l * lf[1]
+          const d = (vx * dirX + vz * dirZ) / Math.hypot(vx, vz)
+          if (!best || d > best.d) best = { f, l, d }
+        }
+      }
+      bot.setControlState('forward', best.f === 1); bot.setControlState('back', best.f === -1)
+      bot.setControlState('left', best.l === 1); bot.setControlState('right', best.l === -1)
+    }
+    const angTo = (q) => { const e = bot.entity.position.offset(0, 1.62, 0), d = q.minus(e); return [Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z))] }
+    const lerpLook = (yaw, pitch, k) => {         // one tick of a smooth follow
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      bot.look(bot.entity.yaw + dy * k, bot.entity.pitch + (pitch - bot.entity.pitch) * k, true)
+    }
+
     // ================= task 1: the mountain =================
-    // NOOB: ladders by hand, runs out a third of the way up, lets go
+    // NOOB: walks up to the cliff, ladders by hand, runs out a third of the way up, lets go
     beat({ task: 0 })
     ctx.select(0)
-    bot.setControlState('forward', true)
-    ctx.easeLook(N, 0.55, 500)                     // up the cliff: that's a long way
-    const lz = wallZ + 1                           // the ladder column
-    let placed = 0
-    for (let w = 0; w < 200 && placed < 8; w++) {
-      const fy = bot.entity.position.y
+    const lz = wallZ + 1                           // the ladder column (mx, lz)
+    const col = new Vec3(mx + 0.5, F + 1, lz + 0.5)
+    let placed = 0, turned = false
+    for (let w = 0; w < 260 && placed < 8; w++) {
+      const p = bot.entity.position
+      const dx = col.x - p.x, dz = col.z - p.z
+      if (placed === 0) {                           // the walk in: eyes up the cliff
+        const n = Math.hypot(dx, dz) || 1
+        steer(dx / n, dz / n)
+        if (w === 0) ctx.easeLook(bot.entity.yaw, 0.5, 700)
+      } else steer(Math.max(-0.5, Math.min(0.5, dx * 2)), -1)   // into the ladders, centred on the column
+      const fy = p.y
       const want = Math.floor(fy + 0.35) + (placed === 0 ? 0 : 1)   // the cell the feet climb into next
-      if (bot.entity.position.z < lz + 0.75 && want >= F + 1 + placed) {
+      if (Math.hypot(dx, dz) < 1.4 && p.z < lz + 1.7 && want >= F + 1 + placed) {
         const y = F + 1 + placed
         placeAt(new Vec3(mx, y, wallZ), 3, [0.5, 0.5, 1], { x: mx, y, z: lz })
         ctx.sound('block.ladder.place', 1, 0.9)
         placed++
-        if (placed === 4) ctx.easeLook(N, 0.85, 700)
       }
+      if (placed === 2 && !turned) { turned = true; ctx.easeLook(-0.75, -0.35, 1300) }   // looks out: the ground dropping away
       await bot.waitForTicks(1)
     }
     ctx.mark('ladders_out')
-    // out of ladders at the top one: look down... and let go
-    for (let w = 0; w < 30 && bot.entity.position.y < F + placed - 0.2; w++) await bot.waitForTicks(1)
-    bot.setControlState('forward', false)
-    await look(N + 0.2, -0.9, 300)
-    ctx.log('noob at', bot.entity.position.y - F, 'blocks up')
-    bot.setControlState('back', true)            // lets go: backs off the ladder column and drops
-    ctx.easeLook(N + 0.1, -1.25, 400)
-    for (let w = 0; w < 14 && bot.entity.position.z < lz + 1.45; w++) await bot.waitForTicks(1)
-    bot.setControlState('back', false)
+    // out of ladders at the top one: looks down... and lets go
+    for (let w = 0; w < 30 && bot.entity.position.y < F + placed - 0.2; w++) { steer(0, -1); await bot.waitForTicks(1) }
+    bot.clearControlStates()
+    await look(-0.6, -1.0, 300)
+    ctx.log('noob at', (bot.entity.position.y - F).toFixed(1), 'blocks up')
+    ctx.easeLook(-0.5, -1.3, 400)
+    for (let w = 0; w < 14 && bot.entity.position.z < lz + 1.45; w++) { steer(0, 1); await bot.waitForTicks(1) }
+    bot.clearControlStates()
     for (let w = 0; w < 60 && !bot.entity.onGround; w++) await bot.waitForTicks(1)
-    ctx.mark('noob_fell', { hp: bot.health })
-    ctx.log('noob fell, health', bot.health)
-    await look(N, 0.75, 450)                       // and looks back up at the ladders
+    ctx.mark('noob_fell')
+    await look(-0.2, 0.85, 500)                    // and looks back up at the ladders he fell off
     await bot.waitForTicks(3)
     endBeat()
 
-    // PRO: an ender pearl onto the summit
-    const sz = wallZ + 16
-    await bot.waitForTicks(1)
+    // PRO: an ender pearl onto the summit, the camera following it
+    const sz = wallZ + 10
     await this.cutTo(ctx, mx + 0.5, F + 1, sz + 0.5, 180, -20)
     await ctx.cmd(`/fill ${mx} ${F + 1} ${lz} ${mx} ${F + 12} ${lz} air replace ladder`)
     await ctx.hotbar([['ender_pearl', 16]])
@@ -219,43 +263,46 @@ module.exports = {
       if (!best || err < best.err) best = { pitch, err, hit }   // the middle of the flat summit (the flattest one clipped the cliff's edge)
     }
     if (!best || best.err > 3) { ctx.log('no pearl solution', best); return false }
-    ctx.log('pearl: pitch', best.pitch.toFixed(3), 'lands', best.hit, 'err', best.err.toFixed(2))
+    ctx.log('pearl: pitch', best.pitch.toFixed(3), 'lands', best.hit.x.toFixed(1), best.hit.y, best.hit.z.toFixed(1), 'err', best.err.toFixed(2))
     await look(N, best.pitch, 350)
     bot.activateItem(); bot.swingArm(); ctx.sound('entity.ender_pearl.throw', 1, 0.5)
     ctx.mark('pearl')
     const p0 = bot.entity.position.clone()
-    // follow it up and over the cliff top
-    ctx.easeLook(N, 0.35, 900)
-    for (let w = 0; w < 120 && bot.entity.position.distanceTo(p0) < 4; w++) await bot.waitForTicks(1)
+    const path = best.hit.path
+    for (let w = 0; w < 120 && bot.entity.position.distanceTo(p0) < 4; w++) {
+      const q = path[Math.min(path.length - 1, w + 2)]
+      if (q) { const [ya, pa] = angTo(new Vec3(q.x, q.y, q.z)); lerpLook(ya, pa, 0.35) }   // eyes on the pearl
+      await bot.waitForTicks(1)
+    }
     ctx.sound('entity.player.teleport', 1); ctx.particles('portal', bot.entity.position, { count: 40 })
     ctx.mark('summit')
-    ctx.log('pro at', bot.entity.position, 'y+', (bot.entity.position.y - F).toFixed(1))
-    if (bot.entity.position.y < F + 18) { ctx.log('pearl missed the summit'); return false }
-    // on top: look out over the edge, down at the field we started from
-    await look(Math.PI + 0.25, -0.75, 700)
-    await bot.waitForTicks(4)
+    ctx.log('pro at', bot.entity.position.x.toFixed(1), bot.entity.position.z.toFixed(1), 'y+', (bot.entity.position.y - F).toFixed(1))
+    if (bot.entity.position.y < F + MH - 1) { ctx.log('pearl missed the summit'); return false }
+    // on top: a look over the far side, the whole mountain under my feet
+    await look(N + 0.45, -0.6, 700)
+    await bot.waitForTicks(3)
     endBeat()
 
-    // HACKER: /effect give @s levitation
-    await this.cutTo(ctx, mx + 0.5, F + 1, wallZ + 2.6, 180, -20)
+    // HACKER: /effect give @s levitation, eyes on the peak as he shoots past it
+    await this.cutTo(ctx, this.startX, F + 1, this.startZ, this.startYaw, -22)
     await ctx.hotbar([])
     beat()
-    ctx.easeLook(N, 0.2, 500)
-    await bot.waitForTicks(14)
+    const peak = new Vec3(mx + 0.5, F + MH + 1, mz + 0.5)
+    ctx.easeLook(bot.entity.yaw, 0.45, 600)
+    await bot.waitForTicks(20)
     await typed(0)
     bot.chat('/effect give @s levitation 5 39 true')
     ctx.mark('hack')
     ctx.sound('entity.player.levelup', 0.6, 1.4)
-    for (let w = 0; w < 70; w++) {
-      const up = bot.entity.position.y - F
-      if (w === 8) ctx.easeLook(N, -0.15, 700)                  // the cliff face rushing past
-      if (w === 26) ctx.easeLook(N + 0.3, -1.3, 900)            // over the peak: the mountain below, shrinking
+    for (let w = 0; w < 48; w++) {
+      const [ya, pa] = angTo(peak)
+      lerpLook(ya, Math.max(-1.45, pa - 0.15), 0.18)
       await bot.waitForTicks(1)
-      if (up > 80 || w > 46) break
+      if (bot.entity.position.y - F > 85) break
     }
-    endBeat()
     ctx.log('hacker up', (bot.entity.position.y - F).toFixed(1))
     ctx.mark('lev_top')
+    endBeat()
 
     // ================= task 2: the lava lake =================
     const lmx = (lx0 + lx1) / 2 + 0.5
@@ -314,8 +361,7 @@ module.exports = {
     bot.clearControlStates()
     ctx.mark('bridged')
     if (bot.entity.position.y < F + 0.9 || ctx.died) { ctx.log('pro fell', bot.entity.position); return false }
-    await look(Math.PI + 0.3, -0.55, 550)                         // back over the bridge
-    await bot.waitForTicks(3)
+    await look(N + 0.3, -0.6, 400)                                // across: lava on both sides of the last block
     endBeat()
 
     // HACKER: /fill ... diamond_block
@@ -323,15 +369,15 @@ module.exports = {
     await ctx.cmd(`/fill ${lx0} ${F - 1} ${lz0} ${lx1} ${F} ${lz1} lava replace cobblestone`)
     await ctx.hotbar([])
     beat()
-    ctx.easeLook(N, 0.3, 500)
-    await bot.waitForTicks(12)
+    ctx.easeLook(N, -0.5, 500)                                    // the lava he isn't going to bridge
+    await bot.waitForTicks(20)
     await typed(1)
     bot.chat(`/fill ${lx0} ${F - 1} ${lz0} ${lx1} ${F} ${lz1} diamond_block replace lava`)
     ctx.mark('hack')
     ctx.sound('entity.player.levelup', 0.6, 1.4); ctx.sound('block.amethyst_block.chime', 1, 1)
     await bot.waitForTicks(6)
     bot.setControlState('forward', true); bot.setControlState('sprint', true)
-    ctx.easeLook(N - 0.25, 0.35, 700)
+    ctx.easeLook(N - 0.15, -0.35, 700)
     for (let w = 0; w < 60 && bot.entity.position.z > lz0 + 2; w++) {
       if (w % 9 === 4) bot.setControlState('jump', true); else bot.setControlState('jump', false)
       await bot.waitForTicks(1)
@@ -400,14 +446,13 @@ module.exports = {
     await this.cutTo(ctx, pfx, F - 6, pfz, 180, 30)
     await ctx.hotbar([])
     beat()
-    ctx.easeLook(N, -0.4, 400)
-    await bot.waitForTicks(12)
+    ctx.easeLook(N, -0.75, 600)                                   // where the TNT goes: at my feet
+    await bot.waitForTicks(20)
     await typed(2)
     const fp = bot.entity.position
-    for (let k = 0; k < 4; k++) bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:16}`)
+    for (let k = 0; k < 6; k++) bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:16}`)
     ctx.sound('entity.tnt.primed', 1)
     ctx.mark('hack')
-    ctx.easeLook(N, -0.75, 500)                                   // the TNT at my feet
     let boomed = false
     const onBoom = () => { if (!boomed) { boomed = true; ctx.mark('boom') } }
     bot._client.on('explosion', onBoom)
