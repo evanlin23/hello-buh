@@ -473,6 +473,38 @@ function sheepColor (s, tick) {
 // hitbox width / height (EntityType sizes) for the fire overlay
 const HITBOX_W = { zombie: 0.6, skeleton: 0.6, creeper: 0.6, villager: 0.6, cow: 0.9, sheep: 0.9, pig: 0.9, chicken: 0.4, spider: 1.4, enderman: 0.6, iron_golem: 1.4, wolf: 0.6, horse: 1.3965, slime: 0.52, husk: 0.6, drowned: 0.6, witch: 0.6, pillager: 0.6, blaze: 0.6, warden: 0.9 }
 const HITBOX_H = { zombie: 1.95, skeleton: 1.99, creeper: 1.7, villager: 1.95, cow: 1.4, sheep: 1.3, pig: 0.9, chicken: 0.7, spider: 0.9, enderman: 2.9, iron_golem: 2.7, wolf: 0.85, horse: 1.6, slime: 0.52, husk: 1.95, drowned: 1.95, witch: 1.95, pillager: 1.95, blaze: 1.8, warden: 2.9 }
+// Baby models (AgeableListModel / BabyModelTransform): [scaleHead, yHeadOffset, zHeadOffset,
+// babyHeadScale, babyBodyScale]. The body draws at 1/bodyScale from the ground; the head parts at
+// f = scaleHead ? 1.5 / headScale : 1 (adult size when false: piglets and calves have big heads),
+// moved by the offsets (Java px, y down) before scaling. Villagers just draw at half size.
+// Mobs not listed: half size with the head at 0.75 of the adult's.
+const BABY = {
+  pig: [false, 4, 4, 2, 2], cow: [false, 10, 4, 2, 2], mooshroom: [false, 10, 4, 2, 2], sheep: [false, 8, 4, 2, 2],
+  chicken: [false, 5, 2, 2, 2], polar_bear: [true, 16, 4, 2.25, 2], panda: [true, 23, 4.8, 2.7, 3], turtle: [true, 120, 0, 9, 6],
+  cat: [true, 10, 4, 2, 2], ocelot: [true, 10, 4, 2, 2],
+  zombie: [true, 16, 0, 2, 2], husk: [true, 16, 0, 2, 2], drowned: [true, 16, 0, 2, 2], zombie_villager: [true, 16, 0, 2, 2], zombified_piglin: [true, 16, 0, 2, 2], piglin: [true, 16, 0, 2, 2],
+  villager: 'uniform', wandering_trader: 'uniform'
+}
+function poseBaby (r, name) {
+  const t = BABY[name] || [true, 0, 0, 2, 2]
+  if (t === 'uniform') { r.obj.scale.multiplyScalar(0.5); return }
+  const [scaleHead, yOff, zOff, hs, bs] = t
+  r.obj.scale.multiplyScalar(1 / bs)
+  const h = r.bones.head
+  if (!h || !h.userData.pivot) return
+  if (!h.userData.babyPos) {
+    // the head's pivot in model px (Bedrock y up from the ground; Java y = 24 - y), moved and scaled
+    // as Java does, then back into the body's 1/bs space, relative to the parent bone's pivot
+    const f = scaleHead ? 1.5 / hs : 1, p = h.userData.pivot
+    const ppiv = h.parent && h.parent.userData.pivot ? h.parent.userData.pivot : new THREE.Vector3()
+    const q = new THREE.Vector3(p.x * f, 24 - (24 - p.y + yOff) * f, (p.z + zOff) * f).multiplyScalar(bs)
+    h.userData.babyPos = q.sub(ppiv); h.userData.babyScale = f * bs
+  }
+  h.position.copy(h.userData.babyPos); h.scale.setScalar(h.userData.babyScale)
+}
+
+function B_isBlock (n) { return n === 'falling_block' || n === 'moving_block' || n === 'item_frame' || n === 'glow_item_frame' }
+
 export class EntityLayer {
   constructor (scene, regs) { this.scene = scene; this.regs = regs || {}; this.live = new Map(); this.pending = new Set(); this.blockModels = new Map() }
   static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
@@ -779,6 +811,7 @@ export class EntityLayer {
         if (r.obj.scale.x !== 1 && s.name !== 'falling_block') r.obj.scale.setScalar(1)
         if (r.mat?.userData.white) r.mat.userData.white.value = 0
       }
+      if (s.extra && s.extra.baby && !B_isBlock(s.name)) poseBaby(r, s.name)
       // limb swing like WalkAnimationState: per game tick, target = min(1, distance * 4), speed eases
       // toward it by 0.4 and the phase advances by speed. Frames come at 60 fps (3 per tick), so
       // measure over elapsed ticks, not per frame (per frame read a third of the speed).

@@ -55,6 +55,8 @@ class Mixer:
         variants = self.defs[event]["sounds"]
         v = self.rng.choice(variants)
         v = {"name": v} if isinstance(v, str) else v
+        if v.get("type") == "event":   # points at another sound event (parrot imitations), not a file
+            return self.play(v["name"], t, volume * v.get("volume", 1.0), pitch * v.get("pitch", 1.0))
         f = asset(f"minecraft/sounds/{v['name']}.ogg")
         x = decode(f, pitch * v.get("pitch", 1.0)) * volume * v.get("volume", 1.0)
         i = int(t * SR)
