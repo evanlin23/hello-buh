@@ -18,7 +18,7 @@ module.exports = {
   name: 'story_respawn_tax',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every time I respawn, someone disappears 😳',
-  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:-0.2', deathScreen: true, onFire: 'burn:death' },
+  edit: { caption: 'every time I respawn, someone disappears 😳', red: 'respawn,', story: 'stories/respawn_tax', startAt: 'line:0', endAfter: 'story_end:-0.2', deathScreen: true, onFire: 'burn:death', punch: [['go_on', 1, 0.08]] },
   expectDeath: true,
 
   async setup (ctx) {
@@ -121,10 +121,12 @@ module.exports = {
     // something moving behind every death screen: smoke at a point in view, every 3 ticks while dead
     let deadView = null
     bot.on('death', () => {
-      const e = bot.entity, f = { x: -Math.sin(e.yaw), z: -Math.cos(e.yaw) }
+      // 2.5 blocks along the view, pitch included: level, it sat inside the ground the fall death looks down at
+      // and that death screen froze (retention audit)
+      const e = bot.entity, c = Math.cos(e.pitch), f = { x: -Math.sin(e.yaw) * c, z: -Math.cos(e.yaw) * c }
       const d = 2.5
       // not on a cauldron death: the fire can kill before tripStep returns 'dead', and the smoke sat on the gold block
-      if (!noSmoke && trip === null) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 - 1.6), e.position.z + f.z * d)
+      if (!noSmoke && trip === null) deadView = new ctx.Vec3(e.position.x + f.x * d, Math.max(F + 0.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z + f.z * d)
     })
     let noSmoke = false
     bot.on('physicsTick', () => { if (ctx.died && deadView && !noSmoke && ctx.tick % 3 === 0) ctx.particles('smoke', deadView, { count: 2 }) })
@@ -255,7 +257,7 @@ module.exports = {
       if (k === 0) { while (!alive()) await bot.waitForTicks(1); await cut(3.5, 3.6, P(0.5, 1.4, -2)) }
       if (k >= at(2)) { nz = Math.min(0.5, nz + 0.2); say(`/tp @e[tag=v_nitwit] ${X + 0.5} ${F + 1} ${(Z + nz).toFixed(3)} 0 0`) }
       K.base = K.aim(P(0.5, 1.4, nz)); look(k)
-    })
+    }, -0.2)   // the cut waits for the respawn: the line ran 0.2 s long (0.9 s of silence before L12)
     // L12: he wasn't taken. He volunteered (a nod, a puff, gone)
     await line('L12', async (k, at) => {
       if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)
@@ -296,16 +298,18 @@ module.exports = {
     ctx.mark('face_on', { near: [X + 0.5, Z + 0.5, 1] })
     await line('L16', async (k) => { go(k > 6 && k < 12); look(k) })
     go(false)
+    // her sparkles around her, not on her face (they hid it under the death text: retention audit)
+    const sparkle = () => { for (let i = 0; i < 2; i++) { const a = Math.random() * Math.PI * 2; ctx.particles('happy', P(0.5 + Math.cos(a) * 0.55, 1.2 + Math.random() * 1.3, 0.5 + Math.sin(a) * 0.55), { count: 2 }) } }
     // L17: and today, I tripped again
     dead = false; trip = null; landed = 0
     await line('L17', async (k, at) => {
       go(!dead && trip === null && k >= at(2) - 11)   // the fall lands on "AGAIN."
       if (k === at(1)) ctx.sound('entity.player.small_fall', 0.6, 1)
       if (!dead) {
-        const st = tripStep(P(0.5, 2.0, 0.5))   // dies facing her: her face between the title and the buttons
+        const st = tripStep(P(0.5, 2.3, 0.5))   // dies facing her: her face in the clear band between the Score line and the buttons
         if (st === 'dead') { dead = true; deadView = null; noSmoke = true }   // nothing between us: she sparkles instead
       }
-      if (dead && k % 3 === 0) ctx.particles('happy', P(0.5, 1.6 + Math.random() * 0.6, 0.5), { count: 2 })
+      if (dead && k % 2 === 0) sparkle()
       if (!dead && trip === null) { K.base = K.aim(k > at(1) && k < at(2) ? P(0.5, 0.4, 4.5) : P(0.5, 1.5, 0.5)); look(k) }
     })
     go(false)
@@ -313,7 +317,9 @@ module.exports = {
     // reaching a dead player after ~1 s, so the motion comes from particles: she sparkles (a happy
     // villager), the cauldron smokes
     await line('L18', async (k, at) => {
-      if (k % 3 === 0) ctx.particles('happy', P(0.5, 1.6 + Math.random() * 0.6, 0.5), { count: 2 })
+      if (k % 2 === 0) sparkle()
+      if (k === at(1)) ctx.sound('entity.villager.yes', 1, 1)   // "just SMILED": the nitwit's nod again
+      if (k === at(3)) ctx.mark('go_on')                         // the view pushes in on "go on."
     })
     ctx.mark('story_end')
     await bot.waitForTicks(4)
