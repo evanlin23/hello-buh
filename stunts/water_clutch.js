@@ -19,16 +19,21 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // flattened pad: the bot lands ~7 blocks out and water flows toward any drop within 4 blocks
-    const R = 16
-    await ctx.cmd(`/fill ${x - R} ${floor - 3} ${z - R} ${x + R} ${floor - 1} ${z + R} dirt`)
-    await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R} grass_block`)
-    for (let y0 = floor + 1; y0 <= top + 4; y0 += 30) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(y0 + 29, top + 4)} ${z + R} air`)
+    // a round clearing, not a 33x33 square: the sharp-edged square pad read as command-built in
+    // every fall (worker 3, tries review)
+    const R = 12
+    for (let dz = -R; dz <= R; dz++) {
+      const w = Math.floor(Math.sqrt(R * R - dz * dz + R)), zz = z + dz
+      await ctx.cmd(`/fill ${x - w} ${floor - 3} ${zz} ${x + w} ${floor - 1} ${zz} dirt`)
+      await ctx.cmd(`/fill ${x - w} ${floor} ${zz} ${x + w} ${floor} ${zz} grass_block`)
+      for (let y0 = floor + 1; y0 <= top + 4; y0 += 30) await ctx.cmd(`/fill ${x - w} ${y0} ${zz} ${x + w} ${Math.min(y0 + 29, top + 4)} ${zz} air`)
+    }
     await ctx.cmd(`/fill ${x} ${floor + 1} ${z} ${x} ${top} ${z} cobblestone`)
     if (LAYERS > 0) await ctx.cmd(`/setblock ${x} ${top + 1} ${z} snow[layers=${LAYERS}]`)
     await ctx.hotbar(['diamond_sword', 'water_bucket', ['cobblestone', 64], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, top + 1 + Math.max(0, LAYERS - 1) / 8, z + 0.5, 0, 20)
     await ctx.cmd('/gamemode survival'); await ctx.cmd('/effect give @s instant_health 1 10 true')
-    ctx.select(0)
+    ctx.select(1)   // the bucket from the first frame (0.85 s of a sword first: review)
     await bot.waitForTicks(30)
     return { x, y: floor, z }
   },
@@ -59,7 +64,8 @@ module.exports = {
       const inReach = above + 1.62 < 4.45
       // too late: any water that lands before the player saves them (the server sees it first), so
       // a real "too late" never gets the water down - just the swing as the ground arrives
-      if (mode === 'late' && !placed && above < 0.8) { placed = true; bot.swingArm(); ctx.mark('too_late') }
+      // just out of time, still in the air: at 0.8 it was the death frame and read as 'forgot' (review)
+      if (mode === 'late' && !placed && above < 2.2) { placed = true; bot.swingArm(); ctx.mark('too_late') }
       if (mode === 'late') return
       if (!placed && mode !== 'skip' && vy < -0.5 && inReach) {
         ctx.select(1)
@@ -84,7 +90,7 @@ module.exports = {
     const below = bot.blockAt(bot.entity.position.floored())
     if (below && below.name === 'water') {
       await bot.look(bot.entity.yaw, -Math.PI / 2, true); bot.activateItem(); await bot.waitForTicks(4)
-      ctx.sound('item.bucket.fill'); ctx.particles('splash', { x: bot.entity.position.x, y: this.floor + 1.9, z: bot.entity.position.z }, { count: 8 })
+      ctx.sound('item.bucket.fill')   // no splash: vanilla doesn't splash on a fill (blue squares on dry grass: review)
     }
     await bot.waitForTicks(6)
     const dx = this.x + 0.5 - bot.entity.position.x, dz = this.z + 0.5 - bot.entity.position.z

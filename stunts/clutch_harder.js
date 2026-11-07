@@ -90,7 +90,7 @@ module.exports = {
     await ctx.cmd('/gamemode survival')
     await ctx.cmd('/effect give @s instant_health 1 10 true')
     if (t.halfHeart) await ctx.cmd('/damage @s 19 minecraft:generic')
-    ctx.select(t.hotbar === 'pearl' ? 0 : 0)
+    ctx.select(t.hotbar === 'pearl' ? 0 : 1)   // water tiers open on the bucket, the lava tier on the 'water' bucket
     await ctx.bot.waitForTicks(6)
   },
 

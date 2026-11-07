@@ -310,13 +310,17 @@ def death_windows(timeline, event="death"):
     death, a spurious instant respawn, death again) are one death, so the screen doesn't blink off
     (dig_up). An earlier rule ignored respawns under 0.5 s, which, with immediate_respawn, kept every
     other try dead for its whole length (tries: empty HUD on tries 2, 4 and 6)."""
-    raw, open_ = [], None
+    raw, open_, up = [], None, None
     for e in timeline or []:
         t = e["t"] / 1000
+        if open_ is not None and up is None and e["event"] == "health" and (e.get("health") or 0) > 0:
+            up = t   # the health coming back: the instant respawn, when no respawn mark was recorded
         if e["event"] == event and open_ is None:
-            open_ = t
+            open_, up = t, None
         elif e["event"] == event and t - open_ > 1.5:   # older recordings: no respawn mark (instant respawn)
-            raw.append([open_, open_ + 0.05]); open_ = t
+            # up to the health coming back, not a fixed tick: the hearts were black on the first
+            # frame after 5 of 6 instant respawns (worker 3, tries)
+            raw.append([open_, up if up is not None and up - open_ < 1.5 else open_ + 0.05]); open_, up = t, None
         elif e["event"] == "respawn" and open_ is not None:
             raw.append([open_, t]); open_ = None
     if open_ is not None:
