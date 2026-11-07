@@ -521,7 +521,7 @@ export class EntityLayer {
       obj = new THREE.Group(); obj.add(m); mat = m.material
       if (extra.flash !== undefined) {   // primed TNT: white overlay that blinks
         const w = new THREE.Mesh(bm.geo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, depthFunc: THREE.LessEqualDepth }))
-        w.position.set(-0.5, 0, -0.5); w.visible = !!extra.flash; obj.add(w)
+        w.position.set(-0.5, 0, -0.5); w.visible = !!extra.flash; obj.add(w); bones.flashMat = w.material
       }
       if (extra.scale) obj.scale.setScalar(extra.scale)
     } else if ((name === 'item_frame' || name === 'glow_item_frame') && this.blockModels.has(`frame:${name}`)) {
@@ -672,7 +672,7 @@ export class EntityLayer {
       if (extra.scale && extra.scale !== 1) { const s = extra.scale; m.position.set(-(s - 1) / 2, -(s - 1) / 2, -(s - 1) / 2); m.scale.setScalar(s) }
       if (extra.flash) {
         const w = new THREE.Mesh(bm.geo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8, depthFunc: THREE.LessEqualDepth }))
-        w.position.copy(m.position); w.scale.copy(m.scale); g.add(w)
+        w.position.copy(m.position); w.scale.copy(m.scale); g.add(w); bones.flashMat = w.material
       }
       obj.add(g); bones.contentMat = m.material
     }
@@ -693,6 +693,9 @@ export class EntityLayer {
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
+      // the white flash (OverlayTexture) is mixed in before the lightmap: it darkens with the light too
+      // (a primed TNT flashed full white under a thunderstorm sky: worker 18, worse_sky)
+      if (r.bones.flashMat) r.bones.flashMat.color.setRGB(...LL)
       // on fire (EntityRenderDispatcher.renderFlame): fire_0 / fire_1 layers facing the camera, scale
       // 1.4 x width, each 1 x 1.4 of that, 0.45 higher and 0.9 x smaller than the last, up the height
       if (s.extra && s.extra.fire && !s.player) {
