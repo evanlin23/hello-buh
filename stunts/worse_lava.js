@@ -10,6 +10,7 @@
 //  30 s  the lava rises every 0.7 s: the bot pillars, and at 0.00 the lava stops one block below it
 // Commands only build the set and play the game master (lava layers, summons, the time of day);
 // every action of the player is a real survival action.
+const kit = require('../lib/escalation')
 const L = 8            // island half-size (17 x 17)
 const R = 56           // lava sea half-size (wide: the cut hillsides at the edge of the cleared box stay far back)
 const LEVEL = 100      // ticks per level (5 s)
@@ -37,9 +38,8 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
-    if (!g) throw new Error('no dry land')
+    // flat ground: the cleared box against a hill left a cut wall behind the oak (review 3)
+    const g = await kit(ctx).flatSite(R + 10)
     const { x, z } = g, G = g.y
     this.x = x; this.z = z; this.G = G
     await ctx.defaultRules()
@@ -55,16 +55,17 @@ module.exports = {
     for (const y of [G + 1, G + 2]) await ctx.cmd(`/fill ${x - R} ${y} ${z - R} ${x + R} ${y} ${z + R} lava replace air`)
     // a lone oak on a dirt islet off the south edge: the first rise swallows the islet's top on camera
     // (from on the island its outer faces point away), and in the finale the lava climbs its trunk
-    await ctx.cmd(`/fill ${x} ${G + 1} ${z + 11} ${x} ${G + 3} ${z + 11} dirt`)
-    await ctx.cmd(`/fill ${x - 2} ${G + 8} ${z + 9} ${x + 2} ${G + 9} ${z + 13} oak_leaves[persistent=true]`)
-    await ctx.cmd(`/fill ${x - 1} ${G + 10} ${z + 10} ${x + 1} ${G + 10} ${z + 12} oak_leaves[persistent=true]`)
-    await ctx.cmd(`/fill ${x} ${G + 4} ${z + 11} ${x} ${G + 9} ${z + 11} oak_log`)
+    // a tall one: the bot pillars to G+11 and the trunk has to stay at eye level for the lava line on it to read
+    await ctx.cmd(`/fill ${x} ${G + 1} ${z + 13} ${x} ${G + 3} ${z + 13} dirt`)
+    await ctx.cmd(`/fill ${x - 2} ${G + 13} ${z + 11} ${x + 2} ${G + 14} ${z + 15} oak_leaves[persistent=true]`)
+    await ctx.cmd(`/fill ${x - 1} ${G + 15} ${z + 12} ${x + 1} ${G + 15} ${z + 14} oak_leaves[persistent=true]`)
+    await ctx.cmd(`/fill ${x} ${G + 4} ${z + 13} ${x} ${G + 14} ${z + 13} oak_log`)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty easy')
     await ctx.hotbar(['diamond_sword[enchantments={knockback:1}]', ['cobblestone', 64], ['bread', 16], ['torch', 8]])
     // on the south edge, looking down its side: the last dirt layer above the lava, which the first
     // rise swallows (from the middle of the island the rise couldn't be seen: review 1)
-    await ctx.tpCheck(x + 0.5, G + 5, z + 8.2, 0, 42)
+    await ctx.tpCheck(x + 0.5, G + 5, z + 8.2, 0, 30)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(30)
@@ -128,13 +129,15 @@ module.exports = {
     ctx.mark('l1'); riseTo(G + 3)
     // (mineflayer yaw: 0 north, -pi/2 east, pi/2 west) along the side it just climbed, then away from
     // the edge: it walks back into the middle of the island
-    await bot.waitForTicks(12)
+    await bot.waitForTicks(8)
     await ctx.easeLook(Math.PI - 0.9, -0.75, 900)
     await ctx.easeLook(0.3, -0.2, 900)
     bot.setControlState('forward', true)
     for (let i = 0; i < 60 && bot.entity.position.z > z + 5.6; i++) { await bot.look(bot.entity.yaw - 0.006, bot.entity.pitch, true); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
-    await ctx.easeLook(0, -0.15, 500)
+    // the whole island, lava on every side: a look round from the middle
+    await ctx.easeLook(1.4, -0.35, 900)
+    await ctx.easeLook(0, -0.15, 700)
     await until(at(5), () => bot.look(bot.entity.yaw + 0.007, bot.entity.pitch + 0.002 * Math.sin(ctx.tick / 6), true))
 
     // ---- 2. a creeper ----
@@ -213,7 +216,10 @@ module.exports = {
     // one ahead-left, one ahead-right, each on grass that's still there (not a crater)
     const ground = (wx, wz) => { const b = bot.blockAt(new Vec3(Math.floor(wx), G + 4, Math.floor(wz))); return b && b.name === 'grass_block' }
     const spot = (cands) => cands.map(([dx, dz]) => [p0.x + dx, p0.z + dz]).find(([wx, wz]) => ground(wx, wz) && ground(wx + 0.3, wz + 0.3) && ground(wx - 0.3, wz - 0.3))
-    const sl = spot([[-2.5, -5], [-3, -4], [-2, -4], [-3.5, -3], [-2, -3]]), sr = spot([[3.5, -6], [3, -5], [4, -4], [2.5, -4], [3, -3]])
+    // both in view: ahead, about 20 degrees either side of where it looks
+    const yw = bot.entity.yaw
+    const around = (side) => [5, 4.5, 4, 5.5, 3.5].flatMap(d => [0.35, 0.25, 0.45].map(a => [-Math.sin(yw + side * a) * d, -Math.cos(yw + side * a) * d]))
+    const sl = spot(around(1)), sr = spot(around(-1))
     if (!sl || !sr) throw new Error('no ground for the creepers')
     bot.chat(`/summon creeper ${sl[0].toFixed(2)} ${G + 5} ${sl[1].toFixed(2)} {PersistenceRequired:1b,Rotation:[-30f,0f]}`)
     bot.chat(`/summon creeper ${sr[0].toFixed(2)} ${G + 5} ${sr[1].toFixed(2)} {PersistenceRequired:1b,Rotation:[30f,0f]}`)
@@ -245,21 +251,22 @@ module.exports = {
         const b = bot.blockAt(new Vec3(bx + dx, G + 4, bz + dz))
         if (b && b.name === 'grass_block') { if (n++ % 3 === 0) ctx.particles('block', b.position, { block: 'grass_block' }) }
       }
-      if (!n) continue
       const sides = [[bx - r, bz - r, bx + r, bz - r], [bx - r, bz + r, bx + r, bz + r], [bx - r, bz - r + 1, bx - r, bz + r - 1], [bx + r, bz - r + 1, bx + r, bz + r - 1]]
       for (const [ax, az, cx, cz] of sides) for (const what of ['dirt', 'grass_block']) bot.chat(`/fill ${ax} ${G + 1} ${az} ${cx} ${G + 4} ${cz} lava replace ${what}`)
       ctx.sound('block.gravel.break', 1, 0.6 + r * 0.03); ctx.sound('block.lava.pop', 0.7)
       bot.chat('/kill @e[type=item]')   // a popped torch would burn in the lava, not come back to the hotbar
       if (r === 3) { await lookDown; ctx.easeLook(y6 - 0.4, -0.8, 900) }
-      for (let i = 0; i < 4; i++) { if (ld && r > 3) await bot.look(bot.entity.yaw - 0.006, bot.entity.pitch, true); await bot.waitForTicks(1) }
+      for (let i = 0; i < (n ? 4 : 1); i++) { if (ld && r > 3) await bot.look(bot.entity.yaw - 0.006, bot.entity.pitch, true); await bot.waitForTicks(1) }
     }
     ctx.mark('one_block')
+    await ctx.easeLook(bot.entity.yaw, -1.35, 400)   // the one block it's standing on
+    await bot.waitForTicks(8)
     // the one thing still standing out there: the oak, its feet in the lava
-    const tree = new Vec3(x + 0.5, G + 6, z + 11.5)
+    const tree = new Vec3(x + 0.5, G + 6, z + 13.5)
     await ctx.easeLookAt(tree, 600)
     await until(at(29.5), () => bot.look(bot.entity.yaw + 0.004, bot.entity.pitch - 0.001, true))
     ctx.select(1)
-    await until(at(30))
+    await until(at(30), () => bot.look(bot.entity.yaw + 0.006, bot.entity.pitch, true))
 
     // ---- 7. lava every second: pillar ----
     if (ctx.tick > at(30) + 1) throw new Error('level 7 late')   // the 5 s grid must hold
@@ -284,7 +291,7 @@ module.exports = {
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: base, z: bz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound('block.stone.place', 1, 0.9)
       pillarTop = base + 1
-      const up = ctx.easeLookAt(new Vec3(x + 0.5, Math.max(G + 5, lavaY + 1.5), z + 11.5), 300)
+      const up = ctx.easeLookAt(new Vec3(x + 0.5, Math.max(G + 5, lavaY + 1.5), z + 13.5), 300)
       for (let i = 0; i < 20 && !bot.entity.onGround; i++) await bot.waitForTicks(1)
       await up
     }

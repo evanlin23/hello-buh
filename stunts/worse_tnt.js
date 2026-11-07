@@ -27,32 +27,8 @@ module.exports = {
 
   async setup (ctx) {
     const { bot, Vec3 } = ctx
-    // a flat site: the field is cleared down to one level, and against a hill that left a sheer cut
-    // wall in the background (review 2). Try spots around the plains until the ground within R + 12
-    // stays within a few blocks of the field level (water is fine).
-    const sp = bot.entity.position.floored()
-    let g = null
-    for (const [ox, oz] of [[0, 0], [160, 0], [-160, 0], [0, 160], [0, -160], [160, 160], [-160, -160], [160, -160], [-160, 160], [320, 0], [-320, 0], [0, 320], [0, -320], [320, 320], [-320, -320], [480, 0]]) {
-      await ctx.cmd(`/tp @s ${sp.x + ox} 200 ${sp.z + oz}`)
-      await bot.waitForTicks(40)
-      try { await bot.waitForChunksToLoad() } catch (e) {}
-      const c = ctx.findLand(sp.x + ox, sp.z + oz)
-      if (!c) continue
-      const hs = []
-      for (let dx = -(R + 12); dx <= R + 12; dx += 8) for (let dz = -(R + 12); dz <= R + 12; dz += 8) { const b = ctx.surface(c.x + dx, c.z + dz); if (b && !/water|ice/.test(b.name)) hs.push(b.position.y) }
-      // only land matters: anything well above the field level is cut into a wall, well below it leaves a cliff
-      hs.sort((p, q) => p - q)
-      const hi = hs[Math.floor(hs.length * 0.97)] - c.y, lo = c.y - hs[Math.floor(hs.length * 0.05)]   // a lone tree trunk or pit doesn't count
-      ctx.log('site', c.x, c.z, 'above', hi, 'below', lo, 'samples', hs.length)
-      if (hs.length > 150 && (!g || hi + lo / 2 < g.score)) g = { x: c.x, y: c.y, z: c.z, score: hi + lo / 2 }
-      if (g && g.score <= 4) break
-    }
-    if (!g || g.score > 10) throw new Error('no flat site')
-    ctx.log('chose site', g)
-    // go there before building: the fills fail ("not loaded") from the last site probed (review 3)
-    await ctx.cmd(`/tp @s ${g.x} 200 ${g.z}`)
-    await bot.waitForTicks(40)
-    try { await bot.waitForChunksToLoad() } catch (e) {}
+    // a flat site: a cleared field against a hill leaves a sheer cut wall in the background (review 2)
+    const g = await kit(ctx).flatSite(R + 12)
     const { x, z } = g, G = g.y
     this.x = x; this.z = z; this.G = G
     await ctx.defaultRules()
