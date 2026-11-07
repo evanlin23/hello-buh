@@ -6,7 +6,7 @@
 // eyes` every tick on the crowds that have turned; face_on (near: this crowd) / face_off marks tell
 // the renderer. Hard cut (teleport) between crowds. The bot starts in the middle of the field so
 // every crowd's chunks are loaded (recorded) when the recording starts.
-const GAP = 26   // (with the west shift, the 200 ends ~30 blocks inside the field)
+const GAP = 22   // crowds x - 97 .. x + 57: 27+ blocks of field either side (the cut edges showed)
 const CROWDS = [
   { n: 1, sub: '1 villager', cols: 1, rows: 1 },
   { n: 5, sub: '5 villagers', cols: 5, rows: 1 },
@@ -18,7 +18,7 @@ const CROWDS = [
   { n: 200, sub: '200 villagers', cols: 20, rows: 10 }   // (500 + 100 behind slowed the server below 1 tick/s)
 ]
 const BEHIND = { cols: 10, rows: 4 }        // the finale crowd behind the start of the last walk
-const crowdX = (x, i) => x - 10 + Math.round((i - (CROWDS.length - 1) / 2) * GAP)   // shifted west: the 200 stood 6 blocks from the field's cut east edge
+const crowdX = (x, i) => x - 20 + Math.round((i - (CROWDS.length - 1) / 2) * GAP)   // shifted west: the 200 stood 6 blocks from the field's cut east edge
 module.exports = {
   name: 'villager_crowd',
   biome: process.env.BIOME || 'minecraft:plains',
@@ -46,8 +46,8 @@ module.exports = {
     // it does ("Timeout waiting for 1 ticks"): pace the heavy commands by wall-clock time instead.
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     // deep and high enough that no cut hillside or trunkless canopy shows, even in the turnaround south
-    for (let z0 = z - 72; z0 <= z + 60; z0 += 4) {   // (z - 40 left a cut cliff face in the 200 shot)
-      const z1 = Math.min(z0 + 3, z + 60)
+    for (let z0 = z - 72; z0 <= z + 90; z0 += 4) {   // (z - 40 left a cut cliff face in the 200 shot)
+      const z1 = Math.min(z0 + 3, z + 90)
       await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + 30} ${z1} air`)
       await heavy(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
       await heavy(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
