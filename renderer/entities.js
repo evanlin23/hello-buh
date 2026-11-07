@@ -311,6 +311,34 @@ function poseHorse (r, s, walkPos, walkSpeed) {
   B.leftHindLeg.rotation.set(b, 0, 0); B.rightFrontLeg.rotation.set(b, 0, 0)
   B.tail.rotation.set(Math.PI / 6 + walkSpeed * 0.75, 0, 0)
 }
+// WardenModel.createBodyLayer (128x128): a root bone at y 24 carrying the body (ribcage panels, head
+// with the two tendrils, 28 px arms) and the legs; about 3 blocks tall
+const WARDEN_PARTS = [
+  ['bone', null, [0, 24, 0], []],
+  ['body', 'bone', [0, -21, 0], [[[-9, -13, -4], [18, 21, 11], [0, 0], 0]]],
+  ['rightRibcage', 'body', [-7, -2, -4], [[[-2, -11, -0.1], [9, 21, 0], [90, 11], 0]]],
+  ['leftRibcage', 'body', [7, -2, -4], [[[-7, -11, -0.1], [9, 21, 0], [90, 11], 0]]],
+  ['head', 'body', [0, -13, 0], [[[-8, -16, -5], [16, 16, 10], [0, 32], 0]]],
+  ['rightTendril', 'head', [-8, -12, 0], [[[-16, -13, 0], [16, 16, 0], [52, 32], 0]]],
+  ['leftTendril', 'head', [8, -12, 0], [[[0, -13, 0], [16, 16, 0], [58, 0], 0]]],
+  ['rightArm', 'body', [-13, -13, 1], [[[-4, 0, -4], [8, 28, 8], [44, 50], 0]]],
+  ['leftArm', 'body', [13, -13, 1], [[[-4, 0, -4], [8, 28, 8], [0, 58], 0]]],
+  ['rightLeg', 'bone', [-5.9, -13, 0], [[[-3.1, 0, -3], [6, 13, 6], [76, 48], 0]]],
+  ['leftLeg', 'bone', [5.9, -13, 0], [[[-2.9, 0, -3], [6, 13, 6], [76, 76], 0]]]
+]
+// WardenModel.animateWalk (simplified): legs and arms swing against each other, the head looks, the
+// tendrils sway with time
+function poseWarden (r, s, walkPos, walkSpeed, tick) {
+  const B = r.bones
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  B.head.rotation.set(-(s.pitch || 0), net, 0)
+  const sw = Math.cos(walkPos * 0.6662) * Math.min(1, walkSpeed * 2), f = 0.5
+  B.rightLeg.rotation.set(sw * 1.4 * f, 0, 0); B.leftLeg.rotation.set(-sw * 1.4 * f, 0, 0)
+  B.rightArm.rotation.set(-sw * f, 0, 0); B.leftArm.rotation.set(sw * f, 0, 0)
+  const tw = Math.sin((tick || 0) * 0.15) * 0.1
+  B.rightTendril.rotation.set(0, tw, 0); B.leftTendril.rotation.set(0, -tw, 0)
+}
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
 // player (the converted Bedrock geometry had the head sunk into the body and the arms poking above it)
@@ -402,6 +430,9 @@ export class EntityLayer {
       const tex = { horse: 'entity/horse/horse_brown', donkey: 'entity/horse/donkey', mule: 'entity/horse/mule', skeleton_horse: 'entity/horse/horse_skeleton', zombie_horse: 'entity/horse/horse_zombie' }[name]
       const t = await texture([tex])
       if (t) { const b = buildPlayer(t, HORSE_PARTS, name === 'horse' ? 1.1 : name === 'mule' ? 0.92 : name === 'donkey' ? 0.87 : 1.0); obj = b.root; bones = b.bones; mat = b.mat }
+    } else if (name === 'warden') {
+      const t = await texture(['entity/warden/warden'])
+      if (t) { const b = buildPlayer(t, WARDEN_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'witch') {
       const t = await texture(['entity/witch'])
       if (t) { const b = buildPlayer(t, WITCH_PARTS, 0.9375); obj = b.root; bones = b.bones; mat = b.mat }
@@ -539,6 +570,7 @@ export class EntityLayer {
       if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'witch' && B.hat4) { poseWitch(r, s, r.walk, r.amt || 0); continue }
       if (B.mane && B.rightHindLeg) { poseHorse(r, s, r.walk, r.amt || 0); continue }
+      if (s.name === 'warden' && B.rightTendril) { poseWarden(r, s, r.walk, r.amt || 0, tick); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
         // part positions are y-down from 24 px up; the converted rods sit at that origin
