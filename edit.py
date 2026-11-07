@@ -623,7 +623,7 @@ def clock_fmt(v, target, done):
     return f"{int(m)}:{sec:05.2f}"
 
 
-def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
+def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3, timeline=None):
     """Big on-screen clocks for 'x in 1 second vs 1 minute vs 1 hour' Shorts. spec is a JSON list
     of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL]: from the start event the clock counts from
     0 to TARGET linearly over the span (so a sped-up time-lapse reads as that much time), then
@@ -631,10 +631,20 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
     at 0 for `lead` seconds before its start, so the first block never lands before the clock. Returns
     an image-sequence pattern, one frame per output frame at `fps`."""
     clocks = []
+    # 5th element "down": count from TARGET down to 0, red at 0 (per-round countdowns: worker 16).
+    # Repeated event names: the k-th entry using a START name takes its k-th occurrence, paired with
+    # the next END after it.
+    used = {}
     for c in json.loads(spec):
         a, b, target = c[0], c[1], float(c[2])
-        if a in tl_ev and b in tl_ev:
-            clocks.append((tl_ev[a] - start, tl_ev[b] - start, target, c[3] if len(c) > 3 else ""))
+        down = len(c) > 4 and c[4] == "down"
+        k = used.get(a, 0); used[a] = k + 1
+        ta = [e["t"] / 1000 for e in timeline if e["event"] == a] if timeline else ([tl_ev[a]] if a in tl_ev else [])
+        tb = [e["t"] / 1000 for e in timeline if e["event"] == b] if timeline else ([tl_ev[b]] if b in tl_ev else [])
+        if len(ta) > k:
+            te = next((x for x in tb if x > ta[k] + 1e-6), None)
+            if te is not None:
+                clocks.append((ta[k] - start, te - start, target, c[3] if len(c) > 3 else "", down))
     if not clocks:
         return None
     clocks.sort()
@@ -650,7 +660,7 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
         if not cur:
             key = None
         else:
-            t0, t1, target, label = cur[-1]
+            t0, t1, target, label, down = cur[-1]
             done = t >= t1 - 1e-6
             lag = 1.5 / fps            # the first frame after a cut can land mid-tick: it still reads 0:00
             v = target * min(1.0, max(0.0, (t - t0 - lag) / max(1e-6, t1 - t0 - lag)))
@@ -658,12 +668,13 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
             if done:   # a quick pop when it lands: 1.22 -> 1.0 over 0.25 s
                 k = (t - t1) / 0.25
                 pop = 1.0 + 0.22 * max(0.0, 1 - k) if k < 1 else 1.0
-            key = (clock_fmt(v, target, done), label, done, round(pop, 2))
+            txt = (clock_fmt(0.0, target, False) if done else clock_fmt(target - v, target, False)) if down else clock_fmt(v, target, done)
+            key = (txt, label, done, round(pop, 2), down)
         if key not in cache:
             path = outdir / f"clock{len(cache)}.png"
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             if key:
-                txt, label, done, pop = key
+                txt, label, done, pop, down = key
                 f_ = ImageFont.truetype(FONT, int(124 * pop)) if pop != 1.0 else font
                 d = ImageDraw.Draw(img)
                 y = BAND + 28
@@ -672,7 +683,7 @@ def clock_concat(spec, tl_ev, start, dur, outdir, fps=60, lead=0.3):
                     d.text(((W - lw) / 2, y), label, font=lfont, fill=(255, 220, 40, 255), stroke_width=6, stroke_fill=(0, 0, 0, 255))
                     y += 66
                 tw = d.textlength(txt, font=f_)
-                color = (80, 255, 80, 255) if done else (255, 255, 255, 255)
+                color = ((255, 60, 60, 255) if down else (80, 255, 80, 255)) if done else (255, 255, 255, 255)
                 d.text(((W - tw) / 2, y - (int(124 * pop) - 124) / 2), txt, font=f_, fill=color, stroke_width=8, stroke_fill=(0, 0, 0, 255))
             img.save(path)
             cache[key] = path
@@ -1003,7 +1014,7 @@ def main():
         graph.append(f"[{last}][tmv]overlay=0:0:eof_action=repeat[tmo]")
         last, n_in = "tmo", n_in + 1
     if args.clock and args.timeline:
-        seq = clock_concat(args.clock, tl_ev, args.start, dur, tmp, fps=args.out_fps)
+        seq = clock_concat(args.clock, tl_ev, args.start, dur, tmp, fps=args.out_fps, timeline=json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
         if seq:
             inputs += ["-framerate", str(args.out_fps), "-i", str(seq)]
             graph.append(f"[{n_in}:v]format=rgba[clv]")
