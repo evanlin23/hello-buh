@@ -20,6 +20,7 @@ const BEHIND = { cols: 10, rows: 4 }        // the finale crowd behind the start
 const crowdX = (x, i) => x - 20 + Math.round((i - (CROWDS.length - 1) / 2) * GAP)   // shifted west: the 200 stood 6 blocks from the field's cut east edge
 module.exports = {
   name: 'villager_crowd',
+  botTimeout: 420,   // the field (cleared to z + 150) takes ~150 s to set up: the default 180 killed all 5 attempts
   biome: process.env.BIOME || 'minecraft:plains',
   caption: '1 vs 10 vs 100 vs 200 villagers staring at me 💀',
   edit: {
