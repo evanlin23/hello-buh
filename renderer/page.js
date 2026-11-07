@@ -8,19 +8,58 @@ import { BlockEntityLayer } from '/blockentities.js'
 // ("cylindrical" read as horizontal only), so high drops showed a recorded-terrain disc floating in
 // pale sky (worker 3, drops). In vanilla the ground under a 150+ block drop fogs out at render
 // distance 8, and stunts that want it seen raise renderDistance (with recordRadius to match).
+// Computed per FRAGMENT from the interpolated camera-relative position: max() of an interpolated
+// per-vertex distance isn't linear across a face, and on large faces (far terrain, greedy quads) it
+// left a grey-blue haze patch over flat grass (worker 6, lapse_castle). Vanilla's linear_fog_value is
+// linear between start and end (three.js uses smoothstep).
+THREE.ShaderChunk.fog_pars_vertex = `
+#ifdef USE_FOG
+	varying vec3 vFogRel;
+#endif
+`
 THREE.ShaderChunk.fog_vertex = `
 #ifdef USE_FOG
-	vec3 fogRel = ( modelMatrix * vec4( transformed, 1.0 ) ).xyz - cameraPosition;
-	vFogDepth = max( length( fogRel.xz ), abs( fogRel.y ) );
+	vFogRel = ( modelMatrix * vec4( transformed, 1.0 ) ).xyz - cameraPosition;
+#endif
+`
+THREE.ShaderChunk.fog_pars_fragment = `
+#ifdef USE_FOG
+	uniform vec3 fogColor;
+	varying vec3 vFogRel;
+	#ifdef FOG_EXP2
+		uniform float fogDensity;
+	#else
+		uniform float fogNear;
+		uniform float fogFar;
+	#endif
+#endif
+`
+THREE.ShaderChunk.fog_fragment = `
+#ifdef USE_FOG
+	#ifdef FOG_EXP2
+		float vFogDepth = length( vFogRel );
+		float fogFactor = 1.0 - exp( - fogDensity * fogDensity * vFogDepth * vFogDepth );
+	#else
+		// a negative near marks environmental fog (lava, water, the Nether): vanilla measures it
+		// spherically, length(pos); render-distance fog is max(xz, |y|) (see envFog)
+		bool fogSph = fogNear < 0.0;
+		float fogN = fogSph ? -fogNear - 0.001 : fogNear;
+		float vFogDepth = fogSph ? length( vFogRel ) : max( length( vFogRel.xz ), abs( vFogRel.y ) );
+		float fogFactor = clamp( ( vFogDepth - fogN ) / ( fogFar - fogN ), 0.0, 1.0 );
+	#endif
+	gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
 #endif
 `
 // sprites (dropped items, pearls, thrown potions, rockets) have no 'transformed' in their vertex
-// shader: the override above failed to compile for them, so give them the same distance measured
-// to the sprite's centre
+// shader: measure to the sprite's centre
 THREE.ShaderLib.sprite.vertexShader = THREE.ShaderLib.sprite.vertexShader.replace('#include <fog_vertex>', `#ifdef USE_FOG
-	vec3 fogRel = ( modelMatrix * vec4( 0.0, 0.0, 0.0, 1.0 ) ).xyz - cameraPosition;
-	vFogDepth = max( length( fogRel.xz ), abs( fogRel.y ) );
+	vFogRel = ( modelMatrix * vec4( 0.0, 0.0, 0.0, 1.0 ) ).xyz - cameraPosition;
 #endif`)
+
+// FogRenderer: render-distance fog starts at end - clamp(end / 10, 4, 64) (it was 0.8 x end, tuned for
+// three's smoothstep); environmental fog (lava, water, Nether) is flagged by a negative near
+const rdFogStart = (end) => end - Math.min(64, Math.max(4, end / 10))
+const envFog = (near) => -near - 0.001
 
 const W = window.innerWidth, H = window.innerHeight
 const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true })
@@ -366,7 +405,7 @@ window.HB = {
     opaqueMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, alphaTest: 0.1, fog: true })
     translucentMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, transparent: true, depthWrite: false, fog: true })
     const blocks = env.renderDistance * 16
-    scene.fog = new THREE.Fog(srgb(env.fogColor), blocks * 0.8, blocks)
+    scene.fog = new THREE.Fog(srgb(env.fogColor), rdFogStart(blocks), blocks)
     scene.background = srgb(env.fogColor)
     sky = makeSky(); scene.add(sky)
     sun = await makeSun('/assets/env/sun.png'); scene.add(sun)
@@ -496,7 +535,7 @@ window.HB = {
     sun.material.opacity = 1 - rain; if (moon) moon.material.opacity = 1 - rain
     // FogRenderer: lava 0.25..1.0. (This else chain once sat behind a // comment on one line, so
     // underwater fog never applied and lava fog was never cleared.)
-    if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = 0.25; scene.fog.far = 1.0 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = 0; scene.fog.far = 24 } else { scene.fog.color.copy(env.fogColorC); scene.fog.near = blocks * 0.8; scene.fog.far = blocks }
+    if (cam.inLava) { scene.fog.color.copy(srgb(0x991a00)); scene.fog.near = envFog(0.25); scene.fog.far = 1.0 } else if (cam.underwater) { scene.fog.color.copy(srgb(cam.waterFog ?? 0x050533)); scene.fog.near = envFog(0); scene.fog.far = 24 } else { scene.fog.color.copy(env.fogColorC); scene.fog.near = rdFogStart(blocks); scene.fog.far = blocks }
     const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under && env.clouds !== false;   // a stunt can set `clouds: false` (Video Settings > Clouds: OFF)
     sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
     scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : env.fogColorC.clone()
@@ -510,7 +549,7 @@ window.HB = {
       // (the End's biome fog is 0xA080A0; our biome table only has the overworld default for it)
       const fc = dim === 'the_end' ? srgb(0xA080A0).multiplyScalar(0.15) : srgb(env.fogColor0 ?? env.fogColor)
       scene.fog.color.copy(fc); scene.background = fc.clone()
-      if (dim === 'the_nether') { scene.fog.near = blocks * 0.05; scene.fog.far = Math.min(blocks, 192) * 0.5 }
+      if (dim === 'the_nether') { scene.fog.near = envFog(blocks * 0.05); scene.fog.far = Math.min(blocks, 192) * 0.5 }
       sky.visible = false; clouds.visible = false; sun.visible = false; if (moon) moon.visible = false; if (stars) stars.visible = false
       if (dim === 'the_end') { if (!endSky) endSky = await makeEndSky(); endSky.visible = true; endSky.position.copy(camera.position) }
     } else if (dim !== 'overworld') { clouds.visible = false; sun.visible = false; if (moon) moon.visible = false; if (stars) stars.visible = false }
