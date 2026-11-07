@@ -28,7 +28,7 @@ module.exports = {
     song: 'songs/funk_abnormal.mp3', dropAt: 'r4_found',
     startAt: 'r1_go:-0.35', endAfter: 'r4_found:0.45',
     // the zoom-out: a fixed camera up at y 320 beside him as he tosses an emerald down (appended after the zoom)
-    replay: { at: 'r4_found', before: 0.1, after: 1.4, cam: '1.0,322.0,9.5,43.5,-28', speed: 1, label: 'MEANWHILE AT Y 320' },
+    replay: { at: 'r4_found', before: 0.1, after: 0.8, cam: '1.0,322.0,9.5,43.5,-28', speed: 1, label: 'MEANWHILE AT Y 320' },
     speed: [1, 2, 3].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
     clock: [1, 2, 3, 4].map(n => [`r${n}_go`, `r${n}_end`, 5, `ROUND ${n}`, "down"]),
     counter: { at: [1, 2, 3, 4].map(n => `r${n}_found`), total: ROUNDS },
@@ -300,10 +300,19 @@ module.exports = {
     await look(-1.85, 321.4 - F, 6.5, 450)
     hmm(0.9)
     found(4)
-    // up there: he tosses an emerald down at the seeker and laughs (happy particles)
-    bot.chat(`/summon item ${X - 1.5} ${321.3} ${Z + 6.6} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[0.12,0.22,0.06]}`)
-    for (let i = 0; i < 3; i++) ctx.particles('happy', W(-1.85, 321.6 - F, 6.5))
-    for (let i = 0; i < 36; i++) { await bot.look(bot.entity.yaw + 0.002 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1) }
+    // up there (seen in the zoom-out replay): he hops about on the top, laughing (happy particles), and
+    // tosses emeralds down at the seeker. NoGravity, so the hops are teleports along a jump arc.
+    const hops = (async () => {
+      for (let i = 0; i < 36; i++) {
+        const k = i % 12, h = 0.42 * k - 0.035 * k * k   // ~vanilla jump: 0.42 up, gravity
+        bot.chat(`/tp @e[tag=h4,limit=1] ${(X - 1.85).toFixed(3)} ${(320 + Math.max(0, h)).toFixed(3)} ${(Z + 6.5).toFixed(3)}`)
+        if (i % 6 === 0) bot.chat(`/summon item ${X - 1.5} ${321.3} ${Z + 6.6} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[${(0.1 + 0.03 * (i % 3)).toFixed(2)},0.22,${(0.04 + 0.02 * (i % 4)).toFixed(2)}]}`)
+        if (i % 4 === 0) ctx.particles('happy', W(-1.85, 321.6 - F + Math.max(0, h), 6.5))
+        await bot.waitForTicks(1)
+      }
+    })()
+    await hops
+    for (let i = 0; i < 4; i++) { await bot.look(bot.entity.yaw + 0.002 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1) }
     return true
   }
 }
