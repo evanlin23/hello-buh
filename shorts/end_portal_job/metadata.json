@@ -1,0 +1,1185 @@
+{
+  "name": "end_portal_job",
+  "caption": "POV: your job is filling end portals",
+  "youtube": {
+    "title": "POV: your job is filling end portals #minecraft #shorts",
+    "description": "POV: your job is filling end portals\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "ayuda.mp3",
+    "title": "AYUDA",
+    "artist": "MXRCVRY",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "portal",
+    "drop_in_song_s": 9.0,
+    "drop_in_short_s": 5.23,
+    "song_start_s": 3.77
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 32.08,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 56346968,
+    "sha256": "43c073c2af22412257a6d3576543f8858167bfca69aa2274ac51d39e4f77f543"
+  },
+  "edit": {
+    "caption": "POV: your job is filling end portals",
+    "red": "job",
+    "song": "songs/payphone.mp3",
+    "dropAt": "portal",
+    "startAt": "start:0",
+    "endAfter": "outro:1.4",
+    "subsY": 0.15,
+    "subs": [
+      [
+        "ring",
+        "getting faster",
+        1.6,
+        1
+      ],
+      [
+        "ring",
+        "speedrun",
+        1.6,
+        2
+      ],
+      [
+        "ring",
+        "world record pace",
+        1.6,
+        3
+      ],
+      [
+        "ring",
+        "overtime",
+        1.6,
+        4
+      ],
+      [
+        "ring",
+        "double shift",
+        1.6,
+        5
+      ],
+      [
+        "ring",
+        "no breaks",
+        1.6,
+        6
+      ]
+    ],
+    "cards": [
+      [
+        "outro",
+        "IT NEVER ENDS \ud83d\udc80",
+        1.4,
+        "red"
+      ]
+    ],
+    "speed": [
+      [
+        "hopA0",
+        "hopB0",
+        "cut"
+      ],
+      [
+        "walk1",
+        "in1",
+        "cut"
+      ],
+      [
+        "hopA1",
+        "hopB1",
+        "cut"
+      ],
+      [
+        "walk2",
+        "in2",
+        "cut"
+      ],
+      [
+        "hopA2",
+        "hopB2",
+        "cut"
+      ],
+      [
+        "walk3",
+        "in3",
+        "cut"
+      ],
+      [
+        "hopA3",
+        "hopB3",
+        "cut"
+      ],
+      [
+        "walk4",
+        "in4",
+        "cut"
+      ],
+      [
+        "hopA4",
+        "hopB4",
+        "cut"
+      ],
+      [
+        "walk5",
+        "in5",
+        "cut"
+      ],
+      [
+        "hopA5",
+        "hopB5",
+        "cut"
+      ],
+      [
+        "walk6",
+        "in6",
+        "cut"
+      ],
+      [
+        "hopA6",
+        "hopB6",
+        "cut"
+      ],
+      [
+        "outroA",
+        "outroB",
+        "cut"
+      ]
+    ],
+    "args": [
+      "--caption",
+      "POV: your job is filling end portals",
+      "--red",
+      "job",
+      "--subs",
+      "[[\"ring\",\"getting faster\",1.6,1],[\"ring\",\"speedrun\",1.6,2],[\"ring\",\"world record pace\",1.6,3],[\"ring\",\"overtime\",1.6,4],[\"ring\",\"double shift\",1.6,5],[\"ring\",\"no breaks\",1.6,6]]",
+      "--subs_y",
+      "0.15",
+      "--speed",
+      "[[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]]",
+      "--cards",
+      "[[\"outro\",\"IT NEVER ENDS \ud83d\udc80\",1.4,\"red\"]]",
+      "--start_at",
+      "start:0",
+      "--end_after",
+      "outro:1.4"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 387,
+      "y": 70,
+      "z": -39
+    },
+    "biome": "minecraft:plains",
+    "ticks": 730,
+    "seconds": 36.5,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "ring"
+      },
+      {
+        "t": 1.05,
+        "event": "place"
+      },
+      {
+        "t": 1.05,
+        "event": "swing"
+      },
+      {
+        "t": 1.5,
+        "event": "place"
+      },
+      {
+        "t": 1.5,
+        "event": "swing"
+      },
+      {
+        "t": 1.95,
+        "event": "place"
+      },
+      {
+        "t": 1.95,
+        "event": "swing"
+      },
+      {
+        "t": 2.4,
+        "event": "place"
+      },
+      {
+        "t": 2.4,
+        "event": "swing"
+      },
+      {
+        "t": 2.85,
+        "event": "place"
+      },
+      {
+        "t": 2.85,
+        "event": "swing"
+      },
+      {
+        "t": 3.3,
+        "event": "place"
+      },
+      {
+        "t": 3.3,
+        "event": "swing"
+      },
+      {
+        "t": 3.75,
+        "event": "place"
+      },
+      {
+        "t": 3.75,
+        "event": "swing"
+      },
+      {
+        "t": 4.2,
+        "event": "place"
+      },
+      {
+        "t": 4.2,
+        "event": "swing"
+      },
+      {
+        "t": 4.65,
+        "event": "place"
+      },
+      {
+        "t": 4.65,
+        "event": "swing"
+      },
+      {
+        "t": 5.1,
+        "event": "place"
+      },
+      {
+        "t": 5.1,
+        "event": "swing"
+      },
+      {
+        "t": 5.55,
+        "event": "place"
+      },
+      {
+        "t": 5.55,
+        "event": "swing"
+      },
+      {
+        "t": 5.7,
+        "event": "hop"
+      },
+      {
+        "t": 5.7,
+        "event": "hopA0"
+      },
+      {
+        "t": 5.7,
+        "event": "cut"
+      },
+      {
+        "t": 5.9,
+        "event": "hopB0"
+      },
+      {
+        "t": 6.15,
+        "event": "place"
+      },
+      {
+        "t": 6.15,
+        "event": "swing"
+      },
+      {
+        "t": 6.2,
+        "event": "portal"
+      },
+      {
+        "t": 7,
+        "event": "walk"
+      },
+      {
+        "t": 7,
+        "event": "walk1"
+      },
+      {
+        "t": 7,
+        "event": "cut"
+      },
+      {
+        "t": 7.2,
+        "event": "in1"
+      },
+      {
+        "t": 7.2,
+        "event": "ring"
+      },
+      {
+        "t": 7.5,
+        "event": "place"
+      },
+      {
+        "t": 7.5,
+        "event": "swing"
+      },
+      {
+        "t": 7.9,
+        "event": "place"
+      },
+      {
+        "t": 7.9,
+        "event": "swing"
+      },
+      {
+        "t": 8.35,
+        "event": "place"
+      },
+      {
+        "t": 8.35,
+        "event": "swing"
+      },
+      {
+        "t": 8.75,
+        "event": "place"
+      },
+      {
+        "t": 8.75,
+        "event": "swing"
+      },
+      {
+        "t": 9.15,
+        "event": "place"
+      },
+      {
+        "t": 9.15,
+        "event": "swing"
+      },
+      {
+        "t": 9.55,
+        "event": "place"
+      },
+      {
+        "t": 9.55,
+        "event": "swing"
+      },
+      {
+        "t": 9.95,
+        "event": "place"
+      },
+      {
+        "t": 9.95,
+        "event": "swing"
+      },
+      {
+        "t": 10.35,
+        "event": "place"
+      },
+      {
+        "t": 10.35,
+        "event": "swing"
+      },
+      {
+        "t": 10.75,
+        "event": "place"
+      },
+      {
+        "t": 10.75,
+        "event": "swing"
+      },
+      {
+        "t": 11.15,
+        "event": "place"
+      },
+      {
+        "t": 11.15,
+        "event": "swing"
+      },
+      {
+        "t": 11.55,
+        "event": "place"
+      },
+      {
+        "t": 11.55,
+        "event": "swing"
+      },
+      {
+        "t": 11.7,
+        "event": "hop"
+      },
+      {
+        "t": 11.7,
+        "event": "hopA1"
+      },
+      {
+        "t": 11.7,
+        "event": "cut"
+      },
+      {
+        "t": 11.9,
+        "event": "hopB1"
+      },
+      {
+        "t": 12.15,
+        "event": "place"
+      },
+      {
+        "t": 12.15,
+        "event": "swing"
+      },
+      {
+        "t": 12.2,
+        "event": "portal"
+      },
+      {
+        "t": 13,
+        "event": "walk"
+      },
+      {
+        "t": 13,
+        "event": "walk2"
+      },
+      {
+        "t": 13,
+        "event": "cut"
+      },
+      {
+        "t": 13.2,
+        "event": "in2"
+      },
+      {
+        "t": 13.2,
+        "event": "ring"
+      },
+      {
+        "t": 13.5,
+        "event": "place"
+      },
+      {
+        "t": 13.5,
+        "event": "swing"
+      },
+      {
+        "t": 13.85,
+        "event": "place"
+      },
+      {
+        "t": 13.85,
+        "event": "swing"
+      },
+      {
+        "t": 14.2,
+        "event": "place"
+      },
+      {
+        "t": 14.2,
+        "event": "swing"
+      },
+      {
+        "t": 14.55,
+        "event": "place"
+      },
+      {
+        "t": 14.55,
+        "event": "swing"
+      },
+      {
+        "t": 14.9,
+        "event": "place"
+      },
+      {
+        "t": 14.9,
+        "event": "swing"
+      },
+      {
+        "t": 15.25,
+        "event": "place"
+      },
+      {
+        "t": 15.25,
+        "event": "swing"
+      },
+      {
+        "t": 15.6,
+        "event": "place"
+      },
+      {
+        "t": 15.6,
+        "event": "swing"
+      },
+      {
+        "t": 15.95,
+        "event": "place"
+      },
+      {
+        "t": 15.95,
+        "event": "swing"
+      },
+      {
+        "t": 16.3,
+        "event": "place"
+      },
+      {
+        "t": 16.3,
+        "event": "swing"
+      },
+      {
+        "t": 16.65,
+        "event": "place"
+      },
+      {
+        "t": 16.65,
+        "event": "swing"
+      },
+      {
+        "t": 17,
+        "event": "place"
+      },
+      {
+        "t": 17,
+        "event": "swing"
+      },
+      {
+        "t": 17.15,
+        "event": "hop"
+      },
+      {
+        "t": 17.15,
+        "event": "hopA2"
+      },
+      {
+        "t": 17.15,
+        "event": "cut"
+      },
+      {
+        "t": 17.35,
+        "event": "hopB2"
+      },
+      {
+        "t": 17.6,
+        "event": "place"
+      },
+      {
+        "t": 17.6,
+        "event": "swing"
+      },
+      {
+        "t": 17.6,
+        "event": "portal"
+      },
+      {
+        "t": 18.25,
+        "event": "walk"
+      },
+      {
+        "t": 18.25,
+        "event": "walk3"
+      },
+      {
+        "t": 18.25,
+        "event": "cut"
+      },
+      {
+        "t": 18.45,
+        "event": "in3"
+      },
+      {
+        "t": 18.45,
+        "event": "ring"
+      },
+      {
+        "t": 18.75,
+        "event": "place"
+      },
+      {
+        "t": 18.75,
+        "event": "swing"
+      },
+      {
+        "t": 19.05,
+        "event": "place"
+      },
+      {
+        "t": 19.05,
+        "event": "swing"
+      },
+      {
+        "t": 19.35,
+        "event": "place"
+      },
+      {
+        "t": 19.35,
+        "event": "swing"
+      },
+      {
+        "t": 19.65,
+        "event": "place"
+      },
+      {
+        "t": 19.65,
+        "event": "swing"
+      },
+      {
+        "t": 19.95,
+        "event": "place"
+      },
+      {
+        "t": 19.95,
+        "event": "swing"
+      },
+      {
+        "t": 20.25,
+        "event": "place"
+      },
+      {
+        "t": 20.25,
+        "event": "swing"
+      },
+      {
+        "t": 20.55,
+        "event": "place"
+      },
+      {
+        "t": 20.55,
+        "event": "swing"
+      },
+      {
+        "t": 20.85,
+        "event": "place"
+      },
+      {
+        "t": 20.85,
+        "event": "swing"
+      },
+      {
+        "t": 21.15,
+        "event": "place"
+      },
+      {
+        "t": 21.15,
+        "event": "swing"
+      },
+      {
+        "t": 21.45,
+        "event": "place"
+      },
+      {
+        "t": 21.45,
+        "event": "swing"
+      },
+      {
+        "t": 21.75,
+        "event": "place"
+      },
+      {
+        "t": 21.75,
+        "event": "swing"
+      },
+      {
+        "t": 21.9,
+        "event": "hop"
+      },
+      {
+        "t": 21.9,
+        "event": "hopA3"
+      },
+      {
+        "t": 21.9,
+        "event": "cut"
+      },
+      {
+        "t": 22.1,
+        "event": "hopB3"
+      },
+      {
+        "t": 22.35,
+        "event": "place"
+      },
+      {
+        "t": 22.35,
+        "event": "swing"
+      },
+      {
+        "t": 22.35,
+        "event": "portal"
+      },
+      {
+        "t": 23,
+        "event": "walk"
+      },
+      {
+        "t": 23,
+        "event": "walk4"
+      },
+      {
+        "t": 23,
+        "event": "cut"
+      },
+      {
+        "t": 23.2,
+        "event": "in4"
+      },
+      {
+        "t": 23.2,
+        "event": "ring"
+      },
+      {
+        "t": 23.5,
+        "event": "place"
+      },
+      {
+        "t": 23.5,
+        "event": "swing"
+      },
+      {
+        "t": 23.75,
+        "event": "place"
+      },
+      {
+        "t": 23.75,
+        "event": "swing"
+      },
+      {
+        "t": 24,
+        "event": "place"
+      },
+      {
+        "t": 24,
+        "event": "swing"
+      },
+      {
+        "t": 24.25,
+        "event": "place"
+      },
+      {
+        "t": 24.25,
+        "event": "swing"
+      },
+      {
+        "t": 24.5,
+        "event": "place"
+      },
+      {
+        "t": 24.5,
+        "event": "swing"
+      },
+      {
+        "t": 24.75,
+        "event": "place"
+      },
+      {
+        "t": 24.75,
+        "event": "swing"
+      },
+      {
+        "t": 25,
+        "event": "place"
+      },
+      {
+        "t": 25,
+        "event": "swing"
+      },
+      {
+        "t": 25.25,
+        "event": "place"
+      },
+      {
+        "t": 25.25,
+        "event": "swing"
+      },
+      {
+        "t": 25.5,
+        "event": "place"
+      },
+      {
+        "t": 25.5,
+        "event": "swing"
+      },
+      {
+        "t": 25.75,
+        "event": "place"
+      },
+      {
+        "t": 25.75,
+        "event": "swing"
+      },
+      {
+        "t": 26,
+        "event": "place"
+      },
+      {
+        "t": 26,
+        "event": "swing"
+      },
+      {
+        "t": 26.15,
+        "event": "hop"
+      },
+      {
+        "t": 26.15,
+        "event": "hopA4"
+      },
+      {
+        "t": 26.15,
+        "event": "cut"
+      },
+      {
+        "t": 26.35,
+        "event": "hopB4"
+      },
+      {
+        "t": 26.65,
+        "event": "place"
+      },
+      {
+        "t": 26.65,
+        "event": "swing"
+      },
+      {
+        "t": 26.65,
+        "event": "portal"
+      },
+      {
+        "t": 27.3,
+        "event": "walk"
+      },
+      {
+        "t": 27.3,
+        "event": "walk5"
+      },
+      {
+        "t": 27.3,
+        "event": "cut"
+      },
+      {
+        "t": 27.5,
+        "event": "in5"
+      },
+      {
+        "t": 27.5,
+        "event": "ring"
+      },
+      {
+        "t": 27.8,
+        "event": "place"
+      },
+      {
+        "t": 27.8,
+        "event": "swing"
+      },
+      {
+        "t": 28,
+        "event": "place"
+      },
+      {
+        "t": 28,
+        "event": "swing"
+      },
+      {
+        "t": 28.2,
+        "event": "place"
+      },
+      {
+        "t": 28.2,
+        "event": "swing"
+      },
+      {
+        "t": 28.4,
+        "event": "place"
+      },
+      {
+        "t": 28.4,
+        "event": "swing"
+      },
+      {
+        "t": 28.6,
+        "event": "place"
+      },
+      {
+        "t": 28.6,
+        "event": "swing"
+      },
+      {
+        "t": 28.8,
+        "event": "place"
+      },
+      {
+        "t": 28.8,
+        "event": "swing"
+      },
+      {
+        "t": 29,
+        "event": "place"
+      },
+      {
+        "t": 29,
+        "event": "swing"
+      },
+      {
+        "t": 29.2,
+        "event": "place"
+      },
+      {
+        "t": 29.2,
+        "event": "swing"
+      },
+      {
+        "t": 29.4,
+        "event": "place"
+      },
+      {
+        "t": 29.4,
+        "event": "swing"
+      },
+      {
+        "t": 29.6,
+        "event": "place"
+      },
+      {
+        "t": 29.6,
+        "event": "swing"
+      },
+      {
+        "t": 29.8,
+        "event": "place"
+      },
+      {
+        "t": 29.8,
+        "event": "swing"
+      },
+      {
+        "t": 29.95,
+        "event": "hop"
+      },
+      {
+        "t": 29.95,
+        "event": "hopA5"
+      },
+      {
+        "t": 29.95,
+        "event": "cut"
+      },
+      {
+        "t": 30.15,
+        "event": "hopB5"
+      },
+      {
+        "t": 30.4,
+        "event": "place"
+      },
+      {
+        "t": 30.4,
+        "event": "swing"
+      },
+      {
+        "t": 30.45,
+        "event": "portal"
+      },
+      {
+        "t": 31.05,
+        "event": "walk"
+      },
+      {
+        "t": 31.05,
+        "event": "walk6"
+      },
+      {
+        "t": 31.05,
+        "event": "cut"
+      },
+      {
+        "t": 31.25,
+        "event": "in6"
+      },
+      {
+        "t": 31.25,
+        "event": "ring"
+      },
+      {
+        "t": 31.55,
+        "event": "place"
+      },
+      {
+        "t": 31.55,
+        "event": "swing"
+      },
+      {
+        "t": 31.7,
+        "event": "place"
+      },
+      {
+        "t": 31.7,
+        "event": "swing"
+      },
+      {
+        "t": 31.85,
+        "event": "place"
+      },
+      {
+        "t": 31.85,
+        "event": "swing"
+      },
+      {
+        "t": 32,
+        "event": "place"
+      },
+      {
+        "t": 32,
+        "event": "swing"
+      },
+      {
+        "t": 32.15,
+        "event": "place"
+      },
+      {
+        "t": 32.15,
+        "event": "swing"
+      },
+      {
+        "t": 32.3,
+        "event": "place"
+      },
+      {
+        "t": 32.3,
+        "event": "swing"
+      },
+      {
+        "t": 32.45,
+        "event": "place"
+      },
+      {
+        "t": 32.45,
+        "event": "swing"
+      },
+      {
+        "t": 32.6,
+        "event": "place"
+      },
+      {
+        "t": 32.6,
+        "event": "swing"
+      },
+      {
+        "t": 32.75,
+        "event": "place"
+      },
+      {
+        "t": 32.75,
+        "event": "swing"
+      },
+      {
+        "t": 32.9,
+        "event": "place"
+      },
+      {
+        "t": 32.9,
+        "event": "swing"
+      },
+      {
+        "t": 33.05,
+        "event": "place"
+      },
+      {
+        "t": 33.05,
+        "event": "swing"
+      },
+      {
+        "t": 33.15,
+        "event": "hop"
+      },
+      {
+        "t": 33.15,
+        "event": "hopA6"
+      },
+      {
+        "t": 33.15,
+        "event": "cut"
+      },
+      {
+        "t": 33.35,
+        "event": "hopB6"
+      },
+      {
+        "t": 33.6,
+        "event": "place"
+      },
+      {
+        "t": 33.6,
+        "event": "swing"
+      },
+      {
+        "t": 33.6,
+        "event": "portal"
+      },
+      {
+        "t": 34.25,
+        "event": "outroA"
+      },
+      {
+        "t": 34.25,
+        "event": "cut"
+      },
+      {
+        "t": 34.45,
+        "event": "outroB"
+      },
+      {
+        "t": 34.45,
+        "event": "outro"
+      },
+      {
+        "t": 36.5,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "b7346787a519aec072a474efb02cf23522d01489",
+    "rendered_at": "2026-11-07T18:02:58.087Z",
+    "head_at_publish": "b7346787a519aec072a474efb02cf23522d01489",
+    "stunt": "stunts/end_portal_job.js",
+    "source_snapshot": [
+      "source/end_portal_job.js",
+      "source/_site.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout b7346787a519",
+    "gunzip -c shorts/end_portal_job/recording.json.gz > work/end_portal_job.rec.json",
+    "node render.js work/end_portal_job.rec.json work/end_portal_job.frames 60 1080 1011",
+    "python3 audio.py work/end_portal_job.rec.json work/end_portal_job.wav",
+    "python3 edit.py --frames work/end_portal_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/end_portal_job.rec.json --audio work/end_portal_job.wav --caption \"POV: your job is filling end portals\" --red job --subs \"[[\\\"ring\\\",\\\"getting faster\\\",1.6,1],[\\\"ring\\\",\\\"speedrun\\\",1.6,2],[\\\"ring\\\",\\\"world record pace\\\",1.6,3],[\\\"ring\\\",\\\"overtime\\\",1.6,4],[\\\"ring\\\",\\\"double shift\\\",1.6,5],[\\\"ring\\\",\\\"no breaks\\\",1.6,6]]\" --subs_y 0.15 --speed [[\"hopA0\",\"hopB0\",\"cut\"],[\"walk1\",\"in1\",\"cut\"],[\"hopA1\",\"hopB1\",\"cut\"],[\"walk2\",\"in2\",\"cut\"],[\"hopA2\",\"hopB2\",\"cut\"],[\"walk3\",\"in3\",\"cut\"],[\"hopA3\",\"hopB3\",\"cut\"],[\"walk4\",\"in4\",\"cut\"],[\"hopA4\",\"hopB4\",\"cut\"],[\"walk5\",\"in5\",\"cut\"],[\"hopA5\",\"hopB5\",\"cut\"],[\"walk6\",\"in6\",\"cut\"],[\"hopA6\",\"hopB6\",\"cut\"],[\"outroA\",\"outroB\",\"cut\"]] --cards \"[[\\\"outro\\\",\\\"IT NEVER ENDS \ud83d\udc80\\\",1.4,\\\"red\\\"]]\" --start_at start:0 --end_after outro:1.4 --out out/end_portal_job.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 4: v10, 7 rings each faster, eyes from inside the ring with the 12th from outside, spare-ring outro. Independent review ready, no blockers. Nitpicks left: a small pitch settle at each ring cut, the card briefly over the spare ring's far frames, the hand lowering 1-4 frames early on a stack's last eye (engine).",
+  "published_at": "2026-11-07T18:19:44.417Z"
+}
