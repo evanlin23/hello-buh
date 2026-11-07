@@ -379,8 +379,11 @@ const DEATHS = []
   }
   if (open !== null) DEATHS.push([open, Infinity])
   for (let k = DEATHS.length - 1; k > 0; k--) if (DEATHS[k][0] - DEATHS[k - 1][1] < 5) { DEATHS[k - 1][1] = DEATHS[k][1]; DEATHS.splice(k, 1) }
-  // a missing respawn mark (older recordings): the death ends where the pose jumps (respawn teleport)
-  for (const d of DEATHS) {
+  // a missing respawn mark (older recordings): the death ends where the pose jumps (respawn teleport).
+  // Only then: with a mark, the respawn teleport reaches the pose a tick before it, and cutting there
+  // showed the spawn point under the death screen for 3 frames (worker 5, story_respawn_tax f324)
+  const hasRespawnMarks = (rec.timeline || []).some(e => e.event === 'respawn')
+  for (const d of hasRespawnMarks ? [] : DEATHS) {
     for (let i = Math.ceil(d[0]) + 1; i < Math.min(P.length, d[1]); i++) {
       const a = P[i - 1], b = P[i]
       if ((b[1] - a[1]) ** 2 + (b[2] - a[2]) ** 2 + (b[3] - a[3]) ** 2 > 64) { d[1] = i; break }
