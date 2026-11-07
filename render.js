@@ -783,6 +783,19 @@ const ROAR_START = new Map()   // id -> [[startTick, endTick]]
   }
   for (const [id, a] of staged) { if (!ROAR_START.has(id)) ROAR_START.set(id, []); ROAR_START.get(id).push([a, a + 84]) }   // no pose_off: the 4.2 s roar
 }
+// staged poses (NoAI mobs posed on cue): ctx.mark('pose', { ids, creepy | standing: true }) until a
+// 'pose_off' for those ids: an enderman's scream, a polar bear rearing up (the roar is above)
+const STAGED = new Map()   // id -> [[a, b, flags]]
+{
+  const open = new Map()
+  for (const e of rec.timeline || []) {
+    if (e.event === 'pose') {
+      const fl = {}; if (e.creepy) fl.creepy = true; if (e.standing) fl.standing = true
+      if (Object.keys(fl).length) for (const id of e.ids || []) { const run = [e.t / 50, Infinity, fl]; if (!STAGED.has(id)) STAGED.set(id, []); STAGED.get(id).push(run); open.set(id, run) }
+    }
+    if (e.event === 'pose_off') for (const id of e.ids || []) if (open.has(id)) { open.get(id)[1] = e.t / 50; open.delete(id) }
+  }
+}
 // TNT minecarts primed (harness cart_primed marks, entity status 10): id -> tick
 const CART_PRIMED = new Map()
 for (const e of rec.timeline || []) if (e.event === 'cart_primed' && !CART_PRIMED.has(e.id)) CART_PRIMED.set(e.id, e.t / 50)
@@ -1865,6 +1878,11 @@ function camAtLive (t) {
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
       }
       e.mobHeld = held
+    }
+    for (const e of ents) {
+      const st = STAGED.get(e.id); if (!st) continue
+      const run = st.find(([a, b]) => t >= a && t < b)
+      if (run) e.extra = { ...(e.extra || {}), ...run[2] }
     }
     for (const e of ents) {
       if (e.name !== 'warden' || !ROAR_START.has(e.id)) continue
