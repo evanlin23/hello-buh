@@ -115,7 +115,10 @@ module.exports = {
       await fill(5, 1, nB + 1 + k, 5, k, nB + 1 + k, 'stone_bricks')
       await put(5, k + 1, nB + 1 + k, 'redstone_wire')
     }
-    await fill(5, 1, towers[0].n, 5, 6, towers[2].n, 'stone_bricks')   // the ridge
+    // the ridge: a bridge at h 6 on pillars at the tower rows (a solid wall hid the columns' landings
+    // from the lane)
+    await fill(5, 6, towers[0].n, 5, 6, towers[2].n, 'stone_bricks')
+    for (const t of towers) await fill(5, 1, t.n, 5, 5, t.n, 'stone_bricks')
     for (let i = 0; i < towers.length; i++) {
       const { n, L: len } = towers[i]
       await put(5, 7, n, T)
@@ -270,9 +273,13 @@ module.exports = {
         const dx = steer.x - p.x, dz = steer.z - p.z, yw = bot.entity.yaw
         const f = -Math.sin(yw) * dx - Math.cos(yw) * dz, r = Math.cos(yw) * dx - Math.sin(yw) * dz
         const far = Math.hypot(dx, dz) > 0.5
-        bot.setControlState('forward', far && f > 0.3); bot.setControlState('back', far && f < -0.3)
-        bot.setControlState('right', far && r > 0.3); bot.setControlState('left', far && r < -0.3)
-        bot.setControlState('sprint', far && sprint && f > 0.3)
+        // the keys are all-or-nothing: press one only when its component dominates (within ~22 degrees),
+        // or a small sideways error turns into a full 45-degree strafe (it walked into the landed sand)
+        const fw = f > 0.3 && f > 0.4 * Math.abs(r), bk = f < -0.3 && -f > 0.4 * Math.abs(r)
+        const rt = r > 0.3 && r > 0.4 * Math.abs(f), lt = r < -0.3 && -r > 0.4 * Math.abs(f)
+        bot.setControlState('forward', far && fw); bot.setControlState('back', far && bk)
+        bot.setControlState('right', far && rt); bot.setControlState('left', far && lt)
+        bot.setControlState('sprint', far && sprint && fw)
       } else for (const s of ['forward', 'back', 'left', 'right', 'sprint']) bot.setControlState(s, false)
       const tc = Object.values(bot.entities).find(e => e.name === 'tnt_minecart')
       if (tc && tc.position.x - X < this.eAct + 0.5 && at('tnt_launch')) markOnce('primed')
@@ -291,29 +298,29 @@ module.exports = {
     bot._client.write('block_place', { hand: 0, location: B(0, 1, 2), direction: 4, cursorX: 0.1, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
     bot.swingArm()
     ctx.mark('press')
-    focus = W(1.5, 1.4, 6); steer = W(9, 0, 3)        // the arrow crosses; head for the east side
+    focus = W(1.5, 1.4, 6)                              // the arrow crosses
     await until(() => at('arrow_hit'), 40)
-    // B: walk up the lane, the camera on the newest lamp
-    steer = W(10, 0, 34); sprint = true                // keep up with the chain, on the east side
+    // B: up the lane west of the line (e = 0: e = 1.5 passed close enough to the stuck arrow to pick it up)
+    steer = W(0, 0, 34); sprint = true                  // keep up with the chain
     for (let kk = 0; kk < lamps.length; kk++) {
       focus = W(5, 2, lamps[Math.min(lamps.length - 1, kk + 1)])
       await until(() => at(`lamp${kk}`), 40)
     }
-    // C: up the staircase to the ridge, then each column as it falls
+    // C: up the staircase to the ridge, then each column as it falls (seen under the ridge's bridge)
     focus = W(5, 6, towers[0].n - 3); k = 0.14
-    steer = W(10, 0, towers[0].n - 6)
+    steer = W(0, 0, towers[0].n - 6)
     await until(() => at('push0'), 40)
     for (let i = 0; i < towers.length; i++) {
-      steer = W(10, 0, towers[i].n - 5)
+      steer = W(0, 0, towers[i].n - 4)
       focus = W(7, 6 + towers[i].L * 0.4, towers[i].n + 1)
       await until(() => at(`push${i + 1}`) || (i === 2 && at('sand_land')), 40)
     }
     focus = W(7, 3, nC); await until(() => at('sand_land'), 60)
     // D: the cart rolls west across the lane: stop short of the track and follow it, walking west
-    focus = W(4, 1, nD); steer = W(6, 0, nD - 5); sprint = false
+    focus = W(4, 1, nD); steer = W(0, 0, nD - 4); sprint = false
     await until(() => at('launch'), 20)
     k = 0.2; sprint = true
-    steer = W(-9, 0, nD - 5)
+    steer = W(-9, 0, nD - 4)
     await follow('minecart', [-2.0, 0.2, 0], () => at('cart_end'), 160)
     sprint = false
     // E: the rockets go up one by one; the last one into the target; the anvil comes down
@@ -361,7 +368,7 @@ module.exports = {
     // TNT 10-15 blocks, and two takes ended in a crater)
     k = 0.1; steer = W(-6, 0, nH - 16)
     for (let i = 0; i < 260 && !at('giant_peak'); i++) {
-      if (at('cube')) steer = W(-2, 0, nH - 21)
+      if (at('cube')) steer = W(-4, 0, nH - 19)        // clear of the bells (e -2/-7, n 55)
       if (at('big')) { focus = W(27, 3, nH + 3) } else if (at('cube')) { focus = W(12, 2.5, nH) }
       else {
         const tnts = Object.values(bot.entities).filter(en => en.name === 'tnt')
