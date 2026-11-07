@@ -145,7 +145,7 @@ module.exports = makeStunt({
   red: 'hour',
   hotbar: [['dirt', 64], ['cobblestone', 64], ['stone_bricks', 64]],
   small,
-  mid: { blocks: fort(), w: 7, d: 7, front: -1, perTick: 2, speed: 2, slots: { cobblestone: 1, stone_bricks: 2 } },
+  mid: { blocks: fort(), w: 7, d: 7, front: -1, perTick: 2, speed: 3, slots: { cobblestone: 1, stone_bricks: 2 } },
   big: {
     blocks: castle(),
     hold: 'stone_bricks', slot: 2,
