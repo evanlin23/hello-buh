@@ -64,7 +64,25 @@ module.exports = {
       // the last try's placement is the payoff: mark it 'saved' (the lava try's 'placed' ended the video early)
       const mark0 = ctx.mark
       if (MODES[i] === 'ok') ctx.mark = (e, d) => { mark0(e, d); if (e === 'placed') mark0('saved') }
-      try { ok = await clutch.perform.call(this, ctx) } catch (e) { ctx.log('attempt error', e.message) }
+      // the clutch runs on a guarded bot: once it dies, its looks stop and the respawn goes on without it (the
+      // lava try burned to death during the clutch's 1.5 s look up the pillar, and the bot stood respawned
+      // on the pillar staring at the sky for 1.7 s until the clutch returned)
+      let aborted = false, settled = false
+      const gbot = new Proxy(bot, { get (t, k) { if (aborted && (k === 'look' || k === 'activateItem' || k === 'setControlState')) return () => Promise.resolve(); const v = t[k]; return typeof v === 'function' ? v.bind(t) : v } })
+      const gctx = Object.create(ctx)
+      gctx.bot = gbot
+      gctx.easeLook = async (yaw, pitch, ms) => {
+        const y0 = bot.entity.yaw, p0 = bot.entity.pitch, steps = Math.max(1, Math.round(ms / 50))
+        let dy = yaw - y0; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+        for (let j = 1; j <= steps && !aborted; j++) {
+          const t = j / steps, e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
+          await gbot.look(y0 + dy * e, p0 + (pitch - p0) * e, true); await bot.waitForTicks(1)
+        }
+      }
+      gctx.easeLookAt = async (q, ms) => { const d = q.minus(bot.entity.position.offset(0, 1.62, 0)); await gctx.easeLook(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), ms) }
+      const run = clutch.perform.call(this, gctx).catch(e => { ctx.log('attempt error', e.message); return false }).finally(() => { settled = true })
+      while (!settled && ctx.deaths === deathsBefore) await bot.waitForTicks(1)
+      if (settled) ok = await run; else { aborted = true; bot.clearControlStates(); ctx.log('died mid-clutch: clutch aborted') }
       ctx.mark = mark0
       if (drink) bot.removeListener('physicsTick', drink)
       ctx.log('perform returned at tick', ctx.tick, 'died', ctx.died, 'pitch', bot.entity.pitch.toFixed(2))
