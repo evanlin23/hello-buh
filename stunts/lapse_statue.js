@@ -84,11 +84,11 @@ function giant () {
     }
   }
   for (let z = 16; z <= 52; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'polished_blackstone_bricks', 6)   // the road in
-  // stage 7: a stepped red sandstone pyramid behind it, for scale
+  // stage 7: a stepped red sandstone pyramid behind it, for scale (solid layers: hollow rings read as a
+  // flat orange frame from above while it rose)
   for (let s = 0; s <= 15; s++) {
     const r = 15 - s
     for (let x = -r; x <= r; x++) for (let z = -40 - r; z <= -40 + r; z++) {
-      if (Math.abs(x) !== r && Math.abs(z + 40) !== r && s !== 15) continue
       put(x, s, z, s === 15 ? 'gold_block' : (s & 1 ? 'cut_red_sandstone' : 'red_sandstone'), 7)
     }
   }
