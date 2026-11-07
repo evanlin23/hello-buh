@@ -56,7 +56,8 @@ module.exports = {
     flash: [['boom', 0, 0.35]],
     // the noob burning in the lava, cut to the death; every change of beat is a hard cut straight
     // from the end of one beat's action (x<k>) to the start of the next (g<k>): no teleport waits
-    speed: [['burn_a', 'death:-0.2', 'cut'], ...[1, 2, 3, 4, 5, 6, 7, 8].map(k => [`x${k}`, `g${k}`, 'cut'])]
+    speed: [['burn_a', 'death:-0.2', 'cut'], ['pearl:0.35', 'summit:-0.25', 2],   // the pearl's long climb at 2x
+      ...[1, 2, 3, 4, 5, 6, 7, 8].map(k => [`x${k}`, `g${k}`, 'cut'])]
   },
 
   async setup (ctx) {
@@ -85,8 +86,8 @@ module.exports = {
         const steep = Math.max(...[[1, 0], [-1, 0], [0, 1], [0, -1]].map(([a, b]) => h - H(dx + a, dz + b)))
         const hv = hash(X, Z)
         const top = h >= 20 ? 'snow_block' : steep > 2 ? (hv < 0.3 ? 'andesite' : hv < 0.4 ? 'gravel' : 'stone') : (hv < 0.12 ? 'coarse_dirt' : 'grass_block')
-        if (h >= 2) bot.chat(`/fill ${X} ${F + 1} ${Z} ${X} ${F + h - 1} ${Z} ${h >= 20 ? "snow_block" : "stone"}`)
-        if (h >= 3 && /grass|dirt/.test(top)) bot.chat(`/setblock ${X} ${F + h - 1} ${Z} dirt`)
+        if (h >= 2) bot.chat(`/fill ${X} ${F + 1} ${Z} ${X} ${F + h - 1} ${Z} stone`)
+        if (h >= 3 && /grass|dirt|snow/.test(top)) bot.chat(`/setblock ${X} ${F + h - 1} ${Z} ${top === 'snow_block' ? 'snow_block' : 'dirt'}`)
         bot.chat(`/setblock ${X} ${F + h} ${Z} ${top}`)
         if (top === 'grass_block' && steep <= 1 && h < 16 && dz < cliff(dx) - 4 && hv > 0.965) trees.push([X, F + h + 1, Z])
         if (++n % 6 === 0) await bot.waitForTicks(1)
@@ -98,8 +99,8 @@ module.exports = {
     this.wallZ = mz + cliff(0)                 // the cliff's face block row at dx 0
     this.cliffH = H(0, cliff(0))
     // the noob's (and the hacker's) start: back from the cliff and off to the side, looking up at it
-    this.startX = mx + 3.5; this.startZ = this.wallZ + 9.5
-    this.startYaw = 180 - Math.atan2(3, 8) * 180 / Math.PI
+    this.startX = mx + 2.5; this.startZ = this.wallZ + 6.5
+    this.startYaw = 180 - Math.atan2(2, 5) * 180 / Math.PI
     ctx.log('mountain: summit', H(0, 0), 'cliff at dx0', this.cliffH, 'wall z', this.wallZ)
 
     // --- 2. the lava lake: two deep on stone, flush with the grass ---
@@ -229,7 +230,7 @@ module.exports = {
         ctx.sound('block.ladder.place', 1, 0.9)
         placed++
       }
-      if (placed === 2 && !turned) { turned = true; ctx.easeLook(-0.75, -0.35, 1300) }   // looks out: the ground dropping away
+      if (placed === 2 && !turned) { turned = true; ctx.easeLook(-0.9, -0.75, 1300) }   // looks out and down: the ground dropping away
       await bot.waitForTicks(1)
     }
     ctx.mark('ladders_out')
@@ -434,7 +435,6 @@ module.exports = {
     await bot.waitForTicks(5)
     bot.setControlState('jump', false)
     for (let w = 0; w < 30 && !(bot.entity.onGround && bot.entity.position.z < pz - 1); w++) await bot.waitForTicks(1)
-    await bot.waitForTicks(4)
     bot.clearControlStates()
     ctx.mark('out')
     ctx.log('pro out at', bot.entity.position, 'y', (bot.entity.position.y - F).toFixed(1))
@@ -450,7 +450,9 @@ module.exports = {
     await bot.waitForTicks(20)
     await typed(2)
     const fp = bot.entity.position
-    for (let k = 0; k < 6; k++) bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:16}`)
+    for (let k = 0; k < 3; k++) bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:16}`)
+    // and a ring round the rim, out of shot: the crater has to read from 40 blocks up (a 3x3 pit didn't)
+    for (const [a, b] of [[-3, -3], [0, -3], [3, -3], [-3, 0], [3, 0], [-3, 3], [0, 3], [3, 3]]) bot.chat(`/summon tnt ${px + a + 0.5} ${F - 2} ${pz + b + 0.5} {fuse:16}`)
     ctx.sound('entity.tnt.primed', 1)
     ctx.mark('hack')
     let boomed = false
@@ -458,7 +460,7 @@ module.exports = {
     bot._client.on('explosion', onBoom)
     for (let w = 0; w < 40 && !boomed; w++) await bot.waitForTicks(1)
     if (!boomed) { ctx.log('no explosion'); return false }
-    ctx.easeLook(N + 0.15, -1.45, 500)                            // launched: the pit falling away below
+    ctx.easeLook(N + 0.15, -1.45, 300)                            // launched: the crater falling away below
     for (let w = 0; w < 40; w++) await bot.waitForTicks(1)
     bot._client.removeListener('explosion', onBoom)
     ctx.log('hacker launched to', (bot.entity.position.y - F).toFixed(1))
