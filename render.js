@@ -173,6 +173,7 @@ const MC = require('minecraft-data')(rec.version)
 const FALL_START = new Map()   // falling_block id -> where it appeared
 for (const r of rec.entities || []) if (r[2] === 'falling_block' && !FALL_START.has(r[1])) FALL_START.set(r[1], { t: r[0], x: r[3], y: r[4], z: r[5], vy: 0 })
 const FACE = []
+const PRE_FACE = new Map()   // entity id -> [tick, yaw, headYaw, pitch] last seen outside a face_on window
 // [start tick, end tick, which]: which = { ids: [...] } or { near: [x, z, r] } from the face_on mark,
 // or null for every villager (older recordings)
 { let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = [e.t / 50, e.ids || e.near ? { ids: e.ids, near: e.near, head: e.head } : null]; if (e.event === 'face_off' && a !== null) { FACE.push([a[0], e.t / 50, a[1]]); a = null } } if (a !== null) FACE.push([a[0], Infinity, a[1]]) }
@@ -1221,8 +1222,17 @@ function camAtLive (t) {
     }
     // mobs made to face the player by command (tp facing entity <bot> eyes) between face_on and
     // face_off marks: the recorded entity yaw lags the server by seconds, so face them here
-    for (const [fa, fb, which] of FACE) {
-      if (t < fa || t >= fb) continue
+    // the turn has to ease from the yaw the mob had BEFORE face_on: the bot sends tp facing every
+    // tick, so the recorded yaw is already turned at face_on and easing from it did nothing (the
+    // crowd still snapped in 3 frames: worker 2, staring_villagers). Remember each mob's last yaw
+    // outside a face window, and the one it had when the window opened.
+    for (const e of ents) {
+      const inFace = FACE.some(([fa, fb]) => t > fa - 1 && t < fb)   // (fa - 1: frames between ticks already lerp toward the turned yaw)
+      if (!inFace) { PRE_FACE.set(e.id, [t, e.yaw, e.headYaw ?? e.yaw, e.pitch]) }
+    }
+    for (const [fa0, fb, which] of FACE) {
+      const fa = fa0 - 1   // from the last tick before face_on: the frames after it already interpolate toward the turned yaw
+      if (t <= fa || t >= fb) continue
       for (const e of ents) {
         if (which ? !((which.ids && which.ids.includes(e.id)) || (which.near && Math.hypot(e.x - which.near[0], e.z - which.near[1]) <= which.near[2])) : e.name !== 'villager') continue
         const dx = cam.x - e.x, dz = cam.z - e.z, dy = cam.y - (e.y + 1.62)
@@ -1230,10 +1240,12 @@ function camAtLive (t) {
         // the turn eases like Entity.lerpTo (3 ticks), head leading the body (2 ticks): a one-frame
         // 180 flip of the whole crowd read as a glitch (frame review, staring_villagers)
         const fb = Math.min(1, (t - fa) / 3), fh = Math.min(1, (t - fa) / 2)
-        const hy = e.headYaw ?? e.yaw
-        if (!(which && which.head)) e.yaw = lerpAngle(e.yaw, yaw, fb)   // head: true = LookAtPlayerGoal, only the head follows
+        // the start: the mob's look on the last frame before face_on (within a second of it), else as recorded
+        const pre = PRE_FACE.get(e.id), ok = pre && pre[0] <= fa && fa - pre[0] <= 20
+        const by = ok ? pre[1] : e.yaw, hy = ok ? pre[2] : (e.headYaw ?? e.yaw), p0 = ok ? pre[3] : e.pitch
+        if (!(which && which.head)) e.yaw = lerpAngle(by, yaw, fb)   // head: true = LookAtPlayerGoal, only the head follows
         e.headYaw = lerpAngle(hy, yaw, fh)
-        e.pitch = e.pitch + (pitch - e.pitch) * fh
+        e.pitch = p0 + (pitch - p0) * fh
       }
     }
     // mobs never walk into the player: the server and client push overlapping entities apart, but
