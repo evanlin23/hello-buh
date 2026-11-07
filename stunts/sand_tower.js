@@ -71,6 +71,9 @@ module.exports = {
       bot._client.write('block_dig', { status: 0, location: loc, face: 3, sequence: 0 })
       ctx.sound('block.sand.break', 1); ctx.particles('block', new Vec3(cx, floor + 1, cz), { block: 'sand' })
       if (ctx.tick - lastSwing >= 3) { bot.swingArm(); lastSwing = ctx.tick }   // ctx.tick: bot.time.age only updates once a second
+      // sand checks for a free space 2 ticks after the update (a torch isn't one): let the column
+      // start falling, then the torch goes in the gap and each falling block lands on it
+      await bot.waitForTicks(3)
       ctx.select(1)
       bot._client.write('block_place', { hand: 0, location: { x: cx, y: floor, z: cz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
       ctx.sound('block.wood.place', 1)
