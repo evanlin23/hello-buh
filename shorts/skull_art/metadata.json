@@ -3,7 +3,7 @@
   "caption": "why is he building THIS \ud83d\ude28",
   "youtube": {
     "title": "why is he building THIS \ud83d\ude28 #minecraft #shorts",
-    "description": "why is he building THIS \ud83d\ude28\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "why is he building THIS \ud83d\ude28\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,12 +13,12 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "com_bota.mp3",
-    "title": "COM BOTA",
-    "artist": "cape, crysstales",
+    "file": "fearless_funk.mp3",
+    "title": "Fearless Funk",
+    "artist": "DR M\u00d8B, Chris Linton",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
-    "drop_in_song_s": 16.75,
+    "drop_in_song_s": 29.5,
     "drop_in_short_s": 29.55,
     "song_start_s": 0.0
   },
@@ -681,9 +681,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "ab6f67ac63df76705b887252b55dd6bbbda356cc",
+    "commit": "c02f2a86e278bff110de51d6f25785bf9879eb4e",
     "rendered_at": "2026-11-07T00:43:24.247Z",
-    "head_at_publish": "ab6f67ac63df76705b887252b55dd6bbbda356cc",
+    "head_at_publish": "e2bac70e49a07ab0066bb0ac7130664cff96607f",
     "stunt": "stunts/skull_art.js",
     "source_snapshot": [
       "source/skull_art.js",
@@ -691,13 +691,13 @@
     ]
   },
   "rebuild": [
-    "git checkout ab6f67ac63df",
+    "git checkout c02f2a86e278",
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
     "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS \ud83d\ude28\" --start_at stage:-0.2 --end_after complete:0.9 --out out/skull_art.mp4"
   ],
-  "status": "ready",
-  "notes": "worker: 30.5 s three-skull format; frame review + retention + minecraft audits passed. Nitpicks: quick flick back after the glance (fixed in lib since), glance crops the medium skull",
-  "published_at": "2026-11-07T00:48:06.278Z"
+  "status": "pending-qa",
+  "notes": "worker: held for re-render (owner: remove the mid-build glance)",
+  "published_at": "2026-11-07T06:09:40.337Z"
 }
