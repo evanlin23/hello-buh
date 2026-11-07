@@ -409,6 +409,7 @@ window.HB = {
 
   // pos = eye position; yaw/pitch in mineflayer convention; bob = {x,y,roll,pitch} offsets
   async frame (cam, tick, ents, parts) {
+    if (END_LOADS.length) await Promise.all(END_LOADS)   // the portal's textures before its first frame (it drew black for one)
     animate(tick || 0)
     if (entities) await entities.update(ents || [], tick || 0)
     if (blockEntities && cam.blockEntities) await blockEntities.update(cam.blockEntities)
@@ -490,7 +491,7 @@ window.HB = {
     await drawParticles(parts)
     await drawWeather(cam)
     GLINT.ms.value = (tick || 0) * 50
-    END_TIME.value = ((tick || 0) % 4000) / 4000 * 0.6   // the shader's GameTime drift, slow
+    END_TIME.value = ((tick || 0) % 24000) / 24000   // GameTime: the game time as a fraction of a day
     drawSelection(cam)
     cullClouds()
     renderer.render(scene, camera)
@@ -548,30 +549,41 @@ async function drawWeather (cam) {
 // drifting with time, tinted with the shader's colour table. Double-sided (seen from below too).
 let END_MAT = null
 const END_TIME = { value: 0 }
+const END_LOADS = []
 function endPortalMaterial () {
   if (END_MAT) return END_MAT
-  const tex = new THREE.TextureLoader().load('/assets/env/entity/end_portal.png')
-  tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.magFilter = THREE.NearestFilter; tex.minFilter = THREE.NearestFilter; tex.colorSpace = THREE.NoColorSpace
+  const load = (url) => {
+    const t = new THREE.TextureLoader().load(url)
+    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
+    END_LOADS.push(new Promise((resolve) => { const i = setInterval(() => { if (t.image && t.image.complete !== false) { clearInterval(i); resolve() } }, 10) }))
+    return t
+  }
   END_MAT = new THREE.ShaderMaterial({
     side: THREE.DoubleSide,
-    uniforms: { tex: { value: tex }, time: END_TIME, res: { value: new THREE.Vector2(W, H) } },
-    vertexShader: 'void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    uniforms: { sky: { value: load('/assets/env/end_sky.png') }, tex: { value: load('/assets/env/entity/end_portal.png') }, time: END_TIME },
+    // texProj0 = projection_from_position(gl_Position): (xy + w) / 2, zw kept
+    vertexShader: `varying vec4 vProj;
+      void main() { vec4 p = projectionMatrix * modelViewMatrix * vec4(position, 1.0); gl_Position = p; vProj = vec4((p.xy + p.w) * 0.5, p.zw); }`,
+    // rendertype_end_portal.fsh as written: end_sky x COLORS[0], then 15 layers of end_portal.png
+    // through end_portal_layer(i) = mat4(scale * rotate) * translate * SCALE_TRANSLATE (GLSL
+    // column-major: the translate and the 0.25 terms act through w), sampled with textureProj
     fragmentShader: `
-      uniform sampler2D tex; uniform float time; uniform vec2 res;
+      uniform sampler2D sky; uniform sampler2D tex; uniform float time; varying vec4 vProj;
       const vec3 C[16] = vec3[](vec3(0.022087,0.098399,0.110818), vec3(0.011892,0.095924,0.089485), vec3(0.027636,0.101689,0.100326), vec3(0.046564,0.109883,0.114838),
         vec3(0.064901,0.117696,0.097189), vec3(0.063761,0.086895,0.123646), vec3(0.084817,0.111994,0.166380), vec3(0.097489,0.154120,0.091064),
         vec3(0.106152,0.131144,0.195191), vec3(0.097721,0.110188,0.187229), vec3(0.133516,0.138278,0.148582), vec3(0.070006,0.243332,0.235792),
         vec3(0.196766,0.142899,0.214696), vec3(0.047281,0.315338,0.321970), vec3(0.204675,0.390010,0.302066), vec3(0.080955,0.314821,0.661491));
-      mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
+      const mat4 SCALE_TRANSLATE = mat4(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.25, 0.25, 0.0, 1.0);
+      mat2 rotZ(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
+      mat4 layerM(float layer) {
+        mat4 translate = mat4(1.0, 0.0, 0.0, 17.0 / layer, 0.0, 1.0, 0.0, (2.0 + layer / 1.5) * (time * 1.5), 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+        mat2 rs = mat2((4.5 - layer / 4.0) * 2.0) * rotZ(radians((layer * layer * 4321.0 + layer * 9.0) * 2.0));
+        return mat4(rs) * translate * SCALE_TRANSLATE;
+      }
+      vec3 proj(sampler2D s, vec4 q) { return texture2D(s, q.xy / q.w).rgb; }
       void main() {
-        vec2 p = gl_FragCoord.xy / res.y;
-        vec3 col = vec3(0.07, 0.09, 0.10) * 0.3;
-        for (int i = 0; i < 15; i++) {
-          float fi = float(i + 1);
-          vec2 q = rot(radians((fi * fi * 4321.0 + fi * 9.0) * 2.0)) * p * (4.5 - fi / 4.0);
-          q += vec2(17.0 / fi, (2.0 + fi / 1.5) * (time * 1.5));
-          col += texture2D(tex, q).rgb * C[i];
-        }
+        vec3 col = proj(sky, vProj) * C[0];
+        for (int i = 0; i < 15; i++) col += proj(tex, vProj * layerM(float(i + 1))).rgb * C[i];
         gl_FragColor = vec4(col, 1.0);
       }`
   })
