@@ -55,7 +55,8 @@ module.exports = {
     dropAt: 'hack', endAfter: 'boom:0.95',
     // the ladder climb at 1.6x, the pearl's flight cut (a dot on a held shot), the noob burning in the lava cut to the death
     deathBeats: [3, 6],
-    speed: [['climb_a', 'ladders_out', 1.6], ['pillar_a', 'pillared', 1.4], ['pearl:0.45', 'summit:-0.15', 'cut'], ['burn_a', 'death:-0.2', 'cut']],
+    // the run-in: 0.8 s with the whole mountain in shot, then cut to the wall as the first ladder goes on
+    speed: [['seg:0.8', 'climb_a:-0.35', 'cut'], ['climb_a', 'ladders_out', 1.6], ['pillar_a', 'pillared', 1.4], ['pearl:0.45', 'summit:-0.15', 'cut'], ['burn_a', 'death:-0.2', 'cut']],
     extra: {
       deathScreen: true, onFire: 'in_lava:death',
       // a preview of the finale before beat 1 (the launch, cut before it lands)
@@ -104,8 +105,8 @@ module.exports = {
     this.wallZ = mz + cliff(0)                 // the cliff's face block row at dx 0
     this.cliffH = H(0, cliff(0))
     // the noob's (and the hacker's) start: back from the cliff and off to the side, looking up at it
-    this.startX = mx + 3.5; this.startZ = this.wallZ + 10.5
-    this.startYaw = 180 - Math.atan2(3, 9) * 180 / Math.PI
+    this.startX = mx + 5.5; this.startZ = this.wallZ + 22.5   // far enough back that the whole mountain is in the opening shot
+    this.startYaw = 180 - Math.atan2(5, 21) * 180 / Math.PI
     ctx.log('mountain: summit', H(0, 0), 'cliff at dx0', this.cliffH, 'wall z', this.wallZ)
 
     // --- 2. the lava lake: two deep on stone, flush with the grass ---
@@ -186,6 +187,7 @@ module.exports = {
         k.placeAt(new Vec3(mx, y, wallZ), 3, [0.5, 0.5, 1], { x: mx, y, z: lz })
         ctx.sound('block.ladder.place', 1, 0.9)
         if (placed === 0) { ctx.mark('climb_a'); ctx.easeLook(N + 0.15, 1.05, 900) }   // up the ladder column, the cliff above
+        if (placed === 4) ctx.easeLook(N - 0.3, 0.5, 1500)   // a slow drift down the cliff as he climbs: the height shows (a locked look read as frozen)
         placed++
       }
       await bot.waitForTicks(1)
@@ -255,7 +257,7 @@ module.exports = {
       const [ya, pa] = k.angTo(peak)
       k.lerpLook(ya, Math.max(-1.45, pa - 0.15), 0.18)
       await bot.waitForTicks(1)
-      if (bot.entity.position.y - F > MH + 11) break   // just past the peak: from 50 up the field's edges showed
+      if (bot.entity.position.y - F > MH + 3) break    // just past the peak: higher, the field's edges showed
     }
     ctx.log('hacker up', (bot.entity.position.y - F).toFixed(1))
     k.endBeat()
@@ -388,7 +390,6 @@ module.exports = {
     bot.setControlState('forward', true); bot.setControlState('jump', true)
     await bot.waitForTicks(5)
     bot.setControlState('jump', false)
-    await bot.waitForTicks(4)
     k.endBeat()                                                   // mid-jump onto the rim (landing on flat grass was 0.75 s of nothing)
     for (let w = 0; w < 30 && !(bot.entity.onGround && bot.entity.position.z < pz - 1); w++) await bot.waitForTicks(1)
     bot.clearControlStates()
