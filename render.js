@@ -26,6 +26,18 @@ const HIDE_HAND = !!STUNT_MOD.hideHand
 const F1 = []
 { let on = null; for (const e of rec.timeline || []) { if (e.event === 'f1_on' && on === null) on = e.t / 50; if (e.event === 'f1_off' && on !== null) { F1.push([on, e.t / 50]); on = null } } if (on !== null) F1.push([on, Infinity]) }
 const P = rec.poses
+// client-side placement prediction: a stunt can mark('place', {x, y, z}) on the tick it uses an item
+// on a block. The block change the server sends back 1-3 ticks later is moved to that tick, as
+// BlockItem.place predicts on the client; an eye of ender is not predicted (EnderEyeItem.useOn returns
+// early client-side), so it lands one tick after the use (worker 4, end_portal_job)
+if (rec.blocks && rec.timeline) {
+  for (const m of rec.timeline.filter(e => e.event === 'place' && Number.isFinite(e.x))) {
+    const t0 = m.t / 50 + (m.eye ? 1 : 0), x = Math.floor(m.x), y = Math.floor(m.y), z = Math.floor(m.z)
+    const b = rec.blocks.find(b => b[1] === x && b[2] === y && b[3] === z && b[0] > t0 && b[0] <= t0 + 5)
+    if (b) b[0] = Math.ceil(t0)
+  }
+  rec.blocks.sort((a, b) => a[0] - b[0])
+}
 // the dimension (harness: rec.dimension; DIMENSION= overrides): the Nether and the End light, sky and fog
 const DIM = String(process.env.DIMENSION || rec.dimension || STUNT_MOD.dimension || 'overworld').replace(/^minecraft:/, '')
 setDimension(DIM)
