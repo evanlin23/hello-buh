@@ -19,7 +19,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:snowy_plains',
   caption: 'hide and seek but the villagers cheated again 😭',
   recordRadius: 150,   // (the default 8-chunk view; the bot visits the cave in a cut so the renderer meshes down to it)
-  botTimeout: 480,
+  botTimeout: 900,
   time: 2500,
   fovZoom: [['r1_zoom', 'r1_dig:-0.3', 1.6], ['r2_zoom', 'r2_found:0.6', 1.8], ['r3_zoom', 'r3_found:0.7', 1.7],
     ['r4_zoom', 'r4_found:0.7', 2.2], ['r5_zoom', 'r5_found:0.3', 3]],
@@ -44,11 +44,11 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     await ctx.defaultRules()
-    const site = await hs.findFlat(ctx, { wide: true })
+    const site = await hs.findFlat(ctx)
     const { X, Z, F } = site
     Object.assign(this, site)
     for (const c of ['/gamerule log_admin_commands false', '/gamerule random_tick_speed 0', '/gamerule fire_spread_radius_around_player 0', '/difficulty peaceful']) await ctx.cmd(c)
-    await hs.clearField(ctx, site, { biome: 'minecraft:snowy_plains' })
+    await hs.clearField(ctx, site, { biome: 'minecraft:snowy_plains', taper: 6 })
     const S = hs.set(ctx, site), P = S.P
     // a thin snow cover everywhere (before the pieces: their own air clears it inside them)
     for (let z0 = Z - 72; z0 <= Z + 72; z0 += 24) { bot.chat(`/fill ${X - 72} ${F + 1} ${z0} ${X + 72} ${F + 1} ${Math.min(Z + 72, z0 + 23)} snow`); await ctx.sleep(300) }
@@ -91,6 +91,7 @@ module.exports = {
     await ctx.cmd(`/fill ${P(-13, -1, -4)} ${P(-11, 0, -2)} powder_snow`); await ctx.cmd(`/fill ${P(-13, 1, -4)} ${P(-11, 1, -2)} air`)
     // 4: the ice statue (south-west), 3x3x4 of ice
     await ctx.cmd(`/fill ${P(-14, 1, 3)} ${P(-12, 4, 5)} ice`)
+    await hs.fixGround(ctx, site)
     await ctx.cmd('/kill @e[type=villager]'); await ctx.cmd('/kill @e[type=snow_golem]')
     await S.hider('h0', 3.5, 1.06, -6.2, -55, 0, 'farmer', 'snow')               // the runner
     await S.hider('h1', 7.0, 0.55, -4.0, 180, 0, 'farmer', 'snow')               // in the snowman
@@ -261,6 +262,7 @@ module.exports = {
     const down = m.everyTick(24, (i) => {
       if (i % 5 === 0) bot.chat(`/summon snowball ${X + 5.5} ${BOTTOM + 1.6} ${Z + 5.5} {Motion:[0.0,1.3,0.0]}`)
       if (i % 3 === 0) ctx.particles('happy', new ctx.Vec3(X + 5.5, BOTTOM + 2.1, Z + 5.5))
+      if (i % 4 === 0) ctx.particles('lava', new ctx.Vec3(X + 4.5, BOTTOM + 0.95, Z + 5.0), { count: 2, spread: 0.6 })
       if (i === 8) ctx.mark('face_on', { near: [X + 5.5, Z + 5.5, 1.2] })
     })
     for (let i = 0; i < 24; i++) { await bot.look(bot.entity.yaw + 0.004 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1) }

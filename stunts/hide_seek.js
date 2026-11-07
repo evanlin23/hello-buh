@@ -23,7 +23,7 @@ module.exports = {
   renderDistance: 17, recordRadius: 280,   // the build-limit pillar: its top is ~250 blocks up (fog is max(xz, |y|))
   chunkStops: set => [{ x: set.x + 150, z: set.z }, { x: set.x - 150, z: set.z }, { x: set.x, z: set.z + 150 }, { x: set.x, z: set.z - 150 }],
   clouds: false,   // Video Settings > Clouds: OFF (vanilla): at y 192 they'd hide the top of the pillar
-  botTimeout: 480,
+  botTimeout: 900,
   time: 1500,      // morning: at noon the sun sat right at the top of the pillar shot
   // sharp zooms (narrower FOV) on each giveaway
   fovZoom: [['r1_zoom', 'r1_chop:-0.3', 1.6], ['r2_zoom', 'r2_found:0.6', 1.7], ['r3_zoom', 'r3_found:0.7', 1.8],
@@ -50,24 +50,13 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     await ctx.defaultRules()
-    const { X, Z, F } = await hs.findFlat(ctx, { wide: true, radius: 110, maxHill: 4 })
+    const { X, Z, F } = await hs.findFlat(ctx)
     Object.assign(this, { X, Z, F })
     await ctx.cmd('/gamerule log_admin_commands false')
     await ctx.cmd('/gamerule random_tick_speed 0')
     await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
     await ctx.cmd('/difficulty peaceful')
-    await ctx.cmd(`/tp @s ${X} ${F + 40} ${Z}`); await bot.waitForTicks(20)
-    const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
-    await heavy(`/forceload add ${X - 72} ${Z - 72} ${X + 72} ${Z + 72}`)
-    for (let z0 = Z - 72; z0 <= Z + 72; z0 += 6) {
-      const z1 = Math.min(z0 + 5, Z + 72)
-      await heavy(`/fill ${X - 72} ${F + 1} ${z0} ${X + 72} ${F + 6} ${z1} air`)
-      await heavy(`/fill ${X - 72} ${F + 7} ${z0} ${X + 72} ${F + 30} ${z1} air`)
-      await heavy(`/fill ${X - 72} ${F} ${z0} ${X + 72} ${F} ${z1} grass_block`)
-      await heavy(`/fill ${X - 72} ${F - 4} ${z0} ${X + 72} ${F - 1} ${z1} dirt`)
-      await heavy(`/fillbiome ${X - 72} ${F - 4} ${z0} ${X + 72} ${F + 12} ${z1} minecraft:plains`)
-    }
-    await ctx.sleep(2000)
+    await hs.clearField(ctx, { X, Z, F }, { taper: 6 })
     const P = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     // streets
     await ctx.cmd(`/fill ${P(-1, 0, -26)} ${P(1, 0, 26)} dirt_path`)
@@ -129,6 +118,7 @@ module.exports = {
     await ctx.cmd(`/fill ${P(-20, 0, -16)} ${P(-17, 0, -16)} lava`)
     // round 3's hole under the start spot (covered by the path block)
     await ctx.cmd(`/fill ${P(-9, -2, -1)} ${P(-9, -1, -1)} air`)
+    await hs.fixGround(ctx, { X, Z, F })
     // the hiders
     await ctx.cmd('/kill @e[type=villager]')
     const hider = (tag, x, y, z, yaw, pitch, prof) => ctx.cmd(`/summon villager ${(X + x).toFixed(3)} ${(F + y).toFixed(3)} ${(Z + z).toFixed(3)} {NoAI:1b,NoGravity:1b,Invulnerable:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${yaw}f,${pitch}f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${prof}",type:"minecraft:plains",level:2},Xp:1}`)
@@ -270,7 +260,8 @@ module.exports = {
     ctx.mark('r2_end')
     await look(16.5, 0.9, 9.5, 360)              // ...bubbles on the pond
     const bubbles = everyTick(40, (i) => {
-      if (i % 3 === 0) ctx.particles('splash', W(16.5, 1, 9.5), { count: 10, spread: 0.35 })
+      if (i % 2 === 0) ctx.particles('bubble', W(16.5, 0.2, 9.5), { count: 4, spread: 0.3 })
+      if (i % 3 === 0) ctx.particles('bubble_pop', W(16.5, 0.9, 9.5), { count: 3, spread: 0.35 })
       if (i % 6 === 0) ctx.sound('block.bubble_column.upwards_ambient', 0.8, 0.9 + 0.05 * (i % 4))
     })
     ctx.mark('r2_zoom')
@@ -330,14 +321,16 @@ module.exports = {
     await bot.waitForTicks(3)
     ctx.mark('r4_end')
     // the giveaway: the lava pops, and a burning head peeks out of it and sinks back
-    const pops = everyTick(30, (i) => { if (i % 5 === 0) ctx.sound('block.lava.pop', 1, 0.8 + 0.1 * (i % 3)) })
+    const pops = everyTick(40, (i) => {
+      if (i % 5 === 0) { ctx.sound('block.lava.pop', 1, 0.8 + 0.1 * (i % 3)); ctx.particles('lava', W(-18.5, 0.95, -12.5), { count: 2, spread: 1.6 }) }
+    })
     const peek = (async () => { await rise('h4', 1.5, 6); await bot.waitForTicks(6); await rise('h4', -1.5, 6) })()
     await look(-18.5, 0.8, -12.5, 300)
-    await peek
     ctx.mark('r4_zoom')
-    const up4 = rise('h4', 2.6, 20)             // ...and he comes up, on fire, as the seeker walks over
-    await go(-14.2, -13.0, { sprint: false, stop: 0.35, face: [-18.5, 1.2, -12.5] })
-    await up4
+    const walk = go(-14.2, -13.0, { sprint: false, stop: 0.35, face: [-18.5, 1.2, -12.5] })   // walking over while the head peeks
+    await peek
+    await rise('h4', 2.6, 18)                   // ...and he comes up, on fire
+    await walk
     hmm(0.9)
     found(4)
     await pops
