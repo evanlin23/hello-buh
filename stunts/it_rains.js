@@ -8,6 +8,7 @@
 // Owner rules: 30 s minimum from more beats, no dead space, end <= 1 s after the payoff (death
 // screen text: ~1.6 s of reading).
 const { plateau } = require('../lib/plateau')
+const { plainsBiome } = require('../lib/story')
 const H = 16            // drop height above the floor: in frame for the whole fall with the camera pitched up
 const R = 64            // cleared field radius (at 40 the cleared pit's walls showed in every spin)
 
@@ -39,6 +40,9 @@ module.exports = {
     // a plateau, never a pit: at the start point's height the field's cut walls showed in every spin
     const floor = await plateau(ctx, { x0: x - R, x1: x + R, z0: z - R, z1: z + R, above: H + 14, below: 8 })
     Object.assign(this, { x, z, floor })
+    // one biome over the field (a biome border tinted half the grass teal); the harness re-sends
+    // the chunks before recording
+    await plainsBiome(ctx, (dx, dy, dz) => `${x + dx} ${floor + dy} ${z + dz}`, R, -8, 20)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16], 'water_bucket'])
@@ -155,6 +159,9 @@ module.exports = {
 
     // ---- phase 3: creepers ----
     ctx.mark('creepers')
+    // the chaos can hurt but not kill until the one with his name on it (resistance IV: 80% off,
+    // hearts still drop); a stray creeper ended it early twice and the finale never played
+    bot.chat('/effect give @s resistance infinite 3 true')
     rain.tnt = 0; rain.anvil = 6; rain.creeper = 14
     ctx.easeLook(yaw0, 0.15, 500); await bot.waitForTicks(6)
     // backpedal, weaving, watching them come
@@ -204,6 +211,8 @@ module.exports = {
     const yf = bot.entity.yaw
     for (const [dy, dirs, t] of [[0.3, ['left'], 10], [-0.4, ['right'], 10], [0.1, ['back'], 8], [0.4, ['left'], 8], [-0.2, ['back'], 8], [0.25, ['right'], 8]]) { ctx.easeLook(yf + dy, 0.3, 500); await step(dirs, t) }
     // the one that lands right behind
+    bot.chat('/effect clear @s resistance')
+    await bot.waitForTicks(1)
     const p = bot.entity.position, yb = bot.entity.yaw
     bot.chat(`/summon creeper ${(p.x + Math.sin(yb) * 1.6).toFixed(2)} ${(floor + 1).toFixed(1)} ${(p.z + Math.cos(yb) * 1.6).toFixed(2)} {PersistenceRequired:1b,ignited:1b,Fuse:30}`)
     await bot.waitForTicks(3)
