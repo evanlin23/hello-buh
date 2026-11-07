@@ -22,7 +22,10 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     // a wide field (its cut edges showed behind the payoff at 40 blocks)
-    for (let y0 = floor + 1; y0 <= floor + 46; y0 += 3) await ctx.cmd(`/fill ${x - 40} ${y0} ${z - 40} ${x + 70} ${y0 + 2} ${z + 40} air`)   // tall: hills cut at 22 showed as pit walls
+    // tall (hills cut at 22 showed as pit walls). Big fills stall the server for seconds, longer than
+    // mineflayer's tick wait allows: send each one and wait on the clock
+    const bigFill = async (c) => { bot.chat(c); await new Promise(r => setTimeout(r, 1800)) }
+    for (let y0 = floor + 1; y0 <= floor + 37; y0 += 3) await bigFill(`/fill ${x - 40} ${y0} ${z - 40} ${x + 70} ${y0 + 2} ${z + 40} air`)
     await ctx.cmd(`/fill ${x - 40} ${floor} ${z - 40} ${x + 70} ${floor} ${z + 40} grass_block`)
     await ctx.cmd(`/fill ${x - 40} ${floor - 3} ${z - 40} ${x + 70} ${floor - 1} ${z + 40} dirt`)
     // where the bot escapes to, and what's waiting right behind it there
