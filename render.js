@@ -18,6 +18,12 @@ const EYE = 1.62
 const rec = JSON.parse(fs.readFileSync(recPath))
 let STUNT_MOD = {}
 try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {}
+const FOV_ZOOM = []   // [startTick, endTick, scale] from stunt.fovZoom (see the frame loop)
+for (const [sa, sb, sc] of STUNT_MOD.fovZoom || []) {
+  const at = (spec) => { const [ev, off] = String(spec).split(':'); const e = (rec.timeline || []).find(m => m.event === ev); return e ? e.t / 50 + Number(off || 0) * 20 : null }
+  const a0 = at(sa), b0 = at(sb)
+  if (a0 !== null && b0 !== null && b0 > a0) FOV_ZOOM.push([a0, b0, Number(sc)])
+}
 setBrightness(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5)   // the Brightness option (renderer/models.js)
 // `hideHand: true`: no first-person hand or held item (vanilla F1), for narrators who aren't Steve
 const HIDE_HAND = !!STUNT_MOD.hideHand
@@ -1274,6 +1280,17 @@ function camAtLive (t) {
     cam.dayTime = curDayTime
     cam.rain = levelAt(RAIN, t); cam.thunder = levelAt(THUNDER, t)
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
+    // stunt.fovZoom [[EVENT[:s], EVENT[:s], SCALE]]: a sharp zoom rendered as a narrower FOV (a 2.2x crop
+    // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.
+    // The first-person hand keeps its own camera, so it doesn't zoom. Not with CAM= (the replay pass).
+    if (FOV_ZOOM.length && !process.env.CAM) {
+      let z = 1
+      for (const [a0, b0, sc] of FOV_ZOOM) {
+        const u = t < a0 ? 0 : t < a0 + 8 ? (t - a0) / 8 : t <= b0 ? 1 : t < b0 + 5 ? 1 - (t - b0) / 5 : 0
+        z = Math.max(z, 1 + (sc - 1) * u * u * (3 - 2 * u))
+      }
+      if (z > 1) cam.fov = 2 * Math.atan(Math.tan((cam.fov || 70) * Math.PI / 360) / z) * 180 / Math.PI
+    }
     // CAM="dx,dy,dz,yawDeg,pitchDeg": a fixed camera relative to the set origin (no bob)
     // CAM=back[:dist] / CAM=front[:dist]: vanilla's F5 views (default 4 blocks), bob and hurt tilt kept
     if (process.env.CAM) {

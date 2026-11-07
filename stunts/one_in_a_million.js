@@ -37,6 +37,10 @@ module.exports = {
   // refresh loads every tier's landing (each covers the server's 192) plus 96 past the first one
   renderDistance: 18, recordRadius: 360,
   chunkStops: set => [...TIERS.map((t, i) => ({ x: set.x + (i - 2) * GAP, z: set.z + (t.dz || 0) })), { x: set.x - 2 * GAP - 96, z: set.z }],
+  // a push-in on the crosshair through each fall from tier 2, rendered as a narrower FOV (sharp; an edit
+  // crop at 2.2x was a blur): a 1x1 at 160+ blocks is a few px, and the drift (physics caps it near 3-4
+  // degrees at terminal velocity) only reads magnified (review)
+  fovZoom: TIERS.slice(1).map((_, i) => [`drop${i + 2}:0.4`, `splash${i + 2}:-0.2`, 2.2]),
   clouds: false,   // Video Settings > Clouds: OFF (vanilla). At y 192 the falls went through a white cloud wall, and from build limit the clouds hid the target
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
@@ -49,10 +53,6 @@ module.exports = {
       ['drop5:-0.6', 'drop5:0.6', 2],          // the held breath and the jump's rise before the last fall (PAUSE 0.6 s)
       ['drop5:0.6', 'drop5:3.3', 2.5]],        // the high, dark part of the last fall (review: LOW 1.9 s); the lava rushing up stays real-time
     // retention toolkit (scripts/retention.py, scripts/sfx.py; worker 10)
-    // a slow push-in on the crosshair through each fall from tier 2 (worker 10's zoom spans): a 1x1 at
-    // 160+ blocks is a few px, and the drift (physics caps it near 3-4 degrees at terminal velocity) only
-    // reads magnified (review)
-    zoom: TIERS.slice(1).map((_, i) => [`drop${i + 2}:0.4`, `splash${i + 2}:-0.2`, 2.2]),
     hook: { at: 'splash5', before: 1.7, after: -0.2, text: 'wait for the last one 😳' },   // a flash of the finale before tier 1: 1.5 s (owner: 0.5 s was "too quick")
     counter: { at: TIERS.map((_, i) => `look${i + 1}`), total: TIERS.length },
     fallen: TIERS.map((_, i) => [`drop${i + 1}`, `splash${i + 1}`, 'blocks', -1]),   // live blocks-fallen count; -1: the splash mark fires with the feet in the water block
