@@ -15,7 +15,7 @@
 // The lava runs with /tick rate LAVA_RATE (vanilla lava moves 1 block per 1.5 s, too slow for a
 // Short), the water at 2x, the drains at 3x.
 const { findSite, clearFlat } = require('./_site')
-const STEPS = 9, LAVA_RATE = Number(process.env.LAVA_RATE || 150), STREAMS = [-2, -1, 0, 1, 2]
+const STEPS = 9, LAVA_RATE = Number(process.env.LAVA_RATE || 60), STREAMS = [-2, -1, 0, 1, 2]
 const HW = 6, WALK = 5   // hill from x-HW to x+WALK: the streams take x-2..x+2, a rail x+3, the bot walks x+4; the west side is wide so the second layer's spread stays on the hill
 
 module.exports = {
@@ -26,9 +26,10 @@ module.exports = {
     caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.15', endAfter: 'final:0.95',
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
-    // the walks back up and to the field in front are jump cuts; the casts (under a water sheet) at 3x,
-    // the drains (the shell coming out, seen from the field) at 1x
-    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 3], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 3], ['rv1a', 'rv1b', 'cut']]
+    // the pour and the walk down play at 2x (lava at tick rate 60: one time-lapse, not lava racing a 1x
+    // player); the walks back up and out to the field are jump cuts; the casts (under a water sheet) at 3x;
+    // the drains (a slow sneak in on the slope) at 1x
+    speed: [['pour', 'climb1a', 2], ['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 3], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 3], ['rv1a', 'rv1b', 'cut']]
   },
 
   async setup (ctx) {
@@ -37,7 +38,7 @@ module.exports = {
     // is levelled (a wide clear cut a box into the terrain)
     const AREA = [-HW - 7, WALK + 7, -12, STEPS + 15]
     // flat (and tree-free) over a ring 8 wider than the levelled area, so no higher ground stands at its edge
-    const g = await findSite(ctx, [AREA[0] - 8, AREA[1] + 8, AREA[2] - 8, AREA[3] + 8], { flatEnough: 2, noTrees: true, stride: 8, step: 2 })
+    const g = await findSite(ctx, [AREA[0] - 8, AREA[1] + 8, AREA[2] - 8, AREA[3] + 8], { flatEnough: 1, noTrees: true, noSnow: true, stride: 8, step: 2 })
     if (!g) throw new Error('no flat land')
     ctx.log('site', g)
     const { x, z, y: floor } = g
@@ -194,21 +195,30 @@ module.exports = {
       let wetAt = ctx.tick
       const onSlope = (o, b2) => { const b = b2 || o; if (!b) return; const q = b.position; if (Math.abs(q.x - x) <= 3 && q.z >= z - 1 && q.z <= z + STEPS && ((b2 && b2.name === 'water') || (o && o.name === 'water'))) wetAt = ctx.tick }
       bot.on('blockUpdate', onSlope)
-      // a jump cut to the field in front of the hill's foot, looking up the whole slope (from the
-      // walkway the camera was wedged against the shell's side and never saw the cast)
+      // a jump cut out onto the field looking up the whole slope (from the walkway the camera was wedged
+      // against the shell's side): layer 1 from the front, layer 2 from the south-west
       ctx.mark(`rv${n}a`)
-      await tpTo(x + 0.5, this.floor + 1, z + STEPS + 9.5, 180, -16)   // non-whole x/z: /tp centres whole ones on the block
+      if (last) await tpTo(x - 7.5, this.floor + 1, z + STEPS + 9.5, -140, -14)   // non-whole x/z: /tp centres whole ones
+      else await tpTo(x + 0.5, this.floor + 1, z + STEPS + 13.5, 180, -12)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
-      // the water draining off the slope (2x in the edit), with a slow drift across it
-      for (let i = 0; i < 16 && ctx.tick - wetAt <= 10; i++) await ctx.easeLookAt(step(i % 2 ? 6 : 2).offset(i % 2 ? 1.5 : -2.5, 2, 0), 1100)   // a slow drift, the slope in the lower half
+      // the water draining off: a slow sneak in towards the hill, eyes on the slope (a moving shot, not a
+      // rocking one), until the slope is dry
+      const aim = step(4).offset(last ? 1 : 0, 2, 0)
+      bot.setControlState('sneak', true)
+      for (let k = 0; k < 220 && ctx.tick - wetAt <= 10; k++) {
+        await lookStep(aim, 0.12)
+        const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 5
+        bot.setControlState('forward', far)
+        await bot.waitForTicks(1)
+      }
+      bot.clearControlStates()
       bot.removeListener('blockUpdate', onSlope)
       ctx.mark(last ? 'final' : 'reveal', { n })
       // the shell, top to bottom
       // aimed above the shell, so it sits in the lower half of the view, under the card
       await ctx.easeLookAt(step(1).offset(-1, 3, 0), 500)
       await ctx.easeLookAt(step(6).offset(1, 2.5, 0), last ? 900 : 700)
-      if (!last) await ctx.easeLookAt(step(4).offset(-2.5, 3, 0), 700)   // once more across it
     }
 
     // ---- layer 1 ----

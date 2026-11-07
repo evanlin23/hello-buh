@@ -11,7 +11,7 @@
 // grass at y and dirt below it. On flat land the cuts at its edges are a block or two.
 const SKIP = /^(air|cave_air|short_grass|tall_grass|fern|large_fern|snow|dandelion|poppy|bush|vine|sugar_cane|pumpkin|melon|sweet_berry_bush|lily_pad|leaf_litter|wildflowers|firefly_bush|short_dry_grass|tall_dry_grass)$|_leaves$|_log$|flower|tulip|orchid|allium|azure|oxeye|cornflower|lily_of|mushroom/
 
-async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTrees = false } = {}) {
+async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTrees = false, noSnow = false } = {}) {
   const { bot, Vec3 } = ctx
   const p = bot.entity.position.floored()
   const r4 = (v) => Math.floor(v / step) * step
@@ -25,6 +25,7 @@ async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTree
       const b = bot.blockAt(new Vec3(x, y, z))
       if (!b) break
       if (noTrees && /_leaves$|_log$/.test(b.name)) { v = -1; break }   // a clear would slice the tree
+      if (noSnow && /^snow/.test(b.name)) { v = -1; break }   // a levelled patch in snow shows as a green box
       if (SKIP.test(b.name)) continue
       v = y >= 63 ? y : -1
       break
