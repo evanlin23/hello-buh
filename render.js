@@ -177,7 +177,22 @@ const PRE_FACE = new Map()   // entity id -> [tick, yaw, headYaw, pitch] last se
 // [start tick, end tick, which]: which = { ids: [...] } or { near: [x, z, r] } from the face_on mark,
 // or null for every villager (older recordings)
 { let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = [e.t / 50, e.ids || e.near ? { ids: e.ids, near: e.near, head: e.head } : null]; if (e.event === 'face_off' && a !== null) { FACE.push([a[0], e.t / 50, a[1]]); a = null } } if (a !== null) FACE.push([a[0], Infinity, a[1]]) }
-const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, z: e.z }))
+const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, y: e.y, z: e.z }))
+// per creeper with recorded swell data: Creeper.tick's swell counter per tick (0..30)
+const CREEPER_SWELL = new Map()
+{
+  const ids = new Set((rec.entities || []).filter(r => r[2] === 'creeper' && r[9] && (r[9].swellDir !== undefined || r[9].ignited)).map(r => r[1]))
+  const last = Math.max(0, ...[...ENT.keys()])
+  for (const id of ids) {
+    const out = []; let sw = 0, dir = -1
+    for (let tk = 0; tk <= last + 1; tk++) {
+      const row = ENT.get(tk) && ENT.get(tk).get(id)
+      if (row) dir = row[9] && (row[9].ignited || row[9].swellDir === 1) ? 1 : -1
+      sw = Math.max(0, Math.min(30, sw + dir)); out.push(sw)
+    }
+    CREEPER_SWELL.set(id, out)
+  }
+}
 const ASSETS_DIR = path.join(__dirname, 'work', 'assets', rec.version)
 // Held item over time: hotbar contents + selected slot from the timeline, the tick the held item last
 // changed (equip animation) and the arm swings (6-tick attack animation).
@@ -1288,13 +1303,24 @@ function camAtLive (t) {
       const dx = e.x - cam.x, dz = e.z - cam.z, d = Math.hypot(dx, dz), min = 0.85
       if (d < min && d > 1e-6 && Math.abs(e.y - (cam.y - 1.62)) < 2) { e.x = cam.x + dx / d * min; e.z = cam.z + dz / d * min }
     }
-    // creeper swelling (CreeperRenderer.scale): 30-tick fuse ending in its explosion
+    // creeper swelling (CreeperRenderer.scale / getWhiteOverlayProgress): from the creeper's own
+    // entity data when recorded (Creeper.tick: swell += swellDir, ignited forces 1, clamped 0..30,
+    // shown as swell / 28); older recordings: a 30-tick fuse ending in an explosion at that creeper
+    // (3D, within 1.5 blocks). Any blast within 3 blocks horizontally used to whiten a creeper falling
+    // past a TNT and hide survivors for 10 ticks (worker 9, it_rains f1026).
     for (const e of ents) {
       if (e.name !== 'creeper') continue
-      const ex = EXPLOSIONS.find(x => x.t >= t && x.t - t <= 30 && Math.hypot(x.x - e.x, x.z - e.z) < 3)
-      if (ex) e.swell = Math.min(1, Math.max(0, 1 - (ex.t - t) / 30))
+      const sw = CREEPER_SWELL.get(e.id)
+      if (sw) {
+        const i = Math.max(0, Math.min(sw.length - 2, Math.floor(t))), f = t - i
+        const v = (sw[i] + (sw[i + 1] - sw[i]) * f) / 28
+        if (v > 0) e.swell = Math.min(1, v)
+      } else {
+        const ex = EXPLOSIONS.find(x => x.t >= t && x.t - t <= 30 && Math.hypot(x.x - e.x, x.y - e.y, x.z - e.z) < 1.5)
+        if (ex) e.swell = Math.min(1, Math.max(0, 1 - (ex.t - t) / 30))
+      }
       // gone on the tick it blows (the entity's removal reaches the recording a tick or two later)
-      if (EXPLOSIONS.some(x => t >= x.t && t - x.t < 10 && Math.hypot(x.x - e.x, x.z - e.z) < 3)) e.hidden = true
+      if (EXPLOSIONS.some(x => t >= x.t && t - x.t < 10 && Math.hypot(x.x - e.x, x.y - e.y, x.z - e.z) < 1.5)) e.hidden = true
     }
     // primed TNT (TntRenderer): the TNT block, white flash while (fuse / 5) % 2 == 0, swelling 30%
     // over the last 10 ticks. Fuse from when the entity appeared (80 ticks by default).
