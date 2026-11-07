@@ -161,16 +161,21 @@ module.exports = {
       const eye = bot.entity.position.offset(0, 1.62, 0), d = p.minus(eye)
       return { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
     }
-    const look = (k, dyaw = 0, dpitch = 0) => bot.look(base.yaw + dyaw + Math.sin(k / 19) * 0.09 * sway, base.pitch + dpitch + Math.sin(k / 27) * 0.035 * sway, true)
+    // the sway runs on the recording's clock, not the line's k: restarting it at every line made the camera jump
+    // between lines that share a shot (the party lines slid over 3 frames)
+    const swayY = () => Math.sin(ctx.tick / 19) * 0.09 * sway, swayP = () => Math.sin(ctx.tick / 27) * 0.035 * sway
+    const look = (k, dyaw = 0, dpitch = 0) => bot.look(base.yaw + dyaw + swayY(), base.pitch + dpitch + swayP(), true)
     // a cut: teleport, wait for it to land, aim
     const cut = async (dx, dz, target, dy = 1) => {
       const x = X + dx, z = Z + dz
       const d = target.minus(new ctx.Vec3(x, F + dy + 1.62, z))   // arrive already aimed (no 2-frame snap after the cut)
-      base = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
+      const nb = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
       ctx.mark('cut')   // the renderer snaps to the new spot at any distance (short cuts glided; worker 8)
-      say(`/tp @s ${x.toFixed(3)} ${(F + dy).toFixed(3)} ${z.toFixed(3)} ${(180 - base.yaw * 180 / Math.PI).toFixed(2)} ${(-base.pitch * 180 / Math.PI).toFixed(2)}`)
-      for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break }
-      await bot.look(base.yaw, base.pitch, true)
+      say(`/tp @s ${x.toFixed(3)} ${(F + dy).toFixed(3)} ${z.toFixed(3)} ${(180 - (nb.yaw + swayY()) * 180 / Math.PI).toFixed(2)} ${(-(nb.pitch + swayP()) * 180 / Math.PI).toFixed(2)}`)
+      // the old shot keeps swaying while the teleport lands (it froze for 2-4 frames before every cut)
+      for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.x - x) < 0.05 && Math.abs(bot.entity.position.z - z) < 0.05) break; look(0) }
+      base = nb
+      await look(0)
     }
     // move a tagged group one step away from the bot (they turn to run, then keep running)
     const flee = (tag, speed) => say(`/execute as @e[tag=${tag}] at @s facing entity ${bot.username} feet rotated ~180 0 positioned ^ ^ ^${speed} run tp @s ~ ${F + 1} ~ facing ^ ^ ^5`)
@@ -215,7 +220,7 @@ module.exports = {
       const go = at(4) - 2
       if (k === go) ctx.mark('face_off')
       if (k >= go) {                          // turn, hop the north fence (z -7), sprint off
-        fz -= k < go + 2 ? 0.12 : 0.34
+        fz -= k < go + 2 ? 0.12 : 0.26
         const hop = Math.max(0, 1 - Math.abs(fz + 6.5) / 1.3)
         say(`/tp @e[tag=farmer,limit=1] ${(X + fx).toFixed(3)} ${(F + 1 + hop * 1.4).toFixed(3)} ${(Z + fz).toFixed(3)} 180 0`)
       }
@@ -262,7 +267,7 @@ module.exports = {
     await cut(19.5, 7.7, P(19.5, 1.35, 10.5))
     ctx.mark('face_on', { near: [X + 19.5, Z + 10.5, 1.5] })
     await line('L07', async (k, at) => {
-      bot.setControlState('forward', k >= at(3) && bot.entity.position.z < Z + 9.0)
+      bot.setControlState('forward', k >= at(3) && bot.entity.position.z < Z + 8.6)
       base = aim(P(19.5, 1.35, 10.5)); look(k)
     })
     bot.setControlState('forward', false)
@@ -328,7 +333,7 @@ module.exports = {
     const boomAt = bot.entity.position.clone()
     // he goes off like a creeper: a creeper exploding exactly where he stands (Fuse 0, inside the camera, so it's
     // never seen). The death screen reads "HelloBuh was blown up by Creeper", the twist in the game's own words.
-    say(`/execute at @s rotated as @s positioned ^ ^ ^-0.9 run summon creeper ~ ~ ~ {Fuse:0s,ignited:1b,NoAI:1b,Silent:1b}`)   // just behind the camera: inside it, its white swell drew as a flat white shape
+    say(`/execute at @s rotated as @s positioned ^ ^ ^-1.5 run summon creeper ~ ~ ~ {Fuse:0s,ignited:1b,NoAI:1b,Silent:1b}`)   // just behind the camera: inside it, its white swell drew as a flat white shape
     ctx.mark('boom'); ctx.mark('flash')   // the blast itself is behind the camera: one bright frame for it
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
     // a dead player stops getting mob updates after ~1 s (the villagers froze): the crater smokes instead
