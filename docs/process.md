@@ -70,3 +70,14 @@ Short in any 3 posts. The owner's favourites so far, so make more of them: **tim
 (story_runaway). The pixel-art format has five Shorts already: fix those (the mid-build glance), but
 start no new pixel-art Shorts until the others have caught up. The `videos` README's ready list is
 the queue: pick the next upload from a format that wasn't the last one.
+
+## Workers 12-18 (owner, 2026-11-07: "spawn 1 worker session per type"); see docs/ideas.md "New formats"
+| Worker | Format | Session |
+|---|---|---|
+| 12 | Spot what's wrong | session_019n1tKHTL2J3xCe9fVfDfns |
+| 13 | Guess the mob by its sound | session_019n1tKFN7wHMYGYDKS9U6GR |
+| 14 | Which one would you survive | session_019n1tKFBjrV8kkC6rcqN1KN |
+| 15 | Noob vs Pro vs Hacker | session_019n1tKGUf7qpvSyTQMtbbRc |
+| 16 | Hide and seek, but I cheated | session_019n1tKEmBkB5NxgUytgwruX |
+| 17 | One continuous chain reaction | session_019n1tKFxGmhh5Wij6Ab4tRX |
+| 18 | Every 5 seconds it gets worse | session_019n1tKEZhRaD2qvG3ehbzma |
