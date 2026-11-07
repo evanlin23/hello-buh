@@ -30,7 +30,7 @@ module.exports = {
     // lava at tick rate 40 (2x: a 7.5x lava next to a 1x player read as fast lava, not a time-lapse); the
     // walks back up and out to the field are jump cuts; the casts (under a water sheet) at 2x; the drains
     // (a slow sneak in on the slope) at 1x
-    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
+    speed: [['down', 'up', 2], ['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
   },
 
   async setup (ctx) {
@@ -50,6 +50,19 @@ module.exports = {
     await ctx.cmd('/kill @e[type=!player,distance=..100]')   // no villager wandering through the shot
     await ctx.cmd(`/tp @s ${x} ${floor + 20} ${z + 4}`); await bot.waitForTicks(20)
     await clearFlat(ctx, x, z, floor, AREA, 16)
+    // the patch's edge: where the ground outside stands higher, step it down into the patch a block at a
+    // time (a straight cut face read as command-built)
+    {
+      const [X0, X1, Z0, Z1] = [x + AREA[0], x + AREA[1], z + AREA[2], z + AREA[3]]
+      const edge = []
+      for (let px = X0; px <= X1; px++) edge.push([px, Z0, 0, -1], [px, Z1, 0, 1])
+      for (let pz = Z0 + 1; pz < Z1; pz++) edge.push([X0, pz, -1, 0], [X1, pz, 1, 0])
+      for (const [px, pz, ox, oz] of edge) {
+        const out = ctx.surface(px + ox, pz + oz)
+        const h = out ? out.position.y - floor : 0
+        for (let d = 0; d < h - 1 && d < 4; d++) await ctx.cmd(`/fill ${px - ox * d} ${floor + 1} ${pz - oz * d} ${px - ox * d} ${floor + h - 1 - d} ${pz - oz * d} grass_block`)
+      }
+    }
     // whole trees off around it (a tree cut at the levelled edge left a floating canopy)
     for (const t of ['#minecraft:leaves', '#minecraft:logs']) {
       for (const [z0, z1] of [[AREA[2] - 5, 6], [7, AREA[3] + 5]]) await ctx.cmd(`/fill ${x + AREA[0] - 5} ${floor} ${z + z0} ${x + AREA[1] + 5} ${floor + 22} ${z + z1} air replace ${t}`)
@@ -214,8 +227,8 @@ module.exports = {
       // a jump cut out onto the field looking up the whole slope (from the walkway the camera was wedged
       // against the shell's side): layer 1 from the front, layer 2 from the south-west
       ctx.mark(`rv${n}a`)
-      if (last) await tpTo(x + 0.5, this.floor + 1, z + STEPS + 14.5, 180, -12)   // the final: wide, from the front (non-whole x/z: /tp centres whole ones)
-      else await tpTo(x - 7.5, this.floor + 1, z + STEPS + 9.5, -140, -14)
+      if (last) await tpTo(x + 0.5, this.floor + 1, z + STEPS + 11.5, 180, -12)   // the final: wide, from the front (non-whole x/z: /tp centres whole ones)
+      else await tpTo(x - 9.5, this.floor + 1, z + STEPS + 11.5, -140, -10)   // further out: the slope from the side read cramped
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
       // the water draining off: a slow sneak in towards the hill, eyes on the slope (a moving shot, not a
@@ -264,16 +277,17 @@ module.exports = {
     }
     bot.clearControlStates()
     bot.removeListener('blockUpdate', onLava)
-    // at the bottom: look back up the whole sheet while the lava finishes running down (the water must
-    // go on a finished sheet: on a half-run one the shell came out patchy), then climb back
+    // at the bottom: a look back up the sheet, then climb back
     await ctx.easeLookAt(step(4).offset(0, -1, 0), 500)
-    ctx.log('lava settled', await watch(['lava'], [[7, 500], [3, 600], [6, 600], [2, 600], [5, 600]], 7), 'ticks ago')
-    await ctx.cmd('/tick rate 20')
     ctx.mark('up')
-    // back up on the platform, out of the water's way (a jump cut: climb1a..climb1b)
+    // back up on the platform, out of the water's way (a jump cut: climb1a..climb1b); from there,
+    // looking down the slope, the lava finishes running (the water must go on a finished sheet: on a
+    // half-run one the shell came out patchy; from the walkway the rail hid it)
     ctx.mark('climb1a')
     await tpTo(x + 3.9, T + 3, z - 1.4, 30, 45)
     ctx.mark('climb1b')
+    ctx.log('lava settled', await watch(['lava'], [[5, 500], [8, 600], [4, 600], [9, 600], [6, 600]], 5), 'ticks ago')
+    await ctx.cmd('/tick rate 20')
     // water on the channel row right above the lava sources: it casts the flow from above. From the
     // platform the ray passes west of the channel's east rail (from the walkway it hit the rail)
     await ctx.cmd('/tick rate 40')
