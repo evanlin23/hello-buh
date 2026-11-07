@@ -164,6 +164,7 @@ function look (name, extra, regs) {
       { origin: [-8, 16, -6], size: [16, 16, 1], uv: [30, 47], rotation: [-90, 0, 0], pivot: [0, 24, 0] }] } }
   }
   if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`], yOff: -1.0 }   // the Bedrock boat geometry sits its hull ~15 px up; Java's hull bottom is at the entity's feet
+  if (name === 'parrot') return { model: 'parrot', layers: [`entity/parrot/parrot_${['red_blue', 'blue', 'green', 'yellow_blue', 'grey'][(extra && extra.variant) || 0] || 'red_blue'}`] }   // Parrot.Variant
   if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
   if (name === 'chicken') return { model: 'chicken', layers: ['entity/chicken/temperate_chicken'] }
   if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
@@ -412,6 +413,35 @@ function poseFox (r, s, walkPos, walkSpeed) {
   B.rightHindLeg.rotation.set(a, 0, 0); B.leftHindLeg.rotation.set(b, 0, 0)
   B.rightFrontLeg.rotation.set(b, 0, 0); B.leftFrontLeg.rotation.set(a, 0, 0)
 }
+// SpiderModel.createSpiderBodyLayer (texture 64x32): head, neck, abdomen and eight 16 px legs out to
+// the sides from the neck. The converted Bedrock geometry kept its leg spread in an animation we
+// never applied: the legs stuck straight out level, stacked (worker 13, guess_sound_2)
+const SL = [[[-15, -1, -1], [16, 2, 2], [18, 0], 0]], SR = [[[-1, -1, -1], [16, 2, 2], [18, 0], 0]]
+const SPIDER_PARTS = [
+  ['head', null, [0, 15, -3], [[[-4, -4, -8], [8, 8, 8], [32, 4], 0]]],
+  ['neck', null, [0, 15, 0], [[[-3, -3, -3], [6, 6, 6], [0, 0], 0]]],
+  ['abdomen', null, [0, 15, 9], [[[-5, -4, -6], [10, 8, 12], [0, 12], 0]]],
+  ['rightHindLeg', null, [-4, 15, 2], SL], ['leftHindLeg', null, [4, 15, 2], SR],
+  ['rightMiddleHindLeg', null, [-4, 15, 1], SL], ['leftMiddleHindLeg', null, [4, 15, 1], SR],
+  ['rightMiddleFrontLeg', null, [-4, 15, 0], SL], ['leftMiddleFrontLeg', null, [4, 15, 0], SR],
+  ['rightFrontLeg', null, [-4, 15, -1], SL], ['leftFrontLeg', null, [4, 15, -1], SR]
+]
+// SpiderModel.setupAnim: the legs angled down (zRot +-pi/4, the middle pairs x 0.74) and fanned
+// (yRot +-pi/8 steps), then the walk: yRot swings and zRot lifts in four phases
+function poseSpider (r, s, walkPos, walkSpeed) {
+  const B = r.bones
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(r.tilt || 0)))
+  B.head.rotation.set(-(s.pitch || 0), net, 0)
+  const f = Math.PI / 4, f1 = Math.PI / 8, p = walkPos * 0.6662, v = walkSpeed
+  const sw = (o) => -(Math.cos(p * 2 + o) * 0.4) * v, up = (o) => Math.abs(Math.sin(p + o) * 0.4) * v
+  const legs = [['HindLeg', 1, 2, 0], ['MiddleHindLeg', 0.74, 1, Math.PI], ['MiddleFrontLeg', 0.74, -1, Math.PI / 2], ['FrontLeg', 1, -2, Math.PI * 1.5]]
+  for (const [n, zk, yk, o] of legs) {
+    const y = yk * f1 + sw(o), z = zk * f + up(o)
+    B['right' + n].rotation.set(0, y, -z)
+    B['left' + n].rotation.set(0, -y, z)
+  }
+}
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
 // player (the converted Bedrock geometry had the head sunk into the body and the arms poking above it)
@@ -568,6 +598,10 @@ export class EntityLayer {
         if (bones.waterPatch) for (const m of bones.waterPatch.children) if (m.isMesh) { m.material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); m.renderOrder = 0.5 }
         poseBoatPaddle(bones.leftPaddle, 0, false); poseBoatPaddle(bones.rightPaddle, 0, true)
       }
+    } else if (name === 'spider' || name === 'cave_spider') {
+      // SpiderEyesLayer: the eyes full bright (RenderType.eyes); CaveSpiderRenderer scales by 0.7
+      const t = await texture([name === 'spider' ? 'entity/spider/spider' : 'entity/spider/cave_spider']), te = await texture(['entity/spider_eyes'])
+      if (t) { const b = buildPlayer(t, SPIDER_PARTS, name === 'spider' ? 1 : 0.7, te ? [{ tex: te, parts: ['head'] }] : null); obj = b.root; bones = b.bones; mat = b.mat; bones.spider = true }
     } else if (name === 'fox') {
       const t = await texture([(extra && extra.snow) ? 'entity/fox/snow_fox' : 'entity/fox/fox'])
       if (t) { const b = buildPlayer(t, FOX_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat; bones.fox = true }
@@ -871,6 +905,7 @@ export class EntityLayer {
         continue
       }
       if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
+      if (B.spider) { poseSpider(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'warden' && B.rightTendril) { poseWarden(r, s, r.walk, r.amt || 0, tick); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
