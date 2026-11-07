@@ -49,8 +49,8 @@ module.exports = {
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     await ctx.hotbar(['diamond_sword[enchantments={knockback:2}]', ['cobblestone', 64]])
-    // one block in from the north edge, looking down over it: the island's edge and the 40-block drop
-    await ctx.tpCheck(x + 0.5, Y + 1, z - 2.5, 180, 62)
+    // one block in from the south edge, looking down over it: the island's edge and the 40-block drop
+    await ctx.tpCheck(x + 0.5, Y + 1, z + 2.5, 0, 62)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(30)
@@ -92,35 +92,36 @@ module.exports = {
 
     await bot.waitForTicks(6)
     const go = K.start(6)
+    // the storm starts on its own tick, ~0.9 s before its card (the client fades rain in)
+    const storm = () => { if (ctx.tick >= K.at(9.1)) { bot.removeListener('physicsTick', storm); ctx.setWeather('thunder') } }
+    bot.on('physicsTick', storm)
     await K.until(go, K.drift(-0.012, -0.002))
     ctx.mark('go')
 
     // ---- 1. the edge falls away ----
     ctx.mark('l1')
-    // the side in front goes first, column by column, while it leans over that edge and watches the
-    // blocks drop the whole way (from the middle they fell behind the island's own edge: review 5)
+    // it starts on the south edge: that side goes first, column by column, while it leans over and
+    // watches the blocks drop the whole way, then the east side (blocks falling off an edge only show
+    // from right at that edge: reviews 5-11). The north and west sides go out of view, quickly.
     const ring4 = K.ring(x, z, 4)
-    const front = ring4.filter(([cx, cz]) => cz === z - 4).sort((p, q) => Math.abs(p[0] - x) - Math.abs(q[0] - x))
-    // ...then the east side, north to south, and the camera follows it along; the rest goes out of view
-    const east = ring4.filter(([cx, cz]) => cx === x + 4 && cz !== z - 4).sort((p, q) => p[1] - q[1])
-    // then the far (south) side east to west and the west side south to north, slowly, while it walks in watching them
-    const south = ring4.filter(([cx, cz]) => cz === z + 4 && cx !== x + 4).sort((p, q) => q[0] - p[0])
-    const west = ring4.filter(([cx, cz]) => cx === x - 4 && cz !== z + 4 && cz !== z - 4).sort((p, q) => q[1] - p[1])
-    const crumbling = (async () => { await drop(front, 1, 2); await drop(east, 1, 2); await drop(west, 3, 1); await drop(south, 1, 5) })()
+    const front = ring4.filter(([cx, cz]) => cz === z + 4).sort((p, q) => Math.abs(p[0] - x) - Math.abs(q[0] - x))
+    const east = ring4.filter(([cx, cz]) => cx === x + 4 && cz !== z + 4).sort((p, q) => q[1] - p[1])
+    const restL1 = ring4.filter(([cx, cz]) => cz !== z + 4 && cx !== x + 4)
+    const crumbling = (async () => { await drop(front, 1, 2); await drop(east, 1, 2); await drop(restL1, 3, 1) })()
     bot.setControlState('sneak', true); bot.setControlState('forward', true)
-    await ctx.easeLook(0, -1.3, 500)
-    for (let i = 0; i < 20; i++) { await bot.look(0.25 * Math.sin(i / 12), -1.3 + 0.05 * Math.sin(i / 9), true); await bot.waitForTicks(1) }
+    await ctx.easeLook(Math.PI, -1.3, 500)
+    for (let i = 0; i < 20; i++) { await bot.look(Math.PI + 0.25 * Math.sin(i / 12), -1.3 + 0.05 * Math.sin(i / 9), true); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
-    // along the east side as it goes
-    for (const zz of [z - 3, z - 1, z + 1, z + 3]) await ctx.easeLookAt(new Vec3(x + 4.5, Y - 3, zz + 0.5), 250)
-    bot.setControlState('sneak', false)
-    // into the middle (south), eyes on the far side going column by column, then the west side
-    await ctx.easeLookAt(new Vec3(x + 3.5, Y - 3, z + 4.5), 350)
-    bot.setControlState('forward', true)
-    const sweep = ctx.easeLookAt(new Vec3(x - 3.5, Y - 3, z + 4.5), 1700)   // the far side goes last, slowly, in view
-    for (let i = 0; i < 40 && bot.entity.position.z < z + 1.0 && ctx.tick < K.at(4.0); i++) await bot.waitForTicks(1)
-    bot.setControlState('forward', false)
-    await sweep
+    // along the east side as it goes (south to north)
+    for (const zz of [z + 3, z + 1, z - 1, z - 3]) await ctx.easeLookAt(new Vec3(x + 4.5, Y - 3, zz + 0.5), 300)
+    // back over the south edge: the first blocks are still on their way down
+    await ctx.easeLook(Math.PI - 0.2, -1.25, 600)
+    await crumbling
+    await K.until(K.at(3.5), K.drift(-0.006, 0.001))
+    // and a couple of steps back from the new edge, eyes on it
+    bot.setControlState('sneak', false); bot.setControlState('back', true)
+    for (let i = 0; i < 30 && bot.entity.position.z > z + 1.0 && ctx.tick < K.at(4.7); i++) { await bot.look(bot.entity.yaw, Math.min(-0.5, bot.entity.pitch + 0.03), true); await bot.waitForTicks(1) }
+    bot.setControlState('back', false); bot.setControlState('sneak', false)
     await K.until(K.at(4.95), K.drift(0.006, 0.001))
     await K.level(2, 5)
     bot.chat(`/summon creeper ${x + 0.5} ${Y + 1} ${z + 3.5} {PersistenceRequired:1b,Rotation:[180f,0f]}`)
@@ -141,7 +142,6 @@ module.exports = {
     bot.setControlState('sneak', false)
     await toCenter(K.at(9.85))
     await K.until(K.at(9.4))
-    await ctx.setWeather('thunder')   // a moment early: the client fades the rain in, the sky had to darken under the card
     await K.level(3, 10)
     ctx.sound('entity.lightning_bolt.thunder', 0.9, 0.85)   // a strike somewhere out of sight
     await ctx.easeLook(bot.entity.yaw + 0.3, 0.45, 500)  // up into it
@@ -160,7 +160,6 @@ module.exports = {
       if (!rb || rb.name !== 'cobblestone') throw new Error(`railing block not placed at ${cx},${cz}`)
     }
     ctx.select(0)
-    await toCenter(K.at(14.6))
     if (ctx.tick < K.at(14.4)) await ctx.easeLookAt(new Vec3(x + 0.5, Y + 1.2, z - 2.5), 400)
     // stays on the railing (testing it) until something groans behind it
     // testing it, eyes along it end to end
@@ -184,12 +183,8 @@ module.exports = {
       await watchFall(zs[i], 8)
     }
     // back to the middle if a hit pushed it, facing the island
-    await ctx.easeLook(bot.entity.yaw + 0.9, -0.55, 900)   // what's left of the island around it
-    if (Math.hypot(bot.entity.position.x - x - 0.5, bot.entity.position.z - z - 0.5) > 0.6) {
-      bot.setControlState('forward', true)
-      for (let i = 0; i < 30 && Math.hypot(bot.entity.position.x - x - 0.5, bot.entity.position.z - z - 0.5) > 0.4; i++) await bot.waitForTicks(1)
-      bot.setControlState('forward', false)
-    }
+    await toCenter(K.at(19.3))
+    if (ctx.tick < K.at(19.2)) await ctx.easeLook(bot.entity.yaw + 0.9, -0.55, 700)   // what's left of the island around it
     await K.until(K.at(20), K.drift(0.012, 0.001))
 
     // ---- 5. the island shrinks ----
@@ -198,12 +193,12 @@ module.exports = {
     const sx = Math.floor(bot.entity.position.x), sz = Math.floor(bot.entity.position.z)
     const outer = [...island].map(k => k.split(',').map(Number)).filter(([cx, cz]) => Math.max(Math.abs(cx - sx), Math.abs(cz - sz)) >= 2)
     const shrink = drop(byAngle(outer, bot.entity.yaw + 0.3, sx + 0.5, sz + 0.5), 2)
-    await ctx.easeLook(bot.entity.yaw - 0.4, -1.2, 700)
-    await ctx.easeLook(bot.entity.yaw - 1.4, -1.15, 1300)
+    await ctx.easeLook(bot.entity.yaw - 0.4, -0.9, 700)
+    await ctx.easeLook(bot.entity.yaw - 1.4, -0.85, 1300)
     await shrink
     // all that's left: a slow look round the 3x3 from its middle (its edges against the drop on every side)
-    await ctx.easeLook(bot.entity.yaw + 1.2, -1.2, 1300)
-    await ctx.easeLook(bot.entity.yaw + 0.8, -1.25, 700)
+    await ctx.easeLook(bot.entity.yaw + 1.2, -0.8, 1300)
+    await ctx.easeLook(bot.entity.yaw + 0.8, -0.8, 700)
     await K.until(K.at(25), K.drift(0.012, 0.001))
 
     // ---- 6. two blocks left ----
