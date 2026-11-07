@@ -14,7 +14,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'pouring water on a lava lake 😳',
   edit: {
-    subsY: 0.15, caption: 'pouring water on a lava lake 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'finale',
+    subsY: 0.15, caption: 'pouring water on a lava lake 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'end_look',
     startAt: 'pour:-0.4', endAfter: 'end_look:1.05'
   },
 
@@ -121,23 +121,53 @@ module.exports = {
     await ctx.easeLook(Math.PI, -0.75, 450)               // facing back south (mineflayer yaw 0 = north), down at the path
     const stops = [3, 6, 9, 12, 15, 18]
     let flow = 10
+    const lavaLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (at(a, b, G - 1)?.name === 'lava') n++; return n }
+    // walk on the world axis to (lx, lz) whatever the view (controls picked against it), eyes on `aim`
+    const stepTo = async (lx, lz, aim) => {
+      const tx = x0 + lx + 0.5, tz = z0 + lz + 0.5
+      for (let k = 0; k < 60; k++) {
+        const e = bot.entity.position, dx = tx - e.x, dz = tz - e.z
+        if (Math.hypot(dx, dz) < 0.4) break
+        const eye = e.offset(0, 1.62, 0), d = aim.minus(eye)
+        const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+        let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+        const ny = bot.entity.yaw + dy * 0.3
+        await bot.look(ny, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.3, true)
+        const len = Math.hypot(dx, dz), wx = dx / len, wz = dz / len
+        const f = wx * -Math.sin(ny) + wz * -Math.cos(ny), rr = wx * Math.cos(ny) + wz * -Math.sin(ny)
+        bot.setControlState('forward', f > 0.35); bot.setControlState('back', f < -0.35)
+        bot.setControlState('right', rr > 0.35); bot.setControlState('left', rr < -0.35)
+        await bot.waitForTicks(1)
+      }
+      for (const c of ['forward', 'back', 'left', 'right']) bot.setControlState(c, false)
+    }
     for (const sz of stops) {
+      if (!lavaLeft()) break                                 // the lake is gone: no pours on finished obsidian
       // walk back (south = +z, facing it) to this row
       const tz = z0 + sz + 0.5
       bot.setControlState('forward', true)
       for (let k = 0; k < 40 && bot.entity.position.z < tz - 0.55; k++) await bot.waitForTicks(1)
       bot.setControlState('forward', false)
-      for (const lx of [9, 5]) {                             // facing south: +x is on the left
-        // the outermost obsidian on that side of this row
+      for (const dir of [1, -1]) {
+        // the outermost obsidian on that side of this row; skip the side if no lava borders it
         let ox = 7
-        const dir = lx > 7 ? 1 : -1
         while (ox + dir >= 0 && ox + dir <= 14 && at(ox + dir, sz, G - 1)?.name === 'obsidian') ox += dir
         if (ox === 7) continue
+        let lava = 0
+        for (let b = Math.max(0, sz - 3); b <= Math.min(L - 1, sz + 3); b++) for (let a = ox; a >= 0 && a <= 14; a += dir) if (at(a, b, G - 1)?.name === 'lava') lava++
+        if (!lava) continue
+        // walk out along the row to 2 cells short of the edge: the pour stays in survival reach (from the
+        // path it landed 5-7 blocks out on a raised reach)
+        const sx = Math.abs(ox - 7) > 2 ? ox - 2 * dir : 7
+        if (sx !== 7) await stepTo(sx, sz, cell(ox, sz, -0.3))
         await pourScoop(ox, sz, cell(ox, sz, -0.04), flow, 280)
         flow = Math.min(24, flow + 2)
+        if (sx !== 7) await stepTo(7, sz, cell(7, Math.min(L - 1, sz + 3), -0.3))
       }
       await ctx.easeLook(Math.PI, -0.6, 250)
     }
+    ctx.log('lava left', lavaLeft())
+    await bot.waitForTicks(8)                                // the last pour's water drains before the look (it covered the payoff)
     // stand on it: look out over the black field
     ctx.mark('end_look')
     await ctx.easeLook(0.35, -0.4, 1000)                  // turn round: the whole lake behind is black
