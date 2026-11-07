@@ -39,7 +39,7 @@ function castle () {
     for (let x = tx - 7; x <= tx + 7; x++) {
       for (let z = tz - 7; z <= tz + 7; z++) {
         const d = Math.hypot(x - tx, z - tz)
-        for (let y = 0; y < 20; y++) if (d >= 4.4 && d < 5.6) put(x, y, z, y % 6 === 5 ? 'chiseled_stone_bricks' : 'stone_bricks', 0)
+        for (let y = 0; y < 20; y++) if (d >= 4.4 && d < 5.6) put(x, y, z, y % 6 === 5 ? 'chiseled_stone_bricks' : 'stone_bricks', y >= 12 ? 9 : 0)
         if (d < 6.2) put(x, 20, z, d >= 5.0 ? 'stone_bricks' : 'spruce_planks', 2)         // corbel ring + floor
         for (let y = 21; y <= 33; y++) {                                                   // cone
           const r = 6.0 - (y - 21) * 0.5
@@ -82,7 +82,7 @@ function castle () {
   for (const [y, r] of pyr) for (let x = -r; x <= r; x++) for (let z = KZ - r; z <= KZ + r; z++) put(x, y, z, 'blue_concrete', 2)
   for (let y = 42; y <= 45; y++) put(0, y, KZ, 'oak_fence', 3)
   for (let y = 44; y <= 45; y++) for (let x = 1; x <= 3; x++) put(x, y, KZ, 'red_wool', 3)
-  const STAGE = { 0: 1, 1: 2, 2: 3, 3: 6 }   // walls 1, keep 2, roofs 3, (village 4, courtyard 5), flags 6
+  const STAGE = { 0: 1, 9: 2, 1: 3, 2: 4, 3: 7 }   // walls 1, towers above the walls 2, keep 3, roofs 4, (village 5, courtyard 6), flags 7
   for (const b of out.values()) b[4] = STAGE[b[4]]
   // stage 0: the moat, flooded into the ground around everything, with a plank bridge at the gate
   for (let x = -35; x <= 35; x++) {
@@ -90,12 +90,12 @@ function castle () {
       if (Math.max(Math.abs(x), Math.abs(z)) < 33) continue
       const bridge = z > 0 && Math.abs(x) <= 2
       for (const y of [-1, -2]) put(x, y, z, bridge ? (y === -1 ? 'spruce_planks' : 'dirt') : 'water', 0)
-      if (z > 0 && Math.abs(x) === 3) put(x, 0, z, 'oak_fence', 4)                                  // bridge rails
+      if (z > 0 && Math.abs(x) === 3) put(x, 0, z, 'oak_fence', 5)                                  // bridge rails
     }
   }
-  for (let z = 36; z <= 52; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'dirt_path', 4)        // the road in
-  for (let z = 25; z <= 32; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'dirt_path', 4)
-  // stage 4: a village around the moat (sides and back; the front stays open for the reveal)
+  for (let z = 36; z <= 52; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'dirt_path', 5)        // the road in
+  for (let z = 25; z <= 32; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'dirt_path', 5)
+  // stage 5: a village around the moat (sides and back; the front stays open for the reveal)
   const HOUSES = [[-46, -22], [-46, 4], [41, -22], [41, 4], [-20, -44], [15, -44], [-46, 28], [41, 28]]
   for (const [hx, hz] of HOUSES) {
     for (let y = 0; y < 4; y++) {
@@ -106,41 +106,42 @@ function castle () {
           if (z === 4 && x === 2 && y < 2) continue
           const corner = ex && ez
           const win = !corner && y === 1 && (x === 1 || x === 3 || z === 2)
-          put(hx + x, y, hz + z, corner ? 'oak_log' : win ? 'glass' : 'oak_planks', 4)
+          put(hx + x, y, hz + z, corner ? 'oak_log' : win ? 'glass' : 'oak_planks', 5)
         }
       }
     }
-    for (const [y, lo, hi] of [[4, -1, 5], [5, 0, 4], [6, 1, 3], [7, 2, 2]]) for (let z = lo; z <= hi; z++) for (let x = -1; x <= 5; x++) put(hx + x, y, hz + z, 'spruce_planks', 4)
-    for (const [y, lo, hi] of [[4, 0, 4], [5, 1, 3], [6, 2, 2]]) for (let z = lo; z <= hi; z++) for (const x of [0, 4]) put(hx + x, y, hz + z, 'oak_planks', 4)
+    for (const [y, lo, hi] of [[4, -1, 5], [5, 0, 4], [6, 1, 3], [7, 2, 2]]) for (let z = lo; z <= hi; z++) for (let x = -1; x <= 5; x++) put(hx + x, y, hz + z, 'spruce_planks', 5)
+    for (const [y, lo, hi] of [[4, 0, 4], [5, 1, 3], [6, 2, 2]]) for (let z = lo; z <= hi; z++) for (const x of [0, 4]) put(hx + x, y, hz + z, 'oak_planks', 5)
   }
-  // stage 5: the courtyard - trees, a well and gravel paths from the gate to the keep
-  for (let z = 4; z <= 22; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'gravel', 5)
+  // stage 6: the courtyard - trees, a well and gravel paths from the gate to the keep
+  for (let z = 4; z <= 22; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'gravel', 6)
   for (const [tx, tz] of [[-14, 12], [14, 12], [-15, -12], [15, -12], [-14, -1], [14, -1]]) {
-    for (let y = 0; y < 4; y++) put(tx, y, tz, 'oak_log', 5)
+    for (let y = 0; y < 4; y++) put(tx, y, tz, 'oak_log', 6)
     for (let y = 2; y <= 5; y++) {
       const r = y <= 3 ? 2 : 1
-      for (let x = -r; x <= r; x++) for (let z = -r; z <= r; z++) if (!(x === 0 && z === 0 && y < 4) && Math.abs(x) + Math.abs(z) <= r + 1) put(tx + x, y, tz + z, 'oak_leaves', 5)
+      for (let x = -r; x <= r; x++) for (let z = -r; z <= r; z++) if (!(x === 0 && z === 0 && y < 4) && Math.abs(x) + Math.abs(z) <= r + 1) put(tx + x, y, tz + z, 'oak_leaves', 6)
     }
   }
   for (let x = -2; x <= 2; x++) {
     for (let z = 13; z <= 17; z++) {
       const rim = Math.abs(x) === 2 || z === 13 || z === 17
-      if (rim) { put(x, 0, z, 'cobblestone', 5); if ((Math.abs(x) === 2) && (z === 13 || z === 17)) for (let y = 1; y <= 2; y++) put(x, y, z, 'oak_fence', 5) } else put(x, -1, z, 'water', 5)
+      if (rim) { put(x, 0, z, 'cobblestone', 6); if ((Math.abs(x) === 2) && (z === 13 || z === 17)) for (let y = 1; y <= 2; y++) put(x, y, z, 'oak_fence', 6) } else put(x, -1, z, 'water', 6)
     }
   }
-  for (let x = -2; x <= 2; x++) for (let z = 13; z <= 17; z++) put(x, 3, z, 'spruce_planks', 5)
-  // stage 6: a flag on every tower (the keep's flag is the last block of all)
+  for (let x = -2; x <= 2; x++) for (let z = 13; z <= 17; z++) put(x, 3, z, 'spruce_planks', 6)
+  // stage 7: a flag on every tower (the keep's flag is the last block of all)
   for (const [tx, tz] of TOW) {
-    for (let y = 33; y <= 36; y++) put(tx, y, tz, 'oak_fence', 6)
-    for (let y = 35; y <= 36; y++) for (let x = 1; x <= 2; x++) put(tx + x, y, tz, 'red_wool', 6)
+    for (let y = 33; y <= 36; y++) put(tx, y, tz, 'oak_fence', 7)
+    for (let y = 35; y <= 36; y++) for (let x = 1; x <= 2; x++) put(tx + x, y, tz, 'red_wool', 7)
   }
   const list = [...out.values()]
-  const last = list.filter(b => b[4] === 6 && b[1] >= 42)                                          // the keep's flag goes in last
-  return list.filter(b => !last.includes(b)).concat(last.map(b => [b[0], b[1], b[2], b[3], 7]))
+  const last = list.filter(b => b[4] === 7 && b[1] >= 42)                                          // the keep's flag goes in last
+  return list.filter(b => !last.includes(b)).concat(last.map(b => [b[0], b[1], b[2], b[3], 8]))
 }
 
 module.exports = makeStunt({
   name: 'lapse_castle',
+  renderDistance: 12, recordRadius: 220,   // high shots: the horizon fogs out at 12 chunks instead of a domed edge at 8
   caption: 'building a castle in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   hotbar: [['dirt', 64], ['cobblestone', 64], ['stone_bricks', 64]],
@@ -149,21 +150,22 @@ module.exports = makeStunt({
   big: {
     blocks: castle(),
     hold: 'stone_bricks', slot: 2,
-    // ticks of the build each stage gets: moat, walls, keep, roofs, village, courtyard, tower flags, the last flag
-    stageTicks: { 0: 120, 1: 300, 2: 180, 3: 180, 4: 240, 5: 120, 6: 50, 7: 40 },
+    // ticks of the build each stage gets (each 3 s or less on screen): moat, walls, towers, keep, roofs,
+    // village, courtyard, tower flags, the last flag
+    stageTicks: { 0: 120, 1: 180, 2: 120, 3: 180, 4: 180, 5: 150, 6: 150, 7: 60, 8: 40 },
     // [tick of the build, camera, look-at], local to the castle centre (y from the ground)
     keys: [
-      [0, [-30, 22, 58], [0, -2, 20]],
-      [120, [-34, 13, 46], [0, 3, 0]],
-      [270, [-14, 16, 50], [0, 8, 0]],
+      [0, [-24, 13, 52], [0, -1, 26]],
+      [120, [-34, 14, 46], [0, 3, 0]],
+      [300, [-30, 18, 40], [0, 8, 0]],
       [420, [10, 22, 46], [0, 12, -2]],
-      [600, [20, 33, 33], [0, 22, -3]],
-      [760, [14, 42, 26], [0, 30, -3]],
-      [850, [-12, 46, 40], [-24, 18, 0]],
-      [960, [-64, 26, 24], [-44, 3, 2]],
-      [1080, [-32, 40, 40], [0, 6, -3]],
-      [1150, [-14, 46, 34], [0, 36, -3]],
-      [1238, [0, 12, 78], [0, 21, 0]]
+      [600, [20, 30, 33], [0, 22, -3]],
+      [760, [14, 36, 26], [0, 30, -3]],
+      [850, [-30, 30, 44], [-26, 8, 0]],
+      [960, [-50, 24, 30], [-22, 6, 0]],
+      [1080, [-30, 34, 40], [0, 8, -3]],
+      [1140, [-14, 38, 34], [0, 34, -3]],
+      [1188, [0, 12, 78], [0, 21, 0]]
     ],
     // [ticks after the build, camera, look-at]: the pull-back lands on the wide shot at 60:00 (the
     // castle behind the dirt arch and the fort) and pushes in and round to the end (backwards it ran
