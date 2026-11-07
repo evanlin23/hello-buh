@@ -29,12 +29,12 @@ module.exports = {
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
     // every move between the platform and the field in front is a jump cut; the lava runs (watched from the
     // front) and the casts (under a water sheet) at 2x; the first drain at 1x, the second at 2x
-    speed: [['run0a', 'run0b', 'cut'], ['run0', 'back0a', 2], ['back0a', 'back0b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['run1a', 'run1b', 'cut'], ['run1', 'back1a', 2], ['back1a', 'back1b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]],
+    speed: [['run0a', 'run0b', 'cut'], ['run0', 'back0a', 3], ['back0a', 'back0b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['run1a', 'run1b', 'cut'], ['run1', 'back1a', 3], ['back1a', 'back1b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]],
     hook: { at: 'back0a', before: 1.4, after: -0.05, text: 'wait for the end 😌' }   // the lava sheet running down
   },
 
   async setup (ctx) {
-    const { bot } = ctx
+    const { bot, Vec3 } = ctx
     // a small, flat, tree-free patch of the natural ground: the hill is built on it and only the patch
     // is levelled (a wide clear cut a box into the terrain)
     const AREA = [-HW - 7, WALK + 7, -12, STEPS + 15]
@@ -63,13 +63,39 @@ module.exports = {
         for (let d = 0; d < h - 1 && d < 4; d++) await ctx.cmd(`/fill ${px - ox * d} ${floor + 1} ${pz - oz * d} ${px - ox * d} ${floor + h - 1 - d} ${pz - oz * d} grass_block`)
       }
     }
-    // whole trees off around it (a tree cut at the levelled edge left a floating canopy)
-    for (const t of ['#minecraft:leaves', '#minecraft:logs']) {
-      for (const [z0, z1] of [[AREA[2] - 5, 6], [7, AREA[3] + 5]]) await ctx.cmd(`/fill ${x + AREA[0] - 5} ${floor} ${z + z0} ${x + AREA[1] + 5} ${floor + 22} ${z + z1} air replace ${t}`)
+    // /fill in slabs under the 32768-block cap
+    const fillBox = async (X0, Y0, Z0, X1, Y1, Z1, what) => {
+      const zs = Math.max(1, Math.floor(32768 / (X1 - X0 + 1)))
+      for (let za = Z0; za <= Z1; za += zs) {
+        const zb = Math.min(Z1, za + zs - 1), per = Math.max(1, Math.floor(32768 / ((X1 - X0 + 1) * (zb - za + 1))))
+        for (let ya = Y0; ya <= Y1; ya += per) await ctx.cmd(`/fill ${X0} ${ya} ${za} ${X1} ${Math.min(Y1, ya + per - 1)} ${zb} ${what}`)
+      }
     }
+    // whole trees off around it: every tree reaching into the area +5, followed through its logs and leaves
+    // (a box fill sliced a tree at the box edge and left its canopy floating in the sky)
+    const box = [x + AREA[0] - 5, x + AREA[1] + 5, z + AREA[2] - 5, z + AREA[3] + 5]
+    {
+      const isTree = (b) => b && /_leaves$|_log$|_wood$/.test(b.name)
+      const lim = [box[0] - 24, box[1] + 24, box[2] - 24, box[3] + 24]
+      const seen = new Set(), queue = []
+      const add = (px, py, pz) => { const k = `${px},${py},${pz}`; if (seen.has(k)) return; if (!isTree(bot.blockAt(new Vec3(px, py, pz)))) return; seen.add(k); queue.push([px, py, pz]) }
+      for (let px = box[0]; px <= box[1]; px++) for (let pz = box[2]; pz <= box[3]; pz++) for (let py = floor - 2; py <= floor + 24; py++) add(px, py, pz)
+      while (queue.length && seen.size < 40000) {
+        const [px, py, pz] = queue.pop()
+        if (px < box[0]) box[0] = px; if (px > box[1]) box[1] = px; if (pz < box[2]) box[2] = pz; if (pz > box[3]) box[3] = pz
+        for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
+          const qx = px + dx, qz = pz + dz
+          if ((dx || dy || dz) && qx >= lim[0] && qx <= lim[1] && qz >= lim[2] && qz <= lim[3] && py + dy >= floor - 4 && py + dy <= floor + 30) add(qx, py + dy, qz)
+        }
+      }
+      ctx.log('trees off', seen.size, 'blocks, box', box)
+    }
+    for (const t of ['#minecraft:leaves', '#minecraft:logs']) await fillBox(box[0], floor - 4, box[2], box[1], floor + 30, box[3], `air replace ${t}`)
     // no bare dirt in sight: the cut faces at the patch's edge and the squares under the removed trunks
     // grass over (grass_block shows grass on its sides too)
-    for (const [z0, z1] of [[AREA[2] - 6, 6], [7, AREA[3] + 6]]) await ctx.cmd(`/fill ${x + AREA[0] - 6} ${floor - 2} ${z + z0} ${x + AREA[1] + 6} ${floor + 8} ${z + z1} grass_block replace dirt`)
+    await fillBox(box[0] - 1, floor - 4, box[2] - 1, box[1] + 1, floor + 10, box[3] + 1, 'grass_block replace dirt')
+    // no lava pools or flows in the fields around (they read as stray lava from the cast)
+    await fillBox(x - 48, floor - 8, z - 48, x + 48, floor + 20, z + 48, 'grass_block replace lava')
     // and some grass tufts on the patch like the ground around it (not on the hill or its foot)
     for (let dx = AREA[0]; dx <= AREA[1]; dx++) {
       for (let dz = AREA[2]; dz <= AREA[3]; dz++) {
@@ -98,6 +124,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x + 3} ${T + 1} ${z} ${x + 3} ${T + 2} ${z} stone_bricks`)
     await ctx.cmd(`/fill ${x - 3} ${T + 1} ${z} ${x - 3} ${T + 2} ${z} stone_bricks`)
     await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
+    await ctx.cmd('/gamerule random_tick_speed 0')   // no grass dying to dirt squares under the water at the hill foot, no fires from the lava
     await ctx.hotbar([...STREAMS.map(() => 'lava_bucket'), 'water_bucket', 'lava_bucket', 'lava_bucket', ['cobblestone', 16]])
     // on the platform's edge above the west end of the lip, facing south down the hill
     await ctx.tpCheck(x - 1.5, T + 3, z - 1.3, 0, 55)   // not x-2.5: from there the first pour's ray clipped the channel's west rail
@@ -248,7 +275,7 @@ module.exports = {
       ctx.mark(`rv${n}a`)
       // layer 1 from the front; the final low from the south-west, where the second shell's raised edge
       // shows over the first (from the front the two reveals looked the same)
-      if (last) await tpTo(x - 9.5, this.floor + 1, z + STEPS + 3.5, -125, -12)
+      if (last) await tpTo(x - 12.5, this.floor + 1, z + STEPS + 7.5, -128, -10)   // well back: pressed against the hill's side the shell was only an outline
       else await tpTo(...FRONT(), 180, -12)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
@@ -260,7 +287,7 @@ module.exports = {
       for (let k = 0; k < 220 && ctx.tick - wetAt <= 10; k++) {
         const ph = k / 22
         await lookStep(step(4 + Math.round(2 * Math.sin(ph * 0.7))).offset((last ? 1 : 0) + 3 * Math.sin(ph), 2, 0), 0.1)
-        const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > 5
+        const far = Math.hypot(bot.entity.position.x - (x + 0.5), bot.entity.position.z - (z + STEPS + 1)) > (last ? 10 : 5)
         bot.setControlState('forward', far)
         await bot.waitForTicks(1)
       }
