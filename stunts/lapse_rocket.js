@@ -150,6 +150,7 @@ module.exports = makeStunt({
       [740, [12, 54, 36], [0, 52, 0]],       // the nose cone
       [830, [42, 42, 30], [12, 32, 0]],      // the launch tower
       [910, [46, 24, 20], [10, 28, 0]],
+      [960, [-6, 30, 66], [-4, 20, 0]],      // wide round the front (straight across skimmed the rocket)
       [1010, [-58, 24, 36], [-34, 6, 0]],    // the fuel tanks and masts
       [1110, [-62, 20, 30], [-36, 8, 0]],
       [1200, [-30, 36, 0], [-54, 16, -50]],  // the hall rising back left
