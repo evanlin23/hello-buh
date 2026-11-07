@@ -118,7 +118,7 @@ module.exports = {
     const mid = new ctx.Vec3(x0 + (N - 1) * STEP / 2 + 0.5, floor + 1, z + 0.5)
     bot.setControlState('back', true); bot.setControlState('left', true)
     let rev = false
-    for (let t = 0; t < 16; t++) {                      // a short back-up: the rainbow stays big in frame
+    for (let t = 0; t < 20; t++) {                      // a short back-up: the rainbow stays big in frame
       await bot.waitForTicks(1)
       if (t === 8) { ctx.mark('reveal'); ctx.sound('entity.player.levelup', 0.5, 1.2); rev = true }
       const e = bot.entity.position, d = mid.minus(e.offset(0, 1.62, 0))
@@ -170,7 +170,7 @@ module.exports = {
       await bot.waitForTicks(3)
     }
     // the whole line cycling
-    await this.backReveal(ctx, 'alljeb_reveal', 22)
+    await this.backReveal(ctx, 'alljeb_reveal', 30)   // the cycling flock is the money shot (22 ran the Short 29.9 s)
     // shear them all: a rainbow of wool pops out and gets picked up on the way
     ctx.select(8)
     bot.on('playerCollect', (c) => { if (c === bot.entity) ctx.sound('entity.item.pickup', 0.25, 0.8 + Math.random() * 0.6) })
