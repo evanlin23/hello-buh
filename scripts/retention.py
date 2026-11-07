@@ -315,32 +315,34 @@ def countdown_windows(spec, timeline, start):
         a, b = event_times(timeline, c[0]), event_times(timeline, c[1])
         label = c[2] if len(c) > 2 and c[2] is not None else ""
         red = float(c[4]) if len(c) > 4 and c[4] is not None else 0.5   # red under this many seconds
+        yf = float(c[5]) if len(c) > 5 and c[5] is not None else 0.42   # height in the game view (0.13 = centre-top)
         if len(c) > 3 and c[3] is not None:
             n = int(c[3]); a = a[n:n + 1]
         for ta in a:
             tb = next((x for x in b if x > ta + 1e-6), None)
             if tb is not None:
-                out.append((ta - start, tb - start, label, red))
+                out.append((ta - start, tb - start, label, red, yf))
     return out
 
 
-def countdown_img(left, total, label, since, red_under=0.5):
+def countdown_img(left, total, label, since, red_under=0.5, yf=0.42):
     """A live round countdown: the label, a big digit (ceil of the time left, popping on each
     change), and a bar draining every frame; red under 0.5 s."""
     red = left < red_under
     color = COLORS["red"] if red else COLORS["white"]
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    cy = BAND + int(GAME_H * 0.42)
+    k = 1.0 if yf >= 0.3 else 0.6   # near the top: smaller, so it stays inside the game view
+    cy = BAND + int(GAME_H * yf)
     if label:
-        lab = rich_text(label, 72, COLORS["yellow"])
-        img.alpha_composite(lab, ((W - lab.width) // 2, cy - 230))
-    digit = rich_text(str(max(1, math.ceil(left - 1e-6))), 260, color, stroke_w=14)
+        lab = rich_text(label, int(72 * k), COLORS["yellow"])
+        img.alpha_composite(lab, ((W - lab.width) // 2, max(BAND + 4, cy - int(230 * k))))
+    digit = rich_text(str(max(1, math.ceil(left - 1e-6))), int(260 * k), color, stroke_w=int(14 * k))
     sc = _pop(since, 0.2, 0.45)
     if sc != 1.0:
         digit = digit.resize((int(digit.width * sc), int(digit.height * sc)), Image.BICUBIC)
     img.alpha_composite(digit, ((W - digit.width) // 2, cy - digit.height // 2))
-    bw, bh = int(W * 0.6), 26
-    x0, y0 = (W - bw) // 2, cy + 170
+    bw, bh = int(W * 0.6 * k), int(26 * k)
+    x0, y0 = (W - bw) // 2, cy + int(170 * k)
     d = ImageDraw.Draw(img)
     d.rounded_rectangle((x0 - 6, y0 - 6, x0 + bw + 6, y0 + bh + 6), 16, fill=(0, 0, 0, 200))
     fw = int(bw * max(0.0, min(1.0, left / total)))
@@ -500,11 +502,11 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             if t0 <= t + 1e-6 < hold - 1e-6:
                 fk = (fn(min(t, t1)), label, t >= t1)
         cwk = None
-        for c0, c1, clabel, cred in cdw:      # live round countdowns (a new image every frame)
+        for c0, c1, clabel, cred, cyf in cdw:      # live round countdowns (a new image every frame)
             if c0 <= t + 1e-6 < c1 - 1e-6:
                 left = c1 - t
                 since = t - max(c0, c1 - math.ceil(left - 1e-6))   # time since the digit last changed
-                cwk = (round(left, 3), round(c1 - c0, 3), clabel, round(since, 3), cred)
+                cwk = (round(left, 3), round(c1 - c0, 3), clabel, round(since, 3), cred, cyf)
         rk = None
         for r0, r1, xf, yf, rad in rgw:       # highlight ring: pops in, pulses, fades over the last 0.12 s
             if r0 <= t + 1e-6 < r1 - 1e-6:
