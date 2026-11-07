@@ -76,7 +76,6 @@ function portal (b) {
   // the rest: chests, a smithing table, a respawn anchor, crimson stems
   b.set(1, 0, -4, 'chest[facing=east]'); b.set(1, 0, -5, 'barrel[facing=up]'); b.set(1, 0, -6, 'smithing_table')
   b.set(10, 0, -4, 'respawn_anchor[charges=2]'); b.set(10, 0, -6, 'crimson_planks'); b.set(10, 1, -6, 'crimson_planks'); b.set(10, 0, -5, 'anvil[facing=north]')
-  b.set(3, -1, -2, 'magma_block')
 }
 
 module.exports = spotWrong({
@@ -84,13 +83,13 @@ module.exports = spotWrong({
   caption: 'find the mistake 🤔',
   searchFrom: [1600, 1600],
   rounds: [
-    { at: [45, -12], build: patch, seconds: 7,
+    { at: [62, -12], build: patch,   // further east: round 2's bridge showed on the horizon seconds: 7,
       cam: { pos: [-3, 13], walk: 'right' },
       scan: [[0, [-2, 0.5, 4]], [3, [1, 0.5, 4]], [6, [2, 0.8, 2]]],
       tag: 'EASY',
       reveals: [{ at: [0.5, 0.95, 4.5], zoom: 3.2, sub: 'a melon', check: [[0, 0, 4], 'melon'] }] },
     { at: [0, -12], build: bridge, seconds: 8,
-      cam: { pos: [9, 11], walk: 'left' },   // facing away from round 1's shed (it showed in the background)
+      cam: { pos: [6, 9], walk: 'left' },   // facing away from round 1's shed (it showed in the background)
       scan: [[0, [0, 0.5, 1]], [2.5, [-9, 3, -5]], [5, [0, 0.5, 2.5]], [8, [-1, 0.5, 2]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the tree'],
       reveals: [{ at: [0.5, 0.75, 3.5], zoom: 3.2, sub: 'upside-down slab', check: [[0, 0, 3], 'stone_brick_slab'] }] },
@@ -105,7 +104,7 @@ module.exports = spotWrong({
       tag: 'only 1% can find it', hint: [4.5, 'hint: look closer'],
       reveals: [
         { at: [9.5, 0.5, -7.0], zoom: 3, strafe: 'left', sub: 'raw gold, not gold', check: [[9, 0, -8], 'raw_gold_block'] },
-        { pre: 'wait... there is another one', at: [7.5, 2.5, -7.0], zoom: 2.1, ring: 160, hold: 2.4, tail: 1.5, sub: 'crying obsidian cant make a portal', check: [[7, 2, -8], 'crying_obsidian'] }
+        { pre: 'wait... there is another one', at: [7.5, 2.5, -7.0], zoom: 2.7, ring: 150, hold: 2.4, tail: 1.5, sub: "crying obsidian can't make a portal", check: [[7, 2, -8], 'crying_obsidian'] }
       ] }
   ]
 })

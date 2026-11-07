@@ -1,6 +1,6 @@
 // "find the mistake 🤔" #2 (worker 12, lib/spot_wrong.js): three new builds, one wrong block each.
 //  1 EASY    a striped lighthouse by a pond: one white block in a red stripe
-//  2 MEDIUM  a cobblestone cottage: one eave stair turned sideways
+//  2 MEDIUM  a cobblestone cottage: one eave stair upside down
 //  3 "only 1% can find it"  a storage room: one barrel in a stack lies on its side, then "wait,
 //            there's another one": the sign says DONT TOUHC
 const spotWrong = require('../lib/spot_wrong')
@@ -50,9 +50,10 @@ function cottage (b) {
   b.fill(1, 4, -5, 7, 4, -1, 'oak_planks')
   // the chimney
   b.fill(7, 4, -4, 7, 9, -4, 'bricks')   // (no campfire on top: we draw no campfire smoke yet)
-  // the mistake: one eave stair turned sideways (its L-shaped side faces the street; a backwards one
-  // looked like every other stair from the ground)
-  b.set(3, 4, 1, 'oak_stairs[facing=east]')
+  // the mistake: one eave stair upside down (a backwards one looked like every other stair from the
+  // ground, and a sideways one got reshaped into a corner by its neighbours)
+  b.set(3, 4, 1, 'oak_stairs[facing=north,half=top]')
+  b.fill(-1, 7, -3, 9, 7, -3, 'oak_planks')   // under the ridge (a 1x1 tunnel showed at the overhang ends)
   // the porch and the garden
   b.fill(-1, 0, 1, -1, 0, 3, 'oak_fence[north=true,south=true]'); b.fill(9, 0, 1, 9, 0, 3, 'oak_fence[north=true,south=true]')
   b.fill(0, -1, 1, 8, -1, 3, 'cobblestone'); b.fill(4, -1, 4, 4, -1, 12, 'dirt_path')
@@ -93,22 +94,22 @@ module.exports = spotWrong({
   searchFrom: [1600, 1600],
   rounds: [
     { at: [45, -12], build: lighthouse, seconds: 7,
-      cam: { pos: [-1, 17], walk: 'right' },
+      cam: { pos: [-1, 24], walk: 'right' },   // far enough back that the answer sits below the countdown
       scan: [[0, [2.5, 4, 0]], [2.5, [0, 3, 2]], [5, [2.5, 13, 0]], [7, [2, 10, 0]]],
       tag: 'EASY',
       reveals: [{ at: [1.5, 12.5, 1.0], zoom: 3.4, hold: 1.0, sub: 'white in a red stripe', check: [[1, 12, 0], 'white_concrete'] }] },
     { at: [0, -12], build: cottage, seconds: 8,
       cam: { pos: [-6, 15], walk: 'right' },
-      scan: [[0, [-4, 1, 6]], [2.5, [4, 2, 0]], [5, [4, 6, -1]], [8, [5, 3.5, 0]]],
+      scan: [[0, [-4, 1, 6]], [2.5, [4, 2, 0]], [4.5, [4, 6, -1]], [6.2, [1, 1, 2]], [8, [5, 3.5, 0]]],
       tag: 'MEDIUM', hint: [4, 'hint: not the garden'],
-      reveals: [{ at: [3.5, 4.6, 1.5], zoom: 3.6, sub: 'a stair turned sideways', check: [[3, 4, 1], 'oak_stairs'] }] },
+      reveals: [{ at: [3.5, 4.6, 1.5], zoom: 3.6, sub: 'an upside-down stair', check: [[3, 4, 1], 'oak_stairs'] }] },
     { at: [-45, 40], build: storage, seconds: 9,
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [3, 0.5, -8]], [2.2, [1, 0.8, -4]], [4.2, [6, 1, -8.5]], [6.2, [10, 0.8, -3.5]], [9, [8, 0.6, -8]]],
       tag: 'only 1% can find it', hint: [4.5, 'hint: not the chests'],
       reveals: [
         { at: [8.5, 1.5, -7.0], zoom: 3.2, sub: 'a barrel on its side', check: [[8, 1, -8], 'barrel'] },
-        { pre: 'wait... there is another one', preHold: 0.8, at: [5.5, 2.68, -7.9], zoom: 5, ring: 230, hold: 2.3, tail: 1.5, sub: 'it says TOUHC', check: [[5, 2, -8], 'oak_wall_sign'] }
+        { pre: 'wait... there is another one', preHold: 0.8, at: [5.5, 2.6, -7.9], zoom: 5, ring: 230, hold: 2.3, tail: 1.5, sub: 'it says TOUHC', check: [[5, 2, -8], 'oak_wall_sign'] }
       ] }
   ]
 })
