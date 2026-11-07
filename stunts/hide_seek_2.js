@@ -133,7 +133,8 @@ module.exports = {
     await m.openDoor(4, -11)
     await look(6.5, 1.4, -10.5, 240)
     await bot.waitForTicks(3)
-    await go(2.6, -6.5, { pitch: -0.05, stop: 0.4 })   // (clear of H2's porch slabs)
+    await go(1.7, -9.6, { pitch: -0.05, stop: 0.4 })   // back out onto the street (H2's porch has a lantern and slabs)
+    await go(2.0, -6.5, { pitch: -0.05, stop: 0.4 })
     ctx.mark('r1_end')
     // the giveaway: the snowman's head turns to look at him
     await ctx.cmd(`/setblock ${X + 7} ${F + 3} ${Z - 5} carved_pumpkin[facing=north]`)
@@ -207,7 +208,8 @@ module.exports = {
     await m.openDoor(-4, 11)
     await look(-7, 1.4, 11.5, 240)
     await bot.waitForTicks(3)
-    await go(-2.4, 6.9)                          // (round H3's corner)
+    await go(-1.4, 9.4, { stop: 0.4 })            // back out onto the street
+    await go(-1.6, 6.9)                          // (round H3's corner)
     await go(-12.6, 6.9)                         // along the front of H3
     await look(-12.2, 1.2, 15, 240)
     await bot.waitForTicks(3)
