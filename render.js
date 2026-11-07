@@ -748,7 +748,7 @@ function camAtLive (t) {
   const BE = new Map()   // 'x,y,z' -> { x, y, z, nbt }
   const SKULL_TEX = { skeleton: ['entity/skeleton/skeleton', false], wither_skeleton: ['entity/skeleton/wither_skeleton', false], zombie: ['entity/zombie/zombie', true], creeper: ['entity/creeper/creeper', false], player: ['entity/player/wide/steve', true] }
   const skullOf = (name) => { const m = /^(skeleton|wither_skeleton|zombie|creeper|player)_(wall_)?(skull|head)$/.exec(name); return m && SKULL_TEX[m[1]] }
-  const beKind = (name) => skullOf(name) ? (/_wall_/.test(name) ? 'wall_skull' : 'skull') : /_wall_hanging_sign$/.test(name) ? 'wall_hanging' : /_hanging_sign$/.test(name) ? 'hanging' : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
+  const beKind = (name) => /shulker_box$/.test(name) ? 'shulker' : /_wall_banner$/.test(name) ? 'wall_banner' : /_banner$/.test(name) ? 'banner' : skullOf(name) ? (/_wall_/.test(name) ? 'wall_skull' : 'skull') : /_wall_hanging_sign$/.test(name) ? 'wall_hanging' : /_hanging_sign$/.test(name) ? 'hanging' : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
   const BE_STATES = new Set()
   for (const b of MC.blocksArray) if (beKind(b.name)) for (let sid = b.minStateId; sid <= b.maxStateId; sid++) BE_STATES.add(sid)
   {
@@ -801,6 +801,7 @@ function camAtLive (t) {
     return { text: [0, 1, 2, 3].map(i => plainText(msgs[i] ?? '').slice(0, 30)), textColor: [((hex >> 16) & 255) / 255 * k, ((hex >> 8) & 255) / 255 * k, (hex & 255) / 255 * k] }
   }
   const FACING_DEG = { south: 0, west: 90, north: 180, east: 270 }
+  const BANNER_DYE = { white: 0xF9FFFE, orange: 0xF9801D, magenta: 0xC74EBD, light_blue: 0x3AB3DA, yellow: 0xFED83D, lime: 0x80C71F, pink: 0xF38BAA, gray: 0x474F52, light_gray: 0x9D9D97, cyan: 0x169C9C, purple: 0x8932B8, blue: 0x3C44AA, brown: 0x835432, green: 0x5E7C16, red: 0xB02E26, black: 0x1D1D21 }
   let beLast = ''
   const blockEntitiesAt = (t, cam) => {
     while (beMi < BE_MARKS.length && BE_MARKS[beMi].t <= t) { const m = BE_MARKS[beMi++]; if (BE.has(m.key)) BE.get(m.key).nbt = m.nbt; else BE.set(m.key, { ...m, x: +m.key.split(',')[0], y: +m.key.split(',')[1], z: +m.key.split(',')[2] }) }
@@ -827,6 +828,12 @@ function camAtLive (t) {
       // skull yaw in our chain (checked by eye): the face points north at 0, so a floor skull adds 180 to
       // its rotation (rotation 8 faces north) and a wall skull adds 180 to its facing
       if (kind === 'wall_skull') Object.assign(o, { rot: ((FACING_DEG[pr.facing] || 0) + 180) % 360, facing: pr.facing, tex: skullOf(b.name)[0], humanoid: skullOf(b.name)[1] })
+      if (kind === 'shulker') Object.assign(o, { facing: pr.facing || 'up', tex: b.name === 'shulker_box' ? 'shulker' : 'shulker_' + b.name.replace(/_shulker_box$/, '') })
+      // DyeColor.getTextureDiffuseColor for the flag; the wave runs on game time (one cycle per 100 ticks, stepped by 5 ticks to limit rebuilds)
+      if (kind === 'banner' || kind === 'wall_banner') {
+        const col = BANNER_DYE[b.name.replace(/_(wall_)?banner$/, '')] ?? 0xF9FFFE
+        Object.assign(o, { rot: kind === 'banner' ? Number(pr.rotation || 0) * 22.5 : FACING_DEG[pr.facing] || 0, tint: [((col >> 16) & 255) / 255, ((col >> 8) & 255) / 255, (col & 255) / 255], wave: Math.floor(t / 5) * 5 % 100 })
+      }
       if (kind === 'bed') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, head: pr.part === 'head', color: b.name.replace(/_bed$/, '') })
       out.push(o)
     }

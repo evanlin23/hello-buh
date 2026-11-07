@@ -68,7 +68,8 @@ each section.
 - **What renders among the blocks vanilla draws specially** (checked 2026-11-07 by placing each in front of the camera):
   - Renders: chest, trapped chest, ender chest (single and double, lid animation), beds, standing and wall signs (text), lectern (without the book), enchanting table (without the floating book), spawner, campfire, cauldrons (water, lava), end portal frame, end portal/gateway surface.
   - Skeleton, wither skeleton, zombie, creeper and player heads render (floor and wall; player heads use the default Steve skin). Piglin and dragon heads do not.
-  - Draws nothing yet: shulker boxes, banners, decorated pots, the conduit core, the bell body (only its frame), the enchanting table and lectern books. Hanging signs (ceiling and wall, with text) render since worker 11 added them. Stage around them, or ask the engine worker.
+  - Shulker boxes (closed, any facing and colour) and banners (standing and wall, waving, in the base colour; patterns are not drawn yet) render.
+  - Draws nothing yet: decorated pots, the conduit core, the bell body (only its frame), the enchanting table and lectern books. Hanging signs (ceiling and wall, with text) render since worker 11 added them. Stage around them, or ask the engine worker.
   - A conduit (or any waterlogged block) set in air keeps waterlogged=true and shows a water block around it, in vanilla too.
 - **Lava cauldron**: its content face has tintindex 0 but no BlockColors provider. We tinted it grass green, so the lava read dull brown. Only the water cauldron is tinted (biome water colour).
 - **The Nether and the End render** (worker 11). The harness records `rec.dimension`; `DIMENSION=` overrides it. Before this a Nether recording drew no terrain at all: the mesher assumed the overworld's y -64..320, and Nether/End chunks are y 0..256, so every section index was off by four. Now the mesher takes the height from the columns.

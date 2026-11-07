@@ -36,7 +36,7 @@ function box (min, size, uv, grow = 0) {
 }
 
 // parts: [{ cubes: [[min, size, uv]], pivot, rot: [x, y, z] (ModelPart rotationZYX) }], M: model -> block
-function buildGeometry (parts, M, texW, texH) {
+function buildGeometry (parts, M, texW, texH, tint = [1, 1, 1]) {
   const pos = [], uv = [], col = [], idx = []
   const v = new THREE.Vector3(), n = new THREE.Vector3(), e1 = new THREE.Vector3(), e2 = new THREE.Vector3()
   for (const p of parts) {
@@ -50,7 +50,7 @@ function buildGeometry (parts, M, texW, texH) {
         if (n.lengthSq() < 1e-12) { e1.subVectors(q[2], q[1]); e2.subVectors(q[3], q[1]); n.crossVectors(e1, e2) }
         n.normalize()
         const s = Math.abs(n.y) > 0.5 ? (n.y > 0 ? 1.0 : 0.5) : Math.abs(n.z) >= Math.abs(n.x) ? 0.8 : 0.6
-        for (let k = 0; k < 4; k++) { pos.push(q[k].x, q[k].y, q[k].z); uv.push(uvs[k][0] / texW, uvs[k][1] / texH); col.push(s, s, s) }
+        for (let k = 0; k < 4; k++) { pos.push(q[k].x, q[k].y, q[k].z); uv.push(uvs[k][0] / texW, uvs[k][1] / texH); col.push(s * tint[0], s * tint[1], s * tint[2]) }
         idx.push(base, base + 1, base + 2, base, base + 2, base + 3)
       }
     }
@@ -193,6 +193,26 @@ export class BlockEntityLayer {
       const cubes = [[[-4, -8, -4], [8, 8, 8], [0, 0]]]
       if (b.humanoid) cubes.push([[-4, -8, -4], [8, 8, 8], [32, 0], 0.25])
       await add(buildGeometry([{ rot: [0, b.rot * D, 0], cubes }], M, 64, b.humanoid ? 64 : 32), `/assets/env/${b.tex}.png`)
+    } else if (b.kind === 'shulker') {
+      // ShulkerBoxRenderer: T(0.5) S(0.9995) Direction.getRotation() S(1, -1, -1) T(0, -1, 0); base and
+      // lid (closed) at y 24
+      const R = { up: M4(), down: M4().makeRotationX(Math.PI), south: M4().makeRotationX(Math.PI / 2), north: M4().makeRotationX(Math.PI / 2).multiply(M4().makeRotationZ(Math.PI)),
+        west: M4().makeRotationX(Math.PI / 2).multiply(M4().makeRotationZ(Math.PI / 2)), east: M4().makeRotationX(Math.PI / 2).multiply(M4().makeRotationZ(-Math.PI / 2)) }[b.facing] || M4()
+      const M = at.clone().multiply(T(0.5, 0.5, 0.5)).multiply(S(0.9995, 0.9995, 0.9995)).multiply(R).multiply(S(1, -1, -1)).multiply(T(0, -1, 0)).multiply(S(1 / 16, 1 / 16, 1 / 16))
+      await add(buildGeometry([{ pivot: [0, 24, 0], cubes: [[[-8, -8, -8], [16, 8, 16], [0, 28]], [[-8, -16, -8], [16, 12, 16], [0, 0]]] }], M, 64, 64), `/assets/env/entity/shulker/${b.tex}.png`)
+    } else if (b.kind === 'banner' || b.kind === 'wall_banner') {
+      // BannerRenderer: standing T(0.5) Ry(-rot) (with the pole); wall T(0.5, -1/6, 0.5) Ry(-facing)
+      // T(0, -0.3125, -0.4375); scale(2/3, -2/3, -2/3); flag at y -32 waving
+      // xRot = (-0.0125 + 0.01 cos(2 pi t / 100)) pi; the flag's base texture tinted the banner colour
+      const wall = b.kind === 'wall_banner'
+      const base = at.clone().multiply(wall ? T(0.5, -1 / 6, 0.5) : T(0.5, 0.5, 0.5)).multiply(RY(-b.rot))
+      if (wall) base.multiply(T(0, -0.3125, -0.4375))
+      const M = base.multiply(S(2 / 3 / 16, -2 / 3 / 16, -2 / 3 / 16))
+      const parts = [{ cubes: [[[-10, -32, -1], [20, 2, 2], [0, 42]]] }]
+      if (!wall) parts.push({ cubes: [[[-1, -30, -1], [2, 42, 2], [44, 0]]] })
+      await add(buildGeometry(parts, M, 64, 64), '/assets/env/entity/banner_base.png')
+      const wave = (-0.0125 + 0.01 * Math.cos(2 * Math.PI * (b.wave || 0) / 100)) * Math.PI
+      await add(buildGeometry([{ pivot: [0, -32, 0], rot: [wave, 0, 0], cubes: [[[-10, 0, -2], [20, 40, 1], [0, 0]]] }], M, 64, 64, b.tint || [1, 1, 1]), '/assets/env/entity/banner/base.png')
     } else if (b.kind === 'chest') {
       // ChestRenderer: T(0.5) Ry(-facing) T(-0.5), the model y-up in pixels
       const M = at.clone().multiply(T(0.5, 0.5, 0.5)).multiply(RY(-b.rot)).multiply(T(-0.5, -0.5, -0.5)).multiply(S(1 / 16, 1 / 16, 1 / 16))
