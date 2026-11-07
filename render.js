@@ -79,8 +79,19 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
       if (Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz) > 4) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }   // teleport: no easing
       else if (row[3] !== c.tx || row[4] !== c.ty || row[5] !== c.tz) { c.tx = row[3]; c.ty = row[4]; c.tz = row[5]; c.steps = 3 }
       if (c.steps > 0) { c.x += (c.tx - c.x) / c.steps; c.y += (c.ty - c.y) / c.steps; c.z += (c.tz - c.z) / c.steps; c.steps-- }
+      // rotation: lerpTo / lerpHeadTo ease yaw and head yaw over the same 3 steps (wrapped), so a
+      // /tp ... facing half turn reads over 3 ticks instead of snapping (worker 5, story_runaway f393)
+      const wrap = (a) => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
+      if (c.yaw === undefined || c.last !== tick - 1) { c.yaw = c.tyaw = row[6]; c.ysteps = 0; c.head = c.thead = row[8]; c.hsteps = 0 }
+      if (row[6] !== c.tyaw) { c.tyaw = row[6]; c.ysteps = 3 }
+      if (c.ysteps > 0) { c.yaw += wrap(c.tyaw - c.yaw) / c.ysteps; c.ysteps-- }
+      if (row[8] !== null && row[8] !== undefined) {
+        if (c.head === null || c.head === undefined) c.head = c.thead = row[8]
+        if (row[8] !== c.thead) { c.thead = row[8]; c.hsteps = 3 }
+        if (c.hsteps > 0) { c.head += wrap(c.thead - c.head) / c.hsteps; c.hsteps-- }
+      }
       c.last = tick; cur.set(id, c)
-      const r = row.slice(); r[3] = c.x; r[4] = c.y; r[5] = c.z; ENT.get(tick).set(id, r)
+      const r = row.slice(); r[3] = c.x; r[4] = c.y; r[5] = c.z; r[6] = c.yaw; if (row[8] !== null && row[8] !== undefined) r[8] = c.head; ENT.get(tick).set(id, r)
     }
   }
 }
