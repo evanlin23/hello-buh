@@ -27,7 +27,7 @@ module.exports = {
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
     // the climb back up and both casts at 2x; the walk back up to the platform for layer 2 is cut
-    speed: [['up', 'water', 2], ['follow', 'scoop', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2]]
+    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2]]
   },
 
   async setup (ctx) {
@@ -172,6 +172,16 @@ module.exports = {
       }
     }
 
+    // a teleport inside a jump cut (the walk back up the walkway was unreliable: it got stuck on the
+    // steps and poured from the wrong place); yaw/pitch in /tp degrees
+    const tpTo = async (tx, ty, tz, yaw, pitch) => {
+      for (let t = 0; ; t++) {
+        await ctx.cmd(`/tp @s ${tx} ${ty} ${tz} ${yaw} ${pitch}`)
+        if (bot.entity.position.distanceTo(new Vec3(tx, ty, tz)) < 0.2) break
+        if (t > 20) throw new Error('teleport did not stick')
+      }
+      await bot.waitForTicks(2)
+    }
     // follow the cast down the hill: wide, slow sweeps
     const FOLLOW = [[2, 550], [5, 550], [8, 550], [9, 500], [6, 550], [3, 550], [6, 550], [9, 550]]
     // the reveal, from the side: down to the walkway while the water drains, strafing down beside
@@ -207,14 +217,14 @@ module.exports = {
     await ctx.easeLookAt(step(1), 600)
     await ctx.cmd('/tick rate 20')
     ctx.mark('up')
-    await ctx.easeLook(W, -0.45, 250)
-    await strafe(-1, z + 0.6, (dz) => Math.max(0, dz - 3))
-    // back up: lip -> channel row -> platform, out of the water's way
-    await goTo(x + 4.6, z - 0.5, step(1), { jump: true, ease: 0.2 })
-    await goTo(x + 3.9, z - 1.4, step(2), { jump: true, ease: 0.2, tol: 0.15 })
+    // back up on the platform, out of the water's way (a jump cut: climb1a..climb1b)
+    ctx.mark('climb1a')
+    await tpTo(x + 3.9, T + 3, z - 1.4, 30, 45)
+    ctx.mark('climb1b')
     // water on the channel row right above the lava sources: it casts the flow from above. From the
     // platform the ray passes west of the channel's east rail (from the walkway it hit the rail)
     await ctx.cmd('/tick rate 40')
+    if (bot.entity.position.distanceTo(new Vec3(x + 3.9, T + 3, z - 1.4)) > 0.5) throw new Error(`not on the platform for the water: ${bot.entity.position}`)
     ctx.mark('water', { n: 0 }); ctx.sound('item.bucket.empty')
     await aimUse(new Vec3(x + 2.2, T + 2 - 0.02, z - 0.6), 5, 350)
     ctx.mark('follow', { n: 0 })
@@ -227,11 +237,7 @@ module.exports = {
     // back up to the platform's west end (cut in the edit)
     ctx.mark('climb2a')
     await ctx.cmd('/tick rate 20')
-    await strafe(-1, z + 0.6, (dz) => Math.max(0, dz - 3))
-    await goTo(x + 4.6, z - 0.5, step(1), { jump: true, ease: 0.2 })
-    await goTo(x + 3.9, z - 1.4, step(2), { jump: true, ease: 0.2, tol: 0.15 })
-    await goTo(x - 0.5, z - 1.4, step(2).offset(-2, 0, 0), { ease: 0.3, tol: 0.2 })
-    await ctx.easeLookAt(new Vec3(x - 0.5, T + 1.98, z + 0.6), 250)
+    await tpTo(x - 0.5, T + 3, z - 1.4, 0, 60)
     ctx.mark('climb2b')
     await ctx.cmd(`/tick rate ${LAVA_RATE}`)
     ctx.mark('pour', { n: 1 })
