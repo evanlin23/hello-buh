@@ -18,7 +18,7 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.5' },
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.6', subs: [['collected', '3 stacks of emeralds', 0.9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
 
   async setup (ctx) {
     const { bot } = ctx
@@ -88,7 +88,7 @@ module.exports = {
         for (let k = 0; k < o.n; k++) {
           const sx = o.x + 0.5 + (rnd() - 0.5) * 1.0, sy = oy + 0.5 + (rnd() - 0.5) * 0.8, sz = this.wz + 1.1 + rnd() * 0.3
           const tx = me.x + (rnd() - 0.5) * 1.6, tz = me.z - 0.4 + rnd() * 1.2          // all of them come down within reach
-          const vy = 0.3 + rnd() * 0.3
+          const vy = 0.16 + rnd() * 0.14   // low arcs that stay in frame (0.3-0.6 flew out the top and were caught overhead)
           let y = sy, T = 0
           for (let v = vy; T < 80; T++) { v -= 0.04; y += v; v *= 0.98; if (y <= ground && T > 2) break }
           const f = (1 - Math.pow(0.98, T)) / 0.02
@@ -97,18 +97,19 @@ module.exports = {
           bot.chat(`/summon item ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {Item:{id:"minecraft:${o.drop}",count:1},PickupDelay:32767,Tags:["fd${i}_${vi}"],Motion:[${((tx - sx) / f).toFixed(3)},${vy.toFixed(3)},${((tz - sz) / f).toFixed(3)}]}`)
         }
         // release them for pickup once they're up and apart
-        { let t = 0; const tag = `fd${i}_${vi}`; const rel = () => { if (++t === 12) { bot.chat(`/execute as @e[type=item,tag=${tag}] run data merge entity @s {PickupDelay:0}`); bot.removeListener('physicsTick', rel) } }; bot.on('physicsTick', rel) }
+        { let t = 0; const tag = `fd${i}_${vi}`; const rel = () => { if (++t === 16) {   // once they've come down (12 caught them mid-air, off screen)
+             bot.chat(`/execute as @e[type=item,tag=${tag}] run data merge entity @s {PickupDelay:0}`); bot.removeListener('physicsTick', rel) } }; bot.on('physicsTick', rel) }
         // the ore's own XP (vanilla: coal, lapis, redstone, diamond, emerald drop orbs)
         if (/coal|lapis|redstone|diamond|emerald/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${oy + 0.5} ${this.wz + 1.2} {Value:3}`)
-        await ctx.easeLook((rnd() - 0.5) * 0.3, 0.15, vein.length > 1 ? 200 : 350)   // look at the shower
+        await ctx.easeLook((rnd() - 0.5) * 0.3, 0.0, vein.length > 1 ? 200 : 300)   // look at the shower
         await bot.waitForTicks(vi < vein.length - 1 ? 2 : 8)
       }
       // watch it rain down around your feet, and step back and forth through it picking it up
-      await ctx.easeLook((rnd() - 0.5) * 0.4, -0.4, 300)   // eyes on the falling items (-0.85 stared at empty grass: they're caught mid-air)
+      ctx.easeLook((rnd() - 0.5) * 0.4, -0.45, 550)          // follow them down as they land round your feet
       bot.setControlState('back', true); await bot.waitForTicks(9); bot.setControlState('back', false)   // (11+11 ran the beats 3.2 s apart)
       bot.setControlState('forward', true); await bot.waitForTicks(9); bot.setControlState('forward', false)
       if (i === this.ores.length - 1) ctx.mark('collected')
-      await bot.waitForTicks(i === this.ores.length - 1 ? 12 : 2)
+      await bot.waitForTicks(i === this.ores.length - 1 ? 14 : 2)
       await ctx.easeLook(0, -0.3, 300)
     }
     await bot.waitForTicks(20)
