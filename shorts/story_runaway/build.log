@@ -1,0 +1,32 @@
+03:21:22.542 spawned at Vec3 { x: 125.5, y: 69, z: 11.5 }
+03:21:22.769 nearest minecraft:plains at [ 381, -53 ]
+03:22:32.134 COMMAND ERROR: Could not set the block
+03:22:54.327 set at { x: 381, y: 70, z: -53 }
+03:23:03.911 chunks refreshed; back at start within 0.00 blocks
+03:23:09.074 COMMAND ERROR: Could not set the block
+03:23:40.322 died
+03:23:44.358 STUNT OK
+--- render at 7b31205 ---
+meshing from y -11
+light computed in 1.3 s
+meshed + uploaded world in 16.5 s
+77 particles
+rendered 2394 frames (39.90 s of video) in 940.8 s = 23.6 s per video second
+wrote work/story_runaway.wav 39.95s
+wrote out/story_runaway.mp4 38.45s
+--- render at 0ec69ab ---
+meshing from y -11
+light computed in 1.3 s
+meshed + uploaded world in 21.6 s
+99 particles
+rendered 2394 frames (39.90 s of video) in 933.1 s = 23.4 s per video second
+wrote work/story_runaway.wav 39.95s
+wrote out/story_runaway.mp4 38.45s
+--- render at 4808177 ---
+meshing from y -11
+light computed in 1.1 s
+meshed + uploaded world in 19.1 s
+99 particles
+rendered 2394 frames (39.90 s of video) in 761.1 s = 19.1 s per video second
+wrote work/story_runaway.wav 39.95s
+wrote out/story_runaway.mp4 38.45s
