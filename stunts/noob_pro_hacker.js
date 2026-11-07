@@ -22,7 +22,7 @@ const LADDERS = 10
 // re-sent with the up arrow and a shorter fuse each time, so all three go off on the same tick
 const FUSES = [20, 14, 8]
 const TNT = (f) => `/summon tnt ~ ~ ~ {fuse:${f},explosion_power:6}`
-const CMDS = ['/effect give @s levitation 5 39 true', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.05], [TNT(8), 0.05]]
+const CMDS = ['/effect give @s levitation 5 39 true', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.15], [TNT(8), 0.15]]
 const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
 
 // the mountain: an uneven peak (lobed outline, ridges down the flanks) of stone with grass, gravel and
@@ -124,6 +124,7 @@ module.exports = {
     await ctx.cmd(`/fill ${px} ${F - 31} ${pz} ${px} ${F - 8} ${pz} air`)
 
     await ctx.cmd('/effect give @s saturation infinite 1 true')
+    await ctx.cmd('/kill @e[type=item]')                    // a stray raw cod got picked up on the field
     await ctx.hotbar([['ladder', LADDERS]])
     // the noob's start: a step back from the cliff, facing it (north)
     await ctx.tpCheck(this.startX, F + 1, this.startZ, this.startYaw, -28)
@@ -408,6 +409,7 @@ module.exports = {
     for (let i = 0; i < 3; i++) {
       if (i) await bot.waitForTicks(6)
       k.typed()
+      ctx.easeLook(N + (i % 2 ? -0.3 : 0.3), -0.75 + (i === 1 ? 0.12 : -0.1), 300)   // glances between sends (a locked camera read as a freeze)
       bot.chat(`/summon tnt ${fp.x.toFixed(2)} ${fp.y.toFixed(2)} ${fp.z.toFixed(2)} {fuse:${FUSES[i]},explosion_power:6}`)
       if (!i) { ctx.sound('entity.tnt.primed', 1); ctx.mark('hack') }
     }
