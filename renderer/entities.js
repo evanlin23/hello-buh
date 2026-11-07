@@ -221,11 +221,11 @@ const PLAYER_PARTS = [
   ['leftLeg', null, [1.9, 12, 0], [[[-2, 0, -2], [4, 12, 4], [16, 48], 0]]],
   ['leftPants', 'leftLeg', [0, 0, 0], [[[-2, 0, -2], [4, 12, 4], [0, 48], 0.25]]]
 ]
-function buildPlayer (texInfo) {
+function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null) {
   const root = new THREE.Group()            // world: position + Ry + death Rz
   const model = new THREE.Group()           // S(-1,-1,1) S(0.9375) T(0,-1.501,0) S(1/16)
   model.matrixAutoUpdate = false
-  model.matrix.makeScale(-0.9375, -0.9375, 0.9375).multiply(new THREE.Matrix4().makeTranslation(0, -1.501, 0)).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
+  model.matrix.makeScale(-scale, -scale, scale).multiply(new THREE.Matrix4().makeTranslation(0, -1.501, 0)).multiply(new THREE.Matrix4().makeScale(1 / 16, 1 / 16, 1 / 16))
   root.add(model)
   // the overlay layers (hat, jacket, sleeves, pants) are cut out by alpha; draw both sides
   const mat = new THREE.MeshBasicMaterial({ map: texInfo.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
@@ -234,8 +234,10 @@ function buildPlayer (texInfo) {
     sh.uniforms.uRed = mat.userData.red
     sh.fragmentShader = 'uniform float uRed;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.0, 0.0) * diffuse * vColor.rgb, uRed * 0.302);')
   }
+  // an emissive layer over the same geometry (EnderEyesLayer: full bright, cut out)
+  const eyeMat = eyes ? new THREE.MeshBasicMaterial({ map: eyes.tex, transparent: true, alphaTest: 0.05, depthWrite: false, side: THREE.DoubleSide, fog: true, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 }) : null
   const bones = {}
-  for (const [name, parent, pivot, cubes] of PLAYER_PARTS) {
+  for (const [name, parent, pivot, cubes] of parts) {
     const g = new THREE.Group(); g.rotation.order = 'ZYX'   // ModelPart: rotationZYX(zRot, yRot, xRot)
     g.position.set(...pivot)
     const all = { pos: [], uv: [], col: [], idx: [] }
@@ -246,15 +248,41 @@ function buildPlayer (texInfo) {
     geom.setAttribute('color', new THREE.Float32BufferAttribute(all.col, 3))
     geom.setIndex(all.idx)
     g.add(new THREE.Mesh(geom, mat))
+    if (eyeMat) { const em = new THREE.Mesh(geom, eyeMat); em.renderOrder = 1; g.add(em) }
     ;(parent ? bones[parent] : model).add(g)
     bones[name] = g
   }
+  if (!bones.rightArm) return { root, bones, mat }
   // ItemInHandLayer: the arm's transform, then Rx(-90) Ry(180) T(1/16, 0.125, -0.625) (blocks)
   const hand = new THREE.Group(); hand.matrixAutoUpdate = false
   hand.matrix.makeRotationX(-Math.PI / 2).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
   bones.rightArm.add(hand)
   bones.hand = hand
   return { root, bones, mat }
+}
+// EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
+// on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
+// player (the converted Bedrock geometry had the head sunk into the body and the arms poking above it)
+const ENDERMAN_PARTS = [
+  ['head', null, [0, -13, 0], [[[-4, -8, -4], [8, 8, 8], [0, 0], 0]]],
+  ['hat', 'head', [0, 0, 0], [[[-4, -8, -4], [8, 8, 8], [0, 16], -0.5]]],
+  ['body', null, [0, -14, 0], [[[-4, 0, -2], [8, 12, 4], [32, 16], 0]]],
+  ['rightArm', null, [-5, -12, 0], [[[-1, -2, -1], [2, 30, 2], [56, 0], 0]]],
+  ['leftArm', null, [5, -12, 0], [[[-1, -2, -1], [2, 30, 2], [56, 0], 0]]],
+  ['rightLeg', null, [-2, -5, 0], [[[-1, 0, -1], [2, 30, 2], [56, 0], 0]]],
+  ['leftLeg', null, [2, -5, 0], [[[-1, 0, -1], [2, 30, 2], [56, 0], 0]]]
+]
+// EndermanModel.setupAnim: the humanoid walk, then arms and legs x 0.5 clamped to +-0.4 rad
+function poseEnderman (r, s, walkPos, walkSpeed) {
+  const B = r.bones
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  B.head.rotation.set(-(s.pitch || 0), net, 0)
+  const c = (v) => Math.max(-0.4, Math.min(0.4, v * 0.5))
+  B.rightArm.rotation.set(c(Math.cos(walkPos * 0.6662 + Math.PI) * walkSpeed), 0, 0)
+  B.leftArm.rotation.set(c(Math.cos(walkPos * 0.6662) * walkSpeed), 0, 0)
+  B.rightLeg.rotation.set(c(Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed), 0, 0)
+  B.leftLeg.rotation.set(c(Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed), 0, 0)
 }
 // HumanoidModel.setupAnim (+ setupAttackAnimation, ArmPose.ITEM, AnimationUtils.bobModelPart) and
 // LivingEntityRenderer.setupRotations for a player state s: yaw = body yaw, headYaw, pitch
@@ -313,6 +341,9 @@ export class EntityLayer {
         w.position.set(-0.5, 0, -0.5); w.visible = !!extra.flash; obj.add(w)
       }
       if (extra.scale) obj.scale.setScalar(extra.scale)
+    } else if (name === 'enderman') {
+      const t = await texture(['entity/enderman/enderman']), te = await texture(['entity/enderman/enderman_eyes'])
+      if (t) { const b = buildPlayer(t, ENDERMAN_PARTS, 1, te); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (name === 'player') {
       const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
       if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
@@ -417,6 +448,7 @@ export class EntityLayer {
       r.last = { x: s.x, z: s.z, t: tick }
       const swing = Math.cos(r.walk * 0.6662) * 1.4 * (r.amt || 0)
       const B = r.bones
+      if (s.name === 'enderman' && B.hat) { poseEnderman(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
         // part positions are y-down from 24 px up; the converted rods sit at that origin
