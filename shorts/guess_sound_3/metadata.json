@@ -1,0 +1,956 @@
+{
+  "name": "guess_sound_3",
+  "caption": "guess the mob from its sound pt 3 \ud83d\udd0a",
+  "youtube": {
+    "title": "guess the mob from its sound pt 3 \ud83d\udd0a #minecraft #shorts",
+    "description": "guess the mob from its sound pt 3 \ud83d\udd0a\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "final_reveal",
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 29.85,
+    "song_start_s": 8.4
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 32.55,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 15760409,
+    "sha256": "aa42819d083e11c62c6e6367d65ec56700142e7e6e16928cc53cc71b2e1e1e75"
+  },
+  "edit": {
+    "caption": "guess the mob from its sound pt 3 \ud83d\udd0a",
+    "red": "sound",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "final_reveal",
+    "startAt": "round:-0.05",
+    "endAfter": "death:1.2",
+    "counter": {
+      "at": [
+        [
+          "count",
+          0
+        ],
+        [
+          "count",
+          1
+        ],
+        [
+          "count",
+          2
+        ],
+        [
+          "count",
+          3
+        ],
+        [
+          "count",
+          4
+        ],
+        [
+          "count",
+          5
+        ]
+      ],
+      "total": 6
+    },
+    "countdowns": [
+      [
+        "cd3",
+        "turn",
+        "EASY",
+        0,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "MEDIUM",
+        1,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "HARD",
+        2,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "VERY HARD",
+        3,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "EXPERT",
+        4,
+        0.5,
+        0.42
+      ],
+      [
+        "cd3",
+        "turn",
+        "IMPOSSIBLE",
+        5,
+        0.5,
+        0.42
+      ]
+    ],
+    "cards": [
+      [
+        "lit",
+        "CHICKEN",
+        1.25,
+        "green",
+        0
+      ],
+      [
+        "lit",
+        "SNIFFER",
+        1.25,
+        "green",
+        1
+      ],
+      [
+        "lit",
+        "MAGMA CUBE",
+        1.25,
+        "orange",
+        2
+      ],
+      [
+        "lit",
+        "SKELETON",
+        1.25,
+        "white",
+        3
+      ],
+      [
+        "lit",
+        "BLAZE",
+        1.25,
+        "gold",
+        4
+      ],
+      [
+        "lit",
+        "NOT A PARROT",
+        0.8,
+        "red",
+        5
+      ]
+    ],
+    "punch": [
+      [
+        "lit",
+        0,
+        1.1
+      ],
+      [
+        "lit",
+        1,
+        1.1
+      ],
+      [
+        "lit",
+        2,
+        1.1
+      ],
+      [
+        "lit",
+        3,
+        1.1
+      ],
+      [
+        "lit",
+        4,
+        1.1
+      ],
+      [
+        "lit",
+        5,
+        1.1
+      ]
+    ],
+    "subs": [],
+    "subsY": 0.77,
+    "deathScreen": true,
+    "args": [
+      "--caption",
+      "guess the mob from its sound pt 3 \ud83d\udd0a",
+      "--red",
+      "sound",
+      "--subs",
+      "[]",
+      "--subs_y",
+      "0.77",
+      "--punch",
+      "[[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]]",
+      "--counter",
+      "{\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6}",
+      "--cards",
+      "[[\"lit\",\"CHICKEN\",1.25,\"green\",0],[\"lit\",\"SNIFFER\",1.25,\"green\",1],[\"lit\",\"MAGMA CUBE\",1.25,\"orange\",2],[\"lit\",\"SKELETON\",1.25,\"white\",3],[\"lit\",\"BLAZE\",1.25,\"gold\",4],[\"lit\",\"NOT A PARROT\",0.8,\"red\",5]]",
+      "--countdowns",
+      "[[\"cd3\",\"turn\",\"EASY\",0,0.5,0.42],[\"cd3\",\"turn\",\"MEDIUM\",1,0.5,0.42],[\"cd3\",\"turn\",\"HARD\",2,0.5,0.42],[\"cd3\",\"turn\",\"VERY HARD\",3,0.5,0.42],[\"cd3\",\"turn\",\"EXPERT\",4,0.5,0.42],[\"cd3\",\"turn\",\"IMPOSSIBLE\",5,0.5,0.42]]",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "round:-0.05",
+      "--end_after",
+      "death:1.2"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 402,
+      "y": 71,
+      "z": -58
+    },
+    "biome": "minecraft:plains",
+    "ticks": 673,
+    "seconds": 33.65,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        },
+        {
+          "insertion": "f775eed6-58ca-424e-8791-da6f3406e97c",
+          "hover_event": {
+            "name": {
+              "translate": "entity.minecraft.creeper"
+            },
+            "action": "show_entity",
+            "id": "minecraft:creeper",
+            "uuid": [
+              -143266090,
+              1489650254,
+              -2020484497,
+              872868220
+            ]
+          },
+          "translate": "entity.minecraft.creeper"
+        }
+      ],
+      "translate": "death.attack.explosion.player"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "count"
+      },
+      {
+        "t": 0.75,
+        "event": "round"
+      },
+      {
+        "t": 0.9,
+        "event": "hear"
+      },
+      {
+        "t": 1.05,
+        "event": "cd3"
+      },
+      {
+        "t": 2.05,
+        "event": "cd2"
+      },
+      {
+        "t": 2.05,
+        "event": "hear"
+      },
+      {
+        "t": 3.05,
+        "event": "cd1"
+      },
+      {
+        "t": 4.05,
+        "event": "turn"
+      },
+      {
+        "t": 4.45,
+        "event": "place"
+      },
+      {
+        "t": 4.45,
+        "event": "swing"
+      },
+      {
+        "t": 4.45,
+        "event": "reveal"
+      },
+      {
+        "t": 4.45,
+        "event": "react"
+      },
+      {
+        "t": 4.45,
+        "event": "face_on"
+      },
+      {
+        "t": 4.6,
+        "event": "lit"
+      },
+      {
+        "t": 4.75,
+        "event": "again"
+      },
+      {
+        "t": 5.45,
+        "event": "face_off"
+      },
+      {
+        "t": 5.9,
+        "event": "cut"
+      },
+      {
+        "t": 5.9,
+        "event": "count"
+      },
+      {
+        "t": 5.95,
+        "event": "round"
+      },
+      {
+        "t": 6.1,
+        "event": "hear"
+      },
+      {
+        "t": 6.25,
+        "event": "cd3"
+      },
+      {
+        "t": 7.25,
+        "event": "cd2"
+      },
+      {
+        "t": 7.25,
+        "event": "hear"
+      },
+      {
+        "t": 8.25,
+        "event": "cd1"
+      },
+      {
+        "t": 9.25,
+        "event": "turn"
+      },
+      {
+        "t": 9.65,
+        "event": "place"
+      },
+      {
+        "t": 9.65,
+        "event": "swing"
+      },
+      {
+        "t": 9.65,
+        "event": "reveal"
+      },
+      {
+        "t": 9.65,
+        "event": "react"
+      },
+      {
+        "t": 9.65,
+        "event": "face_on"
+      },
+      {
+        "t": 9.8,
+        "event": "lit"
+      },
+      {
+        "t": 9.95,
+        "event": "again"
+      },
+      {
+        "t": 10.65,
+        "event": "face_off"
+      },
+      {
+        "t": 11.1,
+        "event": "cut"
+      },
+      {
+        "t": 11.1,
+        "event": "count"
+      },
+      {
+        "t": 11.15,
+        "event": "round"
+      },
+      {
+        "t": 11.3,
+        "event": "hear"
+      },
+      {
+        "t": 11.45,
+        "event": "cd3"
+      },
+      {
+        "t": 12.45,
+        "event": "cd2"
+      },
+      {
+        "t": 12.45,
+        "event": "hear"
+      },
+      {
+        "t": 13.45,
+        "event": "cd1"
+      },
+      {
+        "t": 14.45,
+        "event": "turn"
+      },
+      {
+        "t": 14.85,
+        "event": "place"
+      },
+      {
+        "t": 14.85,
+        "event": "swing"
+      },
+      {
+        "t": 14.85,
+        "event": "reveal"
+      },
+      {
+        "t": 14.85,
+        "event": "react"
+      },
+      {
+        "t": 14.85,
+        "event": "face_on"
+      },
+      {
+        "t": 15,
+        "event": "lit"
+      },
+      {
+        "t": 15.15,
+        "event": "again"
+      },
+      {
+        "t": 16.05,
+        "event": "face_off"
+      },
+      {
+        "t": 16.3,
+        "event": "cut"
+      },
+      {
+        "t": 16.3,
+        "event": "count"
+      },
+      {
+        "t": 16.35,
+        "event": "round"
+      },
+      {
+        "t": 16.5,
+        "event": "hear"
+      },
+      {
+        "t": 16.65,
+        "event": "cd3"
+      },
+      {
+        "t": 17.65,
+        "event": "cd2"
+      },
+      {
+        "t": 17.65,
+        "event": "hear"
+      },
+      {
+        "t": 18.5,
+        "event": "vel"
+      },
+      {
+        "t": 18.55,
+        "event": "vel"
+      },
+      {
+        "t": 18.65,
+        "event": "cd1"
+      },
+      {
+        "t": 19.05,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.5,
+        "event": "vel"
+      },
+      {
+        "t": 19.55,
+        "event": "vel"
+      },
+      {
+        "t": 19.65,
+        "event": "turn"
+      },
+      {
+        "t": 19.65,
+        "event": "vel"
+      },
+      {
+        "t": 19.85,
+        "event": "vel"
+      },
+      {
+        "t": 20.05,
+        "event": "place"
+      },
+      {
+        "t": 20.05,
+        "event": "swing"
+      },
+      {
+        "t": 20.05,
+        "event": "reveal"
+      },
+      {
+        "t": 20.05,
+        "event": "react"
+      },
+      {
+        "t": 20.05,
+        "event": "face_on"
+      },
+      {
+        "t": 20.2,
+        "event": "lit"
+      },
+      {
+        "t": 20.25,
+        "event": "vel"
+      },
+      {
+        "t": 20.35,
+        "event": "again"
+      },
+      {
+        "t": 20.5,
+        "event": "vel"
+      },
+      {
+        "t": 20.55,
+        "event": "vel"
+      },
+      {
+        "t": 20.65,
+        "event": "vel"
+      },
+      {
+        "t": 21.35,
+        "event": "face_off"
+      },
+      {
+        "t": 21.5,
+        "event": "vel"
+      },
+      {
+        "t": 21.55,
+        "event": "cut"
+      },
+      {
+        "t": 21.55,
+        "event": "count"
+      },
+      {
+        "t": 21.55,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "round"
+      },
+      {
+        "t": 21.65,
+        "event": "vel"
+      },
+      {
+        "t": 21.75,
+        "event": "hear"
+      },
+      {
+        "t": 21.9,
+        "event": "cd3"
+      },
+      {
+        "t": 22.5,
+        "event": "vel"
+      },
+      {
+        "t": 22.55,
+        "event": "vel"
+      },
+      {
+        "t": 22.65,
+        "event": "vel"
+      },
+      {
+        "t": 22.9,
+        "event": "cd2"
+      },
+      {
+        "t": 22.9,
+        "event": "hear"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
+        "event": "vel"
+      },
+      {
+        "t": 23.55,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.9,
+        "event": "cd1"
+      },
+      {
+        "t": 24.45,
+        "event": "vel"
+      },
+      {
+        "t": 24.5,
+        "event": "vel"
+      },
+      {
+        "t": 24.55,
+        "event": "vel"
+      },
+      {
+        "t": 24.65,
+        "event": "vel"
+      },
+      {
+        "t": 24.65,
+        "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 24.9,
+        "event": "turn"
+      },
+      {
+        "t": 25.3,
+        "event": "place"
+      },
+      {
+        "t": 25.3,
+        "event": "swing"
+      },
+      {
+        "t": 25.3,
+        "event": "reveal"
+      },
+      {
+        "t": 25.3,
+        "event": "react"
+      },
+      {
+        "t": 25.3,
+        "event": "face_on"
+      },
+      {
+        "t": 25.4,
+        "event": "vel"
+      },
+      {
+        "t": 25.45,
+        "event": "lit"
+      },
+      {
+        "t": 25.5,
+        "event": "vel"
+      },
+      {
+        "t": 25.55,
+        "event": "vel"
+      },
+      {
+        "t": 25.6,
+        "event": "again"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26.2,
+        "event": "vel"
+      },
+      {
+        "t": 26.5,
+        "event": "vel"
+      },
+      {
+        "t": 26.55,
+        "event": "face_off"
+      },
+      {
+        "t": 26.55,
+        "event": "vel"
+      },
+      {
+        "t": 26.6,
+        "event": "vel"
+      },
+      {
+        "t": 26.65,
+        "event": "vel"
+      },
+      {
+        "t": 26.65,
+        "event": "vel"
+      },
+      {
+        "t": 26.75,
+        "event": "cut"
+      },
+      {
+        "t": 26.75,
+        "event": "count"
+      },
+      {
+        "t": 26.8,
+        "event": "round"
+      },
+      {
+        "t": 26.95,
+        "event": "hear"
+      },
+      {
+        "t": 27.15,
+        "event": "cd3"
+      },
+      {
+        "t": 28.15,
+        "event": "cd2"
+      },
+      {
+        "t": 28.15,
+        "event": "hear"
+      },
+      {
+        "t": 28.4,
+        "event": "collect"
+      },
+      {
+        "t": 29.15,
+        "event": "cd1"
+      },
+      {
+        "t": 30.15,
+        "event": "turn"
+      },
+      {
+        "t": 30.55,
+        "event": "place"
+      },
+      {
+        "t": 30.55,
+        "event": "swing"
+      },
+      {
+        "t": 30.55,
+        "event": "reveal"
+      },
+      {
+        "t": 30.55,
+        "event": "final_reveal"
+      },
+      {
+        "t": 30.55,
+        "event": "react"
+      },
+      {
+        "t": 30.55,
+        "event": "ignite"
+      },
+      {
+        "t": 30.7,
+        "event": "lit"
+      },
+      {
+        "t": 32.05,
+        "event": "hurt",
+        "type": "player_explosion"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "death"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "vel"
+      },
+      {
+        "t": 32.6,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 32.9,
+        "event": "vel"
+      },
+      {
+        "t": 33.65,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "1b8823d9315df9120ee54b6e4f31f9d595356811",
+    "rendered_at": "2026-11-07T14:35:06.871Z",
+    "head_at_publish": "1b8823d9315df9120ee54b6e4f31f9d595356811",
+    "stunt": "stunts/guess_sound_3.js",
+    "source_snapshot": [
+      "source/guess_sound_3.js",
+      "source/guess_sound.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 1b8823d9315d",
+    "gunzip -c shorts/guess_sound_3/recording.json.gz > work/guess_sound_3.rec.json",
+    "node render.js work/guess_sound_3.rec.json work/guess_sound_3.frames 60 1080 1011",
+    "python3 audio.py work/guess_sound_3.rec.json work/guess_sound_3.wav",
+    "python3 edit.py --frames work/guess_sound_3.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_3.rec.json --audio work/guess_sound_3.wav --caption \"guess the mob from its sound pt 3 \ud83d\udd0a\" --red sound --subs [] --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"CHICKEN\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"SNIFFER\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"MAGMA CUBE\\\",1.25,\\\"orange\\\",2],[\\\"lit\\\",\\\"SKELETON\\\",1.25,\\\"white\\\",3],[\\\"lit\\\",\\\"BLAZE\\\",1.25,\\\"gold\\\",4],[\\\"lit\\\",\\\"NOT A PARROT\\\",0.8,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --death_screen death --start_at round:-0.05 --end_after death:1.2 --out out/guess_sound_3.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 13: guess the mob from its sound pt 3 (chicken, sniffer, magma cube, skeleton, blaze, then a real creeper after two parrot fake-outs); independent review r5 ready on retention, minecraft and frame review",
+  "published_at": "2026-11-07T14:49:45.966Z"
+}
