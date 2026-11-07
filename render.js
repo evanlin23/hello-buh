@@ -1020,6 +1020,79 @@ function bodyAfterDeath (d, t) {
   const A = deathSim.pts[i], B = deathSim.pts[i + 1]
   return { x: A[0] + (B[0] - A[0]) * f, y: A[1] + (B[1] - A[1]) * f, z: A[2] + (B[2] - A[2]) * f, yaw: deathSim.yaw, pitch: deathSim.pitch }
 }
+// Dropped items and XP orbs between the server's position syncs (every ~20 ticks): vanilla runs their
+// physics on the client from the velocity in the spawn / entity_velocity packets (harness 'vel'
+// marks). ItemEntity: gravity 0.04, drag 0.98 (ground: slipperiness 0.6 x 0.98), a -0.5 bounce;
+// ExperienceOrb: gravity 0.03, pulled toward a player within 8 blocks ((1 - d/8)^2 x 0.1), a -0.9
+// bounce. A synced position snaps. A pickup ('collect') flies the item to the collector over 3 ticks
+// (ItemPickupParticle), then it's gone: they froze at the spawn and blinked out (fortune f1613).
+function simulateDrops (world) {
+  const tl = rec.timeline || []
+  const vel = new Map(), coll = new Map()
+  for (const e of tl) {
+    if (e.event === 'vel') { if (!vel.has(e.id)) vel.set(e.id, []); vel.get(e.id).push([Math.round(e.t / 50), e.vx, e.vy, e.vz]) }
+    if (e.event === 'collect' && !coll.has(e.id)) coll.set(e.id, { t: Math.round(e.t / 50), by: e.by })
+  }
+  if (!vel.size) return
+  const Block = require('prismarine-block')(rec.version)
+  const changes = new Map()
+  for (const b of rec.blocks || []) { const k = `${b[1]},${b[2]},${b[3]}`; if (!changes.has(k)) changes.set(k, []); changes.get(k).push(b) }
+  const solid = (x, y, z, tick) => {
+    const bx = Math.floor(x), by = Math.floor(y), bz = Math.floor(z)
+    let b = null
+    const ch = changes.get(`${bx},${by},${bz}`)
+    if (ch) { for (const c of ch) if (c[0] <= tick) { try { b = Block.fromStateId(c[4], 0) } catch (e) {} } }
+    if (!b) b = world.getBlock(new Vec3(bx, by, bz))
+    return !!(b && b.boundingBox === 'block')
+  }
+  const rowsOf = new Map()
+  for (const tick of [...ENT.keys()].sort((a, b) => a - b)) for (const [id, row] of ENT.get(tick)) if (vel.has(id) && (row[2] === 'item' || row[2] === 'experience_orb')) { if (!rowsOf.has(id)) rowsOf.set(id, []); rowsOf.get(id).push(row) }
+  let n = 0
+  for (const [id, rows] of rowsOf) {
+    const orb = rows[0][2] === 'experience_orb', vs = vel.get(id)
+    let x = rows[0][3], y = rows[0][4], z = rows[0][5], vx = 0, vy = 0, vz = 0, onGround = false, vi = 0, last = rows[0]
+    const t0 = rows[0][0], t1 = rows[rows.length - 1][0]
+    const byTick = new Map(rows.map(r => [r[0], r]))
+    for (let tick = t0; tick <= t1; tick++) {
+      while (vi < vs.length && vs[vi][0] <= tick) { [, vx, vy, vz] = vs[vi++] }
+      const row = byTick.get(tick)
+      if (row && (row[3] !== last[3] || row[4] !== last[4] || row[5] !== last[5])) { x = row[3]; y = row[4]; z = row[5] }   // a sync
+      if (row) last = row
+      if (row) { const r = row.slice(); r[3] = x; r[4] = y; r[5] = z; ENT.get(tick).set(id, r) }
+      // the tick's physics
+      if (orb) {
+        vy -= 0.03
+        const p = P[Math.min(P.length - 1, tick)]
+        if (p) { const dx = p[1] - x, dy = p[2] + EYE / 2 - y, dz = p[3] - z, d = Math.hypot(dx, dy, dz); if (d < 8 && d > 1e-6) { const k = (1 - d / 8) ** 2 * 0.1; vx += dx / d * k; vy += dy / d * k; vz += dz / d * k } }
+      } else vy -= 0.04
+      if (solid(x + vx, y + 0.05, z, tick)) vx = 0
+      if (solid(x, y + 0.05, z + vz, tick)) vz = 0
+      x += vx; z += vz
+      onGround = false
+      if (vy < 0 && solid(x, y + vy, z, tick)) { y = Math.floor(y + vy) + 1; onGround = true } else if (vy > 0 && solid(x, y + 0.25 + vy, z, tick)) vy = 0; else y += vy
+      const f = onGround ? 0.6 * 0.98 : 0.98
+      vx *= f; vy *= 0.98; vz *= f
+      if (onGround && vy < 0) vy *= orb ? -0.9 : -0.5
+      if (onGround && Math.abs(vy) < 0.005) vy = 0
+    }
+    // picked up: ItemPickupParticle, 3 ticks from the item to the collector's position + 0.5 (eased f^2)
+    const c = coll.get(id)
+    if (c) {
+      const from = [x, y, z]
+      for (let k = 0; k <= 3; k++) {
+        const tick = c.t + k
+        let tx, ty, tz
+        if (c.by === 'self') { const p = P[Math.min(P.length - 1, tick)]; if (!p) break; [tx, ty, tz] = [p[1], p[2] + 0.5, p[3]] } else { const cr = ENT.get(tick) && ENT.get(tick).get(c.by); if (!cr) break; [tx, ty, tz] = [cr[3], cr[4] + 0.5, cr[5]] }
+        const f = (k / 3) ** 2
+        if (!ENT.has(tick)) ENT.set(tick, new Map())
+        const r = last.slice(); r[0] = tick; r[3] = from[0] + (tx - from[0]) * f; r[4] = from[1] + (ty - from[1]) * f; r[5] = from[2] + (tz - from[2]) * f
+        if (k < 3) ENT.get(tick).set(id, r); else ENT.get(tick).delete(id)
+      }
+    }
+    n++
+  }
+  if (n) console.log(`simulated ${n} dropped item / xp orb paths`)
+}
 let solidWorld = null   // set once the mesher exists
 
 // after a respawn mark the respawn teleport can land a few ticks late: until it does, the pose is
@@ -1136,6 +1209,7 @@ function camAtLive (t) {
   mesher.addColumns(rec.columns)
   solidWorld = mesher.world
   hmapWorld = mesher.world
+  simulateDrops(mesher.world)
 
   const app = express()
   const blobs = new Map(); let blobId = 0
