@@ -185,16 +185,17 @@ module.exports = {
     // sweep back along the line right in front of the sheep, eyes on the row ahead (not a sheep's face),
     // collecting the wool: the hotbar fills with the rainbow
     const row = new ctx.Vec3(this.x0 - 2, this.floor + 0.6, z + 0.6)
-    bot.setControlState('left', true)
+    // facing west along the line: forward moves along it, right (north) / left (south) hold the distance
+    bot.setControlState('forward', true)
     for (let k = 0; k < 80 && bot.entity.position.x > this.x0 + 0.5; k++) {
       const e = bot.entity.position, d = row.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
-      bot.setControlState('forward', e.z > z + 1.4); bot.setControlState('back', e.z < z + 1.1)
+      bot.setControlState('right', e.z > z + 1.4); bot.setControlState('left', e.z < z + 1.1)
       await bot.waitForTicks(1)
     }
-    for (const c of ['left', 'forward', 'back']) bot.setControlState(c, false)
+    for (const c of ['left', 'right', 'forward']) bot.setControlState(c, false)
     ctx.mark('collected')
     await bot.waitForTicks(16)
     ctx.log('hotbar', JSON.stringify(bot.inventory.items().map(i => [i.name, i.count])))
