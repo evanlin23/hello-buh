@@ -22,7 +22,7 @@ module.exports = {
   botTimeout: 420,
   time: 1500,      // morning: at noon the sun sat right at the top of the pillar shot
   // sharp zooms (narrower FOV) on each giveaway
-  fovZoom: [['r1_zoom', 'r1_chop:-0.3', 1.8], ['r2_zoom', 'r2_found:0.6', 1.8], ['r3_zoom', 'r3_found:0.8', 2.2], ['r4_zoom', 'r4_found:0.8', 7]],
+  fovZoom: [['r1_zoom', 'r1_chop:-0.3', 1.8], ['r2_zoom', 'r2_found:0.6', 1.8], ['r3_zoom', 'r3_found:0.8', 2.2], ['r4_zoom', 'r4_found:0.9', 12]],
   edit: {
     caption: 'hide and seek but the villagers cheated 😭', red: 'cheated',
     song: 'songs/funk_abnormal.mp3', dropAt: 'r4_found',
@@ -30,8 +30,8 @@ module.exports = {
     speed: [1, 2, 3].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
     clock: [1, 2, 3, 4].map(n => [`r${n}_go`, `r${n}_end`, 5, `ROUND ${n}`, "down"]),
     counter: { at: [1, 2, 3, 4].map(n => `r${n}_found`), total: ROUNDS },
-    cards: [['r1_found', 'INSIDE THE TREE 😭', 1.0, 'yellow'], ['r2_found', 'UNDER THE POND 😭', 1.0, 'blue'],
-      ['r3_found', 'UNDER MY FEET 😭', 1.0, 'orange'], ['r4_found', 'AT BUILD LIMIT 💀', 0.9, 'red']],
+    cards: [['r1_found', 'IN A TREE 😭', 1.0, 'yellow'], ['r2_found', 'IN THE POND 😭', 1.0, 'blue'],
+      ['r3_found', 'UNDER ME 😭', 1.0, 'orange'], ['r4_found', 'BUILD LIMIT 💀', 0.9, 'red']],
     punch: ['r1_found', 'r2_found', 'r3_found', 'r4_found'],
     subs: [['r1_end', 'where is he', 0.9], ['r2_end', 'nothing again', 0.9], ['r3_end', 'I give up', 0.9], ['r4_end', 'seriously?', 0.9]],
     subsY: 0.62
@@ -268,7 +268,7 @@ module.exports = {
     await ctx.cmd('/gamemode creative')
     // the pillar: (-3, 6), from the ground to build limit (y 319); the villager on top, at its east edge, looking down
     for (let y = 1; y <= 319 - F; y += 100) await ctx.cmd(`/fill ${X - 3} ${F + y} ${Z + 6} ${X - 3} ${Math.min(319, F + y + 99)} ${Z + 6} dirt`)
-    await this.hider('h4', -2.25, 320 - F, 6.5, -90, 60, 'librarian')
+    await this.hider('h4', -1.85, 320 - F, 6.5, -90, 90, 'librarian')   // leaning out over the edge, face down
     await tp(-0.5, 5.5, 70, 0)   // the pillar ahead on the right: it's in shot from the start
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(20)
@@ -291,9 +291,9 @@ module.exports = {
     await look(-1.6, 0.3, 6.5, 350)
     ctx.sound('entity.item.pickup', 0.4, 0.6)
     // ...and up the pillar
-    await look(-2.5, 40, 6.5, 450)
+    await look(-2.5, 40, 6.5, 400)
     ctx.mark('r4_zoom')
-    await look(-2.2, 321 - F, 6.5, 650)
+    await look(-1.85, 321.4 - F, 6.5, 450)
     hmm(0.9)
     found(4)
     for (let i = 0; i < 24; i++) { await bot.look(bot.entity.yaw + 0.002 * Math.sin(i / 3), bot.entity.pitch, true); await bot.waitForTicks(1) }
