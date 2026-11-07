@@ -8,7 +8,7 @@ const COLORS = [
   { dye: 'red_dye', id: 14, sub: 'red' },
   { dye: 'orange_dye', id: 1, sub: 'orange' },
   { dye: 'yellow_dye', id: 4, sub: 'yellow' },
-  { dye: 'lime_dye', id: 5, sub: 'green' },
+  { dye: 'lime_dye', id: 5, sub: 'lime' },
   { dye: 'light_blue_dye', id: 3, sub: 'light blue' },
   { dye: 'blue_dye', id: 11, sub: 'blue' },
   { dye: 'purple_dye', id: 10, sub: 'purple' }
@@ -24,6 +24,7 @@ module.exports = {
     subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'collected',
     startAt: 'dye:-0.45',
     endAfter: 'collected:0.9',      // (the 30 s minimum: 29.9 at :0.4)
+    speed: [['tagfast_a', 'tagfast_b', 1.6]],   // the middle of the tag round: seven near-identical tags dragged
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i]),    // (no 'and jeb_' line: it sat on the jeb_ nameplate)
       ['alljeb', 'what if they were ALL jeb_', 1.8, 0], ['lastshear', 'free rainbow wool', 1.6, 0], ['collected', 'rainbow hotbar', 0.6, 0]]   // (not 'every colour': wool landing behind the sheep can't be reached)
   },
@@ -164,6 +165,8 @@ module.exports = {
     await bot.waitForTicks(2)
     ctx.select(7)
     for (let i = N - 2; i >= 0; i--) {
+      if (i === N - 4) ctx.mark('tagfast_a')
+      if (i === 1) ctx.mark('tagfast_b')
       await this.moveTo(ctx, i, z + 3.0)
       await this.use(ctx, this.sheepAt(ctx, i))
       ctx.sound('entity.sheep.ambient', 0.5, 1.0 + i * 0.05)
@@ -173,21 +176,38 @@ module.exports = {
     await this.backReveal(ctx, 'alljeb_reveal', 20)   // (30 left a long walk back to sheep 0)
     // shear them all: a rainbow of wool pops out and gets picked up on the way
     ctx.select(8)
-    bot.on('playerCollect', (c) => { if (c === bot.entity) ctx.sound('entity.item.pickup', 0.25, 0.8 + Math.random() * 0.6) })
+    // the payoff is the pickup that fills the last free slot: 8 wool colours in the 8 emptied slots
+    let full = false
+    const woolKinds = () => new Set(bot.inventory.items().filter(it => /_wool$/.test(it.name)).map(it => it.name)).size
+    bot.on('playerCollect', (c) => {
+      if (c !== bot.entity) return
+      ctx.sound('entity.item.pickup', 0.25, 0.8 + Math.random() * 0.6)
+      setTimeout(() => { if (!full && woolKinds() >= N) { full = true; ctx.mark('collected'); ctx.sound('entity.player.levelup', 0.6, 1.4) } }, 120)
+    })
     ctx.mark('shear')
     for (let i = 0; i < N; i++) {                       // quick, so the wool is in the air together
       await this.moveTo(ctx, i, z + 2.2)
       await this.use(ctx, this.sheepAt(ctx, i))
       ctx.sound('entity.sheep.shear', 1, 1)
-      await bot.waitForTicks(2)
+      await bot.waitForTicks(1)
+      // the wool pops forward, off the sheep (a vanilla roll, but always toward the player): wool that fell
+      // behind the sheep, against the fence, was out of reach and the hotbar ended with 5 of 8 colours
+      bot.chat(`/execute as @e[type=item,x=${this.x0 + i * STEP + 0.5},y=${floor + 1.5},z=${z + 0.5},distance=..2] run data merge entity @s {Motion:[0.0,0.22,0.2]}`)
+      await bot.waitForTicks(1)
     }
     ctx.mark('lastshear')
     // sweep west along the line ~1.7 out (pickup range), eyes on the line ~2.5 ahead at an angle so the sheep and
     // the wool on the grass are in frame (looking straight down the row crammed them on the right edge).
     // Controls are picked against the view each tick: the motion stays due west whatever the look
     bot.setControlState('sprint', false)
+    const lineMid = new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5)
     for (let k = 0; k < 100 && bot.entity.position.x > this.x0 + 0.5; k++) {
-      const e = bot.entity.position, tgt = new ctx.Vec3(e.x - 2.5, this.floor + 0.7, z + 0.5), d = tgt.minus(e.offset(0, 1.62, 0))
+      const e = bot.entity.position
+      // over the last 5 blocks the view turns gradually onto the middle of the line (it ran past the last
+      // sheep onto empty grass and then whipped ~100 degrees back)
+      const w = Math.max(0, Math.min(1, (this.x0 + 5.5 - e.x) / 5))
+      const ahead = new ctx.Vec3(e.x - 2.5, this.floor + 0.7, z + 0.5)
+      const tgt = ahead.scaled(1 - w).plus(lineMid.scaled(w)), d = tgt.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       const ny = bot.entity.yaw + dy * 0.3
@@ -203,18 +223,17 @@ module.exports = {
     for (const c of ['left', 'right', 'forward', 'back']) bot.setControlState(c, false)
     // the payoff: back off with the whole sheared, cycling line coming into frame (the full hotbar below); the
     // mark lands once the line fills the view (at the sweep's end the camera faced the grass past the line)
-    const lineMid = new ctx.Vec3(this.x0 + (N - 1) * STEP / 2 + 0.5, this.floor + 1, z + 0.5)
-    await ctx.easeLookAt(lineMid, 280)   // onto the line first (the back-off swung over empty grass and whipped to it)
+    await ctx.easeLookAt(lineMid, 450)   // settle on the line (already mostly turned during the sweep)
     bot.setControlState('back', true)
     for (let k = 0; k < 14; k++) {   // a short back-off: the line stays big (22 ticks left it a receding strip)
       const e = bot.entity.position, d = lineMid.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.25, true)
-      if (k === 9) ctx.mark('collected')
       await bot.waitForTicks(1)
     }
     bot.setControlState('back', false)
+    if (!full) { ctx.log('hotbar not full:', woolKinds(), 'wool colours'); full = true; ctx.mark('collected') }
     await bot.waitForTicks(16)   // the recording has to run past endAfter (it stopped 0.2 s after the payoff: 29.9 s)
     ctx.log('hotbar', JSON.stringify(bot.inventory.items().map(i => [i.name, i.count])))
     return true
