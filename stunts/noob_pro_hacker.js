@@ -62,7 +62,7 @@ module.exports = {
     extra: {
       deathScreen: true, onFire: 'in_lava:death',
       // a preview of the finale before beat 1 (the launch, cut before it lands)
-      hook: { at: 'boom', before: 0.3, after: 0.9, text: 'wait for the hacker 💀' },
+      hook: { at: 'boom', before: 0.5, after: 0.9, text: 'wait for the hacker 💀' },
       punch: [['hack', 0, 1.08], ['hack', 1, 1.08], ['boom', 0, 1.18]],
       shake: [['boom', 0, 22]]
     }
