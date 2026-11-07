@@ -517,6 +517,22 @@ export class EntityLayer {
           g.add(m); b.root.children[0].add(g); bones.carried = g; bones.carriedMat = m.material
         }
       }
+    } else if (name === 'experience_orb') {
+      // ExperienceOrbRenderer: one 16x16 icon of experience_orb.png picked by the orb's value
+      // (getIcon), a camera-facing quad 0.3 across from -0.25 to 0.75 of its height, alpha 128
+      const t = await texture(['entity/experience_orb'])
+      if (t) {
+        const v = (extra && extra.value) || 1
+        const icon = [2477, 1237, 617, 307, 149, 73, 37, 17, 7, 3].findIndex(x => v >= x)
+        const i = icon < 0 ? 0 : 10 - icon
+        const c = document.createElement('canvas'); c.width = 16; c.height = 16
+        const S = t.w / 4
+        c.getContext('2d').drawImage(t.tex.image, (i % 4) * S, Math.floor(i / 4) * S, S, S, 0, 0, 16, 16)
+        const tx = new THREE.CanvasTexture(c); tx.magFilter = THREE.NearestFilter; tx.minFilter = THREE.NearestFilter; tx.generateMipmaps = false; tx.colorSpace = THREE.NoColorSpace
+        mat = new THREE.SpriteMaterial({ map: tx, transparent: true, opacity: 128 / 255, alphaTest: 0.05, depthWrite: false, fog: true })
+        obj = new THREE.Sprite(mat); obj.scale.setScalar(0.3); obj.center.set(0.5, 0.25)
+        bones = { orb: true }
+      }
     } else if (name === 'player') {
       const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
       if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
@@ -575,6 +591,13 @@ export class EntityLayer {
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
+      if (r.bones.orb) {
+        // 0.1 up; colour (sin(age/2) + 1) / 2, 1, (sin(age/2 + 4.19) + 1) / 10, lit at block light + 7
+        r.obj.position.set(s.x, s.y + 0.1, s.z)
+        const age = (tick + (s.id % 97)) / 2, b = Math.min(1, Math.max(...LL) + 0.35)
+        r.mat.color.setRGB((Math.sin(age) + 1) * 0.5 * b, b, (Math.sin(age + 4.1887903) + 1) * 0.1 * b)
+        continue
+      }
       if (r.woolMat) {   // Sheep.getColor: dye colour x 0.75 (white x 0.9); jeb_ blends through all 16, 25 ticks each
         const c = sheepColor(s, tick)
         r.woolMat.color.setRGB(c[0] * LL[0], c[1] * LL[1], c[2] * LL[2])
