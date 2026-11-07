@@ -1,0 +1,25 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+18:42:13.125 spawned at Vec3 { x: 133.5, y: 70, z: 9.5 }
+18:42:13.341 nearest minecraft:plains at [ 357, -55 ]
+18:42:26.208 set at { x: 357, y: 62, z: -47 }
+18:42:36.722 chunks refreshed; back at start within 0.00 blocks
+18:42:56.386 dig did not break gold_ore
+18:42:56.390 COMMAND ERROR: Could not set the block
+18:43:09.773 hotbar [["emerald",64],["emerald",57],["diamond_pickaxe",1],["coal",10],["raw_copper",16],["raw_iron",22],["lapis_lazuli",28],["redstone",34],["raw_gold",40],["diamond",50],["emerald",64]]
+18:43:11.378 STUNT OK
+simulated 434 dropped item / xp orb paths
+meshing from y -13
+light computed in 1.2 s
+meshed + uploaded world in 12.5 s
+660 particles
+rendered 2046 frames (34.10 s of video) in 683.4 s = 20.0 s per video second
+wrote work/fortune.wav 34.15s
+song drop at 38.25s lands on 25.55s of the Short (song starts at 12.70s)
+no 3D block icons needed
+wrote out/fortune.mp4 30.75s
+
+real	15m12.789s
+user	10m21.543s
+sys	0m27.866s
+exit=0
