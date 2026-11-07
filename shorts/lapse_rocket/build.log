@@ -1,0 +1,509 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+13:37:29.413 spawned at Vec3 { x: 134.5, y: 70, z: 13.5 }
+13:37:33.325 nearest minecraft:badlands at [ -3674, -3283 ]
+13:38:37.524 COMMAND ERROR: No entity was found
+13:38:37.723 set at { x: -3674, y: 66, z: -3283 }
+13:38:47.616 chunks refreshed; back at start within 0.00 blocks
+13:38:50.030 small 3/3 blocks correct
+13:39:11.994 mid 34/34 blocks correct
+13:40:22.224 big: 21727 blocks, 1286 placed by the bot, 8401 fill passes
+13:40:23.508 big 21727/21727 blocks correct
+13:40:23.962 STUNT OK
+rendering 1967 of 5748 frames
+filled 2 dropped pose tick(s): 522 523
+simulated 3 dropped item / xp orb paths
+meshing from y -41
+light computed in 2.0 s
+meshed + uploaded world in 23.7 s
+rendered 5748 frames (95.80 s of video) in 1220.4 s = 12.7 s per video second
+5748 frame names, 1967 rendered
+wrote work/lapse_rocket.wav 95.85s
+speed: 5748 frames -> 2006 (2.45-3.80s xinf, 3.80-23.80s x3, 24.40-26.15s xinf, 26.15-95.05s x3)
+no 3D block icons needed
+wrote out/lapse_rocket.mp4 32.03s
+EXIT 0
+lapse_rocket: 1922 frames, 32.03s, mean brightness 151.8 | flags: jump x1, hole x3 | 17 sheets -> work/qa_frames/lapse_rocket
+lapse_rocket: 32.03s video, recording trimmed from 1.15s
+
+marks (video time):
+    0.10s  small_start        
+    0.10s  place              
+    0.10s  swing              
+    0.40s  place              
+    0.40s  swing              
+    0.70s  slot               
+    0.70s  place              
+    0.70s  swing              
+    1.10s  small_done         
+    1.30s  cut1_a             
+    1.30s  slot               
+    1.30s  cut1_b             
+    1.30s  mid_start          
+    1.37s  place              
+    1.37s  swing              
+    1.53s  place              
+    1.53s  swing              
+    1.58s  place              
+    1.58s  swing              
+    1.67s  place              
+    1.67s  swing              
+    2.53s  place              
+    2.53s  swing              
+    2.57s  slot               
+    2.60s  place              
+    2.60s  swing              
+    2.68s  place              
+    2.68s  swing              
+    2.72s  slot               
+    2.77s  place              
+    2.77s  swing              
+    2.80s  slot               
+    2.92s  place              
+    2.92s  swing              
+    2.95s  slot               
+    3.00s  place              
+    3.00s  swing              
+    3.77s  place              
+    3.77s  swing              
+    3.93s  place              
+    3.93s  swing              
+    4.68s  place              
+    4.68s  swing              
+    4.72s  slot               
+    4.83s  place              
+    4.83s  swing              
+    4.87s  slot               
+    4.92s  place              
+    4.92s  swing              
+    4.98s  place              
+    4.98s  swing              
+    5.07s  place              
+    5.07s  swing              
+    5.10s  slot               
+    5.43s  slot               
+    5.65s  place              
+    5.65s  swing              
+    5.82s  place              
+    5.82s  swing              
+    5.97s  TURN -41deg and back 
+    5.98s  place              
+    5.98s  swing              
+    6.07s  slot               
+    6.18s  place              
+    6.18s  swing              
+    6.28s  slot               
+    6.30s  place              
+    6.30s  swing              
+    6.37s  place              
+    6.37s  swing              
+    6.47s  place              
+    6.47s  swing              
+    6.50s  slot               
+    6.58s  place              
+    6.58s  swing              
+    6.68s  place              
+    6.68s  swing              
+    6.80s  place              
+    6.80s  swing              
+    6.88s  place              
+    6.88s  swing              
+    7.03s  slot               
+    7.15s  dig                
+    7.15s  swing              
+    7.18s  dig_end            
+    7.18s  vel                
+    7.27s  dig                
+    7.27s  swing              
+    7.28s  dig_end            
+    7.30s  vel                
+    7.33s  collect            
+    7.37s  dig                
+    7.37s  swing              
+    7.40s  dig_end            
+    7.40s  vel                
+    7.45s  collect            
+    7.55s  collect            
+    7.97s  mid_done           
+    8.57s  cut2_a             
+    8.57s  TURN +152deg       
+    8.57s  slot               
+    8.57s  cut2_b             
+    8.57s  f1_on              
+    8.57s  big_start          
+    8.57s  swing              
+    8.70s  swing              
+    8.77s  swing              
+    8.90s  swing              
+    8.97s  swing              
+    9.10s  swing              
+    9.17s  swing              
+    9.30s  swing              
+    9.37s  swing              
+    9.50s  swing              
+    9.57s  swing              
+    9.70s  swing              
+    9.77s  swing              
+    9.90s  swing              
+    9.97s  swing              
+   10.10s  swing              
+   10.17s  swing              
+   10.30s  swing              
+   10.37s  swing              
+   10.50s  swing              
+   10.57s  swing              
+   10.70s  swing              
+   10.77s  swing              
+   10.90s  swing              
+   10.97s  swing              
+   11.08s  place              
+   11.08s  swing              
+   11.18s  place              
+   11.18s  swing              
+   11.28s  place              
+   11.28s  swing              
+   11.38s  place              
+   11.38s  swing              
+   11.47s  place              
+   11.48s  swing              
+   11.57s  place              
+   11.58s  swing              
+   11.67s  place              
+   11.68s  swing              
+   11.77s  place              
+   11.78s  swing              
+   11.87s  place              
+   11.88s  swing              
+   11.97s  place              
+   12.00s  swing              
+   12.07s  swing              
+   12.13s  place              
+   12.17s  place              
+   12.18s  swing              
+   12.27s  place              
+   12.28s  swing              
+   12.37s  place              
+   12.38s  swing              
+   12.47s  place              
+   12.48s  swing              
+   12.57s  place              
+   12.58s  swing              
+   12.67s  place              
+   12.68s  swing              
+   12.77s  place              
+   12.78s  swing              
+   12.87s  place              
+   12.88s  swing              
+   12.97s  place              
+   12.98s  swing              
+   13.07s  place              
+   13.08s  swing              
+   13.17s  place              
+   13.18s  swing              
+   13.27s  place              
+   13.28s  swing              
+   13.37s  place              
+   13.38s  swing              
+   13.47s  place              
+   13.48s  swing              
+   13.57s  place              
+   13.58s  swing              
+   13.67s  place              
+   13.70s  swing              
+   13.77s  swing              
+   13.78s  place              
+   13.87s  place              
+   13.87s  swing              
+   13.97s  place              
+   13.97s  swing              
+   14.07s  place              
+   14.07s  swing              
+   14.17s  place              
+   14.17s  swing              
+   14.27s  place              
+   14.27s  swing              
+   14.37s  place              
+   14.37s  swing              
+   14.47s  place              
+   14.47s  swing              
+   14.57s  place              
+   14.57s  swing              
+   14.67s  place              
+   14.67s  swing              
+   14.77s  place              
+   14.77s  swing              
+   14.87s  place              
+   14.87s  swing              
+   14.97s  place              
+   14.97s  swing              
+   15.07s  place              
+   15.07s  swing              
+   15.17s  place              
+   15.17s  swing              
+   15.27s  place              
+   15.27s  swing              
+   15.37s  place              
+   15.37s  swing              
+   15.47s  place              
+   15.47s  swing              
+   15.57s  place              
+   15.57s  swing              
+   15.67s  place              
+   15.67s  swing              
+   15.77s  place              
+   15.77s  swing              
+   15.87s  place              
+   15.87s  swing              
+   15.97s  place              
+   15.97s  swing              
+   16.07s  place              
+   16.07s  swing              
+   16.17s  place              
+   16.17s  swing              
+   16.27s  place              
+   16.27s  swing              
+   16.37s  place              
+   16.37s  swing              
+   16.47s  place              
+   16.47s  swing              
+   16.57s  place              
+   16.57s  swing              
+   16.67s  place              
+   16.67s  swing              
+   16.77s  swing              
+   16.90s  swing              
+   16.97s  swing              
+   17.10s  swing              
+   17.17s  swing              
+   17.23s  place              
+   17.27s  place              
+   17.28s  swing              
+   17.37s  place              
+   17.38s  swing              
+   17.47s  place              
+   17.48s  swing              
+   17.57s  place              
+   17.58s  swing              
+   17.67s  place              
+   17.68s  swing              
+   17.77s  place              
+   17.78s  swing              
+   17.87s  place              
+   17.88s  swing              
+   18.00s  swing              
+   18.07s  swing              
+   18.20s  swing              
+   18.23s  place              
+   18.27s  place              
+   18.30s  swing              
+   18.37s  place              
+   18.40s  swing              
+   18.47s  place              
+   18.50s  swing              
+   18.57s  place              
+   18.60s  swing              
+   18.67s  place              
+   18.70s  swing              
+   18.77s  place              
+   18.80s  swing              
+   18.87s  place              
+   18.90s  swing              
+   18.97s  place              
+   19.00s  swing              
+   19.07s  place              
+   19.10s  swing              
+   19.17s  place              
+   19.20s  swing              
+   19.27s  place              
+   19.30s  swing              
+   19.37s  place              
+   19.40s  swing              
+   19.47s  place              
+   19.50s  swing              
+   19.57s  place              
+   19.60s  swing              
+   19.67s  place              
+   19.70s  swing              
+   19.77s  place              
+   19.80s  swing              
+   19.87s  place              
+   19.90s  swing              
+   19.97s  place              
+   20.00s  swing              
+   20.07s  place              
+   20.10s  swing              
+   20.17s  place              
+   20.20s  swing              
+   20.27s  place              
+   20.30s  swing              
+   20.37s  place              
+   20.40s  swing              
+   20.47s  place              
+   20.50s  swing              
+   20.57s  place              
+   20.60s  swing              
+   20.67s  swing              
+   20.80s  swing              
+   20.87s  swing              
+   21.00s  swing              
+   21.07s  swing              
+   21.20s  swing              
+   21.27s  swing              
+   21.40s  swing              
+   21.47s  swing              
+   21.60s  swing              
+   21.67s  swing              
+   21.80s  swing              
+   21.87s  swing              
+   22.00s  swing              
+   22.07s  swing              
+   22.20s  swing              
+   22.27s  swing              
+   22.40s  swing              
+   22.47s  swing              
+   22.60s  swing              
+   22.67s  swing              
+   22.80s  swing              
+   22.87s  swing              
+   23.00s  swing              
+   23.07s  swing              
+   23.20s  swing              
+   23.27s  swing              
+   23.40s  swing              
+   23.47s  swing              
+   23.60s  swing              
+   23.67s  swing              
+   23.80s  swing              
+   23.87s  swing              
+   24.00s  swing              
+   24.07s  swing              
+   24.20s  swing              
+   24.27s  swing              
+   24.40s  swing              
+   24.47s  swing              
+   24.60s  swing              
+   24.67s  swing              
+   24.80s  swing              
+   24.87s  swing              
+   25.00s  swing              
+   25.07s  swing              
+   25.20s  swing              
+   25.27s  swing              
+   25.40s  swing              
+   25.47s  swing              
+   25.60s  swing              
+   25.67s  swing              
+   25.80s  swing              
+   25.87s  swing              
+   26.00s  swing              
+   26.07s  swing              
+   26.20s  swing              
+   26.27s  swing              
+   26.40s  swing              
+   26.47s  swing              
+   26.60s  swing              
+   26.67s  swing              
+   26.80s  swing              
+   26.87s  swing              
+   27.00s  swing              
+   27.07s  place              
+   27.07s  swing              
+   27.17s  place              
+   27.17s  swing              
+   27.27s  place              
+   27.27s  swing              
+   27.37s  place              
+   27.37s  swing              
+   27.47s  place              
+   27.47s  swing              
+   27.57s  place              
+   27.57s  swing              
+   27.67s  place              
+   27.67s  swing              
+   27.77s  place              
+   27.77s  swing              
+   27.87s  place              
+   27.87s  swing              
+   27.97s  place              
+   27.97s  swing              
+   28.07s  place              
+   28.07s  swing              
+   28.17s  place              
+   28.17s  swing              
+   28.27s  place              
+   28.27s  swing              
+   28.37s  place              
+   28.37s  swing              
+   28.47s  place              
+   28.47s  swing              
+   28.57s  place              
+   28.57s  swing              
+   28.67s  place              
+   28.67s  swing              
+   28.77s  place              
+   28.77s  swing              
+   28.87s  place              
+   28.87s  swing              
+   28.97s  place              
+   28.97s  swing              
+   29.07s  place              
+   29.07s  swing              
+   29.17s  place              
+   29.17s  swing              
+   29.27s  place              
+   29.27s  swing              
+   29.37s  place              
+   29.37s  swing              
+   29.47s  place              
+   29.47s  swing              
+   29.57s  place              
+   29.57s  swing              
+   29.67s  place              
+   29.67s  swing              
+   29.77s  swing              
+   29.90s  swing              
+   29.97s  swing              
+   30.10s  swing              
+   30.17s  swing              
+   30.30s  swing              
+   30.37s  swing              
+   30.50s  swing              
+   30.57s  swing              
+   30.70s  swing              
+   30.77s  swing              
+   30.90s  swing              
+   30.97s  swing              
+   31.10s  swing              
+   31.17s  swing              
+   31.30s  swing              
+   31.37s  swing              
+   31.53s  big_done           
+
+motion per 0.25 s (mean abs change per frame, game view):
+   0.00: 8.9   0.25: 7.8   0.50: 8.3   0.75: 7.2   1.00: 4.5   1.25:15.5   1.50:14.8   1.75:12.8
+   2.00: 9.6   2.25:10.6   2.50:16.0   2.75:19.0   3.00:11.8   3.25: 8.3   3.50: 8.6   3.75:17.8
+   4.00: 9.2   4.25: 9.2   4.50:10.0   4.75:18.1   5.00:17.3   5.25:15.8   5.50:10.2   5.75:11.4
+   6.00:21.3   6.25:23.4   6.50:18.7   6.75:18.6   7.00:24.3   7.25:14.4   7.50:18.7   7.75:10.9
+   8.00: 8.0   8.25: 4.9   8.50: 3.4   8.75: 3.6   9.00: 3.8   9.25: 3.2   9.50: 2.6   9.75: 3.0
+  10.00: 3.7  10.25: 2.5  10.50: 2.6  10.75: 2.5  11.00: 2.0  11.25: 2.9  11.50: 2.5  11.75: 1.7
+  12.00: 2.2  12.25: 2.8  12.50: 2.3  12.75: 2.1  13.00: 2.4  13.25: 2.6  13.50: 1.9  13.75: 2.5
+  14.00: 2.6  14.25: 2.5  14.50: 2.8  14.75: 3.1  15.00: 2.7  15.25: 2.6  15.50: 3.5  15.75: 3.0
+  16.00: 2.3  16.25: 2.9  16.50: 3.1  16.75: 2.0  17.00: 2.6  17.25: 2.7  17.50: 2.3  17.75: 3.1
+  18.00: 2.8  18.25: 1.8  18.50: 2.1  18.75: 2.7  19.00: 2.1  19.25: 1.7  19.50: 2.7  19.75: 2.7
+  20.00: 1.9  20.25: 2.3  20.50: 2.3  20.75: 2.5  21.00: 3.1  21.25: 3.6  21.50: 3.1  21.75: 3.4
+  22.00: 3.9  22.25: 3.1  22.50: 2.9  22.75: 4.0  23.00: 4.6  23.25: 3.3  23.50: 2.7  23.75: 8.3
+  24.00: 9.5  24.25: 9.7  24.50: 9.1  24.75:13.8  25.00:11.4  25.25: 5.1  25.50: 2.4  25.75: 2.1
+  26.00: 2.7  26.25: 3.2  26.50: 2.2  26.75: 2.7  27.00: 4.4  27.25: 5.9  27.50: 7.3  27.75: 5.3
+  28.00: 4.4  28.25: 2.8  28.50: 5.1  28.75: 8.0  29.00:10.2  29.25:17.0  29.50:15.7  29.75: 9.5
+  30.00: 5.4  30.25: 5.7  30.50: 4.7  30.75: 4.6  31.00: 3.4  31.25: 2.7  31.50: 2.0  31.75: 1.5
+  32.00: 1.7
+
+still stretches:
+  none
+
+camera turns (each needs an on-screen reason; an unmotivated turn reads as weird):
+    5.97s  TURN -41deg and back
+    8.57s  TURN +152deg
+
+payoff 'big_done' at 31.53s; the video ends 0.50s after it -> OK
+QADONE
