@@ -92,8 +92,10 @@ module.exports = {
       bot.setControlState('forward', false)
       ctx.easeLook(bot.entity.yaw, -Math.PI / 2 + 0.01, 400)
       let placed = false, landed = false, spot = null
+      let lastVy = 0
       const onTick = () => {
         const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
+        if (vy < -0.5) lastVy = vy
         const drink = c.item === 'milk_bucket' && !placed && vy < -0.3 && above < 30   // drinking takes 1.6 s: start it early so it shows
         if (drink || (!placed && c.item !== 'milk_bucket' && vy < -0.5 && above + 1.62 < 4.45)) {
           placed = true
@@ -131,6 +133,10 @@ module.exports = {
         // cut at the top of the bounce (it came down beside the slime, on grass, and took damage)
         // ride the bounce looking up and out (staring down at the slime all the way up read as a 1.3 s STILL),
         // and cut on the way up rather than at the apex
+        // the slime arrives from the server a tick or two after the client lands, so mineflayer's physics never
+        // bounced (it stood on the slime: review). Vanilla's bounceUp: the fall speed reversed (living: x1.0)
+        bot.entity.velocity.y = -lastVy
+        ctx.log('slime bounce from vy', lastVy.toFixed(2))
         ctx.easeLook(bot.entity.yaw, -0.15, 450)
         for (let k = 0; k < 14 && !(bot.entity.velocity.y < 0 && bot.entity.position.y > floor + 3); k++) await bot.waitForTicks(1)
         ctx.mark('apex')
