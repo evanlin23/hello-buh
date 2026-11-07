@@ -615,7 +615,24 @@ function bodyAfterDeath (d, t) {
 }
 let solidWorld = null   // set once the mesher exists
 
+// after a respawn mark the respawn teleport can land a few ticks late: until it does, the pose is
+// still the death spot (in lava, at the bottom of the fall), which showed for 1-2 frames after the
+// death screen closed (worker 5, story_respawn_tax f367, f641). Show the spawn pose from the mark on.
+const RESPAWN_SNAP = []
+for (const d of DEATHS) {
+  if (!Number.isFinite(d[1])) continue
+  const R = d[1]
+  for (let i = Math.floor(R) + 1; i < Math.min(P.length, Math.floor(R) + 12); i++) {
+    const a = P[i - 1], b = P[i]
+    if ((b[1] - a[1]) ** 2 + (b[2] - a[2]) ** 2 + (b[3] - a[3]) ** 2 > 64) { RESPAWN_SNAP.push([R, i]); break }
+  }
+}
 function camAt (t) {
+  const snap = RESPAWN_SNAP.find(([a, b]) => t >= a && t < b)
+  if (snap) {
+    const q = P[snap[1]]
+    return { x: q[1], y: q[2] + EYE, z: q[3], yaw: q[4], pitch: q[5], roll: 0, bobX: 0, bobY: 0, bobPitch: 0 }
+  }
   const d = DEATHS.find(([a, b]) => t >= a && t < b)
   const h = hurtTilt(t)
   if (d) {

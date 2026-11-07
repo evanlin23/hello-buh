@@ -361,7 +361,10 @@ def hud_ticks(timeline, duration, keep_inventory=False):
         while si < len(states) - 1 and t >= states[si][1]:
             si += 1
         _, _, slot, items, health = states[si]
-        if any(a - 0.05 <= t + 1e-6 < b for a, b in deaths):   # from the death frame on (the screen starts a frame early)
+        # from the death frame on (the screen starts a frame early) to the tick the respawn falls in: a
+        # HUD tick is 3 frames, and the one holding the respawn showed empty hearts on the first
+        # respawn frame (worker 5, story_respawn_tax f369)
+        if any(a - 0.05 <= t + 1e-6 and t + 0.05 <= b + 1e-6 for a, b in deaths):
             health = 0
             # the inventory drops on the death tick (unless keep_inventory), shown only for a real
             # death screen: with immediate_respawn the window is a tick and blanked the hotbar (tries)
@@ -370,7 +373,7 @@ def hud_ticks(timeline, duration, keep_inventory=False):
         else:
             # just respawned: mineflayer's health/hotbar updates land a few ticks late, and the HUD sat
             # on 0 hearts and an empty hotbar for ~0.4 s (worker 7). Take the next values from the respawn.
-            rb = next((b for a, b in deaths if b <= t + 1e-6 < b + 1.5), None)
+            rb = next((b for a, b in deaths if b - 0.05 < t + 1e-6 < b + 1.5), None)
             if rb is not None and health <= 0:
                 nh = next((e.get("health") for e in timeline or [] if e["t"] / 1000 >= t and e.get("health") is not None and e["health"] > 0), None)
                 if nh is not None:
