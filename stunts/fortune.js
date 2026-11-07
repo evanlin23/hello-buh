@@ -11,14 +11,14 @@ const ORES = [   // eight beats (~30 s, owner: 30 s minimum), filling the 8 free
   { block: 'redstone_ore', drop: 'redstone', n: 34 },
   { block: 'gold_ore', drop: 'raw_gold', n: 40 },
   { block: 'diamond_ore', drop: 'diamond', n: 52 },
-  { block: 'emerald_ore', drop: 'emerald', n: 64 }
+  { block: 'emerald_ore', drop: 'emerald', n: 64, vein: [1, 0, -1] }   // the finale: a vein of three, back to back
 ]
 
 module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'dig:-0.1', endAfter: 'finale:2.0' },
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.5' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -36,7 +36,7 @@ module.exports = {
     await ctx.cmd(`/fill ${x - 10} ${floor + 1} ${this.wz - 2} ${x + 10} ${floor + 5} ${this.wz} stone`)
     await ctx.cmd(`/fill ${x - 10} ${floor + 6} ${this.wz - 2} ${x + 10} ${floor + 6} ${this.wz} grass_block`)
     this.ores = ORES.map((o, i) => ({ ...o, x: x - 7 + i * 2, y: floor + 2 }))
-    for (const o of this.ores) await ctx.cmd(`/setblock ${o.x} ${o.y} ${this.wz} ${o.block}`)
+    for (const o of this.ores) for (const dy of (o.vein || [0])) await ctx.cmd(`/setblock ${o.x} ${o.y + dy} ${this.wz} ${o.block}`)
     await ctx.hotbar(['diamond_pickaxe[enchantments={fortune:3}]'])   // enchanted: it glints
     await ctx.tpCheck(x - 6.5, floor + 1, z + 0.5, 180, 15)
     await ctx.cmd('/gamemode survival')
@@ -63,46 +63,51 @@ module.exports = {
         await bot.waitForTicks(1)
       }
       bot.setControlState('left', false); bot.setControlState('right', false)
-      const p = new Vec3(o.x, o.y, this.wz)
-      await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), 250)
-      // a real survival dig (crack stages, the pickaxe's real break time) instead of swings + a command
-      ctx.mark('dig')
-      // the vanilla packets for a real dig: start, swing through the diamond pickaxe's break time on a
-      // hardness-3 ore (12 ticks), finish. (bot.dig took 4.5 s on every ore after the first.)
-      const dig = (status) => bot._client.write('block_dig', { status, location: p, face: 3, sequence: 0 })
-      dig(0)
-      for (let t = 0; t < 12; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
-      dig(2)
-      await bot.waitForTicks(1)
-      if (bot.blockAt(p)?.name !== 'air') { ctx.log('dig did not break', o.block); bot.chat(`/setblock ${o.x} ${o.y} ${this.wz} air`) }
-      ctx.sound('block.stone.break', 1); ctx.particles('block', p, { block: o.block })
-      if (i === 0) ctx.mark('burst')
-      if (i === this.ores.length - 1) ctx.mark('finale')
-      ctx.mark('ore', { n: i, block: o.block })
-      // the fountain: spread spawn points (no merging), each item launched with vanilla physics on an
-      // arc that comes down around the player (the renderer eases items between the server's syncs)
-      const me = bot.entity.position, ground = this.floor + 1
-      for (let k = 0; k < o.n; k++) {
-        const sx = o.x + 0.5 + (rnd() - 0.5) * 1.0, sy = o.y + 0.5 + (rnd() - 0.5) * 0.8, sz = this.wz + 1.1 + rnd() * 0.3
-        const tx = me.x + (rnd() - 0.5) * 1.6, tz = me.z - 0.4 + rnd() * 1.2          // all of them come down within reach
-        const vy = 0.3 + rnd() * 0.3
-        let y = sy, T = 0
-        for (let v = vy; T < 80; T++) { v -= 0.04; y += v; v *= 0.98; if (y <= ground && T > 2) break }
-        const f = (1 - Math.pow(0.98, T)) / 0.02
-        // PickupDelay 32767 = never merge (vanilla merged 64 emeralds into ~6 stacks within 7 ticks, so no
-        // fountain showed); it drops to 0 once they're in the air, so they land as single items and get picked up
-        bot.chat(`/summon item ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {Item:{id:"minecraft:${o.drop}",count:1},PickupDelay:32767,Tags:["fd${i}"],Motion:[${((tx - sx) / f).toFixed(3)},${vy.toFixed(3)},${((tz - sz) / f).toFixed(3)}]}`)
+      const vein = o.vein || [0]
+      for (let vi = 0; vi < vein.length; vi++) {
+        const oy = o.y + vein[vi]
+        const p = new Vec3(o.x, oy, this.wz)
+        await ctx.easeLookAt(p.offset(0.5, 0.5, 0.5), 250)
+        // a real survival dig (crack stages, the pickaxe's real break time) instead of swings + a command
+        ctx.mark('mine')   // (not 'dig': a second dig mark without coordinates hid every crack overlay)
+        // the vanilla packets for a real dig: start, swing through the diamond pickaxe's break time on a
+        // hardness-3 ore (12 ticks), finish. (bot.dig took 4.5 s on every ore after the first.)
+        const dig = (status) => bot._client.write('block_dig', { status, location: p, face: 3, sequence: 0 })
+        dig(0)
+        for (let t = 0; t < 12; t++) { if (t % 4 === 0) { bot.swingArm(); ctx.sound('block.stone.hit', 0.5, 0.7) } await bot.waitForTicks(1) }
+        dig(2)
+        await bot.waitForTicks(1)
+        if (bot.blockAt(p)?.name !== 'air') { ctx.log('dig did not break', o.block); bot.chat(`/setblock ${o.x} ${oy} ${this.wz} air`) }
+        ctx.sound('block.stone.break', 1); ctx.particles('block', p, { block: o.block })
+        if (i === 0 && vi === 0) ctx.mark('burst')
+        if (i === this.ores.length - 1 && vi === 0) ctx.mark('finale')
+        ctx.mark('ore', { n: i, block: o.block })
+        // the fountain: spread spawn points (no merging), each item launched with vanilla physics on an
+        // arc that comes down around the player (the renderer eases items between the server's syncs)
+        const me = bot.entity.position, ground = this.floor + 1
+        for (let k = 0; k < o.n; k++) {
+          const sx = o.x + 0.5 + (rnd() - 0.5) * 1.0, sy = oy + 0.5 + (rnd() - 0.5) * 0.8, sz = this.wz + 1.1 + rnd() * 0.3
+          const tx = me.x + (rnd() - 0.5) * 1.6, tz = me.z - 0.4 + rnd() * 1.2          // all of them come down within reach
+          const vy = 0.3 + rnd() * 0.3
+          let y = sy, T = 0
+          for (let v = vy; T < 80; T++) { v -= 0.04; y += v; v *= 0.98; if (y <= ground && T > 2) break }
+          const f = (1 - Math.pow(0.98, T)) / 0.02
+          // PickupDelay 32767 = never merge (vanilla merged 64 emeralds into ~6 stacks within 7 ticks, so no
+          // fountain showed); it drops to 0 once they're in the air, so they land as single items and get picked up
+          bot.chat(`/summon item ${sx.toFixed(2)} ${sy.toFixed(2)} ${sz.toFixed(2)} {Item:{id:"minecraft:${o.drop}",count:1},PickupDelay:32767,Tags:["fd${i}_${vi}"],Motion:[${((tx - sx) / f).toFixed(3)},${vy.toFixed(3)},${((tz - sz) / f).toFixed(3)}]}`)
+        }
+        // release them for pickup once they're up and apart
+        { let t = 0; const tag = `fd${i}_${vi}`; const rel = () => { if (++t === 12) { bot.chat(`/execute as @e[type=item,tag=${tag}] run data merge entity @s {PickupDelay:0}`); bot.removeListener('physicsTick', rel) } }; bot.on('physicsTick', rel) }
+        // the ore's own XP (vanilla: coal, lapis, redstone, diamond, emerald drop orbs)
+        if (/coal|lapis|redstone|diamond|emerald/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${oy + 0.5} ${this.wz + 1.2} {Value:3}`)
+        await ctx.easeLook((rnd() - 0.5) * 0.3, 0.15, vein.length > 1 ? 200 : 350)   // look at the shower
+        await bot.waitForTicks(vi < vein.length - 1 ? 2 : 8)
       }
-      // release them for pickup once they're up and apart
-      { let t = 0; const tag = `fd${i}`; const rel = () => { if (++t === 12) { bot.chat(`/execute as @e[type=item,tag=${tag}] run data merge entity @s {PickupDelay:0}`); bot.removeListener('physicsTick', rel) } }; bot.on('physicsTick', rel) }
-      // the ore's own XP (vanilla: coal, lapis, redstone, diamond, emerald drop orbs)
-      if (/coal|lapis|redstone|diamond|emerald/.test(o.block)) for (let k = 0; k < 3; k++) bot.chat(`/summon experience_orb ${o.x + 0.5} ${o.y + 0.5} ${this.wz + 1.2} {Value:3}`)
-      await ctx.easeLook((rnd() - 0.5) * 0.3, 0.15, 350)   // look at the shower
-      await bot.waitForTicks(8)
       // watch it rain down around your feet, and step back and forth through it picking it up
-      await ctx.easeLook((rnd() - 0.5) * 0.4, -0.85, 300)
+      await ctx.easeLook((rnd() - 0.5) * 0.4, -0.4, 300)   // eyes on the falling items (-0.85 stared at empty grass: they're caught mid-air)
       bot.setControlState('back', true); await bot.waitForTicks(11); bot.setControlState('back', false)
       bot.setControlState('forward', true); await bot.waitForTicks(11); bot.setControlState('forward', false)
+      if (i === this.ores.length - 1) ctx.mark('collected')
       await bot.waitForTicks(i === this.ores.length - 1 ? 12 : 2)
       await ctx.easeLook(0, -0.3, 300)
     }
