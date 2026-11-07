@@ -272,7 +272,7 @@ module.exports = {
     await ctx.cmd('/gamemode creative')
     // the pillar: (-3, 6), from the ground to build limit (y 319); the villager on top, at its east edge, looking down
     for (let y = 1; y <= 319 - F; y += 100) await ctx.cmd(`/fill ${X - 3} ${F + y} ${Z + 6} ${X - 3} ${Math.min(319, F + y + 99)} ${Z + 6} dirt`)
-    await this.hider('h4', -1.85, 320 - F, 6.5, -90, 90, 'librarian')   // leaning out over the edge, face down
+    await this.hider('h4', -1.85, 320 - F, 6.5, -45, 35, 'librarian')   // at the edge, looking down toward the seeker (and the replay camera)
     await tp(-0.5, 5.5, 70, 0)   // the pillar ahead on the right: it's in shot from the start
     await ctx.cmd('/gamemode survival')
     await bot.waitForTicks(20)
