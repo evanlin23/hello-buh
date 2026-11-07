@@ -27,7 +27,7 @@ module.exports = {
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
     // the climb back up and both casts at 2x; the walk back up to the platform for layer 2 is cut
-    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2]]
+    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
   },
 
   async setup (ctx) {
@@ -35,7 +35,8 @@ module.exports = {
     // a small, flat, tree-free patch of the natural ground: the hill is built on it and only the patch
     // is levelled (a wide clear cut a box into the terrain)
     const AREA = [-HW - 7, WALK + 7, -12, STEPS + 15]
-    const g = await findSite(ctx, AREA, { flatEnough: 2, noTrees: true, stride: 8 })
+    // flat (and tree-free) over a ring 8 wider than the levelled area, so no higher ground stands at its edge
+    const g = await findSite(ctx, [AREA[0] - 8, AREA[1] + 8, AREA[2] - 8, AREA[3] + 8], { flatEnough: 2, noTrees: true, stride: 8, step: 2 })
     if (!g) throw new Error('no flat land')
     ctx.log('site', g)
     const { x, z, y: floor } = g
@@ -187,18 +188,24 @@ module.exports = {
     // the reveal, from the side: down to the walkway while the water drains, strafing down beside
     // the sheet; the reveal when the slope (not the field below) is dry, then a pan along the shell
     const reveal = async (last) => {
+      const n = last ? 1 : 0
       await ctx.cmd('/tick rate 60')
       let wetAt = ctx.tick
-      const onSlope = (o, n) => { const b = n || o; if (!b) return; const q = b.position; if (Math.abs(q.x - x) <= 3 && q.z >= z - 1 && q.z <= z + STEPS && ((n && n.name === 'water') || (o && o.name === 'water'))) wetAt = ctx.tick }
+      const onSlope = (o, b2) => { const b = b2 || o; if (!b) return; const q = b.position; if (Math.abs(q.x - x) <= 3 && q.z >= z - 1 && q.z <= z + STEPS && ((b2 && b2.name === 'water') || (o && o.name === 'water'))) wetAt = ctx.tick }
       bot.on('blockUpdate', onSlope)
-      await goTo(x + 4.6, z - 0.5, step(3), { ease: 0.2 })
-      await goTo(x + 4.9, z + 0.5, step(3), { ease: 0.2 })
-      await strafe(+1, z + 4.6, (dz) => Math.min(STEPS, dz + 2))
-      for (let i = 0; i < 20 && ctx.tick - wetAt <= 10; i++) await ctx.easeLookAt(step(i % 2 ? 6 : 3).offset(-1, -0.5, 0), 450)
+      // a jump cut to the field in front of the hill's foot, looking up the whole slope (from the
+      // walkway the camera was wedged against the shell's side and never saw the cast)
+      ctx.mark(`rv${n}a`)
+      await tpTo(x + 0.5, this.floor + 1, z + STEPS + 9, 180, -16)
+      ctx.mark(`rv${n}b`)
+      ctx.mark(`drain${n}`)
+      // the water draining off the slope (2x in the edit), with a slow drift across it
+      for (let i = 0; i < 24 && ctx.tick - wetAt <= 10; i++) await ctx.easeLookAt(step(i % 2 ? 6 : 2).offset(i % 2 ? 1.5 : -2.5, 0, 0), 700)
       bot.removeListener('blockUpdate', onSlope)
-      ctx.mark(last ? 'final' : 'reveal', { n: last ? 1 : 0 })
-      await ctx.easeLookAt(step(1).offset(-1, 0, 0), 600)
-      await ctx.easeLookAt(step(8).offset(-1.5, -1, 0), last ? 900 : 700)
+      ctx.mark(last ? 'final' : 'reveal', { n })
+      // the shell, top to bottom
+      await ctx.easeLookAt(step(1).offset(-1, 0, 0), 500)
+      await ctx.easeLookAt(step(7).offset(1, -1, 0), last ? 900 : 700)
     }
 
     // ---- layer 1 ----
@@ -214,7 +221,6 @@ module.exports = {
     await strafe(+1, z + STEPS - 0.6, (dz) => Math.min(STEPS, dz + 3))
     // at the bottom: look back up the whole sheet, then climb back
     await ctx.easeLookAt(step(4).offset(0, -1, 0), 500)
-    await ctx.easeLookAt(step(1), 600)
     await ctx.cmd('/tick rate 20')
     ctx.mark('up')
     // back up on the platform, out of the water's way (a jump cut: climb1a..climb1b)
