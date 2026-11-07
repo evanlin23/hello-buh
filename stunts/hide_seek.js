@@ -2,8 +2,8 @@
 // plains village built from vanilla's own village templates (/place template). Four rounds, each on
 // a 5 s clock: the seeker checks doors, behind houses, the well, the hay... nothing. Then something
 // gives the hider away, and every spot is more impossible than the last:
-//   1. inside a tree trunk (its nose sticks out of the log): the seeker chops the log, face to face
-//   2. at the bottom of a 1x1 shaft under the pond (bubbles): looking down, a villager looking up
+//   1. inside a 2x2 dark oak trunk (a "hmm" from the tree): two chops, face to face
+//   2. down a 1x1 shaft under the pond (bubbles): he rises out of the water
 //   3. right under the spot where the seeker started (a "hmm" from below): dig it, a face looking up
 //   4. on a 1x1 pillar up to build limit, right beside the start (an emerald falls from the sky):
 //      the camera follows the pillar up to the top
@@ -20,8 +20,9 @@ module.exports = {
   chunkStops: set => [{ x: set.x + 150, z: set.z }, { x: set.x - 150, z: set.z }, { x: set.x, z: set.z + 150 }, { x: set.x, z: set.z - 150 }],
   clouds: false,   // Video Settings > Clouds: OFF (vanilla): at y 192 they'd hide the top of the pillar
   botTimeout: 420,
+  time: 1500,      // morning: at noon the sun sat right at the top of the pillar shot
   // sharp zooms (narrower FOV) on each giveaway
-  fovZoom: [['r1_zoom', 'r1_chop:-0.3', 2.4], ['r2_zoom', 'r2_found:0.6', 2.6], ['r3_zoom', 'r3_dig:-0.2', 1.6], ['r4_zoom', 'r4_found:0.8', 7]],
+  fovZoom: [['r1_zoom', 'r1_chop:-0.3', 1.8], ['r2_zoom', 'r2_found:0.6', 1.8], ['r3_zoom', 'r3_found:0.8', 2.2], ['r4_zoom', 'r4_found:0.8', 7]],
   edit: {
     caption: 'hide and seek but the villagers cheated 😭', red: 'cheated',
     song: 'songs/funk_abnormal.mp3', dropAt: 'r4_found',
@@ -87,7 +88,12 @@ module.exports = {
       for (const [a, b] of [[-2, -2], [2, -2], [-2, 2], [2, 2]]) await ctx.cmd(`/setblock ${P(dx + a, h - 1, dz + b)} air`)
       await ctx.cmd(`/fill ${P(dx, 1, dz)} ${P(dx, h - 1, dz)} oak_log`)
     }
-    await tree(6, -5, 6)        // T1: the hider's tree (round 1)
+    // T1, the hider's tree (round 1): a 2x2 dark oak, trunk (6..7, -5..-4), so the villager fits inside
+    await ctx.cmd(`/fill ${P(3, 5, -8)} ${P(10, 6, -1)} dark_oak_leaves[persistent=true]`)
+    await ctx.cmd(`/fill ${P(4, 7, -7)} ${P(9, 7, -2)} dark_oak_leaves[persistent=true]`)
+    await ctx.cmd(`/fill ${P(5, 8, -6)} ${P(8, 8, -3)} dark_oak_leaves[persistent=true]`)
+    for (const [a, b] of [[3, -8], [10, -8], [3, -1], [10, -1]]) await ctx.cmd(`/fill ${P(a, 5, b)} ${P(a, 6, b)} air`)
+    await ctx.cmd(`/fill ${P(6, 1, -5)} ${P(7, 6, -4)} dark_oak_log`)
     await tree(-15, 8, 6)       // T3 (round 3's look-behind)
     await tree(13, 16, 5)
     await tree(-14, -12, 5)
@@ -97,20 +103,20 @@ module.exports = {
     // the pond (round 2): 2 deep, a 1x1 shaft 5 deeper in the middle
     await ctx.cmd(`/fill ${P(12, -3, 6)} ${P(20, -1, 12)} dirt`)
     await ctx.cmd(`/fill ${P(12, -2, 6)} ${P(20, -2, 12)} sand`)
-    await ctx.cmd(`/fill ${P(16, -8, 9)} ${P(16, -3, 9)} air`)
-    await ctx.cmd(`/fill ${P(15, -9, 8)} ${P(17, -9, 10)} stone`)
+    await ctx.cmd(`/fill ${P(16, -5, 9)} ${P(16, -3, 9)} air`)
+    await ctx.cmd(`/fill ${P(15, -6, 8)} ${P(17, -6, 10)} stone`)
     await ctx.cmd(`/fill ${P(12, -1, 6)} ${P(20, 0, 12)} water`)
-    await ctx.cmd(`/fill ${P(16, -8, 9)} ${P(16, -3, 9)} water`)
+    await ctx.cmd(`/fill ${P(16, -5, 9)} ${P(16, -3, 9)} water`)
     for (const [a, b] of [[12, 6], [20, 6], [12, 12], [20, 12]]) await ctx.cmd(`/setblock ${P(a, 0, b)} grass_block`)
     // round 3's hole under the start spot (covered by the path block)
     await ctx.cmd(`/fill ${P(-9, -2, -1)} ${P(-9, -1, -1)} air`)
     // the hiders
     await ctx.cmd('/kill @e[type=villager]')
     const hider = (tag, x, y, z, yaw, pitch, prof) => ctx.cmd(`/summon villager ${(X + x).toFixed(3)} ${(F + y).toFixed(3)} ${(Z + z).toFixed(3)} {NoAI:1b,NoGravity:1b,Invulnerable:1b,Silent:1b,PersistenceRequired:1b,Rotation:[${yaw}f,${pitch}f],Tags:["${tag}"],VillagerData:{profession:"minecraft:${prof}",type:"minecraft:plains",level:2},Xp:1}`)
-    // 1: in the trunk at (6, -5), facing north, pushed toward the north face so the nose pokes out
-    await hider('h1', 6.5, 1.55, -4.72, 180, 0, 'farmer')
-    // 2: at the bottom of the shaft, looking up
-    await hider('h2', 16.5, -8, 9.5, 90, -80, 'fisherman')
+    // 1: in the middle of the 2x2 trunk, facing north, its head in the trunk's F+2 row
+    await hider('h1', 7.0, 0.55, -4.0, 180, 0, 'farmer')
+    // 2: at the bottom of the shaft (he rises on the reveal), facing west, toward the seeker
+    await hider('h2', 16.5, -5, 9.5, 90, 0, 'fisherman')
     // 3: in the hole under the start spot, looking up
     await hider('h3', -8.5, -2.05, -0.5, 90, -85, 'nitwit')
     this.hider = hider
@@ -179,16 +185,18 @@ module.exports = {
     await bot.waitForTicks(4)
     ctx.mark('r1_end')
     hmm(1)                                       // ...a "hmm" from behind: the tree
-    await look(6.5, 2.55, -5.1, 420)
+    await look(7.0, 2.4, -5.0, 420)
     ctx.mark('r1_zoom')
     await bot.waitForTicks(14)
-    await go(6.5, -6.7, { sprint: false, pitch: -0.05, stop: 0.3 })
+    await go(7.0, -6.9, { sprint: false, pitch: -0.05, stop: 0.3 })
     await look(6.5, 2.5, -5, 180)
     ctx.mark('r1_chop'); ctx.select(0)
-    await dig(6, 2, -5, 8, 'oak_log', 'wood')
+    await dig(6, 2, -5, 8, 'dark_oak_log', 'wood')
+    await look(7.5, 2.5, -5, 150)
+    await dig(7, 2, -5, 8, 'dark_oak_log', 'wood')
     hmm(1.1)
     found(1)
-    await look(6.5, 2.7, -4.7, 300)
+    await look(7.0, 2.4, -4.3, 300)
     await bot.waitForTicks(16)
 
     // ---- round 2: the pond (south-east)
@@ -211,15 +219,22 @@ module.exports = {
     for (let i = 0; i < 6; i++) ctx.sound('block.bubble_column.upwards_ambient', 0.8, 0.9 + i * 0.05)
     for (let i = 0; i < 5; i++) ctx.particles('splash', W(16.5, 1, 9.5), { count: 8, spread: 0.4 })
     await look(16.5, 0.9, 9.5, 380)
-    await go(11.6, 9.5, { sprint: false, pitch: -0.5, stop: 0.35 })
+    await go(11.6, 9.5, { sprint: false, pitch: -0.2, stop: 0.35 })
     ctx.mark('r2_zoom')
-    await look(16.5, -6.5, 9.5, 450)            // down the shaft: he's looking up
+    // he rises out of the shaft, right in front of the seeker
+    for (let i = 0; i < 22; i++) {
+      bot.chat(`/execute as @e[tag=h2] at @s run tp @s ~ ~${(4.4 / 22).toFixed(3)} ~`)
+      if (i === 14) { ctx.particles('splash', W(16.5, 1, 9.5), { count: 20 }); ctx.sound('entity.player.splash', 0.8, 1.2) }
+      await bot.look(bot.entity.yaw, bot.entity.pitch + (Math.atan2(F + 1.4 - (bot.entity.position.y + 1.62), 4.9) - bot.entity.pitch) * 0.15, true)
+      await bot.waitForTicks(1)
+    }
     hmm(0.8)
     found(2)
     await bot.waitForTicks(26)
 
     // ---- round 3: under my feet (west, by the bell stall)
     ctx.mark('cut2a')
+    await ctx.cmd('/gamerule block_drops false')   // round 3: the path's dirt drop floated over his face
     await tp(-8.5, -0.5, 90, 0)
     await bot.waitForTicks(6)
     ctx.mark('cut2b')
