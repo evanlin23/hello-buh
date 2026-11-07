@@ -7,7 +7,7 @@ module.exports = {
   name: 'midas_touch',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: you got the midas touch 🤑',
-  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', song: 'songs/funk_abnormal.mp3', dropAt: 'touch', startAt: 'touch:-0.35', endAfter: 'wave:0.9' },
+  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', song: 'songs/funk_abnormal.mp3', dropAt: 'touch', startAt: 'touch:-0.35', endAfter: 'wave:1.6' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -33,7 +33,7 @@ module.exports = {
     await ctx.cmd(`/setblock ${x + 5} ${cy + 2} ${z + 16} glass`)
     await ctx.cmd(`/fill ${x + 5} ${cy + 1} ${z + 15} ${x + 5} ${cy + 2} ${z + 15} air`)
     await ctx.hotbar(['diamond_sword', 'diamond_pickaxe', ['bread', 16], ['gold_ingot', 7]])
-    await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 180, 15)
+    await ctx.tpCheck(x + 0.5, floor + 1, z + 0.5, 0, 15)   // already facing south (the opening was the end of a 170° spin)
     await ctx.cmd('/gamemode survival')
     ctx.select(3)
     await bot.waitForTicks(20)
@@ -47,6 +47,10 @@ module.exports = {
     // every few ticks the block under the crosshair starts a blob that grows outward a ring a tick
     // (all at once in one frame read as a swap, not a spread)
     const blobs = []
+    // ground cover goes first: it would stay green on the gold, and a plant whose block turns gold
+    // pops off and drops seeds (they littered the gold and filled the hotbar)
+    const COVER = ['leaf_litter', 'short_grass', 'fern', 'bush', 'tall_grass', 'large_fern', '#minecraft:small_flowers']
+    const clearCover = (x0, y0, z0, x1, y1, z1) => { for (const c of COVER) bot.chat(`/fill ${x0} ${y0} ${z0} ${x1} ${y1} ${z1} air replace ${c}`) }
     const touch = () => {
       if (on && n++ % 4 === 0) {
         const b = bot.blockAtCursor(48)
@@ -57,10 +61,8 @@ module.exports = {
       }
       for (const bl of blobs) {
         const { p, r } = bl
+        clearCover(p.x - r, p.y - r, p.z - r, p.x + r, p.y + r + 1, p.z + r)
         for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r} ${p.z + r} gold_block replace ${t}`)
-        if (r === bl.max) {   // ground cover on top would stay green on the gold (leaf litter, grass): clear it
-          for (const c of ['leaf_litter', 'short_grass', 'fern', 'bush']) bot.chat(`/fill ${p.x - r} ${p.y - r} ${p.z - r} ${p.x + r} ${p.y + r + 1} ${p.z + r} air replace ${c}`)
-        }
         bl.r++
       }
       for (let i = blobs.length - 1; i >= 0; i--) if (blobs[i].r > blobs[i].max) blobs.splice(i, 1)
@@ -88,46 +90,49 @@ module.exports = {
     await ctx.easeLook(Math.PI + 0.2, -0.3, 700)              // a normal day in the forest...
     on = true; ctx.mark('touch')
     ctx.sound('entity.player.levelup', 0.7)
-    await ctx.easeLook(Math.PI + 0.6, -0.45, 1800)            // the ground in front
+    await ctx.easeLook(Math.PI - 0.5, -0.55, 1800)            // across the ground in front (fresh ground all the way)
     await ctx.easeLook(Math.PI + 0.9, 0.15, 2000)             // up a tree
-    await ctx.easeLook(Math.PI - 0.6, 0.05, 3800)             // sweep across the trees
+    await ctx.easeLook(Math.PI - 0.6, -0.25, 3000)            // sweep back across, low: near ground, bushes
     wp = P(8); ctx.mark('walk')                               // walk on, gilding the path and the trees alongside
-    await ctx.easeLook(Math.PI - 0.3, -0.25, 1600)
-    await ctx.easeLook(Math.PI + 0.7, 0.05, 1800)
-    // a big tree on the right, top to bottom
-    await ctx.easeLook(Math.PI + 1.0, 0.45, 2200)
-    await ctx.easeLook(Math.PI + 0.8, -0.2, 1500)
-    // on to the cabin, stopping beside it to watch it go gold
-    wp = P(16)
+    await ctx.easeLook(Math.PI - 0.3, -0.3, 1600)
+    // the trees on the left (looking right from here, PI + 0.7, gilded the cabin 7 s early)
+    await ctx.easeLook(Math.PI - 0.8, 0.05, 1800)
+    await ctx.easeLook(Math.PI - 1.0, 0.3, 2000)
+    await ctx.easeLook(Math.PI - 0.7, -0.25, 1500)
+    // on toward the cabin, stopping back from it so it's all in frame, and it goes gold
+    wp = P(12)
     const cab = new ctx.Vec3(this.cabin.x + 0.5, this.cabin.y + 1.5, this.cabin.z + 0.5)
-    await ctx.easeLook(Math.PI - 0.2, -0.15, 1500)
-    await ctx.easeLookAt(cab, 900)
+    await ctx.easeLookAt(cab, 1100)
     ctx.mark('cabin')
     const cyaw = bot.entity.yaw, cp = bot.entity.pitch
-    await ctx.easeLook(cyaw - 0.3, cp + 0.25, 1500)
-    await ctx.easeLook(cyaw + 0.3, cp - 0.15, 1700)
-    await ctx.easeLook(cyaw, cp + 0.1, 1400)
+    await ctx.easeLook(cyaw - 0.25, cp + 0.25, 1200)
+    await ctx.easeLook(cyaw + 0.25, cp - 0.1, 1200)
+    await ctx.easeLook(cyaw, cp + 0.15, 1000)
     // on: it's stronger now, whole trees at a glance
     wp = P(27); ctx.mark('stronger')
-    await ctx.easeLook(Math.PI + 0.5, 0.25, 2000)
-    await ctx.easeLook(Math.PI - 0.6, 0.3, 2200)
+    await ctx.easeLook(Math.PI + 0.5, 0.25, 2400)
+    await ctx.easeLook(Math.PI - 0.6, 0.3, 2600)
+    await ctx.easeLook(Math.PI + 0.9, -0.2, 2000)
     await ctx.easeLook(Math.PI, -0.1, 1000)
     wp = null
-    // turn round to the untouched forest to the side... and one last wave, while the camera drifts
-    await ctx.easeLook(Math.PI / 2 + 0.3, 0.12, 1600)          // west-ish, over the green trees
-    const b = bot.blockAtCursor(64)
+    // turn round to the untouched forest to the side (the touch held back so it stays green)... and
+    // one last wave, while the camera drifts
+    on = false
+    await ctx.easeLook(Math.PI / 2 + 0.3, -0.2, 1300)          // west-ish, down onto the land (level, it saw only sky over the crest)
+    let b = bot.blockAtCursor(64)
+    if (!b) { b = ctx.surface(this.x - 12, this.z + 27); ctx.log('wave: cursor missed, fixed centre', !!b) }
+    if (!b) throw new Error('no wave target')
     ctx.mark('wave')
     ctx.sound('entity.player.levelup', 1, 0.8); ctx.sound('block.amethyst_block.chime', 1, 0.6)
-    const drift = ctx.easeLook(Math.PI / 2 + 0.6, 0.2, 1100)
-    if (b) {   // the wave grows out from where it looks, a ring every couple of ticks
-      const p = b.position
-      for (const r of [2, 4, 6, 8, 10]) {
-        for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - 5} ${p.z - r} ${p.x + r} ${p.y + r + 2} ${p.z + r} gold_block replace ${t}`)
-        await bot.waitForTicks(2)
-      }
+    const drift = ctx.easeLook(Math.PI / 2 + 0.6, -0.05, 1600)
+    const p = b.position
+    for (const r of [2, 4, 6, 8, 10, 12, 14, 16]) {   // a ring every couple of ticks; each /fill under the 32768 cap
+      clearCover(p.x - r, p.y - 5, p.z - r, p.x + r, p.y + r + 2, p.z + r)
+      for (const t of tags) bot.chat(`/fill ${p.x - r} ${p.y - 5} ${p.z - r} ${p.x + r} ${p.y + r + 2} ${p.z + r} gold_block replace ${t}`)
+      if (r % 4 === 0) ctx.sound('block.amethyst_block.chime', 0.8, 0.7 + r * 0.03)
+      await bot.waitForTicks(2)
     }
     await drift
-    on = false
     await bot.waitForTicks(24)
     bot.removeListener('physicsTick', touch); bot.removeListener('physicsTick', steer)
     return true

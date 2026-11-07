@@ -20,6 +20,9 @@ module.exports = {
     if (!g) throw new Error('no dry land')
     const { x, z } = g, floor = g.y
     this.x = x; this.z = z; this.floor = floor
+    // the server is still generating chunks round the new spot: the first command's 4-tick wait timed
+    // out here in two renders running. Wait until it ticks again first.
+    for (let i = 0; i < 12; i++) { try { await bot.waitForTicks(2); break } catch (e) { ctx.log('server busy', i) } }
     await ctx.defaultRules()
     // a wide field (its cut edges showed behind the payoff at 40 blocks)
     // tall (hills cut at 22 showed as pit walls). Big fills stall the server for seconds, longer than
