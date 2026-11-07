@@ -50,13 +50,14 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     await ctx.defaultRules()
-    const { X, Z, F } = await hs.findFlat(ctx)
+    const site = await hs.findFlat(ctx)
+    const { X, Z, F } = site
     Object.assign(this, { X, Z, F })
     await ctx.cmd('/gamerule log_admin_commands false')
     await ctx.cmd('/gamerule random_tick_speed 0')
     await ctx.cmd('/gamerule fire_spread_radius_around_player 0')
     await ctx.cmd('/difficulty peaceful')
-    await hs.clearField(ctx, { X, Z, F }, { taper: 6 })
+    await hs.clearField(ctx, site, { taper: 6 })
     const P = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     // streets
     await ctx.cmd(`/fill ${P(-1, 0, -26)} ${P(1, 0, 26)} dirt_path`)
@@ -271,8 +272,8 @@ module.exports = {
     ctx.particles('splash', W(16.5, 1, 9.5), { count: 24 }); ctx.sound('entity.player.splash', 0.8, 1.2)
     hmm(0.8)
     found(2)
+    await drift(14)
     await bubbles
-    await drift(18)
 
     // ---- round 3: under my feet (west, by the bell stall)
     ctx.mark('cut2a')
@@ -315,9 +316,9 @@ module.exports = {
     await bot.waitForTicks(6)
     ctx.mark('cut3b')
     ctx.mark('r4_go')
-    await go(-11.0, -15.3)                       // round the back of H1
-    await look(-4, 1.2, -15.5, 240)
-    await look(-13, 4.0, -18, 260)               // up into the tree
+    await go(-11.0, -12.5)                       // up the side of H1
+    await look(-13, 4.0, -18, 280)               // up into the tree ahead
+    await go(-11.5, -15.3, { face: [-13, 4.0, -18], stop: 0.4 })   // ...walking under it, still looking up
     await bot.waitForTicks(3)
     ctx.mark('r4_end')
     // the giveaway: the lava pops, and a burning head peeks out of it and sinks back
@@ -356,6 +357,7 @@ module.exports = {
     ctx.mark('r5_end')
     // an emerald drops out of the sky, right beside the pillar
     bot.chat(`/summon item ${X - 1.6} ${F + 7} ${Z + 6.5} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[0.0,-0.3,0.0]}`)
+    ctx.sound('entity.item.pickup', 0.6, 0.5)   // (a cue for the turn: the falling emerald whooshes past)
     await look(-1.6, 4.5, 6.5, 260)
     await look(-1.6, 0.3, 6.5, 300)
     // ...and up the pillar, fast
@@ -368,7 +370,7 @@ module.exports = {
     // turns his head from the seeker below to the camera
     // (thrown at the replay camera, so they fly past the lens: a fixed shot of a still villager read as a pause)
     const up = everyTick(24, (i) => {
-      if (i % 4 === 0) bot.chat(`/summon item ${X - 2.1} ${321.4} ${Z + 6.9} {Item:{id:"minecraft:emerald",count:1},PickupDelay:200,Motion:[${(0.24 + 0.03 * (i % 3)).toFixed(2)},0.3,${(0.25 + 0.02 * (i % 5)).toFixed(2)}]}`)
+      if (i % 4 === 0) bot.chat(`/summon item ${X - 1.8 + 0.15 * (i % 3)} ${321.0 + 0.3 * (i % 2)} ${Z + 6.9} {Item:{id:"minecraft:${['emerald', 'diamond', 'gold_ingot', 'apple', 'bread', 'iron_ingot'][i / 4]}",count:1},PickupDelay:200,Motion:[${(0.24 + 0.03 * (i % 3)).toFixed(2)},0.3,${(0.25 + 0.02 * (i % 5)).toFixed(2)}]}`)
       if (i % 3 === 0) ctx.particles('happy', W(-2.5, 321.9 - F, 6.5))
     })
     for (let i = 0; i < 24; i++) {
