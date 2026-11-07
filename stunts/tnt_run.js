@@ -5,17 +5,17 @@
 // hard cut between them). mineflayer yaw 0 = north: the bot faces north (the wave) and backs south.
 const LANES = [-24, -8, 8, 24]
 const WAVES = [   // every: ticks per block the front advances; gap: blocks between bot and front; ticks: how long it runs
-  { every: 4, dxs: [-2, 0, 2], gap: 12, ticks: 180, sub: 'wave 1: easy' },
+  { every: 4, dxs: [-2, 0, 2], gap: 12, ticks: 160, sub: 'wave 1: easy' },
   { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 22, ticks: 150, sub: 'wave 2: faster' },
   { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 16, ticks: 110, sub: 'wave 3: wider' },
-  { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 14, ticks: 200, sub: 'wave 4...' }
+  { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 26, ticks: 200, sub: 'wave 4...' }   // a real chase before it catches you
 ]
 module.exports = {
   name: 'tnt_run',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: the floor is TNT 💀',
   edit: {
-    caption: 'POV: the floor is TNT 💀', red: 'TNT', song: 'songs/funk_abnormal.mp3', dropAt: 'wave', startAt: 'wave:-0.3', deathScreen: true, endAfter: 'death:1.1',
+    caption: 'POV: the floor is TNT 💀', red: 'TNT', song: 'songs/funk_abnormal.mp3', dropAt: 'wave', startAt: 'wave:-0.3', deathScreen: true, endAfter: 'death:0.8',
     subs: [...WAVES.map((w, i) => ['wave', w.sub, 1.6, i]), ...WAVES.slice(0, -1).map((w, i) => ['escaped', i === 2 ? 'BARELY' : 'made it', 1.0, i])]
   },
   expectDeath: true,
