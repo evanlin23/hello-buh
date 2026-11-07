@@ -300,6 +300,34 @@ async function particleMaterial (tex) {
   partTex.set(tex, m)
   return m
 }
+// Entity shadows (EntityRenderDispatcher.renderShadow): misc/shadow.png flat on the ground under each
+// entity, radius per renderer, alpha from render.js (height above the ground, camera distance)
+let shadowMat = null, shadowMesh = null
+async function drawShadows (list) {
+  if (shadowMesh) { scene.remove(shadowMesh); shadowMesh.geometry.dispose(); shadowMesh = null }
+  if (!list || !list.length) return
+  if (!shadowMat) {
+    const t = await new THREE.TextureLoader().loadAsync('/assets/env/misc/shadow.png').catch(() => null)
+    if (!t) return
+    t.magFilter = THREE.LinearFilter; t.minFilter = THREE.LinearFilter; t.generateMipmaps = false; t.colorSpace = THREE.NoColorSpace
+    shadowMat = new THREE.MeshBasicMaterial({ map: t, vertexColors: true, transparent: true, depthWrite: false, fog: true, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 })
+  }
+  const pos = [], uv = [], col = [], idx = []
+  for (const s of list) {
+    const n = pos.length / 3, y = s.y + 0.002
+    pos.push(s.x - s.r, y, s.z - s.r, s.x + s.r, y, s.z - s.r, s.x + s.r, y, s.z + s.r, s.x - s.r, y, s.z + s.r)
+    uv.push(0, 0, 1, 0, 1, 1, 0, 1)
+    for (let k = 0; k < 4; k++) col.push(s.l, s.l, s.l, s.a)
+    idx.push(n, n + 2, n + 1, n, n + 3, n + 2)
+  }
+  const g = new THREE.BufferGeometry()
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+  g.setAttribute('color', new THREE.Float32BufferAttribute(col, 4))
+  g.setIndex(idx)
+  shadowMesh = new THREE.Mesh(g, shadowMat); shadowMesh.frustumCulled = false; shadowMesh.renderOrder = 1
+  scene.add(shadowMesh)
+}
 async function drawParticles (parts) {
   for (const m of partMeshes) { scene.remove(m); m.geometry.dispose() }
   partMeshes.length = 0
@@ -494,6 +522,7 @@ window.HB = {
     const drift = (tick || 0) * 0.03
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
+    await drawShadows(cam.shadows)
     await drawParticles(parts)
     await drawWeather(cam)
     GLINT.ms.value = (tick || 0) * 50

@@ -188,6 +188,8 @@ const PRE_FACE = new Map()   // entity id -> [tick, yaw, headYaw, pitch] last se
 // [start tick, end tick, which]: which = { ids: [...] } or { near: [x, z, r] } from the face_on mark,
 // or null for every villager (older recordings)
 { let a = null; for (const e of rec.timeline || []) { if (e.event === 'face_on') a = [e.t / 50, e.ids || e.near ? { ids: e.ids, near: e.near, head: e.head } : null]; if (e.event === 'face_off' && a !== null) { FACE.push([a[0], e.t / 50, a[1]]); a = null } } if (a !== null) FACE.push([a[0], Infinity, a[1]]) }
+// EntityRenderer.shadowRadius per renderer (vanilla); slimes x size, babies x 0.5, boats 0.8
+const SHADOW_R = { player: 0.5, villager: 0.5, wandering_trader: 0.5, zombie: 0.5, zombie_villager: 0.5, husk: 0.5, drowned: 0.5, skeleton: 0.5, stray: 0.5, wither_skeleton: 0.7, creeper: 0.5, enderman: 0.5, witch: 0.5, pillager: 0.5, vindicator: 0.5, evoker: 0.5, cow: 0.7, mooshroom: 0.7, sheep: 0.7, pig: 0.7, goat: 0.7, chicken: 0.3, iron_golem: 0.7, snow_golem: 0.5, spider: 0.8, cave_spider: 0.7, wolf: 0.5, cat: 0.4, ocelot: 0.4, fox: 0.4, rabbit: 0.3, horse: 0.75, donkey: 0.75, mule: 0.75, skeleton_horse: 0.75, zombie_horse: 0.75, llama: 0.7, camel: 0.7, slime: 0.25, magma_cube: 0.25, blaze: 0.5, warden: 0.9, bee: 0.4, panda: 0.9, polar_bear: 0.9, frog: 0.3, axolotl: 0.3, turtle: 0.7, item: 0.15, tnt: 0.5, falling_block: 0.5, armor_stand: 0.0 }
 const EXPLOSIONS = (rec.timeline || []).filter(e => e.event === 'particles' && e.type === 'explosion').map(e => ({ t: e.t / 50, x: e.x, y: e.y, z: e.z }))
 // per creeper with recorded swell data: Creeper.tick's swell counter per tick (0..30)
 const CREEPER_SWELL = new Map()
@@ -642,7 +644,13 @@ function pullIn (eye, f, dist, world) {
 function detachedCam (eye, mode, dist, world) {
   const yaw = mode === 'front' ? eye.yaw + Math.PI : eye.yaw, pitch = mode === 'front' ? -eye.pitch : eye.pitch
   const f = { x: -Math.sin(yaw) * Math.cos(pitch), y: Math.sin(pitch), z: -Math.cos(yaw) * Math.cos(pitch) }
-  const d = pullIn(eye, f, dist, world)
+  let d = pullIn(eye, f, dist, world)
+  // replays: a collision pulls the camera in at once (Camera.getMaxZoom), but it comes back out at
+  // most 0.25 blocks a tick, so a released pull-in eases out instead of jumping from 2 to 6 blocks
+  // (boat_clutch v4 replay f2031). Needs the frame time (detachedCam.t), set by the caller.
+  const st = detachedCam.state, tNow = detachedCam.t
+  if (st && tNow !== undefined && tNow > st.t && tNow - st.t < 2 && d > st.d) d = Math.min(d, st.d + 0.25 * (tNow - st.t))
+  if (tNow !== undefined) detachedCam.state = { t: tNow, d }
   const c = { x: eye.x - f.x * d, y: eye.y - f.y * d, z: eye.z - f.z * d, yaw, pitch }
   // replays (not vanilla F5): keep the camera at least 1 block above the ground or a water/lava
   // surface under it, and re-aim at the eye so the player stays framed (worker 10: boat_clutch
@@ -874,6 +882,12 @@ function camAtLive (t) {
     const fnt = path.join(ASSETS_DIR, 'env', 'font', 'ascii.png')
     if (!fs.existsSync(fnt)) {
       try { fs.mkdirSync(path.dirname(fnt), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/font/ascii.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), fnt]) } catch (e) { console.error('no font texture:', e.message) }
+    }
+  }
+  { // the entity shadow texture (not in the asset build)
+    const sh = path.join(ASSETS_DIR, 'env', 'misc', 'shadow.png')
+    if (!fs.existsSync(sh)) {
+      try { fs.mkdirSync(path.dirname(sh), { recursive: true }); require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/misc/shadow.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), sh]) } catch (e) { console.error('no shadow texture:', e.message) }
     }
   }
   { // the End sky texture (not in the asset build)
@@ -1175,7 +1189,7 @@ function camAtLive (t) {
     // CAM=back[:dist] / CAM=front[:dist]: vanilla's F5 views (default 4 blocks), bob and hurt tilt kept
     if (process.env.CAM) {
       const m = /^(back|front)(?::([\d.]+))?$/.exec(process.env.CAM)
-      if (m) Object.assign(cam, detachedCam(eye, m[1], Number(m[2] || 4), mesher.world))
+      if (m) { detachedCam.t = t; Object.assign(cam, detachedCam(eye, m[1], Number(m[2] || 4), mesher.world)) }
       else {
         const [dx, dy, dz, yw, pt] = process.env.CAM.split(',').map(Number)
         Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0 })
@@ -1403,6 +1417,30 @@ function camAtLive (t) {
       if (!e.extra.name) e.extra = { ...e.extra, name: 'jeb_' }   // recordings from before names were recorded
       const near = Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) < 64
       if (near && (e.extra.nameVisible || e.id === cam.targetEntity)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
+    }
+    // entity shadows (EntityRenderDispatcher: within 16 blocks of the camera, strength 1 - d^2/256;
+    // ShadowRenderer: on the ground up to 2 blocks below, alpha (strength - drop / 2) x 0.5)
+    cam.shadows = []
+    {
+      const shadowOf = (x, y, z, r) => {
+        const d2 = (x - cam.x) ** 2 + (y - cam.y) ** 2 + (z - cam.z) ** 2
+        const st = 1 - d2 / 256
+        if (st <= 0) return
+        for (let by = Math.floor(y); by >= Math.floor(y) - 2; by--) {
+          const b = mesher.world.getBlock(new Vec3(Math.floor(x), by, Math.floor(z)))
+          if (!b || b.boundingBox !== 'block') continue
+          const top = by + Math.max(...(b.shapes && b.shapes.length ? b.shapes.map(q => q[4]) : [1]))
+          if (top > y + 0.01) continue
+          const a = (st - (y - top) / 2) * 0.5
+          if (a > 0) { const [ls, lb] = mesher.world.getLight(new Vec3(Math.floor(x), Math.floor(top + 0.01), Math.floor(z))); cam.shadows.push({ x, y: top, z, r, a: Math.min(1, a), l: Math.max(...lightmap(ls, lb)) }) }
+          return
+        }
+      }
+      for (const e of ents) {
+        if (e.hidden) continue
+        const r = SHADOW_R[e.name] ?? (/_boat$|^boat$/.test(e.name) ? 0.8 : null)
+        if (r) shadowOf(e.x, e.y, e.z, r * (e.name === 'slime' || e.name === 'magma_cube' ? (e.extra && e.extra.size || 1) : 1) * (e.extra && e.extra.baby ? 0.5 : 1))
+      }
     }
     await page.evaluate(([c, tick, e, pt]) => window.HB.frame(c, tick, e, pt), [cam, t, ents.filter(e => !e.hidden), parts])
     prof('page frame (GL)')
