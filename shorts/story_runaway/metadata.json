@@ -1,9 +1,9 @@
 {
   "name": "story_runaway",
-  "caption": "why does everyone run from me \ud83d\udc80",
+  "caption": "why does everyone run from me 💀",
   "youtube": {
-    "title": "why does everyone run from me \ud83d\udc80 #minecraft #shorts",
-    "description": "why does everyone run from me \ud83d\udc80\n\nSong: Crysstales -  Take The Sky\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/takethesky\nWatch: http://ncs.lnk.to/taketheskyAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "why does everyone run from me 💀 #minecraft #shorts",
+    "description": "why does everyone run from me 💀\n\nSong: Crysstales -  Take The Sky\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/takethesky\nWatch: http://ncs.lnk.to/taketheskyAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -33,7 +33,7 @@
     "sha256": "40b9362411ca63a6a05a2fde44a27c162012f4d9a8748ab114ec09a61481ae4b"
   },
   "edit": {
-    "caption": "why does everyone run from me \ud83d\udc80",
+    "caption": "why does everyone run from me 💀",
     "red": "run",
     "story": "stories/runaway",
     "startAt": "line:0",
@@ -48,7 +48,7 @@
     "deathScreen": true,
     "args": [
       "--caption",
-      "why does everyone run from me \ud83d\udc80",
+      "why does everyone run from me 💀",
       "--red",
       "run",
       "--zoom",
@@ -329,9 +329,14 @@
     "gunzip -c shorts/story_runaway/recording.json.gz > work/story_runaway.rec.json",
     "node render.js work/story_runaway.rec.json work/story_runaway.frames 60 1080 1011",
     "python3 audio.py work/story_runaway.rec.json work/story_runaway.wav",
-    "python3 edit.py --frames work/story_runaway.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_runaway.rec.json --audio work/story_runaway.wav --caption \"why does everyone run from me \ud83d\udc80\" --red run --zoom [[\"boom:0.1\",\"boom:1.35\",1.12]] --death_screen death --story stories/runaway --start_at line:0 --end_after boom:1.35 --out out/story_runaway.mp4"
+    "python3 edit.py --frames work/story_runaway.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_runaway.rec.json --audio work/story_runaway.wav --caption \"why does everyone run from me 💀\" --red run --zoom [[\"boom:0.1\",\"boom:1.35\",1.12]] --death_screen death --story stories/runaway --start_at line:0 --end_after boom:1.35 --out out/story_runaway.mp4"
   ],
-  "status": "ready",
+  "status": "posted",
   "notes": "Owner's ending: the reveal is the boom itself (no spoken 'I'm the creeper'); ends 1.35 s after the blast on the death message 'blown up by Creeper'. Passed retention + frame QA of the new ending (ready), minecraft-audit on the re-edit (ready); earlier sections unchanged from the version that passed all three.",
-  "published_at": "2026-11-07T06:49:55.688Z"
+  "published_at": "2026-11-07T06:49:55.688Z",
+  "posted": {
+    "date": "2026-11-07",
+    "platform": "YouTube Shorts",
+    "by": "owner (manual upload)"
+  }
 }
