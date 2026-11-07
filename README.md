@@ -15,6 +15,7 @@ checked out at `../hb-videos`.
 | Short | Caption | Length | Song | Status | Commit | Notes |
 |---|---|---|---|---|---|---|
 | [anvil_rain](shorts/anvil_rain/short.mp4) | minecraft but it rains anvils 💀 | 10.05s | FUNK ABNORMAL (ULTRA SLOWED) | pending-qa | 799e77f | not yet passed the frame-by-frame review (docs/qa.md);  |
+| [boat_clutch](shorts/boat_clutch/short.mp4) | boat clutch 💀 | 34.29s | MONTAGEM FAVELA · CHASHKAKEFIRA | ready | e436f1a | worker 4: independent review READY (no blockers, no visible). Seven drops 15-79 on natural terrain, real boat use + mount (reach nudged to 6.5), full hearts every landing, slow-mo final + third-person replay. Re-encoded under the size cap (78.9 MB). Nitpicks left: hotbar highlight lags 1-4 frames after some cuts; one repeated frame at the hook's end (engine); ~0.1 s hold on each pillar top; the boat is on screen ~3 frames before each normal-speed landing. |
 | [cave_reveal](shorts/cave_reveal/short.mp4) | never dig straight down 💀 | 7.85s | THE REDEEMER · BVSSL7ON, ANIZYZ | pending-qa | 799e77f | not yet passed the frame-by-frame review (docs/qa.md); QA2: still dark; lavafall render gaps |
 | [creeper](shorts/creeper/short.mp4) | POV: you hear tssss 💀 | 6.85s | Intranet Crush · hiræth, Willix | needs-fix | 502c8b2 | frame QA: creeper not on screen until 4.2 s, no fuse flash; re-render queued |
 | [creeper_art](shorts/creeper_art/short.mp4) | rate my pixel art 1-10 😭 | 31.85s | INDUSTRY KISS · DIPIENS, HRXSTAL | pending-qa | 68b05c5 | worker: held for re-render (owner: remove the mid-build glance) |

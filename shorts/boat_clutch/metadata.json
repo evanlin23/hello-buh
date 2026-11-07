@@ -1,0 +1,489 @@
+{
+  "name": "boat_clutch",
+  "caption": "boat clutch \ud83d\udc80",
+  "youtube": {
+    "title": "boat clutch \ud83d\udc80 #minecraft #shorts",
+    "description": "boat clutch \ud83d\udc80\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "final_place",
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 29.95,
+    "song_start_s": 8.3
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 34.29,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 78881736,
+    "sha256": "ad8c9ebc5f2a85960ab7e43ec414e5d87a8b7f43918f4f4ad144eda44c222846"
+  },
+  "edit": {
+    "caption": "boat clutch \ud83d\udc80",
+    "red": "boat",
+    "song": "songs/misery.mp3",
+    "dropAt": "final_place",
+    "startAt": "start:0",
+    "endAfter": "final:0.9",
+    "subs": [
+      [
+        "jump",
+        "15 blocks",
+        2.261895003862225,
+        0
+      ],
+      [
+        "jump",
+        "20 blocks",
+        2.4416407864998737,
+        1
+      ],
+      [
+        "jump",
+        "30 blocks",
+        2.743167672515498,
+        2
+      ],
+      [
+        "jump",
+        "40 blocks",
+        2.9973665961010276,
+        3
+      ],
+      [
+        "jump",
+        "50 blocks",
+        3.2213203435596425,
+        4
+      ],
+      [
+        "jump",
+        "64 blocks",
+        3.5,
+        5
+      ],
+      [
+        "jump",
+        "79 blocks",
+        3.7664583251946766,
+        6
+      ]
+    ],
+    "speed": [
+      [
+        "cut1a",
+        "cut1b",
+        "cut"
+      ],
+      [
+        "cut2a",
+        "cut2b",
+        "cut"
+      ],
+      [
+        "cut3a",
+        "cut3b",
+        "cut"
+      ],
+      [
+        "cut4a",
+        "cut4b",
+        "cut"
+      ],
+      [
+        "cut5a",
+        "cut5b",
+        "cut"
+      ],
+      [
+        "cut6a",
+        "cut6b",
+        "cut"
+      ]
+    ],
+    "hook": {
+      "at": "final_place",
+      "before": 1.4,
+      "after": -0.05,
+      "text": "79 blocks \ud83d\udc80"
+    },
+    "slowmo": [
+      [
+        "final_place",
+        0.15,
+        0.3,
+        0.5
+      ]
+    ],
+    "replay": {
+      "at": "final",
+      "before": 1.2,
+      "after": 0.4,
+      "cam": "back:6",
+      "speed": 0.5
+    },
+    "args": [
+      "--caption",
+      "boat clutch \ud83d\udc80",
+      "--red",
+      "boat",
+      "--subs",
+      "[[\"jump\",\"15 blocks\",2.261895003862225,0],[\"jump\",\"20 blocks\",2.4416407864998737,1],[\"jump\",\"30 blocks\",2.743167672515498,2],[\"jump\",\"40 blocks\",2.9973665961010276,3],[\"jump\",\"50 blocks\",3.2213203435596425,4],[\"jump\",\"64 blocks\",3.5,5],[\"jump\",\"79 blocks\",3.7664583251946766,6]]",
+      "--speed",
+      "[[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]]",
+      "--slowmo",
+      "[[\"final_place\",0.15,0.3,0.5]]",
+      "--hook",
+      "{\"at\":\"final_place\",\"before\":1.4,\"after\":-0.05,\"text\":\"79 blocks \ud83d\udc80\"}",
+      "--replay",
+      "{\"at\":\"final\",\"before\":1.2,\"after\":0.4,\"cam\":\"back:6\",\"speed\":0.5}",
+      "--start_at",
+      "start:0",
+      "--end_after",
+      "final:0.9"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 396,
+      "y": 71,
+      "z": -39
+    },
+    "biome": "minecraft:plains",
+    "ticks": 732,
+    "seconds": 36.6,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 1.55,
+        "event": "jump"
+      },
+      {
+        "t": 2.85,
+        "event": "placed"
+      },
+      {
+        "t": 2.85,
+        "event": "swing"
+      },
+      {
+        "t": 2.9,
+        "event": "mounted"
+      },
+      {
+        "t": 2.9,
+        "event": "swing"
+      },
+      {
+        "t": 3,
+        "event": "landed"
+      },
+      {
+        "t": 4.35,
+        "event": "cut1a"
+      },
+      {
+        "t": 4.75,
+        "event": "cut"
+      },
+      {
+        "t": 5.1,
+        "event": "cut1b"
+      },
+      {
+        "t": 5.1,
+        "event": "top"
+      },
+      {
+        "t": 5.9,
+        "event": "jump"
+      },
+      {
+        "t": 7.35,
+        "event": "placed"
+      },
+      {
+        "t": 7.35,
+        "event": "swing"
+      },
+      {
+        "t": 7.35,
+        "event": "mounted"
+      },
+      {
+        "t": 7.35,
+        "event": "swing"
+      },
+      {
+        "t": 7.45,
+        "event": "landed"
+      },
+      {
+        "t": 8.8,
+        "event": "cut2a"
+      },
+      {
+        "t": 9.2,
+        "event": "cut"
+      },
+      {
+        "t": 9.5,
+        "event": "cut2b"
+      },
+      {
+        "t": 9.5,
+        "event": "top"
+      },
+      {
+        "t": 10.3,
+        "event": "jump"
+      },
+      {
+        "t": 12.05,
+        "event": "placed"
+      },
+      {
+        "t": 12.05,
+        "event": "swing"
+      },
+      {
+        "t": 12.05,
+        "event": "mounted"
+      },
+      {
+        "t": 12.05,
+        "event": "swing"
+      },
+      {
+        "t": 12.15,
+        "event": "landed"
+      },
+      {
+        "t": 13.5,
+        "event": "cut3a"
+      },
+      {
+        "t": 13.9,
+        "event": "cut"
+      },
+      {
+        "t": 14.2,
+        "event": "cut3b"
+      },
+      {
+        "t": 14.2,
+        "event": "top"
+      },
+      {
+        "t": 15.05,
+        "event": "jump"
+      },
+      {
+        "t": 17.05,
+        "event": "placed"
+      },
+      {
+        "t": 17.05,
+        "event": "swing"
+      },
+      {
+        "t": 17.05,
+        "event": "mounted"
+      },
+      {
+        "t": 17.05,
+        "event": "swing"
+      },
+      {
+        "t": 17.15,
+        "event": "landed"
+      },
+      {
+        "t": 18.5,
+        "event": "cut4a"
+      },
+      {
+        "t": 18.9,
+        "event": "cut"
+      },
+      {
+        "t": 19.2,
+        "event": "cut4b"
+      },
+      {
+        "t": 19.2,
+        "event": "top"
+      },
+      {
+        "t": 20,
+        "event": "jump"
+      },
+      {
+        "t": 22.25,
+        "event": "placed"
+      },
+      {
+        "t": 22.25,
+        "event": "swing"
+      },
+      {
+        "t": 22.25,
+        "event": "mounted"
+      },
+      {
+        "t": 22.25,
+        "event": "swing"
+      },
+      {
+        "t": 22.35,
+        "event": "landed"
+      },
+      {
+        "t": 23.7,
+        "event": "cut5a"
+      },
+      {
+        "t": 24.1,
+        "event": "cut"
+      },
+      {
+        "t": 24.4,
+        "event": "cut5b"
+      },
+      {
+        "t": 24.4,
+        "event": "top"
+      },
+      {
+        "t": 25.2,
+        "event": "jump"
+      },
+      {
+        "t": 27.75,
+        "event": "placed"
+      },
+      {
+        "t": 27.75,
+        "event": "swing"
+      },
+      {
+        "t": 27.75,
+        "event": "mounted"
+      },
+      {
+        "t": 27.75,
+        "event": "swing"
+      },
+      {
+        "t": 27.85,
+        "event": "landed"
+      },
+      {
+        "t": 29.2,
+        "event": "cut6a"
+      },
+      {
+        "t": 29.6,
+        "event": "cut"
+      },
+      {
+        "t": 29.9,
+        "event": "cut6b"
+      },
+      {
+        "t": 29.9,
+        "event": "top"
+      },
+      {
+        "t": 30.7,
+        "event": "jump"
+      },
+      {
+        "t": 33.55,
+        "event": "placed"
+      },
+      {
+        "t": 33.55,
+        "event": "final_place"
+      },
+      {
+        "t": 33.55,
+        "event": "swing"
+      },
+      {
+        "t": 33.55,
+        "event": "mounted"
+      },
+      {
+        "t": 33.55,
+        "event": "swing"
+      },
+      {
+        "t": 33.65,
+        "event": "landed"
+      },
+      {
+        "t": 33.65,
+        "event": "final"
+      },
+      {
+        "t": 34.3,
+        "event": "outro"
+      },
+      {
+        "t": 36.6,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "e436f1a2f4c09f3ce236e3aacda0fc9b741c2610",
+    "rendered_at": "2026-11-07T05:41:41.113Z",
+    "head_at_publish": "9819983627f30e31d01505436bb41ca680715c12",
+    "stunt": "stunts/boat_clutch.js",
+    "source_snapshot": [
+      "source/boat_clutch.js",
+      "source/_site.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout e436f1a2f4c0",
+    "gunzip -c shorts/boat_clutch/recording.json.gz > work/boat_clutch.rec.json",
+    "node render.js work/boat_clutch.rec.json work/boat_clutch.frames 60 1080 1011",
+    "python3 audio.py work/boat_clutch.rec.json work/boat_clutch.wav",
+    "python3 edit.py --frames work/boat_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/boat_clutch.rec.json --audio work/boat_clutch.wav --caption \"boat clutch \ud83d\udc80\" --red boat --subs \"[[\\\"jump\\\",\\\"15 blocks\\\",2.261895003862225,0],[\\\"jump\\\",\\\"20 blocks\\\",2.4416407864998737,1],[\\\"jump\\\",\\\"30 blocks\\\",2.743167672515498,2],[\\\"jump\\\",\\\"40 blocks\\\",2.9973665961010276,3],[\\\"jump\\\",\\\"50 blocks\\\",3.2213203435596425,4],[\\\"jump\\\",\\\"64 blocks\\\",3.5,5],[\\\"jump\\\",\\\"79 blocks\\\",3.7664583251946766,6]]\" --speed [[\"cut1a\",\"cut1b\",\"cut\"],[\"cut2a\",\"cut2b\",\"cut\"],[\"cut3a\",\"cut3b\",\"cut\"],[\"cut4a\",\"cut4b\",\"cut\"],[\"cut5a\",\"cut5b\",\"cut\"],[\"cut6a\",\"cut6b\",\"cut\"]] --slowmo [[\"final_place\",0.15,0.3,0.5]] --hook \"{\\\"at\\\":\\\"final_place\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"79 blocks \ud83d\udc80\\\"}\" --replay {\"at\":\"final\",\"before\":1.2,\"after\":0.4,\"cam\":\"back:6\",\"speed\":0.5} --start_at start:0 --end_after final:0.9 --out out/boat_clutch.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 4: independent review READY (no blockers, no visible). Seven drops 15-79 on natural terrain, real boat use + mount (reach nudged to 6.5), full hearts every landing, slow-mo final + third-person replay. Re-encoded under the size cap (78.9 MB). Nitpicks left: hotbar highlight lags 1-4 frames after some cuts; one repeated frame at the hook's end (engine); ~0.1 s hold on each pillar top; the boat is on screen ~3 frames before each normal-speed landing.",
+  "published_at": "2026-11-07T06:56:26.182Z"
+}
