@@ -10,7 +10,7 @@ const BEATS = [
   { villagers: 1, golems: 1, dx: -64, launches: 1, sub: '1 villager' },
   { villagers: 3, golems: 3, dx: -32, launches: 2, sub: '3 villagers' },
   { villagers: 5, golems: 5, dx: 0, launches: 3, sub: '5 villagers' },
-  { villagers: 10, golems: 10, dx: 32, launches: 4, sub: '10 villagers' },
+  { villagers: 10, golems: 10, dx: 32, launches: 5, sub: '10 villagers' },
   { villagers: 20, golems: 20, dx: 64, launches: 1, sub: '20 villagers...' }
 ]
 module.exports = {
@@ -101,20 +101,23 @@ module.exports = {
       const g0 = near('iron_golem')[0]
       if (g0) await ctx.easeLookAt(g0.position.offset(0, 2.2, 0), 300)
       ctx.mark('golem', { n: B.golems })
-      let launched = false, n = 0, airborne = false
+      let launched = false, n = 0, airborne = false, lastLaunch = -99
       const hp0 = bot.health
       for (let k = 0; k < 320 && !ctx.died; k++) {
-        const g = near('iron_golem')[0]
+        // between hits, look from golem to golem (a fixed stare on one read as a pause)
+        const gs = near('iron_golem'), g = gs[n % Math.max(1, Math.min(gs.length, 3))] || gs[0]
         if (g) {
           const e = bot.entity.position.offset(0, 1.62, 0), d = g.position.offset(0, 2.2, 0).minus(e)
-          await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
+          { const ty = Math.atan2(-d.x, -d.z), tp = Math.atan2(d.y, Math.hypot(d.x, d.z))   // eased: switching golems isn't a snap
+            let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+            await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (tp - bot.entity.pitch) * 0.25, true) }
           // stand and take it (backing off outran the golems: beats 1-2 never launched); step in if one hangs back
           bot.setControlState('forward', !airborne && k > 10 && g.position.distanceTo(bot.entity.position) > 3)
           if (k % 14 === 0) ctx.sound('entity.iron_golem.step', 0.6)
         }
-        if (!airborne && (bot.entity.velocity.y > 0.25 || bot.health < hp0 - 0.5)) {
+        if (!airborne && k - lastLaunch > 20 && (bot.entity.velocity.y > 0.25 || bot.health < hp0 - 0.5)) {   // one count per juggle (hits a few ticks apart counted 4 in 0.35 s)
           // a launch (the golems juggle you: count them, re-armed on landing)
-          airborne = true; launched = true; n++
+          airborne = true; launched = true; n++; lastLaunch = k
           ctx.mark('launched', { n }); ctx.sound('entity.iron_golem.attack', 1)
           bot.setControlState('forward', false)
         } else if (airborne && bot.entity.onGround && bot.entity.velocity.y <= 0) {
