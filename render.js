@@ -746,7 +746,9 @@ function camAtLive (t) {
   // block_entity marks; chests and beds have none, so they're found by block state (sections whose
   // palette can't hold one are skipped).
   const BE = new Map()   // 'x,y,z' -> { x, y, z, nbt }
-  const beKind = (name) => /_wall_hanging_sign$/.test(name) ? 'wall_hanging' : /_hanging_sign$/.test(name) ? 'hanging' : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
+  const SKULL_TEX = { skeleton: ['entity/skeleton/skeleton', false], wither_skeleton: ['entity/skeleton/wither_skeleton', false], zombie: ['entity/zombie/zombie', true], creeper: ['entity/creeper/creeper', false], player: ['entity/player/wide/steve', true] }
+  const skullOf = (name) => { const m = /^(skeleton|wither_skeleton|zombie|creeper|player)_(wall_)?(skull|head)$/.exec(name); return m && SKULL_TEX[m[1]] }
+  const beKind = (name) => skullOf(name) ? (/_wall_/.test(name) ? 'wall_skull' : 'skull') : /_wall_hanging_sign$/.test(name) ? 'wall_hanging' : /_hanging_sign$/.test(name) ? 'hanging' : /_wall_sign$/.test(name) ? 'wall_sign' : /_sign$/.test(name) ? 'sign' : /^(chest|trapped_chest|ender_chest)$/.test(name) ? 'chest' : /_bed$/.test(name) ? 'bed' : null
   const BE_STATES = new Set()
   for (const b of MC.blocksArray) if (beKind(b.name)) for (let sid = b.minStateId; sid <= b.maxStateId; sid++) BE_STATES.add(sid)
   {
@@ -821,6 +823,10 @@ function camAtLive (t) {
         if (type !== 'single') for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) open = Math.max(open, lidAt(`${e.x + dx},${e.y},${e.z + dz}`, t))
         Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, type, tex: type === 'single' || base === 'ender' ? base : `${base}_${type}`, open: +open.toFixed(3) })
       }
+      if (kind === 'skull') Object.assign(o, { rot: (Number(pr.rotation || 0) * 22.5 + 180) % 360, tex: skullOf(b.name)[0], humanoid: skullOf(b.name)[1] })
+      // skull yaw in our chain (checked by eye): the face points north at 0, so a floor skull adds 180 to
+      // its rotation (rotation 8 faces north) and a wall skull adds 180 to its facing
+      if (kind === 'wall_skull') Object.assign(o, { rot: ((FACING_DEG[pr.facing] || 0) + 180) % 360, facing: pr.facing, tex: skullOf(b.name)[0], humanoid: skullOf(b.name)[1] })
       if (kind === 'bed') Object.assign(o, { rot: FACING_DEG[pr.facing] || 0, head: pr.part === 'head', color: b.name.replace(/_bed$/, '') })
       out.push(o)
     }

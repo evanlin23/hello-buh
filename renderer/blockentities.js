@@ -19,8 +19,8 @@ function tex (url) {
 }
 
 // ModelPart.Cube: [verts(4 x vec3), uv(4 x [u, v])] per face, positions in pixels
-function box (min, size, uv) {
-  const [x0, y0, z0] = min, [x1, y1, z1] = [min[0] + size[0], min[1] + size[1], min[2] + size[2]]
+function box (min, size, uv, grow = 0) {
+  const [x0, y0, z0] = min.map(v => v - grow), [x1, y1, z1] = [min[0] + size[0] + grow, min[1] + size[1] + grow, min[2] + size[2] + grow]
   const [dx, dy, dz] = size, [u, v] = uv
   const V = { a: [x0, y0, z0], b: [x1, y0, z0], c: [x1, y1, z0], d: [x0, y1, z0], e: [x0, y0, z1], f: [x1, y0, z1], g: [x1, y1, z1], h: [x0, y1, z1] }
   const f4 = u, f5 = u + dz, f6 = u + dz + dx, f7 = u + dz + dx + dx, f8 = u + dz + dx + dz, f9 = u + dz + dx + dz + dx
@@ -43,8 +43,8 @@ function buildGeometry (parts, M, texW, texH) {
     const PM = new THREE.Matrix4().makeTranslation(...(p.pivot || [0, 0, 0]))
     if (p.rot) PM.multiply(new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(p.rot[0], p.rot[1], p.rot[2], 'ZYX')))
     const W = M.clone().multiply(PM)
-    for (const [min, size, uvo] of p.cubes) {
-      for (const [vs, uvs] of box(min, size, uvo)) {
+    for (const [min, size, uvo, grow] of p.cubes) {
+      for (const [vs, uvs] of box(min, size, uvo, grow || 0)) {
         const base = pos.length / 3, q = vs.map(c => v.set(...c).applyMatrix4(W).clone())
         e1.subVectors(q[1], q[0]); e2.subVectors(q[2], q[0]); n.crossVectors(e1, e2)
         if (n.lengthSq() < 1e-12) { e1.subVectors(q[2], q[1]); e2.subVectors(q[3], q[1]); n.crossVectors(e1, e2) }
@@ -185,6 +185,14 @@ export class BlockEntityLayer {
           grp.add(q); mats.push(m)
         }
       }
+    } else if (b.kind === 'skull' || b.kind === 'wall_skull') {
+      // SkullBlockRenderer: floor T(0.5, 0, 0.5) or wall T(0.5 - dx * 0.25, 0.25, 0.5 - dz * 0.25), then
+      // scale(-1, -1, 1); SkullModel head (and the humanoid hat layer, grown 0.25) turned yRot
+      const wall = b.kind === 'wall_skull', d = { north: [0, -1], south: [0, 1], west: [-1, 0], east: [1, 0] }[b.facing] || [0, 0]
+      const M = at.clone().multiply(wall ? T(0.5 - d[0] * 0.25, 0.25, 0.5 - d[1] * 0.25) : T(0.5, 0, 0.5)).multiply(S(-1 / 16, -1 / 16, 1 / 16))
+      const cubes = [[[-4, -8, -4], [8, 8, 8], [0, 0]]]
+      if (b.humanoid) cubes.push([[-4, -8, -4], [8, 8, 8], [32, 0], 0.25])
+      await add(buildGeometry([{ rot: [0, b.rot * D, 0], cubes }], M, 64, b.humanoid ? 64 : 32), `/assets/env/${b.tex}.png`)
     } else if (b.kind === 'chest') {
       // ChestRenderer: T(0.5) Ry(-facing) T(-0.5), the model y-up in pixels
       const M = at.clone().multiply(T(0.5, 0.5, 0.5)).multiply(RY(-b.rot)).multiply(T(-0.5, -0.5, -0.5)).multiply(S(1 / 16, 1 / 16, 1 / 16))
