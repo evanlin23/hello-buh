@@ -682,7 +682,9 @@ function bodyAfterDeath (d, t) {
       if (e.event !== 'particles' || e.type !== 'explosion' || Math.abs(e.t / 50 - d[0]) > 1) continue
       let kb = e.kb
       if (!kb) {
-        const ex = start[1] - e.x, ey = start[2] + EYE - e.y, ez = start[3] - e.z, dist = Math.hypot(ex, ey, ez), q = dist / (2 * (e.radius || 4))
+        // ServerExplosion: strength from the feet distance (distanceToSqr), direction toward the eye
+        const q = Math.hypot(start[1] - e.x, start[2] - e.y, start[3] - e.z) / (2 * (e.radius || 4))
+        const ex = start[1] - e.x, ey = start[2] + EYE - e.y, ez = start[3] - e.z, dist = Math.hypot(ex, ey, ez)
         if (q <= 1 && dist > 1e-4) { const k = 1 - q; kb = [ex / dist * k, ey / dist * k, ez / dist * k] }
       }
       if (kb) { vx += kb[0]; vy += kb[1]; vz += kb[2] }
@@ -704,15 +706,22 @@ function bodyAfterDeath (d, t) {
       }
       return null
     }
+    // LivingEntity.travel order: move with the current velocity (collisions), then gravity and drag;
+    // the horizontal drag uses the friction of the block under it from the previous tick's onGround
+    // (0.6 x 0.91 on most blocks, 0.91 in the air). Fluids: x 0.5/0.8 (lava) or 0.8 (water), gravity 0.02.
+    let onGround = (() => { const g = groundBelow(x, y + 0.001, z); return g !== null && y - g < 0.01 })()
     for (let k = 0; k < 400; k++) {
       const m = blk(x, y + 0.1, z)
-      if (m === 'lava') { vx *= 0.5; vy *= 0.8; vz *= 0.5; vy -= 0.02 } else if (m === 'water') { vx *= 0.8; vy *= 0.8; vz *= 0.8; vy -= 0.02 } else { const fr = groundBelow(x, y - 0.001, z) !== null && y - groundBelow(x, y - 0.001, z) < 0.01 ? 0.546 : 0.91; vy -= 0.08; vy *= 0.98; vx *= fr; vz *= fr }   // on the ground: block friction 0.6 x 0.91
       if (solid(x + vx, y, z)) vx = 0
       if (solid(x, y, z + vz)) vz = 0
       x += vx; z += vz
-      if (vy < 0) { const g = groundBelow(x, y, z); if (g !== null && y + vy <= g) { y = g; vy = 0 } else y += vy } else y += vy
+      let landed = false
+      if (vy < 0) { const g = groundBelow(x, y, z); if (g !== null && y + vy <= g) { y = g; vy = 0; landed = true } else y += vy } else y += vy
+      if (m === 'lava') { vx *= 0.5; vy *= 0.8; vz *= 0.5; vy -= 0.02 } else if (m === 'water') { vx *= 0.8; vy *= 0.8; vz *= 0.8; vy -= 0.02 } else { const fr = onGround ? 0.546 : 0.91; vy -= 0.08; vy *= 0.98; vx *= fr; vz *= fr }
+      onGround = landed || (vy <= 0 && (() => { const g = groundBelow(x, y + 0.001, z); return g !== null && y - g < 0.01 })())
       pts.push([x, y, z])
     }
+    if (process.env.DEBUG_DEATH) console.log('death body', JSON.stringify(pts.slice(0, 20).map(q => q.map(v => +v.toFixed(2)))))
     deathSim = { d, pts, yaw: start[4], pitch: start[5] }
   }
   const e = Math.max(0, t - d[0]), i = Math.min(deathSim.pts.length - 2, Math.floor(e)), f = e - i
