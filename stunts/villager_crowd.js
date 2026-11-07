@@ -46,7 +46,7 @@ module.exports = {
     // it does ("Timeout waiting for 1 ticks"): pace the heavy commands by wall-clock time instead.
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     // deep and high enough that no cut hillside or trunkless canopy shows, even in the turnaround south
-    for (let z0 = z - 40; z0 <= z + 60; z0 += 4) {
+    for (let z0 = z - 72; z0 <= z + 60; z0 += 4) {   // (z - 40 left a cut cliff face in the 200 shot)
       const z1 = Math.min(z0 + 3, z + 60)
       await heavy(`/fill ${x - 124} ${floor + 1} ${z0} ${x + 124} ${floor + 30} ${z1} air`)
       await heavy(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
@@ -154,7 +154,8 @@ module.exports = {
       ctx.mark('beat', { n: c.n })                       // walk on the cut (a 3-tick wait read as a freeze)
       // walk up behind them
       bot.setControlState('forward', true)
-      while (bot.entity.position.z > z - 0.2) await bot.waitForTicks(1)
+      const stopZ = c.n >= 50 ? z + 1.8 : z - 0.2           // big crowds: stop further back so their size shows
+      while (bot.entity.position.z > stopZ) await bot.waitForTicks(1)
       bot.setControlState('forward', false)
       await bot.waitForTicks(6)
       // they all turn round at once (the last face_on also covers the crowd behind, which turns with it)
@@ -162,7 +163,10 @@ module.exports = {
       // and the renderer turns every villager in the face_on window toward the camera anyway
       if (!last) bot.chat(`/tag @e[type=villager,tag=crowd${i}] add on`)
       const depth = (c.rows - 1) * (c.n >= 50 ? 1.3 : 1.8)
-      ctx.mark('turn', { n: c.n }); ctx.mark('face_on', { near: [sx + 0.5, z - 3.5 - depth / 2, 8 + depth] })   // this crowd only (not the one behind)
+      // this crowd only: the radius stops short of the crowd behind (z + 5.5 on); 8 + depth (19.7 for the 200)
+      // reached it, so it was already staring when the camera turned round
+      const cz = z - 3.5 - depth / 2
+      ctx.mark('turn', { n: c.n }); ctx.mark('face_on', { near: [sx + 0.5, cz, Math.min(8 + depth, z + 5.0 - cz)] })
       const voices = Math.min(c.n, 6)
       for (let v = 0; v < voices; v++) ctx.sound('entity.villager.ambient', 0.5 + 0.1 * voices, 0.75 + v * 0.1)
       aim = new ctx.Vec3(sx + 0.5, floor + 2.3, z - 3.5 - Math.min(depth, 6) / 2)
@@ -178,8 +182,7 @@ module.exports = {
       aim = null
       ctx.mark('turnaround')
       await ctx.easeLook(Math.PI * 0.999, -0.05, 850)   // mineflayer yaw 0 = north; the crowd behind is south
-      // their backs... then they all snap round too
-      await bot.waitForTicks(4)
+      // their backs (seen through the turn)... then they all snap round too, at once (a 4-tick hold read as a freeze)
       ctx.mark('face_off'); ctx.mark('face_on', { near: [sx + 0.5, z + 7.5, 10] })
       ctx.mark('behind')
       for (let v = 0; v < 6; v++) ctx.sound('entity.villager.ambient', 1.1, 0.7 + v * 0.1)
