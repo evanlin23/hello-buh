@@ -115,13 +115,13 @@ module.exports = {
     for (const zz of [z - 3, z - 1, z + 1, z + 3]) await ctx.easeLookAt(new Vec3(x + 4.5, Y - 3, zz + 0.5), 250)
     bot.setControlState('sneak', false)
     // into the middle (south), eyes on the far side going column by column, then the west side
-    await ctx.easeLookAt(new Vec3(x + 3.5, Y - 1, z + 4.5), 350)
+    await ctx.easeLookAt(new Vec3(x + 3.5, Y - 3, z + 4.5), 350)
     bot.setControlState('forward', true)
-    const sweep = ctx.easeLookAt(new Vec3(x - 3.5, Y - 1, z + 4.5), 1100)
-    for (let i = 0; i < 40 && bot.entity.position.z < z - 0.1 && ctx.tick < K.at(4.0); i++) await bot.waitForTicks(1)
+    const sweep = ctx.easeLookAt(new Vec3(x - 3.5, Y - 3, z + 4.5), 1100)
+    for (let i = 0; i < 40 && bot.entity.position.z < z + 1.0 && ctx.tick < K.at(4.0); i++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
     await sweep
-    await ctx.easeLookAt(new Vec3(x - 4.5, Y - 1, z - 1.5), 600)
+    await ctx.easeLookAt(new Vec3(x - 4.5, Y - 3, z - 1.5), 600)
     await K.until(K.at(4.95), K.drift(0.006, 0.001))
     await K.level(2, 5)
     bot.chat(`/summon creeper ${x + 0.5} ${Y + 1} ${z + 3.5} {PersistenceRequired:1b,Rotation:[180f,0f]}`)
@@ -134,7 +134,7 @@ module.exports = {
     // where did it go: walk to that edge, sneak the last step and look over it, eyes on it all the way down
     const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.35, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
     bot.setControlState('forward', true)
-    for (let i = 0; i < 30 && bot.entity.position.z < z + 3.4 && ctx.tick < K.at(8.6); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 30 && bot.entity.position.z < z + 3.4 && ctx.tick < K.at(8.9); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', true)
     for (let i = 0; i < 30 && ctx.tick < K.at(9.2); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
@@ -196,12 +196,12 @@ module.exports = {
     const sx = Math.floor(bot.entity.position.x), sz = Math.floor(bot.entity.position.z)
     const outer = [...island].map(k => k.split(',').map(Number)).filter(([cx, cz]) => Math.max(Math.abs(cx - sx), Math.abs(cz - sz)) >= 2)
     const shrink = drop(byAngle(outer, bot.entity.yaw + 0.3, sx + 0.5, sz + 0.5), 2)
-    await ctx.easeLook(bot.entity.yaw - 0.4, -0.95, 700)
-    await ctx.easeLook(bot.entity.yaw - 1.4, -0.9, 1300)
+    await ctx.easeLook(bot.entity.yaw - 0.4, -1.2, 700)
+    await ctx.easeLook(bot.entity.yaw - 1.4, -1.15, 1300)
     await shrink
     // all that's left: a slow look round the 3x3 from its middle (its edges against the drop on every side)
-    await ctx.easeLook(bot.entity.yaw + 1.2, -0.6, 1300)
-    await ctx.easeLook(bot.entity.yaw + 0.8, -0.6, 700)
+    await ctx.easeLook(bot.entity.yaw + 1.2, -1.2, 1300)
+    await ctx.easeLook(bot.entity.yaw + 0.8, -1.25, 700)
     await K.until(K.at(25))
 
     // ---- 6. two blocks left ----
