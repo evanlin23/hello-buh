@@ -1,0 +1,3266 @@
+{
+  "name": "lava_cast",
+  "caption": "satisfying lava cast \ud83d\ude0c",
+  "youtube": {
+    "title": "satisfying lava cast \ud83d\ude0c #minecraft #shorts",
+    "description": "satisfying lava cast \ud83d\ude0c\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "favela.mp3",
+    "title": "FAVELA",
+    "artist": "MXZI, Deno",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "water:0",
+    "drop_in_song_s": 4.5,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 4.5
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 33.56,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 42887442,
+    "sha256": "d5039a703e8abb077665ad8af1b1cd59f01e89f151f1f961caf04421a53be2a3"
+  },
+  "edit": {
+    "caption": "satisfying lava cast \ud83d\ude0c",
+    "red": "lava",
+    "song": "songs/misery.mp3",
+    "dropAt": "water:0",
+    "startAt": "pour:-0.15",
+    "endAfter": "final:0.95",
+    "subsY": 0.1,
+    "subs": [
+      [
+        "pour",
+        "layer 1",
+        1.4,
+        0
+      ],
+      [
+        "pour",
+        "layer 2",
+        1.4,
+        1
+      ]
+    ],
+    "cards": [
+      [
+        "reveal",
+        "LAYER 1 \u2705",
+        0.9,
+        "white"
+      ],
+      [
+        "final",
+        "LAYER 2 \ud83d\ude0c",
+        0.95,
+        "gold"
+      ]
+    ],
+    "speed": [
+      [
+        "run0a",
+        "run0b",
+        "cut"
+      ],
+      [
+        "run0",
+        "back0a",
+        3
+      ],
+      [
+        "back0a",
+        "back0b",
+        "cut"
+      ],
+      [
+        "follow",
+        "scoop",
+        2
+      ],
+      [
+        "rv0a",
+        "rv0b",
+        "cut"
+      ],
+      [
+        "drain0",
+        "reveal",
+        2
+      ],
+      [
+        "climb2a",
+        "climb2b",
+        "cut"
+      ],
+      [
+        "run1a",
+        "run1b",
+        "cut"
+      ],
+      [
+        "run1",
+        "back1a",
+        3
+      ],
+      [
+        "back1a",
+        "back1b",
+        "cut"
+      ],
+      [
+        "follow1",
+        "scoop1",
+        2
+      ],
+      [
+        "rv1a",
+        "rv1b",
+        "cut"
+      ],
+      [
+        "drain1",
+        "final",
+        2
+      ]
+    ],
+    "hook": {
+      "at": "back0a",
+      "before": 1.4,
+      "after": -0.05,
+      "text": "wait for the end \ud83d\ude0c"
+    },
+    "args": [
+      "--caption",
+      "satisfying lava cast \ud83d\ude0c",
+      "--red",
+      "lava",
+      "--subs",
+      "[[\"pour\",\"layer 1\",1.4,0],[\"pour\",\"layer 2\",1.4,1]]",
+      "--subs_y",
+      "0.1",
+      "--speed",
+      "[[\"run0a\",\"run0b\",\"cut\"],[\"run0\",\"back0a\",3],[\"back0a\",\"back0b\",\"cut\"],[\"follow\",\"scoop\",2],[\"rv0a\",\"rv0b\",\"cut\"],[\"drain0\",\"reveal\",2],[\"climb2a\",\"climb2b\",\"cut\"],[\"run1a\",\"run1b\",\"cut\"],[\"run1\",\"back1a\",3],[\"back1a\",\"back1b\",\"cut\"],[\"follow1\",\"scoop1\",2],[\"rv1a\",\"rv1b\",\"cut\"],[\"drain1\",\"final\",2]]",
+      "--cards",
+      "[[\"reveal\",\"LAYER 1 \u2705\",0.9,\"white\"],[\"final\",\"LAYER 2 \ud83d\ude0c\",0.95,\"gold\"]]",
+      "--hook",
+      "{\"at\":\"back0a\",\"before\":1.4,\"after\":-0.05,\"text\":\"wait for the end \ud83d\ude0c\"}",
+      "--start_at",
+      "pour:-0.15",
+      "--end_after",
+      "final:0.95"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 536,
+      "y": 71,
+      "z": -136
+    },
+    "biome": "minecraft:plains",
+    "ticks": 1444,
+    "seconds": 72.2,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0,
+        "event": "vel"
+      },
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "vel"
+      },
+      {
+        "t": 0.95,
+        "event": "pour"
+      },
+      {
+        "t": 1,
+        "event": "vel"
+      },
+      {
+        "t": 1.05,
+        "event": "vel"
+      },
+      {
+        "t": 1.15,
+        "event": "vel"
+      },
+      {
+        "t": 1.2,
+        "event": "swing"
+      },
+      {
+        "t": 1.45,
+        "event": "vel"
+      },
+      {
+        "t": 1.65,
+        "event": "vel"
+      },
+      {
+        "t": 1.7,
+        "event": "swing"
+      },
+      {
+        "t": 1.7,
+        "event": "vel"
+      },
+      {
+        "t": 2.15,
+        "event": "swing"
+      },
+      {
+        "t": 2.35,
+        "event": "vel"
+      },
+      {
+        "t": 2.35,
+        "event": "vel"
+      },
+      {
+        "t": 2.6,
+        "event": "swing"
+      },
+      {
+        "t": 3,
+        "event": "swing"
+      },
+      {
+        "t": 3,
+        "event": "vel"
+      },
+      {
+        "t": 3,
+        "event": "vel"
+      },
+      {
+        "t": 3.05,
+        "event": "run0a"
+      },
+      {
+        "t": 3.05,
+        "event": "cut"
+      },
+      {
+        "t": 3.35,
+        "event": "run0b"
+      },
+      {
+        "t": 3.35,
+        "event": "run0"
+      },
+      {
+        "t": 3.65,
+        "event": "vel"
+      },
+      {
+        "t": 3.7,
+        "event": "vel"
+      },
+      {
+        "t": 4.3,
+        "event": "vel"
+      },
+      {
+        "t": 4.35,
+        "event": "vel"
+      },
+      {
+        "t": 5,
+        "event": "vel"
+      },
+      {
+        "t": 5,
+        "event": "vel"
+      },
+      {
+        "t": 5.65,
+        "event": "vel"
+      },
+      {
+        "t": 5.7,
+        "event": "vel"
+      },
+      {
+        "t": 6.3,
+        "event": "vel"
+      },
+      {
+        "t": 6.35,
+        "event": "vel"
+      },
+      {
+        "t": 6.95,
+        "event": "vel"
+      },
+      {
+        "t": 7,
+        "event": "vel"
+      },
+      {
+        "t": 7.65,
+        "event": "vel"
+      },
+      {
+        "t": 7.65,
+        "event": "vel"
+      },
+      {
+        "t": 8.35,
+        "event": "vel"
+      },
+      {
+        "t": 8.4,
+        "event": "vel"
+      },
+      {
+        "t": 9,
+        "event": "vel"
+      },
+      {
+        "t": 9.05,
+        "event": "vel"
+      },
+      {
+        "t": 9.7,
+        "event": "vel"
+      },
+      {
+        "t": 9.7,
+        "event": "vel"
+      },
+      {
+        "t": 10.35,
+        "event": "vel"
+      },
+      {
+        "t": 10.35,
+        "event": "vel"
+      },
+      {
+        "t": 11,
+        "event": "vel"
+      },
+      {
+        "t": 11.05,
+        "event": "vel"
+      },
+      {
+        "t": 11.65,
+        "event": "vel"
+      },
+      {
+        "t": 11.7,
+        "event": "vel"
+      },
+      {
+        "t": 12.35,
+        "event": "vel"
+      },
+      {
+        "t": 12.35,
+        "event": "vel"
+      },
+      {
+        "t": 13,
+        "event": "vel"
+      },
+      {
+        "t": 13.05,
+        "event": "vel"
+      },
+      {
+        "t": 13.65,
+        "event": "vel"
+      },
+      {
+        "t": 13.7,
+        "event": "vel"
+      },
+      {
+        "t": 14.35,
+        "event": "vel"
+      },
+      {
+        "t": 14.35,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15.05,
+        "event": "vel"
+      },
+      {
+        "t": 15.65,
+        "event": "vel"
+      },
+      {
+        "t": 15.7,
+        "event": "vel"
+      },
+      {
+        "t": 16.35,
+        "event": "vel"
+      },
+      {
+        "t": 16.35,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17,
+        "event": "vel"
+      },
+      {
+        "t": 17.65,
+        "event": "vel"
+      },
+      {
+        "t": 17.7,
+        "event": "vel"
+      },
+      {
+        "t": 18.3,
+        "event": "vel"
+      },
+      {
+        "t": 18.35,
+        "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19,
+        "event": "vel"
+      },
+      {
+        "t": 19.65,
+        "event": "vel"
+      },
+      {
+        "t": 19.7,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.35,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.7,
+        "event": "vel"
+      },
+      {
+        "t": 21.7,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.4,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
+        "event": "back0a"
+      },
+      {
+        "t": 23.5,
+        "event": "cut"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.7,
+        "event": "vel"
+      },
+      {
+        "t": 23.8,
+        "event": "back0b"
+      },
+      {
+        "t": 24.2,
+        "event": "water"
+      },
+      {
+        "t": 24.3,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.6,
+        "event": "swing"
+      },
+      {
+        "t": 24.65,
+        "event": "follow"
+      },
+      {
+        "t": 24.8,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 26.3,
+        "event": "vel"
+      },
+      {
+        "t": 26.3,
+        "event": "vel"
+      },
+      {
+        "t": 26.8,
+        "event": "vel"
+      },
+      {
+        "t": 26.8,
+        "event": "vel"
+      },
+      {
+        "t": 27.3,
+        "event": "vel"
+      },
+      {
+        "t": 27.3,
+        "event": "vel"
+      },
+      {
+        "t": 27.8,
+        "event": "vel"
+      },
+      {
+        "t": 27.8,
+        "event": "vel"
+      },
+      {
+        "t": 27.8,
+        "event": "vel"
+      },
+      {
+        "t": 27.85,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.15,
+        "event": "vel"
+      },
+      {
+        "t": 28.15,
+        "event": "vel"
+      },
+      {
+        "t": 28.2,
+        "event": "vel"
+      },
+      {
+        "t": 28.2,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.3,
+        "event": "vel"
+      },
+      {
+        "t": 28.3,
+        "event": "vel"
+      },
+      {
+        "t": 28.3,
+        "event": "vel"
+      },
+      {
+        "t": 28.3,
+        "event": "vel"
+      },
+      {
+        "t": 28.35,
+        "event": "vel"
+      },
+      {
+        "t": 28.35,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.65,
+        "event": "vel"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.8,
+        "event": "vel"
+      },
+      {
+        "t": 28.8,
+        "event": "vel"
+      },
+      {
+        "t": 28.8,
+        "event": "vel"
+      },
+      {
+        "t": 28.8,
+        "event": "vel"
+      },
+      {
+        "t": 28.85,
+        "event": "vel"
+      },
+      {
+        "t": 28.85,
+        "event": "vel"
+      },
+      {
+        "t": 28.95,
+        "event": "vel"
+      },
+      {
+        "t": 29,
+        "event": "scoop"
+      },
+      {
+        "t": 29.15,
+        "event": "vel"
+      },
+      {
+        "t": 29.2,
+        "event": "vel"
+      },
+      {
+        "t": 29.25,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
+        "event": "vel"
+      },
+      {
+        "t": 29.35,
+        "event": "vel"
+      },
+      {
+        "t": 29.4,
+        "event": "swing"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 29.65,
+        "event": "rv0a"
+      },
+      {
+        "t": 29.65,
+        "event": "cut"
+      },
+      {
+        "t": 29.65,
+        "event": "vel"
+      },
+      {
+        "t": 29.65,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "vel"
+      },
+      {
+        "t": 29.85,
+        "event": "vel"
+      },
+      {
+        "t": 29.85,
+        "event": "vel"
+      },
+      {
+        "t": 29.85,
+        "event": "vel"
+      },
+      {
+        "t": 29.9,
+        "event": "vel"
+      },
+      {
+        "t": 29.9,
+        "event": "vel"
+      },
+      {
+        "t": 29.9,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "rv0b"
+      },
+      {
+        "t": 29.95,
+        "event": "drain0"
+      },
+      {
+        "t": 29.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "vel"
+      },
+      {
+        "t": 29.95,
+        "event": "vel"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.1,
+        "event": "vel"
+      },
+      {
+        "t": 30.2,
+        "event": "vel"
+      },
+      {
+        "t": 30.3,
+        "event": "vel"
+      },
+      {
+        "t": 30.35,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.75,
+        "event": "vel"
+      },
+      {
+        "t": 30.75,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.05,
+        "event": "vel"
+      },
+      {
+        "t": 31.1,
+        "event": "vel"
+      },
+      {
+        "t": 31.35,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.75,
+        "event": "vel"
+      },
+      {
+        "t": 31.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.05,
+        "event": "vel"
+      },
+      {
+        "t": 32.1,
+        "event": "vel"
+      },
+      {
+        "t": 32.35,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 32.75,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.05,
+        "event": "vel"
+      },
+      {
+        "t": 33.35,
+        "event": "vel"
+      },
+      {
+        "t": 33.35,
+        "event": "vel"
+      },
+      {
+        "t": 33.35,
+        "event": "vel"
+      },
+      {
+        "t": 33.35,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.75,
+        "event": "vel"
+      },
+      {
+        "t": 34,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "vel"
+      },
+      {
+        "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.35,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.75,
+        "event": "vel"
+      },
+      {
+        "t": 35,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.05,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "vel"
+      },
+      {
+        "t": 35.35,
+        "event": "vel"
+      },
+      {
+        "t": 35.4,
+        "event": "vel"
+      },
+      {
+        "t": 35.4,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.7,
+        "event": "vel"
+      },
+      {
+        "t": 35.75,
+        "event": "vel"
+      },
+      {
+        "t": 35.95,
+        "event": "reveal"
+      },
+      {
+        "t": 36,
+        "event": "vel"
+      },
+      {
+        "t": 36.05,
+        "event": "vel"
+      },
+      {
+        "t": 36.05,
+        "event": "vel"
+      },
+      {
+        "t": 36.05,
+        "event": "vel"
+      },
+      {
+        "t": 36.05,
+        "event": "vel"
+      },
+      {
+        "t": 36.05,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "vel"
+      },
+      {
+        "t": 36.4,
+        "event": "vel"
+      },
+      {
+        "t": 36.4,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.7,
+        "event": "vel"
+      },
+      {
+        "t": 36.75,
+        "event": "vel"
+      },
+      {
+        "t": 37,
+        "event": "vel"
+      },
+      {
+        "t": 37.05,
+        "event": "vel"
+      },
+      {
+        "t": 37.05,
+        "event": "vel"
+      },
+      {
+        "t": 37.05,
+        "event": "vel"
+      },
+      {
+        "t": 37.05,
+        "event": "vel"
+      },
+      {
+        "t": 37.05,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "climb2a"
+      },
+      {
+        "t": 37.35,
+        "event": "cut"
+      },
+      {
+        "t": 37.65,
+        "event": "climb2b"
+      },
+      {
+        "t": 37.75,
+        "event": "vel"
+      },
+      {
+        "t": 37.75,
+        "event": "vel"
+      },
+      {
+        "t": 37.75,
+        "event": "vel"
+      },
+      {
+        "t": 37.75,
+        "event": "vel"
+      },
+      {
+        "t": 37.8,
+        "event": "vel"
+      },
+      {
+        "t": 37.85,
+        "event": "pour"
+      },
+      {
+        "t": 37.85,
+        "event": "vel"
+      },
+      {
+        "t": 38.1,
+        "event": "swing"
+      },
+      {
+        "t": 38.4,
+        "event": "vel"
+      },
+      {
+        "t": 38.45,
+        "event": "vel"
+      },
+      {
+        "t": 38.45,
+        "event": "vel"
+      },
+      {
+        "t": 38.45,
+        "event": "vel"
+      },
+      {
+        "t": 38.45,
+        "event": "vel"
+      },
+      {
+        "t": 38.5,
+        "event": "vel"
+      },
+      {
+        "t": 38.85,
+        "event": "swing"
+      },
+      {
+        "t": 38.9,
+        "event": "run1a"
+      },
+      {
+        "t": 38.9,
+        "event": "cut"
+      },
+      {
+        "t": 39.05,
+        "event": "vel"
+      },
+      {
+        "t": 39.1,
+        "event": "vel"
+      },
+      {
+        "t": 39.1,
+        "event": "vel"
+      },
+      {
+        "t": 39.1,
+        "event": "vel"
+      },
+      {
+        "t": 39.15,
+        "event": "vel"
+      },
+      {
+        "t": 39.15,
+        "event": "vel"
+      },
+      {
+        "t": 39.2,
+        "event": "run1b"
+      },
+      {
+        "t": 39.2,
+        "event": "run1"
+      },
+      {
+        "t": 39.7,
+        "event": "vel"
+      },
+      {
+        "t": 39.75,
+        "event": "vel"
+      },
+      {
+        "t": 39.75,
+        "event": "vel"
+      },
+      {
+        "t": 39.75,
+        "event": "vel"
+      },
+      {
+        "t": 39.8,
+        "event": "vel"
+      },
+      {
+        "t": 39.8,
+        "event": "vel"
+      },
+      {
+        "t": 40.4,
+        "event": "vel"
+      },
+      {
+        "t": 40.4,
+        "event": "vel"
+      },
+      {
+        "t": 40.4,
+        "event": "vel"
+      },
+      {
+        "t": 40.4,
+        "event": "vel"
+      },
+      {
+        "t": 40.45,
+        "event": "vel"
+      },
+      {
+        "t": 40.5,
+        "event": "vel"
+      },
+      {
+        "t": 41.05,
+        "event": "vel"
+      },
+      {
+        "t": 41.1,
+        "event": "vel"
+      },
+      {
+        "t": 41.1,
+        "event": "vel"
+      },
+      {
+        "t": 41.1,
+        "event": "vel"
+      },
+      {
+        "t": 41.1,
+        "event": "vel"
+      },
+      {
+        "t": 41.15,
+        "event": "vel"
+      },
+      {
+        "t": 41.7,
+        "event": "vel"
+      },
+      {
+        "t": 41.75,
+        "event": "vel"
+      },
+      {
+        "t": 41.75,
+        "event": "vel"
+      },
+      {
+        "t": 41.75,
+        "event": "vel"
+      },
+      {
+        "t": 41.8,
+        "event": "vel"
+      },
+      {
+        "t": 41.8,
+        "event": "vel"
+      },
+      {
+        "t": 42.4,
+        "event": "vel"
+      },
+      {
+        "t": 42.4,
+        "event": "vel"
+      },
+      {
+        "t": 42.4,
+        "event": "vel"
+      },
+      {
+        "t": 42.4,
+        "event": "vel"
+      },
+      {
+        "t": 42.45,
+        "event": "vel"
+      },
+      {
+        "t": 42.5,
+        "event": "vel"
+      },
+      {
+        "t": 43.05,
+        "event": "vel"
+      },
+      {
+        "t": 43.1,
+        "event": "vel"
+      },
+      {
+        "t": 43.1,
+        "event": "vel"
+      },
+      {
+        "t": 43.1,
+        "event": "vel"
+      },
+      {
+        "t": 43.1,
+        "event": "vel"
+      },
+      {
+        "t": 43.15,
+        "event": "vel"
+      },
+      {
+        "t": 43.75,
+        "event": "vel"
+      },
+      {
+        "t": 43.8,
+        "event": "vel"
+      },
+      {
+        "t": 43.8,
+        "event": "vel"
+      },
+      {
+        "t": 43.8,
+        "event": "vel"
+      },
+      {
+        "t": 43.8,
+        "event": "vel"
+      },
+      {
+        "t": 43.85,
+        "event": "vel"
+      },
+      {
+        "t": 44.4,
+        "event": "vel"
+      },
+      {
+        "t": 44.45,
+        "event": "vel"
+      },
+      {
+        "t": 44.45,
+        "event": "vel"
+      },
+      {
+        "t": 44.45,
+        "event": "vel"
+      },
+      {
+        "t": 44.5,
+        "event": "vel"
+      },
+      {
+        "t": 44.5,
+        "event": "vel"
+      },
+      {
+        "t": 45.1,
+        "event": "vel"
+      },
+      {
+        "t": 45.1,
+        "event": "vel"
+      },
+      {
+        "t": 45.1,
+        "event": "vel"
+      },
+      {
+        "t": 45.1,
+        "event": "vel"
+      },
+      {
+        "t": 45.15,
+        "event": "vel"
+      },
+      {
+        "t": 45.2,
+        "event": "vel"
+      },
+      {
+        "t": 45.75,
+        "event": "vel"
+      },
+      {
+        "t": 45.8,
+        "event": "vel"
+      },
+      {
+        "t": 45.8,
+        "event": "vel"
+      },
+      {
+        "t": 45.8,
+        "event": "vel"
+      },
+      {
+        "t": 45.8,
+        "event": "vel"
+      },
+      {
+        "t": 45.85,
+        "event": "vel"
+      },
+      {
+        "t": 46.4,
+        "event": "vel"
+      },
+      {
+        "t": 46.45,
+        "event": "vel"
+      },
+      {
+        "t": 46.45,
+        "event": "vel"
+      },
+      {
+        "t": 46.45,
+        "event": "vel"
+      },
+      {
+        "t": 46.5,
+        "event": "vel"
+      },
+      {
+        "t": 46.5,
+        "event": "vel"
+      },
+      {
+        "t": 47.1,
+        "event": "vel"
+      },
+      {
+        "t": 47.1,
+        "event": "vel"
+      },
+      {
+        "t": 47.1,
+        "event": "vel"
+      },
+      {
+        "t": 47.1,
+        "event": "vel"
+      },
+      {
+        "t": 47.15,
+        "event": "vel"
+      },
+      {
+        "t": 47.2,
+        "event": "vel"
+      },
+      {
+        "t": 47.75,
+        "event": "vel"
+      },
+      {
+        "t": 47.8,
+        "event": "vel"
+      },
+      {
+        "t": 47.8,
+        "event": "vel"
+      },
+      {
+        "t": 47.8,
+        "event": "vel"
+      },
+      {
+        "t": 47.8,
+        "event": "vel"
+      },
+      {
+        "t": 47.85,
+        "event": "vel"
+      },
+      {
+        "t": 48.4,
+        "event": "vel"
+      },
+      {
+        "t": 48.45,
+        "event": "vel"
+      },
+      {
+        "t": 48.45,
+        "event": "vel"
+      },
+      {
+        "t": 48.45,
+        "event": "vel"
+      },
+      {
+        "t": 48.45,
+        "event": "vel"
+      },
+      {
+        "t": 48.5,
+        "event": "vel"
+      },
+      {
+        "t": 49.05,
+        "event": "vel"
+      },
+      {
+        "t": 49.1,
+        "event": "vel"
+      },
+      {
+        "t": 49.1,
+        "event": "vel"
+      },
+      {
+        "t": 49.1,
+        "event": "vel"
+      },
+      {
+        "t": 49.15,
+        "event": "vel"
+      },
+      {
+        "t": 49.15,
+        "event": "vel"
+      },
+      {
+        "t": 49.75,
+        "event": "vel"
+      },
+      {
+        "t": 49.75,
+        "event": "vel"
+      },
+      {
+        "t": 49.75,
+        "event": "vel"
+      },
+      {
+        "t": 49.75,
+        "event": "vel"
+      },
+      {
+        "t": 49.8,
+        "event": "vel"
+      },
+      {
+        "t": 49.85,
+        "event": "vel"
+      },
+      {
+        "t": 50.4,
+        "event": "vel"
+      },
+      {
+        "t": 50.45,
+        "event": "vel"
+      },
+      {
+        "t": 50.45,
+        "event": "vel"
+      },
+      {
+        "t": 50.45,
+        "event": "vel"
+      },
+      {
+        "t": 50.45,
+        "event": "vel"
+      },
+      {
+        "t": 50.5,
+        "event": "vel"
+      },
+      {
+        "t": 51.05,
+        "event": "vel"
+      },
+      {
+        "t": 51.1,
+        "event": "vel"
+      },
+      {
+        "t": 51.1,
+        "event": "vel"
+      },
+      {
+        "t": 51.1,
+        "event": "vel"
+      },
+      {
+        "t": 51.15,
+        "event": "vel"
+      },
+      {
+        "t": 51.15,
+        "event": "vel"
+      },
+      {
+        "t": 51.75,
+        "event": "vel"
+      },
+      {
+        "t": 51.75,
+        "event": "vel"
+      },
+      {
+        "t": 51.75,
+        "event": "vel"
+      },
+      {
+        "t": 51.75,
+        "event": "vel"
+      },
+      {
+        "t": 51.8,
+        "event": "vel"
+      },
+      {
+        "t": 51.85,
+        "event": "vel"
+      },
+      {
+        "t": 52.4,
+        "event": "vel"
+      },
+      {
+        "t": 52.45,
+        "event": "vel"
+      },
+      {
+        "t": 52.45,
+        "event": "vel"
+      },
+      {
+        "t": 52.45,
+        "event": "vel"
+      },
+      {
+        "t": 52.45,
+        "event": "vel"
+      },
+      {
+        "t": 52.5,
+        "event": "vel"
+      },
+      {
+        "t": 53.05,
+        "event": "vel"
+      },
+      {
+        "t": 53.1,
+        "event": "vel"
+      },
+      {
+        "t": 53.1,
+        "event": "vel"
+      },
+      {
+        "t": 53.1,
+        "event": "vel"
+      },
+      {
+        "t": 53.15,
+        "event": "vel"
+      },
+      {
+        "t": 53.15,
+        "event": "vel"
+      },
+      {
+        "t": 53.75,
+        "event": "vel"
+      },
+      {
+        "t": 53.75,
+        "event": "vel"
+      },
+      {
+        "t": 53.75,
+        "event": "vel"
+      },
+      {
+        "t": 53.75,
+        "event": "vel"
+      },
+      {
+        "t": 53.8,
+        "event": "vel"
+      },
+      {
+        "t": 53.85,
+        "event": "vel"
+      },
+      {
+        "t": 54.45,
+        "event": "vel"
+      },
+      {
+        "t": 54.45,
+        "event": "vel"
+      },
+      {
+        "t": 54.45,
+        "event": "vel"
+      },
+      {
+        "t": 54.45,
+        "event": "vel"
+      },
+      {
+        "t": 54.5,
+        "event": "vel"
+      },
+      {
+        "t": 54.55,
+        "event": "vel"
+      },
+      {
+        "t": 55.1,
+        "event": "vel"
+      },
+      {
+        "t": 55.1,
+        "event": "vel"
+      },
+      {
+        "t": 55.1,
+        "event": "vel"
+      },
+      {
+        "t": 55.1,
+        "event": "vel"
+      },
+      {
+        "t": 55.15,
+        "event": "vel"
+      },
+      {
+        "t": 55.2,
+        "event": "vel"
+      },
+      {
+        "t": 55.75,
+        "event": "vel"
+      },
+      {
+        "t": 55.8,
+        "event": "vel"
+      },
+      {
+        "t": 55.8,
+        "event": "vel"
+      },
+      {
+        "t": 55.8,
+        "event": "vel"
+      },
+      {
+        "t": 55.8,
+        "event": "vel"
+      },
+      {
+        "t": 55.85,
+        "event": "vel"
+      },
+      {
+        "t": 56.4,
+        "event": "vel"
+      },
+      {
+        "t": 56.45,
+        "event": "vel"
+      },
+      {
+        "t": 56.45,
+        "event": "vel"
+      },
+      {
+        "t": 56.45,
+        "event": "vel"
+      },
+      {
+        "t": 56.5,
+        "event": "vel"
+      },
+      {
+        "t": 56.5,
+        "event": "vel"
+      },
+      {
+        "t": 57.1,
+        "event": "vel"
+      },
+      {
+        "t": 57.1,
+        "event": "vel"
+      },
+      {
+        "t": 57.1,
+        "event": "vel"
+      },
+      {
+        "t": 57.1,
+        "event": "vel"
+      },
+      {
+        "t": 57.15,
+        "event": "vel"
+      },
+      {
+        "t": 57.2,
+        "event": "vel"
+      },
+      {
+        "t": 57.4,
+        "event": "back1a"
+      },
+      {
+        "t": 57.4,
+        "event": "cut"
+      },
+      {
+        "t": 57.7,
+        "event": "back1b"
+      },
+      {
+        "t": 57.75,
+        "event": "vel"
+      },
+      {
+        "t": 57.75,
+        "event": "vel"
+      },
+      {
+        "t": 57.75,
+        "event": "vel"
+      },
+      {
+        "t": 57.75,
+        "event": "vel"
+      },
+      {
+        "t": 57.8,
+        "event": "vel"
+      },
+      {
+        "t": 57.8,
+        "event": "vel"
+      },
+      {
+        "t": 58.25,
+        "event": "place"
+      },
+      {
+        "t": 58.25,
+        "event": "swing"
+      },
+      {
+        "t": 58.25,
+        "event": "vel"
+      },
+      {
+        "t": 58.25,
+        "event": "vel"
+      },
+      {
+        "t": 58.25,
+        "event": "vel"
+      },
+      {
+        "t": 58.25,
+        "event": "vel"
+      },
+      {
+        "t": 58.3,
+        "event": "water"
+      },
+      {
+        "t": 58.3,
+        "event": "vel"
+      },
+      {
+        "t": 58.3,
+        "event": "vel"
+      },
+      {
+        "t": 58.65,
+        "event": "swing"
+      },
+      {
+        "t": 58.7,
+        "event": "follow"
+      },
+      {
+        "t": 58.7,
+        "event": "follow1"
+      },
+      {
+        "t": 58.75,
+        "event": "vel"
+      },
+      {
+        "t": 58.75,
+        "event": "vel"
+      },
+      {
+        "t": 58.75,
+        "event": "vel"
+      },
+      {
+        "t": 58.75,
+        "event": "vel"
+      },
+      {
+        "t": 58.8,
+        "event": "vel"
+      },
+      {
+        "t": 58.8,
+        "event": "vel"
+      },
+      {
+        "t": 59.2,
+        "event": "vel"
+      },
+      {
+        "t": 59.25,
+        "event": "vel"
+      },
+      {
+        "t": 59.25,
+        "event": "vel"
+      },
+      {
+        "t": 59.25,
+        "event": "vel"
+      },
+      {
+        "t": 59.25,
+        "event": "vel"
+      },
+      {
+        "t": 59.3,
+        "event": "vel"
+      },
+      {
+        "t": 59.7,
+        "event": "vel"
+      },
+      {
+        "t": 59.75,
+        "event": "vel"
+      },
+      {
+        "t": 59.75,
+        "event": "vel"
+      },
+      {
+        "t": 59.75,
+        "event": "vel"
+      },
+      {
+        "t": 59.75,
+        "event": "vel"
+      },
+      {
+        "t": 59.8,
+        "event": "vel"
+      },
+      {
+        "t": 60.2,
+        "event": "vel"
+      },
+      {
+        "t": 60.25,
+        "event": "vel"
+      },
+      {
+        "t": 60.25,
+        "event": "vel"
+      },
+      {
+        "t": 60.25,
+        "event": "vel"
+      },
+      {
+        "t": 60.25,
+        "event": "vel"
+      },
+      {
+        "t": 60.3,
+        "event": "vel"
+      },
+      {
+        "t": 60.7,
+        "event": "vel"
+      },
+      {
+        "t": 60.75,
+        "event": "vel"
+      },
+      {
+        "t": 60.75,
+        "event": "vel"
+      },
+      {
+        "t": 60.75,
+        "event": "vel"
+      },
+      {
+        "t": 60.75,
+        "event": "vel"
+      },
+      {
+        "t": 60.8,
+        "event": "vel"
+      },
+      {
+        "t": 61.2,
+        "event": "vel"
+      },
+      {
+        "t": 61.25,
+        "event": "vel"
+      },
+      {
+        "t": 61.25,
+        "event": "vel"
+      },
+      {
+        "t": 61.25,
+        "event": "vel"
+      },
+      {
+        "t": 61.25,
+        "event": "vel"
+      },
+      {
+        "t": 61.3,
+        "event": "vel"
+      },
+      {
+        "t": 61.7,
+        "event": "vel"
+      },
+      {
+        "t": 61.75,
+        "event": "vel"
+      },
+      {
+        "t": 61.75,
+        "event": "vel"
+      },
+      {
+        "t": 61.75,
+        "event": "vel"
+      },
+      {
+        "t": 61.75,
+        "event": "vel"
+      },
+      {
+        "t": 61.8,
+        "event": "vel"
+      },
+      {
+        "t": 62.2,
+        "event": "vel"
+      },
+      {
+        "t": 62.25,
+        "event": "vel"
+      },
+      {
+        "t": 62.25,
+        "event": "vel"
+      },
+      {
+        "t": 62.25,
+        "event": "vel"
+      },
+      {
+        "t": 62.25,
+        "event": "vel"
+      },
+      {
+        "t": 62.3,
+        "event": "vel"
+      },
+      {
+        "t": 62.7,
+        "event": "vel"
+      },
+      {
+        "t": 62.75,
+        "event": "vel"
+      },
+      {
+        "t": 62.75,
+        "event": "vel"
+      },
+      {
+        "t": 62.75,
+        "event": "vel"
+      },
+      {
+        "t": 62.75,
+        "event": "vel"
+      },
+      {
+        "t": 62.8,
+        "event": "vel"
+      },
+      {
+        "t": 63.1,
+        "event": "scoop"
+      },
+      {
+        "t": 63.1,
+        "event": "scoop1"
+      },
+      {
+        "t": 63.25,
+        "event": "vel"
+      },
+      {
+        "t": 63.3,
+        "event": "vel"
+      },
+      {
+        "t": 63.3,
+        "event": "vel"
+      },
+      {
+        "t": 63.3,
+        "event": "vel"
+      },
+      {
+        "t": 63.3,
+        "event": "vel"
+      },
+      {
+        "t": 63.35,
+        "event": "vel"
+      },
+      {
+        "t": 63.5,
+        "event": "swing"
+      },
+      {
+        "t": 63.7,
+        "event": "vel"
+      },
+      {
+        "t": 63.7,
+        "event": "vel"
+      },
+      {
+        "t": 63.7,
+        "event": "vel"
+      },
+      {
+        "t": 63.7,
+        "event": "vel"
+      },
+      {
+        "t": 63.7,
+        "event": "vel"
+      },
+      {
+        "t": 63.75,
+        "event": "rv1a"
+      },
+      {
+        "t": 63.75,
+        "event": "cut"
+      },
+      {
+        "t": 63.75,
+        "event": "vel"
+      },
+      {
+        "t": 64,
+        "event": "vel"
+      },
+      {
+        "t": 64.05,
+        "event": "rv1b"
+      },
+      {
+        "t": 64.05,
+        "event": "drain1"
+      },
+      {
+        "t": 64.05,
+        "event": "vel"
+      },
+      {
+        "t": 64.05,
+        "event": "vel"
+      },
+      {
+        "t": 64.05,
+        "event": "vel"
+      },
+      {
+        "t": 64.05,
+        "event": "vel"
+      },
+      {
+        "t": 64.05,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.35,
+        "event": "vel"
+      },
+      {
+        "t": 64.4,
+        "event": "vel"
+      },
+      {
+        "t": 64.4,
+        "event": "vel"
+      },
+      {
+        "t": 64.7,
+        "event": "vel"
+      },
+      {
+        "t": 64.7,
+        "event": "vel"
+      },
+      {
+        "t": 64.7,
+        "event": "vel"
+      },
+      {
+        "t": 64.7,
+        "event": "vel"
+      },
+      {
+        "t": 64.7,
+        "event": "vel"
+      },
+      {
+        "t": 64.75,
+        "event": "vel"
+      },
+      {
+        "t": 65,
+        "event": "vel"
+      },
+      {
+        "t": 65.05,
+        "event": "vel"
+      },
+      {
+        "t": 65.05,
+        "event": "vel"
+      },
+      {
+        "t": 65.05,
+        "event": "vel"
+      },
+      {
+        "t": 65.05,
+        "event": "vel"
+      },
+      {
+        "t": 65.05,
+        "event": "vel"
+      },
+      {
+        "t": 65.35,
+        "event": "vel"
+      },
+      {
+        "t": 65.35,
+        "event": "vel"
+      },
+      {
+        "t": 65.35,
+        "event": "vel"
+      },
+      {
+        "t": 65.35,
+        "event": "vel"
+      },
+      {
+        "t": 65.4,
+        "event": "vel"
+      },
+      {
+        "t": 65.4,
+        "event": "vel"
+      },
+      {
+        "t": 65.7,
+        "event": "vel"
+      },
+      {
+        "t": 65.7,
+        "event": "vel"
+      },
+      {
+        "t": 65.7,
+        "event": "vel"
+      },
+      {
+        "t": 65.7,
+        "event": "vel"
+      },
+      {
+        "t": 65.7,
+        "event": "vel"
+      },
+      {
+        "t": 65.75,
+        "event": "vel"
+      },
+      {
+        "t": 66,
+        "event": "vel"
+      },
+      {
+        "t": 66,
+        "event": "vel"
+      },
+      {
+        "t": 66,
+        "event": "vel"
+      },
+      {
+        "t": 66,
+        "event": "vel"
+      },
+      {
+        "t": 66.05,
+        "event": "vel"
+      },
+      {
+        "t": 66.05,
+        "event": "vel"
+      },
+      {
+        "t": 66.35,
+        "event": "vel"
+      },
+      {
+        "t": 66.35,
+        "event": "vel"
+      },
+      {
+        "t": 66.35,
+        "event": "vel"
+      },
+      {
+        "t": 66.35,
+        "event": "vel"
+      },
+      {
+        "t": 66.35,
+        "event": "vel"
+      },
+      {
+        "t": 66.4,
+        "event": "vel"
+      },
+      {
+        "t": 66.65,
+        "event": "vel"
+      },
+      {
+        "t": 66.7,
+        "event": "vel"
+      },
+      {
+        "t": 66.7,
+        "event": "vel"
+      },
+      {
+        "t": 66.7,
+        "event": "vel"
+      },
+      {
+        "t": 66.7,
+        "event": "vel"
+      },
+      {
+        "t": 66.7,
+        "event": "vel"
+      },
+      {
+        "t": 67,
+        "event": "vel"
+      },
+      {
+        "t": 67,
+        "event": "vel"
+      },
+      {
+        "t": 67,
+        "event": "vel"
+      },
+      {
+        "t": 67,
+        "event": "vel"
+      },
+      {
+        "t": 67.05,
+        "event": "vel"
+      },
+      {
+        "t": 67.05,
+        "event": "vel"
+      },
+      {
+        "t": 67.35,
+        "event": "vel"
+      },
+      {
+        "t": 67.35,
+        "event": "vel"
+      },
+      {
+        "t": 67.35,
+        "event": "vel"
+      },
+      {
+        "t": 67.35,
+        "event": "vel"
+      },
+      {
+        "t": 67.35,
+        "event": "vel"
+      },
+      {
+        "t": 67.4,
+        "event": "vel"
+      },
+      {
+        "t": 67.65,
+        "event": "vel"
+      },
+      {
+        "t": 67.7,
+        "event": "vel"
+      },
+      {
+        "t": 67.7,
+        "event": "vel"
+      },
+      {
+        "t": 67.7,
+        "event": "vel"
+      },
+      {
+        "t": 67.7,
+        "event": "vel"
+      },
+      {
+        "t": 67.7,
+        "event": "vel"
+      },
+      {
+        "t": 68,
+        "event": "vel"
+      },
+      {
+        "t": 68,
+        "event": "vel"
+      },
+      {
+        "t": 68,
+        "event": "vel"
+      },
+      {
+        "t": 68,
+        "event": "vel"
+      },
+      {
+        "t": 68.05,
+        "event": "vel"
+      },
+      {
+        "t": 68.05,
+        "event": "vel"
+      },
+      {
+        "t": 68.35,
+        "event": "vel"
+      },
+      {
+        "t": 68.35,
+        "event": "vel"
+      },
+      {
+        "t": 68.35,
+        "event": "vel"
+      },
+      {
+        "t": 68.35,
+        "event": "vel"
+      },
+      {
+        "t": 68.35,
+        "event": "vel"
+      },
+      {
+        "t": 68.4,
+        "event": "vel"
+      },
+      {
+        "t": 68.65,
+        "event": "vel"
+      },
+      {
+        "t": 68.7,
+        "event": "vel"
+      },
+      {
+        "t": 68.7,
+        "event": "vel"
+      },
+      {
+        "t": 68.7,
+        "event": "vel"
+      },
+      {
+        "t": 68.7,
+        "event": "vel"
+      },
+      {
+        "t": 68.7,
+        "event": "vel"
+      },
+      {
+        "t": 69,
+        "event": "vel"
+      },
+      {
+        "t": 69,
+        "event": "vel"
+      },
+      {
+        "t": 69,
+        "event": "vel"
+      },
+      {
+        "t": 69,
+        "event": "vel"
+      },
+      {
+        "t": 69.05,
+        "event": "vel"
+      },
+      {
+        "t": 69.05,
+        "event": "vel"
+      },
+      {
+        "t": 69.35,
+        "event": "vel"
+      },
+      {
+        "t": 69.35,
+        "event": "vel"
+      },
+      {
+        "t": 69.35,
+        "event": "vel"
+      },
+      {
+        "t": 69.35,
+        "event": "vel"
+      },
+      {
+        "t": 69.35,
+        "event": "vel"
+      },
+      {
+        "t": 69.4,
+        "event": "vel"
+      },
+      {
+        "t": 69.65,
+        "event": "vel"
+      },
+      {
+        "t": 69.65,
+        "event": "vel"
+      },
+      {
+        "t": 69.65,
+        "event": "vel"
+      },
+      {
+        "t": 69.65,
+        "event": "vel"
+      },
+      {
+        "t": 69.7,
+        "event": "vel"
+      },
+      {
+        "t": 69.7,
+        "event": "vel"
+      },
+      {
+        "t": 70,
+        "event": "vel"
+      },
+      {
+        "t": 70,
+        "event": "vel"
+      },
+      {
+        "t": 70,
+        "event": "vel"
+      },
+      {
+        "t": 70,
+        "event": "vel"
+      },
+      {
+        "t": 70,
+        "event": "vel"
+      },
+      {
+        "t": 70.05,
+        "event": "vel"
+      },
+      {
+        "t": 70.3,
+        "event": "vel"
+      },
+      {
+        "t": 70.35,
+        "event": "vel"
+      },
+      {
+        "t": 70.35,
+        "event": "vel"
+      },
+      {
+        "t": 70.35,
+        "event": "vel"
+      },
+      {
+        "t": 70.35,
+        "event": "vel"
+      },
+      {
+        "t": 70.35,
+        "event": "vel"
+      },
+      {
+        "t": 70.6,
+        "event": "final"
+      },
+      {
+        "t": 70.65,
+        "event": "vel"
+      },
+      {
+        "t": 70.65,
+        "event": "vel"
+      },
+      {
+        "t": 70.65,
+        "event": "vel"
+      },
+      {
+        "t": 70.65,
+        "event": "vel"
+      },
+      {
+        "t": 70.7,
+        "event": "vel"
+      },
+      {
+        "t": 70.7,
+        "event": "vel"
+      },
+      {
+        "t": 71,
+        "event": "vel"
+      },
+      {
+        "t": 71,
+        "event": "vel"
+      },
+      {
+        "t": 71,
+        "event": "vel"
+      },
+      {
+        "t": 71,
+        "event": "vel"
+      },
+      {
+        "t": 71,
+        "event": "vel"
+      },
+      {
+        "t": 71.05,
+        "event": "vel"
+      },
+      {
+        "t": 71.3,
+        "event": "vel"
+      },
+      {
+        "t": 71.35,
+        "event": "vel"
+      },
+      {
+        "t": 71.35,
+        "event": "vel"
+      },
+      {
+        "t": 71.35,
+        "event": "vel"
+      },
+      {
+        "t": 71.35,
+        "event": "vel"
+      },
+      {
+        "t": 71.35,
+        "event": "vel"
+      },
+      {
+        "t": 71.65,
+        "event": "vel"
+      },
+      {
+        "t": 71.65,
+        "event": "vel"
+      },
+      {
+        "t": 71.65,
+        "event": "vel"
+      },
+      {
+        "t": 71.65,
+        "event": "vel"
+      },
+      {
+        "t": 71.7,
+        "event": "vel"
+      },
+      {
+        "t": 71.7,
+        "event": "vel"
+      },
+      {
+        "t": 72,
+        "event": "vel"
+      },
+      {
+        "t": 72.05,
+        "event": "vel"
+      },
+      {
+        "t": 72.05,
+        "event": "vel"
+      },
+      {
+        "t": 72.05,
+        "event": "vel"
+      },
+      {
+        "t": 72.1,
+        "event": "vel"
+      },
+      {
+        "t": 72.15,
+        "event": "vel"
+      },
+      {
+        "t": 72.2,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "d2c518c9634613a877e6200e9fb9536bb3cbc790",
+    "rendered_at": "2026-11-07T21:14:01.416Z",
+    "head_at_publish": "d2c518c9634613a877e6200e9fb9536bb3cbc790",
+    "stunt": "stunts/lava_cast.js",
+    "source_snapshot": [
+      "source/lava_cast.js",
+      "source/_site.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout d2c518c96346",
+    "gunzip -c shorts/lava_cast/recording.json.gz > work/lava_cast.rec.json",
+    "node render.js work/lava_cast.rec.json work/lava_cast.frames 60 1080 1011",
+    "python3 audio.py work/lava_cast.rec.json work/lava_cast.wav",
+    "python3 edit.py --frames work/lava_cast.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lava_cast.rec.json --audio work/lava_cast.wav --caption \"satisfying lava cast \ud83d\ude0c\" --red lava --subs \"[[\\\"pour\\\",\\\"layer 1\\\",1.4,0],[\\\"pour\\\",\\\"layer 2\\\",1.4,1]]\" --subs_y 0.1 --speed [[\"run0a\",\"run0b\",\"cut\"],[\"run0\",\"back0a\",3],[\"back0a\",\"back0b\",\"cut\"],[\"follow\",\"scoop\",2],[\"rv0a\",\"rv0b\",\"cut\"],[\"drain0\",\"reveal\",2],[\"climb2a\",\"climb2b\",\"cut\"],[\"run1a\",\"run1b\",\"cut\"],[\"run1\",\"back1a\",3],[\"back1a\",\"back1b\",\"cut\"],[\"follow1\",\"scoop1\",2],[\"rv1a\",\"rv1b\",\"cut\"],[\"drain1\",\"final\",2]] --cards \"[[\\\"reveal\\\",\\\"LAYER 1 \u2705\\\",0.9,\\\"white\\\"],[\\\"final\\\",\\\"LAYER 2 \ud83d\ude0c\\\",0.95,\\\"gold\\\"]]\" --hook \"{\\\"at\\\":\\\"back0a\\\",\\\"before\\\":1.4,\\\"after\\\":-0.05,\\\"text\\\":\\\"wait for the end \ud83d\ude0c\\\"}\" --start_at pour:-0.15 --end_after final:0.95 --out out/lava_cast.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 4: v16, two-layer lava cast on a built hill on natural ground. Final reveal from the field in front, standing, so the layer-2 ridges read on the first shell. Independent review ready, no blockers. Nitpicks left: two 6-7 s lava runs at 3x (front advancing), lava visible under water ~0.2 s before converting (possible engine timing), a 1-frame judder in the hook preview, the held bucket over the east edge of the shell at the end.",
+  "published_at": "2026-11-07T21:23:17.733Z"
+}
