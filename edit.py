@@ -818,6 +818,7 @@ def main():
     ap.add_argument("--punch", help='JSON list of EVENT or [EVENT, NTH, SCALE] zoom punches on the game view')
     ap.add_argument("--counter", help='JSON {"at": [EVENT, ...], "total": N} "3/5" beat counter')
     ap.add_argument("--cards", help='JSON list of [EVENT, TEXT, SECONDS?, COLOR?, NTH?] impact cards')
+    ap.add_argument("--zoom", help='JSON list of [START[:off], END[:off], SCALE] held push-ins on the game view')
     ap.add_argument("--shake", help='JSON list of EVENT or [EVENT, NTH, PX] screen shakes on the game view')
     ap.add_argument("--flash", help='JSON list of EVENT or [EVENT, NTH, ALPHA] white flashes on the game view')
     ap.add_argument("--freeze", help='JSON list of [EVENT, SECONDS, TEXT?, COLOR?] freeze frames with a stamped text')
@@ -852,7 +853,7 @@ def main():
     args.start = math.floor(args.start * args.fps + 1e-6) / args.fps
     sys.path.insert(0, str(HERE / "scripts"))
     import retention
-    if (args.punch or args.shake or args.flash or args.freeze) and args.timeline and args.frames:
+    if (args.punch or args.shake or args.flash or args.freeze or args.zoom) and args.timeline and args.frames:
         retention.apply_frame_fx(args, json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))

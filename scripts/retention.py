@@ -12,6 +12,8 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
            or [EVENT, ...]                         view, popping up on each mark
   cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?]]  big impact text popping on a mark ("10/10",
                                                    "NO WAY"); COLOR: white|red|green|yellow|blue|gold
+  zoom:    [[START[:off], END[:off], SCALE]]       a held push-in on the crosshair (eases in 0.4 s,
+                                                   back out over 0.25 s after END); multiplies with punch
   shake:   [EVENT | [EVENT, NTH, PX]]             screen shake on the game view (default 16 px, 0.35 s)
   flash:   [EVENT | [EVENT, NTH, ALPHA]]          white flash on the game view (0.7, ~0.2 s)
   freeze:  [[EVENT, SECONDS, TEXT?, COLOR?]]      freeze frame on a mark with a slow push-in and a
@@ -132,6 +134,8 @@ def _marks(spec, timeline, default):
         p = [p] if isinstance(p, str) else list(p)
         ts = event_times(timeline, p[0])
         nth = int(p[1]) if len(p) > 1 else 0
+        if not ts and event_at(timeline, p[0]) is not None:   # 'EVENT:OFFSET_S'
+            ts = [event_at(timeline, p[0])]
         if len(ts) > nth:
             out.append((ts[nth], float(p[2]) if len(p) > 2 else default))
     return out
@@ -146,6 +150,28 @@ def shake_offset(dt, px, dur=0.35, seed=0):
     return a * math.sin(k * 2.39 + 0.7), a * math.cos(k * 1.71 + 2.1)
 
 
+def event_at(timeline, name):
+    """Output time of 'EVENT' or 'EVENT:OFFSET_S' (first occurrence), or None."""
+    ts = event_times(timeline, name)
+    if ts:
+        return ts[0]
+    k, _, off = str(name).rpartition(":")
+    try:
+        ts = event_times(timeline, k)
+        return ts[0] + float(off) if ts else None
+    except ValueError:
+        return None
+
+
+def zoom_curve(t, a, b, scale, ease_in=0.4, ease_out=0.25):
+    """Held zoom over [a, b]: smoothstep up to `scale` over ease_in, held, back to 1 over ease_out after b."""
+    if t < a or t > b + ease_out:
+        return 1.0
+    sm = lambda k: k * k * (3 - 2 * k)
+    k = sm(min(1.0, (t - a) / ease_in)) if t < b else sm(max(0.0, 1 - (t - b) / ease_out))
+    return 1 + (scale - 1) * k
+
+
 def apply_frame_fx(args, timeline):
     """Rewrite the frame sequence with the game-view effects (symlinks for untouched frames):
     zoom punches, screen shakes, white flashes, and a slow push-in on freeze frames. Runs after the
@@ -157,7 +183,14 @@ def apply_frame_fx(args, timeline):
     flashes = _marks(args.flash, timeline, 0.7)
     pushes = [(ts[0], float(f[1]) if len(f) > 1 else 0.6) for f in _load(args.freeze)
               for ts in [event_times(timeline, f[0])] if ts]
-    if not (punches or shakes or flashes or pushes):
+    zooms = []   # [[START[:off], END[:off], SCALE]]: a held push-in on the crosshair (one_in_a_million's falls)
+    for zs in _load(getattr(args, "zoom", None)):
+        a_, b_ = event_at(timeline, zs[0]), event_at(timeline, zs[1])
+        if a_ is not None and b_ is not None and b_ > a_:
+            zooms.append((a_, b_, float(zs[2]) if len(zs) > 2 else 1.5))
+        else:
+            print(f"zoom {zs} skipped (event missing or empty)")
+    if not (punches or shakes or flashes or pushes or zooms):
         return
     src = pathlib.Path(args.frames)
     files = sorted(src.parent.glob("*" + src.suffix))
@@ -170,6 +203,8 @@ def apply_frame_fx(args, timeline):
             continue
         t = i / args.fps
         z = max([punch_curve(t - m, peak) for m, peak in punches] + [1.0])
+        for a_, b_, sc in zooms:   # composes with punches and shakes: the scales multiply
+            z *= zoom_curve(t, a_, b_, sc)
         for m, secs in pushes:   # freeze: a slow push-in so the held frame never sits still
             if m - 1e-6 <= t < m + secs:
                 z = max(z, 1 + 0.10 * (1 - (1 - (t - m) / secs) ** 2))
@@ -194,7 +229,7 @@ def apply_frame_fx(args, timeline):
             n += 1
         else:
             out.symlink_to(f.resolve())
-    print(f"frame fx: {n} frames ({len(punches)} punches, {len(shakes)} shakes, {len(flashes)} flashes, {len(pushes)} freezes)")
+    print(f"frame fx: {n} frames ({len(punches)} punches, {len(shakes)} shakes, {len(flashes)} flashes, {len(pushes)} freezes, {len(zooms)} zooms)")
     args.frames = str(wd / src.name)
 
 
