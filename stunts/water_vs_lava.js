@@ -12,9 +12,9 @@ const L = 21   // lake length (rows lz 0..L-1; 15 wide). 15 rows crossed in 3 po
 module.exports = {
   name: 'water_vs_lava',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: 'pouring water on a lava lake 😳',
+  caption: 'can ONE water bucket delete a lava lake? 😳',
   edit: {
-    subsY: 0.15, caption: 'pouring water on a lava lake 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'end_look',
+    subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', song: 'songs/misery.mp3', dropAt: 'end_look',
     startAt: 'pour:-0.4', endAfter: 'end_look:1.05'
   },
 
@@ -119,8 +119,8 @@ module.exports = {
     // left to run longer than the last: the black spreads wider until the lake is gone (~30 s total)
     ctx.mark('finale')
     await ctx.easeLook(Math.PI, -0.75, 450)               // facing back south (mineflayer yaw 0 = north), down at the path
-    const stops = [3, 6, 9, 12, 15, 18]
-    let flow = 10
+    const stops = [5, 15]   // two stops, both sides, long runs: 6 stops of short pours were 4-5 s of walking apart, mostly off screen
+    const flow = 40
     const lavaLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (at(a, b, G - 1)?.name === 'lava') n++; return n }
     // walk on the world axis to (lx, lz) whatever the view (controls picked against it), eyes on `aim`
     const stepTo = async (lx, lz, aim) => {
@@ -161,16 +161,18 @@ module.exports = {
         const sx = Math.abs(ox - 7) > 2 ? ox - 2 * dir : 7
         if (sx !== 7) await stepTo(sx, sz, cell(ox, sz, -0.3))
         await pourScoop(ox, sz, cell(ox, sz, -0.04), flow, 280)
-        flow = Math.min(24, flow + 2)
-        if (sx !== 7) await stepTo(7, sz, cell(7, Math.min(L - 1, sz + 3), -0.3))
+        if (!lavaLeft()) break
+        // back to the path eyes on the other side's lava (looking at the path turned away from the action)
+        if (sx !== 7) await stepTo(7, sz, cell(dir > 0 ? 2 : 12, sz, -0.3))
       }
       await ctx.easeLook(Math.PI, -0.6, 250)
     }
+    // the payoff lands on the last lava going (on screen), then a wide look over the whole black lake
+    for (let k = 0; k < 60 && lavaLeft(); k++) await bot.waitForTicks(1)
     ctx.log('lava left', lavaLeft())
-    await bot.waitForTicks(8)                                // the last pour's water drains before the look (it covered the payoff)
     // stand on it: look out over the black field
     ctx.mark('end_look')
-    await ctx.easeLook(0.35, -0.4, 1000)                  // turn round: the whole lake behind is black
+    await ctx.easeLook(0.35, -0.25, 1000)                 // turn round, wide: the whole lake behind is black
     bot.removeListener('blockUpdate', onBlock)
 
     let lava = 0, obs = 0
