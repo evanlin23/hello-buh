@@ -475,7 +475,10 @@ def snap_hotbar(timeline):
     out, server, shown, pend = [], None, None, {}   # pend: slot -> [use times not yet confirmed]
 
     def emit(t, base, items):
-        out.append({**base, "event": "hotbar", "t": t, "items": [list(x) if x else None for x in items], "snapped": True})
+        # (no "slot": the event is about the stack, not the selection. A delayed eye count-drop carried
+        # the place mark's old slot past the stunt's select() and jumped back to the empty slot: worker 4)
+        ev = {k: v for k, v in base.items() if k != "slot"}
+        out.append({**ev, "event": "hotbar", "t": t, "items": [list(x) if x else None for x in items], "snapped": True})
 
     for e in sorted(timeline, key=lambda e: e["t"]):
         t = e["t"]
