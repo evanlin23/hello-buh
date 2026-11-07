@@ -28,18 +28,25 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
-    // no cleared box: each ring on its own level patch of the natural ground (the ring and the two rows
-    // south of it where the bot stands, nothing overhead)
+    // no cleared box: each ring on its own patch of the natural ground (within a block of level, the
+    // ring's 5x5 then levelled: at most a one-block step), nothing overhead
+    // a retry respawns wherever the last attempt ended (once underground): back to the biome first
+    await ctx.locateBiome(this.biome)
     const g = ctx.findLand(bot.entity.position.x | 0, bot.entity.position.z | 0)
     if (!g) throw new Error('no dry land')
     await ctx.defaultRules()
     await ctx.cmd('/kill @e[type=!player,distance=..150]')
-    this.spots = await openSpots(ctx, g.x, g.z, Array(RINGS).fill(4), { axis: 'x', gap: 8, foot: [-1, 5, -1, 6], level: [0, 4, 0, 4], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N, spread: 96 })
+    this.spots = await openSpots(ctx, g.x, g.z, Array(RINGS).fill(2), { axis: 'x', gap: 8, foot: [0, 4, 0, 6], side: Array.from({ length: 41 }, (_, i) => (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 4), tries: 140, min: N, spread: 96 })
     // empty rings, every frame facing the middle (vanilla needs that for the portal to form)
     for (const S of this.spots) {
       const X = S.x, z = S.z, y = S.floor + 1
       ctx.log('ring at', S)
       await clearPlants(ctx, X - 1, y - 1, z - 1, X + 5, y + 2, z + 7)   // the grass and flowers on the patch (plants only)
+      // the ring's 5x5 level with its floor: a block of ground off where it stood a block higher, filled
+      // where it stood a block lower (the patch was within a block of level)
+      await ctx.cmd(`/fill ${X} ${y} ${z} ${X + 4} ${y + 1} ${z + 4} air`)
+      await ctx.cmd(`/fill ${X} ${y - 1} ${z} ${X + 4} ${y - 1} ${z + 4} grass_block`)
+      await ctx.cmd(`/fill ${X} ${y - 2} ${z} ${X + 4} ${y - 2} ${z + 4} dirt replace air`)
       for (let i = 1; i <= 3; i++) {
         await ctx.cmd(`/setblock ${X + i} ${y} ${z} end_portal_frame[facing=south,eye=false]`)
         await ctx.cmd(`/setblock ${X + i} ${y} ${z + 4} end_portal_frame[facing=north,eye=false]`)
