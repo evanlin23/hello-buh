@@ -189,9 +189,12 @@ module.exports = {
         await ctx.easeLookAt(new Vec3(t1.cx + 4.5, floor - 0.5, t1.zf), 800)
       } else {
         // walk up to the crater, looking into it
-        await ctx.easeLook(bot.entity.yaw - 0.15, -0.2, 300)
+        // eyes on the crater the whole way (walking while looking at plain grass read as a frozen frame)
+        const hole = new Vec3(t.cx + 0.5, floor - 1, t.zf - t.d / 2 + 0.5)
+        await ctx.easeLookAt(hole, 300)
         bot.setControlState('forward', true)
-        for (let k = 0; k < 40; k++) {
+        for (let k = 0; k < 30; k++) {
+          if (k % 4 === 0) ctx.easeLookAt(hole.offset(k % 8 ? 0.8 : -0.8, 0, 0), 200)
           const p = bot.entity.position
           const ahead = bot.blockAt(new Vec3(Math.floor(p.x), floor, Math.floor(p.z - 2)))
           if (!ahead || ahead.name === 'air' || p.z < t.zf + 2) break
