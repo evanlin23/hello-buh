@@ -8,8 +8,8 @@ const LANES = [-64, -32, 0, 32, 64]   // 32 apart: blasts and flung TNT don't wr
 // stop: the front stops this far from the bot (a real near miss, outside TNT's ~8-block damage range,
 // and its smoke stays off the camera); waves 1-3 stop, wave 4 doesn't
 const WAVES = [
-  { every: 3, dxs: [-2, 0, 2], gap: 20, stop: 9, sub: 'wave 1: easy' },   // (every 4 from 14 out crept: 4 s of smoke wall)
-  { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 25, stop: 9, sub: 'wave 2: wider' },
+  { every: 3, dxs: [-2, 0, 2], gap: 22, stop: 9, sub: 'wave 1: easy' },   // (every 4 from 14 out crept: 4 s of smoke wall)
+  { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 27, stop: 9, sub: 'wave 2: wider' },
   { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 26, stop: 9, sub: 'wave 3: WIDER' },
   { every: 2, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 38, stop: 8, sub: 'wave 4: faster AND wider' },   // stop 7 + the blasts' knockback held the gap inside the damage range: dead in wave 3
   { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 32, stop: 0, sub: 'wave 5...' }      // a real chase that catches you
