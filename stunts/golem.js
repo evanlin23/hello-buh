@@ -7,11 +7,12 @@
 // player-attributed /damage so its retaliation fires at once (left alone, a golem wandered for ~4 s).
 const BEATS = [
   // launches: how many times the golems juggle you before the cut (escalates; the last beat kills)
-  { villagers: 1, golems: 1, dx: -64, launches: 1, sub: '1 villager' },
-  { villagers: 3, golems: 3, dx: -32, launches: 2, sub: '3 villagers' },
-  { villagers: 5, golems: 5, dx: 0, launches: 3, sub: '5 villagers' },
-  { villagers: 10, golems: 10, dx: 32, launches: 5, sub: '10 villagers' },
-  { villagers: 20, golems: 20, dx: 64, launches: 1, sub: '20 villagers...' }
+  { villagers: 1, golems: 1, dx: -80, launches: 1, sub: '1 villager' },
+  { villagers: 3, golems: 3, dx: -48, launches: 2, sub: '3 villagers' },
+  { villagers: 5, golems: 5, dx: -16, launches: 3, sub: '5 villagers' },
+  { villagers: 7, golems: 7, dx: 16, launches: 3, sub: '7 villagers' },      // (five villages ran 25.9 s)
+  { villagers: 10, golems: 10, dx: 48, launches: 5, sub: '10 villagers' },
+  { villagers: 20, golems: 20, dx: 80, launches: 1, sub: '20 villagers...' }
 ]
 module.exports = {
   name: 'golem',
@@ -33,9 +34,9 @@ module.exports = {
     await ctx.defaultRules()
     for (let z0 = z - 16; z0 <= z + 14; z0 += 6) {   // five village sites in one field (slabs under the /fill cap)
       const z1 = Math.min(z0 + 5, z + 14)
-      for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await ctx.cmd(`/fill ${x - 80} ${y0} ${z0} ${x + 80} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
-      await ctx.cmd(`/fill ${x - 80} ${floor} ${z0} ${x + 80} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 80} ${floor - 3} ${z0} ${x + 80} ${floor - 1} ${z1} dirt`)
+      for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await ctx.cmd(`/fill ${x - 100} ${y0} ${z0} ${x + 100} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
+      await ctx.cmd(`/fill ${x - 100} ${floor} ${z0} ${x + 100} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 100} ${floor - 3} ${z0} ${x + 100} ${floor - 1} ${z1} dirt`)
     }
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
