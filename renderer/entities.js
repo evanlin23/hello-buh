@@ -99,14 +99,16 @@ function build (geo, texInfo, extraCubes = {}) {
   // of the rest pose (head yaw) change sign inside the mirror.
   const inner = new THREE.Group(); inner.scale.set(-1 / 16, 1 / 16, 1 / 16); root.add(inner)
   const mat = new THREE.MeshBasicMaterial({ map: texInfo.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
-  // white overlay (creeper fuse flash, LivingEntityRenderer overlay): mix toward white by uWhite
+  // white overlay (creeper fuse flash, LivingEntityRenderer overlay): OverlayTexture's white row has
+  // alpha 1 - u/15 x 0.75, mixed into the texture before the lightmap: at most 75% white, still lit
+  // and shaded (a full-white flat creeper at the peak: worker 14, which_door f1086)
   mat.userData.white = { value: 0 }
   mat.userData.red = { value: 0 }
   mat.onBeforeCompile = (sh) => {
     sh.uniforms.uWhite = mat.userData.white
     sh.uniforms.uRed = mat.userData.red
     // OverlayTexture: hurt / dying mixes 30% red into the (lit) colour, the creeper flash toward white
-    sh.fragmentShader = 'uniform float uWhite;\nuniform float uRed;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.0, 0.0) * diffuse * vColor.rgb, uRed * 0.302);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0), uWhite);')
+    sh.fragmentShader = 'uniform float uWhite;\nuniform float uRed;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.0, 0.0) * diffuse * vColor.rgb, uRed * 0.302);\n  diffuseColor.rgb = mix(diffuseColor.rgb, diffuse * vColor.rgb, floor(uWhite * 15.0) / 15.0 * 0.75);')
   }
   const bones = {}
   const defs = {}
