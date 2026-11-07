@@ -23,8 +23,7 @@ const LADDERS = 10
 const FUSES = [20, 14, 8]
 const TNT = (f) => `/summon tnt ~ ~ ~ {fuse:${f},explosion_power:6}`
 const CMDS = ['/effect give @s levitation 5 39 true', '/fill ~-6 ~-2 ~-11 ~6 ~-1 ~-4 diamond_block replace lava', TNT(20), [TNT(14), 0.15], [TNT(8), 0.15]]
-// (no feedback line for the levitation: its 1.5 s hold ran across the cut into the next beat)
-const FEEDBACK = [null, 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
+const FEEDBACK = ['Applied effect Levitation to HelloBuh', 'Successfully filled 208 block(s)', 'Summoned new Primed TNT', 'Summoned new Primed TNT', 'Summoned new Primed TNT']
 
 // the mountain: an uneven peak (lobed outline, ridges down the flanks) of stone with grass, gravel and
 // snow on top, cut by a sheer cliff on the side we start at (where the noob puts his ladders), with a
