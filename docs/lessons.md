@@ -378,3 +378,5 @@ each section.
 ## Engine bugs to fix later (reported by worker 3, 2026-11-07)
 - red_bed (special block-entity item model) is not drawn in the hotbar slot or in the first-person hand.
 - Dropped item entities on the death screen draw only their shadow discs, with no item on top (every_clutch f1795-1812, drops).
+- Possible: lava stays visible next to flowing water for 0.2-0.3 s before it turns to cobblestone (lava_cast f672-684, f1590-1610). Vanilla converts on the same tick, so the renderer may apply the block update late. (worker 4)
+- Tooling: when run.sh's botTimeout kills a try, nothing is logged except "stunt failed N times", and the stale out/*.mp4 stays in place. Add a timeout log line and remove the stale output on failure. (worker 4)
