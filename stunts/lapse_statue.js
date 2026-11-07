@@ -84,11 +84,13 @@ function giant () {
     }
   }
   for (let z = 16; z <= 52; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'polished_blackstone_bricks', 6)   // the road in
-  // stage 7: a stepped red sandstone pyramid behind it, for scale (solid layers: hollow rings read as a
-  // flat orange frame from above while it rose)
+  // stage 7: a stepped red sandstone pyramid behind it for scale, off to the right so it shows beside
+  // the statue in the final wide shot (straight behind, the legs hid it); solid layers (hollow rings
+  // read as a flat orange frame from above while it rose)
+  const PX = 24, PZ = -34
   for (let s = 0; s <= 15; s++) {
     const r = 15 - s
-    for (let x = -r; x <= r; x++) for (let z = -40 - r; z <= -40 + r; z++) {
+    for (let x = PX - r; x <= PX + r; x++) for (let z = PZ - r; z <= PZ + r; z++) {
       put(x, s, z, s === 15 ? 'gold_block' : (s & 1 ? 'cut_red_sandstone' : 'red_sandstone'), 7)
     }
   }
@@ -115,23 +117,25 @@ module.exports = makeStunt({
     blocks: giant(),
     hold: 'terracotta', slot: 4,
     // plinth, legs, robe, arms, head, face, obelisks + oases, the pyramid, crown
-    stageTicks: { 0: 100, 1: 100, 2: 180, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 60 },
+    stageTicks: { 0: 100, 1: 100, 2: 140, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 60 },
     keys: [
       [0, [-16, 9, 30], [0, 0, 6]],          // close on the plinth from the cut, then a pass across it
       [60, [-4, 11, 26], [0, 1, 4]],
       [100, [-20, 12, 32], [0, 6, 0]],       // the legs
       [200, [-20, 22, 40], [0, 20, 0]],
-      [380, [18, 30, 36], [0, 28, 4]],
-      [500, [26, 40, 30], [0, 40, 0]],
-      [660, [10, 46, 34], [0, 44, 6]],       // the face going on
-      [840, [4, 42, 32], [0, 44, 6]],
-      [950, [-44, 24, 30], [-24, 6, 0]],     // the obelisks and the west oasis
-      [1080, [-40, 34, -10], [0, 14, -40]],  // the pyramid rising behind
-      [1170, [-6, 66, -16], [0, 20, -40]],   // over the head, looking down at the pyramid
-      [1225, [32, 56, 30], [0, 30, -30]],
-      [1290, [-12, 62, 26], [0, 52, 0]],     // over the crown going on (further out: it passed the face at 11 blocks)
-      [1318, [-1, 18, 98], [0, 31, 0]],      // the pull-back arrives early and creeps into 60:00, the head below the clock
-      [1338, [0, 16, 94], [0, 31, 0]]
+      [270, [-6, 26, 44], [0, 24, 0]],       // round the front while the robe rises (a slow stretch)
+      [340, [18, 30, 36], [0, 28, 4]],
+      [460, [26, 40, 30], [0, 40, 0]],
+      [620, [10, 46, 34], [0, 44, 6]],       // the face going on
+      [800, [4, 42, 32], [0, 44, 6]],
+      [910, [-44, 24, 30], [-24, 6, 0]],     // the obelisks and the west oasis
+      [975, [2, 26, 62], [0, 22, 0]],        // round the front (straight across went through the statue)
+      [1050, [48, 18, -4], [24, 6, -34]],    // the pyramid rising, low from the side (from above it read as flat slabs)
+      [1130, [-4, 62, -14], [18, 18, -34]],  // over the head, the pyramid beside it
+      [1185, [32, 56, 30], [0, 30, -30]],
+      [1250, [-12, 62, 26], [0, 52, 0]],     // over the crown going on (further out: it passed the face at 11 blocks)
+      [1278, [-1, 18, 98], [0, 31, 0]],      // the pull-back arrives early and creeps into 60:00, the head below the clock
+      [1298, [0, 16, 94], [0, 31, 0]]
     ],
     reveal: [
       [8, [-3, 17, 90], [0, 31, 0]],
