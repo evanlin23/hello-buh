@@ -97,20 +97,20 @@ function mansion () {
   }
   for (let x = -7; x <= 7; x++) for (let z = -6; z <= 4; z++) put(x, 20, z, 'dark_oak_planks', 5)
   // stage 5: the garden - hedges along the road and the pool, four trees
-  for (let z = 24; z <= 33; z++) for (const x of [-3, 3]) if (z % 4 !== 0) put(x, 0, z, 'oak_leaves', 7)   // stops short of the two small builds
-  for (let x = -12; x <= 12; x++) if (Math.abs(x) >= 3) put(x, 0, 23, 'oak_leaves', 7)
+  for (let z = 24; z <= 33; z++) for (const x of [-3, 3]) if (z % 4 !== 0) put(x, 0, z, 'oak_leaves', 4)   // stops short of the two small builds
+  for (let x = -12; x <= 12; x++) if (Math.abs(x) >= 3) put(x, 0, 23, 'oak_leaves', 4)
   for (const [tx, tz] of [[-34, 18], [34, 18], [-15, 27], [15, 27]]) {
-    for (let y = 0; y < 5; y++) put(tx, y, tz, 'oak_log', 7)
+    for (let y = 0; y < 5; y++) put(tx, y, tz, 'oak_log', 4)
     for (let y = 3; y <= 7; y++) {
       const r = y <= 5 ? 2 : 1
-      for (let x = -r; x <= r; x++) for (let z = -r; z <= r; z++) if (!(x === 0 && z === 0 && y < 5) && Math.abs(x) + Math.abs(z) < r + 2) put(tx + x, y, tz + z, 'oak_leaves', 7)
+      for (let x = -r; x <= r; x++) for (let z = -r; z <= r; z++) if (!(x === 0 && z === 0 && y < 5) && Math.abs(x) + Math.abs(z) < r + 2) put(tx + x, y, tz + z, 'oak_leaves', 4)
     }
   }
   // stage 6: a rooftop infinity pool on the west half and a helipad on the east wing
   for (let x = -16; x <= -8; x++) {
     for (let z = -8; z <= 8; z++) {
       const rim = x === -16 || x === -8 || Math.abs(z) === 8
-      put(x, 16, z, rim ? 'glass' : 'water', 6)
+      put(x, 16, z, rim ? 'glass' : 'water', rim ? 5 : 6)   // the rim before the water (it spilled over the roof)
     }
   }
   for (let x = 21; x <= 27; x++) {
@@ -119,8 +119,12 @@ function mansion () {
       put(x, 11, z, H ? 'yellow_concrete' : 'gray_concrete', 6)
     }
   }
-  // stage 8: a gold crown on the penthouse, the last blocks of all
-  for (const [x, y] of [[-1, 21], [0, 21], [1, 21], [-1, 22], [1, 22], [0, 23]]) put(x, y, -1, 'gold_block', 8)
+  // stage 8: a gold crown round the penthouse roof, the last blocks of all
+  for (let x = -7; x <= 7; x++) for (let z = -6; z <= 4; z++) {
+    if (Math.abs(x) !== 7 && z !== -6 && z !== 4) continue
+    put(x, 21, z, 'gold_block', 8)
+    if ((x + z) % 2 === 0) put(x, 22, z, 'gold_block', 8)
+  }
   return [...out.values()]
 }
 
@@ -132,32 +136,31 @@ module.exports = makeStunt({
   red: 'hour',
   hotbar: [['dirt', 64], ['oak_log', 64], ['oak_planks', 64], ['glass', 64], ['spruce_planks', 64], ['quartz_block', 64]],
   small,
-  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 4, roofSpeed: 8, backTicks: 14, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
+  mid: { blocks: cottage(), w: 5, d: 5, roofY: 2, door: 2, perTick: 2, speed: 4, roofSpeed: 6, backTicks: 14, slots: { oak_log: 1, oak_planks: 2, glass: 3, spruce_planks: 4 } },
   big: {
     blocks: mansion(),
     hold: 'quartz_block', slot: 5,
-    // ticks each stage gets: pool + road, floor 1, floor 2, floor 3, wings, roof + penthouse, garden, crown
-    stageTicks: { 0: 110, 1: 150, 2: 150, 3: 150, 4: 170, 5: 180, 6: 190, 7: 180, 8: 40 },
+    // ticks each stage gets: pool + road, floor 1, floor 2, floor 3, wings + garden, roof + penthouse, helipad + rooftop pool, crown
+    stageTicks: { 0: 110, 1: 150, 2: 150, 3: 150, 4: 350, 5: 180, 6: 170, 8: 50 },
     // [tick of the build, camera, look-at], local to the mansion centre (y from the ground)
     keys: [
-      [0, [-18, 8, 34], [0, -1, 15]],       // the pool, close
+      [0, [-12, 6, 30], [0, -1, 16]],        // the pool, close
       [110, [-24, 8, 28], [0, 3, 0]],
       [260, [-8, 11, 32], [0, 6, 0]],
       [410, [12, 14, 32], [0, 9, 0]],
       [560, [26, 17, 26], [10, 10, 0]],
-      [730, [40, 16, 22], [22, 6, 0]],       // the wings
-      [910, [16, 30, 24], [0, 17, -1]],      // roof and penthouse
-      [1000, [-30, 30, 20], [-12, 15, 0]],   // the rooftop pool, then over to the helipad
-      [1100, [10, 34, 26], [24, 11, 0]],
-      [1220, [-30, 16, 40], [-15, 3, 20]],   // the garden going in
-      [1290, [-6, 30, 16], [0, 21, -1]],     // the crown
-      [1310, [-1, 15, 80], [0, 10, 0]],      // the pull-back arrives early and creeps into 60:00
-      [1328, [0, 14, 76], [0, 10, 0]]
+      [730, [40, 16, 22], [22, 6, 0]],       // the east wing
+      [880, [-30, 16, 40], [-15, 3, 20]],    // the west wing and the garden
+      [1060, [16, 30, 24], [0, 17, -1]],     // roof and penthouse
+      [1110, [10, 34, 26], [24, 11, 0]],     // the helipad
+      [1200, [-30, 30, 20], [-12, 15, 0]],   // the rooftop pool filling
+      [1295, [-2, 11, 70], [0, 10, 0]],      // one long pull-back (1.5 s), the crown going on
+      [1318, [0, 10, 64], [0, 10, 0]]
     ],
     // [ticks after the build, camera, look-at]: a push-in after 60:00 (the Short ends 0.5 s in)
     reveal: [
-      [8, [-4, 15, 70], [0, 10, 0]],
-      [16, [-8, 17, 64], [-1, 10, 0]]
+      [8, [-3, 11, 59], [0, 10, 0]],
+      [16, [-7, 12, 54], [-1, 10, 0]]
     ]
   }
 })
