@@ -48,7 +48,7 @@ module.exports = {
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
     song: 'songs/ncs/fearless_funk.mp3', dropAt: 'splash5',   // its drop (29.5 s) comes after splash5 (~25.5 s): misery's 16.25 s drop played on tier 4
-    startAt: 'drop1:-0.85', endAfter: 'splash5:0.9',
+    startAt: 'drop1:-0.85', endAfter: 'splash5:0.75',
     subs,
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
       ['look5:0.15', 'look5:0.95', 'cut'],      // the finale's first glance at -0.7 was black night sky (beat audit PAUSE 0.8 s)
