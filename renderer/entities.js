@@ -132,7 +132,10 @@ function look (name, extra, regs) {
     if (p !== 'none') layers.push(`entity/villager/profession/${p}`)
     // VillagerModel: crossed arms rest at xRot -0.75 (tilted out from the chest)
     // the converted model lacks the hat layer that profession outfits draw on
-    return { model: 'villager', layers, rest: { arms: [0.75, 0, 0] }, extra: { head: [{ origin: [-4, 24, -4], size: [8, 10, 8], uv: [32, 0], inflate: 0.5 }] } }
+    return { model: 'villager', layers, rest: { arms: [0.75, 0, 0] }, extra: { head: [{ origin: [-4, 24, -4], size: [8, 10, 8], uv: [32, 0], inflate: 0.5 },
+      // VillagerModel hat_rim: 16x16x1 at texOffs(30, 47), xRot -90 deg: the flat brim of the farmer's
+      // straw hat (transparent for the other professions). Without it the hat vanished from behind.
+      { origin: [-8, 16, -6], size: [16, 16, 1], uv: [30, 47], rotation: [-90, 0, 0], pivot: [0, 24, 0] }] } }
   }
   if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`], yOff: -1.0 }   // the Bedrock boat geometry sits its hull ~15 px up; Java's hull bottom is at the entity's feet
   if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
