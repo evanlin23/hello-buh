@@ -12,9 +12,9 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'never dig straight up 💀',
   edit: {
-    caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened_lava', onFire: 'hurt:death', deathScreen: true,
+    caption: 'never dig straight up 💀', red: 'never', song: 'songs/funk_abnormal.mp3', dropAt: 'opened_lava', onFire: 'burn:death', deathScreen: true,
     startAt: 'dig1:-0.4', endAfter: 'death:0.9',
-    subs: [['dig1', 'dig up #1', 5], ['dig2', 'dig up #2', 6], ['dig3', 'dig up #3', 5], ['dig4', 'dig up #4', 3.5]]
+    subs: [['dig1', 'dig up #1', 3.5], ['dig2', 'dig up #2', 6], ['dig3', 'dig up #3', 5], ['dig4', 'dig up #4', 3.5]]
   },
   expectDeath: true,
   brightness: 1,   // Options > Brightness: Bright: the ceiling shots read as flat dark grey at the default
@@ -38,10 +38,10 @@ module.exports = {
       await ctx.cmd(`/setblock ${ox} ${oy} ${oz} ${ores[Math.floor(rnd() * ores.length)]}`)
     }
     await ctx.cmd(`/fill ${x} ${y} ${z - 27} ${x} ${y + 1} ${z + 2} air`)          // the tunnel
-    this.s1 = z - 2; this.s2 = z - 10; this.sa = z - 16; this.s3 = z - 23                             // the three dig-up spots
+    this.s1 = z - 2; this.s2 = z - 10; this.sa = z - 14; this.s3 = z - 23                             // the three dig-up spots
     this.dz = z - 6                                                                 // the diamond
     await ctx.cmd(`/setblock ${x + 1} ${y + 1} ${this.dz} diamond_ore`)
-    for (const dz of [1, -4, -8, -12, -14, -19, -21, -25]) await ctx.cmd(`/setblock ${x - 1} ${y + 1} ${z + dz} wall_torch[facing=east]`)
+    for (const dz of [1, -4, -8, -12, -15, -19, -21, -25]) await ctx.cmd(`/setblock ${x - 1} ${y + 1} ${z + dz} wall_torch[facing=east]`)
     // what waits above each spot
     await ctx.cmd(`/fill ${x} ${y + 3} ${this.s1} ${x} ${y + 4} ${this.s1} gravel`)
     await ctx.cmd(`/fill ${x - 1} ${y + 3} ${this.s2 - 1} ${x + 1} ${y + 4} ${this.s2 + 1} water`)
@@ -51,7 +51,7 @@ module.exports = {
     await ctx.hotbar(['diamond_pickaxe[enchantments={efficiency:5}]', 'diamond_shovel[enchantments={efficiency:5}]', ['cobblestone', 64], ['torch', 40], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, y, z + 1.5, 180, 0)
     await ctx.cmd('/gamemode survival')
-    await ctx.cmd('/effect give @s haste infinite 2 true')   // strip-mining pace (no particles)
+    await ctx.cmd('/effect give @s haste infinite 1 true')   // Haste II (a beacon's): strip-mining pace, no particles
     ctx.select(0)
     await bot.waitForTicks(30)
     return { x, y, z }
@@ -64,13 +64,15 @@ module.exports = {
     // and every later beat ran from 6-17 blocks away)
     const walkTo = async (zt) => {
       bot.setControlState('forward', true)
+      const hop = () => bot.setControlState('jump', !!bot.entity.isCollidedHorizontally)
+      bot.on('physicsTick', hop)
       let lastZ = bot.entity.position.z, still = 0
       for (let i = 0; i < 160 && bot.entity.position.z > zt + 0.5; i++) {
         await bot.waitForTicks(1)
         if (Math.abs(bot.entity.position.z - lastZ) < 0.01) { if (++still > 12) break } else still = 0
         lastZ = bot.entity.position.z
       }
-      bot.setControlState('forward', false)
+      bot.setControlState('forward', false); bot.removeListener('physicsTick', hop); bot.setControlState('jump', false)
       if (bot.entity.position.z > zt + 0.9) throw new Error(`walk stuck at z ${bot.entity.position.z.toFixed(2)} (wanted ${zt})`)
       await bot.waitForTicks(2)
     }
@@ -94,7 +96,7 @@ module.exports = {
     await digUp(this.s1, 1)
     ctx.mark('opened_gravel')
     await stepBack(5)
-    for (let i = 0; i < 18; i++) { await bot.waitForTicks(1); if (i % 6 === 0) ctx.sound('block.gravel.fall', 0.8) }
+    for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); await bot.look(bot.entity.yaw, Math.min(0.6, bot.entity.pitch + 0.06), true); if (i % 5 === 0) ctx.sound('block.gravel.fall', 0.8) }
     await ctx.easeLook(bot.entity.yaw, -0.15, 250)
     ctx.select(1)                                             // shovel through it, until the whole column is clear
     const falling = () => Object.values(bot.entities).some(e => e.name === 'falling_block' && e.position.distanceTo(new Vec3(x, y, this.s1)) < 5)
@@ -108,21 +110,25 @@ module.exports = {
     await ctx.easeLook(bot.entity.yaw, 0, 200)
     // the diamond on the way
     ctx.select(0)
-    await walkTo(this.dz + 0.6)
+    await walkTo(this.dz + 1.6)                               // a step short: the whole ore in frame
     const d = bot.blockAt(new Vec3(x + 1, y + 1, this.dz))
     await ctx.easeLookAt(d.position.offset(0.5, 0.5, 0.5), 400)
     ctx.mark('diamond')
-    try { await bot.dig(d, true) } catch (e) { ctx.log('dig diamond', e.message) }   // real mining: cracks, the drop, the XP
+    // mined at its real speed with dig packets (mineflayer's digTime rated this pickaxe as no tool: 2.85 s)
+    const loc = { x: d.position.x, y: d.position.y, z: d.position.z }
+    bot._client.write('block_dig', { status: 0, location: loc, face: 4, sequence: 0 })
+    for (let i = 0; i < 3; i++) { bot.swingArm(); await bot.waitForTicks(1) }
+    bot._client.write('block_dig', { status: 2, location: loc, face: 4, sequence: 0 })
     ctx.particles('block', d.position, { block: 'diamond_ore' })
     await bot.waitForTicks(6)
-    await ctx.easeLook(0, -0.05, 300)                         // back down the tunnel
+    await ctx.easeLook(0, -0.05, 300)                         // back down the tunnel (over the drop)
     // 2. water
     await walkTo(this.s2 + 1)
     await digUp(this.s2, 2)
     ctx.mark('opened_water')
     await stepBack(8)
     const wy = bot.entity.yaw
-    for (let i = 0; i < 22; i++) { await bot.waitForTicks(1); await bot.look(wy + 0.25 * Math.sin(i / 7), -0.2 + 0.1 * Math.sin(i / 5), true) }   // looking round at the flood
+    for (let i = 0; i < 40; i++) { await bot.waitForTicks(1); await bot.look(wy + 0.3 * Math.sin(i / 7), -0.25 + 0.15 * Math.sin(i / 5), true) }   // the flood comes on, round its feet
     // plug it: cobblestone into the hole, clicked on the side of the stone beside it
     ctx.select(2)
     const side = new Vec3(x + 1, y + 2, this.s2)
@@ -132,27 +138,39 @@ module.exports = {
     ctx.mark('plugged')
     for (let i = 0; i < 30; i++) await bot.waitForTicks(1)    // the water drains away
     await ctx.easeLook(0, -0.05, 300)
-    // 3. an anvil: the hole opens a shaft and it drops straight onto the bot's head
+    // 3. anvils: the hole opens a shaft, an anvil drops right in front (it backed off in time), it
+    // mines it out of the way, walks under the shaft... and a second one comes down on its head
     ctx.select(0)
-    await walkTo(this.sa + 0.2)
+    await walkTo(this.sa + 1)
     const up3 = bot.blockAt(new Vec3(x, y + 2, this.sa))
     await ctx.easeLookAt(up3.position.offset(0.5, 0, 0.5), 450)
     ctx.mark('dig3')
     try { await bot.dig(up3, true) } catch (e) { ctx.log('dig', e.message) }
     ctx.particles('block', up3.position, { block: 'stone' })
     ctx.mark('opened_anvil')
-    for (let i = 0; i < 30 && bot.health >= 19; i++) { await bot.waitForTicks(1); await bot.look(bot.entity.yaw, Math.min(1.5, bot.entity.pitch + 0.03), true) }   // staring up the shaft
+    await stepBack(6, 0.12)
+    for (let i = 0; i < 26; i++) { await bot.waitForTicks(1); if (bot.blockAt(new Vec3(x, y, this.sa)).name.includes('anvil')) break }
+    ctx.mark('anvil_miss')
+    await bot.waitForTicks(6)
+    const mineAnvils = async () => {
+      for (let k = 0; k < 4; k++) {
+        const a = [y, y + 1].flatMap(yy => [0, -1, -2].map(dz => bot.blockAt(new Vec3(x, yy, Math.floor(bot.entity.position.z) + dz)))).find(b => b && /anvil/.test(b.name))
+        if (!a) break
+        await ctx.easeLookAt(a.position.offset(0.5, 0.5, 0.5), 250)
+        try { await bot.dig(a, true) } catch (e) { ctx.log('dig anvil', e.message) }
+        await bot.waitForTicks(4)
+      }
+    }
+    await mineAnvils()
+    await ctx.easeLook(0, 0.1, 300)
+    await walkTo(this.sa + 0.2)                               // under the shaft
+    await ctx.easeLookAt(new Vec3(x + 0.5, y + 6, this.sa + 0.5), 400)   // looking up it...
+    bot.chat(`/setblock ${x} ${y + 9} ${this.sa} anvil`)
+    for (let i = 0; i < 30 && bot.health >= 19; i++) { await bot.waitForTicks(1) }
     ctx.mark('anvil_hit', { health: bot.health })
     await bot.waitForTicks(6)
     await ctx.easeLook(bot.entity.yaw, -1.2, 350)              // looking down at what hit it
-    // it's in the way: mine through it
-    for (let k = 0; k < 4; k++) {
-      const a = [y, y + 1].map(yy => bot.blockAt(new Vec3(x, yy, Math.floor(bot.entity.position.z) - 1))).concat([bot.blockAt(bot.entity.position.floored())]).find(b => b && /anvil/.test(b.name))
-      if (!a) break
-      await ctx.easeLookAt(a.position.offset(0.5, 0.5, 0.5), 250)
-      try { await bot.dig(a, true) } catch (e) { ctx.log('dig anvil', e.message) }
-      await bot.waitForTicks(4)
-    }
+    await mineAnvils()
     await ctx.easeLook(0, -0.05, 300)
     // 4. lava
     ctx.select(0)
@@ -178,6 +196,7 @@ module.exports = {
       bot.chat(`/setblock ${x} ${y} ${zz} lava[level=${Math.min(7, lv)}]`)
       await bot.waitForTicks(5)
     }
+    ctx.mark('burn')                                          // it's at the bot's feet: the fire starts here
     const yaw = bot.entity.yaw
     for (const [dy, p] of [[0.6, 0.2], [-0.7, 0.1], [0.3, -0.3], [-0.5, 0.25], [0.8, 0.0], [-0.3, -0.2]]) { if (!ctx.died) await ctx.easeLook(yaw + dy, p, 380) }   // panic, never a still red screen
     for (let i = 0; i < 160 && !ctx.died; i++) await bot.waitForTicks(1)
