@@ -19,7 +19,7 @@ module.exports = R.makeStunt({
     endAfter: 'last_death:0.97', deathScreen: true, onFire: 'lava_in:death',
     counter: { at: ROOMS.map((r, i) => ['open', i]), total: ROOMS.length },
     cards: [
-      ['intro', 'PICK A DOOR 👇', 1.8, 'yellow'],
+      ['intro', 'PICK A DOOR', 1.8, 'yellow'],   // (no 👇: it sat over door 5 and read as a hint)
       ['death', 'DEAD ❌', 0.7, 'red', 0],
       ['survive', 'SURVIVED ✅', 0.6, 'green', 0],
       ['survive', 'SURVIVED ✅', 0.6, 'green', 1],
