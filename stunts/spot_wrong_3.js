@@ -102,7 +102,7 @@ module.exports = spotWrong({
         if (t % 4 === 0) ctx.particles('portal', W([5 + Math.random() * 2, 1 + Math.random() * 3, -7.5]), { count: 6, face: true })
         if (t % 70 === 5) ctx.sound('block.portal.ambient', 0.25, 0.9 + Math.random() * 0.2)
         // crying obsidian's tears (CryingObsidianBlock.animateTick: 1 in 5 ticks, from an open face: south or east)
-        if (t % 5 === 2) ctx.particles('obsidian_tear', Math.random() < 0.6 ? W([7.15 + Math.random() * 0.7, 2.05 + Math.random() * 0.8, -7.0]) : W([8.0, 2.05 + Math.random() * 0.8, -7.85 + Math.random() * 0.7]))
+        if (t % 5 === 2) ctx.particles('obsidian_tear', Math.random() < 0.6 ? W([7.1 + Math.random() * 0.8, 2.05 + Math.random() * 0.85, -6.95]) : W([8.05, 2.05 + Math.random() * 0.85, -7.9 + Math.random() * 0.8]))
       },
       cam: { pos: [5.5, -1.5] },
       scan: [[0, [5.5, 2, -8]], [2.2, [1, 0.8, -5]], [4.2, [6, 3, -8.5]], [6.2, [10, 0.8, -5]], [8, [2.5, 0.6, -8]], [10, [5, 2, -8]]],
