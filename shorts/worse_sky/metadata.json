@@ -1,0 +1,977 @@
+{
+  "name": "worse_sky",
+  "caption": "every 5 seconds it gets worse \ud83d\ude30",
+  "youtube": {
+    "title": "every 5 seconds it gets worse \ud83d\ude30 #minecraft #shorts",
+    "description": "every 5 seconds it gets worse \ud83d\ude30\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "vem_lenta.mp3",
+    "title": "VEM LENTA!",
+    "artist": "KPHK, Eluvo, Sayfalse",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "l7",
+    "drop_in_song_s": 36.75,
+    "drop_in_short_s": 30.0,
+    "song_start_s": 6.75
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 36.45,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 81734848,
+    "sha256": "148cddaf9631c128c90a3ccb2552e59aced0dba427723114cd7872f499ab48de"
+  },
+  "edit": {
+    "caption": "every 5 seconds it gets worse \ud83d\ude30",
+    "red": "worse",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "l7",
+    "startAt": "go:0",
+    "endAfter": "death:1.4",
+    "countdown": "go:boom:SURVIVE",
+    "counter": {
+      "at": [
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5",
+        "l6",
+        "l7"
+      ],
+      "total": 7
+    },
+    "cards": [
+      [
+        "l1",
+        "THE EDGE FALLS",
+        1,
+        "yellow"
+      ],
+      [
+        "l2",
+        "+1 CREEPER",
+        1,
+        "green"
+      ],
+      [
+        "l3",
+        "THUNDERSTORM",
+        1,
+        "blue"
+      ],
+      [
+        "l4",
+        "+2 ZOMBIES",
+        1,
+        "green"
+      ],
+      [
+        "l5",
+        "THE ISLAND SHRINKS",
+        1,
+        "yellow"
+      ],
+      [
+        "l6",
+        "2 BLOCKS LEFT",
+        1,
+        "orange"
+      ],
+      [
+        "l7",
+        "+1 TNT",
+        1,
+        "red"
+      ]
+    ],
+    "punch": [
+      "l5",
+      "boom"
+    ],
+    "deathScreen": true,
+    "args": [
+      "--caption",
+      "every 5 seconds it gets worse \ud83d\ude30",
+      "--red",
+      "worse",
+      "--countdown",
+      "go:boom:SURVIVE",
+      "--punch",
+      "[\"l5\",\"boom\"]",
+      "--counter",
+      "{\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7}",
+      "--cards",
+      "[[\"l1\",\"THE EDGE FALLS\",1,\"yellow\"],[\"l2\",\"+1 CREEPER\",1,\"green\"],[\"l3\",\"THUNDERSTORM\",1,\"blue\"],[\"l4\",\"+2 ZOMBIES\",1,\"green\"],[\"l5\",\"THE ISLAND SHRINKS\",1,\"yellow\"],[\"l6\",\"2 BLOCKS LEFT\",1,\"orange\"],[\"l7\",\"+1 TNT\",1,\"red\"]]",
+      "--death_screen",
+      "death",
+      "--start_at",
+      "go:0",
+      "--end_after",
+      "death:1.4"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 361,
+      "y": 110,
+      "z": -45
+    },
+    "biome": "minecraft:plains",
+    "ticks": 778,
+    "seconds": 38.9,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        },
+        {
+          "insertion": "3479fc41-e3a2-4e72-b893-7d67de2e0836",
+          "hover_event": {
+            "name": {
+              "translate": "entity.minecraft.tnt"
+            },
+            "action": "show_entity",
+            "id": "minecraft:tnt",
+            "uuid": [
+              880409665,
+              -475902350,
+              -1198293657,
+              -567408586
+            ]
+          },
+          "translate": "entity.minecraft.tnt"
+        }
+      ],
+      "translate": "death.attack.explosion"
+    },
+    "events": [
+      {
+        "t": 0,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 0.2,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 1.1,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 1.1,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 1.4,
+        "event": "go"
+      },
+      {
+        "t": 1.4,
+        "event": "l1"
+      },
+      {
+        "t": 1.6,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 1.6,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.1,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.1,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 5.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.4,
+        "event": "l2"
+      },
+      {
+        "t": 6.6,
+        "event": "hiss"
+      },
+      {
+        "t": 6.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 6.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.15,
+        "event": "swing"
+      },
+      {
+        "t": 7.15,
+        "event": "hit"
+      },
+      {
+        "t": 7.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.65,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.65,
+        "event": "mob_death"
+      },
+      {
+        "t": 7.65,
+        "event": "mob_death"
+      },
+      {
+        "t": 7.95,
+        "event": "off1"
+      },
+      {
+        "t": 9.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 9.15,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 9.15,
+        "event": "vel"
+      },
+      {
+        "t": 9.15,
+        "event": "vel"
+      },
+      {
+        "t": 9.15,
+        "event": "vel"
+      },
+      {
+        "t": 9.15,
+        "event": "vel"
+      },
+      {
+        "t": 9.15,
+        "event": "mob_death"
+      },
+      {
+        "t": 9.15,
+        "event": "mob_death"
+      },
+      {
+        "t": 9.65,
+        "event": "vel"
+      },
+      {
+        "t": 10.2,
+        "event": "vel"
+      },
+      {
+        "t": 10.2,
+        "event": "vel"
+      },
+      {
+        "t": 10.2,
+        "event": "vel"
+      },
+      {
+        "t": 10.2,
+        "event": "vel"
+      },
+      {
+        "t": 10.4,
+        "event": "vel"
+      },
+      {
+        "t": 10.7,
+        "event": "weather"
+      },
+      {
+        "t": 10.8,
+        "event": "vel"
+      },
+      {
+        "t": 11.2,
+        "event": "vel"
+      },
+      {
+        "t": 11.4,
+        "event": "l3"
+      },
+      {
+        "t": 13.75,
+        "event": "swing"
+      },
+      {
+        "t": 13.75,
+        "event": "place"
+      },
+      {
+        "t": 14.25,
+        "event": "swing"
+      },
+      {
+        "t": 14.25,
+        "event": "place"
+      },
+      {
+        "t": 14.75,
+        "event": "swing"
+      },
+      {
+        "t": 14.75,
+        "event": "place"
+      },
+      {
+        "t": 16.4,
+        "event": "l4"
+      },
+      {
+        "t": 17.2,
+        "event": "swing"
+      },
+      {
+        "t": 17.2,
+        "event": "hit"
+      },
+      {
+        "t": 17.2,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 17.2,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 17.95,
+        "event": "off2"
+      },
+      {
+        "t": 18,
+        "event": "hurt",
+        "type": "mob_attack"
+      },
+      {
+        "t": 18.35,
+        "event": "swing"
+      },
+      {
+        "t": 18.35,
+        "event": "hit"
+      },
+      {
+        "t": 18.35,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 18.35,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 19.15,
+        "event": "off3"
+      },
+      {
+        "t": 19.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 19.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "vel"
+      },
+      {
+        "t": 19.25,
+        "event": "mob_death"
+      },
+      {
+        "t": 19.25,
+        "event": "mob_death"
+      },
+      {
+        "t": 19.75,
+        "event": "vel"
+      },
+      {
+        "t": 20.2,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.3,
+        "event": "vel"
+      },
+      {
+        "t": 20.4,
+        "event": "vel"
+      },
+      {
+        "t": 20.4,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 20.4,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 20.4,
+        "event": "vel"
+      },
+      {
+        "t": 20.4,
+        "event": "vel"
+      },
+      {
+        "t": 20.4,
+        "event": "vel"
+      },
+      {
+        "t": 20.4,
+        "event": "vel"
+      },
+      {
+        "t": 20.4,
+        "event": "mob_death"
+      },
+      {
+        "t": 20.4,
+        "event": "mob_death"
+      },
+      {
+        "t": 20.9,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21.3,
+        "event": "vel"
+      },
+      {
+        "t": 21.3,
+        "event": "vel"
+      },
+      {
+        "t": 21.3,
+        "event": "vel"
+      },
+      {
+        "t": 21.35,
+        "event": "vel"
+      },
+      {
+        "t": 21.4,
+        "event": "l5"
+      },
+      {
+        "t": 21.4,
+        "event": "vel"
+      },
+      {
+        "t": 21.45,
+        "event": "vel"
+      },
+      {
+        "t": 21.45,
+        "event": "vel"
+      },
+      {
+        "t": 21.45,
+        "event": "vel"
+      },
+      {
+        "t": 21.45,
+        "event": "vel"
+      },
+      {
+        "t": 21.5,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
+        "event": "vel"
+      },
+      {
+        "t": 22.25,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.4,
+        "event": "vel"
+      },
+      {
+        "t": 22.4,
+        "event": "vel"
+      },
+      {
+        "t": 22.5,
+        "event": "vel"
+      },
+      {
+        "t": 23.25,
+        "event": "vel"
+      },
+      {
+        "t": 23.35,
+        "event": "vel"
+      },
+      {
+        "t": 23.4,
+        "event": "vel"
+      },
+      {
+        "t": 23.5,
+        "event": "vel"
+      },
+      {
+        "t": 24.25,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.4,
+        "event": "vel"
+      },
+      {
+        "t": 24.5,
+        "event": "vel"
+      },
+      {
+        "t": 25.25,
+        "event": "vel"
+      },
+      {
+        "t": 25.35,
+        "event": "vel"
+      },
+      {
+        "t": 25.4,
+        "event": "vel"
+      },
+      {
+        "t": 25.5,
+        "event": "vel"
+      },
+      {
+        "t": 26.25,
+        "event": "vel"
+      },
+      {
+        "t": 26.35,
+        "event": "vel"
+      },
+      {
+        "t": 26.4,
+        "event": "l6"
+      },
+      {
+        "t": 26.4,
+        "event": "vel"
+      },
+      {
+        "t": 26.5,
+        "event": "vel"
+      },
+      {
+        "t": 27.25,
+        "event": "vel"
+      },
+      {
+        "t": 27.35,
+        "event": "vel"
+      },
+      {
+        "t": 27.4,
+        "event": "vel"
+      },
+      {
+        "t": 27.5,
+        "event": "vel"
+      },
+      {
+        "t": 28.25,
+        "event": "vel"
+      },
+      {
+        "t": 28.35,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
+        "event": "vel"
+      },
+      {
+        "t": 28.5,
+        "event": "vel"
+      },
+      {
+        "t": 29,
+        "event": "swing"
+      },
+      {
+        "t": 29,
+        "event": "place"
+      },
+      {
+        "t": 29,
+        "event": "bridge"
+      },
+      {
+        "t": 29.25,
+        "event": "vel"
+      },
+      {
+        "t": 29.35,
+        "event": "vel"
+      },
+      {
+        "t": 29.4,
+        "event": "vel"
+      },
+      {
+        "t": 29.5,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "vel"
+      },
+      {
+        "t": 30.35,
+        "event": "vel"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.5,
+        "event": "vel"
+      },
+      {
+        "t": 31.25,
+        "event": "vel"
+      },
+      {
+        "t": 31.35,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "l7"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.5,
+        "event": "vel"
+      },
+      {
+        "t": 32.3,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 33.3,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "vel"
+      },
+      {
+        "t": 33.45,
+        "event": "vel"
+      },
+      {
+        "t": 33.55,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "landed"
+      },
+      {
+        "t": 34.3,
+        "event": "vel"
+      },
+      {
+        "t": 34.4,
+        "event": "vel"
+      },
+      {
+        "t": 34.45,
+        "event": "vel"
+      },
+      {
+        "t": 34.55,
+        "event": "vel"
+      },
+      {
+        "t": 35.3,
+        "event": "vel"
+      },
+      {
+        "t": 35.4,
+        "event": "vel"
+      },
+      {
+        "t": 35.45,
+        "event": "vel"
+      },
+      {
+        "t": 35.55,
+        "event": "vel"
+      },
+      {
+        "t": 36.3,
+        "event": "vel"
+      },
+      {
+        "t": 36.45,
+        "event": "vel"
+      },
+      {
+        "t": 36.45,
+        "event": "hurt",
+        "type": "explosion"
+      },
+      {
+        "t": 36.45,
+        "event": "vel"
+      },
+      {
+        "t": 36.45,
+        "event": "vel"
+      },
+      {
+        "t": 36.45,
+        "event": "mob_death"
+      },
+      {
+        "t": 36.45,
+        "event": "vel"
+      },
+      {
+        "t": 36.45,
+        "event": "vel"
+      },
+      {
+        "t": 36.45,
+        "event": "death"
+      },
+      {
+        "t": 36.45,
+        "event": "vel"
+      },
+      {
+        "t": 36.5,
+        "event": "boom"
+      },
+      {
+        "t": 36.55,
+        "event": "vel"
+      },
+      {
+        "t": 37.3,
+        "event": "vel"
+      },
+      {
+        "t": 38.9,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "29a21caf9fda6ebfaa77bf76f247941b555dd6ff",
+    "rendered_at": "2026-11-07T22:48:44.320Z",
+    "head_at_publish": "91e437a1367812597ce5cb1a20750bf0a5151876",
+    "stunt": "stunts/worse_sky.js",
+    "source_snapshot": [
+      "source/worse_sky.js",
+      "source/escalation.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 29a21caf9fda",
+    "gunzip -c shorts/worse_sky/recording.json.gz > work/worse_sky.rec.json",
+    "node render.js work/worse_sky.rec.json work/worse_sky.frames 60 1080 1011",
+    "python3 audio.py work/worse_sky.rec.json work/worse_sky.wav",
+    "python3 edit.py --frames work/worse_sky.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/worse_sky.rec.json --audio work/worse_sky.wav --caption \"every 5 seconds it gets worse \ud83d\ude30\" --red worse --countdown go:boom:SURVIVE --punch [\"l5\",\"boom\"] --counter {\"at\":[\"l1\",\"l2\",\"l3\",\"l4\",\"l5\",\"l6\",\"l7\"],\"total\":7} --cards \"[[\\\"l1\\\",\\\"THE EDGE FALLS\\\",1,\\\"yellow\\\"],[\\\"l2\\\",\\\"+1 CREEPER\\\",1,\\\"green\\\"],[\\\"l3\\\",\\\"THUNDERSTORM\\\",1,\\\"blue\\\"],[\\\"l4\\\",\\\"+2 ZOMBIES\\\",1,\\\"green\\\"],[\\\"l5\\\",\\\"THE ISLAND SHRINKS\\\",1,\\\"yellow\\\"],[\\\"l6\\\",\\\"2 BLOCKS LEFT\\\",1,\\\"orange\\\"],[\\\"l7\\\",\\\"+1 TNT\\\",1,\\\"red\\\"]]\" --death_screen death --start_at go:0 --end_after death:1.4 --out out/worse_sky.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 18: every 5 seconds it gets worse #2 (floating island shrinks; dies to a TNT exactly at 0.00); 12 independent review rounds, round 12 ready on frame/retention/minecraft",
+  "published_at": "2026-11-07T22:57:36.562Z"
+}
