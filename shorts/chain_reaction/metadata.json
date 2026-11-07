@@ -1,0 +1,563 @@
+{
+  "name": "chain_reaction",
+  "caption": "the most satisfying chain reaction \ud83d\ude33",
+  "youtube": {
+    "title": "the most satisfying chain reaction \ud83d\ude33 #minecraft #shorts",
+    "description": "the most satisfying chain reaction \ud83d\ude33\n\nSong: CHASHKAKEFIRA - MONTAGEM FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MONTAGEMFAVELA\nWatch: http://ncs.lnk.to/MONTAGEMFAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "montagem_favela.mp3",
+    "title": "MONTAGEM FAVELA",
+    "artist": "CHASHKAKEFIRA",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "giant",
+    "drop_in_song_s": 38.25,
+    "drop_in_short_s": 28.85,
+    "song_start_s": 9.4
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 30.7,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 54072850,
+    "sha256": "d5622996086a9ba8e26861f1b1c3e9651b58094cee35bfe93a07c45a2ef10ebe"
+  },
+  "edit": {
+    "caption": "the most satisfying chain reaction \ud83d\ude33",
+    "red": "satisfying",
+    "song": "songs/funk_abnormal.mp3",
+    "dropAt": "giant",
+    "startAt": "press:-0.5",
+    "endAfter": "giant_peak:0.8",
+    "args": [
+      "--caption",
+      "the most satisfying chain reaction \ud83d\ude33",
+      "--red",
+      "satisfying",
+      "--start_at",
+      "press:-0.5",
+      "--end_after",
+      "giant_peak:0.8"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 382,
+      "y": 64,
+      "z": -98
+    },
+    "biome": "minecraft:plains",
+    "ticks": 653,
+    "seconds": 32.65,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.8,
+        "event": "start"
+      },
+      {
+        "t": 0.8,
+        "event": "go"
+      },
+      {
+        "t": 1.9,
+        "event": "swing"
+      },
+      {
+        "t": 1.9,
+        "event": "press"
+      },
+      {
+        "t": 2.25,
+        "event": "arrow_hit"
+      },
+      {
+        "t": 2.7,
+        "event": "block_action"
+      },
+      {
+        "t": 2.75,
+        "event": "lamp0"
+      },
+      {
+        "t": 3.05,
+        "event": "block_action"
+      },
+      {
+        "t": 3.1,
+        "event": "lamp1"
+      },
+      {
+        "t": 3.45,
+        "event": "block_action"
+      },
+      {
+        "t": 3.5,
+        "event": "lamp2"
+      },
+      {
+        "t": 3.85,
+        "event": "block_action"
+      },
+      {
+        "t": 3.9,
+        "event": "lamp3"
+      },
+      {
+        "t": 4.25,
+        "event": "block_action"
+      },
+      {
+        "t": 4.3,
+        "event": "lamp4"
+      },
+      {
+        "t": 4.65,
+        "event": "block_action"
+      },
+      {
+        "t": 4.7,
+        "event": "lamp5"
+      },
+      {
+        "t": 5.05,
+        "event": "block_action"
+      },
+      {
+        "t": 5.1,
+        "event": "lamp6"
+      },
+      {
+        "t": 5.45,
+        "event": "block_action"
+      },
+      {
+        "t": 5.5,
+        "event": "lamp7"
+      },
+      {
+        "t": 5.85,
+        "event": "block_action"
+      },
+      {
+        "t": 5.9,
+        "event": "lamp8"
+      },
+      {
+        "t": 6.25,
+        "event": "block_action"
+      },
+      {
+        "t": 6.3,
+        "event": "lamp9"
+      },
+      {
+        "t": 6.65,
+        "event": "block_action"
+      },
+      {
+        "t": 6.7,
+        "event": "lamp10"
+      },
+      {
+        "t": 7.05,
+        "event": "block_action"
+      },
+      {
+        "t": 7.1,
+        "event": "lamp11"
+      },
+      {
+        "t": 7.45,
+        "event": "block_action"
+      },
+      {
+        "t": 7.5,
+        "event": "lamp12"
+      },
+      {
+        "t": 7.85,
+        "event": "block_action"
+      },
+      {
+        "t": 7.85,
+        "event": "block_action"
+      },
+      {
+        "t": 7.9,
+        "event": "lamp13"
+      },
+      {
+        "t": 7.95,
+        "event": "push0"
+      },
+      {
+        "t": 8.15,
+        "event": "block_action"
+      },
+      {
+        "t": 8.25,
+        "event": "push1"
+      },
+      {
+        "t": 8.45,
+        "event": "block_action"
+      },
+      {
+        "t": 8.55,
+        "event": "push2"
+      },
+      {
+        "t": 8.85,
+        "event": "block_action"
+      },
+      {
+        "t": 9.15,
+        "event": "block_action"
+      },
+      {
+        "t": 9.45,
+        "event": "block_action"
+      },
+      {
+        "t": 9.6,
+        "event": "block_action"
+      },
+      {
+        "t": 9.65,
+        "event": "sand_land"
+      },
+      {
+        "t": 9.7,
+        "event": "launch"
+      },
+      {
+        "t": 9.7,
+        "event": "block_action"
+      },
+      {
+        "t": 10.75,
+        "event": "block_action"
+      },
+      {
+        "t": 10.8,
+        "event": "bell0"
+      },
+      {
+        "t": 11.4,
+        "event": "block_action"
+      },
+      {
+        "t": 11.45,
+        "event": "bell1"
+      },
+      {
+        "t": 12.05,
+        "event": "block_action"
+      },
+      {
+        "t": 12.1,
+        "event": "bell2"
+      },
+      {
+        "t": 12.65,
+        "event": "cart_end"
+      },
+      {
+        "t": 12.7,
+        "event": "rocket0"
+      },
+      {
+        "t": 13.1,
+        "event": "rocket1"
+      },
+      {
+        "t": 13.5,
+        "event": "rocket2"
+      },
+      {
+        "t": 13.9,
+        "event": "rocket3"
+      },
+      {
+        "t": 15.15,
+        "event": "rocket_hit"
+      },
+      {
+        "t": 15.45,
+        "event": "block_action"
+      },
+      {
+        "t": 15.55,
+        "event": "anvil_push"
+      },
+      {
+        "t": 15.85,
+        "event": "block_action"
+      },
+      {
+        "t": 17.45,
+        "event": "anvil_land"
+      },
+      {
+        "t": 17.8,
+        "event": "block_action"
+      },
+      {
+        "t": 17.9,
+        "event": "wave0"
+      },
+      {
+        "t": 18.2,
+        "event": "block_action"
+      },
+      {
+        "t": 18.2,
+        "event": "block_action"
+      },
+      {
+        "t": 18.3,
+        "event": "wave1"
+      },
+      {
+        "t": 18.6,
+        "event": "block_action"
+      },
+      {
+        "t": 18.6,
+        "event": "block_action"
+      },
+      {
+        "t": 18.7,
+        "event": "wave2"
+      },
+      {
+        "t": 19,
+        "event": "block_action"
+      },
+      {
+        "t": 19,
+        "event": "block_action"
+      },
+      {
+        "t": 19.1,
+        "event": "wave3"
+      },
+      {
+        "t": 19.4,
+        "event": "block_action"
+      },
+      {
+        "t": 19.4,
+        "event": "block_action"
+      },
+      {
+        "t": 19.5,
+        "event": "wave4"
+      },
+      {
+        "t": 19.8,
+        "event": "block_action"
+      },
+      {
+        "t": 19.8,
+        "event": "block_action"
+      },
+      {
+        "t": 19.9,
+        "event": "wave5"
+      },
+      {
+        "t": 20.25,
+        "event": "block_action"
+      },
+      {
+        "t": 20.25,
+        "event": "block_action"
+      },
+      {
+        "t": 20.35,
+        "event": "wave6"
+      },
+      {
+        "t": 20.65,
+        "event": "block_action"
+      },
+      {
+        "t": 20.65,
+        "event": "block_action"
+      },
+      {
+        "t": 20.75,
+        "event": "wave7"
+      },
+      {
+        "t": 21.05,
+        "event": "block_action"
+      },
+      {
+        "t": 21.05,
+        "event": "block_action"
+      },
+      {
+        "t": 21.15,
+        "event": "wave8"
+      },
+      {
+        "t": 21.45,
+        "event": "block_action"
+      },
+      {
+        "t": 21.45,
+        "event": "block_action"
+      },
+      {
+        "t": 21.55,
+        "event": "wave9"
+      },
+      {
+        "t": 21.85,
+        "event": "block_action"
+      },
+      {
+        "t": 21.85,
+        "event": "block_action"
+      },
+      {
+        "t": 21.95,
+        "event": "wave10"
+      },
+      {
+        "t": 22.2,
+        "event": "block_action"
+      },
+      {
+        "t": 22.2,
+        "event": "block_action"
+      },
+      {
+        "t": 22.3,
+        "event": "wave11"
+      },
+      {
+        "t": 22.4,
+        "event": "block_action"
+      },
+      {
+        "t": 22.5,
+        "event": "tnt_launch"
+      },
+      {
+        "t": 22.6,
+        "event": "block_action"
+      },
+      {
+        "t": 22.8,
+        "event": "block_action"
+      },
+      {
+        "t": 23.2,
+        "event": "cart_primed"
+      },
+      {
+        "t": 23.3,
+        "event": "primed"
+      },
+      {
+        "t": 23.65,
+        "event": "block_action"
+      },
+      {
+        "t": 23.7,
+        "event": "tbell0"
+      },
+      {
+        "t": 24.45,
+        "event": "block_action"
+      },
+      {
+        "t": 24.5,
+        "event": "tbell1"
+      },
+      {
+        "t": 25.45,
+        "event": "block_action"
+      },
+      {
+        "t": 25.5,
+        "event": "tbell2"
+      },
+      {
+        "t": 26.5,
+        "event": "block_action"
+      },
+      {
+        "t": 26.55,
+        "event": "tbell3"
+      },
+      {
+        "t": 27.25,
+        "event": "cart_boom"
+      },
+      {
+        "t": 28.8,
+        "event": "cube"
+      },
+      {
+        "t": 29.4,
+        "event": "big"
+      },
+      {
+        "t": 30.25,
+        "event": "giant"
+      },
+      {
+        "t": 31.3,
+        "event": "giant_peak"
+      },
+      {
+        "t": 32.65,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "29a21caf9fda6ebfaa77bf76f247941b555dd6ff",
+    "rendered_at": "2026-11-07T14:44:41.606Z",
+    "head_at_publish": "ffb1affc37d1f9f49596a4ef0441bf785ad6bec8",
+    "stunt": "stunts/chain_reaction.js",
+    "source_snapshot": [
+      "source/chain_reaction.js",
+      "source/chain.js",
+      "source/_site.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 29a21caf9fda",
+    "gunzip -c shorts/chain_reaction/recording.json.gz > work/chain_reaction.rec.json",
+    "node render.js work/chain_reaction.rec.json work/chain_reaction.frames 60 1080 1011",
+    "python3 audio.py work/chain_reaction.rec.json work/chain_reaction.wav",
+    "python3 edit.py --frames work/chain_reaction.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/chain_reaction.rec.json --audio work/chain_reaction.wav --caption \"the most satisfying chain reaction \ud83d\ude33\" --red satisfying --start_at press:-0.5 --end_after giant_peak:0.8 --out out/chain_reaction.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker 17: one continuous real-redstone chain (button, arrow, 14-note lamp line, 3 sand-on-torch collapses, cart + bells, rockets, anvil, glass piston wave, primed TNT cart + bells, TNT line -> 27 -> 125 -> 486). Passed frame review + minecraft audit (review 4) and retention re-audit. Nitpicks left: small cart at 9-11 s, obsidian watch floor visible at 9.5-11.9 s and the end, game-audio loudnorm flattens the build-up (edit.py, reported to worker 10; the NCS song covers it)",
+  "published_at": "2026-11-07T14:48:38.416Z"
+}
