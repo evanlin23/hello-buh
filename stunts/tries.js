@@ -71,6 +71,10 @@ module.exports = {
       const gbot = new Proxy(bot, { get (t, k) { if (aborted && (k === 'look' || k === 'activateItem' || k === 'setControlState')) return () => Promise.resolve(); const v = t[k]; return typeof v === 'function' ? v.bind(t) : v } })
       const gctx = Object.create(ctx)
       gctx.bot = gbot
+      if (MODES[i] === 'lava') {   // the clutch's water splash (particles, sound) fired on the lava landing
+        gctx.particles = (type, ...a) => type === 'splash' ? undefined : ctx.particles(type, ...a)
+        gctx.sound = (name, ...a) => /splash/.test(name) ? undefined : ctx.sound(name, ...a)
+      }
       gctx.easeLook = async (yaw, pitch, ms) => {
         const y0 = bot.entity.yaw, p0 = bot.entity.pitch, steps = Math.max(1, Math.round(ms / 50))
         let dy = yaw - y0; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
@@ -93,7 +97,8 @@ module.exports = {
       // camera): an empty bucket for try 3, a milk bucket for try 5, water otherwise
       bot.chat(`/item replace entity @s hotbar.1 with ${{ 2: 'bucket', 4: 'milk_bucket', 5: 'lava_bucket' }[i + 1] || 'water_bucket'}`)
       // the lava pool goes with the death (behind the respawn cut), so the next try doesn't land in it
-      if (MODES[i] === 'lava') bot.chat(`/fill ${this.x - 5} ${this.floor} ${this.z - 5} ${this.x + 5} ${this.floor + 2} ${this.z + 5} air replace lava`)
+      // (+-5 missed it: the bot lands ~7 out, and tries 7 and 8 landed in the leftover pool)
+      if (MODES[i] === 'lava') bot.chat(`/fill ${this.x - 12} ${this.floor} ${this.z - 12} ${this.x + 12} ${this.floor + 2} ${this.z + 12} air replace lava`)
       respawning = true
       for (let k = 0; k < 60 && bot.entity.position.y < this.top - 0.5; k++) await bot.waitForTicks(1)
       respawning = false
@@ -103,7 +108,7 @@ module.exports = {
       bot.setQuickBarSlot(1)
       // a beat on the pillar for the death line to land (the next try's line cut it to 0.15 s)
       await ctx.easeLook(0.25, -0.95, 400)              // (600 + 500 read as ~1.1 s of dead air per respawn)
-      await ctx.easeLook(-0.1, -0.7, 350)
+      await ctx.easeLook(0, -1.3, 450)   // nearly straight down already: the clutch's 250 ms ease from -0.7 to -1.45 was a 1-2 frame snap every try
     }
     return false
   }
