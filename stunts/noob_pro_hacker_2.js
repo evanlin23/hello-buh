@@ -12,7 +12,12 @@
 const { plateau } = require('../lib/plateau')
 const nph = require('../lib/nph')
 
-const TASKS = ['get diamonds', 'kill the creeper', 'get down the tower']
+const TASKS = ['get wood', 'get diamonds', 'kill the creeper', 'get down the tower']
+// the grove: oak trees built by hand (fixed shape, so the hacker's /fill count is known): a 5-log trunk,
+// leaves in two layers. Offsets from the grove start (I stand at its origin facing north); tree 0 is
+// the one in front of me
+const TREES = [[0, -2], [-6, -4], [5, -6], [-3, -10], [7, -12], [-9, -8], [2, -14]]
+const TRUNK = 5
 // the cave: a 9x4x9 room in an 11x6x11 stone shell; ores set into its walls (dx, dy, dz from the
 // room's floor-centre; the north wall is dz -5)
 const DIAMONDS = [[-1, 1, -5], [0, 1, -5], [1, 1, -5], [0, 2, -5]]
@@ -20,8 +25,8 @@ const ORES = [['coal_ore', -5, 2, -2], ['coal_ore', -5, 3, -1], ['coal_ore', 5, 
 const SHELL_STONE = 11 * 6 * 11 - 9 * 4 * 9 - DIAMONDS.length - ORES.length
 const SLIME = 15 * 15
 const H = 30                                     // the tower
-const CMDS = ['/fill ~-5 ~-1 ~-6 ~5 ~4 ~4 diamond_ore replace stone', '/effect give @e[type=creeper] levitation 10 4', '/fill ~-7 ~-31 ~-9 ~7 ~-31 ~5 slime_block']
-const FEEDBACK = [`Successfully filled ${SHELL_STONE} block(s)`, 'Applied effect Levitation to Creeper', `Successfully filled ${SLIME} block(s)`]
+const CMDS = ['/fill ~-12 ~ ~-15 ~12 ~8 ~9 air replace oak_log', '/fill ~-5 ~-1 ~-6 ~5 ~4 ~4 diamond_ore replace stone', '/effect give @e[type=creeper] levitation 10 4', '/fill ~-7 ~-31 ~-9 ~7 ~-31 ~5 slime_block']
+const FEEDBACK = [`Successfully filled ${TREES.length * TRUNK} block(s)`, `Successfully filled ${SHELL_STONE} block(s)`, 'Applied effect Levitation to Creeper', `Successfully filled ${SLIME} block(s)`]
 
 module.exports = {
   name: 'noob_pro_hacker_2',
@@ -31,14 +36,14 @@ module.exports = {
   botTimeout: 420,
   edit: nph.edit({
     caption: 'noob vs pro vs hacker 💀 part 2', red: 'hacker', tasks: TASKS, cmds: CMDS, feedback: FEEDBACK,
-    dropAt: 'hack', endAfter: 'bounce:1.0', deathBeats: [3, 6],
+    dropAt: 'hack', endAfter: 'bounce:1.0', deathBeats: [6, 9],
     // the wooden pickaxe's 7.5 s on diamond ore at 8x; the creeper and fall deaths cut to the death
-    speed: [['ndig_a', 'ndig_b', 8]],
+    speed: [['wdig_a', 'wdig_b', 6], ['ndig_a', 'ndig_b', 8]],
     extra: {
       deathScreen: true,
       punch: [['hack', 0, 1.08], ['hack', 1, 1.08], ['bounce', 0, 1.15]],
       shake: [['death', 0, 16], ['bounce', 0, 14]],
-      cards: [['nothing', 'NOTHING 💀', 1.0, 'white']]
+      cards: [['floating', 'FLOATING 💀', 1.0, 'white'], ['nothing', 'NOTHING 💀', 1.0, 'white']]
     }
   }),
 
@@ -67,15 +72,30 @@ module.exports = {
     const tx = x + 28, tz = z - 20
     Object.assign(this, { tx, tz })
     await ctx.cmd(`/fill ${tx} ${F + 1} ${tz} ${tx} ${F + H} ${tz} cobblestone`)
-    await ctx.cmd(`/setblock ${tx} ${F + H + 1} ${tz} snow[layers=5]`)   // the clutch's phase trick (docs/clutch-timing.md)
+    await ctx.cmd(`/setblock ${tx} ${F + H + 1} ${tz} cobblestone_slab[type=bottom]`)   // the clutch's half-block phase trick (docs/clutch-timing.md); a snow cap filled the shot white
 
     await ctx.cmd('/effect give @s saturation infinite 1 true')
-    await ctx.hotbar(['wooden_pickaxe'])
-    await ctx.tpCheck(cx + 0.5, R0, cz + 1.5, 180, 0)
+    // --- 0. the grove (on the field above the cave) ---
+    const gx = x - 28, gz = z - 20
+    Object.assign(this, { gx, gz })
+    await this.trees(ctx)
+    await ctx.hotbar([])
+    await ctx.tpCheck(gx + 0.5, F + 1, gz + 0.5, 180, -10)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
     await bot.waitForTicks(20)
     return { x, y: F, z }
+  },
+
+  async trees (ctx) {
+    const { gx, gz, F } = this
+    for (const [dx, dz] of TREES) {
+      const X = gx + dx, Z = gz + dz
+      await ctx.cmd(`/fill ${X - 2} ${F + 4} ${Z - 2} ${X + 2} ${F + 5} ${Z + 2} oak_leaves[persistent=true]`)
+      await ctx.cmd(`/fill ${X - 1} ${F + 6} ${Z - 1} ${X + 1} ${F + 7} ${Z + 1} oak_leaves[persistent=true]`)
+      for (const [a, b] of [[-2, -2], [2, 2], [-2, 2], [2, -2]]) await ctx.cmd(`/setblock ${X + a} ${F + 5} ${Z + b} air`)   // rounded corners
+      await ctx.cmd(`/fill ${X} ${F + 1} ${Z} ${X} ${F + TRUNK} ${Z} oak_log`)
+    }
   },
 
   async ores (ctx) {
@@ -92,9 +112,65 @@ module.exports = {
     const ore = (i) => new Vec3(cx + DIAMONDS[i][0], R0 - 1 + DIAMONDS[i][1], cz + DIAMONDS[i][2])
     const walkTo = async (zt, maxT = 30) => { bot.setControlState('forward', true); for (let w = 0; w < maxT && bot.entity.position.z > zt; w++) await bot.waitForTicks(1); bot.setControlState('forward', false) }
 
-    // ================= task 1: diamonds =================
-    // NOOB: a wooden pickaxe on diamond ore. It breaks... and drops nothing.
+    // ================= task 1: wood =================
+    const { gx, gz } = this
+    const t0 = (y) => new Vec3(gx + TREES[0][0], y, gz + TREES[0][1])
+    const rawDig = async (loc, ticks) => {
+      bot._client.write('block_dig', { status: 0, location: loc, face: 3, sequence: 0 }); bot.swingArm()
+      await bot.waitForTicks(ticks)
+      bot._client.write('block_dig', { status: 2, location: loc, face: 3, sequence: 0 }); bot.swingArm()
+      for (let w = 0; w < 10 && bot.blockAt(loc)?.name !== 'air'; w++) await bot.waitForTicks(1)
+      return bot.blockAt(loc)?.name === 'air'
+    }
+    // NOOB: punches out the bottom log... the tree floats
     k.beat({ task: 0 })
+    await ctx.easeLookAt(t0(F + 1).offset(0.5, 0.5, 1), 450)
+    ctx.mark('wdig_a')
+    try { await bot.dig(bot.blockAt(t0(F + 1)), 'ignore') } catch (e) { ctx.log('punch failed', e.message); return false }
+    ctx.mark('wdig_b')
+    ctx.sound('block.wood.break', 1, 1)
+    await ctx.easeLookAt(t0(F + 4).offset(0.5, 0.5, 0.5), 450)      // ...and looks up: the rest of it is just hanging there
+    ctx.mark('floating')
+    await k.look(bot.entity.yaw + 0.2, 0.75, 700)
+    k.endBeat()
+
+    // PRO: Efficiency V axe, the whole trunk in a second (2 ticks a log, vanilla), logs scooped up
+    await this.trees(ctx)
+    await k.cutTo(gx + 0.5, F + 1, gz + 0.5, 180, -10, { hotbar: [['diamond_axe[enchantments={efficiency:5}]', 1]] })
+    k.beat()
+    for (let y = F + 1; y <= F + TRUNK; y++) {
+      await ctx.easeLookAt(t0(y).offset(0.5, 0.5, 1), 100)
+      if (!(await rawDig(t0(y), 2))) { ctx.log('pro chop rejected', y); return false }
+      ctx.sound('block.wood.break', 1, 1)
+    }
+    ctx.mark('chopped')
+    ctx.easeLookAt(t0(F).offset(0.5, 1, 0.5), 300)
+    bot.setControlState('forward', true)
+    for (let w = 0; w < 25 && bot.inventory.items().filter(i => i.name === 'oak_log').reduce((a, i) => a + i.count, 0) < TRUNK; w++) { if (bot.entity.position.z < gz - 0.6) bot.setControlState('forward', false); await bot.waitForTicks(1) }
+    bot.clearControlStates()
+    ctx.log('pro logs', bot.inventory.items().filter(i => i.name === 'oak_log').reduce((a, i) => a + i.count, 0))
+    k.endBeat()
+
+    // HACKER: /fill ... air replace oak_log: every trunk in the grove gone, the leaves left floating
+    await this.trees(ctx)
+    await ctx.cmd('/kill @e[type=item]')
+    await k.cutTo(gx + 0.5, F + 1, gz + 0.5, 180, -10)
+    k.beat()
+    ctx.easeLook(N + 0.3, 0.2, 1000)
+    await bot.waitForTicks(20)
+    k.typed()
+    bot.chat(`/fill ${gx - 12} ${F + 1} ${gz - 15} ${gx + 12} ${F + 9} ${gz + 9} air replace oak_log`)
+    ctx.mark('hack')
+    ctx.sound('entity.player.levelup', 0.6, 1.4)
+    await bot.waitForTicks(4)
+    await k.look(N - 0.4, 0.45, 800)                              // floating trees, all of them
+    await k.look(N + 0.5, 0.35, 700)
+    k.endBeat()
+
+    // ================= task 2: diamonds =================
+    // NOOB: a wooden pickaxe on diamond ore. It breaks... and drops nothing.
+    await k.cutTo(cx + 0.5, R0, cz + 1.5, 180, 0, { hotbar: ['wooden_pickaxe'] })
+    k.beat({ task: 1 })
     ctx.easeLookAt(ore(1).offset(0.5, 0.5, 0.5), 600)
     await walkTo(cz - 1.4)
     await ctx.easeLookAt(ore(1).offset(0.5, 0.5, 1), 200)
@@ -104,7 +180,7 @@ module.exports = {
     ctx.sound('block.stone.break', 1, 1)
     await ctx.easeLookAt(ore(1).offset(0.5, -0.6, 2), 350)        // where the diamond should have dropped
     ctx.mark('nothing')
-    await bot.waitForTicks(16)
+    await k.look(bot.entity.yaw - 0.25, -0.35, 450)               // where IS it
     const gotNoob = bot.inventory.items().some(i => i.name === 'diamond')
     ctx.log('noob got a diamond?', gotNoob)
     k.endBeat()
@@ -117,7 +193,15 @@ module.exports = {
     await walkTo(cz - 1.4)
     for (const i of [0, 1, 2, 3]) {
       await ctx.easeLookAt(ore(i).offset(0.5, 0.5, 1), 110)
-      try { await bot.dig(bot.blockAt(ore(i)), 'ignore') } catch (e) { ctx.log('pro dig failed', e.message); return false }
+      // raw dig packets: mineflayer's digTime read this pick as 4.55 s an ore; vanilla Efficiency V
+      // diamond on diamond ore is 3 ticks (34 / 3 / 30 = 0.38 a tick), which the server checks itself
+      const loc = ore(i)
+      bot._client.write('block_dig', { status: 0, location: loc, face: 3, sequence: 0 }); bot.swingArm()
+      await bot.waitForTicks(3)
+      bot._client.write('block_dig', { status: 2, location: loc, face: 3, sequence: 0 }); bot.swingArm()
+      ctx.sound('block.stone.break', 1, 1)
+      for (let w = 0; w < 10 && bot.blockAt(loc)?.name === 'diamond_ore'; w++) await bot.waitForTicks(1)
+      if (bot.blockAt(loc)?.name === 'diamond_ore') { ctx.log('pro dig rejected at', loc); return false }
     }
     ctx.mark('vein')
     // step in and scoop up the drops (they pop out at the foot of the wall)
@@ -161,7 +245,7 @@ module.exports = {
     // blast does ~12 on normal, and a noob who survives a point-blank creeper isn't the joke
     bot.chat('/damage @s 14 minecraft:generic')
     await bot.waitForTicks(24)
-    k.beat({ task: 1 })
+    k.beat({ task: 2 })
     const creeperHead = () => { const c = k.mob('creeper'); return c ? c.position.offset(0, 1.1, 0) : null }
     bot.setControlState('forward', true)
     let hissed = false
@@ -227,7 +311,7 @@ module.exports = {
     await ctx.cmd('/kill @e[type=creeper]')
 
     // ================= task 3: the tower =================
-    const top = F + H + 1 + 0.5                                   // on the snow cap
+    const top = F + H + 1 + 0.5                                   // on the slab
     const jumpOff = async () => {
       await ctx.easeLook(N, -1.45, 250)                           // straight down the tower
       ctx.mark('jump')
@@ -242,14 +326,14 @@ module.exports = {
     // NOOB: just jumps
     bot.chat(`/spawnpoint @s ${tx} ${F + 1} ${tz + 4} 180 0`); bot.chat(`/setworldspawn ${tx} ${F + 1} ${tz + 4} 180 0`)
     await k.cutTo(tx + 0.5, top, tz + 0.5, 180, 70)
-    k.beat({ task: 2 })
+    k.beat({ task: 3 })
     await bot.waitForTicks(4)
     await jumpOff()
     for (let w = 0; w < 120 && !ctx.died; w++) await bot.waitForTicks(1)
     bot.clearControlStates()
     if (!ctx.died) { ctx.log('noob survived the fall?'); return false }
     ctx.mark('noob_splat')
-    await bot.waitForTicks(18)
+    await bot.waitForTicks(9)
     k.endBeat()
     ctx.revive(); ctx.respawn()
     await new Promise(r => bot.once('spawn', r))
