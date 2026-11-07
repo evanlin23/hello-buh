@@ -25,7 +25,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hit a villager 💀',
   edit: {
-    caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/funk_abnormal.mp3', dropAt: 'death', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:0.8',
+    caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/funk_abnormal.mp3', dropAt: 'death', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:1.0',
     subs: [...BEATS.map((b, i) => ['beat', b.sub, 1.4, i]), ...BEATS.map((b, i) => ['golem', b.golems === 1 ? '1 golem' : `${b.golems} golems`, 1.2, i]), ...juggleSubs()],
     speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b`, 'cut'])
   },
@@ -65,7 +65,7 @@ module.exports = {
       }
       for (let g = 0; g < B.golems; g++) {
         const ring = g < 12 ? 0 : 1, inRing = ring ? B.golems - 12 : Math.min(12, B.golems), k = ring ? g - 12 : g
-        const ang = Math.PI / 3 + (k + 0.5) / inRing * (4 * Math.PI / 3), rad = 5.0 + ring * 2.2
+        const ang = Math.PI / 3 + (k + 0.5) / inRing * (4 * Math.PI / 3), rad = 3.6 + ring * 2.0   // (5.0: a 1-1.4 s walk-in on empty sky every beat)
         const gx = sx + 0.5 + Math.sin(ang) * rad, gz = z + 0.5 - Math.cos(ang) * rad
         bot.chat(`/summon iron_golem ${gx.toFixed(2)} ${floor + 1} ${gz.toFixed(2)} {PlayerCreated:0b,PersistenceRequired:1b,Rotation:[${(g * 47) % 360}f,0f],Tags:["g${i}"]}`)
       }
@@ -106,33 +106,35 @@ module.exports = {
       // this village's villagers and golems now (a cut span hides them appearing)
       if (i > 0) ctx.mark(`spawn${i}a`)
       await this.spawnBeat(i)
-      if (i > 0) ctx.mark(`spawn${i}b`)
+      if (i > 0) { await bot.waitForTicks(6); ctx.mark(`spawn${i}b`) }   // (ending the cut right after the spawn: the villagers popped in 3 frames after it)
       ctx.mark('beat', { n: i })
       // smack every villager here
       for (const v of near('villager').slice(0, B.villagers)) {
         await ctx.easeLookAt(v.position.offset(0, 1.4, 0), B.villagers > 5 ? 80 : 160)
         ctx.mark('smack')
-        bot.attack(v); ctx.sound('entity.villager.hurt', 1); ctx.sound('entity.player.attack.strong', 0.8)
+        bot.attack(v); ctx.sound('entity.villager.hurt', 1); ctx.sound(B.villagers > 1 ? 'entity.player.attack.weak' : 'entity.player.attack.strong', 0.8)   // (spam hits are before the cooldown: weak)
         ctx.particles('angry', { x: v.position.x, y: v.position.y + 2.1, z: v.position.z }, { count: 3 })
         await bot.waitForTicks(B.villagers > 5 ? 1 : B.villagers > 1 ? 3 : 7)   // (20 one at a time ran 4.8 s)
       }
       // ...the golems saw that
-      bot.chat(`/execute as @e[type=iron_golem,tag=g${i}] run damage @s 1 minecraft:player_attack by ${bot.username}`)
+      // provoked by anger, not a /damage (that flashed every golem red with nobody hitting them)
+      { const h = bot.player.uuid.replace(/-/g, ''), ints = [0, 8, 16, 24].map(o => { const v = parseInt(h.slice(o, o + 8), 16); return v > 0x7fffffff ? v - 0x100000000 : v })
+        bot.chat(`/execute as @e[type=iron_golem,tag=g${i}] run data merge entity @s {AngerTime:600,AngryAt:[I;${ints.join(',')}],anger_end_time:999999999L,angry_at:[I;${ints.join(',')}]}`) }
       const g0 = near('iron_golem')[0]
       if (g0) await ctx.easeLookAt(g0.position.offset(0, 2.2, 0), 300)
       ctx.mark('golem', { n: B.golems })
       let launched = false, n = 0, airborne = false, lastLaunch = -99
       const hp0 = bot.health
-      for (let k = 0; k < 320 && !ctx.died; k++) {
+      for (let k = 0; k < 420 && !ctx.died; k++) {   // (320 cut the 7 beat at x3)
         // eyes on the middle of the swarm (one golem's face filled the frame and the count never showed)
         const gs = near('iron_golem').filter(e => e.position.distanceTo(bot.entity.position) < 14)
         const g = gs.length ? { position: gs.reduce((a, e) => a.plus(e.position), new ctx.Vec3(0, 0, 0)).scaled(1 / gs.length).offset(0, -0.6, 0) } : null
         if (g) {
           // in the air: look down at the ring falling away (the launch reads); on the ground: over their heads, not into a golem's chest
-          const e = bot.entity.position.offset(0, 1.62, 0), d = (airborne ? bot.entity.position.offset(0, -4, -2.5) : g.position.offset(0, 3.6, 0)).minus(e)
+          const e = bot.entity.position.offset(0, 1.62, 0), d = (airborne ? g.position.offset(0, 0.4, 0) : g.position.offset(0, 3.2, 0)).minus(e)   // in the air: down onto the ring around you
           { const ty = Math.atan2(-d.x, -d.z), tp = Math.atan2(d.y, Math.hypot(d.x, d.z))   // eased: switching golems isn't a snap
             let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-            const kf = airborne ? 0.6 : 0.25   // in the air: down at the ring fast (the ~1-block hop is over in ~0.5 s)
+            const kf = airborne ? 0.22 : 0.2   // (0.6 in the air snapped the view in 2-3 frames: a stutter, not a throw)
             await bot.look(bot.entity.yaw + dy * kf, bot.entity.pitch + (tp - bot.entity.pitch) * kf, true) }
           // stand and take it (backing off outran the golems: beats 1-2 never launched); step in if one hangs back
           bot.setControlState('forward', !airborne && k > 10 && g.position.distanceTo(bot.entity.position) > 3)
