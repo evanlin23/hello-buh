@@ -5,6 +5,7 @@
 // standing ON it. It lights the block at its feet, runs for the edge... "HelloBuh was blown up by
 // HelloBuh". Peaceful (no TNT damage to the player) until the finale, normal for it.
 // Owner rules: 30 s minimum from more beats, no dead space, end <= 1 s after the payoff.
+const { plateau } = require('../lib/plateau')
 const TIERS = [
   { n: 1, dx: -60, size: [1, 1, 1], view: 7, label: '1 TNT' },
   { n: 10, dx: -45, size: [5, 2, 1], view: 11, label: '10 TNT' },
@@ -38,21 +39,18 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z } = g, floor = g.y
-    Object.assign(this, { x, z, floor })
+    const { x, z } = g
     await ctx.defaultRules()
     await ctx.cmd('/gamerule tnt_explosion_drop_decay true')     // vanilla rule: fewer block drops (thousands of items)
     await ctx.cmd('/difficulty peaceful')
     // stand over the middle while building so every pile's chunks are loaded and recorded
-    await ctx.cmd(`/tp @s ${x + 0.5} ${floor + 1} ${z + 0.5}`)
+    await ctx.cmd(`/tp @s ${x + 0.5} ${g.y + 1} ${z + 0.5}`)
     await bot.waitForTicks(60)
-    // the field: air above, grass, deep dirt below (craters that reach groundwater flood). Slabs
-    // under the 32768-block /fill cap.
-    const W = XR - XL + 1, D = ZF - ZB + 1
-    const rows = Math.max(1, Math.floor(32000 / (W * D)))
-    for (let y0 = floor + 1; y0 <= floor + 26; y0 += rows) await ctx.cmd(`/fill ${x + XL} ${y0} ${z + ZB} ${x + XR} ${Math.min(floor + 26, y0 + rows - 1)} ${z + ZF} air`)
-    for (let y0 = floor - 20; y0 <= floor - 1; y0 += rows) await ctx.cmd(`/fill ${x + XL} ${y0} ${z + ZB} ${x + XR} ${Math.min(floor - 1, y0 + rows - 1)} ${z + ZF} dirt`)
-    await ctx.cmd(`/fill ${x + XL} ${floor} ${z + ZB} ${x + XR} ${floor} ${z + ZF} grass_block`)
+    // the field: a plateau levelled at a high percentile of the terrain (dug down to the start
+    // point, its cut walls showed in the wide shots), deep dirt below (craters that reach
+    // groundwater flood)
+    const floor = await plateau(ctx, { x0: x + XL, x1: x + XR, z0: z + ZB, z1: z + ZF, above: 30, below: 20 })
+    Object.assign(this, { x, z, floor })
     await ctx.cmd('/kill @e[type=!player]')
     this.tiers = TIERS.map(t => {
       const [w, h, d] = t.size

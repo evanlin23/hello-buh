@@ -7,6 +7,7 @@
 // once... and a creeper lands right behind it. "HelloBuh was blown up by Creeper".
 // Owner rules: 30 s minimum from more beats, no dead space, end <= 1 s after the payoff (death
 // screen text: ~1.6 s of reading).
+const { plateau } = require('../lib/plateau')
 const H = 16            // drop height above the floor: in frame for the whole fall with the camera pitched up
 const R = 64            // cleared field radius (at 40 the cleared pit's walls showed in every spin)
 
@@ -32,14 +33,12 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z } = g, floor = g.y
-    Object.assign(this, { x, z, floor })
+    const { x, z } = g
     await ctx.defaultRules()
     await ctx.cmd('/gamerule tnt_explosion_drop_decay true')
-    const W = 2 * R + 1, rows = Math.max(1, Math.floor(32000 / (W * W)))
-    for (let y0 = floor + 1; y0 <= floor + H + 8; y0 += rows) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(floor + H + 8, y0 + rows - 1)} ${z + R} air`)
-    for (let y0 = floor - 8; y0 <= floor - 1; y0 += rows) await ctx.cmd(`/fill ${x - R} ${y0} ${z - R} ${x + R} ${Math.min(floor - 1, y0 + rows - 1)} ${z + R} dirt`)
-    await ctx.cmd(`/fill ${x - R} ${floor} ${z - R} ${x + R} ${floor} ${z + R} grass_block`)
+    // a plateau, never a pit: at the start point's height the field's cut walls showed in every spin
+    const floor = await plateau(ctx, { x0: x - R, x1: x + R, z0: z - R, z1: z + R, above: H + 14, below: 8 })
+    Object.assign(this, { x, z, floor })
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16], 'water_bucket'])
