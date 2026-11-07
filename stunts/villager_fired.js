@@ -198,9 +198,10 @@ module.exports = {
     const litAt = ctx.tick
     // back off facing it, the villager in view
     // a single short step back (it used to walk back ~19 ticks: a wide shot with FIRED on his head)
-    bot.setControlState('back', true); await bot.waitForTicks(4); bot.setControlState('back', false)
+    // (a step and a half: from nearer, the fuse line's crater opened under the player)
+    bot.setControlState('back', true); await bot.waitForTicks(7); bot.setControlState('back', false)
     await ctx.easeLookAt(head.offset(0, 1.6, 0), 300)          // aimed well above him: he sits clear under the subtitle
-    await bot.waitForTicks(8)
+    await ctx.easeLookAt(head.offset(0.3, 1.7, 0), 400)        // still drifting into the cut
     ctx.mark('fuse_a')
     for (let k = 0; k < 18; k++) { await bot.waitForTicks(1); if (k === 3) bot.setControlState('back', false) }
     bot.setControlState('back', false)
@@ -210,14 +211,11 @@ module.exports = {
     // the fuse line goes, then the ring: FIRED
     let booms = 0
     bot._client.on('explosion', () => { booms++ })
-    // a slow sneak forward while it burns (a static wide shot read as dead), eyes on him
-    bot.setControlState('sneak', true); bot.setControlState('forward', true)
+    // glances while it burns, eyes on him (no walking: the player stays well back on the rim)
     for (let k = 0; k < 80 && booms === 0; k++) {
       if (k % 10 === 0) ctx.easeLookAt(head.offset([-0.5, 0.5, -0.2, 0.6][(k / 10) % 4], [1.6, 1.4, 1.7, 1.5][(k / 10) % 4], 0), 450)   // aimed above him: he sits under the subtitle
-      if (bot.entity.position.z < vz + 6.6) bot.setControlState('forward', false)   // not too near the fuse line's blast
       await bot.waitForTicks(1)
     }
-    bot.setControlState('forward', false); bot.setControlState('sneak', false)
     // wait for the ring itself to go (the 4th blast on), then he's unemployed
     for (let k = 0; k < 60 && booms < 4; k++) await bot.waitForTicks(1)
     ctx.mark('ring_boom')
