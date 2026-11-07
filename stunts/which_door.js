@@ -31,7 +31,7 @@ module.exports = R.makeStunt({
     flash: [['death', 2, 0.8]],
     shake: [['death', 2, 24]],
     // the blast from above, slowed (first person, the death screen covers it on the tick it lands)
-    replay: { at: 'big_blast', before: 0.6, after: 0.25, cam: '12.5,14,-2,0,-72', speed: 0.4, label: 'REPLAY' },
+    replay: { at: 'big_blast', before: 0.8, after: 0.3, cam: '12.5,14,-2,0,-72', speed: 0.35, label: 'REPLAY' },
     speed: [['lava_a', 'lava_dead', 2.5]]     // the burn in the lava, sped up to the death
   }
 })
