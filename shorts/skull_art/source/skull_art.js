@@ -1,10 +1,16 @@
-// "the skull emoji irl 💀": the 💀 emoji as pixel art. Eyes and nose first, then the skull.
-module.exports = require('../lib/pixel_art')({
+// "why is he building THIS 😨": the 💀 emoji as pixel art, three times, each bigger. Eyes and nose
+// first, then the skull; the last one is huge.
+const pixelArt = require('../lib/pixel_art')
+const MID = ['..WWWWW..', '.WWWWWWW.', 'WWWWWWWWW', 'WKKWWWKKW', 'WKKWWWKKW', 'WWWWKWWWW', '.WWWWWWW.', '..WKWKW..', '..WWWWW..']
+module.exports = pixelArt({
   name: 'skull_art',
-  art: ['..WWWWW..', '.WWWWWWW.', 'WWWWWWWWW', 'WKKWWWKKW', 'WKKWWWKKW', 'WWWWKWWWW', '.WWWWWWW.', '..WKWKW..', '..WWWWW..'],
+  stages: [
+    { art: ['.WWW.', 'WKWKW', 'WWWWW', '.WKW.', '.WWW.'], first: 'K' },
+    { art: MID, first: 'K' },
+    { art: pixelArt.upscale(MID, 2), first: 'K' }
+  ],
   palette: { W: 'white_concrete', K: 'black_concrete' },
-  first: 'K',
-  wall: 'deepslate_bricks',
-  caption: 'the skull emoji irl 💀',
-  edit: { caption: 'the skull emoji irl 💀', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', start: 0.3 }
+  wall: 'oak_planks',
+  caption: 'why is he building THIS 😨',
+  edit: { caption: 'why is he building THIS 😨', song: 'songs/funk_abnormal.mp3', dropAt: 'complete', startAt: 'stage:-0.2', endAfter: 'complete:0.9' }
 })

@@ -1,9 +1,9 @@
 {
   "name": "skull_art",
-  "caption": "the skull emoji irl \ud83d\udc80",
+  "caption": "why is he building THIS \ud83d\ude28",
   "youtube": {
-    "title": "the skull emoji irl \ud83d\udc80 #minecraft #shorts",
-    "description": "the skull emoji irl \ud83d\udc80\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "why is he building THIS \ud83d\ude28 #minecraft #shorts",
+    "description": "why is he building THIS \ud83d\ude28\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -19,33 +19,32 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 16.75,
-    "drop_in_short_s": 7.15,
-    "song_start_s": 9.6
+    "drop_in_short_s": 29.55,
+    "song_start_s": 0.0
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.75,
+    "duration_s": 30.45,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 6438250,
-    "sha256": "8ad4666f1e683745c2e73660aede5a81c69fd9cd3c503937bca68b166b517b1d"
+    "bytes": 34158113,
+    "sha256": "44eebfddd3e67c1045ca3e32b4d10dae61e083947850f992ac67e30d052c2d2f"
   },
   "edit": {
-    "caption": "the skull emoji irl \ud83d\udc80",
+    "caption": "why is he building THIS \ud83d\ude28",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "complete",
-    "start": 0.3,
+    "startAt": "stage:-0.2",
+    "endAfter": "complete:0.9",
     "args": [
       "--caption",
-      "the skull emoji irl \ud83d\udc80",
-      "--start",
-      "0.3",
-      "--song",
-      "songs/funk_abnormal.mp3",
-      "--song_drop_at",
-      "complete"
+      "why is he building THIS \ud83d\ude28",
+      "--start_at",
+      "stage:-0.2",
+      "--end_after",
+      "complete:0.9"
     ]
   },
   "recording": {
@@ -56,13 +55,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 426,
-      "y": 85,
-      "z": 15
+      "x": 383,
+      "y": 72,
+      "z": -42
     },
-    "biome": "minecraft:forest",
-    "ticks": 182,
-    "seconds": 9.1,
+    "biome": "minecraft:plains",
+    "ticks": 635,
+    "seconds": 31.75,
     "deaths": 0,
     "events": [
       {
@@ -70,11 +69,611 @@
         "event": "start"
       },
       {
-        "t": 7.45,
+        "t": 0,
+        "event": "stage"
+      },
+      {
+        "t": 0.2,
+        "event": "swing"
+      },
+      {
+        "t": 0.6,
+        "event": "swing"
+      },
+      {
+        "t": 0.75,
+        "event": "swing"
+      },
+      {
+        "t": 1,
+        "event": "swing"
+      },
+      {
+        "t": 1.25,
+        "event": "swing"
+      },
+      {
+        "t": 1.5,
+        "event": "swing"
+      },
+      {
+        "t": 1.75,
+        "event": "swing"
+      },
+      {
+        "t": 1.9,
+        "event": "swing"
+      },
+      {
+        "t": 2.05,
+        "event": "swing"
+      },
+      {
+        "t": 2.3,
+        "event": "swing"
+      },
+      {
+        "t": 2.55,
+        "event": "swing"
+      },
+      {
+        "t": 2.8,
+        "event": "swing"
+      },
+      {
+        "t": 2.9,
+        "event": "reveal"
+      },
+      {
+        "t": 4,
+        "event": "stage"
+      },
+      {
+        "t": 4.05,
+        "event": "swing"
+      },
+      {
+        "t": 4.25,
+        "event": "swing"
+      },
+      {
+        "t": 4.45,
+        "event": "swing"
+      },
+      {
+        "t": 4.65,
+        "event": "swing"
+      },
+      {
+        "t": 4.85,
+        "event": "swing"
+      },
+      {
+        "t": 5.05,
+        "event": "swing"
+      },
+      {
+        "t": 5.25,
+        "event": "swing"
+      },
+      {
+        "t": 5.45,
+        "event": "swing"
+      },
+      {
+        "t": 5.65,
+        "event": "swing"
+      },
+      {
+        "t": 5.85,
+        "event": "swing"
+      },
+      {
+        "t": 6.05,
+        "event": "swing"
+      },
+      {
+        "t": 6.25,
+        "event": "swing"
+      },
+      {
+        "t": 6.4,
+        "event": "swing"
+      },
+      {
+        "t": 6.6,
+        "event": "swing"
+      },
+      {
+        "t": 6.8,
+        "event": "swing"
+      },
+      {
+        "t": 7,
+        "event": "swing"
+      },
+      {
+        "t": 7.2,
+        "event": "swing"
+      },
+      {
+        "t": 7.4,
+        "event": "swing"
+      },
+      {
+        "t": 7.6,
+        "event": "swing"
+      },
+      {
+        "t": 7.8,
+        "event": "swing"
+      },
+      {
+        "t": 8,
+        "event": "swing"
+      },
+      {
+        "t": 8.2,
+        "event": "swing"
+      },
+      {
+        "t": 8.4,
+        "event": "swing"
+      },
+      {
+        "t": 8.6,
+        "event": "swing"
+      },
+      {
+        "t": 8.8,
+        "event": "swing"
+      },
+      {
+        "t": 9,
+        "event": "swing"
+      },
+      {
+        "t": 9.2,
+        "event": "swing"
+      },
+      {
+        "t": 9.4,
+        "event": "swing"
+      },
+      {
+        "t": 9.6,
+        "event": "swing"
+      },
+      {
+        "t": 9.8,
+        "event": "swing"
+      },
+      {
+        "t": 10,
+        "event": "swing"
+      },
+      {
+        "t": 10.2,
+        "event": "swing"
+      },
+      {
+        "t": 10.4,
+        "event": "swing"
+      },
+      {
+        "t": 10.6,
+        "event": "reveal"
+      },
+      {
+        "t": 11.65,
+        "event": "stage"
+      },
+      {
+        "t": 11.7,
+        "event": "swing"
+      },
+      {
+        "t": 11.85,
+        "event": "swing"
+      },
+      {
+        "t": 12.05,
+        "event": "swing"
+      },
+      {
+        "t": 12.25,
+        "event": "swing"
+      },
+      {
+        "t": 12.4,
+        "event": "swing"
+      },
+      {
+        "t": 12.55,
+        "event": "swing"
+      },
+      {
+        "t": 12.75,
+        "event": "swing"
+      },
+      {
+        "t": 12.9,
+        "event": "swing"
+      },
+      {
+        "t": 13.05,
+        "event": "swing"
+      },
+      {
+        "t": 13.25,
+        "event": "swing"
+      },
+      {
+        "t": 13.4,
+        "event": "swing"
+      },
+      {
+        "t": 13.55,
+        "event": "swing"
+      },
+      {
+        "t": 13.75,
+        "event": "swing"
+      },
+      {
+        "t": 13.9,
+        "event": "swing"
+      },
+      {
+        "t": 14.05,
+        "event": "swing"
+      },
+      {
+        "t": 14.25,
+        "event": "swing"
+      },
+      {
+        "t": 14.4,
+        "event": "swing"
+      },
+      {
+        "t": 14.55,
+        "event": "swing"
+      },
+      {
+        "t": 14.75,
+        "event": "swing"
+      },
+      {
+        "t": 14.9,
+        "event": "swing"
+      },
+      {
+        "t": 15.05,
+        "event": "swing"
+      },
+      {
+        "t": 15.25,
+        "event": "swing"
+      },
+      {
+        "t": 15.4,
+        "event": "swing"
+      },
+      {
+        "t": 15.55,
+        "event": "swing"
+      },
+      {
+        "t": 15.75,
+        "event": "swing"
+      },
+      {
+        "t": 15.9,
+        "event": "swing"
+      },
+      {
+        "t": 16.05,
+        "event": "swing"
+      },
+      {
+        "t": 16.25,
+        "event": "swing"
+      },
+      {
+        "t": 16.4,
+        "event": "swing"
+      },
+      {
+        "t": 16.55,
+        "event": "swing"
+      },
+      {
+        "t": 16.75,
+        "event": "swing"
+      },
+      {
+        "t": 16.9,
+        "event": "swing"
+      },
+      {
+        "t": 17.05,
+        "event": "swing"
+      },
+      {
+        "t": 17.25,
+        "event": "swing"
+      },
+      {
+        "t": 17.4,
+        "event": "swing"
+      },
+      {
+        "t": 17.55,
+        "event": "swing"
+      },
+      {
+        "t": 17.75,
+        "event": "swing"
+      },
+      {
+        "t": 17.9,
+        "event": "swing"
+      },
+      {
+        "t": 18.05,
+        "event": "swing"
+      },
+      {
+        "t": 18.25,
+        "event": "swing"
+      },
+      {
+        "t": 18.4,
+        "event": "swing"
+      },
+      {
+        "t": 18.55,
+        "event": "swing"
+      },
+      {
+        "t": 18.75,
+        "event": "swing"
+      },
+      {
+        "t": 18.9,
+        "event": "swing"
+      },
+      {
+        "t": 19.05,
+        "event": "swing"
+      },
+      {
+        "t": 19.25,
+        "event": "swing"
+      },
+      {
+        "t": 19.4,
+        "event": "swing"
+      },
+      {
+        "t": 19.55,
+        "event": "swing"
+      },
+      {
+        "t": 19.75,
+        "event": "swing"
+      },
+      {
+        "t": 19.9,
+        "event": "swing"
+      },
+      {
+        "t": 20.05,
+        "event": "swing"
+      },
+      {
+        "t": 20.25,
+        "event": "swing"
+      },
+      {
+        "t": 20.4,
+        "event": "swing"
+      },
+      {
+        "t": 20.55,
+        "event": "swing"
+      },
+      {
+        "t": 20.6,
+        "event": "glance"
+      },
+      {
+        "t": 22.15,
+        "event": "swing"
+      },
+      {
+        "t": 22.3,
+        "event": "swing"
+      },
+      {
+        "t": 22.5,
+        "event": "swing"
+      },
+      {
+        "t": 22.65,
+        "event": "swing"
+      },
+      {
+        "t": 22.8,
+        "event": "swing"
+      },
+      {
+        "t": 23,
+        "event": "swing"
+      },
+      {
+        "t": 23.15,
+        "event": "swing"
+      },
+      {
+        "t": 23.35,
+        "event": "swing"
+      },
+      {
+        "t": 23.55,
+        "event": "swing"
+      },
+      {
+        "t": 23.7,
+        "event": "swing"
+      },
+      {
+        "t": 23.85,
+        "event": "swing"
+      },
+      {
+        "t": 24.05,
+        "event": "swing"
+      },
+      {
+        "t": 24.2,
+        "event": "swing"
+      },
+      {
+        "t": 24.35,
+        "event": "swing"
+      },
+      {
+        "t": 24.55,
+        "event": "swing"
+      },
+      {
+        "t": 24.7,
+        "event": "swing"
+      },
+      {
+        "t": 24.85,
+        "event": "swing"
+      },
+      {
+        "t": 25.05,
+        "event": "swing"
+      },
+      {
+        "t": 25.2,
+        "event": "swing"
+      },
+      {
+        "t": 25.35,
+        "event": "swing"
+      },
+      {
+        "t": 25.55,
+        "event": "swing"
+      },
+      {
+        "t": 25.7,
+        "event": "swing"
+      },
+      {
+        "t": 25.85,
+        "event": "swing"
+      },
+      {
+        "t": 26.05,
+        "event": "swing"
+      },
+      {
+        "t": 26.2,
+        "event": "swing"
+      },
+      {
+        "t": 26.25,
+        "event": "backup"
+      },
+      {
+        "t": 26.35,
+        "event": "swing"
+      },
+      {
+        "t": 26.55,
+        "event": "swing"
+      },
+      {
+        "t": 26.7,
+        "event": "swing"
+      },
+      {
+        "t": 26.85,
+        "event": "swing"
+      },
+      {
+        "t": 27.05,
+        "event": "swing"
+      },
+      {
+        "t": 27.2,
+        "event": "swing"
+      },
+      {
+        "t": 27.35,
+        "event": "swing"
+      },
+      {
+        "t": 27.55,
+        "event": "swing"
+      },
+      {
+        "t": 27.7,
+        "event": "swing"
+      },
+      {
+        "t": 27.85,
+        "event": "swing"
+      },
+      {
+        "t": 28.05,
+        "event": "swing"
+      },
+      {
+        "t": 28.2,
+        "event": "swing"
+      },
+      {
+        "t": 28.35,
+        "event": "swing"
+      },
+      {
+        "t": 28.55,
+        "event": "swing"
+      },
+      {
+        "t": 28.7,
+        "event": "swing"
+      },
+      {
+        "t": 28.85,
+        "event": "swing"
+      },
+      {
+        "t": 29.05,
+        "event": "swing"
+      },
+      {
+        "t": 29.2,
+        "event": "swing"
+      },
+      {
+        "t": 29.35,
+        "event": "swing"
+      },
+      {
+        "t": 29.55,
         "event": "complete"
       },
       {
-        "t": 9.1,
+        "t": 31.75,
         "event": "end"
       }
     ]
@@ -82,9 +681,9 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "46cab20a69e0cc25da8bf28f65f8e4c8c37ff680",
-    "rendered_at": "2026-11-06T08:57:30.843Z",
-    "head_at_publish": "5617e570187ac62847a8839cdb03dab29625b2fc",
+    "commit": "ab6f67ac63df76705b887252b55dd6bbbda356cc",
+    "rendered_at": "2026-11-07T00:43:24.247Z",
+    "head_at_publish": "ab6f67ac63df76705b887252b55dd6bbbda356cc",
     "stunt": "stunts/skull_art.js",
     "source_snapshot": [
       "source/skull_art.js",
@@ -92,13 +691,13 @@
     ]
   },
   "rebuild": [
-    "git checkout 46cab20a69e0",
+    "git checkout ab6f67ac63df",
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
-    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"the skull emoji irl \ud83d\udc80\" --start 0.3 --song songs/funk_abnormal.mp3 --song_drop_at complete --out out/skull_art.mp4"
+    "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS \ud83d\ude28\" --start_at stage:-0.2 --end_after complete:0.9 --out out/skull_art.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
-  "published_at": "2026-11-06T08:59:58.495Z"
+  "status": "ready",
+  "notes": "worker: 30.5 s three-skull format; frame review + retention + minecraft audits passed. Nitpicks: quick flick back after the glance (fixed in lib since), glance crops the medium skull",
+  "published_at": "2026-11-07T00:48:06.278Z"
 }
