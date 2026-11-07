@@ -26,7 +26,7 @@ module.exports = {
   botTimeout: 300,
 
   async setup (ctx) {
-    const { bot } = ctx
+    const { bot, Vec3 } = ctx
     // a flat site: the field is cleared down to one level, and against a hill that left a sheer cut
     // wall in the background (review 2). Try spots around the plains until the ground within R + 12
     // stays within a few blocks of the field level (water is fine).
@@ -49,6 +49,10 @@ module.exports = {
     }
     if (!g || g.score > 10) throw new Error('no flat site')
     ctx.log('chose site', g)
+    // go there before building: the fills fail ("not loaded") from the last site probed (review 3)
+    await ctx.cmd(`/tp @s ${g.x} 200 ${g.z}`)
+    await bot.waitForTicks(40)
+    try { await bot.waitForChunksToLoad() } catch (e) {}
     const { x, z } = g, G = g.y
     this.x = x; this.z = z; this.G = G
     await ctx.defaultRules()
@@ -59,6 +63,12 @@ module.exports = {
     await ctx.cmd(`/fill ${x - C} ${G} ${z - C} ${x + C} ${G} ${z + C} grass_block`)
     // deep solid ground (no caves or water for the craters to open into)
     for (let y0 = G - 24; y0 <= G - 1; y0 += 3) await ctx.cmd(`/fill ${x - C} ${y0} ${z - C} ${x + C} ${y0 + 2} ${z + C} dirt`)
+    // the set must really be there: corners cleared, floor laid
+    await bot.waitForTicks(20)
+    for (const [cx, cz] of [[x - R, z - R], [x + R, z + R], [x - R, z + R], [x + R, z - R], [x, z]]) {
+      const a = bot.blockAt(new Vec3(cx, G + 3, cz)), f = bot.blockAt(new Vec3(cx, G, cz))
+      if (!a || a.name !== 'air' || !f || f.name !== 'grass_block') throw new Error(`set not built at ${cx},${cz}: ${a && a.name} / ${f && f.name}`)
+    }
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16]])
@@ -203,7 +213,8 @@ module.exports = {
     ctx.easeLook(bot.entity.yaw + 0.6, -1.15, 700)
     await bot.waitForTicks(10)
     bot.setControlState('forward', false)
-    await bot.waitForTicks(30)
+    await bot.waitForTicks(4)
+    await ctx.easeLook(bot.entity.yaw + 0.7, -0.75, 1300)   // keeps moving to the last frame
     ctx.log('health', bot.health)
     return !ctx.died
   }
