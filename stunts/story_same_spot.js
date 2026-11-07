@@ -41,7 +41,7 @@ module.exports = {
     for (let y0 = 65; y0 <= 120; y0++) await c(`/fill ${A(-64, y0, -64)} ${A(64, y0, 64)} air`)   // the mountain south of the set reaches past y 64
     await c(`/fill ${A(-64, 0, 65)} ${A(64, 0, 128)} grass_block`)
     for (let y0 = -4; y0 <= -1; y0 += 3) await c(`/fill ${A(-64, y0, 65)} ${A(64, Math.min(-1, y0 + 2), 128)} dirt`)
-    await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
+    await plainsBiome(ctx, A, 80, -4, 30)       // one grass colour over the set
     await c('/kill @e[type=!player]')
     // the edge of the village: a line of oaks past the end of the street
     for (let x = -36; x <= 36; x += 6) if (Math.abs(x) > 8) await c(`/place feature minecraft:oak ${A(x, 1, 40)}`)   // clear of the edge camera

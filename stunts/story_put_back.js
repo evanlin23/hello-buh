@@ -37,7 +37,7 @@ module.exports = {
     await c('/gamerule log_admin_commands false')
     await c('/difficulty normal')                      // an enderman is a monster: refused on peaceful (spawn_mobs stays off)
     await clearSet(ctx, A, 64, 64)              // a wide flat clearing (lib/story.js), high (no cut hillsides)
-    await plainsBiome(ctx, A, 64, -4, 30)       // one grass colour over the set
+    await plainsBiome(ctx, A, 80, -4, 30)       // one grass colour over the set
     await c('/kill @e[type=!player]')
 
     // --- my house: stone bricks (x -3..3, z -8..-2), the south-east corner still blown open

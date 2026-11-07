@@ -56,7 +56,7 @@ module.exports = {
     await c('/gamerule log_admin_commands false')
     await c('/difficulty normal')                      // the creeper needs it (spawn_mobs stays off)
     await clearSet(ctx, A, 64, 28)
-    await plainsBiome(ctx, A, 64, -4, 30)
+    await plainsBiome(ctx, A, 80, -4, 30)
     await c('/kill @e[type=!player]')
     // a real sign (1.21.11: messages are literal strings); glowing text so it reads at night
     const sign = (x, z, rot, lines, glow = false) => c(`/setblock ${A(x, 1, z)} oak_sign[rotation=${rot}]{front_text:{${glow ? 'has_glowing_text:1b,' : ''}messages:[${lines.map(t => JSON.stringify(t)).join(',')}]}}`)
