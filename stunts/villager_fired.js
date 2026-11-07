@@ -69,14 +69,15 @@ module.exports = {
     await ctx.cmd('/effect give @e[type=villager] resistance infinite 4 true')
     await ctx.cmd('/execute as @e[type=villager] run attribute @s minecraft:explosion_knockback_resistance base set 1')
     await ctx.cmd('/execute as @e[type=villager] run attribute @s minecraft:knockback_resistance base set 1')
-    // job site spots: the row in front of the pen and both sides (13), front centre first
+    // job site spots (13): both sides, the front corners and the back row
     const spots = []
-    for (let dx = -2; dx <= 2; dx++) spots.push([x + dx, vz + 2])
-    for (let dz = 1; dz >= -2; dz--) { spots.push([x - 2, vz + dz]); spots.push([x + 2, vz + dz]) }
-    this.spots = [2, 1, 3, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => spots[i])
+    // (none in the middle of the front row: there they hid his outfit from the camera)
+    for (const dz of [1, 2, 0, -1, -2]) { spots.push([x + 2, vz + dz]); spots.push([x - 2, vz + dz]) }
+    for (const dx of [-1, 0, 1]) spots.push([x + dx, vz - 2])
+    this.spots = spots
     // TNT in the ground under every spot, and a 3-block fuse line toward the player
     for (const [sx, sz] of this.spots) await ctx.cmd(`/setblock ${sx} ${floor} ${sz} tnt`)
-    for (let k = 3; k <= 4; k++) await ctx.cmd(`/setblock ${x} ${floor} ${vz + k} tnt`)
+    for (let k = 2; k <= 4; k++) await ctx.cmd(`/setblock ${x} ${floor} ${vz + k} tnt`)
     // he stands on blast-proof obsidian: after the blast he's left alone on a pillar in the crater
     await ctx.cmd(`/fill ${x} ${floor - 10} ${vz} ${x} ${floor} ${vz} obsidian`)
     await ctx.cmd('/attribute @s minecraft:block_interaction_range base set 9')
@@ -95,7 +96,7 @@ module.exports = {
     const { x, floor, vz } = this
     const sel = `@e[type=villager,limit=1,sort=nearest,x=${x + 0.5},y=${floor + 1},z=${vz + 0.5}]`
     const setJob = (p) => bot.chat(`/data merge entity ${sel} {VillagerData:{profession:"minecraft:${p}"},Xp:${p === 'none' || p === 'nitwit' ? 0 : 1}}`)
-    const head = new Vec3(x + 0.5, floor + 1.7, vz + 0.5)
+    const head = new Vec3(x + 0.5, floor + 2.6, vz + 0.5)    // aimed above him: the subtitles sit at his head otherwise
     const vpos = { x: x + 0.5, y: floor + 2.0, z: vz + 0.5 }
     ctx.mark('face_on', { near: [x + 0.5, vz - 2, 8.5], head: true })
     const slotOf = (i) => (i < 8 ? i : i - 8)
@@ -203,7 +204,7 @@ module.exports = {
     ctx.mark('fired_all')
     const v = Object.values(bot.entities).find(e => e.name === 'villager' && Math.abs(e.position.x - (x + 0.5)) < 3 && Math.abs(e.position.z - (vz + 0.5)) < 3)
     // him, alone on his pillar in the crater: a slow look down the pillar and back up
-    const top = new Vec3(x + 0.5, floor + 1.4, vz + 0.5)
+    const top = new Vec3(x + 0.5, floor + 3.2, vz + 0.5)      // above him, so he's below the subtitle
     await ctx.easeLookAt(top, 400)
     await ctx.easeLookAt(top.offset(0.3, -2.2, 0), 700)
     ctx.easeLookAt(top.offset(-0.2, 0.2, 0), 700)
