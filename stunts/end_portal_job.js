@@ -142,10 +142,13 @@ module.exports = {
     // the rest of the field: empty rings waiting, near and far
     ctx.mark('outro')
     const here = bot.entity.position
-    // the spare empty rings if there are any, else the ones it already filled
-    const spare = (this.spots.length > N ? this.spots.slice(N) : this.spots.slice(0, N - 1)).map(S => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)).sort((a, b) => a.distanceTo(here) - b.distanceTo(here))
-    await ctx.easeLookAt(spare[0], 700)
-    await ctx.easeLookAt(spare[spare.length - 1], 1000)
+    // the nearest spare empty ring (if any), then a slow turn to the farthest other ring: two different
+    // targets, so the camera keeps moving to the end (one spare only gave the same target twice: a hold)
+    const P = (S) => new Vec3(S.x + 2.5, S.floor + 1, S.z + 2.5)
+    const spare = this.spots.slice(N).map(P).sort((a, b) => a.distanceTo(here) - b.distanceTo(here))
+    const others = this.spots.slice(0, N - 1).map(P).sort((a, b) => b.distanceTo(here) - a.distanceTo(here))
+    await ctx.easeLookAt(spare[0] || others[others.length - 1], 700)
+    await ctx.easeLookAt(others[0], 1100)
     bot.removeListener('blockUpdate', onBlock)
     return !ctx.died
   }
