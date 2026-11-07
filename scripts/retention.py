@@ -271,12 +271,18 @@ def fallen_fn(args):
         # the standing height: the highest pose in the 0.25 s before the drop mark (at the mark the
         # player can already be 0.08 below the block top, which read 99 under a "100 blocks" label)
         y0 = max(y_at(ts0 - k / 20) for k in range(0, 6))
-        off = int(sp[3]) if len(sp) > 3 else 0   # e.g. -1 for a water landing: the end mark fires with the feet inside the water block
+        # -1 for a water landing (the end mark fires with the feet inside the water block, one under
+        # the surface): automatic for 'splash*' end marks, else pass it as the 4th field
+        off = int(sp[3]) if len(sp) > 3 else (-1 if str(sp[1]).startswith("splash") else 0)
         final = max(0, int(math.floor(y0 - y_at(sb[0]))) + off) if sb else None   # the landing value, from the mark itself
         fn = (lambda t, y0=y0, off=off, t1=t1, final=final:
               final if final is not None and t >= t1 - 1e-6 else
               max(0, int(math.floor(y0 - y_at(warp.src(t + args.start) if warp else t + args.start))) + off))
-        res.append((t0, t1, sp[2] if len(sp) > 2 else "blocks", fn))
+        # held 0.6 s after the landing, but never past the next hard cut (the last total stayed up
+        # over the next shot: worker 3, drops)
+        cuts = [warp.out(a) - args.start for a, b, f in (warp.spans if warp else []) if f == math.inf]
+        hold = min([t1 + 0.6] + [c for c in cuts if c > t1 - 1e-6])
+        res.append((t0, t1, sp[2] if len(sp) > 2 else "blocks", fn, hold))
     return res
 
 
@@ -344,8 +350,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=()):
             fade = min(1.0, (t1 - t) / 0.12)
             cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1))
         fk = None
-        for t0, t1, label, fn in fallen:     # live "blocks fallen" counter, held 0.6 s after the landing
-            if t0 <= t + 1e-6 < t1 + 0.6:
+        for t0, t1, label, fn, hold in fallen:   # live "blocks fallen" counter, held after the landing
+            if t0 <= t + 1e-6 < hold - 1e-6:
                 fk = (fn(min(t, t1)), label, t >= t1)
         key = (ck, cc, fk)
         if key not in cache:
