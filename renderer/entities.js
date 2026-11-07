@@ -377,6 +377,28 @@ function poseBoatPaddle (part, f, right) {
   if (right) y = Math.PI - y
   part.rotation.set(x, y, Math.PI / 16)
 }
+// FoxModel.createBodyLayer (48x32; the converted Bedrock fox was laid out for a 64x32 texture, so
+// its head and body showed the wrong texels): head with ears and nose, the body turned flat (pi/2)
+// carrying the tail, four legs
+const FOX_PARTS = [
+  ['head', null, [-1, 16.5, -3], [[[-3, -2, -5], [8, 6, 6], [1, 5], 0], [[-3, -4, -4], [2, 2, 1], [8, 1], 0], [[3, -4, -4], [2, 2, 1], [15, 1], 0], [[-1, 2.01, -8], [4, 2, 3], [6, 18], 0]]],
+  ['body', null, [0, 16, -6], [[[-3, 3.999, -3.5], [6, 11, 6], [24, 15], 0]], [Math.PI / 2, 0, 0]],
+  ['tail', 'body', [-4, 15, -1], [[[2, 0, -1], [4, 9, 5], [30, 0], 0]], [-0.05235988, 0, 0]],
+  ['rightHindLeg', null, [-5, 17.5, 7], [[[2, 0.5, -1], [2, 6, 2], [13, 24], 0.001]]],
+  ['leftHindLeg', null, [-1, 17.5, 7], [[[2, 0.5, -1], [2, 6, 2], [4, 24], 0.001]]],
+  ['rightFrontLeg', null, [-5, 17.5, 0], [[[2, 0.5, -1], [2, 6, 2], [13, 24], 0.001]]],
+  ['leftFrontLeg', null, [-1, 17.5, 0], [[[2, 0.5, -1], [2, 6, 2], [4, 24], 0.001]]]
+]
+// FoxModel.setupAnim: the head looks; quadruped legs (hind and front pairs opposite)
+function poseFox (r, s, walkPos, walkSpeed) {
+  const B = r.bones
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(r.tilt || 0)))
+  B.head.rotation.set(-(s.pitch || 0), net, 0)
+  const a = Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, b = Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed
+  B.rightHindLeg.rotation.set(a, 0, 0); B.leftHindLeg.rotation.set(b, 0, 0)
+  B.rightFrontLeg.rotation.set(b, 0, 0); B.leftFrontLeg.rotation.set(a, 0, 0)
+}
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
 // player (the converted Bedrock geometry had the head sunk into the body and the arms poking above it)
@@ -492,6 +514,9 @@ export class EntityLayer {
         if (bones.waterPatch) for (const m of bones.waterPatch.children) if (m.isMesh) { m.material = new THREE.MeshBasicMaterial({ colorWrite: false, side: THREE.DoubleSide }); m.renderOrder = 0.5 }
         poseBoatPaddle(bones.leftPaddle, 0, false); poseBoatPaddle(bones.rightPaddle, 0, true)
       }
+    } else if (name === 'fox') {
+      const t = await texture([(extra && extra.snow) ? 'entity/fox/snow_fox' : 'entity/fox/fox'])
+      if (t) { const b = buildPlayer(t, FOX_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat; bones.fox = true }
     } else if (name === 'warden') {
       const t = await texture(['entity/warden/warden'])
       // WardenRenderer's emissive layers (full bright, translucent): the bioluminescent layer on the
@@ -781,6 +806,7 @@ export class EntityLayer {
         poseBoatPaddle(B.leftPaddle, r.row[0], false); poseBoatPaddle(B.rightPaddle, r.row[1], true)
         continue
       }
+      if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
       if (s.name === 'warden' && B.rightTendril) { poseWarden(r, s, r.walk, r.amt || 0, tick); continue }
       if (s.name === 'blaze' && B.upperBodyParts0) {
         // BlazeModel.setupAnim: three rings of four rods (radius 9, 7, 5) circling and bobbing. Java
