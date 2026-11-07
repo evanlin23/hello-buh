@@ -8,9 +8,9 @@ const LANES = [-48, -16, 16, 48]   // 32 apart: blasts and flung TNT don't wreck
 // stop: the front stops this far from the bot (a real near miss, outside TNT's ~8-block damage range,
 // and its smoke stays off the camera); waves 1-3 stop, wave 4 doesn't
 const WAVES = [
-  { every: 4, dxs: [-2, 0, 2], gap: 14, stop: 8, sub: 'wave 1: easy' },
-  { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 25, stop: 7, sub: 'wave 2: faster' },
-  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 18, stop: 6, sub: 'wave 3: wider' },
+  { every: 4, dxs: [-2, 0, 2], gap: 14, stop: 9, sub: 'wave 1: easy' },
+  { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 25, stop: 8, sub: 'wave 2: faster' },
+  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 18, stop: 7, sub: 'wave 3: wider' },
   { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 26, stop: 0, sub: 'wave 4...' }      // a real chase that catches you
 ]
 module.exports = {
@@ -74,7 +74,9 @@ module.exports = {
           return
         }
         if (!last && pz - front <= W.stop) { on = false; stopped = true; return }   // the near miss: it stops short
-        for (const dx of W.dxs) bot.chat(`/summon tnt ${lx + dx + 0.5} ${floor + 1} ${front + 0.5} {fuse:10}`)
+        // fuse 2: each row blows before the next spawns. (fuse 10 left rows primed behind the front: the blasts flung
+        // them at the bot and wave 1 killed it at 4 s)
+        for (const dx of W.dxs) bot.chat(`/summon tnt ${lx + dx + 0.5} ${floor + 1} ${front + 0.5} {fuse:2}`)
         front += 1
       }
       ctx.mark('wave', { n: r + 1 })
