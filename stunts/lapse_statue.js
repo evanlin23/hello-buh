@@ -65,8 +65,8 @@ function giant () {
   for (let x = -7; x <= 6; x++) for (let y = 47; y <= 48; y++) put(x, y, 7, 'dark_oak_planks', 5)
   box(-2, 1, 36, 43, 7, 10, 'terracotta', 5)
   // stage 6: four obelisks at the plinth corners, and an oasis on each side
-  for (const [ox, oz] of [[-13, -13], [13, -13], [-13, 13], [13, 13]]) {
-    box(ox - 1, ox + 1, 3, 16, oz - 1, oz + 1, 'polished_blackstone', 6)
+  for (const [ox, oz] of [[-12, -12], [12, -12], [-12, 12], [12, 12]]) {
+    box(ox - 1, ox + 1, 2, 16, oz - 1, oz + 1, 'polished_blackstone', 6)   // on the y 1 step (from y 3 it floated)
     put(ox, 17, oz, 'polished_blackstone', 6); put(ox, 18, oz, 'gold_block', 6)
   }
   for (const side of [-1, 1]) {
@@ -93,8 +93,9 @@ function giant () {
     }
   }
   // stage 8: a gold crown on the head, the last blocks
-  for (let x = -7; x <= 6; x++) for (const z of [-7, 6]) if ((x + 7) % 3 !== 1) put(x, 53, z, 'gold_block', 8)
-  for (let z = -6; z <= 5; z++) for (const x of [-7, 6]) if ((z + 7) % 3 !== 1) put(x, 53, z, 'gold_block', 8)
+  // a full band with points every third block (gaps alone read as four loose gold blocks)
+  for (let x = -7; x <= 6; x++) for (const z of [-7, 6]) { put(x, 53, z, 'gold_block', 8); if ((x + 7) % 3 === 0) { put(x, 54, z, 'gold_block', 8); put(x, 55, z, 'gold_block', 8) } }
+  for (let z = -6; z <= 5; z++) for (const x of [-7, 6]) { put(x, 53, z, 'gold_block', 8); if ((z + 7) % 3 === 0) { put(x, 54, z, 'gold_block', 8); put(x, 55, z, 'gold_block', 8) } }
   return [...out.values()]
 }
 
@@ -114,7 +115,7 @@ module.exports = makeStunt({
     blocks: giant(),
     hold: 'terracotta', slot: 4,
     // plinth, legs, robe, arms, head, face, obelisks + oases, the pyramid, crown
-    stageTicks: { 0: 100, 1: 100, 2: 180, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 40 },
+    stageTicks: { 0: 100, 1: 100, 2: 180, 3: 120, 4: 160, 5: 180, 6: 220, 7: 210, 8: 60 },
     keys: [
       [0, [-16, 9, 30], [0, 0, 6]],          // close on the plinth from the cut, then a pass across it
       [60, [-4, 11, 26], [0, 1, 4]],
@@ -128,13 +129,13 @@ module.exports = makeStunt({
       [1080, [-40, 34, -10], [0, 14, -40]],  // the pyramid rising behind
       [1170, [-6, 66, -16], [0, 20, -40]],   // over the head, looking down at the pyramid
       [1225, [32, 56, 30], [0, 30, -30]],
-      [1275, [-16, 64, 30], [0, 52, 0]],     // over the crown (further out: it passed the face at 11 blocks)
-      [1302, [-1, 16, 86], [0, 24, 0]],      // the pull-back arrives early and creeps into 60:00
-      [1318, [0, 14, 82], [0, 24, 0]]
+      [1290, [-12, 62, 26], [0, 52, 0]],     // over the crown going on (further out: it passed the face at 11 blocks)
+      [1318, [-1, 18, 98], [0, 31, 0]],      // the pull-back arrives early and creeps into 60:00, the head below the clock
+      [1338, [0, 16, 94], [0, 31, 0]]
     ],
     reveal: [
-      [8, [-4, 15, 76], [0, 24, 0]],
-      [16, [-8, 17, 70], [-1, 24, 0]]
+      [8, [-3, 17, 90], [0, 31, 0]],
+      [16, [-7, 18, 86], [-1, 31, 0]]
     ]
   }
 })
