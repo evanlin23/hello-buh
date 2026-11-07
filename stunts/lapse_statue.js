@@ -2,7 +2,7 @@
 // hay-bale scarecrow with a pumpkin head, a little villager statue on a plinth (its head rows built
 // from a dirt pillar the bot towers up and then digs away), then a 53-block giant villager statue
 // rising as a time-lapse: plinth and steps, legs, robe, crossed arms, head, the face (emerald eyes,
-// the unibrow, the nose), sandstone obelisks and an oasis around it, a pyramid behind it, and last
+// the unibrow, the nose), blackstone obelisks and an oasis around it, a pyramid behind it, and last
 // a gold crown.
 const { makeStunt } = require('../lib/time_lapse')
 
@@ -40,12 +40,12 @@ function giant () {
       put(x, y, z, paint ? paint(x, y, z) || name : name, stage)
     }
   }
-  // stage 0: a stepped sandstone plinth
+  // stage 0: a stepped blackstone plinth with gold edges (sandstone vanished on the sand)
   for (let s = 0; s < 3; s++) {
     const r = 15 - s * 2
     for (let x = -r; x <= r; x++) for (let z = -r; z <= r; z++) {
       const edge = Math.abs(x) === r || Math.abs(z) === r
-      put(x, s, z, edge ? 'chiseled_sandstone' : 'cut_sandstone', 0)
+      put(x, s, z, edge ? 'gold_block' : 'polished_blackstone_bricks', 0)
     }
   }
   // stage 1: the legs (robe brown, as a villager's are)
@@ -66,8 +66,8 @@ function giant () {
   box(-2, 1, 36, 43, 7, 10, 'terracotta', 5)
   // stage 6: four obelisks at the plinth corners, and an oasis on each side
   for (const [ox, oz] of [[-13, -13], [13, -13], [-13, 13], [13, 13]]) {
-    box(ox - 1, ox + 1, 3, 16, oz - 1, oz + 1, 'smooth_sandstone', 6)
-    put(ox, 17, oz, 'chiseled_sandstone', 6); put(ox, 18, oz, 'gold_block', 6)
+    box(ox - 1, ox + 1, 3, 16, oz - 1, oz + 1, 'polished_blackstone', 6)
+    put(ox, 17, oz, 'polished_blackstone', 6); put(ox, 18, oz, 'gold_block', 6)
   }
   for (const side of [-1, 1]) {
     const cx = side * 30
@@ -83,13 +83,13 @@ function giant () {
       for (const [dx, dz] of [[3, 0], [-3, 0], [0, 3], [0, -3]]) put(tx + dx, ty - 1, pz + dz, 'jungle_leaves', 6)
     }
   }
-  for (let z = 16; z <= 52; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'smooth_sandstone', 6)   // the road in
-  // stage 7: a stepped sandstone pyramid behind it, for scale
+  for (let z = 16; z <= 52; z++) for (let x = -1; x <= 1; x++) put(x, -1, z, 'polished_blackstone_bricks', 6)   // the road in
+  // stage 7: a stepped red sandstone pyramid behind it, for scale
   for (let s = 0; s <= 15; s++) {
     const r = 15 - s
     for (let x = -r; x <= r; x++) for (let z = -40 - r; z <= -40 + r; z++) {
       if (Math.abs(x) !== r && Math.abs(z + 40) !== r && s !== 15) continue
-      put(x, s, z, s === 15 ? 'gold_block' : 'sandstone', 7)
+      put(x, s, z, s === 15 ? 'gold_block' : (s & 1 ? 'cut_red_sandstone' : 'red_sandstone'), 7)
     }
   }
   // stage 8: a gold crown on the head, the last blocks
@@ -126,8 +126,8 @@ module.exports = makeStunt({
       [1080, [-44, 24, 30], [-24, 6, 0]],    // the obelisks and the west oasis
       [1190, [-40, 34, -10], [0, 14, -40]],  // the pyramid rising behind
       [1260, [-6, 66, -16], [0, 20, -40]],   // over the head, looking down at the pyramid
-      [1305, [24, 52, 14], [0, 30, -30]],
-      [1355, [-14, 60, 22], [0, 52, 0]],     // over the crown
+      [1305, [32, 56, 30], [0, 30, -30]],
+      [1355, [-16, 64, 30], [0, 52, 0]],     // over the crown (further out: it passed the face at 11 blocks)
       [1382, [-1, 16, 86], [0, 24, 0]],      // the pull-back arrives early and creeps into 60:00
       [1398, [0, 14, 82], [0, 24, 0]]
     ],
