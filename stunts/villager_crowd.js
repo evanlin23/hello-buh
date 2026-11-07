@@ -6,7 +6,7 @@
 // eyes` every tick on the crowds that have turned; face_on (near: this crowd) / face_off marks tell
 // the renderer. Hard cut (teleport) between crowds. The bot starts in the middle of the field so
 // every crowd's chunks are loaded (recorded) when the recording starts.
-const GAP = 34
+const GAP = 30
 const CROWDS = [
   { n: 1, sub: '1 villager', cols: 1, rows: 1 },
   { n: 5, sub: '5 villagers', cols: 5, rows: 1 },
@@ -44,16 +44,16 @@ module.exports = {
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     for (let z0 = z - 40; z0 <= z + 26; z0 += 4) {
       const z1 = Math.min(z0 + 3, z + 26)
-      await heavy(`/fill ${x - 110} ${floor + 1} ${z0} ${x + 110} ${floor + 14} ${z1} air`)
-      await heavy(`/fill ${x - 110} ${floor} ${z0} ${x + 110} ${floor} ${z1} grass_block`)
-      await heavy(`/fill ${x - 110} ${floor - 3} ${z0} ${x + 110} ${floor - 1} ${z1} dirt`)
+      await heavy(`/fill ${x - 96} ${floor + 1} ${z0} ${x + 96} ${floor + 14} ${z1} air`)
+      await heavy(`/fill ${x - 96} ${floor} ${z0} ${x + 96} ${floor} ${z1} grass_block`)
+      await heavy(`/fill ${x - 96} ${floor - 3} ${z0} ${x + 96} ${floor - 1} ${z1} dirt`)
       // one biome everywhere (a crowd stood on a duller grass tint)
-      await heavy(`/fillbiome ${x - 110} ${floor - 4} ${z0} ${x + 110} ${floor + 14} ${z1} minecraft:plains`)
+      await heavy(`/fillbiome ${x - 96} ${floor - 4} ${z0} ${x + 96} ${floor + 14} ${z1} minecraft:plains`)
     }
     await ctx.sleep(3000)
     // mineflayer ignores the biome update packet: go far away and come back to reload the chunks
     await ctx.cmd(`/tp @s ${x + 1000} 200 ${z}`); await bot.waitForTicks(60)
-    await ctx.cmd(`/tp @s ${x} ${floor + 1} ${z + 8}`); await bot.waitForTicks(20); await bot.waitForChunksToLoad()
+    await ctx.cmd(`/tp @s ${x} ${floor + 1} ${z + 8}`); await this.settle(ctx); await bot.waitForChunksToLoad()
     let k = 0
     const summon = async (vx, vz, rot, tag) => {
       const p = profs[(k * 5 + 3) % profs.length], t = types[(k * 3 + 1) % types.length]
@@ -74,7 +74,7 @@ module.exports = {
     for (let r = 0; r < BEHIND.rows; r++) {
       for (let q = 0; q < BEHIND.cols; q++) await summon(lx + 0.5 + (q - (BEHIND.cols - 1) / 2) * 1.25 + (r % 2) * 0.4, z + 9.5 + r * 1.3, 180, `crowd${CROWDS.length - 1}`)
     }
-    await ctx.sleep(8000)                                    // let the server settle after ~420 summons
+    await this.settle(ctx)                                   // the big field + ~420 summons stall the server for a while
     ctx.log('villagers', Object.values(bot.entities).filter(e => e.name === 'villager').length)
     await ctx.hotbar(['diamond_sword', ['emerald', 32], ['bread', 16], ['oak_log', 64]])
     await ctx.tpCheck(x + 0.5, floor + 1, z + 4.5, 180, -4)   // the middle: all crowds' chunks loaded for the recording
@@ -82,6 +82,19 @@ module.exports = {
     ctx.select(1)
     await bot.waitForTicks(30)
     return { x, y: floor, z }
+  },
+
+  // wait (up to 90 s) until the server ticks at a normal rate again: tick waits time out (5 s) while it relights
+  async settle (ctx) {
+    const { bot } = ctx
+    for (let i = 0; i < 18; i++) {
+      const t0 = Date.now()
+      try { await bot.waitForTicks(20) } catch (e) { ctx.log('server busy, waiting'); continue }
+      const ms = Date.now() - t0
+      ctx.log('20 ticks in', ms, 'ms')
+      if (ms < 1400) return
+    }
+    throw new Error('server never settled')
   },
 
   // teleport to the next crowd without the 1 s settle of tpCheck: wait just until it took
