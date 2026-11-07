@@ -31,13 +31,13 @@ module.exports = {
   edit: {
     caption: 'hide and seek but the villagers cheated 😭', red: 'cheated',
     song: 'songs/funk_abnormal.mp3', dropAt: 'r5_found',
-    startAt: 'r1_go:0', endAfter: 'r5_found:0.25',
+    startAt: 'r1_go:0', endAfter: 'r5_found:0.1',
     // the zoom-out: a fixed camera up at y 320 beside him, appended after the look up the pillar
     replay: { at: 'r5_found', before: 0.05, after: 0.85, cam: '1.5,324.5,10.5,45,-35', speed: 1, label: 'MEANWHILE AT Y 320' },
     speed: [1, 2, 3, 4].map(n => [`cut${n}a`, `cut${n}b`, 'cut']),
     clock: R.map((n, i) => [`r${n}_go`, `r${n}_end`, [5, 4, 4, 4, 3][i], `ROUND ${n}`, 'down']),
     counter: { at: R.map(n => `r${n}_found`), total: ROUNDS },
-    cards: [['r1_found', 'IN A TREE 😭', 0.9, 'yellow'], ['r2_found', 'IN THE POND 😭', 0.7, 'blue'],
+    cards: [['r1_found', 'IN A TREE 😭', 0.8, 'yellow'], ['r2_found', 'IN THE POND 😭', 0.7, 'blue'],
       ['r3_found', 'UNDER ME 😭', 0.9, 'orange'], ['r4_found', 'IN LAVA 🔥', 0.9, 'gold']],
     punch: R.map(n => `r${n}_found`),
     subs: [['r1_end', 'where did he go', 0.9], ['r2_end', 'nothing again', 0.9], ['r3_end', 'I give up', 0.9],
@@ -50,7 +50,7 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     await ctx.defaultRules()
-    const site = await hs.findFlat(ctx)
+    const site = await hs.findSite(ctx, 'minecraft:plains')
     const { X, Z, F } = site
     Object.assign(this, { X, Z, F })
     await ctx.cmd('/gamerule log_admin_commands false')
@@ -371,7 +371,7 @@ module.exports = {
     // (thrown at the replay camera, so they fly past the lens: a fixed shot of a still villager read as a pause)
     const up = everyTick(24, (i) => {
       if (i % 4 === 0) bot.chat(`/summon item ${X - 1.8 + 0.15 * (i % 3)} ${321.0 + 0.3 * (i % 2)} ${Z + 6.9} {Item:{id:"minecraft:${['emerald', 'diamond', 'gold_ingot', 'apple', 'bread', 'iron_ingot'][i / 4]}",count:1},PickupDelay:200,Motion:[${(0.24 + 0.03 * (i % 3)).toFixed(2)},0.3,${(0.25 + 0.02 * (i % 5)).toFixed(2)}]}`)
-      if (i % 3 === 0) ctx.particles('happy', W(-2.5, 321.9 - F, 6.5))
+      if (i % 6 === 0) ctx.particles('happy', W(-2.5, 322.4 - F, 6.5))
     })
     for (let i = 0; i < 24; i++) {
       if (i === 8) ctx.mark('face_on', { near: [X - 2.5, Z + 6.5, 1.5] })   // ...and he turns round to the camera

@@ -44,7 +44,7 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     await ctx.defaultRules()
-    const site = await hs.findFlat(ctx)
+    const site = await hs.findSite(ctx, 'minecraft:snowy_plains')
     const { X, Z, F } = site
     Object.assign(this, site)
     for (const c of ['/gamerule log_admin_commands false', '/gamerule random_tick_speed 0', '/gamerule fire_spread_radius_around_player 0', '/difficulty peaceful']) await ctx.cmd(c)
