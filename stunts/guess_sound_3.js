@@ -12,8 +12,8 @@ module.exports = guessSound({
   endAfter: null,
   edit: { deathScreen: true, endAfter: 'death:1.6' },
   rounds: [
-    { mob: 'chicken', room: 'farm', sound: 'entity.chicken.ambient', label: 'EASY', answer: 'CHICKEN', react: 'call', lookY: 0.6 },
-    { mob: 'turtle', room: 'beach', sound: 'entity.turtle.ambient_land', label: 'MEDIUM', answer: 'TURTLE', react: 'call', lookY: 0.3, lookDown: 0.2, color: 'green' },
+    { mob: 'chicken', room: 'farm', sound: 'entity.chicken.ambient', label: 'EASY', answer: 'CHICKEN', react: 'call', leanTicks: 5, lookY: 0.6 },
+    { mob: 'turtle', room: 'beach', sound: 'entity.turtle.ambient_land', label: 'MEDIUM', answer: 'TURTLE', react: 'call', leanTicks: 5, lookY: 0.3, lookDown: 0.05, color: 'green' },
     { mob: 'magma_cube', room: 'nether', sound: 'entity.magma_cube.squish', label: 'HARD', answer: 'MAGMA CUBE', react: 'call', reactSound: 'entity.magma_cube.jump', lean: 0, back: 4, lookY: 0.6, nbt: 'Size:1', color: 'orange' },
     { mob: 'skeleton', room: 'cave', sound: 'entity.skeleton.ambient', label: 'VERY HARD', answer: 'SKELETON', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'white' },
     { mob: 'blaze', room: 'nether', sound: 'entity.blaze.ambient', label: 'EXPERT', answer: 'BLAZE', react: 'call', reactSound: 'entity.blaze.burn', lean: 0, back: 5, lookY: 1.5, mobDy: 0.5, nbt: 'NoGravity:1b', color: 'gold' },

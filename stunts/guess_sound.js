@@ -9,9 +9,9 @@ module.exports = guessSound({
   name: 'guess_sound',
   caption: 'guess the mob from its sound 🔊',
   red: 'sound',
-  endAfter: 1.5,   // the payoff ends on a text line ("parrots copy creepers"): reading time
+  endAfter: 1.75,   // the payoff ends on a text line ("parrots copy creepers"): reading time
   rounds: [
-    { mob: 'cow', room: 'barn', sound: 'entity.cow.ambient', label: 'EASY', answer: 'COW', react: 'moo', lookY: 1.2 },
+    { mob: 'cow', room: 'barn', sound: 'entity.cow.ambient', label: 'EASY', answer: 'COW', react: 'moo', leanTicks: 6, lookY: 1.2 },
     { mob: 'llama', room: 'savanna', sound: 'entity.llama.ambient', label: 'MEDIUM', answer: 'LLAMA', react: 'call', reactSound: 'entity.llama.angry', lean: 0, back: 4, lookY: 1.7, color: 'gold' },
     { mob: 'polar_bear', room: 'ice', sound: 'entity.polar_bear.warning', label: 'HARD', answer: 'POLAR BEAR', react: 'growl', ai: (u) => `AngerTime:400,AngryAt:${u}`, lean: 0, lookY: 1.1, color: 'white' },
     { mob: 'enderman', room: 'cave', sound: 'entity.enderman.ambient', label: 'VERY HARD', answer: 'ENDERMAN', react: 'stare', ai: true, lean: 0, lookY: 2.55, lookDown: -0.05, color: 'blue' },   // eyes within ~8 deg of the look: it has to see you stare
