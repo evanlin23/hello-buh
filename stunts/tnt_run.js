@@ -3,15 +3,16 @@
 // look back). Wave 1 is slow and it gets away; wave 2 is faster; wave 3 is wide and it barely makes
 // it; wave 4 is fast enough to catch it (death screen). Each wave in its own lane of the field (a
 // hard cut between them). mineflayer yaw 0 = north: the bot faces north (the wave) and backs south.
-const LANES = [-48, -16, 16, 48]   // 32 apart: blasts and flung TNT don't wreck the next lane
+const LANES = [-64, -32, 0, 32, 64]   // 32 apart: blasts and flung TNT don't wreck the next lane
 // every: ticks per block the front advances; gap: blocks between bot and front at the start;
 // stop: the front stops this far from the bot (a real near miss, outside TNT's ~8-block damage range,
 // and its smoke stays off the camera); waves 1-3 stop, wave 4 doesn't
 const WAVES = [
   { every: 4, dxs: [-2, 0, 2], gap: 14, stop: 9, sub: 'wave 1: easy' },
-  { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 25, stop: 8, sub: 'wave 2: faster' },
-  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 18, stop: 7, sub: 'wave 3: wider' },
-  { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 26, stop: 0, sub: 'wave 4...' }      // a real chase that catches you
+  { every: 3, dxs: [-4, -2, 0, 2, 4], gap: 25, stop: 9, sub: 'wave 2: faster' },
+  { every: 3, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 18, stop: 9, sub: 'wave 3: wider' },
+  { every: 2, dxs: [-7, -5, -3, -1, 1, 3, 5, 7], gap: 30, stop: 9, sub: 'wave 4: faster AND wider' },   // stop 7 + the blasts' knockback held the gap inside the damage range: dead in wave 3
+  { every: 2, dxs: [-6, -3, 0, 3, 6], gap: 26, stop: 0, sub: 'wave 5...' }      // a real chase that catches you
 ]
 module.exports = {
   name: 'tnt_run',
@@ -19,7 +20,7 @@ module.exports = {
   caption: 'POV: the floor is TNT 💀',
   edit: {
     caption: 'POV: the floor is TNT 💀', red: 'TNT', song: 'songs/funk_abnormal.mp3', dropAt: 'death', startAt: 'wave:0.0', deathScreen: true, endAfter: 'death:0.8',
-    subs: [...WAVES.map((w, i) => ['wave', w.sub, 1.6, i]), ...WAVES.slice(0, -1).map((w, i) => ['escaped', i === 2 ? 'BARELY' : 'made it', 1.0, i])]
+    subs: [...WAVES.map((w, i) => ['wave', w.sub, 1.6, i]), ...WAVES.slice(0, -1).map((w, i) => ['escaped', i === WAVES.length - 2 ? 'BARELY' : 'made it', 1.0, i])]
   },
   expectDeath: true,
 
@@ -36,9 +37,9 @@ module.exports = {
     await ctx.cmd('/difficulty normal')
     for (let z0 = z - 40; z0 <= z + 40; z0 += 4) {   // four lanes side by side (slabs under the /fill cap)
       const z1 = Math.min(z0 + 3, z + 40)
-      for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 62} ${y0} ${z0} ${x + 62} ${y0 + 5} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 62} ${floor} ${z0} ${x + 62} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 62} ${floor - 4} ${z0} ${x + 62} ${floor - 1} ${z1} dirt`)
+      for (let y0 = floor + 1; y0 <= floor + 12; y0 += 6) await ctx.cmd(`/fill ${x - 78} ${y0} ${z0} ${x + 78} ${y0 + 5} ${z1} air`)
+      await ctx.cmd(`/fill ${x - 78} ${floor} ${z0} ${x + 78} ${floor} ${z1} grass_block`)
+      await ctx.cmd(`/fill ${x - 78} ${floor - 4} ${z0} ${x + 78} ${floor - 1} ${z1} dirt`)
     }
     await ctx.hotbar(['diamond_sword', ['cobblestone', 64], ['bread', 16]])
     await ctx.tpCheck(x + LANES[0] + 0.5, floor + 1, z - 10 + 0.5, 180, 8)   // facing north (MC yaw 180): the wave comes from there
@@ -73,7 +74,7 @@ module.exports = {
           front = pz - 1
           return
         }
-        if (!last && pz - front <= W.stop) { on = false; stopped = true; return }   // the near miss: it stops short
+        if (!last && (pz - front <= W.stop || bot.health < 19.5)) { on = false; stopped = true; return }   // the near miss: it stops short (and at once if a blast got through)
         // fuse 2: each row blows before the next spawns. (fuse 10 left rows primed behind the front: the blasts flung
         // them at the bot and wave 1 killed it at 4 s)
         for (const dx of W.dxs) bot.chat(`/summon tnt ${lx + dx + 0.5} ${floor + 1} ${front + 0.5} {fuse:2}`)
