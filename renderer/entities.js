@@ -444,6 +444,11 @@ function poseSpider (r, s, walkPos, walkSpeed) {
     B['left' + n].rotation.set(0, -y, z)
   }
 }
+// MagmaCubeModel (1.21 texture, 64x64): eight 8x1x8 slices down the cube (strips at (0, 9i) for the
+// top four, (32, 9(i-4)) for the rest; the eyes are on slices 2 and 3) and a 4x4x4 core at (24, 40).
+// The converted Bedrock geometry used the old 64x32 layout: a dark block in two offset halves
+const MAGMA_PARTS = [...Array(8).keys()].map(i => [`cube${i}`, null, [0, 0, 0], [[[-4, 16 + i, -4], [8, 1, 8], [i < 4 ? 0 : 32, i < 4 ? 9 * i : 9 * (i - 4)], 0]]])
+  .concat([['insideCube', null, [0, 0, 0], [[[-2, 18, -2], [4, 4, 4], [24, 40], 0]]]])
 // EndermanModel.createBodyLayer (HumanoidModel.createMesh at y offset -14; texture 64x32): the head
 // on top of the 12 px body, 30 px arms from the shoulders, 30 px legs. Built in Java space like the
 // player (the converted Bedrock geometry had the head sunk into the body and the arms poking above it)
@@ -604,6 +609,9 @@ export class EntityLayer {
       // SpiderEyesLayer: the eyes full bright (RenderType.eyes); CaveSpiderRenderer scales by 0.7
       const t = await texture([name === 'spider' ? 'entity/spider/spider' : 'entity/spider/cave_spider']), te = await texture(['entity/spider_eyes'])
       if (t) { const b = buildPlayer(t, SPIDER_PARTS, name === 'spider' ? 1 : 0.7, te ? [{ tex: te, parts: ['head'] }] : null); obj = b.root; bones = b.bones; mat = b.mat; bones.spider = true }
+    } else if (name === 'magma_cube') {
+      const t = await texture(['entity/slime/magmacube'])
+      if (t) { const b = buildPlayer(t, MAGMA_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat; bones.magma = true }
     } else if (name === 'fox') {
       const t = await texture([(extra && extra.snow) ? 'entity/fox/snow_fox' : 'entity/fox/fox'])
       if (t) { const b = buildPlayer(t, FOX_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat; bones.fox = true }
