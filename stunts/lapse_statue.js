@@ -126,13 +126,15 @@ module.exports = makeStunt({
       [270, [-6, 26, 44], [0, 24, 0]],       // round the front while the robe rises (a slow stretch)
       [340, [18, 30, 36], [0, 28, 4]],
       [460, [26, 40, 30], [0, 40, 0]],
+      [540, [-16, 44, 34], [0, 42, 0]],      // an orbit round the blank head (the slowest stretch)
       [620, [10, 46, 34], [0, 44, 6]],       // the face going on
-      [800, [4, 42, 32], [0, 44, 6]],
+      [800, [4, 43, 27], [0, 44, 6]],        // pushing in on it
       [910, [-44, 24, 30], [-24, 6, 0]],     // the obelisks and the west oasis
       [975, [2, 26, 62], [0, 22, 0]],        // round the front (straight across went through the statue)
       [1050, [48, 18, -4], [24, 6, -34]],    // the pyramid rising, low from the side (from above it read as flat slabs)
-      [1130, [-4, 62, -14], [18, 18, -34]],  // over the head, the pyramid beside it
-      [1185, [32, 56, 30], [0, 30, -30]],
+      [1130, [46, 22, -12], [24, 8, -34]],   // held low while it climbs
+      [1180, [-4, 62, -14], [18, 18, -34]],  // over the head, the pyramid beside it
+      [1215, [32, 56, 30], [0, 30, -30]],
       [1250, [-12, 62, 26], [0, 52, 0]],     // over the crown going on (further out: it passed the face at 11 blocks)
       [1278, [-1, 18, 98], [0, 31, 0]],      // the pull-back arrives early and creeps into 60:00, the head below the clock
       [1298, [0, 16, 94], [0, 31, 0]]
