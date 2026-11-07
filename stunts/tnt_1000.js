@@ -6,7 +6,6 @@
 // HelloBuh". Peaceful (no TNT damage to the player) until the finale, normal for it.
 // Owner rules: 30 s minimum from more beats, no dead space, end <= 1 s after the payoff.
 const { plateau } = require('../lib/plateau')
-const { plainsBiome } = require('../lib/story')
 const TIERS = [
   { n: 1, dx: -60, size: [1, 1, 1], view: 7, label: '1 TNT' },
   { n: 10, dx: -45, size: [5, 2, 1], view: 11, label: '10 TNT' },
@@ -30,7 +29,7 @@ module.exports = {
   edit: {
     caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', song: 'songs/funk_abnormal.mp3', dropAt: 'boom4',
     startAt: 'tier1:-0.05', endAfter: 'death:1.4', deathScreen: true,
-    subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]).concat([['compare', 'vs the 1 TNT crater', 1.3, 0]]),
+    subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
   },
   expectDeath: true,
@@ -50,10 +49,7 @@ module.exports = {
     // the field: a plateau levelled at a high percentile of the terrain (dug down to the start
     // point, its cut walls showed in the wide shots), deep dirt below (craters that reach
     // groundwater flood)
-    const floor = await plateau(ctx, { x0: x + XL, x1: x + XR, z0: z + ZB, z1: z + ZF, above: 30, below: 20 })
-    // one biome over the field (a taiga border tinted the first two tiers' grass teal); the
-    // harness re-sends the chunks before recording, so the new biome reaches the recording
-    await plainsBiome(ctx, (dx, dy, dz) => `${x + 20 + dx} ${floor + dy} ${z + dz}`, 128, -8, 24)
+    const floor = await plateau(ctx, { x0: x + XL, x1: x + XR, z0: z + ZB, z1: z + ZF, above: 30, below: 26, biome: 'minecraft:plains' })
     Object.assign(this, { x, z, floor })
     await ctx.cmd('/kill @e[type=!player]')
     this.tiers = TIERS.map(t => {
@@ -79,6 +75,12 @@ module.exports = {
     const floor = this.floor
     let booms = 0, lastBoom = -99
     bot._client.on('explosion', () => { booms++; lastBoom = ctx.tick })
+    // one tick of a smooth look toward (yaw, pitch); the caller loops it every tick
+    const aimStep = async (gy, gp, f = 0.2) => {
+      let dy = gy - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      await bot.look(bot.entity.yaw + dy * f, bot.entity.pitch + (gp - bot.entity.pitch) * f, true)
+      await bot.waitForTicks(1)
+    }
     const light = (bx, by, bz, dir, cur) => {
       bot._client.write('block_place', { hand: 0, location: { x: bx, y: by, z: bz }, direction: dir, cursorX: cur[0], cursorY: cur[1], cursorZ: cur[2], insideBlock: false, worldBorderHit: false, sequence: 0 })
       bot.swingArm(); ctx.sound('item.flintandsteel.use', 1); ctx.sound('entity.tnt.primed', 1)
@@ -154,18 +156,20 @@ module.exports = {
       const before = booms
       const y0 = bot.entity.yaw, p0 = bot.entity.pitch
       for (let k = 0; k < 60 && booms === before; k++) {
-        if (k % 8 === 0) ctx.easeLook(y0 + [0.3, -0.25, 0.15, -0.3][(k / 8) % 4], p0 + [0.12, 0.02, 0.18, 0.05][(k / 8) % 4], 380)
-        await bot.waitForTicks(1)
+        const g = Math.floor(k / 8) % 4
+        await aimStep(y0 + [0.3, -0.25, 0.15, -0.3][g], p0 + [0.12, 0.02, 0.18, 0.05][g])
       }
       ctx.mark(`boom${n}`)
       // watch the chain: the look rises with the blast (flung TNT), the bigger the higher
       const up = n === 4 ? 0.12 : Math.min(0.5, 0.12 + t.h * 0.045)   // the 1000 blast stays in frame
-      ctx.easeLook(bot.entity.yaw + 0.15, up, 700)
+      // one camera owner, stepped every tick (two overlapping eases fought and snapped 32 deg in a tick)
+      const yb = bot.entity.yaw
+      let goal = [yb + 0.15, up]
       const cap = [20, 26, 28, 50][i]       // ticks of chain on screen at most (3 s+ read as a gap)
       for (let k = 0; k < cap && ctx.tick - lastBoom < 14; k++) {
-        if (k === 22) ctx.easeLook(bot.entity.yaw - 0.3, n === 4 ? 0.05 : up * 0.6, 600)
-        if (k === 46 && n === 4) ctx.easeLook(bot.entity.yaw + 0.35, 0.0, 700)
-        await bot.waitForTicks(1)
+        if (k === 22) goal = [yb - 0.15, n === 4 ? 0.05 : up * 0.6]
+        if (k === 40 && n === 4) goal = [yb + 0.2, 0.0]
+        await aimStep(goal[0], goal[1])
       }
       if (n === 4) {
         // the big crater: cut to its rim (find where the ground stops along the line in)
@@ -179,26 +183,22 @@ module.exports = {
         await bot.waitForTicks(2)
         ctx.mark('rim4b')
         ctx.mark(`crater${n}`)
-        const pit = new Vec3(t.cx + 0.5, floor - 5, t.zf - 4.5)        // the middle of the big crater
-        await ctx.easeLookAt(pit.offset(3, 0, 0), 500)
-        await ctx.easeLookAt(pit.offset(-3, 0, 0), 800)
-        // ...and back down the field at the 1 TNT crater for scale
-        const t1 = this.tiers[0]
-        await ctx.easeLookAt(new Vec3(t1.cx + 0.5, floor, t1.zf), 650)
-        ctx.mark('compare')
-        await ctx.easeLookAt(new Vec3(t1.cx + 4.5, floor - 0.5, t1.zf), 800)
+        const pit = new Vec3(t.cx + 0.5, floor - 6, t.zf - 4.5)        // the middle of the big crater
+        await ctx.easeLookAt(pit.offset(4, 0, 0), 500)
+        await ctx.easeLookAt(pit.offset(-4, 0, 0), 900)
+        await ctx.easeLookAt(pit.offset(1, -4, -2), 800)              // ...all the way down
       } else {
         // walk up to the crater, looking into it
         // eyes on the crater the whole way (walking while looking at plain grass read as a frozen frame)
-        const hole = new Vec3(t.cx + 0.5, floor - 1, t.zf - t.d / 2 + 0.5)
+        const hole = new Vec3(t.cx + 0.5, floor - 3, t.zf - t.d / 2 + 0.5)
         await ctx.easeLookAt(hole, 300)
         bot.setControlState('forward', true)
         for (let k = 0; k < 30; k++) {
-          if (k % 4 === 0) ctx.easeLookAt(hole.offset(k % 8 ? 0.8 : -0.8, 0, 0), 200)
+          const e = bot.entity.position.offset(0, 1.62, 0), d = hole.offset(Math.sin(k / 5) * 0.8, 0, 0).minus(e)
+          await aimStep(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), 0.3)
           const p = bot.entity.position
           const ahead = bot.blockAt(new Vec3(Math.floor(p.x), floor, Math.floor(p.z - 2)))
           if (!ahead || ahead.name === 'air' || p.z < t.zf + 2) break
-          await bot.waitForTicks(1)
         }
         bot.setControlState('forward', false)
         ctx.mark(`crater${n}`)
