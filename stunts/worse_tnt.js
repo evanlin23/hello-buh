@@ -23,12 +23,12 @@ module.exports = {
     shake: ['boom6', 'boom7'],
     deathScreen: true
   },
-  botTimeout: 300,
+  botTimeout: 480,
 
   async setup (ctx) {
     const { bot, Vec3 } = ctx
     // a flat site: a cleared field against a hill leaves a sheer cut wall in the background (review 2)
-    const g = await kit(ctx).flatSite(R + 12)
+    const g = await kit(ctx).flatSite(R + 12, 5, 8)
     const { x, z } = g, G = g.y
     this.x = x; this.z = z; this.G = G
     await ctx.defaultRules()
@@ -69,10 +69,12 @@ module.exports = {
     const drop = (n, dmin, dmax, spread, fuseS, h = 14) => {
       const p = pos(), yaw = bot.entity.yaw
       const out = []
+      let miss = 0
       for (let i = 0; i < n; i++) {
         const a = yaw + (rnd() - 0.5) * spread, d = dmin + rnd() * (dmax - dmin)
         const tx = p.x - Math.sin(a) * d, tz = p.z - Math.cos(a) * d
         if (Math.abs(tx - x) > R - 2 || Math.abs(tz - z) > R - 2) continue
+        if (!solid(tx, tz)) { if (++miss < 60) i--; continue }   // on ground in view, not down an old crater (review 6)
         out.push([tx, tz])
         bot.chat(`/summon tnt ${tx.toFixed(2)} ${G + h + rnd() * 4} ${tz.toFixed(2)} {fuse:${Math.round(fuseS * 20)}}`)
       }
@@ -127,7 +129,7 @@ module.exports = {
       [3.4, 5, 8, 0.8, 10],
       [3.0, 6, 10, 1.0, 12],
       [3.0, 7, 12, 1.2, 13],
-      [3.0, 9, 15, 1.4, 14]
+      [3.5, 9, 15, 1.2, 14]
     ]
     for (let w = 0; w < 6; w++) {
       if (ctx.tick > K.at(w * 5) + 1) throw new Error(`wave ${w + 1} late`)   // the 5 s grid must hold
@@ -142,7 +144,7 @@ module.exports = {
       ctx.mark(`boom${w + 1}`)
       // turn back to the open field: the next wave comes where it looks
       await K.until(K.at(w * 5 + 4.2), K.drift(0.006, 0.0015))
-      if (w === 5) { await K.until(K.at(30), K.drift(0.004, 0.001)); continue }   // hold on the smoke; the 64 come from everywhere
+      if (w === 5) { await K.until(K.at(29.55), K.drift(0.004, 0.001)); ctx.easeLook(bot.entity.yaw, 0.35, 450); await K.until(K.at(30)); continue }   // hold on the smoke, then eyes up: the 64 come from everywhere
       // face the widest stretch of ground still there, ready for the next one
       let best = null
       for (let a = bot.entity.yaw - 0.8; a <= bot.entity.yaw + 0.8; a += 0.2) {
@@ -160,7 +162,7 @@ module.exports = {
     const p = pos()
     for (let i = 0; i < 64; i++) {
       const a = (i / 64) * 2 * Math.PI, d = 7.9 + (i % 3) * 0.6
-      bot.chat(`/summon tnt ${(p.x + Math.sin(a) * d).toFixed(2)} ${G + 12 + (i % 5)} ${(p.z + Math.cos(a) * d).toFixed(2)} {fuse:${Math.round(4.95 * 20)}}`)
+      bot.chat(`/summon tnt ${(p.x + Math.sin(a) * d).toFixed(2)} ${G + 12 + (i % 5)} ${(p.z + Math.cos(a) * d).toFixed(2)} {fuse:${Math.round(4.85 * 20)}}`)
     }
     ctx.sound('entity.tnt.primed', 1, 0.9); ctx.sound('entity.tnt.primed', 1, 1.1)
     await ctx.easeLook(bot.entity.yaw, 0.6, 350)                 // the sky full of TNT

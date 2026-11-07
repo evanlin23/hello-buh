@@ -18,7 +18,7 @@ module.exports = {
   edit: {
     caption: 'every 5 seconds it gets worse 😰', red: 'worse',
     song: 'songs/funk_abnormal.mp3', dropAt: 'l7',
-    startAt: 'go:0', endAfter: 'death:1.5',
+    startAt: 'go:0', endAfter: 'death:1.4',
     countdown: 'go:boom:SURVIVE',
     counter: { at: ['l1', 'l2', 'l3', 'l4', 'l5', 'l6', 'l7'], total: 7 },
     cards: [
@@ -123,15 +123,15 @@ module.exports = {
     if (!c) throw new Error('no creeper')
     if (!await K.fight(c, K.at(9.5), { waitSwell: 12, gone: offIsland })) throw new Error('creeper stayed')
     ctx.mark('off1')
-    await watchFall(c)
+    await watchFall(c, 5)
     // where did it go: walk to that edge, sneak the last step and look over it, eyes on it all the way down
-    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.3, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
+    const followC = async () => { if (bot.entities[c.id]) { const d = c.position.minus(K.eye()); const ty = Math.atan2(-d.x, -d.z), tp = Math.max(-1.0, Math.atan2(d.y, Math.hypot(d.x, d.z))); let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI; await bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (tp - bot.entity.pitch) * 0.2, true) } }
     bot.setControlState('forward', true)
-    for (let i = 0; i < 30 && bot.entity.position.z < z + 3.3 && ctx.tick < K.at(8.0); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 30 && bot.entity.position.z < z + 3.55 && ctx.tick < K.at(8.7); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', true)
-    for (let i = 0; i < 26 && ctx.tick < K.at(8.8); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 26 && ctx.tick < K.at(9.1); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
-    for (let i = 0; i < 10 && ctx.tick < K.at(8.95); i++) { await followC(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 10 && ctx.tick < K.at(9.25); i++) { await followC(); await bot.waitForTicks(1) }
     bot.setControlState('sneak', false)
     await toCenter(K.at(9.85))
     await K.until(K.at(9.4))
