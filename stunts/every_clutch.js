@@ -12,7 +12,7 @@ const CLUTCHES = [   // nine beats, ~33 s (seven ran 25.9 s; owner: 30 s minimum
   { item: 'honey_block', h: 40, sub: 'honey block: 6/10' },
   { item: 'sweet_berries', h: 44, sub: 'berry bush: 8/10 (pokey)' },    // stuck-in-block resets the fall, like cobweb
   { item: 'cobweb', h: 48, sub: 'cobweb: 11/10' },
-  { item: 'water_bucket', h: 52, sub: 'water bucket (again): 10/10' },   // powder snow and twisting vines killed the bot (mineflayer)
+  { item: 'ender_pearl', h: 52, sub: 'ender pearl: 7/10 (2.5 hearts)' },   // thrown down mid-fall: vanilla resets the fall on the teleport, 5 damage (the second water beat read as a loop; powder snow and twisting vines killed the bot)
   { item: 'milk_bucket', h: 56, sub: 'milk bucket: 0/10' }
 ]
 const TOP = 60
@@ -25,7 +25,8 @@ module.exports = {
     caption: 'rating every MLG clutch 💀', red: 'every', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'death', startAt: 'clutch:0.0',
     deathScreen: true, endAfter: 'death:0.8',
     speed: CLUTCHES.slice(1).map((_, k) => [`hold${k + 1}a`, `hold${k + 1}b`, 'cut']),
-    subs: CLUTCHES.flatMap((c, i) => [['clutch', `${c.h} blocks`, 1.0, i], ['landed', c.sub, 1.6, i]])
+    // the milk's 0/10 goes up as it starts drinking, mid-fall (on 'landed' it was only up 0.85 s, over the death screen)
+    subs: CLUTCHES.flatMap((c, i) => [['clutch', `${c.h} blocks`, 1.0, i], c.item === 'milk_bucket' ? ['placed', c.sub, 2.4, i] : ['landed', c.sub, 1.6, i]])
   },
   expectDeath: true,
 
@@ -106,7 +107,15 @@ module.exports = {
         const p = bot.entity.position, vy = bot.entity.velocity.y, above = p.y - (floor + 1)
         if (vy < -0.5) lastVy = vy
         const drink = c.item === 'milk_bucket' && !placed && vy < -0.3 && above < 30   // drinking takes 1.6 s: start it early so it shows
-        if (drink || (!placed && c.item !== 'milk_bucket' && vy < -0.5 && above + 1.62 < 4.45)) {
+        if (c.item === 'ender_pearl' && !placed && vy < -0.5 && above < 20) {
+          // throw it straight down: it outruns you (your speed + 1.5), and the teleport onto the ground resets the fall
+          placed = true
+          bot.entity.pitch = -Math.PI / 2
+          spot = { x: Math.floor(p.x), y: floor, z: Math.floor(p.z) }
+          ctx.sound('entity.ender_pearl.throw', 1)
+          process.nextTick(() => { bot.activateItem(); bot.swingArm() })
+          ctx.mark('placed', { item: c.item })
+        } else if (c.item !== 'ender_pearl' && (drink || (!placed && c.item !== 'milk_bucket' && vy < -0.5 && above + 1.62 < 4.45))) {
           placed = true
           if (!drink) bot.entity.pitch = -Math.PI / 2
           spot = { x: Math.floor(p.x), y: floor, z: Math.floor(p.z) }
@@ -132,6 +141,7 @@ module.exports = {
           if (c.item === 'red_bed') ctx.sound('block.wool.fall', 1)
           if (c.item === 'sweet_berries') ctx.sound('block.sweet_berry_bush.break', 0.8)
           if (c.item === 'powder_snow_bucket') ctx.sound('block.powder_snow.fall', 1)
+          if (c.item === 'ender_pearl') { ctx.sound('entity.enderman.teleport', 1); ctx.particles('portal', { x: p.x, y: floor + 1.5, z: p.z }, { count: 30 }); bot.chat('/kill @e[type=endermite]') }
         }
       }
       bot.on('physicsTick', onTick)
