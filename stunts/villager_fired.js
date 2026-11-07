@@ -158,16 +158,24 @@ module.exports = {
     // all 13 at once: the outfit cycles faster and faster
     await ctx.easeLookAt(head.offset(0, -0.2, 0), 250)
     ctx.mark('all_jobs')
-    let gap = 5
+    let gap = 5, ft = 0
     for (let k = 0; k < 46; k++) {
       setJob(JOBS[k % 13][1])
       if (k % 2 === 0) ctx.particles('happy', vpos, { count: 3 })
       if (k % 3 === 0) ctx.sound(`entity.villager.work_${JOBS[k % 13][1]}`, 0.7, 1 + k / 46)
-      await bot.waitForTicks(Math.max(1, Math.round(gap)))
+      // the camera never stops: each tick eases a little toward a slowly swinging point above him
+      for (let w = 0; w < Math.max(1, Math.round(gap)); w++) {
+        ft++
+        const g = head.offset(Math.sin(ft / 9) * 0.7, 0.3 + Math.cos(ft / 13) * 0.2, 0)
+        const e = bot.entity.position.offset(0, 1.62, 0), dd = g.minus(e)
+        const gy = Math.atan2(-dd.x, -dd.z), gp = Math.atan2(dd.y, Math.hypot(dd.x, dd.z))
+        let dy = gy - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+        await bot.look(bot.entity.yaw + dy * 0.25, bot.entity.pitch + (gp - bot.entity.pitch) * 0.25, true)
+        await bot.waitForTicks(1)
+      }
       gap *= 0.9
       if (k === 22) ctx.mark('faster')
       if (bot.entity.position.z < vz + 5.6) bot.setControlState('forward', false)
-      if (k % 6 === 3) ctx.easeLookAt(head.offset((k % 12 < 6 ? 0.5 : -0.5), 0.3, 0), 300)   // aimed high: he sits under the subtitle
     }
     setJob('mason')
     // meanwhile, the crowd behind him: still unemployed, all staring
@@ -235,8 +243,7 @@ module.exports = {
     ctx.particles('angry', { x: x + 0.5, y: floor + 3.3, z: vz + 0.5 }, { count: 4 })
     ctx.mark('nitwit')
     await bot.waitForTicks(10)
-    ctx.easeLookAt(top.offset(0.35, 0.05, 0), 900)
-    await bot.waitForTicks(18)
+    await ctx.easeLookAt(top.offset(0.9, 0.25, 0), 1000)        // a real drift to the end (a small one read as a pause)
     return booms >= 4 && !ctx.died && !!v
   }
 }
