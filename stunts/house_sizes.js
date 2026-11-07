@@ -129,7 +129,7 @@ module.exports = {
     // (pieces under the 32768-block /fill cap; the edge sits out in the fog: at x+42 a cut hillside showed)
     const fillBig = async (x0, y0, z0, x1, y1, z1, block) => {
       const per = Math.max(1, Math.floor(32768 / ((y1 - y0 + 1) * (z1 - z0 + 1))))
-      for (let xa = x0; xa <= x1; xa += per) await ctx.cmd(`/fill ${xa} ${y0} ${z0} ${Math.min(x1, xa + per - 1)} ${y1} ${z1} ${block}`)
+      for (let xa = x0; xa <= x1; xa += per) { bot.chat(`/fill ${xa} ${y0} ${z0} ${Math.min(x1, xa + per - 1)} ${y1} ${z1} ${block}`); await new Promise(r => setTimeout(r, 900)) }   // on the clock: big fills stall the server past mineflayer's tick wait
     }
     for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await fillBig(x - 70, y0, z - 90, x + 85, y0 + 7, z + 45, 'air')
     await fillBig(x - 70, floor, z - 90, x + 85, floor, z + 45, 'grass_block')
