@@ -102,6 +102,7 @@ module.exports = {
         // TNT under the feet... a look out west over the edge (how high; the craters far off), back down
         await ctx.easeLook(W + 0.35, -0.3, 550)
         await ctx.easeLook(W - 0.4, -0.45, 700)
+        await ctx.easeLook(W - 0.05, -0.7, 500)
         await ctx.easeLook(W - 0.1, -1.15, 450)
         const bx = t.cx + 4, by = floor + t.h, bz = t.zf - 5                // the edge block right behind the feet
         await ctx.easeLookAt(new Vec3(bx + 0.5, by + 1, bz + 0.5), 350)
@@ -150,7 +151,7 @@ module.exports = {
       const litAt = ctx.tick - 8
       await ctx.tpCheck(t.cx + 0.5, floor + 1, t.zf + t.view + 0.5, 180, 0)
       await ctx.easeLookAt(mid.offset(0.8, -t.h * 0.15, 0), 50)
-      while (ctx.tick - litAt < (n === 4 ? 38 : 58)) await bot.waitForTicks(1)
+      while (ctx.tick - litAt < (n === 4 ? 52 : 58)) await bot.waitForTicks(1)
       ctx.mark(`fuse${n}b`)
       // nervous glances while it flashes, coming back to the pile
       const before = booms
@@ -175,18 +176,21 @@ module.exports = {
         // the big crater: cut to its rim (find where the ground stops along the line in)
         ctx.mark('rim4a')
         let rz = t.zf + t.view
+        // the first spot with solid ground under it and the next 3 blocks out (a ragged edge made
+        // the teleport fall and fail)
+        const solid = (zz) => { const b = bot.blockAt(new Vec3(t.cx, floor, zz)); return b && b.name !== 'air' }
         for (let zz = t.zf + 2; zz <= t.zf + t.view; zz++) {
-          const b = bot.blockAt(new Vec3(t.cx, floor, zz))
-          if (b && b.name !== 'air') { rz = zz; break }
+          if (solid(zz) && solid(zz + 1) && solid(zz + 2) && solid(zz + 3)) { rz = zz; break }
         }
         await ctx.tpCheck(t.cx + 0.5, floor + 1, rz + 1.5, 180, 50)
         await bot.waitForTicks(2)
         ctx.mark('rim4b')
         ctx.mark(`crater${n}`)
-        const pit = new Vec3(t.cx + 0.5, floor - 6, t.zf - 4.5)        // the middle of the big crater
-        await ctx.easeLookAt(pit.offset(4, 0, 0), 500)
-        await ctx.easeLookAt(pit.offset(-4, 0, 0), 900)
-        await ctx.easeLookAt(pit.offset(1, -4, -2), 800)              // ...all the way down
+        // sweep down into it: from the near wall's floor to the bottom (steep, about -0.9 and below)
+        const near = new Vec3(t.cx + 0.5, floor - 6, rz - 4)
+        await ctx.easeLookAt(near.offset(5, 0, 0), 500)
+        await ctx.easeLookAt(near.offset(-5, -3, -2), 900)
+        await ctx.easeLookAt(near.offset(0, -8, -5), 900)              // ...all the way down
       } else {
         // walk up to the crater, looking into it
         // eyes on the crater the whole way (walking while looking at plain grass read as a frozen frame)
@@ -197,13 +201,14 @@ module.exports = {
           const e = bot.entity.position.offset(0, 1.62, 0), d = hole.offset(Math.sin(k / 5) * 0.8, 0, 0).minus(e)
           await aimStep(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), 0.3)
           const p = bot.entity.position
-          const ahead = bot.blockAt(new Vec3(Math.floor(p.x), floor, Math.floor(p.z - 2)))
+          const ahead = bot.blockAt(new Vec3(Math.floor(p.x), floor, Math.floor(p.z - 1)))   // right up to the edge
           if (!ahead || ahead.name === 'air' || p.z < t.zf + 2) break
         }
         bot.setControlState('forward', false)
         ctx.mark(`crater${n}`)
-        await ctx.easeLook(bot.entity.yaw + 0.3, -1.0, 450)
-        await ctx.easeLook(bot.entity.yaw - 0.4, -0.9, 400)
+        // into the hole from the rim, staying on it
+        await ctx.easeLookAt(hole.offset(1.2, -1, 0), 500)
+        await ctx.easeLookAt(hole.offset(-1.2, -1, -0.5), 600)
       }
     }
     return false
