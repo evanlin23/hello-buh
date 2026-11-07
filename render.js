@@ -639,6 +639,30 @@ const isCutStep = (i, a, b) => {
   let dy = Math.abs(b[4] - a[4]) % (2 * Math.PI); if (dy > Math.PI) dy = 2 * Math.PI - dy
   return d > 0.8 || dy > 0.35 || Math.abs(b[5] - a[5]) > 0.35
 }
+// slow pans: the recorded yaw/pitch of a slow look steps unevenly (held for 1-3 ticks, then a
+// catch-up; sometimes a tick back), which froze the view for 3-9 frames mid-pan (worker 5,
+// story_runaway r4). Where every step in a +-2 tick window is under 0.03 rad (1.7 degrees) and there
+// is no cut, the camera uses a 1-2-3-2-1 average; fast turns and cuts stay as recorded
+const SMOOTH = (() => {
+  const n = P.length, yaw = new Float64Array(n), pitch = new Float64Array(n)
+  const uw = [P[0][4]]
+  for (let i = 1; i < n; i++) { let d = P[i][4] - P[i - 1][4]; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; uw.push(uw[i - 1] + d) }
+  const W = [1, 2, 3, 2, 1]
+  for (let i = 0; i < n; i++) {
+    yaw[i] = P[i][4]; pitch[i] = P[i][5]
+    if (i < 2 || i > n - 3) continue
+    let ok = true
+    for (let k = i - 1; k <= i + 2 && ok; k++) {
+      const a = P[k - 1], b = P[k]
+      if (Math.abs(uw[k] - uw[k - 1]) >= 0.03 || Math.abs(b[5] - a[5]) >= 0.03 || Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) > 0.8) ok = false
+    }
+    if (!ok) continue
+    let sy = 0, sp = 0
+    for (let k = -2; k <= 2; k++) { sy += W[k + 2] * uw[i + k]; sp += W[k + 2] * P[i + k][5] }
+    yaw[i] = P[i][4] + (sy / 9 - uw[i]); pitch[i] = sp / 9
+  }
+  return { yaw, pitch }
+})()
 function camAtLive (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t)))
   const a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
@@ -647,7 +671,7 @@ function camAtLive (t) {
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f
   return {
     x: a[1] + (b[1] - a[1]) * f, y: a[2] + (b[2] - a[2]) * f + EYE, z: a[3] + (b[3] - a[3]) * f,
-    yaw: lerpAngle(a[4], b[4], f), pitch: a[5] + (b[5] - a[5]) * f,
+    yaw: lerpAngle(SMOOTH.yaw[i], SMOOTH.yaw[i + 1], f), pitch: SMOOTH.pitch[i] + (SMOOTH.pitch[i + 1] - SMOOTH.pitch[i]) * f,
     bobX: Math.sin(g * Math.PI) * h * 0.5,
     bobY: -Math.abs(Math.cos(g * Math.PI) * h),
     roll: Math.sin(g * Math.PI) * h * 3 * Math.PI / 180,
