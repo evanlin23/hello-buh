@@ -21,7 +21,7 @@ async function findFlat (ctx, area, { reach = 128, step = 4, stride = 16, noTree
     const k = x * 65536 + z
     if (H.has(k)) return H.get(k)
     let v = null
-    for (let y = 120; y > 50; y--) {
+    for (let y = 200; y > 50; y--) {   // from high up: a scan from 120 read a hill above a y-120 plateau as flat ground
       const b = bot.blockAt(new Vec3(x, y, z))
       if (!b) break
       if (noTrees && /_leaves$|_log$/.test(b.name)) { v = -1; break }   // a clear would slice the tree

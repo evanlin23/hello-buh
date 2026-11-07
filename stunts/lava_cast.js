@@ -26,8 +26,9 @@ module.exports = {
     caption: 'satisfying lava cast 😌', red: 'lava', song: 'songs/misery.mp3', dropAt: 'water:0', startAt: 'pour:-0.15', endAfter: 'final:0.95',
     subs: [['pour', 'layer 1', 1.4, 0], ['pour', 'layer 2', 1.4, 1]],
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
-    // the walks back up and to the field in front are jump cuts; the drains at 2x (the casts at 1x)
-    speed: [['climb1a', 'climb1b', 'cut'], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]]
+    // the walks back up and to the field in front are jump cuts; the casts (under a water sheet) at 3x,
+    // the drains (the shell coming out, seen from the field) at 1x
+    speed: [['climb1a', 'climb1b', 'cut'], ['follow', 'scoop', 3], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['follow1', 'scoop1', 3], ['rv1a', 'rv1b', 'cut']]
   },
 
   async setup (ctx) {
@@ -200,13 +201,14 @@ module.exports = {
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
       // the water draining off the slope (2x in the edit), with a slow drift across it
-      for (let i = 0; i < 24 && ctx.tick - wetAt <= 10; i++) await ctx.easeLookAt(step(i % 2 ? 6 : 2).offset(i % 2 ? 1.5 : -2.5, 0, 0), 700)
+      for (let i = 0; i < 16 && ctx.tick - wetAt <= 10; i++) await ctx.easeLookAt(step(i % 2 ? 6 : 2).offset(i % 2 ? 1.5 : -2.5, 2, 0), 1100)   // a slow drift, the slope in the lower half
       bot.removeListener('blockUpdate', onSlope)
       ctx.mark(last ? 'final' : 'reveal', { n })
       // the shell, top to bottom
-      await ctx.easeLookAt(step(1).offset(-1, 0, 0), 500)
-      await ctx.easeLookAt(step(7).offset(1, -1, 0), last ? 900 : 700)
-      if (!last) await ctx.easeLookAt(step(4).offset(-2.5, 0, 0), 700)   // once more across it
+      // aimed above the shell, so it sits in the lower half of the view, under the card
+      await ctx.easeLookAt(step(1).offset(-1, 3, 0), 500)
+      await ctx.easeLookAt(step(6).offset(1, 2.5, 0), last ? 900 : 700)
+      if (!last) await ctx.easeLookAt(step(4).offset(-2.5, 3, 0), 700)   // once more across it
     }
 
     // ---- layer 1 ----
