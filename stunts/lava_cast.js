@@ -29,8 +29,8 @@ module.exports = {
     cards: [['reveal', 'LAYER 1 ✅', 0.9, 'white'], ['final', 'LAYER 2 😌', 0.95, 'gold']],
     // every move between the platform and the field in front is a jump cut; the lava runs (watched from the
     // front) and the casts (under a water sheet) at 2x; the first drain at 1x, the second at 2x
-    speed: [['run0a', 'run0b', 'cut'], ['run0', 'back0a', 2], ['back0a', 'back0b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['climb2a', 'climb2b', 'cut'], ['run1a', 'run1b', 'cut'], ['run1', 'back1a', 2], ['back1a', 'back1b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]],
-    hook: { at: 'final', before: 1.3, after: -0.05, text: 'wait for the end 😌' }
+    speed: [['run0a', 'run0b', 'cut'], ['run0', 'back0a', 2], ['back0a', 'back0b', 'cut'], ['follow', 'scoop', 2], ['rv0a', 'rv0b', 'cut'], ['drain0', 'reveal', 2], ['climb2a', 'climb2b', 'cut'], ['run1a', 'run1b', 'cut'], ['run1', 'back1a', 2], ['back1a', 'back1b', 'cut'], ['follow1', 'scoop1', 2], ['rv1a', 'rv1b', 'cut'], ['drain1', 'final', 2]],
+    hook: { at: 'back0a', before: 1.4, after: -0.05, text: 'wait for the end 😌' }   // the lava sheet running down
   },
 
   async setup (ctx) {
@@ -228,7 +228,7 @@ module.exports = {
       await tpTo(...FRONT(), 180, -14)
       ctx.mark(`run${n}b`)
       ctx.mark(`run${n}`)
-      for (let k = 0; k < 300 && !(k > 40 && ctx.tick - last > 12); k++) {
+      for (let k = 0; k < 400 && !(k > 60 && ctx.tick - last > 30); k++) {   // lava steps about once a second here: a 12-tick quiet ended the layer-2 run before it ran
         await lookStep(step(Math.max(1, Math.min(STEPS, front))).offset(Math.sin(k / 20) * 1.5, 1.5, 0), 0.12)
         await bot.waitForTicks(1)
       }
@@ -246,7 +246,10 @@ module.exports = {
       // a jump cut out onto the field looking up the whole slope (from the walkway the camera was wedged
       // against the shell's side): layer 1 from the front, layer 2 from the south-west
       ctx.mark(`rv${n}a`)
-      await tpTo(...FRONT(), 180, -12)   // from the front (the south-west side view read cramped)
+      // layer 1 from the front; the final low from the south-west, where the second shell's raised edge
+      // shows over the first (from the front the two reveals looked the same)
+      if (last) await tpTo(x - 9.5, this.floor + 1, z + STEPS + 3.5, -125, -12)
+      else await tpTo(...FRONT(), 180, -12)
       ctx.mark(`rv${n}b`)
       ctx.mark(`drain${n}`)
       // the water draining off: a slow sneak in towards the hill, eyes on the slope (a moving shot, not a
