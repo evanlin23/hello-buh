@@ -362,3 +362,14 @@ each section.
 - **A solid wall between the lane and the action hides the action's bottom.** The ridge under the sand-on-torch columns is a bridge on pillars, so the landings show.
 - **Falling blocks:** the server sends their position about once a second, so aim at a simulated fall (gravity 0.04, drag 0.98) rather than at the entity.
 - **Engine features added for this format** (worker 11): piston slides, TNT minecart contents, flash and smoke, arrows, note particles, bell swing, rocket trails, and block light by state (lit lamps and copper bulbs light their surroundings at night).
+
+## Guess the mob by its sound (worker 13: lib/guess_sound.js, stunts/guess_sound*.js)
+- **Vanilla light 0 is not black.** A mob in front of the camera in a closed room reads as a silhouette, which spoils a "guess" round, even on Moody brightness. Put the mob behind the player and turn round at the reveal.
+- **A pitch-black countdown reads as frozen** (beat_audit counts mean change over the whole game view; a draining bar barely registers). A dim redstone torch (light 7) on the wall the player faces gives the listening scan something to move over, and it never reaches the mob 7+ blocks behind. Nether bricks and smooth packed ice need more texture or a second torch. A pan that reverses also stops for 0.5 s: phase a nod so it peaks where the pan turns.
+- **Exact countdown windows.** Time "3-2-1" windows by `ctx.tick` (60 ticks), not by chained 20-tick waits: 3.15 s windows drew a "4" (worker 10 clamped it since).
+- **Silent:1b + ctx.sound.** Mob sounds from the server aren't recorded; play them yourself. `sounds.json` variants with `type: event` (every `entity.parrot.imitate.*`) name another event: spell it out (imitate.creeper = creeper.primed at pitch 1.8).
+- **Giving a mob its AI back for a reaction is unpredictable on camera.** An angry polar bear charged into the lens; a stared-at enderman teleported next to the player and attacked instead of away. Stage reactions on NoAI mobs with `pose` marks (worker 11) and scripted moves. 1.21.11's NeutralMob keys are `angry_at` + `anger_end_time` (absolute game time = `bot.time.age`), not AngerTime/AngryAt. A summoned warden never roared (anger NBT, /damage or AI alone).
+- **`/summon ... {equipment:{mainhand:...}}` didn't give a skeleton its bow** in the recording; `/item replace entity @e[tag=...] weapon.mainhand with bow` after the summon.
+- **A waterlogged block in a dry set floods the floor** (a default sea_pickle): `sea_pickle[waterlogged=false]`.
+- **Hard difficulty for a creeper kill:** a 3-block creeper blast is ~17 damage on normal (survivable), ~25 on hard.
+- **Round answer cards must end before the cut** (they spilled into the next dark room): hold the round until the card is gone.
