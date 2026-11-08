@@ -115,8 +115,9 @@ def ts(t):
 
 
 def dialogue(seg, cfg, fps):
-    """[(t0, t1, text)] in segment time: the scene's `line` marks (lib/movie.js line()), each on screen until the
-    next line (at most 3.5 s, or the mark's own dur) and at least 1.2 s."""
+    """[(t0, t1, text)] in segment time: the scene's `line` marks (lib/movie.js line()), each on screen for its reading
+    time (0.8 s + 0.06 s a character, 1 to 4.5 s; the mark's own dur wins) and never past the next line. render.js
+    times the talking head the same way."""
     import longform
     rec_path, meta = longform.fetch_segment(seg, cfg)
     rec = json.loads(rec_path.read_text())
@@ -126,8 +127,9 @@ def dialogue(seg, cfg, fps):
     ls.sort(key=lambda x: x[0])
     out = []
     for k, (t0, e) in enumerate(ls):
-        nxt = ls[k + 1][0] if k + 1 < len(ls) else t0 + 3.5
-        t1 = t0 + float(e.get("dur") or min(3.5, max(1.2, nxt - t0 - 0.05)))
+        nxt = ls[k + 1][0] if k + 1 < len(ls) else float("inf")
+        want = float(e.get("dur") or max(1.0, min(4.5, 0.8 + 0.06 * len(e.get("text", "")))))
+        t1 = min(t0 + want, nxt - 0.05)
         if 0 <= t0 < end - start:
             out.append((t0, min(t1, end - start), e["text"]))
     return out
@@ -249,6 +251,23 @@ def build(ep_dir, ep):
         i = int(at * SR)
         nar[i:i + len(x)] += x[: n - i]
         spans.append((at + voice[lid]["onset"], at + voice[lid]["end"], lid))
+    # recorded dialogue (movie scenes): episodes/<ep>/lines/<scene>_<n>.wav on the n-th line mark of that scene
+    # (`python3 scripts/longform.py lines` lists them), mixed and ducked like the narration
+    for p in ep["pieces"]:
+        if p["kind"] not in ("seg", "clip"):
+            continue
+        a_off = float(p.get("from", 0)) if p["kind"] == "clip" else 0.0
+        for k, (t0, t1, text) in enumerate(dialogue(p["seg"], ep["segments"].get(p["seg"], {}), fps)):
+            wav = ep_dir / "lines" / f"{p['seg']}_{k}.wav"
+            at = starts[p["id"]] + t0 - a_off
+            if not wav.exists() or at < starts[p["id"]] - 0.01:
+                continue
+            x = sfx.read_audio(wav)
+            i = int(at * SR)
+            if i >= n:
+                continue
+            nar[i:i + len(x)] += x[: n - i]
+            spans.append((at, at + len(x) / SR, f"{p['seg']}_{k}"))
     spans.sort()
     for (a0, b0, l0), (a1, b1, l1) in zip(spans, spans[1:]):
         if a1 < b0 + 0.1:

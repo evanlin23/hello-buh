@@ -495,6 +495,7 @@ function posePlayer (r, s) {
   r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw).multiply(new THREE.Matrix4().makeRotationZ(death)))
   for (const k of ['head', 'body', 'rightArm', 'leftArm', 'rightLeg', 'leftLeg']) B[k].rotation.set(0, 0, 0)
   B.rightArm.position.set(-5, 2, 0); B.leftArm.position.set(5, 2, 0)
+  B.head.position.set(0, 0, 0); B.body.position.set(0, 0, 0); B.rightLeg.position.set(-1.9, 12, 0); B.leftLeg.position.set(1.9, 12, 0)
   B.head.rotation.y = net; B.head.rotation.x = -(s.pitch || 0)
   const pos = p.walkPos || 0, spd = p.walkSpeed || 0
   B.rightArm.rotation.x = Math.cos(pos * 0.6662 + Math.PI) * 2 * spd * 0.5
@@ -502,6 +503,15 @@ function posePlayer (r, s) {
   B.rightLeg.rotation.x = Math.cos(pos * 0.6662) * 1.4 * spd
   B.leftLeg.rotation.x = Math.cos(pos * 0.6662 + Math.PI) * 1.4 * spd
   if (p.holding) B.rightArm.rotation.x = B.rightArm.rotation.x * 0.5 - Math.PI / 10   // ArmPose.ITEM
+  // HumanoidModel.setupAnim, crouching (movie actors and the player seen from outside, docs/movie_engine.md): the body
+  // leans 0.5, the arms come forward 0.4, the legs step back 4 px, everything above the hips drops; PlayerRenderer
+  // lowers the whole model 0.125 blocks (getRenderOffset)
+  if (p.crouch) {
+    B.body.rotation.x = 0.5; B.rightArm.rotation.x += 0.4; B.leftArm.rotation.x += 0.4
+    B.rightLeg.position.set(-1.9, 12.2, 4); B.leftLeg.position.set(1.9, 12.2, 4)
+    B.head.position.y = 4.2; B.body.position.y = 3.2; B.rightArm.position.y = 5.2; B.leftArm.position.y = 5.2
+    r.obj.position.y -= 0.125
+  }
   const a = p.attack || 0
   if (a > 0) {
     const by = Math.sin(Math.sqrt(a) * Math.PI * 2) * 0.2
@@ -691,7 +701,7 @@ export class EntityLayer {
         obj = new THREE.Sprite(mat); obj.scale.setScalar(0.3); obj.center.set(0.5, 0.25)
         bones = { orb: true }
       }
-    } else if (name === 'player') {
+    } else if (name === 'player' || name === 'mannequin') {   // (a Mannequin is the player model: movie extras)
       const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
       if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (/^(ender_pearl|snowball|egg|item|splash_potion|lingering_potion|experience_bottle|firework_rocket)$/.test(name)) {
@@ -860,7 +870,7 @@ export class EntityLayer {
         if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
         continue
       }
-      if (s.name === 'player') {
+      if (s.name === 'player' || s.name === 'mannequin') {
         posePlayer(r, s)
         // the held item (ItemInHandLayer), built by the page (block models / extruded sprites)
         const held = s.player && s.player.held, hk = held ? held.key : null

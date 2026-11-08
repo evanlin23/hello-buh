@@ -31,19 +31,24 @@ module.exports = {
   noChunkRefresh: false,
   botTimeout: 600,
   fogSea: { y0: 60, y1: 140, layers: 16, density: 0.985, fade: 5 },
+  // the cinematic look (renderer/page.js makePost): moonlit grade, lantern bloom, bars and focus on camera shots
+  look: { grade: 'night', bloom: 0.6, bloomThreshold: 0.68, vignette: 0.45, grain: 0.03, letterbox: 2.39, dof: { aperture: 0.9 } },   // (threshold 0.55 made the white deck glow)
   cast: { self: 'kai', Highkeeper: 'efe' },
+  selfName: 'Ash',               // his lines (M.line who) move his head when he's seen from outside
+  idleLife: true,
   // the camera director (render.js): offsets are from the set origin O (y 100), so the deck is dy 200
   shots: {
-    wide: { path: [[0, -46, 222, 54], [6.5, -26, 210, 30]], lookPath: [[0, 4, 196, 0], [6.5, 4, 201, 0]] },
-    two: { at: [4.3, 204.2, 10.5], look: [4.3, 201.6, 1.0], fov: 50 },   // (well above the gold rim at dz 6: at 202.7 it filled the frame's foot)
+    // a crane down onto the deck: high and wide (the tower, the clouds, the fog sea), ending on the two of them
+    wide: { dof: false, path: [[0, -30, 232, 34], [2.2, -16, 214, 19], [4.4, -6, 205, 9]], lookPath: [[0, 3, 192, 0], [2.2, 3, 199, 0], [4.4, 3.5, 201.3, 0.8]] },
+    two: { at: [4.4, 203.3, 6.4], look: [4.4, 201.5, 1.0], fov: 55 },   // (just above the gold rim at dz 6, looking down past it: v1 sat 10 back and the rim filled the foot)
     ots_ash: { at: { of: 'self', offset: [-2.0, 0.2, 1.0] }, look: 'actor:Highkeeper', fov: 55 },
     ots_hk: { at: { of: 'actor:Highkeeper', offset: [2.0, 0.2, -1.0] }, look: 'self', fov: 55 },
-    walkout: { follow: 'self', offset: [-3.2, 0.9, 1.4], look: { of: 'self', offset: [2, -0.4, 0] }, lag: 3, fov: 65 },
-    low: { at: [WX - 1, 197.5, 4], look: { of: 'self', offset: [0, -0.6, 0] }, fov: 60 },
+    walkout: { follow: 'self', offset: [-3.0, 0.9, -1.6], look: { of: 'self', offset: [2, -0.4, 0] }, lag: 3, fov: 65 },   // (north side: v1's south offset went through the Highkeeper's head)
+    low: { dof: false, at: [WX - 1, 197.5, 4], look: { of: 'self', offset: [0, -0.6, 0] }, fov: 60 },
     pov: { pov: true }
   },
   edit: {
-    startAt: 'start:0.05', endAfter: 'fog:0.7',
+    startAt: 'start:0.3', endAfter: 'fog:0.7',   // (0.3: already walking, the owner's no-pause rule)
     sfx: [['wind', 'fall', 'fog', { gain: 0.5 }], ['whoosh', 'fog', { gain: 0.4 }]]
   },
 
@@ -105,11 +110,10 @@ module.exports = {
       for (let k = 0; k < maxTicks && bot.entity.position.x < x; k++) await bot.waitForTicks(1)
       bot.setControlState('forward', false)
     }
-    await bot.look(-Math.PI / 2, 0, true)   // east
-    await bot.waitForTicks(30)
+    await bot.look(-Math.PI / 2, 0, true)   // east, and walking at once: no still opening (v1 stood 1.5 s)
+    M.shotIn(ctx, 'two', 34)                // the cut lands while he's still walking up to him
     await walkTo(X + 3.2)
     // 2. the two-shot: they face each other
-    M.shot(ctx, 'two')
     await ctx.easeLookAt(hkEye(), 350)
     await M.lookAt(hk, ashEye(), 300)
     await bot.waitForTicks(10)
@@ -121,7 +125,8 @@ module.exports = {
     M.line(ctx, 'Ash', 'Four.')
     await bot.waitForTicks(30)
     M.shot(ctx, 'ots_ash')
-    await bot.waitForTicks(30)   // he looks at Ash a moment too long
+    await M.lookAway(hk, 25, 600)   // he looks away, then back at Ash a moment too long
+    await M.lookAt(hk, ashEye(), 500)
     M.swing(hk)                  // the hand-over
     await M.empty(ctx, 'Highkeeper')
     await ctx.hotbar(['bucket'])
@@ -130,11 +135,11 @@ module.exports = {
     await bot.waitForTicks(34)
     M.shot(ctx, 'two')
     M.line(ctx, 'Ash', 'The floor I jump from is the floor I live on.')
+    await bot.waitForTicks(30)
     await M.nod(hk)
-    await bot.waitForTicks(40)
     // 4. he turns and walks out to the end of the plank, sneaking (it keeps him on it)
-    M.shot(ctx, 'walkout')
     await ctx.easeLook(-Math.PI / 2, 0.1, 400)
+    M.shotIn(ctx, 'walkout', 6)
     await walkTo(X + 6.6, 80)                     // across the deck at a walk
     bot.setControlState('sneak', true)            // sneaking on the plank keeps him on it
     await walkTo(X + 11.45, 120)

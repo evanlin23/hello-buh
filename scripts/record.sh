@@ -3,6 +3,7 @@
 # -> work/<name>.rec.json. No Shorts render or edit: for movie scenes (docs/movie_engine.md), which are
 # rendered at 16:9 by scripts/longform.py. Only one server per container: check `ps` for server.jar first.
 #   STUNT=movie_reel ./scripts/record.sh
+#   KEEP_WORLD=1 STUNT=movie_below ./scripts/record.sh   (the same world as the last run)
 set -euo pipefail
 cd "$(dirname "$0")/.."
 STUNT=${STUNT:?STUNT=<name>}
@@ -21,7 +22,8 @@ S=work/server
 cp server.properties "$S/server.properties"
 echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEULA), accepted for this private server
 python3 make_ops.py HelloBuh "$S/ops.json"
-rm -rf "$S/world"                 # fresh world every run
+# fresh world every run; KEEP_WORLD=1 keeps it (movie scenes that share one set: build it once, docs/movie_engine.md)
+[ "${KEEP_WORLD:-0}" = 1 ] || rm -rf "$S/world"
 rm -f "$S/console" && mkfifo "$S/console"
 ( cd "$S" && tail -f console | java -Xmx2G -jar server.jar nogui > ../server.log 2>&1 ) &
 stop_server() { timeout 5 sh -c "echo stop > '$S/console'" 2>/dev/null || true; sleep 3; pkill -f "tail -f console" 2>/dev/null || true; }

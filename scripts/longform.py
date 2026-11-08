@@ -3,6 +3,7 @@
     python3 scripts/longform.py render episodes/<ep> [--only SEG,SEG]   # each segment -> work/lf/<seg>.mp4
     python3 scripts/longform.py plan episodes/<ep>                       # each segment's marks, in segment time
     ~/.hb-tts/bin/python scripts/voice.py episodes/<ep>                  # the narration (episodes/<ep>/story.json)
+    python3 scripts/longform.py lines episodes/<ep>                      # lines.csv: every line, for the voice actors
     python3 scripts/longform.py build episodes/<ep>                      # -> out/<name>.mp4 + .json (chapters,
                                                                          #    description, thumbnail)
 
@@ -128,7 +129,13 @@ def render_frames(rec_path, out_dir, fps, frames, env_extra=None, tag=""):
     """render.js for just `frames` (numbered at `fps`), kept across runs: a finished pass writes done.json."""
     out_dir = pathlib.Path(out_dir)
     done = out_dir / "done.json"
-    if done.exists() and json.loads(done.read_text()) == {"fps": fps, "frames": frames, "size": [W, H]}:
+    # the cache key: also the recording, its stunt module (camera shots, the look) and the engine, so a re-tuned
+    # camera or a renderer fix re-renders (the frame list alone matched across two different recordings)
+    stunt = HERE / "stunts" / f"{json.loads(pathlib.Path(rec_path).read_text()).get('stunt', '')}.js"
+    eng = max([(HERE / "render.js").stat().st_mtime] + [f.stat().st_mtime for f in (HERE / "renderer").glob("*.js")])
+    key = {"fps": fps, "frames": frames, "size": [W, H], "rec": pathlib.Path(rec_path).stat().st_mtime,
+           "stunt": stunt.stat().st_mtime if stunt.exists() else 0, "engine": eng, "env": {k: os.environ.get(k) for k in ("CAM", "SKIN", "LOOK", "NO_DOF") if k in (env_extra or {}) or os.environ.get(k)}}
+    if done.exists() and json.loads(done.read_text()) == key:
         print(f"{tag}: {len(frames)} frames already rendered")
         return
     shutil.rmtree(out_dir, ignore_errors=True)
@@ -137,7 +144,7 @@ def render_frames(rec_path, out_dir, fps, frames, env_extra=None, tag=""):
     env["FRAMES"] = ",".join(map(str, frames))
     print(f"{tag}: rendering {len(frames)} frames at {fps} fps, {W}x{H}", flush=True)
     run(["node", "render.js", rec_path, out_dir, fps, W, H], cwd=HERE, env=env)
-    done.write_text(json.dumps({"fps": fps, "frames": frames, "size": [W, H]}))
+    done.write_text(json.dumps(key))
 
 
 def render_segment(seg, cfg, fps):
@@ -242,9 +249,30 @@ def cmd_plan(ep_dir):
             print(f"  {t:7.2f}  {e}#{seen[e]}")
 
 
+def cmd_lines(ep_dir):
+    """episodes/<ep>/lines.csv: every line of dialogue in the episode's scenes, for whoever records the voices. Each
+    row names the file the build looks for: episodes/<ep>/lines/<scene>_<n>.wav (n counts that scene's lines)."""
+    import csv
+    sys.path.insert(0, str(HERE / "scripts"))
+    import longform_build
+    ep_dir, ep = load_episode(ep_dir)
+    rows = []
+    for seg, cfg in ep["segments"].items():
+        for n, (t0, t1, text) in enumerate(longform_build.dialogue(seg, cfg, ep.get("fps", 30))):
+            rec_path, _ = fetch_segment(seg, cfg)
+            who = [e.get("who") for e in json.loads(rec_path.read_text())["timeline"] if e["event"] == "line"]
+            rows.append([seg, n, who[n] if n < len(who) else "", text, f"{t0:.2f}", f"{t1 - t0:.2f}", f"lines/{seg}_{n}.wav"])
+    out = ep_dir / "lines.csv"
+    with out.open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["scene", "n", "who", "text", "at_s", "subtitle_s", "file"])
+        w.writerows(rows)
+    print(f"{len(rows)} lines -> {out}")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["render", "plan", "build"])
+    ap.add_argument("cmd", choices=["render", "plan", "build", "lines"])
     ap.add_argument("episode")
     ap.add_argument("--only")
     a = ap.parse_args()
@@ -252,6 +280,8 @@ if __name__ == "__main__":
         cmd_render(a.episode, set(a.only.split(",")) if a.only else None)
     elif a.cmd == "plan":
         cmd_plan(a.episode)
+    elif a.cmd == "lines":
+        cmd_lines(a.episode)
     else:
         import longform_build
         longform_build.build(*load_episode(a.episode))

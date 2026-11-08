@@ -77,6 +77,172 @@ const sections = new Map()
 let opaqueMat, translucentMat, clouds, sky, sun, moon, stars, entities, blockEntities
 let fogSea = null
 
+// The cinematic look (docs/movie_engine.md; stunt.look): what shader packs add on top of the game, as a post chain.
+// The world, the hand and the darkness quad draw into an off-screen target; then bloom (bright pixels blurred at
+// quarter size), depth of field (camera shots with a focus distance), and one finishing pass: exposure, a colour
+// grade (lift / gamma / gain, saturation, an S-curve), vignette, grain, and letterbox bars (camera shots). The HUD
+// is drawn later by edit.py, so it stays clean. Off unless a stunt sets `look`.
+const GRADES = {
+  neutral: { lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], sat: 1.04, contrast: 0.08, exposure: 1 },
+  night: { lift: [0.0, 0.012, 0.03], gamma: [1.0, 1.0, 1.04], gain: [1.07, 1.0, 0.9], sat: 1.06, contrast: 0.14, exposure: 1.06 },
+  dawn: { lift: [0.02, 0.008, 0.015], gamma: [0.97, 1.0, 1.03], gain: [1.09, 1.0, 0.88], sat: 1.12, contrast: 0.1, exposure: 1.03 },
+  day: { lift: [0.0, 0.0, 0.01], gamma: [1, 1, 1], gain: [1.04, 1.01, 0.96], sat: 1.1, contrast: 0.1, exposure: 1.02 }
+}
+let POST = null
+
+// Sun and moon shadows (stunt.look.shadows: true or { radius, size, strength }; docs/movie_engine.md). Not vanilla:
+// what shader packs add. A depth map of the world's opaque blocks from the sun (or the moon at night), an
+// orthographic box of `radius` blocks around the camera, and the block material darkened where a texel is behind
+// something. Cached: it re-renders only when blocks change, the time changes or the camera moves to another 16-block
+// cell, so a still scene pays for it once. v1: blocks cast shadows, entities don't (they keep their shadow discs).
+let SHADOW = null
+function makeShadow (spec, atlas) {
+  const o = typeof spec === 'object' ? spec : {}
+  const size = o.size || 2048, R = o.radius || 72
+  const rt = new THREE.WebGLRenderTarget(size, size)
+  rt.depthTexture = new THREE.DepthTexture(size, size)
+  const cam = new THREE.OrthographicCamera(-R, R, R, -R, 1, 700)
+  cam.layers.set(1)   // only the shadow casters (opaque block sections)
+  const depthMat = new THREE.MeshBasicMaterial({ map: atlas, alphaTest: 0.1, colorWrite: false, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 4 })
+  const uniforms = { shadowMap: { value: rt.depthTexture }, shadowMatrix: { value: new THREE.Matrix4() }, shadowStrength: { value: 0 }, shadowTexel: { value: 1 / size } }
+  return { rt, cam, depthMat, uniforms, R, size, strength: o.strength ?? 0.45, key: '', dirty: true }
+}
+function shadowMaterial (mat) {   // the block material reads the shadow map (a 4-tap PCF), darkening the lit colour
+  mat.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, SHADOW.uniforms)
+    sh.vertexShader = 'varying vec3 vShWorld;\n' + sh.vertexShader.replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\n  vShWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;')
+    sh.fragmentShader = 'uniform sampler2D shadowMap; uniform mat4 shadowMatrix; uniform float shadowStrength; uniform float shadowTexel; varying vec3 vShWorld;\n' +
+      sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+  if (shadowStrength > 0.0) {
+    vec4 sc = shadowMatrix * vec4(vShWorld, 1.0);
+    if (sc.x > 0.0 && sc.x < 1.0 && sc.y > 0.0 && sc.y < 1.0 && sc.z < 1.0) {
+      float lit = 0.0;
+      for (int i = 0; i < 4; i++) {
+        vec2 o = vec2(i == 1 || i == 3 ? 1.0 : -1.0, i >= 2 ? 1.0 : -1.0) * 0.75 * shadowTexel;
+        lit += step(sc.z - 0.0015, texture2D(shadowMap, sc.xy + o).x);
+      }
+      diffuseColor.rgb *= 1.0 - shadowStrength * (1.0 - lit / 4.0);
+    }
+  }`)
+  }
+  mat.needsUpdate = true
+}
+function updateShadow (dayTime, rain) {
+  const S = SHADOW
+  const a = dayInfo(dayTime).angle * Math.PI * 2
+  let dir = new THREE.Vector3(-Math.sin(a), Math.cos(a), 0)   // toward the sun (placeSun)
+  let k = 1
+  if (dir.y < 0.06) { dir = dir.clone().negate(); k = 0.35 }   // the sun is down: the moon, fainter
+  const elev = Math.max(0, dir.y)
+  const strength = S.strength * k * Math.min(1, elev * 4) * (1 - (rain || 0))
+  S.uniforms.shadowStrength.value = strength
+  if (strength <= 0.001) return
+  const cx = Math.floor(camera.position.x / 16) * 16 + 8, cy = Math.floor(camera.position.y / 16) * 16 + 8, cz = Math.floor(camera.position.z / 16) * 16 + 8
+  const key = `${cx},${cy},${cz},${dayTime},${sections.size}`
+  if (!S.dirty && key === S.key) return
+  S.key = key; S.dirty = false
+  const c = new THREE.Vector3(cx, cy, cz)
+  S.cam.position.copy(c).addScaledVector(dir, 350)
+  S.cam.up.set(0, 0, 1)
+  S.cam.lookAt(c)
+  S.cam.updateMatrixWorld(); S.cam.updateProjectionMatrix()
+  const bias = new THREE.Matrix4().set(0.5, 0, 0, 0.5, 0, 0.5, 0, 0.5, 0, 0, 0.5, 0.5, 0, 0, 0, 1)
+  S.uniforms.shadowMatrix.value.copy(bias).multiply(S.cam.projectionMatrix).multiply(S.cam.matrixWorldInverse)
+  const prevBg = scene.background, prevFog = scene.fog, prevOver = scene.overrideMaterial, prevTarget = renderer.getRenderTarget()
+  scene.background = null; scene.fog = null; scene.overrideMaterial = S.depthMat
+  renderer.setRenderTarget(S.rt); renderer.clear(); renderer.render(scene, S.cam)
+  scene.background = prevBg; scene.fog = prevFog; scene.overrideMaterial = prevOver
+  renderer.setRenderTarget(prevTarget)
+}
+function makePost (look, w, h) {
+  const g = typeof look.grade === 'object' ? { ...GRADES.neutral, ...look.grade } : (GRADES[look.grade] || GRADES.neutral)
+  const rt = new THREE.WebGLRenderTarget(w, h, { depthBuffer: true })
+  rt.depthTexture = new THREE.DepthTexture(w, h)
+  const bw = Math.max(1, Math.floor(w / 4)), bh = Math.max(1, Math.floor(h / 4))
+  const ba = new THREE.WebGLRenderTarget(bw, bh), bb = new THREE.WebGLRenderTarget(bw, bh)
+  const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), quadScene = new THREE.Scene()
+  const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2)); quadScene.add(quad)
+  const vs = 'varying vec2 vUv; void main () { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }'
+  const mk = (fs, uniforms) => new THREE.ShaderMaterial({ vertexShader: vs, fragmentShader: fs, uniforms, depthTest: false, depthWrite: false })
+  const bright = mk(`uniform sampler2D src; uniform float thr; varying vec2 vUv;
+    void main () { vec3 c = texture2D(src, vUv).rgb; float l = max(c.r, max(c.g, c.b));
+      gl_FragColor = vec4(c * max(0.0, l - thr) / max(1e-3, (1.0 - thr) * l), 1.0); }`, { src: { value: null }, thr: { value: look.bloomThreshold ?? 0.7 } })
+  const blur = mk(`uniform sampler2D src; uniform vec2 dir; varying vec2 vUv;
+    void main () { vec3 c = texture2D(src, vUv).rgb * 0.2270;
+      c += (texture2D(src, vUv + dir * 1.3846).rgb + texture2D(src, vUv - dir * 1.3846).rgb) * 0.3162;
+      c += (texture2D(src, vUv + dir * 3.2308).rgb + texture2D(src, vUv - dir * 3.2308).rgb) * 0.0703;
+      gl_FragColor = vec4(c, 1.0); }`, { src: { value: null }, dir: { value: new THREE.Vector2() } })
+  const COC = `uniform sampler2D depth; uniform vec2 res; uniform float near; uniform float far; uniform float focus; uniform float aperture;
+    float lin (float d) { return near * far / (far - d * (far - near)); }
+    // the circle of confusion in pixels at 540 high, scaled to the frame: the preview and the final match
+    float coc (vec2 uv) { float z = lin(texture2D(depth, uv).x); float k = res.y / 540.0; return clamp(aperture * abs(z - focus) / max(z, 0.1) * 12.0 * k, 0.0, 14.0 * k); }`
+  // depth of field at half size (blur hides it; a quarter of the cost): a 24-tap golden-angle disc gather, each tap
+  // weighted by its own blur so a sharp subject in front doesn't bleed into the background behind it
+  const rd = new THREE.WebGLRenderTarget(Math.max(1, Math.floor(w / 2)), Math.max(1, Math.floor(h / 2)))
+  const dofMat = mk(`uniform sampler2D src; ${COC} varying vec2 vUv;
+    void main () {
+      float r = coc(vUv); vec3 c = texture2D(src, vUv).rgb;
+      if (r > 0.5) {
+        vec3 acc = c; float wsum = 1.0;
+        for (int k = 0; k < 24; k++) {
+          float a = float(k) * 2.39996, rr = sqrt((float(k) + 0.5) / 24.0);
+          vec2 o = vec2(cos(a), sin(a)) * rr * r / res;
+          float w = clamp(coc(vUv + o) / max(0.5, rr * r), 0.0, 1.0);
+          acc += texture2D(src, vUv + o).rgb * w; wsum += w;
+        }
+        c = acc / wsum;
+      }
+      gl_FragColor = vec4(c, 1.0);
+    }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) }, near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 } })
+  const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D depth; uniform vec2 res;
+    uniform float near; uniform float far; uniform float focus; uniform float aperture; uniform float bloomK;
+    uniform vec3 lift; uniform vec3 gam; uniform vec3 gain; uniform float sat; uniform float contrast; uniform float exposure;
+    uniform float vig; uniform float grain; uniform float seed; uniform float bars; varying vec2 vUv;
+    float lin (float d) { return near * far / (far - d * (far - near)); }
+    float coc (vec2 uv) { float z = lin(texture2D(depth, uv).x); float k = res.y / 540.0; return clamp(aperture * abs(z - focus) / max(z, 0.1) * 12.0 * k, 0.0, 14.0 * k); }
+    float hash (vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233)) + seed) * 43758.5453); }
+    void main () {
+      vec3 c = texture2D(src, vUv).rgb;
+      if (focus > 0.0) c = mix(c, texture2D(dof, vUv).rgb, smoothstep(0.5, 2.5, coc(vUv)));   // the half-size blur where it's out of focus
+      c += texture2D(bloom, vUv).rgb * bloomK;
+      c *= exposure;
+      c = pow(max(vec3(0.0), c * gain + lift * (1.0 - c)), 1.0 / gam);
+      float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+      c = mix(vec3(l), c, sat);
+      c = mix(c, c * c * (3.0 - 2.0 * c), contrast);
+      vec2 q = vUv - 0.5; q.x *= res.x / res.y;
+      c *= mix(1.0, smoothstep(0.95, 0.25, length(q)), vig);
+      c += (hash(vUv * res) - 0.5) * grain;
+      if (bars > 0.0 && abs(vUv.y - 0.5) > 0.5 * (res.x / res.y) / bars) c = vec3(0.0);
+      gl_FragColor = vec4(clamp(c, 0.0, 1.0), 1.0);
+    }`, {
+    src: { value: rt.texture }, bloom: { value: ba.texture }, dof: { value: rd.texture }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) },
+    near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 }, bloomK: { value: look.bloom ?? 0.6 },
+    lift: { value: new THREE.Vector3(...g.lift) }, gam: { value: new THREE.Vector3(...g.gamma) }, gain: { value: new THREE.Vector3(...g.gain) },
+    sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 },
+    vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 }
+  })
+  return { rt, ba, bb, rd, quad, quadScene, quadCam, bright, blur, dofMat, fin, bw, bh }
+}
+function runPost (cam, tick) {
+  const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
+  P.bright.uniforms.src.value = P.rt.texture; pass(P.bright, P.ba)
+  for (let i = 0; i < 2; i++) {   // two blur rounds at quarter size: a wide, soft glow
+    P.blur.uniforms.src.value = P.ba.texture; P.blur.uniforms.dir.value.set(1 / P.bw, 0); pass(P.blur, P.bb)
+    P.blur.uniforms.src.value = P.bb.texture; P.blur.uniforms.dir.value.set(0, 1 / P.bh); pass(P.blur, P.ba)
+  }
+  const u = P.fin.uniforms
+  u.near.value = camera.near; u.far.value = camera.far
+  u.focus.value = cam.focus || 0; u.aperture.value = cam.aperture ?? 1
+  if (cam.focus > 0) {
+    const d = P.dofMat.uniforms
+    d.near.value = camera.near; d.far.value = camera.far; d.focus.value = cam.focus; d.aperture.value = cam.aperture ?? 1
+    pass(P.dofMat, P.rd)
+  }
+  u.bars.value = cam.bars || 0; u.seed.value = ((tick || 0) * 0.6180339) % 1 * 100
+  pass(P.fin, null)
+}
+
 // The fog sea (docs/movie_engine.md; stunt.fogSea = { y0, y1, layers, density, color, fade, night }): a white
 // band between y0 and y1 that reads as a sea of fog from above, as an overcast ceiling from below, and
 // that you can fall through. Not vanilla (no block looks like that and lets you through): stacked
@@ -435,6 +601,8 @@ window.HB = {
     stars = makeStars(); scene.add(stars)
     clouds = await makeClouds('/assets/env/clouds.png'); scene.add(clouds)
     if (env.fogSea) { fogSea = makeFogSea(env.fogSea, blocks); scene.add(fogSea) }
+    if (env.look) POST = makePost(env.look, W, H)
+    if (env.look && env.look.shadows) { SHADOW = makeShadow(env.look.shadows, atlas); shadowMaterial(opaqueMat) }
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
     entities = new EntityLayer(scene, regs); entities.camera = camera
@@ -483,6 +651,7 @@ window.HB = {
       geo.setIndex(new THREE.BufferAttribute(d.indices, 1))
       const m = new THREE.Mesh(geo, mat)
       if (part === 'translucent') m.renderOrder = 1
+      else m.layers.enable(1)   // a shadow caster (SHADOW)
       grp.add(m)
     }
     if (s.endPortal && s.endPortal.positions.length) {
@@ -493,6 +662,7 @@ window.HB = {
     }
     scene.add(grp)
     sections.set(key, grp)
+    if (SHADOW) SHADOW.dirty = true
   },
 
   removeSection (key) {
@@ -616,6 +786,8 @@ window.HB = {
     drawSelection(cam)
     drawAim(cam)
     cullClouds()
+    if (SHADOW) updateShadow(env.time, rain)
+    if (POST) renderer.setRenderTarget(POST.rt)   // the cinematic look: everything below draws off screen first
     renderer.render(scene, camera)
     // vanilla's mipmap chain stops at level 4 (Options mipmapLevels: 16 px -> 1 px per tile); three
     // builds it down to 1x1, where the 32 px atlas cells (8 px padding) blend into their neighbours
@@ -628,6 +800,7 @@ window.HB = {
         renderer.state.reset(); opaqueMat.map.userData.maxLevel = true
       }
     }
+    if (POST) renderer.setRenderTarget(POST.rt)   // (state.reset above can unbind it)
     if (await drawHand(cam)) {
       const ac = renderer.autoClear; renderer.autoClear = false
       renderer.clearDepth(); renderer.render(handScene, handCam)
@@ -645,6 +818,7 @@ window.HB = {
       const ac = renderer.autoClear; renderer.autoClear = false
       renderer.render(darkScene, darkCam); renderer.autoClear = ac
     }
+    if (POST) runPost(cam, tick)
     return true
   }
 }
