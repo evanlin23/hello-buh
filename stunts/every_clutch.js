@@ -42,6 +42,8 @@ module.exports = {
         for (let dz = -8; dz <= 8; dz++) {
           const b = ctx.surface(cx + dx, cz + dz)
           if (!b || /water|lava|ice/.test(b.name) || Math.abs(b.position.y - c.position.y) > 1) return null
+          // the landing patch dead level (a +1 terrace inside it was shaved into a straight dirt wall: review)
+          if (Math.abs(dx) <= 4 && dz >= -4 && dz <= 6 && b.position.y !== c.position.y) return null
         }
       }
       return c.position
@@ -64,7 +66,9 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
-    for (let y0 = floor + 1; y0 <= floor + TOP + 4; y0 += 10) await ctx.cmd(`/fill ${x - 8} ${y0} ${z - 8} ${x + 8} ${Math.min(y0 + 9, floor + TOP + 4)} ${z + 8} air`)
+    // from 2 up only (trees, tall grass), so the natural ground and any +1 step round the patch stay as they are
+    for (let y0 = floor + 2; y0 <= floor + TOP + 4; y0 += 10) await ctx.cmd(`/fill ${x - 8} ${y0} ${z - 8} ${x + 8} ${Math.min(y0 + 9, floor + TOP + 4)} ${z + 8} air`)
+    await ctx.cmd(`/fill ${x - 4} ${floor + 1} ${z - 4} ${x + 4} ${floor + 1} ${z + 6} air`)   // the level patch: just its grass tufts
     // a small flat landing patch (the placements assume ground at floor); the old 17x17 pad's sharp edges
     // read as command-built in every fall
     await ctx.cmd(`/fill ${x - 3} ${floor} ${z - 1} ${x + 3} ${floor} ${z + 5} grass_block`)
@@ -232,6 +236,8 @@ module.exports = {
       }
       bot.setControlState('back', false)
       pending = spot                                   // cleared after the next cut, off camera
+      // a beat on the result so the rating reads (the hold cut ate most of its 1.6 s: 0.65 s on screen, review)
+      if (!ctx.died) { const drift = ctx.easeLook(bot.entity.yaw + 0.35, Math.max(-0.9, bot.entity.pitch + 0.25), 650); await bot.waitForTicks(13); await drift }
     }
     return ctx.died
   }
