@@ -48,7 +48,7 @@ module.exports = {
   edit: {
     caption: '1 in a million landing, but it gets harder 😳', red: 'harder',
     song: 'songs/ncs/fearless_funk.mp3', dropAt: 'splash5',   // its drop (29.5 s) comes after splash5 (~25.5 s): misery's 16.25 s drop played on tier 4
-    startAt: 'drop1:-0.85', endAfter: 'splash5:0.75',
+    startAt: 'drop1:-0.85', endAfter: 'splash5:1.15',
     subs, subsY: 0.12,   // up top over the far terrain: at mid view the tier 4 label lay on the cactus field (review v9)
     speed: [...TIERS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
       ['look3:0', 'look3:0.2', 'cut'], ['look4:0', 'look4:0.6', 'cut'],   // the openings' first look out at build limit was a pale fog void over the top 40% (review v8)
@@ -66,7 +66,7 @@ module.exports = {
     slowmo: [...TIERS.slice(2).map((_, i) => [`drift${i + 3}`, 0, 0.6]), ['splash5', 0.25, 0.25]],                                       // 0.5 s of the 1x1 entry over 1 s
     cards: [['splash1', 'EASY', 0.8, 'green'], ['splash2', 'CLEAN', 0.8, 'green'], ['splash3', 'TIGHT 😬', 0.8, 'yellow'],
       ['splash4', 'INSANE', 0.8, 'orange'], ['splash5', '1 IN A MILLION', 1.2, 'red', 0, 'stamp']],
-    replay: { at: 'splash5', before: 0.8, after: 0.45, cam: 'back:6', speed: 0.6 },   // third-person, after the payoff
+    // no replay (owner: "dont need the replay"): it ends 0.75 s after the payoff splash
     loop: true,
     sfx: [
       ...TIERS.slice(1).map((_, i) => ['whoosh', `cut${i + 1}b`]),
