@@ -97,7 +97,9 @@ module.exports = {
       }
       // the freeze needs a bare mark on a frame with the lava in it: 2 ticks after the placement (freeze takes no offset)
       if (MODES[i] === 'lava') gctx.mark = (e, d) => { ctx.mark(e, d); if (e === 'placed') { let t = 0; const h = () => { if (++t === 2) { ctx.mark('lava_shown'); bot.removeListener('physicsTick', h) } }; bot.on('physicsTick', h) } }
-      if (MODES[i] === 'ok') gctx.mark = (e, d) => { ctx.mark(e, d); if (e === 'placed') savedPlaced = true }   // the edit slows this moment
+      // armed 3 ticks after 'placed' (the clutch marks it just before the bucket use goes out: armed at once, it
+      // blocked the save's own placement and the bot died on try 8)
+      if (MODES[i] === 'ok') gctx.mark = (e, d) => { ctx.mark(e, d); if (e === 'placed') { let t = 0; const h = () => { if (++t === 3) { savedPlaced = true; bot.removeListener('physicsTick', h) } }; bot.on('physicsTick', h) } }   // the edit slows this moment
       gctx.easeLook = async (yaw, pitch, ms) => {
         const y0 = bot.entity.yaw, p0 = bot.entity.pitch, steps = Math.max(1, Math.round(ms / 50))
         let dy = yaw - y0; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
