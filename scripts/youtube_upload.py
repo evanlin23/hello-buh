@@ -1,4 +1,5 @@
-"""Upload the next Short to @HelloBuh: private, with a scheduled publish at a varied time, at most YT_PER_DAY a day.
+"""Upload the day's Shorts to @HelloBuh: private, each with a scheduled publish at a varied time, YT_PER_DAY a day
+(default 3, owner 2026-11-08: "hello buh should be uploading 3x a day"). One morning run uploads them all.
 
     python3 scripts/youtube_upload.py            # the daily run (cron-job.org / Actions)
     python3 scripts/youtube_upload.py --dry-run  # say what would go up, upload nothing
@@ -7,7 +8,8 @@
 Does NOTHING unless all of these exist (docs/upload-setup.md): the secrets YT_CLIENT_ID, YT_CLIENT_SECRET,
 YT_REFRESH_TOKEN, the variable YT_CHANNEL_ID and the variable YT_ENABLED=true. And nothing while uploads/PAUSED
 exists. Ported from evanlin23/buh-explains buhexplains/pipeline/upload.py, with what that channel learned:
-- one a day at a random time (11:00-19:30 Central), not a fixed robotic slot; YT_PER_DAY=2 for two;
+- each at a random time in its own slice of 9:00-21:00 Central (3 a day: 9-13, 13-17, 17-21), never a fixed
+  robotic slot; YT_PER_DAY changes the count;
 - never delete or re-upload a video that underperforms (YouTube treats it as spam);
 - refuses if the token's channel isn't YT_CHANNEL_ID, if the Short isn't status "ready" on the videos branch,
   if its title is already on the channel (hand uploads too), or if it would break the posting mix
@@ -28,8 +30,8 @@ from check_queue import series, mix_ok   # noqa: E402
 UP = ROOT / "uploads"
 QUEUE, RECORD, PAUSED = UP / "queue.txt", UP / "uploads.json", UP / "PAUSED"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
-PER_DAY = int(os.environ.get("YT_PER_DAY", "1") or 1)
-WINDOW = ((11, 0), (19, 30))          # Central; with 2 a day: the first in 11:00-14:30, the second in 16:00-19:30
+PER_DAY = int(os.environ.get("YT_PER_DAY", "3") or 3)
+WINDOW = ((9, 0), (21, 0))            # Central; split into PER_DAY equal slices, one publish in each
 TZ = "America/Chicago"
 
 
@@ -122,15 +124,17 @@ def pick(vd: Path, done: dict) -> tuple[str | None, str]:
 
 
 def publish_at(slot: int) -> str:
+    """A random minute in slice `slot` of the day's window (kept 20 min from the slice edges, so two publishes are
+    at least 40 min apart). If that slice has already passed today, the same slice tomorrow."""
     now = central_now()
     (h0, m0), (h1, m1) = WINDOW
     lo, hi = h0 * 60 + m0, h1 * 60 + m1
-    if PER_DAY >= 2:
-        mid = (lo + hi) // 2
-        lo, hi = (lo, mid - 60) if slot == 0 else (mid + 30, hi)
-    mins = random.randint(lo, hi)
+    n = max(1, PER_DAY)
+    w = (hi - lo) / n
+    a, b = int(lo + slot % n * w) + 20, int(lo + (slot % n + 1) * w) - 20
+    mins = random.randint(a, max(a, b))
     at = now.replace(hour=mins // 60, minute=mins % 60, second=0, microsecond=0)
-    if at < now + dt.timedelta(minutes=45):   # a late run: today's window has passed, so tomorrow's
+    if at < now + dt.timedelta(minutes=45):
         at = at + dt.timedelta(days=1)
     return at.astimezone(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -197,7 +201,7 @@ def report(yt, done: dict, vd: Path | None) -> None:
             "| uploaded | Short | by | views | likes | comments | status |\n|---|---|---|---|---|---|---|\n"
             + "\n".join(r for _, r in rows)
             + f"\n\n**Ready and not uploaded yet: {len(left)}** (about {days:.0f} days at {PER_DAY} a day)"
-            + (" - **running low: make more Shorts**" if days < 10 else "")
+            + (" - **running low: make more Shorts**" if days < 7 else "")
             + ("\n\n" + ", ".join(left) if left else "")
             + "\n\nTo pause: create `uploads/PAUSED` on main (any text). To stop: set the repo variable YT_ENABLED to anything but `true`.")
     t = f"HelloBuh weekly report {central_now().date().isoformat()}"
@@ -227,56 +231,62 @@ def main() -> None:
         n_today = sum(1 for e in done.values() if e.get("uploaded") == today)
         if n_today >= PER_DAY and not a.dry_run:
             print(f"already uploaded {n_today} today ({today} Central; the limit is {PER_DAY}). Nothing done."); return
-        if a.short:
-            meta = meta_of(vd, a.short)
-            history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
-            if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short):
-                sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, or breaks the mix")
-            name, skipped = a.short, ""
-        else:
-            name, skipped = pick(vd, done)
-        if skipped:
-            print("skipped:\n" + skipped)
-        if not name:
-            msg = "Nothing left that is ready and keeps the posting mix. The channel goes quiet until more Shorts are published."
-            print(msg)
-            if not a.dry_run and not open_issue("HelloBuh: nothing left to upload"):
-                issue("HelloBuh: nothing left to upload", msg + ("\n\nSkipped:\n" + skipped if skipped else ""))
-            return
-        meta = meta_of(vd, name)
-        yt_meta = meta["youtube"]
-        title, desc = yt_meta["title"].strip()[:100], yt_meta["description"]
-        if "#shorts" not in (title + desc).lower():
-            desc = desc.rstrip() + "\n\n#shorts"
-        when = publish_at(n_today)
-        print(f"next: {name}: {title!r}, publish at {when} UTC (series {series(name)})")
-        if a.dry_run:
-            return
-        yt = youtube()
-        me = [c["id"] for c in yt.channels().list(part="id", mine=True).execute().get("items", [])]
-        if os.environ["YT_CHANNEL_ID"].strip() not in me:
-            sys.exit(f"the token belongs to {me}, not YT_CHANNEL_ID: refusing to upload")
-        if title in channel_titles(yt):
-            sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
-                     "or record it in uploads/uploads.json if it was uploaded by hand")
-        f = fetch_short(vd, name)
-        body = {"snippet": {"title": title, "description": desc, "categoryId": "20",
-                            "tags": [h.lstrip("#") for h in yt_meta.get("hashtags", [])]},
-                "status": {"privacyStatus": "private", "publishAt": when, "selfDeclaredMadeForKids": False,
-                           "containsSyntheticMedia": False}}
-        from googleapiclient.http import MediaFileUpload
-        req = yt.videos().insert(part="snippet,status", body=body,
-                                 media_body=MediaFileUpload(str(f), mimetype="video/mp4", chunksize=16 << 20, resumable=True))
-        resp = None
-        while resp is None:
-            st, resp = req.next_chunk()
-            if st:
-                print(f"uploaded {int(st.progress() * 100)}%", flush=True)
-        vid = resp["id"]
-    done[name] = {"video_id": vid, "uploaded": today, "publish_at": when, "title": title, "by": "auto"}
-    save_record(done, f"uploads: {name} ({vid}), public at {when} UTC")
-    print(f"uploaded {name}: https://youtube.com/shorts/{vid} (private until {when} UTC)")
-
+        yt = None
+        for slot in range(n_today, PER_DAY if not a.dry_run else n_today + PER_DAY):
+            if a.short and slot > n_today:
+                break
+            if a.short:
+                meta = meta_of(vd, a.short)
+                history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
+                if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short):
+                    sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, or breaks the mix")
+                name, skipped = a.short, ""
+            else:
+                name, skipped = pick(vd, done)
+            if skipped:
+                print("skipped:\n" + skipped)
+            if not name:
+                msg = "Nothing left that is ready and keeps the posting mix. The channel goes quiet until more Shorts are published."
+                print(msg)
+                if not a.dry_run and not open_issue("HelloBuh: nothing left to upload"):
+                    issue("HelloBuh: nothing left to upload", msg + ("\n\nSkipped:\n" + skipped if skipped else ""))
+                return
+            meta = meta_of(vd, name)
+            yt_meta = meta["youtube"]
+            title, desc = yt_meta["title"].strip()[:100], yt_meta["description"]
+            if "#shorts" not in (title + desc).lower():
+                desc = desc.rstrip() + "\n\n#shorts"
+            when = publish_at(slot)
+            print(f"next: {name}: {title!r}, publish at {when} UTC (series {series(name)})")
+            if a.dry_run:
+                done[name] = {"uploaded": today, "video_id": ""}   # only so the next pick follows on
+                continue
+            if yt is None:
+                yt = youtube()
+                me = [c["id"] for c in yt.channels().list(part="id", mine=True).execute().get("items", [])]
+                if os.environ["YT_CHANNEL_ID"].strip() not in me:
+                    sys.exit(f"the token belongs to {me}, not YT_CHANNEL_ID: refusing to upload")
+            if title in channel_titles(yt):
+                sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
+                         "or record it in uploads/uploads.json if it was uploaded by hand")
+            f = fetch_short(vd, name)
+            body = {"snippet": {"title": title, "description": desc, "categoryId": "20",
+                                "tags": [h.lstrip("#") for h in yt_meta.get("hashtags", [])]},
+                    "status": {"privacyStatus": "private", "publishAt": when, "selfDeclaredMadeForKids": False,
+                               "containsSyntheticMedia": False}}
+            from googleapiclient.http import MediaFileUpload
+            req = yt.videos().insert(part="snippet,status", body=body,
+                                     media_body=MediaFileUpload(str(f), mimetype="video/mp4", chunksize=16 << 20, resumable=True))
+            resp = None
+            while resp is None:
+                st, resp = req.next_chunk()
+                if st:
+                    print(f"uploaded {int(st.progress() * 100)}%", flush=True)
+            vid = resp["id"]
+            f.unlink()   # keep the runner's disk small between uploads
+            done[name] = {"video_id": vid, "uploaded": today, "publish_at": when, "title": title, "by": "auto"}
+            save_record(done, f"uploads: {name} ({vid}), public at {when} UTC")
+            print(f"uploaded {name}: https://youtube.com/shorts/{vid} (private until {when} UTC)")
 
 if __name__ == "__main__":
     main()

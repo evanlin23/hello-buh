@@ -69,8 +69,9 @@ The loop is in `docs/process.md`: make, render, frame QA, independent review, cl
 - Each fix adds a rule to `docs/lessons.md`.
 
 ## Uploading (automated)
-`.github/workflows/upload-short` (`scripts/youtube_upload.py`) uploads one Short a day from the `videos` branch in
-`uploads/queue.txt` order, private with a scheduled publish at a random time 11:00-19:30 Central, and records it in
+`.github/workflows/upload-short` (`scripts/youtube_upload.py`) uploads 3 Shorts a day (`YT_PER_DAY`) from the `videos`
+branch in `uploads/queue.txt` order, private, each with a scheduled publish at a random time in its own slice of
+9:00-21:00 Central, and records it in
 `uploads/uploads.json`. It keeps the posting mix (`scripts/check_queue.py`), never re-uploads, refuses titles already
 on the channel, opens a weekly report issue on Sundays and an issue when a run fails. Off until set up:
 `docs/upload-setup.md`. Pause with `uploads/PAUSED`.

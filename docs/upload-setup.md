@@ -3,8 +3,9 @@
 Uploads stay **off** until every step is done. The `upload-short` workflow checks for all of them and otherwise
 prints "uploads are off" and does nothing.
 
-What it does once on: every day one Short from `uploads/queue.txt` goes up **private** with a scheduled publish
-at a random time between 11:00 and 19:30 Central (YouTube makes it public on its own). When the queue runs out it
+What it does once on: every morning the next 3 Shorts from `uploads/queue.txt` go up **private**, each with a
+scheduled publish at a random time in its own slice of 9:00-21:00 Central (9-13, 13-17, 17-21); YouTube makes
+them public on its own. When the queue runs out it
 takes any other "ready" Short, still keeping the mix (no format twice in a row, at most 1 pixel-art per 3). Every
 Sunday it opens an issue with the views of everything uploaded and how many Shorts are left. A failed run opens
 an issue too. GitHub emails you about new issues, so that is the weekly check-in.
@@ -28,7 +29,7 @@ screen, and a Web OAuth client (buh-explains reuses it too). Use the same Client
 ## 3. GitHub: evanlin23/hello-buh → Settings → Secrets and variables → Actions
 - **Secrets:** `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN`. Never paste these into a chat or a commit.
 - **Variables:** `YT_CHANNEL_ID` = the UC... id (the upload refuses any other channel), `YT_ENABLED` = `true`.
-  Optional: `YT_PER_DAY` = `2` for two a day.
+  Optional: `YT_PER_DAY` (default 3) to change how many a day.
 - Actions → General → Workflow permissions: **Read and write**.
 - Test: Actions → upload-short → Run workflow → mode `dry-run`. It prints the next Short and its publish time.
 
