@@ -22,7 +22,8 @@ module.exports = {
     // (the 10-block drop is over in 1.2 s: 1.6 ran its sub over the cut)
     // + a line mid-fall on the three longest (3.5-4.1 s from the break to the landing: no beat)
     subs: [...DROPS.map((d, i) => [`drop${i + 1}`, d.sub, i === 0 ? 1.1 : 1.6]),
-      [`fast${DROPS.length - 2}b`, "it's SO small", 1.3], [`fast${DROPS.length - 1}b`, 'please please please', 1.3], [`fast${DROPS.length}b`, 'wait...', 1.3]], deathScreen: true, endAfter: 'death:0.8',
+      [`fast${DROPS.length - 3}b`, 'still falling...', 1.2], [`fast${DROPS.length - 2}b`, "it's SO small", 1.3], [`fast${DROPS.length - 1}b`, 'please please please', 1.3],
+      [`mid${DROPS.length}`, 'this is the one', 1.2], [`fast${DROPS.length}b`, 'wait...', 0.85]],   // ('wait...' ends on the death: over it, it drew low) deathScreen: true, endAfter: 'death:0.8',
     // cut the teleport turnarounds (the look up + tp read as a still), speed up the top of the 250 fall,
     // and a live blocks-fallen counter on every drop
     speed: [...DROPS.slice(1).map((_, i) => [`cut${i + 1}a`, `cut${i + 1}b`, 'cut']),
@@ -133,6 +134,7 @@ module.exports = {
         // and put the loaded area's edge in frame); the top of a long fall plays faster instead
         if (d.h >= 100 && k === 6) { fast = true; ctx.mark(`fast${n}a`) }
         if (fast && bot.entity.position.y < floor + 60) { fast = false; ctx.mark(`fast${n}b`) }
+        if (n === DROPS.length && !this.midDone && bot.entity.position.y < floor + 150) { this.midDone = true; ctx.mark(`mid${n}`) }   // a line halfway down the last
         if (d.off && !splashed && bot.entity.position.y < floor + 1.4) {
           // the fatal landing: vanilla throws a burst of the ground block's particles, on the grass top (it was
           // emitted after the death, which the recording had stopped taking, and inside the block)
@@ -144,7 +146,11 @@ module.exports = {
         }
         if (!splashed && bot.entity.position.y < floor + 1.2) {
           splashed = true
-          if (!d.off) { ctx.mark(`splash${n}`); ctx.mark('splash'); ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: x + 0.5, y: floor + 0.95, z: z + 0.5 }, { count: 30 }) }
+          if (!d.off) {
+            ctx.mark(`splash${n}`); ctx.mark('splash'); ctx.sound('entity.player.splash.high_speed'); ctx.particles('splash', { x: x + 0.5, y: floor + 0.95, z: z + 0.5 }, { count: 30 })
+            // a second, wider burst 2 ticks on: the 150's splash drew 1-2 drops (the eye sat at the surface: culled)
+            { let t = 0; const h = () => { if (++t === 2) { ctx.particles('splash', { x: x + 0.5, y: floor + 1.2, z: z + 0.5 }, { count: 30, spread: 2.6 }); bot.removeListener('physicsTick', h) } }; bot.on('physicsTick', h) }
+          }
         }
         if (splashed && k > 4 && (bot.entity.onGround || bot.entity.isInWater)) break
       }
