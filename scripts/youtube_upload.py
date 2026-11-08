@@ -112,6 +112,9 @@ def pick(vd: Path, done: dict) -> tuple[str | None, str]:
             if name in queued:
                 why.append(f"{name}: status {meta.get('status')!r}, not ready")
             continue
+        lic = (meta.get("song") or {}).get("licence", "")
+        if meta.get("song") and not lic.startswith(("NCS", "original")):
+            why.append(f"{name}: its song isn't cleared ({lic or 'no licence'})"); continue
         if not mix_ok(history, name):
             why.append(f"{name}: same format as the last upload, or a 2nd pixel-art in 3"); continue
         return name, "\n".join(why)
