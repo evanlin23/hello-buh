@@ -194,7 +194,25 @@ function makePost (look, w, h) {
       }
       gl_FragColor = vec4(c, 1.0);
     }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) }, near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 } })
-  const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D depth; uniform vec2 res;
+  // god rays (look.rays: strength): the bright open sky (depth at the far plane) streaked toward the sun's place
+  // on screen, at quarter size; added in the finishing pass, fading as the sun leaves the frame
+  const rr = new THREE.WebGLRenderTarget(bw, bh)
+  const rayMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform vec2 sun; uniform float sunOn; varying vec2 vUv;
+    void main () {
+      vec2 d = (sun - vUv) / 32.0; vec2 uv = vUv; vec3 acc = vec3(0.0); float decay = 1.0;
+      for (int i = 0; i < 32; i++) {
+        float sky = step(0.9999, texture2D(depth, uv).x);
+        vec3 c = texture2D(src, uv).rgb;
+        // only the sun and its glow give light (luminance near white, close to the sun): with the whole bright
+        // sky as the source, a clear day washed out white (test frame, boat_clutch)
+        float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+        float near = smoothstep(0.35, 0.0, distance(uv, sun));
+        acc += c * sky * smoothstep(0.86, 1.0, l) * near * decay;
+        decay *= 0.96; uv += d;
+      }
+      gl_FragColor = vec4(acc / 32.0 * sunOn, 1.0);
+    }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, sun: { value: new THREE.Vector2(0.5, 0.5) }, sunOn: { value: 0 } })
+  const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D rays; uniform float raysK; uniform sampler2D depth; uniform vec2 res;
     uniform float near; uniform float far; uniform float focus; uniform float aperture; uniform float bloomK;
     uniform vec3 lift; uniform vec3 gam; uniform vec3 gain; uniform float sat; uniform float contrast; uniform float exposure;
     uniform float vig; uniform float grain; uniform float seed; uniform float bars; varying vec2 vUv;
@@ -205,6 +223,7 @@ function makePost (look, w, h) {
       vec3 c = texture2D(src, vUv).rgb;
       if (focus > 0.0) c = mix(c, texture2D(dof, vUv).rgb, smoothstep(0.5, 2.5, coc(vUv)));   // the half-size blur where it's out of focus
       c += texture2D(bloom, vUv).rgb * bloomK;
+      c += texture2D(rays, vUv).rgb * raysK;
       c *= exposure;
       c = pow(max(vec3(0.0), c * gain + lift * (1.0 - c)), 1.0 / gam);
       float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
@@ -216,13 +235,13 @@ function makePost (look, w, h) {
       if (bars > 0.0 && abs(vUv.y - 0.5) > 0.5 * (res.x / res.y) / bars) c = vec3(0.0);
       gl_FragColor = vec4(clamp(c, 0.0, 1.0), 1.0);
     }`, {
-    src: { value: rt.texture }, bloom: { value: ba.texture }, dof: { value: rd.texture }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) },
+    src: { value: rt.texture }, bloom: { value: ba.texture }, dof: { value: rd.texture }, rays: { value: rr.texture }, raysK: { value: look.rays || 0 }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) },
     near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 }, bloomK: { value: look.bloom ?? 0.6 },
     lift: { value: new THREE.Vector3(...g.lift) }, gam: { value: new THREE.Vector3(...g.gamma) }, gain: { value: new THREE.Vector3(...g.gain) },
     sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 },
     vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 }
   })
-  return { rt, ba, bb, rd, quad, quadScene, quadCam, bright, blur, dofMat, fin, bw, bh }
+  return { rt, ba, bb, rd, rr, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0 }
 }
 function runPost (cam, tick) {
   const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
@@ -230,6 +249,12 @@ function runPost (cam, tick) {
   for (let i = 0; i < 2; i++) {   // two blur rounds at quarter size: a wide, soft glow
     P.blur.uniforms.src.value = P.ba.texture; P.blur.uniforms.dir.value.set(1 / P.bw, 0); pass(P.blur, P.bb)
     P.blur.uniforms.src.value = P.bb.texture; P.blur.uniforms.dir.value.set(0, 1 / P.bh); pass(P.blur, P.ba)
+  }
+  if (P.rays > 0 && sun && sun.visible) {   // the sun's place on screen: on (or just off) the frame, in front of the camera
+    const v = sun.position.clone().project(camera), on = v.z < 1 && Math.abs(v.x) < 1.6 && Math.abs(v.y) < 1.6 ? 1 - Math.max(0, Math.max(Math.abs(v.x), Math.abs(v.y)) - 1) / 0.6 : 0
+    P.rayMat.uniforms.sun.value.set(v.x * 0.5 + 0.5, v.y * 0.5 + 0.5); P.rayMat.uniforms.sunOn.value = Math.max(0, on) * (sun.material.opacity ?? 1)
+    if (on > 0) pass(P.rayMat, P.rr)
+    P.fin.uniforms.raysK.value = on > 0 ? P.rays : 0
   }
   const u = P.fin.uniforms
   u.near.value = camera.near; u.far.value = camera.far

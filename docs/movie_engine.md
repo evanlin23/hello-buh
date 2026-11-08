@@ -31,7 +31,7 @@ renders those frames (frame n = n / 10 s at fps 10).
 | camera director | `render.js` (SHOTS, shotAt, shotCam) + `lib/movie.js` `shot` | `stunt.shots = { name: spec }`, switched by `shot` marks while recording. Specs: `{ pov: true }`, `at: TARGET`, `path: [[sec, dx, dy, dz], ...]`, `follow: TARGET` + `offset` + `lag`, with `look: TARGET` / `lookPath` / `yaw`+`pitch`, `fov`, `roll`. TARGET = `[dx, dy, dz]` from the set origin, `'self'`, `'actor:NAME'`, `{ of: TARGET, offset }`. A pure function of time: re-tune a camera and re-render, no re-record. Camera shots hide the HUD and hand (`shot` marks `f1_on`/`f1_off`) and draw the player's body |
 | fog sea | `renderer/page.js` `makeFogSea` | `stunt.fogSea = { y0, y1, layers, density, fade, color, night }`: stacked translucent sheets (a fog sea from above, a ceiling from below), a white-out when the camera is inside it, colour following daylight |
 | dialogue | `lib/movie.js` `line` + `scripts/longform_build.py` `dialogue` | `line` marks `{who, text, dur?}` become white bottom subtitles in the 16:9 build. Voices go on the same marks later |
-| the look | `renderer/page.js` makePost / runPost, `stunt.look` | `{ grade, bloom, bloomThreshold, vignette, grain, letterbox, dof }`: renders into an off-screen target, then bloom, depth of field and one finishing pass. Costs ~0.25 s a 1080p frame (bloom and grade ~0.15, depth of field ~0.1). `LOOK=0` renders without it, `NO_DOF=1` without depth of field |
+| the look | `renderer/page.js` makePost / runPost, `stunt.look` | `{ grade, bloom, bloomThreshold, vignette, grain, letterbox, dof, shadows, rays }`: renders into an off-screen target, then bloom, depth of field and one finishing pass. Costs ~0.25 s a 1080p frame (bloom and grade ~0.15, depth of field ~0.1). `LOOK=0` renders without it, `NO_DOF=1` without depth of field, `LOOK_JSON='{...}'` tries a look on any recording, `DAY_TIME=n` renders at another hour |
 | acting | `lib/movie.js` | `nod`, `shake`, `lookAway`, `point`, `stepBack`, `walkTo`; `shotIn(ctx, name, ticks)` cuts a few ticks into an action; render.js adds idle life (head drift while standing), a talking head while that actor's line is up (`selfName` for the POV character), and the crouch pose |
 | extras | `/summon minecraft:mannequin ... {CustomName:"Mira"}` | drawn as players with `cast[name]`'s skin, idle life included |
 | cameras | render.js `shotCam` | Catmull-Rom paths through several keys, `orbit`, a camera pulled out of any block, handheld `drift` (default 1) |
@@ -111,9 +111,12 @@ motion, but i dont think there should be that pause". Each phase ends with a ree
 - [x] 3b.2 Letterbox bars on camera shots (`look.letterbox: 2.39`); POV shots stay full frame for the HUD
 - [x] 3b.3 Depth of field on camera shots (`look.dof`, per shot `dof: false | { aperture, focus }`), focused on the
       subject a shot follows or looks at; gathered at half size (~0.1 s a 1080p frame)
-- [ ] 3b.4 Sun and moon shadows (shadow maps over the chunk meshes): the biggest step toward a shader-pack look, and
-      the most expensive on 4 CPUs without a GPU; prototype on one scene and measure
-- [ ] 3b.5 God rays from the sun at dawn and dusk (a screen-space radial blur of the sky behind the world)
+- [x] 3b.4 Sun and moon shadows (`look.shadows: true | { radius, size, strength }`): a 2048 shadow map over the block
+      sections, re-rendered only when blocks change, the time changes or the camera crosses a 16-block cell (a still
+      scene pays once). Strong in the morning and afternoon, nothing at noon (straight down) or at the horizon (dawn
+      scales it to ~0), faint by moonlight. Next: entities cast shadows too (needs a per-frame pass for movers)
+- [x] 3b.5 God rays (`look.rays: 0.5-1`): the sun's glow streaked past whatever is in front of it, quarter size. Subtle by
+      design (the whole sky as the source washed a clear day out white); strongest with the sun low and partly hidden
 - [ ] 3b.6 Motion blur on fast moves (the fall): render 2-4 sub-frames and average them, on marked spans only
 
 **Phase 4: worlds**

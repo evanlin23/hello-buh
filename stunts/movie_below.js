@@ -120,7 +120,7 @@ module.exports = {
     await M.nod(ash)
     await bot.waitForTicks(30)
     ctx.mark('end_scene')
-    await bot.waitForTicks(14)
+    await bot.waitForTicks(30)   // (the actors quit after this: the edit ends 0.6 s after end_scene)
     M.quitActors(ctx)
     return true
   }
