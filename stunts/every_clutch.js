@@ -43,7 +43,7 @@ module.exports = {
           const b = ctx.surface(cx + dx, cz + dz)
           if (!b || /water|lava|ice/.test(b.name) || Math.abs(b.position.y - c.position.y) > 1) return null
           // the landing patch dead level (a +1 terrace inside it was shaved into a straight dirt wall: review)
-          if (Math.abs(dx) <= 4 && dz >= -4 && dz <= 6 && b.position.y !== c.position.y) return null
+          if (Math.abs(dx) <= 3 && dz >= -2 && dz <= 5 && b.position.y !== c.position.y) return null   // (9x11 level: nothing in 8 hops)
         }
       }
       return c.position
@@ -56,8 +56,8 @@ module.exports = {
         await bot.waitForTicks(20); try { await bot.waitForChunksToLoad() } catch (e) {}
         await bot.waitForTicks(20)
       }
-      for (let r = 0; r <= 96 && !g; r += 8) {
-        for (const [dx, dz] of [[0, 0], [r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, -r], [r, -r], [-r, r]]) { if ((g = flat(cx + dx, cz + dz))) break }
+      for (let r = 0; r <= 96 && !g; r += 4) {   // denser: 16 directions every 4 out
+        for (let a = 0; a < (r ? 16 : 1) && !g; a++) g = flat(cx + Math.round(r * Math.cos(a * Math.PI / 8)), cz + Math.round(r * Math.sin(a * Math.PI / 8)))
       }
       if (!g) ctx.log('no flat open spot near', cx, cz)
     }
@@ -68,7 +68,7 @@ module.exports = {
     await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
     // from 2 up only (trees, tall grass), so the natural ground and any +1 step round the patch stay as they are
     for (let y0 = floor + 2; y0 <= floor + TOP + 4; y0 += 10) await ctx.cmd(`/fill ${x - 8} ${y0} ${z - 8} ${x + 8} ${Math.min(y0 + 9, floor + TOP + 4)} ${z + 8} air`)
-    await ctx.cmd(`/fill ${x - 4} ${floor + 1} ${z - 4} ${x + 4} ${floor + 1} ${z + 6} air`)   // the level patch: just its grass tufts
+    await ctx.cmd(`/fill ${x - 3} ${floor + 1} ${z - 2} ${x + 3} ${floor + 1} ${z + 5} air`)   // the level patch: just its grass tufts
     // a small flat landing patch (the placements assume ground at floor); the old 17x17 pad's sharp edges
     // read as command-built in every fall
     await ctx.cmd(`/fill ${x - 3} ${floor} ${z - 1} ${x + 3} ${floor} ${z + 5} grass_block`)
