@@ -28,7 +28,8 @@ module.exports = {
   edit: {
     caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'death', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:0.9',
     subs: [...BEATS.map((b, i) => ['beat', b.sub, 1.4, i]), ...BEATS.map((b, i) => ['golem', b.golems === 1 ? '1 golem' : `${b.golems} golems`, 1.2, i]), ...juggleSubs()],
-    speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b`, 'cut'])
+    // the cut ends 0.1 s into the beat: the crowd still popped in 3 frames after it ended on spawnNb
+    speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b:0.1`, 'cut'])
   },
   expectDeath: true,
 
@@ -41,9 +42,9 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
-    for (let z0 = z - 80; z0 <= z + 26; z0 += 6) {   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
+    for (let z0 = z - 120; z0 <= z + 26; z0 += 6) {   // (to z - 80 a cut stone face showed behind the 7, 10 and 20 beats)   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
       const z1 = Math.min(z0 + 5, z + 26)
-      for (let y0 = floor + 1; y0 <= floor + 48; y0 += 8) await ctx.cmd(`/fill ${x - 124} ${y0} ${z0} ${x + 124} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
+      for (let y0 = floor + 1; y0 <= floor + 64; y0 += 8) await ctx.cmd(`/fill ${x - 124} ${y0} ${z0} ${x + 124} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
       await ctx.cmd(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
     }
@@ -67,13 +68,13 @@ module.exports = {
       }
       for (let g = 0; g < B.golems; g++) {
         const ring = g < 12 ? 0 : 1, inRing = ring ? B.golems - 12 : Math.min(12, B.golems), k = ring ? g - 12 : g
-        const ang = Math.PI / 3 + (k + 0.5) / inRing * (4 * Math.PI / 3), rad = 3.6 + ring * 2.0   // (5.0: a 1-1.4 s walk-in on empty sky every beat)
+        const ang = Math.PI / 3 + (k + 0.5) / inRing * (4 * Math.PI / 3), rad = 4.4 + ring * 2.0   // (5.0: a 1-1.4 s walk-in; 3.6: one golem's face filled the frame through every juggle)
         const gx = sx + 0.5 + Math.sin(ang) * rad, gz = z + 0.5 - Math.cos(ang) * rad
         bot.chat(`/summon iron_golem ${gx.toFixed(2)} ${floor + 1} ${gz.toFixed(2)} {PlayerCreated:0b,PersistenceRequired:1b,Rotation:[${(g * 47) % 360}f,0f],Tags:["g${i}"]}`)
       }
       await bot.waitForTicks(10)   // till the client has them all (at 4 they popped in 3 frames after the cut)
     }
-    await ctx.hotbar(['wooden_sword', ['bread', 16], ['oak_planks', 32]])
+    await ctx.hotbar(['stone_sword', ['bread', 16], ['oak_planks', 32]])   // (a wooden sword broke on hit 59 of 61, on camera)
     await ctx.tpCheck(x + BEATS[0].dx + 0.5, floor + 1, z + 0.5, 180, 10)
     await ctx.cmd('/gamemode survival')
     ctx.select(0)
@@ -118,13 +119,20 @@ module.exports = {
         ctx.particles('angry', { x: v.position.x, y: v.position.y + 2.1, z: v.position.z }, { count: 3 })
         await bot.waitForTicks(B.villagers > 5 ? 1 : B.villagers > 1 ? 3 : 7)   // (20 one at a time ran 4.8 s)
       }
+      // the 20: show them first, the whole ring over the villagers, with the count (it killed 0.1 s after the
+      // provoke and the '20 golems' line only showed on the death screen)
+      if (last) {
+        ctx.mark('golem', { n: B.golems })
+        const gs = near('iron_golem'), c = gs.reduce((a, e) => a.plus(e.position), new ctx.Vec3(0, 0, 0)).scaled(1 / Math.max(1, gs.length))
+        await ctx.easeLookAt(c.offset(-3, 2.5, 0), 350); await ctx.easeLookAt(c.offset(3, 2.5, 0), 500)
+      }
       // ...the golems saw that
       // provoked by anger, not a /damage (that flashed every golem red with nobody hitting them)
       { const h = bot.player.uuid.replace(/-/g, ''), ints = [0, 8, 16, 24].map(o => { const v = parseInt(h.slice(o, o + 8), 16); return v > 0x7fffffff ? v - 0x100000000 : v })
         bot.chat(`/execute as @e[type=iron_golem,tag=g${i}] run data merge entity @s {AngerTime:600,AngryAt:[I;${ints.join(',')}],anger_end_time:999999999L,angry_at:[I;${ints.join(',')}]}`) }
       const g0 = near('iron_golem')[0]
       if (g0) await ctx.easeLookAt(g0.position.offset(0, 2.2, 0), 300)
-      ctx.mark('golem', { n: B.golems })
+      if (!last) ctx.mark('golem', { n: B.golems })
       let launched = false, n = 0, airborne = false, lastLaunch = -99
       const hp0 = bot.health
       for (let k = 0; k < 420 && !ctx.died; k++) {   // (320 cut the 7 beat at x3)
