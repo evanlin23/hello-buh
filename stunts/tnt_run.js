@@ -171,7 +171,9 @@ module.exports = {
     await lane(3, async () => {
       for (let k = 0; k < 66 && !ctx.died; k++) {
         // lit once it's ~9 away, so the first blast can't reach it; then the chain chases it down the floor
-        if (k === 0) { bot.chat(`/setblock ${L(3)} ${floor} ${z - 34} air`); tnt(L(3) + 0.5, floor + 0.5, z - 34 + 0.5, 1) }   // the far end, ~18 away: the chain runs about as fast as it backs
+        // hidden Resistance II for this lane only: a primed TNT flung down the line by the chain went off at its feet
+        // and killed it in 4 of 6 runs (hits still cost hearts on screen)
+        if (k === 0) { bot.chat('/effect give @s resistance 4 1 true'); bot.chat(`/setblock ${L(3)} ${floor} ${z - 34} air`); tnt(L(3) + 0.5, floor + 0.5, z - 34 + 0.5, 1) }   // the far end, ~18 away: the chain runs about as fast as it backs
         await lookAt(new Vec3(L(3) + 0.5, floor, bot.entity.position.z - 9), 0.2)
         steer(0, bot.entity.position.z < z + 8 ? 1 : 0)   // keeps backing (stopping at z - 2 let the flung TNT catch it)
         await bot.waitForTicks(1)
