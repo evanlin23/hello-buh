@@ -31,5 +31,9 @@ character secrets, the clue table) are never shown to them.
 
 ## What's here
 - `round1/`: five reports on draft 1 (the 20-minute screenplay), 2026-11-08.
-- `round2/arc_draft2.md`: the one-hour arc written from them (also the "Draft 2" tab of the script doc,
-  https://claude.ai/artifact/4BphcbVEduwc4HmV8tbcpJ). Round 2's reports go in `round2/`.
+- `round2/arc_draft2.md`: the one-hour arc written from them; `round2/*.md`: four fresh readers on it (kid, skeptic,
+  Minecraft veteran, editor), all 7-9/10, who found the rules living in the notes, not on screen, and a climax the
+  hero didn't own.
+- `round2/arc_draft21.md`: draft 2.1, the arc after round 2 (the "Draft 2.1" tab of the script doc,
+  https://claude.ai/artifact/4BphcbVEduwc4HmV8tbcpJ). Next: the owner's four choices, then the Chapter 1 screenplay
+  and its own blind read.

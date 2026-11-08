@@ -17,8 +17,8 @@ const FOG0 = 96, FOG1 = 126
 
 module.exports = {
   name: 'movie_below',
-  biome: 'minecraft:plains',
-  near: [1200, 0],              // (the plains nearest spawn on this seed is a quarter snow and ice: the POV saw it from 30 up)
+  biome: 'minecraft:sunflower_plains',
+  near: [2400, 0],              // (scripts/scout.sh: flat 4, 86% grass, no snow. The plains nearest spawn is a quarter snow, and the one from [1200, 0] rolls 50-97, so the camp sat in a pit)
   time: 23300,                  // just before sunrise: the sun on the horizon under the fog ceiling
   renderDistance: 12, recordRadius: 192,
   botTimeout: 600,
