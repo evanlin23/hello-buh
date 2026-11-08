@@ -167,6 +167,11 @@ still (the owner's pause); the wide shot is a speck of tower for 4 s; the two-sh
 their foreground; "Four." stays up 3 s; the walk-out camera passes through the Highkeeper's head.
 
 ## Decisions waiting on the owner
+- The script is being rebuilt for about 60 minutes (owner: "we should be aiming for the 1 hour length mark"; "do the full
+  overall story arc first with acts"). Draft 1 (20 min) went through a blind audit (docs/blind_audit/); the one-hour
+  arc is the doc's "Draft 2" tab, in round-2 blind audit now. Owner choices listed there: Rook for Dace, the climax
+  (stone MLG vs taking the empty bucket), Hollis, how dark the Cradle rule is. Then the screenplay, chapter by
+  chapter, each audited before the next.
 - Approve the BUILD LIMIT script (the doc's questions section: title, twist 4, voices, chapters, sequel hook, skin).
 - Stay on this renderer, or try the real client + Replay Mod (real animations, any number of players, shaders;
   needs the owner's Microsoft account and probably a computer with a GPU). Judge from this reel.
