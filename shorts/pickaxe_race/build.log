@@ -1,0 +1,40 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+02:32:22.843 spawned at Vec3 { x: 128.5, y: 70, z: 18.5 }
+02:32:23.099 nearest minecraft:plains at [ 352, -46 ]
+02:32:43.346 set at { x: 360, y: 69, z: -46 }
+02:32:52.603 chunks refreshed; back at start within 0.00 blocks
+02:33:01.984 wooden mined in 167 ticks; blocks left 0
+02:33:08.156 stone mined in 96 ticks; blocks left 0
+02:33:12.773 iron mined in 67 ticks; blocks left 0
+02:33:16.995 diamond mined in 58 ticks; blocks left 0
+02:33:20.408 gold mined in 43 ticks; blocks left 0
+02:33:20.409 gold left in hand: null
+02:33:22.381 efficiency V + haste mined in 9 ticks; blocks left 0
+02:33:30.922 tnt placed 7 of 7 (one lit); booms so far 0
+02:33:34.930 boom 1 tick 846
+02:33:36.371 boom 2 tick 875
+02:33:36.971 boom 3 tick 887
+02:33:37.621 boom 4 tick 900
+02:33:38.321 boom 5 tick 914
+02:33:39.019 boom 6 tick 928
+02:33:40.018 boom 7 tick 948
+02:33:40.059 booms 7 of 7
+02:33:42.219 STUNT OK
+filled 32 dropped pose tick(s): 16 17 433 434 435 516 519 520 523 524 527 528 529 532 533 536 537 538 541 542 ...
+simulated 105 dropped item / xp orb paths
+meshing from y -13
+light computed in 1.0 s
+meshed + uploaded world in 19.2 s
+4202 particles
+rendered 2946 frames (49.10 s of video) in 1014.9 s = 20.7 s per video second
+wrote work/pickaxe_race.wav 49.15s
+speed: 2946 frames -> 2090 (3.75-7.42s xinf, 12.25-13.32s xinf, 17.95-18.32s xinf, 22.45-22.82s xinf, 30.25-38.35s x2.2, 38.35-40.70s x2, 40.70-42.12s xinf, 42.80-47.00s x1.75)
+song drop at 47.50s lands on 29.02s of the Short (song starts at 18.48s)
+no 3D block icons needed
+wrote out/pickaxe_race.mp4 33.12s
+
+real	23m19.615s
+user	17m32.568s
+sys	0m35.584s
+exit=0
