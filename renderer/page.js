@@ -75,6 +75,28 @@ const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 1000)   // vanilla F
 camera.rotation.order = 'YXZ'
 const sections = new Map()
 let opaqueMat, translucentMat, clouds, sky, sun, moon, stars, entities, blockEntities
+let fogSea = null
+
+// The fog sea (docs/movie_engine.md; stunt.fogSea = { y0, y1, layers, density, color, fade, night }): a white
+// band between y0 and y1 that reads as a sea of fog from above, as an overcast ceiling from below, and
+// that you can fall through. Not vanilla (no block looks like that and lets you through): stacked
+// translucent sheets centred on the camera, bunched toward the top so the surface is soft, with
+// `density` (default 0.97) of the light stopped by the whole stack. Inside the band the scene fog closes
+// in to a white-out over `fade` blocks (default 4). Its colour follows the daylight, down to `night` (0.34) of it.
+function makeFogSea (spec, blocks) {
+  const n = spec.layers || 14, dens = spec.density ?? 0.97
+  const alpha = 1 - Math.pow(1 - dens, 1 / n)
+  const grp = new THREE.Group(); grp.userData = { spec }
+  const geo = new THREE.PlaneGeometry(blocks * 3, blocks * 3)
+  for (let k = 0; k < n; k++) {
+    const u = n === 1 ? 1 : k / (n - 1)
+    const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: alpha, depthWrite: false, side: THREE.DoubleSide, fog: true })
+    const m = new THREE.Mesh(geo, mat)
+    m.rotation.x = -Math.PI / 2; m.position.y = spec.y0 + (spec.y1 - spec.y0) * Math.pow(u, 0.6); m.renderOrder = 3; m.frustumCulled = false
+    grp.add(m)
+  }
+  return grp
+}
 const env = { skyColor: 0x78a7ff, fogColor: 0xc0d8ff, renderDistance: 12, cloudHeight: 192.33, time: 6000 }
 
 function srgb (hex) { return new THREE.Color().setHex(hex, THREE.LinearSRGBColorSpace) }
@@ -412,6 +434,7 @@ window.HB = {
     try { moon = await makeSun('/assets/env/moon.png'); moon.scale.setScalar(20 / 30); scene.add(moon) } catch (e) { moon = null }
     stars = makeStars(); scene.add(stars)
     clouds = await makeClouds('/assets/env/clouds.png'); scene.add(clouds)
+    if (env.fogSea) { fogSea = makeFogSea(env.fogSea, blocks); scene.add(fogSea) }
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
     entities = new EntityLayer(scene, regs); entities.camera = camera
@@ -550,6 +573,19 @@ window.HB = {
     const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under && env.clouds !== false;   // a stunt can set `clouds: false` (Video Settings > Clouds: OFF)
     sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
     scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : env.fogColorC.clone()
+    if (fogSea) {   // (makeFogSea above)
+      const sp = fogSea.userData.spec
+      const c = srgb(sp.color ?? 0xeef2ff).multiplyScalar((sp.night ?? 0.34) + (1 - (sp.night ?? 0.34)) * day.bright * (1 - rain * 0.4))   // (at 0.16 the night sea was black on black: test reel)
+      fogSea.position.set(camera.position.x, 0, camera.position.z)
+      for (const m of fogSea.children) m.material.color.copy(c)
+      const depth = sp.y1 - cam.y
+      if (depth > 0 && cam.y > sp.y0 - 2 && !cam.underwater && !cam.inLava) {
+        const k = Math.min(1, depth / (sp.fade ?? 4))
+        scene.fog.color.lerp(c, k); scene.fog.near = envFog((1 - k) * 32); scene.fog.far = blocks * (1 - k) + 3 * k
+        scene.background.lerp(c, k)
+        if (k > 0.9) { sky.visible = false; clouds.visible = false; sun.visible = false; if (moon) moon.visible = false; if (stars) stars.visible = false }
+      }
+    }
     sky.position.copy(camera.position)
     // the Nether (DimensionSpecialEffects NETHER: no sky, sun or clouds; the clear colour is the biome
     // fog colour, not darkened by time; thick fog from renderDistance * 0.05 to min(renderDistance,

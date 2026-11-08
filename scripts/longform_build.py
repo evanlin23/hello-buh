@@ -114,13 +114,40 @@ def ts(t):
     return f"{t // 60}:{t % 60:02d}"
 
 
-def raw_frame(seg, t, fps):
+def dialogue(seg, cfg, fps):
+    """[(t0, t1, text)] in segment time: the scene's `line` marks (lib/movie.js line()), each on screen until the
+    next line (at most 3.5 s, or the mark's own dur) and at least 1.2 s."""
+    import longform
+    rec_path, meta = longform.fetch_segment(seg, cfg)
+    rec = json.loads(rec_path.read_text())
+    args = longform.seg_args(meta, cfg)
+    warp, start, end, _, _ = longform.seg_clock(rec, args, fps)
+    ls = [((warp.out(e["t"] / 1000) if warp else e["t"] / 1000) - start, e) for e in rec["timeline"] if e["event"] == "line"]
+    ls.sort(key=lambda x: x[0])
+    out = []
+    for k, (t0, e) in enumerate(ls):
+        nxt = ls[k + 1][0] if k + 1 < len(ls) else t0 + 3.5
+        t1 = t0 + float(e.get("dur") or min(3.5, max(1.2, nxt - t0 - 0.05)))
+        if 0 <= t0 < end - start:
+            out.append((t0, min(t1, end - start), e["text"]))
+    return out
+
+
+def subtitle_png(text, path):
+    """A movie subtitle: white, black outline, centred near the bottom of the 16:9 frame."""
+    im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ti = text_img(text, 54, WHITE, stroke=5)
+    im.alpha_composite(ti, ((W - ti.width) // 2, H - 110 - ti.height // 2))
+    im.save(path)
+
+
+def raw_frame(seg, t, fps, ep_segments=None):
     """The renderer's own frame (no HUD, counters or subtitles) shown at segment time t: thumbnails want the
     clean picture (on the edited one the HUD, the counter and the block count fought the title)."""
     import longform
-    rec_path, meta = longform.fetch_segment(seg)
+    rec_path, meta = longform.fetch_segment(seg, (ep_segments or {}).get(seg))
     rec = json.loads(rec_path.read_text())
-    args = longform.seg_args(meta, {})
+    args = longform.seg_args(meta, (ep_segments or {}).get(seg) or {})
     warp, start, *_ = longform.seg_clock(rec, args, fps)
     i = warp.frame(int(round((t + start) * fps)), fps)
     return Image.open(LF / f"{seg}.frames" / f"f{i:05d}.png").convert("RGB")
@@ -132,7 +159,7 @@ def thumbnail(ep, out):
     spec = ep.get("thumbnail") or {}
     seg, t = spec.get("frame", ["one_in_a_million", 24.0])
     if spec.get("raw"):
-        src = raw_frame(seg, t, ep.get("fps", 30))
+        src = raw_frame(seg, t, ep.get("fps", 30), ep.get("segments"))
     else:
         src = frame_at(LF / f"{seg}.mp4", t, out.with_suffix(".src.png"))
     z = float(spec.get("zoom", 1.0))
@@ -176,16 +203,32 @@ def build(ep_dir, ep):
         t += d
     total = t
     # 2. picture + game audio: one concat, everything re-timed onto the episode's frame grid
-    ins, g = [], []
-    for i, (path, a, d) in enumerate(clips):
+    ins, extra, g, vlab, subs_key = [], [], [], {}, []
+    n_in = len(clips)
+    for i, ((path, a, d), p) in enumerate(zip(clips, ep["pieces"])):
         ins += ["-i", str(path)]
         g.append(f"[{i}:v]trim=start={a:.4f}:duration={d:.4f},setpts=PTS-STARTPTS,fps={fps},scale={W}:{H},setsar=1,format=yuv420p[v{i}]")
         g.append(f"[{i}:a]atrim=start={a:.4f}:duration={d:.4f},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,"
                  f"apad=whole_dur={d:.4f},atrim=0:{d:.4f}[a{i}]")
-    g.append("".join(f"[v{i}][a{i}]" for i in range(len(clips))) + f"concat=n={len(clips)}:v=1:a=1[v][a]")
+        last = f"v{i}"
+        # dialogue subtitles (a movie scene's `line` marks), overlaid on their piece in piece time
+        if p["kind"] in ("seg", "clip") and ep.get("subtitles", True):
+            for k, (t0, t1, text) in enumerate(dialogue(p["seg"], ep["segments"].get(p["seg"], {}), fps)):
+                t0, t1 = t0 - a, t1 - a
+                if t1 <= 0 or t0 >= d:
+                    continue
+                png = tmp / f"sub_{i}_{k}.png"
+                subtitle_png(text, png)
+                subs_key.append([i, round(t0, 3), round(t1, 3), text])
+                extra += ["-loop", "1", "-framerate", str(fps), "-t", f"{d:.3f}", "-i", str(png)]
+                g.append(f"[{last}][{n_in}:v]overlay=0:0:enable='between(t,{max(0, t0):.3f},{t1:.3f})',format=yuv420p[v{i}s{k}]")
+                last, n_in = f"v{i}s{k}", n_in + 1
+        vlab[i] = last
+    g.append("".join(f"[{vlab[i]}][a{i}]" for i in range(len(clips))) + f"concat=n={len(clips)}:v=1:a=1[v][a]")
+    ins += extra
     pic = tmp / "picture.mkv"
     # the concat is the slow part (one 1080p encode): kept while no clip changed, so a mix-only change is quick
-    key = json.dumps([[str(p_), p_.stat().st_mtime, a, d] for p_, a, d in clips])
+    key = json.dumps([[[str(p_), p_.stat().st_mtime, a, d] for p_, a, d in clips], subs_key])
     if not (pic.exists() and (tmp / "picture.key").exists() and (tmp / "picture.key").read_text() == key):
         subprocess.run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]",
                         "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-maxrate", "16M", "-bufsize", "32M", "-pix_fmt", "yuv420p",
@@ -197,9 +240,10 @@ def build(ep_dir, ep):
     game = sfx.read_audio(pic)[:n]
     game = np.pad(game, ((0, n - len(game)), (0, 0)))
     nar = np.zeros((n, 2), np.float32)
-    voice = json.loads((ep_dir / "voice" / "voice.json").read_text())["lines"]
+    vj = ep_dir / "voice" / "voice.json"
+    voice = json.loads(vj.read_text())["lines"] if vj.exists() else {}
     spans = []
-    for lid, pid, off in ep["narration"]:
+    for lid, pid, off in ep.get("narration", []):
         at = starts[pid] + float(off)
         x = sfx.read_audio(ep_dir / "voice" / f"{lid}.wav")
         i = int(at * SR)

@@ -403,3 +403,18 @@ each section.
   block count fought the title. Centre the crop on the subject, not the crosshair (the bot drifts on purpose).
 - **The wider frame shows the neighbouring sets.** clutch_harder's other pillars and the lava pool are in view at
   16:9; the near-square Short crop hid most of them. Plan sets for 16:9 if they'll be used in long form.
+
+## Movie engine (orchestrator stand-in, 2026-11-08; docs/movie_engine.md)
+- **Other players are already in the recording** (`player` entity rows). They needed a username, a held item and
+  their arm swings recorded, and a body turn and walk computed in render.js. Without those an actor slid around in
+  a T-pose with its head locked to its body.
+- **Walking off an edge needs forward held until the drop.** Three ticks of forward left the bot balanced on the
+  plank's edge (its box still 0.08 blocks over it) for the whole recording.
+- **A one-block Well needs `/tick freeze`.** A water source on a pillar spreads off every side. Frozen, the world
+  keeps it as one block, players still move, and `/clone ... move` still slides it.
+- **A beat at terminal velocity can't use `ctx.cmd`:** it waits 4 ticks per command, about 15 blocks of fall.
+  Send the one command with `bot.chat` from the physics tick.
+- **A night fog sea at 16% of its colour is black on black.** The fog sea keeps at least a third of its light at
+  night (`fogSea.night`, default 0.34).
+- **Look at camera specs on a few frames first** (`FRAMES=15,50,80 node render.js rec dir 10 960 540`): the
+  two-shot sat behind the deck's gold rim and the low angle was too far away, both obvious in one frame each.

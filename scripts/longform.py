@@ -44,9 +44,16 @@ def load_episode(ep_dir):
 
 
 # ------------------------------------------------------------------ segment sources
-def fetch_segment(seg):
-    """work/lf/<seg>.rec.json and .meta.json, from the videos branch (git show reads just those blobs)."""
+def fetch_segment(seg, cfg=None):
+    """work/lf/<seg>.rec.json and .meta.json, from the videos branch (git show reads just those blobs).
+    A `local` segment (a movie scene recorded here with scripts/record.sh) uses work/<seg>.rec.json and the
+    edit its stunt module asks for (scripts/edit_args.js), so it needs no package on the videos branch."""
     LF.mkdir(parents=True, exist_ok=True)
+    if cfg and cfg.get("local"):
+        rec = HERE / "work" / f"{cfg.get('rec', seg)}.rec.json"
+        stunt = json.loads(rec.read_text()).get("stunt") or seg
+        args = subprocess.run(["node", "scripts/edit_args.js", stunt], cwd=HERE, capture_output=True, text=True, check=True).stdout.split("\n")
+        return rec, {"edit": {"args": [a for a in args if a != ""]}}
     rec, meta = LF / f"{seg}.rec.json", LF / f"{seg}.meta.json"
     if not meta.exists():
         meta.write_bytes(subprocess.run(["git", "show", f"origin/videos:shorts/{seg}/metadata.json"], cwd=HERE,
@@ -134,7 +141,7 @@ def render_frames(rec_path, out_dir, fps, frames, env_extra=None, tag=""):
 
 
 def render_segment(seg, cfg, fps):
-    rec_path, meta = fetch_segment(seg)
+    rec_path, meta = fetch_segment(seg, cfg)
     rec = json.loads(rec_path.read_text())
     args = seg_args(meta, cfg)
     warp, start, end, _, n = seg_clock(rec, args, fps)
@@ -221,7 +228,7 @@ def cmd_plan(ep_dir):
     ep_dir, ep = load_episode(ep_dir)
     fps = ep.get("fps", 30)
     for seg, cfg in ep["segments"].items():
-        rec_path, meta = fetch_segment(seg)
+        rec_path, meta = fetch_segment(seg, cfg)
         rec = json.loads(rec_path.read_text())
         args = seg_args(meta, cfg)
         warp, start, end, marks, _ = seg_clock(rec, args, fps)

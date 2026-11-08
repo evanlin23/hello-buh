@@ -1,0 +1,15 @@
+{
+ "name": "lf_movie_reel",
+ "title": "BUILD LIMIT: movie engine test reel",
+ "description": "Movie engine test reel: the cold open of BUILD LIMIT. Two actors, the camera director, the fog sea. No voices yet.",
+ "hashtags": ["#minecraft"],
+ "fps": 30,
+ "segments": {
+  "movie_reel": {"local": true}
+ },
+ "pieces": [
+  {"id": "scene", "kind": "seg", "seg": "movie_reel"},
+  {"id": "title", "kind": "card", "dur": 3.0, "bg": ["movie_reel", 1.0], "bg_clip": ["movie_reel", 0.3], "title": "BUILD LIMIT"}
+ ],
+ "thumbnail": {"frame": ["movie_reel", 3.0], "raw": true, "zoom": 1.0, "text": [["BUILD", "white"], ["LIMIT", "yellow"]], "text_size": 150}
+}

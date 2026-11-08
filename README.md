@@ -128,6 +128,7 @@ Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chro
 Any Short on the `videos` branch can be re-rendered at 1920x1080 from its recording (no server, no bot) and stitched into
 a narrated, chaptered episode: `scripts/longform.py` + `episodes/<ep>/`. Pilot: `episodes/clutches`, "I Tested Every
 Minecraft Clutch" (2:59). How it works, costs, the rules that change for long form, and formats: `docs/longform.md`.
+Movies (several actors, a camera director, the fog sea; the BUILD LIMIT test reel): `docs/movie_engine.md`.
 
 ## Retention toolkit (optional `edit` keys, `scripts/retention.py`)
 | key | example | what |

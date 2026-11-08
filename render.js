@@ -851,6 +851,101 @@ const PBODY = [], PWALK = []
     PWALK.push([wpos, wspd])
   }
 }
+// Actors (docs/movie_engine.md): the other players in a recording, i.e. extra bots playing cast members
+// (lib/movie.js). The same body turn and limb swing as the player's own above, per actor and per tick,
+// from their recorded positions; their arm swings come from the harness's ent_swing marks, and their
+// skins from stunt.cast (username -> skin), the recording bot's from cast.self.
+const ENT_SWINGS = new Map()
+for (const e of rec.timeline || []) if (e.event === 'ent_swing') { if (!ENT_SWINGS.has(e.id)) ENT_SWINGS.set(e.id, []); ENT_SWINGS.get(e.id).push(e.t / 50) }
+const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick -> [body, walkPos, walkSpeed]) }; username -> id
+{
+  const wrap = (a) => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
+  const byId = new Map()
+  for (const row of rec.entities || []) if (row[2] === 'player') { if (!byId.has(row[1])) byId.set(row[1], []); byId.get(row[1]).push(row) }
+  for (const [id, rows] of byId) {
+    rows.sort((a, b) => a[0] - b[0])
+    const sw = ENT_SWINGS.get(id) || [], ticks = new Map()
+    let body = rows[0][8] ?? rows[0][6], wpos = 0, wspd = 0, prev = rows[0]
+    for (const r of rows) {
+      const look = r[8] ?? r[6], dx = r[3] - prev[3], dz = r[5] - prev[5], d2 = dx * dx + dz * dz
+      let target = body
+      if (d2 > 0.0025 && d2 < 16) {
+        target = 1.5 * Math.PI - Math.atan2(dz, dx)
+        if (Math.abs(wrap(look - target)) > 95 * Math.PI / 180) target += Math.PI
+      }
+      if (sw.some(s => r[0] >= s && r[0] - s < 6)) target = look
+      if (d2 >= 16) body = look
+      body += wrap(target - body) * 0.3
+      const off = wrap(look - body), MAX = 50 * Math.PI / 180
+      if (Math.abs(off) > MAX) body += off - Math.sign(off) * MAX
+      body = wrap(body)
+      if (d2 < 16) { wspd += (Math.min(1, Math.sqrt(d2) * 4) - wspd) * 0.4; wpos += wspd }
+      ticks.set(r[0], [body, wpos, wspd])
+      prev = r
+    }
+    const named = rows.find(r => r[9] && r[9].user)
+    const user = named ? named[9].user : null
+    ACTOR.set(id, { user, ticks })
+    if (user) ACTOR_ID.set(user, id)
+  }
+}
+// The camera director (docs/movie_engine.md). stunt.shots = { NAME: spec }; a 'shot' mark ({name}, from
+// lib/movie.js shot()) switches to that spec until the next one. Before the first mark, and on a
+// { pov: true } shot, the camera is the player's own eyes (HUD and hand). A camera spec:
+//   at: TARGET                        a fixed camera
+//   path: [[sec, dx, dy, dz], ...]    keyframes, seconds from the shot's start, smoothstep between each pair
+//   follow: TARGET, offset: [dx, dy, dz], lag: TICKS   ride along with a target (its position LAG ticks back)
+//   look: TARGET  |  yaw: deg, pitch: deg               where it points (mineflayer convention: yaw 0 = north)
+//   lookPath: [[sec, dx, dy, dz], ...]                  a moving look target, keyframed like path
+//   fov: degrees (default 70), roll: degrees
+// TARGET is [dx, dy, dz] from the set origin, 'self' (the player's eye), 'actor:NAME' (that actor's eye)
+// or { of: TARGET, offset: [dx, dy, dz] }. Everything is a function of the time alone, so frames can be
+// rendered in any order (FRAMES=) and a camera can be re-tuned without re-recording.
+const SHOTS = STUNT_MOD.shots || {}
+const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
+for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
+function shotAt (t) {
+  let s = null
+  for (const m of SHOT_MARKS) { if (m.t <= t + 1e-6) s = m; else break }
+  return s && SHOTS[s.name] ? { ...SHOTS[s.name], name: s.name, t0: s.t } : null
+}
+function entityPosAt (id, t) {
+  const i = Math.floor(t), f = t - i, a = ENT.get(i) && ENT.get(i).get(id)
+  if (!a) return null
+  let b = (ENT.get(i + 1) && ENT.get(i + 1).get(id)) || a
+  if (Math.hypot(b[3] - a[3], b[4] - a[4], b[5] - a[5]) > 4) b = a
+  return { x: a[3] + (b[3] - a[3]) * f, y: a[4] + (b[4] - a[4]) * f, z: a[5] + (b[5] - a[5]) * f, sneak: !!(a[9] && a[9].sneak) }
+}
+function targetAt (tg, t) {
+  if (tg === 'self') { const c = camAt(Math.max(0, t)); return { x: c.x, y: c.y, z: c.z } }
+  if (typeof tg === 'string' && tg.startsWith('actor:')) {
+    const id = ACTOR_ID.get(tg.slice(6)), p = id !== undefined ? entityPosAt(id, Math.max(0, t)) : null
+    return p ? { x: p.x, y: p.y + (p.sneak ? 1.27 : 1.62), z: p.z } : null
+  }
+  if (Array.isArray(tg)) return { x: rec.set.x + tg[0], y: rec.set.y + tg[1], z: rec.set.z + tg[2] }
+  if (tg && tg.of) { const p = targetAt(tg.of, t), o = tg.offset || [0, 0, 0]; return p ? { x: p.x + o[0], y: p.y + o[1], z: p.z + o[2] } : null }
+  return null
+}
+function keyed (keys, u) {   // [[sec, dx, dy, dz], ...] at u seconds: smoothstep between the two keys around u
+  if (u <= keys[0][0]) return keys[0].slice(1)
+  for (let k = 0; k < keys.length - 1; k++) {
+    const a = keys[k], b = keys[k + 1]
+    if (u <= b[0]) { let s = (u - a[0]) / Math.max(1e-6, b[0] - a[0]); s = s * s * (3 - 2 * s); return [1, 2, 3].map(j => a[j] + (b[j] - a[j]) * s) }
+  }
+  return keys[keys.length - 1].slice(1)
+}
+function shotCam (sh, t) {
+  const u = (t - sh.t0) / 20
+  let pos = null
+  if (sh.path) { const d = keyed(sh.path, u); pos = { x: rec.set.x + d[0], y: rec.set.y + d[1], z: rec.set.z + d[2] } }
+  else if (sh.follow) { const p = targetAt(sh.follow, t - (sh.lag || 0)), o = sh.offset || [0, 0, 0]; if (p) pos = { x: p.x + o[0], y: p.y + o[1], z: p.z + o[2] } }
+  else if (sh.at) pos = targetAt(sh.at, t)
+  if (!pos) return null
+  let yaw = (sh.yaw || 0) * Math.PI / 180, pitch = (sh.pitch || 0) * Math.PI / 180
+  const lk = sh.lookPath ? (() => { const d = keyed(sh.lookPath, u); return { x: rec.set.x + d[0], y: rec.set.y + d[1], z: rec.set.z + d[2] } })() : sh.look ? targetAt(sh.look, t) : null
+  if (lk) { const dx = lk.x - pos.x, dy = lk.y - pos.y, dz = lk.z - pos.z; yaw = Math.atan2(-dx, -dz); pitch = Math.atan2(dy, Math.hypot(dx, dz)) }
+  return { x: pos.x, y: pos.y, z: pos.z, yaw, pitch, bobX: 0, bobY: 0, roll: (sh.roll || 0) * Math.PI / 180, bobPitch: 0, fov: sh.fov }
+}
 // the model an item draws with: its item definition (items/<name>.json, 1.21.4+; many block items
 // have no models/item/<name>.json, e.g. lectern -> block/lectern), else item/<name>
 const jarJson = (p) => { try { return JSON.parse(require('child_process').execFileSync('unzip', ['-p', path.join(__dirname, 'work', 'client', `${rec.version}.jar`), p], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch (e) { return null } }
@@ -1321,7 +1416,7 @@ function camAtLive (t) {
       try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/celestial/moon/full_moon.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), moon]) } catch (e) { console.error('no moon texture:', e.message) }
     }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null })
 
   const send = async (list) => {
     const id = String(blobId++)
@@ -1700,6 +1795,12 @@ function camAtLive (t) {
         Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0, fov: undefined })
       }
     }
+    // the camera director (stunt.shots + 'shot' marks, above): a camera shot draws the player's body and
+    // no hand, like CAM=; a POV shot is the plain first-person view
+    const shotNow = process.env.CAM ? null : shotAt(t)
+    const camShot = !!(shotNow && !shotNow.pov)
+    if (camShot) { const c = shotCam(shotNow, t); if (c) Object.assign(cam, c); cam.aim = null }
+    const third = THIRD || camShot
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
     cam.inLava = !!(inBlock && inBlock.name === 'lava')
@@ -1728,7 +1829,7 @@ function camAtLive (t) {
     prof('camera+target')
     const ents = entitiesAt(t, mesher)
     // first-person held item
-    const hd = HIDE_HAND || THIRD || F1.some(([a, b]) => t >= a && t < b) ? null : handAt(t)
+    const hd = HIDE_HAND || third || F1.some(([a, b]) => t >= a && t < b) ? null : handAt(t)
     if (hd) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = !!spriteOf(hd.name)
@@ -1747,7 +1848,7 @@ function camAtLive (t) {
       // none, and the hand vanished before each cut with the hearts still full: worker 3, tries f214)
       cam.dead = !!DEATHS.find(([a, b]) => t >= (b - a >= 10 ? a - 20 / FPS - 1e-6 : a) && t < b)
     }
-    if (THIRD) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
+    if (third) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
       const dw = DEATHS.find(([a, b]) => t >= a && t < b), deathTime = dw ? t - dw[0] + 1 : 0
       // ItemInHandLayer draws the entity's current main-hand item at once: no first-person lowering
       // and raising (the placed boat stayed in the replay hand for ~3 ticks: boat_clutch v3 f1993)
@@ -1770,7 +1871,7 @@ function camAtLive (t) {
         const sw = SWINGS.find(s0 => s0 <= t && t - s0 < 6)
         ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - EYE, z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body, pitch: eye.pitch, headYaw: eye.yaw,
-          extra: { skin: process.env.SKIN || 'steve' }, light: lightmap(ls, lb),
+          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10) }
         })
       }
@@ -1933,6 +2034,31 @@ function camAtLive (t) {
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
       }
       e.mobHeld = held
+    }
+    // actors (other players: the movie cast, lib/movie.js): the skin from stunt.cast, the body turn and
+    // walk from their recorded positions (ACTOR), the arm swing from ent_swing marks, the main-hand item
+    for (const e of ents) {
+      if (e.name !== 'player' || e.id === -1) continue
+      const A = ACTOR.get(e.id), user = (e.extra && e.extra.user) || (A && A.user)
+      e.extra = { ...(e.extra || {}), skin: (STUNT_MOD.cast && user && STUNT_MOD.cast[user]) || 'steve' }
+      let wp = 0, ws = 0
+      if (A) {
+        const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a
+        if (a) { e.headYaw = e.headYaw ?? e.yaw; e.yaw = lerpAngle(a[0], b[0], f); wp = a[1] + (b[1] - a[1]) * f; ws = a[2] + (b[2] - a[2]) * f }
+      }
+      let held = null
+      const n = e.extra.held
+      if (n) {
+        held = { key: n, display: thirdPersonDisplay(n) }
+        const bl = MC.blocksByName[n]
+        if (spriteOf(n)) held.tex = spriteOf(n)
+        else if (bl) {
+          held.state = bl.defaultState
+          if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+        }
+      }
+      const sw = (ENT_SWINGS.get(e.id) || []).find(s0 => s0 <= t && t - s0 < 6)
+      e.player = { walkPos: wp, walkSpeed: ws, attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime: 0, hurt: (MOB_HURT.get(e.id) || []).some(h => t >= h && t - h < 10) }
     }
     for (const e of ents) {
       const st = STAGED.get(e.id); if (!st) continue
