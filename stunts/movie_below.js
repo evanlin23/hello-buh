@@ -39,7 +39,7 @@ module.exports = {
     // Ash turns to him: from Buh's side, his shoulder at the frame's edge
     ash: { at: { of: 'actor:Ash', offset: [1.3, 0.15, 2.3] }, look: 'actor:Ash', fov: 48 },
     // behind the two of them as Ash leads him into the camp: the fires and the missed ahead
-    walk: { follow: 'actor:Ash', offset: [1.4, 1.4, -3.4], look: { of: 'actor:Ash', offset: [-0.4, -0.3, 4.5] }, lag: 4, fov: 60, crossLine: true }   // (a new axis: their walk)
+    walk: { follow: 'actor:Ash', offset: [-0.6, 2.6, -4.2], look: { of: 'actor:Ash', offset: [0.4, -0.8, 4.0] }, lag: 4, fov: 62, crossLine: true }   // (a new axis: their walk; high behind both: at eye height Buh's head filled the foreground, scripts/try_shots.py)
   },
   edit: { startAt: 'start:0.3', endAfter: 'end_scene:0.6' },
 

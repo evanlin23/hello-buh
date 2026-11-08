@@ -778,7 +778,9 @@ window.HB = {
       for (const m of fogSea.children) m.material.color.copy(c)
       const depth = sp.y1 - cam.y
       if (depth > 0 && cam.y > sp.y0 - 2 && !cam.underwater && !cam.inLava) {
-        const k = Math.min(1, depth / (sp.fade ?? 4))
+        // (and out again over the band's last `fade` blocks: you come out of its floor gradually; the white held until
+        // the eye was 2 below it, 2 s of white at the start of the Below's POV)
+        const k = Math.max(0, Math.min(1, depth / (sp.fade ?? 4), (cam.y - sp.y0) / (sp.fade ?? 4)))
         scene.fog.color.lerp(c, k); scene.fog.near = envFog((1 - k) * 32); scene.fog.far = blocks * (1 - k) + 3 * k
         scene.background.lerp(c, k)
         if (k > 0.9) { sky.visible = false; clouds.visible = false; sun.visible = false; if (moon) moon.visible = false; if (stars) stars.visible = false }

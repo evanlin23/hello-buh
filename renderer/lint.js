@@ -127,7 +127,9 @@ function run (h) {
     if (!sp.pov && dur < 0.8) row.issues.push(['N', s.t0, null, `only ${dur.toFixed(1)} s: too short to read`])
     if (!sp.pov && still * 2 / 20 > 5) row.issues.push(['N', s.t0, null, `the camera holds still for ${(still * 2 / 20).toFixed(1)} s: add push, drift or a move`])
     // the 180-degree line
-    if (cov && cov.line && !sp.pov && !sp.crossLine && subs.some(n => cov.line.includes(n))) {
+    // (only shots of the conversation itself: a shot overlapping a line of dialogue)
+    const talking = lines.some(l => l.t1 > s.t0 && l.t0 < s.t1)
+    if (cov && cov.line && talking && !sp.pov && !sp.crossLine && subs.some(n => cov.line.includes(n))) {
       const tm = (s.t0 + s.t1) / 2, A = targetAt(cov.line[0], tm), B = targetAt(cov.line[1], tm), c = camAtShot(s, tm)
       if (A && B && c) {
         const { p } = FRAMING.perpTo(A, B, cov.side || 'south')
@@ -158,14 +160,14 @@ function run (h) {
   const lineAt = (t) => lines.some(l => t >= l.t0 && t < l.t1)
   const dead = []
   const flushDead = (t) => { if (deadFrom !== null) { const l = dead[dead.length - 1]; if (l && deadFrom <= l[1]) l[1] = Math.max(l[1], t); else dead.push([deadFrom, t]) } deadFrom = null }
+  // (summed over 4-tick steps inside the window, not end to end: a nod that dips and comes back is motion)
+  const poseMove = (t0) => { let m = 0; for (let k = 0; k < 24; k += 4) { const a = nearest(POSE, Math.round(t0 + k)), b = nearest(POSE, Math.round(t0 + k + 4)); if (a && b) m += Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) + Math.abs(wrap(b[4] - a[4])) * 1.5 + Math.abs(b[5] - a[5]) } return m }
+  const entMove = (m, t0) => { let s = 0; for (let k = 0; k < 24; k += 4) { const ra = nearest(m, Math.round(t0 + k)), rb = nearest(m, Math.round(t0 + k + 4)); if (ra && rb) s += Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) + Math.abs(wrap((rb[8] ?? rb[6]) - (ra[8] ?? ra[6]))) * 1.5 + Math.abs((rb[7] || 0) - (ra[7] || 0)) } return s }
+  const swingsAt = new Set(tl.filter(e => e.event === 'ent_swing' || e.event === 'swing').map(e => Math.round(e.t / 50)))
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
-    let mv = 0
-    const a = POSE.get(Math.round(t)) || nearest(POSE, Math.round(t)), b = POSE.get(Math.round(t + 24)) || nearest(POSE, Math.round(t + 24))
-    if (a && b) mv = Math.max(mv, Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) + Math.abs(wrap(b[4] - a[4])) * 1.5 + Math.abs(b[5] - a[5]))
-    for (const m of ent.values()) {
-      const ra = nearest(m, Math.round(t)), rb = nearest(m, Math.round(t + 24))
-      if (ra && rb) mv = Math.max(mv, Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) + Math.abs(wrap((rb[8] ?? rb[6]) - (ra[8] ?? ra[6]))) * 1.5 + Math.abs((rb[7] || 0) - (ra[7] || 0)))
-    }
+    let mv = poseMove(t)
+    for (const m of ent.values()) mv = Math.max(mv, entMove(m, t))
+    for (let k = 0; k < 24; k++) if (swingsAt.has(Math.round(t + k))) { mv = Math.max(mv, 0.3); break }   // an arm swing is a gesture
     if (mv < 0.25) { if (deadFrom === null) deadFrom = t } else flushDead(t + 12)
   }
   flushDead(end)
