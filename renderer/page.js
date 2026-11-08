@@ -747,6 +747,9 @@ window.HB = {
     sky.material.uniforms.below.value = (cam.dimension || 'overworld') === 'overworld' && cam.y < 63 ? 1 : 0
     env.fogColorC = fogC
     const cloudC = new THREE.Color().setScalar(day.bright * 0.9 + 0.1)
+    // look.cloudNight (a movie scene's choice, not vanilla): moonlit clouds at least this bright. At vanilla's 0.1 they
+    // were black holes over a moonlit fog sea (reel 1 v3)
+    if (env.look && env.look.cloudNight) { const k = env.look.cloudNight; cloudC.setRGB(Math.max(cloudC.r, k * 0.85), Math.max(cloudC.g, k * 0.9), Math.max(cloudC.b, k)) }
     if (rain > 0) grey(cloudC, 0.6, rain, 0.95)
     if (thunder > 0) grey(cloudC, 0.2, thunder, 0.95)
     // darkness: the short fog swallows the clouds, sun, moon and stars (they fade with the blend)

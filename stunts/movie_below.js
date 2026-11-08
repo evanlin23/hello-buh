@@ -26,6 +26,7 @@ module.exports = {
   look: { grade: 'dawn', bloom: 0.5, bloomThreshold: 0.72, vignette: 0.4, grain: 0.03, letterbox: 2.39, dof: { aperture: 0.8 }, shadows: true },
   cast: { self: 'steve', Ash: 'noor', Mira: 'alex', Tobin: 'ari', Wren: 'makena', Oslo: 'kai', Pell: 'sunny', Juno: 'zuri' },   // (Ash as in reel 1; kai's back of head reads as a face)
   selfName: 'Buh',
+  coverage: { line: ['self', 'actor:Ash'], side: 'south' },   // (renderer/lint.js checks every shot of the two of them stays south)
   idleLife: true,
   // offsets from O = (X, F, Z)
   shots: {
@@ -38,7 +39,7 @@ module.exports = {
     // Ash turns to him: from Buh's side, his shoulder at the frame's edge
     ash: { at: { of: 'actor:Ash', offset: [1.3, 0.15, 2.3] }, look: 'actor:Ash', fov: 48 },
     // behind the two of them as Ash leads him into the camp: the fires and the missed ahead
-    walk: { follow: 'actor:Ash', offset: [1.4, 1.4, -3.4], look: { of: 'actor:Ash', offset: [-0.4, -0.3, 4.5] }, lag: 4, fov: 60 }
+    walk: { follow: 'actor:Ash', offset: [1.4, 1.4, -3.4], look: { of: 'actor:Ash', offset: [-0.4, -0.3, 4.5] }, lag: 4, fov: 60, crossLine: true }   // (a new axis: their walk)
   },
   edit: { startAt: 'start:0.3', endAfter: 'end_scene:0.6' },
 
@@ -112,12 +113,11 @@ module.exports = {
     for (let k = 0; k < 120 && bot.entity.position.x > X - 2.7; k++) { await bot.look(WEST, 0.05, true); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
     M.line(ctx, 'Buh', 'Ash?')
-    // 4. Ash turns around
+    // 4. Ash turns around (cut on the turn), and the line is acted: M.say turns him to Buh and nods
     M.shot(ctx, 'ash')
-    await bot.waitForTicks(6)
     await M.lookAt(ash, bot.entity.position.offset(0, 1.62, 0), 600)
-    M.line(ctx, 'Ash', 'Took you long enough, Buh.')
-    await bot.waitForTicks(34)
+    ash.swingArm('right')   // the rod comes up as he turns
+    await M.say(ctx, 'Ash', 'Took you long enough, Buh.', { to: 'Buh' })
     // 5. he leads him into the camp, talking as they go (the scene ends on the move, not on a held two-shot)
     M.line(ctx, 'Ash', 'Come meet the ones who missed.')
     const walking = M.walkTo(ash, X - 1.6, Z + 15.2)

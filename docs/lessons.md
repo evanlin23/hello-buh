@@ -418,3 +418,20 @@ each section.
   night (`fogSea.night`, default 0.34).
 - **Look at camera specs on a few frames first** (`FRAMES=15,50,80 node render.js rec dir 10 960 540`): the
   two-shot sat behind the deck's gold rim and the low angle was too far away, both obvious in one frame each.
+- **Every hand-placed camera needed a re-take; let geometry place them.** Reels 1-2: cameras inside a roof, behind a
+  lantern post, through the Highkeeper's head, a head hiding the other actor, the 180-degree line crossed. The
+  auto-framed `two` / `ots` / `single` shots (renderer/framing.js) and the lint (`LINT=1 node render.js`) catch or
+  prevent all of them in seconds; the lint reproduced the human review's dead stretches exactly.
+- **A set piece at terminal velocity is invisible at full speed.** The Well's one-block slide was 9 ticks and 2 px
+  at 30 blocks. Trigger it closer (6 ticks out, ~18 blocks), make it glide (`M.slideBlocks`), and slow the window
+  down (`edit.slowmo`): 0.65 s of fall over 2.2 s reads.
+- **At midnight a held item is a dark sleeve.** Sky light 15 at night lights it at about (0.22, 0.22, 0.45), and the
+  night grade darkens it more: `look.handLift` lifts the first-person hand. Same for night clouds over a lit fog
+  sea: vanilla's 0.1 grey is a black hole (`look.cloudNight`).
+- **Dialogue needs acting in the recording, not just in the render.** Idle head drift and talking heads are polish;
+  reviewers still called still-standing actors dead. `M.say` moves the speaker and the listeners for real.
+- **The seed is fixed, so /locate is too.** The plains nearest spawn is a quarter snow; `scripts/scout.sh` ranks
+  start points, and a stunt's `near: [x, z]` sends /locate from there.
+- **Blind readers find the holes the writer can't.** Five readers who saw only the screenplay (a kid viewer, a
+  plot-hole hunter, a Minecraft expert, a story editor, a dialogue-only listener) agreed within minutes on the big
+  ones: why the missed can't come back, why nobody builds out, a finale with no clutch, clues that are visual only.

@@ -36,7 +36,7 @@ module.exports = {
   fogSea: { y0: 60, y1: 140, layers: 16, density: 0.985, fade: 5, night: 0.55 },
   // the cinematic look (renderer/page.js makePost): moonlit grade, lantern bloom, bars and focus on camera shots
   // (handLift: the empty bucket in his hand read as a dark sleeve at midnight, review v2 B2)
-  look: { grade: 'night', bloom: 0.6, bloomThreshold: 0.68, vignette: 0.45, grain: 0.03, letterbox: 2.39, dof: { aperture: 0.9 }, handLift: 0.45 },   // (threshold 0.55 made the white deck glow)
+  look: { grade: 'night', bloom: 0.6, bloomThreshold: 0.68, vignette: 0.45, grain: 0.03, letterbox: 2.39, dof: { aperture: 0.9 }, handLift: 0.45, cloudNight: 0.42 },   // (threshold 0.55 made the white deck glow)
   cast: { self: 'noor', Highkeeper: 'efe' },   // (kai's ribbon read as a face on the back of his head, review v2 V10)
   selfName: 'Ash',               // his lines (M.line who) move his head when he's seen from outside
   idleLife: true,
