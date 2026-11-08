@@ -195,7 +195,8 @@ module.exports = {
         const em = bot.inventory.items().find(it => it.name === 'emerald')
         ctx.mark('gem'); ctx.sound('entity.item.pickup', 0.4, 0.6)
         try { await bot.toss(em.type, null, 1) } catch (e) { ctx.log('toss', e.message) }
-        await bot.waitForTicks(22)
+        // a slow drift along the heads while they turn down to it (a fixed aim here was a 0.6 s PAUSE)
+        for (let k = 0; k < 22; k++) { aim = new ctx.Vec3(sx + 0.5 + (k - 11) * 0.15, floor + 1.3, z - 1.6 - k * 0.04); await bot.waitForTicks(1) }
         for (let v = 0; v < 4; v++) ctx.sound('entity.villager.ambient', 0.7, 0.9 + v * 0.1)
         bot.setControlState('forward', true); await bot.waitForTicks(6); bot.setControlState('forward', false)
         bot.removeListener('physicsTick', gemTrack); bot.on('physicsTick', track)
