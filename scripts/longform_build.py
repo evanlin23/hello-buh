@@ -7,7 +7,7 @@ episodes/<ep>/episode.json `pieces` play in order:
    "sub": "...", "list": [["#1", "BOAT", "the easiest"], ...]}                               a chapter card
 `narration`: [[LINE_ID, PIECE_ID, SECONDS_INTO_PIECE], ...] places each line of episodes/<ep>/voice/ (voice.py).
 
-The mix: narration at -16 LUFS, the game under it (ducked 9 dB while a line plays), an NCS bed at -30 (ducked 6 dB),
+The mix: narration at -16 LUFS, the game at -18 (ducked 9 dB while a line plays), an NCS bed at -24 (ducked 10 dB: vanilla falls are nearly silent, so the bed carries the action),
 a whoosh on every card, mastered to -14 LUFS (YouTube's long-form reference). Writes out/<name>.mp4 plus
 out/<name>.json (title, description with chapters and the NCS credit, chapter list) and out/<name>_thumb.jpg.
 """
@@ -81,18 +81,31 @@ def card_layers(p, bg, tmp):
 
 
 def render_card(p, fps, tmp):
-    """A card clip: a slow push-in on the background, the text fading in over 0.15 s with a small rise, silence."""
+    """A card clip: a slow push-in on the background, the text fading in over 0.15 s with a small rise, silence.
+    `bg_clip: [SEG, FROM]` puts that segment's footage behind the text, blurred and darkened, instead of a still
+    (a 12 s outro on a still frame read as a frozen video)."""
     out = tmp / f"{p['id']}.mp4"
+    spec, spec_f = json.dumps(p, sort_keys=True), tmp / f"{p['id']}.spec"
+    if out.exists() and spec_f.exists() and spec_f.read_text() == spec:   # unchanged card: keep it (and the concat cache)
+        return out
     d = float(p["dur"])
-    zoom = f"(1+0.05*t/{d:.3f})"
-    g = (f"[0:v]scale=w='trunc({W}*{zoom}/2+1)*2':h='trunc({H}*{zoom}/2+1)*2':eval=frame,crop={W}:{H},setsar=1[bgv];"
-         f"[1:v]format=rgba,fade=t=in:st=0.05:d=0.15:alpha=1[tx];"
+    zoom = f"(1+0.08*t/{d:.3f})"
+    push = f"scale=w='trunc({W}*{zoom}/2+1)*2':h='trunc({H}*{zoom}/2+1)*2':eval=frame,crop={W}:{H},setsar=1"
+    if p.get("bg_clip"):
+        seg, t0 = p["bg_clip"]
+        bg_in = ["-ss", f"{float(t0):.3f}", "-t", f"{d:.3f}", "-i", str(LF / f"{seg}.mp4")]
+        bg = f"[0:v]fps={fps},gblur=sigma=14,drawbox=c=black@0.5:t=fill,{push}[bgv];"
+    else:
+        bg_in = ["-loop", "1", "-framerate", str(fps), "-t", f"{d:.3f}", "-i", str(tmp / f"{p['id']}_bg.png")]
+        bg = f"[0:v]{push}[bgv];"
+    g = (bg + f"[1:v]format=rgba,fade=t=in:st=0.05:d=0.15:alpha=1[tx];"
          f"[bgv][tx]overlay=x=0:y='max(0,18-18*t/0.25)',fps={fps},format=yuv420p[v]")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-framerate", str(fps), "-t", f"{d:.3f}", "-i", str(tmp / f"{p['id']}_bg.png"),
+    subprocess.run(["ffmpeg", "-v", "error", "-y", *bg_in,
                     "-loop", "1", "-framerate", str(fps), "-t", f"{d:.3f}", "-i", str(tmp / f"{p['id']}_text.png"),
                     "-f", "lavfi", "-t", f"{d:.3f}", "-i", "anullsrc=r=48000:cl=stereo",
                     "-filter_complex", g, "-map", "[v]", "-map", "2:a", "-t", f"{d:.3f}", "-c:v", "libx264", "-preset", "medium",
                     "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", str(out)], check=True)
+    spec_f.write_text(spec)
     return out
 
 
@@ -101,18 +114,43 @@ def ts(t):
     return f"{t // 60}:{t % 60:02d}"
 
 
+def raw_frame(seg, t, fps):
+    """The renderer's own frame (no HUD, counters or subtitles) shown at segment time t: thumbnails want the
+    clean picture (on the edited one the HUD, the counter and the block count fought the title)."""
+    import longform
+    rec_path, meta = longform.fetch_segment(seg)
+    rec = json.loads(rec_path.read_text())
+    args = longform.seg_args(meta, {})
+    warp, start, *_ = longform.seg_clock(rec, args, fps)
+    i = warp.frame(int(round((t + start) * fps)), fps)
+    return Image.open(LF / f"{seg}.frames" / f"f{i:05d}.png").convert("RGB")
+
+
 def thumbnail(ep, out):
+    """1280x720: the frame (`raw`: without the HUD), zoomed `zoom`x with the `subject` (px from the frame centre,
+    default the crosshair) at `target` (x/y fractions), an optional red `ring` (radius) on it, and the title lines top left."""
     spec = ep.get("thumbnail") or {}
     seg, t = spec.get("frame", ["one_in_a_million", 24.0])
-    im = frame_at(LF / f"{seg}.mp4", t, out.with_suffix(".src.png")).resize((1280, 720))
-    im = Image.blend(im, Image.new("RGB", im.size, (0, 0, 0)), 0.15).convert("RGBA")
-    if spec.get("ring"):   # a red ring on the target (frame fractions)
-        cx, cy, r = spec["ring"][0] * 1280, spec["ring"][1] * 720, spec["ring"][2]
+    if spec.get("raw"):
+        src = raw_frame(seg, t, ep.get("fps", 30))
+    else:
+        src = frame_at(LF / f"{seg}.mp4", t, out.with_suffix(".src.png"))
+    z = float(spec.get("zoom", 1.0))
+    cw, ch = W / z, H / z
+    tx, ty = spec.get("target", [0.5, 0.5])        # where the subject lands in the thumbnail (fractions)
+    sx, sy = W / 2 + spec.get("subject", [0, 0])[0], H / 2 + spec.get("subject", [0, 0])[1]   # subject: px from the frame centre
+    x0 = min(max(0.0, sx - tx * cw), W - cw)
+    y0 = min(max(0.0, sy - ty * ch), H - ch)
+    im = src.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((1280, 720), Image.LANCZOS)
+    im = Image.blend(im, Image.new("RGB", im.size, (0, 0, 0)), 0.1).convert("RGBA")
+    if spec.get("ring"):   # a red ring around the target
+        cx, cy = (sx - x0) / cw * 1280, (sy - y0) / ch * 720
+        r = spec["ring"]
         ImageDraw.Draw(im).ellipse((cx - r, cy - r, cx + r, cy + r), outline=RED, width=14)
-    y = 40
+    y = 30
     for line, color in spec.get("text", [["EVERY", "yellow"], ["CLUTCH", "white"]]):
-        ti = text_img(line, 170, {"yellow": YELLOW, "white": WHITE, "red": RED}[color], stroke=12)
-        im.alpha_composite(ti, (40, y)); y += ti.height - 40
+        ti = text_img(line, int(spec.get("text_size", 150)), {"yellow": YELLOW, "white": WHITE, "red": RED}[color], stroke=12)
+        im.alpha_composite(ti, (30, y)); y += ti.height - 40
     im.convert("RGB").save(out, quality=92)
 
 
@@ -145,10 +183,14 @@ def build(ep_dir, ep):
         g.append(f"[{i}:a]atrim=start={a:.4f}:duration={d:.4f},asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo,"
                  f"apad=whole_dur={d:.4f},atrim=0:{d:.4f}[a{i}]")
     g.append("".join(f"[v{i}][a{i}]" for i in range(len(clips))) + f"concat=n={len(clips)}:v=1:a=1[v][a]")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]",
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-maxrate", "16M", "-bufsize", "32M", "-pix_fmt", "yuv420p",
-                    "-r", str(fps), "-c:a", "pcm_s16le", str(tmp / "picture.mkv")], check=True)
     pic = tmp / "picture.mkv"
+    # the concat is the slow part (one 1080p encode): kept while no clip changed, so a mix-only change is quick
+    key = json.dumps([[str(p_), p_.stat().st_mtime, a, d] for p_, a, d in clips])
+    if not (pic.exists() and (tmp / "picture.key").exists() and (tmp / "picture.key").read_text() == key):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", ";".join(g), "-map", "[v]", "-map", "[a]",
+                        "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-maxrate", "16M", "-bufsize", "32M", "-pix_fmt", "yuv420p",
+                        "-r", str(fps), "-c:a", "pcm_s16le", str(pic)], check=True)
+        (tmp / "picture.key").write_text(key)
     # 3. the stems, on the episode clock (48 kHz stereo float)
     SR = sfx.SR
     n = int(total * SR) + SR
@@ -172,7 +214,7 @@ def build(ep_dir, ep):
         sfx.write_wav(tmp / "m.wav", x)
         return 10 ** ((target - loud.measure(tmp / "m.wav")) / 20)
     nar *= lufs_gain(nar, -16.0)
-    game *= lufs_gain(game, -21.0)
+    game *= lufs_gain(game, -18.0)   # (at -21 the action between lines dipped 7 dB under the narrated stretches)
     music = np.zeros((n, 2), np.float32)
     track = ep.get("music")
     if track:
@@ -191,7 +233,7 @@ def build(ep_dir, ep):
     k = int(0.15 * SR)
     env = np.convolve(env, np.ones(k) / k, mode="same")
     game *= (1 - env * (1 - 10 ** (-9 / 20)))[:, None]
-    music *= (1 - env * (1 - 10 ** (-6 / 20)))[:, None]
+    music *= (1 - env * (1 - 10 ** (-10 / 20)))[:, None]   # the bed fills the silent falls between lines, and gets out of the way under them
     fx = np.zeros((n, 2), np.float32)
     wh = sfx.synth_whoosh(0.5) * 0.35
     for p in ep["pieces"]:

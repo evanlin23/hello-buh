@@ -3,6 +3,27 @@
 Owner, 2026-11-08: "Can you try to make a long form video? How would this even be done for hello buh?"
 This is the answer and the pilot. The pilot is `episodes/clutches` ("I Tested Every Minecraft Clutch").
 
+## The pilot (2026-11-08)
+`out/lf_clutches.mp4`: **2:59**, 1920x1080 at 30 fps, -14.1 LUFS, 7 chapters, NCS credit in the description, thumbnail
+`out/lf_clutches_thumb.jpg`, metadata `out/lf_clutches.json`. Not uploaded, and not on the `videos` branch: at 1080p it's
+307 MB, over GitHub's 100 MB file limit. Rebuild it from this repo with the commands below (~70 min on 4 CPUs).
+
+| time | piece | source |
+|---|---|---|
+| 0:00 | cold open: the build-limit drop into a 1x1 of water in a lava lake, cut before it lands | one_in_a_million |
+| 0:05 | title card ("by the end of this video, I'm landing it") | |
+| 0:12 | Clutch #1: the boat (15 to 79 blocks, replay) | boat_clutch |
+| 0:45 | Clutch #2: the ladder (too late at 20, then up to 80) | ladder_clutch |
+| 1:19 | Clutch #3: the water bucket, every one harder (ends on the lava bucket) | clutch_harder |
+| 1:53 | Bonus: every way to cross lava, rated | lava_crossing |
+| 2:16 | The final test: 1 in a million (lands the cold open) | one_in_a_million |
+| 2:46 | The ranking (12 s, right half free for the end screen) | |
+
+QA: `scripts/qa_landscape.py` flags only cuts, cards, the night beats, the replay's white flash and the animated lava.
+Nitpicks: 1-frame repeats on some segment starts and inside slow-mo (as in the Shorts); clutch_harder's
+neighbouring sets show at the edges of the wider frame. It is 3 minutes, not 8-10, because that's all the clutch
+footage there is (see "Formats").
+
 ## Why long form at all
 - **Monetization.** YPP needs 1,000 subscribers plus either **4,000 public watch hours in 12 months** or **10M
   Shorts views in 90 days** (https://support.google.com/youtube/answer/72851). Shorts-feed watch time doesn't
@@ -38,14 +59,16 @@ python3 scripts/longform.py build  episodes/clutches   # -> out/lf_clutches.mp4,
 | 16:9 edit | `scripts/landscape_edit.py` | `edit.py` unchanged, with its layout constants (and `retention.py`'s) switched to 1920x1080 and no caption band: the same HUD, death screen, subtitles, counters, cards, slow-mo and replay. The hook preview, loop dissolve and song are dropped, because the episode has its own. |
 | episode | `episodes/<ep>/episode.json` | `segments` (+ optional `start_at`/`end_after`/`replay: false` overrides), `pieces` in order (`seg`, `clip` = part of a segment, `card` = chapter card), `narration` cues `[LINE, PIECE, SECONDS]`, `music`, `thumbnail`, title, description. |
 | narration | `episodes/<ep>/story.json` + `scripts/voice.py` | the story narrator (Kokoro `am_adam`) at **rate 1.0** (the story Shorts use 1.45x; long form at ~150-250 wpm and natural pitch). |
-| assembly | `scripts/longform_build.py` | cards (blurred frame, slow push-in, kicker/title/sub or a ranking list on the left half for the end screen), one concat, then the mix: narration -16 LUFS, game -21 ducked 9 dB under each line, NCS bed -30 ducked 6 dB, a whoosh per card, master -14 LUFS. Writes chapters (from `chapter` keys), the description with the NCS credit, and a 1280x720 thumbnail. |
+| segment options | `episode.json` `segments.<seg>` | `start_at` / `end_after` / `replay: false` override the published edit; `sfx_extra` adds sound effects (wind on falls); `mute_sounds` drops vanilla sound events from the rebuilt game audio; `extra` sets any other edit.py flag. |
+| assembly | `scripts/longform_build.py` | cards (blurred frame or `bg_clip` footage, slow push-in, kicker/title/sub or a ranking list on the left half for the end screen), one concat (cached while no clip changes), then the mix: narration -16 LUFS, game -18 ducked 9 dB under each line, NCS bed -24 ducked 10 dB, a whoosh per card, master -14 LUFS. Writes chapters (from `chapter` keys; warns under 10 s), the description with the NCS credit, and a 1280x720 thumbnail from the raw render (`thumbnail.raw`, `zoom`, `subject`, `target`, `ring`). |
+| QA | `scripts/qa_landscape.py` | `qa_frames.py`'s checks on the full 16:9 frame, sheets every 15th frame. |
 
 ## Measured costs (4 CPUs, no GPU)
-- Render: about **0.6-1.0 s per 1920x1080 frame**, i.e. ~17-30 s of render per video second at 30 fps, plus ~15 s
-  of world load per segment. A 10-minute episode is roughly 3-5 hours of render. Segments are independent, so
-  they split across worker sessions the same way Shorts do.
-- Narration: ~10 s of synthesis per line on CPU.
-- Assembly: a few minutes (one 1080p encode).
+- Render: about **0.5-0.8 s per 1920x1080 frame** (boat_clutch: 909 frames in 11.6 min), i.e. ~15-25 s of render per
+  video second at 30 fps, plus ~15 s of world load per segment. The pilot's five segments took ~70 min. A 10-minute
+  episode is roughly 3-4 hours. Segments are independent, so they split across worker sessions like Shorts do.
+- Narration: ~10 s of synthesis per line on CPU (17 lines, 79 s of voice, ~3 min).
+- Assembly: ~5 min (one 1080p encode); a mix-only change reuses the encode.
 
 ## What changes vs the Shorts rules
 | | Shorts | long form |

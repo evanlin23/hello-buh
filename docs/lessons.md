@@ -382,3 +382,24 @@ each section.
 - Tooling: when run.sh's botTimeout kills a try, nothing is logged except "stunt failed N times", and the stale out/*.mp4 stays in place. Add a timeout log line and remove the stale output on failure. (worker 4)
 - Engine (worker 3): no tool-break particles or sound (golem's sword); seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666; every_clutch's frozen lake); redstone ore shows no dust while being mined; bucket use shows no arm swing.
 - Engine (worker 18): no lightning bolt is drawn, so storms have thunder sound only.
+- Audio (orchestrator, long-form pilot): recordings made before the harness logged sounds (no `sound` or `hurt` events,
+  e.g. boat_clutch) fall back to audio.py's water-clutch rebuild, which plays `item.bucket.empty` and a high-speed
+  splash on the last `placed` mark. On boat_clutch that's a bucket and a splash on the final boat landing (in the
+  published Short too, under the song). Fix: only rebuild the water-clutch sounds for water-clutch stunts, or
+  re-record. The long-form episode mutes both (`mute_sounds`).
+
+## Long form (orchestrator, 2026-11-08; docs/longform.md)
+- **A clip cut from a segment starts after any cut inside it.** The cold open started 0.2 s before
+  one_in_a_million's teleport to build limit, so 6 frames of the previous beat ("INSANE" on the cactus drop) led the
+  video. Start a clip a frame or two after the cut mark (`plan` lists them).
+- **Every chapter is >= 10 s, or YouTube drops the whole chapter list.** The intro was a 5 s cold open + a 5 s title.
+  Start chapter 1 on its footage, not its card (`build` warns).
+- **Vanilla falls are nearly silent.** Between narration lines the boat and ladder drops measured -70 LUFS of game
+  audio, a 7 dB dip after every line. The NCS bed carries the action (-24 LUFS, ducked 10 dB under the voice) and
+  falls get `wind` (`sfx_extra`); the narrated and action stretches now sit within 2-4 dB.
+- **A long card needs moving footage behind it.** The 12 s outro on a still frame read as a frozen video
+  (`stuck 11.7 s`). Use `bg_clip`.
+- **Thumbnails come from the raw render** (`work/lf/<seg>.frames`), not the edit: the HUD, the beat counter and the
+  block count fought the title. Centre the crop on the subject, not the crosshair (the bot drifts on purpose).
+- **The wider frame shows the neighbouring sets.** clutch_harder's other pillars and the lava pool are in view at
+  16:9; the near-square Short crop hid most of them. Plan sets for 16:9 if they'll be used in long form.

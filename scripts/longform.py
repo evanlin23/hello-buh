@@ -72,6 +72,12 @@ def seg_args(meta, cfg):
             del args[i:i + 2]
         if val is not False:
             args += [flag, str(val)]
+    if cfg.get("sfx_extra"):   # more sound effects on top of the published ones (e.g. wind on falls: vanilla falls are silent)
+        old = json.loads(opt(args, "--sfx")) if opt(args, "--sfx") else []
+        if "--sfx" in args:
+            i = args.index("--sfx")
+            del args[i:i + 2]
+        args += ["--sfx", json.dumps(old + cfg["sfx_extra"])]
     for flag, val in (cfg.get("extra") or {}).items():   # e.g. {"--subs_y": "0.3"}
         if flag in args:
             i = args.index(flag)
@@ -186,9 +192,17 @@ def render_segment(seg, cfg, fps):
     else:
         shutil.rmtree(rdir, ignore_errors=True)
     # 4. game audio rebuilt from the recording, then the 16:9 edit
-    wav = LF / f"{seg}.wav"
-    if not wav.exists():
-        run(["python3", "audio.py", rec_path, wav], cwd=HERE)
+    # (`mute_sounds`: vanilla sound events audio.py must not play here. Recordings older than the harness's sound log
+    # get audio.py's water-clutch rebuild, which put a bucket and a splash on boat_clutch's last boat landing)
+    wav, wkey = LF / f"{seg}.wav", LF / f"{seg}.wav.key"
+    mute = sorted(cfg.get("mute_sounds") or [])
+    if not (wav.exists() and wkey.exists() and wkey.read_text() == json.dumps(mute)):
+        code = ("import sys, json, audio\n"
+                "mute, play = set(json.loads(sys.argv[1])), audio.Mixer.play\n"
+                "audio.Mixer.play = lambda self, ev, *a, **k: None if ev in mute else play(self, ev, *a, **k)\n"
+                "audio.main(sys.argv[2], sys.argv[3])")
+        run(["python3", "-c", code, json.dumps(mute), rec_path, wav], cwd=HERE)
+        wkey.write_text(json.dumps(mute))
     out = LF / f"{seg}.mp4"
     run(["python3", "scripts/landscape_edit.py", "--frames", fdir / "f%05d.png", "--fps", fps, "--out_fps", fps,
          "--timeline", rec_path, "--audio", wav, *args, "--out", out], cwd=HERE)

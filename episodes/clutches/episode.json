@@ -1,51 +1,515 @@
 {
  "name": "lf_clutches",
  "title": "I Tested Every Minecraft Clutch (Easy to Impossible)",
- "description": "Boat, ladder, water bucket, ender pearl... and one jump from build limit into a single block of water in the middle of a lava lake. Every clutch is real survival gameplay.",
- "hashtags": ["#minecraft", "#minecraftclutch", "#mlg"],
+ "description": "Boat, ladder, water bucket, ender pearl... and one jump from build limit into a single block of water in the middle of a lava lake. Every landing uses real vanilla mechanics.",
+ "hashtags": [
+  "#minecraft",
+  "#minecraftclutch",
+  "#mlg"
+ ],
  "fps": 30,
- "music": {"file": "feel_good_funk.mp3", "start": 0, "lufs": -30},
- "thumbnail": {"frame": ["one_in_a_million", 24.2], "ring": [0.5, 0.5, 70], "text": [["EVERY", "yellow"], ["CLUTCH", "white"]]},
+ "music": {
+  "file": "feel_good_funk.mp3",
+  "start": 0,
+  "lufs": -24
+ },
+ "thumbnail": {
+  "frame": [
+   "one_in_a_million",
+   25.8
+  ],
+  "raw": true,
+  "zoom": 1.8,
+  "subject": [
+   -74,
+   4
+  ],
+  "target": [
+   0.7,
+   0.62
+  ],
+  "ring": 100,
+  "text": [
+   [
+    "EVERY",
+    "yellow"
+   ],
+   [
+    "CLUTCH",
+    "white"
+   ]
+  ],
+  "text_size": 150
+ },
  "segments": {
-  "boat_clutch": {},
-  "ladder_clutch": {},
-  "clutch_harder": {},
+  "boat_clutch": {
+   "mute_sounds": [
+    "item.bucket.empty",
+    "entity.player.splash.high_speed"
+   ],
+   "sfx_extra": [
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 0,
+      "gain": 0.3
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 1,
+      "gain": 0.33
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 2,
+      "gain": 0.36
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 3,
+      "gain": 0.39
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 4,
+      "gain": 0.42
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 5,
+      "gain": 0.45
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 6,
+      "gain": 0.48
+     }
+    ],
+    [
+     "impact",
+     "landed",
+     {
+      "nth": 6,
+      "gain": 0.5
+     }
+    ]
+   ]
+  },
+  "ladder_clutch": {
+   "sfx_extra": [
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 0,
+      "gain": 0.3
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 1,
+      "gain": 0.325
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 2,
+      "gain": 0.35
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 3,
+      "gain": 0.375
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 4,
+      "gain": 0.4
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 5,
+      "gain": 0.425
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 6,
+      "gain": 0.45
+     }
+    ],
+    [
+     "wind",
+     "jump",
+     "landed",
+     {
+      "nth": 7,
+      "gain": 0.475
+     }
+    ],
+    [
+     "impact",
+     "landed",
+     {
+      "nth": 0,
+      "gain": 0.45
+     }
+    ]
+   ]
+  },
+  "clutch_harder": {
+   "sfx_extra": [
+    [
+     "wind",
+     "jump1",
+     "placed1",
+     {
+      "gain": 0.32
+     }
+    ],
+    [
+     "wind",
+     "jump2",
+     "placed2",
+     {
+      "gain": 0.32
+     }
+    ],
+    [
+     "wind",
+     "jump3",
+     "placed3",
+     {
+      "gain": 0.32
+     }
+    ],
+    [
+     "wind",
+     "jump4",
+     "placed4",
+     {
+      "gain": 0.32
+     }
+    ],
+    [
+     "wind",
+     "jump8",
+     "placed8",
+     {
+      "gain": 0.32
+     }
+    ],
+    [
+     "wind",
+     "fall5",
+     "teleported5",
+     {
+      "gain": 0.32
+     }
+    ],
+    [
+     "wind",
+     "fall6",
+     "teleported6",
+     {
+      "gain": 0.32
+     }
+    ],
+    [
+     "wind",
+     "fall7",
+     "teleported7",
+     {
+      "gain": 0.32
+     }
+    ]
+   ]
+  },
   "lava_crossing": {},
   "one_in_a_million": {}
  },
  "pieces": [
-  {"id": "cold", "kind": "clip", "seg": "one_in_a_million", "from": 21.3, "to": 26.36},
-  {"id": "title", "kind": "card", "dur": 4.4, "bg": ["one_in_a_million", 24.2], "kicker": "HELLOBUH TESTS", "title": "EVERY CLUTCH", "sub": "easy to impossible"},
-  {"id": "c1", "kind": "card", "dur": 2.6, "bg": ["boat_clutch", 3.0], "kicker": "CLUTCH #1", "title": "THE BOAT", "chapter": "Clutch #1: the boat"},
-  {"id": "boat", "kind": "seg", "seg": "boat_clutch"},
-  {"id": "c2", "kind": "card", "dur": 2.6, "bg": ["ladder_clutch", 6.6], "kicker": "CLUTCH #2", "title": "THE LADDER", "chapter": "Clutch #2: the ladder"},
-  {"id": "ladder", "kind": "seg", "seg": "ladder_clutch"},
-  {"id": "c3", "kind": "card", "dur": 3.0, "bg": ["clutch_harder", 3.0], "kicker": "CLUTCH #3", "title": "WATER BUCKET", "sub": "but every one is harder", "chapter": "Clutch #3: the water bucket"},
-  {"id": "harder", "kind": "seg", "seg": "clutch_harder"},
-  {"id": "c4", "kind": "card", "dur": 2.6, "bg": ["lava_crossing", 7.5], "kicker": "BONUS", "title": "CROSSING LAVA", "sub": "every way, rated", "chapter": "Bonus: crossing lava"},
-  {"id": "lava", "kind": "seg", "seg": "lava_crossing"},
-  {"id": "c5", "kind": "card", "dur": 3.0, "bg": ["one_in_a_million", 15.5], "kicker": "THE FINAL TEST", "title": "1 IN A MILLION", "chapter": "The final test: 1 in a million"},
-  {"id": "oiam", "kind": "seg", "seg": "one_in_a_million"},
-  {"id": "outro", "kind": "card", "dur": 12.0, "bg": ["one_in_a_million", 27.3], "kicker": "THE RANKING", "chapter": "The ranking",
-   "list": [["#1", "BOAT", "the easiest"], ["#2", "WATER BUCKET", "the classic"], ["#3", "LADDER", "hardest to time"], ["#4", "LAVA BUCKET", "a choice"]]}
+  {
+   "id": "cold",
+   "kind": "clip",
+   "seg": "one_in_a_million",
+   "from": 21.54,
+   "to": 26.36
+  },
+  {
+   "id": "title",
+   "kind": "card",
+   "dur": 5.0,
+   "bg": [
+    "one_in_a_million",
+    24.2
+   ],
+   "bg_clip": [
+    "one_in_a_million",
+    21.6
+   ],
+   "kicker": "HELLOBUH TESTS",
+   "title": "EVERY CLUTCH",
+   "sub": "easy to impossible"
+  },
+  {
+   "id": "c1",
+   "kind": "card",
+   "dur": 2.6,
+   "bg": [
+    "boat_clutch",
+    3.0
+   ],
+   "kicker": "CLUTCH #1",
+   "title": "THE BOAT"
+  },
+  {
+   "id": "boat",
+   "kind": "seg",
+   "seg": "boat_clutch",
+   "chapter": "Clutch #1: the boat"
+  },
+  {
+   "id": "c2",
+   "kind": "card",
+   "dur": 2.6,
+   "bg": [
+    "ladder_clutch",
+    6.6
+   ],
+   "kicker": "CLUTCH #2",
+   "title": "THE LADDER",
+   "chapter": "Clutch #2: the ladder"
+  },
+  {
+   "id": "ladder",
+   "kind": "seg",
+   "seg": "ladder_clutch"
+  },
+  {
+   "id": "c3",
+   "kind": "card",
+   "dur": 3.0,
+   "bg": [
+    "clutch_harder",
+    3.0
+   ],
+   "kicker": "CLUTCH #3",
+   "title": "WATER BUCKET",
+   "sub": "but every one is harder",
+   "chapter": "Clutch #3: the water bucket"
+  },
+  {
+   "id": "harder",
+   "kind": "seg",
+   "seg": "clutch_harder"
+  },
+  {
+   "id": "c4",
+   "kind": "card",
+   "dur": 2.6,
+   "bg": [
+    "lava_crossing",
+    7.5
+   ],
+   "kicker": "BONUS",
+   "title": "CROSSING LAVA",
+   "sub": "every way, rated",
+   "chapter": "Bonus: crossing lava"
+  },
+  {
+   "id": "lava",
+   "kind": "seg",
+   "seg": "lava_crossing"
+  },
+  {
+   "id": "c5",
+   "kind": "card",
+   "dur": 3.0,
+   "bg": [
+    "one_in_a_million",
+    15.5
+   ],
+   "kicker": "THE FINAL TEST",
+   "title": "1 IN A MILLION",
+   "chapter": "The final test: 1 in a million"
+  },
+  {
+   "id": "oiam",
+   "kind": "seg",
+   "seg": "one_in_a_million"
+  },
+  {
+   "id": "outro",
+   "kind": "card",
+   "dur": 12.0,
+   "bg": [
+    "one_in_a_million",
+    27.3
+   ],
+   "bg_clip": [
+    "boat_clutch",
+    16.0
+   ],
+   "kicker": "THE RANKING",
+   "chapter": "The ranking",
+   "list": [
+    [
+     "#1",
+     "BOAT",
+     "the easiest"
+    ],
+    [
+     "#2",
+     "WATER BUCKET",
+     "the classic"
+    ],
+    [
+     "#3",
+     "LADDER",
+     "hardest to time"
+    ],
+    [
+     "#4",
+     "LAVA BUCKET",
+     "a choice"
+    ]
+   ]
+  }
  ],
  "narration": [
-  ["N01", "cold", 0.1],
-  ["N02", "title", 0.3],
-  ["N03", "c1", 0.2],
-  ["N04", "boat", 0.55],
-  ["N05", "boat", 28.85],
-  ["N06", "c2", 0.45],
-  ["N07", "ladder", 1.95],
-  ["N08", "ladder", 13.9],
-  ["N09", "c3", 0.3],
-  ["N10", "harder", 18.45],
-  ["N11", "harder", 27.4],
-  ["N12", "harder", 30.0],
-  ["N13", "c4", 0.9],
-  ["N14", "lava", 14.65],
-  ["N15", "c5", 0.3],
-  ["N16", "oiam", 21.55],
-  ["N17", "outro", 0.5]
+  [
+   "N01",
+   "cold",
+   0.1
+  ],
+  [
+   "N02",
+   "title",
+   0.7
+  ],
+  [
+   "N03",
+   "c1",
+   0.35
+  ],
+  [
+   "N04",
+   "boat",
+   0.55
+  ],
+  [
+   "N05",
+   "boat",
+   28.85
+  ],
+  [
+   "N06",
+   "c2",
+   0.45
+  ],
+  [
+   "N07",
+   "ladder",
+   1.95
+  ],
+  [
+   "N08",
+   "ladder",
+   13.9
+  ],
+  [
+   "N09",
+   "c3",
+   0.3
+  ],
+  [
+   "N10",
+   "harder",
+   18.45
+  ],
+  [
+   "N11",
+   "harder",
+   27.4
+  ],
+  [
+   "N12",
+   "harder",
+   30.0
+  ],
+  [
+   "N13",
+   "c4",
+   0.9
+  ],
+  [
+   "N14",
+   "lava",
+   14.65
+  ],
+  [
+   "N15",
+   "c5",
+   0.3
+  ],
+  [
+   "N16",
+   "oiam",
+   21.55
+  ],
+  [
+   "N17",
+   "outro",
+   0.5
+  ]
  ]
 }
