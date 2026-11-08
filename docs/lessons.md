@@ -380,3 +380,5 @@ each section.
 - Dropped item entities on the death screen draw only their shadow discs, with no item on top (every_clutch f1795-1812, drops).
 - Possible: lava stays visible next to flowing water for 0.2-0.3 s before it turns to cobblestone (lava_cast f672-684, f1590-1610). Vanilla converts on the same tick, so the renderer may apply the block update late. (worker 4)
 - Tooling: when run.sh's botTimeout kills a try, nothing is logged except "stunt failed N times", and the stale out/*.mp4 stays in place. Add a timeout log line and remove the stale output on failure. (worker 4)
+- Engine (worker 3): no tool-break particles or sound (golem's sword); seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666; every_clutch's frozen lake); redstone ore shows no dust while being mined; bucket use shows no arm swing.
+- Engine (worker 18): no lightning bolt is drawn, so storms have thunder sound only.
