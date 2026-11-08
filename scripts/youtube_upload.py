@@ -124,14 +124,14 @@ def pick(vd: Path, done: dict) -> tuple[str | None, str]:
 
 
 def publish_at(slot: int) -> str:
-    """A random minute in slice `slot` of the day's window (kept 20 min from the slice edges, so two publishes are
-    at least 40 min apart). If that slice has already passed today, the same slice tomorrow."""
+    """A random minute in slice `slot` of the day's window (kept 45 min from the slice edges, so two publishes are
+    at least 90 min apart). If that slice has already passed today, the same slice tomorrow."""
     now = central_now()
     (h0, m0), (h1, m1) = WINDOW
     lo, hi = h0 * 60 + m0, h1 * 60 + m1
     n = max(1, PER_DAY)
     w = (hi - lo) / n
-    a, b = int(lo + slot % n * w) + 20, int(lo + (slot % n + 1) * w) - 20
+    a, b = int(lo + slot % n * w) + 45, int(lo + (slot % n + 1) * w) - 45
     mins = random.randint(a, max(a, b))
     at = now.replace(hour=mins // 60, minute=mins % 60, second=0, microsecond=0)
     if at < now + dt.timedelta(minutes=45):
@@ -165,6 +165,39 @@ def issue(title: str, body: str) -> None:
         subprocess.run(["gh", "issue", "create", "--repo", REPO, "--title", title, "--body", body])
     else:
         print(f"[issue] {title}\n{body}")
+
+
+def suppressed(yt, done: dict) -> str:
+    """The BuhExplains lesson: a channel YouTube stops showing gets ~0 views on every new Short. If the last 3+ auto
+    uploads that have been public for 24-96 h ALL have under 50 views, stop and tell the owner instead of feeding
+    more videos into a held-back channel. Returns the reason, or "" when all is well."""
+    now = dt.datetime.now(dt.timezone.utc)
+    recent = []
+    for name, e in done.items():
+        if e.get("by") != "auto" or not e.get("video_id") or not e.get("publish_at"):
+            continue
+        age = now - dt.datetime.strptime(e["publish_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc)
+        if dt.timedelta(hours=24) <= age <= dt.timedelta(hours=96):
+            recent.append((name, e["video_id"]))
+    if len(recent) < 3:
+        return ""
+    items = yt.videos().list(part="statistics", id=",".join(v for _, v in recent[:50])).execute().get("items", [])
+    views = {it["id"]: int(it.get("statistics", {}).get("viewCount", 0)) for it in items}
+    if all(views.get(v, 0) < 50 for _, v in recent):
+        return ", ".join(f"{n} {views.get(v, 0)} views" for n, v in recent)
+    return ""
+
+
+def pause(reason: str) -> None:
+    PAUSED.write_text(reason + "\n")
+    subprocess.run(["git", "add", str(PAUSED)], check=True)
+    subprocess.run(["git", "commit", "-m", "uploads: paused automatically (possible reach suppression)"], check=True)
+    ref = os.environ.get("GITHUB_REF_NAME", "")
+    if ref:
+        for _ in range(6):
+            if subprocess.run(["git", "push", "origin", f"HEAD:{ref}"]).returncode == 0:
+                break
+            subprocess.run(["git", "pull", "--rebase", "origin", ref], check=True)
 
 
 def open_issue(title: str) -> bool:
@@ -266,6 +299,19 @@ def main() -> None:
                 me = [c["id"] for c in yt.channels().list(part="id", mine=True).execute().get("items", [])]
                 if os.environ["YT_CHANNEL_ID"].strip() not in me:
                     sys.exit(f"the token belongs to {me}, not YT_CHANNEL_ID: refusing to upload")
+                why = suppressed(yt, done)
+                if why:
+                    msg = (f"Every recent auto upload is stuck under 50 views a day or more after going public ({why}). "
+                           "That is how the BuhExplains suppression looked, so uploads are paused (uploads/PAUSED) instead "
+                           "of feeding more into a held-back channel. Check YouTube Studio (Analytics > Reach, 'Shown in "
+                           "feed'; any policy notices), then delete uploads/PAUSED on main to resume.")
+                    pause(msg)
+                    issue("HelloBuh uploads paused: recent Shorts get no views", msg)
+                    print(msg); return
+            elif slot > n_today:
+                gap = random.randint(240, 720)   # don't fire 3 uploads back to back within seconds
+                print(f"waiting {gap // 60} min before the next upload", flush=True)
+                import time; time.sleep(gap)
             if title in channel_titles(yt):
                 sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
                          "or record it in uploads/uploads.json if it was uploaded by hand")

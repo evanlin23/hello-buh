@@ -28,7 +28,7 @@ concurrency:
 jobs:
   upload:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 120
     env:
       GH_TOKEN: ${{ github.token }}
       YT_ENABLED: ${{ vars.YT_ENABLED }}
@@ -54,6 +54,10 @@ jobs:
         run: |
           git config user.name evanlin23
           git config user.email 113861384+evanlin23@users.noreply.github.com
+          # the daily run starts at a different minute each day (0-40 min late): no clockwork pattern
+          if [ -z "${{ inputs.mode }}" ] || [ "${{ inputs.mode }}" = upload ] && [ -z "${{ inputs.short }}" ]; then
+            d=$((RANDOM % 2400)); echo "starting in $((d / 60)) min"; sleep $d; git pull -q --rebase origin main || true
+          fi
           case "${{ inputs.mode }}" in
             report)  python3 scripts/youtube_upload.py --report ;;
             dry-run) python3 scripts/youtube_upload.py --dry-run ;;

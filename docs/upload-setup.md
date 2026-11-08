@@ -51,3 +51,17 @@ schedule stays as a backup; a second run on the same day does nothing).
 - Never delete or re-upload a video that does badly: YouTube treats that as spam.
 - If the token dies (issue "upload failed" with "YT_REFRESH_TOKEN no longer works"): repeat step 2 and replace
   the `YT_REFRESH_TOKEN` secret.
+
+## Safeguards against looking like a bot (owner, 2026-11-08)
+- **No clockwork.** The daily run starts 0-40 min late at random. Each Short publishes at a random minute in its
+  own slice of 9:00-21:00 Central, at least 90 min from the next. The 3 uploads in a run are 4-12 min apart.
+- **Fixed daily cap** (`YT_PER_DAY`, default 3), counting hand uploads, so no bursts.
+- **No repeats.** A title already on the channel is refused (series parts have their own titles). Nothing is
+  ever deleted or re-uploaded.
+- **No same format twice in a row**, at most 1 pixel-art per 3 (`scripts/check_queue.py`).
+- **Only original, reviewed Shorts.** Status "ready" means all three reviews passed. Only NCS or original music,
+  credited. Made for kids: No. No synthetic-media flag (it's rendered gameplay, not realistic altered footage).
+- **Circuit breaker.** If the last 3+ auto uploads that have been public 24-96 h all have under 50 views (what the
+  BuhExplains suppression looked like), the run pauses uploads itself (`uploads/PAUSED`) and opens an issue
+  instead of feeding more videos to a held-back channel.
+- Only the HelloBuh channel: the token's channel must match `YT_CHANNEL_ID`.
