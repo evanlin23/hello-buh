@@ -26,7 +26,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hit a villager 💀',
   edit: {
-    caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'death', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:1.0',
+    caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'death', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:0.9',
     subs: [...BEATS.map((b, i) => ['beat', b.sub, 1.4, i]), ...BEATS.map((b, i) => ['golem', b.golems === 1 ? '1 golem' : `${b.golems} golems`, 1.2, i]), ...juggleSubs()],
     speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b`, 'cut'])
   },
