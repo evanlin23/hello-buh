@@ -33,9 +33,11 @@ module.exports = {
       await new Promise(r => setTimeout(r, 400))
       for (let i = 0; i < 8; i++) { try { await bot.waitForTicks(1); break } catch (e) { ctx.log('fill still running', i) } }
     }
-    for (let y0 = floor + 1; y0 <= floor + 37; y0 += 3) await bigFill(`/fill ${x - 40} ${y0} ${z - 40} ${x + 70} ${y0 + 2} ${z + 40} air`)
-    await bigFill(`/fill ${x - 40} ${floor} ${z - 40} ${x + 70} ${floor} ${z + 40} grass_block`)
-    await bigFill(`/fill ${x - 40} ${floor - 3} ${z - 40} ${x + 70} ${floor - 1} ${z + 40} dirt`)
+    for (const [xa, xb] of [[x - 40, x + 40], [x + 41, x + 125]]) {   // under the 32768 cap each
+      for (let y0 = floor + 1; y0 <= floor + 37; y0 += 3) await bigFill(`/fill ${xa} ${y0} ${z - 40} ${xb} ${y0 + 2} ${z + 40} air`)
+      await bigFill(`/fill ${xa} ${floor} ${z - 40} ${xb} ${floor} ${z + 40} grass_block`)
+      await bigFill(`/fill ${xa} ${floor - 3} ${z - 40} ${xb} ${floor - 1} ${z + 40} dirt`)
+    }
     // where the bot escapes to, and what's waiting right behind it there
     this.px = x + 40; this.pz = z + 1
     await ctx.cmd('/kill @e[type=villager]')
@@ -88,6 +90,8 @@ module.exports = {
     await ctx.easeLook(bot.entity.yaw, -0.15, 250)
     bot._client.write('block_dig', { status: 4, location: { x: 0, y: 0, z: 0 }, face: 0, sequence: 0 })
     bot.swingArm()
+    { const sl = 36 + bot.quickBarSlot, it = bot.inventory.slots[sl]   // the client predicts the drop (the server sends nothing): the HUD stayed at 32
+      if (it) { it.count -= 1; bot.inventory.updateSlot(sl, it.count > 0 ? it : null) } }
     ctx.mark('offer')
     setTimeout(() => ctx.log('emeralds after the drop:', bot.inventory.items().filter(i => i.name === 'emerald').reduce((n, i) => n + i.count, 0)), 600)
     const oy = bot.entity.yaw
@@ -104,14 +108,14 @@ module.exports = {
       const c = centroid(), d = bot.entity.position.minus(c); d.y = 0
       const len = Math.hypot(d.x, d.z)
       if (len < 7) return
-      if (villagers().some(e => e.position.distanceTo(bot.entity.position) < 3)) return   // they stop short of the camera
+      if (villagers().some(e => e.position.distanceTo(bot.entity.position) < 2.5)) return   // they stop short of the camera
       bot.chat(`/execute as @e[type=villager,tag=!scare] at @s run tp @s ~${(d.x / len * pace).toFixed(3)} ~ ~${(d.z / len * pace).toFixed(3)}`)
     }
     bot.on('physicsTick', move)
     const lookCrowd = async () => { const c = centroid().offset(0, 1.2, 0), eye = bot.entity.position.offset(0, 1.62, 0), d = c.minus(eye); await bot.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true) }
     // 1. backing away, facing them: they walk after it, keeping pace
     await ctx.easeLookAt(centroid().offset(0, 1.2, 0), 300)
-    pace = 0.2; ctx.mark('follow')
+    pace = 0.25; ctx.mark('follow')                          // a touch faster than it backs: they close in
     bot.setControlState('back', true)
     for (let i = 0; i < 70 && bot.entity.position.x < x + 16; i++) { await lookCrowd(); await bot.waitForTicks(1) }
     bot.setControlState('back', false)
@@ -120,7 +124,7 @@ module.exports = {
     await ctx.easeLook(-Math.PI / 2, 0, 300)                   // east
     pace = 0.26
     bot.setControlState('sprint', true); bot.setControlState('forward', true)
-    for (let i = 0; i < 60 && bot.entity.position.x < x + 32; i++) {
+    for (let i = 0; i < 60 && bot.entity.position.x < x + 29; i++) {
       await bot.waitForTicks(1)
       if (i === 22) { bot.setControlState('sprint', false); await ctx.easeLook(Math.PI / 2 - 0.4, -0.05, 300); await ctx.easeLook(-Math.PI / 2, 0, 300); bot.setControlState('sprint', true) }   // a glance over the shoulder mid-run
     }
@@ -131,10 +135,11 @@ module.exports = {
     const c3 = centroid().offset(0, 1.2, 0)
     await ctx.easeLookAt(c3, 450)
     ctx.sound('entity.villager.ambient', 0.9, 0.6)
-    pace = 0.12                                               // still creeping in
-    for (let i = 0; i < 18; i++) { await lookCrowd(); await bot.waitForTicks(1) }
-    // 4. the last stretch backwards to the pillar spot
-    pace = 0.26
+    pace = 0.2                                                // still coming (it backs off: a held still frame here read as a freeze)
+    bot.setControlState('back', true)
+    for (let i = 0; i < 10; i++) { await lookCrowd(); await bot.waitForTicks(1) }
+    // 4. the last stretch backwards to the pillar spot: they're faster now
+    pace = 0.31
     for (let i = 0; i < 200 && bot.entity.position.x < px + 0.4; i++) {
       await lookCrowd()
       const dz = pz + 0.5 - bot.entity.position.z
@@ -173,21 +178,22 @@ module.exports = {
       const c = centroid(), eye = bot.entity.position.offset(0, 1.62, 0), d = c.minus(eye)   // the camera stays on the ring forming
       await bot.look(bot.entity.yaw + (Math.atan2(-d.x, -d.z) - bot.entity.yaw) * 0.5, Math.atan2(d.y, Math.hypot(d.x, d.z)), true)
     }
-    // what waits behind it (built only now, out of sight: in view during the run it gave the twist away)
-    const tx = Math.floor(bot.entity.position.x) + 2, tz = Math.floor(bot.entity.position.z), topY = Math.floor(bot.entity.position.y)
-    bot.chat(`/fill ${tx} ${floor + 1} ${tz} ${tx} ${topY - 1} ${tz} stone`)
-    bot.chat(`/summon villager ${tx + 0.5} ${topY} ${tz + 0.5} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Tags:["scare"],Rotation:[90f,0f],VillagerData:{profession:"minecraft:nitwit",type:"minecraft:plains",level:2},Xp:1}`)
     // 6. up top: they're all round the base, staring up, as the sun goes down (smoothly)
     ctx.mark('top')
     const y0b = bot.entity.yaw
     await ctx.easeLook(y0b - 0.3, -1.0, 300)
     let t = 11200                                               // into sunset (6000-12000 is all day)
-    for (let i = 0; i < 70; i++) {
-      t += 26; bot.chat(`/time set ${t}`); ctx.mark('time', { time: t })
-      await bot.look(y0b + Math.PI * 1.4 * (i / 70) - 0.3, -1.0 + 0.12 * Math.sin(i / 11), true)   // looking down round the ring
+    for (let i = 0; i < 80; i++) {
+      t += 23; bot.chat(`/time set ${t}`); ctx.mark('time', { time: t })
+      await bot.look(y0b + Math.PI * 1.4 * (i / 80) - 0.3, -1.0 + 0.12 * Math.sin(i / 11), true)   // looking down round the ring
       await bot.waitForTicks(1)
     }
     bot.removeListener('physicsTick', gather)
+    // what waits behind it (built only now, after the look down round the ring: built before it, the sweep showed it and a villager walked into it)
+    const tx = bx + 2, tz = bz, topY = Math.floor(bot.entity.position.y)
+    bot.chat(`/fill ${tx} ${floor + 1} ${tz} ${tx} ${topY - 1} ${tz} stone`)
+    bot.chat(`/summon villager ${tx + 0.5} ${topY} ${tz + 0.5} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Tags:["scare"],Invulnerable:1b,Rotation:[90f,0f],VillagerData:{profession:"minecraft:nitwit",type:"minecraft:plains",level:2},Xp:1}`)
+    await bot.waitForTicks(2)
     ctx.sound('entity.villager.ambient', 0.6, 0.6)
     // 7. ...and turns round: face to face. A flinch.
     await ctx.easeLook(-Math.PI / 2, -0.05, 450)               // east
