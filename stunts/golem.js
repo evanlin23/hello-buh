@@ -10,7 +10,6 @@ const BEATS = [
   { villagers: 1, golems: 1, dx: -96, launches: 1, sub: '1 villager' },
   { villagers: 3, golems: 3, dx: -64, launches: 2, sub: '3 villagers' },
   { villagers: 5, golems: 5, dx: -32, launches: 3, sub: '5 villagers' },
-  { villagers: 7, golems: 7, dx: 0, launches: 4, sub: '7 villagers' },      // (3, like the 5: padding)
   { villagers: 10, golems: 10, dx: 32, launches: 5, sub: '10 villagers' },
   { villagers: 15, golems: 15, dx: 64, launches: 6, sub: '15 villagers' },   // (closer golems: six beats ran 27.3 s; owner: 30 s minimum)
   { villagers: 20, golems: 20, dx: 96, launches: 1, sub: '20 villagers...' }
@@ -29,7 +28,7 @@ module.exports = {
     caption: 'POV: you hit a villager 💀', red: 'hit', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'death', startAt: 'beat:-0.05', deathScreen: true, endAfter: 'death:0.9',
     subs: [...BEATS.map((b, i) => ['beat', b.sub, 1.4, i]), ...BEATS.map((b, i) => ['golem', b.golems === 1 ? '1 golem' : `${b.golems} golems`, 1.2, i]), ...juggleSubs()],
     // the cut ends 0.1 s into the beat: the crowd still popped in 3 frames after it ended on spawnNb
-    speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b:0.1`, 'cut'])
+    speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b:0.25`, 'cut'])   // (0.1: still 3 empty frames before the crowd drew)
   },
   expectDeath: true,
   botTimeout: 300,   // 7 beats (~45 s) after a bigger field setup
@@ -43,15 +42,15 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
-    await ctx.cmd(`/forceload add ${x - 124} ${z - 120} ${x + 124} ${z + 26}`)   // (28 of the fills hit unloaded chunks)
+    await ctx.cmd(`/forceload add ${x - 124} ${z - 120} ${x + 124} ${z + 60}`)   // (28 of the fills hit unloaded chunks)
     await ctx.sleep(3000)
-    for (let z0 = z - 120; z0 <= z + 26; z0 += 6) {   // (to z - 80 a cut stone face showed behind the 7, 10 and 20 beats)   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
+    for (let z0 = z - 120; z0 <= z + 60; z0 += 6) {   // (to z + 26 a cut cliff and sliced canopies showed south of the 10 and 20 beats)   // (to z - 80 a cut stone face showed behind the 7, 10 and 20 beats)   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
       const z1 = Math.min(z0 + 5, z + 26)
       for (let y0 = floor + 1; y0 <= floor + 64; y0 += 8) await ctx.cmd(`/fill ${x - 124} ${y0} ${z0} ${x + 124} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
       await ctx.cmd(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
     }
-    await ctx.cmd(`/forceload remove ${x - 124} ${z - 120} ${x + 124} ${z + 26}`)
+    await ctx.cmd(`/forceload remove ${x - 124} ${z - 120} ${x + 124} ${z + 60}`)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     const profs = ['farmer', 'librarian', 'none', 'cleric', 'fletcher', 'mason', 'shepherd', 'butcher', 'armorer', 'toolsmith']
@@ -139,14 +138,16 @@ module.exports = {
       if (!last) ctx.mark('golem', { n: B.golems })
       let launched = false, n = 0, airborne = false, lastLaunch = -99
       const hp0 = bot.health
+      this.panYaw = bot.entity.yaw   // each beat's pan starts where the camera is
       for (let k = 0; k < 420 && !ctx.died; k++) {   // (320 cut the 7 beat at x3)
         // eyes on the middle of the swarm (one golem's face filled the frame and the count never showed)
         const gs = near('iron_golem').filter(e => e.position.distanceTo(bot.entity.position) < 14)
         const g = gs.length ? { position: gs.reduce((a, e) => a.plus(e.position), new ctx.Vec3(0, 0, 0)).scaled(1 / gs.length).offset(0, -0.6, 0) } : null
         if (g) {
           // in the air: look down at the ring falling away (the launch reads); on the ground: over their heads, not into a golem's chest
-          const e = bot.entity.position.offset(0, 1.62, 0), d = (airborne ? g.position.offset(0, 0.4, 0) : g.position.offset(0, 3.2, 0)).minus(e)   // in the air: down onto the ring around you
-          { const ty = Math.atan2(-d.x, -d.z), tp = Math.atan2(d.y, Math.hypot(d.x, d.z))   // eased: switching golems isn't a snap
+          // a slow pan round the ring at a fixed downward pitch (aiming at the swarm's centre, which is you, put one
+          // golem's face in the frame for ~13 s: review); steeper in the air so the ring drops away under you
+          { const ty = (this.panYaw = (this.panYaw ?? bot.entity.yaw) + 0.012), tp = airborne ? -0.75 : -0.3
             let dy = ty - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
             const kf = airborne ? 0.22 : 0.2   // (0.6 in the air snapped the view in 2-3 frames: a stutter, not a throw)
             await bot.look(bot.entity.yaw + dy * kf, bot.entity.pitch + (tp - bot.entity.pitch) * kf, true) }
