@@ -48,8 +48,10 @@ module.exports = {
       for (let dx = -6; dx <= 6; dx++) {
         for (let dz = -6; dz <= 6; dz++) {
           const b = ctx.surface(cx + dx, cz + dz)
-          if (!b || /water|lava|ice/.test(b.name)) return null
-          if (Math.abs(dx) <= 3 && Math.abs(dz) <= 3 && (Math.abs(b.position.y - c.position.y) > 1 || !['grass_block', 'dirt'].includes(b.name))) return null
+          if (!b || /water|lava|ice|snow/.test(b.name)) return null
+          // level and snowless all the way out (+-3 only: the lawn sank 2 into a snowy slope with dirt walls, review)
+          if (Math.abs(b.position.y - c.position.y) > 1 || !['grass_block', 'dirt'].includes(b.name)) return null
+          if (/snow/.test(bot.blockAt(b.position.offset(0, 1, 0))?.name || '')) return null
         }
       }
       return c.position
