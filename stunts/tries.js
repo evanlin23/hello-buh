@@ -24,7 +24,11 @@ module.exports = {
   name: 'tries',
   caption: `it took me ${MODES.length} tries 💀`,
   edit: {
-    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/ncs/industry_kiss.mp3', dropAt: 'saved', startAt: 'jump:-1.0', endAfter: 'saved:0.8',   // 'saved', not 'placed': the lava try places too
+    caption: `it took me ${MODES.length} tries 💀`, song: 'songs/ncs/industry_kiss.mp3', dropAt: 'saved', startAt: 'jump:-1.0', endAfter: 'saved:0.6',   // (0.8 ended on the cleared pad's dirt wall)
+    // the lava try: the lava is placed 1 tick before the fatal landing, so it showed for 3 frames. Slow the moment
+    // (0.15 s of footage over ~0.75 s) so it reads. Offsets from 'saved' (the only unique mark after it; no speed
+    // spans before it, so the recording's spacing holds)
+    speed: [['saved:-7.85', 'saved:-7.70', 0.2]],   // 'saved', not 'placed': the lava try places too
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
     // each try looks different (review: six identical falls read as a loop) and the counter shows on screen
     subs: subs()
