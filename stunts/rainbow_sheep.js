@@ -212,8 +212,10 @@ module.exports = {
       const e = bot.entity.position
       // over the last 5 blocks the view turns gradually onto the middle of the line (it ran past the last
       // sheep onto empty grass and then whipped ~100 degrees back)
-      const w = Math.max(0, Math.min(1, (this.x0 + 5.5 - e.x) / 5))
-      const ahead = new ctx.Vec3(e.x - 2.5, this.floor + 0.7, z + 0.5)
+      // eyes on the wool ahead until the hotbar's full: the last pickup (the payoff) happened off screen while the
+      // view had already turned onto the line (review). The turn onto the line comes after it
+      const w = full ? Math.max(0, Math.min(1, (this.x0 + 5.5 - e.x) / 5)) : 0
+      const ahead = new ctx.Vec3(e.x - 2.5, this.floor + 0.3, z + 2.6)   // where the popped wool lies
       const tgt = ahead.scaled(1 - w).plus(lineMid.scaled(w)), d = tgt.minus(e.offset(0, 1.62, 0))
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
@@ -230,7 +232,7 @@ module.exports = {
     for (const c of ['left', 'right', 'forward', 'back']) bot.setControlState(c, false)
     // the payoff: back off with the whole sheared, cycling line coming into frame (the full hotbar below); the
     // mark lands once the line fills the view (at the sweep's end the camera faced the grass past the line)
-    await ctx.easeLookAt(lineMid, 450)   // settle on the line (already mostly turned during the sweep)
+    await ctx.easeLookAt(lineMid, 700)   // onto the line, after the payoff
     bot.setControlState('back', true)
     for (let k = 0; k < 14; k++) {   // a short back-off: the line stays big (22 ticks left it a receding strip)
       const e = bot.entity.position, d = lineMid.minus(e.offset(0, 1.62, 0))
