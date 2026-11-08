@@ -1,38 +1,71 @@
-# Uploads the next ready Short from the videos branch, 3 times a day (or on demand).
-# Needs repo secrets YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN (see scripts/youtube_auth.py).
-# Optional repo variables: YT_AUDIO (song|nosong), YT_PRIVACY (private|public|unlisted).
+# @HelloBuh auto-upload: once a day, the next Short goes up PRIVATE with a scheduled publish at a varied time
+# (11:00-19:30 Central), and on Sundays a weekly report issue with every video's views. docs/upload-setup.md.
+# OFF until set up: does nothing unless the YT_* secrets, the variable YT_CHANNEL_ID and the variable
+# YT_ENABLED=true all exist. Pause any time by creating uploads/PAUSED on main.
+# The clock: cron-job.org dispatches this workflow daily (GitHub's own schedule below is a backup; it has
+# not fired reliably for this owner). Two runs on one day are harmless: the daily limit (YT_PER_DAY, default 1)
+# and the report's one-issue-per-day check stop doubles.
 name: upload-short
 on:
   schedule:
-    - cron: '17 14 * * *'   # times in UTC; adjust to the audience's peak hours
-    - cron: '17 19 * * *'
-    - cron: '17 23 * * *'
-  workflow_dispatch: {}
+    - cron: '7 13 * * *'      # 7:07 AM Central (CST)
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "upload | report | dry-run"
+        required: false
+        default: "upload"
+      short:
+        description: "upload this Short now instead of the next in uploads/queue.txt (blank = next)"
+        required: false
+        default: ""
 permissions:
   contents: write
-concurrency: upload-short
+  issues: write
+concurrency:
+  group: upload-short
+  cancel-in-progress: false
 jobs:
   upload:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      YT_ENABLED: ${{ vars.YT_ENABLED }}
+      YT_CHANNEL_ID: ${{ vars.YT_CHANNEL_ID }}
+      YT_PER_DAY: ${{ vars.YT_PER_DAY }}
+      YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+      YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+      YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
     steps:
+      - name: off unless enabled
+        if: ${{ vars.YT_ENABLED != 'true' && inputs.mode != 'dry-run' }}
+        run: echo "uploads are off (repo variable YT_ENABLED is not 'true'). Nothing done."
       - uses: actions/checkout@v4
-        with: { ref: main, path: main }
-      - uses: actions/checkout@v4
-        with: { ref: videos, path: hb-videos }
-      - name: Upload next Short
-        env:
-          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
-          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
-          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
-          YT_AUDIO: ${{ vars.YT_AUDIO || 'song' }}
-          YT_PRIVACY: ${{ vars.YT_PRIVACY || 'private' }}
+        if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
+        with: { python-version: "3.12" }
+      - if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
+        run: pip install -q google-api-python-client google-auth
+      - name: upload
+        if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
         run: |
-          if [ -z "$YT_REFRESH_TOKEN" ]; then echo "No YouTube secrets set yet (see scripts/youtube_auth.py)"; exit 0; fi
-          python3 main/scripts/youtube_upload.py hb-videos
-      - name: Record the upload
-        run: |
-          cd hb-videos
           git config user.name evanlin23
           git config user.email 113861384+evanlin23@users.noreply.github.com
-          git add uploads.json
-          git diff --cached --quiet || (git commit -m "Uploaded a Short" && git push origin videos)
+          case "${{ inputs.mode }}" in
+            report)  python3 scripts/youtube_upload.py --report ;;
+            dry-run) python3 scripts/youtube_upload.py --dry-run ;;
+            *)       python3 scripts/youtube_upload.py --short "${{ inputs.short }}" ;;
+          esac
+      - name: weekly report (Sundays, Central)
+        if: ${{ vars.YT_ENABLED == 'true' && (inputs.mode == '' || inputs.mode == 'upload') }}
+        continue-on-error: true
+        run: |
+          if [ "$(TZ=America/Chicago date +%u)" = 7 ]; then git pull -q --rebase origin main || true; python3 scripts/youtube_upload.py --report; fi
+      - name: tell the owner it failed
+        if: ${{ failure() }}
+        run: |
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "HelloBuh upload failed $(TZ=America/Chicago date +%F)" \
+            --body "The daily upload run failed: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID . Nothing was published by this run. Most common cause: the YouTube token expired (docs/upload-setup.md step 2)."

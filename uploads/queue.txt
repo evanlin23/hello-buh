@@ -1,0 +1,30 @@
+# @HelloBuh posting order (scripts/youtube_upload.py takes the first one not uploaded yet).
+# Rules (owner): never the same format twice in a row, at most 1 pixel-art per 3. Check: python3 scripts/check_queue.py
+# After this list runs out, any other "ready" Short on the videos branch goes up, still keeping the mix.
+clutch_harder
+guess_sound
+lapse_house
+chain_reaction
+story_respawn_tax
+hide_seek
+spot_wrong_2
+one_in_a_million
+guess_sound_2
+lapse_statue
+worse_lava
+villager_fired
+tnt_1000
+spot_wrong_3
+end_portal_job
+guess_sound_3
+lapse_rocket
+worse_sky
+it_rains
+ladder_clutch
+which_door
+noob_pro_hacker
+lava_cast
+worse_tnt
+fortune
+boat_clutch
+speed_build

@@ -1,0 +1,67 @@
+"""The posting mix for @HelloBuh (owner rules): never the same format twice in a row, at most 1 pixel-art per 3.
+
+    python3 scripts/check_queue.py [../hb-videos]   # check uploads/queue.txt (after what's already uploaded)
+
+series(name) is the format a Short belongs to; youtube_upload.py uses mix_ok() before every upload.
+Exit 1 if the queue breaks a rule, names a Short that isn't on the videos branch, or repeats a title.
+"""
+import json, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+# format families: same-family Shorts never go up back to back
+FAMILIES = [
+    ("lapse", lambda n: n.startswith("lapse_") or n in ("house_sizes",)),
+    ("spot", lambda n: n.startswith("spot_wrong")),
+    ("guess", lambda n: n.startswith("guess_sound")),
+    ("worse", lambda n: n.startswith("worse_")),
+    ("story", lambda n: n.startswith("story_")),
+    ("art", lambda n: n.endswith("_art") or n == "looks_wrong"),
+    ("clutch", lambda n: "clutch" in n or n in ("one_in_a_million",)),
+    ("versus", lambda n: n in ("tnt_1000", "noob_pro_hacker", "villager_crowd", "speed_build")),
+]
+
+
+def series(name: str) -> str:
+    for fam, f in FAMILIES:
+        if f(name):
+            return fam
+    return name
+
+
+def mix_ok(history: list, name: str) -> bool:
+    """history: names already up, oldest first."""
+    if history and series(history[-1]) == series(name):
+        return False
+    if series(name) == "art" and any(series(h) == "art" for h in history[-2:]):
+        return False
+    return True
+
+
+def main():
+    vd = Path(sys.argv[1] if len(sys.argv) > 1 else ROOT.parent / "hb-videos")
+    done = json.loads((ROOT / "uploads/uploads.json").read_text())
+    hist = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
+    q = [l.split("#")[0].strip() for l in (ROOT / "uploads/queue.txt").read_text().splitlines()]
+    q = [x for x in q if x and x not in done]
+    bad, titles = [], {v.get("title", "").strip() for v in done.values()}
+    for n in q:
+        m = vd / "shorts" / n / "metadata.json"
+        if not m.exists():
+            bad.append(f"{n}: not on the videos branch"); continue
+        meta = json.loads(m.read_text())
+        t = meta["youtube"]["title"].strip()
+        if meta.get("status") != "ready":
+            bad.append(f"{n}: status {meta.get('status')}")
+        if t in titles:
+            bad.append(f"{n}: title {t!r} repeats an earlier one")
+        titles.add(t)
+        if not mix_ok(hist, n):
+            bad.append(f"{n}: breaks the mix after {hist[-1]} ({series(n)})")
+        hist.append(n)
+    print("\n".join(bad) if bad else f"queue OK: {len(q)} Shorts, {len(q)} days at 1 a day")
+    sys.exit(1 if bad else 0)
+
+
+if __name__ == "__main__":
+    main()

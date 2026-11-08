@@ -69,26 +69,11 @@ The loop is in `docs/process.md`: make, render, frame QA, independent review, cl
 - Each fix adds a rule to `docs/lessons.md`.
 
 ## Uploading (automated)
-`.github/workflows/upload.yml` uploads the next ready Short from the `videos` branch 3 times a day
-(`scripts/youtube_upload.py`, YouTube Data API v3) with the package's title, description and
-hashtags, and records it in `uploads.json` on that branch so nothing goes up twice.
-One-time setup by the owner: reuse the existing Google Cloud project (YouTube Data API v3 already
-enabled, OAuth client already made). If you don't already have a refresh token with the
-`youtube.upload` scope *for the HelloBuh channel*, run `scripts/youtube_auth.py` on your own
-computer and sign in as HelloBuh (a token is per channel). Save
-`YT_CLIENT_ID`, `YT_CLIENT_SECRET` and `YT_REFRESH_TOKEN` as repo secrets. Optional repo
-variables: `YT_AUDIO` (`song` = baked-in NCS track, `nosong`) and `YT_PRIVACY`.
-- Uploads carry the baked-in NCS track (see Music). `YT_AUDIO=nosong` uploads game audio only.
-- Quota (checked against the official docs 2026-11-06, developers.google.com/youtube/v3/determine_quota_cost):
-  uploads have their own bucket, **100 `videos.insert` calls per day per Google Cloud project** at
-  1 unit each. It's shared by every channel that uploads through the project (the owner's other
-  channels use the same one: 9 uploads a day in total) and resets at midnight Pacific. `videos.update`
-  and `thumbnails.set` cost 50 of the separate 10,000 general units. More quota: the YouTube API
-  Services audit and quota extension form.
-- Per the current `videos.insert` page, uploads from unverified projects are *not* restricted to
-  private. The workflow defaults to private to be safe: set the repo variable `YT_PRIVACY=public`
-  to publish directly.
-- Packages with a metadata `status` other than `ready` (e.g. pearl_clutch) are skipped.
+`.github/workflows/upload-short` (`scripts/youtube_upload.py`) uploads one Short a day from the `videos` branch in
+`uploads/queue.txt` order, private with a scheduled publish at a random time 11:00-19:30 Central, and records it in
+`uploads/uploads.json`. It keeps the posting mix (`scripts/check_queue.py`), never re-uploads, refuses titles already
+on the channel, opens a weekly report issue on Sundays and an issue when a run fails. Off until set up:
+`docs/upload-setup.md`. Pause with `uploads/PAUSED`.
 
 ## Parallel workers
 The orchestrator session spawns worker cloud sessions (Claude Code `create_session`) that each
