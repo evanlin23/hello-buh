@@ -52,16 +52,40 @@ renders those frames (frame n = n / 10 s at fps 10).
   (three ticks left him balanced on the edge, his box still 0.08 blocks over the plank).
 
 ## Making a scene (the worker recipe)
+The goal is a scene that's right on its first render. Every re-take on reels 1-2 was something a tool now catches
+or prevents (see "Shots an agent can trust" below), so follow the loop and trust the lint.
 1. Copy `stunts/movie_reel.js` (night, a built set, two actors, a fall) or `stunts/movie_below.js` (dawn, terrain, a
-   camp of Mannequin extras). Set `cast`, `selfName`, `shots`, `look`, `fogSea`, `idleLife: true`.
+   camp of Mannequin extras). Set `cast`, `selfName`, `shots`, `look`, `fogSea`, `idleLife: true`, and for a
+   conversation `coverage: { line: ['self', 'actor:NAME'], side: 'south' }`.
+   Natural terrain: `./scripts/scout.sh` first and set `near: [x, z]` (the seed is fixed: the plains nearest spawn
+   is a quarter snow).
 2. `setup`: build the set (`/tick freeze` if water or fire must stay put), spawn the actors (`M.spawnActors`), place
    and equip them, summon the extras, put the POV character at their start.
-3. `perform`: start the motion first, then cut (`M.shotIn(ctx, name, ticks)` lands a cut a few ticks into an action),
-   lines with `M.line(ctx, who, text)`, gestures on lines (`nod`, `shake`, `lookAway`, `point`, `swing`).
-4. `STUNT=<name> ./scripts/record.sh`, then `python3 scripts/shot_sheet.py work/<name>.rec.json` and re-tune the
-   cameras in `shots` until every frame reads (no re-record needed: cameras are pure functions of time).
-5. Add it to an episode (`"local": true`), `longform.py render`, `build`, `qa_landscape.py`, and an independent review
+3. `perform`: start the motion first, then cut (`M.shotIn(ctx, name, ticks)` lands a cut a few ticks into an action).
+   Dialogue with `await M.say(ctx, who, text)`: it acts the line (speaker turns and nods, listeners turn to the speaker
+   and nod) and waits its reading time. `M.track(actor, () => point)` keeps a head on someone walking away.
+   A set piece the viewer must see: `M.slideBlocks` (blocks glide instead of popping) plus
+   `ctx.mark('beat', { at: [x, y, z], size: 1, what: 'the Well' })` so the lint checks it's big enough on screen.
+4. Shots: prefer the auto-framed ones (`{ two: [A, B] }`, `{ ots: S, over: A }`, `{ single: S, toward: A }`): no
+   coordinates to tune. Hand-placed cameras (`at`, `path`, `follow`) for establishing shots and set pieces; add
+   `subject: ['self']` so the lint checks them.
+5. `./scripts/scene.sh <name>`: records, lints, makes the shot sheet. Fix every PROBLEM. Camera-only fixes:
+   `NO_RECORD=1 ./scripts/scene.sh <name>`; try framings on the recording with `scripts/try_shots.py` (about 30 s).
+6. Add it to an episode (`"local": true`), `longform.py render`, `build`, `qa_landscape.py`, and an independent review
    with `docs/movie_reviewer_prompt.md`. Fix, then re-render.
+
+### Shots an agent can trust
+| Tool | What it does | Why (the re-take it removes) |
+|---|---|---|
+| `renderer/framing.js`: `two`, `ots`, `single` shot specs | the camera is placed from where the actors stand at the shot's start (or every frame with `anchor: 'live'`), on the `coverage.side` of the line, swung or raised until nothing solid or no other actor is between it and the faces; sizes close / medium / wide | cameras inside roofs and behind posts, a head hiding the other actor, the 180-degree line crossed (reels 1-2) |
+| `LINT=1 node render.js work/<s>.rec.json` (`renderer/lint.js`) | replays the recording through the render's own cameras and block changes: camera in a block; subject hidden, covered by an actor, out of frame, under the letterbox, too small; line crossed; same-framing cuts; shots too short or frozen; nobody moving for 1 s+; `beat` marks too small to see; lines across cuts. Exit 1 on problems | every finding of review v2 that geometry can answer, before a 15-minute render |
+| `M.say(ctx, who, text, { to, gesture, hold })` | a line with its acting, timed to its reading time | dialogue shots where nobody moved |
+| `M.track(actor, pointFn)` | a head that follows someone | the Highkeeper stared at the deck while Ash walked out |
+| `M.slideBlocks(ctx, box, by, names, ticks)` + render.js `slide_blocks` | blocks moved by `/clone ... move` glide over `ticks` | the Well's slide was a 2 px pop |
+| `scripts/try_shots.py REC '{json}' --at SEC` | candidate cameras on an existing recording, one sheet | re-recording to move a camera |
+| `scripts/scout.sh` (`stunts/scout.js`) | ranks `near` start points per biome: green, cold, water, height spread | the snowy plains under the Below |
+| `scripts/scene.sh <stunt>` | record, lint, shot sheet in one go | forgetting a step |
+| `look.handLift`, `fogSea.night` | a first-person item readable at night; a moonlit fog sea | the empty bucket read as a dark sleeve |
 
 **Cinematography rules** (what the reviewers check):
 - Every shot opens on motion: an actor already moving, or the camera already drifting. Never a still cast.

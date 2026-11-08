@@ -1,7 +1,8 @@
 // Movie engine test reel 2 (docs/movie_engine.md): BUILD LIMIT scenes 16-17, "the Below". BUH (the recording bot)
 // climbs down Fen's ladder out of the fog. Under it, at dawn, is a whole green world: a lake right under the
 // Needle, a camp of the "missed" (Mannequins, the 1.21.9 player-shaped mob, as extras), and ASH (an actor bot) at
-// the shore with a fishing rod. Buh walks over; Ash turns: "Took you long enough, Buh."
+// the shore with a fishing rod. Buh walks over: "Ash?" Ash turns: "Took you long enough, Buh." and leads him into
+// the camp: "Come meet the ones who missed." (v1 ended on a 3 s two-shot where nobody moved: QA stuck 12.9-15.9 s)
 //
 // What it proves beyond reel 1: the fog sea from inside and from below (a ceiling), dawn light, natural terrain,
 // a first-person ladder descent, an actor holding an item, Mannequin extras, the cinematic look in daylight.
@@ -17,12 +18,13 @@ const FOG0 = 96, FOG1 = 126
 module.exports = {
   name: 'movie_below',
   biome: 'minecraft:plains',
+  near: [1200, 0],              // (the plains nearest spawn on this seed is a quarter snow and ice: the POV saw it from 30 up)
   time: 23300,                  // just before sunrise: the sun on the horizon under the fog ceiling
   renderDistance: 12, recordRadius: 192,
   botTimeout: 600,
   fogSea: { y0: FOG0, y1: FOG1, layers: 16, density: 0.985, fade: 5 },
   look: { grade: 'dawn', bloom: 0.5, bloomThreshold: 0.72, vignette: 0.4, grain: 0.03, letterbox: 2.39, dof: { aperture: 0.8 }, shadows: true },
-  cast: { self: 'steve', Ash: 'kai', Mira: 'alex', Tobin: 'ari', Wren: 'makena', Oslo: 'noor', Pell: 'sunny', Juno: 'zuri' },
+  cast: { self: 'steve', Ash: 'noor', Mira: 'alex', Tobin: 'ari', Wren: 'makena', Oslo: 'kai', Pell: 'sunny', Juno: 'zuri' },   // (Ash as in reel 1; kai's back of head reads as a face)
   selfName: 'Buh',
   idleLife: true,
   // offsets from O = (X, F, Z)
@@ -35,8 +37,8 @@ module.exports = {
     follow: { follow: 'self', offset: [-2.6, 1.1, -2.4], look: { of: 'self', offset: [1.0, -0.3, 3.0] }, lag: 3, fov: 62 },
     // Ash turns to him: from Buh's side, his shoulder at the frame's edge
     ash: { at: { of: 'actor:Ash', offset: [1.3, 0.15, 2.3] }, look: 'actor:Ash', fov: 48 },
-    // the two of them, the lake and the Needle behind
-    two: { at: [3.5, 2.8, 12.5], look: [-3.6, 1.7, 7.6], fov: 38 }   // (v1 sat behind the lantern post and over a campfire; same side of the two of them as 'ash')
+    // behind the two of them as Ash leads him into the camp: the fires and the missed ahead
+    walk: { follow: 'actor:Ash', offset: [1.4, 1.4, -3.4], look: { of: 'actor:Ash', offset: [-0.4, -0.3, 4.5] }, lag: 4, fov: 60 }
   },
   edit: { startAt: 'start:0.3', endAfter: 'end_scene:0.6' },
 
@@ -79,7 +81,7 @@ module.exports = {
     await ctx.cmd('/gamemode survival')
     // (sneaking holds you on a ladder: without it he slid down before the teleport check, 'did not stick')
     bot.setControlState('sneak', true)
-    await ctx.cmd(`/tp @s ${X + 0.5} ${FOG0 + 4} ${Z + 1.5} 0 35`)   // (4 above the fog's foot: at 7 the POV was 2.5 s of white)
+    await ctx.cmd(`/tp @s ${X + 0.5} ${FOG0 + 1.5} ${Z + 1.5} 0 35`)   // (1.5 above the fog's foot: at 7 the POV was 2.5 s of white, at 4 still 2.2 s)
     await bot.waitForTicks(20)
     return { x: X, y: F, z: Z }
   },
@@ -109,18 +111,29 @@ module.exports = {
     for (let k = 0; k < 120 && bot.entity.position.z < Z + 7.6; k++) { await bot.look(SOUTH, 0.05, true); await bot.waitForTicks(1) }
     for (let k = 0; k < 120 && bot.entity.position.x > X - 2.7; k++) { await bot.look(WEST, 0.05, true); await bot.waitForTicks(1) }
     bot.setControlState('forward', false)
+    M.line(ctx, 'Buh', 'Ash?')
     // 4. Ash turns around
     M.shot(ctx, 'ash')
-    await M.lookAt(ash, bot.entity.position.offset(0, 1.62, 0), 700)
+    await bot.waitForTicks(6)
+    await M.lookAt(ash, bot.entity.position.offset(0, 1.62, 0), 600)
     M.line(ctx, 'Ash', 'Took you long enough, Buh.')
-    await bot.waitForTicks(36)
-    // 5. the two of them
-    M.shot(ctx, 'two')
-    await ctx.easeLookAt(ash.entity.position.offset(0, 1.62, 0), 400)
-    await M.nod(ash)
-    await bot.waitForTicks(30)
-    ctx.mark('end_scene')
-    await bot.waitForTicks(30)   // (the actors quit after this: the edit ends 0.6 s after end_scene)
+    await bot.waitForTicks(34)
+    // 5. he leads him into the camp, talking as they go (the scene ends on the move, not on a held two-shot)
+    M.line(ctx, 'Ash', 'Come meet the ones who missed.')
+    const walking = M.walkTo(ash, X - 1.6, Z + 15.2)
+    M.shotIn(ctx, 'walk', 6)
+    await bot.waitForTicks(4)
+    bot.setControlState('forward', true)
+    for (let k = 0; k < 70; k++) {
+      const a = ash.entity.position, p = bot.entity.position
+      const gx = a.x + 1.1, gz = a.z - 1.2   // a step behind him, on his left
+      await bot.look(Math.atan2(-(gx - p.x), -(gz - p.z)), 0.05, true)
+      bot.setControlState('forward', Math.hypot(gx - p.x, gz - p.z) > 0.5)
+      if (k === 36) ctx.mark('end_scene')
+      await bot.waitForTicks(1)
+    }
+    bot.setControlState('forward', false)
+    await walking
     M.quitActors(ctx)
     return true
   }
