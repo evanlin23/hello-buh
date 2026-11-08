@@ -245,8 +245,12 @@ module.exports = {
     await lane(8, async () => {
       // ~3.5 s: the sky and the sides near-missing it for 2 s while the wall comes, then it all closes in
       const w = wall(L(8), sz - 26, 3, [-4, -2, 0, 2, 4], sz + 30)
-      for (let k = 0; k < 160 && !ctx.died; k++) {
-        const p = bot.entity.position, close = k > 115   // (the near misses at 10 / 9 out killed it at k ~ 79 in the render: 27.7 s) ~5 s of near misses, then it all closes in (the trimmed lane ends took ~2 s: keeps the Short at 30 s+)
+      // hidden Resistance IV through the near misses, cleared as it all closes in: a random near miss killed it
+      // early twice (27.7 s and 29.5 s renders), so the death has to come from the close-in
+      bot.chat('/effect give @s resistance 10 3 true')
+      for (let k = 0; k < 170 && !ctx.died; k++) {
+        if (k === 126) bot.chat('/effect clear @s resistance')
+        const p = bot.entity.position, close = k > 125   // (the near misses at 10 / 9 out killed it at k ~ 79 in the render: 27.7 s) ~5 s of near misses, then it all closes in (the trimmed lane ends took ~2 s: keeps the Short at 30 s+)
         if (k % 3 === 0) { const a = R() * 2 * Math.PI, r = (close ? 3 : 12) + R() * 3; tnt(p.x + Math.sin(a) * r, floor + 18, p.z - Math.cos(a) * r, 30) }
         if (k % 6 === 0 && k > 6) { const sd = close ? 5 : 11; tnt(p.x - sd + 0.5, floor + 1, p.z + 0.5, 4); tnt(p.x + sd + 0.5, floor + 1, p.z + 0.5, 4) }
         if (close && w.front > p.z - 4) for (const [dx, dz] of [[0, 0], [1, 1], [-1, 1]]) tnt(p.x + dx, floor + 1, p.z + dz, 4)
