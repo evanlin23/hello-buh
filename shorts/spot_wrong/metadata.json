@@ -1,9 +1,9 @@
 {
   "name": "spot_wrong",
-  "caption": "find the mistake \ud83e\udd14",
+  "caption": "find the mistake 🤔",
   "youtube": {
-    "title": "find the mistake \ud83e\udd14 #minecraft #shorts",
-    "description": "find the mistake \ud83e\udd14\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "find the mistake 🤔 #minecraft #shorts",
+    "description": "find the mistake 🤔\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -33,7 +33,7 @@
     "sha256": "98f0dd11672790000d74882ee24062170f57c48a488e810c6d04e35772a148b6"
   },
   "edit": {
-    "caption": "find the mistake \ud83e\udd14",
+    "caption": "find the mistake 🤔",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "use3_2",
     "startAt": "round1:0",
@@ -208,7 +208,7 @@
     ],
     "args": [
       "--caption",
-      "find the mistake \ud83e\udd14",
+      "find the mistake 🤔",
       "--subs",
       "[[\"round1\",\"EASY\",3.65],[\"hint1\",\"hint: not the flowers\",3.6],[\"zoom1_1\",\"oak plank in birch\",3],[\"round2\",\"MEDIUM\",4.15],[\"hint2\",\"hint: not the field\",4.1],[\"zoom2_1\",\"a sideways log\",3],[\"round3\",\"only 1% can find it\",4.15],[\"hint3\",\"hint: not the bed\",5.1],[\"zoom3_1\",\"no chain: it floats\",3],[\"pre3_2\",\"wait... there is another one\",1.7],[\"zoom3_2\",\"both handles right\",1.15],[\"use3_2\",\"both swing left!\",3]]",
       "--subs_y",
@@ -587,9 +587,14 @@
     "gunzip -c shorts/spot_wrong/recording.json.gz > work/spot_wrong.rec.json",
     "node render.js work/spot_wrong.rec.json work/spot_wrong.frames 60 1080 1011",
     "python3 audio.py work/spot_wrong.rec.json work/spot_wrong.wav",
-    "python3 edit.py --frames work/spot_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/spot_wrong.rec.json --audio work/spot_wrong.wav --caption \"find the mistake \ud83e\udd14\" --subs \"[[\\\"round1\\\",\\\"EASY\\\",3.65],[\\\"hint1\\\",\\\"hint: not the flowers\\\",3.6],[\\\"zoom1_1\\\",\\\"oak plank in birch\\\",3],[\\\"round2\\\",\\\"MEDIUM\\\",4.15],[\\\"hint2\\\",\\\"hint: not the field\\\",4.1],[\\\"zoom2_1\\\",\\\"a sideways log\\\",3],[\\\"round3\\\",\\\"only 1% can find it\\\",4.15],[\\\"hint3\\\",\\\"hint: not the bed\\\",5.1],[\\\"zoom3_1\\\",\\\"no chain: it floats\\\",3],[\\\"pre3_2\\\",\\\"wait... there is another one\\\",1.7],[\\\"zoom3_2\\\",\\\"both handles right\\\",1.15],[\\\"use3_2\\\",\\\"both swing left!\\\",3]]\" --subs_y 0.78 --counter {\"at\":[\"round1\",\"round2\",\"round3\"],\"total\":3} --countdowns [[\"t1_7\",\"time_up1\",null,null,1,0.13],[\"t2_8\",\"time_up2\",null,null,1,0.13],[\"t3_9\",\"time_up3\",null,null,1,0.13]] --ring [[\"zoom1_1:0.2\",1.3,0.5,0.5,120],[\"zoom2_1:0.2\",1.3,0.5,0.5,170],[\"zoom3_1:0.2\",1.3,0.5,0.5,170],[\"zoom3_2:0.2\",0.8,0.565,0.5,240],[\"use3_2\",4.8,0.36,0.5,230]] --sfx [[\"impact\",\"zoom1_1\"],[\"whoosh\",\"round2\"],[\"impact\",\"zoom2_1\"],[\"whoosh\",\"round3\"],[\"impact\",\"zoom3_1\"],[\"whoosh\",\"pre3_2\"],[\"impact\",\"zoom3_2\"],[\"impact\",\"use3_2\"]] --start_at round1:0 --end_after use3_2:1 --out out/spot_wrong.mp4"
+    "python3 edit.py --frames work/spot_wrong.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/spot_wrong.rec.json --audio work/spot_wrong.wav --caption \"find the mistake 🤔\" --subs \"[[\\\"round1\\\",\\\"EASY\\\",3.65],[\\\"hint1\\\",\\\"hint: not the flowers\\\",3.6],[\\\"zoom1_1\\\",\\\"oak plank in birch\\\",3],[\\\"round2\\\",\\\"MEDIUM\\\",4.15],[\\\"hint2\\\",\\\"hint: not the field\\\",4.1],[\\\"zoom2_1\\\",\\\"a sideways log\\\",3],[\\\"round3\\\",\\\"only 1% can find it\\\",4.15],[\\\"hint3\\\",\\\"hint: not the bed\\\",5.1],[\\\"zoom3_1\\\",\\\"no chain: it floats\\\",3],[\\\"pre3_2\\\",\\\"wait... there is another one\\\",1.7],[\\\"zoom3_2\\\",\\\"both handles right\\\",1.15],[\\\"use3_2\\\",\\\"both swing left!\\\",3]]\" --subs_y 0.78 --counter {\"at\":[\"round1\",\"round2\",\"round3\"],\"total\":3} --countdowns [[\"t1_7\",\"time_up1\",null,null,1,0.13],[\"t2_8\",\"time_up2\",null,null,1,0.13],[\"t3_9\",\"time_up3\",null,null,1,0.13]] --ring [[\"zoom1_1:0.2\",1.3,0.5,0.5,120],[\"zoom2_1:0.2\",1.3,0.5,0.5,170],[\"zoom3_1:0.2\",1.3,0.5,0.5,170],[\"zoom3_2:0.2\",0.8,0.565,0.5,240],[\"use3_2\",4.8,0.36,0.5,230]] --sfx [[\"impact\",\"zoom1_1\"],[\"whoosh\",\"round2\"],[\"impact\",\"zoom2_1\"],[\"whoosh\",\"round3\"],[\"impact\",\"zoom3_1\"],[\"whoosh\",\"pre3_2\"],[\"impact\",\"zoom3_2\"],[\"impact\",\"use3_2\"]] --start_at round1:0 --end_after use3_2:1 --out out/spot_wrong.mp4"
   ],
   "status": "ready",
   "notes": "worker 12: find the mistake #1 (house, barn, bedroom; door-hinge payoff). Retention, Minecraft and frame reviews: ready (5 review rounds)",
-  "published_at": "2026-11-07T11:42:52.502Z"
+  "published_at": "2026-11-07T11:42:52.502Z",
+  "posted": {
+    "date": "2026-11-08",
+    "platform": "YouTube Shorts",
+    "by": "owner (manual upload)"
+  }
 }
