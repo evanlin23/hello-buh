@@ -32,6 +32,7 @@ module.exports = {
     speed: BEATS.slice(1).map((_, k) => [`spawn${k + 1}a`, `spawn${k + 1}b:0.1`, 'cut'])
   },
   expectDeath: true,
+  botTimeout: 300,   // 7 beats (~45 s) after a bigger field setup
 
   async setup (ctx) {
     const { bot } = ctx
