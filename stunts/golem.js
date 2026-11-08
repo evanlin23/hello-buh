@@ -43,12 +43,15 @@ module.exports = {
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
     await ctx.cmd('/gamerule keep_inventory true')   // nothing drops on the death: the dropped items drew as bare shadows on the death screen (engine)
+    await ctx.cmd(`/forceload add ${x - 124} ${z - 120} ${x + 124} ${z + 26}`)   // (28 of the fills hit unloaded chunks)
+    await ctx.sleep(3000)
     for (let z0 = z - 120; z0 <= z + 26; z0 += 6) {   // (to z - 80 a cut stone face showed behind the 7, 10 and 20 beats)   // (a canopy and a cut face showed north of the 10 beat)   // the village sites in one deep field (z - 16 left the cut wall behind the last swarm)
       const z1 = Math.min(z0 + 5, z + 26)
       for (let y0 = floor + 1; y0 <= floor + 64; y0 += 8) await ctx.cmd(`/fill ${x - 124} ${y0} ${z0} ${x + 124} ${y0 + 7} ${z1} air`)   // (to +16 left floating canopies)
       await ctx.cmd(`/fill ${x - 124} ${floor} ${z0} ${x + 124} ${floor} ${z1} grass_block`)
       await ctx.cmd(`/fill ${x - 124} ${floor - 3} ${z0} ${x + 124} ${floor - 1} ${z1} dirt`)
     }
+    await ctx.cmd(`/forceload remove ${x - 124} ${z - 120} ${x + 124} ${z + 26}`)
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
     const profs = ['farmer', 'librarian', 'none', 'cleric', 'fletcher', 'mason', 'shepherd', 'butcher', 'armorer', 'toolsmith']
