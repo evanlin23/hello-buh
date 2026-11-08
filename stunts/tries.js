@@ -6,7 +6,7 @@ const clutch = require('./water_clutch')
 // tries 4 and 7 were the same 'too late' fall as try 2 (review: a loop): now a cobblestone block and a scaffolding
 // placed under you (landing on top of either is the full fall), each its own look. (A powder snow bucket placed
 // nothing at all in the test: the same empty click as 'late'.)
-const MODES = (process.env.TRIES_MODES || 'skip,late,skip,cobble,late,lava,scaff,ok').split(',')
+const MODES = (process.env.TRIES_MODES || 'skip,late,late,cobble,late,lava,scaff,ok').split(',')   // try 3 clicks its empty bucket on camera (it never clicked: 'IT WAS EMPTY' was only told)
 const PLACE_MODES = ['lava', 'cobble', 'scaff']
 const BLOCK_MODES = { cobble: 'cobblestone', scaff: 'scaffolding' }   // placed like the water (the clutch's ok mode), with the wrong thing   // 8 tries: ~33 s (7 ran 29.4 s; owner: 30 s minimum)
 
@@ -33,7 +33,7 @@ module.exports = {
     // the lava try: the lava is placed 1 tick before the fatal landing, so it showed for 3 frames. Slow the moment
     // (0.15 s of footage over ~0.75 s) so it reads. Offsets from 'saved' (the only unique mark after it; no speed
     // spans before it, so the recording's spacing holds)
-    speed: [['lava_placed:-0.05', 'lava_placed:0.1', 0.2]],
+    freeze: [['lava_shown', 0.45]],   // a held frame on the lava (a 0.2x span blended frames: ghosted, half-see-through lava, and dissolved across the respawn cut)
     // the narration escalates with the frustration (7 tries; the last attempt line is always 'locked in.')
     // each try looks different (review: six identical falls read as a loop) and the counter shows on screen
     subs: subs()
@@ -76,7 +76,7 @@ module.exports = {
       // the clutch runs on a guarded bot: once it dies, its looks stop and the respawn goes on without it (the
       // lava try burned to death during the clutch's 1.5 s look up the pillar, and the bot stood respawned
       // on the pillar staring at the sky for 1.7 s until the clutch returned)
-      let aborted = false, settled = false
+      let aborted = false, settled = false, savedPlaced = false
       // the cobblestone try: 'using' a block places it, on the ground under you (the clutch uses the item like a bucket)
       const placeCobble = () => {
         const p = bot.entity.position
@@ -86,6 +86,7 @@ module.exports = {
       const gbot = new Proxy(bot, { get (t, k) {
         if (aborted && (k === 'look' || k === 'activateItem' || k === 'setControlState')) return () => Promise.resolve()
         if (k === 'activateItem' && BLOCK_MODES[MODES[i]]) return placeCobble
+        if (k === 'activateItem' && MODES[i] === 'ok' && savedPlaced) return () => {}   // no scoop on the save: the water stays in shot (it was up 12 frames)
         const v = t[k]; return typeof v === 'function' ? v.bind(t) : v
       } })
       const gctx = Object.create(ctx)
@@ -94,7 +95,9 @@ module.exports = {
         gctx.particles = (type, ...a) => type === 'splash' ? undefined : ctx.particles(type, ...a)
         gctx.sound = (name, ...a) => /splash/.test(name) || (BLOCK_MODES[MODES[i]] && /bucket/.test(name)) ? undefined : ctx.sound(name, ...a)
       }
-      if (MODES[i] === 'lava') gctx.mark = (e, d) => { ctx.mark(e, d); if (e === 'placed') ctx.mark('lava_placed') }   // the edit slows this moment
+      // the freeze needs a bare mark on a frame with the lava in it: 2 ticks after the placement (freeze takes no offset)
+      if (MODES[i] === 'lava') gctx.mark = (e, d) => { ctx.mark(e, d); if (e === 'placed') { let t = 0; const h = () => { if (++t === 2) { ctx.mark('lava_shown'); bot.removeListener('physicsTick', h) } }; bot.on('physicsTick', h) } }
+      if (MODES[i] === 'ok') gctx.mark = (e, d) => { ctx.mark(e, d); if (e === 'placed') savedPlaced = true }   // the edit slows this moment
       gctx.easeLook = async (yaw, pitch, ms) => {
         const y0 = bot.entity.yaw, p0 = bot.entity.pitch, steps = Math.max(1, Math.round(ms / 50))
         let dy = yaw - y0; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
@@ -116,19 +119,23 @@ module.exports = {
       // the next try's bucket goes in at the death, before the respawn cut (it used to swap in the hand on
       // camera): an empty bucket for try 3, a milk bucket for try 5, water otherwise
       bot.chat(`/item replace entity @s hotbar.1 with ${{ 2: 'bucket', 3: 'cobblestone', 4: 'milk_bucket', 5: 'lava_bucket', 6: 'scaffolding' }[i + 1] || 'water_bucket'}`)
-      // the lava pool goes with the death (behind the respawn cut), so the next try doesn't land in it
-      // (+-5 missed it: the bot lands ~7 out, and tries 7 and 8 landed in the leftover pool)
-      if (MODES[i] === 'lava') bot.chat(`/fill ${this.x - 12} ${this.floor} ${this.z - 12} ${this.x + 12} ${this.floor + 2} ${this.z + 12} air replace lava`)
-      if (MODES[i] === 'scaff') bot.chat(`/fill ${this.x - 12} ${this.floor + 1} ${this.z - 12} ${this.x + 12} ${this.floor + 1} ${this.z + 12} air replace scaffolding`)
-      if (MODES[i] === 'cobble') {   // the placed block goes (the pillar is cobblestone too: put its foot back)
-        bot.chat(`/fill ${this.x - 12} ${this.floor + 1} ${this.z - 12} ${this.x + 12} ${this.floor + 1} ${this.z + 12} air replace cobblestone`)
-        bot.chat(`/setblock ${this.x} ${this.floor + 1} ${this.z} cobblestone`)
-      }
       respawning = true
       for (let k = 0; k < 60 && bot.entity.position.y < this.top - 0.5; k++) await bot.waitForTicks(1)
       respawning = false
       ctx.revive()
       ctx.log('revived at tick', ctx.tick, 'pos', bot.entity.position.toString())
+      // the leftovers go once back on the pillar: sent at the death, the server cleared them but the client (mid-
+      // respawn, reloading chunks) never got the block updates, so the recording kept them: try 5 landed on try 4's
+      // cobblestone and try 7 on the lava (review)
+      // the lava pool goes with the death (behind the respawn cut), so the next try doesn't land in it
+      // (+-5 missed it: the bot lands ~7 out, and tries 7 and 8 landed in the leftover pool)
+      if (MODES[i] === 'lava') await ctx.cmd(`/fill ${this.x - 12} ${this.floor} ${this.z - 12} ${this.x + 12} ${this.floor + 2} ${this.z + 12} air replace lava`)
+      if (MODES[i] === 'scaff') await ctx.cmd(`/fill ${this.x - 12} ${this.floor + 1} ${this.z - 12} ${this.x + 12} ${this.floor + 1} ${this.z + 12} air replace scaffolding`)
+      if (MODES[i] === 'cobble') {   // the placed block goes (the pillar is cobblestone too: put its foot back)
+        await ctx.cmd(`/fill ${this.x - 12} ${this.floor + 1} ${this.z - 12} ${this.x + 12} ${this.floor + 1} ${this.z + 12} air replace cobblestone`)
+        await ctx.cmd(`/setblock ${this.x} ${this.floor + 1} ${this.z} cobblestone`)
+      }
+
       await bot.look(0, -0.7, true)                     // straight back to staring over the edge
       bot.setQuickBarSlot(1)
       // a beat on the pillar for the death line to land (the next try's line cut it to 0.15 s)
