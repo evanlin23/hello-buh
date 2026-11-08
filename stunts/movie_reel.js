@@ -88,7 +88,10 @@ module.exports = {
     const cast = await M.spawnActors(ctx, ['Highkeeper'])
     this.cast = cast
     await M.place(ctx, 'Highkeeper', X + 5.5, TOP + 1, Z + 1.5, 90, 0)   // by the plank, facing west (yaw 90)
-    await M.give(ctx, 'Highkeeper', 'bucket')
+    // the swap (owner, 2026-11-08: "the guy doesnt have water in his bucket" - it showed): the Highkeeper holds and hands
+    // over a WATER bucket; Ash pockets it (empty hand on the walk out); only in the fall, first person, does he pull it
+    // out and it's empty. The audience finds out when he does.
+    await M.give(ctx, 'Highkeeper', 'water_bucket')
     // Ash starts on the west side of the deck, facing east
     await ctx.tpCheck(X - 3.5, TOP + 1, Z + 0.5, -90, 0)
     await ctx.hotbar([])
@@ -129,7 +132,7 @@ module.exports = {
     await M.lookAt(hk, ashEye(), 500)
     M.swing(hk)                  // the hand-over
     await M.empty(ctx, 'Highkeeper')
-    await ctx.hotbar(['bucket'])
+    await ctx.hotbar([null, 'bucket'])   // into slot 2: his hand stays empty in every camera shot
     ctx.select(0)
     M.line(ctx, 'Highkeeper', 'You fall once.')
     await bot.waitForTicks(34)
@@ -151,13 +154,14 @@ module.exports = {
     await bot.waitForTicks(14)
     const tx = X + WX + 0.5, tz = Z + 0.5, floorY = 100 + WELL_Y + 1, startY = bot.entity.position.y
     bot.setControlState('forward', true)
-    let k0 = 0, slid = false, swung = false, fogged = false, povOn = false, released = false
+    let k0 = 0, slid = false, swung = false, fogged = false, povOn = false, released = false, drawn = false
     const onTick = () => {
       k0++
       const e = bot.entity
       if (e.position.y > startY - 0.3) { if (k0 > 30) bot.setControlState('forward', false); return }   // hold forward until he drops (3 ticks left him balanced on the edge)
       if (!released) { released = true; bot.setControlState('forward', false) }   // off the edge: the steering takes the keys
       if (!povOn && e.position.y < startY - 2.5) { povOn = true; M.shot(ctx, 'pov'); ctx.mark('fall'); ctx.sound('block.bell.use', 3, 0.6) }
+      if (povOn && !drawn && e.position.y < startY - 40) { drawn = true; ctx.select(1); ctx.mark('draw') }   // he pulls the bucket out: empty
       if (e.position.y > floorY - 1) {   // steer onto the Well (movement keys only), eyes down
         const c = steer({ yaw: -Math.PI / 2, px: e.position.x, pz: e.position.z, vx: e.velocity.x, vz: e.velocity.z, y: e.position.y, vy: e.velocity.y, tx, tz, floorY, startY, bias: 0 })
         for (const key of ['forward', 'back', 'left', 'right']) bot.setControlState(key, c[key])
