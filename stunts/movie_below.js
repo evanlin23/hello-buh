@@ -56,7 +56,15 @@ module.exports = {
     await ctx.cmd('/difficulty peaceful')
     await ctx.cmd('/kill @e[type=!minecraft:player]')   // the world's own fish, squid, bats and bears (in the reveal)
     await ctx.cmd('/tick freeze')   // the lake and the fires stay put
-    // a level patch for the lake and the camp (plains: the cuts are a block or two)
+    // a wide level clearing first: the plains here roll from y 51 to 97, and v2's 27-block patch left the camp at the
+    // bottom of a pit with dirt walls, plain to see from the POV. 80x80, so the hills start beyond the POV's view
+    for (const [x0, z0] of [[-40, -40], [0, -40], [-40, 0], [0, 0]]) {
+      await ctx.cmd(`/fill ${A(x0, 1, z0)} ${A(x0 + 39, 20, z0 + 39)} air`)
+      await ctx.cmd(`/fill ${A(x0, 21, z0)} ${A(x0 + 39, 40, z0 + 39)} air`)
+      await ctx.cmd(`/fill ${A(x0, -6, z0)} ${A(x0 + 39, -1, z0 + 39)} dirt replace air`)
+      await ctx.cmd(`/fill ${A(x0, 0, z0)} ${A(x0 + 39, 0, z0 + 39)} grass_block`)
+    }
+    // a level patch for the lake and the camp
     await ctx.cmd(`/fill ${A(-12, 1, -10)} ${A(14, 12, 22)} air`)
     await ctx.cmd(`/fill ${A(-12, 0, -10)} ${A(14, 0, 22)} grass_block`)
     // the lake (round-ish), the island and the Needle with its ladder
@@ -104,7 +112,7 @@ module.exports = {
     }
     // 2. the reveal, from the camp; he keeps sliding down
     M.shot(ctx, 'reveal')
-    await bot.waitForTicks(80)
+    await bot.waitForTicks(55)   // (80 held on the empty fog ceiling for its last 2 s)
     // 3. a cut to the foot of the ladder (the reveal hides the jump), then over the bridge and along the shore
     await ctx.cmd(`/tp @s ${X + 0.5} ${F + 1} ${Z + 1.5} 0 10`)
     M.shotIn(ctx, 'follow', 2)
@@ -120,7 +128,7 @@ module.exports = {
     await M.say(ctx, 'Ash', 'Took you long enough, Buh.', { to: 'Buh' })
     // 5. he leads him into the camp, talking as they go (the scene ends on the move, not on a held two-shot)
     M.line(ctx, 'Ash', 'Come meet the ones who missed.')
-    const walking = M.walkTo(ash, X - 1.6, Z + 15.2)
+    const walking = M.walkTo(ash, X + 0.4, Z + 15.4)   // (between the fires: at X - 1.6 he walked under the west house's eaves and the camera hit its roof)
     M.shotIn(ctx, 'walk', 6)
     await bot.waitForTicks(4)
     bot.setControlState('forward', true)
