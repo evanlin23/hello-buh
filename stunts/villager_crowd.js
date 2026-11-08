@@ -48,7 +48,7 @@ module.exports = {
     const heavy = async (c) => { bot.chat(c); await ctx.sleep(450) }
     // deep and high enough that no cut hillside or trunkless canopy shows, even in the turnaround south
     // the rows past ~z + 90 are outside what the bot keeps loaded: force-load them for the fills
-    await ctx.cmd(`/forceload add ${x - 124} ${z + 60} ${x + 124} ${z + 150}`)
+    await ctx.cmd(`/forceload add ${x - 124} ${z - 72} ${x + 124} ${z + 150}`)   // the whole field (the first 6 north rows failed too)
     await ctx.sleep(3000)
     for (let z0 = z - 72; z0 <= z + 150; z0 += 4) {   // (z - 40 left a cut cliff face in the 200 shot; z + 90 one behind the payoff)
       const z1 = Math.min(z0 + 3, z + 150)
@@ -60,7 +60,7 @@ module.exports = {
       await heavy(`/fillbiome ${x - 124} ${floor - 4} ${z0} ${x + 124} ${floor + 14} ${z1} minecraft:plains`)
     }
     await ctx.sleep(3000)
-    await ctx.cmd(`/forceload remove ${x - 124} ${z + 60} ${x + 124} ${z + 150}`)
+    await ctx.cmd(`/forceload remove ${x - 124} ${z - 72} ${x + 124} ${z + 150}`)
     // mineflayer ignores the biome update packet: go far away and come back to reload the chunks
     await ctx.cmd(`/tp @s ${x + 1000} 200 ${z}`); await bot.waitForTicks(60)
     await ctx.cmd(`/tp @s ${x} ${floor + 1} ${z + 8}`); await this.settle(ctx); await bot.waitForChunksToLoad()
@@ -186,17 +186,17 @@ module.exports = {
         // a beat of its own: toss an emerald at their feet... every head drops to follow it, then snaps back
         // to you as you walk up and take it back (server-side: the heads face the item, the renderer's
         // face-the-camera window is off for it)
-        aim = new ctx.Vec3(sx + 0.5, floor + 1, z - 1.6)
+        aim = new ctx.Vec3(sx + 0.5, floor + 0.6, z - 3.5)   // the gem on the grass and the front row's heads both in frame (lower cut the heads off)
         await bot.waitForTicks(5)
         ctx.mark('face_off')
         bot.removeListener('physicsTick', track)
         const gemTrack = () => bot.chat(`/execute as @e[type=villager,tag=on] at @s run tp @s ~ ~ ~ facing entity @e[type=item,limit=1,sort=nearest] feet`)
         bot.on('physicsTick', gemTrack)
-        const em = bot.inventory.items().find(it => it.name === 'emerald')
         ctx.mark('gem'); ctx.sound('entity.item.pickup', 0.4, 0.6)
-        try { await bot.toss(em.type, null, 1) } catch (e) { ctx.log('toss', e.message) }
+        // one emerald, the vanilla Q drop from the held stack (bot.toss emptied the whole slot, 32 -> 0, review)
+        bot._client.write('block_dig', { status: 4, location: { x: 0, y: 0, z: 0 }, face: 0, sequence: 0 }); bot.swingArm()
         // a slow drift along the heads while they turn down to it (a fixed aim here was a 0.6 s PAUSE)
-        for (let k = 0; k < 22; k++) { aim = new ctx.Vec3(sx + 0.5 + (k - 11) * 0.15, floor + 1.3, z - 1.6 - k * 0.04); await bot.waitForTicks(1) }
+        for (let k = 0; k < 22; k++) { aim = new ctx.Vec3(sx + 0.5 + (k - 11) * 0.15, floor + 0.6, z - 3.5); await bot.waitForTicks(1) }
         for (let v = 0; v < 4; v++) ctx.sound('entity.villager.ambient', 0.7, 0.9 + v * 0.1)
         bot.setControlState('forward', true); await bot.waitForTicks(6); bot.setControlState('forward', false)
         bot.removeListener('physicsTick', gemTrack); bot.on('physicsTick', track)
