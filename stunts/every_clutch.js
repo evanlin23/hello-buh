@@ -33,8 +33,33 @@ module.exports = {
   async setup (ctx) {
     const { bot } = ctx
     const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
-    if (!g) throw new Error('no dry land')
+    // flat, open ground (the 17x17 clear cut a square stone pit into a hillside, in every fall: review): within
+    // 1 of level for 8 round, no water or ice; nothing near spawn: move on 160 at a time and look again
+    const flat = (cx, cz) => {
+      const c = ctx.surface(cx, cz)
+      if (!c || !['grass_block', 'dirt'].includes(c.name) || c.position.y < 62 || c.position.y > 250 - TOP) return null
+      for (let dx = -8; dx <= 8; dx++) {
+        for (let dz = -8; dz <= 8; dz++) {
+          const b = ctx.surface(cx + dx, cz + dz)
+          if (!b || /water|lava|ice/.test(b.name) || Math.abs(b.position.y - c.position.y) > 1) return null
+        }
+      }
+      return c.position
+    }
+    let g = null, cx = sp.x, cz = sp.z
+    for (let hop = 0; hop < 8 && !g; hop++) {
+      if (hop > 0) {
+        cx = sp.x + [160, 0, -160, 0, 320, 0, -320, 0][hop - 1]; cz = sp.z + [0, 160, 0, -160, 0, 320, 0, -320][hop - 1]
+        await ctx.cmd('/gamemode creative'); await ctx.cmd(`/tp @s ${cx} 200 ${cz}`)
+        await bot.waitForTicks(20); try { await bot.waitForChunksToLoad() } catch (e) {}
+        await bot.waitForTicks(20)
+      }
+      for (let r = 0; r <= 96 && !g; r += 8) {
+        for (const [dx, dz] of [[0, 0], [r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, -r], [r, -r], [-r, r]]) { if ((g = flat(cx + dx, cz + dz))) break }
+      }
+      if (!g) ctx.log('no flat open spot near', cx, cz)
+    }
+    if (!g) throw new Error('no flat open land')
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
