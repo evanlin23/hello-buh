@@ -28,10 +28,15 @@ module.exports = {
             }
           }
           ys.sort((a, c) => a - c)
+          // local flatness: the height spread within 40 blocks (a set needs flat ground; cutting a hill leaves a pit)
+          const near = []
+          for (let dx = -40; dx <= 40; dx += 5) for (let dz = -40; dz <= 40; dz += 5) { if (Math.hypot(dx, dz) > 40) continue; const s2 = ctx.surface(loc[0] + dx, loc[1] + dz); if (s2) near.push(s2.position.y) }
+          near.sort((a, c) => a - c)
+          const flat = near.length ? near[Math.floor(near.length * 0.9)] - near[Math.floor(near.length * 0.1)] : 99
           const pc = (k) => Math.round(100 * (cnt[k] || 0) / Math.max(1, n))
           const green = pc('grass_block') + pc('leaf_litter') + pc('podzol') + pc('moss_block')
           const cold = pc('snow') + pc('ice') + pc('packed_ice') + pc('powder_snow')
-          ctx.log('SCOUT', JSON.stringify({ near: st, biome: b, found: loc, green, cold, water: pc('water'), y: [ys[0], ys[Math.floor(ys.length / 2)], ys[ys.length - 1]], top: Object.entries(cnt).sort((a, c) => c[1] - a[1]).slice(0, 5).map(([k, v]) => `${k} ${Math.round(100 * v / n)}%`) }))
+          ctx.log('SCOUT', JSON.stringify({ near: st, biome: b, found: loc, green, cold, water: pc('water'), flat, y: [ys[0], ys[Math.floor(ys.length / 2)], ys[ys.length - 1]], top: Object.entries(cnt).sort((a, c) => c[1] - a[1]).slice(0, 5).map(([k, v]) => `${k} ${Math.round(100 * v / n)}%`) }))
         } catch (e) { ctx.log('SCOUT', JSON.stringify({ near: st, biome: b, error: e.message })) }
       }
     }

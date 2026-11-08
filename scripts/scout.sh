@@ -9,8 +9,8 @@ grep -o 'SCOUT {.*}' work/scout.log | sed 's/^SCOUT //' | python3 -c "
 import json, sys
 rows = [json.loads(l) for l in sys.stdin if l.strip()]
 ok = [r for r in rows if r.get('found')]
-ok.sort(key=lambda r: (r['cold'] > 5, -(r['green'] - r['water'] / 2)))
-for r in ok: print(f\"near: [{r['near'][0]}, {r['near'][1]}]  {r['biome']:<24} at {r['found']}  green {r['green']}%  cold {r['cold']}%  water {r['water']}%  y {r['y']}  ({', '.join(r['top'])})\")
+ok.sort(key=lambda r: (r['cold'] > 5, r.get('flat', 99) > 6, -(r['green'] - r['water'] / 2)))
+for r in ok: print(f\"near: [{r['near'][0]}, {r['near'][1]}]  {r['biome']:<24} at {r['found']}  flat {r.get('flat')}  green {r['green']}%  cold {r['cold']}%  water {r['water']}%  y {r['y']}  ({', '.join(r['top'])})\")
 for r in rows:
     if not r.get('found'): print('not found:', r)
 "

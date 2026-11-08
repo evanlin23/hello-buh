@@ -56,14 +56,8 @@ module.exports = {
     await ctx.cmd('/difficulty peaceful')
     await ctx.cmd('/kill @e[type=!minecraft:player]')   // the world's own fish, squid, bats and bears (in the reveal)
     await ctx.cmd('/tick freeze')   // the lake and the fires stay put
-    // a wide level clearing first: the plains here roll from y 51 to 97, and v2's 27-block patch left the camp at the
-    // bottom of a pit with dirt walls, plain to see from the POV. 80x80, so the hills start beyond the POV's view
-    for (const [x0, z0] of [[-40, -40], [0, -40], [-40, 0], [0, 0]]) {
-      await ctx.cmd(`/fill ${A(x0, 1, z0)} ${A(x0 + 39, 20, z0 + 39)} air`)
-      await ctx.cmd(`/fill ${A(x0, 21, z0)} ${A(x0 + 39, 40, z0 + 39)} air`)
-      await ctx.cmd(`/fill ${A(x0, -6, z0)} ${A(x0 + 39, -1, z0 + 39)} dirt replace air`)
-      await ctx.cmd(`/fill ${A(x0, 0, z0)} ${A(x0 + 39, 0, z0 + 39)} grass_block`)
-    }
+    // (a flat spot matters more than flattening: an 80x80 cut into these hills read as a quarry with sheer walls, and a
+    // 27-block patch as a pit. scripts/scout.sh ranks spots by local flatness; `near` picks one)
     // a level patch for the lake and the camp
     await ctx.cmd(`/fill ${A(-12, 1, -10)} ${A(14, 12, 22)} air`)
     await ctx.cmd(`/fill ${A(-12, 0, -10)} ${A(14, 0, 22)} grass_block`)
