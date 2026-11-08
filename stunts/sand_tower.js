@@ -1,16 +1,17 @@
-// "the torch trick never gets old 😭" (~31 s): five sand towers in a row, each bigger: 1x1, 2x2, 4x4,
-// 5x5 and a 6x6 giant 26 high. The bot runs up to each, breaks bottom blocks and puts a torch in each
+// "the torch trick never gets old 😭" (~30 s): six sand towers in a row, each bigger: 1x1 up to a
+// 6x6 giant 28 high (five towers came to 24.9 s). The bot runs up to each, breaks bottom blocks and puts a torch in each
 // gap, so the column falls onto the torch and every block pops into an item. It works a few columns at
 // a time (break, break, break, then torch, torch, torch), sidestepping along the big ones, and backs
 // off as each comes down; it ends just after the 6x6 pours down. An Efficiency V shovel insta-breaks
 // sand (vanilla: speed 34 >= 30 x hardness 0.5), so each column is one click.
 const D = 8                  // it backs off to this far in front of the towers
 const TOWERS = [
-  { dx: -22, w: 1, h: 8, near: 4 },
-  { dx: -16, w: 2, h: 12, near: 3.5 },
-  { dx: -9, w: 4, h: 18, near: 2.5 },
-  { dx: 0, w: 5, h: 22, near: 2.5 },
-  { dx: 10, w: 6, h: 26, near: 2.5, slot: 2 }   // a second torch stack for the last one
+  { dx: -28, w: 1, h: 8, near: 4 },
+  { dx: -23, w: 2, h: 12, near: 3.5 },
+  { dx: -17, w: 3, h: 15, near: 3 },
+  { dx: -10, w: 4, h: 18, near: 2.5 },
+  { dx: -1, w: 5, h: 22, near: 2.5 },
+  { dx: 9, w: 6, h: 28, near: 2.5, slot: 2 }   // a second torch stack for the last one
 ]
 
 module.exports = {
@@ -149,7 +150,7 @@ module.exports = {
       // the row so it's in front of what it's breaking
       const cols = []
       for (let iz = t.w - 1; iz >= 0; iz--) for (let ix = 0; ix < t.w; ix++) cols.push([t.x0 + ix, t.z0 + iz])
-      const per = t.w >= 4 ? 3 : 2
+      const per = t.w >= 3 ? 3 : 2
       for (let k = 0; k < cols.length; k += per) {
         const b = cols.slice(k, k + per)
         if (t.w >= 4) goal = new Vec3(b[0][0] + 0.5, 0, nearZ)
@@ -165,14 +166,14 @@ module.exports = {
         await bot.waitForTicks(1)
         if (i % 3 === 0) {
           const left = sandLeft(t)
-          if (last && left < total * 0.4) { ctx.mark('crash', { left }); break }   // the mass of it has come down
+          if (last && left < total * 0.3) { ctx.mark('crash', { left }); break }   // the mass of it has come down
           if (!last && i > 16 && left < total * 0.12) break
         }
       }
       ctx.log('tower', ti, 'sand left', sandLeft(t))
     }
     // a moment more on the pile as the rest of it pours down (the Short ends 0.8 s after 'crash')
-    for (let i = 0; i < 40; i++) { await look(new Vec3(TOWERS[4].x0 + 3, floor + 3, this.tz - 2), 0.08); await bot.waitForTicks(1) }
+    for (let i = 0; i < 40; i++) { await look(new Vec3(TOWERS[TOWERS.length - 1].x0 + 3, floor + 3, this.tz - 2), 0.08); await bot.waitForTicks(1) }
     bot.removeListener('physicsTick', steer)
     for (const c of ['forward', 'back', 'left', 'right', 'sprint']) bot.setControlState(c, false)
     await bot.waitForTicks(30)
