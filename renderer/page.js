@@ -775,7 +775,13 @@ window.HB = {
       const sp = fogSea.userData.spec
       const c = srgb(sp.color ?? 0xeef2ff).multiplyScalar((sp.night ?? 0.34) + (1 - (sp.night ?? 0.34)) * day.bright * (1 - rain * 0.4))   // (at 0.16 the night sea was black on black: test reel)
       fogSea.position.set(camera.position.x, 0, camera.position.z)
-      for (const m of fogSea.children) m.material.color.copy(c)
+      // a sheet fades as the camera nears it, so passing through one is smooth (each sheet is ~23% of the haze: crossing
+      // them popped the Below's POV twice on the way out, QA f22 and f42)
+      for (const m of fogSea.children) {
+        m.material.color.copy(c)
+        const base = m.userData.alpha ?? (m.userData.alpha = m.material.opacity)
+        m.material.opacity = base * Math.min(1, Math.abs(m.position.y - camera.position.y) / 3)
+      }
       const depth = sp.y1 - cam.y
       if (depth > 0 && cam.y > sp.y0 - 2 && !cam.underwater && !cam.inLava) {
         // (and out again over the band's last `fade` blocks: you come out of its floor gradually; the white held until
