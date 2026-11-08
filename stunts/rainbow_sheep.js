@@ -200,8 +200,8 @@ module.exports = {
     // watch the last of it pop out (the white one's wool was still in the air, uncollectable, when the sweep
     // set off from beside it: 7 of 8 colours)
     // (a still wait here read as a 0.9 s PAUSE: step back and pan along the wool shower instead)
-    const pan = ctx.easeLookAt(new ctx.Vec3(bot.entity.position.x - 4, floor + 0.8, z + 2.6), 950)
-    bot.setControlState('back', true); await bot.waitForTicks(7); bot.setControlState('back', false)
+    const pan = ctx.easeLookAt(new ctx.Vec3(bot.entity.position.x - 4, floor + 0.8, z + 2.6), 1150)
+    bot.setControlState('back', true); await bot.waitForTicks(9); bot.setControlState('back', false)   // (950 ms / 7: tested 30.30 s)
     await pan
     // sweep west along the line ~1.7 out (pickup range), eyes on the line ~2.5 ahead at an angle so the sheep and
     // the wool on the grass are in frame (looking straight down the row crammed them on the right edge).
