@@ -1,9 +1,9 @@
 {
   "name": "spot_wrong_3",
-  "caption": "find the mistake \ud83e\udd14",
+  "caption": "find the mistake 🤔",
   "youtube": {
-    "title": "find the mistake \ud83e\udd14 #minecraft #shorts",
-    "description": "find the mistake \ud83e\udd14\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "find the mistake pt 3 🤔 #minecraft #shorts",
+    "description": "find the mistake pt 3 🤔\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -15,7 +15,7 @@
   "song": {
     "file": "fearless_funk.mp3",
     "title": "Fearless Funk",
-    "artist": "DR M\u00d8B, Chris Linton",
+    "artist": "DR MØB, Chris Linton",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "reveal3_2",
     "drop_in_song_s": 29.5,
@@ -33,7 +33,7 @@
     "sha256": "f42ef059f6b0ddbc4c5fda4f0d3faeb89fdf6588464d3a98bfa83ad48f4ea952"
   },
   "edit": {
-    "caption": "find the mistake \ud83e\udd14",
+    "caption": "find the mistake 🤔",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "reveal3_2",
     "startAt": "round1:0",
@@ -187,7 +187,7 @@
     ],
     "args": [
       "--caption",
-      "find the mistake \ud83e\udd14",
+      "find the mistake 🤔",
       "--subs",
       "[[\"round1\",\"EASY\",5.15],[\"zoom1_1\",\"a melon\",3],[\"round2\",\"MEDIUM\",4.15],[\"hint2\",\"hint: not the tree\",4.1],[\"zoom2_1\",\"upside-down slab\",3],[\"round3\",\"only 1% can find it\",4.65],[\"hint3\",\"hint: look closer\",5.6],[\"zoom3_1\",\"raw gold, not gold\",3],[\"pre3_2\",\"wait... there is another one\",0.8999999999999999],[\"zoom3_2\",\"crying obsidian can't make a portal\",3]]",
       "--subs_y",
@@ -1130,7 +1130,7 @@
     "gunzip -c shorts/spot_wrong_3/recording.json.gz > work/spot_wrong_3.rec.json",
     "node render.js work/spot_wrong_3.rec.json work/spot_wrong_3.frames 60 1080 1011",
     "python3 audio.py work/spot_wrong_3.rec.json work/spot_wrong_3.wav",
-    "python3 edit.py --frames work/spot_wrong_3.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/spot_wrong_3.rec.json --audio work/spot_wrong_3.wav --caption \"find the mistake \ud83e\udd14\" --subs \"[[\\\"round1\\\",\\\"EASY\\\",5.15],[\\\"zoom1_1\\\",\\\"a melon\\\",3],[\\\"round2\\\",\\\"MEDIUM\\\",4.15],[\\\"hint2\\\",\\\"hint: not the tree\\\",4.1],[\\\"zoom2_1\\\",\\\"upside-down slab\\\",3],[\\\"round3\\\",\\\"only 1% can find it\\\",4.65],[\\\"hint3\\\",\\\"hint: look closer\\\",5.6],[\\\"zoom3_1\\\",\\\"raw gold, not gold\\\",3],[\\\"pre3_2\\\",\\\"wait... there is another one\\\",0.8999999999999999],[\\\"zoom3_2\\\",\\\"crying obsidian can't make a portal\\\",3]]\" --subs_y 0.765 --counter {\"at\":[\"round1\",\"round2\",\"round3\"],\"total\":3} --countdowns [[\"t1_5\",\"time_up1\",null,null,1,0.13],[\"t2_8\",\"time_up2\",null,null,1,0.13],[\"t3_10\",\"time_up3\",null,null,1,0.13]] --ring [[\"zoom1_1:0.2\",1.3,0.5,0.5,120],[\"zoom2_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_2:0.2\",4.699999999999999,0.5,0.5,150]] --sfx [[\"impact\",\"zoom1_1\"],[\"whoosh\",\"round2\"],[\"impact\",\"zoom2_1\"],[\"whoosh\",\"round3\"],[\"impact\",\"zoom3_1\"],[\"whoosh\",\"pre3_2\"],[\"impact\",\"zoom3_2\"]] --start_at round1:0 --end_after reveal3_2:1.5 --out out/spot_wrong_3.mp4"
+    "python3 edit.py --frames work/spot_wrong_3.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/spot_wrong_3.rec.json --audio work/spot_wrong_3.wav --caption \"find the mistake 🤔\" --subs \"[[\\\"round1\\\",\\\"EASY\\\",5.15],[\\\"zoom1_1\\\",\\\"a melon\\\",3],[\\\"round2\\\",\\\"MEDIUM\\\",4.15],[\\\"hint2\\\",\\\"hint: not the tree\\\",4.1],[\\\"zoom2_1\\\",\\\"upside-down slab\\\",3],[\\\"round3\\\",\\\"only 1% can find it\\\",4.65],[\\\"hint3\\\",\\\"hint: look closer\\\",5.6],[\\\"zoom3_1\\\",\\\"raw gold, not gold\\\",3],[\\\"pre3_2\\\",\\\"wait... there is another one\\\",0.8999999999999999],[\\\"zoom3_2\\\",\\\"crying obsidian can't make a portal\\\",3]]\" --subs_y 0.765 --counter {\"at\":[\"round1\",\"round2\",\"round3\"],\"total\":3} --countdowns [[\"t1_5\",\"time_up1\",null,null,1,0.13],[\"t2_8\",\"time_up2\",null,null,1,0.13],[\"t3_10\",\"time_up3\",null,null,1,0.13]] --ring [[\"zoom1_1:0.2\",1.3,0.5,0.5,120],[\"zoom2_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_1:0.2\",1.3,0.5,0.5,120],[\"zoom3_2:0.2\",4.699999999999999,0.5,0.5,150]] --sfx [[\"impact\",\"zoom1_1\"],[\"whoosh\",\"round2\"],[\"impact\",\"zoom2_1\"],[\"whoosh\",\"round3\"],[\"impact\",\"zoom3_1\"],[\"whoosh\",\"pre3_2\"],[\"impact\",\"zoom3_2\"]] --start_at round1:0 --end_after reveal3_2:1.5 --out out/spot_wrong_3.mp4"
   ],
   "status": "ready",
   "notes": "worker 12: find the mistake #3 (pumpkin patch, bridge, nether portal room; crying obsidian payoff with tears). Retention, Minecraft and frame reviews: ready (6 review rounds)",
