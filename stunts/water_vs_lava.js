@@ -18,7 +18,7 @@ module.exports = {
     startAt: 'pour:-0.4', endAfter: 'end_look:1.05',
     // the long side-pour runs at 1.8x (about 12 s of the Short was a blue water sheet) and the walk between the stops at 2x
     speed: [...[...Array(12).keys()].map(i => [`run${i}a`, `run${i}b`, 1.8]), ['walk_a', 'walk_b', 2],
-      ...[...Array(4).keys()].map(m => [`mop${m}a`, `mop${m}b`, 2])]   // the walks to the mop-up pours (3.3-3.5 s gaps)
+      ...[...Array(4).keys()].map(m => [`mop${m}a`, `mop${m}b`, 2]), ['cross_a', 'finale', 2], ['drain_a', 'end_look', 2]]   // the walks to the mop-up pours (3.3-3.5 s gaps)
   },
 
   async setup (ctx) {
@@ -30,9 +30,13 @@ module.exports = {
     this.G = G
     await ctx.defaultRules()
     // wide and high (x +-22, 13 up left a cut notch in the hillside behind the field: review)
-    for (let y0 = G + 1; y0 <= G + 20; y0 += 5) await ctx.cmd(`/fill ${x - 40} ${y0} ${z - 50} ${x + 40} ${y0 + 4} ${z + 24} air`)
-    await ctx.cmd(`/fill ${x - 40} ${G} ${z - 50} ${x + 40} ${G} ${z + 24} grass_block`)
-    await ctx.cmd(`/fill ${x - 40} ${G - 4} ${z - 50} ${x + 40} ${G - 1} ${z + 24} dirt`)
+    // ~64 round (x +-40 / z + 24 still left a cut hill face behind the south rim: review). Slabs of 40 rows (the fill cap)
+    for (let za = z - 76; za <= z + 52; za += 40) {
+      const zb = Math.min(za + 39, z + 52)
+      for (let y0 = G + 1; y0 <= G + 20; y0 += 5) await ctx.cmd(`/fill ${x - 64} ${y0} ${za} ${x + 64} ${y0 + 4} ${zb} air`)
+      await ctx.cmd(`/fill ${x - 64} ${G} ${za} ${x + 64} ${G} ${zb} grass_block`)
+      await ctx.cmd(`/fill ${x - 64} ${G - 4} ${za} ${x + 64} ${G - 1} ${zb} dirt`)
+    }
     const x0 = x - 7, z0 = z - 6 - L
     this.x0 = x0; this.z0 = z0
     await ctx.cmd(`/fill ${x0} ${G - 2} ${z0} ${x0 + 14} ${G - 2} ${z0 + L - 1} stone`)
@@ -122,6 +126,7 @@ module.exports = {
       await pourScoop(7, front, cell(7, front, -0.04), 6)   // short runs: ~2 rows a pour, 5-6 pours across (10 crossed in 3 and the Short ran 29 s)
       lz = front
     }
+    ctx.mark('cross_a')   // the walk to the far rim at 2x (a blank water sheet, then the rim's dirt wall)
     await walkTo(1)
     // across. Turn round and walk back down the path, pouring either side of it at each stop, each pour
     // left to run longer than the last: the black spreads wider until the lake is gone (~30 s total)
@@ -177,7 +182,9 @@ module.exports = {
         if (!lavaLeft()) break
         // back to the path, eyes on lava that's still there (it swung to the finished side and off the lake)
         let tgt = null
-        for (let b2 = 0; b2 < L && !tgt; b2++) for (let a2 = 0; a2 < 15 && !tgt; a2++) if (at(a2, b2, G - 1)?.name === 'lava') tgt = cell(a2, b2, -0.3)
+        // the nearest lava (the first in scan order was the far north corner: a swing onto an empty rim and sky)
+        { let bd = 1e9; const e = bot.entity.position
+          for (let b2 = 0; b2 < L; b2++) for (let a2 = 0; a2 < 15; a2++) if (at(a2, b2, G - 1)?.name === 'lava') { const d = Math.hypot(x0 + a2 - e.x, z0 + b2 - e.z); if (d < bd) { bd = d; tgt = cell(a2, b2, -0.3) } } }
         if (sx !== 7) await stepTo(7, sz, tgt || cell(7, Math.min(L - 1, sz + 4), -0.3))
       }
     }
@@ -202,7 +209,7 @@ module.exports = {
       await stepTo(na + da, nb2 + db, cell(a, b, -0.3))
       ctx.mark(`mop${m}b`)
       ctx.log('mop-up pour on', na, nb2, 'for lava at', a, b)
-      await pourScoop(na, nb2, cell(na, nb2, -0.04), 14, 300)
+      await pourScoop(na, nb2, cell(na, nb2, -0.04), 7, 300)   // (14: a big sheet, and 1.8 s waiting for it to drain before the payoff)
       // watch it go black (the camera turned away before it did: review)
       await ctx.easeLookAt(cell(a, b, -0.6), 250)
       for (let k = 0; k < 12 && at(a, b, G - 1)?.name === 'lava'; k++) await bot.waitForTicks(1)
@@ -213,6 +220,7 @@ module.exports = {
     // up and out over the middle of the lake while the last water drains, and the payoff once it's gone: the
     // whole black lake (end_look on a water sheet: the song drop hit blue, review)
     const waterLeft = () => { let n = 0; for (let a = 0; a < 15; a++) for (let b = 0; b < L; b++) if (/water/.test(at(a, b, G)?.name || '')) n++; return n }
+    ctx.mark('drain_a')   // the wait for the last water to drain, at 2x
     const mid = cell(7, Math.floor(L / 2), 0)
     ctx.easeLookAt(mid, 900)
     for (let k = 0; k < 40 && (waterLeft() || k < 18); k++) await bot.waitForTicks(1)   // at least the 900 ms turn
