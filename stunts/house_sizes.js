@@ -110,6 +110,7 @@ const SOUND = (n) => n === 'dirt' ? 'block.gravel.place' : n === 'glass' ? 'bloc
 module.exports = {
   name: 'house_sizes',
   biome: process.env.BIOME || 'minecraft:plains',
+  renderDistance: 6,   // the clearing's cut edge is past it (see setup)
   caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀',
   edit: {
     caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀', red: '60s', song: 'songs/funk_abnormal.mp3', dropAt: 'all_done',
@@ -125,15 +126,18 @@ module.exports = {
     const { x, z, y: floor } = g
     this.x = x; this.z = z; this.floor = floor
     await ctx.defaultRules()
+    await ctx.cmd(`/kill @e[type=!player,x=${x},y=${floor},z=${z},distance=..160]`)   // a polar bear buried by the floor fill suffocated off-screen
     // a wide clearing: a cut hillside at its edge read as a command-built box behind the builds
     // (pieces under the 32768-block /fill cap; the edge sits out in the fog: at x+42 a cut hillside showed)
     const fillBig = async (x0, y0, z0, x1, y1, z1, block) => {
       const per = Math.max(1, Math.floor(32768 / ((y1 - y0 + 1) * (z1 - z0 + 1))))
       for (let xa = x0; xa <= x1; xa += per) { bot.chat(`/fill ${xa} ${y0} ${z0} ${Math.min(x1, xa + per - 1)} ${y1} ${z1} ${block}`); await new Promise(r => setTimeout(r, 900)) }   // on the clock: big fills stall the server past mineflayer's tick wait
     }
-    for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await fillBig(x - 70, y0, z - 90, x + 85, y0 + 7, z + 45, 'air')
-    await fillBig(x - 70, floor, z - 90, x + 85, floor, z + 45, 'grass_block')
-    await fillBig(x - 70, floor - 3, z - 90, x + 85, floor - 1, z + 45, 'dirt')
+    // ...to beyond the draw distance (renderDistance 6 = 96 blocks) from every plot and the wide shot:
+    // x+85 still showed a cut hillside on the walks east
+    for (let y0 = floor + 1; y0 <= floor + 40; y0 += 8) await fillBig(x - 112, y0, z - 125, x + 125, y0 + 7, z + 45, 'air')
+    await fillBig(x - 112, floor, z - 125, x + 125, floor, z + 45, 'grass_block')
+    await fillBig(x - 112, floor - 3, z - 125, x + 125, floor - 1, z + 45, 'dirt')
     // the wide shot at the end: a dirt mound in front of the middle of the four plots
     this.view = { x: x + 6, z: z + 27 }   // far and high enough for all five
     await ctx.cmd(`/fill ${x + 5} ${floor + 1} ${z + 26} ${x + 7} ${floor + 5} ${z + 28} dirt`)
@@ -189,11 +193,14 @@ module.exports = {
       const used = {}
       const slotFor = (name) => B.slots[name][Math.min(B.slots[name].length - 1, Math.floor((used[name] - 1) / 64))]
       ctx.mark('build_start', { build: B.name, blocks: todo.length })
-      let budget = 0, guard = 0
+      let budget = 0, guard = 0, backed = false
       while (todo.length && guard++ < 1000) {
         const i = todo.findIndex(b => FACES.some(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz })))
         if (i < 0) { ctx.log(B.name, 'stuck with', todo.length, 'blocks left'); break }
         const b = todo.splice(i, 1)[0]
+        // the mansion's roof: back off so the gable rises in view (close in, the eave hid it: 4 s of a
+        // white wall)
+        if (B.name === 'mansion' && !backed && b.y >= o.y + 9) { backed = true; ctx.mark('roof'); tgt = { x: tgt.x, z: tgt.z + 9 } }
         const [dx, dy, dz, face] = FACES.find(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz }))
         used[b.name] = (used[b.name] || 0) + 1
         if (bot.quickBarSlot !== slotFor(b.name)) ctx.select(slotFor(b.name))   // next stack once one runs out
