@@ -42,16 +42,19 @@ module.exports = {
     const { bot } = ctx
     const sp = bot.entity.position.floored()
     // flat, dry ground: a lake beside a pit cut into a hill read as "landing in a pond", not a 1x1 hole
+    let snowy = 0
     const flat = (cx, cz) => {
+      snowy = 0
       const c = ctx.surface(cx, cz)
       if (!c || !['grass_block', 'dirt'].includes(c.name) || c.position.y < 62 || c.position.y > 67) return null   // > 67: the 250 glass (floor + 250) went past the 319 build limit, never placed: no break on the last drop
       for (let dx = -6; dx <= 6; dx++) {
         for (let dz = -6; dz <= 6; dz++) {
           const b = ctx.surface(cx + dx, cz + dz)
-          if (!b || /water|lava|ice|snow/.test(b.name)) return null
-          // level and snowless all the way out (+-3 only: the lawn sank 2 into a snowy slope with dirt walls, review)
-          if (Math.abs(b.position.y - c.position.y) > 1 || !['grass_block', 'dirt'].includes(b.name)) return null
-          if (/snow/.test(bot.blockAt(b.position.offset(0, 1, 0))?.name || '')) return null
+          if (!b || /water|lava|ice/.test(b.name)) return null
+          // level all the way out (+-3 only: the lawn sank 2 into a slope with dirt walls, review). Snow is fine
+          // (this world is snowy almost everywhere: snowless found nothing in 8 hops): the lawn gets it back
+          if (Math.abs(b.position.y - c.position.y) > 1 || !['grass_block', 'dirt', 'snow_block'].includes(b.name)) return null
+          if (/snow/.test(bot.blockAt(b.position.offset(0, 1, 0))?.name || '') || b.name === 'snow_block') snowy++
         }
       }
       return c.position
@@ -86,8 +89,7 @@ module.exports = {
     await ctx.cmd(`/setblock ${x} ${floor} ${z} water`)
     await ctx.cmd(`/setblock ${x} ${floor - 1} ${z} stone`)
     // a snowy site: snow back on the lawn up to the hole (a bare 7x7 grass square read as command-built)
-    const around = [[6, 0], [-6, 0], [0, 6], [0, -6], [5, 5], [-5, -5]].map(([dx, dz]) => bot.blockAt(new ctx.Vec3(x + dx, floor + 1, z + dz))?.name)
-    if (around.filter(n => n === 'snow').length >= 2) {
+    if (snowy > 20) {   // (the old test looked for a snow layer 6 out at floor + 1: on a slope that was solid ground)
       await ctx.cmd(`/fill ${x - 3} ${floor + 1} ${z - 3} ${x + 3} ${floor + 1} ${z + 3} snow[layers=1]`)
       await ctx.cmd(`/setblock ${x} ${floor + 1} ${z} air`)
       ctx.log('snowy site: snow put back on the lawn')
