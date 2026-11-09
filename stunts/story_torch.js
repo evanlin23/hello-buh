@@ -62,8 +62,9 @@ module.exports = {
     // the filled-in column: soft dirt from the hilltop all the way to the floor (the top block shows it: a dirt
     // square under the torch, in the grass)
     await c(`/fill ${A(SX, TOP, SZ)} ${A(SX, FLOOR + 1, SZ)} dirt`)
-    // the torch niches: one block into the west wall, a torch standing in each (hidden until the dirt beside it goes)
-    for (const y of NICHES) { await c(`/setblock ${A(SX - 1, y - 1, SZ)} stone`); await c(`/setblock ${A(SX - 1, y, SZ)} torch`) }
+    // the torches: on the west wall of the shaft every 4 blocks, each in a pocket of air the dirt was poured around
+    // (dirt can't go where a torch is), so digging into one is a reveal. A camera facing north sees them on its left
+    for (const y of NICHES) { await c(`/setblock ${A(SX - 1, y, SZ)} stone`); await c(`/setblock ${A(SX, y, SZ)} wall_torch[facing=east]`) }
     await c(`/setblock ${A(SX, TOP + 1, SZ)} torch`)
 
     // --- home, south of the hill: the door on its north wall, facing the hill
@@ -108,14 +109,14 @@ module.exports = {
     const digDown = () => {
       if (digging) return false
       const b = bot.blockAt(bot.entity.position.offset(0, -0.5, 0).floored())
-      if (!b || b.name === 'air' || b.name === 'lava') return false
+      if (!b || !['dirt', 'stone', 'grass_block'].includes(b.name)) return false   // never the torches (I fall past them)
       digging = bot.dig(b, 'ignore').catch(e => ctx.log('dig', e.message)).finally(() => { digging = null })
       return true
     }
     // stand in the shaft with feet at F + dy (the column above cleared): a cut, looking straight down, north up
     const down = { yaw: 0, pitch: -1.42 }
     const shaft = async (dy, clearFrom) => {
-      if (clearFrom !== undefined && clearFrom > dy) say(`/fill ${X + SX} ${F + dy} ${Z + SZ} ${X + SX} ${F + clearFrom} ${Z + SZ} air`)
+      if (clearFrom !== undefined && clearFrom > dy) say(`/fill ${X + SX} ${F + dy} ${Z + SZ} ${X + SX} ${F + clearFrom} ${Z + SZ} air replace dirt`)   // the dirt only: the wall torches stay
       await bot.waitForTicks(1)
       ctx.mark('cut')
       say(`/tp @s ${cx.toFixed(3)} ${(F + dy).toFixed(3)} ${cz.toFixed(3)} 180 ${(-down.pitch * 180 / Math.PI).toFixed(2)}`)
@@ -171,7 +172,7 @@ module.exports = {
     await line('L05', async (k, at) => {
       if (k === at(2) - 5) digDown()
       if (k === at(2)) { setMeter(2); from5 = { ...K.base }; k5 = k }
-      if (from5) K.turnTo(from5, new ctx.Vec3(X + SX - 0.4, F - 2 + 0.45, cz), (k - k5) / 8)   // the torch in the west wall, close
+      if (from5) K.turnTo(from5, new ctx.Vec3(X + SX + 0.15, F - 2 + 0.55, cz), (k - k5) / 8)   // the torch in the west wall, close
       look(k)
     })
     // L06: I look up the shaft: the square of sky, and the dog's head over the edge, whining
@@ -213,7 +214,7 @@ module.exports = {
       if (k >= 2 && k < at(3) && bot.entity.onGround) { const b = bot.blockAt(bot.entity.position.offset(0, -0.5, 0).floored()); if (b && b.name === 'dirt') digDown() }   // dirt to the stone floor (a dig mid-fall did nothing)
       if (k === 18) ctx.sound('block.lava.pop', 0.8, 0.9)
       if (k >= at(3) - 4 && !from9) { from9 = { ...K.base }; k9 = k }
-      if (from9) K.turnTo(from9, new ctx.Vec3(X + SX - 0.5, F - 42 + 0.6, cz), (k - k9) / 10)
+      if (from9) K.turnTo(from9, new ctx.Vec3(X + SX + 0.15, F - 42 + 0.6, cz), (k - k9) / 10)
       look(k)
     })
     // L10: NEVER dig straight DOWN. Pickaxe out, look down, and the stone under my feet breaks on "DOWN"
