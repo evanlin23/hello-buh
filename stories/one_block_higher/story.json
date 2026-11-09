@@ -1,0 +1,83 @@
+{
+  "name": "one_block_higher",
+  "stunt": "story_one_block_higher",
+  "caption": "every time I sleep, I wake up higher 😳",
+  "premise": "Every time the narrator sleeps, he wakes up one block higher: his bed sits on a dirt pillar that grows a block a night. The farmer's field is a pond, the fisherman fishes from his roof, the golem stands neck-deep, somebody is stealing the hill, and the village tells him to stay up there.",
+  "twist": "The sea is rising. Every night the villagers climb the ladder, soaking wet, and lift his bed one block above the water while they stay below. He pretends to sleep, peeks over the edge and sees them; the game shows it (the flooded village, the ladder full of villagers, one more block), nobody says it.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.12,
+  "key_color": "#5BC8FF",
+  "meter": {
+    "label": "BLOCKS UP"
+  },
+  "lines": [
+    {
+      "id": "L01",
+      "text": "Every time / I SLEEP, / I wake up / ONE block / HIGHER."
+    },
+    {
+      "id": "L02",
+      "text": "Nine NIGHTS. / Nine blocks / of DIRT / under my BED."
+    },
+    {
+      "id": "L03",
+      "text": "I asked / the FARMER / who did it. / He said / he's BUSY. / His wheat field / is a POND now."
+    },
+    {
+      "id": "L04",
+      "text": "The FISHERMAN / fishes from / his ROOF. / Says the fish / come to HIM."
+    },
+    {
+      "id": "L05",
+      "text": "The iron GOLEM / just stands / in the water / up to / his NECK. / He looks FINE."
+    },
+    {
+      "id": "L06",
+      "text": "And SOMEBODY / keeps stealing / the HILL / behind my house."
+    },
+    {
+      "id": "L07",
+      "text": "Night TEN. / ELEVEN. / TWELVE."
+    },
+    {
+      "id": "L08",
+      "text": "I think / my bed / is GROWING."
+    },
+    {
+      "id": "L09",
+      "text": "So I / slept on / the GROUND. / Woke up / in my BED. / One block / HIGHER."
+    },
+    {
+      "id": "L10",
+      "text": "Everyone / says STAY / up there. / The view / is BETTER."
+    },
+    {
+      "id": "L11",
+      "text": "It IS better. / The SEA / looks closer / every DAY."
+    },
+    {
+      "id": "L12",
+      "text": "The BUTCHER / brings my / dinner UP. / He's always / soaking WET."
+    },
+    {
+      "id": "L13",
+      "text": "Night TWENTY. / Nobody / down there / SLEEPS anymore. / All night, / I hear / DIGGING."
+    },
+    {
+      "id": "L14",
+      "text": "So tonight, / I only / PRETENDED / to sleep."
+    },
+    {
+      "id": "L15",
+      "text": "And I / peeked / over the EDGE."
+    },
+    {
+      "id": "L16",
+      "text": "So THAT'S / why..."
+    }
+  ]
+}
