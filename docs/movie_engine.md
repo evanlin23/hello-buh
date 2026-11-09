@@ -104,8 +104,16 @@ out/build_limit_teaser_novox.mp4 (the lines as on-screen quotes); `--sheet` rend
   and a camera: any render.js shot spec (auto-framed `single`/`two`/`ots`, `path`, `orbit`, `at`) or the name of one of
   the stunt's shots, plus `slow` for real slow motion (rendered at 30 x slow fps). Every other shot mark is stripped, so
   a clip shows only its own camera; clips are cached by their spec.
-- **Cards** are Cinzel (fonts/, OFL) over the 2.39:1 bars: a small line over a big one, the title with a glow.
-- **The score is made, not licensed** (score() in the script): the four-note song (D D A D) on a real note block in a
+- **Cards** are Cinzel (fonts/, OFL) over the 2.39:1 bars: a small line over a big one, the title with a glow, and
+  `one` (a single line of 1 to 6 words, centred over the picture with a soft shadow; the research measured 1 to 6
+  words a card in real teasers, about 1.25 s each).
+- **Teaser v4 rules** (from `reports/Movie and trailer craft for BUILD LIMIT.md`, T1 to T9): no answer images (no
+  slide, no green world, no Ash); cards over picture, black only for the opening, the hush and the button; one anchor
+  image (the Well as a dot seen from Forty) opens the fall and holds the title; the title lands at 75 to 80% on its
+  line ("There is no forty-one."); the button is a line after the title. v3 is kept as `edl_v3.json`.
+- **The score is made, not licensed** (score() in the script; `"score": "v4"` in the edit list picks score_v4, where
+  the bell is the rhythm: a far toll on each rule card, the second toll and a braam on the fall into the fog, the
+  montage cut on tolls pitched lower each time, then the hush). The older score_v3: the four-note song (D D A D) on a real note block in a
   hall reverb, saw-stack drones, "braam" hits (detuned saws on D1/D2/A2 with a closing filter and a sub), heartbeats,
   clock ticks that speed up through the montage, risers, reversed swells into hits, the game's bell with a sine body
   and a long tail, a hard silence before the reveal, and the song again as four braams under the title.

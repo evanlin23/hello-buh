@@ -35,5 +35,8 @@ character secrets, the clue table) are never shown to them.
   Minecraft veteran, editor), all 7-9/10, who found the rules living in the notes, not on screen, and a climax the
   hero didn't own.
 - `round2/arc_draft21.md`: draft 2.1, the arc after round 2 (the "Draft 2.1" tab of the script doc,
-  https://claude.ai/artifact/4BphcbVEduwc4HmV8tbcpJ). Next: the owner's four choices, then the Chapter 1 screenplay
-  and its own blind read.
+  https://claude.ai/artifact/4BphcbVEduwc4HmV8tbcpJ).
+- `round3/arc_draft3.md`: draft 3, the arc rebuilt from the research report (`reports/Movie and trailer craft for
+  BUILD LIMIT.md`, changes A1 to A14): build limit as the system's lie, a two-part trick, the gravel, the Below's scar.
+  Also the "Draft 3" tab of the script doc. Next: the owner's two choices, a blind audit of draft 3 with fresh readers
+  (round 3), then the Chapter 1 screenplay and its own blind read.
