@@ -247,9 +247,14 @@ module.exports = {
     go(false); sneak(false)
     // L09: I think he's just packing (wide on the ring, the boots still smoking in his hand)
     await cut(BX - 4.9, BZ + 5.6, B(0.2, 1.2, 1.2))
-    await line('L09', async (k) => { go(k > 2 && k < 14); if (k % 5 === 0) handSmoke(); if (k % 4 === 0) wisps(6); look(k) })
+    let away = false
+    await line('L09', async (k, at) => {   // he puts the boots away on "PACKING" (switching after the cut played the swap over the next scene's first frames)
+      go(k > 2 && k < 14)
+      if (!away && k >= at(2)) { away = true; ctx.select(0) }
+      if (!away && k % 5 === 0) handSmoke()
+      if (k % 4 === 0) wisps(6); look(k)
+    })
     go(false)
-    ctx.select(0)
     // L10: at night the floor growls (the kitchen at night; purple seeps up through the boards)
     say('/time set 18000'); ctx.dayTime = 18000; ctx.mark('time', { time: 18000 })
     await cut(KX + 6.5, KZ + 5.75, Kt(2.6, 1.0, 5.6))   // along the south wall (from the corner the chair's cobweb filled the view)
