@@ -38,5 +38,11 @@ character secrets, the clue table) are never shown to them.
   https://claude.ai/artifact/4BphcbVEduwc4HmV8tbcpJ).
 - `round3/arc_draft3.md`: draft 3, the arc rebuilt from the research report (`reports/Movie and trailer craft for
   BUILD LIMIT.md`, changes A1 to A14): build limit as the system's lie, a two-part trick, the gravel, the Below's scar.
-  Also the "Draft 3" tab of the script doc. Next: a blind audit of draft 3 with fresh readers
-  (round 3), then the Chapter 1 screenplay and its own blind read.
+  Also the "Draft 3" tab of the script doc.
+- `round3/{kid,skeptic,minecraft,editor,cinephile}.md`: five fresh readers on draft 3 (inputs in `round3/reader_input/`).
+  Four of five, and the owner, could not follow why a jumper needs both a Well and a bucket; the owner also asked
+  "why would you jump if you were given an empty bucket?"
+- `round3/arc_draft31.md`: draft 3.1 (the "Draft 3.1" tab): one landing, the clutch onto the Mark (a gold block, no
+  Well); the chosen kid knows the bucket is empty and jumps anyway; naming is one of the house's own; the trick is one
+  hole; the thirty build their way up. Next: re-shoot the cold open, re-cut the teaser, a blind read of Chapter 1
+  alone, then the Chapter 1 screenplay.
