@@ -702,8 +702,11 @@ export class EntityLayer {
         bones = { orb: true }
       }
     } else if (name === 'player' || name === 'mannequin') {   // (a Mannequin is the player model: movie extras)
-      const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
-      if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
+      const skin = (extra && extra.skin) || 'steve'
+      const t = await texture([`entity/player/wide/${skin}`])
+      // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
+      const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
+      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat }
     } else if (/^(ender_pearl|snowball|egg|item|splash_potion|lingering_potion|experience_bottle|firework_rocket)$/.test(name)) {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       // thrown potions: the bottle plus potion_overlay tinted with the potion colour (ThrownItemRenderer)

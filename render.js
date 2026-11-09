@@ -1469,6 +1469,8 @@ function camAtLive (t) {
   app.get('/blockentities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'blockentities.js')))
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
+  // our own player skins (skins/, scripts/make_skins.py) beside the jar's: stunt.cast names either; <skin>_glow.png lights a part full bright
+  app.use('/assets/env/entity/player/wide', express.static(path.join(__dirname, 'skins')))
   app.use('/assets', express.static(path.join(__dirname, 'work', 'assets', rec.version)))
   const server = http.createServer(app)
   await new Promise(r => server.listen(0, '127.0.0.1', r))
