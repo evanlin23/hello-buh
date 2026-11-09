@@ -26,7 +26,8 @@ module.exports = {
   name: 'story_chunk_next_door',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.5', punch: [['name', 0, 0.1]], zoom: [['name:0.15', 'name:1.5', 1.35]] },
+  // zoom: a push-in on the thing as line 1 starts (it read small and the first second was still), and on the name tag
+  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.5', punch: [['name', 0, 0.1]], zoom: [['line:0', 'line:2.3', 1.3], ['name:0.15', 'name:1.5', 1.35]] },
   time: NIGHT,
   brightness: 1,           // Options > Brightness: Bright (the night scenes still read)
   renderDistance: 2,       // vanilla's lowest: the fog starts 28 blocks out and ends at 32
