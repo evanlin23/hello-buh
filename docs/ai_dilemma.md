@@ -37,3 +37,17 @@ answer is the rescue itself, on camera, mechanically true.
 1. **Thin Ice** (episodes/thin_ice, stunts/ai_thin_ice.js): your little brother falls through the ice.
 2. **Dirk Willems** (next, same lake set): you're fleeing across the ice from the man hunting you; he falls through. Go
    back? (Real, 1569: he went back, pulled him out, and was burned for it.)
+
+## Thin Ice versions
+- v1 (out/ai_thin_ice_v1_preview.mp4): the story end to end; owner: set too small (edges), captions on everything,
+  Grok not deep/boomy enough, not cinematic enough, wants the cenotshi logo sidebar, music not cinematic.
+- v3 (out/ai_thin_ice_v3_preview.mp4): 44x29 lake in a round clearing ringed with spruce; full captions (2-3 words, key
+  words in the speaker's colour); Grok -3.4 semitones with a sub-octave (episodes/thin_ice/process_vox.sh); the
+  sidebar (our own icons, greyed with a red cross once an AI refuses); two angles per AI; POV under the ice for the
+  punch; teal-orange grade; slow motion on the break; a silent beat before Grok; the score on real CC0 orchestra
+  samples (scripts/get_samples.sh, scripts/sampler.py, orchestra.epic_real). Lyria (music generation) is on the proxy
+  but the free tier has no quota for it.
+- Score reviews by a listening model: synth orchestra 2/10, first sample version 3/10, after seating, EQ,
+  humanising and expression 5.5/10. An editor review of v3 rated the mix clear, Grok clearly the deepest, the silence
+  "the strongest part of the edit". Its remaining notes: the boy is too still under the ice (bubbles, struggle), the
+  hole is one block (a bigger, jagged break), Grok hard to see underwater in the sink shot.
