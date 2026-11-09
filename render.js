@@ -428,7 +428,7 @@ const ATLAS_UV = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(_
 // the block under the crosshair within reach (4.5, survival): vanilla outlines it in black
 // hitbox [width, height] of mobs that can be targeted (EntityType sizes); an entity under the crosshair
 // within the 3-block entity reach is the target, and vanilla draws no outline for it
-const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
+const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], zombie_villager: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
 // outline shapes (Block.getShape) where they differ from the collision shape: fences, walls and
 // gates outline 1 block tall (their collision is 1.5), and blocks you walk through still get targeted
 // and outlined: crops by age, plants, torches (a ray used to pass through wheat and outline the

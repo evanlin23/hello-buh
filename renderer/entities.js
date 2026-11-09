@@ -165,6 +165,16 @@ function look (name, extra, regs) {
       // straw hat (transparent for the other professions). Without it the hat vanished from behind.
       { origin: [-8, 16, -6], size: [16, 16, 1], uv: [30, 47], rotation: [-90, 0, 0], pivot: [0, 24, 0] }] } }
   }
+  // a zombie villager keeps its villager's biome outfit, profession outfit and hat (ZombieVillagerModel: the
+  // villager head and hat on a zombie's body); only the profession overlay drew before, as black boxes
+  if (name === 'zombie_villager') {
+    const t = regs['minecraft:villager_type']?.[String(extra?.type)] || 'plains'
+    const p = regs['minecraft:villager_profession']?.[String(extra?.profession)] || 'none'
+    const layers = ['entity/zombie_villager/zombie_villager', `entity/zombie_villager/type/${t}`]
+    if (p !== 'none') layers.push(`entity/zombie_villager/profession/${p}`)
+    return { model: 'zombie_villager', layers, extra: { head: [{ origin: [-4, 24, -4], size: [8, 10, 8], uv: [32, 0], inflate: 0.5 },
+      { origin: [-8, 16, -6], size: [16, 16, 1], uv: [30, 47], rotation: [-90, 0, 0], pivot: [0, 24, 0] }] } }
+  }
   if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`], yOff: -1.0 }   // the Bedrock boat geometry sits its hull ~15 px up; Java's hull bottom is at the entity's feet
   if (name === 'parrot') return { model: 'parrot', layers: [`entity/parrot/parrot_${['red_blue', 'blue', 'green', 'yellow_blue', 'grey'][(extra && extra.variant) || 0] || 'red_blue'}`] }   // Parrot.Variant
   if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
