@@ -124,14 +124,19 @@ def card_png(c, path):
     if "title" in c:
         f = ImageFont.truetype(str(FONT / "Cinzel_900Black.ttf"), 176)
         glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-        tracked(ImageDraw.Draw(glow), (W / 2, H / 2 - 20), c["title"], f, 26, (255, 236, 200, 255))
+        # (high in the frame: the tower's lit deck fills the lower middle, and the lines under the title sat on it)
+        tracked(ImageDraw.Draw(glow), (W / 2, H / 2 - 170), c["title"], f, 26, (255, 236, 200, 255))
         im = Image.alpha_composite(im, glow.filter(ImageFilter.GaussianBlur(18)))
         d = ImageDraw.Draw(im)
-        tracked(d, (W / 2, H / 2 - 20), c["title"], f, 26, (255, 255, 255, 255))
+        tracked(d, (W / 2, H / 2 - 170), c["title"], f, 26, (255, 255, 255, 255))
     elif "under" in c or "under2" in c:
         f = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 44 if "under" in c else 38)
-        y = H / 2 + 115 if "under" in c else H / 2 + 180
-        tracked(d, (W / 2, y), c.get("under") or c.get("under2"), f, 14, (225, 225, 225, 255))
+        y = H / 2 - 62 if "under" in c else H / 2 - 8
+        shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        tracked(ImageDraw.Draw(shadow), (W / 2, y), c.get("under") or c.get("under2"), f, 14, (0, 0, 0, 230))
+        im = Image.alpha_composite(im, shadow.filter(ImageFilter.GaussianBlur(6)))
+        d = ImageDraw.Draw(im)
+        tracked(d, (W / 2, y), c.get("under") or c.get("under2"), f, 14, (230, 230, 230, 255))
     elif "quote" in c:
         f = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 46)
         tracked(d, (W / 2, H - BAR - 70), c["quote"], f, 4, (255, 255, 255, 255))
@@ -383,14 +388,19 @@ def score(edl, T, total, vox):
         put(braam(1.6 if dt < 1.9 else 3.0, 36.71 * 2 ** ((semi - 8) / 12)), S("title", 0.6) + dt, 0.9)
     put(drone(S("pre_sting") - S("title", 0.6) + 1.0, (36.7, 73.4, 110.0), 0.45), S("title", 0.6), 0.5)
     for dt, semi in song:
-        put(reverb(st(note("block.note_block.harp", NB(semi + 12), 0.6)), 3.0, 0.65), S("title", 3.4) + dt * 0.9, 0.35)
+        x = note("block.note_block.harp", NB(semi + 12), 0.6)
+        x[: int(0.035 * SR)] *= np.linspace(0, 1, int(0.035 * SR))   # (a softer attack: it jumped out after the hits)
+        put(reverb(st(x), 3.4, 0.75), S("title", 3.4) + dt * 0.9, 0.3)
     # after the title: two bells, very far away
     put(bell(0.6, 0.7, far=True), S("sting", 0.3), 0.8)
     put(bell(0.6, 0.7, far=True), S("sting", 1.3), 0.8)
     # the voices
     if vox:
         for v in edl["vox"]:
-            put(load_vox(v["id"], v.get("far")), at(T, v["at"]), 0.85)
+            x = load_vox(v["id"], v.get("far"))
+            if v.get("room"):   # more of the room on this one (Ash's last line read close-miked next to the others)
+                x = reverb(x, 1.4, v["room"], damp=3200)
+            put(x, at(T, v["at"]), 0.85)
     mix = mix[: int(total * SR)]
     # hard cut to silence at the hush and the very end (trailer silences are part of the score)
     for k in ("hush",):
@@ -423,6 +433,7 @@ def main():
     ap.add_argument("edl")
     ap.add_argument("--sheet", action="store_true")
     ap.add_argument("--only", choices=["vox", "novox"])
+    ap.add_argument("--audio", action="store_true", help="re-make only the mix and re-mux it into the existing cuts")
     a = ap.parse_args()
     edl = json.loads(pathlib.Path(a.edl).read_text())
     WORK.mkdir(parents=True, exist_ok=True)
@@ -430,6 +441,16 @@ def main():
     if a.sheet:
         return sheet(edl, T)
     print(f"{edl['name']}: {total:.1f} s, {len(edl['seq'])} segments")
+    if a.audio:
+        for vox, suffix in ((True, ""), (False, "_novox")):
+            out = HERE / "out" / f"{edl['name']}{suffix}.mp4"
+            wav = WORK / f"mix_{'v' if vox else 'q'}.wav"
+            write_wav(wav, score(edl, T, total, vox))
+            tmp = out.with_suffix(".tmp.mp4")
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(out), "-i", str(wav), "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+                            "-c:a", "aac", "-b:a", "256k", "-af", "loudnorm=I=-14:TP=-1.2:LRA=14", "-ar", str(SR), "-t", f"{total:.3f}", str(tmp)], check=True)
+            tmp.replace(out); print("re-muxed", out)
+        return
     (HERE / "out").mkdir(exist_ok=True)
     if a.only != "novox":
         assemble(edl, T, total, True, HERE / "out" / f"{edl['name']}.mp4")
