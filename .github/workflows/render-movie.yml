@@ -1,7 +1,7 @@
 # Renders a movie-engine Short (an AI-dilemma episode, docs/ai_dilemma.md) on parallel runners instead of one container.
 # Triggered by pushing renders/job.json on a claude/* branch (scripts/queue_render.sh writes it with the recording and
-# the voices; push triggers work from any branch, a Run-workflow button needs the file on main). 8 jobs each render
-# one slice of the picture (scripts/ai_short.py --chunk i/8) and keep it as an artifact; one more job joins them and
+# the voices; push triggers work from any branch, a Run-workflow button needs the file on main). 12 jobs each render
+# one slice of the picture (scripts/ai_short.py --chunk i/12; the repo is public: free minutes, 4-core runners) and keep it as an artifact; one more job joins them and
 # adds the sound, the score (CC0 orchestra samples, cached), the captions and the sidebar -> artifact "short".
 name: render-movie
 on:
@@ -18,9 +18,11 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: true
-      matrix: { chunk: [0, 1, 2, 3, 4, 5, 6, 7] }
+      matrix: { chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "21" }   # (build_assets runs the server jar's data generator)
       - uses: actions/setup-node@v4
         with: { node-version: "22", cache: npm }
       - name: system deps
@@ -49,7 +51,7 @@ jobs:
           echo "ep=$EP" >> "$GITHUB_OUTPUT"
           gunzip -c "renders/$EP/$ST.rec.json.gz" > "work/$ST.rec.json"
       - name: render slice ${{ matrix.chunk }}
-        run: python3 scripts/ai_short.py "episodes/${{ steps.job.outputs.ep }}" --chunk ${{ matrix.chunk }}/8
+        run: python3 scripts/ai_short.py "episodes/${{ steps.job.outputs.ep }}" --chunk ${{ matrix.chunk }}/12
       - uses: actions/upload-artifact@v4
         with: { name: "seg-${{ matrix.chunk }}", path: "work/${{ steps.job.outputs.ep }}/segs/seg_*.mp4", retention-days: 3 }
 
@@ -59,6 +61,8 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "21" }   # (build_assets runs the server jar's data generator)
       - uses: actions/setup-node@v4
         with: { node-version: "22", cache: npm }
       - name: system deps
