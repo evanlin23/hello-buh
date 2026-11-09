@@ -38,7 +38,17 @@ module.exports = {
     // few hubs and take the flattest dry spot.
     const start = bot.entity.position.floored()
     let g = null, best = Infinity
-    for (const [hx, hz] of [[0, 0], [288, 0], [0, 288], [-288, 0], [0, -288], [288, 288], [-288, -288]]) {
+    // the world's seed is fixed: a plateau found by this search (nothing higher for 96 blocks) is tried first.
+    // The search's own pick varied from run to run with how many chunks had arrived
+    {
+      await ctx.cmd('/tp @s 380 200 215'); await bot.waitForTicks(60); try { await bot.waitForChunksToLoad() } catch (e) {} await bot.waitForTicks(40)
+      const fl = ctx.findLand(380, 215), c = fl ? { name: 'grass_block', position: fl } : null
+      let up = 0
+      for (let ex = -96; ex <= 96; ex += 8) for (let ez = -96; ez <= 96; ez += 8) { const b = ctx.surface(380 + ex, 215 + ez); if (b && c) up = Math.max(up, b.position.y - c.position.y) }
+      ctx.log('plateau site', c && c.name, c && c.position.y, 'highest ground around it +', up)
+      if (c && c.name === 'grass_block' && up <= 6) { g = c.position.clone(); best = 0 }
+    }
+    for (const [hx, hz] of best === 0 ? [] : [[0, 0], [288, 0], [0, 288], [-288, 0], [0, -288], [288, 288], [-288, -288]]) {
       if (hx || hz) { await ctx.cmd(`/tp @s ${start.x + hx} 200 ${start.z + hz}`); await bot.waitForTicks(40); try { await bot.waitForChunksToLoad() } catch (e) {} await bot.waitForTicks(20) }
       const cx0 = start.x + hx, cz0 = start.z + hz, H = new Map()
       for (let dx = -176; dx <= 176; dx += 8) for (let dz = -176; dz <= 176; dz += 8) { const b = ctx.surface(cx0 + dx, cz0 + dz); if (b) H.set(`${dx},${dz}`, b) }
@@ -52,7 +62,7 @@ module.exports = {
           if (/water|lava|ice/.test(b.name)) wet++
           up = Math.max(up, b.position.y - c.position.y); down = Math.max(down, c.position.y - b.position.y)
         }
-        const score = up + down * 0.5 + wet * 0.5 + miss * 2
+        const score = up * 3 + down * 0.3 + wet * 0.5 + miss * 0.1
         if (score < best) { best = score; g = c.position.clone(); g.info = { up, down, wet, miss } }
       }
       ctx.log('site search hub', hx, hz, 'best so far', best.toFixed(1), g && JSON.stringify(g.info), g && [g.x, g.y, g.z])
