@@ -172,17 +172,17 @@ module.exports = {
 
     // L01: the street in the morning, golems down both sides; they turn to watch me walk in
     await cut(0.5, 43.5, P(0.5, 2.0, 30))
-    for (let k = 0; k < 8; k++) { mill(); look(k); await bot.waitForTicks(1) }
+    for (let k = 0; k < 8; k++) { mill(); watch(9); look(k); await bot.waitForTicks(1) }   // the nearest golems are already looking on frame 0
     await line('L01', async (k) => { mill(); watch(9); go(k > 4); look(k) })
     go(false)
     // L02: from a roof: nineteen golems, six villagers... and every golem looks up at me
-    await cut(-2.4, 15.6, P(1.5, 1.5, 31), 5)   // the roof's street-side corner (from the middle of the roof the roof filled the frame)
+    await cut(-2.05, 22.4, P(3.0, 1.5, 10), 5)   // the roof's south-east corner, looking up the street: both rows, the roof behind me   // the roof's street-side corner (from the middle of the roof the roof filled the frame)
     let from = null
     await line('L02', async (k, at) => {
       if (k < at(2)) mill()
       else for (let i = 0; i < 6; i++) { V[i].z -= 0.13; setV(i, 180) }   // and they hurry off
       if (k >= at(2) - 2) watch(60)
-      if (k >= at(1) - 6) { from = from || { ...K.base }; K.turnTo(from, P(0.5, 1.2, 21.5 + drift), (k - at(1) + 6) / 12) }
+      if (k >= at(1) - 6) { from = from || { ...K.base }; K.turnTo(from, P(1.0, 1.2, 19.5 + drift), (k - at(1) + 6) / 12) }
       look(k)
     })
     // L03: the blacksmith turns his back and shuffles off behind a golem
@@ -244,7 +244,7 @@ module.exports = {
       watch(9)
       // eyes open on the ceiling, then down to the door: one slow move the whole way (a held ceiling was a second of nothing)
       const t0 = 3
-      if (k >= t0) { from = from || { ...K.base }; K.turnTo(from, P(22.5, 2.3, -22.2), (k - t0) / (at(3) + 2 - t0)) }
+      if (k >= t0) { from = from || { ...K.base }; K.turnTo(from, P(22.5, 1.0, -22.2), (k - t0) / (at(2) + 2 - t0)) }   // down by SORE, aimed low: he stands above the caption line
       go(k >= at(3) - 2 && bot.entity.position.z < Z - 26.8)
       look(k)
     })
@@ -309,7 +309,7 @@ module.exports = {
     })
     go(false)
     // L12: he screams, hops, runs in circles... and POP: golem number twenty, right next to him
-    const G20 = { x: 3.2, z: 50.6 }
+    const G20 = { x: 2.5, z: 52.2 }   // behind the farmer's shoulder, in frame when it pops
     let fromA = null, fromB = null
     let pt = 0
     const panic = () => {   // a hop, then side to side through the wheat, flat out
@@ -323,7 +323,7 @@ module.exports = {
       if (k === at(0) + 1) ctx.sound('entity.villager.hurt', 1, 1.25)
       if (k === at(0) + 9) ctx.sound('entity.villager.hurt', 0.8, 1.4)
       if (k >= at(0)) panic()
-      if (k === at(1) - 2) say(`/summon iron_golem ${(X + G20.x).toFixed(2)} ${F + 1} ${(Z + G20.z).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,PlayerCreated:0b,Tags:["g","ga","g20"],Rotation:[90f,0f]}`)
+      if (k === at(1)) say(`/summon iron_golem ${(X + G20.x).toFixed(2)} ${F + 1} ${(Z + G20.z).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,PlayerCreated:0b,Tags:["g","ga","g20"],Rotation:[90f,0f]}`)
       if (k === at(1)) { ctx.mark('pop'); ctx.mark('meter', { value: 20 }); ctx.sound('entity.item.pickup', 1, 0.7); ctx.sound('entity.iron_golem.step', 1, 0.6) }
       if (k >= at(1) + 1) { fromA = fromA || { ...K.base }; K.turnTo(fromA, P(G20.x - 0.6, 2.7, G20.z), (k - at(1) - 1) / 9) }
       if (k >= at(4)) say(`/tp @e[tag=g20,limit=1] ${(X + G20.x + jit()).toFixed(3)} ${F + 1} ${Z + G20.z} facing entity ${me} eyes`)
@@ -339,7 +339,8 @@ module.exports = {
       if (k >= at(1) - 3 && k < at(3) - 3) { fromB = fromB || { ...K.base }; K.turnTo(fromB, P(fx, 1.9, fz), (k - at(1) + 3) / 8); if (k >= at(1) + 5) K.base = K.aim(P(fx, 1.9, fz)) }
       if (k === at(3) - 3) fromA = { ...K.base }
       if (k >= at(3) - 3) K.turnTo(fromA, P(G20.x, 3.0, G20.z), (k - at(3) + 3) / 9)
-      say(`/tp @e[tag=g20,limit=1] ${(X + G20.x + jit()).toFixed(3)} ${F + 1} ${Z + G20.z} facing entity ${me} eyes`)
+      if (k >= at(3)) { G20.z -= 0.05; G20.x -= 0.02 }   // and he starts toward me
+      say(`/tp @e[tag=g20,limit=1] ${(X + G20.x + jit()).toFixed(3)} ${F + 1} ${(Z + G20.z).toFixed(3)} facing entity ${me} eyes`)
       if ([T13 - 15, T13 - 9, T13 - 3].includes(k)) ctx.sound('entity.iron_golem.step', 0.5 + (k - T13 + 15) * 0.04, 0.9)
       look(k)
     })
@@ -357,20 +358,29 @@ module.exports = {
     await line('L14', async (k) => { advance(n++); K.turnTo(from, P(C.x - X, 2.6, C.z - Z - 8), (k - 1) / 11); look(k) })
     // L15: and why is everyone looking at ME? (my voice: the groan again.) The nearest one swings
     from = { ...K.base }
+    const uh = bot.player.uuid.replace(/-/g, ''), ints = [0, 8, 16, 24].map(o => { const v = parseInt(uh.slice(o, o + 8), 16); return v > 0x7fffffff ? v - 0x100000000 : v })
     const T15 = Math.round((S.line('L15').dur + S.gap) * 20)
     await line('L15', async (k, at) => {
       advance(n++)
       if (k === at(3) + 2) groan(0.9)
+      if (k === T15 - 6) say(`/execute as @e[tag=ga] run data merge entity @s {NoAI:0b,AngerTime:600,AngryAt:[I;${ints.join(',')}],anger_end_time:999999999L,angry_at:[I;${ints.join(',')}]}`)
       // across the wall of them, left then right, and up into the face of the one in front
       const u = k / T15, sweep = Math.sin(u * Math.PI * 2) * 0.5 * (1 - u * 0.6)
       K.base = { yaw: from.yaw + sweep, pitch: from.pitch + 0.22 * Math.min(1, Math.max(0, (u - 0.55) / 0.4)) }
       look(k)
     })
-    // the hit: the game says what I am to them
-    ctx.mark('smash')
-    ctx.sound('entity.iron_golem.attack', 1, 1); ctx.sound('entity.zombie.hurt', 0.9, 1)
-    say(`/damage @s 100 minecraft:mob_attack by @e[tag=ga,limit=1,sort=nearest]`)
-    for (let i = 0; i < 20 && !ctx.died; i++) { advance(n++); await bot.waitForTicks(1) }
+    // the hit is a real one: the front rank wakes up angry at me a moment before the line ends (a /damage alone
+    // killed with nobody swinging and no launch: Minecraft audit). One golem hit does 7.5-21.5, so the first hit
+    // is finished off at once in the same golem's name.
+    let hit = false
+    const smash = () => {
+      hit = true; ctx.mark('smash')
+      ctx.sound('entity.iron_golem.attack', 1, 1); ctx.sound('entity.zombie.hurt', 0.9, 1)
+      if (!ctx.died) say(`/damage @s 100 minecraft:mob_attack by @e[tag=ga,limit=1,sort=nearest]`)
+    }
+    for (let i = 0; i < 30 && !ctx.died; i++) { advance(n++); if (!hit && bot.health < 20) smash(); await bot.waitForTicks(1) }
+    if (!hit) smash()
+    for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
     // behind the death screen they all lean in (mob updates reach a dead player for ~0.9 s)
     for (let i = 0; i < 44; i++) { lean = Math.min(0.9, lean + 0.07); advance(n++); await bot.waitForTicks(1) }
     ctx.mark('story_end')
