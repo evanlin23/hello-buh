@@ -227,12 +227,12 @@ module.exports = {
     let got = -1
     await line('L07', async (k, at) => {
       if (got < 0 && bot.inventory.items().some(it => it.name === 'wooden_sword')) got = k
-      go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); if (got >= 0 && bz() > 3.5) go(true)   // creeps on toward the ring (the shot parked after the turn)
+      go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); bot.setControlState('left', got >= 0)   // a slow sidestep round the ring to the cut (creeping forward, he reached the frame and parked against it for 0.6 s)
       if (k % 4 === 0 && got < 0) ctx.particles('portal', B(1.5, 0.9, 3.75), { count: 5 })
-      if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 1.3, 0.5), (k - got) / 12) } else K.base = K.aim(B(1.5, 1.15, 3.75))
+      if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 1.3, 0.5), (k - got) / 26) } else K.base = K.aim(B(1.5, 1.15, 3.75))
       look(k)
     })
-    go(false)
+    go(false); bot.setControlState('left', false)
     // L08: on Tuesday, his boots. Still smoking (a real pickup again: on the floor they were 110 px wide, and the
     // wide shot hid them behind the hotbar. In the hand they are big, with the smoke coming off them)
     say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:0s,Age:-32768s,Tags:["boots"]}`)
