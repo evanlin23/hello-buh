@@ -3,8 +3,7 @@
  "title": "BUILD LIMIT (teaser)",
  "note": "Trailer times are seconds of the trailer; clip t0 is recording seconds (rec.timeline t / 1000); slow = slow-motion factor (rendered at 30 x slow fps). Shot specs are render.js camera-director specs; offsets are from the recording's set origin.",
  "recs": {
-  "R1": "work/movie_reel.rec.json",
-  "R2": "work/movie_below.rec.json"
+  "R1": "work/movie_reel.rec.json"
  },
  "seq": [
   {
@@ -53,12 +52,31 @@
   {
    "id": "plank",
    "rec": "R1",
-   "t0": 12.3,
+   "t0": 17.3,
    "dur": 1.6,
    "shot": "walkout"
   },
   {
-   "id": "welldot",
+   "id": "stand",
+   "rec": "R1",
+   "t0": 9.3,
+   "dur": 1.5,
+   "shot": {
+    "at": [
+     4.0,
+     202.6,
+     2.4
+    ],
+    "look": [
+     6.0,
+     202.3,
+     -1.5
+    ],
+    "fov": 44
+   }
+  },
+  {
+   "id": "markdot",
    "rec": "R1",
    "t0": 3.0,
    "dur": 2.0,
@@ -69,8 +87,8 @@
      1.3
     ],
     "look": [
-     12.4,
-     50.5,
+     12.5,
+     51.0,
      0.5
     ],
     "fov": 30,
@@ -100,7 +118,7 @@
   {
    "id": "hk2",
    "rec": "R1",
-   "t0": 6.25,
+   "t0": 6.95,
    "dur": 1.6,
    "shot": {
     "single": "actor:Highkeeper",
@@ -113,8 +131,21 @@
   {
    "id": "ash2",
    "rec": "R1",
-   "t0": 7.65,
+   "t0": 8.2,
    "dur": 1.0,
+   "shot": {
+    "single": "self",
+    "toward": "actor:Highkeeper",
+    "size": "close",
+    "side": "south",
+    "fov": 34
+   }
+  },
+  {
+   "id": "look",
+   "rec": "R1",
+   "t0": 10.5,
+   "dur": 2.4,
    "shot": {
     "single": "self",
     "toward": "actor:Highkeeper",
@@ -126,7 +157,7 @@
   {
    "id": "hand",
    "rec": "R1",
-   "t0": 13.2,
+   "t0": 13.4,
    "dur": 1.6,
    "shot": {
     "single": "actor:Highkeeper",
@@ -139,33 +170,31 @@
   {
    "id": "edge",
    "rec": "R1",
-   "t0": 14.6,
+   "t0": 19.9,
    "dur": 2.0,
    "shot": "edge"
   },
   {
    "id": "povfall",
    "rec": "R1",
-   "t0": 16.75,
-   "dur": 1.4,
+   "t0": 22.1,
+   "dur": 1.3,
    "shot": {
     "pov": true
    }
   },
   {
-   "id": "wellpov",
+   "id": "chase",
    "rec": "R1",
-   "t0": 18.85,
-   "dur": 1.0,
-   "shot": {
-    "pov": true
-   }
+   "t0": 23.5,
+   "dur": 1.2,
+   "shot": "chase"
   },
   {
    "id": "fogin",
    "rec": "R1",
-   "t0": 20.1,
-   "dur": 1.0,
+   "t0": 24.75,
+   "dur": 0.45,
    "shot": {
     "pov": true
    }
@@ -177,21 +206,33 @@
   {
    "id": "m1",
    "rec": "R1",
-   "t0": 10.0,
+   "t0": 9.9,
    "dur": 0.6,
-   "shot": "ots_ash"
+   "shot": {
+    "at": [
+     4.0,
+     202.6,
+     2.4
+    ],
+    "look": [
+     6.0,
+     202.3,
+     -1.5
+    ],
+    "fov": 44
+   }
   },
   {
    "id": "m2",
    "rec": "R1",
-   "t0": 15.4,
+   "t0": 20.9,
    "dur": 0.5,
    "shot": "edge"
   },
   {
    "id": "m4",
    "rec": "R1",
-   "t0": 12.6,
+   "t0": 13.7,
    "dur": 0.5,
    "shot": {
     "single": "actor:Highkeeper",
@@ -204,12 +245,12 @@
   {
    "id": "m6",
    "rec": "R1",
-   "t0": 16.25,
+   "t0": 11.6,
    "dur": 0.5,
    "shot": {
-    "single": "actor:Highkeeper",
-    "toward": "self",
-    "size": "medium",
+    "single": "self",
+    "toward": "actor:Highkeeper",
+    "size": "close",
     "side": "south",
     "fov": 34
    }
@@ -217,16 +258,14 @@
   {
    "id": "m5",
    "rec": "R1",
-   "t0": 18.2,
+   "t0": 24.2,
    "dur": 0.5,
-   "shot": {
-    "pov": true
-   }
+   "shot": "chase"
   },
   {
    "id": "bucket",
    "rec": "R1",
-   "t0": 17.45,
+   "t0": 20.7,
    "dur": 2.2,
    "shot": {
     "pov": true
@@ -253,8 +292,8 @@
      1.3
     ],
     "look": [
-     12.4,
-     50.5,
+     12.5,
+     51.0,
      0.5
     ],
     "fov": 22,
@@ -290,26 +329,26 @@
   },
   {
    "at": [
-    "welldot",
+    "stand",
     0.3
    ],
-   "dur": 1.6,
-   "one": "ONE BLOCK OF WATER"
+   "dur": 1.2,
+   "one": "ONE BUCKET"
   },
   {
    "at": [
-    "deck",
-    0.1
+    "markdot",
+    0.3
    ],
-   "dur": 1.1,
+   "dur": 1.5,
    "one": "THE FLOOR YOU JUMP FROM"
   },
   {
    "at": [
     "deck",
-    1.25
+    0.5
    ],
-   "dur": 1.1,
+   "dur": 1.6,
    "one": "IS YOURS. FOREVER."
   },
   {
@@ -317,13 +356,13 @@
     "povfall",
     0.2
    ],
-   "dur": 1.1,
+   "dur": 1.0,
    "one": "EVERY YEAR"
   },
   {
    "at": [
-    "wellpov",
-    0.0
+    "chase",
+    0.1
    ],
    "dur": 1.0,
    "one": "ONE OF US"
@@ -331,9 +370,9 @@
   {
    "at": [
     "fogin",
-    0.1
+    0.05
    ],
-   "dur": 1.0,
+   "dur": 1.1,
    "one": "NEVER LANDS"
   },
   {
@@ -477,5 +516,6 @@
  "note_v4": "Research report (reports/Movie and trailer craft for BUILD LIMIT.md) T1-T4, T6, T7, T9: no answer images (the slide, the green, Ash's line); 1-6 word cards over picture; black cut from 44% to ~30%; the toll as the rhythm, the second toll over the fall into the fog is the reveal; one anchor image (the Well as a dot seen from Forty) opens the fall and holds the title; the title smashes in on 'There is no forty-one.' T5 (the swap on screen) and T8 (real voices) wait for the re-shoot.",
  "score": "v4",
  "note_v4b": "Listening check (2026-11-09): 'There is no forty-one.' was heard as 'fifty-one': the line runs 2.64 s and the title, its swell and braams came in at 1.8 s, on 'forty-one'. The black beat now holds the whole line (2.8 s), the score is silent from the hush to the title, and the music ducks ~5 dB under every line.",
- "note_v4c": "Owner, 2026-11-09: 'i dont understand the How many in your family? line'. Cut from the teaser: nothing in it sets up the Count, so the question reads as random. It stays in the movie, where the market census pays it off within minutes."
+ "note_v4c": "Owner, 2026-11-09: 'i dont understand the How many in your family? line'. Cut from the teaser: nothing in it sets up the Count, so the question reads as random. It stays in the movie, where the market census pays it off within minutes.",
+ "note_v5": "Draft 3.1 re-shoot (2026-11-09): no Well. ONE BUCKET over the stand (the full one stays, the empty one is taken down); the knowing look (Ash looks down at it, then up at him); the chase shot so the fall reads (owner: 'i dont understand the falling'); the fall cuts before the Mark moves (no answer image); the title holds on the gold dot seen from Forty. 'How many in your family?' stays cut (note_v4c)."
 }

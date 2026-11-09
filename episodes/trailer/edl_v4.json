@@ -1,0 +1,481 @@
+{
+ "name": "build_limit_teaser",
+ "title": "BUILD LIMIT (teaser)",
+ "note": "Trailer times are seconds of the trailer; clip t0 is recording seconds (rec.timeline t / 1000); slow = slow-motion factor (rendered at 30 x slow fps). Shot specs are render.js camera-director specs; offsets are from the recording's set origin.",
+ "recs": {
+  "R1": "work/movie_reel.rec.json",
+  "R2": "work/movie_below.rec.json"
+ },
+ "seq": [
+  {
+   "id": "open",
+   "black": 3.0
+  },
+  {
+   "id": "tower",
+   "rec": "R1",
+   "t0": 1.0,
+   "dur": 4.0,
+   "fade_in": 0.5,
+   "shot": {
+    "path": [
+     [
+      0,
+      15,
+      104,
+      19
+     ],
+     [
+      5.6,
+      11,
+      228,
+      13
+     ]
+    ],
+    "lookPath": [
+     [
+      0,
+      0,
+      165,
+      0
+     ],
+     [
+      5.6,
+      0,
+      214,
+      0
+     ]
+    ],
+    "fov": 62,
+    "dof": false
+   }
+  },
+  {
+   "id": "plank",
+   "rec": "R1",
+   "t0": 12.3,
+   "dur": 1.6,
+   "shot": "walkout"
+  },
+  {
+   "id": "welldot",
+   "rec": "R1",
+   "t0": 3.0,
+   "dur": 2.0,
+   "shot": {
+    "at": [
+     12.6,
+     202.0,
+     1.3
+    ],
+    "look": [
+     12.4,
+     50.5,
+     0.5
+    ],
+    "fov": 30,
+    "dof": false,
+    "push": 1.0
+   }
+  },
+  {
+   "id": "deck",
+   "rec": "R1",
+   "t0": 3.0,
+   "dur": 2.4,
+   "shot": {
+    "orbit": [
+     0,
+     202,
+     0
+    ],
+    "radius": 20,
+    "height": 5,
+    "startDeg": 150,
+    "degPerSec": 7,
+    "fov": 50,
+    "dof": false
+   }
+  },
+  {
+   "id": "hk2",
+   "rec": "R1",
+   "t0": 6.25,
+   "dur": 1.6,
+   "shot": {
+    "single": "actor:Highkeeper",
+    "toward": "self",
+    "size": "close",
+    "side": "south",
+    "fov": 34
+   }
+  },
+  {
+   "id": "ash2",
+   "rec": "R1",
+   "t0": 7.65,
+   "dur": 1.0,
+   "shot": {
+    "single": "self",
+    "toward": "actor:Highkeeper",
+    "size": "close",
+    "side": "south",
+    "fov": 34
+   }
+  },
+  {
+   "id": "hand",
+   "rec": "R1",
+   "t0": 13.2,
+   "dur": 1.6,
+   "shot": {
+    "single": "actor:Highkeeper",
+    "toward": "self",
+    "size": "close",
+    "side": "south",
+    "fov": 34
+   }
+  },
+  {
+   "id": "edge",
+   "rec": "R1",
+   "t0": 14.6,
+   "dur": 2.0,
+   "shot": "edge"
+  },
+  {
+   "id": "povfall",
+   "rec": "R1",
+   "t0": 16.75,
+   "dur": 1.4,
+   "shot": {
+    "pov": true
+   }
+  },
+  {
+   "id": "wellpov",
+   "rec": "R1",
+   "t0": 18.85,
+   "dur": 1.0,
+   "shot": {
+    "pov": true
+   }
+  },
+  {
+   "id": "fogin",
+   "rec": "R1",
+   "t0": 20.1,
+   "dur": 1.0,
+   "shot": {
+    "pov": true
+   }
+  },
+  {
+   "id": "fen",
+   "black": 2.6
+  },
+  {
+   "id": "m1",
+   "rec": "R1",
+   "t0": 10.0,
+   "dur": 0.6,
+   "shot": "ots_ash"
+  },
+  {
+   "id": "m2",
+   "rec": "R1",
+   "t0": 15.4,
+   "dur": 0.5,
+   "shot": "edge"
+  },
+  {
+   "id": "m4",
+   "rec": "R1",
+   "t0": 12.6,
+   "dur": 0.5,
+   "shot": {
+    "single": "actor:Highkeeper",
+    "toward": "self",
+    "size": "close",
+    "side": "south",
+    "fov": 34
+   }
+  },
+  {
+   "id": "m6",
+   "rec": "R1",
+   "t0": 16.25,
+   "dur": 0.5,
+   "shot": {
+    "single": "actor:Highkeeper",
+    "toward": "self",
+    "size": "medium",
+    "side": "south",
+    "fov": 34
+   }
+  },
+  {
+   "id": "m5",
+   "rec": "R1",
+   "t0": 18.2,
+   "dur": 0.5,
+   "shot": {
+    "pov": true
+   }
+  },
+  {
+   "id": "bucket",
+   "rec": "R1",
+   "t0": 17.45,
+   "dur": 2.2,
+   "shot": {
+    "pov": true
+   }
+  },
+  {
+   "id": "hush",
+   "black": 0.8
+  },
+  {
+   "id": "limit",
+   "black": 2.8
+  },
+  {
+   "id": "title",
+   "rec": "R1",
+   "t0": 4.0,
+   "dur": 7.0,
+   "fade_out": 0.8,
+   "shot": {
+    "at": [
+     12.6,
+     202.0,
+     1.3
+    ],
+    "look": [
+     12.4,
+     50.5,
+     0.5
+    ],
+    "fov": 22,
+    "dof": false,
+    "push": 0.6
+   }
+  },
+  {
+   "id": "pre_sting",
+   "black": 1.2
+  },
+  {
+   "id": "sting",
+   "black": 4.0
+  }
+ ],
+ "cards": [
+  {
+   "at": [
+    "tower",
+    0.7
+   ],
+   "dur": 1.5,
+   "one": "ONE TOWER"
+  },
+  {
+   "at": [
+    "plank",
+    0.2
+   ],
+   "dur": 1.3,
+   "one": "ONE JUMP"
+  },
+  {
+   "at": [
+    "welldot",
+    0.3
+   ],
+   "dur": 1.6,
+   "one": "ONE BLOCK OF WATER"
+  },
+  {
+   "at": [
+    "deck",
+    0.1
+   ],
+   "dur": 1.1,
+   "one": "THE FLOOR YOU JUMP FROM"
+  },
+  {
+   "at": [
+    "deck",
+    1.25
+   ],
+   "dur": 1.1,
+   "one": "IS YOURS. FOREVER."
+  },
+  {
+   "at": [
+    "povfall",
+    0.2
+   ],
+   "dur": 1.1,
+   "one": "EVERY YEAR"
+  },
+  {
+   "at": [
+    "wellpov",
+    0.0
+   ],
+   "dur": 1.0,
+   "one": "ONE OF US"
+  },
+  {
+   "at": [
+    "fogin",
+    0.1
+   ],
+   "dur": 1.0,
+   "one": "NEVER LANDS"
+  },
+  {
+   "at": [
+    "bucket",
+    0.25
+   ],
+   "dur": 0.95,
+   "one": "IT WAS NEVER"
+  },
+  {
+   "at": [
+    "bucket",
+    1.2
+   ],
+   "dur": 1.0,
+   "one": "AN ACCIDENT"
+  },
+  {
+   "at": [
+    "title",
+    0.05
+   ],
+   "dur": 6.4,
+   "title": "BUILD LIMIT"
+  },
+  {
+   "at": [
+    "title",
+    3.6
+   ],
+   "dur": 2.9,
+   "under": "A HELLOBUH MOVIE"
+  },
+  {
+   "at": [
+    "title",
+    4.8
+   ],
+   "dur": 1.7,
+   "under2": "COMING SOON"
+  }
+ ],
+ "vox": [
+  {
+   "id": "hk2",
+   "at": [
+    "hk2",
+    0.15
+   ]
+  },
+  {
+   "id": "ash2",
+   "at": [
+    "ash2",
+    0.12
+   ]
+  },
+  {
+   "id": "hk3",
+   "at": [
+    "hand",
+    0.1
+   ]
+  },
+  {
+   "id": "fen1",
+   "at": [
+    "fen",
+    0.3
+   ],
+   "far": true
+  },
+  {
+   "id": "hk4",
+   "at": [
+    "limit",
+    0.1
+   ]
+  },
+  {
+   "id": "buh1",
+   "at": [
+    "sting",
+    2.3
+   ]
+  }
+ ],
+ "quotes": [
+  {
+   "at": [
+    "hk2",
+    0.1
+   ],
+   "dur": 1.4,
+   "text": "“Which floor?”"
+  },
+  {
+   "at": [
+    "ash2",
+    0.1
+   ],
+   "dur": 0.9,
+   "text": "“Forty.”"
+  },
+  {
+   "at": [
+    "hand",
+    0.1
+   ],
+   "dur": 1.5,
+   "text": "“You fall once.”"
+  },
+  {
+   "at": [
+    "fen",
+    0.3
+   ],
+   "dur": 2.2,
+   "text": "“It rings twice... for the one.”"
+  },
+  {
+   "at": [
+    "limit",
+    0.1
+   ],
+   "dur": 2.6,
+   "text": "“There is no forty-one.”"
+  },
+  {
+   "at": [
+    "sting",
+    2.3
+   ],
+   "dur": 1.6,
+   "text": "“That's not an echo.”"
+  }
+ ],
+ "note_v2": "Owner, 2026-11-09: 'i dont understand the opening dialog' - the rule cards now come before the plank, 'How many in your family?' moved into the montage unanswered, 'Four.' cut; and voices drier ('without so much reverb').",
+ "note_v3": "Owner: 'it doesnt make sense that theres no water in the water bucket'. No shot shows the full bucket handed over until the cold open is re-shot with the swap on screen (he keeps the full one, hands over the empty one).",
+ "note_v4": "Research report (reports/Movie and trailer craft for BUILD LIMIT.md) T1-T4, T6, T7, T9: no answer images (the slide, the green, Ash's line); 1-6 word cards over picture; black cut from 44% to ~30%; the toll as the rhythm, the second toll over the fall into the fog is the reveal; one anchor image (the Well as a dot seen from Forty) opens the fall and holds the title; the title smashes in on 'There is no forty-one.' T5 (the swap on screen) and T8 (real voices) wait for the re-shoot.",
+ "score": "v4",
+ "note_v4b": "Listening check (2026-11-09): 'There is no forty-one.' was heard as 'fifty-one': the line runs 2.64 s and the title, its swell and braams came in at 1.8 s, on 'forty-one'. The black beat now holds the whole line (2.8 s), the score is silent from the hush to the title, and the music ducks ~5 dB under every line.",
+ "note_v4c": "Owner, 2026-11-09: 'i dont understand the How many in your family? line'. Cut from the teaser: nothing in it sets up the Count, so the question reads as random. It stays in the movie, where the market census pays it off within minutes."
+}

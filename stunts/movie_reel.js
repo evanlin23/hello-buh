@@ -54,7 +54,7 @@ module.exports = {
     stand: { at: [4.5, 202.7, 1.6], look: [5.9, 202.4, -1.9], fov: 42 },
     // the fall from outside (owner, 2026-11-09: "i dont understand the falling"): riding above and beside him, looking
     // down past him at the Mark, so a person, the tower face and the target are in one frame
-    chase: { follow: 'self', offset: [3.2, 4.2, 3.4], look: [WX + 0.5, MARK_Y + 1, 0.5], fov: 62, dof: false },
+    chase: { follow: 'self', offset: [1.4, 5.0, 0.6], look: { of: 'self', offset: [0, -8, 0] }, fov: 55, dof: false },   // (nearly overhead: from the side, him and the Mark below never fit one frame; try_shots d-f)
     pov: { pov: true }
   },
   edit: {
