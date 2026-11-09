@@ -25,7 +25,7 @@ module.exports = {
   caption: "there's a torch I never placed 😳",
   edit: { caption: "there's a torch I never placed 😳", red: 'torch', story: 'stories/torch', startAt: 'line:0', endAfter: 'death:1.4', deathScreen: true, onFire: 'burn:death', zoom: [['broke:0', 'death:1.4', 1.06]] },
   expectDeath: true,
-  time: 12600,              // dusk: the torch on the hill glows against the sky
+  time: 12950,              // sunset: the torch on the hill glows against an orange sky
 
   async setup (ctx) {
     const { bot } = ctx
@@ -129,8 +129,8 @@ module.exports = {
 
     setMeter(1)
     // L01: the hill behind the house, the torch on top against the dusk; walk toward it, the dog at its foot
-    await cut(0.5, -0.5, P(SX + 0.5, TOP + 1.4, SZ + 0.5))
-    await line('L01', async (k) => { wake(k); bot.setControlState('forward', k > 6 && bot.entity.position.z > Z - 2.6); look(k) })
+    await cut(1.6, -3.2, P(SX + 0.5, TOP + 1.45, SZ + 0.5))
+    await line('L01', async (k) => { wake(k); bot.setControlState('forward', k > 6 && bot.entity.position.z > Z - 4.4); K.base = K.aim(P(SX + 0.5, TOP + 1.45, SZ + 0.5)); look(k) })
     bot.setControlState('forward', false)
     // L02: Mom at the front door. She sighs on "sighed" (turns half away and back, a villager's grumble)
     await cut(-0.5, 0.3, P(-0.5, 1.6, 4.2))
@@ -166,10 +166,12 @@ module.exports = {
       look(k)
     })
     // L05: the last dirt before the first niche goes on "ANOTHER": the torch in the wall, on my left
+    let from5 = null, k5 = 0
     await line('L05', async (k, at) => {
-      if (k === at(2) - 3) digDown()
-      if (k === at(2)) setMeter(2)
-      look(k, 0, k > at(2) ? Math.min(0.25, (k - at(2)) * 0.03) : 0)
+      if (k === at(2) - 5) digDown()
+      if (k === at(2)) { setMeter(2); from5 = { ...K.base }; k5 = k }
+      if (from5) K.turnTo(from5, new ctx.Vec3(X + SX - 0.4, F - 2 + 0.45, cz), (k - k5) / 8)   // the torch in the west wall, close
+      look(k)
     })
     // L06: I look up the shaft: the square of sky, and the dog's head over the edge, whining
     say(`/tp @e[tag=dog,limit=1] ${cx.toFixed(3)} ${F + TOP + 1} ${(cz + 0.85).toFixed(3)} 180 40`)
@@ -183,16 +185,17 @@ module.exports = {
       look(k)
     })
     // L07: deeper, digging fast, torches passing on the left wall. TEN. TWENTY.
-    await shaft(-9, -3)
-    const L7 = S.line('L07')
+    await shaft(-23, -3)
+    const from7 = { ...K.base }
     await line('L07', async (k, at) => {
       if (k === at(0)) setMeter(10)
       if (k === at(1)) setMeter(20)
-      if (k >= 2 && k % 7 === 2 && k < Math.round(L7.dur * 20) - 4) digDown()
-      look(k, 0, Math.sin(k / 5) * 0.02)
+      // from my feet up the shaft: torches lining the left wall up to a square of sky
+      K.turnTo(from7, new ctx.Vec3(cx + 0.05, F + TOP + 1, cz - 0.25), k / 16)
+      look(k)
     })
     // L08: deeper still: the walls glow (magma), the stone hums, something bubbles below
-    await shaft(-28, -10)
+    await shaft(-28, -24)
     const L8 = S.line('L08')
     await line('L08', async (k, at) => {
       if (k === at(0)) setMeter(30)
@@ -206,7 +209,7 @@ module.exports = {
     let from9 = null, k9 = 0
     await line('L09', async (k, at) => {
       if (k === at(0)) setMeter(40)
-      if (k === 3 || k === 10) digDown()
+      if (k === 2 || k === 8 || k === 14) digDown()   // -42, -43, -44: down to the stone floor
       if (k === 18) ctx.sound('block.lava.pop', 0.8, 0.9)
       if (k >= at(3) - 4 && !from9) { from9 = { ...K.base }; k9 = k }
       if (from9) K.turnTo(from9, new ctx.Vec3(X + SX - 0.5, F - 42 + 0.6, cz), (k - k9) / 10)
