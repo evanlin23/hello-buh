@@ -24,6 +24,7 @@ const DAY = 11500, DUSK = 12950
 const ZA = [[2.7, 29.3], [3.2, 31.9], [5.5, 28.5], [5.8, 31.6], [5.9, 29.9], [4.4, 32.6]]   // under the tree
 const ZF = [7.2, 30.7]                                                                       // the one who tries the sun
 const ZB = [[8.0, 0.4, 1.25], [8.8, -1.2, 1.7], [9.2, 1.6, 1.5], [10.6, 0.2, 2.2], [11.0, -1.4, 2.6], [11.4, 1.2, 2.4]]   // x, z, how close each gets
+const ZW = [[-2.6, 5.4], [-2.0, 6.8], [-3.2, 6.4]]   // three more, in the gap between the houses behind me
 const GAZE = [[-9.2, -1.6, 'cleric'], [-10.8, -0.7, 'mason'], [-9.9, 1.9, 'shepherd'], [-11.4, 2.3, 'fletcher']]
 
 module.exports = {
@@ -121,7 +122,8 @@ module.exports = {
     for (let i = 0; i < GAZE.length; i++) await vil(GAZE[i][0], GAZE[i][1], 90, GAZE[i][2], 'gaze', ['plains', 'desert', 'plains', 'taiga'][i])
     for (let i = 0; i < ZA.length; i++) await zom(ZA[i][0], 1, ZA[i][1], -90 + (i % 3 - 1) * 14, ['za'])
     await zom(ZF[0], 1, ZF[1], -90, ['za', 'zf'])
-    for (let i = 0; i < ZB.length; i++) await zom(ZB[i][0], -3, ZB[i][1], 90, ['zb', `zb${i}`])   // the street's zombies wait under it, out of the sun
+    for (let i = 0; i < ZB.length; i++) await zom(ZB[i][0], -3, ZB[i][1], 90, ['zb', `zb${i}`])
+    for (let i = 0; i < ZW.length; i++) await zom(ZW[i][0], -3, ZW[i][1], 180, ['zb', `zw${i}`])   // the street's zombies wait under it, out of the sun
 
     await c('/clear @s')
     await resendChunks(ctx, X, Z)
@@ -338,7 +340,8 @@ module.exports = {
         tree = true; k14 = k; setTime(DUSK)
         say('/tag @e[tag=za] add out')
         await cut(11.6, 29.3, P(5.2, 2.4, 30.3))
-        for (let i = 0; i < ZB.length; i++) say(`/tp @e[tag=zb${i}] ${X + ZB[i][0]} ${F + 1} ${Z + ZB[i][1]} 90 0`)   // the street's zombies climb out, out of shot
+        for (let i = 0; i < ZB.length; i++) say(`/tp @e[tag=zb${i}] ${X + ZB[i][0]} ${F + 1} ${Z + ZB[i][1]} 90 0`)
+        for (let i = 0; i < ZW.length; i++) say(`/tp @e[tag=zw${i}] ${X + ZW[i][0]} ${F + 1} ${Z + ZW[i][1]} 180 0`)   // the street's zombies climb out, out of shot
         zbUp = 'wait'
         say(`/tp @e[tag=gaze] ${X + 20} ${F - 8} ${Z - 40}`); gazeOn = false   // the sun-watchers have gone in
         ctx.mark('dusk')
@@ -360,10 +363,12 @@ module.exports = {
     const D = T16 - 3                                         // the killing hit, on the last word
     const hits16 = [D, D - 11, D - 22, D - 33].filter(t => t >= 0)
     const hits15 = [D - 33, D - 44].filter(t => t < 0).map(t => T15 + t)
-    // the street's zombies: each makes for its own place in an arc in front of me (straight at me they piled
-    // into one green wall), at a zombie's walk, and they follow when a hit knocks me back
-    const SLOT = [[1.35, 0], [1.9, -34], [1.9, 34], [2.9, -17], [2.9, 17], [3.7, -2]]
-    const Zs = ZB.map(([x, z]) => ({ x, z }))
+    // the street's zombies: each makes for its own place in an arc round me (straight at me they piled into one
+    // green wall), at a zombie's walk. Six come up the street from the east; three more come through the gap
+    // between the houses behind me. A hit knocks me ~2 blocks (vanilla), so one group could never keep up:
+    // each hit throws me at the other group, which lands the next one
+    const SLOT = [[1.35, 0], [1.9, -34], [1.9, 34], [2.9, -17], [2.9, 17], [3.7, -2], [1.35, 180], [1.9, 148], [1.9, 212]]
+    const Zs = [...ZB.map(([x, z], i) => ({ x, z, tag: `zb${i}` })), ...ZW.map(([x, z], i) => ({ x, z, tag: `zw${i}` }))]
     let me = { x: 3.0, z: 0.5 }, close = 1, shuffle = 0
     const zombies = () => {
       if (!ctx.died) me = { x: bot.entity.position.x - X, z: bot.entity.position.z - Z }
@@ -372,22 +377,27 @@ module.exports = {
         const dx = me.x + r * Math.cos(a) - q.x, dz = me.z + r * Math.sin(a) - q.z, d = Math.hypot(dx, dz)
         if (d > 0.02) { const v = Math.min(0.115, d); q.x += dx / d * v; q.z += dz / d * v }
         const j = d > 0.02 ? 0 : (ctx.tick % 2 ? 0.002 : -0.002)
-        say(`/tp @e[tag=zb${i},limit=1] ${(X + q.x + j).toFixed(3)} ${F + 1} ${(Z + q.z).toFixed(3)} ${yawOf(me.x - q.x, me.z - q.z).toFixed(1)} 8`)
+        say(`/tp @e[tag=${q.tag},limit=1] ${(X + q.x + j).toFixed(3)} ${F + 1} ${(Z + q.z).toFixed(3)} ${yawOf(me.x - q.x, me.z - q.z).toFixed(1)} 8`)
       })
     }
-    const hit = () => say(`/damage @s 3 minecraft:mob_attack by @e[tag=zb0,limit=1]`)
+    const EAST = Zs[0], WEST = Zs[ZB.length]
+    let attacker = EAST
+    const hit = (who) => { attacker = who; say(`/damage @s 3 minecraft:mob_attack by @e[tag=${who.tag},limit=1]`) }
     // the hit's knockback: the server sends it as the player's velocity, which mineflayer scales away to nothing
     // on 1.21.11 (blocks a tick read as 1/8000ths), so the bot applies vanilla's LivingEntity.knockback(0.4) itself
     // when that packet comes: half the old speed plus 0.4 away from the zombie, and 0.4 up from the ground
     bot._client.on('entity_velocity', (p) => {
       if (p.entityId !== bot.entity.id || ctx.died) return
       setImmediate(() => {
-        const dx = me.x - Zs[0].x, dz = me.z - Zs[0].z, d = Math.hypot(dx, dz) || 1, v = bot.entity.velocity
+        const dx = me.x - attacker.x, dz = me.z - attacker.z, d = Math.hypot(dx, dz) || 1, v = bot.entity.velocity
         v.x = v.x / 2 + dx / d * 0.4; v.z = v.z / 2 + dz / d * 0.4
         if (bot.entity.onGround) v.y = Math.min(0.4, v.y / 2 + 0.4)
       })
     })
-    const front = () => P(Math.max(Zs[0].x, me.x + 1.2), 2.55, Zs[0].z * 0.5 + me.z * 0.5)
+    const face = (q) => P(q === EAST ? Math.max(q.x, me.x + 1.2) : Math.min(q.x, me.x - 1.2), 2.55, q.z * 0.5 + me.z * 0.5)
+    // who lands each hit: 1 east (from behind, while I look for grandpa), 2 west, 3 east, 4 west, 5 east
+    const ORDER = [EAST, WEST, EAST, WEST, EAST]
+    const hitAt = [D - 44, D - 33, D - 22, D - 11, D]          // ticks from L16's start (negative: in L15)
     let fromA = null, fromB = null, kB = 0
     await line('L15', async (k, at) => {
       zombies()
@@ -395,23 +405,24 @@ module.exports = {
       if (k === 3) groan(0.9, 1)
       const turn = at(1) + 2
       if (k >= turn && !fromB) { fromA = fromA || { ...K.base }; K.turnTo(fromA, P(G.x, 2.4, 0.9), (k - turn) / 11) }   // round to where grandpa was... he's a dot down the street
-      if (hits15.includes(k)) { hit(); fromB = { ...K.base }; kB = k }
-      if (fromB) K.turnTo(fromB, front(), (k - kB - 1) / 8)                                                          // the hit from behind: back round to them
-      if (!fromA) K.base = K.aim(front())
+      hitAt.forEach((t, n) => { if (t < 0 && k === T15 + t) { hit(ORDER[n]); fromB = { ...K.base }; kB = k } })
+      if (fromB) K.turnTo(fromB, face(EAST), (k - kB - 1) / 8)                                                       // the hit from behind: back round to them
+      if (!fromA) K.base = K.aim(face(EAST))
       look(k)
     })
-    // ---- L16: wait. Then who was too slow to run?
-    let dead = false
+    // ---- L16: wait. Then who was too slow to run? (hit from behind again: the ones from the gap. I spin round to them)
+    let dead = false, view = EAST, from16 = null, k16 = 0
     await line('L16', async (k) => {
       zombies()
       if (!ctx.died) {
-        if (hits16.includes(k)) hit()
+        hitAt.forEach((t, n) => { if (t >= 0 && k === t) hit(ORDER[n]) })
         if (k === 6 || k === 20) groan(1, k === 6 ? 1 : 0.85)
-        K.base = K.aim(front())
+        if (k === hitAt[2] + 1) { view = WEST; from16 = { ...K.base }; k16 = k }   // the third hit throws me at the ones behind: round to face them
+        if (from16 && k < k16 + 8) K.turnTo(from16, face(view), (k - k16) / 7); else K.base = K.aim(face(view))
         look(k, Math.sin(k * 0.9) * 0.035, Math.sin(k * 0.7 + 1) * 0.025)
       } else if (!dead) { dead = true; ctx.mark('slain') }
     })
-    for (let i = 0; i < 40 && !ctx.died; i++) { ambient(); zombies(); if (i % 11 === 0) hit(); await bot.waitForTicks(1) }
+    for (let i = 0; i < 40 && !ctx.died; i++) { ambient(); zombies(); if (i % 11 === 0) hit(i % 22 ? WEST : EAST); await bot.waitForTicks(1) }
     if (!dead) { dead = true; ctx.mark('slain') }
     // behind the death screen they crowd round (their moves reach a dead player for ~0.9 s)
     // (closing right in filled the whole screen with one face: they jostle for a place instead)
