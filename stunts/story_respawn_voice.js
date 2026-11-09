@@ -176,7 +176,7 @@ module.exports = {
     await fall('L01', -0.15)
     await respawn()                                     // lands in my brother's shot (the spawnpoint)
     say('/item replace entity @s hotbar.0 with iron_pickaxe'); bot.setQuickBarSlot(0)
-    say(`/spawnpoint @s ${X + 12} ${F + 1} ${Z + 40} 212 4`)   // the second respawn: the field, facing away from the cliff (from here it read as a /fill slab: Minecraft audit)
+    say(`/spawnpoint @s ${X + 12} ${F + 1} ${Z + 40} -148 4`)   // the second respawn: the field, facing away from the cliff (from here it read as a /fill slab: Minecraft audit)
 
     // L02: my brother heard DON'T MINE THE GOLD (card). Behind it was lava (the ore is mined: lava)
     const ORE = P(20, 2, -30)
