@@ -33,7 +33,7 @@ module.exports = {
   clouds: false,             // Video Settings > Clouds: OFF (the renderer fogs dusk clouds orange one way and grey the other)
   brightness: 1,             // Options > Brightness: Bright, so the dusk scenes read
   caption: "the sun hasn't set in 300 days 💀",
-  edit: { caption: "the sun hasn't set in 300 days 💀", red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.35', zoom: [['death:0.1', 'death:1.35', 1.05], ['death:0.5', 'death:1.35', 1.05], ['death:0.95', 'death:1.35', 1.06]], deathScreen: true, sfx: [['riser', 'lever', 'dusk', { gain: 0.5 }], ['impact', 'dusk', { gain: 0.6 }], ['impact', 'death', { gain: 0.6 }]] },
+  edit: { caption: "the sun hasn't set in 300 days 💀", red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.3', zoom: [['death:0.1', 'death:1.3', 1.04], ['death:0.45', 'death:1.3', 1.05], ['death:0.85', 'death:1.7', 1.12]], deathScreen: true, sfx: [['riser', 'lever', 'dusk', { gain: 0.5 }], ['impact', 'dusk', { gain: 0.6 }], ['impact', 'death', { gain: 0.6 }]] },
   expectDeath: true,
   botTimeout: 300,
 
@@ -365,11 +365,11 @@ module.exports = {
     // into one green wall), at a zombie's walk, and they follow when a hit knocks me back
     const SLOT = [[1.6, 0], [1.9, -34], [1.9, 34], [2.9, -17], [2.9, 17], [3.7, -2]]
     const Zs = ZB.map(([x, z]) => ({ x, z }))
-    let me = { x: 3.0, z: 0.5 }, close = 1
+    let me = { x: 3.0, z: 0.5 }, close = 1, shuffle = 0
     const zombies = () => {
       if (!ctx.died) me = { x: bot.entity.position.x - X, z: bot.entity.position.z - Z }
       Zs.forEach((q, i) => {
-        const a = SLOT[i][1] * Math.PI / 180, r = SLOT[i][0] * close
+        const a = (SLOT[i][1] + shuffle * (i % 2 ? 1 : -1)) * Math.PI / 180, r = SLOT[i][0] * close
         const dx = me.x + r * Math.cos(a) - q.x, dz = me.z + r * Math.sin(a) - q.z, d = Math.hypot(dx, dz)
         if (d > 0.02) { const v = Math.min(0.105, d); q.x += dx / d * v; q.z += dz / d * v }
         const j = d > 0.02 ? 0 : (ctx.tick % 2 ? 0.002 : -0.002)
@@ -404,8 +404,9 @@ module.exports = {
     })
     for (let i = 0; i < 40 && !ctx.died; i++) { ambient(); zombies(); if (i % 11 === 0) hit(); await bot.waitForTicks(1) }
     if (!dead) { dead = true; ctx.mark('slain') }
-    // behind the death screen they close in a little (their moves reach a dead player for ~0.9 s)
-    for (let i = 0; i < 44; i++) { close = Math.max(0.5, close - 0.03); zombies(); await bot.waitForTicks(1) }
+    // behind the death screen they crowd round (their moves reach a dead player for ~0.9 s)
+    // (closing right in filled the whole screen with one face: they jostle for a place instead)
+    for (let i = 0; i < 44; i++) { close = Math.max(0.92, close - 0.006); shuffle = Math.sin(i / 3.2) * 9; zombies(); await bot.waitForTicks(1) }
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return ctx.died
