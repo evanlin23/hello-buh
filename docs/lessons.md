@@ -287,6 +287,13 @@ each section.
 - **Keep QA light while a render runs.** The container restarted once with a render, a full-video ffmpeg filter and three audit agents at once, and the render was lost. Seek with `-ss`, use `-threads 1`, decode short ranges.
 - **A mob hopping back from past 64 blocks shows ~2 ticks after its `/tp`, and one leaving vanishes ~2 ticks after.** Send cast moves 2 ticks before the cut so they land on the cut frame (`onCut` in stunts/story_respawn_tax.js). When the old spot is in the next shot and the new spot is in the old shot, use a twin waiting out past 64 blocks.
 - **On half a heart the first touch kills,** so any reaction that should play before a contact death (looking up the cactus) has to start on the approach, not on contact.
+- **A hill higher than `clearSet`'s top stays floating, and its gravel falls into the set** a little later (story_sheep_stares: a heap in the village street, different in every run; one cut landed inside it and the narrator suffocated 3 hearts away). Clear the air to y+130 and replace gravel and sand on the ground before the cast goes in.
+- **A `time` mark made after `K.cut` returns is one tick late** (3 frames of day in a night shot). The pose with the new position is recorded before the stunt's next tick runs. Mark it from `bot.once('forcedMove')`.
+- **Large smoke and poof behind a death screen read as blotches or hide the message.** The engine's `smoke` is the 2.5x LargeSmokeParticle and `poof` is a mob-sized cloud. With no other motion available (a dead player gets no mob updates), stack `zoom` windows for a continuous push-in.
+- **A mob moved faster than ~0.17 blocks a tick hovers** (legs near horizontal, body off its shadow). Sheep 0.12, wolves 0.17.
+- **A picked-up item lands in the selected slot and shows in the hand.** Select an empty slot elsewhere first (`ctx.select(8)`) if the hand must stay empty.
+- **A mob's melee needs its centre within ~1.4 blocks.** Walk it there before `/damage ... by`. A zombie's diamond sword on Normal is 3 + 6 = 9.
+- **Give a cut the same aim the line's first tick uses.** A different one shows for a tick, then snaps (3 frames).
 
 ## Engine, round 3 (orchestrator)
 - **Check vanilla shaders straight from the jar.** `unzip -p work/client/1.21.11.jar assets/minecraft/shaders/core/<name>.fsh` gives the exact maths. Our lightmap had been a guess (one grey scalar); the real one keeps sky and block light apart and makes block light warm.

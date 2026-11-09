@@ -14,7 +14,7 @@
 //
 // One scene per line (docs/stories.md): each lasts its spoken length + gap, actions land on caption
 // chunks (at(k)). The fall is real (15 blocks = 12 damage, 4 hearts left), and the zombie's hit is
-// a diamond sword's on Normal (3 + 7 = 10).
+// a diamond sword's on Normal (3 + 6 = 9).
 const path = require('path')
 const { storyLines, storyKit, house, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
@@ -262,7 +262,7 @@ module.exports = {
     const creep = (s) => say(`/execute as @e[tag=vil] at @s run tp @s ~ ~ ~${s}`)
     await line('L10', (k) => { creep(0.035); ctl('forward', k < 14); look(k) })
     // L11: what happened to the old one? WHO? (the farmer leans in; the two behind him look at each other)
-    await cut(40.4, 8.4, P(40.5, 1.75, 6.2))
+    await cut(40.4, 8.4, P(40.5, 2.6, 5.0 + 34 * 0.035))   // the aim the line keeps (a different one snapped 3 frames after the cut)
     ctx.mark('face_on', { near: [X + 40.5, Z + 6.5, 4], head: true })
     let y1 = 0, y2 = 0, faced = true, fz = 5.0 + 34 * 0.035
     await line('L11', (k, at) => {
@@ -339,11 +339,14 @@ module.exports = {
     const reach = me().z - Z - 1.4                                            // a mob's melee reach: he has to be this close
     for (let i = 0; i < 22 && !ctx.died; i++) {
       if (i >= 3) ZED.z = Math.min(reach, ZED.z + 0.1)                        // he walks up
-      K.turnTo(from, P(0.2, -DEPTH + AIMY, ZED.z), (i + 1) / 8)   // a little left of him: the sword comes toward the middle, where the edit pushes in   // above his head: he and the sword sit low, clear of the death message
+      // eyes on him while he walks up; on the hit the head jerks back and up, so he and the sword sit low and a
+      // little right, clear of the death message, with the sword toward the middle where the edit pushes in
+      const f = ease((i - 16) / 5)
+      K.turnTo(from, P(0.5 - 0.3 * f, -DEPTH + 2.75 + (AIMY - 2.75) * f, ZED.z), (i + 1) / 8)   // above his head: he and the sword sit low, clear of the death message
       look(i); await bot.waitForTicks(1)
     }
-    // the hit: a diamond sword in a zombie's hand on Normal is 10; 8 health was left after the fall
-    say(`/damage @s 10 minecraft:mob_attack by @e[tag=zed,limit=1]`)
+    // the hit: a diamond sword in a zombie's hand on Normal is 3 + 6 = 9; 8 health was left after the fall
+    say(`/damage @s 9 minecraft:mob_attack by @e[tag=zed,limit=1]`)
     ctx.mark('slain')
     for (let i = 0; i < 12 && !ctx.died; i++) await bot.waitForTicks(1)
     if (!ctx.died) { ctx.log('still alive, health', bot.health); say(`/damage @s 20 minecraft:mob_attack by @e[tag=zed,limit=1]`); for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1) }
