@@ -2,7 +2,7 @@
   "name": "chunk_next_door",
   "stunt": "story_chunk_next_door",
   "caption": "something walks out of the fog every night 😳",
-  "premise": "For 700 nights something has walked out of the fog next to the narrator's house. It never attacks him, even when he punches it. It harvests his wheat, replants it, uses the composter, pays an emerald for the wheat he leaves out, and the iron golem lets it walk by. At sunrise it catches fire and runs back into the fog.",
+  "premise": "For 700 nights something has walked out of the fog next to the narrator's house. It never attacks him, even when he throws snowballs at it. It harvests his wheat, replants it, uses the composter, pays an emerald for the wheat he leaves out, and the iron golem lets it walk by. At sunrise it catches fire and runs back into the fog.",
   "twist": "Every night it stops at Gary's old house and knocks. Gary, the village farmer, has been gone for 700 nights. The narrator waits in the fog and looks it in the face: the game shows the name tag over a zombie villager in a farmer's straw hat. Gary. He never left; he has been coming home and going to work every night. The reveal is the name tag, never said aloud.",
   "voice": {
     "voice": "am_adam",
@@ -22,7 +22,7 @@
     },
     {
       "id": "L03",
-      "text": "I even / PUNCHED it / once. / It just / kept WALKING."
+      "text": "I even / threw SNOWBALLS / at it. / It just / kept WALKING."
     },
     {
       "id": "L04",
@@ -54,7 +54,7 @@
     },
     {
       "id": "L11",
-      "text": "I've never / seen its FACE. / It only / comes out / in the DARK."
+      "text": "I've never / gone NEAR it. / It only / comes out / in the DARK."
     },
     {
       "id": "L12",

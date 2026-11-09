@@ -82,36 +82,36 @@
    ]
   },
   "L03": {
-   "text": "I even punched it once. It just kept walking.",
-   "dur": 2.328,
+   "text": "I even threw snowballs at it. It just kept walking.",
+   "dur": 2.586,
    "onset": 0.172,
-   "end": 2.138,
+   "end": 2.397,
    "chunks": [
     [
      0.172,
-     0.466
+     0.44
     ],
     [
-     0.466,
-     0.724
+     0.44,
+     1.06
     ],
     [
-     0.724,
-     1.052
+     1.06,
+     1.328
     ],
     [
-     1.121,
-     1.345
+     1.397,
+     1.621
     ],
     [
-     1.345,
-     2.138
+     1.621,
+     2.397
     ]
    ],
    "captions": [
     "I even",
-    "PUNCHED it",
-    "once.",
+    "threw SNOWBALLS",
+    "at it.",
     "It just",
     "kept WALKING."
    ]
@@ -352,35 +352,35 @@
    ]
   },
   "L11": {
-   "text": "I've never seen its face. It only comes out in the dark.",
-   "dur": 2.603,
-   "onset": 0.155,
-   "end": 2.397,
+   "text": "I've never gone near it. It only comes out in the dark.",
+   "dur": 2.552,
+   "onset": 0.172,
+   "end": 2.345,
    "chunks": [
     [
-     0.155,
-     0.457
+     0.172,
+     0.5
     ],
     [
-     0.457,
-     1.086
+     0.5,
+     1.017
     ],
     [
-     1.155,
-     1.448
+     1.086,
+     1.379
     ],
     [
-     1.448,
-     1.784
+     1.379,
+     1.733
     ],
     [
-     1.784,
-     2.397
+     1.733,
+     2.345
     ]
    ],
    "captions": [
     "I've never",
-    "seen its FACE.",
+    "gone NEAR it.",
     "It only",
     "comes out",
     "in the DARK."
@@ -537,5 +537,5 @@
    ]
   }
  },
- "total": 39.24
+ "total": 39.45
 }

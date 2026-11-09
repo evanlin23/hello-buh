@@ -26,7 +26,7 @@ module.exports = {
   name: 'story_chunk_next_door',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.4', zoom: [['name:0.15', 'name:1.4', 1.1]] },
+  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.25', punch: [['name', 0, 0.1]], zoom: [['name:0.15', 'name:1.25', 1.12]] },
   time: NIGHT,
   brightness: 1,           // Options > Brightness: Bright (the night scenes still read)
   renderDistance: 2,       // vanilla's lowest: the fog starts 28 blocks out and ends at 32
@@ -87,11 +87,11 @@ module.exports = {
 
     // --- the cast: every one NoAI, buried under its first spot until its scene
     const zv = (tag, x, z, more = 'Invulnerable:1b,') => c(`/summon zombie_villager ${(X + x).toFixed(2)} ${F - 8} ${(Z + z).toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,${more}CanPickUpLoot:0b,Tags:["${tag}","zv"],Rotation:[0f,0f],VillagerData:{profession:"minecraft:farmer",type:"minecraft:plains",level:2}}`)
-    await zv('a1', -0.5, -24)
-    await zv('a2', -7.2, 13.5, '')             // the snowballs have to land: not invulnerable
+    await zv('a1', -0.5, -18.5)
+    await zv('a2', -7.2, 13.5)                 // (made vulnerable in L02: the snowballs have to land, but buried it would suffocate)
     await zv('a4', -52.5, -5.5)
     await zv('a7', -0.5, -11.5)
-    await zv('a10', 40.5, -17.5)
+    await zv('a10', 40.5, -18.8)
     await zv('a11', -3.6, -2.5)
     await zv('a12', 47.5, -11.5)
     await zv('gary', -0.5, -22, 'Invulnerable:1b,CustomName:"Gary",')
@@ -146,32 +146,34 @@ module.exports = {
     const groan = (v = 1, p = 1) => ctx.sound('entity.zombie_villager.ambient', v, p)
 
     // ---------- L01: it walks out of the fog, down the path to my house
-    const a1 = raise('a1', { x: -0.5, z: -24, yaw: 0 })
-    await cut(-0.5, 1.5, P(-0.5, 1.4, -22))
+    const a1 = raise('a1', { x: -0.5, z: -18.5, yaw: 0 })
+    await cut(-0.5, -6.5, P(-0.5, 2.2, -17))
     for (let i = 0; i < 14; i++) { step(a1, 0, 0.11); look(0); await bot.waitForTicks(1) }
     let a2
     await line('L01', async (k) => {
       step(a1, 0, 0.11)
-      go(k > 30 && k < 44, 'back')              // a step back toward my door
+      go(k > 3 && k < 26, 'back')               // backing away toward my door as it comes through the lamps
       if (k === 4) groan(0.5, 0.9)
-      K.base = K.aim(P(-0.5, 1.3, a1.z)); look(k)
+      K.base = K.aim(P(-0.5, 2.2, a1.z)); look(k)
     }, () => { a2 = raise('a2', { x: -7.2, z: 13.5, yaw: 90 }) })
     go(false, 'back')
 
     // ---------- L02 + L03: it walks right past me; the snowballs
-    await cut(-8.6, 15.7, P(a2.x - 0.9, 1.4, 13.5))
+    await cut(-8.6, 15.7, P(a2.x - 0.9, 2.3, 13.5))
     bury('a1')
     await line('L02', async (k) => {
       step(a2, -0.1, 0)
-      K.base = K.aim(P(a2.x, 1.35, a2.z)); look(k)
-    }, () => ctx.select(1))
+      K.base = K.aim(P(a2.x, 2.3, a2.z)); look(k)
+    }, () => { ctx.select(1); say('/data merge entity @e[tag=a2,limit=1] {Invulnerable:0b}') })
     let thrown = 0
     await line('L03', async (k, at) => {
       step(a2, -0.1, 0)
-      K.base = K.aim(P(a2.x, 1.75, a2.z)); look(k)
+      K.base = K.aim(P(a2.x, 2.75, a2.z)); look(k)
+      bot.setControlState('sneak', k > at(3)); go(k > at(3))   // a few careful steps after it
       if ([at(1) - 2, at(1) + 5, at(1) + 12].includes(k)) { bot.activateItem(); bot.swingArm(); ctx.sound('entity.snowball.throw', 0.5, 0.5); thrown++ }
       if ([at(1) + 3, at(1) + 10, at(1) + 17].includes(k)) ctx.sound('entity.zombie_villager.hurt', 0.9, 1)
     }, () => { raise('a4', { x: -52.5, z: -5.5, yaw: -90 }); ctx.select(2) })
+    bot.setControlState('sneak', false); go(false)
 
     // ---------- L04: it harvests my wheat (the row it walks and the rows beside it)
     const a4 = acts.get('a4')
@@ -182,11 +184,11 @@ module.exports = {
       cutCol.add(col)
       for (const dz of [-6, -5, -7]) { say(`/setblock ${X + col} ${F + 1} ${Z + dz} air destroy`); cropList.push([col, dz]) }
     }
-    await cut(-49.5, -1.3, P(a4.x + 1.2, 1.2, -5.5))
+    await cut(-49.5, -1.3, P(a4.x + 1.2, 1.9, -5.5))
     bury('a2')
     await line('L04', async (k) => {
       step(a4, 0.11, 0); harvest()
-      K.base = K.aim(P(a4.x + 0.8, 1.2, -5.5)); look(k)
+      K.base = K.aim(P(a4.x + 0.8, 1.9, -5.5)); look(k)
     })
     // ---------- L05: it replants it, and it uses the composter
     let comp = 0
@@ -196,16 +198,16 @@ module.exports = {
       ctx.sound(n === 8 ? 'block.composter.ready' : 'block.composter.fill_success', 1, 1)
       ctx.particles('happy', P(-43.5, 1.9, -5.5), { count: 4 })
     }
-    await cut(-45.5, -0.4, P(a4.x + 1, 1.0, -5.5))
+    await cut(-45.5, -0.4, P(a4.x + 1, 1.9, -5.5))
     let planted = 0
     await line('L05', async (k, at) => {
       if (a4.x < -44.75) { step(a4, 0.1, 0); harvest() }
       if (k >= 2 && k % 2 === 0 && planted < cropList.length) { const [cx, cz] = cropList[planted++]; say(`/setblock ${X + cx} ${F + 1} ${Z + cz} wheat[age=0]`); if (planted % 3 === 1) ctx.sound('item.crop.plant', 0.9, 1) }
       if (a4.x >= -44.75 && k >= at(2) && comp < 3 && k % 6 === 0) compost(comp + 1)
-      K.base = K.aim(P(Math.min(a4.x + 0.9, -44.2), 1.1, -5.5)); look(k)
+      K.base = K.aim(P(Math.min(a4.x + 0.9, -44.2), 1.9, -5.5)); look(k)
     })
     // ---------- L06: zombies don't compost (close on the composter filling up, the bone meal popping out)
-    await cut(-46.7, -3.6, P(-44.0, 1.25, -5.5))
+    await cut(-47.2, -3.2, P(-44.1, 2.0, -5.5))
     await line('L06', async (k, at) => {
       if (a4.x < -44.75) step(a4, 0.1, 0)
       while (planted < cropList.length) { const [cx, cz] = cropList[planted++]; say(`/setblock ${X + cx} ${F + 1} ${Z + cz} wheat[age=0]`) }
@@ -216,20 +218,19 @@ module.exports = {
         ctx.sound('block.composter.empty', 1, 1)
         say(`/summon item ${X - 43.5} ${F + 2.1} ${Z - 5.5} {Item:{id:"minecraft:bone_meal",count:1},Motion:[-0.06d,0.3d,0.09d],PickupDelay:32767}`)
       }
-      go(k < 12)
       look(k, at(1) <= k && k < at(2) + 8 ? Math.sin((k - at(1)) / 1.9) * 0.06 : 0)   // a little head shake on "don't"
     }, () => raise('a7', { x: -0.5, z: -11.5, yaw: 180 }))
     go(false)
 
     // ---------- L07: at sunrise it catches fire and runs back into the fog
     const a7 = acts.get('a7')
-    await cutAt(DAWN, -0.5, -4.5, P(-0.5, 1.3, a7.z))
+    await cutAt(DAWN, -0.5, -4.5, P(-0.5, 2.1, a7.z))
     bury('a4'); say('/kill @e[type=item]')
     await line('L07', async (k, at) => {
       if (k === at(1) - 1) { say('/data merge entity @e[tag=a7,limit=1] {Fire:400s}'); ctx.sound('entity.zombie_villager.hurt', 0.8, 1.1); ctx.sound('block.fire.ambient', 1, 1) }
       step(a7, 0, k < at(3) - 4 ? -0.07 : -Math.min(0.3, 0.07 + (k - at(3) + 4) * 0.04))
       go(k >= at(3) && k < at(3) + 16)
-      K.base = K.aim(P(-0.5, 1.3, a7.z)); look(k)
+      K.base = K.aim(P(-0.5, 2.1, a7.z)); look(k)
     }, () => {
       say(`/summon item ${X - 0.5} ${F + 1.1} ${Z + 2.3} {Item:{id:"minecraft:emerald",count:1},Tags:["pay"],PickupDelay:0}`)
       for (const [cx, cz] of cropList) say(`/setblock ${X + cx} ${F + 1} ${Z + cz} wheat[age=7]`)   // grown again for L09
@@ -240,7 +241,7 @@ module.exports = {
     await cutAt(MORNING, -0.5, 6.7, P(-0.5, 1.15, 2.3))
     bury('a7')
     await line('L08', async (k, at) => {
-      go(k >= at(4) - 2 && bot.entity.position.z > Z + 2.6)
+      go(k >= at(4) - 2 && bot.entity.position.z > Z + 3.45)   // stops a step short: the emerald jumps to me
       K.base = K.aim(P(-0.5, 1.2, 2.3)); look(k)
     }, () => { raise('v1', { x: -41.5, z: -5.5, yaw: -100 }); raise('v2', { x: -40.3, z: -7.2, yaw: -120 }) })
     go(false)
@@ -252,7 +253,7 @@ module.exports = {
       go(k < at(2), 'right')
       if (k >= at(1) - 2) { from9 = from9 || { ...K.base }; K.turnTo(from9, P(-38.5, 7.2, -9.5), (k - at(1) + 2) / 26) }
       look(k)
-    }, () => raise('a10', { x: 40.5, z: -17.5, yaw: -90 }))
+    }, () => raise('a10', { x: 40.5, z: -18.8, yaw: -90 }))
     go(false, 'right')
 
     // ---------- L10: the iron golem lets it walk right by
@@ -260,28 +261,30 @@ module.exports = {
     const golem = raise('golem', { x: 46.5, z: -20.5, yaw: 0 })
     const watch = () => { golem.yaw = yawOf(a10.x - golem.x, a10.z - golem.z) }
     watch()
-    await cutAt(NIGHT, 46.5, -12.5, P(46.5, 2.0, -20.5))
+    await cutAt(NIGHT, 46.5, -12.5, P(46.5, 2.7, -20.5))
     bury('v1'); bury('v2')
     await line('L10', async (k, at) => {
       step(a10, 0.115, 0); watch()
+      bot.setControlState('sneak', k < 40); go(k < 40)   // creeping closer
       look(k, Math.max(-0.16, Math.min(0.16, (a10.x - 46.5) * 0.03)))
     }, () => raise('a11', { x: -3.6, z: -2.5, yaw: -90 }))
+    bot.setControlState('sneak', false); go(false)
 
     // ---------- L11: I've never seen its face (from inside my door: it crosses in the dark)
     const a11 = acts.get('a11')
-    await cut(-0.5, 6.7, P(-0.5, 1.6, -2.5))
+    await cut(-0.5, 6.7, P(-0.5, 2.3, -2.5))
     bury('a10'); acts.delete('golem')
     await line('L11', async (k, at) => {
       step(a11, 0.1, -0.012)
       go(k >= at(1) && bot.entity.position.z > Z + 4.3)
-      if (k >= at(1)) K.base = K.aim(P(Math.min(a11.x, 2.2), 1.5, a11.z))
+      if (k >= at(1)) K.base = K.aim(P(Math.min(a11.x, 2.2), 2.3, a11.z))
       look(k)
     }, () => raise('a12', { x: 47.5, z: -11.5, yaw: 0 }))
     go(false)
 
     // ---------- L12: every night it stops at Gary's old house
     const a12 = acts.get('a12')
-    await cut(47.5, -17.5, P(47.9, 1.5, -7))
+    await cut(47.5, -17.5, P(47.9, 2.3, -7))
     bury('a11')
     await line('L12', async (k) => {
       if (a12.z < -6.95) step(a12, 0, 0.1)
@@ -290,7 +293,7 @@ module.exports = {
     })
     bot.setControlState('sneak', false); go(false)
     // ---------- L13: it knocks, nobody answers; Gary has been gone for 700 nights (the sign)
-    await cut(50.4, -10.6, P(47.9, 1.5, -6.6))
+    await cut(50.4, -10.6, P(48.0, 2.3, -6.6))
     let from13 = null
     await line('L13', async (k, at) => {
       if (a12.z < -6.95) step(a12, 0, 0.1)
@@ -298,16 +301,16 @@ module.exports = {
         if (k === t) { ctx.sound('entity.zombie.attack_wooden_door', 1, 1); a12.z += 0.12 }
         if (k === t + 2) a12.z -= 0.12
       }
-      if (k >= at(3) - 3) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(49.5, 2.45, -6.9), (k - at(3) + 3) / 16) }
-      go(k >= at(3) && bot.entity.position.z < Z - 8.9)
+      if (k >= at(2) + 4) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(49.5, 2.5, -6.9), (k - at(2) - 4) / 14) }
+      bot.setControlState('sneak', true); go(k >= at(2) + 4 && bot.entity.position.z < Z - 8.45)   // a slow push in on his sign
       look(k)
     }, () => raise('gary', { x: -0.5, z: -22, yaw: 0 }))
-    go(false)
+    go(false); bot.setControlState('sneak', false)
 
     // ---------- L14: tonight I waited in the fog (my house, far off; then the sound behind me)
     const gary = acts.get('gary')
     const CAMZ = -10.2
-    await cut(-0.5, CAMZ, P(-0.5, 1.8, 3))
+    await cut(-0.5, CAMZ, P(-0.5, 2.6, 3))
     bury('a12')
     let from14 = null
     const STOP = CAMZ - 3.75, NEAR = CAMZ - 2.9       // out of reach, then one step into it (reach is 3 blocks to its hitbox)
@@ -315,17 +318,17 @@ module.exports = {
     await line('L14', async (k, at) => {
       garyWalk()
       if (k === at(2) - 6) groan(1, 1)
-      if (k >= at(2) - 3) { from14 = from14 || { ...K.base }; K.turnTo(from14, P(-0.5, 1.25, gary.z), (k - at(2) + 3) / 16) }
+      if (k >= at(2) - 3) { from14 = from14 || { ...K.base }; K.turnTo(from14, P(-0.5, 2.2, gary.z), (k - at(2) + 3) / 16) }
       look(k)
     })
     // ---------- L15: it walked right up to me, into the lamp light
-    await line('L15', async (k) => { garyWalk(); K.base = K.aim(P(-0.5, 1.25, gary.z)); look(k) })
+    await line('L15', async (k) => { garyWalk(); K.base = K.aim(P(-0.5, 2.2, gary.z)); look(k) })
     // ---------- L16: and I finally looked it in the face. One more step, into reach: the name tag
     let from16 = null, named = false
     K.sway = 0.45
     const reveal = async (k, at) => {
       from16 = from16 || { ...K.base }
-      K.turnTo(from16, P(-0.5, 1.5, NEAR), (k - 1) / (at(3) - 1))
+      K.turnTo(from16, P(-0.5, 2.62, NEAR), (k - 1) / (at(3) - 1))
       if (k >= at(3) - 4 && gary.z < NEAR) gary.z = Math.min(NEAR, gary.z + 0.1)
       if (!named && gary.z >= CAMZ - 3.28) { named = true; ctx.mark('name'); groan(1, 0.85) }
       look(k)
