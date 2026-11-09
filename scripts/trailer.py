@@ -61,15 +61,16 @@ def render_clip(edl, s, w=W, h=H, frames=None):
     key = hashlib.sha1(json.dumps([s, w, h, want, rec_path.stat().st_mtime, (HERE / "render.js").stat().st_mtime,
                                     (HERE / "renderer" / "page.js").stat().st_mtime]).encode()).hexdigest()[:12]
     out = WORK / "clips" / f"{s['id']}_{key}"
-    if out.exists() and len(list(out.glob("f*.png"))) >= len(want):
+    missing = [f for f in want if not (out / f"f{f:05d}.png").exists()]
+    if not missing:
         return out, f0, n, fps
-    if out.exists():
-        shutil.rmtree(out)
-    out.mkdir(parents=True)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "clip.mp4").unlink(missing_ok=True)
     rec = json.loads(rec_path.read_text())
     # only this clip's camera: every shot and F1 mark out, one shot mark at t0
     rec["timeline"] = [e for e in rec["timeline"] if e["event"] not in ("shot", "f1_on", "f1_off")]
-    rec["timeline"].append({"t": s["t0"] * 1000 - 1, "event": "shot", "name": "trl"})
+    # (at the first frame's own time: at t0 itself, a first frame rounded down to before the mark flashed one frame of POV)
+    rec["timeline"].append({"t": min(want) / fps * 1000 - 1, "event": "shot", "name": "trl"})
     rec["timeline"].sort(key=lambda e: e["t"])
     stunt = rec.get("stunt")
     spec = s["shot"]
@@ -77,8 +78,8 @@ def render_clip(edl, s, w=W, h=H, frames=None):
         spec = json.loads(subprocess.run(["node", "-e", f"process.stdout.write(JSON.stringify(require('./stunts/{stunt}').shots['{spec}']))"], cwd=HERE, capture_output=True, text=True, check=True).stdout)
     tmp = out / "clip.rec.json"
     tmp.write_text(json.dumps(rec))
-    env = {**os.environ, "SHOTS_JSON": json.dumps({"trl": spec}), "FRAMES": ",".join(map(str, want))}
-    print(f"render {s['id']}: {len(want)} frames at {fps} fps")
+    env = {**os.environ, "SHOTS_JSON": json.dumps({"trl": spec}), "FRAMES": ",".join(map(str, missing))}
+    print(f"render {s['id']}: {len(missing)} frames at {fps} fps")
     subprocess.run(["node", "render.js", str(tmp), str(out), str(fps), str(w), str(h)], cwd=HERE, env=env, check=True, stdout=subprocess.DEVNULL)
     tmp.unlink()
     return out, f0, n, fps
@@ -128,17 +129,17 @@ def card_png(c, path):
         d = ImageDraw.Draw(im)
         tracked(d, (W / 2, H / 2 - 20), c["title"], f, 26, (255, 255, 255, 255))
     elif "under" in c or "under2" in c:
-        f = ImageFont.truetype(str(FONT / "Cinzel_400Regular.ttf"), 34)
-        y = H / 2 + 110 if "under" in c else H / 2 + 170
+        f = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 44 if "under" in c else 38)
+        y = H / 2 + 115 if "under" in c else H / 2 + 180
         tracked(d, (W / 2, y), c.get("under") or c.get("under2"), f, 14, (225, 225, 225, 255))
     elif "quote" in c:
         f = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 46)
         tracked(d, (W / 2, H - BAR - 70), c["quote"], f, 4, (255, 255, 255, 255))
     else:
-        fs = ImageFont.truetype(str(FONT / "Cinzel_400Regular.ttf"), 44)
-        fb = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 86)
-        tracked(d, (W / 2, H / 2 - 58), c["small"], fs, 16, (220, 220, 220, 255))
-        tracked(d, (W / 2, H / 2 + 34), c["big"], fb, 14, (255, 255, 255, 255))
+        fs = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 56)
+        fb = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 100)
+        tracked(d, (W / 2, H / 2 - 66), c["small"], fs, 14, (215, 215, 215, 255))   # (44/86 px read as fine print at phone size)
+        tracked(d, (W / 2, H / 2 + 40), c["big"], fb, 12, (255, 255, 255, 255))
     im.save(path)
 
 
@@ -296,12 +297,16 @@ def reverse_swell(dur=1.2, level=0.6):
 
 
 def load_vox(i, far=False):
+    """A line placed in the world, not on the listener's ears: a stone-room reverb on every voice (a review heard them
+    dry on top of the mix), a longer hall on a far one, and a de-essing low-pass on whispers (Fen's 's' bit at 5-7 kHz)."""
     p = WORK / "vox" / f"{i}.wav"
     raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(p), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"], capture_output=True, check=True).stdout
     m = np.frombuffer(raw, np.float32).copy()
     m = sfx.norm(m, 0.9)
+    if far:
+        m = sfx.onepole(m, 4800)
     s = st(m)
-    return reverb(s, 2.2 if far else 1.2, 0.45 if far else 0.16)
+    return reverb(s, 2.6 if far else 0.9, 0.5 if far else 0.3, damp=3800)
 
 
 def score(edl, T, total, vox):
@@ -316,8 +321,15 @@ def score(edl, T, total, vox):
     S = lambda k, off=0.0: T[k][0] + off
     # the four-note song on a note block (low, low, high, low: D, D, A, D), in a big hall, out of silence
     song = [(0.0, 8), (0.55, 8), (1.1, 15), (1.9, 8)]
+    room = RNG.standard_normal(int(4.2 * SR)) * 0.004
+    put(st(sfx.onepole(room, 2500)), 0.0, 1.0)   # room tone: the silence is a place
     for dt, semi in song:
-        put(reverb(st(note("block.note_block.harp", NB(semi), 0.9)), 3.5, 0.55), S("open", 0.45) + dt, 0.55)
+        tone = note("block.note_block.harp", NB(semi), 0.9)
+        shadow = note("block.note_block.harp", NB(semi) * 2 ** (9 / 1200), 0.35)   # +9 cents: a little wow
+        n = max(len(tone), len(shadow)); m = np.zeros(n); m[: len(tone)] += tone; m[: len(shadow)] += shadow
+        click = sfx.band(RNG.standard_normal(int(0.006 * SR)), 2500, 6500) * 0.08
+        put(st(click), S("open", 0.45) + dt - 0.012, 0.6)
+        put(reverb(st(m), 3.8, 0.6), S("open", 0.45) + dt, 0.55)
     put(drone(S("cardB") - S("open", 1.0) + 1.0), S("open", 1.0), 0.55)
     # the tower: wind, a slow rise
     put(sfx.synth_air(S("hk1") - S("tower") + 0.6), S("tower"), 0.35)
@@ -343,18 +355,20 @@ def score(edl, T, total, vox):
     # black. Fen. A far bell.
     put(bell(0.6, 0.8, far=True), S("fen", 0.05), 0.7)
     # the montage: a riser, ticks doubling, a hit on every cut
-    put(sfx.synth_riser(S("hush") - S("m1")), S("m1"), 0.75)
+    rz = sfx.synth_riser(S("hush") - S("m1"))
+    rz = rz - np.stack([sfx.band(rz[:, 0], 1800, 3400)] * 2, 1) * 0.6   # a notch where the ticks and the whisper live
+    put(rz, S("m1"), 0.55)
     t, gap = S("m1"), 0.25
     while t < S("hush"):
-        put(tick(0.3), t); t += gap; gap = max(0.07, gap * 0.9)
+        put(tick(0.22), t); t += gap; gap = max(0.07, gap * 0.9)
     for k in ("m1", "m2", "m3", "m4", "m5", "m6"):
         put(thump(60, 0.3, 0.9), S(k), 0.8)
     # silence (hush), then the reveal, in slow motion: DONG ... DONG, and the floor drops away
     put(bell(0.55, 1.0), S("slidepov", 0.1), 1.0)
     put(reverse_swell(1.6, 0.8), S("slidepov", 1.9) - 1.6, 0.8)
     put(bell(0.5, 1.0), S("slidepov", 1.9), 1.0)
-    put(braam(3.2, 29.1) * 0.8, S("slidepov", 1.9), 0.8)
-    put(drone(S("cardD") - S("slidepov", 1.9) + 0.5, (36.7, 55.0), 0.5), S("slidepov", 1.9), 0.6)
+    put(braam(2.4, 29.1) * 0.8, S("slidepov", 1.9), 0.8)
+    put(drone(S("cardD") - S("slidepov", 1.9) - 0.4, (36.7, 55.0), 0.5), S("slidepov", 1.9), 0.4)   # (shorter: the sub lingered into the warm chord)
     put(whoosh(0.8, rev=True), S("slideext", 1.0), 0.6)
     put(whoosh(1.0), S("slideext", 1.5), 0.8)
     # IT WAS NEVER AN ACCIDENT
