@@ -1,0 +1,34 @@
+{
+  "name": "more_golems",
+  "stunt": "story_more_golems",
+  "caption": "who keeps building iron golems 💀",
+  "premise": "Every morning there's one more iron golem in the narrator's village, and nobody builds them. The villagers won't look at him, they bar their doors at sunset, he wakes up sore every morning, and one golem always waits outside his door.",
+  "twist": "Villagers spawn an iron golem when they panic. He stays up to catch the builder: night falls, he feels great, he says hey and it comes out as a zombie groan. The farmer screams, golem number twenty pops in, and all twenty turn on him: slain by Iron Golem. At night he's a zombie, and he never remembers. Then it's morning again, with one more golem.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#FF9A3D",
+  "meter": {
+    "label": "GOLEMS"
+  },
+  "lines": [
+    { "id": "L01", "text": "Every morning / there's ONE MORE / iron golem / in my village. / Nobody / BUILDS them." },
+    { "id": "L02", "text": "NINETEEN golems. / SIX villagers. / And ME." },
+    { "id": "L03", "text": "I asked / the BLACKSMITH / who makes them. / He won't / even LOOK / at me." },
+    { "id": "L04", "text": "At SUNSET / everybody / runs inside / and BARS / the door." },
+    { "id": "L05", "text": "I think / they're scared / of the DARK." },
+    { "id": "L06", "text": "Every morning / I wake up / SORE all over. / Like something / HUGE / hit me." },
+    { "id": "L07", "text": "One golem / always waits / outside MY door. / I call him / my BODYGUARD." },
+    { "id": "L08", "text": "The villagers / say something / GROANS / outside their doors / all night. / I never / hear it. / I sleep / like a ROCK." },
+    { "id": "L09", "text": "So tonight / I stayed UP / to catch / whoever / BUILDS them." },
+    { "id": "L10", "text": "Night came. / I felt / GREAT." },
+    { "id": "L11", "text": "Then I saw / the FARMER. / Still outside. / I said, / HEY!" },
+    { "id": "L12", "text": "He SCREAMED. / And POP. / Right next / to him. / Golem number / TWENTY." },
+    { "id": "L13", "text": "Wait. / THEY make them? / When they get / SCARED?" },
+    { "id": "L14", "text": "Scared / of WHAT?" },
+    { "id": "L15", "text": "And why / is everyone / looking / at ME?" }
+  ]
+}

@@ -1,0 +1,521 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "Every morning there's one more iron golem in my village. Nobody builds them.",
+   "dur": 3.5,
+   "onset": 0.172,
+   "end": 3.31,
+   "chunks": [
+    [
+     0.172,
+     0.569
+    ],
+    [
+     0.569,
+     1.078
+    ],
+    [
+     1.078,
+     1.595
+    ],
+    [
+     1.595,
+     2.207
+    ],
+    [
+     2.319,
+     2.595
+    ],
+    [
+     2.595,
+     3.31
+    ]
+   ],
+   "captions": [
+    "Every morning",
+    "there's ONE MORE",
+    "iron golem",
+    "in my village.",
+    "Nobody",
+    "BUILDS them."
+   ]
+  },
+  "L02": {
+   "text": "Nineteen golems. six villagers. And me.",
+   "dur": 2.138,
+   "onset": 0.172,
+   "end": 1.931,
+   "chunks": [
+    [
+     0.172,
+     0.845
+    ],
+    [
+     0.905,
+     1.397
+    ],
+    [
+     1.422,
+     1.931
+    ]
+   ],
+   "captions": [
+    "NINETEEN golems.",
+    "SIX villagers.",
+    "And ME."
+   ]
+  },
+  "L03": {
+   "text": "I asked the blacksmith who makes them. He won't even look at me.",
+   "dur": 2.69,
+   "onset": 0.172,
+   "end": 2.483,
+   "chunks": [
+    [
+     0.172,
+     0.491
+    ],
+    [
+     0.491,
+     0.922
+    ],
+    [
+     0.922,
+     1.466
+    ],
+    [
+     1.534,
+     1.733
+    ],
+    [
+     1.733,
+     2.0
+    ],
+    [
+     2.0,
+     2.483
+    ]
+   ],
+   "captions": [
+    "I asked",
+    "the BLACKSMITH",
+    "who makes them.",
+    "He won't",
+    "even LOOK",
+    "at me."
+   ]
+  },
+  "L04": {
+   "text": "At sunset everybody runs inside and bars the door.",
+   "dur": 2.569,
+   "onset": 0.155,
+   "end": 2.379,
+   "chunks": [
+    [
+     0.155,
+     0.552
+    ],
+    [
+     0.552,
+     0.862
+    ],
+    [
+     0.862,
+     1.483
+    ],
+    [
+     1.483,
+     1.81
+    ],
+    [
+     1.81,
+     2.379
+    ]
+   ],
+   "captions": [
+    "At SUNSET",
+    "everybody",
+    "runs inside",
+    "and BARS",
+    "the door."
+   ]
+  },
+  "L05": {
+   "text": "I think they're scared of the dark.",
+   "dur": 1.586,
+   "onset": 0.155,
+   "end": 1.379,
+   "chunks": [
+    [
+     0.155,
+     0.362
+    ],
+    [
+     0.362,
+     0.784
+    ],
+    [
+     0.784,
+     1.379
+    ]
+   ],
+   "captions": [
+    "I think",
+    "they're scared",
+    "of the DARK."
+   ]
+  },
+  "L06": {
+   "text": "Every morning I wake up sore all over. Like something huge hit me.",
+   "dur": 3.0,
+   "onset": 0.172,
+   "end": 2.81,
+   "chunks": [
+    [
+     0.172,
+     0.578
+    ],
+    [
+     0.578,
+     0.931
+    ],
+    [
+     0.931,
+     1.552
+    ],
+    [
+     1.638,
+     1.991
+    ],
+    [
+     1.991,
+     2.259
+    ],
+    [
+     2.259,
+     2.81
+    ]
+   ],
+   "captions": [
+    "Every morning",
+    "I wake up",
+    "SORE all over.",
+    "Like something",
+    "HUGE",
+    "hit me."
+   ]
+  },
+  "L07": {
+   "text": "One golem always waits outside my door. I call him my bodyguard.",
+   "dur": 3.224,
+   "onset": 0.172,
+   "end": 3.017,
+   "chunks": [
+    [
+     0.172,
+     0.603
+    ],
+    [
+     0.603,
+     1.06
+    ],
+    [
+     1.06,
+     1.793
+    ],
+    [
+     1.862,
+     2.198
+    ],
+    [
+     2.198,
+     3.017
+    ]
+   ],
+   "captions": [
+    "One golem",
+    "always waits",
+    "outside MY door.",
+    "I call him",
+    "my BODYGUARD."
+   ]
+  },
+  "L08": {
+   "text": "The villagers say something groans outside their doors all night. I never hear it. I sleep like a rock.",
+   "dur": 4.207,
+   "onset": 0.172,
+   "end": 4.0,
+   "chunks": [
+    [
+     0.172,
+     0.534
+    ],
+    [
+     0.534,
+     0.914
+    ],
+    [
+     0.914,
+     1.19
+    ],
+    [
+     1.19,
+     1.75
+    ],
+    [
+     1.75,
+     2.207
+    ],
+    [
+     2.276,
+     2.569
+    ],
+    [
+     2.569,
+     2.931
+    ],
+    [
+     3.0,
+     3.319
+    ],
+    [
+     3.319,
+     4.0
+    ]
+   ],
+   "captions": [
+    "The villagers",
+    "say something",
+    "GROANS",
+    "outside their doors",
+    "all night.",
+    "I never",
+    "hear it.",
+    "I sleep",
+    "like a ROCK."
+   ]
+  },
+  "L09": {
+   "text": "So tonight I stayed up to catch whoever builds them.",
+   "dur": 2.328,
+   "onset": 0.172,
+   "end": 2.138,
+   "chunks": [
+    [
+     0.172,
+     0.5
+    ],
+    [
+     0.5,
+     0.897
+    ],
+    [
+     0.897,
+     1.224
+    ],
+    [
+     1.224,
+     1.448
+    ],
+    [
+     1.448,
+     2.138
+    ]
+   ],
+   "captions": [
+    "So tonight",
+    "I stayed UP",
+    "to catch",
+    "whoever",
+    "BUILDS them."
+   ]
+  },
+  "L10": {
+   "text": "Night came. I felt great.",
+   "dur": 1.552,
+   "onset": 0.19,
+   "end": 1.362,
+   "chunks": [
+    [
+     0.19,
+     0.552
+    ],
+    [
+     0.578,
+     0.862
+    ],
+    [
+     0.862,
+     1.362
+    ]
+   ],
+   "captions": [
+    "Night came.",
+    "I felt",
+    "GREAT."
+   ]
+  },
+  "L11": {
+   "text": "Then I saw the farmer. Still outside. I said, hey!",
+   "dur": 2.414,
+   "onset": 0.155,
+   "end": 2.19,
+   "chunks": [
+    [
+     0.155,
+     0.474
+    ],
+    [
+     0.474,
+     0.862
+    ],
+    [
+     0.914,
+     1.448
+    ],
+    [
+     1.483,
+     1.724
+    ],
+    [
+     1.759,
+     2.19
+    ]
+   ],
+   "captions": [
+    "Then I saw",
+    "the FARMER.",
+    "Still outside.",
+    "I said,",
+    "HEY!"
+   ]
+  },
+  "L12": {
+   "text": "He screamed. And pop. Right next to him. Golem number twenty.",
+   "dur": 2.862,
+   "onset": 0.155,
+   "end": 2.655,
+   "chunks": [
+    [
+     0.155,
+     0.569
+    ],
+    [
+     0.595,
+     0.948
+    ],
+    [
+     1.0,
+     1.336
+    ],
+    [
+     1.336,
+     1.603
+    ],
+    [
+     1.681,
+     2.103
+    ],
+    [
+     2.103,
+     2.655
+    ]
+   ],
+   "captions": [
+    "He SCREAMED.",
+    "And POP.",
+    "Right next",
+    "to him.",
+    "Golem number",
+    "TWENTY."
+   ]
+  },
+  "L13": {
+   "text": "Wait. they make them? When they get scared?",
+   "dur": 1.897,
+   "onset": 0.172,
+   "end": 1.69,
+   "chunks": [
+    [
+     0.172,
+     0.328
+    ],
+    [
+     0.353,
+     0.776
+    ],
+    [
+     0.828,
+     1.155
+    ],
+    [
+     1.155,
+     1.69
+    ]
+   ],
+   "captions": [
+    "Wait.",
+    "THEY make them?",
+    "When they get",
+    "SCARED?"
+   ]
+  },
+  "L14": {
+   "text": "Scared of what?",
+   "dur": 1.086,
+   "onset": 0.172,
+   "end": 0.879,
+   "chunks": [
+    [
+     0.172,
+     0.371
+    ],
+    [
+     0.371,
+     0.879
+    ]
+   ],
+   "captions": [
+    "Scared",
+    "of WHAT?"
+   ]
+  },
+  "L15": {
+   "text": "And why is everyone looking at me?",
+   "dur": 1.776,
+   "onset": 0.155,
+   "end": 1.569,
+   "chunks": [
+    [
+     0.155,
+     0.414
+    ],
+    [
+     0.414,
+     0.879
+    ],
+    [
+     0.879,
+     1.112
+    ],
+    [
+     1.112,
+     1.569
+    ]
+   ],
+   "captions": [
+    "And why",
+    "is everyone",
+    "looking",
+    "at ME?"
+   ]
+  }
+ },
+ "total": 38.33
+}
