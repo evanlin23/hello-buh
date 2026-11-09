@@ -27,7 +27,7 @@ module.exports = {
   name: 'story_sheep_stares',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.6', deathScreen: true, zoom: [['slain:0.15', 'slain:1.6', 1.12]] },
+  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.9', deathScreen: true, zoom: [['slain:0.10', 'slain:3', 1.035], ['slain:0.32', 'slain:3', 1.035], ['slain:0.54', 'slain:3', 1.035], ['slain:0.76', 'slain:3', 1.035], ['slain:0.98', 'slain:3', 1.035], ['slain:1.20', 'slain:3', 1.035], ['slain:1.42', 'slain:3', 1.035], ['slain:1.64', 'slain:3', 1.035]] },
   expectDeath: true,
   botTimeout: 360,
 
@@ -74,7 +74,7 @@ module.exports = {
     await c(`/setblock ${A(1, 1, 14)} barrel[facing=up]`)
     await c(`/setblock ${A(-2, 2, 12)} wall_torch[facing=east]`)
     for (const z of [3, 5, 7, 9]) await c(`/setblock ${A(-1, 1, z)} torch`)
-    for (const [dx, dz, b] of [[-3, 9, 'poppy'], [2, 9, 'dandelion'], [3, 6, 'oxeye_daisy'], [-4, 2, 'cornflower'], [4, -3, 'poppy'], [-5, -4, 'dandelion'], [6, 2, 'azure_bluet'], [-7, 5, 'poppy'], [2, -6, 'cornflower']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
+    for (const [dx, dz, b] of [[-3, 9, 'poppy'], [2, 9, 'dandelion'], [3, 6, 'oxeye_daisy'], [4, -3, 'poppy'], [-5, -4, 'dandelion'], [6, 2, 'azure_bluet'], [-7, 5, 'poppy'], [2, -6, 'cornflower']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
 
     // --- the river, north of the block, and trees so no horizon is bare
     await c(`/fill ${A(-64, -2, -38)} ${A(64, 0, -32)} water`)
@@ -121,10 +121,15 @@ module.exports = {
     const { P, say, look, line } = K
     const ctl = (n, on) => bot.setControlState(n, on)
     const stopAll = () => { for (const n of ['forward', 'back', 'left', 'right', 'sprint', 'sneak', 'jump']) ctl(n, false) }
-    const cut = async (dx, dz, target, dy = 1) => { stopAll(); await K.cut(dx, dz, target, dy) }
+    // a cut that also changes the time of day: the `time` mark goes on the teleport's arrival (forcedMove), the tick
+    // the new pose is recorded. Marked after the cut returned it was a tick late: 3 frames of day in a night shot
+    const cut = async (dx, dz, target, dy = 1, time) => {
+      stopAll()
+      if (time !== undefined) { say(`/time set ${time}`); bot.once('forcedMove', () => ctx.mark('time', { time })) }
+      await K.cut(dx, dz, target, dy)
+    }
     const tp = (tag, x, y, z, yaw, pitch = 0) => say(`/tp @e[tag=${tag},limit=1] ${(X + x).toFixed(3)} ${(F + y).toFixed(3)} ${(Z + z).toFixed(3)} ${yaw.toFixed(1)} ${pitch.toFixed(1)}`)
     const park = (tag) => say(`/tp @e[tag=${tag}] ${X + PARK[0]} ${F + PARK[1]} ${Z + PARK[2]} 0 0`)
-    const setTime = (n) => { say(`/time set ${n}`); ctx.mark('time', { time: n }) }
     const me = () => bot.entity.position
     const ease = (u) => { u = Math.max(0, Math.min(1, u)); return u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2 }
     const yawTo = (fx, fz, tx, tz) => -Math.atan2(tx - fx, tz - fz) * 180 / Math.PI   // Minecraft yaw (0 = south) from one point to another
@@ -152,6 +157,7 @@ module.exports = {
     const SUBJ = P(-0.15, 1.55, 0.5)       // between his face and the block
     const track = (p) => { K.base = K.aim(p) }
 
+    ctx.select(8)   // the last hotbar slot: the dirt he picks up later lands in slot 1, not in his hand (it hid the zombie)
     // L01: the sheep, the block, 412 days. Creep in on them
     await cut(2.9, 4.9, SUBJ)
     await line('L01', (k) => { ctl('sneak', true); ctl('forward', k < 44); ctl('left', k > 6 && k < 40); track(SUBJ); look(k) })
@@ -160,8 +166,8 @@ module.exports = {
     await cut(1.7, 3.1, P(-0.5, 1.6, 0.5))
     tp('river', -20.5, 1, -29.3, 180, 0)      // his twin comes to the river bank, far behind every L02 shot
     await line('L02', async (k, at) => {
-      if (k === at(2)) { await cut(-4.6, -3.4, P(-0.4, 1.5, 0.5)); setTime(18000) }
-      if (k === at(4)) { await cut(3.3, 0.5, P(-0.6, 2.1, 0.5)); setTime(6000) }
+      if (k === at(2)) await cut(-4.6, -3.4, P(-0.4, 1.5, 0.5), 1, 18000)
+      if (k === at(4)) await cut(3.3, 0.5, P(-0.6, 2.1, 0.5), 1, 6000)
       ctl('sneak', true)
       if (k < at(2)) { ctl('right', true); track(P(-0.5, 1.6, 0.5)) } else if (k < at(4)) { ctl('left', true); track(P(-0.4, 1.5, 0.5)) } else { ctl('forward', me().x > X + 2.35); track(P(-0.6, 2.1, 0.5)) }
       look(k)
@@ -169,7 +175,7 @@ module.exports = {
 
     // L03: I pushed him into the river (his twin, at the bank). He walked right back
     await cut(-20.5, -26.9, P(-20.5, 1.1, -31.5))
-    Object.assign(SH, { x: -0.95, z: -7.4, yaw: 0, pitch: 0 })   // the real one waits north of his spot, off camera
+    Object.assign(SH, { x: -0.95, z: -2.7, yaw: 0, pitch: 0 })   // the real one waits north of his spot, off camera
     let rz = -29.3, ry = 1, wet = false
     await line('L03', async (k, at) => {
       if (k < at(2)) {
@@ -179,11 +185,11 @@ module.exports = {
         if (wet) ry = Math.max(0.3, ry - 0.22)
         tp('river', -20.5, ry + (wet ? Math.sin(k / 3) * 0.04 : 0), rz, 180, 0)
         track(P(-20.5, wet ? 0.9 : 1.1, rz - 0.4)); look(k)
-        if (k >= at(2) - 4) SH.z += 0.3        // already trotting home when the cut lands
+        if (k >= at(2) - 4) SH.z += 0.12       // already trotting home when the cut lands
         return
       }
       if (k === at(2)) { await cut(-4.4, 3.2, P(SH.x, 1.3, SH.z)); park('river') }   // from the south-west: he trots down toward the camera, the block beyond him
-      if (SH.z < HOME.z) SH.z = Math.min(HOME.z, SH.z + 0.3)
+      if (SH.z < HOME.z) SH.z = Math.min(HOME.z, SH.z + 0.12)   // a sheep's walk (at 0.3 a tick its legs flew and it hovered)
       else { SH.yaw += (HOME.yaw - SH.yaw) * 0.45; SH.pitch += (HOME.pitch - SH.pitch) * 0.45 }   // and turns back to the block
       ctl('sneak', true); ctl('right', true)
       track(P(SH.x + 0.3, 1.35, SH.z)); look(k)
@@ -191,17 +197,17 @@ module.exports = {
     Object.assign(SH, HOME)
 
     // L04: wolves showed up, took one look at him and left
-    const W = [[-1.2, -8.4], [-2.4, -9.5], [-0.1, -10.1]]
+    const W = [[-1.2, -5.9], [-2.5, -7.0], [0.0, -7.7]]
     const wolves = (dz, yaw) => { for (let i = 0; i < 3; i++) { W[i][1] += dz; tp(`wolf${i}`, W[i][0], 1, W[i][1], yaw, 0) } }
     await cut(2.6, -3.7, P(-0.9, 1.0, -1.5))   // from the north-east, close: the block and him on the left, the wolves come in on the right
     wolves(0, 0)                               // from past 64 blocks: they show 2 ticks later, still out of frame (sent before the cut they popped into L03's shot)
     await line('L04', (k, at) => {
       const stop = at(2) + 2, run = at(5) - 4
-      if (k < stop) wolves(0.3, 0)                                         // loping in
+      if (k < stop) wolves(0.17, 0)                                         // loping in
       else if (k < run) wolves(k % 2 ? 0.003 : -0.003, 0)                   // one look
-      else wolves(-Math.min(0.42, 0.1 + (k - run) * 0.06), 180)             // and gone
+      else wolves(-Math.min(0.24, 0.08 + (k - run) * 0.04), 180)             // and gone
       ctl('sneak', true); ctl('right', k < stop)
-      track(P(-0.9, 1.0, -1.5 - 0.8 * ease((k - run) / 10))); look(k)
+      track(P(-0.9, 1.0 + 0.3 * ease((k - run - 4) / 12), -1.5 + 1.6 * ease((k - run - 4) / 12))); look(k)   // back to him and his block as they go
     })
 
     // L05: a block of gold on top. He stared through it
@@ -212,8 +218,7 @@ module.exports = {
 
     // L06: at night the block groans
     say(`/setblock ${X} ${F + 2} ${Z} air`)
-    await cut(1.3, 3.7, P(0.2, 1.55, 0.5))
-    setTime(18000)
+    await cut(1.3, 3.7, P(0.2, 1.55, 0.5), 1, 18000)
     await line('L06', (k, at) => {
       if (k === at(2) - 1) ctx.sound('entity.zombie.ambient', 0.45, 0.75)
       ctl('sneak', true); ctl('left', k < at(2) || k >= at(4)); ctl('forward', k >= at(2) && k < at(4) && me().z > Z + 2.6)
@@ -223,9 +228,12 @@ module.exports = {
     })
 
     // L07: I don't remember getting a sheep, or dyeing him blue (from the north: him, the block, the torches, my house)
-    await cut(-3.4, -3.9, P(-0.6, 1.4, 0.5))
-    setTime(6000)
-    await line('L07', (k, at) => { ctl('sneak', true); ctl('left', k < at(5)); ctl('forward', k >= at(5)); track(P(-0.6, 1.4, 0.5)); look(k) })
+    await cut(-3.4, -3.9, P(-0.6, 1.4, 0.5), 1, 6000)
+    await line('L07', async (k, at) => {
+      if (k === at(5)) await cut(-0.3, 3.3, P(-0.55, 1.8, 0.5))                  // "Or dyeing him BLUE": his blue face, close
+      ctl('sneak', true); ctl('left', k < at(5)); ctl('forward', k >= at(5) && me().z > Z + 2.6)
+      track(k < at(5) ? P(-0.6, 1.4, 0.5) : P(-0.55, 1.8, 0.5)); look(k)
+    }, -0.05)
 
     // L08: I woke up in this house 412 days ago (the ceiling, the bare room, then him through the door)
     await cut(-0.9, 13.4, P(-1.6, 3.9, 12.3))
@@ -256,10 +264,11 @@ module.exports = {
     // L11: what happened to the old one? WHO? (the farmer leans in; the two behind him look at each other)
     await cut(40.4, 8.4, P(40.5, 1.75, 6.2))
     ctx.mark('face_on', { near: [X + 40.5, Z + 6.5, 4], head: true })
-    let y1 = 0, y2 = 0, faced = true
+    let y1 = 0, y2 = 0, faced = true, fz = 5.0 + 34 * 0.035
     await line('L11', (k, at) => {
       ctl('sneak', true); ctl('back', true)                                    // I back away; the farmer keeps coming
-      say(`/execute as @e[tag=v0] at @s run tp @s ~ ~ ~${k < at(5) ? 0.07 : 0.02}`)
+      { const st = k < at(5) ? 0.06 : 0.02; fz += st; say(`/execute as @e[tag=v0] at @s run tp @s ~ ~ ~${st}`) }
+      track(P(40.5, 2.6, fz))                                                  // his face (the shot was his robe)
       if (faced && k >= at(5) - 3) { faced = false; ctx.mark('face_off') }
       if (k >= at(5) - 2) {   // WHO? The librarian and the mason turn to each other
         const u = ease((k - at(5) + 2) / 6)
@@ -291,7 +300,7 @@ module.exports = {
     await line('L14', (k) => {
       ctl('sneak', true); ctl('back', false)
       from = from || { ...K.base }; K.turnTo(from, P(0.5, 1.5, 0.5), (k + 1) / 6)
-      if (k === 3) bot.dig(cube, 'ignore').then(() => { broke = true; ctx.mark('broke') }).catch((e) => ctx.log('dig', e.message))
+      if (k === 3) bot.dig(cube, 'ignore').then(() => { broke = true; ctx.mark('broke'); ctx.particles('block', P(0.5, 1.5, 0.5), { block: 'coarse_dirt' }); ctx.sound(`block.${ctx.soundGroup('coarse_dirt')}.break`, 1, 0.8) }).catch((e) => ctx.log('dig', e.message))
       look(k)
     }, 0.1)
     const HOLE = P(0.5, 0.3, 0.45)      // into the shaft from its edge (straight down is my own feet)
@@ -326,9 +335,11 @@ module.exports = {
     // the bottom: his old mine, still lit. A groan; look up: a zombie, holding a diamond sword
     ctx.sound('entity.zombie.ambient', 1, 1)
     from = { ...K.base }
-    for (let i = 0; i < 12 && !ctx.died; i++) {
-      if (i >= 3) ZED.z = Math.min(-2.25, ZED.z + 0.1)                       // he steps in
-      K.turnTo(from, P(0.5, -DEPTH + 3.2, ZED.z), (i + 1) / 8)   // above his head: he and the sword sit low, clear of the death message
+    const AIMY = Number(process.env.AIMY || 3.65)   // above his head: he and the sword sit low, clear of the death message
+    const reach = me().z - Z - 1.4                                            // a mob's melee reach: he has to be this close
+    for (let i = 0; i < 22 && !ctx.died; i++) {
+      if (i >= 3) ZED.z = Math.min(reach, ZED.z + 0.1)                        // he walks up
+      K.turnTo(from, P(0.5, -DEPTH + AIMY, ZED.z), (i + 1) / 8)   // above his head: he and the sword sit low, clear of the death message
       look(i); await bot.waitForTicks(1)
     }
     // the hit: a diamond sword in a zombie's hand on Normal is 10; 8 health was left after the fall
@@ -336,12 +347,9 @@ module.exports = {
     ctx.mark('slain')
     for (let i = 0; i < 12 && !ctx.died; i++) await bot.waitForTicks(1)
     if (!ctx.died) { ctx.log('still alive, health', bot.health); say(`/damage @s 20 minecraft:mob_attack by @e[tag=zed,limit=1]`); for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1) }
-    // behind the death screen: the torch and the furnace keep smoking (mob updates stop reaching a dead player)
-    for (let i = 0; i < 44; i++) {
-      if (i % 2 === 0) ctx.particles('smoke', P(1.7, -DEPTH + 2.85, -2.5), { count: 1 })    // the far torch smokes (the near one's drew as blotches by the eye; poof clouds hid the death message)
-      if (i % 6 === 2) ctx.particles('smoke', P(-0.5, -DEPTH + 1.55, -2.95), { count: 1 })  // and the furnace he left burning
-      await bot.waitForTicks(1)
-    }
+    // behind the death screen nothing in the world moves (a dead player gets no mob updates, and the engine's smoke is
+    // the large kind: it drew as dark blotches); the edit pushes in on the zombie instead (edit.zoom)
+    for (let i = 0; i < 50; i++) await bot.waitForTicks(1)
     ctx.mark('story_end')
     bot.removeListener('physicsTick', everyTick)
     await bot.waitForTicks(4)
