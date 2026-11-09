@@ -1,0 +1,48 @@
+{
+  "name": "ai_thin_ice",
+  "caption": "Which AI Goes In? 🧊💔",
+  "youtube": {
+    "title": "Which AI Goes In? 🧊💔 #minecraft #shorts",
+    "description": "Your little brother falls through the ice. Which AI goes in after him? 🧊\n\nA parody: what the AIs say here is written for the story, not real chatbot answers.\nMusic: original score, made for this Short (VS Chamber Orchestra 2 Community Edition samples, CC0).\n\n#minecraft #shorts #ai #grok #chatgpt",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#ai",
+      "#grok",
+      "#chatgpt"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "title": "ai_thin_ice score",
+    "artist": "HelloBuh",
+    "licence": "original: composed for this Short (scripts/orchestra.py, VSCO-2 CE samples, CC0)"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 50.0,
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "codec": "h264",
+    "bytes": 68074462,
+    "sha256": "fb3f0fc2048ed23f47b7bd1e9270ac1585176f1e9da1d114e48196f9cccdb629"
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "stunt": "stunts/ai_thin_ice.js",
+    "episode": "episodes/thin_ice"
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "claude/ai-dilemma",
+    "commit": "66a6a2e2ebb6f1cf57146e47cdf6eb2d97e6fb8f"
+  },
+  "rebuild": [
+    "./scripts/queue_render.sh thin_ice && git push   (renders on Actions: .github/workflows/render-movie.yml)"
+  ],
+  "status": "ready",
+  "notes": "AI-dilemma Short 1 (docs/ai_dilemma.md). Independent audit of v4 (not ready: rescue unreadable, dead frames) -> fixes in v5-v6 checked on frames; owner's note on the late last line fixed in v6; listening check v6: no glitches, all lines clear, ready. Rendered on Actions run 42594373170.",
+  "published_at": "2026-11-09T09:49:24.000Z"
+}
