@@ -1,0 +1,541 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "For 700 nights, something has walked out of the fog next to my house.",
+   "dur": 3.207,
+   "onset": 0.172,
+   "end": 3.017,
+   "chunks": [
+    [
+     0.172,
+     1.103
+    ],
+    [
+     1.181,
+     1.483
+    ],
+    [
+     1.483,
+     1.767
+    ],
+    [
+     1.767,
+     2.138
+    ],
+    [
+     2.138,
+     2.371
+    ],
+    [
+     2.371,
+     3.017
+    ]
+   ],
+   "captions": [
+    "For 700 NIGHTS,",
+    "something has",
+    "walked out",
+    "of the FOG",
+    "next to",
+    "my HOUSE."
+   ]
+  },
+  "L02": {
+   "text": "It never attacks me. It just walks right past me.",
+   "dur": 2.448,
+   "onset": 0.155,
+   "end": 2.241,
+   "chunks": [
+    [
+     0.155,
+     0.431
+    ],
+    [
+     0.431,
+     0.948
+    ],
+    [
+     1.017,
+     1.224
+    ],
+    [
+     1.224,
+     1.638
+    ],
+    [
+     1.638,
+     2.241
+    ]
+   ],
+   "captions": [
+    "It never",
+    "ATTACKS me.",
+    "It just",
+    "walks right",
+    "PAST me."
+   ]
+  },
+  "L03": {
+   "text": "I even punched it once. It just kept walking.",
+   "dur": 2.328,
+   "onset": 0.172,
+   "end": 2.138,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.724
+    ],
+    [
+     0.724,
+     1.052
+    ],
+    [
+     1.121,
+     1.345
+    ],
+    [
+     1.345,
+     2.138
+    ]
+   ],
+   "captions": [
+    "I even",
+    "PUNCHED it",
+    "once.",
+    "It just",
+    "kept WALKING."
+   ]
+  },
+  "L04": {
+   "text": "Then it harvests my wheat.",
+   "dur": 1.448,
+   "onset": 0.172,
+   "end": 1.259,
+   "chunks": [
+    [
+     0.172,
+     0.31
+    ],
+    [
+     0.31,
+     0.655
+    ],
+    [
+     0.655,
+     1.259
+    ]
+   ],
+   "captions": [
+    "Then it",
+    "harvests",
+    "my WHEAT."
+   ]
+  },
+  "L05": {
+   "text": "It replants it. It even uses the composter.",
+   "dur": 2.431,
+   "onset": 0.155,
+   "end": 2.224,
+   "chunks": [
+    [
+     0.155,
+     0.828
+    ],
+    [
+     0.897,
+     1.172
+    ],
+    [
+     1.172,
+     1.5
+    ],
+    [
+     1.5,
+     2.224
+    ]
+   ],
+   "captions": [
+    "It REPLANTS it.",
+    "It even",
+    "uses the",
+    "COMPOSTER."
+   ]
+  },
+  "L06": {
+   "text": "Zombies don't compost.",
+   "dur": 1.586,
+   "onset": 0.19,
+   "end": 1.379,
+   "chunks": [
+    [
+     0.19,
+     0.5
+    ],
+    [
+     0.5,
+     0.707
+    ],
+    [
+     0.707,
+     1.379
+    ]
+   ],
+   "captions": [
+    "Zombies",
+    "don't",
+    "COMPOST."
+   ]
+  },
+  "L07": {
+   "text": "At sunrise, it catches fire and runs back into the fog.",
+   "dur": 2.776,
+   "onset": 0.155,
+   "end": 2.569,
+   "chunks": [
+    [
+     0.155,
+     0.69
+    ],
+    [
+     0.724,
+     1.06
+    ],
+    [
+     1.06,
+     1.345
+    ],
+    [
+     1.345,
+     1.819
+    ],
+    [
+     1.819,
+     2.569
+    ]
+   ],
+   "captions": [
+    "At SUNRISE,",
+    "it catches",
+    "FIRE",
+    "and runs back",
+    "into the FOG."
+   ]
+  },
+  "L08": {
+   "text": "I left some wheat on my doorstep. By morning, it had paid me.",
+   "dur": 2.741,
+   "onset": 0.155,
+   "end": 2.534,
+   "chunks": [
+    [
+     0.155,
+     0.397
+    ],
+    [
+     0.397,
+     0.664
+    ],
+    [
+     0.664,
+     0.828
+    ],
+    [
+     0.828,
+     1.31
+    ],
+    [
+     1.397,
+     1.759
+    ],
+    [
+     1.784,
+     1.94
+    ],
+    [
+     1.94,
+     2.534
+    ]
+   ],
+   "captions": [
+    "I left",
+    "some wheat",
+    "on my",
+    "DOORSTEP.",
+    "By morning,",
+    "it had",
+    "PAID me."
+   ]
+  },
+  "L09": {
+   "text": "Honestly, it's the best farmer this village ever had.",
+   "dur": 2.414,
+   "onset": 0.172,
+   "end": 2.207,
+   "chunks": [
+    [
+     0.172,
+     0.517
+    ],
+    [
+     0.552,
+     0.948
+    ],
+    [
+     0.948,
+     1.164
+    ],
+    [
+     1.164,
+     1.552
+    ],
+    [
+     1.552,
+     2.207
+    ]
+   ],
+   "captions": [
+    "Honestly,",
+    "it's the BEST",
+    "farmer",
+    "this village",
+    "ever HAD."
+   ]
+  },
+  "L10": {
+   "text": "The iron golem lets it walk right by. He only does that for villagers.",
+   "dur": 3.362,
+   "onset": 0.155,
+   "end": 3.155,
+   "chunks": [
+    [
+     0.155,
+     0.81
+    ],
+    [
+     0.81,
+     1.017
+    ],
+    [
+     1.017,
+     1.724
+    ],
+    [
+     1.828,
+     2.121
+    ],
+    [
+     2.121,
+     2.414
+    ],
+    [
+     2.414,
+     3.155
+    ]
+   ],
+   "captions": [
+    "The IRON GOLEM",
+    "lets it",
+    "walk right BY.",
+    "He only",
+    "does that",
+    "for VILLAGERS."
+   ]
+  },
+  "L11": {
+   "text": "I've never seen its face. It only comes out in the dark.",
+   "dur": 2.603,
+   "onset": 0.155,
+   "end": 2.397,
+   "chunks": [
+    [
+     0.155,
+     0.457
+    ],
+    [
+     0.457,
+     1.086
+    ],
+    [
+     1.155,
+     1.448
+    ],
+    [
+     1.448,
+     1.784
+    ],
+    [
+     1.784,
+     2.397
+    ]
+   ],
+   "captions": [
+    "I've never",
+    "seen its FACE.",
+    "It only",
+    "comes out",
+    "in the DARK."
+   ]
+  },
+  "L12": {
+   "text": "And every night, it stops at gary's old house.",
+   "dur": 2.138,
+   "onset": 0.155,
+   "end": 1.948,
+   "chunks": [
+    [
+     0.155,
+     0.603
+    ],
+    [
+     0.629,
+     0.922
+    ],
+    [
+     0.922,
+     1.259
+    ],
+    [
+     1.259,
+     1.948
+    ]
+   ],
+   "captions": [
+    "And every night,",
+    "it stops",
+    "at GARY'S",
+    "old HOUSE."
+   ]
+  },
+  "L13": {
+   "text": "It knocks. Nobody answers. Gary's been gone for 700 nights.",
+   "dur": 3.293,
+   "onset": 0.155,
+   "end": 3.103,
+   "chunks": [
+    [
+     0.155,
+     0.534
+    ],
+    [
+     0.569,
+     0.845
+    ],
+    [
+     0.845,
+     1.328
+    ],
+    [
+     1.422,
+     1.845
+    ],
+    [
+     1.845,
+     2.129
+    ],
+    [
+     2.129,
+     3.103
+    ]
+   ],
+   "captions": [
+    "It KNOCKS.",
+    "Nobody",
+    "answers.",
+    "Gary's been",
+    "gone for",
+    "700 NIGHTS."
+   ]
+  },
+  "L14": {
+   "text": "So tonight, I waited in the fog.",
+   "dur": 1.759,
+   "onset": 0.172,
+   "end": 1.552,
+   "chunks": [
+    [
+     0.172,
+     0.552
+    ],
+    [
+     0.586,
+     0.905
+    ],
+    [
+     0.905,
+     1.552
+    ]
+   ],
+   "captions": [
+    "So TONIGHT,",
+    "I waited",
+    "in the FOG."
+   ]
+  },
+  "L15": {
+   "text": "It walked right up to me.",
+   "dur": 1.414,
+   "onset": 0.155,
+   "end": 1.224,
+   "chunks": [
+    [
+     0.155,
+     0.5
+    ],
+    [
+     0.5,
+     0.776
+    ],
+    [
+     0.776,
+     1.224
+    ]
+   ],
+   "captions": [
+    "It walked",
+    "right UP",
+    "to me."
+   ]
+  },
+  "L16": {
+   "text": "And I finally looked it in the face.",
+   "dur": 1.69,
+   "onset": 0.155,
+   "end": 1.5,
+   "chunks": [
+    [
+     0.155,
+     0.345
+    ],
+    [
+     0.345,
+     0.655
+    ],
+    [
+     0.655,
+     0.853
+    ],
+    [
+     0.853,
+     1.5
+    ]
+   ],
+   "captions": [
+    "And I",
+    "finally",
+    "looked it",
+    "in the FACE."
+   ]
+  }
+ },
+ "total": 39.24
+}

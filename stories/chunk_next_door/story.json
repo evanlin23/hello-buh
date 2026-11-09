@@ -1,0 +1,80 @@
+{
+  "name": "chunk_next_door",
+  "stunt": "story_chunk_next_door",
+  "caption": "something walks out of the fog every night 😳",
+  "premise": "For 700 nights something has walked out of the fog next to the narrator's house. It never attacks him, even when he punches it. It harvests his wheat, replants it, uses the composter, pays an emerald for the wheat he leaves out, and the iron golem lets it walk by. At sunrise it catches fire and runs back into the fog.",
+  "twist": "Every night it stops at Gary's old house and knocks. Gary, the village farmer, has been gone for 700 nights. The narrator waits in the fog and looks it in the face: the game shows the name tag over a zombie villager in a farmer's straw hat. Gary. He never left; he has been coming home and going to work every night. The reveal is the name tag, never said aloud.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#FFD640",
+  "lines": [
+    {
+      "id": "L01",
+      "text": "For 700 NIGHTS, / something has / walked out / of the FOG / next to / my HOUSE."
+    },
+    {
+      "id": "L02",
+      "text": "It never / ATTACKS me. / It just / walks right / PAST me."
+    },
+    {
+      "id": "L03",
+      "text": "I even / PUNCHED it / once. / It just / kept WALKING."
+    },
+    {
+      "id": "L04",
+      "text": "Then it / harvests / my WHEAT."
+    },
+    {
+      "id": "L05",
+      "text": "It REPLANTS it. / It even / uses the / COMPOSTER."
+    },
+    {
+      "id": "L06",
+      "text": "Zombies / don't / COMPOST."
+    },
+    {
+      "id": "L07",
+      "text": "At SUNRISE, / it catches / FIRE / and runs back / into the FOG."
+    },
+    {
+      "id": "L08",
+      "text": "I left / some wheat / on my / DOORSTEP. / By morning, / it had / PAID me."
+    },
+    {
+      "id": "L09",
+      "text": "Honestly, / it's the BEST / farmer / this village / ever HAD."
+    },
+    {
+      "id": "L10",
+      "text": "The IRON GOLEM / lets it / walk right BY. / He only / does that / for VILLAGERS."
+    },
+    {
+      "id": "L11",
+      "text": "I've never / seen its FACE. / It only / comes out / in the DARK."
+    },
+    {
+      "id": "L12",
+      "text": "And every night, / it stops / at GARY'S / old HOUSE."
+    },
+    {
+      "id": "L13",
+      "text": "It KNOCKS. / Nobody / answers. / Gary's been / gone for / 700 NIGHTS."
+    },
+    {
+      "id": "L14",
+      "text": "So TONIGHT, / I waited / in the FOG."
+    },
+    {
+      "id": "L15",
+      "text": "It walked / right UP / to me."
+    },
+    {
+      "id": "L16",
+      "text": "And I / finally / looked it / in the FACE."
+    }
+  ]
+}
