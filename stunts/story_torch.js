@@ -23,7 +23,7 @@ module.exports = {
   name: 'story_torch',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "there's a torch I never placed 😳",
-  edit: { caption: "there's a torch I never placed 😳", red: 'torch', story: 'stories/torch', startAt: 'line:0', endAfter: 'death:1.4', deathScreen: true, onFire: 'burn:death', zoom: [['hook:0', 'hook:2.9', 1.12], ['broke:0', 'death:1.4', 1.06]] },
+  edit: { caption: "there's a torch I never placed 😳", red: 'torch', story: 'stories/torch', startAt: 'line:0', endAfter: 'death:1.6', deathScreen: true, onFire: 'burn:death', zoom: [['hook:0', 'hook:2.9', 1.25], ['broke:0', 'death:1.6', 1.06]] },
   expectDeath: true,
   time: 12950,              // sunset: the torch on the hill glows against an orange sky
 
@@ -98,6 +98,7 @@ module.exports = {
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F })
     const { P, say, look, line, cut } = K
+    K.sway = 1.7   // more drift: dark shots read as frozen at the normal sway (retention audit: five 0.6-0.9 s pauses)
     const setMeter = (v) => ctx.mark('meter', { value: v })
     const cx = X + SX + 0.5, cz = Z + SZ + 0.5
     // keep idle actors awake (a long-idle mob's first move reaches the client ~1 s late)
@@ -193,7 +194,7 @@ module.exports = {
       if (k === at(0)) setMeter(10)
       if (k === at(1)) setMeter(20)
       // from my feet up the shaft: torches lining the left wall up to a square of sky
-      K.turnTo(from7, new ctx.Vec3(X + SX + 0.15, F - 18 + 0.6, cz), k / 12)   // up the west wall: the torches in a column toward the sky
+      K.turnTo(from7, new ctx.Vec3(X + SX + 0.15, F - 18 + 0.6 + Math.max(0, k - 12) * 0.35, cz), k / 12)   // up the west wall, then on up the column toward the sky
       look(k)
     })
     // L08: deeper still: the walls glow (magma), the stone hums, something bubbles below
@@ -214,7 +215,7 @@ module.exports = {
       if (k >= 2 && k < at(3) && bot.entity.onGround) { const b = bot.blockAt(bot.entity.position.offset(0, -0.5, 0).floored()); if (b && b.name === 'dirt') digDown() }   // dirt to the stone floor (a dig mid-fall did nothing)
       if (k === 18) ctx.sound('block.lava.pop', 0.8, 0.9)
       if (k >= at(3) - 4 && !from9) { from9 = { ...K.base }; k9 = k }
-      if (from9) K.turnTo(from9, new ctx.Vec3(X + SX + 0.15, F - 42 + 0.6, cz), (k - k9) / 10)
+      if (from9) K.turnTo(from9, new ctx.Vec3(X + SX + 0.15, F - 42 + 0.6 - Math.max(0, k - k9 - 10) * 0.08, cz + Math.max(0, k - k9 - 10) * 0.02), (k - k9) / 10)   // then a slow drift down the wall toward my feet (it held still 1.1 s)
       look(k)
     })
     // L10: NEVER dig straight DOWN. Pickaxe out, look down, and the stone under my feet breaks on "DOWN"

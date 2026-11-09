@@ -4,20 +4,56 @@
  "caption": "there's a torch I never placed 😳",
  "premise": "A torch stands on the hill behind the narrator's house and he doesn't remember placing it. Mom sighs 'again?', the librarian sells him 64 torches he never asked for, the dirt under it is soft like someone filled the hole in, and his dog won't come down. Under it: another torch, then another, forty of them down a shaft, all on the left wall, the way he places them.",
  "twist": "He has dug this shaft before, every time, and every time he forgets the one rule of Minecraft: never dig straight down. He breaks the block under his feet and drops into lava. The death screen is the reveal; the soft dirt, mom's 'again?' and the torches on the left wall say it's happened forty times. The ending loops into line 1: the torch on the hill.",
- "voice": {"voice": "am_adam", "tempo": 1.03, "rate": 1.45},
- "gap": 0.12,
+ "voice": {
+  "voice": "am_adam",
+  "tempo": 1.03,
+  "rate": 1.45
+ },
+ "gap": 0.15,
  "key_color": "#FFB43A",
- "meter": {"label": "TORCHES"},
+ "meter": {
+  "label": "TORCHES"
+ },
  "lines": [
-  {"id": "L01", "text": "There's a TORCH / on the hill / behind my house. / I never / PLACED it."},
-  {"id": "L02", "text": "I asked / MOM. / She just / sighed / and said, / AGAIN?"},
-  {"id": "L03", "text": "The LIBRARIAN / sold me / sixty four / TORCHES. / I didn't / ASK for them."},
-  {"id": "L04", "text": "So I DUG / under it. / The dirt / was SOFT. / Like someone / FILLED it IN."},
-  {"id": "L05", "text": "And under / the dirt? / ANOTHER / TORCH."},
-  {"id": "L06", "text": "My DOG / sat at the top / and WHINED. / He wouldn't / come DOWN."},
-  {"id": "L07", "text": "TEN torches. / TWENTY. / All on the / LEFT wall. / That's how / I place them."},
-  {"id": "L08", "text": "THIRTY. / The stone / got WARM. / Something / down there / was BUBBLING."},
-  {"id": "L09", "text": "FORTY. / That's when / I remembered / the ONE rule / of Minecraft."},
-  {"id": "L10", "text": "NEVER / dig / straight / DOWN."}
+  {
+   "id": "L01",
+   "text": "There's a TORCH / on the hill / behind my house. / I never / PLACED it."
+  },
+  {
+   "id": "L02",
+   "text": "I asked / MOM. / She just / sighed / and said, / AGAIN?"
+  },
+  {
+   "id": "L03",
+   "text": "The LIBRARIAN / sold me / sixty four / TORCHES. / I didn't / ASK for them."
+  },
+  {
+   "id": "L04",
+   "text": "So I DUG / under it. / The dirt / was SOFT. / Like someone / FILLED it IN."
+  },
+  {
+   "id": "L05",
+   "text": "And under / the dirt? / ANOTHER / TORCH."
+  },
+  {
+   "id": "L06",
+   "text": "My DOG / sat at the top / and WHINED. / He wouldn't / come DOWN."
+  },
+  {
+   "id": "L07",
+   "text": "TEN torches. / TWENTY. / All on the / LEFT wall. / That's how / I place them."
+  },
+  {
+   "id": "L08",
+   "text": "THIRTY. / The stone / got WARM. / Something / down there / was BUBBLING."
+  },
+  {
+   "id": "L09",
+   "text": "FORTY. / That's when / I remembered / the ONE rule / of Minecraft."
+  },
+  {
+   "id": "L10",
+   "text": "NEVER / dig / straight / DOWN."
+  }
  ]
 }
