@@ -27,7 +27,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
   // zoom: a push-in on the thing as line 1 starts (it read small and the first second was still), and on the name tag
-  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.5', punch: [['name', 0, 0.1]], zoom: [['line:0', 'line:2.3', 1.3], ['name:0.15', 'name:1.5', 1.35]] },
+  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.5', punch: [['name', 0, 0.1]], zoom: [['line:0', 'line:2.3', 1.3], ['name:0.15', 'name:1.5', 1.5]] },
   time: NIGHT,
   brightness: 1,           // Options > Brightness: Bright (the night scenes still read)
   renderDistance: 2,       // vanilla's lowest: the fog starts 28 blocks out and ends at 32
@@ -62,7 +62,7 @@ module.exports = {
     await c(`/fill ${A(-2, 0, -44)} ${A(0, 0, 2)} dirt_path`)
     await post(-4, 1); await post(2, 1)
     await post(-3, -14); await post(1, -14)       // the last lamps before the dark: where it comes out, and where I wait
-    for (const [dx, dz, b] of [[-3, 2, 'poppy'], [1, 2, 'dandelion'], [-3, -8, 'cornflower'], [1, -14, 'oxeye_daisy'], [2, -5, 'poppy']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
+    for (const [dx, dz, b] of [[-3, 2, 'poppy'], [1, 2, 'dandelion'], [-3, -8, 'cornflower'], [2, -12, 'oxeye_daisy'], [2, -5, 'poppy']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
     // the lane behind the house, running west (L02, L03)
     await c(`/fill ${A(-40, 0, 13)} ${A(8, 0, 14)} dirt_path`)
     await post(-13, 11)
@@ -86,7 +86,7 @@ module.exports = {
     await c(`/setblock ${A(47, 4, -4)} spruce_planks`); await c(`/setblock ${A(48, 4, -3)} spruce_planks`)   // nobody home: no light inside
     await c(`/setblock ${A(49, 2, -7)} oak_wall_sign[facing=north]{front_text:{color:"white",has_glowing_text:1b,messages:["","GARY'S","HOUSE",""]}}`)
     await c(`/fill ${A(46, 0, -30)} ${A(48, 0, -7)} dirt_path`)
-    await c(`/setblock ${A(46, 1, -7)} dead_bush`)
+    await c(`/setblock ${A(45, 1, -8)} dead_bush`)
     await post(50, -20); await post(44, -9)
 
     // --- the cast: every one NoAI, buried under its first spot until its scene
@@ -182,7 +182,7 @@ module.exports = {
       for (const dz of [-6, -5, -7]) { say(`/setblock ${X + col} ${F + 1} ${Z + dz} air destroy`); cropList.push([col, dz]) }
     }
     await cut(-49.5, -1.3, P(a4.x + 1.2, 1.9, -5.5))
-    bury('a2')
+    say('/data merge entity @e[tag=a2,limit=1] {Invulnerable:1b}'); bury('a2')   // buried, it would suffocate
     await line('L04', async (k) => {
       step(a4, 0.11, 0); harvest()
       K.base = K.aim(P(a4.x + 0.8, 1.9, -5.5)); look(k)
@@ -239,13 +239,14 @@ module.exports = {
     await cutAt(MORNING, -0.5, 6.7, P(-0.5, 1.15, 2.3))
     bury('a7')
     await line('L08', async (k, at) => {
-      go(k >= at(4) - 2 && bot.entity.position.z > Z + 3.45)   // stops a step short: the emerald jumps to me
+      // creeping to the door from the first words, then the last steps on "By morning"; stops a step short: the emerald jumps to me
+      bot.setControlState('sneak', k < at(4) - 2); go(k >= 2 && bot.entity.position.z > Z + 3.45)
       const got = bot.entity.position.z <= Z + 3.5
       if (!got) K.base = K.aim(P(-0.5, 1.2, 2.3))
       else { from8 = from8 || { ...K.base }; k8 = k8 || k; K.turnTo(from8, P(-0.5, 2.0, -14), (k - k8) / 12) }   // then up the path, the way it went
       look(k)
     }, () => { raise('v1', { x: -41.5, z: -5.5, yaw: -100 }); raise('v2', { x: -40.3, z: -7.2, yaw: -120 }) })
-    go(false)
+    go(false); bot.setControlState('sneak', false)
 
     // ---------- L09: the best farmer this village ever had (the field grown back, the hay he has stacked)
     await cut(-51.5, -1.3, P(-47, 1.2, -8))
