@@ -408,13 +408,6 @@
    "far": true
   },
   {
-   "id": "hk1",
-   "at": [
-    "m1",
-    0.05
-   ]
-  },
-  {
    "id": "hk4",
    "at": [
     "limit",
@@ -464,14 +457,6 @@
   },
   {
    "at": [
-    "m1",
-    0.05
-   ],
-   "dur": 2.6,
-   "text": "“How many in your family?”"
-  },
-  {
-   "at": [
     "limit",
     0.1
    ],
@@ -491,5 +476,6 @@
  "note_v3": "Owner: 'it doesnt make sense that theres no water in the water bucket'. No shot shows the full bucket handed over until the cold open is re-shot with the swap on screen (he keeps the full one, hands over the empty one).",
  "note_v4": "Research report (reports/Movie and trailer craft for BUILD LIMIT.md) T1-T4, T6, T7, T9: no answer images (the slide, the green, Ash's line); 1-6 word cards over picture; black cut from 44% to ~30%; the toll as the rhythm, the second toll over the fall into the fog is the reveal; one anchor image (the Well as a dot seen from Forty) opens the fall and holds the title; the title smashes in on 'There is no forty-one.' T5 (the swap on screen) and T8 (real voices) wait for the re-shoot.",
  "score": "v4",
- "note_v4b": "Listening check (2026-11-09): 'There is no forty-one.' was heard as 'fifty-one': the line runs 2.64 s and the title, its swell and braams came in at 1.8 s, on 'forty-one'. The black beat now holds the whole line (2.8 s), the score is silent from the hush to the title, and the music ducks ~5 dB under every line."
+ "note_v4b": "Listening check (2026-11-09): 'There is no forty-one.' was heard as 'fifty-one': the line runs 2.64 s and the title, its swell and braams came in at 1.8 s, on 'forty-one'. The black beat now holds the whole line (2.8 s), the score is silent from the hush to the title, and the music ducks ~5 dB under every line.",
+ "note_v4c": "Owner, 2026-11-09: 'i dont understand the How many in your family? line'. Cut from the teaser: nothing in it sets up the Count, so the question reads as random. It stays in the movie, where the market census pays it off within minutes."
 }

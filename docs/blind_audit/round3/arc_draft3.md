@@ -92,8 +92,8 @@ Draft 3 changes what happens at those breaks, not where they fall.
 
 ## Chapter 1: You Fall Once (12 min)
 
-**Hook (0:00).** The Plank on Floor 40, at night, three years ago. Keeper Brann pats Ash (16) down and takes his own bucket. On a stand by the Plank are two buckets. The Highkeeper lifts both, and the moon catches the water in one of them.
-- "How many in your family?" "Four."
+**Hook (0:00).** The Plank on Floor 40, at night, three years ago. Keeper Brann pats Ash (16) down and takes his own bucket. On a stand by the Plank are two buckets. The Highkeeper lifts both, and the moon catches the water in one of them. Beside him a Keeper holds the census ledger open.
+- "How many in your family?" "Four." He writes a 4 in the ledger, the way you'd count heads.
 - "Which floor?" "Forty."
 - He sets the full bucket down behind him and puts the empty one in Ash's hand. Ash is looking down at the drop and never checks it. The hotbar shows a plain bucket, not a water bucket. We see it; he doesn't.
 - "You fall once."
@@ -127,7 +127,7 @@ Draft 3 changes what happens at those breaks, not where they fall.
    > The tower is full. There is no forty-one.
 
    - Rook: "All three of us are moving to Forty." Orlo, smiling: "There's always room on Forty."
-   - The census at Mom's stall. "How many in your family?" Buh: "Four." "Four?" "Mom, Pip, me. And Ash." Gently: "Three, son." He writes.
+   - The census at Mom's stall. "How many in your family?" Buh: "Four." "Four?" "Mom, Pip, me. And Ash." Gently: "Three, son." He writes a 3 over the 4.
 6. **Mom's stall (1 min).** Pip (3) is asleep among the mushroom sacks, and the curtain is still shut.
    - Mom: "Floor 10. Real windows." Buh: "Ash jumped from Forty." Mom: "And look where it got him."
    - Later, to a customer: "Pip was a Cradle baby. We were lucky."

@@ -379,9 +379,10 @@ def score_v4(edl, T, total, vox):
     # Fen, in the dark, and a bell so far away it's almost not there
     put(bell(0.6, 0.6, far=True), S("fen", 0.05), 0.5)
     # the montage cuts on tolls, each a little lower
-    put(sfx.synth_riser(S("bucket") - S("m1")) * 0.5, S("m1"), 0.5)
+    # (softer than the first cut: a listener heard "How many in your family?" as "Have the one...", masked by these)
+    put(sfx.synth_riser(S("bucket") - S("m1")) * 0.5, S("m1"), 0.35)
     for k, (sid, pitch) in enumerate(zip(["m1", "m2", "m4", "m6", "m5"], [0.7, 0.66, 0.62, 0.58, 0.54])):
-        put(bell(pitch, 0.55), S(sid), 0.45)
+        put(bell(pitch, 0.55), S(sid), 0.32)
     # the empty bucket, held: IT WAS NEVER / AN ACCIDENT
     put(drone(S("hush") - S("bucket") + 0.3, (36.7, 55.0), 0.45), S("bucket"), 0.5)
     put(braam(3.0), at(T, edl["cards"][9]["at"]), 1.0)
@@ -401,7 +402,7 @@ def score_v4(edl, T, total, vox):
     a, b = int(S("hush") * SR), int(S("title") * SR)
     mix[a: a + 240] *= np.linspace(1, 0, 240)[:, None]; mix[a + 240: b] = 0
     if vox:
-        # every line rides over the music: duck the score about 5 dB under each one (with 60 ms ramps)
+        # every line rides over the music: duck the score about 7 dB under each one (with 60 ms ramps)
         duck = np.ones(len(mix), np.float32); voice = np.zeros_like(mix); r = int(0.06 * SR)
         for v in edl["vox"]:
             x = load_vox(v["id"], v.get("far")) * 0.85
@@ -410,11 +411,14 @@ def score_v4(edl, T, total, vox):
                 continue
             voice[i:j] += x[: j - i]
             lo, hi = max(0, i - r), min(len(mix), j + r)
-            env = np.full(hi - lo, 0.56, np.float32)
-            env[: min(r, len(env))] = np.linspace(1, 0.56, min(r, len(env)))
-            env[-min(r, len(env)):] = np.linspace(0.56, 1, min(r, len(env)))
+            env = np.full(hi - lo, 0.45, np.float32)
+            env[: min(r, len(env))] = np.linspace(1, 0.45, min(r, len(env)))
+            env[-min(r, len(env)):] = np.linspace(0.45, 1, min(r, len(env)))
             duck[lo:hi] = np.minimum(duck[lo:hi], env)
-        mix = mix * duck[:, None] + voice
+        # and duck the lows harder than the highs: a deep voice (the Highkeeper) sits in the same range as the tolls
+        # and drones, and a listener still lost "How many in your family?" under the montage with a flat duck
+        low = np.stack([sfx.onepole(mix[:, c].astype(np.float64), 300.0) for c in range(2)], 1).astype(np.float32)
+        mix = (mix - low) * duck[:, None] + low * (duck ** 2.2)[:, None] + voice
     peak = np.abs(mix).max()
     return mix * (0.95 / peak) if peak > 0.95 else mix
 
