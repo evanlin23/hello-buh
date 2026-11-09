@@ -1,0 +1,32 @@
+{
+  "name": "sun_wont_set",
+  "stunt": "story_sun_wont_set",
+  "caption": "the sun hasn't set in 300 days 😳",
+  "premise": "The sun has hung over the narrator's village for 300 days. Nobody has slept: the farmer walks into his fence, the butcher sleeps standing up, every bed is still made, and the zombies have waited under one tree the whole time. Every day grandpa asks if tonight is the night.",
+  "twist": "It isn't a curse. The narrator stopped the sun with a lever, because zombies come out at night and grandpa is too slow to run. Grandpa asks him to let the night come. He does, the zombies come out, and grandpa is gone before he can finish yelling: the game answers who was too slow (slain by Zombie). Grandpa always got home first.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.12,
+  "key_color": "#FFB52E",
+  "lines": [
+    { "id": "L01", "text": "The SUN / hasn't SET / in my world / for 300 / DAYS." },
+    { "id": "L02", "text": "Nobody / has SLEPT. / The farmer / keeps walking / into his / own FENCE." },
+    { "id": "L03", "text": "The butcher / fell ASLEEP / standing UP." },
+    { "id": "L04", "text": "Every BED / in the village / is still / MADE." },
+    { "id": "L05", "text": "The ZOMBIES / have been / hiding under / ONE tree / since it / STARTED." },
+    { "id": "L06", "text": "And every day / my GRANDPA / asks me / the same / THING." },
+    { "id": "L07", "text": "Is TONIGHT / the night?" },
+    { "id": "L08", "text": "And every day / I tell him, / NOT YET." },
+    { "id": "L09", "text": "Then I / walk him / HOME. / He always / gets there / FIRST." },
+    { "id": "L10", "text": "Everyone thinks / it's a CURSE. / It's not. / It's a LEVER. / And I / PULLED it." },
+    { "id": "L11", "text": "Because / at NIGHT / the zombies / come OUT. / And grandpa / is too SLOW / to RUN." },
+    { "id": "L12", "text": "But today / he said, / let it COME. / I'm TIRED, / kid." },
+    { "id": "L13", "text": "So I / pulled it / BACK." },
+    { "id": "L14", "text": "The sun / went DOWN. / The zombies / came OUT." },
+    { "id": "L15", "text": "I yelled, / RUN, / grandpa! / He was / already / GONE." },
+    { "id": "L16", "text": "Wait. / Then WHO / was too SLOW / to RUN?" }
+  ]
+}

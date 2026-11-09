@@ -1,0 +1,546 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.12,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "The sun hasn't set in my world for 300 days.",
+   "dur": 2.5,
+   "onset": 0.172,
+   "end": 2.31,
+   "chunks": [
+    [
+     0.172,
+     0.448
+    ],
+    [
+     0.448,
+     0.802
+    ],
+    [
+     0.802,
+     1.207
+    ],
+    [
+     1.207,
+     1.741
+    ],
+    [
+     1.741,
+     2.31
+    ]
+   ],
+   "captions": [
+    "The SUN",
+    "hasn't SET",
+    "in my world",
+    "for 300",
+    "DAYS."
+   ]
+  },
+  "L02": {
+   "text": "Nobody has slept. The farmer keeps walking into his own fence.",
+   "dur": 2.931,
+   "onset": 0.19,
+   "end": 2.724,
+   "chunks": [
+    [
+     0.19,
+     0.44
+    ],
+    [
+     0.44,
+     0.931
+    ],
+    [
+     1.0,
+     1.328
+    ],
+    [
+     1.328,
+     1.767
+    ],
+    [
+     1.767,
+     2.0
+    ],
+    [
+     2.0,
+     2.724
+    ]
+   ],
+   "captions": [
+    "Nobody",
+    "has SLEPT.",
+    "The farmer",
+    "keeps walking",
+    "into his",
+    "own FENCE."
+   ]
+  },
+  "L03": {
+   "text": "The butcher fell asleep standing up.",
+   "dur": 1.776,
+   "onset": 0.155,
+   "end": 1.569,
+   "chunks": [
+    [
+     0.155,
+     0.466
+    ],
+    [
+     0.466,
+     0.897
+    ],
+    [
+     0.897,
+     1.569
+    ]
+   ],
+   "captions": [
+    "The butcher",
+    "fell ASLEEP",
+    "standing UP."
+   ]
+  },
+  "L04": {
+   "text": "Every bed in the village is still made.",
+   "dur": 1.931,
+   "onset": 0.172,
+   "end": 1.724,
+   "chunks": [
+    [
+     0.172,
+     0.543
+    ],
+    [
+     0.543,
+     0.914
+    ],
+    [
+     0.914,
+     1.207
+    ],
+    [
+     1.207,
+     1.724
+    ]
+   ],
+   "captions": [
+    "Every BED",
+    "in the village",
+    "is still",
+    "MADE."
+   ]
+  },
+  "L05": {
+   "text": "The zombies have been hiding under one tree since it started.",
+   "dur": 2.638,
+   "onset": 0.172,
+   "end": 2.431,
+   "chunks": [
+    [
+     0.172,
+     0.578
+    ],
+    [
+     0.578,
+     0.784
+    ],
+    [
+     0.784,
+     1.19
+    ],
+    [
+     1.19,
+     1.629
+    ],
+    [
+     1.629,
+     1.845
+    ],
+    [
+     1.845,
+     2.431
+    ]
+   ],
+   "captions": [
+    "The ZOMBIES",
+    "have been",
+    "hiding under",
+    "ONE tree",
+    "since it",
+    "STARTED."
+   ]
+  },
+  "L06": {
+   "text": "And every day my grandpa asks me the same thing.",
+   "dur": 2.276,
+   "onset": 0.155,
+   "end": 2.069,
+   "chunks": [
+    [
+     0.155,
+     0.517
+    ],
+    [
+     0.517,
+     1.026
+    ],
+    [
+     1.026,
+     1.319
+    ],
+    [
+     1.319,
+     1.603
+    ],
+    [
+     1.603,
+     2.069
+    ]
+   ],
+   "captions": [
+    "And every day",
+    "my GRANDPA",
+    "asks me",
+    "the same",
+    "THING."
+   ]
+  },
+  "L07": {
+   "text": "Is tonight the night?",
+   "dur": 1.293,
+   "onset": 0.155,
+   "end": 1.086,
+   "chunks": [
+    [
+     0.155,
+     0.534
+    ],
+    [
+     0.534,
+     1.086
+    ]
+   ],
+   "captions": [
+    "Is TONIGHT",
+    "the night?"
+   ]
+  },
+  "L08": {
+   "text": "And every day I tell him, not yet.",
+   "dur": 1.793,
+   "onset": 0.155,
+   "end": 1.603,
+   "chunks": [
+    [
+     0.155,
+     0.586
+    ],
+    [
+     0.586,
+     0.983
+    ],
+    [
+     1.017,
+     1.603
+    ]
+   ],
+   "captions": [
+    "And every day",
+    "I tell him,",
+    "NOT YET."
+   ]
+  },
+  "L09": {
+   "text": "Then I walk him home. He always gets there first.",
+   "dur": 2.345,
+   "onset": 0.172,
+   "end": 2.138,
+   "chunks": [
+    [
+     0.172,
+     0.345
+    ],
+    [
+     0.345,
+     0.569
+    ],
+    [
+     0.569,
+     0.897
+    ],
+    [
+     0.966,
+     1.328
+    ],
+    [
+     1.328,
+     1.647
+    ],
+    [
+     1.647,
+     2.138
+    ]
+   ],
+   "captions": [
+    "Then I",
+    "walk him",
+    "HOME.",
+    "He always",
+    "gets there",
+    "FIRST."
+   ]
+  },
+  "L10": {
+   "text": "Everyone thinks it's a curse. It's not. It's a lever. And I pulled it.",
+   "dur": 2.897,
+   "onset": 0.172,
+   "end": 2.707,
+   "chunks": [
+    [
+     0.172,
+     0.629
+    ],
+    [
+     0.629,
+     1.069
+    ],
+    [
+     1.138,
+     1.483
+    ],
+    [
+     1.509,
+     1.914
+    ],
+    [
+     1.94,
+     2.129
+    ],
+    [
+     2.129,
+     2.707
+    ]
+   ],
+   "captions": [
+    "Everyone thinks",
+    "it's a CURSE.",
+    "It's not.",
+    "It's a LEVER.",
+    "And I",
+    "PULLED it."
+   ]
+  },
+  "L11": {
+   "text": "Because at night the zombies come out. And grandpa is too slow to run.",
+   "dur": 3.19,
+   "onset": 0.155,
+   "end": 3.0,
+   "chunks": [
+    [
+     0.155,
+     0.328
+    ],
+    [
+     0.328,
+     0.569
+    ],
+    [
+     0.569,
+     0.966
+    ],
+    [
+     0.966,
+     1.397
+    ],
+    [
+     1.466,
+     1.931
+    ],
+    [
+     1.931,
+     2.414
+    ],
+    [
+     2.414,
+     3.0
+    ]
+   ],
+   "captions": [
+    "Because",
+    "at NIGHT",
+    "the zombies",
+    "come OUT.",
+    "And grandpa",
+    "is too SLOW",
+    "to RUN."
+   ]
+  },
+  "L12": {
+   "text": "But today he said, let it come. I'm tired, kid.",
+   "dur": 2.397,
+   "onset": 0.155,
+   "end": 2.19,
+   "chunks": [
+    [
+     0.155,
+     0.44
+    ],
+    [
+     0.44,
+     0.707
+    ],
+    [
+     0.733,
+     1.19
+    ],
+    [
+     1.276,
+     1.672
+    ],
+    [
+     1.707,
+     2.19
+    ]
+   ],
+   "captions": [
+    "But today",
+    "he said,",
+    "let it COME.",
+    "I'm TIRED,",
+    "kid."
+   ]
+  },
+  "L13": {
+   "text": "So I pulled it back.",
+   "dur": 1.259,
+   "onset": 0.172,
+   "end": 1.052,
+   "chunks": [
+    [
+     0.172,
+     0.353
+    ],
+    [
+     0.353,
+     0.603
+    ],
+    [
+     0.603,
+     1.052
+    ]
+   ],
+   "captions": [
+    "So I",
+    "pulled it",
+    "BACK."
+   ]
+  },
+  "L14": {
+   "text": "The sun went down. The zombies came out.",
+   "dur": 2.103,
+   "onset": 0.155,
+   "end": 1.914,
+   "chunks": [
+    [
+     0.155,
+     0.414
+    ],
+    [
+     0.414,
+     0.862
+    ],
+    [
+     0.931,
+     1.345
+    ],
+    [
+     1.345,
+     1.914
+    ]
+   ],
+   "captions": [
+    "The sun",
+    "went DOWN.",
+    "The zombies",
+    "came OUT."
+   ]
+  },
+  "L15": {
+   "text": "I yelled, run, grandpa! He was already gone.",
+   "dur": 2.345,
+   "onset": 0.172,
+   "end": 2.138,
+   "chunks": [
+    [
+     0.172,
+     0.448
+    ],
+    [
+     0.483,
+     0.638
+    ],
+    [
+     0.672,
+     1.138
+    ],
+    [
+     1.224,
+     1.371
+    ],
+    [
+     1.371,
+     1.621
+    ],
+    [
+     1.621,
+     2.138
+    ]
+   ],
+   "captions": [
+    "I yelled,",
+    "RUN,",
+    "grandpa!",
+    "He was",
+    "already",
+    "GONE."
+   ]
+  },
+  "L16": {
+   "text": "Wait. Then who was too slow to run?",
+   "dur": 1.741,
+   "onset": 0.172,
+   "end": 1.534,
+   "chunks": [
+    [
+     0.172,
+     0.362
+    ],
+    [
+     0.388,
+     0.543
+    ],
+    [
+     0.543,
+     0.966
+    ],
+    [
+     0.966,
+     1.534
+    ]
+   ],
+   "captions": [
+    "Wait.",
+    "Then WHO",
+    "was too SLOW",
+    "to RUN?"
+   ]
+  }
+ },
+ "total": 37.34
+}
