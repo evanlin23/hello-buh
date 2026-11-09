@@ -23,7 +23,7 @@ module.exports = {
   name: 'story_torch',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "there's a torch I never placed 😳",
-  edit: { caption: "there's a torch I never placed 😳", red: 'torch', story: 'stories/torch', startAt: 'line:0', endAfter: 'death:1.4', deathScreen: true, onFire: 'burn:death', zoom: [['hook:0', 'hook:2.9', 1.45], ['broke:0', 'death:1.4', 1.06]] },
+  edit: { caption: "there's a torch I never placed 😳", red: 'torch', story: 'stories/torch', startAt: 'line:0', endAfter: 'death:1.4', deathScreen: true, onFire: 'burn:death', zoom: [['hook:0', 'hook:2.9', 1.12], ['broke:0', 'death:1.4', 1.06]] },
   expectDeath: true,
   time: 12950,              // sunset: the torch on the hill glows against an orange sky
 
@@ -129,8 +129,8 @@ module.exports = {
 
     setMeter(1)
     // L01: the hill behind the house, the torch on top against the dusk; walk toward it, the dog at its foot
-    // 8 blocks back: closer, the hill's steps hide the torch; the edit zooms in on it (`hook` mark)
-    await cut(SX + 0.9, SZ + 8.3, P(SX + 0.5, TOP + 1.45, SZ + 0.5))
+    // on the hill's third step, two blocks from the torch: the flame big against the night sky (from the ground it was a dot)
+    await cut(SX + 0.7, SZ + 2.7, P(SX + 0.5, TOP + 1.5, SZ + 0.5), TOP)
     ctx.mark('hook')
     await line('L01', async (k) => { wake(k); K.base = K.aim(P(SX + 0.5, TOP + 1.45, SZ + 0.5)); look(k) })
     // L02: Mom at the front door. She sighs on "sighed" (turns half away and back, a villager's grumble)
