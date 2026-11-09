@@ -102,6 +102,7 @@ module.exports = {
     await c(`/setblock ${A(1, 1, -7)} crafting_table`)
     await c(`/setblock ${A(-2, 1, -7)} bookshelf`)
     await c(`/setblock ${A(-2, 3, -5)} wall_torch[facing=east]`); await c(`/setblock ${A(1, 3, -5)} wall_torch[facing=west]`)
+    await c(`/setblock ${A(-1, 2, -3)} oak_planks`)   // no window by the door: it looked out on the clearing's cut edge
     for (const [dx, dz, b] of [[-2, -2, 'poppy'], [2, -2, 'dandelion']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
 
     const mob = (type, x, y, z, yaw, tag, more = '') => c(`/summon ${type} ${(X + x).toFixed(2)} ${(F + y).toFixed(2)} ${(Z + z).toFixed(2)} {NoAI:1b,NoGravity:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[${yaw}f,0f]${more}}`)
@@ -140,7 +141,7 @@ module.exports = {
     // the zombie is moved every tick (an idle mob's first move reaches the client late)
     const zom = { x: 0.0, y: -6, z: -9.0, yaw: 0 }
     let jig = 0
-    bot.on('physicsTick', () => { jig++; tp('zombie', zom.x + (jig % 4 < 2 ? 0.003 : -0.003), zom.y, zom.z, zom.yaw) })
+    bot.on('physicsTick', () => { jig++; tp('zombie', zom.x + (zom.sway ? Math.sin(jig / 13) * 0.3 : (jig % 4 < 2 ? 0.003 : -0.003)), zom.y, zom.z, zom.yaw) })   // at the window he shuffles side to side (he stood frozen for 4 s)
 
     // deaths: the Respawn button works 20 ticks after the death; smoke drifts in front of the dead camera
     let deadAt = -99, deadView = null
@@ -187,10 +188,15 @@ module.exports = {
       if (!digging && k >= at(3) - 17) {
         digging = true
         const b = bot.blockAt(ORE)
-        if (b && b.name === 'gold_ore') bot.dig(b, 'ignore').then(broke, (e) => ctx.log('dig', e.message))
+        // an iron pickaxe breaks gold ore in 0.75 s (15 ticks); mineflayer's own digTime came out as a bare
+        // hand's 4.55 s on 1.21.11 (the crack stalled and the safety net broke the block: Minecraft audit)
+        ctx.log('dig: held', bot.heldItem && bot.heldItem.name, 'digTime', b && bot.digTime(b))
+        const dt = bot.digTime
+        bot.digTime = () => 800
+        if (b && b.name === 'gold_ore') bot.dig(b, 'ignore').then(() => { ctx.log('dig: broke'); broke() }, (e) => ctx.log('dig', e.message)).then(() => { bot.digTime = dt })
       }
       if (digging && !mined && k % 4 === 0) ctx.sound('block.stone.hit', 0.25, 0.5)
-      if (!mined && k >= at(3) + 8) { say(`/setblock ${X + 20} ${F + 2} ${Z - 30} air`); broke() }   // a safety net: the dig should have landed by now
+      if (!mined && k >= at(3) + 8) { ctx.log('dig: SAFETY NET'); say(`/setblock ${X + 20} ${F + 2} ${Z - 30} air`); broke() }   // a safety net: the dig should have landed by now
       if (k === Math.round((S.line('L02').dur + S.gap) * 20) - 8) say('/clear @s')   // the hand is empty again before the cut (the pickaxe was still lowering in the next shot)
       K.base = K.aim(P(20.5, 2.5, -29.5)); look(k)
     })
@@ -289,7 +295,7 @@ module.exports = {
     stop()
 
     // L11: but I wasn't dead (full hearts; and a zombie at the window over the bed)
-    Object.assign(zom, { x: 0.0, y: 1, z: -9.0, yaw: 0 })
+    Object.assign(zom, { x: 0.0, y: 1, z: -9.0, yaw: 0, sway: true })
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
     await cut(0.3, -4.6, P(-0.1, 2.45, -8))
     ctx.mark('not_dead')
