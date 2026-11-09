@@ -172,7 +172,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         first_ai = min([t for t, who, *_ in lines if who in names] + [end])
         ev.append(f"Dialogue: 2,{ass_time(0.0)},{ass_time(min(first_ai, 9.5) - 0.1)},Hook,,0,0,0,,{{\\fad(0,250)\\fscx90\\fscy90\\t(0,200,\\fscx100\\fscy100)}}{hook}")
     for ft in flashes or []:   # a white flash (the ice opening): a full-frame box fading out
-        ev.append(f"Dialogue: 3,{ass_time(ft)},{ass_time(ft + 0.45)},Cap,,0,0,0,,{{\\pos(0,0)\\an7\\1c&HFFFFFF&\\bord0\\shad0\\fad(0,380)\\p1}}m 0 0 l {W} 0 {W} {H} 0 {H}")
+        ev.append(f"Dialogue: 0,{ass_time(ft)},{ass_time(ft + 0.45)},Cap,,0,0,0,,{{\\pos(0,0)\\an7\\1c&HFFFFFF&\\1a&H70&\\bord0\\shad0\\fad(0,380)\\p1}}m 0 0 l {W} 0 {W} {H} 0 {H}")
     # the speaker's name card at the top while an AI talks (fades in on its line, out at the next cut)
     for t, who, text, dur, vox in lines:
         if who not in names:
