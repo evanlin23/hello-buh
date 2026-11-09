@@ -27,7 +27,7 @@ module.exports = {
   name: 'story_sheep_stares',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.75', deathScreen: true, zoom: [['slain:0.15', 'slain:1.9', 1.1]] },
+  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.6', deathScreen: true, zoom: [['slain:0.15', 'slain:1.6', 1.12]] },
   expectDeath: true,
   botTimeout: 360,
 
@@ -61,7 +61,7 @@ module.exports = {
     await c(`/setblock ${A(0, 1, 0)} coarse_dirt`)                                // THE block (coarse dirt: grass never spreads to it)
     await c(`/setblock ${A(-1, -DEPTH + 2, -2)} wall_torch[facing=east]`)
     await c(`/setblock ${A(1, -DEPTH + 2, -3)} wall_torch[facing=west]`)
-    await c(`/setblock ${A(-1, -DEPTH + 1, -4)} furnace[facing=south]`)
+    await c(`/setblock ${A(-1, -DEPTH + 1, -4)} furnace[facing=south,lit=true]`)
     await c(`/setblock ${A(1, -DEPTH + 1, -4)} crafting_table`)
     await c(`/setblock ${A(0, -DEPTH + 2, -5)} diamond_ore`)
     await c(`/setblock ${A(2, -DEPTH + 2, -1)} iron_ore`)
@@ -336,9 +336,10 @@ module.exports = {
     ctx.mark('slain')
     for (let i = 0; i < 12 && !ctx.died; i++) await bot.waitForTicks(1)
     if (!ctx.died) { ctx.log('still alive, health', bot.health); say(`/damage @s 20 minecraft:mob_attack by @e[tag=zed,limit=1]`); for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1) }
-    // behind the death screen: the torches keep smoking (mob updates stop reaching a dead player)
+    // behind the death screen: the torch and the furnace keep smoking (mob updates stop reaching a dead player)
     for (let i = 0; i < 44; i++) {
-      if (i % 2 === 0) ctx.particles('poof', i % 4 ? P(1.7, -DEPTH + 2.8, -2.5) : P(-0.7, -DEPTH + 2.8, -1.5), { w: 0.12, h: 0.12 })   // small pale puffs off the two torches (dark smoke drew as black blotches under the death tint)
+      if (i % 2 === 0) ctx.particles('smoke', P(1.7, -DEPTH + 2.85, -2.5), { count: 1 })    // the far torch smokes (the near one's drew as blotches by the eye; poof clouds hid the death message)
+      if (i % 6 === 2) ctx.particles('smoke', P(-0.5, -DEPTH + 1.55, -2.95), { count: 1 })  // and the furnace he left burning
       await bot.waitForTicks(1)
     }
     ctx.mark('story_end')
