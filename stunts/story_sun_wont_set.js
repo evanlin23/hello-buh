@@ -33,7 +33,7 @@ module.exports = {
   clouds: false,             // Video Settings > Clouds: OFF (the renderer fogs dusk clouds orange one way and grey the other)
   brightness: 1,             // Options > Brightness: Bright, so the dusk scenes read
   caption: "the sun hasn't set in 300 days 💀",
-  edit: { caption: "the sun hasn't set in 300 days 💀", red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.3', zoom: [['death:0.1', 'death:1.3', 1.04], ['death:0.45', 'death:1.3', 1.05], ['death:0.85', 'death:1.7', 1.12]], deathScreen: true, sfx: [['riser', 'lever', 'dusk', { gain: 0.5 }], ['impact', 'dusk', { gain: 0.6 }], ['impact', 'death', { gain: 0.6 }]] },
+  edit: { caption: "the sun hasn't set in 300 days 💀", red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.3', zoom: [['death:0.1', 'death:1.3', 1.04], ['death:0.45', 'death:1.3', 1.05], ['death:0.9', 'death:1.7', 1.16]], deathScreen: true, sfx: [['riser', 'lever', 'dusk', { gain: 0.5 }], ['impact', 'dusk', { gain: 0.6 }], ['impact', 'death', { gain: 0.6 }]] },
   expectDeath: true,
   botTimeout: 300,
 
