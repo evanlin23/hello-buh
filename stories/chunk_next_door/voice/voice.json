@@ -352,35 +352,35 @@
    ]
   },
   "L11": {
-   "text": "I've never gone near it. It only comes out in the dark.",
-   "dur": 2.552,
-   "onset": 0.172,
-   "end": 2.345,
+   "text": "Nobody knows why. It only comes out in the dark.",
+   "dur": 2.466,
+   "onset": 0.19,
+   "end": 2.259,
    "chunks": [
     [
-     0.172,
-     0.5
+     0.19,
+     0.431
     ],
     [
-     0.5,
-     1.017
+     0.431,
+     0.948
     ],
     [
-     1.086,
-     1.379
+     1.034,
+     1.328
     ],
     [
-     1.379,
-     1.733
+     1.328,
+     1.647
     ],
     [
-     1.733,
-     2.345
+     1.647,
+     2.259
     ]
    ],
    "captions": [
-    "I've never",
-    "gone NEAR it.",
+    "Nobody",
+    "knows WHY.",
     "It only",
     "comes out",
     "in the DARK."
@@ -537,5 +537,5 @@
    ]
   }
  },
- "total": 39.45
+ "total": 39.36
 }

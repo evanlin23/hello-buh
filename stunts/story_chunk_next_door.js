@@ -26,7 +26,7 @@ module.exports = {
   name: 'story_chunk_next_door',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.25', punch: [['name', 0, 0.1]], zoom: [['name:0.15', 'name:1.25', 1.12]] },
+  edit: { caption: CAPTION, red: 'fog', story: 'stories/chunk_next_door', startAt: 'line:0', endAfter: 'name:1.5', punch: [['name', 0, 0.1]], zoom: [['name:0.15', 'name:1.5', 1.35]] },
   time: NIGHT,
   brightness: 1,           // Options > Brightness: Bright (the night scenes still read)
   renderDistance: 2,       // vanilla's lowest: the fog starts 28 blocks out and ends at 32
@@ -71,7 +71,7 @@ module.exports = {
     await c(`/fill ${A(-55, 1, -15)} ${A(-40, 1, -15)} oak_fence`)
     await c(`/fill ${A(-55, 1, -3)} ${A(-40, 1, -3)} oak_fence`)
     await c(`/setblock ${A(-44, 1, -6)} composter[level=0]`)
-    await post(-55, -3); await post(-42, -3); await post(-42, -15); await post(-55, -15)
+    for (const x of [-55, -51, -47, -42]) { await post(x, -3); await post(x, -15) }   // lit all round: the wheat read bright on dark grass with four lamps
     // the hay he has stacked up over 700 nights (L09)
     for (let y = 1; y <= 9; y++) { const r = y <= 3 ? 2 : y <= 6 ? 1 : 0; await c(`/fill ${A(-38 - r, y, -10 - r)} ${A(-38 + r, y, -10 + r)} hay_block`) }
     for (const [dx, dz, b] of [[-43, -12, 'pumpkin'], [-42, -11, 'melon'], [-43, -9, 'pumpkin'], [-42, -7, 'melon']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
@@ -81,9 +81,8 @@ module.exports = {
     await c(`/setblock ${A(47, 4, -4)} spruce_planks`); await c(`/setblock ${A(48, 4, -3)} spruce_planks`)   // nobody home: no light inside
     await c(`/setblock ${A(49, 2, -7)} oak_wall_sign[facing=north]{front_text:{color:"white",has_glowing_text:1b,messages:["","GARY'S","HOUSE",""]}}`)
     await c(`/fill ${A(46, 0, -30)} ${A(48, 0, -7)} dirt_path`)
-    await c(`/setblock ${A(45, 3, -7)} cobweb`); await c(`/setblock ${A(50, 3, -7)} cobweb`)
     await c(`/setblock ${A(46, 1, -7)} dead_bush`)
-    await post(50, -20)
+    await post(50, -20); await post(44, -9)
 
     // --- the cast: every one NoAI, buried under its first spot until its scene
     const zv = (tag, x, z, more = 'Invulnerable:1b,') => c(`/summon zombie_villager ${(X + x).toFixed(2)} ${F - 8} ${(Z + z).toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,${more}CanPickUpLoot:0b,Tags:["${tag}","zv"],Rotation:[0f,0f],VillagerData:{profession:"minecraft:farmer",type:"minecraft:plains",level:2}}`)
@@ -91,11 +90,11 @@ module.exports = {
     await zv('a2', -7.2, 13.5)                 // (made vulnerable in L02: the snowballs have to land, but buried it would suffocate)
     await zv('a4', -52.5, -5.5)
     await zv('a7', -0.5, -11.5)
-    await zv('a10', 40.5, -18.8)
+    await zv('a10', 40.5, -18.3)
     await zv('a11', -3.6, -2.5)
     await zv('a12', 47.5, -11.5)
     await zv('gary', -0.5, -22, 'Invulnerable:1b,CustomName:"Gary",')
-    await c(`/summon iron_golem ${X + 46.5} ${F + 1} ${Z - 20.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["golem"],Rotation:[0f,0f]}`)
+    await c(`/summon iron_golem ${X + 46.5} ${F + 1} ${Z - 21} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["golem"],Rotation:[0f,0f]}`)
     const vil = (tag, x, z, prof) => c(`/summon villager ${(X + x).toFixed(2)} ${F - 8} ${(Z + z).toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[0f,0f],VillagerData:{profession:"minecraft:${prof}",type:"minecraft:plains",level:2},Xp:1}`)
     await vil('v1', -41.5, -5.5, 'librarian'); await vil('v2', -40.3, -7.2, 'mason')
 
@@ -118,16 +117,9 @@ module.exports = {
     const T = (id) => Math.round((S.line(id).dur + S.gap) * 20)
     const go = (on, key = 'forward') => bot.setControlState(key, on)
     const setTime = (n) => { ctx.dayTime = n; say(`/time set ${n}`); ctx.mark('time', { time: n }) }
-    // a cut into another time of day: the time changes while the teleport is in the air, so the new light
-    // arrives with the new shot (set after the cut landed, the first frames of the dawn shot were still night)
-    const cutAt = async (time, dx, dz, target, lead = 1) => {
-      let n = 0
-      const tick = () => { if (n++ === lead) setTime(time) }
-      bot.on('physicsTick', tick)
-      await cut(dx, dz, target)
-      bot.removeListener('physicsTick', tick)
-      if (n <= lead) setTime(time)
-    }
+    // a cut into another time of day: the time mark goes on the teleport's own tick, so the new light arrives
+    // with the new shot (set after the cut landed, or a tick into it, the first frames still had the old sky)
+    const cutAt = async (time, dx, dz, target) => { setTime(time); await cut(dx, dz, target) }
 
     // the actors on stage: each is teleported every tick (a mob that sat still starts ~1 s late)
     const acts = new Map()
@@ -152,14 +144,14 @@ module.exports = {
     let a2
     await line('L01', async (k) => {
       step(a1, 0, 0.11)
-      go(k > 3 && k < 26, 'back')               // backing away toward my door as it comes through the lamps
+      go(k > 46 && k < 58, 'back')              // it comes through the lamps, right at me: a step back at the end
       if (k === 4) groan(0.5, 0.9)
       K.base = K.aim(P(-0.5, 2.2, a1.z)); look(k)
     }, () => { a2 = raise('a2', { x: -7.2, z: 13.5, yaw: 90 }) })
     go(false, 'back')
 
     // ---------- L02 + L03: it walks right past me; the snowballs
-    await cut(-8.6, 15.7, P(a2.x - 0.9, 2.3, 13.5))
+    await cut(-8.6, 18.3, P(a2.x - 0.9, 2.3, 13.5))   // it passes almost 5 blocks off: out of reach, so no name tag
     bury('a1')
     await line('L02', async (k) => {
       step(a2, -0.1, 0)
@@ -238,11 +230,15 @@ module.exports = {
     go(false)
 
     // ---------- L08: by morning it had paid me (the emerald on my doorstep)
+    let from8 = null, k8 = 0
     await cutAt(MORNING, -0.5, 6.7, P(-0.5, 1.15, 2.3))
     bury('a7')
     await line('L08', async (k, at) => {
       go(k >= at(4) - 2 && bot.entity.position.z > Z + 3.45)   // stops a step short: the emerald jumps to me
-      K.base = K.aim(P(-0.5, 1.2, 2.3)); look(k)
+      const got = bot.entity.position.z <= Z + 3.5
+      if (!got) K.base = K.aim(P(-0.5, 1.2, 2.3))
+      else { from8 = from8 || { ...K.base }; k8 = k8 || k; K.turnTo(from8, P(-0.5, 2.0, -14), (k - k8) / 12) }   // then up the path, the way it went
+      look(k)
     }, () => { raise('v1', { x: -41.5, z: -5.5, yaw: -100 }); raise('v2', { x: -40.3, z: -7.2, yaw: -120 }) })
     go(false)
 
@@ -250,22 +246,22 @@ module.exports = {
     await cut(-51.5, -1.3, P(-47, 1.2, -8))
     let from9 = null
     await line('L09', async (k, at) => {
-      go(k < at(2), 'right')
-      if (k >= at(1) - 2) { from9 = from9 || { ...K.base }; K.turnTo(from9, P(-38.5, 7.2, -9.5), (k - at(1) + 2) / 26) }
+      bot.setControlState('sneak', k >= at(2)); go(true, 'right')
+      if (k >= at(1) - 2) { from9 = from9 || { ...K.base }; K.turnTo(from9, P(-38.5, 8.2, -9.5), (k - at(1) + 2) / 36) }
       look(k)
-    }, () => raise('a10', { x: 40.5, z: -18.8, yaw: -90 }))
-    go(false, 'right')
+    }, () => raise('a10', { x: 40.5, z: -18.3, yaw: -90 }))
+    go(false, 'right'); bot.setControlState('sneak', false)
 
     // ---------- L10: the iron golem lets it walk right by
     const a10 = acts.get('a10')
-    const golem = raise('golem', { x: 46.5, z: -20.5, yaw: 0 })
+    const golem = raise('golem', { x: 46.5, z: -21, yaw: 0 })
     const watch = () => { golem.yaw = yawOf(a10.x - golem.x, a10.z - golem.z) }
     watch()
-    await cutAt(NIGHT, 46.5, -12.5, P(46.5, 2.7, -20.5))
+    await cutAt(NIGHT, 46.5, -11.5, P(46.5, 2.7, -21))
     bury('v1'); bury('v2')
     await line('L10', async (k, at) => {
       step(a10, 0.115, 0); watch()
-      bot.setControlState('sneak', k < 40); go(k < 40)   // creeping closer
+      bot.setControlState('sneak', true); go(bot.entity.position.z > Z - 15.6)   // creeping closer
       look(k, Math.max(-0.16, Math.min(0.16, (a10.x - 46.5) * 0.03)))
     }, () => raise('a11', { x: -3.6, z: -2.5, yaw: -90 }))
     bot.setControlState('sneak', false); go(false)
@@ -293,16 +289,16 @@ module.exports = {
     })
     bot.setControlState('sneak', false); go(false)
     // ---------- L13: it knocks, nobody answers; Gary has been gone for 700 nights (the sign)
-    await cut(50.4, -10.6, P(48.0, 2.3, -6.6))
+    await cut(50.9, -12.0, P(48.0, 2.3, -6.6))
     let from13 = null
     await line('L13', async (k, at) => {
       if (a12.z < -6.95) step(a12, 0, 0.1)
       for (const t of [at(0), at(0) + 6, at(1) + 2, at(1) + 8]) {
-        if (k === t) { ctx.sound('entity.zombie.attack_wooden_door', 1, 1); a12.z += 0.12 }
-        if (k === t + 2) a12.z -= 0.12
+        if (k === t) { ctx.sound('entity.zombie.attack_wooden_door', 1, 1); a12.z += 0.22 }
+        if (k === t + 3) a12.z -= 0.22
       }
-      if (k >= at(2) + 4) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(49.5, 2.5, -6.9), (k - at(2) - 4) / 14) }
-      bot.setControlState('sneak', true); go(k >= at(2) + 4 && bot.entity.position.z < Z - 8.45)   // a slow push in on his sign
+      if (k >= at(3) - 3) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(49.5, 2.5, -6.9), (k - at(3) + 3) / 14) }
+      bot.setControlState('sneak', true); go(bot.entity.position.z < Z - 8.45)   // a slow push in on his sign
       look(k)
     }, () => raise('gary', { x: -0.5, z: -22, yaw: 0 }))
     go(false); bot.setControlState('sneak', false)
@@ -317,8 +313,8 @@ module.exports = {
     const garyWalk = () => { if (gary.z < STOP) step(gary, 0, Math.min(0.105, (STOP - gary.z) * 0.2 + 0.01)) }
     await line('L14', async (k, at) => {
       garyWalk()
-      if (k === at(2) - 6) groan(1, 1)
-      if (k >= at(2) - 3) { from14 = from14 || { ...K.base }; K.turnTo(from14, P(-0.5, 2.2, gary.z), (k - at(2) + 3) / 16) }
+      if (k === at(1) - 4) groan(1, 1)
+      if (k >= at(1)) { from14 = from14 || { ...K.base }; K.turnTo(from14, P(-0.5, 2.2, gary.z), (k - at(1)) / 16) }
       look(k)
     })
     // ---------- L15: it walked right up to me, into the lamp light
