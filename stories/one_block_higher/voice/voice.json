@@ -1,0 +1,541 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.12,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "Every time I sleep, I wake up one block higher.",
+   "dur": 2.431,
+   "onset": 0.172,
+   "end": 2.241,
+   "chunks": [
+    [
+     0.172,
+     0.526
+    ],
+    [
+     0.526,
+     0.948
+    ],
+    [
+     1.0,
+     1.345
+    ],
+    [
+     1.345,
+     1.707
+    ],
+    [
+     1.707,
+     2.241
+    ]
+   ],
+   "captions": [
+    "Every time",
+    "I SLEEP,",
+    "I wake up",
+    "ONE block",
+    "HIGHER."
+   ]
+  },
+  "L02": {
+   "text": "Nine nights. Nine blocks of dirt under my bed.",
+   "dur": 2.345,
+   "onset": 0.19,
+   "end": 2.138,
+   "chunks": [
+    [
+     0.19,
+     0.69
+    ],
+    [
+     0.75,
+     1.198
+    ],
+    [
+     1.198,
+     1.44
+    ],
+    [
+     1.44,
+     2.138
+    ]
+   ],
+   "captions": [
+    "Nine NIGHTS.",
+    "Nine blocks",
+    "of DIRT",
+    "under my BED."
+   ]
+  },
+  "L03": {
+   "text": "I asked the farmer who did it. He said he's busy. His wheat field is a pond now.",
+   "dur": 3.672,
+   "onset": 0.172,
+   "end": 3.483,
+   "chunks": [
+    [
+     0.172,
+     0.457
+    ],
+    [
+     0.457,
+     0.784
+    ],
+    [
+     0.784,
+     1.207
+    ],
+    [
+     1.259,
+     1.474
+    ],
+    [
+     1.474,
+     1.983
+    ],
+    [
+     2.052,
+     2.629
+    ],
+    [
+     2.629,
+     3.483
+    ]
+   ],
+   "captions": [
+    "I asked",
+    "the FARMER",
+    "who did it.",
+    "He said",
+    "he's BUSY.",
+    "His wheat field",
+    "is a POND now."
+   ]
+  },
+  "L04": {
+   "text": "The fisherman fishes from his roof. Says the fish come to him.",
+   "dur": 2.862,
+   "onset": 0.155,
+   "end": 2.672,
+   "chunks": [
+    [
+     0.155,
+     0.578
+    ],
+    [
+     0.578,
+     0.94
+    ],
+    [
+     0.94,
+     1.397
+    ],
+    [
+     1.474,
+     1.966
+    ],
+    [
+     1.966,
+     2.672
+    ]
+   ],
+   "captions": [
+    "The FISHERMAN",
+    "fishes from",
+    "his ROOF.",
+    "Says the fish",
+    "come to HIM."
+   ]
+  },
+  "L05": {
+   "text": "The iron golem just stands in the water up to his neck. He looks fine.",
+   "dur": 3.19,
+   "onset": 0.172,
+   "end": 2.983,
+   "chunks": [
+    [
+     0.172,
+     0.793
+    ],
+    [
+     0.793,
+     1.164
+    ],
+    [
+     1.164,
+     1.491
+    ],
+    [
+     1.491,
+     1.629
+    ],
+    [
+     1.629,
+     2.086
+    ],
+    [
+     2.155,
+     2.983
+    ]
+   ],
+   "captions": [
+    "The iron GOLEM",
+    "just stands",
+    "in the water",
+    "up to",
+    "his NECK.",
+    "He looks FINE."
+   ]
+  },
+  "L06": {
+   "text": "And somebody keeps stealing the hill behind my house.",
+   "dur": 2.19,
+   "onset": 0.155,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.155,
+     0.448
+    ],
+    [
+     0.448,
+     0.888
+    ],
+    [
+     0.888,
+     1.121
+    ],
+    [
+     1.121,
+     2.0
+    ]
+   ],
+   "captions": [
+    "And SOMEBODY",
+    "keeps stealing",
+    "the HILL",
+    "behind my house."
+   ]
+  },
+  "L07": {
+   "text": "Night ten. eleven. twelve.",
+   "dur": 1.69,
+   "onset": 0.19,
+   "end": 1.483,
+   "chunks": [
+    [
+     0.19,
+     0.552
+    ],
+    [
+     0.586,
+     0.862
+    ],
+    [
+     0.922,
+     1.483
+    ]
+   ],
+   "captions": [
+    "Night TEN.",
+    "ELEVEN.",
+    "TWELVE."
+   ]
+  },
+  "L08": {
+   "text": "I think my bed is growing.",
+   "dur": 1.517,
+   "onset": 0.155,
+   "end": 1.328,
+   "chunks": [
+    [
+     0.155,
+     0.379
+    ],
+    [
+     0.379,
+     0.664
+    ],
+    [
+     0.664,
+     1.328
+    ]
+   ],
+   "captions": [
+    "I think",
+    "my bed",
+    "is GROWING."
+   ]
+  },
+  "L09": {
+   "text": "So I slept on the ground. Woke up in my bed. One block higher.",
+   "dur": 2.897,
+   "onset": 0.172,
+   "end": 2.707,
+   "chunks": [
+    [
+     0.172,
+     0.353
+    ],
+    [
+     0.353,
+     0.629
+    ],
+    [
+     0.629,
+     1.0
+    ],
+    [
+     1.052,
+     1.284
+    ],
+    [
+     1.284,
+     1.724
+    ],
+    [
+     1.802,
+     2.172
+    ],
+    [
+     2.172,
+     2.707
+    ]
+   ],
+   "captions": [
+    "So I",
+    "slept on",
+    "the GROUND.",
+    "Woke up",
+    "in my BED.",
+    "One block",
+    "HIGHER."
+   ]
+  },
+  "L10": {
+   "text": "Everyone says stay up there. The view is better.",
+   "dur": 2.379,
+   "onset": 0.172,
+   "end": 2.172,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.802
+    ],
+    [
+     0.802,
+     1.19
+    ],
+    [
+     1.259,
+     1.552
+    ],
+    [
+     1.552,
+     2.172
+    ]
+   ],
+   "captions": [
+    "Everyone",
+    "says STAY",
+    "up there.",
+    "The view",
+    "is BETTER."
+   ]
+  },
+  "L11": {
+   "text": "It is better. The sea looks closer every day.",
+   "dur": 2.31,
+   "onset": 0.155,
+   "end": 2.103,
+   "chunks": [
+    [
+     0.155,
+     0.638
+    ],
+    [
+     0.707,
+     0.948
+    ],
+    [
+     0.948,
+     1.431
+    ],
+    [
+     1.431,
+     2.103
+    ]
+   ],
+   "captions": [
+    "It IS better.",
+    "The SEA",
+    "looks closer",
+    "every DAY."
+   ]
+  },
+  "L12": {
+   "text": "The butcher brings my dinner up. He's always soaking wet.",
+   "dur": 2.534,
+   "onset": 0.155,
+   "end": 2.345,
+   "chunks": [
+    [
+     0.155,
+     0.448
+    ],
+    [
+     0.448,
+     0.759
+    ],
+    [
+     0.759,
+     1.19
+    ],
+    [
+     1.259,
+     1.621
+    ],
+    [
+     1.621,
+     2.345
+    ]
+   ],
+   "captions": [
+    "The BUTCHER",
+    "brings my",
+    "dinner UP.",
+    "He's always",
+    "soaking WET."
+   ]
+  },
+  "L13": {
+   "text": "Night sixteen. Nobody down there sleeps anymore. All night, I hear digging.",
+   "dur": 3.207,
+   "onset": 0.172,
+   "end": 3.017,
+   "chunks": [
+    [
+     0.172,
+     0.828
+    ],
+    [
+     0.897,
+     1.138
+    ],
+    [
+     1.138,
+     1.397
+    ],
+    [
+     1.397,
+     1.931
+    ],
+    [
+     1.983,
+     2.241
+    ],
+    [
+     2.267,
+     2.5
+    ],
+    [
+     2.5,
+     3.017
+    ]
+   ],
+   "captions": [
+    "Night SIXTEEN.",
+    "Nobody",
+    "down there",
+    "SLEEPS anymore.",
+    "All night,",
+    "I hear",
+    "DIGGING."
+   ]
+  },
+  "L14": {
+   "text": "So tonight, I only pretended to sleep.",
+   "dur": 2.069,
+   "onset": 0.172,
+   "end": 1.862,
+   "chunks": [
+    [
+     0.172,
+     0.569
+    ],
+    [
+     0.603,
+     0.914
+    ],
+    [
+     0.914,
+     1.259
+    ],
+    [
+     1.259,
+     1.862
+    ]
+   ],
+   "captions": [
+    "So tonight,",
+    "I only",
+    "PRETENDED",
+    "to sleep."
+   ]
+  },
+  "L15": {
+   "text": "And I peeked over the edge.",
+   "dur": 1.483,
+   "onset": 0.155,
+   "end": 1.276,
+   "chunks": [
+    [
+     0.155,
+     0.353
+    ],
+    [
+     0.353,
+     0.543
+    ],
+    [
+     0.543,
+     1.276
+    ]
+   ],
+   "captions": [
+    "And I",
+    "peeked",
+    "over the EDGE."
+   ]
+  },
+  "L16": {
+   "text": "So that's why...",
+   "dur": 1.172,
+   "onset": 0.172,
+   "end": 0.914,
+   "chunks": [
+    [
+     0.172,
+     0.517
+    ],
+    [
+     0.517,
+     0.914
+    ]
+   ],
+   "captions": [
+    "So THAT'S",
+    "why..."
+   ]
+  }
+ },
+ "total": 39.87
+}
