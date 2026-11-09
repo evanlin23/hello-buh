@@ -24,7 +24,7 @@ module.exports = {
   name: 'story_more_golems',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'who keeps building iron golems 💀',
-  edit: { caption: 'who keeps building iron golems 💀', red: 'golems', story: 'stories/more_golems', startAt: 'line:0', endAfter: 'death:1.1', zoom: [['death:0.6', 'death:1.2', 1.14]], punch: [['pop', 0, 0.08]], deathScreen: true },
+  edit: { caption: 'who keeps building iron golems 💀', red: 'golems', story: 'stories/more_golems', startAt: 'line:0', endAfter: 'death:1.3', zoom: [['death:0.1', 'death:2', 1.05], ['death:0.5', 'death:2', 1.06], ['death:0.9', 'death:2', 1.06]], punch: [['pop', 0, 0.08]], deathScreen: true },
   expectDeath: true,
   hideHand: true,          // no Steve arm: who "I" am is the twist
   time: 1000,              // morning
@@ -172,13 +172,15 @@ module.exports = {
     })
     go(false)
     // L04: sunset. Everybody runs inside and the doors slam, far ones first
-    await cut(0.5, 41.0, P(0.5, 2.4, 22)); setTime(12750, 1)
+    await cut(0.5, 34.5, P(0.5, 2.2, 22)); setTime(12750, 1)   // close enough that the last pair runs past the camera (from the street's end they were specks)
     const inside = [false, false, false, false, false, false]
+    let from4 = null
     await line('L04', async (k, at) => {
       watch(14)
-      go(k < 34)
+      go(k < 14)
+      if (k >= at(3)) { from4 = from4 || { ...K.base }; K.turnTo(from4, P(4.5, 1.9, 28.5), (k - at(3)) / 16) }   // to the last door as it shuts (L05 is that door)
       for (let i = 0; i < 6; i++) {
-        if (inside[i] || k < at(1) - 4 + (i % 3)) continue
+        if (inside[i] || k < at(1) - 4 + (i % 3) * 7) continue   // far doors first; the nearest pair goes last, on BARS the door
         const side = i < 3 ? -1 : 1, dz = DOORS[i][1] + 0.5
         const v = V[i], sp = 0.27
         let nx = v.x, nz = v.z
@@ -222,8 +224,8 @@ module.exports = {
     await cut(19.3, -22.4, P(22.5, 3.2, -22.2))
     let gx = 22.5
     await line('L07', async (k, at) => {
-      const follow = k >= at(3)
-      go(k > 2 && k < at(3) - 4 && bot.entity.position.x < X + 20.1)   // a step up to him first (the shot held still for half a second)
+      const follow = k >= at(2)
+      go(k > 2 && k < at(2) - 3 && bot.entity.position.x < X + 20.1)   // a step up to him first (the shot held still for half a second)
       bot.setControlState('back', follow && bot.entity.position.x > X + 16.2)
       if (follow) gx -= 0.085
       say(`/tp @e[tag=guard,limit=1] ${(X + gx + jit()).toFixed(3)} ${F + 1} ${Z - 22.2} facing entity ${me} eyes`)
@@ -266,11 +268,11 @@ module.exports = {
     }
     const idle = () => say(`/execute as @e[tag=g] at @s run tp @s ~${jit()} ~ ~`)
     // L11: the farmer, still out in his wheat. I say HEY (a zombie's groan). He turns round
-    await cut(0.5, 44.8, P(0.5, 2.3, 50.5))
+    await cut(0.5, 42.0, P(0.5, 2.3, 50.5))   // a longer walk-in: he is still coming closer on HEY
     let fx = 0.5, fz = 50.5
     await line('L11', async (k, at) => {
       idle()
-      go(bot.entity.position.z < Z + STAND.z - 0.1)
+      go(k > 12 && bot.entity.position.z < Z + STAND.z - 0.1)
       if (k === at(4)) groan(1)
       const seen = k >= at(4) + 4
       say(`/tp @e[tag=v3,limit=1] ${(X + fx + jit()).toFixed(3)} ${F + 1} ${Z + fz} ${seen ? 180 : (12 * Math.sin(k / 5)).toFixed(1)} ${seen ? 0 : (30 + 14 * Math.sin(k / 3)).toFixed(1)}`)
