@@ -44,7 +44,8 @@ module.exports = {
       ['voice1', VOICE1, 1.3, 'yellow'],
       ['no_bed', 'NO HOME BED?', 1.4, 'white'],
       ['voice2', 'SLEEP IN THE BED,', 0.75, 'red'],
-      ['voice2b', "OR YOU'LL RESPAWN SOMEWHERE THAT ISN'T HOME.", 1.85, 'red'],
+      ['voice2b', "OR YOU'LL RESPAWN", 0.55, 'red'],
+      ['voice2b:0.6', "SOMEWHERE THAT ISN'T HOME.", 1.25, 'red'],
       ['question', 'TRUST VOICE 1 OR 2? COMMENT 👇', 1.8, 'gold']
     ],
     sfx: [['impact', 'nailed'], ['scratch', 'not_dead'], ['dip', 'question', 0.3]],
