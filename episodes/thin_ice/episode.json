@@ -69,5 +69,8 @@
       "HELD ON"
     ]
   },
-  "hook": "WHICH AI GOES IN?"
+  "hook": "WHICH AI GOES IN?",
+  "flash": [
+    "broke"
+  ]
 }

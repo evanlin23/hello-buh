@@ -48,7 +48,7 @@ CHARS = {
     "ai_deep":   dict(screen="#2f56d6", ink="#dfe8ff", glyph="wave", case="#20283a", shirt="#9fb6e8", jacket="#1f2f5e", legs="#2a3346", shoes="#15181f", accent="#2f56d6"),
     "ai_claude": dict(screen="#f3ead8", ink="#d0623c", glyph="spark", case="#5a4636", shirt="#efe4d0", jacket="#c9673f", legs="#8b7660", shoes="#3e2f25", accent="#e8a27f"),
     "ai_gemini": dict(screen="grad", ink="#ffffff", glyph="sparkle", case="#e7e9f0", shirt="#ffffff", jacket="#eef0f6", legs="#4b5cb8", shoes="#2b2f45", accent="#7c6cf0"),
-    "ai_grok":   dict(screen="#050506", ink="#f2f2f2", glyph="slash", case="#0d0d0f", shirt="#1a1a1c", jacket="#0a0a0b", legs="#101012", shoes="#050505", accent="#2a2a2e"),
+    "ai_grok":   dict(screen="#050506", ink="#f2f2f2", glyph="slash", case="#1c1c21", shirt="#3a3a42", jacket="#2a2a31", legs="#222228", shoes="#121214", accent="#55555e"),   # (charcoal, not black: v4 read as a hole in the frame)
 }
 GRAD = ["#4285f4", "#6a6cf0", "#9a5cdf", "#c459c8", "#e5609f", "#f07a6f"]   # blue to pink, row by row
 

@@ -99,6 +99,6 @@ jobs:
       - name: assemble
         run: |
           python3 scripts/ai_short.py "episodes/${{ steps.job.outputs.ep }}" --segments segs
-          ffmpeg -v error -y -i "out/${{ steps.job.outputs.st }}.mp4" -c:v libx264 -crf 26 -vf scale=720:1280 -c:a aac -b:a 160k "out/${{ steps.job.outputs.st }}_preview.mp4"
+          ffmpeg -v error -y -i "out/${{ steps.job.outputs.st }}.mp4" -c:v libx264 -crf 23 -preset slow -c:a aac -b:a 160k "out/${{ steps.job.outputs.st }}_preview.mp4"
       - uses: actions/upload-artifact@v4
         with: { name: short, path: "out/*.mp4", retention-days: 14 }

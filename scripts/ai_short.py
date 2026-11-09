@@ -40,8 +40,8 @@ def mark_time(tl, spec):
     return ts[0] + float(off or 0)
 
 
-def read_wav(p, sr=SR):
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(p), "-ac", "2", "-ar", str(sr), "-f", "f32le", "-"], capture_output=True, check=True).stdout
+def read_wav(p, sr=SR, af=None):
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(p), *(["-af", af] if af else []), "-ac", "2", "-ar", str(sr), "-f", "f32le", "-"], capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.float32).reshape(-1, 2).copy()
 
 
@@ -125,7 +125,7 @@ def bgr(col, a="00"):
     return f"&H{a}{c[4:6]}{c[2:4]}{c[0:2]}"
 
 
-def captions(lines, shots, names, keywords, end, path, hook=None):
+def captions(lines, shots, names, keywords, end, path, hook=None, flashes=None):
     """Every word, two or three at a time, timed by where they fall in the line (by characters), the key words in the
     speaker's colour (white for the narrator: yellow keys). lines: [(t, who, text, dur, vox)] in output seconds."""
     head = f"""[Script Info]
@@ -154,7 +154,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         chunks, cur = [], []
         for w in words:   # 2-3 words a chunk, a break after punctuation
             cur.append(w)
-            if len(cur) == 3 or (len(cur) >= 2 and len(" ".join(cur)) > 13) or w[-1] in ".,?!":
+            if (len(cur) == 3 or (len(cur) >= 2 and len(" ".join(cur)) > 13) or w[-1] in ".,?!") and (len(w.strip(".,?!'")) > 2 or w[-1] in ".,?!"):
                 chunks.append(cur); cur = []
         if cur:
             chunks.append(cur)
@@ -171,6 +171,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     if hook:
         first_ai = min([t for t, who, *_ in lines if who in names] + [end])
         ev.append(f"Dialogue: 2,{ass_time(0.0)},{ass_time(min(first_ai, 9.5) - 0.1)},Hook,,0,0,0,,{{\\fad(0,250)\\fscx90\\fscy90\\t(0,200,\\fscx100\\fscy100)}}{hook}")
+    for ft in flashes or []:   # a white flash (the ice opening): a full-frame box fading out
+        ev.append(f"Dialogue: 3,{ass_time(ft)},{ass_time(ft + 0.45)},Cap,,0,0,0,,{{\\pos(0,0)\\an7\\1c&HFFFFFF&\\bord0\\shad0\\fad(0,380)\\p1}}m 0 0 l {W} 0 {W} {H} 0 {H}")
     # the speaker's name card at the top while an AI talks (fades in on its line, out at the next cut)
     for t, who, text, dur, vox in lines:
         if who not in names:
@@ -339,7 +341,7 @@ def main():
     vox_mix = np.zeros((int((total + 6) * SR), 2), np.float32)
     env = np.zeros(len(vox_mix), np.float32)
     for t, who, text, dur, vox in lines:
-        x = read_wav(work / "vox" / f"{vox}.wav")
+        x = read_wav(work / "vox" / f"{vox}.wav", af="deesser=i=0.6:m=0.6:f=0.5,highpass=f=70")   # (audit v4: harsh sibilance)
         x = sfx.norm(x, 0.85)
         x = T.reverb(x, 0.45, 0.08, damp=3800)[: len(x) + int(0.3 * SR)]
         if who == cfg.get("hero_voice", "Grok"):
@@ -363,10 +365,12 @@ def main():
     mix = vox_mix * 1.0 + music * 0.55 + gm * 0.7
     mix = mix[: int((total + 0.05) * SR)]
     mix /= max(1e-6, np.abs(mix).max()) / 0.95
+    nf = int(0.5 * SR); mix[-nf:] *= np.linspace(1, 0, nf)[:, None]   # (fade out: v4 ended on a hard cut of the music)
     wav = work / "mix.wav"
     T.write_wav(wav, mix)
     ass = work / "captions.ass"
-    captions(lines, shots, cfg.get("names", {}), cfg.get("keywords", {}), total, ass, cfg.get("hook"))
+    captions(lines, shots, cfg.get("names", {}), cfg.get("keywords", {}), total, ass, cfg.get("hook"),
+             [omap(e["t"] / 1000) for e in tl if e["event"] in cfg.get("flash", [])])
     # the sidebar: a state per stretch (all lit for the prompt; the speaker big; who said no greyed with a cross)
     order = [w for w in ("GPT", "DeepSeek", "Claude", "Gemini", "Grok") if w in cfg.get("names", {})]
     states, done = [], []
@@ -389,11 +393,12 @@ def main():
         inputs += ["-i", str(q)]
         chain.append(f"[{last}][{i + 2}:v]overlay=0:0:enable='between(t,{t0:.3f},{t1 - 0.001:.3f})'[s{i}]")
         last = f"s{i}"
-    chain.append(f"[{last}]ass={ass}:fontsdir={HERE / 'fonts'}[v]")
+    chain.append(f"[{last}]unsharp=5:5:0.55:5:5:0.0[sh]")   # (a light sharpen before the text: owner, "a bit sharper")
+    chain.append(f"[sh]ass={ass}:fontsdir={HERE / 'fonts'}[v]")
     out = HERE / "out" / f"{stunt}.mp4"
     out.parent.mkdir(exist_ok=True)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(vid), "-i", str(wav), *inputs, "-filter_complex", ";".join(chain),
-                    "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
+                    "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-preset", "slow", "-crf", "19", "-maxrate", "12M", "-bufsize", "24M", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
                     "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-shortest", str(out)], check=True)
     print("wrote", out, f"({total:.1f} s)")
 
