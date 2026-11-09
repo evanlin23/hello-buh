@@ -226,24 +226,29 @@ def _pct(x):
 def video_analytics(ya, ids: list, start: str, end: str) -> tuple[dict, str]:
     """Per video, lifetime to date: views, engaged views (the API's nearest thing to Studio's "stayed to watch":
     views that carried on past the first seconds), watch time, average view duration and %, likes, comments, shares,
-    subscribers gained. Returns ({video_id: {...}}, note)."""
+    subscribers gained. One query per video (filters=video==ID): a dimensions=video query over a list of ids came back
+    with no rows (2026-11-09). Returns ({video_id: {...}}, note)."""
     base = ["views", "engagedViews", "estimatedMinutesWatched", "averageViewDuration", "averageViewPercentage",
             "likes", "comments", "shares", "subscribersGained"]
-    out, note = {}, ""
-    for metrics in (base, [m for m in base if m != "engagedViews"]):
-        try:
-            for i in range(0, len(ids), 100):
+    out, note, metrics = {}, "", base
+    for vid in ids:
+        for attempt in range(2):
+            try:
                 r = ya.reports().query(ids="channel==MINE", startDate=start, endDate=end, metrics=",".join(metrics),
-                                       dimensions="video", filters="video==" + ",".join(ids[i:i + 100]), maxResults=200).execute(num_retries=3)
+                                       filters=f"video=={vid}").execute(num_retries=3)
                 cols = [h["name"] for h in r.get("columnHeaders", [])]
-                for row in r.get("rows", []) or []:
-                    out[row[0]] = dict(zip(cols[1:], row[1:]))
-            if "engagedViews" not in metrics:
-                note = "Engaged views aren't offered by the API for this channel yet, so the stayed-to-watch proxy is blank."
-            return out, note
-        except Exception as e:   # (an unknown metric or a missing scope)
-            note = f"YouTube Analytics API unavailable ({str(e)[:160]}): add the scope https://www.googleapis.com/auth/yt-analytics.readonly to the token (docs/upload-setup.md step 2)."
-            out = {}
+                rows = r.get("rows", []) or []
+                if rows:
+                    out[vid] = dict(zip(cols, rows[0]))
+                break
+            except Exception as e:
+                if "engagedViews" in metrics:   # (not offered for this channel: carry on without it)
+                    metrics = [m for m in metrics if m != "engagedViews"]
+                    note = "Engaged views aren't offered by the API for this channel, so the stayed-to-watch proxy is blank."
+                    continue
+                note = f"YouTube Analytics per-video query failed ({str(e)[:160]})."
+                break
+    print(f"analytics: {len(out)} of {len(ids)} videos have data ({start} to {end})", flush=True)
     return out, note
 
 
