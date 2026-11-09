@@ -212,6 +212,89 @@ function makePost (look, w, h) {
       }
       gl_FragColor = vec4(acc / 32.0 * sunOn, 1.0);
     }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, sun: { value: new THREE.Vector2(0.5, 0.5) }, sunOn: { value: 0 } })
+  // the shader-pack pass (look.shade, look.reflect): screen-space reflections on the lake (a plane y inside an ellipse:
+  // ice and the water in its holes), ambient occlusion from the depth buffer, haze glowing warm toward the sun and cool
+  // away from it, a warm/cool light split. Runs on the rendered frame before bloom and depth of field.
+  const rs = new THREE.WebGLRenderTarget(w, h)
+  const SH = look.shade || {}, RF = look.reflect || null
+  const shadeMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform vec2 res; uniform mat4 projInv; uniform mat4 proj; uniform mat4 camWorld; uniform mat4 view;
+    uniform vec3 sunDir; uniform vec3 warm; uniform vec3 cool; uniform float aoK; uniform float hazeK; uniform float hazeDist; uniform float split; uniform float glow;
+    uniform float reflK; uniform float planeY; uniform vec2 ctr; uniform vec2 rad; uniform float under; varying vec2 vUv;
+    vec3 vpos (vec2 uv) { float d = texture2D(depth, uv).x; vec4 q = projInv * vec4(uv * 2.0 - 1.0, d * 2.0 - 1.0, 1.0); return q.xyz / q.w; }
+    float hash (vec2 p) { return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
+    void main () {
+      vec3 c = texture2D(src, vUv).rgb;
+      float d = texture2D(depth, vUv).x;
+      vec3 P = vpos(vUv);
+      vec3 Vw = normalize((camWorld * vec4(P, 0.0)).xyz);
+      float sunA = max(dot(Vw, normalize(sunDir)), 0.0);
+      if (d >= 0.99999) {   // sky: a glow round the sun
+        c += warm * pow(sunA, 18.0) * glow;
+        gl_FragColor = vec4(c, 1.0); return;
+      }
+      vec3 W = (camWorld * vec4(P, 1.0)).xyz;
+      vec3 N = normalize(cross(dFdx(P), dFdy(P)));
+      if (dot(N, P) > 0.0) N = -N;
+      // ambient occlusion: 12 taps in a spiral, a world radius of ~0.9 blocks
+      float occ = 0.0;
+      if (aoK > 0.0) {
+        float r = clamp(0.9 * res.y * proj[1][1] * 0.5 / max(0.3, -P.z), 2.0, 60.0);
+        float a0 = hash(vUv * res) * 6.283;
+        for (int k = 0; k < 12; k++) {
+          float fk = float(k) + 0.5, a = a0 + fk * 2.39996;
+          vec2 o = vec2(cos(a), sin(a)) * r * sqrt(fk / 12.0) / res;
+          vec3 v = vpos(vUv + o) - P;
+          float dd = dot(v, v);
+          occ += max(0.0, dot(v, N) - 0.02 * -P.z) / (dd + 0.05) * smoothstep(4.0, 0.5, dd);
+        }
+        occ = clamp(occ / 12.0 * 1.6, 0.0, 1.0);
+        c *= mix(vec3(1.0), cool * 1.25, occ * aoK);
+      }
+      // reflections on the lake
+      if (reflK > 0.0 && under < 0.5) {
+        vec2 e = (W.xz - ctr) / rad;
+        bool onIce = abs(W.y - planeY) < 0.04, onWater = abs(W.y - (planeY - 0.111)) < 0.05;
+        if ((onIce || onWater) && dot(e, e) < 1.0 && N.y > -2.0) {
+          vec3 Nv = normalize((view * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
+          vec3 Vv = normalize(P), R = reflect(Vv, Nv);
+          float fres = 0.04 + 0.96 * pow(1.0 - max(0.0, dot(-Vv, Nv)), 5.0);
+          vec3 Rw = normalize((camWorld * vec4(R, 0.0)).xyz);
+          // the sky it would see, if the march finds nothing: the haze colours and the sun
+          vec3 refl = mix(cool * 0.9, warm, pow(max(dot(Rw, normalize(sunDir)), 0.0), 3.0)) * (0.6 + 0.4 * smoothstep(0.0, 0.4, Rw.y));
+          float hit = 0.0;
+          for (int i = 1; i <= 40; i++) {
+            float t = 0.15 * float(i) + 0.012 * float(i * i);
+            vec3 Q = P + R * t;
+            vec4 cq = proj * vec4(Q, 1.0); vec2 uq = cq.xy / cq.w * 0.5 + 0.5;
+            if (uq.x < 0.0 || uq.x > 1.0 || uq.y < 0.0 || uq.y > 1.0) break;
+            float sd = texture2D(depth, uq).x;
+            if (sd >= 0.99999) continue;
+            float sz = vpos(uq).z;
+            if (Q.z < sz && sz - Q.z < 0.6 + t * 0.12) {
+              float edge = smoothstep(0.0, 0.08, min(min(uq.x, 1.0 - uq.x), min(uq.y, 1.0 - uq.y)));
+              refl = mix(refl, texture2D(src, uq).rgb, edge); hit = 1.0; break;
+            }
+          }
+          float k = reflK * (onWater ? 0.9 : 0.62) * (0.5 + 0.5 * fres);
+          c = mix(c, refl, clamp(k, 0.0, 0.9));
+        }
+      }
+      // haze: warm toward the sun, cool away, thicker with distance
+      float dist = length(P);
+      float hz = (1.0 - exp(-dist / hazeDist)) * hazeK;
+      vec3 hcol = mix(cool, warm, pow(sunA, 4.0));
+      c = mix(c, hcol, hz);
+      // the light split: warm highlights, cool shadows
+      float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+      c *= mix(mix(vec3(1.0), cool * 1.35, split), mix(vec3(1.0), warm * 1.2, split), smoothstep(0.15, 0.7, l));
+      gl_FragColor = vec4(c, 1.0);
+    }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) }, projInv: { value: new THREE.Matrix4() }, proj: { value: new THREE.Matrix4() },
+    camWorld: { value: new THREE.Matrix4() }, view: { value: new THREE.Matrix4() }, sunDir: { value: new THREE.Vector3(0, 1, 0) },
+    warm: { value: new THREE.Vector3(...(SH.warm || [1.0, 0.66, 0.38])) }, cool: { value: new THREE.Vector3(...(SH.cool || [0.42, 0.52, 0.72])) },
+    aoK: { value: SH.ao ?? 0 }, hazeK: { value: SH.haze ?? 0 }, hazeDist: { value: SH.hazeDist ?? 60 }, split: { value: SH.split ?? 0 }, glow: { value: SH.glow ?? 0 },
+    reflK: { value: RF ? (RF.strength ?? 0.8) : 0 }, planeY: { value: RF ? RF.y : 0 }, ctr: { value: new THREE.Vector2(RF ? RF.cx : 0, RF ? RF.cz : 0) }, rad: { value: new THREE.Vector2(...(RF && RF.radius ? RF.radius : [1, 1])) }, under: { value: 0 } })
+  shadeMat.extensions = { derivatives: true }
+  const shadeOn = !!(look.shade || look.reflect)
   const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D rays; uniform float raysK; uniform sampler2D depth; uniform vec2 res;
     uniform float near; uniform float far; uniform float focus; uniform float aperture; uniform float bloomK;
     uniform vec3 lift; uniform vec3 gam; uniform vec3 gain; uniform float sat; uniform float contrast; uniform float exposure;
@@ -241,11 +324,21 @@ function makePost (look, w, h) {
     sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 },
     vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 }
   })
-  return { rt, ba, bb, rd, rr, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1 }
+  return { rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1 }
 }
 function runPost (cam, tick) {
   const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
-  P.bright.uniforms.src.value = P.rt.texture; pass(P.bright, P.ba)
+  let frame = P.rt.texture
+  if (P.shadeOn) {
+    const su = P.shadeMat.uniforms
+    su.projInv.value.copy(camera.projectionMatrixInverse); su.proj.value.copy(camera.projectionMatrix)
+    su.camWorld.value.copy(camera.matrixWorld); su.view.value.copy(camera.matrixWorldInverse)
+    if (sun) su.sunDir.value.copy(sun.position).sub(camera.position).normalize()
+    su.under.value = cam.underwater || cam.inLava ? 1 : 0
+    pass(P.shadeMat, P.rs); frame = P.rs.texture
+  }
+  P.dofMat.uniforms.src.value = frame; P.fin.uniforms.src.value = frame; if (P.rayMat) P.rayMat.uniforms.src.value = frame
+  P.bright.uniforms.src.value = frame; pass(P.bright, P.ba)
   for (let i = 0; i < 2; i++) {   // two blur rounds at quarter size: a wide, soft glow
     P.blur.uniforms.src.value = P.ba.texture; P.blur.uniforms.dir.value.set(1 / P.bw, 0); pass(P.blur, P.bb)
     P.blur.uniforms.src.value = P.bb.texture; P.blur.uniforms.dir.value.set(0, 1 / P.bh); pass(P.blur, P.ba)

@@ -32,7 +32,9 @@ module.exports = {
   weather: 'rain',             // snow, in this biome
   renderDistance: 10, recordRadius: 128,
   botTimeout: 600,
-  look: { grade: { lift: [0.0, 0.018, 0.034], gamma: [1.0, 0.99, 0.96], gain: [1.12, 1.0, 0.84], sat: 1.16, contrast: 0.17, exposure: 1.04 }, bloom: 0.6, bloomThreshold: 0.7, vignette: 0.45, grain: 0.035, dof: { aperture: 0.7 }, shadows: true, underwater: 1.9, rays: 0.6 },
+  look: { grade: { lift: [0.0, 0.018, 0.034], gamma: [1.0, 0.99, 0.96], gain: [1.12, 1.0, 0.84], sat: 1.16, contrast: 0.17, exposure: 1.04 }, bloom: 0.6, bloomThreshold: 0.7, vignette: 0.45, grain: 0.035, dof: { aperture: 0.7 }, shadows: true, underwater: 1.9, rays: 0.6,
+    // the shader-pack pass (renderer/page.js): ambient occlusion, sun-tinted haze, the warm/cool split, and the lake as a mirror
+    shade: { ao: 1.0, haze: 0.3, hazeDist: 70, split: 0.12, glow: 0.6 }, reflect: { dy: 1, center: [0, -6], radius: [22.5, 14.8], strength: 1.25 } },
   cast: { self: 'sunny', GPT: 'ai_gpt', DeepSeek: 'ai_deep', Claude: 'ai_claude', Gemini: 'ai_gemini', Grok: 'ai_grok' },
   selfName: 'Brother',
   idleLife: true,
@@ -59,7 +61,7 @@ module.exports = {
     under: { at: [6.5, -3.6, 5.2], look: [4.5, -0.6, 3.5], fov: 62, dof: false, subject: ['self'] },
     pov2: { pov: true },   // (his eyes under the ice: Grok's shape above, the crack, the light)
     // 10. from above: the ice breaks, the boy comes up through the hole
-    top: { at: [6.8, 3.4, 6.4], look: [4.5, 0.3, 3.3], fov: 60, subject: ['actor:Grok'] },
+    top: { at: [6.8, 3.4, 6.4], look: { of: 'self', offset: [0, -0.7, 0.9] }, fov: 60, subject: ['self', 'actor:Grok'] },   // (follows the boy as he climbs out: v3 lost him off the top edge)
     // 11. under again: Grok sinking away into the dark under the sheet
     sink: { at: [9.5, -3.2, 2.0], look: 'actor:Grok', fov: 60, dof: false },
     // 12. the end: high, pulling away; the boy kneeling at the hole in the snow
@@ -274,11 +276,12 @@ module.exports = {
     try { await grok.dig(iceB, true) } catch (e) { ctx.log('grok dig:', e.message); bot.chat(`/setblock ${A(4, 0, 3)} water destroy`) }
     await swinging
     ctx.mark('broke')
-    await M.sleep(Math.max(0, g1 - (Date.now() - t8) - 400))
-    // 10. from above: the boy comes up through the hole and climbs out north onto the ice
-    M.shot(ctx, 'top')
+    // 10. from above, cut the moment his head breaks the surface (v3 held the POV into a flat grey sky): he climbs
+    //     straight out north onto the ice, Grok's hand down to him
     await bot.look(NORTH, 0.2, true)
     bot.setControlState('jump', true); bot.setControlState('forward', true)
+    for (let k = 0; k < 40 && bot.entity.position.y + 1.62 < F + 0.75; k++) await bot.waitForTicks(1)
+    M.shot(ctx, 'top')
     grok.swingArm('right')                                          // a hand down to him
     for (let k = 0; k < 50 && bot.entity.position.y < F + 0.95; k++) await bot.waitForTicks(1)
     for (let k = 0; k < 12; k++) await bot.waitForTicks(1)

@@ -125,7 +125,7 @@ def bgr(col, a="00"):
     return f"&H{a}{c[4:6]}{c[2:4]}{c[0:2]}"
 
 
-def captions(lines, shots, names, keywords, end, path):
+def captions(lines, shots, names, keywords, end, path, hook=None):
     """Every word, two or three at a time, timed by where they fall in the line (by characters), the key words in the
     speaker's colour (white for the narrator: yellow keys). lines: [(t, who, text, dur, vox)] in output seconds."""
     head = f"""[Script Info]
@@ -137,6 +137,7 @@ WrapStyle: 2
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Cap,Bebas Neue,150,&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,3,0,1,8,5,5,70,70,0,1
+Style: Hook,Bebas Neue,132,&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,4,0,1,9,5,8,60,60,190,1
 Style: Name,Bebas Neue,110,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,6,0,1,7,3,8,60,60,250,1
 
 [Events]
@@ -166,6 +167,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             b_ = t + lead + speech * c0 / total_chars if j + 1 < len(chunks) else t + dur + 0.25
             txt = " ".join((f"{{\\1c{keycol}}}{w.upper()}{{\\1c&H00FFFFFF&}}" if w.strip("?!.,'").lower() in keys else w.upper()) for w in ch)
             ev.append(f"Dialogue: 1,{ass_time(a_)},{ass_time(max(b_, a_ + 0.3))},Cap,,0,0,0,,{{\\pos({W // 2},{int(H * 0.71)}){pop}}}{txt}")
+    # the hook: the question, big at the top, over the prompt (cenotshi opens on a single word; ours asks the question)
+    if hook:
+        first_ai = min([t for t, who, *_ in lines if who in names] + [end])
+        ev.append(f"Dialogue: 2,{ass_time(0.0)},{ass_time(min(first_ai, 9.5) - 0.1)},Hook,,0,0,0,,{{\\fad(0,250)\\fscx90\\fscy90\\t(0,200,\\fscx100\\fscy100)}}{hook}")
     # the speaker's name card at the top while an AI talks (fades in on its line, out at the next cut)
     for t, who, text, dur, vox in lines:
         if who not in names:
@@ -177,48 +182,64 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
 
 def sidebar(order, names, state, path):
-    """The lineup down the left edge (the cenotshi hook, our own icons): a rounded tile per AI in its colour with its
-    screen glyph (scripts/make_skins.py). state: {who: 'idle' | 'on' | 'out' | 'hero'}."""
-    from PIL import Image, ImageDraw, ImageFilter
+    """The lineup down the left edge, cenotshi-style: a white strip with each AI's mark and name. The mark is
+    assets/logos/<who>.png if the owner put one there (their call: real logos are trademarks), else our own screen
+    glyph (scripts/make_skins.py). state: {who: 'idle' | 'on' | 'out' | 'hero'}: the speaker grows with a coloured
+    ring, the ones that refused grey out with a red cross, the hero glows gold."""
+    from PIL import Image, ImageDraw, ImageFilter, ImageFont
     import make_skins as MS
-    S, gap, x0 = 112, 26, 34
     im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    y = int(H * 0.30)
+    S, gap, x0, top = 104, 44, 30, int(H * 0.27)
+    font = ImageFont.truetype(str(HERE / "fonts" / "BebasNeue_400Regular.ttf"), 30)
+    sw = S + 2 * 18
+    sh = len(order) * (S + gap) + 10
+    strip = Image.new("RGBA", (sw, sh), (0, 0, 0, 0))
+    ImageDraw.Draw(strip).rounded_rectangle([0, 0, sw - 1, sh - 1], radius=28, fill=(250, 250, 252, 236))
+    shadow = Image.new("RGBA", (sw + 40, sh + 40), (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rounded_rectangle([20, 24, sw + 19, sh + 23], radius=28, fill=(0, 0, 0, 110))
+    im.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(10)), (x0 - 20, top - 20))
+    im.alpha_composite(strip, (x0, top))
+    y = top + 14
     for who in order:
         skin = {"GPT": "ai_gpt", "DeepSeek": "ai_deep", "Claude": "ai_claude", "Gemini": "ai_gemini", "Grok": "ai_grok"}[who]
         c = MS.CHARS[skin]
         st = state.get(who, "idle")
-        scale = 1.22 if st in ("on", "hero") else 1.0
-        s = int(S * scale)
-        tile = Image.new("RGBA", (s, s), (0, 0, 0, 0)); d = ImageDraw.Draw(tile)
-        scr = (66, 133, 244) if c["screen"] == "grad" else MS.hexc(c["screen"])[:3]
-        if who == "Grok":
-            scr = (14, 14, 16)
-        d.rounded_rectangle([0, 0, s - 1, s - 1], radius=s // 5, fill=scr + (255,), outline=(255, 255, 255, 230) if st in ("on", "hero") else (0, 0, 0, 160), width=5 if st in ("on", "hero") else 3)
-        if c["screen"] == "grad":   # Gemini's gradient
-            for yy in range(6, s - 6):
-                col = MS.hexc(MS.GRAD[min(5, int((yy / s) * 6))])
-                d.line([(8, yy), (s - 9, yy)], fill=col)
-        px = (s - 24) // 6
-        ink = MS.hexc(c["ink"])
-        for gy, row in enumerate(MS.GLYPHS[c["glyph"]]):
-            for gx, ch in enumerate(row):
-                if ch == "#":
-                    d.rectangle([12 + gx * px, 12 + gy * px, 12 + (gx + 1) * px - 1, 12 + (gy + 1) * px - 1], fill=ink)
-        if st == "out":   # answered, and wouldn't go in: greyed, a red cross
-            g = tile.convert("LA").convert("RGBA"); g.putalpha(tile.getchannel("A").point(lambda v: v * 0.55)); tile = g
+        big = st in ("on", "hero")
+        s = int(S * (1.14 if big else 1.0))
+        logo = HERE / "assets" / "logos" / f"{who}.png"
+        if logo.exists():
+            tile = Image.open(logo).convert("RGBA").resize((s, s), Image.LANCZOS)
+        else:
+            tile = Image.new("RGBA", (s, s), (0, 0, 0, 0)); d = ImageDraw.Draw(tile)
+            scr = (14, 14, 16) if who == "Grok" else (66, 133, 244) if c["screen"] == "grad" else MS.hexc(c["screen"])[:3]
+            d.rounded_rectangle([0, 0, s - 1, s - 1], radius=s // 4, fill=scr + (255,))
+            if c["screen"] == "grad":
+                for yy in range(5, s - 5):
+                    d.line([(7, yy), (s - 8, yy)], fill=MS.hexc(MS.GRAD[min(5, int(yy / s * 6))]))
+            px = (s - 22) // 6
+            for gy, row in enumerate(MS.GLYPHS[c["glyph"]]):
+                for gx, ch in enumerate(row):
+                    if ch == "#":
+                        d.rectangle([11 + gx * px, 11 + gy * px, 11 + (gx + 1) * px - 1, 11 + (gy + 1) * px - 1], fill=MS.hexc(c["ink"]))
+        if st == "out":
+            g = tile.convert("LA").convert("RGBA"); g.putalpha(tile.getchannel("A").point(lambda v: int(v * 0.5))); tile = g
             d = ImageDraw.Draw(tile)
-            d.line([(14, 14), (s - 15, s - 15)], fill=(235, 50, 50, 255), width=10); d.line([(s - 15, 14), (14, s - 15)], fill=(235, 50, 50, 255), width=10)
-        elif st == "idle":
-            tile.putalpha(tile.getchannel("A").point(lambda v: int(v * 0.8)))
-        if st in ("on", "hero"):
-            glow = Image.new("RGBA", (s + 60, s + 60), (0, 0, 0, 0))
-            gc = (255, 205, 90, 200) if st == "hero" else tuple(scr) + (170,)
-            ImageDraw.Draw(glow).rounded_rectangle([30, 30, s + 29, s + 29], radius=s // 5, fill=gc)
-            glow = glow.filter(ImageFilter.GaussianBlur(16))
-            im.alpha_composite(glow, (x0 - 30, y - 30))
-        im.alpha_composite(tile, (x0, y))
-        y += s + gap
+            d.line([(12, 12), (s - 13, s - 13)], fill=(225, 40, 40, 255), width=11); d.line([(s - 13, 12), (12, s - 13)], fill=(225, 40, 40, 255), width=11)
+        cx = x0 + sw // 2
+        if big:   # a ring in the speaker's colour (gold for the hero), and a glow
+            col = (255, 196, 60) if st == "hero" else MS.hexc(names[who][1])[:3]
+            glow = Image.new("RGBA", (s + 70, s + 70), (0, 0, 0, 0))
+            ImageDraw.Draw(glow).rounded_rectangle([35, 35, s + 34, s + 34], radius=s // 4, fill=col + (210,))
+            im.alpha_composite(glow.filter(ImageFilter.GaussianBlur(14)), (cx - s // 2 - 35, y - 35))
+            ring = Image.new("RGBA", (s + 14, s + 14), (0, 0, 0, 0))
+            ImageDraw.Draw(ring).rounded_rectangle([0, 0, s + 13, s + 13], radius=s // 4 + 5, outline=col + (255,), width=6)
+            im.alpha_composite(ring, (cx - s // 2 - 7, y - 7))
+        im.alpha_composite(tile, (cx - s // 2, y))
+        label = names[who][0].upper()
+        d = ImageDraw.Draw(im)
+        tw = d.textlength(label, font=font)
+        d.text((cx - tw / 2, y + s + 2), label, font=font, fill=(120, 120, 128, 255) if st == "out" else (24, 24, 30, 255))
+        y += s + gap - (s - S)
     im.save(path)
 
 
@@ -322,7 +343,7 @@ def main():
     wav = work / "mix.wav"
     T.write_wav(wav, mix)
     ass = work / "captions.ass"
-    captions(lines, shots, cfg.get("names", {}), cfg.get("keywords", {}), total, ass)
+    captions(lines, shots, cfg.get("names", {}), cfg.get("keywords", {}), total, ass, cfg.get("hook"))
     # the sidebar: a state per stretch (all lit for the prompt; the speaker big; who said no greyed with a cross)
     order = [w for w in ("GPT", "DeepSeek", "Claude", "Gemini", "Grok") if w in cfg.get("names", {})]
     states, done = [], []

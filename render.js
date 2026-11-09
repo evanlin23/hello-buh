@@ -1521,7 +1521,13 @@ function camAtLive (t) {
       try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/celestial/moon/full_moon.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), moon]) } catch (e) { console.error('no moon texture:', e.message) }
     }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: (process.env.LOOK === '0' ? null : process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look) || null })
+// look.reflect is given from the set origin (dy, center [dx, dz]); the page wants world coordinates
+  function worldLook (L) {
+    if (!L || !L.reflect || !rec.set) return L
+    const r = L.reflect, c = r.center || [0, 0]
+    return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
+  }
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look) || null) })
 
   const send = async (list) => {
     const id = String(blobId++)
