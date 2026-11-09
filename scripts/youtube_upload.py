@@ -155,8 +155,8 @@ def youtube():
 
 
 def channel_titles(yt) -> list[str]:
-    pl = yt.channels().list(part="contentDetails", mine=True).execute()["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
-    items = yt.playlistItems().list(part="snippet", playlistId=pl, maxResults=50).execute().get("items", [])
+    pl = yt.channels().list(part="contentDetails", mine=True).execute(num_retries=3)["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+    items = yt.playlistItems().list(part="snippet", playlistId=pl, maxResults=50).execute(num_retries=3).get("items", [])
     return [i["snippet"]["title"].strip() for i in items]
 
 
@@ -312,6 +312,9 @@ def main() -> None:
                 gap = random.randint(240, 720)   # don't fire 3 uploads back to back within seconds
                 print(f"waiting {gap // 60} min before the next upload", flush=True)
                 import time; time.sleep(gap)
+                # a fresh connection after the wait: the idle one was closed under us and the next call died with
+                # BrokenPipeError (2026-11-09: 2 of 3 went up, the run stopped before the third)
+                yt = youtube()
             if title in channel_titles(yt):
                 sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
                          "or record it in uploads/uploads.json if it was uploaded by hand")
@@ -325,7 +328,7 @@ def main() -> None:
                                      media_body=MediaFileUpload(str(f), mimetype="video/mp4", chunksize=16 << 20, resumable=True))
             resp = None
             while resp is None:
-                st, resp = req.next_chunk()
+                st, resp = req.next_chunk(num_retries=5)
                 if st:
                     print(f"uploaded {int(st.progress() * 100)}%", flush=True)
             vid = resp["id"]

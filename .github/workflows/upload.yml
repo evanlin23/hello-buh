@@ -72,4 +72,4 @@ jobs:
         if: ${{ failure() }}
         run: |
           gh issue create --repo "$GITHUB_REPOSITORY" --title "HelloBuh upload failed $(TZ=America/Chicago date +%F)" \
-            --body "The daily upload run failed: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID . Nothing was published by this run. Most common cause: the YouTube token expired (docs/upload-setup.md step 2)."
+            --body "The daily upload run failed: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID . Anything this run uploaded before it failed is recorded in uploads/uploads.json. Most common cause: the YouTube token expired (docs/upload-setup.md step 2)."
