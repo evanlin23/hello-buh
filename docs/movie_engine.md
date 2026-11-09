@@ -199,6 +199,15 @@ off the Well), coverage on one side, the edge shot over the plank, "Which floor?
 dialogue predates M.say, so the lint still flags 2-9 s as still: re-stage it with M.say when the cold open is redone
 for draft 2.1 (the Well should blink, not glide: dispensers).
 
+**Reel 1, v4 (draft 3.1 re-shoot, 2026-11-09):** no Well. The Needle is a 5x5 column with a 7x7 cap, the Mark (a gold
+block) raised over the drop shaft, lanterns on the cap's corners. The Highkeeper writes the census answer in his
+ledger, takes the EMPTY bucket down from a stand of two item frames (the full one stays) and holds it out; Ash looks
+at it, then at him, and takes it. The second toll is eight bells on the way down (`BELL_AT`); the Mark glides aside 6
+ticks out and he drops into the shaft (the reel ends in its dark, `endAfter: 'hole:0.35'`). A `chase` shot rides
+nearly overhead (from the side, him and the Mark never fit one frame). Recorded first try, 0.01 blocks off the hole.
+Lint: the dialogue beats are still still (re-stage with M.say for the Chapter 1 screenplay); the held bucket reads
+only on the stand and in first person (lessons.md).
+
 **Reel 2 (the Below), v1-v3 (out/lf_movie_below.mp4):** v1 opened on 2.2 s of white, was set on snowy plains, held a
 3 s frozen two-shot at the end and framed the reveal on a house wall. v2: Ash walks Buh into the camp (M.say,
 coverage), but the camp sat in a pit (the plains rolled 50-97); an 80x80 flatten made a quarry. v3: a flat sunflower

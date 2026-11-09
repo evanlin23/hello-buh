@@ -439,3 +439,10 @@ each section.
   durations didn't show: a male character read as a young woman, "Buh" heard as "huh", and the newer TTS models
   reading the delivery note aloud before the line. A Gemini audio model asked "the exact words, the apparent age and
   gender" for each clip caught all three.
+- **Show an item's state where the renderer draws it flat, not in a third-person hand.** The Highkeeper's held bucket
+  read as a grey sliver or a knife from every camera (reel 1 v4: seven framings), and from the south his right hand was
+  behind his body. Two item frames on a stand (a water bucket, an empty one) said "one full, one empty" at a glance,
+  and the first-person hand shows the empty bucket clearly. Put the state on a stand, in a frame, or in POV.
+- **A chase shot of a fall has to be nearly overhead.** From beside him, the faller and the target 100 blocks below
+  are 70 degrees apart and never share a frame; at offset [1.4, 5, 0.6], looking 8 blocks below him, the tower's lines
+  converge on the target right under him (try_shots d-i).
