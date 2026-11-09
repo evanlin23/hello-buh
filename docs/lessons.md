@@ -435,3 +435,7 @@ each section.
 - **Blind readers find the holes the writer can't.** Five readers who saw only the screenplay (a kid viewer, a
   plot-hole hunter, a Minecraft expert, a story editor, a dialogue-only listener) agreed within minutes on the big
   ones: why the missed can't come back, why nobody builds out, a finale with no clutch, clues that are visual only.
+- **Listen to every TTS take with another model before using it.** Three of eight first takes were wrong in ways
+  durations didn't show: a male character read as a young woman, "Buh" heard as "huh", and the newer TTS models
+  reading the delivery note aloud before the line. A Gemini audio model asked "the exact words, the apparent age and
+  gender" for each clip caught all three.

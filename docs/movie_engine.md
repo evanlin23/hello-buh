@@ -97,6 +97,23 @@ or prevents (see "Shots an agent can trust" below), so follow the loop and trust
 - A cut that hides a teleport is fine; a teleport inside a shot is a pop.
 - First-person (POV) shots carry the clues that live on the HUD (the empty bucket); camera shots carry the acting.
 
+## Trailers (scripts/trailer.py)
+`python3 scripts/trailer.py episodes/trailer/edl.json` builds out/build_limit_teaser.mp4 (with voices) and
+out/build_limit_teaser_novox.mp4 (the lines as on-screen quotes); `--sheet` renders one frame of every clip first.
+- **The edit list** (episodes/trailer/edl.json) is a sequence of clips and black beats. A clip is a recording, a time
+  and a camera: any render.js shot spec (auto-framed `single`/`two`/`ots`, `path`, `orbit`, `at`) or the name of one of
+  the stunt's shots, plus `slow` for real slow motion (rendered at 30 x slow fps). Every other shot mark is stripped, so
+  a clip shows only its own camera; clips are cached by their spec.
+- **Cards** are Cinzel (fonts/, OFL) over the 2.39:1 bars: a small line over a big one, the title with a glow.
+- **The score is made, not licensed** (score() in the script): the four-note song (D D A D) on a real note block in a
+  hall reverb, saw-stack drones, "braam" hits (detuned saws on D1/D2/A2 with a closing filter and a sub), heartbeats,
+  clock ticks that speed up through the montage, risers, reversed swells into hits, the game's bell with a sine body
+  and a long tail, a hard silence before the reveal, and the song again as four braams under the title.
+- **Voices**: scripts/tts.py (Gemini TTS, the proxy has the key; see the notes in it). The free tier is a handful of
+  requests a day per model, so put a whole exchange in one multi-speaker request. Newer models read a "Say ...:" note
+  aloud: tts.py keeps the last stretches of speech. Check every take with a listening model before using it (Puck read
+  as a young woman for Ash; Achird works for both brothers, Algenib for the Highkeeper, Charon for Fen).
+
 ## Roadmap (step by step; [x] done, [ ] to do)
 Owner, 2026-11-08: "did a full step by step for the roadmap for what we need to build out, and then build it out
 please and audit". And on the story Shorts: "the scenes would start with everyone motionless, then perform the
