@@ -38,5 +38,5 @@ character secrets, the clue table) are never shown to them.
   https://claude.ai/artifact/4BphcbVEduwc4HmV8tbcpJ).
 - `round3/arc_draft3.md`: draft 3, the arc rebuilt from the research report (`reports/Movie and trailer craft for
   BUILD LIMIT.md`, changes A1 to A14): build limit as the system's lie, a two-part trick, the gravel, the Below's scar.
-  Also the "Draft 3" tab of the script doc. Next: the owner's two choices, a blind audit of draft 3 with fresh readers
+  Also the "Draft 3" tab of the script doc. Next: a blind audit of draft 3 with fresh readers
   (round 3), then the Chapter 1 screenplay and its own blind read.

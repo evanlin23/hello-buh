@@ -344,13 +344,15 @@ Every key rule gets three uses: it's set up, tested in the middle, and turned at
 - **Voices.** Real, directed performances, with a different voice for each brother. AI voices are for temp tracks only: the genre punishes them.
 - **The movie cut.** No chapter recaps. Each cold open must work as a standalone clip. No narrator, ever.
 
-## Choices for you
+## Decided
 
-1. **The grave.** Cass is dead: the one time the fog really kept what it took. That's what stops the Below being a "crummy secret" that makes every past danger fake. The softer version: Cass is alive in the camp and has never forgiven Jory.
-2. **The gravel.** Hollis means for Buh to die on Drop Day. It's the darkest act in the movie, and it gives Act 3 its villain and its clock. The softer version: the Keepers bury only the ladder, so the hole is still safe and Buh's clutch is purely a choice.
+The owner, 2026-11-09, on the two choices: "whatever is better". Both go the darker way, because that is the version the research backs.
+
+1. **The grave stays.** Cass is dead: the one time the fog really kept what it took. Without it the Below is the "crummy secret" Roger Ebert punished in The Village, a reveal that makes every past danger fake. With it, the fog is still dangerous and the camp has a reason never to go up.
+2. **The gravel goes under the hole.** Hollis means for Buh to die on Drop Day. The worst loss in the films that work, at 65 to 77% of the runtime, is a death or a horror the system commits on purpose: Rue in The Hunger Games, the release footage in The Giver. It also takes away Buh's safety net, so the one-tick clutch is the only way he lives, and his choice is to go to Forty knowing that.
 
 ## What happens next
 
-1. Your read, and your call on the two choices.
+1. Your read.
 2. A blind audit of draft 3 with fresh readers (`README.md` in this folder's parent), checking that the simpler trick and the new rules read cleanly.
 3. The Chapter 1 screenplay, audited before Chapter 2 is written. It is also the re-shoot of the cold open, with the swap and the hole on screen.
