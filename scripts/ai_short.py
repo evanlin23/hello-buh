@@ -62,25 +62,57 @@ def chord_swell(freqs, dur, level):
     return T.st(y)
 
 
-def score(total, hero_at, lines):
-    mix = np.zeros((int((total + 4) * SR), 2), np.float32)
-    D2, A2 = 73.42, 110.0
-    # the cold: a low D drone from the start to the hero, and a slow heartbeat under the four answers
-    place(mix, T.drone(hero_at + 1.5, (D2 / 2, A2 / 2), 0.22), 0.0)
-    first_ai = min([t for t, who, _ in lines if who not in ("Narrator", "Grok")] or [hero_at])
-    t = first_ai
-    while t < hero_at - 0.8:
-        place(mix, T.heartbeat(0.5), t); t += 1.25
-    # the turn: a swell into a hit as the hero starts, then the chords rise to the end
-    place(mix, T.reverse_swell(1.4, 0.5), hero_at - 1.4)
-    place(mix, T.braam(3.2, 36.71), hero_at, 0.55)
-    prog = [(146.83, 174.61, 220.0), (116.54, 146.83, 174.61), (174.61, 220.0, 261.63), (130.81, 196.0, 164.81)]   # Dm Bb F C
-    rest = total - hero_at + 2.5
-    step = rest / len(prog)
-    for k, ch in enumerate(prog):
-        place(mix, chord_swell([f for f in ch], step + 1.2, 0.16 + 0.05 * k), hero_at + 0.2 + k * step)
-        place(mix, chord_swell([f * 2 for f in ch], step + 1.2, 0.05 + 0.03 * k), hero_at + 0.2 + k * step)
-    return T.reverb(mix, 2.8, 0.35)[: len(mix)]
+def organ(f, dur, level=0.2, attack=0.06, release=0.9, bright=1.0):
+    """A pipe organ note: additive ranks (16' 8' 4' 2 2/3' 2' 1 3/5' 1'), a slow tremulant, wind noise in the attack."""
+    n = int((dur + release) * SR); t = np.arange(n) / SR
+    ranks = ((0.5, 0.55), (1, 1.0), (2, 0.6 * bright), (3, 0.28 * bright), (4, 0.32 * bright), (5, 0.12 * bright), (8, 0.14 * bright))
+    y = sum(w * np.sin(2 * np.pi * f * r * t * (1 + 0.0009 * np.sin(2 * np.pi * 5.6 * t))) for r, w in ranks if f * r < 9000)
+    env = np.minimum(1, t / attack) * np.where(t < dur, 1.0, np.exp(-(t - dur) / (release / 3)))
+    y = y * env * (1 + 0.06 * np.sin(2 * np.pi * 5.6 * t))
+    y += sfx.onepole(T.RNG.standard_normal(n), 2500) * np.exp(-t / 0.05) * 0.05
+    return T.st(y / 3.0 * level)
+
+
+def score(total, hero_at, lines, quiet=None):
+    """quiet = (q0, q1): silence before the turn. The motif: an ostinato A4 E5 over D (Interstellar's clock, our notes)."""
+    mix = np.zeros((int((total + 6) * SR), 2), np.float32)
+    q0, q1 = quiet or (hero_at - 0.01, hero_at)
+    beat = 0.46
+    A4, E5, F5, D5, C5 = 440.0, 659.26, 698.46, 587.33, 523.25
+    # 1. the clock: soft, high, under the prompt and the answers (the ostinato changes its top note every 8 beats)
+    tops = [E5, E5, F5, E5, D5, E5, F5, C5]
+    k, t = 0, 0.25
+    while t < q0 - 0.1:
+        lvl = 0.05 + 0.03 * min(1, t / max(1, q0))
+        place(mix, organ(A4 if k % 2 == 0 else tops[(k // 8) % len(tops)], beat * 0.8, lvl, 0.02, 0.5, 0.4), t)
+        k += 1; t += beat
+    # a low D pedal and drone under it all, cut at the silence
+    place(mix, organ(73.42, max(0.5, q0 - 0.6), 0.10, 2.5, 0.6, 0.5), 0.0)
+    place(mix, T.drone(max(1, q0), (36.71, 55.0), 0.12), 0.0)
+    # 2. the silence, then a reversed swell into the hit
+    place(mix, T.reverse_swell(1.1, 0.55), hero_at - 1.1)
+    place(mix, T.braam(3.4, 36.71), hero_at, 0.6)
+    # 3. the full organ: Dm Bb F C (voiced low and wide), the ostinato back on top, louder each bar
+    prog = [(73.42, 146.83, 220.0, 293.66, 349.23), (58.27, 116.54, 174.61, 293.66, 349.23),
+            (87.31, 174.61, 261.63, 349.23, 440.0), (65.41, 130.81, 196.0, 329.63, 392.0)]
+    rest = total - hero_at + 1.0
+    bar = rest / len(prog)
+    for i, ch in enumerate(prog):
+        st = hero_at + 0.15 + i * bar
+        for f in ch:
+            place(mix, organ(f, bar + (1.6 if i == len(prog) - 1 else 0.1), 0.07 + 0.03 * i, 0.25, 2.5 if i == len(prog) - 1 else 0.5, 0.6 + 0.15 * i), st)
+        t = st
+        while t < st + bar - 0.05:
+            place(mix, organ(A4 * (2 if i >= 2 else 1), beat * 0.8, 0.06 + 0.03 * i, 0.02, 0.4, 0.7), t)
+            place(mix, organ(E5 * (2 if i >= 2 else 1), beat * 0.8, 0.05 + 0.03 * i, 0.02, 0.4, 0.7), t + beat / 2)
+            t += beat
+    mix = T.reverb(mix, 3.6, 0.42)[: len(mix)]
+    # the silence is total (the reverb tail of the clock dies before the hit)
+    i0, i1 = int(q0 * SR), int((hero_at - 1.1) * SR)
+    if i1 > i0:
+        fade = np.linspace(1, 0, min(int(0.35 * SR), i1 - i0))
+        mix[i0:i0 + len(fade)] *= fade[:, None]; mix[i0 + len(fade):i1] = 0
+    return mix
 
 
 def ass_time(s):
@@ -145,39 +177,80 @@ def main():
     edit = json.loads(subprocess.run(["node", "-e", f"process.stdout.write(JSON.stringify(require('./stunts/{stunt}').edit||{{}}))"], cwd=HERE, capture_output=True, text=True, check=True).stdout)
     a = mark_time(tl, edit.get("startAt", "start:0"))
     b = mark_time(tl, edit.get("endAfter", "end_scene:0"))
-    total = b - a
-    fdir = work / "frames"
+    # slow motion (stunt.edit.slowmo: [[mark, from, to, factor]]): that window is rendered at FPS * factor and played at FPS
+    slows = [(mark_time(tl, f"{m}:{x0}"), mark_time(tl, f"{m}:{x1}"), k) for m, x0, x1, k in edit.get("slowmo", [])]
+    def omap(tr):   # recording seconds -> output seconds
+        o, prev = tr - a, a
+        for s0, s1, k in slows:
+            if tr > s0:
+                o += (min(tr, s1) - s0) * (k - 1)
+        return o
+    total = omap(b)
+    fdir, sdir = work / "frames", work / "frames_slow"
     f0, f1 = int(round(a * FPS)), int(round(b * FPS))
     if not o.no_render:
-        subprocess.run(["rm", "-rf", str(fdir)], check=True)
-        env = {**os.environ, "FRAMES": f"{f0}-{f1}" if os.environ.get("FRAMES_RANGE") else ",".join(map(str, range(f0, f1 + 1))), "NO_BARS": "1"}
+        subprocess.run(["rm", "-rf", str(fdir), str(sdir)], check=True)
+        env = {**os.environ, "FRAMES": ",".join(map(str, range(f0, f1 + 1))), "NO_BARS": "1"}
         subprocess.run(["node", "render.js", str(rec_path), str(fdir), str(FPS), str(W), str(H)], cwd=HERE, env=env, check=True)
-    # the picture, from frame f0
+    for i, (s0, s1, k) in enumerate(slows):
+        d = sdir / str(i)
+        if not d.exists():
+            sf = FPS * k
+            env = {**os.environ, "FRAMES": ",".join(map(str, range(int(s0 * sf), int(s1 * sf) + 1))), "NO_BARS": "1"}
+            subprocess.run(["node", "render.js", str(rec_path), str(d), str(sf), str(W), str(H)], cwd=HERE, env=env, check=True)
+    # the picture: a frame list (normal frames, the slow windows' frames in their place)
+    seq, f = [], f0
+    while f <= f1:
+        tr = f / FPS
+        sw = next(((i, s0, s1, k) for i, (s0, s1, k) in enumerate(slows) if s0 <= tr < s1), None)
+        if sw:
+            i, s0, s1, k = sw
+            sf = FPS * k
+            seq += [sdir / str(i) / f"f{j:05d}.png" for j in range(int(s0 * sf), int(s1 * sf))]
+            f = int(round(s1 * FPS)); continue
+        seq.append(fdir / f"f{f:05d}.png"); f += 1
+    lst = work / "frames.txt"
+    lst.write_text("".join(f"file '{q}'\nduration {1 / FPS:.6f}\n" for q in seq if q.exists()))
     vid = work / "video.mp4"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(FPS), "-start_number", str(f0), "-i", str(fdir / "f%05d.png"),
-                    "-frames:v", str(f1 - f0 + 1), "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p", str(vid)], check=True)
-    # sound
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-r", str(FPS),
+                    "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p", str(vid)], check=True)
+    # sound: the game's, stretched (and pitched down) inside the slow windows
     game = HERE / "work" / f"{stunt}.wav"
     if not game.exists() or game.stat().st_mtime < rec_path.stat().st_mtime:
         subprocess.run(["python3", "audio.py", str(rec_path), str(game)], cwd=HERE, check=True)
-    g = read_wav(game)[int(a * SR):]
-    lines = [((e["t"] / 1000) - a, e["who"], e["text"], e.get("dur", 2.0), e.get("vox")) for e in tl if e["event"] == "line"]
-    shots = [((e["t"] / 1000) - a, e["name"]) for e in tl if e["event"] == "shot"]
-    vox_mix = np.zeros((int((total + 4) * SR), 2), np.float32)
+    graw = read_wav(game)
+    parts, cur = [], a
+    for s0, s1, k in slows:
+        parts.append(graw[int(cur * SR):int(s0 * SR)])
+        seg = graw[int(s0 * SR):int(s1 * SR)]
+        idx = np.linspace(0, len(seg) - 1, int(len(seg) * k))
+        parts.append(np.stack([np.interp(idx, np.arange(len(seg)), seg[:, c]) for c in (0, 1)], 1).astype(np.float32))
+        cur = s1
+    parts.append(graw[int(cur * SR):])
+    g = np.concatenate(parts)
+    lines = [(omap(e["t"] / 1000), e["who"], e["text"], e.get("dur", 2.0), e.get("vox")) for e in tl if e["event"] == "line"]
+    shots = [(omap(e["t"] / 1000), e["name"]) for e in tl if e["event"] == "shot"]
+    vox_mix = np.zeros((int((total + 6) * SR), 2), np.float32)
     env = np.zeros(len(vox_mix), np.float32)
     for t, who, text, dur, vox in lines:
         x = read_wav(work / "vox" / f"{vox}.wav")
-        x = sfx.norm(x, 0.85) if hasattr(sfx, "norm") else x
+        x = sfx.norm(x, 0.85)
         x = T.reverb(x, 0.45, 0.08, damp=3800)[: len(x) + int(0.3 * SR)]
+        if who == cfg.get("hero_voice", "Grok"):
+            x = T.reverb(x, 1.6, 0.18, damp=3000)[: len(x) + int(0.8 * SR)]   # the hero a little bigger: a hall
         place(vox_mix, x, t, 1.0)
         i = int(t * SR); env[i:i + len(x)] = 1
     hero_at = next((t for t, who, _, _, v in lines if v == cfg.get("hero")), total * 0.6)
-    music = score(total, hero_at, [(t, w, v) for t, w, _, _, v in lines])[: len(vox_mix)]
+    before = [t + d for t, w, _, d, v in lines if t < hero_at]
+    quiet = (max(before) + 0.15, hero_at) if before else None
+    music = score(total, hero_at, [(t, w, v) for t, w, _, _, v in lines], quiet)[: len(vox_mix)]
     # duck the music and the game under the voices (a 120 ms smoothed gate)
     k = int(0.12 * SR)
     duck = np.convolve(env, np.ones(k) / k, mode="same")
     music *= (1 - 0.55 * duck)[:, None]
     gm = np.zeros_like(vox_mix); gm[: min(len(g), len(gm))] = g[: len(gm)]
+    if quiet:   # the game hushes in the silence too (snow and wind only)
+        gm[int(quiet[0] * SR):int(quiet[1] * SR)] *= 0.35
     gm *= (1 - 0.35 * duck)[:, None]
     mix = vox_mix * 1.0 + music * 0.55 + gm * 0.7
     mix = mix[: int((total + 0.05) * SR)]

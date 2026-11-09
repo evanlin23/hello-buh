@@ -39,7 +39,7 @@ module.exports = {
   // offsets from O. Portrait frames: fov is vertical, so a 9:16 frame is narrow; keep subjects central
   shots: {
     // 1. high and wide over the lake, drifting down; he's small, walking east across the ice
-    est: { dof: false, path: [[0, -9, 13, 16], [3, -6, 9, 12]], look: 'self', fov: 60, subject: ['self'] },
+    est: { dof: false, path: [[0, -26, 46, 34], [1.6, -16, 24, 22], [3, -8, 9.5, 12]], look: 'self', fov: 56, subject: ['self'] },   // (a crane from high over the taiga down onto the lake: the boy a speck, then a figure)
     // 2. behind him at eye height: "you", following your brother out
     behind: { follow: 'self', offset: [-3.2, 0.75, 0.6], look: { of: 'self', offset: [2.5, -0.4, 0] }, lag: 3, fov: 58, subject: ['self'] },
     // 3. first person in the water: the ice ceiling, the hole's light sliding away
@@ -50,7 +50,7 @@ module.exports = {
     claude: { path: [[0, 6.4, 1.6, 8.4], [9, 5.9, 1.3, 6.9]], look: { of: 'actor:Claude', offset: [0, -0.25, 0] }, fov: 46, subject: ['actor:Claude'] },   // (side-on: he crawls north toward the hole, straight at an auto-framed single)
     gemini: { single: 'actor:Gemini', toward: [0.5, 0.5, 3.5], size: 'close', fov: 55, anchor: 'live' },
     // 8. Grok's run: low behind him as he sprints north over the ice
-    run: { follow: 'actor:Grok', offset: [0.9, 0.6, 3.0], look: { of: 'actor:Grok', offset: [0, 0.2, -3.0] }, lag: 2, fov: 62, subject: ['actor:Grok'] },
+    run: { follow: 'actor:Grok', offset: [3.4, 0.4, 1.2], look: { of: 'actor:Grok', offset: [-0.8, 0.3, -1.6] }, lag: 2, fov: 58, subject: ['actor:Grok'] },   // (from the east: the setting sun behind him, a rim on the black coat)
     // 9. under the ice, looking up: the boy against the sheet, Grok's shape arriving above and punching through
     under: { at: [6.5, -3.6, 5.2], look: [4.5, -0.6, 3.5], fov: 62, dof: false, subject: ['self'] },
     // 10. from above: the ice breaks, the boy comes up through the hole
@@ -58,9 +58,9 @@ module.exports = {
     // 11. under again: Grok sinking away into the dark under the sheet
     sink: { at: [9.5, -3.2, 2.0], look: 'actor:Grok', fov: 60, dof: false },
     // 12. the end: high, pulling away; the boy kneeling at the hole in the snow
-    end: { dof: false, path: [[0, 7.5, 4.5, 8.5], [3, 9.0, 9.0, 12.5]], look: [4.5, 0.6, 3.0], fov: 60, subject: ['self'] }
+    end: { dof: false, path: [[0, 6.4, 1.3, 1.2], [1.5, 7.2, 2.4, 2.0], [4.5, 13, 13, 9]], look: { of: 'self', offset: [0, -0.4, 0] }, fov: 52, subject: ['self'] }   // (low and close on him kneeling at the hole, then rising away over the lake)
   },
-  edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.2' },
+  edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.2', slowmo: [['broke', -0.6, 1.5, 2.5]] },   // (the punch and the ice giving: 2.1 s over 5.2 s)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -211,7 +211,7 @@ module.exports = {
     await idle(c.Gemini, gemMs * 0.2)
     await M.lookAt(c.Gemini, hole(), 400)
     await M.stepBack(c.Gemini, 7)
-    await idle(c.Gemini, Math.max(0, gemMs - (Date.now() - t7)) + 200)
+    await idle(c.Gemini, Math.max(0, gemMs - (Date.now() - t7)) + 1300)   // (the held beat: the score goes silent here)
 
     // 8. Grok: already sprinting when the cut lands (Gemini parks after the cut: her live camera followed her down)
     await M.place(ctx, 'Grok', X + 4.5, F + 1, Z + 11.5, 180, 0)
@@ -283,6 +283,8 @@ module.exports = {
     M.shot(ctx, 'end')
     await bot.look(Math.PI, -0.75, true)
     await bot.waitForTicks(30)
+    await ctx.easeLook(Math.PI + 0.15, -0.55, 900)   // he lifts his head a little
+    await bot.waitForTicks(40)
     ctx.mark('end_scene')
     await bot.waitForTicks(10)
     M.quitActors(ctx)
