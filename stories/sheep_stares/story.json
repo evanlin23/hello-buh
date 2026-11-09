@@ -1,0 +1,32 @@
+{
+  "name": "sheep_stares",
+  "stunt": "story_sheep_stares",
+  "caption": "why is my sheep staring at this block 💀",
+  "premise": "The narrator's blue sheep has stared at one dirt block for 412 days. It won't eat, wolves leave it alone, and at night the block groans. He woke up in this house 412 days ago with no tools and no memories, there's a line of torches from his door to the block, and the villagers call him the new one.",
+  "twist": "He breaks the block: a shaft straight down. He falls in, and at the bottom a zombie kills him with a diamond sword. The death message says it: HelloBuh was slain by Zombie using [HelloBuh's Sword]. He dug down there 412 days ago, sealed the hole behind him, died, and respawned with nothing. The zombie kept his sword; the sheep watched him go in and has waited at that block ever since. The death loops into line 1.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#FFB13B",
+  "lines": [
+    { "id": "L01", "text": "My SHEEP / has stared at / the SAME / dirt block / for 412 DAYS." },
+    { "id": "L02", "text": "He doesn't / EAT. / He doesn't / SLEEP. / He doesn't / even BLINK." },
+    { "id": "L03", "text": "I pushed him / into the RIVER. / He WALKED / right BACK." },
+    { "id": "L04", "text": "WOLVES / showed up. / They took / one LOOK / at him / and LEFT." },
+    { "id": "L05", "text": "I put / a block / of GOLD / on top. / He stared / THROUGH it." },
+    { "id": "L06", "text": "Sometimes / the block / GROANS. / I figured / dirt just / DOES that." },
+    { "id": "L07", "text": "Honestly, / I don't / remember / GETTING / a sheep. / Or dyeing / him BLUE." },
+    { "id": "L08", "text": "I woke up / in this house / 412 days ago. / No TOOLS. / No MEMORIES. / Just HIM, / already STARING." },
+    { "id": "L09", "text": "The house / was already / BUILT. / There's / a line / of TORCHES / from my door / to that BLOCK." },
+    { "id": "L10", "text": "The villagers / call me / the NEW one." },
+    { "id": "L11", "text": "They keep / asking / what happened / to the OLD one. / I say, / WHO?" },
+    { "id": "L12", "text": "So today / I got / CURIOUS." },
+    { "id": "L13", "text": "And for / the FIRST time / in 412 days, / he LOOKED / at ME." },
+    { "id": "L14", "text": "I broke / the BLOCK." },
+    { "id": "L15", "text": "There's / a HOLE / under it. / It goes / STRAIGHT down." },
+    { "id": "L16", "text": "Who digs / STRAIGHT / DOWN?" }
+  ]
+}
