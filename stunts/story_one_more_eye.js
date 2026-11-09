@@ -171,6 +171,8 @@ module.exports = {
     // L01: the rule, as three mornings: a jump cut round the ring on each new eye (8, 9, 10)
     await cut(BX - 2.6, BZ + 5.4, B(0.5, 1.2, 0.5))   // from the south-west: from the south-east the cobwebbed stairs sat behind the EYES meter
     let shot = 0, tgt = B(0.5, 1.2, 0.5)
+    // crouched from the first frame until he steps up to the open portal (L15): a crouch that changed on a cut
+    // showed as 2-3 stray frames before it or a 3-frame settle after it (frame QA, runs 5-9)
     sneak(true)
     await line('L01', async (k, at) => {
       if (shot === 0 && k >= at(2) - 1) { shot = 1; eye(8); setMeter(9); tgt = B(-1.5, 1.7, 1.5); await cut(BX - 4.6, BZ + 3.9, tgt) }
@@ -187,7 +189,7 @@ module.exports = {
     await cut(BX - 1.5, BZ + 4.6, B(-5.5, 2.4, 1.5))
     let from = null
     await line('L03', async (k, at) => {
-      sneak(false); go(k < 9)
+      go(true)
       if (k >= at(3) - 3) { from = from || { ...K.base }; K.turnTo(from, B(-5.5, 6.0, -2.6), (k - at(3) + 3) / 22) }
       look(k)
     })
@@ -197,7 +199,7 @@ module.exports = {
     let bench = false
     await line('L04', async (k, at) => {   // the whole name in frame, a slow push in; on "With a WOODEN sword" a cut to the crafting table he made it on, under cobwebs (one 3.45 s shot with nothing new failed the retention audit)
       if (!bench && k >= at(5) - 1) { bench = true; await cut(RX + 10.4, RZ + 3.6, R(13.5, 1.6, 1.5)) }
-      sneak(true); go(true)
+      go(true)
       K.base = K.aim(bench ? R(13.5, 1.6, 1.5) : R(7.5, 3.9, 0.5)); look(k)
     }, -0.1)
     go(false)
@@ -205,7 +207,7 @@ module.exports = {
     await cut(KX + 1.9, KZ + 1.9, Kt(4.8, 1.9, 3.6))
     from = null
     await line('L05', async (k, at) => {
-      sneak(false); go(k < 7)
+      go(true)
       if (k >= at(3) - 4) { from = from || { ...K.base }; K.turnTo(from, Kt(4.5, 2.1, 4.5), (k - at(3) + 4) / 14) }
       look(k)
     })
@@ -213,7 +215,7 @@ module.exports = {
     // L06: so it's gotta be him, opening it from the other side (over the ring from the far corner; purple in the middle)
     await cut(BX + 4.0, BZ - 3.9, B(0.5, 0.9, 0.5))
     await line('L06', async (k, at) => {
-      sneak(true); go(Math.hypot(bot.entity.position.x - (X + BX + 0.5), bz() - 0.5) > 4.3); K.base = K.aim(B(0.5, 0.9 + Math.sin(k / 9) * 0.25, 0.5))   // stops short of the frames (it walked up until one frame filled the view)
+      go(Math.hypot(bot.entity.position.x - (X + BX + 0.5), bz() - 0.5) > 4.3); K.base = K.aim(B(0.5, 0.9 + Math.sin(k / 9) * 0.25, 0.5))   // stops short of the frames (it walked up until one frame filled the view)
       if (k % 2 === 0) wisps(k >= at(5) ? 22 : k >= at(3) ? 14 : 8)
       look(k)
     })
@@ -221,12 +223,12 @@ module.exports = {
     // L07: on Monday his sword came through (it lies by the ring; he walks up and picks it up: a real pickup)
     say(`/summon item ${(X + BX + 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:wooden_sword",count:1,components:{"minecraft:damage":41}},PickupDelay:0s,Age:-32768s,Tags:["sword"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
-    await cut(BX + 1.5, BZ + 6.4, B(1.5, 1.15, 3.75))
+    await cut(BX + 1.5, BZ + 5.75, B(1.5, 1.15, 3.75))
     from = null
     let got = -1
     await line('L07', async (k, at) => {
       if (got < 0 && bot.inventory.items().some(it => it.name === 'wooden_sword')) got = k
-      go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); bot.setControlState('right', got >= 0)   // a slow sidestep to the cut, away from where the boots appear (creeping forward he parked against the frame; sidestepping left he was in reach of the boots as they spawned, and picked them up before the cut)
+      go(k >= at(1) - 12 && got < 0 && bz() > 4.4); bot.setControlState('right', got >= 0)   // a slow sidestep to the cut, away from where the boots appear (creeping forward he parked against the frame; sidestepping left he was in reach of the boots as they spawned, and picked them up before the cut)
       if (k % 4 === 0 && got < 0) ctx.particles('portal', B(1.5, 0.9, 3.75), { count: 5 })
       if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 1.3, 0.5), (k - got) / 26) } else K.base = K.aim(B(1.5, 1.15, 3.75))
       look(k)
@@ -236,7 +238,7 @@ module.exports = {
     // wide shot hid them behind the hotbar. In the hand they are big, with the smoke coming off them)
     say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:12s,Age:-32768s,Tags:["boots"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
-    await cut(BX - 1.5, BZ + 6.4, B(-1.5, 1.15, 3.75))
+    await cut(BX - 1.5, BZ + 5.75, B(-1.5, 1.15, 3.75))
     // smoke off the boots: on the floor, then just ahead of the hand (lower right of the view)
     const handSmoke = () => {
       const e = bot.entity, f = { x: -Math.sin(e.yaw), z: -Math.cos(e.yaw) }
@@ -245,7 +247,7 @@ module.exports = {
     from = null; got = -1
     await line('L08', async (k, at) => {
       if (got < 0 && bot.inventory.items().some(it => it.name === 'iron_boots')) { got = k; ctx.select(1) }
-      go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); if (got >= 0 && bz() > 3.6) go(true)
+      go(k >= at(1) - 12 && got < 0 && bz() > 4.4); if (got >= 0 && bz() > 3.6) go(true)
       if (got < 0 && k % 6 === 0) ctx.particles('smoke', B(-1.5, 1.5, 3.75), { count: 1 })
       if (got >= 0 && k % 5 === 0) handSmoke()
       if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(-0.5, 1.5, 0.5), (k - got) / 14) } else K.base = K.aim(B(-1.5, 1.15, 3.75))
@@ -256,7 +258,7 @@ module.exports = {
     await cut(BX - 4.9, BZ + 5.6, B(0.2, 1.2, 1.2))
     let away = false
     await line('L09', async (k, at) => {   // he puts the boots away on "PACKING" (switching after the cut played the swap over the next scene's first frames)
-      sneak(true); go(true)
+      go(true)
       if (!away && k >= at(2)) { away = true; ctx.select(0) }
       if (!away && k % 5 === 0) handSmoke()
       if (k % 4 === 0) wisps(6); look(k)
@@ -267,7 +269,7 @@ module.exports = {
     await cut(KX + 6.5, KZ + 5.75, Kt(2.6, 1.0, 5.6))   // along the south wall (from the corner the chair's cobweb filled the view)
     from = null
     await line('L10', async (k, at) => {
-      sneak(true); go(k < at(2) - 2)   // a slow push in until the growl stops him
+      go(k < at(2) - 2)   // a slow push in until the growl stops him
       if (k === at(2) - 2) growl(0.55, 0.8)
       if (k >= at(2) - 2 && k < at(2) + 12 && k % 2 === 0) ctx.particles('portal', Kt(2.0 + Math.random() * 2.6, 0.6, 5.0 + Math.random() * 1.4), { count: 9 })
       if (k >= at(3)) { from = from || { ...K.base }; K.turnTo(from, Kt(3.2, 2.2, 3.6), (k - at(3)) / 18) }
@@ -278,7 +280,6 @@ module.exports = {
     await cut(BX + 3.6, BZ + 4.2, B(0.5, 1.4, 0.5))
     from = null
     await line('L11', async (k, at) => {
-      sneak(false)
       if (k >= at(1) - 3) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 6.0, 0.5), (k - at(1) + 3) / 40) }
       if (k % 3 === 0) ctx.particles('smoke', B(0.5 + (Math.random() - 0.5) * 2.4, 4.6 + Math.random() * 0.8, 0.5 + (Math.random() - 0.5) * 2.4), { count: 5 })
       look(k)
@@ -287,13 +288,13 @@ module.exports = {
     say(`/setblock ${blk(3, 1, 3)} oak_planks`); say(`/setblock ${blk(3, 2, 3)} cake`)
     say(`/setblock ${blk(4, 1, 3)} red_carpet`); say(`/setblock ${blk(3, 1, 4)} red_carpet`); say(`/setblock ${blk(4, 1, 4)} red_carpet`)
     await cut(BX + 6.3, BZ + 6.3, B(3.5, 2.1, 3.5))   // from the corner: the cake, the ring behind it (at 2.5 blocks, walking in, the cake filled the view)
-    await line('L12', async (k) => { sneak(true); bot.setControlState('left', true); K.base = K.aim(B(3.5, 2.1, 3.5)); if (k % 6 === 0) wisps(4); look(k) })
+    await line('L12', async (k) => { bot.setControlState('left', true); K.base = K.aim(B(3.5, 2.1, 3.5)); if (k % 6 === 0) wisps(4); look(k) })
     bot.setControlState('left', false)
     // L13: last night I stayed up to watch (in front of the empty frame; he sits down)
     await cut(BX + 0.5, BZ + 6.7, B(0.5, 1.5, 2.5))
     const n13 = ticksOf('L13')
     await line('L13', async (k, at) => {   // creeping in to the last tick, the purple already gathering on the empty frame (it stood still for 0.9 s: retention audit)
-      sneak(true); go(bz() > 4.6)
+      go(bz() > 4.6)
       K.base = K.aim(B(0.5, 1.5 - 0.3 * Math.max(0, (k - n13 + 15) / 15), 2.5))
       if (k % 4 === 0) wisps(6)
       if (k >= at(2) && k % 2 === 0) ctx.particles('portal', B(0.5, 1.2, 2.5), { count: 7 })
