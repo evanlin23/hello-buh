@@ -39,6 +39,7 @@ module.exports = {
   edit: {
     caption: CAPTION, red: 'TRUST?', story: 'stories/respawn_voice', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true,
     cards: [
+      ['line', 'VOICE 1 OR VOICE 2?', 0.9, 'gold', 0],   // the hook: the choice is on screen in the first second (retention audit)
       ['heard_brother', "DON'T MINE THE GOLD.", 1.7, 'white'],
       ['heard_sister', 'CLOSE THE DOOR.', 1.5, 'white'],
       ['voice1', VOICE1, 1.3, 'yellow'],
@@ -152,7 +153,7 @@ module.exports = {
       // small puffs low over the grass a few blocks along the view (big ones at eye height covered the screen: frame review)
       deadView = new ctx.Vec3(e.position.x - Math.sin(e.yaw) * 1.9, F + 1.15, e.position.z - Math.cos(e.yaw) * 1.9)
     })
-    bot.on('physicsTick', () => { if (ctx.died && deadView && ctx.tick % 3 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 2.4, 0, (Math.random() - 0.5) * 2.4), { w: 0.3, h: 0.3, count: 3 }) })
+    bot.on('physicsTick', () => { if (ctx.died && deadView && ctx.tick % 3 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 2.4, 0, (Math.random() - 0.5) * 2.4), { w: 0.3, h: 0.3, count: 2 }) })
     const respawn = async () => {
       if (!ctx.died) return
       while (ctx.tick < deadAt + 21) await bot.waitForTicks(1)
@@ -175,7 +176,7 @@ module.exports = {
     await fall('L01', -0.15)
     await respawn()                                     // lands in my brother's shot (the spawnpoint)
     say('/item replace entity @s hotbar.0 with iron_pickaxe'); bot.setQuickBarSlot(0)
-    say(`/spawnpoint @s ${X + 12} ${F + 1} ${Z + 40} 115 4`)   // the second respawn: the field
+    say(`/spawnpoint @s ${X + 12} ${F + 1} ${Z + 40} 212 4`)   // the second respawn: the field, facing away from the cliff (from here it read as a /fill slab: Minecraft audit)
 
     // L02: my brother heard DON'T MINE THE GOLD (card). Behind it was lava (the ore is mined: lava)
     const ORE = P(20, 2, -30)
@@ -231,7 +232,7 @@ module.exports = {
     await line('L05', async () => {}, -0.15)
     await respawn()                                     // in the field
 
-    // L06: I respawned in a field (the cliff far off); my bed was gone (a turn toward home)
+    // L06: I respawned in a field; my bed was gone (a turn toward home)
     ctx.mark('no_bed')
     let from = null
     await line('L06', async (k, at) => {
@@ -263,7 +264,9 @@ module.exports = {
       if (k === at(1)) {   // one plank at a time: the bottom of the doorway, then (5 ticks on) over his face
         say(`/setblock ${X} ${F + 2} ${Z - 3} air`); say(`/setblock ${X} ${F + 1} ${Z - 3} dark_oak_planks`)
         ctx.sound('block.wood.place', 1, 0.8); ctx.mark('nailed')
+        say('/kill @e[type=item]')   // the replaced door's item popped out onto the plank
       }
+      if (k === at(1) + 1 || k === at(1) + 2) say('/kill @e[type=item]')
       if (k === at(1) + 6) {
         say(`/setblock ${X} ${F + 2} ${Z - 3} dark_oak_planks`); ctx.sound('block.wood.place', 1, 0.75)
         tp('dad2', ...FAR, 180)
