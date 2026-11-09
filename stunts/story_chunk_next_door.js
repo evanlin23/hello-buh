@@ -20,7 +20,7 @@ const { storyLines, storyKit, house, clearSet, plainsBiome, resendChunks } = req
 
 const STORY = path.join(__dirname, '..', 'stories', 'chunk_next_door')
 const CAPTION = 'something walks out of the fog every night 😳'
-const NIGHT = 18000, DAWN = 23300, MORNING = 1000
+const NIGHT = 18000, DAWN = 23500, MORNING = 1000
 
 module.exports = {
   name: 'story_chunk_next_door',
@@ -47,6 +47,10 @@ module.exports = {
     await c('/gamerule random_tick_speed 0')      // the wheat grows only when the story says so
     await c('/gamerule log_admin_commands false') // per-tick `tp`s flooded the bot with op broadcasts
     await clearSet(ctx, A, 64, 28)
+    // water the clearing's skirt cut through stands as a blue wall past the farm (Minecraft audit): grass instead
+    for (const [x0, z0, x1, z1] of [[-80, -80, -65, 80], [65, -80, 80, 80], [-64, -80, 64, -65], [-64, 65, 64, 80]]) {
+      for (let y = 0; y <= 12; y += 6) await c(`/fill ${A(x0, y, z0)} ${A(x1, y + 5, z1)} grass_block replace water`)
+    }
     await c('/kill @e[type=!player]')
     await plainsBiome(ctx, A, 80, -4, 30)
 
