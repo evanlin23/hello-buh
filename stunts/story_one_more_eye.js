@@ -11,8 +11,8 @@
 //
 // One scene per line (docs/stories.md): each lasts its spoken length + gap, actions land on caption
 // chunks (at(k)). No mobs on camera: the motion is cuts, the camera, particles and the eyes going in.
-// The dragon is a real one, NoAI, 300 blocks away (never tracked, never drawn): the last hit is
-// `/damage ... minecraft:dragon_breath by` it, so the death screen names it.
+// The dragon is a real one, NoAI, 300 blocks away (never tracked, never drawn): the breath's
+// hits are `/damage ... minecraft:dragon_breath by` it, so it holds the kill credit and the death screen names it.
 const path = require('path')
 const { storyLines, storyKit, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
@@ -36,8 +36,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'who keeps filling my end portal 😳',
   edit: {
-    caption: 'who keeps filling my end portal 😳', red: 'filling', story: 'stories/one_more_eye', startAt: 'line:0', endAfter: 'roar:1.8', deathScreen: true,
-    zoom: [['roar:0.35', 'roar:1.8', 1.1]], punch: [['open', 0, 0.08]],
+    caption: 'who keeps filling my end portal 😳', red: 'filling', story: 'stories/one_more_eye', startAt: 'line:0', endAfter: 'roar:1.7', deathScreen: true,
+    zoom: [['roar:0.3', 'roar:1.7', 1.1]], punch: [['open', 0, 0.08]],
     shake: [['growl', 0, 10], ['growl', 1, 10], ['growl', 2, 14], ['roar', 0, 28]]
   },
   expectDeath: true,
@@ -57,6 +57,7 @@ module.exports = {
     await ctx.defaultRules()
     await c('/gamerule natural_health_regeneration false')   // the hearts he loses to the breath stay lost
     await c('/gamerule mob_griefing false')
+    await c('/difficulty normal')   // on peaceful a hit `by` a mob is scaled to 0: the last blow did nothing and the death screen lost the dragon's name
     await c('/gamerule log_admin_commands false')
     await clearSet(ctx, A, 64, 24)
     await c('/kill @e[type=!player]')
@@ -89,7 +90,6 @@ module.exports = {
       await c(`/setblock ${B(-6, 1 + i, 2 - i)} stone_brick_stairs[facing=north]`)
     }
     for (const [y, z] of [[3, 2], [4, 0], [5, -1], [3, 1]]) await c(`/setblock ${B(-6, y, z)} cobweb`)
-    await c(`/setblock ${B(-5, 1, 3)} cobweb`)
 
     // a plank room: floor y0, walls to y h, ceiling y h+1, log corners, glowstone in the ceiling
     const room = async (P, w, d, h, lights) => {
@@ -154,7 +154,10 @@ module.exports = {
     const wisps = (n = 8, y = 1.2) => ctx.particles('portal', B(0.5 + (Math.random() - 0.5) * 2, y, 0.5 + (Math.random() - 0.5) * 2), { count: n })
     // the breath: purple spell clouds rising out of the ring
     const breath = (p) => ctx.particles('potion', p, { color: BREATH, instant: false })
-    const hurt = (n) => say(`/damage @s ${n} minecraft:dragon_breath`)
+    // each hit is `by` the dragon, so it holds the kill credit; the last blow has no attacker, which is the one
+    // case where vanilla names the credited mob ("... was roasted in dragon's breath by Ender Dragon":
+    // death.attack.dragonBreath.player). A last blow `by` it used the plain message, without the name.
+    const hurt = (n) => say(`/damage @s ${n} minecraft:dragon_breath by @e[type=minecraft:ender_dragon,tag=drg,limit=1]`)
     const growl = (vol, pitch) => { ctx.sound('entity.ender_dragon.growl', vol, pitch); ctx.mark('growl') }
     setMeter(8)
 
@@ -202,7 +205,7 @@ module.exports = {
     // L06: so it's gotta be him, opening it from the other side (over the ring from the far corner; purple in the middle)
     await cut(BX + 4.0, BZ - 3.9, B(0.5, 0.9, 0.5))
     await line('L06', async (k, at) => {
-      sneak(true); go(true); K.base = K.aim(B(0.5, 0.9, 0.5))
+      sneak(true); go(Math.hypot(bot.entity.position.x - (X + BX + 0.5), bz() - 0.5) > 4.3); K.base = K.aim(B(0.5, 0.9 + Math.sin(k / 9) * 0.25, 0.5))   // stops short of the frames (it walked up until one frame filled the view)
       if (k >= at(3) && k % 3 === 0) wisps(k >= at(5) ? 14 : 5)
       look(k)
     })
@@ -224,27 +227,27 @@ module.exports = {
     // L08: on Tuesday, his boots. Still smoking
     say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.6).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:32767s,Age:-32768s,Tags:["boots"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
-    await cut(BX - 1.5, BZ + 5.9, B(-1.5, 1.2, 3.6))
+    await cut(BX - 1.5, BZ + 6.2, B(-1.5, 1.2, 3.6))
     const smoke = (n = 1) => ctx.particles('smoke', B(-1.5 + (Math.random() - 0.5) * 0.3, 1.3, 3.6 + (Math.random() - 0.5) * 0.3), { count: n })
     await line('L08', async (k, at) => {
-      sneak(true); go(bz() > 5.0)
-      if (k % 2 === 0) smoke(k >= at(2) ? 3 : 1)
+      sneak(true); go(bz() > 5.2)
+      if (k % (k >= at(2) ? 3 : 5) === 0) smoke(1)   // a thin trail: 1-3 puffs every other tick hid the boots behind a black cloud
       K.base = K.aim(B(-1.5, 1.2 + (k >= at(2) ? Math.min(0.5, (k - at(2)) * 0.03) : 0), 3.6)); look(k)   // the eyes follow the smoke up
     })
     go(false); sneak(false)
     // L09: I think he's just packing (wide: the ring, the boots smoking beside it)
     await cut(BX - 4.9, BZ + 5.6, B(0.2, 1.2, 1.2))
-    await line('L09', async (k) => { go(k > 2 && k < 14); if (k % 2 === 0) smoke(2); if (k % 5 === 0) wisps(5); look(k) })
+    await line('L09', async (k) => { go(k > 2 && k < 14); if (k % 3 === 0) smoke(1); if (k % 5 === 0) wisps(5); look(k) })
     go(false)
     say('/kill @e[tag=boots]')
     // L10: at night the floor growls (the kitchen at night; purple seeps up through the boards)
     say('/time set 18000'); ctx.dayTime = 18000; ctx.mark('time', { time: 18000 })
-    await cut(KX + 6.4, KZ + 5.4, Kt(3.4, 1.0, 2.6))
+    await cut(KX + 6.5, KZ + 5.75, Kt(2.6, 1.0, 5.6))   // along the south wall (from the corner the chair's cobweb filled the view)
     from = null
     await line('L10', async (k, at) => {
       if (k === at(2) - 2) growl(0.55, 0.8)
-      if (k >= at(2) - 2 && k < at(2) + 12 && k % 2 === 0) ctx.particles('portal', Kt(2.4 + Math.random() * 2, 0.6, 1.8 + Math.random() * 2), { count: 9 })
-      if (k >= at(3)) { from = from || { ...K.base }; K.turnTo(from, Kt(4.6, 2.0, 3.4), (k - at(3)) / 16) }
+      if (k >= at(2) - 2 && k < at(2) + 12 && k % 2 === 0) ctx.particles('portal', Kt(2.0 + Math.random() * 2.6, 0.6, 5.0 + Math.random() * 1.4), { count: 9 })
+      if (k >= at(3)) { from = from || { ...K.base }; K.turnTo(from, Kt(3.2, 2.2, 3.6), (k - at(3)) / 18) }
       const j = k >= at(2) - 2 && k < at(2) + 8 ? 1 : 0
       look(k, Math.sin(k * 2.1) * 0.012 * j, Math.sin(k * 1.7) * 0.01 * j)
     })
@@ -252,19 +255,19 @@ module.exports = {
     await cut(BX + 3.6, BZ + 4.2, B(0.5, 1.4, 0.5))
     from = null
     await line('L11', async (k, at) => {
-      if (k >= at(1) - 3) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 6.0, 0.5), (k - at(1) + 3) / 18) }
+      if (k >= at(1) - 3) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 6.0, 0.5), (k - at(1) + 3) / 30) }
       if (k % 3 === 0) ctx.particles('smoke', B(0.5 + (Math.random() - 0.5) * 2.4, 4.6 + Math.random() * 0.8, 0.5 + (Math.random() - 0.5) * 2.4), { count: 2 })
       look(k)
     })
     // L12: so I baked him a welcome home cake (by the ring)
-    say(`/setblock ${blk(4, 1, 4)} oak_planks`); say(`/setblock ${blk(4, 2, 4)} cake`)
-    say(`/setblock ${blk(3, 1, 4)} red_carpet`); say(`/setblock ${blk(4, 1, 3)} red_carpet`); say(`/setblock ${blk(5, 1, 4)} red_carpet`); say(`/setblock ${blk(4, 1, 5)} red_carpet`)
-    await cut(BX + 6.1, BZ + 6.4, B(4.5, 2.3, 4.5))
-    await line('L12', async (k) => { sneak(true); go(k > 2 && k < 22); K.base = K.aim(B(4.5, 2.3, 4.5)); if (k % 6 === 0) wisps(4); look(k) })
-    go(false); sneak(false)
+    say(`/setblock ${blk(3, 1, 3)} oak_planks`); say(`/setblock ${blk(3, 2, 3)} cake`)
+    say(`/setblock ${blk(4, 1, 3)} red_carpet`); say(`/setblock ${blk(3, 1, 4)} red_carpet`); say(`/setblock ${blk(4, 1, 4)} red_carpet`)
+    await cut(BX + 6.3, BZ + 6.3, B(3.5, 2.1, 3.5))   // from the corner: the cake, the ring behind it (at 2.5 blocks, walking in, the cake filled the view)
+    await line('L12', async (k) => { sneak(true); bot.setControlState('left', true); K.base = K.aim(B(3.5, 2.1, 3.5)); if (k % 6 === 0) wisps(4); look(k) })
+    bot.setControlState('left', false); sneak(false)
     // L13: last night I stayed up to watch (in front of the empty frame; he sits down)
     await cut(BX + 0.5, BZ + 6.2, B(0.5, 1.5, 2.5))
-    await line('L13', async (k, at) => { sneak(k >= at(1)); go(k < 6); K.base = K.aim(B(0.5, 1.5, 2.5)); if (k % 6 === 0) wisps(4); look(k) })
+    await line('L13', async (k, at) => { sneak(k >= at(1)); go(bz() > 4.9); K.base = K.aim(B(0.5, 1.5, 2.5)); if (k % 6 === 0) wisps(4); look(k) })
     go(false); sneak(false)
     // L14: number twelve: purple gathers on the frame, the eye is in, the portal opens
     await cut(BX + 0.5, BZ + 4.5, B(0.5, 1.75, 2.5))
@@ -294,8 +297,8 @@ module.exports = {
     // L16: wow, your voice got deep. I've waited for this (the breath keeps coming; he keeps talking)
     await line('L16', async (k, at) => {
       if (k % 2 === 0) wisps(9, 1.6)
-      if (k === at(2)) { breath(B(0.5, 1.3, 0.9)); hurt(5) }
-      if (k === at(3)) { growl(0.85, 0.9); breath(B(0.5, 1.4, 1.2)); hurt(5) }
+      if (k === at(2)) { breath(B(0.5, 1.3, 0.2)); hurt(5) }
+      if (k === at(3)) { growl(0.85, 0.9); breath(B(0.2, 1.4, 0.5)); hurt(5) }
       K.base = K.aim(B(0.5, 0.9, 0.6))
       const j = 0.6 + Math.min(1.4, k / 20)   // the camera trembles more and more
       look(k, Math.sin(k * 2.1) * 0.01 * j, Math.sin(k * 1.7) * 0.008 * j)
@@ -303,15 +306,13 @@ module.exports = {
     // the roar, and the breath takes him: the game names the dragon on the death screen (no spoken reveal)
     ctx.sound('entity.ender_dragon.growl', 1, 1.05); ctx.sound('entity.ender_dragon.shoot', 1, 0.9)
     ctx.mark('roar'); ctx.mark('flash')
-    breath(B(0.5, 1.4, 1.6)); breath(B(0.5, 1.2, 0.5))
+    breath(B(0.5, 1.3, -0.4))   // one cloud, at the far side of the ring: nearer, single particles filled a quarter of the view, and two clouds hid the death message
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(i, Math.sin(i * 2.6) * 0.03, 0.02 * i) }
-    say('/damage @s 100 minecraft:dragon_breath by @e[type=minecraft:ender_dragon,tag=drg,limit=1]')
+    say('/damage @s 100 minecraft:dragon_breath')
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
-    if (!ctx.died) { say('/damage @s 100 minecraft:dragon_breath'); for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1) }
     // behind the death screen: the breath still pours out of the ring (the portal's stars drift too)
     for (let i = 0; i < 48; i++) {
-      if (i % 2 === 0) wisps(10, 1.6)
-      if (i % 8 === 2) breath(B(0.5 + (Math.random() - 0.5), 1.2, 0.5 + (Math.random() - 0.5)))
+      if (i % 2 === 0) wisps(8, 1.3)   // low over the stars: the death message stays clear
       await bot.waitForTicks(1)
     }
     ctx.mark('story_end')
