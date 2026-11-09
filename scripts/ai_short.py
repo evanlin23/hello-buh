@@ -247,6 +247,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("episode")
     ap.add_argument("--no-render", action="store_true")
+    ap.add_argument("--chunk", help="i/N: render only slice i of N of the picture and encode it (Actions)")
+    ap.add_argument("--segments", help="a folder of seg_*.mp4 slices: build the Short from them instead of frames")
     o = ap.parse_args()
     ep = pathlib.Path(o.episode)
     cfg = json.loads((ep / "episode.json").read_text())
@@ -271,17 +273,7 @@ def main():
     total = omap(b)
     fdir, sdir = work / "frames", work / "frames_slow"
     f0, f1 = int(round(a * FPS)), int(round(b * FPS))
-    if not o.no_render:
-        subprocess.run(["rm", "-rf", str(fdir), str(sdir)], check=True)
-        env = {**os.environ, "FRAMES": ",".join(map(str, range(f0, f1 + 1))), "NO_BARS": "1"}
-        subprocess.run(["node", "render.js", str(rec_path), str(fdir), str(FPS), str(W), str(H)], cwd=HERE, env=env, check=True)
-    for i, (s0, s1, k) in enumerate(slows):
-        d = sdir / str(i)
-        if not d.exists():
-            sf = FPS * k
-            env = {**os.environ, "FRAMES": ",".join(map(str, range(int(s0 * sf), int(s1 * sf) + 1))), "NO_BARS": "1"}
-            subprocess.run(["node", "render.js", str(rec_path), str(d), str(sf), str(W), str(H)], cwd=HERE, env=env, check=True)
-    # the picture: a frame list (normal frames, the slow windows' frames in their place)
+    # the picture as a list of (fps, frame, file): normal frames, each slow window's frames (rendered at FPS * k) in place
     seq, f = [], f0
     while f <= f1:
         tr = f / FPS
@@ -289,14 +281,45 @@ def main():
         if sw:
             i, s0, s1, k = sw
             sf = FPS * k
-            seq += [sdir / str(i) / f"f{j:05d}.png" for j in range(int(s0 * sf), int(s1 * sf))]
+            seq += [(sf, j, sdir / str(i) / f"f{j:05d}.png") for j in range(int(s0 * sf), int(s1 * sf))]
             f = int(round(s1 * FPS)); continue
-        seq.append(fdir / f"f{f:05d}.png"); f += 1
-    lst = work / "frames.txt"
-    lst.write_text("".join(f"file '{q}'\nduration {1 / FPS:.6f}\n" for q in seq if q.exists()))
+        seq.append((FPS, f, fdir / f"f{f:05d}.png")); f += 1
+
+    def render(items):
+        """Render (fps, frame, file) items with render.js, one call per frame rate / output folder."""
+        groups = {}
+        for fps_, j, q in items:
+            groups.setdefault((fps_, q.parent), []).append(j)
+        for (fps_, d), js in groups.items():
+            env = {**os.environ, "FRAMES": ",".join(map(str, js)), "NO_BARS": "1"}
+            subprocess.run(["node", "render.js", str(rec_path), str(d), str(fps_), str(W), str(H)], cwd=HERE, env=env, check=True)
+
+    def encode(items, out_mp4, crf):
+        lst = out_mp4.with_suffix(".txt")
+        lst.write_text("".join(f"file '{q}'\nduration {1 / FPS:.6f}\n" for _, _, q in items if q.exists()))
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-r", str(FPS),
+                        "-c:v", "libx264", "-preset", "medium", "-crf", str(crf), "-pix_fmt", "yuv420p", str(out_mp4)], check=True)
+
     vid = work / "video.mp4"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-r", str(FPS),
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p", str(vid)], check=True)
+    if o.chunk:   # one slice of the picture (GitHub Actions: .github/workflows/render-movie.yml), then stop
+        i, n = map(int, o.chunk.split("/"))
+        per = -(-len(seq) // n)
+        part = seq[i * per:(i + 1) * per]
+        render(part)
+        segs = work / "segs"; segs.mkdir(exist_ok=True)
+        encode(part, segs / f"seg_{i:02d}.mp4", 12)
+        print(f"chunk {i}/{n}: {len(part)} frames -> {segs / f'seg_{i:02d}.mp4'}")
+        return
+    if o.segments:   # the picture from rendered slices, in order
+        segs = sorted(pathlib.Path(o.segments).glob("seg_*.mp4"))
+        lst = work / "segs.txt"
+        lst.write_text("".join(f"file '{q.resolve()}'\n" for q in segs))
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(vid)], check=True)
+    else:
+        if not o.no_render:
+            subprocess.run(["rm", "-rf", str(fdir), str(sdir)], check=True)
+            render(seq)
+        encode(seq, vid, 17)
     # sound: the game's, stretched (and pitched down) inside the slow windows
     game = HERE / "work" / f"{stunt}.wav"
     if not game.exists() or game.stat().st_mtime < rec_path.stat().st_mtime:
