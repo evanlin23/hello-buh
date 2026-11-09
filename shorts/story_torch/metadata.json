@@ -1,0 +1,663 @@
+{
+  "name": "story_torch",
+  "caption": "there's a torch I never placed \ud83d\ude33",
+  "youtube": {
+    "title": "there's a torch I never placed \ud83d\ude33 #minecraft #shorts",
+    "description": "there's a torch I never placed \ud83d\ude33\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "montagem_toma.mp3",
+    "title": "Montagem Toma",
+    "artist": "X972, sk3tch01, MXZI",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": null,
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 13.5
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 31.66,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 17140205,
+    "sha256": "d2488209d47f5765d6acbb7c11cd275174d1531be0e722be14c0e67f41759798"
+  },
+  "edit": {
+    "caption": "there's a torch I never placed \ud83d\ude33",
+    "red": "torch",
+    "story": "stories/torch",
+    "startAt": "line:0",
+    "endAfter": "death:1.6",
+    "deathScreen": true,
+    "onFire": "burn:death",
+    "zoom": [
+      [
+        "hook:0",
+        "hook:2.9",
+        1.25
+      ],
+      [
+        "broke:0",
+        "death:1.6",
+        1.06
+      ]
+    ],
+    "args": [
+      "--caption",
+      "there's a torch I never placed \ud83d\ude33",
+      "--red",
+      "torch",
+      "--zoom",
+      "[[\"hook:0\",\"hook:2.9\",1.25],[\"broke:0\",\"death:1.6\",1.06]]",
+      "--on_fire",
+      "burn:death",
+      "--death_screen",
+      "death",
+      "--story",
+      "stories/torch",
+      "--start_at",
+      "line:0",
+      "--end_after",
+      "death:1.6"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 356,
+      "y": 69,
+      "z": -39
+    },
+    "biome": "minecraft:plains",
+    "ticks": 668,
+    "seconds": 33.4,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.lava"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "meter"
+      },
+      {
+        "t": 0.75,
+        "event": "cut"
+      },
+      {
+        "t": 0.8,
+        "event": "hook"
+      },
+      {
+        "t": 0.8,
+        "event": "line"
+      },
+      {
+        "t": 3.75,
+        "event": "cut"
+      },
+      {
+        "t": 3.8,
+        "event": "face_on"
+      },
+      {
+        "t": 3.8,
+        "event": "line"
+      },
+      {
+        "t": 6.15,
+        "event": "face_off"
+      },
+      {
+        "t": 6.15,
+        "event": "cut"
+      },
+      {
+        "t": 6.2,
+        "event": "face_on"
+      },
+      {
+        "t": 6.2,
+        "event": "line"
+      },
+      {
+        "t": 7.2,
+        "event": "vel"
+      },
+      {
+        "t": 7.9,
+        "event": "vel"
+      },
+      {
+        "t": 8.2,
+        "event": "vel"
+      },
+      {
+        "t": 8.45,
+        "event": "vel"
+      },
+      {
+        "t": 8.7,
+        "event": "vel"
+      },
+      {
+        "t": 9.1,
+        "event": "vel"
+      },
+      {
+        "t": 9.25,
+        "event": "vel"
+      },
+      {
+        "t": 9.3,
+        "event": "vel"
+      },
+      {
+        "t": 9.45,
+        "event": "face_off"
+      },
+      {
+        "t": 9.9,
+        "event": "cut"
+      },
+      {
+        "t": 9.95,
+        "event": "line"
+      },
+      {
+        "t": 10.2,
+        "event": "dig"
+      },
+      {
+        "t": 10.2,
+        "event": "swing"
+      },
+      {
+        "t": 10.35,
+        "event": "dig_end"
+      },
+      {
+        "t": 10.35,
+        "event": "vel"
+      },
+      {
+        "t": 10.8,
+        "event": "collect"
+      },
+      {
+        "t": 11.05,
+        "event": "dig"
+      },
+      {
+        "t": 11.05,
+        "event": "swing"
+      },
+      {
+        "t": 11.2,
+        "event": "dig_end"
+      },
+      {
+        "t": 11.25,
+        "event": "vel"
+      },
+      {
+        "t": 11.65,
+        "event": "collect"
+      },
+      {
+        "t": 11.85,
+        "event": "dig"
+      },
+      {
+        "t": 11.85,
+        "event": "swing"
+      },
+      {
+        "t": 11.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 12,
+        "event": "vel"
+      },
+      {
+        "t": 12.45,
+        "event": "collect"
+      },
+      {
+        "t": 12.7,
+        "event": "dig"
+      },
+      {
+        "t": 12.7,
+        "event": "swing"
+      },
+      {
+        "t": 12.8,
+        "event": "dig_end"
+      },
+      {
+        "t": 12.85,
+        "event": "vel"
+      },
+      {
+        "t": 13.05,
+        "event": "line"
+      },
+      {
+        "t": 13.3,
+        "event": "collect"
+      },
+      {
+        "t": 13.6,
+        "event": "dig"
+      },
+      {
+        "t": 13.6,
+        "event": "swing"
+      },
+      {
+        "t": 13.7,
+        "event": "dig_end"
+      },
+      {
+        "t": 13.75,
+        "event": "vel"
+      },
+      {
+        "t": 13.85,
+        "event": "meter"
+      },
+      {
+        "t": 14.2,
+        "event": "collect"
+      },
+      {
+        "t": 14.95,
+        "event": "line"
+      },
+      {
+        "t": 18.2,
+        "event": "cut"
+      },
+      {
+        "t": 18.25,
+        "event": "line"
+      },
+      {
+        "t": 18.4,
+        "event": "meter"
+      },
+      {
+        "t": 19,
+        "event": "meter"
+      },
+      {
+        "t": 20.45,
+        "event": "dig"
+      },
+      {
+        "t": 20.45,
+        "event": "swing"
+      },
+      {
+        "t": 20.55,
+        "event": "dig_end"
+      },
+      {
+        "t": 20.6,
+        "event": "vel"
+      },
+      {
+        "t": 20.75,
+        "event": "dig"
+      },
+      {
+        "t": 20.75,
+        "event": "swing"
+      },
+      {
+        "t": 20.75,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "collect"
+      },
+      {
+        "t": 21.05,
+        "event": "swing"
+      },
+      {
+        "t": 21.35,
+        "event": "dig_end"
+      },
+      {
+        "t": 21.8,
+        "event": "cut"
+      },
+      {
+        "t": 21.85,
+        "event": "line"
+      },
+      {
+        "t": 21.95,
+        "event": "dig"
+      },
+      {
+        "t": 21.95,
+        "event": "swing"
+      },
+      {
+        "t": 22,
+        "event": "meter"
+      },
+      {
+        "t": 22.1,
+        "event": "dig_end"
+      },
+      {
+        "t": 22.1,
+        "event": "vel"
+      },
+      {
+        "t": 22.55,
+        "event": "collect"
+      },
+      {
+        "t": 22.75,
+        "event": "dig"
+      },
+      {
+        "t": 22.75,
+        "event": "swing"
+      },
+      {
+        "t": 22.85,
+        "event": "dig_end"
+      },
+      {
+        "t": 22.9,
+        "event": "vel"
+      },
+      {
+        "t": 23.15,
+        "event": "dig"
+      },
+      {
+        "t": 23.15,
+        "event": "swing"
+      },
+      {
+        "t": 23.25,
+        "event": "dig_end"
+      },
+      {
+        "t": 23.3,
+        "event": "vel"
+      },
+      {
+        "t": 23.35,
+        "event": "collect"
+      },
+      {
+        "t": 23.55,
+        "event": "dig"
+      },
+      {
+        "t": 23.55,
+        "event": "swing"
+      },
+      {
+        "t": 23.7,
+        "event": "dig_end"
+      },
+      {
+        "t": 23.7,
+        "event": "vel"
+      },
+      {
+        "t": 23.75,
+        "event": "collect"
+      },
+      {
+        "t": 24.15,
+        "event": "collect"
+      },
+      {
+        "t": 24.35,
+        "event": "dig"
+      },
+      {
+        "t": 24.35,
+        "event": "swing"
+      },
+      {
+        "t": 24.45,
+        "event": "dig_end"
+      },
+      {
+        "t": 24.5,
+        "event": "vel"
+      },
+      {
+        "t": 24.95,
+        "event": "collect"
+      },
+      {
+        "t": 25.2,
+        "event": "cut"
+      },
+      {
+        "t": 25.25,
+        "event": "line"
+      },
+      {
+        "t": 25.45,
+        "event": "meter"
+      },
+      {
+        "t": 25.5,
+        "event": "dig"
+      },
+      {
+        "t": 25.5,
+        "event": "swing"
+      },
+      {
+        "t": 25.6,
+        "event": "dig_end"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "dig"
+      },
+      {
+        "t": 25.85,
+        "event": "swing"
+      },
+      {
+        "t": 25.95,
+        "event": "dig_end"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26.1,
+        "event": "collect"
+      },
+      {
+        "t": 26.45,
+        "event": "collect"
+      },
+      {
+        "t": 28.05,
+        "event": "line"
+      },
+      {
+        "t": 28.5,
+        "event": "dig"
+      },
+      {
+        "t": 28.5,
+        "event": "swing"
+      },
+      {
+        "t": 28.8,
+        "event": "swing"
+      },
+      {
+        "t": 28.85,
+        "event": "dig_end"
+      },
+      {
+        "t": 28.9,
+        "event": "vel"
+      },
+      {
+        "t": 29,
+        "event": "broke"
+      },
+      {
+        "t": 29,
+        "event": "burn"
+      },
+      {
+        "t": 29.1,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 29.35,
+        "event": "collect"
+      },
+      {
+        "t": 29.6,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 30.1,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 30.6,
+        "event": "hurt",
+        "type": "lava"
+      },
+      {
+        "t": 30.85,
+        "event": "vel"
+      },
+      {
+        "t": 30.85,
+        "event": "vel"
+      },
+      {
+        "t": 30.85,
+        "event": "vel"
+      },
+      {
+        "t": 30.85,
+        "event": "vel"
+      },
+      {
+        "t": 30.85,
+        "event": "death"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 30.9,
+        "event": "vel"
+      },
+      {
+        "t": 33.4,
+        "event": "story_end"
+      },
+      {
+        "t": 33.4,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "14c7f69659cb6b7cc6cc77f72ec9cd7c42fcfc58",
+    "rendered_at": "2026-11-09T21:57:39.735Z",
+    "head_at_publish": "99a52b662087ac1c2a5f858d7fe2bd74034165f5",
+    "stunt": "stunts/story_torch.js",
+    "source_snapshot": [
+      "source/story_torch.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 14c7f69659cb",
+    "gunzip -c shorts/story_torch/recording.json.gz > work/story_torch.rec.json",
+    "node render.js work/story_torch.rec.json work/story_torch.frames 60 1080 1011",
+    "python3 audio.py work/story_torch.rec.json work/story_torch.wav",
+    "python3 edit.py --frames work/story_torch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_torch.rec.json --audio work/story_torch.wav --caption \"there's a torch I never placed \ud83d\ude33\" --red torch --zoom [[\"hook:0\",\"hook:2.9\",1.25],[\"broke:0\",\"death:1.6\",1.06]] --on_fire burn:death --death_screen death --story stories/torch --start_at line:0 --end_after death:1.6 --out out/story_torch.mp4"
+  ],
+  "status": "ready",
+  "notes": "Story: the torch I never placed. Retention audit pass (31.6 s, no stills, death text 1.6 s), Minecraft audit pass (tamed dog, iron shovel/pickaxe dig speeds, lava death). Owner 2026-11-09: stories first.",
+  "published_at": "2026-11-09T22:02:36.703Z"
+}
