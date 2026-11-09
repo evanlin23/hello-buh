@@ -68,7 +68,7 @@ module.exports = {
     // 12. the end: high, pulling away; the boy kneeling at the hole in the snow
     end: { dof: false, path: [[0, 7.4, 1.6, 0.4], [1.2, 8.0, 2.6, 1.4], [2.6, 11, 9, 6]], look: { of: 'self', offset: [0, -0.4, 0] }, fov: 52, subject: ['self'] }   // (low and close on him kneeling at the hole, then rising away over the lake)
   },
-  edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.2', slowmo: [['broke', -0.2, 0.5, 2.0], ['grokfall', -0.45, 1.0, 2.5]] },   // (the break, and Grok going through: audit v4 wanted the slow on his drop)   // (the punch and the ice giving: 2.1 s over 5.2 s)
+  edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.2', slowmo: [['broke', -0.2, 0.5, 1.5], ['grokfall', -0.35, 0.8, 1.8]] },   // (lighter: owner, the last line came too late)   // (the break, and Grok going through: audit v4 wanted the slow on his drop)   // (the punch and the ice giving: 2.1 s over 5.2 s)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -251,8 +251,8 @@ module.exports = {
     await M.stepBack(c.Gemini, 7)
     await idle(c.Gemini, Math.max(0, gemMs - (Date.now() - t7)))
     // the silence: she turns her back and walks off the shore (moving picture over the held beat)
-    await M.lookAway(c.Gemini, 170, 500)
-    await M.walkTo(c.Gemini, X - 1.0, Z + 13.0, { maxMs: 1300 })
+    M.lookAway(c.Gemini, 170, 450)   // (not awaited: the silence is ~1 s, owner: the pause before Grok ran long)
+    await M.sleep(250)
 
     // 8. Grok: already sprinting when the cut lands (Gemini parks after the cut: her live camera followed her down)
     await M.place(ctx, 'Grok', X + 4.5, F + 1, Z + 11.5, 180, 0)
@@ -309,16 +309,18 @@ module.exports = {
     for (const dx of [4, 5]) bot.chat(`/setblock ${A(dx, 0, 4)} water destroy`)
     ctx.mark('grokfall')
     bot.swingArm('right')   // reaching for him
+    // his last line starts as he goes through (owner: v5 left 4.5 s without a word before it)
+    const g2 = speak('Grok', 'g2', 'Go home, little brother. Tell Mom I held on.')
+    const tg2 = Date.now()
     grok.setControlState('sneak', false)
     await bot.waitForTicks(4)
     await bot.waitForTicks(14)
     // 11. under: Grok sinking away east under the sheet
     M.shot(ctx, 'sink')
-    const g2 = speak('Grok', 'g2', 'Go home, little brother. Tell Mom I held on.')
     // (v4 stood still and flashed hurt 2 s in: air lasts 15 s. Now he drifts down and east under the sheet, face up
     //  to the light, bubbles rising; driven by /tp a tick at a time, the render interpolates it smooth)
     grok.clearControlStates()
-    const g0 = grok.entity.position.clone(), steps = Math.round(g2 / 50) + 12
+    const g0 = grok.entity.position.clone(), steps = Math.max(30, Math.round((g2 - (Date.now() - tg2)) / 50) + 12)
     for (let k = 0; k < steps; k++) {
       const f = k / steps, e = f * f * (3 - 2 * f)
       bot.chat(`/tp Grok ${(g0.x + 2.2 * e).toFixed(3)} ${(Math.max(F - 5.0, g0.y - 3.6 * e)).toFixed(3)} ${(g0.z - 0.6 * e).toFixed(3)} -90 -55`)
