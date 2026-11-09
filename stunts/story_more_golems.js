@@ -115,7 +115,7 @@ module.exports = {
     for (const z of ROWS) { G.push([-2.1, z, -90]); G.push([3.1, z, 90]) }
     G.push([-4.5, 41.5, -90], [5.5, 41.5, 90], [-1.6, -8.8, 0], [9.5, -4.5, 0], [22.5, -22.2, 180])
     const rankOf = (i) => i < 5 ? 'ga' : i < 12 ? 'gb' : 'gc'
-    for (let i = 0; i < G.length; i++) await c(`/summon iron_golem ${(X + G[i][0]).toFixed(2)} ${F + 1} ${(Z + G[i][1]).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,PlayerCreated:0b,Tags:["g","g${i}","${rankOf(i)}"${i === 18 ? ',"guard"' : ''}],Rotation:[${G[i][2]}f,0f]}`)
+    for (let i = 0; i < G.length; i++) await c(`/summon iron_golem ${(X + G[i][0]).toFixed(2)} ${F + 1} ${(Z + G[i][1]).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,PlayerCreated:0b,Tags:["g","g${i}","${rankOf(i)}"${i === 18 ? ',"guard"' : ''}${i < 16 ? ',"row"' : ''}],Rotation:[${G[i][2]}f,0f]}`)
 
     // anything that still fell onto the set (the set itself has no gravel or sand in it)
     await c('/kill @e[type=falling_block]')
@@ -164,6 +164,9 @@ module.exports = {
       say(`/setblock ${X + dx} ${F + 2} ${Z + dz} oak_door[half=upper,facing=${f},open=${open}]`)
       say(`/setblock ${X + dx} ${F + 1} ${Z + dz} oak_door[half=lower,facing=${f},open=${open}]`)
     }
+    // the street's golems, while they are out of shot, turn to where the next street shot will stand: turned on
+    // the cut itself they all spun round in its first 6 frames (frame review)
+    const preAim = (x, z) => say(`/execute at ${me} as @e[tag=row,distance=14..] at @s run tp @s ~${jit()} ~ ~ facing ${(X + x).toFixed(2)} ${(F + 2.62).toFixed(2)} ${(Z + z).toFixed(2)}`)
     const groan = (vol) => ctx.sound('entity.zombie.ambient', vol, 1)
     ctx.mark('meter', { value: 19 })
 
@@ -190,6 +193,7 @@ module.exports = {
     await line('L03', async (k, at) => {
       if (k < 2) say(`/execute as @e[tag=g] at @s run tp @s ~ ~ ~${k ? -0.003 : 0.003} ~ 0`)   // heads level again: the street's golems were still looking up at the roof when L04 opened
       watch(14)
+      if (k >= 2) preAim(0.5, 34.5)
       go(k > 2 && bot.entity.position.z > Z - 5.6)
       if (k >= at(3) && k < at(4)) say(`/tp @e[tag=smith,limit=1] ${(X + sx + jit()).toFixed(3)} ${F + 1} ${Z + sz} 180 0`)
       if (k >= at(4)) { sx = Math.min(-0.3, sx + 0.2); say(`/tp @e[tag=smith,limit=1] ${(X + sx).toFixed(3)} ${F + 1} ${(Z + sz - Math.min(0.6, (sx + 4.5) * 0.15)).toFixed(3)} ${sx < -0.3 ? -90 : 180} 0`) }
@@ -260,7 +264,7 @@ module.exports = {
     // L08: the gossip at the well. Something groans all night; they all look at me; they scatter
     await cut(5.5, 4.8, P(5.5, 1.6, -3.9))
     await line('L08', async (k, at) => {
-      watch(14)
+      watch(14); preAim(0.5, 2.0)
       go(bot.entity.position.z > Z + 0.9)
       if (k === at(2)) groan(0.3)
       if (k < at(5)) for (let i = 0; i < 3; i++) say(`/tp @e[tag=v${i},limit=1] ${(X + V[i].x + jit()).toFixed(3)} ${F + 1} ${(Z + V[i].z).toFixed(3)} ${(mcYaw(5.5 - V[i].x, -3.9 - V[i].z) + 14 * Math.sin(k / 4 + i * 2)).toFixed(1)} ${(8 + 8 * Math.sin(k / 3 + i)).toFixed(1)}`)
