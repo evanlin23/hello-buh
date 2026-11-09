@@ -29,13 +29,37 @@ module.exports = {
   hideHand: true,          // no Steve arm: who "I" am is the twist
   time: 1000,              // morning
   brightness: 1,           // Options > Brightness: Bright, so the night scenes read
-  botTimeout: 300,
+  botTimeout: 480,
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
+    // The site: flat for 96 blocks around. The clearing only cuts 24 blocks up, so a hill beside the set stood as a
+    // sliced grey wall with trees hanging over it in six scenes (Minecraft audit). Map the ground height around a
+    // few hubs and take the flattest dry spot.
+    const start = bot.entity.position.floored()
+    let g = null, best = Infinity
+    for (const [hx, hz] of [[0, 0], [288, 0], [0, 288], [-288, 0], [0, -288], [288, 288], [-288, -288]]) {
+      if (hx || hz) { await ctx.cmd(`/tp @s ${start.x + hx} 200 ${start.z + hz}`); await bot.waitForTicks(40); try { await bot.waitForChunksToLoad() } catch (e) {} await bot.waitForTicks(20) }
+      const cx0 = start.x + hx, cz0 = start.z + hz, H = new Map()
+      for (let dx = -176; dx <= 176; dx += 8) for (let dz = -176; dz <= 176; dz += 8) { const b = ctx.surface(cx0 + dx, cz0 + dz); if (b) H.set(`${dx},${dz}`, b) }
+      for (let dx = -80; dx <= 80; dx += 16) for (let dz = -80; dz <= 80; dz += 16) {
+        const c = H.get(`${dx},${dz}`)
+        if (!c || c.name !== 'grass_block' || c.position.y < 63) continue
+        let up = 0, down = 0, wet = 0, miss = 0
+        for (let ex = -96; ex <= 96; ex += 8) for (let ez = -96; ez <= 96; ez += 8) {
+          const b = H.get(`${dx + ex},${dz + ez}`)
+          if (!b) { miss++; continue }
+          if (/water|lava|ice/.test(b.name)) wet++
+          up = Math.max(up, b.position.y - c.position.y); down = Math.max(down, c.position.y - b.position.y)
+        }
+        const score = up + down * 0.5 + wet * 0.5 + miss * 2
+        if (score < best) { best = score; g = c.position.clone(); g.info = { up, down, wet, miss } }
+      }
+      ctx.log('site search hub', hx, hz, 'best so far', best.toFixed(1), g && JSON.stringify(g.info), g && [g.x, g.y, g.z])
+      if (best <= 9) break
+    }
     if (!g) throw new Error('no dry land')
+    await ctx.cmd(`/tp @s ${g.x} 200 ${g.z}`); await bot.waitForTicks(40); try { await bot.waitForChunksToLoad() } catch (e) {}
     const X = g.x, Z = g.z, F = g.y
     Object.assign(this, { X, Z, F })
     const c = (s) => ctx.cmd(s)
@@ -164,6 +188,7 @@ module.exports = {
     for (let i = 0; i < 6; i++) { V[i].x = 0.5 + (i < 3 ? -0.9 : 0.9); V[i].z = DOORS[i][1] + 0.5 + (i % 2 ? 2.2 : -2.0); setV(i, i < 3 ? 90 : -90) }
     let sx = -4.5; const sz = -9.5
     await line('L03', async (k, at) => {
+      if (k < 2) say(`/execute as @e[tag=g] at @s run tp @s ~ ~ ~${k ? -0.003 : 0.003} ~ 0`)   // heads level again: the street's golems were still looking up at the roof when L04 opened
       watch(14)
       go(k > 2 && bot.entity.position.z > Z - 5.6)
       if (k >= at(3) && k < at(4)) say(`/tp @e[tag=smith,limit=1] ${(X + sx + jit()).toFixed(3)} ${F + 1} ${Z + sz} 180 0`)
@@ -221,11 +246,11 @@ module.exports = {
     })
     go(false)
     // L07: he waits outside my door. I back off; he comes after me
-    await cut(19.3, -22.4, P(22.5, 3.2, -22.2))
+    await cut(20.6, -23.5, P(22.5, 3.2, -22.2))   // just out of the door, so he only turns his head a little (from the west side his head snapped 90 degrees)
     let gx = 22.5
     await line('L07', async (k, at) => {
       const follow = k >= at(2)
-      go(k > 2 && k < at(2) - 3 && bot.entity.position.x < X + 20.1)   // a step up to him first (the shot held still for half a second)
+      go(k > 2 && k < at(2) - 3 && bot.entity.position.x < X + 21.0)   // a step up to him first (the shot held still for half a second)
       bot.setControlState('back', follow && bot.entity.position.x > X + 16.2)
       if (follow) gx -= 0.085
       say(`/tp @e[tag=guard,limit=1] ${(X + gx + jit()).toFixed(3)} ${F + 1} ${Z - 22.2} facing entity ${me} eyes`)
