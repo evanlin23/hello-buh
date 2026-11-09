@@ -3,7 +3,7 @@
 
     python3 scripts/youtube_upload.py            # the daily run (cron-job.org / Actions)
     python3 scripts/youtube_upload.py --dry-run  # say what would go up, upload nothing
-    python3 scripts/youtube_upload.py --report   # the weekly report only (views of everything uploaded)
+    python3 scripts/youtube_upload.py --report   # the weekly report only (views, engagement, retention, watch time, subscribers)
 
 Does NOTHING unless all of these exist (docs/upload-setup.md): the secrets YT_CLIENT_ID, YT_CLIENT_SECRET,
 YT_REFRESH_TOKEN, the variable YT_CHANNEL_ID and the variable YT_ENABLED=true. And nothing while uploads/PAUSED
@@ -139,9 +139,8 @@ def publish_at(slot: int) -> str:
     return at.astimezone(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def youtube():
+def credentials():
     from google.oauth2.credentials import Credentials
-    from googleapiclient.discovery import build
     from google.auth.transport.requests import Request
     from google.auth.exceptions import RefreshError
     creds = Credentials(None, refresh_token=os.environ["YT_REFRESH_TOKEN"], client_id=os.environ["YT_CLIENT_ID"],
@@ -151,7 +150,19 @@ def youtube():
     except RefreshError as e:
         sys.exit(f"YT_REFRESH_TOKEN no longer works ({e}). If the Google Cloud OAuth consent screen is in 'Testing', "
                  "tokens die after 7 days: publish the app and mint a new token (docs/upload-setup.md step 2).")
-    return build("youtube", "v3", credentials=creds, cache_discovery=False)
+    return creds
+
+
+def youtube():
+    from googleapiclient.discovery import build
+    return build("youtube", "v3", credentials=credentials(), cache_discovery=False)
+
+
+def analytics():
+    """The YouTube Analytics API (retention, watch time, shares, engaged views, subscribers). The youtube.readonly scope
+    the token already has covers these reports; without it the report says so and shows the Data API numbers only."""
+    from googleapiclient.discovery import build
+    return build("youtubeAnalytics", "v2", credentials=credentials(), cache_discovery=False)
 
 
 def channel_titles(yt) -> list[str]:
@@ -208,21 +219,122 @@ def open_issue(title: str) -> bool:
     return r.returncode == 0 and r.stdout.strip() not in ("", "[]")
 
 
-def report(yt, done: dict, vd: Path | None) -> None:
-    """Weekly: views/likes/comments of everything recorded, and how many Shorts are left to go up."""
+def _pct(x):
+    return "-" if x is None else f"{100 * x:.0f}%"
+
+
+def video_analytics(ya, ids: list, start: str, end: str) -> tuple[dict, str]:
+    """Per video, lifetime to date: views, engaged views (the API's nearest thing to Studio's "stayed to watch":
+    views that carried on past the first seconds), watch time, average view duration and %, likes, comments, shares,
+    subscribers gained. Returns ({video_id: {...}}, note)."""
+    base = ["views", "engagedViews", "estimatedMinutesWatched", "averageViewDuration", "averageViewPercentage",
+            "likes", "comments", "shares", "subscribersGained"]
+    out, note = {}, ""
+    for metrics in (base, [m for m in base if m != "engagedViews"]):
+        try:
+            for i in range(0, len(ids), 100):
+                r = ya.reports().query(ids="channel==MINE", startDate=start, endDate=end, metrics=",".join(metrics),
+                                       dimensions="video", filters="video==" + ",".join(ids[i:i + 100]), maxResults=200).execute(num_retries=3)
+                cols = [h["name"] for h in r.get("columnHeaders", [])]
+                for row in r.get("rows", []) or []:
+                    out[row[0]] = dict(zip(cols[1:], row[1:]))
+            if "engagedViews" not in metrics:
+                note = "Engaged views aren't offered by the API for this channel yet, so the stayed-to-watch proxy is blank."
+            return out, note
+        except Exception as e:   # (an unknown metric or a missing scope)
+            note = f"YouTube Analytics API unavailable ({str(e)[:160]}): add the scope https://www.googleapis.com/auth/yt-analytics.readonly to the token (docs/upload-setup.md step 2)."
+            out = {}
+    return out, note
+
+
+def retention(ya, vid: str, start: str, end: str) -> dict:
+    """The audience retention curve: the share of the audience still watching at 3 points, and how it compares with
+    similar-length YouTube videos at the halfway mark (relativeRetentionPerformance, 0.5 = typical)."""
+    try:
+        r = ya.reports().query(ids="channel==MINE", startDate=start, endDate=end, metrics="audienceWatchRatio,relativeRetentionPerformance",
+                               dimensions="elapsedVideoTimeRatio", filters=f"video=={vid}").execute(num_retries=3)
+    except Exception:
+        return {}
+    rows = r.get("rows", []) or []
+    if not rows:
+        return {}
+    def at(x):
+        return min(rows, key=lambda row: abs(row[0] - x))
+    return {"r10": at(0.1)[1], "r50": at(0.5)[1], "r100": at(1.0)[1], "rel50": at(0.5)[2]}
+
+
+def channel_summary(ya, start: str, end: str) -> str:
+    """The channel over the last 7 days, and where its views came from over the last 28 (the Shorts feed share)."""
+    lines = []
+    try:
+        r = ya.reports().query(ids="channel==MINE", startDate=start, endDate=end,
+                               metrics="views,estimatedMinutesWatched,likes,comments,shares,subscribersGained,subscribersLost").execute(num_retries=3)
+        if r.get("rows"):
+            v, mins, lk, cm, sh_, sg, sl = r["rows"][0]
+            lines.append(f"**Last 7 days:** {int(v):,} views, {mins / 60:.1f} h watched, {int(lk):,} likes, {int(cm):,} comments, "
+                         f"{int(sh_):,} shares, subscribers +{int(sg)} / -{int(sl)} (net {int(sg) - int(sl):+d}).")
+        s28 = (dt.date.fromisoformat(end) - dt.timedelta(days=28)).isoformat()
+        r = ya.reports().query(ids="channel==MINE", startDate=s28, endDate=end, metrics="views",
+                               dimensions="insightTrafficSourceType", sort="-views").execute(num_retries=3)
+        rows = r.get("rows", []) or []
+        tot = sum(x[1] for x in rows) or 1
+        if rows:
+            lines.append("**Where views came from (28 days):** " + ", ".join(f"{k.replace('_', ' ').lower()} {100 * n / tot:.0f}%" for k, n in rows[:5]) + ".")
+    except Exception as e:
+        lines.append(f"(channel analytics unavailable: {str(e)[:120]})")
+    return "\n\n".join(lines)
+
+
+def report(yt, done: dict, vd: Path | None, ya=None) -> None:
+    """Weekly: every recorded Short's numbers (Data API: views, likes, comments; Analytics API: engaged views, watch
+    time, average % viewed, retention at 10/50/100%, shares, subscribers, engagement rate), the channel's week, and how
+    many Shorts are left to go up."""
     ids = {v["video_id"]: k for k, v in done.items() if v.get("video_id")}
     stats = {}
     keys = list(ids)
     for i in range(0, len(keys), 50):
-        for it in yt.videos().list(part="statistics,status", id=",".join(keys[i:i + 50])).execute().get("items", []):
+        for it in yt.videos().list(part="statistics,status", id=",".join(keys[i:i + 50])).execute(num_retries=3).get("items", []):
             stats[it["id"]] = it
-    rows = []
+    today = central_now().date()
+    end = today.isoformat()
+    start = min([v.get("uploaded", end) for v in done.values()] + [end])
+    an, note, ret = {}, "", {}
+    if ya is not None:
+        an, note = video_analytics(ya, keys, start, end)
+        for vid in keys:
+            if an.get(vid, {}).get("views"):
+                ret[vid] = retention(ya, vid, start, end)
+    rows, scored = [], []
     for vid, name in ids.items():
         s = stats.get(vid, {}).get("statistics", {}); st = stats.get(vid, {}).get("status", {})
         e = done[name]
-        rows.append((e.get("uploaded", ""), f"| {e.get('uploaded', '')} | [{name}](https://youtube.com/shorts/{vid}) | {e.get('by', 'auto')} | "
-                     f"{int(s.get('viewCount', 0)):,} | {int(s.get('likeCount', 0)):,} | {int(s.get('commentCount', 0)):,} | {st.get('privacyStatus', '?')} |"))
+        views, likes, comments = int(s.get("viewCount", 0)), int(s.get("likeCount", 0)), int(s.get("commentCount", 0))
+        A, R = an.get(vid, {}), ret.get(vid, {})
+        shares = int(A.get("shares", 0) or 0)
+        eng = (likes + comments + shares) / views if views else None
+        stayed = (A["engagedViews"] / A["views"]) if A.get("engagedViews") is not None and A.get("views") else None
+        avd = A.get("averageViewDuration")
+        avd_s = "-" if avd is None else f"{avd:.0f}s"
+        avp = A.get("averageViewPercentage")
+        avp_s = "-" if avp is None else f"{avp:.0f}%"
+        rel = R.get("rel50")
+        rel_s = "-" if rel is None else f"{rel:.2f}"
+        subs = A.get("subscribersGained")
+        subs_s = "-" if subs is None else str(int(subs))
+        cells = [e.get("uploaded", ""), f"[{name}](https://youtube.com/shorts/{vid})", e.get("by", "auto"), f"{views:,}", _pct(stayed),
+                 f"{likes:,}", f"{comments:,}", f"{shares:,}", _pct(eng), avd_s, avp_s,
+                 f"{_pct(R.get('r10'))} / {_pct(R.get('r50'))} / {_pct(R.get('r100'))}", rel_s, subs_s, st.get("privacyStatus", "?")]
+        rows.append((e.get("uploaded", ""), "| " + " | ".join(cells) + " |"))
+        if views >= 100:
+            scored.append((name, vid, views, stayed, eng, A.get("averageViewPercentage")))
     rows.sort(reverse=True)
+    best = []
+    for label, k in (("most views", 2), ("best stayed-to-watch proxy", 3), ("best engagement rate", 4), ("highest average % viewed", 5)):
+        c = [x for x in scored if x[k] is not None]
+        if c:
+            x = max(c, key=lambda x: x[k])
+            val = f"{x[k]:,}" if k == 2 else (f"{x[k]:.0f}%" if k == 5 else _pct(x[k]))
+            best.append(f"{label}: [{x[0]}](https://youtube.com/shorts/{x[1]}) ({val})")
     left = []
     if vd:
         for m in sorted((vd / "shorts").glob("*/metadata.json")):
@@ -230,14 +342,26 @@ def report(yt, done: dict, vd: Path | None) -> None:
             if meta.get("status") == "ready" and m.parent.name not in done and not meta.get("posted"):
                 left.append(m.parent.name)
     days = len(left) / max(1, PER_DAY)
-    body = ("Views so far (newest first). Auto uploads vs hand uploads: compare the `by` column.\n\n"
-            "| uploaded | Short | by | views | likes | comments | status |\n|---|---|---|---|---|---|---|\n"
+    summary = channel_summary(ya, (today - dt.timedelta(days=7)).isoformat(), end) if ya is not None else ""
+    body = ((summary + "\n\n" if summary else "")
+            + ("**Best (100+ views):** " + "; ".join(best) + "\n\n" if best else "")
+            + "Every Short (newest first). Auto uploads vs hand uploads: compare the `by` column.\n\n"
+            "| uploaded | Short | by | views | stayed* | likes | comments | shares | engagement | avg view | avg % | retention 10/50/100% | vs similar | subs + | status |\n"
+            "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n"
             + "\n".join(r for _, r in rows)
+            + "\n\n*stayed: engaged views / views, the API's nearest thing to Studio's \"stayed to watch\" (Studio's exact "
+              "\"viewed vs swiped away\" isn't in the API). engagement: (likes + comments + shares) / views. retention: the "
+              "share of viewers still watching at 10%, half and the end (over 100% at the end means rewatches/loops). vs "
+              "similar: retention at the halfway mark against similar-length YouTube videos (0.5 = typical, higher is better). "
+              "YouTube Analytics lags 1-3 days, so the newest Shorts show '-' until it catches up."
+            + (f"\n\n_{note}_" if note else "")
             + f"\n\n**Ready and not uploaded yet: {len(left)}** (about {days:.0f} days at {PER_DAY} a day)"
             + (" - **running low: make more Shorts**" if days < 7 else "")
             + ("\n\n" + ", ".join(left) if left else "")
             + "\n\nTo pause: create `uploads/PAUSED` on main (any text). To stop: set the repo variable YT_ENABLED to anything but `true`.")
     t = f"HelloBuh weekly report {central_now().date().isoformat()}"
+    if os.environ.get("REPORT_STDOUT"):
+        print(t); print(body); return
     if not open_issue(t):
         issue(t, body)
 
@@ -256,7 +380,7 @@ def main() -> None:
         vd = videos_checkout(Path(td) / "videos")
         if a.report:
             if ok:
-                report(youtube(), done, vd)
+                report(youtube(), done, vd, analytics())
             return
         if PAUSED.exists():
             print(f"uploads are paused (uploads/PAUSED: {PAUSED.read_text().strip()}). Nothing done."); return

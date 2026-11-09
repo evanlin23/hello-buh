@@ -1,5 +1,5 @@
 # @HelloBuh auto-upload: one run a day uploads the day's 3 Shorts (YT_PER_DAY), each PRIVATE with a scheduled publish
-# at a random time in its own slice of 9:00-21:00 Central, and on Sundays a weekly report issue with every video's views. docs/upload-setup.md.
+# at a random time in its own slice of 9:00-21:00 Central, and on Sundays a weekly report issue with every video's views, engagement, retention and watch time. docs/upload-setup.md.
 # OFF until set up: does nothing unless the YT_* secrets, the variable YT_CHANNEL_ID and the variable
 # YT_ENABLED=true all exist. Pause any time by creating uploads/PAUSED on main.
 # The clock: cron-job.org dispatches this workflow daily (GitHub's own schedule below is a backup; it has
