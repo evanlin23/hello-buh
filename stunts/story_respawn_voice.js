@@ -41,9 +41,9 @@ module.exports = {
     cards: [
       ['heard_brother', "DON'T MINE THE GOLD.", 1.7, 'white'],
       ['heard_sister', 'CLOSE THE DOOR.', 1.5, 'white'],
-      ['voice1', VOICE1, 1.5, 'yellow'],
+      ['voice1', VOICE1, 1.3, 'yellow'],
       ['no_bed', 'NO HOME BED?', 1.4, 'white'],
-      ['voice2', VOICE2, 3.0, 'red'],
+      ['voice2', VOICE2, 2.6, 'red'],
       ['question', 'TRUST VOICE 1 OR 2? COMMENT 👇', 1.8, 'gold']
     ],
     sfx: [['impact', 'nailed'], ['scratch', 'not_dead'], ['dip', 'question', 0.3]],

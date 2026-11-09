@@ -1,0 +1,446 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "In my world, the first time you die, you hear one sentence from your future self.",
+   "dur": 3.466,
+   "onset": 0.172,
+   "end": 3.276,
+   "chunks": [
+    [
+     0.172,
+     0.569
+    ],
+    [
+     0.595,
+     1.017
+    ],
+    [
+     1.017,
+     1.448
+    ],
+    [
+     1.552,
+     1.819
+    ],
+    [
+     1.819,
+     2.293
+    ],
+    [
+     2.293,
+     2.474
+    ],
+    [
+     2.474,
+     3.276
+    ]
+   ],
+   "captions": [
+    "In my world,",
+    "the FIRST time",
+    "you DIE,",
+    "you hear",
+    "ONE sentence",
+    "from your",
+    "FUTURE self."
+   ]
+  },
+  "L02": {
+   "text": "My brother heard, don't mine the gold. Behind it was lava.",
+   "dur": 2.724,
+   "onset": 0.172,
+   "end": 2.5,
+   "chunks": [
+    [
+     0.172,
+     0.483
+    ],
+    [
+     0.483,
+     0.828
+    ],
+    [
+     0.828,
+     1.448
+    ],
+    [
+     1.517,
+     1.853
+    ],
+    [
+     1.853,
+     2.5
+    ]
+   ],
+   "captions": [
+    "My brother",
+    "heard, DON'T",
+    "mine the GOLD.",
+    "Behind it",
+    "was LAVA."
+   ]
+  },
+  "L03": {
+   "text": "My sister heard, close the door. That night a zombie came knocking.",
+   "dur": 3.0,
+   "onset": 0.172,
+   "end": 2.81,
+   "chunks": [
+    [
+     0.172,
+     0.5
+    ],
+    [
+     0.5,
+     0.983
+    ],
+    [
+     0.983,
+     1.397
+    ],
+    [
+     1.483,
+     1.733
+    ],
+    [
+     1.733,
+     2.052
+    ],
+    [
+     2.052,
+     2.81
+    ]
+   ],
+   "captions": [
+    "My sister",
+    "heard, CLOSE",
+    "the DOOR.",
+    "That night",
+    "a ZOMBIE",
+    "came KNOCKING."
+   ]
+  },
+  "L04": {
+   "text": "Today I fell off a cliff. And I heard mine.",
+   "dur": 2.259,
+   "onset": 0.172,
+   "end": 2.052,
+   "chunks": [
+    [
+     0.172,
+     0.371
+    ],
+    [
+     0.371,
+     0.595
+    ],
+    [
+     0.595,
+     1.069
+    ],
+    [
+     1.138,
+     1.328
+    ],
+    [
+     1.328,
+     2.052
+    ]
+   ],
+   "captions": [
+    "Today",
+    "I fell",
+    "off a CLIFF.",
+    "And I",
+    "heard MINE."
+   ]
+  },
+  "L05": {
+   "text": "Don't sleep in the new bed.",
+   "dur": 1.466,
+   "onset": 0.172,
+   "end": 1.259,
+   "chunks": [
+    [
+     0.172,
+     0.56
+    ],
+    [
+     0.56,
+     0.672
+    ],
+    [
+     0.672,
+     1.259
+    ]
+   ],
+   "captions": [
+    "DON'T SLEEP",
+    "in the",
+    "NEW bed."
+   ]
+  },
+  "L06": {
+   "text": "I respawned in a field. My bed was gone.",
+   "dur": 2.31,
+   "onset": 0.155,
+   "end": 2.103,
+   "chunks": [
+    [
+     0.155,
+     0.595
+    ],
+    [
+     0.595,
+     1.086
+    ],
+    [
+     1.155,
+     1.457
+    ],
+    [
+     1.457,
+     2.103
+    ]
+   ],
+   "captions": [
+    "I respawned",
+    "in a FIELD.",
+    "My bed",
+    "was GONE."
+   ]
+  },
+  "L07": {
+   "text": "Dad had built me a new one. He said it's safer.",
+   "dur": 2.276,
+   "onset": 0.172,
+   "end": 2.069,
+   "chunks": [
+    [
+     0.172,
+     0.397
+    ],
+    [
+     0.397,
+     0.629
+    ],
+    [
+     0.629,
+     1.069
+    ],
+    [
+     1.138,
+     1.371
+    ],
+    [
+     1.371,
+     2.069
+    ]
+   ],
+   "captions": [
+    "Dad had",
+    "BUILT me",
+    "a NEW one.",
+    "He said",
+    "it's SAFER."
+   ]
+  },
+  "L08": {
+   "text": "Then he nailed my door shut.",
+   "dur": 1.534,
+   "onset": 0.172,
+   "end": 1.345,
+   "chunks": [
+    [
+     0.172,
+     0.328
+    ],
+    [
+     0.328,
+     0.569
+    ],
+    [
+     0.569,
+     0.888
+    ],
+    [
+     0.888,
+     1.345
+    ]
+   ],
+   "captions": [
+    "Then he",
+    "NAILED",
+    "my door",
+    "SHUT."
+   ]
+  },
+  "L09": {
+   "text": "That night I heard a second voice. my voice.",
+   "dur": 2.207,
+   "onset": 0.172,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.172,
+     0.422
+    ],
+    [
+     0.422,
+     0.595
+    ],
+    [
+     0.595,
+     0.879
+    ],
+    [
+     0.879,
+     1.276
+    ],
+    [
+     1.345,
+     2.0
+    ]
+   ],
+   "captions": [
+    "That night",
+    "I heard",
+    "a SECOND",
+    "voice.",
+    "MY voice."
+   ]
+  },
+  "L10": {
+   "text": "Sleep in the bed, or you'll respawn somewhere that isn't home.",
+   "dur": 2.638,
+   "onset": 0.19,
+   "end": 2.448,
+   "chunks": [
+    [
+     0.19,
+     0.405
+    ],
+    [
+     0.405,
+     0.776
+    ],
+    [
+     0.828,
+     1.017
+    ],
+    [
+     1.017,
+     1.353
+    ],
+    [
+     1.353,
+     1.664
+    ],
+    [
+     1.664,
+     1.914
+    ],
+    [
+     1.914,
+     2.448
+    ]
+   ],
+   "captions": [
+    "SLEEP in",
+    "the bed,",
+    "or you'll",
+    "RESPAWN",
+    "somewhere",
+    "that ISN'T",
+    "home."
+   ]
+  },
+  "L11": {
+   "text": "But I wasn't dead.",
+   "dur": 1.241,
+   "onset": 0.155,
+   "end": 1.034,
+   "chunks": [
+    [
+     0.155,
+     0.328
+    ],
+    [
+     0.328,
+     0.56
+    ],
+    [
+     0.56,
+     1.034
+    ]
+   ],
+   "captions": [
+    "But I",
+    "wasn't",
+    "DEAD."
+   ]
+  },
+  "L12": {
+   "text": "And the first voice sounded old. grandpa old.",
+   "dur": 2.5,
+   "onset": 0.155,
+   "end": 2.293,
+   "chunks": [
+    [
+     0.155,
+     0.293
+    ],
+    [
+     0.293,
+     0.672
+    ],
+    [
+     0.672,
+     1.293
+    ],
+    [
+     1.388,
+     2.293
+    ]
+   ],
+   "captions": [
+    "And the",
+    "FIRST voice",
+    "sounded OLD.",
+    "GRANDPA old."
+   ]
+  },
+  "L13": {
+   "text": "Voice one, or voice two?",
+   "dur": 1.534,
+   "onset": 0.172,
+   "end": 1.31,
+   "chunks": [
+    [
+     0.172,
+     0.552
+    ],
+    [
+     0.578,
+     0.888
+    ],
+    [
+     0.888,
+     1.31
+    ]
+   ],
+   "captions": [
+    "Voice ONE,",
+    "or voice",
+    "TWO?"
+   ]
+  }
+ },
+ "total": 30.46
+}
