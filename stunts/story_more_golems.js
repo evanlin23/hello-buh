@@ -24,7 +24,7 @@ module.exports = {
   name: 'story_more_golems',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'who keeps building iron golems 💀',
-  edit: { caption: 'who keeps building iron golems 💀', red: 'golems', story: 'stories/more_golems', startAt: 'line:0', endAfter: 'death:1.35', zoom: [['death:0.1', 'death:1.35', 1.12]], punch: [['pop', 0, 0.08]], deathScreen: true },
+  edit: { caption: 'who keeps building iron golems 💀', red: 'golems', story: 'stories/more_golems', startAt: 'line:0', endAfter: 'death:1.2', zoom: [['death:0.1', 'death:1.2', 1.12]], punch: [['pop', 0, 0.08]], deathScreen: true },
   expectDeath: true,
   hideHand: true,          // no Steve arm: who "I" am is the twist
   time: 1000,              // morning
@@ -46,6 +46,9 @@ module.exports = {
     await c('/gamerule keep_inventory true')
     await c('/difficulty normal')                   // mob_attack damage scales to 0 on peaceful
     await clearSet(ctx, A, 64, 24)
+    // natural gravel above the clearing falls once the air under it is gone: it landed as a mound in the street.
+    // Wait for it, then sweep the bottom layers again
+    for (let pass = 0; pass < 2; pass++) { await ctx.sleep(2500); for (let y = 1; y <= 4; y++) await c(`/fill ${A(-64, y, -64)} ${A(64, y, 64)} air`) }
     await c('/kill @e[type=!player]')
     await plainsBiome(ctx, A, 80, -4, 24)
 
@@ -110,7 +113,8 @@ module.exports = {
     const watch = (R) => say(`/execute at ${me} as @e[tag=g,distance=..${R}] at @s run tp @s ~${jit()} ~ ~ facing entity ${me} eyes`)
     // every villager stays awake: a long-idle mob's first move reaches the client ~1 s late
     const line = (id, scene, extra = 0) => K.line(id, async (k, at) => { say(`/execute as @e[tag=vil] at @s run tp @s ~${jit()} ~ ~`); await scene(k, at) }, extra)
-    const setTime = (n) => { say(`/time set ${n}`); ctx.dayTime = n; ctx.mark('time', { time: n }) }
+    // back: after a cut, date the mark one tick back so the light changes on the cut frame (it came 2 frames late)
+    const setTime = (n, back = 0) => { say(`/time set ${n}`); ctx.dayTime = n; ctx.mark('time', { time: n, t: (ctx.tick - back) * 50 }) }
     const mcYaw = (vx, vz) => -Math.atan2(vx, vz) * 180 / Math.PI
     // the six villagers of the street
     const V = [0, 1, 2, 3, 4, 5].map(i => ({ x: -0.4 + (i % 3) * 0.9, z: 20 + i * 1.2, yaw: 180 }))
@@ -136,7 +140,7 @@ module.exports = {
     // L01: the street in the morning, golems down both sides; they turn to watch me walk in
     await cut(0.5, 43.5, P(0.5, 2.0, 30))
     for (let k = 0; k < 8; k++) { mill(); look(k); await bot.waitForTicks(1) }
-    await line('L01', async (k) => { mill(); watch(9); go(k > 4 && k < 46); look(k) })
+    await line('L01', async (k) => { mill(); watch(9); go(k > 4); look(k) })
     go(false)
     // L02: from a roof: nineteen golems, six villagers... and every golem looks up at me
     await cut(-2.4, 15.6, P(1.5, 1.5, 31), 5)   // the roof's street-side corner (from the middle of the roof the roof filled the frame)
@@ -162,11 +166,11 @@ module.exports = {
     })
     go(false)
     // L04: sunset. Everybody runs inside and the doors slam, far ones first
-    await cut(0.5, 41.0, P(0.5, 2.4, 22)); setTime(12750)
+    await cut(0.5, 41.0, P(0.5, 2.4, 22)); setTime(12750, 1)
     const inside = [false, false, false, false, false, false]
     await line('L04', async (k, at) => {
       watch(14)
-      go(k < 12)
+      go(k < 34)
       for (let i = 0; i < 6; i++) {
         if (inside[i] || k < at(1) - 4 + (i % 3)) continue
         const side = i < 3 ? -1 : 1, dz = DOORS[i][1] + 0.5
@@ -193,7 +197,7 @@ module.exports = {
       look(k, k > shut ? Math.sin((k - shut) / 2.2) * 0.06 * Math.max(0, 1 - (k - shut) / 24) : 0)
     })
     // L06: morning. I wake up staring at the ceiling, sore... and something huge is at my door
-    await cut(22.5, -28.5, P(22.56, 4.2, -28.3)); setTime(1000)
+    await cut(22.5, -28.5, P(22.56, 4.2, -28.3)); setTime(1000, 1)
     // behind the walls: three of them to the well, the farmer to his field
     const GOS = [[4.3, -3.2], [6.7, -3.4], [5.5, -5.0]]
     for (let i = 0; i < 3; i++) { V[i].x = GOS[i][0]; V[i].z = GOS[i][1]; setV(i, mcYaw(5.5 - V[i].x, -3.9 - V[i].z)); say(`/tag @e[tag=v${i}] add gos`) }
@@ -201,8 +205,9 @@ module.exports = {
     from = null
     await line('L06', async (k, at) => {
       watch(9)
-      const t0 = at(3) - 10
-      if (k >= t0) { from = from || { ...K.base }; K.turnTo(from, P(22.5, 2.3, -22.2), (k - t0) / 14) }
+      // eyes open on the ceiling, then down to the door: one slow move the whole way (a held ceiling was a second of nothing)
+      const t0 = 3
+      if (k >= t0) { from = from || { ...K.base }; K.turnTo(from, P(22.5, 2.3, -22.2), (k - t0) / (at(3) + 2 - t0)) }
       go(k >= at(3) - 2 && bot.entity.position.z < Z - 26.8)
       look(k)
     })
@@ -231,7 +236,7 @@ module.exports = {
     })
     go(false)
     // L09: I stay up. The sun goes down over the street (the sky runs to night in steps)
-    await cut(0.5, 2.0, P(0.5, 5.2, 30)); setTime(11800)
+    await cut(0.5, 2.0, P(0.5, 5.2, 30)); setTime(11800, 1)
     let T = 11800
     const dusk = (k) => { if (T < 14000 && k % 3 === 2) { T = Math.min(14000, T + 240); setTime(T) } }
     await line('L09', async (k, at) => { watch(10); dusk(k); go(k > 2 && k < 26); look(k, 0, k >= at(3) ? -0.1 * Math.min(1, (k - at(3)) / 10) : 0) })
