@@ -173,8 +173,9 @@ module.exports = {
     // L02: today, eleven: the one empty frame between two eyes
     eye(10); setMeter(11)
     await cut(BX + 0.5, BZ + 5.9, B(0.5, 1.6, 2.5))
-    await line('L02', async (k, at) => { go(bz() > 4.1); K.base = K.aim(B(0.5, 1.6, 2.5)); look(k) })
-    go(false); sneak(false)
+    await line('L02', async (k, at) => { go(k >= 14 && bz() > 4.3); bot.setControlState('left', k < 14);   // a sidestep, then the push in, still moving on the last tick (it reached the frame early and parked)
+      K.base = K.aim(B(0.5, 1.6, 2.5)); look(k) })
+    go(false); bot.setControlState('left', false); sneak(false)
     // L03: I never put them in. Nobody goes down there (the stairs, cobwebs across them, up into the dark)
     await cut(BX - 1.5, BZ + 4.6, B(-5.5, 2.4, 1.5))
     let from = null
@@ -262,7 +263,7 @@ module.exports = {
     await cut(BX + 3.6, BZ + 4.2, B(0.5, 1.4, 0.5))
     from = null
     await line('L11', async (k, at) => {
-      if (k >= at(1) - 3) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 6.0, 0.5), (k - at(1) + 3) / 30) }
+      if (k >= at(1) - 3) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 6.0, 0.5), (k - at(1) + 3) / 40) }
       if (k % 3 === 0) ctx.particles('smoke', B(0.5 + (Math.random() - 0.5) * 2.4, 4.6 + Math.random() * 0.8, 0.5 + (Math.random() - 0.5) * 2.4), { count: 5 })
       look(k)
     })
@@ -289,7 +290,7 @@ module.exports = {
     let openAt = -1
     await line('L14', async (k, at) => {
       if (k < at(1) && k % 2 === 0) ctx.particles('portal', B(0.5, 1.2, 2.5), { count: 7 })
-      if (k === at(1)) { eye(11); ctx.sound('block.end_portal_frame.fill', 1, 1); setMeter(12); ctx.particles('smoke', B(0.5, 1.9, 2.5), { count: 2 }) }   // vanilla puffs smoke on the frame as an eye goes in
+      if (k === at(1)) { eye(11); ctx.sound('block.end_portal_frame.fill', 1, 1); setMeter(12); ctx.particles('smoke', B(0.5, 1.9, 2.5), { count: 1 }) }   // vanilla puffs smoke on the frame as an eye goes in
       if (k === at(1) + 2) {
         say(`/fill ${blk(-1, 1, -1)} ${blk(1, 1, 1)} end_portal`)
         ctx.sound('block.end_portal.spawn', 1, 1); ctx.mark('open'); openAt = k
