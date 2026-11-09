@@ -43,7 +43,8 @@ module.exports = {
       ['heard_sister', 'CLOSE THE DOOR.', 1.5, 'white'],
       ['voice1', VOICE1, 1.3, 'yellow'],
       ['no_bed', 'NO HOME BED?', 1.4, 'white'],
-      ['voice2', VOICE2, 2.6, 'red'],
+      ['voice2', 'SLEEP IN THE BED,', 0.75, 'red'],
+      ['voice2b', "OR YOU'LL RESPAWN SOMEWHERE THAT ISN'T HOME.", 1.85, 'red'],
       ['question', 'TRUST VOICE 1 OR 2? COMMENT 👇', 1.8, 'gold']
     ],
     sfx: [['impact', 'nailed'], ['scratch', 'not_dead'], ['dip', 'question', 0.3]],
@@ -125,6 +126,8 @@ module.exports = {
     const setTime = (n) => { ctx.dayTime = n; say(`/time set ${n}`); ctx.mark('time', { time: n }) }   // no 4-tick wait (ctx.setTime stalls the shot)
     const FAR = [0.5, 30, 80.5]
     const clamp = (u) => Math.max(0, Math.min(1, u))
+    // a slow push in for a whole line: sneaking, a step every third tick (no shot holds still)
+    const creep = (k, on) => { ctl('sneak', true); go(on && k % 3 === 0) }
 
     // the zombie is moved every tick (an idle mob's first move reaches the client late)
     const zom = { x: 0.0, y: -6, z: -9.0, yaw: 0 }
@@ -189,17 +192,18 @@ module.exports = {
     await cut(31.0, 11.7, P(31.0, 2.2, 15.5))
     ctx.mark('heard_sister')
     await line('L03', async (k, at) => {
-      go(k > 2 && bot.entity.position.z < Z + 12.6)
+      creep(k, bot.entity.position.z < Z + 13.3)
       if (k === at(1) + 3) {
         say(`/setblock ${X + 31} ${F + 2} ${Z + 15} oak_door[half=upper,facing=south,open=false]`)
         say(`/setblock ${X + 31} ${F + 1} ${Z + 15} oak_door[half=lower,facing=south,open=false]`)
         ctx.sound('block.wooden_door.close', 1, 0.9)
       }
-      const w0 = at(3) - 4                               // he walks past the window to the door
-      if (k >= w0) { zom.x = Math.min(31.5, 27.6 + (k - w0) * 0.11); if (zom.x >= 31.5) zom.yaw = -90 - 90 * clamp((k - w0 - 36) / 5) }
+      const w0 = at(1) + 8, w1 = w0 + 30                 // he walks past the window to the door (0.13 a tick)
+      if (k >= w0) { zom.x = Math.min(31.5, 27.6 + (k - w0) * 0.13); if (k >= w1) zom.yaw = -90 - 90 * clamp((k - w1) / 5) }
       if (k === at(4)) ctx.sound('entity.zombie.ambient', 0.7, 1)
-      for (const kk of [at(5), at(5) + 6, at(5) + 12]) if (k === kk) ctx.sound('entity.zombie.attack_wooden_door', 0.6, 1)
-      K.base = K.aim(P(30.6 + 0.6 * clamp((k - w0) / 30), 2.2, 15.5)); look(k)
+      let jolt = 0
+      for (const kk of [w1 + 3, w1 + 9, w1 + 15]) { if (k === kk) ctx.sound('entity.zombie.attack_wooden_door', 0.6, 1); if (k >= kk && k < kk + 4) jolt = Math.sin((k - kk) * 1.6) * 0.025 }
+      K.base = K.aim(P(30.4 + 0.9 * clamp((k - w0) / 30), 2.2, 15.5)); look(k, jolt, 0)
     })
     stop()
     Object.assign(zom, { x: 0.0, y: -6, z: -9.0, yaw: 0 })   // back under the ground before the sun is up
@@ -226,31 +230,29 @@ module.exports = {
     ctx.mark('face_on', { near: [X + 1.3, Z - 5.7, 1], head: true })
     from = null
     await line('L07', async (k, at) => {
-      go(k > 2 && k < 12)
+      if (k < at(3) - 4) { go(k > 2 && k < 12) } else { creep(k, bot.entity.position.x < X - 0.5) }
       if (k >= at(3) - 4) { from = from || { ...K.base }; K.turnTo(from, P(1.3, 2.55, -5.7), (k - at(3) + 4) / 12) }
       look(k)
     })
     ctx.mark('face_off')
     stop()
 
-    // L08: then he nailed my door shut (he's outside; the door shuts, then planks across it)
+    // L08: then he nailed my door shut (he's outside the open door; dark planks fill the doorway, hammer blows)
     tp('dad2', 0.5, 1, -1.7, 180); tp('dad', ...FAR, 180)
     for (let i = 0; i < 2; i++) { await bot.waitForTicks(1); look(0) }
     await cut(-0.6, -6.1, P(0.5, 2.3, -3))
     await line('L08', async (k, at) => {
-      go(k > 3 && bot.entity.position.z < Z - 5.0)
-      if (k === 3) {
-        say(`/setblock ${X} ${F + 2} ${Z - 3} oak_door[half=upper,facing=south,open=false]`)
-        say(`/setblock ${X} ${F + 1} ${Z - 3} oak_door[half=lower,facing=south,open=false]`)
-        ctx.sound('block.wooden_door.close', 1, 0.8)
-      }
+      creep(k, bot.entity.position.z < Z - 4.6)
+      K.base = K.aim(P(0.5, 2.2, -3))
       if (k === at(1)) {
-        say(`/fill ${X} ${F + 1} ${Z - 3} ${X} ${F + 2} ${Z - 3} spruce_planks`)
+        say(`/fill ${X} ${F + 1} ${Z - 3} ${X} ${F + 2} ${Z - 3} dark_oak_planks`)
         ctx.sound('block.wood.place', 1, 0.8); ctx.mark('nailed')
         tp('dad2', ...FAR, 180)
       }
       for (const kk of [at(1) + 5, at(3), at(3) + 5]) if (k === kk) ctx.sound('entity.zombie.attack_wooden_door', 0.45, 1.5)   // the hammer
-      look(k, k >= at(1) && k < at(1) + 8 ? Math.sin((k - at(1)) * 1.9) * 0.02 : 0)
+      let jolt = 0
+      for (const kk of [at(1), at(1) + 5, at(3), at(3) + 5]) if (k >= kk && k < kk + 4) jolt = Math.sin((k - kk) * 1.6) * 0.03
+      look(k, jolt, 0)
     })
     stop()
 
@@ -259,13 +261,15 @@ module.exports = {
     await cut(-1.4, -4.7, P(0.5, 2.2, -3))
     from = null
     await line('L09', async (k, at) => {
-      if (k >= at(2)) { from = from || { ...K.base }; K.turnTo(from, P(-0.5, 1.4, -6.6), (k - at(2)) / 14) }
+      creep(k, bot.entity.position.z > Z - 5.3)
+      if (k >= at(2)) { from = from || { ...K.base }; K.turnTo(from, P(-0.5, 1.4, -6.6), (k - at(2)) / 14) } else K.base = K.aim(P(0.5, 2.2, -3))
       look(k)
     })
     // L10: SLEEP IN THE BED, OR YOU'LL RESPAWN SOMEWHERE THAT ISN'T HOME (card, red): creeping up to the bed
     ctx.mark('voice2')
-    await line('L10', async (k) => {
-      ctl('sneak', true); go(bot.entity.position.z > Z - 5.6)
+    await line('L10', async (k, at) => {
+      if (k === at(2)) ctx.mark('voice2b')
+      creep(k, bot.entity.position.z > Z - 5.9)
       K.base = K.aim(P(-0.6, 1.5, -6.7)); look(k, Math.sin(k / 7) * 0.05, 0)
     })
     stop()
@@ -276,16 +280,16 @@ module.exports = {
     await cut(0.3, -4.6, P(-0.1, 2.45, -8))
     ctx.mark('not_dead')
     await line('L11', async (k, at) => {
-      go(k > 2 && bot.entity.position.z > Z - 5.5)
+      creep(k, bot.entity.position.z > Z - 5.4)
       if (k === at(1)) ctx.sound('entity.zombie.ambient', 0.6, 0.9)
-      look(k)
+      K.base = K.aim(P(-0.1, 2.45, -8)); look(k)
     })
     stop()
 
     // L12: and the first voice sounded old. Grandpa old (close on the new bed, a slow push)
     await cut(1.2, -4.5, P(-0.5, 1.4, -6.6))
     await line('L12', async (k) => {
-      ctl('sneak', true); go(bot.entity.position.x > X + 0.2)
+      creep(k, bot.entity.position.x > X - 0.1)
       K.base = K.aim(P(-0.5, 1.4, -6.6)); look(k)
     })
     stop()
@@ -294,12 +298,13 @@ module.exports = {
     await cut(-1.4, -5.2, P(0.5, 2.0, -3))
     from = null
     await line('L13', async (k, at) => {
+      creep(k, true)
       if (k >= at(1) - 2) { from = from || { ...K.base }; K.turnTo(from, P(-0.5, 1.6, -6.6), (k - at(1) + 2) / 12) }
       look(k)
     })
     ctx.mark('question')
     from = { ...K.base }
-    for (let k = 0; k < 34; k++) { K.turnTo(from, P(-0.8, 1.5, -6.6), k / 30); ctl('sneak', true); go(bot.entity.position.z > Z - 5.8); look(k); await bot.waitForTicks(1) }   // the card's reading time (1.7 s): a slow lean in on the pillow
+    for (let k = 0; k < 34; k++) { K.turnTo(from, P(-0.8, 1.5, -6.6), k / 30); creep(k, bot.entity.position.z > Z - 5.9); look(k); await bot.waitForTicks(1) }   // the card's reading time (1.7 s): a slow lean in on the pillow
     ctx.mark('story_end')
     stop()
     await bot.waitForTicks(4)
