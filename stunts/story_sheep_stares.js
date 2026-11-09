@@ -27,7 +27,7 @@ module.exports = {
   name: 'story_sheep_stares',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.9', deathScreen: true, zoom: [['slain:0.10', 'slain:3', 1.035], ['slain:0.32', 'slain:3', 1.035], ['slain:0.54', 'slain:3', 1.035], ['slain:0.76', 'slain:3', 1.035], ['slain:0.98', 'slain:3', 1.035], ['slain:1.20', 'slain:3', 1.035], ['slain:1.42', 'slain:3', 1.035], ['slain:1.64', 'slain:3', 1.035]] },
+  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.9', deathScreen: true, zoom: [['slain:0.10', 'slain:3', 1.045], ['slain:0.32', 'slain:3', 1.045], ['slain:0.54', 'slain:3', 1.045], ['slain:0.76', 'slain:3', 1.045], ['slain:0.98', 'slain:3', 1.045], ['slain:1.20', 'slain:3', 1.045], ['slain:1.42', 'slain:3', 1.045], ['slain:1.64', 'slain:3', 1.045]] },
   expectDeath: true,
   botTimeout: 360,
 
@@ -335,11 +335,11 @@ module.exports = {
     // the bottom: his old mine, still lit. A groan; look up: a zombie, holding a diamond sword
     ctx.sound('entity.zombie.ambient', 1, 1)
     from = { ...K.base }
-    const AIMY = Number(process.env.AIMY || 3.65)   // above his head: he and the sword sit low, clear of the death message
+    const AIMY = Number(process.env.AIMY || 3.7)   // above his head: he and the sword sit low, clear of the death message
     const reach = me().z - Z - 1.4                                            // a mob's melee reach: he has to be this close
     for (let i = 0; i < 22 && !ctx.died; i++) {
       if (i >= 3) ZED.z = Math.min(reach, ZED.z + 0.1)                        // he walks up
-      K.turnTo(from, P(0.5, -DEPTH + AIMY, ZED.z), (i + 1) / 8)   // above his head: he and the sword sit low, clear of the death message
+      K.turnTo(from, P(0.2, -DEPTH + AIMY, ZED.z), (i + 1) / 8)   // a little left of him: the sword comes toward the middle, where the edit pushes in   // above his head: he and the sword sit low, clear of the death message
       look(i); await bot.waitForTicks(1)
     }
     // the hit: a diamond sword in a zombie's hand on Normal is 10; 8 health was left after the fall
