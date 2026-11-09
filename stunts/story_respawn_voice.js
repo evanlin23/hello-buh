@@ -136,7 +136,7 @@ module.exports = {
     const FAR = [0.5, 30, 80.5]
     const clamp = (u) => Math.max(0, Math.min(1, u))
     // a slow push in for a whole line: sneaking, a step every third tick (no shot holds still)
-    const creep = (k, on) => { ctl('sneak', true); go(on && k % 3 === 0) }
+    const creep = (k, on, every = 3) => { ctl('sneak', true); go(on && k % every === 0) }
 
     // the zombie is moved every tick (an idle mob's first move reaches the client late)
     const zom = { x: 0.0, y: -6, z: -9.0, yaw: 0 }
@@ -150,9 +150,9 @@ module.exports = {
       const e = bot.entity, cp = Math.cos(e.pitch), d = 2.5
       void cp; void d
       // small puffs low over the grass a few blocks along the view (big ones at eye height covered the screen: frame review)
-      deadView = new ctx.Vec3(e.position.x - Math.sin(e.yaw) * 3.2, F + 1.15, e.position.z - Math.cos(e.yaw) * 3.2)
+      deadView = new ctx.Vec3(e.position.x - Math.sin(e.yaw) * 1.9, F + 1.15, e.position.z - Math.cos(e.yaw) * 1.9)
     })
-    bot.on('physicsTick', () => { if (ctx.died && deadView && ctx.tick % 4 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 3, 0, (Math.random() - 0.5) * 3), { w: 0.25, h: 0.25, count: 2 }) })
+    bot.on('physicsTick', () => { if (ctx.died && deadView && ctx.tick % 3 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 2.4, 0, (Math.random() - 0.5) * 2.4), { w: 0.3, h: 0.3, count: 3 }) })
     const respawn = async () => {
       if (!ctx.died) return
       while (ctx.tick < deadAt + 21) await bot.waitForTicks(1)
@@ -280,7 +280,7 @@ module.exports = {
     await cut(-1.4, -4.7, P(0.5, 2.2, -3))
     from = null
     await line('L09', async (k, at) => {
-      creep(k, bot.entity.position.z > Z - 5.3)
+      creep(k, bot.entity.position.z > Z - 5.0)
       if (k >= at(2)) { from = from || { ...K.base }; K.turnTo(from, P(-0.5, 1.4, -6.6), (k - at(2)) / 14) } else K.base = K.aim(P(0.5, 2.2, -3))
       look(k)
     })
@@ -289,8 +289,8 @@ module.exports = {
     await line('L10', async (k, at) => {
       if (k === at(2)) ctx.mark('voice2b')
       if (k === at(4)) ctx.mark('voice2c')
-      creep(k, bot.entity.position.z > Z - 5.9)
-      K.base = K.aim(P(-0.6, 1.5, -6.7)); look(k, Math.sin(k / 7) * 0.05, 0)
+      creep(k, bot.entity.position.z > Z - 5.95, 4)
+      K.base = K.aim(P(-0.6, 1.5, -6.7)); look(k, Math.sin(k / 7) * 0.07, Math.sin(k / 11) * 0.03)
     })
     stop()
 
