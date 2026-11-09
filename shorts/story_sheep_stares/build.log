@@ -1,0 +1,23 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+22:52:05.614 spawned at Vec3 { x: 133.5, y: 72, z: 24.5 }
+22:52:05.841 nearest minecraft:plains at [ 357, -40 ]
+22:52:59.562 COMMAND ERROR: No entity was found
+22:53:00.268 COMMAND ERROR: No entity was found
+22:53:00.919 COMMAND ERROR: No entity was found
+22:53:57.561 set at { x: 357, y: 69, z: -40 }
+22:54:06.465 chunks refreshed; back at start within 0.00 blocks
+22:54:49.033 broke true fell true y -3.844478247056884
+22:54:49.535 landed y -14 health 20
+22:54:50.669 died
+22:54:53.902 STUNT OK
+filled 12 dropped pose tick(s): 204 206 207 212 396 687 721 723 744 746 818 869
+simulated 2 dropped item / xp orb paths
+meshing from y -13
+light computed in 1.0 s
+meshed + uploaded world in 13.6 s
+98 particles
+rendered 2811 frames (46.85 s of video) in 944.6 s = 20.2 s per video second
+wrote work/story_sheep_stares.wav 46.90s
+wrote out/story_sheep_stares.mp4 45.25s
+exit 0
