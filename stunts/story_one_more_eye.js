@@ -119,6 +119,13 @@ module.exports = {
     await c(`/fill ${Kt(1, 1, 1)} ${Kt(1, 1, 3)} smooth_stone`); await c(`/setblock ${Kt(1, 1, 4)} crafting_table`)   // a counter (furnaces and barrels are block entities: not drawn)
     await c(`/fill ${Kt(7, 1, 6)} ${Kt(7, 2, 6)} bookshelf`)
 
+    // hedges outside the kitchen windows: the clearing's cut edge (straight terraces, a sheer dirt and stone face
+    // where it met a hill) showed through them (Minecraft audit). Grass, a hedge and sky now, whatever the site.
+    await c(`/fill ${Kt(-3, 1, -4)} ${Kt(12, 5, -4)} oak_leaves[persistent=true]`)
+    await c(`/fill ${Kt(-3, 1, 11)} ${Kt(12, 5, 11)} oak_leaves[persistent=true]`)
+    await c(`/fill ${Kt(12, 1, -4)} ${Kt(12, 5, 11)} oak_leaves[persistent=true]`)
+    for (const [x, z, b] of [[10, 3, 'poppy'], [10, 5, 'dandelion'], [4, -2, 'oxeye_daisy'], [5, 9, 'poppy']]) await c(`/setblock ${Kt(x, 1, z)} ${b}`)
+
     // --- the dragon: a real one, frozen 300 blocks away and 90 up (out of tracking range: never in the
     // recording). Only its name is used, on the death screen.
     await c(`/forceload add ${X + 304} ${Z}`)
@@ -210,10 +217,11 @@ module.exports = {
       if (k % 2 === 0) wisps(k >= at(5) ? 22 : k >= at(3) ? 14 : 8)
       look(k)
     })
-    go(false); sneak(false)
+    go(false)
     // L07: on Monday his sword came through (it lies by the ring; he walks up and picks it up: a real pickup)
     say(`/summon item ${(X + BX + 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:wooden_sword",count:1,components:{"minecraft:damage":41}},PickupDelay:0s,Age:-32768s,Tags:["sword"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
+    sneak(false)   // stands up on the cut (3 ticks before it, the camera lurched up)
     await cut(BX + 1.5, BZ + 6.4, B(1.5, 1.15, 3.75))
     from = null
     let got = -1
@@ -224,11 +232,12 @@ module.exports = {
       if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 1.3, 0.5), (k - got) / 12) } else K.base = K.aim(B(1.5, 1.15, 3.75))
       look(k)
     })
-    go(false); sneak(false)
+    go(false)
     // L08: on Tuesday, his boots. Still smoking (a real pickup again: on the floor they were 110 px wide, and the
     // wide shot hid them behind the hotbar. In the hand they are big, with the smoke coming off them)
     say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:0s,Age:-32768s,Tags:["boots"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
+    sneak(false)
     await cut(BX - 1.5, BZ + 6.4, B(-1.5, 1.15, 3.75))
     // smoke off the boots: on the floor, then just ahead of the hand (lower right of the view)
     const handSmoke = () => {
@@ -298,7 +307,7 @@ module.exports = {
     await line('L14', async (k, at) => {
       if (k < at(1) && k % 2 === 0) ctx.particles('portal', B(0.5, 1.2, 2.5), { count: 7 })
       if (k === at(1)) { eye(11); ctx.sound('block.end_portal_frame.fill', 1, 1); setMeter(12); ctx.particles('smoke', B(0.5, 1.9, 2.5), { count: 1 }) }   // vanilla puffs smoke on the frame as an eye goes in
-      if (k === at(1) + 2) {
+      if (k === at(1)) {   // the same tick as the eye, as vanilla
         say(`/fill ${blk(-1, 1, -1)} ${blk(1, 1, 1)} end_portal`)
         ctx.sound('block.end_portal.spawn', 1, 1); ctx.mark('open'); openAt = k
       }
