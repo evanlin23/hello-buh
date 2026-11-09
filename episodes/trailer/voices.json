@@ -86,5 +86,19 @@
     "Took you long enough, Buh."
    ]
   ]
+ },
+ {
+  "id": "hk_limit",
+  "speakers": {
+   "Highkeeper": "Algenib"
+  },
+  "direction": "Say slowly and softly, a kind old man stating a simple truth:",
+  "lines": [
+   [
+    "Highkeeper",
+    "hk4",
+    "There is no forty-one."
+   ]
+  ]
  }
 ]

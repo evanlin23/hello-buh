@@ -137,6 +137,13 @@ def card_png(c, path):
         im = Image.alpha_composite(im, shadow.filter(ImageFilter.GaussianBlur(6)))
         d = ImageDraw.Draw(im)
         tracked(d, (W / 2, y), c.get("under") or c.get("under2"), f, 14, (230, 230, 230, 255))
+    elif "one" in c:   # (the research: 1-6 words a card, ~1.25 s, over picture; a soft shadow keeps it legible on any shot)
+        f = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 78)
+        shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        tracked(ImageDraw.Draw(shadow), (W / 2, H / 2), c["one"], f, 12, (0, 0, 0, 235))
+        im = Image.alpha_composite(im, shadow.filter(ImageFilter.GaussianBlur(10)))
+        d = ImageDraw.Draw(im)
+        tracked(d, (W / 2, H / 2), c["one"], f, 12, (255, 255, 255, 255))
     elif "quote" in c:
         f = ImageFont.truetype(str(FONT / "Cinzel_700Bold.ttf"), 46)
         tracked(d, (W / 2, H - BAR - 70), c["quote"], f, 4, (255, 255, 255, 255))
@@ -316,6 +323,85 @@ def load_vox(i, far=False):
 
 
 def score(edl, T, total, vox):
+    return (score_v4 if edl.get("score") == "v4" else score_v3)(edl, T, total, vox)
+
+
+def score_v4(edl, T, total, vox):
+    """The bell is the rhythm (the research: a trailer built on one of the film's own sounds, like Woollen's chalkboard):
+    a low toll lands each of the first three cards, ONE toll as he steps off, and the SECOND toll over the fall into the
+    fog is the reveal, heard before any card says it. The montage cuts on tolls. No clock ticks, no heartbeat."""
+    mix = np.zeros((int((total + 6) * SR), 2), np.float32)
+
+    def put(x, t, g=1.0):
+        i = int(round(t * SR))
+        a, b = max(0, i), min(len(mix), i + len(x))
+        if b > a:
+            mix[a:b] += x[a - i: b - i] * g
+
+    S = lambda k, off=0.0: T[k][0] + off
+    song = [(0.0, 8), (0.55, 8), (1.1, 15), (1.9, 8)]
+    def music_box(t0, octave=0, gain=0.55, spacing=1.0, wet=0.6):
+        for dt, semi in song:
+            tone = note("block.note_block.harp", NB(semi + octave), 0.9)
+            shadow = note("block.note_block.harp", NB(semi + octave) * 2 ** (9 / 1200), 0.35)
+            n = max(len(tone), len(shadow)); m = np.zeros(n); m[: len(tone)] += tone; m[: len(shadow)] += shadow
+            m[: int(0.02 * SR)] *= np.linspace(0, 1, int(0.02 * SR))
+            put(reverb(st(m), 3.8, wet), t0 + dt * spacing, gain)
+    # the song alone in a room
+    put(st(sfx.onepole(RNG.standard_normal(int(3.2 * SR)) * 0.004, 2500)), 0.0, 1.0)
+    music_box(S("open", 0.35))
+    put(drone(S("hk2") - S("open", 1.0) + 1.0), S("open", 1.0), 0.5)
+    put(sfx.synth_air(S("edge") - S("tower") + 0.5), S("tower"), 0.3)
+    # ONE TOWER / ONE JUMP / ONE BLOCK OF WATER: a deep, far toll lands each card
+    for c in edl["cards"][:3]:
+        put(bell(0.5, 0.7, far=True), at(T, c["at"]) - 0.02, 0.75)
+    # THE FLOOR YOU JUMP FROM / IS YOURS. FOREVER.: the first braam
+    put(reverse_swell(1.0, 0.5), at(T, edl["cards"][4]["at"]) - 1.0, 0.5)
+    put(braam(2.4), at(T, edl["cards"][4]["at"]), 0.8)
+    # the plank: the song again, slow and an octave down, under the questions
+    music_box(S("hk2", 0.1), octave=-12, gain=0.32, spacing=1.15, wet=0.7)
+    put(drone(S("fen") - S("hk2") + 1.0, (55.0, 82.4), 0.3), S("hk2"), 0.5)
+    # the edge: wind rising into the step; ONE toll as he steps off
+    put(sfx.synth_wind(S("fogin") - S("edge") + 0.2) * 0.6, S("edge"), 0.45)
+    put(reverse_swell(1.2, 0.7), S("povfall") - 1.2, 0.7)
+    put(bell(0.6, 1.0), S("povfall", 0.02), 0.9)
+    put(thump(55, 0.35, 0.8), at(T, edl["cards"][5]["at"]), 0.6)   # EVERY YEAR
+    put(thump(52, 0.35, 0.8), at(T, edl["cards"][6]["at"]), 0.6)   # ONE OF US
+    # NEVER LANDS: the SECOND toll, and the floor drops out of the score
+    put(reverse_swell(0.9, 0.8), S("fogin") - 0.9, 0.8)
+    put(bell(0.55, 1.0), S("fogin", 0.0), 1.0)
+    put(braam(3.0, 29.1), S("fogin", 0.0), 0.75)
+    put(whoosh(0.9), S("fogin", 0.3), 0.6)
+    # Fen, in the dark, and a bell so far away it's almost not there
+    put(bell(0.6, 0.6, far=True), S("fen", 0.05), 0.5)
+    # the montage cuts on tolls, each a little lower
+    put(sfx.synth_riser(S("bucket") - S("m1")) * 0.5, S("m1"), 0.5)
+    for k, (sid, pitch) in enumerate(zip(["m1", "m2", "m4", "m6", "m5"], [0.7, 0.66, 0.62, 0.58, 0.54])):
+        put(bell(pitch, 0.55), S(sid), 0.45)
+    # the empty bucket, held: IT WAS NEVER / AN ACCIDENT
+    put(drone(S("hush") - S("bucket") + 0.3, (36.7, 55.0), 0.45), S("bucket"), 0.5)
+    put(braam(3.0), at(T, edl["cards"][9]["at"]), 1.0)
+    # hush (silence), then the line that names the film, dry, and the title smashes in on it
+    put(reverse_swell(0.9, 0.8), S("title") - 0.9, 0.7)
+    for k, (dt, semi) in enumerate(song):
+        put(braam(1.6 if k < 3 else 3.2, 36.71 * 2 ** ((semi - 8) / 12)), S("title") + dt, 0.95)
+    put(bell(0.5, 1.0), S("title"), 0.7)
+    put(drone(S("pre_sting") - S("title") + 1.0, (36.7, 73.4, 110.0), 0.45), S("title"), 0.5)
+    music_box(S("title", 3.4), octave=12, gain=0.3, spacing=0.9, wet=0.75)
+    # the button: two bells, very far away, and Buh
+    put(bell(0.6, 0.7, far=True), S("sting", 0.3), 0.8)
+    put(bell(0.6, 0.7, far=True), S("sting", 1.3), 0.8)
+    if vox:
+        for v in edl["vox"]:
+            put(load_vox(v["id"], v.get("far")), at(T, v["at"]), 0.85)
+    mix = mix[: int(total * SR)]
+    a, b = int(S("hush") * SR), int((S("hush") + T["hush"][1]) * SR)   # a true silence, and dry for the line
+    mix[a: a + 240] *= np.linspace(1, 0, 240)[:, None]; mix[a + 240: b] = 0
+    peak = np.abs(mix).max()
+    return mix * (0.95 / peak) if peak > 0.95 else mix
+
+
+def score_v3(edl, T, total, vox):
     mix = np.zeros((int((total + 6) * SR), 2), np.float32)
 
     def put(x, t, g=1.0):
