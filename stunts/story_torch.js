@@ -121,7 +121,8 @@ module.exports = {
     const down = { yaw: 0, pitch: -1.42 }
     const shaft = async (dy, clearFrom) => {
       if (clearFrom !== undefined && clearFrom > dy) say(`/fill ${X + SX} ${F + dy} ${Z + SZ} ${X + SX} ${F + clearFrom} ${Z + SZ} air replace dirt`)   // the dirt only: the wall torches stay
-      await bot.waitForTicks(1)
+      // let the light settle in the new air before the cut lands there (1 tick: 6 dark frames after the THIRTY cut)
+      for (let i = 0; i < 8; i++) { look(0); await bot.waitForTicks(1) }
       ctx.mark('cut')
       say(`/tp @s ${cx.toFixed(3)} ${(F + dy).toFixed(3)} ${cz.toFixed(3)} 180 ${(-down.pitch * 180 / Math.PI).toFixed(2)}`)
       for (let i = 0; i < 10; i++) { await bot.waitForTicks(1); if (Math.abs(bot.entity.position.y - (F + dy)) < 0.1) break }
