@@ -333,7 +333,8 @@
     0.3
    ],
    "dur": 1.2,
-   "one": "ONE BUCKET"
+   "one": "ONE BUCKET",
+   "dy": 265
   },
   {
    "at": [
