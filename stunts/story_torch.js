@@ -176,7 +176,7 @@ module.exports = {
     await line('L05', async (k, at) => {
       if (k === at(2) - 5) digDown()
       if (k === at(2)) { setMeter(2); from5 = { ...K.base }; k5 = k }
-      if (from5) K.turnTo(from5, new ctx.Vec3(X + SX + 0.15, F - 2 + 0.55, cz), Math.min(0.35, (k - k5) / 10))   // a little toward the torch (all the way, it filled the frame)
+      if (from5) K.turnTo(from5, new ctx.Vec3(X + SX + 0.15, F - 2 + 0.55, cz), Math.min(0.6, (k - k5) / 22))   // slowly, partway toward the torch (all the way, it filled the frame)
       look(k)
     })
     // L06: I look up the shaft: the square of sky, and the dog's head over the edge, whining
@@ -186,6 +186,7 @@ module.exports = {
       wake(k)
       if (!from6) from6 = { ...K.base }
       K.turnTo(from6, new ctx.Vec3(cx, F + TOP + 1.3, cz + 0.35), k / 14)
+      say(`/tp @e[tag=dog,limit=1] ${cx.toFixed(3)} ${F + TOP + 1} ${(cz + 0.85).toFixed(3)} ${(180 + Math.sin(k / 4) * 25).toFixed(1)} ${(40 + Math.sin(k / 3) * 12).toFixed(1)}`)   // he shifts and looks down at me
       if (k === at(2)) ctx.sound('entity.wolf.whine', 0.9, 1)
       if (k === at(4)) ctx.sound('entity.wolf.whine', 0.7, 1.1)
       look(k)
@@ -193,11 +194,17 @@ module.exports = {
     // L07: deeper, digging fast, torches passing on the left wall. TEN. TWENTY.
     await shaft(-23, -3)
     const from7 = { ...K.base }
+    let from7b = null
     await line('L07', async (k, at) => {
       if (k === at(0)) setMeter(10)
       if (k === at(1)) setMeter(20)
       // from my feet up the shaft: torches lining the left wall up to a square of sky
-      K.turnTo(from7, new ctx.Vec3(X + SX + 0.15, F - 18 + 0.6 + Math.max(0, k - 12) * 0.35, cz), k / 12)   // up the west wall, then on up the column toward the sky
+      if (k < at(4)) K.turnTo(from7, new ctx.Vec3(X + SX + 0.15, F - 18 + 0.6 + Math.max(0, k - 12) * 0.2, cz), k / 12)   // up the west wall, the torches in a column
+      else {   // "That's how I place them": back down, digging again
+        if (k === at(4)) from7b = { ...K.base }
+        K.turnTo(from7b, new ctx.Vec3(cx, F - 30, cz - 0.4), (k - at(4)) / 8)
+        if (k >= at(4) + 8 && (k - at(4)) % 6 === 2) digDown()
+      }
       look(k)
     })
     // L08: deeper still: the walls glow (magma), the stone hums, something bubbles below
