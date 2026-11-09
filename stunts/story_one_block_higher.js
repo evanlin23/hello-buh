@@ -30,18 +30,40 @@ module.exports = {
 
   async setup (ctx) {
     const { bot } = ctx
-    const sp = bot.entity.position.floored()
-    const g = ctx.findLand(sp.x, sp.z)
+    const c = (s) => ctx.cmd(s)
+    // always the same site (the seed is fixed): open plains at 360, -44. A retry starts wherever the failed attempt
+    // left the bot (600 blocks out after resendChunks), and one take landed against a cut mountain
+    await c('/gamemode creative')
+    await c('/tp @s 360.5 120 -43.5')   // (it falls to the ground in creative: no check on y)
+    await bot.waitForChunksToLoad()
+    await bot.waitForTicks(40)
+    const g = ctx.findLand(360, -44)
     if (!g) throw new Error('no dry land')
     const X = g.x, Z = g.z, F = g.y
     Object.assign(this, { X, Z, F })
-    const c = (s) => ctx.cmd(s)
+    // the far corners weren't loaded yet on one take: two of clearSet's fills failed ("That position is not
+    // loaded") and the south of the set stayed natural terrain, the camera inside it
+    await c(`/forceload add ${X - 82} ${Z - 82} ${X + 82} ${Z + 82}`)
+    await bot.waitForTicks(100)
     const A = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     await ctx.defaultRules()
     await c('/gamerule log_admin_commands false')   // per-tick `execute as` tps flood the bot with op broadcasts
     await c('/gamerule block_drops false')          // the flood washes flowers away: no item rain
     await c('/gamerule random_tick_speed 0')        // grass under the water and the wheat stay as built
-    await clearSet(ctx, A, 64, 26)
+    const cleared = () => {
+      for (let dx = -60; dx <= 60; dx += 12) for (let dz = -60; dz <= 60; dz += 12) for (const dy of [1, 2, 4, 8]) {
+        const bl = bot.blockAt(new ctx.Vec3(X + dx, F + dy, Z + dz))
+        if (bl && bl.name !== 'air') return false
+      }
+      return true
+    }
+    for (let i = 0; ; i++) {
+      await clearSet(ctx, A, 64, 26)
+      await bot.waitForTicks(40)
+      if (cleared()) break
+      if (i === 2) throw new Error('the set did not clear')
+      ctx.log('the set did not clear, again')
+    }
     for (const y of [1, 2, 3]) await c(`/fill ${A(-64, y, -64)} ${A(64, y, 64)} air replace gravel`)   // gravel from a cut hillside lands on the set as grey heaps
     await c('/kill @e[type=!player]')
     await plainsBiome(ctx, A, 80, -4, 30)
@@ -358,7 +380,7 @@ module.exports = {
     ctx.mark('face_off')
 
     // L13: night sixteen. In bed, the dusk sky; down below, digging and splashing. The sea comes in under the frame
-    setTime(12300); setMeter(FINAL); thunk(0.8)
+    setTime(12000); setMeter(FINAL); thunk(0.8)
     for (const t of ['crowd', 'butcher', 'farmer', 'fisher', 'fish', 'sheep']) bury(t)
     await rise(FINAL, P(-16, FINAL + 1 + 24, -26), 1.5, 0.5)
     const flood = (n) => say(`/fill ${A(-62 - 2 * n, n, -62 - 2 * n)} ${A(62 + 2 * n, n, 62 + 2 * n)} water replace air`)
@@ -366,12 +388,14 @@ module.exports = {
       if (k % 5 === 0) ctx.sound(['block.gravel.break', 'block.gravel.hit', 'block.gravel.place', 'item.shovel.flatten'][(k / 5) % 4 | 0], 0.3 + Math.random() * 0.2, 0.8 + Math.random() * 0.3)
       if (k % 13 === 0) ctx.sound('entity.generic.swim', 0.3, 1)
     }
-    let f13 = null
+    let f13 = null, pan13 = 0
     await line('L13', async (k, at) => {
       if ([2, 12, 22, 32].includes(k)) flood([2, 12, 22, 32].indexOf(k) + 1)
       if (k >= at(4) - 4) dig(k)
       if (k >= at(5)) { f13 = f13 || { ...K.base }; K.turnTo(f13, P(1.5, FINAL + 1 + 9, -44), (k - at(5)) / 22) }
-      look(k, k * 0.004, 0)
+      if (k > 0 && k % 6 === 0 && ctx.dayTime < 12330) setTime(ctx.dayTime + 30)   // dusk comes down over the line: the sky turns as it pans (a held sky read as a still)
+      pan13 = k * 0.011
+      look(k, pan13, Math.sin(k / 9) * 0.03)
     })
     say('/kill @e[type=item]')
 
@@ -391,7 +415,7 @@ module.exports = {
       dig(k + 2); if (k % 9 === 4) ctx.sound('entity.villager.ambient', 0.25, 1)
       gangMove(k, false)
       K.turnTo(f14, P(1.5, FINAL + 1 + 3.2, -40), k / (n - 1))
-      look(k)
+      look(k, pan13 * (1 - ease(k / 12)), 0)
     })
 
     // L15: and I peeked over the edge: the village under water, the chain of villagers passing dirt from the hill
@@ -404,7 +428,8 @@ module.exports = {
       K.turnTo(f15, P(7, 4.5, -4), k / (at(2) + 2))
       if (!seen && k >= at(2) + 4) { seen = true; ctx.mark('face_on', { near: [X + 6.5, Z - 2, 9.5] }); ctx.sound('entity.villager.ambient', 0.8, 1); ctx.mark('seen') }
       if (!seen) dig(k)
-      gangMove(k, seen)
+      gangMove(k * (seen ? 0.45 : 1), false)   // caught, they keep treading water (frozen, the shot held 0.6 s)
+      if (seen && k % 2 === 0) ctx.particles('splash', P(2.5 + Math.random() * 10.5, 4.95, -3.5 + (Math.random() - 0.5)), { count: 3, spread: 0.8 })
       if (k === liftK) {
         lifted = true; go(false)
         ctx.mark('lift'); thunk(1); setMeter(FINAL + 1)
@@ -413,10 +438,10 @@ module.exports = {
         say(`/tp @s ${p.x.toFixed(3)} ${top(FINAL + 1).toFixed(3)} ${p.z.toFixed(3)}`)   // no cut mark: the view rides up the one block
         grow(FINAL + 1)
       }
-      look(k)
+      look(k, seen ? Math.sin((k - at(2)) / 11) * 0.05 : 0, 0)
     }, 0.8)
     // L16: so THAT'S why... (into line 1)
-    await line('L16', async (k) => { gangMove(k, true); if (k % 3 === 0) ctx.particles('splash', P(2.5 + Math.random() * 10, 4.95, -3.5), { count: 2, spread: 0.8 }); look(k, 0, -0.03 * ease(k / 14)) }, 0.14)
+    await line('L16', async (k) => { gangMove(k * 0.45 + 40, false); if (k % 3 === 0) ctx.particles('splash', P(2.5 + Math.random() * 10, 4.95, -3.5), { count: 2, spread: 0.8 }); look(k, 0, -0.03 * ease(k / 14)) }, 0.14)
     ctx.mark('story_end')
     bot.setControlState('sneak', false)
     await bot.waitForTicks(4)
