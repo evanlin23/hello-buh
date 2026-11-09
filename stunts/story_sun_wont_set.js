@@ -277,15 +277,15 @@ module.exports = {
     say('/tag @e[tag=zf] add out')
     let zx = ZF[0], lit = false, street = false
     await line('L11', async (k, at) => {
-      const out = at(3) - 9
+      const out = at(3) - 14
       if (!street) {
         // he shuffles out past the leaves, burns, and scrambles back under
-        if (k >= out && k < out + 9) zx = Math.min(8.7, zx + 0.17)
-        if (k >= out + 12) zx = Math.max(ZF[0], zx - 0.19)
-        say(`/tp @e[tag=zf,limit=1] ${(X + zx).toFixed(3)} ${F + 1} ${(Z + ZF[1] + (ctx.tick % 2 ? 0.002 : -0.002)).toFixed(3)} ${(k >= out + 12 && zx > ZF[0] ? -90 + 180 * ease((k - out - 11) / 4) : -90).toFixed(0)} 0`)
+        if (k >= out && k < out + 14) zx = Math.min(8.7, zx + 0.11)   // a zombie's walk
+        if (k >= out + 17) zx = Math.max(ZF[0], zx - 0.11)
+        say(`/tp @e[tag=zf,limit=1] ${(X + zx).toFixed(3)} ${F + 1} ${(Z + ZF[1] + (ctx.tick % 2 ? 0.002 : -0.002)).toFixed(3)} ${(k >= out + 17 && zx > ZF[0] ? -90 + 180 * ease((k - out - 16) / 4) : -90).toFixed(0)} 0`)
         // sunlight sets a zombie alight on a random tick (~4% a tick): this one catches at once
-        if (k === out + 6 && !lit) { lit = true; say('/data merge entity @e[tag=zf,limit=1] {Fire:200s}') }
-        if (k === out + 8) ctx.sound('entity.zombie.hurt', 0.9, 1)
+        if (k === out + 10 && !lit) { lit = true; say('/data merge entity @e[tag=zf,limit=1] {Fire:200s}') }
+        if (k === out + 12) ctx.sound('entity.zombie.hurt', 0.9, 1)
         if (k === 2) groan(0.6, 1)
       }
       if (!street && k >= at(4) - 1) {
@@ -332,7 +332,7 @@ module.exports = {
     await cut(5.6, 0.5, P(-60, 9.5, 0.5))
     let tree = false, k14 = 0
     await line('L14', async (k, at) => {
-      const end = at(2) - 2
+      const end = at(2) - 6   // dusk for the last few ticks of the shot, so the street is seen to dim with the sky
       if (!tree) setTime(DAY + (DUSK - DAY) * Math.min(1, (k + 1) / end))   // ~20 ticks from late afternoon to dusk: a time-lapse of the first sunset in 300 days
       if (!tree && k >= at(2) - 1) {
         tree = true; k14 = k; setTime(DUSK)
@@ -346,7 +346,6 @@ module.exports = {
       }
       if (tree) {
         say(`/execute as @e[tag=za] at @s run tp @s ~0.1 ~ ~ -90 0`)   // out from under the leaves, toward me
-        bot.setControlState('back', k > k14 + 3)                          // and I back away
         if (k === k14 + 8) groan(0.8, 1.1)
       } else K.base = K.aim(P(-60, 9.5 - 5 * ease(k / end), 0.5))        // the camera sinks with it
       look(k)
@@ -363,7 +362,7 @@ module.exports = {
     const hits15 = [D - 33, D - 44].filter(t => t < 0).map(t => T15 + t)
     // the street's zombies: each makes for its own place in an arc in front of me (straight at me they piled
     // into one green wall), at a zombie's walk, and they follow when a hit knocks me back
-    const SLOT = [[1.6, 0], [1.9, -34], [1.9, 34], [2.9, -17], [2.9, 17], [3.7, -2]]
+    const SLOT = [[1.35, 0], [1.9, -34], [1.9, 34], [2.9, -17], [2.9, 17], [3.7, -2]]
     const Zs = ZB.map(([x, z]) => ({ x, z }))
     let me = { x: 3.0, z: 0.5 }, close = 1, shuffle = 0
     const zombies = () => {
@@ -371,12 +370,23 @@ module.exports = {
       Zs.forEach((q, i) => {
         const a = (SLOT[i][1] + shuffle * (i % 2 ? 1 : -1)) * Math.PI / 180, r = SLOT[i][0] * close
         const dx = me.x + r * Math.cos(a) - q.x, dz = me.z + r * Math.sin(a) - q.z, d = Math.hypot(dx, dz)
-        if (d > 0.02) { const v = Math.min(0.105, d); q.x += dx / d * v; q.z += dz / d * v }
+        if (d > 0.02) { const v = Math.min(0.115, d); q.x += dx / d * v; q.z += dz / d * v }
         const j = d > 0.02 ? 0 : (ctx.tick % 2 ? 0.002 : -0.002)
         say(`/tp @e[tag=zb${i},limit=1] ${(X + q.x + j).toFixed(3)} ${F + 1} ${(Z + q.z).toFixed(3)} ${yawOf(me.x - q.x, me.z - q.z).toFixed(1)} 8`)
       })
     }
     const hit = () => say(`/damage @s 3 minecraft:mob_attack by @e[tag=zb0,limit=1]`)
+    // the hit's knockback: the server sends it as the player's velocity, which mineflayer scales away to nothing
+    // on 1.21.11 (blocks a tick read as 1/8000ths), so the bot applies vanilla's LivingEntity.knockback(0.4) itself
+    // when that packet comes: half the old speed plus 0.4 away from the zombie, and 0.4 up from the ground
+    bot._client.on('entity_velocity', (p) => {
+      if (p.entityId !== bot.entity.id || ctx.died) return
+      setImmediate(() => {
+        const dx = me.x - Zs[0].x, dz = me.z - Zs[0].z, d = Math.hypot(dx, dz) || 1, v = bot.entity.velocity
+        v.x = v.x / 2 + dx / d * 0.4; v.z = v.z / 2 + dz / d * 0.4
+        if (bot.entity.onGround) v.y = Math.min(0.4, v.y / 2 + 0.4)
+      })
+    })
     const front = () => P(Math.max(Zs[0].x, me.x + 1.2), 2.55, Zs[0].z * 0.5 + me.z * 0.5)
     let fromA = null, fromB = null, kB = 0
     await line('L15', async (k, at) => {
@@ -397,7 +407,6 @@ module.exports = {
       if (!ctx.died) {
         if (hits16.includes(k)) hit()
         if (k === 6 || k === 20) groan(1, k === 6 ? 1 : 0.85)
-        bot.setControlState('sneak', true); bot.setControlState('back', true)   // backing off at a crouch: slower than they walk
         K.base = K.aim(front())
         look(k, Math.sin(k * 0.9) * 0.035, Math.sin(k * 0.7 + 1) * 0.025)
       } else if (!dead) { dead = true; ctx.mark('slain') }
