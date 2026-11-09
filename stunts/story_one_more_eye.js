@@ -289,7 +289,7 @@ module.exports = {
     let openAt = -1
     await line('L14', async (k, at) => {
       if (k < at(1) && k % 2 === 0) ctx.particles('portal', B(0.5, 1.2, 2.5), { count: 7 })
-      if (k === at(1)) { eye(11); ctx.sound('block.end_portal_frame.fill', 1, 1); setMeter(12) }
+      if (k === at(1)) { eye(11); ctx.sound('block.end_portal_frame.fill', 1, 1); setMeter(12); ctx.particles('smoke', B(0.5, 1.9, 2.5), { count: 2 }) }   // vanilla puffs smoke on the frame as an eye goes in
       if (k === at(1) + 2) {
         say(`/fill ${blk(-1, 1, -1)} ${blk(1, 1, 1)} end_portal`)
         ctx.sound('block.end_portal.spawn', 1, 1); ctx.mark('open'); openAt = k
