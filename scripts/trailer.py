@@ -123,9 +123,13 @@ def card_png(c, path):
     d = ImageDraw.Draw(im)
     if "title" in c:
         f = ImageFont.truetype(str(FONT / "Cinzel_900Black.ttf"), 176)
-        glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         # (high in the frame: the tower's lit deck fills the lower middle, and the lines under the title sat on it)
-        tracked(ImageDraw.Draw(glow), (W / 2, H / 2 - 170), c["title"], f, 26, (255, 236, 200, 255))
+        # A dark shadow first: the v4 title sits over the tower's lit face, where a white glow alone lost the letters.
+        shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        tracked(ImageDraw.Draw(shadow), (W / 2, H / 2 - 166), c["title"], f, 26, (0, 0, 0, 210))
+        im = Image.alpha_composite(im, shadow.filter(ImageFilter.GaussianBlur(16)))
+        glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        tracked(ImageDraw.Draw(glow), (W / 2, H / 2 - 170), c["title"], f, 26, (255, 236, 200, 150))
         im = Image.alpha_composite(im, glow.filter(ImageFilter.GaussianBlur(18)))
         d = ImageDraw.Draw(im)
         tracked(d, (W / 2, H / 2 - 170), c["title"], f, 26, (255, 255, 255, 255))
@@ -381,8 +385,8 @@ def score_v4(edl, T, total, vox):
     # the empty bucket, held: IT WAS NEVER / AN ACCIDENT
     put(drone(S("hush") - S("bucket") + 0.3, (36.7, 55.0), 0.45), S("bucket"), 0.5)
     put(braam(3.0), at(T, edl["cards"][9]["at"]), 1.0)
-    # hush (silence), then the line that names the film, dry, and the title smashes in on it
-    put(reverse_swell(0.9, 0.8), S("title") - 0.9, 0.7)
+    # hush (silence), then the line that names the film, dry, and the title smashes in on its last word (no swell into
+    # the title: in v4's first cut a swell and the braams sat on "forty-one", and a listener heard "fifty-one")
     for k, (dt, semi) in enumerate(song):
         put(braam(1.6 if k < 3 else 3.2, 36.71 * 2 ** ((semi - 8) / 12)), S("title") + dt, 0.95)
     put(bell(0.5, 1.0), S("title"), 0.7)
@@ -391,12 +395,26 @@ def score_v4(edl, T, total, vox):
     # the button: two bells, very far away, and Buh
     put(bell(0.6, 0.7, far=True), S("sting", 0.3), 0.8)
     put(bell(0.6, 0.7, far=True), S("sting", 1.3), 0.8)
-    if vox:
-        for v in edl["vox"]:
-            put(load_vox(v["id"], v.get("far")), at(T, v["at"]), 0.85)
     mix = mix[: int(total * SR)]
-    a, b = int(S("hush") * SR), int((S("hush") + T["hush"][1]) * SR)   # a true silence, and dry for the line
+    # a true silence from the hush to the title, so the line that names the film plays alone (a braam's tail used to
+    # come back after the hush)
+    a, b = int(S("hush") * SR), int(S("title") * SR)
     mix[a: a + 240] *= np.linspace(1, 0, 240)[:, None]; mix[a + 240: b] = 0
+    if vox:
+        # every line rides over the music: duck the score about 5 dB under each one (with 60 ms ramps)
+        duck = np.ones(len(mix), np.float32); voice = np.zeros_like(mix); r = int(0.06 * SR)
+        for v in edl["vox"]:
+            x = load_vox(v["id"], v.get("far")) * 0.85
+            i = int(round(at(T, v["at"]) * SR)); j = min(len(mix), i + len(x))
+            if j <= i:
+                continue
+            voice[i:j] += x[: j - i]
+            lo, hi = max(0, i - r), min(len(mix), j + r)
+            env = np.full(hi - lo, 0.56, np.float32)
+            env[: min(r, len(env))] = np.linspace(1, 0.56, min(r, len(env)))
+            env[-min(r, len(env)):] = np.linspace(0.56, 1, min(r, len(env)))
+            duck[lo:hi] = np.minimum(duck[lo:hi], env)
+        mix = mix * duck[:, None] + voice
     peak = np.abs(mix).max()
     return mix * (0.95 / peak) if peak > 0.95 else mix
 
