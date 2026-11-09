@@ -123,7 +123,7 @@ module.exports = {
     // nineteen golems: fourteen lining the street, two at its south end, two on the plaza, one at my door
     const G = []
     for (const z of ROWS) { G.push([-2.1, z, -90]); G.push([3.1, z, 90]) }
-    G.push([-4.5, 41.5, -90], [5.5, 41.5, 90], [-1.6, -8.8, 0], [9.5, -4.5, 0], [22.5, -22.2, 180])
+    G.push([-4.5, 41.5, -90], [5.5, 41.5, 90], [-1.6, -8.8, 0], [9.5, -4.5, 0], [22.5, -21.6, 180])
     const rankOf = (i) => i < 5 ? 'ga' : i < 12 ? 'gb' : 'gc'
     for (let i = 0; i < G.length; i++) await c(`/summon iron_golem ${(X + G[i][0]).toFixed(2)} ${F + 1} ${(Z + G[i][1]).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,PlayerCreated:0b,Tags:["g","g${i}","${rankOf(i)}"${i === 18 ? ',"guard"' : ''}${i < 16 ? ',"row"' : ''}],Rotation:[${G[i][2]}f,0f]}`)
 
@@ -254,21 +254,21 @@ module.exports = {
       watch(9)
       // eyes open on the ceiling, then down to the door: one slow move the whole way (a held ceiling was a second of nothing)
       const t0 = 3
-      if (k >= t0) { from = from || { ...K.base }; K.turnTo(from, P(22.5, 1.0, -22.2), (k - t0) / (at(2) + 2 - t0)) }   // down by SORE, aimed low: he stands above the caption line
+      if (k >= t0) { from = from || { ...K.base }; K.turnTo(from, P(22.5, 1.0, -21.6), (k - t0) / (at(2) + 2 - t0)) }   // down by SORE, aimed low: he stands above the caption line
       go(k >= at(3) - 2 && bot.entity.position.z < Z - 26.8)
       look(k)
     })
     go(false)
-    // L07: he waits outside my door. I back off; he comes after me
-    await cut(20.6, -23.5, P(22.5, 3.2, -22.2))   // just out of the door, so he only turns his head a little (from the west side his head snapped 90 degrees)
-    let gx = 22.5
+    // L07: he waits outside my door. I step out right under him (the same side he was already facing: from the
+    // side his head was twisted round on the cut frame), back off into the house, and he comes after me to the door
+    await cut(22.5, -23.85, P(22.5, 3.2, -21.6))
+    let gz = -21.6
     await line('L07', async (k, at) => {
-      const follow = k >= at(2)
-      go(k > 2 && k < at(2) - 3 && bot.entity.position.x < X + 21.0)   // a step up to him first (the shot held still for half a second)
-      bot.setControlState('back', follow && bot.entity.position.x > X + 16.2)
-      if (follow) gx -= 0.085
-      say(`/tp @e[tag=guard,limit=1] ${(X + gx + jit()).toFixed(3)} ${F + 1} ${Z - 22.2} facing entity ${me} eyes`)
-      K.base = K.aim(P(gx, 3.2, -22.2)); look(k)
+      const follow = k >= at(1)
+      bot.setControlState('back', follow && bot.entity.position.z > Z - 26.6)
+      if (follow) gz = Math.max(-23.2, gz - 0.07)
+      say(`/tp @e[tag=guard,limit=1] ${(X + 22.5 + jit()).toFixed(3)} ${F + 1} ${(Z + gz).toFixed(3)} facing entity ${me} eyes`)
+      K.base = K.aim(P(22.5, 3.2, gz)); look(k)
     })
     bot.setControlState('back', false)
     // L08: the gossip at the well. Something groans all night; they all look at me; they scatter
