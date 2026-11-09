@@ -22,7 +22,7 @@ const DAY = 11500, DUSK = 12950
 
 // the cast's fixed spots (set-relative x, z)
 const ZA = [[2.7, 29.3], [3.2, 31.9], [5.5, 28.5], [5.8, 31.6], [5.9, 29.9], [4.4, 32.6]]   // under the tree
-const ZF = [6.6, 30.7]                                                                       // the one who tries the sun
+const ZF = [7.2, 30.7]                                                                       // the one who tries the sun
 const ZB = [[8.0, 0.4, 1.25], [8.8, -1.2, 1.7], [9.2, 1.6, 1.5], [10.6, 0.2, 2.2], [11.0, -1.4, 2.6], [11.4, 1.2, 2.4]]   // x, z, how close each gets
 const GAZE = [[-9.2, -1.6, 'cleric'], [-10.8, -0.7, 'mason'], [-9.9, 1.9, 'shepherd'], [-11.4, 2.3, 'fletcher']]
 
@@ -30,6 +30,7 @@ module.exports = {
   name: 'story_sun_wont_set',
   biome: process.env.BIOME || 'minecraft:plains',
   time: DAY,
+  clouds: false,             // Video Settings > Clouds: OFF (the renderer fogs dusk clouds orange one way and grey the other)
   brightness: 1,             // Options > Brightness: Bright, so the dusk scenes read
   caption: "the sun hasn't set in 300 days 💀",
   edit: { caption: "the sun hasn't set in 300 days 💀", red: 'sun', story: 'stories/sun_wont_set', startAt: 'line:0', endAfter: 'death:1.35', zoom: [['death:0.1', 'death:1.35', 1.05], ['death:0.5', 'death:1.35', 1.05], ['death:0.95', 'death:1.35', 1.06]], deathScreen: true, sfx: [['riser', 'lever', 'dusk', { gain: 0.5 }], ['impact', 'dusk', { gain: 0.6 }], ['impact', 'death', { gain: 0.6 }]] },
@@ -237,10 +238,11 @@ module.exports = {
     const T8 = Math.round((S.line('L08').dur + S.gap) * 20)
     await line('L08', async (k, at) => {
       const no = at(2)
-      const shake = k >= no ? Math.sin((k - no) * 0.82) * 0.2 * Math.max(0, 1 - (k - no) / 16) : 0
+      const shake = k >= no ? Math.sin((k - no) * 0.82) * 0.2 * Math.min(1, (k - no) / 5) * Math.max(0, 1 - (k - no) / 16) : 0
       G.pitch = k < no + 3 ? -6 : -6 + 36 * ease((k - no - 3) / 7)
       if (k === no + 5) ctx.sound('entity.villager.no', 1, 0.9)
-      if (k >= T8 - 6) { G.yaw = -90 - 180 * ease((k - T8 + 7) / 5); G.pitch = 20 }   // turns away
+      if (k >= T8 - 11) { G.yaw = -90 - 180 * ease((k - T8 + 12) / 5); G.pitch = 20 }   // turns away
+      if (k >= T8 - 6) G.x -= 0.135                                                    // and sets off for home
       K.base = K.aim(P(G.x, 2.72, 0.5)); look(k, shake)
     })
     // ---- L09: then I walk him home. He always gets there first (he pulls away down the street)
@@ -251,7 +253,7 @@ module.exports = {
     await line('L09', async (k, at) => {
       go(true)
       const dx = door.x - G.x, dz = door.z - G.z, d = Math.hypot(dx, dz)
-      const v = Math.min(0.42, 0.12 + k * 0.05)   // off he goes
+      const v = Math.min(0.33, 0.135 + k * 0.05)   // off he goes, at a villager's run
       if (d > v) { G.x += dx / d * v; G.z += dz / d * v; G.yaw = yawOf(dx, dz) } else if (!home) { home = true; G.x = door.x; G.z = door.z }
       if (home) { const p = bot.entity.position; G.yaw = yawOf(p.x - X - G.x, p.z - Z - G.z) }   // at his door, looking back for me
       K.base = K.aim(P(Math.min(G.x, bot.entity.position.x - X - 4), 2.4, G.z * 0.6 + 0.2)); look(k)
@@ -263,7 +265,7 @@ module.exports = {
     let rig = false
     await line('L10', async (k, at) => {
       if (!rig && k >= at(3) - 1) { rig = true; go(false); await cut(32.4, 12.5, P(28.0, 1.7, 12.5)) }
-      if (!rig) { go(k > 2 && k < 8); look(k) } else { bot.setControlState('sneak', true); go(bot.entity.position.x > X + 30.2); K.sway = 0.6; look(k) }   // creeping up on it
+      if (!rig) { go(k > 2 && k < 8); look(k) } else { bot.setControlState('sneak', true); go(bot.entity.position.x > X + 30.2); K.sway = 0.5; K.base = K.aim(P(28.2, 1.55, 12.5)); look(k) }   // creeping up on it
     })
     go(false); bot.setControlState('sneak', false); K.sway = 1
 
@@ -275,15 +277,15 @@ module.exports = {
     say('/tag @e[tag=zf] add out')
     let zx = ZF[0], lit = false, street = false
     await line('L11', async (k, at) => {
-      const out = at(3) - 8
+      const out = at(3) - 9
       if (!street) {
         // he shuffles out past the leaves, burns, and scrambles back under
-        if (k >= out && k < out + 7) zx = Math.min(8.75, zx + 0.36)
-        if (k >= out + 11) zx = Math.max(ZF[0], zx - 0.36)
-        say(`/tp @e[tag=zf,limit=1] ${(X + zx).toFixed(3)} ${F + 1} ${(Z + ZF[1] + (ctx.tick % 2 ? 0.002 : -0.002)).toFixed(3)} ${k >= out + 11 && zx > ZF[0] ? 90 : -90} 0`)
+        if (k >= out && k < out + 9) zx = Math.min(8.7, zx + 0.17)
+        if (k >= out + 12) zx = Math.max(ZF[0], zx - 0.19)
+        say(`/tp @e[tag=zf,limit=1] ${(X + zx).toFixed(3)} ${F + 1} ${(Z + ZF[1] + (ctx.tick % 2 ? 0.002 : -0.002)).toFixed(3)} ${(k >= out + 12 && zx > ZF[0] ? -90 + 180 * ease((k - out - 11) / 4) : -90).toFixed(0)} 0`)
         // sunlight sets a zombie alight on a random tick (~4% a tick): this one catches at once
-        if (k === out + 4 && !lit) { lit = true; say('/data merge entity @e[tag=zf,limit=1] {Fire:200s}') }
-        if (k === out + 6) ctx.sound('entity.zombie.hurt', 0.9, 1)
+        if (k === out + 6 && !lit) { lit = true; say('/data merge entity @e[tag=zf,limit=1] {Fire:200s}') }
+        if (k === out + 8) ctx.sound('entity.zombie.hurt', 0.9, 1)
         if (k === 2) groan(0.6, 1)
       }
       if (!street && k >= at(4) - 1) {
@@ -311,15 +313,16 @@ module.exports = {
     await cut(31.0, 12.5, P(28.0, 1.6, 12.5))
     G.yaw = 90; G.pitch = -14      // grandpa turns to watch the sun
     B.on = false; say(`/tp @e[tag=butcher] ${X + 20} ${F - 8} ${Z - 40}`)   // the butcher goes in for the night
-    K.sway = 0.4
+    K.sway = 0.25
     let from13 = null
     ctx.mark('lever')
     await line('L13', async (k, at) => {
-      go(bot.entity.position.x > X + 29.9)
+      go(bot.entity.position.x > X + 30.3)
       if (k === at(2)) {
         bot._client.write('block_place', { hand: 0, location: { x: X + 28, y: F + 1, z: Z + 12 }, direction: 5, cursorX: 0.2, cursorY: 0.5, cursorZ: 0.5, insideBlock: false, worldBorderHit: false, sequence: 0 })
         bot.swingArm(); ctx.sound('block.lever.click', 0.6, 0.5)
       }
+      if (k <= at(2) + 2) K.base = K.aim(P(28.2, 1.5, 12.5))   // the crosshair stays on the lever for the click
       if (k >= at(2) + 3) { from13 = from13 || { ...K.base }; K.turnTo(from13, P(28.0, 2.75, 12.5), (k - at(2) - 3) / 12); K.sway = 1 }   // up to the lamp as it goes dark
       look(k)
     })
@@ -351,7 +354,7 @@ module.exports = {
 
     bot.setControlState('back', false)
     // ---- L15: I yelled, run, grandpa! He was already gone
-    G.x = 1.6; G.z = 0.5
+    G.x = -3.5; G.z = 0.5   // he bolted when they came out
     await cut(3.0, 0.5, P(9.5, 2.4, 0.5))
     zbUp = 'go'
     const T15 = Math.round((S.line('L15').dur + S.gap) * 20), T16 = Math.round((S.line('L16').dur + S.gap) * 20)
@@ -378,7 +381,7 @@ module.exports = {
     let fromA = null, fromB = null, kB = 0
     await line('L15', async (k, at) => {
       zombies()
-      G.x -= Math.min(0.42, 0.2 + k * 0.05); G.yaw = 90; G.pitch = 0   // grandpa, flat out, from the first word
+      G.x -= 0.32; G.yaw = 90; G.pitch = 0   // grandpa, flat out (a villager's panic run), already well down the street
       if (k === 3) groan(0.9, 1)
       const turn = at(1) + 2
       if (k >= turn && !fromB) { fromA = fromA || { ...K.base }; K.turnTo(fromA, P(G.x, 2.4, 0.9), (k - turn) / 11) }   // round to where grandpa was... he's a dot down the street
