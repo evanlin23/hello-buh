@@ -35,8 +35,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'who keeps filling my end portal 😳',
   edit: {
-    caption: 'who keeps filling my end portal 😳', red: 'filling', story: 'stories/one_more_eye', startAt: 'line:0', endAfter: 'roar:1.7', deathScreen: true,
-    zoom: [['roar:0.3', 'roar:1.7', 1.1]], punch: [['open', 0, 0.08]],
+    caption: 'who keeps filling my end portal 😳', red: 'filling', story: 'stories/one_more_eye', startAt: 'line:0', endAfter: 'roar:1.9', deathScreen: true,
+    zoom: [['roar:0.3', 'roar:1.9', 1.1]], punch: [['open', 0, 0.08]],
     shake: [['growl', 0, 10], ['growl', 1, 10], ['growl', 2, 14], ['roar', 0, 28]]
   },
   expectDeath: true,
@@ -107,8 +107,8 @@ module.exports = {
     }
     await c(`/fill ${R(3, 2, 12)} ${R(5, 3, 12)} glass`); await c(`/fill ${R(9, 2, 12)} ${R(11, 3, 12)} glass`)
     await c(`/fill ${R(0, 2, 4)} ${R(0, 3, 7)} glass`); await c(`/fill ${R(14, 2, 4)} ${R(14, 3, 7)} glass`)
-    await c(`/fill ${R(1, 1, 1)} ${R(1, 2, 1)} bookshelf`); await c(`/setblock ${R(13, 1, 1)} crafting_table`); await c(`/setblock ${R(12, 1, 1)} note_block`)
-    for (const p of [R(1, 6, 1), R(13, 6, 1), R(13, 5, 1), R(1, 3, 1), R(13, 2, 1), R(7, 6, 1), R(5, 1, 1), R(9, 1, 2), R(12, 2, 1)]) await c(`/setblock ${p} cobweb`)
+    await c(`/fill ${R(1, 1, 1)} ${R(1, 2, 1)} bookshelf`); await c(`/setblock ${R(13, 1, 1)} crafting_table`)
+    for (const p of [R(1, 6, 1), R(13, 6, 1), R(13, 5, 1), R(1, 3, 1), R(13, 2, 1), R(7, 6, 1), R(5, 1, 1), R(9, 1, 2)]) await c(`/setblock ${p} cobweb`)
     await c(`/fill ${R(6, 1, 3)} ${R(8, 1, 5)} red_carpet`)
     // --- the kitchen (L05, L10): the table still set for him, cobwebs on his chair
     await room(Kt, 8, 7, 4, [[2, 2], [6, 5], [4, 3]])
@@ -196,9 +196,9 @@ module.exports = {
     await cut(RX + 6.3, RZ + 10.7, R(7.5, 3.9, 0.5))
     let bench = false
     await line('L04', async (k, at) => {   // the whole name in frame, a slow push in; on "With a WOODEN sword" a cut to the crafting table he made it on, under cobwebs (one 3.45 s shot with nothing new failed the retention audit)
-      if (!bench && k >= at(5) - 1) { bench = true; await cut(RX + 10.4, RZ + 3.6, R(13.4, 1.7, 1.5)) }
+      if (!bench && k >= at(5) - 1) { bench = true; await cut(RX + 10.4, RZ + 3.6, R(13.5, 1.6, 1.5)) }
       sneak(true); go(true)
-      K.base = K.aim(bench ? R(13.4, 1.7, 1.5) : R(7.5, 3.9, 0.5)); look(k)
+      K.base = K.aim(bench ? R(13.5, 1.6, 1.5) : R(7.5, 3.9, 0.5)); look(k)
     }, -0.1)
     go(false); sneak(false)
     // L05: back by dinner (the kitchen table still set, cobwebs on his chair)
@@ -227,15 +227,15 @@ module.exports = {
     let got = -1
     await line('L07', async (k, at) => {
       if (got < 0 && bot.inventory.items().some(it => it.name === 'wooden_sword')) got = k
-      go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); bot.setControlState('left', got >= 0)   // a slow sidestep round the ring to the cut (creeping forward, he reached the frame and parked against it for 0.6 s)
+      go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); bot.setControlState('right', got >= 0)   // a slow sidestep to the cut, away from where the boots appear (creeping forward he parked against the frame; sidestepping left he was in reach of the boots as they spawned, and picked them up before the cut)
       if (k % 4 === 0 && got < 0) ctx.particles('portal', B(1.5, 0.9, 3.75), { count: 5 })
       if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 1.3, 0.5), (k - got) / 26) } else K.base = K.aim(B(1.5, 1.15, 3.75))
       look(k)
     })
-    go(false); bot.setControlState('left', false)
+    go(false); bot.setControlState('right', false)
     // L08: on Tuesday, his boots. Still smoking (a real pickup again: on the floor they were 110 px wide, and the
     // wide shot hid them behind the hotbar. In the hand they are big, with the smoke coming off them)
-    say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:0s,Age:-32768s,Tags:["boots"]}`)
+    say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:12s,Age:-32768s,Tags:["boots"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
     sneak(false)
     await cut(BX - 1.5, BZ + 6.4, B(-1.5, 1.15, 3.75))
@@ -258,23 +258,25 @@ module.exports = {
     await cut(BX - 4.9, BZ + 5.6, B(0.2, 1.2, 1.2))
     let away = false
     await line('L09', async (k, at) => {   // he puts the boots away on "PACKING" (switching after the cut played the swap over the next scene's first frames)
-      go(k > 2 && k < 14)
+      sneak(true); go(true)
       if (!away && k >= at(2)) { away = true; ctx.select(0) }
       if (!away && k % 5 === 0) handSmoke()
       if (k % 4 === 0) wisps(6); look(k)
     })
-    go(false)
+    go(false); sneak(false)
     // L10: at night the floor growls (the kitchen at night; purple seeps up through the boards)
     say('/time set 18000'); ctx.dayTime = 18000; ctx.mark('time', { time: 18000 })
     await cut(KX + 6.5, KZ + 5.75, Kt(2.6, 1.0, 5.6))   // along the south wall (from the corner the chair's cobweb filled the view)
     from = null
     await line('L10', async (k, at) => {
+      sneak(true); go(k < at(2) - 2)   // a slow push in until the growl stops him
       if (k === at(2) - 2) growl(0.55, 0.8)
       if (k >= at(2) - 2 && k < at(2) + 12 && k % 2 === 0) ctx.particles('portal', Kt(2.0 + Math.random() * 2.6, 0.6, 5.0 + Math.random() * 1.4), { count: 9 })
       if (k >= at(3)) { from = from || { ...K.base }; K.turnTo(from, Kt(3.2, 2.2, 3.6), (k - at(3)) / 18) }
       const j = k >= at(2) - 2 && k < at(2) + 8 ? 1 : 0
       look(k, Math.sin(k * 2.1) * 0.012 * j, Math.sin(k * 1.7) * 0.01 * j)
     })
+    sneak(false)
     // L11: and the ceiling above it keeps turning black (a tilt from the ring up to the soot)
     await cut(BX + 3.6, BZ + 4.2, B(0.5, 1.4, 0.5))
     from = null
@@ -299,7 +301,7 @@ module.exports = {
       if (k >= at(2) && k % 2 === 0) ctx.particles('portal', B(0.5, 1.2, 2.5), { count: 7 })
       look(k)
     })
-    go(false); sneak(false)
+    go(false)   // still crouched through the cut: standing up on it gave 3 stray frames (frame review)
     // L14: number twelve: purple gathers on the frame, the eye is in, the portal opens
     await cut(BX + 0.5, BZ + 4.5, B(0.5, 1.75, 2.5))
     from = null
@@ -317,7 +319,7 @@ module.exports = {
     // L15: Leo? Is that you? (up to the frame, looking down into the stars; something answers)
     from = { ...K.base }
     await line('L15', async (k, at) => {
-      go(bz() > 3.36)
+      sneak(false); go(bz() > 3.36)
       K.turnTo(from, B(0.5, 0.9, 0.6), k / 12)
       if (k % 2 === 0) wisps(6, 1.6)
       if (k === at(2) + 5) { growl(0.7, 0.75); breath(50); hurt(5) }
@@ -342,8 +344,8 @@ module.exports = {
     say('/damage @s 100 minecraft:dragon_breath')
     for (let i = 0; i < 20 && !ctx.died; i++) await bot.waitForTicks(1)
     // behind the death screen: the breath still pours out of the ring (the portal's stars drift too)
-    for (let i = 0; i < 48; i++) {
-      if (i % 2 === 0) wisps(8, 1.3)   // low over the stars: the death message stays clear
+    for (let i = 0; i < 52; i++) {
+      if (i % 2 === 0) wisps(6, 1.1)   // low over the stars: the death message stays clear
       await bot.waitForTicks(1)
     }
     ctx.mark('story_end')
