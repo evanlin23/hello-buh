@@ -24,7 +24,7 @@ module.exports = {
   name: 'story_more_golems',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'who keeps building iron golems 💀',
-  edit: { caption: 'who keeps building iron golems 💀', red: 'golems', story: 'stories/more_golems', startAt: 'line:0', endAfter: 'death:1.2', zoom: [['death:0.1', 'death:1.2', 1.12]], punch: [['pop', 0, 0.08]], deathScreen: true },
+  edit: { caption: 'who keeps building iron golems 💀', red: 'golems', story: 'stories/more_golems', startAt: 'line:0', endAfter: 'death:1.1', zoom: [['death:0.6', 'death:1.2', 1.14]], punch: [['pop', 0, 0.08]], deathScreen: true },
   expectDeath: true,
   hideHand: true,          // no Steve arm: who "I" am is the twist
   time: 1000,              // morning
@@ -46,9 +46,11 @@ module.exports = {
     await c('/gamerule keep_inventory true')
     await c('/difficulty normal')                   // mob_attack damage scales to 0 on peaceful
     await clearSet(ctx, A, 64, 24)
-    // natural gravel above the clearing falls once the air under it is gone: it landed as a mound in the street.
-    // Wait for it, then sweep the bottom layers again
-    for (let pass = 0; pass < 2; pass++) { await ctx.sleep(2500); for (let y = 1; y <= 4; y++) await c(`/fill ${A(-64, y, -64)} ${A(64, y, 64)} air`) }
+    // a hill higher than the clearing's top leaves gravel and sand hanging over the set, and it falls later: a mound
+    // landed in the street in one run and in front of the first shot in the next. Take it out of the air above
+    // (to +72), wait for what is already falling, and sweep the bottom layers again
+    for (let y = 25; y <= 72; y++) for (const b of ['gravel', 'sand']) bot.chat(`/fill ${A(-64, y, -64)} ${A(64, y, 64)} air replace ${b}`)
+    for (let pass = 0; pass < 2; pass++) { await ctx.sleep(3000); for (let y = 1; y <= 4; y++) await c(`/fill ${A(-64, y, -64)} ${A(64, y, 64)} air`) }
     await c('/kill @e[type=!player]')
     await plainsBiome(ctx, A, 80, -4, 24)
 
@@ -91,6 +93,10 @@ module.exports = {
     const rankOf = (i) => i < 5 ? 'ga' : i < 12 ? 'gb' : 'gc'
     for (let i = 0; i < G.length; i++) await c(`/summon iron_golem ${(X + G[i][0]).toFixed(2)} ${F + 1} ${(Z + G[i][1]).toFixed(2)} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,PlayerCreated:0b,Tags:["g","g${i}","${rankOf(i)}"${i === 18 ? ',"guard"' : ''}],Rotation:[${G[i][2]}f,0f]}`)
 
+    // anything that still fell onto the set (the set itself has no gravel or sand in it)
+    await c('/kill @e[type=falling_block]')
+    for (let y = 1; y <= 8; y++) for (const b of ['gravel', 'sand']) bot.chat(`/fill ${A(-64, y, -64)} ${A(64, y, 64)} air replace ${b}`)
+    await ctx.sleep(1500)
     await c('/clear @s')
     await resendChunks(ctx, X, Z)     // mineflayer ignores the biome-update packet: the chunks come again with plains
     await ctx.tpCheck(X + 0.5, F + 1, Z + 43.5, 180, 0)
@@ -217,6 +223,7 @@ module.exports = {
     let gx = 22.5
     await line('L07', async (k, at) => {
       const follow = k >= at(3)
+      go(k > 2 && k < at(3) - 4 && bot.entity.position.x < X + 20.1)   // a step up to him first (the shot held still for half a second)
       bot.setControlState('back', follow && bot.entity.position.x > X + 16.2)
       if (follow) gx -= 0.085
       say(`/tp @e[tag=guard,limit=1] ${(X + gx + jit()).toFixed(3)} ${F + 1} ${Z - 22.2} facing entity ${me} eyes`)
