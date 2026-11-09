@@ -1927,6 +1927,7 @@ function camAtLive (t) {
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
       cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
       if (cam.target && cam.target.entity !== undefined) { cam.targetEntity = cam.target.entity; cam.target = null }
+      if (third) cam.target = null   // (the hit outline is a first-person thing: a camera shot drew the player's targeted block, a box over the hole: ai_thin_ice)
       // an eye inside the targeted shape (a respawn inside a lantern post): the block is culled from
       // in there, and its outline's edges ran past the eye as lines from sky to ground (respawn_tax f1647)
       if (cam.target) {
@@ -1940,7 +1941,7 @@ function camAtLive (t) {
         // only on a block that's still there: under Haste the block breaks before the dig_end mark
         // arrives, and the overlay drawn over empty air read as lace with the sky through it
         const db = mesher.world.getBlock(new Vec3(dg[2], dg[3], dg[4]))
-        if (stage >= 0 && db && !/^(air|cave_air|void_air)$/.test(db.name)) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
+        if (stage >= 0 && db && !/^(air|cave_air|void_air|water|lava)$/.test(db.name)) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
       }
     }
     prof('camera+target')
@@ -2237,7 +2238,7 @@ function camAtLive (t) {
     prof('entities+hand')
     cam.blockEntities = blockEntitiesAt(t, cam)
     cam.dimension = DIM
-    cam.weather = weatherColumns(cam, t, cam.rain)
+    cam.weather = cam.underwater ? [] : weatherColumns(cam, t, cam.rain)   // (precipitation stops at the surface: snow fell under the ice)
     const parts = partsAt(t, cam)
     if (cam.rain > 0 && !process.env.NOPARTS) {
       for (const p of rainSplashes(t, camAt)) {
