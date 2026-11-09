@@ -261,6 +261,20 @@ def video_analytics(ya, ids: list, start: str, end: str) -> tuple[dict, str]:
                     continue
                 note = f"YouTube Analytics per-video query failed ({str(e)[:160]})."
                 break
+    if len(out) < len(ids):
+        # the documented "top videos" report (dimensions=video, sort=-views, maxResults): a second route in case the
+        # per-video filter returns nothing (0 of 9 on 2026-11-09 while the channel totals had views)
+        try:
+            r = ya.reports().query(ids="channel==MINE", startDate=start, endDate=end, metrics=",".join(metrics),
+                                   dimensions="video", sort="-views", maxResults=200).execute(num_retries=3)
+            cols = [h["name"] for h in r.get("columnHeaders", [])]
+            for row in r.get("rows", []) or []:
+                d = dict(zip(cols, row))
+                if d.get("video") in ids and d["video"] not in out:
+                    out[d.pop("video")] = d
+        except Exception as e:
+            note = note or f"top-videos query failed ({str(e)[:160]})."
+            print(note, flush=True)
     print(f"analytics: {len(out)} of {len(ids)} videos have data ({start} to {end})", flush=True)
     return out, note
 
