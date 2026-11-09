@@ -288,6 +288,15 @@ each section.
 - **A mob hopping back from past 64 blocks shows ~2 ticks after its `/tp`, and one leaving vanishes ~2 ticks after.** Send cast moves 2 ticks before the cut so they land on the cut frame (`onCut` in stunts/story_respawn_tax.js). When the old spot is in the next shot and the new spot is in the old shot, use a twin waiting out past 64 blocks.
 - **On half a heart the first touch kills,** so any reaction that should play before a contact death (looking up the cactus) has to start on the approach, not on contact.
 
+- **story_sun_wont_set (2026-11-09):**
+  - **mineflayer drops mob knockback on 1.21.11.** `entity_velocity` now carries blocks a tick and mineflayer still scales it by 1/8000, so a bot hit by a mob (or `/damage ... by <mob>`) never moves: five zombie hits on a planted camera read as scripted (Minecraft audit). Until the harness applies the packet unscaled, do vanilla's `knockback(0.4)` in the stunt when the packet comes (half the old speed + 0.4 away from the attacker, 0.4 up from the ground). It throws the player ~1.9 blocks with a 1.15-block hop, so one group of walking zombies can't land a hit every 11 ticks: surround the player, each hit throws him at the other group.
+  - **Mob head pitch from a per-tick `/tp x y z yaw pitch` reaches the recording at once** (a nodding butcher, villagers staring up at the sun, a head that sinks on a word). No `face_on` needed for mobs the scene moves every tick.
+  - **Sunlight ignites a zombie on a random tick (~4% a tick),** so a staged "steps into the sun and burns" needs `/data merge entity ... {Fire:200s}` on the step (and `{Fire:0s}` after the cut). Zombies under leaves don't burn; nothing burns after ~12542.
+  - **A time-lapse sunset is a run of `time` marks** (`/time set` + `ctx.mark('time')` each tick). Every mark re-lights and re-meshes the world (~26 s each): 20 marks added 9 minutes to the render.
+  - **Dusk clouds are fogged orange facing the sun and grey facing away** (the cloud material takes the scene fog; vanilla only fades cloud alpha). Reported; until it's fixed use `clouds: false` on a stunt that pans at dusk.
+  - **Mobs closing in behind a death screen fill it with one face** once their updates stop (~0.9 s). Keep them at their distance and let them jostle sideways; a staggered `zoom` whose last stage starts at ~0.9 s keeps the screen moving to the last frame.
+  - **Aim at heads, not feet:** a villager's or zombie's head is at feet + 1.75 (`P(x, 2.7, z)` for a mob standing on the set floor). Re-aim every tick at a lever while walking up to it: a fixed aim climbed onto the lamp above and the click was not survival-legal.
+
 ## Engine, round 3 (orchestrator)
 - **Check vanilla shaders straight from the jar.** `unzip -p work/client/1.21.11.jar assets/minecraft/shaders/core/<name>.fsh` gives the exact maths. Our lightmap had been a guess (one grey scalar); the real one keeps sky and block light apart and makes block light warm.
 - **Scale every part of a transform you rescale.** HAND_X moved the held item's rest position inward but not the swing's sideways lunge, so placements ballooned to the centre of the view.
