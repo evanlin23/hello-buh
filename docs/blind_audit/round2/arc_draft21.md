@@ -73,7 +73,7 @@ Draft 2 rebuilt the world and the five chapters around those.
 
 ## Chapter 1: You Fall Once (12 min)
 
-**Hook (0:00).** We open on the Plank on Floor 40, at night, three years ago. A Keeper pats Ash (16) down and takes his own bucket. The Highkeeper: "How many in your family?" "Four." "Which floor?" "Forty." He hands over a bucket. "You fall once." Ash: "The floor I jump from is the floor I live on." He grins, and steps off.
+**Hook (0:00).** We open on the Plank on Floor 40, at night, three years ago. A Keeper pats Ash (16) down and takes his own bucket. The Highkeeper: "How many in your family?" "Four." "Which floor?" "Forty." He holds two buckets, one full and one empty. He keeps the full one and puts the empty one in Ash's hand. Ash, looking down at the drop, never checks it. We see it; he doesn't. "You fall once." Ash: "The floor I jump from is the floor I live on." He grins, and steps off.
 
 1. **The fall, intercut (1.5 min).** POV: the toll rolls down the tower, DONG. Intercut with that night's earlier scene: Ash and Buh (13) at the note block on Floor 3. The four-note song, low, low, high, low. Ash: "Play it every night and I'll hear it from the top." Over the door, 8UH'S ROOM. Buh: "You wrote my name with an eight again." Ash: "Eights are cooler." Back to the fall: DONG, a second toll. The Well blinks one block over. The bucket in his hand is empty, held for a full second. He drops past the Needle into the fog.
 2. **Floor 3 (20 s).** Buh at the window. A hand pulls the curtain shut. Mom: "Don't look." TITLE.
@@ -156,7 +156,7 @@ Draft 2 rebuilt the world and the five chapters around those.
 | Planted | Pays off |
 |---|---|
 | The second toll, the Well blinking, a full second of the empty bucket (cold open) | The model and the slowed flashback (Ch3); the Well moving in front of the city (Ch5) |
-| A Keeper takes Ash's own bucket; "One bucket, from his hand" (cold open, Ch1) | "Don't take his bucket" (Ch1); "Show them it's full" (Ch5) |
+| A Keeper takes Ash's own bucket; the Highkeeper keeps the full one and hands Ash the empty one; "One bucket, from his hand" (cold open, Ch1) | "Don't take his bucket" (Ch1); "Show them it's full" (Ch5) |
 | "How many in your family?" / "Three, son" (Ch1) | "Thirty-three" (Ch5) |
 | "Pip was a Cradle baby. We were lucky." (Ch1) | "The Cradle costs a name" (Ch3); "Mom named me" (Ch3) |
 | "There's always room on Forty" (Ch1); "Half of Forty's empty" (Ch2) | It was never full, it was unequal; the staircase (end) |

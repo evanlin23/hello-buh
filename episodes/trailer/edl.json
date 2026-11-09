@@ -87,9 +87,15 @@
   {
    "id": "hand",
    "rec": "R1",
-   "t0": 8.65,
+   "t0": 10.7,
    "dur": 1.6,
-   "shot": "two"
+   "shot": {
+    "single": "actor:Highkeeper",
+    "toward": "self",
+    "size": "close",
+    "side": "south",
+    "fov": 34
+   }
   },
   {
    "id": "edge",
@@ -127,7 +133,7 @@
   {
    "id": "m1",
    "rec": "R1",
-   "t0": 5.75,
+   "t0": 10.0,
    "dur": 0.8,
    "shot": "ots_ash"
   },
@@ -150,7 +156,7 @@
   {
    "id": "m4",
    "rec": "R1",
-   "t0": 10.8,
+   "t0": 12.6,
    "dur": 0.45,
    "shot": {
     "single": "actor:Highkeeper",
@@ -446,5 +452,6 @@
    "text": "“That's not an echo.”"
   }
  ],
- "note_v2": "Owner, 2026-11-09: 'i dont understand the opening dialog' - the rule cards now come before the plank, 'How many in your family?' moved into the montage unanswered, 'Four.' cut; and voices drier ('without so much reverb')."
+ "note_v2": "Owner, 2026-11-09: 'i dont understand the opening dialog' - the rule cards now come before the plank, 'How many in your family?' moved into the montage unanswered, 'Four.' cut; and voices drier ('without so much reverb').",
+ "note_v3": "Owner: 'it doesnt make sense that theres no water in the water bucket'. No shot shows the full bucket handed over until the cold open is re-shot with the swap on screen (he keeps the full one, hands over the empty one)."
 }
