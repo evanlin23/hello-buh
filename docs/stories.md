@@ -145,7 +145,7 @@ contradiction, `counter` not needed, `hook` can flash the question card at the s
   through a locked door (who can do that?), and it misspells our name. Clues for 2: sign 1 is placed
   where only mom could reach, and mom's shadow is wrong / she never blinks. Ask: which sign do you
   trust?
-- **The Respawn Voice.** On your first death you hear one sentence from your future self. Proof:
+- **The Respawn Voice.** *(made: `story_respawn_voice`; the intended answer is in the stunt file)* On your first death you hear one sentence from your future self. Proof:
   two players whose sentence saved them. Ours: "Don't sleep in the new bed." Dad just built us a
   new bed. That night a second voice (also us, but we're alive): "Sleep in the bed, or you'll
   respawn somewhere that isn't home." Clues both ways: the bed's respawn point (vanilla mechanics!),

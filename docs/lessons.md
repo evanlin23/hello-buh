@@ -382,3 +382,13 @@ each section.
 - Tooling: when run.sh's botTimeout kills a try, nothing is logged except "stunt failed N times", and the stale out/*.mp4 stays in place. Add a timeout log line and remove the stale output on failure. (worker 4)
 - Engine (worker 3): no tool-break particles or sound (golem's sword); seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666; every_clutch's frozen lake); redstone ore shows no dust while being mined; bucket use shows no arm swing.
 - Engine (worker 18): no lightning bolt is drawn, so storms have thunder sound only.
+
+## "Who do you trust?" stories (story_respawn_voice)
+- **Cards wrap at about 13 characters a line:** over ~27 characters a card runs to 4-5 lines, loses its top line and sits on the caption. Split a long sentence over several cards, each on its own mark.
+- **A card's event takes no `EVENT:offset`** (fx_concat uses `event_times`): `['voice2b:0.6', ...]` was dropped silently. Give every card a real `ctx.mark`.
+- **mineflayer's `bot.digTime` ignores the tool on 1.21.11** (gold ore with an iron pickaxe: 4550 ms, a bare hand's time). `bot.dig` then never finishes and the crack stalls. Set `bot.digTime = () => <vanilla ms + 50>` around the dig; the server still checks the real time.
+- **`/spawnpoint` yaw must be within -180..180:** 212 was refused, and the respawn landed at the old spawn point.
+- **A poof mark is 20 particles by default:** one every 3 ticks behind a death screen covered 60% of the view. `{ count: 2-3, w: 0.3, h: 0.3 }` about 2 blocks along the view keeps the screen moving without hiding it.
+- **Replacing a door's lower half drops a door item** on the new block: `/kill @e[type=item]` on that tick and the next two.
+- **`ctx.setTime` waits 4 ticks** (ctx.cmd): before a cut it stalls the old shot. Send `/time set` with `say` and write the `time` mark yourself.
+- **A lone /fill column reads as a slab from far away.** Keep it out of long shots (turn the respawn away), and put flowers and stones where a fall lands so the ground visibly rushes up.
