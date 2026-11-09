@@ -173,7 +173,7 @@ module.exports = {
     // L02: today, eleven: the one empty frame between two eyes
     eye(10); setMeter(11)
     await cut(BX + 0.5, BZ + 5.9, B(0.5, 1.6, 2.5))
-    await line('L02', async (k, at) => { go(k >= at(3) - 2 && bz() > 4.1); K.base = K.aim(B(0.5, 1.6, 2.5)); look(k) })
+    await line('L02', async (k, at) => { go(bz() > 4.1); K.base = K.aim(B(0.5, 1.6, 2.5)); look(k) })
     go(false); sneak(false)
     // L03: I never put them in. Nobody goes down there (the stairs, cobwebs across them, up into the dark)
     await cut(BX - 1.5, BZ + 4.6, B(-5.5, 2.4, 1.5))
@@ -189,7 +189,7 @@ module.exports = {
     const n4 = ticksOf('L04')
     await line('L04', async (k) => {
       sneak(true); bot.setControlState('right', true)
-      const u = Math.min(1, k / (n4 - 6)), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2
+      const u = Math.min(1, k / n4), e = u * (0.4 + 0.6 * u)   // eases in only: still sliding on the last word (it parked under "WOODEN sword")
       K.base = K.aim(R(3.5 + 8 * e, 4.3 - 0.5 * e, 0.5)); look(k)
     })
     bot.setControlState('right', false); sneak(false)
@@ -206,7 +206,7 @@ module.exports = {
     await cut(BX + 4.0, BZ - 3.9, B(0.5, 0.9, 0.5))
     await line('L06', async (k, at) => {
       sneak(true); go(Math.hypot(bot.entity.position.x - (X + BX + 0.5), bz() - 0.5) > 4.3); K.base = K.aim(B(0.5, 0.9 + Math.sin(k / 9) * 0.25, 0.5))   // stops short of the frames (it walked up until one frame filled the view)
-      if (k >= at(3) && k % 3 === 0) wisps(k >= at(5) ? 14 : 5)
+      if (k % 2 === 0) wisps(k >= at(5) ? 22 : k >= at(3) ? 14 : 8)
       look(k)
     })
     go(false); sneak(false)
@@ -218,12 +218,12 @@ module.exports = {
     let got = -1
     await line('L07', async (k, at) => {
       if (got < 0 && bot.inventory.items().some(it => it.name === 'wooden_sword')) got = k
-      go(k >= at(1) - 7 && got < 0 && bz() > 4.4)
+      go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); if (got >= 0 && bz() > 3.5) go(true)   // creeps on toward the ring (the shot parked after the turn)
       if (k % 4 === 0 && got < 0) ctx.particles('portal', B(1.5, 0.9, 3.75), { count: 5 })
       if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 1.3, 0.5), (k - got) / 12) } else K.base = K.aim(B(1.5, 1.15, 3.75))
       look(k)
     })
-    go(false)
+    go(false); sneak(false)
     // L08: on Tuesday, his boots. Still smoking
     say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.6).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:32767s,Age:-32768s,Tags:["boots"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
@@ -256,7 +256,7 @@ module.exports = {
     from = null
     await line('L11', async (k, at) => {
       if (k >= at(1) - 3) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 6.0, 0.5), (k - at(1) + 3) / 30) }
-      if (k % 3 === 0) ctx.particles('smoke', B(0.5 + (Math.random() - 0.5) * 2.4, 4.6 + Math.random() * 0.8, 0.5 + (Math.random() - 0.5) * 2.4), { count: 2 })
+      if (k % 3 === 0) ctx.particles('smoke', B(0.5 + (Math.random() - 0.5) * 2.4, 4.6 + Math.random() * 0.8, 0.5 + (Math.random() - 0.5) * 2.4), { count: 5 })
       look(k)
     })
     // L12: so I baked him a welcome home cake (by the ring)
@@ -266,8 +266,15 @@ module.exports = {
     await line('L12', async (k) => { sneak(true); bot.setControlState('left', true); K.base = K.aim(B(3.5, 2.1, 3.5)); if (k % 6 === 0) wisps(4); look(k) })
     bot.setControlState('left', false); sneak(false)
     // L13: last night I stayed up to watch (in front of the empty frame; he sits down)
-    await cut(BX + 0.5, BZ + 6.2, B(0.5, 1.5, 2.5))
-    await line('L13', async (k, at) => { sneak(k >= at(1)); go(bz() > 4.9); K.base = K.aim(B(0.5, 1.5, 2.5)); if (k % 6 === 0) wisps(4); look(k) })
+    await cut(BX + 0.5, BZ + 6.7, B(0.5, 1.5, 2.5))
+    const n13 = ticksOf('L13')
+    await line('L13', async (k, at) => {   // creeping in to the last tick, the purple already gathering on the empty frame (it stood still for 0.9 s: retention audit)
+      sneak(true); go(bz() > 4.6)
+      K.base = K.aim(B(0.5, 1.5 - 0.3 * Math.max(0, (k - n13 + 15) / 15), 2.5))
+      if (k % 4 === 0) wisps(6)
+      if (k >= at(2) && k % 2 === 0) ctx.particles('portal', B(0.5, 1.2, 2.5), { count: 7 })
+      look(k)
+    })
     go(false); sneak(false)
     // L14: number twelve: purple gathers on the frame, the eye is in, the portal opens
     await cut(BX + 0.5, BZ + 4.5, B(0.5, 1.75, 2.5))
