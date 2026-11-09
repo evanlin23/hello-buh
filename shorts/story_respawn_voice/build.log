@@ -1,0 +1,76 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+22:04:11.223 spawned at Vec3 { x: 138.5, y: 70, z: 6.5 }
+22:04:11.488 nearest minecraft:plains at [ 394, -58 ]
+22:05:48.496 set at { x: 394, y: 69, z: -58 }
+22:05:59.166 chunks refreshed; back at start within 0.00 blocks
+22:06:01.379 died
+22:06:02.471 COMMAND ERROR: No entity was found
+22:06:02.475 COMMAND ERROR: No entity was found
+22:06:02.525 COMMAND ERROR: No entity was found
+22:06:02.580 COMMAND ERROR: No entity was found
+22:06:02.628 COMMAND ERROR: No entity was found
+22:06:02.679 COMMAND ERROR: No entity was found
+22:06:02.729 COMMAND ERROR: No entity was found
+22:06:02.780 COMMAND ERROR: No entity was found
+22:06:02.830 COMMAND ERROR: No entity was found
+22:06:02.881 COMMAND ERROR: No entity was found
+22:06:02.930 COMMAND ERROR: No entity was found
+22:06:02.981 COMMAND ERROR: No entity was found
+22:06:03.031 COMMAND ERROR: No entity was found
+22:06:03.081 COMMAND ERROR: No entity was found
+22:06:03.131 COMMAND ERROR: No entity was found
+22:06:03.181 COMMAND ERROR: No entity was found
+22:06:03.231 COMMAND ERROR: No entity was found
+22:06:03.282 COMMAND ERROR: No entity was found
+22:06:03.334 COMMAND ERROR: No entity was found
+22:06:03.385 COMMAND ERROR: No entity was found
+22:06:03.507 COMMAND ERROR: No entity was found
+22:06:03.507 COMMAND ERROR: No entity was found
+22:06:04.163 dig: held iron_pickaxe digTime 4550
+22:06:04.965 dig: broke
+22:06:07.073 COMMAND ERROR: Could not set the block
+22:06:10.975 died
+22:06:12.084 COMMAND ERROR: No entity was found
+22:06:12.120 COMMAND ERROR: No entity was found
+22:06:12.166 COMMAND ERROR: No entity was found
+22:06:12.217 COMMAND ERROR: No entity was found
+22:06:12.267 COMMAND ERROR: No entity was found
+22:06:12.317 COMMAND ERROR: No entity was found
+22:06:12.367 COMMAND ERROR: No entity was found
+22:06:12.417 COMMAND ERROR: No entity was found
+22:06:12.467 COMMAND ERROR: No entity was found
+22:06:12.517 COMMAND ERROR: No entity was found
+22:06:12.567 COMMAND ERROR: No entity was found
+22:06:12.616 COMMAND ERROR: No entity was found
+22:06:12.667 COMMAND ERROR: No entity was found
+22:06:12.717 COMMAND ERROR: No entity was found
+22:06:12.767 COMMAND ERROR: No entity was found
+22:06:12.817 COMMAND ERROR: No entity was found
+22:06:12.867 COMMAND ERROR: No entity was found
+22:06:12.917 COMMAND ERROR: No entity was found
+22:06:12.967 COMMAND ERROR: No entity was found
+22:06:13.017 COMMAND ERROR: No entity was found
+22:06:13.068 COMMAND ERROR: No entity was found
+22:06:13.118 COMMAND ERROR: No entity was found
+22:06:13.169 COMMAND ERROR: No entity was found
+22:06:13.220 COMMAND ERROR: No entity was found
+22:06:13.270 COMMAND ERROR: No entity was found
+22:06:13.320 COMMAND ERROR: No entity was found
+22:06:13.370 COMMAND ERROR: No entity was found
+22:06:13.421 COMMAND ERROR: No entity was found
+22:06:18.811 COMMAND ERROR: No entity was found
+22:06:18.861 COMMAND ERROR: No entity was found
+22:06:33.507 STUNT OK
+filled 7 dropped pose tick(s): 141 144 382 383 388 522 672
+simulated 1 dropped item / xp orb paths
+meshing from y 13
+light computed in 1.1 s
+meshed + uploaded world in 13.3 s
+126 particles
+rendered 2031 frames (33.85 s of video) in 635.2 s = 18.8 s per video second
+wrote work/story_respawn_voice.wav 33.90s
+no 3D block icons needed
+sfx: 2 sounds (impact, scratch)
+wrote out/story_respawn_voice.mp4 32.90s
+exit 0
