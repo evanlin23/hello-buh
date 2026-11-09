@@ -159,7 +159,7 @@ module.exports = {
     ctx.mark('face_off')
     say(`/kill @e[type=item]`)
     // L04: on the hilltop, already a block into the dirt, looking down, digging: the dirt is soft
-    say(`/setblock ${X + SX} ${F + TOP + 1} ${Z + SZ} air`)
+    say(`/setblock ${X + SX} ${F + TOP + 1} ${Z + SZ} air`); say(`/setblock ${X + SX + 1} ${F + TOP} ${Z + SZ} torch`)   // I moved it beside the hole (it lights the first dig)
     await hold(0)
     await shaft(3, TOP)
     const L4 = S.line('L04')
@@ -172,7 +172,7 @@ module.exports = {
     await line('L05', async (k, at) => {
       if (k === at(2) - 5) digDown()
       if (k === at(2)) { setMeter(2); from5 = { ...K.base }; k5 = k }
-      if (from5) K.turnTo(from5, new ctx.Vec3(X + SX + 0.15, F - 2 + 0.55, cz), (k - k5) / 8)   // the torch in the west wall, close
+      if (from5) K.turnTo(from5, new ctx.Vec3(X + SX + 0.15, F - 2 + 0.55, cz), Math.min(0.35, (k - k5) / 10))   // a little toward the torch (all the way, it filled the frame)
       look(k)
     })
     // L06: I look up the shaft: the square of sky, and the dog's head over the edge, whining
@@ -193,7 +193,7 @@ module.exports = {
       if (k === at(0)) setMeter(10)
       if (k === at(1)) setMeter(20)
       // from my feet up the shaft: torches lining the left wall up to a square of sky
-      K.turnTo(from7, new ctx.Vec3(cx + 0.05, F + TOP + 1, cz - 0.25), k / 16)
+      K.turnTo(from7, new ctx.Vec3(X + SX + 0.15, F - 18 + 0.6, cz), k / 12)   // up the west wall: the torches in a column toward the sky
       look(k)
     })
     // L08: deeper still: the walls glow (magma), the stone hums, something bubbles below
