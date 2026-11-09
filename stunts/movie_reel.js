@@ -1,29 +1,27 @@
-// Movie engine test reel (docs/movie_engine.md): the cold open of BUILD LIMIT (the movie doc, scenes 2-3).
-// Night, Floor 40 of a tower that reaches build limit. ASH (the recording bot, so his fall is a real
-// first-person POV) walks across the top deck to the HIGHKEEPER (an extra bot, lib/movie.js), who asks
-// "How many in your family?", then "Which floor?" (every 16-year-old jumps once, from the floor they dare: the floor
-// you jump from is the floor you live on; the owner, 2026-11-08: "how do we choose which floor we jump from?" - the
-// reel has to say it). Ash: "Forty." The Highkeeper hands him a full bucket; Ash pockets it and walks out to the end
-// of the top plank. POV: the tower rushes past, the bell rings, he pulls the bucket out - EMPTY - the Well (one
-// block of water on the Needle) grows from a dot, the bell rings again and the Well slides one block (slow motion),
-// he swings the empty bucket anyway, clips past the Needle and drops into the fog sea. White.
+// Movie engine test reel (docs/movie_engine.md): the cold open of BUILD LIMIT, draft 3.1
+// (docs/blind_audit/round3/arc_draft31.md). Night, Floor 40 of a tower that reaches build limit. ASH (the recording bot,
+// so his fall is a real first-person POV) walks across the top deck to the HIGHKEEPER (an extra bot, lib/movie.js), who
+// has the census ledger: "How many in your family?" "Four." (he writes) "Which floor?" "Forty." On a stand by the Plank
+// hang two buckets, one full and one empty. He takes down the EMPTY one and holds it out. Ash looks at it, then at him.
+// "You fall once." Ash takes it: he knows (owner, 2026-11-09: "why would you jump if you were given an empty bucket?").
+// He shouts the law to the city like a joke and steps off. POV: the first toll; the Mark (one gold block on the
+// Needle's stone cap) grows from a dot; the second toll rolls down the tower bell by bell and catches him; the Mark
+// glides aside and he drops into the black of the shaft under it. He never reaches for the bucket.
 //
-// What it proves: two actors in one scene, the camera director (wide push-in, two-shot, over-the-
-// shoulders, a follow, a low angle, POV), the fog sea, real physics for the fall, dialogue marks.
-//
-// Set (origin O = X, 100, Z over deep ocean): a 9x9 trunk from y 100 to 299 (stone bricks below the
-// clouds at y 192, quartz above), a rim every 5 blocks = 40 floors, lanterns on the Drop Face corners, a
-// plank on every floor, the top deck at y 300 (= Floor 40) with its 5-block plank, and the Needle at
-// x+11/x+12: a 1-wide shaft with a cap beside its top holding the Well. The world is frozen (/tick freeze:
-// players still move) so the single block of water never spreads; the slide is one /clone ... move.
-// The fog sea (render.js stunt.fogSea, y 60-140) hides the ocean.
+// Set (origin O = X, 100, Z over deep ocean): a 9x9 trunk from y 100 to 299 (stone bricks below the clouds at y 192,
+// quartz above), a rim every 5 blocks = 40 floors, lanterns on the Drop Face corners, a plank on every floor, the top
+// deck at y 300 (= Floor 40) with its 5-block plank, and the Needle at x+10..x+14: a 5x5 stone column with a 7x7 cap at
+// y 149, the Mark (gold) raised in its centre over the drop shaft. The world is frozen (/tick freeze: players still
+// move). The slide is one /clone ... move, glided by render.js (slide_blocks). The fog sea (y 60-140) hides the ocean.
+// v3 (the Well, the pocketed bucket) is kept as work/movie_reel_v3.stunt.js and work/movie_reel_v3.rec.json.
 const M = require('../lib/movie')
 const { steer, ticksToFall } = require('../lib/air_steer')
 
 const TOP = 300                 // the deck (Floor 40) is y 300; the trunk's top block is 299
 const FLOOR = 5                 // blocks per floor
-const WX = 12                   // the Well's x offset (the cap); the shaft is at WX - 1
-const WELL_Y = 50               // the Well's y offset: y 150, ten blocks above the fog sea's top (140)
+const WX = 12                   // the Mark's x offset (the centre of the cap and the drop shaft)
+const MARK_Y = 50               // the Mark's y offset: y 150 on the cap (y 149), nine blocks above the fog sea's top (140)
+const CAP = 3                   // the cap's half-width: 7x7
 
 module.exports = {
   name: 'movie_reel',
@@ -52,14 +50,17 @@ module.exports = {
     // high over the plank's end from the east: Ash lit at the top of the frame, a lantern and a plank on every
     // floor below him down to the clouds (v2's low angle was a silhouette on the stars, no height: review V6)
     edge: { dof: false, at: [16.5, 206.5, 3.5], look: [11, 199, 0.5], fov: 60, push: 0.35 },
+    // the stand: low between them, on the two buckets (the full one stays; he takes down the empty one)
+    stand: { at: [4.5, 202.7, 1.6], look: [5.9, 202.4, -1.9], fov: 42 },
+    // the fall from outside (owner, 2026-11-09: "i dont understand the falling"): riding above and beside him, looking
+    // down past him at the Mark, so a person, the tower face and the target are in one frame
+    chase: { follow: 'self', offset: [3.2, 4.2, 3.4], look: [WX + 0.5, MARK_Y + 1, 0.5], fov: 62, dof: false },
     pov: { pov: true }
   },
   edit: {
-    startAt: 'start:0.3', endAfter: 'fog:0.7',   // (0.3: already walking, the owner's no-pause rule)
-    // the slide, the swing and the miss in slow motion: 0.65 s of fall over 2.2 s (at full speed it was 9 ticks and
-    // nobody saw the Well move, review v2 B1)
-    slowmo: [['slide', 0.1, 0.55, 0.3]],
-    sfx: [['air', 'start', 'fall', { gain: 0.14 }], ['wind', 'fall', 'fog', { gain: 0.4 }], ['whoosh', 'fog', { gain: 0.4 }]]
+    // draft 3.1: "Cut to black before he lands" - he drops into the shaft under the Mark, and the reel ends in its dark
+    startAt: 'start:0.3', endAfter: 'hole:0.35',   // (0.3: already walking, the owner's no-pause rule)
+    sfx: [['air', 'start', 'fall', { gain: 0.14 }], ['wind', 'fall', 'hole', { gain: 0.4 }], ['whoosh', 'slide', { gain: 0.35 }]]
   },
 
   async setup (ctx) {
@@ -70,7 +71,7 @@ module.exports = {
     Object.assign(this, { X, Z, Y })
     await ctx.cmd('/gamerule log_admin_commands false')
     await ctx.cmd('/difficulty peaceful')
-    await ctx.cmd('/tick freeze')   // fluids don't spread (the Well), players still move
+    await ctx.cmd('/tick freeze')   // nothing ticks (frames, lanterns), players still move
     // the trunk and the floors
     await ctx.cmd(`/fill ${X - 4} ${Y} ${Z - 4} ${X + 4} 191 ${Z + 4} stone_bricks`)
     await ctx.cmd(`/fill ${X - 4} 192 ${Z - 4} ${X + 4} ${TOP - 1} ${Z + 4} quartz_bricks`)
@@ -90,18 +91,28 @@ module.exports = {
     await ctx.cmd(`/fill ${X} ${TOP + 1} ${Z - 3} ${X} ${TOP + 3} ${Z - 3} gold_block`)   // (off Ash's path along z + 0.5)
     await ctx.cmd(`/setblock ${X} ${TOP + 4} ${Z - 3} lantern`)
     await ctx.cmd(`/fill ${X + 7} ${TOP} ${Z} ${X + 11} ${TOP} ${Z} oak_planks`)        // the plank, 5 long
-    // the Needle: the shaft, the cap beside its top, the Well on the cap
-    await ctx.cmd(`/fill ${X + WX - 1} 90 ${Z} ${X + WX - 1} ${Y + WELL_Y - 1} ${Z} stone_bricks`)
-    await ctx.cmd(`/setblock ${X + WX} ${Y + WELL_Y - 1} ${Z} stone_bricks`)
-    await ctx.cmd(`/setblock ${X + WX} ${Y + WELL_Y} ${Z} water`)
+    // the Needle: a 5x5 column with the drop shaft down its centre, the 7x7 cap, the Mark raised over the shaft's mouth,
+    // lanterns on the cap's corners (the gold has to read from Forty at midnight), Fen's hut in one corner
+    const NX = X + WX, CY = Y + MARK_Y - 1
+    await ctx.cmd(`/fill ${NX - 2} 90 ${Z - 2} ${NX + 2} ${CY - 1} ${Z + 2} stone_bricks`)
+    await ctx.cmd(`/fill ${NX - CAP} ${CY} ${Z - CAP} ${NX + CAP} ${CY} ${Z + CAP} polished_andesite`)
+    await ctx.cmd(`/fill ${NX} 90 ${Z} ${NX} ${CY} ${Z} air`)                        // the drop shaft, open at the cap
+    await ctx.cmd(`/setblock ${NX} ${CY + 1} ${Z} gold_block`)                         // the Mark, over the hole
+    for (const [dx, dz] of [[-CAP, -CAP], [-CAP, CAP], [CAP, -CAP], [CAP, CAP]]) await ctx.cmd(`/setblock ${NX + dx} ${CY + 1} ${Z + dz} lantern`)
+    await ctx.cmd(`/fill ${NX + 1} ${CY + 1} ${Z - CAP + 1} ${NX + 2} ${CY + 2} ${Z - CAP + 1} spruce_planks`)   // Fen's hut (a low shed)
+    await ctx.cmd(`/fill ${NX + 1} ${CY + 3} ${Z - CAP + 1} ${NX + 2} ${CY + 3} ${Z - CAP + 1} spruce_slab`)
+    // the stand by the Plank: two item frames on a quartz post north of the Highkeeper, facing the cameras (south):
+    // a water bucket and an empty one. He takes the empty one down; the full one stays.
+    await ctx.cmd(`/fill ${X + 5} ${TOP + 1} ${Z - 2} ${X + 6} ${TOP + 2} ${Z - 2} quartz_pillar`)
+    await ctx.cmd(`/summon item_frame ${X + 5} ${TOP + 2} ${Z - 1} {Facing:3b,Fixed:1b,Tags:["bk_full"],Item:{id:"minecraft:water_bucket",count:1}}`)
+    await ctx.cmd(`/summon item_frame ${X + 6} ${TOP + 2} ${Z - 1} {Facing:3b,Fixed:1b,Tags:["bk_empty"],Item:{id:"minecraft:bucket",count:1}}`)
     // the cast
     const cast = await M.spawnActors(ctx, ['Highkeeper'])
     this.cast = cast
     await M.place(ctx, 'Highkeeper', X + 5.5, TOP + 1, Z + 1.5, 90, 0)   // by the plank, facing west (yaw 90)
-    // the swap (owner, 2026-11-08: "the guy doesnt have water in his bucket" - it showed): the Highkeeper holds and hands
-    // over a WATER bucket; Ash pockets it (empty hand on the walk out); only in the fall, first person, does he pull it
-    // out and it's empty. The audience finds out when he does.
-    await M.give(ctx, 'Highkeeper', 'water_bucket')
+    // the census ledger in his hand (owner, 2026-11-09: "i dont understand the How many in your family? line": he writes
+    // the answer down, so it reads as a head count)
+    await M.give(ctx, 'Highkeeper', 'writable_book')
     // Ash starts on the west side of the deck, facing east
     await ctx.tpCheck(X - 3.5, TOP + 1, Z + 0.5, -90, 0)
     await ctx.hotbar([])
@@ -136,7 +147,13 @@ module.exports = {
     // 3. on Ash
     M.shot(ctx, 'ots_hk')
     M.line(ctx, 'Ash', 'Four.')
-    await bot.waitForTicks(20)
+    await bot.waitForTicks(12)
+    // 3b. he writes it in the ledger: a head count (he glances down at the book, a stroke of the pen, back up)
+    await M.lookAt(hk, hk.entity.position.offset(0.6 * Math.sign(bot.entity.position.x - hk.entity.position.x), 1.0, 0), 250)
+    M.swing(hk)
+    await bot.waitForTicks(6)
+    await M.lookAt(hk, ashEye(), 250)
+    await bot.waitForTicks(4)
     // 4. on the Highkeeper: he looks away, then back a moment too long. The rule, said plainly
     M.shot(ctx, 'ots_ash')
     await M.lookAway(hk, 25, 450)
@@ -147,54 +164,76 @@ module.exports = {
     M.shot(ctx, 'ots_hk')
     M.line(ctx, 'Ash', 'Forty.')
     await bot.waitForTicks(20)
-    // 6. the two-shot, cut on the hand-over: the full bucket side-on to this camera (edge-on in the singles it read as
-    // a knife, review V3). It leaves his hand at the swing's peak and Ash takes it (v2 emptied the hand first, V2)
-    M.shot(ctx, 'two')
+    // 6. the stand: he turns from Ash to the two buckets, puts the ledger away and takes down the EMPTY one
+    const standAt = hk.entity.position.offset(X + 6.5 - hk.entity.position.x, TOP + 2.5 - hk.entity.position.y, Z - 1.9 - hk.entity.position.z)   // (a Vec3: M.lookAt subtracts)
+    M.shot(ctx, 'stand')
+    await M.lookAt(hk, standAt, 300)
     M.swing(hk)
+    await ctx.cmd('/data remove entity @e[type=item_frame,tag=bk_empty,limit=1] Item')
+    await M.give(ctx, 'Highkeeper', 'bucket')
+    await bot.waitForTicks(12)
+    // 7. he holds it out. Ash looks at it, then at him (over the Highkeeper's shoulder onto Ash's face). The Highkeeper
+    // doesn't look away
+    M.shot(ctx, 'ots_hk')
+    await M.lookAt(hk, ashEye(), 300)
+    M.swing(hk)
+    const handAt = () => { const h = hk.entity.position; return h.offset((bot.entity.position.x - h.x) * 0.35, 1.15, (bot.entity.position.z - h.z) * 0.35) }
+    await ctx.easeLookAt(handAt(), 450)      // down at the bucket
+    await bot.waitForTicks(22)
+    await ctx.easeLookAt(hkEye(), 400)       // up at him
+    await bot.waitForTicks(14)
+    // 8. the two-shot: the rule, and he takes it (into his hand: a plain bucket in every shot from here on)
+    M.shot(ctx, 'two')
     M.line(ctx, 'Highkeeper', 'You fall once.')
-    await bot.waitForTicks(3)
+    await bot.waitForTicks(26)
     await M.empty(ctx, 'Highkeeper')
     bot.swingArm('right')
-    await ctx.hotbar([null, 'bucket'])   // into slot 2: his hand stays empty in every camera shot (the swap)
+    await ctx.hotbar(['bucket'])
     ctx.select(0)
-    await bot.waitForTicks(20)
-    // 7. he says the law back as he turns and walks out; the Highkeeper watches him go (v2 stared at the deck, V5)
-    M.line(ctx, 'Ash', 'The floor I jump from is the floor I live on.')
+    await bot.waitForTicks(10)
+    // 9. he turns to the city and shouts the law like a joke as he walks out; the Highkeeper watches him go
+    M.line(ctx, 'Ash', 'The floor I jump from is the floor I live on!')
     unwatch = M.track(hk, ashEye)
     await ctx.easeLook(-Math.PI / 2, 0.1, 350)
     M.shotIn(ctx, 'walkout', 12)
     await walkTo(X + 6.6, 80)                     // across the deck at a walk
     bot.setControlState('sneak', true)            // sneaking on the plank keeps him on it
     await walkTo(X + 9.6, 80)
-    // 8. the edge, cut while he's still walking: the tower and a plank on every floor below him
+    // 10. the edge, cut while he's still walking: the tower and a plank on every floor below him
     M.shot(ctx, 'edge')
     await walkTo(X + 11.45, 80)
     bot.setControlState('sneak', false)
-    await ctx.easeLook(-Math.PI / 2, -0.9, 400)   // he looks down: the Well, 150 blocks below
+    await ctx.easeLook(-Math.PI / 2, -0.9, 400)   // he looks down: the Mark, 150 blocks below
     await bot.waitForTicks(6)
-    // 9. he steps off: POV
-    const tx = X + WX + 0.75, tz = Z + 0.5, floorY = Y + WELL_Y + 1, startY = bot.entity.position.y   // (0.75: v2 aimed at the centre and the eye grazed the slid Well, a navy frame, review B3)
+    // 11. he steps off. POV, then from outside (the chase), then POV again for the last of it
+    const tx = X + WX + 0.5, tz = Z + 0.5, floorY = Y + MARK_Y + 1, capY = Y + MARK_Y - 1, startY = bot.entity.position.y
     bot.setControlState('forward', true)
-    let k0 = 0, slid = false, swung = false, fogged = false, povOn = false, released = false, drawn = false
+    let k0 = 0, slid = false, back = false, hole = false, fogged = false, povOn = false, chased = false, povAgain = false, released = false
+    let bells = 0
+    const BELL_AT = [27, 24, 21, 18, 15, 12, 9, 6]   // ticks to the Mark: the second toll rolling down the tower, catching up
     const onTick = () => {
       k0++
       const e = bot.entity
-      if (e.position.y > startY - 0.3) { if (k0 > 30) bot.setControlState('forward', false); return }   // hold forward until he drops (3 ticks left him balanced on the edge)
+      if (e.position.y > startY - 0.3) { if (k0 > 30) bot.setControlState('forward', false); return }   // hold forward until he drops
       if (!released) { released = true; bot.setControlState('forward', false) }   // off the edge: the steering takes the keys
-      if (!povOn && e.position.y < startY - 2.5) { povOn = true; M.shot(ctx, 'pov'); ctx.mark('fall'); ctx.sound('block.bell.use', 3, 0.6) }
-      if (povOn && !drawn && e.position.y < startY - 25) { drawn = true; ctx.select(1); ctx.mark('draw') }   // he pulls the bucket out: empty
-      if (e.position.y > floorY - 1) {   // steer onto the Well (movement keys only), eyes down
+      if (!povOn && e.position.y < startY - 2.5) { povOn = true; M.shot(ctx, 'pov'); ctx.mark('fall'); ctx.sound('block.bell.use', 3, 0.6) }   // the first toll
+      if (povOn && !chased && e.position.y < startY - 40) { chased = true; M.shot(ctx, 'chase'); ctx.mark('chase') }
+      if (chased && !povAgain && e.position.y < startY - 105) { povAgain = true; M.shot(ctx, 'pov'); ctx.mark('pov2') }
+      if (e.position.y > floorY - 1) {   // steer onto the Mark (movement keys only), eyes down
         const c = steer({ yaw: -Math.PI / 2, px: e.position.x, pz: e.position.z, vx: e.velocity.x, vz: e.velocity.z, y: e.position.y, vy: e.velocity.y, tx, tz, floorY, startY, bias: 0 })
         for (const key of ['forward', 'back', 'left', 'right']) bot.setControlState(key, c[key])
       } else bot.clearControlStates()
-      // the second ring and the slide, 6 ticks out (about 18 blocks: the Well is big enough to see it move)
-      if (!slid && ticksToFall(e.position.y, e.velocity.y, floorY) <= 6) {
-        slid = true
-        ctx.sound('block.bell.use', 3, 0.6); ctx.mark('slide')
-        const wx = X + WX, wy = Y + WELL_Y
-        M.slideBlocks(ctx, [wx, wy - 1, Z, wx, wy, Z], [-1, 0, 0], [[wx, wy - 1, Z, 'stone_bricks'], [wx, wy, Z, 'water']], 4)
+      const left = ticksToFall(e.position.y, e.velocity.y, floorY)
+      while (bells < BELL_AT.length && left <= BELL_AT[bells]) {   // each bell a little closer, louder and lower
+        ctx.sound('block.bell.use', 1.2 + 0.25 * bells, 0.78 - 0.025 * bells); if (bells === 0) ctx.mark('toll2'); bells++
       }
-      if (slid && !swung && ticksToFall(e.position.y, e.velocity.y, floorY) <= 3) { swung = true; bot.activateItem(); bot.swingArm('right'); ctx.mark('swing') }
+      // the Mark glides aside 6 ticks out (about 18 blocks: big enough to see), and he drops into the hole under it
+      if (!slid && left <= 6) {
+        slid = true; ctx.mark('slide')
+        M.slideBlocks(ctx, [X + WX, Y + MARK_Y, Z, X + WX, Y + MARK_Y, Z], [0, 0, 1], [[X + WX, Y + MARK_Y, Z, 'gold_block']], 4)
+      }
+      if (!hole && e.position.y < capY) { hole = true; ctx.mark('hole') }
+      if (hole && !back && e.position.y < capY - 12) { back = true; M.slideBlocks(ctx, [X + WX, Y + MARK_Y, Z + 1, X + WX, Y + MARK_Y, Z + 1], [0, 0, -1], [[X + WX, Y + MARK_Y, Z + 1, 'gold_block']], 4) }
       if (!fogged && e.position.y < 140) { fogged = true; ctx.mark('fog') }
     }
     bot.on('physicsTick', onTick)
@@ -203,8 +242,8 @@ module.exports = {
     bot.removeListener('physicsTick', onTick); bot.clearControlStates()
     unwatch()
     const p = bot.entity.position
-    ctx.log(`passed the Well at ${(p.x - tx).toFixed(2)}, ${(p.z - tz).toFixed(2)} from its first spot; slid ${slid}, fog ${fogged}`)
+    ctx.log(`passed the Mark at ${(p.x - tx).toFixed(2)}, ${(p.z - tz).toFixed(2)}; slid ${slid}, hole ${hole}, back ${back}, bells ${bells}`)
     M.quitActors(ctx)
-    return slid && fogged
+    return slid && hole
   }
 }
