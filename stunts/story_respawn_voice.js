@@ -43,9 +43,10 @@ module.exports = {
       ['heard_sister', 'CLOSE THE DOOR.', 1.5, 'white'],
       ['voice1', VOICE1, 1.3, 'yellow'],
       ['no_bed', 'NO HOME BED?', 1.4, 'white'],
-      ['voice2', 'SLEEP IN THE BED,', 0.75, 'red'],
-      ['voice2b', "OR YOU'LL RESPAWN", 0.55, 'red'],
-      ['voice2b:0.6', "SOMEWHERE THAT ISN'T HOME.", 1.25, 'red'],
+      ['voice2', 'SLEEP IN THE BED,', 0.75, 'blue'],
+      ['voice2b', "OR YOU'LL RESPAWN", 0.5, 'blue'],
+      ['voice2c', "SOMEWHERE THAT ISN'T HOME.", 1.3, 'blue'],
+      ['old_voice', VOICE1, 1.1, 'yellow'],
       ['question', 'TRUST VOICE 1 OR 2? COMMENT 👇', 1.8, 'gold']
     ],
     sfx: [['impact', 'nailed'], ['scratch', 'not_dead'], ['dip', 'question', 0.3]],
@@ -70,8 +71,12 @@ module.exports = {
     await c('/kill @e[type=!player]')
 
     // --- the cliff (L01, L04): a stone column 27 high, far west
-    await c(`/fill ${A(-50, 1, 18)} ${A(-45, 27, 23)} stone`)
-    await c(`/fill ${A(-50, 28, 18)} ${A(-45, 28, 23)} grass_block`)
+    await c(`/fill ${A(-62, 1, 9)} ${A(-45, 27, 32)} stone`)
+    await c(`/fill ${A(-62, 28, 9)} ${A(-45, 28, 32)} grass_block`)
+    await c(`/fill ${A(-62, 20, 9)} ${A(-56, 28, 14)} air`); await c(`/fill ${A(-62, 24, 26)} ${A(-52, 28, 32)} air`)   // a broken skyline, not a box
+    // the ground it lands on: flowers, grass and stones, so the ground visibly rushes up
+    { const base = ['short_grass', 'poppy', 'short_grass', 'dandelion', 'cobblestone', 'short_grass', 'oxeye_daisy', 'short_grass', 'mossy_cobblestone', 'cornflower']; let bi = 0
+      for (let dx = -44; dx <= -38; dx++) for (let dz = 19; dz <= 31; dz++) if ((dx * 7 + dz * 13) % 3 === 0) await c(`/setblock ${A(dx, 1, dz)} ${base[bi++ % base.length]}`) }
     // --- my brother's gold (L02): a stone outcrop, the ore in its south face, lava right behind it
     await c(`/fill ${A(15, 1, -35)} ${A(25, 4, -30)} stone`)
     await c(`/fill ${A(16, 5, -34)} ${A(24, 5, -31)} stone`)
@@ -85,6 +90,7 @@ module.exports = {
     await c(`/fill ${A(29, 2, 15)} ${A(30, 2, 15)} glass`)
     await c(`/setblock ${A(32, 1, 11)} barrel`); await c(`/setblock ${A(29, 1, 11)} crafting_table`)
     await c(`/setblock ${A(28, 1, 17)} lantern`); await c(`/setblock ${A(33, 1, 17)} lantern`)
+    await c(`/setblock ${A(29, 3, 13)} wall_torch[facing=east]`); await c(`/setblock ${A(32, 3, 13)} wall_torch[facing=west]`)
     // --- the field I respawn in (L06): flowers and grass, home far to the north
     const flora = ['short_grass', 'poppy', 'short_grass', 'dandelion', 'short_grass', 'cornflower', 'short_grass', 'oxeye_daisy', 'short_grass', 'azure_bluet']
     let fi = 0
@@ -95,6 +101,7 @@ module.exports = {
     await c(`/setblock ${A(0, 1, -7)} light_blue_bed[facing=west,part=foot]`)
     await c(`/setblock ${A(1, 1, -7)} crafting_table`)
     await c(`/setblock ${A(-2, 1, -7)} bookshelf`)
+    await c(`/setblock ${A(-2, 3, -5)} wall_torch[facing=east]`); await c(`/setblock ${A(1, 3, -5)} wall_torch[facing=west]`)
     for (const [dx, dz, b] of [[-2, -2, 'poppy'], [2, -2, 'dandelion']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
 
     const mob = (type, x, y, z, yaw, tag, more = '') => c(`/summon ${type} ${(X + x).toFixed(2)} ${(F + y).toFixed(2)} ${(Z + z).toFixed(2)} {NoAI:1b,NoGravity:1b,Silent:1b,PersistenceRequired:1b,Invulnerable:1b,Tags:["${tag}"],Rotation:[${yaw}f,0f]${more}}`)
@@ -140,9 +147,11 @@ module.exports = {
     bot.on('death', () => {
       deadAt = ctx.tick
       const e = bot.entity, cp = Math.cos(e.pitch), d = 2.5
-      deadView = new ctx.Vec3(e.position.x - Math.sin(e.yaw) * cp * d, Math.max(F + 1.4, e.position.y + 1.62 + Math.sin(e.pitch) * d), e.position.z - Math.cos(e.yaw) * cp * d)
+      void cp; void d
+      // small puffs low over the grass a few blocks along the view (big ones at eye height covered the screen: frame review)
+      deadView = new ctx.Vec3(e.position.x - Math.sin(e.yaw) * 3.2, F + 1.15, e.position.z - Math.cos(e.yaw) * 3.2)
     })
-    bot.on('physicsTick', () => { if (ctx.died && deadView && ctx.tick % 3 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 1.2, 0, (Math.random() - 0.5) * 1.2), { w: 0.8, h: 0.8 }) })
+    bot.on('physicsTick', () => { if (ctx.died && deadView && ctx.tick % 4 === 0) ctx.particles('poof', deadView.offset((Math.random() - 0.5) * 3, 0, (Math.random() - 0.5) * 3), { w: 0.25, h: 0.25, count: 2 }) })
     const respawn = async () => {
       if (!ctx.died) return
       while (ctx.tick < deadAt + 21) await bot.waitForTicks(1)
@@ -182,10 +191,10 @@ module.exports = {
       }
       if (digging && !mined && k % 4 === 0) ctx.sound('block.stone.hit', 0.25, 0.5)
       if (!mined && k >= at(3) + 8) { say(`/setblock ${X + 20} ${F + 2} ${Z - 30} air`); broke() }   // a safety net: the dig should have landed by now
+      if (k === Math.round((S.line('L02').dur + S.gap) * 20) - 8) say('/clear @s')   // the hand is empty again before the cut (the pickaxe was still lowering in the next shot)
       K.base = K.aim(P(20.5, 2.5, -29.5)); look(k)
     })
     stop(); bot.stopDigging()
-    say('/clear @s')
 
     // L03: my sister heard CLOSE THE DOOR (card; the door shuts). That night a zombie came knocking.
     setTime(18000)
@@ -231,7 +240,7 @@ module.exports = {
     ctx.mark('face_on', { near: [X + 1.3, Z - 5.7, 1], head: true })
     from = null
     await line('L07', async (k, at) => {
-      if (k < at(3) - 4) { go(k > 2 && k < 12) } else { creep(k, bot.entity.position.x < X - 0.5) }
+      if (k < at(3) - 4) { go(k > 2 && k < 12) } else { ctl('sneak', true); go(bot.entity.position.x < X - 0.2) }
       if (k >= at(3) - 4) { from = from || { ...K.base }; K.turnTo(from, P(1.3, 2.55, -5.7), (k - at(3) + 4) / 12) }
       look(k)
     })
@@ -245,14 +254,17 @@ module.exports = {
     await line('L08', async (k, at) => {
       creep(k, bot.entity.position.z < Z - 4.6)
       K.base = K.aim(P(0.5, 2.2, -3))
-      if (k === at(1)) {
-        say(`/fill ${X} ${F + 1} ${Z - 3} ${X} ${F + 2} ${Z - 3} dark_oak_planks`)
+      if (k === at(1)) {   // one plank at a time: the bottom of the doorway, then (5 ticks on) over his face
+        say(`/setblock ${X} ${F + 2} ${Z - 3} air`); say(`/setblock ${X} ${F + 1} ${Z - 3} dark_oak_planks`)
         ctx.sound('block.wood.place', 1, 0.8); ctx.mark('nailed')
+      }
+      if (k === at(1) + 6) {
+        say(`/setblock ${X} ${F + 2} ${Z - 3} dark_oak_planks`); ctx.sound('block.wood.place', 1, 0.75)
         tp('dad2', ...FAR, 180)
       }
-      for (const kk of [at(1) + 5, at(3), at(3) + 5]) if (k === kk) ctx.sound('entity.zombie.attack_wooden_door', 0.45, 1.5)   // the hammer
+      for (const kk of [at(3), at(3) + 5]) if (k === kk) ctx.sound('entity.zombie.attack_wooden_door', 0.45, 1.5)   // the hammer
       let jolt = 0
-      for (const kk of [at(1), at(1) + 5, at(3), at(3) + 5]) if (k >= kk && k < kk + 4) jolt = Math.sin((k - kk) * 1.6) * 0.03
+      for (const kk of [at(1), at(1) + 6, at(3), at(3) + 5]) if (k >= kk && k < kk + 4) jolt = Math.sin((k - kk) * 1.6) * 0.03
       look(k, jolt, 0)
     })
     stop()
@@ -270,6 +282,7 @@ module.exports = {
     ctx.mark('voice2')
     await line('L10', async (k, at) => {
       if (k === at(2)) ctx.mark('voice2b')
+      if (k === at(4)) ctx.mark('voice2c')
       creep(k, bot.entity.position.z > Z - 5.9)
       K.base = K.aim(P(-0.6, 1.5, -6.7)); look(k, Math.sin(k / 7) * 0.05, 0)
     })
@@ -289,7 +302,8 @@ module.exports = {
 
     // L12: and the first voice sounded old. Grandpa old (close on the new bed, a slow push)
     await cut(1.2, -4.5, P(-0.5, 1.4, -6.6))
-    await line('L12', async (k) => {
+    await line('L12', async (k, at) => {
+      if (k === at(1)) ctx.mark('old_voice')   // voice 1's card again, on "the FIRST voice"
       creep(k, bot.entity.position.x > X - 0.1)
       K.base = K.aim(P(-0.5, 1.4, -6.6)); look(k)
     })
