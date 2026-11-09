@@ -1,0 +1,48 @@
+{
+  "name": "ai_dirk_willems",
+  "caption": "He Went Back 🧊😭",
+  "youtube": {
+    "title": "He Went Back 🧊😭 #minecraft #shorts",
+    "description": "The man hunting you falls through the ice. Which AI goes back for him? 🧊\n\nBased on a true story: Dirk Willems, 1569. He went back. It cost him his life.\n\nA parody: what the AIs say here is written for the story, not real chatbot answers.\nMusic: original score, made for this Short (VS Chamber Orchestra 2 Community Edition samples, CC0).\n\n#minecraft #shorts #ai #grok #chatgpt",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#ai",
+      "#grok",
+      "#chatgpt"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "title": "ai_dirk_willems score",
+    "artist": "HelloBuh",
+    "licence": "original: composed for this Short (scripts/orchestra.py, VSCO-2 CE samples, CC0)"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 46.6,
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "codec": "h264",
+    "bytes": 63375479,
+    "sha256": "0db9021130eae66796184ee510681534b4cefd9ad7c8d9e8e7e6f0939bbb8b5d"
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "stunt": "stunts/ai_dirk_willems.js",
+    "episode": "episodes/dirk_willems"
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "claude/ai-dilemma",
+    "commit": "b7dd5c9b19041f8268e3428e8401309f0cc3e0c8"
+  },
+  "rebuild": [
+    "./scripts/queue_render.sh dirk_willems && git push   (renders on Actions: .github/workflows/render-movie.yml)"
+  ],
+  "status": "ready",
+  "notes": "AI dilemma episode 2 (Dirk Willems, 1569). Owner 2026-11-09: post the backlog and keep testing formats.",
+  "published_at": "2026-11-09T19:37:04.000Z"
+}
