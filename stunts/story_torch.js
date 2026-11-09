@@ -82,6 +82,9 @@ module.exports = {
     // the dog: a wolf sitting at the hill's foot (L01), then on the hilltop at the hole's edge (L06)
     await c(`/summon wolf ${X + 2.5} ${F + 1} ${Z - 3.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Sitting:1b,Tags:["dog","warm"],Rotation:[150f,0f]}`)
 
+    // my dog: tamed (owned by me), so he wears the red collar (an untamed wolf has none: Minecraft audit)
+    await c('/execute as @s run data modify entity @e[tag=dog,limit=1] Owner set from entity @s UUID')
+    await c('/data merge entity @e[tag=dog,limit=1] {CollarColor:14b}')
     await c('/clear @s')
     await ctx.hotbar(['iron_shovel', 'iron_pickaxe'])
     await resendChunks(ctx, X, Z)
