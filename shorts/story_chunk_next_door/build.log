@@ -1,0 +1,27 @@
+fetched server, client jar and asset index for 1.21.11
+attempt 1
+22:23:33.617 spawned at Vec3 { x: 131.5, y: 73, z: 24.5 }
+22:23:33.914 nearest minecraft:plains at [ 387, -40 ]
+22:24:57.013 set at { x: 387, y: 72, z: -40 }
+22:25:05.789 chunks refreshed; back at start within 0.00 blocks
+22:25:50.495 STUNT OK
+filled 34 dropped pose tick(s): 26 28 29 31 32 33 38 329 333 377 566 567 568 571 744 800 801 815 818 821 ...
+simulated 5 dropped item / xp orb paths
+meshing from y -11
+light computed in 1.3 s
+meshed + uploaded world in 15.2 s
+24 particles
+rendering 2542 of 2649 frames
+resume: 899 kept, 1643 to render
+filled 34 dropped pose tick(s): 26 28 29 31 32 33 38 329 333 377 566 567 568 571 744 800 801 815 818 821 ...
+simulated 5 dropped item / xp orb paths
+meshing from y -11
+light computed in 1.3 s
+meshed + uploaded world in 15.4 s
+24 particles
+rendered 2649 frames (44.15 s of video) in 598.2 s = 13.6 s per video second
+2649 frame names, 2542 rendered
+wrote work/story_chunk_next_door.wav 44.20s
+no 3D block icons needed
+wrote out/story_chunk_next_door.mp4 41.35s
+RUN EXIT 0

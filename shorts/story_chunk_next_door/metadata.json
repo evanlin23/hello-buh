@@ -1,0 +1,334 @@
+{
+  "name": "story_chunk_next_door",
+  "caption": "something walks out of the fog every night \ud83d\ude33",
+  "youtube": {
+    "title": "something walks out of the fog every night \ud83d\ude33 #minecraft #shorts",
+    "description": "something walks out of the fog every night \ud83d\ude33\n\nSong: Lieless, Luuna, Yarimov - Sky Verse\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/SkyVerse\nWatch: http://ncs.lnk.to/SkyVerseAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "sky_verse.mp3",
+    "title": "Sky Verse",
+    "artist": "Lieless, Luuna, Yarimov",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": null,
+    "drop_in_song_s": 4.0,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 3.0
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 41.35,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 34854718,
+    "sha256": "7df5f3635cc1634a07a93de5e14f8e38ab48a13eb76ba4af4fb49d74811ea62b"
+  },
+  "edit": {
+    "caption": "something walks out of the fog every night \ud83d\ude33",
+    "red": "fog",
+    "story": "stories/chunk_next_door",
+    "startAt": "line:0",
+    "endAfter": "name:1.5",
+    "punch": [
+      [
+        "name",
+        0,
+        0.1
+      ]
+    ],
+    "zoom": [
+      [
+        "line:0",
+        "line:2.3",
+        1.3
+      ],
+      [
+        "name:0.15",
+        "name:1.5",
+        1.5
+      ]
+    ],
+    "args": [
+      "--caption",
+      "something walks out of the fog every night \ud83d\ude33",
+      "--red",
+      "fog",
+      "--punch",
+      "[[\"name\",0,0.1]]",
+      "--zoom",
+      "[[\"line:0\",\"line:2.3\",1.3],[\"name:0.15\",\"name:1.5\",1.5]]",
+      "--story",
+      "stories/chunk_next_door",
+      "--start_at",
+      "line:0",
+      "--end_after",
+      "name:1.5"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 387,
+      "y": 72,
+      "z": -40
+    },
+    "biome": "minecraft:plains",
+    "ticks": 884,
+    "seconds": 44.2,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "cut"
+      },
+      {
+        "t": 1.5,
+        "event": "line"
+      },
+      {
+        "t": 4.8,
+        "event": "cut"
+      },
+      {
+        "t": 4.85,
+        "event": "line"
+      },
+      {
+        "t": 7.4,
+        "event": "line"
+      },
+      {
+        "t": 7.75,
+        "event": "swing"
+      },
+      {
+        "t": 7.75,
+        "event": "vel"
+      },
+      {
+        "t": 7.95,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.95,
+        "event": "mob_death"
+      },
+      {
+        "t": 8.1,
+        "event": "swing"
+      },
+      {
+        "t": 8.1,
+        "event": "vel"
+      },
+      {
+        "t": 8.3,
+        "event": "mob_death"
+      },
+      {
+        "t": 8.45,
+        "event": "swing"
+      },
+      {
+        "t": 8.45,
+        "event": "vel"
+      },
+      {
+        "t": 8.7,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 8.7,
+        "event": "mob_death"
+      },
+      {
+        "t": 10.15,
+        "event": "cut"
+      },
+      {
+        "t": 10.2,
+        "event": "line"
+      },
+      {
+        "t": 11.75,
+        "event": "cut"
+      },
+      {
+        "t": 11.8,
+        "event": "line"
+      },
+      {
+        "t": 14.35,
+        "event": "cut"
+      },
+      {
+        "t": 14.4,
+        "event": "line"
+      },
+      {
+        "t": 15.25,
+        "event": "vel"
+      },
+      {
+        "t": 16.1,
+        "event": "time"
+      },
+      {
+        "t": 16.1,
+        "event": "cut"
+      },
+      {
+        "t": 16.15,
+        "event": "line"
+      },
+      {
+        "t": 18.65,
+        "event": "vel"
+      },
+      {
+        "t": 19.1,
+        "event": "time"
+      },
+      {
+        "t": 19.1,
+        "event": "cut"
+      },
+      {
+        "t": 19.15,
+        "event": "line"
+      },
+      {
+        "t": 19.7,
+        "event": "vel"
+      },
+      {
+        "t": 19.85,
+        "event": "vel"
+      },
+      {
+        "t": 20.65,
+        "event": "vel"
+      },
+      {
+        "t": 20.8,
+        "event": "vel"
+      },
+      {
+        "t": 21.55,
+        "event": "collect"
+      },
+      {
+        "t": 22,
+        "event": "cut"
+      },
+      {
+        "t": 22.05,
+        "event": "line"
+      },
+      {
+        "t": 24.55,
+        "event": "time"
+      },
+      {
+        "t": 24.55,
+        "event": "cut"
+      },
+      {
+        "t": 24.6,
+        "event": "line"
+      },
+      {
+        "t": 28.15,
+        "event": "cut"
+      },
+      {
+        "t": 28.2,
+        "event": "line"
+      },
+      {
+        "t": 30.75,
+        "event": "cut"
+      },
+      {
+        "t": 30.8,
+        "event": "line"
+      },
+      {
+        "t": 33.05,
+        "event": "cut"
+      },
+      {
+        "t": 33.1,
+        "event": "line"
+      },
+      {
+        "t": 36.55,
+        "event": "cut"
+      },
+      {
+        "t": 36.6,
+        "event": "line"
+      },
+      {
+        "t": 38.45,
+        "event": "line"
+      },
+      {
+        "t": 39.95,
+        "event": "line"
+      },
+      {
+        "t": 41.35,
+        "event": "name"
+      },
+      {
+        "t": 44,
+        "event": "story_end"
+      },
+      {
+        "t": 44.2,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "14c7f69659cb6b7cc6cc77f72ec9cd7c42fcfc58",
+    "rendered_at": "2026-11-09T22:46:04.696Z",
+    "head_at_publish": "e2259c913fe65e3955bde99f5815edfee38d52e7",
+    "stunt": "stunts/story_chunk_next_door.js",
+    "source_snapshot": [
+      "source/story_chunk_next_door.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 14c7f69659cb",
+    "gunzip -c shorts/story_chunk_next_door/recording.json.gz > work/story_chunk_next_door.rec.json",
+    "node render.js work/story_chunk_next_door.rec.json work/story_chunk_next_door.frames 60 1080 1011",
+    "python3 audio.py work/story_chunk_next_door.rec.json work/story_chunk_next_door.wav",
+    "python3 edit.py --frames work/story_chunk_next_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_chunk_next_door.rec.json --audio work/story_chunk_next_door.wav --caption \"something walks out of the fog every night \ud83d\ude33\" --red fog --punch [[\"name\",0,0.1]] --zoom [[\"line:0\",\"line:2.3\",1.3],[\"name:0.15\",\"name:1.5\",1.5]] --story stories/chunk_next_door --start_at line:0 --end_after name:1.5 --out out/story_chunk_next_door.mp4"
+  ],
+  "status": "ready",
+  "notes": "story #4 (worker, branch claude/story-chunk-next-door): frame review ready; retention + minecraft audits passed after the fixes they asked for. Needs the zombie villager renderer entries on that branch (commit 00961de) to rebuild.",
+  "published_at": "2026-11-09T22:50:52.744Z"
+}
