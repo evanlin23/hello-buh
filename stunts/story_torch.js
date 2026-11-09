@@ -23,7 +23,7 @@ module.exports = {
   name: 'story_torch',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "there's a torch I never placed 😳",
-  edit: { caption: "there's a torch I never placed 😳", red: 'torch', story: 'stories/torch', startAt: 'line:0', endAfter: 'death:1.4', deathScreen: true, onFire: 'burn:death', zoom: [['broke:0', 'death:1.4', 1.06]] },
+  edit: { caption: "there's a torch I never placed 😳", red: 'torch', story: 'stories/torch', startAt: 'line:0', endAfter: 'death:1.4', deathScreen: true, onFire: 'burn:death', zoom: [['hook:0', 'hook:2.9', 1.45], ['broke:0', 'death:1.4', 1.06]] },
   expectDeath: true,
   time: 12950,              // sunset: the torch on the hill glows against an orange sky
 
@@ -129,9 +129,10 @@ module.exports = {
 
     setMeter(1)
     // L01: the hill behind the house, the torch on top against the dusk; walk toward it, the dog at its foot
-    await cut(1.6, -3.2, P(SX + 0.5, TOP + 1.45, SZ + 0.5))
-    await line('L01', async (k) => { wake(k); bot.setControlState('forward', k > 6 && bot.entity.position.z > Z - 4.4); K.base = K.aim(P(SX + 0.5, TOP + 1.45, SZ + 0.5)); look(k) })
-    bot.setControlState('forward', false)
+    // 8 blocks back: closer, the hill's steps hide the torch; the edit zooms in on it (`hook` mark)
+    await cut(SX + 0.9, SZ + 8.3, P(SX + 0.5, TOP + 1.45, SZ + 0.5))
+    ctx.mark('hook')
+    await line('L01', async (k) => { wake(k); K.base = K.aim(P(SX + 0.5, TOP + 1.45, SZ + 0.5)); look(k) })
     // L02: Mom at the front door. She sighs on "sighed" (turns half away and back, a villager's grumble)
     await cut(-0.5, 0.3, P(-0.5, 1.6, 4.2))
     ctx.mark('face_on', { near: [X - 0.5, Z + 4.2, 1.5], head: true })
@@ -209,13 +210,14 @@ module.exports = {
     let from9 = null, k9 = 0
     await line('L09', async (k, at) => {
       if (k === at(0)) setMeter(40)
-      if (k === 2 || k === 8 || k === 14) digDown()   // -42, -43, -44: down to the stone floor
+      if (k >= 2 && k < at(3) && bot.entity.onGround) { const b = bot.blockAt(bot.entity.position.offset(0, -0.5, 0).floored()); if (b && b.name === 'dirt') digDown() }   // dirt to the stone floor (a dig mid-fall did nothing)
       if (k === 18) ctx.sound('block.lava.pop', 0.8, 0.9)
       if (k >= at(3) - 4 && !from9) { from9 = { ...K.base }; k9 = k }
       if (from9) K.turnTo(from9, new ctx.Vec3(X + SX - 0.5, F - 42 + 0.6, cz), (k - k9) / 10)
       look(k)
     })
     // L10: NEVER dig straight DOWN. Pickaxe out, look down, and the stone under my feet breaks on "DOWN"
+    if (digging) { bot.stopDigging(); await bot.waitForTicks(2) }
     await hold(1)
     const from10 = { ...K.base }
     const floor = bot.blockAt(new ctx.Vec3(X + SX, F + FLOOR, Z + SZ))
