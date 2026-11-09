@@ -311,7 +311,8 @@ def load_vox(i, far=False):
     if far:
         m = sfx.onepole(m, 4800)
     s = st(m)
-    return reverb(s, 2.6 if far else 0.9, 0.5 if far else 0.3, damp=3800)
+    # (nearly dry: the owner asked for "the voices without so much reverb"; a far voice gets a light hall)
+    return reverb(s, 1.3 if far else 0.45, 0.2 if far else 0.07, damp=3800)
 
 
 def score(edl, T, total, vox):
@@ -335,16 +336,17 @@ def score(edl, T, total, vox):
         click = sfx.band(RNG.standard_normal(int(0.006 * SR)), 2500, 6500) * 0.08
         put(st(click), S("open", 0.45) + dt - 0.012, 0.6)
         put(reverb(st(m), 3.8, 0.6), S("open", 0.45) + dt, 0.55)
-    put(drone(S("cardB") - S("open", 1.0) + 1.0), S("open", 1.0), 0.55)
+    put(drone(S("cardA") - S("open", 1.0) + 1.0), S("open", 1.0), 0.55)
     # the tower: wind, a slow rise
-    put(sfx.synth_air(S("hk1") - S("tower") + 0.6), S("tower"), 0.35)
+    put(sfx.synth_air(S("cardA") - S("tower") + 0.6), S("tower"), 0.35)
     put(whoosh(0.6), S("tower", 0.1), 0.5)
-    put(reverse_swell(1.4, 0.5), S("hk1") - 1.4, 0.6)
-    # the plank: a clock ticks under the questions
-    for k in range(int((S("cardB") - S("hk1")) / 0.72)):
-        put(tick(0.18), S("hk1") + k * 0.72)
-    # BOOM: the rule
+    put(reverse_swell(1.4, 0.5), S("cardA") - 1.4, 0.6)
+    # BOOM, BOOM: the rule, in two cards
+    put(braam(2.2), S("cardA"), 0.75)
     put(braam(2.6), S("cardB"), 0.9)
+    # the plank: a clock ticks under the question and the answer
+    for k in range(int((S("edge") - S("hk2")) / 0.72)):
+        put(tick(0.18), S("hk2") + k * 0.72)
     put(drone(S("fen") - S("cardB") + 1.5, (55.0, 82.4), 0.35), S("cardB", 0.4), 0.6)
     # the edge: a heartbeat speeding up
     t, gap = S("edge"), 0.9
@@ -398,8 +400,6 @@ def score(edl, T, total, vox):
     if vox:
         for v in edl["vox"]:
             x = load_vox(v["id"], v.get("far"))
-            if v.get("room"):   # more of the room on this one (Ash's last line read close-miked next to the others)
-                x = reverb(x, 1.4, v["room"], damp=3200)
             put(x, at(T, v["at"]), 0.85)
     mix = mix[: int(total * SR)]
     # hard cut to silence at the hush and the very end (trailer silences are part of the score)

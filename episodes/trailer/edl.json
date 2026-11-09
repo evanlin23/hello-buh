@@ -51,36 +51,18 @@
    }
   },
   {
-   "id": "hk1",
-   "rec": "R1",
-   "t0": 2.55,
-   "dur": 2.4,
-   "shot": {
-    "single": "actor:Highkeeper",
-    "toward": "self",
-    "size": "close",
-    "side": "south",
-    "fov": 36
-   }
+   "id": "cardA",
+   "black": 2.4
   },
   {
-   "id": "ash1",
-   "rec": "R1",
-   "t0": 4.6,
-   "dur": 1.0,
-   "shot": {
-    "single": "self",
-    "toward": "actor:Highkeeper",
-    "size": "close",
-    "side": "south",
-    "fov": 36
-   }
+   "id": "cardB",
+   "black": 2.4
   },
   {
    "id": "hk2",
    "rec": "R1",
    "t0": 6.25,
-   "dur": 1.4,
+   "dur": 1.6,
    "shot": {
     "single": "actor:Highkeeper",
     "toward": "self",
@@ -108,10 +90,6 @@
    "t0": 8.65,
    "dur": 1.6,
    "shot": "two"
-  },
-  {
-   "id": "cardB",
-   "black": 2.4
   },
   {
    "id": "edge",
@@ -299,11 +277,20 @@
   },
   {
    "at": [
+    "cardA",
+    0.15
+   ],
+   "dur": 2.1,
+   "small": "AT SIXTEEN, YOU JUMP",
+   "big": "INTO ONE BLOCK OF WATER"
+  },
+  {
+   "at": [
     "cardB",
     0.15
    ],
    "dur": 2.1,
-   "small": "THE FLOOR YOU FALL FROM",
+   "small": "THE FLOOR YOU JUMP FROM",
    "big": "IS YOURS. FOREVER."
   },
   {
@@ -351,20 +338,6 @@
  ],
  "vox": [
   {
-   "id": "hk1",
-   "at": [
-    "hk1",
-    0.25
-   ]
-  },
-  {
-   "id": "ash1",
-   "at": [
-    "ash1",
-    0.12
-   ]
-  },
-  {
    "id": "hk2",
    "at": [
     "hk2",
@@ -394,12 +367,18 @@
    "far": true
   },
   {
+   "id": "hk1",
+   "at": [
+    "m1",
+    0.15
+   ]
+  },
+  {
    "id": "ash3",
    "at": [
     "ashvox",
     0.45
-   ],
-   "room": 0.35
+   ]
   },
   {
    "id": "buh1",
@@ -412,26 +391,10 @@
  "quotes": [
   {
    "at": [
-    "hk1",
-    0.25
-   ],
-   "dur": 2.1,
-   "text": "“How many in your family?”"
-  },
-  {
-   "at": [
-    "ash1",
-    0.1
-   ],
-   "dur": 0.9,
-   "text": "“Four.”"
-  },
-  {
-   "at": [
     "hk2",
     0.1
    ],
-   "dur": 1.3,
+   "dur": 1.4,
    "text": "“Which floor?”"
   },
   {
@@ -460,6 +423,14 @@
   },
   {
    "at": [
+    "m1",
+    0.15
+   ],
+   "dur": 2.6,
+   "text": "“How many in your family?”"
+  },
+  {
+   "at": [
     "ashvox",
     0.45
    ],
@@ -474,5 +445,6 @@
    "dur": 1.6,
    "text": "“That's not an echo.”"
   }
- ]
+ ],
+ "note_v2": "Owner, 2026-11-09: 'i dont understand the opening dialog' - the rule cards now come before the plank, 'How many in your family?' moved into the montage unanswered, 'Four.' cut; and voices drier ('without so much reverb')."
 }
