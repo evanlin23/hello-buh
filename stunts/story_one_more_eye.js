@@ -187,11 +187,13 @@ module.exports = {
     go(false)
     // L04: Leo's room: his name on the wall, the camera slides along it
     await cut(RX + 6.3, RZ + 10.7, R(7.5, 3.9, 0.5))
-    await line('L04', async (k) => {   // the whole name in frame, a slow push in and a drift along it (a close slide never showed LEO in one frame)
-      sneak(true); go(true); bot.setControlState('right', k % 3 === 0)
-      K.base = K.aim(R(7.5, 3.9, 0.5)); look(k)
-    })
-    go(false); bot.setControlState('right', false); sneak(false)
+    let bench = false
+    await line('L04', async (k, at) => {   // the whole name in frame, a slow push in; on "With a WOODEN sword" a cut to the crafting table he made it on, under cobwebs (one 3.45 s shot with nothing new failed the retention audit)
+      if (!bench && k >= at(5) - 1) { bench = true; await cut(RX + 10.4, RZ + 3.6, R(13.4, 1.7, 1.5)) }
+      sneak(true); go(true)
+      K.base = K.aim(bench ? R(13.4, 1.7, 1.5) : R(7.5, 3.9, 0.5)); look(k)
+    }, -0.1)
+    go(false); sneak(false)
     // L05: back by dinner (the kitchen table still set, cobwebs on his chair)
     await cut(KX + 1.9, KZ + 1.9, Kt(4.8, 1.9, 3.6))
     from = null
@@ -231,21 +233,21 @@ module.exports = {
     // smoke off the boots: on the floor, then just ahead of the hand (lower right of the view)
     const handSmoke = () => {
       const e = bot.entity, f = { x: -Math.sin(e.yaw), z: -Math.cos(e.yaw) }
-      ctx.particles('smoke', new ctx.Vec3(e.position.x + f.x * 1.5 - f.z * 0.55, e.position.y + 1.15, e.position.z + f.z * 1.5 + f.x * 0.55), { count: 1 })
+      ctx.particles('smoke', new ctx.Vec3(e.position.x + f.x * 2.2 - f.z * 0.8, e.position.y + 1.0, e.position.z + f.z * 2.2 + f.x * 0.8), { count: 1 })   // 2.2 blocks out: nearer, the puffs drew as big hard-edged blocks
     }
     from = null; got = -1
     await line('L08', async (k, at) => {
       if (got < 0 && bot.inventory.items().some(it => it.name === 'iron_boots')) { got = k; ctx.select(1) }
       go(k >= at(1) - 7 && got < 0 && bz() > 4.4); sneak(got >= 0); if (got >= 0 && bz() > 3.6) go(true)
-      if (got < 0 && k % 3 === 0) ctx.particles('smoke', B(-1.5, 1.3, 3.75), { count: 1 })
-      if (got >= 0 && k % 3 === 0) handSmoke()
+      if (got < 0 && k % 6 === 0) ctx.particles('smoke', B(-1.5, 1.5, 3.75), { count: 1 })
+      if (got >= 0 && k % 5 === 0) handSmoke()
       if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(-0.5, 1.5, 0.5), (k - got) / 14) } else K.base = K.aim(B(-1.5, 1.15, 3.75))
       look(k)
     })
     go(false); sneak(false)
     // L09: I think he's just packing (wide on the ring, the boots still smoking in his hand)
     await cut(BX - 4.9, BZ + 5.6, B(0.2, 1.2, 1.2))
-    await line('L09', async (k) => { go(k > 2 && k < 14); if (k % 3 === 0) handSmoke(); if (k % 4 === 0) wisps(6); look(k) })
+    await line('L09', async (k) => { go(k > 2 && k < 14); if (k % 5 === 0) handSmoke(); if (k % 4 === 0) wisps(6); look(k) })
     go(false)
     ctx.select(0)
     // L10: at night the floor growls (the kitchen at night; purple seeps up through the boards)
