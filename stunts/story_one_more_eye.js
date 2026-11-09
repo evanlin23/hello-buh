@@ -182,12 +182,12 @@ module.exports = {
     await cut(BX + 0.5, BZ + 5.9, B(0.5, 1.6, 2.5))
     await line('L02', async (k, at) => { go(k >= 14 && bz() > 4.3); bot.setControlState('left', k < 14);   // a sidestep, then the push in, still moving on the last tick (it reached the frame early and parked)
       K.base = K.aim(B(0.5, 1.6, 2.5)); look(k) })
-    go(false); bot.setControlState('left', false); sneak(false)
+    go(false); bot.setControlState('left', false)   // (no stand-up before a cut: while the teleport lands it showed as 2-3 stray frames; each scene sets its own crouch)
     // L03: I never put them in. Nobody goes down there (the stairs, cobwebs across them, up into the dark)
     await cut(BX - 1.5, BZ + 4.6, B(-5.5, 2.4, 1.5))
     let from = null
     await line('L03', async (k, at) => {
-      go(k < 9)
+      sneak(false); go(k < 9)
       if (k >= at(3) - 3) { from = from || { ...K.base }; K.turnTo(from, B(-5.5, 6.0, -2.6), (k - at(3) + 3) / 22) }
       look(k)
     })
@@ -200,12 +200,12 @@ module.exports = {
       sneak(true); go(true)
       K.base = K.aim(bench ? R(13.5, 1.6, 1.5) : R(7.5, 3.9, 0.5)); look(k)
     }, -0.1)
-    go(false); sneak(false)
+    go(false)
     // L05: back by dinner (the kitchen table still set, cobwebs on his chair)
     await cut(KX + 1.9, KZ + 1.9, Kt(4.8, 1.9, 3.6))
     from = null
     await line('L05', async (k, at) => {
-      go(k < 7)
+      sneak(false); go(k < 7)
       if (k >= at(3) - 4) { from = from || { ...K.base }; K.turnTo(from, Kt(4.5, 2.1, 4.5), (k - at(3) + 4) / 14) }
       look(k)
     })
@@ -221,7 +221,6 @@ module.exports = {
     // L07: on Monday his sword came through (it lies by the ring; he walks up and picks it up: a real pickup)
     say(`/summon item ${(X + BX + 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:wooden_sword",count:1,components:{"minecraft:damage":41}},PickupDelay:0s,Age:-32768s,Tags:["sword"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
-    sneak(false)   // stands up on the cut (3 ticks before it, the camera lurched up)
     await cut(BX + 1.5, BZ + 6.4, B(1.5, 1.15, 3.75))
     from = null
     let got = -1
@@ -237,7 +236,6 @@ module.exports = {
     // wide shot hid them behind the hotbar. In the hand they are big, with the smoke coming off them)
     say(`/summon item ${(X + BX - 1.5).toFixed(2)} ${F + 1.1} ${(Z + BZ + 3.75).toFixed(2)} {Item:{id:"minecraft:iron_boots",count:1},PickupDelay:12s,Age:-32768s,Tags:["boots"]}`)
     for (let i = 0; i < 3; i++) { await bot.waitForTicks(1); look(0) }
-    sneak(false)
     await cut(BX - 1.5, BZ + 6.4, B(-1.5, 1.15, 3.75))
     // smoke off the boots: on the floor, then just ahead of the hand (lower right of the view)
     const handSmoke = () => {
@@ -253,7 +251,7 @@ module.exports = {
       if (got >= 0) { from = from || { ...K.base }; K.turnTo(from, B(-0.5, 1.5, 0.5), (k - got) / 14) } else K.base = K.aim(B(-1.5, 1.15, 3.75))
       look(k)
     })
-    go(false); sneak(false)
+    go(false)
     // L09: I think he's just packing (wide on the ring, the boots still smoking in his hand)
     await cut(BX - 4.9, BZ + 5.6, B(0.2, 1.2, 1.2))
     let away = false
@@ -263,7 +261,7 @@ module.exports = {
       if (!away && k % 5 === 0) handSmoke()
       if (k % 4 === 0) wisps(6); look(k)
     })
-    go(false); sneak(false)
+    go(false)
     // L10: at night the floor growls (the kitchen at night; purple seeps up through the boards)
     say('/time set 18000'); ctx.dayTime = 18000; ctx.mark('time', { time: 18000 })
     await cut(KX + 6.5, KZ + 5.75, Kt(2.6, 1.0, 5.6))   // along the south wall (from the corner the chair's cobweb filled the view)
@@ -276,11 +274,11 @@ module.exports = {
       const j = k >= at(2) - 2 && k < at(2) + 8 ? 1 : 0
       look(k, Math.sin(k * 2.1) * 0.012 * j, Math.sin(k * 1.7) * 0.01 * j)
     })
-    sneak(false)
     // L11: and the ceiling above it keeps turning black (a tilt from the ring up to the soot)
     await cut(BX + 3.6, BZ + 4.2, B(0.5, 1.4, 0.5))
     from = null
     await line('L11', async (k, at) => {
+      sneak(false)
       if (k >= at(1) - 3) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 6.0, 0.5), (k - at(1) + 3) / 40) }
       if (k % 3 === 0) ctx.particles('smoke', B(0.5 + (Math.random() - 0.5) * 2.4, 4.6 + Math.random() * 0.8, 0.5 + (Math.random() - 0.5) * 2.4), { count: 5 })
       look(k)
@@ -290,7 +288,7 @@ module.exports = {
     say(`/setblock ${blk(4, 1, 3)} red_carpet`); say(`/setblock ${blk(3, 1, 4)} red_carpet`); say(`/setblock ${blk(4, 1, 4)} red_carpet`)
     await cut(BX + 6.3, BZ + 6.3, B(3.5, 2.1, 3.5))   // from the corner: the cake, the ring behind it (at 2.5 blocks, walking in, the cake filled the view)
     await line('L12', async (k) => { sneak(true); bot.setControlState('left', true); K.base = K.aim(B(3.5, 2.1, 3.5)); if (k % 6 === 0) wisps(4); look(k) })
-    bot.setControlState('left', false); sneak(false)
+    bot.setControlState('left', false)
     // L13: last night I stayed up to watch (in front of the empty frame; he sits down)
     await cut(BX + 0.5, BZ + 6.7, B(0.5, 1.5, 2.5))
     const n13 = ticksOf('L13')
@@ -303,7 +301,8 @@ module.exports = {
     })
     go(false)   // still crouched through the cut: standing up on it gave 3 stray frames (frame review)
     // L14: number twelve: purple gathers on the frame, the eye is in, the portal opens
-    await cut(BX + 0.5, BZ + 4.5, B(0.5, 1.75, 2.5))
+    // no cut here: L13 ends 0.1 block from this spot, and a cut that short drew as a 3-frame re-aim. The same shot goes on.
+    const from14 = { ...K.base }
     from = null
     let openAt = -1
     await line('L14', async (k, at) => {
@@ -313,6 +312,7 @@ module.exports = {
         say(`/fill ${blk(-1, 1, -1)} ${blk(1, 1, 1)} end_portal`)
         ctx.sound('block.end_portal.spawn', 1, 1); ctx.mark('open'); openAt = k
       }
+      if (openAt < 0) K.turnTo(from14, B(0.5, 1.7, 2.5), k / 8)
       if (openAt >= 0) { from = from || { ...K.base }; K.turnTo(from, B(0.5, 1.2, 0.9), (k - openAt) / 10); if (k % 2 === 0) wisps(6, 1.6) }
       look(k)
     }, 0.55)
