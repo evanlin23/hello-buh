@@ -290,10 +290,14 @@ def family_scores(ya, done: dict) -> dict:
     end = central_now().date().isoformat()
     start = min([v.get("uploaded", end) for v in done.values()] + [end])
     an, note = video_analytics(ya, list(ids), start, end)
+    studio = json.loads((UP / "studio.json").read_text()) if (UP / "studio.json").exists() else {}
     per, fam = {}, {}
     for vid, name in ids.items():
         A = an.get(vid, {})
         v, sg = int(A.get("views", 0) or 0), int(A.get("subscribersGained", 0) or 0)
+        S = studio.get(name) or {}
+        if S.get("subs", 0) > sg:   # Studio's newer count (uploads/studio.json) beats the lagging API
+            v, sg = max(v, int(S.get("views", 0))), int(S["subs"])
         per[name] = {"family": series(name), "views": v, "subs": sg, "avg_pct": A.get("averageViewPercentage"),
                      "stayed": (A["engagedViews"] / v) if A.get("engagedViews") is not None and v else None}
         f = fam.setdefault(series(name), {"views": 0, "subs": 0, "shorts": 0})
