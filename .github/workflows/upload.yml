@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "upload | report | dry-run"
+        description: "upload | report | scores | dry-run"
         required: false
         default: "upload"
       short:
@@ -61,6 +61,7 @@ jobs:
           case "${{ inputs.mode }}" in
             report)  python3 scripts/youtube_upload.py --report ;;
             dry-run) python3 scripts/youtube_upload.py --dry-run ;;
+            scores)  python3 scripts/youtube_upload.py --scores ;;
             *)       python3 scripts/youtube_upload.py --short "${{ inputs.short }}" ;;
           esac
       - name: weekly report (Sundays, Central)

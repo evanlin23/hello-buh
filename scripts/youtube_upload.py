@@ -15,8 +15,13 @@ exists. Ported from evanlin23/buh-explains buhexplains/pipeline/upload.py, with 
   if its title is already on the channel (hand uploads too), or if it would break the posting mix
   (scripts/check_queue.py: no format twice in a row, at most 1 pixel-art per 3).
 
-Order: uploads/queue.txt first; when that runs out, any other "ready" Short on the videos branch (oldest
-published first) that keeps the mix. Every upload is recorded in uploads/uploads.json on main.
+Order (owner 2026-11-09: "post the content that gets the most subscribers"; the goal is 100k): queue lines marked
+"# first" go first; then every other ready Short (queue.txt and the rest of the videos branch) ranked by its format's
+SUBSCRIBERS PER 1,000 VIEWS (family_scores: YouTube Analytics, lifetime, shrunk toward the channel average so a format
+with little data isn't over- or under-rated; a format not posted yet gets the average, so new formats still get tried),
+queue order breaking ties, always keeping the mix. The scores are saved to uploads/scores.json each run.
+    python3 scripts/youtube_upload.py --scores   # print the ranking only
+Every upload is recorded in uploads/uploads.json on main.
 """
 from __future__ import annotations
 
@@ -28,7 +33,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from check_queue import series, mix_ok   # noqa: E402
 
 UP = ROOT / "uploads"
-QUEUE, RECORD, PAUSED = UP / "queue.txt", UP / "uploads.json", UP / "PAUSED"
+QUEUE, RECORD, PAUSED, SCORES = UP / "queue.txt", UP / "uploads.json", UP / "PAUSED", UP / "scores.json"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
 PER_DAY = int(os.environ.get("YT_PER_DAY", "3") or 3)
 WINDOW = ((9, 0), (21, 0))            # Central; split into PER_DAY equal slices, one publish in each
@@ -56,7 +61,7 @@ def save_record(done: dict, msg: str) -> None:
     """Write uploads.json, commit and push (rebasing if main moved). An unsaved upload would be retried as a
     duplicate, so this retries hard and fails loudly."""
     RECORD.write_text(json.dumps(done, indent=1, ensure_ascii=False) + "\n")
-    subprocess.run(["git", "add", str(RECORD)], check=True)
+    subprocess.run(["git", "add", str(RECORD)] + ([str(SCORES)] if SCORES.exists() else []), check=True)
     subprocess.run(["git", "commit", "-m", msg], check=True)
     ref = os.environ.get("GITHUB_REF_NAME", "")
     if not ref:
@@ -90,17 +95,25 @@ def meta_of(vd: Path, name: str) -> dict | None:
     return json.loads(p.read_text()) if p.exists() else None
 
 
-def pick(vd: Path, done: dict) -> tuple[str | None, str]:
-    """The next Short: queue.txt order, then any other ready one, skipping anything uploaded or posted by hand,
-    not ready, or that would break the mix after what went up last."""
+def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, str]:
+    """The next Short: queue lines marked "# first", then the rest ranked by their format's subscribers per 1,000
+    views (scores["family"], higher first; queue order, then the oldest published, breaking ties), skipping anything
+    uploaded or posted by hand, not ready, or that would break the mix after what went up last."""
     history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
-    queued = [l.split("#")[0].strip() for l in QUEUE.read_text().splitlines()] if QUEUE.exists() else []
+    lines = QUEUE.read_text().splitlines() if QUEUE.exists() else []
+    pinned = [l.split("#")[0].strip() for l in lines if "# first" in l]
+    queued = [l.split("#")[0].strip() for l in lines]
     queued = [q for q in queued if q]
     rest = []
     for m in sorted((vd / "shorts").glob("*/metadata.json")):
         meta = json.loads(m.read_text())
         rest.append((meta.get("published_at", ""), m.parent.name))
     order = queued + [n for _, n in sorted(rest) if n not in queued]
+    fam = (scores or {}).get("family", {})
+    mean = (scores or {}).get("mean", 0)
+    pos = {n: i for i, n in enumerate(order)}
+    order = [n for n in pinned if n] + sorted((n for n in order if n not in pinned),
+                                             key=lambda n: (-fam.get(series(n), mean), pos[n]))
     why = []
     for name in order:
         if name in done:
@@ -252,6 +265,36 @@ def video_analytics(ya, ids: list, start: str, end: str) -> tuple[dict, str]:
     return out, note
 
 
+PRIOR_VIEWS = 3000   # how many views of evidence a format needs before its own rate outweighs the channel average
+
+
+def family_scores(ya, done: dict) -> dict:
+    """Subscribers gained per 1,000 views for each format family (check_queue.series), lifetime to date, from YouTube
+    Analytics. Shrunk toward the channel's average: (subs + mean * PRIOR_VIEWS) / (views + PRIOR_VIEWS), so one lucky
+    Short with 300 views doesn't top the ranking. Writes uploads/scores.json and returns it."""
+    ids = {v["video_id"]: k for k, v in done.items() if v.get("video_id")}
+    end = central_now().date().isoformat()
+    start = min([v.get("uploaded", end) for v in done.values()] + [end])
+    an, note = video_analytics(ya, list(ids), start, end)
+    per, fam = {}, {}
+    for vid, name in ids.items():
+        A = an.get(vid, {})
+        v, sg = int(A.get("views", 0) or 0), int(A.get("subscribersGained", 0) or 0)
+        per[name] = {"family": series(name), "views": v, "subs": sg, "avg_pct": A.get("averageViewPercentage"),
+                     "stayed": (A["engagedViews"] / v) if A.get("engagedViews") is not None and v else None}
+        f = fam.setdefault(series(name), {"views": 0, "subs": 0, "shorts": 0})
+        f["views"] += v; f["subs"] += sg; f["shorts"] += 1
+    tv, ts = sum(f["views"] for f in fam.values()), sum(f["subs"] for f in fam.values())
+    mean = 1000 * ts / tv if tv else 0.0
+    rate = {k: round(1000 * (f["subs"] + mean / 1000 * PRIOR_VIEWS) / (f["views"] + PRIOR_VIEWS), 3) for k, f in fam.items()}
+    out = {"updated": end, "mean": round(mean, 3), "family": rate, "family_totals": fam, "videos": per,
+           "note": note or "subscribers per 1,000 views; YouTube Analytics lags 1-3 days"}
+    SCORES.write_text(json.dumps(out, indent=1) + "\n")
+    print(f"scores (subs per 1k views, channel {mean:.2f}): " +
+          ", ".join(f"{k} {r:.2f} ({fam[k]['subs']} subs / {fam[k]['views']:,} views)" for k, r in sorted(rate.items(), key=lambda kv: -kv[1])), flush=True)
+    return out
+
+
 def retention(ya, vid: str, start: str, end: str) -> dict:
     """The audience retention curve: the share of the audience still watching at 3 points, and how it compares with
     similar-length YouTube videos at the halfway mark (relativeRetentionPerformance, 0.5 = typical)."""
@@ -380,6 +423,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--report", action="store_true")
+    ap.add_argument("--scores", action="store_true", help="print the subscribers-per-1k-views ranking only")
     ap.add_argument("--short", default="", help="upload this Short now (still checks ready, mix and the daily limit)")
     a = ap.parse_args()
     ok, missing = enabled()
@@ -392,6 +436,16 @@ def main() -> None:
             if ok:
                 report(youtube(), done, vd, analytics())
             return
+        if a.scores:
+            if ok:
+                family_scores(analytics(), done)
+            return
+        scores = None
+        if ok:
+            try:
+                scores = family_scores(analytics(), done)
+            except Exception as e:   # never let the ranking stop an upload: fall back to queue order
+                print(f"scores unavailable ({str(e)[:160]}): queue order", flush=True)
         if PAUSED.exists():
             print(f"uploads are paused (uploads/PAUSED: {PAUSED.read_text().strip()}). Nothing done."); return
         today = central_now().date().isoformat()
@@ -409,7 +463,7 @@ def main() -> None:
                     sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, or breaks the mix")
                 name, skipped = a.short, ""
             else:
-                name, skipped = pick(vd, done)
+                name, skipped = pick(vd, done, scores)
             if skipped:
                 print("skipped:\n" + skipped)
             if not name:

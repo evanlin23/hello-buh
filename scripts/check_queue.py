@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # format families: same-family Shorts never go up back to back
 FAMILIES = [
+    ("ai", lambda n: n.startswith("ai_")),
     ("lapse", lambda n: n.startswith("lapse_") or n in ("house_sizes",)),
     ("spot", lambda n: n.startswith("spot_wrong")),
     ("guess", lambda n: n.startswith("guess_sound")),
