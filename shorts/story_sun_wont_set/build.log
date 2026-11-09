@@ -1,0 +1,41 @@
+22:15:34.417 spawned at Vec3 { x: 122.5, y: 69, z: 8.5 }
+22:15:34.694 nearest minecraft:plains at [ 378, -56 ]
+22:17:18.733 set at { x: 378, y: 69, z: -56 }
+22:17:28.086 chunks refreshed; back at start within 0.00 blocks
+22:18:07.465 died
+22:18:08.551 COMMAND ERROR: No entity was found
+22:18:08.602 COMMAND ERROR: No entity was found
+22:18:08.655 COMMAND ERROR: No entity was found
+22:18:08.702 COMMAND ERROR: No entity was found
+22:18:08.751 COMMAND ERROR: No entity was found
+22:18:08.801 COMMAND ERROR: No entity was found
+22:18:08.852 COMMAND ERROR: No entity was found
+22:18:08.901 COMMAND ERROR: No entity was found
+22:18:08.951 COMMAND ERROR: No entity was found
+22:18:09.001 COMMAND ERROR: No entity was found
+22:18:09.052 COMMAND ERROR: No entity was found
+22:18:09.102 COMMAND ERROR: No entity was found
+22:18:09.152 COMMAND ERROR: No entity was found
+22:18:09.202 COMMAND ERROR: No entity was found
+22:18:09.253 COMMAND ERROR: No entity was found
+22:18:09.303 COMMAND ERROR: No entity was found
+22:18:09.353 COMMAND ERROR: No entity was found
+22:18:09.404 COMMAND ERROR: No entity was found
+22:18:09.454 COMMAND ERROR: No entity was found
+22:18:09.504 COMMAND ERROR: No entity was found
+22:18:09.554 COMMAND ERROR: No entity was found
+22:18:09.605 COMMAND ERROR: No entity was found
+22:18:09.655 COMMAND ERROR: No entity was found
+22:18:09.704 COMMAND ERROR: No entity was found
+22:18:09.754 COMMAND ERROR: No entity was found
+22:18:10.507 STUNT OK
+filled 29 dropped pose tick(s): 85 122 158 264 266 268 270 272 274 276 323 325 450 569 570 573 622 624 625 626 ...
+meshing from y 12
+light computed in 1.2 s
+meshed + uploaded world in 13.6 s
+60 particles
+rendered 2514 frames (41.90 s of video) in 1181.1 s = 28.2 s per video second
+wrote work/story_sun_wont_set.wav 41.95s
+sfx: 3 sounds (impact, riser)
+wrote out/story_sun_wont_set.mp4 39.40s
+EXIT 0

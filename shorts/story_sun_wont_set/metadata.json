@@ -1,0 +1,425 @@
+{
+  "name": "story_sun_wont_set",
+  "caption": "the sun hasn't set in 300 days \ud83d\udc80",
+  "youtube": {
+    "title": "the sun hasn't set in 300 days \ud83d\udc80 #minecraft #shorts",
+    "description": "the sun hasn't set in 300 days \ud83d\udc80\n\nSong: MXZI, sk3tch01, X972 - Montagem Toma\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MontagemToma\nWatch: http://ncs.lnk.to/MontagemTomaAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "montagem_toma.mp3",
+    "title": "Montagem Toma",
+    "artist": "X972, sk3tch01, MXZI",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": null,
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 13.5
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 39.4,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 41547596,
+    "sha256": "817287e1f3195168c8e293fbae0bbde3d8d96ff0097416e9fed5fa03cf01fa17"
+  },
+  "edit": {
+    "caption": "the sun hasn't set in 300 days \ud83d\udc80",
+    "red": "sun",
+    "story": "stories/sun_wont_set",
+    "startAt": "line:0",
+    "endAfter": "death:1.3",
+    "zoom": [
+      [
+        "death:0.1",
+        "death:1.3",
+        1.04
+      ],
+      [
+        "death:0.45",
+        "death:1.3",
+        1.05
+      ],
+      [
+        "death:0.9",
+        "death:1.7",
+        1.16
+      ]
+    ],
+    "deathScreen": true,
+    "sfx": [
+      [
+        "riser",
+        "lever",
+        "dusk",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "impact",
+        "dusk",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "impact",
+        "death",
+        {
+          "gain": 0.6
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "the sun hasn't set in 300 days \ud83d\udc80",
+      "--red",
+      "sun",
+      "--zoom",
+      "[[\"death:0.1\",\"death:1.3\",1.04],[\"death:0.45\",\"death:1.3\",1.05],[\"death:0.9\",\"death:1.7\",1.16]]",
+      "--sfx",
+      "[[\"riser\",\"lever\",\"dusk\",{\"gain\":0.5}],[\"impact\",\"dusk\",{\"gain\":0.6}],[\"impact\",\"death\",{\"gain\":0.6}]]",
+      "--death_screen",
+      "death",
+      "--story",
+      "stories/sun_wont_set",
+      "--start_at",
+      "line:0",
+      "--end_after",
+      "death:1.3"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 378,
+      "y": 69,
+      "z": -56
+    },
+    "biome": "minecraft:plains",
+    "ticks": 839,
+    "seconds": 41.95,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        },
+        {
+          "insertion": "a107697b-8aeb-450d-9f8c-109f6bc30efe",
+          "hover_event": {
+            "name": {
+              "translate": "entity.minecraft.zombie"
+            },
+            "action": "show_entity",
+            "id": "minecraft:zombie",
+            "uuid": [
+              -1593349765,
+              -1964292851,
+              -1618210657,
+              1807945470
+            ]
+          },
+          "translate": "entity.minecraft.zombie"
+        }
+      ],
+      "translate": "death.attack.mob"
+    },
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "cut"
+      },
+      {
+        "t": 1.3,
+        "event": "line"
+      },
+      {
+        "t": 3.95,
+        "event": "cut"
+      },
+      {
+        "t": 4,
+        "event": "line"
+      },
+      {
+        "t": 7.05,
+        "event": "cut"
+      },
+      {
+        "t": 7.1,
+        "event": "line"
+      },
+      {
+        "t": 9,
+        "event": "cut"
+      },
+      {
+        "t": 9.05,
+        "event": "line"
+      },
+      {
+        "t": 11.15,
+        "event": "cut"
+      },
+      {
+        "t": 11.2,
+        "event": "line"
+      },
+      {
+        "t": 14,
+        "event": "cut"
+      },
+      {
+        "t": 14.05,
+        "event": "line"
+      },
+      {
+        "t": 16.45,
+        "event": "cut"
+      },
+      {
+        "t": 16.5,
+        "event": "line"
+      },
+      {
+        "t": 17.9,
+        "event": "line"
+      },
+      {
+        "t": 19.8,
+        "event": "cut"
+      },
+      {
+        "t": 19.85,
+        "event": "line"
+      },
+      {
+        "t": 22.35,
+        "event": "cut"
+      },
+      {
+        "t": 22.4,
+        "event": "line"
+      },
+      {
+        "t": 23.85,
+        "event": "cut"
+      },
+      {
+        "t": 25.45,
+        "event": "cut"
+      },
+      {
+        "t": 25.5,
+        "event": "line"
+      },
+      {
+        "t": 26.9,
+        "event": "cut"
+      },
+      {
+        "t": 28.85,
+        "event": "cut"
+      },
+      {
+        "t": 28.9,
+        "event": "line"
+      },
+      {
+        "t": 31.4,
+        "event": "cut"
+      },
+      {
+        "t": 31.45,
+        "event": "lever"
+      },
+      {
+        "t": 31.45,
+        "event": "line"
+      },
+      {
+        "t": 32.05,
+        "event": "swing"
+      },
+      {
+        "t": 32.85,
+        "event": "cut"
+      },
+      {
+        "t": 32.9,
+        "event": "line"
+      },
+      {
+        "t": 32.9,
+        "event": "time"
+      },
+      {
+        "t": 32.95,
+        "event": "time"
+      },
+      {
+        "t": 33,
+        "event": "time"
+      },
+      {
+        "t": 33.05,
+        "event": "time"
+      },
+      {
+        "t": 33.1,
+        "event": "time"
+      },
+      {
+        "t": 33.15,
+        "event": "time"
+      },
+      {
+        "t": 33.2,
+        "event": "time"
+      },
+      {
+        "t": 33.25,
+        "event": "time"
+      },
+      {
+        "t": 33.3,
+        "event": "time"
+      },
+      {
+        "t": 33.35,
+        "event": "time"
+      },
+      {
+        "t": 33.4,
+        "event": "time"
+      },
+      {
+        "t": 33.45,
+        "event": "time"
+      },
+      {
+        "t": 33.5,
+        "event": "time"
+      },
+      {
+        "t": 33.8,
+        "event": "cut"
+      },
+      {
+        "t": 33.85,
+        "event": "dusk"
+      },
+      {
+        "t": 35.15,
+        "event": "cut"
+      },
+      {
+        "t": 35.2,
+        "event": "line"
+      },
+      {
+        "t": 37.2,
+        "event": "hurt",
+        "type": "mob_attack"
+      },
+      {
+        "t": 37.7,
+        "event": "line"
+      },
+      {
+        "t": 37.75,
+        "event": "hurt",
+        "type": "mob_attack"
+      },
+      {
+        "t": 38.3,
+        "event": "hurt",
+        "type": "mob_attack"
+      },
+      {
+        "t": 38.85,
+        "event": "hurt",
+        "type": "mob_attack"
+      },
+      {
+        "t": 39.4,
+        "event": "hurt",
+        "type": "mob_attack"
+      },
+      {
+        "t": 39.4,
+        "event": "death"
+      },
+      {
+        "t": 39.45,
+        "event": "slain"
+      },
+      {
+        "t": 41.75,
+        "event": "story_end"
+      },
+      {
+        "t": 41.95,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "14c7f69659cb6b7cc6cc77f72ec9cd7c42fcfc58",
+    "rendered_at": "2026-11-09T22:41:18.372Z",
+    "head_at_publish": "12265ebfb3f46568781b321abee216217a992118",
+    "stunt": "stunts/story_sun_wont_set.js",
+    "source_snapshot": [
+      "source/story_sun_wont_set.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 14c7f69659cb",
+    "gunzip -c shorts/story_sun_wont_set/recording.json.gz > work/story_sun_wont_set.rec.json",
+    "node render.js work/story_sun_wont_set.rec.json work/story_sun_wont_set.frames 60 1080 1011",
+    "python3 audio.py work/story_sun_wont_set.rec.json work/story_sun_wont_set.wav",
+    "python3 edit.py --frames work/story_sun_wont_set.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_sun_wont_set.rec.json --audio work/story_sun_wont_set.wav --caption \"the sun hasn't set in 300 days \ud83d\udc80\" --red sun --zoom [[\"death:0.1\",\"death:1.3\",1.04],[\"death:0.45\",\"death:1.3\",1.05],[\"death:0.9\",\"death:1.7\",1.16]] --sfx [[\"riser\",\"lever\",\"dusk\",{\"gain\":0.5}],[\"impact\",\"dusk\",{\"gain\":0.6}],[\"impact\",\"death\",{\"gain\":0.6}]] --death_screen death --story stories/sun_wont_set --start_at line:0 --end_after death:1.3 --out out/story_sun_wont_set.mp4"
+  ],
+  "status": "ready",
+  "notes": "story #10 (the sun won't set): frame review ready (nitpicks), retention ready, Minecraft audit ready; clouds off (engine: dusk clouds fogged orange/grey by view direction); knockback applied in the stunt (mineflayer drops entity_velocity on 1.21.11)",
+  "published_at": "2026-11-09T22:59:23.906Z"
+}
