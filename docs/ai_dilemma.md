@@ -51,3 +51,14 @@ answer is the rescue itself, on camera, mechanically true.
   humanising and expression 5.5/10. An editor review of v3 rated the mix clear, Grok clearly the deepest, the silence
   "the strongest part of the edit". Its remaining notes: the boy is too still under the ice (bubbles, struggle), the
   hole is one block (a bigger, jagged break), Grok hard to see underwater in the sink shot.
+- v4 (out/ai_thin_ice_v4_preview.mp4, rendered on GitHub Actions): the shader-pack pass (renderer/page.js shadeMat:
+  look.reflect = screen-space reflections on the lake plane inside an ellipse, look.shade = ambient occlusion, sun-tinted
+  haze, warm/cool split, a sun glow); the cut to the top shot lands as his head breaks the surface; the white AI strip
+  (assets/logos/<who>.png used if present); the hook line (episode.json "hook").
+
+## Rendering on GitHub Actions (the repo is public: free minutes, 4-core runners)
+`./scripts/queue_render.sh <ep> && git push` packs the recording and the voices into renders/<ep>/ and writes
+renders/job.json; the push starts .github/workflows/render-movie.yml: 12 jobs render a slice each
+(ai_short.py --chunk i/12), one job assembles (--segments) with the sound, score, captions and strip. The MP4 and a
+720p preview are the run's "short" artifact. Thin Ice v4: 12 min from push to artifact (slices 3-5 min each; the first
+run also downloaded the orchestra samples), vs ~25 min in this container. Recording still happens here (the server).
