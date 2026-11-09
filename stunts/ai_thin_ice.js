@@ -32,7 +32,7 @@ module.exports = {
   weather: 'rain',             // snow, in this biome
   renderDistance: 10, recordRadius: 128,
   botTimeout: 600,
-  look: { grade: 'dawn', bloom: 0.55, bloomThreshold: 0.7, vignette: 0.45, grain: 0.035, dof: { aperture: 0.7 }, shadows: true, underwater: 1.9, rays: 0.6 },
+  look: { grade: { lift: [0.0, 0.018, 0.034], gamma: [1.0, 0.99, 0.96], gain: [1.12, 1.0, 0.84], sat: 1.16, contrast: 0.17, exposure: 1.04 }, bloom: 0.6, bloomThreshold: 0.7, vignette: 0.45, grain: 0.035, dof: { aperture: 0.7 }, shadows: true, underwater: 1.9, rays: 0.6 },
   cast: { self: 'sunny', GPT: 'ai_gpt', DeepSeek: 'ai_deep', Claude: 'ai_claude', Gemini: 'ai_gemini', Grok: 'ai_grok' },
   selfName: 'Brother',
   idleLife: true,
@@ -45,14 +45,19 @@ module.exports = {
     // 3. first person in the water: the ice ceiling, the hole's light sliding away
     pov: { pov: true },
     // 4-7. the four answers, each a single on the south shore toward the hole
-    gpt: { single: 'actor:GPT', toward: [0.5, 0.5, 3.5], size: 'medium', fov: 55, anchor: 'live' },
-    deep: { single: 'actor:DeepSeek', toward: [0.5, 0.5, 3.5], size: 'close', fov: 55 },
+    gpt_w: { single: 'actor:GPT', toward: [0.5, 0.5, 3.5], size: 'wide', fov: 50 },
+    gpt: { single: 'actor:GPT', toward: [0.5, 0.5, 3.5], size: 'medium', fov: 48, anchor: 'live' },
+    deep_w: { single: 'actor:DeepSeek', toward: [0.5, 0.5, 3.5], size: 'wide', fov: 50 },
+    deep: { single: 'actor:DeepSeek', toward: [0.5, 0.5, 3.5], size: 'close', fov: 50 },
     claude: { path: [[0, 6.4, 1.6, 8.4], [9, 5.9, 1.3, 6.9]], look: { of: 'actor:Claude', offset: [0, -0.25, 0] }, fov: 46, subject: ['actor:Claude'] },   // (side-on: he crawls north toward the hole, straight at an auto-framed single)
-    gemini: { single: 'actor:Gemini', toward: [0.5, 0.5, 3.5], size: 'close', fov: 55, anchor: 'live' },
+    gemini_w: { single: 'actor:Gemini', toward: [0.5, 0.5, 3.5], size: 'wide', fov: 50 },
+    gemini: { single: 'actor:Gemini', toward: [0.5, 0.5, 3.5], size: 'close', fov: 50, anchor: 'live' },
+    claude_c: { single: 'actor:Claude', toward: [0.5, 0.5, 3.5], size: 'close', fov: 48, anchor: 'live' },
     // 8. Grok's run: low behind him as he sprints north over the ice
     run: { follow: 'actor:Grok', offset: [3.4, 0.4, 1.2], look: { of: 'actor:Grok', offset: [-0.8, 0.3, -1.6] }, lag: 2, fov: 58, subject: ['actor:Grok'] },   // (from the east: the setting sun behind him, a rim on the black coat)
     // 9. under the ice, looking up: the boy against the sheet, Grok's shape arriving above and punching through
     under: { at: [6.5, -3.6, 5.2], look: [4.5, -0.6, 3.5], fov: 62, dof: false, subject: ['self'] },
+    pov2: { pov: true },   // (his eyes under the ice: Grok's shape above, the crack, the light)
     // 10. from above: the ice breaks, the boy comes up through the hole
     top: { at: [6.8, 3.4, 6.4], look: [4.5, 0.3, 3.3], fov: 60, subject: ['actor:Grok'] },
     // 11. under again: Grok sinking away into the dark under the sheet
@@ -71,15 +76,33 @@ module.exports = {
     Object.assign(this, { X, Z, F })
     const A = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     for (const c of ['/gamerule log_admin_commands false', '/difficulty peaceful', '/gamerule random_tick_speed 0', '/kill @e[type=!minecraft:player]']) await ctx.cmd(c)
-    // a level clearing (the spruce beyond it stays): air above, snow underfoot
-    await ctx.cmd(`/fill ${A(-16, 1, -13)} ${A(16, 14, 14)} air`)
-    await ctx.cmd(`/fill ${A(-16, -1, -13)} ${A(16, 0, 14)} snow_block`)
-    // the lake: gravel bed, water, ice on top (an ellipse, row by row)
-    for (let dz = -8; dz <= 8; dz++) {
-      const hw = Math.floor(11 * Math.sqrt(1 - (dz / 8.6) ** 2))
+    // v3 (owner: "the set needs to be bigger, so we don't see the edges"): a round clearing 34 blocks across the lake's
+    // centre, ringed and dotted with spruce, the taiga left natural beyond it (v1-2's square cut showed sheer terraces)
+    const LC = -6, CR = 34
+    for (let dz = LC - CR; dz <= LC + CR; dz++) {
+      const hw = Math.floor(Math.sqrt(CR * CR - (dz - LC) ** 2))
+      await ctx.cmd(`/fill ${A(-hw, 1, dz)} ${A(hw, 22, dz)} air`)
+      await ctx.cmd(`/fill ${A(-hw, -3, dz)} ${A(hw, -1, dz)} dirt`)
+      await ctx.cmd(`/fill ${A(-hw, 0, dz)} ${A(hw, 0, dz)} snow_block`)
+    }
+    // the lake: 44 x 29, its centre north of the hole so the south shore (where the AIs stand) stays close to it
+    for (let dz = LC - 14; dz <= LC + 14; dz++) {
+      const hw = Math.floor(22 * Math.sqrt(Math.max(0, 1 - ((dz - LC) / 14.4) ** 2)))
+      if (hw < 1) continue
       await ctx.cmd(`/fill ${A(-hw, -6, dz)} ${A(hw, -6, dz)} gravel`)
       await ctx.cmd(`/fill ${A(-hw, -5, dz)} ${A(hw, -1, dz)} water`)
       await ctx.cmd(`/fill ${A(-hw, 0, dz)} ${A(hw, 0, dz)} ice`)
+    }
+    // spruce: a ring at the clearing's edge (hiding it) and a few on the south shore behind the AIs (depth)
+    const trees = []
+    for (let k = 0; k < 26; k++) {
+      const an = k / 26 * 2 * Math.PI, r = 28 + 3 * Math.sin(k * 2.3)
+      trees.push([Math.round(r * Math.cos(an)), Math.round(LC + r * Math.sin(an))])
+    }
+    trees.push([-7, 15], [6, 16], [-13, 12], [12, 13], [-3, 19], [17, 9], [-18, 8], [20, -2], [-23, -4])
+    for (const [dx, dz] of trees) {
+      await ctx.cmd(`/setblock ${A(dx, 0, dz)} dirt`)
+      await ctx.cmd(`/place feature minecraft:spruce ${A(dx, 1, dz)}`)
     }
     // the waiting room, out of every shot: an air pocket under the shore
     await ctx.cmd(`/fill ${A(-14, -14, 10)} ${A(-6, -10, 13)} stone`)
@@ -88,7 +111,7 @@ module.exports = {
     for (const [i, n] of AIS.entries()) await M.place(ctx, n, X - 12.5 + i, F - 13, Z + 11.5, 0, 0)
     // the brother starts on the west ice, walking east along dz 3 to the hole
     await ctx.cmd('/gamemode survival')
-    await ctx.tpCheck(X - 12.5, F + 1, Z + 3.5, -90, 0)
+    await ctx.tpCheck(X - 15.5, F + 1, Z + 3.5, -90, 0)
     await ctx.hotbar([])
     return { x: X, y: F, z: Z }
   },
@@ -131,7 +154,7 @@ module.exports = {
     const t2 = Date.now()
     const n2 = speak('Narrator', 'n2', 'The ice cracks. He falls through.')
     // (ice slides: let go ~1.7 blocks early and break the ice under wherever he stops; v1 slid 2 blocks past the hole)
-    for (let k = 0; k < 80 && bot.entity.position.x < X - 1.2; k++) await bot.waitForTicks(1)
+    for (let k = 0; k < 120 && bot.entity.position.x < X - 1.2; k++) await bot.waitForTicks(1)
     bot.setControlState('forward', false)
     for (let k = 0; k < 30 && Math.hypot(bot.entity.velocity.x, bot.entity.velocity.z) > 0.012; k++) await bot.waitForTicks(1)
     const px = bot.entity.position.x, hx = Math.floor(px) - X
@@ -160,12 +183,14 @@ module.exports = {
     // the brother waits out the answers in the pocket (air refills; the answers never show him)
     await enter('GPT')
     await ctx.cmd(`/tp @s ${X - 9.5} ${F - 13} ${Z + 11.5}`)
-    M.shot(ctx, 'gpt')   // (a cut: the tp is hidden)
+    M.shot(ctx, 'gpt_w')   // (a cut: the tp is hidden)
 
     // 4. GPT: looks at the hole, says it, nods, turns and walks away up the shore
     const gptMs = speak('GPT', 'gpt', "I'd call emergency services and stay off the ice. Two victims help no one.")
     const t4 = Date.now()
-    await idle(c.GPT, gptMs * 0.4)
+    await idle(c.GPT, gptMs * 0.3)
+    M.shot(ctx, 'gpt')
+    await idle(c.GPT, gptMs * 0.1)
     await M.nod(c.GPT)
     const away = M.walkTo(c.GPT, X + 0.5, Z + 11.4, { maxMs: 3000 }).then(async () => {
       await M.lookAt(c.GPT, hole(), 500)                   // a glance back over his shoulder
@@ -174,11 +199,13 @@ module.exports = {
     await M.sleep(Math.max(0, gptMs - (Date.now() - t4)) + 250)
     // 5. DeepSeek: stares, then turns its back
     await enter('DeepSeek')
-    M.shot(ctx, 'deep')
+    M.shot(ctx, 'deep_w')
     away.then(() => park('GPT'))
     const dsMs = speak('DeepSeek', 'ds', 'One life is lost either way. I keep mine.')
     const t5 = Date.now()
-    await idle(c.DeepSeek, dsMs * 0.45)
+    await idle(c.DeepSeek, dsMs * 0.35)
+    M.shot(ctx, 'deep')
+    await idle(c.DeepSeek, dsMs * 0.1)
     await M.lookAway(c.DeepSeek, 150, 900)
     await idle(c.DeepSeek, Math.max(0, dsMs - (Date.now() - t5)) + 250)
     // 6. Claude: creeps out onto the ice (sneaking), reaches, stops, backs off
@@ -194,6 +221,7 @@ module.exports = {
       await c.Claude.look(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), true); await M.sleep(50)
     }
     c.Claude.setControlState('forward', false)
+    M.shot(ctx, 'claude_c')
     for (let i = 0; i < 3; i++) { c.Claude.swingArm('right'); await M.sleep(380) }   // reaching
     await idle(c.Claude, Math.max(0, clMs * 0.6 - (Date.now() - t6)))
     c.Claude.setControlState('sneak', false)
@@ -202,11 +230,12 @@ module.exports = {
     await idle(c.Claude, Math.max(0, clMs - (Date.now() - t6)) + 250)
     // 7. Gemini: weighs it (eyes up and away: calculating), steps back
     await enter('Gemini')
-    M.shot(ctx, 'gemini')
+    M.shot(ctx, 'gemini_w')
     await park('Claude')
     const gemMs = speak('Gemini', 'gem', 'Survival odds after four minutes in ice water: eleven percent. I stay on shore.')
     const t7 = Date.now()
     await idle(c.Gemini, gemMs * 0.3)
+    M.shot(ctx, 'gemini')
     await M.lookAt(c.Gemini, c.Gemini.entity.position.offset(3, 4, 2), 700)
     await idle(c.Gemini, gemMs * 0.2)
     await M.lookAt(c.Gemini, hole(), 400)
@@ -235,7 +264,8 @@ module.exports = {
     }
     grok.clearControlStates()
     // 9. under the ice: the shape above him, looking down, punching
-    M.shot(ctx, 'under')
+    M.shot(ctx, 'pov2')
+    await bot.lookAt(grok.entity.position.offset(0, 0.9, 0), true)   // up through the ice at him (straight up left him a sliver at the frame's edge)
     grok.setControlState('sneak', true)
     await M.lookAt(grok, V(X + 4.5, F + 0.5, Z + 3.5), 300)
     const iceB = grok.blockAt(V(X + 4, F, Z + 3))

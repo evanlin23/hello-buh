@@ -120,8 +120,14 @@ def ass_time(s):
     return f"{int(s // 3600)}:{int(s % 3600 // 60):02d}:{s % 60:05.2f}"
 
 
+def bgr(col, a="00"):
+    c = col.lstrip("#")
+    return f"&H{a}{c[4:6]}{c[2:4]}{c[0:2]}"
+
+
 def captions(lines, shots, names, keywords, end, path):
-    """lines: [(t, who, text, dur, vox)] in output seconds; shots: [(t, name)]."""
+    """Every word, two or three at a time, timed by where they fall in the line (by characters), the key words in the
+    speaker's colour (white for the narrator: yellow keys). lines: [(t, who, text, dur, vox)] in output seconds."""
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
@@ -130,34 +136,90 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Key,Bebas Neue,190,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,4,0,1,9,4,5,60,60,0,1
-Style: Name,Bebas Neue,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,6,0,1,7,3,8,60,60,250,1
+Style: Cap,Bebas Neue,150,&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,0,0,0,0,100,100,3,0,1,8,5,5,70,70,0,1
+Style: Name,Bebas Neue,110,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,6,0,1,7,3,8,60,60,250,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     ev = []
-    pop = r"{\fscx70\fscy70\t(0,90,\fscx112\fscy112)\t(90,170,\fscx100\fscy100)}"
+    pop = r"\fscx82\fscy82\t(0,80,\fscx106\fscy106)\t(80,150,\fscx100\fscy100)"
     for t, who, text, dur, vox in lines:
-        ks = keywords.get(vox, [])
-        low = text.lower()
-        times = []
-        for k in ks:
-            i = low.find(k.lower().rstrip("?!."))
-            times.append(t + dur * (max(0, i) / max(1, len(text))) * 0.92)
-        for j, (k, a) in enumerate(zip(ks, times)):
-            b = times[j + 1] if j + 1 < len(times) else min(a + 1.1, t + dur + 0.3)
-            b = max(b, a + 0.45)
-            ev.append(f"Dialogue: 1,{ass_time(a)},{ass_time(b)},Key,,0,0,0,,{{\\pos({W // 2},{int(H * 0.70)})}}{pop}{k.upper()}")
+        keycol = bgr(names[who][1]) if who in names and who != "Grok" else "&H0040D8FF"   # (Grok and the narrator: gold keys)
+        keys = set()
+        for k in keywords.get(vox, []):
+            keys |= {w.strip("?!.,'").lower() for w in k.split()}
+        words = text.split()
+        chunks, cur = [], []
+        for w in words:   # 2-3 words a chunk, a break after punctuation
+            cur.append(w)
+            if len(cur) == 3 or (len(cur) >= 2 and len(" ".join(cur)) > 13) or w[-1] in ".,?!":
+                chunks.append(cur); cur = []
+        if cur:
+            chunks.append(cur)
+        total_chars = sum(len(w) + 1 for w in words)
+        lead, speech = 0.08, dur * 0.94
+        c0 = 0
+        for j, ch in enumerate(chunks):
+            a_ = t + lead + speech * c0 / total_chars
+            c0 += sum(len(w) + 1 for w in ch)
+            b_ = t + lead + speech * c0 / total_chars if j + 1 < len(chunks) else t + dur + 0.25
+            txt = " ".join((f"{{\\1c{keycol}}}{w.upper()}{{\\1c&H00FFFFFF&}}" if w.strip("?!.,'").lower() in keys else w.upper()) for w in ch)
+            ev.append(f"Dialogue: 1,{ass_time(a_)},{ass_time(max(b_, a_ + 0.3))},Cap,,0,0,0,,{{\\pos({W // 2},{int(H * 0.71)}){pop}}}{txt}")
     # the speaker's name card at the top while an AI talks (fades in on its line, out at the next cut)
     for t, who, text, dur, vox in lines:
         if who not in names:
             continue
         name, col = names[who]
         nxt = min([s for s, _ in shots if s > t + 0.2] + [end])
-        c = col.lstrip("#"); bgr = f"&H00{c[4:6]}{c[2:4]}{c[0:2]}"
-        ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(nxt - 0.05)},Name,,0,0,0,,{{\\fad(180,120)\\1c{bgr}\\3c&H000000&}}{name.upper()}")
+        ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(nxt - 0.05)},Name,,0,0,0,,{{\\fad(180,120)\\1c{bgr(col)}\\3c&H000000&}}{name.upper()}")
     pathlib.Path(path).write_text(head + "\n".join(ev) + "\n")
+
+
+def sidebar(order, names, state, path):
+    """The lineup down the left edge (the cenotshi hook, our own icons): a rounded tile per AI in its colour with its
+    screen glyph (scripts/make_skins.py). state: {who: 'idle' | 'on' | 'out' | 'hero'}."""
+    from PIL import Image, ImageDraw, ImageFilter
+    import make_skins as MS
+    S, gap, x0 = 112, 26, 34
+    im = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    y = int(H * 0.30)
+    for who in order:
+        skin = {"GPT": "ai_gpt", "DeepSeek": "ai_deep", "Claude": "ai_claude", "Gemini": "ai_gemini", "Grok": "ai_grok"}[who]
+        c = MS.CHARS[skin]
+        st = state.get(who, "idle")
+        scale = 1.22 if st in ("on", "hero") else 1.0
+        s = int(S * scale)
+        tile = Image.new("RGBA", (s, s), (0, 0, 0, 0)); d = ImageDraw.Draw(tile)
+        scr = (66, 133, 244) if c["screen"] == "grad" else MS.hexc(c["screen"])[:3]
+        if who == "Grok":
+            scr = (14, 14, 16)
+        d.rounded_rectangle([0, 0, s - 1, s - 1], radius=s // 5, fill=scr + (255,), outline=(255, 255, 255, 230) if st in ("on", "hero") else (0, 0, 0, 160), width=5 if st in ("on", "hero") else 3)
+        if c["screen"] == "grad":   # Gemini's gradient
+            for yy in range(6, s - 6):
+                col = MS.hexc(MS.GRAD[min(5, int((yy / s) * 6))])
+                d.line([(8, yy), (s - 9, yy)], fill=col)
+        px = (s - 24) // 6
+        ink = MS.hexc(c["ink"])
+        for gy, row in enumerate(MS.GLYPHS[c["glyph"]]):
+            for gx, ch in enumerate(row):
+                if ch == "#":
+                    d.rectangle([12 + gx * px, 12 + gy * px, 12 + (gx + 1) * px - 1, 12 + (gy + 1) * px - 1], fill=ink)
+        if st == "out":   # answered, and wouldn't go in: greyed, a red cross
+            g = tile.convert("LA").convert("RGBA"); g.putalpha(tile.getchannel("A").point(lambda v: v * 0.55)); tile = g
+            d = ImageDraw.Draw(tile)
+            d.line([(14, 14), (s - 15, s - 15)], fill=(235, 50, 50, 255), width=10); d.line([(s - 15, 14), (14, s - 15)], fill=(235, 50, 50, 255), width=10)
+        elif st == "idle":
+            tile.putalpha(tile.getchannel("A").point(lambda v: int(v * 0.8)))
+        if st in ("on", "hero"):
+            glow = Image.new("RGBA", (s + 60, s + 60), (0, 0, 0, 0))
+            gc = (255, 205, 90, 200) if st == "hero" else tuple(scr) + (170,)
+            ImageDraw.Draw(glow).rounded_rectangle([30, 30, s + 29, s + 29], radius=s // 5, fill=gc)
+            glow = glow.filter(ImageFilter.GaussianBlur(16))
+            im.alpha_composite(glow, (x0 - 30, y - 30))
+        im.alpha_composite(tile, (x0, y))
+        y += s + gap
+    im.save(path)
 
 
 def main():
@@ -243,11 +305,13 @@ def main():
     hero_at = next((t for t, who, _, _, v in lines if v == cfg.get("hero")), total * 0.6)
     before = [t + d for t, w, _, d, v in lines if t < hero_at]
     quiet = (max(before) + 0.15, hero_at) if before else None
-    music = score(total, hero_at, [(t, w, v) for t, w, _, _, v in lines], quiet)[: len(vox_mix)]
+    import orchestra
+    music = orchestra.epic_real(total, hero_at, quiet)[: len(vox_mix)]   # (score() above: the first, plainer organ score)
     # duck the music and the game under the voices (a 120 ms smoothed gate)
     k = int(0.12 * SR)
     duck = np.convolve(env, np.ones(k) / k, mode="same")
-    music *= (1 - 0.55 * duck)[:, None]
+    music /= max(1e-6, np.abs(music).max()) / 0.9
+    music *= (1 - 0.5 * duck)[:, None]
     gm = np.zeros_like(vox_mix); gm[: min(len(g), len(gm))] = g[: len(gm)]
     if quiet:   # the game hushes in the silence too (snow and wind only)
         gm[int(quiet[0] * SR):int(quiet[1] * SR)] *= 0.35
@@ -259,10 +323,33 @@ def main():
     T.write_wav(wav, mix)
     ass = work / "captions.ass"
     captions(lines, shots, cfg.get("names", {}), cfg.get("keywords", {}), total, ass)
+    # the sidebar: a state per stretch (all lit for the prompt; the speaker big; who said no greyed with a cross)
+    order = [w for w in ("GPT", "DeepSeek", "Claude", "Gemini", "Grok") if w in cfg.get("names", {})]
+    states, done = [], []
+    for t, who, _, _, _ in lines:
+        if who in order and (not states or states[-1][1].get(who) not in ("on", "hero")):
+            st = {w: ("out" if w in done else "idle") for w in order}
+            st[who] = "hero" if who == "Grok" else "on"
+            states.append((t, st))
+            if who != "Grok":
+                done.append(who)
+    if not states or states[0][0] > 0:
+        states.insert(0, (0.0, {w: "idle" for w in order}))
+    pngs = []
+    for i, (t, st) in enumerate(states):
+        q = work / f"sidebar_{i}.png"
+        sidebar(order, cfg.get("names", {}), st, q)
+        pngs.append((t, states[i + 1][0] if i + 1 < len(states) else total + 1, q))
+    inputs, chain, last = [], [], "0:v"
+    for i, (t0, t1, q) in enumerate(pngs):
+        inputs += ["-i", str(q)]
+        chain.append(f"[{last}][{i + 2}:v]overlay=0:0:enable='between(t,{t0:.3f},{t1 - 0.001:.3f})'[s{i}]")
+        last = f"s{i}"
+    chain.append(f"[{last}]ass={ass}:fontsdir={HERE / 'fonts'}[v]")
     out = HERE / "out" / f"{stunt}.mp4"
     out.parent.mkdir(exist_ok=True)
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(vid), "-i", str(wav), "-vf", f"ass={ass}:fontsdir={HERE / 'fonts'}",
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(vid), "-i", str(wav), *inputs, "-filter_complex", ";".join(chain),
+                    "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
                     "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-shortest", str(out)], check=True)
     print("wrote", out, f"({total:.1f} s)")
 
