@@ -32,7 +32,7 @@ module.exports = {
   weather: 'rain',             // snow, in this biome
   renderDistance: 10, recordRadius: 128,
   botTimeout: 600,
-  look: { grade: 'dawn', bloom: 0.55, bloomThreshold: 0.7, vignette: 0.45, grain: 0.035, dof: { aperture: 0.7 }, shadows: true },
+  look: { grade: 'dawn', bloom: 0.55, bloomThreshold: 0.7, vignette: 0.45, grain: 0.035, dof: { aperture: 0.7 }, shadows: true, underwater: 1.9, rays: 0.6 },
   cast: { self: 'sunny', GPT: 'ai_gpt', DeepSeek: 'ai_deep', Claude: 'ai_claude', Gemini: 'ai_gemini', Grok: 'ai_grok' },
   selfName: 'Brother',
   idleLife: true,
@@ -58,7 +58,7 @@ module.exports = {
     // 11. under again: Grok sinking away into the dark under the sheet
     sink: { at: [9.5, -3.2, 2.0], look: 'actor:Grok', fov: 60, dof: false },
     // 12. the end: high, pulling away; the boy kneeling at the hole in the snow
-    end: { dof: false, path: [[0, 6.4, 1.3, 1.2], [1.5, 7.2, 2.4, 2.0], [4.5, 13, 13, 9]], look: { of: 'self', offset: [0, -0.4, 0] }, fov: 52, subject: ['self'] }   // (low and close on him kneeling at the hole, then rising away over the lake)
+    end: { dof: false, path: [[0, 7.4, 1.6, 0.4], [1.5, 8.0, 2.6, 1.4], [4.5, 13, 13, 9]], look: { of: 'self', offset: [0, -0.4, 0] }, fov: 52, subject: ['self'] }   // (low and close on him kneeling at the hole, then rising away over the lake)
   },
   edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.2', slowmo: [['broke', -0.6, 1.5, 2.5]] },   // (the punch and the ice giving: 2.1 s over 5.2 s)
 

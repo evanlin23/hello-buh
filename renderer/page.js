@@ -241,7 +241,7 @@ function makePost (look, w, h) {
     sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 },
     vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 }
   })
-  return { rt, ba, bb, rd, rr, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0 }
+  return { rt, ba, bb, rd, rr, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1 }
 }
 function runPost (cam, tick) {
   const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
@@ -264,6 +264,9 @@ function runPost (cam, tick) {
     d.near.value = camera.near; d.far.value = camera.far; d.focus.value = cam.focus; d.aperture.value = cam.aperture ?? 1
     pass(P.dofMat, P.rd)
   }
+  // look.underwater: an exposure lift while the camera is in water (the cold-biome water fog graded to near black: ai_thin_ice)
+  if (P.exp0 === undefined) P.exp0 = u.exposure.value
+  u.exposure.value = P.exp0 * (cam.underwater ? (P.underwater ?? 1) : 1)
   u.bars.value = cam.bars || 0; u.seed.value = ((tick || 0) * 0.6180339) % 1 * 100
   pass(P.fin, null)
 }

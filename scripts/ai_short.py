@@ -148,7 +148,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         for j, (k, a) in enumerate(zip(ks, times)):
             b = times[j + 1] if j + 1 < len(times) else min(a + 1.1, t + dur + 0.3)
             b = max(b, a + 0.45)
-            ev.append(f"Dialogue: 1,{ass_time(a)},{ass_time(b)},Key,,0,0,0,,{{\\pos({W // 2},{int(H * 0.60)})}}{pop}{k.upper()}")
+            ev.append(f"Dialogue: 1,{ass_time(a)},{ass_time(b)},Key,,0,0,0,,{{\\pos({W // 2},{int(H * 0.70)})}}{pop}{k.upper()}")
     # the speaker's name card at the top while an AI talks (fades in on its line, out at the next cut)
     for t, who, text, dur, vox in lines:
         if who not in names:
