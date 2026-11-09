@@ -1,0 +1,83 @@
+{
+  "name": "one_more_eye",
+  "stunt": "story_one_more_eye",
+  "caption": "who keeps filling my end portal 😳",
+  "premise": "Every morning the end portal in the narrator's basement has one more eye of ender in it. He's sure it's his brother Leo, who left six years ago to fight the dragon with a wooden sword, opening it from the other side to come home.",
+  "twist": "It isn't Leo. His sword came through, then his boots (still smoking), the floor growls at night and the ceiling over the portal turns black: the dragon he went to fight is the one filling the portal. The twelfth eye goes in, the portal opens, and the game says it: roasted in dragon's breath by Ender Dragon.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#4BE3A0",
+  "meter": {
+    "label": "EYES"
+  },
+  "lines": [
+    {
+      "id": "L01",
+      "text": "Every MORNING, / the end portal / in my BASEMENT / has ONE / more EYE / in it."
+    },
+    {
+      "id": "L02",
+      "text": "Today / it has / ELEVEN. / It only / needs TWELVE."
+    },
+    {
+      "id": "L03",
+      "text": "I never / put them / in. / NOBODY / goes down / there."
+    },
+    {
+      "id": "L04",
+      "text": "SIX years ago / my brother LEO / went to / fight the / DRAGON. / With a / WOODEN sword."
+    },
+    {
+      "id": "L05",
+      "text": "He said / he'd be / back by / DINNER."
+    },
+    {
+      "id": "L06",
+      "text": "So it's / GOTTA be / him. / He's opening / it from / the OTHER / side."
+    },
+    {
+      "id": "L07",
+      "text": "On MONDAY, / his SWORD / came through."
+    },
+    {
+      "id": "L08",
+      "text": "On TUESDAY, / his BOOTS. / Still / SMOKING."
+    },
+    {
+      "id": "L09",
+      "text": "I think / he's just / PACKING."
+    },
+    {
+      "id": "L10",
+      "text": "At night / the floor / GROWLS. / Dad says / it's the / PIPES."
+    },
+    {
+      "id": "L11",
+      "text": "And the / ceiling / above it / keeps turning / BLACK."
+    },
+    {
+      "id": "L12",
+      "text": "So I / baked him / a WELCOME / HOME cake."
+    },
+    {
+      "id": "L13",
+      "text": "Last night / I stayed / UP / to WATCH."
+    },
+    {
+      "id": "L14",
+      "text": "Number / TWELVE."
+    },
+    {
+      "id": "L15",
+      "text": "LEO? / Is that / YOU?"
+    },
+    {
+      "id": "L16",
+      "text": "Wow. / Your VOICE / got DEEP. / I've WAITED / for this"
+    }
+  ]
+}

@@ -1,0 +1,541 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "Every morning, the end portal in my basement has one more eye in it.",
+   "dur": 3.052,
+   "onset": 0.172,
+   "end": 2.862,
+   "chunks": [
+    [
+     0.172,
+     0.638
+    ],
+    [
+     0.664,
+     1.216
+    ],
+    [
+     1.216,
+     1.793
+    ],
+    [
+     1.793,
+     2.103
+    ],
+    [
+     2.103,
+     2.414
+    ],
+    [
+     2.414,
+     2.862
+    ]
+   ],
+   "captions": [
+    "Every MORNING,",
+    "the end portal",
+    "in my BASEMENT",
+    "has ONE",
+    "more EYE",
+    "in it."
+   ]
+  },
+  "L02": {
+   "text": "Today it has eleven. It only needs twelve.",
+   "dur": 2.259,
+   "onset": 0.172,
+   "end": 2.052,
+   "chunks": [
+    [
+     0.172,
+     0.371
+    ],
+    [
+     0.371,
+     0.552
+    ],
+    [
+     0.552,
+     0.931
+    ],
+    [
+     1.0,
+     1.276
+    ],
+    [
+     1.276,
+     2.052
+    ]
+   ],
+   "captions": [
+    "Today",
+    "it has",
+    "ELEVEN.",
+    "It only",
+    "needs TWELVE."
+   ]
+  },
+  "L03": {
+   "text": "I never put them in. nobody goes down there.",
+   "dur": 2.276,
+   "onset": 0.172,
+   "end": 2.086,
+   "chunks": [
+    [
+     0.172,
+     0.431
+    ],
+    [
+     0.431,
+     0.621
+    ],
+    [
+     0.621,
+     0.897
+    ],
+    [
+     0.991,
+     1.259
+    ],
+    [
+     1.259,
+     1.638
+    ],
+    [
+     1.638,
+     2.086
+    ]
+   ],
+   "captions": [
+    "I never",
+    "put them",
+    "in.",
+    "NOBODY",
+    "goes down",
+    "there."
+   ]
+  },
+  "L04": {
+   "text": "Six years ago my brother leo went to fight the dragon. With a wooden sword.",
+   "dur": 3.328,
+   "onset": 0.19,
+   "end": 3.121,
+   "chunks": [
+    [
+     0.19,
+     0.707
+    ],
+    [
+     0.707,
+     1.198
+    ],
+    [
+     1.198,
+     1.362
+    ],
+    [
+     1.362,
+     1.586
+    ],
+    [
+     1.586,
+     2.052
+    ],
+    [
+     2.121,
+     2.302
+    ],
+    [
+     2.302,
+     3.121
+    ]
+   ],
+   "captions": [
+    "SIX years ago",
+    "my brother LEO",
+    "went to",
+    "fight the",
+    "DRAGON.",
+    "With a",
+    "WOODEN sword."
+   ]
+  },
+  "L05": {
+   "text": "He said he'd be back by dinner.",
+   "dur": 1.569,
+   "onset": 0.155,
+   "end": 1.362,
+   "chunks": [
+    [
+     0.155,
+     0.371
+    ],
+    [
+     0.371,
+     0.569
+    ],
+    [
+     0.569,
+     0.879
+    ],
+    [
+     0.879,
+     1.362
+    ]
+   ],
+   "captions": [
+    "He said",
+    "he'd be",
+    "back by",
+    "DINNER."
+   ]
+  },
+  "L06": {
+   "text": "So it's gotta be him. He's opening it from the other side.",
+   "dur": 2.69,
+   "onset": 0.172,
+   "end": 2.483,
+   "chunks": [
+    [
+     0.172,
+     0.379
+    ],
+    [
+     0.379,
+     0.741
+    ],
+    [
+     0.741,
+     1.034
+    ],
+    [
+     1.103,
+     1.517
+    ],
+    [
+     1.517,
+     1.681
+    ],
+    [
+     1.681,
+     1.94
+    ],
+    [
+     1.94,
+     2.483
+    ]
+   ],
+   "captions": [
+    "So it's",
+    "GOTTA be",
+    "him.",
+    "He's opening",
+    "it from",
+    "the OTHER",
+    "side."
+   ]
+  },
+  "L07": {
+   "text": "On monday, his sword came through.",
+   "dur": 1.828,
+   "onset": 0.172,
+   "end": 1.603,
+   "chunks": [
+    [
+     0.172,
+     0.586
+    ],
+    [
+     0.612,
+     0.966
+    ],
+    [
+     0.966,
+     1.603
+    ]
+   ],
+   "captions": [
+    "On MONDAY,",
+    "his SWORD",
+    "came through."
+   ]
+  },
+  "L08": {
+   "text": "On tuesday, his boots. Still smoking.",
+   "dur": 2.069,
+   "onset": 0.172,
+   "end": 1.879,
+   "chunks": [
+    [
+     0.172,
+     0.552
+    ],
+    [
+     0.578,
+     0.983
+    ],
+    [
+     1.034,
+     1.233
+    ],
+    [
+     1.233,
+     1.879
+    ]
+   ],
+   "captions": [
+    "On TUESDAY,",
+    "his BOOTS.",
+    "Still",
+    "SMOKING."
+   ]
+  },
+  "L09": {
+   "text": "I think he's just packing.",
+   "dur": 1.414,
+   "onset": 0.155,
+   "end": 1.224,
+   "chunks": [
+    [
+     0.155,
+     0.353
+    ],
+    [
+     0.353,
+     0.621
+    ],
+    [
+     0.621,
+     1.224
+    ]
+   ],
+   "captions": [
+    "I think",
+    "he's just",
+    "PACKING."
+   ]
+  },
+  "L10": {
+   "text": "At night the floor growls. Dad says it's the pipes.",
+   "dur": 2.379,
+   "onset": 0.155,
+   "end": 2.19,
+   "chunks": [
+    [
+     0.155,
+     0.371
+    ],
+    [
+     0.371,
+     0.621
+    ],
+    [
+     0.621,
+     1.017
+    ],
+    [
+     1.095,
+     1.474
+    ],
+    [
+     1.474,
+     1.655
+    ],
+    [
+     1.655,
+     2.19
+    ]
+   ],
+   "captions": [
+    "At night",
+    "the floor",
+    "GROWLS.",
+    "Dad says",
+    "it's the",
+    "PIPES."
+   ]
+  },
+  "L11": {
+   "text": "And the ceiling above it keeps turning black.",
+   "dur": 1.931,
+   "onset": 0.155,
+   "end": 1.724,
+   "chunks": [
+    [
+     0.155,
+     0.302
+    ],
+    [
+     0.302,
+     0.534
+    ],
+    [
+     0.534,
+     0.81
+    ],
+    [
+     0.81,
+     1.224
+    ],
+    [
+     1.224,
+     1.724
+    ]
+   ],
+   "captions": [
+    "And the",
+    "ceiling",
+    "above it",
+    "keeps turning",
+    "BLACK."
+   ]
+  },
+  "L12": {
+   "text": "So I baked him a welcome home cake.",
+   "dur": 1.879,
+   "onset": 0.172,
+   "end": 1.672,
+   "chunks": [
+    [
+     0.172,
+     0.328
+    ],
+    [
+     0.328,
+     0.595
+    ],
+    [
+     0.595,
+     0.966
+    ],
+    [
+     0.966,
+     1.672
+    ]
+   ],
+   "captions": [
+    "So I",
+    "baked him",
+    "a WELCOME",
+    "HOME cake."
+   ]
+  },
+  "L13": {
+   "text": "Last night I stayed up to watch.",
+   "dur": 1.707,
+   "onset": 0.172,
+   "end": 1.5,
+   "chunks": [
+    [
+     0.172,
+     0.526
+    ],
+    [
+     0.526,
+     0.819
+    ],
+    [
+     0.819,
+     0.914
+    ],
+    [
+     0.914,
+     1.5
+    ]
+   ],
+   "captions": [
+    "Last night",
+    "I stayed",
+    "UP",
+    "to WATCH."
+   ]
+  },
+  "L14": {
+   "text": "Number twelve.",
+   "dur": 1.138,
+   "onset": 0.19,
+   "end": 0.931,
+   "chunks": [
+    [
+     0.19,
+     0.388
+    ],
+    [
+     0.388,
+     0.931
+    ]
+   ],
+   "captions": [
+    "Number",
+    "TWELVE."
+   ]
+  },
+  "L15": {
+   "text": "Leo? Is that you?",
+   "dur": 1.379,
+   "onset": 0.19,
+   "end": 1.121,
+   "chunks": [
+    [
+     0.19,
+     0.397
+    ],
+    [
+     0.422,
+     0.75
+    ],
+    [
+     0.75,
+     1.121
+    ]
+   ],
+   "captions": [
+    "LEO?",
+    "Is that",
+    "YOU?"
+   ]
+  },
+  "L16": {
+   "text": "Wow. Your voice got deep. I've waited for this",
+   "dur": 2.207,
+   "onset": 0.172,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.172,
+     0.31
+    ],
+    [
+     0.336,
+     0.638
+    ],
+    [
+     0.638,
+     1.086
+    ],
+    [
+     1.155,
+     1.5
+    ],
+    [
+     1.5,
+     2.0
+    ]
+   ],
+   "captions": [
+    "Wow.",
+    "Your VOICE",
+    "got DEEP.",
+    "I've WAITED",
+    "for this"
+   ]
+  }
+ },
+ "total": 34.7
+}
