@@ -1,0 +1,30 @@
+{
+  "name": "respawn_voice",
+  "stunt": "story_respawn_voice",
+  "format": "who_do_you_trust",
+  "caption": "which voice do I TRUST? 😳",
+  "premise": "In this world, the first time you die you hear one sentence from your future self. It saved my brother from lava and my sister from a zombie. Today I fell off a cliff and heard mine: DON'T SLEEP IN THE NEW BED. I respawned in a field, because my bed was gone: Dad had built me a new one. He said it's safer, then nailed my door shut. That night a second voice, my own, said: SLEEP IN THE BED, OR YOU'LL RESPAWN SOMEWHERE THAT ISN'T HOME. But I wasn't dead. And the first voice sounded grandpa old.",
+  "answer": "Voice 1 (don't sleep). Part 2: the rule gives one sentence, on your first death. Voice 2 came to a living player, so it isn't future me: it's whatever wants me in that bed. A bed sets your respawn point, so one night in it and every death brings me back to that nailed-shut room, forever. 'Somewhere that isn't home' was the truth told as a threat: the field was me being free. And voice 1 sounded grandpa old because the me who never sleeps in that bed gets to grow old. Clues for 1: voice 2 came while I was alive (full hearts, no death screen) and it's a second sentence when the rule gives one; Dad took the old bed and nailed the door shut the moment I was inside. Clues for 2: I really did respawn in a field with no home bed (vanilla: a missing bed sends you to world spawn), exactly what voice 2 warns of; voice 1 sounded far too old to be me; a zombie is at the window, so the nailed door looks like protection (and CLOSE THE DOOR saved my sister). Both ways: the nailed door, and the old voice.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#7FE0FF",
+  "lines": [
+    { "id": "L01", "text": "In my world, / the FIRST time / you DIE, / you hear / ONE sentence / from your / FUTURE self." },
+    { "id": "L02", "text": "My brother / heard, DON'T / mine the GOLD. / Behind it / was LAVA." },
+    { "id": "L03", "text": "My sister / heard, CLOSE / the DOOR. / That night / a ZOMBIE / came KNOCKING." },
+    { "id": "L04", "text": "Today / I fell / off a CLIFF. / And I / heard MINE." },
+    { "id": "L05", "text": "DON'T SLEEP / in the / NEW bed." },
+    { "id": "L06", "text": "I respawned / in a FIELD. / My bed / was GONE." },
+    { "id": "L07", "text": "Dad had / BUILT me / a NEW one. / He said / it's SAFER." },
+    { "id": "L08", "text": "Then he / NAILED / my door / SHUT." },
+    { "id": "L09", "text": "That night / I heard / a SECOND / voice. / MY voice." },
+    { "id": "L10", "text": "SLEEP in / the bed, / or you'll / RESPAWN / somewhere / that ISN'T / home." },
+    { "id": "L11", "text": "But I / wasn't / DEAD." },
+    { "id": "L12", "text": "And the / FIRST voice / sounded OLD. / GRANDPA old." },
+    { "id": "L13", "text": "Voice ONE, / or voice / TWO?" }
+  ]
+}
