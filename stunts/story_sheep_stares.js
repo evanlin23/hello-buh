@@ -27,7 +27,7 @@ module.exports = {
   name: 'story_sheep_stares',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: CAPTION,
-  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.9', deathScreen: true, zoom: [['slain:0.10', 'slain:3', 1.045], ['slain:0.32', 'slain:3', 1.045], ['slain:0.54', 'slain:3', 1.045], ['slain:0.76', 'slain:3', 1.045], ['slain:0.98', 'slain:3', 1.045], ['slain:1.20', 'slain:3', 1.045], ['slain:1.42', 'slain:3', 1.045], ['slain:1.64', 'slain:3', 1.045]] },
+  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.9', deathScreen: true, zoom: [['slain:0.10', 'slain:3', 1.07], ['slain:0.30', 'slain:3', 1.07], ['slain:0.50', 'slain:3', 1.07], ['slain:0.70', 'slain:3', 1.07], ['slain:0.90', 'slain:3', 1.07], ['slain:1.10', 'slain:3', 1.07], ['slain:1.30', 'slain:3', 1.07], ['slain:1.50', 'slain:3', 1.07], ['slain:1.70', 'slain:3', 1.07]] },
   expectDeath: true,
   botTimeout: 360,
 
