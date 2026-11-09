@@ -166,6 +166,20 @@ the subtitles, the fall steered past the Needle (0.01 blocks off), the fog. Prob
 still (the owner's pause); the wide shot is a speck of tower for 4 s; the two-shots are far and the gold rim fills
 their foreground; "Four." stays up 3 s; the walk-out camera passes through the Highkeeper's head.
 
+**Reel 1, v2 (independent review, docs/movie_reviewer_prompt.md): not ready.** Blockers: the Well's slide was a 2 px
+pop 30 blocks away; the empty bucket read as a dark sleeve at night; a navy frame as the eye grazed the Well. Plus dead
+dialogue, a broken hand-over, the 180-degree line crossed, no sense of height, black night clouds.
+**Reel 1, v3 (out/lf_movie_reel.mp4):** all three blockers fixed (slideBlocks + slow motion, look.handLift, aim 0.75
+off the Well), coverage on one side, the edge shot over the plank, "Which floor?" / "Forty.", look.cloudNight. Its
+dialogue predates M.say, so the lint still flags 2-9 s as still: re-stage it with M.say when the cold open is redone
+for draft 2.1 (the Well should blink, not glide: dispensers).
+
+**Reel 2 (the Below), v1-v3 (out/lf_movie_below.mp4):** v1 opened on 2.2 s of white, was set on snowy plains, held a
+3 s frozen two-shot at the end and framed the reveal on a house wall. v2: Ash walks Buh into the camp (M.say,
+coverage), but the camp sat in a pit (the plains rolled 50-97); an 80x80 flatten made a quarry. v3: a flat sunflower
+plain found with scripts/scout.sh (near [2400, 0]), the fog fading out of its floor, fog sheets fading as the camera
+crosses them, the white-out ramping from the full distance. Lint clean; QA flags only the four cuts.
+
 ## Decisions waiting on the owner
 - The script is being rebuilt for about 60 minutes (owner: "we should be aiming for the 1 hour length mark"; "do the full
   overall story arc first with acts"). Draft 1 (20 min) went through a blind audit (docs/blind_audit/); the one-hour
