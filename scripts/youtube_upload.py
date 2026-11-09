@@ -272,6 +272,11 @@ def channel_summary(ya, start: str, end: str) -> str:
     """The channel over the last 7 days, and where its views came from over the last 28 (the Shorts feed share)."""
     lines = []
     try:
+        # how far YouTube Analytics has processed (it lags the public view counts by 1-3 days)
+        s14 = (dt.date.fromisoformat(end) - dt.timedelta(days=14)).isoformat()
+        r = ya.reports().query(ids="channel==MINE", startDate=s14, endDate=end, metrics="views", dimensions="day", sort="day").execute(num_retries=3)
+        days_ = [row[0] for row in (r.get("rows", []) or []) if row[1]]
+        lines.append(f"_YouTube Analytics has data through {days_[-1] if days_ else 'no recent day'}; anything newer shows '-' below._")
         r = ya.reports().query(ids="channel==MINE", startDate=start, endDate=end,
                                metrics="views,estimatedMinutesWatched,likes,comments,shares,subscribersGained,subscribersLost").execute(num_retries=3)
         if r.get("rows"):
