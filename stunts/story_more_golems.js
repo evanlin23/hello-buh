@@ -262,13 +262,15 @@ module.exports = {
     // L07: he waits outside my door. I step out right under him (the same side he was already facing: from the
     // side his head was twisted round on the cut frame), back off into the house, and he comes after me to the door
     await cut(22.5, -23.85, P(22.5, 3.2, -21.6))
-    let gz = -21.6
+    let gz = -21.6, ay = 3.2
     await line('L07', async (k, at) => {
       const follow = k >= at(1)
-      bot.setControlState('back', follow && bot.entity.position.z > Z - 26.6)
-      if (follow) gz = Math.max(-23.2, gz - 0.07)
+      bot.setControlState('back', k >= at(2) && bot.entity.position.z > Z - 25.9)
+      if (follow) gz = Math.max(-23.35, gz - 0.036)   // he keeps coming, all the way to the doorway
+      // once I'm under the lintel, look at him through the door (aimed at his head the shot was all wall)
+      ay += ((bot.entity.position.z < Z - 24.3 ? 2.1 : 3.2) - ay) * 0.2
       say(`/tp @e[tag=guard,limit=1] ${(X + 22.5 + jit()).toFixed(3)} ${F + 1} ${(Z + gz).toFixed(3)} facing entity ${me} eyes`)
-      K.base = K.aim(P(22.5, 3.2, gz)); look(k)
+      K.base = K.aim(P(22.5, ay, gz)); look(k)
     })
     bot.setControlState('back', false)
     // L08: the gossip at the well. Something groans all night; they all look at me; they scatter
