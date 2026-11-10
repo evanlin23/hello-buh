@@ -125,6 +125,9 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "none of these new stories should go out until i've OKed them".** Every story is packaged
+  **held** (`publish.js --pass` gives a story_* status "held"), and only the owner's own OK, by story name, makes it
+  ready (`--owner-ok`, run by the lead). "Proceed without my review" never covers posting a story to YouTube.
 - **Owner, 2026-11-10: "I lowkey dont think we need the "Good boy" or the "day 1, again" i feel like both are implied?"**
   Don't say what the picture already says. When the last shot shows the ending (the dog back on the hill, the farmer
   with the dog), end on the picture and the sound, no closing line naming it. Supersedes "endings explain themselves":
