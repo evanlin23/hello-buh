@@ -17,9 +17,9 @@
     "N": {
       "role": "narrator",
       "name": "me (Pip, a villager kid)",
-      "voice": "Erinome",
+      "voice": "Leda",
       "color": "#FFFFFF",
-      "profile": "a young villager kid telling a friend about the dog on the hill; hushed, earnest, a little in awe",
+      "profile": "a village kid, about nine: bright, earnest, a clear voice (never whispering)",
       "on_screen": "baby villager (plains), seen in camera shots"
     },
     "Grandpa": {
@@ -61,8 +61,8 @@
       "id": "L01",
       "who": "N",
       "text": "The DOG on the hill / hasn't MOVED / in NINE HUNDRED days.",
-      "say": "The dog on the hill... hasn't moved... in nine hundred days.",
-      "direction": "hushed, a held breath before the number",
+      "say": "The dog on the hill hasn't moved in nine hundred days.",
+      "direction": "one quick breath, no pauses: the hook",
       "shot": "S01"
     },
     {
@@ -140,9 +140,9 @@
     {
       "id": "L12",
       "who": "N",
-      "text": "And then... / he STOOD UP.",
-      "say": "And then... he stood up.",
-      "direction": "a whisper, astonished",
+      "text": "And then / he STOOD UP!",
+      "say": "And then he stood up!",
+      "direction": "excited, amazed, a full voice",
       "shot": "S11"
     },
     {
@@ -164,9 +164,9 @@
     {
       "id": "L15",
       "who": "N",
-      "text": "Day ONE.",
-      "say": "Day one.",
-      "direction": "very quiet, heartbroken",
+      "text": "Day ONE. / AGAIN.",
+      "say": "Day one. Again.",
+      "direction": "quietly sad, a clear voice, a beat before 'again'",
       "shot": "S15"
     }
   ],
