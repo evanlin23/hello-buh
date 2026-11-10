@@ -276,13 +276,13 @@ module.exports = {
       }
       look(k)
     })
-    for (const [t] of farmers) K.bury(t, -60)
 
     // ---- L06 (S06): sunset another day, the slope below the tower: Grandpa climbing the path toward it
     put(GA, 33.0, 22.6, yawTo(33, 22.6, 36, 28.5), -5); hold(GA, 'crossbow')
     await bot.waitForTicks(3)
     await shot('s06', 5.0, 12.5, P(44, 14, 40), TIMES.S06)
     park(GB)
+    for (const [t] of farmers) K.bury(t, -60)   // out of the square after the cut
     say('/kill @e[type=item]')
     await line('L06', async (k) => {
       const s = G[GA]; if (s.z < 28) { s.x += 0.028; s.z += 0.055; s.y = gy(s.x, s.z) }
@@ -299,7 +299,7 @@ module.exports = {
     await line('L07', async (k, at) => {
       if (k === at(1) - 2) swing(GB)
       if (k === at(1)) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === at(2)) {   // "a whole CHEST": first person, beside him; I open his chest (the vanilla chest screen)
+      if (k === Math.max(at(2) + 4, at(1) + 17)) {   // "a whole CHEST" (after OMINOUS's look on him): first person, beside him; I open his chest (the vanilla chest screen)
         K.shot('pov')
         await K.cut(-8.2, -12.0, P(-5.5, 2.45, -12.5), 2)
         K.open(P(-6, 2, -13)).then(w => { chest = w }).catch(e => ctx.log('chest', e.message))
@@ -380,7 +380,9 @@ module.exports = {
     const placeRaiders = () => {
       for (const [t, back, side] of WEDGE) {
         // along the road by "distance from the gate" (the ROAD polyline from the gate is close to straight-line distance here)
-        const r = along(raidD + back), x = r.x - r.uz * side, z = r.z + r.ux * side
+        // one direction for the whole wedge (the lead's road segment): per-member segments swung the side offsets
+        // round the road's bend (1-block jumps the kit refused)
+        const L0 = along(raidD), x = L0.x + L0.ux * back - L0.uz * side, z = L0.z + L0.uz * back + L0.ux * side, r = L0
         const a = raiders.get(t); a.x = x; a.z = z; a.y = gy(x, z); a.yaw = K.mcYaw(-r.ux, -r.uz)
       }
     }
@@ -401,6 +403,7 @@ module.exports = {
       if (k >= at(2) - 2 && k < E) K.turnTo(base, P(-7.5, 2.0, -7.7), (k - at(2) + 2) / 14)   // back at Grandpa, asleep on his bench
       if (k === E - 6) {   // the raiders onto the road while I'm looking back at him
         raidD = 20; raiders = new Map(WEDGE.map(([t]) => [t, K.actor(t, { x: 20, z: 6, y: gy(20, 6), yaw: 90 })])); placeRaiders()
+        for (const [t] of WEDGE) K.warp(t)   // onto the road while the camera is on Grandpa
       }
       if (k === E) {   // S13: the cut (on the spot, a step forward) to the road; the horn on its frame
         say('/effect clear @s')
