@@ -78,6 +78,13 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   serious, and if we can do actual voices and make it seem super professional and high quality, that would be
   amazing."** This is the channel's direction: serious, professional, high-quality Minecraft storytelling with real
   character voices. Judge every story against a polished animated short, not against other Minecraft Shorts.
+- **Owner, 2026-11-10, on the stories so far:** "Like the creeper was good. i think the respawn tax is somewhat mid. I
+  like the sheep thing (at least it feels like a mystery, I was hooked, the delivery was just kinda bad). Like the sheep
+  worked bc its like why tf is this sheep staring at this block? I also think we need to work on like continuity and
+  stuff. And also stuff might be too zoomed in at times? Theres just a ton of micro and macro to work on." So: the
+  hook is ONE strange, concrete image that makes the viewer ask "why?" (a sheep staring at a block); the twist must
+  re-explain everything (the creeper); fix continuity (props, time of day, positions, who is where across cuts);
+  use wider shots so the viewer sees the place and the action, not just a close-up. Craft guide: docs/story_craft.md.
 - **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
   effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
   a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
