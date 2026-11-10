@@ -37,10 +37,18 @@ def words(wav):
         x = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
                                          capture_output=True, check=True).stdout, np.float32).copy()
     r = _pipe({"raw": x, "sampling_rate": SR}, return_timestamps="word")
+    # the HF pipeline puts a line's first word at 0.00 s whatever the lead silence (captions ran early: Good Boy's
+    # first words 0.13-0.50 s ahead of the speech): no word starts before the speech onset, measured as
+    # scripts/caption_sync.py measures it (the first 10 ms frame within 30 dB of the peak)
+    fr = 160
+    db = 20 * np.log10(np.sqrt(np.mean(x[: len(x) // fr * fr].reshape(-1, fr) ** 2, axis=1)) + 1e-9)
+    on = float(np.argmax(db > db.max() - 30)) * fr / SR if len(db) else 0.0
     out = []
     for c in r["chunks"]:
         a, b = c["timestamp"]
-        out.append((c["text"].strip(), float(a), float(b if b is not None else len(x) / SR)))
+        b = float(b if b is not None else len(x) / SR)
+        a = max(float(a), on) if float(a) < on else float(a)
+        out.append((c["text"].strip(), a, max(b, a + 0.05)))
     return out
 
 
@@ -48,9 +56,24 @@ def norm(t):
     return re.sub(r"[^a-z0-9]", "", t.lower())
 
 
+ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
+
+
+def spelled(t):
+    """A token's letters, numbers spelled out (Whisper hears "thirty-seven" as "37": 2 letters against the script's
+    11 shifted every later chunk's place; Good Boy's "to LEAVE" started on "tried")."""
+    def say(n):
+        if n < 20: return ONES[n]
+        if n < 100: return TENS[n // 10] + (ONES[n % 10] if n % 10 else "")
+        if n < 1000: return ONES[n // 100] + "hundred" + (say(n % 100) if n % 100 else "")
+        return str(n)
+    return re.sub(r"\d+", lambda m: say(int(m.group())), norm(t))
+
+
 def place(tokens):
     """Each token's (start, end) position as a fraction of the joined letters."""
-    lens = [max(1, len(norm(t))) for t in tokens]
+    lens = [max(1, len(spelled(t))) for t in tokens]
     tot, acc, out = sum(lens), 0, []
     for n in lens:
         out.append((acc / tot, (acc + n) / tot)); acc += n

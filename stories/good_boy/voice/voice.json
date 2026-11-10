@@ -7,28 +7,28 @@
    "text": "I've tried to leave this guy thirty-seven times.",
    "who": null,
    "dur": 3.23,
-   "onset": 0.35,
-   "end": 3.09,
+   "onset": 0.11,
+   "end": 2.74,
    "chunks": [
     [
-     0.0,
-     0.58
+     0.11,
+     0.34
     ],
     [
-     0.58,
-     0.98
+     0.34,
+     0.74
     ],
     [
-     0.98,
-     1.38
+     0.74,
+     1.16
     ],
     [
-     1.38,
-     1.9
+     1.16,
+     1.66
     ],
     [
-     1.9,
-     2.98
+     1.66,
+     2.74
     ]
    ],
    "captions": [
@@ -37,17 +37,18 @@
     "this guy",
     "THIRTY-SEVEN",
     "times."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L02": {
    "text": "Every time I get twelve blocks away, boom. Right next to him again.",
    "who": null,
    "dur": 4.215,
    "onset": 0.13,
-   "end": 4.11,
+   "end": 4.2,
    "chunks": [
     [
-     0.0,
+     0.13,
      0.5
     ],
     [
@@ -78,17 +79,18 @@
     "BOOM.",
     "Right next",
     "to him AGAIN."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L03": {
    "text": "There you are, buddy!",
    "who": "Sam",
    "dur": 1.87,
    "onset": 0.28,
-   "end": 1.46,
+   "end": 1.56,
    "chunks": [
     [
-     0.0,
+     0.28,
      1.04
     ],
     [
@@ -99,17 +101,18 @@
    "captions": [
     "There you ARE,",
     "buddy!"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L04": {
    "text": "I tried at night. Through the wheat. I even swam!",
    "who": null,
    "dur": 4.265,
    "onset": 0.5,
-   "end": 3.91,
+   "end": 3.78,
    "chunks": [
     [
-     0.0,
+     0.5,
      0.74
     ],
     [
@@ -135,17 +138,18 @@
     "Through the WHEAT.",
     "I even",
     "SWAM!"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L05": {
    "text": "He feeds me raw porkchops. Who does that?",
    "who": null,
    "dur": 4.15,
-   "onset": 0.22,
-   "end": 3.81,
+   "onset": 0.25,
+   "end": 3.98,
    "chunks": [
     [
-     0.0,
+     0.25,
      0.92
     ],
     [
@@ -153,12 +157,12 @@
      1.54
     ],
     [
-     1.54,
-     2.1
+     2.1,
+     2.82
     ],
     [
-     2.1,
-     3.3
+     3.14,
+     3.98
     ]
    ],
    "captions": [
@@ -166,17 +170,18 @@
     "RAW",
     "PORKCHOPS.",
     "Who DOES that?"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L06": {
    "text": "Everyone here is so tall.",
    "who": null,
    "dur": 1.956,
-   "onset": 0.32,
-   "end": 1.93,
+   "onset": 0.34,
+   "end": 1.94,
    "chunks": [
     [
-     0.0,
+     0.34,
      0.8
     ],
     [
@@ -192,17 +197,18 @@
     "Everyone here",
     "is SO",
     "TALL."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L07": {
    "text": "And there's this dog. Wherever I go, it's already there!",
    "who": null,
    "dur": 4.414,
-   "onset": 0.02,
-   "end": 4.0,
+   "onset": 0.09,
+   "end": 4.32,
    "chunks": [
     [
-     0.0,
+     0.09,
      0.68
     ],
     [
@@ -233,17 +239,18 @@
     "I go,",
     "it's ALREADY",
     "there!"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L08": {
    "text": "I can't even open a door.",
    "who": null,
    "dur": 1.81,
-   "onset": 0.15,
-   "end": 1.56,
+   "onset": 0.16,
+   "end": 1.78,
    "chunks": [
     [
-     0.0,
+     0.16,
      0.54
     ],
     [
@@ -254,17 +261,18 @@
    "captions": [
     "I can't even",
     "open a DOOR."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L10": {
    "text": "skeletons run from me!",
    "who": null,
    "dur": 2.77,
-   "onset": 0.09,
-   "end": 2.35,
+   "onset": 0.13,
+   "end": 2.2,
    "chunks": [
     [
-     0.0,
+     0.13,
      0.82
     ],
     [
@@ -275,17 +283,18 @@
    "captions": [
     "SKELETONS",
     "run from ME!"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L11": {
    "text": "Then a zombie went for him.",
    "who": null,
    "dur": 2.32,
    "onset": 0.17,
-   "end": 1.88,
+   "end": 1.98,
    "chunks": [
     [
-     0.0,
+     0.17,
      1.14
     ],
     [
@@ -296,17 +305,18 @@
    "captions": [
     "Then a ZOMBIE",
     "went for HIM."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L12": {
    "text": "Hey! Get back!",
    "who": "Sam",
    "dur": 2.0,
-   "onset": 0.21,
-   "end": 1.57,
+   "onset": 0.28,
+   "end": 1.78,
    "chunks": [
     [
-     0.0,
+     0.28,
      0.92
     ],
     [
@@ -317,17 +327,18 @@
    "captions": [
     "Hey!",
     "Get BACK!"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L13": {
    "text": "And I just lost it!",
    "who": null,
    "dur": 1.57,
    "onset": 0.31,
-   "end": 1.34,
+   "end": 1.54,
    "chunks": [
     [
-     0.0,
+     0.31,
      0.6
     ],
     [
@@ -338,17 +349,18 @@
    "captions": [
     "And I just",
     "LOST it!"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L14": {
    "text": "good boy!",
    "who": "Sam",
    "dur": 1.4,
    "onset": 0.34,
-   "end": 1.13,
+   "end": 0.78,
    "chunks": [
     [
-     0.0,
+     0.34,
      0.46
     ],
     [
@@ -359,7 +371,8 @@
    "captions": [
     "GOOD",
     "BOY!"
-   ]
+   ],
+   "aligned": "whisper-base.en"
   }
  },
  "total": 37.27
