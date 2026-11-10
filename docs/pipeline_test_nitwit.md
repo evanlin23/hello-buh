@@ -40,7 +40,8 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 | round 1 fixes (campfires in the ruin, wall-top wide shot, burning room, lantern over the well + rim camera, crown blown off + fire, HMMS 4097) | 04:03:00 | 04:05:13 | 2.2 min | working | |
 | recording 6 | 04:05:13 | 04:08:14 | 3 min | waiting | 1 attempt, rec_check clean |
 | Actions render 3 queued (old setup) | 04:08:20 | 04:19:54 | (superseded) | waiting | re-queued after merging main's no-apt render setup (lead) |
-| Actions render 4 (no-apt setup) | 04:19:54 | | | waiting | |
+| Actions render 4 (no-apt setup) | 04:19:54 | 04:40:20 | 20.5 min | waiting | setup now 20-30 s a runner. 11 slices took 2.5-7 min; slice 11 (the ending: blasts, bolts, particles) took 12 min alone, so the split by frame count left the run waiting 6+ min on one slice; finish 6 min (join 1.3, audio+edit 4) |
+| independent review round 2 (new session) | 04:40:49 | | | waiting | |
 | preview (`scripts/preview.sh`, now on main) in parallel | 04:08:32 | 04:34:31 | 26 min | waiting | slower than the new Actions render: 3 parallel render.js jobs each still step through all 2583 frames (5-12 min each on this 4-CPU box with other work running), edit 3.3 min. Sheets are excellent (every cut ±3 frames, labelled). They showed the ruin and tree fixes reading, the ending's blasts in view, and the new lava still drawing near-black with one orange quarter (engine) |
 | Actions render 2 queued + stills 4 (12 ticks) | 03:15:32 | 03:17:36 | 2 min | waiting | stills: roof nitwit visible, ruin readable, no hand (the hand in stills 3 is unexplained; render.js silently ignores a stunt module that fails to load) |
 
@@ -95,6 +96,9 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 17. **ENGINE: lava placed with /fill (water -> lava in a 2x2x2 well) draws near-black** with one orange quarter for
     1 s+, even with a lantern above it. Repro: stunts/story_nitwit.js L06 (`/fill ... lava replace water`), output
     ~12.3-13.4 s. Later shots of the same well show it orange. (open, engine)
+18. **Slices are split by frame count, not cost**: the explosion-heavy last 3.5 s took 12 min while the other 11
+    slices took 2.5-7. Weight slices by a cheap per-tick cost estimate (entities, particles, block changes), or
+    split the heavy span finer. ~5 min a render. (open)
 3. Worker setup says symlink nothing; the lead's brief had me symlink node_modules, songs, sfx/mixkit and work. The
    docs don't say a worktree needs `work/` (server, assets) linked: without it run.sh would re-download and rebuild
    the server and assets. (open: doc note)
