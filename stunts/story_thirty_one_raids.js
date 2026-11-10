@@ -283,7 +283,7 @@ module.exports = {
     await line('L07', async (k, at) => {
       if (k === at(1) - 2) swing(GB)
       if (k === at(1)) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === at(3) - 3) {   // "a whole CHEST": first person, beside him; I open his chest (the vanilla chest screen)
+      if (k === at(3) + 5) {   // "a whole CHEST": first person, beside him; I open his chest (the vanilla chest screen)
         K.shot('pov')
         await K.cut(-8.2, -12.0, P(-5.5, 2.45, -12.5), 2)
         try { bot.openContainer(bot.blockAt(P(-6, 2, -13))).then(w => { chest = w }).catch(e => ctx.log('chest', e.message)) } catch (e) { ctx.log('chest', e.message) }
@@ -310,6 +310,8 @@ module.exports = {
     await shot('s09', -4.2, 5.6, P(0, 2, 0))
     await line('L09', async (k, at) => {
       if (k >= at(1) - 4 && G[GA].yaw < gate.yaw + 95) G[GA].yaw += 9
+      if (k >= at(2) && k < at(2) + 12) G[GA].pitch = Math.sin((k - at(2)) / 12 * Math.PI) * 16   // a nod on "COMING"
+      if (k === at(2) + 18) swing(GA)                                                           // he shoulders the crossbow
       look(k)
     })
 
@@ -322,6 +324,7 @@ module.exports = {
     park(GA)
     await line('L10', async (k, at) => {
       const up = at(3)
+      if (k === 10 || k === 34) swing(GB)   // he nudges the one bowl across the table
       G[GB].pitch = k < up - 3 ? 50 : k < up + 16 ? Math.max(4, G[GB].pitch - 9) : Math.min(50, G[GB].pitch + 5)
       look(k)
     })
