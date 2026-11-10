@@ -12,7 +12,7 @@ const LOOK = {
   shade: { ao: 0.7, haze: 0.22, hazeDist: 90, split: 0.35, glow: 0.6 },
   // the moat (and the courtyard well): water surface at y 67.89 inside a 37-block circle round the castle centre
   // (render.js worldLook: center [dx, dz] from the set origin, plane at set.y + dy)
-  reflect: { center: [0, -45], dy: 1, radius: [37, 37], strength: 0.75 }
+  reflect: { center: [0, -45], dy: 1, radius: [37, 37], strength: 0.75, ice: false }
 }
 const merge = (a, b) => { const o = { ...a }; for (const [k, v] of Object.entries(b || {})) o[k] = v && typeof v === 'object' && !Array.isArray(v) && a[k] && typeof a[k] === 'object' ? merge(a[k], v) : v; return o }
 

@@ -106,13 +106,36 @@
     "startDeg": -30,
     "degPerSec": 11,
     "drift": 0,
-    "fov": 55
+    "fov": 55,
+    "dof": false
    },
    "look": {
-    "grade": "day",
-    "rays": 0.6,
+    "grade": {
+     "lift": [
+      0.0,
+      0.0,
+      0.015
+     ],
+     "gamma": [
+      1,
+      1,
+      1
+     ],
+     "gain": [
+      1.04,
+      1.0,
+      0.97
+     ],
+     "sat": 1.18,
+     "contrast": 0.12,
+     "exposure": 0.9
+    },
+    "bloom": 0.25,
+    "bloomThreshold": 0.9,
+    "rays": 0.5,
     "shade": {
-     "haze": 0.1
+     "haze": 0.08,
+     "glow": 0.0
     }
    }
   },
@@ -209,13 +232,13 @@
      [
       0,
       22,
-      2.2,
+      3.4,
       -11
      ],
      [
       4.5,
       -6,
-      1.6,
+      2.8,
       -11
      ]
     ],

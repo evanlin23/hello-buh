@@ -219,7 +219,7 @@ function makePost (look, w, h) {
   const SH = look.shade || {}, RF = look.reflect || null
   const shadeMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform vec2 res; uniform mat4 projInv; uniform mat4 proj; uniform mat4 camWorld; uniform mat4 view;
     uniform vec3 sunDir; uniform vec3 warm; uniform vec3 cool; uniform float aoK; uniform float hazeK; uniform float hazeDist; uniform float split; uniform float glow;
-    uniform float reflK; uniform float planeY; uniform vec2 ctr; uniform vec2 rad; uniform float under; varying vec2 vUv;
+    uniform float reflK; uniform float iceOn; uniform float planeY; uniform vec2 ctr; uniform vec2 rad; uniform float under; varying vec2 vUv;
     vec3 vpos (vec2 uv) { float d = texture2D(depth, uv).x; vec4 q = projInv * vec4(uv * 2.0 - 1.0, d * 2.0 - 1.0, 1.0); return q.xyz / q.w; }
     float hash (vec2 p) { return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
     void main () {
@@ -253,7 +253,7 @@ function makePost (look, w, h) {
       // reflections on the lake
       if (reflK > 0.0 && under < 0.5) {
         vec2 e = (W.xz - ctr) / rad;
-        bool onIce = abs(W.y - planeY) < 0.04, onWater = abs(W.y - (planeY - 0.111)) < 0.05;
+        bool onIce = iceOn > 0.5 && abs(W.y - planeY) < 0.04, onWater = abs(W.y - (planeY - 0.111)) < 0.05;
         if ((onIce || onWater) && dot(e, e) < 1.0 && N.y > -2.0) {
           vec3 Nv = normalize((view * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
           vec3 Vv = normalize(P), R = reflect(Vv, Nv);
@@ -292,7 +292,8 @@ function makePost (look, w, h) {
     camWorld: { value: new THREE.Matrix4() }, view: { value: new THREE.Matrix4() }, sunDir: { value: new THREE.Vector3(0, 1, 0) },
     warm: { value: new THREE.Vector3(...(SH.warm || [1.0, 0.66, 0.38])) }, cool: { value: new THREE.Vector3(...(SH.cool || [0.42, 0.52, 0.72])) },
     aoK: { value: SH.ao ?? 0 }, hazeK: { value: SH.haze ?? 0 }, hazeDist: { value: SH.hazeDist ?? 60 }, split: { value: SH.split ?? 0 }, glow: { value: SH.glow ?? 0 },
-    reflK: { value: RF ? (RF.strength ?? 0.8) : 0 }, planeY: { value: RF ? RF.y : 0 }, ctr: { value: new THREE.Vector2(RF ? RF.cx : 0, RF ? RF.cz : 0) }, rad: { value: new THREE.Vector2(...(RF && RF.radius ? RF.radius : [1, 1])) }, under: { value: 0 } })
+    reflK: { value: RF ? (RF.strength ?? 0.8) : 0 }, iceOn: { value: RF && RF.ice === false ? 0 : 1 },   // (ice: false: water only; grass level with the plane mirrored the whole courtyard)
+    planeY: { value: RF ? RF.y : 0 }, ctr: { value: new THREE.Vector2(RF ? RF.cx : 0, RF ? RF.cz : 0) }, rad: { value: new THREE.Vector2(...(RF && RF.radius ? RF.radius : [1, 1])) }, under: { value: 0 } })
   shadeMat.extensions = { derivatives: true }
   const shadeOn = !!(look.shade || look.reflect)
   const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D rays; uniform float raysK; uniform sampler2D depth; uniform vec2 res;

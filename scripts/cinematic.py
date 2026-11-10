@@ -355,16 +355,17 @@ def assemble(sp, segdir, portrait, out):
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(cm)], check=True)
         clips.append(cm)
     # dissolves between clips (`xfade` on the incoming clip), a fade in from black and out to black
-    inputs, fl, prev, acc = [], [], "[0:v]", sp["clips"][0]["dur"]
+    inputs, fl, prev, acc = [], [], "[c0]", sp["clips"][0]["dur"]
     for i, cm in enumerate(clips):
         inputs += ["-i", str(cm)]
+        fl.append(f"[{i}:v]settb=AVTB,fps={FPS},format=yuv420p,setpts=PTS-STARTPTS[c{i}]")   # (one timebase: xfade after a concat refused a mismatch)
     for i in range(1, len(clips)):
         x = sp["clips"][i].get("xfade", 0)
         lbl = f"[x{i}]"
         if x > 0:
-            fl.append(f"{prev}[{i}:v]xfade=transition=fade:duration={x}:offset={acc - x:.4f}{lbl}")
+            fl.append(f"{prev}[c{i}]xfade=transition=fade:duration={x}:offset={acc - x:.4f}{lbl}")
         else:
-            fl.append(f"{prev}[{i}:v]concat=n=2:v=1:a=0{lbl}")
+            fl.append(f"{prev}[c{i}]concat=n=2:v=1:a=0,settb=AVTB,fps={FPS}{lbl}")
         acc += sp["clips"][i]["dur"] - x
         prev = lbl
     total = sp["total"]
