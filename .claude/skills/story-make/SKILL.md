@@ -26,7 +26,9 @@ shots, clean continuity, a "why tf?" hook and a twist worth a rewatch.
 
 ## The format (owner, 2026-11-10)
 **These are YouTube Shorts**, in the channel's established layout: 1080x1920 vertical, the title/caption band on top,
-the gameplay picture in the middle (1080x1011), the bottom band below; captions as now. Cinematic shots are rendered
+the gameplay picture in the middle (1080x1011), the bottom band below; captions as now. The bands are a blurred,
+darkened copy of the gameplay (`edit: { bands: 'blur' }`, owner 2026-11-10: "the top and bottom can be blur rather
+than black"). Cinematic shots are rendered
 as a **wide 1920x1080 master** and **cropped to the middle frame** in the edit ("we should have the full wide, but then
 crop it", owner): the 1080-tall master crops to 1080x1011 with no upscaling, and the wide master is kept for trailers
 or long-form. Compose every shot for the centre crop (subjects inside the middle 1080 columns, or give the shot a crop

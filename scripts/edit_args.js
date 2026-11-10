@@ -7,6 +7,7 @@ const e = { ...(require(`../stunts/${process.argv[2]}`).edit || {}), ...JSON.par
 const out = []
 if (e.caption) out.push('--caption', process.env.CAPTION || e.caption)
 if (e.red) out.push('--red', e.red)
+if (e.bands) out.push('--bands', e.bands)   // 'blur' | 'black'
 if (e.colors) out.push('--colors', e.colors)
 if (e.countdown) out.push('--countdown', e.countdown)
 if (e.subs) out.push('--subs', JSON.stringify(e.subs))
