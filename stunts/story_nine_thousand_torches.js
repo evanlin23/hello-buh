@@ -260,7 +260,7 @@ module.exports = {
     // L09 (S09): POV through our door to the chest; the chest screen opens on 'STUFF'
     await K.cut(5.5, -2.5, P(6.5, 1.3, -5.5), 1, { time: 23250, shot: 'pov' })
     await line('L09', async (k, at) => {
-      K.go(k > 2 && bot.entity.position.z > Z - 4.3)
+      K.go(k > 2 && bot.entity.position.z > Z - 3.6)
       if (k === at(1) - 2) { K.stop(); try { bot.openContainer(bot.blockAt(new V(X + 6, F + 1, Z - 6))) } catch (e) { ctx.log('chest:', e.message) } }
       K.look(k)
     })
@@ -278,7 +278,7 @@ module.exports = {
     give(FRONT.length + NORTH.length + 1)
     const fr0 = FRONT[0]
     jtp(fr0[0] - 2.5, (this.rowY[`${fr0[0]},${fr0[2]}`] ?? F) + 1 - F, fr0[2] + 0.5, -90)
-    await K.cut(STRIP_X + 0.5, FRONT_Z + 10.5, P(STRIP_X + 0.5, 2.2, FRONT_Z - 1), (this.rowY[`${STRIP_X},${FRONT_Z + 8}`] ?? F) + 1 - F, { time: 23450, shot: 'pov' })
+    await K.cut(STRIP_X + 0.5, FRONT_Z + 11.5, P(STRIP_X + 0.5, 2.2, FRONT_Z - 1), (this.rowY[`${STRIP_X},${FRONT_Z + 8}`] ?? F) + 1 - F, { time: 23450, shot: 'pov' })
     let placed = 0
     await line('L12', async (k, at) => {
       if (k === at(1) && placed === 0) { placed++; jPlace(FRONT[0][0], FRONT[0][2]) }
@@ -307,7 +307,7 @@ module.exports = {
     K.stop()
 
     // L14 (S14): the same axis as S06: the last torch on the door spot; after 'ONCE' he stands and waves
-    await K.cut(2.6, 3.0, P(0.5, 1.2, -1), 1, { time: 23688, shot: 's14' })
+    await K.cut(2.5, 2.7, P(0.5, 1.2, -1), 1, { time: 23688, shot: 's14' })
     await line('L14', async (k, at, n) => {
       if (k === at(1)) jPlace(DOOR_SPOT[0], DOOR_SPOT[2])
       if (k === at(3) + 6) sneak(false)
@@ -320,7 +320,7 @@ module.exports = {
     await K.cut(1.6, 2.9, P(0.5, 2.5, 0.3), 1, { time: 23742, shot: 'pov' })
     let gone = false
     await line('L15', async (k) => {
-      if (k === 0 && !gone) { gone = true; try { jb.quit() } catch (e) {} chat('Jonah left the game', 'yellow') }
+      if (k === 3 && !gone) { gone = true; try { jb.quit() } catch (e) {} chat('Jonah left the game', 'yellow') }
       K.look(k)
     }, 0.8)
     ctx.mark('story_end')
@@ -364,7 +364,7 @@ module.exports.shots = {
   // S05: the flashback crane down to Jonah at his gate, looking west into the low sun
   s05: { path: [[0, -4, 9, 7.5], [3, -5.5, 4.5, 7.5]], lookPath: [[0, -13, 4, 7.5], [3, -13, 4, 7.5]], ease: true, fov: 50, dof: false, mood: 'flashback', subject: ['actor:Jonah'] },
   // S06: our door at sunset, wide, looking north; the kid at frame right on the path
-  s06: { at: [1.5, 2.5, 9], look: [0.5, 1.6, -1], fov: 55, push: 0.1, dof: false, mood: 'flashback', subject: ['actor:Jonah'] },
+  s06: { at: [1.6, 3.9, 9.6], look: [0.8, 1.3, -0.5], fov: 55, push: 0.1, dof: false, mood: 'flashback', subject: ['actor:Jonah'] },
   // S07: Jonah medium by his chests at dusk
   s07: { at: [-13.2, 4.7, 9.6], look: [-15.5, 4.4, 6.5], fov: 50, push: 0.2, mood: 'flashback', subject: ['actor:Jonah'] },
   // S08: behind the kid on our doorstep, looking west down the street
@@ -374,5 +374,5 @@ module.exports.shots = {
   // S13: the follow: behind the kid, 6 back, 1.6 up
   s13: { follow: 'self', offset: [0, 1.6, 6], lag: 0.3, look: 'self', fov: 55, dof: false },
   // S14: the same axis as S06, closer: the last torch, the wave
-  s14: { at: [1.5, 2.0, 5.5], look: [0.5, 1.4, -0.5], fov: 50, push: 0.08, dof: false, subject: ['actor:Jonah'] }
+  s14: { at: [1.3, 3.5, 6.3], look: [0.8, 1.2, -0.5], fov: 50, push: 0.08, dof: false, subject: ['actor:Jonah'] }
 }
