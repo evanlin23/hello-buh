@@ -188,12 +188,11 @@ module.exports = {
       }
       if (k < at(3)) autoJump()
       look(k)
-    })
+    }, 0, { tail: () => { putGuy(37.4, 14.6, yawTo(37.4, 14.6, 36.4, 15.6), 42) } })   // his hop in the line's tail (he's not in the swim shot): pacing, owner "Pacing needs to be faster"
     // (no K.stop() here: the swim keeps jumping until L05's cut stops it; released here, the eye sank under the water
     // for 6 frames before the cut: review round 3)
 
     // L05: in the yard, looking up at him. He holds out a raw porkchop and drops it in front of me
-    await putGuy(37.4, 14.6, yawTo(37.4, 14.6, 36.4, 15.6), 42)
     // the standing eye height on the cut's landing (set before it, the swim camera sank under the water: review round 3)
     await K.cut(36.4, 15.6, P(37.4, eyeY(1.6), 14.6), H + 1, { self: [{}, EYE] })
     let looking = K.base
@@ -216,12 +215,10 @@ module.exports = {
       stepG(v3, -0.035, 0); v3.pitch = 20
       if (k >= at(1)) K.turnTo(looking, P(v2.x, v2.y + 1.15, v2.z), Math.min(0.8, (k - at(1)) / 16))   // up to his chin, not the sky (a black square showed in the sky above him: review rounds 1-2)
       look(k)
-    })
+    }, 0, { tail: () => { putGuy(31.6, 14.4, -90, 5) } })   // his hop in the tail, 8 ticks before the follow opens on him (pacing)
 
     // L07: "And there's this DOG." Camera shots: walking the road beside him (a follow, low, ahead of them); then on
     // the yard's sea edge, already sitting there as he walks up
-    await putGuy(31.6, 14.4, -90, 5)
-    await bot.waitForTicks(3)   // (the follow opened on him still at the hop: a red blur)
     K.shot('dog_walk')
     await K.cut(31.8, 15.5, P(50, eyeY(0.4), 15.5), H + 1)
     for (const t of ['v1', 'v2', 'v3']) K.bury(t, -60)   // after the cut (buried before it, the librarian vanished on screen)
@@ -260,7 +257,7 @@ module.exports = {
       if (k > opensAt) K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), (k - opensAt) / 8)
       if (k > opensAt + 6) { guy.pitch = 30 + Math.sin((k - opensAt) / 5) * 6; placeGuy() }   // he looks down at me (no walk-in: the open door's panel stopped him dead)
       look(k, 0, Math.sin(k / 6) * 0.03)
-    }, 0.5)
+    }, 0.3)   // (0.5: dead air, owner "Pacing needs to be faster")
     K.stop()
 
     K.self({ sitting: false }, EYE)
@@ -276,18 +273,15 @@ module.exports = {
       autoJump()
       if (k === at(1)) ctx.sound('entity.skeleton.ambient', 0.6, 1.2)
       look(k)
-    })
+    }, 0, { tail: () => { putGuy(37.5, 15.2, 0, 0); putMob('zom', 36.6, 8.6, 0) } })   // the yard's cast placed in the tail (pacing)
     K.stop(); K.bury('sk1', -60); K.bury('sk2', -60)
 
     // L11: night, the yard: the zombie walks in from the road. L12: "Hey! Get back!" it hits him; the wolf at his
     // side gets up, eyes red. A camera shot from the yard's west corner
-    await putGuy(37.5, 15.2, 0, 0)
-    await putMob('zom', 36.6, 8.6, 0)   // (from 6.0 it was a speck for a second and reached him only after the hit)
+    // (the zombie starts at z 8.6: from 6.0 it was a speck for a second and reached him only after the hit)
     const zom = actorG('zom', { x: 36.6, z: 8.6, yaw: 0 })
-    K.self({ sitting: true }, SIT_EYE)
-    await bot.waitForTicks(3)
-    K.shot('night_yard')
-    await K.cut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1)
+    // the sitting eye and the shot on the cut's landing (set 3 ticks before it, the old POV dropped)
+    await K.cut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1, { self: [{ sitting: true }, SIT_EYE], shot: 'night_yard' })
     const zWalk = (speed) => { const dx = guy.x + 0.3 - zom.x, dz = guy.z - 1.2 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
     await line('L11', async (k) => {
       zWalk(0.1)

@@ -1,34 +1,34 @@
 {
  "voice": "gemini cast",
  "sr": 24000,
- "gap": 0.1,
+ "gap": 0.05,
  "lines": {
   "L01": {
    "text": "I've tried to leave this guy thirty-seven times.",
    "who": null,
-   "dur": 2.99,
-   "onset": 0.11,
-   "end": 2.74,
+   "dur": 2.96,
+   "onset": 0.08,
+   "end": 2.7,
    "chunks": [
     [
-     0.11,
-     0.34
+     0.08,
+     0.3
     ],
     [
-     0.34,
-     0.74
+     0.3,
+     0.7
     ],
     [
-     0.74,
-     1.16
+     0.7,
+     1.08
     ],
     [
-     1.16,
-     1.66
+     1.08,
+     1.64
     ],
     [
-     1.66,
-     2.74
+     1.64,
+     2.7
     ]
    ],
    "captions": [
@@ -43,33 +43,33 @@
   "L02": {
    "text": "Every time I get twelve blocks away, boom. Right next to him again.",
    "who": null,
-   "dur": 4.215,
-   "onset": 0.13,
-   "end": 4.2,
+   "dur": 4.165,
+   "onset": 0.08,
+   "end": 4.14,
    "chunks": [
     [
-     0.13,
-     0.5
+     0.08,
+     0.46
     ],
     [
-     0.5,
-     1.16
+     0.46,
+     1.1
     ],
     [
-     1.16,
-     2.34
+     1.1,
+     2.28
     ],
     [
-     2.34,
-     2.92
+     2.28,
+     2.86
     ],
     [
-     2.92,
-     3.56
+     2.86,
+     3.52
     ],
     [
-     3.56,
-     4.2
+     3.52,
+     4.14
     ]
    ],
    "captions": [
@@ -85,17 +85,17 @@
   "L03": {
    "text": "There you are, buddy!",
    "who": "Sam",
-   "dur": 1.87,
-   "onset": 0.28,
-   "end": 1.56,
+   "dur": 1.52,
+   "onset": 0.09,
+   "end": 1.5,
    "chunks": [
     [
-     0.28,
-     1.04
+     0.09,
+     0.78
     ],
     [
-     1.04,
-     1.56
+     0.78,
+     1.5
     ]
    ],
    "captions": [
@@ -107,29 +107,29 @@
   "L04": {
    "text": "I tried at night. Through the wheat. I even swam!",
    "who": null,
-   "dur": 4.265,
-   "onset": 0.49,
-   "end": 3.78,
+   "dur": 3.73,
+   "onset": 0.07,
+   "end": 3.36,
    "chunks": [
     [
-     0.49,
-     0.74
+     0.07,
+     0.32
     ],
     [
-     0.74,
-     1.5
+     0.32,
+     1.08
     ],
     [
-     1.5,
-     2.4
+     1.08,
+     1.98
     ],
     [
-     2.4,
-     2.76
+     1.98,
+     2.34
     ],
     [
-     2.76,
-     3.78
+     2.34,
+     3.36
     ]
    ],
    "captions": [
@@ -144,25 +144,25 @@
   "L05": {
    "text": "He feeds me raw porkchops. Who does that?",
    "who": null,
-   "dur": 4.15,
-   "onset": 0.25,
-   "end": 3.98,
+   "dur": 3.88,
+   "onset": 0.11,
+   "end": 3.86,
    "chunks": [
     [
-     0.25,
-     0.92
+     0.11,
+     0.78
     ],
     [
-     0.92,
-     1.54
+     0.78,
+     1.4
     ],
     [
-     2.1,
-     2.82
+     1.96,
+     2.74
     ],
     [
-     3.14,
-     3.98
+     3.0,
+     3.86
     ]
    ],
    "captions": [
@@ -176,21 +176,21 @@
   "L06": {
    "text": "Everyone here is so tall.",
    "who": null,
-   "dur": 1.956,
-   "onset": 0.34,
-   "end": 1.94,
+   "dur": 1.716,
+   "onset": 0.1,
+   "end": 1.7,
    "chunks": [
     [
-     0.34,
-     0.8
+     0.1,
+     0.54
     ],
     [
-     0.8,
-     1.18
+     0.54,
+     0.92
     ],
     [
-     1.18,
-     1.94
+     0.92,
+     1.7
     ]
    ],
    "captions": [
@@ -203,9 +203,9 @@
   "L07": {
    "text": "And there's this dog. Wherever I go, it's already there!",
    "who": null,
-   "dur": 4.414,
+   "dur": 4.34,
    "onset": 0.09,
-   "end": 4.32,
+   "end": 4.28,
    "chunks": [
     [
      0.09,
@@ -229,7 +229,7 @@
     ],
     [
      3.3,
-     4.32
+     4.28
     ]
    ],
    "captions": [
@@ -245,17 +245,17 @@
   "L08": {
    "text": "I can't even open a door.",
    "who": null,
-   "dur": 1.81,
-   "onset": 0.15,
-   "end": 1.78,
+   "dur": 1.69,
+   "onset": 0.09,
+   "end": 1.66,
    "chunks": [
     [
-     0.15,
-     0.54
+     0.09,
+     0.48
     ],
     [
-     0.54,
-     1.78
+     0.48,
+     1.66
     ]
    ],
    "captions": [
@@ -267,17 +267,17 @@
   "L10": {
    "text": "skeletons run from me!",
    "who": null,
-   "dur": 2.77,
-   "onset": 0.13,
-   "end": 2.2,
+   "dur": 2.6,
+   "onset": 0.09,
+   "end": 2.14,
    "chunks": [
     [
-     0.13,
-     0.82
+     0.09,
+     0.78
     ],
     [
-     0.82,
-     2.2
+     0.78,
+     2.14
     ]
    ],
    "captions": [
@@ -289,17 +289,17 @@
   "L11": {
    "text": "Then a zombie went for him.",
    "who": null,
-   "dur": 2.32,
-   "onset": 0.17,
-   "end": 1.98,
+   "dur": 2.03,
+   "onset": 0.08,
+   "end": 1.78,
    "chunks": [
     [
-     0.17,
-     1.14
+     0.08,
+     1.06
     ],
     [
-     1.14,
-     1.98
+     1.06,
+     1.78
     ]
    ],
    "captions": [
@@ -311,16 +311,16 @@
   "L12": {
    "text": "Hey! Get back!",
    "who": "Sam",
-   "dur": 2.0,
-   "onset": 0.28,
+   "dur": 1.8,
+   "onset": 0.15,
    "end": 1.78,
    "chunks": [
     [
-     0.28,
-     0.92
+     0.15,
+     0.76
     ],
     [
-     0.92,
+     0.76,
      1.78
     ]
    ],
@@ -333,17 +333,17 @@
   "L13": {
    "text": "And I just lost it!",
    "who": null,
-   "dur": 1.57,
-   "onset": 0.31,
-   "end": 1.54,
+   "dur": 1.31,
+   "onset": 0.08,
+   "end": 1.28,
    "chunks": [
     [
-     0.31,
-     0.6
+     0.08,
+     0.38
     ],
     [
-     0.6,
-     1.54
+     0.38,
+     1.28
     ]
    ],
    "captions": [
@@ -353,5 +353,5 @@
    "aligned": "whisper-base.en"
   }
  },
- "total": 35.53
+ "total": 32.34
 }
