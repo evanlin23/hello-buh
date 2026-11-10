@@ -18,6 +18,7 @@ pilot's path: its splitter groups a take's pauses by expected length, and voice_
 """
 import argparse
 import json
+import os
 import pathlib
 import re
 import subprocess
@@ -30,6 +31,8 @@ sys.path.insert(0, str(HERE / "scripts"))
 import tts  # noqa: E402
 
 SR = tts.SR
+if os.environ.get('VOICE_MODELS'):   # e.g. VOICE_MODELS=gemini-3.8-flash-tts when the 2.5 quota is spent
+    tts.MODELS = os.environ['VOICE_MODELS'].split(',')
 
 
 def spoken(text):

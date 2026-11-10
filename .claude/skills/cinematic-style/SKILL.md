@@ -81,3 +81,16 @@ look: { grade: { lift: [0.02, 0.01, 0.018], gamma: [0.97, 1.0, 1.04], gain: [1.1
 8. Long TTS directions get read aloud: one short sentence plus a profile per speaker.
 9. A sneaking actor's eye is 1.27: aim at it, not 1.62.
 10. Heavy CPU work (Whisper, renders) during a recording stalls the server: the bot times out. Record alone.
+11. Placing scenes by eye from a top-down still put a swim on land and a run inside a tower (the still was
+    mis-oriented): map the recorded blocks (`./hb map`, or scripts/set_map.js on claude/cinematic-default) and read
+    exact ground and water from the map.
+12. A ground finder that scans from the sky lands on barrier platforms and roofs: start just above the set.
+13. Gemini swaps speakers on short lines in a two-speaker take: one speaker per request for short character lines;
+    check pitch and transcript with `scripts/voice_check.py`, re-cut with `--resplit` (Whisper word gaps).
+14. A tender, slow, whispered payoff line can read as intimate out of context (owner on "good boy"): payoffs that
+    are a character's line are loud, cheerful and physical (a pat, a bark, a hard cut).
+15. Walking the narrator into a door to show "I can't open it" reads as stuck: sit and look at it; open it after
+    the line.
+16. Undead waiting off-set burn in daylight (and the fire shows): roof their waiting room.
+17. `render_on_actions.sh --wait` right after queueing can fetch the previous run's result: wait for the new
+    commit's run to start (or delete out/<name>.mp4 and check the run URL it prints).
