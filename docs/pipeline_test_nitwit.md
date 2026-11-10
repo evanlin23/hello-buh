@@ -35,13 +35,18 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 | lead: preview tool merged to main; merged main into the branch (419fe92). Skipped a preview this round: the Actions render was already 4 min in (~21 min total) and a ~10 min preview would only save ~7 min of the wait, while my own stills had already checked the staging | 03:19:00 | 03:19:20 | 0.3 min | working | trade-off |
 | Actions render 2 (`render_on_actions.sh` + `--wait`) | 03:15:32 | 03:57:03 | 41.5 min | waiting | docs say ~21 min. Each slice's actual render is ~2 min; the rest is runner setup: apt-get from the Azure Ubuntu mirror ran at ~119 kB/s on some runners (slice 8: 14 min in `apt-get install ffmpeg`, 3 min in playwright's `--with-deps` apt), and the finish job spent 15.5 of its 21 min in render-setup |
 | own look at the Short (2 fps sheets) | 03:57:10 | 03:57:40 | 0.5 min | working | readable; the ending's blasts are small at the right edge |
-| independent review round 1 (a new cloud session, `create_session`: no subagent tool here) | 03:57:43 | | | waiting | |
+| independent review round 1 (a new cloud session, `create_session`: no subagent tool here) | 03:57:43 | 04:02:55 | 5.2 min | waiting | NOT READY, 3 blockers: (1) the ruin doesn't read as a burned copy of the village (camera walks into the nitwit, dark wall close-ups), (2) the lava well reads black and villagers hide it, (3) 0.9 s near-still night tree that doesn't look split. Reviewer also found rec_check's set check silently skipped without `npm install` |
+| maker checks meanwhile: beat_audit | 03:58:20 | 03:59:00 | 0.7 min | working | flagged the same 0.9 s pause as blocker 3 (I'd judged it acceptable) |
+| round 1 fixes (campfires in the ruin, wall-top wide shot, burning room, lantern over the well + rim camera, crown blown off + fire, HMMS 4097) | 04:03:00 | 04:05:13 | 2.2 min | working | |
+| recording 6 | 04:05:13 | 04:08:14 | 3 min | waiting | 1 attempt, rec_check clean |
+| Actions render 3 queued | 04:08:20 | | | waiting | |
+| preview (`scripts/preview.sh`, now on main) in parallel | 04:08:32 | | | waiting | checks the fixes before the 40-min render lands |
 | Actions render 2 queued + stills 4 (12 ticks) | 03:15:32 | 03:17:36 | 2 min | waiting | stills: roof nitwit visible, ruin readable, no hand (the hand in stills 3 is unexplained; render.js silently ignores a stunt module that fails to load) |
 
 ## Counts
 - recordings attempted: 5 runs of run.sh (9 bot attempts; 4 died in setup)
 - renders: 2 queued on Actions (1 cancelled by a re-queue, 1 finished); 4 local still renders by hand
-- review rounds: 0
+- review rounds: 1 (NOT READY, 3 blockers)
 - tool fixes needed: 0
 
 ## Gaps, bugs, confusing docs (running)
@@ -81,6 +86,8 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 14. **No subagent tool in this worker** for the "independent reviewer subagent" the brief and short-review ask
     for: used `create_session` (a separate cloud session on render/story_nitwit) and read its answer with
     `list_events`. Works, but costs a fresh container + setup per round. (open: doc how a worker should do it)
+15. **rec_check's set/vanilla checks silently skip when node_modules is missing** (the reviewer's fresh checkout:
+    `prismarine-chunk` not found, and the report still said OK). It should say the check didn't run. (open)
 3. Worker setup says symlink nothing; the lead's brief had me symlink node_modules, songs, sfx/mixkit and work. The
    docs don't say a worktree needs `work/` (server, assets) linked: without it run.sh would re-download and rebuild
    the server and assets. (open: doc note)
