@@ -9,7 +9,6 @@
   "premise": "Every road, stair and doghouse in the boy's village is carpeted, 300 sheep are sheared every morning, the bell is boxed in wool and the well wears a white wool lid. Mom says 'walk soft, the ground's a light sleeper'. Once he pulled the wool off the well and the bottom of the well screamed; Mom said it was a fox. Then a skeleton, shooting at him, hits a creeper, and he gets a music disc in a village where nobody has ever heard a song.",
   "twist": "The carpet is silence (vanilla: walking on wool and carpet makes no vibration, and wool blocks stop vibrations). The village sits on an ancient city and the bottom of the well is a sculk shrieker. Tonight he pulls the lid off again because wells echo, puts a jukebox on the well, puts the disc in, and steps off the carpet onto the well's bare stone rim to dance: four shrieks, the Darkness pulsing ('like a real party'), and the warden rises out of the square. He was obliterated by a sonically-charged shriek.",
   "key_color": "#3FD0D4",
-  "gap": 0.3,
   "voice": {
     "engine": "gemini",
     "model_hint": "gemini-2.5-flash-preview-tts"
