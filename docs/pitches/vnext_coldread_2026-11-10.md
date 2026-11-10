@@ -32,7 +32,7 @@ feels is emotional (the owner left; Grandpa wants to be needed), not mechanical.
 | dog_hill | yes | "SOMEBODY said be right BACK" (who said it?) | 8 | "Maybe he LIKES the GRASS." | "SOMEBODY told him / be right BACK." |
 | gold_for_the_portal | mostly | the item list; "GOLD keeps you SAFE in the NETHER" (a rules lecture) | 7 | "Grandma SAYS he's still TRADING. So he's ALIVE." | the rule is now Grandma's quote; added "Grandpa's the BEST TRADER ever." |
 | good_boy | mostly | "So he NEVER makes me SIT" (three logic steps) | 7 | "Every NIGHT he SAYS, sorry, BUDDY. I don't KNOW what FOR." | "He doesn't WANT / me to WAIT. / So he NEVER / makes me SIT." |
-| thirty_one_raids | mostly | "OMINOUS bottles" (a casual player needs Bad Omen); the empty frame never paid off; "won ALONE" | 6 | "They KNOW who BEATS them." | the frame is cut; "won ALONE" becomes "WON"; the lonely line moves up; added "Then a HORN goes OFF. And Grandpa SMILES. He must LOVE FIGHTING." |
+| thirty_one_raids | mostly | "OMINOUS bottles" (a casual player needs Bad Omen); the empty frame never paid off; "won ALONE" | 6 | "They KNOW who BEATS them." | the frame is cut; "won ALONE" becomes "WON"; the lonely line moves up; added "Then a HORN goes OFF. And Grandpa SMILES. He must LOVE a good FIGHT." |
 | light_sleeper | mostly | "a SKELETON shot a CREEPER... it DROPPED a music DISC" (a game-lore detour) | 6 | "Then the LIGHTS went DARK. Just LIKE a PARTY." | "Then I FOUND / a music DISC / by the FARM."; the sheep line is cut |
 
 **A finding about the rule itself:** with one CAPS key word in every 2-3 word chunk, almost every other word is

@@ -62,6 +62,6 @@ The cold listener (audio-style, one fast pass) followed it. Its notes are applie
 | L05 | Since GRANDMA died, / he's always ALONE. / But RAID nights? / EVERYONE cheers / for HIM. | S10 |
 | L06 | Every WEEK, / he HUNTS / at the TOWER. / He brings BACK / OMINOUS bottles. / He CALLS them / his LUCK. | S06-S07 |
 | L07 | He DRINKS one / at the GATE. / Then he SAYS, / lock the DOOR, / kid, they're COMING. | S08-S09 |
-| L08 | Then a HORN / goes OFF. / And Grandpa SMILES. / He must LOVE / FIGHTING. | S09 |
+| L08 | Then a HORN / goes OFF. / And Grandpa SMILES. / He must LOVE / a good FIGHT. | S09 |
 | L09 | Tonight he CAME / home too TIRED / to FIGHT. | S11 |
 | L10 | So I DRANK / his LUCK. / SOMEBODY had / to FIGHT. | S12: the horn, the Raid bar, Grandpa turns; cut 1.0 s |
