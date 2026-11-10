@@ -101,7 +101,7 @@ module.exports = {
     await c('/item replace entity @s armor.feet with golden_boots')
     await c('/effect give @s resistance infinite 255 true')
     await c('/effect give @s saturation infinite 255 true')
-    await ctx.tpCheck(X + 2.4, F + 1, Z + 3.4, -105, 0)   // the ladder's foot: S03's POV (S01-S02 are camera shots)
+    await ctx.tpCheck(X + 2.4, F + 1, Z + 3.4, -78, 0)   // the ladder's foot: S03's POV (S01-S02 are camera shots)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await bot.waitForTicks(40)
@@ -153,7 +153,7 @@ module.exports = {
       if (k < at(1) - 2) { gma.yaw += 1.2 * Math.sin(k / 5); gma.pitch = 6 + 6 * Math.sin(k / 7) }   // still at the portal under the crane
     if (k === at(1) - 2) K.park('gma')
     if (k === at(1) + 1) say(`/tp @e[type=bat,tag=bat] ${X} ${F - 200} ${Z}`)   // motion-ok: the bat leaves after the cut, unseen from the cellar (a /kill drew its red death poof: audit F9)
-      if (k === at(1)) { K.setTime(MORNING); ctx.mark('cut'); K.shot('pov_morning') }   // already standing there: no cut, no in-between frames
+      if (k === at(1)) await K.cut(2.4, 3.4, P(11, 2.0, 5.6), 1, { shot: 'pov_morning', time: MORNING })   // on the spot, arriving aimed at the portal (a bare shot switch kept the crane-time north aim)   // already standing there: no cut, no in-between frames
       if (k === at(1) + 4) { walking = true; K.walkTo([P(3.6, 1, 3.4), P(4.6, 1, 3.85)], { max: 60 }).catch(e => ctx.log(e.message)).finally(() => { walking = false }) }
       if (k > at(1)) portalLife(k)
       if (k === at(2)) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.26d,0.2d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
@@ -300,7 +300,8 @@ module.exports = {
       }
       if (k === at(3) + 10) gone()
       if (k === at(5)) K.shot('s10')
-      look(k)
+      K.go(k >= at(3) + 12 && k < at(3) + 18, 'back')   // a step back from the purple after the throw
+      look(k, k > at(3) + 10 ? 0.25 * Math.sin((k - at(3)) / 8) : 0, k > at(3) + 10 ? 0.06 * Math.sin((k - at(3)) / 6) : 0)
     })
     if (shut < 0) { hatch(false); K.park('gma') }
 
@@ -315,7 +316,8 @@ module.exports = {
       if (k >= at(2) && pg && pg.x > 10.1) pg.x -= 0.14
       if (k === at(2)) { ctx.sound('entity.piglin.ambient', 1, 1); ctx.particles('portal', P(11.2, 2, 5.6), { count: 30 }) }
       if (k === at(2) + 6 || k === at(2) + 11) ctx.sound('entity.piglin.step', 0.6, 1)
-      look(k, 0.05 * Math.sin(k / 9), 0.03 * Math.sin(k / 11))
+      // 'Then I WAITED': glancing at the hatch and back to the purple; eyes fixed on it from 'And SOMETHING'
+      look(k, k < at(1) ? 0.4 * Math.sin(k / 9) : 0.04 * Math.sin(k / 9), k < at(1) ? 0.1 * Math.sin(k / 6) : 0.03 * Math.sin(k / 11))
     })
 
     // S14 (no line): the reveal, close: the piglin, shaking, in the gold helmet with the blue stripe. The cut comes
@@ -345,7 +347,7 @@ module.exports.shots = {
   // S01's subject: her eye (y 1.9 sat in the carpet's block, which the lint read as hidden)
   s01: { at: [6.5, 2.0, 7.8], look: [10.2, 2.0, 5.3], fov: 62, push: 0.12, dof: false, subject: [[9.2, 2.6, 4.85]] },
   // S02: the ridge at night, an extreme-wide crane down from over the slope south-east of the cottage to the gate
-  s02: { path: [[1, 14, 22, 20], [2.2, 7.5, 16.5, 15.5]], lookPath: [[0, 4, 13, 2], [2.2, 3, 13.5, 4]], ease: true, fov: 60, dof: false },
+  s02: { path: [[0, 10, 19, 18], [1.3, 7.5, 16.5, 15.5]], look: [3.5, 13.3, 3.5], ease: true, fov: 60, dof: false, subject: [[4.4, 12.6, 7.4]] },   // the carrot bed (in view all the way down): eyeTrace takes the cut from S01's Grandma
   // S05: the garden, morning: behind the grandson at the gate, looking south-south-west down the slope to Hushwell's plaza
   s05: { at: [3.3, 13.8, 8.4], look: [-16, 12.5, 60], fov: 55, mood: 'village_day', push: 0.2, dof: false, subject: ['self'] },
   // S06: 25 years ago, medium: 3 blocks in front of Grandpa at his eye height, the new portal behind him
@@ -357,7 +359,7 @@ module.exports.shots = {
   // S07b: 'He never came BACK': Grandma alone by the portal, medium, the purple at frame right
   s07b: { at: [5.0, 2.7 + DOWN, 7.6], look: [9.0, 2.3 + DOWN, 4.4], fov: 50, push: 0.2, mood: 'flashback', subject: [[8.6, 1.9 + DOWN, 3.9]] },
   // S04's middle gift: low at the portal's foot, the string on the floor and me kneeling behind it (audit B6)
-  s04b: { at: [10.5, 1.45, 6.3], look: [8.4, 1.6, 6.8], fov: 60, dof: false, subject: ['self'] },
+  s04b: { at: [10.5, 1.45, 6.3], look: [8.6, 1.45, 6.75], fov: 60, dof: false, subject: ['self'] },
   // S08: over my shoulder at the barrel, before the screen (audit B6)
   s08ots: { at: [6.6, 3.0, 4.6], look: [10.3, 1.6, 3.3], fov: 55, push: 0.15, dof: false, subject: ['self'] },
   // the stairs, high: the ladder's top looking down the cellar to the portal (audit B6)

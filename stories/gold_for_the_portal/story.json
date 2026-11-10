@@ -44,7 +44,8 @@
    "on_screen": "villager (plains, librarian outfit), no name tag; speaks L10 in her own voice (r-cast); the narrator quotes her elsewhere",
    "ref": null,
    "voice": "Gacrux",
-   "profile": "Grandma: a warm, steady woman in her seventies, gentle and certain, a little amused; she has said this a thousand times"
+   "profile": "Grandma: a warm, steady woman in her seventies, gentle and certain, a little amused; she has said this a thousand times",
+   "model": "gemini-3.8-flash-tts"
   },
   "Grandpa": {
    "role": "character",
@@ -61,7 +62,7 @@
  },
  "requests": [
   {
-   "id": "b1",
+   "id": "n1",
    "speakers": [
     "N"
    ],
@@ -69,23 +70,16 @@
     "L01",
     "L02",
     "L03",
-    "L04"
-   ],
-   "direction": "The setup: Grandma's weird nightly ritual, told proudly to friends at a sleepover."
-  },
-  {
-   "id": "b2",
-   "speakers": [
-    "N"
-   ],
-   "lines": [
+    "L04",
     "L05",
     "L06",
     "L07",
     "L08",
-    "L09"
+    "L09",
+    "L11",
+    "L12"
    ],
-   "direction": "The family legend and the plan: Grandpa went in long ago, and the kid is SURE he is alive and trading."
+   "direction": "Grandma's weird nightly ritual, the family legend, and the kid's big secret plan, told proudly to friends at a sleepover, all in one go."
   },
   {
    "id": "g1",
@@ -96,17 +90,6 @@
     "L10"
    ],
    "direction": "A cosy cellar at night. Grandma gently turns down her grandson."
-  },
-  {
-   "id": "b3",
-   "speakers": [
-    "N"
-   ],
-   "lines": [
-    "L11",
-    "L12"
-   ],
-   "direction": "The kid's big secret move tonight, gleeful and sneaky, then the spooky-funny ending."
   }
  ],
  "sfx": [
@@ -270,7 +253,7 @@
    "shot": "S11",
    "look": {
     "what": "prop:portal",
-    "word": "THREW"
+    "word": "HOME"
    },
    "direction": "hit only GOLD, ALL and HOME; the rest level and quick"
   },
@@ -507,5 +490,8 @@
    67
   ]
  ],
- "hotbar_note": "Slots 1-6 are his own things in a cottage with a Nether portal in the cellar: his saved gold (thrown in L11, so slot 1 empties on the throw), a fire resistance potion from the gifts barrel (selected and drunk in S05, then the slot stays the same), golden carrots, torches, lanterns, shears. Slots 7-9 are the ridiculous ones (owner 2026-11-10): a bucket of milk, a whole cake, 67 eggs (owner: \"make it 67 eggs\"). The mornings' gifts (S04) go into the inventory, not the hotbar: the hotbar is the same in every shot except the throw."
+ "hotbar_note": "Slots 1-6 are his own things in a cottage with a Nether portal in the cellar: his saved gold (thrown in L11, so slot 1 empties on the throw), a fire resistance potion from the gifts barrel (selected and drunk in S05, then the slot stays the same), golden carrots, torches, lanterns, shears. Slots 7-9 are the ridiculous ones (owner 2026-11-10): a bucket of milk, a whole cake, 67 eggs (owner: \"make it 67 eggs\"). The mornings' gifts (S04) go into the inventory, not the hotbar: the hotbar is the same in every shot except the throw.",
+ "one_take": [
+  "N"
+ ]
 }

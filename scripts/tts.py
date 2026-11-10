@@ -1015,8 +1015,19 @@ def beat_groups(story, cs, narrator, spoken):
         else:
             beats.append({"id": ln["id"], "key": key, "scene": scene, "room": r.get("room", story.get("room", "small")),
                           "lines": [item]})
+    # story "one_take": [speaker ids] (the lead, 2026-11-10: the narrator in ONE request, quota): all of a speaker's
+    # lines in one beat even where another speaker's line interrupts; run_beats splits the take back into runs of
+    # consecutive story lines (the slices tile the take: a run is a contiguous stretch of it, no cut inside a line)
+    for w1 in story.get("one_take") or []:
+        mine = [b for b in beats if b["key"][0] == w1]
+        if len(mine) > 1:
+            first = mine[0]
+            first["runs"] = [[it[1] for it in b["lines"]] for b in mine]
+            for b in mine[1:]:
+                first["lines"] += b["lines"]
+                beats.remove(b)
     for b in beats:
-        if len(b["lines"]) > MAX_LINES:
+        if len(b["lines"]) > MAX_LINES and not b.get("runs"):
             print(f"WARNING: beat {b['id']} has {len(b['lines'])} lines (> {MAX_LINES}): long takes drift; split it with line `beat` markers")
     return beats
 
@@ -1119,8 +1130,28 @@ def run_beats(d, story, cs, narrator, voice, only=None, retakes=2):
             continue
         d_, m = voice_beat(b, cs, d / "voice", tries=1 + retakes, opening=(i == 0), limits=lim)
         done.update(d_)
-        metas[b["id"]] = m
+        if b.get("runs"):
+            metas.update(split_runs(d / "voice", b, m, d_))
+        else:
+            metas[b["id"]] = m
     return done, metas
+
+
+def split_runs(out, beat, m, done):
+    """A one_take beat back into its runs of consecutive story lines: each run's stretch of the take (its lines'
+    slices, which tile it exactly) written as beat_<first line>.wav, offsets from the run's start. -> {run id: meta}"""
+    ends = m["offsets"][1:] + [m["dur"]]
+    at = {lid: (o, e) for lid, o, e in zip(m["lines"], m["offsets"], ends)}
+    metas = {}
+    for run in beat["runs"]:
+        a, b = at[run[0]][0], at[run[-1]][1]
+        rid = run[0]
+        seg = np.concatenate([done[lid][2] for lid in run])
+        write(out / f"beat_{rid}.wav", seg)
+        metas[rid] = {**m, "lines": run, "file": f"beat_{rid}.wav", "dur": round(len(seg) / SR, 3),
+                      "offsets": [round(at[lid][0] - a, 3) for lid in run], "take": beat["id"], "take_at": round(a, 3)}
+        print(f"one take {beat['id']} -> {rid}: {', '.join(run)} ({a:.2f}-{b:.2f} s of the take)")
+    return metas
 
 
 def run_story(d, only=None, check=True, retakes=2, relock=None):

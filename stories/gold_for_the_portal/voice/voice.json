@@ -2,59 +2,62 @@
  "lines": {
   "L01": {
    "who": "N",
-   "text": "My grandma has thrown nine thousand gold ingots into a portal.",
-   "dur": 4.77,
-   "onset": 0.4,
-   "end": 4.34,
+   "text": "My grandma has thrown nine thousand gold into a portal.",
+   "dur": 3.58,
+   "onset": 0.26,
+   "end": 3.4,
    "chunks": [
     [
-     0.4,
-     1.6
+     0.26,
+     0.64
     ],
     [
-     1.98,
-     2.94
+     0.72,
+     1.08
     ],
     [
-     3.02,
-     3.62
+     1.36,
+     2.64
     ],
     [
-     3.68,
-     4.34
+     2.78,
+     3.4
     ]
    ],
    "captions": [
-    "My grandma has thrown",
-    "NINE THOUSAND",
-    "gold ingots",
+    "My GRANDMA",
+    "has THROWN",
+    "nine thousand GOLD",
     "into a PORTAL."
    ],
    "with": [
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "88848e5b46c7"
+   "aligned_wav": "ea320d2fd8e8"
   },
   "L02": {
    "who": "N",
    "text": "One every night. And every morning, something comes back.",
-   "dur": 4.59,
-   "onset": 0.48,
-   "end": 4.16,
+   "dur": 3.417,
+   "onset": 0.26,
+   "end": 2.92,
    "chunks": [
     [
-     0.48,
-     1.24
+     0.26,
+     0.98
     ],
     [
-     1.64,
-     2.72
+     1.46,
+     2.08
     ],
     [
-     3.175,
-     4.16
+     2.165,
+     2.92
     ]
    ],
    "captions": [
@@ -66,323 +69,779 @@
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 3.58,
+   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "15c52c1ed71f"
+   "aligned_wav": "84197ad7671b"
   },
   "L03": {
    "who": "N",
-   "text": "Obsidian. string. ender pearls. A potion that makes you fireproof.",
-   "dur": 5.9,
-   "onset": 0.28,
-   "end": 5.14,
+   "text": "Some obsidian. A little string. Ender pearls. A fireproof potion.",
+   "dur": 4.97,
+   "onset": 0.105,
+   "end": 4.54,
    "chunks": [
     [
-     0.28,
-     0.72
+     0.105,
+     0.82
     ],
     [
-     1.375,
-     1.84
+     1.16,
+     1.8
     ],
     [
-     2.54,
-     3.18
+     2.26,
+     2.78
     ],
     [
-     3.9,
-     5.14
+     3.24,
+     4.54
     ]
    ],
    "captions": [
-    "OBSIDIAN.",
-    "STRING.",
-    "ENDER PEARLS.",
-    "A potion that makes you FIREPROOF."
+    "Some OBSIDIAN.",
+    "A little STRING.",
+    "Ender PEARLS.",
+    "A FIREPROOF potion."
    ],
    "with": [
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 6.997,
+   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "17759d0d574f"
+   "aligned_wav": "73105ada423f"
   },
   "L04": {
    "who": "N",
-   "text": "Twenty-five years ago, Grandma gave Grandpa her gold helmet. With a blue stripe.",
-   "dur": 5.66,
-   "onset": 0.36,
-   "end": 4.88,
+   "text": "Grandma says it's from grandpa.",
+   "dur": 1.785,
+   "onset": 0.14,
+   "end": 1.18,
    "chunks": [
     [
-     0.36,
-     1.24
+     0.14,
+     0.56
     ],
     [
-     1.42,
-     2.52
-    ],
-    [
-     2.62,
-     3.38
-    ],
-    [
-     4.24,
-     4.88
+     0.62,
+     1.18
     ]
    ],
    "captions": [
-    "Twenty-five years ago,",
-    "Grandma gave Grandpa",
-    "her gold HELMET.",
-    "With a BLUE stripe."
+    "Grandma SAYS",
+    "it's from GRANDPA."
    ],
    "with": [
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 11.967,
+   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "3d64120bc857"
+   "aligned_wav": "23d65665bfee"
   },
   "L05": {
    "who": "N",
-   "text": "Gold keeps you safe in the Nether, she said. He went in. <short pause> He never came back.",
-   "dur": 5.82,
-   "onset": 0.36,
-   "end": 5.28,
+   "text": "Twenty-five years ago, Grandpa went in. He wore her gold helmet, blue stripe and all.",
+   "dur": 4.32,
+   "onset": 0.18,
+   "end": 4.12,
    "chunks": [
     [
-     0.36,
+     0.18,
+     0.98
+    ],
+    [
+     1.14,
+     1.74
+    ],
+    [
+     2.3,
+     2.62
+    ],
+    [
+     2.68,
+     3.32
+    ],
+    [
+     3.5,
+     3.88
+    ],
+    [
+     3.92,
+     4.12
+    ]
+   ],
+   "captions": [
+    "Twenty-five YEARS ago,",
+    "Grandpa went IN.",
+    "He WORE",
+    "her gold HELMET,",
+    "BLUE stripe",
+    "and ALL."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 13.752,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "bd7aff565090"
+  },
+  "L06": {
+   "who": "N",
+   "text": "Gold keeps you safe, Grandma said. piglins won't touch you in gold.",
+   "dur": 3.425,
+   "onset": 0.26,
+   "end": 2.96,
+   "chunks": [
+    [
+     0.26,
+     0.66
+    ],
+    [
+     0.68,
+     1.0
+    ],
+    [
+     1.06,
+     1.52
+    ],
+    [
+     1.86,
+     2.3
+    ],
+    [
+     2.34,
+     2.62
+    ],
+    [
+     2.68,
+     2.96
+    ]
+   ],
+   "captions": [
+    "GOLD keeps",
+    "you SAFE,",
+    "Grandma SAID.",
+    "PIGLINS won't",
+    "TOUCH you",
+    "in GOLD."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 18.073,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "dd2a30fa7a09"
+  },
+  "L07": {
+   "who": "N",
+   "text": "But he never came back.",
+   "dur": 1.228,
+   "onset": 0.18,
+   "end": 0.9,
+   "chunks": [
+    [
+     0.18,
+     0.52
+    ],
+    [
+     0.56,
+     0.9
+    ]
+   ],
+   "captions": [
+    "But he NEVER",
+    "came BACK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 21.497,
+   "gap": 0,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "12f0ffe8d242"
+  },
+  "L08": {
+   "who": "N",
+   "text": "So I keep his gifts in a barrel. Grandma says he's still trading. So he's alive. Grandpa's the best trader ever.",
+   "dur": 6.335,
+   "onset": 0.175,
+   "end": 5.9,
+   "chunks": [
+    [
+     0.175,
+     0.9
+    ],
+    [
+     0.96,
      1.26
     ],
     [
      1.3,
-     2.16
+     1.68
     ],
     [
-     3.16,
-     3.56
+     2.16,
+     2.62
     ],
     [
-     4.62,
-     5.28
+     2.66,
+     3.38
+    ],
+    [
+     3.55,
+     4.2
+    ],
+    [
+     4.66,
+     5.34
+    ],
+    [
+     5.38,
+     5.9
     ]
    ],
    "captions": [
-    "Gold keeps you SAFE",
-    "in the NETHER, she said.",
-    "He went IN.",
-    "He never came BACK."
-   ],
-   "with": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "a0b3b2c1ee21"
-  },
-  "L06": {
-   "who": "N",
-   "text": "I keep his gifts in a barrel. Grandma says he's still trading.",
-   "dur": 3.89,
-   "onset": 0.34,
-   "end": 3.54,
-   "chunks": [
-    [
-     0.34,
-     1.04
-    ],
-    [
-     1.08,
-     1.48
-    ],
-    [
-     2.14,
-     2.64
-    ],
-    [
-     2.68,
-     3.54
-    ]
-   ],
-   "captions": [
-    "I keep his gifts",
+    "So I KEEP",
+    "his GIFTS",
     "in a BARREL.",
-    "Grandma says",
-    "he's still TRADING."
-   ],
-   "with": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "8d1180c73d93"
-  },
-  "L07": {
-   "who": "N",
-   "text": "So he's alive. I know it.",
-   "dur": 3.19,
-   "onset": 0.265,
-   "end": 2.68,
-   "chunks": [
-    [
-     0.265,
-     1.56
-    ],
-    [
-     2.14,
-     2.68
-    ]
-   ],
-   "captions": [
+    "Grandma SAYS",
+    "he's still TRADING.",
     "So he's ALIVE.",
-    "I KNOW it."
+    "Grandpa's the BEST",
+    "TRADER ever."
    ],
    "with": [
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 22.725,
+   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "edcd346f70c1"
+   "aligned_wav": "b3957c7edbe0"
   },
-  "L08": {
-   "who": "Grandma",
-   "text": "Just one, Nico. <short pause> One's plenty.",
-   "dur": 4.76,
-   "onset": 0.34,
-   "end": 4.3,
+  "L09": {
+   "who": "N",
+   "text": "Grandma throws one a night.",
+   "dur": 1.38,
+   "onset": 0.18,
+   "end": 1.08,
    "chunks": [
     [
-     0.34,
-     2.22
+     0.18,
+     0.68
     ],
     [
-     3.28,
-     4.3
+     0.76,
+     1.08
     ]
    ],
    "captions": [
-    "Just ONE, Nico.",
-    "One's PLENTY."
+    "Grandma THROWS",
+    "one a NIGHT."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 29.06,
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "cc10cf9b7aa6"
+  },
+  "L10": {
+   "who": "Grandma",
+   "text": "One's plenty, sweetie.",
+   "dur": 2.905,
+   "onset": 0.74,
+   "end": 2.54,
+   "chunks": [
+    [
+     0.74,
+     1.84
+    ],
+    [
+     1.895,
+     2.54
+    ]
+   ],
+   "captions": [
+    "One's PLENTY,",
+    "sweetie."
    ],
    "with": [
     "Grandma"
    ],
-   "model": "gemini-3.1-flash-tts-preview",
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L10",
+   "offset": 0.0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "676c769e28c6"
+   "aligned_wav": "3bc303492808"
   },
-  "L09": {
+  "L11": {
    "who": "N",
-   "text": "When she went to bed, I threw in all my gold. sixty-four. To buy his way home.",
-   "dur": 5.59,
-   "onset": 0.14,
-   "end": 5.14,
+   "text": "But I had sixty-four gold. So tonight, I threw them all. To buy him a way home.",
+   "dur": 5.43,
+   "onset": 0.18,
+   "end": 4.8,
    "chunks": [
     [
-     0.14,
+     0.18,
      0.92
     ],
     [
-     1.18,
-     1.58
+     0.925,
+     1.68
     ],
     [
-     1.94,
-     2.5
+     2.105,
+     2.64
     ],
     [
-     2.81,
-     3.7
+     2.74,
+     2.94
     ],
     [
-     4.18,
-     5.14
+     3.0,
+     3.36
+    ],
+    [
+     3.72,
+     4.14
+    ],
+    [
+     4.2,
+     4.8
     ]
    ],
    "captions": [
-    "When she went to BED,",
-    "I threw in",
-    "ALL my gold.",
-    "SIXTY-FOUR.",
-    "To buy his way HOME."
+    "But I HAD",
+    "sixty-four GOLD.",
+    "So TONIGHT,",
+    "I THREW",
+    "them ALL.",
+    "To BUY him",
+    "a way HOME."
    ],
    "with": [
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L11",
+   "offset": 0.0,
+   "gap": 0,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "70ed18fc6b6c"
+   "aligned_wav": "112d96c8d1f9"
   },
-  "L10": {
+  "L12": {
    "who": "N",
-   "text": "Then I sat and waited. <short pause> And something stepped out.",
-   "dur": 4.89,
-   "onset": 0.26,
-   "end": 4.24,
+   "text": "Then I waited. And something stepped out.",
+   "dur": 2.45,
+   "onset": 0.1,
+   "end": 2.14,
    "chunks": [
     [
-     0.26,
-     1.28
+     0.1,
+     0.6
     ],
     [
-     1.58,
-     2.08
+     1.22,
+     1.68
     ],
     [
-     2.88,
-     3.5
-    ],
-    [
-     3.53,
-     4.24
+     1.705,
+     2.14
     ]
    ],
    "captions": [
-    "Then I sat",
-    "and WAITED.",
-    "And something",
+    "Then I WAITED.",
+    "And SOMETHING",
     "stepped OUT."
    ],
    "with": [
     "N"
    ],
    "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L11",
+   "offset": 5.43,
    "aligned": "ctc:wav2vec2-base-960h",
-   "aligned_wav": "6a034cde882a"
-  },
-  "L11": {
-   "who": "N",
-   "text": "It was wearing Grandpa's helmet.",
-   "dur": 2.51,
-   "onset": 0.16,
-   "end": 2.44,
-   "chunks": [
-    [
-     0.16,
-     0.7
-    ],
-    [
-     0.7,
-     2.44
-    ]
-   ],
-   "captions": [
-    "It was wearing",
-    "Grandpa's HELMET."
-   ],
-   "with": [
-    "N"
-   ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "aligned": "whisper-base.en"
+   "aligned_wav": "6af855877191"
   }
  },
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
  "sr": 24000,
- "gap": 0.3,
+ "gap": 0.25,
  "models": {
   "N": "gemini-3.8-flash-lite-tts",
-  "Grandma": "gemini-3.1-flash-tts-preview"
+  "Grandma": "gemini-3.8-flash-tts"
  },
- "total": 54.87
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 30.44,
+   "tempo": 1.1,
+   "rate": 1.0,
+   "semitones": 1.0,
+   "stretch": "rubberband",
+   "offsets": [
+    0.0,
+    3.58,
+    6.997,
+    11.967,
+    13.752,
+    18.073,
+    21.497,
+    22.725,
+    29.06
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 1.65,
+     "len": 0.31,
+     "why": "0.31 s pause inside line 1 (limit 0.2 s, the opening)"
+    },
+    {
+     "kind": "pause",
+     "at": 6.59,
+     "len": 0.52,
+     "why": "0.52 s pause between lines 1-2 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 9.89,
+     "len": 0.33,
+     "why": "0.33 s pause inside line 3 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 11.71,
+     "len": 0.4,
+     "why": "0.40 s pause between lines 2-3 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 13.23,
+     "len": 0.67,
+     "why": "0.67 s pause between lines 3-4 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 15.72,
+     "len": 0.33,
+     "why": "0.33 s pause inside line 5 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 17.9,
+     "len": 0.44,
+     "why": "0.44 s pause between lines 5-6 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 19.61,
+     "len": 0.33,
+     "why": "0.33 s pause inside line 6 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 21.3,
+     "len": 0.41,
+     "why": "0.41 s pause between lines 6-7 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 22.48,
+     "len": 0.44,
+     "why": "0.44 s pause between lines 6-7 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 24.39,
+     "len": 0.49,
+     "why": "0.49 s pause inside line 8 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 28.76,
+     "len": 0.48,
+     "why": "0.48 s pause between lines 7-8 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 30.1,
+     "len": 0.53,
+     "why": "0.53 s pause between lines 8-9 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 30.73,
+     "len": 0.34,
+     "why": "0.34 s pause inside line 10 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 32.18,
+     "len": 0.38,
+     "why": "0.38 s pause inside line 10 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 33.78,
+     "len": 0.4,
+     "why": "0.40 s pause inside line 10 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 35.28,
+     "len": 0.72,
+     "why": "0.72 s pause between lines 9-10 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 36.51,
+     "len": 0.57,
+     "why": "0.57 s pause inside line 11 (limit 0.3 s)"
+    }
+   ],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.31 s pause inside line 1 (limit 0.2 s, the opening)",
+      "0.52 s pause between lines 1-2 (limit 0.35 s)",
+      "0.33 s pause inside line 3 (limit 0.3 s)",
+      "0.40 s pause between lines 2-3 (limit 0.35 s)",
+      "0.67 s pause between lines 3-4 (limit 0.35 s)",
+      "0.33 s pause inside line 5 (limit 0.3 s)",
+      "0.44 s pause between lines 5-6 (limit 0.35 s)",
+      "0.33 s pause inside line 6 (limit 0.3 s)",
+      "0.41 s pause between lines 6-7 (limit 0.35 s)",
+      "0.44 s pause between lines 6-7 (limit 0.35 s)",
+      "0.49 s pause inside line 8 (limit 0.3 s)",
+      "0.48 s pause between lines 7-8 (limit 0.35 s)",
+      "0.53 s pause between lines 8-9 (limit 0.35 s)",
+      "0.34 s pause inside line 10 (limit 0.3 s)",
+      "0.38 s pause inside line 10 (limit 0.3 s)",
+      "0.40 s pause inside line 10 (limit 0.3 s)",
+      "0.72 s pause between lines 9-10 (limit 0.35 s)",
+      "0.57 s pause inside line 11 (limit 0.3 s)"
+     ]
+    }
+   ],
+   "take": "L01",
+   "take_at": 0.0
+  },
+  "L11": {
+   "lines": [
+    "L11",
+    "L12"
+   ],
+   "file": "beat_L11.wav",
+   "dur": 7.88,
+   "tempo": 1.1,
+   "rate": 1.0,
+   "semitones": 1.0,
+   "stretch": "rubberband",
+   "offsets": [
+    0.0,
+    5.43
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 1.65,
+     "len": 0.31,
+     "why": "0.31 s pause inside line 1 (limit 0.2 s, the opening)"
+    },
+    {
+     "kind": "pause",
+     "at": 6.59,
+     "len": 0.52,
+     "why": "0.52 s pause between lines 1-2 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 9.89,
+     "len": 0.33,
+     "why": "0.33 s pause inside line 3 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 11.71,
+     "len": 0.4,
+     "why": "0.40 s pause between lines 2-3 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 13.23,
+     "len": 0.67,
+     "why": "0.67 s pause between lines 3-4 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 15.72,
+     "len": 0.33,
+     "why": "0.33 s pause inside line 5 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 17.9,
+     "len": 0.44,
+     "why": "0.44 s pause between lines 5-6 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 19.61,
+     "len": 0.33,
+     "why": "0.33 s pause inside line 6 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 21.3,
+     "len": 0.41,
+     "why": "0.41 s pause between lines 6-7 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 22.48,
+     "len": 0.44,
+     "why": "0.44 s pause between lines 6-7 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 24.39,
+     "len": 0.49,
+     "why": "0.49 s pause inside line 8 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 28.76,
+     "len": 0.48,
+     "why": "0.48 s pause between lines 7-8 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 30.1,
+     "len": 0.53,
+     "why": "0.53 s pause between lines 8-9 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 30.73,
+     "len": 0.34,
+     "why": "0.34 s pause inside line 10 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 32.18,
+     "len": 0.38,
+     "why": "0.38 s pause inside line 10 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 33.78,
+     "len": 0.4,
+     "why": "0.40 s pause inside line 10 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 35.28,
+     "len": 0.72,
+     "why": "0.72 s pause between lines 9-10 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 36.51,
+     "len": 0.57,
+     "why": "0.57 s pause inside line 11 (limit 0.3 s)"
+    }
+   ],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.31 s pause inside line 1 (limit 0.2 s, the opening)",
+      "0.52 s pause between lines 1-2 (limit 0.35 s)",
+      "0.33 s pause inside line 3 (limit 0.3 s)",
+      "0.40 s pause between lines 2-3 (limit 0.35 s)",
+      "0.67 s pause between lines 3-4 (limit 0.35 s)",
+      "0.33 s pause inside line 5 (limit 0.3 s)",
+      "0.44 s pause between lines 5-6 (limit 0.35 s)",
+      "0.33 s pause inside line 6 (limit 0.3 s)",
+      "0.41 s pause between lines 6-7 (limit 0.35 s)",
+      "0.44 s pause between lines 6-7 (limit 0.35 s)",
+      "0.49 s pause inside line 8 (limit 0.3 s)",
+      "0.48 s pause between lines 7-8 (limit 0.35 s)",
+      "0.53 s pause between lines 8-9 (limit 0.35 s)",
+      "0.34 s pause inside line 10 (limit 0.3 s)",
+      "0.38 s pause inside line 10 (limit 0.3 s)",
+      "0.40 s pause inside line 10 (limit 0.3 s)",
+      "0.72 s pause between lines 9-10 (limit 0.35 s)",
+      "0.57 s pause inside line 11 (limit 0.3 s)"
+     ]
+    }
+   ],
+   "take": "L01",
+   "take_at": 30.44
+  },
+  "L10": {
+   "lines": [
+    "L10"
+   ],
+   "file": "beat_L10.wav",
+   "dur": 2.905,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": []
+  }
+ },
+ "total": 41.98
 }
