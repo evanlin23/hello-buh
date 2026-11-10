@@ -53,7 +53,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
    (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.
-   Check: owner (voice pick), speaker_check, panel. r:r4c881f
+   Check: owner (voice pick), speaker_check, panel. r:r4c881f The narrator sounds like a kid. r:r7fabda
 0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone; one narrator says
    every line, quotes included, so other characters speak only in very short lines, on Gemini. r:r4f221c r:r30c821
 1. **The narrator is `voices/cast.json` `narrator` = `narrator_roblox`**: Gemini **Orus**, gemini-3.8-flash-tts

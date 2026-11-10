@@ -138,6 +138,9 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (on the brand narrator candidates, all adult): "i think it should still sound like a child".** The
+  brand narrator is a kid: our own distinctive child voice (as Pip was), at the fast, no-pause pace, not an adult and not
+  a copy of anyone. docs/brand.md's "twenties" narrator is superseded on age.
 - **Owner, 2026-11-10 (later): "Im thinking we do the unique voices", "Instead of the sped up trying to copy", "We need
   a brand identity", "I think the narrator does all of it essentially, plus short lines from other characters".**
   Supersedes the Orus x1.45 narrator (an imitation of the Roblox-story Adam sound). The narrator gets OUR OWN distinctive
