@@ -2,18 +2,18 @@
  "name": "gold_for_the_portal",
  "stunt": "story_gold_for_the_portal",
  "version": 2,
- "revision": "r3 (2026-11-10): r2 continuity's S13 fix and notes, and the r2 critic's 'one more ingot'; see reviews/r1-response.md",
+ "revision": "vNext r2 adopted (2026-11-10, owner approved the rewrites): one narrator for every line (Grandma's quote narrated), no Nico, the gold-protects plant, the new S14 with no line; continuous beat takes.",
  "caption": "why does grandma feed the nether portal 😶",
  "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson Nico is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
  "question": "why tf does grandma throw gold into a nether portal every night?",
  "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Her grandson keeps the gifts in a barrel and knows Grandpa is alive.",
- "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, sweetie. One's plenty.'). Tonight Nico throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
+ "twist": "The gifts are a piglin's barters (a gold ingot in, a random barter item out). Grandpa died over there long ago; a piglin wears his striped gold helmet ('PIGLINS won't TOUCH you in GOLD': a piglin in it means he isn't). Grandma knows ('Just ONE. One's PLENTY.'). Tonight the grandson throws in a whole stack to buy Grandpa's way home, and what steps out is the piglin, shaking, in Grandpa's helmet.",
  "key_color": "#B07CFF",
  "mood": [
   "eerie",
   "sad"
  ],
- "payoff": "look_at",
+ "payoff": "reveal",
  "look": {
   "time": "night",
   "fog": false
@@ -28,27 +28,21 @@
  },
  "voice": {
   "engine": "gemini",
-  "model_hint": "gemini-3.8-flash-lite-tts",
-  "recipe": "voices/recipes/pip.md"
+  "recipe": "voices/recipes/narrator_roblox.md"
  },
  "cast": {
   "N": {
    "role": "narrator",
    "ref": "narrator",
-   "name": "Nico",
    "color": "#FFFFFF",
-   "on_screen": "Nico, a player kid, default Steve skin: POV in S03, S04, S08, S09, S11, S12; seen from outside small in S05 (drinking), S10 (back to us at the portal), S13 (sitting on the bed). Pip's voice (cast `narrator`, Leda). Wears golden boots in every shot (Grandma's rule in the cellar; armour on players already renders): a picture plant, never mentioned.",
-   "voice": "Leda",
-   "model": "gemini-3.8-flash-lite-tts",
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+   "on_screen": "the grandson (never named), default Steve skin, golden boots: POV in S03, S04, S08, S09, S11, S12; seen from outside in S05 (drinking), S10 (back to us at the portal), S13 (sitting on the floor)"
   },
   "Grandma": {
    "role": "character",
    "name": "Grandma",
-   "voice": "Gacrux",
+   "silent": true,
    "color": "#F2C66B",
-   "profile": "[An old village grandma in her seventies, warm and steady, slow, a small sad smile in her voice; full volume, never a whisper]",
-   "on_screen": "villager (plains, librarian outfit), no name tag; one voiced line (L08), on screen while she says it. No library ref fits (no elder woman in voices/cast.json): Gacrux (mature) is the palette's closest; audition Vindemiatrix as the alternate."
+   "on_screen": "villager (plains, librarian outfit), no name tag; never voiced: the narrator quotes her (L05, L07, L08, L10)"
   },
   "Grandpa": {
    "role": "character",
@@ -65,12 +59,10 @@
  },
  "requests": [
   {
-   "id": "r1",
+   "id": "b1",
    "speakers": [
     "N"
    ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
    "lines": [
     "L01",
     "L02",
@@ -79,33 +71,21 @@
     "L05",
     "L06"
    ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+   "direction": "[confident, punchy and matter-of-fact, sentence after sentence with no gaps or dramatic pauses, landing each line on its last word; full voice, never whispery or breathy] The setup: the weird family ritual, told proudly."
   },
   {
-   "id": "r2",
+   "id": "b2",
    "speakers": [
     "N"
    ],
-   "model": "gemini-3.8-flash-lite-tts",
-   "voice": "Leda",
    "lines": [
     "L07",
+    "L08",
     "L09",
     "L10",
     "L11"
    ],
-   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
-  },
-  {
-   "id": "r3",
-   "speakers": [
-    "Grandma"
-   ],
-   "voice": "Gacrux",
-   "lines": [
-    "L08"
-   ],
-   "direction": "[An old village grandma in her seventies, warm and steady, slow, a small sad smile in her voice; full volume, never a whisper]"
+   "direction": "[confident, punchy and matter-of-fact, sentence after sentence with no gaps or dramatic pauses, landing each line on its last word; full voice, never whispery or breathy] The plan: sure Grandpa is alive, sneaky and hopeful to the end."
   }
  ],
  "sfx": [
@@ -149,15 +129,13 @@
   {
    "id": "L01",
    "who": "N",
-   "text": "My grandma has thrown / NINE THOUSAND / gold ingots / into a PORTAL.",
+   "text": "My GRANDMA / has THROWN / nine thousand GOLD / into a PORTAL.",
    "shot": "S01",
    "look": {
     "what": "prop:portal",
     "word": "PORTAL"
    },
-   "note": "one quick bright breath, amazed and proud of her; the number lands hardest",
-   "say": "My grandma has thrown nine thousand gold ingots into a portal.",
-   "retake": "owner 2026-11-10: a pause (it sounds like a breath) before NINE THOUSAND. Re-take as one continuous phrase, no breath or pause before the number (the continuous-take gate). The emphasis comes from the voice, not a stop."
+   "note": "one continuous phrase: no breath or stop before 'nine thousand' (owner v2 note)"
   },
   {
    "id": "L02",
@@ -173,95 +151,92 @@
      "what": "prop:portal",
      "word": "MORNING"
     }
-   ],
-   "note": "a storyteller's grin; a small beat before the last two words",
-   "retake": "check at the re-take (lead, 2026-11-10): forced alignment puts voicing 0.22-0.40 s before the vowel of 'One': listen for a breath or hum before the line; re-take if heard."
+   ]
   },
   {
    "id": "L03",
    "who": "N",
-   "text": "OBSIDIAN. / STRING. / ENDER PEARLS. / A potion that makes you FIREPROOF.",
+   "text": "Some OBSIDIAN. / A little STRING. / Ender PEARLS. / A FIREPROOF potion.",
    "shot": "S04",
    "look": {
     "what": "prop:gifts_floor",
     "word": "OBSIDIAN",
     "size": "cu"
-   },
-   "note": "a quick excited list, each item a little bigger; the last one is the best present in the world"
+   }
   },
   {
    "id": "L04",
    "who": "N",
-   "text": "Twenty-five years ago, / Grandma gave Grandpa / her gold HELMET. / With a BLUE stripe.",
+   "text": "Twenty-five YEARS ago, / Grandpa went IN, / WEARING her / gold HELMET, / BLUE stripe / and ALL.",
    "shot": "S06",
    "look": {
     "what": "actor:Grandpa",
     "word": "HELMET",
     "size": "ms"
-   },
-   "note": "slower, proud, the family legend; lean on the colour"
+   }
   },
   {
    "id": "L05",
    "who": "N",
-   "text": "Gold keeps you SAFE / in the NETHER, she said. / He went IN. / He never came BACK.",
-   "say": "Gold keeps you safe in the Nether, she said. He went in. <short pause> He never came back.",
+   "text": "GOLD keeps / you SAFE / in the NETHER, / she SAID. / PIGLINS won't / TOUCH you / in GOLD.",
    "shot": "S07",
-   "look": [
-    {
-     "what": "actor:Grandpa",
-     "word": "IN"
-    },
-    {
-     "what": "Grandma",
-     "word": "BACK"
-    }
-   ],
-   "note": "quoting her proudly, then the energy drops for the last sentence; a short stop before it"
+   "look": {
+    "what": "actor:Grandpa",
+    "word": "GOLD"
+   }
   },
   {
    "id": "L06",
    "who": "N",
-   "text": "I keep his gifts / in a BARREL. / Grandma says / he's still TRADING.",
-   "shot": "S08",
-   "look": [
-    {
-     "what": "prop:gifts_barrel",
-     "word": "BARREL"
-    },
-    {
-     "what": "Grandma",
-     "word": "Grandma"
-    }
-   ],
-   "note": "bright again, sure of it; the last word said like a fact everybody knows"
+   "text": "He NEVER / came BACK.",
+   "shot": "S07",
+   "look": {
+    "what": "Grandma",
+    "word": "NEVER"
+   }
   },
   {
    "id": "L07",
    "who": "N",
-   "text": "So he's ALIVE. / I KNOW it.",
-   "shot": "S10",
+   "text": "I KEEP / his GIFTS / in a BARREL. / Grandma SAYS / he's still TRADING.",
+   "shot": "S08",
    "look": {
-    "what": "prop:portal"
-   },
-   "note": "full volume, certain, a little defiant, like someone said he wasn't"
+    "what": "prop:gifts_barrel",
+    "word": "BARREL"
+   }
   },
   {
    "id": "L08",
-   "who": "Grandma",
-   "text": "Just ONE, sweetie. / One's PLENTY.",
-   "direction": "gentle and firm, a small smile; a beat after the name",
-   "say": "Just one, sweetie. <short pause> One's plenty.",
-   "shot": "S11",
+   "who": "N",
+   "text": "Mom SAYS / he's GONE. / Grandma SAYS / he's BUSY. / So he's ALIVE. / I KNOW it.",
+   "shot": "S09",
    "look": {
-    "what": "Grandma"
-   },
-   "owner_note": "2026-11-10 'Who is nico?': the narrator's name is never set up, so Grandma doesn't say it. Re-voice L08."
+    "what": "Grandma",
+    "word": "Mom"
+   }
   },
   {
    "id": "L09",
    "who": "N",
-   "text": "When she went to BED, / I threw in / ALL my gold. / SIXTY-FOUR. / To buy his way HOME.",
+   "text": "So TONIGHT / I BROUGHT / ALL my gold. / SIXTY-FOUR ingots. / To BUY him / a way HOME.",
+   "shot": "S10",
+   "look": {
+    "what": "prop:portal"
+   }
+  },
+  {
+   "id": "L10",
+   "who": "N",
+   "text": "She SAW / my GOLD. / Just ONE, / she SAID. / One's PLENTY.",
+   "shot": "S11",
+   "look": {
+    "what": "Grandma"
+   }
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "text": "When SHE / went to BED, / I threw IN / ALL of it, / and SOMETHING / stepped OUT.",
    "shot": "S12",
    "look": [
     {
@@ -272,20 +247,7 @@
      "what": "prop:portal",
      "word": "ALL"
     }
-   ],
-   "note": "sneaky and fast, then huge hope on the last words"
-  },
-  {
-   "id": "L10",
-   "who": "N",
-   "text": "Then I sat / and WAITED. / And something / stepped OUT.",
-   "say": "Then I sat and waited. <short pause> And something stepped out.",
-   "shot": "S13",
-   "look": {
-    "what": "prop:portal",
-    "word": "OUT"
-   },
-   "note": "slower, full volume, real nerves creeping in; a held beat before the last two words"
+   ]
   }
  ],
  "shots": [
@@ -456,27 +418,13 @@
  "ending": {
   "after": "L11",
   "beats": [
-   "S14 (no line): the piglin close, shaking, in the gold helmet with the lapis stripe from S06b. Grandma, at the frame's left edge, tosses one more ingot past it into the purple; its head turns after the gold (the payoff: the sting and a punch-in). Cut."
+   "S14 (no line): the piglin steps out of the purple, shaking, in the gold helmet with the blue stripe; the cut comes 1.0 s after the stripe reads (the 'reveal' mark), with the sting and a punch-in. No toss, no epilogue."
   ],
-  "loop": "L01 changes: the nine thousand ingots were never for Grandpa. Grandma has been feeding the one who has his helmet, and tonight she sends it home with one more."
+  "loop": "cause and effect: a piglin wearing his helmet means Grandpa isn't; the gifts were barters, and line 1's 9,000 ingots bought them."
  },
  "bible": "stories/gold_for_the_portal/bible.md",
  "beats": "stories/gold_for_the_portal/beats.md",
  "set": "stories/gold_for_the_portal/set.md",
  "voice_note": "Owner's voice-drift rule and Pip's recipe: every narrator line goes in a single-speaker request on gemini-3.8-flash-lite-tts with Pip's direction verbatim and identical in r1 and r2; no per-line directions are sent for the narrator (lines[].note is for the builder and the take check only). Grandma has her own request (r3). Two narrator requests, not one, to keep the brief's limit of about 6 lines per character per request; if one take must carry all ten, merge r1 and r2 unchanged.",
- "cut_lines": [
-  {
-   "id": "L11",
-   "who": "N",
-   "text": "It was wearing / Grandpa's HELMET.",
-   "shot": "S14",
-   "look": {
-    "what": "entity:piglin",
-    "word": "HELMET",
-    "size": "cu"
-   },
-   "note": "full volume, slow, the wonder cracking into understanding on the last word; no tears, just a kid seeing it",
-   "cut": "2026-11-10, owner rule 'both are implied' (STANDARDS 1.3): S14 shows the piglin in the striped helmet S06b established; the Short ends on the picture and the sound. The recording keeps the L11 mark and the shot; the voice is silent."
-  }
- ]
+ "voice_takes": "beat"
 }
