@@ -74,7 +74,8 @@ class Mesher {
     // the faces were lit with lightmap(15, 0) at the current time of day; divide it out so only the
     // face shading and tint stay. The caller multiplies by the light where the block is (held item,
     // falling block): at night the held cobblestone was lit twice, near black (worker 18, worse_lava)
-    const lm = lightmap(15, 0)
+    // (with shader light the colours carry no light: nothing to divide out)
+    const lm = this.lightAttr ? [1, 1, 1] : lightmap(15, 0)
     const cols = Array.from(g.colors).concat(Array.from(g.t_colors || [])).map((c, i) => Math.min(1, c / Math.max(0.01, lm[i % 3])))
     return { positions: pos, colors: cols, uvs: Array.from(g.uvs).concat(Array.from(g.t_uvs || [])), indices: Array.from(g.indices).concat(tIdx), translucent: tIdx.length > 0 }
   }
@@ -150,6 +151,8 @@ class Mesher {
         g.positions = shift(Array.from(g.positions)); g.t_positions = shift(g.t_positions)
         h.o = [put(g.positions, Float32Array), put(g.colors, Float32Array), put(g.uvs, Float32Array), put(g.indices, Uint32Array)]
         h.t = [put(g.t_positions, Float32Array), put(g.t_colors, Float32Array), put(g.t_uvs, Float32Array), put(g.t_indices, Uint32Array)]
+        // shader light: each vertex's (sky, block) light level, a 5th array (models.setLightAttr)
+        if (this.lightAttr) { h.o.push(put(g.lights, Float32Array)); h.t.push(put(g.t_lights, Float32Array)) }
         if (g.e_positions.length) {
           const ei = []; for (let q = 0; q < g.e_positions.length / 12; q++) ei.push(q * 4, q * 4 + 2, q * 4 + 1, q * 4 + 1, q * 4 + 2, q * 4 + 3)
           h.e = [put(shift(g.e_positions), Float32Array), put(ei, Uint32Array)]

@@ -171,11 +171,14 @@ def glint_icon(jar, icon, tick):
     return Image.fromarray((a * 255 + 0.5).astype(np.uint8), "RGBA")
 
 
-def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None, max_health=20, xp_state=None):
+def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None, max_health=20, xp_state=None, item_name=None):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bar = big(sprite(jar, "gui/sprites/hud/hotbar"))
     sel = big(sprite(jar, "gui/sprites/hud/hotbar_selection"))
     bx, by = (W - bar.width) // 2, BAND + GAME_H - bar.height - GUI   # hotbar sits at the bottom edge of the game
+    if item_name:   # Gui.renderSelectedItemName: centred, guiHeight - 59 (survival), alpha from the highlight timer
+        text, rgb, alpha = item_name
+        draw_text(img, jar, text, W // 2, BAND + GAME_H - 59 * GUI, center=True, color=(*rgb, alpha))
     img.alpha_composite(bar, (bx, by))
     # crosshair in the middle of the game view (vanilla draws it inverted against the scene; plain
     # white reads the same on sky and terrain)
@@ -369,6 +372,34 @@ def _death_windows(timeline, event="death"):
         else:
             out.append(w)
     return [tuple(w) for w in out]
+
+
+# Item.getName rarity colours (ChatFormatting): COMMON white, UNCOMMON yellow, RARE aqua, EPIC light purple
+RARITY = {"golden_apple": (85, 255, 255), "enchanted_golden_apple": (255, 85, 255), "experience_bottle": (255, 255, 85),
+          "totem_of_undying": (255, 255, 85), "nether_star": (255, 255, 85), "dragon_egg": (255, 85, 255)}
+
+
+def selected_name(hstates, names, t):
+    """Gui.renderSelectedItemName: when the selected stack changes (slot or item), its name shows for 40 ticks
+    (toolHighlightTimer), alpha = timer * 256 / 10 capped at 255 (it fades over the last 10). `names` maps item
+    ids to the hover name ({"splash_potion": "Splash Potion of Weakness"}); others are title-cased ids.
+    Returns (text, rgb, alpha) or None."""
+    cur, since = None, None
+    for a, _b, slot, items, _h in hstates:
+        if a > t + 1e-6:
+            break
+        it = items[slot] if slot is not None and slot < len(items) else None
+        nm = (it[0] if isinstance(it, (list, tuple)) else None) if it else None
+        if nm != cur:
+            cur, since = nm, a
+    if not cur or since is None or since <= 0:
+        return None
+    timer = 40 - int((t - since) * 20 + 1e-6)
+    if timer <= 0:
+        return None
+    alpha = min(255, int(timer * 256 / 10))
+    text = names.get(cur) or " ".join(w.capitalize() for w in cur.split("_"))
+    return (text, RARITY.get(cur, (255, 255, 255)), alpha)
 
 
 def hud_ticks(timeline, duration, keep_inventory=False):
@@ -1062,6 +1093,7 @@ def main():
     ap.add_argument("--loop", help='true or SECONDS: the last 0.25 s dissolve into the first frame')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 1.5, "after": 0, "text": ...} finale preview in front (1.2-1.5 s)')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
+    ap.add_argument("--item_names", help='JSON {item id: name}: draw the selected item\'s name over the hotbar when it changes (Gui.renderSelectedItemName); {} for title-cased ids')
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
@@ -1210,6 +1242,7 @@ def main():
                 htl, hstates, hticks, tsrc = tl, states, ticks, (lambda t_: t_)
             exact = not death_windows(htl)
             st_t0 = [a for a, *_ in hstates]
+            item_names = json.loads(args.item_names) if getattr(args, "item_names", None) else None
             for j in range(int(math.ceil(dur * args.out_fps)) + 1):
                 t_out = shift + j / args.out_fps
                 ts = tsrc(t_out)
@@ -1222,13 +1255,15 @@ def main():
                         st = hticks[min(len(hticks) - 1, dtick)]
                 if any(a <= t_out + 1e-6 < b for a, b in f1):   # F1 spans, frame-exact
                     st = "F1"
+                if st != "F1" and item_names is not None:   # the selected item's name over the hotbar (opt-in)
+                    st = tuple(st) + (selected_name(hstates, item_names, ts),)
                 if st not in pngs:
                     pngs[st] = tmp / f"hud{len(pngs)}.png"
                     if st == "F1":
                         Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(pngs[st])
                     else:
-                        slot, items, health, display, blink, shake, max_health, xp = st
-                        hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None, max_health=max_health, xp_state=xp)
+                        slot, items, health, display, blink, shake, max_health, xp = st[:8]
+                        hud_png(jar, slot, list(items), health, pngs[st], display=display, blink=blink, shake=list(shake) if shake else None, max_health=max_health, xp_state=xp, item_name=st[8] if len(st) > 8 else None)
                 (seq / f"h{j:05d}.png").symlink_to(pngs[st].resolve())
         inputs += ["-framerate", str(args.out_fps), "-i", str(seq / "h%05d.png")]
         graph.append(f"[{n_in}:v]format=rgba[hudv]")

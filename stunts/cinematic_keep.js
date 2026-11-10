@@ -7,12 +7,17 @@ const clip = process.env.CINE_CLIP ? JSON.parse(process.env.CINE_CLIP) : {}
 // the base look: a golden-hour grade, soft bloom, film grain, 2.39:1 bars, depth of field, sun shadows, god rays
 // and the shader-pack pass (AO, warm/cool haze and light split; reflections on the moat)
 const LOOK = {
-  grade: 'dawn', bloom: 0.55, bloomThreshold: 0.8, vignette: 0.42, grain: 0.035, letterbox: 2.39,
+  // (owner, 2026-11-10: "some parts with the light are a bit blurry". Measured on the golden-hour still: depth of field
+  // on a wide shot was most of it, then a wide bloom, rays over the blocks and grain the phone encode smeared; see the
+  // cinematic-style skill. Tight bloom, rays mostly on the sky, a light unsharp mask, faint grain; DoF only where a
+  // clip asks for it: scripts/cinematic.py turns it off on every other shot)
+  grade: 'dawn', bloom: 0.35, bloomThreshold: 0.9, bloomPasses: 1, vignette: 0.42, grain: 0.012, letterbox: 2.39,
+  sharpen: 0.4, raysOverBlocks: 0.35,
   dof: { aperture: 0.35 }, shadows: { radius: 96, size: 2048, strength: 0.75 }, rays: 0.8, cloudNight: 0.32,
   shade: { ao: 0.7, haze: 0.22, hazeDist: 90, split: 0.35, glow: 0.6 },
   // the moat (and the courtyard well): water surface at y 67.89 inside a 37-block circle round the castle centre
   // (render.js worldLook: center [dx, dz] from the set origin, plane at set.y + dy)
-  reflect: { center: [0, -45], dy: 1, radius: [37, 37], strength: 0.75 }
+  reflect: { center: [0, -45], dy: 1, radius: [37, 37], strength: 0.75, ice: false }
 }
 const merge = (a, b) => { const o = { ...a }; for (const [k, v] of Object.entries(b || {})) o[k] = v && typeof v === 'object' && !Array.isArray(v) && a[k] && typeof a[k] === 'object' ? merge(a[k], v) : v; return o }
 

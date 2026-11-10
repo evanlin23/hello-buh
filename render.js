@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap, setBrightness, setDayTime, setDimension, particleTint, dayInfo } = require('./renderer/models')
+const { lightmap, setBrightness, setDayTime, setDimension, particleTint, dayInfo, setLightAttr, lightParams, setBlockFactor } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -33,6 +33,19 @@ let STUNT_MOD = {}
       console.error('*** STUNT_OPTIONAL: rendering WITHOUT the stunt\'s options ***\n')
     }
   }
+}
+// Hidden boxes (stunt.hideBoxes: [[dx0, dy0, dz0, dx1, dy1, dz1], ...] from the set origin, corners inclusive): a
+// cast's waiting room (a barrier floor and a stone roof 60 blocks up, story_good_boy) is a real build the camera can
+// see: a dark slab in the sky over the librarian. Its blocks are left out of the drawn world (and the light), and the
+// entities inside it aren't drawn. Only stunts that list boxes change.
+const HIDE_BOXES = (STUNT_MOD.hideBoxes || []).map(b => {
+  const o = rec.set || { x: 0, y: 0, z: 0 }
+  return [Math.min(b[0], b[3]) + o.x, Math.min(b[1], b[4]) + o.y, Math.min(b[2], b[5]) + o.z, Math.max(b[0], b[3]) + o.x, Math.max(b[1], b[4]) + o.y, Math.max(b[2], b[5]) + o.z]
+})
+const { inHideBoxes, hideInWorld } = require('./renderer/hidebox')
+if (HIDE_BOXES.length) {
+  rec.blocks = (rec.blocks || []).filter(b => !inHideBoxes(HIDE_BOXES, b[1], b[2], b[3]))
+  rec.entities = (rec.entities || []).filter(r => !inHideBoxes(HIDE_BOXES, Math.floor(r[3]), Math.floor(r[4] + 0.01), Math.floor(r[5])))
 }
 const FOV_ZOOM = []   // [startTick, endTick, scale] from stunt.fovZoom (see the frame loop)
 for (const [sa, sb, sc] of STUNT_MOD.fovZoom || []) {
@@ -300,7 +313,9 @@ function entitiesAt (t, mesher) {
       }
     }
     // BlazeRenderer / MagmaCubeRenderer.getBlockLightLevel: always 15 (they glow in the dark)
-    if (ra[2] === 'blaze' || ra[2] === 'magma_cube' || ra[2] === 'allay' || ra[2] === 'vex') blk = 15   // (AllayRenderer / VexRenderer too)
+    if (ra[2] === 'blaze' || ra[2] === 'magma_cube' || ra[2] === 'allay' || ra[2] === 'vex') blk = 15
+    if (ra[2] === 'glow_squid' && (rec.engine || 0) >= 2) blk = 15   // GlowSquidRenderer.getBlockLightLevel (15 unless just hurt)   // (AllayRenderer / VexRenderer too)
+    if (DYN.length) blk = Math.max(blk, dynLightAt(cell.x + 0.5, cell.y + 0.5, cell.z + 0.5))
     out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(sky, blk) })
   }
   return out
@@ -812,11 +827,13 @@ function hurtTilt (t) {
 // max(0, cos(tickCount * PI * 0.025) * 0.45 * blend) (a 4 s period).
 const DARK = []
 {
-  const evs = (rec.timeline || []).filter(e => (e.event === 'effect' || e.event === 'effect_end') && e.effect === 'darkness').map(e => ({ k: Math.round(e.t / 50), on: e.event === 'effect', dur: e.dur })).sort((a, b) => a.k - b.k)
+  // a stunt's 'darkness_snap' mark { to: 0 } sets the blend at once (a cut out of a dark scene: no 22-tick fade
+  // over the next scene's first second)
+  const evs = (rec.timeline || []).filter(e => ((e.event === 'effect' || e.event === 'effect_end') && e.effect === 'darkness') || e.event === 'darkness_snap').map(e => ({ k: Math.round(e.t / 50), on: e.event === 'effect', snap: e.event === 'darkness_snap' ? (e.to ?? 0) : null, dur: e.dur })).sort((a, b) => a.k - b.k)
   if (evs.length) {
     let f = 0, until = -1, j = 0
     for (let k = 0; k <= P.length + 1; k++) {
-      while (j < evs.length && evs[j].k <= k) { const e = evs[j++]; until = e.on ? (e.dur < 0 ? Infinity : k + e.dur) : k }
+      while (j < evs.length && evs[j].k <= k) { const e = evs[j++]; if (e.snap !== null) { f = e.snap; continue } until = e.on ? (e.dur < 0 ? Infinity : k + e.dur) : k }
       const target = k < until ? 1 : 0
       f = target > f ? Math.min(1, f + 1 / 22) : Math.max(0, f - 1 / 22)
       DARK[k] = f
@@ -890,12 +907,13 @@ const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
   for (const e of rec.timeline || []) {
     if (e.event === 'pose') {
       const fl = {}; if (e.creepy) fl.creepy = true; if (e.standing) fl.standing = true
+      if (e.sleep) fl.sleep = true; if (e.shake) fl.shake = true; if (e.converting) fl.converting = true   // a piglin/hoglin zombifying in the Overworld (LivingEntityRenderer.isShaking)   // any mob lying asleep; a villager shaking its head no (entities.js)
       if (Object.keys(fl).length) for (const id of e.ids || []) { const run = [e.t / 50, Infinity, fl]; if (!STAGED.has(id)) STAGED.set(id, []); STAGED.get(id).push(run); open.set(id, run) }
       // { pose: 'wave' | ['sit', 'drink'], ...params }, or the flags sit / drink / use (ground: sit on the floor)
       const names = [].concat(e.pose || [])
       if (e.sit) names.push(e.ground ? 'sit_ground' : 'sit')
       if (e.drink) names.push('drink'); else if (e.use) names.push('use')
-      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, ...params } = e
+      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, shake: _sh, converting: _cv, ...params } = e
       const ap = names.filter(n => { if (POSES.POSES[n]) return true; console.log(`pose mark at tick ${e.t / 50}: no pose '${n}' in renderer/poses.js (${POSES.POSE_NAMES.join(', ')})`); return false }).map(name => ({ name, ...params }))
       if (ap.length) for (const id of e.ids || []) { if (openA.has(id)) openA.get(id)[1] = e.t / 50; const run = [e.t / 50, Infinity, ap]; if (!ACT_POSE.has(id)) ACT_POSE.set(id, []); ACT_POSE.get(id).push(run); openA.set(id, run) }
       for (const k of ['emerge', 'dig']) if (e[k]) for (const id of e.ids || []) { if (!WARDEN_ANIM.has(id)) WARDEN_ANIM.set(id, []); WARDEN_ANIM.get(id).push([e.t / 50, e.t / 50 + (k === 'emerge' ? 134 : 100), k]) }
@@ -992,6 +1010,21 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
 // Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
 // time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
 const LINES = []
+// Heads that turn to look (docs/engine_features.md "Life"): `look_at` marks { ids, at: NAME | id | [dx, dy, dz] from the
+// set origin } until a `look_at_off` for those ids (lib/movie.js M.lookAt), and stunt.lookAtSpeaker (true, or the range
+// in blocks, default 10): while someone speaks a line, everyone else in range turns their head to them.
+const LOOK_AT = new Map()   // id -> [[a, b, at]]
+{
+  const open = new Map()
+  for (const e of rec.timeline || []) {
+    if (e.event !== 'look_at' && e.event !== 'look_at_off') continue
+    for (const id of e.ids || []) {
+      if (open.has(id)) { open.get(id)[1] = e.t / 50; open.delete(id) }
+      if (e.event === 'look_at') { const run = [e.t / 50, Infinity, e.at]; if (!LOOK_AT.has(id)) LOOK_AT.set(id, []); LOOK_AT.get(id).push(run); open.set(id, run) }
+    }
+  }
+}
+const SPEAKER_RANGE = STUNT_MOD.lookAtSpeaker ? (typeof STUNT_MOD.lookAtSpeaker === 'number' ? STUNT_MOD.lookAtSpeaker : 10) : 0
 {
   const ls = (rec.timeline || []).filter(e => e.event === 'line').map(e => ({ who: e.who, t0: e.t / 50, text: e.text || '', dur: e.dur })).sort((a, b) => a.t0 - b.t0)
   ls.forEach((l, k) => {
@@ -1000,11 +1033,37 @@ const LINES = []
     LINES.push({ who: l.who, t0: l.t0, t1: Math.min(l.t0 + want * 20, next - 1) })
   })
 }
+const MOON_PHASES = ['full_moon', 'waning_gibbous', 'third_quarter', 'waning_crescent', 'new_moon', 'waxing_crescent', 'first_quarter', 'waxing_gibbous']
+const MOON_PHASE = (() => {
+  const m = process.env.MOON_PHASE ?? STUNT_MOD.moonPhase
+  if (m !== undefined && m !== null && m !== '') {
+    const i = /^\d+$/.test(String(m)) ? Number(m) % 8 : MOON_PHASES.indexOf(String(m))
+    if (i < 0) throw new Error(`moonPhase '${m}': one of ${MOON_PHASES.join(', ')} or 0-7`)
+    return i ? MOON_PHASES[i] : null   // (full: the texture every Short already uses)
+  }
+  const day = Math.floor((rec.time ?? 6000) / 24000) % 8
+  return (rec.engine || 0) >= 2 && day > 0 ? MOON_PHASES[day] : null
+})()
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
 // stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
 const LOOKS = require('./renderer/looks')
 const LOOK_RAW = LOOKS.resolveLook(process.env.LOOK_JSON ? (/^\s*[{"]/.test(process.env.LOOK_JSON) ? JSON.parse(process.env.LOOK_JSON) : process.env.LOOK_JSON.trim()) : STUNT_MOD.look)
 const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : LOOK_RAW
+// Light in the shader (look.smoothLight: true, or SHADER_LIGHT=1; docs/engine_features.md): the world is meshed once
+// with each vertex's light level and the page lights it every frame, so a sunset is smooth (no DAY_LIGHT_STEP
+// re-meshes), a lightning bolt lights the world (LightTexture: sky darken 1 while skyFlashTime > 0), and held
+// torches/lanterns light what's around their holder (look.heldLight: false turns that off). Two more look keys work
+// with it: moonlight (0.2..1: the night's darkest sky factor, vanilla 0.2, for nights that read black) and
+// torchGlow (x vanilla's block light factor 1.5). Off (every published Short): the light stays baked, unchanged.
+const SHADER_LIGHT = process.env.SHADER_LIGHT ? process.env.SHADER_LIGHT === '1' : !!(LOOK_RAW && LOOK_RAW.smoothLight)
+const MOONLIGHT = SHADER_LIGHT ? Number((LOOK_RAW && LOOK_RAW.moonlight) || 0) : 0
+const HELD_LIGHT = SHADER_LIGHT && process.env.HELD_LIGHT !== '0' && !(LOOK_RAW && LOOK_RAW.heldLight === false)
+if (SHADER_LIGHT) { setLightAttr(true); if (LOOK_RAW && LOOK_RAW.torchGlow) setBlockFactor(Number(LOOK_RAW.torchGlow)) }
+// held light sources (the light level of the item's block, as the LambDynamicLights mod and Bedrock do; vanilla
+// Java has no held light): main or off hand, players and mobs
+const LIGHT_ITEMS = { torch: 14, soul_torch: 10, lantern: 15, soul_lantern: 10, redstone_torch: 7, glowstone: 15, sea_lantern: 15, jack_o_lantern: 15, shroomlight: 15, lava_bucket: 15, glow_berries: 14, end_rod: 14, campfire: 15, soul_campfire: 10, ochre_froglight: 15, verdant_froglight: 15, pearlescent_froglight: 15, beacon: 15, conduit: 15, magma_block: 3, glow_ink_sac: 6, blaze_rod: 10, nether_star: 10 }
+let DYN = []   // this frame's held lights: [x, y, z, level]
+function dynLightAt (x, y, z) { let b = 0; for (const d of DYN) { const v = d[3] - Math.hypot(x - d[0], y - d[1], z - d[2]); if (v > b) b = v } return b }
 // Idle life (docs/movie_engine.md): nobody stands perfectly still. Two slow sines per entity (periods of
 // 6-24 s, phases from its id), in [-1, 1]; deterministic, so frames render in any order.
 function idleNoise (id, t) {
@@ -1174,12 +1233,12 @@ function fixedDisplay (item) {
 }
 // an item's display.thirdperson_righthand, following the model's parents in the client jar
 const DISPLAY = new Map()
-function thirdPersonDisplay (item, left = false) {
-  const key = left ? `${item}|left` : item
+function thirdPersonDisplay (item, left = false, slotName = null) {
+  const key = slotName ? `${item}|${slotName}` : left ? `${item}|left` : item
   if (DISPLAY.has(key)) return DISPLAY.get(key)
   const jar = path.join(__dirname, 'work', 'client', `${rec.version}.jar`)
   let name = itemModel(item), out = null
-  const slot = left ? 'thirdperson_lefthand' : 'thirdperson_righthand'
+  const slot = slotName || (left ? 'thirdperson_lefthand' : 'thirdperson_righthand')
   for (let k = 0; k < 8 && name && !out; k++) {
     let m = null
     try { m = JSON.parse(require('child_process').execFileSync('unzip', ['-p', jar, `assets/minecraft/models/${name.replace(/^minecraft:/, '')}.json`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch (e) { break }
@@ -1558,7 +1617,9 @@ function camAtLive (t) {
 ;(async () => {
   const mesher = new Mesher(rec.version)
   mesher.noSky = DIM === 'the_nether' || DIM === 'the_end'
+  mesher.lightAttr = SHADER_LIGHT
   mesher.addColumns(rec.columns)
+  if (HIDE_BOXES.length) hideInWorld(mesher, HIDE_BOXES)
   solidWorld = mesher.world
   hmapWorld = mesher.world
   simulateDrops(mesher.world)
@@ -1644,6 +1705,24 @@ function camAtLive (t) {
       try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/snow.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), snow]) } catch (e) { console.error('no snow texture:', e.message) }
     }
   }
+  // Moon phases (DimensionType.moonPhase: (dayTime / 24000) % 8; 0 full, 1 waning gibbous, 2 third quarter, 3 waning
+  // crescent, 4 new, 5 waxing crescent, 6 first quarter, 7 waxing gibbous). A stunt's `moonPhase` (a name or 0-7)
+  // picks one; a recording from 2026-11-10 on (rec.engine >= 2) whose time is past day 0 gets its day's phase.
+  // Otherwise the full moon, as every Short so far drew. 1.21.11 has one texture per phase; older jars a 4x2 sheet.
+  if (MOON_PHASE) {
+    const out = path.join(ASSETS_DIR, 'env', `moon_${MOON_PHASE}.png`)
+    if (!fs.existsSync(out)) {
+      try {
+        require('child_process').execFileSync('python3', ['-c', `import zipfile,sys,io
+from PIL import Image
+z=zipfile.ZipFile(sys.argv[1]); n='assets/minecraft/textures/environment/celestial/moon/'+sys.argv[3]+'.png'
+if n in z.namelist(): open(sys.argv[2],'wb').write(z.read(n))
+else:
+  im=Image.open(io.BytesIO(z.read('assets/minecraft/textures/environment/moon_phases.png'))); i=int(sys.argv[4]); w,h=im.size[0]//4,im.size[1]//2
+  im.crop((i%4*w,i//4*h,i%4*w+w,i//4*h+h)).save(sys.argv[2])`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), out, MOON_PHASE, String(MOON_PHASES.indexOf(MOON_PHASE))])
+      } catch (e) { console.error('no moon phase texture:', e.message) }
+    }
+  }
   { // the moon texture (assets built before night support lack it)
     const moon = path.join(ASSETS_DIR, 'env', 'moon.png')
     if (!fs.existsSync(moon)) {
@@ -1656,11 +1735,12 @@ function camAtLive (t) {
     const r = L.reflect, c = r.center || [0, 0]
     return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null) })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null, engine: rec.engine || 0 })
 
+  let meshCapture = null   // (the stills mesh cache below collects the first mesh's blobs here)
   const send = async (list) => {
     const id = String(blobId++)
-    blobs.set(id, mesher.pack(list))
+    blobs.set(id, mesher.pack(list)); if (meshCapture) meshCapture.push(blobs.get(id))
     await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`)
   }
   const t0 = Date.now()
@@ -1677,11 +1757,51 @@ function camAtLive (t) {
     const list = mesher.sections(minVisibleY)
     const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
     if (nw > 1) {
-      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
-      for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
+      const blobsOut = await mesher.packParallel(list, nw, { lightAttr: SHADER_LIGHT, hideBoxes: HIDE_BOXES, recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
+      for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); if (meshCapture) meshCapture.push(b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
     } else await send(list)
   }
-  await sendAll(0, 0)
+  // Stills cache the first mesh (./hb still, ONLY= / FRAMES= renders; MESH_CACHE=0 turns it off): the world as recorded
+  // meshes the same every time, so its blobs are kept in work/hb/meshcache, keyed by the recording (path, size, mtime),
+  // everything the mesh depends on (the visible depth, Brightness, time and weather at tick 0, the dimension, shader
+  // light) and the source of the mesher files. The next still of the same recording skips the mesh (story_nitwit: two
+  // stills 56 s -> 25 s). An entry is big (story_nitwit: 178 MB), so only the newest is kept (MESH_CACHE_KEEP=n for
+  // more). Full renders never read it.
+  const sparse = !!(process.env.ONLY || process.env.FRAMES)
+  const cacheDir = path.join(__dirname, 'work', 'hb', 'meshcache')
+  let cacheFile = null
+  if (sparse && process.env.MESH_CACHE !== '0') {
+    try {
+      const h = require('crypto').createHash('sha1'), st = fs.statSync(recPath)
+      h.update(JSON.stringify([path.resolve(recPath), st.size, st.mtimeMs, minVisibleY, Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTimeAt(0), weatherLight(0), DIM, SHADER_LIGHT, rec.version, HIDE_BOXES]))
+      for (const f of ['models.js', 'mesher.js', 'light.js', 'world.js', 'mesh_worker.js', 'modelsBuilder.js', 'hidebox.js']) { const fp = path.join(__dirname, 'renderer', f); if (fs.existsSync(fp)) h.update(fs.readFileSync(fp)) }
+      for (const f of ['blocksStates.json', 'blockstates.json', 'atlas.json']) { const fp = path.join(ASSETS_DIR, f); if (fs.existsSync(fp)) h.update(String(fs.statSync(fp).mtimeMs)) }
+      cacheFile = path.join(cacheDir, h.digest('hex').slice(0, 20) + '.bin')
+    } catch (e) { cacheFile = null }
+  }
+  if (cacheFile && fs.existsSync(cacheFile)) {
+    const buf = fs.readFileSync(cacheFile)
+    let o = 0
+    while (o < buf.length) { const n = buf.readUInt32LE(o); o += 4; const id = String(blobId++); blobs.set(id, buf.subarray(o, o + n)); o += n; await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
+    fs.utimesSync(cacheFile, new Date(), new Date())
+    console.log('mesh from the stills cache', path.basename(cacheFile))
+  } else {
+    if (cacheFile) meshCapture = []
+    await sendAll(0, 0)
+    const got = meshCapture; meshCapture = null
+    if (cacheFile && got && got.length) {
+      try {
+        fs.mkdirSync(cacheDir, { recursive: true })
+        const parts = []
+        for (const b of got) { const l = Buffer.alloc(4); l.writeUInt32LE(b.length); parts.push(l, b) }
+        if (parts.length) {
+          fs.writeFileSync(cacheFile + '.tmp', Buffer.concat(parts)); fs.renameSync(cacheFile + '.tmp', cacheFile)
+          const old = fs.readdirSync(cacheDir).filter(f => f.endsWith('.bin')).map(f => [f, fs.statSync(path.join(cacheDir, f)).mtimeMs]).sort((x, y) => y[1] - x[1])
+          for (const [f] of old.slice(Math.max(1, Number(process.env.MESH_CACHE_KEEP || 1)))) fs.unlinkSync(path.join(cacheDir, f))
+        }
+      } catch (e) { console.error('mesh cache not written:', e.message) }
+    }
+  }
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
 
   // particles from recorded events (block crumbs use the block's particle texture in the atlas)
@@ -1912,7 +2032,7 @@ function camAtLive (t) {
   // A rain step (weatherKey: rain/thunder in 1/16ths) always re-lights. DAY_LIGHT_STEP=0.025 (scripts/cinematic.py) also
   // rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame.
   const DAY_STEP = Number(process.env.DAY_LIGHT_STEP || 0)
-  const skyKey = (t) => { const d = dayInfo(dayTimeAt(t), ...weatherLight(t)).dark; return `${DAY_STEP ? Math.round(d / DAY_STEP) : d.toFixed(6)}|${weatherKey(t)}` }
+  const skyKey = SHADER_LIGHT ? () => 'shader' : (t) => { const d = dayInfo(dayTimeAt(t), ...weatherLight(t)).dark; return `${DAY_STEP ? Math.round(d / DAY_STEP) : d.toFixed(6)}|${weatherKey(t)}` }
   let curDayTime = dayTimeAt(0), curWeather = weatherKey(0), curSky = skyKey(0)
   const t1 = Date.now()
   // Block entities drawn by entity renderers (renderer/blockentities.js): signs with their text,
@@ -2112,6 +2232,26 @@ function camAtLive (t) {
     Object.assign(cam, darknessAt(t))
     cam.aim = AIMS.length && !process.env.CAM ? aimAt(t) : null   // first person only: in the third-person replay it showed as red bars under the player
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
+    if (SHADER_LIGHT) {   // the light this frame (look.smoothLight): continuous time of day, rain, lightning; held lights
+      const flash = BOLTS.length ? boltsAt(t).flash / 0.45 : 0
+      setDayTime(curDayTime, levelAt(RAIN, t), levelAt(THUNDER, t), flash, MOONLIGHT)
+      cam.lm = lightParams()
+      DYN = []
+      if (HELD_LIGHT) {
+        const i = Math.floor(t), fr = t - i, a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
+        for (const [id, ra] of a) {
+          const x = ra[9], lv = x ? Math.max(LIGHT_ITEMS[x.held] || 0, LIGHT_ITEMS[x.offhand] || 0) : 0
+          if (!lv) continue
+          const rb = b.get(id) || ra, h = ENT_H[ra[2]] || 1.8
+          DYN.push([ra[3] + (rb[3] - ra[3]) * fr, ra[4] + (rb[4] - ra[4]) * fr + h * 0.6, ra[5] + (rb[5] - ra[5]) * fr, lv])
+        }
+        let own = null; for (const [tk, n] of HELD) { if (tk <= t) own = n; else break }
+        if (own && LIGHT_ITEMS[own] && !HIDE_HAND) DYN.push([eye.x, eye.y - 0.5, eye.z, LIGHT_ITEMS[own]])
+        DYN.sort((p, q) => Math.hypot(p[0] - eye.x, p[1] - eye.y, p[2] - eye.z) - Math.hypot(q[0] - eye.x, q[1] - eye.y, q[2] - eye.z))
+        DYN = DYN.slice(0, 8)
+      }
+      cam.dyn = DYN
+    }
     // stunt.self.eye: the narrator isn't a player (story_good_boy: a wolf, eye 0.68): the POV camera sits at that
     // height over the feet. Only the camera moves; targeting and the body keep the player's eye.
     const selfNow = selfAt(t)
@@ -2192,7 +2332,8 @@ function camAtLive (t) {
     if (hd) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = !!spriteOf(hd.name)
-      const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
+      let [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
+      if (DYN.length) hb = Math.max(hb, dynLightAt(cam.x, cam.y, cam.z))
       // look.handLift (0..1): lift the first-person hand's light toward white, so a held item reads at night (at
       // midnight sky light 15 is about (0.22, 0.22, 0.45): reel 1's bucket read as a dark sleeve, review v2 B2)
       const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
@@ -2220,7 +2361,8 @@ function camAtLive (t) {
       if (deathTime < 21) {
         const i = Math.max(0, Math.min(P.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
         const body = lerpAngle(PBODY[i], PBODY[i + 1], f), wk = [0, 1].map(k => PWALK[i][k] + (PWALK[i + 1][k] - PWALK[i][k]) * f)
-        const [ls, lb] = mesher.world.getLight(new Vec3(eye.x, eye.y - EYE + 0.5, eye.z))
+        let [ls, lb] = mesher.world.getLight(new Vec3(eye.x, eye.y - EYE + 0.5, eye.z))
+        if (DYN.length) lb = Math.max(lb, dynLightAt(eye.x, eye.y - 0.5, eye.z))
         let held = null
         if (ph && ph.name) {
           held = { key: ph.name + (glintAt(t) ? '#glint' : ''), display: thirdPersonDisplay(ph.name), glint: glintAt(t) }
@@ -2238,7 +2380,7 @@ function camAtLive (t) {
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),
+          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve', ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
@@ -2412,7 +2554,21 @@ function camAtLive (t) {
         held.state = bl.defaultState
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
       }
+      // a villager or wandering trader holds it over its crossed arms (CrossedArmsItemLayer: ItemDisplayContext.GROUND);
+      // only for recordings from engine 2 on, so published Shorts stay as they were
+      if (/^(villager|wandering_trader)$/.test(e.name)) { if ((rec.engine || 0) < 2) continue; held.display = thirdPersonDisplay(n, false, 'ground'); held.key = n + '|ground'; held.crossed = true }
       e.mobHeld = held
+    }
+    // a mob's off-hand item (harness extra.offhand for mobs, engine 2): ItemInHandLayer on the left arm
+    for (const e of ents) {
+      if (!e.extra || !e.extra.offhand || e.name === 'player' || e.name === 'mannequin' || e.id === -1) continue
+      const o = e.extra.offhand, oh = { key: o + '|left', display: thirdPersonDisplay(o, true) }, bl = MC.blocksByName[o]
+      if (spriteOf(o)) oh.tex = spriteOf(o)
+      else if (bl) {
+        oh.state = bl.defaultState
+        if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+      }
+      e.mobOff = oh
     }
     // actors (other players: the movie cast, lib/movie.js): the skin from stunt.cast, the body turn and
     // walk from their recorded positions (ACTOR), the arm swing from ent_swing marks, the main-hand item
@@ -2465,6 +2621,16 @@ function camAtLive (t) {
       e.headYaw = (e.headYaw ?? e.yaw) + nz[0] * 0.09 * still + (tk ? tk.yaw : 0)
       e.pitch = (e.pitch || 0) + nz[1] * 0.05 * still + (tk ? tk.pitch : 0)
     }
+    // the narrator's own staged poses, seen from a camera shot (ctx.mark('pose', { ids: [-1], pose: 'sit_ground' })):
+    // the actors' loop above skips the recording bot; only stunts that mark id -1 see a change
+    if (ACT_POSE.has(-1)) {
+      const se = ents.find(e => e.id === -1 && e.player)
+      if (se) {
+        const poses = []
+        for (const [a, b, list] of ACT_POSE.get(-1)) for (const q of list) { const bl = POSES.blendOf(q.name), k = Math.min(1, (t - a) / bl, (b + bl - t) / bl); if (t >= a && k > 0) poses.push({ ...q, k: k * k * (3 - 2 * k) }) }
+        if (poses.length) se.player.poses = poses
+      }
+    }
     // idle life for mobs (stunt.idleLife: true; story casts are no-AI mobs that otherwise freeze between their
     // moves): a slow look-around while a mob stands still, up to ~12 degrees across and ~5 up or down
     if (STUNT_MOD.idleLife) {
@@ -2474,6 +2640,48 @@ function camAtLive (t) {
         const still = a && b ? Math.max(0, 1 - Math.hypot(a.x - b.x, a.z - b.z) * 2) : 1
         const n = idleNoise(e.id, t)
         e.headYaw += n[0] * 0.2 * still; e.pitch = (e.pitch || 0) + n[1] * 0.09 * still
+      }
+    }
+    // turning to look (LOOK_AT marks, stunt.lookAtSpeaker): the head eases to the target over 8 ticks (the body follows
+    // past 75 degrees, BodyRotationControl in entities.js) and back over 8 after
+    if (LOOK_AT.size || SPEAKER_RANGE) {
+      const nameOf = (e) => (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user) || null
+      const headOf = (e) => ({ x: e.x, y: e.y + (ENT_H[e.name] || 1.8) * 0.85, z: e.z })
+      const find = (at) => {
+        if (Array.isArray(at)) return rec.set ? { x: rec.set.x + at[0], y: rec.set.y + at[1], z: rec.set.z + at[2] } : null
+        if (typeof at === 'number') { const o = ents.find(x => x.id === at); return o ? headOf(o) : null }
+        if (at && SELF_NAME && at === SELF_NAME) return { x: eye.x, y: eye.y, z: eye.z }
+        const o = at && ents.find(x => nameOf(x) === at); return o ? headOf(o) : null
+      }
+      for (const e of ents) {
+        if (e.headYaw === null || e.headYaw === undefined) continue
+        let tgt = null, w = 0
+        const run = LOOK_AT.has(e.id) && LOOK_AT.get(e.id).find(([a, b]) => t >= a && t < b + 8)
+        if (run) { tgt = find(run[2]); w = Math.min(1, (t - run[0]) / 8, run[1] === Infinity ? 1 : (run[1] + 8 - t) / 8) }
+        if (!tgt && SPEAKER_RANGE) {
+          const me = nameOf(e), l = LINES.find(x => x.who && x.who !== me && t >= x.t0 && t < x.t1 + 8)
+          if (l) {
+            const p = find(l.who), h = headOf(e)
+            if (p && Math.hypot(p.x - h.x, p.z - h.z) <= SPEAKER_RANGE) { tgt = p; w = Math.min(1, (t - l.t0) / 8, (l.t1 + 8 - t) / 8) }
+          }
+        }
+        if (!tgt || w <= 0) continue
+        const h = headOf(e), dx = tgt.x - h.x, dy = tgt.y - h.y, dz = tgt.z - h.z
+        if (Math.hypot(dx, dz) < 0.3) continue
+        const k = w * w * (3 - 2 * w), yaw = Math.atan2(-dx, -dz), pitch = Math.atan2(dy, Math.hypot(dx, dz))
+        let d = yaw - e.headYaw; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI
+        e.headYaw += d * k; e.pitch = (e.pitch || 0) + (pitch - (e.pitch || 0)) * k
+      }
+    }
+    // optional name tags (stunt.nameTags: true for every actor and named mob, or a list of names): always drawn over
+    // the head, as vanilla does for players and CustomNameVisible mobs (the nameplate loop below draws them)
+    if (STUNT_MOD.nameTags) {
+      const only = Array.isArray(STUNT_MOD.nameTags) ? STUNT_MOD.nameTags : null
+      for (const e of ents) {
+        // the narrator seen from a camera shot (id -1) wears its player nameplate only when the list names it
+        const nm = e.id === -1 ? (only && SELF_NAME && only.includes(SELF_NAME) ? SELF_NAME : null) : (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user)
+        if (!nm || (only && !only.includes(nm))) continue
+        e.extra = { ...(e.extra || {}), name: nm, nameVisible: true }
       }
     }
     for (const e of ents) {
@@ -2522,6 +2730,7 @@ function camAtLive (t) {
     }
     prof('entities+hand')
     cam.blockEntities = blockEntitiesAt(t, cam)
+    if (LOOK_RAW && LOOK_RAW.motionBlur) cam.frameTicks = 20 / FPS   // (the page's motion blur: one frame's worth of the camera's move)
     if (BOLTS.length) { const bl = boltsAt(t); cam.bolts = bl.bolts; cam.skyFlash = bl.flash }
     cam.dimension = DIM
     cam.weather = cam.underwater ? [] : weatherColumns(cam, t, cam.rain)   // (precipitation stops at the surface: snow fell under the ice)

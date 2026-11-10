@@ -384,6 +384,15 @@ each section.
 - NOT REPRODUCED: seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666 re-rendered clean on 2026-11-10; the fluid mesher reads neighbours across chunks). every_clutch's recording wasn't available to recheck the ice.
 - FIXED: redstone ore puffs redstone dust when a dig starts on it (RedStoneOreBlock.attack). There are still no hit crumbs (ParticleEngine.crack) while digging any block.
 - FIXED: bucket use swings the arm (a bucket <-> filled bucket change in the held slot is a use when no swing mark is near).
+- FIXED (worker 18's report): lightning bolts draw (lightning_bolt entities, or a stunt's own `lightning` mark {x, y, z, ticks?}) and the sky flashes; the lightmap flash is done with `look.smoothLight` (agent/engine-2: the bolt lights blocks and mobs).
+- FIXED: subtitles (`--subs`) blinked off for 3 frames at every line change (they ended 0.05 s early); story word chunks due just before a picture cut now start on it (story_sheep_stares' day/night cuts).
+- FIXED: dusk/dawn clouds took the fog colour (orange toward the sun, grey away). Clouds now fade by alpha over distance like rendertype_clouds.fsh, with no fog colour; `clouds: false` is no longer needed for sunsets.
+- VANILLA, not bugs (story_sheep_stares nitpicks): the death puffs are drawn in the world under the death screen (edit.py overlays the screen on the finished frame; the white text over light-grey puffs is just low contrast); the hearts blink for 20 ticks after the killing hit (Gui.renderHearts); a dropped item stands upright facing the camera (sprite items are still billboards rather than vanilla's spinning 1-pixel-thick model: open).
+- VANILLA, not an engine bug (story_nitwit "lava drawn near-black with one orange quarter"): `/fill ... lava replace water`
+  over a 2x2x2 water pool places the lava block by block, and every lava source that lands next to water still in the
+  pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
+  the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
+  `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
 - FIXED (worker 18's report): lightning bolts draw (lightning_bolt entities, or a stunt's own `lightning` mark {x, y, z, ticks?}) and the sky flashes; the lightmap flash is not done.
 - FIXED: subtitles (`--subs`) blinked off for 3 frames at every line change (they ended 0.05 s early); story word chunks due just before a picture cut now start on it (story_sheep_stares' day/night cuts).
 - FIXED: dusk/dawn clouds took the fog colour (orange toward the sun, grey away). Clouds now fade by alpha over distance like rendertype_clouds.fsh, with no fog colour; `clouds: false` is no longer needed for sunsets.
@@ -447,6 +456,10 @@ each section.
   durations didn't show: a male character read as a young woman, "Buh" heard as "huh", and the newer TTS models
   reading the delivery note aloud before the line. A Gemini audio model asked "the exact words, the apparent age and
   gender" for each clip caught all three.
+- NOT the sky (agent/engine-2, 2026-11-10): story_good_boy's "opaque black square in the dusk sky above the librarian"
+  (L06, 19.9-20.45 s) was the cast's waiting room roof (stone at F+64 over a barrier floor, 66 blocks up and in frame
+  on the low POV shot), lit by sky light 8 under itself at time 12300. Vanilla draws it too. Fix: `stunt.hideBoxes`
+  (docs/engine_features.md); story_good_boy lists its waiting room.
 - VANILLA, not an engine bug (story_nitwit "lava drawn near-black with one orange quarter"): `/fill ... lava replace water`
   over a 2x2x2 water pool places the lava block by block, and every lava source that lands next to water still in the
   pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;

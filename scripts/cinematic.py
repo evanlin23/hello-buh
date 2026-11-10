@@ -102,6 +102,7 @@ def clip_rec(sp, c, portrait):
     rec["timeline"].append({"t": t_ms(0) - 1, "event": "shot", "name": "cine"})
     rec["timeline"].sort(key=lambda e: e["t"])
     shot = dict(c["shot"])
+    shot.setdefault("dof", False)   # depth of field only where a clip asks for it: on wide shots it read as blur (owner)
     for key in ("path", "lookPath"):
         if key in shot:
             shot[key] = [[k[0] * c["rate"], *k[1:]] for k in shot[key]]
@@ -355,16 +356,17 @@ def assemble(sp, segdir, portrait, out):
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(cm)], check=True)
         clips.append(cm)
     # dissolves between clips (`xfade` on the incoming clip), a fade in from black and out to black
-    inputs, fl, prev, acc = [], [], "[0:v]", sp["clips"][0]["dur"]
+    inputs, fl, prev, acc = [], [], "[c0]", sp["clips"][0]["dur"]
     for i, cm in enumerate(clips):
         inputs += ["-i", str(cm)]
+        fl.append(f"[{i}:v]settb=AVTB,fps={FPS},format=yuv420p,setpts=PTS-STARTPTS[c{i}]")   # (one timebase: xfade after a concat refused a mismatch)
     for i in range(1, len(clips)):
         x = sp["clips"][i].get("xfade", 0)
         lbl = f"[x{i}]"
         if x > 0:
-            fl.append(f"{prev}[{i}:v]xfade=transition=fade:duration={x}:offset={acc - x:.4f}{lbl}")
+            fl.append(f"{prev}[c{i}]xfade=transition=fade:duration={x}:offset={acc - x:.4f}{lbl}")
         else:
-            fl.append(f"{prev}[{i}:v]concat=n=2:v=1:a=0{lbl}")
+            fl.append(f"{prev}[c{i}]concat=n=2:v=1:a=0,settb=AVTB,fps={FPS}{lbl}")
         acc += sp["clips"][i]["dur"] - x
         prev = lbl
     total = sp["total"]
@@ -391,6 +393,13 @@ def assemble(sp, segdir, portrait, out):
                     "-c:v", "libx264", "-crf", "16", "-preset", "slow", "-pix_fmt", "yuv420p", "-r", str(FPS), "-movflags", "+faststart",
                     "-c:a", "aac", "-b:a", "256k", "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-t", f"{total:.3f}", str(out)], check=True)
     print("wrote", out)
+    # the phone-upload copy: film tuning and adaptive quantisation keep block edges; at the master's grain a CRF 22
+    # re-encode spent its bits on noise and smeared the bricks (owner: "a bit blurry")
+    share = out.with_name(out.stem + "_share.mp4")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(out), "-c:v", "libx264", "-preset", "slow", "-tune", "film", "-crf", "20",
+                    "-x264-params", "aq-mode=3", "-maxrate", "14M", "-bufsize", "28M", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+                    "-c:a", "copy", str(share)], check=True)
+    print("wrote", share, f"{share.stat().st_size / 1e6:.1f} MB")
 
 
 def main():

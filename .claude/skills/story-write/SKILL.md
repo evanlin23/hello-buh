@@ -20,6 +20,10 @@ fails after the build costs a day of review rounds.
    ```
    Also the premise bank table in `docs/stories.md` and any `docs/story_pitches_*.md`.
 
+4. **The shared world** (owner, 2026-11-10: "wouldnt the lore be crazy if all of the sets were the same world"):
+   `docs/world/canon.md` (places, the timeline, recurring characters, the links, the easter-egg rules) and
+   `node scripts/world.js list` (every place, every story's day). Every story happens in this one world.
+
 Scratch files go in the scratchpad, never the repo. The deliverables go in `stories/<name>/`.
 
 ## 1. Pitch ten (Pixar #12: discount the first five ideas)
@@ -35,6 +39,12 @@ viewer's words, under 12 words), **count**, **the vanilla rule it breaks or uses
 - Check buildability: every mob and block the image needs renders (`renderer/entity_models.json`,
   `docs/lessons.md`: beds, chests and signs render; banners, heads, pots and shulker boxes don't).
 - Banned: coma/dream/simulation twists, a door to the past, the owner's example stories, near-copies of anything made.
+- **Pitch inside the world** (docs/world/canon.md): each pitch names its **place** (an existing one from
+  docs/world/map.json, or a new one in an empty part of the map, with the region it's in) and its **day** on the
+  world timeline, and checks the canon's facts for that place and day (who lives there, what has already happened
+  there, the Long Day, who is dead or gone). A pitch that contradicts a published Short is killed or moved.
+- **Stands alone first:** the pitch must work for a viewer who has seen nothing else. A link to another story is a
+  bonus a fan notices, never a step the plot needs (the critic checks this with the cold reader).
 
 ## 2. Score them
 
@@ -50,6 +60,10 @@ Write the ending first (the reveal frame), then:
   the clue it plants. Mark the second where the attentive viewer gets ahead of the narrator.
 - The **clue map**: every clue, where it's planted (line and shot), how it's misread, what it means after the twist.
   At least two clues for the twist, at least one in the picture.
+- **One easter egg** (docs/world/canon.md "Easter eggs"): a cameo from another story placed in the background of one
+  shot (the dog on his hill on the skyline, the boxed bell, the totem wall, the empty boat, the HelloBuh graves...),
+  true to the canon on this story's day, never named in a line and never needed to follow the story. Write it into
+  the bible's Props table with its shot, and into map.json `stories.<name>.cameos` so world.build builds it.
 
 ## 4. The script (stories/<name>/story.json, version 2)
 
@@ -80,6 +94,12 @@ Write the ending first (the reveal frame), then:
   map. Every number the script says matches what the picture will show.
 - The set plan in the bible's Places table: the site (natural terrain, not a clearing), its scale, what fills each
   establishing shot out to the fog (`docs/story_craft.md` section 9).
+- **The place in the map:** use the canonical place's coordinates and pieces (docs/world/map.json), or claim a new
+  place: `node scripts/world.js claim <key> --name "..." --at x,y,z --footprint x0,z0,x1,z1 --story <name> --day N`
+  (read the ground y off out/world/world_map_hub.png / the survey grid), then add its pieces and stamps with
+  canonical x, y, z. Commit and push the claim on its own, like a premise claim, before building.
+- **Canon facts the story creates** (a death, a building, a character who leaves): add them to docs/world/canon.md
+  (the place's row, the timeline, a character) in the same commit as the script; they bind every later story.
 
 ## 6. The table read (max 2 rounds)
 
@@ -89,7 +109,8 @@ Run these three independently (in parallel if you can spawn agents):
    did), and the comment it would leave. Fail if it can't say what happened in two sentences or gets a relationship
    wrong.
 2. **`story-critic`** in **script mode**: scores against runaway; verdict approve / revise / kill.
-3. **`story-continuity`** in **pre-build mode**: the bible, the shots and the script against each other.
+3. **`story-continuity`** in **pre-build mode**: the bible, the shots and the script against each other, and the
+   story against the world canon (docs/world/canon.md: the place, the day, the recurring characters, the easter egg).
 
 Apply the must-fixes, re-run only what failed. Round 2 only confirms round 1's must-fixes (a new finding is a
 should-fix unless it breaks an owner rule). If it still fails after round 2, go back to step 1 with the next premise:
