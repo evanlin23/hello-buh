@@ -1,0 +1,729 @@
+{
+ "lines": {
+  "L01": {
+   "who": "N",
+   "text": "My village is covered in nine thousand CARPETS.",
+   "dur": 3.18,
+   "onset": 0.21,
+   "end": 3.18,
+   "chunks": [
+    [
+     0.21,
+     0.87
+    ],
+    [
+     0.87,
+     1.728
+    ],
+    [
+     1.728,
+     3.18
+    ]
+   ],
+   "captions": [
+    "My VILLAGE",
+    "is COVERED in",
+    "nine thousand CARPETS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "gap": 0
+  },
+  "L02": {
+   "who": "N",
+   "text": "The road? CARPET. The stairs? CARPET. The DOGHOUSE? Also CARPET.",
+   "dur": 4.365,
+   "onset": 0.07,
+   "end": 4.32,
+   "chunks": [
+    [
+     0.07,
+     1.254
+    ],
+    [
+     1.254,
+     2.578
+    ],
+    [
+     2.578,
+     3.484
+    ],
+    [
+     3.484,
+     4.32
+    ]
+   ],
+   "captions": [
+    "The road? CARPET.",
+    "The stairs? CARPET.",
+    "The DOGHOUSE?",
+    "Also CARPET."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 3.18,
+   "gap": 0
+  },
+  "L03": {
+   "who": "N",
+   "text": "Even the bell wears a SWEATER.",
+   "dur": 1.768,
+   "onset": 0.05,
+   "end": 1.68,
+   "chunks": [
+    [
+     0.05,
+     0.781
+    ],
+    [
+     0.781,
+     1.68
+    ]
+   ],
+   "captions": [
+    "Even the BELL",
+    "wears a SWEATER."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 7.545,
+   "gap": 0
+  },
+  "L04": {
+   "who": "N",
+   "text": "Mom says:",
+   "dur": 0.998,
+   "onset": 0.05,
+   "end": 0.9,
+   "chunks": [
+    [
+     0.05,
+     0.9
+    ]
+   ],
+   "captions": [
+    "Mom SAYS:"
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L01",
+   "offset": 9.312
+  },
+  "L05": {
+   "who": "Mom",
+   "text": "Walk SOFT, sweetie. The ground's a light SLEEPER.",
+   "dur": 3.94,
+   "onset": 0.23,
+   "end": 3.46,
+   "chunks": [
+    [
+     0.23,
+     1.536
+    ],
+    [
+     1.536,
+     2.36
+    ],
+    [
+     2.36,
+     3.46
+    ]
+   ],
+   "captions": [
+    "Walk SOFT, sweetie.",
+    "The GROUND'S",
+    "a light SLEEPER."
+   ],
+   "with": [
+    "Mom"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L05",
+   "offset": 0.0
+  },
+  "L06": {
+   "who": "N",
+   "text": "But one time, I pulled the wool off the WELL.",
+   "dur": 2.295,
+   "onset": 0.17,
+   "end": 2.295,
+   "chunks": [
+    [
+     0.17,
+     0.828
+    ],
+    [
+     0.828,
+     1.232
+    ],
+    [
+     1.232,
+     1.637
+    ],
+    [
+     1.637,
+     2.295
+    ]
+   ],
+   "captions": [
+    "But ONE time,",
+    "I PULLED",
+    "the WOOL",
+    "off the WELL."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 0.0,
+   "gap": 0
+  },
+  "L07": {
+   "who": "N",
+   "text": "Then something down the well just SCREAMED.",
+   "dur": 2.717,
+   "onset": 0.05,
+   "end": 2.62,
+   "chunks": [
+    [
+     0.05,
+     0.928
+    ],
+    [
+     0.928,
+     1.742
+    ],
+    [
+     1.742,
+     2.62
+    ]
+   ],
+   "captions": [
+    "Then SOMETHING",
+    "down the WELL",
+    "just SCREAMED."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 2.295,
+   "gap": 0
+  },
+  "L08": {
+   "who": "N",
+   "text": "Mom said it was a FOX. I didn't know foxes lived in WELLS.",
+   "dur": 3.572,
+   "onset": 0.09,
+   "end": 3.48,
+   "chunks": [
+    [
+     0.09,
+     0.781
+    ],
+    [
+     0.781,
+     1.408
+    ],
+    [
+     1.408,
+     2.224
+    ],
+    [
+     2.224,
+     2.915
+    ],
+    [
+     2.915,
+     3.48
+    ]
+   ],
+   "captions": [
+    "Mom SAID it",
+    "was a FOX.",
+    "I didn't KNOW",
+    "FOXES lived",
+    "in WELLS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 5.013,
+   "gap": 0
+  },
+  "L09": {
+   "who": "N",
+   "text": "Then I found a music disc by the FARM.",
+   "dur": 2.35,
+   "onset": 0.31,
+   "end": 2.35,
+   "chunks": [
+    [
+     0.31,
+     0.99
+    ],
+    [
+     0.99,
+     1.67
+    ],
+    [
+     1.67,
+     2.35
+    ]
+   ],
+   "captions": [
+    "Then I FOUND",
+    "a music DISC",
+    "by the FARM."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 8.585,
+   "gap": 0
+  },
+  "L10": {
+   "who": "N",
+   "text": "A real SONG. Nobody here has HEARD one.",
+   "dur": 3.058,
+   "onset": 0.0,
+   "end": 2.92,
+   "chunks": [
+    [
+     0.0,
+     0.947
+    ],
+    [
+     0.947,
+     1.815
+    ],
+    [
+     1.815,
+     2.92
+    ]
+   ],
+   "captions": [
+    "A real SONG.",
+    "Nobody HERE",
+    "has HEARD one."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 10.935,
+   "gap": 0
+  },
+  "L11": {
+   "who": "N",
+   "text": "So tonight, I put a jukebox on the WELL. Wells echo, you KNOW.",
+   "dur": 3.958,
+   "onset": 0.09,
+   "end": 3.8,
+   "chunks": [
+    [
+     0.09,
+     0.806
+    ],
+    [
+     0.806,
+     1.131
+    ],
+    [
+     1.131,
+     1.717
+    ],
+    [
+     1.717,
+     2.498
+    ],
+    [
+     2.498,
+     3.214
+    ],
+    [
+     3.214,
+     3.8
+    ]
+   ],
+   "captions": [
+    "So TONIGHT,",
+    "I PUT",
+    "a JUKEBOX",
+    "on the WELL.",
+    "Wells ECHO,",
+    "you KNOW."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 13.992,
+   "gap": 0
+  },
+  "L12": {
+   "who": "N",
+   "text": "The fox screamed AGAIN. It loved the MUSIC.",
+   "dur": 3.018,
+   "onset": 0.09,
+   "end": 2.78,
+   "chunks": [
+    [
+     0.09,
+     0.561
+    ],
+    [
+     0.561,
+     1.57
+    ],
+    [
+     1.57,
+     2.108
+    ],
+    [
+     2.108,
+     2.78
+    ]
+   ],
+   "captions": [
+    "The FOX",
+    "screamed AGAIN.",
+    "It LOVED",
+    "the MUSIC."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 17.95,
+   "gap": 0
+  },
+  "L13": {
+   "who": "N",
+   "text": "Then the lights went DARK. Just like a PARTY.",
+   "dur": 2.4,
+   "onset": 0.19,
+   "end": 2.32,
+   "chunks": [
+    [
+     0.19,
+     0.951
+    ],
+    [
+     0.951,
+     1.458
+    ],
+    [
+     1.458,
+     1.914
+    ],
+    [
+     1.914,
+     2.32
+    ]
+   ],
+   "captions": [
+    "Then the LIGHTS",
+    "went DARK.",
+    "Just LIKE",
+    "a PARTY."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 20.968,
+   "gap": 0
+  },
+  "L14": {
+   "who": "N",
+   "text": "Mom froze in the DOOR.",
+   "dur": 1.542,
+   "onset": 0.05,
+   "end": 1.4,
+   "chunks": [
+    [
+     0.05,
+     0.629
+    ],
+    [
+     0.629,
+     1.4
+    ]
+   ],
+   "captions": [
+    "Mom FROZE",
+    "in the DOOR."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "beat": "L06",
+   "offset": 23.367
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts",
+  "Mom": "gemini-3.8-flash-tts"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 10.31,
+   "tempo": 1.1,
+   "rate": 1.0,
+   "semitones": 1.0,
+   "stretch": "rubberband",
+   "offsets": [
+    0.0,
+    3.18,
+    7.545,
+    9.312
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 2,
+   "fixes": [],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 8.99,
+     "len": 0.43,
+     "why": "0.43 s pause between lines 2-3 (limit 0.35 s)"
+    }
+   ],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.43 s pause between lines 2-3 (limit 0.35 s)"
+     ]
+    },
+    {
+     "try": 2,
+     "why": [
+      "0.39 s pause between lines 2-3 (limit 0.35 s)",
+      "0.50 s pause between lines 2-3 (limit 0.35 s)"
+     ]
+    }
+   ]
+  },
+  "L05": {
+   "lines": [
+    "L05"
+   ],
+   "file": "beat_L05.wav",
+   "dur": 3.94,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "try": 3,
+   "tries": 5,
+   "fixes": [
+    "one continuous take, no pauses between sentences",
+    "read every word exactly as written, nothing added or skipped"
+   ],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 1.62,
+     "len": 0.5,
+     "why": "0.50 s pause inside line 1 (limit 0.3 s)"
+    }
+   ],
+   "cut": "whole",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.31 s pause inside line 1 (limit 0.3 s)",
+      "0.43 s pause inside line 1 (limit 0.3 s)",
+      "0.56 s pause inside line 1 (limit 0.3 s)",
+      "0.35 s pause inside line 1 (limit 0.3 s)",
+      "1.78 s pause inside line 1 (limit 0.3 s)",
+      "0.45 s pause inside line 1 (limit 0.3 s)",
+      "Whisper heard only 46% of the script (\"Milo's mom, a warm woman in her forties, gentle and tired, loving, calls from another room, a little worried under it. W\")",
+      "extra words 'milos mom a warm woman in her forties gentle and tired loving calls from another room a little worried under it' (a direction read aloud?)"
+     ]
+    },
+    {
+     "try": 2,
+     "why": [
+      "0.86 s pause inside line 1 (limit 0.3 s)"
+     ]
+    },
+    {
+     "try": 3,
+     "why": [
+      "0.50 s pause inside line 1 (limit 0.3 s)"
+     ]
+    },
+    {
+     "try": 4,
+     "why": [
+      "0.61 s pause inside line 1 (limit 0.3 s)"
+     ]
+    },
+    {
+     "try": 5,
+     "why": [
+      "0.63 s pause inside line 1 (limit 0.3 s)"
+     ]
+    }
+   ]
+  },
+  "L06": {
+   "lines": [
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14"
+   ],
+   "file": "beat_L06.wav",
+   "dur": 24.91,
+   "tempo": 1.1,
+   "rate": 1.0,
+   "semitones": 1.0,
+   "stretch": "rubberband",
+   "offsets": [
+    0.0,
+    2.295,
+    5.013,
+    8.585,
+    10.935,
+    13.992,
+    17.95,
+    20.968,
+    23.367
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": false,
+   "gate": [
+    {
+     "kind": "pause",
+     "at": 4.68,
+     "len": 0.48,
+     "why": "0.48 s pause between lines 1-2 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 6.19,
+     "len": 0.35,
+     "why": "0.35 s pause inside line 3 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 8.23,
+     "len": 0.71,
+     "why": "0.71 s pause between lines 3-4 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 11.95,
+     "len": 0.38,
+     "why": "0.38 s pause inside line 5 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 13.61,
+     "len": 0.53,
+     "why": "0.53 s pause between lines 4-5 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 16.32,
+     "len": 0.4,
+     "why": "0.40 s pause inside line 6 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 17.58,
+     "len": 0.52,
+     "why": "0.52 s pause between lines 5-6 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 19.27,
+     "len": 0.31,
+     "why": "0.31 s pause inside line 7 (limit 0.3 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 20.6,
+     "len": 0.61,
+     "why": "0.61 s pause between lines 6-7 (limit 0.35 s)"
+    },
+    {
+     "kind": "pause",
+     "at": 23.1,
+     "len": 0.67,
+     "why": "0.67 s pause between lines 8-9 (limit 0.35 s)"
+    }
+   ],
+   "cut": "aligned",
+   "rejected": [
+    {
+     "try": 1,
+     "why": [
+      "0.48 s pause between lines 1-2 (limit 0.35 s)",
+      "0.35 s pause inside line 3 (limit 0.3 s)",
+      "0.71 s pause between lines 3-4 (limit 0.35 s)",
+      "0.38 s pause inside line 5 (limit 0.3 s)",
+      "0.53 s pause between lines 4-5 (limit 0.35 s)",
+      "0.40 s pause inside line 6 (limit 0.3 s)",
+      "0.52 s pause between lines 5-6 (limit 0.35 s)",
+      "0.31 s pause inside line 7 (limit 0.3 s)",
+      "0.61 s pause between lines 6-7 (limit 0.35 s)",
+      "0.67 s pause between lines 8-9 (limit 0.35 s)"
+     ]
+    }
+   ]
+  }
+ },
+ "total": 39.91
+}
