@@ -138,6 +138,22 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "it should sound happy, bubbly. maybe like a child that doesnt understand teh wrold? like theyre
+  figuring it out? I kinda like pip. The no pause only works if tis clear what is beign said. like here it gets. abit
+  confusing. but somehow in the ohter ones i never get lost. why is that?"**
+  - The narrator: a happy, bubbly kid (Pip is the base) who doesn't understand the world and is figuring it out out
+    loud; the viewer understands what the kid doesn't (the kid misreads, the viewer works it out: that gap is the
+    mystery).
+  - No-pause only works when it's clear: (1) the script is written for the ear: one short simple thought per
+    sentence, in time order, each joined to the last ("So I... Then she... But..."), no stacked clauses, names and
+    numbers spaced out; (2) the take is PERFORMED continuously (directed "one breath, keep going", each new sentence
+    lifts, the key word hit), not cut afterwards: cutting pauses out of a paused performance leaves sentence-final
+    falls running into the next line and reads as confusing; pause capping is only a safety net; (3) each sentence
+    lands on its one key word (the CAPS word in its caption chunk).
+  - Check: a cold listener follows the narration on one listen (audio only), before the picture.
+- **Owner, 2026-11-10 (on the brand narrator candidates, all adult): "i think it should still sound like a child".** The
+  brand narrator is a kid: our own distinctive child voice (as Pip was), at the fast, no-pause pace, not an adult and not
+  a copy of anyone. docs/brand.md's "twenties" narrator is superseded on age.
 - **Owner, 2026-11-10 (later): "Im thinking we do the unique voices", "Instead of the sped up trying to copy", "We need
   a brand identity", "I think the narrator does all of it essentially, plus short lines from other characters".**
   Supersedes the Orus x1.45 narrator (an imitation of the Roblox-story Adam sound). The narrator gets OUR OWN distinctive
@@ -188,6 +204,27 @@ STANDARDS.md in the same commit.
   kit's primitives (eased turns, pathing walks, vanilla-speed NPCs, a still camera in GUIs), which are the only way a
   stunt moves anything; a pre-recording lint rejects raw look/teleport calls. Checks after the render are the safety
   net, never the method. The same goes for every quality rule: build it into the tool first, check it second.
+- **Owner, 2026-11-10: "the villager keeps teleporting" ... "right at the 'i even begged' line. Also the cuts don't
+  seem to be correct, because i keep noticing them. Something i learned is about cuts that you don't notice the cuts
+  beucase the focus of attention stays int eh same location between cuts? Also idk if our timigns for the cuts are
+  correct?"** (dog_hill: the stunt hopped its villager with its own `/tp` every few ticks, a stepped "teleport", and
+  placed cast 1-2 ticks AFTER the cut, so they jump on screen.) Cast move only through the kit (`K.actor`, smooth at
+  20 Hz, placed before the cut), never a stunt's own `/tp @e`. Cuts are invisible by construction: the subject the eye
+  is on sits at about the same place in the frame on both sides of the cut (eye-trace), and the cut lands where an
+  editor would put it, not just on the line start.
+- **Owner, 2026-11-10: "for the looking and the breaking, something i noticed is that sometimes there will be a block
+  int eh way. we need to ensure there is a clear line fo sight to teh stuff we are placing or breaking."** Every dig
+  and place has a clear line of sight from the eye to the face being hit (vanilla can't reach through blocks either):
+  the kit picks a stand spot and a face the eye can see, and refuses a dig/place through a block.
+- **Owner, 2026-11-10 (kid narrator round 2): "i kidna like the sleepover"; "no pitch adjustmnet, maybe minor like 0 vs
+  +1"; "i kinda like the 1.1 pace with no pitch adjumsnet. But it sounds a little bit like artificial at times? can we
+  try to make it more realisitc?"; "maybe 1.1 with +1 pitch".** The narrator is the Leda "sleepover" take direction
+  (brand/voice_samples/kid k4) at 1.1x, pitch 0 or +1 (being decided), never more processing than that; the next
+  takes are performed continuously so no pause has to be cut (a 0.12 s gap cap made it sound spliced).
+- **Owner, 2026-11-10: "C and D feel like they have weird artifacts in them, so A sounds the best here"** (A = the
+  sleepover take, rubberband tempo 1.1, +1 semitone; C = formant-preserving speech mode, D = a room added). The
+  narrator recipe is A exactly: `voices/cast.json` `narrator` (Leda, sleepover direction, tempo 1.1, semitones 1,
+  stretch rubberband, no pause cap), nothing else on top.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

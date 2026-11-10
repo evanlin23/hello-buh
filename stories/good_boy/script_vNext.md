@@ -81,3 +81,57 @@ is unchanged. Not voiced.
   - Conflict 6 is resolved: the man is Buh, not the old farmer.
 
 **Reviews:** `reviews/vnext-rework-critic.md`; the cold read is in `docs/pitches/vnext_coldread_2026-11-10.md` (good_boy rework).
+
+## r-ear (2026-11-10): rewritten for the ear (STANDARDS 2.000)
+The owner: "only works if tis clear what is beign said"; the narrator is "a child that doesnt understand teh wrold... figuring it out".
+These lines **replace the table above**. The beats, the shots and the reveal and cut are unchanged unless noted.
+
+How they're written:
+- one short, simple thought per sentence, in time order, joined by So / Then / But;
+- no stacked clauses, and numbers kept apart from other information;
+- each sentence lands on its key word;
+- told by a happy kid who misreads what the viewer understands (model: "Mom SAID it was a FOX").
+
+The cold listener (audio-style, one fast pass) followed it. Its notes are applied here and logged in `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+**Length:** 126 words, ~24 s spoken at 5.25 words/s, plus ~2 s of reveal.
+
+| # | line (r-ear) | plays over |
+|---|---|---|
+| L01 | My HUMAN / has TRIED / to LOSE me / thirty-seven TIMES. | the teleport (old L02): Buh sprinting off, the wolf blinks in beside him |
+| L02 | He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM. | POV run (old L01); the yard crane (old L02) |
+| L03 | He HID / in the WHEAT. / He tried HILLS / at NIGHT. / He SWAM / to an ISLAND. / I POPPED up / on the BEACH. | old L04 |
+| L04 | But SITTING? / I STAY put. / A SITTING dog / waits FOREVER. | new: another tamed wolf sitting alone by an empty house; Buh looks at it |
+| L05 | He doesn't WANT / me to WAIT. / So he NEVER / makes me SIT. | new: Buh walks on, his own wolf standing at his side |
+| L06 | He keeps TALKING / about a PLACE / called COLLEGE. / It sounds BORING. | old L05 yard |
+| L07 | Every NIGHT / he SAYS, / sorry, BUDDY. / I don't KNOW / what FOR. | dusk on the sea edge (old L09 camera) |
+| L08 | Then last NIGHT, / a ZOMBIE / came for HIM. / But I GOT / there FIRST. | old L14-L16 |
+| L09 | So this MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT. | new: Dog Hill (world.build), the boxed bell below |
+| L10 | He SAID, / sit, BOY. | new: the wolf sits on D |
+| L11 | Then he SAID, / I'll BE / right BACK. | new: chat 'Buh left the game'; cut 1.0 s |
+
+## r-cast (2026-11-10): character lines in their own voices, plus spoken stress
+This **replaces the r-ear table above**. Two changes, both ruled by the lead on main:
+
+- **Characters speak their own short lines in their own voices** (STANDARDS 2.00: "the narrator does all of it essentially, plus short lines from other characters"). The narrator's lead-ins stay short ("Mom SAYS:"). Each character line is 6 words or fewer; Light Sleeper's "Walk SOFT, sweetie..." (8) is the allowed exception.
+- **Spoken stress:** the caption still colours one key word per chunk, but the voice stresses ONE word per sentence, its last key word, shown in **bold**. The delivery note says to hit only the bold words and keep the rest level and quick.
+
+**Voices:** Buh: `milo`/`buh` (Achird), canon. Narrator: the house narrator (STANDARDS 2.0-2.1).
+
+**Length:** 127 words, ~24 s spoken at 5.25 words/s, plus ~2 s of reveal.
+
+| # | who | line (bold = the spoken stress) | plays over |
+|---|---|---|---|
+| L01 | N | My HUMAN / has TRIED / to LOSE me / thirty-seven **TIMES**. | the teleport (old L02): Buh sprinting off, the wolf blinks in beside him |
+| L02 | N | He **RUNS**. / I **FOLLOW**. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to **HIM**. | POV run (old L01); the yard crane (old L02) |
+| L03 | N | He HID / in the **WHEAT**. / He tried HILLS / at **NIGHT**. / He SWAM / to an **ISLAND**. / I POPPED up / on the **BEACH**. | old L04 |
+| L04 | N | But **SITTING**? / I **STAY** put. / A SITTING dog / waits **FOREVER**. | new: another tamed wolf sitting alone by an empty house; Buh looks at it |
+| L05 | N | He doesn't WANT / me to **WAIT**. / So he NEVER / makes me **SIT**. | new: Buh walks on, his own wolf standing at his side |
+| L06 | N | He keeps TALKING / about a PLACE / called **COLLEGE**. / It sounds **BORING**. | old L05 yard |
+| L07 | N | Every NIGHT / he SAYS, / **sorry**, BUDDY. / I don't KNOW / what **FOR**. | dusk on the sea edge (old L09 camera) |
+| L08 | N | Then last NIGHT, / a ZOMBIE / came for **HIM**. / But I GOT / there **FIRST**. | old L14-L16 |
+| L09 | N | This MORNING, / he WALKED me / BACK home, / up the HILL / to his **HUT**. | new: Dog Hill (world.build), the boxed bell below |
+| L10 | N | He TURNED / to **ME**. | new: the wolf sits on D |
+| L11 | Buh | Sit, **BOY**. | new: the wolf sits on D |
+| L12 | N | Then he SAID: | new: chat 'Buh left the game'; cut 1.0 s |
+| L13 | Buh | I'll BE / right **BACK**. | new: chat 'Buh left the game'; cut 1.0 s |

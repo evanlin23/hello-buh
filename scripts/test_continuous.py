@@ -343,10 +343,19 @@ class SpeedUp(unittest.TestCase):
         with self.assertRaises(SystemExit):
             tts.speed_of(["N", "G"], cs)
 
-    def test_cast_narrator_is_orus_x145(self):   # owner 2026-11-10: "we can just do 1.45 thats fine"
+    def test_cast_narrator_is_the_sleepover_kid(self):   # owner 2026-11-10: "maybe 1.1 with +1 pitch", "A sounds the best"
         n = tts.library()["narrator"]
-        self.assertEqual((n["voice"], n["model"], n["tempo"], n["rate"]), ("Orus", "gemini-3.8-flash-tts", 0.95, 1.45))
-        self.assertEqual({k: v for k, v in tts.library()["narrator_roblox"].items()}, n)
+        self.assertEqual((n["voice"], n["model"], n["tempo"], n.get("rate"), n["semitones"], n["stretch"]),
+                         ("Leda", "gemini-3.8-flash-lite-tts", 1.1, None, 1, "rubberband"))
+        r = tts.library()["narrator_roblox"]
+        self.assertEqual((r["voice"], r["tempo"], r["rate"]), ("Orus", 0.95, 1.45))
+
+    def test_rubberband_stretch(self):
+        x = take(vowel(0.6), quiet(0.2), vowel(0.6))
+        self.assertEqual(tts.stretch_of(["N"], {"N": {"semitones": 1, "stretch": "rubberband"}}), (1.0, "rubberband"))
+        self.assertEqual(tts.stretch_of(["N"], {"N": {}}), (0.0, "atempo"))
+        y = tts.speed_up(x, 1.1, 1.0, 1, "rubberband")
+        self.assertAlmostEqual(len(y) / len(x), 1 / 1.1, delta=0.03)
 
     def test_gate_judges_the_sped_up_take(self):
         # a 0.45 s pause between the lines: over the 0.35 s limit as Gemini read it, 0.33 s once played 1.45x faster
@@ -384,9 +393,12 @@ class PauseCap(unittest.TestCase):
         loud = lambda z: int(np.sum(np.abs(z) > 0.05))
         self.assertAlmostEqual(loud(x), loud(y), delta=0.02 * SR)          # the words are untouched
 
-    def test_cast_narrator_caps_pauses(self):
-        cs = tts.resolve({"N": {"ref": "narrator", "role": "narrator"}})
-        self.assertEqual(cs["N"].get("pause_cap"), 0.12)
+    def test_cast_narrator_pause_caps(self):
+        # the kid narrator is performed continuously and never gap-cut (owner: the capped take sounded artificial);
+        # the Roblox narrator keeps its cap
+        cs = tts.resolve({"N": {"ref": "narrator", "role": "narrator"}, "R": {"ref": "narrator_roblox", "role": "narrator"}})
+        self.assertIsNone(cs["N"].get("pause_cap"))
+        self.assertEqual(cs["R"].get("pause_cap"), 0.12)
 
 
 def old_whisper_cut(x, heard, lw, fw):

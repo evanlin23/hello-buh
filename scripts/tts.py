@@ -675,7 +675,7 @@ def as_heard(x, who, cs):
     `pause_cap` (s), every silence inside the take shortened to it, only in its silent middle (cap_pauses: never within
     60 ms of a word, crossfaded). Owner 2026-11-10, on s3, whose gaps were cut to ~0.06 s: "its fine to have those cuts,
     i didnt even notice" (the narrator "just yaps on and on"). Words are never touched."""
-    x = speed_up(x, *speed_of(who, cs))
+    x = speed_up(x, *speed_of(who, cs), *stretch_of(who, cs))
     caps = {float(cs[w]["pause_cap"]) for w in who if cs[w].get("pause_cap")}
     if caps:
         x = shorten_pauses(x, min(caps))
@@ -709,15 +709,32 @@ def shorten_pauses(x, cap, keep=0.04, xf=0.02):
     return np.concatenate(out).astype(np.float32)
 
 
-def speed_up(x, tempo=1.0, rate=1.0):
+def stretch_of(who, cs):
+    """(semitones, engine) of a request's speakers: cast `semitones` (a pitch shift, formants move with it) and
+    `stretch` ("rubberband" or the default "atempo"). Owner 2026-11-10, on the sleepover kid narrator: "A sounds the
+    best" = rubberband tempo 1.1, +1 semitone ("C and D feel like they have weird artifacts": no formant-preserving
+    speech mode, no room). One value for the whole take, like speed_of."""
+    sp = {(float(cs[w].get("semitones") or 0.0), cs[w].get("stretch") or "atempo") for w in who}
+    if len(sp) > 1:
+        raise SystemExit(f"{list(who)}: different semitones/stretch in one request {sorted(sp)}: voice them in separate requests")
+    return sp.pop() if sp else (0.0, "atempo")
+
+
+def speed_up(x, tempo=1.0, rate=1.0, semitones=0.0, engine="atempo"):
     """The Roblox narrator's speed-up of a WHOLE raw take (owner 2026-11-10: "s3_gemini_orus.mp3 is good", "we can just
     do 1.45 thats fine"; docs/voices.md "The Roblox narrator"), before it is trimmed, sliced, gated or shaped: `tempo`
     = atempo (pitch kept), then `rate` = played faster by resampling (asetrate + aresample: pitch, formants and tempo
     all rise by `rate`, no pitch correction). The same ffmpeg filters as out/voice_match/s3, minus its gap cut: a
     continuous take is never edited inside; a take with pauses is re-taken (take_gate on the sped-up take)."""
-    if tempo == 1.0 and rate == 1.0:
+    if tempo == 1.0 and rate == 1.0 and not semitones:
         return x
-    af = ([f"atempo={tempo:g}"] if tempo != 1.0 else []) + ([f"asetrate={round(SR * rate)}", f"aresample={SR}"] if rate != 1.0 else [])
+    if engine == "rubberband":   # the owner's pick (stretch_of): tempo and pitch in one high-quality pass
+        af = [f"rubberband=tempo={tempo:g}:pitch={2 ** (semitones / 12):.6f}:pitchq=quality"]
+    else:
+        af = ([f"atempo={tempo:g}"] if tempo != 1.0 else [])
+        if semitones:
+            af.append(f"rubberband=pitch={2 ** (semitones / 12):.6f}:pitchq=quality")
+    af += [f"asetrate={round(SR * rate)}", f"aresample={SR}"] if rate != 1.0 else []
     return np.frombuffer(pcm(["-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-af", ",".join(af), "-f", "f32le", "-"],
                              np.asarray(x, np.float32).tobytes()), np.float32).copy()
 
@@ -1076,8 +1093,10 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None,
               + "; ".join(f["why"] for f in best["res"]["fails"]) + ": a blocker (speaker_check GATE). Fix the text or "
               "the direction, or ./hb voice <stunt> --retakes more")
     tempo, rate = speed_of([w], cs)
+    semis, engine = stretch_of([w], cs)
     meta = {"lines": [lid for _, lid, _, _ in lines], "file": f"beat_{beat['id']}.wav", "dur": round(len(y) / SR, 3),
             **({"tempo": tempo, "rate": rate} if (tempo, rate) != (1.0, 1.0) else {}),
+            **({"semitones": semis, "stretch": engine} if semis or engine != "atempo" else {}),
             "offsets": [round(a / SR, 3) for a in starts[:-1]], "model": best["model"], "try": best["try"],
             "tries": len(tried), "fixes": best["fixes"], "ok": best["res"]["ok"], "gate": best["res"]["fails"],
             **({"cut_faults": cuts} if cuts else {}),
