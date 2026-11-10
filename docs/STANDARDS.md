@@ -75,7 +75,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    r:r221d0a
 4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
    pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
-   only between beats. Check: pace (pauses), speaker_check (CLIPPED), panel. r:rfd4907
+   only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a
+   story with `"voice_takes": "beat"` (scripts/take_gate.py, docs/voices.md "Continuous takes"). r:rfd4907
 
 ## 3. Set
 1. **No superflat**: built into real terrain with relief, at full scale, with depth in every shot (foreground,

@@ -23,9 +23,25 @@ def load(f):
     return np.frombuffer(raw, np.float32)
 
 
+def inner_edges(sd):
+    """{line id: (start, end)}: which edges of a line are boundaries inside a continuous take (voice.json `beats`,
+    story.json "voice_takes": "beat"). The take plays whole across them, so they are not cuts."""
+    vp = os.path.join(sd, "voice", "voice.json")
+    if not os.path.exists(vp):
+        return {}
+    import json
+    out = {}
+    for b in (json.load(open(vp)).get("beats") or {}).values():
+        for lid in b["lines"]:
+            out[lid] = (lid != b["lines"][0], lid != b["lines"][-1])
+    return out
+
+
 def main(sd):
     bad = 0
+    inner = inner_edges(sd)
     for f in sorted(glob.glob(os.path.join(sd, "voice", "L*.wav"))):
+        skip = inner.get(os.path.basename(f)[:-4], (False, False))
         x = load(f)
         if len(x) < 1600:
             continue
@@ -34,7 +50,9 @@ def main(sd):
         pk = db.max()
         head, tail = db[:2].max() - pk, db[-2:].max() - pk
         msg = []
-        for name, v in (("start", head), ("end", tail)):
+        for name, v, sk in (("start", head, skip[0]), ("end", tail, skip[1])):
+            if sk:   # inside a continuous take: not a cut
+                continue
             if v > -30:
                 msg.append(f"CUT at the {name} ({v:.0f} dB from peak)")
             elif v > -40:

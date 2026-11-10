@@ -70,12 +70,48 @@ def _marks(timeline, start, ids=None, on_respawn=()):
     return out
 
 
+def voice_starts(voice, marks):
+    """Where each line's audio really starts, in seconds of the Short, and what to lay there. A plain line: its own
+    mark, its own wav. Continuous takes (voice.json `beats`, story.json "voice_takes": "beat"; docs/voices.md): the
+    whole beat take is laid once, at the beat's first marked line minus that line's offset in the take, and every line
+    of the beat starts at that point plus its own offset, whatever its mark says (the stunt times the marks from the
+    same offsets, lib/story.js beatTicks, so they agree to a tick). -> ({line id: s}, [(s, wav name, [line ids])])"""
+    at = {lid: t for t, lid in marks}
+    starts, lay = dict(at), []
+    beats = voice.get("beats") or {}
+    placed = set()
+    for t, lid in marks:
+        bid = (voice["lines"].get(lid) or {}).get("beat")
+        if bid is None or bid not in beats:
+            lay.append((t, f"{lid}.wav", [lid]))
+            continue
+        if bid in placed:
+            continue
+        placed.add(bid)
+        b = beats[bid]
+        t0 = t - voice["lines"][lid]["offset"]
+        ids = [l for l in b["lines"] if l in at]
+        for l in ids:
+            starts[l] = t0 + voice["lines"][l]["offset"]
+        lay.append((t0, b.get("file", f"beat_{bid}.wav"), ids))
+    return starts, lay
+
+
+PICTURE_DRIFT = 0.15   # s: a continuous take's line mark this far from its voice is reported (the picture is off)
+
+
 def narration_wav(story_dir, timeline, start, dur, out):
     story, voice = _lines(story_dir)
     sr = 48000
     track = np.zeros(int((dur + 1) * sr), np.float32)
-    for t, lid in _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ())):
-        with wave.open(str(pathlib.Path(story_dir) / "voice" / f"{lid}.wav")) as w:
+    marks = _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ()))
+    starts, lay = voice_starts(voice, marks)
+    for t, lid in marks:
+        if abs(starts[lid] - t) > PICTURE_DRIFT:
+            print(f"narration: {lid}'s mark is {t - starts[lid]:+.2f} s off its place in the continuous take: the picture "
+                  f"runs {'late' if t > starts[lid] else 'early'} there (time the stunt with K.line, lib/story.js)")
+    for t, wav, _ in lay:
+        with wave.open(str(pathlib.Path(story_dir) / "voice" / wav)) as w:
             x = np.frombuffer(w.readframes(w.getnframes()), np.int16 if w.getsampwidth() == 2 else np.int32).astype(np.float32)
             x /= 32768.0 if w.getsampwidth() == 2 else 2 ** 31
             src_sr = w.getframerate()
@@ -187,8 +223,11 @@ def caption_events(story_dir, timeline, start, dur, who=False):
     (0.3 s past its last word only when the next line is over 1.2 s away)."""
     story, voice = _lines(story_dir)
     marks = _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ()))
+    # a line's words are timed from where its audio starts: its mark, or its place in a continuous take (voice_starts)
+    vs, _ = voice_starts(voice, marks)
     ev = []
-    for n, (t, lid) in enumerate(marks):
+    for n, (_, lid) in enumerate(marks):
+        t = vs[lid]
         v = voice["lines"][lid]
         nxt = marks[n + 1][0] if n + 1 < len(marks) else dur
         for i, ((a, b), text) in enumerate(zip(v["chunks"], v["captions"])):
@@ -202,7 +241,7 @@ def caption_events(story_dir, timeline, start, dur, who=False):
     # timed by voice/words.json (Whisper word starts) when present, else by each word's share of the chunk's letters.
     # "captions": "chunk" keeps the 2-3 word chunks.
     if story.get("captions", "word") == "word":
-        ev = _one_word(ev, story_dir, marks)
+        ev = _one_word(ev, story_dir, [(vs[lid], lid) for _, lid in marks])
     # owner 2026-11-10: "The captions actually seem behind". Whisper's word starts are not late (0.14 s earlier than a
     # wav2vec2 forced alignment on gold_for_the_portal, 113 words), but a word shown on its onset reads as late: picture
     # behind sound is noticed from ~45 ms, picture ahead of sound is tolerated to ~125 ms (ITU-R BT.1359). So every
@@ -224,7 +263,8 @@ def caption_events(story_dir, timeline, start, dur, who=False):
 
 
 def _one_word(ev, story_dir, marks):
-    """Split each (t0, t1, text, lid) chunk into one event per word."""
+    """Split each (t0, t1, text, lid) chunk into one event per word. marks: [(where the line's audio starts, id)]
+    (words.json times are from the start of each line's wav)."""
     import json as _json
     wf = pathlib.Path(story_dir) / "voice" / "words.json"
     words = _json.loads(wf.read_text()) if wf.exists() else {}

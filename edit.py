@@ -1456,7 +1456,8 @@ def main():
         # a fade at the very end: a Short that ends on a blast cut the boom off at full volume (frame review,
         # story_runaway). It covers the air after the last spoken word (0.25 s for a spoken ending, up to 0.6 s)
         _story, _voice = story_track._lines(args.story)
-        _ends = [t + _voice["lines"][lid]["end"] for t, lid in story_track._marks(story_tl, args.start, {l["id"] for l in _story["lines"]}, _story.get("start_on_respawn", ()))]
+        _vs, _ = story_track.voice_starts(_voice, story_track._marks(story_tl, args.start, {l["id"] for l in _story["lines"]}, _story.get("start_on_respawn", ())))
+        _ends = [t + _voice["lines"][lid]["end"] for lid, t in _vs.items()]   # (a continuous take's lines: their place in the take)
         story_fade = min(0.6, max(0.25, dur - max(_ends, default=0) - 0.05))
         graph.append(f"[{n_in}:a]afade=t=out:st={max(0, dur - story_fade):.3f}:d={story_fade:.3f},aresample=48000[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
