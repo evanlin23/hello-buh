@@ -234,7 +234,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - `face_on` windows are sequential (one open at a time): `face_off` before the next `face_on`.
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
-- No block entities render (beds, bells, chests, signs): build sets without them.
+- Block entities render now (beds, bells, chests with their lids, signs, banners, skulls, shulkers), and an opened chest, barrel or shulker box shows its container screen with the contents (docs/engine_features.md). Anything else the renderer lacks: build it (docs/engine_features.md), don't stage around it.
 - Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands. Keep sneak (and
   any other key the next shot needs) held through the cut (`K.cut` does): a stunt that clears its controls before the
   teleport stands the camera up for a tick and it eases back down on screen. `scripts/rec_check.py` flags both.
