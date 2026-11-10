@@ -221,7 +221,7 @@ module.exports = {
     // ---- L02: the crane up the carpet street ('est'); on "The DOGHOUSE?" the insert on the doghouse (audit B2)
     K.actor('wolf', { x: this.dog.x, y: this.dog.y, z: this.dog.z, yaw: -40 })   // the doghouse's wolf: the insert's subject
     await K.cutShot('est')
-    await line('L02', async (k, at) => { if (k === at(2) - 1) await K.cutShot('dog'); K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
+    await line('L02', async (k, at) => { if (k === at.cut(2)) await K.cutShot('dog'); K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
     away('walk1'); away('walk2')
 
     // ---- L03: POV walking east past the well toward the bell in its wool box ("Even the BELL wears a SWEATER")
@@ -322,7 +322,7 @@ module.exports = {
       if (k === at(2) - 4) bot.setQuickBarSlot(1)
       if (k >= at(2) && !placed && !digging) { placed = true; K.place(new ctx.Vec3(X - 1, F + 2, Z), 'jukebox', { against: new ctx.Vec3(X - 1, F + 1, Z) }).then(() => { say('/item replace entity @s hotbar.1 with white_carpet 64'); jbAt = k; from11 = { ...K.base } }) }
       if (jbAt !== null && from11) { const t = k - jbAt; K.turnTo(from11, C(Math.sin(t / 7) * 0.6, 0.4, Math.cos(t / 9) * 0.3), Math.min(1, t / 24)) }   // then down into the open slot: "Wells ECHO"
-      if (k === at(4) - 1) { shriek(); craneAt = ctx.tick; await K.cutShot('crane') }   // ECHO
+      if (k === at.cut(4)) { shriek(); craneAt = ctx.tick; await K.cutShot('crane') }   // ECHO
       if (!digging) {
         if (!placed && dug === 0) K.base = K.aim(C(0, 2.0, 0))
         look(k)
