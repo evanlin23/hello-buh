@@ -74,6 +74,12 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   multi-speaker with acting direction, as the AI-dilemma Shorts do), no 1.45x sped-up narrator by default, real
   delivery (emotion, pauses, emphasis), built sets that look designed (not a clearing in the wild), and plots with
   more invention. The cinematic engine (shots, looks) is the direction for the look.
+- **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
+  effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
+  a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
+  distance), never a few blocks on a flat cleared plain. `clearSet`'s wide flat clearing is the look to avoid: pick a
+  site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
+  or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog.
 
 - **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
   minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
