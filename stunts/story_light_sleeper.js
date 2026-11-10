@@ -35,7 +35,7 @@ module.exports = {
   idleLife: true,
   hideHand: false,
   look: { mood: 'auto', shadows: true, dof: { aperture: 0.85 }, cloudNight: 0.42 },   // docs/look.md: the grade follows the clock
-  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true, punch: ['death'] },   // a punch-in on the death: the payoff's picture change (pace gate)
+  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true, flash: ['death'] },   // the hit's flash on the death: the payoff's picture change (pace gate)
   expectDeath: true,
 
   async setup (ctx) {
@@ -406,7 +406,7 @@ module.exports = {
       if (r % 6 === 0 && r < 30) ctx.particles('block', P(0, 1, 4), { block: 'white_carpet' })
       if (r === 26) { const e = wEnt(); if (e) ctx.mark('pose', { ids: [e.id], roar: true }); ctx.sound('entity.warden.roar', 1.4, 1) }
       if (k === toPov) { K.ctl('jump', false); K.shot('pov') }
-      if (k === T16 - 9) {   // the beam on the live picture, 0.45 s before the hit lands (review round 2)
+      if (k === T16 - 16) {   // the beam on the live picture, 0.8 s before the hit: its rings (16 ticks) are gone by the death screen
         const eye = bot.entity.position
         ctx.sound('entity.warden.sonic_boom', 1.6, 1)
         ctx.particles('sonic_boom', P(0.5, 2.6, wd.z), { tx: +eye.x.toFixed(3), ty: +(eye.y + 1.62).toFixed(3), tz: +eye.z.toFixed(3) })
