@@ -130,6 +130,12 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "sure 4.5 is fine bc that matches the best. also, we should have absolutely no pauses in like
+  the first few seconds right, bc those are the most critical? Like the other this dog has been sitting there has a
+  brief pause right in the first few seconds."** The narrator talks at ~4.5 words/s while speaking (runaway: 4.6).
+  No "..." in any line spoken in the first 5 s (Gemini turns it into a half-second stop: Dog on the Hill's L01 had
+  0.53 s and L02 0.54 + 0.71 s), and the gap between opening lines stays at one breath (runaway's 0.37-0.40 s).
+  `./hb pace` blocks a pause inside an opening line over 0.35 s or a gap between opening lines over 0.6 s.
 - **Owner, 2026-11-10: "why does the narrator keep whispering? is the narrator the child or like a woman? i think it
   should be like a child most of the time right? like bubbly happy" and "the audio must land like start talking the
   first moment the video starts, same with the visual hook".** The whispering was ours: the library narrator was
