@@ -57,10 +57,13 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    colours one key word per chunk, but the voice doesn't hit every CAPS word (a cold listener heard that as "a flat
    drumbeat"). Character lines of about 6 words or fewer are spoken by the character in their own voice (00).
    Check: cold listener, audio only, one listen. r:r919ea3
-0000. **The narrator recipe (owner's pick)**: Gemini Leda with the "sleepover" direction (spooky-funny story at a
-   sleepover, fast and gleeful; brand/voice_samples/kid k4), rubberband tempo 1.1x and +1 semitone, nothing else (no
-   pause cap, no formant mode, no room: "weird artifacts"); performed continuously so no pause is cut. It is
-   `voices/cast.json` `narrator`; the Orus x1.45 voice is now `narrator_roblox` only. Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c
+0000. **The narrator recipe (owner's pick)**: Pip as heard in Dog on the Hill v2: Gemini Leda on gemini-3.8-flash-lite-tts,
+   one single-speaker request "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing
+   story; not whispery, breathy or soft]" + the lines in plain sentence case (`plain_say`: no CAPS, no ellipses);
+   natural tempo, no speed-up, no pitch shift, no pause cap; performed continuously, re-taken never trimmed; the take gate allows
+   sentence breaks up to 0.6 s (cast `max_pause`), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
+   earlier picks are `narrator_sleepover` (k4, rubberband 1.1x +1 st) and `narrator_roblox` (Orus x1.45), history only.
+   Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c r:r754946
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
    (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.
@@ -224,6 +227,10 @@ actions left silent). r:rc85ccc r:r36632d
 - A finding that has happened before becomes a rule (cinematic-style "Mistakes already solved", or the house rules).
 
 ## 10. Publish
+- **Stories go to the second channel, "Buh Stories"**, never @HelloBuh; uploads wait for the owner to set that channel
+  up. Check: owner. r:r732bc0
+- **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
+  on. Check: owner. r:r77977b
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

@@ -1197,12 +1197,12 @@ function selfAt (t) {
 let cropNow = 0
 const MW = (STUNT_MOD.wideMaster || process.env.WIDE_MASTER) ? Math.max(W, Math.round(H * 16 / 9)) : W
 const WIDE_HAND_X = require('./lib/wide_hand').wideHandX({ outW: W, masterW: MW, H, rec, stunt: STUNT_MOD, env: process.env })   // the hand inside the crop (lib/wide_hand.js)
-const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
+const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name, ...(e.eyeTrace === false ? { eyeTrace: false } : {}) })).sort((a, b) => a.t - b.t)
 for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
 function shotAt (t) {
   let s = null
   for (const m of SHOT_MARKS) { if (m.t <= t + 1e-6) s = m; else break }
-  return s && SHOTS[s.name] ? { ...SHOTS[s.name], name: s.name, t0: s.t } : null
+  return s && SHOTS[s.name] ? { ...SHOTS[s.name], name: s.name, t0: s.t, ...(s.eyeTrace === false ? { eyeTrace: false } : {}) } : null
 }
 function entityPosAt (id, t) {
   const i = Math.floor(t), f = t - i, a = ENT.get(i) && ENT.get(i).get(id)
@@ -1321,15 +1321,23 @@ const etOccluded = (solidAt) => (cam, p) => {
   for (let s = 0.3; s < L - 0.4; s += 0.25) if (solidAt(cam.x + dx * s / L, cam.y + dy * s / L, cam.z + dz * s / L)) return true
   return false
 }
-function etAttention (cam, t, sh, solidAt) {
+// carry: in a first-person frame right after a camera shot, that shot (its subject is what the eye is still looking for)
+function etAttention (cam, t, sh, solidAt, carry = null) {
   const camShot = !!(sh && !sh.pov)
   const g = ET.geom({ W, H, MW, cropX: camShot ? sh.cropX : 0 })
   const aim = camShot && sh.look && !sh.lookPath ? targetAt(sh.look, t) : null   // what the shot frames (the centre before eyeTrace)
-  return ET.attention({ ...cam, fov: cam.fov || 70 }, g, { entities: etEntities(t, camShot), subject: camShot ? ET.subjectOf(sh, rec.set) : null, aim, occluded: etOccluded(solidAt) })
+  const subject = camShot ? ET.subjectOf(sh, rec.set) : carry ? ET.subjectOf(carry, rec.set) : null
+  return ET.attention({ ...cam, fov: cam.fov || 70 }, g, { entities: etEntities(t, camShot), subject, aim, occluded: etOccluded(solidAt) })
 }
 const START_T = (() => { const e = (rec.timeline || []).find(m => m.event === 'start'); return e ? e.t / 50 : 0 })()
+// The first-person view the player had at tick t (the eye height a stunt.self sets).
+const povCamAt = (t) => { const c = camAt(t), s = selfAt(t); return { ...c, y: s && s.eye ? c.y - (EYE - s.eye) : c.y, fov: 70 } }
+// A first-person shot is eye-traced only when it follows a camera shot (a cut from outside back into the head): the
+// view is turned so what the eye lands on in the first-person frame (the most salient cast member, else the crosshair)
+// sits where the camera shot's subject was, then eases back to the player's own aim (hold/settle as below). A cut from
+// first person to first person is the player's own turn: aim K.cut there (the ./hb cuts check still measures it).
 function eyeTraceOffset (sh, solidAt) {
-  if (!ET_ON || sh.eyeTrace === false || sh.pov) return null
+  if (!ET.traced(sh, sh.pov ? shotAt(sh.t0 - 20 / FPS) : null, ET_ON)) return null
   const key = `${sh.name}@${sh.t0}`
   if (ET_MEMO.has(key)) return ET_MEMO.get(key)
   ET_MEMO.set(key, null)   // (a re-entrant call while this one computes gets no offset)
@@ -1338,10 +1346,10 @@ function eyeTraceOffset (sh, solidAt) {
   const tp = sh.t0 - 20 / FPS   // the last frame before the cut
   if (tp >= START_T) {
     const prev = shotAt(tp)
-    const pc = prev && !prev.pov ? shotCam(prev, tp, solidAt) : (() => { const c = camAt(tp), s = selfAt(tp); return { ...c, y: s && s.eye ? c.y - (EYE - s.eye) : c.y, fov: 70 } })()
+    const pc = prev && !prev.pov ? shotCam(prev, tp, solidAt) : povCamAt(tp)
     const was = pc && etAttention(pc, tp, prev, solid)
-    const nc = shotCamBase(sh, sh.t0, solidAt)
-    const now = nc && etAttention(nc, sh.t0, sh, solid)
+    const nc = sh.pov ? povCamAt(sh.t0) : shotCamBase(sh, sh.t0, solidAt)
+    const now = nc && etAttention(nc, sh.t0, sh, solid, sh.pov ? prev : null)
     if (was && now) {
       const g = ET.geom({ W, H, MW, cropX: sh.cropX || 0 })
       const o = ET.aimOffset({ ...nc, fov: nc.fov || 70 }, g, now.point, ET.clampBox(was), sh.eyeTrace && sh.eyeTrace.max)
@@ -1351,18 +1359,20 @@ function eyeTraceOffset (sh, solidAt) {
   ET_MEMO.set(key, off)
   return off
 }
+// the eye-trace turn at tick t of shot sh: held for the cut, then eased back to the shot's own framing (the eye follows a
+// slow re-frame; a held offset crept shot to shot until everything sat at the box's edge): full for `hold` s, none
+// from `settle` s (0.5 / 2.0)
+function eyeTraceAt (sh, t, solidAt) {
+  const o = eyeTraceOffset(sh, solidAt)
+  if (!o) return null
+  const w = ET.weight(sh.eyeTrace, (t - sh.t0) / 20)
+  return w > 0 ? { dyaw: o.dyaw * w, dpitch: o.dpitch * w } : null
+}
 function shotCam (sh, t, solidAt) {
   const c = shotCamBase(sh, t, solidAt)
   if (!c) return c
-  const o = eyeTraceOffset(sh, solidAt)
-  if (o) {
-    // held for the cut, then eased back to the shot's own framing (the eye follows a slow re-frame; a held offset crept
-    // shot to shot until everything sat at the box's edge): full for `hold` s, none from `settle` s (0.5 / 2.0)
-    const et = typeof sh.eyeTrace === 'object' ? sh.eyeTrace : {}, u = (t - sh.t0) / 20
-    const h = et.hold ?? 0.5, st = Math.max(h + 0.1, et.settle ?? 2.0), x = Math.max(0, Math.min(1, (u - h) / (st - h)))
-    const w = 1 - x * x * (3 - 2 * x)
-    c.yaw += o.dyaw * w; c.pitch += o.dpitch * w
-  }
+  const o = eyeTraceAt(sh, t, solidAt)
+  if (o) { c.yaw += o.dyaw; c.pitch += o.dpitch }
   return c
 }
 // the model an item draws with: its item definition (items/<name>.json, 1.21.4+; many block items
@@ -1995,7 +2005,11 @@ function camAtLive (t) {
       const sh = shotAt(t)
       let c = sh && !sh.pov ? shotCam(sh, t, solidAt) : null
       const mode = c ? `shot ${sh.name}` : sh ? `shot ${sh.name} (pov)` : 'pov'
-      if (!c) { c = camAt(t); const s = selfAt(t); if (s && s.eye) c = { ...c, y: c.y - (EYE - s.eye) } }
+      if (!c) {
+        c = camAt(t); const s = selfAt(t); if (s && s.eye) c = { ...c, y: c.y - (EYE - s.eye) }
+        const o = sh && sh.pov ? eyeTraceAt(sh, t, solidAt) : null
+        if (o) c = { ...c, yaw: c.yaw + o.dyaw, pitch: c.pitch + o.dpitch }
+      }
       lines.push(JSON.stringify({ t, mode, x: r3(c.x), y: r3(c.y), z: r3(c.z), yaw: r3(c.yaw), pitch: r3(c.pitch), fov: c.fov || 70 }))
     }
     process.stdout.write(lines.join('\n') + '\n')
@@ -2635,6 +2649,10 @@ else:
     const shotNow = process.env.CAM ? null : shotAt(t)
     cropNow = shotNow && !shotNow.pov && shotNow.cropX ? Math.max(-1, Math.min(1, shotNow.cropX)) : 0
     const camShot = !!(shotNow && !shotNow.pov)
+    if (shotNow && shotNow.pov) {   // a first-person shot right after a camera shot: eye-traced (eyeTraceOffset)
+      const o = eyeTraceAt(shotNow, t, (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') })
+      if (o) { cam.yaw += o.dyaw; cam.pitch += o.dpitch }
+    }
     if (camShot) {
       const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
       const c = shotCam(shotNow, t, solidAt); if (c) Object.assign(cam, c); cam.aim = null

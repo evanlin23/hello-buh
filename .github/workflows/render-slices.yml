@@ -16,6 +16,12 @@
 #            (scripts/finish_render.sh), uploads out/<name>.mp4 (artifact "short") and commits it to the render
 #            branch as renders/out/<name>.mp4 with renders/result.json, so `render_on_actions.sh --fetch <name>`
 #            gets it back with plain git (no gh token needed)
+#   check    in parallel with the slices (no wall-clock added): ./hb check on the recording (motion lint, rec_check with
+#            the cast and sight sections, lint, continuity, framing, owner, cuts, caption sync, on-screen sound) ->
+#            artifact "check" (renders/out/<name>.check.json + .txt). Never fails the run.
+#            finish then burns "CHECK FAILED: <n> blockers" (or "CHECK DID NOT RUN") over the top of the Short when it
+#            has blockers (scripts/check_label.py; a ~30 s re-encode only then) and commits the report beside the mp4,
+#            so no preview reaches the owner with an unflagged known blocker (2026-11-10)
 #   failed   on any failure: renders/result.json says so, with the run's URL
 name: render-slices
 on:
@@ -80,8 +86,28 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: { name: "seg-${{ matrix.i }}", path: "work/segs/*.mkv", retention-days: 3, compression-level: 0, if-no-files-found: error }
 
+  check:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    continue-on-error: true   # a flag for the preview, never a reason to lose the render
+    env:
+      NAME: ${{ needs.plan.outputs.name }}
+      STUNT: ${{ needs.plan.outputs.stunt }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/render-setup
+      - name: hb check on the recording (no server needed)
+        run: |
+          gunzip -c "renders/slices/$NAME.rec.json.gz" > "work/$NAME.rec.json"
+          mkdir -p renders/out
+          ./hb check "$STUNT" --rec "work/$NAME.rec.json" --report "renders/out/$NAME.check.json" || echo "check exit $?"
+          cat "renders/out/$NAME.check.txt" || echo "no report"
+      - uses: actions/upload-artifact@v4
+        with: { name: check, path: "renders/out/*.check.*", retention-days: 14, if-no-files-found: warn }
+
   finish:
-    needs: [plan, slice]
+    needs: [plan, slice, check]
     if: always() && needs.plan.result == 'success' && (needs.slice.result == 'success' || needs.slice.result == 'skipped')
     runs-on: ubuntu-24.04
     timeout-minutes: 40
@@ -110,6 +136,16 @@ jobs:
           python3 scripts/render_slices.py join ${{ needs.plan.outputs.frames }}
       - name: audio, replay, edit
         run: scripts/finish_render.sh "$NAME" "$STUNT"
+      - name: the check report (the parallel check job)
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with: { name: check, path: renders/out }
+      - name: label the Short with its check verdict (CHECK FAILED / DID NOT RUN)
+        run: |
+          R="renders/out/$NAME.check.json"; [ -f "$R" ] || R=""
+          python3 scripts/check_label.py "out/$NAME.mp4" $R
+          cp "out/$NAME.check.txt" "renders/out/$NAME.check.txt"
+          cat "renders/out/$NAME.check.txt"
       - uses: actions/upload-artifact@v4
         with: { name: short, path: "out/${{ needs.plan.outputs.name }}.mp4", retention-days: 14, if-no-files-found: error }
       - name: commit the Short to the render branch
