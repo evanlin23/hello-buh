@@ -24,6 +24,14 @@ shots, clean continuity, a "why tf?" hook and a twist worth a rewatch.
 4. Create your branch `claude/story-<name>` once you have a name; claim the premise in `docs/stories.md` in its own
    commit and push it, so two sessions never make the same story.
 
+## The format (owner, 2026-11-10)
+**These are YouTube Shorts**, in the channel's established layout: 1080x1920 vertical, the title/caption band on top,
+the gameplay picture in the middle (1080x1011), the bottom band below; captions as now. Cinematic shots are rendered
+as a **wide 1920x1080 master** and **cropped to the middle frame** in the edit ("we should have the full wide, but then
+crop it", owner): the 1080-tall master crops to 1080x1011 with no upscaling, and the wide master is kept for trailers
+or long-form. Compose every shot for the centre crop (subjects inside the middle 1080 columns, or give the shot a crop
+offset); the framing checks judge the CROPPED frame. Never deliver a 16:9 Short.
+
 ## 1. Write (writers' room, ~30 min)
 Run `.claude/skills/story-write/SKILL.md` end to end: 10 pitches → premise test → pick (skip anything claimed or
 too close to a made story; vary the lane: eerie / absurd / heart) → beat sheet with a clue map → story.json v2
