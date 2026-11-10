@@ -117,3 +117,8 @@ trailers your environment gives. Never commit licensed assets (songs/, sfx/mixki
 Narrator-first: one first-person narrator carries the story; other characters get at most 1-3 short lines at key beats
 (hook, turn, payoff), each in a clearly different voice with a colour-coded caption. No dialogue scenes. Details and the
 reason: docs/stories.md, House rules.
+
+## Missing engine features (owner, 2026-11-10)
+A shot the renderer can't draw yet is a feature to build, not a reason to rewrite the scene: build it
+(docs/engine_features.md) and merge it to main once existing Shorts render unchanged. Only a feature that would take
+more than ~2 h gets staged around, and it's logged in docs/engine_requests.md.

@@ -130,6 +130,13 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, on engine gaps (no sitting, no drink pose, no off-hand item, chests not showing their contents,
+  campfire smoke): "why cant we build the renderer out to allow all of these? and more when they come up?"** So the
+  story decides and the engine follows. When a script needs something the renderer can't draw yet, **build the feature**
+  (docs/engine_features.md: poses, particles, block-entity animations, GUI screens, mob animations), test it so existing
+  Shorts render unchanged, and merge it to main for every story. Don't rewrite the scene around the gap. Only if the
+  feature would take more than about 2 hours: stage around it this time, and log it in docs/engine_requests.md so it
+  gets built next.
 - **Owner, 2026-11-10, on voices: "maybe we should have a narrator?" … then, on narrator-first with a few character
   lines: "i think that makes the most sense yeah".** Our best story (runaway: one first-person narrator, 3.2 subs per
   1k views, the channel's best) and the cinematic pilots (several voices: "mixed up", one read as ASMR) point the same
