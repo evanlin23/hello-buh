@@ -29,7 +29,7 @@ const PARK = [0, 80, 140]                   // the off-stage Grandpa waits here 
 // the road out of the gate: the centre line (gate-relative x, z), east then south-east up onto the plateau
 const ROAD = [[0, 0.5], [14, 0.5], [26, 12.5], [34, 24.5], [38, 32.5]]
 const TOWER = [44, 40]                      // the watchtower's centre (template corner at TOWER - 7)
-const TIMES = { S01: 23500, S02: 12500, S03: 12600, S05: 23800, S06: 12000, S07: 14000, S08: 13000, S10: 14000, S11: 12300, S12: 12400, S13: 13000 }
+const TIMES = { S01: 23500, S02: 12500, S03: 12600, S05: 23800, S06: 12000, S07: 14000, S08: 13000, S10: 14000, S11: 12300, S12: 12400, S13: 12800 }
 
 // the voice timing at module load (the camera shots key on words: S07's tilt on "CHEST")
 let V = null
@@ -91,6 +91,12 @@ module.exports = {
       if (dz === -3 || dz === 3) fast(`/setblock ${A(0, g + 6, dz)} lantern`)
     }
     for (let dz = -14; dz <= -4; dz++) fast(`/setblock ${A(-1, groundAt(-1, dz) + 2, dz)} spruce_slab[type=top]`)   // the walkway (S02)
+    {   // the gatehouse (audit F10: two posts read as "a tree and a fence"): a lintel, a slab roof, lanterns under it
+      const g = Math.max(groundAt(0, -3), groundAt(0, 3))
+      fast(`/fill ${A(0, g + 5, -3)} ${A(0, g + 5, 3)} spruce_log[axis=z]`)
+      fast(`/fill ${A(-1, g + 6, -4)} ${A(1, g + 6, 4)} spruce_slab[type=bottom]`)
+      fast(`/setblock ${A(0, g + 4, -2)} lantern[hanging=true]`); fast(`/setblock ${A(0, g + 4, 2)} lantern[hanging=true]`)
+    }
     await bot.waitForTicks(10)
     for (const dz of [-3, 4]) { const g = groundAt(3, dz); await c(`/fill ${A(3, g + 1, dz)} ${A(3, g + 2, dz)} spruce_fence`); await c(`/setblock ${A(3, g + 3, dz)} lantern`) }   // light on faces at the gate at dusk (docs/look.md)
     await c(`/setblock ${A(0, 1, -2)} spruce_fence_gate[facing=east,open=true]`)
@@ -119,6 +125,34 @@ module.exports = {
       for (let x = x0; x <= x1; x++) for (let z = z0; z <= z1; z++) { const g = groundAt(x, z); fast(`/setblock ${A(x, g, z)} farmland[moisture=7]`); fast(`/setblock ${A(x, g + 1, z)} wheat[age=${5 + (x + z) % 3}]`) }
       await bot.waitForTicks(6)
     }
+    // --- the land along the road (audit F9: it read as a cleared plain): a broken hedge 4.5 blocks either side of the
+    // road, grass hummocks 7-11 out, 1-3 high
+    {
+      const along0 = (d) => {
+        for (let i = 0; i + 1 < ROAD.length; i++) {
+          const [ax, az] = ROAD[i], [bx, bz] = ROAD[i + 1], L = Math.hypot(bx - ax, bz - az)
+          if (d <= L || i + 2 === ROAD.length) return { x: ax + (bx - ax) * d / L, z: az + (bz - az) * d / L, ux: (bx - ax) / L, uz: (bz - az) / L }
+          d -= L
+        }
+      }
+      for (let d = 17; d <= 40; d++) {
+        const r = along0(d)
+        for (const side of [-1, 1]) {
+          if ((d + (side > 0 ? 3 : 0)) % 6 !== 0) {   // the hedge, with gaps
+            const hx = Math.floor(r.x - r.uz * 4.5 * side), hz = Math.floor(r.z + r.ux * 4.5 * side), g = groundAt(hx, hz)
+            fast(`/fill ${A(hx, g + 1, hz)} ${A(hx, g + 1 + (d % 3 === 0 ? 1 : 0), hz)} oak_leaves[persistent=true]`)
+          }
+          for (let o = 7; o <= 11; o++) {   // the hummocks
+            const h = Math.max(0, Math.round(1.6 + 1.4 * Math.sin(d * 0.45 + side * 1.7) - Math.abs(o - 9) * 0.6))
+            if (!h) continue
+            const mx = Math.floor(r.x - r.uz * o * side), mz = Math.floor(r.z + r.ux * o * side), g = groundAt(mx, mz)
+            fast(`/fill ${A(mx, g + 1, mz)} ${A(mx, g + h, mz)} grass_block`)
+          }
+        }
+        if (d % 4 === 0) await bot.waitForTicks(2)
+      }
+      await bot.waitForTicks(6)
+    }
     // --- the tower on the hill: the vanilla watchtower template on the plateau's bluff, without its banners
     {
       const [tx, tz] = [TOWER[0] - 7, TOWER[1] - 7], ty = groundAt(TOWER[0], TOWER[1]) + 1
@@ -144,7 +178,7 @@ module.exports = {
     for (let i = 1; i <= 5; i++) await mob('pillager', 0, 61, 0, 0, [`p${i}`], 'equipment:{mainhand:{id:"minecraft:crossbow",count:1}}')
     // item frames: the totem wall (30 totems, the 31st frame empty until "THIRTY-ONE", the 32nd always empty), the
     // bottles beside the east window, the crossbow by the door, the bowl on the table
-    const frame = (dx, dy, dz, facing, item, tag) => c(`/summon item_frame ${(X + dx + 0.5).toFixed(1)} ${F + dy + 0.5} ${(Z + dz + 0.5).toFixed(1)} {Facing:${facing}b,Fixed:1b,Invulnerable:1b,Tags:["${tag}"]${item ? `,Item:{id:"minecraft:${item}",count:1}` : ''}}`)
+    const frame = (dx, dy, dz, facing, item, tag) => c(`/summon ${tag === 'f32' ? 'glow_item_frame' : 'item_frame'} ${(X + dx + 0.5).toFixed(1)} ${F + dy + 0.5} ${(Z + dz + 0.5).toFixed(1)} {Facing:${facing}b,Fixed:1b,Invulnerable:1b,Tags:["${tag}"]${item ? `,Item:{id:"minecraft:${item}",count:1}` : ''}}`)
     for (let row = 0; row < 4; row++) for (let col = 0; col < 8; col++) {
       const dx = -13 + col, dy = 3 + row
       const n = (3 - row) * 8 + col + 1   // the bottom row is frames 1-8 (left to right)... the last two are 31 and 32
@@ -214,24 +248,24 @@ module.exports = {
 
     // ---- L01 (S01): dawn after raid 31. The totem wall; Grandpa (frame right) hangs the 31st; the push ends on the
     // one empty frame, lit by the lantern under it
-    put(GA, -7.2, -14.8, 172, 10, 2); hold(GA, 'totem_of_undying')
-    put(GB, 21.5, 8.6, yawTo(21.5, 8.6, 0.5, 0.5), 8)             // S02's Grandpa, already on the road
+    put(GA, -8.0, -14.4, yawTo(-8.0, -14.4, -6.5, -15.9), 12, 2); hold(GA, 'totem_of_undying')   // left of the 31st frame, in profile (audit B1)
+    put(GB, 13.5, 1.0, yawTo(13.5, 1.0, 0.5, 0.5), 8)             // S02's Grandpa, already on the road, near enough to read (audit F3)
     hold(GB, 'crossbow'); frameEmpty('xbf')
     await bot.waitForTicks(6)
     await shot('s01', -10.5, -5.5, P(-10, 3, -12), TIMES.S01)
     await line('L01', async (k, at) => {
       if (k === at(0) + 1) swing(GA)   // the 31st totem goes in on "THIRTY-ONE"
       if (k === at(0) + 4) { frameItem('f31', 'totem_of_undying'); hold(GA, 'air'); sound('entity.item_frame.add_item', 1, 1) }
-      if (k > at(0) + 8) { G[GA].yaw = 175; G[GA].pitch = 5 }
+      if (k > at(0) + 8) { G[GA].yaw = yawTo(-8.0, -14.4, -6.0, -15.9); G[GA].pitch = 18 }   // he looks at the empty one
       look(k)
     })
 
     // ---- L02 (S02): dusk, from the palisade walkway by the gate: Grandpa small on the road, walking home; the tower
-    put(GA, -7.3, -4.5, -90, 35)                                  // S03's Grandpa at the grindstone
+    put(GA, -7.3, -4.5, -90, 35, 1)                               // S03's Grandpa sitting at the grindstone (audit F6)
     await shot('s02', -3.5, -12.5, P(20, 2, 6), TIMES.S02)
     await line('L02', async (k) => {
-      const s = G[GB]; const d = Math.hypot(s.x - 14.5, s.z - 0.8)
-      if (d > 0.3) { s.x -= 0.075 * (s.x - 14.5) / d; s.z -= 0.075 * (s.z - 0.8) / d; s.y = gy(s.x, s.z) }
+      const s = G[GB]; const d = Math.hypot(s.x - 6.5, s.z - 0.6)
+      if (d > 0.3) { s.x -= 0.075 * (s.x - 6.5) / d; s.z -= 0.075 * (s.z - 0.6) / d; s.yaw = yawTo(s.x, s.z, 0.5, 0.5); s.y = gy(s.x, s.z) }
       look(k)
     })
 
@@ -239,18 +273,20 @@ module.exports = {
     frameItem('xbf', 'crossbow')
     await shot('s03', -24, -4.5, P(-6, 2, -4.5), TIMES.S03)
     park(GB)
+    M.pose(ctx, GA, 'sit_ground')   // knees up on the ground at the grindstone (audit F6)
     const grind = (k) => { if (k % 12 === 0) { swing(GA); sound('block.grindstone.use', 0.35, 1) } }
     // ...and on "They KNOW" the cut in (S04, closer; he doesn't look up)
-    put(GB, -77.5, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side (clear of the market stalls)
+    put(GB, -76.0, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side (clear of the market stalls)
     await line('L03', async (k, at) => {
-      if (k === at(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 2.2, -4.6)) }
+      if (k === at(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 1.8, -4.6)) }
       grind(k); if (k === at(3)) G[GA].pitch = 25
       look(k)
     })
     // ---- L04 (S04W): first person, inside, the same evening: the totem wall; on "ONE frame" the eyes go to the
     // empty 32nd frame (bottom row, right), the lantern under it
     K.shot('pov')
-    await K.cut(-8.5, -11.0, P(-9.5, 4.6, -15.5), 2, { time: TIMES.S03 })
+    await K.cut(-8.5, -11.0, P(-9.5, 4.0, -15.5), 2, { time: TIMES.S03 })
+    M.poseOff(ctx, GA)
     let wall = null
     await line('L04', async (k, at) => {
       if (k === 0) wall = K.base
@@ -268,7 +304,7 @@ module.exports = {
     park(GA)
     await line('L05', async (k, at) => {
       const s = G[GB]
-      if (s.x < -69.5) { s.x += 0.105; s.yaw = -90 }
+      if (s.x < -72.0) { s.x += 0.06; s.yaw = -90 }
       fa.forEach((f, i) => { f.yaw = yawTo(f.x, f.z, s.x, s.z) })
       if (k >= at(2) - 2 && k <= at(2) + 6 && (k - at(2) + 2) % 2 === 0) {   // on "BREAD"
         const f = fa[(k - at(2) + 2) / 2 % fa.length], dx = s.x + 1.2 - f.x, dz = s.z - f.z, d = Math.hypot(dx, dz)
@@ -279,14 +315,14 @@ module.exports = {
     })
 
     // ---- L06 (S06): sunset another day, the slope below the tower: Grandpa climbing the path toward it
-    put(GA, 33.0, 22.6, yawTo(33, 22.6, 36, 28.5), -5); hold(GA, 'crossbow')
+    put(GA, 21.0, 7.6, yawTo(21, 7.6, 26, 12.5), -5); hold(GA, 'crossbow')   // on the road ahead of the lens (audit F4)
     await bot.waitForTicks(3)
-    await shot('s06', 5.0, 12.5, P(44, 14, 40), TIMES.S06)
+    await shot('s06', 9.0, -3.0, P(44, 14, 40), TIMES.S06)
     park(GB)
     for (const [t] of farmers) K.bury(t, -60)   // out of the square after the cut
     say('/kill @e[type=item]')
     await line('L06', async (k) => {
-      const s = G[GA]; if (s.z < 28) { s.x += 0.028; s.z += 0.055; s.y = gy(s.x, s.z) }
+      const s = G[GA]; if (s.z < 13) { s.x += 0.045; s.z += 0.045; s.yaw = yawTo(0, 0, 1, 1); s.y = gy(s.x, s.z) }
       look(k)
     })
 
@@ -336,6 +372,7 @@ module.exports = {
     put(GB, -10.28, -12.5, -90, 50, 2.5, [11, 8, 8]); hold(GB, 'air')
     frameItem('xbf', 'crossbow')
     await bot.waitForTicks(3)
+    say(`/setblock ${X - 9} ${F + 3} ${Z - 13} lantern`)   // his table lantern, this night (audit B2)
     await shot('s10', -6.0, -6.5, P(-6, 2, -9), TIMES.S10)
     M.pose(ctx, GB, 'sit')
     park(GA)
@@ -347,6 +384,7 @@ module.exports = {
       look(k)
     })
 
+    say(`/setblock ${X - 9} ${F + 3} ${Z - 13} air`)
     // ---- L11 (S11): the final night, the yard: Grandpa crouched against his door frame, the bottle undrunk in his
     // slack hand; it leaves his hand on "FIGHT"
     put(GA, -7.5, -7.72, 15, 50, 1.5, [3, 14, 7]); hold(GA, 'ominous_bottle')
@@ -356,13 +394,13 @@ module.exports = {
     M.poseOff(ctx, GB); park(GB)
     await line('L11', async (k, at) => {
       if (k === at(1)) G[GA].pitch = 62   // "too TIRED"
+      if (k === at(2)) ctx.hotbar(mergeHotbar(ctx.storyHotbar, ['ominous_bottle'])).then(() => bot.setQuickBarSlot(0)).catch(e => ctx.log('hotbar', e.message))   // Grandpa's bottle is mine now, in place of the bread (the HUD is off in this camera shot)
       if (k === at(2)) { hold(GA, 'air'); G[GA].pitch = 66; sound('item.armor.equip_generic', 0.4, 1.3) }
       look(k)
     })
 
     // ---- L12 (S12): first person, at the open gate, the bottle in my hand: the drink on "drank"; "had to FIGHT"
     // over the empty hand. Then S13 (the hold): the horn, and they're coming up the road
-    await ctx.hotbar(mergeHotbar(ctx.storyHotbar, ['ominous_bottle'])); bot.setQuickBarSlot(0)   // Grandpa's bottle, in place of the bread (story.json hotbar_note)
     await bot.waitForTicks(4)
     K.shot('pov')
     const roadAim = P(44, 12, 40)   // up at the tower, where the bottles come from
@@ -391,16 +429,18 @@ module.exports = {
     // the raiders walk down it. E+2..E+22: the Raid bar fills (vanilla's red notched_10 "Raid" bar; edit.py draws it
     // from the `bossbar` marks); E+22: full (`raidbar`, the payoff punch). E+8..E+22: Grandpa steps up beside me; from
     // E+16 I turn to him; ~E+30 he turns to see me. The line (and the Short) ends 1.0 s after the bar is full.
-    const RISE = 20, AFTERBAR = 20
+    const RISE = 20, AFTERBAR = Math.max(10, Math.round(HOLD * 20) - 2 - RISE)   // story.json reveal.hold (2.1 s): the bar full 1.0 s before the cut
     let E = null, me = null, rc = null, aim = null, from = null, WALK = null
-    await line('L12', async (k, at, n) => {
-      if (E === null) E = n - (2 + RISE + AFTERBAR)
+    // L12 covers only its speech (a late picture shortens it); the reveal then runs its own fixed 2 + RISE + AFTERBAR ticks
+    let N12 = null, AT12 = null
+    const scene12 = async (k, at, n) => {
+      if (E === null) E = n
       if (k === 0) base = K.base
       if (k <= at(0) + 16) K.turnTo(base, roadAim, Math.max(0, (k - at(0) + 4) / 20))   // from the near road up the road as I drink
       if (k === at(0) + 2) { bot.activateItem(); for (let j = 0; j < 7; j++) setTimeout(() => sound('entity.generic.drink', 0.6, 1 + j * 0.01), j * 220) }
       if (k === at(0) + 36) { say('/effect clear @s bad_omen'); say('/effect clear @s raid_omen'); say('/effect clear @s trial_omen') }
       if (k === at(2) - 2) base = K.base
-      if (k >= at(2) - 2 && k < E) K.turnTo(base, P(-7.5, 2.0, -7.7), (k - at(2) + 2) / 14)   // back at Grandpa, asleep on his bench
+      if (k >= at(2) - 2 && k < E) K.turnTo(base, P(-7.5, 2.6, -7.7), (k - at(2) + 2) / 14)   // back at Grandpa, asleep on his bench
       if (k === E - 6) {   // the raiders onto the road while I'm looking back at him
         raidD = 20; raiders = new Map(WEDGE.map(([t]) => [t, K.actor(t, { x: 20, z: 6, y: gy(20, 6), yaw: 90 })])); placeRaiders()
         for (const [t] of WEDGE) K.warp(t)   // onto the road while the camera is on Grandpa
@@ -438,12 +478,14 @@ module.exports = {
         if (k === E + 20) swing(GB)
         if (k === E + 30) sound('item.crossbow.loading_end', 1.0, 1)
       }
-      if (raiders) { raidD = Math.max(14, raidD - (k > E + 16 ? 0.055 : 0.105)); placeRaiders() }
+      if (raiders) { raidD = Math.max(12.5, raidD - (k > E + 16 ? 0.055 : 0.105)); placeRaiders() }
       if (k > E && k < E + 16) K.base = K.aim(P(along(raidD).x, 2.0, along(raidD).z))
       if (k === E + 16) from = K.base
       if (k >= E + 16) K.turnTo(from, P(me.x + 10 * Math.cos(aim), 2.3, me.z + 10 * Math.sin(aim)), Math.min(1, (k - E - 16) / 16))
       look(k)
-    }, HOLD)
+    }
+    await line('L12', async (k, at, n) => { N12 = n; AT12 = at; await scene12(k, at, n) })
+    for (let k = N12; k < N12 + 2 + RISE + AFTERBAR; k++) { await scene12(k, AT12, N12); await bot.waitForTicks(1); K._clock++ }
     ctx.mark('story_end')
     for (const s of Object.values(G)) s.on = false
     await bot.waitForTicks(4)
@@ -497,16 +539,24 @@ async function grandpaHouse (c, A) {
   await set([-6, 2, -16], 'lantern')
   await set([-14, 2, -10], 'barrel[facing=up]'); await set([-14, 3, -10], 'lantern')
   await set([-14, 2, -13], 'composter')
+  // the totem wall lit (audit B1): lanterns on the floor under its west end and middle (the east end's is under the
+  // empty frame), glowstone in the ceiling right over the top row
+  await set([-13, 2, -16], 'lantern'); await set([-10, 2, -16], 'lantern')
+  for (const x of [-13, -10, -7]) await set([x, 7, -16], 'glowstone')
+  // the raid count on screen: a sign under the wall, between the lanterns
+  await c(`/setblock ${A(-11, 2, -16)} spruce_wall_sign[facing=south]{front_text:{has_glowing_text:1b,color:"yellow",messages:["","RAIDS WON","31",""]}}`)
+  // his face at the table (audit B2): a lantern on the table between the places, one hanging behind the lens
+  await set([-7, 6, -11], 'lantern[hanging=true]')   // (the table lantern goes on for L10 only: it filled L04's and S07's foreground)
 }
 
-// The ground's top solid block at (x, z), ignoring plants, crops, leaves, logs, fences and lanterns
+// The ground's top solid block at (x, z), ignoring plants, crops, leaves, logs, slabs (the gate roof), fences and lanterns
 function ground (ctx, x, z) {
   const { bot } = ctx
   for (let y = 120; y > 40; y--) {
     const b = bot.blockAt(new ctx.Vec3(Math.floor(x), y, Math.floor(z)))
     if (!b) continue
     if (b.name === 'farmland' || b.name === 'dirt_path') return y
-    if (b.boundingBox !== 'block' || /_leaves$|_log$|fence|lantern|barrier/.test(b.name)) continue
+    if (b.boundingBox !== 'block' || /_leaves$|_log$|_slab$|fence|lantern|barrier/.test(b.name)) continue
     return y
   }
   return F
@@ -518,28 +568,30 @@ const l07Chest = chunkAt('L07', 3, 2.6)
 module.exports.shots = {
   pov: { pov: true },
   // S01: inside the door, a slow push to the totem wall; it ends on the empty frame (bottom right), lantern-lit
-  s01: { path: [[0, -9.8, 3.66, -10.1], [durOf('L01', 5.2), -8.4, 3.4, -12.3]], lookPath: [[0, -6.6, 4.1, -16.9], [durOf('L01', 5.2), -6.2, 3.4, -16.9]], ease: true, fov: 68, dof: false },
+  // (audit B1: from the south-east corner, the wall edge to edge, Grandpa in profile at frame right, the table out)
+  s01: { path: [[0, -6.8, 3.5, -10.8], [durOf('L01', 4.0), -6.9, 3.4, -11.5]], lookPath: [[0, -10.0, 4.3, -16.9], [durOf('L01', 4.0), -7.3, 3.6, -16.9]], ease: true, fov: 55, dof: false },
   // S02: high on the palisade walkway beside the gate, looking out: the road, Grandpa small on it, the tower on the hill
-  s02: { at: [-1.2, 6.6, -10.5], look: [22, 3.0, 9.0], fov: 50, push: 0.12, dof: false },
+  s02: { at: [-1.2, 6.6, -10.5], look: [16, 3.0, 8.0], fov: 50, push: 0.12, dof: false },
   // S03 / S11: the yard from its west side, looking east: the door at frame left, the grindstone, the gate posts right
   s03: { at: [-19.6, 3.62, -4.6], look: [-4.0, 2.0, -3.4], fov: 60, push: 0.08, dof: false },
-  s11: { at: [-15.0, 3.3, -3.6], look: [-7.9, 2.0, -7.6], fov: 56, push: 0.25, dof: false },
+  s11: { at: [-13.3, 2.8, -4.6], look: [-7.9, 2.2, -7.6], fov: 56, push: 0.25, dof: false },   // audit F8: 2 closer, lower
   // S04: a few steps closer, from the south-east, a little lower: him knees-up, the door and the crossbow behind
-  s04: { at: [-4.6, 2.45, -0.4], look: [-7.4, 2.4, -4.6], fov: 56, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.4, 0] } } },
+  s04: { at: [-4.6, 2.2, -0.4], look: [-7.4, 1.9, -4.6], fov: 56, push: 0.12, dof: false },   // audit F5: no DoF on a full shot
   // S05: the square at dawn from its south edge, past a hay bale and a fence: he crosses left to right, the bell behind
   s05: { at: [-73.0, 1.62, 16.0], look: [-73.8, 1.5, 3.0], fov: 56, push: 0.25, dof: false },
   // S06: below the tower at sunset, looking up the slope: the tower on the hill, Grandpa climbing the path
-  s06: { at: [8.0, 3.8, 14.0], look: [30, 7.6, 24], fov: 50, push: 0.15, dof: false },
+  // (audit F4: from the road behind him: Grandpa ~6 blocks ahead, the tower above him on the hill)
+  s06: { at: [16.6, 3.0, 3.0], look: [30, 4.6, 17.5], fov: 56, push: 0.15, dof: false },
   // S07: beside Grandpa at the chest under the east window; the tilt down to the open chest on "CHEST"
   s07: { at: [-9.0, 3.6, -11.2], look: [-6.6, 3.4, -14.3], fov: 58, push: 0.15, dof: false },
   // S08: the gate at dusk, 4 behind Grandpa and 2 to his right: the bottle in profile, the road and the tower
   s08: { at: [-3.5, 2.62, -0.5], look: [20, 3.0, 6.5], fov: 54, push: 0.1, dof: false },
   // S09: closer, the same side: he turns his head back over his right shoulder
-  s09: { at: [-2.6, 2.45, 3.8], look: [0.6, 2.35, 0.3], fov: 58, push: 0.1, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.5, 0] } } },
+  s09: { at: [-2.6, 2.45, 3.8], look: [0.6, 2.35, 0.3], fov: 58, push: 0.1, dof: false },   // audit F5
   // S10: the room from its south-east corner: Grandma's chair nearest the lens, Grandpa crouched over the table
-  s10: { at: [-6.6, 3.75, -10.4], look: [-10.6, 2.9, -13.6], fov: 62, push: 0.1, dof: false },
+  s10: { at: [-6.6, 3.75, -10.4], look: [-10.4, 3.0, -13.0], fov: 46, push: 0.1, dof: false },   // a medium (addendum: not FS after S09's FS)
   // S10b: in on his face across the table on "a RAID" (the ceiling glowstone lights him)
-  s10b: { at: [-7.3, 3.5, -11.1], look: [-10.3, 3.3, -12.5], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GB}`, offset: [0, 1.4, 0] } } }
+  s10b: { at: [-7.2, 3.9, -12.3], look: [-10.3, 3.65, -12.5], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GB}`, offset: [0, 1.4, 0] } } }
 }
 
 module.exports.ROAD = ROAD
