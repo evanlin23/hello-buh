@@ -1,0 +1,383 @@
+{
+ "voice": "gemini cast (Erinome, Algenib, Achird)",
+ "sr": 24000,
+ "gap": 0.3,
+ "lines": {
+  "L01": {
+   "text": "The dog on the hill... hasn't moved... in nine hundred days.",
+   "who": "N",
+   "dur": 4.42,
+   "onset": 0.05,
+   "end": 4.37,
+   "chunks": [
+    [
+     0.0,
+     0.98
+    ],
+    [
+     0.98,
+     2.38
+    ],
+    [
+     2.38,
+     3.86
+    ]
+   ],
+   "captions": [
+    "The DOG on the hill",
+    "hasn't MOVED",
+    "in NINE HUNDRED days."
+   ]
+  },
+  "L02": {
+   "text": "Not for rain. Not for thunder. Not even for zombies.",
+   "who": "N",
+   "dur": 4.74,
+   "onset": 0.05,
+   "end": 4.69,
+   "chunks": [
+    [
+     0.0,
+     1.26
+    ],
+    [
+     1.26,
+     2.7
+    ],
+    [
+     2.7,
+     4.38
+    ]
+   ],
+   "captions": [
+    "Not for RAIN.",
+    "Not for THUNDER.",
+    "Not even for ZOMBIES."
+   ]
+  },
+  "L03": {
+   "text": "I bring him a bone every morning. He never even looks.",
+   "who": "N",
+   "dur": 3.552,
+   "onset": 0.05,
+   "end": 3.502,
+   "chunks": [
+    [
+     0.0,
+     0.82
+    ],
+    [
+     0.82,
+     2.16
+    ],
+    [
+     2.16,
+     3.4
+    ]
+   ],
+   "captions": [
+    "I bring him a BONE",
+    "every MORNING.",
+    "He never even LOOKS."
+   ]
+  },
+  "L04": {
+   "text": "He wears a red collar. But nobody in the village owns him.",
+   "who": "N",
+   "dur": 3.518,
+   "onset": 0.05,
+   "end": 3.468,
+   "chunks": [
+    [
+     0.0,
+     1.66
+    ],
+    [
+     1.66,
+     2.8
+    ],
+    [
+     2.8,
+     3.52
+    ]
+   ],
+   "captions": [
+    "He wears a red COLLAR.",
+    "But nobody in the village",
+    "OWNS him."
+   ]
+  },
+  "L05": {
+   "text": "He just stares... at one empty patch of grass.",
+   "who": "N",
+   "dur": 3.535,
+   "onset": 0.05,
+   "end": 3.485,
+   "chunks": [
+    [
+     0.0,
+     0.76
+    ],
+    [
+     0.76,
+     2.62
+    ],
+    [
+     2.62,
+     3.42
+    ]
+   ],
+   "captions": [
+    "He just stares",
+    "at one EMPTY patch",
+    "of GRASS."
+   ]
+  },
+  "L06": {
+   "text": "And behind him... an old dirt hut. Nobody knows who built it.",
+   "who": "N",
+   "dur": 4.329,
+   "onset": 0.05,
+   "end": 4.279,
+   "chunks": [
+    [
+     0.0,
+     1.18
+    ],
+    [
+     1.18,
+     2.72
+    ],
+    [
+     2.72,
+     3.5
+    ],
+    [
+     3.5,
+     4.33
+    ]
+   ],
+   "captions": [
+    "And behind him,",
+    "an OLD DIRT HUT.",
+    "Nobody knows",
+    "who BUILT it."
+   ]
+  },
+  "L07": {
+   "text": "I tried to make him stand. I begged. He won't budge.",
+   "who": "N",
+   "dur": 3.682,
+   "onset": 0.05,
+   "end": 3.632,
+   "chunks": [
+    [
+     0.0,
+     1.84
+    ],
+    [
+     1.84,
+     2.78
+    ],
+    [
+     2.78,
+     3.66
+    ]
+   ],
+   "captions": [
+    "I tried to make him STAND.",
+    "I BEGGED.",
+    "He won't BUDGE."
+   ]
+  },
+  "L08": {
+   "text": "Leave him be, kid. Only one voice gets him up.",
+   "who": "Grandpa",
+   "dur": 3.588,
+   "onset": 0.05,
+   "end": 3.538,
+   "chunks": [
+    [
+     0.0,
+     1.82
+    ],
+    [
+     1.82,
+     2.64
+    ],
+    [
+     2.64,
+     3.59
+    ]
+   ],
+   "captions": [
+    "Leave him be, kid.",
+    "Only ONE voice",
+    "gets him UP."
+   ]
+  },
+  "L09": {
+   "text": "Whose? Nobody's come up here in years.",
+   "who": "N",
+   "dur": 2.887,
+   "onset": 0.05,
+   "end": 2.837,
+   "chunks": [
+    [
+     0.0,
+     1.1
+    ],
+    [
+     1.1,
+     2.0
+    ],
+    [
+     2.0,
+     2.74
+    ]
+   ],
+   "captions": [
+    "WHOSE?",
+    "Nobody's come up here",
+    "in YEARS."
+   ]
+  },
+  "L10": {
+   "text": "Said he'd be right back.",
+   "who": "Grandpa",
+   "dur": 1.546,
+   "onset": 0.05,
+   "end": 1.496,
+   "chunks": [
+    [
+     0.0,
+     0.6
+    ],
+    [
+     0.6,
+     1.44
+    ]
+   ],
+   "captions": [
+    "Said he'd be",
+    "RIGHT BACK."
+   ]
+  },
+  "L11": {
+   "text": "So every night now... I sit with him. Nobody should wait alone.",
+   "who": "N",
+   "dur": 4.306,
+   "onset": 0.05,
+   "end": 4.256,
+   "chunks": [
+    [
+     0.0,
+     1.4
+    ],
+    [
+     1.4,
+     3.0
+    ],
+    [
+     3.0,
+     4.16
+    ]
+   ],
+   "captions": [
+    "So every night now,",
+    "I sit with him.",
+    "Nobody should wait ALONE."
+   ]
+  },
+  "L12": {
+   "text": "And then... he stood up.",
+   "who": "N",
+   "dur": 1.96,
+   "onset": 0.05,
+   "end": 1.91,
+   "chunks": [
+    [
+     0.0,
+     0.96
+    ],
+    [
+     0.96,
+     1.96
+    ]
+   ],
+   "captions": [
+    "And then...",
+    "he STOOD UP."
+   ]
+  },
+  "L13": {
+   "text": "Hey, buddy! Sorry... got busy.",
+   "who": "Player",
+   "dur": 2.38,
+   "onset": 0.05,
+   "end": 2.33,
+   "chunks": [
+    [
+     0.0,
+     0.9
+    ],
+    [
+     0.9,
+     1.68
+    ],
+    [
+     1.68,
+     2.38
+    ]
+   ],
+   "captions": [
+    "Hey, BUDDY!",
+    "Sorry.",
+    "Got BUSY."
+   ]
+  },
+  "L14": {
+   "text": "Okay. Sit, boy. I'll be right back.",
+   "who": "Player",
+   "dur": 2.28,
+   "onset": 0.05,
+   "end": 2.23,
+   "chunks": [
+    [
+     0.0,
+     1.4
+    ],
+    [
+     1.4,
+     1.68
+    ],
+    [
+     1.68,
+     2.28
+    ]
+   ],
+   "captions": [
+    "Okay. SIT, boy.",
+    "I'll be",
+    "RIGHT BACK."
+   ]
+  },
+  "L15": {
+   "text": "Day one.",
+   "who": "N",
+   "dur": 0.8,
+   "onset": 0.05,
+   "end": 0.75,
+   "chunks": [
+    [
+     0.0,
+     0.8
+    ]
+   ],
+   "captions": [
+    "Day ONE."
+   ]
+  }
+ },
+ "total": 47.52
+}

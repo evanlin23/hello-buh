@@ -1292,6 +1292,12 @@ def main():
             graph.append(f"[{n_in}:v]format=rgba[mtv]")
             graph.append(f"[{last}][mtv]overlay=0:0:eof_action=repeat[mto]")
             last, n_in = "mto", n_in + 1
+        chat = story_track.chat_concat(story_tl, args.start, dur, tmp)   # the game's chat lines (`chat` marks), if any
+        if chat:
+            inputs += ["-framerate", str(args.out_fps), "-i", story_track.as_sequence(chat, "ch")]
+            graph.append(f"[{n_in}:v]format=rgba[chv]")
+            graph.append(f"[{last}][chv]overlay=0:0:eof_action=repeat[cho]")
+            last, n_in = "cho", n_in + 1
         narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
     graph.append(f"[{last}][1:v]overlay=0:0,format=yuv420p[v]")
     audio_ss, duck = args.start, ""

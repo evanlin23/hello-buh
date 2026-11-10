@@ -392,3 +392,43 @@ if __name__ == "__main__":     # preview: python3 scripts/story_track.py stories
     story, _ = _lines(sys.argv[1])
     key = tuple(int(story.get("key_color", "#ffd640")[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
     caption_image(sys.argv[2], key).save(sys.argv[3])
+
+
+def chat_concat(timeline, start, dur, tmp):
+    """The game's chat line ("HelloBuh joined the game") on `chat` marks {text, hold?, color?}: yellow text on the
+    chat's dark box, bottom-left of the game view (camera shots draw no HUD, so the edit draws it), scaled up for a
+    phone and fading out over its last 0.4 s. None when the stunt marks no chat."""
+    marks = [(e["t"] / 1000 - start, e["text"], e.get("hold", 2.6), e.get("color", "#FFFF55")) for e in timeline if e["event"] == "chat"]
+    if not marks:
+        return None
+    tmp = pathlib.Path(tmp)
+    blank = tmp / "chat_blank.png"
+    Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
+    f = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 46)
+    runs, frame, total = [], 0, int(round(dur * FPS))
+    for k, (t0, text, hold, col) in enumerate(sorted(marks)):
+        f0, f1 = max(frame, int(round(t0 * FPS))), min(total, int(round((t0 + hold) * FPS)))
+        if f1 <= f0:
+            continue
+        if f0 > frame:
+            runs.append((blank, f0 - frame))
+        tw = f.getlength(text)
+        x, y = 36, BAND + GAME_H - 150
+        fade = int(0.4 * FPS)
+        steps = [(1.0, f1 - f0 - fade)] + [(1 - (i + 1) / (fade + 1), 1) for i in range(fade)]
+        for j, (a, n) in enumerate(steps):
+            if n <= 0:
+                continue
+            img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+            d = ImageDraw.Draw(img)
+            d.rectangle([x - 14, y - 10, x + tw + 14, y + 60], fill=(0, 0, 0, int(128 * a)))
+            d.text((x + 4, y + 4), text, font=f, fill=(63, 63, 21, int(255 * a)))   # the game's text shadow (colour / 4)
+            d.text((x, y), text, font=f, fill=_rgba(col)[:3] + (int(255 * a),))
+            p = tmp / f"chat{k}_{j}.png"; img.save(p)
+            runs.append((p, n))
+        frame = f1
+    if frame < total:
+        runs.append((blank, total - frame))
+    lst = tmp / "chat.txt"
+    lst.write_text("ffconcat version 1.0\n" + "".join(f"file '{p}'\nduration {n / FPS:.6f}\n" for p, n in runs) + f"file '{runs[-1][0]}'\n")
+    return lst

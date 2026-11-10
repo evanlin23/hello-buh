@@ -143,6 +143,7 @@ def main():
     ap.add_argument("--no-render", action="store_true")
     ap.add_argument("--chunk", help="i/N: render only slice i of N of the picture and encode it (Actions)")
     ap.add_argument("--segments", help="a folder of seg_*.mp4 slices: build the Short from them instead of frames")
+    ap.add_argument("--score-only", help="write only the score (Short time, from the startAt mark) to this wav: the bed for edit.py --story (stunt edit.song)")
     o = ap.parse_args()
     sd = pathlib.Path(o.story)
     story = json.loads((sd / "story.json").read_text())
@@ -163,6 +164,14 @@ def main():
                 o_ += (min(tr, s1) - s0) * (k - 1)
         return o_
     total = omap(b)
+    if o.score_only:
+        lines = [(omap(e["t"] / 1000), e["who"], e.get("vox") or e.get("id"), e.get("dur", 2.0)) for e in tl if e["event"] == "line"]
+        hushes = list(zip([omap(e["t"] / 1000) for e in tl if e["event"] == "hush"], [omap(e["t"] / 1000) for e in tl if e["event"] == "hush_end"]))
+        m = score(total + 1, lines, hushes, [omap(e["t"] / 1000) for e in tl if e["event"] == "swell"])[: int((total + 1) * SR)]
+        m /= max(1e-6, np.abs(m).max()) / 0.9
+        T.write_wav(o.score_only, m)
+        print("wrote", o.score_only, f"({total:.1f} s)")
+        return
     fdir, sdir = work / "frames", work / "frames_slow"
     f0, f1 = int(round(a * FPS)), int(round(b * FPS))
     seq, f = [], f0
@@ -233,7 +242,7 @@ def main():
     vox_mix = np.zeros((int((total + 6) * SR), 2), np.float32)
     env = np.zeros(len(vox_mix), np.float32)
     for t, who, vox, dur in lines:
-        x = read_wav(sd / "vox" / f"{vox}.wav", af="deesser=i=0.5:m=0.5:f=0.5,highpass=f=70")
+        x = read_wav(sd / "voice" / f"{vox}.wav", af="deesser=i=0.5:m=0.5:f=0.5,highpass=f=70")
         x = sfx.norm(x, 0.85)
         x = T.reverb(x, 0.5, 0.07, damp=3800)[: len(x) + int(0.3 * SR)]
         place(vox_mix, x, t, 1.0)
@@ -252,7 +261,7 @@ def main():
     wav = work / "mix.wav"
     T.write_wav(wav, mix)
     ass = work / "captions.ass"
-    tf = sd / "vox" / "timing.json"
+    tf = sd / "voice" / "timing.json"
     captions(story, lines, chats, total, ass, json.loads(tf.read_text()) if tf.exists() else None)
     out = HERE / "out" / f"{stunt}.mp4"
     out.parent.mkdir(exist_ok=True)

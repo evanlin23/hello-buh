@@ -68,7 +68,10 @@ module.exports = {
     end: { dof: false, path: [[0, -4.5, 5.5, -3.5], [4, -10, 14, -8]], look: [11, -11, 11], fov: 60 }
   },
   caption: 'why won\'t this dog stand up?',
-  edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.25', ownScore: true, caption: 'why won\'t this dog stand up?' },
+  // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
+  // 16:9 master); the bed is our own score (scripts/story_short.py --score-only, as .ogg), so publish adds no NCS track
+  wideMaster: true,
+  edit: { story: 'stories/dog_hill', startAt: 'start:0.1', endAfter: 'end_scene:0.25', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -163,7 +166,7 @@ module.exports = {
     const park = (tag) => say(`/tp @e[tag=${tag},limit=1] ${this.PARK.join(' ')}`)
     const put = (tag, dx, dy, dz, yaw, pitch = 0) => { park(tag); tp(tag, dx, dy, dz, yaw, pitch) }   // through the park: no glide
     const T = (id) => Math.round((VOX[id] + GAP) * 20)
-    const line = (who, id) => ctx.mark('line', { who, vox: id, dur: VOX[id], text: id })
+    const line = (who, id) => ctx.mark('line', { id, who, vox: id, dur: VOX[id] })
     const run = async (n, fn) => { for (let k = 0; k < n; k++) { if (fn) fn(k); await bot.waitForTicks(1) } }
     const time = (n) => { say(`/time set ${n}`); ctx.mark('time', { time: n }) }
     const weather = (w) => { say(`/weather ${w}`); ctx.mark('weather', { weather: w, cut: true }) }
