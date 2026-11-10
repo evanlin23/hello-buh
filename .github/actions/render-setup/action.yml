@@ -30,7 +30,7 @@ runs:
       run: |
         T=~/hb-tools; mkdir -p $T
         if [ ! -x $T/ffmpeg/bin/ffmpeg ]; then
-          curl -sSL --retry 3 -o /tmp/ff.tar.xz https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-linux64-gpl-7.1.tar.xz
+          curl -sSL --retry 3 -o /tmp/ff.tar.xz https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz
           mkdir -p $T/ffmpeg && tar -xJf /tmp/ff.tar.xz -C $T/ffmpeg --strip-components=1
         fi
         echo "$T/ffmpeg/bin" >> "$GITHUB_PATH"
