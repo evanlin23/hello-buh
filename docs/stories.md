@@ -138,6 +138,12 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (on the reference Roblox Short's captions): "the captions can be 2-3 words thats fine".**
+  Captions are 2-3 word chunks again (the script's " / " splits), one CAPS key word per chunk in the key colour
+  (supersedes "one word at a time"); quotes keep their quote marks.
+- **Owner, 2026-11-10 (on the reference Roblox Short at ~5.5 words/s): "the fast pace is good".** The narration runs
+  fast, about 5-5.5 words per second while speaking (supersedes "4.5 is not a target, Pip's natural tempo"): short
+  sentences, little air between them, the voice's natural speed (not a sped-up file).
 - **Owner, 2026-11-10 (sending a top Roblox story Short as the model): "this one also has a loop. can we look at the
   story arcs for the best stories in this area? we can try to make our stories based on those then".** Our stories
   follow the arcs of the top stories in the niche (docs/story_arcs.md, being written). The reference Short: a paradox

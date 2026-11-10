@@ -236,11 +236,10 @@ def caption_events(story_dir, timeline, start, dur, who=False):
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
             t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text, lid))
-    # owner 2026-11-10: "do 1 at a time if the top do it 1 at a time" (Xenost and Ashyyy show one word per caption in
-    # all 48 sampled frames): story.json "captions": "word" (the default) splits every chunk into single words,
-    # timed by voice/words.json (Whisper word starts) when present, else by each word's share of the chunk's letters.
-    # "captions": "chunk" keeps the 2-3 word chunks.
-    if story.get("captions", "word") == "word":
+    # owner 2026-11-10 (later, on the reference Roblox Short): "the captions can be 2-3 words thats fine": the 2-3 word
+    # chunks (the script's " / " splits, one CAPS key word each) are the default again; story.json "captions": "word"
+    # splits every chunk into single words (the earlier rule), timed by voice/words.json.
+    if story.get("captions", "chunk") == "word":
         ev = _one_word(ev, story_dir, [(vs[lid], lid) for _, lid in marks])
     # owner 2026-11-10: "The captions actually seem behind". Whisper's word starts are not late (0.14 s earlier than a
     # wav2vec2 forced alignment on gold_for_the_portal, 113 words), but a word shown on its onset reads as late: picture
