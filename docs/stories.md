@@ -138,6 +138,19 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
+  question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
+  reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
+  like too obvious and being confusing, and like trying to create a mystery out of that".**
+  Every story opens a question to the viewer in the first 3 s that only the ending answers; a cold reader can guess at
+  the midpoint but not be sure, and can explain the reveal in one sentence after it; the Short cuts within ~1 s of the
+  reveal; nothing that doesn't move the question. Light Sleeper is the new bar (with runaway). story-critic blocks on all
+  four.
+- **Owner, 2026-11-10: "it should be like a first person narrator, maybe with something like the Roblox voice, just
+  like higher quality, more expressive, but have like the same pace, tone, etc. And then we can have like other
+  characters use like 11 Labs for just like super duper short sort of things."** Narrator-first stays; the narrator's
+  voice changes to a Roblox-story-style voice (being chosen: docs/voice_search.md); other characters only in very short
+  lines, voiced separately (ElevenLabs proposed: needs a licence decision).
 - **Owner, 2026-11-10 (review page): "I think we don't need the grandpa labeling, just the color"; "Gandma doesnt need
   the label"; "dont need the mom tag".** No speaker name tags: the caption colour alone says who speaks
   (story_track: off by default).
