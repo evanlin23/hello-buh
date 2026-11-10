@@ -1,4 +1,4 @@
-# broken_rail: continuity bible (r2)
+# broken_rail: continuity bible (r2 polish)
 
 ## World
 - **Where:** the rail town two valleys east of the carpeted village (Light Sleeper), so that village lies WEST, under
@@ -29,7 +29,7 @@
 | "TEN" (his age) | L08 | Milo is the default Steve skin; nothing contradicts. The narrator voice is Pip's nine-year-old recipe (owner rule) |
 | "THREE THOUSAND blocks" | L09 | S09 shows a long line over a ridge into a valley; no coordinates or other numbers in frame. ELMWATER 4500 (S02) is further than the crater: consistent |
 | the timing | - | leave the bridge at 18000; sprint 3,000 blocks at 5.6 b/s ≈ 536 s ≈ 10,700 ticks → crater at ~4700 (S10); fix and push by ~5000; the cart at 8 b/s ≈ 375 s ≈ 7,500 ticks → buffer at ~12500-12800 (S13-S14). Dusk at both ends. |
-| 7 dirt, 7 rails | S12a (not said) | the crater is 7 wide at rail height: 7 dirt (5 already placed at the jump cut, 2 on screen) and 7 rails |
+| 7 dirt, 7 rails | S12a (not said) | the crater is 7 wide at rail height: 7 dirt (3 already placed at the jump cut, 4 on screen) and 7 rails |
 | gold rail every 8 blocks | S09 (not said) | a powered rail with a redstone torch beside it every 8 blocks |
 
 ## Places
@@ -38,7 +38,7 @@ site:** origin = the crater's centre at rail height, x east, z south.
 
 | place | where | what's there | the establishing shot | changes |
 |---|---|---|---|---|
-| station | station site: buffer (0,0); Grandpa's mark (0,-1); activator rail (0,1); platform x -3..-1, z -2..14 | stone-slab platform west of the line, buffer stop (stone-brick wall + slab + lantern), a powered activator rail (red; a redstone torch under the platform edge keeps it on) as the last rail, lamp posts, a bench by Grandpa's mark, sign ELMWATER 4500 → | S01 (5 behind and 2 west of Grandpa, looking south), S02 crane | none; S13 repeats S01's frame |
+| station | station site: buffer (0,0); Grandpa's mark (0,-1); activator rail (0,1); platform x -3..-1, z -2..14, plus a north apron of slabs at x -3..0, z -2..-1 (Grandpa stands on it) | stone-slab platform west of the line, buffer stop (stone-brick wall + slab + lantern), a powered activator rail (red; a redstone torch under the platform edge keeps it on) as the last rail, lamp posts, a bench at (-2,-1), at frame left in S01/S13 and clear of Grandpa, sign ELMWATER 4500 → | S01 (5 behind and 2 west of Grandpa, looking south), S02 crane | none; S13 repeats S01's frame |
 | sidings | station site (4..7, -3..4), east of the main line | two short spurs with buffer stops: OTTO's (a minecart) and ROSE's (empty), oak signs over each | S04 (looking north, ROSE's spur centred; bg the village) | none; ROSE's spur is in S14's bg, still empty |
 | our gate and yard | station site: cottage (spruce) door at (-18,-12), garden gate at (-16,-5), yard loop at (-22..-18, -6..-2) | a 5x5 rail loop, the pig in a minecart on it, fence, carrot patch | S03 (camera 10 behind Mom at the gate, looking ESE to the station, the yard loop in fg); S05 (looking north at the cottage, no station in frame) | none |
 | village | station site, z < -10 | vanilla plains village built onto, roofs and chimney smoke | S02 crane, S04 bg | none |
@@ -50,7 +50,7 @@ site:** origin = the crater's centre at rail height, x east, z south.
 | who | mob / skin | outfit | name tag | where, per scene | state changes |
 |---|---|---|---|---|---|
 | Milo (narrator) | player, default Steve | none | none | yard (S06 POV), bridge foot (S08 POV), line (S09, tiny), crater (S10-S12) | none; not at the station at the end |
-| Grandpa | villager, plains, toolsmith (black apron) | standing | none | **always at (0,-1), north of the buffer, facing south**: S01, S02, S03 bg, S07, S13, S14 | S14: head turns to the cart, tips on "dear" |
+| Grandpa | villager, plains, toolsmith (black apron) | standing | none | **always at (0,-1), north of the buffer, body facing south**; in S01 and S13 his head is turned ~40 deg west toward the sunset (so the face reads in three-quarter): S01, S02, S03 bg, S07, S13, S14 | S14: head turns to the cart, tips on "dear" |
 | Grandma | villager, plains, farmer (straw hat) | sitting in a minecart, then standing | none | in her cart on the crater's far lip (S11a-S12b), on the line (S13), set down at (0,1) (S14) | facing north (home) in every shot; S14: set down standing by the activator rail |
 | Mom | villager, plains, cleric (purple robe) | standing | none | at our garden gate, facing the station (S03) | none |
 | the pig | pig, no saddle | sitting in a minecart | none | the yard loop (S03 fg, S05-S06), stationary cart | head follows the carrot in S06 |
@@ -63,8 +63,8 @@ site:** origin = the crater's centre at rail height, x east, z south.
 | OTTO's cart | S04 | empty minecart on the left spur | sidings | S02 (small) |
 | ROSE's spur | S04 | empty, sign ROSE | sidings | S02 (small), S14 bg |
 | the pig's cart and loop | S03 fg | minecart, stationary, pig inside | yard | S05, S06 |
-| hotbar | S06 | slot 1 rails (64), 2 carrot, 3 dirt (64), 4 redstone torch (8); health and hunger full, no armour | POV | S08 (carrot selected, then rails on "RAILS"), S10-S11a (rails), S12a (dirt, rails, torch) |
-| her cart | S11a | minecart stopped on a dark powered rail, Grandma in it | valley (0,0,4) | S12b leaves north; S13 off the bridge; S14 at the buffer |
+| hotbar | S06 | slot 1 empty, 2 carrot, 3 dirt (64), 4 redstone torch (8); health and hunger full, no armour | POV | S08 (carrot selected; the rails (64) arrive in slot 1 and are selected on "RAILS": the packing), S10-S11a (rails), S12a (dirt, rails, torch) |
+| her cart | S11a | minecart stopped on a dark powered rail, Grandma in it | valley (0,0,4) | S12b leaves north; S13 off the bridge (~45 out) to ~27 out at the cut; S14 hopped to ~3 out, knocks the buffer |
 | the dead gold rail | S11a | powered rail, unpowered (dark), torch block empty | valley (0,0,4) | S12a: torch placed, rail lit |
 | crater | S10 | grassed over | valley centre | S12a bridged |
 | lit gold rails | S09 | every 8 blocks, torch beside each | the line | S13 |
@@ -79,10 +79,10 @@ site:** origin = the crater's centre at rail height, x east, z south.
 - No conversations: in S14 Grandma and Grandpa face each other across the buffer stop, in profile.
 
 ## The narrator
-- Holds: the carrot in S06; the carrot still selected at the start of S08, the rails on "RAILS"; the rails in S10-S11a;
+- Holds: the carrot in S06 (no rails yet); the carrot still selected at the start of S08, the rails appear and are selected on "RAILS"; the rails in S10-S11a;
   dirt, then rails, then the redstone torch in S12a. Hearts and hunger full. No armour.
 - Where Milo is per line: L01-L05 not on screen (narrating; L03-L05 he's in the yard, off frame); L06 at the cart (POV);
-  L07 not on screen; L08 at the bridge foot; L09 on the line (tiny); L10-L12 at the crater; L13-L14 walking home, off
+  L07 not on screen; L08 at the bridge foot; L09 on the line (tiny); L10-L12 at the crater (S12a walks him across the new rails to the far side); L13-L14 walking home, off
   screen.
 
 ## Who knows what

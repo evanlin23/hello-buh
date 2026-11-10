@@ -1,4 +1,4 @@
-# broken_rail: beat sheet, clue map, writer's checks (r2)
+# broken_rail: beat sheet, clue map, writer's checks (r2, polished)
 
 r2 (2026-11-10) applies the r1 critic's and continuity's must-fixes (reviews/r1-response.md): L02 "She's on her WAY",
 L07 "Grandpa won't leave the STATION", L08 gives the kid a reason to go and to pack rails, S01 shows Grandpa's face,
@@ -30,7 +30,7 @@ one thought: mobs can't get out of a minecart. She never left him. She was stuck
 - **Until finally,** he bridges the hole, lays rail and pushes, and that evening her cart rolls into the buffer stop
   where Grandpa is waiting.
 
-## Beat sheet (118 words; ~44 s with the holds)
+## Beat sheet (118 words; ~44.9 s with the holds)
 
 | t (s) | beat | line | picture | plants |
 |---|---|---|---|---|
@@ -39,17 +39,17 @@ one thought: mobs can't get out of a minecart. She never left him. She was stuck
 | 6.9-9.4 | **Mom's version** | L03 N: "Mom says Grandma LEFT him for her SISTER'S." | S03 WS: Mom at the gate facing the station; **the pig in its minecart in the foreground** | why the family stopped looking; **picture clue 1 planted silently at 6.9 s** |
 | 9.7-11.5 | test 1 | L04 N: "Kept the CART, too. RUDE." | S04 MS: ROSE's empty spur, centred | **picture clue 2**: the cart never came back either; misread as spite |
 | 11.8-14.6 | test 2 | L05 N: "Our PIG lives in his OWN cart. LOVES it." | S05 FS: the pig in its cart on Milo's yard loop | the pig named: a mob in a cart, misread as love |
-| 14.9-17.1 | test 2 (pivot) | L06 N: "Won't even get out for a CARROT." | S06 MS POV: the carrot swung, the pig's head follows, its body stays in; hotbar: rails, carrot, dirt, redstone torch | **the rule shown by the game**: it *can't* get out |
-| 17.4-21.0 | **Why nobody went** | L07 N: "Grandpa won't leave the STATION. And I wasn't allowed past the BRIDGE." | S07 EWS crane from Grandpa's shoulder up to the bridge 40 blocks south | the two reasons nobody walked the line in 22 years |
-| 21.3-26.1 | **The want, and the choice** | L08 N: "At MIDNIGHT I turned TEN. If she's on her WAY, the rail's BROKEN. I packed RAILS." | S08 WS POV: still at the bridge foot at midnight; on "RAILS" the rails selected, he steps onto the deck | the kid chooses, out loud, to believe Grandpa; the reason for the rails. **The attentive viewer gets ahead here (~24 s, 55%)**: a broken rail + a mob who can't leave a cart |
+| 14.9-17.1 | test 2 (pivot) | L06 N: "Won't even get out for a CARROT." | S06 MS POV: the carrot swung, the pig's head follows, its body stays in; hotbar: carrot, dirt, redstone torch (no rails yet) | **the rule shown by the game**: it *can't* get out |
+| 17.4-21.0 | **Why nobody went** | L07 N: "Grandpa won't leave the STATION. And I wasn't allowed past the BRIDGE." | S07 EWS: a 0.5 s hold on Grandpa (he's waiting), then a crane from his shoulder up to the bridge 40 blocks south | the two reasons nobody walked the line in 22 years |
+| 21.3-26.1 | **The want, and the choice** | L08 N: "At MIDNIGHT I turned TEN. If she's on her WAY, the rail's BROKEN. I packed RAILS." | S08 WS POV: still at the bridge foot at midnight; on "RAILS" the rails go into the hotbar and are selected, he steps onto the deck | the kid chooses, out loud, to believe Grandpa; the reason for the rails. **The attentive viewer gets ahead here (~24 s, 55%)**: a broken rail + a mob who can't leave a cart |
 | 26.4-28.2 | the journey | L09 N: "THREE THOUSAND blocks." | S09 EWS crane at sunrise: the line over a ridge into a valley, gold rails lit every 8 blocks, Milo tiny on it | the line still works: whatever stopped her is one spot |
 | 28.5-31.5 | **The bomb under the table** | L10 N: "Then the rail STOPPED. A CREEPER hole, grassed OVER." | S10 WS POV: the rail ends on the lip of a grassy crater | Milo's theory confirmed; a visible vanilla cause, and an old one |
-| 31.8-35.0 | **The reveal (the game)** | L11 N: "Past it, a MINECART. GRANDMA in it. Still facing HOME." | S11a POV (continuous) across the crater: a cart on a dark gold rail, a villager in it; S11b CU: Grandma, facing the lens | mobs can't leave carts; the dead gold rail braked her at the gap; "facing home" = she was coming back |
-| 35.3-39.1 | **The act** | L12 N: "I bridged the HOLE, laid RAILS, PUSHED." | S12a POV (jump cut): the dirt row finishes, 7 rails, a torch lights her gold rail (2.8 s); S12b FS: he walks into the cart, it fires left (home) (1 s) | the kid's act causes the ending; every part vanilla |
-| 39.4-42.0 | time cut | L13 N: "That EVENING, Grandpa was waiting. Like ALWAYS." | S13 WS: S01's frame again at dusk; on "waiting" a cart rolls off the bridge and down the line toward us | the first frame repeated, now with the thing he waited for in it |
-| 42.0-42.6 | the arrival | (no line) | S14 FS side-on: the cart rolls in over the activator rail and knocks the buffer; Grandma set down standing | the knock is the hit; the score has dropped out |
-| 42.6-43.9 | **The payoff** | L14 Grandma: "Sorry I'm LATE, dear." | S14: Grandma facing Grandpa across the buffer stop; his head tips on "dear" | she was on her way; she says so herself, 22 years late |
-| 43.9-44.5 | end | | hold 0.6 s, cut | |
+| 31.8-35.6 | **The reveal (the game)** | L11 N: "Past it, a MINECART. GRANDMA in it. Still facing HOME." (two short pauses) | S11a POV (continuous) across the crater: a cart on a dark gold rail, a villager in it; S11b CU: Grandma, facing the lens | mobs can't leave carts; the dead gold rail braked her at the gap; "facing home" = she was coming back |
+| 35.9-39.7 | **The act** | L12 N: "I bridged the HOLE, laid RAILS, PUSHED." | S12a POV (jump cut in at 3 dirt): he walks out along the row finishing it, lays 7 rails as he goes, and from the last rail a torch lights her gold rail (2.8 s); S12b FS: he walks into the cart, it fires left (home) (1 s) | the kid's act causes the ending; every part vanilla |
+| 40.0-42.6 | time cut | L13 N: "That EVENING, Grandpa was waiting. Like ALWAYS." | S13 WS: S01's frame again at dusk; on "waiting" a cart rolls off the bridge and down the line toward us (~27 blocks out at the cut) | the first frame repeated, now with the thing he waited for in it |
+| 42.6-43.0 | the arrival | (no line) | S14 FS side-on: the cart, hopped to ~3 blocks out, rolls in over the activator rail and knocks the buffer 0.3 s before L14; Grandma set down standing | the knock is the hit; the score has dropped out |
+| 43.0-44.3 | **The payoff** | L14 Grandma: "Sorry I'm LATE, dear." | S14: Grandma facing Grandpa across the buffer stop; his head tips on "dear" | she was on her way; she says so herself, 22 years late |
+| 44.3-44.9 | end | | hold 0.6 s, cut | |
 
 Payoff = L14 (the arrival). The twist is *seen* at L11, but it *lands*, and line 1 flips, when she arrives and speaks:
 the score drops 0.45 s before the buffer knock, the hit is on the knock, and the Short ends 0.6 s after "dear".
@@ -60,7 +60,7 @@ to the crater by mid-morning, and her cart, at the powered-rail top speed of 8 b
 (~7,500 ticks) to get home, which lands it at dusk (bible, "Every number").
 
 ## The second the viewer gets ahead
-~24 s (L08, "the rail's BROKEN"), 55% of 44 s, a little earlier than the 70% target because the critic asked the kid
+~24 s (L08, "the rail's BROKEN"), 54% of 45 s, a little earlier than the 70% target because the critic asked the kid
 to choose out loud. What the viewer can call there: she's stuck somewhere on the line, in a cart, and can't get out
 (the pig). What they can't yet see: the crater, that she's facing home, and the ending. The narrator confirms it on the
 picture at L10-L11.
@@ -129,9 +129,9 @@ picture at L10-L11.
 No hushed, intimate or obedient line; the narrator direction is Pip's recipe ("not whispery, breathy or soft").
 
 ## Words and length
-118 spoken words (narrator 114, Grandma 4). ~44 s with the holds, ending ~44.5 s: inside 35-45 s but near the top, so
-the build should keep the gaps at 0.3 s and the S13-S14 cart roll at 0.6 s. No ellipsis anywhere; three `<short pause>`
-tags (L02 before the quote, L12 twice).
+118 spoken words (narrator 114, Grandma 4). ~44.9 s with the holds: inside 35-45 s but at the top, so the build must
+keep the gaps at 0.3 s, the S13-S14 cart roll at 0.4 s and the end hold at 0.6 s; if `./hb pace` reads over 45 s, drop
+L11's second `<short pause>` first. No ellipsis anywhere; five `<short pause>` tags (L02 once, L11 twice, L12 twice).
 
 ## Voices
 - Narrator: one voice, Pip's recipe (voices/recipes/pip.md: gemini-3.8-flash-lite-tts, Leda, single speaker, the exact

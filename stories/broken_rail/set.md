@@ -1,4 +1,4 @@
-# broken_rail: set brief (r2)
+# broken_rail: set brief (r2 polish)
 
 Two sites on natural terrain: the **rail town** (station, yard, sidings, bridge, the first stretch of line) and the
 **valley** (the line over a ridge, the crater on the valley floor). The story says 3,000 blocks between them; the build
@@ -18,13 +18,14 @@ follows `docs/building_guide.md`; no clearing, no superflat.
   - the buffer stop at (0,0): a stone-brick wall block at the rail's north end with a stone-brick slab on top and a
     lantern on the slab; the last rail at (0,1) is an **activator rail**, kept powered by a redstone torch under the
     platform edge (lit red in S01/S13; it sets Grandma down in S14); Grandpa's mark (0,-1) is on the platform's
-    north apron, north of the buffer, never on the track;
+    north apron (slabs extended to x -3..0, z -2..-1), north of the buffer, never on the track;
   - the platform: smooth stone slabs, 3 wide, 14 long, on the west side, with 2 lamp posts (`dress.lamp`, post style),
-    a spruce bench (stairs) beside Grandpa's mark, a hanging oak sign `ELMWATER | 4500 →` facing north;
+    a spruce bench (stairs) at (-2,-1), frame left in S01/S13, clear of Grandpa, a hanging oak sign `ELMWATER | 4500 →` facing north;
   - the sidings: two 6-rail spurs on the east side joined to the main line by a curve, each ending in a buffer stop;
     an oak sign over each (`OTTO`, `ROSE`); a minecart on OTTO's spur;
   - dressing: barrels and crates (`dress.clutter`, crates) at the platform's back, flowers along the ballast
     (gravel under the rails, frayed with coarse dirt by `dress.path`).
+- **The hotbar**: no rails until L08 (S06: carrot, dirt, torch); give the rails stack on "RAILS" in S08.
 - **Our yard**: south of the cottage (garden on), a 5x5 rail loop on grass with a minecart on it and a pig in the cart
   (`/summon pig` then `/ride @e[type=pig,limit=1] mount <cart>`; NoAI off so the head can follow the carrot in
   S06, or a staged head turn), fence round it, the carrot patch from the cottage's vegetable bed. The loop sits between
@@ -43,10 +44,10 @@ follows `docs/building_guide.md`; no clearing, no superflat.
   - S04: fg platform slabs; ROSE's spur centred; bg (north) the village roofs.
   - S05: looking north from the yard fence: the pig's cart, the cottage behind; no station (it is behind-right).
   - S07: crane from Grandpa's shoulder: the station, the line, the bridge 40 blocks south, the hills beyond.
-- **Cast placement**: Grandpa at (0,-1) facing south (NoAI villager); Mom at the garden gate facing the station (S03).
+- **Cast placement**: Grandpa at (0,-1), body facing south (NoAI villager), headYaw ~40 deg west toward the sunset in S01/S13; Mom at the garden gate facing the station (S03).
 - **Grandma's arrival (S13-S14)**: a minecart on the main line, summoned off the bridge's north end on "waiting"
-  (~45 blocks out), driven down the line; **hop it to ~15 blocks out at the cut** to S14 (at 8 b/s, 2.3 s covers only
-  ~18 blocks). Grandma is **tp'd with the cart every tick** (mineflayer doesn't move passengers: staging lesson), seated.
+  (~45 blocks out), driven down the line; it is ~27 blocks out at S13's cut (8 b/s x 2.3 s = 18 blocks); **hop it to ~3 blocks out at the cut** to S14, so it
+  knocks the buffer 0.3 s before L14. Grandma is **tp'd with the cart every tick** (mineflayer doesn't move passengers: staging lesson), seated.
   On the knock, the activator rail "sets her down": end the ride and tp her standing at (0,1), facing north.
 
 ## Site 2: the valley
@@ -61,9 +62,10 @@ follows `docs/building_guide.md`; no clearing, no superflat.
   in mid-air); far stub's last rail (the dead powered rail) at (0,0,4).
 - **Her cart**: a minecart on the far stub's last rail, Grandma (farmer, NoAI) riding it, yaw facing north; when the
   cart moves (S12b), tp her with it every tick.
-- **S12a** (3.8 s line with two short pauses; S12a ~2.8 s, S12b ~1 s): a jump cut in with 5 dirt already across at
-  rail height; the bot places the last 2 on "HOLE", lays 7 rails on "laid RAILS", places a redstone torch beside her
-  powered rail in the pause (the rail lights). **S12b**: the bot walks into the cart from the south; the lit powered rail launches it north
+- **S12a** (3.8 s line with two short pauses; S12a ~2.8 s, S12b ~1 s): a jump cut in with 3 dirt already across at
+  rail height; the bot walks forward along the row placing the last 4 on "I bridged the HOLE" (reach ~4.5: the far rail
+  is ~9 from the near lip), walks on laying 7 rails on "laid RAILS", and from the last rail places a redstone torch
+  beside her powered rail in the pause (the rail lights). He ends on the far side, behind the cart, for S12b. **S12b**: the bot walks into the cart from the south; the lit powered rail launches it north
   (lessons.md: empty carts lose speed, but a ridden cart on boosters every 8 blocks is fine; check it clears the crater
   bridge and leaves frame left within ~1 s; S12b's camera pans left with it for 3 blocks).
 - **Depth:** S09: fg ridge-top spruces, mid the line and Milo, bg the valley, hills to the fog;

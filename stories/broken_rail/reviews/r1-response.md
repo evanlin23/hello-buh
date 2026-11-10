@@ -63,3 +63,25 @@
 
 ## Numbers
 118 spoken words (narrator 114, Grandma 4), ~44 s with holds, ending ~44.5 s. Valid JSON, no ellipsis.
+
+## r2 polish (r2-continuity notes 1-7, r2-critic should-fixes 1-3)
+Continuity:
+1. `props.dead_gold_rail.at` is now [0,0,4], so the gap is 7 blocks.
+2. S06 time is 12650, so the sun no longer runs backward after S03-S05.
+3. The S13 cart is ~27 blocks out at the cut (S13 frame, `ending.beats[0]`). It hops to ~3 blocks out for S14 and
+   knocks the buffer 0.3 s before L14 (S14 frame, set.md, beats clock).
+4. In S12a the POV walks forward along the new row: it places the dirt, lays the rails as it goes, and places the torch
+   from the last rail. Milo ends on the far side for S12b (S12a camera/frame, set.md).
+5. Grandpa's headYaw is ~40 deg west toward the sunset in S01 and S13, so his face reads in three-quarter (S01, S13,
+   bible cast row, set.md).
+6. A north apron of slabs at x -3..0, z -2..-1 holds Grandpa's mark. The bench moves to (-2,-1), at frame left and
+   clear of him (S01, bible, set.md).
+7. The hotbar has no rails before L08. S06 shows carrot, dirt and torch only, and the rails arrive in slot 1 on "RAILS"
+   in S08 (S06, S08, bible hotbar and narrator rows, set.md).
+Critic:
+1. L11 `say` is now "Past it, a minecart. <short pause> Grandma in it. <short pause> Still facing home."
+2. S12a's jump cut starts at 3 dirt, and the last 4 go in on "I bridged the HOLE".
+3. S07 holds 0.5 s on Grandpa before the crane. The hold sits inside L07's speech, so it adds no time.
+Numbers: 118 words. The estimated length is ~44.9 s, ending at the 45 s limit: L11 adds +0.6 s and the shorter cart
+roll saves -0.2 s. If `./hb pace` reads over 45 s, drop L11's second pause first (beats.md says so). Valid JSON, no
+ellipsis.
