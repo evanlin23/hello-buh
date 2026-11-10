@@ -40,16 +40,16 @@ module.exports = {
     // L01: a crane in from over the east drop: the hill's rim below, the dog alone on its top, ending on his face (audit B1)
     open: { path: [[0, 12, 6, 6], [2.5, 5.4, 3.0, 1.0]], look: [0.6, 1.6, 0.5], fov: 54 },
     // L02: weather and nights he didn't move
-    rain: { path: [[0, 0.9, 1.9, -3.0], [2, 0.8, 1.8, -2.7]], look: [0.6, 1.6, 0.5], fov: 44 },
-    storm: { path: [[0, -1.2, 2.3, 7], [2, -1, 2.2, 6.4]], look: [0.6, 1.9, -1], fov: 58 },   // (the bolt behind the hut, in the crop: audit F3)
+    rain: { path: [[0, 2.6, 3.0, -7.4], [2, 2.4, 2.9, -7.0]], look: [0.6, 1.6, 0.5], fov: 50 },   // WS (addendum: L02 alternates WS / FS / WS / CU)
+    storm: { path: [[0, -0.6, 2.0, 3.8], [2, -0.5, 1.95, 3.5]], look: [0.6, 1.8, -1], fov: 52 },   // FS, the bolt behind the hut in the crop (audit F3)
     creeper: { path: [[0, 3.6, 2.4, 5.6], [2, 3.3, 2.3, 5.3]], look: [-1.2, 1.9, -1.2], fov: 55 },
-    zombies: { path: [[0, -1.0, 2.2, 6.6], [2, -0.8, 2.1, 6.0]], look: [-1.5, 2.0, -1.5], fov: 54 },
+    zombies: { path: [[0, 1.9, 1.8, 2.1], [2, 1.8, 1.78, 1.95]], look: [0.7, 1.7, 0.4], fov: 40 },   // CU on his face, the zombies passing behind him
     // L03-L04: morning, Pip walks up from the south with a bone; throws a stick
     bone: { path: [[0, -3.2, 2.0, 5.2], [4, -2.9, 1.9, 4.8]], look: [0.4, 1.5, 1.4], fov: 52 },
     // L05: the collar, close
     collar: { dof: { aperture: 0.6 }, path: [[0, 2.6, 1.6, -1.4], [4, 2.3, 1.55, -1.2]], look: [0.6, 1.45, 0.5], fov: 45 },
-    // L06: over his shoulder at the one empty patch, flowers all round it (audit B6)
-    patch: { path: [[0, 0.1, 2.25, 1.7], [4, 0.4, 2.15, 1.5]], look: [3.5, 1.0, 0.5], fov: 50 },
+    // L06: the one empty patch, flowers all round it (audit B6)
+    patch: { path: [[0, 2.3, 7.8, 2.0], [4, 2.6, 7.0, 1.7]], look: [3.5, 1.0, 0.5], fov: 50 },   // high top-down: the bare block in its ring of flowers (addendum)
     // L07: the hut, wide, the dog small in the foreground
     hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
@@ -64,7 +64,7 @@ module.exports = {
     reveal: { path: [[0, 2.0, 2.4, -4.4], [4, 2.0, 2.3, -4.0]], look: [2.0, 1.8, 0.5], fov: 52 },
     // L13-L14: side on, the reunion; the sit wider (F10)
     reunion: { dof: { aperture: 0.6 }, path: [[0, 1.6, 1.8, 4.6], [5, 1.8, 1.7, 4.2]], look: [2.8, 1.9, 0.5], fov: 50 },
-    sit: { path: [[0, -0.8, 2.2, 6.4], [5, -1.0, 2.3, 6.8]], look: [2.6, 1.8, 0.3], fov: 50 },
+    sit: { path: [[0, 13, -1.2, 3.2], [5, 13.6, -1.4, 3.6]], look: [2.5, 2.0, 0.4], fov: 50 },   // a wide from down the slope: the two small against the sky (addendum)
     // the end: the opening crane in reverse, pulling up and out over the drop (the loop, shown not said)
     end: { path: [[0, 5.6, 3.1, 1.2], [1.6, 9.5, 4.8, 4.2]], look: [0.6, 1.6, 0.5], fov: 54 }
   },
