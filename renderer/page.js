@@ -71,7 +71,8 @@ renderer.outputColorSpace = THREE.LinearSRGBColorSpace
 document.body.appendChild(renderer.domElement)
 
 const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 1000)   // vanilla FOV 70 (vertical)
+// vanilla FOV 70 (vertical); far plane GameRenderer.getDepthFar: max(renderDistance x 64, Cloud Distance x 16)
+const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 2048)
 camera.rotation.order = 'YXZ'
 const sections = new Map()
 let opaqueMat, translucentMat, clouds, sky, sun, moon, stars, entities, blockEntities
@@ -112,6 +113,7 @@ function makeSky () {
   return m
 }
 
+const CLOUDS_END = 128 * 16
 // Fancy clouds: the game's 256x256 clouds.png, 12 blocks per pixel, 4 blocks thick, one shell
 // mesh (only faces next to empty pixels), vanilla face tints, 80% opaque.
 async function makeClouds (url) {
@@ -140,7 +142,16 @@ async function makeClouds (url) {
   }
   for (let k = 0; k < segs.length; k++) segs[k][1] = (k + 1 < segs.length ? segs[k + 1][0] : pos.length / 3) - segs[k][0]
   const P = new THREE.Float32BufferAttribute(pos, 3), C = new THREE.Float32BufferAttribute(col, 3)
-  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: true, fog: true })
+  // rendertype_clouds.fsh: clouds take no fog colour; they fade out by alpha over the spherical
+  // distance, 0 to FogCloudsEnd (Cloud Distance x 16, default 128 chunks). With the scene fog they took
+  // the dusk fog colour, orange toward the sun and grey away from it (story_sun_wont_set)
+  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: true, fog: false })
+  mat.onBeforeCompile = (sh) => {
+    sh.uniforms.uCloudsEnd = { value: CLOUDS_END }
+    sh.vertexShader = 'varying float vCloudDist;\n' + sh.vertexShader.replace('#include <project_vertex>', '#include <project_vertex>\n  vCloudDist = length((modelMatrix * vec4(transformed, 1.0)).xyz - cameraPosition);')
+    sh.fragmentShader = 'varying float vCloudDist;\nuniform float uCloudsEnd;\n' + sh.fragmentShader.replace('#include <fog_fragment>', '#include <fog_fragment>\n  gl_FragColor.a *= 1.0 - clamp(vCloudDist / uCloudsEnd, 0.0, 1.0);')
+  }
+  mat.customProgramCacheKey = () => 'clouds'
   const grp = new THREE.Group()
   for (const dx of [-1, 0]) for (const dz of [-1, 0]) {   // tile 2x2 so the camera is always covered
     const geo = new THREE.BufferGeometry(); geo.setAttribute('position', P); geo.setAttribute('color', C)   // shared buffers
@@ -151,7 +162,7 @@ async function makeClouds (url) {
   grp.userData.segs = segs
   return grp
 }
-// Draw only the cloud segments inside the view frustum (the far plane is at 1000 blocks; the four
+// Draw only the cloud segments inside the view frustum (the far plane is at 2048 blocks; the four
 // tiles cover 6144 blocks). The visible segments' vertices go into the index buffer in buffer order and
 // the mesh stays one render item: three draws a transparent double-sided mesh in two passes (back
 // faces, then front), and geometry groups interleaved those passes and shifted the blend (1-3 levels).
