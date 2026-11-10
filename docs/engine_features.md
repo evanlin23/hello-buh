@@ -291,6 +291,37 @@ fixture re-rendered pixel-identical).
   Potion of Weakness' }` (`{}` for title-cased ids) draws the name for 2 s whenever the selected stack changes, fading over
   the last 0.5 s, in its rarity colour (a golden apple is aqua). Off without `itemNames`.
 
+## The story's hotbar (story.json "hotbar")
+Owner, 2026-11-10: "Can we also fill our hotbar with like ridiculous items? like buckets of milk for example", and
+"make it 67 eggs" (docs/STANDARDS.md 3.6). Built in, not hand-rolled per stunt:
+- **story.json `"hotbar"`**: up to 9 entries, slot 0 first: `"milk_bucket"`, `["egg", 67]`, `["iron_pickaxe", 1, true]`
+  (the glint: `enchantment_glint_override`) or `["diamond_sword", 1, "sharpness:5"]` (real enchantments), `{ "item":
+  "cake", "count": 1 }`, `null` (an empty slot). The story's own tools first, then 1-3 ridiculous items that fit the world.
+- **Counts over the item's stack size** (67 eggs; eggs stack to 16, buckets and cake to 1): the kit adds the 1.21
+  `max_stack_size=99` component (`egg[max_stack_size=99] 67`), so the server takes it and the HUD reads "67". 1-99; a tool
+  with durability can't stack (1.21 refuses the component on a damageable item).
+- **Applied once, before the first recorded frame**: lib/harness.js calls `applyStoryHotbar` (lib/story.js) for any
+  stunt with `edit.story`, right after `stunt.setup` and the item sweep, before the chunk refresh and the recording; it
+  runs `ctx.hotbar(items)` (`/clear`, `/item replace`), so the recording's first `hotbar` mark is already full. A story
+  without `"hotbar"` is untouched. The selected slot is never changed: `ctx.select` / the stunt decides what is held.
+- **A stunt's own `ctx.hotbar` wins from its moment** (it clears first). To keep the story's items around the stunt's
+  own: `await ctx.hotbar(mergeHotbar(ctx.storyHotbar, ['iron_shovel']))` (lib/story.js; its non-empty slots win).
+- **Checks**: `./hb check story_<name>` works before the first recording too (the motion lint and the hotbar only):
+  BLOCK on an id that isn't in minecraft-data for versions.env's version, a count outside 1-99, a stacked tool, more
+  than 9 entries, or an item the HUD has no icon for yet (shield, decorated pot, player/dragon/piglin heads, copper
+  chests and golem statues: 3D special models); WARN on no `"hotbar"` or fewer than 7 filled. `./hb record` refuses
+  to start on a blocker. After recording, rec_check (`hotbar`) WARNs when fewer than 7 slots are filled on more than
+  20% of the first-person frames where the HUD shows (camera shots, F1, the death screen and open containers don't count).
+- **Icons**: edit.py draws every 1.21.11 item now. Items whose texture isn't named after them (compass, clock,
+  recovery compass, crossbow, enchanted golden apple, tipped arrow, debug stick, the waxed copper bars/chains/doors/
+  lanterns) drew an empty slot; `item_def_icon` reads the item definition (assets/minecraft/items/<name>.json: a
+  condition's on_false, a select/range_dispatch's fallback or first case) and composites its layers with their default
+  tints. Only reached where the old name lookups found nothing: no published recording holds any of those items (all
+  100 published and work/ recordings scanned), so every published Short renders as before.
+- Test: `./hb record _hotbar_test && ./hb still _hotbar_test t_full+0.5 t_milk+0.5 t_eggs+0.5 t_own+0.5` (the fixture
+  lib/hb/test/fixtures/hotbar_story: an enchanted pickaxe, 67 eggs, milk and water buckets, a cake; slot 6 and 7 held;
+  then the stunt's own sword over slot 0). `npm test` (lib/hb/test/hotbar.test.js) covers the kit on a fake ctx and both checks.
+
 ## Faster stills: the mesh cache
 `./hb still` (any `ONLY=`/`FRAMES=` render) keeps the first mesh of the world in `work/hb/meshcache/` and the next
 still of the same recording loads it instead of meshing (story_nitwit, two stills: 56 s -> 25 s; the PNGs are

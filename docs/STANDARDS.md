@@ -122,6 +122,14 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
    docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
    check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
+5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
+   "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
+   them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
+6. **A full, funny hotbar**: all 9 slots filled, the story's own tools first, then 1-3 ridiculous items that fit the
+   world (milk buckets, cake, 67 eggs: owner "make it 67 eggs"); never contradicting the story, the same between shots.
+   story.json "hotbar" (the harness puts it on before the first frame; docs/engine_features.md "The story's hotbar").
+   Check: check (story hotbar: BLOCK on an unknown item id), rec_check (hotbar), review (stills). r:rdc3c4c
+
 ## 3b. Motion (built in, not caught)
 1. **Smooth by construction**: stunts move the camera, the player and NPCs only through the story kit's primitives
    (eased turns, pathing walks, vanilla-speed NPCs, a still camera while a GUI is open); a lint before recording
