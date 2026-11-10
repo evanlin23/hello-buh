@@ -41,15 +41,29 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 | recording 6 | 04:05:13 | 04:08:14 | 3 min | waiting | 1 attempt, rec_check clean |
 | Actions render 3 queued (old setup) | 04:08:20 | 04:19:54 | (superseded) | waiting | re-queued after merging main's no-apt render setup (lead) |
 | Actions render 4 (no-apt setup) | 04:19:54 | 04:40:20 | 20.5 min | waiting | setup now 20-30 s a runner. 11 slices took 2.5-7 min; slice 11 (the ending: blasts, bolts, particles) took 12 min alone, so the split by frame count left the run waiting 6+ min on one slice; finish 6 min (join 1.3, audio+edit 4) |
-| independent review round 2 (new session) | 04:40:49 | | | waiting | |
+| independent review round 2 (new session) | 04:40:49 | 04:41:50 | 1 min (I polled at 04:48) | waiting | READY: all 3 blockers fixed, none new. Nitpicks: ruin wide shot dim, the lava mostly dark (engine), the burned room's floor reads as netherrack |
+| publish (`node scripts/publish.js story_nitwit --pass --notes ...`) | 04:48:29 | 04:49:09 | 0.7 min | waiting | videos 8ef7406: NCS bed (MUPP - X2) baked in with its credit, thanks to the 609a5e1 fix. Printed `fatal: path 'stunts/story_nitwit.js' ... not in '9ba2ef01'` (gap 5: code.commit is a main commit without the stunt). No build.log or game_audio.flac in the package (Actions route). GitHub warned short.mp4 and short_nosong.mp4 are 56 MB each (over the 50 MB recommendation) |
 | preview (`scripts/preview.sh`, now on main) in parallel | 04:08:32 | 04:34:31 | 26 min | waiting | slower than the new Actions render: 3 parallel render.js jobs each still step through all 2583 frames (5-12 min each on this 4-CPU box with other work running), edit 3.3 min. Sheets are excellent (every cut ±3 frames, labelled). They showed the ruin and tree fixes reading, the ending's blasts in view, and the new lava still drawing near-black with one orange quarter (engine) |
 | Actions render 2 queued + stills 4 (12 ticks) | 03:15:32 | 03:17:36 | 2 min | waiting | stills: roof nitwit visible, ruin readable, no hand (the hand in stills 3 is unexplained; render.js silently ignores a stunt module that fails to load) |
 
+## Totals
+
+| | wall clock | notes |
+|---|---|---|
+| one-time setup (TTS venv incl. a failed first apt attempt; Kokoro + spaCy download on the first voice run) | ~8 min | waiting; ran in the background while I wrote the script, so ~0 on the critical path |
+| per-story, start to publish | **2 h 40 min** (02:09:30 -> 04:49:09) | |
+| per-story active work (reading, writing, fixing, checking sheets, logging) | **~50 min** | reading 3.5, script 4, stunt 4.5, staging fixes 7, tool fixes 3, reading sheets/review/investigating ~15, log ~10, publish 1 |
+| per-story waiting (critical path) | **~1 h 50 min** | recordings ~25 (9 bot attempts, 4 died in setup), hand-made stills ~27, Actions renders ~62 (41.5 old setup + 20.5 new), review sessions ~6 (+7 of my polling), preview 26 (overlapped the render) |
+
+Where the time went, biggest first: Actions render on the old apt setup (41.5 min, now ~20 with the lead's no-apt
+setup, and ~15 if slices were balanced), still renders by hand before the preview tool existed (27 min), recordings
+(25 min, ~8 of it flaky setup retries), the set bug that made recording 2 + its stills useless (~11 min).
+
 ## Counts
-- recordings attempted: 5 runs of run.sh (9 bot attempts; 4 died in setup)
-- renders: 2 queued on Actions (1 cancelled by a re-queue, 1 finished); 4 local still renders by hand
-- review rounds: 1 (NOT READY, 3 blockers)
-- tool fixes needed: 0
+- recordings attempted: 6 runs of run.sh (11 bot attempts; 5 died in setup or timed out)
+- renders: 4 queued on Actions (2 cancelled by re-queues, 2 finished); 4 local still renders by hand; 1 preview
+- review rounds: 2 (NOT READY with 3 blockers, then READY)
+- tool fixes made in the branch: 3 (7bfeecb run.sh RECORD_ONLY rec_check, 609a5e1 publish.js NCS bed after an Actions render, 6dd5351 clearSet waits for chunks)
 
 ## Gaps, bugs, confusing docs (running)
 1. **docs/stories.md Setup: `apt-get install -y espeak-ng` fails in a fresh container** (`Unable to locate package`):
