@@ -5,7 +5,7 @@ itself), so we play them the way the client would: from the recorded events and 
 pose. Vanilla volumes and pitches come from sounds.json; the files from Mojang's asset CDN
 (sha1-checked, cached in work/sounds). Loudness is normalized later in edit.py (-18 LUFS).
 
-  python3 audio.py work/x.rec.json work/x.wav
+  python3 audio.py work/x.rec.json work/x.wav [stories/<name>]
 """
 import hashlib
 import json
@@ -65,7 +65,7 @@ class Mixer:
             self.buf[i:i + n] += x[:n]
 
 
-def main(rec_path, out_path):
+def main(rec_path, out_path, story_dir=None):
     rec = json.loads(pathlib.Path(rec_path).read_text())
     poses, tl = rec["poses"], rec["timeline"]
     seconds = len(poses) * TICK
@@ -83,7 +83,7 @@ def main(rec_path, out_path):
             sys.path.insert(0, str(ROOT / "scripts"))
             import onscreen_sfx
             rec["_path"] = str(rec_path)
-            for t, snd, vol, pitch, what in onscreen_sfx.fills(rec, onscreen_sfx.story_dir_of(rec), m.defs):
+            for t, snd, vol, pitch, what in onscreen_sfx.fills(rec, story_dir or onscreen_sfx.story_dir_of(rec), m.defs):
                 m.play(snd, t, volume=vol, pitch=pitch)
                 print(f"on-screen sound {t:6.2f}s {snd} ({what})")
         return finish(m, seconds, out_path)
@@ -169,4 +169,4 @@ def finish(m, seconds, out_path):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:3])
+    main(*sys.argv[1:4])   # [story dir]: the story the key words come from (default: the stunt's edit.story)

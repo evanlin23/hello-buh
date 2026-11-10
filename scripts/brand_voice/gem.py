@@ -4,7 +4,7 @@
   gem.py design <name> <male|female> <description>        voices.create (type prompted): a custom voice from words;
                                                            saves its id and Google's own sample_audio
   gem.py say <name> <voice id> <style> [text file]         Interactions API: read the audition text in that voice
-  gem.py gc <name> <model> <prebuilt voice> <direction>    generateContent, Pip's layout: "[direction]" + blank line +
+  gem.py gc <name> <model> <prebuilt voice> <direction> [text file]  generateContent, Pip's layout: "[direction]" + blank line +
                                                            the text (voices/recipes/pip.md); works on flash-lite-tts
 
 No reference audio is ever sent: these voices come from text descriptions or the stock library, never a clone."""
@@ -50,7 +50,7 @@ if mode == "design":
     print(json.dumps(r)[:400])
 elif mode == "gc":
     MODEL, voice, direction = sys.argv[3:6]
-    text = open("scripts/brand_voice/text.txt").read().strip()
+    text = open(sys.argv[6] if len(sys.argv) > 6 else "scripts/brand_voice/text.txt").read().strip()
     prompt = f"[{direction}]\n\n{text}"
     r = post(f"models/{MODEL}:generateContent", {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {
         "responseModalities": ["AUDIO"], "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}})

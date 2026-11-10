@@ -31,7 +31,8 @@ def f0(y, sr=16000):
 OUT, SR, CAP = "out/brand_voice", tts.SR, 0.12
 name = sys.argv[1]
 tempo = float(sys.argv[2]) if len(sys.argv) > 2 else 1.0
-words = len(open("scripts/brand_voice/text.txt").read().split())
+TEXT = os.environ.get("TEXT", "scripts/brand_voice/text.txt")
+words = len(open(TEXT).read().split())
 
 
 def load(p, sr=SR):

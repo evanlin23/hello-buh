@@ -14,6 +14,9 @@ Checks (ranked by how often reviews flagged them):
                must already be the new shot's pose (no second jump, no 1-3 frame snap of the aim or the position,
                no stand-up/crouch); no whip in the last frames before it; a time-of-day change lands ON a cut.
                Also teleports under 4 blocks with no `cut` mark (the renderer glides them).
+  1b. cast     a cast member that jumps over 0.5 block 1-4 ticks after a cut's frame (the new shot opens on it in the
+               old spot), or moves in stair steps (holds 2+ ticks, then moves, again and again: under 20 Hz, it reads as
+               teleporting). scripts/cast_motion.py; the kit (K.actor, K.cutShot) makes both right by construction.
   2. held      stretches of 0.6 s+ in output time where the camera barely moves and nothing else does (mobs in
                view, block changes in view, particles, caption/card/overlay changes). And the ending: <= 1.0 s
                after the payoff mark (1.8 s for a text payoff: a death message, a card, a story caption).
@@ -511,6 +514,16 @@ def main():
                 f"({abs(off) / 3:.0f} tick(s) off): the {'new' if off > 0 else 'old'} shot flashes the wrong sky. setTime on the cut's tick")
         else:
             add("WARN", "cuts", j, f"time of day changes {d} ticks mid-shot (no cut nearby): the sky and the light jump")
+
+    # ---------------------------------------------------------------- 1b. the cast (scripts/cast_motion.py; STANDARDS 3b.2)
+    # a cast member landing 1-4 ticks after a cut's frame (the new shot opens on it in the old spot), and a cast member
+    # moving in stair steps (2+ tick holds, again and again: a /tp loop the client gets every 3rd tick). Camera shots
+    # included: the cast is on screen there too
+    import cast_motion
+    for tick, msg in cast_motion.messages(rec.get("entities") or [], tl, P):
+        o = out_t(tick / 20)
+        if start <= o < end_o:
+            add("BLOCK", "cast", min(n - 1, max(0, int(round(o * FPS)) - k0)), msg, tick=tick)
 
     # ---------------------------------------------------------------- 2. held shots
     # camera speed per frame, smoothed over 0.2 s
