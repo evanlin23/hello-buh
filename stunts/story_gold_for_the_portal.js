@@ -38,7 +38,7 @@ module.exports = {
   selfArmor: ['golden_boots', null, null, null],   // Grandma's rule: Nico wears golden boots (never said)
   look: 'auto',
   shots: {},   // below
-  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', startAt: 'line:0', endAfter: 'story_end:0' },
+  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', startAt: 'line:0', endAfter: 'story_end:0', punch: [['story_end:-1.12', 0, 0.08]] },   // the punch: on 'HELMET' (the payoff, L11+1.52)
   // the whole area, Hushwell's plaza (S05's background, ~95 blocks SSW) included
   chunkStops (set) { return [[0, 0], [-30, 60], [-22, 100], [40, 0], [0, -40], [40, 40], [-40, 0]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
 
