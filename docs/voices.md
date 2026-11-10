@@ -135,6 +135,11 @@ line from the same cached re-take instead of the original bad one. Each re-take 
 
 ## Continuous takes (`"voice_takes": "beat"`, STANDARDS 2b.4)
 
+**Record after the voice is final.** Runaway's clean cuts came from voicing first and recording the stunt to the real
+line lengths. A story recording is now stamped with its voice (`rec.voice`, a hash of voice/voice.json, from
+lib/story.js `voiceStamp`); `./hb check` BLOCKs a recording whose stamp differs from today's voice.json (a re-take
+changed the line lengths: re-record) and WARNs on an unstamped older recording. Test: lib/hb/test/voice_stamp.test.js.
+
 Owner, 2026-11-10: "I think part of the reason the voice pacing feels off is because we are cutting it bc of silence
 and stuff. but i think instead we should be ensuring the voice we get back is all like continuous already without the
 stuff we dont want." Opt-in per story: set `"voice_takes": "beat"` in story.json and run `./hb voice <stunt>` as

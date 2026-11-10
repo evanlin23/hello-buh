@@ -260,6 +260,34 @@ def _fricative_onset(fr, t, floor):
     return min(t, max(floor, k * FR_HOP))
 
 
+def greedy_letters(lp, vocab, blank):
+    """What the acoustic model itself hears, best frame by best frame: the collapsed CTC path's letters, lowercase,
+    with no blanks, word separators or apostrophes ("MOM|SAYY_SS" -> "momsays")."""
+    inv = {v: k for k, v in vocab.items()}
+    out, prev = [], None
+    for i in np.asarray(lp).argmax(1):
+        if i != prev and i != blank:
+            ch = inv.get(int(i), "")
+            if len(ch) == 1 and ch.isalpha():
+                out.append(ch.lower())
+        prev = i
+    return "".join(out)
+
+
+def fits(score, lp, groups, vocab, blank):
+    """Does the take say the script? The mean letter log-prob over MIN_SCORE, or, for a take whose mean is dragged under
+    it by a few weak frames (a 2-word lead-in like "Mom says:" scored -2.87: too few letters to average out one soft
+    vowel), the model's own greedy reading spelling exactly the script's letters. A take that says something else never
+    passes the second test, so this only rescues takes the model already hears correctly."""
+    if score >= MIN_SCORE:
+        return True
+    if score < -99 + 1:
+        return False
+    inv = {v: k for k, v in vocab.items()}
+    want = "".join(inv.get(i, "") for g in groups for i in g).lower().replace("'", "")
+    return bool(want) and greedy_letters(lp, vocab, blank) == want
+
+
 def align(wav, tokens, model=MODEL):
     """[(token, start s, end s)] for each caption token of a take, or None when the take doesn't fit the words.
     tokens: the caption words, in order (punctuation and CAPS as displayed)."""
@@ -275,7 +303,7 @@ def align(wav, tokens, model=MODEL):
         return None
     sep = vocab.get("|")
     spans, score = viterbi(lp, groups, blank, sep)
-    if spans is None or score < MIN_SCORE:
+    if spans is None or not fits(score, lp, groups, vocab, blank):
         return None
     lag = LAG.get(model, 0.0)
     dur = len(x) / SR
