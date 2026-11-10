@@ -294,7 +294,8 @@ module.exports = {
       if (k === at(1) + 1) { creeperDead = true; K.actors.delete('creep'); say('/kill @e[tag=arr]'); say('/damage @e[tag=creep,limit=1] 100 minecraft:arrow'); ctx.sound('entity.creeper.death', 0.7, 1) }
       if (k === at(1) + 4 && !disc) { disc = { x: cr.x, z: cr.z }; say(`/summon item ${(X + cr.x).toFixed(2)} ${(F + cr.y + 0.3).toFixed(2)} ${(Z + cr.z).toFixed(2)} {Item:{id:"minecraft:music_disc_cat",count:1},PickupDelay:32767,Age:-32768}`) }
       if (bot.entity.position.x < X - 28.0) K.go(false)
-      const tgt = disc ? C(disc.x - 0.5, cr.y + 0.2, disc.z - 0.5) : C(-34, fy + 1.3, 7.5)
+      const fx = disc ? disc.x : cr.x, fz = disc ? disc.z : cr.z   // between the skeleton and the creeper (then the disc)
+      const tgt = P((fx + sk.x) / 2 + 0.6, (cr.y + sk.y) / 2 + (disc ? 0.6 : 1.0), (fz + sk.z) / 2)
       K.base = K.aim(tgt); look(k)
     })
     K.stop()
