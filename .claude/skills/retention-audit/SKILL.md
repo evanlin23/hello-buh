@@ -18,6 +18,8 @@ Owner rules (2026-11-06):
 
 ## Inputs
 - `out/<name>.mp4` and the stunt module `stunts/<name>.js` (caption, `edit` block, marks).
+- `./hb pace <name>`: the hook, dead spots, build-up, payoff and length measured on the mp4 (BLOCK/WARN with times and
+  fixes; scripts/pace.py). Start from its lines, then judge what it can't (does line 1 make you ask why?).
 - `python3 scripts/beat_audit.py <name> [--payoff EVENT]` gives:
   - the stunt marks at their video times;
   - gaps between beats;
