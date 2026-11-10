@@ -152,5 +152,32 @@
    "request": "b3",
    "beat": "b3"
   }
- ]
+ ],
+ "hotbar": [
+  [
+   "bone",
+   14
+  ],
+  "lead",
+  [
+   "bread",
+   9
+  ],
+  [
+   "cooked_beef",
+   6
+  ],
+  "name_tag",
+  [
+   "oak_planks",
+   32
+  ],
+  "milk_bucket",
+  [
+   "egg",
+   67
+  ],
+  "cake"
+ ],
+ "hotbar_note": "Buh's hotbar (STANDARDS 3.6): his dog things first (bones, a lead, food, a name tag), then the ridiculous (milk, 67 eggs, a cake). Not on screen in this story: every POV is the wolf's (hud: false)."
 }
