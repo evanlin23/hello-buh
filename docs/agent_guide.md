@@ -8,7 +8,9 @@ continuity bible), `docs/worker.md`, `docs/qa.md`, `docs/movie_engine.md` (camer
 
 ## Start of a session (1 minute)
 ```bash
-./hb doctor          # packages, Chromium, Java, ffmpeg, assets, server jar, songs, TTS venv, Gemini, disk, server free
+./hb doctor          # packages, Chromium, Java, ffmpeg, assets, server jar, songs, TTS venv + whisper, Gemini, disk,
+                     # server free; flags a stale Minecraft server (run.sh gone, no bot, 30+ min): --fix stops it
+./hb rules           # the owner's current rules (newest date, an id): again before voicing, recording, rendering
 ./hb status          # every story stunt: voice / recording / preview / Actions render / reviews / published / queue,
                      # and the next step for each; also whether the Minecraft server is in use and the free disk
 ```
@@ -18,19 +20,21 @@ name): `ln -s /home/user/hello-buh/{node_modules,songs,work} .`
 ## The commands
 | command | what | time |
 |---|---|---|
-| `./hb doctor` | is this box ready; each failure has its fix | 5 s |
+| `./hb doctor` | is this box ready; each failure has its fix; `--fix` stops a stale server (only one it can prove is orphaned) | 5 s |
+| `./hb rules [--since DATE]` | the owner's rules from docs/stories.md, newest first, with the newest date and an id: re-run before voicing, recording, rendering; a new id = re-read | 1 s |
 | `./hb status [stunt]` | what exists and what's next | 2 s |
 | `./hb voice <stunt> [--only L03]` | the voices: a v2 cast on Gemini (word cuts, speaker check, automatic re-takes, word times; `--check` only checks: docs/voices.md), a v1 story on Kokoro | 30 s - 10 min |
 | `./hb record <stunt>` | server + bot -> `work/<stunt>.rec.json`, then rec_check; stops on blockers (`--no-strict` to keep going); refuses while another server batch runs | 3 min a try (5 tries) |
 | `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing + owner | 10-40 s |
 | `./hb owner <stunt>` | the owner's review notes as checks (lib/hb/owner.js): superflat shots (and the set's footprint, the plain, the relief), the camera off what the line names (`lines[].look`), the picture ahead of / against the words, an uncaused fall, glitches (doors by themselves, stuck on a door, jitter, one-tick snaps, stutter, fog/night/rain missing); `--shots` prints each shot's fill, `--story DIR` reads another story dir | 5-15 s |
 | `./hb describe <stunt> [T...]` | a moment as text (below); no T = the middle of every shot | 1-2 s |
+| `./hb map <stunt> [T...]` | top-down plan of the recorded blocks, north up, in set offsets, each shot's camera wedge and the cast (in/out of frame) -> `map.png` + `columns.json`; place things without mixing up north and east | 5-10 s |
 | `./hb continuity <stunt>` | per shot: time, weather, held item, camera, cast; flags pops, time jumps, cast that moved or vanished across a cut | 2 s |
 | `./hb framing <stunt>` | per shot: size (EWS/WS/FS/MS/CU), place; flags too-tight shots (subject over 60% of the frame height), cameras against a wall, new places with no wide shot, sizes tighter than story.json v2 planned | 2 s |
 | `./hb still <stunt> T [T...]` | renders only those moments in one render.js -> PNGs + a labelled sheet (`--cam back:4`, `--size 360`) | ~30 s + 3-15 s each |
 | `./hb sheet <stunt>` | one labelled frame per shot (`--at first,mid,last` adds the cut edges) | 3-10 min |
 | `./hb preview <stunt>` | the whole edited Short at 360x640 + sheets of every cut and caption | 10-25 min |
-| `./hb render <stunt>` | queues the full render on GitHub Actions; `--wait` / `--fetch` brings back `out/<stunt>.mp4` | 10-20 min |
+| `./hb render <stunt>` | queues the full render on GitHub Actions on its own branch (`render/<stunt>`, or `<prefix>/render-<stunt>` when only your prefix may be pushed; never your working branch); `--wait` / `--fetch` brings back `out/<stunt>.mp4` | 10-20 min |
 | `./hb pace <stunt>` | the pacing gate on the finished `out/<stunt>.mp4`: visual + audio hook, dead spots, the same picture held, build-up over thirds, the payoff (a hit + a picture change, the end ≤1 s after), length; BLOCK/WARN with output times and the cheapest fix, exit 1 on blockers (`scripts/pace.py`; `--payoff L18`, `--video`, `--rec`). Needs the render, so it isn't in `hb check` | 20-40 s |
 | `./hb review <stunt>` | qa_frames + beat_audit + pace, counts the round; `--verdict "READY"` records the reviewer's answer | 2-4 min |
 | `./hb publish <stunt> --notes "..."` | to the videos branch (needs a READY verdict) | 1 min |
@@ -92,6 +96,13 @@ Measured on story_nitwit (docs/pipeline_test_nitwit.md: 2 h 40 min start to publ
 
 A stunt Short is the same from step 3 (no script, no voice).
 
+## When the engine can't show something
+Build it, don't stage around it: `docs/engine_features.md` (a pose is a few lines in `renderer/poses.js`; particles,
+block-entity and mob animations, GUI screens; the before/after pixel-diff test). Already there for player actors:
+`M.pose(ctx, who, 'sit' | 'drink' | 'wave' | ...)`, the off hand (`M.giveOff`), armour; an opened chest/barrel/
+shulker shows its screen with the contents; campfire smoke; the warden's emerge (`ctx.mark('pose', { ids, emerge:
+true })`). Test without the server: `node scripts/pose_fixture.js --staged` + `./hb still`.
+
 ## Rules
 - **One server batch at a time.** The Minecraft server has a fixed port and the work/ folder is shared by every
   worktree: `hb record` refuses while a server or bot runs anywhere (`hb status` shows whose). Never start one by hand
@@ -109,7 +120,9 @@ A stunt Short is the same from step 3 (no script, no voice).
 ## Troubleshooting
 | symptom | cause and fix |
 |---|---|
-| `Timeout waiting for N ticks` in setup | flaky right after the biome teleport (1 in 2-3 tries); run.sh retries 5 times (`--tries`) |
+| `Timeout waiting for N ticks` in setup | flaky right after the biome teleport (1 in 2-3 tries); run.sh retries 5 times (`--tries`). The chunk refresh no longer goes to fresh terrain (it was the usual cause) |
+| cast missing, or the server crashes in chunk ticking | parked cast in an unloaded chunk or inside stone: `clearSet` forceloads the set, `K.park(tag)` parks in the air inside it, `K.bury` carves an air pocket; for your own sets `await ctx.forceload({ x0, z0, x1, z1 })` |
+| `hb record` refuses: a server is running | `./hb doctor` says whose; a stale one (its run.sh gone, no bot) is stopped by `./hb doctor --fix` |
 | `COMMAND ERROR: That position is not loaded` in the bot log | a `/fill` before the chunks arrived: `clearSet` waits for them now; wait in your own setup too. The recording still "passes", so look at a sheet |
 | render.js exits 2: `stunts/x.js failed to load` | the stunt has an error: `node -e "require('./stunts/x')"`. It used to render silently without hideHand, brightness, fovZoom |
 | `hb still` is slow (15+ s a frame) | each still re-lights and re-meshes the world for the blocks and time of day since the last one; a busy box (load > 4) doubles it. Fewer stills, or `hb describe` first. (agent/test-gaps is cutting the re-mesh cost) |

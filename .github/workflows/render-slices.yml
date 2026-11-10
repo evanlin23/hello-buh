@@ -108,7 +108,11 @@ jobs:
           git config user.email 41898299+github-actions[bot]@users.noreply.github.com
           git add -f renders/out renders/result.json
           git commit -qm "render-slices: out/$NAME.mp4 [skip ci]"
-          git push origin "HEAD:$GITHUB_REF_NAME" || echo "the branch moved on (re-queued?): the Short is still the 'short' artifact"
+          # only ever a render branch (scripts/render_on_actions.sh queues on render/<name>, <prefix>/render-<name> or
+          # <branch>-render-<name>): a job queued straight on a working branch reports to render/<name>, so the working
+          # branch is never written. Matched by the exact names, not "render" anywhere: agent/render-speed is a working branch
+          case "$GITHUB_REF_NAME" in render/*|*/render-"$NAME"|*-render-"$NAME") OUT_BRANCH=$GITHUB_REF_NAME; F="" ;; *) OUT_BRANCH=render/$NAME; F="-f" ;; esac
+          git push $F origin "HEAD:refs/heads/$OUT_BRANCH" || echo "the branch moved on (re-queued?): the Short is still the 'short' artifact"
 
   failed:
     needs: [plan, slice, finish]
@@ -124,4 +128,5 @@ jobs:
           git config user.email 41898299+github-actions[bot]@users.noreply.github.com
           git add -f renders/result.json
           git commit -qm "render-slices: failed [skip ci]"
-          git push origin "HEAD:$GITHUB_REF_NAME" || true
+          NAME=$(python3 -c "import json;print(json.load(open('renders/slices.json'))['name'])" 2>/dev/null || echo unknown)
+          case "$GITHUB_REF_NAME" in render/*|*/render-"$NAME"|*-render-"$NAME") git push origin "HEAD:refs/heads/$GITHUB_REF_NAME" || true ;; *) git push -f origin "HEAD:refs/heads/render/$NAME" || true ;; esac

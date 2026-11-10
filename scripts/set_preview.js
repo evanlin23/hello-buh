@@ -47,10 +47,9 @@ if (opt('base')) {
 }
 const colAt = (x, z) => cols.get(`${Math.floor(x / 16) * 16},${Math.floor(z / 16) * 16}`)
 const nameAt = (x, y, z) => { const c = colAt(x, z); if (!c) return 'air'; const id = c.getBlockStateId(new Vec3(((x % 16) + 16) % 16, y, ((z % 16) + 16) % 16)); return Block.fromStateId(id, 0).name }
-if (Y === null) {
-  const skip = /air|grass$|fern|flower|leaves|log|poppy|dandelion|bush|tulip|snow$/
-  for (let y = 200; y > 0; y--) { const n = nameAt(X, y, Z); if (!skip.test(n) && n !== 'short_grass') { Y = y; break } }
-}
+// the natural ground height of a column (lib/sets/site.js GROUND), for the base terrain
+const { GROUND } = require('../lib/sets/site')
+const Hnat = (x, z) => { if (!colAt(x, z)) return null; for (let y = 220; y > -60; y--) { const n = nameAt(x, y, z); if (GROUND.test(n)) return /water|lava/.test(n) ? null : y } return null }
 
 // a fake ctx: place()'s maths without a server (we only need the voxels and the world positions)
 const vox = sets.build(name, variant)
@@ -59,10 +58,40 @@ const k = Math.max(0, sets.FACES.indexOf(facing))
 const [ox, oz] = sets.rotXZ(Math.floor((hi[0] - lo[0]) / 2), Math.floor((hi[2] - lo[2]) / 2), k)
 const px = X - ox, pz = Z - oz
 const Wd = (lx, lz) => { const [a, b] = sets.rotXZ(lx - lo[0], lz - lo[2], k); return [px + a, pz + b] }
+const corners0 = [[lo[0], lo[2]], [hi[0], lo[2]], [lo[0], hi[2]], [hi[0], hi[2]]].map(([a, b]) => Wd(a, b))
+const fbox = { x0: Math.min(...corners0.map(c => c[0])), x1: Math.max(...corners0.map(c => c[0])), z0: Math.min(...corners0.map(c => c[1])), z1: Math.max(...corners0.map(c => c[1])) }
+if (Y === null) {   // place()'s choice: a low percentile of the ground over the footprint
+  const ys = []
+  for (let x = fbox.x0; x <= fbox.x1; x += 2) for (let z = fbox.z0; z <= fbox.z1; z += 2) { const h = Hnat(x, z); if (h !== null) ys.push(h) }
+  ys.sort((a, b) => a - b); Y = ys[Math.floor((ys.length - 1) * 0.35)]
+  console.log('ground y', Y, 'range', ys[0], '..', ys[ys.length - 1])
+}
 if (k !== 0) console.log('note: --facing rotates positions only; block states are not turned in this preview (the game does it on /place)')
 
 // the stamped world: voxels by world position
 const world = new Map()
+// place()'s terrain fit (lib/sets/terrain.js) over the base recording's land
+if (opt('base') && opt('fit', '1') !== '0') {
+  const { planFit } = require('../lib/sets/terrain')
+  const { parse } = require('../lib/sets/voxel')
+  // the ways in (as place() works them out): door-side anchors walked out to the box edge
+  const entries = []
+  const FACES = ['south', 'west', 'north', 'east'], VV = { south: [0, 1], west: [-1, 0], north: [0, -1], east: [1, 0] }
+  for (const n of ['doorstep', 'street', 'gate', 'entrance', 'approach', 'mouth', 'outside', 'approach_b', 'end_a']) {
+    const a = vox.anchors[n]; if (!a || !VV[a.face]) continue
+    const face = FACES[(FACES.indexOf(a.face) + k) & 3], v = VV[face]
+    let [cx, cz] = Wd(a.x, a.z)
+    const sgn = (v[0] * (cx - (fbox.x0 + fbox.x1) / 2) + v[1] * (cz - (fbox.z0 + fbox.z1) / 2)) >= 0 ? 1 : -1
+    const fx = v[0] * sgn, fz = v[1] * sgn
+    for (let i = 0; i < 40 && cx >= fbox.x0 && cx <= fbox.x1 && cz >= fbox.z0 && cz <= fbox.z1; i++) { cx += fx; cz += fz }
+    if (!entries.some(e => e.x === cx && e.z === cz)) entries.push({ x: cx, z: cz, fx, fz })
+  }
+  const ops = planFit(Hnat, fbox, Y, { margin: 7, seed: (fbox.x0 * 31 + fbox.z0) | 0, entries })
+  // trees on and next to the footprint go (as place() clears them)
+  for (let x = fbox.x0 - 2; x <= fbox.x1 + 2; x++) for (let z = fbox.z0 - 2; z <= fbox.z1 + 2; z++) for (let y = Y - 4; y <= Y + 40; y++) if (/_log$|_leaves$/.test(nameAt(x, y, z))) world.set(`${x},${y},${z}`, { name: 'air', props: {} })
+  for (const o of ops) for (let y = o.y0; y <= o.y1; y++) world.set(`${o.x},${y},${o.z}`, parse(o.block))
+  console.log('fit ops', ops.length)
+}
 for (const [key, st] of vox.cells) {
   const [lx, ly, lz] = key.split(',').map(Number)
   const [x, z] = Wd(lx, lz)

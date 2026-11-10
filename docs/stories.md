@@ -134,6 +134,21 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
+  per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
+  Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. Until `./hb voice` cuts safely:
+  - cut each line at the quietest point between lines, never at Whisper's word start (it lands late, on the
+    consonant); keep >= 80 ms before the first word and >= 200 ms after the last, with a 10-20 ms fade at each edge;
+  - never splice a pause out of the middle of a line: if a pause is too long, re-take the line (or shorten only the
+    silent middle of the pause with a 30 ms crossfade, never within 60 ms of speech);
+  - check every take: `python3 scripts/voice_edges.py stories/<name>` (edges), a listening pass asking "is any word
+    cut off?", and `./hb pace` now blocks a line still speaking when the video ends or two lines overlapping.
+- **Owner, 2026-11-10: "I see a lot of sessions getting caught on the 4.5 words/second, what are your thoughts?"**
+  4.5 words/s is **not a target**. It was the research median, but the owner then chose Pip's natural tempo (~4.1
+  while speaking, ~2.85 overall) over every sped-up take. Speed comes from the direction and the script (short
+  sentences), never from stretching, and never from re-take loops chasing a number. What matters is no dead air:
+  the opening in one breath, short gaps, holds with something happening, the end right after the payoff. `./hb pace`
+  only warns on a rate clearly slower than Pip and never blocks on rate.
 - **Owner, 2026-11-10: "can you make sure the voices are distinct and correct? It felt like stuff was getting mixed
   up... Maybe we can have color coded captions?"** and, on the colours: **"It should generally just "match" the vibe
   of the character thats supposed to be speaking."** Every voiced line is checked for the right speaker and the
@@ -171,7 +186,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
     Listening checks: gemini-3.5-flash (retry 502/503).
 - **Owner, 2026-11-10: "sure 4.5 is fine bc that matches the best. also, we should have absolutely no pauses in like
   the first few seconds right, bc those are the most critical? Like the other this dog has been sitting there has a
-  brief pause right in the first few seconds."** The narrator talks at ~4.5 words/s while speaking (runaway: 4.6).
+  brief pause right in the first few seconds."** (Superseded on speed: see the newer "not a target" rule; Pip's natural tempo is the reference.)
   No "..." in any line spoken in the first 5 s (Gemini turns it into a half-second stop: Dog on the Hill's L01 had
   0.53 s and L02 0.54 + 0.71 s), and the gap between opening lines stays at one breath (runaway's 0.37-0.40 s).
   `./hb pace` blocks a pause inside an opening line over 0.35 s or a gap between opening lines over 0.6 s.
@@ -208,7 +223,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   **other characters' lines are quoted by the narrator with a "said" tag by default** (Mom said, "He's just shy.");
   a second voice is allowed for at most 1-3 punchlines of 6 words or fewer, only while that character is on screen,
   very different from the narrator (other age or sex), never two extra voices of the same sex, never exposition.
-  The narrator: young male, fast and deadpan, about **4.5 words per second** (runaway is 4.4), never whispery or breathy:
+  The narrator: fast and deadpan (speed: Pip's natural tempo, see the "not a target" rule), never whispery or breathy:
   say so in the Gemini style prompt. Line 1 is the title: an absurd premise stated flatly in first person, then quick
   escalating examples, the twist, the loop. Test A vs A+ (one extra voice) on the next 4 stories.
 - **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like
@@ -268,7 +283,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
   or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog. The set library
   (`lib/sets`, catalog and anchors in docs/sets.md) does both: `sets.findSite`, `sets.place(ctx, 'cottage', {...})`
-  (14 dressed pieces that land on the terrain and return door/bed/window anchors), `sets.vanilla` and `sets.dress`.
+  (17 dressed pieces that land on the terrain and return door/bed/window anchors), `sets.vanilla` and `sets.dress`.
 - **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
   good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
   overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its
@@ -309,7 +324,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - `face_on` windows are sequential (one open at a time): `face_off` before the next `face_on`.
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
-- No block entities render (beds, bells, chests, signs): build sets without them.
+- Block entities render now (beds, bells, chests with their lids, signs, banners, skulls, shulkers), and an opened chest, barrel or shulker box shows its container screen with the contents (docs/engine_features.md). Anything else the renderer lacks: build it (docs/engine_features.md), don't stage around it.
 - Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands. Keep sneak (and
   any other key the next shot needs) held through the cut (`K.cut` does): a stunt that clears its controls before the
   teleport stands the camera up for a tick and it eases back down on screen. `scripts/rec_check.py` flags both.

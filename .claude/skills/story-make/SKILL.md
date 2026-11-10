@@ -20,7 +20,9 @@ shots, clean continuity, a "why tf?" hook and a twist worth a rewatch.
 2. **Owner notes first.** Read the review notes the owner left on the review page (see "Feedback" below) and
    `uploads/scores.json` (subscribers per 1k views by format). An open note on a published story is fixed in the
    style skill before you make anything new.
-3. Check `pgrep -af "server.jar|bot.js"`: one server batch at a time per container.
+3. Check `pgrep -af "server.jar|bot.js"`: one server batch at a time per container (`./hb doctor` says whose).
+   **Run `./hb rules` now and again before voicing (2), recording (4) and rendering (5):** the owner adds rules during
+   the day; a new `id` or newest date means re-read docs/stories.md "House rules" and fix the story before that step.
 4. Create your branch `claude/story-<name>` once you have a name; claim the premise in `docs/stories.md` in its own
    commit and push it, so two sessions never make the same story.
 
