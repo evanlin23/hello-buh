@@ -68,26 +68,33 @@ look: { grade: { lift: [0.02, 0.01, 0.018], gamma: [0.97, 1.0, 1.04], gain: [1.1
 - Final encode: crf <= 18.
 
 ## Sound
-The full standard and its evidence: docs/audio.md (research: docs/research/audio_2026-11-10.md). All automatic in
-`edit.py --story` + `add_song.py` (scripts/story_audio.py); set story.json `mood` and `payoff`, the rest follows.
+The full standard and its evidence: docs/audio.md (research: docs/research/audio_2026-11-10.md; the owner's reference
+Short, measured 2026-11-10). All automatic in `edit.py --story` (scripts/story_audio.py), **the score included**:
+every render, previews too, is what gets posted (publish only writes the credit). Set story.json `mood` and `payoff`.
 - **Levels:** voice -15 LUFS after the clarity chain (HPF 80 Hz, -2 dB @ 250, +2.5 dB @ 3.5k, de-ess, 3:1); game -27
-  ducked 4 dB under lines; score bed -26 ducked 7 dB under lines (~18 dB under the voice while it talks, ~11 in
-  pauses; the old fixed -31 bed never moved); payoff track -24; room tone -47; master -14 LUFS, true peak <= -1 dBTP
-  (4x-oversampled limiter; no dynamic loudnorm: it flattened the payoff).
+  ducked 4 dB under lines; ambience -38 ducked 3 dB; score bed -26 through a voice pocket (-6 dB over ~650 Hz-3 kHz),
+  ducked only 2.5 dB: **~14 dB under the voice while it talks** (the reference: 13.8 dB, constant; the old -26 ducked
+  7 dB sat ~18 dB under, and only went in at publish, so the previews had no music: owner, "I dont hear any music");
+  room tone -47; master -14 LUFS, true peak <= -1 dBTP (4x-oversampled limiter; no dynamic loudnorm).
+- **Clarity guard:** while a line is spoken the effects are held 9 dB under the voice in the 300 Hz-4 kHz band (the
+  bed's swells 6 dB), so nothing covers a word.
 - **Music = mood score, not phonk:** `"mood": "eerie" | ["tense", "sad"]` (eerie / tense / sad / funny / heroic,
-  before/after the twist) picks a Kevin MacLeod CC BY track from music/score.json (credit added to the description).
-  Beds keep the 1-4 kHz voice band free (pick skips a bed with > 15% there).
-- **The payoff (`"payoff": "L13" | "boom"`):** a 1.9 s riser, then the bed drops out **0.45 s before** the payoff
-  (silence before the hit: on runaway the drop-out sits 19.8 dB under the hit, 10.9 dB in the old mix), an impact +
-  sub on the payoff frame, then the payoff track enters on its own drop (funny: a record scratch and the same tune
-  picks up again).
+  before/after the twist) picks a Kevin MacLeod CC BY track from music/score.json (`"score": "<id>"` pins one; credit
+  added to the description). Beds keep the 1-4 kHz voice band free (pick skips a bed with > 15% there).
+- **The payoff (`"payoff": "L13" | "boom"`):** a soft 1.9 s riser (peak -24 dBFS, slow attack), the bed drops out
+  **0.45 s before** the payoff (silence before the hit), an impact + sub on the payoff frame, and **nothing after**:
+  no payoff track, no sting (owner: Good Boy "Wtf is the beat at the end?"). Both moods funny: a record scratch
+  instead. `"hit": false` drops the riser too.
 - **On-screen sounds:** every visible event that makes a sound in vanilla gets it on its frame (digs, breaks,
-  places, doors, pickups, mob hurt/death, bells, chests, eating, fuses, thunder): audio.py adds the missing ones
-  for a story (scripts/onscreen_sfx.py; the check lists them). Not under a key word (minor sounds dropped, causal
-  ones -6 dB).
-- **Design SFX, sparingly:** whooshes only on scene changes (a clock jump or a > 24-block move), at most one per 6 s,
-  peaking 40 ms before the cut. Hand-placed SFX: quiet (gain 0.3-0.6), varied (pitch 0.9-1.2), one per beat at most;
-  no SFX under a spoken line's key word.
+  places, doors, barrels, chests, pickups, mob hurt/death, mob idle voices, steps, splashes and swimming, bells,
+  eating, fuses, thunder): audio.py adds the missing ones for a story (scripts/onscreen_sfx.py; `--strict` fails on
+  a visible action left silent). Under a key word: idle voices dropped, minor sounds -9 dB, causal ones -6 dB. The
+  hotbar switch is silent in vanilla.
+- **Ambience per shot:** night crickets, dusk crickets (-5 dB), day breeze, indoors (crickets muffled at night), a
+  cave's cold wind, vanilla rain / nether / underwater loops (onscreen_sfx.scenes).
+- **Design SFX, sparingly:** **no whooshes** (owner: "the woosh is too jarring and loud"; the reference has none).
+  `"audio": {"whoosh": true}` brings them back at -32 dBFS, low-passed, faded in. Hand-placed SFX: quiet (gain
+  0.3-0.6), varied (pitch 0.9-1.2), one per beat at most.
 - **Never digital silence:** the room tone runs under everything (the old nosong mixes were 8-12% below -70 LUFS).
 - Check a render: `python3 scripts/audio_measure.py out/<name>.mp4` (I -14 +-0.5, TP <= -1.0, digital silence 0).
 - Character voices: docs/story_craft.md section 5 (Gemini cast; contrast in pitch between any two voices that talk:
@@ -145,6 +152,11 @@ Try a grade in a second: `LOOK=0 ./hb still <stunt> T --out raw` once, then `scr
   fletcher, librarian, butcher, cleric's purple, armorer's mask); stage against grass, sky or light planks.
 - Instant reads: creeper, allay, zombie, iron golem (not on sand), sheep. Enderman and witch vanish at night (dE 13/19):
   light them. A second human: Alex (luma 0.62 vs Steve 0.38); two humans differ by >= 0.15 luma.
+
+**Cuts** (docs/cinematic.md "Invisible cuts"; owner: "i keep noticing them"): the eye's point of interest stays put
+across a cut (<= 15 % of the frame; render.js eyeTrace re-aims camera shots, give each shot a `subject`), the cut lands
+33-150 ms before the line's first word (K.line), cast that would steal the eye (a stray village mob) is cleared from
+the set. `./hb cuts <stunt>` measures both.
 
 **On-screen effects**: no onomatopoeia or emoji (0/69 frames on Xenost, Ashyyy, Skytro; common only on kids' comedy
 channels). Punch-in 0.06-0.10 at most twice (reveal, payoff), shake 6-10 px only on a visible impact, flash 0.4-0.5 only

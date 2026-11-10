@@ -95,6 +95,8 @@ jobs:
         with: { extra-cache: "true" }
       - name: sound effects
         run: python3 scripts/fetch_sfx.py || echo "fetch_sfx failed, the edit uses its fallbacks"
+      - name: the mood score (a story's edit mixes it in; docs/audio.md)
+        run: python3 scripts/fetch_music.py || echo "fetch_music failed, a story edit without its track prints NO MUSIC"
       - uses: actions/download-artifact@v4
         if: needs.plan.outputs.reuse == ''
         with: { pattern: "seg-*", path: work/segs, merge-multiple: true }

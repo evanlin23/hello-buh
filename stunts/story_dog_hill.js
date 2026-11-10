@@ -17,7 +17,6 @@ const M = require('../lib/movie')
 
 const VX = -160, VZ = -864
 const X = VX - 42, Z = VZ - 34
-const GAP = 0.08   // (main's K.line default; the clips carry their own 80 ms lead and 200 ms tail)
 
 module.exports = {
   name: 'story_dog_hill',
@@ -34,39 +33,41 @@ module.exports = {
   // the THUNDER bolt lights the world, moonlight lifts the night faces (audit F2)
   look: { mood: 'auto', bloom: 0.35, bloomThreshold: 0.9, bloomPasses: 1, rays: 0.35, raysOverBlocks: 0.35, sharpen: 0.4,
     grain: 0.012, vignette: 0.38, shadows: true, smoothLight: true, moonlight: 0.35 },
+  // subject: what the eye is on (the lint checks it; eyeTrace puts it where the last shot's subject was): the kit's
+  // actors by tag ('actor:dog'), 'self' (Buh), or a point. Without one the village horse beside the dog won the eye.
   // offsets from D (dy from the ground's top: the dog's feet at dy 1, his sitting head ~1.6, Pip's eyes ~1.8, Buh's
   // and Grandpa's ~2.6 over their ground). Aims at the faces (audit B5), no plant within 2 blocks of a path point (F4)
   shots: {
     // L01: a crane in from over the east drop: the hill's rim below, the dog alone on its top, ending on his face (audit B1)
-    open: { path: [[0, -8, 16, -7], [2.5, 3.8, 3.0, -2.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // a drone swoop from high north-west: the dog alone on the hilltop, the village far below behind him (audit B1)
+    open: { subject: ['actor:dog'], path: [[0, -8, 16, -7], [2.5, 3.8, 3.0, -2.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // a drone swoop from high north-west: the dog alone on the hilltop, the village far below behind him (audit B1)
     // L02: weather and nights he didn't move
-    rain: { path: [[0, -1.5, 3.0, -7.4], [2, -1.3, 2.9, -7.0]], look: [0.6, 1.6, 0.5], fov: 50 },   // WS (addendum: L02 alternates WS / FS / WS / CU)
-    storm: { path: [[0, -0.6, 2.0, 3.8], [2, -0.5, 1.95, 3.5]], look: [0.6, 1.8, -1], fov: 52 },   // FS, the bolt behind the hut in the crop (audit F3)
-    creeper: { path: [[0, -3.6, 2.3, 2.6], [2, -3.4, 2.2, 2.4]], look: [0.2, 1.9, -1.4], fov: 60 },   // WS: the dog and the creeper walking up behind him
-    zombies: { path: [[0, 1.9, 1.8, 2.1], [2, 1.8, 1.78, 1.95]], look: [0.7, 1.7, 0.4], fov: 40 },   // CU on his face, the zombies passing behind him
+    rain: { subject: ['actor:dog'], path: [[0, -1.5, 3.0, -7.4], [2, -1.3, 2.9, -7.0]], look: [0.6, 1.6, 0.5], fov: 50 },   // WS (addendum: L02 alternates WS / FS / WS / CU)
+    storm: { subject: ['actor:dog'], path: [[0, -0.6, 2.0, 3.8], [2, -0.5, 1.95, 3.5]], look: [0.6, 1.8, -1], fov: 52 },   // FS, the bolt behind the hut in the crop (audit F3)
+    creeper: { subject: ['actor:cr'], path: [[0, -3.6, 2.3, 2.6], [2, -3.4, 2.2, 2.4]], look: [0.2, 1.9, -1.4], fov: 60 },   // WS: the dog and the creeper walking up behind him
+    zombies: { subject: ['actor:dog'], path: [[0, 1.9, 1.8, 2.1], [2, 1.8, 1.78, 1.95]], look: [0.7, 1.7, 0.4], fov: 40 },   // CU on his face, the zombies passing behind him
     // L03-L04: morning, Pip walks up from the south with a bone; throws a stick
-    bone: { path: [[0, -3.2, 2.0, 5.2], [4, -2.9, 1.9, 4.8]], look: [0.4, 1.5, 1.4], fov: 52 },
+    bone: { subject: ['actor:pip'], path: [[0, -3.2, 2.0, 5.2], [4, -2.9, 1.9, 4.8]], look: [0.4, 1.5, 1.4], fov: 52 },
     // L05: the collar, close
-    collar: { dof: { aperture: 0.6 }, path: [[0, 2.0, 1.55, -0.4], [4, 1.9, 1.5, -0.2]], look: [0.7, 1.45, 0.5], fov: 45 },
+    collar: { subject: ['actor:dog'], dof: { aperture: 0.6 }, path: [[0, 2.0, 1.55, -0.4], [4, 1.9, 1.5, -0.2]], look: [0.7, 1.45, 0.5], fov: 45 },
     // L06: the one empty patch, flowers all round it (audit B6)
-    patch: { path: [[0, 2.8, 6.2, 1.6], [4, 3.0, 5.6, 1.3]], look: [3.5, 1.0, 0.5], fov: 50 },   // high top-down: the bare block in its ring of flowers (addendum)
+    patch: { subject: [3.5, 1.0, 0.5], path: [[0, 2.8, 6.2, 1.6], [4, 3.0, 5.6, 1.3]], look: [3.5, 1.0, 0.5], fov: 50 },   // high top-down: the bare block in its ring of flowers (addendum)
     // L07: the hut, wide, the dog small in the foreground
-    hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
+    hut: { subject: [5, 2, -5.5], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
-    beg: { path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
+    beg: { subject: ['actor:pip'], path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
     // L09-L10: Grandpa on the path below the south rim, shot from the south-east off the Pip-Grandpa line (audit B3)
-    gramps: { path: [[0, -2.6, -0.2, 10.0], [4, -2.8, -0.25, 10.2]], look: [-5, -0.4, 11.8], fov: 50 },   // his face, 3/4 from his right (he looks north up at Pip)
-    rightback: { path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.4, 11.5], fov: 48 },
+    gramps: { subject: ['actor:gramps'], path: [[0, -2.6, -0.2, 10.0], [4, -2.8, -0.25, 10.2]], look: [-5, -0.4, 11.8], fov: 50 },   // his face, 3/4 from his right (he looks north up at Pip)
+    rightback: { subject: ['actor:gramps'], path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.4, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night, the dog in the crop (F6)
-    dusk: { path: [[0, 4.2, 1.8, 2.1], [3, 3.8, 1.7, 1.9]], look: [0.0, 1.7, 1.0], fov: 50 },
-    night: { dof: { aperture: 0.6 }, path: [[0, 2.8, 1.6, 3.0], [3, 2.5, 1.55, 2.8]], look: [0.3, 1.6, 0.8], fov: 46 },
+    dusk: { subject: ['actor:pip', 'actor:dog'], path: [[0, 4.2, 1.8, 2.1], [3, 3.8, 1.7, 1.9]], look: [0.0, 1.7, 1.0], fov: 50 },
+    night: { subject: ['actor:dog'], dof: { aperture: 0.6 }, path: [[0, 2.8, 1.6, 3.0], [3, 2.5, 1.55, 2.8]], look: [0.3, 1.6, 0.8], fov: 46 },
     // L13: from the north: Buh on the patch and the dog, centred; Pip behind the dog (audit F5)
-    reveal: { path: [[0, 0.4, 2.8, -6.8], [4, 0.5, 2.7, -6.4]], look: [2.0, 1.8, 0.5], fov: 46 },
+    reveal: { subject: ['self'], path: [[0, 0.4, 2.8, -6.8], [4, 0.5, 2.7, -6.4]], look: [2.0, 1.8, 0.5], fov: 46 },
     // L13-L14: side on, the reunion; the sit wider (F10)
-    reunion: { dof: { aperture: 0.6 }, path: [[0, 1.6, 1.8, 4.6], [5, 1.8, 1.7, 4.2]], look: [2.8, 1.9, 0.5], fov: 50 },
-    sit: { path: [[0, 14, 2.6, 4.0], [5, 14.6, 2.7, 4.4]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
+    reunion: { subject: ['actor:dog', 'self'], dof: { aperture: 0.6 }, path: [[0, 1.6, 1.8, 4.6], [5, 1.8, 1.7, 4.2]], look: [2.8, 1.9, 0.5], fov: 50 },
+    sit: { subject: ['self', 'actor:dog'], path: [[0, 14, 2.6, 4.0], [5, 14.6, 2.7, 4.4]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
     // the end: the opening crane in reverse, pulling up and out over the drop (the loop, shown not said)
-    end: { path: [[0, -3, 10, -4.6], [1.6, -7.5, 15, -6.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // rising into the opening's frame: the dog alone above the village (the loop)
+    end: { subject: ['actor:dog'], path: [[0, -3, 10, -4.6], [1.6, -7.5, 15, -6.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // rising into the opening's frame: the dog alone above the village (the loop)
   },
   caption: 'why won\'t this dog stand up?',
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
@@ -87,8 +88,9 @@ module.exports = {
     const c = (s) => ctx.cmd(s)
     for (const t of ['dog', 'pip', 'gramps', 'z1', 'z2']) await c(`/kill @e[tag=${t}]`)   // (a retried attempt runs setup again on the same world)
     await c(`/kill @e[type=item,x=${X - 20},y=${F - 20},z=${Z - 20},dx=40,dy=40,dz=40]`)
-    // the village's horses and donkeys graze up onto the hilltop and stood beside the dog in the first frame: none on the set
-    for (const t of ['horse', 'donkey', 'mule']) await c(`/kill @e[type=${t},x=${X - 24},y=${F - 30},z=${Z - 24},dx=48,dy=50,dz=48]`)
+    // no stray mobs on the hilltop: the village's horse stood beside the dog (+0.6, 1, -1.5) all story and stole the eye
+    // (eyeTrace takes the biggest cast member near the middle; docs/cinematic.md). spawn_mobs is off: none come back
+    await c(`/kill @e[type=!player,type=!item,x=${X},y=${F},z=${Z},distance=..32]`)
     // the meadow: a disc (r 9) round the dog, levelled to F, cut off at the east edge (holes below filled deep)
     for (let dz = -9; dz <= 9; dz++) {
       const hw = Math.floor(Math.sqrt(81 - dz * dz))
@@ -226,8 +228,9 @@ module.exports = {
     const { bot } = ctx
     const F = this.F
     const { storyKit, storyLines } = require('../lib/story')
-    // the cast are K.actors (visual audit B4): /tp'd every tick from a state object, walked at a mob's pace; a jump only
-    // with K.warp on a camera cut (the renderer snaps a move that lands within 6 ticks of the cut onto it)
+    // the cast are K.actors (visual audit B4; owner 2026-11-10: "the villager keeps teleporting ... right at the 'i even
+    // begged' line"): moved by the kit at 20 Hz on the client, walked at a mob's pace; a jump only on a camera cut
+    // (K.cutShot), never a /tp of the stunt's own
     const K = storyKit(ctx, storyLines('stories/dog_hill'), { X, Z, F }, { warm: null })
     const say = (s) => bot.chat(s)
     const run = async (n, fn) => { for (let k = 0; k < n; k++) { if (fn) fn(k); await bot.waitForTicks(1) } }
@@ -239,117 +242,118 @@ module.exports = {
     const dog = K.actor('dog', { x: 0.5, y: 1, z: 0.5, yaw: -90 })
     const pip = K.actor('pip', { ...OFF })
     const gramps = K.actor('gramps', { ...OFF, z: 2 })
-    const place = (tag, st) => { Object.assign(K.actors.get(tag), { pitch: 0 }, st); K.warp(tag) }
-    // a camera cut: the cast moves (warped) on the cut's own tick, the time and weather change on its frame
-    const cut = (name, opts = {}, moves) => { if (moves) moves(); if (opts.time !== undefined) K.setTime(opts.time); if (opts.weather) weather(opts.weather); K.shot(name) }
+    const place = (tag, st) => { Object.assign(K.actors.get(tag), { pitch: 0 }, st) }
+    // a camera cut through the kit (K.cutShot): moves() places the cast for the new shot, and the shot mark waits until
+    // they are on their marks, so its first frame has them in place (they landed 1-3 ticks after the mark: Pip glided
+    // in from the hut shot's spot on 'I even begged'); the time and the weather change on the cut's frame
+    const cut = (name, opts = {}, moves) => K.cutShot(name, moves, { time: opts.time, at: opts.weather ? () => weather(opts.weather) : undefined })
 
-    // vNext r2 (one narrator, continuous takes): line lengths and chunk starts come from voice/voice.json, and the picture
-    // cuts and acts on the chunk it shows (owner: "look at what the line names", never ahead of the words)
-    const VJ = require('../stories/dog_hill/voice/voice.json').lines
-    const L = (id) => Math.round((VJ[id].dur + GAP) * 20)                 // ticks a line holds the screen
-    const C = (id, k) => Math.round((VJ[id].chunks[k] ? VJ[id].chunks[k][0] : VJ[id].dur) * 20)   // tick chunk k starts
-    const say1 = (id) => ctx.mark('line', { id, who: 'N', vox: id, dur: VJ[id].dur })
+    // every line through K.line: its mark and its length come from voice/voice.json on the recording's clock (inside a
+    // continuous take, from the take's own offsets), so the picture never drifts from the voice (its own `dur + 0.08`
+    // clock ran 85 ms a line late: 1.4 s by L14), and a cut lands just before the word (lib/story.js cutLead).
+    // at(i): the tick (from the line's mark) where caption chunk i starts: the picture cuts and acts on the chunk it shows;
+    // a cut inside a line goes 1 tick before its chunk (3 when it waits for a mob just summoned), so it shows before the word
+    const { line } = K
 
     // ---- L01: the dog on the hill (sunrise)
-    cut('open'); say1('L01')
-    await run(L('L01'))
+    await cut('open')
+    await line('L01', () => {})
     // ---- L02: rain / thunder / a creeper / zombies, one chunk each (the picture on its word)
-    const t2 = L('L02'), c2 = [0, C('L02', 1), C('L02', 2), C('L02', 3)]
-    cut('rain', { time: 6000, weather: 'rain' }); say1('L02')
-    await run(c2[1])
-    cut('storm', { time: 18000, weather: 'thunder' })
-    await run(c2[2] - c2[1], (k) => {
+    let cr = null, z1 = null, z2 = null
+    await cut('rain', { time: 6000, weather: 'rain' })
+    await line('L02', async (k, at) => {
+      if (k === at(1) - 1) await cut('storm', { time: 18000, weather: 'thunder' })
       // the bolt behind the hut, inside the crop (audit F3); smoothLight lights the world with it
-      if (k === 2) { ctx.mark('lightning', { x: X + 6, y: F, z: Z - 20 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
+      if (k === at(1) + 2) { ctx.mark('lightning', { x: X + 6, y: F, z: Z - 20 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
+      if (k === at(2) - 3) {
+        say(`/summon creeper ${X + 0.0} ${F + 1} ${Z - 3.8} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["cr"],Rotation:[0f,0f]}`)
+        cr = K.actor('cr', { x: 0.0, z: -3.8, yaw: 0 })
+        await cut('creeper', { weather: 'clear' })
+      }
+      if (cr && k > at(2) && k < at(3)) { cr.z = -3.8 + (k - at(2)) * 0.06; if (k === at(2) + 3) ctx.sound('entity.creeper.primed', 0.25, 1) }
+      if (k === at(3) - 3) {
+        K.park('cr'); say('/kill @e[tag=cr]'); cr = null
+        for (const [t, dx, dz] of [['z1', -1.8, -3.2], ['z2', -3.2, -4.4]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
+        z1 = K.actor('z1', { x: -1.8, z: -3.2, yaw: 0 }); z2 = K.actor('z2', { x: -3.2, z: -4.4, yaw: 0 })
+        await cut('zombies')
+      }
+      if (z1 && k > at(3)) { z1.z = -3.2 + (k - at(3)) * 0.09; z2.z = -4.4 + (k - at(3)) * 0.09; if (k === at(3) + 2) ctx.sound('entity.zombie.ambient', 0.5, 0.9) }
     })
-    say(`/summon creeper ${X + 0.0} ${F + 1} ${Z - 3.8} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["cr"],Rotation:[0f,0f]}`)
-    const cr = K.actor('cr', { x: 0.0, z: -3.8, yaw: 0 })
-    cut('creeper', { weather: 'clear' })
-    await run(c2[3] - c2[2], (k) => { cr.z = -3.8 + k * 0.06; if (k === 3) ctx.sound('entity.creeper.primed', 0.25, 1) })
-    K.park('cr'); say('/kill @e[tag=cr]')
-    for (const [t, dx, dz] of [['z1', -1.8, -3.2], ['z2', -3.2, -4.4]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
-    const z1 = K.actor('z1', { x: -1.8, z: -3.2, yaw: 0 }), z2 = K.actor('z2', { x: -3.2, z: -4.4, yaw: 0 })
-    cut('zombies')
-    await run(t2 - c2[3], (k) => { z1.z = -3.2 + k * 0.09; z2.z = -4.4 + k * 0.09; if (k === 2) ctx.sound('entity.zombie.ambient', 0.5, 0.9) })
     K.park('z1'); K.park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
     // ---- L03: morning: Pip walks up with a bone and drops it on the pile; he never looks
-    cut('bone', { time: 1000 }, () => place('pip', { x: -2.5, y: 1, z: 5, yaw: -134 })); say1('L03')
-    const t3 = L('L03'), b3 = Math.max(C('L03', 2), 24) - 4   // a walk: ~4.3 blocks over 1+ s
-    await run(t3, (k) => {
+    await cut('bone', { time: 1000 }, () => place('pip', { x: -2.5, y: 1, z: 5, yaw: -134 }))
+    await line('L03', (k, at) => {
+      const b3 = Math.max(at(2), 24) - 4   // a walk: ~4.3 blocks over 1+ s
       const u = ease(k / Math.max(1, b3 + 4))
       Object.assign(pip, { x: lerp(-2.5, 0.6, u), z: lerp(5, 2.0, u), yaw: u < 1 ? -134 : 180, pitch: u < 1 ? 0 : 25 })
       if (k === b3 + 4) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{n:99}}},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
     })
     // ---- L04: kids throw sticks: Pip throws one past his nose on THROW; he doesn't blink
-    say1('L04')
-    await run(L('L04'), (k) => {
+    await line('L04', (k) => {
       Object.assign(pip, { yaw: k < 6 ? 180 : 160, pitch: k < 6 ? 10 : -10 })
       if (k === 3) say(`/summon item ${X + 0.8} ${F + 1.9} ${Z + 1.5} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.16d,0.3d,-0.2d]}`)   // high past his nose, on THROW
     })
     // ---- L05: the collar (the stick goes on the cut: it landed on the patch and read as something there)
     say('/kill @e[type=item,tag=stick]')
-    cut('collar'); say1('L05')
-    await run(L('L05'), (k) => { pip.yaw = 180 + 8 * Math.sin(k / 9); pip.pitch = 10 })
+    await cut('collar')
+    await line('L05', (k) => { pip.yaw = 180 + 8 * Math.sin(k / 9); pip.pitch = 10 })
     // ---- L06: the empty patch (Pip steps back out of the over-the-shoulder lens: behind the camera, by the lantern)
-    cut('patch', { time: 6000 }, () => place('pip', { x: -0.6, y: 1, z: -1.2, yaw: -33 })); say1('L06')
-    await run(L('L06'), (k) => { const u = ease(k / 30); pip.x = lerp(-0.6, 0.0, u); pip.z = lerp(-1.2, -0.7, u); pip.yaw = -33 + 8 * Math.sin(k / 12) })   // a step closer (the top-down holds still otherwise)
+    await cut('patch', { time: 6000 }, () => place('pip', { x: -0.6, y: 1, z: -1.2, yaw: -33 }))
+    await line('L06', (k) => { const u = ease(k / 30); pip.x = lerp(-0.6, 0.0, u); pip.z = lerp(-1.2, -0.7, u); pip.yaw = -33 + 8 * Math.sin(k / 12) })   // a step closer (the top-down holds still otherwise)
     // ---- L07: the hut
-    cut('hut'); say1('L07')
-    await run(L('L07'), (k) => { pip.yaw = lerp(-33, 20, k / 40) })
-    // ---- L08: Pip begs: small steps side to side, a head shake (no floating hops: audit F9)
-    cut('beg', { time: 9000 }, () => place('pip', { x: 1.7, y: 1, z: 0.5, yaw: 90 })); say1('L08')
-    const t8 = L('L08')
-    await run(t8, (k) => { pip.z = 0.5 + 0.3 * Math.sin(k / 9); pip.yaw = 90 + 22 * Math.sin(k / 3.5) * (k < t8 * 0.75 ? 1 : 0.3); pip.pitch = k > t8 * 0.75 ? 30 : 0 })
+    await cut('hut')
+    await line('L07', (k) => { pip.yaw = lerp(-33, 20, k / 40) })
+    // ---- L08: Pip begs: small steps side to side, a head shake (no floating hops: audit F9). Placed by the cut (the
+    // shot mark waits until the client has him there) and moved by K.actor at 20 Hz: the owner's "the villager keeps
+    // teleporting" was this shot (he landed 2 ticks after the cut, then moved in 3-tick steps)
+    await cut('beg', { time: 9000 }, () => place('pip', { x: 1.7, y: 1, z: 0.5, yaw: 90 }))
+    await line('L08', (k, at, n) => { pip.z = 0.5 + 0.3 * Math.sin(k / 9); pip.yaw = 90 + 22 * Math.sin(k / 3.5) * (k < n * 0.75 ? 1 : 0.3); pip.pitch = k > n * 0.75 ? 30 : 0 })
     // ---- L09: Grandpa (on the path below) says leave him be; L10: "somebody said be right back" (he looks away)
     const [gx, gy, gz] = this.G
-    cut('gramps', { time: 11500 }, () => { place('pip', { x: -5, y: 1, z: 7.5, yaw: 0, pitch: 30 }); place('gramps', { x: gx, y: gy + 1, z: gz + 1.5, yaw: 180, pitch: -30 }) })
-    say1('L09')
-    await run(L('L09'), (k) => { Object.assign(gramps, { z: gz + 1.5 - Math.min(1.5, k * 0.05), yaw: 180 + 8 * Math.sin(k / 10), pitch: -32 + (k % 16 < 8 ? 6 : 0) }); pip.pitch = 28 + 4 * Math.sin(k / 8) })
-    cut('rightback'); say1('L10')
-    const t10 = L('L10')
-    await run(t10, (k) => { const u = ease(k / Math.max(1, t10)); Object.assign(gramps, { z: gz, yaw: lerp(180, 235, u), pitch: lerp(-30, -5, u) }) })
+    await cut('gramps', { time: 11500 }, () => { place('pip', { x: -5, y: 1, z: 7.5, yaw: 0, pitch: 30 }); place('gramps', { x: gx, y: gy + 1, z: gz + 1.5, yaw: 180, pitch: -30 }) })
+    await line('L09', (k) => { Object.assign(gramps, { z: gz + 1.5 - Math.min(1.5, k * 0.05), yaw: 180 + 8 * Math.sin(k / 10), pitch: -32 + (k % 16 < 8 ? 6 : 0) }); pip.pitch = 28 + 4 * Math.sin(k / 8) })
+    await cut('rightback')
+    await line('L10', (k, at, n) => { const u = ease(k / Math.max(1, n)); Object.assign(gramps, { z: gz, yaw: lerp(180, 235, u), pitch: lerp(-30, -5, u) }) })
     // ---- L11: every night, Pip sits with him: dusk, then night on NOBODY
-    cut('dusk', { time: 12700 }, () => { place('pip', { x: 0.5, y: 1, z: 1.6, yaw: -90 }); place('gramps', { ...OFF, z: 2 }) }); say1('L11')
-    const t11 = L('L11'), n11 = C('L11', 2)
-    await run(n11, (k) => { pip.yaw = -90 + 6 * Math.sin(k / 15) })
-    cut('night', { time: 18000 })
-    // Buh logs in on the patch now, behind the night camera (it looks west, away from P): seen first on L13's word
-    const tn = ctx.tick
-    await ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5)
-    await run(Math.max(0, t11 - n11 - (ctx.tick - tn)), (k) => { pip.yaw = -90 - 10 * Math.sin(k / 18) })
+    await cut('dusk', { time: 12700 }, () => { place('pip', { x: 0.5, y: 1, z: 1.6, yaw: -90 }); place('gramps', { ...OFF, z: 2 }) })
+    await line('L11', async (k, at) => {
+      if (k === at(2) - 1) {
+        await cut('night', { time: 18000 })
+        // Buh logs in on the patch now, behind the night camera (it looks west, away from P): seen first on L13's word.
+        // Not awaited: the line's clock goes on while the teleport is checked
+        ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5).catch(e => ctx.log('login tp:', e.message))
+      }
+      pip.yaw = k < at(2) ? -90 + 6 * Math.sin(k / 15) : -90 - 10 * Math.sin((k - at(2)) / 18)
+    })
     // ---- L12: then last night he stood up: the dog stands on STOOD, "Buh joined the game" with it (audit F8: not before)
     ctx.mark('hush'); ctx.mark('swell')
-    say1('L12')
-    const t12 = L('L12'), s12 = C('L12', 1)
-    await run(t12, (k) => {
-      if (k === Math.max(0, s12 - 3)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit'); ctx.mark('chat', { text: 'Buh joined the game', hold: 2.6 }) }
+    await line('L12', (k, at) => {
+      if (k === Math.max(0, at(1) - 3)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit'); ctx.mark('chat', { text: 'Buh joined the game', hold: 2.6 }) }
       pip.yaw = -90 + 4 * Math.sin(k / 6)
     })
     ctx.mark('hush_end')
     // ---- L13: then a guy just appeared on the patch (the reveal); on "Hey BUDDY" the reunion
-    cut('reveal'); say1('L13')
-    const t13 = L('L13'), h13 = C('L13', 3)
-    await run(h13, (k) => { pip.yaw = lerp(-90, -80, k / 20) })
-    cut('reunion')
-    bot.setControlState('sneak', true)
-    await run(t13 - h13, (k) => {
-      const u = ease(k / 12)
-      const hop = k > 12 ? Math.max(0, Math.sin((k - 12) / 2.2)) * 0.35 : 0
-      Object.assign(dog, { x: lerp(0.5, 2.4, u), y: 1 + hop, z: 0.5 + (k > 12 ? 0.25 * Math.sin((k - 12) / 5) : 0), yaw: -90 })
-      if (k === 14) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
+    await cut('reveal')
+    await line('L13', async (k, at) => {
+      const h = at(3)
+      if (k < h - 1) { pip.yaw = lerp(-90, -80, k / 20); return }
+      if (k === h - 1) { await cut('reunion'); bot.setControlState('sneak', true) }
+      const r = k - h, u = ease(r / 12)
+      const hop = r > 12 ? Math.max(0, Math.sin((r - 12) / 2.2)) * 0.35 : 0
+      Object.assign(dog, { x: lerp(0.5, 2.4, u), y: 1 + hop, z: 0.5 + (r > 12 ? 0.25 * Math.sin((r - 12) / 5) : 0), yaw: -90 })
+      if (r === 14) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
     })
     // ---- L14: then he said, sit, boy (the dog sits on SIT), be right back; he logs out after BACK (the payoff)
-    cut('sit'); say1('L14')
-    const t14 = L('L14'), sit14 = C('L14', 1)
-    await run(t14, (k) => {
+    await cut('sit')
+    await line('L14', (k, at) => {
       if (k === 3) bot.setControlState('sneak', false)
-      if (k === sit14 + 2) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90 }); sitDog(true); bot.swingArm('right') }
+      if (k === at(1) + 2) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90 }); sitDog(true); bot.swingArm('right') }
     })
     ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit'); ctx.mark('payoff')
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     // the loop is shown, not said: the opening crane in reverse from the dog alone, the end 1.6 s after the payoff
     await run(10)
-    cut('end')
+    await cut('end')
     await run(20)
     ctx.mark('end_scene')
     await run(10)

@@ -42,25 +42,40 @@ def pick_ncs(name, at=0.0):
 
 
 def story_score(name, d, meta, stunt, rec, tl, start, src, out_override=None):
-    """A narrated story gets a mood-picked cinematic score (music/score.json), not an NCS phonk bed: ducked under
-    the voice, out 0.45 s before the payoff, the payoff track from the hit on, every credit in the description."""
+    """A narrated story gets a mood-picked cinematic score (music/score.json), not an NCS phonk bed, every credit in
+    the description. Since 2026-11-10 the edit mixes it in (edit.py --story: the preview the owner reviews is what
+    gets posted) and stamps it in the mp4's comment tag: then publish only writes the credit, and never adds a second
+    bed. An mp4 without the tag (edited before) gets it here, as before (story_audio.add_score)."""
     sys.path.insert(0, str(ROOT / "scripts"))
     import story_track
     import story_audio
-    story_track.POSES = rec.get("poses")
-    story_dir = str(ROOT / stunt["story"])
-    start = int(start * 60 + 1e-6) / 60   # edit.py starts on the 60 fps frame grid
-    used = {}
-    for m in (VID / "shorts").glob("*/metadata.json"):
-        if m.parent.name != name:
-            for t in (json.loads(m.read_text()).get("song") or {}).get("tracks", []):
-                used[t] = used.get(t, 0) + 1
     out = pathlib.Path(out_override) if out_override else d / "short.mp4"
-    tracks, moods, payoff = story_audio.add_score(src, out, name, story_dir, tl, start, used, stunt.get("endAfter"))
+    baked = story_audio.score_tag(src) or story_audio.score_tag(d / "short.mp4")
+    if baked:
+        if baked.get("song"):   # the stunt's own bed (edit.song): no score, no credit to add
+            print(name, "the edit has its own bed:", baked["song"])
+            return
+        tracks = [next(t for t in story_audio.tracks() if t["id"] == i) for i in baked["tracks"]]
+        moods, payoff = baked.get("mood") or ["", ""], baked.get("payoff_in_short_s")
+        if out_override and pathlib.Path(out_override) != d / "short.mp4":
+            import shutil
+            shutil.copyfile(d / "short.mp4", out)
+        print(name, f"score already in the edit: {baked['title']} (no second bed)")
+    else:
+        story_track.POSES = rec.get("poses")
+        story_dir = str(ROOT / stunt["story"])
+        start = int(start * 60 + 1e-6) / 60   # edit.py starts on the 60 fps frame grid
+        used = {}
+        for m in (VID / "shorts").glob("*/metadata.json"):
+            if m.parent.name != name:
+                for t in (json.loads(m.read_text()).get("song") or {}).get("tracks", []):
+                    used[t] = used.get(t, 0) + 1
+        tracks, moods, payoff = story_audio.add_score(src, out, name, story_dir, tl, start, used, stunt.get("endAfter"))
     credit = "\n\n".join(t["credit"] for t in tracks)
     meta["song"] = {"file": story_audio.fetch_name(tracks[0]), "title": " / ".join(t["title"] for t in tracks), "artist": tracks[0]["artist"],
                     "tracks": [t["id"] for t in tracks], "licence": tracks[0]["licence"], "mood": list(moods),
-                    "payoff_in_short_s": round(payoff, 2) if payoff is not None else None, "mix": "scripts/story_audio.py (docs/audio.md)"}
+                    "payoff_in_short_s": round(payoff, 2) if payoff is not None else None, "mix": "scripts/story_audio.py (docs/audio.md)",
+                    "mixed_in": "edit" if baked else "publish"}
     yt = meta["youtube"]
     yt["description"] = meta.get("caption", name) + f"\n\n{credit}" + "\n\n" + " ".join(yt.get("hashtags", []))
     if not out_override:

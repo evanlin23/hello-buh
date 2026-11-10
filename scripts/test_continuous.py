@@ -2,6 +2,7 @@
 the beat take's slicing and metadata, the narration track and the captions. Synthetic audio only: no Whisper, no
 API. Run: python3 -m unittest scripts/test_continuous.py (npm test runs it through lib/hb/test/continuous.test.js)."""
 import json
+import os
 import pathlib
 import sys
 import tempfile
@@ -56,6 +57,14 @@ def words_for(x, names, min_gap=0.15):
         else:
             merged.append((a, b))
     return [(w, a * G.FR, b * G.FR) for w, (a, b) in zip(names, merged)]
+
+
+def aligner(min_gap=0.15):
+    """Fake forced aligner (tts.align_lines' shape): each line's words [(start, end)] from the loud stretches."""
+    def align(y, texts):
+        ws = [w for t in texts for w in t.split()]
+        return tts.lines_of(texts, words_for(y, ws, min_gap))
+    return align
 
 
 class Gate(unittest.TestCase):
@@ -159,7 +168,7 @@ class BeatTake(unittest.TestCase):
         cs = {"N": {"name": "N", "voice": "Leda", "profile": "p", "post": ""}}
         beat = {"id": "L01", "scene": "[A kid]", "room": "", "lines": [("N", "L01", "one two", ""), ("N", "L02", "three", "")]}
         hear = lambda y: words_for(y, ["one", "two", "three"])
-        done, meta = tts.voice_beat(beat, cs, self.d, tries=3, hear_fn=hear)
+        done, meta = tts.voice_beat(beat, cs, self.d, tries=3, hear_fn=hear, align_fn=aligner())
         self.assertEqual(calls, [[], [G.FIX["pause"]]])   # the second request carries the fix
         self.assertTrue(meta["ok"])
         self.assertEqual((meta["try"], meta["tries"]), (2, 2))
@@ -334,10 +343,19 @@ class SpeedUp(unittest.TestCase):
         with self.assertRaises(SystemExit):
             tts.speed_of(["N", "G"], cs)
 
-    def test_cast_narrator_is_orus_x145(self):   # owner 2026-11-10: "we can just do 1.45 thats fine"
+    def test_cast_narrator_is_the_sleepover_kid(self):   # owner 2026-11-10: "maybe 1.1 with +1 pitch", "A sounds the best"
         n = tts.library()["narrator"]
-        self.assertEqual((n["voice"], n["model"], n["tempo"], n["rate"]), ("Orus", "gemini-3.8-flash-tts", 0.95, 1.45))
-        self.assertEqual({k: v for k, v in tts.library()["narrator_roblox"].items()}, n)
+        self.assertEqual((n["voice"], n["model"], n["tempo"], n.get("rate"), n["semitones"], n["stretch"]),
+                         ("Leda", "gemini-3.8-flash-lite-tts", 1.1, None, 1, "rubberband"))
+        r = tts.library()["narrator_roblox"]
+        self.assertEqual((r["voice"], r["tempo"], r["rate"]), ("Orus", 0.95, 1.45))
+
+    def test_rubberband_stretch(self):
+        x = take(vowel(0.6), quiet(0.2), vowel(0.6))
+        self.assertEqual(tts.stretch_of(["N"], {"N": {"semitones": 1, "stretch": "rubberband"}}), (1.0, "rubberband"))
+        self.assertEqual(tts.stretch_of(["N"], {"N": {}}), (0.0, "atempo"))
+        y = tts.speed_up(x, 1.1, 1.0, 1, "rubberband")
+        self.assertAlmostEqual(len(y) / len(x), 1 / 1.1, delta=0.03)
 
     def test_gate_judges_the_sped_up_take(self):
         # a 0.45 s pause between the lines: over the 0.35 s limit as Gemini read it, 0.33 s once played 1.45x faster
@@ -349,11 +367,11 @@ class SpeedUp(unittest.TestCase):
             beat = {"id": "L01", "scene": "", "room": "", "lines": [("N", "L01", "one two", ""), ("N", "L02", "three", "")]}
             hear = lambda y: words_for(y, ["one", "two", "three"], min_gap=0.15 / 1.45)
             slow = {"N": {"name": "N", "voice": "Orus", "profile": "p", "post": ""}}
-            _, m0 = tts.voice_beat(beat, slow, pathlib.Path(tmp.name) / "a", tries=1, hear_fn=hear)
+            _, m0 = tts.voice_beat(beat, slow, pathlib.Path(tmp.name) / "a", tries=1, hear_fn=hear, align_fn=aligner(0.15 / 1.45))
             self.assertFalse(m0["ok"])
             self.assertNotIn("rate", m0)
             fast = {"N": dict(slow["N"], rate=1.45)}
-            done, m1 = tts.voice_beat(beat, fast, pathlib.Path(tmp.name) / "b", tries=1, hear_fn=hear)
+            done, m1 = tts.voice_beat(beat, fast, pathlib.Path(tmp.name) / "b", tries=1, hear_fn=hear, align_fn=aligner(0.15 / 1.45))
             self.assertTrue(m1["ok"], m1["gate"])
             self.assertEqual(m1["rate"], 1.45)
             # the whole (sped-up) take is the beat file and its slices tile it exactly
@@ -375,9 +393,149 @@ class PauseCap(unittest.TestCase):
         loud = lambda z: int(np.sum(np.abs(z) > 0.05))
         self.assertAlmostEqual(loud(x), loud(y), delta=0.02 * SR)          # the words are untouched
 
-    def test_cast_narrator_caps_pauses(self):
-        cs = tts.resolve({"N": {"ref": "narrator", "role": "narrator"}})
-        self.assertEqual(cs["N"].get("pause_cap"), 0.12)
+    def test_cast_narrator_pause_caps(self):
+        # the kid narrator is performed continuously and never gap-cut (owner: the capped take sounded artificial);
+        # the Roblox narrator keeps its cap
+        cs = tts.resolve({"N": {"ref": "narrator", "role": "narrator"}, "R": {"ref": "narrator_roblox", "role": "narrator"}})
+        self.assertIsNone(cs["N"].get("pause_cap"))
+        self.assertEqual(cs["R"].get("pause_cap"), 0.12)
+
+
+def old_whisper_cut(x, heard, lw, fw):
+    """The beat cutter's rule before 2026-11-10 (tts.bounds): the quiet point of a window that opened 0.1 s after
+    the last word's heard start. Light Sleeper's L07|L08 went inside "screamed" this way."""
+    t0 = min(heard[lw][2] - 0.05, heard[lw][1] + 0.1)
+    t1 = min(max(heard[fw][1] + 0.3, heard[lw][2] + 0.1), max(heard[fw][2], heard[lw][2] + 0.1))
+    return tts.quiet_point(x, t0, t1)
+
+
+class StretchedWord(unittest.TestCase):
+    """Whisper stretches a line's last word over the pause after it (Light Sleeper's "screamed": heard 12.58-13.56 s,
+    said ~12.80-13.47 s). The line edge must come from the audio: the gap between the aligned words, never inside a
+    word, and speaker_check must block a slice cut inside one."""
+
+    def setUp(self):
+        # line 1: "go", then "screamed" with a 60 ms stop closure inside it ("s-c-reamed"); a 0.12 s pause (the
+        # narrator's pause_cap); line 2: "mom held"
+        self.parts = [("go", vowel(0.3)), (None, quiet(0.05)), ("scr", vowel(0.45, 180)), (None, quiet(0.06)),
+                      ("eamed", vowel(0.15, 180)), (None, quiet(0.12)), ("mom", vowel(0.2, 220)), (None, quiet(0.05)),
+                      ("held", vowel(0.3, 220))]
+        self.x = take(*[p for _, p in self.parts])
+        t, at = 0.3, {}
+        for name, p in self.parts:
+            at[name] = (t, t + len(p) / SR)
+            t += len(p) / SR
+        self.at = at
+        self.word = (at["scr"][0], at["eamed"][1])        # "screamed", as said
+        self.gap = (at["eamed"][1], at["mom"][0])         # the true pause between the lines
+        self.texts = ["Go screamed.", "Mom held."]
+        # Whisper: "screamed" from its start to the next word's start (the pause swallowed)
+        self.heard = [("Go", *at["go"]), ("screamed.", self.word[0], at["mom"][0]), ("Mom", *at["mom"]), ("held.", *at["held"])]
+        # the aligner: the words as said (its word end comes a little early: a tail decays after the last letter's frame)
+        self.aligned = [[at["go"], (self.word[0], self.word[1] - 0.04)], [at["mom"], at["held"]]]
+
+    def test_old_rule_cut_inside_the_word(self):   # the bug, reproduced
+        q = old_whisper_cut(self.x, self.heard, 1, 2) / SR
+        self.assertTrue(self.word[0] < q < self.word[1], q)
+
+    def test_aligned_cut_lands_in_the_pause(self):
+        q = tts.bounds(self.x, self.texts, self.heard, self.aligned)[0] / SR
+        self.assertTrue(self.gap[0] < q < self.gap[1], (q, self.gap))
+        self.assertAlmostEqual(q, sum(self.gap) / 2, delta=0.03)   # the middle of the silence
+
+    def test_aligner_by_default_whisper_only_as_fallback(self):
+        calls = []
+        q = tts.bounds(self.x, self.texts, self.heard, align_fn=lambda x, t: calls.append(1) or self.aligned)[0] / SR
+        self.assertEqual(calls, [1])
+        self.assertTrue(self.gap[0] < q < self.gap[1])
+        # no aligner (no torch): Whisper's window no longer opens deep inside a long last word
+        q = tts.bounds(self.x, self.texts, self.heard, align_fn=lambda x, t: None)[0] / SR
+        self.assertTrue(self.gap[0] < q < self.gap[1], (q, self.gap))
+
+    def test_gap_cut_never_inside_a_word(self):
+        # no silence in the gap (the lines run together): the lowest-energy frame between the words, not in them
+        x = take(vowel(0.4), noise(0.05, 0.02), vowel(0.4))
+        a, b = 0.3 + 0.4, 0.3 + 0.45
+        q = tts.gap_cut(x, a, b) / SR
+        self.assertTrue(a <= q <= b, q)
+        self.assertEqual(tts.gap_cut(x, a, a), int(round(a * SR)))   # spans touching: the junction
+
+    def test_slice_faults(self):
+        bad = old_whisper_cut(self.x, self.heard, 1, 2) / SR
+        f = tts.slice_faults(self.x, SR, [0.0, bad], self.aligned)
+        self.assertIn(0, f)
+        self.assertIn("before its last word ends", f[0][0])
+        self.assertIn(1, f)                                         # the next line's start: on the stray syllable
+        good = tts.bounds(self.x, self.texts, self.heard, self.aligned)[0] / SR
+        self.assertEqual(tts.slice_faults(self.x, SR, [0.0, good], self.aligned), {})
+        # a cut in sound (mid-vowel of a word the aligner put earlier) is caught by the level alone
+        mid = sum(self.at["eamed"]) / 2
+        f = tts.slice_faults(self.x, SR, [0.0, mid], [[self.at["go"], (self.word[0], mid - 0.1)], [self.at["mom"], self.at["held"]]])
+        self.assertTrue(any("dB from its peak" in w for w in f[0]), f)
+
+    def test_speaker_check_blocks_the_bad_slice(self):
+        import speaker_check as SC
+        with tempfile.TemporaryDirectory() as tmp:
+            p = pathlib.Path(tmp) / "beat_L01.wav"
+            write_wav(p, self.x)
+            bad = round(old_whisper_cut(self.x, self.heard, 1, 2) / SR, 3)
+            beat = {"path": p, "lines": ["L01", "L02"], "offsets": [0.0, bad], "say": self.texts}
+            items = [{"id": "L01", "beat": beat}, {"id": "L02", "beat": beat}]
+            fake = lambda x, texts: self.aligned   # (speaker_check loads at 16 kHz; the spans are in seconds)
+            out = SC.slice_check(items, align_fn=fake)
+            self.assertEqual(sorted(out), ["L01", "L02"])
+            beat["offsets"] = [0.0, round(tts.bounds(self.x, self.texts, self.heard, self.aligned)[0] / SR, 3)]
+            self.assertEqual(SC.slice_check(items, align_fn=fake), {})
+            self.assertIsNone(SC.slice_check(items, align_fn=lambda x, t: None))   # can't align: skipped, and said so
+
+    def test_whisper_words_across_the_cut(self):
+        import speaker_check as SC
+        # Light Sleeper's L07|L08 at 12.785 s, as Whisper heard the two slices
+        prev = {"say": "The bottom of the well just screamed.", "heard": "At the bottom of the well chest."}
+        nxt = {"say": "Mom held me in the dark. She said it was a fox.", "heard": "Screamed. Mom held me in the dark. She said it was a fox."}
+        self.assertIn("screamed", SC.cut_across(prev, nxt))
+        self.assertEqual(set(SC.edge_words(prev["say"], prev["heard"])), {"last"})
+        self.assertEqual(set(SC.edge_words(nxt["say"], nxt["heard"])), {"first"})
+        # the same lines cut at 13.505 s
+        ok_p = dict(prev, heard="The bottom of the well just screamed.")
+        ok_n = dict(nxt, heard="Mom held me in the dark. She said it was a fox.")
+        self.assertIsNone(SC.cut_across(ok_p, ok_n))
+        self.assertEqual(SC.edge_words(ok_p["say"], ok_p["heard"]), {})
+        # Whisper merging and splitting edge words is no cut
+        self.assertEqual(SC.edge_words("Mom froze. Don't move, sweetie.", "Monfros. Don't move, sweetie."), {})
+        self.assertEqual(SC.edge_words("The doghouse? Also carpet.", "The dog house also carpet."), {})
+        # the next line's first word heard at the end of this slice
+        self.assertIn("mom", SC.cut_across(dict(ok_p, heard="The bottom of the well just screamed. Mom"),
+                                           dict(ok_n, heard="held me in the dark. She said it was a fox.")))
+
+
+@unittest.skipUnless(os.environ.get("HB_BEAT_REGRESSION"), "set HB_BEAT_REGRESSION=<a copy of claude/story-light-sleeper's "
+                     "stories/light_sleeper> (audio is not committed); needs the TTS venv's torch for the aligner")
+class LightSleeperRegression(unittest.TestCase):
+    """The real take: Light Sleeper's beat_L01.wav (Orus, 15 lines, 14 boundaries). The old cutter put L07|L08 at
+    12.785 s, inside "screamed"; the shipped cut (by hand) is 13.505 s."""
+    OLD = [2.235, 5.105, 7.075, 8.395, 10.665, 11.915, 12.785, 15.225, 17.705, 19.915, 22.175, 23.385, 24.725, 26.035]
+
+    def test_boundaries(self):
+        import voice
+        d = pathlib.Path(os.environ["HB_BEAT_REGRESSION"])
+        story = json.loads((d / "story.json").read_text())
+        texts = [voice.spoken(l) for l in story["lines"]]
+        with wave.open(str(d / "voice" / "beat_L01.wav")) as w:
+            self.assertEqual(w.getframerate(), SR)
+            x = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
+        al = tts.align_lines(x, texts)
+        self.assertIsNotNone(al, "the aligner didn't run (torch / the TTS venv)")
+        qs = [q / SR for q in tts.bounds(x, texts, None, al)]
+        self.assertEqual(len(qs), 14)
+        self.assertTrue(13.45 < qs[6] < 13.58, qs[6])                          # before "Mom", not inside "screamed"
+        for i, q in enumerate(qs):                                               # every cut between the two lines' words
+            self.assertTrue(al[i][-1][1] <= q <= al[i + 1][0][0], (i, q))
+        self.assertEqual(tts.slice_faults(x, SR, [0.0, *qs], al), {})
+        self.assertLess(max(abs(a - b) for i, (a, b) in enumerate(zip(qs, self.OLD)) if i != 6), 0.05)   # the rest stay
+        f = tts.slice_faults(x, SR, [0.0, *self.OLD], al)                        # the old cut: blocked
+        self.assertEqual(sorted(f), [6, 7])                                    # L07 and L08 (it starts on "-eamed")
+        self.assertIn("before its last word ends", f[6][0])
 
 
 if __name__ == "__main__":
