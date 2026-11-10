@@ -1,0 +1,378 @@
+{
+ "lines": {
+  "L01": {
+   "who": "N",
+   "text": "My grandma has thrown nine thousand gold ingots into a portal.",
+   "dur": 4.77,
+   "onset": 0.0,
+   "end": 4.5,
+   "chunks": [
+    [
+     0.0,
+     1.2
+    ],
+    [
+     1.2,
+     2.88
+    ],
+    [
+     2.88,
+     3.48
+    ],
+    [
+     3.8,
+     4.5
+    ]
+   ],
+   "captions": [
+    "My grandma has thrown",
+    "NINE THOUSAND",
+    "gold ingots",
+    "into a PORTAL."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L02": {
+   "who": "N",
+   "text": "One every night. And every morning, something comes back.",
+   "dur": 4.59,
+   "onset": 0.0,
+   "end": 4.52,
+   "chunks": [
+    [
+     0.0,
+     1.16
+    ],
+    [
+     1.16,
+     2.6
+    ],
+    [
+     2.6,
+     4.52
+    ]
+   ],
+   "captions": [
+    "One every NIGHT.",
+    "And every MORNING,",
+    "something comes BACK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L03": {
+   "who": "N",
+   "text": "Obsidian. string. ender pearls. A potion that makes you fireproof.",
+   "dur": 5.9,
+   "onset": 0.0,
+   "end": 5.44,
+   "chunks": [
+    [
+     0.0,
+     1.22
+    ],
+    [
+     1.22,
+     2.32
+    ],
+    [
+     2.32,
+     3.58
+    ],
+    [
+     3.82,
+     5.44
+    ]
+   ],
+   "captions": [
+    "OBSIDIAN.",
+    "STRING.",
+    "ENDER PEARLS.",
+    "A potion that makes you FIREPROOF."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L04": {
+   "who": "N",
+   "text": "Twenty-five years ago, Grandma gave Grandpa her gold helmet. With a blue stripe.",
+   "dur": 5.66,
+   "onset": 0.7,
+   "end": 5.12,
+   "chunks": [
+    [
+     0.7,
+     1.7
+    ],
+    [
+     1.7,
+     2.68
+    ],
+    [
+     2.68,
+     3.28
+    ],
+    [
+     4.3,
+     5.12
+    ]
+   ],
+   "captions": [
+    "Twenty-five years ago,",
+    "Grandma gave Grandpa",
+    "her gold HELMET.",
+    "With a BLUE stripe."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L05": {
+   "who": "N",
+   "text": "Gold keeps you safe in the Nether, she said. He went in. <short pause> He never came back.",
+   "dur": 5.82,
+   "onset": 0.0,
+   "end": 5.24,
+   "chunks": [
+    [
+     0.0,
+     1.16
+    ],
+    [
+     1.16,
+     2.1
+    ],
+    [
+     2.1,
+     3.56
+    ],
+    [
+     3.56,
+     5.24
+    ]
+   ],
+   "captions": [
+    "Gold keeps you SAFE",
+    "in the NETHER, she said.",
+    "He went IN.",
+    "He never came BACK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L06": {
+   "who": "N",
+   "text": "I keep his gifts in a barrel. Grandma says he's still trading.",
+   "dur": 3.89,
+   "onset": 0.0,
+   "end": 3.86,
+   "chunks": [
+    [
+     0.0,
+     0.9
+    ],
+    [
+     0.9,
+     1.9
+    ],
+    [
+     2.26,
+     2.52
+    ],
+    [
+     2.52,
+     3.86
+    ]
+   ],
+   "captions": [
+    "I keep his gifts",
+    "in a BARREL.",
+    "Grandma says",
+    "he's still TRADING."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L07": {
+   "who": "N",
+   "text": "So he's alive. I know it.",
+   "dur": 3.19,
+   "onset": 0.0,
+   "end": 2.82,
+   "chunks": [
+    [
+     0.0,
+     1.8
+    ],
+    [
+     1.8,
+     2.82
+    ]
+   ],
+   "captions": [
+    "So he's ALIVE.",
+    "I KNOW it."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L08": {
+   "who": "Grandma",
+   "text": "Just one, Nico. <short pause> One's plenty.",
+   "dur": 4.76,
+   "onset": 0.0,
+   "end": 4.54,
+   "chunks": [
+    [
+     0.0,
+     2.62
+    ],
+    [
+     2.62,
+     4.54
+    ]
+   ],
+   "captions": [
+    "Just ONE, Nico.",
+    "One's PLENTY."
+   ],
+   "with": [
+    "Grandma"
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "aligned": "whisper-base.en"
+  },
+  "L09": {
+   "who": "N",
+   "text": "When she went to bed, I threw in all my gold. sixty-four. To buy his way home.",
+   "dur": 5.59,
+   "onset": 0.0,
+   "end": 5.56,
+   "chunks": [
+    [
+     0.0,
+     0.7
+    ],
+    [
+     0.7,
+     1.4
+    ],
+    [
+     1.4,
+     2.16
+    ],
+    [
+     2.74,
+     3.98
+    ],
+    [
+     4.22,
+     5.56
+    ]
+   ],
+   "captions": [
+    "When she went to BED,",
+    "I threw in",
+    "ALL my gold.",
+    "SIXTY-FOUR.",
+    "To buy his way HOME."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L10": {
+   "who": "N",
+   "text": "Then I sat and waited. <short pause> And something stepped out.",
+   "dur": 4.89,
+   "onset": 0.0,
+   "end": 4.66,
+   "chunks": [
+    [
+     0.0,
+     1.16
+    ],
+    [
+     1.16,
+     2.42
+    ],
+    [
+     2.42,
+     3.34
+    ],
+    [
+     3.34,
+     4.66
+    ]
+   ],
+   "captions": [
+    "Then I sat",
+    "and WAITED.",
+    "And something",
+    "stepped OUT."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  },
+  "L11": {
+   "who": "N",
+   "text": "It was wearing Grandpa's helmet.",
+   "dur": 2.51,
+   "onset": 0.0,
+   "end": 2.44,
+   "chunks": [
+    [
+     0.0,
+     0.7
+    ],
+    [
+     0.7,
+     2.44
+    ]
+   ],
+   "captions": [
+    "It was wearing",
+    "Grandpa's HELMET."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "aligned": "whisper-base.en"
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.3,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts",
+  "Grandma": "gemini-3.1-flash-tts-preview"
+ },
+ "total": 54.87
+}

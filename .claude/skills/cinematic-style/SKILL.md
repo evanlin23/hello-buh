@@ -183,3 +183,13 @@ on a time jump or the twist (edit.punch/shake/flash). Words in the world are die
     took 27 Mbps): grain <= 0.012. Rules: no DoF on wide or establishing shots (scripts/cinematic.py makes DoF opt-in
     per shot); bloom <= 0.35 with threshold >= 0.9 and one pass; rays 0.35 over blocks; sharpen 0.4; the phone copy
     is `-preset slow -tune film -crf 20 -x264-params aq-mode=3 -maxrate 14M` (cinematic.py writes `<name>_share.mp4`).
+19. Pauses between lines that no take has (gold_for_the_portal: 0.85 s in the opening, 7.6 s of gaps in all): every
+    `await K.cut`, `M.place`, `ctx.cmd` or `waitForTicks` between or inside lines adds its ticks to the line. Move the
+    narrator during a camera shot that hides him with a /tp that doesn't wait (`jump` in story_gold_for_the_portal: the
+    aim rides on the /tp, `look` holds until it lands), start him where the first POV needs him, place the cast in
+    setup, and open containers without awaiting. Then the line marks sit exactly `dur + gap` apart.
+20. A shot camera inside a block slides toward its subject until clear (render.js): a camera at a villager's "eye
+    height" given as 1.6 over the floor block sat in a carpet and slid 2.8 blocks in. Feet stand at dy 1 in a story's
+    coordinates: an eye-height camera is dy 2.5-2.7. `./hb describe <stunt> <t>` prints where the camera really is.
+21. A NoAI mob idle since setup moves late (~1 s) on its first actor frames, and the Short starts on L01: give a cast
+    member who acts in L01 a 20-30 tick `K.preroll` of motion first (the preroll isn't in the Short).

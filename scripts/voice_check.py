@@ -39,8 +39,7 @@ def resplit(sd):
     tts.py's cut, the one cutter (docs/voices.md "The cut"): Whisper says roughly where each boundary is, the audio
     says exactly (the quiet point: within 6 dB of the quietest 10 ms, nearest the middle of the window), and each
     edge keeps 80-350 ms before the line's first sound and 200-450 ms after its last, never into the neighbour's
-    sound, with 15 ms fades. Writes voice/<id>.wav only: run ./hb voice <stunt> --check (or align.py) after it for
-    voice.json and words.json."""
+    sound, with 15 ms fades. Writes voice/<id>.wav, then re-runs align.py so voice.json and words.json match the new cut."""
     import subprocess
     import numpy as np
     import tts
@@ -52,6 +51,12 @@ def resplit(sd):
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(tts.SR), "-ac", "1", "-i", "-", f"{sd}/voice/{lid}.wav"],
                            input=seg.astype(np.float32).tobytes(), check=True)
         print(f"{r['id']}: {len(r['lines'])} lines, {[round(len(g) / tts.SR, 2) for g in segs]} s")
+    # the new cut moves every word inside its wav: voice.json's onset/chunks and words.json must follow, or the
+    # captions run ahead of the voice (owner 2026-11-10, Dog on the Hill: "the captions are not lined up correctly":
+    # a re-cut added 0.2-0.37 s of lead and the stale chunks still started at 0.0)
+    import align
+    align.main(sd)
+    print("re-aligned voice.json chunks + words.json to the new cut")
 
 
 if __name__ == "__main__":

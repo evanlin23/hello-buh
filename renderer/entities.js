@@ -32,6 +32,7 @@ async function texture (layers) {
   if (texCache.has(key)) return texCache.get(key)
   // a layer 'path#rrggbb' is tinted (multiplied) by that colour, keeping its alpha: a wolf's collar (WolfCollarLayer)
   const imgs = (await Promise.all(layers.map(async l => {
+    if (l.includes('@')) return trimImage(...l.split('@'))
     const [p, tint] = l.split('#'); const im = await img(`/assets/env/${p}.png`)
     if (!im || !tint) return im
     const o = document.createElement('canvas'); o.width = im.width; o.height = im.height
@@ -50,6 +51,23 @@ async function texture (layers) {
   const out = { tex: t, w: c.width, h: c.height }
   texCache.set(key, out)
   return out
+}
+
+// an armour trim (PalettedPermutations atlas source): the greyscale pattern's pixels matching trims/color_palettes/
+// trim_palette's 8 keys are replaced by the material palette's 8 colours, alpha kept
+async function trimImage (pattern, material) {
+  const [im, key, pal] = await Promise.all([img(`/assets/env/${pattern}.png`), img('/assets/env/trims/color_palettes/trim_palette.png'), img(`/assets/env/trims/color_palettes/${material}.png`)])
+  if (!im || !key || !pal) return null
+  const px = (i) => { const c = document.createElement('canvas'); c.width = i.width; c.height = i.height; const g = c.getContext('2d'); g.drawImage(i, 0, 0); return [c, g, g.getImageData(0, 0, i.width, i.height)] }
+  const [, , K] = px(key), [, , M] = px(pal), [c, g, D] = px(im)
+  const map = new Map(); for (let i = 0; i < K.data.length / 4 && i < M.data.length / 4; i++) map.set((K.data[i * 4] << 16) | (K.data[i * 4 + 1] << 8) | K.data[i * 4 + 2], i)
+  for (let i = 0; i < D.data.length; i += 4) {
+    if (!D.data[i + 3]) continue
+    const j = map.get((D.data[i] << 16) | (D.data[i + 1] << 8) | D.data[i + 2]); if (j === undefined) continue
+    D.data[i] = M.data[j * 4]; D.data[i + 1] = M.data[j * 4 + 1]; D.data[i + 2] = M.data[j * 4 + 2]
+  }
+  g.putImageData(D, 0, 0)
+  return c
 }
 
 async function potionTexture (name, color) {
@@ -325,13 +343,22 @@ const ARMOR_PARTS = {   // [bone, cube min, size, uv, mirror]
   feet: [['rightLeg', [-2, 0, -2], [4, 12, 4], [0, 16]], ['leftLeg', [-2, 0, -2], [4, 12, 4], [0, 16], true]]
 }
 const ARMOR_MATERIAL = (item) => { const m = /^(leather|chainmail|iron|golden|diamond|netherite|copper|turtle)_(helmet|chestplate|leggings|boots)$/.exec(item || ''); return m ? (m[1] === 'golden' ? 'gold' : m[1] === 'turtle' ? 'turtle_scute' : m[1]) : null }
-async function addArmor (bones, armor) {
+// the armour texture layers for one slot: the material, then its trim (TrimmedArmorLayer: trims/entity/<humanoid|
+// humanoid_leggings>/<pattern> in the material's palette; extra.trims[i] = 'pattern/material')
+function armorLayers (mat, dir, trim) {
+  const L = mat === 'leather' ? [`entity/equipment/${dir}/leather#a06540`, `entity/equipment/${dir}/leather_overlay`] : [`entity/equipment/${dir}/${mat}`]
+  const m = trim && /^([a-z_]+)\/([a-z_]+)$/.exec(trim)
+  // the material's darker palette on armour of its own metal (TrimMaterial override_armor_assets: gold on gold)
+  if (m) L.push(`trims/entity/${dir}/${m[1]}@${m[2] === mat || (m[2] === 'gold' && mat === 'gold') ? m[2] + '_darker' : m[2]}`)
+  return L
+}
+async function addArmor (bones, armor, trims) {
   const slots = ['feet', 'legs', 'chest', 'head']
   for (let i = 0; i < 4; i++) {
     const mat = ARMOR_MATERIAL(armor[i]); if (!mat) continue
     const legs = slots[i] === 'legs', dir = legs ? 'humanoid_leggings' : 'humanoid'
     // leather: the dyed base (default leather colour A06540) under the undyed overlay (DyedItemColor)
-    const t = await texture(mat === 'leather' ? [`entity/equipment/${dir}/leather#a06540`, `entity/equipment/${dir}/leather_overlay`] : [`entity/equipment/${dir}/${mat}`])
+    const t = await texture(armorLayers(mat, dir, trims && trims[i]))
     if (!t) continue
     const m = new THREE.MeshBasicMaterial({ map: t.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
     for (const [bone, min, size, uv, mirror, extra] of ARMOR_PARTS[slots[i]]) {
@@ -346,6 +373,38 @@ async function addArmor (bones, armor) {
       bones[bone].add(new THREE.Mesh(geom, m))
     }
     ;(bones.armorMats = bones.armorMats || []).push(m)
+  }
+}
+// Armour on a humanoid mob (HumanoidArmorLayer on a zombie, skeleton, piglin...): the converted (Bedrock) geometry's
+// own bones, the armour cubes taken from each bone's first cube (the helmet is the 8x8x8 humanoid head on the head's
+// pivot: a piglin's 10-wide snout head gets the plain helmet, PiglinModel's armour set), grown 1.0 (piglins 1.02:
+// LayerDefinitions PIGLIN_OUTER_ARMOR) or 0.5 for leggings, textured from entity/equipment/humanoid[_leggings].
+const MOB_ARMOR_BONES = { head: ['head'], chest: ['body', 'rightarm', 'leftarm'], legs: ['body', 'rightleg', 'leftleg'], feet: ['rightleg', 'leftleg'] }
+async function addMobArmor (geo, bones, armor, trims) {
+  const slots = ['feet', 'legs', 'chest', 'head']
+  const defs = {}; for (const b of geo.bones) defs[b.name.toLowerCase()] = b
+  const piglin = !!defs.leftear
+  for (let i = 0; i < 4; i++) {
+    const mat = ARMOR_MATERIAL(armor[i]); if (!mat) continue
+    const legs = slots[i] === 'legs', dir = legs ? 'humanoid_leggings' : 'humanoid'
+    const t = await texture(armorLayers(mat, dir, trims && trims[i])); if (!t) continue
+    const grow = legs ? 0.5 : (piglin ? 1.02 : 1.0)
+    const mini = []
+    for (const bn of MOB_ARMOR_BONES[slots[i]]) {
+      const d = defs[bn]; if (!d || !bones[d.name]) continue
+      const c0 = (d.cubes || [])[0]
+      let cube
+      if (bn === 'head') cube = { origin: [-4, d.pivot[1], -4], size: [8, 8, 8], uv: [0, 0], inflate: grow }
+      else if (c0) {
+        const uv = bn === 'body' ? (legs ? [16, 16] : [16, 16]) : /arm/.test(bn) ? [40, 16] : [0, 16]
+        cube = { origin: c0.origin, size: c0.size, uv, inflate: grow, mirror: /^left/.test(bn) }
+      }
+      if (cube) mini.push({ name: d.name, pivot: d.pivot, cubes: [cube] })
+    }
+    if (!mini.length) continue
+    const a = build({ bones: mini }, t)
+    for (const [bn, g] of Object.entries(a.bones)) if (bones[bn]) for (const m of [...g.children].filter(c => c.isMesh)) bones[bn].add(m)
+    ;(bones.armorMats = bones.armorMats || []).push(a.mat)
   }
 }
 // WitchModel.createBodyLayer: VillagerModel's body (texture 64x128) with the bent four-piece hat and
@@ -728,7 +787,7 @@ export class EntityLayer {
   async ensure (id, name, extra) {
     // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
     // rebuilt the bear and lost its stand animation, so it snapped down: worker 13)
-    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
+    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'converting' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
     if (ek === '{}' || ek === undefined) ek = 'null'
     const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
@@ -856,7 +915,7 @@ export class EntityLayer {
       const t = await texture([`entity/player/wide/${skin}`])
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
       const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
-      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor) }
+      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims) }
     } else if (name === 'item' && extra && extra.special && this.itemFactory) {
       // a dropped special item (bed, chest, head, banner, shulker box): its model with the 'ground'
       // display, turned about y by the spin (render.js)
@@ -877,6 +936,7 @@ export class EntityLayer {
       if (geo && t) {
         const b = build(geo, t, l.extra); obj = b.root; bones = b.bones; mat = b.mat
         for (const [bn, r] of Object.entries(l.rest || {})) if (bones[bn]) { bones[bn].rotation.set(...r); bones[bn].userData.rest = bones[bn].rotation.clone() }
+        if (extra && extra.armor) await addMobArmor(geo, bones, extra.armor, extra.trims)
         if (name === 'sheep' && extra && (extra.jeb || extra.color)) {
           // SheepWoolUndercoatLayer (1.21.5+): a dyed or jeb_ sheep's body gets the undercoat over
           // the skin, tinted with the wool colour, sheared or not (the coloured stubble)
@@ -927,13 +987,17 @@ export class EntityLayer {
   // states: [{id, name, x, y, z, yaw, pitch, headYaw, extra, light}]
   async update (states, tick = 0) {
     const seen = new Set()
-    for (const s of states) {
+    for (let s of states) {
       seen.add(s.id)
       const r = await this.ensure(s.id, s.name, s.extra)
       if (!r.obj) continue
       r.obj.position.set(s.x, s.y + (r.obj.isSprite ? 0.15 : 0) + (r.yOff || 0), s.z)
       const LL = Array.isArray(s.light) ? s.light : [s.light ?? 1, s.light ?? 1, s.light ?? 1]
       if (r.mat) r.mat.color.setRGB(...LL)
+      if (r.bones.armorMats && !(s.name === 'player' || s.name === 'mannequin')) for (const m of r.bones.armorMats) m.color.setRGB(...LL)
+      // zombifying outside the Nether (Piglin/Hoglin.isConverting -> LivingEntityRenderer.isShaking): the whole body
+      // turns by cos(age x 3.25) x PI x 0.4 degrees every frame (a staged pose mark { converting: true })
+      if (s.extra && s.extra.converting) { const d = Math.cos(tick * 3.25) * Math.PI * 0.4 * Math.PI / 180; s = { ...s, yaw: (s.yaw || 0) + d, headYaw: s.headYaw != null ? s.headYaw + d : s.headYaw } }
       // the white flash (OverlayTexture) is mixed in before the lightmap: it darkens with the light too
       // (a primed TNT flashed full white under a thunderstorm sky: worker 18, worse_sky)
       if (r.bones.flashMat) r.bones.flashMat.color.setRGB(...LL)
@@ -1169,6 +1233,33 @@ export class EntityLayer {
       // a mob's main-hand item (ItemInHandLayer): the Java hand transform Rx(-90) Ry(180)
       // T(1/16, 0.125, -0.625) under the right arm, with the Bedrock bone's y-up flipped to Java's y-down
       const mh = s.mobHeld, mk = mh ? mh.key : null
+      // a villager's item over its crossed arms (CrossedArmsItemLayer: VillagerModel.translateToArms, then
+      // T(0, 0.4, -0.4) Rx(180), ItemDisplayContext.GROUND), Java's y-down flipped to the bone's y-up
+      if (r.heldKey !== mk && !B.rightArm && B.arms && mh && mh.crossed) {
+        if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
+        if (!r.heldGrp) {
+          r.heldGrp = new THREE.Group(); r.heldGrp.matrixAutoUpdate = false
+          r.heldGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(0, 0.4, -0.4)).multiply(new THREE.Matrix4().makeRotationX(Math.PI))
+          B.arms.add(r.heldGrp)
+        }
+        r.heldObj = mk && this.itemFactory ? await this.itemFactory(mh) : null
+        if (r.heldObj) r.heldGrp.add(r.heldObj.obj)
+        r.heldKey = mk
+      }
+      // a mob's off-hand item (ItemInHandLayer, the left arm: T(-1/16, 0.125, -0.625))
+      const mo = s.mobOff, mok = mo ? mo.key : null
+      if (r.offKey !== mok && B.leftArm) {
+        if (r.offObj) r.offGrp.remove(r.offObj.obj)
+        if (!r.offGrp) {
+          r.offGrp = new THREE.Group(); r.offGrp.matrixAutoUpdate = false
+          r.offGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(-1 / 16, 0.125, -0.625))
+          B.leftArm.add(r.offGrp)
+        }
+        r.offObj = mok && this.itemFactory ? await this.itemFactory(mo) : null
+        if (r.offObj) r.offGrp.add(r.offObj.obj)
+        r.offKey = mok
+      }
+      if (r.offObj && r.offObj.mat) r.offObj.mat.color.setRGB(...LL)
       if (r.heldKey !== mk && B.rightArm) {
         if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
         if (!r.heldGrp) {

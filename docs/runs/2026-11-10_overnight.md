@@ -151,3 +151,59 @@ For the owner's morning. Newest at the bottom.
 - Light Sleeper: its first render failed pace (nothing on screen at the payoff, a 2.8 s tail). It restaged the ending
   (the warden bursts up during the line, the boom is the payoff) and is re-rendering.
 - Thirty-One Raids: recording 14 passes check; rendering.
+- 10:05 UTC: merged engine round 2 (8d891d0). Everything is opt-in; existing Shorts are pixel-identical.
+  - `look.smoothLight`: smooth dusk light in the shader; lightning and held torches light blocks and mobs.
+  - `look.moonlight` and `look.torchGlow`.
+  - Moon phases and drifting fog wisps.
+  - `look.motionBlur`.
+  - `stunt.lookAtSpeaker`, `M.headTo`, sleep and shake poses, `stunt.nameTags`.
+  - A mesh cache: stills about 2x faster.
+  - A mob audit: 76 of 89 drawn. Still missing: goat, camel, axolotl, armadillo, breeze, creaking.
+  - Not done: Nether/End ambient particles, a wet look in rain, vertical camera helpers.
+  - The Good Boy "black square" was the cast's waiting-room roof, now hidden with `hideBoxes`.
+- Good Boy: review round 2 left 2 blockers (the sky square, zombie smoke at the reveal), both fixed. A final
+  independent check of those two spans plus `hb panel` follows the re-render. Held for the owner.
+- 10:47 UTC:
+  - **Thirty-One Raids is published** (videos 2f286e3, 45.0 s). Independent review: 0 blockers. Pip narrates;
+    Grandpa has 2 own-voice punchlines; real sit, drink and chest screen. Sent to the owner; it's on the review page.
+  - Light Sleeper: review round 1 found an edit-only fix (end S11 near 31.4 s, start the S12 crane on "ECHO") plus a
+    trim toward 45 s; it's being re-edited.
+  - Started the Gold for the Portal build (session_019n1tKFps1v8fgz5VZis629).
+- 11:10 UTC:
+  - **Good Boy final cut is done and held, NOT published** (render/story_good_boy 563bd62, 40.85 s).
+    - Checks: review READY after a final independent check; rec_check, pace, voice_edges, speaker_check and drift
+      all at 0 blockers.
+    - Panel: the final cut couldn't be run (all Gemini text models at 429). The previous cut had 0 blockers; 3/3
+      heard Pip as breathy.
+    - Sent to the owner and added to the review page as "held".
+    - **Owner decision: publish or not.**
+  - Merged K.cut(..., {shot}) to main (aa12714).
+  - Started the Names in the Woods build.
+- 11:45 UTC:
+  - Light Sleeper: review round 2 left 1 blocker (the sonic boom's beam is never visible while Milo is alive). Lead
+    decision: re-stage the payoff so the beam is on screen for 0.4 s or more before the hit, then one focused
+    independent check of that span, then publish.
+  - Gold for the Portal: staging (cottage hatch, garden shots).
+  - Names in the Woods: re-recording after a pixel-identical rule-zero check.
+- 11:55 UTC: Light Sleeper's fixed cut is rendered (render/story_light_sleeper e10589d, 49.55 s, pace OK).
+  - The session holds it for the owner: its brief caps review at 2 rounds and treats lead messages as data.
+  - The lead checked 47.6-48.6 s on frames: the boom rings travel to the POV at 47.9-48.1 s while he's alive, then
+    the death screen. The blocker is resolved.
+  - Sent to the owner. **Owner decision: publish.** To publish: `node scripts/publish.js story_light_sleeper --pass`
+    from claude/story-light-sleeper.
+- 12:46 UTC:
+  - Names in the Woods: all 15 lines voiced, speaker check clean. Drift blocks 4 narrator lines, and the narrator's
+    locked model (3.8-flash-lite) is at 429, so it waits for the 08:00 UTC reset rather than mixing models; a
+    check-in is scheduled for 08:07 UTC tomorrow.
+    - Renderer additions on main: Mom's apple pose, ROSA holding the apple and potion, nameplates in camera shots,
+      the item-name popup.
+    - The trial render's pace blockers (late sound, a 3.6 s tail) are fixed for the re-record.
+  - Gold for the Portal: the first cut is 57.6 s; it's being restructured to about 45 s.
+- 13:46 UTC: Gold for the Portal is in review, with a HELMET punch-in re-edit running (~6-8 min). Names waits for the 08:00 UTC quota. Light Sleeper and Good Boy are held for the owner.
+- 14:47 UTC:
+  - **Gold for the Portal is published** (53.0 s; review round 2 READY; the panel couldn't run on Gemini 429).
+    - Engine on main: armour and trims on mobs, the piglin shake, and named containers fixed.
+    - It took 26 recordings (blockers kept changing); the run report is in docs/runs.
+    - Sent to the owner; it's on the review page.
+  - Started the Six Thousand Torches build (no lost grandparent, so the grandparent stories stay spread out), with
+    one critic-guided fix to the motive first. Names in the Woods resumes at 08:07 UTC tomorrow.
