@@ -20,7 +20,7 @@ module.exports = {
         if (!loc || seen.some(s => Math.hypot(s[0] - loc[0], s[1] - loc[1]) < 100)) { ctx.log('SCOUT_HM', JSON.stringify({ near: st, found: loc, dup: !!loc })); continue }
         seen.push(loc)
         await ctx.cmd(`/tp @s ${loc[0]} 200 ${loc[1]}`); await bot.waitForTicks(100); await bot.waitForChunksToLoad()
-        const R = 80, step = 2, ys = [], names = []
+        const R = +(process.env.SCOUT_R || 80), step = +(process.env.SCOUT_STEP || 2), ys = [], names = []
         for (let dz = -R; dz < R; dz += step) {
           const ry = [], rn = []
           for (let dx = -R; dx < R; dx += step) { const s = ctx.surface(loc[0] + dx, loc[1] + dz); ry.push(s ? s.position.y : -1); rn.push(s ? s.name : '?') }

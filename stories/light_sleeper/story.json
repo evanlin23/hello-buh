@@ -2,7 +2,7 @@
   "name": "light_sleeper",
   "stunt": "story_light_sleeper",
   "version": 2,
-  "revision": "r4 (2026-11-10): today's owner rules: Milo, pacing (35-45 s: lines trimmed, gap 0.15), the out-of-context read (no affectionate hush; 'sweetie' cut for his name), lines of 3 words or fewer in their own request. r3: the pre-build fixes (reviews/r3-fixes.md)",
+  "revision": "r4 (2026-11-10): today's owner rules: Milo, pacing (35-45 s: L03 cut (its meadow stays in S02's last frame), lines trimmed, gap 0.15), the out-of-context read (no affectionate hush; 'sweetie' cut for his name), lines of 3 words or fewer in their own request. r3: the pre-build fixes (reviews/r3-fixes.md)",
   "caption": "why is my whole village carpeted 😶",
   "logline": "A boy in a village where every inch is carpeted, the bell is wrapped in wool and the well wears a wool lid wants everyone to hear one song, so he puts a jukebox on the well.",
   "question": "why tf is the whole village covered in carpet?",
@@ -39,7 +39,6 @@
       "lines": [
         "L01",
         "L02",
-        "L03",
         "L04",
         "L05",
         "L06",
@@ -91,16 +90,9 @@
       "shot": "S02"
     },
     {
-      "id": "L03",
-      "who": "N",
-      "text": "THREE HUNDRED / sheep. / Sheared every / MORNING.",
-      "direction": "matter-of-fact and quick, this is normal to him",
-      "shot": "S03"
-    },
-    {
       "id": "L04",
       "who": "N",
-      "text": "Our BELL / is wrapped / in WOOL. / I've never / HEARD it.",
+      "text": "Our BELL / wears WOOL. / I've never / HEARD it.",
       "direction": "curious, a small pause before the last phrase",
       "shot": "S04"
     },
@@ -116,7 +108,6 @@
       "id": "L06",
       "who": "N",
       "text": "Once, / I pulled / the WOOL / off the WELL.",
-      "say": "Once... I pulled the wool off the well.",
       "direction": "a little guilty, a beat after the first word",
       "shot": "S06"
     },
@@ -138,7 +129,7 @@
     {
       "id": "L09",
       "who": "N",
-      "text": "Then a skeleton / shot a CREEPER. / It dropped / a music DISC.",
+      "text": "A skeleton / shot a CREEPER. / It dropped / a music DISC.",
       "direction": "brightening and fast, the best news of his life",
       "shot": "S09"
     },
@@ -153,7 +144,7 @@
       "id": "L11",
       "who": "N",
       "text": "So tonight, / I opened / the WELL / and put / a JUKEBOX on it. / Wells ECHO.",
-      "say": "So tonight... I opened the well and put a jukebox on it. Wells echo.",
+      "say": "So tonight, I opened the well and put a jukebox on it. Wells echo.",
       "direction": "determined and a little proud; the last two words a clever secret",
       "shot": "S11"
     },
@@ -176,7 +167,7 @@
     {
       "id": "L14",
       "who": "N",
-      "text": "The music / made the lights / go DARK. / Like a / real PARTY.",
+      "text": "The lights / went DARK. / Like a / real PARTY.",
       "direction": "loud and delighted, his full voice, not hearing her at all",
       "shot": "S14"
     },
@@ -239,15 +230,7 @@
       "place": "carpet_street to hill_overlook",
       "size": "ews",
       "camera": "path: crane up and back. Key 0 (0 s): 2 blocks above the striped road near (-12,-14), looking south-east down carpet_street toward the plaza. Key 1 (~1.2 s, 'STAIRS'): rising and pulling back north-west up the slope, past the carpeted stairs of the houses on both sides. Key 2 (~2.4 s, 'DOGHOUSE'): about (-22,-31), 5 blocks above the doghouse's roof (the doghouse's ground is ~12 above the plaza, so the lens is ~20 above the plaza floor). The look holds south-east the whole way, tilting down so the doghouse ends lower-centre",
-      "frame": "on 'ROADS' the road stripes run away from the lens at centre; on 'STAIRS' carpeted stairs climb to doors at both sides; on 'DOGHOUSE' the doghouse (carpet roof, a sitting wolf with a red collar) sits lower-centre at the top of the street, and above it the whole village fills the frame: every road, stair and roof in carpet, the plaza with the wool-lidded well and the boxed bell, the sheep meadow on the far slope, forest and hills into the fog. Morning (1000)."
-    },
-    {
-      "id": "S03",
-      "line": "L03",
-      "place": "sheep_meadow",
-      "size": "wide",
-      "camera": "at: 4 blocks up on the meadow fence post, slow push in",
-      "frame": "fg: the meadow fence and a stack of wool blocks by the gate; mid: ~80 sheep packed into the meadow, half of them sheared bald, more beyond the rise; bg: the carpet-roofed village and the forest. Morning (1000)."
+      "frame": "on 'ROADS' the road stripes run away from the lens at centre; on 'STAIRS' carpeted stairs climb to doors at both sides; on 'DOGHOUSE' the doghouse (carpet roof, a sitting wolf with a red collar) sits lower-centre at the top of the street, and above it the whole village fills the frame: every road, stair and roof in carpet, the plaza with the wool-lidded well and the boxed bell, the sheep meadow on the far slope, forest and hills into the fog. Morning (1000). The sheep meadow on the far slope is half sheared (the wool supply), in the crane's last frame."
     },
     {
       "id": "S04",

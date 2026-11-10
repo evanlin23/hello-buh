@@ -1,5 +1,9 @@
 # light_sleeper: beat sheet, clue map, writer's checks (r2)
 
+**r4 (2026-11-10, owner rules of the day):** L03 (the sheep) is cut for the 35-45 s target (the half-sheared meadow stays in
+S02's last frame); L04, L09, L11, L14 are shorter; Mom says "Milo", not "sweetie", and only L07 and L13 are hushed (mystery and
+fear). The timings below are r2's; the real ones are in voice/voice.json.
+
 r2 (2026-11-10) applies the r1 critic's must-fixes: the carpet rule holds to the end (he steps off the carpet onto the
 well's bare stone to dance), the well wears a white wool lid from S01, pulling the wool off is the vibration (the egg
 is gone), "Wells ECHO" gives the jukebox its reason, our door is on the plaza 8 blocks from the well (S13 is
