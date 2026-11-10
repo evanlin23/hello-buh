@@ -29,6 +29,15 @@ fetch () {
   if [ "$status" != done ]; then echo "$branch: $status ($run)"; return 1; fi
   mkdir -p out
   git show "FETCH_HEAD:renders/out/$name.mp4" > "out/$name.mp4"
+  # which code made it, for publish.js: the commit the run rendered (the last one that queued renders/slices.json),
+  # with the stunt/lib/stories as recorded; it stays reachable on $branch
+  local rc
+  rc=$(git log -1 --format=%H FETCH_HEAD -- renders/slices.json)
+  python3 - "out/$name.render.json" "$rc" "$branch" "$run" "out/$name.mp4" <<'EOF'
+import hashlib, json, sys
+p, commit, branch, run, mp4 = sys.argv[1:]
+json.dump({"commit": commit, "branch": branch, "run": run, "sha256": hashlib.sha256(open(mp4, "rb").read()).hexdigest()}, open(p, "w"), indent=1)
+EOF
   echo "out/$name.mp4 ($(du -h "out/$name.mp4" | cut -f1)) from $run"
 }
 
