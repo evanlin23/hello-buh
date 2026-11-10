@@ -40,18 +40,18 @@ module.exports = {
     open: { dof: false, path: [[0, -10, 14, -8], [5, -4.5, 5.5, -3.5]], look: [11, -11, 11], fov: 60 },
     // L02: three days of not moving
     rain: { path: [[0, 3.6, 2.2, 2.6], [2, 3.2, 2.0, 2.3]], look: [0.5, 0.6, 0.5], fov: 55 },
-    storm: { path: [[0, -1.2, 1.7, 7], [2, -1, 1.6, 6.4]], look: [0.3, 1.6, 0], fov: 58 },
-    zombies: { path: [[0, 2.6, 1.8, 4.6], [2, 2.3, 1.7, 4.3]], look: [-1.5, 0.8, -1], fov: 55 },
+    storm: { path: [[0, -1.2, 2.3, 7], [2, -1, 2.2, 6.4]], look: [0.3, 1.4, 0], fov: 58 },
+    zombies: { path: [[0, 3.6, 2.4, 5.6], [2, 3.3, 2.3, 5.3]], look: [-1.5, 0.8, -1], fov: 55 },
     // L03: morning, Pip walks up from the south rim with a bone
     bone: { path: [[0, -3.6, 2.2, 6.2], [4, -3.2, 2.0, 5.6]], look: [0.4, 0.5, 1.4], fov: 55 },
     // L04: the collar, close (the one close-up before the reveal)
     collar: { path: [[0, 2.6, 1.3, -1.4], [4, 2.3, 1.2, -1.2]], look: [0.55, 0.85, 0.5], fov: 45 },
     // L05: over his back at the empty patch, the valley beyond
-    patch: { path: [[0, -2.6, 1.9, 0.4], [4, -2.0, 1.6, 0.45]], look: [3.5, 0.4, 0.5], fov: 50 },
+    patch: { path: [[0, -2.8, 2.8, 0.5], [4, -2.2, 2.5, 0.5]], look: [3.5, 0.2, 0.5], fov: 50 },
     // L06: the hut, wide, the dog small in the foreground
     hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.5, -5], fov: 58 },
     // L07: Pip begging in front of him (side on)
-    beg: { path: [[0, 1.0, 1.5, 4.8], [4, 0.9, 1.3, 4.2]], look: [1.0, 0.6, 0.5], fov: 50 },
+    beg: { path: [[0, 1.0, 1.8, 4.8], [4, 0.9, 1.7, 4.2]], look: [1.0, 0.6, 0.5], fov: 50 },
     // L08-L10: Grandpa on the path below the south rim; Pip at the rim above
     gramps: { path: [[0, -5.2, 3.0, 4.6], [4, -5.4, 2.8, 5.0]], look: [-5, -1.5, 11.5], fov: 50 },
     whose: { path: [[0, -2.4, 1.6, 5.8], [4, -2.6, 1.5, 6.1]], look: [-5, 0.7, 7.5], fov: 50 },
@@ -60,7 +60,7 @@ module.exports = {
     dusk: { path: [[0, 4.8, 2.6, 2.4], [3, 4.4, 2.4, 2.2]], look: [0, 0.4, 0.9], fov: 56 },
     night: { path: [[0, 4.4, 2.4, 2.2], [3, 4.0, 2.2, 2.0]], look: [0, 0.4, 0.9], fov: 56 },
     // L12: behind them: the player appears on the patch, the dog stands, the village lights below
-    reveal: { path: [[0, -3.8, 2.2, 2.0], [4, -3.4, 2.0, 1.8]], look: [3, 0.9, 0.5], fov: 50 },
+    reveal: { path: [[0, -3.8, 2.9, 2.0], [4, -3.4, 2.7, 1.8]], look: [3, 0.8, 0.5], fov: 50 },
     // L13-L14: side on, the reunion and the sit
     reunion: { path: [[0, 1.6, 1.5, 4.6], [5, 1.8, 1.4, 4.2]], look: [2.4, 0.9, 0.5], fov: 50 },
     sit: { path: [[0, 1.2, 2.4, 6.8], [5, 1.0, 2.6, 7.4]], look: [2.4, 0.7, 0.5], fov: 52 },
