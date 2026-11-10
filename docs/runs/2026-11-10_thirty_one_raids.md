@@ -101,3 +101,6 @@ per-line request, branch only), docs/stories.md (premise status).
   42844451555. Independent round-2 review READY, 0 blockers (`hb review` logs it as round 3 because each `hb make`
   opened a round). Republished: videos 3151d6d, status ready. The review-page row is the lead's (v3, "held");
   my 720p copy of the republished cut is asset bf12df755623756842f364f04d0c6804.
+- 16:05 UTC: the owner said "none of these new stories should go out until i've OKed them"; the lead set the package
+  back to **held** (videos 5de29cb). It waits for the owner's OK; publish.js now packages stories held unless
+  --owner-ok (main f4c0605, merged here).
