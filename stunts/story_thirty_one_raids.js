@@ -183,6 +183,13 @@ module.exports = {
     // pacing: the kit's gap (0.08 s); the reveal's hold after L12 (story.json reveal.hold): the horn, the bar, Grandpa
     const SJ = JSON.parse(fs.readFileSync(path.join(STORY, 'story.json'), 'utf8'))
     const HOLD = (SJ.reveal || {}).hold ?? 2.1
+    // the boy's hotbar (story.json "hotbar", owner r:rdc3c4c), slot 1 selected; the same in every shot until L12's bottle
+    // 67 eggs is over vanilla's 16-egg stack: the stack size component lets the slot hold them (the kit will do this)
+    const STACK16 = new Set(['egg', 'snowball', 'ender_pearl', 'honey_bottle', 'bucket', 'sign', 'banner', 'armor_stand'])
+    if (SJ.hotbar) {
+      await ctx.hotbar(SJ.hotbar.map(x => (Array.isArray(x) && x[1] > (STACK16.has(x[0]) ? 16 : 64)) ? [`${x[0]}[max_stack_size=99]`, x[1]] : x))
+      bot.setQuickBarSlot(0)
+    }
     const line = (id, fn, extra = 0, o) => K.line(id, fn, extra, o)
     const P = (dx, dy, dz) => new ctx.Vec3(X + dx, F + dy, Z + dz)
     const gy = (dx, dz) => ground(ctx, X + dx, Z + dz) + 1 - F           // feet height (from F) at a spot
