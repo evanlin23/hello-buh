@@ -37,26 +37,33 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
 
 ## 2. Voice
-1. **The narrator is `voices/cast.json` `narrator`**: Leda as Pip (Dog on the Hill v3), a bubbly kid, fast and bright,
-   **natural tempo, no time-stretch, no pitch shift** (`post` empty; atempo 1.1 at most if a take drags). An adult
-   woman storyteller is `storyteller` (Despina), never a kid; a kid *character* is `child` (Laomedeia). r:rb9756b r:r350819 r:r810b66
+1. **The narrator is `voices/cast.json` `narrator` = Pip**: Leda, the bubbly nine-year-old direction,
+   gemini-3.8-flash-lite-tts, single speaker, **natural tempo, no time-stretch, no pitch shift** (`post` empty; atempo
+   1.1 at most if a take drags); the recipe is `voices/recipes/pip.md`. Kid Puck is `puck_kid`, an alternative only.
+   An adult woman storyteller is `storyteller` (Despina), never a kid; a kid *character* is `child` (Laomedeia).
+   r:r5519b8 r:rb9756b r:r350819 r:r810b66
 2. **Never whispery**: every style prompt says "fast, bright, energetic; not whispery, breathy or soft"; drop to
    scared (not hushed) only for real danger. r:r350819 r:raf72e0
 3. **Speed is not a target**: no stretching, no re-take loops chasing words/s. Speed comes from short sentences and
    the direction. Pace only warns when clearly slower than Pip (~4.1 words/s speaking, ~2.85 overall). r:r00f92f
 4. **The opening in one breath**: no pause inside line 1 over **0.2 s**; in the first 5 s no pause inside a line over
    **0.35 s** and no gap between lines over **0.6 s** (pace BLOCK; WARN over 0.25 / 0.45 s). Re-take, don't trim. r:r810b66 r:r961104
-5. **Cut safely**: at the quietest point between lines, never at Whisper's word start; **>= 80 ms** before the first
+5. **Cut safely**: at the quietest point between lines (`voice_check.py --resplit`), never at Whisper's word start or
+   end, and ask for a breath between sentences so a quiet point exists; **>= 80 ms** before the first
    word, **>= 200 ms** after the last, 10-20 ms fades; never splice inside a line (only shorten the silent middle of a
    pause, 30 ms crossfade, >= 60 ms from speech). Check: edges (an edge within 30 dB of the peak = CUT), pace (a line
-   cut by the end, two lines overlapping: BLOCK), a listening pass. r:r9b64f0
+   cut by the end, two lines overlapping: BLOCK), a listening pass. r:r9b64f0 r:r3ae817
 6. **The right voice and the right words on every line**: a line in the wrong voice or with the wrong words is a
    blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
    any two voices that talk differ in age, sex or pitch. r:r4b4332 r:raf72e0
-8. **Quota out (429 on every TTS model)**: stop, push, leave the story for the next run; never fall back to the old
+8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
+   character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
+   direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
+   blocker. Check: listening + speaker (the drift gate, scripts/voice_drift.py on agent/voice-drift, when it lands). r:rd9445b
+9. **Quota out (429 on every TTS model)**: stop, push, leave the story for the next run; never fall back to the old
    sped-up narrator. Short bracketed directions only (long ones get read aloud). r:r810b66
-9. **Re-voice after any script change**; the scene lengths come from voice.json, so a new voice = a new recording.
+10. **Re-voice after any script change**; the scene lengths come from voice.json, so a new voice = a new recording.
 
 ## 3. Set
 1. **No superflat**: built into real terrain with relief, at full scale, with depth in every shot (foreground,
@@ -131,5 +138,7 @@ Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
 - **Leda at 1.5x tempo +1.5 semitones** (the kid-narrator audition; still in the docs/voices.md table): replaced by Pip's
   natural tempo (r:rb9756b). "A kid narrator is Leda (cast `child`)" (r:r810b66): Leda is the `narrator` now and `child`
   is Laomedeia.
+- **Kid Puck as the default narrator** (r:rc4689d, r:r710834, Good Boy session): Pip is the narrator again (r:r5519b8);
+  Puck is `puck_kid`, an alternative.
 - **Captions of 2-3 words** (r:re512f6; cinematic-style "words per chunk"): one word at a time (r:rbd7cb6).
 - **40-75 s stories** (docs/stories.md intro): 30-45 s (Script 9).

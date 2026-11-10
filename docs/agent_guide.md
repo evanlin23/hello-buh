@@ -45,7 +45,7 @@ timestamps, artifacts, the last blockers; `./hb status` shows it).
 | `./hb doctor` | is this box ready; each failure has its fix; `--fix` stops a stale server (only one it can prove is orphaned) | 5 s |
 | `./hb rules` | docs/STANDARDS.md (the current checklist by stage: number, check, source key) and whether it cites every owner rule in the history; `--log` the dated history with keys (`--since DATE`, `--full`), `--key rXXXXXX` one rule in full, `--check` exit 1 when STANDARDS.md is behind | 1 s |
 | `./hb status [stunt]` | what exists and what's next | 2 s |
-| `./hb voice <stunt> [--only L03]` | the narration (Kokoro, v1 stories); v2 cast voices: `docs/story_craft.md` 5-6 | 30 s |
+| `./hb voice <stunt> [--only L03]` | the voices: a v2 cast on Gemini (word cuts, speaker check, automatic re-takes, word times; `--check` only checks: docs/voices.md), a v1 story on Kokoro | 30 s - 10 min |
 | `./hb record <stunt>` | server + bot -> `work/<stunt>.rec.json`, then rec_check; stops on blockers (`--no-strict` to keep going); refuses while another server batch runs | 3 min a try (5 tries) |
 | `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing + owner | 10-40 s |
 | `./hb owner <stunt>` | the owner's review notes as checks (lib/hb/owner.js): superflat shots (and the set's footprint, the plain, the relief), the camera off what the line names (`lines[].look`), the picture ahead of / against the words, an uncaused fall, glitches (doors by themselves, stuck on a door, jitter, one-tick snaps, stutter, fog/night/rain missing); `--shots` prints each shot's fill, `--story DIR` reads another story dir | 5-15 s |
@@ -152,12 +152,12 @@ true })`). Test without the server: `node scripts/pose_fixture.js --staged` + `.
 | rec_check says a check was skipped | `node_modules` missing (a fresh checkout): `npm ci` or link it; `hb check` lists skipped checks |
 | `hb render --wait` returned an old Short | a working branch carried an old renders/result.json; fixed: the queue drops it and --fetch checks the job's queued stamp |
 | a re-render after an edit-only fix takes 20 min | `./hb make <stunt> --from render` (or `./hb render <stunt> --reuse`): reuses the frames |
-| `voice_check.py`: No module named 'whisper' | not needed any more: it runs on faster-whisper or transformers (scripts/whisper_compat.py); `./hb doctor` says which |
+| No module named 'whisper' / 'resemblyzer' / 'scipy' | never install openai-whisper (torch): the voice tools use transformers, `scripts/whisper_shim/` covers old `import whisper` tools on faster-whisper; the speaker check: `~/.hb-tts/bin/pip install transformers scipy && ~/.hb-tts/bin/pip install --no-deps resemblyzer` (`./hb doctor` checks all three) |
 | a `fix:` line you don't trust / an error with none | the step's full output is in `work/hb/logs/<step>.log`; add the error and its fix to lib/hb/fixes.js |
 | `apt-get install espeak-ng` can't find it | `apt-get update` first |
 | an Actions render takes 40 min | a slow apt mirror on a runner; the setup is cached now (~20 s). `hb render --wait` keeps polling |
 | `hb review` refuses: output older than the recording | you re-recorded: render again before reviewing (freshness, docs/qa.md step 4) |
-| a v2 story (cast voices) | voiced by hand with `tts.py` until the adapter lands (docs/story_craft.md 6): write `voice/voice.json` |
+| a v2 story (cast voices) | `./hb voice <stunt>` (docs/voices.md); `./hb doctor` says what the TTS venv still needs (transformers, resemblyzer) |
 
 ## Knobs, if you really need them
 `hb` covers these; the raw environment variables still work for the scripts underneath:

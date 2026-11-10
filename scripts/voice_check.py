@@ -1,56 +1,35 @@
 """Check a story's voice takes without listening: Whisper transcribes every line's wav and prints it beside its
 median pitch, so a bad split (a word in the wrong line), a missing word, a direction read aloud or two voices too
-alike shows up at once. Runs in the TTS venv with any Whisper: openai-whisper, else faster-whisper, else transformers'
-whisper-base.en (scripts/whisper_compat.py).
+alike shows up at once. The full check, with the speaker of every line, is scripts/speaker_check.py (`./hb voice
+<stunt> --check`); this is the quick transcript view. Whisper is align.py's (openai/whisper-base.en via transformers,
+already in the TTS venv: nothing else to install).
 
     ~/.hb-tts/bin/python scripts/voice_check.py stories/<name>            # transcript + pitch per line
     ~/.hb-tts/bin/python scripts/voice_check.py stories/<name> --words    # voice/words.json for the caption times
-    ~/.hb-tts/bin/python scripts/voice_check.py stories/<name> --resplit  # re-cut the takes at Whisper's word gaps
+    ~/.hb-tts/bin/python scripts/voice_check.py stories/<name> --resplit  # re-cut cached raw takes (voice/<req>_take.f32) safely
 """
 import json
+import pathlib
 import sys
 
-import pathlib
-
-import numpy as np
-
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from whisper_compat import whisper  # noqa: E402
-
-
-def f0(x, sr=16000):
-    fr = int(0.04 * sr); out = []
-    for i in range(0, len(x) - fr, fr):
-        s = x[i:i + fr]
-        if np.abs(s).max() < 0.05:
-            continue
-        s = s - s.mean(); c = np.correlate(s, s, 'full')[fr - 1:]
-        lo, hi = int(sr / 400), int(sr / 60); k = lo + np.argmax(c[lo:hi])
-        if c[k] > 0.3 * c[0]:
-            out.append(sr / k)
-    return np.median(out) if out else 0
+import align           # noqa: E402
+import speaker_check   # noqa: E402
 
 
 def main(sd):
     d = json.load(open(f"{sd}/story.json"))
-    m = whisper.load_model('base.en')
     for ln in d['lines']:
-        x = whisper.load_audio(f"{sd}/voice/{ln['id']}.wav")
-        t = m.transcribe(x, language='en', fp16=False)['text'].strip()
-        print(f"{ln['id']} {ln.get('who', 'N'):5s} {round(f0(x)):4d} Hz | {t}\n{'':16s}  script: {ln['text'].replace(' / ', ' ')}")
-
-
+        p = f"{sd}/voice/{ln['id']}.wav"
+        t = " ".join(w for w, _, _ in align.words(p))
+        hz = speaker_check.f0(speaker_check.trim(speaker_check.load(p)))
+        print(f"{ln['id']} {ln.get('who', 'N'):5s} {round(hz):4d} Hz | {t}\n{'':16s}  script: {ln['text'].replace(' / ', ' ')}")
 
 
 def words(sd):
-    """Write stories/<name>/voice/words.json: Whisper's word timestamps per line ({id: [[word, start, end], ...]}).
-    scripts/voice_cast.py --timing uses them for the caption chunk times (Gemini gives none)."""
+    """Write stories/<name>/voice/words.json: Whisper's word timestamps per line ({id: [[word, start, end], ...]})."""
     d = json.load(open(f"{sd}/story.json"))
-    m = whisper.load_model('base.en')
-    out = {}
-    for ln in d['lines']:
-        r = m.transcribe(f"{sd}/voice/{ln['id']}.wav", language='en', fp16=False, word_timestamps=True)
-        out[ln['id']] = [[w['word'].strip(), round(float(w['start']), 3), round(float(w['end']), 3)] for s in r['segments'] for w in s['words']]
+    out = {ln['id']: [[w, round(a, 3), round(b, 3)] for w, a, b in align.words(f"{sd}/voice/{ln['id']}.wav")] for ln in d['lines']}
     open(f"{sd}/voice/words.json", 'w').write(json.dumps(out, indent=0))
     print(f"{sd}/voice/words.json: {sum(len(v) for v in out.values())} words")
 
@@ -61,16 +40,15 @@ def resplit(sd):
     word and the next line's first. Fixes splits that the pause-based cut got wrong."""
     import re
     import subprocess
+    import numpy as np
     SR = 24000
     d = json.load(open(f"{sd}/story.json"))
     reqs = json.load(open(f"{sd}/voices.json"))
-    m = whisper.load_model('base.en')
     norm = lambda w: re.sub(r"[^a-z0-9]", "", w.lower())
     for r in reqs:
         x = np.fromfile(f"{sd}/voice/{r['id']}_take.f32", np.float32)
         x16 = subprocess.run(["ffmpeg", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-ar", "16000", "-f", "f32le", "-"], input=x.tobytes(), capture_output=True).stdout
-        res = m.transcribe(np.frombuffer(x16, np.float32).copy(), language='en', fp16=False, word_timestamps=True)
-        words = [(norm(w['word']), w['start'], w['end']) for s in res['segments'] for w in s['words'] if norm(w['word'])]
+        words = [(norm(w), a, b) for w, a, b in align.words(np.frombuffer(x16, np.float32).copy()) if norm(w)]   # align.py's Whisper
         # align each line by its own words: its first two words' first match after the previous line, and its last
         # word's last match before the next line starts. Words that match no line (a direction read aloud before the
         # lines, a line dropped from the script but still in a cached take) are left out
@@ -115,6 +93,16 @@ def resplit(sd):
             s0 = max(prev_end + 0.02, min(cutsq[k - 1] if k else words[a][1] - 0.15, words[a][1] - 0.08))
             s1 = min(next_start - 0.02, max(cutsq[k] if k + 1 < len(spans) else words[b][2] + 0.4, words[b][2] + 0.2))
             s1 = min(s1, words[b][2] + 0.5)
+            # a tight join (under 0.4 s between the words): both lines meet at the quiet point itself; the margins would
+            # push each into the other's breath
+            if k + 1 < len(spans) and next_start - words[b][2] < 0.4:
+                s1 = cutsq[k]
+            if k and words[a][1] - prev_end < 0.4:
+                s0 = cutsq[k - 1]
+            if k == 0 and words[a][1] < 2.0:
+                s0 = 0.0   # a take's first line keeps what's said just before it (the farmer's laugh)
+            if k + 1 == len(spans):
+                s1 = len(x) / SR   # and its last line runs to the take's own fade (Whisper's last word ends early)
             segs.append((s0, s1))
         for (who, lid, t), (a, b) in zip(r['lines'], segs):
             seg = x[int(a * SR):int(b * SR)].copy()
