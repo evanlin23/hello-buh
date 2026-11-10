@@ -9,7 +9,6 @@
   "premise": "Grandpa (a villager) stands at the buffer stop of the station at the edge of our rail town every evening and has for 22 years. Nothing ever comes down the line. He says 'She's on her way.' Mom says Grandma left him for her sister's village, and kept the cart. Grandpa won't leave the station (villagers stay in their village) and Ezra wasn't allowed past the bridge, so nobody walked the line. Our pig lives in his own minecart in the yard ('loves it'). At midnight Ezra turns ten and works it out like a kid who believes his grandpa: if she's on her way, the rail's broken.",
   "twist": "She was coming. On her way home from her sister's, 3,000 blocks out in a valley, a creeper had blown the line; the blast took the redstone torch of the last powered rail, which braked her cart to a stop at the edge of the crater. Mobs can't get out of a minecart on their own (the pig shows it), so Grandma has sat there for 22 years, facing home. Ezra bridges the crater, lays rail, relights the gold rail and pushes; that evening her cart rolls into the buffer stop where Grandpa is waiting, and the station's activator rail sets her down beside him.",
   "key_color": "#F2B544",
-  "gap": 0.3,
   "mood": [
     "sad",
     "heroic"

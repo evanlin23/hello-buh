@@ -483,6 +483,17 @@ def main():
             nd = next((x["t"] for x in tl if x["event"] == "dig_end" and x["t"] >= e["t"]), e["t"] + e["ms"])
             for u in range(int(e["t"] / 50), int(nd / 50) + 1):
                 active.add(u)   # the crack overlay grows
+    # a container window is up: the view holds still by rule (the mouse drives the cursor; docs/engine_features.md
+    # "Motion by construction") and the screen with its items is what's on screen, so it is not a held pause
+    win = None
+    for e in tl:
+        if e["event"] == "container" and win is None:
+            win = e["t"] / 50
+        elif e["event"] == "container_close" and win is not None:
+            active.update(range(int(win), int(e["t"] / 50) + 2))
+            win = None
+    if win is not None:
+        active.update(range(int(win), len(P) + 1))
     # overlay changes (output s): story captions, line marks, subs, cards, counters... every edit entry anchored on a mark
     overlay = set()
 

@@ -168,7 +168,21 @@ function run (h) {
   const poseMove = (t0) => { let m = 0; for (let k = 0; k < 24; k += 4) { const a = nearest(POSE, Math.round(t0 + k)), b = nearest(POSE, Math.round(t0 + k + 4)); if (a && b) m += Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) + Math.abs(wrap(b[4] - a[4])) * 1.5 + Math.abs(b[5] - a[5]) } return m }
   const entMove = (m, t0) => { let s = 0; for (let k = 0; k < 24; k += 4) { const ra = nearest(m, Math.round(t0 + k)), rb = nearest(m, Math.round(t0 + k + 4)); if (ra && rb) s += Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) + Math.max(Math.abs(wrap((rb[8] ?? rb[6]) - (ra[8] ?? ra[6]))), Math.abs(wrap(rb[6] - ra[6]))) * 1.5 + Math.abs((rb[7] || 0) - (ra[7] || 0)) } return s }
   const swingsAt = new Set(tl.filter(e => e.event === 'ent_swing' || e.event === 'swing').map(e => Math.round(e.t / 50)))
+  // a container window is up (the harness's container..container_close, the kit's gui_freeze..gui_thaw): the view holds
+  // still by rule (docs/engine_features.md "Motion by construction": vanilla's mouse drives the cursor) and the screen
+  // itself is the action (the items, the hand on them), so that stretch is not "nobody moves"
+  const GUI = []
+  for (const [o, c] of [['container', 'container_close'], ['gui_freeze', 'gui_thaw']]) {
+    let a = null
+    for (const e of tl) {
+      if (e.event === o && a === null) a = e.t / 50
+      else if (e.event === c && a !== null) { GUI.push([a, e.t / 50]); a = null }
+    }
+    if (a !== null) GUI.push([a, Infinity])
+  }
+  const inGui = (t) => GUI.some(([a, b]) => t >= a - 1 && t <= b + 1)
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
+    if (inGui(t) || inGui(t + 12)) { flushDead(t); continue }
     let mv = poseMove(t)
     let me = nearest(POSE, Math.round(t)); if (me) lastMe = me; else me = lastMe   // dead: the last place we stood
     for (const [id, m] of ent) {

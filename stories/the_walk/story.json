@@ -14,7 +14,6 @@
     "heroic"
   ],
   "payoff": "L08+1.0",
-  "gap": 0.25,
   "look": {
     "time": 1000,
     "fog": false,

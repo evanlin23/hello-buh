@@ -19,7 +19,7 @@ Checks (BLOCK = the short-review bar, WARN = needs a reason or a fix):
   payoff    the story.json `payoff` line/mark, else the edit's endAfter event, else the line the `twist` quotes,
             else the biggest sound + picture hit in the last 40%: a sound hit and a picture change within 0.3 s,
             and the end <= 1.0 s after it (1.2-1.8 s for a text payoff: a death screen or a card).
-  length    BLOCK < 30 s, WARN > 45 s (story Shorts: the owner wants them tight).
+  length    BLOCK < 25 s, WARN > 45 s (story Shorts: the owner wants them tight).
 Exit 1 on a blocker, 2 when it can't run.
 """
 import argparse
@@ -50,7 +50,7 @@ PICTURE_WARN = 5.0
 SAME_WARN = 5.0               # runaway (the benchmark) holds one picture 3.3 s at most
 PAYOFF_WIN = 0.3
 TAIL_MAX, TEXT_TAIL = 1.0, (1.2, 1.8)
-LEN_MIN, LEN_WARN = 30.0, 45.0
+LEN_MIN, LEN_WARN = 25.0, 45.0   # 25: no-pause narration at ~5.25 words/s runs 25-29 s (owner: no dramatic pauses)
 
 
 # ---------------------------------------------------------------- measuring
@@ -211,6 +211,7 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             notes.append(f"the recording's clock failed ({type(e).__name__}: {e}): picture and sound only")
     elif not recp:
         notes.append("no recording: picture and sound only (no line, caption or event marks)")
+    story = {}
     if story_dir and (pathlib.Path(story_dir) / "story.json").exists():
         story = json.loads((pathlib.Path(story_dir) / "story.json").read_text())
     if is_story is None:
@@ -248,9 +249,15 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
                 add("BLOCK", "voice", nxt[0], f"{nxt[1]} starts at {nxt[0]:.2f} s while {lid} is still speaking (to {e:.2f} s): the lines overlap",
                     "space the line marks so each line ends before the next starts (or shorten the take's tail padding)")
 
+    # ---- 5b. a story-wide line gap that builds in pauses (owner 2026-11-10: "the narrator just yaps on and on")
+    g = story.get("gap") if isinstance(story, dict) else None
+    if isinstance(g, (int, float)) and g > 0.15:
+        add("WARN", "gap", 0.0, f'story.json "gap": {g} s between every line (the reference Short: ~0.1 s)',
+            'drop "gap" (K.line defaults to 0.08 s); published stories keep theirs only so they render as before')
+
     # ---- 6. length
     if dur < LEN_MIN:
-        add("BLOCK", "length", dur, f"{dur:.1f} s: under the owner's 30 s minimum", "more beats (an escalating series), not slower ones")
+        add("BLOCK", "length", dur, f"{dur:.1f} s: under the 25 s minimum", "more beats (an escalating series), not slower ones")
     elif is_story and dur > LEN_WARN:
         add("WARN", "length", dur, f"{dur:.1f} s: over 45 s for a story (owner wants them tight)", "cut the line/shot that adds least (see the slowest spans below), or end on the payoff")
 

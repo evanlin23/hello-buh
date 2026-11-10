@@ -1,84 +1,116 @@
 [
  {
-  "id": "n1",
-  "direction": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences. N: a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy.",
+  "id": "r1",
+  "direction": "Read this short film dialogue. N: a dog, bright and quick, warm, never hushed or breathy. Sam: an old man, gravelly, slow and gentle.",
   "speakers": {
-   "N": "Puck"
+   "N": "Puck",
+   "Sam": "Algenib"
   },
   "lines": [
    [
     "N",
     "L01",
-    "I've tried to leave this guy thirty-seven times."
+    "I've tried to leave this man thirty-seven times."
    ],
    [
     "N",
     "L02",
-    "Every time I get twelve blocks away, boom. Right next to him again."
+    "Every time I get twelve blocks away... I'm standing right next to him."
+   ],
+   [
+    "Sam",
+    "L03",
+    "There you are."
    ],
    [
     "N",
     "L04",
-    "I tried at night. Through the wheat. I even swam!"
+    "I've tried at night. Through the wheat. I even swam for it."
    ],
    [
     "N",
     "L05",
-    "He feeds me raw pork chops. Who does that?"
+    "He feeds me raw porkchops. Never cooked. Not once."
    ],
    [
-    "N",
+    "Sam",
     "L06",
-    "Everyone here is so tall."
+    "sit."
    ],
    [
     "N",
     "L07",
-    "And there's this dog. Wherever I go, it's already there!"
+    "And when he says sit... I sit. I don't know why."
    ],
    [
     "N",
     "L08",
-    "I can't even open a door."
+    "Everyone in this village is so tall."
    ],
    [
     "N",
-    "L10",
-    "skeletons run from me!"
-   ],
-   [
-    "N",
-    "L11",
-    "Then a zombie went for him."
-   ],
-   [
-    "N",
-    "L13",
-    "And I just lost it!"
+    "L09",
+    "And there's this dog. Wherever I go... it's already there."
    ]
   ]
  },
  {
-  "id": "s1",
-  "direction": "A jolly old farmer calls out to his dog, loud and warm, a laugh in his voice. A short pause between lines. Sam: a cheerful old farmer; loud, warm, jolly, a big laugh in his voice.",
+  "id": "r2",
+  "direction": "Read this short film dialogue, the night scene: quieter, then frightened, then tender. N: a dog, bright and quick, warm, never hushed or breathy. Sam: an old man, gravelly, slow and gentle.",
   "speakers": {
+   "N": "Puck",
    "Sam": "Algenib"
   },
   "lines": [
    [
-    "Sam",
-    "L03",
-    "There you are, buddy!"
+    "N",
+    "L10",
+    "I can't even open a door."
    ],
    [
     "Sam",
+    "L11",
+    "Come on in, you."
+   ],
+   [
+    "N",
     "L12",
+    "When he leaves, I wait by the door. all day."
+   ],
+   [
+    "N",
+    "L13",
+    "skeletons run when they see me."
+   ],
+   [
+    "N",
+    "L14",
+    "Then one night, a zombie came for him."
+   ],
+   [
+    "Sam",
+    "L15",
     "Hey! Get back!"
    ],
    [
+    "N",
+    "L16",
+    "I don't remember what happened next."
+   ],
+   [
     "Sam",
-    "L14",
-    "Good boy!"
+    "L17",
+    "Easy... easy. It's gone."
+   ],
+   [
+    "Sam",
+    "L18",
+    "good boy."
+   ],
+   [
+    "N",
+    "L19",
+    "Tomorrow, I'm leaving. For real."
    ]
   ]
  }

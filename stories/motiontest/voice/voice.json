@@ -1,0 +1,131 @@
+{
+  "voice": "none",
+  "tempo": 1,
+  "rate": 1,
+  "sr": 24000,
+  "gap": 0.1,
+  "model": "silence (motion test)",
+  "lines": {
+    "L01": {
+      "text": "I turn to the VILLAGER.",
+      "dur": 1.2,
+      "onset": 0.1,
+      "end": 1.1,
+      "chunks": [
+        [
+          0.1,
+          0.5
+        ],
+        [
+          0.5,
+          1.1
+        ]
+      ],
+      "captions": [
+        "I turn",
+        "to the VILLAGER."
+      ]
+    },
+    "L02": {
+      "text": "He WALKS away.",
+      "dur": 1.2,
+      "onset": 0.1,
+      "end": 1.1,
+      "chunks": [
+        [
+          0.1,
+          0.5
+        ],
+        [
+          0.5,
+          1.1
+        ]
+      ],
+      "captions": [
+        "He",
+        "WALKS away."
+      ]
+    },
+    "L03": {
+      "text": "I walk AROUND the wall.",
+      "dur": 1.2,
+      "onset": 0.1,
+      "end": 1.1,
+      "chunks": [
+        [
+          0.1,
+          0.5
+        ],
+        [
+          0.5,
+          1.1
+        ]
+      ],
+      "captions": [
+        "I walk",
+        "AROUND the wall."
+      ]
+    },
+    "L04": {
+      "text": "Three DIGS and a BLOCK.",
+      "dur": 1.2,
+      "onset": 0.1,
+      "end": 1.1,
+      "chunks": [
+        [
+          0.1,
+          0.5
+        ],
+        [
+          0.5,
+          1.1
+        ]
+      ],
+      "captions": [
+        "Three DIGS",
+        "and a BLOCK."
+      ]
+    },
+    "L05": {
+      "text": "I open the CHEST.",
+      "dur": 1.2,
+      "onset": 0.1,
+      "end": 1.1,
+      "chunks": [
+        [
+          0.1,
+          0.5
+        ],
+        [
+          0.5,
+          1.1
+        ]
+      ],
+      "captions": [
+        "I open",
+        "the CHEST."
+      ]
+    },
+    "L06": {
+      "text": "CUT to the villager.",
+      "dur": 1.2,
+      "onset": 0.1,
+      "end": 1.1,
+      "chunks": [
+        [
+          0.1,
+          0.5
+        ],
+        [
+          0.5,
+          1.1
+        ]
+      ],
+      "captions": [
+        "CUT to",
+        "the villager."
+      ]
+    }
+  },
+  "total": 7.2
+}
