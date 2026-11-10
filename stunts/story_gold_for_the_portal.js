@@ -38,7 +38,7 @@ module.exports = {
   selfArmor: ['golden_boots', null, null, null],   // Grandma's rule: Nico wears golden boots (never said)
   look: 'auto',
   shots: {},   // below
-  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', startAt: 'line:0', endAfter: 'story_end:0', punch: [['story_end:-1.12', 0, 0.08]] },   // the punch: on 'HELMET' (the payoff, L11+1.52)
+  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', startAt: 'line:0', endAfter: 'story_end:-0.17', punch: [['story_end:-1.12', 0, 0.08]] },   // the punch: on 'HELMET' (the payoff, L11+1.52)
   // the whole area, Hushwell's plaza (S05's background, ~95 blocks SSW) included
   chunkStops (set) { return [[0, 0], [-30, 60], [-22, 100], [40, 0], [0, -40], [40, 40], [-40, 0]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
 
@@ -59,7 +59,7 @@ module.exports = {
     await c(`/fill ${A(1, 1 + DOWN, 1)} ${A(11, 4 + DOWN, 9)} air replace water`)
     await c(`/kill @e[type=!player,x=${X + 6},y=${F},z=${Z + 5},distance=..48]`)
     // the gifts barrel and its 25 years of barters; Grandpa's gold chest
-    await c(`/data merge block ${A(10, 1, 3)} {CustomName:'"Grandpa\\'s Gifts"'}`)
+    await c(`/data merge block ${A(10, 1, 3)} {CustomName:"Grandpa's Gifts"}`)   // 1.21.5+: the name is a text component in SNBT, a plain string here
     const gifts = [['obsidian', 64], ['crying_obsidian', 23], ['string', 48], ['ender_pearl', 16], ['soul_sand', 40], ['gravel', 64], ['quartz', 52], ['leather', 30], ['iron_nugget', 60], ['blackstone', 64]]
     for (let i = 0; i < gifts.length; i++) await c(`/item replace block ${A(10, 1, 3)} container.${i} with ${gifts[i][0]} ${gifts[i][1]}`)
     for (let i = 0; i < 3; i++) await c(`/item replace block ${A(10, 1, 3)} container.${11 + i} with potion[potion_contents={potion:"minecraft:fire_resistance"}]`)
@@ -142,10 +142,13 @@ module.exports = {
     K.shot('s02')
     K.setTime(RIDGE_NIGHT)
     say(`/summon bat ${A(5, 16, 4)} {PersistenceRequired:1b,Tags:["bat"]}`)
+    let from2 = null
     await line('L02', async (k, at) => {
       if (k === at(1) - 2) { hatch(true, false); K.park('gma'); say('/kill @e[type=bat,tag=bat]') }
       if (k === at(1)) { K.setTime(MORNING); ctx.mark('cut'); K.shot('pov') }   // already standing there: no cut, no in-between frames
       if (k > at(1)) { K.go(k > at(1) + 4 && bot.entity.position.x < X + 6.8); portalLife(k) }
+      if (k === at(2) + 6) from2 = { ...K.base }
+      if (from2) K.turnTo(from2, P(11.2, 1.55, 5.6), (k - at(2) - 6) / 14)   // eyes on the obsidian that came out
       if (k === at(2)) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.16d,0.18d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
       if (k === at(2) + 9) ctx.sound('block.stone.step', 0.8, 0.9)
       if (k >= at(1)) look(k)
@@ -281,24 +284,23 @@ module.exports = {
       if (k >= at(3) && pg && pg.x > 10.1) pg.x -= 0.14
       if (k === at(3)) { ctx.sound('entity.piglin.ambient', 1, 1); ctx.particles('portal', P(11.2, 2, 5.6), { count: 30 }) }
       if (k === at(3) + 6 || k === at(3) + 11) ctx.sound('entity.piglin.step', 0.6, 1)
-      if (k === at(2) - 16) { Object.assign(gma, { x: 1.5, y: 10.0, z: 1.75, yaw: 180, pitch: 0 }); K.actors.set('gma', gma) }
-      if (k === at(2) - 14) { ctx.mark('use', { x: X + 1, y: F + 11, z: Z + 1, who: 'Grandma' }); hatch(true) }
-      if (k > at(2) - 14 && gma.y > 1) gma.y = Math.max(1, gma.y - 0.2)
-      else if (k > at(2) - 14) { const dx = 8.8 - gma.x, dz = 4.75 - gma.z, d = Math.hypot(dx, dz); if (d > 0.15) K.step(gma, dx / d * 0.14, dz / d * 0.14) }   // off the ladder, she walks to it
+      if (k === 0) { Object.assign(gma, { x: 1.5, y: 10.0, z: 1.75, yaw: 180, pitch: 0 }); K.actors.set('gma', gma) }
+      if (k === 2) { ctx.mark('use', { x: X + 1, y: F + 11, z: Z + 1, who: 'Grandma' }); hatch(true) }
+      if (k > 2 && gma.y > 1) gma.y = Math.max(1, gma.y - 0.3)
+      else if (k > 2) { const dx = 8.8 - gma.x, dz = 4.75 - gma.z, d = Math.hypot(dx, dz); if (d > 0.15) K.step(gma, dx / d * Math.min(0.2, d), dz / d * Math.min(0.2, d)); else gma.yaw = -75 }   // off the ladder, she walks to it
       look(k, 0.2 * Math.sin(k / 10), 0.1 * Math.sin(k / 13))
     })
 
     // L11 (S14): the reveal, close: the piglin in Grandpa's striped helmet, shaking. Held 0.9 s after 'HELMET':
     // Grandma at the frame's left edge tosses one more ingot past its head into the purple; its head turns after it
     K.shot('s14')
-    Object.assign(gma, { x: 8.8, y: 1, z: 4.75, yaw: -75, pitch: 0 })
     // the end lands on 'HELMET': she tosses the ingot as the word starts, its head turns after the gold, then cut
     await line('L11', async (k, at) => {
       portalLife(k)
       if (pg) { pg.yaw = 90 + 14 * Math.sin(k / 9); pg.pitch = 6 * Math.sin(k / 7) }
-      if (k === at(1) + 3) toss('gold_ingot', [9.0, 2.3, 4.9], [11.5, 2.5, 5.75], 8)
-      if (k === at(1) + 7) { if (pig) ctx.mark('look_at', { ids: [pig.id], at: [11.6, 2.4, 5.8] }); ctx.sound('entity.piglin.admiring_item', 0.9, 1) }
-      if (k === at(1) + 11) gone()
+      if (k === 31) toss('gold_ingot', [9.0, 2.3, 4.9], [11.5, 2.5, 5.75], 8)
+      if (k === 35) { if (pig) ctx.mark('look_at', { ids: [pig.id], at: [11.6, 2.4, 5.8] }); ctx.sound('entity.piglin.admiring_item', 0.9, 1) }
+      if (k === 39) gone()
     })
     ctx.mark('story_end')
     await bot.waitForTicks(4)
