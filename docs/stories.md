@@ -235,6 +235,10 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-10, on the daily story producer (the scheduled task that starts one new story a day): "keep off
   until more are done".** The producer is switched off until the held stories are finished; switch it back on only
   when the owner says so.
+- **Owner, 2026-11-10: "Is it really okay to have the two formats? They feel like they have very different audiences.
+  I meant above buh stories as like a second channel."** The story Shorts go to a second channel, "Buh Stories", not
+  @HelloBuh (which keeps its Minecraft shitposts and "spot what's wrong"). Nothing is uploaded to either until the
+  owner creates the channel, authorises uploads to it, and OKs each story by name.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
