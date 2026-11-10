@@ -91,3 +91,13 @@ per-line request, branch only), docs/stories.md (premise status).
   change, but every voice change cost a re-record and a render. Ask which voice before recording.
 - The pace gate needs story.json `payoff` when the twist line isn't the last beat (it guessed L12 here).
 - An idle actor between moves reads as "nobody moves" to the lint: give every on-screen actor a gesture on the line.
+
+## Afternoon re-edit (owner notes relayed by the lead, verified on main)
+- Captions ran early, then "seem behind": re-aligned with main's align.py (first caption on the speech onset) and
+  CAPTION_LEAD 0.1 s; `caption_sync.py` 0 blockers. The hero is Buh again (owner rule a0d24ab): no spoken line or tag
+  ever named him; renamed in the story files. Checked STANDARDS 1.3 (the closing line doesn't name what's on screen)
+  and 2b.4 (continuous takes: one Pip take, cut only between lines).
+- Two more full Actions renders (main's render code changed, so frames weren't reusable): runs 42839469258 and
+  42844451555. Independent round-2 review READY, 0 blockers (`hb review` logs it as round 3 because each `hb make`
+  opened a round). Republished: videos 3151d6d, status ready. The review-page row is the lead's (v3, "held");
+  my 720p copy of the republished cut is asset bf12df755623756842f364f04d0c6804.
