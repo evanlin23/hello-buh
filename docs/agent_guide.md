@@ -22,7 +22,8 @@ name): `ln -s /home/user/hello-buh/{node_modules,songs,work} .`
 | `./hb status [stunt]` | what exists and what's next | 2 s |
 | `./hb voice <stunt> [--only L03]` | the narration (Kokoro, v1 stories); v2 cast voices: `docs/story_craft.md` 5-6 | 30 s |
 | `./hb record <stunt>` | server + bot -> `work/<stunt>.rec.json`, then rec_check; stops on blockers (`--no-strict` to keep going); refuses while another server batch runs | 3 min a try (5 tries) |
-| `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing | 10-30 s |
+| `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing + owner | 10-40 s |
+| `./hb owner <stunt>` | the owner's review notes as checks (lib/hb/owner.js): superflat shots (and the set's footprint, the plain, the relief), the camera off what the line names (`lines[].look`), the picture ahead of / against the words, an uncaused fall, glitches (doors by themselves, stuck on a door, jitter, one-tick snaps, stutter, fog/night/rain missing); `--shots` prints each shot's fill, `--story DIR` reads another story dir | 5-15 s |
 | `./hb describe <stunt> [T...]` | a moment as text (below); no T = the middle of every shot | 1-2 s |
 | `./hb continuity <stunt>` | per shot: time, weather, held item, camera, cast; flags pops, time jumps, cast that moved or vanished across a cut | 2 s |
 | `./hb framing <stunt>` | per shot: size (EWS/WS/FS/MS/CU), place; flags too-tight shots (subject over 60% of the frame height), cameras against a wall, new places with no wide shot, sizes tighter than story.json v2 planned | 2 s |

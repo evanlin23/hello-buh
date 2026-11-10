@@ -177,15 +177,20 @@ through `lib/story.js`, `scripts/voice.py` and `scripts/story_track.py`, which r
                   "direction": "Night, a village, a boy talks to his mother through a window." } ],
   "lines": [
     { "id": "L01", "who": "N", "text": "The IRON GOLEM / has stood in / my DOORWAY / for NINE days.",
-      "direction": "a held breath before the number", "shot": "S01" },
+      "direction": "a held breath before the number", "shot": "S01", "look": { "what": "entity:iron_golem", "word": "GOLEM" } },
     { "id": "L05", "who": "Mom", "text": "Are you EATING, / sweetie?",
       "say": "Are you eating, sweetie? <short pause>", "direction": "too cheerful, a rasp under it",
       "shot": "S05" }
   ],
   "shots": [
     { "id": "S01", "line": "L01", "place": "street", "size": "wide", "camera": "pov",
-      "frame": "house front fills the lower half; golem in the door, back to camera; lane and hills above" }
+      "frame": "house front fills the lower half; golem in the door, back to camera; lane and hills above" },
+    { "id": "S07", "line": "L09", "place": "street", "size": "ews", "camera": "at", "master": "wide", "cropX": -180,
+      "look": { "fog": true } }
   ],
+  "props": { "door": { "at": [-1, 1, 3] } },
+  "look": { "time": "night", "fog": false },
+  "weather": "clear",
   "bible": "stories/golem_inside/bible.md"
 }
 ```
@@ -202,6 +207,10 @@ through `lib/story.js`, `scripts/voice.py` and `scripts/story_track.py`, which r
 | `lines[].shot` | the shot id this line plays over | build, continuity check |
 | `shots[]` | `place`, `size` (ecu/cu/ms/full/wide/ews), `camera` (pov, or a movie-engine spec: `single`/`two`/`ots`/`path`/`at`), `frame` (what's in the foreground/subject/background) | build; `story-continuity` |
 | `bible` | the continuity bible file (section 7) | build; `story-continuity` |
+| `lines[].look` | **what the camera must be on during the line** (owner, 2026-11-10: "why are we staring down instead of at the librarian's face"): an actor or name tag (`"Mom"`, `"actor:Gary"`), a cast id, `"entity:wolf"`, `"block:torch"`, `"prop:<id>"` (from `props`), `[dx, dy, dz]` from the set; or `{ "what": ..., "word": "TORCH", "size": "cu" }` (judged from that word on; `size` cu/ecu allows a close-up), a list of them, or `false` (the line names something we deliberately don't show). Missing: inferred from the line's words (TORCH, DOG, LIBRARIAN, MOM...; a family word means any villager/actor) | `./hb owner` subject check: explicit = blocker, inferred = warning |
+| `props` | `{ id: { at: [dx,dy,dz] } \| { block: "torch" } \| { actor: NAME } }`: the bible's props by name, for `look` and for words in lines | `./hb owner` |
+| `look`, `weather` | the story's world: `look.time` (`"night"` or ticks), `look.fog` (true: the picture needs visible fog, `stunt.fogSea`; render distance alone draws none), `weather` (`rain`/`thunder`/`clear`); also per shot in `shots[].look` / `shots[].weather` | `./hb owner` glitch check: the recording must have it (blocker). Without the keys the caption, logline, question and the bible's World section are read for fog/night/rain (the caption: blocker, the rest: warning) |
+| `shots[].master`, `shots[].cropX` | `"wide"`: the shot is rendered as a 1920x1080 master and centre-cropped to the Short's 1080x1011 middle frame, shifted `cropX` pixels of the master (or a fraction of its width when \|cropX\| <= 1). The subject and flat-world checks judge the cropped frame (a subject outside the crop is out of frame); `stunt.shots[name].master` / `.cropX` and `stunt.master` work too | `./hb owner` |
 
 **Compatibility.** The voice step for a v2 story writes `stories/<name>/voices.json` in `tts.py`'s format and runs
 `tts.py` into `stories/<name>/voice/<id>.wav`, then writes the same `voice.json` (per-line `dur`, chunk times) that
@@ -221,7 +230,8 @@ builder checks the recording against it.
 
 ## World
 - Time of day per scene (in ticks) and the order scenes play in; where the sun is (which side of frame).
-- Weather per scene. Season cues (snow, leaves).
+- Weather per scene, and fog. Season cues (snow, leaves). Put the same in story.json `look` / `weather` (section 6):
+  `./hb owner` holds the recording to them (owner: "there's no fog", on a story about fog).
 - Days elapsed in the story ("412 days"), and every number the script says (it must match every picture: 14 villagers
   = 14 on screen when counted).
 
