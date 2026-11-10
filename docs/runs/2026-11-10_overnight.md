@@ -249,3 +249,14 @@ For the owner's morning. Newest at the bottom.
   - Stories follow the niche arcs and loop (docs/story_arcs.md).
   - No new stories: fix the five held ones (script_vNext.md each).
   - Caption fix merged (forced alignment); motion by construction merged and live-tested.
+
+## 20:30 UTC: rewrites approved
+- **The owner approved the arc rewrites:** "Yes. Okay. Rewriting the stories is fine. Whatever you think is best". Good Boy: "Yeah, we can rework it."
+- **Voicing order after the 08:00 UTC reset** (Orus, about 10 requests a day, shared):
+  1. Light Sleeper (3+1)
+  2. Dog on the Hill (3+1)
+  3. Thirty-One Raids (2+1)
+  4. Gold (2+1)
+- **Good Boy:** the new premise comes from the writers' room.
+- **Every story is packaged held** for the owner's review.
+- **Narrator:** silences capped at 0.12 s ("its fine to have those cuts").
