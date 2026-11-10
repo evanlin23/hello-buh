@@ -7,15 +7,15 @@
   "post": "",
   "fallback": "bf_emma",
   "from": "the AI-dilemma Shorts' narrator (thin_ice, dirk_willems)",
-  "notes": "Third-person framing, chapter cards, the hook line. When HelloBuh tells his own story the first person goes to `buh` and the narrator only frames."
+  "notes": "Third-person framing, chapter cards, the hook line. When Milo tells his own story the first person goes to `milo` and the narrator only frames."
  },
- "buh": {
-  "name": "Buh",
+ "milo": {
+  "name": "Milo",
   "voice": "Achird",
-  "profile": "HelloBuh, our hero: a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
+  "profile": "Milo, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
   "post": "",
   "fallback": "am_michael",
-  "from": "the AI-dilemma voice for Claude, the trailer's Buh and the movie's brothers",
+  "from": "the AI-dilemma voice for Claude, the trailer's Buh (renamed Milo, owner 2026-11-10) and the movie's brothers",
   "notes": "First person. Range: scared/funny ('Okay. That's... not normal.'), serious, whispering. Never sped up."
  },
  "elder": {
@@ -66,7 +66,7 @@
  "mom": {
   "name": "Mom",
   "voice": "Sulafat",
-  "profile": "Buh's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it",
+  "profile": "Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it",
   "post": "",
   "fallback": "af_sarah",
   "from": "new",
@@ -75,11 +75,11 @@
  "friend": {
   "name": "Max",
   "voice": "Fenrir",
-  "profile": "Buh's best friend: a sixteen-year-old boy, loud, excitable and loyal, talks fast, jokes, always up for it",
+  "profile": "Milo's best friend: a sixteen-year-old boy, loud, excitable and loyal, talks fast, jokes, always up for it",
   "post": "",
   "fallback": "am_puck",
   "from": "new",
-  "notes": "The sidekick and comic relief; he goes first into the cave. Fenrir is brighter and faster than Buh's Achird, so the two read apart in an exchange."
+  "notes": "The sidekick and comic relief; he goes first into the cave. Fenrir is brighter and faster than Milo's Achird, so the two read apart in an exchange."
  },
  "_spares": {
   "Kore": "crisp, firm woman (the AI Shorts' Gemini): a guard captain, an announcer, a cold official",

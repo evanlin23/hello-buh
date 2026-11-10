@@ -19,8 +19,8 @@
       "role": "narrator",
       "ref": "child",
       "color": "#FFFFFF",
-      "on_screen": "pov (the hand, never his face); HelloBuh as a kid; seen from outside only small and from behind (S07, S12's crane start, S13's shoulder, S16), default Steve skin (owner: HelloBuh stays Steve)",
-      "audition": "Before locking the voice, take L01, L07 and L15 three ways: the library `child` (Leda, lifted 2 semitones), the library `buh` (Achird, directed younger and hushed) and Iapetus (the r1 pick). Pick the one that whispers L01 without going breathy and still lifts on L14-L15; record the pick here. Never override the library profile: the whisper lives in the request's scene sentence and the line notes."
+      "on_screen": "pov (the hand, never his face); Milo as a kid; seen from outside only small and from behind (S07, S12's crane start, S13's shoulder, S16), default Steve skin (owner: the hero stays Steve)",
+      "audition": "Before locking the voice, take L01, L07 and L15 three ways: the library `child` (Leda, lifted 2 semitones), the library `milo` (Achird, directed younger and hushed) and Iapetus (the r1 pick). Pick the one that whispers L01 without going breathy and still lifts on L14-L15; record the pick here. Never override the library profile: the whisper lives in the request's scene sentence and the line notes."
     },
     "Mom": {
       "role": "character",
@@ -210,7 +210,7 @@
     "beats": [
       "S15 holds 0.4 s past 'DANCED': one more jump on the rim, then cut",
       "S16 (camera, low behind the boy, everything within 12 blocks of the lens): shriek 4 on frame 1, the Darkness at full pulse; the carpet 3 blocks south of the well bursts and the warden rises out of the square, facing the boy across the open well; the roar (cut at ~1.5 s)",
-      "S17 (POV): the warden across the well fills the upper half, the sonic boom; death screen 'HelloBuh was obliterated by a sonically-charged shriek', held ~1.3 s, the jukebox song still playing under it, the caption track repeating 'obliterated by a sonically-charged shriek'",
+      "S17 (POV): the warden across the well fills the upper half, the sonic boom; death screen 'Milo was obliterated by a sonically-charged shriek', held ~1.3 s, the jukebox song still playing under it, the caption track repeating 'obliterated by a sonically-charged shriek'",
       "cut 0.25 s after the hold; no spoken line after the reveal (owner, 2026-11-07)"
     ],
     "loop": "cause and effect: the shriek is why L01's village is covered in nine thousand carpets"
@@ -350,7 +350,7 @@
       "place": "plaza",
       "size": "ms",
       "camera": "pov from the rim, the warden across the well filling the upper half; the sonic boom; then the death screen with the plaza still pulsing behind",
-      "frame": "the warden's chest and head over the open well; the sonic boom ring; 'HelloBuh was obliterated by a sonically-charged shriek' (also in the caption track)"
+      "frame": "the warden's chest and head over the open well; the sonic boom ring; 'Milo was obliterated by a sonically-charged shriek' (also in the caption track)"
     }
   ],
   "bible": "stories/light_sleeper/bible.md",

@@ -130,6 +130,15 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "we still need to ensure that the pacing is good, and theres still a good visual and audio
+  hook and build up and a good payoff."** Cinematic doesn't mean slow. Every story still needs: a hook in the first
+  1-2 s that works both muted (a striking picture or motion) and with sound (a sound or line that makes you ask "why?");
+  something new on screen or in the ear every ~3 s; build-up that escalates (stakes, music and cut rate rise toward the
+  payoff); a payoff that lands in one clear picture plus a sound hit; the end ≤1 s after it. The `pacing` gate
+  (`./hb pace`) measures these and short-review treats its blockers as blockers.
+- **Owner, 2026-11-10: "We don't need the character's name to be Buh" / "sure milo is fine".** The hero is **Milo**
+  (default Steve skin, voice `milo` in voices/cast.json). HelloBuh is the channel, not the character; in-game names
+  on death screens and chat say Milo.
 - **Owner, 2026-11-10: "The voice is definitely an issue. And also the sets. I think we can be more creative with the
   story telling, and better with the delivery and the plots and using other voices for the other characters. I think
   we don't necessarily need to use this sped up voice. this voice i dont think does a good job of playing different

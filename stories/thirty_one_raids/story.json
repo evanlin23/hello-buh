@@ -17,7 +17,7 @@
   "cast": {
     "N": {
       "role": "narrator",
-      "ref": "buh",
+      "ref": "milo",
       "color": "#FFFFFF",
       "on_screen": "pov (HelloBuh, default Steve skin per the owner; never seen from outside in this story); hotbar: empty hand, then the ominous bottle (S12), empty again once drunk"
     },
