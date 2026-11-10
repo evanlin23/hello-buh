@@ -130,6 +130,25 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (in the Dog on the Hill session): "the start should be delivered all at once right?" / "we can
+  have pauses later, the opening must be in one breath"; "is milo a woman?"; "what does the day one mean bro".**
+  - Line 1 is one quick breath, no internal pause (`./hb pace` blocks one over 0.2 s). Re-take it; trimming silence
+    doesn't fix a dragged word.
+  - **No "..." anywhere in a script.** Gemini turns an ellipsis into a stop and drops dramatic lines into a breathy
+    whisper. Use short sentences, and direct dramatic lines "full volume, excited".
+  - A kid narrator is **Leda** (cast `child`), unshifted (the +2 semitone filter warbles). Erinome reads as an adult
+    woman: she's the storyteller, never a kid.
+  - Endings explain themselves: a sting the viewer has to decode doesn't land ("Day one." failed, "Day one. Again."
+    worked).
+  - TTS models (2026-11-10): gemini-2.5-flash/pro-preview-tts hit the shared daily quota first; gemini-3.8-flash-tts
+    works (keep bracketed directions short or it reads them aloud); gemini-3.1-flash-tts-preview can refuse with SAFETY.
+    Listening checks: gemini-3.5-flash (retry 502/503).
+- **Owner, 2026-11-10: "sure 4.5 is fine bc that matches the best. also, we should have absolutely no pauses in like
+  the first few seconds right, bc those are the most critical? Like the other this dog has been sitting there has a
+  brief pause right in the first few seconds."** The narrator talks at ~4.5 words/s while speaking (runaway: 4.6).
+  No "..." in any line spoken in the first 5 s (Gemini turns it into a half-second stop: Dog on the Hill's L01 had
+  0.53 s and L02 0.54 + 0.71 s), and the gap between opening lines stays at one breath (runaway's 0.37-0.40 s).
+  `./hb pace` blocks a pause inside an opening line over 0.35 s or a gap between opening lines over 0.6 s.
 - **Owner, 2026-11-10: "why does the narrator keep whispering? is the narrator the child or like a woman? i think it
   should be like a child most of the time right? like bubbly happy" and "the audio must land like start talking the
   first moment the video starts, same with the visual hook".** The whispering was ours: the library narrator was

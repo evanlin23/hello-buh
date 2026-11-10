@@ -287,6 +287,49 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     else:
         add("WARN", "hook", None, f"no line mark and no sound hit in the first {HOOK_S} s", "open on the question line or a hit")
 
+    # ---- no pauses in the opening (owner 2026-11-10: "we should have absolutely no pauses in like the first few
+    # seconds ... the dog has been sitting there has a brief pause right in the first few seconds"). Gaps between
+    # lines (voice.json) and silences inside each line's take (its wav), for everything spoken before OPEN_S.
+    OPEN_S = 5.0
+    if is_story and lines:
+        pauses = [(g_at, g_len, f"between {a} and {b}") for g_at, g_len, a, b in voice_gaps if g_at < OPEN_S]
+        vdir = pathlib.Path(story_dir) / "voice" if story_dir else None
+        for t0, lid in lines:
+            if t0 >= OPEN_S or not vdir or not (vdir / f"{lid}.wav").exists():
+                continue
+            try:
+                raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(vdir / f"{lid}.wav"), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
+                                     capture_output=True, check=True).stdout
+                x = np.frombuffer(raw, np.float32)
+                fr = 160
+                db = 20 * np.log10(np.sqrt(np.mean(x[: len(x) // fr * fr].reshape(-1, fr) ** 2, axis=1)) + 1e-9)
+                voiced = np.where(db > db.max() - 30)[0]
+                if len(voiced) < 2:
+                    continue
+                run = 0
+                for i in range(voiced[0], voiced[-1] + 1):
+                    if db[i] <= db.max() - 30:
+                        run += 1
+                    else:
+                        if run * 0.01 >= 0.2:
+                            at = t0 + (i - run) * 0.01
+                            if at < OPEN_S:
+                                pauses.append((round(at, 2), round(run * 0.01, 2), f"inside {lid}"))
+                        run = 0
+            except Exception:   # noqa: BLE001
+                pass
+        # calibrated on runaway (the benchmark): its sentence gaps are 0.37-0.40 s and read as one breath; a "..."
+        # pause inside a line, or a gap over ~0.5 s, reads as the video stalling
+        for at, ln, where in sorted(pauses):
+            between = where.startswith("between")
+            first = where == f"inside {lines[0][1]}"
+            if ln > (0.6 if between else 0.2 if first else 0.35):
+                add("BLOCK", "hook", at, f"a {ln:.2f} s pause in the opening ({where}); owner: no pauses in the first seconds",
+                    ("owner: \"the opening must be in one breath\": re-take line 1 as one quick breath (trimming silence isn't enough)" if first else
+                     "re-take the line without the '...' / tighten the cut between lines (gap <= 0.15 s) in the first 5 s"))
+            elif ln > (0.45 if between else 0.25):
+                add("WARN", "hook", at, f"a {ln:.2f} s pause in the opening ({where})", "tighten it (runaway's sentence gaps: ~0.4 s)")
+
     # ---- speech rate (docs/research/narration_2026-11-10.md: narrator channels 3.8-5.8 words/s, median 4.57;
     # runaway 4.4, both counted over speaking time). Here: words over first line start .. last line start + 2 s, gaps
     # included, so the numbers run lower: runaway (the benchmark) 3.47, respawn_tax 3.58, old good_boy 3.13.
@@ -295,6 +338,12 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         span = max(1e-6, (lines[-1][0] if len(lines) > 1 else dur) - lines[0][0] + 2.0)
         wps = nwords / span
         notes.append(f"speech rate: {nwords} words over {span:.1f} s = {wps:.2f} words/s (runaway, the benchmark: 3.47 by this count)")
+        if spoken:
+            swps = nwords / max(1e-6, spoken)
+            notes.append(f"speaking-time rate: {swps:.2f} words/s while talking (owner target 4.5, the top narrator channels' median)")
+            if swps < 3.8:
+                add("WARN", "pace", None, f"the narrator talks at {swps:.2f} words/s while speaking (owner target 4.5)",
+                    "a faster take ('fast, bright, energetic' in the style prompt) or atempo 1.1-1.2")
         if wps < 2.7:
             add("BLOCK", "pace", None, f"the narration is slow: {wps:.2f} words/s (runaway 3.47 by this count)",
                 "re-take faster (direct 'fast, energetic' in the style prompt) or atempo the takes; tighten the gaps between lines")
