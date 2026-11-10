@@ -58,7 +58,7 @@ module.exports = {
     rightback: { path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.5, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night
     dusk: { path: [[0, 4.8, 2.6, 2.4], [3, 4.4, 2.4, 2.2]], look: [0, 0.4, 0.9], fov: 56 },
-    night: { path: [[0, 4.4, 2.4, 2.2], [3, 4.0, 2.2, 2.0]], look: [0, 0.4, 0.9], fov: 56 },
+    night: { path: [[0, 3.0, 1.6, 3.3], [3, 2.7, 1.5, 3.0]], look: [0.2, 0.6, 1.1], fov: 48 },   // (closer than dusk: a time cut on the same framing read as a jump cut)
     // L12: behind them: the player appears on the patch, the dog stands, the village lights below
     reveal: { path: [[0, -3.8, 2.9, 2.0], [4, -3.4, 2.7, 1.8]], look: [3, 0.8, 0.5], fov: 50 },
     // L13-L14: side on, the reunion and the sit
@@ -195,10 +195,10 @@ module.exports = {
     await run(t2 - b2, (k) => {   // two zombies shuffle past behind him, north to south (zombie walk ~0.23 b/t... slower here)
       tp('z1', -1.8, 1, -2.6 + k * 0.09, 0); tp('z2', -3.2, 1, -3.8 + k * 0.09, 0)
       if (k === 4) ctx.sound('entity.zombie.ambient', 0.5, 0.9)
+      if (k === t2 - b2 - 20) put('pip', -4, 1, 6, -131)   // early: the client shows a mob back from the park ~0.5 s late (lint)
     })
     park('z1'); park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')   // (die at the park: no death fall in the next shot)
     // ---- L03: morning: Pip walks up from the edge with a bone and drops it on the pile
-    put('pip', -4, 1, 6, -131)
     cut('bone', { time: 1000 })
     line('N', 'L03')
     const t3 = T('L03')

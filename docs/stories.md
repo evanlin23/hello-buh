@@ -48,26 +48,26 @@ ending) on `lib/story.js`. Every story so far hand-rolled the same helpers (`c`,
 | the rest | `K.go(on)`, `K.ctl(key, on)`, `K.stop()`, `K.setTime(n)` (no 4-tick stall), `K.setMeter(v)`, `K.groan()`, `K.knockback(() => attackerPos)` (mineflayer drops hit knockback on 1.21.11), `K.dig(block)` (vanilla dig speed; mineflayer's is a bare hand's), `ease`, `mcYaw` |
 
 ## Cinematic story Shorts (movie engine + Gemini cast): `dog_hill` is the worked example
-The 2026-11-10 direction (real voices, cinematic sets) in one pipeline, on top of the movie engine (docs/movie_engine.md):
+The 2026-11-10 direction (real voices, cinematic sets) on the channel's story edit (edit.py --story: black bands, the
+title on top, the 1080x1011 game view cropped from a `wideMaster` 16:9 render):
 ```bash
 # 1. stories/<name>/story.json v2 (docs/story_craft.md section 6) + bible.md; run the story-critic before voicing
-# 2. voices: one Gemini request per speaker pair (scripts/tts.py, voices.json); the auto-split cuts at the longest pauses,
-#    which lands INSIDE lines that have "..." pauses. Cut by word timings instead: faster-whisper base.en
-#    (pip install faster-whisper; the model comes from Hugging Face) gives each word's start; cut at the silence before
-#    each line's first word. Per-line wavs go in stories/<name>/vox/<id>.wav, lengths in durations.json, chunk start times
-#    in vox/timing.json (the captions use them). Tempo: atempo 1.08 kept Erinome natural and saved 4 s.
-# 3. the stunt: movie-engine `shots` (hand-placed `path` cameras, offsets from the set origin), NoAI mobs moved by /tp per
-#    tick, `line` marks {who, vox, dur}, `chat` marks {text, hold} for "X joined the game", `hush`/`hush_end`/`swell`
-#    for the score, `time` marks on cuts and `weather` marks with `cut: true` (render.js lands them at once)
-STUNT=story_<name> ./scripts/record.sh
-# 4. check frames: two per shot at 360x640 (render.js FRAMES=, ~2-4 min), fix cameras without re-recording
-# 5. render on Actions: 12 slices + assemble, committed back to the branch (~10-15 min)
-./scripts/queue_story.sh <name> && git push      # then: git pull -> renders/out/story_<name>.mp4
+# 2. voices: one Gemini request per speaker pair (scripts/tts.py). Its auto-split cuts at the longest pauses, which land
+#    INSIDE lines written with "..." pauses: cut by Whisper word timings instead (scripts/align.py on main, or
+#    faster-whisper base.en): cut at the silence before each line's first word. -> stories/<name>/voice/<id>.wav +
+#    voice.json ({lines: {id: {text, who, dur, onset, end, chunks: [[start, end]...], captions: [...]}}})
+# 3. the stunt: movie-engine `shots` (hand-placed `path` cameras), NoAI mobs moved by /tp per tick, `line` marks {id},
+#    `chat` marks {text, hold} for "X joined the game" (edit.py draws the chat line), `time` marks on cuts and
+#    `weather` marks with `cut: true` (render.js lands them at once); `wideMaster: true`; edit.story
+STUNT=story_<name> ./scripts/record.sh && ./hb check story_<name>
+# 4. check frames: two per shot at 360x640 (render.js FRAMES=, ~2-4 min); fix cameras without re-recording
+# 5. render on Actions (~15 min): RENDER_BRANCH=<your branch> scripts/render_on_actions.sh story_<name> (+ --wait)
 ```
-`scripts/story_short.py stories/<name>` is the editor (1080x1920 30 fps): voices on their marks, the story's own caption
-chunks with key words in colour (characters in their cast colour with a small name over the caption), the game's chat
-line in yellow bottom-left, the hook from story.json `hook` at the top, a made note-block score (no licensed music).
-Set `edit.ownScore: true` in the stunt so publish.js/add_song.py doesn't lay an NCS bed over it.
+A made score instead of the NCS bed: `python3 scripts/story_short.py stories/<name> --score-only stories/<name>/score.wav`
+(a note-block lullaby in a hall, silent over `hush`..`hush_end`, a swell on `swell`; encode to .ogg), then
+`edit.song: 'stories/<name>/score.ogg'` (edit.py lays it as the -31 LUFS bed) and `edit.ownScore: true` (publish.js /
+add_song.py then add no NCS track). `scripts/story_short.py` without `--score-only` is a standalone full-frame 9:16
+editor (render-story workflow); the channel layout above is the one that ships.
 Lessons from dog_hill:
 - **Scout a real place:** a village scout (/locate village_plains from 10 starts, the highest ground 20-70 blocks
   out) found a village with a 28-block hill; `stunts/probe_dog_hill.js` prints a heightmap and renders test cameras.
