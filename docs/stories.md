@@ -130,6 +130,10 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "you choose for the audio mix, im not an expert there".** The lead picked the new story mix
+  (docs/audio.md): mood score with ducking, a drop-out and hit at the payoff, room tone, vanilla on-screen sounds,
+  -14 LUFS. It's measured, not listened to by the owner, so a story's review checks the mix by ear-proxy
+  (scripts/audio_measure.py) and any owner note on a track or level overrides it.
 - **Owner, 2026-11-10, after the kid-narrator audition: "all of the current ones seem to be too sped up. i kinda like
   the pip here"** (Dog on the Hill v3: Leda, natural tempo, no pitch shift; measured ~4.1 words/s while speaking,
   ~0.45 s between sentences, 2.85 words/s overall). The narrator is Leda as voiced there: **no time-stretch and no
