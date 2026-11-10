@@ -58,6 +58,7 @@ module.exports = {
     await ctx.defaultRules()
     await c('/gamerule log_admin_commands false')
     await c('/gamerule random_tick_speed 0')
+    await c('/gamerule mob_drops false')   // the zombie's kill: no XP orbs into the wolf's eye, nothing collected (review)
     await c('/difficulty normal')
     await c('/kill @e[type=iron_golem]')           // the village golem would hunt the story's zombie and skeletons
     await c('/kill @e[type=item]')
@@ -196,10 +197,9 @@ module.exports = {
     await K.cut(36.4, 15.6, P(37.4, eyeY(1.6), 14.6), H + 1)
     let looking = K.base
     await line('L05', async (k, at) => {
-      if (k === at(1)) { swingGuy(); say(`/summon item ${(X + 36.9).toFixed(2)} ${F + H + 1.9} ${(Z + 15.0).toFixed(2)} {Item:{id:"minecraft:porkchop",count:1},PickupDelay:32767}`) }
-      if (k >= at(2) && k < at(4)) K.turnTo(looking, P(36.9, H + 1, 15.0), (k - at(2)) / 10)
-      if (k === at(4)) looking = K.base
-      if (k >= at(4)) K.turnTo(looking, P(37.4, eyeY(1.6), 14.6), (k - at(4)) / 8)
+      // he holds the porkchop out (the review: a look down at the ground found nothing there and whipped back up)
+      if (k === at(1) || k === at(3)) swingGuy()
+      guy.pitch = 42 + Math.sin(k / 4) * 5; placeGuy()
       look(k)
     })
     // L06: on the village road: villagers pass close and look down at me
@@ -213,7 +213,7 @@ module.exports = {
       stepG(v1, -0.045, 0.002); v1.pitch = 28
       stepG(v2, 0.04, 0); v2.pitch = 25
       stepG(v3, -0.035, 0); v3.pitch = 20
-      if (k >= at(1)) K.turnTo(looking, P(v2.x, v2.y + 2.5, v2.z), (k - at(1)) / 16)
+      if (k >= at(1)) K.turnTo(looking, P(v2.x, v2.y + 1.6, v2.z), (k - at(1)) / 16)   // his face (aimed over it, the sky showed a black square)
       look(k)
     })
     for (const t of ['v1', 'v2', 'v3']) K.bury(t, -60)
@@ -230,11 +230,12 @@ module.exports = {
       if (k === at(2)) {
         K.stop()
         K.self({ sitting: true }, SIT_EYE)
-        await putGuy(34.0, 13.8, -60)
-        K.shot('dog_sea')
-        await K.cut(41.5, 16.5, P(60, eyeY(0.4), 18), H + 1)
+        // no hop for him (the old shot showed the empty road while he jumped): he walks on from where he is; the
+        // wolf's cut switches the shot on its landing tick
+        await K.cut(41.5, 16.5, P(60, eyeY(0.4), 18), H + 1, { shot: 'dog_sea' })
       }
-      if (k > at(2)) { if (guy.x < 40.4) { guy.x += 0.19; guy.z += 0.07; guy.yaw = -70; guy.pitch = 10; placeGuy() } else { guy.yaw = yawTo(guy.x, guy.z, 41.5, 16.5); guy.pitch = 35; placeGuy() } }
+      // he walks up to the wolf already sitting there, slowing, and looks down at it (never parked: the review)
+      if (k > at(2)) { const dx = 40.6 - guy.x, dz = 16.0 - guy.z, d = Math.hypot(dx, dz); if (d > 0.3) { const sp = Math.min(0.17, 0.05 + d * 0.04); guy.x += dx / d * sp; guy.z += dz / d * sp; guy.yaw = K.mcYaw(dx, dz); guy.pitch = 10; placeGuy() } else { guy.yaw = yawTo(guy.x, guy.z, 41.5, 16.5); guy.pitch = 35 + Math.sin(k / 4) * 6; placeGuy() } }
       if (k > at(2) + 8) K.base = K.aim(P(guy.x, eyeY(1.5), guy.z))
       look(k)
     })
@@ -242,9 +243,10 @@ module.exports = {
     // L08: dusk, sitting at the shut door looking up at it (no bump: the owner's "stuck on the door"); after the line
     // he opens it from inside (no line: narrator-first) and I trot in
     K.self({ sitting: true }, SIT_EYE)
+    // the cut first, the shot and the dusk on its landing; then he hops in behind the shut door, out of view (hopped
+    // before the cut, the old shot showed him gone, the wolf gone and a pink sky)
+    await K.cut(36.5, 18.4, P(36.5, eyeY(1.4), 20.6), H + 1, { time: DUSK, shot: 'pov' })
     await putGuy(36.5, 22.2, 180, 30)
-    await K.cut(36.5, 18.4, P(36.5, eyeY(1.4), 20.6), H + 1, { time: DUSK })
-    K.shot('pov')
     looking = K.base
     const opensAt = K.T('L08') - 2
     await line('L08', async (k) => {
@@ -279,22 +281,28 @@ module.exports = {
     // L11: night, the yard: the zombie walks in from the road. L12: "Hey! Get back!" it hits him; the wolf at his
     // side gets up, eyes red. A camera shot from the yard's west corner
     await putGuy(37.5, 15.2, 0, 0)
-    await putMob('zom', 36.6, 6.0, 0)
-    const zom = actorG('zom', { x: 36.6, z: 6.0, yaw: 0 })
+    await putMob('zom', 36.6, 8.6, 0)   // (from 6.0 it was a speck for a second and reached him only after the hit)
+    const zom = actorG('zom', { x: 36.6, z: 8.6, yaw: 0 })
     K.self({ sitting: true }, SIT_EYE)
     await bot.waitForTicks(3)
     K.shot('night_yard')
     await K.cut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1)
     const zWalk = (speed) => { const dx = 37.6 - zom.x, dz = 14.0 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
     await line('L11', async (k) => {
-      zWalk(0.12)
+      zWalk(0.1)
       if (k === 6) ctx.sound('entity.zombie.ambient', 0.8, 1)
       if (k > 10) { guy.yaw = yawTo(37.5, 15.2, zom.x, zom.z); placeGuy() }
       K.base = K.aim(P(zom.x, zom.y + 1.5, zom.z)); look(k)
     })
-    await line('L12', async (k) => {
-      zWalk(0.08)
-      if (k === 2) { say(`/damage ${GUY} 4 minecraft:mob_attack by @e[tag=zom,limit=1]`); K.self({ sitting: false, angry: true }, EYE); ctx.sound('entity.wolf.growl', 0.9, 1) }
+    let hit = false
+    await line('L12', async (k, at, n) => {
+      zWalk(hit ? 0.02 : 0.09)
+      // the hit lands when it reaches him (the review: at 6-8 blocks it was a hit with no visible cause), at the latest
+      // 8 ticks before the line ends; the wolf stands up on it, growling
+      if (!hit && (Math.hypot(zom.x - 37.5, zom.z - 15.2) < 1.6 || k >= n - 8)) {
+        hit = true
+        say(`/damage ${GUY} 4 minecraft:mob_attack by @e[tag=zom,limit=1]`); K.self({ sitting: false, angry: true }, EYE); ctx.sound('entity.wolf.growl', 0.9, 1)
+      }
       guy.yaw = yawTo(37.5, 15.2, zom.x, zom.z); placeGuy()
       K.base = K.aim(P(zom.x, zom.y + 1.4, zom.z)); look(k)
     })
@@ -307,6 +315,7 @@ module.exports = {
       const [sy, sp] = shake(k, 0.035)
       if (k === at(0) + 4 || k === at(1) + 2) { const z = zEnt(); if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.1) }
       if (k === at(1) + 10) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
+      if (k >= at(1) + 10 && k <= at(1) + 16) say('/kill @e[type=experience_orb]')   // (and if mob_drops is a no-op)
       if (k < at(1) + 10) { const z = zEnt(); if (z && bot.entity.position.distanceTo(z.position) < 1.3) K.go(false) }
       const zp = P(zom.x, zom.y + 1.0, zom.z); if (bot.entity.position.distanceTo(zp) > 1.6) K.base = K.aim(zp); look(k, sy, sp)
     })
