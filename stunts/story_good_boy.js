@@ -252,7 +252,7 @@ module.exports = {
       }
       if (k === opensAt + 4) K.self({ sitting: false }, EYE)
       if (k > opensAt) K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), (k - opensAt) / 8)
-      if (k > opensAt + 8) { K.go(true); guy.z = Math.min(23.4, guy.z + 0.05); placeGuy() }
+      if (k > opensAt + 6) { guy.pitch = 30 + Math.sin((k - opensAt) / 5) * 6; placeGuy() }   // he looks down at me (no walk-in: the open door's panel stopped him dead)
       look(k, 0, Math.sin(k / 6) * 0.03)
     }, 1.2)
     K.stop()
@@ -267,6 +267,7 @@ module.exports = {
     await line('L10', async (k, at) => {
       if (k < at(1)) { sk1.yaw = -90; sk2.yaw = -95 }
       if (k >= at(1)) { stepG(sk1, -0.2, 0.02); stepG(sk2, -0.22, -0.02) }
+      autoJump()
       if (k === at(1)) ctx.sound('entity.skeleton.ambient', 0.6, 1.2)
       look(k)
     })
@@ -392,7 +393,7 @@ module.exports.shots = {
   // the cottage, the sea behind, the man, and his "dog" beside him
   est: { dof: false, path: [[0, 24, H + 13, 4], [3.6, 31.5, H + 3.6, 11.5]], lookPath: [[0, 37, H + 1.0, 16], [3.6, 37, H + 1.4, 15.2]], ease: true },
   // L09: walking the road beside him: a follow ahead of them and low (they walk east, toward it)
-  dog_walk: { follow: `actor:${GUY}`, offset: [3.6, 0.05, 2.6], look: { of: `actor:${GUY}`, offset: [0.0, -0.55, 0.6] }, lag: 2, fov: 52 },
+  dog_walk: { follow: `actor:${GUY}`, offset: [3.4, -1.15, 2.2], look: { of: `actor:${GUY}`, offset: [0.0, -0.1, 0.5] }, lag: 2, fov: 54 },   // (low, looking up: the yard grass filled 47% of the frame)
   // L09: on the yard's sea edge, sitting there already as he walks up (from the south-east, the sea behind them)
   dog_sea: { at: [42.4, H + 1.3, 21.0], look: [39.6, H + 1.5, 15.0], fov: 46, push: 0.3, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -1.1, 0] } } },
   // L14-L15: night, the yard from its south-west corner: the road, the zombie walking in, the man and the wolf
