@@ -191,7 +191,7 @@ def cut_pauses(x, texts, hints=None):
             for k in range(i - 1, j):
                 c = best[i - 1, k] + ((segs[j - 1][1] - segs[k][0]) / T - share[i - 1]) ** 2 * 50 + spread(k, j) - (0.6 * gaps[j - 1] / gmax if j < M else 0)
                 if hints and j < M and i < L and hints[i - 1] is not None:   # line i+1 starts at its first heard word
-                    c += 20 * (segs[j][0] / SR - hints[i - 1]) ** 2
+                    c += 20 * max(0.0, abs(segs[j][0] / SR - hints[i - 1]) - 0.3) ** 2   # Whisper's starts run ~0.1-0.3 s late
                 if c < best[i, j]:
                     best[i, j], arg[i, j] = c, k
     out, j = [], M
@@ -296,10 +296,12 @@ def speaker_check(d, ids):
         return None
 
 
-def retake(d, done, items, cs, n_max):
+def retake(d, done, items, cs, n_max, prior=None):
     """Check the lines just voiced; re-take the ones in the wrong voice or with the wrong words, at most n_max times
-    each, always as a single-speaker request (one voice can't swap). Lines that pass are never re-taken. -> {id: n}"""
-    takes, ids = {}, list(done)
+    each, always as a single-speaker request (one voice can't swap). Lines that pass are never re-taken. prior: the
+    re-take each line already has (voice.json `take`), so a new run asks for a NEW take, not the cached bad one.
+    -> {id: n}"""
+    takes, ids = dict(prior or {}), list(done)
     for n in range(1, n_max + 1):
         rep = speaker_check(d, ids)
         if rep is None:
@@ -316,8 +318,9 @@ def retake(d, done, items, cs, n_max):
         print(f"re-take {n}/{n_max}: {', '.join(ids)} (single-speaker)")
         for lid in ids:
             sc, it = items[lid]
-            done.update(voice_lines([(sc, [it])], cs, d / "voice", f"retake{n}")); takes[lid] = n
-    rep = speaker_check(d, ids) if takes else None
+            k = takes.get(lid, 0) + 1
+            done.update(voice_lines([(sc, [it])], cs, d / "voice", f"retake{k}")); takes[lid] = k
+    rep = speaker_check(d, ids) if ids and set(ids) & set(takes) else None
     if rep and rep["blockers"]:
         print(f"STILL WRONG after {n_max} re-takes: {', '.join(rep['blockers'])}: listen, then fix the line's text or "
               f"direction (or --retakes more); a swapped voice is a blocker")
@@ -363,7 +366,7 @@ def run_story(d, only=None, check=True, retakes=2):
         if n and old["lines"][lid].get("text") == it[2]:
             done.update(voice_lines([(sc, [it])], cs, d / "voice", f"retake{n}")); takes[lid] = n
     if check:
-        takes.update(retake(d, done, items, cs, retakes))
+        takes = retake(d, done, items, cs, retakes, takes)
     meta = old if only else {"lines": {}}
     meta.update({"model": f"Gemini TTS ({MODELS[0]} first), voices/cast.json", "sr": SR, "gap": story.get("gap", 0.25)})
     for ln in story["lines"]:
