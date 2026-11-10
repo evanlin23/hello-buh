@@ -154,7 +154,8 @@ module.exports = {
     // only on a cut (moveWith: set his new mark from inside the cut)
     const buh = K.actor(TAG, { x: 44.5, y: gy(44.5, -5.0), z: -5.0, yaw: 90, pitch: 5 })
     const moveWith = (s) => () => Object.assign(buh, s)
-    const walkG = (a, dx, dz) => { K.step(a, dx, dz); a.y = gy(a.x, a.z) }
+    // feet follow the ground, eased (a full-block step in one tick read as a 1.04-block jump: rec_check)
+    const walkG = (a, dx, dz) => { K.step(a, dx, dz); const g = gy(a.x, a.z); a.y += Math.max(-0.2, Math.min(0.2, g - a.y)) }
     const zEnt = () => Object.values(bot.entities).find(e => e.name === 'zombie')
     // a one-block step ahead while the wolf runs (mineflayer doesn't step up)
     const autoJump = () => {
@@ -217,7 +218,7 @@ module.exports = {
       const stopAt = at(1), on = at(4)
       const walking = k < stopAt || k >= on
       if (walking) { walkG(buh, -0.2, 0); buh.pitch = 5 } else { buh.yaw = yawTo(buh.x, buh.z, 18.5, -6.4); buh.pitch = 25 }
-      K.go(walking); if (!walking) K.base = K.aim(P(18.5, gy(18.5, -6.4) + 0.4, -6.4))
+      K.go(walking); if (walking) autoJump(); if (!walking) K.base = K.aim(P(18.5, gy(18.5, -6.4) + 0.4, -6.4))
       else K.base = K.aim(P(bot.entity.position.x - X - 10, buh.y + 0.6, -4.3))
       look(k)
     })
@@ -288,11 +289,11 @@ module.exports = {
 
     // L09 "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.": Dog Hill, morning: a crane down as
     // they come up over the south rim onto the meadow and walk north toward his old dirt hut
-    await K.cut(DX - 1.0, DZ + 7.5, P(DX - 1.0, HILL + 0.6, DZ - 6), HILL, { shot: 'hill_walk', time: MORNING, self: [{ sitting: false, angry: false }, EYE], after: moveWith({ x: DX, z: DZ + 7.0, y: HILL, yaw: 180, pitch: 5 }) })
+    await K.cut(DX - 1.0, DZ + 5.0, P(DX - 1.0, HILL + 0.6, DZ - 6), HILL, { shot: 'hill_walk', time: MORNING, self: [{ sitting: false, angry: false }, EYE], after: moveWith({ x: DX, z: DZ + 4.6, y: HILL, yaw: 180, pitch: 5 }) })   // (from DZ + 7.5 it stood past the levelled disc and walked into its rim)
     K.go(true)
     await line('L09', async (k) => {
-      if (buh.z > DZ + 1.2) { K.step(buh, 0.02, -0.17); buh.pitch = 5 } else { buh.yaw = 180; buh.pitch = 10 }
-      if (bot.entity.position.z - Z < DZ + 1.6) K.go(false)
+      if (buh.z > DZ + 1.2) { K.step(buh, 0.015, -0.12); buh.pitch = 5 } else { buh.yaw = 180; buh.pitch = 10 }
+      autoJump(); if (bot.entity.position.z - Z < DZ + 1.6) K.go(false)
       K.base = K.aim(P(DX - 1.0, HILL + 0.6, DZ - 6)); look(k)
     })
     K.stop()
@@ -379,7 +380,7 @@ const DXs = 102.5, DZs = -513.5, HL = 39   // Dog Hill's D, set-relative (as DX,
 module.exports.shots = {
   pov: { pov: true },
   // L01: Buh sprinting west down the road, a low follow ahead of him (the wolf blinks in beside him)
-  run_follow: { follow: `actor:${GUY}`, offset: [-3.6, -0.75, 2.1], look: { of: `actor:${GUY}`, offset: [0.4, -0.2, -0.2] }, lag: 2, fov: 56 },
+  run_follow: { follow: `actor:${GUY}`, offset: [-2.6, -0.55, 3.4], look: { of: `actor:${GUY}`, offset: [0.2, 0.35, -1.2] }, lag: 2, fov: 54 },   // (from the south-west at -0.75 the road's plain filled 39%: rec_check flat; now the houses north of the road behind him)
   // L02: back next to him. A crane down onto the yard at golden hour from the west: the cottage, the sea, him, the wolf
   est: { dof: false, path: [[0, 24, H + 13, 4], [3.6, 31.5, H + 3.6, 11.5]], lookPath: [[0, 37, H + 1.0, 16], [3.6, 37, H + 1.4, 15.2]], ease: true },
   // L03: the island's beach, low from the water's edge: he climbs out, the wolf already sitting on the sand
@@ -393,7 +394,7 @@ module.exports.shots = {
   // L08: night, the yard from its south-west corner: the road, the zombie walking in, Buh and the wolf
   night_yard: { at: [33.4, H + 1.5, 19.2], look: [37.6, H + 1.9, 11.0], fov: 56, push: 0.35, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } },
   // L09: Dog Hill, morning: a crane down from over the south rim as they walk up onto the meadow toward the hut
-  hill_walk: { path: [[0, DXs - 3.5, HL + 6, DZs + 13], [3.2, DXs - 2.5, HL + 2.2, DZs + 9.5]], lookPath: [[0, DXs, HL + 1, DZs + 5], [3.2, DXs + 1.5, HL + 1.5, DZs - 3]], ease: true },
+  hill_walk: { path: [[0, DXs - 3.5, HL + 6, DZs + 11], [3.2, DXs - 2.5, HL + 2.2, DZs + 8.0]], lookPath: [[0, DXs, HL + 1, DZs + 3], [3.2, DXs + 1.5, HL + 1.5, DZs - 3]], ease: true },
   // L10: the hilltop from the side: the wolf on D, Buh on the patch, the hut behind
   hill_sit: { at: [DXs + 1.5, HL + 0.9, DZs + 4.2], look: [DXs + 1.6, HL + 0.9, DZs], fov: 52, push: 0.15 },
   // L11: over the sitting wolf's shoulder at Buh on the patch; then the empty patch
