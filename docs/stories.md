@@ -132,6 +132,12 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "I see a lot of sessions getting caught on the 4.5 words/second, what are your thoughts?"**
+  4.5 words/s is **not a target**. It was the research median, but the owner then chose Pip's natural tempo (~4.1
+  while speaking, ~2.85 overall) over every sped-up take. Speed comes from the direction and the script (short
+  sentences), never from stretching, and never from re-take loops chasing a number. What matters is no dead air:
+  the opening in one breath, short gaps, holds with something happening, the end right after the payoff. `./hb pace`
+  only warns on a rate clearly slower than Pip and never blocks on rate.
 - **Owner, 2026-11-10: "do 1 at a time if the top do it 1 at a time. the font is ok yes just whatever is best".**
   Story captions show **one word at a time** (Xenost and Ashyyy: one word in all 48 sampled frames), timed by
   voice/words.json word starts, in Poppins Black. Each word pops in (0.1 s, the existing `POP`) and cuts out hard
@@ -161,7 +167,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
     Listening checks: gemini-3.5-flash (retry 502/503).
 - **Owner, 2026-11-10: "sure 4.5 is fine bc that matches the best. also, we should have absolutely no pauses in like
   the first few seconds right, bc those are the most critical? Like the other this dog has been sitting there has a
-  brief pause right in the first few seconds."** The narrator talks at ~4.5 words/s while speaking (runaway: 4.6).
+  brief pause right in the first few seconds."** (Superseded on speed: see the newer "not a target" rule; Pip's natural tempo is the reference.)
   No "..." in any line spoken in the first 5 s (Gemini turns it into a half-second stop: Dog on the Hill's L01 had
   0.53 s and L02 0.54 + 0.71 s), and the gap between opening lines stays at one breath (runaway's 0.37-0.40 s).
   `./hb pace` blocks a pause inside an opening line over 0.35 s or a gap between opening lines over 0.6 s.
@@ -198,7 +204,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   **other characters' lines are quoted by the narrator with a "said" tag by default** (Mom said, "He's just shy.");
   a second voice is allowed for at most 1-3 punchlines of 6 words or fewer, only while that character is on screen,
   very different from the narrator (other age or sex), never two extra voices of the same sex, never exposition.
-  The narrator: young male, fast and deadpan, about **4.5 words per second** (runaway is 4.4), never whispery or breathy:
+  The narrator: fast and deadpan (speed: Pip's natural tempo, see the "not a target" rule), never whispery or breathy:
   say so in the Gemini style prompt. Line 1 is the title: an absurd premise stated flatly in first person, then quick
   escalating examples, the twist, the loop. Test A vs A+ (one extra voice) on the next 4 stories.
 - **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like

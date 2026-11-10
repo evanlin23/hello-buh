@@ -340,15 +340,17 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         notes.append(f"speech rate: {nwords} words over {span:.1f} s = {wps:.2f} words/s (runaway, the benchmark: 3.47 by this count)")
         if spoken:
             swps = nwords / max(1e-6, spoken)
-            notes.append(f"speaking-time rate: {swps:.2f} words/s while talking (owner target 4.5, the top narrator channels' median)")
-            if swps < 3.8:
-                add("WARN", "pace", None, f"the narrator talks at {swps:.2f} words/s while speaking (owner target 4.5)",
-                    "a faster take ('fast, bright, energetic' in the style prompt) or atempo 1.1-1.2")
-        if wps < 2.7:
-            add("BLOCK", "pace", None, f"the narration is slow: {wps:.2f} words/s (runaway 3.47 by this count)",
-                "re-take faster (direct 'fast, energetic' in the style prompt) or atempo the takes; tighten the gaps between lines")
-        elif wps < 3.3:
-            add("WARN", "pace", None, f"the narration is slowish: {wps:.2f} words/s (runaway 3.47 by this count)", "a faster take, atempo 1.1-1.2, shorter gaps")
+            notes.append(f"speaking-time rate: {swps:.2f} words/s while talking (reference: Pip, the owner's pick, ~4.1)")
+            # owner 2026-11-10: the natural-tempo Pip beat every sped-up take ("too sped up"), so the rate is
+            # information, not a target: warn only when clearly slower than Pip, never block, never stretch takes
+            if swps < 3.3:
+                add("WARN", "pace", None, f"the narrator talks at {swps:.2f} words/s while speaking (Pip ~4.1)",
+                    "re-take with a quicker direction; never time-stretch (the owner rejected sped-up takes)")
+        # dead air is what loses viewers, and the gap and pause checks above catch it; overall rate only flags a
+        # story that is mostly silence
+        if wps < 2.3:
+            add("WARN", "pace", None, f"the narration is sparse: {wps:.2f} words/s overall (Pip's Dog on the Hill ~2.85)",
+                "tighten the gaps between lines and the holds with no voice")
 
     # ---- 5. payoff (located first: build-up runs to it)
     payoff, how = None, ""
