@@ -89,7 +89,7 @@ setup, and ~15 if slices were balanced), still renders by hand before the previe
 10. **Flaky setup: `Timeout waiting for N ticks` right after the biome search teleport** (1 in 2-3 attempts):
     each failed attempt costs 1-3 min. run.sh's retries hide it, but recording 5 took 8 min for 3 attempts. (open)
 11. **render.js swallows a failed `require` of the stunt** (`try { STUNT_MOD = require(...) } catch {}`): a broken
-    stunt file renders with no hideHand, brightness, fovZoom... silently. (open; probably what put a hand in stills 3)
+    stunt file renders with no hideHand, brightness, fovZoom... silently. FIXED on agent/agent-friendly: render.js stops (exit 2) with the error; `STUNT_OPTIONAL=1` renders without it
 12. **Twins vs one actor**: the docs say "move cast between scenes with a >64-block hop"; with one nitwit in 9
     places, a twin per place (summoned in setup, idle until its scene) was simpler and never glides. Worth a line in
     the staging lessons. (doc)

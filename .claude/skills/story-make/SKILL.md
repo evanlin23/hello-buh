@@ -52,13 +52,14 @@ old sped-up single narrator.
 - Every accident needs a visible in-game cause.
 
 ## 4. Record and check (~15 min per pass)
-`RECORD_ONLY=1 REC_CHECK_STRICT=1 STUNT=story_<name> ./run.sh` (or `hb record` / `hb check` if present).
-Fix every rec_check blocker by re-recording. Then stills / the contact sheet at every cut and line
-(`scripts/still.py`, `scripts/preview.sh`, `hb sheet`) and `story-continuity` on them. Max 4 recordings; if the
+`./hb record story_<name>` (record + rec_check, stops on blockers), then `./hb check story_<name>` (rec_check, the
+movie engine's lint, continuity, framing: seconds, no render). Fix every blocker by re-recording; give every warning
+a reason or a fix. `./hb describe story_<name> L05` reads a moment as text; then `./hb sheet story_<name>` (one frame
+per shot) and `./hb still` at anything flagged, and `story-continuity` on them (docs/agent_guide.md). Max 4 recordings; if the
 same blocker survives, log it in the run report and simplify the scene.
 
 ## 5. Render (~15 min, unattended)
-`bash scripts/render_on_actions.sh story_<name>` then `--wait`. Never render full Shorts locally (container
+`./hb render story_<name>` then `./hb render story_<name> --wait` (= `scripts/render_on_actions.sh`). Never render full Shorts locally (container
 restarts kill them). Sharpness rules apply (subject in focus, crisp textures, high-quality encode).
 
 ## 6. Review (≤ 2 rounds)
