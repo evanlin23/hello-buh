@@ -60,7 +60,7 @@ module.exports = {
     await c('/gamerule random_tick_speed 0')
     await c('/gamerule raids false')              // the drink is real (Bad Omen): never let it start a real raid
     await c('/difficulty normal')
-    try { await ctx.waitChunks({ x0: X - 100, z0: Z - 40, x1: X + 60, z1: Z + 60 }, 90000) } catch (e) { ctx.log('chunks', e.message) }
+    try { await ctx.waitChunks({ x0: X - 110, z0: Z - 70, x1: X + 60, z1: Z + 60 }, 120000) } catch (e) { ctx.log('chunks', e.message) }
     const fast = (s) => bot.chat(s)
     // the village's own life wanders through shots: the cast is ours (NoAI)
     for (const t of ['villager', 'iron_golem', 'cat', 'pillager', 'item', 'allay', 'chicken', 'pig', 'cow', 'sheep', 'horse']) await ctx.cmd(`/kill @e[type=${t},x=${X},y=${F},z=${Z},distance=..220]`, { mayFail: true })
@@ -152,6 +152,59 @@ module.exports = {
         if (d % 4 === 0) await bot.waitForTicks(2)
       }
       await bot.waitForTicks(6)
+    }
+    // --- relief (owner: superflat is the visual he flags most; audit F9): continuous natural ridges, 2-5 high, rounded,
+    // grass over the plains so the plain around the gate breaks into pieces under 60 blocks and every wide has a
+    // slope with depth behind it: east behind the raiders' road (the road climbs over it), north above the fields,
+    // west between the house and the village, and a berm behind the square (S05). Trees and mossy boulders on top
+    {
+      const H = new Map()   // "x,z" -> height over the ground there
+      const ridge = (pts, w, h0, h1, seed) => {
+        for (let i = 0; i + 1 < pts.length; i++) {
+          const [ax, az] = pts[i], [bx, bz] = pts[i + 1], L = Math.hypot(bx - ax, bz - az)
+          for (let s = 0; s <= L; s += 0.5) {
+            const cx = ax + (bx - ax) * s / L, cz = az + (bz - az) * s / L, u = (i * 97 + s) * 0.21 + seed
+            const h = h0 + (h1 - h0) * (0.5 + 0.35 * Math.sin(u) + 0.15 * Math.sin(u * 2.7 + 1))
+            const ww = w * (0.85 + 0.25 * Math.sin(u * 1.3 + 2))
+            for (let x = Math.floor(cx - ww); x <= Math.ceil(cx + ww); x++) for (let z = Math.floor(cz - ww); z <= Math.ceil(cz + ww); z++) {
+              const d = Math.hypot(x + 0.5 - cx, z + 0.5 - cz) / ww
+              if (d > 1) continue
+              const v = Math.max(d < 0.45 ? 1 : 0, Math.round(h * (1 - d * d)))   // the crest is never below 1: no gaps
+              const k = `${x},${z}`
+              if (v > (H.get(k) || 0)) H.set(k, v)
+            }
+          }
+        }
+      }
+      ridge([[34, -62], [31, -40], [35, -20], [32, -2], [35, 14], [33, 26]], 5, 2, 5, 1)    // east, behind the road
+      ridge([[2, -25], [12, -23], [22, -26], [33, -24]], 4, 1.5, 3.5, 4)                       // north, above the fields
+      ridge([[-28, -48], [-30, -30], [-27, -14], [-29, 2], [-27, 20]], 4, 2, 4, 7)              // west, house | village
+      ridge([[-102, -16], [-88, -13], [-74, -15], [-60, -12], [-46, -14], [-30, -12]], 4, 1.5, 4, 9)   // behind the square
+      const keep = /^(air|cave_air|short_grass|tall_grass|fern|large_fern|poppy|dandelion|cornflower|oxeye_daisy|azure_bluet|allium|wheat|carrots|potatoes|beetroots|snow|oak_leaves)$/   // (oak_leaves: the road hedge, which the east ridge takes over)
+      let n = 0
+      for (const [k, h] of H) {
+        const [x, z] = k.split(',').map(Number), g = groundAt(x, z)
+        let free = true   // never into a building, the palisade, a crop row's farmland edge or the road's own blocks
+        for (let y = g + 1; y <= g + h + 1; y++) { const b = bot.blockAt(new ctx.Vec3(X + x, F + y, Z + z)); if (b && !keep.test(b.name)) { free = false; break } }
+        const top = bot.blockAt(new ctx.Vec3(X + x, F + g, Z + z))
+        if (!free || !top) continue
+        const path = top.name === 'dirt_path', farm = top.name === 'farmland'
+        if (farm) continue
+        fast(`/fill ${A(x, g, z)} ${A(x, g + h - 1, z)} dirt`)
+        fast(`/setblock ${A(x, g + h, z)} ${path ? 'dirt_path' : 'grass_block'}`)
+        fast(`/fill ${A(x, g + h + 1, z)} ${A(x, g + h + 2, z)} air`)
+        if (++n % 120 === 0) await bot.waitForTicks(2)
+      }
+      await bot.waitForTicks(10)
+      // trees and boulders on the crests (the same spots every recording)
+      for (const [x, z, f] of [[33, -44, 'oak'], [35, -12, 'birch'], [32, 6, 'oak'], [18, -25, 'oak'], [-29, -34, 'birch'], [-28, 8, 'oak'], [-80, -14, 'oak'], [-55, -13, 'birch']]) {
+        await ctx.cmd(`/place feature minecraft:${f} ${A(x, groundAt(x, z) + 1, z)}`, { mayFail: true })
+      }
+      for (const [x, z] of [[30, -30], [36, 0], [8, -24], [-26, -22], [-31, 12], [-66, -11]]) {
+        const g = groundAt(x, z)
+        fast(`/fill ${A(x, g + 1, z)} ${A(x + 1, g + 1, z + 1)} mossy_cobblestone`); fast(`/setblock ${A(x, g + 2, z)} cobblestone`); fast(`/setblock ${A(x + 1, g + 1, z - 1)} andesite`)
+      }
+      ctx.log('relief', `${n} columns raised`)
     }
     for (const dz of [-2, 3]) { const g = groundAt(12, dz); await c(`/fill ${A(12, g + 1, dz)} ${A(12, g + 2, dz)} spruce_fence`); await c(`/setblock ${A(12, g + 3, dz)} lantern`) }   // the raiders lit as they reach the fields (audit F7)
     // --- the tower on the hill: the vanilla watchtower template on the plateau's bluff, without its banners
@@ -597,7 +650,7 @@ module.exports.shots = {
   // S13 (the reveal, after L12's POV drink): over the boy's right shoulder through the gate, up the road: the raiders
   // centre, Grandpa steps in at frame right and turns to him
   s13: { at: [-2.2, 2.9, 1.6], look: [14, 2.4, 1.8], fov: 54, push: 0.12, dof: false },
-  s10b: { at: [-7.2, 3.9, -12.3], look: [-10.3, 3.65, -12.5], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GB}`, offset: [0, 1.4, 0] } } }
+  s10b: { at: [-7.4, 3.9, -13.7], look: [-10.3, 3.65, -12.6], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GB}`, offset: [0, 1.4, 0] } } }
 }
 
 module.exports.ROAD = ROAD
