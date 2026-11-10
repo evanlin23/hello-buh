@@ -89,7 +89,8 @@
   {
    "id": "L07",
    "text": "And there's / this DOG. / Wherever / I go... / it's ALREADY / there!",
-   "request": "n1"
+   "request": "n1",
+   "look": false
   },
   {
    "id": "L08",

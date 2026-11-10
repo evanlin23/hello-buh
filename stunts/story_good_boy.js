@@ -78,6 +78,9 @@ module.exports = {
     for (const [dx, dz] of [[32, 20], [40, 27], [32, 28]]) await c(`/setblock ${A(dx, 1, dz)} flowering_azalea`)
     await c(`/setblock ${A(38, 1, 19)} barrel[facing=up]`); await c(`/setblock ${A(39, 1, 19)} hay_block`)
     await c(`/place feature minecraft:fancy_oak ${A(31, 1, 31)}`); await c(`/place feature minecraft:oak ${A(43, 1, 31)}`)
+    for (const [f, dx, dz] of [['birch', 46, 10], ['oak', 27, 9], ['fancy_oak', 47, 22], ['birch', 26, 30]]) await c(`/place feature minecraft:${f} ${A(dx, 1, dz)}`)
+    for (const [dx, dz] of [[31, 15], [42, 21], [41, 13], [32, 25]]) await c(`/setblock ${A(dx, 1, dz)} azalea`)
+    for (const [dx, dz] of [[44, 14], [45, 15], [28, 20], [28, 21]]) await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} mossy_cobblestone`)
     // the village farms are wheat (the narrator runs through it)
     // a wheat field west of the yard (this village has no farms): farmland on the natural ground, a water channel
     for (let dx = 12; dx <= 27; dx++) for (let dz = 15; dz <= 27; dz++) {
@@ -233,26 +236,25 @@ module.exports = {
       look(k)
     })
 
-    // L08: dusk, at the shut door: I push at it. L09: "Door's OPEN, buddy!" He opens it
-    K.self({ sitting: false }, EYE)
+    // L08: dusk, sitting at the shut door looking up at it (no bump: the owner's "stuck on the door"); after the line
+    // he opens it from inside (no line: narrator-first) and I trot in
+    K.self({ sitting: true }, SIT_EYE)
     await putGuy(36.5, 22.2, 180, 30)
-    await K.cut(36.5, 18.6, P(36.5, eyeY(1.0), 21.0), H + 1, { time: DUSK })
+    await K.cut(36.5, 18.4, P(36.5, eyeY(1.4), 20.6), H + 1, { time: DUSK })
     K.shot('pov')
-    K.go(true)
     looking = K.base
-    // he hears me and opens it (no line: narrator-first, owner 2026-11-10), and I trot in
-    const opensAt = K.T('L08') - 18
+    const opensAt = K.T('L08') + 2
     await line('L08', async (k) => {
-      if (k === 6) K.go(false); if (k === 12) K.go(true); if (k === 18) K.go(false)
       if (k === opensAt) {
         this.cast[GUY].swingArm('right')
         say(`/setblock ${X + 36} ${Y + 2} ${Z + 20} spruce_door[half=upper,facing=north,open=true]`); say(`/setblock ${X + 36} ${Y + 1} ${Z + 20} spruce_door[half=lower,facing=north,open=true]`)
         ctx.sound('block.wooden_door.open', 0.8, 1)
       }
-      if (k > opensAt) { K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), (k - opensAt) / 8) }
-      if (k > opensAt + 6) { K.go(true); guy.z = Math.min(23.4, guy.z + 0.05); placeGuy() }
-      look(k)
-    }, 0.3)
+      if (k === opensAt + 4) K.self({ sitting: false }, EYE)
+      if (k > opensAt) K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), (k - opensAt) / 8)
+      if (k > opensAt + 8) { K.go(true); guy.z = Math.min(23.4, guy.z + 0.05); placeGuy() }
+      look(k, 0, Math.sin(k / 6) * 0.03)
+    }, 1.2)
     K.stop()
 
     K.self({ sitting: false }, EYE)
@@ -390,12 +392,12 @@ module.exports.shots = {
   // the cottage, the sea behind, the man, and his "dog" beside him
   est: { dof: false, path: [[0, 24, H + 13, 4], [3.6, 31.5, H + 3.6, 11.5]], lookPath: [[0, 37, H + 1.0, 16], [3.6, 37, H + 1.4, 15.2]], ease: true },
   // L09: walking the road beside him: a follow ahead of them and low (they walk east, toward it)
-  dog_walk: { follow: `actor:${GUY}`, offset: [4.0, 0.25, 2.4], look: { of: `actor:${GUY}`, offset: [0.2, -0.9, 0.7] }, lag: 2, fov: 50 },
+  dog_walk: { follow: `actor:${GUY}`, offset: [3.6, 0.05, 2.6], look: { of: `actor:${GUY}`, offset: [0.0, -0.55, 0.6] }, lag: 2, fov: 52 },
   // L09: on the yard's sea edge, sitting there already as he walks up (from the south-east, the sea behind them)
-  dog_sea: { at: [42.2, H + 2.0, 20.6], look: [40.4, H + 1.0, 15.6], fov: 46, push: 0.3, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -1.1, 0] } } },
+  dog_sea: { at: [42.4, H + 1.3, 21.0], look: [39.6, H + 1.5, 15.0], fov: 46, push: 0.3, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -1.1, 0] } } },
   // L14-L15: night, the yard from its south-west corner: the road, the zombie walking in, the man and the wolf
-  night_yard: { at: [32.4, H + 2.7, 18.8], look: [38.2, H + 1.4, 13.6], fov: 52, push: 0.35, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } },
+  night_yard: { at: [33.4, H + 1.5, 19.2], look: [37.6, H + 1.9, 11.0], fov: 56, push: 0.35, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } },
   // L18-L19: the reveal. From the narrator's eye (sitting, looking up at him) back and out to a low three-quarter
   // shot of the wolf at his feet, then up into a crane over the yard, the village and the sea as the night turns
-  reveal: { path: [[0, 37.5, H + 1.5, 16.2], [0.45, 36.6, H + 1.6, 17.5], [1.2, 35.4, H + 1.75, 18.4], [2.6, 35.0, H + 2.2, 18.6]], lookPath: [[0, 38.7, H + 2.3, 16.2], [0.45, 38.0, H + 1.5, 16.2], [1.2, 37.8, H + 1.3, 16.1], [2.6, 37.8, H + 1.3, 16.1]], ease: true, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } }
+  reveal: { path: [[0, 37.5, H + 1.5, 16.2], [0.45, 36.6, H + 1.6, 17.5], [1.2, 35.4, H + 1.75, 18.4], [2.6, 35.2, H + 1.5, 18.2]], lookPath: [[0, 38.7, H + 2.3, 16.2], [0.45, 38.0, H + 1.5, 16.2], [1.2, 37.8, H + 1.5, 16.0], [2.6, 38.2, H + 1.9, 15.6]], ease: true, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } }
 }
