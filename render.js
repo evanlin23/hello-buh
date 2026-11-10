@@ -890,12 +890,13 @@ const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
   for (const e of rec.timeline || []) {
     if (e.event === 'pose') {
       const fl = {}; if (e.creepy) fl.creepy = true; if (e.standing) fl.standing = true
+      if (e.sleep) fl.sleep = true; if (e.shake) fl.shake = true   // any mob lying asleep; a villager shaking its head no (entities.js)
       if (Object.keys(fl).length) for (const id of e.ids || []) { const run = [e.t / 50, Infinity, fl]; if (!STAGED.has(id)) STAGED.set(id, []); STAGED.get(id).push(run); open.set(id, run) }
       // { pose: 'wave' | ['sit', 'drink'], ...params }, or the flags sit / drink / use (ground: sit on the floor)
       const names = [].concat(e.pose || [])
       if (e.sit) names.push(e.ground ? 'sit_ground' : 'sit')
       if (e.drink) names.push('drink'); else if (e.use) names.push('use')
-      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, ...params } = e
+      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, shake: _sh, ...params } = e
       const ap = names.filter(n => { if (POSES.POSES[n]) return true; console.log(`pose mark at tick ${e.t / 50}: no pose '${n}' in renderer/poses.js (${POSES.POSE_NAMES.join(', ')})`); return false }).map(name => ({ name, ...params }))
       if (ap.length) for (const id of e.ids || []) { if (openA.has(id)) openA.get(id)[1] = e.t / 50; const run = [e.t / 50, Infinity, ap]; if (!ACT_POSE.has(id)) ACT_POSE.set(id, []); ACT_POSE.get(id).push(run); openA.set(id, run) }
       for (const k of ['emerge', 'dig']) if (e[k]) for (const id of e.ids || []) { if (!WARDEN_ANIM.has(id)) WARDEN_ANIM.set(id, []); WARDEN_ANIM.get(id).push([e.t / 50, e.t / 50 + (k === 'emerge' ? 134 : 100), k]) }
@@ -992,6 +993,21 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
 // Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
 // time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
 const LINES = []
+// Heads that turn to look (docs/engine_features.md "Life"): `look_at` marks { ids, at: NAME | id | [dx, dy, dz] from the
+// set origin } until a `look_at_off` for those ids (lib/movie.js M.lookAt), and stunt.lookAtSpeaker (true, or the range
+// in blocks, default 10): while someone speaks a line, everyone else in range turns their head to them.
+const LOOK_AT = new Map()   // id -> [[a, b, at]]
+{
+  const open = new Map()
+  for (const e of rec.timeline || []) {
+    if (e.event !== 'look_at' && e.event !== 'look_at_off') continue
+    for (const id of e.ids || []) {
+      if (open.has(id)) { open.get(id)[1] = e.t / 50; open.delete(id) }
+      if (e.event === 'look_at') { const run = [e.t / 50, Infinity, e.at]; if (!LOOK_AT.has(id)) LOOK_AT.set(id, []); LOOK_AT.get(id).push(run); open.set(id, run) }
+    }
+  }
+}
+const SPEAKER_RANGE = STUNT_MOD.lookAtSpeaker ? (typeof STUNT_MOD.lookAtSpeaker === 'number' ? STUNT_MOD.lookAtSpeaker : 10) : 0
 {
   const ls = (rec.timeline || []).filter(e => e.event === 'line').map(e => ({ who: e.who, t0: e.t / 50, text: e.text || '', dur: e.dur })).sort((a, b) => a.t0 - b.t0)
   ls.forEach((l, k) => {
@@ -2541,6 +2557,47 @@ else:
         const still = a && b ? Math.max(0, 1 - Math.hypot(a.x - b.x, a.z - b.z) * 2) : 1
         const n = idleNoise(e.id, t)
         e.headYaw += n[0] * 0.2 * still; e.pitch = (e.pitch || 0) + n[1] * 0.09 * still
+      }
+    }
+    // turning to look (LOOK_AT marks, stunt.lookAtSpeaker): the head eases to the target over 8 ticks (the body follows
+    // past 75 degrees, BodyRotationControl in entities.js) and back over 8 after
+    if (LOOK_AT.size || SPEAKER_RANGE) {
+      const nameOf = (e) => (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user) || null
+      const headOf = (e) => ({ x: e.x, y: e.y + (ENT_H[e.name] || 1.8) * 0.85, z: e.z })
+      const find = (at) => {
+        if (Array.isArray(at)) return rec.set ? { x: rec.set.x + at[0], y: rec.set.y + at[1], z: rec.set.z + at[2] } : null
+        if (typeof at === 'number') { const o = ents.find(x => x.id === at); return o ? headOf(o) : null }
+        if (at && SELF_NAME && at === SELF_NAME) return { x: eye.x, y: eye.y, z: eye.z }
+        const o = at && ents.find(x => nameOf(x) === at); return o ? headOf(o) : null
+      }
+      for (const e of ents) {
+        if (e.headYaw === null || e.headYaw === undefined) continue
+        let tgt = null, w = 0
+        const run = LOOK_AT.has(e.id) && LOOK_AT.get(e.id).find(([a, b]) => t >= a && t < b + 8)
+        if (run) { tgt = find(run[2]); w = Math.min(1, (t - run[0]) / 8, run[1] === Infinity ? 1 : (run[1] + 8 - t) / 8) }
+        if (!tgt && SPEAKER_RANGE) {
+          const me = nameOf(e), l = LINES.find(x => x.who && x.who !== me && t >= x.t0 && t < x.t1 + 8)
+          if (l) {
+            const p = find(l.who), h = headOf(e)
+            if (p && Math.hypot(p.x - h.x, p.z - h.z) <= SPEAKER_RANGE) { tgt = p; w = Math.min(1, (t - l.t0) / 8, (l.t1 + 8 - t) / 8) }
+          }
+        }
+        if (!tgt || w <= 0) continue
+        const h = headOf(e), dx = tgt.x - h.x, dy = tgt.y - h.y, dz = tgt.z - h.z
+        if (Math.hypot(dx, dz) < 0.3) continue
+        const k = w * w * (3 - 2 * w), yaw = Math.atan2(-dx, -dz), pitch = Math.atan2(dy, Math.hypot(dx, dz))
+        let d = yaw - e.headYaw; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI
+        e.headYaw += d * k; e.pitch = (e.pitch || 0) + (pitch - (e.pitch || 0)) * k
+      }
+    }
+    // optional name tags (stunt.nameTags: true for every actor and named mob, or a list of names): always drawn over
+    // the head, as vanilla does for players and CustomNameVisible mobs (the nameplate loop below draws them)
+    if (STUNT_MOD.nameTags) {
+      const only = Array.isArray(STUNT_MOD.nameTags) ? STUNT_MOD.nameTags : null
+      for (const e of ents) {
+        const nm = (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user)
+        if (!nm || (only && !only.includes(nm))) continue
+        e.extra = { ...(e.extra || {}), name: nm, nameVisible: true }
       }
     }
     for (const e of ents) {

@@ -7,6 +7,7 @@
 //   node scripts/pose_fixture.js --staged              # + sit, drink, off-hand, warden emerge, lit campfire
 //   ./hb still _poses_test tick:5 tick:40 --out /tmp/x # render it (stunts/_poses_test.js reads it)
 //
+// --life (with --stunt _life_test): villagers asleep / shaking their heads, a line spoken (heads turn), a look_at mark.
 // --stunt NAME the stunt module the recording names (default _poses_test; _light_test has a fog sea and a moon phase).
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
 // Light tests (look.smoothLight): --time N (the time of day, e.g. 18000 midnight), --lights (the Girl holds a lantern,
@@ -71,5 +72,12 @@ if (args.includes('--lights')) for (const e of out.entities) { if (e[1] === 9003
 if (opt('bolt')) { const [bx, by, bz] = at(10, -3); out.timeline.push({ t: Number(opt('bolt')) * 50, event: 'lightning', x: bx, y: by, z: bz, ticks: 6 }) }
 if (args.includes('--sunset')) for (let t = 1; t < N; t++) out.timeline.push({ t: t * 50, event: 'time', time: Math.round(12000 + 1800 * t / (N - 1)) })
 if (args.includes('--whip')) out.poses.forEach((p, t) => { p[4] = +(p[4] + 0.25 * Math.min(10, Math.max(0, t - 20))).toFixed(5) })   // a whip pan: 0.25 rad a tick over ticks 20-30
+if (args.includes('--life')) {   // villagers: one asleep, one shaking its head, one watching; the Girl speaks over ticks 10-40, the Boy looks at the warden
+  const vs = [[9200, 5.5, -3.2, {}], [9201, 2, 1.6, {}], [9202, 3, 3.2, {}]]
+  for (const [id, ahead, right] of vs) { const [x, y, z] = at(ahead, right); for (let t = 0; t < N; t++) out.entities.push([t, id, 'villager', +x.toFixed(3), y, +z.toFixed(3), +(faceCam + 1.2).toFixed(4), 0, +(faceCam + 1.2).toFixed(4), { type: 2, profession: 5 }]) }
+  out.timeline.push({ t: 0, event: 'pose', ids: [9201], sleep: true }, { t: 0, event: 'pose', ids: [9202], shake: true })
+  out.timeline.push({ t: 10 * 50, event: 'line', who: 'Girl', text: 'Did everyone hear that? Something is under the well.', dur: 1.5 })
+  out.timeline.push({ t: 5 * 50, event: 'look_at', ids: [9002], at: 9100 })
+}
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)

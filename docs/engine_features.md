@@ -147,6 +147,22 @@ a big jump resets it, and a single `./hb still` shows none (give it two consecut
 second is blurred). Moving mobs aren't blurred (camera motion only). Test: `node scripts/pose_fixture.js --staged
 --whip`. Off unless the look asks.
 
+## Life: heads that turn, sleeping and head-shaking mobs, name tags
+- **Look at the speaker**: `stunt.lookAtSpeaker: true` (or a range in blocks, default 10): while a `line` mark's speaker
+  talks (lib/movie.js `M.line`/`M.say`), every other actor and mob within range eases its head to them over 8 ticks
+  and back 8 ticks after the line; past 75 degrees the body follows (BodyRotationControl). The narrator (`selfName`)
+  counts as a speaker at the camera's eye.
+- **Look at a mark**: `M.headTo(ctx, who, at)` ... `M.headOff(ctx, who)` (marks `look_at` / `look_at_off`): `at` is an
+  actor's name, an entity id or `[dx, dy, dz]` from the set origin. Renderer-side, so no-AI mobs turn too.
+- **Asleep**: `ctx.mark('pose', { ids: [id], sleep: true })` ... `pose_off`: any mob lies on its side on the floor
+  (Pose.SLEEPING; player actors have the `lie` pose). **Shaking its head no**: `{ shake: true }` (VillagerModel's
+  unhappy head shake, zRot 0.3 sin(0.45 age)) on any mob with a head.
+- Vanilla villagers have no work or panic animation (a panicking villager just runs: record it running), and mob
+  idle variety is `stunt.idleLife` (a slow look-around, docs/movie_engine.md).
+- **Name tags**: `stunt.nameTags: true` (every actor and named mob) or a list of names draws the vanilla nameplate
+  over their heads (EntityRenderer.renderNameTag, 0.5 above the hitbox), as CustomNameVisible does.
+Test: `node scripts/pose_fixture.js --stunt _life_test --life` (stunts/_life_test.js).
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.
