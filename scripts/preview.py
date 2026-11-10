@@ -225,7 +225,7 @@ def marks_for(plan):
         if F is not None:
             groups.append((f"PAYOFF {pay}", clip([F - 12, F - 3, F, F + 3, F + 12, F + 30])))
     groups.append(("LAST SECOND", clip([plan.total - 60, plan.total - 48, plan.total - 36, plan.total - 24, plan.total - 12, plan.total - 1])))
-    return [(g, fs) for g, fs in groups if fs]
+    return sorted(((g, fs) for g, fs in groups if fs), key=lambda x: x[1][0])   # in Short order
 
 
 def nearest_mark(plan, F):
@@ -390,10 +390,12 @@ def main():
     run(["python3", "edit.py", "--frames", str(frames / "f%05d.png"), "--fps", str(FPS), "--out_fps", str(FPS),
          "--timeline", str(rec_path), "--audio", str(audio), *eargs, "--preview", "--out", str(edit60)])
     t_edit = time.time() - t
-    got = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(edit60)],
-                               capture_output=True, text=True).stdout)
-    if abs(got - plan.total / FPS) > 1.5 / FPS:
-        print(f"WARNING: the edit is {got:.3f}s but the plan says {plan.total / FPS:.3f}s: sheet frames may be off")
+    nf = int(subprocess.run(["ffprobe", "-v", "error", "-count_frames", "-select_streams", "v", "-show_entries", "stream=nb_read_frames",
+                             "-of", "csv=p=0", str(edit60)], capture_output=True, text=True).stdout)
+    got = nf / FPS
+    if not plan.total <= nf <= plan.total + 1:   # (edit.loop's dissolve can add one frame at the very end)
+        print(f"WARNING: the edit has {nf} frames but the plan says {plan.total}: preview/sheet frames may not be the rendered ones "
+              "(edit.py's timing changed? run scripts/preview_selftest.py)")
     out = outdir / "preview.mp4"
     run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(edit60), "-vf", f"select='not(mod(n\\,{stride}))',setpts=N/{P}/TB,scale={pw}:-2", "-r", str(P), "-c:v", "libx264", "-preset", "veryfast",
          "-crf", "23", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(out)])
