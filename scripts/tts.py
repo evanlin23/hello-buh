@@ -161,10 +161,12 @@ def cut(x, texts):
 
 
 def cut_words(x, texts):
-    """Cut with Whisper's help: it transcribes the take with word times (scripts/align.py's model), and where the
-    first word of a line is heard as written, the cut must fall in the pause just before that word. The cut itself
-    still goes in a real pause (cut_pauses), so Whisper's loose word ends (they swallow the pause after a word) don't
-    clip anything, and a line Whisper missed (it dropped a lone "Sit.") is placed by the pauses alone."""
+    """Cut with Whisper's help: it transcribes the take with word times (scripts/align.py's model) and the script is
+    matched to what it heard, which says roughly where each boundary is: between the line's last word heard and the
+    next line's first. Whisper's times are loose (a word end swallows the pause after it, a start lands up to ~0.3 s
+    late), so the boundary is searched in a window around them and placed by the audio (quiet_point); the edges are
+    then cut by the safe-cut rules (edges_at). A boundary Whisper can't place (it dropped a lone "Sit.") sends the
+    whole take to the pauses (cut_pauses, with the first words heard as hints)."""
     sys.path.insert(0, str(ROOT / "scripts"))
     import difflib
     import align
@@ -186,10 +188,134 @@ def cut_words(x, texts):
             if j in m and len(a[j]) > 1:
                 return heard[m[j]][1], 0.3 + 0.4 * (j - first[i])   # a later word: the line starts up to ~0.4 s/word before it
         return None
-    hints = [hint(i) for i in range(1, len(texts))]
-    if not any(h is not None for h in hints):
-        raise ValueError("no line's first word was heard as written")
-    return cut_pauses(x, texts, hints)
+
+    def boundary(i):   # (heard index of line i-1's last word, of line i's first word), or None
+        lw = next((m[j] + (ends[i - 1] - 1 - j) for j in range(ends[i - 1] - 1, first[i - 1] - 1, -1) if j in m), None)
+        fw = next((m[j] - (j - first[i]) for j in range(first[i], ends[i]) if j in m), None)
+        if lw is None and fw is None:
+            return None
+        lw = fw - 1 if lw is None else lw
+        fw = lw + 1 if fw is None else fw
+        lw, fw = min(lw, fw - 1), max(fw, lw + 1)   # (a word guessed from the matched ones: keep them in order)
+        return (lw, fw) if 0 <= lw and fw < len(heard) else None
+    bds = [boundary(i) for i in range(1, len(texts))]
+    if None in bds:
+        hints = [hint(i) for i in range(1, len(texts))]
+        if not any(h is not None for h in hints):
+            raise ValueError("no line's first word was heard as written")
+        print("  (Whisper didn't hear every line's edge: cutting at the pauses, its first words as hints)")
+        return cut_pauses(x, texts, hints)
+    # the window (claude/cinematic-default's resplit, which left Good Boy's Pip take with 0 cut edges): from just
+    # before the last word's heard end (or 0.1 s into it) to 0.3 s past the next line's heard start (or 0.1 s past
+    # the word end), but never past that first word's own end
+    qs = []
+    for lw, fw in bds:
+        lw = fw - 1   # words heard between the lines but in neither (a direction read aloud) stay with the line before:
+        #               the boundary is the pause before the next line's first word, never inside them
+        t0 = min(heard[lw][2] - 0.05, heard[lw][1] + 0.1)
+        t1 = min(max(heard[fw][1] + 0.3, heard[lw][2] + 0.1), max(heard[fw][2], heard[lw][2] + 0.1))
+        qs.append(quiet_point(x, t0, t1))
+    if any(q2 <= q1 for q1, q2 in zip(qs, qs[1:])):
+        raise ValueError("boundaries out of order")
+    return edges_at(x, qs)
+
+
+def quiet_point(x, t0, t1, fr=240):
+    """The sample to cut at between t0 and t1 s (claude/cinematic-default's resplit rule): among the 10 ms frames
+    within 6 dB of the quietest, the one nearest the middle (the quietest alone was once the soft "s" starting the next
+    word: "Skeletons" heard as "Gelatin's"); and only frames in a run of 40 ms or more of them when there is one: a
+    pause, not a stop consonant's closure inside a word ("zom-b-ies": the middle was the "b", and the cut clipped
+    "-ies" and "I" at the head of the next line)."""
+    i0, i1 = max(0, int(t0 * SR)), min(len(x), int(t1 * SR))
+    if i1 - i0 < 2 * fr:
+        return (i0 + i1) // 2
+    db = frame_db(x[i0:i1], fr)
+    q = db <= db.min() + 6
+    keep, i = np.zeros(len(q), bool), 0
+    while i < len(q):
+        j = i
+        while j < len(q) and q[j]:
+            j += 1
+        keep[i:j] = j - i >= 4
+        i = max(j, i + 1)
+    ok = np.nonzero(keep if keep.any() else q)[0]
+    k = int(ok[np.argmin(np.abs(ok - (len(db) - 1) / 2))])
+    return i0 + k * fr + fr // 2
+
+
+def edges_at(x, qs):
+    """Cut a take at the boundary samples qs into len(qs) + 1 lines by the safe-cut rules (owner, 2026-11-10: "the
+    voices seem to be edited in a way that cuts stuff off"): from each boundary, the neighbours' last and first sound
+    are found by level (soft_floor: 45 dB under the take's loud frames), so breaths and word tails count as sound;
+    a line keeps 80-350 ms before its first sound and 200-450 ms after its last, never past the neighbour's own sound,
+    and each edge is the boundary itself when it lies in that range, else the quiet point of the range; in a pause too
+    short for the margins both lines meet, 200/280 of it going to the tail; lines said with no silence between them
+    meet at the boundary. 15 ms fades; the take's first/last line padded with silence if the take itself is tight."""
+    fr = 240
+    db = frame_db(x, fr)
+    floor = soft_floor(db)
+    n = len(db)
+    loud = np.nonzero(db > floor)[0]
+    if not len(loud):
+        return [x.copy() for _ in range(len(qs) + 1)]
+    pre, post, br, tl = (int(v * SR / fr) for v in (PRE_MIN, POST_MIN, BREATH, TAIL))
+    qf = [min(n - 1, q // fr) for q in qs]
+
+    def off_on(f):   # the last sound before boundary frame f and the first after it (frame indices)
+        a = f
+        while a > 0 and db[a - 1] <= floor:
+            a -= 1
+        b = f if db[f] > floor else f + 1
+        while b < n and db[b] <= floor:
+            b += 1
+        return (a, b) if db[f] <= floor else (f, f)
+
+    bd = [off_on(f) for f in qf]
+
+    def split(off, on, q):   # a pause too short for both margins: both lines meet in it, the tail getting 200/280 of
+        #                      it (a cut-off tail was the owner's complaint); no silence at all: at the quiet point
+        return (off * fr + (on - off) * fr * post // (pre + post)) if on > off else q
+    starts, stops = [], []
+    for i in range(len(qs) + 1):
+        if i == 0:   # the take's first sound
+            on, prev_off, q0 = int(loud[0]), 0, None
+        else:
+            prev_off, on = bd[i - 1]; q0 = qs[i - 1]
+        lo, hi = max(prev_off, on - br), on - pre
+        if hi >= lo:
+            s = q0 if q0 is not None and lo * fr <= q0 <= hi * fr else quiet_point(x, lo * fr / SR, hi * fr / SR)
+        else:
+            s = split(prev_off, on, q0) if q0 is not None else 0
+        if i == len(qs):   # the take's last sound
+            off, next_on, q1 = int(loud[-1]) + 1, n, None
+        else:
+            off, next_on = bd[i]; q1 = qs[i]
+        lo, hi = off + post, min(next_on, off + tl)
+        if hi >= lo:
+            e = q1 if q1 is not None and lo * fr <= q1 <= hi * fr else quiet_point(x, lo * fr / SR, hi * fr / SR)
+        else:
+            e = split(off, next_on, q1) if q1 is not None else len(x)
+        starts.append(max(0, s)); stops.append(min(len(x), e))
+    ys = [fade(x[a:b].copy()) for a, b in zip(starts, stops)]
+    # a take that starts or ends too close to its sound: pad the first/last line with silence to the margin (the
+    # sound judged against the line's own peak, as speaker_check's EDGE/TIGHT test does: a quiet line's soft tail counts)
+    for i, end in ((0, False), (len(ys) - 1, True)):
+        yd = frame_db(ys[i], fr)
+        if not len(yd):
+            continue
+        snd = np.nonzero(yd > yd.max() - 45)[0]
+        pad = int(POST_MIN * SR) - (len(ys[i]) - (snd[-1] + 1) * fr) if end else int(PRE_MIN * SR) - snd[0] * fr
+        if pad > 0:
+            z = np.zeros(pad, np.float32)
+            ys[i] = np.concatenate([ys[i], z] if end else [z, ys[i]])
+    return ys
+
+
+def fade(y):
+    f = min(len(y) // 4, int(FADE * SR))
+    if f:
+        y[:f] *= np.linspace(0, 1, f); y[-f:] *= np.linspace(1, 0, f)
+    return y
 
 
 def cut_pauses(x, texts, hints=None):
@@ -252,8 +378,8 @@ def soft_floor(db):
 def padded(x, segs, k, e):
     """Line = speech stretches k..e and the quiet around them, cut safely (owner, 2026-11-10: "the voices seem to be
     edited in a way that cuts stuff off"): the line's first and last sound are found by level, not by the speech gate
-    (which misses soft consonants, breaths and word tails), then each edge is cut at the quietest 10 ms (the energy
-    valley) of the pause, keeping 80-350 ms before the first sound and 200-450 ms after the last, never past the
+    (which misses soft consonants, breaths and word tails), then each edge is cut at the pause's quiet point
+    (quiet_point), keeping 80-350 ms before the first sound and 200-450 ms after the last, never past the
     neighbour's own first/last sound, with a 15 ms fade."""
     fr = 240
     db = frame_db(x, fr)
@@ -272,13 +398,11 @@ def padded(x, segs, k, e):
             f += 1
         return f + 1
 
-    def valley(lo, hi):
+    def valley(lo, hi):   # the quiet point of frames lo..hi (quiet_point: within 6 dB of the quietest, nearest the middle)
         lo, hi = max(0, int(lo)), min(n, int(hi))
         if hi <= lo:
             return lo
-        q = db[lo:hi]
-        quiet = np.nonzero(q <= q.min() + 1.0)[0]   # the quietest frames: cut in the middle of their run
-        return lo + int(np.median(quiet))
+        return min(hi - 1, quiet_point(x, lo * fr / SR, hi * fr / SR) // fr)
 
     on, off = onset(segs[k][0] + 1200), offset(segs[e][1] - 2400)   # undo speech_segments' own padding
     prev_off = offset(segs[k - 1][1] - 2400) if k else 0
@@ -288,11 +412,7 @@ def padded(x, segs, k, e):
     a = valley(lo, on - pre) if on - pre > lo else valley(prev_off, on) if on > prev_off else on - pre
     hi = min(next_on, off + tl)
     b = valley(off + post, hi) + 1 if hi > off + post else valley(off, next_on) + 1 if next_on > off else off + post
-    y = x[max(0, a * fr):min(len(x), b * fr)].copy()
-    f = min(len(y) // 4, int(FADE * SR))
-    if f:
-        y[:f] *= np.linspace(0, 1, f); y[-f:] *= np.linspace(1, 0, f)
-    return y
+    return fade(x[max(0, a * fr):min(len(x), b * fr)].copy())
 
 
 def cap_pauses(y, cap, keep=0.06, xf=0.03):
