@@ -49,7 +49,7 @@ module.exports = {
   idleLife: true,
   look: { grade: { lift: [0.02, 0.012, 0.02], gamma: [0.98, 1.0, 1.03], gain: [1.1, 1.0, 0.9], sat: 1.08, contrast: 0.12, exposure: 1.04 }, bloom: 0, bloomThreshold: 0.72, vignette: 0.36, grain: 0, dof: { aperture: 0.7 }, shadows: true, rays: 0.4, cloudNight: 0.42 },
   shots: {},   // below (module.exports.shots)
-  edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['payoff'] },
+  edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['raidbar'] },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -180,11 +180,10 @@ module.exports = {
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F }, { warm: null })
     const { look, say } = K
-    // pacing (story.json): lines[].after evens the silence between lines to ~0.28 s; L12's hold is the horn beat
+    // pacing: the kit's gap (0.08 s); the reveal's hold after L12 (story.json reveal.hold): the horn, the bar, Grandpa
     const SJ = JSON.parse(fs.readFileSync(path.join(STORY, 'story.json'), 'utf8'))
-    const AFTER = Object.fromEntries(SJ.lines.map(l => [l.id, l.after || 0]))
-    const HOLD = (SJ.lines.find(l => l.id === 'L12') || {}).hold ?? 1.8
-    const line = (id, fn, extra = 0, o) => K.line(id, fn, extra + (AFTER[id] || 0), o)
+    const HOLD = (SJ.reveal || {}).hold ?? 2.1
+    const line = (id, fn, extra = 0, o) => K.line(id, fn, extra, o)
     const P = (dx, dy, dz) => new ctx.Vec3(X + dx, F + dy, Z + dz)
     const gy = (dx, dz) => ground(ctx, X + dx, Z + dz) + 1 - F           // feet height (from F) at a spot
     const cutG = (dx, dz, target, o) => K.cut(dx, dz, target, gy(dx, dz), o)
@@ -220,9 +219,9 @@ module.exports = {
     await bot.waitForTicks(6)
     await shot('s01', -10.5, -5.5, P(-10, 3, -12), TIMES.S01)
     await line('L01', async (k, at) => {
-      if (k === at(2) - 3) swing(GA)
-      if (k === at(2)) { frameItem('f31', 'totem_of_undying'); hold(GA, 'air'); sound('entity.item_frame.add_item', 1, 1) }
-      if (k > at(2) + 4) { G[GA].yaw = 175; G[GA].pitch = 5 }
+      if (k === at(0) + 1) swing(GA)   // the 31st totem goes in on "THIRTY-ONE"
+      if (k === at(0) + 4) { frameItem('f31', 'totem_of_undying'); hold(GA, 'air'); sound('entity.item_frame.add_item', 1, 1) }
+      if (k > at(0) + 8) { G[GA].yaw = 175; G[GA].pitch = 5 }
       look(k)
     })
 
@@ -240,16 +239,28 @@ module.exports = {
     await shot('s03', -24, -4.5, P(-6, 2, -4.5), TIMES.S03)
     park(GB)
     const grind = (k) => { if (k % 12 === 0) { swing(GA); sound('block.grindstone.use', 0.35, 1) } }
-    await line('L03', async (k) => { grind(k); look(k) })
-    // ---- L04 (S04): closer: "They know who BEATS them, kid." (not looking up)
+    // ...and on "They KNOW" the cut in (S04, closer; he doesn't look up)
     put(GB, -77.5, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side (clear of the market stalls)
-    await shot('s04', -3.0, 2.0, P(-7.4, 2.2, -4.6))
-    await line('L04', async (k, at) => { grind(k + 6); if (k === at(2)) G[GA].pitch = 25; look(k) })
+    await line('L03', async (k, at) => {
+      if (k === at(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 2.2, -4.6)) }
+      grind(k); if (k === at(3)) G[GA].pitch = 25
+      look(k)
+    })
+    // ---- L04 (S04W): first person, inside, the same evening: the totem wall; on "ONE frame" the eyes go to the
+    // empty 32nd frame (bottom row, right), the lantern under it
+    K.shot('pov')
+    await K.cut(-8.5, -11.0, P(-9.5, 4.6, -15.5), 2, { time: TIMES.S03 })
+    let wall = null
+    await line('L04', async (k, at) => {
+      if (k === 0) wall = K.base
+      if (k >= at(2) - 4) K.turnTo(wall, P(-5.5, 3.5, -15.5), (k - at(2) + 4) / 18)
+      look(k)
+    })
 
     // ---- L05 (S05): dawn after raid 31, the square: he walks across; the farmers throw him bread on "BREAD"
     const farmers = [['f1', -78.5, -1.5], ['f2', -69.5, -2.0], ['f3', -81.0, 9.5], ['f4', -66.5, 6.0]]
-    for (const [t, x, z] of farmers) { say(`/tp @e[tag=${t},limit=1] ${(X + x).toFixed(2)} ${(F + gy(x, z)).toFixed(2)} ${(Z + z).toFixed(2)} ${yawTo(x, z, -74, 4).toFixed(1)} 0`) }
     const fa = farmers.map(([t, x, z]) => K.actor(t, { x, z, y: gy(x, z), yaw: yawTo(x, z, -74, 4) }))
+    for (const [t] of farmers) K.warp(t)   // into the square while the camera is elsewhere (before S05's cut)
     await bot.waitForTicks(3)
     frameEmpty('xbf')
     await shot('s05', -72.5, 19.5, P(-74, 1, 3), TIMES.S05)
@@ -258,8 +269,8 @@ module.exports = {
       const s = G[GB]
       if (s.x < -69.5) { s.x += 0.105; s.yaw = -90 }
       fa.forEach((f, i) => { f.yaw = yawTo(f.x, f.z, s.x, s.z) })
-      if (k >= at(3) - 2 && k <= at(3) + 6 && (k - at(3) + 2) % 2 === 0) {
-        const f = fa[(k - at(3) + 2) / 2 % fa.length], dx = s.x + 1.2 - f.x, dz = s.z - f.z, d = Math.hypot(dx, dz)
+      if (k >= at(2) - 2 && k <= at(2) + 6 && (k - at(2) + 2) % 2 === 0) {   // on "BREAD"
+        const f = fa[(k - at(2) + 2) / 2 % fa.length], dx = s.x + 1.2 - f.x, dz = s.z - f.z, d = Math.hypot(dx, dz)
         say(`/summon item ${(X + f.x).toFixed(2)} ${(F + f.y + 1.4).toFixed(2)} ${(Z + f.z).toFixed(2)} {Item:{id:"minecraft:bread",count:1},PickupDelay:32767,Motion:[${(dx / d * 0.28).toFixed(3)},0.32,${(dz / d * 0.28).toFixed(3)}]}`)
         sound('entity.villager.celebrate', 0.5, 1 + (k % 3) * 0.05)
       }
@@ -288,14 +299,14 @@ module.exports = {
     await line('L07', async (k, at) => {
       if (k === at(1) - 2) swing(GB)
       if (k === at(1)) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === at(3) + 5) {   // "a whole CHEST": first person, beside him; I open his chest (the vanilla chest screen)
+      if (k === at(2)) {   // "a whole CHEST": first person, beside him; I open his chest (the vanilla chest screen)
         K.shot('pov')
         await K.cut(-8.2, -12.0, P(-5.5, 2.45, -12.5), 2)
-        try { bot.openContainer(bot.blockAt(P(-6, 2, -13))).then(w => { chest = w }).catch(e => ctx.log('chest', e.message)) } catch (e) { ctx.log('chest', e.message) }
+        K.open(P(-6, 2, -13)).then(w => { chest = w }).catch(e => ctx.log('chest', e.message))
       }
       look(k)
     })
-    try { if (chest && chest.close) chest.close() } catch (e) {}
+    try { K.close(chest) } catch (e) {}
 
     // ---- L08 (S08): dusk, a raid night: Grandpa in the open gate, the bottle in his right hand; head back on
     // "drinks" (the drink sound), the crossbow back in his hand by "GATE"
@@ -311,12 +322,12 @@ module.exports = {
       if (k >= at(3)) G[GA].pitch = Math.min(0, G[GA].pitch + 7)
       look(k)
     })
-    // ---- L09 (S09): closer; he turns his head back over his right shoulder on "kid"
+    // ---- L09 (S09): closer; he turns his head back over his right shoulder on "lock the DOOR", a nod on "kid"
     await shot('s09', -4.2, 5.6, P(0, 2, 0))
     await line('L09', async (k, at) => {
       if (k >= at(1) - 4 && G[GA].yaw < gate.yaw + 95) G[GA].yaw += 9
-      if (k >= at(2) && k < at(2) + 12) G[GA].pitch = Math.sin((k - at(2)) / 12 * Math.PI) * 16   // a nod on "COMING"
-      if (k === at(2) + 18) swing(GA)                                                           // he shoulders the crossbow
+      if (k >= at(2) && k < at(2) + 12) G[GA].pitch = Math.sin((k - at(2)) / 12 * Math.PI) * 16   // a nod on "kid, they're COMING"
+      if (k === at(2) + 14) swing(GA)                                                           // he shoulders the crossbow
       look(k)
     })
 
@@ -328,7 +339,7 @@ module.exports = {
     M.pose(ctx, GB, 'sit')
     park(GA)
     await line('L10', async (k, at) => {
-      const up = at(3)
+      const up = at(2)   // "GLAD"
       if (k === 10 || k === 34) swing(GB)   // he nudges the one bowl across the table
       if (k === at(1)) K.shot('s10b')        // "a RAID": in on his face
       G[GB].pitch = k < up - 3 ? 50 : k < up + 16 ? Math.max(4, G[GB].pitch - 9) : Math.min(50, G[GB].pitch + 5)
@@ -343,8 +354,8 @@ module.exports = {
     M.pose(ctx, GA, 'sit')
     M.poseOff(ctx, GB); park(GB)
     await line('L11', async (k, at) => {
-      if (k === at(2)) G[GA].pitch = 62
-      if (k === at(3)) { hold(GA, 'air'); G[GA].pitch = 66; sound('item.armor.equip_generic', 0.4, 1.3) }
+      if (k === at(1)) G[GA].pitch = 62   // "too TIRED"
+      if (k === at(2)) { hold(GA, 'air'); G[GA].pitch = 66; sound('item.armor.equip_generic', 0.4, 1.3) }
       look(k)
     })
 
@@ -374,57 +385,62 @@ module.exports = {
       }
     }
     let base = null
+    // the reveal (no closing line, story.json reveal): E = the end of the speech. E: the cut to the road, the horn;
+    // the raiders walk down it. E+2..E+22: the Raid bar fills (vanilla's red notched_10 "Raid" bar; edit.py draws it
+    // from the `bossbar` marks); E+22: full (`raidbar`, the payoff punch). E+8..E+22: Grandpa steps up beside me; from
+    // E+16 I turn to him; ~E+30 he turns to see me. The line (and the Short) ends 1.0 s after the bar is full.
+    const RISE = 20, AFTERBAR = 20
+    let E = null, me = null, rc = null, aim = null, from = null, WALK = null
     await line('L12', async (k, at, n) => {
-      const L = S.line('L12'), endSpeech = Math.round((L.dur + S.gap) * 20)
+      if (E === null) E = n - (2 + RISE + AFTERBAR)
       if (k === 0) base = K.base
       if (k <= at(0) + 16) K.turnTo(base, roadAim, Math.max(0, (k - at(0) + 4) / 20))   // from the near road up the road as I drink
       if (k === at(0) + 2) { bot.activateItem(); for (let j = 0; j < 7; j++) setTimeout(() => sound('entity.generic.drink', 0.6, 1 + j * 0.01), j * 220) }
       if (k === at(0) + 36) { say('/effect clear @s bad_omen'); say('/effect clear @s raid_omen'); say('/effect clear @s trial_omen') }
       if (k === at(2) - 2) base = K.base
-      if (k >= at(2) - 2 && k < endSpeech) K.turnTo(base, P(-7.5, 2.0, -7.7), (k - at(2) + 2) / 14)   // back at Grandpa, asleep on his bench
-      if (k === endSpeech - 6) {   // the raiders onto the road while I'm looking back at him
+      if (k >= at(2) - 2 && k < E) K.turnTo(base, P(-7.5, 2.0, -7.7), (k - at(2) + 2) / 14)   // back at Grandpa, asleep on his bench
+      if (k === E - 6) {   // the raiders onto the road while I'm looking back at him
         raidD = 20; raiders = new Map(WEDGE.map(([t]) => [t, K.actor(t, { x: 20, z: 6, y: gy(20, 6), yaw: 90 })])); placeRaiders()
       }
-      if (k === endSpeech) {   // S13: the cut (on the spot, a step forward) to the road; the horn on its frame
+      if (k === E) {   // S13: the cut (on the spot, a step forward) to the road; the horn on its frame
         say('/effect clear @s')
         await K.cut(0.9, 0.55, P(19, 2.0, 5.5), 1, { time: TIMES.S13 })
         sound('event.raid.horn', 2.2, 1)
         K.go(true)   // a step forward through the gate, toward them
-        put(GB, -1.6, 1.3, -80, 0); hold(GB, 'crossbow')            // S14's Grandpa, behind me, out of view
+        put(GB, -1.6, 1.3, -80, 0); hold(GB, 'crossbow')            // Grandpa, behind me, out of view
       }
-      if (k === endSpeech + 7) K.go(false)
-      if (raiders) { raidD = Math.max(16, raidD - 0.105); placeRaiders() }
-      if (k > endSpeech) { K.base = K.aim(P(along(raidD).x, 2.0, along(raidD).z)) }
+      if (k === E + 7) K.go(false)
+      if (k >= E + 2 && k <= E + 2 + RISE && (k - E - 2) % 2 === 0) {
+        const progress = +((k - E - 2) / RISE).toFixed(2)
+        ctx.mark('bossbar', { title: 'Raid', progress, color: 'red', overlay: 'notched_10' })
+        if (progress === 1) ctx.mark('raidbar')
+      }
+      if (k === E + 8) {   // where I stand after the step; Grandpa's walk ends a step ahead on my right, 10 deg right of my aim
+        me = { x: bot.entity.position.x - X, z: bot.entity.position.z - Z }
+        rc = along(raidD)
+        const thR = Math.atan2(rc.z - me.z, rc.x - me.x); aim = thR + 20 * Math.PI / 180
+        const thG = aim + 10 * Math.PI / 180, end = [me.x + 2.4 * Math.cos(thG), me.z + 2.4 * Math.sin(thG)]
+        WALK = [[E + 8, G[GB].x, G[GB].z], [E + 15, me.x - 0.3, me.z + 1.3], [E + 22, end[0], end[1]]]
+        ctx.log('S14', JSON.stringify({ me, end, aimDeg: aim * 180 / Math.PI }))
+        sound('item.crossbow.loading_start', 0.8, 1)
+      }
+      if (WALK) {
+        const s = G[GB]
+        if (k <= E + 22) {
+          const [a, b] = k <= E + 15 ? [WALK[0], WALK[1]] : [WALK[1], WALK[2]], u = (k - a[0]) / (b[0] - a[0])
+          const nx = a[1] + (b[1] - a[1]) * u, nz = a[2] + (b[2] - a[2]) * u
+          s.yaw = yawTo(s.x, s.z, nx, nz); s.x = nx; s.z = nz; s.y = gy(nx, nz)
+        } else s.yaw = k >= E + 30 ? yawTo(s.x, s.z, me.x, me.z) : yawTo(s.x, s.z, rc.x, rc.z)   // he turns to see me
+        s.pitch = k >= E + 30 ? 5 : 2
+        if (k === E + 20) swing(GB)
+        if (k === E + 30) sound('item.crossbow.loading_end', 1.0, 1)
+      }
+      if (raiders) { raidD = Math.max(14, raidD - (k > E + 16 ? 0.055 : 0.105)); placeRaiders() }
+      if (k > E && k < E + 16) K.base = K.aim(P(along(raidD).x, 2.0, along(raidD).z))
+      if (k === E + 16) from = K.base
+      if (k >= E + 16) K.turnTo(from, P(me.x + 10 * Math.cos(aim), 2.3, me.z + 10 * Math.sin(aim)), Math.min(1, (k - E - 16) / 16))
       look(k)
     }, HOLD)
-
-    // ---- L13 (S14): I turn right: Grandpa steps up beside me at the gate post, awake, loading his crossbow, eyes on
-    // the road; a glance at me on "YOU". The crossbow clicks loaded on "kid"; the end 0.3 s after
-    const from = K.base
-    // where I stand after the step; the raiders' bearing from there; I turn 20 degrees right of them, and Grandpa ends
-    // a step ahead on my right, 10 degrees right of my aim, 2.4 blocks off
-    const me = { x: bot.entity.position.x - X, z: bot.entity.position.z - Z }
-    const rc = along(raidD), thR = Math.atan2(rc.z - me.z, rc.x - me.x), aim = thR + 20 * Math.PI / 180, thG = aim + 10 * Math.PI / 180
-    const end = [me.x + 2.4 * Math.cos(thG), me.z + 2.4 * Math.sin(thG)]
-    const WALK = [[0, G[GB].x, G[GB].z], [7, me.x - 0.3, me.z + 1.3], [14, end[0], end[1]]]
-    ctx.log('S14', JSON.stringify({ me, end, aimDeg: aim * 180 / Math.PI }))
-    await line('L13', async (k, at) => {
-      const s = G[GB]
-      if (k <= 14) {
-        const [a, b] = k <= 7 ? [WALK[0], WALK[1]] : [WALK[1], WALK[2]], u = (k - a[0]) / (b[0] - a[0])
-        const nx = a[1] + (b[1] - a[1]) * u, nz = a[2] + (b[2] - a[2]) * u
-        s.yaw = yawTo(s.x, s.z, nx, nz); s.x = nx; s.z = nz; s.y = gy(nx, nz)
-      }
-      if (k > 14) s.yaw = (k >= at(1) && k < at(1) + 16) ? yawTo(s.x, s.z, me.x, me.z) : yawTo(s.x, s.z, rc.x, rc.z)
-      s.pitch = (k >= at(1) && k < at(1) + 16) ? 5 : 2
-      if (k === 6) sound('item.crossbow.loading_start', 0.8, 1)
-      if (k === 12 || k === at(1) - 4) swing(GB)
-      if (k === 20) sound('item.crossbow.loading_middle', 0.8, 1)
-      if (k === at(2) + 8) { sound('item.crossbow.loading_end', 1.2, 1); swing(GB); ctx.mark('payoff') }   // the click on "kid" (the payoff: a punch-in)
-      K.turnTo(from, P(me.x + 10 * Math.cos(aim), 2.3, me.z + 10 * Math.sin(aim)), Math.min(1, k / 16))
-      raidD = Math.max(13, raidD - 0.055); placeRaiders()
-      look(k)
-    })
     ctx.mark('story_end')
     for (const s of Object.values(G)) s.on = false
     await bot.waitForTicks(4)

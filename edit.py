@@ -714,6 +714,48 @@ def container_windows(timeline):
     return [w for w in out if w[1] > w[0]]
 
 
+def bossbar_windows(timeline):
+    """[(t0, t1, state)] from `bossbar` marks ({title, progress 0..1, color, overlay}: a boss bar the stunt stages, e.g.
+    the raid bar the server would show; each mark is a new state) to `bossbar_off` (or a death, or the end)."""
+    out, cur = [], None
+    for e in timeline or []:
+        t = e["t"] / 1000
+        if e["event"] == "bossbar":
+            st = (str(e.get("title", "")), round(max(0.0, min(1.0, float(e.get("progress", 1)))), 3), e.get("color", "red"), e.get("overlay", "progress"))
+            if cur:
+                out.append((cur[0], t, cur[1]))
+            cur = (t, st)
+        elif e["event"] in ("bossbar_off", "death") and cur:
+            out.append((cur[0], t, cur[1])); cur = None
+    if cur:
+        out.append((cur[0], 1e9, cur[1]))
+    return [w for w in out if w[1] > w[0]]
+
+
+def bossbar_png(jar, state, path):
+    """BossHealthOverlay as vanilla draws one bar: 182 x 5 GUI px, centred, 12 px from the top of the game view; the
+    colour's background, the overlay's notches (notched_6/10/12/20; `progress` = none), then the progress part cut to
+    the bar's fill; the title centred 9 px above it in white with its shadow. The raid's bar is red, notched_10, "Raid"."""
+    title, prog, color, overlay = state
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    x0, y0 = W // 2 - 91 * GUI, BAND + 12 * GUI
+    def part(name, frac):
+        sp = sprite(jar, f"gui/sprites/boss_bar/{name}")
+        w = int(round(sp.width * frac))
+        if w > 0:
+            img.alpha_composite(big(sp.crop((0, 0, w, sp.height))), (x0, y0))
+    part(f"{color}_background", 1.0)
+    if overlay != "progress":
+        part(f"{overlay}_background", 1.0)
+    if prog > 0:
+        part(f"{color}_progress", prog)
+        if overlay != "progress":
+            part(f"{overlay}_progress", prog)
+    if title:
+        draw_text(img, jar, title, W // 2, y0 - 9 * GUI, center=True)
+    img.save(path)
+
+
 def syschat_windows(timeline, hold=10.0):
     """[(t0, t1, ((text, rgba), ...))] from `syschat` marks ({text, color}: chat lines the stunt or the harness
     recorded, e.g. '<Jonah> see you tomorrow' and the yellow 'Jonah left the game') and `syschat_clear` marks. A
@@ -1414,6 +1456,21 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"cont{ci}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[ct{ci}]")
                     last, n_in = f"ct{ci}", n_in + 1
+    # boss bars (`bossbar` marks): a staged raid bar ("Raid", red, notched_10) at the top of the game view
+    if args.timeline:
+        bwins = bossbar_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
+        if bwins:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                made = {}
+                for bi, (a_, b_, st) in enumerate(bwins):
+                    a, b = a_ - args.start, min(b_ - args.start, 1e6)
+                    if b <= 0 or b <= a:
+                        continue
+                    if st not in made:
+                        made[st] = tmp / f"boss{len(made)}.png"; bossbar_png(jar, st, made[st])
+                    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(made[st])]
+                    graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[bb{bi}]")
+                    last, n_in = f"bb{bi}", n_in + 1
     # chat lines (`syschat` marks): '<Jonah> see you tomorrow', 'Jonah left the game' in yellow
     if args.timeline:
         swins = syschat_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
