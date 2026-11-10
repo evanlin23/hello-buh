@@ -32,7 +32,7 @@ const STRIP = []; for (let dz = 18; dz >= FRONT_Z; dz--) STRIP.push([STRIP_X, 1,
 const FRONT = []; for (let dx = STRIP_X - 1; dx >= 1; dx--) FRONT.push([dx, 1, FRONT_Z])
 const NORTH = []; for (let dz = FRONT_Z - 1; dz >= 1; dz--) if (dz < 5 || dz > 7) NORTH.push([1, 1, dz])   // the path z 5..7 takes none
 const ROW = [...STRIP, ...FRONT, ...NORTH]      // in laying order; the door spot is the last torch, after these
-const DAWN = 23000, FLASH = 11600
+const DAWN = 22300, FLASH = 11600   // scene A before the sky pales: the torch carpet has to read from the air (S01)
 const SWAP_DZ = 20                             // the swaps leave the north edge (z0..z0+19) lit: S04 looks at it on the cut into the flashback, and no flashback shot sees it
 
 const SCOUT = process.env.SCOUT === '1'
@@ -80,7 +80,7 @@ module.exports = {
     await sets.dress.grove(ctx, { x: X - 6, z: Z - 86, r: 16, n: 16, kinds: ['dark_oak', 'dark_oak', 'oak'] })
     // our family's chest against the west wall inside (S09: everything Jonah owned)
     const items = [['diamond_sword', 1], ['iron_helmet', 1], ['iron_chestplate', 1], ['iron_leggings', 1], ['iron_boots', 1], ['red_bed', 1], ['shield', 1], ['filled_map', 1], ['fishing_rod', 1], ['bread', 16], ['bucket', 1]]
-    await c(`/setblock ${A(6, 1, -6)} chest[facing=west]`)   // the room's own chest, north-east corner
+    await c(`/setblock ${A(3, 1, -6)} chest[facing=south]`)   // our family's chest against the north wall (the corner one hides behind a cauldron)
     // B: Jonah's two chests of coal and sticks and a crafting table by his door (S07)
     const jd = this.J.doorstep
     await c(`/setblock ${Math.floor(jd.x)} ${jd.y} ${Math.floor(jd.z) - 2} chest[facing=south]`, { mayFail: true })
@@ -104,7 +104,7 @@ module.exports = {
     await c(`/fill ${P.x0} ${jc.y} ${P.z0} ${P.x1} ${jc.y} ${P.z1} coarse_dirt`)
     await sets.dress.fence(ctx, [[b.x1, b.z0 + 1], [b.x1, Z + 3]])
     await sets.dress.fence(ctx, [[b.x1, Z + 9], [b.x1, b.z1]])   // the street fence where his garden fence was (S11 fg)
-    for (let i = 0; i < items.length; i++) await c(`/item replace block ${A(6, 1, -6)} container.${i * 2} with ${items[i][0]} ${items[i][1]}`)
+    for (let i = 0; i < items.length; i++) await c(`/item replace block ${A(3, 1, -6)} container.${i * 2} with ${items[i][0]} ${items[i][1]}`)
     await c(`/kill @e[type=item]`)
     await bot.waitForTicks(10)
     const skip = new Set([...ROW, DOOR_SPOT].map(([dx, , dz]) => `${X + dx},${Z + dz}`))
@@ -258,10 +258,10 @@ module.exports = {
     await this.clone(ctx, 'from', STASH.A, true)
     await bot.waitForTicks(3)
     // L09 (S09): POV through our door to the chest; the chest screen opens on 'STUFF'
-    await K.cut(5.5, -2.5, P(6.5, 1.3, -5.5), 1, { time: 23250, shot: 'pov' })
+    await K.cut(3.5, -3.6, P(3.5, 1.3, -6), 1, { time: 23250, shot: 'pov' })
     await line('L09', async (k, at) => {
-      K.go(k > 2 && bot.entity.position.z > Z - 3.6)
-      if (k === at(1) - 2) { K.stop(); try { bot.openContainer(bot.blockAt(new V(X + 6, F + 1, Z - 6))) } catch (e) { ctx.log('chest:', e.message) } }
+      K.go(k > 2 && bot.entity.position.z > Z - 4.4)
+      if (k === at(1) - 2) { K.stop(); try { bot.openContainer(bot.blockAt(new V(X + 3, F + 1, Z - 6))) } catch (e) { ctx.log('chest:', e.message) } }
       K.look(k)
     })
     // L10 (S10): the screen closes; on the bed under the window, looking out north-west at the lit village
