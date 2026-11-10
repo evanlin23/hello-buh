@@ -136,7 +136,7 @@ Coordinates: the vanilla village's bell is (0,0); +x east, +z south. The real nu
 | L07-L08 | "one last night"; thinks grounded | it's his last night | first suspicion |
 | L09-L11 | the chest, the empty plot; thinks hiding | he gave it all away | **he's leaving** (~72%) |
 | L12-L13 | a row is growing; wants to know who; it ends at his door | | where it ends: the nightly spot |
-| L14 | Jonah put the last one there, every night at once (and waved) | goodbye | goodbye |
+| L14 | Jonah put the last one there, every night at once (he waves after, unsaid) | goodbye | goodbye |
 | L15 | no "see you tomorrow"; the game says he left | | he isn't coming back; the torches are for after |
 
 ## Clue map

@@ -86,8 +86,8 @@ much of the box, so **swap the whole box, not a patch** (continuity fix 3):
 - **S13:** the follow camera rounds the corner with the kid; on 'MY door' Jonah is in frame, crouched at the doorstep,
   9 blocks ahead.
 - **The last torch (S14):** Jonah, crouched, places his one torch on the door spot on 'LAST' (a real placement: the
-  swing and the block are in the recording; his hand is empty after), stands (sneak off), turns to the kid, and on
-  'WAVED' swings his arm twice. Player moves only: no kneel or wave pose.
+  swing and the block are in the recording; his hand is empty after), stands (sneak off), turns to the kid, and after 'ONCE', in the gap before L15,
+  swings his arm twice. Player moves only: no kneel or wave pose.
 - **S06 (the nightly habit, in B):** Jonah crouches and places a torch on the door spot on 'TORCH', stands, turns to
   the kid; on 'TOMORROW' the bot chats `see you tomorrow` (a real chat message: the harness/overlay shows `<Jonah> see
   you tomorrow`); after the line, his bot quits ("Jonah left the game"). **At the cut into S07, clear the chat overlay (an
