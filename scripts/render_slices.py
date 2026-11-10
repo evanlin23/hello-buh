@@ -1,6 +1,8 @@
 """The steps of .github/workflows/render-slices.yml (a recording rendered in N parallel slices on Actions).
 
-  python3 scripts/render_slices.py plan                 GITHUB_OUTPUT lines: name, stunt, fps, frames, n, matrix
+  python3 scripts/render_slices.py plan                 GITHUB_OUTPUT lines: name, stunt, fps, frames, n, matrix, reuse
+                                                        (reuse: renders/slices.json reuse_run, when that run's seg-*
+                                                        artifacts are still there: the slices are skipped)
                                                         (from renders/slices.json; IN_NAME/IN_STUNT/IN_SLICES override)
                                                         matrix = {"include": [{"i", "a", "b"}, ...]}: n contiguous
                                                         frame ranges of about equal render TIME (scripts/render_cost.py:
@@ -40,6 +42,8 @@ def job():
         "fps": int(j.get("fps") or 60),
         "queued": j.get("queued"),
         "source": j.get("source"),
+        "reuse_run": j.get("reuse_run"),
+        "picture_key": j.get("picture_key"),
     }
 
 
@@ -64,6 +68,8 @@ def plan():
     ranges, est, total = render_cost.slice_plan(rec, min(j["slices"], 32), j["fps"], W, H, min_frames=10)
     assert ranges[0][0] == 0 and ranges[-1][1] == frames and all(a < b for a, b in ranges)
     n = len(ranges)
+    reuse = reusable(j.get("reuse_run"))
+    print(f"reuse={reuse}")
     print(f"name={j['name']}")
     print(f"stunt={j['stunt']}")
     print(f"fps={j['fps']}")
@@ -74,6 +80,32 @@ def plan():
           f"slowest slice ~{max(est) / 60:.1f} min", file=sys.stderr)
     for i, ((a, b), e) in enumerate(zip(ranges, est)):
         print(f"  slice {i}: frames {a}-{b - 1} ({b - a}), ~{e / 60:.1f} min", file=sys.stderr)
+
+
+def reusable(run):
+    """The run id whose seg-* artifacts this job reuses (hb render --reuse: the same recording and picture code, only
+    the edit changed), or "" to render every slice: no reuse asked, the artifacts expired or gone, or the API can't
+    be asked (no token). Never fails the plan: a full render is always the fallback."""
+    if not run:
+        return ""
+    import urllib.request
+    repo, tok = os.environ.get("GITHUB_REPOSITORY"), os.environ.get("GITHUB_TOKEN")
+    if not (repo and tok):
+        print(f"reuse {run}: no GITHUB_REPOSITORY/GITHUB_TOKEN: rendering every slice", file=sys.stderr)
+        return ""
+    try:
+        req = urllib.request.Request(f"https://api.github.com/repos/{repo}/actions/runs/{run}/artifacts?per_page=100",
+                                     headers={"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json"})
+        arts = json.load(urllib.request.urlopen(req, timeout=30)).get("artifacts", [])
+    except Exception as e:  # noqa: BLE001
+        print(f"reuse {run}: could not list its artifacts ({e}): rendering every slice", file=sys.stderr)
+        return ""
+    segs = [a for a in arts if a.get("name", "").startswith("seg-") and not a.get("expired")]
+    if not segs:
+        print(f"reuse {run}: its frames are gone (no live seg-* artifacts): rendering every slice", file=sys.stderr)
+        return ""
+    print(f"reuse {run}: {len(segs)} slices of frames: only the edit runs", file=sys.stderr)
+    return str(run)
 
 
 def slice_(a, b):

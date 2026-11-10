@@ -102,3 +102,21 @@ For the owner's morning. Newest at the bottom.
   - Merged sets round 2 (e99250d): a builder's fit (retaining walls, stairs, natural edges; no stepped pyramids),
     whole-layout site choice, the floating tower fixed, a tavern, windmill and dock, and run.sh's lock plus per-run
     log (no more server collisions). Sent the owner the before/after.
+- 08:20-08:50 UTC:
+  - Narrator: the owner tried kid Puck in the Good Boy session ("er that does not sound right"), then went back to Pip
+    ("a lot a lot better"). Pip is the default narrator again; the recipe is in voices/recipes/pip.md (Leda,
+    3.8-flash-lite, single speaker, no post filter).
+  - Owner: voices drift take to take. New rule: one model per character, short requests, identical direction. A drift
+    gate is being built (agent/voice-drift), including a tts.py cache bug where a fallback model's take was stored
+    under the first model's hash.
+  - Merged the speaker check and colour captions (a4a4b72): SWAP/WORDS/EDGE/CLIPPED blockers, safe cuts, `./hb voice`
+    as the one Gemini path, one-word captions coloured by speaker with name tags. Sent the owner the caption sheet.
+  - Merged the viewer panel (cffa636): `./hb panel`, three Gemini viewers watch the Short. It caught the old Good Boy's
+    ASMR read and its wrong-sounding voice, and passes runaway. Two caveats: it doesn't judge length, and it uses 2
+    text-model requests per run.
+  - Two resplit cutters are being reconciled into one (agent/cut-reconcile).
+  - The writers' room session is filling a bank of 6 scripts. Ergonomics round 2 is building STANDARDS.md and
+    `./hb make`. The shared-world canon is in progress.
+  - Thirty-One Raids: picture final; it's re-voicing the narrator with Pip.
+  - Good Boy: re-voiced with Pip and the speaker check is clean; re-recording, then render.
+  - Dog on the Hill: re-cut with no clipped words; rendering.

@@ -8,6 +8,25 @@ The practical guide. Research and sources: `docs/research/story_craft_research.m
 Shorts." Our own bar is `runaway` ("the creeper was good"): one simple premise, a twist you can rewatch, the reveal done
 by the game. Every story is scored against it (section 11 says why it works, line by line).
 
+**Owner rules from 2026-11-10 that override the older numbers below** (quotes and reasons: `docs/stories.md`, House
+rules). When a section here disagrees, these win:
+- **Narrator-first.** One first-person kid narrator tells the whole story: cast `narrator` in voices/cast.json (Pip's
+  voice since the owner's "i like this one a lot a lot better"; recipe voices/recipes/pip.md; kid Puck is `puck_kid`). Other characters are quoted by him with a
+  "said" tag; at most 1-3 punchlines of 6 words or fewer get their own voice, only while that character is on screen.
+  No dialogue scenes. The voice palette and the "hushed, intimate" narrator in section 5 are for those few punchlines
+  and for the A+ test, not for the narrator.
+- **Never hushed, whispery or breathy** except for real fear. No intimate or obedient lines that read as ASMR out of
+  context.
+- **No "..." anywhere** in `text` or `say` (Gemini stops and whispers on it). Pauses come from full stops, short
+  sentences and `<short pause>` tags, never an ellipsis.
+- **35-45 s, about 90-120 spoken words** (runaway is 36.5 s), not the 45-55 s budget in section 2. Line 1 is the title,
+  an absurd premise said in one quick breath; the first word lands in the first 0.4 s; no dead air.
+- **Captions are one word at a time** (timed on the words), not the 2-3 word chunks in section 4. Keep the ` / ` chunk
+  marks in `text` anyway: `"captions": "chunk"` still uses them.
+- **The ending explains itself** in one short line or one picture the game shows, and the Short ends within 1 s of the
+  payoff.
+- **Every accident has a visible in-game cause; sets sit on natural terrain, never a flat clearing.**
+
 ---
 
 ## 1. The premise test: one picture, one "why tf?"
@@ -36,7 +55,7 @@ unless the critic agrees the new one is clearly different from `runaway`; a twis
 a premise whose image needs a renderer feature we don't have (check `docs/lessons.md`; block entities beds, chests and
 signs render now; banners, heads, pots and shulker boxes don't).
 
-## 2. The beat structure (40-60 s)
+## 2. The beat structure (35-45 s; the clock below was written for 40-60 s, compress it)
 
 Acted voices at a natural pace run about 150-180 words a minute plus pauses, not the old 290 wpm. **Budget 100-150
 spoken words for 45-55 s.** Every line earns its seconds or goes.
@@ -98,7 +117,7 @@ and LEFT." End beats on the pivot.
 - Vanilla mobs that can't talk (golems, animals, zombies) never speak. Villagers may, as a style choice, but sparingly:
   a villager who only says "hmm" all story and then speaks one sentence is stronger than a chatty one.
 
-**Captions** (unchanged): 2-3 word chunks split by ` / `, key words in CAPS and the key colour, never more than two
+**Captions** (now one word at a time, see the box at the top; the chunks still matter for `"captions": "chunk"`): 2-3 word chunks split by ` / `, key words in CAPS and the key colour, never more than two
 lines. Character lines get the speaker's colour, matched to the character's vibe, with a name tag on its first line
 (docs/voices.md "Caption colours").
 
@@ -138,7 +157,7 @@ docs/voices.md, cuts a take into lines). For each request:
   ("flat", "monotone", "quiet"); use "hushed", "steady", "unhurried". Keep it short: more text drifts.
 - **Per line**: a `direction` note for the emotion and the one rhythmic moment ("a held breath before the number").
   Never quote the line's own words in its note (the model reads them out).
-- **In the spoken text**: punctuation for pace (a comma is a small breath, an ellipsis a trailing pause, a full stop
+- **In the spoken text**: punctuation for pace (a comma is a small breath, a full stop
   a stop), CAPITALS already mark stress, and inline tags where the model supports them: `<short pause>`,
   `<long pause>`, `<sigh>`, `<gasp>`, `<whispers>`, `<laugh>` (newer models; the 3.1 tester guide uses
   `[sighs]`/`[whispers]`). Test the tag syntax on the model `tts.py` actually reaches before relying on it.
