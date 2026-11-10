@@ -1,0 +1,26 @@
+{
+ "model": "gemini-3.8-flash-lite-tts",
+ "body": {
+  "contents": [
+   {
+    "parts": [
+     {
+      "text": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]\n\nThe dog on the hill hasn't moved in nine hundred days.\n\nNot for rain. Not for thunder. Not even for zombies.\n\nI bring him a bone every morning. He never even looks.\n\nHe wears a red collar. But nobody in the village owns him.\n\nHe just stares at one empty patch of grass.\n\nAnd behind him, an old dirt hut. Nobody knows who built it.\n\nI tried to make him stand. I begged. He won't budge.\n\nSo every night now, I sit with him. Nobody should wait alone.\n\nAnd then he stood up!\n\nDay one. Again."
+     }
+    ]
+   }
+  ],
+  "generationConfig": {
+   "responseModalities": [
+    "AUDIO"
+   ],
+   "speechConfig": {
+    "voiceConfig": {
+     "prebuiltVoiceConfig": {
+      "voiceName": "Leda"
+     }
+    }
+   }
+  }
+ }
+}
