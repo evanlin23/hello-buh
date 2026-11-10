@@ -24,14 +24,16 @@
    "ref": "elder",
    "name": "Grandpa",
    "color": "#E8C48A",
-   "on_screen": "villager, plains cartographer outfit, no name tag; on the path below the rim, on screen while he says L10. Voice: cast `elder` (Charon), the brand's Grandpa (docs/brand.md: 'genuinely aged', far from the kid narrator)"
+   "on_screen": "villager, plains cartographer outfit, no name tag; on the path below the rim, on screen while he says L10. Voice: cast `elder` (Charon), the brand's Grandpa (docs/brand.md: 'genuinely aged', far from the kid narrator)",
+   "model": "gemini-3.8-flash-tts"
   },
   "Buh": {
    "role": "character",
    "ref": "buh",
    "name": "Buh",
    "color": "#4FD8E6",
-   "on_screen": "the player (default Steve skin), on screen while he says L15 and L17; never named aloud (the chat lines name him)"
+   "on_screen": "the player (default Steve skin), on screen while he says L15 and L17; never named aloud (the chat lines name him)",
+   "model": "gemini-3.8-flash-tts"
   }
  },
  "lines": [
