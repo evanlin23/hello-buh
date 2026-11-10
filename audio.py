@@ -79,6 +79,13 @@ def main(rec_path, out_path):
             player_damage_sounds(m, tl)
         for e in sound_events:
             m.play(e["sound"], e["t"] / 1000, volume=e.get("volume", 1.0), pitch=e.get("pitch", 1.0))
+        if any(e["event"] == "line" for e in tl):   # a story: every visible event gets its vanilla sound (scripts/onscreen_sfx.py)
+            sys.path.insert(0, str(ROOT / "scripts"))
+            import onscreen_sfx
+            rec["_path"] = str(rec_path)
+            for t, snd, vol, pitch, what in onscreen_sfx.fills(rec, onscreen_sfx.story_dir_of(rec), m.defs):
+                m.play(snd, t, volume=vol, pitch=pitch)
+                print(f"on-screen sound {t:6.2f}s {snd} ({what})")
         return finish(m, seconds, out_path)
     # (older recordings: rebuild the clutch sounds from the poses and events below)
 

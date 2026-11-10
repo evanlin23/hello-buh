@@ -1,13 +1,22 @@
 {
- "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x).",
+ "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ, or a tempo/formant-preserving rubberband shift for the narrator; never asetrate (docs/voices.md \"Realism\").",
  "narrator": {
   "name": "Narrator",
-  "voice": "Erinome",
-  "profile": "the storyteller: a woman in her thirties, calm, clear and a little hushed, unhurried, like the opening of a mystery film; she lets the strange detail land with a small pause before it",
+  "voice": "Leda",
+  "profile": "a kid of about eleven telling the camera his own story: fast, bright, bubbly, happy and energetic, a big grin in his voice, chatty like he's telling his best friend; not whispery, not breathy, not soft",
+  "post": "",
+  "fallback": "am_adam",
+  "from": "kid-narrator audition 2026-11-10 (owner: 'it should be like a child most of the time right? like bubbly happy'); out/voices_cast/kid_narrator_audition.mp3",
+  "notes": "Gemini reads him at ~2.7 words/s; post speeds him up 1.5x (~4.1 words/s; target 4.5) and lifts him 1.5 semitones with formants kept (judge: age ~11, bubbly 9/10, realism 7; unlifted Leda is realism 10 but reads 15-18). The asetrate lift (the old Kid filter) warbles: never use it. Scene direction must say 'full volume, excited': an ellipsis or a 'dramatic' note makes Gemini whisper. Owner 2026-11-10, after the audition: \"all of the current ones seem to be too sped up. i kinda like the pip here\" (Dog on the Hill v3: Leda, unshifted, natural tempo, ~4.1 words/s while speaking from direction alone). So no tempo stretch and no pitch shift: get the speed from the direction (quick, bright, one breath per sentence); atempo at most 1.1 if a take drags."
+ },
+ "storyteller": {
+  "name": "Storyteller",
+  "voice": "Despina",
+  "profile": "the storyteller: a woman in her thirties telling a friend a story late at night, low and close, plain and conversational, never an announcer; she lets the strange detail land with a small pause before it",
   "post": "",
   "fallback": "bf_emma",
   "from": "the AI-dilemma Shorts' narrator (thin_ice, dirk_willems)",
-  "notes": "Third-person framing, chapter cards, the hook line. When Milo tells his own story the first person goes to `milo` and the narrator only frames."
+  "notes": "The old default narrator (Erinome until 2026-11-10, recast to Despina: Erinome was heard as 'announcer'/'audiobook' in three listening tests, Despina 9/10). Third-person framing for serious mystery stories; the default narrator is now the kid (`narrator`)."
  },
  "milo": {
   "name": "Milo",
@@ -20,21 +29,21 @@
  },
  "elder": {
   "name": "Elder",
-  "voice": "Algenib",
-  "profile": "the village elder: an old man in his seventies, slow, soft and warm, wise, a little gravelly; he has seen this before, and that is what makes him quietly unsettling",
+  "voice": "Charon",
+  "profile": "the village elder: an old man in his seventies, tired, low and a little rough in the throat, speaks slowly and quietly; he has seen this before, and that is what makes him unsettling",
   "post": "",
   "fallback": "bm_george",
   "from": "the trailer's Highkeeper (Grok in the AI Shorts is the same voice, directed deep and heroic)",
-  "notes": "Librarian, grandfather, the one who knows the rule. Slow on purpose: give him short sentences."
+  "notes": "Librarian, grandfather, the one who knows the rule. Slow on purpose: give him short sentences. Recast Algenib -> Charon 2026-11-10 (realism test: Charon 'genuinely aged', Algenib 'sounds like a filter, younger than seventy')."
  },
  "child": {
   "name": "Kid",
-  "voice": "Leda",
-  "profile": "a village kid, about nine: small, bright, earnest and fast, asks questions, scared but trying to be brave",
-  "post": "asetrate=24000*1.12,aresample=24000,atempo=0.893",
+  "voice": "Laomedeia",
+  "profile": "a real village kid, about nine: small and quick, breath catching, words tumbling out a little too fast; scared but trying to be brave",
+  "post": "",
   "fallback": "af_sky",
   "from": "new",
-  "notes": "No Gemini voice is a child: Leda (youthful) directed young and lifted about 2 semitones (post) at the same speed."
+  "notes": "Recast Leda+2 st -> Laomedeia unshifted 2026-11-10: every listening test put the pitch lift last ('chipmunk', 'warble'); Laomedeia unshifted was heard as a real child. Never pitch-shift him."
  },
  "smith": {
   "name": "Smith",
@@ -47,12 +56,12 @@
  },
  "stranger": {
   "name": "Stranger",
-  "voice": "Charon",
+  "voice": "Algenib",
   "profile": "a mysterious hooded stranger: very old and gravelly, a slow low whisper, knows a terrible secret and says less than he knows",
   "post": "",
   "fallback": "bm_fable",
   "from": "the movie's Fen",
-  "notes": "The wandering trader, the one at the edge of render distance. Keep his lines under ten words where possible."
+  "notes": "The wandering trader, the one at the edge of render distance. Keep his lines under ten words where possible. Voice moved Charon -> Algenib (gravelly) 2026-11-10 when Charon became the elder; audition him before his first story."
  },
  "villain": {
   "name": "Villain",
@@ -84,8 +93,11 @@
  "_spares": {
   "Kore": "crisp, firm woman (the AI Shorts' Gemini): a guard captain, an announcer, a cold official",
   "Iapetus": "measured, polite man (the AI Shorts' GPT): a mayor, a shopkeeper",
-  "Puck": "cast as a 16-year-old boy in the trailer it read as a young woman: use it for a young woman",
+  "Puck": "cast as a 16-year-old boy in the trailer it read as a young woman: use it for a young woman; directed as an 11-year-old it read as 19 (kid audition)",
   "Gacrux": "mature woman: a grandmother, a witch",
-  "Enceladus": "breathy man: a ghost, a sick villager"
+  "Enceladus": "breathy man: a ghost, a sick villager",
+  "Erinome": "clear, polished woman: heard as an announcer/audiobook reader; a radio host, a news voice, not a storyteller",
+  "Leda": "unlifted: reads as a teenage girl of 15-18, very natural",
+  "Achernar": "soft, very breathy woman: a ghost, someone sick"
  }
 }

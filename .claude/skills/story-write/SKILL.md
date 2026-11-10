@@ -53,7 +53,10 @@ Write the ending first (the reveal frame), then:
 
 ## 4. The script (stories/<name>/story.json, version 2)
 
-- Lines in the house format (` / ` chunks of 2-3 words, CAPS key words), 100-150 spoken words for 45-55 s.
+- Lines in the house format (` / ` chunks of 2-3 words, CAPS key words), about 90-120 spoken words for 35-45 s
+  (story_runaway, the owner's benchmark, is 36.5 s; `./hb pace` warns over 45 s; story_good_boy's 19 lines ran 60 s).
+- `"payoff": "<line id>"`: the line the twist lands on (the reveal). `./hb pace` checks a sound hit and a picture change
+  on it and that the Short ends ≤1 s after it, so no line after the payoff (put a button line before it).
 - The cast block: the narrator plus 1-3 speaking characters, each with a Gemini voice cast for contrast, a caption
   colour and a short audio profile (`docs/story_craft.md` section 5 has the palette).
 - `who` on every character line; `say` where the spoken text needs tags or differs from the caption; `direction` on
@@ -61,6 +64,9 @@ Write the ending first (the reveal frame), then:
 - `requests`: group the speakers into Gemini requests of at most 2 speakers (the narrator with one character per
   request), as few requests as possible (the free tier allows a few a day).
 - `premise`, `twist`, `logline`, `question`, `caption` (the top-band hook, under 45 characters, one emoji), `key_color`.
+- `mood` (the score: `eerie` / `tense` / `sad` / `funny` / `heroic`, or `[before, after]` when the twist changes the
+  colour, e.g. `["tense", "sad"]`) and `payoff` (the line id or mark the twist lands on: the music drops out 0.45 s
+  before it and the hit lands on it). docs/audio.md.
 - Run the twist checklist (`docs/story_craft.md` section 3) and the agency rule (no accident without a visible cause).
 - Word count and a rough length: `python3 -c "import json,re,sys;d=json.load(open(sys.argv[1]));w=sum(len(re.sub(r'[/]',' ',l.get('say',l['text'])).split()) for l in d['lines']);print(w,'words, ~',round(w/2.8),'s + pauses')" stories/<name>/story.json`
 
@@ -105,3 +111,8 @@ don't build a weak story.
 The ten pitches with scores, the pick and why, the logline, the line count and estimated length, the cast with
 voices, the table-read results (cold reader's summary, critic's scores and verdict, continuity findings), and what's
 left to build.
+
+## Voice structure (owner, 2026-11-10)
+Narrator-first: one first-person narrator carries the story; other characters get at most 1-3 short lines at key beats
+(hook, turn, payoff), each in a clearly different voice with a colour-coded caption. No dialogue scenes. Details and the
+reason: docs/stories.md, House rules.
