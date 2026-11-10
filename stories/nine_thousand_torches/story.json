@@ -217,7 +217,7 @@
     {
       "id": "L09",
       "who": "N",
-      "text": "This morning, / his STUFF / was in OUR chest.",
+      "text": "And his STUFF / was in OUR chest.",
       "direction": "excited, a lift at the end",
       "shot": "S09",
       "look": {
@@ -448,7 +448,7 @@
       "place": "our_door",
       "size": "full",
       "camera": "at: 1 block up, 5 blocks from our doorstep, the same axis as S06 looking north, FOV 50, still",
-      "frame": "fg: the kid (baby villager) at frame right, stopped on the path nearer the lens than the door spot (never covering it), back three-quarters to us; subject: Milo head to foot crouched (his name dimmed, as vanilla draws a sneaking player's name) (sneak) at the doorstep, holding exactly one torch; on 'LAST' he places it on the door spot (the grass block one east of the doorstep: the same spot as S06), closing the row, his hand now empty; he stands, turns to the kid and, on 'WAVED', swings his arm twice (a player's wave); bg: our house front, the window, torch-lit roofs behind, gold sunlight raking across the front from the right (the sun itself out of frame: we look north). Sunrise (23688, S13's end tick)."
+      "frame": "fg: the kid (baby villager) at frame right, stopped on the path nearer the lens than the door spot (never covering it), back three-quarters to us; subject: Milo head to foot crouched (sneak; his name dimmed, as vanilla draws a sneaking player's name, still readable) at the doorstep, holding exactly one torch; on 'LAST' he places it on the door spot (the grass block one east of the doorstep: the same spot as S06), closing the row, his hand now empty; he stands, turns to the kid and, on 'WAVED', swings his arm twice (a player's wave); bg: our house front, the window, torch-lit roofs behind, gold sunlight raking across the front from the right (the sun itself out of frame: we look north). Sunrise (23688, S13's end tick)."
     },
     {
       "id": "S15",
