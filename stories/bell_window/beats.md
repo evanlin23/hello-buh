@@ -21,11 +21,11 @@ Then the boy is in the window, leaning past the bell, and the skeleton draws aga
 | 3-7 | worse | L02 "The bell RINGS. Three hundred NIGHTS. Nobody's ever THERE." | S02 the empty square; the cliff, bell and window on one axis | a ghost? |
 | 7-9 | **the plant** | L03 Mom: "Shutters SHUT, honey." | S03 Mom (unarmed) | literally: shut means safe; heard as "it's cold" |
 | 9-13 | **the clue** | L04 "Every morning there's an ARROW in the bell post. Mom pulls it OUT." | S04 the arrow, angled from the cliff | someone shoots |
-| 13-15 | the clue | L05 "Mine's the only LIT window in the village." | S05 dusk, one lit window behind the bell | the target |
+| 13-15 | the clue | L05 "Every window in the village is OPEN. Except MINE." | S05 day, every shutter open but his | skeletons ignore villagers: only he is a target |
 | 15-20 | **bomb (~50 %)** | L06 "Up on the CLIFF there's an old OAK. Something WHITE stands under it all DAY." | S06 the white shape in the oak's shade | players: a skeleton in the shade |
-| 20-25 | **the want, the try** | L07 "Tonight I opened the shutters and LEANED out, to catch whoever it IS." | S07 POV leaning past the bell | he takes the shield away |
-| 25-27 | **the reveal** | | S08 from behind the skeleton: draw, arrow, the bell rings, doors slam | the game says it |
-| 27-28 | **cut** | | S09 it draws again at us; cut 1.2 s after L07 | |
+| 20-25 | **the want, the try** | L07 "Tonight the bell RANG again. So I LEANED out PAST it." | S07 POV: an arrow hits the bell on RANG; he leans past it on PAST | he takes the shield away |
+| 25-27 | **the reveal** | | S08 from behind the skeleton: the kid exposed, the bell off the line; it draws | the game says it |
+| 27-28 | **cut** | | 1.0 s after L07 | |
 
 ## Clue map
 | clue | where | misread as | means after the twist |
@@ -35,7 +35,7 @@ Then the boy is in the window, leaning past the bell, and the skeleton draws aga
 | the cliff, bell and window on one axis | S02 (picture) | composition | the line of fire |
 | "Shutters SHUT, honey." | L03 | Mom fussing | shut shutters = no target |
 | an arrow in the post, angled from the cliff | L04, S04 | a prank | a skeleton's miss |
-| the only lit window | L05, S05 | a brag | the only player, the only target |
+| every window open but his | L05, S05 | a brag | the only player, the only target |
 | something white under the oak all day | L06, S06 | a stump, a statue | a skeleton in the shade (vanilla: it shelters from sun) |
 | unarmed villagers | S03, S06 (picture) | | why nobody kills it |
 
@@ -54,7 +54,7 @@ Then the boy is in the window, leaning past the bell, and the skeleton draws aga
 ## Owner's mystery test
 - **Q** by 3 s: yes.
 - **Mid:** cold read 40 %.
-- **Cut** ≤1.2 s: yes.
+- **Cut** ≤1.0 s: yes.
 - **Length:** ~28 s.
 
 The cold read said "confused on cause and effect", so S02's axis and S08's framing are the fix: the bell visibly on

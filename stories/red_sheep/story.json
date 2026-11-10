@@ -2,7 +2,7 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
   "caption": "why is every sheep in our village blue 🐑",
   "logline": "In Grandpa's walled village every sheep is dyed blue; when a boy leaves the gate open and follows his lamb into the woods at dusk, he learns what the blue is for.",
   "question": "why tf is every sheep in the village blue?",
@@ -22,7 +22,7 @@
   },
   "weather": "clear",
   "world": {
-    "place": "ravenford (canonical) and the woods on the Ridge road east of the east gate (inside ravenford's footprint toward raven_tower)",
+    "place": "ravenford (canonical): the pasture inside the palisade with its own fence gate in the east wall, the east gate, Grandpa's house and totem wall; the woods are the birch past the ford (+40) east of the gate, staged at +45..+54 inside the footprint (or widen it)",
     "day": 2100,
     "canon": "Kid Buh (about 12) living with Grandpa (Ravenford) after raid 32 (day 1900). New canon fact: from day ~1950 Grandpa dyes Ravenford's flock blue as an evoker alarm; an evoker lives in the Ridge woods (where it came from is never said). Nobody says 'Buh'.",
     "easter_egg": "totem_wall: Grandpa's wall of 32 totems (all full after day 1900), out of focus behind Grandpa in S03"
@@ -215,8 +215,11 @@
       "line": "L01",
       "place": "pasture",
       "size": "ews",
-      "camera": "path: crane down from (0, 22, 30) to (0, 8, 18) over the pasture, looking north at (0, 0, -4). FOV 55. wideMaster",
-      "frame": "fg: the pasture fence; subject: sixty blue sheep grazing the green pasture inside the log palisade, at full scale; bg: Ravenford's roofs, the east gate, the Ridge and the old tower on the skyline. Morning. All blue, not one other colour."
+      "camera": "path: crane down from (-30, 22, 0) to (-18, 8, 0) over the pasture, looking EAST at (10, 0, 0). FOV 55. wideMaster",
+      "frame": "fg: the pasture fence; subject: sixty blue sheep grazing the green pasture inside the log palisade, at full scale; bg: the east palisade, the fields to the ford, the birch woods beyond, the Ridge and the old tower on the skyline. Morning. All blue, not one other colour.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S02",
@@ -224,7 +227,10 @@
       "place": "pasture_gate",
       "size": "full",
       "camera": "at: (4, 1.6, 4) looking at Grandpa (0, 1, 0), slow push",
-      "frame": "subject: Grandpa at the pasture gate with blue dye, a white stray sheep in front of him: on 'GATE' it turns blue (use the dye) and trots in; bg: the pasture of blue sheep. Morning. (Blue parents breed blue lambs in vanilla, so only strays and new sheep need dyeing.)"
+      "frame": "subject: Grandpa at the pasture gate with blue dye, a white stray sheep in front of him: on 'GATE' it turns blue (use the dye) and trots in; bg: the pasture of blue sheep. Morning. (Blue parents breed blue lambs in vanilla, so only strays and new sheep need dyeing.)",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S03",
@@ -232,7 +238,10 @@
       "place": "grandpa_house",
       "size": "ms",
       "camera": "at: (2.5, 1.6, 2) looking at Grandpa's face (0, 1.6, 0), still",
-      "frame": "subject: Grandpa in his doorway, waist up, looking at camera; bg (out of focus): the totem wall inside, 32 totems (the easter egg). Morning."
+      "frame": "subject: Grandpa in his doorway, waist up, looking at camera; bg (out of focus): the totem wall inside, 32 totems (the easter egg). Morning.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S04",
@@ -240,7 +249,10 @@
       "place": "pasture_gate",
       "size": "wide",
       "camera": "at: (-6, 2.5, 8) looking at the gate (0, 1, 0), slow pan along the flock",
-      "frame": "subject: Grandpa at the pasture gate at dusk, lantern on the post, the flock filing past him, every sheep blue; he nods at each. Dusk 12000."
+      "frame": "subject: Grandpa at the pasture gate at dusk, lantern on the post, the flock filing past him, every sheep blue; he nods at each. Dusk 12000.",
+      "look": {
+        "time": 12000
+      }
     },
     {
       "id": "S05",
@@ -248,23 +260,32 @@
       "place": "pasture_gate",
       "size": "ms",
       "camera": "at: (3, 1.2, 3) looking at the red sheep (0, 0.8, 0), slow push",
-      "frame": "subject: ONE red sheep standing in the gateway among blue ones, facing camera; Grandpa's boots and crossbow at frame edge. Day."
+      "frame": "subject: ONE red sheep standing in the gateway among blue ones, facing camera; Grandpa's boots and crossbow at frame edge. Day.",
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S06",
       "line": "L06",
       "place": "east_gate",
       "size": "wide",
-      "camera": "at: (0, 6, 14) looking at the gate (0, 2, 0), still",
-      "frame": "subject: Grandpa sitting on a log by the east gate, crossbow across his knees, facing the woods; kid Buh small behind him at a window; bg: the dark treeline of the Ridge woods 40 blocks out, the pillager outpost's tower far on the horizon (why an evoker can be here: never named). Dusk."
+      "camera": "at: (-10, 5, -4) behind Grandpa, aimed at the outpost (131, 20, 92), still",
+      "frame": "subject: Grandpa's back, sitting on a log in the east gateway, crossbow across his knees, facing the woods; mid: the fields and the ford at +40, the birch treeline past it; bg: the pillager outpost's tower far on the horizon (never named). Dusk.",
+      "look": {
+        "time": 12300
+      }
     },
     {
       "id": "S07",
       "line": "L07",
       "place": "east_gate",
       "size": "ews",
-      "camera": "at: (0, 10, -6) looking east over the palisade at the treeline (0, 4, 40), still",
-      "frame": "subject: the black treeline under the moon; on 'SNAPPED' a snap sound (evoker fangs) deep in the trees; nothing seen. Night 18000, lanterns on the palisade."
+      "camera": "at: (-4, 10, 0) over the palisade aimed east at the treeline (45, 4, 0), still",
+      "frame": "subject: the black birch treeline past the ford under the moon; on 'SNAPPED' a snap sound (evoker fangs) deep in the trees; nothing seen. Night, lanterns on the palisade.",
+      "look": {
+        "time": 18000
+      }
     },
     {
       "id": "S08",
@@ -272,7 +293,10 @@
       "place": "pasture_gate",
       "size": "full",
       "camera": "pov: at the open pasture gate, looking out at the lamb trotting toward the treeline 15 blocks away",
-      "frame": "fg: the open gate in the hand's reach; subject: the small blue lamb going toward the woods; bg: the treeline, sun low. Dusk 12500."
+      "frame": "fg: the open pasture gate (a fence gate in the east palisade, 15 blocks south of the east gate); subject: the small blue lamb trotting out toward the woods, 15 blocks out; mid: the ford at +40; bg: the birch treeline at +45. Dusk.",
+      "look": {
+        "time": 12500
+      }
     },
     {
       "id": "S09",
@@ -280,23 +304,32 @@
       "place": "woods_edge",
       "size": "wide",
       "camera": "pov walking into the woods, following the lamb 6 blocks ahead",
-      "frame": "subject: the lamb between spruce trunks; light falling; bg: dark trunks, nothing moving. Dusk 12200, lanterns: none (dark but readable, look_stats night floor)."
+      "frame": "subject: the lamb between birch trunks; light falling; bg: dark trunks, nothing moving. Dusk 12200, lanterns: none (dark but readable, look_stats night floor).",
+      "look": {
+        "time": 12200
+      }
     },
     {
       "id": "S10",
       "line": "L10",
       "place": "clearing",
-      "size": "ms",
+      "size": "full",
       "camera": "pov stops: the lamb 5 blocks ahead, stopped, facing away into the trees",
-      "frame": "subject: the lamb's back, still, its head toward a dark gap between trunks; nothing else visible yet. Dusk 12200. Low sun on the lamb in the clearing so blue-to-red reads at 300 px (check on the shot sheet before recording)."
+      "frame": "subject: the lamb 2.5 blocks ahead, stopped, head toward a dark gap between birch trunks; low sun on the lamb (blue must read). Dusk 12200.",
+      "look": {
+        "time": 12200
+      }
     },
     {
       "id": "S11",
       "line": "L10",
       "place": "clearing",
       "size": "wide",
-      "camera": "at: low behind and left of Buh (shoulder, -1.5, 1.6, 2) looking past the lamb at the evoker (0, 1.6, -10). The reveal, all in one frame: on L10's end the evoker (arms raised, casting) lowers its arms, the lamb turns from blue to red in a puff of spell particles, then a line of fangs snaps up out of the ground from the evoker toward the camera; cut 1.0 s after the first fang",
-      "frame": "fg: Buh's shoulder; mid: the lamb turning red; subject: the evoker between the trunks; the fangs racing at us. Dusk 12200, the evoker readable at 300 px (a quarter of the frame height)."
+      "camera": "at: low behind and left of Buh (shoulder, -1.5, 1.6, 2) looking past the lamb at the evoker 8 blocks beyond it, FOV 35 (the evoker a quarter of the frame). The reveal, all in one frame: on L10's end the evoker (arms raised, casting) lowers its arms, the lamb turns from blue to red in a puff of spell particles, then a line of fangs snaps up out of the ground from the evoker toward the camera; cut 1.0 s after the first fang",
+      "frame": "fg: Buh's shoulder; mid: the lamb turning red; subject: the evoker between the trunks; the fangs racing at us. Dusk 12200, the evoker readable at 300 px (a quarter of the frame height).",
+      "look": {
+        "time": 12200
+      }
     }
   ],
   "props": {

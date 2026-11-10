@@ -17,7 +17,7 @@
 | A. the pasture, morning | L01-L03 | 1000 | sun low east |
 | B. dusk count, a memory | L04 | 12000 | lantern on the gate post |
 | C. last spring (memory) | L05-L07 | day, then dusk, then night 18000 | lanterns on the palisade at night |
-| D. today, dusk | L08-L10, the reveal | 12500-12800 | low sun, then trees; the evoker must read at 300 px |
+| D. today, dusk | L08-L10, the reveal | 12500 (S08), 12200 (S09-S11: low sun on the lamb) | low sun, then trees; the evoker must read at 300 px |
 
 ## Places
 | place | where (from the east gate, canonical) | establishing shot |
@@ -26,10 +26,12 @@
 | dye yard / pasture gate | the pasture's east gate (oak fence gate), a lantern post | S02, S04, S05, S08 |
 | Grandpa's house | canonical (Thirty-One Raids' build), the totem wall inside | S03 |
 | east gate | canonical, logs | S06, S07 |
-| the Ridge woods | 40+ blocks east of the gate: spruce and oak on rising ground toward raven_tower | S09-S11 |
+| fields and ford | east of the gate: fields, the ford at +40 (Thirty-One Raids' geography) | S06-S08 |
+| pasture gate | a fence gate in the east palisade, 15 blocks south of the east gate; the flock grazes outside it by day | S02, S04, S05, S08 |
+| the birch woods | past the ford, from +45; the clearing staged at +45..+54 (inside the footprint, or widen it) | S09-S11 |
 
 ## Cast and costume
-- **Buh:** default Steve. He's seen only in S06 (small, at a window). POV elsewhere.
+- **Buh:** default Steve. Never seen (POV only).
 - **Grandpa:** `zuri` skin, the slow walk (canon), crossbow in S05-S06.
 - **The lamb:** a baby sheep, blue (S02 onward), red only in S11.
 - **The flock:** 60 sheep, all blue (no other colour in any shot) except the one red sheep in S05.
@@ -48,8 +50,8 @@
 ## Positions and screen direction
 The woods are east, and the village is west of them:
 - the gate shots look east;
-- in S11 Buh faces east, with the evoker ahead between the trunks and the lamb between them, ~5 blocks ahead of Buh
-  and ~5 from the evoker. That puts the lamb inside the evoker's 16-block spell range.
+- in S11 Buh faces east, with the lamb 2.5 blocks ahead of him and the evoker ~8 blocks beyond the lamb.
+  That puts the lamb inside the evoker's 16-block spell range.
 
 ## Who knows what
 - **Grandpa** knows from L03. He never says it.

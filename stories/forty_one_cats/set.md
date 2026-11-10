@@ -13,3 +13,10 @@
   swell. Cut before the blast.
 - **Engine checks:** cat variants (it renders), the creeper's swell and flash (check), falling snow (the weather
   renderer).
+
+## Pre-build checklist (from reviews/r1-continuity.md)
+1. Claim `kettle_hollow`. Add `"forty_one_cats": {"day": 2400, "places": ["kettle_hollow"], "status": "claimed",
+   "cameos": ["old_road"]}`, and register the new `old_road` cameo (a signpost at the south gate reading
+   RAVENFORD / FROSTGATE), or log an exception in canon.md.
+2. **Override the palisade note above:** the wall is ONE block of full blocks, not a 3-high palisade.
+3. Engine features: the cat sit pose, collars (blue) and variants. Only the tabby is drawn today.

@@ -8,7 +8,7 @@ of the ground toward us. Cut.
 **The first frame it re-explains** is sixty blue sheep in Grandpa's pasture inside Ravenford's palisade.
 
 ## Spine
-- **Every day,** Grandpa dyes every newborn lamb blue and counts the flock every night: "They're our EYES, kid."
+- **Every day,** Grandpa won't let a white sheep through the gate (he dyes every stray blue) and counts the flock every night: "They're our EYES, kid."
 - **One day,** Buh leaves the pasture gate open and his lamb wanders into the Ridge woods.
 - **Because of that,** with Grandpa asleep, he follows it alone at dusk, past where last spring's sheep came back red.
 - **Until finally,** the lamb stops and stares into the trees. It turns red, and the evoker is there.
@@ -17,7 +17,7 @@ of the ground toward us. Cut.
 | t (s) | beat | line | picture | plants |
 |---|---|---|---|---|
 | 0-3 | **the question** | L01 "Every SHEEP in our village is BLUE. All SIXTY of them." | S01 EWS crane: sixty blue sheep | why blue? |
-| 3-6 | worse than you thought | L02 "Grandpa dyes every new LAMB the day it's BORN." | S02 a white lamb turns blue on 'BORN' | it's deliberate, and it has a cost |
+| 3-6 | worse than you thought | L02 "Grandpa won't let a WHITE one through the GATE." | S02 a white stray turns blue on 'GATE' | it's deliberate; blue parents breed blue lambs, so only strays need it |
 | 6-8 | **the plant** | L03 Grandpa: "They're our EYES, kid." | S03 Grandpa, the totem wall behind | literally true; heard as sentiment |
 | 8-11 | rewatch line | L04 "He counts them every NIGHT. Blue. Blue. BLUE." | S04 dusk, the flock filing past | he isn't counting sheep, he's checking colours |
 | 11-14 | the clue | L05 "Last spring, ONE came back from the woods RED." | S05 one red sheep in the gate | red = something in the woods |
@@ -32,7 +32,7 @@ of the ground toward us. Cut.
 | clue | where | misread as | means after the twist |
 |---|---|---|---|
 | all sixty blue | L01, S01 | a quirky grandpa | an alarm system |
-| dye every lamb at birth | L02, S02 | a tradition | every sheep must be blue to work |
+| no white one through the gate | L02, S02 | a fussy grandpa | every sheep must be blue to work |
 | "They're our EYES, kid." | L03 | sentiment | literal: they see the evoker for us |
 | "Blue. Blue. BLUE." | L04 | counting | checking colours |
 | one came back red | L05, S05 (picture) | spooky | an evoker was within 16 blocks of it |

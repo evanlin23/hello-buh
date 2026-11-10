@@ -3,12 +3,10 @@
 ## World
 - **Place:** a new place to claim, `kettle_hollow` ("Kettle Hollow"), the generated snowy village at (-1585, -692) in
   the White (unclaimed in canon).
-- **The wall:** a palisade around the village, ~410 blocks of perimeter, with one cat every ten blocks.
-  - Vanilla: creepers flee cats within 6 blocks, so a ten-block spacing leaves a 4-block lane between the zones.
-    That's why every cat matters.
-  - Fudge: with 10-block spacing a creeper could, in principle, slip between two cats. The story says that never
-    happened because Grandma counts. Keep the spacing *on screen* even, and let the gap read as two spacings.
-- **Day:** 2400 (outside the Long Day). Snow.
+- **The wall:** one block of full blocks (mobs hop it), ~410 blocks of perimeter, with a cat every ten blocks.
+  - Vanilla: creepers flee a cat they can see within 6 blocks, so 10-block spacing overlaps with no lane.
+  - One missing cat opens an 8-block lane (reviews/r1-continuity.md).
+- **Day:** 2400 (outside the Long Day). Weather: `rain` all story, which falls as snow here.
 - **New canon facts:**
   - Kettle Hollow and its 41 cats (from ~2380);
   - the boy (a player, about 10) and his grandma (a snowy villager);
@@ -24,23 +22,28 @@
 | C. tonight | L07-L09, S10 | 18000, snowing |
 
 ## Cast
-- **The boy:** default skin, a player.
+- **The boy:** a default skin that is NOT Steve (Steve reads as Buh). A player.
 - **Grandma:** a snowy-plains villager, no profession. In S03 only.
-- **Cats:** 41, tame (sitting), mixed vanilla variants. The one by his window is a tabby.
+- **Cats:** 41, tame and sitting, with blue collars (not the dog's red). The one by his window is a tabby. The renderer
+  draws only the tabby, with no sit pose or collar: engine work.
 - **The creeper:** only in S10.
 
 ## Props
 | prop | state | shots |
 |---|---|---|
 | fish | Grandma's (S03); his (S07) | |
+| his window | glass | all |
 | the gap | from S07, where his cat sat | S07, S08, S10 |
 | open doors | two on his lane | S05, S10 |
 | lanterns | on the lane, and at his window | S10 |
 
 ## Positions
-- His house is on the inner side of the wall. His window faces the wall, and the cat on the wall-top is 2 blocks
-  from the window.
-- The lane runs from the gap past two open doors to his window. In S10 the camera is high and south, looking north.
+- The houses stand in a row along the inside of the wall, with a 3-wide lane between.
+- His glass window is 4 blocks from the wall; the cat on the wall-top sits opposite it.
+- The neighbours' open doors are 5-8 blocks either side of his window.
+- Inside, the bed is under the window and the hearth is 7+ blocks away (the cat by the fire is out of a creeper's
+  6-block flee range, behind glass).
+- S10 looks at the window from high in the lane.
 
 ## Who knows what
 - **Grandma** knows (L03) and lies once (L06's "a CAT").

@@ -2,7 +2,7 @@
   "name": "bell_window",
   "stunt": "story_bell_window",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
   "caption": "why does my village hide when I open my window 🔔",
   "logline": "Every time a boy in Saltmouth opens his bedroom window, the bell outside rings and the whole village runs indoors; tonight he leans out to catch whoever rings it.",
   "question": "why tf does the whole village hide when he opens his window?",
@@ -16,16 +16,16 @@
   "payoff": "L07+1.0",
   "gap": 0.25,
   "look": {
-    "time": 18000,
+    "time": 13500,
     "fog": false,
-    "note": "night 18000 (S01-S03, S07-S09), morning 1000 (S04-S06)"
+    "note": "per shot in shots[].look; nights at 13500 (villagers are in bed by 18000 and wouldn't run)"
   },
   "weather": "clear",
   "world": {
-    "place": "saltmouth (canonical, the generated plains village; the bell is the village's own) and a cliff with one oak on its north edge (to stamp) SITE RULE: the ledge 8-10 blocks up and at most 15 blocks from the window (a skeleton's range), on one line with the bell; prove it on the survey or move the story to another plains village",
+    "place": "saltmouth (canonical). Layout from his window sill, the window facing north: the skeleton's feet at (0, 10, -11) on a 9-11 high rise under a stamped oak (since 1700); the bell hung from an oak beam on two fence posts at (0, 6, -3), on the line between the two; the square between the bell and the rise; his house stamped two storeys (room 7x7x3). Skeleton range 15 blocks. If no rise lines up at Saltmouth, move the house.",
     "day": 2000,
     "canon": "A Saltmouth family (not Buh's). The kid is a player; Mom is a villager. New canon fact: a skeleton lives under the oak on Saltmouth's north cliff from about day 1700 (the stamp: the oak and its shade).",
-    "easter_egg": "Saltmouth's ruined portal on the village's east edge (canon place fact, from Good Boy's set), small at S01's frame right; dog_on_hill is not true until day 3400"
+    "easter_egg": "saltmouth_portal (register as a cameo, since 0): Saltmouth's ruined portal at (-269, -366), framed in a daytime shot that looks south-east (S05)"
   },
   "voice": {
     "engine": "tbd",
@@ -37,13 +37,15 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "a Saltmouth kid, default skin; POV in S01, S07, S08; seen in the window in S09"
+      "on_screen": "a Saltmouth kid, a default skin that is NOT Steve (alex): Steve reads as Buh; POV in S01, S07; seen in S08"
     },
     "Mom": {
       "role": "character",
-      "ref": "mom",
+      "ref": null,
       "color": "#FFC2A8",
-      "on_screen": "plains villager (no profession outfit), unarmed"
+      "on_screen": "plains villager (no profession outfit), unarmed",
+      "voice": "Gacrux",
+      "note": "not `mom` (Sulafat is Buh's mom): a spare; add a cast entry before voicing"
     }
   },
   "requests": [
@@ -172,7 +174,10 @@
       "place": "bedroom",
       "size": "wide",
       "camera": "pov: hand opens the shutters; through them the night square: on 'RUNS' the bell rings and every villager in the square runs for a door",
-      "frame": "fg: the shutters swinging open; subject: the moonlit square, the bell on its post 3 blocks outside the window, villagers running; bg: Saltmouth's roofs, the dark cliff with the lone oak against the stars (planted from frame 1); the ruined portal tiny at frame right."
+      "frame": "fg: the shutters swinging open; subject: the moonlit square, the bell on its post 3 blocks outside the window, villagers running; bg: Saltmouth's roofs, the dark cliff with the lone oak against the stars (planted from frame 1); the ruined portal tiny at frame right.",
+      "look": {
+        "time": 13500
+      }
     },
     {
       "id": "S02",
@@ -180,30 +185,39 @@
       "place": "square",
       "size": "ews",
       "camera": "at: high over the square (0, 18, 16) looking at the bell and the window (0, 2, 0), slow push",
-      "frame": "subject: the empty square, every door shut, the bell still swinging, the one lit window behind it; bg: the cliff and the oak above the village, in line with the bell and the window (the axis, hidden in plain sight). Night."
+      "frame": "subject: the empty square, every door shut, the bell still swinging, the one lit window behind it; bg: the cliff and the oak above the village, in line with the bell and the window (the axis, hidden in plain sight). Night.",
+      "look": {
+        "time": 13500
+      }
     },
     {
       "id": "S03",
       "line": "L03",
       "place": "bedroom",
-      "size": "ms",
+      "size": "wide",
       "camera": "at: (1.5, 1.6, 1.5) looking at Mom (0, 1.6, 0), still",
-      "frame": "subject: Mom (villager, unarmed) at his door, nodding at the shutters; lantern lit. Night."
+      "frame": "subject: the bedroom established, Mom full figure at his door, nodding at the shutters; the bed, the lantern lit. Night 13500.",
+      "look": {
+        "time": 13500
+      }
     },
     {
       "id": "S04",
       "line": "L04",
       "place": "square",
-      "size": "ms",
+      "size": "full",
       "camera": "at: (2, 1.4, 2) looking at the bell post (0, 1.5, 0), push",
-      "frame": "subject: an arrow stuck in the bell post, its shaft angled down from the cliff side; Mom's hand pulls it. Morning 1000."
+      "frame": "subject: an arrow stuck in the bell post at (0, 1.5, -3), angled down from the rise; on 'OUT' it's gone and Mom holds it (a held item). Morning 1000.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S05",
       "line": "L05",
       "place": "square",
       "size": "wide",
-      "camera": "at: (0, 3, 20) looking at the house (0, 3, 0), still (re-use the night master at dusk 13000)",
+      "camera": "at: (0, 3, -20) from the square looking south at his house, still",
       "frame": "subject: the village by day, every window's shutters open but his (shut); the bell right in front of his. Day 6000. (Skeletons ignore villagers: this plants 'only me'.)",
       "look": {
         "time": 6000
@@ -213,9 +227,12 @@
       "id": "S06",
       "line": "L06",
       "place": "cliff",
-      "size": "wide",
-      "camera": "at: (0, 2, 30) from the square looking up at the oak on the cliff (0, 20, -10), slow push",
-      "frame": "subject: the oak on the cliff edge in full sun; in its shade, a white shape standing still (the skeleton, too small and shaded to read as one); villagers working below, unarmed. Day 6000."
+      "size": "ews",
+      "camera": "at: (0, 2, -2) looking up north at the oak on the rise (0, 10, -11), slow push",
+      "frame": "subject: the oak on the cliff edge in full sun; in its shade, a white shape standing still (the skeleton, too small and shaded to read as one); villagers working below, unarmed. Day 6000.",
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S07",
@@ -223,7 +240,10 @@
       "place": "bedroom",
       "size": "full",
       "camera": "pov at the window, then leaning out past the bell",
-      "frame": "fg: the open shutters, the sill; on 'RANG' an arrow hits the bell 3 blocks ahead (the ring, doors slam below); on 'PAST' the camera leans out clear of the bell, looking up at the ledge and the oak. Night 18000."
+      "frame": "fg: the open shutters, the sill; on 'RANG' an arrow hits the bell 3 blocks ahead (the ring, doors slam below); on 'PAST' the camera leans out clear of the bell, looking up at the ledge and the oak. Night 18000.",
+      "look": {
+        "time": 13500
+      }
     },
     {
       "id": "S08",
@@ -231,7 +251,10 @@
       "place": "cliff",
       "size": "wide",
       "camera": "at: behind the skeleton under the oak on the ledge, looking down along its aim at the window. The reveal, one shot: the kid leaning out, the bell now off the line; the skeleton draws at him. Cut 1.0 s after L07",
-      "frame": "fg: the skeleton's bow and skull in the oak's shade; subject: the kid leaning out of the one window, the bell to one side, swinging; bg: the dark village, every door shut. Night, a lantern within 4 blocks of the skeleton."
+      "frame": "fg: the skeleton's bow and skull in the oak's shade; subject: the kid leaning out of the one window, the bell to one side, swinging; bg: the dark village, every door shut. Night 13500 (no lantern: the night floor; the skeleton readable at 300 px).",
+      "look": {
+        "time": 13500
+      }
     }
   ],
   "props": {
@@ -239,28 +262,35 @@
       "at": [
         0,
         1,
-        10
+        -8
       ]
     },
     "arrow": {
       "at": [
         0,
         1.5,
-        3
+        -3
       ]
     },
     "window": {
       "at": [
         0,
-        3,
+        0,
         0
+      ]
+    },
+    "bell": {
+      "at": [
+        0,
+        6,
+        -3
       ]
     },
     "oak": {
       "at": [
         0,
-        20,
-        -12
+        10,
+        -11
       ]
     }
   },

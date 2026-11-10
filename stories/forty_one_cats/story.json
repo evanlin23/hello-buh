@@ -2,7 +2,7 @@
   "name": "forty_one_cats",
   "stunt": "story_forty_one_cats",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
   "caption": "why does grandma keep 41 cats on the wall 🐈",
   "logline": "In a snowy village where nobody locks a door, a boy's grandma keeps forty-one cats on the wall facing out; on the coldest night he takes the one by his window up to his bed.",
   "question": "why tf does grandma keep 41 cats on the wall, facing out?",
@@ -18,14 +18,14 @@
   "look": {
     "time": 1000,
     "fog": false,
-    "note": "day 1000 (S01-S05), dusk 13000 (S06), night 18000 (S07-S10); snow on the ground, light snowfall at night"
+    "note": "per shot; weather rain all story (falls as snow in this biome)"
   },
-  "weather": "clear",
+  "weather": "rain",
   "world": {
     "place": "new village to claim: the snowy village at (-1585, -692) in the White (generated village_snowy, unclaimed), name 'Kettle Hollow'",
     "day": 2400,
     "canon": "A new family: the boy (a player, about 10, default skin) lives with Grandma (a snowy villager). New canon fact: Kettle Hollow's wall holds forty-one cats from day ~2380.",
-    "easter_egg": "none of canon.md's cameos is in sight of Kettle Hollow (Frostgate, the nearest canon place, is 780 blocks east): open question for story-continuity (a new cameo, or an exception)"
+    "easter_egg": "old_road (a new cameo, proposed by story-continuity): a signpost at Kettle Hollow's south gate reading RAVENFORD / FROSTGATE, on the road kid Buh crossed around day 1550; in S01's background. Fallback: an exception logged in canon.md"
   },
   "voice": {
     "engine": "tbd",
@@ -37,7 +37,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "the boy, default skin; POV in S07-S09; seen asleep in S10"
+      "on_screen": "the boy, a default skin that is NOT Steve (Steve reads as Buh): POV in S07-S09; in bed, head turned to the window, in S10"
     },
     "Grandma": {
       "role": "character",
@@ -204,23 +204,32 @@
       "place": "wall",
       "size": "ews",
       "camera": "path: crane along the outside of the palisade from (20, 10, 12) to (-20, 8, 12), looking at the wall (0, 2, 0). FOV 55. wideMaster",
-      "frame": "subject: the village's log palisade running away along the snow, a cat sitting on top of it every ten blocks, all facing out at us; bg: snowy roofs, chimney smoke, spruce, the White to the horizon. Day."
+      "frame": "subject: the village's log palisade running away along the snow, a cat sitting on top of it every ten blocks, all facing out at us; bg: snowy roofs, chimney smoke, spruce, the White to the horizon. Day.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S02",
       "line": "L02",
       "place": "lane",
-      "size": "wide",
+      "size": "ms",
       "camera": "at: (0, 2.2, 8) looking at the wall (0, 3, 0), still; snow falling",
-      "frame": "subject: two cats on the wall in falling snow, facing out, not moving; a warm lit doorway below them, shut. Day, light snow."
+      "frame": "subject: one cat close, a second beyond it, on the wall in falling snow, facing out, not moving; a warm lit doorway below them, shut. Day, light snow.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S03",
       "line": "L03",
       "place": "grandma_house",
-      "size": "ms",
-      "camera": "at: (1.8, 1.6, 1.8) looking at Grandma (0, 1.6, 0), still",
-      "frame": "subject: Grandma at the window, looking out at the wall, a fish in her hand for the cats. Day."
+      "size": "wide",
+      "camera": "at: behind Grandma inside her house, looking out of her window at the wall, still",
+      "frame": "subject: Grandma from behind at her window, a fish in her hand; through the window, the wall and a row of cats facing out. Day.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S04",
@@ -228,7 +237,10 @@
       "place": "wall",
       "size": "full",
       "camera": "at: (0, 3.2, 3) looking at one old cat on the wall by the gate (0, 3, 0), slow push",
-      "frame": "subject: the oldest cat, on the post nearest the boy's house; bg: the house with his window. Day."
+      "frame": "subject: the oldest cat, on the post nearest the boy's house; bg: the house with his window. Day.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S05",
@@ -236,7 +248,10 @@
       "place": "lane",
       "size": "wide",
       "camera": "at: (6, 2, 6) looking down the lane (0, 1, -10), still",
-      "frame": "subject: a lane of snowy houses, two doors standing open, a villager walking in and out freely; bg: the wall and its cats. Day."
+      "frame": "subject: a lane of snowy houses, two doors standing open, a villager walking in and out freely; bg: the wall and its cats. Day.",
+      "look": {
+        "time": 1000
+      }
     },
     {
       "id": "S06",
@@ -244,15 +259,21 @@
       "place": "boy_house",
       "size": "full",
       "camera": "at: outside, low (2, 0.6, 3) looking at the wall under his window (0, 1, 0), dusk; on 'HISS' a hiss off screen, on 'CAT' the cat above the window turns its head and the hiss stops",
-      "frame": "subject: the snow under his window, empty; the cat on the wall top 2 blocks away. Dusk 13000."
+      "frame": "subject: the snow under his window, empty; the cat on the wall top 2 blocks away. Dusk 13000.",
+      "look": {
+        "time": 13000
+      }
     },
     {
       "id": "S07",
       "line": "L07",
       "place": "boy_house",
-      "size": "ms",
-      "camera": "pov: at the window, the hand holds out a fish; the cat on the wall top hops down, follows the fish across the room and up onto the bed",
-      "frame": "fg: the fish in hand; subject: the cat stepping off the wall-top and following the fish across the room to the hearth, curling up by the fire (the gap opens behind it, unremarked); the hearth is 7+ blocks from his window (creepers flee cats within 6). Night 18000."
+      "size": "wide",
+      "camera": "pov from his doorway, then into the room",
+      "frame": "subject: the room established (bed under the glass window, the door, the hearth 7+ blocks from the window); he opens the door, lures the window cat in with a fish, shuts the door; it curls by the fire. The gap on the wall, through the glass. Night.",
+      "look": {
+        "time": 18000
+      }
     },
     {
       "id": "S08",
@@ -260,7 +281,10 @@
       "place": "boy_house",
       "size": "full",
       "camera": "pov lying in bed by the window (ground floor)",
-      "frame": "subject: through the window, the row of cats on the wall with one gap; fg: the blanket; bg (across the room, far): the cat asleep by the fire. Night."
+      "frame": "subject: through the window, the row of cats on the wall with one gap; fg: the blanket; bg (across the room, far): the cat asleep by the fire. Night.",
+      "look": {
+        "time": 18000
+      }
     },
     {
       "id": "S09",
@@ -268,7 +292,10 @@
       "place": "boy_house",
       "size": "ms",
       "camera": "pov: eyes open, look to the window",
-      "frame": "subject: the window, dark; a hiss from outside. Night."
+      "frame": "subject: the window, dark; a hiss from outside. Night.",
+      "look": {
+        "time": 18000
+      }
     },
     {
       "id": "S10",
@@ -276,7 +303,10 @@
       "place": "village",
       "size": "wide",
       "camera": "at: outside, high (0, 6, 10) looking at his window (0, 1, 0). The reveal: the creeper passes the last open door (a villager inside, no glance), 3 blocks from his window, reaches the window and swells and flashes; through the glass, far across the room, the cat asleep by the fire. Cut 1.0 s after L09",
-      "frame": "subject: the creeper at his window, swelling; mid: the open door it passed; bg: the wall and the gap. Night, lanterns on the lane and at his window."
+      "frame": "subject: the creeper at his window, swelling; mid: the open door it passed; bg: the wall and the gap. Night, lanterns on the lane and at his window. Layout: the houses in a row along the inside of the 1-block wall, a 3-wide lane between; his glass window 4 blocks from the wall; the neighbours' open doors 5-8 blocks either side; inside, the boy in bed with his head turned to the window, the cat far away by the fire.",
+      "look": {
+        "time": 18000
+      }
     }
   ],
   "props": {

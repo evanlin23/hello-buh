@@ -2,7 +2,7 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
   "caption": "grandpa broke the same lectern 3,000 times 📚",
   "logline": "A grandpa has broken the same librarian's lectern three thousand times; his grandkid knows Grandma lives on the island across the bay and told him to walk there or not come at all.",
   "question": "why tf has grandpa broken the same lectern 3,000 times?",
@@ -22,10 +22,10 @@
   },
   "weather": "clear",
   "world": {
-    "place": "new place to claim: 'Gullwick', a shore hamlet on the West March coast with an island 50-70 blocks offshore (the lit window must read at 300 px) across a bay of open (unfrozen) cold ocean, away from Leo's House and the stronghold islets",
+    "place": "gullwick (to claim): a shore hamlet on the West March coast within ~200 blocks of the Ridge tower (-2000, -445), e.g. near (-2190, -380), away from Leo's House and the stronghold islets. The bay must be cold_ocean (not frozen) with a natural island 50-70 blocks out; the dock flush at sea level (Frost Walker freezes water one block below the feet). Coordinates in shots are dock-relative, -z = out to sea (the island is west).",
     "day": 2300,
     "canon": "A new family: the kid (a player), Grandpa (a player, an old-man actor skin, not Ravenford's), Grandma (a player, on the island, never seen; her window only), and the librarian (a villager). One grandpa per Short (canon conflict 11).",
-    "easter_egg": "raven_tower: the old watchtower on the Ridge, a speck on the skyline inland in S04 if the line of sight allows; else the critic and continuity pick"
+    "easter_egg": "raven_tower: the old watchtower on the Ridge on the inland skyline in S05 (looking back from the dock)"
   },
   "voice": {
     "engine": "tbd",
@@ -37,7 +37,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "the grandkid, default skin; POV in S02, S07; seen small on the dock in S09"
+      "on_screen": "the grandkid, a default skin that is NOT Steve: POV in S02, S07, S08 (the trade screen is the kid's: he trades, Grandpa reads over his shoulder); small on the dock in S09"
     },
     "Grandpa": {
       "role": "character",
@@ -194,23 +194,32 @@
       "place": "library_hut",
       "size": "wide",
       "camera": "at: (5, 2, 5) looking at the lectern (0, 1, 0); frame 0 mid-break: the lectern pops, the librarian's hat pops off (job lost); then the timelapse: break and place 3 times by 'TIMES'",
-      "frame": "subject: Grandpa breaking the lectern by the librarian; bg: the hut's wall covered in oak signs full of tally marks (the 3,000 as a picture); through the door, the bay and the island. Day."
+      "frame": "subject: Grandpa breaking the lectern by the librarian; bg: the hut's wall covered in oak signs full of tally marks (the 3,000 as a picture); through the door, the bay and the island. Day.",
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S02",
       "line": "L02",
       "place": "library_hut",
       "size": "ms",
-      "camera": "pov over Grandpa's shoulder: the librarian's trade screen opens, a book (an enchanted book), it closes, the lectern breaks, is placed, the librarian's hat flickers (job lost and regained)",
-      "frame": "subject: the trade screen (the book's name too small to read: on purpose); the librarian. Day."
+      "camera": "pov: the kid opens the librarian's trade screen (emeralds in hand); Grandpa leans in over his shoulder, reads the book's name, shakes his head; the screen closes and Grandpa breaks the lectern",
+      "frame": "subject: the trade screen (the book's name too small to read on purpose) and Grandpa's face above it; the librarian. Day.",
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S03",
       "line": "L03",
       "place": "library_hut",
-      "size": "ms",
+      "size": "full",
       "camera": "at: (1.6, 1.6, 1.6) looking at Grandpa (0, 1.6, 0), still",
-      "frame": "subject: Grandpa, axe in hand, unimpressed. Day."
+      "frame": "subject: Grandpa, axe in hand, unimpressed. Day.",
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S04",
@@ -218,15 +227,21 @@
       "place": "dock",
       "size": "ews",
       "camera": "at: (0, 6, 8) behind Grandpa on the dock looking out at the island (0, 4, -120), still",
-      "frame": "subject: the bay at dusk, the island 60 blocks out, one lit window in a small house on it; Grandpa at the dock's end, small, looking at it; bg: the sea to the horizon. Dusk 13000."
+      "frame": "subject: the bay at dusk, the island 60 blocks out, one lit window in a small house on it; Grandpa at the dock's end, small, looking at it; bg: the sea to the horizon. Dusk 13000.",
+      "look": {
+        "time": 13000
+      }
     },
     {
       "id": "S05",
       "line": "L05",
       "place": "dock",
       "size": "wide",
-      "camera": "at: (6, 2, 0) looking at the dock (0, 1, 0), slow push",
-      "frame": "subject: a boat tied at the dock, untouched, snow-free, a little moss; Grandpa walking past it without a look. Dusk."
+      "camera": "at: the dock's end looking back inland, slow push",
+      "frame": "subject: the tied boat, untouched, a little moss; Grandpa walking past it without a look; bg: Gullwick and, on the inland skyline, the old tower on the Ridge (the easter egg). Day 6000.",
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S06",
@@ -234,17 +249,20 @@
       "place": "dock",
       "size": "full",
       "camera": "at: (0, 1.4, 4) low behind Grandpa looking past him at the island window (0, 3, -120), slow push",
-      "frame": "subject: Grandpa's back at the dock's end, the lit window far ahead. Dusk."
+      "frame": "subject: Grandpa's back at the dock's end, the lit window far ahead. Dusk.",
+      "look": {
+        "time": 13000
+      }
     },
     {
       "id": "S07",
       "line": "L07",
       "place": "library_hut",
       "size": "ms",
-      "camera": "pov: the librarian holds up a book; the trade screen opens",
+      "camera": "pov: the kid opens the trade screen; the librarian holds up a new book; Grandpa's face above the screen",
       "frame": "subject: the trade screen; the book's name (Frost Walker II) is held for S08. Dawn 23200.",
       "look": {
-        "time": 23200
+        "time": 22800
       }
     },
     {
@@ -253,9 +271,9 @@
       "place": "library_hut",
       "size": "cu",
       "camera": "the reveal 1: the trade screen, the enchanted book's name readable: 'Frost Walker II' (also in the caption track); on 'ANYTHING' the trade completes",
-      "frame": "subject: the tooltip 'Frost Walker II'. Dawn 23200. On the cut to S09: an anvil clank off screen.",
+      "frame": "the reveal 1: the trade screen with Grandpa's face above it; the book's tooltip readable: 'Frost Walker II' (also in the caption track); on 'ANYTHING' the kid buys it for him. On the cut to S09: an anvil clank off screen. Dawn 22800.",
       "look": {
-        "time": 23200
+        "time": 22800
       }
     },
     {
@@ -263,10 +281,10 @@
       "line": "L08",
       "place": "dock",
       "size": "wide",
-      "camera": "at: high and behind (0, 10, 14) looking down the dock at the sea. The reveal: opens on Grandpa's boots glinting (enchanted) as he steps off the end of the dock; the water freezes in a white circle under every step, a path toward the island's lit window; cut 1.0 s after the first ice",
+      "camera": "at: high and behind (0, 10, 14) looking down the dock at the sea. The reveal: opens on Grandpa's new leather boots glinting (enchanted; boots are drawn on players) as he steps off the end of the dock; the water freezes in a white circle under every step, a path toward the island's lit window; cut 1.0 s after the first ice",
       "frame": "subject: Grandpa on the sea, the ice path behind him; bg: the island and its window. Dawn 23500.",
       "look": {
-        "time": 23200
+        "time": 23500
       }
     }
   ],
