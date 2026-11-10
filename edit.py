@@ -1069,10 +1069,10 @@ def main():
         states = hud_states(tl, dur + shift)
         # missing icons, and ones older than the icon renderer or the mesher (a stale empty honey_block
         # icon from before the translucent fix stayed invisible: worker 3, every_clutch)
-        made = max((HERE / "renderer" / f).stat().st_mtime for f in ("icons.js", "models.js", "mesher.js"))
+        made = max((HERE / "renderer" / f).stat().st_mtime for f in ("icons.js", "models.js", "mesher.js", "specialitems.js", "blockentities.js"))
         stale = lambda n: not (ICONS / f"{n}.png").exists() or (ICONS / f"{n}.png").stat().st_mtime < made
         need = sorted({it[0] for st in states for it in st[3] if isinstance(it, tuple) and it and it[0] and stale(it[0])})
-        if need:   # 3D icons for block items (skips non-block items itself)
+        if need:   # 3D icons for block items and special item models (skips flat items itself)
             subprocess.run(["node", str(HERE / "renderer" / "icons.js"), CLIENT_JAR.stem, *need], check=True)
         ticks = hud_ticks(tl, dur + shift, bool(json.loads(pathlib.Path(args.timeline).read_text()).get('keepInventory')) if args.timeline else False)
         first = int(shift * 20 + 1e-6)
@@ -1181,7 +1181,11 @@ def main():
             tts = [e["t"] / 1000 for e in all_ev if e["event"] == sub[0]]
             nth_ = sub[3] if len(sub) > 3 else 0
             if len(tts) > nth_:
-                sub_starts.append(tts[nth_] - args.start)
+                t_ = tts[nth_] - args.start
+                for c in cut_times(args):    # (the same snap as below: a line due a frame or two before a cut starts on it)
+                    if c - 0.07 < t_ < c:
+                        t_ = c
+                sub_starts.append(t_)
         for k, sub in enumerate(json.loads(args.subs)):
             ev_name, text = sub[0], sub[1]
             dur_s = sub[2] if len(sub) > 2 else 1.8
@@ -1190,14 +1194,15 @@ def main():
             if len(ts) <= nth:
                 continue
             t0 = ts[nth] - args.start
+            for c in cut_times(args):
+                if c - 0.07 < t0 < c:        # a line due a frame or two before a cut starts on it
+                    dur_s -= c - t0; t0 = c
             starts = sorted(x for x in sub_starts if x > t0 + 1e-3)
-            if starts:                       # never overlap the next line (they doubled up)
-                dur_s = min(dur_s, starts[0] - t0 - 0.05)
+            if starts and t0 + dur_s >= starts[0] - 0.05:   # never overlap the next line (they doubled up), and
+                dur_s = starts[0] - t0       # hand over on its first frame (a 0.05 s gap blanked 3 frames at every change: pickaxe_race)
             for c in cut_times(args):        # a line ending just after a hard cut ends ON the cut (it stayed a frame on the new shot)
                 if t0 + 0.3 < c < t0 + dur_s <= c + 0.3:
                     dur_s = c - t0
-                if c - 0.07 < t0 < c:        # a line due a frame or two before a cut starts on it
-                    dur_s -= c - t0; t0 = c
             # a line shown during a death screen goes below its buttons, drawn over the screen (it sat on
             # "Respawn" at 42% of the game height: worker 7, die_rating)
             dws = [(a - args.start, b - args.start) for a, b in death_windows(all_ev)] if args.death_screen else []

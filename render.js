@@ -290,6 +290,23 @@ const POTION_COLOR = new Map()
 }
 const FIRST_SEEN = new Map()
 for (const r of rec.entities || []) if (!FIRST_SEEN.has(r[1])) FIRST_SEEN.set(r[1], r[0])
+// Lightning (LightningBoltRenderer, drawn by the page): lightning_bolt entities while they exist, and
+// `lightning` marks {x, y, z, ticks?} for a stunt's own bolt (default 6 ticks). Storms had the thunder
+// sound only (worker 18). The sky flashes while a bolt is out (ClientLevel.skyFlashTime 2, fading
+// over the next 2 ticks).
+const BOLTS = []
+{
+  const span = new Map()
+  for (const r of rec.entities || []) if (r[2] === 'lightning_bolt') { const s0 = span.get(r[1]); if (!s0) span.set(r[1], { a: r[0], b: r[0] + 1, x: r[3], y: r[4], z: r[5], seed: r[1] }); else s0.b = r[0] + 1 }
+  BOLTS.push(...span.values())
+  for (const e of rec.timeline || []) if (e.event === 'lightning' && Number.isFinite(e.x)) BOLTS.push({ a: e.t / 50, b: e.t / 50 + (e.ticks || 6), x: e.x, y: e.y, z: e.z, seed: Math.round(e.t) })
+}
+function boltsAt (t) {
+  const bolts = BOLTS.filter(b => t >= b.a && t < b.b).map(b => ({ x: b.x, y: b.y, z: b.z, seed: b.seed }))
+  let flash = 0
+  for (const b of BOLTS) if (t >= b.a) flash = Math.max(flash, t < b.b ? 1 : Math.min(1, Math.max(0, b.b + 2 - t)))
+  return { bolts, flash: flash * 0.45 }
+}
 const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a lit one 80)
 for (const r of rec.entities || []) if (r[2] === 'tnt' && r[9] && r[9].fuse !== undefined && TNT_FUSE[r[1]] === undefined && FIRST_SEEN.get(r[1]) === r[0]) TNT_FUSE[r[1]] = r[9].fuse
 const TNT_STATE = require('minecraft-data')(rec.version).blocksByName.tnt.defaultState
@@ -349,6 +366,27 @@ const SWINGS = []
     const g = !!(it && ((Array.isArray(it) && it[2]) || GLINT_ITEMS.has(name)))
     if (g !== curGlint) { GLINTS.push([e.t / 50, g]); curGlint = g }
   }
+}
+// A bucket use swings the arm (BucketItem.use succeeds and the client swings), but mineflayer's
+// activateItem sends no swing, so recordings only had one when the stunt called swingArm (worker 3).
+// The held stack turning from a bucket to a filled one or back, in the same slot, is a use: swing on
+// that tick unless a swing mark is already within 3 ticks.
+{
+  const BUCKET = /^(bucket|water_bucket|lava_bucket|powder_snow_bucket|milk_bucket|(cod|salmon|pufferfish|tropical_fish|axolotl|tadpole)_bucket)$/
+  let items = null, slot = 0, prev = null, prevSlot = null
+  const add = []
+  for (const e of rec.timeline || []) {
+    if (e.event === 'hotbar') items = e.items
+    if (e.slot !== undefined) slot = e.slot
+    if (!items) continue
+    const it = items[slot], name = it ? (Array.isArray(it) ? it[0] : it) : null
+    if (e.event === 'hotbar' && slot === prevSlot && name !== prev && BUCKET.test(name || '') && BUCKET.test(prev || '') && (name === 'bucket' || prev === 'bucket') && name !== 'milk_bucket') {
+      const t = e.t / 50
+      if (!SWINGS.some(s => Math.abs(s - t) < 3) && !add.some(s => Math.abs(s - t) < 3)) add.push(t)
+    }
+    prev = name; prevSlot = slot
+  }
+  if (add.length) { SWINGS.push(...add); SWINGS.sort((a, b) => a - b) }
 }
 // the held stack's enchantment glint over time (hotbar entries [name, count, 1] are enchanted)
 function glintAt (t) { let g = false; for (const [a, v] of GLINTS) if (a <= t) g = v; return g }
@@ -864,6 +902,8 @@ function itemModel (item) {
   }
   return ((def && find(def)) || `item/${item}`).replace(/^minecraft:/, '')
 }
+// special item models (beds, chests, shulker boxes, heads, banners): renderer/specialitems.js
+const specialItem = require('./renderer/specialitems').specialItems(jarJson)
 // an item's display.fixed (item frames), following the model's parents
 const FIXED_DISPLAY = new Map()
 function fixedDisplay (item) {
@@ -1445,6 +1485,24 @@ function camAtLive (t) {
     if (!sp || !pose) continue
     PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
   }
+  // starting to mine redstone ore (RedStoneOreBlock.attack -> spawnParticles): one redstone dust speck
+  // 0.5625 out from the centre of each face not against a solid block, at a random spot on that face
+  // (mining it showed nothing: worker 3)
+  {
+    const stateAt = (x, y, z, t) => { let s = null; for (const b of rec.blocks || []) { if (b[0] > t) break; if (b[1] === x && b[2] === y && b[3] === z) s = b[4] } if (s !== null) return mcDataR.blocks[require('prismarine-block')(rec.version).fromStateId(s, 0).type]; const b = mesher.world.getBlock(new Vec3(x, y, z)); return b }
+    const solidR = (b) => !!(b && b.boundingBox === 'block' && !b.transparent)
+    let k = 0
+    for (const [a, , x, y, z] of DIGS) {
+      const b = stateAt(x, y, z, a)
+      if (!b || !/^(deepslate_)?redstone_ore$/.test(b.name)) continue
+      for (const [dx, dy, dz] of [[0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1], [-1, 0, 0], [1, 0, 0]]) {
+        if (solidR(stateAt(x + dx, y + dy, z + dz, a))) continue
+        const rr = () => ((Math.sin((++k) * 12.9898 + a * 78.233) * 43758.5453) % 1 + 1) % 1
+        const px = dx ? 0.5 + 0.5625 * dx : rr(), py = dy ? 0.5 + 0.5625 * dy : rr(), pz = dz ? 0.5 + 0.5625 * dz : rr()
+        PARTS.push(...particles.spawn({ type: 'dust', t: a * 50, x: x + px, y: y + py, z: z + pz, color: [1, 0, 0] }))
+      }
+    }
+  }
   PARTS.sort((a, b) => a.t0 - b.t0)
   const MAXLIFE = PARTS.reduce((m, p) => Math.max(m, p.life || 0), 0) + 1
   const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
@@ -1735,6 +1793,7 @@ function camAtLive (t) {
       const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
       cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
+      else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
         cam.hand.state = bl.defaultState
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
@@ -1762,6 +1821,7 @@ function camAtLive (t) {
           held = { key: ph.name + (glintAt(t) ? '#glint' : ''), display: thirdPersonDisplay(ph.name), glint: glintAt(t) }
           const bl = MC.blocksByName[ph.name]
           if (spriteOf(ph.name)) held.tex = spriteOf(ph.name)
+          else if (specialItem(ph.name)) held.special = specialItem(ph.name)
           else if (bl) {
             held.state = bl.defaultState
             if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
@@ -1807,10 +1867,21 @@ function camAtLive (t) {
       const it = e.extra.item
       if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
       const bl = MC.blocksByName[it]
-      // an item we can't draw (special item models: beds, chests, heads, banners, shields; no sprite
-      // and an empty block model): no model, so no shadow either (a red bed was a lone shadow: every_clutch)
-      if (!bl || blockModelEmpty(bl.defaultState)) { e.hidden = true; continue }
       const age = t - (FIRST_SEEN.get(e.id) ?? t)
+      // special item models (beds, chests, heads, banners, shulker boxes): their block-entity model with
+      // the 'ground' display (ItemEntityRenderer: bob sin(age/10)*0.1+0.1, plus the model's ground-scaled
+      // lift, spin age/20 rad about y); the shadow stays the item's
+      if (specialItem(it)) {
+        const sp = specialItem(it), gs = (sp.display.ground && sp.display.ground.scale) || [1, 1, 1]
+        e.shadowName = 'item'; e.shadowY = e.y
+        e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
+        e.yaw = age / 20 + (e.id % 7)
+        e.extra = { item: it, special: sp }
+        continue
+      }
+      // an item we can't draw (shields, ...; no sprite and an empty block model): no model, so no
+      // shadow either (a red bed was a lone shadow: every_clutch)
+      if (!bl || blockModelEmpty(bl.defaultState)) { e.hidden = true; continue }
       // the shadow stays the item's (ItemEntityRenderer.shadowRadius 0.15, from the entity's own y,
       // not the bobbing model): drawn as a falling block it cast a 0.5 one, 3x vanilla (lapse_statue)
       e.shadowName = 'item'; e.shadowY = e.y
@@ -1833,6 +1904,7 @@ function camAtLive (t) {
         held = { key: it }
         const bl = MC.blocksByName[it]
         if (spriteOf(it)) held.tex = spriteOf(it)
+        else if (specialItem(it)) held.special = specialItem(it)
         else if (bl) { held.state = bl.defaultState; if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) } }
         held.display = fixedDisplay(it)
       }
@@ -1974,6 +2046,7 @@ function camAtLive (t) {
     }
     prof('entities+hand')
     cam.blockEntities = blockEntitiesAt(t, cam)
+    if (BOLTS.length) { const bl = boltsAt(t); cam.bolts = bl.bolts; cam.skyFlash = bl.flash }
     cam.dimension = DIM
     cam.weather = weatherColumns(cam, t, cam.rain)
     const parts = partsAt(t, cam)
