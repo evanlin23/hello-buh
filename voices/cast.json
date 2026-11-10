@@ -1,5 +1,5 @@
 {
- "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ, or a tempo/formant-preserving rubberband shift for the narrator; never asetrate (docs/voices.md \"Realism\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\").",
+ "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ, or a tempo/formant-preserving rubberband shift for the narrator; never asetrate (docs/voices.md \"Realism\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\"). `model` (optional) locks the character to one TTS model: tts.py never voices it with another (docs/voices.md \"Drift gate\": a different model is a different-sounding person).",
  "narrator": {
   "name": "Narrator",
   "voice": "Leda",
@@ -10,7 +10,8 @@
   "fallback": "am_adam",
   "from": "Pip, Dog on the Hill voices v3: owner 'i kinda like the pip here', 'what about pip? i liked the audio i sent earlier', and vs kid Puck: 'i like this one a lot a lot better'",
   "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
-  "model_hint": "gemini-3.8-flash-lite-tts, single speaker, all narrator lines in one request separated by blank lines, the profile as a short bracketed prefix (Pip v3); see voices/recipes/pip.md"
+  "model_hint": "gemini-3.8-flash-lite-tts, single speaker, all narrator lines in one request separated by blank lines, the profile as a short bracketed prefix (Pip v3); see voices/recipes/pip.md",
+  "model": "gemini-3.8-flash-lite-tts"
  },
  "storyteller": {
   "name": "Storyteller",
@@ -131,7 +132,8 @@
   "fallback": "am_adam",
   "from": "Pip, Dog on the Hill voices v3 (owner 2026-11-10: 'i kinda like the pip here'; the 1.5x audition takes were 'too sped up')",
   "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
-  "model_hint": "gemini-3.8-flash-lite-tts worked for Pip (single speaker, all narrator lines in one request, separated by blank lines, the profile as a short bracketed prefix); 3.1-flash-tts with the structured prompt is the default in tts.py"
+  "model_hint": "gemini-3.8-flash-lite-tts worked for Pip (single speaker, all narrator lines in one request, separated by blank lines, the profile as a short bracketed prefix); 3.1-flash-tts with the structured prompt is the default in tts.py",
+  "model": "gemini-3.8-flash-lite-tts"
  },
  "puck_kid": {
   "name": "Narrator (kid Puck, alt)",

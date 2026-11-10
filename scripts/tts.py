@@ -12,9 +12,8 @@ the profile sent as direction, a post filter). A story's `cast` (docs/story_craf
 Lines: `who` (a cast id; missing = the narrator), `say` (what is read; default `text` with " / " removed and CAPS
 lowered, as voice.py), `direction` (a note for that line: emotion and one rhythmic moment; never quote its words).
 `requests` (optional) pairs the speakers ({"id", "speakers": [<=2 cast ids], "direction": scene}); each line goes to
-the first request with its speaker, or to its own `request` id if it names one (lines of 3 words or fewer get a
-single-speaker request of their own: multi-speaker swaps speakers on short lines). Without it, consecutive lines share a request until a third speaker. A request
-holds at most 8 lines.
+the first request with its speaker. Without it, consecutive lines share a request until a third speaker. A request
+holds at most 6 lines (MAX_LINES: longer takes drift).
 
 Quota: the free tier is a handful of requests a day per model, so a whole exchange goes in ONE request (Gemini's
 multi-speaker mode takes at most 2 speakers) and is cut into lines at its pauses afterwards. Every raw take is cached
@@ -48,12 +47,21 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # (9/10 vs 3-8 for 2.5-flash takes). 2.5-pro-tts has a free-tier limit of 0; 3.8-flash-tts takes no direction block
 # (multi-speaker needs per-part speechMetadata, no system instruction) and read a bracket tag aloud.
 MODELS = ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
+BRACKET = ("gemini-3.8",)    # Pip's recipe (voices/recipes/pip.md): no direction block; "[profile]" then the lines
 STRUCTURED = ("gemini-3",)   # models that get the # AUDIO PROFILE / ## THE SCENE / ### DIRECTOR'S NOTES / #### TRANSCRIPT layout
 SR = 24000
 CACHE = ROOT / "work" / "tts"
 STATS = {"requests": 0, "cached": 0}
+MAX_LINES = 6    # lines per request: longer takes drift over the take (owner, 2026-11-10: voices "change ... even within take")
+LOCK = {}        # cast id -> the one model that voices it in this story (voice.json `models`; docs/voices.md "Drift gate")
+
+
 SHORT_WORDS = 3  # a character line this short goes in a single-speaker request (multi-speaker takes swapped them)
 PITCH_W = 3.0   # weight of the pitch term in cut() (tuned on the voices/samples takes)
+
+
+class QuotaOut(SystemExit):
+    """The locked model is out of quota: stop (the takes so far are cached) rather than switch a character's model."""
 
 
 def library():
@@ -75,15 +83,16 @@ def resolve(story_cast=None):
     return out
 
 
-def request(text, voices):
-    """One TTS call -> float32 mono at SR. voices: {label: Gemini voice name} (1 or 2 entries). `text` is the prompt,
-    or a function model -> prompt (each model family gets the layout it was tested with)."""
+def request(text, voices, models=None):
+    """One TTS call -> (float32 mono at SR, the model that made it). voices: {label: Gemini voice name} (1 or 2
+    entries). `text` is the prompt, or a function model -> prompt (each model family gets the layout it was tested
+    with). models: the ones this request may use, in order (a locked character: exactly one; default MODELS)."""
     if len(voices) == 1:
         sc = {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": list(voices.values())[0]}}}
     else:
         sc = {"multiSpeakerVoiceConfig": {"speakerVoiceConfigs": [
             {"speaker": s, "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": v}}} for s, v in voices.items()]}}
-    for model in MODELS:
+    for model in models or MODELS:
         body = json.dumps({"contents": [{"parts": [{"text": text(model) if callable(text) else text}]}],
                            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
         # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
@@ -98,7 +107,7 @@ def request(text, voices):
                 if "wav" in part["mimeType"]:
                     data = subprocess.run(["ffmpeg", "-v", "error", "-i", "-", "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"],
                                           input=data, capture_output=True, check=True).stdout
-                return np.frombuffer(data, "<i2").astype(np.float32) / 32768
+                return np.frombuffer(data, "<i2").astype(np.float32) / 32768, model
             except urllib.error.HTTPError as e:
                 msg = e.read()[:300].decode(errors="replace")
                 print(f"  {model}: {e.code} {msg[:120]!r}")
@@ -107,6 +116,10 @@ def request(text, voices):
                 if e.code not in (500, 502, 503, 504):
                     raise SystemExit(f"TTS {e.code}: {msg}")
                 time.sleep(20)
+    if models and len(models) == 1:
+        raise QuotaOut(f"TTS: {models[0]} is out of quota and it is locked for this voice (docs/voices.md \"Drift gate\"): "
+                       f"run again after the quota resets (the takes so far are cached), or re-take ALL of the character's "
+                       f"lines on another model: --relock <cast id>=<model>")
     raise SystemExit("TTS: every model refused (quota?)")
 
 
@@ -420,6 +433,8 @@ def prompt(scene, lines, cs, model=MODELS[0]):
     notes = [f"Line {i + 1}: {note}." for i, (_, _, _, note) in enumerate(lines) if note]
     body = [t if len(who) == 1 else f"{cs[w]['name']}: {t}" for w, _, t, _ in lines]
     profiles = [f"{cs[w]['name']} is {cs[w]['profile']}." for w in who]
+    if model.startswith(BRACKET) and len(who) == 1:   # voices/recipes/pip.md: [profile], a blank line, the lines
+        return f"[{cs[who[0]]['profile']}]\n\n" + "\n\n".join(body)
     if model.startswith(STRUCTURED):
         return ("# AUDIO PROFILE\n" + "\n".join(profiles) + "\n\n## THE SCENE\n" + (scene.strip() or "A quiet room.") +
                 "\n\n### DIRECTOR'S NOTES\n" + "\n".join([REALISM, *notes, "Leave a natural pause between lines."]) +
@@ -430,23 +445,43 @@ def prompt(scene, lines, cs, model=MODELS[0]):
     return " ".join(head) + "\n\n" + "\n".join(body)
 
 
+TAKE_MODEL = {}   # line id -> the model of its current take (voice.json lines[].model)
+
+
+def allowed(who, cs):
+    """The models a request may use: a character's lock (this story's voice.json `models`, else its cast `model`), the
+    same for every speaker in the request; an unlocked request tries MODELS in order and locks what answers."""
+    locks = {LOCK.get(w) or cs[w].get("model") for w in who} - {None}
+    if len(locks) > 1:
+        raise SystemExit(f"{who}: locked to different models {sorted(locks)}: voice them in separate requests (story `requests`)")
+    return list(locks) or MODELS
+
+
 def take(scene, lines, cs, salt=""):
     """Voice one request's lines [(who, id, text, note)] (at most 2 speakers) -> [float32 per line], cached.
     salt: a re-take's name ("retake1"): the same prompt, a new request and its own cache entry."""
     who = list(dict.fromkeys(w for w, _, _, _ in lines))
     if len(who) > 2:
         raise SystemExit(f"{[l for _, l, _, _ in lines]}: {len(who)} speakers in one request (Gemini takes 2)")
-    text = prompt(scene, lines, cs)   # the cache key: the first model's prompt (a fallback model's take is cached under it)
     voices = {cs[w]["name"]: cs[w]["voice"] for w in who}
-    raw = CACHE / f"{hashlib.sha1(json.dumps([text, voices] + ([salt] if salt else [])).encode()).hexdigest()[:16]}.wav"
-    if raw.exists():
+    models = allowed(who, cs)
+    # the cache key holds the model: a fallback model's take used to be cached under the first model's prompt and
+    # came back later as if the first model had made it (cross-model drift nobody could see)
+    key = lambda m: CACHE / f"{hashlib.sha1(json.dumps([prompt(scene, lines, cs, m), voices, m] + ([salt] if salt else [])).encode()).hexdigest()[:16]}.wav"
+    hit = next((m for m in models if key(m).exists()), None)
+    if hit:
         STATS["cached"] += 1
+        model, raw = hit, key(hit)
         x = np.frombuffer(pcm(["-i", str(raw), "-f", "f32le", "-"]), np.float32)
     else:
-        print(f"request: {', '.join(f'{k}={v}' for k, v in voices.items())}, {len(lines)} lines")
-        x = request(lambda m: prompt(scene, lines, cs, m), voices)
+        print(f"request: {', '.join(f'{k}={v}' for k, v in voices.items())}, {len(lines)} lines, model {' or '.join(models)}")
+        x, model = request(lambda m: prompt(scene, lines, cs, m), voices, models)
+        raw = key(model)
         CACHE.mkdir(parents=True, exist_ok=True)
         pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(raw)], x.tobytes())
+    for w in who:
+        LOCK.setdefault(w, model)
+    TAKE_MODEL.update({lid: model for _, lid, _, _ in lines})
     words = sum(len(t.split()) for _, _, t, _ in lines)
     if len(x) / SR > words / 1.5 + 2:   # slower than ~90 wpm: the direction was probably read aloud
         print(f"  WARNING: {len(x) / SR:.1f} s for {words} words: was the direction read aloud? listen to {raw}")
@@ -530,39 +565,87 @@ def retake(d, done, items, cs, n_max, prior=None, groups_of=None):
     return takes
 
 
-def run_story(d, only=None, check=True, retakes=2):
+def drift_check(d, ids):
+    """scripts/voice_drift.py on the story (the TTS venv) -> {line id: its report row} for these ids, or None."""
+    py = pathlib.Path.home() / ".hb-tts" / "bin" / "python"
+    r = subprocess.run([str(py if py.exists() else sys.executable), str(ROOT / "scripts" / "voice_drift.py"), str(d),
+                        "--json", "--only", ",".join(ids)], capture_output=True, text=True)
+    try:
+        return {l["id"]: l for l in json.loads(r.stdout.strip().splitlines()[-1])["lines"]}
+    except (IndexError, json.JSONDecodeError, KeyError):
+        print(f"drift check didn't run ({(r.stderr or r.stdout).strip().splitlines()[-1:] or '?'}): listen for drift")
+        return None
+
+
+def drift_retake(d, done, items, cs, takes, n_max=2):
+    """Re-take every line the drift gate blocks (a different-sounding person, or a voice that changes inside the take),
+    at most n_max times, single-speaker on the character's locked model; then keep whichever take is closest (the
+    gate's `drift`: 1.0 = the blocker line). -> takes {id: n}"""
+    rows = drift_check(d, list(done))
+    if rows is None:
+        return takes
+    bad = [lid for lid, r in rows.items() if lid in items and r.get("drift", 0) >= 1]
+    for lid in bad:
+        sc, it, rm = items[lid]
+        cur = takes.get(lid, 0)
+        tried = {cur: rows[lid]["drift"]}
+        print(f"  {lid}: drift {rows[lid]['drift']} ({' '.join(rows[lid]['flags'])}): re-taking (max {n_max})")
+        for _ in range(n_max):
+            k = max(tried) + 1
+            done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{k}"))
+            row = (drift_check(d, [lid]) or {}).get(lid)
+            tried[k] = row["drift"] if row else 9.0
+            print(f"    take {k}: drift {tried[k]}")
+            if tried[k] < 1:
+                break
+        best = min(tried, key=tried.get)
+        if best != max(tried):   # the closest was an earlier take: put it back (from the cache)
+            done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{best}" if best else ""))
+        takes[lid] = best
+        print(f"  {lid}: kept take {best} (drift {tried[best]})" + ("  STILL DRIFTS: a blocker, listen" if tried[best] >= 1 else ""))
+    return {k: v for k, v in takes.items() if v}
+
+
+def run_story(d, only=None, check=True, retakes=2, relock=None):
     sys.path.insert(0, str(ROOT / "scripts"))
     import voice   # the caption format (" / " chunks, CAPS lowered for speech) stays voice.py's
     story = json.loads((d / "story.json").read_text())
     cs = resolve(story.get("cast"))
+    lib = library()
+    for cid, c in (story.get("cast") or {}).items():   # a library character keeps its direction byte for byte
+        if c.get("ref") in lib and c.get("profile") not in (None, lib[c["ref"]]["profile"]):
+            print(f"WARNING: cast {cid} overrides {c['ref']}'s profile: a different direction is a different-sounding person")
     narrator = next((k for k, c in cs.items() if c.get("role") == "narrator"), "narrator")
+    vf = d / "voice" / "voice.json"
+    LOCK.update((json.loads(vf.read_text()).get("models") or {}) if vf.exists() else {})   # one model per character
+    for cid, m in (relock or {}).items():   # move a character to another model: ALL of its lines are re-taken
+        LOCK[cid] = m
+        if only:
+            only = list(only) + [ln["id"] for ln in story["lines"] if ln.get("who", narrator) == cid]
     reqs = story.get("requests") or []
     groups, cur, cur_req = [], [], None
     for ln in story["lines"]:
         if only and ln["id"] not in only:
             continue
         w = ln.get("who", narrator)
-        # a line's own `request` (e.g. a line of 3 words or fewer alone, so multi-speaker can't swap its speaker),
-        # else the first request that lists its speaker
-        r = (next((r for r in reqs if r["id"] == ln["request"]), None) if ln.get("request") else
-             next((r for r in reqs if w in r["speakers"]), None)) if reqs else None
+        r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
         item = (w, ln["id"], ln.get("say") or voice.spoken(ln), ln.get("direction", ""))
-        if w != narrator and len(item[2].split()) <= SHORT_WORDS:   # narrator-first: a short character line goes alone
-            g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < 8), None)
+        solo = (LOCK.get(w) or cs[w].get("model") or "").startswith(BRACKET)   # Pip's model: single-speaker requests only
+        if solo or (w != narrator and len(item[2].split()) <= SHORT_WORDS):   # narrator-first: a short character line goes alone
+            g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < MAX_LINES), None)
             g[1].append(item) if g else groups.append(((r or {}).get("direction", story.get("direction", "")), [item], ("solo", w)))
             continue
         if reqs:   # each line in the first request that lists its speaker
             if r is None:
                 raise SystemExit(f"{ln['id']}: no request lists speaker {w}")
-            g = next((g for g in groups if g[2] is r and len(g[1]) < 8), None)
+            g = next((g for g in groups if g[2] is r and len(g[1]) < MAX_LINES), None)
             g[1].append(item) if g else groups.append((r.get("direction", ""), [item], r))
             continue
-        if cur and (len({x[0] for x in cur} | {w}) > 2 or len(cur) == 8):
+        if cur and (len({x[0] for x in cur} | {w}) > 2 or len(cur) == MAX_LINES):
             groups.append((story.get("direction", ""), cur, None)); cur = []
         cur.append(item)
     if cur:
         groups.append((story.get("direction", ""), cur, None))
-    vf = d / "voice" / "voice.json"
     old = json.loads(vf.read_text()) if vf.exists() else {"lines": {}}
     room = lambda r: (r if isinstance(r, dict) else {}).get("room", story.get("room", "small"))   # a solo group: the story's room
     done = voice_lines([(s, l, room(r)) for s, l, r in groups], cs, d / "voice")
@@ -575,6 +658,14 @@ def run_story(d, only=None, check=True, retakes=2):
             done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{n}")); takes[lid] = n
     if check:
         takes = retake(d, done, items, cs, retakes, takes, groups_of)
+    if check and done:   # the voices must stay the same people (owner, 2026-11-10); needs voice.json, written below
+        _write_meta(d, story, voice, old, only, done, takes, groups_of)
+        takes = drift_retake(d, done, items, cs, takes, retakes)
+    _write_meta(d, story, voice, old, only, done, takes, groups_of)
+
+
+def _write_meta(d, story, voice, old, only, done, takes, groups_of):
+    vf = d / "voice" / "voice.json"
     mp = story.get("max_pause")   # seconds, or {"opening": s, "rest": s} (opening = the first two lines)
     if mp:
         first2 = [ln["id"] for ln in story["lines"][:2]]
@@ -587,7 +678,8 @@ def run_story(d, only=None, check=True, retakes=2):
                     done[lid] = (w, t, y2)
                     print(f"{lid}: pauses shortened to {cap} s in their silent middle: {cuts}")
     meta = old if only else {"lines": {}}
-    meta.update({"model": f"Gemini TTS ({MODELS[0]} first), voices/cast.json", "sr": SR, "gap": story.get("gap", 0.25)})
+    meta.update({"model": f"Gemini TTS ({MODELS[0]} first), voices/cast.json", "sr": SR, "gap": story.get("gap", 0.25),
+                 "models": {**(old.get("models") or {}), **LOCK}})
     for ln in story["lines"]:
         if ln["id"] not in done:
             continue
@@ -599,6 +691,7 @@ def run_story(d, only=None, check=True, retakes=2):
         meta["lines"][ln["id"]] = {"who": w, "text": t, "dur": round(len(y) / SR, 3), "onset": round(a, 3), "end": round(b, 3),
                                    "chunks": [[round(a + (b - a) * s, 3), round(a + (b - a) * e, 3)] for s, e in zip(share, share[1:])],
                                    "captions": caps, "with": [w] if takes.get(ln["id"]) else sorted({it[0] for it in groups_of[ln["id"]]}),   # the request's speakers (speaker_check)
+                                   "model": TAKE_MODEL.get(ln["id"]),
                                    **({"take": takes[ln["id"]]} if takes.get(ln["id"]) else {})}
     meta["lines"] = {ln["id"]: meta["lines"][ln["id"]] for ln in story["lines"] if ln["id"] in meta["lines"]}
     meta["total"] = round(sum(l["dur"] + meta["gap"] for l in meta["lines"].values()), 2)
@@ -610,7 +703,9 @@ if __name__ == "__main__":
     only = a[a.index("--only") + 1].split(",") if "--only" in a else None
     p = pathlib.Path(a[0])
     if p.is_dir():
-        run_story(p, only, check="--no-check" not in a, retakes=int(a[a.index("--retakes") + 1]) if "--retakes" in a else 2)
+        relock = dict(kv.split("=", 1) for kv in a[a.index("--relock") + 1].split(",")) if "--relock" in a else None
+        run_story(p, only, check="--no-check" not in a, retakes=int(a[a.index("--retakes") + 1]) if "--retakes" in a else 2,
+                  relock=relock)
     else:
         run_list(p, pathlib.Path(a[1]))
     print(f"{STATS['requests']} API request(s), {STATS['cached']} take(s) from the cache")
