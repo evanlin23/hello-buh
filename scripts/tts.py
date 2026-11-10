@@ -549,6 +549,45 @@ def speed_of(who, cs):
     return sp.pop() if sp else (1.0, 1.0)
 
 
+def as_heard(x, who, cs):
+    """A whole raw take as it will be heard: the speakers' speed-up (speed_up), then, when their cast entry sets
+    `pause_cap` (s), every silence inside the take shortened to it, only in its silent middle (cap_pauses: never within
+    60 ms of a word, crossfaded). Owner 2026-11-10, on s3, whose gaps were cut to ~0.06 s: "its fine to have those cuts,
+    i didnt even notice" (the narrator "just yaps on and on"). Words are never touched."""
+    x = speed_up(x, *speed_of(who, cs))
+    caps = {float(cs[w]["pause_cap"]) for w in who if cs[w].get("pause_cap")}
+    if caps:
+        x = shorten_pauses(x, min(caps))
+    return x
+
+
+def shorten_pauses(x, cap, keep=0.04, xf=0.02):
+    """Every silence inside the take longer than `cap` s, as take_gate measures silence (frames under the take's peak
+    - 30 dB), shortened to `cap`: the cut comes out of its middle, never within `keep` s of a sound, joined with an
+    `xf` s crossfade. The same silences the gate would reject, so a capped take passes the gate on pauses."""
+    import take_gate
+    out, last = [], 0
+    for at, ln in take_gate.pauses(x, SR, min_len=cap + 1e-3):
+        drop = ln - cap
+        a, b = at + keep, at + ln - keep
+        if b - a < drop + xf:
+            continue
+        s0 = int((a + (b - a - drop) / 2) * SR)
+        n = int(drop * SR)
+        k = int(xf * SR)
+        seg = x[last:s0 + k].copy()
+        nxt = x[s0 + n:s0 + n + k]
+        if len(nxt) == k and k:
+            r = np.linspace(0, 1, k, dtype=np.float32)
+            seg[-k:] = seg[-k:] * (1 - r) + nxt * r
+        out.append(seg)
+        last = s0 + n + k
+    if not out:
+        return x
+    out.append(x[last:])
+    return np.concatenate(out).astype(np.float32)
+
+
 def speed_up(x, tempo=1.0, rate=1.0):
     """The Roblox narrator's speed-up of a WHOLE raw take (owner 2026-11-10: "s3_gemini_orus.mp3 is good", "we can just
     do 1.45 thats fine"; docs/voices.md "The Roblox narrator"), before it is trimmed, sliced, gated or shaped: `tempo`
@@ -643,7 +682,7 @@ def take(scene, lines, cs, salt=""):
     """Voice one request's lines [(who, id, text, note)] (at most 2 speakers) -> [float32 per line], cached.
     salt: a re-take's name ("retake1"): the same prompt, a new request and its own cache entry."""
     x, _, _ = raw_take(scene, lines, cs, salt)
-    x = speed_up(x, *speed_of(dict.fromkeys(w for w, _, _, _ in lines), cs))   # the whole take, before it is cut
+    x = as_heard(x, list(dict.fromkeys(w for w, _, _, _ in lines)), cs)   # the whole take, before it is cut
     return cut(x, [t for _, _, t, _ in lines])
 
 
@@ -872,7 +911,7 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None)
     fixes, tried, salt = [], [], ""
     for n in range(max(1, tries)):
         x, model, raw = raw_take(scene, lines, cs, salt, fixes)
-        x = speed_up(x, *speed_of([w], cs))   # the take as it will be heard: the gate judges ITS pauses
+        x = as_heard(x, [w], cs)   # the take as it will be heard: the gate judges ITS pauses
         y = level([shape(trim_take(x), cs[w].get("post", ""), room)])[0]
         heard = hear_fn(y)
         try:

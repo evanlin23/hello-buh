@@ -365,5 +365,20 @@ class SpeedUp(unittest.TestCase):
             tmp.cleanup()
 
 
+class PauseCap(unittest.TestCase):
+    def test_capped_take_passes_the_gate_and_keeps_the_words(self):
+        x = take(vowel(0.6), quiet(0.7), vowel(0.6), quiet(0.5), vowel(0.6))
+        self.assertTrue(any(ln > 0.35 for _, ln in G.pauses(x, SR)))
+        y = tts.shorten_pauses(x, 0.12)
+        self.assertTrue(all(ln <= 0.13 for _, ln in G.pauses(y, SR)))      # every silence capped (gate: 0.3/0.35)
+        self.assertAlmostEqual(len(x) - len(y), int((0.7 - 0.12) * SR) + int((0.5 - 0.12) * SR), delta=0.03 * SR)
+        loud = lambda z: int(np.sum(np.abs(z) > 0.05))
+        self.assertAlmostEqual(loud(x), loud(y), delta=0.02 * SR)          # the words are untouched
+
+    def test_cast_narrator_caps_pauses(self):
+        cs = tts.resolve({"N": {"ref": "narrator", "role": "narrator"}})
+        self.assertEqual(cs["N"].get("pause_cap"), 0.12)
+
+
 if __name__ == "__main__":
     unittest.main()

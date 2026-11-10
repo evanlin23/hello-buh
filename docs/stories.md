@@ -138,6 +138,10 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (told the s3 sample he liked had every gap cut to ~0.06 s): "its fine to have those cuts, i didnt
+  even notice".** For the narrator, silences inside a take are shortened to 0.12 s (tts.shorten_pauses, cast
+  `pause_cap`): only the silent middle, never within 40 ms of a word, crossfaded. Words are never cut or spliced; a
+  take with a wrong, clipped, breathy or whispered word is still re-taken.
 - **Owner, 2026-11-10 (choosing the narrator from the voice-match samples): "s3_gemini_orus.mp3 is good"; then, after
   hearing it at 1.30x-1.60x: "we can just do 1.45 thats fine".** The narrator is `narrator_roblox` (the default
   `narrator`): Gemini Orus on gemini-3.8-flash-tts with the voice-match direction, and every take played tempo 0.95

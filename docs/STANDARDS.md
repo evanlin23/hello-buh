@@ -93,6 +93,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    are forced-aligned to the caption words (`scripts/align.py` -> `scripts/ctc_align.py`; Whisper only as a fallback,
    flagged), caption words matched to them by text. Measured on the finished Short: |median offset| <= 33 ms and
    <= 10% of words over 100 ms off, else BLOCK. Check: `scripts/caption_av_check.py` (in `./hb review`). r:r27d123
+6. **Narrator silences capped, words untouched**: each silence inside the narrator's take is shortened to 0.12 s in its
+   silent middle (cast `pause_cap`, tts.shorten_pauses), the way the owner's s3 sample was; words are never cut, and a
+   take with a bad word is re-taken. Check: take_gate (pause, words), voice_edges. r:r5deb6a
 5. **No dramatic pauses**: the narrator talks continuously from frame 0 to the cut; drama comes from the words and
    the picture, never silence. Pause limits (take gate) and line spacing follow the owner's reference Short's measured
    gaps: 194/195 word gaps under 0.3 s, so pauses max 0.3 s inside a line and 0.35 s between, lines 0.08 s apart. Length

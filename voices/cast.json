@@ -11,9 +11,10 @@
   "rate": 1.45,
   "fallback": "am_adam",
   "from": "owner 2026-11-10: \"s3_gemini_orus.mp3 is good\" (docs/voice_search.md \"Closest match\": the Roblox-story voice is ElevenLabs Adam played ~1.45x faster; Orus x1.45 has its melody and nasal band)",
-  "notes": "The Roblox-story first-person narrator, and the default `narrator` since 2026-11-10. ONE narrator says every line, quotes included (owner), so characters are rarely voiced. tts.py plays every raw take `tempo` 0.95 (atempo, pitch kept) then `rate` 1.45 faster (a resample: pitch, formants and tempo all rise, no pitch correction) BEFORE trimming, slicing or the take gate, so the gate judges the pauses as they are heard; a take with pauses is re-taken, never spliced. The owner-approved exception to \"never pitch-shift a voice\", for this narrator only (docs/STANDARDS.md). Recipe: voices/recipes/narrator_roblox.md",
+  "notes": "The Roblox-story first-person narrator, and the default `narrator` since 2026-11-10. ONE narrator says every line, quotes included (owner), so characters are rarely voiced. tts.py plays every raw take `tempo` 0.95 (atempo, pitch kept) then `rate` 1.45 faster (a resample: pitch, formants and tempo all rise, no pitch correction) BEFORE trimming, slicing or the take gate, so the gate judges the pauses as they are heard; then every silence inside the take is shortened to `pause_cap` 0.12 s, in its silent middle only (owner: \"its fine to have those cuts, i didnt even notice\", on s3's gap cut); words are never cut. The owner-approved exception to \"never pitch-shift a voice\", for this narrator only (docs/STANDARDS.md). Recipe: voices/recipes/narrator_roblox.md",
   "model_hint": "gemini-3.8-flash-tts, single speaker, the profile as the bracketed prefix, lines separated by blank lines (voices/recipes/narrator_roblox.md)",
-  "model": "gemini-3.8-flash-tts"
+  "model": "gemini-3.8-flash-tts",
+  "pause_cap": 0.12
  },
  "narrator_roblox": {
   "name": "Narrator",
@@ -26,9 +27,10 @@
   "rate": 1.45,
   "fallback": "am_adam",
   "from": "owner 2026-11-10: \"s3_gemini_orus.mp3 is good\" (docs/voice_search.md \"Closest match\": the Roblox-story voice is ElevenLabs Adam played ~1.45x faster; Orus x1.45 has its melody and nasal band)",
-  "notes": "The Roblox-story first-person narrator, and the default `narrator` since 2026-11-10. ONE narrator says every line, quotes included (owner), so characters are rarely voiced. tts.py plays every raw take `tempo` 0.95 (atempo, pitch kept) then `rate` 1.45 faster (a resample: pitch, formants and tempo all rise, no pitch correction) BEFORE trimming, slicing or the take gate, so the gate judges the pauses as they are heard; a take with pauses is re-taken, never spliced. The owner-approved exception to \"never pitch-shift a voice\", for this narrator only (docs/STANDARDS.md). Recipe: voices/recipes/narrator_roblox.md",
+  "notes": "The Roblox-story first-person narrator, and the default `narrator` since 2026-11-10. ONE narrator says every line, quotes included (owner), so characters are rarely voiced. tts.py plays every raw take `tempo` 0.95 (atempo, pitch kept) then `rate` 1.45 faster (a resample: pitch, formants and tempo all rise, no pitch correction) BEFORE trimming, slicing or the take gate, so the gate judges the pauses as they are heard; then every silence inside the take is shortened to `pause_cap` 0.12 s, in its silent middle only (owner: \"its fine to have those cuts, i didnt even notice\", on s3's gap cut); words are never cut. The owner-approved exception to \"never pitch-shift a voice\", for this narrator only (docs/STANDARDS.md). Recipe: voices/recipes/narrator_roblox.md",
   "model_hint": "gemini-3.8-flash-tts, single speaker, the profile as the bracketed prefix, lines separated by blank lines (voices/recipes/narrator_roblox.md)",
-  "model": "gemini-3.8-flash-tts"
+  "model": "gemini-3.8-flash-tts",
+  "pause_cap": 0.12
  },
  "storyteller": {
   "name": "Storyteller",
