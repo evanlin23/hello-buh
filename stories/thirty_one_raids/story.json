@@ -2,7 +2,7 @@
   "name": "thirty_one_raids",
   "stunt": "story_thirty_one_raids",
   "version": 2,
-  "revision": "r4 (2026-11-10): r3 + the owner's narrator-first rules (main docs/stories.md): one kid narrator (cast `narrator`, Leda) carries the story; Grandpa's own voice only for his two on-screen punchlines (L09, L13, 6 words or fewer); L04 quoted with a said tag; L01 in one breath",
+  "revision": "r4 (2026-11-10): r3 + the owner's narrator-first rules (main docs/stories.md): one kid narrator (cast `narrator`, Leda) carries the story; Grandpa's own voice only for his two on-screen punchlines (L09, L13, 6 words or fewer); L04 quoted with a said tag; L01 in one breath; r4.1: narrator re-voiced as kid Puck (owner pick), cut at the quietest point (fixed resplit)",
   "caption": "why do raiders always follow grandpa home 😶",
   "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; the night Grandpa comes home too tired to fight, the boy drinks Grandpa's 'courage' himself.",
   "question": "why tf do raids start every night grandpa comes home?",
@@ -12,7 +12,8 @@
   "gap": 0.3,
   "voice": {
     "engine": "gemini",
-    "note": "single-speaker requests; narrator first-person kid, fast and bright (owner rules 2026-11-10)"
+    "model": "gemini-3.1-flash-tts-preview (every character, one model per story)",
+    "note": "single-speaker requests of at most 4 lines, identical scene text for the narrator (owner: voice drift); narrator = cast `narrator` (Puck, kid), Grandpa = `elder` (Charon)"
   },
   "cast": {
     "N": {
@@ -45,16 +46,25 @@
         "L01",
         "L02",
         "L03",
-        "L04",
+        "L04"
+      ],
+      "direction": "A kid, Milo, tells the camera about his grandpa and the raids."
+    },
+    {
+      "id": "n2",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
         "L05",
         "L06",
         "L07",
         "L08"
       ],
-      "direction": "A kid, Milo, rattles off his grandpa's legend to the camera, fast and proud: about four and a half words a second, one breath per line, no pauses inside a line."
+      "direction": "A kid, Milo, tells the camera about his grandpa and the raids."
     },
     {
-      "id": "n2",
+      "id": "n3",
       "speakers": [
         "N"
       ],
@@ -63,7 +73,7 @@
         "L11",
         "L12"
       ],
-      "direction": "The same kid on the last evening, still talking fast, about four and a half words a second: the grin fades into worry, then a firm, brave decision. No pauses inside a line."
+      "direction": "A kid, Milo, tells the camera about his grandpa and the raids."
     },
     {
       "id": "g1",
@@ -158,7 +168,7 @@
       "direction": "amazed, bright",
       "shot": "S05",
       "look": "actor:Gramps",
-      "request": "n1"
+      "request": "n2"
     },
     {
       "id": "L06",
@@ -167,7 +177,7 @@
       "direction": "quick, a little in awe",
       "shot": "S06",
       "look": "actor:Grandpa",
-      "request": "n1"
+      "request": "n2"
     },
     {
       "id": "L07",
@@ -179,7 +189,7 @@
         "what": "actor:Gramps",
         "word": "BOTTLES"
       },
-      "request": "n1"
+      "request": "n2"
     },
     {
       "id": "L08",
@@ -188,7 +198,7 @@
       "direction": "admiring, quick",
       "shot": "S08",
       "look": "actor:Grandpa",
-      "request": "n1"
+      "request": "n2"
     },
     {
       "id": "L09",
@@ -208,7 +218,7 @@
       "direction": "still quick, but the grin is gone; a little sad",
       "shot": "S10",
       "look": "actor:Gramps",
-      "request": "n2"
+      "request": "n3"
     },
     {
       "id": "L11",
@@ -218,7 +228,7 @@
       "direction": "worried, a little faster",
       "shot": "S11",
       "look": "actor:Grandpa",
-      "request": "n2"
+      "request": "n3"
     },
     {
       "id": "L12",
@@ -230,7 +240,7 @@
       "hold": 1.8,
       "hold_note": "no words: the raid horn; pillagers and a ravager come up the road toward the gate (S13)",
       "look": false,
-      "request": "n2"
+      "request": "n3"
     },
     {
       "id": "L13",

@@ -1,27 +1,30 @@
 {
+ "voice": "gemini cast",
+ "sr": 24000,
+ "gap": 0.3,
  "lines": {
   "L01": {
-   "who": "N",
    "text": "Grandpa has saved our village from thirty-one raids.",
-   "dur": 2.78,
-   "onset": 0.19,
-   "end": 2.78,
+   "who": "N",
+   "dur": 4.66,
+   "onset": 0.24,
+   "end": 4.52,
    "chunks": [
     [
-     0.19,
-     1.089
+     0.24,
+     1.667
     ],
     [
-     1.089,
-     1.67
+     1.667,
+     2.674
     ],
     [
-     1.67,
-     2.463
+     2.674,
+     3.933
     ],
     [
-     2.463,
-     2.78
+     3.933,
+     4.52
     ]
    ],
    "captions": [
@@ -32,23 +35,23 @@
    ]
   },
   "L02": {
-   "who": "N",
    "text": "Every single one started the night he came home.",
-   "dur": 2.46,
-   "onset": 0.0,
-   "end": 2.46,
+   "who": "N",
+   "dur": 4.105,
+   "onset": 0.02,
+   "end": 3.9,
    "chunks": [
     [
-     0.0,
-     0.856
+     0.02,
+     1.4
     ],
     [
-     0.856,
-     1.765
+     1.4,
+     2.865
     ],
     [
-     1.765,
-     2.46
+     2.865,
+     3.9
     ]
    ],
    "captions": [
@@ -58,19 +61,19 @@
    ]
   },
   "L03": {
-   "who": "N",
    "text": "He says they follow him.",
-   "dur": 1.26,
-   "onset": 0.13,
-   "end": 1.26,
+   "who": "N",
+   "dur": 1.94,
+   "onset": 0.58,
+   "end": 1.67,
    "chunks": [
     [
-     0.13,
-     0.474
+     0.58,
+     0.959
     ],
     [
-     0.474,
-     1.26
+     0.959,
+     1.67
     ]
    ],
    "captions": [
@@ -79,23 +82,23 @@
    ]
   },
   "L04": {
-   "who": "N",
    "text": "Grandpa said, \"They know who beats them.\"",
-   "dur": 2.48,
-   "onset": 0.17,
-   "end": 2.48,
+   "who": "N",
+   "dur": 3.655,
+   "onset": 0.77,
+   "end": 3.19,
    "chunks": [
     [
-     0.17,
-     0.94
+     0.77,
+     1.62
     ],
     [
-     0.94,
-     1.532
+     1.62,
+     2.274
     ],
     [
-     1.532,
-     2.48
+     2.274,
+     3.19
     ]
    ],
    "captions": [
@@ -105,27 +108,27 @@
    ]
   },
   "L05": {
-   "who": "N",
    "text": "When he walks by, the villagers throw him bread.",
-   "dur": 2.9,
-   "onset": 0.47,
-   "end": 2.9,
+   "who": "N",
+   "dur": 3.66,
+   "onset": 0.29,
+   "end": 3.5,
    "chunks": [
     [
-     0.47,
+     0.29,
      0.848
     ],
     [
      0.848,
-     1.334
+     1.476
     ],
     [
-     1.334,
-     2.036
+     1.476,
+     2.453
     ],
     [
-     2.036,
-     2.9
+     2.453,
+     3.5
     ]
    ],
    "captions": [
@@ -136,23 +139,23 @@
    ]
   },
   "L06": {
-   "who": "N",
    "text": "He hunts at the old tower on the hill.",
-   "dur": 2.08,
-   "onset": 0.19,
-   "end": 2.08,
+   "who": "N",
+   "dur": 3.345,
+   "onset": 0.68,
+   "end": 3.06,
    "chunks": [
     [
-     0.19,
-     0.767
+     0.68,
+     1.428
     ],
     [
-     0.767,
-     1.45
+     1.428,
+     2.312
     ],
     [
-     1.45,
-     2.08
+     2.312,
+     3.06
     ]
    ],
    "captions": [
@@ -162,27 +165,27 @@
    ]
   },
   "L07": {
-   "who": "N",
    "text": "He brings back grey bottles. He's got a whole chest.",
-   "dur": 3.46,
-   "onset": 0.13,
-   "end": 3.46,
+   "who": "N",
+   "dur": 3.68,
+   "onset": 0.19,
+   "end": 3.52,
    "chunks": [
     [
-     0.13,
-     1.081
+     0.19,
+     1.161
     ],
     [
-     1.081,
-     1.965
+     1.161,
+     2.063
     ],
     [
-     1.965,
-     2.509
+     2.063,
+     2.618
     ],
     [
-     2.509,
-     3.46
+     2.618,
+     3.52
     ]
    ],
    "captions": [
@@ -193,27 +196,27 @@
    ]
   },
   "L08": {
-   "who": "N",
    "text": "He calls it his courage. He drinks it at the gate.",
-   "dur": 3.0,
-   "onset": 0.25,
-   "end": 3.0,
+   "who": "N",
+   "dur": 4.285,
+   "onset": 0.7,
+   "end": 3.97,
    "chunks": [
     [
-     0.25,
-     0.894
+     0.7,
+     1.482
     ],
     [
-     0.894,
-     1.596
+     1.482,
+     2.335
     ],
     [
-     1.596,
-     2.298
+     2.335,
+     3.188
     ],
     [
-     2.298,
-     3.0
+     3.188,
+     3.97
     ]
    ],
    "captions": [
@@ -224,23 +227,23 @@
    ]
   },
   "L09": {
-   "who": "Grandpa",
    "text": "Lock the door, kid. They're coming.",
-   "dur": 3.6,
-   "onset": 0.27,
-   "end": 3.6,
+   "who": "Grandpa",
+   "dur": 3.92,
+   "onset": 0.38,
+   "end": 3.53,
    "chunks": [
     [
-     0.27,
-     1.683
+     0.38,
+     1.66
     ],
     [
-     1.683,
-     2.086
+     1.66,
+     2.152
     ],
     [
-     2.086,
-     3.6
+     2.152,
+     3.53
     ]
    ],
    "captions": [
@@ -249,122 +252,24 @@
     "They're COMING."
    ]
   },
-  "L10": {
-   "who": "N",
-   "text": "Since Grandma died a raid is the only time anyone's glad to see him.",
-   "dur": 4.42,
-   "onset": 0.23,
-   "end": 4.42,
-   "chunks": [
-    [
-     0.23,
-     1.455
-    ],
-    [
-     1.455,
-     1.842
-    ],
-    [
-     1.842,
-     2.873
-    ],
-    [
-     2.873,
-     3.711
-    ],
-    [
-     3.711,
-     4.42
-    ]
-   ],
-   "captions": [
-    "Since Grandma died,",
-    "a RAID",
-    "is the only time",
-    "anyone's GLAD",
-    "to see him."
-   ]
-  },
-  "L11": {
-   "who": "N",
-   "text": "Tonight, he came home too tired to fight.",
-   "dur": 3.0,
-   "onset": 0.35,
-   "end": 3.0,
-   "chunks": [
-    [
-     0.35,
-     0.851
-    ],
-    [
-     0.851,
-     1.711
-    ],
-    [
-     1.711,
-     2.355
-    ],
-    [
-     2.355,
-     3.0
-    ]
-   ],
-   "captions": [
-    "Tonight",
-    "he came home",
-    "too TIRED",
-    "to fight."
-   ]
-  },
-  "L12": {
-   "who": "N",
-   "text": "So I drank his courage. Somebody had to fight.",
-   "dur": 4.06,
-   "onset": 0.29,
-   "end": 4.06,
-   "chunks": [
-    [
-     0.29,
-     1.167
-    ],
-    [
-     1.167,
-     2.219
-    ],
-    [
-     2.219,
-     2.92
-    ],
-    [
-     2.92,
-     4.06
-    ]
-   ],
-   "captions": [
-    "So I drank",
-    "his COURAGE.",
-    "Somebody",
-    "had to FIGHT."
-   ]
-  },
   "L13": {
-   "who": "Grandpa",
    "text": "Now they'll love you too, kid.",
-   "dur": 2.12,
-   "onset": 0.0,
-   "end": 2.12,
+   "who": "Grandpa",
+   "dur": 6.105,
+   "onset": 2.04,
+   "end": 4.36,
    "chunks": [
     [
-     0.0,
-     0.833
+     2.04,
+     2.951
     ],
     [
-     0.833,
-     1.439
+     2.951,
+     3.697
     ],
     [
-     1.439,
-     2.12
+     3.697,
+     4.36
     ]
    ],
    "captions": [
@@ -374,8 +279,5 @@
    ]
   }
  },
- "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
- "sr": 24000,
- "gap": 0.3,
- "total": 41.52
+ "total": 42.36
 }
