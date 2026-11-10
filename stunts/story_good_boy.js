@@ -110,7 +110,8 @@ module.exports = {
       const r = Math.hypot(dx / 4.3, dz / 3.3)
       if (r > 1) continue
       const top = r < 0.6 ? SEA + 1 : SEA
-      await c(`/fill ${X + 66 + dx} ${SEA - 8} ${Z + 13 + dz} ${X + 66 + dx} ${top} ${Z + 13 + dz} sand`)
+      await c(`/fill ${X + 66 + dx} ${SEA - 8} ${Z + 13 + dz} ${X + 66 + dx} ${top - 1} ${Z + 13 + dz} sandstone`)   // (all sand fell into the water: the first dry run had no island)
+      await c(`/setblock ${X + 66 + dx} ${top} ${Z + 13 + dz} sand`)
     }
     await c(`/setblock ${X + 67} ${SEA + 2} ${Z + 12} dead_bush`); await c(`/setblock ${X + 65} ${SEA + 2} ${Z + 14} short_grass`)
     // the other dog (L04): somebody's tamed wolf sitting alone outside an empty house on the road (its door at
@@ -197,6 +198,7 @@ module.exports = {
     sneak(true)
     K.ctl('sprint', true); K.go(true)
     await line('L03', async (k, at) => {
+      if (k === at(1)) sneak(false)   // found: he pops up out of the wheat (crouched, the POV saw only wheat)
       if (k < at(2)) { autoJump(); if (bot.entity.position.x - X < 21) K.go(false); K.base = K.aim(P(buh.x, buh.y + 0.9, buh.z)); look(k) }
       if (k === at(2)) {
         await cutG(7.5, 34, P(7.5, gy(7.5, 14) + 0.6, 0), { time: NIGHT, after: () => { sneak(false); Object.assign(buh, { x: 7.5, z: 29.5, y: gy(7.5, 29.5), yaw: 180, pitch: 0 }) } })
@@ -241,9 +243,9 @@ module.exports = {
 
     // L06 "He keeps TALKING / about a PLACE / called COLLEGE.": on the cottage step, crouched, talking to the wolf
     // sitting beside him (a low shot from the yard)
-    await K.cut(37.7, 18.4, P(36.5, eyeY(1.0), 18.8), H + 1, { shot: 'step', self: [{ sitting: true }, SIT_EYE], after: () => { Object.assign(buh, { x: 36.5, z: 19.0, y: H + 1, yaw: 0, pitch: 10 }); sneak(true) } })
+    await K.cut(37.7, 18.4, P(36.5, eyeY(1.0), 18.8), H + 1, { shot: 'step', self: [{ sitting: true }, SIT_EYE], after: () => { Object.assign(buh, { x: 36.5, z: 19.0, y: H + 1, yaw: 180, pitch: 10 }); sneak(true) } })
     await line('L06', async (k) => {
-      buh.yaw = Math.sin(k / 11) * 35 - 20; buh.pitch = 10 + Math.sin(k / 7) * 8   // talking: turning between the wolf and the sea
+      buh.yaw = 180 + Math.sin(k / 11) * 30 + 15; buh.pitch = 10 + Math.sin(k / 7) * 8   // talking, facing the yard (the door faces north): turning between the wolf and the sea
       if (k % 23 === 5) swing()
       look(k)
     })
@@ -391,7 +393,7 @@ module.exports.shots = {
   // L02: back next to him. A crane down onto the yard at golden hour from the west: the cottage, the sea, him, the wolf
   est: { dof: false, path: [[0, 24, H + 13, 4], [3.6, 31.5, H + 3.6, 11.5]], lookPath: [[0, 37, H + 1.0, 16], [3.6, 37, H + 1.4, 15.2]], ease: true },
   // L03: the island's beach, low from the water's edge: he climbs out, the wolf already sitting on the sand
-  beach: { at: [61.8, -5.4, 16.8], look: [65.6, -5.8, 13.0], fov: 50, push: 0.25, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -0.6, 0] } } },
+  beach: { at: [69.8, -4.5, 15.6], look: [64.8, -5.4, 13.0], fov: 50, push: 0.2, dof: { aperture: 0.5, focus: { of: `actor:${GUY}` } } },   // from the island's far side: the wolf already sitting on the sand in front, Buh climbing out behind it (from the water side Buh hid the wolf)
   // L04: the road: the other tamed wolf sitting alone outside the empty house; Buh and his wolf walk past
   other_wolf: { at: [14.6, H + 1.5, -1.5], look: [19.6, H + 1.0, -6.0], fov: 54, push: 0.2 },
   // L06: the cottage step from the yard, low: Buh crouched talking, the wolf sitting beside him
@@ -405,5 +407,5 @@ module.exports.shots = {
   // L10: the hilltop from the side: the wolf on D, Buh on the patch, the hut behind
   hill_sit: { at: [DXs + 1.5, HL + 0.9, DZs + 4.2], look: [DXs + 1.6, HL + 0.9, DZs], fov: 52, push: 0.15 },
   // L11: over the sitting wolf's shoulder at Buh on the patch; then the empty patch
-  hill_end: { at: [DXs - 2.4, HL + 0.75, DZs + 0.9], look: [DXs + 3.2, HL + 1.1, DZs - 0.1], fov: 50, push: 0.12, dof: { aperture: 0.6 } }
+  hill_end: { at: [DXs - 2.6, HL + 1.3, DZs + 3.2], look: [DXs + 4.5, HL + 1.4, DZs - 4.5], fov: 54, push: 0.12, dof: { aperture: 0.4, focus: { of: 'self', offset: [0, -0.6, 0] } } }   // behind the sitting wolf: Buh on the patch, his hut behind him (eye-level east over the meadow read as superflat: rec_check)
 }
