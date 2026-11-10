@@ -1161,6 +1161,8 @@ function talkMotion (who, t) {
 //   fov: degrees (default 70), roll: degrees, push: blocks/s toward the subject on `at` shots (default 0.2), drift (default 1)
 //   two: [A, B] | ots: S, over: A | single: S, toward: B   auto-framed from where they stand (renderer/framing.js):
 //                                     side (compass), size (close|medium|wide), anchor (start|live), height
+//   subject: [TARGET, ...]            what the eye should be on (the lint checks it; eyeTrace puts it where the last
+//                                     shot's subject was); eyeTrace: false | { max, hold, settle } (see eyeTraceOffset)
 // TARGET is [dx, dy, dz] from the set origin, 'self' (the player's eye), 'actor:NAME' (that actor's eye)
 // or { of: TARGET, offset: [dx, dy, dz] }. Everything is a function of the time alone, so frames can be
 // rendered in any order (FRAMES=) and a camera can be re-tuned without re-recording.
@@ -1228,7 +1230,7 @@ function actorsAt (t) {
   return out
 }
 const FRAME_HELP = (solidAt) => ({ targetAt, solidAt: solidAt || (() => false), actors: actorsAt, side: STUNT_MOD.coverage && STUNT_MOD.coverage.side })
-function shotCam (sh, t, solidAt) {
+function shotCamBase (sh, t, solidAt) {
   const u = (t - sh.t0) / 20
   let pos = null
   const auto = FRAMING.frame(sh, t, FRAME_HELP(solidAt))   // { two | ots | single }: placed from the actors (renderer/framing.js)
@@ -1274,6 +1276,77 @@ function shotCam (sh, t, solidAt) {
   else if (auto && auto.focus) focus = Math.hypot(auto.focus.x - pos.x, auto.focus.y - pos.y, auto.focus.z - pos.z)
   if (dr) { yaw += Math.sin(t * 0.041) * 0.0035 * dr; pitch += Math.sin(t * 0.035 + 1) * 0.0025 * dr }
   return { x: pos.x, y: pos.y, z: pos.z, yaw, pitch, bobX: 0, bobY: 0, roll: (sh.roll || 0) * Math.PI / 180, bobPitch: 0, fov: sh.fov || (auto ? 50 : undefined), focusDist: focus }
+}
+// Eye-trace (docs/cinematic.md "Invisible cuts", STANDARDS 3b.3; owner 2026-11-10: "i keep noticing them"): a camera
+// shot starts with its subject where the previous shot's subject was on screen, so the eye doesn't search the new
+// frame (~0.6 s to find it instead of ~1 s). The new shot is re-aimed by a constant yaw/pitch for its whole length:
+// its subject (shot.subject, else the most salient cast member, else its aim: lib/eyetrace.js) lands on the
+// previous frame's point of attention, kept inside the framing box (x 30-70 %, y 28-58 %) and at most 14 degrees.
+// eyeTrace: false on a shot (a deliberate jump: a shock cut, a reveal) or on the stunt turns it off; EYETRACE=0 too.
+// lib/hb/cuts.js measures the same thing on the same cameras (./hb check, step "cuts").
+const ET = require('./lib/eyetrace')
+const ET_ON = STUNT_MOD.eyeTrace !== false && process.env.EYETRACE !== '0'
+const ET_MEMO = new Map()
+const ET_MD = (() => { try { return require('minecraft-data')(rec.version).entitiesByName } catch (e) { return {} } })()
+function etEntities (t, withSelf) {
+  const out = []
+  for (const [id, a] of ENT.get(Math.floor(Math.max(0, t))) || []) {
+    const p = entityPosAt(id, t)
+    if (!p) continue
+    const ex = a[9] || {}
+    out.push({ id, type: a[2], label: a[2], user: ex.user, x: p.x, y: p.y, z: p.z, h: ENT_H[a[2]] || (ET_MD[a[2]] && ET_MD[a[2]].height) || 1, baby: !!ex.baby })
+  }
+  if (withSelf) { const c = camAt(Math.max(0, t)), s = selfAt(t); out.push({ id: 'self', type: 'player', label: 'the narrator', x: c.x, y: c.y - ((s && s.eye) || EYE), z: c.z, h: 1.8 }) }
+  return out
+}
+const etOccluded = (solidAt) => (cam, p) => {
+  const dx = p.x - cam.x, dy = p.y - cam.y, dz = p.z - cam.z, L = Math.hypot(dx, dy, dz)
+  for (let s = 0.3; s < L - 0.4; s += 0.25) if (solidAt(cam.x + dx * s / L, cam.y + dy * s / L, cam.z + dz * s / L)) return true
+  return false
+}
+function etAttention (cam, t, sh, solidAt) {
+  const camShot = !!(sh && !sh.pov)
+  const g = ET.geom({ W, H, MW, cropX: camShot ? sh.cropX : 0 })
+  const aim = camShot && sh.look && !sh.lookPath ? targetAt(sh.look, t) : null   // what the shot frames (the centre before eyeTrace)
+  return ET.attention({ ...cam, fov: cam.fov || 70 }, g, { entities: etEntities(t, camShot), subject: camShot ? ET.subjectOf(sh, rec.set) : null, aim, occluded: etOccluded(solidAt) })
+}
+const START_T = (() => { const e = (rec.timeline || []).find(m => m.event === 'start'); return e ? e.t / 50 : 0 })()
+function eyeTraceOffset (sh, solidAt) {
+  if (!ET_ON || sh.eyeTrace === false || sh.pov) return null
+  const key = `${sh.name}@${sh.t0}`
+  if (ET_MEMO.has(key)) return ET_MEMO.get(key)
+  ET_MEMO.set(key, null)   // (a re-entrant call while this one computes gets no offset)
+  let off = null
+  const solid = solidAt || (() => false)
+  const tp = sh.t0 - 20 / FPS   // the last frame before the cut
+  if (tp >= START_T) {
+    const prev = shotAt(tp)
+    const pc = prev && !prev.pov ? shotCam(prev, tp, solidAt) : (() => { const c = camAt(tp), s = selfAt(tp); return { ...c, y: s && s.eye ? c.y - (EYE - s.eye) : c.y, fov: 70 } })()
+    const was = pc && etAttention(pc, tp, prev, solid)
+    const nc = shotCamBase(sh, sh.t0, solidAt)
+    const now = nc && etAttention(nc, sh.t0, sh, solid)
+    if (was && now) {
+      const g = ET.geom({ W, H, MW, cropX: sh.cropX || 0 })
+      const o = ET.aimOffset({ ...nc, fov: nc.fov || 70 }, g, now.point, ET.clampBox(was), sh.eyeTrace && sh.eyeTrace.max)
+      off = { ...o, subject: now.label }
+    }
+  }
+  ET_MEMO.set(key, off)
+  return off
+}
+function shotCam (sh, t, solidAt) {
+  const c = shotCamBase(sh, t, solidAt)
+  if (!c) return c
+  const o = eyeTraceOffset(sh, solidAt)
+  if (o) {
+    // held for the cut, then eased back to the shot's own framing (the eye follows a slow re-frame; a held offset crept
+    // shot to shot until everything sat at the box's edge): full for `hold` s, none from `settle` s (0.5 / 2.0)
+    const et = typeof sh.eyeTrace === 'object' ? sh.eyeTrace : {}, u = (t - sh.t0) / 20
+    const h = et.hold ?? 0.5, st = Math.max(h + 0.1, et.settle ?? 2.0), x = Math.max(0, Math.min(1, (u - h) / (st - h)))
+    const w = 1 - x * x * (3 - 2 * x)
+    c.yaw += o.dyaw * w; c.pitch += o.dpitch * w
+  }
+  return c
 }
 // the model an item draws with: its item definition (items/<name>.json, 1.21.4+; many block items
 // have no models/item/<name>.json, e.g. lectern -> block/lectern), else item/<name>
