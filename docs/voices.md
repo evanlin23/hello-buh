@@ -416,3 +416,9 @@ python3 scripts/tts.py voices/samples/samples.json /tmp/vox    # 5 requests, or 
 ```
 Then encode each line to mp3 (64 kb/s mono, all under 125 KB) and concatenate them with a 0.15 s 1 kHz beep between
 characters for the reel.
+
+**Delivery by beat on Pip's model (STANDARDS 2b.1).** gemini-3.8-flash-lite takes only a bracket before the lines (Pip's
+recipe), so `scripts/tts.py` used the narrator's profile there and dropped the request's direction: every beat came out
+bubbly. A request whose `direction` is in [brackets] now takes the bracket's place on that model (same voice, same
+model; keep it one short line and name the character, e.g. "[A nine-year-old kid telling a friend a story. This part:
+stunned and quiet, close to tears; full voice, not whispery]"). An unbracketed scene, or none, still sends the profile.
