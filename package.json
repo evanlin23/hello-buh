@@ -2,7 +2,7 @@
   "name": "hello-buh",
   "private": true,
   "description": "Automated Minecraft stunt Shorts for @HelloBuh",
-  "scripts": {},
+  "scripts": { "test": "node --test 'lib/hb/test/*.test.js'" },
   "dependencies": {
     "express": "4.22.3",
     "mineflayer": "4.39.0",

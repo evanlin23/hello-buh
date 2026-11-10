@@ -1,0 +1,24 @@
+{
+ "title": "I tested every Minecraft clutch",
+ "voice": {"voice": "am_adam", "tempo": 1.0, "rate": 1.0},
+ "gap": 0.15,
+ "lines": [
+  {"id": "N01", "text": "This is a jump from build limit, into one block of water, in the middle of a lava lake."},
+  {"id": "N02", "text": "By the end of this video, I'm landing it. But first, the easy stuff."},
+  {"id": "N03", "text": "Clutch number one. The boat."},
+  {"id": "N04", "text": "Getting into a boat resets your fall distance. So if you place it right before the ground and hop in, you take no damage at all. Let's see how high it goes."},
+  {"id": "N05", "text": "Seventy nine blocks. Full hearts. The boat is kind of broken."},
+  {"id": "N06", "text": "Clutch number two. The ladder."},
+  {"id": "N07", "text": "Too late. A ladder catches you the moment you touch it, but you have to stick it on the wall a couple of ticks before you land."},
+  {"id": "N08", "text": "Every wall gets fancier. There is no reason for this."},
+  {"id": "N09", "text": "Clutch number three. The water bucket. Everyone knows this one, so every time, it gets harder."},
+  {"id": "N10", "text": "Now with ender pearls."},
+  {"id": "N11", "text": "And to finish, an easy one."},
+  {"id": "N12", "text": "That was lava."},
+  {"id": "N13", "text": "Quick break from falling. Every way to cross lava, rated."},
+  {"id": "N14", "text": "And then there's this guy."},
+  {"id": "N15", "text": "The final test. Five drops. Every one is higher, and every landing is smaller."},
+  {"id": "N16", "text": "And this is the one from the start."},
+  {"id": "N17", "text": "So the boat is the easiest, the ladder is the hardest to time, and the lava bucket is, well, a choice. If you want the next one to be even more ridiculous, subscribe. It really helps."}
+ ]
+}

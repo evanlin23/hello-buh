@@ -132,6 +132,10 @@ key words in the story's colour (in a v2 story a character's words are in that c
 underlined; docs/voices.md "Caption colours"), centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
+**The current rules, de-duplicated by stage with their checks: `docs/STANDARDS.md` (`./hb rules`).** The house rules
+below are the dated history (newest first, some superseded); a new owner rule goes at the top here and into
+STANDARDS.md in the same commit.
+
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
 - **Owner, 2026-11-10, comparing Pip (Dog on the Hill v3) with kid Puck: "i like this one a lot a lot better" (Pip);
@@ -162,6 +166,18 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   excited, mid-pitch, not squeaky, full volume, a short breath between sentences), no post filter. Then: "what about pip? i liked
   the audio i sent earlier": **Pip keeps his voice** (cast `pip`: Leda, the bubbly nine-year-old direction, natural
   tempo) in Dog on the Hill and for Pip-like young narrators; **Puck** (`narrator`) is the default elsewhere.
+- **Owner, 2026-11-10: "wouldnt the lore be crazy if all of the sets were the same world".** Every story happens in
+  **one persistent world** (seed `hellobuh`): `docs/world/canon.md` (the places, the timeline, the recurring characters,
+  the links between stories) and `docs/world/map.json` (every place's canonical coordinates and the set pieces it uses).
+  - Pitch inside the world: use a place from the map or claim a new one (`node scripts/world.js claim`), give the
+    story a day on the world timeline, and check the canon for that place and day.
+  - Build at the canonical spot: `world.build(ctx, { story })` (lib/world.js) rebuilds the places on the seed's own
+    terrain every run; no site searches, no clearings, no `/locate`.
+  - **Every Short still stands alone.** No line or clue needs another Short; links live in the background.
+  - One easter egg per story (the dog on his hill on the skyline, the boxed bell, the totem frames...), background
+    only, true on the story's day, never spoken.
+  - Facts a story creates (a grave, a building, someone gone) go into canon.md and map.json in the same commit; a
+    published Short's facts are never contradicted (canon.md lists them and how earlier conflicts are read).
 - **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
   per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
   Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. `./hb voice` now cuts by these rules and

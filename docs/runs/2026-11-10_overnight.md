@@ -120,3 +120,18 @@ For the owner's morning. Newest at the bottom.
   - Thirty-One Raids: picture final; it's re-voicing the narrator with Pip.
   - Good Boy: re-voiced with Pip and the speaker check is clean; re-recording, then render.
   - Dog on the Hill: re-cut with no clipped words; rendering.
+- 08:50-09:15 UTC: merged to main:
+  - Voice drift gate (9ef7104): `./hb drift`, locked references in voices/refs, one model per character, the model in
+    the cache key, drift re-takes. The OpenVoice voice converter was tested and not adopted.
+  - Ergonomics round 2 (d9f17d4): docs/STANDARDS.md plus a sync test, `./hb make`, render frame reuse, one review
+    report, about 30 error fixes. Owner to delete the test branches render/hbtest_reuse and
+    agent/ergonomics-2-render-hbtest (the proxy refuses deletes).
+  - The shared world (3d3a5c7): docs/world/canon.md (12 places, a timeline, recurring characters, 10 cross-story
+    links, 17 conflicts resolved), seed hellobuh, map.json, `./hb world`. Sent the owner the world map and the
+    Dog Hill still.
+  - Cinematic (41b7eaf): THE KEEP's blur fixed (no DoF on wides, tighter bloom, rays off the blocks, sharpening,
+    less grain, a sharper phone encode). Sent the owner the before/after.
+- Engine round 2 started (agent/engine-2).
+- Good Boy: Sam re-voiced on one model; drift 0 blockers.
+- Disk: 1.7 GB free. 2.7 GB of stale /tmp/hb-edit-* folders need the owner's OK to delete (the permission check
+  blocked it).
