@@ -203,6 +203,14 @@ def caption_events(story_dir, timeline, start, dur, who=False):
     # "captions": "chunk" keeps the 2-3 word chunks.
     if story.get("captions", "word") == "word":
         ev = _one_word(ev, story_dir, marks)
+    # owner 2026-11-10: "The captions actually seem behind". Whisper's word starts are not late (0.14 s earlier than a
+    # wav2vec2 forced alignment on gold_for_the_portal, 113 words), but a word shown on its onset reads as late: picture
+    # behind sound is noticed from ~45 ms, picture ahead of sound is tolerated to ~125 ms (ITU-R BT.1359). So every
+    # caption leads its word by CAPTION_LEAD, never before its own line's cut; a word's end moves with the next word.
+    line_t = {lid: t for t, lid in marks}
+    ev = [(max(line_t.get(e[3], 0.0), e[0] - CAPTION_LEAD),
+           (e[1] - CAPTION_LEAD) if k + 1 < len(ev) and ev[k + 1][3] == e[3] and abs(ev[k + 1][0] - e[1]) < 1e-6 else e[1],
+           *e[2:]) for k, e in enumerate(ev)]
     # a chunk due just before a picture cut inside a line starts on the cut (the voice's word timing put
     # "He doesn't" 6-9 frames before the night/day cuts it belongs to: story_sheep_stares f222, f262)
     cuts = _cut_times(timeline, start)
@@ -248,6 +256,7 @@ def _one_word(ev, story_dir, marks):
     return out
 
 
+CAPTION_LEAD = 0.10   # s: captions appear this far ahead of the spoken word (owner 2026-11-10)
 CUT_SNAP = 0.25   # s: how far ahead of a cut a chunk may start and still be moved onto it
 
 
