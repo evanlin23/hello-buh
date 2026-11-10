@@ -148,8 +148,15 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   way. So: **one first-person narrator (Milo, or whoever's POV it is) carries the whole story**; other characters get
   at most 1-3 short lines, only at key beats (the hook, the turn, the payoff), each in a clearly different voice
   (age/sex/pitch apart) and a colour-coded caption. No back-and-forth dialogue scenes. The narrator is never hushed
-  for warmth (see the ASMR rule); he's quick, curious and a little funny, and goes quiet only for fear. Pending the
-  narration research (docs/research/narration_2026-11-10.md), which may tune the details.
+  for warmth (see the ASMR rule); he's quick, curious and a little funny, and goes quiet only for fear. The narration research
+  (docs/research/narration_2026-11-10.md: 26 channels, ~11.5k Shorts) backs it: first-person narrator channels had a
+  3.4M median per Short and 3.09 views per subscriber, against 0.45-0.56 for dialogue-only or multi-voice. So, tuned:
+  **other characters' lines are quoted by the narrator with a "said" tag by default** (Mom said, "He's just shy.");
+  a second voice is allowed for at most 1-3 punchlines of 6 words or fewer, only while that character is on screen,
+  very different from the narrator (other age or sex), never two extra voices of the same sex, never exposition.
+  The narrator: young male, fast and deadpan, about **4.5 words per second** (runaway is 4.4), never whispery or breathy:
+  say so in the Gemini style prompt. Line 1 is the title: an absurd premise stated flatly in first person, then quick
+  escalating examples, the twist, the loop. Test A vs A+ (one extra voice) on the next 4 stories.
 - **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like
   sensual asmr."** Read every script for how it could be misheard, out of context, by a stranger scrolling past. A
   hushed, breathy first-person voice plus lines about obeying, sitting when told, waiting all day for someone, or a
