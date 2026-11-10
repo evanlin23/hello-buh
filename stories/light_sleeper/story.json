@@ -215,10 +215,10 @@
   "ending": {
     "after": "L15",
     "beats": [
-      "S15 holds 0.3 s past 'DANCED' (one more jump on the rim), then three 0.4 s inserts that speed the cut rate: S15b Mom frozen in the door, S15c the villagers in the east doorways, S15d POV jumping on the rim",
-      "S16 (camera, low, 2-3 blocks behind the boy): shriek 4 on frame 1, the Darkness at full pulse; the carpet at (0,4) bursts with block particles and the warden rises out of the square, facing the boy across the open well; the roar (cut at ~1.5 s)",
-      "S17 (POV): the warden steps to the south rim (0,3), 5 blocks away; the sonic boom; death screen 'Milo was obliterated by a sonically-charged shriek' held under L16 (the narrator, deadpan: 'Oh. That's why we have nine thousand carpets.'), the jukebox song still playing",
-      "cut 0.3 s after L16 (owner 2026-11-10: endings explain themselves; the death screen alone was a sting to decode)"
+      "S15 holds past 'DANCED' (he keeps jumping on the rim), then three 0.35 s inserts that speed the cut rate: S15b Mom frozen in the door, S15c the villagers in the east doorways, S15d POV jumping on the rim",
+      "S16 (camera, low, behind him): shriek 4 on frame 1, the carpet at (0,4) bursts with block particles and the warden rises out of the square and roars, while he gets it: L16 'Oh. THAT'S why we have nine thousand CARPETS.'",
+      "S17 (POV) on the line's last second: the warden steps to the south rim; the sonic boom (sound + flash) right as L16 ends = the payoff",
+      "death screen 'Milo was obliterated by a sonically-charged shriek' ~1.2 s, the plaza pulsing behind, then cut (owner: the end right after the payoff; endings explain themselves)"
     ],
     "loop": "said out loud in L16, which is line 1 again"
   },
@@ -379,5 +379,5 @@
   "bible": "stories/light_sleeper/bible.md",
   "beats": "stories/light_sleeper/beats.md",
   "set": "stories/light_sleeper/set.md",
-  "payoff": "L16"
+  "payoff": "flash"
 }

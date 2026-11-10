@@ -386,7 +386,8 @@ module.exports = {
     K.shot('ins_door'); await bot.waitForTicks(7)
     K.shot('pov'); for (let k = 0; k < 7; k++) { K.base = K.aim(C(0, 0.6, 4)); look(k); await bot.waitForTicks(1) }
 
-    // ---- the reveal. S16: behind him, low: shriek 4, the carpet south of the well bursts, the warden rises, roars
+    // ---- the reveal. S16: behind him, low: shriek 4, the carpet south of the well bursts, the warden rises and roars,
+    // while he gets it (L16 "Oh. THAT'S why we have nine thousand CARPETS."); S17: POV, it steps up, the sonic boom
     K.shot('s16')
     shriek()
     for (let x = -1; x <= 1; x++) for (const dy of [1, 0]) breakBlock(x, dy, 4, dy ? 'white_carpet' : 'grass_block', dy ? 'block.wool.break' : 'block.grass.break')
@@ -394,26 +395,25 @@ module.exports = {
     ctx.sound('entity.warden.emerge', 1.2, 1)
     const wd = await put('warden', { x: 0.5, y: -2.8, z: 4.5, yaw: 180, pitch: 0 })
     const wEnt = () => Object.values(bot.entities).find(e => e.name === 'warden')
-    for (let k = 0; k < 34; k++) {
-      wd.y = Math.min(1.0, -2.8 + 3.8 * K.ease(k / 30))
-      if (k % 6 === 0) ctx.particles('block', P(0, 1, 4), { block: 'white_carpet' })
-      if (k === 26) { const e = wEnt(); if (e) ctx.mark('pose', { ids: [e.id], roar: true }); ctx.sound('entity.warden.roar', 1.4, 1) }
-      look(k); await bot.waitForTicks(1)
-    }
-    // S17: POV from the rim: the warden steps up to the south rim edge, the sonic boom
-    K.ctl('jump', false)
-    K.shot('pov')
-    for (let k = 0; k < 18; k++) {
-      if (k < 12) wd.z = 4.5 - 1.0 * K.ease(k / 12)
-      wd.pitch = Math.sin(k / 4) * 10
-      K.base = K.aim(P(0.5, 3.4, wd.z)); look(k)
-      if (k === 14) { ctx.sound('entity.warden.sonic_boom', 1.6, 1); ctx.mark('flash') }
-      await bot.waitForTicks(1)
-    }
+    for (let k = 0; k < 6; k++) { wd.y = -2.8 + 3.8 * K.ease(k / 30); look(k); await bot.waitForTicks(1) }
+    const T16 = K.T('L16'), toPov = Math.max(26, T16 - 20)
+    await line('L16', async (k) => {
+      const r = k + 6
+      if (r <= 30) wd.y = Math.min(1.0, -2.8 + 3.8 * K.ease(r / 30))
+      if (r % 6 === 0 && r < 30) ctx.particles('block', P(0, 1, 4), { block: 'white_carpet' })
+      if (r === 26) { const e = wEnt(); if (e) ctx.mark('pose', { ids: [e.id], roar: true }); ctx.sound('entity.warden.roar', 1.4, 1) }
+      if (k === toPov) { K.ctl('jump', false); K.shot('pov') }
+      if (k >= toPov) {
+        const u = (k - toPov) / Math.max(1, T16 - toPov)
+        wd.z = 4.5 - 1.0 * K.ease(u * 1.4); wd.pitch = Math.sin(k / 4) * 10
+        K.base = K.aim(P(0.5, 3.4, wd.z))
+      }
+      look(k)
+    })
+    // the sonic boom right as the line lands, then the death screen ~1.2 s, the plaza pulsing behind it
+    ctx.sound('entity.warden.sonic_boom', 1.6, 1); ctx.mark('flash')
     say('/damage @s 1000 minecraft:sonic_boom')
-    await bot.waitForTicks(8)   // the death screen comes up (the harness keeps ticking while dead)
-    // L16 over the death screen, the plaza pulsing behind it: "Oh. THAT'S why we have nine thousand CARPETS."
-    await line('L16', async (k) => { wd.yaw = 180 + Math.sin(k / 5) * 22; wd.pitch = 10 + Math.sin(k / 7) * 8 })   // it sniffs the square
+    for (let k = 0; k < 26; k++) { wd.yaw = 180 + Math.sin(k / 5) * 22; wd.pitch = 10 + Math.sin(k / 7) * 8; await bot.waitForTicks(1) }
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     if (song) song()
