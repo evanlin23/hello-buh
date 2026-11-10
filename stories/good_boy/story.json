@@ -2,7 +2,7 @@
  "name": "good_boy",
  "stunt": "story_good_boy",
  "version": 2,
- "revision": "vNext r3 (2026-11-10): the rework (owner: \"Yeah, we can rework it\"); script stories/good_boy/script_vNext.md, critic r2 8.0",
+ "revision": "vNext r-cast (2026-11-10): script_vNext.md's r-cast table: Buh speaks L11 and L13 in his own voice; one spoken stress per sentence (the CAPS word in `say`)",
  "caption": "my human tried to lose me 37 times 🐺",
  "logline": "A dog tells how its human tried to lose it thirty-seven times, and why he never once made it sit.",
  "question": "why tf would he try to lose his own dog?",
@@ -13,7 +13,7 @@
   "funny",
   "sad"
  ],
- "payoff": "L11+1.0",
+ "payoff": "syschat",
  "audio": {
   "hit": false
  },
@@ -28,129 +28,91 @@
   },
   "Buh": {
    "role": "character",
-   "ref": null,
-   "color": "#9FD4FF",
-   "on_screen": "actor bot, Steve skin; never speaks, never named aloud"
+   "ref": "buh",
+   "color": "#4FD8E6",
+   "on_screen": "actor bot Buh, Steve skin; speaks only L11 and L13"
   }
  },
- "requests": [
-  {
-   "id": "b1",
-   "speakers": [
-    "N"
-   ],
-   "lines": [
-    "L01",
-    "L02",
-    "L03",
-    "L04"
-   ],
-   "direction": "[A dog, bright and quick, warm, never hushed or breathy]"
-  },
-  {
-   "id": "b2",
-   "speakers": [
-    "N"
-   ],
-   "lines": [
-    "L05",
-    "L06",
-    "L07",
-    "L08"
-   ],
-   "direction": "[A dog, bright and quick, warm, never hushed or breathy]"
-  },
-  {
-   "id": "b3",
-   "speakers": [
-    "N"
-   ],
-   "lines": [
-    "L09",
-    "L10",
-    "L11"
-   ],
-   "direction": "[A dog, bright and quick, warm, never hushed or breathy]"
-  }
- ],
  "lines": [
   {
    "id": "L01",
    "who": "N",
    "text": "My HUMAN / has TRIED / to LOSE me / thirty-seven TIMES.",
-   "request": "b1",
-   "beat": "b1"
+   "say": "My human has tried to lose me thirty-seven TIMES."
   },
   {
    "id": "L02",
    "who": "N",
    "text": "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM.",
-   "request": "b1",
-   "beat": "b1"
+   "say": "He RUNS. I FOLLOW. Twelve blocks out, I just appear right next to HIM."
   },
   {
    "id": "L03",
    "who": "N",
    "text": "He HID / in the WHEAT. / He tried HILLS / at NIGHT. / He SWAM / to an ISLAND. / I POPPED up / on the BEACH.",
-   "request": "b1",
-   "beat": "b1"
+   "say": "He hid in the WHEAT. He tried hills at NIGHT. He swam to an ISLAND. I popped up on the BEACH."
   },
   {
    "id": "L04",
    "who": "N",
-   "text": "The ONLY time / I DON'T / POP up / next to HIM / is WHEN / I'm SITTING.",
-   "request": "b1",
-   "beat": "b1"
+   "text": "But SITTING? / I STAY put. / A SITTING dog / waits FOREVER.",
+   "say": "But SITTING? I STAY put. A sitting dog waits FOREVER.",
+   "look": false
   },
   {
    "id": "L05",
    "who": "N",
-   "text": "He KNOWS that. / A SITTING dog / waits FOREVER. / He WANTS me / to FORGET him. / So he NEVER / makes me SIT.",
-   "request": "b2",
-   "beat": "b2",
+   "text": "He doesn't WANT / me to WAIT. / So he NEVER / makes me SIT.",
+   "say": "He doesn't want me to WAIT. So he never makes me SIT.",
    "look": false
   },
   {
    "id": "L06",
    "who": "N",
-   "text": "He keeps TALKING / about a PLACE / called COLLEGE.",
-   "request": "b2",
-   "beat": "b2"
+   "text": "He keeps TALKING / about a PLACE / called COLLEGE. / It sounds BORING.",
+   "say": "He keeps talking about a place called COLLEGE. It sounds BORING."
   },
   {
    "id": "L07",
    "who": "N",
-   "text": "Every NIGHT / he SAYS, / SORRY, buddy. / I don't KNOW / what FOR.",
-   "request": "b2",
-   "beat": "b2"
+   "text": "Every NIGHT / he SAYS, / sorry, BUDDY. / I don't KNOW / what FOR.",
+   "say": "Every night he says, SORRY, buddy. I don't know what FOR."
   },
   {
    "id": "L08",
    "who": "N",
-   "text": "Last NIGHT, / a ZOMBIE / came for HIM. / I got THERE / FIRST, though.",
-   "request": "b2",
-   "beat": "b2"
+   "text": "Then last NIGHT, / a ZOMBIE / came for HIM. / But I GOT / there FIRST.",
+   "say": "Then last night, a zombie came for HIM. But I got there FIRST."
   },
   {
    "id": "L09",
    "who": "N",
    "text": "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.",
-   "request": "b3",
-   "beat": "b3"
+   "say": "This morning, he walked me back home, up the hill to his HUT."
   },
   {
    "id": "L10",
    "who": "N",
-   "text": "He SAID, / sit, BOY.",
-   "request": "b3",
-   "beat": "b3"
+   "text": "He TURNED / to ME.",
+   "say": "He turned to ME."
   },
   {
    "id": "L11",
+   "who": "Buh",
+   "text": "Sit, BOY.",
+   "say": "Sit, BOY."
+  },
+  {
+   "id": "L12",
    "who": "N",
-   "text": "He SAID, / I'll BE / right BACK.",
-   "request": "b3",
-   "beat": "b3"
+   "text": "Then he SAID:",
+   "say": "Then he SAID:"
+  },
+  {
+   "id": "L13",
+   "who": "Buh",
+   "text": "I'll BE / right BACK.",
+   "say": "I'll be right BACK."
   }
  ],
  "hotbar": [
@@ -179,5 +141,6 @@
   ],
   "cake"
  ],
- "hotbar_note": "Buh's hotbar (STANDARDS 3.6): his dog things first (bones, a lead, food, a name tag), then the ridiculous (milk, 67 eggs, a cake). Not on screen in this story: every POV is the wolf's (hud: false)."
+ "hotbar_note": "Buh's hotbar (STANDARDS 3.6): his dog things first (bones, a lead, food, a name tag), then the ridiculous (milk, 67 eggs, a cake). Not on screen in this story: every POV is the wolf's (hud: false).",
+ "direction": "the narrator: a dog, bright and quick, warm, never hushed or breathy; hit only the CAPS word of each sentence, the rest level and quick. Buh: two short lines to his dog, warm and easy"
 }
