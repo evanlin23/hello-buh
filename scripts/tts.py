@@ -218,10 +218,24 @@ def line_hints(texts, heard):
     return [hint(i) for i in range(1, len(texts))]
 
 
-def bounds(x, texts, heard):
-    """The sample where each line of a take starts (len(texts) - 1 boundaries), or None when Whisper can't place one:
-    the script matched to what Whisper heard says roughly where (between a line's last word heard and the next line's
-    first), and the audio says exactly (quiet_point). Used by cut_words and by the continuous takes (voice_beat)."""
+def bounds(x, texts, heard, aligned=None, align_fn=None):
+    """The sample where each line of a take starts (len(texts) - 1 boundaries), or None when no line edge can be placed.
+    Used by cut_words and by the continuous takes (voice_beat).
+
+    From the audio first (gap_cut): the script is force-aligned to the take (scripts/ctc_align.py, the captions'
+    aligner: `aligned`, else align_fn(x, texts), default align_lines), and each boundary is cut in the gap between line
+    N's last aligned word and line N+1's first, never inside either word. Whisper's word times are only the fallback
+    (no torch, or the take doesn't fit the script): Whisper stretches a word over the pause after it (Light Sleeper's
+    "screamed", heard 12.58-13.56 s, said ~12.80-13.47 s), and the old window, opened 0.1 s after that word's heard
+    start, put the cut on the stop inside "s-creamed" (12.785 s; the quiet point was 13.505 s)."""
+    if aligned is None:
+        aligned = (align_fn or align_lines)(x, texts)
+    if aligned:
+        qs = [gap_cut(x, aligned[i - 1][-1][1], aligned[i][0][0]) for i in range(1, len(texts))]
+        if all(q2 > q1 for q1, q2 in zip(qs, qs[1:])):
+            return qs
+    if not heard:
+        return None
     a, m, first, ends = _matched(texts, heard)
 
     def boundary(i):   # (heard index of line i-1's last word, of line i's first word), or None
@@ -237,18 +251,125 @@ def bounds(x, texts, heard):
     if None in bds:
         return None
     # the window (claude/cinematic-default's resplit, which left Good Boy's Pip take with 0 cut edges): from just
-    # before the last word's heard end (or 0.1 s into it) to 0.3 s past the next line's heard start (or 0.1 s past
-    # the word end), but never past that first word's own end
+    # before the last word's heard end (or 0.1 s into it, but never more than 0.35 s before its heard end: a stretched
+    # word's start is far from the pause) to 0.3 s past the next line's heard start (or 0.1 s past the word end), but
+    # never past that first word's own end
     qs = []
     for lw, fw in bds:
         lw = fw - 1   # words heard between the lines but in neither (a direction read aloud) stay with the line before:
         #               the boundary is the pause before the next line's first word, never inside them
-        t0 = min(heard[lw][2] - 0.05, heard[lw][1] + 0.1)
+        t0 = max(min(heard[lw][2] - 0.05, heard[lw][1] + 0.1), heard[lw][2] - 0.35)
         t1 = min(max(heard[fw][1] + 0.3, heard[lw][2] + 0.1), max(heard[fw][2], heard[lw][2] + 0.1))
         qs.append(quiet_point(x, t0, t1))
     if any(q2 <= q1 for q1, q2 in zip(qs, qs[1:])):
         raise ValueError("boundaries out of order")
     return qs
+
+
+def align_lines(x, texts):
+    """Each line's words force-aligned to a take at SR (scripts/ctc_align.py, wav2vec2: in this process when torch is
+    importable, else through the TTS venv): [[(start s, end s) per spoken word] per line], or None when the aligner
+    can't run or the take doesn't fit the script."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import ctc_align
+    toks = [w for t in texts for w in t.split()]
+    x16 = np.interp(np.arange(int(len(x) * 16000 / SR)) * SR / 16000, np.arange(len(x)), x).astype(np.float32)
+    try:
+        r = ctc_align.align_batch([(x16, toks)])[0]
+    except (ImportError, RuntimeError, OSError) as e:
+        print(f"  (no forced alignment: {e}; the line edges come from Whisper)")
+        return None
+    return lines_of(texts, r)
+
+
+def lines_of(texts, words):
+    """[(token, start, end)] for every token of the texts in order -> [[(start, end)] per line], only the tokens that
+    say something ("--" has no span of its own), or None when a line has no word or the words are missing."""
+    if not words or len(words) != sum(len(t.split()) for t in texts):
+        return None
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import ctc_align
+    out, k = [], 0
+    for t in texts:
+        n = len(t.split())
+        ws = [(float(a), float(b)) for tok, a, b in words[k:k + n] if ctc_align.spoken_words(tok)]
+        k += n
+        if not ws:
+            return None
+        out.append(ws)
+    return out
+
+
+def gap_cut(x, end, start, fr=120):
+    """The sample to cut at between a word that ends at `end` s and the next that starts at `start` s (aligned): the
+    middle of the longest run of true silence in that gap (5 ms frames under the take's soft floor: soft_floor, the
+    pause_cap's silence), else its lowest-energy frame. Never inside either word's aligned span; when the spans touch
+    (no gap), the junction itself. The aligner's word end comes early (a "d" or an "x" decays for ~0.1 s after its
+    last letter's frame), so the silence is looked for, not assumed at the gap's start."""
+    a, b = sorted((int(round(end * SR)), int(round(start * SR))))
+    a, b = max(0, a), min(len(x), b)
+    if b - a < 2 * fr:
+        return (a + b) // 2
+    db = frame_db(x[a:b], fr)
+    floor = soft_floor(frame_db(x, 240))
+    quiet = db <= floor
+    best, i = None, 0
+    while i < len(quiet):
+        if quiet[i]:
+            j = i
+            while j < len(quiet) and quiet[j]:
+                j += 1
+            if best is None or j - i > best[1] - best[0]:
+                best = (i, j)
+            i = j
+        else:
+            i += 1
+    if best:
+        return a + (best[0] + best[1]) * fr // 2
+    return a + int(np.argmin(db)) * fr + fr // 2
+
+
+CUT_TOL = 0.03   # s: an aligned word may run this far past a slice edge (the aligner's 20 ms frames)
+
+
+def slice_faults(x, sr, starts, aligned, silent_db=30.0):
+    """Is a continuous take cut inside a word? x: the whole take; starts: each line's start (s) in it; aligned: each
+    line's words [(start, end)] in the take (align_lines). -> {line index: [why]} for the lines whose slice ends (or
+    starts) inside sound: an aligned word of the line running past its slice's end (or starting before its start),
+    or a cut where the take is above the silence line (the take gate's: peak - 30 dB, 10 ms frames). The take's own
+    first start and last end are not checked here (speaker_check's EDGE does)."""
+    n = int(sr * 0.01)
+    m = len(x) // n
+    db = 20 * np.log10(np.sqrt(np.mean(np.asarray(x[:m * n], np.float64).reshape(m, n) ** 2, axis=1)) + 1e-9)
+    line = db.max() - silent_db
+    dur = len(x) / sr
+    ends = list(starts[1:]) + [dur]
+    out = {}
+    for i, (s, e) in enumerate(zip(starts, ends)):
+        why = []
+        if i + 1 < len(starts):
+            w0, w1 = aligned[i][-1]
+            if w1 > e + CUT_TOL:
+                why.append(f"cut at {e:.3f} s, before its last word ends (aligned {w0:.2f}-{w1:.2f} s)")
+            f = min(m - 1, int(e / 0.01))
+            if db[f] > line:
+                why.append(f"cut at {e:.3f} s where the take is {db[f] - db.max():.0f} dB from its peak (sound, not silence)")
+        if i and aligned[i][0][0] < s - CUT_TOL:
+            w0, w1 = aligned[i][0]
+            why.append(f"starts at {s:.3f} s inside its first word (aligned {w0:.2f}-{w1:.2f} s)")
+        if i and aligned[i - 1][-1][1] > s + CUT_TOL:   # the previous line's last word runs on into this slice
+            w0, w1 = aligned[i - 1][-1]
+            why.append(f"starts at {s:.3f} s with the end of the previous line's last word (aligned {w0:.2f}-{w1:.2f} s)")
+        if i + 1 < len(starts) and aligned[i + 1][0][0] < e - CUT_TOL:   # the next line's first word starts in this one
+            w0, w1 = aligned[i + 1][0]
+            why.append(f"ends at {e:.3f} s with the start of the next line's first word (aligned {w0:.2f}-{w1:.2f} s)")
+        if i:
+            f = min(m - 1, int(s / 0.01))
+            if db[f] > line:
+                why.append(f"starts at {s:.3f} s where the take is {db[f] - db.max():.0f} dB from its peak (sound, not silence)")
+        if why:
+            out[i] = why
+    return out
 
 
 def quiet_point(x, t0, t1, fr=240):
@@ -896,15 +1017,17 @@ def letter_bounds(y, texts):
     return [quiet_point(y, max(0, f * len(y) / SR - 0.4), f * len(y) / SR + 0.4) for f in share]
 
 
-def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None):
+def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None, align_fn=None):
     """Voice one beat as ONE continuous take, judged by the take gate; a rejected take is asked for again with the
     gate's fixes added to its direction (a new request, its own cache entry), at most `tries` requests in all; the
     best take is kept (a passing one, else the least bad: voice.json records its failures, a blocker). Writes
     out/beat_<id>.wav (the whole take: what the narration plays) and out/<line id>.wav (each line's slice of it, for
-    the checks and the captions; the slices tile the take exactly). -> ({line id: (who, text, slice)}, beat meta)"""
+    the checks and the captions; the slices tile the take exactly). The line edges come from the script force-aligned
+    to the take (align_fn, default align_lines; bounds), Whisper's words only when it can't run.
+    -> ({line id: (who, text, slice)}, beat meta)"""
     sys.path.insert(0, str(ROOT / "scripts"))
     import take_gate
-    hear_fn = hear_fn or hear
+    hear_fn, align_fn = hear_fn or hear, align_fn or align_lines
     lines, scene, room = beat["lines"], beat["scene"], beat["room"]
     w = lines[0][0]
     texts = [t for _, _, t, _ in lines]
@@ -914,12 +1037,13 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None)
         x = as_heard(x, [w], cs)   # the take as it will be heard: the gate judges ITS pauses
         y = level([shape(trim_take(x), cs[w].get("post", ""), room)])[0]
         heard = hear_fn(y)
+        al = align_fn(y, texts) if len(texts) > 1 and heard else None
         try:
-            qs = bounds(y, texts, heard) if len(texts) > 1 and heard else ([] if heard else None)
+            qs = bounds(y, texts, heard, al or []) if len(texts) > 1 and heard else ([] if heard else None)
         except ValueError:
             qs = None
         res = take_gate.gate(y, SR, texts, heard, None if qs is None else [q / SR for q in qs], limits, raw=x, opening=opening)
-        tried.append({"res": res, "y": y, "qs": qs, "model": model, "try": n + 1, "fixes": list(fixes), "raw": str(raw)})
+        tried.append({"res": res, "y": y, "qs": qs, "al": al, "model": model, "try": n + 1, "fixes": list(fixes), "raw": str(raw)})
         print(f"beat {beat['id']} ({len(lines)} line(s), take {n + 1}/{tries}, {len(y) / SR:.2f} s): "
               + ("ok" if res["ok"] else "REJECTED: " + "; ".join(f["why"] for f in res["fails"])))
         if res["ok"]:
@@ -934,6 +1058,11 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None)
     if qs is None:
         qs = letter_bounds(y, texts) if len(texts) > 1 else []
     starts = [0, *qs, len(y)]
+    cuts = {}
+    if best["al"] and len(texts) > 1:   # a cut inside a word or inside sound: speaker_check blocks it (SLICE)
+        cuts = {lines[i][1]: w for i, w in slice_faults(y, SR, [a / SR for a in starts[:-1]], best["al"]).items()}
+        for lid, w in cuts.items():
+            print(f"  {lid}: CUT INSIDE SOUND: {'; '.join(w)}")
     out.mkdir(parents=True, exist_ok=True)
     write(out / f"beat_{beat['id']}.wav", y)
     done = {}
@@ -951,6 +1080,8 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None)
             **({"tempo": tempo, "rate": rate} if (tempo, rate) != (1.0, 1.0) else {}),
             "offsets": [round(a / SR, 3) for a in starts[:-1]], "model": best["model"], "try": best["try"],
             "tries": len(tried), "fixes": best["fixes"], "ok": best["res"]["ok"], "gate": best["res"]["fails"],
+            **({"cut_faults": cuts} if cuts else {}),
+            "cut": "aligned" if best["al"] and len(texts) > 1 else "whisper" if len(texts) > 1 else "whole",
             "rejected": [{"try": t["try"], "why": [f["why"] for f in t["res"]["fails"]]} for t in tried if not t["res"]["ok"]]}
     return done, meta
 

@@ -20,7 +20,14 @@ weighted more for short lines, where the embedding is weak). Flags:
             `requests`): a single-speaker request can't swap
   THIN      the right voice wins, but by too little to trust; listen to it (a warning, not a blocker)
   WORDS     Whisper's transcript is under 60% like the script, or it has words the script doesn't (a direction read
-            aloud, a word from the next line): a bad cut or a misread
+            aloud, a word from the next line), or, in a continuous take, a line's last word heard at the start of the
+            next line's slice (or the next line's first word at the end of this one): a bad cut or a misread. Light
+            Sleeper's L07|L08 cut inside "screamed": L07 heard "...the well chest.", L08 "Screamed. Mom held me..."
+  EDGEWORD  the line's first or last word isn't heard as written ("screamed" heard as "chest"): listen (a warning
+            alone, since Whisper mishears short edge words in a slice: "to keep up" -> "Kiba")
+  SLICE     a line of a continuous take (voice_takes "beat") is cut inside a word or inside sound: the script
+            force-aligned to the whole beat take (scripts/ctc_align.py) puts a word of the line past its slice's end
+            (or the next line's first word before it), or the cut sits above the take's silence line (tts.slice_faults)
   SIMILAR   two cast voices are too alike to tell apart (embedding similarity and pitch): re-cast one (a warning)
   GATE      a continuous take (story.json "voice_takes": "beat") failed its take gate on every try (scripts/take_gate.py)
   EDGE      the line starts or ends within 30 dB of its peak: a word or breath cut off (voice_edges.py's test); TIGHT
@@ -189,6 +196,51 @@ def word_check(spoken, heard):
     return ok, round(match, 2), extra
 
 
+EDGE_WORD = 0.5   # letters alike (difflib ratio) for a script word to count as heard at a line's edge
+
+
+def alike(script_words, heard_words, n=2, last=False):
+    """How alike the edge words are: the best ratio of the script's first (last) word, or first (last) n joined,
+    against Whisper's first (last) word or n joined; Whisper splits and merges words ("dog house", "Mom froze" ->
+    "Monfros")."""
+    if not script_words or not heard_words:
+        return 0.0
+    edge = (lambda ws, k: ws[-k:]) if last else (lambda ws, k: ws[:k])
+    sc = ["".join(edge(script_words, k)) for k in range(1, min(n, len(script_words)) + 1)]
+    hc = ["".join(edge(heard_words, k)) for k in range(1, min(n, len(heard_words)) + 1)]
+    return max(difflib.SequenceMatcher(None, x, y).ratio() for x in sc for y in hc)
+
+
+def edge_words(spoken, heard):
+    """{"first"/"last": (script word, heard word)} for a line whose first or last word Whisper didn't hear as written
+    (a clipped "screamed" heard as "chest"). On its own a warning: Whisper also mishears a short edge word in a slice
+    ("to keep up" -> "Kiba"); it blocks when the neighbour slice heard the missing word (cut_across)."""
+    a, b = norm(spoken), norm(heard)
+    if not a:
+        return {}
+    out = {}
+    if alike(a, b) < EDGE_WORD:
+        out["first"] = (a[0], b[0] if b else "")
+    if alike(a, b, last=True) < EDGE_WORD:
+        out["last"] = (a[-1], b[-1] if b else "")
+    return out
+
+
+def cut_across(prev, nxt):
+    """A cut between two lines of one take that went through a word: Whisper hears line N's last script word at the
+    start of line N+1's slice (and not N+1's own first word), or line N+1's first script word at the end of line N's
+    slice. prev/nxt: {"say", "heard"}. -> why, or None. (Light Sleeper L07|L08 at 12.785 s: L07 heard "...the well
+    chest.", L08 heard "Screamed. Mom held me...".)"""
+    pa, pb, na, nb = norm(prev["say"]), norm(prev["heard"]), norm(nxt["say"]), norm(nxt["heard"])
+    if not (pa and na):
+        return None
+    if nb and alike([pa[-1]], nb[:1], 1) >= 0.75 and alike(na[:1], nb[:1], 1) < 0.75:
+        return f"\"{pa[-1]}\" (the end of the line) is heard at the start of the next slice: \"{' '.join(nb[:3])}...\""
+    if pb and alike(na[:1], pb[-1:], 1) >= 0.75 and alike(pa[-1:], pb[-1:], 1) < 0.75:
+        return f"\"{na[0]}\" (the next line's first word) is heard at the end of the slice: \"...{' '.join(pb[-3:])}\""
+    return None
+
+
 # ---- the check ----
 
 # What each voices/samples/ file really holds (made 2026-11-10 with the first roster; voices/cast.json has been recast
@@ -273,6 +325,42 @@ def listen(rows):
     return None
 
 
+def slice_check(items, align_fn=None):
+    """{line id: [why]} for the lines of continuous takes cut inside a word or inside sound (tts.slice_faults): each
+    beat take (item `beat`: {path, lines, offsets, say}) is force-aligned whole to its lines' script, once. {} when no
+    item is in a beat; None when no beat take could be aligned (the check is then skipped, and said so)."""
+    beats = {}
+    for it in items:
+        if it.get("beat") and len(it["beat"]["lines"]) > 1:
+            beats.setdefault(str(it["beat"]["path"]), it["beat"])
+    if not beats:
+        return {}
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import tts
+    out, skipped = {}, False
+    for path, b in beats.items():
+        x = load(path)
+        al = (align_fn or _align)(x, b["say"])
+        if not al:
+            skipped = True
+            continue
+        for i, why in tts.slice_faults(x, SR, b["offsets"], al).items():
+            out[b["lines"][i]] = why
+    return None if skipped and not out else out
+
+
+def _align(x, texts):
+    """Each line's aligned words [(start, end)] in a 16 kHz take (scripts/ctc_align.py), or None."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import ctc_align
+    import tts
+    try:
+        r = ctc_align.align_batch([(x, [w for t in texts for w in t.split()])])[0]
+    except (ImportError, RuntimeError, OSError):
+        return None
+    return tts.lines_of(texts, r)
+
+
 def check(items, cast_voice, words=True, only=None, library=True, hear=True):
     """items: [{id, who, path, say}]; cast_voice: {who: Gemini voice or None}. -> report dict."""
     rows = []
@@ -309,7 +397,11 @@ def check(items, cast_voice, words=True, only=None, library=True, hear=True):
             res.append(sc)
         keep = [max(sc, key=sc.get) == r["who"] if len(sc) > 1 and r["who"] in sc else True for sc, r in zip(res, rows)]
     final = refs(-1, keep)
-    out = {"lines": [], "pairs": [], "swapped": [], "thin": [], "words": [], "edges": [], "clipped": [], "gate": []}
+    out = {"lines": [], "pairs": [], "swapped": [], "thin": [], "words": [], "edges": [], "clipped": [], "gate": [], "slice": []}
+    slices = slice_check(items)
+    if slices is None:
+        out["slice_check"] = "skipped (no forced alignment of the beat takes): listen to every line boundary"
+        slices = {}
     heard_cut = listen([r for r in rows if not only or r["id"] in only]) if hear else None
     if hear and heard_cut is None:
         out["listen"] = "skipped (no answer from the listening model): listen to the edges yourself"
@@ -340,12 +432,19 @@ def check(items, cast_voice, words=True, only=None, library=True, hear=True):
             line.update({"heard": heard, "match": match, "extra": extra})
             if not ok:
                 flags.append("WORDS"); out["words"].append(r["id"])
+            ew = edge_words(r["say"], heard)
+            if ew:   # a warning; it blocks when the neighbour slice heard the word (cut_across, below)
+                line["edge_words"] = [f"{k} word \"{s}\" heard as \"{h}\"" for k, (s, h) in ew.items()]
+                flags.append("EDGEWORD")
         ed = edges(r["path"], r.get("inner", (False, False)))
         line["edges"] = ed
         if ed["cut"]:
             flags.append("EDGE"); out["edges"].append(r["id"])
         elif ed["tight"]:
             flags.append("TIGHT")
+        if slices.get(r["id"]):
+            line["slice"] = slices[r["id"]]
+            flags.append("SLICE"); out["slice"].append(r["id"])
         if r.get("gate"):   # a continuous take that failed its gate on every try (tts.py voice_beat): re-take the beat
             line["gate"] = r["gate"]
             flags.append("GATE"); out["gate"].append(r["id"])
@@ -353,6 +452,21 @@ def check(items, cast_voice, words=True, only=None, library=True, hear=True):
             line["clipped"] = heard_cut[r["id"]]
             flags.append("CLIPPED"); out["clipped"].append(r["id"])
         out["lines"].append(line)
+    # a cut through a word between two lines of one take: the word's end heard in the other slice (WORDS)
+    by, say = {l["id"]: l for l in out["lines"]}, {r["id"]: r["say"] for r in rows}
+    seen = set()
+    for r in rows:
+        b = r.get("beat")
+        if not b or str(b["path"]) in seen:
+            continue
+        seen.add(str(b["path"]))
+        for p, n in zip(b["lines"], b["lines"][1:]):
+            if p in by and n in by and "heard" in by[p] and "heard" in by[n]:
+                why = cut_across({"say": say[p], "heard": by[p]["heard"]}, {"say": say[n], "heard": by[n]["heard"]})
+                for lid in (p, n) if why else ():
+                    by[lid].setdefault("cut_across", []).append(f"{p}|{n}: {why}")
+                    if "WORDS" not in by[lid]["flags"]:
+                        by[lid]["flags"].append("WORDS"); out["words"].append(lid)
     for a in range(len(who)):
         for b in range(a + 1, len(who)):
             if who[a] in final and who[b] in final:
@@ -362,7 +476,8 @@ def check(items, cast_voice, words=True, only=None, library=True, hear=True):
                                      "similar": bool(cos > SIMILAR_COS and d < SIMILAR_ST)})
     out["refs"] = {w: {"hz": int(round(final[w][1])), "lines": sum(1 for i, r in enumerate(rows) if r["who"] == w and keep[i]),
                        "library": len(libref.get(cast_voice[w], []))} for w in who if w in final}
-    out["blockers"] = sorted(set(out["swapped"]) | set(out["words"]) | set(out["edges"]) | set(out["clipped"]) | set(out["gate"]))
+    out["blockers"] = sorted(set(out["swapped"]) | set(out["words"]) | set(out["edges"]) | set(out["clipped"]) | set(out["gate"])
+                             | set(out["slice"]))
     out["ok"] = not out["blockers"]
     return out
 
@@ -395,6 +510,11 @@ def story_items(d):
                 it["inner"] = (b["lines"][0] != ln["id"], b["lines"][-1] != ln["id"])
                 if not b.get("ok", True):
                     it["gate"] = [f["why"] for f in b.get("gate", [])]
+                bp = d / "voice" / b.get("file", "")
+                if b.get("file") and bp.exists() and len(b.get("offsets") or []) == len(b["lines"]):
+                    said = {l["id"]: l.get("say") or kvoice.spoken(l) for l in story["lines"]}
+                    if all(l in said for l in b["lines"]):
+                        it["beat"] = {"path": bp, "lines": b["lines"], "offsets": b["offsets"], "say": [said[l] for l in b["lines"]]}
             items.append(it)
     def voice_of(w):   # a sped-up voice (the Roblox narrator, Orus x1.45) is not the library sample of that voice
         c = cs.get(w) or {}
@@ -427,6 +547,12 @@ def table(rep):
             out.append(f"{'':15s}edges: start {e['head_db']} dB, end {e['tail_db']} dB from peak; {e['lead']:.2f} s before the first sound, {e['trail']:.2f} s after the last")
         if l.get("gate"):
             out.append(f"{'':15s}take gate: " + "; ".join(l["gate"]))
+        if l.get("slice"):
+            out.append(f"{'':15s}slice: " + "; ".join(l["slice"]))
+        if l.get("edge_words"):
+            out.append(f"{'':15s}edge words: " + "; ".join(l["edge_words"]) + ("" if l.get("cut_across") else " (listen)"))
+        if l.get("cut_across"):
+            out.append(f"{'':15s}cut through a word: " + "; ".join(l["cut_across"]))
         if l.get("clipped"):
             out.append(f"{'':15s}heard cut: " + "; ".join(f"\"{p.get('word')}\" {p.get('where')}" + (f" ({p['what']})" if p.get('what') else "") for p in l["clipped"]))
     for p in rep["pairs"]:
@@ -435,6 +561,8 @@ def table(rep):
     out.append("references: " + ", ".join(f"{w} {r['lines']} line(s) + {r['library']} library sample(s), {r['hz']} Hz" for w, r in rep["refs"].items()))
     if rep.get("listen"):
         out.append("listening check " + rep["listen"])
+    if rep.get("slice_check"):
+        out.append("slice check " + rep["slice_check"])
     out.append(("OK: every line in its own voice, words and edges clean" if rep["ok"] else f"BLOCKERS: {', '.join(rep['blockers'])}")
                + (f"; listen to: {', '.join(rep['thin'])}" if rep["thin"] else ""))
     return "\n".join(out)

@@ -148,8 +148,15 @@ usual. Stories without it are voiced exactly as above (the prompt and the cache 
   (80-350 ms before, 200-450 ms after, at the quiet point, 15 ms fades: `trim_take`). Nothing inside is cut, spliced or
   shortened; `max_pause` never trims here, it becomes the gate's pause limit. Then the usual post, room and one gain.
   The take is `voice/beat_<first line id>.wav`: the narration plays that file.
-- **Line places inside the take.** Whisper hears the finished take; each line's start is the quiet point between its
-  first word and the previous line's last (`tts.bounds`, the same rule as the cut). Each line's `voice/<id>.wav` is
+- **Line places inside the take.** The script is force-aligned to the finished take (`scripts/ctc_align.py`, the
+  captions' aligner: `tts.align_lines`), and each line's start is cut in the gap between the previous line's last
+  aligned word and its first (`tts.bounds` -> `gap_cut`): the middle of the longest run of true silence there (5 ms
+  frames under the take's soft floor), else the gap's lowest-energy frame; never inside either word's span. Whisper's
+  word times are only the fallback (no torch): Whisper stretches a word over the pause after it, and the old window,
+  opened 0.1 s after the last word's heard start, cut Light Sleeper's L07|L08 inside "screamed" (12.785 s; the pause
+  before "Mom" is at 13.52 s). The Whisper window now never opens more than 0.35 s before the word's heard end.
+  voice.json `beats[].cut` says which ("aligned" / "whisper"); `cut_faults` lists any cut `tts.slice_faults` finds
+  inside a word or inside sound (speaker_check blocks it as SLICE). Each line's `voice/<id>.wav` is
   its slice from its start to the next line's (the slices tile the take exactly, so speaker_check, the drift gate,
   align.py and caption_sync run on them unchanged; words.json stays relative to each slice). voice.json gets `beats`
   (`{id: {lines, file, dur, offsets, model, try, tries, fixes, ok, gate, rejected}}`) and, per line, `beat`, `offset`
@@ -180,7 +187,8 @@ usual. Stories without it are voiced exactly as above (the prompt and the cache 
   else the least bad (`take_gate.score`); voice.json records its failures and speaker_check flags every line of
   that beat **GATE** (a blocker). No single-line re-takes and no drift re-takes in this mode: re-taking one line would
   splice a second take into the beat; re-take the beat (`--only <any line of it>`). `voice_check.py --resplit` refuses
-  these stories. speaker_check and voice_edges judge only the take's own ends (a slice's inner edges are not cuts).
+  these stories. speaker_check's EDGE and voice_edges judge only the take's own ends (a slice's inner edges are not cuts);
+  the inner edges are judged by speaker_check's SLICE (where the words are) and WORDS (what Whisper hears either side).
 - **Calibration** (2026-11-10, on the cached thirty_one_raids takes; no requests): Pip's 11-line narrator take
   (gemini-3.8-flash-lite) passes every check as two beats; its pauses are 0.23-0.74 s. Grandpa's 2-line
   Charon take, carved into its two beats, fails both: an extra "And" heard between the lines and a 2.56 s pause
@@ -228,7 +236,9 @@ shorter, where the embedding is weakest) and flagged:
 | flag | meaning | |
 |---|---|---|
 | SWAP | another cast voice beats the line's own `who` by more than 0.02 | blocker: re-taken automatically |
-| WORDS | transcript under 60% like the script, or extra words (a direction read aloud, a word of the next line) | blocker: re-taken automatically |
+| WORDS | transcript under 60% like the script, or extra words (a direction read aloud, a word of the next line); in a continuous take, also a line's last word heard at the start of the next slice, or the next line's first word at the end of this one (Light Sleeper's bad cut: L07 "...the well chest.", L08 "Screamed. Mom held me...") | blocker: re-taken automatically |
+| EDGEWORD | the line's first or last word not heard as written (letters under 50% alike, Whisper's split/merged words allowed) | listen (alone it's often Whisper mishearing a short edge word: "to keep up" -> "Kiba") |
+| SLICE | continuous takes: the beat take force-aligned whole (ctc_align) puts a word of the line across its slice's edge (its last word past the end, the next line's first word before it), or the cut is above the take's silence line (peak - 30 dB) (`tts.slice_faults`) | blocker: re-take the beat or fix the cut |
 | THIN | the right voice wins by under 0.06 (short or shouted lines) | listen |
 | SIMILAR | two cast voices with embedding similarity over 0.88 and under 2.5 semitones apart | re-cast one |
 | EDGE | the first or last 20 ms within 30 dB of the line's peak: a word or breath cut off (voice_edges.py's test) | blocker: re-taken automatically |
