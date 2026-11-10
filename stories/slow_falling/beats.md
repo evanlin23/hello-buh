@@ -58,7 +58,7 @@ off. She isn't brave or magic: every one of those 11,000 steps was a bottle Gran
 | the column only lifts (soul sand, bubbles up) | S01, S04 (picture), L04 (line), S09 | a fun fountain | no way down: he built her a reason to fly every day |
 | "She was BORN to fly." | L05, S05 | a fact about Grandma | Grandpa's wish, which he makes true every night |
 | the brewing stand, three bottles, shelves of peach bottles | S06, S07 (picture) | a "tea machine" | he brews slow falling |
-| "Every night... I'm not allowed ANY." | L06 | grown-up tea, gross | a potion isn't for kids, and it's a secret |
+| "Every night he brews TEA." "I'm not allowed ANY." | L06 | grown-up tea, gross | a potion isn't for kids, and it's a secret |
 | "Same color as my TEA." | L10, S10 (picture: both bottles) | the kid half-gets it | juice = tea = slow falling |
 | "Potion of Slow Falling" over the hotbar | S10 (game text, also in the captions) | none: this is the game saying it | the name |
 
