@@ -153,7 +153,11 @@ function run (h) {
   // nobody moving: every 0.2 s, how far anyone moved or turned their head over the next 1.2 s (the recording alone,
   // so idle life and talking heads don't count: they're the render's polish, not acting)
   const POSE = new Map(); for (const p of rec.poses || []) POSE.set(p[0], p)
-  const ent = new Map(); for (const r of rec.entities || []) { if (r[2] !== 'player' && r[2] !== 'mannequin') continue; if (!ent.has(r[1])) ent.set(r[1], new Map()); ent.get(r[1]).set(r[0], r) }
+  // (players and mannequins anywhere; and the living mobs acting within 32 blocks of the set: a story's cast is often
+  // a villager or a piglin moved by /tp. Items, projectiles and the 0.002 idle jitter of a parked actor don't count)
+  const SET = rec.set || null, NOT_ACTING = /^(item|experience_orb|arrow|spectral_arrow|trident|snowball|egg|ender_pearl|potion|splash_potion|lingering_potion|firework_rocket|falling_block|tnt|item_frame|glow_item_frame|painting|armor_stand|marker|interaction|block_display|item_display|text_display|.*_boat|.*_raft|minecart|.*_minecart)$/
+  const acting = (r) => r[2] === 'player' || r[2] === 'mannequin' || (SET && !NOT_ACTING.test(r[2]) && Math.hypot(r[3] - SET.x, r[5] - SET.z) < 32)
+  const ent = new Map(); for (const r of rec.entities || []) { if (!acting(r)) continue; if (!ent.has(r[1])) ent.set(r[1], new Map()); ent.get(r[1]).set(r[0], r) }
   const nearest = (m, t) => { for (let d = 0; d < 6; d++) { if (m.has(t - d)) return m.get(t - d); if (m.has(t + d)) return m.get(t + d) } return null }
   const wrap = (a) => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
   let deadFrom = null

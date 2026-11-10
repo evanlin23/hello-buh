@@ -2377,7 +2377,7 @@ else:
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),
+          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve', ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
@@ -2603,6 +2603,16 @@ else:
       const still = Math.max(0, 1 - ws * 8), nz = idleNoise(e.id, t), tk = talkMotion(user, t)
       e.headYaw = (e.headYaw ?? e.yaw) + nz[0] * 0.09 * still + (tk ? tk.yaw : 0)
       e.pitch = (e.pitch || 0) + nz[1] * 0.05 * still + (tk ? tk.pitch : 0)
+    }
+    // the narrator's own staged poses, seen from a camera shot (ctx.mark('pose', { ids: [-1], pose: 'sit_ground' })):
+    // the actors' loop above skips the recording bot; only stunts that mark id -1 see a change
+    if (ACT_POSE.has(-1)) {
+      const se = ents.find(e => e.id === -1 && e.player)
+      if (se) {
+        const poses = []
+        for (const [a, b, list] of ACT_POSE.get(-1)) for (const q of list) { const bl = POSES.blendOf(q.name), k = Math.min(1, (t - a) / bl, (b + bl - t) / bl); if (t >= a && k > 0) poses.push({ ...q, k: k * k * (3 - 2 * k) }) }
+        if (poses.length) se.player.poses = poses
+      }
     }
     // idle life for mobs (stunt.idleLife: true; story casts are no-AI mobs that otherwise freeze between their
     // moves): a slow look-around while a mob stands still, up to ~12 degrees across and ~5 up or down
