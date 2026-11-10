@@ -94,7 +94,15 @@
       "who": "N",
       "text": "Our BELL / wears WOOL. / I've never / HEARD it.",
       "direction": "curious, a small pause before the last phrase",
-      "shot": "S04"
+      "shot": "S04",
+      "look": {
+        "what": [
+          6.5,
+          3.2,
+          0.5
+        ],
+        "word": "BELL"
+      }
     },
     {
       "id": "L05",
@@ -102,7 +110,8 @@
       "text": "Walk SOFT, / Milo. / The ground's / a light SLEEPER.",
       "say": "Walk soft, Milo. The ground's a light sleeper.",
       "direction": "a busy mom's everyday reminder at normal speaking volume, brisk and practical, a knowing weight on the last word",
-      "shot": "S05"
+      "shot": "S05",
+      "look": "Mom"
     },
     {
       "id": "L06",
@@ -131,7 +140,11 @@
       "who": "N",
       "text": "A skeleton / shot a CREEPER. / It dropped / a music DISC.",
       "direction": "brightening and fast, the best news of his life",
-      "shot": "S09"
+      "shot": "S09",
+      "look": {
+        "what": "entity:creeper",
+        "word": "CREEPER"
+      }
     },
     {
       "id": "L10",
@@ -162,7 +175,8 @@
       "say": "Milo... Don't... Move.",
       "direction": "terrified, barely a whisper, frozen with fear; a gap between the words",
       "shot": "S13",
-      "request": "r3"
+      "request": "r3",
+      "look": "Mom"
     },
     {
       "id": "L14",
