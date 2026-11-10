@@ -132,3 +132,14 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 ## Report back
 Finish with a short report: each format's name, caption, length, QA verdict, anything you couldn't
 fix, and any engine bugs found (with how to reproduce them).
+
+## Working in a git worktree
+A worktree (`git worktree add ../wt-x -b my-branch origin/main`) has no game files, packages or licensed media.
+Link them from the main checkout, or run.sh re-downloads and rebuilds the server and assets:
+`ln -s /home/user/hello-buh/{node_modules,songs} . && mkdir -p sfx && ln -s /home/user/hello-buh/sfx/mixkit sfx/mixkit && ln -s /home/user/hello-buh/work work`
+(never commit these links). Only one Minecraft server can run at a time: `pgrep -af "server.jar|bot.js"` first.
+
+## An independent reviewer when you have no subagent tool
+Start a fresh cloud session on your branch (`create_session` with the repo and your branch or `render/<name>`),
+give it `.claude/skills/short-review/SKILL.md` and the video path, and read its verdict with `list_events`
+(story_nitwit's two rounds worked this way; each needs a fresh container, ~5 min).

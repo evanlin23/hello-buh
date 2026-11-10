@@ -7,6 +7,9 @@ camera, and that is the format's best trick: the viewer never sees who "I" am (p
 narrator turns out to be the creeper).
 
 ## Make one
+**Write it first:** `/story-write` (`.claude/skills/story-write/SKILL.md`) takes a story from ten pitches to a
+script with a voiced cast, a shot list and a continuity bible, checked by the `story-critic` and `story-continuity`
+agents and a cold reader, before anything is built. Craft guide: `docs/story_craft.md`.
 ```bash
 # 1. the script: stories/<name>/story.json (lines, chunks, key words), see stories/put_back
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
@@ -82,7 +85,7 @@ hud: false,                                                               // ...
 
 ## Setup (once per container)
 ```bash
-apt-get install -y espeak-ng                     # Kokoro's phonemizer for unknown words
+apt-get update && apt-get install -y espeak-ng   # Kokoro's phonemizer for unknown words (a fresh container's apt lists are empty)
 python3.11 -m venv ~/.hb-tts
 ~/.hb-tts/bin/pip install --extra-index-url https://download.pytorch.org/whl/cpu torch kokoro soundfile numpy
 ```
@@ -105,6 +108,31 @@ key words in the story's colour, centred at 70% of the game view's height (under
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
+
+- **Owner, 2026-11-10: "The voice is definitely an issue. And also the sets. I think we can be more creative with the
+  story telling, and better with the delivery and the plots and using other voices for the other characters. I think
+  we don't necessarily need to use this sped up voice. this voice i dont think does a good job of playing different
+  parts."** So, from now on: a cast of voices (narrator plus a distinct voice per character, e.g. Gemini TTS
+  multi-speaker with acting direction, as the AI-dilemma Shorts do), no 1.45x sped-up narrator by default, real
+  delivery (emotion, pauses, emphasis), built sets that look designed (not a clearing in the wild), and plots with
+  more invention. The cinematic engine (shots, looks) is the direction for the look.
+- **Owner, 2026-11-10: "i think i kinda believe in this sort of storytelling minecraft thing. it feels somewhat
+  serious, and if we can do actual voices and make it seem super professional and high quality, that would be
+  amazing."** This is the channel's direction: serious, professional, high-quality Minecraft storytelling with real
+  character voices. Judge every story against a polished animated short, not against other Minecraft Shorts.
+- **Owner, 2026-11-10, on the stories so far:** "Like the creeper was good. i think the respawn tax is somewhat mid. I
+  like the sheep thing (at least it feels like a mystery, I was hooked, the delivery was just kinda bad). Like the sheep
+  worked bc its like why tf is this sheep staring at this block? I also think we need to work on like continuity and
+  stuff. And also stuff might be too zoomed in at times? Theres just a ton of micro and macro to work on." So: the
+  hook is ONE strange, concrete image that makes the viewer ask "why?" (a sheep staring at a block); the twist must
+  re-explain everything (the creeper); fix continuity (props, time of day, positions, who is where across cuts);
+  use wider shots so the viewer sees the place and the action, not just a close-up. Craft guide: docs/story_craft.md.
+- **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
+  effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
+  a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
+  distance), never a few blocks on a flat cleared plain. `clearSet`'s wide flat clearing is the look to avoid: pick a
+  site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
+  or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog.
 
 - **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
   minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
@@ -176,7 +204,7 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 8 | **More Golems Every Morning** | "Every morning there's one more iron golem in my village. Nobody builds them." | villagers won't look at me; doors barred at sunset; a golem waiting outside my door | golems spawn when villagers are scared: at night I'm a zombie, and I don't remember | tonight there are twenty of them at my door | open |
 | 9 | **One Block Higher** | "Every time I sleep, I wake up one block higher." | a dirt pillar under my bed; muddy villager footprints; the sea looks closer every day | the sea is rising; every night the villagers lift me above it, one block at a time, while they stay below | I look down for the first time | open |
 | 10 | **The Sun Won't Set** | "The sun hasn't set in my world for 300 days." | villagers yawning; a bed nobody sleeps in; my grandpa asks every day if tonight's the night | I froze the time (`advance_time false`) because zombies come at night and grandpa is too slow to run | grandpa asks me to let the night come | open |
-| 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | building: lead session (pipeline test, `story_nitwit`) |
+| 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | made (`story_nitwit`, pipeline test 2026-11-10: 2 h 40 min, 2 review rounds; docs/pipeline_test_nitwit.md) |
 | 12 | **Last Seen** | "My friend's armor stand has stood at the village gate for 900 days. Today it turned around." | his armor gets one more scratch a day; a bed still warm; the golem salutes it | (armor stands don't render yet: needs an engine model) | | parked: engine |
 | 13 | **Good Boy** (cinematic pilot) | "I've tried to run away from this guy thirty-seven times." | every time I get 12 blocks away I'm right back next to him; raw porkchops; I sit when he says sit; everyone is tall; sheep look delicious; I can't open doors; skeletons run from me; a dog is always exactly where I am (every camera shot shows it) | I'm his dog: a tamed wolf (vanilla: tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons, attack whatever hurts their owner). Revealed when the camera pulls out of my head | "Tomorrow I'm leaving for real." loops into line 1 | building: cinematic-default worker (`story_good_boy`, branch claude/cinematic-default) |
 
