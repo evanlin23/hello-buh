@@ -1398,7 +1398,9 @@
       "garden": true,
       "bed": "red",
       "seed": 7
-     }
+     },
+     "banks": true,
+     "margin": 11
     },
     {
      "id": "cellar",

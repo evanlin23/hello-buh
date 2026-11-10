@@ -2,19 +2,19 @@
  "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ only; never asetrate (docs/voices.md \"Realism\"). `tempo` and `rate` (optional; the Roblox narrator only, owner-approved 2026-11-10) speed up the WHOLE raw take before anything else: `tempo` = atempo (pitch kept), then `rate` = a resample that raises pitch, formants and tempo together (docs/voices.md \"The Roblox narrator\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\"). `model` (optional) locks the character to one TTS model: tts.py never voices it with another (docs/voices.md \"Drift gate\": a different model is a different-sounding person).",
  "narrator": {
   "name": "Narrator",
-  "voice": "Orus",
+  "voice": "Leda",
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
-  "profile": "A deep-voiced American guy in his twenties telling a crazy true story from his own life, first person, straight into a phone mic; confident, punchy and matter-of-fact, every sentence driven forward with no gaps between sentences, a little smug, landing each line hard on the last word; full, close and clear, not an announcer, not an audiobook, never whispery; steady natural speaking pace",
+  "profile": "A kid telling a spooky-funny story at a sleepover, fast and gleeful, every sentence a bit more excited, one breath, punching only the capitalised key word; full voice, never whispering",
   "post": "",
-  "tempo": 0.95,
-  "rate": 1.45,
+  "tempo": 1.1,
+  "semitones": 1,
+  "stretch": "rubberband",
+  "model": "gemini-3.8-flash-lite-tts",
   "fallback": "am_adam",
-  "from": "owner 2026-11-10: \"s3_gemini_orus.mp3 is good\" (docs/voice_search.md \"Closest match\": the Roblox-story voice is ElevenLabs Adam played ~1.45x faster; Orus x1.45 has its melody and nasal band)",
-  "notes": "The Roblox-story first-person narrator, and the default `narrator` since 2026-11-10. ONE narrator says every line, quotes included (owner), so characters are rarely voiced. tts.py plays every raw take `tempo` 0.95 (atempo, pitch kept) then `rate` 1.45 faster (a resample: pitch, formants and tempo all rise, no pitch correction) BEFORE trimming, slicing or the take gate, so the gate judges the pauses as they are heard; then every silence inside the take is shortened to `pause_cap` 0.12 s, in its silent middle only (owner: \"its fine to have those cuts, i didnt even notice\", on s3's gap cut); words are never cut. The owner-approved exception to \"never pitch-shift a voice\", for this narrator only (docs/STANDARDS.md). Recipe: voices/recipes/narrator_roblox.md",
-  "model_hint": "gemini-3.8-flash-tts, single speaker, the profile as the bracketed prefix, lines separated by blank lines (voices/recipes/narrator_roblox.md)",
-  "model": "gemini-3.8-flash-tts",
-  "pause_cap": 0.12
+  "from": "owner 2026-11-10: \"i kidna like the sleepover\" (brand/voice_samples/kid k4_sleepover), \"maybe 1.1 with +1 pitch\", \"C and D feel like they have weird artifacts in them, so A sounds the best\" (A = rubberband tempo 1.1, +1 semitone, nothing else)",
+  "notes": "Our brand kid narrator (STANDARDS 2.000/2.0000, docs/brand.md). tts.py plays every raw take through rubberband tempo 1.1 and +1 semitone (stretch_of) and nothing else: no pause_cap (a 0.12 s gap cap sounded spliced), no formant-preserving speech mode or room (owner: artifacts). Takes must be PERFORMED continuously; a take with long pauses is re-taken. The Orus x1.45 Roblox narrator is `narrator_roblox`.",
+  "model_hint": "k4_sleepover was voiced on gemini-3.8-flash-lite-tts in Pip's layout: \"[profile]\", a blank line, the text as one paragraph (brand/voice_samples/kid/raw/k4_sleepover_raw.wav.json); the brand session's direction said \"punching the key word\", here \"only the capitalised key word\" (STANDARDS 2.000: one stress per sentence)"
  },
  "narrator_roblox": {
   "name": "Narrator",

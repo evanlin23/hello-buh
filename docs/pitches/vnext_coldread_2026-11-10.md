@@ -25,3 +25,30 @@ feels is emotional (the owner left; Grandpa wants to be needed), not mechanical.
   - "I don't remember what happened next" (did the dog die?);
   - the vague sea line.
 - **Score:** 7/10.
+
+## Cold listener: the five r-ear scripts (audio-style, one fast pass, before its fixes)
+| story | followed it? | where it caught | score (easy at speed) | best kid misread | fix applied |
+|---|---|---|---|---|---|
+| dog_hill | yes | "SOMEBODY said be right BACK" (who said it?) | 8 | "Maybe he LIKES the GRASS." | "SOMEBODY told him / be right BACK." |
+| gold_for_the_portal | mostly | the item list; "GOLD keeps you SAFE in the NETHER" (a rules lecture) | 7 | "Grandma SAYS he's still TRADING. So he's ALIVE." | the rule is now Grandma's quote; added "Grandpa's the BEST TRADER ever." |
+| good_boy | mostly | "So he NEVER makes me SIT" (three logic steps) | 7 | "Every NIGHT he SAYS, sorry, BUDDY. I don't KNOW what FOR." | "He doesn't WANT / me to WAIT. / So he NEVER / makes me SIT." |
+| thirty_one_raids | mostly | "OMINOUS bottles" (a casual player needs Bad Omen); the empty frame never paid off; "won ALONE" | 6 | "They KNOW who BEATS them." | the frame is cut; "won ALONE" becomes "WON"; the lonely line moves up; added "Then a HORN goes OFF. And Grandpa SMILES. He must LOVE a good FIGHT." |
+| light_sleeper | mostly | "a SKELETON shot a CREEPER... it DROPPED a music DISC" (a game-lore detour) | 6 | "Then the LIGHTS went DARK. Just LIKE a PARTY." | "Then I FOUND / a music DISC / by the FARM."; the sheep line is cut |
+
+**A finding about the rule itself:** with one CAPS key word in every 2-3 word chunk, almost every other word is
+stressed, so at speed the stress becomes "a flat drumbeat". The words that carry the story (TRADING, LUCK, SIT) don't
+stand out. That's for the lead and owner to rule on (STANDARDS 6.1). One option: keep the caption colour on one word
+per chunk, but direct the *spoken* stress only on each sentence's last key word.
+
+## Cold listener: r-cast (character voices plus spoken stress, before its fixes)
+| story | followed? | score | caught on | fix applied |
+|---|---|---|---|---|
+| good_boy | yes | 8 | "Then he SAID" twice in a row; "So this morning" (So doesn't follow) | "He TURNED / to ME." before "Sit, BOY."; "So" dropped |
+| dog_hill | mostly | 7 | "He says only one voice..." (who is he?); "Somebody told him be right back" (crowded) | Grandpa says it himself: "Only ONE voice / gets him UP."; then "Somebody PROMISED / to come BACK." |
+| light_sleeper | mostly | 7 | the stress on BEFORE, not DANCED; "Mom SAYS" took the stress | stress overrides (DANCED); lead-ins ending ":" are never stressed |
+| gold_for_the_portal | mostly | 7 | "blue stripe" is hard to hold on audio; "piglins won't touch you" vs "never came back" | kept: the helmet is on screen at the reveal, and the snag is the mystery itself |
+| thirty_one_raids | mostly | 6 | "Raid ONE? He WON." four times (the worst drumbeat); FIGHT stressed three times; "ominous" unexplained | "Raid ONE, raid TWELVE, raid THIRTY-ONE. He WON every ONE."; "He must LOVE the RAIDS."; the kid's misread "OMINOUS means LUCKY, I think." |
+
+**Spoken stress, revised:** one stress per sentence on its key content word. That's the last key word unless an
+override names the word that matters (DANCED, PLENTY, PROMISED, ALIVE, SORRY, TRADER). Lead-ins that end in ":" are
+never stressed. The listener's note: always stressing the last word becomes its own drumbeat.
