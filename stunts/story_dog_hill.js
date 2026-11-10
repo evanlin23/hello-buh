@@ -308,7 +308,7 @@ module.exports = {
     ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     await run(16)
-    // ---- L15: "Day one." over the dog alone where Milo vanished; on "Again." the cut to the opening frame pulling
+    // ---- L15: "Day one." over the dog alone where Buh vanished; on "Again." the cut to the opening frame pulling
     // back (the loop) with the payoff's sound hit; the end 0.25 s after the word (owner: end as the payoff lands)
     line('N', 'L15')
     await run(27)   // "Day one." and the breath (the quiet re-take: "again" at 1.37 s)
