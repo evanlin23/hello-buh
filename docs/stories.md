@@ -138,6 +138,17 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, on the published Dog on the Hill: "the captions are not lined up correctly. Day 1 again is not
+  delivered correctly, it seems too excited..."** (Held on `videos` until fixed.)
+  - **Captions:** a re-cut moved the speech 0.2-0.37 s into every wav but voice.json still said onset 0.0, so every
+    caption ran early. `voice_check.py --resplit` now re-runs align.py itself, and `scripts/caption_sync.py` (in
+    `./hb review`) blocks a caption more than 0.12 s off the speech onset.
+  - **Delivery follows the line, not just the character:** one bubbly direction for all of Pip's lines made the sad
+    ending sound excited. Split the narrator's lines by emotional beat: the same voice, model and character profile,
+    but each beat (the bubbly setup, the scared turn, the quiet or bittersweet ending) in its own request with a
+    one-line scene direction for that feeling ("quiet, sad, a small breath before AGAIN; not whispery, not excited").
+    Drift still checks they're the same person. The critic and the viewer panel check that the ending's delivery
+    matches its emotion.
 - **Owner, 2026-11-10, comparing Pip (Dog on the Hill v3) with kid Puck: "i like this one a lot a lot better" (Pip);
   Puck: "er that does not sound right".** **The default narrator is Pip's voice again** (cast `narrator` = Leda, the
   bubbly nine-year-old direction, gemini-3.8-flash-lite-tts, single speaker, natural tempo; recipe in
