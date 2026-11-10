@@ -46,3 +46,11 @@ For the owner's morning. Newest at the bottom.
   old flat clearing, but the stepped grass terraces under the houses look fake and something floats in the sky.
   Round 2 (agent/sets-2) fixes those, improves site choice, adds a tavern, mill and dock, and fixes run.sh's startup
   race. The orphan server (pid 7073) is gone.
+- 07:40 UTC: merged voice realism (56d1201).
+  - New TTS: 3.1-flash-tts with a structured prompt, breath padding, no pitch shift.
+  - New roster: the kid narrator is Leda at 1.5x tempo with a slight pitch lift that keeps formants; storyteller
+    Despina; elder Charon; child Laomedeia.
+  - Sent the owner the kid-narrator audition (pick #8; #3 sounds more natural but older) and the realism A/B.
+  - Owner decision for the morning: #8 or #3.
+  - The shared TTS quota ran out today and resets at 08:00 UTC; story sessions wait for it rather than falling
+    back to old voices.
