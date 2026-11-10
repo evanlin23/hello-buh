@@ -232,8 +232,9 @@ const MOTION_FIXES = process.env.MOTION_FIXES ? process.env.MOTION_FIXES === '1'
 // so the new shot showed it in its old spot for up to 3 ticks and then the 3-tick client lerp dashed it across
 // (gold_for_the_portal L07, 3.2 blocks at 31.7 s: "Grandma teleports"). A jump of over a block within 6 ticks after a
 // cut or a shot change is moved back onto the cut: the entity is at its new place from the cut's own tick.
+const CAST_CUT_TICKS = MOTION_FIXES ? [...new Set((rec.timeline || []).filter(e => e.event === 'cut' || e.event === 'shot' || e.event === 'respawn').map(e => Math.round(e.t / 50)))] : []
 if (MOTION_FIXES) {
-  const cuts = (rec.timeline || []).filter(e => e.event === 'cut' || e.event === 'shot' || e.event === 'respawn').map(e => Math.round(e.t / 50))
+  const cuts = CAST_CUT_TICKS
   const ticks = [...ENT.keys()].sort((a, b) => a - b)
   let n = 0
   for (const c of [...new Set(cuts)]) {
@@ -278,6 +279,8 @@ const BLINK_SELF = []
     if (BLINK.size) console.log(`blink: ${BLINK.size} on-screen teleport${BLINK.size > 1 ? 's' : ''} (K.blink) snap with no lerp`)
   }
 }
+const CAST_CUT_SET = new Set(CAST_CUT_TICKS)
+const CUT_SNAP = new Set()   // `${id}|${tick}`: a cast member placed with a cut lands on that tick with no glide
 // The server sends mob moves every few ticks, so recorded positions are steps (a creeper "glided"
 // in 0.4-block hops). The vanilla client eases toward each new position over 3 ticks
 // (Entity.lerpTo / lerpSteps); do the same, per tick, before the per-frame interpolation.
@@ -288,7 +291,13 @@ const BLINK_SELF = []
       if (row[2] === 'falling_block' || row[2] === 'item' || row[2] === 'moving_block') continue
       let c = cur.get(id)
       if (!c || c.last !== tick - 1) c = { x: row[3], y: row[4], z: row[5], tx: row[3], ty: row[4], tz: row[5], steps: 0 }
-      if (Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz) > 4 || (BLINK.size && BLINK.has(`${id}|${tick}`))) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }   // teleport (or a K.blink): no easing
+      // a teleport (or a K.blink), or a cast member placed with a cut (over half a block on the cut's own tick, where
+      // K.cutShot lands it, or the fix above moved its late landing): no easing. The ease toward it from the old spot undid
+      // that fix: the new shot opened with the cast gliding 1-2 blocks out of the old shot's place (dog_hill 'beg', 2026-11-10)
+      const jump = Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz)
+      const onCut = jump > 0.5 && jump <= 4 && CAST_CUT_SET.has(tick)
+      if (onCut) CUT_SNAP.add(`${id}|${tick}`)   // (entitiesAt holds the old spot until the tick, like a teleport)
+      if (jump > 4 || (BLINK.size && BLINK.has(`${id}|${tick}`)) || onCut) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }
       else if (row[3] !== c.tx || row[4] !== c.ty || row[5] !== c.tz) { c.tx = row[3]; c.ty = row[4]; c.tz = row[5]; c.steps = 3 }
       if (c.steps > 0) { c.x += (c.tx - c.x) / c.steps; c.y += (c.ty - c.y) / c.steps; c.z += (c.tz - c.z) / c.steps; c.steps-- }
       // rotation: lerpTo / lerpHeadTo ease yaw and head yaw over the same 3 steps (wrapped), so a
@@ -352,7 +361,7 @@ function entitiesAt (t, mesher) {
   const out = []
   for (const [id, ra] of a) {
     let rb = b.get(id) || ra
-    if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4 || (BLINK.size && BLINK.has(`${id}|${i + 1}`))) rb = ra   // teleport (or a K.blink): hold, then snap on the next tick
+    if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4 || (BLINK.size && BLINK.has(`${id}|${i + 1}`)) || CUT_SNAP.has(`${id}|${i + 1}`)) rb = ra   // teleport (or a K.blink, or placed with a cut): hold, then snap on the next tick
     const L = (k) => ra[k] + (rb[k] - ra[k]) * f
     const pos = { x: L(3), y: L(4), z: L(5) }
     // EntityRenderer.getPackedLightCoords samples at getLightProbePosition = the eye (0.85 x height
