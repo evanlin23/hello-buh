@@ -348,29 +348,7 @@
     "RIGHT BACK."
    ],
    "aligned": "whisper-base.en"
-  },
-  "L15": {
-   "text": "Day one. Again.",
-   "who": "N",
-   "dur": 2.85,
-   "onset": 0.34,
-   "end": 2.41,
-   "chunks": [
-    [
-     0.34,
-     1.37
-    ],
-    [
-     1.37,
-     2.6
-    ]
-   ],
-   "captions": [
-    "Day ONE.",
-    "AGAIN."
-   ],
-   "aligned": "whisper-base.en"
   }
  },
- "total": 46.73
+ "total": 43.88
 }

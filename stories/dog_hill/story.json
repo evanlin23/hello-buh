@@ -160,14 +160,6 @@
       "say": "Okay. Sit, boy. I'll be right back.",
       "direction": "casual, already leaving",
       "shot": "S13"
-    },
-    {
-      "id": "L15",
-      "who": "N",
-      "text": "Day ONE. / AGAIN.",
-      "say": "Day one. Again.",
-      "direction": "fast, bright, energetic",
-      "shot": "S15"
     }
   ],
   "hook": "why won't this dog stand up?",

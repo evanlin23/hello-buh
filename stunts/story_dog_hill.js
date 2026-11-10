@@ -5,7 +5,7 @@
 // facing one empty patch of grass in front of an old dirt hut. Pip (a baby villager, the narrator) brings bones, begs;
 // Grandpa says only one voice gets him up. One night: "Buh joined the game" and the player (the recording bot)
 // is standing on the patch, where he logged out (vanilla: you come back where you left). The dog stands for the first
-// time. "Sit, boy. I'll be right back." The dog sits. "Buh left the game." Day one.
+// time. "Sit, boy. I'll be right back." The dog sits. "Buh left the game." The dog sits on: the last shot is the first one (the loop, shown not said).
 //
 // Set origin D = the dog's block: village + (-42, ~27, -34), near the hill's east edge. The dog faces east (MC yaw -90)
 // at the patch P = D + (3, 0, 0), the drop and the village below; the hut is north-east (D + (3..7, *, -8..-4), door south).
@@ -305,15 +305,13 @@ module.exports = {
       if (k === Math.round(t14 * 0.3)) { tp('dog', 2.4, 1, 0.5, -90, 0); sitDog(true); bot.swingArm('right') }
     })
     await run(8)
-    ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
+    ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit'); ctx.mark('payoff')
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
-    await run(16)
-    // ---- L15: "Day one." over the dog alone where Buh vanished; on "Again." the cut to the opening frame pulling
-    // back (the loop) with the payoff's sound hit; the end 0.25 s after the word (owner: end as the payoff lands)
-    line('N', 'L15')
-    await run(27)   // "Day one." and the breath (the quiet re-take: "again" at 1.37 s)
-    cut('end'); ctx.mark('hit'); ctx.mark('payoff')
-    await run(26)   // "again" ends at 2.41 s: the end 0.25 s after it
+    // the loop is shown, not said (owner: "day 1, again" is implied): 0.7 s after the logout, the opening frame
+    // pulling back from the dog alone; the end 1.7 s after the payoff (a text payoff: the chat line)
+    await run(14 - 3)   // (tpCheck takes ~3 ticks)
+    cut('end')
+    await run(20)
     ctx.mark('end_scene')
     await run(10)
     return true
