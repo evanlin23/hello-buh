@@ -94,3 +94,7 @@ Read `docs/world/canon.md`. In script mode, add a **Canon** line to the scores:
   (canon.md "Published facts"); a recurring character keeps his look, voice and what he knows on that day.
 - **One easter egg**, in the background of one shot, true on the story's day, never spoken, never needed.
 - **Lore value:** does the story add one fact a fan can connect (a place, a consequence), without explaining it?
+
+## The hero's name is never spoken (owner, 2026-11-10)
+The hero is Buh, but nobody says his name aloud (narrator or character). A line that speaks it is a must-fix; it may
+appear only as in-game text (chat, death screen, name tag).
