@@ -7,7 +7,7 @@ newest owner decision wins; superseded rules are listed at the end and must not 
 owner's quotes, the reasons) stays in `docs/stories.md` "House rules": each standard cites its source as `r:xxxxxx`
 (`./hb rules --log` lists every rule with its key, `./hb rules --key r00f92f` prints one in full).
 Checks: **pace** = `./hb pace` (the finished mp4), **owner** = `./hb owner`, **check** = `./hb check` (rec_check, lint,
-continuity, framing, owner), **edges** = `python3 scripts/voice_edges.py stories/<name>`, **speaker** =
+continuity, framing, owner, cuts), **edges** = `python3 scripts/voice_edges.py stories/<name>`, **speaker** =
 `scripts/speaker_check.py` (run by `./hb voice`), **review** = the short-review skill. BLOCK stops the line; WARN
 needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order.
 
@@ -150,7 +150,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    shot's first frame already has them in place; never a stunt's own `/tp @e` loop (dog_hill's hop read as a teleport).
    Check: lint (raw `/tp @e`), rec_check (cast jump after a cut; stepped motion). r:rfa229d
 3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
-   (eye-trace), and the cut lands on an edit point, not wherever the line starts. Check: cut check (in progress). r:rfa229d
+   (eye-trace: jump <= 15 % of the frame; > 20 % WARN, > 33 % BLOCK), and the cut lands in the pause 33-150 ms before
+   the line's first word, never after it nor off the line's voice. Built in: render.js `eyeTrace` re-aims each camera
+   shot onto the last shot's subject (name it with the shot's `subject`), `K.line` ends a line so the next cut lands
+   before the next word (docs/cinematic.md "Invisible cuts"). Check: check (`cuts`; `./hb cuts`). r:rfa229d
 
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4

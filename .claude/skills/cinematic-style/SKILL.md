@@ -146,6 +146,11 @@ Try a grade in a second: `LOOK=0 ./hb still <stunt> T --out raw` once, then `scr
 - Instant reads: creeper, allay, zombie, iron golem (not on sand), sheep. Enderman and witch vanish at night (dE 13/19):
   light them. A second human: Alex (luma 0.62 vs Steve 0.38); two humans differ by >= 0.15 luma.
 
+**Cuts** (docs/cinematic.md "Invisible cuts"; owner: "i keep noticing them"): the eye's point of interest stays put
+across a cut (<= 15 % of the frame; render.js eyeTrace re-aims camera shots, give each shot a `subject`), the cut lands
+33-150 ms before the line's first word (K.line), cast that would steal the eye (a stray village mob) is cleared from
+the set. `./hb cuts <stunt>` measures both.
+
 **On-screen effects**: no onomatopoeia or emoji (0/69 frames on Xenost, Ashyyy, Skytro; common only on kids' comedy
 channels). Punch-in 0.06-0.10 at most twice (reveal, payoff), shake 6-10 px only on a visible impact, flash 0.4-0.5 only
 on a time jump or the twist (edit.punch/shake/flash). Words in the world are diegetic: signs, chat, the death screen.
