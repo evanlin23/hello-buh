@@ -3,6 +3,45 @@
 Everything that cost real debugging time, so nobody has to rediscover it. Newest first within
 each section.
 
+## Process lessons (2026-11-10: the day the owner found what our tools should have)
+
+The owner caught, by eye or ear, every one of these before any check did. Each one now has a fix built into the tool
+and a check behind it (STANDARDS r:keys in brackets).
+
+| What the owner saw | Why our process missed it | Fixed by construction | Safety net |
+|---|---|---|---|
+| "the villager keeps teleporting" | the server only sends a mob's move every 3rd tick, so a per-tick /tp reaches the client as 6.7 Hz steps; cast placed on a cut landed 1-3 ticks late; the story hand-rolled its own /tp | K.actor (air-supply nudge: moves every tick), K.cutShot (the shot mark waits until the cast has landed) [rfa229d] | motion lint (raw tp, execute tp, data Pos); rec_check cast-jump + stepped-motion BLOCKs |
+| "i keep noticing the cuts" / "are our timings correct?" | nobody measured where the eye is across a cut; cuts sat on the line start; dog_hill ran its own clock and drifted 1.4 s behind the voice | render.js eyeTrace; K.line cuts 33 ms before the next word [rfa229d] | `./hb cuts` (eye jump > 33 % / cut off its word: BLOCK) |
+| "a block in the way" of a dig | the kit aimed at block centres | K.dig/K.place aim at a visible face, or refuse naming the blocker [rd0b2b1] | rec_check `sight` |
+| "captions some earlier some after" | a session silently fell back to Whisper word times | forced alignment only [r919ea3] | caption_sync BLOCKs Whisper times; doctor fails without the aligner |
+| "I dont hear any music", "the woosh is too jarring" | music only went in at publish; mobs were Silent; whoosh on every cut | edit.py mixes the bed in every render; mob voices, steps, ambience; whoosh off [r36632d] | onscreen_sfx.py --strict |
+| "artificial" voice | a 0.12 s gap cap spliced every pause | perform continuously, never trim; per-speaker gate limits [rcf486c] | the take gate (retake, never cut) |
+
+How the work itself went wrong, and the rule now:
+- **Checks after the render were the method, so the owner was the test suite.** Rule: a quality rule ships as a
+  kit primitive first, a check second, and `./hb check` runs every check before a preview is rendered (process
+  fixes, `claude/process-fixes`).
+- **Stories bypassed the kit** (own /tp loops, own line clock). Every kit fix then missed them. Rule: stunts move
+  and time things only through `K.*`; the lint enforces it.
+- **The script lived in two places** (writers' `script_vNext.md` vs `story.json`); voicing nearly used the old one.
+  Rule: the writers' deliverable is `story.json` on a branch; `./hb voice` refuses a story whose script notes are newer.
+- **Docs contradicted each other** (STANDARDS 2.0 "one narrator says every line" vs the owner's newer "short lines
+  from other characters"). Rule: when a new owner rule lands, grep STANDARDS for the old one and mark it superseded in
+  the same commit.
+- **Shared quota, misread errors.** Three sessions fired Gemini at once, read per-minute 429s as the daily quota, and
+  stalled; one wasted requests on probes. Rule: tts.py tells per-minute from per-day, waits and retries per-minute,
+  paces itself 20 s; the lead staggers sessions; test with one tiny request before declaring a quota spent.
+- **Too many voice auditions spent the quota.** Rule: keep every raw take (`raw/`) and make speed/pitch/processing
+  variants locally from one take (ffmpeg rubberband); only a new direction needs a new request.
+- **"Publish" meant two things.** Rule: story Shorts package HELD; only the owner's OK by name makes one ready
+  (publish.js enforces `--owner-ok`).
+- **Disk filled up** mid-recording (agents' worktrees, renders, scratch). Rule: doctor checks free disk; `./hb clean`;
+  remove an agent's worktree when its branch is merged.
+- **Sessions' environments drifted** (11 failing tests from missing assets in one container). Rule: `./hb doctor`
+  and `npm test` green before recording or voicing; `scripts/assets_restore.sh` for assets.
+- **Long silences to the owner.** Rule: one-line status before any multi-step stretch; ETAs as ranges with what
+  they depend on.
+
 ## Owner preferences and format
 - Owner decisions live in README "Owner decisions". Highlights: "close match is fine"; skip the
   real Minecraft client (no account/login anywhere); bake recognisable songs in (Shorts stay
