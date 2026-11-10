@@ -43,8 +43,7 @@ module.exports = {
   // height is known: see shotsFor()
   shots: {},
   edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0',
-    // the reveal's sound: a whoosh as the camera leaves his head (the reveal mark, on the cut), a hit on the bark
-    sfx: [['whoosh', 'reveal', { nth: 0, gain: 0.7 }], ['impact', 'bark', { gain: 1.0 }]],
+    sfx: [],   // the house story mix does it (scripts/story_audio.py): a riser into the silence, the hit on the bark (a manual impact here turned the house hit off and itself sank into the -27 LUFS game bed: the reveal measured -24 LUFS)
     punch: [['bark', 0, 0.12]], flash: [['bark', 0, 0.55]] },   // a push-in on the bark: the payoff's picture hit (./hb pace)
 
   async setup (ctx) {

@@ -113,5 +113,9 @@
    "request": "n1"
   }
  ],
- "payoff": "bark"
+ "payoff": "bark",
+ "mood": [
+  "tense",
+  "funny"
+ ]
 }
