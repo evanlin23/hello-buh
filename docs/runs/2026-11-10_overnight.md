@@ -233,3 +233,9 @@ For the owner's morning. Newest at the bottom.
 - **Good Boy v3** is rendering. Its round-3 review found 3 blockers: the librarian vanishing on screen, murky frames at the swim cut, and a reveal that was too quiet.
 - **Broken Rail and Six Thousand Torches** are waiting for Pip's quota (08:00 UTC). In the meantime they're building sets; Broken Rail's new set tools go to main once tested.
 - **videos branch:** no new story is marked ready; the ready ones are the older approved stories. npm test passes on main.
+
+## 17:51 UTC check-in
+- **Good Boy v3** (render cd4cb4d) is on the review page, held. Its fixes: no villager vanishes, a clean swim cut, and the reveal at -18 LUFS with the bark hit. The K.cut {self} option is on main (88ac4d6).
+- **Broken Rail's set tools are on main** (58e8ebd, fa42bb9): the station piece, sets.dress.rails, and the world stamps rails, ravine and crater. The voice is 1 of 7 beats; the rest wait for the 08:00 UTC reset.
+- **videos branch:** only the older approved stories are ready; every new one is held. npm test 18/18.
+- **Waiting for the owner's OK:** Dog on the Hill v2, Thirty-One v2, Gold v2, Light Sleeper v2, Good Boy v3.
