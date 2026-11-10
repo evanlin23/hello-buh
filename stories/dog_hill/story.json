@@ -1,0 +1,181 @@
+{
+  "name": "dog_hill",
+  "stunt": "story_dog_hill",
+  "version": 2,
+  "caption": "why has this dog sat on the same block for 900 DAYS",
+  "logline": "A villager kid tries for 900 days to get the dog on the hill to stand up, until the one person it obeys logs back in.",
+  "question": "why tf has the dog sat on that hill for 900 days?",
+  "premise": "A tamed wolf has sat on one hilltop block above the village for 900 days, staring at an empty patch of grass beside an old dirt hut. Bones pile up untouched. A villager kid decides to sit with him so he doesn't wait alone.",
+  "twist": "A sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago (players come back where they left). 'HelloBuh joined the game': he appears on the patch and the dog stands for the first time. He says 'Sit, boy. I'll be right back.' and logs out again. The dog sits. Day one.",
+  "key_color": "#FFC94A",
+  "gap": 0.3,
+  "voice": {
+    "engine": "gemini",
+    "model_hint": "gemini-2.5-flash-preview-tts"
+  },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "name": "me (Pip, a villager kid)",
+      "voice": "Erinome",
+      "color": "#FFFFFF",
+      "profile": "a young villager kid telling a friend about the dog on the hill; hushed, earnest, a little in awe",
+      "on_screen": "baby villager (plains), seen in camera shots"
+    },
+    "Grandpa": {
+      "role": "character",
+      "name": "Grandpa",
+      "voice": "Algenib",
+      "color": "#B9D7FF",
+      "profile": "an old villager who has seen too much; gravelly, slow, gentle, calls everyone kid",
+      "on_screen": "villager (plains, weaponsmith outfit? no: a nitwit-free elder, the cartographer)"
+    },
+    "Player": {
+      "role": "character",
+      "name": "HelloBuh (the player)",
+      "voice": "Achird",
+      "color": "#FFC94A",
+      "profile": "a young man who logged in for a minute between other things; warm, casual, a bit distracted",
+      "on_screen": "the recording bot (Steve-like player skin), only in the last 12 s"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N",
+        "Grandpa"
+      ],
+      "direction": "A quiet hilltop above a village at the end of the day. Pip: a young kid telling a friend a strange, sad story, hushed and earnest, with real pauses. Grandpa: an old man, gravelly and slow, gentle, tired of explaining."
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "Player"
+      ],
+      "direction": "A young man, warm and casual, a little distracted, talking to his dog for a moment before he has to go."
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "The DOG on the hill / hasn't MOVED / in NINE HUNDRED days.",
+      "say": "The dog on the hill... hasn't moved... in nine hundred days.",
+      "direction": "hushed, a held breath before the number",
+      "shot": "S01"
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "Not for RAIN. / Not for THUNDER. / Not even for ZOMBIES.",
+      "say": "Not for rain. Not for thunder. Not even for zombies.",
+      "direction": "each one a little more amazed",
+      "shot": "S02"
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "I bring him a BONE / every MORNING. / He never even LOOKS.",
+      "say": "I bring him a bone every morning. He never even looks.",
+      "direction": "a little hurt",
+      "shot": "S03"
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "He wears a red COLLAR. / But nobody in the village / OWNS him.",
+      "say": "He wears a red collar. But nobody in the village owns him.",
+      "direction": "puzzled, a detail she can't explain",
+      "shot": "S03b"
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "He just stares / at one EMPTY patch / of GRASS.",
+      "say": "He just stares... at one empty patch of grass.",
+      "direction": "puzzled, slow",
+      "shot": "S04"
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "And behind him, / an OLD DIRT HUT. / Nobody knows / who BUILT it.",
+      "say": "And behind him... an old dirt hut. Nobody knows who built it.",
+      "direction": "lower, like a secret",
+      "shot": "S05"
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "I tried to make him STAND. / I BEGGED. / He won't BUDGE.",
+      "say": "I tried to make him stand. I begged. He won't budge.",
+      "direction": "frustrated, then deflated",
+      "shot": "S05b"
+    },
+    {
+      "id": "L08",
+      "who": "Grandpa",
+      "text": "Leave him be, kid. / Only ONE voice / gets him UP.",
+      "say": "Leave him be, kid. Only one voice gets him up.",
+      "direction": "slow and gentle, tired",
+      "shot": "S06"
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "WHOSE? / Nobody's come up here / in YEARS.",
+      "say": "Whose? Nobody's come up here in years.",
+      "direction": "frustrated, a kid arguing",
+      "shot": "S07"
+    },
+    {
+      "id": "L10",
+      "who": "Grandpa",
+      "text": "Said he'd be / RIGHT BACK.",
+      "say": "Said he'd be right back.",
+      "direction": "half to himself, remembering something far away",
+      "shot": "S08"
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "So every night now, / I sit with him. / Nobody should wait ALONE.",
+      "say": "So every night now... I sit with him. Nobody should wait alone.",
+      "direction": "quiet resolve, warm",
+      "shot": "S09"
+    },
+    {
+      "id": "L12",
+      "who": "N",
+      "text": "And then... / he STOOD UP.",
+      "say": "And then... he stood up.",
+      "direction": "a whisper, astonished",
+      "shot": "S11"
+    },
+    {
+      "id": "L13",
+      "who": "Player",
+      "text": "Hey, BUDDY! / Sorry. / Got BUSY.",
+      "say": "Hey, buddy! Sorry... got busy.",
+      "direction": "happy, a little guilty",
+      "shot": "S12"
+    },
+    {
+      "id": "L14",
+      "who": "Player",
+      "text": "Okay. SIT, boy. / I'll be / RIGHT BACK.",
+      "say": "Okay. Sit, boy. I'll be right back.",
+      "direction": "casual, already leaving",
+      "shot": "S13"
+    },
+    {
+      "id": "L15",
+      "who": "N",
+      "text": "Day ONE.",
+      "say": "Day one.",
+      "direction": "very quiet, heartbroken",
+      "shot": "S15"
+    }
+  ]
+}

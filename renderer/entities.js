@@ -29,7 +29,16 @@ async function img (url) {
 async function texture (layers) {
   const key = layers.join('|')
   if (texCache.has(key)) return texCache.get(key)
-  const imgs = (await Promise.all(layers.map(l => img(`/assets/env/${l}.png`)))).filter(Boolean)
+  // a layer 'path#rrggbb' is tinted (multiplied) by that colour first: the wolf's dyed collar (WolfCollarLayer)
+  const imgs = (await Promise.all(layers.map(async l => {
+    const [p, tint] = l.split('#'); const i = await img(`/assets/env/${p}.png`)
+    if (!i || !tint) return i
+    const o = document.createElement('canvas'); o.width = i.width; o.height = i.height
+    const og = o.getContext('2d'); og.drawImage(i, 0, 0); og.globalCompositeOperation = 'multiply'
+    og.fillStyle = '#' + tint; og.fillRect(0, 0, o.width, o.height)
+    og.globalCompositeOperation = 'destination-in'; og.drawImage(i, 0, 0)
+    return o
+  }))).filter(Boolean)
   if (!imgs.length) { texCache.set(key, null); return null }
   const c = document.createElement('canvas'); c.width = imgs[0].width; c.height = imgs[0].height
   const g = c.getContext('2d')
@@ -177,6 +186,11 @@ function look (name, extra, regs) {
   }
   if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`], yOff: -1.0 }   // the Bedrock boat geometry sits its hull ~15 px up; Java's hull bottom is at the entity's feet
   if (name === 'parrot') return { model: 'parrot', layers: [`entity/parrot/parrot_${['red_blue', 'blue', 'green', 'yellow_blue', 'grey'][(extra && extra.variant) || 0] || 'red_blue'}`] }   // Parrot.Variant
+  if (name === 'wolf') {   // WolfModel (Java numbers, wolfGeo below): standing or sitting; tame = the tame skin + the dyed collar
+    const layers = [extra && extra.tame ? 'entity/wolf/wolf_tame' : 'entity/wolf/wolf']
+    if (extra && extra.tame) layers.push(`entity/wolf/wolf_collar#${(DYE[extra.collar ?? 14] ?? DYE[14]).toString(16).padStart(6, '0')}`)
+    return { model: 'wolf', geo: extra && extra.sit ? 'java_sit' : 'java_stand', layers }
+  }
   if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
   if (name === 'chicken') return { model: 'chicken', layers: ['entity/chicken/temperate_chicken'] }
   if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
@@ -189,6 +203,28 @@ function look (name, extra, regs) {
   const t = m && m.textures && (m.textures.default || Object.values(m.textures)[0])
   if (t && m.geometry && m.geometry.default) return { model: name, layers: [FALLBACK_TEX[name] || t.replace(/^textures\//, '')] }
   return null
+}
+// WolfModel.createBodyLayer + setupAnim (sitting pose), from Java's numbers (y down from 24, x shifted -1 like the
+// converted Bedrock geometry). The converted wolf has no bind rotations (Bedrock poses it by animation), so it drew
+// with its body standing upright. Bone rotation = Java xRot in degrees (build() negates it into the flipped space).
+function wolfGeo (sit) {
+  const D = 180 / Math.PI
+  const part = (name, [px, py, pz], boxes, xRot = 0) => ({
+    name, pivot: [px - 1, 24 - py, pz], rotation: [xRot * D, 0, 0],
+    cubes: boxes.map(([bx, by, bz, sx, sy, sz, u, v]) => ({ origin: [px + bx - 1, 24 - (py + by + sy), pz + bz], size: [sx, sy, sz], uv: [u, v] }))
+  })
+  const leg = [0, 0, -1, 2, 8, 2, 0, 18]
+  const tail = (0.55 * Math.PI)   // a tame wolf at full health (Wolf.getTailAngle)
+  return { texturewidth: 64, textureheight: 32, bones: [
+    part('head', [-1, 13.5, -7], [[-2, -3, -2, 6, 6, 4, 0, 0], [-2, -5, 0, 2, 2, 1, 16, 14], [2, -5, 0, 2, 2, 1, 16, 14], [-0.5, -0.001, -5, 3, 3, 4, 0, 10]]),
+    sit ? part('body', [0, 18, 0], [[-3, -2, -3, 6, 9, 6, 18, 14]], Math.PI / 4) : part('body', [0, 14, 2], [[-3, -2, -3, 6, 9, 6, 18, 14]], Math.PI / 2),
+    sit ? part('upperBody', [-1, 16, -3], [[-3, -3, -3, 8, 6, 7, 21, 0]], 2 * Math.PI / 5) : part('upperBody', [-1, 14, -3], [[-3, -3, -3, 8, 6, 7, 21, 0]], Math.PI / 2),
+    sit ? part('leg0', [-2.5, 22.7, 2], [leg], 3 * Math.PI / 2) : part('leg0', [-2.5, 16, 7], [leg]),
+    sit ? part('leg1', [0.5, 22.7, 2], [leg], 3 * Math.PI / 2) : part('leg1', [0.5, 16, 7], [leg]),
+    sit ? part('leg2', [-2.49, 17, -4], [leg], 5.811947) : part('leg2', [-2.5, 16, -4], [leg]),
+    sit ? part('leg3', [0.51, 17, -4], [leg], 5.811947) : part('leg3', [0.5, 16, -4], [leg]),
+    part('tail', sit ? [-1, 21, 6] : [-1, 12, 8], [[0, 0, -1, 2, 8, 2, 9, 18]], tail)
+  ] }
 }
 // textures that moved since the converted models were made
 const FALLBACK_TEX = { squid: 'entity/squid/squid', cat: 'entity/cat/tabby', ocelot: 'entity/cat/ocelot', wolf: 'entity/wolf/wolf', horse: 'entity/horse/horse_brown', fox: 'entity/fox/fox', rabbit: 'entity/rabbit/brown', parrot: 'entity/parrot/parrot_red_blue', llama: 'entity/llama/creamy', panda: 'entity/panda/panda' }
@@ -586,7 +622,12 @@ function B_isBlock (n) { return n === 'falling_block' || n === 'moving_block' ||
 
 export class EntityLayer {
   constructor (scene, regs) { this.scene = scene; this.regs = regs || {}; this.live = new Map(); this.pending = new Set(); this.blockModels = new Map() }
-  static async loadModels () { if (!MODELS) MODELS = await (await fetch('/entity_models.json')).json() }
+  static async loadModels () {
+    if (!MODELS) {
+      MODELS = await (await fetch('/entity_models.json')).json()
+      if (MODELS.wolf) { MODELS.wolf.geometry.java_stand = wolfGeo(false); MODELS.wolf.geometry.java_sit = wolfGeo(true) }
+    }
+  }
 
   async ensure (id, name, extra) {
     // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
