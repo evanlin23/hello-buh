@@ -169,3 +169,13 @@ For the owner's morning. Newest at the bottom.
   - Light Sleeper: review round 1 found an edit-only fix (end S11 near 31.4 s, start the S12 crane on "ECHO") plus a
     trim toward 45 s; it's being re-edited.
   - Started the Gold for the Portal build (session_019n1tKFps1v8fgz5VZis629).
+- 11:10 UTC:
+  - **Good Boy final cut is done and held, NOT published** (render/story_good_boy 563bd62, 40.85 s).
+    - Checks: review READY after a final independent check; rec_check, pace, voice_edges, speaker_check and drift
+      all at 0 blockers.
+    - Panel: the final cut couldn't be run (all Gemini text models at 429). The previous cut had 0 blockers; 3/3
+      heard Pip as breathy.
+    - Sent to the owner and added to the review page as "held".
+    - **Owner decision: publish or not.**
+  - Merged K.cut(..., {shot}) to main (aa12714).
+  - Started the Names in the Woods build.
