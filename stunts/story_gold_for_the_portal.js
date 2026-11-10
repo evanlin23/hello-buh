@@ -65,6 +65,10 @@ module.exports = {
     for (let i = 0; i < gifts.length; i++) await c(`/item replace block ${A(10, 1, 3)} container.${i} with ${gifts[i][0]} ${gifts[i][1]}`)
     for (let i = 0; i < 3; i++) await c(`/item replace block ${A(10, 1, 3)} container.${11 + i} with potion[potion_contents={potion:"minecraft:fire_resistance"}]`)
     for (let i = 0; i < 5; i++) await c(`/item replace block ${A(8, 1, 1)} container.${i * 2} with gold_block 9`)
+    // gold in S01's foreground (the first frame: the gold reads before the line does) and a lantern on top, on
+    // Grandma's camera side (visual audit 2026-11-10 B1)
+    await c(`/fill ${A(9, 1, 7)} ${A(9, 2, 7)} gold_block`)
+    await c(`/setblock ${A(9, 3, 7)} lantern`)
     await c(`/fill ${A(1, 11, 1)} ${A(1, 11, 1)} spruce_trapdoor[facing=south,half=top,open=true] replace spruce_trapdoor`)   // the hatch, open (never seen until Grandma shuts it in L11)
     // the narrator's pocket under the cellar
     await c(`/fill ${A(POCKET[0] - 1, POCKET[1] - 1, POCKET[2] - 1)} ${A(POCKET[0] + 1, POCKET[1] + 2, POCKET[2] + 1)} air`)
@@ -126,8 +130,8 @@ module.exports = {
     // L01 (S01): the cellar, night. Grandma full-figure at the portal, tonight's ingot already crossing the purple
     K.shot('s01')
     // (a 30-tick preroll, not in the Short: an idle mob's first moves reach the client ~1 s late, so she's warm by frame 1)
-    await K.preroll(30, (k) => { if (k === 25) toss('gold_ingot', [9.6, 2.25, 5.0], [11.4, 2.2, 5.5], 8); portalLife(k); const j = Math.max(0, k - 24); gma.pitch = k < 24 ? 20 + 6 * Math.sin(k / 4) : 42 - j * 2; gma.yaw = k < 24 ? -70 + 8 * Math.sin(k / 5) : -60 - j * 1.5 })
-    await line('L01', async (k) => { portalLife(k); if (k < 16) gma.x -= 0.025; gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = k < 14 ? -69 - k * 1.6 : -80 + 12 * Math.sin((k - 14) / 13); if (k === 4) gone(); if (k === 3) ctx.sound('block.portal.trigger', 0.12, 1.6) })
+    await K.preroll(30, (k) => { if (k === 27) toss('gold_ingot', [9.6, 2.25, 5.0], [11.4, 2.2, 5.5], 8); portalLife(k); const j = Math.max(0, k - 24); gma.pitch = k < 24 ? 20 + 6 * Math.sin(k / 4) : 42 - j * 2; gma.yaw = k < 24 ? -70 + 8 * Math.sin(k / 5) : -60 - j * 1.5 })
+    await line('L01', async (k) => { portalLife(k); if (k < 16) gma.x -= 0.025; gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = k < 8 ? -69 : turnToward(gma.yaw, 0, 5) + (k > 22 ? 4 * Math.sin((k - 22) / 9) : 0); if (k === 5) gone(); if (k === 3) ctx.sound('block.portal.trigger', 0.12, 1.6) })
     K.base = K.aim(P(11, 2.0, 5.6))
 
     // L02 (S02): the ridge at night, the crane down to the cottage; on 'MORNING' (S03) the cellar at sunrise, POV from
@@ -139,11 +143,13 @@ module.exports = {
     // (the walk keeps north of the carpet, x 5-7 z 4-6)
     let from2 = null, walking = false
     await line('L02', async (k, at) => {
-      if (k === at(1) - 2) { K.park('gma'); say('/kill @e[type=bat,tag=bat]') }
-      if (k === at(1)) { K.setTime(MORNING); ctx.mark('cut'); K.shot('pov') }   // already standing there: no cut, no in-between frames
-      if (k === at(1) + 4) { walking = true; K.walkTo([P(4.6, 1, 3.85)], { max: 60 }).catch(e => ctx.log(e.message)).finally(() => { walking = false }) }
+      if (k < at(1) - 2) { gma.yaw += 1.2 * Math.sin(k / 5); gma.pitch = 6 + 6 * Math.sin(k / 7) }   // still at the portal under the crane
+    if (k === at(1) - 2) K.park('gma')
+    if (k === at(1) + 1) say(`/tp @e[type=bat,tag=bat] ${X} ${F - 200} ${Z}`)   // motion-ok: the bat leaves after the cut, unseen from the cellar (a /kill drew its red death poof: audit F9)
+      if (k === at(1)) { K.setTime(MORNING); ctx.mark('cut'); K.shot('pov_morning') }   // already standing there: no cut, no in-between frames
+      if (k === at(1) + 4) { walking = true; K.walkTo([P(3.6, 1, 3.4), P(4.6, 1, 3.85)], { max: 60 }).catch(e => ctx.log(e.message)).finally(() => { walking = false }) }
       if (k > at(1)) portalLife(k)
-      if (k === at(2)) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.16d,0.18d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
+      if (k === at(2)) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.26d,0.2d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
       if (k === at(2) + 9) ctx.sound('block.stone.step', 0.8, 0.9)
       if (!walking && k > at(2) + 6) { from2 = from2 || { ...K.base }; K.turnTo(from2, P(11.2, 1.55, 5.6), Math.min(1, (k - at(2) - 6) / 14)) }   // eyes on the obsidian that came out
       if (k >= at(1) && !walking) look(k, 0.1 * Math.sin(k / 7), 0.03 * Math.sin(k / 9))
@@ -247,6 +253,7 @@ module.exports = {
     let leg = 0
     await line('L09', async (k, at, n) => {
       portalLife(k)
+      if (k === at(3)) { ctx.mark('cut'); K.shot('pov') }   // 'SIXTY-FOUR ingots': POV, the 64 on the hotbar (audit F6)
       if (leg < legs.length) {
         const [tx, tz] = legs[leg], dx = tx - gma.x, dz = tz - gma.z, d = Math.hypot(dx, dz)
         if (d < 0.12) leg++; else K.step(gma, dx / d * Math.min(0.12, d), dz / d * Math.min(0.12, d))
@@ -313,24 +320,27 @@ module.exports = {
 // is cottage-local (lx, lz) -> (lx - 2, lz - 4) here (floor dy 11); the garden gate at (1, 11).
 module.exports.shots = {
   pov: { pov: true },
-  // S01: full figure, 4 blocks west of the portal at Grandma's eye height, a slow push east
-  s01: { at: [5.4, 2.45, 6.4], look: [10.9, 2.3, 5.75], fov: 62, push: 0.25, dof: false, subject: [[9.3, 1.9, 4.75]] },
+  // S03: the morning cellar, warm so the cut from the night crane reads as morning (audit F2)
+  pov_morning: { pov: true, mood: 'golden_hour' },
+  // S01: low on the throw line from the south-west: the ingot over the purple, the gold and its lantern at frame right, Grandma turning to us (audit B1)
+  // S01's subject: her eye (y 1.9 sat in the carpet's block, which the lint read as hidden)
+  s01: { at: [6.5, 2.0, 7.8], look: [10.2, 2.0, 5.3], fov: 62, push: 0.12, dof: false, subject: [[9.2, 2.6, 4.85]] },
   // S02: the ridge at night, an extreme-wide crane down from over the slope south-east of the cottage to the gate
-  s02: { path: [[0, 22, 30, 28], [2.2, 7.5, 16.5, 15.5]], lookPath: [[0, 4, 13, 2], [2.2, 3, 13.5, 4]], ease: true, fov: 60, dof: false },
+  s02: { path: [[1, 14, 22, 20], [2.2, 7.5, 16.5, 15.5]], lookPath: [[0, 4, 13, 2], [2.2, 3, 13.5, 4]], ease: true, fov: 60, dof: false },
   // S05: the garden, morning: behind the grandson at the gate, looking south-south-west down the slope to Hushwell's plaza
-  s05: { at: [4.0, 15.5, 6.6], look: [-16, 9, 60], fov: 55, push: 0.2, dof: false, subject: ['self'] },
+  s05: { at: [3.3, 13.8, 8.4], look: [-16, 12.5, 60], fov: 55, mood: 'village_day', push: 0.2, dof: false, subject: ['self'] },
   // S06: 25 years ago, medium: 3 blocks in front of Grandpa at his eye height, the new portal behind him
-  s06: { at: [5.6, 2.55 + DOWN, 6.9], look: [9.6, 2.35 + DOWN, 5.4], fov: 50, push: 0.3, mood: 'flashback', subject: ['actor:Grandpa'] },
+  s06: { at: [6.6, 2.55 + DOWN, 8.0], look: [9.6, 2.35 + DOWN, 5.4], fov: 50, push: 0.3, mood: 'flashback', subject: ['actor:Grandpa'] },
   // S07: wide from beside the ladder, still: Grandpa walks into the purple; Grandma left alone
   // S06b: 'With a BLUE stripe': close on the helmet's lapis stripe
   s06b: { at: [7.5, 2.9 + DOWN, 3.6], look: [9.6, 2.6 + DOWN, 5.5], fov: 48, push: 0.15, mood: 'flashback', subject: ['actor:Grandpa'] },
   s07: { at: [1.6, 2.3 + DOWN, 2.6], look: [10.5, 2.0 + DOWN, 5.4], fov: 55, push: 0.12, mood: 'flashback', dof: false, subject: [[10.5, 1.9 + DOWN, 5.5]] },
   // S07b: 'He never came BACK': Grandma alone by the portal, medium, the purple at frame right
-  s07b: { at: [5.6, 2.7 + DOWN, 6.2], look: [8.7, 2.2 + DOWN, 3.9], fov: 50, push: 0.2, mood: 'flashback', subject: [[8.6, 1.9 + DOWN, 3.9]] },
+  s07b: { at: [5.0, 2.7 + DOWN, 7.6], look: [9.0, 2.3 + DOWN, 4.4], fov: 50, push: 0.2, mood: 'flashback', subject: [[8.6, 1.9 + DOWN, 3.9]] },
   // S10: high over the grandson's shoulder near the ceiling beams, looking past him into the portal
   s10: { at: [3.7, 4.05, 5.75], look: [10.8, 1.85, 5.5], fov: 55, push: 0.3, dof: false, subject: ['self'] },
   // S13: from the bed corner behind the grandson, standing where he threw, in line with the portal
-  s13: { at: [1.2, 3.4, 8.2], look: [10.9, 0.9, 5.9], fov: 72, push: 0.15, dof: false, subject: ['self'] },
+  s13: { at: [2.0, 2.9, 7.6], look: [10.9, 2.0, 5.6], fov: 58, push: 0.15, dof: false, subject: ['self'] },
   // S14: the reveal, close: 2.4 blocks west of the piglin at its eye height, facing east, a very slow push
   s14: { at: [6.9, 2.55, 5.5], look: [10.1, 2.25, 5.6], fov: 52, push: 0.12, dof: { aperture: 0.7 }, subject: [[10.1, 1.9, 5.6]] }
 }
