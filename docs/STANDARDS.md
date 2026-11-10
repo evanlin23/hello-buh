@@ -60,7 +60,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 0000. **The narrator recipe (owner's pick)**: Gemini Leda with the "sleepover" direction (spooky-funny story at a
    sleepover, fast and gleeful; brand/voice_samples/kid k4), rubberband tempo 1.1x and +1 semitone, nothing else (no
    pause cap, no formant mode, no room: "weird artifacts"); performed continuously so no pause is cut. It is
-   `voices/cast.json` `narrator`; the Orus x1.45 voice is now `narrator_roblox` only. Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c
+   `voices/cast.json` `narrator`; the Orus x1.45 voice is now `narrator_roblox` only. Its take gate allows sentence
+   breaks up to 0.6 s (cast `max_pause`: the take the owner called "fine" had them); character lines up to 1.0 s. Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
    (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.

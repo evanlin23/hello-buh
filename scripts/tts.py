@@ -34,8 +34,8 @@ read the direction aloud; a pitch that belongs to the other speaker means a bad 
 import base64
 import hashlib
 import json
-import pathlib
 import os
+import pathlib
 import subprocess
 import sys
 import time
@@ -56,12 +56,6 @@ CACHE = ROOT / "work" / "tts"
 STATS = {"requests": 0, "cached": 0}
 MAX_LINES = 6    # lines per request: longer takes drift over the take (owner, 2026-11-10: voices "change ... even within take")
 LOCK = {}        # cast id -> the one model that voices it in this story (voice.json `models`; docs/voices.md "Drift gate")
-# pacing, opt-in (unset: as before): TTS_MIN_GAP seconds between requests; on a 429, TTS_429_RETRIES more tries of the
-# same model after TTS_429_WAIT seconds each, before moving on (a shared per-minute quota recovers in about a minute)
-MIN_GAP = float(os.environ.get("TTS_MIN_GAP") or 0)
-RETRY_429 = int(os.environ.get("TTS_429_RETRIES") or 0)
-WAIT_429 = float(os.environ.get("TTS_429_WAIT") or 65)
-_LAST = [0.0]
 
 
 SHORT_WORDS = 3  # a character line this short goes in a single-speaker request (multi-speaker takes swapped them)
@@ -93,6 +87,21 @@ def resolve(story_cast=None):
     return out
 
 
+# shared-quota pacing (the lead, 2026-11-10: several sessions share the TTS quota): TTS_MIN_GAP seconds between
+# this process's requests, and on a 429 TTS_429_WAIT seconds then a retry, up to TTS_429_RETRIES times (both
+# default 0: a 429 moves on as before)
+_LAST_REQ = [0.0]
+
+
+def _pace():
+    gap = float(os.environ.get("TTS_MIN_GAP", "0") or 0)
+    wait = _LAST_REQ[0] + gap - time.time()
+    if wait > 0:
+        print(f"  (pacing: {wait:.0f} s before the next request)")
+        time.sleep(wait)
+    _LAST_REQ[0] = time.time()
+
+
 def request(text, voices, models=None):
     """One TTS call -> (float32 mono at SR, the model that made it). voices: {label: Gemini voice name} (1 or 2
     entries). `text` is the prompt, or a function model -> prompt (each model family gets the layout it was tested
@@ -105,17 +114,11 @@ def request(text, voices, models=None):
     for model in models or MODELS:
         body = json.dumps({"contents": [{"parts": [{"text": text(model) if callable(text) else text}]}],
                            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
-        # a 429 is the model's daily quota: move to the next one (after TTS_429_RETRIES waits); a 5xx gets one more try
-        tries_429 = 0
-        attempt = 0
-        while attempt < 2:
-            attempt += 1
+        # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
+        r429 = int(os.environ.get("TTS_429_RETRIES", "0") or 0)
+        for attempt in range(2 + r429):
             try:
-                if MIN_GAP:
-                    gap = MIN_GAP - (time.time() - _LAST[0])
-                    if gap > 0:
-                        time.sleep(gap)
-                _LAST[0] = time.time()
+                _pace()
                 STATS["requests"] += 1
                 req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                                              data=body, headers={"Content-Type": "application/json", "x-goog-api-key": "proxy"})
@@ -127,13 +130,15 @@ def request(text, voices, models=None):
                                           input=data, capture_output=True, check=True).stdout
                 return np.frombuffer(data, "<i2").astype(np.float32) / 32768, model
             except urllib.error.HTTPError as e:
-                msg = e.read()[:300].decode(errors="replace")
+                msg = e.read()[:4000].decode(errors="replace")
                 print(f"  {model}: {e.code} {msg[:120]!r}")
                 if e.code == 429:
-                    if tries_429 < RETRY_429:
-                        tries_429 += 1; attempt -= 1
-                        print(f"  {model}: 429, waiting {WAIT_429:.0f} s (retry {tries_429}/{RETRY_429})")
-                        time.sleep(WAIT_429)
+                    print(f"  429 (full): {msg}")
+                    if r429 > 0:
+                        r429 -= 1
+                        w = float(os.environ.get("TTS_429_WAIT", "65") or 65)
+                        print(f"  429: waiting {w:.0f} s, then again ({r429} retries left)")
+                        time.sleep(w)
                         continue
                     break
                 if e.code not in (500, 502, 503, 504):
@@ -1035,8 +1040,19 @@ def beat_groups(story, cs, narrator, spoken):
         else:
             beats.append({"id": ln["id"], "key": key, "scene": scene, "room": r.get("room", story.get("room", "small")),
                           "lines": [item]})
+    # story "one_take": [speaker ids] (the lead, 2026-11-10: the narrator in ONE request, quota): all of a speaker's
+    # lines in one beat even where another speaker's line interrupts; run_beats splits the take back into runs of
+    # consecutive story lines (the slices tile the take: a run is a contiguous stretch of it, no cut inside a line)
+    for w1 in story.get("one_take") or []:
+        mine = [b for b in beats if b["key"][0] == w1]
+        if len(mine) > 1:
+            first = mine[0]
+            first["runs"] = [[it[1] for it in b["lines"]] for b in mine]
+            for b in mine[1:]:
+                first["lines"] += b["lines"]
+                beats.remove(b)
     for b in beats:
-        if len(b["lines"]) > MAX_LINES:
+        if len(b["lines"]) > MAX_LINES and not b.get("runs"):
             print(f"WARNING: beat {b['id']} has {len(b['lines'])} lines (> {MAX_LINES}): long takes drift; split it with line `beat` markers")
     return beats
 
@@ -1125,6 +1141,21 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None,
     return done, meta
 
 
+CHARACTER_MAX_PAUSE = {"rest": 1.0}   # a character's short line may breathe between its sentences: the pace rules are the narrator's
+
+
+def beat_limits(story, cs, who, narrator):
+    """The take gate's pause limits for one beat (in a continuous take a limit, never a trim). Story `max_pause` first,
+    then the speaker's cast `max_pause`: the owner's kid narrator performs sentence breaks at ~0.4-0.6 s and the owner
+    said "this is fine" of exactly that take (docs/stories.md, r:rcf486c), so its cast entry allows rest 0.6. A
+    character (anyone but the narrator) gets CHARACTER_MAX_PAUSE: Mom's "Walk SOFT, sweetie. The ground's a light
+    SLEEPER." has a natural sentence gap and failed five takes against the narrator's 0.35 s."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import take_gate
+    mp = cs.get(who, {}).get("max_pause") or (None if who == narrator else CHARACTER_MAX_PAUSE)
+    return take_gate.limits_for(story.get("max_pause") or mp)
+
+
 def run_beats(d, story, cs, narrator, voice, only=None, retakes=2):
     """A story with "voice_takes": "beat": every beat (or the beats holding an `--only` line) as one gated
     continuous take. No single-line re-takes: re-taking one line would splice a second take into the beat.
@@ -1132,15 +1163,35 @@ def run_beats(d, story, cs, narrator, voice, only=None, retakes=2):
     sys.path.insert(0, str(ROOT / "scripts"))
     import take_gate
     beats = beat_groups(story, cs, narrator, voice.spoken)
-    lim = take_gate.limits_for(story.get("max_pause"))   # in a continuous take max_pause is a gate limit, never a trim
     done, metas = {}, {}
     for i, b in enumerate(beats):
         if only and not any(lid in only for _, lid, _, _ in b["lines"]):
             continue
+        lim = beat_limits(story, cs, b["lines"][0][0], narrator)
         d_, m = voice_beat(b, cs, d / "voice", tries=1 + retakes, opening=(i == 0), limits=lim)
         done.update(d_)
-        metas[b["id"]] = m
+        if b.get("runs"):
+            metas.update(split_runs(d / "voice", b, m, d_))
+        else:
+            metas[b["id"]] = m
     return done, metas
+
+
+def split_runs(out, beat, m, done):
+    """A one_take beat back into its runs of consecutive story lines: each run's stretch of the take (its lines'
+    slices, which tile it exactly) written as beat_<first line>.wav, offsets from the run's start. -> {run id: meta}"""
+    ends = m["offsets"][1:] + [m["dur"]]
+    at = {lid: (o, e) for lid, o, e in zip(m["lines"], m["offsets"], ends)}
+    metas = {}
+    for run in beat["runs"]:
+        a, b = at[run[0]][0], at[run[-1]][1]
+        rid = run[0]
+        seg = np.concatenate([done[lid][2] for lid in run])
+        write(out / f"beat_{rid}.wav", seg)
+        metas[rid] = {**m, "lines": run, "file": f"beat_{rid}.wav", "dur": round(len(seg) / SR, 3),
+                      "offsets": [round(at[lid][0] - a, 3) for lid in run], "take": beat["id"], "take_at": round(a, 3)}
+        print(f"one take {beat['id']} -> {rid}: {', '.join(run)} ({a:.2f}-{b:.2f} s of the take)")
+    return metas
 
 
 def run_story(d, only=None, check=True, retakes=2, relock=None):
