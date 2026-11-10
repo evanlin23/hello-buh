@@ -1,354 +1,588 @@
 {
- "voice": "gemini cast (Leda fast, Algenib, Achird)",
- "sr": 24000,
- "gap": 0.3,
  "lines": {
   "L01": {
-   "text": "The dog on the hill hasn't moved in nine hundred days.",
    "who": "N",
-   "dur": 3.56,
-   "onset": 0.23,
-   "end": 3.1,
+   "text": "The dog on the hill hasn't moved in nine-hundred days.",
+   "dur": 2.565,
+   "onset": 0.1,
+   "end": 2.34,
    "chunks": [
     [
-     0.23,
+     0.1,
+     0.36
+    ],
+    [
+     0.36,
      0.78
     ],
     [
      0.78,
-     1.34
+     1.38
     ],
     [
-     1.34,
-     3.1
+     1.38,
+     2.34
     ]
    ],
    "captions": [
-    "The DOG on the hill",
+    "The DOG",
+    "on the HILL",
     "hasn't MOVED",
-    "in NINE HUNDRED days."
+    "in nine-hundred DAYS."
    ],
-   "aligned": "whisper-base.en"
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 0.0,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "538c17bf7e5b"
   },
   "L02": {
-   "text": "Not for rain. Not for thunder. Not even for zombies.",
    "who": "N",
-   "dur": 3.24,
-   "onset": 0.2,
+   "text": "Not for rain. Not for thunder. Not for creepers. Not even zombies.",
+   "dur": 3.07,
+   "onset": 0.07,
    "end": 2.74,
    "chunks": [
     [
-     0.2,
-     0.66
+     0.07,
+     0.44
     ],
     [
-     1.18,
-     1.56
+     0.7,
+     1.06
     ],
     [
-     2.02,
+     1.42,
+     2.0
+    ],
+    [
+     2.22,
      2.74
     ]
    ],
    "captions": [
     "Not for RAIN.",
     "Not for THUNDER.",
-    "Not even for ZOMBIES."
+    "Not for CREEPERS.",
+    "Not even ZOMBIES."
    ],
-   "aligned": "whisper-base.en"
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 2.565,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "6626970f259b"
   },
   "L03": {
-   "text": "I bring him a bone every morning. He never even looks.",
    "who": "N",
-   "dur": 3.625,
-   "onset": 0.19,
-   "end": 3.14,
+   "text": "I bring him a bone every morning. He never looks.",
+   "dur": 1.68,
+   "onset": 0.0,
+   "end": 1.44,
    "chunks": [
     [
-     0.19,
-     0.82
+     0.0,
+     0.28
     ],
-    [
-     0.82,
-     1.62
-    ],
-    [
-     2.16,
-     3.14
-    ]
-   ],
-   "captions": [
-    "I bring him a BONE",
-    "every MORNING.",
-    "He never even LOOKS."
-   ],
-   "aligned": "whisper-base.en"
-  },
-  "L04": {
-   "text": "He wears a red collar. But nobody in the village owns him.",
-   "who": "N",
-   "dur": 3.6,
-   "onset": 0.32,
-   "end": 3.1,
-   "chunks": [
-    [
-     0.32,
-     1.02
-    ],
-    [
-     1.48,
-     2.6
-    ],
-    [
-     2.6,
-     3.1
-    ]
-   ],
-   "captions": [
-    "He wears a red COLLAR.",
-    "But nobody in the village",
-    "OWNS him."
-   ],
-   "aligned": "whisper-base.en"
-  },
-  "L05": {
-   "text": "He just stares at one empty patch of grass.",
-   "who": "N",
-   "dur": 3.08,
-   "onset": 0.28,
-   "end": 2.52,
-   "chunks": [
     [
      0.28,
-     0.72
+     0.44
     ],
     [
-     0.72,
-     2.14
+     0.44,
+     0.94
     ],
     [
-     2.14,
-     2.52
+     1.1,
+     1.44
     ]
    ],
    "captions": [
-    "He just stares",
-    "at one EMPTY patch",
-    "of GRASS."
+    "I BRING him",
+    "a BONE",
+    "every MORNING.",
+    "He never LOOKS."
    ],
-   "aligned": "whisper-base.en"
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 5.635,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "5239b0c3e90c"
   },
-  "L06": {
-   "text": "And behind him, an old dirt hut. Nobody knows who built it.",
+  "L04": {
    "who": "N",
-   "dur": 4.58,
-   "onset": 0.21,
-   "end": 4.38,
+   "text": "Kids throw sticks for him. He doesn't blink.",
+   "dur": 1.46,
+   "onset": 0.0,
+   "end": 1.3,
    "chunks": [
     [
-     0.21,
-     0.8
+     0.0,
+     0.3
     ],
     [
-     0.8,
-     2.52
+     0.3,
+     0.9
     ],
     [
-     3.22,
-     3.72
-    ],
-    [
-     3.72,
-     4.38
-    ]
-   ],
-   "captions": [
-    "And behind him,",
-    "an OLD DIRT HUT.",
-    "Nobody knows",
-    "who BUILT it."
-   ],
-   "aligned": "whisper-base.en"
-  },
-  "L07": {
-   "text": "I tried to make him stand. I begged. He won't budge.",
-   "who": "N",
-   "dur": 4.095,
-   "onset": 0.75,
-   "end": 3.88,
-   "chunks": [
-    [
-     0.75,
-     1.6
-    ],
-    [
-     2.12,
-     2.38
-    ],
-    [
-     3.22,
-     3.88
-    ]
-   ],
-   "captions": [
-    "I tried to make him STAND.",
-    "I BEGGED.",
-    "He won't BUDGE."
-   ],
-   "aligned": "whisper-base.en"
-  },
-  "L08": {
-   "text": "Leave him be, kid. Only one voice gets him up.",
-   "who": "Grandpa",
-   "dur": 4.31,
-   "onset": 0.29,
-   "end": 3.82,
-   "chunks": [
-    [
-     0.29,
+     1.0,
      1.3
-    ],
-    [
-     1.3,
-     3.12
-    ],
-    [
-     3.12,
-     3.82
     ]
    ],
    "captions": [
-    "Leave him be, kid.",
-    "Only ONE voice",
-    "gets him UP."
+    "Kids THROW",
+    "STICKS for him.",
+    "He doesn't BLINK."
    ],
-   "aligned": "whisper-base.en"
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 7.315,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "d13dfd12a731"
   },
-  "L10": {
-   "text": "Said he'd be right back.",
-   "who": "Grandpa",
-   "dur": 1.76,
-   "onset": 0.19,
-   "end": 1.32,
-   "chunks": [
-    [
-     0.19,
-     0.74
-    ],
-    [
-     0.74,
-     1.32
-    ]
-   ],
-   "captions": [
-    "Said he'd be",
-    "RIGHT BACK."
-   ],
-   "aligned": "whisper-base.en"
-  },
-  "L11": {
-   "text": "So every night now, I sit with him. Nobody should wait alone.",
+  "L05": {
    "who": "N",
-   "dur": 4.885,
-   "onset": 0.66,
-   "end": 4.54,
+   "text": "He's got a red collar, but nobody here owns him.",
+   "dur": 1.84,
+   "onset": 0.05,
+   "end": 1.74,
    "chunks": [
     [
-     0.66,
-     1.74
+     0.05,
+     0.18
     ],
     [
-     1.94,
-     2.66
-    ],
-    [
-     3.64,
-     4.54
-    ]
-   ],
-   "captions": [
-    "So every night now,",
-    "I sit with him.",
-    "Nobody should wait ALONE."
-   ],
-   "aligned": "whisper-base.en"
-  },
-  "L12": {
-   "text": "And then he stood up!",
-   "who": "N",
-   "dur": 1.83,
-   "onset": 0.63,
-   "end": 1.34,
-   "chunks": [
-    [
-     0.63,
-     0.82
-    ],
-    [
-     0.82,
-     1.34
-    ]
-   ],
-   "captions": [
-    "And then",
-    "he STOOD UP!"
-   ],
-   "aligned": "whisper-base.en"
-  },
-  "L13": {
-   "text": "Hey, buddy! Sorry... got busy.",
-   "who": "Player",
-   "dur": 2.72,
-   "onset": 0.27,
-   "end": 2.24,
-   "chunks": [
-    [
-     0.27,
+     0.18,
      0.6
     ],
     [
-     1.08,
-     1.36
+     0.82,
+     1.38
     ],
     [
-     1.78,
-     2.24
+     1.38,
+     1.74
     ]
    ],
    "captions": [
-    "Hey, BUDDY!",
-    "Sorry.",
-    "Got BUSY."
+    "He's GOT",
+    "a red COLLAR,",
+    "but NOBODY here",
+    "OWNS him."
    ],
-   "aligned": "whisper-base.en"
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 8.775,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "70d2a0716e89"
   },
-  "L14": {
-   "text": "Okay. Sit, boy. I'll be right back.",
-   "who": "Player",
-   "dur": 2.595,
-   "onset": 0.25,
-   "end": 2.16,
+  "L06": {
+   "who": "N",
+   "text": "He just stares at one empty patch of grass.",
+   "dur": 1.92,
+   "onset": 0.05,
+   "end": 1.64,
    "chunks": [
     [
-     0.25,
-     1.18
+     0.05,
+     0.42
     ],
     [
-     1.52,
-     1.84
+     0.42,
+     1.06
     ],
     [
-     1.84,
-     2.16
+     1.06,
+     1.64
     ]
    ],
    "captions": [
-    "Okay. SIT, boy.",
-    "I'll be",
-    "RIGHT BACK."
+    "He just STARES",
+    "at one EMPTY",
+    "patch of GRASS."
    ],
-   "aligned": "whisper-base.en"
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 10.615,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "a1492e8acc69"
+  },
+  "L07": {
+   "who": "N",
+   "text": "And behind him, an old dirt hut. Nobody knows who built it.",
+   "dur": 2.13,
+   "onset": 0.04,
+   "end": 2.1,
+   "chunks": [
+    [
+     0.04,
+     0.4
+    ],
+    [
+     0.54,
+     0.82
+    ],
+    [
+     0.82,
+     1.24
+    ],
+    [
+     1.42,
+     1.66
+    ],
+    [
+     1.66,
+     2.1
+    ]
+   ],
+   "captions": [
+    "And BEHIND him,",
+    "an OLD",
+    "dirt HUT.",
+    "Nobody KNOWS",
+    "who BUILT it."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 12.535,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "d4774369e48f"
+  },
+  "L08": {
+   "who": "N",
+   "text": "I tried to make him stand. I even begged.",
+   "dur": 1.54,
+   "onset": 0.05,
+   "end": 1.3,
+   "chunks": [
+    [
+     0.05,
+     0.24
+    ],
+    [
+     0.24,
+     0.66
+    ],
+    [
+     0.44,
+     1.3
+    ]
+   ],
+   "captions": [
+    "I TRIED to",
+    "make him STAND.",
+    "I even BEGGED."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 14.665,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "628330cb72fc"
+  },
+  "L09": {
+   "who": "N",
+   "text": "Grandpa says, leave him be. Only one voice gets him up.",
+   "dur": 2.13,
+   "onset": 0.04,
+   "end": 2.04,
+   "chunks": [
+    [
+     0.04,
+     0.42
+    ],
+    [
+     0.42,
+     0.9
+    ],
+    [
+     1.06,
+     1.6
+    ],
+    [
+     1.6,
+     2.04
+    ]
+   ],
+   "captions": [
+    "Grandpa SAYS,",
+    "leave him BE.",
+    "Only ONE voice",
+    "gets him UP."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 16.205,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "b8c3cf25ac9d"
+  },
+  "L10": {
+   "who": "N",
+   "text": "Somebody said be right back.",
+   "dur": 1.12,
+   "onset": 0.05,
+   "end": 0.96,
+   "chunks": [
+    [
+     0.05,
+     0.38
+    ],
+    [
+     0.54,
+     0.96
+    ]
+   ],
+   "captions": [
+    "SOMEBODY said",
+    "be right BACK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 18.335,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "be77b4f3e000"
+  },
+  "L11": {
+   "who": "N",
+   "text": "So every night, I sit there. nobody should wait alone.",
+   "dur": 2.0,
+   "onset": 0.0,
+   "end": 1.8,
+   "chunks": [
+    [
+     0.0,
+     0.62
+    ],
+    [
+     0.62,
+     1.06
+    ],
+    [
+     1.2,
+     1.48
+    ],
+    [
+     1.48,
+     1.8
+    ]
+   ],
+   "captions": [
+    "So every NIGHT,",
+    "I SIT there.",
+    "NOBODY should",
+    "wait ALONE."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 19.455,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "3ea2632d074a"
+  },
+  "L12": {
+   "who": "N",
+   "text": "Then last night, he stood up.",
+   "dur": 1.03,
+   "onset": 0.0,
+   "end": 0.92,
+   "chunks": [
+    [
+     0.0,
+     0.42
+    ],
+    [
+     0.6,
+     0.92
+    ]
+   ],
+   "captions": [
+    "Then last NIGHT,",
+    "he STOOD up."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 21.455,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "a64c09bba32b"
+  },
+  "L13": {
+   "who": "N",
+   "text": "Then a guy just appeared on the patch. Hey buddy, sorry, got busy.",
+   "dur": 2.44,
+   "onset": 0.04,
+   "end": 2.28,
+   "chunks": [
+    [
+     0.04,
+     0.3
+    ],
+    [
+     0.3,
+     0.68
+    ],
+    [
+     0.68,
+     1.1
+    ],
+    [
+     1.36,
+     1.52
+    ],
+    [
+     1.72,
+     2.28
+    ]
+   ],
+   "captions": [
+    "Then a GUY",
+    "just APPEARED",
+    "on the PATCH.",
+    "Hey BUDDY,",
+    "sorry, got BUSY."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 22.485,
+   "gap": 0,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "3874948cbb2c"
+  },
+  "L14": {
+   "who": "N",
+   "text": "Then he said, sit, boy. be right back.",
+   "dur": 1.495,
+   "onset": 0.07,
+   "end": 1.18,
+   "chunks": [
+    [
+     0.07,
+     0.3
+    ],
+    [
+     0.46,
+     0.7
+    ],
+    [
+     0.84,
+     1.18
+    ]
+   ],
+   "captions": [
+    "Then he SAID,",
+    "sit, BOY.",
+    "be right BACK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L01",
+   "offset": 24.925,
+   "aligned": "whisper-base.en",
+   "aligned_wav": "f040c6db23a4"
   }
  },
- "total": 43.88
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "N": "gemini-3.8-flash-tts"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L01": {
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14"
+   ],
+   "file": "beat_L01.wav",
+   "dur": 26.42,
+   "tempo": 0.95,
+   "rate": 1.45,
+   "offsets": [
+    0.0,
+    2.565,
+    5.635,
+    7.315,
+    8.775,
+    10.615,
+    12.535,
+    14.665,
+    16.205,
+    18.335,
+    19.455,
+    21.455,
+    22.485,
+    24.925
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "rejected": []
+  }
+ },
+ "total": 26.67
 }
