@@ -40,9 +40,11 @@
   "Grandma": {
    "role": "character",
    "name": "Grandma",
-   "silent": true,
    "color": "#F2C66B",
-   "on_screen": "villager (plains, librarian outfit), no name tag; never voiced: the narrator quotes her (L05, L07, L08, L10)"
+   "on_screen": "villager (plains, librarian outfit), no name tag; speaks L10 in her own voice (r-cast); the narrator quotes her elsewhere",
+   "ref": null,
+   "voice": "Gacrux",
+   "profile": "Grandma: a warm, steady woman in her seventies, gentle and certain, a little amused; she has said this a thousand times"
   },
   "Grandpa": {
    "role": "character",
@@ -67,11 +69,9 @@
     "L01",
     "L02",
     "L03",
-    "L04",
-    "L05",
-    "L06"
+    "L04"
    ],
-   "direction": "[confident, punchy and matter-of-fact, sentence after sentence with no gaps or dramatic pauses, landing each line on its last word; full voice, never whispery or breathy] The setup: the weird family ritual, told proudly."
+   "direction": "The setup: Grandma's weird nightly ritual, told proudly to friends at a sleepover."
   },
   {
    "id": "b2",
@@ -79,13 +79,34 @@
     "N"
    ],
    "lines": [
+    "L05",
+    "L06",
     "L07",
     "L08",
-    "L09",
-    "L10",
-    "L11"
+    "L09"
    ],
-   "direction": "[confident, punchy and matter-of-fact, sentence after sentence with no gaps or dramatic pauses, landing each line on its last word; full voice, never whispery or breathy] The plan: sure Grandpa is alive, sneaky and hopeful to the end."
+   "direction": "The family legend and the plan: Grandpa went in long ago, and the kid is SURE he is alive and trading."
+  },
+  {
+   "id": "g1",
+   "speakers": [
+    "Grandma"
+   ],
+   "lines": [
+    "L10"
+   ],
+   "direction": "A cosy cellar at night. Grandma gently turns down her grandson."
+  },
+  {
+   "id": "b3",
+   "speakers": [
+    "N"
+   ],
+   "lines": [
+    "L11",
+    "L12"
+   ],
+   "direction": "The kid's big secret move tonight, gleeful and sneaky, then the spooky-funny ending."
   }
  ],
  "sfx": [
@@ -135,6 +156,7 @@
     "what": "prop:portal",
     "word": "PORTAL"
    },
+   "direction": "hit only PORTAL; the rest level and quick",
    "note": "one continuous phrase: no breath or stop before 'nine thousand' (owner v2 note)"
   },
   {
@@ -151,7 +173,8 @@
      "what": "prop:portal",
      "word": "MORNING"
     }
-   ]
+   ],
+   "direction": "hit only NIGHT and BACK; the rest level and quick"
   },
   {
    "id": "L03",
@@ -162,82 +185,100 @@
     "what": "prop:gifts_floor",
     "word": "OBSIDIAN",
     "size": "cu"
-   }
+   },
+   "direction": "hit only OBSIDIAN, STRING, PEARLS and FIREPROOF, one each; the rest level and quick"
   },
   {
    "id": "L04",
    "who": "N",
-   "text": "Twenty-five YEARS ago, / Grandpa went IN, / WEARING her / gold HELMET, / BLUE stripe / and ALL.",
+   "text": "Grandma SAYS / it's from GRANDPA.",
+   "shot": "S05",
+   "look": false,
+   "direction": "hit only GRANDPA; the rest level and quick",
+   "note": "over the garden (S05): the narrator quotes her; nobody named is on screen, look off"
+  },
+  {
+   "id": "L05",
+   "who": "N",
+   "text": "Twenty-five YEARS ago, / Grandpa went IN. / He WORE / her gold HELMET, / BLUE stripe / and ALL.",
    "shot": "S06",
    "look": {
     "what": "actor:Grandpa",
     "word": "HELMET",
     "size": "ms"
-   }
-  },
-  {
-   "id": "L05",
-   "who": "N",
-   "text": "GOLD keeps / you SAFE / in the NETHER, / she SAID. / PIGLINS won't / TOUCH you / in GOLD.",
-   "shot": "S07",
-   "look": {
-    "what": "actor:Grandpa",
-    "word": "GOLD"
-   }
+   },
+   "direction": "hit only IN and ALL; the rest level and quick"
   },
   {
    "id": "L06",
    "who": "N",
-   "text": "He NEVER / came BACK.",
+   "text": "GOLD keeps / you SAFE, / Grandma SAID. / PIGLINS won't / TOUCH you / in GOLD.",
    "shot": "S07",
    "look": {
-    "what": "Grandma",
-    "word": "NEVER"
-   }
+    "what": "actor:Grandpa",
+    "word": "GOLD"
+   },
+   "direction": "hit only SAID and the last GOLD; the rest level and quick"
   },
   {
    "id": "L07",
    "who": "N",
-   "text": "I KEEP / his GIFTS / in a BARREL. / Grandma SAYS / he's still TRADING.",
-   "shot": "S08",
+   "text": "But he NEVER / came BACK.",
+   "shot": "S07",
    "look": {
-    "what": "prop:gifts_barrel",
-    "word": "BARREL"
-   }
+    "what": "Grandma",
+    "word": "NEVER"
+   },
+   "direction": "hit only BACK; the rest level and quick"
   },
   {
    "id": "L08",
    "who": "N",
-   "text": "Mom SAYS / he's GONE. / Grandma SAYS / he's BUSY. / So he's ALIVE. / I KNOW it.",
-   "shot": "S09",
+   "text": "So I KEEP / his GIFTS / in a BARREL. / Grandma SAYS / he's still TRADING. / So he's ALIVE. / Grandpa's the BEST / TRADER ever.",
+   "shot": "S08",
    "look": {
-    "what": "Grandma",
-    "word": "Mom"
-   }
+    "what": "prop:gifts_barrel",
+    "word": "BARREL"
+   },
+   "direction": "hit only BARREL, TRADING, ALIVE and TRADER; the rest level and quick"
   },
   {
    "id": "L09",
    "who": "N",
-   "text": "So TONIGHT / I BROUGHT / ALL my gold. / SIXTY-FOUR ingots. / To BUY him / a way HOME.",
+   "text": "Grandma THROWS / one a NIGHT.",
    "shot": "S10",
    "look": {
-    "what": "prop:portal"
-   }
+    "what": "Grandma",
+    "word": "THROWS"
+   },
+   "direction": "hit only NIGHT; the rest level and quick"
   },
   {
    "id": "L10",
-   "who": "N",
-   "text": "She SAW / my GOLD. / Just ONE, / she SAID. / One's PLENTY.",
-   "shot": "S11",
+   "who": "Grandma",
+   "text": "One's PLENTY, / sweetie.",
+   "shot": "S10",
    "look": {
     "what": "Grandma"
-   }
+   },
+   "direction": "warm, certain and a little amused, gentle; hit only PLENTY"
   },
   {
    "id": "L11",
    "who": "N",
-   "text": "When SHE / went to BED, / I threw IN / ALL of it, / and SOMETHING / stepped OUT.",
-   "shot": "S12",
+   "text": "But I HAD / sixty-four GOLD. / So TONIGHT, / I THREW / them ALL. / To BUY him / a way HOME.",
+   "shot": "S11",
+   "look": {
+    "what": "prop:portal",
+    "word": "THREW"
+   },
+   "direction": "hit only GOLD, ALL and HOME; the rest level and quick"
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "text": "Then I WAITED. / And SOMETHING / stepped OUT.",
+   "shot": "S13",
    "look": [
     {
      "what": "prop:ladder",
@@ -247,7 +288,8 @@
      "what": "prop:portal",
      "word": "ALL"
     }
-   ]
+   ],
+   "direction": "hit only WAITED and OUT; the rest level and quick"
   }
  ],
  "shots": [
