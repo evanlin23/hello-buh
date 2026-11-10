@@ -130,6 +130,14 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, on voices: "maybe we should have a narrator?" … then, on narrator-first with a few character
+  lines: "i think that makes the most sense yeah".** Our best story (runaway: one first-person narrator, 3.2 subs per
+  1k views, the channel's best) and the cinematic pilots (several voices: "mixed up", one read as ASMR) point the same
+  way. So: **one first-person narrator (Milo, or whoever's POV it is) carries the whole story**; other characters get
+  at most 1-3 short lines, only at key beats (the hook, the turn, the payoff), each in a clearly different voice
+  (age/sex/pitch apart) and a colour-coded caption. No back-and-forth dialogue scenes. The narrator is never hushed
+  for warmth (see the ASMR rule); he's quick, curious and a little funny, and goes quiet only for fear. Pending the
+  narration research (docs/research/narration_2026-11-10.md), which may tune the details.
 - **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like
   sensual asmr."** Read every script for how it could be misheard, out of context, by a stranger scrolling past. A
   hushed, breathy first-person voice plus lines about obeying, sitting when told, waiting all day for someone, or a
