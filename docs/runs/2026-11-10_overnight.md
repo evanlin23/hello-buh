@@ -41,3 +41,8 @@ For the owner's morning. Newest at the bottom.
   - look standards (font, captions, grade, lighting, sets, characters, on-screen effects);
   - the voice realism and kid-narrator audition;
   - the set library.
+- 07:30 UTC: merged the set library (`lib/sets`, docs/sets.md): 14 dressed pieces that land on natural terrain,
+  vanilla structures, dressing and camera helpers. Its demo village (out/sets_demo_sheet.jpg) is much better than the
+  old flat clearing, but the stepped grass terraces under the houses look fake and something floats in the sky.
+  Round 2 (agent/sets-2) fixes those, improves site choice, adds a tavern, mill and dock, and fixes run.sh's startup
+  race. The orphan server (pid 7073) is gone.
