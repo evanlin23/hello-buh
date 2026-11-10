@@ -1456,6 +1456,273 @@
     "names_in_the_woods"
    ],
    "status": "claimed 2026-11-10 by names_in_the_woods"
+  },
+  "rail_town": {
+   "name": "The Rail Town",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -318,
+    117,
+    -770
+   ],
+   "footprint": [
+    -366,
+    -808,
+    -250,
+    -700
+   ],
+   "about": "A small rail town on the High Meadow's flat top: a station at the end of a line (buffer stop with a lantern, a powered activator rail, a slab platform, two sidings with their own buffers named OTTO and JUNE), our spruce cottage west of it with a fenced yard and a rail loop where the pig sits in a minecart, two neighbours' houses to the north. The line runs south over a stone bridge across a dry ravine that drains east off the plateau, then down off the meadow toward the bay and west, 3,000 blocks to a crater (rail_crater) and on to Elmwater. Grandpa (a toolsmith) waits at the buffer every evening; Grandma JUNE left on day ~370 and came home on day 8400.",
+   "pieces": [
+    {
+     "id": "station",
+     "piece": "station",
+     "x": -318,
+     "z": -761,
+     "y": 116,
+     "facing": "south",
+     "variant": {
+      "a": "OTTO",
+      "b": "JUNE",
+      "sign": "ELMWATER|4500 ->"
+     },
+     "since": 300
+    },
+    {
+     "id": "bridge",
+     "piece": "bridge",
+     "x": -318,
+     "z": -727,
+     "y": 116,
+     "facing": "south",
+     "variant": {
+      "length": 25,
+      "drop": 12
+     },
+     "fit": false,
+     "since": 300
+    },
+    {
+     "id": "home",
+     "piece": "cottage",
+     "x": -348,
+     "z": -772,
+     "y": 117,
+     "facing": "east",
+     "variant": {
+      "palette": "spruce",
+      "garden": true,
+      "seed": 9
+     },
+     "since": 300
+    },
+    {
+     "id": "house_n",
+     "piece": "house2",
+     "x": -322,
+     "z": -800,
+     "y": 112,
+     "facing": "south",
+     "variant": {},
+     "since": 300
+    },
+    {
+     "id": "house_ne",
+     "piece": "cottage",
+     "x": -300,
+     "z": -790,
+     "y": 110,
+     "facing": "south",
+     "variant": {
+      "palette": "oak",
+      "garden": true,
+      "seed": 4
+     },
+     "since": 300
+    }
+   ],
+   "stamps": [
+    {
+     "id": "ravine",
+     "since": 0,
+     "what": "a dry ravine across the meadow's top, draining east off the plateau (the bridge spans it)",
+     "do": "ravine",
+     "x0": -352,
+     "x1": -250,
+     "z": -726,
+     "y0": 116,
+     "fall": 0.35,
+     "min": 66,
+     "floor": 6,
+     "wall": 2.2,
+     "top": 126
+    },
+    {
+     "id": "bridge_rails",
+     "since": 300,
+     "what": "the line's rails down the bridge deck",
+     "do": "fill",
+     "from": [
+      -318,
+      117,
+      -738
+     ],
+     "to": [
+      -318,
+      117,
+      -716
+     ],
+     "block": "rail[shape=north_south]"
+    },
+    {
+     "id": "line",
+     "since": 300,
+     "what": "the line: from the station south to the bridge, and on from the bridge down off the meadow",
+     "do": "rails",
+     "pts": [
+      [
+       -318,
+       -748
+      ],
+      [
+       -318,
+       -655
+      ]
+     ],
+     "opts": {
+      "fixed_range": [
+       [
+        0,
+        12,
+        117
+       ],
+       [
+        22,
+        36,
+        117
+       ]
+      ],
+      "skipz": [
+       -739,
+       -715
+      ]
+     }
+    },
+    {
+     "id": "yard",
+     "since": 6000,
+     "what": "our yard: a fenced square south of the cottage with a 5x5 rail loop on grass (the pig's)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -352 117 -760 -346 117 -754 grass_block",
+      "/fill -352 118 -760 -346 120 -754 air",
+      "/fill -352 118 -760 -346 118 -760 oak_fence",
+      "/fill -352 118 -754 -346 118 -754 oak_fence",
+      "/fill -352 118 -760 -352 118 -754 oak_fence",
+      "/fill -346 118 -760 -346 118 -754 oak_fence",
+      "/setblock -346 118 -757 oak_fence_gate[facing=east]",
+      "/fill -351 118 -759 -347 118 -759 rail[shape=east_west]",
+      "/fill -351 118 -755 -347 118 -755 rail[shape=east_west]",
+      "/fill -351 118 -759 -351 118 -755 rail[shape=north_south]",
+      "/fill -347 118 -759 -347 118 -755 rail[shape=north_south]",
+      "/setblock -351 118 -759 rail[shape=south_east]",
+      "/setblock -347 118 -759 rail[shape=south_west]",
+      "/setblock -351 118 -755 rail[shape=north_east]",
+      "/setblock -347 118 -755 rail[shape=north_west]",
+      "/fill -350 117 -758 -348 117 -756 farmland[moisture=7]",
+      "/fill -350 118 -758 -348 118 -756 carrots[age=7]"
+     ]
+    }
+   ],
+   "stories": [
+    "broken_rail"
+   ],
+   "status": "claimed 2026-11-10 by broken_rail"
+  },
+  "rail_crater": {
+   "name": "The Crater on the Line",
+   "kind": "landmark",
+   "region": "the_west_march",
+   "at": [
+    -2116,
+    78,
+    -96
+   ],
+   "footprint": [
+    -2140,
+    -250,
+    -2090,
+    -50
+   ],
+   "about": "3,000 blocks down the rail town's line, in a green basin south of a highland ridge: the line comes over the ridge (a powered rail every 8 blocks, a redstone torch beside each) and down to the basin floor, where a creeper blew a crater in it on day ~370 and took the redstone torch of the last powered rail. Grandma JUNE's minecart stopped on that dark rail at the crater's far lip, facing home, and she sat in it (mobs can't leave a minecart) until day 8400, when her grandson bridged the crater and pushed her home.",
+   "pieces": [],
+   "stamps": [
+    {
+     "id": "line",
+     "since": 300,
+     "what": "the line over the ridge and down to the basin floor, boosted every 8 blocks",
+     "do": "rails",
+     "pts": [
+      [
+       -2116,
+       -240
+      ],
+      [
+       -2116,
+       -60
+      ]
+     ],
+     "opts": {
+      "boost": 8,
+      "fixed_range": [
+       [
+        136,
+        152,
+        78
+       ]
+      ]
+     }
+    },
+    {
+     "id": "crater_bowl",
+     "since": 370,
+     "what": "the crater's bowl",
+     "do": "crater",
+     "pos": [
+      -2116,
+      77,
+      -96
+     ],
+     "r": 3.6,
+     "depth": 3
+    },
+    {
+     "id": "crater",
+     "since": 370,
+     "what": "the creeper crater cutting the line, 7 wide and 3 deep, grassed over; the last powered rail south of it dark (its torch blown away)",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -2115 78 -92 air",
+      "/setblock -2116 78 -92 powered_rail[shape=north_south,powered=false]"
+     ]
+    },
+    {
+     "id": "bridged",
+     "since": 8401,
+     "what": "the crater bridged by Buh on day 8400: 7 dirt and 7 rails across at rail height, the dark rail's redstone torch relit",
+     "do": "cmds",
+     "cmds": [
+      "/fill -2116 77 -99 -2116 77 -93 dirt",
+      "/fill -2116 78 -99 -2116 78 -93 rail[shape=north_south]",
+      "/setblock -2115 78 -92 redstone_torch",
+      "/setblock -2116 78 -92 powered_rail[shape=north_south,powered=true]"
+     ]
+    }
+   ],
+   "stories": [
+    "broken_rail"
+   ],
+   "status": "claimed 2026-11-10 by broken_rail"
   }
  },
  "stories": {
@@ -1625,6 +1892,17 @@
    ],
    "cameos": [
     "empty_boat"
+   ],
+   "status": "claimed"
+  },
+  "broken_rail": {
+   "day": 8400,
+   "places": [
+    "rail_town",
+    "rail_crater"
+   ],
+   "cameos": [
+    "torch_hill"
    ],
    "status": "claimed"
   }
