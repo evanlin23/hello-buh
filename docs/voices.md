@@ -131,6 +131,64 @@ single-speaker request (one voice can't swap), at most `--retakes` times; lines 
 re-take is cached like any take (its own cache key), and voice.json records `"take": n` so a later run rebuilds that
 line from the same cached re-take instead of the original bad one. Each re-take is one request of the ~10 a day.
 
+## Continuous takes (`"voice_takes": "beat"`, STANDARDS 2b.4)
+
+Owner, 2026-11-10: "I think part of the reason the voice pacing feels off is because we are cutting it bc of silence
+and stuff. but i think instead we should be ensuring the voice we get back is all like continuous already without the
+stuff we dont want." Opt-in per story: set `"voice_takes": "beat"` in story.json and run `./hb voice <stunt>` as
+usual. Stories without it are voiced exactly as above (the prompt and the cache keys are unchanged).
+
+- **A beat is one request and one take.** A beat is a run of consecutive lines with the same speaker and the same
+  direction (the request that lists the line in `requests[].lines`, else the first request with its speaker, else the
+  story `direction`). To split or join beats by hand, give lines a `"beat"` marker: consecutive lines with the same
+  marker and speaker are one beat. A beat over 6 lines warns (long takes drift). `tts.beat_groups` prints them.
+- **Used whole.** Only the take's own lead and tail are cut, at its first and last sound, with the safe margins
+  (80-350 ms before, 200-450 ms after, at the quiet point, 15 ms fades: `trim_take`). Nothing inside is cut, spliced or
+  shortened; `max_pause` never trims here, it becomes the gate's pause limit. Then the usual post, room and one gain.
+  The take is `voice/beat_<first line id>.wav`: the narration plays that file.
+- **Line places inside the take.** Whisper hears the finished take; each line's start is the quiet point between its
+  first word and the previous line's last (`tts.bounds`, the same rule as the cut). Each line's `voice/<id>.wav` is
+  its slice from its start to the next line's (the slices tile the take exactly, so speaker_check, the drift gate,
+  align.py and caption_sync run on them unchanged; words.json stays relative to each slice). voice.json gets `beats`
+  (`{id: {lines, file, dur, offsets, model, try, tries, fixes, ok, gate, rejected}}`) and, per line, `beat`, `offset`
+  (s into the take) and `gap: 0` on every line but the beat's last.
+- **The picture follows the voice.** `lib/story.js`: `S.line(id).gap` is 0 inside a beat (the take's own pause is
+  the gap), and `K.line` times a beat's lines from the take's offsets on the recording's clock (`beatTicks`): each
+  mark lands on its offset to the tick, with no drift over the beat; anything that runs between two lines of the beat
+  (a `K.preroll`, a wait) makes that mark late and shortens that line, so the next one is back on the voice; `extra`
+  counts only on the beat's last line (logged and ignored inside). `K.T(id)` uses the same gap. A stunt that times
+  its own lines (runaway's) should switch to K.line before turning beats on.
+- **Narration and captions.** `story_track.voice_starts`: the beat take is laid once, at its first marked line's mark
+  minus that line's offset; every line of the beat starts at that point plus its offset whatever its own mark says
+  (a mark more than 0.15 s off prints a warning: the picture runs early or late there). Captions and one-word timing use
+  these voice starts; `CAPTION_LEAD` and "never before the line's own cut" are unchanged. edit.py's end fade uses them.
+- **The take gate** (`scripts/take_gate.py`) rejects instead of editing. Measured on the finished take:
+  | fail | what | limit |
+  |---|---|---|
+  | pause | silence (every 10 ms under peak - 30 dB, pace.py's measure) | in the story's first beat, first 5 s: 0.2 s inside line 1, 0.35 inside a line, 0.6 between (pace.py's blockers); elsewhere 0.5 inside a line, 0.8 between; story `max_pause` overrides |
+  | breath | unvoiced noise, centroid under 4 kHz (not an "s"), 0.15 s+, above the silence line and under word level, not straight after a word | any |
+  | whisper | a run of Whisper's words with under 20 % of their sound pitched, or 14 dB under the take's median word | 0.5 s of sound |
+  | words | under 75 % of the script's letters heard, a line with under half its words heard, a run of 3+ extra words (a direction read aloud), a line edge Whisper can't place | any |
+  | clipped | the raw take's first or last 20 ms within 30 dB of its peak (Gemini cut a word) | any |
+
+  A rejected take is asked for again with the fix for each kind of failure added to its direction (`take_gate.FIX`:
+  inside the bracket on Pip's model, in DIRECTOR'S NOTES on 3.x), so the re-take is a new prompt and its own cache
+  entry (text + direction + fixes + model + salt); the same failures twice in a row get the same direction with a
+  fresh salt. At most 1 + `--retakes` requests per beat (default 3; `--no-check`: 1). The first passing take is kept,
+  else the least bad (`take_gate.score`); voice.json records its failures and speaker_check flags every line of
+  that beat **GATE** (a blocker). No single-line re-takes and no drift re-takes in this mode: re-taking one line would
+  splice a second take into the beat; re-take the beat (`--only <any line of it>`). `voice_check.py --resplit` refuses
+  these stories. speaker_check and voice_edges judge only the take's own ends (a slice's inner edges are not cuts).
+- **Calibration** (2026-11-10, on the cached thirty_one_raids takes; no requests): Pip's 11-line narrator take
+  (gemini-3.8-flash-lite) passes every check as two beats; its pauses are 0.23-0.74 s. Grandpa's 2-line
+  Charon take, carved into its two beats, fails both: an extra "And" heard between the lines and a 2.56 s pause
+  (L09), and 1.09 s of near-unvoiced speech at the end (L13, which that story later re-took with "never a whisper").
+  Not heard by ear: the whisper and breath thresholds rest on the metrics, so listen to the first gated stories.
+- **What changes in the gaps** (same takes, today's cut vs continuous, `out/continuous/`, not committed): today a
+  line keeps 200-450 ms of tail and 80-350 ms of lead and the stunt adds the story gap, so Pip's sentence gaps came out
+  0.57-0.99 s, evened out by the margins; continuous, they are the take's own 0.38-0.74 s (the same numbers measured in
+  the raw take), and the 8-line beat is 1.35 s shorter.
+
 ## Speaker check (`scripts/speaker_check.py`)
 
 For each line's wav: a speaker embedding (Resemblyzer's GE2E encoder: 17 MB, CPU, ~0.2 s a line with torch on 2
@@ -416,3 +474,9 @@ python3 scripts/tts.py voices/samples/samples.json /tmp/vox    # 5 requests, or 
 ```
 Then encode each line to mp3 (64 kb/s mono, all under 125 KB) and concatenate them with a 0.15 s 1 kHz beep between
 characters for the reel.
+
+**Delivery by beat on Pip's model (STANDARDS 2b.1).** gemini-3.8-flash-lite takes only a bracket before the lines (Pip's
+recipe), so `scripts/tts.py` used the narrator's profile there and dropped the request's direction: every beat came out
+bubbly. A request whose `direction` is in [brackets] now takes the bracket's place on that model (same voice, same
+model; keep it one short line and name the character, e.g. "[A nine-year-old kid telling a friend a story. This part:
+stunned and quiet, close to tears; full voice, not whispery]"). An unbracketed scene, or none, still sends the profile.

@@ -17,8 +17,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    block?"). Then quick escalating examples, the twist, the loop. Check: review, pace (hook). r:rc07fa1 r:rb1b445 r:raf72e0
 2. **The twist turns the whole story over**, planted at least twice where a rewatch catches it, said in one short line
    or shown by the game itself (runaway ends on the blast + "blown up by Creeper", no spoken reveal). Check: review. r:r9f677e
-3. **The ending explains itself** ("Day one." failed, "Day one. Again." worked) and **the last line loops into
-   line 1** (as one sentence or as cause and effect). Check: review. r:r810b66 r:r1fc6a3
+3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
+   effect). Never say what the last shot already shows ("Good boy.", "Day one. Again." cut by the owner): end on the
+   picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
 4. **The plot survives "why?"**: every character's action has a reason the viewer can state, and every accident has
    a cause you can SEE that exists in the game (a blast, a hit, a block breaking, powder snow, an arrow; never "I
    tripped/slipped/fell asleep"). Check: owner (`sync`: an uncaused fall), story-critic. r:rd497c4 r:r1d5238
@@ -30,7 +31,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 7. **Write like a person**: short sentences, **no "..." anywhere**, no em dashes or semicolons, US English, no AI
    words; fiction, never "true story"; nothing aimed at kids in the title or description; one quotable line short
    enough to type. Check: review (an ellipsis shows up in pace as an opening pause). r:rd2e17b r:rc7ba87 r:r810b66
-8. **The hero is Milo** (default Steve skin); HelloBuh is the channel. In-game names (death screen, chat) say Milo. r:raa4daf r:rc1ccff
+8. **The hero is Buh** (default Steve skin); HelloBuh is the channel. His name is only in-game text (chat, death screen, name tag); **nobody says it aloud**. r:raa4daf r:rc1ccff r:rf8d2e6 r:rdd0a3e
 9. **Length 30-45 s** (pace BLOCK < 30 s, WARN > 45 s). r:rcb4ffc
 10. **The bar is a polished animated short**, serious and professional, with more invention in the plots. r:r416ae4 r:r4b4332
 11. **The story decides, the engine follows**: a shot the renderer can't draw is a feature to build
@@ -65,6 +66,18 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    sped-up narrator. Short bracketed directions only (long ones get read aloud). r:r810b66
 10. **Re-voice after any script change**; the scene lengths come from voice.json, so a new voice = a new recording.
 
+## 2b. Voice delivery and caption sync (owner 2026-11-10)
+1. **Delivery follows the line's emotion**: the narrator's lines split by beat into requests with one scene direction
+   each (same voice, model, profile); a sad or quiet ending is never read bubbly. Check: panel, review. r:r08bb81
+2. **Captions start with the speech**: voice.json/words.json re-aligned after every cut; caption start within 0.12 s of
+   the speech onset. Check: `scripts/caption_sync.py` (in `./hb review`). r:r08bb81
+3. **Captions lead the word by 0.1 s** (`story_track.CAPTION_LEAD`), never before the line's own cut. Check: built in.
+   r:r221d0a
+4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
+   pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
+   only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a
+   story with `"voice_takes": "beat"` (scripts/take_gate.py, docs/voices.md "Continuous takes"). r:rfd4907
+
 ## 3. Set
 1. **No superflat**: built into real terrain with relief, at full scale, with depth in every shot (foreground,
    mid-ground, distance); places far apart in the story are far apart on screen; never a clearing on a flat plain.
@@ -92,6 +105,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 6. **The format**: a 1080x1920 Short, title band on top, the game view 1080x1011 in the middle, black bands;
    cinematic shots from a wide master cropped to the middle (compose for the centre crop); never a 16:9 Short.
    Check: owner and framing judge the cropped frame. r:r77975c
+
+- **Smooth digging, eye-level looks** (owner 2026-11-10): no aim snaps between dug blocks; a look puts faces at
+  eye level with headroom (never the feet or a block centre). Check: review; agent/smooth-dig and agent/aim add
+  measured checks. r:rb9aa2d
 
 ## 5. Look
 Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinematic is the default (`look: 'auto'`).

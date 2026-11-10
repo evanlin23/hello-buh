@@ -138,6 +138,41 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "I lowkey dont think we need the "Good boy" or the "day 1, again" i feel like both are implied?"**
+  Don't say what the picture already says. When the last shot shows the ending (the dog back on the hill, the farmer
+  with the dog), end on the picture and the sound, no closing line naming it. Supersedes "endings explain themselves":
+  the ending must be *readable*, from what's on screen, not narrated. Good Boy drops "Good boy."; Dog on the Hill
+  drops "Day one. Again." (the loop is shown: the same shot as line 1).
+- **Owner, 2026-11-10: "I think part of the reason the voice pacing feels off is because we are cutting it bc of silence
+  and stuff. but i think instead we should be ensuring the voice we get back is all like continuous already without the
+  stuff we dont want."**
+  Get takes right, don't edit them into shape. One beat = one continuous take used whole: the gaps between its
+  sentences are the take's own. A take with a long pause, a breath, a whisper, a wrong word or a clipped word is
+  re-taken (with a tighter direction), not trimmed. Cuts happen only between beats, at the take's own ends.
+- **Owner, 2026-11-10: "The captions actually seem behind".** Captions lead the spoken word by 0.1 s
+  (`story_track.CAPTION_LEAD`; Whisper's word times measured on time, but picture behind sound reads as late from
+  ~45 ms and picture ahead of sound is tolerated to ~125 ms, ITU-R BT.1359). Never before the line's own cut.
+- **Owner, 2026-11-10: "Can we have the main character be called buh, and just not have anyone say his name?"**
+  The hero is **Buh** again (supersedes Milo): in-game text only (chat "Buh joined the game", death screens, name tags;
+  stunt `botName: 'Buh'`). **No line ever says his name aloud**: not the narrator, not any character. The critic
+  treats a spoken hero name as a must-fix; characters address him without it ("kid", "buddy", or nothing). Voice
+  `milo` and `buh` are the same cast entry. Canon and STANDARDS use Buh.
+- **Owner, 2026-11-10: "can we make the movement smoother when we are breaking blocks? right now it looks very
+  jerky" and "when we 'look' at things, it feels we are looking slightly too low."** Digging moves the camera the
+  way a real player's mouse does (smooth, no snaps between blocks: agent/smooth-dig), and a look puts the subject's
+  face, or the named object's visible top, at eye level with headroom, never centred low (agent/aim). Until those
+  land: aim at faces (eye height), not feet or block centres.
+- **Owner, 2026-11-10, on the published Dog on the Hill: "the captions are not lined up correctly. Day 1 again is not
+  delivered correctly, it seems too excited..."** (Held on `videos` until fixed.)
+  - **Captions:** a re-cut moved the speech 0.2-0.37 s into every wav but voice.json still said onset 0.0, so every
+    caption ran early. `voice_check.py --resplit` now re-runs align.py itself, and `scripts/caption_sync.py` (in
+    `./hb review`) blocks a caption more than 0.12 s off the speech onset.
+  - **Delivery follows the line, not just the character:** one bubbly direction for all of Pip's lines made the sad
+    ending sound excited. Split the narrator's lines by emotional beat: the same voice, model and character profile,
+    but each beat (the bubbly setup, the scared turn, the quiet or bittersweet ending) in its own request with a
+    one-line scene direction for that feeling ("quiet, sad, a small breath before AGAIN; not whispery, not excited").
+    Drift still checks they're the same person. The critic and the viewer panel check that the ending's delivery
+    matches its emotion.
 - **Owner, 2026-11-10, comparing Pip (Dog on the Hill v3) with kid Puck: "i like this one a lot a lot better" (Pip);
   Puck: "er that does not sound right".** **The default narrator is Pip's voice again** (cast `narrator` = Leda, the
   bubbly nine-year-old direction, gemini-3.8-flash-lite-tts, single speaker, natural tempo; recipe in
@@ -225,7 +260,7 @@ STANDARDS.md in the same commit.
   - A kid narrator is **Leda** (cast `child`), unshifted (the +2 semitone filter warbles). Erinome reads as an adult
     woman: she's the storyteller, never a kid.
   - Endings explain themselves: a sting the viewer has to decode doesn't land ("Day one." failed, "Day one. Again."
-    worked).
+    worked). (Superseded 2026-11-10 by "both are implied": the picture carries the ending, not a closing line.)
   - TTS models (2026-11-10): gemini-2.5-flash/pro-preview-tts hit the shared daily quota first; gemini-3.8-flash-tts
     works (keep bracketed directions short or it reads them aloud); gemini-3.1-flash-tts-preview can refuse with SAFETY.
     Listening checks: gemini-3.5-flash (retry 502/503).
