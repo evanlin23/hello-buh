@@ -21,11 +21,14 @@ in work/tts/<hash>.wav by its exact prompt and voices: a re-run costs nothing un
 On a 429 the next model in MODELS is tried (the proxy injects the API key). --only re-voices just those lines (one new
 request per speaker pair) and keeps the others.
 
-Each line: high-pass, the character's `post`, de-ess, loudness -16 LUFS. Writes <id>.wav and, for a story,
+Each line keeps its in-breath and natural tail (the cut pads into the pauses), then: high-pass 60 Hz, the character's
+`post` (EQ, or the narrator's formant-preserving tempo/pitch), a light room (the request's or story's `room`: small,
+hall, outdoor, or "" for dry), and ONE gain per take (-16 LUFS, a limiter on rare peaks only) so a whisper stays
+quieter than a shout. No de-esser, no per-line loudnorm, no asetrate pitch shift: each one made the realism judge say
+"AI" (docs/voices.md "Realism"). Writes <id>.wav and, for a story,
 voice/voice.json (dur, onset, end, caption chunks spread over the speech by length, who): the file lib/story.js and
 edit.py --story already read. Check the printed lengths and pitch: a take far longer than its text means the model
-read the direction aloud (gemini-3.x does with "Say ...:" notes); a pitch that belongs to the other speaker means a
-bad cut (fix the text's punctuation, or split the request).
+read the direction aloud; a pitch that belongs to the other speaker means a bad cut (fix the text's punctuation, or split the request).
 """
 import base64
 import hashlib
@@ -40,7 +43,11 @@ import urllib.request
 import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-MODELS = ["gemini-2.5-flash-preview-tts", "gemini-2.5-pro-preview-tts", "gemini-3.1-flash-tts-preview"]
+# Realism test 2026-11-10 (docs/voices.md "Realism"): 3.1-flash-tts with the structured prompt was judged the most human
+# (9/10 vs 3-8 for 2.5-flash takes). 2.5-pro-tts has a free-tier limit of 0; 3.8-flash-tts takes no direction block
+# (multi-speaker needs per-part speechMetadata, no system instruction) and read a bracket tag aloud.
+MODELS = ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
+STRUCTURED = ("gemini-3",)   # models that get the # AUDIO PROFILE / ## THE SCENE / ### DIRECTOR'S NOTES / #### TRANSCRIPT layout
 SR = 24000
 CACHE = ROOT / "work" / "tts"
 STATS = {"requests": 0, "cached": 0}
@@ -67,15 +74,17 @@ def resolve(story_cast=None):
 
 
 def request(text, voices):
-    """One TTS call -> float32 mono at SR. voices: {label: Gemini voice name} (1 or 2 entries)."""
+    """One TTS call -> float32 mono at SR. voices: {label: Gemini voice name} (1 or 2 entries). `text` is the prompt,
+    or a function model -> prompt (each model family gets the layout it was tested with)."""
     if len(voices) == 1:
         sc = {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": list(voices.values())[0]}}}
     else:
         sc = {"multiSpeakerVoiceConfig": {"speakerVoiceConfigs": [
             {"speaker": s, "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": v}}} for s, v in voices.items()]}}
-    body = json.dumps({"contents": [{"parts": [{"text": text}]}],
-                       "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
-    for model in MODELS:   # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
+    for model in MODELS:
+        body = json.dumps({"contents": [{"parts": [{"text": text(model) if callable(text) else text}]}],
+                           "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
+        # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
         for attempt in range(2):
             try:
                 STATS["requests"] += 1
@@ -150,10 +159,27 @@ def cut(x, texts):
                 c = best[i - 1, k] + ((segs[j - 1][1] - segs[k][0]) / T - share[i - 1]) ** 2 * 50 + spread(k, j) - (0.6 * gaps[j - 1] / gmax if j < M else 0)
                 if c < best[i, j]:
                     best[i, j], arg[i, j] = c, k
-    out, j = [], M
+    bounds, j = [], M
     for i in range(L, 0, -1):
-        k = arg[i, j]; out.append(x[segs[k][0]:segs[j - 1][1]]); j = k
-    return out[::-1]
+        k = arg[i, j]; bounds.append((k, j - 1)); j = k
+    return [padded(x, segs, k, e) for k, e in bounds[::-1]]
+
+
+BREATH = 0.35   # s of the pause before a line kept with it (the in-breath), at most half the pause
+TAIL = 0.30     # s after the last word kept (the decay and any out-breath), at most half the pause
+
+
+def padded(x, segs, k, e):
+    """Line = speech stretches k..e plus the quiet around them: the breath before and the natural tail after, each at
+    most half of the neighbouring pause (so no line holds the other speaker's breath), with 15 ms fades. Cutting at
+    the speech gate (the old way) clipped in-breaths and word tails: the judge's 'robotic tails'."""
+    a = segs[k][0] - min(int(BREATH * SR), (segs[k][0] - (segs[k - 1][1] if k else 0)) // 2)
+    b = segs[e][1] + min(int(TAIL * SR), ((segs[e + 1][0] if e + 1 < len(segs) else len(x)) - segs[e][1]) // 2)
+    y = x[max(0, a):min(len(x), b)].copy()
+    f = min(len(y) // 4, int(0.015 * SR))
+    if f:
+        y[:f] *= np.linspace(0, 1, f); y[-f:] *= np.linspace(1, 0, f)
+    return y
 
 
 def f0(x):
@@ -174,29 +200,92 @@ def pcm(args, data=None):
     return subprocess.run(["ffmpeg", "-v", "error", *args], input=data, capture_output=True, check=True).stdout
 
 
-def finish(x, path, post=""):
-    """Write one line: high-pass, the character's post filter, de-ess, loudness -16 LUFS, back to SR."""
-    af = ",".join(f for f in ["highpass=f=70", post, "deesser=i=0.4", "loudnorm=I=-16:TP=-1.5:LRA=11", f"aresample={SR}"] if f)
+ROOMS = {   # a short synthetic room (decaying filtered noise + a few early reflections), mixed under the dry voice
+    "small": {"rt60": 0.28, "pre": 0.008, "lp": 0.30, "wet": 0.10},     # a bedroom, a kitchen, a shop, a cave mouth
+    "hall": {"rt60": 0.70, "pre": 0.020, "lp": 0.25, "wet": 0.14},      # a church, a big hall, a deep cave
+    "outdoor": {"rt60": 0.18, "pre": 0.030, "lp": 0.20, "wet": 0.05},   # a field, a village square (almost dry)
+}
+
+
+def room_ir(rt60, pre, lp, seed=1, **_):
+    rng = np.random.default_rng(seed)
+    n = int(SR * rt60 * 1.2)
+    tail = rng.standard_normal(n) * np.exp(-6.9 * np.arange(n) / SR / rt60)
+    tail = np.frombuffer(pcm(["-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-af", f"lowpass=f={int(12000 * lp)}",
+                              "-f", "f32le", "-"], tail.astype(np.float32).tobytes()), np.float32)
+    ir = np.zeros(len(tail) + int(pre * SR)); ir[int(pre * SR):] = tail
+    for d, g in [(0.004, .5), (0.007, -.35), (0.011, .3), (0.017, -.2)]:   # early reflections
+        ir[int(d * SR)] += g
+    return ir / np.sqrt((ir ** 2).sum())
+
+
+def add_room(x, kind):
+    """The dry voice plus a little of a synthetic room. No room tone: under the game audio it isn't heard, and alone the
+    judge heard it as a separate track under a dry voice."""
+    r = ROOMS[kind]
+    ir = room_ir(**r)
+    n = 1 << (len(x) + len(ir) - 1).bit_length()
+    wet = np.fft.irfft(np.fft.rfft(x, n) * np.fft.rfft(ir, n), n)[:len(x)]
+    return (x * (1 - r["wet"]) + wet * r["wet"] * 0.6).astype(np.float32)
+
+
+def lufs(x):
+    err = subprocess.run(["ffmpeg", "-v", "info", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-af", "ebur128=framelog=quiet",
+                          "-f", "null", "-"], input=x.astype(np.float32).tobytes(), capture_output=True).stderr.decode()
+    return float(err.rsplit("I:", 1)[1].split("LUFS")[0])
+
+
+def shape(x, post="", room="small"):
+    """One line, gently (docs/voices.md "Realism"): high-pass 60 Hz, the character's `post` (EQ only, never a pitch
+    shift), the scene's room, a 60 ms fade at the end instead of a cut at the last word. No de-esser, no loudnorm."""
     raw = ["-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-"]
-    y = np.frombuffer(pcm([*raw, "-af", af, "-f", "f32le", "-"], np.concatenate([x, np.zeros(SR // 2, np.float32)]).tobytes()), np.float32)
-    nz = np.nonzero(np.abs(y) > 0.003)[0]   # trim the padding loudnorm needed to settle
-    y = y[:nz[-1] + 2400] if len(nz) else y
-    pcm(["-y", *raw, str(path)], y.astype(np.float32).tobytes())
+    af = ",".join(f for f in ["highpass=f=60:p=1", post] if f)
+    y = np.frombuffer(pcm([*raw, "-af", af, "-f", "f32le", "-"], x.astype(np.float32).tobytes()), np.float32).copy()
+    if room:
+        y = add_room(y, room)
+    f = min(len(y) // 4, int(0.06 * SR))
+    y[-f:] *= np.linspace(1, 0, f)
     return y
 
 
-def prompt(scene, lines, cs):
-    """What Gemini reads: the scene, each speaker's profile (the same string in every story), the per-line notes by
-    number, then the lines. Everything before the first line is direction and isn't spoken (gemini-2.5)."""
+def level(ys, target=-16.0, peak=-1.5, limit_db=3.0):
+    """ONE gain for a whole take, so a whisper stays quieter than the line before it (per-line loudnorm made every line
+    equally loud: a giveaway). Aim for `target` LUFS; if that pushes peaks over `peak` dBFS, a limiter may take up to
+    `limit_db` off the rare peaks, and beyond that the take comes out quieter (edit.py sets the final voice level)."""
+    g = 10 ** ((target - lufs(np.concatenate(ys))) / 20)
+    pk = max(np.abs(y).max() for y in ys) * g
+    g /= max(1.0, pk / 10 ** ((peak + limit_db) / 20))
+    out = []
+    for y in ys:
+        y = y * g
+        if np.abs(y).max() > 10 ** (peak / 20):
+            y = np.frombuffer(pcm(["-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-af",
+                                   f"alimiter=limit={10 ** (peak / 20):.3f}:attack=1:release=50:level=disabled", "-f", "f32le", "-"],
+                                  y.astype(np.float32).tobytes()), np.float32).copy()
+        out.append(y)
+    return out
+
+
+REALISM = ("Real people talking, recorded close on a good microphone: not a performance, not an announcer or an audiobook. "
+           "Natural, unpolished, conversational delivery with real breaths and small hesitations.")
+
+
+def prompt(scene, lines, cs, model=MODELS[0]):
+    """What Gemini reads. 3.x models get Google's documented layout (# AUDIO PROFILE: each speaker's profile, the same
+    string in every story; ## THE SCENE; ### DIRECTOR'S NOTES: the realism note and the per-line notes by number;
+    #### TRANSCRIPT); the headings and notes aren't spoken (6 of 6 takes, Whisper-checked). 2.5 gets the flat layout
+    it was tested with. Never put an emotion in [brackets] inside a line: 3.8 read "[barely a whisper]" aloud."""
     who = list(dict.fromkeys(w for w, _, _, _ in lines))
-    head = [scene.strip()] if scene else []
-    if len(who) == 1:
-        head.append(f"Read these lines as {cs[who[0]]['profile']}.")
-    else:
-        head += [f"{cs[w]['name']} is {cs[w]['profile']}." for w in who]
-    head += [f"Line {i + 1}: {note}." for i, (_, _, _, note) in enumerate(lines) if note]
-    head.append("Leave a pause after every line.")
+    notes = [f"Line {i + 1}: {note}." for i, (_, _, _, note) in enumerate(lines) if note]
     body = [t if len(who) == 1 else f"{cs[w]['name']}: {t}" for w, _, t, _ in lines]
+    profiles = [f"{cs[w]['name']} is {cs[w]['profile']}." for w in who]
+    if model.startswith(STRUCTURED):
+        return ("# AUDIO PROFILE\n" + "\n".join(profiles) + "\n\n## THE SCENE\n" + (scene.strip() or "A quiet room.") +
+                "\n\n### DIRECTOR'S NOTES\n" + "\n".join([REALISM, *notes, "Leave a natural pause between lines."]) +
+                "\n\n#### TRANSCRIPT\n" + "\n".join(body))
+    head = [scene.strip()] if scene else []
+    head += [f"Read these lines as {cs[who[0]]['profile']}."] if len(who) == 1 else profiles
+    head += [REALISM, *notes, "Leave a pause after every line."]
     return " ".join(head) + "\n\n" + "\n".join(body)
 
 
@@ -205,7 +294,7 @@ def take(scene, lines, cs):
     who = list(dict.fromkeys(w for w, _, _, _ in lines))
     if len(who) > 2:
         raise SystemExit(f"{[l for _, l, _, _ in lines]}: {len(who)} speakers in one request (Gemini takes 2)")
-    text = prompt(scene, lines, cs)
+    text = prompt(scene, lines, cs)   # the cache key: the first model's prompt (a fallback model's take is cached under it)
     voices = {cs[w]["name"]: cs[w]["voice"] for w in who}
     raw = CACHE / f"{hashlib.sha1(json.dumps([text, voices]).encode()).hexdigest()[:16]}.wav"
     if raw.exists():
@@ -213,7 +302,7 @@ def take(scene, lines, cs):
         x = np.frombuffer(pcm(["-i", str(raw), "-f", "f32le", "-"]), np.float32)
     else:
         print(f"request: {', '.join(f'{k}={v}' for k, v in voices.items())}, {len(lines)} lines")
-        x = request(text, voices)
+        x = request(lambda m: prompt(scene, lines, cs, m), voices)
         CACHE.mkdir(parents=True, exist_ok=True)
         pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(raw)], x.tobytes())
     words = sum(len(t.split()) for _, _, t, _ in lines)
@@ -223,19 +312,29 @@ def take(scene, lines, cs):
 
 
 def voice_lines(groups, cs, out):
-    """groups: [(scene, [(who, id, text, note)])] -> {id: (who, text, wav samples)}."""
+    """groups: [(scene, [(who, id, text, note)], room)] -> {id: (who, text, wav samples)}. room: a ROOMS key or ""
+    (a 2-tuple, or a non-string third item, means the default small room)."""
     out.mkdir(parents=True, exist_ok=True)
     done = {}
-    for scene, lines in groups:
-        for (w, lid, t, _), seg in zip(lines, take(scene, lines, cs)):
-            y = finish(seg, out / f"{lid}.wav", cs[w].get("post", ""))
+    for g in groups:
+        scene, lines = g[:2]
+        room = g[2] if len(g) > 2 and isinstance(g[2], str) else "small"
+        ys = level([shape(seg, cs[w].get("post", ""), room) for (w, _, _, _), seg in zip(lines, take(scene, lines, cs))])
+        for (w, lid, t, _), y in zip(lines, ys):
+            pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(out / f"{lid}.wav")], y.astype(np.float32).tobytes())
             done[lid] = (w, t, y)
             print(f"{lid:8s} {len(y) / SR:5.2f} s {f0(y):4d} Hz  {w}: {t}")
     return done
 
 
+def spoken(t):
+    """CAPS key words are for the captions: lower them for the voice (an all-caps word is read louder and flatter)."""
+    return " ".join(w.lower() if sum(c.isalpha() for c in w) > 1 and w.isupper() else w for w in t.replace(" / ", " ").split())
+
+
 def run_list(spec, out):
-    groups = [(r.get("direction", ""), [(w, lid, t, "") for w, lid, t in r["lines"]]) for r in json.loads(spec.read_text())]
+    groups = [(r.get("direction", ""), [(w, lid, spoken(t), "") for w, lid, t in r["lines"]], r.get("room", "small"))
+              for r in json.loads(spec.read_text())]
     voice_lines(groups, library(), out)
 
 
@@ -264,7 +363,7 @@ def run_story(d, only=None):
         cur.append(item)
     if cur:
         groups.append((story.get("direction", ""), cur, None))
-    done = voice_lines([(s, l) for s, l, _ in groups], cs, d / "voice")
+    done = voice_lines([(s, l, (r or {}).get("room", story.get("room", "small"))) for s, l, r in groups], cs, d / "voice")
     vf = d / "voice" / "voice.json"
     meta = json.loads(vf.read_text()) if only and vf.exists() else {"lines": {}}
     meta.update({"model": f"Gemini TTS ({MODELS[0]} first), voices/cast.json", "sr": SR, "gap": story.get("gap", 0.25)})
