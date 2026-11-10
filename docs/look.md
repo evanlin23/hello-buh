@@ -59,6 +59,24 @@ quality or channel age, so this is not strong evidence for a switch. Optimise wi
   channels' habit at ~4.5 words/s. It is a test, not a rule change: our phrases read as language, which suits the
   serious cinematic tone. Open question for the owner (A/B on the next stories).
 
+### Where a look lands (owner, 2026-11-10: "when we 'look' at things, it feels we are looking slightly too low")
+Measured on 5 stories (dog_hill, thirty_one_raids, gold_for_the_portal, good_boy, light_sleeper; every 3rd tick where a
+cast member's face is within 20 deg of the view, 1,101 moments): **the aim landed below the subject's eyes in 76 % of
+first-person moments (median 1.9 deg, 0.2 blocks; worst quarter > 5.5 deg) and 89 % of camera-shot moments (median 5.8
+deg)**. First-person faces sat at 48 % down the game view, camera-shot faces at 39 %. The renderer is not the cause: its
+eye (1.62, crouched 1.27, `stunt.self.eye`) and pitch match the harness, and the 1011-high crop is centred. The causes
+are the aim points stunts pick: chests and feet (`P(x, 1.5, z)` on a 1.62-eyed villager, `zom.y + 1.4` on a 1.74-eyed
+zombie, `+ 0.6` on a road 15 blocks out: 1-3 blocks low), block middles, and `K.eye` staying 1.62 while sneaking (0.35
+blocks low). Worst: light_sleeper's Mom 7.4 deg under her eyes, its skeleton 11 deg (out/aim/ on the main checkout).
+- **First person (lib/story.js):** look at cast members with `K.face(feet, type)` / `K.face(entity)` (vanilla eye heights,
+  sneaking, babies, sitting) and blocks with `K.top(x, y, z)` (the face the camera sees). Any other point is lifted
+  `K.lift` = 2 deg (the measured median miss); `stunt.aimLift: 0`, `K.lift = 0` or `{ lift: 0 }` on a cut turns it off
+  (a look down a hole). Sneaking aims from 1.27. New recordings only: published Shorts render as before.
+- **Camera shots** keep eyes on the upper third (look points just below the face, `renderer/framing.js` LOOK_DROP),
+  which is where they already sit (39 % median).
+- **The check:** `./hb owner` (lib/hb/owner.js, subject) warns when a first-person look lands more than 4 deg under the
+  named subject's eyes, or its face sits below 62 % (in the caption band) in any shot.
+
 ## 2. Font
 Nine candidates, the same caption ("He NEVER blinks.", key word in the key colour) over the same real frames
 (story_good_boy L05 and L02), each at the same cap height (68 px), in the full layout, and at phone size (360x640,
