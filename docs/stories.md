@@ -67,6 +67,14 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "The voice is definitely an issue. And also the sets. I think we can be more creative with the
+  story telling, and better with the delivery and the plots and using other voices for the other characters. I think
+  we don't necessarily need to use this sped up voice. this voice i dont think does a good job of playing different
+  parts."** So, from now on: a cast of voices (narrator plus a distinct voice per character, e.g. Gemini TTS
+  multi-speaker with acting direction, as the AI-dilemma Shorts do), no 1.45x sped-up narrator by default, real
+  delivery (emotion, pauses, emphasis), built sets that look designed (not a clearing in the wild), and plots with
+  more invention. The cinematic engine (shots, looks) is the direction for the look.
+
 - **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
   minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
   accident needs a cause the viewer can SEE and that exists in the game: knocked in by a creeper blast or a mob hit,
