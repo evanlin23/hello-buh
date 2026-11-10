@@ -123,5 +123,17 @@
   "hook": "why won't this dog stand up?",
   "payoff": "payoff",
   "voice_takes": "beat",
-  "revision": "vNext r2 (main stories/dog_hill/script_vNext.md, owner-approved rewrite 2026-11-10): one narrator, 2-3 word chunks, no dramatic pauses, ends on the promise"
+  "revision": "vNext r2 (main stories/dog_hill/script_vNext.md, owner-approved rewrite 2026-11-10): one narrator, 2-3 word chunks, no dramatic pauses, ends on the promise",
+  "hotbar": [
+    "bone",
+    "lead",
+    "name_tag",
+    "oak_door",
+    "crafting_table",
+    "torch",
+    "cake",
+    "milk_bucket",
+    "egg"
+  ],
+  "hotbar_note": "Buh's bar (the only player). No POV shot in this story, so it never shows; kept the same throughout if a POV is ever added. Story tools first (bone, lead, name tag, his hut's door, crafting table, torch), then the ridiculous ones: a whole cake, a milk bucket, an egg."
 }
