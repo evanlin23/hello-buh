@@ -130,6 +130,15 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "why does the narrator keep whispering? is the narrator the child or like a woman? i think it
+  should be like a child most of the time right? like bubbly happy" and "the audio must land like start talking the
+  first moment the video starts, same with the visual hook".** The whispering was ours: the library narrator was
+  directed "a little hushed", Good Boy's "earnest and hushed", and Gemini leans soft and breathy unless told otherwise.
+  So: **the default narrator is a kid (about 10-12), bubbly, happy and fast**, curious, a little funny, deadpan on
+  the absurd lines, and only drops to scared (never whispery) for real danger. Every style prompt says "fast,
+  bright, energetic; not whispery, breathy or soft". The first word lands on frame 0-5 and the first frame is already
+  moving (`./hb pace` blocks a first word after 0.4 s or a frozen first 0.3 s for stories, and warns on narration
+  slower than runaway's pace).
 - **Owner, 2026-11-10: "we can keep posting, to get more data."** The 5 older-style stories stay in the upload queue.
   On caption colours: "It should generally just "match" the vibe of the character thats supposed to be speaking." And on
   craft: "everything should be the best and optimized in the process" (format, font, music, sound effects, grade,
