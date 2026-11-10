@@ -1,0 +1,527 @@
+{
+  "name": "names_in_the_woods",
+  "stunt": "story_names_in_the_woods",
+  "version": 2,
+  "revision": "r2 polish (2026-11-10): r2 continuity notes and r2 critic should-fixes applied; see reviews/r1-response.md",
+  "caption": "why do these zombies have NAMES 😶",
+  "logline": "A player kid in a hamlet where every villager wears a name tag watches three named zombies walk out of the woods every night, until the night Mom goes to visit the neighbors 'in the city' and four walk out.",
+  "question": "why tf do these zombies have name tags?",
+  "premise": "Every villager in Remy's hamlet at the edge of a dark oak forest gets a name tag at birth. Mom's says ROSA. Remy is the only player. Every night three zombies named TOMAS, GRETA and OLD BEN walk out of the woods, stop at the hamlet's fence and stare at Mom. Mom says the zombies stole the tags, and that the neighbors (three empty cottages with those names on their signs) moved to the city. Every week Mom, the hamlet's cleric, takes them a golden apple and a splash potion ('potion, then apple, fixes anything') and brings it all back unused, so Remy gets the apples. Nobody in the hamlet can throw anything, so Remy wins every egg fight. Tonight Mom goes to visit Tomas and says she'll be back by dark.",
+  "twist": "The zombies are the neighbors, converted in a siege: a named villager keeps its name tag (and its profession outfit) when a zombie converts it. Mom has been trying to cure them every week with the vanilla cure (a splash potion of weakness, then a golden apple), but only a player can throw a splash potion and feed the apple, and villagers can't throw. She lied so her son, the one person who could do it, would never go into the woods. Tonight she stays out past dark: four zombies walk out and the first tag says ROSA, still holding the golden apple. She looks at him and lets the potion fall toward him, Remy picks it up, and with a hotbar full of the apples she gave him he throws: potion, then apple.",
+  "key_color": "#F5C542",
+  "gap": 0.3,
+  "mood": [
+    "eerie",
+    "heroic"
+  ],
+  "payoff": "L15",
+  "look": {
+    "time": 13000,
+    "fog": false
+  },
+  "weather": "clear",
+  "world": {
+    "place": "oakend (new, to claim): Oakend, a cleric's hamlet on the North Inlet's west bank at the east edge of the north-west dark oak forest, the west gate (origin) about (-512, 66, -1030), footprint about (-545, -1055, -447, -1005); Fernbank lies across the inlet, its dock about 75 blocks east of the gate",
+    "where": "Oakend: the hamlet, the west gate, the meadow and the forest edge",
+    "day": 2700,
+    "canon": "New family, not Milo's: Remy (the hamlet's only player, a kid, house narrator voice) and his mom ROSA (the hamlet's cleric, a villager). Tomas, Greta and Old Ben were converted in a siege months before; ROSA is converted on day 2700 and Remy cures her. Bible: World.",
+    "easter_egg": "empty_boat (canon cameo, since day 400): Fernbank's empty oak boat at the end of its dock across the inlet, a small shape on the water at frame right in S03's opening (the crane looking east over the hamlet); world.build places it (Fernbank's stamp)"
+  },
+  "voice": {
+    "engine": "gemini",
+    "model_hint": "gemini-3.8-flash-lite-tts",
+    "recipe": "voices/recipes/pip.md (narrator: Leda, single speaker, no post); Mom on the same model in her own request"
+  },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "ref": "narrator",
+      "color": "#FFFFFF",
+      "on_screen": "Remy, the hamlet's only player (default Steve skin, a kid; a new family, not Milo's). POV for the egg fight, the chest, the potion and the throw; seen from outside in S10 (small, from behind) and S14 (small, facing us, player nameplate 'Remy'). Hotbar: eggs (slot 1), golden apples (slot 2: 6, then 7 from S08 on), the splash potion (slot 3, S13-S15)."
+    },
+    "Mom": {
+      "role": "character",
+      "ref": null,
+      "name": "Mom",
+      "color": "#FFC2A8",
+      "on_screen": "a plains cleric villager (purple robe), name tag ROSA always visible; holds a golden apple over her crossed arms (S06, S07, S10); the splash potion goes into her inventory in S06 (her off hand: villagers don't show it). After the reveal: a zombie villager in the same purple cleric robe, tag ROSA, the golden apple in her right hand and the splash potion in her left (conversion keeps both hands) until she drops it in S13. One voiced line (L05), on screen, in her own request. Voice: her own (Aoede; audition Callirrhoe as the alternate), not the cast `mom` (Sulafat), who is Milo's mom in Hushwell.",
+      "voice": "Aoede",
+      "profile": "[ROSA, the hamlet's cleric and Remy's mom: a warm woman in her forties, gentle and a little too bright, changing the subject; full volume, not whispery]"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L06"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L07",
+        "L08",
+        "L09",
+        "L10",
+        "L11"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+    },
+    {
+      "id": "r3",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L12",
+        "L13",
+        "L14",
+        "L15"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+    },
+    {
+      "id": "r4",
+      "speakers": [
+        "Mom"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Aoede",
+      "lines": [
+        "L05"
+      ],
+      "direction": "[ROSA, the hamlet's cleric and Remy's mom: a warm woman in her forties, gentle and a little too bright, changing the subject; full volume, not whispery]"
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "Every night / THREE zombies / named TOMAS, / GRETA / and OLD BEN / walk out of the WOODS.",
+      "say": "Every night three zombies named Tomas, Greta and Old Ben walk out of the woods.",
+      "direction": "one quick breath, no stop in it, amazed",
+      "shot": "S01",
+      "look": {
+        "what": "entity:zombie_villager",
+        "word": "ZOMBIES"
+      }
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "At our FENCE, / they STARE / at MOM.",
+      "direction": "spooked and a little thrilled, quick",
+      "shot": "S02",
+      "look": [
+        {
+          "what": "entity:zombie_villager",
+          "word": "STARE"
+        },
+        {
+          "what": "Mom",
+          "word": "MOM"
+        }
+      ]
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "Everyone here / gets a NAME TAG. / Mom's says ROSA.",
+      "direction": "proud of his village, cheerful",
+      "shot": "S03",
+      "look": [
+        {
+          "what": "Mom",
+          "word": "Everyone"
+        },
+        {
+          "what": "Mom",
+          "word": "ROSA"
+        }
+      ]
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "Mom says / they STOLE / the tags.",
+      "direction": "believing it, a little indignant",
+      "shot": "S04",
+      "look": "Mom"
+    },
+    {
+      "id": "L05",
+      "who": "Mom",
+      "text": "Our neighbors / moved to the CITY.",
+      "direction": "quick and warm, a smile on it",
+      "shot": "S05",
+      "look": "Mom"
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "Every week, / she takes them / a GOLDEN APPLE / and a SPLASH POTION.",
+      "direction": "fast and impressed, listing fancy presents",
+      "shot": "S06",
+      "look": [
+        "Mom",
+        "prop:brewing_stand"
+      ]
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "Potion, / then APPLE, / she says. / Fixes ANYTHING.",
+      "direction": "doing Mom's saying, sing-song, then plain",
+      "shot": "S07",
+      "look": "Mom"
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "Nobody / TAKES them. / I get / the APPLES.",
+      "direction": "puzzled, then delighted",
+      "shot": "S08",
+      "look": "prop:chest"
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "Nobody here / can THROW. / I win / EGG FIGHTS.",
+      "direction": "bragging, goofy",
+      "shot": "S09",
+      "look": "entity:villager"
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "Tonight, / Mom said / she'd be back / by DARK.",
+      "direction": "plain and steady, a beat before the last two words",
+      "shot": "S10",
+      "look": "Mom"
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "At dark, / FOUR zombies / walked out.",
+      "direction": "scared, still full volume",
+      "shot": "S11",
+      "look": {
+        "what": "entity:zombie_villager",
+        "word": "FOUR"
+      },
+      "gap": 0.4
+    },
+    {
+      "id": "L12",
+      "who": "N",
+      "text": "The new one / said ROSA. / She had / the APPLE.",
+      "direction": "small and plain, a breath after the name, full volume",
+      "shot": "S12",
+      "look": {
+        "what": "actor:ROSA",
+        "word": "ROSA",
+        "size": "ms"
+      },
+      "say": "The new one said <short pause> Rosa. She had the apple."
+    },
+    {
+      "id": "L13",
+      "who": "N",
+      "text": "She DROPPED / her POTION / for ME.",
+      "direction": "quick, amazed, it lands as a gift",
+      "shot": "S13",
+      "look": {
+        "what": "prop:potion",
+        "word": "POTION"
+      }
+    },
+    {
+      "id": "L14",
+      "who": "N",
+      "text": "Mom lied / to keep me HOME. / She can't THROW.",
+      "direction": "figuring it out as he says it",
+      "shot": "S14",
+      "look": [
+        {
+          "what": "actor:ROSA",
+          "word": "Mom"
+        },
+        {
+          "what": "block:lantern",
+          "word": "HOME"
+        }
+      ]
+    },
+    {
+      "id": "L15",
+      "who": "N",
+      "text": "I CAN. / Potion, / then APPLE.",
+      "direction": "brave and certain, loud, a wind-up on the first two words",
+      "shot": "S15",
+      "look": {
+        "what": "actor:ROSA",
+        "word": "Potion"
+      }
+    }
+  ],
+  "ending": {
+    "after": "L15",
+    "beats": [
+      "S15 (POV): on 'I CAN' the arm winds up, ROSA 3.5 blocks ahead by the lamp post, the apple in her hand; on 'Potion' the splash potion leaves the hand and shatters on her (glass break, the grey-purple Weakness splash and swirl): the payoff hit.",
+      "On 'APPLE' the hotbar selection slides from the emptied slot 3 to slot 2, golden apples x7, and 'Golden Apple' pops above the hotbar. TOMAS, GRETA and OLD BEN stand further up the meadow behind her.",
+      "Cut at most 1 s after 'APPLE'. No completed cure: the line has just said the next step."
+    ],
+    "loop": "cause and effect: L01's three named zombies are the neighbors Mom couldn't cure, and the kid who wins every egg fight is the only one who can."
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "west_gate",
+      "size": "wide",
+      "camera": "at: (2, 2.0, 0) just inside the west gate, FOV 50, looking west and slightly up the meadow, slow push in (0.4 blocks); already moving on frame 1. Test the nameplates in a still before the render.",
+      "frame": "fg: the gate's top rail across the bottom edge; subject: three zombie villagers 14-16 blocks out on the meadow path (x -12 to -14), walking toward the lens with their arms raised straight out (the zombie pose reads in silhouette), the path lamp at (-15,2) catching their green faces from the side; their white nameplates TOMAS, GRETA, OLD BEN in the upper third (the meadow rises, so they stand above eye level); bg: the black wall of dark oaks at x -30 they just left, the orange sky over it (the sun just set). Dusk.",
+      "look": {
+        "time": 13000
+      }
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "west_gate",
+      "size": "full",
+      "camera": "ots: behind Mom's LEFT shoulder at the shut west gate (Mom at frame right), 1.6 up, FOV 50, still",
+      "frame": "fg: Mom's back at frame right (she stands 1.5 blocks inside the gate), purple robe, the ROSA tag at upper right; subject, centred and big: the three zombie villagers stopped 1.5 blocks out from the fence (3 blocks beyond her), head to foot, arms raised, staring at her over the fence (zombies can't open fence gates), tags TOMAS, GRETA, OLD BEN; the gate's lantern posts light them; bg: the dark meadow and the treeline against the last orange light. Dusk.",
+      "look": {
+        "time": 13100
+      }
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "hamlet",
+      "size": "ews",
+      "camera": "path: crane down. Key 0: 14 up over x 4 on the lane, looking east over the whole hamlet; key 1 (on 'ROSA'): 2.5 up, 6 blocks in front of Mom's garden gate (10,-6), FOV 50",
+      "frame": "opens: the hamlet from above looking east: seven cottages either side of the lane, the well, gardens, lanterns, villagers each with a white nameplate (HUGO, PIA, NELL, a baby LIL TEO running across the lane), fields beyond, the inlet past them and Fernbank on its far bank, and at frame right on the water at the end of Fernbank's dock a small empty oak boat (the easter egg, canon `empty_boat`, never the subject); lands on: Mom head to foot at her garden gate, centred, ROSA over her head, HUGO and PIA walking past in the lane behind her with their tags, the brewing stand on the garden table behind her. Midday.",
+      "look": {
+        "time": 6000
+      }
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "mom_cottage_inside",
+      "size": "full",
+      "camera": "at: the cottage's `inside` anchor, a back corner of Mom's room, 1.6 up, FOV 55, still",
+      "frame": "subject, centred and big: Mom head to foot at her west window 4 blocks from the lens, ROSA tag; through the window, small and far, three nameplates at the fence in the dusk; on 'STOLE' the window's trapdoor shutters swing shut (a staged block change) and the tags are gone; bg: the lantern-lit room, the bed, the kitchen chest. Dusk, a later night than S02.",
+      "look": {
+        "time": 13200
+      }
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "empty_row",
+      "size": "wide",
+      "camera": "pov at (4,0) in the lane, looking east-south-east down it; hotbar visible (eggs slot 1, golden apples x6 slot 2)",
+      "frame": "establishing the empty row: Mom head to foot in the lane at (12,2), 8 blocks away, facing the camera, ROSA over her head; behind her the three empty cottages recede along the lane's south side (TOMAS nearest, then GRETA, then OLD BEN): shutters closed, gardens gone to tall grass, a cobweb in a door, a sign at each gate with the name (TOMAS readable), a composter, a lectern and a barrel by the doors. Morning.",
+      "look": {
+        "time": 2500
+      }
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "mom_cottage",
+      "size": "full",
+      "camera": "at: 3.5 up above Mom's garden fence, 5 blocks from the brewing stand, looking down at it and her, FOV 50, slow push",
+      "frame": "fg: the garden fence below the lens; subject: Mom head to foot at her brewing stand on the garden table, the golden apple over her crossed arms (on 'GOLDEN APPLE'); on 'SPLASH POTION' one of the stand's three bottles is gone (has_bottle_2 false): she has taken it; bg: her cottage door, a window. Morning.",
+      "look": {
+        "time": 3000
+      }
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "west_gate",
+      "size": "wide",
+      "camera": "at: 6 blocks inside the west gate, 2 up, looking west past it, FOV 50, still",
+      "frame": "subject: Mom standing in the west gate, already open, the golden apple in her arms, ROSA tag, turning back toward the lens on 'she says' (to Remy), then out onto the path; bg: the bright meadow rising to the dark oak treeline. Morning (after S06).",
+      "look": {
+        "time": 3200
+      }
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "mom_cottage_inside",
+      "size": "ms",
+      "camera": "pov at the kitchen chest, which opens on 'Nobody': the vanilla chest screen",
+      "frame": "the chest screen: one Splash Potion of Weakness and one golden apple in it (brought back again); behind the screen, Mom by the window in the late light; on 'APPLES' the golden apple goes into the hotbar and slot 2 ticks from 6 to 7. Late afternoon.",
+      "look": {
+        "time": 11000
+      }
+    },
+    {
+      "id": "S09",
+      "line": "L09",
+      "place": "lane",
+      "size": "wide",
+      "camera": "pov in the lane, eggs in hand (slot 1, 16 to 14), slot 2 golden apples x7, throwing. Kill chickens every tick (an egg can hatch one).",
+      "frame": "fg: the lane; subject: HUGO the farmer 7 blocks ahead, tag over his head; on 'THROW' an egg pops on him and he just stands there, arms crossed; on 'EGG FIGHTS' a second egg pops on PIA beside him, who also just stands; bg: cottages, the well. Midday.",
+      "look": {
+        "time": 6000
+      }
+    },
+    {
+      "id": "S10",
+      "line": "L10",
+      "place": "meadow",
+      "size": "ews",
+      "camera": "at: from (3, 8, 0) above and behind the west gate, pushing slowly to (-1, 7, 0), looking west over the meadow, FOV 40",
+      "frame": "fg: the gate's lanterns and Remy small at the gate at lower left, back to us; subject, centred: Mom on the meadow path from (-22,1), walking away toward the forest, purple robe, ROSA tag, the golden apple in her arms; on 'DARK' she steps under the first dark oaks at (-30,2); bg: the sun low and orange right above the black treeline. Tonight, late afternoon.",
+      "look": {
+        "time": 11800
+      }
+    },
+    {
+      "id": "S11",
+      "line": "L11",
+      "place": "west_gate",
+      "size": "wide",
+      "camera": "at: S01's camera exactly (the echo), FOV 50, the same slow push",
+      "frame": "the S01 frame a little later: four zombie villagers, arms raised; ROSA came out first and is nearest the lens at (-17,0), in front of the other three (x -21 to -23); four nameplates, ROSA lowest and largest; the path lamp at (-15,2) ahead of her; the trees behind against a deep red sky. Dusk.",
+      "look": {
+        "time": 13400
+      }
+    },
+    {
+      "id": "S12",
+      "line": "L12",
+      "place": "meadow",
+      "size": "ms",
+      "camera": "at: on the path 3 blocks in front of ROSA, 1.7 up, looking slightly up and west at her, FOV 50, a slow push back as she shambles toward the lens",
+      "frame": "subject: ROSA waist up to the top of her tag at (-16,0) by the lamp post, a zombie villager in Mom's purple cleric robe, green face lit by the lamp, arms out; the golden apple in her right hand (on 'APPLE'), the splash potion in her left; the nameplate ROSA large; bg: the meadow rising to the black trees, the other three tags behind her. The reveal: the one close shot.",
+      "look": {
+        "time": 13400
+      }
+    },
+    {
+      "id": "S13",
+      "line": "L13",
+      "place": "meadow",
+      "size": "wide",
+      "camera": "pov: Remy is on the path at (-8,0), out of the gate, ROSA 8 blocks ahead; on 'POTION' he sprints 4.5 blocks to (-12.5,0) (about 0.8 s)",
+      "frame": "subject: ROSA head to foot at (-16,0) by the lamp post, stopped; she looks down at the bottle in her left hand, then at him, and on 'DROPPED' lets it fall toward him: it lands at (-13.5,0) on the path; on 'for ME' he has run up and picked it up: slot 3, selected, 'Splash Potion of Weakness' above the hotbar; bg: the other three tags further up the meadow, the treeline. Dusk.",
+      "look": {
+        "time": 13450
+      }
+    },
+    {
+      "id": "S14",
+      "line": "L14",
+      "place": "meadow",
+      "size": "full",
+      "camera": "ots: low behind ROSA's RIGHT shoulder (the path's south side), looking east down the meadow, FOV 50, still",
+      "frame": "fg: ROSA's back and purple robe at frame left, the golden apple in her right hand toward the lens, the ROSA tag at upper left; subject: Remy head to foot 3.5 blocks away at (-12.5,0), facing us, the potion in his hand, his nameplate 'Remy'; bg: home: the fence, the gate lanterns and the hamlet's warm windows (on 'HOME'). Dusk.",
+      "look": {
+        "time": 13500
+      }
+    },
+    {
+      "id": "S15",
+      "line": "L15",
+      "place": "meadow",
+      "size": "ms",
+      "camera": "pov from (-12.5,0): ROSA 3.5 blocks ahead; wind-up on 'I CAN', the throw on 'Potion', the hotbar on 'APPLE'; cut at most 1 s after",
+      "frame": "subject: ROSA waist up by the lamp post, the ROSA tag, the golden apple in her hand; on 'Potion' the bottle leaves the hand and shatters on her, the grey-purple Weakness splash and swirl around her; on 'APPLE' the selection slides to slot 2, golden apples x7, 'Golden Apple' above the hotbar; bg: TOMAS, GRETA and OLD BEN further up the meadow. Dusk. Cut.",
+      "look": {
+        "time": 13500
+      }
+    }
+  ],
+  "props": {
+    "gate": {
+      "at": [
+        0,
+        1,
+        0
+      ]
+    },
+    "brewing_stand": {
+      "block": "brewing_stand"
+    },
+    "chest": {
+      "block": "chest"
+    },
+    "potion": {
+      "at": [
+        -13.5,
+        1,
+        0
+      ]
+    },
+    "lamp_post": {
+      "at": [
+        -15,
+        1,
+        2
+      ]
+    },
+    "golden_apple": {
+      "actor": "ROSA"
+    }
+  },
+  "sfx": [
+    {
+      "under": "S04",
+      "sound": "block.wooden_trapdoor.close",
+      "note": "the shutters on 'STOLE'"
+    },
+    {
+      "under": "S09",
+      "sound": "entity.egg.throw",
+      "note": "two throws and their pops; the villagers make no sound"
+    },
+    {
+      "under": "S13",
+      "sound": "entity.item.pickup",
+      "note": "on 'POTION'"
+    },
+    {
+      "under": "S15",
+      "sound": "entity.splash_potion.throw",
+      "note": "on 'Potion'"
+    },
+    {
+      "under": "S15",
+      "sound": "entity.splash_potion.break",
+      "note": "right after, the payoff hit"
+    },
+    {
+      "under": "S11-S15",
+      "sound": "entity.zombie_villager.ambient",
+      "note": "low groans from the meadow"
+    }
+  ],
+  "bible": "stories/names_in_the_woods/bible.md",
+  "beats": "stories/names_in_the_woods/beats.md",
+  "set": "stories/names_in_the_woods/set.md"
+}

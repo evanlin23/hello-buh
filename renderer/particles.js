@@ -119,6 +119,15 @@ function spawn (ev, blockTex) {
         g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2) * 2.5, size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75 * 2.5, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
     }
   }
+  if (ev.type === 'sonic_boom') {
+    // the warden's sonic boom (SonicBoom.tick): from its chest (x, y, z) toward the target (tx, ty, tz), one
+    // SonicBoomParticle per block for distance + 7 blocks, all on the same tick; each is a HugeExplosionParticle with
+    // quadSize 2 (multiplier 0), lifetime 16, sonic_boom_0..15, full bright, white
+    const dx = ev.tx - ev.x, dy = ev.ty - ev.y, dz = ev.tz - ev.z, d = Math.hypot(dx, dy, dz) || 1
+    for (let i = 1; i < Math.floor(d) + 7; i++) {
+      out.push({ t0: T0, x: ev.x + dx / d * i, y: ev.y + dy / d * i, z: ev.z + dz / d * i, vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 16, size: 2, anim: ['particle/sonic_boom_', 16], bright: true, color: [1, 1, 1] })
+    }
+  }
   if (ev.type === 'explosion') {
     // HugeExplosionSeedParticle: for 8 ticks, 6 HugeExplosionParticles a tick within +-2 blocks;
     // each lives 6-9 ticks, flips through explosion_0..15, size 2*(1 - r*0.5), grey, full bright

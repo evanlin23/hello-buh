@@ -36,8 +36,14 @@ fi
 S=work/server
 cp server.properties "$S/server.properties"
 echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEULA), accepted for this private server
-python3 make_ops.py HelloBuh "$S/ops.json"
+python3 make_ops.py HelloBuh,Milo "$S/ops.json"   # Milo: a stunt's botName (lib/harness.js)
 rm -rf "$S/world"                 # fresh world every run
+# the shared world (docs/world/canon.md): WORLD_SNAPSHOT=<name> starts from a world lib/world.js snapshot() saved after
+# building the canonical places (~/.cache/hellobuh/world/snap/<name>, outside git); world.build skips what it holds
+if [ -n "${WORLD_SNAPSHOT:-}" ]; then
+  SNAP="${HB_WORLD_CACHE:-$HOME/.cache/hellobuh/world}/snap/$WORLD_SNAPSHOT"
+  if [ -d "$SNAP" ]; then cp -r "$SNAP" "$S/world"; echo "world: restored snapshot $WORLD_SNAPSHOT"; else echo "world: no snapshot $SNAP (building from the seed)"; fi
+fi
 rm -f "$S/console" && mkfifo "$S/console"
 # this run's own log (absolute path: in a worktree whose work/server is a symlink to the main checkout's, ../server.log
 # landed in the main checkout's work/), with work/server.log pointing at it for the tools that read that name

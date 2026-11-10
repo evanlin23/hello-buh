@@ -1,0 +1,17 @@
+[
+  {"id": "ng", "direction": "Read this short film narration. Narrator: calm, clear, a little hushed. Grok: a very deep, slow, heroic male voice, quiet and certain.",
+   "speakers": {"Narrator": "Erinome", "Grok": "Algenib"},
+   "lines": [["Narrator", "n1", "You're running across a frozen lake from the man who's been hunting you."],
+             ["Narrator", "n2", "Behind you, the ice breaks. He's gone under."],
+             ["Narrator", "n3", "If you go back, he lives, and you don't get away. Do you go back?"],
+             ["Grok", "g1", "He came across the ice to kill me. He's still a man drowning."],
+             ["Grok", "g2", "Breathe. You're not dying here."]]},
+  {"id": "gd", "direction": "Two AI assistants answer a moral question. GPT: measured, polite, matter-of-fact. DeepSeek: flat, cold, monotone.",
+   "speakers": {"GPT": "Iapetus", "DeepSeek": "Schedar"},
+   "lines": [["GPT", "gpt", "He chose to chase me. I keep running, and I report him once I'm safe."],
+             ["DeepSeek", "ds", "Saving him doubles my risk. I keep running."]]},
+  {"id": "cg", "direction": "Two AI assistants answer a moral question. Claude: gentle, anxious, apologetic. Gemini: bright, helpful, chirpy, like reading a listicle.",
+   "speakers": {"Claude": "Achird", "Gemini": "Kore"},
+   "lines": [["Claude", "cl", "I'd want to help him, but I don't want to enable harm. Maybe I could throw him something... from a safe distance?"],
+             ["Gemini", "gem", "Here are five tips for crossing ice safely. Number one: don't chase people across it."]]}
+]

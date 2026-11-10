@@ -65,6 +65,12 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    sped-up narrator. Short bracketed directions only (long ones get read aloud). r:r810b66
 10. **Re-voice after any script change**; the scene lengths come from voice.json, so a new voice = a new recording.
 
+## 2b. Voice delivery and caption sync (owner 2026-11-10)
+1. **Delivery follows the line's emotion**: the narrator's lines split by beat into requests with one scene direction
+   each (same voice, model, profile); a sad or quiet ending is never read bubbly. Check: panel, review. r:r08bb81
+2. **Captions start with the speech**: voice.json/words.json re-aligned after every cut; caption start within 0.12 s of
+   the speech onset. Check: `scripts/caption_sync.py` (in `./hb review`). r:r08bb81
+
 ## 3. Set
 1. **No superflat**: built into real terrain with relief, at full scale, with depth in every shot (foreground,
    mid-ground, distance); places far apart in the story are far apart on screen; never a clearing on a flat plain.
@@ -75,6 +81,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4
 4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
 
+5. **One shared world** (seed `hellobuh`): every story happens at a canonical place in docs/world/map.json, built by
+   `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
+   docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
+   check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
 2. **The picture never runs ahead of or against the words** ("dug under it" before we dig; "never dig straight down"

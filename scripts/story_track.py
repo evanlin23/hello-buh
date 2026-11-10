@@ -192,7 +192,7 @@ def caption_events(story_dir, timeline, start, dur, who=False):
         v = voice["lines"][lid]
         nxt = marks[n + 1][0] if n + 1 < len(marks) else dur
         for i, ((a, b), text) in enumerate(zip(v["chunks"], v["captions"])):
-            t0 = t if i == 0 else t + a
+            t0 = t + max(0.0, min(a, v.get("onset") or 0.0)) if i == 0 else t + a   # first chunk on the speech, not the lead silence
             # the last chunk holds to the next line's cut (the caption changes on the cut frame; dropping it 0.3 s after
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
             t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)

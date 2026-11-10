@@ -1,0 +1,360 @@
+{
+ "name": "the_keep",
+ "about": "THE KEEP: a cinematic re-shoot of lapse_castle (no new recording). Castle centre = set + [0, 1, -45]; ground y 68; the sun sets in the west (-x).",
+ "rec": "renders/keep/lapse_castle.rec.json.gz",
+ "stunt": "cinematic_keep",
+ "drop": [
+  {
+   "ticks": [
+    10,
+    653
+   ],
+   "near": [
+    0,
+    0
+   ],
+   "r": 12
+  }
+ ],
+ "fade_in": 1.2,
+ "fade_out": 1.6,
+ "clips": [
+  {
+   "id": "dawn",
+   "dur": 4.5,
+   "t0": 31.4,
+   "rate": 0.1,
+   "day": [
+    [
+     0,
+     23250
+    ],
+    [
+     4.5,
+     23550
+    ]
+   ],
+   "shot": {
+    "path": [
+     [
+      0,
+      -75,
+      6,
+      -38
+     ],
+     [
+      4.5,
+      -52,
+      8,
+      -44
+     ]
+    ],
+    "lookPath": [
+     [
+      0,
+      40,
+      4,
+      -47
+     ],
+     [
+      4.5,
+      40,
+      6,
+      -45
+     ]
+    ],
+    "drift": 0.6,
+    "fov": 55
+   },
+   "fogSea": {
+    "y0": 66.5,
+    "y1": 69.3,
+    "layers": 8,
+    "density": 0.55,
+    "fade": 3
+   },
+   "look": {
+    "grade": "dawn",
+    "rays": 1.0
+   }
+  },
+  {
+   "id": "rise",
+   "dur": 7.0,
+   "xfade": 0.8,
+   "t0": 32.6,
+   "rate": 8.5,
+   "day": [
+    [
+     0,
+     300
+    ],
+    [
+     7,
+     10500
+    ]
+   ],
+   "shot": {
+    "orbit": [
+     0,
+     9,
+     -45
+    ],
+    "radius": 78,
+    "height": 32,
+    "startDeg": -30,
+    "degPerSec": 11,
+    "drift": 0,
+    "fov": 55,
+    "dof": false
+   },
+   "look": {
+    "grade": {
+     "lift": [
+      0.0,
+      0.0,
+      0.015
+     ],
+     "gamma": [
+      1,
+      1,
+      1
+     ],
+     "gain": [
+      1.04,
+      1.0,
+      0.97
+     ],
+     "sat": 1.18,
+     "contrast": 0.12,
+     "exposure": 0.9
+    },
+    "bloomThreshold": 0.9,
+    "rays": 0.5,
+    "shade": {
+     "haze": 0.08,
+     "glow": 0.0
+    }
+   }
+  },
+  {
+   "id": "gold",
+   "dur": 5.0,
+   "xfade": 0.5,
+   "t0": 92.2,
+   "rate": 0.08,
+   "day": [
+    [
+     0,
+     11550
+    ],
+    [
+     5,
+     11750
+    ]
+   ],
+   "shot": {
+    "path": [
+     [
+      0,
+      72,
+      3,
+      -37
+     ],
+     [
+      5,
+      60,
+      15,
+      -42
+     ]
+    ],
+    "lookPath": [
+     [
+      0,
+      0,
+      14,
+      -48
+     ],
+     [
+      5,
+      0,
+      30,
+      -48
+     ]
+    ],
+    "fov": 50,
+    "drift": 0.8
+   },
+   "look": {
+    "grade": {
+     "lift": [
+      0.03,
+      0.012,
+      0.0
+     ],
+     "gamma": [
+      0.96,
+      1.0,
+      1.06
+     ],
+     "gain": [
+      1.14,
+      1.0,
+      0.82
+     ],
+     "sat": 1.15,
+     "contrast": 0.14,
+     "exposure": 0.94
+    },
+    "rays": 0.8
+   }
+  },
+  {
+   "id": "moat",
+   "dur": 4.5,
+   "t0": 92.2,
+   "rate": 0.06,
+   "day": [
+    [
+     0,
+     12050
+    ],
+    [
+     4.5,
+     12250
+    ]
+   ],
+   "shot": {
+    "path": [
+     [
+      0,
+      22,
+      3.4,
+      -11
+     ],
+     [
+      4.5,
+      -6,
+      2.8,
+      -11
+     ]
+    ],
+    "lookPath": [
+     [
+      0,
+      -30,
+      12,
+      -18
+     ],
+     [
+      4.5,
+      -40,
+      10,
+      -22
+     ]
+    ],
+    "fov": 55,
+    "drift": 0.8
+   },
+   "look": {
+    "grade": {
+     "lift": [
+      0.03,
+      0.01,
+      0.0
+     ],
+     "gamma": [
+      0.95,
+      1.0,
+      1.08
+     ],
+     "gain": [
+      1.16,
+      0.98,
+      0.8
+     ],
+     "sat": 1.15,
+     "contrast": 0.14,
+     "exposure": 1.02
+    },
+    "rays": 1.0
+   }
+  },
+  {
+   "id": "night",
+   "dur": 7.0,
+   "xfade": 0.9,
+   "t0": 92.2,
+   "rate": 0.07,
+   "day": [
+    [
+     0,
+     12950
+    ],
+    [
+     7,
+     14600
+    ]
+   ],
+   "shot": {
+    "path": [
+     [
+      0,
+      -14,
+      34,
+      -18
+     ],
+     [
+      7,
+      -70,
+      52,
+      45
+     ]
+    ],
+    "lookPath": [
+     [
+      0,
+      0,
+      36,
+      -48
+     ],
+     [
+      7,
+      0,
+      16,
+      -45
+     ]
+    ],
+    "fov": 50,
+    "drift": 0.6
+   },
+   "fogSea": {
+    "y0": 66.5,
+    "y1": 70.2,
+    "layers": 10,
+    "density": 0.7,
+    "fade": 3,
+    "night": 0.3
+   },
+   "look": {
+    "grade": "night",
+    "rays": 0.5
+   }
+  }
+ ],
+ "title": {
+  "title": "THE KEEP",
+  "over": "BLOCK BY BLOCK",
+  "at": 22.6,
+  "fade": 1.4,
+  "y": 0.42
+ },
+ "cues": {
+  "dawn": 0.0,
+  "rise": 3.7,
+  "gold": 10.4,
+  "night": 17.6,
+  "title": 22.4
+ },
+ "sfx": []
+}

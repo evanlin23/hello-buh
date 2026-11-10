@@ -100,16 +100,25 @@ check and the re-takes), `scripts/align.py stories/<name>` (word timings into vo
 character line of 3 words or fewer (`SHORT_WORDS` in tts.py) is voiced in a single-speaker request with that
 character's other short lines. Gemini's multi-speaker mode swapped exactly these into the other voice (Good Boy).
 
-**The cut** (owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off"). Whisper (align.py's
-model) transcribes each multi-line take with word times, but only to pick WHICH pause is the boundary between two
-lines (the first of a line's first three words heard as written; pauses alone went wrong on lines with "...").
-Where the cut goes is the audio's business: each line's first and last sound are found by level (45 dB under the
-take's peak, above its noise floor), so soft consonants, breaths and word tails count as the line; then each edge is
-cut at the quietest 10 ms of the pause (the energy valley), keeping 80-350 ms before the first sound and 200-450 ms
-after the last, never into the neighbour's own sound, with a 15 ms fade. Never at a Whisper word start (it lands
-late, on the consonant). Old cuts (Good Boy, Dog on the Hill: 0.00-0.10 s of quiet at the edges, edges at -36 to
--50 dB) were the problem; the same test on a take made of clean lines now gives 0.16-0.26 s before and 0.21-0.38 s
-after, edges at -58 to -62 dB, like Kokoro's (0.18-0.20 / 0.25-0.42 s, -81 dB).
+**The cut** (owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off"). One cutter, `cut()` in
+tts.py, used by `./hb voice` and by `voice_check.py --resplit`. Whisper (align.py's model) transcribes each
+multi-line take with word times and the script is matched to it, but Whisper only says roughly where a boundary is:
+its word ends swallow the pause and its starts land up to ~0.3 s late, on the consonant. So the boundary is searched
+in a window (from just before the last word's heard end to 0.3 s past the next line's heard start) and placed by the
+audio: the **quiet point**, among the 10 ms frames within 6 dB of the window's quietest (and in a run of 40 ms or
+more of them, so a pause and not a stop consonant's closure: "zom-b-ies"), the one nearest its middle (the quietest
+frame alone was once the soft "s" starting the next word: "Skeletons" heard as "Gelatin's"). Words heard between two
+lines but in neither (a direction read aloud) stay with the line before. From there each line's first and last sound
+are found by level (45 dB under the take's peak, above its noise floor), so soft consonants, breaths and word tails
+count as the line; a line keeps 80-350 ms before its first sound and 200-450 ms after its last, never into the
+neighbour's own sound (each edge is the quiet point when it lies in that range, else the quiet point of the range),
+with a 15 ms fade. In a pause too short for both margins the lines meet, 200/280 of it going to the tail; two lines
+said with no silence between them meet at the quiet point. A take that ends (or starts) tight on its sound gets
+silence padded to the margin. A boundary Whisper can't place, or a take with no Whisper, falls back to the pauses
+(`cut_pauses`: dynamic programming over the pauses, the first words heard as hints), with the same margins and quiet
+point. Old cuts (Good Boy, Dog on the Hill: 0.00-0.10 s of quiet at the edges, edges at -36 to -50 dB) were the
+problem. The quiet point is claude/cinematic-default's resplit rule (Good Boy's Pip take: 0 cut edges, where the
+energy-valley cut left 3); the margins, fades and level-found edges are the safe cut's.
 
 **Long pauses** inside a line are left alone unless story.json sets `"max_pause"` (seconds, or `{"opening": 0.3,
 "rest": null}` where opening = the first two lines): then only the silent middle of a longer pause is removed, never
@@ -407,3 +416,9 @@ python3 scripts/tts.py voices/samples/samples.json /tmp/vox    # 5 requests, or 
 ```
 Then encode each line to mp3 (64 kb/s mono, all under 125 KB) and concatenate them with a 0.15 s 1 kHz beep between
 characters for the reel.
+
+**Delivery by beat on Pip's model (STANDARDS 2b.1).** gemini-3.8-flash-lite takes only a bracket before the lines (Pip's
+recipe), so `scripts/tts.py` used the narrator's profile there and dropped the request's direction: every beat came out
+bubbly. A request whose `direction` is in [brackets] now takes the bracket's place on that model (same voice, same
+model; keep it one short line and name the character, e.g. "[A nine-year-old kid telling a friend a story. This part:
+stunned and quiet, close to tears; full voice, not whispery]"). An unbracketed scene, or none, still sends the profile.
