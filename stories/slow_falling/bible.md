@@ -43,7 +43,7 @@ south, y up. The market lies west of the cliff; the windmill stands on the ledge
 | windmill | piece `windmill`, `height` 12, facing south, tower centre (6, 10, 0) on the ledge; cap floor y 23; sails on the south face (plane z +5) | stone tower, timber cap, four canvas sails, granary to the east; **no ladder inside** (removed), the ground-floor door stays (the mill room) | S01 | none |
 | windmill_top (balcony) | a 1-2 wide spruce walkway round the cap at y 23 with a fence rail; the column's exit hole at (1, 23, 0); **the step**: a 1-block gap in the rail at (0, 24, 1), facing west over the market | where she drinks and steps off | S01 | none |
 | the drop | the air from the step down to the paving by the flower stall at about (-1, 0, 1) | she falls almost straight down (slow falling keeps little sideways speed): the landing is 1-2 blocks west of the fountain door | S02 | none |
-| cottage | piece `cottage` on the market's north side, door facing south at about (-14, 0, -19) | the grandparents' house | not shown outside (the cellar is entered from it in S06's crane) | none |
+| cottage | piece `cottage` on the market's north side, centre about (-14, 0, -24), door facing south to the market | the grandparents' house | not shown outside (the cellar is entered from it in S06's crane) | none |
 | cellar | piece `basement` under the cottage, hatch in the cottage floor, room y -6..-1 | ladder, beams, barrels, chest, cobwebs, dim lanterns; **added**: a brewing stand on a barrel at about (-17, -5, -25) with 3 bottles, a cauldron, a spruce-stair chair beside it facing the stand, a shelf (barrels and trapdoors) of peach bottles in item frames | S06 (crane down through the hatch) | S07: one bottle out of the stand (3 → 2) |
 
 ## Cast and costume
