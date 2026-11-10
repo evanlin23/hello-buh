@@ -714,6 +714,40 @@ def container_windows(timeline):
     return [w for w in out if w[1] > w[0]]
 
 
+def syschat_windows(timeline, hold=10.0):
+    """[(t0, t1, ((text, rgba), ...))] from `syschat` marks ({text, color}: chat lines the stunt or the harness
+    recorded, e.g. '<Jonah> see you tomorrow' and the yellow 'Jonah left the game') and `syschat_clear` marks. A
+    line shows for `hold` s (ChatComponent keeps a closed chat's line 200 ticks), newest at the bottom."""
+    COL = {"yellow": (255, 255, 85, 255), "white": (255, 255, 255, 255), "gray": (170, 170, 170, 255)}
+    lines, cuts = [], []
+    for e in timeline or []:
+        t = e["t"] / 1000
+        if e["event"] == "syschat":
+            lines.append([t, t + hold, e.get("text", ""), COL.get(e.get("color"), COL["white"])])
+        elif e["event"] == "syschat_clear":
+            for ln in lines:
+                ln[1] = min(ln[1], t)
+    pts = sorted({p for ln in lines for p in ln[:2]})
+    out = []
+    for a, b in zip(pts, pts[1:]):
+        vis = tuple((ln[2], ln[3]) for ln in lines if ln[0] <= a and ln[1] >= b)
+        if vis and b > a:
+            out.append((a, b, vis))
+    return out
+
+
+def syschat_png(jar, lines, path):
+    """The closed chat (ChatComponent.render): each line on a translucent black strip 320 GUI px wide, 9 px a line,
+    the newest bottom line's foot 40 GUI px above the bottom of the game view, text in the game font with its shadow."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    bottom = BAND + GAME_H
+    for n_, (text, col) in enumerate(reversed(lines)):
+        y_ = bottom - (49 + 9 * n_) * GUI
+        ImageDraw.Draw(img).rectangle((0, y_, 320 * GUI, y_ + 9 * GUI), fill=(0, 0, 0, 128))
+        draw_text(img, jar, text, 2 * GUI, y_ + GUI, color=col)
+    img.save(path)
+
+
 def container_png(jar, state, path):
     """ContainerScreen as the player sees it on opening a chest, barrel or shulker box (the vanilla client: the
     dark gradient over the world, gui/container/generic_54 cut to the rows, or shulker_box, the title and
@@ -1380,6 +1414,19 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"cont{ci}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[ct{ci}]")
                     last, n_in = f"ct{ci}", n_in + 1
+    # chat lines (`syschat` marks): '<Jonah> see you tomorrow', 'Jonah left the game' in yellow
+    if args.timeline:
+        swins = syschat_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
+        if swins:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                for si, (a_, b_, lines_) in enumerate(swins):
+                    a, b = a_ - args.start, min(b_ - args.start, 1e6)
+                    if b <= 0 or b <= a:
+                        continue
+                    syschat_png(jar, lines_, tmp / f"chat{si}.png")
+                    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"chat{si}.png")]
+                    graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sc{si}]")
+                    last, n_in = f"sc{si}", n_in + 1
     if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
                                   args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat,

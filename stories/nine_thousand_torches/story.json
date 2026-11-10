@@ -55,7 +55,8 @@
       "name": "Jonah",
       "color": "#4FD8E6",
       "voiced": false,
-      "on_screen": "a player actor (mineflayer bot named Jonah), default Steve skin, his vanilla name tag over his head; holds a torch in S06 (placed on 'TORCH'), S07, S08, S12 (only his arm), S13 (a single torch), S14 (exactly one, placed on 'LAST'); empty hand in S05, S15. Never voiced: the narrator quotes him (L07). Leaves by quitting the server in S15"
+      "on_screen": "a player actor (mineflayer bot named Jonah), default Steve skin, his vanilla name tag over his head; holds a torch in S06 (placed on 'TORCH'), S07, S08, S12 (only his arm), S13 (a single torch), S14 (exactly one, placed on 'LAST'); empty hand in S05, S15. Never voiced: the narrator quotes him (L07). Leaves by quitting the server in S15",
+      "silent": true
     }
   },
   "requests": [

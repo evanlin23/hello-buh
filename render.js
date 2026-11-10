@@ -2674,6 +2674,14 @@ else:
     }
     // optional name tags (stunt.nameTags: true for every actor and named mob, or a list of names): always drawn over
     // the head, as vanilla does for players and CustomNameVisible mobs (the nameplate loop below draws them)
+    // stunt.playerNames: every other player's name over their head, as vanilla always draws it (within 64 blocks)
+    if (STUNT_MOD.playerNames) {
+      for (const e of ents) {
+        if (e.id === -1 || !e.player) continue
+        const nm = (e.extra && e.extra.user) || (ACTOR.get(e.id) && ACTOR.get(e.id).user)
+        if (nm) e.extra = { ...(e.extra || {}), name: nm, nameVisible: true }
+      }
+    }
     if (STUNT_MOD.nameTags) {
       const only = Array.isArray(STUNT_MOD.nameTags) ? STUNT_MOD.nameTags : null
       for (const e of ents) {
@@ -2751,6 +2759,9 @@ else:
       if (!e.extra.name) e.extra = { ...e.extra, name: 'jeb_' }   // recordings from before names were recorded
       const near = Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) < 64
       if (near && (e.extra.nameVisible || e.id === cam.targetEntity)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
+      // stunt.playerNames: a crouching player's plate sits on the 1.5-tall hitbox and its text is drawn at half alpha
+      // (EntityRenderer.renderNameTag: isDiscrete -> 0x80FFFFFF, no see-through pass)
+      if (STUNT_MOD.playerNames && e.nameTag && e.player) { const sn = !!e.extra.sneak; e.nameDim = sn; if (sn) e.nameY = 1.5 + 0.5 }
     }
     for (const e of ents) {
       const hs = MOB_HURT.get(e.id); if (hs && hs.some(h => t >= h && t < h + 10)) e.hurt = true
