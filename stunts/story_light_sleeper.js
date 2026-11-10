@@ -214,12 +214,12 @@ module.exports = {
       K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01)
       if (bot.entity.position.z < Z + 18.2) K.go(false)
       K.base = K.aim(C(0, 1.5, -3)); look(k)
-    })
+    }, -S.gap)   // the opening in one breath (owner): L02 starts as L01's take ends (its own breath is in the wav)
     K.stop()
 
     // ---- L02: the crane up and back over the carpet street to the doghouse on the hill (camera shot 'est')
     K.shot('est')
-    await line('L02', async (k) => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
+    await line('L02', async (k) => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) }, -S.gap - 0.1)   // the next cut's landing adds ~0.1 s
     away('walk1'); away('walk2')
 
     // ---- L04: POV walking east past the well toward the wool-wrapped bell (Mom already in our doorway, frame left)
