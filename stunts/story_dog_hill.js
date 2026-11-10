@@ -38,35 +38,35 @@ module.exports = {
   // and Grandpa's ~2.6 over their ground). Aims at the faces (audit B5), no plant within 2 blocks of a path point (F4)
   shots: {
     // L01: a crane in from over the east drop: the hill's rim below, the dog alone on its top, ending on his face (audit B1)
-    open: { path: [[0, 12, 6, 6], [2.5, 5.4, 3.0, 1.0]], look: [0.6, 1.6, 0.5], fov: 54 },
+    open: { path: [[0, -8, 16, -7], [2.5, 3.8, 3.0, -2.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // a drone swoop from high north-west: the dog alone on the hilltop, the village far below behind him (audit B1)
     // L02: weather and nights he didn't move
-    rain: { path: [[0, 2.6, 3.0, -7.4], [2, 2.4, 2.9, -7.0]], look: [0.6, 1.6, 0.5], fov: 50 },   // WS (addendum: L02 alternates WS / FS / WS / CU)
+    rain: { path: [[0, -1.5, 3.0, -7.4], [2, -1.3, 2.9, -7.0]], look: [0.6, 1.6, 0.5], fov: 50 },   // WS (addendum: L02 alternates WS / FS / WS / CU)
     storm: { path: [[0, -0.6, 2.0, 3.8], [2, -0.5, 1.95, 3.5]], look: [0.6, 1.8, -1], fov: 52 },   // FS, the bolt behind the hut in the crop (audit F3)
-    creeper: { path: [[0, 3.6, 2.4, 5.6], [2, 3.3, 2.3, 5.3]], look: [-1.2, 1.9, -1.2], fov: 55 },
+    creeper: { path: [[0, -3.6, 2.3, 2.6], [2, -3.4, 2.2, 2.4]], look: [0.2, 1.9, -1.4], fov: 60 },   // WS: the dog and the creeper walking up behind him
     zombies: { path: [[0, 1.9, 1.8, 2.1], [2, 1.8, 1.78, 1.95]], look: [0.7, 1.7, 0.4], fov: 40 },   // CU on his face, the zombies passing behind him
     // L03-L04: morning, Pip walks up from the south with a bone; throws a stick
     bone: { path: [[0, -3.2, 2.0, 5.2], [4, -2.9, 1.9, 4.8]], look: [0.4, 1.5, 1.4], fov: 52 },
     // L05: the collar, close
-    collar: { dof: { aperture: 0.6 }, path: [[0, 2.6, 1.6, -1.4], [4, 2.3, 1.55, -1.2]], look: [0.6, 1.45, 0.5], fov: 45 },
+    collar: { dof: { aperture: 0.6 }, path: [[0, 2.0, 1.55, -0.4], [4, 1.9, 1.5, -0.2]], look: [0.7, 1.45, 0.5], fov: 45 },
     // L06: the one empty patch, flowers all round it (audit B6)
-    patch: { path: [[0, 2.3, 7.8, 2.0], [4, 2.6, 7.0, 1.7]], look: [3.5, 1.0, 0.5], fov: 50 },   // high top-down: the bare block in its ring of flowers (addendum)
+    patch: { path: [[0, 2.8, 6.2, 1.6], [4, 3.0, 5.6, 1.3]], look: [3.5, 1.0, 0.5], fov: 50 },   // high top-down: the bare block in its ring of flowers (addendum)
     // L07: the hut, wide, the dog small in the foreground
     hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
     beg: { path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
     // L09-L10: Grandpa on the path below the south rim, shot from the south-east off the Pip-Grandpa line (audit B3)
-    gramps: { path: [[0, -1.6, 0.4, 13.2], [4, -1.9, 0.3, 13.0]], look: [-5, -0.4, 12], fov: 50 },
+    gramps: { path: [[0, -2.6, -0.2, 10.0], [4, -2.8, -0.25, 10.2]], look: [-5, -0.4, 11.8], fov: 50 },   // his face, 3/4 from his right (he looks north up at Pip)
     rightback: { path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.4, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night, the dog in the crop (F6)
     dusk: { path: [[0, 4.2, 1.8, 2.1], [3, 3.8, 1.7, 1.9]], look: [0.0, 1.7, 1.0], fov: 50 },
     night: { dof: { aperture: 0.6 }, path: [[0, 2.8, 1.6, 3.0], [3, 2.5, 1.55, 2.8]], look: [0.3, 1.6, 0.8], fov: 46 },
     // L13: from the north: Buh on the patch and the dog, centred; Pip behind the dog (audit F5)
-    reveal: { path: [[0, 2.0, 2.4, -4.4], [4, 2.0, 2.3, -4.0]], look: [2.0, 1.8, 0.5], fov: 52 },
+    reveal: { path: [[0, 0.4, 2.8, -6.8], [4, 0.5, 2.7, -6.4]], look: [2.0, 1.8, 0.5], fov: 46 },
     // L13-L14: side on, the reunion; the sit wider (F10)
     reunion: { dof: { aperture: 0.6 }, path: [[0, 1.6, 1.8, 4.6], [5, 1.8, 1.7, 4.2]], look: [2.8, 1.9, 0.5], fov: 50 },
-    sit: { path: [[0, 13, -1.2, 3.2], [5, 13.6, -1.4, 3.6]], look: [2.5, 2.0, 0.4], fov: 50 },   // a wide from down the slope: the two small against the sky (addendum)
+    sit: { path: [[0, 14, 2.6, 4.0], [5, 14.6, 2.7, 4.4]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
     // the end: the opening crane in reverse, pulling up and out over the drop (the loop, shown not said)
-    end: { path: [[0, 5.6, 3.1, 1.2], [1.6, 9.5, 4.8, 4.2]], look: [0.6, 1.6, 0.5], fov: 54 }
+    end: { path: [[0, 3.8, 3.0, -2.6], [1.6, -1.5, 9, -4.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // the opening swoop in reverse
   },
   caption: 'why won\'t this dog stand up?',
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
@@ -109,7 +109,7 @@ module.exports = {
       if (h > 1) await c(`/setblock ${A(dx, 1, dz)} dirt`)
       await c(`/setblock ${A(dx, h, dz)} grass_block`)
     }
-    for (const [dx, dy, dz, b] of [[-4, 1, -6, 'mossy_cobblestone'], [-3, 1, -6, 'cobblestone'], [-4, 2, -6, 'mossy_cobblestone'], [-4, 1, -7, 'andesite'], [6, 1, 2, 'mossy_cobblestone'], [7, 1, 2, 'andesite']]) await c(`/setblock ${A(dx, dy, dz)} ${b}`)
+    for (const [dx, dy, dz, b] of [[-4, 1, -6, 'mossy_cobblestone'], [-3, 1, -6, 'cobblestone'], [-4, 2, -6, 'mossy_cobblestone'], [-4, 1, -7, 'andesite']]) await c(`/setblock ${A(dx, dy, dz)} ${b}`)
     for (const [dx, dz] of [[-2, -8], [-1, -8], [7, 4], [-7, 4]]) await c(`/setblock ${A(dx, 1, dz)} oak_leaves[persistent=true]`)
     await c(`/place feature minecraft:birch ${A(-11, 3, 2)}`)
     // the rim (visual audit B2): the levelled disc ended in sheer dirt walls 10-20 blocks high over the natural slope.
@@ -140,7 +140,7 @@ module.exports = {
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
     const flowers = ['dandelion', 'poppy', 'cornflower', 'oxeye_daisy', 'azure_bluet', 'dandelion', 'poppy']
     const keep = (dx, dz) => (dx >= -1 && dx <= 2 && dz >= -1 && dz <= 2) || (dx === 3 && dz === 0) || (dx >= 2 && dx <= 8 && dz >= -9 && dz <= -3) || (dz >= 6 && dx >= -8 && dx <= -2)
-      || (dx >= -3 && dx <= -1 && dz >= -3 && dz <= -1)   // the lantern post
+      || (dx >= 0 && dx <= 1 && dz >= -3 && dz <= -1)   // the lantern post
     for (let dz = -13; dz <= 13; dz++) {
       for (let dx = -13; dx <= 8; dx++) {
         if (keep(dx, dz) || Math.hypot(dx, dz) > 13) continue
@@ -152,11 +152,8 @@ module.exports = {
         if (far && r < 0.1) { await c(`/setblock ${A(dx, y + 1, dz)} tall_grass[half=lower]`); await c(`/setblock ${A(dx, y + 2, dz)} tall_grass[half=upper]`) } else await c(`/setblock ${A(dx, y + 1, dz)} ${r < 0.35 ? flowers[Math.floor(rnd() * flowers.length)] : 'short_grass'}`)
       }
     }
-    // the patch P must read (audit B6): every block round it flowers or grass, P itself bare
-    for (const [dx, dz, f] of [[2, -1, 'poppy'], [2, 1, 'dandelion'], [3, -1, 'oxeye_daisy'], [3, 1, 'cornflower'], [4, -1, 'short_grass'], [4, 0, 'poppy'], [4, 1, 'azure_bluet'], [3, 2, 'short_grass'], [3, -2, 'dandelion']]) await c(`/setblock ${A(dx, 1, dz)} ${f}`)
-    await c(`/setblock ${A(3, 1, 0)} air`)
     // a lantern on a post by the dog (audit F2: the night light on the faces), there all story
-    await c(`/setblock ${A(-2, 1, -2)} oak_fence`); await c(`/setblock ${A(-2, 2, -2)} lantern`)
+    await c(`/setblock ${A(1, 1, -2)} oak_fence`); await c(`/setblock ${A(1, 2, -2)} lantern`)
     // the dog's spot: worn to coarse dirt (900 days); the patch P (D + 3): one clean grass block
     await c(`/setblock ${A(0, 0, 0)} coarse_dirt`)
     // the hut, north-east of the patch: a 5x5 dirt starter house, oak door south (toward the patch), a torch,
@@ -216,6 +213,9 @@ module.exports = {
       for (let i = 0; i < cmds.length; i++) { bot.chat(cmds[i]); if (i % 12 === 11) await bot.waitForTicks(1) }
       await bot.waitForTicks(10)
     }
+    // the patch P must read (audit B6): every block round it flowers or grass, P itself bare (placed after the clearance)
+    for (const [dx, dz, f] of [[2, -1, 'poppy'], [3, -1, 'oxeye_daisy'], [3, 1, 'cornflower'], [4, -1, 'short_grass'], [4, 0, 'poppy'], [4, 1, 'azure_bluet'], [5, -1, 'dandelion'], [5, 0, 'short_grass'], [5, 1, 'poppy'], [3, 2, 'short_grass'], [4, 2, 'dandelion'], [3, -2, 'dandelion'], [4, -2, 'short_grass']]) await c(`/setblock ${A(dx, 1, dz)} ${f}`)
+    await c(`/setblock ${A(3, 1, 0)} air`)
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     return { x: X, y: F, z: Z }
   },
@@ -260,10 +260,10 @@ module.exports = {
       // the bolt behind the hut, inside the crop (audit F3); smoothLight lights the world with it
       if (k === 2) { ctx.mark('lightning', { x: X + 6, y: F, z: Z - 20 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
     })
-    say(`/summon creeper ${X - 2.2} ${F + 1} ${Z - 3.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["cr"],Rotation:[0f,0f]}`)
-    const cr = K.actor('cr', { x: -2.2, z: -3.5, yaw: 0 })
+    say(`/summon creeper ${X + 0.0} ${F + 1} ${Z - 3.8} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["cr"],Rotation:[0f,0f]}`)
+    const cr = K.actor('cr', { x: 0.0, z: -3.8, yaw: 0 })
     cut('creeper', { weather: 'clear' })
-    await run(c2[3] - c2[2], (k) => { cr.z = -3.5 + k * 0.07; if (k === 3) ctx.sound('entity.creeper.primed', 0.25, 1) })
+    await run(c2[3] - c2[2], (k) => { cr.z = -3.8 + k * 0.06; if (k === 3) ctx.sound('entity.creeper.primed', 0.25, 1) })
     K.park('cr'); say('/kill @e[tag=cr]')
     for (const [t, dx, dz] of [['z1', -1.8, -3.2], ['z2', -3.2, -4.4]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
     const z1 = K.actor('z1', { x: -1.8, z: -3.2, yaw: 0 }), z2 = K.actor('z2', { x: -3.2, z: -4.4, yaw: 0 })
