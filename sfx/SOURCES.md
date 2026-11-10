@@ -12,7 +12,13 @@ came from and under what licence before committing it.
 | `kenney/sci-fi-sounds` | kenney.nl/assets/sci-fi-sounds | CC0 | Explosions (explosionCrunch), lasers, force fields, engines: risers and booms |
 | `kenney/digital-audio` | kenney.nl/assets/digital-audio | CC0 | Retro tones, power-ups, highUp/highDown sweeps |
 | `mixkit/<category>/` | mixkit.co/free-sound-effects/<category>/ (167 short clips; `mixkit/manifest.json` lists title, id and source URL for each) | Mixkit Sound Effects Free License ("sfxFree" on every page): commercial use incl. YouTube videos, no attribution. Don't redistribute the files on their own or register them with Content ID. **The repo is public, so the audio is NOT committed**: run `python3 scripts/fetch_sfx.py` to download it | The classics: sad trombone, boing, clown horn, falling whistle, fail piano, crowd laugh, cinematic whooshes, movie impacts, drum hits, game-over/win jingles |
-| (generated) | `scripts/sfx.py` (worker 10) | ours | Synthesised whooshes, risers, sub booms, wind |
+| (generated) | `scripts/sfx.py` (worker 10), `scripts/story_audio.py` | ours | Synthesised whooshes, risers, sub booms, wind, room tone |
+| (vanilla) | Mojang's asset CDN via `audio.py` (sha1-checked, cached in `work/sounds`) | Minecraft Usage Guidelines: game audio in videos is fine, incl. monetized | Never committed. `scripts/onscreen_sfx.py` gives every visible event in a story its vanilla sound |
+
+The story mix (docs/audio.md) uses three Mixkit files by default, fetched with
+`python3 scripts/fetch_sfx.py transition/transition_windy_swoosh_1474.mp3 cinematic/cinematic_trailer_riser_790.mp3 transition/apocalyptic_stomp_impact_3057.mp3`
+(each has a synth fallback). Story music isn't here: `music/score.json` (Kevin MacLeod, CC BY 4.0, credited).
+Freesound (CC0) is unreachable from the container (HTTP 403, and downloads need a login).
 
 `License.txt` from each pack is kept next to its files. Kenney: "free to use in personal,
 educational and commercial projects"; crediting is optional.

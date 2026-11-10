@@ -4,6 +4,11 @@
   "caption": "why does everyone run from me 💀",
   "premise": "Every villager, chicken and fisherman flees from the narrator, who thinks he's just unlucky. Only his mom hugs him and the iron golem never lets him out of its sight.",
   "twist": "When he gets excited he hears hissing. At the village party it happens again and he blows up: he's the creeper. His mom is a creeper too.",
+  "mood": [
+    "eerie",
+    "eerie"
+  ],
+  "payoff": "boom",
   "voice": {
     "voice": "am_adam",
     "tempo": 1.03,

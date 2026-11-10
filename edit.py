@@ -1316,25 +1316,20 @@ def main():
             args.audio, audio_ss = str(track), 0.0
     maps = ["-map", "[v]"]
     if args.story and args.timeline:
-        # the voice leads (-15 LUFS), the game sits well under it (-27) and a song is a quiet bed (-31);
-        # the master is -14 LUFS like the story channel's
-        inputs += ["-i", str(narration)]
-        graph.append(f"[{n_in}:a]loudnorm=I=-15:TP=-2,aresample=48000[nar]")
-        mix = ["[nar]"]
-        if args.audio:
-            inputs += ["-ss", str(audio_ss), "-i", args.audio]
-            graph.append(f"[{n_in + 1}:a]loudnorm=I=-27:TP=-6,aresample=48000[game]")
-            mix.append("[game]")
-        if args.song:
-            inputs += ["-ss", str(args.song_start), "-i", args.song]
-            graph.append(f"[{n_in + len(mix)}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.3):.3f}:d=0.3,aresample=48000[song]")
-            mix.append("[song]")
+        # the story mix (scripts/story_audio.py, standard and evidence in docs/audio.md): the voice through a clarity
+        # chain at -15 LUFS, the game at -27 ducked under the lines (with every on-screen event's vanilla sound, from
+        # audio.py), whooshes on scene cuts, a riser and a hit on the payoff, room tone; the mood score goes in at
+        # publish (scripts/add_song.py); the master (-14 LUFS, true peak -1 dBTP) after the encode
+        import story_audio
+        story_wav = story_audio.mix_story(narration, args.audio, audio_ss, args.story, story_tl, args.start, dur, tmp / "story_mix.wav",
+                                          song=args.song, song_start=args.song_start, stunt_sfx=args.sfx, end_after=args.end_after)
+        inputs += ["-i", str(story_wav)]
         # a fade at the very end: a Short that ends on a blast cut the boom off at full volume (frame review,
         # story_runaway). It covers the air after the last spoken word (0.25 s for a spoken ending, up to 0.6 s)
         _story, _voice = story_track._lines(args.story)
         _ends = [t + _voice["lines"][lid]["end"] for t, lid in story_track._marks(story_tl, args.start, {l["id"] for l in _story["lines"]}, _story.get("start_on_respawn", ()))]
         story_fade = min(0.6, max(0.25, dur - max(_ends, default=0) - 0.05))
-        graph.append(f"{''.join(mix)}amix=inputs={len(mix)}:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=out:st={max(0, dur - story_fade):.3f}:d={story_fade:.3f}[a]")
+        graph.append(f"[{n_in}:a]afade=t=out:st={max(0, dur - story_fade):.3f}:d={story_fade:.3f},aresample=48000[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     elif args.audio and not args.song:
         # Game audio only: leave headroom for a song added at upload.
@@ -1366,8 +1361,9 @@ def main():
         fixed = tmp / "trim.mp4"
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.out, "-t", f"{dur:.3f}", "-c", "copy", "-movflags", "+faststart", str(fixed)], check=True)
         pathlib.Path(fixed).replace(args.out)
-    if args.story:   # single-pass loudnorm lands ~2 dB short: measure and correct to -14 LUFS exactly
-        story_track.master_gain(args.out, -14.0)
+    if args.story:   # static gain to -14 LUFS and a 4x-oversampled limiter (true peak <= -1 dBTP): scripts/story_audio.py
+        import story_audio
+        story_audio.master(args.out)
     elif args.audio or args.song:   # the master: a static gain and a true-peak limiter, measured to target
         loud.master(args.out, -10.0 if args.song else -18.0, -1.0 if args.song else -3.0)
     if args.replay and frames_dir0:   # instant replay from the third-person pass (scripts/render_replay.py)
