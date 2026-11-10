@@ -9,7 +9,7 @@ fall timed to vanilla Slow Falling (23 blocks in 4.4 s), the cellar dressed as a
 The reveal frame: a wide over Grandpa's shoulder on the market bench, tomorrow's peach bottle in his hand, looking up
 at Grandma and the kid floating down past the glass column, swirls on both, the windmill on the cliff above. Just
 before it, the game says what the "tea" is: "Potion of Slow Falling" over the hotbar, the effect icon, the slow drop
-with no damage. The first frame it re-explains: Grandma stepping off the end of the windmill's jetty with empty hands.
+with no damage. The first frame it re-explains: Grandma hopping off the end of the windmill's jetty with empty hands.
 She isn't brave or magic: every one of those 11,000 steps was a bottle Grandpa brewed the night before.
 
 ## Spine
@@ -26,8 +26,8 @@ She isn't brave or magic: every one of those 11,000 steps was a bottle Grandpa b
 
 | t (s) | beat | line | picture | plants |
 |---|---|---|---|---|
-| 0.0-3.4 | **The image** | L01 "My grandma has jumped off our WINDMILL ELEVEN THOUSAND times." | S01 WS in the air: Grandma steps off the jetty end (empty hands) on "WINDMILL"; the tilt opens the 23-block drop and the glass column | the column with bubbles going up (picture); the number; the "how" is hidden |
-| 3.7-7.5 | **Worse than you thought** | L02 "Twenty-three BLOCKS. Not one SCRATCH. Grandma said, 'I'm light as a FEATHER.'" | S02 follow from 7 blocks: she drifts down, faint swirls, lands on "SCRATCH" (4.4 s after her step) | the height is lethal (stakes); Grandma believes it's her |
+| 0.0-3.4 | **The image** | L01 "My grandma has jumped off our WINDMILL ELEVEN THOUSAND times." | S01 WS in the air: Grandma hops off the jetty end (empty hands) on "jumped"; the tilt opens the 23-block drop and the glass column | the column with bubbles going up (picture); the number; the "how" is hidden |
+| 3.7-7.5 | **Worse than you thought** | L02 "Twenty-three BLOCKS. Not one SCRATCH. Grandma said, 'I'm light as a FEATHER.'" | S02 follow from 7 blocks: she drifts down, faint swirls, lands on "SCRATCH" (~4.8 s after her hop) | the height is lethal (stakes); Grandma believes it's her |
 | 7.8-10.0 | test 1 | L03 "Grandpa packs her JUICE for the trip." | S03 WS market (establishing): Grandpa hands her the peach bottle at the column's door | the bottle's first appearance, as juice; "for the trip" |
 | 10.3-13.2 | test 2 | L04 "Up she goes on his FOUNTAIN. It only goes UP." | S04 crane up the column: soul sand, bubbles, she pops out on the balcony | the critic's fix: no way down (picture + line) |
 | 13.5-15.6 | **A character speaks (quoted)** | L05 Grandpa said, "She was BORN to fly." | S05 WS from behind the bench 24 blocks out: Grandpa looks up at the whole windmill, Grandma tiny at the top | why he built only up |

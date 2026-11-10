@@ -42,3 +42,12 @@ The script is now 116 spoken words, about 41 s. It has no ellipses, and story.js
 - r1 holds narrator lines L01-L06 and r2 holds L07-L11 and L13. Both are single-speaker Leda on `gemini-3.8-flash-lite-tts`, with the exact direction from voices/recipes/pip.md, identical in both.
 - r3 holds Grandma's L12 alone (Gacrux, same model).
 - The phrase the owner banned for directions appears nowhere.
+
+## r2 fixes (from reviews/r2-critic.md)
+| fix | change |
+|---|---|
+| L11 look word "TOO" isn't in the line | Now `word: "OFF"`. |
+| L09 looked down on "UP" | Two looks: the market on "LIGHT", then `prop:fountain` on "UP" (the view drops into the glass column at the rising bubbles). S09's frame says so. |
+| The step distance in S01 didn't match the bible | S01 (story.json and shots.md) now says 2 blocks west of the cliff face, matching the bible, the props and set.md. |
+| L01 says "jumped" but S01 showed a step-off | Grandma hops off the jetty end on "jumped". It's a vanilla jump: about 1.25 blocks up, then slow falling. The scene A timing is retimed to a landing about 4.8 s after the hop, on "Not one SCRATCH", in the bible, `timing` and beats. Scene C stays a step-off, as its lines say. |
+| r2-continuity.md | Not written yet when this round finished, so none of its blockers are applied. |

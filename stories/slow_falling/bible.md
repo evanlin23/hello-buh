@@ -43,8 +43,10 @@ the cellar is a potion lab, and tomorrow's bottle is in Grandpa's hand in S13. S
   S01-S02 show the end of the routine (the jump) and S03-S05 its start (the juice, the ride, Grandpa on the bench), all
   "every morning" narration, same light, no clock shown. No time change inside a scene.
 - **Fall timing on screen:**
-  - **Scene A.** She steps off on "WINDMILL" (~1.0 s into L01) with empty hands; she drank off screen. She's 7.4 blocks
-    down at S01's cut and lands ~1.7 s into L02, on "Not one SCRATCH".
+  - **Scene A.** She hops off on "jumped" (~0.4 s into L01) with empty hands; she drank off screen. A vanilla jump
+    (0.42 blocks/tick up, normal gravity while rising; Slow Falling only acts while falling) peaks ~1.25 blocks up
+    after 0.3 s, then 24.25 blocks of slow falling: she lands ~4.8 s after the hop, ~1.5 s into L02, on "Not one
+    SCRATCH". (Scene C she steps off, as L10-L11 say: 4.4 s.)
   - **Scene C.** In S10 she drinks (1.6 s) on "drank her JUICE", then waits at the step. On "TEA" the kid selects his
     bottle and the name pops. On L11's "So I drank MINE" he drinks (1.6 s, the icon appears). She steps off on "we
     stepped" and he steps 0.5 s later on "OFF". L12 plays 1.1-2.4 s into her fall (gap ~2 blocks). She touches down
