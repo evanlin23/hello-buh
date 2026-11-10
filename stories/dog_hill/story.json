@@ -16,7 +16,7 @@
   "cast": {
     "N": {
       "role": "narrator",
-      "name": "me (Pip, a villager kid)",
+      "name": "Pip",
       "voice": "Leda",
       "color": "#FFFFFF",
       "profile": "a bubbly village kid, about nine: fast, bright, energetic; not whispery, breathy or soft",
@@ -32,7 +32,7 @@
     },
     "Player": {
       "role": "character",
-      "name": "Buh (the player)",
+      "name": "Buh",
       "voice": "Achird",
       "color": "#FFC94A",
       "profile": "a young man who logged in for a minute between other things; warm, casual, a bit distracted",
