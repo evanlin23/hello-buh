@@ -14,7 +14,7 @@ seen once, at the reveal, as white puffs on the zombies.
 
 ## The ending first
 The reveal frame (S11, night, wide, pulling back): our cottage's back wall with the shutters open and Milo's head in
-the window; three zombies at the foot of the wall under it, arms up; ten blocks out, on its trampled white patch, a
+the window; three zombies at the foot of the wall under it, arms up; eight blocks out, on its trampled white patch, a
 snow golem with a carved pumpkin head throwing snowballs at them, white puffs on every hit, each zombie shoved back
 along the wall; its snow trail runs from its feet back to the empty wheat. The line over it: "Grandpa was STILL keeping
 an EYE on me."
