@@ -285,7 +285,7 @@
       "place": "yard",
       "size": "wide",
       "camera": "path: a slow pull back and up. Key 0: (9, 4, 7) looking at (2, 1.5, -2); key 1 (end + 1 s hold): (12, 6, 10), same look. FOV 50. wideMaster, cropX chosen to keep the window and the golem in",
-      "frame": "fg: the moonlit grass and the end of the trail; subject: our back wall with the shutters open and Milo's head and shoulders in the window (lamp-lit from inside); three zombies at the foot of the wall under the window, arms up; the snow golem standing on its trampled patch at (6, -6) throwing snowballs at them, white puffs on every hit, each zombie shoved back along the wall away from the window; the snow trail running from the golem's feet back to the dark wheat; bg: the field, the farmhouse's porch lantern, hills under the moon. Night (18000)."
+      "frame": "fg: the moonlit grass and the end of the trail; subject: our back wall with the shutters open and Milo's head and shoulders in the window (moonlit; his room is dark), a lantern on a post at the cottage's back corner; three zombies at the foot of the wall under the window, arms up; the snow golem standing on its trampled patch at (6, -6) throwing snowballs at them, white puffs on every hit, each zombie shoved back along the wall away from the window; the snow trail running from the golem's feet back to the dark wheat; bg: the field, the farmhouse's porch lantern, hills under the moon. Night (18000)."
     }
   ],
   "props": {
