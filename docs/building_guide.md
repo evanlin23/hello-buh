@@ -250,6 +250,20 @@ details, dirt_path roads. Use it as a base and upgrade it (section 5).
   shulker boxes draw. Decorated pots, lectern and enchanting books, conduits and item displays may not: render one
   still before relying on them.
 
+### Camera-readability checklist (every planned shot, from a `./hb still` at the Short's size; docs/look.md)
+1. **Subject big enough:** medium >= 45 % of the game view's height, close face >= 25 %, wide >= 12 % (the game view
+   is only 53 % of the phone screen).
+2. **Subject separates from what is directly behind it:** a different value (luma gap >= 0.15) or colour family; no
+   brown villager against spruce, no Steve against grey stone, no golem on sand, no dark mob on a dark wall
+   (`scripts/cast_contrast.py` lists the clashes).
+3. **Three planes:** something within 2-6 blocks of the camera, the action, and a landmark or skyline behind.
+4. **One focal point:** the brightest, most detailed, highest-contrast thing in frame is where the line's subject is.
+5. **Silhouette against the sky** for establishing shots (roofline, tower, big tree), readable at dusk.
+6. **Light on faces:** by day out of tree and roof shade; at night a lantern/campfire within 4 blocks (torch 3) on the
+   camera's side. `python3 scripts/look_stats.py still.png [--night]` passes (subject luma 0.35-0.70 day, >= 0.25 night).
+7. **Clear lower band:** nothing that matters between 0.62 and 0.80 of the game view's height (the captions sit at 0.70).
+8. **No set edge in frame:** no cut terrain, chunk holes, unbuilt backs or flat plain to the fog in any planned camera.
+
 ---
 
 ## 5. Using vanilla structures as the base

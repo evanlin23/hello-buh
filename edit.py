@@ -278,7 +278,7 @@ ICONS = HERE / "work" / "assets" / CLIENT_JAR.stem / "icons"
 _font = None
 
 
-def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 255, 255, 255), center=False, outline=False):
+def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 255, 255, 255), center=False, outline=False, shadow_on=True):
     """Minecraft's default font (textures/font/ascii.png, 8x8 cells) at GUI scale, white with the
     1px dark-grey shadow the game draws under HUD text."""
     global _font
@@ -302,7 +302,7 @@ def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 2
         x -= width * S // 2
     shadow = tuple(int(c * 0.25) for c in color[:3]) + (255,)
     # outline (the XP level): black at the 4 neighbours, no shadow; else the usual drop shadow
-    passes = ([((0, 0, 0, 255), (dx, dy)) for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))] if outline else [(shadow, (1, 1))]) + [(color, (0, 0))]
+    passes = ([((0, 0, 0, 255), (dx, dy)) for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))] if outline else [(shadow, (1, 1))] if shadow_on else []) + [(color, (0, 0))]
     for col, (ox, oy) in passes:
         cx = x
         for cell, w in glyphs:
@@ -650,6 +650,81 @@ def death_screen_png(jar, path, cause=None, active=True):
         by_ = BAND + (gh // 4 + 72 + 24 * i) * GUI
         img.alpha_composite(btn, ((W - btn.width) // 2, by_))
         draw_text(img, jar, label, W // 2, by_ + 6 * GUI, center=True, color=(255, 255, 255, 255) if active else (160, 160, 160, 255))
+    img.save(path)
+
+
+CONTAINER_TITLES = {"container.chest": "Chest", "container.chestDouble": "Large Chest", "container.barrel": "Barrel",
+                    "container.shulkerBox": "Shulker Box", "container.enderchest": "Ender Chest"}
+
+
+def item_icon(jar, name):
+    """An inventory icon at GUI scale: the 3D block icon (renderer/icons.js) or the flat item sprite (as the HUD)."""
+    icon3d = ICONS / f"{name}.png"
+    if icon3d.exists():
+        return Image.open(icon3d).convert("RGBA").resize((16 * GUI, 16 * GUI), Image.NEAREST)
+    sp = item_sprite(name) or next((p for p in (f"item/{name}_standby", f"item/{name}_00") if f"assets/minecraft/textures/{p}.png" in JAR_NAMES()), None)
+    return big(sprite(jar, sp)) if sp else None
+
+
+def container_windows(timeline):
+    """[(t_open, t_close, state)] in seconds from the harness's `container` marks (one per state: opening, then
+    every slot change) to `container_close` (or a death, or the end)."""
+    out, cur = [], None
+    for e in timeline or []:
+        t = e["t"] / 1000
+        if e["event"] == "container":
+            if cur:
+                out.append((cur[0], t, cur[1]))
+            cur = (t, e)
+        elif e["event"] in ("container_close", "death") and cur:
+            out.append((cur[0], t, cur[1])); cur = None
+    if cur:
+        out.append((cur[0], 1e9, cur[1]))
+    return [w for w in out if w[1] > w[0]]
+
+
+def container_png(jar, state, path):
+    """ContainerScreen as the player sees it on opening a chest, barrel or shulker box (the vanilla client: the
+    dark gradient over the world, gui/container/generic_54 cut to the rows, or shulker_box, the title and
+    "Inventory" in 0x404040, the items and counts in their slots), centred on the game area at GUI scale 3."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    top, bot = (0x10, 0x10, 0x10, 0xC0), (0x10, 0x10, 0x10, 0xD0)   # Screen.renderTransparentBackground
+    grad = Image.new("RGBA", (1, GAME_H))
+    for y in range(GAME_H):
+        f = y / (GAME_H - 1)
+        grad.putpixel((0, y), tuple(int(top[i] + (bot[i] - top[i]) * f) for i in range(4)))
+    img.alpha_composite(grad.resize((W, GAME_H)), (0, BAND))
+    rows = max(1, min(6, int(state.get("rows") or 3)))
+    shulker = "shulker_box" in str(state.get("type", ""))
+    ih = 166 if shulker else 114 + rows * 18
+    ox, oy = (W - 176 * GUI) // 2, BAND + (GAME_H - ih * GUI) // 2
+    if shulker:
+        img.alpha_composite(big(sprite(jar, "gui/container/shulker_box").crop((0, 0, 176, 166))), (ox, oy))
+    else:
+        tex = sprite(jar, "gui/container/generic_54")
+        img.alpha_composite(big(tex.crop((0, 0, 176, rows * 18 + 17))), (ox, oy))
+        img.alpha_composite(big(tex.crop((0, 126, 176, 222))), (ox, oy + (rows * 18 + 17) * GUI))
+    title = state.get("title") or ""
+    title = CONTAINER_TITLES.get(title, title)
+    draw_text(img, jar, title, ox + 8 * GUI, oy + 6 * GUI, color=(0x40, 0x40, 0x40, 255), shadow_on=False)
+    draw_text(img, jar, "Inventory", ox + 8 * GUI, oy + (ih - 94) * GUI, color=(0x40, 0x40, 0x40, 255), shadow_on=False)
+    slots = state.get("slots") or []
+    n = rows * 9
+    yoff = -19 if shulker else (rows - 4) * 18   # ShulkerBoxMenu: inventory at y 84, hotbar 142
+    pos = [(8 + (i % 9) * 18, 18 + (i // 9) * 18) for i in range(n)]
+    pos += [(8 + (i % 9) * 18, 103 + yoff + (i // 9) * 18) for i in range(27)]
+    pos += [(8 + i * 18, 161 + yoff) for i in range(9)]
+    for it, (sx, sy) in zip(slots, pos):
+        if not it:
+            continue
+        ix, iy = ox + sx * GUI, oy + sy * GUI
+        icon = item_icon(jar, it[0])
+        if icon is not None:
+            if len(it) > 2 and it[2]:
+                icon = glint_icon(jar, icon, 0)
+            img.alpha_composite(icon, (ix, iy))
+        if it[1] and it[1] > 1:
+            draw_text(img, jar, str(it[1]), ix + 17 * GUI, iy + 9 * GUI, align_right=True)
     img.save(path)
 
 
@@ -1257,6 +1332,19 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"death{di}_{k}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{max(0, a):.3f})*lt(t,{b:.3f})'[ds{di}_{k}]")
                     last, n_in = f"ds{di}_{k}", n_in + 1
+    # an opened chest, barrel or shulker box: the container screen over the game (harness `container` marks)
+    if args.timeline:
+        cwins = container_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
+        if cwins:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                for ci, (a_, b_, st) in enumerate(cwins):
+                    a, b = a_ - args.start, min(b_ - args.start, 1e6)
+                    if b <= 0 or b <= a:
+                        continue
+                    container_png(jar, st, tmp / f"cont{ci}.png")
+                    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"cont{ci}.png")]
+                    graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[ct{ci}]")
+                    last, n_in = f"ct{ci}", n_in + 1
     if (args.counter or args.cards or args.freeze or args.fallen or args.countdowns or args.ring or args.tags or args.chat) and args.timeline:   # counters, cards, stamps (scripts/retention.py)
         lst = retention.fx_concat(args.counter, retention.stamp_cards(args.cards, args.freeze), json.loads(pathlib.Path(args.timeline).read_text())["timeline"],
                                   args.start, dur, tmp, args.out_fps, fallen=retention.fallen_fn(args), countdowns=args.countdowns, rings=args.ring, tags=args.tags, chat=args.chat,
@@ -1322,25 +1410,20 @@ def main():
             args.audio, audio_ss = str(track), 0.0
     maps = ["-map", "[v]"]
     if args.story and args.timeline:
-        # the voice leads (-15 LUFS), the game sits well under it (-27) and a song is a quiet bed (-31);
-        # the master is -14 LUFS like the story channel's
-        inputs += ["-i", str(narration)]
-        graph.append(f"[{n_in}:a]loudnorm=I=-15:TP=-2,aresample=48000[nar]")
-        mix = ["[nar]"]
-        if args.audio:
-            inputs += ["-ss", str(audio_ss), "-i", args.audio]
-            graph.append(f"[{n_in + 1}:a]loudnorm=I=-27:TP=-6,aresample=48000[game]")
-            mix.append("[game]")
-        if args.song:
-            inputs += ["-ss", str(args.song_start), "-i", args.song]
-            graph.append(f"[{n_in + len(mix)}:a]atrim=0:{dur:.3f},asetpts=PTS-STARTPTS{duck},loudnorm=I=-31:TP=-8,afade=t=in:d=0.3,afade=t=out:st={max(0, dur - 0.3):.3f}:d=0.3,aresample=48000[song]")
-            mix.append("[song]")
+        # the story mix (scripts/story_audio.py, standard and evidence in docs/audio.md): the voice through a clarity
+        # chain at -15 LUFS, the game at -27 ducked under the lines (with every on-screen event's vanilla sound, from
+        # audio.py), whooshes on scene cuts, a riser and a hit on the payoff, room tone; the mood score goes in at
+        # publish (scripts/add_song.py); the master (-14 LUFS, true peak -1 dBTP) after the encode
+        import story_audio
+        story_wav = story_audio.mix_story(narration, args.audio, audio_ss, args.story, story_tl, args.start, dur, tmp / "story_mix.wav",
+                                          song=args.song, song_start=args.song_start, stunt_sfx=args.sfx, end_after=args.end_after)
+        inputs += ["-i", str(story_wav)]
         # a fade at the very end: a Short that ends on a blast cut the boom off at full volume (frame review,
         # story_runaway). It covers the air after the last spoken word (0.25 s for a spoken ending, up to 0.6 s)
         _story, _voice = story_track._lines(args.story)
         _ends = [t + _voice["lines"][lid]["end"] for t, lid in story_track._marks(story_tl, args.start, {l["id"] for l in _story["lines"]}, _story.get("start_on_respawn", ()))]
         story_fade = min(0.6, max(0.25, dur - max(_ends, default=0) - 0.05))
-        graph.append(f"{''.join(mix)}amix=inputs={len(mix)}:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=out:st={max(0, dur - story_fade):.3f}:d={story_fade:.3f}[a]")
+        graph.append(f"[{n_in}:a]afade=t=out:st={max(0, dur - story_fade):.3f}:d={story_fade:.3f},aresample=48000[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     elif args.audio and not args.song:
         # Game audio only: leave headroom for a song added at upload.
@@ -1372,8 +1455,9 @@ def main():
         fixed = tmp / "trim.mp4"
         subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.out, "-t", f"{dur:.3f}", "-c", "copy", "-movflags", "+faststart", str(fixed)], check=True)
         pathlib.Path(fixed).replace(args.out)
-    if args.story:   # single-pass loudnorm lands ~2 dB short: measure and correct to -14 LUFS exactly
-        story_track.master_gain(args.out, -14.0)
+    if args.story:   # static gain to -14 LUFS and a 4x-oversampled limiter (true peak <= -1 dBTP): scripts/story_audio.py
+        import story_audio
+        story_audio.master(args.out)
     elif args.audio or args.song:   # the master: a static gain and a true-peak limiter, measured to target
         loud.master(args.out, -10.0 if args.song else -18.0, -1.0 if args.song else -3.0)
     if args.replay and frames_dir0:   # instant replay from the third-person pass (scripts/render_replay.py)

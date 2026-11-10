@@ -71,7 +71,7 @@ module.exports = {
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
   // 16:9 master); the bed is our own score (scripts/story_short.py --score-only, as .ogg), so publish adds no NCS track
   wideMaster: true,
-  edit: { story: 'stories/dog_hill', startAt: 'start:0.1', endAfter: 'end_scene:-0.9', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?' },
+  edit: { story: 'stories/dog_hill', startAt: 'start:0', endAfter: 'end_scene:-0.1', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?' },
 
   async setup (ctx) {
     const { bot } = ctx

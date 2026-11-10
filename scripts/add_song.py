@@ -41,6 +41,33 @@ def pick_ncs(name, at=0.0):
     return "songs/ncs/" + min(have, key=lambda f: (used.get(f, 0), (sorted(have).index(f) - h) % len(have)))
 
 
+def story_score(name, d, meta, stunt, rec, tl, start, src, out_override=None):
+    """A narrated story gets a mood-picked cinematic score (music/score.json), not an NCS phonk bed: ducked under
+    the voice, out 0.45 s before the payoff, the payoff track from the hit on, every credit in the description."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import story_track
+    import story_audio
+    story_track.POSES = rec.get("poses")
+    story_dir = str(ROOT / stunt["story"])
+    start = int(start * 60 + 1e-6) / 60   # edit.py starts on the 60 fps frame grid
+    used = {}
+    for m in (VID / "shorts").glob("*/metadata.json"):
+        if m.parent.name != name:
+            for t in (json.loads(m.read_text()).get("song") or {}).get("tracks", []):
+                used[t] = used.get(t, 0) + 1
+    out = pathlib.Path(out_override) if out_override else d / "short.mp4"
+    tracks, moods, payoff = story_audio.add_score(src, out, name, story_dir, tl, start, used, stunt.get("endAfter"))
+    credit = "\n\n".join(t["credit"] for t in tracks)
+    meta["song"] = {"file": story_audio.fetch_name(tracks[0]), "title": " / ".join(t["title"] for t in tracks), "artist": tracks[0]["artist"],
+                    "tracks": [t["id"] for t in tracks], "licence": tracks[0]["licence"], "mood": list(moods),
+                    "payoff_in_short_s": round(payoff, 2) if payoff is not None else None, "mix": "scripts/story_audio.py (docs/audio.md)"}
+    yt = meta["youtube"]
+    yt["description"] = meta.get("caption", name) + f"\n\n{credit}" + "\n\n" + " ".join(yt.get("hashtags", []))
+    if not out_override:
+        (d / "metadata.json").write_text(json.dumps(meta, indent=2) + "\n")
+    print(name, f"score in -> {out}")
+
+
 def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=False):
     d = VID / "shorts" / name
     meta = json.loads((d / "metadata.json").read_text())
@@ -48,7 +75,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
     src = d / "short_nosong.mp4"
     if stunt.get("ownScore"):   # a cinematic story with its own made score (scripts/story_short.py): no song on top
         print(name, "own score: no song added"); return
-    tl = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))["timeline"]
+    rec = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))
+    tl = rec["timeline"]
     sys.path.insert(0, str(ROOT / "scripts"))
     from timewarp import edit_timeline
     from retention import hook_len
@@ -69,6 +97,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
         print(name, "made short_nosong.mp4 from game_audio.flac")
     drop_at = stunt.get("dropAt")
     at = (ev[drop_at] - start + hook_len(stunt)) if drop_at in ev else 0.0   # a hook preview pushes the Short back
+    if stunt.get("story") and not song_override and not gen:   # a story: the mood score (scripts/story_audio.py, docs/audio.md)
+        return story_score(name, d, meta, stunt, rec, tl, start, src, out_override)
     if ncs and not song_override:
         song_override = pick_ncs(name, at)
     song = song_override or stunt.get("song")
