@@ -118,3 +118,13 @@ lint mob motion, scout_valley. The round-2 particle fix and the voice_check.py r
   slower (1.3 s) and Mom turns from the well to him on L13, her head sinking as the Darkness comes.
 - `./hb render --wait` alone only fetches the last finished render (it handed back the old 48 s cut); queue with
   `./hb render <stunt>` first.
+- Owner note via the lead, "whyisnt the well covered in carpet too", and the visual audit
+  (docs/runs/visual_audit_2026-11-10/light_sleeper.md, B1-B5, F1-F8): every grey face that shows is padded in wool
+  (rim, step risers, side walls, foundations, Mom's ground floor), the rim carpeted; exactly ONE bare stone, the rim
+  block he lands on in L15, seen first in L06/L07/L11 (the plant). Doghouse insert on "DOGHOUSE"; S16 closer with key
+  lanterns at eerie_night (the warden reads, roaring, ~45% of the frame); L11 low third person from the north-east,
+  L14 a reverse wide with the Darkness given on "DARK"; golden-hour L09 with the mobs placed early; road carpet
+  without light gray (it read as stone). F2: the lid checker, no exposure change. F4: no view-whip WARN.
+- Story hotbar (STANDARDS 3.6): shears, white/cyan carpet x64, an empty hand, wool x2, milk, 67 eggs, a cake.
+- Shared code (branch, tested: npm test 51/51): renderer/looks.js `gradeAt` takes a shot's `grade`/`vignette` over its
+  mood (the audit's night variants need it); inert for shots without them.
