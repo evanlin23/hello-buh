@@ -44,7 +44,7 @@ module.exports = {
   shots: {},
   edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0',
     // the reveal's sound: a whoosh as the camera leaves his head (the reveal mark, on the cut), a hit on the bark
-    sfx: [['whoosh', 'reveal', { nth: 0, gain: 0.45 }], ['impact', 'bark', { gain: 0.5 }]],
+    sfx: [['whoosh', 'reveal', { nth: 0, gain: 0.7 }], ['impact', 'bark', { gain: 1.0 }]],
     punch: [['bark', 0, 0.12]], flash: [['bark', 0, 0.55]] },   // a push-in on the bark: the payoff's picture hit (./hb pace)
 
   async setup (ctx) {
@@ -190,7 +190,8 @@ module.exports = {
       if (k < at(3)) autoJump()
       look(k)
     })
-    K.stop()
+    // (no K.stop() here: the swim keeps jumping until L05's cut stops it; released here, the eye sank under the water
+    // for 6 frames before the cut: review round 3)
 
     // L05: in the yard, looking up at him. He holds out a raw porkchop and drops it in front of me
     K.self({}, EYE)
@@ -217,7 +218,6 @@ module.exports = {
       if (k >= at(1)) K.turnTo(looking, P(v2.x, v2.y + 1.15, v2.z), Math.min(0.8, (k - at(1)) / 16))   // up to his chin, not the sky (a black square showed in the sky above him: review rounds 1-2)
       look(k)
     })
-    for (const t of ['v1', 'v2', 'v3']) K.bury(t, -60)
 
     // L07: "And there's this DOG." Camera shots: walking the road beside him (a follow, low, ahead of them); then on
     // the yard's sea edge, already sitting there as he walks up
@@ -225,6 +225,7 @@ module.exports = {
     await bot.waitForTicks(3)   // (the follow opened on him still at the hop: a red blur)
     K.shot('dog_walk')
     await K.cut(31.8, 15.5, P(50, eyeY(0.4), 15.5), H + 1)
+    for (const t of ['v1', 'v2', 'v3']) K.bury(t, -60)   // after the cut (buried before it, the librarian vanished on screen)
     K.go(true)
     await line('L07', async (k, at) => {
       if (k < at(2)) { guy.x += 0.215; guy.yaw = -90; guy.pitch = 8; placeGuy() }
@@ -344,12 +345,13 @@ module.exports = {
       if (k < 8) say('/kill @e[type=experience_orb]')   // (if mob_drops is a no-op)
       if (k === 0 || k === 6) swingGuy()   // the pat
       if (k === 4) K.self({ wag: true })
+      if (k === 2 || k === 12) ctx.sound('entity.wolf.pant', 1.6, 1.1)   // playful panting under the pat and hearts (the reveal sat at -27 LUFS: review round 3)
       if (k === 10) ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 7 })
       guy.pitch = 40 + Math.sin(k / 3) * 4; placeGuy()
       look(k, 0, Math.sin(k / 2) * 0.03)
       await bot.waitForTicks(1)
     }
-    ctx.sound('entity.wolf.ambient', 1, 1.05)   // the bark: the hard cut lands on it
+    ctx.sound('entity.wolf.ambient', 2.4, 1.05)   // the bark, at the voice's level: the hard cut lands on it
     ctx.mark('bark')
     for (let k = 0; k < 10; k++) { look(k, 0, k < 3 ? 0.12 : 0); await bot.waitForTicks(1) }
     ctx.mark('story_end')
