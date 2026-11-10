@@ -41,6 +41,7 @@ module.exports = {
     // L02: three days of not moving
     rain: { path: [[0, 0.9, 1.5, -3.0], [2, 0.8, 1.4, -2.7]], look: [0.4, 0.7, 0.6], fov: 44 },
     storm: { path: [[0, -1.2, 2.3, 7], [2, -1, 2.2, 6.4]], look: [0.3, 1.4, 0], fov: 58 },
+    storm2: { path: [[0, -1.0, 2.0, 6.6], [2, -0.8, 1.9, 6.0]], look: [-1.5, 0.8, -1.5], fov: 54 },
     zombies: { path: [[0, 3.6, 2.4, 5.6], [2, 3.3, 2.3, 5.3]], look: [-1.5, 0.8, -1], fov: 55 },
     // L03: morning, Pip walks up from the south rim with a bone
     bone: { path: [[0, -3.6, 2.2, 6.2], [4, -3.2, 2.0, 5.6]], look: [0.4, 0.5, 1.4], fov: 55 },
@@ -193,123 +194,122 @@ module.exports = {
     const ease = (u) => { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u) }
     const cut = (name, opts = {}) => { if (opts.time !== undefined) time(opts.time); if (opts.weather) weather(opts.weather); M.shot(ctx, name) }
 
-    // ---- L01: sunrise, the dog on the hill, the village below
-    cut('open')
-    line('N', 'L01')
-    await run(T('L01'))
-    // ---- L02: rain / thunder at night / zombies at night, one third each
-    const t2 = T('L02'), a2 = Math.round(t2 * 0.31), b2 = Math.round(t2 * 0.64)
-    cut('rain', { time: 6000, weather: 'rain' })
-    line('N', 'L02')
-    await run(a2)
+    // vNext r2 (one narrator, continuous takes): line lengths and chunk starts come from voice/voice.json, and the picture
+    // cuts and acts on the chunk it shows (owner: "look at what the line names", never ahead of the words)
+    const VJ = require('../stories/dog_hill/voice/voice.json').lines
+    const L = (id) => Math.round((VJ[id].dur + GAP) * 20)                 // ticks a line holds the screen
+    const C = (id, k) => Math.round((VJ[id].chunks[k] ? VJ[id].chunks[k][0] : VJ[id].dur) * 20)   // tick chunk k starts
+    const say1 = (id) => ctx.mark('line', { id, who: 'N', vox: id, dur: VJ[id].dur })
+
+    // ---- L01: the dog on the hill (sunrise)
+    cut('open'); say1('L01')
+    await run(L('L01'))
+    // ---- L02: rain / thunder / a creeper / zombies, one chunk each (the picture on its word)
+    const t2 = L('L02'), c2 = [0, C('L02', 1), C('L02', 2), C('L02', 3)]
+    cut('rain', { time: 6000, weather: 'rain' }); say1('L02')
+    await run(c2[1])
     cut('storm', { time: 18000, weather: 'thunder' })
-    await run(b2 - a2, (k) => {
-      if (k === 6) { ctx.mark('lightning', { x: X - 14, y: F, z: Z - 16 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
-      if (k === 15) ctx.mark('lightning', { x: X - 18, y: F, z: Z - 10 })
+    await run(c2[2] - c2[1], (k) => {
+      if (k === 4) { ctx.mark('lightning', { x: X - 14, y: F, z: Z - 16 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
     })
-    // the zombies exist only for their shot (summoned at night: a parked zombie burns in the daytime sky)
-    for (const [t, dx, dz] of [['z1', -1.8, -2.6], ['z2', -3.2, -3.8]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
+    say(`/summon creeper ${X - 2.2} ${F + 1} ${Z - 3} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["cr"],Rotation:[0f,0f]}`)
     cut('zombies', { weather: 'clear' })
-    await run(t2 - b2, (k) => {   // two zombies shuffle past behind him, north to south (zombie walk ~0.23 b/t... slower here)
+    await run(c2[3] - c2[2], (k) => { tp('cr', -2.2, 1, -3 + k * 0.07, 0); if (k === 3) ctx.sound('entity.creeper.primed', 0.25, 1) })
+    park('cr'); say('/kill @e[tag=cr]')
+    for (const [t, dx, dz] of [['z1', -1.8, -2.6], ['z2', -3.2, -3.8]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
+    cut('storm2')
+    await run(t2 - c2[3], (k) => {
       tp('z1', -1.8, 1, -2.6 + k * 0.09, 0); tp('z2', -3.2, 1, -3.8 + k * 0.09, 0)
-      if (k === 4) ctx.sound('entity.zombie.ambient', 0.5, 0.9)
-      if (k === t2 - b2 - 20) put('pip', -4, 1, 6, -131)   // early: the client shows a mob back from the park ~0.5 s late (lint)
+      if (k === 2) ctx.sound('entity.zombie.ambient', 0.5, 0.9)
+      if (k === t2 - c2[3] - 12) put('pip', -4, 1, 6, -131)   // early: a mob back from the park shows ~0.5 s late
     })
-    park('z1'); park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')   // (die at the park: no death fall in the next shot)
-    // ---- L03: morning: Pip walks up from the edge with a bone and drops it on the pile
-    cut('bone', { time: 1000 })
-    line('N', 'L03')
-    const t3 = T('L03')
+    park('z1'); park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
+    // ---- L03: morning: Pip walks up with a bone and drops it on the pile; he never looks
+    cut('bone', { time: 1000 }); say1('L03')
+    const t3 = L('L03'), b3 = C('L03', 1)
     await run(t3, (k) => {
-      const u = ease(k / (t3 * 0.55))
-      const x = lerp(-4, 0.6, u), z = lerp(6, 2.0, u), y = 1
-      tp('pip', x, y, z, u < 1 ? -131 : 180, u < 1 ? 0 : 25)
-      if (k === Math.round(t3 * 0.6)) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
+      const u = ease(k / Math.max(1, b3 + 4))
+      tp('pip', lerp(-4, 0.6, u), 1, lerp(6, 2.0, u), u < 1 ? -131 : 180, u < 1 ? 0 : 25)
+      if (k === b3 + 4) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
     })
-    // ---- L04: the collar (Pip stays by him, out of this frame)
-    cut('collar')
-    line('N', 'L04')
-    await run(T('L04'), (k) => tp('pip', 0.6, 1, 2.0, 180 + 8 * Math.sin(k / 9), 10))
-    // ---- L05: the patch, over his back
+    // ---- L04: kids throw sticks: Pip throws one past his nose on THROW; he doesn't blink
+    say1('L04')
+    const t4 = L('L04')
+    await run(t4, (k) => {
+      tp('pip', 0.6, 1, 2.0, k < 6 ? 180 : 160, k < 6 ? 10 : -10)
+      if (k === 2) say(`/summon item ${X + 0.7} ${F + 1.7} ${Z + 1.6} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Motion:[0.18d,0.22d,-0.12d]}`)
+    })
+    // ---- L05: the collar
+    cut('collar'); say1('L05')
+    await run(L('L05'), (k) => tp('pip', 0.6, 1, 2.0, 180 + 8 * Math.sin(k / 9), 10))
+    // ---- L06: the empty patch
     put('pip', 0.6, 1, 2.0, 180)
-    cut('patch', { time: 6000 })
-    line('N', 'L05')
-    await run(T('L05'), (k) => tp('pip', 0.6, 1, 2.0, 180 + 10 * Math.sin(k / 12), 5))
-    // ---- L06: the hut
-    cut('hut')
-    line('N', 'L06')
-    await run(T('L06'), (k) => tp('pip', 0.6, 1, 2.0, lerp(180, 215, k / 40), 0))
-    // ---- L07: Pip begs in front of him: hops, steps side to side
+    cut('patch', { time: 6000 }); say1('L06')
+    await run(L('L06'), (k) => tp('pip', 0.6, 1, 2.0, 180 + 10 * Math.sin(k / 12), 5))
+    // ---- L07: the hut
+    cut('hut'); say1('L07')
+    await run(L('L07'), (k) => tp('pip', 0.6, 1, 2.0, lerp(180, 215, k / 40), 0))
+    // ---- L08: Pip begs: hops, steps side to side
     put('pip', 1.7, 1, 0.5, 90)
-    cut('beg', { time: 9000 })
-    line('N', 'L07')
-    const t7 = T('L07')
-    await run(t7, (k) => {
-      const hop = Math.max(0, Math.sin(k / 3.2)) * 0.45 * (k < t7 * 0.7 ? 1 : 0)
-      tp('pip', 1.7, 1 + hop, 0.5 + 0.35 * Math.sin(k / 11), 90 + 12 * Math.sin(k / 7), k > t7 * 0.75 ? 30 : 0)
+    cut('beg', { time: 9000 }); say1('L08')
+    const t8 = L('L08')
+    await run(t8, (k) => {
+      const hop = Math.max(0, Math.sin(k / 3.2)) * 0.45 * (k < t8 * 0.7 ? 1 : 0)
+      tp('pip', 1.7, 1 + hop, 0.5 + 0.35 * Math.sin(k / 11), 90 + 12 * Math.sin(k / 7), k > t8 * 0.75 ? 30 : 0)
     })
-    // ---- L08-L10: Grandpa on the path below, Pip at the edge above
+    // ---- L09: Grandpa (on the path below) says leave him be; L10: "somebody said be right back" (he looks away)
     const [gx, gy, gz] = this.G
     put('pip', -5, 1, 7.5, 0, 30)
     put('gramps', gx, gy + 1, gz + 1.5, 180, -30)
-    cut('gramps', { time: 11500 })
-    line('Grandpa', 'L08')
-    const t8 = T('L08')
-    await run(t8, (k) => { tp('gramps', gx, gy + 1, gz + 1.5 - Math.min(1.5, k * 0.05), 180 + 8 * Math.sin(k / 10), -32); tp('pip', -5, 1, 7.5, 0, 28 + 4 * Math.sin(k / 8)) })
-    cut('rightback')
-    line('Grandpa', 'L10')
-    await run(T('L10'), (k) => tp('gramps', gx, gy + 1, gz, lerp(180, 235, ease(k / 40)), lerp(-30, -5, ease(k / 40))))   // he looks away, out over the valley
+    cut('gramps', { time: 11500 }); say1('L09')
+    const t9 = L('L09')
+    await run(t9, (k) => { tp('gramps', gx, gy + 1, gz + 1.5 - Math.min(1.5, k * 0.05), 180 + 8 * Math.sin(k / 10), -32 + (k % 16 < 8 ? 6 : 0)); tp('pip', -5, 1, 7.5, 0, 28 + 4 * Math.sin(k / 8)) })
+    cut('rightback'); say1('L10')
+    const t10 = L('L10')
+    await run(t10, (k) => tp('gramps', gx, gy + 1, gz, lerp(180, 235, ease(k / Math.max(1, t10))), lerp(-30, -5, ease(k / Math.max(1, t10)))))
     park('gramps')
-    // ---- L11: dusk, then night: Pip beside him
+    // ---- L11: every night, Pip sits with him: dusk, then night on NOBODY
     put('pip', 0.5, 1, 1.6, -90)
-    cut('dusk', { time: 12700 })
-    line('N', 'L11')
-    const t11 = T('L11'), a11 = Math.round(t11 * 0.45)
-    await run(a11, (k) => tp('pip', 0.5, 1, 1.6, -90 + 6 * Math.sin(k / 15), 0))
+    cut('dusk', { time: 12700 }); say1('L11')
+    const t11 = L('L11'), n11 = C('L11', 2)
+    await run(n11, (k) => tp('pip', 0.5, 1, 1.6, -90 + 6 * Math.sin(k / 15), 0))
     cut('night', { time: 18000 })
-    await run(t11 - a11, (k) => tp('pip', 0.5, 1, 1.6, -90 - 10 * Math.sin(k / 18), 0))
-    // ---- L12: the reveal: "Buh joined the game", he's on the patch, the dog stands
-    cut('reveal')
+    await run(t11 - n11, (k) => tp('pip', 0.5, 1, 1.6, -90 - 10 * Math.sin(k / 18), 0))
+    // ---- L12: then last night he stood up: "Buh joined the game" on the line, the dog stands on STOOD (the two-shot
+    // faces away from the patch: Buh is first seen on L13's word)
     ctx.mark('hush'); ctx.mark('swell')
-    await run(4)
-    // the chat line on the teleport's own tick (vanilla: the message and the appearance are the same tick; marked after
-    // tpCheck's confirm wait it came 1.2 s late: review round 1)
+    say1('L12')
+    const t12 = L('L12'), s12 = C('L12', 1)
     ctx.mark('chat', { text: 'Buh joined the game', hold: 2.6 })
     await ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5)
-    await run(14)
-    line('N', 'L12')
-    const t12 = T('L12')
-    await run(t12, (k) => {
-      if (k === Math.round(t12 * 0.62)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit') }
-      tp('pip', 0.5, 1, 1.6, lerp(-90, -80, k / 20), 0)
+    await run(t12 - 3, (k) => {
+      if (k === Math.max(0, s12 - 3)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit') }
+      tp('pip', 0.5, 1, 1.6, -90 + 4 * Math.sin(k / 6), 0)
     })
     ctx.mark('hush_end')
-    // ---- L13: he runs to him; the player crouches to him
+    // ---- L13: then a guy just appeared on the patch (the reveal); on "Hey BUDDY" the reunion
+    cut('reveal'); say1('L13')
+    const t13 = L('L13'), h13 = C('L13', 3)
+    await run(h13, (k) => tp('pip', 0.5, 1, 1.6, lerp(-90, -80, k / 20), 0))
     cut('reunion')
-    line('Player', 'L13')
-    const t13 = T('L13')
     bot.setControlState('sneak', true)
-    await run(t13, (k) => {
-      const u = ease(k / 14)
-      const hop = k > 14 ? Math.max(0, Math.sin((k - 14) / 2.2)) * 0.35 : 0
-      tp('dog', lerp(0.5, 2.4, u), 1 + hop, 0.5 + (k > 14 ? 0.25 * Math.sin((k - 14) / 5) : 0), -90, 0)
-      if (k === 16 || k === 30) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
-      if (k % 8 === 4) ctx.sound('entity.wolf.pant', 0.4, 1)
+    await run(t13 - h13, (k) => {
+      const u = ease(k / 12)
+      const hop = k > 12 ? Math.max(0, Math.sin((k - 12) / 2.2)) * 0.35 : 0
+      tp('dog', lerp(0.5, 2.4, u), 1 + hop, 0.5 + (k > 12 ? 0.25 * Math.sin((k - 12) / 5) : 0), -90, 0)
+      if (k === 14) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
     })
-    // ---- L14: "Sit, boy. I'll be right back." He stands, the dog sits; he logs out
-    cut('sit')
-    line('Player', 'L14')
-    const t14 = T('L14')
+    // ---- L14: then he said, sit, boy (the dog sits on SIT), be right back; he logs out after BACK (the payoff)
+    cut('sit'); say1('L14')
+    const t14 = L('L14'), sit14 = C('L14', 1), back14 = C('L14', 2)
     await run(t14, (k) => {
-      if (k === 6) bot.setControlState('sneak', false)
-      if (k === Math.round(t14 * 0.3)) { tp('dog', 2.4, 1, 0.5, -90, 0); sitDog(true); bot.swingArm('right') }
+      if (k === 3) bot.setControlState('sneak', false)
+      if (k === sit14 + 2) { tp('dog', 2.4, 1, 0.5, -90, 0); sitDog(true); bot.swingArm('right') }
     })
-    await run(8)
     ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit'); ctx.mark('payoff')
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
-    // the loop is shown, not said (owner: "day 1, again" is implied): 0.7 s after the logout, the opening frame
-    // pulling back from the dog alone; the end 1.7 s after the payoff (a text payoff: the chat line)
-    await run(14 - 3)   // (tpCheck takes ~3 ticks)
+    // the loop is shown, not said: the opening frame pulling back from the dog alone, the end 1.6 s after the payoff
+    await run(10)
     cut('end')
     await run(20)
     ctx.mark('end_scene')
