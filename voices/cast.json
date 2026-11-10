@@ -5,7 +5,7 @@
   "voice": "Leda",
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
-  "profile": "A happy, bubbly kid telling a spooky-funny story at a sleepover, fast and gleeful, in one continuous breath: each new sentence lifts, only the one key word is hit, the rest level and quick; a kid figuring the world out, proud of the strange details; natural kid breathing, no long pauses, not over-acted, not whispery",
+  "profile": "A kid telling a spooky-funny story at a sleepover, fast and gleeful, every sentence a bit more excited, one breath, punching only the capitalised key word; full voice, never whispering",
   "post": "",
   "tempo": 1.1,
   "semitones": 1,
@@ -13,7 +13,8 @@
   "model": "gemini-3.8-flash-lite-tts",
   "fallback": "am_adam",
   "from": "owner 2026-11-10: \"i kidna like the sleepover\" (brand/voice_samples/kid k4_sleepover), \"maybe 1.1 with +1 pitch\", \"C and D feel like they have weird artifacts in them, so A sounds the best\" (A = rubberband tempo 1.1, +1 semitone, nothing else)",
-  "notes": "Our brand kid narrator (STANDARDS 2.000/2.0000, docs/brand.md). tts.py plays every raw take through rubberband tempo 1.1 and +1 semitone (stretch_of) and nothing else: no pause_cap (a 0.12 s gap cap sounded spliced), no formant-preserving speech mode or room (owner: artifacts). Takes must be PERFORMED continuously; a take with long pauses is re-taken. The Orus x1.45 Roblox narrator is `narrator_roblox`."
+  "notes": "Our brand kid narrator (STANDARDS 2.000/2.0000, docs/brand.md). tts.py plays every raw take through rubberband tempo 1.1 and +1 semitone (stretch_of) and nothing else: no pause_cap (a 0.12 s gap cap sounded spliced), no formant-preserving speech mode or room (owner: artifacts). Takes must be PERFORMED continuously; a take with long pauses is re-taken. The Orus x1.45 Roblox narrator is `narrator_roblox`.",
+  "model_hint": "k4_sleepover was voiced on gemini-3.8-flash-lite-tts in Pip's layout: \"[profile]\", a blank line, the text as one paragraph (brand/voice_samples/kid/raw/k4_sleepover_raw.wav.json); the brand session's direction said \"punching the key word\", here \"only the capitalised key word\" (STANDARDS 2.000: one stress per sentence)"
  },
  "narrator_roblox": {
   "name": "Narrator",

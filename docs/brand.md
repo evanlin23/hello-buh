@@ -82,6 +82,22 @@ The owner picks the voice. `voices/cast.json` is unchanged. Candidates: `out/bra
 | never | a clone, or a soundalike of a real person or product voice; whisper; "dramatic" pauses; a take cut out of a paused read | owner |
 
 ## Narrator candidates, round 1: adult voices (2026-11-10; rejected by the owner: "i think it should still sound like a child")
+### Round 3: Light Sleeper's real lines (2026-11-10)
+The text is the narrator's lines from `stories/light_sleeper/script_vNext.md` "r-cast": 120 words, one CAPS stress word
+per sentence. It used Leda on gemini-3.8-flash-lite-tts with the continuous direction and atempo 1.15 (the new cap).
+Samples are on `claude/brand-samples`, under `brand/voice_samples/kid_r3/`; play `reel_kid_r3.mp3` first.
+
+| take | direction | natural -> 1.15 w/s | pitch | Whisper words | cold listener |
+|---|---|---|---|---|---|
+| r1_pip | Pip's direction | 4.23 -> 4.72 | 188 Hz | 95.5 % | age 10-14, clarity 9, "adult playing a kid"; it heard line 1's "nine thousand" as "knitted" |
+| r2_proud | "proudly ... as if every weird thing were totally normal and kind of cool" | 3.68 -> 4.12 | 216 Hz | 97.1 % | (listener down: 503) |
+| r3_figuring | "figuring the world out loud, sharing fun facts they got a little bit wrong" | 3.99 -> 4.44 | 219 Hz | 97.1 % | (listener down: 503) |
+| r0_nodirection | none (a request sent by mistake, kept as a baseline) | 3.84 -> 4.34 | 205 Hz | 97.6 % | (listener down: 503) |
+
+At atempo 1.15 the pace is 4.1-4.7 words/s, under the 5.0 target. As the spec above says, the kid sound and the clarity
+win. Not made: a show-and-tell variation, and the sleepover direction on Laomedeia and Autonoe. Flash-lite returned a
+429 after about 10 successful requests today.
+
 ### Round 2: kid voices (2026-11-10)
 The same 78 words. 8 requests:
 - 6 takes on gemini-3.8-flash-lite-tts, in Pip's layout ("[direction]" + the text, generateContent);
