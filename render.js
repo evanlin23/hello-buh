@@ -864,6 +864,8 @@ function itemModel (item) {
   }
   return ((def && find(def)) || `item/${item}`).replace(/^minecraft:/, '')
 }
+// special item models (beds, chests, shulker boxes, heads, banners): renderer/specialitems.js
+const specialItem = require('./renderer/specialitems').specialItems(jarJson)
 // an item's display.fixed (item frames), following the model's parents
 const FIXED_DISPLAY = new Map()
 function fixedDisplay (item) {
@@ -1735,6 +1737,7 @@ function camAtLive (t) {
       const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
       cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
+      else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
         cam.hand.state = bl.defaultState
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
@@ -1762,6 +1765,7 @@ function camAtLive (t) {
           held = { key: ph.name + (glintAt(t) ? '#glint' : ''), display: thirdPersonDisplay(ph.name), glint: glintAt(t) }
           const bl = MC.blocksByName[ph.name]
           if (spriteOf(ph.name)) held.tex = spriteOf(ph.name)
+          else if (specialItem(ph.name)) held.special = specialItem(ph.name)
           else if (bl) {
             held.state = bl.defaultState
             if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
@@ -1807,10 +1811,21 @@ function camAtLive (t) {
       const it = e.extra.item
       if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
       const bl = MC.blocksByName[it]
-      // an item we can't draw (special item models: beds, chests, heads, banners, shields; no sprite
-      // and an empty block model): no model, so no shadow either (a red bed was a lone shadow: every_clutch)
-      if (!bl || blockModelEmpty(bl.defaultState)) { e.hidden = true; continue }
       const age = t - (FIRST_SEEN.get(e.id) ?? t)
+      // special item models (beds, chests, heads, banners, shulker boxes): their block-entity model with
+      // the 'ground' display (ItemEntityRenderer: bob sin(age/10)*0.1+0.1, plus the model's ground-scaled
+      // lift, spin age/20 rad about y); the shadow stays the item's
+      if (specialItem(it)) {
+        const sp = specialItem(it), gs = (sp.display.ground && sp.display.ground.scale) || [1, 1, 1]
+        e.shadowName = 'item'; e.shadowY = e.y
+        e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
+        e.yaw = age / 20 + (e.id % 7)
+        e.extra = { item: it, special: sp }
+        continue
+      }
+      // an item we can't draw (shields, ...; no sprite and an empty block model): no model, so no
+      // shadow either (a red bed was a lone shadow: every_clutch)
+      if (!bl || blockModelEmpty(bl.defaultState)) { e.hidden = true; continue }
       // the shadow stays the item's (ItemEntityRenderer.shadowRadius 0.15, from the entity's own y,
       // not the bobbing model): drawn as a falling block it cast a 0.5 one, 3x vanilla (lapse_statue)
       e.shadowName = 'item'; e.shadowY = e.y
@@ -1833,6 +1848,7 @@ function camAtLive (t) {
         held = { key: it }
         const bl = MC.blocksByName[it]
         if (spriteOf(it)) held.tex = spriteOf(it)
+        else if (specialItem(it)) held.special = specialItem(it)
         else if (bl) { held.state = bl.defaultState; if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) } }
         held.display = fixedDisplay(it)
       }

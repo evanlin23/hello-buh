@@ -1069,10 +1069,10 @@ def main():
         states = hud_states(tl, dur + shift)
         # missing icons, and ones older than the icon renderer or the mesher (a stale empty honey_block
         # icon from before the translucent fix stayed invisible: worker 3, every_clutch)
-        made = max((HERE / "renderer" / f).stat().st_mtime for f in ("icons.js", "models.js", "mesher.js"))
+        made = max((HERE / "renderer" / f).stat().st_mtime for f in ("icons.js", "models.js", "mesher.js", "specialitems.js", "blockentities.js"))
         stale = lambda n: not (ICONS / f"{n}.png").exists() or (ICONS / f"{n}.png").stat().st_mtime < made
         need = sorted({it[0] for st in states for it in st[3] if isinstance(it, tuple) and it and it[0] and stale(it[0])})
-        if need:   # 3D icons for block items (skips non-block items itself)
+        if need:   # 3D icons for block items and special item models (skips flat items itself)
             subprocess.run(["node", str(HERE / "renderer" / "icons.js"), CLIENT_JAR.stem, *need], check=True)
         ticks = hud_ticks(tl, dur + shift, bool(json.loads(pathlib.Path(args.timeline).read_text()).get('keepInventory')) if args.timeline else False)
         first = int(shift * 20 + 1e-6)

@@ -704,6 +704,11 @@ export class EntityLayer {
     } else if (name === 'player') {
       const t = await texture([`entity/player/wide/${(extra && extra.skin) || 'steve'}`])
       if (t) { const b = buildPlayer(t); obj = b.root; bones = b.bones; mat = b.mat }
+    } else if (name === 'item' && extra && extra.special && this.itemFactory) {
+      // a dropped special item (bed, chest, head, banner, shulker box): its model with the 'ground'
+      // display, turned about y by the spin (render.js)
+      const r = await this.itemFactory({ special: extra.special, display: extra.special.display.ground })
+      if (r) { obj = new THREE.Group(); obj.add(r.obj); mat = r.mat }
     } else if (/^(ender_pearl|snowball|egg|item|splash_potion|lingering_potion|experience_bottle|firework_rocket)$/.test(name)) {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       // thrown potions: the bottle plus potion_overlay tinted with the potion colour (ThrownItemRenderer)
@@ -883,7 +888,7 @@ export class EntityLayer {
         if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
         continue
       }
-      if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
+      if ((s.name === 'falling_block' && s.extra && s.extra.spin) || (s.name === 'item' && s.extra && s.extra.special)) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
       // BodyRotationControl: the body is dragged so the head never turns more than 75° from it
       // (a fast turn had heads spun round while bodies still faced away: staring_villagers review)

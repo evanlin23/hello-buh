@@ -822,11 +822,30 @@ function extrudedItemGeometry (img) {
   g.setIndex(idx)
   return g
 }
+// A special item model (beds, chests, shulker boxes, heads, banners: render.js specialItem): its
+// block-entity pieces in the model's 0..1 space, moved by -0.5 like ItemRenderer does after the display
+// transform. Returns { obj, mat } with one mat that lights every piece.
+const _beBuilder = new BlockEntityLayer(null)
+async function specialItemObject (sp, d) {
+  const model = new THREE.Group(), mats = []
+  for (const b of sp.pieces) { const r = await _beBuilder.build(b); model.add(r.obj); mats.push(...r.mats) }
+  model.position.set(-0.5, -0.5, -0.5)
+  const obj = new THREE.Group(), tr = (d && d.translation) || [0, 0, 0], ro = (d && d.rotation) || [0, 0, 0], sc = (d && d.scale) || [1, 1, 1]
+  obj.position.set(tr[0] / 16, tr[1] / 16, tr[2] / 16)
+  obj.rotation.set(ro[0] * D2R, ro[1] * D2R, ro[2] * D2R, 'XYZ')
+  obj.scale.set(sc[0], sc[1], sc[2])
+  obj.add(model)
+  return { obj, mat: { userData: {}, color: { setRGB: (...c) => { for (const m of mats) m.color.setRGB(...c) } } } }
+}
 async function handObject (h) {
   const ck = h.key + (h.glint ? '#glint' : '')
   if (handCache.has(ck)) return handCache.get(ck)
   let inner = null, mat = null
-  if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
+  if (h.special) {
+    // the model's display.firstperson_righthand (item/template_bed: rotation [30, 160, 0], translation [0, 3, 0], scale 0.375)
+    const r = await specialItemObject(h.special, h.special.display.firstperson_righthand)
+    inner = r.obj; mat = r.mat
+  } else if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
     const bm = entities.blockModels.get(h.state)
     const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, -0.5, -0.5); mat = m.material
     inner = new THREE.Group(); inner.add(m)
@@ -848,7 +867,7 @@ async function handObject (h) {
   }
   const out = inner ? { obj: new THREE.Group(), mat } : null
   if (out) { out.obj.add(inner); out.obj.matrixAutoUpdate = false }
-  if (out && h.glint && mat) glintify(mat, h.state !== undefined ? 8 : 0.25)
+  if (out && h.glint && mat && !h.special) glintify(mat, h.state !== undefined ? 8 : 0.25)
   handCache.set(ck, out)
   return out
 }
@@ -890,6 +909,7 @@ function glintify (mat, scale) {
 // the jar's model parents by render.js), then translate(-0.5) for block models. Sprite items use the
 // same 1-pixel-thick extruded geometry as the first-person hand (already centred).
 async function thirdPersonItem (h) {
+  if (h.special) return specialItemObject(h.special, h.display || h.special.display.thirdperson_righthand)
   const d = h.display || { rotation: [0, 0, 0], translation: [0, 3, 1], scale: [0.55, 0.55, 0.55] }
   let inner = null, mat = null
   if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
