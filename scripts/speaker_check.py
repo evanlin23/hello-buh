@@ -22,6 +22,10 @@ weighted more for short lines, where the embedding is weak). Flags:
   WORDS     Whisper's transcript is under 60% like the script, or it has words the script doesn't (a direction read
             aloud, a word from the next line): a bad cut or a misread
   SIMILAR   two cast voices are too alike to tell apart (embedding similarity and pitch): re-cast one (a warning)
+  EDGE      the line starts or ends within 30 dB of its peak: a word or breath cut off (voice_edges.py's test); TIGHT
+            (a warning) = within 40 dB, or under 60 ms of quiet before the first sound / 150 ms after the last
+  CLIPPED   the listening model (gemini-3.5-flash, given every line's audio) hears a word cut off at the start or
+            end or clipped in the middle (--no-listen skips it; no answer = a note, not a blocker)
 
 Setup (once, in the TTS venv): ~/.hb-tts/bin/pip install --no-deps resemblyzer   (only its weights and the network
 shape are used: the mel spectrogram is computed here, so librosa/webrtcvad aren't needed). Whisper is the one
@@ -203,7 +207,68 @@ def library_refs(voices):
     return out
 
 
-def check(items, cast_voice, words=True, only=None, library=True):
+def edges(path):
+    """Is the line cut off at either end? (scripts/voice_edges.py's test, plus the padding the cut rules ask for.) The
+    first and last 20 ms against the line's peak: within 30 dB = CUT (a word or breath sliced; clean takes sit at -50
+    and below, Kokoro's at -80); and the quiet kept before the first sound / after the last (rules: >= 80 / 200 ms;
+    TIGHT under 60 / 150 ms, or an edge within 40 dB)."""
+    x = load(path)
+    n = len(x) // 160
+    if n < 10:
+        return {"cut": False, "tight": False}
+    db = 20 * np.log10(np.sqrt(np.mean(x[:n * 160].reshape(n, 160) ** 2, axis=1)) + 1e-9)
+    pk = db.max()
+    head, tail = db[:2].max() - pk, db[-2:].max() - pk
+    loud = np.nonzero(db > pk - 40)[0]
+    lead, trail = loud[0] * 0.01, (n - 1 - loud[-1]) * 0.01
+    return {"head_db": round(float(head)), "tail_db": round(float(tail)), "lead": round(lead, 2), "trail": round(trail, 2),
+            "cut": bool(head > -30 or tail > -30), "tight": bool(head > -40 or tail > -40 or lead < 0.06 or trail < 0.15)}
+
+
+LISTEN_MODELS = ["gemini-3.5-flash", "gemini-3.8-flash", "gemini-flash-latest"]   # retried on 5xx, the next on anything else
+
+
+def listen(rows):
+    """Ask a Gemini text model to listen to every line (owner, 2026-11-10: "the voices seem to be edited in a way that
+    cuts stuff off"): {id: [problems]} for lines with a word cut off at the start or end or clipped in the middle;
+    None when no model answered (quota, network): the check then says so, and doesn't block."""
+    import base64
+    import time
+    import urllib.error
+    import urllib.request
+    if not rows:
+        return {}
+    parts = [{"text": "You are checking voice-over takes for a video edit. For each numbered line below you get its "
+                      "script and its audio. Listen closely to every word. Is any word cut off at the start or end of "
+                      "the audio (a missing or sliced first consonant, a chopped last syllable or breath), or clipped "
+                      "in the middle (a jump, a missing syllable)? Answer per word: list only the words that are cut "
+                      "or clipped, with where (start/end/middle). Ignore acting, accent and pronunciation. Reply as JSON: "
+                      '{"lines": [{"id": "L01", "problems": [{"word": "...", "where": "start|end|middle", "what": "..."}]}]} '
+                      "with an empty problems list for a clean line."}]
+    for r in rows:
+        wav = subprocess.run(["ffmpeg", "-v", "error", "-i", str(r["path"]), "-ac", "1", "-ar", "16000", "-f", "wav", "-"],
+                             capture_output=True, check=True).stdout
+        parts += [{"text": f"Line {r['id']}. Script: {r['say']}"}, {"inlineData": {"mimeType": "audio/wav", "data": base64.b64encode(wav).decode()}}]
+    body = json.dumps({"contents": [{"parts": parts}], "generationConfig": {"responseMimeType": "application/json", "temperature": 0}}).encode()
+    for model in LISTEN_MODELS:
+        for attempt in range(3):
+            try:
+                req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+                                             data=body, headers={"Content-Type": "application/json", "x-goog-api-key": "proxy"})
+                r = json.loads(urllib.request.urlopen(req, timeout=180).read())
+                text = "".join(p.get("text", "") for p in r["candidates"][0]["content"]["parts"])
+                ans = json.loads(text[text.index("{"):text.rindex("}") + 1])
+                return {l["id"]: l.get("problems") or [] for l in ans.get("lines", []) if l.get("problems")}
+            except urllib.error.HTTPError as e:
+                if e.code in (500, 502, 503, 504):
+                    time.sleep(5 * (attempt + 1)); continue
+                print(f"listening check: {model} {e.code}", file=sys.stderr); break
+            except (ValueError, KeyError, IndexError, OSError) as e:
+                print(f"listening check: {model}: {e}", file=sys.stderr); break
+    return None
+
+
+def check(items, cast_voice, words=True, only=None, library=True, hear=True):
     """items: [{id, who, path, say}]; cast_voice: {who: Gemini voice or None}. -> report dict."""
     rows = []
     for it in items:
@@ -239,7 +304,10 @@ def check(items, cast_voice, words=True, only=None, library=True):
             res.append(sc)
         keep = [max(sc, key=sc.get) == r["who"] if len(sc) > 1 and r["who"] in sc else True for sc, r in zip(res, rows)]
     final = refs(-1, keep)
-    out = {"lines": [], "pairs": [], "swapped": [], "thin": [], "words": []}
+    out = {"lines": [], "pairs": [], "swapped": [], "thin": [], "words": [], "edges": [], "clipped": []}
+    heard_cut = listen([r for r in rows if not only or r["id"] in only]) if hear else None
+    if hear and heard_cut is None:
+        out["listen"] = "skipped (no answer from the listening model): listen to the edges yourself"
     asr = None
     if words:
         sys.path.insert(0, str(ROOT / "scripts"))
@@ -267,6 +335,15 @@ def check(items, cast_voice, words=True, only=None, library=True):
             line.update({"heard": heard, "match": match, "extra": extra})
             if not ok:
                 flags.append("WORDS"); out["words"].append(r["id"])
+        ed = edges(r["path"])
+        line["edges"] = ed
+        if ed["cut"]:
+            flags.append("EDGE"); out["edges"].append(r["id"])
+        elif ed["tight"]:
+            flags.append("TIGHT")
+        if heard_cut and heard_cut.get(r["id"]):
+            line["clipped"] = heard_cut[r["id"]]
+            flags.append("CLIPPED"); out["clipped"].append(r["id"])
         out["lines"].append(line)
     for a in range(len(who)):
         for b in range(a + 1, len(who)):
@@ -277,7 +354,7 @@ def check(items, cast_voice, words=True, only=None, library=True):
                                      "similar": bool(cos > SIMILAR_COS and d < SIMILAR_ST)})
     out["refs"] = {w: {"hz": int(round(final[w][1])), "lines": sum(1 for i, r in enumerate(rows) if r["who"] == w and keep[i]),
                        "library": len(libref.get(cast_voice[w], []))} for w in who if w in final}
-    out["blockers"] = sorted(set(out["swapped"]) | set(out["words"]))
+    out["blockers"] = sorted(set(out["swapped"]) | set(out["words"]) | set(out["edges"]) | set(out["clipped"]))
     out["ok"] = not out["blockers"]
     return out
 
@@ -325,11 +402,18 @@ def table(rep):
         m = "" if l["margin"] is None else f"{l['margin']:+.3f}"
         out.append(f"{l['id']:6s} {l['who']:8s} {l['dur']:5.2f}s {l['hz']:4d} Hz  closest {l['closest']:8s} margin {m:>7s}  [{sc}]"
                    f"  {' '.join(l['flags']) or 'ok'}" + (f"\n{'':15s}heard: {l['heard']}" + (f"  (extra: {' '.join(l['extra'])})" if l['extra'] else "") if l["flags"] and "heard" in l else ""))
+        if set(l["flags"]) & {"EDGE", "TIGHT"}:
+            e = l["edges"]
+            out.append(f"{'':15s}edges: start {e['head_db']} dB, end {e['tail_db']} dB from peak; {e['lead']:.2f} s before the first sound, {e['trail']:.2f} s after the last")
+        if l.get("clipped"):
+            out.append(f"{'':15s}heard cut: " + "; ".join(f"\"{p.get('word')}\" {p.get('where')}" + (f" ({p['what']})" if p.get('what') else "") for p in l["clipped"]))
     for p in rep["pairs"]:
         out.append(f"voices {p['a']} / {p['b']}: similarity {p['cos']:.2f}, pitch {p['hz'][0]} / {p['hz'][1]} Hz ({p['semitones']} st)"
                    + ("  SIMILAR: hard to tell apart, re-cast one" if p["similar"] else ""))
     out.append("references: " + ", ".join(f"{w} {r['lines']} line(s) + {r['library']} library sample(s), {r['hz']} Hz" for w, r in rep["refs"].items()))
-    out.append(("OK: every line in its own voice" if rep["ok"] else f"BLOCKERS: {', '.join(rep['blockers'])}")
+    if rep.get("listen"):
+        out.append("listening check " + rep["listen"])
+    out.append(("OK: every line in its own voice, words and edges clean" if rep["ok"] else f"BLOCKERS: {', '.join(rep['blockers'])}")
                + (f"; listen to: {', '.join(rep['thin'])}" if rep["thin"] else ""))
     return "\n".join(out)
 
@@ -340,7 +424,7 @@ def main(a):
     items, voices = story_items(p) if p.is_dir() else list_items(p, pathlib.Path(a[1]))
     if not items:
         raise SystemExit(f"{p}: no voice takes")
-    rep = check(items, voices, words="--no-words" not in a, only=only)
+    rep = check(items, voices, words="--no-words" not in a, only=only, hear="--no-listen" not in a)
     if "--json" in a:
         rep["lines"] = [{k: v for k, v in l.items()} for l in rep["lines"]]
         print(json.dumps(rep))

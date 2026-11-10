@@ -47,8 +47,9 @@ too close to a made story; vary the lane: eerie / absurd / heart) → beat sheet
 
 ## 2. Voice (~10 min)
 One command: `./hb voice story_<name>` (docs/voices.md "Making the voice"). It voices the cast on Gemini TTS (the
-proxy injects the key), cuts each take at Whisper's word times, runs `scripts/speaker_check.py` on every line (the
-right voice? the right words?), re-takes the failures as single-speaker requests (at most 2 each; lines that pass
+proxy injects the key), cuts each take safely (Whisper picks the boundary, the cut sits in the pause's quietest point with 80+ ms
+before and 200+ ms after each line), runs `scripts/speaker_check.py` on every line (the
+right voice? the right words? any word cut off, by level and by a listening model?), re-takes the failures as single-speaker requests (at most 2 each; lines that pass
 are never re-taken), aligns the word times into `voice.json` and prints the final check. Don't hand-roll this step
 (no extra Whisper installs: `./hb doctor` says what the TTS venv needs). Cast from `voices/cast.json` so recurring
 characters keep their voice and caption colour. Narrator-first: character lines of 3 words or fewer are voiced alone

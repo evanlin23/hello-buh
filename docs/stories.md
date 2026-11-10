@@ -136,7 +136,8 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 - **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
   per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
-  Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. Until `./hb voice` cuts safely:
+  Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. `./hb voice` now cuts by these rules and
+  checks every line (speaker_check EDGE and CLIPPED are blockers, re-taken automatically; docs/voices.md "The cut"):
   - cut each line at the quietest point between lines, never at Whisper's word start (it lands late, on the
     consonant); keep >= 80 ms before the first word and >= 200 ms after the last, with a 10-20 ms fade at each edge;
   - never splice a pause out of the middle of a line: if a pause is too long, re-take the line (or shorten only the

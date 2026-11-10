@@ -165,7 +165,14 @@ def cut_words(x, texts):
     for blk in difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks():
         for k in range(blk.size):
             m[blk.a + k] = blk.b + k
-    hints = [heard[m[first[i]]][1] if first[i] in m and len(a[first[i]]) > 1 else None for i in range(1, len(texts))]
+    ends = list(first[1:]) + [len(sw)]
+
+    def hint(i):   # (time, tolerance): the first of the line's first 3 words heard as written ("I" and "a" too common)
+        for j in range(first[i], min(first[i] + 3, ends[i])):
+            if j in m and len(a[j]) > 1:
+                return heard[m[j]][1], 0.3 + 0.4 * (j - first[i])   # a later word: the line starts up to ~0.4 s/word before it
+        return None
+    hints = [hint(i) for i in range(1, len(texts))]
     if not any(h is not None for h in hints):
         raise ValueError("no line's first word was heard as written")
     return cut_pauses(x, texts, hints)
@@ -200,7 +207,8 @@ def cut_pauses(x, texts, hints=None):
             for k in range(i - 1, j):
                 c = best[i - 1, k] + ((segs[j - 1][1] - segs[k][0]) / T - share[i - 1]) ** 2 * 50 + spread(k, j) - (0.6 * gaps[j - 1] / gmax if j < M else 0)
                 if hints and j < M and i < L and hints[i - 1] is not None:   # line i+1 starts at its first heard word
-                    c += 20 * max(0.0, abs(segs[j][0] / SR - hints[i - 1]) - 0.3) ** 2   # Whisper's starts run ~0.1-0.3 s late
+                    h, tol = hints[i - 1]
+                    c += 20 * max(0.0, abs(segs[j][0] / SR - h) - tol) ** 2   # Whisper's starts run ~0.1-0.3 s late
                 if c < best[i, j]:
                     best[i, j], arg[i, j] = c, k
     bounds, j = [], M
@@ -209,21 +217,109 @@ def cut_pauses(x, texts, hints=None):
     return [padded(x, segs, k, e) for k, e in bounds[::-1]]
 
 
-BREATH = 0.35   # s of the pause before a line kept with it (the in-breath), at most half the pause
-TAIL = 0.30     # s after the last word kept (the decay and any out-breath), at most half the pause
+BREATH = 0.35   # s of quiet before a line's first sound kept at most (the in-breath)
+TAIL = 0.45     # s after its last sound kept at most (the decay and any out-breath)
+PRE_MIN = 0.08  # s kept at least before the first sound (owner: "cuts stuff off"; docs/stories.md)
+POST_MIN = 0.20 # s kept at least after the last sound
+FADE = 0.015    # s fade at each edge
+
+
+def frame_db(x, fr=240):
+    """10 ms frame RMS in dB."""
+    n = len(x) // fr
+    return 20 * np.log10(np.sqrt(np.mean(x[:n * fr].reshape(n, fr) ** 2, axis=1)) + 1e-9)
+
+
+def soft_floor(db):
+    """The level under which a frame is silence: 45 dB under the take's loud frames, but above its noise floor."""
+    return max(np.percentile(db, 99) - 45, np.percentile(db, 5) + 6)
 
 
 def padded(x, segs, k, e):
-    """Line = speech stretches k..e plus the quiet around them: the breath before and the natural tail after, each at
-    most half of the neighbouring pause (so no line holds the other speaker's breath), with 15 ms fades. Cutting at
-    the speech gate (the old way) clipped in-breaths and word tails: the judge's 'robotic tails'."""
-    a = segs[k][0] - min(int(BREATH * SR), (segs[k][0] - (segs[k - 1][1] if k else 0)) // 2)
-    b = segs[e][1] + min(int(TAIL * SR), ((segs[e + 1][0] if e + 1 < len(segs) else len(x)) - segs[e][1]) // 2)
-    y = x[max(0, a):min(len(x), b)].copy()
-    f = min(len(y) // 4, int(0.015 * SR))
+    """Line = speech stretches k..e and the quiet around them, cut safely (owner, 2026-11-10: "the voices seem to be
+    edited in a way that cuts stuff off"): the line's first and last sound are found by level, not by the speech gate
+    (which misses soft consonants, breaths and word tails), then each edge is cut at the quietest 10 ms (the energy
+    valley) of the pause, keeping 80-350 ms before the first sound and 200-450 ms after the last, never past the
+    neighbour's own first/last sound, with a 15 ms fade."""
+    fr = 240
+    db = frame_db(x, fr)
+    floor = soft_floor(db)
+    n = len(db)
+
+    def onset(i):    # walk back from the gate's start while still above the floor
+        f = min(n - 1, i // fr)
+        while f > 0 and db[f - 1] > floor:
+            f -= 1
+        return f
+
+    def offset(i):   # walk forward from the gate's end while still above the floor
+        f = min(n - 1, max(0, i // fr - 1))
+        while f + 1 < n and db[f + 1] > floor:
+            f += 1
+        return f + 1
+
+    def valley(lo, hi):
+        lo, hi = max(0, int(lo)), min(n, int(hi))
+        if hi <= lo:
+            return lo
+        q = db[lo:hi]
+        quiet = np.nonzero(q <= q.min() + 1.0)[0]   # the quietest frames: cut in the middle of their run
+        return lo + int(np.median(quiet))
+
+    on, off = onset(segs[k][0] + 1200), offset(segs[e][1] - 2400)   # undo speech_segments' own padding
+    prev_off = offset(segs[k - 1][1] - 2400) if k else 0
+    next_on = onset(segs[e + 1][0] + 1200) if e + 1 < len(segs) else n
+    pre, post, br, tl = (int(v * SR / fr) for v in (PRE_MIN, POST_MIN, BREATH, TAIL))
+    lo = max(prev_off, on - br)
+    a = valley(lo, on - pre) if on - pre > lo else valley(prev_off, on) if on > prev_off else on - pre
+    hi = min(next_on, off + tl)
+    b = valley(off + post, hi) + 1 if hi > off + post else valley(off, next_on) + 1 if next_on > off else off + post
+    y = x[max(0, a * fr):min(len(x), b * fr)].copy()
+    f = min(len(y) // 4, int(FADE * SR))
     if f:
         y[:f] *= np.linspace(0, 1, f); y[-f:] *= np.linspace(1, 0, f)
     return y
+
+
+def cap_pauses(y, cap, keep=0.06, xf=0.03):
+    """Shorten every pause inside a line to `cap` s, only in its silent middle: never within `keep` (60 ms) of a
+    sound, joined with a `xf` (30 ms) crossfade. A pause with no silent middle long enough is left alone (re-take
+    the line instead). -> (y, [(at s, removed s)])"""
+    fr = 240
+    db = frame_db(y, fr)
+    quiet = db <= soft_floor(db)
+    k_fr, x_n = int(keep * SR / fr) + 1, int(xf * SR)
+    runs, i = [], 0
+    while i < len(quiet):
+        if quiet[i]:
+            j = i
+            while j < len(quiet) and quiet[j]:
+                j += 1
+            if i > 0 and j < len(quiet):   # inside the line, not the edges
+                runs.append((i, j))
+            i = j
+        else:
+            i += 1
+    out, done, last = [], [], 0
+    for i, j in runs:
+        if (j - i) * fr / SR <= cap:
+            continue
+        a, b = (i + k_fr) * fr, (j - k_fr) * fr        # the silent middle
+        drop = int(((j - i) * fr / SR - cap) * SR)
+        if b - a < drop + x_n:
+            continue
+        s0 = a + (b - a - drop) // 2                   # remove [s0, s0 + drop) from the middle, crossfaded
+        out.append(y[last:s0]); last = s0 + drop
+        done.append((round(s0 / SR, 2), round(drop / SR, 2)))
+    if not done:
+        return y, []
+    out.append(y[last:])
+    z = out[0]
+    for seg in out[1:]:
+        n = min(x_n, len(z), len(seg))
+        w = np.linspace(0, 1, n, dtype=np.float32)
+        z = np.concatenate([z[:len(z) - n], z[len(z) - n:] * (1 - w) + seg[:n] * w, seg[n:]])
+    return z.astype(np.float32), done
 
 
 def f0(x):
@@ -395,6 +491,9 @@ def speaker_check(d, ids):
         return None
 
 
+HARD = {"WORDS", "EDGE", "CLIPPED"}   # speaker_check flags a re-take can fix whatever the request (SWAP: multi-speaker only)
+
+
 def retake(d, done, items, cs, n_max, prior=None, groups_of=None):
     """Check the lines just voiced; re-take the ones in the wrong voice or with the wrong words, at most n_max times
     each, always as a single-speaker request (one voice can't swap). Lines that pass are never re-taken. prior: the
@@ -407,11 +506,12 @@ def retake(d, done, items, cs, n_max, prior=None, groups_of=None):
         if rep is None:
             break
         # a single-speaker take can't swap voices, so a re-taken line fails only on its words
-        bad = [l for l in rep["lines"] if l["id"] in ids and ("WORDS" in l["flags"] or ("SWAP" in l["flags"] and l["id"] not in solo))]
+        bad = [l for l in rep["lines"] if l["id"] in ids and (set(l["flags"]) & HARD or ("SWAP" in l["flags"] and l["id"] not in solo))]
         for l in rep["lines"]:
             if l["flags"]:
                 print(f"  {l['id']}: {' '.join(l['flags'])} (closest {l['closest']}, margin {l['margin']}"
-                      + (f", heard \"{l.get('heard', '')}\"" if "WORDS" in l["flags"] else "") + ")")
+                      + (f", heard \"{l.get('heard', '')}\"" if "WORDS" in l["flags"] else "")
+                      + (f", cut: {l.get('clipped')}" if "CLIPPED" in l["flags"] else "") + ")")
         if not bad:
             print(f"speaker check: {len(ids)} line(s) ok" + (f" after {n - 1} re-take round(s)" if n > 1 else ""))
             return takes
@@ -422,7 +522,7 @@ def retake(d, done, items, cs, n_max, prior=None, groups_of=None):
             k = takes.get(lid, 0) + 1
             done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{k}")); takes[lid] = k; solo.add(lid)
     rep = speaker_check(d, ids) if ids and set(ids) & set(takes) else None
-    left = [l["id"] for l in (rep or {}).get("lines", []) if l["id"] in ids and "WORDS" in l["flags"]]
+    left = [l["id"] for l in (rep or {}).get("lines", []) if l["id"] in ids and set(l["flags"]) & HARD]
     if left:
         print(f"STILL WRONG after {n_max} re-takes: {', '.join(left)}: listen, then fix the line's text or "
               f"direction (or --retakes more); a swapped voice is a blocker")
@@ -471,6 +571,17 @@ def run_story(d, only=None, check=True, retakes=2):
             done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{n}")); takes[lid] = n
     if check:
         takes = retake(d, done, items, cs, retakes, takes, groups_of)
+    mp = story.get("max_pause")   # seconds, or {"opening": s, "rest": s} (opening = the first two lines)
+    if mp:
+        first2 = [ln["id"] for ln in story["lines"][:2]]
+        for lid, (w, t, y) in list(done.items()):
+            cap = mp if isinstance(mp, (int, float)) else mp.get("opening" if lid in first2 else "rest")
+            if cap:
+                y2, cuts = cap_pauses(y, cap)
+                if cuts:
+                    pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(d / "voice" / f"{lid}.wav")], y2.tobytes())
+                    done[lid] = (w, t, y2)
+                    print(f"{lid}: pauses shortened to {cap} s in their silent middle: {cuts}")
     meta = old if only else {"lines": {}}
     meta.update({"model": f"Gemini TTS ({MODELS[0]} first), voices/cast.json", "sr": SR, "gap": story.get("gap", 0.25)})
     for ln in story["lines"]:

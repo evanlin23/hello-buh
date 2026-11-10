@@ -98,11 +98,24 @@ check and the re-takes), `scripts/align.py stories/<name>` (word timings into vo
 character line of 3 words or fewer (`SHORT_WORDS` in tts.py) is voiced in a single-speaker request with that
 character's other short lines. Gemini's multi-speaker mode swapped exactly these into the other voice (Good Boy).
 
-**The cut.** Whisper (align.py's model) transcribes each multi-line take with word times; where a line's first word
-is heard as written, the cut must fall in the pause just before it, and the cut itself still goes in a real pause
-(pauses alone went wrong on lines written with "...": the longest pause was inside a line).
+**The cut** (owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off"). Whisper (align.py's
+model) transcribes each multi-line take with word times, but only to pick WHICH pause is the boundary between two
+lines (the first of a line's first three words heard as written; pauses alone went wrong on lines with "...").
+Where the cut goes is the audio's business: each line's first and last sound are found by level (45 dB under the
+take's peak, above its noise floor), so soft consonants, breaths and word tails count as the line; then each edge is
+cut at the quietest 10 ms of the pause (the energy valley), keeping 80-350 ms before the first sound and 200-450 ms
+after the last, never into the neighbour's own sound, with a 15 ms fade. Never at a Whisper word start (it lands
+late, on the consonant). Old cuts (Good Boy, Dog on the Hill: 0.00-0.10 s of quiet at the edges, edges at -36 to
+-50 dB) were the problem; the same test on a take made of clean lines now gives 0.16-0.26 s before and 0.21-0.38 s
+after, edges at -58 to -62 dB, like Kokoro's (0.18-0.20 / 0.25-0.42 s, -81 dB).
 
-**Re-takes.** After the takes, every new line goes through the speaker check. A SWAP or WORDS line is re-taken as a
+**Long pauses** inside a line are left alone unless story.json sets `"max_pause"` (seconds, or `{"opening": 0.3,
+"rest": null}` where opening = the first two lines): then only the silent middle of a longer pause is removed, never
+within 60 ms of a sound, joined with a 30 ms crossfade (`cap_pauses` in tts.py). A pause with no silent middle long
+enough is kept: re-take the line. Speech is never spliced.
+`voice_check.py --resplit` re-cuts cached raw takes (`voice/<req>_take.f32`) with the same safe cut.
+
+**Re-takes.** After the takes, every new line goes through the speaker check. A SWAP, WORDS, EDGE or CLIPPED line is re-taken as a
 single-speaker request (one voice can't swap), at most `--retakes` times; lines that pass are never re-taken. The
 re-take is cached like any take (its own cache key), and voice.json records `"take": n` so a later run rebuilds that
 line from the same cached re-take instead of the original bad one. Each re-take is one request of the ~10 a day.
@@ -123,6 +136,16 @@ shorter, where the embedding is weakest) and flagged:
 | WORDS | transcript under 60% like the script, or extra words (a direction read aloud, a word of the next line) | blocker: re-taken automatically |
 | THIN | the right voice wins by under 0.06 (short or shouted lines) | listen |
 | SIMILAR | two cast voices with embedding similarity over 0.88 and under 2.5 semitones apart | re-cast one |
+| EDGE | the first or last 20 ms within 30 dB of the line's peak: a word or breath cut off (voice_edges.py's test) | blocker: re-taken automatically |
+| TIGHT | an edge within 40 dB, or under 60 ms of quiet before the first sound / 150 ms after the last | listen |
+| CLIPPED | the listening model (gemini-3.5-flash, then 3.8-flash, then flash-latest; one request per check with every line's audio) hears a word cut off at the start or end, or clipped in the middle, answering per word | blocker: re-taken automatically |
+
+A SWAP only counts against the speakers of the request that voiced the line (voice.json `with`, else story.json
+`requests`): Gemini never heard the others, and a single-speaker request can't swap at all. (Good Boy v4 voiced Sam
+alone: its laughing "Hahaha! There you are" at 314 Hz looked like the narrator to the embedding and pitch, a false
+alarm the request rule removes.) The listening model, given a line cut 0.33 s in, named "I've" missing at the start
+and "times" cut at the end; the untouched line came back clean. No answer from it (quota, network) is a note, not a
+blocker. `--no-listen` skips it, `--no-words` skips Whisper.
 
 Measured (2026-11-10): Good Boy's 13 narrator lines all scored as the narrator (margins 0.09-0.37) and its three
 clean Sam lines as Sam (0.28-0.36); the library samples split in halves (9 voices, 22 clips of 2-3.5 s, each
@@ -170,8 +193,8 @@ the transcript is under 60% like the script: that line is a wrong cut or a dropp
 
 What tts.py does to a take: it cuts the take into lines (every pause is a candidate; dynamic programming matches
 each line's share of the speech to its share of the text, follows Whisper's word times where it heard a line's first
-word, and penalises a line whose stretches disagree in pitch, so two speakers don't get merged), keeps each line's
-in-breath and tail (it pads into the pauses), then high-pass 60 Hz, the character's `post` (EQ; the narrator's tempo
+words, and penalises a line whose stretches disagree in pitch, so two speakers don't get merged), cuts each edge in
+the pause's quietest point with the in-breath and tail kept ("The cut" above), then high-pass 60 Hz, the character's `post` (EQ; the narrator's tempo
 and formant-kept lift), a light room, and one gain per take (see "Realism"). It prints each line's length and pitch:
 a pitch that belongs to the
 other speaker means a bad cut.
