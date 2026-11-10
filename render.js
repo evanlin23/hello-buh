@@ -1080,6 +1080,10 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
     if (user) ACTOR_ID.set(user, id)
   }
 }
+// the story kit's cast (lib/story.js K.actor marks 'actor' { tag, id } once it knows the entity): a shot's subject or a
+// look target can name them as 'actor:TAG' (dog_hill: subject ['actor:pip']), like a movie's player actors
+const KIT_TAG = new Map()   // id -> tag
+for (const m of rec.timeline || []) if (m.event === 'actor' && m.tag && m.id !== undefined) { KIT_TAG.set(m.id, m.tag); if (!ACTOR_ID.has(m.tag)) ACTOR_ID.set(m.tag, m.id) }
 // Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
 // time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
 const LINES = []
@@ -1211,7 +1215,11 @@ function targetAt (tg, t) {
   if (tg === 'self') { const c = camAt(Math.max(0, t)); return { x: c.x, y: c.y, z: c.z } }
   if (typeof tg === 'string' && tg.startsWith('actor:')) {
     const id = ACTOR_ID.get(tg.slice(6)), p = id !== undefined ? entityPosAt(id, Math.max(0, t)) : null
-    return p ? { x: p.x, y: p.y + (p.sneak ? 1.27 : 1.62), z: p.z } : null
+    if (!p) return null
+    // a kit actor that isn't a player (a wolf, a baby villager): its eye at 0.85 x its height, not a player's 1.62
+    const row = KIT_TAG.has(id) && ENT.get(Math.floor(Math.max(0, t))) && ENT.get(Math.floor(Math.max(0, t))).get(id)
+    const h = row && row[2] !== 'player' && row[2] !== 'mannequin' ? (ENT_H[row[2]] || 1) * ((row[9] && row[9].baby) ? 0.5 : 1) : null
+    return { x: p.x, y: p.y + (h ? 0.85 * h : (p.sneak ? 1.27 : 1.62)), z: p.z }
   }
   if (Array.isArray(tg)) return { x: rec.set.x + tg[0], y: rec.set.y + tg[1], z: rec.set.z + tg[2] }
   if (tg && tg.of) { const p = targetAt(tg.of, t), o = tg.offset || [0, 0, 0]; return p ? { x: p.x + o[0], y: p.y + o[1], z: p.z + o[2] } : null }
@@ -1303,7 +1311,7 @@ function etEntities (t, withSelf) {
     const p = entityPosAt(id, t)
     if (!p) continue
     const ex = a[9] || {}
-    out.push({ id, type: a[2], label: a[2], user: ex.user, x: p.x, y: p.y, z: p.z, h: ENT_H[a[2]] || (ET_MD[a[2]] && ET_MD[a[2]].height) || 1, baby: !!ex.baby })
+    out.push({ id, type: a[2], label: a[2], user: ex.user || KIT_TAG.get(id), x: p.x, y: p.y, z: p.z, h: ENT_H[a[2]] || (ET_MD[a[2]] && ET_MD[a[2]].height) || 1, baby: !!ex.baby })
   }
   if (withSelf) { const c = camAt(Math.max(0, t)), s = selfAt(t); out.push({ id: 'self', type: 'player', label: 'the narrator', x: c.x, y: c.y - ((s && s.eye) || EYE), z: c.z, h: 1.8 }) }
   return out
