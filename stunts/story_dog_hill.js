@@ -280,18 +280,18 @@ module.exports = {
       if (z1 && k > at(3)) { z1.z = -3.2 + (k - at(3)) * 0.09; z2.z = -4.4 + (k - at(3)) * 0.09; if (k === at(3) + 2) ctx.sound('entity.zombie.ambient', 0.5, 0.9) }
     })
     K.park('z1'); K.park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
-    // ---- L03: morning: Pip walks up with a bone and drops it on the pile; he never looks
-    await cut('bone', { time: 1000 }, () => place('pip', { x: -2.5, y: 1, z: 5, yaw: -134 }))
+    // ---- L03 (r-cast): kids throw sticks: Pip, beside the dog, throws one high past his nose on STICKS; he doesn't blink
+    await cut('bone', { time: 1000 }, () => place('pip', { x: -1.4, y: 1, z: 3.4, yaw: -150 }))
     await line('L03', (k, at) => {
-      const b3 = Math.max(at(2), 24) - 4   // a walk: ~4.3 blocks over 1+ s
-      const u = ease(k / Math.max(1, b3 + 4))
-      Object.assign(pip, { x: lerp(-2.5, 0.6, u), z: lerp(5, 2.0, u), yaw: u < 1 ? -134 : 180, pitch: u < 1 ? 0 : 25 })
-      if (k === b3 + 4) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{n:99}}},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
+      Object.assign(pip, { yaw: k < at(1) ? -150 : -135, pitch: k < at(1) ? 10 : -10 })
+      if (k === at(1)) say(`/summon item ${X - 1.0} ${F + 1.9} ${Z + 3.0} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.2d,0.3d,-0.24d]}`)   // high past his nose, on STICKS
     })
-    // ---- L04: kids throw sticks: Pip throws one past his nose on THROW; he doesn't blink
-    await line('L04', (k) => {
-      Object.assign(pip, { yaw: k < 6 ? 180 : 160, pitch: k < 6 ? 10 : -10 })
-      if (k === 3) say(`/summon item ${X + 0.8} ${F + 1.9} ${Z + 1.5} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.16d,0.3d,-0.2d]}`)   // high past his nose, on THROW
+    // ---- L04: so every morning I bring him a bone: Pip walks to the pile and drops it on BONE; he never looks
+    await line('L04', (k, at) => {
+      const b = Math.max(at(2), 16)
+      const u = ease(k / b)
+      Object.assign(pip, { x: lerp(-1.4, 0.6, u), z: lerp(3.4, 2.0, u), yaw: u < 1 ? -125 : 180, pitch: u < 1 ? 0 : 25 })
+      if (k === b) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{n:99}}},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
     })
     // ---- L05: the collar (the stick goes on the cut: it landed on the patch and read as something there)
     say('/kill @e[type=item,tag=stick]')
@@ -308,46 +308,48 @@ module.exports = {
     // teleporting" was this shot (he landed 2 ticks after the cut, then moved in 3-tick steps)
     await cut('beg', { time: 9000 }, () => place('pip', { x: 1.7, y: 1, z: 0.5, yaw: 90 }))
     await line('L08', (k, at, n) => { pip.z = 0.5 + 0.3 * Math.sin(k / 9); pip.yaw = 90 + 22 * Math.sin(k / 3.5) * (k < n * 0.75 ? 1 : 0.3); pip.pitch = k > n * 0.75 ? 30 : 0 })
-    // ---- L09: Grandpa (on the path below) says leave him be; L10: "somebody said be right back" (he looks away)
+    // ---- L09: "Then GRANDPA said:" (the narrator), L10: Grandpa, on the path below, in his own voice: "Only ONE voice gets
+    // him UP." (on screen while he says it); L11: "Somebody PROMISED to come back." (he looks away down the path)
     const [gx, gy, gz] = this.G
     await cut('gramps', { time: 11500 }, () => { place('pip', { x: -5, y: 1, z: 7.5, yaw: 0, pitch: 30 }); place('gramps', { x: gx, y: gy + 1, z: gz + 1.5, yaw: 180, pitch: -30 }) })
-    await line('L09', (k) => { Object.assign(gramps, { z: gz + 1.5 - Math.min(1.5, k * 0.05), yaw: 180 + 8 * Math.sin(k / 10), pitch: -32 + (k % 16 < 8 ? 6 : 0) }); pip.pitch = 28 + 4 * Math.sin(k / 8) })
+    await line('L09', (k) => { Object.assign(gramps, { z: gz + 1.5 - Math.min(1.5, k * 0.05), yaw: 180 + 8 * Math.sin(k / 10), pitch: -32 }); pip.pitch = 28 + 4 * Math.sin(k / 8) })
+    await line('L10', (k) => { Object.assign(gramps, { z: Math.max(gz, gz + 1.5 - (k + 20) * 0.05), yaw: 180 + 6 * Math.sin(k / 10), pitch: -32 + (k % 16 < 8 ? 6 : 0) }); pip.pitch = 28 + 4 * Math.sin(k / 8) })
     await cut('rightback')
-    await line('L10', (k, at, n) => { const u = ease(k / Math.max(1, n)); Object.assign(gramps, { z: gz, yaw: lerp(180, 235, u), pitch: lerp(-30, -5, u) }) })
-    // ---- L11: every night, Pip sits with him: dusk, then night on NOBODY
+    await line('L11', (k, at, n) => { const u = ease(k / Math.max(1, n)); Object.assign(gramps, { z: gz, yaw: lerp(180, 235, u), pitch: lerp(-30, -5, u) }) })
+    // ---- L12: every night, Pip sits with him: dusk, then night on NOBODY
     await cut('dusk', { time: 12700 }, () => { place('pip', { x: 0.5, y: 1, z: 1.6, yaw: -90 }); place('gramps', { ...OFF, z: 2 }) })
-    await line('L11', async (k, at) => {
+    await line('L12', async (k, at) => {
       if (k === at(2) - 1) {
         await cut('night', { time: 18000 })
-        // Buh logs in on the patch now, behind the night camera (it looks west, away from P): seen first on L13's word.
+        // Buh logs in on the patch now, behind the night camera (it looks west, away from P): seen first on L14's word.
         // Not awaited: the line's clock goes on while the teleport is checked
         ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5).catch(e => ctx.log('login tp:', e.message))
       }
       pip.yaw = k < at(2) ? -90 + 6 * Math.sin(k / 15) : -90 - 10 * Math.sin((k - at(2)) / 18)
     })
-    // ---- L12: then last night he stood up: the dog stands on STOOD, "Buh joined the game" with it (audit F8: not before)
+    // ---- L13: then last night he stood up: the dog stands on STOOD, "Buh joined the game" with it (audit F8: not before)
     ctx.mark('hush'); ctx.mark('swell')
-    await line('L12', (k, at) => {
+    await line('L13', (k, at) => {
       if (k === Math.max(0, at(1) - 3)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit'); ctx.mark('chat', { text: 'Buh joined the game', hold: 2.6 }) }
       pip.yaw = -90 + 4 * Math.sin(k / 6)
     })
     ctx.mark('hush_end')
-    // ---- L13: then a guy just appeared on the patch (the reveal); on "Hey BUDDY" the reunion
+    // ---- L14: a guy just appeared on the PATCH (the reveal); L15: Buh, in his own voice, "Hey BUDDY! Sorry, got BUSY."
+    // on the reunion: he crouches, the dog runs to him
     await cut('reveal')
-    await line('L13', async (k, at) => {
-      const h = at(3)
-      if (k < h - 1) { pip.yaw = lerp(-90, -80, k / 20); return }
-      if (k === h - 1) { await cut('reunion'); bot.setControlState('sneak', true) }
-      const r = k - h, u = ease(r / 12)
-      const hop = r > 12 ? Math.max(0, Math.sin((r - 12) / 2.2)) * 0.35 : 0
-      Object.assign(dog, { x: lerp(0.5, 2.4, u), y: 1 + hop, z: 0.5 + (r > 12 ? 0.25 * Math.sin((r - 12) / 5) : 0), yaw: -90 })
-      if (r === 14) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
+    await line('L14', (k) => { pip.yaw = lerp(-90, -80, k / 20) })
+    await cut('reunion'); bot.setControlState('sneak', true)
+    await line('L15', (k) => {
+      const u = ease(k / 12)
+      const hop = k > 12 ? Math.max(0, Math.sin((k - 12) / 2.2)) * 0.35 : 0
+      Object.assign(dog, { x: lerp(0.5, 2.4, u), y: 1 + hop, z: 0.5 + (k > 12 ? 0.25 * Math.sin((k - 12) / 5) : 0), yaw: -90 })
+      if (k === 6) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
     })
-    // ---- L14: then he said, sit, boy (the dog sits on SIT), be right back; he logs out after BACK (the payoff)
+    // ---- L16: "Then he SAID:"; L17: Buh, "Sit, BOY." (the dog sits on BOY) "Be right BACK." He logs out after BACK (the payoff)
     await cut('sit')
-    await line('L14', (k, at) => {
-      if (k === 3) bot.setControlState('sneak', false)
-      if (k === at(1) + 2) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90 }); sitDog(true); bot.swingArm('right') }
+    await line('L16', (k) => { if (k === 3) bot.setControlState('sneak', false) })
+    await line('L17', (k, at) => {
+      if (k === Math.max(2, at(1) - 4)) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90 }); sitDog(true); bot.swingArm('right') }
     })
     ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit'); ctx.mark('payoff')
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)

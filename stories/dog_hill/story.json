@@ -1,142 +1,245 @@
 {
-  "name": "dog_hill",
-  "stunt": "story_dog_hill",
-  "version": 2,
-  "caption": "why has this dog sat on the same block for 900 DAYS",
-  "logline": "A villager kid tries for 900 days to get the dog on the hill to stand up, until the one person it obeys logs back in.",
-  "question": "why tf has the dog sat on that hill for 900 days?",
-  "premise": "A tamed wolf has sat on one hilltop block above the village for 900 days, staring at an empty patch of grass beside an old dirt hut. Bones pile up untouched. A villager kid decides to sit with him so he doesn't wait alone.",
-  "twist": "A sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago (players come back where they left). 'Buh joined the game': he appears on the patch and the dog stands for the first time. He says 'Sit, boy. I'll be right back.' and logs out again. The dog sits. Day one.",
-  "key_color": "#FFC94A",
-  "voice": {
-    "engine": "gemini"
+ "name": "dog_hill",
+ "stunt": "story_dog_hill",
+ "version": 2,
+ "caption": "why has this dog sat on the same block for 900 DAYS",
+ "logline": "A villager kid tries for 900 days to get the dog on the hill to stand up, until the one person it obeys logs back in.",
+ "question": "why tf has the dog sat on that hill for 900 days?",
+ "premise": "A tamed wolf has sat on one hilltop block above the village for 900 days, staring at an empty patch of grass beside an old dirt hut. Bones pile up untouched. A villager kid decides to sit with him so he doesn't wait alone.",
+ "twist": "A sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago (players come back where they left). 'Buh joined the game': he appears on the patch and the dog stands for the first time. He says 'Sit, boy. I'll be right back.' and logs out again. The dog sits. Day one.",
+ "key_color": "#FFC94A",
+ "voice": {
+  "engine": "gemini"
+ },
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "name": "Pip",
+   "color": "#FFFFFF",
+   "on_screen": "baby villager (plains), seen in camera shots; the narrator (Leda sleepover kid, voices/cast.json `narrator`); says every line but Grandpa's (L10) and Buh's (L15, L17)"
   },
-  "cast": {
-    "N": {
-      "role": "narrator",
-      "ref": "narrator",
-      "name": "Pip",
-      "color": "#FFFFFF",
-      "on_screen": "baby villager (plains), seen in camera shots; says every line, Grandpa's and Buh's included"
-    }
+  "Grandpa": {
+   "role": "character",
+   "ref": "elder",
+   "name": "Grandpa",
+   "color": "#E8C48A",
+   "on_screen": "villager, plains cartographer outfit, no name tag; on the path below the rim, on screen while he says L10. Voice: cast `elder` (Charon), the brand's Grandpa (docs/brand.md: 'genuinely aged', far from the kid narrator)"
   },
-  "lines": [
-    {
-      "id": "L01",
-      "who": "N",
-      "text": "The DOG / on the HILL / hasn't MOVED / in nine-hundred DAYS.",
-      "beat": 1,
-      "shot": "S01"
-    },
-    {
-      "id": "L02",
-      "who": "N",
-      "text": "Not for RAIN. / Not for THUNDER. / Not for CREEPERS. / Not even ZOMBIES.",
-      "beat": 1,
-      "shot": "S02"
-    },
-    {
-      "id": "L03",
-      "who": "N",
-      "text": "I BRING him / a BONE / every MORNING. / He never LOOKS.",
-      "beat": 1,
-      "shot": "S03"
-    },
-    {
-      "id": "L04",
-      "who": "N",
-      "text": "Kids THROW / STICKS for him. / He doesn't BLINK.",
-      "beat": 1,
-      "shot": "S03"
-    },
-    {
-      "id": "L05",
-      "who": "N",
-      "text": "He's GOT / a red COLLAR, / but NOBODY here / OWNS him.",
-      "beat": 1,
-      "shot": "S03b"
-    },
-    {
-      "id": "L06",
-      "who": "N",
-      "text": "He just STARES / at one EMPTY / patch of GRASS.",
-      "beat": 1,
-      "shot": "S04"
-    },
-    {
-      "id": "L07",
-      "who": "N",
-      "text": "And BEHIND him, / an OLD / dirt HUT. / Nobody KNOWS / who BUILT it.",
-      "beat": 1,
-      "shot": "S05"
-    },
-    {
-      "id": "L08",
-      "who": "N",
-      "text": "I TRIED to / make him STAND. / I even BEGGED.",
-      "beat": 1,
-      "shot": "S05b"
-    },
-    {
-      "id": "L09",
-      "who": "N",
-      "text": "Grandpa SAYS, / leave him BE. / Only ONE voice / gets him UP.",
-      "beat": 1,
-      "shot": "S06"
-    },
-    {
-      "id": "L10",
-      "who": "N",
-      "text": "SOMEBODY said / be right BACK.",
-      "beat": 1,
-      "shot": "S08"
-    },
-    {
-      "id": "L11",
-      "who": "N",
-      "text": "So every NIGHT, / I SIT there. / NOBODY should / wait ALONE.",
-      "beat": 1,
-      "shot": "S09"
-    },
-    {
-      "id": "L12",
-      "who": "N",
-      "text": "Then last NIGHT, / he STOOD up.",
-      "beat": 1,
-      "shot": "S11"
-    },
-    {
-      "id": "L13",
-      "who": "N",
-      "text": "Then a GUY / just APPEARED / on the PATCH. / Hey BUDDY, / sorry, got BUSY.",
-      "beat": 1,
-      "shot": "S12"
-    },
-    {
-      "id": "L14",
-      "who": "N",
-      "text": "Then he SAID, / sit, BOY. / be right BACK.",
-      "beat": 1,
-      "shot": "S13"
-    }
-  ],
-  "hook": "why won't this dog stand up?",
-  "payoff": "payoff",
-  "voice_takes": "beat",
-  "revision": "vNext r2 (main stories/dog_hill/script_vNext.md, owner-approved rewrite 2026-11-10): one narrator, 2-3 word chunks, no dramatic pauses, ends on the promise",
-  "hotbar": [
-    "bone",
-    "lead",
-    "name_tag",
-    "oak_door",
-    "crafting_table",
-    "torch",
-    "cake",
-    "milk_bucket",
-    [
-      "egg",
-      67
-    ]
-  ],
-  "hotbar_note": "Buh's bar (the only player). No POV shot in this story, so it never shows; kept the same throughout if a POV is ever added. Story tools first (bone, lead, name tag, his hut's door, crafting table, torch), then the ridiculous ones: a whole cake, a milk bucket, 67 eggs (owner)."
+  "Buh": {
+   "role": "character",
+   "ref": "buh",
+   "name": "Buh",
+   "color": "#4FD8E6",
+   "on_screen": "the player (default Steve skin), on screen while he says L15 and L17; never named aloud (the chat lines name him)"
+  }
+ },
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "text": "The DOG / on the HILL / hasn't MOVED / in nine-hundred DAYS.",
+   "say": "The dog on the hill hasn't moved in nine-hundred DAYS.",
+   "beat": 1,
+   "shot": "S01"
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "text": "Not for RAIN. / Not for THUNDER. / Not for CREEPERS. / Not even ZOMBIES.",
+   "say": "Not for RAIN. Not for THUNDER. Not for CREEPERS. Not even ZOMBIES.",
+   "beat": 1,
+   "shot": "S02"
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "text": "Kids THROW / STICKS for him. / He doesn't BLINK.",
+   "say": "Kids throw STICKS for him. He doesn't BLINK.",
+   "beat": 1,
+   "shot": "S03"
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "text": "So every MORNING, / I BRING him / a BONE. / He never LOOKS.",
+   "say": "So every morning, I bring him a BONE. He never LOOKS.",
+   "beat": 1,
+   "shot": "S03"
+  },
+  {
+   "id": "L05",
+   "who": "N",
+   "text": "He's GOT / a red COLLAR. / But NOBODY here / OWNS him.",
+   "say": "He's got a red COLLAR. But nobody here OWNS him.",
+   "beat": 1,
+   "shot": "S03b"
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "text": "He just STARES / at one EMPTY / patch of GRASS. / Maybe he LIKES / the GRASS.",
+   "say": "He just stares at one empty patch of GRASS. Maybe he likes the GRASS.",
+   "beat": 1,
+   "shot": "S04"
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "text": "And BEHIND him, / an OLD / dirt HUT. / Nobody KNOWS / who BUILT it.",
+   "say": "And behind him, an old dirt HUT. Nobody knows who BUILT it.",
+   "beat": 1,
+   "shot": "S05"
+  },
+  {
+   "id": "L08",
+   "who": "N",
+   "text": "I ASKED him / to STAND. / I even BEGGED.",
+   "say": "I asked him to STAND. I even BEGGED.",
+   "beat": 1,
+   "shot": "S05b"
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "Then GRANDPA said:",
+   "say": "Then Grandpa said:",
+   "beat": 1,
+   "shot": "S06"
+  },
+  {
+   "id": "L10",
+   "who": "Grandpa",
+   "text": "Only ONE voice / gets him UP.",
+   "say": "Only one voice gets him UP.",
+   "beat": 2,
+   "shot": "S06"
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "text": "Somebody PROMISED / to come BACK.",
+   "say": "Somebody PROMISED to come back.",
+   "beat": 3,
+   "shot": "S08"
+  },
+  {
+   "id": "L12",
+   "who": "N",
+   "text": "So every NIGHT, / I SIT there. / NOBODY should / wait ALONE.",
+   "say": "So every night, I SIT there. Nobody should wait ALONE.",
+   "beat": 3,
+   "shot": "S09"
+  },
+  {
+   "id": "L13",
+   "who": "N",
+   "text": "Then last NIGHT, / he STOOD up.",
+   "say": "Then last night, he STOOD up.",
+   "beat": 3,
+   "shot": "S11"
+  },
+  {
+   "id": "L14",
+   "who": "N",
+   "text": "A GUY / just APPEARED / on the PATCH.",
+   "say": "A guy just appeared on the PATCH.",
+   "beat": 3,
+   "shot": "S12"
+  },
+  {
+   "id": "L15",
+   "who": "Buh",
+   "text": "Hey BUDDY! / Sorry, got BUSY.",
+   "say": "Hey BUDDY! SORRY, got busy.",
+   "beat": 4,
+   "shot": "S12"
+  },
+  {
+   "id": "L16",
+   "who": "N",
+   "text": "Then he SAID:",
+   "say": "Then he said:",
+   "beat": 5,
+   "shot": "S13"
+  },
+  {
+   "id": "L17",
+   "who": "Buh",
+   "text": "Sit, BOY. / Be right BACK.",
+   "say": "Sit, BOY. Be right BACK.",
+   "beat": 6,
+   "shot": "S13"
+  }
+ ],
+ "hook": "why won't this dog stand up?",
+ "payoff": "payoff",
+ "voice_takes": "beat",
+ "revision": "r-cast (stories/dog_hill/script_vNext.md, last table): the narrator plus Grandpa's and Buh's short lines in their own voices, one spoken stress per sentence in `say`",
+ "hotbar": [
+  "bone",
+  "lead",
+  "name_tag",
+  "oak_door",
+  "crafting_table",
+  "torch",
+  "cake",
+  "milk_bucket",
+  [
+   "egg",
+   67
+  ]
+ ],
+ "hotbar_note": "Buh's bar (the only player). No POV shot in this story, so it never shows; kept the same throughout if a POV is ever added. Story tools first (bone, lead, name tag, his hut's door, crafting table, torch), then the ridiculous ones: a whole cake, a milk bucket, 67 eggs (owner).",
+ "one_take": [
+  "N"
+ ],
+ "requests": [
+  {
+   "id": "rN",
+   "speakers": [
+    "N"
+   ],
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "L07",
+    "L08",
+    "L09",
+    "L11",
+    "L12",
+    "L13",
+    "L14",
+    "L16"
+   ],
+   "direction": "One continuous telling, start to finish: hit only the CAPITALISED words, keep the rest level and quick, no dramatic pauses."
+  },
+  {
+   "id": "rG",
+   "speakers": [
+    "Grandpa"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "lines": [
+    "L10"
+   ],
+   "direction": "An old man in his seventies, slow and certain, a little tired; full volume, never a whisper. Hit only the capitalised word."
+  },
+  {
+   "id": "rB",
+   "speakers": [
+    "Buh"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "lines": [
+    "L15",
+    "L17"
+   ],
+   "direction": "A friendly sixteen-year-old boy back after a long time away, warm and a little guilty, casual; full volume. Hit only the capitalised words."
+  }
+ ]
 }
