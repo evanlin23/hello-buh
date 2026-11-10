@@ -47,7 +47,7 @@ module.exports = {
     // L04: the collar, close (the one close-up before the reveal)
     collar: { path: [[0, 2.6, 1.3, -1.4], [4, 2.3, 1.2, -1.2]], look: [0.55, 0.85, 0.5], fov: 45 },
     // L05: over his back at the empty patch, the valley beyond
-    patch: { path: [[0, -2.8, 2.8, 0.5], [4, -2.2, 2.5, 0.5]], look: [3.5, 0.2, 0.5], fov: 50 },
+    patch: { path: [[0, -2.6, 2.8, 1.7], [4, -2.0, 2.5, 1.5]], look: [3.2, 0.1, 0.1], fov: 50 },
     // L06: the hut, wide, the dog small in the foreground
     hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.5, -5], fov: 58 },
     // L07: Pip begging in front of him (side on)
