@@ -126,6 +126,39 @@ class Viterbi(unittest.TestCase):
         self.assertEqual(spans, [(3, 8)])
 
 
+class ShortLines(unittest.TestCase):
+    """A 2-word lead-in ("Mom says:") whose mean letter score falls under MIN_SCORE because of one soft vowel is still
+    aligned when the model's own greedy reading spells the script; a take saying other words is still refused."""
+    VOCAB = {"<pad>": 0, "|": 1, "M": 2, "O": 3, "S": 4, "A": 5, "Y": 6, "X": 7}
+
+    def take(self, letters_at, weak=()):
+        lp = np.full((40, len(self.VOCAB)), -9.0)
+        lp[:, 0] = -0.05
+        for t, ch in letters_at:
+            lp[t] = -9.0
+            lp[t, self.VOCAB[ch]] = -7.0 if t in weak else -0.05   # a weak frame: still the best, but improbable
+            if t in weak:
+                lp[t, 0] = -7.5
+        return lp
+
+    def test_weak_vowel_short_line_is_rescued(self):
+        V = self.VOCAB
+        groups = [[V["M"], V["O"], V["M"]], [V["S"], V["A"], V["Y"], V["S"]]]
+        lp = self.take([(5, "M"), (8, "O"), (11, "M"), (14, "|"), (17, "S"), (21, "A"), (22, "Y"), (25, "S")], weak=(8, 21, 25))
+        spans, score = A.viterbi(lp, groups, 0, 1)
+        self.assertLess(score, A.MIN_SCORE)                       # the mean alone would refuse it
+        self.assertEqual(A.greedy_letters(lp, V, 0), "momsays")
+        self.assertTrue(A.fits(score, lp, groups, V, 0))
+
+    def test_wrong_words_are_still_refused(self):
+        V = self.VOCAB
+        groups = [[V["M"], V["O"], V["M"]], [V["S"], V["A"], V["Y"], V["S"]]]
+        lp = self.take([(5, "M"), (8, "O"), (11, "X"), (14, "|"), (17, "S"), (21, "A"), (22, "Y"), (25, "S")], weak=(8, 21, 25))
+        spans, score = A.viterbi(lp, groups, 0, 1)
+        self.assertLess(score, A.MIN_SCORE)
+        self.assertFalse(A.fits(score, lp, groups, V, 0))
+
+
 class Hiss(unittest.TestCase):
     def test_fricative_onset_moves_back_to_the_hiss(self):
         sr, rng = A.SR, np.random.default_rng(3)

@@ -34,6 +34,7 @@ read the direction aloud; a pitch that belongs to the other speaker means a bad 
 import base64
 import hashlib
 import json
+import os
 import pathlib
 import subprocess
 import sys
@@ -86,6 +87,21 @@ def resolve(story_cast=None):
     return out
 
 
+# shared-quota pacing (the lead, 2026-11-10: several sessions share the TTS quota): TTS_MIN_GAP seconds between
+# this process's requests, and on a 429 TTS_429_WAIT seconds then a retry, up to TTS_429_RETRIES times (both
+# default 0: a 429 moves on as before)
+_LAST_REQ = [0.0]
+
+
+def _pace():
+    gap = float(os.environ.get("TTS_MIN_GAP", "0") or 0)
+    wait = _LAST_REQ[0] + gap - time.time()
+    if wait > 0:
+        print(f"  (pacing: {wait:.0f} s before the next request)")
+        time.sleep(wait)
+    _LAST_REQ[0] = time.time()
+
+
 def request(text, voices, models=None):
     """One TTS call -> (float32 mono at SR, the model that made it). voices: {label: Gemini voice name} (1 or 2
     entries). `text` is the prompt, or a function model -> prompt (each model family gets the layout it was tested
@@ -99,8 +115,10 @@ def request(text, voices, models=None):
         body = json.dumps({"contents": [{"parts": [{"text": text(model) if callable(text) else text}]}],
                            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
         # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
-        for attempt in range(2):
+        r429 = int(os.environ.get("TTS_429_RETRIES", "0") or 0)
+        for attempt in range(2 + r429):
             try:
+                _pace()
                 STATS["requests"] += 1
                 req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                                              data=body, headers={"Content-Type": "application/json", "x-goog-api-key": "proxy"})
@@ -112,9 +130,16 @@ def request(text, voices, models=None):
                                           input=data, capture_output=True, check=True).stdout
                 return np.frombuffer(data, "<i2").astype(np.float32) / 32768, model
             except urllib.error.HTTPError as e:
-                msg = e.read()[:300].decode(errors="replace")
+                msg = e.read()[:4000].decode(errors="replace")
                 print(f"  {model}: {e.code} {msg[:120]!r}")
                 if e.code == 429:
+                    print(f"  429 (full): {msg}")
+                    if r429 > 0:
+                        r429 -= 1
+                        w = float(os.environ.get("TTS_429_WAIT", "65") or 65)
+                        print(f"  429: waiting {w:.0f} s, then again ({r429} retries left)")
+                        time.sleep(w)
+                        continue
                     break
                 if e.code not in (500, 502, 503, 504):
                     raise SystemExit(f"TTS {e.code}: {msg}")
@@ -871,6 +896,14 @@ def voice_lines(groups, cs, out, salt=""):
     return done
 
 
+def say_for(ln, who, fallback):
+    """The text a line is voiced from: its `say`, else the caption text made speakable. A cast entry with `plain_say`
+    gets its `say` without the CAPS stress words too: Pip's sound (Dog on the Hill v2, the owner's pick) was voiced
+    from plain sentence case; flash-lite reads a capitalised word louder and flatter."""
+    t = ln.get("say") or fallback(ln)
+    return spoken(t) if who.get("plain_say") and ln.get("say") else t
+
+
 def spoken(t):
     """CAPS key words are for the captions: lower them for the voice (an all-caps word is read louder and flatter)."""
     return " ".join(w.lower() if sum(c.isalpha() for c in w) > 1 and w.isupper() else w for w in t.replace(" / ", " ").split())
@@ -1009,14 +1042,25 @@ def beat_groups(story, cs, narrator, spoken):
         r = req_of(ln, w) or {}
         scene = r.get("direction", story.get("direction", ""))
         key = (w, ("beat", ln["beat"]) if ln.get("beat") is not None else ("direction", scene))
-        item = (w, ln["id"], ln.get("say") or spoken(ln), ln.get("direction", ""))
+        item = (w, ln["id"], say_for(ln, cs.get(w, {}), spoken), ln.get("direction", ""))
         if beats and beats[-1]["key"] == key:
             beats[-1]["lines"].append(item)
         else:
             beats.append({"id": ln["id"], "key": key, "scene": scene, "room": r.get("room", story.get("room", "small")),
                           "lines": [item]})
+    # story "one_take": [speaker ids] (the lead, 2026-11-10: the narrator in ONE request, quota): all of a speaker's
+    # lines in one beat even where another speaker's line interrupts; run_beats splits the take back into runs of
+    # consecutive story lines (the slices tile the take: a run is a contiguous stretch of it, no cut inside a line)
+    for w1 in story.get("one_take") or []:
+        mine = [b for b in beats if b["key"][0] == w1]
+        if len(mine) > 1:
+            first = mine[0]
+            first["runs"] = [[it[1] for it in b["lines"]] for b in mine]
+            for b in mine[1:]:
+                first["lines"] += b["lines"]
+                beats.remove(b)
     for b in beats:
-        if len(b["lines"]) > MAX_LINES:
+        if len(b["lines"]) > MAX_LINES and not b.get("runs"):
             print(f"WARNING: beat {b['id']} has {len(b['lines'])} lines (> {MAX_LINES}): long takes drift; split it with line `beat` markers")
     return beats
 
@@ -1060,6 +1104,14 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None,
         except ValueError:
             qs = None
         res = take_gate.gate(y, SR, texts, heard, None if qs is None else [q / SR for q in qs], limits, raw=x, opening=opening)
+        if beat.get("runs") and qs is not None:
+            # one_take: the pause at a run boundary is where the other speaker's line goes in, not a pause heard
+            ids = [lid for _, lid, _, _ in lines]
+            rb = [qs[ids.index(r[0]) - 1] / SR for r in beat["runs"][1:]]
+            keep = [f for f in res["fails"] if not (f["kind"] == "pause" and any(f["at"] - 0.1 <= b <= f["at"] + f["len"] + 0.1 for b in rb))]
+            if len(keep) != len(res["fails"]):
+                print(f"  (one take: {len(res['fails']) - len(keep)} pause(s) at a run boundary not counted: another speaker's line goes there)")
+                res = {"ok": not keep, "fails": keep, "fix": list(dict.fromkeys(f["kind"] for f in keep))}
         tried.append({"res": res, "y": y, "qs": qs, "al": al, "model": model, "try": n + 1, "fixes": list(fixes), "raw": str(raw)})
         print(f"beat {beat['id']} ({len(lines)} line(s), take {n + 1}/{tries}, {len(y) / SR:.2f} s): "
               + ("ok" if res["ok"] else "REJECTED: " + "; ".join(f["why"] for f in res["fails"])))
@@ -1134,8 +1186,28 @@ def run_beats(d, story, cs, narrator, voice, only=None, retakes=2):
         lim = beat_limits(story, cs, b["lines"][0][0], narrator)
         d_, m = voice_beat(b, cs, d / "voice", tries=1 + retakes, opening=(i == 0), limits=lim)
         done.update(d_)
-        metas[b["id"]] = m
+        if b.get("runs"):
+            metas.update(split_runs(d / "voice", b, m, d_))
+        else:
+            metas[b["id"]] = m
     return done, metas
+
+
+def split_runs(out, beat, m, done):
+    """A one_take beat back into its runs of consecutive story lines: each run's stretch of the take (its lines'
+    slices, which tile it exactly) written as beat_<first line>.wav, offsets from the run's start. -> {run id: meta}"""
+    ends = m["offsets"][1:] + [m["dur"]]
+    at = {lid: (o, e) for lid, o, e in zip(m["lines"], m["offsets"], ends)}
+    metas = {}
+    for run in beat["runs"]:
+        a, b = at[run[0]][0], at[run[-1]][1]
+        rid = run[0]
+        seg = np.concatenate([done[lid][2] for lid in run])
+        write(out / f"beat_{rid}.wav", seg)
+        metas[rid] = {**m, "lines": run, "file": f"beat_{rid}.wav", "dur": round(len(seg) / SR, 3),
+                      "offsets": [round(at[lid][0] - a, 3) for lid in run], "take": beat["id"], "take_at": round(a, 3)}
+        print(f"one take {beat['id']} -> {rid}: {', '.join(run)} ({a:.2f}-{b:.2f} s of the take)")
+    return metas
 
 
 def run_story(d, only=None, check=True, retakes=2, relock=None):
@@ -1172,7 +1244,7 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
             continue
         w = ln.get("who", narrator)
         r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
-        item = (w, ln["id"], ln.get("say") or voice.spoken(ln), ln.get("direction", ""))
+        item = (w, ln["id"], say_for(ln, cs.get(w, {}), voice.spoken), ln.get("direction", ""))
         solo = (LOCK.get(w) or cs[w].get("model") or "").startswith(BRACKET)   # Pip's model: single-speaker requests only
         if solo or (w != narrator and len(item[2].split()) <= SHORT_WORDS):   # narrator-first: a short character line goes alone
             g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < MAX_LINES), None)
