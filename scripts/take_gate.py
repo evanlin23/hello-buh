@@ -237,8 +237,11 @@ def limits_for(max_pause=None):
             lim[k].update({p: max_pause for p in lim[k]})
     elif isinstance(max_pause, dict):
         for k in ("opening", "rest"):
-            if max_pause.get(k):
-                lim[k].update({p: max_pause[k] for p in lim[k] if p != "first"})
+            v = max_pause.get(k)
+            if isinstance(v, dict):   # one kind only: {"rest": {"inside": 0.6}} keeps the other limits
+                lim[k].update({p: v[p] for p in lim[k] if p in v and v[p]})
+            elif v:
+                lim[k].update({p: v for p in lim[k] if p != "first"})
     return lim
 
 

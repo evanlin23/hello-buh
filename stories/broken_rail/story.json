@@ -80,7 +80,7 @@
         "L05",
         "L06"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; cheeky, telling on the grown-ups, indignant, then laughing about the silly pig]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; cheeky, then giggling]"
     },
     {
       "id": "r3",
@@ -94,7 +94,7 @@
         "L08",
         "L09"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; fed up with the rules, then lit up and brave, speeding up, the adventure starting]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; fed up, then brave]"
     },
     {
       "id": "r4",
@@ -107,7 +107,7 @@
         "L10",
         "L11"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; stopping short, puzzled, then full of wonder; never sad]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; puzzled, then amazed]"
     },
     {
       "id": "r5",
@@ -119,7 +119,7 @@
       "lines": [
         "L12"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; fast and determined, the last word like a launch]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; determined]"
     },
     {
       "id": "r6",
@@ -131,7 +131,7 @@
       "lines": [
         "L13"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; proud and smiling, warm, still full volume]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; proud and warm]"
     },
     {
       "id": "r7",
@@ -586,5 +586,11 @@
   "beats": "stories/broken_rail/beats.md",
   "set": "stories/broken_rail/set.md",
   "voice_takes": "beat",
-  "botName": "Buh"
+  "botName": "Buh",
+  "max_pause": {
+    "rest": {
+      "inside": 0.6
+    },
+    "note": "0.6 s inside a line after the opening (default 0.5): the natural beat after 'He says,' before the quote (L02, 6 s in, past pace's opening rules). Everything else at the defaults."
+  }
 }
