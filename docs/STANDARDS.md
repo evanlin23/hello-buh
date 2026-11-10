@@ -20,6 +20,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
    effect). Never say what the last shot already shows ("Good boy.", "Day one. Again." cut by the owner): end on the
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
+0. **The mystery test** (bar: light_sleeper, runaway): a question to the viewer in the first 3 s that only the ending
+   answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
+   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. Check: story-critic (blockers),
+   cold reader. r:ra807e9
 4. **Understood on one watch, nothing extra**: no unexplained names (set up every name first), no punchline that
    explains a twist the picture already landed, no sting after the story ends. Check: cold reader, story-critic.
    r:r0d320b
@@ -41,6 +45,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
 
 ## 2. Voice
+0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone (being chosen:
+   docs/voice_search.md; nothing is voiced until the owner picks); other characters only in very short lines.
+   r:r4f221c
 1. **The narrator is `voices/cast.json` `narrator` = Pip**: Leda, the bubbly nine-year-old direction,
    gemini-3.8-flash-lite-tts, single speaker, **natural tempo, no time-stretch, no pitch shift** (`post` empty; atempo
    1.1 at most if a take drags); the recipe is `voices/recipes/pip.md`. Kid Puck is `puck_kid`, an alternative only.
