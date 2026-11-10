@@ -61,7 +61,7 @@ is the premise, so the site is chosen for it. Every set follows `docs/building_g
 | S01 (in the air SW of the step, tilting down) | a canvas sail tip at frame right | Grandma at the jetty end (empty hands), the cap, the tower with the glass column down its face | first sky and the eastern grove; after the tilt the cliff and the market's striped roofs 23 below |
 | S03 (market, 10 blocks west of the door) | a planter | Grandpa and Grandma at the fountain door | the column up the cliff and tower, the sails, the grove behind the windmill, the fish stall with the nitwit at frame left |
 | S06 (crane down through the hatch) | the ladder, the hatch frame | Grandpa at the lit brewing stand | bookshelves, the potions in item frames, cobwebs (no barrels) |
-| S12 (in the air, 7 blocks west) | air | Grandma and the kid 2 blocks above her | the column at frame left, the cliff with grass along its top, the forested hill behind the windmill |
+| S12 (in the air, 7 blocks west) | air | Grandma and the kid above her, ~1 block west | the column at frame left, the cliff with grass along its top, the forested hill behind the windmill |
 | S09 (POV over the rail) | the rail, the hand | the cliff and the market from above | the valley, forests and hills to the fog (needs ~100 blocks of real terrain west) |
 | S13 (behind the bench, 25 blocks from the column) | Grandpa from behind, tomorrow's potion in his hand | the two floating figures, the column | the windmill on the cliff, sails, the eastern grove, hills |
 

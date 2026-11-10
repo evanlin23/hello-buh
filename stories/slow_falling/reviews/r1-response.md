@@ -51,3 +51,11 @@ The script is now 116 spoken words, about 41 s. It has no ellipses, and story.js
 | The step distance in S01 didn't match the bible | S01 (story.json and shots.md) now says 2 blocks west of the cliff face, matching the bible, the props and set.md. |
 | L01 says "jumped" but S01 showed a step-off | Grandma hops off the jetty end on "jumped". It's a vanilla jump: about 1.25 blocks up, then slow falling. The scene A timing is retimed to a landing about 4.8 s after the hop, on "Not one SCRATCH", in the bible, `timing` and beats. Scene C stays a step-off, as its lines say. |
 | r2-continuity.md | Not written yet when this round finished, so none of its blockers are applied. |
+
+## r2 polish (from reviews/r2-continuity.md, verdict clear)
+| note | change |
+|---|---|
+| The scene A hop takes 4.55 s, not 4.8 s | Changed to 91 ticks = 4.55 s in story.json `timing`, the bible and beats. She still lands on "Not one SCRATCH" (~1.3 s into L02). |
+| The gap numbers, and him landing on her | The vertical gap is now 1.4 / 2.5 / 2.8 blocks at 1.1 / 2 / 2.4 s, and 4.0 at her touchdown. He walks off the jetty end and carries about 1 block further west, staying at least 0.6 blocks apart sideways. He lands at about (-3,0,1). Updated in story.json (S11, S12, S13, props, timing), the bible, set.md and beats. |
+| S10 distance | He is now at (1,24,1) on the balcony edge, 2.5 blocks behind her, so she is head to foot in frame. |
+| The bible and shots.md were behind story.json | shots.md rows now carry story.json's camera and frame text. The bible says the hop happens on "jumped" and gives the new positions. Its instruction stays: record the real drops on the server first and retime from them. That instruction is also in story.json `timing.record_first`. |

@@ -27,7 +27,7 @@ She isn't brave or magic: every one of those 11,000 steps was a bottle Grandpa b
 | t (s) | beat | line | picture | plants |
 |---|---|---|---|---|
 | 0.0-3.4 | **The image** | L01 "My grandma has jumped off our WINDMILL ELEVEN THOUSAND times." | S01 WS in the air: Grandma hops off the jetty end (empty hands) on "jumped"; the tilt opens the 23-block drop and the glass column | the column with bubbles going up (picture); the number; the "how" is hidden |
-| 3.7-7.5 | **Worse than you thought** | L02 "Twenty-three BLOCKS. Not one SCRATCH. Grandma said, 'I'm light as a FEATHER.'" | S02 follow from 7 blocks: she drifts down, faint swirls, lands on "SCRATCH" (~4.8 s after her hop) | the height is lethal (stakes); Grandma believes it's her |
+| 3.7-7.5 | **Worse than you thought** | L02 "Twenty-three BLOCKS. Not one SCRATCH. Grandma said, 'I'm light as a FEATHER.'" | S02 follow from 7 blocks: she drifts down, faint swirls, lands on "SCRATCH" (4.55 s after her hop) | the height is lethal (stakes); Grandma believes it's her |
 | 7.8-10.0 | test 1 | L03 "Grandpa packs her JUICE for the trip." | S03 WS market (establishing): Grandpa hands her the peach bottle at the column's door | the bottle's first appearance, as juice; "for the trip" |
 | 10.3-13.2 | test 2 | L04 "Up she goes on his FOUNTAIN. It only goes UP." | S04 crane up the column: soul sand, bubbles, she pops out on the balcony | the critic's fix: no way down (picture + line) |
 | 13.5-15.6 | **A character speaks (quoted)** | L05 Grandpa said, "She was BORN to fly." | S05 WS from behind the bench 24 blocks out: Grandpa looks up at the whole windmill, Grandma tiny at the top | why he built only up |
@@ -37,7 +37,7 @@ She isn't brave or magic: every one of those 11,000 steps was a bottle Grandpa b
 | 26.1-28.5 | **The trap (a laugh)** | L09 "Wait. I'm not LIGHT. It only goes UP." | S09 EWS POV over the rail: the market 23 blocks down, bubbles only rising | his plan had a hole: he isn't light, and he can't go back |
 | 28.8-31.6 | **The kid gets it** | L10 "Grandma drank her JUICE. Same color as my TEA." | S10 FS POV on the jetty: she drinks (1.6 s); the hotbar swaps to his bottle, "Potion of Slow Falling" pops | **the viewer is ahead or level (~72%)**; the game names it |
 | 31.9-34.3 | **The act** | L11 "So I drank MINE, and we stepped OFF." | S11 WS POV: drink, the Slow Falling icon, she steps on "we stepped", he steps 0.5 s later on "OFF" | the mechanic, shown |
-| 34.6-35.9 | **The misread at its peak** | L12 Grandma (voiced): "You got it from ME!" | S12 full two in depth from 7 blocks: Grandma laughing up at him, him 2 blocks above | she doesn't know |
+| 34.6-35.9 | **The misread at its peak** | L12 Grandma (voiced): "You got it from ME!" | S12 full two in depth from 7 blocks: Grandma laughing up at him, him above and ~1 block west | she doesn't know |
 | 36.2-39.3 | **The payoff** | L13 "Nope. Grandpa BREWED her wings. Eleven thousand TIMES." | S13 EWS over Grandpa's shoulder, tomorrow's bottle in his hand: she touches down on "Eleven thousand" (+4.4 s), the kid 0.5 s later; hit on "TIMES" | loops to L01's number; cut 0.5 s after |
 
 ## The second the viewer gets ahead

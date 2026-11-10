@@ -23,8 +23,10 @@ the cellar is a potion lab, and tomorrow's bottle is in Grandpa's hand in S13. S
     |---|---|---|---|---|---|---|
     | blocks fallen | 2 | 4 | 7.4 | 10 | 22 | **23** |
 
-    **The drop (feet y 24 to y 1) takes 88 ticks = 4.4 s.** Two people who step off 0.5 s apart are about 2 blocks
-    apart from 2 s on (2.0 at 2 s, 2.3 at 2.4 s, 2.7 at 3 s). Record the real curve once (the bot with
+    **The drop (feet y 24 to y 1) takes 88 ticks = 4.4 s.** Two people who step off 0.5 s apart are 1.4 blocks apart
+    (vertically) at 1.1 s, 2.5 at 2 s, 2.8 at 2.4 s and 4.0 when the first touches down, so the kid also carries ~1
+    block further west (he walks off the end; she steps off from standing): keep them at least 0.6 blocks apart
+    sideways so his feet never sit in her head and he lands beside her. Record the real curve once (the bot with
     `/effect give @s slow_falling`, stepping off the jetty) and replay it on the mannequins. If the real number
     differs, retime to it.
   - A 23-block fall without it: 20 damage, lethal from full health.
@@ -45,11 +47,11 @@ the cellar is a potion lab, and tomorrow's bottle is in Grandpa's hand in S13. S
 - **Fall timing on screen:**
   - **Scene A.** She hops off on "jumped" (~0.4 s into L01) with empty hands; she drank off screen. A vanilla jump
     (0.42 blocks/tick up, normal gravity while rising; Slow Falling only acts while falling) peaks ~1.25 blocks up
-    after 0.3 s, then 24.25 blocks of slow falling: she lands ~4.8 s after the hop, ~1.5 s into L02, on "Not one
+    after 0.3 s, then 24.25 blocks of slow falling: she lands 91 ticks = 4.55 s after the hop, ~1.3 s into L02, on "Not one
     SCRATCH". (Scene C she steps off, as L10-L11 say: 4.4 s.)
   - **Scene C.** In S10 she drinks (1.6 s) on "drank her JUICE", then waits at the step. On "TEA" the kid selects his
     bottle and the name pops. On L11's "So I drank MINE" he drinks (1.6 s, the icon appears). She steps off on "we
-    stepped" and he steps 0.5 s later on "OFF". L12 plays 1.1-2.4 s into her fall (gap ~2 blocks). She touches down
+    stepped" and he steps 0.5 s later on "OFF". L12 plays 1.1-2.4 s into her fall (vertical gap 1.4 to 2.8 blocks, him ~1 block west of her). She touches down
     4.4 s after her step (on L13's "Eleven thousand") and he 0.5 s later. "TIMES" comes ~5.6 s after her step, and
     the cut 0.5 s after that.
 - Weather: clear, no fog beyond the render-distance haze. Summer.
@@ -77,7 +79,7 @@ south, y up. The market lies west of the cliff, and the windmill stands on the l
 ## Cast and costume
 | who | mob / skin | outfit, held item | name tag | where in each scene | state changes |
 |---|---|---|---|---|---|
-| me (N), Milo as a kid | the bot, POV; default Steve skin in camera shots (S08, S12, S13) | hotbar: slot 1 empty (selected), slot 2 the peach potion from S07; no armor; full hearts | none | B: the foot of the ladder, then at the stand (S07). C: in the column 4 blocks under Grandma (S08); the balcony beside the column's exit at (1, 24, -1), looking north-west (S09); on the jetty at (-0.5, 24, 1), 2.5 blocks behind her, facing west (S10); steps off at (-2, 24, 1) 0.5 s after her (S11); 2 blocks above her (S12); landing at about (-2, 0, 1.5) (S13) | Slow Falling from L11 to the end; no damage |
+| me (N), Milo as a kid | the bot, POV; default Steve skin in camera shots (S08, S12, S13) | hotbar: slot 1 empty (selected), slot 2 the peach potion from S07; no armor; full hearts | none | B: the foot of the ladder, then at the stand (S07). C: in the column 4 blocks under Grandma (S08); the balcony beside the column's exit at (1, 24, -1), looking north-west (S09); at the balcony edge at (1, 24, 1), the jetty's root, 2.5 blocks behind her, facing west (S10); walks the jetty and steps off its end 0.5 s after her, carrying ~1 block further west (S11); above her and ~1 block west (S12); landing at about (-3, 0, 1) (S13) | Slow Falling from L11 to the end; no damage |
 | Grandma | mannequin, our skin `skins/grandma.png` (grey bun, pink cardigan, flowered skirt; make with scripts/make_skins.py) | **S01-S02 empty hands**; the peach potion from S03 (handed over) and in S04; S10 drinks it (1.6 s), then empty hands to the end | none | A: the step (S01), falling (S02), at the fountain door (S03), rising in the column (S04), tiny at the jetty end (S05). C: rising in the column (S08), at the jetty end facing west, her back to the kid (S10), falling (S11-S13), landing at (-2, 0, 1) | Slow Falling in A (drunk off screen) and from S10; lands without damage |
 | Grandpa | mannequin, our skin `skins/grandpa.png` (white hair and moustache, brown cardigan, purple scarf) | the peach potion in S03 (handing it over); a loaf of bread in S08; **tomorrow's peach potion in his hand, resting on his knee, in S13** | none | A: at the fountain door (S03), on the bench at (-22, 0, 6), sitting, face up (S05). B: on the chair at the brewing stand, awake (S06), asleep with his head dropped (S07, `doze` pose). C: at the bread stall, facing the baker, his back to the column (S08, on screen at frame left); on the bench, face up (S13) | none |
 | the nitwit (easter egg) | villager, nitwit (green coat) | none | none | standing on the fish stall's striped roof (S03, S13 background) | none |
@@ -103,8 +105,8 @@ south, y up. The market lies west of the cliff, and the windmill stands on the l
 - S05 and S13 are shot from behind the bench (24-25 blocks from the column), so the whole windmill (23 blocks up)
   fits in a FOV 55-60 frame with Grandpa in the foreground.
 - On the balcony: S09 looks **north-west** over the rail (Grandma is off frame left, out on the jetty). S10 turns
-  **south-west** onto the jetty: Grandma ahead, facing west, her back to us, the sails at frame left (south).
-- S12: Grandma head to foot in the lower half, the kid 2 blocks above her in the upper half, the column at frame left.
+  **south-west** at the jetty's root (1, 24, 1): Grandma ahead, facing west, her back to us, the sails at frame left (south).
+- S12: Grandma head to foot in the lower half, the kid above her and ~1 block west (nearer the lens) in the upper half, the column at frame left.
 - S13: Grandpa from behind at lower left, the falling pair upper centre, the column left of them.
 
 ## The narrator

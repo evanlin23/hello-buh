@@ -30,7 +30,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "POV (the hand and hotbar), Milo as a kid, default Steve skin, seen from outside only in S08 (small, in the column), S12 (floating 2 blocks above Grandma) and S13 (far, floating)"
+      "on_screen": "POV (the hand and hotbar), Milo as a kid, default Steve skin, seen from outside only in S08 (small, in the column), S12 (floating above Grandma, ~1 block west of her) and S13 (far, floating)"
     },
     "Grandma": {
       "role": "character",
@@ -364,7 +364,7 @@
       "line": "L10",
       "place": "windmill_top",
       "size": "full",
-      "camera": "pov: turned south-west and stepped onto the jetty, 2.5 blocks behind Grandma, still",
+      "camera": "pov: turned south-west at the balcony edge at (1, 24, 1), at the jetty's root, 2.5 blocks behind Grandma at the step (-1.5 centre), still",
       "frame": "subject: Grandma head to foot at the end of the jetty, facing west, her back to us, drinking her peach bottle (drink pose, 1.6 s) on 'drank her JUICE', then waiting at the step, on 'TEA' the hotbar swaps to slot 2, the hand comes up with the same peach bottle in the lower right, and 'Potion of Slow Falling' pops above the hotbar (and in the captions). bg: the sails at frame left, the forested valley and the market far below beyond her. Morning (1000)."
     },
     {
@@ -372,7 +372,7 @@
       "line": "L11",
       "place": "windmill_top to the drop",
       "size": "wide",
-      "camera": "pov: drinks (1.6 s, the item-use animation and sound), the Slow Falling icon appears at the top right, swirls round the hand, on 'we stepped' Grandma steps off ahead, on 'OFF' he walks the last 1.5 blocks and steps off 0.5 s after her, the view tips down",
+      "camera": "pov: drinks (1.6 s, the item-use animation and sound), the Slow Falling icon appears at the top right, swirls round the hand, on 'we stepped' Grandma steps off ahead, he walks out along the jetty as she reaches the end (starting ~0.7 s before her step) and steps off 0.5 s after her on 'OFF', carrying ~1 block further west than her, the view tips down",
       "frame": "opens: Grandma's back at the step and the open sky, ends: looking down past his feet at Grandma floating 2 blocks below, the market below her. Morning (1000)."
     },
     {
@@ -381,7 +381,7 @@
       "place": "the drop",
       "size": "full",
       "camera": "at (moving with them): 7 blocks west of the pair at their height, FOV 50, looking slightly up, a two in depth",
-      "frame": "subject: Grandma head to foot in the lower half, looking up at him and laughing, Milo head to foot 2 blocks above her in the upper half, faint swirls on both, bg: the glass column at frame LEFT of them, the cliff and tower, the forested hill. Morning (1000)."
+      "frame": "subject: Grandma head to foot in the lower half, looking up at him and laughing, Milo head to foot above her and ~1 block further west (nearer the lens), 1.4-2.8 blocks higher during the line, in the upper half, faint swirls on both, bg: the glass column at frame LEFT of them, the cliff and tower, the forested hill. Morning (1000)."
     },
     {
       "id": "S13",
@@ -389,7 +389,7 @@
       "place": "market",
       "size": "ews",
       "camera": "at: low behind and left of the bench (25 blocks from the column), slow pull back, FOV 55",
-      "frame": "fg: Grandpa on the bench from behind and a little to the side, head tilted up, tomorrow's peach bottle in his hand on his knee, subject: Grandma and Milo floating down past the column to the paving by the flower stall (she touches down on 'Eleven thousand', he half a second later), bg: the windmill on the cliff with its sails, the fish stall with the nitwit, forest and hills into the morning haze. Hit on 'TIMES', cut 0.5 s after. Morning (1000)."
+      "frame": "fg: Grandpa on the bench from behind and a little to the side, head tilted up, tomorrow's peach bottle in his hand on his knee, subject: Grandma and Milo floating down past the column to the paving by the flower stall (she touches down at (-2, 0, 1) on 'Eleven thousand', he half a second later about 1 block west of her at (-3, 0, 1)), bg: the windmill on the cliff with its sails, the fish stall with the nitwit, forest and hills into the morning haze. Hit on 'TIMES', cut 0.5 s after. Morning (1000)."
     }
   ],
   "props": {
@@ -430,7 +430,7 @@
         0,
         1
       ],
-      "what": "the paving by the flower stall where they land"
+      "what": "the paving by the flower stall where Grandma lands (-2,0,1), the kid ~1 block west at (-3,0,1)"
     },
     "bottle_grandpa": {
       "actor": "Grandpa",
@@ -442,7 +442,8 @@
   "set": "stories/slow_falling/set.md",
   "timing": {
     "slow_falling_drop": "vanilla LivingEntity.travel: with Slow Falling and falling, gravity is min(gravity, 0.01) per tick, then x0.98 drag, terminal 0.49 blocks/tick = 9.8 blocks/s (minecraft.wiki/w/Slow_Falling: 'terminal velocity of 9.8 m/s'). From rest, the 23-block drop (feet y 24 to y 1) takes 88 ticks = 4.4 s. Recompute with the real recorded curve.",
-    "scene_A": "she hops off on 'jumped' (~0.4 s into L01): a vanilla jump (0.42 up, normal gravity while rising) peaks ~1.25 blocks up after 0.3 s, then 24.25 blocks of slow falling: lands ~4.8 s after the hop, ~1.5 s into L02, on 'Not one SCRATCH'",
-    "scene_C": "Grandma drinks 1.6 s on L10 'drank her JUICE' while walking to the step, Milo selects the bottle on 'TEA' (name pops) and drinks on L11 'So I drank MINE' (1.6 s), she steps on 'we stepped', he steps 0.5 s later on 'OFF' (gap ~2 blocks at the same rate: 2.0 blocks at 2 s, 2.3 at 2.4 s). L12 plays 1.1-2.4 s into her fall. She touches down at +4.4 s (on 'Eleven thousand'), he at +4.9 s, 'TIMES' ~+5.6 s, cut ~+6.1 s."
+    "scene_A": "she hops off on 'jumped' (~0.4 s into L01): a vanilla jump (0.42 up, normal gravity while rising) peaks ~1.25 blocks up after 6 ticks, then slow falling: lands 91 ticks = 4.55 s after the hop, ~1.3 s into L02, on 'Not one SCRATCH'",
+    "scene_C": "Grandma drinks 1.6 s on L10 'drank her JUICE' while walking to the step, Milo selects the bottle on 'TEA' (name pops) and drinks on L11 'So I drank MINE' (1.6 s), she steps on 'we stepped', he steps 0.5 s later on 'OFF' (vertical gap at the same rate: 1.4 blocks at 1.1 s, 2.5 at 2 s, 2.8 at 2.4 s, 4.0 at her touchdown, and he carries ~1 block further west so he never lands on her). L12 plays 1.1-2.4 s into her fall. She touches down at +4.4 s (on 'Eleven thousand'), he at +4.9 s, 'TIMES' ~+5.6 s, cut ~+6.1 s.",
+    "record_first": "Record the real drops on the server first (the bot with /effect give @s slow_falling, stepping and hopping off the jetty) and retime to the measured curves; these numbers are the simulation."
   }
 }
