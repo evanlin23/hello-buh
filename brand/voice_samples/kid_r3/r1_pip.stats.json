@@ -1,0 +1,15 @@
+{
+ "name": "r1_pip",
+ "tempo": 1.15,
+ "raw_s": 41.84,
+ "final_s": 29.15,
+ "raw_wps_speaking": 4.23,
+ "raw_wps_overall": 2.91,
+ "raw_pauses_max": 0.75,
+ "raw_pauses_over_0.12": 31,
+ "wps_speaking": 4.72,
+ "wps_overall": 4.16,
+ "pauses_max": 0.12,
+ "f0_median": 190.0,
+ "f0_spread_st": 10.7
+}

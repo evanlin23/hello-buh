@@ -1,0 +1,15 @@
+{
+ "name": "r2_proud",
+ "tempo": 1.15,
+ "raw_s": 43.84,
+ "final_s": 32.85,
+ "raw_wps_speaking": 3.68,
+ "raw_wps_overall": 2.77,
+ "raw_pauses_max": 0.69,
+ "raw_pauses_over_0.12": 26,
+ "wps_speaking": 4.12,
+ "wps_overall": 3.68,
+ "pauses_max": 0.11,
+ "f0_median": 216.0,
+ "f0_spread_st": 10.6
+}

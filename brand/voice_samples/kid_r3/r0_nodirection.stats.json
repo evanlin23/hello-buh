@@ -1,0 +1,15 @@
+{
+ "name": "r0_nodirection",
+ "tempo": 1.15,
+ "raw_s": 43.56,
+ "final_s": 30.81,
+ "raw_wps_speaking": 3.84,
+ "raw_wps_overall": 2.79,
+ "raw_pauses_max": 0.69,
+ "raw_pauses_over_0.12": 25,
+ "wps_speaking": 4.34,
+ "wps_overall": 3.93,
+ "pauses_max": 0.11,
+ "f0_median": 208.0,
+ "f0_spread_st": 11.0
+}

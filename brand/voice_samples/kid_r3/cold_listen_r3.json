@@ -1,0 +1,36 @@
+{
+ "r1_pip.mp3": {
+  "transcript": "My village is covered in knitted carpets. The road, carpet. The stairs, carpet. The dog house, also carpet. Even the bell wears a sweater. But one time, I pulled the wool off the well, and something down the well just screamed. Mom said it was a fox. I didn't know foxes lived in wells. Then I found a music disc by the farm, a real song. Nobody here has heard one. So tonight, I put a jukebox on the well. Wells echo, you know. The fox screamed again. It loved the music. Then the lights went dark, just like a party. Mom froze in the door, but I've never danced before, so I stepped off the carpet onto the stone.",
+  "unclear_words": [
+   "knitted"
+  ],
+  "clarity": 9,
+  "apparent_age": "10-14",
+  "sex": "female",
+  "sounds_like": "adult playing a kid",
+  "squeaky_or_grating": 3,
+  "pace": "right",
+  "energy": "whimsical curious atmospheric eerie",
+  "would_you_keep_listening": "Yes, intriguing storytelling and mysterious atmosphere keep attention.",
+  "word_match": 0.959,
+  "misses": [
+   [
+    "nine thousand",
+    "knitted"
+   ],
+   [
+    "doghouse",
+    "dog house"
+   ],
+   [
+    "then",
+    "and"
+   ],
+   [
+    "d",
+    "ve"
+   ]
+  ],
+  "listener": "gemini-3.5-flash"
+ }
+}

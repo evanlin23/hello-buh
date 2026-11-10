@@ -1,0 +1,15 @@
+{
+ "name": "r3_figuring",
+ "tempo": 1.0,
+ "raw_s": 46.32,
+ "final_s": 35.63,
+ "raw_wps_speaking": 3.99,
+ "raw_wps_overall": 2.64,
+ "raw_pauses_max": 0.8,
+ "raw_pauses_over_0.12": 30,
+ "wps_speaking": 3.99,
+ "wps_overall": 3.4,
+ "pauses_max": 0.13,
+ "f0_median": 219.0,
+ "f0_spread_st": 11.1
+}
