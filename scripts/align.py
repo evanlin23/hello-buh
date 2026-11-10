@@ -57,9 +57,24 @@ def norm(t):
     return re.sub(r"[^a-z0-9]", "", t.lower())
 
 
+ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
+
+
+def spelled(t):
+    """A token's letters, numbers spelled out (Whisper hears "thirty-seven" as "37": 2 letters against the script's
+    11 shifted every later chunk's place; Good Boy's "to LEAVE" started on "tried")."""
+    def say(n):
+        if n < 20: return ONES[n]
+        if n < 100: return TENS[n // 10] + (ONES[n % 10] if n % 10 else "")
+        if n < 1000: return ONES[n // 100] + "hundred" + (say(n % 100) if n % 100 else "")
+        return str(n)
+    return re.sub(r"\d+", lambda m: say(int(m.group())), norm(t))
+
+
 def place(tokens):
     """Each token's (start, end) position as a fraction of the joined letters."""
-    lens = [max(1, len(norm(t))) for t in tokens]
+    lens = [max(1, len(spelled(t))) for t in tokens]
     tot, acc, out = sum(lens), 0, []
     for n in lens:
         out.append((acc / tot, (acc + n) / tot)); acc += n
@@ -111,6 +126,10 @@ def main(d, only=None):
         wj[lid] = [[w, round(a, 3), round(b, 3)] for w, a, b in heard]
         spoken = [s for _, s in voice.chunks(ln)]
         ct = chunk_times(spoken, heard)
+        # the first chunk starts with the first word heard, even when the script and Whisper spell it differently
+        # ("Twenty-five" heard as "25" matched nothing, and the line's first caption waited for the next word)
+        if ct and heard and heard[0][1] < ct[0][0]:
+            ct[0][0] = round(heard[0][1], 3)
         said, got = norm(" ".join(spoken)), norm(" ".join(w for w, _, _ in heard))
         match = difflib.SequenceMatcher(None, said, got).ratio()
         m = meta["lines"][lid]
