@@ -109,6 +109,7 @@ hud: false,                                                               // ...
 apt-get update && apt-get install -y espeak-ng   # Kokoro's phonemizer for unknown words (a fresh container's apt lists are empty)
 python3.11 -m venv ~/.hb-tts
 ~/.hb-tts/bin/pip install --extra-index-url https://download.pytorch.org/whl/cpu torch kokoro soundfile numpy
+~/.hb-tts/bin/pip install transformers && ~/.hb-tts/bin/pip install --no-deps resemblyzer   # Whisper word cuts + the speaker check
 ```
 CPU torch only (no CUDA download). The first run fetches the Kokoro-82M weights (Apache 2.0) and spaCy's small
 English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
@@ -125,11 +126,20 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 | song | `scripts/add_song.py` (via publish.js) | for a story stunt the NCS track is a quiet bed under the voice (-31 LUFS), not the -13 lead the stunt Shorts use. |
 
 Captions: Schibsted Grotesk Black (OFL, `assets/fonts/`) at 96 px, white with a dark outline and a soft shadow,
-key words in the story's colour, centred at 70% of the game view's height (under the crosshair, above the
+key words in the story's colour (in a v2 story a character's line is in that character's colour, key words underlined;
+docs/voices.md "Caption colours"), centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "can you make sure the voices are distinct and correct? It felt like stuff was getting mixed
+  up... Maybe we can have color coded captions?"** and, on the colours: **"It should generally just "match" the vibe
+  of the character thats supposed to be speaking."** Every voiced line is checked for the right speaker and the
+  right words before anything is recorded (`./hb voice` runs `scripts/speaker_check.py` and re-takes failures); a
+  line in the wrong voice is a blocker. Each character's captions are in its own colour, matched to its look and role
+  (`color` in voices/cast.json: the narrator white, Milo Steve's cyan, the elder amber...), with a small name tag
+  over its first line; the narrator's key words keep the story's key colour, a character's key words are underlined
+  in its own colour (docs/voices.md "Caption colours").
 - **Owner, 2026-11-10, on voices: "maybe we should have a narrator?" … then, on narrator-first with a few character
   lines: "i think that makes the most sense yeah".** Our best story (runaway: one first-person narrator, 3.2 subs per
   1k views, the channel's best) and the cinematic pilots (several voices: "mixed up", one read as ASMR) point the same

@@ -44,6 +44,7 @@ MODELS = ["gemini-2.5-flash-preview-tts", "gemini-2.5-pro-preview-tts", "gemini-
 SR = 24000
 CACHE = ROOT / "work" / "tts"
 STATS = {"requests": 0, "cached": 0}
+SHORT_WORDS = 3  # a character line this short goes in a single-speaker request (multi-speaker takes swapped them)
 PITCH_W = 3.0   # weight of the pitch term in cut() (tuned on the voices/samples takes)
 
 
@@ -121,6 +122,47 @@ def speech_segments(x, gap=0.3, thr=0.02):
 
 
 def cut(x, texts):
+    """Cut a take into len(texts) lines: at Whisper's word timings when Whisper is installed (the TTS venv), else at
+    the pauses (cut_pauses). The pauses alone went wrong on lines written with "...": the longest pause of a take is
+    often inside a line, not between two."""
+    if len(texts) == 1:
+        segs = speech_segments(x, gap=0.12)
+        return [x[segs[0][0]:segs[-1][1]] if segs else x]
+    try:
+        return cut_words(x, texts)
+    except ImportError:
+        print("  (no Whisper here: cutting at the pauses; run tts.py with ~/.hb-tts/bin/python to cut at the words)")
+    except ValueError as e:
+        print(f"  word cut failed ({e}): cutting at the pauses")
+    return cut_pauses(x, texts)
+
+
+def cut_words(x, texts):
+    """Cut with Whisper's help: it transcribes the take with word times (scripts/align.py's model), and where the
+    first word of a line is heard as written, the cut must fall in the pause just before that word. The cut itself
+    still goes in a real pause (cut_pauses), so Whisper's loose word ends (they swallow the pause after a word) don't
+    clip anything, and a line Whisper missed (it dropped a lone "Sit.") is placed by the pauses alone."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import difflib
+    import align
+    x16 = np.interp(np.arange(int(len(x) * 16000 / SR)) * SR / 16000, np.arange(len(x)), x).astype(np.float32)
+    heard = align.words(x16)
+    if not heard:
+        raise ValueError("Whisper heard nothing")
+    sw = [w for t in texts for w in t.split()]
+    first = np.cumsum([0] + [len(t.split()) for t in texts])[:-1]
+    a, b = [align.norm(w) for w in sw], [align.norm(w) for w, _, _ in heard]
+    m = {}
+    for blk in difflib.SequenceMatcher(None, a, b, autojunk=False).get_matching_blocks():
+        for k in range(blk.size):
+            m[blk.a + k] = blk.b + k
+    hints = [heard[m[first[i]]][1] if first[i] in m and len(a[first[i]]) > 1 else None for i in range(1, len(texts))]
+    if not any(h is not None for h in hints):
+        raise ValueError("no line's first word was heard as written")
+    return cut_pauses(x, texts, hints)
+
+
+def cut_pauses(x, texts, hints=None):
     """Cut a take into len(texts) lines (cut_vox.py): every pause is a candidate, and dynamic programming picks the
     cuts so each line's share of the speech matches its share of the text, preferring long pauses. Lines with pauses
     inside them don't fool it the way "the n - 1 longest pauses" did."""
@@ -148,6 +190,8 @@ def cut(x, texts):
         for j in range(i, M + 1):
             for k in range(i - 1, j):
                 c = best[i - 1, k] + ((segs[j - 1][1] - segs[k][0]) / T - share[i - 1]) ** 2 * 50 + spread(k, j) - (0.6 * gaps[j - 1] / gmax if j < M else 0)
+                if hints and j < M and i < L and hints[i - 1] is not None:   # line i+1 starts at its first heard word
+                    c += 20 * (segs[j][0] / SR - hints[i - 1]) ** 2
                 if c < best[i, j]:
                     best[i, j], arg[i, j] = c, k
     out, j = [], M
@@ -200,14 +244,15 @@ def prompt(scene, lines, cs):
     return " ".join(head) + "\n\n" + "\n".join(body)
 
 
-def take(scene, lines, cs):
-    """Voice one request's lines [(who, id, text, note)] (at most 2 speakers) -> [float32 per line], cached."""
+def take(scene, lines, cs, salt=""):
+    """Voice one request's lines [(who, id, text, note)] (at most 2 speakers) -> [float32 per line], cached.
+    salt: a re-take's name ("retake1"): the same prompt, a new request and its own cache entry."""
     who = list(dict.fromkeys(w for w, _, _, _ in lines))
     if len(who) > 2:
         raise SystemExit(f"{[l for _, l, _, _ in lines]}: {len(who)} speakers in one request (Gemini takes 2)")
     text = prompt(scene, lines, cs)
     voices = {cs[w]["name"]: cs[w]["voice"] for w in who}
-    raw = CACHE / f"{hashlib.sha1(json.dumps([text, voices]).encode()).hexdigest()[:16]}.wav"
+    raw = CACHE / f"{hashlib.sha1(json.dumps([text, voices] + ([salt] if salt else [])).encode()).hexdigest()[:16]}.wav"
     if raw.exists():
         STATS["cached"] += 1
         x = np.frombuffer(pcm(["-i", str(raw), "-f", "f32le", "-"]), np.float32)
@@ -222,12 +267,12 @@ def take(scene, lines, cs):
     return cut(x, [t for _, _, t, _ in lines])
 
 
-def voice_lines(groups, cs, out):
+def voice_lines(groups, cs, out, salt=""):
     """groups: [(scene, [(who, id, text, note)])] -> {id: (who, text, wav samples)}."""
     out.mkdir(parents=True, exist_ok=True)
     done = {}
     for scene, lines in groups:
-        for (w, lid, t, _), seg in zip(lines, take(scene, lines, cs)):
+        for (w, lid, t, _), seg in zip(lines, take(scene, lines, cs, salt)):
             y = finish(seg, out / f"{lid}.wav", cs[w].get("post", ""))
             done[lid] = (w, t, y)
             print(f"{lid:8s} {len(y) / SR:5.2f} s {f0(y):4d} Hz  {w}: {t}")
@@ -239,7 +284,47 @@ def run_list(spec, out):
     voice_lines(groups, library(), out)
 
 
-def run_story(d, only=None):
+def speaker_check(d, ids):
+    """scripts/speaker_check.py on these lines (in the TTS venv) -> its report, or None when it can't run."""
+    py = pathlib.Path.home() / ".hb-tts" / "bin" / "python"
+    r = subprocess.run([str(py if py.exists() else sys.executable), str(ROOT / "scripts" / "speaker_check.py"), str(d),
+                        "--json", "--only", ",".join(ids)], capture_output=True, text=True)
+    try:
+        return json.loads(r.stdout.strip().splitlines()[-1])
+    except (IndexError, json.JSONDecodeError):
+        print(f"speaker check didn't run ({(r.stderr or r.stdout).strip().splitlines()[-1:] or '?'}): listen to every line")
+        return None
+
+
+def retake(d, done, items, cs, n_max):
+    """Check the lines just voiced; re-take the ones in the wrong voice or with the wrong words, at most n_max times
+    each, always as a single-speaker request (one voice can't swap). Lines that pass are never re-taken. -> {id: n}"""
+    takes, ids = {}, list(done)
+    for n in range(1, n_max + 1):
+        rep = speaker_check(d, ids)
+        if rep is None:
+            break
+        bad = [l for l in rep["lines"] if l["id"] in ids and ("SWAP" in l["flags"] or "WORDS" in l["flags"])]
+        for l in rep["lines"]:
+            if l["flags"]:
+                print(f"  {l['id']}: {' '.join(l['flags'])} (closest {l['closest']}, margin {l['margin']}"
+                      + (f", heard \"{l.get('heard', '')}\"" if "WORDS" in l["flags"] else "") + ")")
+        if not bad:
+            print(f"speaker check: {len(ids)} line(s) ok" + (f" after {n - 1} re-take round(s)" if n > 1 else ""))
+            return takes
+        ids = [l["id"] for l in bad]
+        print(f"re-take {n}/{n_max}: {', '.join(ids)} (single-speaker)")
+        for lid in ids:
+            sc, it = items[lid]
+            done.update(voice_lines([(sc, [it])], cs, d / "voice", f"retake{n}")); takes[lid] = n
+    rep = speaker_check(d, ids) if takes else None
+    if rep and rep["blockers"]:
+        print(f"STILL WRONG after {n_max} re-takes: {', '.join(rep['blockers'])}: listen, then fix the line's text or "
+              f"direction (or --retakes more); a swapped voice is a blocker")
+    return takes
+
+
+def run_story(d, only=None, check=True, retakes=2):
     sys.path.insert(0, str(ROOT / "scripts"))
     import voice   # the caption format (" / " chunks, CAPS lowered for speech) stays voice.py's
     story = json.loads((d / "story.json").read_text())
@@ -253,6 +338,10 @@ def run_story(d, only=None):
         w = ln.get("who", narrator)
         r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
         item = (w, ln["id"], ln.get("say") or voice.spoken(ln), ln.get("direction", ""))
+        if w != narrator and len(item[2].split()) <= SHORT_WORDS:   # narrator-first: a short character line goes alone
+            g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < 8), None)
+            g[1].append(item) if g else groups.append(((r or {}).get("direction", story.get("direction", "")), [item], ("solo", w)))
+            continue
         if reqs:   # each line in the first request that lists its speaker
             if r is None:
                 raise SystemExit(f"{ln['id']}: no request lists speaker {w}")
@@ -264,9 +353,18 @@ def run_story(d, only=None):
         cur.append(item)
     if cur:
         groups.append((story.get("direction", ""), cur, None))
-    done = voice_lines([(s, l) for s, l, _ in groups], cs, d / "voice")
     vf = d / "voice" / "voice.json"
-    meta = json.loads(vf.read_text()) if only and vf.exists() else {"lines": {}}
+    old = json.loads(vf.read_text()) if vf.exists() else {"lines": {}}
+    done = voice_lines([(s, l) for s, l, _ in groups], cs, d / "voice")
+    items = {it[1]: (sc, it) for sc, l, _ in groups for it in l}
+    takes = {}
+    for lid, (sc, it) in items.items():   # a line that passed on an earlier re-take keeps that take (from the cache)
+        n = (old["lines"].get(lid) or {}).get("take", 0)
+        if n and old["lines"][lid].get("text") == it[2]:
+            done.update(voice_lines([(sc, [it])], cs, d / "voice", f"retake{n}")); takes[lid] = n
+    if check:
+        takes.update(retake(d, done, items, cs, retakes))
+    meta = old if only else {"lines": {}}
     meta.update({"model": f"Gemini TTS ({MODELS[0]} first), voices/cast.json", "sr": SR, "gap": story.get("gap", 0.25)})
     for ln in story["lines"]:
         if ln["id"] not in done:
@@ -278,7 +376,7 @@ def run_story(d, only=None):
         share = np.cumsum([0] + [len(c) for c in caps]) / max(1, sum(len(c) for c in caps))
         meta["lines"][ln["id"]] = {"who": w, "text": t, "dur": round(len(y) / SR, 3), "onset": round(a, 3), "end": round(b, 3),
                                    "chunks": [[round(a + (b - a) * s, 3), round(a + (b - a) * e, 3)] for s, e in zip(share, share[1:])],
-                                   "captions": caps}
+                                   "captions": caps, **({"take": takes[ln["id"]]} if takes.get(ln["id"]) else {})}
     meta["lines"] = {ln["id"]: meta["lines"][ln["id"]] for ln in story["lines"] if ln["id"] in meta["lines"]}
     meta["total"] = round(sum(l["dur"] + meta["gap"] for l in meta["lines"].values()), 2)
     vf.write_text(json.dumps(meta, indent=1))
@@ -288,5 +386,8 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     only = a[a.index("--only") + 1].split(",") if "--only" in a else None
     p = pathlib.Path(a[0])
-    run_story(p, only) if p.is_dir() else run_list(p, pathlib.Path(a[1]))
+    if p.is_dir():
+        run_story(p, only, check="--no-check" not in a, retakes=int(a[a.index("--retakes") + 1]) if "--retakes" in a else 2)
+    else:
+        run_list(p, pathlib.Path(a[1]))
     print(f"{STATS['requests']} API request(s), {STATS['cached']} take(s) from the cache")

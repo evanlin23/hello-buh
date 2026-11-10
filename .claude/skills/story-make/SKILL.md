@@ -44,11 +44,17 @@ too close to a made story; vary the lane: eerie / absurd / heart) → beat sheet
   may be used instead of writing a new one.
 
 ## 2. Voice (~10 min)
-Gemini TTS via `scripts/tts.py` (the proxy injects the key: header `x-goog-api-key: proxy`). Cast from
-`voices/cast.json` so recurring characters keep their voice. Save quota: the cheapest TTS model that sounds right,
-a scene's dialogue in ONE multi-speaker request (max 2 speakers per request), cache every take, only re-take lines
-that changed. Align words (Whisper / the aligner in the voice pipeline) into `voice.json`. Listen-check with a
-transcription pass: the take must match the script (the model sometimes reads the direction aloud).
+One command: `./hb voice story_<name>` (docs/voices.md "Making the voice"). It voices the cast on Gemini TTS (the
+proxy injects the key), cuts each take at Whisper's word times, runs `scripts/speaker_check.py` on every line (the
+right voice? the right words?), re-takes the failures as single-speaker requests (at most 2 each; lines that pass
+are never re-taken), aligns the word times into `voice.json` and prints the final check. Don't hand-roll this step
+(no extra Whisper installs: `./hb doctor` says what the TTS venv needs). Cast from `voices/cast.json` so recurring
+characters keep their voice and caption colour. Narrator-first: character lines of 3 words or fewer are voiced alone
+(Gemini's multi-speaker mode swapped short lines into the other voice). Save quota: cheapest model first, every
+take cached, only changed lines re-taken (`--only L05`).
+**A line in the wrong voice is a blocker** (owner, 2026-11-10: "make sure the voices are distinct and correct"): if
+`./hb voice` ends with BLOCKERS after its re-takes, listen, change the line's text or direction, and `./hb voice
+story_<name> --only <id>`; never record over a swapped line. THIN lines: listen to them.
 **Quota out (429 on every model):** stop here, push, and leave the story for the next run; never fall back to the
 old sped-up single narrator.
 

@@ -21,6 +21,7 @@ HERE = pathlib.Path(__file__).resolve().parent.parent
 FONT = HERE / "assets" / "fonts" / "SchibstedGrotesk-Black.ttf"
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
 CAP_PX = 96
+TAG_PX = 54                              # the speaker's name tag, over a character's first caption (story.json "name_tags": false turns it off)
 MAX_W = 900
 CY = BAND + int(GAME_H * 0.70)          # caption block centre: below the crosshair, above the hearts
 INK = (14, 12, 18, 255)
@@ -106,26 +107,72 @@ def _wrap(words, f, max_w):
     return [words[:best], words[best:]]
 
 
-def caption_image(text, key, base=(255, 255, 255, 255)):
-    """base: the colour of the plain words (white; a v2 story's character lines use that speaker's cast colour)."""
+def caption_image(text, key, base=(255, 255, 255, 255), speaker=False, tag=None):
+    """base: the colour of the plain words (white; a v2 story's character lines use that speaker's cast colour).
+    speaker: a character's line (docs/voices.md "Caption colours"): its key words stay in the speaker's colour,
+    drawn brighter, with a bar under them in that colour, instead of the story's key colour, so the colour always
+    says who is talking and a key word still pops. tag: a small name over the caption (the speaker's first line)."""
     f = ImageFont.truetype(str(FONT), CAP_PX)
     stroke = 8
     lines = _wrap(text.split(), f, MAX_W - 2 * stroke)
     sp, lh = f.getlength(" "), int(CAP_PX * 1.08)
     widths = [sum(f.getlength(w) for w in ln) + sp * (len(ln) - 1) for ln in lines]
-    bw, bh = int(max(widths) + 2 * stroke + 24), int(lh * len(lines) + 2 * stroke + 30)
+    ft = ImageFont.truetype(str(FONT), TAG_PX) if tag else None
+    top = int(TAG_PX * 1.25) if tag else 0
+    bw = int(max(widths + ([ft.getlength(tag.upper()) + 2 * stroke] if tag else [])) + 2 * stroke + 24)
+    bh = int(top + lh * len(lines) + 2 * stroke + 30)
     txt = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
     d = ImageDraw.Draw(txt)
+    if tag:
+        d.text(((bw - ft.getlength(tag.upper())) / 2, stroke), tag.upper(), font=ft, fill=base, stroke_width=6, stroke_fill=INK)
+    hot = tuple(min(255, int(c + (255 - c) * 0.45)) for c in base[:3]) + (255,)   # the speaker's colour, lifted toward white
+    asc = f.getmetrics()[0]
     for i, (ln, lw) in enumerate(zip(lines, widths)):
-        x, y = (bw - lw) / 2, stroke + 8 + i * lh
+        x, y = (bw - lw) / 2, top + stroke + 8 + i * lh
         for w in ln:
-            d.text((x, y), w, font=f, fill=key if _is_key(w) else base, stroke_width=stroke, stroke_fill=INK)
+            k = _is_key(w)
+            if k and speaker:
+                ww = f.getlength(w.rstrip(".,!?;:…"))
+                d.rounded_rectangle((x - 2, y + asc + 4, x + ww + 2, y + asc + 17), 5, fill=base, outline=INK, width=4)
+            d.text((x, y), w, font=f, fill=(hot if speaker else key) if k else base, stroke_width=stroke, stroke_fill=INK)
             x += f.getlength(w) + sp
     shadow = Image.new("RGBA", txt.size, (0, 0, 0, 0))
     shadow.putalpha(txt.split()[3].filter(ImageFilter.GaussianBlur(7)).point(lambda v: int(v * 0.55)))
     out = Image.new("RGBA", (bw, bh + 10), (0, 0, 0, 0))
     out.alpha_composite(shadow, (0, 8))
     out.alpha_composite(txt, (0, 0))
+    out.info["tag_h"] = top   # the name tag's height: the words stay where an untagged caption's would be
+    return out
+
+
+def speakers(story):
+    """{line id: (plain-word colour, is a character, name tag or None)} for a story. v1 stories and the narrator:
+    white. A v2 character: its cast `color`, else its library character's `color` (voices/cast.json, via `ref`),
+    else the first unused colour of the library palette; a name tag over its first line (story.json
+    "name_tags": false turns them off)."""
+    cast = story.get("cast") or {}
+    lib = json.loads((HERE / "voices" / "cast.json").read_text())
+    used = {c.get("color", "").upper() for c in cast.values()}
+    spare = [v["color"] for k, v in lib.items() if not k.startswith("_") and k != "narrator" and v.get("color") and v["color"].upper() not in used]
+    col = {}
+    for cid, c in cast.items():
+        if c.get("role") != "character":
+            continue
+        h = c.get("color") or (lib.get(c.get("ref") or "") or {}).get("color") or (spare.pop(0) if spare else "#FFFFFF")
+        col[cid] = (_rgba(h), c.get("name") or (lib.get(c.get("ref") or "") or {}).get("name") or cid)
+    key = _rgba(story.get("key_color", "#ffd640"))
+    for cid, (c, name) in col.items():   # the narrator's key words must not look like a character talking
+        if sum((a - b) ** 2 for a, b in zip(c[:3], key[:3])) ** 0.5 < 60:
+            print(f"captions: {cid}'s colour is close to the story's key_color {story.get('key_color')}: the narrator's key "
+                  f"words will read as {name} talking; pick a key colour apart from the cast (docs/voices.md)")
+    out, seen = {}, set()
+    for ln in story["lines"]:
+        w = ln.get("who")
+        if w in col:
+            out[ln["id"]] = (col[w][0], True, col[w][1] if story.get("name_tags", True) and w not in seen else None)
+            seen.add(w)
+        else:
+            out[ln["id"]] = ((255, 255, 255, 255), False, None)
     return out
 
 
@@ -194,17 +241,16 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
     runs, frame = [], 0                      # [(png, frames)]
     total = int(round(dur * FPS))
-    # story.json v2: a character's lines in that speaker's cast colour (the narrator's, and v1 stories', white)
-    cast, spk = story.get("cast") or {}, {l["id"]: l.get("who") for l in story["lines"]}
-    def base_of(lid):
-        c = cast.get(spk.get(lid) or "", {})
-        return _rgba(c["color"]) if c.get("role") == "character" and c.get("color") else (255, 255, 255, 255)
+    # story.json v2: a character's lines in that speaker's colour (the narrator's, and v1 stories', white)
+    spk, tagged = speakers(story), set()
     for k, (t0, t1, text, lid) in enumerate(caption_events(story_dir, timeline, start, dur, who=True)):
         f0, f1 = int(round(t0 * FPS)), int(round(t1 * FPS))
         if f0 > frame:
             runs.append((blank, f0 - frame))
         f0 = max(f0, frame)
-        base = caption_image(text, key, base_of(lid))
+        col, is_char, tag = spk.get(lid, ((255, 255, 255, 255), False, None))
+        base = caption_image(text, key, col, is_char, tag if lid not in tagged else None)   # the tag on the line's first chunk
+        tagged.add(lid)
         for j in range(f1 - f0):
             s = POP[j] if j < len(POP) else 1.0
             if j >= len(POP):
@@ -212,7 +258,7 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
                 break
             im = base.resize((max(1, int(base.width * s)), max(1, int(base.height * s))), Image.BICUBIC) if s != 1.0 else base
             full = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-            full.alpha_composite(im, (int(W / 2 - im.width / 2), int(CY - im.height / 2)))
+            full.alpha_composite(im, (int(W / 2 - im.width / 2), int(CY - im.height / 2 - base.info.get("tag_h", 0) * s / 2)))
             p = tmp / f"cap{k}_{j}.png"
             full.save(p)
             runs.append((p, 1))

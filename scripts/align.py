@@ -25,13 +25,16 @@ _pipe = None
 
 
 def words(wav):
-    """[(word, start, end)] in seconds, from Whisper's word timestamps."""
+    """[(word, start, end)] in seconds, from Whisper's word timestamps. wav: a file, or 16 kHz float32 samples."""
     global _pipe
     if _pipe is None:
         from transformers import pipeline
         _pipe = pipeline("automatic-speech-recognition", model="openai/whisper-base.en", device="cpu")
-    x = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
-                                     capture_output=True, check=True).stdout, np.float32).copy()
+    if isinstance(wav, np.ndarray):   # already 16 kHz mono float32 (tts.py's word cut)
+        x = wav.astype(np.float32)
+    else:
+        x = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+                                         capture_output=True, check=True).stdout, np.float32).copy()
     r = _pipe({"raw": x, "sampling_rate": SR}, return_timestamps="word")
     out = []
     for c in r["chunks"]:

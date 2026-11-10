@@ -1,8 +1,10 @@
 {
- "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x).",
+ "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\").",
  "narrator": {
   "name": "Narrator",
   "voice": "Erinome",
+  "color": "#FFFFFF",
+  "color_why": "white: the storyteller is the neutral voice, so every other colour means someone else is talking",
   "profile": "the storyteller: a woman in her thirties, calm, clear and a little hushed, unhurried, like the opening of a mystery film; she lets the strange detail land with a small pause before it",
   "post": "",
   "fallback": "bf_emma",
@@ -12,6 +14,8 @@
  "milo": {
   "name": "Milo",
   "voice": "Achird",
+  "color": "#4FD8E6",
+  "color_why": "cyan: Steve's shirt (Milo is the default Steve skin)",
   "profile": "Milo, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
   "post": "",
   "fallback": "am_michael",
@@ -21,6 +25,8 @@
  "elder": {
   "name": "Elder",
   "voice": "Algenib",
+  "color": "#F0A845",
+  "color_why": "warm amber: an old villager's brown-gold robe in lantern light",
   "profile": "the village elder: an old man in his seventies, slow, soft and warm, wise, a little gravelly; he has seen this before, and that is what makes him quietly unsettling",
   "post": "",
   "fallback": "bm_george",
@@ -30,6 +36,8 @@
  "child": {
   "name": "Kid",
   "voice": "Leda",
+  "color": "#FFEE70",
+  "color_why": "sunny yellow: small, bright and quick",
   "profile": "a village kid, about nine: small, bright, earnest and fast, asks questions, scared but trying to be brave",
   "post": "asetrate=24000*1.12,aresample=24000,atempo=0.893",
   "fallback": "af_sky",
@@ -39,6 +47,8 @@
  "smith": {
   "name": "Smith",
   "voice": "Orus",
+  "color": "#9C9C9C",
+  "color_why": "iron grey: the anvil, and the iron golem he also voices",
   "profile": "the blacksmith: a big, gruff man in his fifties, low and blunt, short sentences, no patience for nonsense, a soft heart he hides",
   "post": "equalizer=f=110:t=q:w=1:g=3",
   "fallback": "am_onyx",
@@ -48,6 +58,8 @@
  "stranger": {
   "name": "Stranger",
   "voice": "Charon",
+  "color": "#B39BFF",
+  "color_why": "dusk violet: the hooded stranger at the edge of render distance, a little enderman",
   "profile": "a mysterious hooded stranger: very old and gravelly, a slow low whisper, knows a terrible secret and says less than he knows",
   "post": "",
   "fallback": "bm_fable",
@@ -57,6 +69,8 @@
  "villain": {
   "name": "Villain",
   "voice": "Schedar",
+  "color": "#F03A47",
+  "color_why": "redstone red: the danger colour; the only red in the cast",
   "profile": "the villain: a man in his forties, cold, flat and quiet, perfectly calm, never shouts, sounds faintly amused; the threat is in how polite he is",
   "post": "equalizer=f=3000:t=q:w=1:g=-2",
   "fallback": "bm_daniel",
@@ -66,6 +80,8 @@
  "mom": {
   "name": "Mom",
   "voice": "Sulafat",
+  "color": "#FFC2A8",
+  "color_why": "warm peach: home, the hearth, the normal life before the strange thing",
   "profile": "Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it",
   "post": "",
   "fallback": "af_sarah",
@@ -75,6 +91,8 @@
  "friend": {
   "name": "Max",
   "voice": "Fenrir",
+  "color": "#7DF07D",
+  "color_why": "lime: loud, quick and loyal, all energy (a slime's green)",
   "profile": "Milo's best friend: a sixteen-year-old boy, loud, excitable and loyal, talks fast, jokes, always up for it",
   "post": "",
   "fallback": "am_puck",
