@@ -99,7 +99,8 @@ and LEFT." End beats on the pivot.
   a villager who only says "hmm" all story and then speaks one sentence is stronger than a chatty one.
 
 **Captions** (unchanged): 2-3 word chunks split by ` / `, key words in CAPS and the key colour, never more than two
-lines. Character lines get the speaker's colour (see the cast block below).
+lines. Character lines get the speaker's colour, matched to the character's vibe, with a name tag on its first line
+(docs/voices.md "Caption colours").
 
 **One quotable line,** short enough to type in a comment.
 
@@ -199,7 +200,7 @@ through `lib/story.js`, `scripts/voice.py` and `scripts/story_track.py`, which r
 |---|---|---|
 | `version: 2` | this story uses the cast extension | writers, critics; tools may branch on it |
 | `logline`, `question` | the one-sentence story and the "why tf" question | the critic; packaging |
-| `cast.<id>` | `ref` (a `voices/cast.json` id: its voice, name and profile), `role` narrator/character, `voice` (Gemini prebuilt name), `color` (caption colour for their lines), `profile` (the audio profile sent as direction), `on_screen` (POV, an actor skin, a mob) | the voice step; captions; the build |
+| `cast.<id>` | `ref` (a `voices/cast.json` id: its voice, name and profile), `role` narrator/character, `voice` (Gemini prebuilt name), `color` (caption colour for their lines; default: the library character's `color`), `profile` (the audio profile sent as direction), `on_screen` (POV, an actor skin, a mob) | the voice step; captions; the build |
 | `requests[]` | which speakers share a TTS request (max 2) and the scene direction | the voice step (maps 1:1 to `tts.py`'s `voices.json` entries: `speakers` = `{cast name: voice}`, `lines` = `[[who, id, say]]`) |
 | `lines[].who` | the speaker (a `cast` id); missing = the narrator | voice, captions |
 | `lines[].say` | the exact text the TTS reads (tags allowed); missing = `text` with ` / ` removed and CAPS lower-cased | voice |

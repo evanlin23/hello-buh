@@ -68,6 +68,11 @@ Work in this order, and stop collecting once you have the verdict's evidence:
   - black or void terrain, a cut world edge in shot, a broken render;
   - under 30 s without the owner's OK;
   - the story not understandable without pausing;
+  - **a line in the wrong voice** (a character's line read by the narrator's voice or the other way round, owner
+    2026-11-10: "make sure the voices are distinct and correct"), a word in the wrong line, a direction read aloud,
+    a word cut off at a line's start or end or clipped in the middle (owner: "cuts stuff off"), or a caption in the
+    wrong speaker's colour: `./hb voice <stunt> --check` lists SWAP, WORDS, EDGE and CLIPPED lines (re-take them:
+    `./hb voice <stunt> --only <id>`), then confirm by ear;
   - **the owner's four patterns (2026-11-10, 22 notes on 6 stories; `./hb owner <stunt>` checks each, with the output
     time and line id; confirm its flags on the frames and look for what it can't measure):**
     1. *superflat / tiny sets*: a shot whose visible world is mostly a flat cleared plain, a 3x3 hill, the next
