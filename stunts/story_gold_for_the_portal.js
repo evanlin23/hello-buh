@@ -79,14 +79,16 @@ module.exports = {
     await c('/gamemode survival Grandpa')
     await c('/effect give Grandpa resistance infinite 255 true')
     await c(`/item replace entity Grandpa armor.head with air`)
-    await M.place(ctx, 'Grandpa', X + 9.5, F + 1 + DOWN, Z + 5.5, 90, 0)
+    await M.place(ctx, 'Grandpa', X + 9.6, F + 1 + DOWN, Z + 5.5, 90, 5)
+    await c(`/item replace entity Grandpa weapon.mainhand with ${HELMET}`)
+    await c(`/tp @e[tag=gma0] ${A(8.2, 1 + DOWN, 3.7)} -60 15`)
 
     // Nico: golden boots, full hearts, nothing in hand
     await c('/clear @s')
     await c('/item replace entity @s armor.feet with golden_boots')
     await c('/effect give @s resistance infinite 255 true')
     await c('/effect give @s saturation infinite 255 true')
-    await ctx.tpCheck(X + POCKET[0] + 0.5, F + POCKET[1], Z + POCKET[2] + 0.5, 90, 0)
+    await ctx.tpCheck(X + 2.3, F + 1, Z + 2.4, -110, 0)   // the ladder's foot: S03's POV (S01-S02 are camera shots)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await bot.waitForTicks(40)
@@ -97,7 +99,7 @@ module.exports = {
     const { bot } = ctx
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F }, { warm: null })
-    const { P, look, line, say } = K
+    const { P, line, say } = K
     const A = (dx, dy, dz) => `${(X + dx).toFixed(2)} ${(F + dy).toFixed(2)} ${(Z + dz).toFixed(2)}`
     const ent = (name, near) => Object.values(bot.entities).filter(e => e.name === name).sort((a, b) => (near ? a.position.distanceTo(near) - b.position.distanceTo(near) : 0))[0]
     // the portal: purple specks drifting off the sheet, and its hum now and then
@@ -112,16 +114,28 @@ module.exports = {
     }
     const gone = () => say(`/kill @e[type=item,tag=toss,x=${X + 11},y=${F + 2},z=${Z + 5.5},distance=..1.6]`)   // into the purple
     const gift = (item, at, count = 1, tag = 'gift') => say(`/summon item ${A(...at)} {Item:{id:"minecraft:${item}",count:${count}},PickupDelay:32767,NoGravity:0b,Tags:["${tag}"],Motion:[0d,0d,0d]}`)
-    const hop = async (tag, x, y, z, yaw, pitch = 0) => { say(`/tp @e[tag=${tag}] ${X + 90} ${F + 40} ${Z + 6}`); await bot.waitForTicks(2); K.tp(tag, x, y, z, yaw, pitch) }
-    const pocket = () => K.cut(POCKET[0] + 0.5, POCKET[2] + 0.5, P(POCKET[0] + 4, POCKET[1] + 1.6, POCKET[2] + 0.5), POCKET[1])
+    // a cut that doesn't wait for the landing (K.cut does, and every tick it waits stretched the line: pauses between
+    // lines, the opening's included). The aim rides on the /tp; look() holds still until the bot has landed
+    let landing = null
+    const jump = (dx, dz, target, dy = 1) => {
+      const x = X + dx, y = F + dy, z = Z + dz, d = target.minus(new ctx.Vec3(x, y + K.eye, z))
+      const nb = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
+      ctx.mark('cut')
+      say(`/tp @s ${x.toFixed(3)} ${y.toFixed(3)} ${z.toFixed(3)} ${(180 - (nb.yaw + K.swayY()) * 180 / Math.PI).toFixed(2)} ${(-(nb.pitch + K.swayP()) * 180 / Math.PI).toFixed(2)}`)
+      K.base = nb; landing = { x, y, z }
+    }
+    const landed = () => { if (!landing) return true; const p = bot.entity.position; if (Math.abs(p.x - landing.x) < 0.05 && Math.abs(p.z - landing.z) < 0.05 && Math.abs(p.y - landing.y) < 0.6) { landing = null; return true } return false }
+    const look = (k, a = 0, b = 0) => { if (landed()) K.look(k, a, b) }
     const hatch = (open, sound = true) => { say(`/setblock ${X + 1} ${F + 11} ${Z + 1} spruce_trapdoor[facing=south,half=top,open=${open}]`); if (sound) ctx.sound(open ? 'block.wooden_trapdoor.open' : 'block.wooden_trapdoor.close', 0.7, 1) }
     const gma = K.actor('gma', { x: 9.3, y: 1, z: 4.75, yaw: -80, pitch: 10 })     // tonight's Grandma (yaw: mc degrees, -90 = east)
     const SELF = [-1]
 
     // L01 (S01): the cellar, night. Grandma full-figure at the portal, tonight's ingot already crossing the purple
     K.shot('s01')
-    await K.preroll(6, (k) => { if (k === 1) toss('gold_ingot', [9.6, 2.25, 5.0], [11.4, 2.2, 5.5], 8); portalLife(k) })
-    await line('L01', async (k) => { portalLife(k); gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = -80 + (k < 14 ? 16 - k * 1.6 : 12 * Math.sin((k - 14) / 13)); if (k === 4) gone(); if (k === 3) ctx.sound('block.portal.trigger', 0.12, 1.6); if (k === 20) await K.cut(2.3, 2.4, P(11, 2.0, 5.6)) })
+    // (a 30-tick preroll, not in the Short: an idle mob's first moves reach the client ~1 s late, so she's warm by frame 1)
+    await K.preroll(30, (k) => { if (k === 25) toss('gold_ingot', [9.6, 2.25, 5.0], [11.4, 2.2, 5.5], 8); portalLife(k); const j = Math.max(0, k - 24); gma.pitch = k < 24 ? 20 + 6 * Math.sin(k / 4) : 42 - j * 2; gma.yaw = k < 24 ? -70 + 8 * Math.sin(k / 5) : -60 - j * 1.5 })
+    await line('L01', async (k) => { portalLife(k); gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = k < 14 ? -69 - k * 1.6 : -80 + 12 * Math.sin((k - 14) / 13); if (k === 4) gone(); if (k === 3) ctx.sound('block.portal.trigger', 0.12, 1.6) })
+    K.base = K.aim(P(11, 2.0, 5.6))
 
     // L02 (S02): the ridge at night, the crane down to the cottage; on 'MORNING' (S03) the cellar at sunrise, POV from
     // the ladder's foot: the hatch open, and on 'BACK' an obsidian block pops out of the purple
@@ -143,20 +157,20 @@ module.exports = {
     say('/kill @e[type=item,tag=gift]')
     const morning = [['obsidian', [9.85, 1.05, 6.15], 1, [8.3, 5.9]], ['string', [9.6, 1.05, 6.6], 1, [8.2, 6.9]], ['ender_pearl', [9.75, 1.05, 6.45], 3, [8.4, 6.1]]]   // the same spot, a little moved each morning
     const pickUp = (i) => { say(`/kill @e[type=item,tag=gift]`); say(`/give @s ${morning[i][0]} ${morning[i][2]}`); ctx.sound('entity.item.pickup', 0.5, 1.1 + i * 0.1) }
-    const aimG = (i) => P(morning[i][1][0] + 0.45, morning[i][1][1] + 0.35, morning[i][1][2])
-    await K.cut(morning[0][3][0], morning[0][3][1], aimG(0), 1, { after: () => gift(...morning[0].slice(0, 3)) })
+    const aimG = (i) => P(9.55 + 0.15 * (morning[i][1][0] - 9.75), 1.3, 6.45)   // the gifts' spot (cellar block 9,1,6), the portal's foot above it
+    jump(morning[0][3][0], morning[0][3][1], aimG(0)); gift(...morning[0].slice(0, 3))
     await line('L03', async (k, at) => {
-      for (let i = 1; i < 3; i++) if (k === at(i)) await K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { after: () => gift(...morning[i].slice(0, 3)) })
+      for (let i = 1; i < 3; i++) if (k === at(i)) { jump(morning[i][3][0], morning[i][3][1], aimG(i)); gift(...morning[i].slice(0, 3)) }
       for (let i = 0; i < 3; i++) if (k === Math.min(at(i) + 17, at(i + 1) - 3)) pickUp(i)
       if (k === at(3)) {
         K.shot('s05')
         say('/item replace entity @s weapon.mainhand with potion[potion_contents={potion:"minecraft:fire_resistance"}]')
-        await K.cut(1.5, 10.2, P(-28, 9, 85), 12)
+        jump(1.5, 10.2, P(-28, 9, 85), 12)
         ctx.mark('pose', { ids: SELF, pose: 'drink' }); ctx.sound('entity.generic.drink', 0.6, 1)
       }
       if (k > at(3) && k % 4 === 0) { ctx.particles('entity_effect', P(1.5 + (Math.random() - 0.5) * 0.6, 12.4 + Math.random() * 1.4, 10.2 + (Math.random() - 0.5) * 0.6), { count: 2, color: 0xE49A3A }); if (k % 8 === 0) ctx.sound('entity.generic.drink', 0.45, 0.95 + Math.random() * 0.1) }
       const bend = [0, 1, 2].map(i => Math.min(at(i) + 17, at(i + 1) - 3)).map(p => Math.max(0, 1 - Math.abs(k - p) / 6)).reduce((a, b) => Math.max(a, b), 0)
-      if (k <= at(3)) look(k, 0, -0.35 * bend)
+      if (k <= at(3)) look(k, 0, -0.14 * bend)
       else look(k, 0.12 * Math.sin((k - at(3)) / 7), Math.min(0.45, (k - at(3)) * 0.03))   // drinking: the head tips back
     })
     ctx.mark('pose_off', { ids: SELF })
@@ -165,18 +179,15 @@ module.exports = {
     // 'HELMET'; Grandma's shoulder at frame left
     say('/item replace entity @s weapon.mainhand with air')
     K.shot('s06')
-    await pocket()
     K.setTime(NIGHT)
-    await hop('gma0', 8.2, 1 + DOWN, 3.7, -60, 15)
     const gma0 = K.actor('gma0', { x: 8.2, y: 1 + DOWN, z: 3.7, yaw: -60, pitch: 15 })
-    await M.place(ctx, 'Grandpa', X + 9.6, F + 1 + DOWN, Z + 5.5, 90, 5)
-    say(`/item replace entity Grandpa weapon.mainhand with ${HELMET}`)
     await line('L04', async (k, at) => {
       portalLife(k, DOWN)
       const G = this.cast.Grandpa
       gma0.pitch = 15 + 8 * Math.sin(k / 12); gma0.yaw = -60 + 6 * Math.sin(k / 16)
       if (k % 2 === 0) G.look(Math.PI / 2 - (k < at(2) ? 0.15 * Math.sin(k / 6) : 0.5 * Math.min(1, (k - at(2)) / 10) + 0.12 * Math.sin((k - at(2)) / 7)), k < at(2) ? -0.75 : -0.75 + 0.85 * Math.min(1, (k - at(2)) / 8), true)
       if (k === at(2) - 3) G.swingArm('right')
+      if (k === at(3)) K.shot('s06b')   // 'With a BLUE stripe': close on the helmet
       if (k === at(2)) { say(`/item replace entity Grandpa armor.head with ${HELMET}`); say('/item replace entity Grandpa weapon.mainhand with air'); ctx.sound('item.armor.equip_gold', 0.8, 1) }
     })
 
@@ -184,27 +195,25 @@ module.exports = {
     K.shot('s07')
     gma0.x = 8.6; gma0.z = 3.9; gma0.yaw = -100; gma0.pitch = 0
     const gp = { x: 9.0, z: 5.5 }
-    await M.place(ctx, 'Grandpa', X + gp.x, F + 1 + DOWN, Z + gp.z, -90, 0)
-    await line('L05', async (k, at) => {
+    say(`/tp Grandpa ${X + gp.x} ${F + 1 + DOWN} ${Z + gp.z} -90 0`)
+    await line('L05', async (k, at, n) => {
       portalLife(k, DOWN)
       if (k < at(2) - 6 && k % 2 === 0) this.cast.Grandpa.look(k < at(1) ? 0.3 : -Math.PI / 2, 0.05, true)   // to her, then to the purple
       if (k >= at(2) - 6 && gp.x < 11.6) { gp.x += 0.11; say(`/tp Grandpa ${(X + gp.x).toFixed(3)} ${F + 1 + DOWN} ${(Z + gp.z).toFixed(3)} -90 0`) }
+      if (k === at(3)) K.shot('s07b')   // 'He never came BACK': Grandma alone by the portal
       if (k === at(2) + 14) { ctx.particles('portal', P(11.3, 2 + DOWN, 5.5), { count: 40 }); ctx.sound('block.portal.travel', 0.15, 1.2); say(`/tp Grandpa ${X + 60} ${F + 60} ${Z - 80}`) }
       gma0.pitch = 8 * Math.sin(k / 15)
       if (k > at(2) + 14) gma0.yaw = -90 + 6 * Math.sin(k / 10)
+      if (k === n - 12) { say('/clear @s'); say('/item replace entity @s armor.feet with golden_boots'); say('/item replace entity @s hotbar.0 with gold_ingot 64'); bot.setQuickBarSlot(0); jump(7.95, 3.5, P(10.5, 1.5, 3.5)) }
     })
     K.park('gma0')
 
     // L06 (S08): tonight, POV: the gifts barrel opened ("Grandpa's Gifts"), my stack of gold in slot 1; on 'Grandma'
     // (S09) the screen closes and I turn to the portal: she tosses tonight's ingot in on 'TRADING', and a snort
-    say('/clear @s'); say('/item replace entity @s armor.feet with golden_boots'); say('/item replace entity @s hotbar.0 with gold_ingot 64')
-    bot.setQuickBarSlot(0)
     Object.assign(gma, { x: 6.8, y: 1, z: 7.4, yaw: -90, pitch: 5 }); K.actors.set('gma', gma)
-    await K.cut(7.95, 3.5, P(10.5, 1.5, 3.5))
     K.shot('pov')
-    const barrel = bot.blockAt(P(10, 1, 3))
     let win = null
-    try { win = await bot.openContainer(barrel) } catch (e) { ctx.log('barrel:', e.message) }
+    bot.openContainer(bot.blockAt(P(10, 1, 3))).then(w => { win = w }).catch(e => ctx.log('barrel:', e.message))
     let from = null
     await line('L06', async (k, at) => {
       portalLife(k)
@@ -220,7 +229,7 @@ module.exports = {
 
     // L07 (S10): over Nico's shoulder from the ceiling: Nico at the portal, gold in hand; Grandma walks off frame left
     K.shot('s10')
-    await K.cut(9.0, 5.5, P(11, 2.0, 5.5))
+    jump(9.0, 5.5, P(11, 2.0, 5.5))
     Object.assign(gma, { x: 9.2, z: 3.9, yaw: 120 })
     let turn = null
     await line('L07', async (k, at, n) => {
@@ -236,13 +245,13 @@ module.exports = {
     K.stop()
 
     // L09 (S12): she's gone up the ladder; the hatch shuts on 'BED'. I turn to the portal and throw in ALL my gold
-    Object.assign(gma, { x: 1.5, y: 2.2, z: 1.75, yaw: 180, pitch: -20 })
-    await K.cut(7.0, 5.5, P(1.5, 4.2, 1.6))
+    jump(7.0, 5.5, P(2.4, 2.6, 2.2))   // she walks from where she stood to the ladder and climbs
     from = null
     let thrown = false, shut = -1
     await line('L09', async (k, at, n) => {
       portalLife(k)
-      if (shut < 0) gma.y += 0.2
+      const lx = 1.5 - gma.x, lz = 1.75 - gma.z, ld = Math.hypot(lx, lz)
+      if (ld > 0.12) { K.step(gma, lx / ld * 0.2, lz / ld * 0.2); gma.pitch = 10 } else { gma.x = 1.5; gma.z = 1.75; gma.yaw = 180; gma.pitch = -20; if (shut < 0) gma.y += 0.22 }
       if (shut < 0 && gma.y >= 10.2) { hatch(false); shut = k }   // she shuts the hatch behind her at the top of the shaft
       if (shut >= 0 && k === shut + 2) K.park('gma')
       if (k >= at(1) - 8) { from = from || { ...K.base }; K.turnTo(from, P(11, 2.0, 5.5), (k - at(1) + 8) / 16) }
@@ -262,12 +271,12 @@ module.exports = {
     // L10 (S13): from behind the bed: Nico sits on it facing the portal. On 'stepped OUT' a piglin pushes out of the
     // purple, shaking; Grandma's feet come down the ladder at the frame's left edge
     K.shot('s13')
-    await K.cut(4.6, 7.8, P(11, 2.0, 5.5))
+    jump(4.6, 7.8, P(11, 2.0, 5.5))
     ctx.mark('pose', { ids: SELF, pose: 'sit_ground' })
     let pig = null, pg = null
     await line('L10', async (k, at) => {
       portalLife(k)
-      if (k === at(3) - 4) { await hop('pig', 11.75, 1, 5.6, 90); pg = K.actor('pig', { x: 11.75, y: 1, z: 5.6, yaw: 90, pitch: 0 }) }
+      if (k === at(3) - 4) pg = K.actor('pig', { x: 11.75, y: 1, z: 5.6, yaw: 90, pitch: 0 })
       if (k === at(3) - 1) { pig = ent('piglin', P(11, 1, 5.5)); if (pig) ctx.mark('pose', { ids: [pig.id], converting: true }); else ctx.log('no piglin entity for the shake') }
       if (k >= at(3) && pg && pg.x > 10.1) pg.x -= 0.14
       if (k === at(3)) { ctx.sound('entity.piglin.ambient', 1, 1); ctx.particles('portal', P(11.2, 2, 5.6), { count: 30 }) }
@@ -275,6 +284,7 @@ module.exports = {
       if (k === at(2) - 16) { Object.assign(gma, { x: 1.5, y: 10.0, z: 1.75, yaw: 180, pitch: 0 }); K.actors.set('gma', gma) }
       if (k === at(2) - 14) { ctx.mark('use', { x: X + 1, y: F + 11, z: Z + 1, who: 'Grandma' }); hatch(true) }
       if (k > at(2) - 14 && gma.y > 1) gma.y = Math.max(1, gma.y - 0.2)
+      else if (k > at(2) - 14) { const dx = 8.8 - gma.x, dz = 4.75 - gma.z, d = Math.hypot(dx, dz); if (d > 0.15) K.step(gma, dx / d * 0.14, dz / d * 0.14) }   // off the ladder, she walks to it
       look(k, 0.2 * Math.sin(k / 10), 0.1 * Math.sin(k / 13))
     })
 
@@ -282,16 +292,14 @@ module.exports = {
     // Grandma at the frame's left edge tosses one more ingot past its head into the purple; its head turns after it
     K.shot('s14')
     Object.assign(gma, { x: 8.8, y: 1, z: 4.75, yaw: -75, pitch: 0 })
-    let hold = 0
-    await line('L11', async (k) => {
+    // the end lands on 'HELMET': she tosses the ingot as the word starts, its head turns after the gold, then cut
+    await line('L11', async (k, at) => {
       portalLife(k)
       if (pg) { pg.yaw = 90 + 14 * Math.sin(k / 9); pg.pitch = 6 * Math.sin(k / 7) }
-      if (k === K.T('L11') - 2) toss('gold_ingot', [9.0, 2.3, 4.9], [11.5, 2.5, 5.75], 9)
-      if (k === K.T('L11') + 2) { if (pig) ctx.mark('look_at', { ids: [pig.id], at: [11.6, 2.4, 5.8] }); ctx.sound('entity.piglin.admiring_item', 0.9, 1) }
-      if (k === K.T('L11') + 9) gone()
-      hold = k
-    }, 0.9)
-    void hold
+      if (k === at(1) + 3) toss('gold_ingot', [9.0, 2.3, 4.9], [11.5, 2.5, 5.75], 8)
+      if (k === at(1) + 7) { if (pig) ctx.mark('look_at', { ids: [pig.id], at: [11.6, 2.4, 5.8] }); ctx.sound('entity.piglin.admiring_item', 0.9, 1) }
+      if (k === at(1) + 11) gone()
+    })
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     M.quitActors(ctx)
@@ -312,7 +320,11 @@ module.exports.shots = {
   // S06: 25 years ago, medium: 3 blocks in front of Grandpa at his eye height, the new portal behind him
   s06: { at: [5.6, 2.55 + DOWN, 6.9], look: [9.6, 2.35 + DOWN, 5.4], fov: 50, push: 0.3, mood: 'flashback', subject: ['actor:Grandpa'] },
   // S07: wide from beside the ladder, still: Grandpa walks into the purple; Grandma left alone
+  // S06b: 'With a BLUE stripe': close on the helmet's lapis stripe
+  s06b: { at: [8.0, 2.9 + DOWN, 4.0], look: [9.6, 2.65 + DOWN, 5.5], fov: 46, push: 0.15, mood: 'flashback', subject: ['actor:Grandpa'] },
   s07: { at: [1.6, 2.3 + DOWN, 2.6], look: [10.5, 2.0 + DOWN, 5.4], fov: 55, push: 0.12, mood: 'flashback', dof: false, subject: ['actor:Grandpa'] },
+  // S07b: 'He never came BACK': Grandma alone by the portal, medium, the purple at frame right
+  s07b: { at: [5.6, 2.7 + DOWN, 6.2], look: [8.7, 2.2 + DOWN, 3.9], fov: 50, push: 0.2, mood: 'flashback', subject: [[8.6, 1.9 + DOWN, 3.9]] },
   // S10: high over Nico's shoulder near the ceiling beams, looking past him into the portal
   s10: { at: [3.7, 4.05, 5.75], look: [10.8, 1.85, 5.5], fov: 55, push: 0.3, dof: false, subject: ['self'] },
   // S13: from behind the bed: Nico (seated on its north-east corner) in line with the portal, the ladder at the left edge

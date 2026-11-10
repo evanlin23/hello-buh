@@ -9,7 +9,7 @@
  "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Nico keeps the gifts in a barrel and knows Grandpa is alive.",
  "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Nico. One's plenty.'). Tonight Nico throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
  "key_color": "#B07CFF",
- "gap": 0.3,
+ "gap": 0.12,
  "mood": [
   "eerie",
   "sad"
@@ -180,17 +180,11 @@
    "who": "N",
    "text": "OBSIDIAN. / STRING. / ENDER PEARLS. / A potion that makes you FIREPROOF.",
    "shot": "S04",
-   "look": [
-    {
-     "what": "prop:gifts_floor",
-     "word": "OBSIDIAN",
-     "size": "cu"
-    },
-    {
-     "what": "entity:player",
-     "word": "potion"
-    }
-   ],
+   "look": {
+    "what": "prop:gifts_floor",
+    "word": "OBSIDIAN",
+    "size": "cu"
+   },
    "note": "a quick excited list, each item a little bigger; the last one is the best present in the world"
   },
   {
@@ -211,10 +205,16 @@
    "text": "Gold keeps you SAFE / in the NETHER, she said. / He went IN. / He never came BACK.",
    "say": "Gold keeps you safe in the Nether, she said. He went in. <short pause> He never came back.",
    "shot": "S07",
-   "look": {
-    "what": "actor:Grandpa",
-    "word": "IN"
-   },
+   "look": [
+    {
+     "what": "actor:Grandpa",
+     "word": "IN"
+    },
+    {
+     "what": "Grandma",
+     "word": "BACK"
+    }
+   ],
    "note": "quoting her proudly, then the energy drops for the last sentence; a short stop before it"
   },
   {
