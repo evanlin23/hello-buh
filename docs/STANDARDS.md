@@ -53,14 +53,17 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 000. **A bubbly kid who's figuring the world out, and always easy to follow**: Pip-based, happy and bubbly, misreading
    what the viewer understands. Fast only works when clear: scripts written for the ear (one short thought per
    sentence, in time order, joined by So/Then/But), takes PERFORMED continuously (not cut out of a paused read), each
-   sentence landing on its key word. Check: cold listener, audio only, one listen. r:r919ea3
+   sentence landing on its key word. Spoken stress goes on ONE word per sentence (its last key word); the caption still
+   colours one key word per chunk, but the voice doesn't hit every CAPS word (a cold listener heard that as "a flat
+   drumbeat"). Character lines of about 6 words or fewer are spoken by the character in their own voice (00).
+   Check: cold listener, audio only, one listen. r:r919ea3
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
    (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.
    Check: owner (voice pick), speaker_check, panel. r:r4c881f The narrator sounds like a kid. r:r7fabda
-0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone; one narrator says
-   every line, quotes included, so other characters speak only in very short lines, on Gemini. r:r4f221c r:r30c821
-1. **The narrator is `voices/cast.json` `narrator` = `narrator_roblox`**: Gemini **Orus**, gemini-3.8-flash-tts
+0. *(Superseded by 00 and 000: the narrator is our own bubbly kid voice, not a Roblox-story imitation, and the short
+   character lines are spoken in the characters' own voices.)* Still true: fast, never padded. r:r4f221c r:r30c821
+1. *(Being replaced: the kid brand voice is being picked, 00/000. Until then the cast default is still:)* **The narrator is `voices/cast.json` `narrator` = `narrator_roblox`**: Gemini **Orus**, gemini-3.8-flash-tts
    (locked), single speaker, the voice-match direction as the bracketed prefix, and every take played **tempo 0.95,
    then 1.45x faster by resampling** (cast `tempo`/`rate`: pitch and formants rise with it; tts.py `speed_up`, on the
    whole raw take before the trim, the slices and the take gate). The one owner-approved exception to "never
