@@ -48,7 +48,8 @@ module.exports = {
     try { await bot.waitForChunksToLoad() } catch (e) {}
     await ctx.defaultRules()
     for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing false', 'fire_damage false']) await c(`/gamerule ${g}`)
-    await c('/difficulty easy')
+    await c('/difficulty hard')                    // the warden's sonic boom does 15 on hard (vanilla)
+    for (const g of ['natural_health_regeneration', 'natural_regeneration', 'naturalRegeneration']) await ctx.cmd(`/gamerule ${g} false`, { mayFail: true })   // the skeleton's arrow (S09) stays on the hearts to the end (1.21.11's name: one of these)
     await c('/kill @e[type=!player]')
     await c(`/attribute @s minecraft:movement_speed base set 0.07`)   // a kid walking soft: ~3 b/s, not 4.3
 
@@ -177,7 +178,7 @@ module.exports = {
     await vil(7.5, -5.5, -90, 'librarian', ['walk2'])
 
     await c('/clear @s')
-    await ctx.hotbar(['shears', 'jukebox', 'music_disc_cat'])
+    await ctx.hotbar(['shears'])                   // the jukebox and the disc come when he gets them (L10, L11)
     for (let i = 3; i < 9; i++) await c(`/item replace entity @s hotbar.${i} with air`)
     await ctx.tpCheck(X + 2.5, F + 7.07, Z + 19.5, 180, 0)
     try { await bot.waitForChunksToLoad() } catch (e) {}
@@ -290,6 +291,7 @@ module.exports = {
     await line('L09', async (k, at) => {
       if (!creeperDead) { K.step(cr, 0.045, 0); cr.y = standY(ctx, X, Z, Math.floor(cr.x), Math.floor(cr.z)) }
       { const p = bot.entity.position, tx = creeperDead ? p.x - X : cr.x, tz = creeperDead ? p.z - Z : cr.z; sk.yaw = K.mcYaw(tx - sk.x, tz - sk.z); if (creeperDead && k % 30 === 0) sk.x -= 0.0 }
+      if (k === 3) { ctx.sound('entity.skeleton.shoot', 0.8, 1.05); say(`/damage @s 5 minecraft:arrow by @e[tag=skel,limit=1]`); ctx.sound('entity.arrow.hit_player', 0.7, 1) }   // it was shooting at me
       if (k === at(1) - 3) { ctx.sound('entity.skeleton.shoot', 0.8, 1); const dd = Math.hypot(cr.x - sk.x, cr.z - sk.z) || 1, ux = (cr.x - sk.x) / dd, uz = (cr.z - sk.z) / dd; say(`/summon arrow ${(X + sk.x + ux * 0.8).toFixed(2)} ${(F + sk.y + 1.5).toFixed(2)} ${(Z + sk.z + uz * 0.8).toFixed(2)} {Motion:[${(ux * 1.2).toFixed(3)},0.02,${(uz * 1.2).toFixed(3)}],Tags:["arr"]}`) }
       if (k === at(1) + 1) { creeperDead = true; K.actors.delete('creep'); say('/kill @e[tag=arr]'); say('/damage @e[tag=creep,limit=1] 100 minecraft:arrow'); ctx.sound('entity.creeper.death', 0.7, 1) }
       if (k === at(1) + 4 && !disc) { disc = { x: cr.x, z: cr.z }; say(`/summon item ${(X + cr.x).toFixed(2)} ${(F + cr.y + 0.3).toFixed(2)} ${(Z + cr.z).toFixed(2)} {Item:{id:"minecraft:music_disc_cat",count:1},PickupDelay:32767,Age:-32768}`) }
@@ -303,6 +305,7 @@ module.exports = {
     say('/kill @e[type=item]')
 
     // ---- L10: night, our doorway, the disc in hand; a slow turn toward the plaza and the lidded well
+    say('/item replace entity @s hotbar.2 with music_disc_cat')
     bot.setQuickBarSlot(2)
     await K.cut(0.5, -6.9, C(-2, 1.4, -2), 3.07, { time: NIGHT })
     const from10 = { ...K.base }
@@ -310,19 +313,20 @@ module.exports = {
 
     // ---- L11: tonight. 4 north of the well; the shears take the middle row; the jukebox on the rim (1,-2);
     // then a look down the slot: "Wells ECHO." Shriek 1
+    say('/item replace entity @s hotbar.1 with jukebox')
     bot.setQuickBarSlot(0)
     dug = 0
     await K.cut(0.5, -3.5, C(0, 1.4, 0), PLAZA)
     K.go(true)
-    let placed = false
+    let placed = false, craneAt = null
     await line('L11', async (k, at) => {
       if (bot.entity.position.z > Z - 2.75) K.go(false)
       if (k === at(1) && !digging) { digging = true; digRow().then(() => { digging = false }) }
       if (k === at(4) - 2) { bot.setQuickBarSlot(1); }
       if (k === at(4) + 2 && !placed) { placed = true; swing(); say(`/setblock ${X + 1} ${F + 2} ${Z - 2} jukebox`); ctx.sound('block.wood.place', 0.9, 1); say('/item replace entity @s hotbar.1 with air') }
-      if (k === at(5)) shriek()
+      if (k === at(5)) { shriek(); K.shot('crane'); craneAt = ctx.tick }   // ECHO: the crane from above, straight down into the open slot
       if (!digging) {
-        const tgt = k < at(4) ? C(0, 1.6, 0) : k < at(5) ? C(1, 2.5, -2) : C(0, -0.4, 0.2)
+        const tgt = k < at(4) ? C(0, 1.6, 0) : k < at(5) ? C(1, 2.5, -2) : C(0, 1.9, -0.1)   // ECHO: into the open slot
         if (k === at(4) || k === at(5)) K._from = { ...K.base }
         if (k >= at(4)) K.turnTo(K._from, tgt, (k - (k < at(5) ? at(4) : at(5))) / 6); else K.base = K.aim(tgt)
         look(k)
@@ -334,8 +338,7 @@ module.exports = {
     // the village steps into its doorways; POV: the disc goes in on "CARE", the song starts. Shriek 2
     bot.setQuickBarSlot(2)
     const doors = [[10, -9, 'south', 'v1', 0], [12, -3, 'west', 'v2', 90], [12, 6, 'west', 'v3', 90], [-12, -3, 'east', 'v4', -90], [-12, 6, 'east', 'v5', -90], [-9, 13, 'north', 'v6', 180], [12, 13, 'north', 'w1', 180], [-9, -18, 'south', 'w2', 0]]
-    K.shot('crane')
-    await K.cut(0.5, -2.75, C(0.3, 1.5, 0), PLAZA)
+    if (craneAt === null) { K.shot('crane'); craneAt = ctx.tick }
     let song = null
     const T12 = K.T('L12')
     await line('L12', async (k, at) => {
@@ -349,7 +352,7 @@ module.exports = {
         }
         ctx.sound('block.wooden_door.open', 0.6, 0.9)
       }
-      if (k === Math.min(T12 - 14, 40)) K.shot('pov')
+      if (K.shotName === 'crane' && ctx.tick - craneAt >= 40) K.shot('pov')
       if (k === at(2) && !song) {
         swing(); say(`/setblock ${X + 1} ${F + 2} ${Z - 2} jukebox[has_record=true]`); say('/item replace entity @s hotbar.2 with air')
         song = startSong(ctx, K, C(1, 3.1, -2))
@@ -411,8 +414,10 @@ module.exports = {
       look(k)
     })
     // the sonic boom right as the line lands, then the death screen ~1.2 s, the plaza pulsing behind it
-    ctx.sound('entity.warden.sonic_boom', 1.6, 1); ctx.mark('flash')
-    say('/damage @s 1000 minecraft:sonic_boom')
+    const eye = bot.entity.position
+    ctx.sound('entity.warden.sonic_boom', 1.6, 1)
+    ctx.particles('sonic_boom', P(0.5, 2.6, wd.z), { tx: +eye.x.toFixed(3), ty: +(eye.y + 1.62).toFixed(3), tz: +eye.z.toFixed(3) })
+    say('/damage @s 15 minecraft:sonic_boom')   // vanilla hard: 15; the arrow left him at 15
     for (let k = 0; k < 26; k++) { wd.yaw = 180 + Math.sin(k / 5) * 22; wd.pitch = 10 + Math.sin(k / 7) * 8; await bot.waitForTicks(1) }
     ctx.mark('story_end')
     await bot.waitForTicks(4)
