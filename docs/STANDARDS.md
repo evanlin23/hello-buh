@@ -24,6 +24,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
    cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. Check: story-critic (blockers),
    cold reader. r:ra807e9
+0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
+   reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
+   story-critic, cold reader (does the end flow into the start?). r:r30c821
 4. **Understood on one watch, nothing extra**: no unexplained names (set up every name first), no punchline that
    explains a twist the picture already landed, no sting after the story ends. Check: cold reader, story-critic.
    r:r0d320b

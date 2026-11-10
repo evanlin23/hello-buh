@@ -138,6 +138,11 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (sending a top Roblox story Short as the model): "this one also has a loop. can we look at the
+  story arcs for the best stories in this area? we can try to make our stories based on those then".** Our stories
+  follow the arcs of the top stories in the niche (docs/story_arcs.md, being written). The reference Short: a paradox
+  hook in line 1, a rule-of-three escalation, a reversal, and it ends mid-sentence on the climax so the last words run
+  straight into line 1 (a loop); one narrator says every quote; about 5.5 words/s.
 - **Owner, 2026-11-10: "the movement shouldn't be caught... the processes should be such that the movement is [smooth]
   in the first place. Like we of course we can still have the check later on, but this check later on shouldn't be
   the main way that we're doing it. Stuff should be front loaded."** Smooth, player-like motion comes from the story
