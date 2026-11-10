@@ -26,7 +26,7 @@ const WAIT = 60                           // the cast's waiting room: a barrier 
 module.exports = {
   name: 'story_light_sleeper',
   near: [1500, 0],                        // the scout's start point for this village (stunts/scout_valley.js)
-  botName: 'Milo',                        // the death screen says Milo (owner, 2026-11-10)
+  botName: 'Buh',                         // the death screen says Buh; nobody says his name (owner, 2026-11-10)
   caption: CAPTION,
   time: MORNING,
   botTimeout: 900,

@@ -2,7 +2,7 @@
   "name": "light_sleeper",
   "stunt": "story_light_sleeper",
   "version": 2,
-  "revision": "r5 (2026-11-10): narrator-first under the owner rules on main (docs/stories.md): one bright, fast kid narrator (cast narrator: Leda, no stretch or pitch shift), Mom's saying quoted by the narrator, one Mom punchline in her own voice while she's on screen (L13), no '...', line 1 in one breath, and an ending line that explains itself (L16). r4: Milo, 35-45 s, L03 cut. r3: the pre-build fixes (reviews/r3-fixes.md)",
+  "revision": "r6 (2026-11-10): the hero is Buh and nobody says his name (owner rule on main): L13 is 'Don't. MOVE.', botName Buh. r5 (2026-11-10): narrator-first under the owner rules on main (docs/stories.md): one bright, fast kid narrator (cast narrator: Leda, no stretch or pitch shift), Mom's saying quoted by the narrator, one Mom punchline in her own voice while she's on screen (L13), no '...', line 1 in one breath, and an ending line that explains itself (L16). r4: Milo, 35-45 s, L03 cut. r3: the pre-build fixes (reviews/r3-fixes.md)",
   "caption": "why is my whole village carpeted 😶",
   "logline": "A boy in a village where every inch is carpeted, the bell is wrapped in wool and the well wears a wool lid wants everyone to hear one song, so he puts a jukebox on the well.",
   "question": "why tf is the whole village covered in carpet?",
@@ -19,7 +19,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "pov (the hand, never his face); Milo as a kid; seen from outside only from behind (S07, S12's crane start, S16), default Steve skin (owner: the hero stays Steve)",
+      "on_screen": "pov (the hand, never his face); Buh as a kid; seen from outside only from behind (S07, S12's crane start, S16), default Steve skin (owner: the hero stays Steve)",
       "voice_note": "cast narrator (Leda, the owner's chosen Pip setup, 2026-11-10); the r2 audition note is superseded by the owner's narrator rules"
     },
     "Mom": {
@@ -158,11 +158,12 @@
     {
       "id": "L13",
       "who": "Mom",
-      "text": "Milo. / Don't. / MOVE.",
+      "text": "Don't. / MOVE.",
       "direction": "terrified and frozen, low and tight but clearly voiced, never breathy",
       "shot": "S13",
       "look": "Mom",
-      "request": "r2"
+      "request": "r2",
+      "say": "Don't. Move."
     },
     {
       "id": "L14",
@@ -218,7 +219,7 @@
       "S15 holds past 'DANCED' (he keeps jumping on the rim), then three 0.35 s inserts that speed the cut rate: S15b Mom frozen in the door, S15c the villagers in the east doorways, S15d POV jumping on the rim",
       "S16 (camera, low, behind him): shriek 4 on frame 1, the carpet at (0,4) bursts with block particles and the warden rises out of the square and roars, while he gets it: L16 'Oh. THAT'S why we have nine thousand CARPETS.'",
       "S17 (POV) on the line's last second: the warden steps to the south rim; the sonic boom (its ring beam from the chest to his eye, the sound): vanilla 15 on hard, and the S09 arrow left him at 15 = the payoff",
-      "death screen 'Milo was obliterated by a sonically-charged shriek' ~1.2 s, the plaza pulsing behind, then cut (owner: the end right after the payoff; endings explain themselves)"
+      "death screen 'Buh was obliterated by a sonically-charged shriek' ~1.2 s, the plaza pulsing behind, then cut (owner: the end right after the payoff; endings explain themselves)"
     ],
     "loop": "said out loud in L16, which is line 1 again"
   },
@@ -317,7 +318,7 @@
       "place": "plaza",
       "size": "full",
       "camera": "at: 1 block east of the boy at his eye height, looking north to our door 5 blocks away, FOV 50, still (a reverse from where he stands; he is just out of frame left)",
-      "frame": "fg: the plaza carpet stripes and the lantern post by our 2 steps; subject: Mom head to foot, frozen in our doorway on the plaza edge, eyes on him; bg: the lit room behind her. The jukebox's song carries from behind the camera. The Darkness (shriek 2's answer) fades in on 'Milo' and pulses; everything is within 6 blocks of the lens. Night (18000)."
+      "frame": "fg: the plaza carpet stripes and the lantern post by our 2 steps; subject: Mom head to foot, frozen in our doorway on the plaza edge, eyes on him; bg: the lit room behind her. The jukebox's song carries from behind the camera. The Darkness (shriek 2's answer) fades in on 'Don't' and pulses; everything is within 6 blocks of the lens. Night (18000)."
     },
     {
       "id": "S14",
@@ -373,7 +374,7 @@
       "place": "plaza",
       "size": "ms",
       "camera": "pov from the rim at (0,-2): the warden takes two steps to the south rim edge (0,3), 5 blocks away (about 41% of the frame height), then the sonic boom; then the death screen with the plaza still pulsing behind",
-      "frame": "the warden's chest and head over the open well; the sonic boom ring; 'Milo was obliterated by a sonically-charged shriek' (also in the caption track)"
+      "frame": "the warden's chest and head over the open well; the sonic boom ring; 'Buh was obliterated by a sonically-charged shriek' (also in the caption track)"
     }
   ],
   "bible": "stories/light_sleeper/bible.md",

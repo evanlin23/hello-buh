@@ -36,7 +36,7 @@ fi
 S=work/server
 cp server.properties "$S/server.properties"
 echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEULA), accepted for this private server
-python3 make_ops.py HelloBuh,Milo "$S/ops.json"   # Milo: a stunt's botName (lib/harness.js)
+python3 make_ops.py HelloBuh,Milo,Buh "$S/ops.json"   # Milo: a stunt's botName (lib/harness.js)
 rm -rf "$S/world"                 # fresh world every run
 # the shared world (docs/world/canon.md): WORLD_SNAPSHOT=<name> starts from a world lib/world.js snapshot() saved after
 # building the canonical places (~/.cache/hellobuh/world/snap/<name>, outside git); world.build skips what it holds

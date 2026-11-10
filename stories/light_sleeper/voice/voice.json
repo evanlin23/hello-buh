@@ -345,30 +345,29 @@
    "aligned": "whisper-base.en"
   },
   "L13": {
-   "text": "Milo. Don't. move.",
    "who": "Mom",
-   "dur": 3.76,
-   "onset": 0.35,
-   "end": 3.62,
+   "text": "Don't. Move.",
+   "dur": 2.52,
+   "onset": 0.27,
+   "end": 2.46,
    "chunks": [
     [
-     0.35,
-     1.54
+     0.27,
+     0.62
     ],
     [
-     1.54,
-     2.1
-    ],
-    [
-     2.1,
-     3.62
+     0.62,
+     2.46
     ]
    ],
    "captions": [
-    "Milo.",
     "Don't.",
     "MOVE."
    ],
+   "with": [
+    "Mom"
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
    "aligned": "whisper-base.en"
   },
   "L14": {
@@ -463,9 +462,10 @@
    "aligned": "whisper-base.en"
   }
  },
- "total": 45.75,
+ "total": 44.51,
  "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
  "models": {
-  "N": "gemini-3.8-flash-lite-tts"
+  "N": "gemini-3.8-flash-lite-tts",
+  "Mom": "gemini-3.1-flash-tts-preview"
  }
 }
