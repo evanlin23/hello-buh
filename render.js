@@ -1232,12 +1232,12 @@ function fixedDisplay (item) {
 }
 // an item's display.thirdperson_righthand, following the model's parents in the client jar
 const DISPLAY = new Map()
-function thirdPersonDisplay (item, left = false) {
-  const key = left ? `${item}|left` : item
+function thirdPersonDisplay (item, left = false, slotName = null) {
+  const key = slotName ? `${item}|${slotName}` : left ? `${item}|left` : item
   if (DISPLAY.has(key)) return DISPLAY.get(key)
   const jar = path.join(__dirname, 'work', 'client', `${rec.version}.jar`)
   let name = itemModel(item), out = null
-  const slot = left ? 'thirdperson_lefthand' : 'thirdperson_righthand'
+  const slot = slotName || (left ? 'thirdperson_lefthand' : 'thirdperson_righthand')
   for (let k = 0; k < 8 && name && !out; k++) {
     let m = null
     try { m = JSON.parse(require('child_process').execFileSync('unzip', ['-p', jar, `assets/minecraft/models/${name.replace(/^minecraft:/, '')}.json`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch (e) { break }
@@ -2553,7 +2553,21 @@ else:
         held.state = bl.defaultState
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
       }
+      // a villager or wandering trader holds it over its crossed arms (CrossedArmsItemLayer: ItemDisplayContext.GROUND);
+      // only for recordings from engine 2 on, so published Shorts stay as they were
+      if (/^(villager|wandering_trader)$/.test(e.name)) { if ((rec.engine || 0) < 2) continue; held.display = thirdPersonDisplay(n, false, 'ground'); held.key = n + '|ground'; held.crossed = true }
       e.mobHeld = held
+    }
+    // a mob's off-hand item (harness extra.offhand for mobs, engine 2): ItemInHandLayer on the left arm
+    for (const e of ents) {
+      if (!e.extra || !e.extra.offhand || e.name === 'player' || e.name === 'mannequin' || e.id === -1) continue
+      const o = e.extra.offhand, oh = { key: o + '|left', display: thirdPersonDisplay(o, true) }, bl = MC.blocksByName[o]
+      if (spriteOf(o)) oh.tex = spriteOf(o)
+      else if (bl) {
+        oh.state = bl.defaultState
+        if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+      }
+      e.mobOff = oh
     }
     // actors (other players: the movie cast, lib/movie.js): the skin from stunt.cast, the body turn and
     // walk from their recorded positions (ACTOR), the arm swing from ent_swing marks, the main-hand item
@@ -2653,7 +2667,8 @@ else:
     if (STUNT_MOD.nameTags) {
       const only = Array.isArray(STUNT_MOD.nameTags) ? STUNT_MOD.nameTags : null
       for (const e of ents) {
-        const nm = (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user)
+        // the narrator seen from a camera shot (id -1) wears its player nameplate only when the list names it
+        const nm = e.id === -1 ? (only && SELF_NAME && only.includes(SELF_NAME) ? SELF_NAME : null) : (e.extra && (e.extra.user || e.extra.name)) || (ACTOR.get(e.id) && ACTOR.get(e.id).user)
         if (!nm || (only && !only.includes(nm))) continue
         e.extra = { ...(e.extra || {}), name: nm, nameVisible: true }
       }
