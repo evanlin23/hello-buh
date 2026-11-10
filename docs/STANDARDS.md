@@ -57,6 +57,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    colours one key word per chunk, but the voice doesn't hit every CAPS word (a cold listener heard that as "a flat
    drumbeat"). Character lines of about 6 words or fewer are spoken by the character in their own voice (00).
    Check: cold listener, audio only, one listen. r:r919ea3
+0000. **The narrator recipe (owner's pick)**: Gemini Leda with the "sleepover" direction (spooky-funny story at a
+   sleepover, fast and gleeful; brand/voice_samples/kid k4), rubberband tempo 1.1x, pitch 0 or +1 semitone (pending),
+   no stronger speed-up or pitch; performed continuously so no pause is cut. Check: owner (listen). r:re6a7ee
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
    (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.

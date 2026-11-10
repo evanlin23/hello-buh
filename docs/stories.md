@@ -216,6 +216,11 @@ STANDARDS.md in the same commit.
   int eh way. we need to ensure there is a clear line fo sight to teh stuff we are placing or breaking."** Every dig
   and place has a clear line of sight from the eye to the face being hit (vanilla can't reach through blocks either):
   the kit picks a stand spot and a face the eye can see, and refuses a dig/place through a block.
+- **Owner, 2026-11-10 (kid narrator round 2): "i kidna like the sleepover"; "no pitch adjustmnet, maybe minor like 0 vs
+  +1"; "i kinda like the 1.1 pace with no pitch adjumsnet. But it sounds a little bit like artificial at times? can we
+  try to make it more realisitc?"; "maybe 1.1 with +1 pitch".** The narrator is the Leda "sleepover" take direction
+  (brand/voice_samples/kid k4) at 1.1x, pitch 0 or +1 (being decided), never more processing than that; the next
+  takes are performed continuously so no pause has to be cut (a 0.12 s gap cap made it sound spliced).
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
