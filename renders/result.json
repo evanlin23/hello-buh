@@ -1,0 +1,10 @@
+{
+ "name": "story_respawn_tax",
+ "stunt": "story_respawn_tax",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/42753890192",
+ "source": "f96f4e8",
+ "queued": "2026-11-10T04:08:06Z",
+ "finished": "2026-11-10T04:18:14Z",
+ "mp4": "renders/out/story_respawn_tax.mp4"
+}
