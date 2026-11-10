@@ -44,7 +44,7 @@
    "speakers": [
     "Sam"
    ],
-   "direction": "(gemini-2.5-flash-preview-tts, Pip-style request: [A jolly old farmer calling to his dog, loud and warm, a big laugh in his voice; deep, steady, the same man every line], lines separated by blank lines)"
+   "direction": "(gemini-3.8-flash-tts, Pip-style request: [A jolly old farmer calling to his dog, loud and warm, a big laugh in his voice; deep, steady, the same man every line], lines separated by blank lines)"
   }
  ],
  "lines": [

@@ -167,7 +167,10 @@ def main():
                 x = np.fromfile(take, np.float32)
             else:
                 text = r["direction"] + "\n" + "\n".join(f"{w}: {t}" if len(r["speakers"]) > 1 else t for w, _, t in r["lines"])
-                x = tts.request(text, r["speakers"]); x.astype(np.float32).tofile(take)
+                x = tts.request(text, r["speakers"])
+                if isinstance(x, tuple):   # main's tts.request returns (audio, model)
+                    x = x[0]
+                x.astype(np.float32).tofile(take)
             for (who, lid, t), seg in zip(r["lines"], split_lines(x, [t for _, _, t in r["lines"]])):
                 write_wav(vdir / f"{lid}.wav", seg)
     timing(story, vdir)

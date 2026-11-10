@@ -213,7 +213,7 @@ module.exports = {
       stepG(v1, -0.045, 0.002); v1.pitch = 28
       stepG(v2, 0.04, 0); v2.pitch = 25
       stepG(v3, -0.035, 0); v3.pitch = 20
-      if (k >= at(1)) K.turnTo(looking, P(v2.x, v2.y + 1.6, v2.z), (k - at(1)) / 16)   // his face (aimed over it, the sky showed a black square)
+      if (k >= at(1)) K.turnTo(looking, P(v2.x, v2.y + 1.15, v2.z), Math.min(0.8, (k - at(1)) / 16))   // up to his chin, not the sky (a black square showed in the sky above him: review rounds 1-2)
       look(k)
     })
     for (const t of ['v1', 'v2', 'v3']) K.bury(t, -60)
@@ -287,7 +287,7 @@ module.exports = {
     await bot.waitForTicks(3)
     K.shot('night_yard')
     await K.cut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1)
-    const zWalk = (speed) => { const dx = 37.6 - zom.x, dz = guy.z - 1.2 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
+    const zWalk = (speed) => { const dx = guy.x + 0.3 - zom.x, dz = guy.z - 1.2 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
     await line('L11', async (k) => {
       zWalk(0.1)
       if (k === 6) ctx.sound('entity.zombie.ambient', 0.8, 1)
@@ -298,10 +298,12 @@ module.exports = {
     await line('L12', async (k, at, n) => {
       zWalk(hit ? 0.045 : 0.09)
       // after the hit he backs off, the zombie following (a still pair for 2.5 s read as parked: the review)
-      if (hit && guy.z < 17.6) { guy.z += 0.05; placeGuy() }
+      // (west: the zombie dies where he stops, and that spot must be out of the reveal's view: its death smoke covered
+      // the reveal's first frames in review round 2)
+      if (hit && guy.x > 35.2) { guy.x -= 0.05; placeGuy() }
       // the hit lands when it reaches him (the review: at 6-8 blocks it was a hit with no visible cause), at the latest
       // 8 ticks before the line ends; the wolf stands up on it, growling
-      if (!hit && (Math.hypot(zom.x - 37.5, zom.z - 15.2) < 1.6 || k >= n - 8)) {
+      if (!hit && (Math.hypot(zom.x - guy.x, zom.z - guy.z) < 1.6 || k >= n - 8)) {
         hit = true
         say(`/damage ${GUY} 4 minecraft:mob_attack by @e[tag=zom,limit=1]`); K.self({ sitting: false, angry: true }, EYE); ctx.sound('entity.wolf.growl', 0.9, 1)
       }
@@ -316,9 +318,10 @@ module.exports = {
     await line('L13', async (k, at) => {
       const [sy, sp] = shake(k, 0.035)
       if (k === at(0) + 4 || k === at(1) + 2) { const z = zEnt(); if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.1) }
-      if (k === at(1) + 10) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
-      if (k >= at(1) + 10 && k <= at(1) + 16) say('/kill @e[type=experience_orb]')   // (and if mob_drops is a no-op)
-      if (k < at(1) + 10) { const z = zEnt(); if (z && bot.entity.position.distanceTo(z.position) < 1.3) K.go(false) }
+      // the kill on the second bite (at + 10 its smoke was still up when the reveal opened)
+      if (k === at(1) + 3) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
+      if (k >= at(1) + 3 && k <= at(1) + 9) say('/kill @e[type=experience_orb]')   // (and if mob_drops is a no-op)
+      if (k < at(1) + 3) { const z = zEnt(); if (z && bot.entity.position.distanceTo(z.position) < 1.3) K.go(false) }
       const zp = P(zom.x, zom.y + 1.0, zom.z); if (bot.entity.position.distanceTo(zp) > 1.6) K.base = K.aim(zp); look(k, sy, sp)
     })
     K.stop(); K.actors.delete('zom')
