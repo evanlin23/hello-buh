@@ -36,6 +36,7 @@ name): `ln -s /home/user/hello-buh/{node_modules,songs,work} .`
 | `./hb preview <stunt>` | the whole edited Short at 360x640 + sheets of every cut and caption | 10-25 min |
 | `./hb render <stunt>` | queues the full render on GitHub Actions on its own branch (`render/<stunt>`, or `<prefix>/render-<stunt>` when only your prefix may be pushed; never your working branch); `--wait` / `--fetch` brings back `out/<stunt>.mp4` | 10-20 min |
 | `./hb pace <stunt>` | the pacing gate on the finished `out/<stunt>.mp4`: visual + audio hook, dead spots, the same picture held, build-up over thirds, the payoff (a hit + a picture change, the end ≤1 s after), length; BLOCK/WARN with output times and the cheapest fix, exit 1 on blockers (`scripts/pace.py`; `--payoff L18`, `--video`, `--rec`). Needs the render, so it isn't in `hb check` | 20-40 s |
+| `./hb panel <stunt>` | the viewer panel: Gemini watches the finished mp4 as a 12-year-old fan, a scroller and a strict editor: swipe point, hook in 2 s, cut-off / drifting / wrong-sex-or-age / annoying / ASMR voices, the ending explained back vs story.json's twist, dark/blurry/zoomed picture. BLOCK when 2+ agree on a cut word, drift, a wrong voice or a missed ending; FLAGs are review inputs (`scripts/viewer_panel.py`; 2 Gemini calls on the shared quota, cached per mp4; calibration in the short-review skill) | 1-5 min |
 | `./hb review <stunt>` | qa_frames + beat_audit + pace, counts the round; `--verdict "READY"` records the reviewer's answer | 2-4 min |
 | `./hb publish <stunt> --notes "..."` | to the videos branch (needs a READY verdict) | 1 min |
 
@@ -88,7 +89,7 @@ Measured on story_nitwit (docs/pipeline_test_nitwit.md: 2 h 40 min start to publ
    of the real thing. Use `./hb sheet` / `./hb still` for staging and `./hb render` (Actions) to see it move.
 7. **Render on Actions**: commit what the render reads (`render.js`, `renderer/`, `edit.py`, `scripts/`: hb refuses
    otherwise), `./hb render story_<name>`, then `./hb render story_<name> --wait` (~10-20 min). Look at sheets meanwhile.
-8. **Review**: `./hb review story_<name>` (includes `./hb pace`: its blockers are blockers), then an independent reviewer with `.claude/skills/short-review/SKILL.md`
+8. **Review**: `./hb review story_<name>` (includes `./hb pace`: its blockers are blockers) and `./hb panel story_<name>` once, then an independent reviewer with `.claude/skills/short-review/SKILL.md`
    (a subagent, or a fresh session: docs/worker.md). Record its answer: `./hb review story_<name> --verdict "NOT READY:
    2 blockers" --notes "..."`. Fix blockers only, re-record/re-render, review again. **Two rounds at most.**
 9. **Publish**: `./hb publish story_<name> --notes "one line: what, rounds, nitpicks"`. Then delete

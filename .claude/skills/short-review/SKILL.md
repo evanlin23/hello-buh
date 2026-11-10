@@ -22,7 +22,8 @@ The three checklists still apply. This skill doesn't repeat them; it says how to
 2. `bash scripts/preview.sh <stunt>`: a low-res preview with the real edit, plus sheets at every cut and
    caption. Fix staging here; there's no need to wait for a full render.
 3. Full render once, then `./hb pace <name>` (below), `python3 scripts/beat_audit.py <name>` and
-   `python3 scripts/qa_frames.py out/<name>.mp4` (`./hb review <name>` runs all three).
+   `python3 scripts/qa_frames.py out/<name>.mp4` (`./hb review <name>` runs all three), and once `./hb panel <name>`
+   (the viewer panel, below): give its report to the reviewer.
 
 ## The pacing gate: `./hb pace <name>` (after the render; ~25 s, no render)
 Owner, 2026-11-10: "we still need to ensure that the pacing is good, and theres still a good visual and audio hook and
@@ -43,6 +44,40 @@ story.json `"payoff": "L18"` or `--payoff MARK`, not by ignoring the line). WARN
 - length: BLOCK < 30 s, WARN > 45 s for a story.
 Calibrated on the published stories (2026-11-10): story_runaway (the owner's "good") passes clean; sheep_stares
 ("hooked but delivery bad") blocks on a silent payoff; respawn_tax ("mid") blocks on a 2.7 s tail.
+
+## The viewer panel: `./hb panel <name>` (after the render; ~2 min, 2 Gemini calls, cached per mp4)
+Owner's notes on 2026-11-10 were things a viewer hears and sees and our numbers miss: voices drifting between takes,
+words cut off, "so high pitched and annoying", "sensual asmr", a pause in the opening, blurry glow, "what does the day
+one mean bro", "is milo a woman?". `scripts/viewer_panel.py` uploads the mp4 to Gemini (Files API through the proxy)
+with the line texts (not the twist) and asks three viewers, a 12-year-old Minecraft fan, a casual scroller and a strict
+editor, for a JSON verdict: the second each would swipe and why, hook clear in 2 s, every voice as heard (sex, age,
+pitch, annoying, intimate/ASMR, drift), timed issues (cut-off word, drift, opening pause, dead air, blurry, dark, too
+zoomed, subject missing), what confused them, and the ending explained back in one sentence. A second, text-only call
+compares those explanations with story.json's `twist` and the heard voices with the cast's profiles.
+- **BLOCK** (a review blocker once you confirm it by ear/eye at the given time): 2+ viewers agree on a cut-off word, a
+  drifting voice, a voice of the wrong sex/age for its character, or 2+ explain the ending wrong.
+- **FLAG**: everything else it reports (one viewer, annoying voice, ASMR read, opening pause, swipe points, picture).
+  Each is a review input: listen/look at that time and decide with the bar below. An ASMR or annoying-voice flag from
+  2+ viewers is worth a re-take even though it isn't a hard blocker.
+- It is a model listening once: it misses things and invents some (see the calibration below). Never re-run it in a
+  loop hoping for a pass: the quota is shared (about 20 requests/day/model) and the result is cached per mp4.
+Calibrated 2026-11-10 against the owner's verdicts (prompt v4-5; cache in work/panel/):
+
+| Short | owner | panel (full Flash model) |
+|---|---|---|
+| story_runaway | good (the benchmark) | 0 blockers; 6-7/10, nobody swipes, hook clear, voice fine; ending FLAG: 3/3 "partly" (they saw the boom but didn't say "I'm the creeper": the reveal has no line) |
+| story_good_boy (old cut) | ASMR-like, too long, voice "high pitched and annoying" | **BLOCK**: the narrator heard as a young woman 3/3 (meant a young man); ASMR 3/3 ("breathy, whispery, intimate"; the scroller swipes at 15 s: "feels like ASMR I didn't ask for"); 2/3 confused by "there's this dog"; night shots too dark. Missed "too long" (said "right"; `./hb pace` warns > 45 s) |
+| story_sheep_stares | hooked, delivery bad | 0 blockers; hook clear 3/3; ending 3/3 "partly" (two of three invent a clone / "new player"); editor: two swallowed words (1.2 s "sheep's", 31 s "who?"), the payoff rushed (pace.py blocks it as silent), a "slightly hushed" read |
+| story_respawn_tax | mid | only a lite-model run (quota): all PASS 8-9/10, i.e. no signal |
+
+So: it catches voice problems (sex/age, ASMR, swallowed words) and a muddled twist the way the owner does; it does not
+judge length or "mid" vs "good" (ratings cluster 6-8 for any competent cut), and "partly" on the ending fires on the
+good benchmark too: only "no" from 2+ blocks. **Lite models can't tell** (gemini-3.5-flash-lite passed all four
+8-10/10, Good Boy included), so they're off the default chain; a report from one says LOW CONFIDENCE.
+Cost per run: 2 requests; ~6-7k tokens in (video ~90 tokens/s, i.e. low resolution at 1 fps) + ~3-4k out/thinking,
+plus a ~1-4k-token judge call: ~10-14k tokens, about 2 cents at Gemini 3 Flash's paid list rates and free on the
+proxy's tier (2 of the ~20 daily requests per model). ~60 s when a model answers at once (upload + processing ~10 s,
+watch 20-40 s, judge 10 s); up to ~5 min when it has to wait out busy (503) models.
 
 ## The review (an independent agent; give it this skill and the Short)
 Work in this order, and stop collecting once you have the verdict's evidence:
@@ -73,6 +108,8 @@ Work in this order, and stop collecting once you have the verdict's evidence:
     a word cut off at a line's start or end or clipped in the middle (owner: "cuts stuff off"), or a caption in the
     wrong speaker's colour: `./hb voice <stunt> --check` lists SWAP, WORDS, EDGE and CLIPPED lines (re-take them:
     `./hb voice <stunt> --only <id>`), then confirm by ear;
+  - a viewer-panel BLOCK (`./hb panel`: 2+ viewers agree on a cut-off word, a drifting voice, a voice of the wrong
+    sex/age for its character, or a misunderstood ending) that you confirm by ear/eye at its time;
   - **the owner's four patterns (2026-11-10, 22 notes on 6 stories; `./hb owner <stunt>` checks each, with the output
     time and line id; confirm its flags on the frames and look for what it can't measure):**
     1. *superflat / tiny sets*: a shot whose visible world is mostly a flat cleared plain, a 3x3 hill, the next
