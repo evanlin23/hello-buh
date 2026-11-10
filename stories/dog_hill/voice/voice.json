@@ -216,32 +216,6 @@
     "gets him UP."
    ]
   },
-  "L09": {
-   "text": "Whose? Nobody's come up here in years.",
-   "who": "N",
-   "dur": 2.887,
-   "onset": 0.05,
-   "end": 2.837,
-   "chunks": [
-    [
-     0.0,
-     1.1
-    ],
-    [
-     1.1,
-     2.0
-    ],
-    [
-     2.0,
-     2.74
-    ]
-   ],
-   "captions": [
-    "WHOSE?",
-    "Nobody's come up here",
-    "in YEARS."
-   ]
-  },
   "L10": {
    "text": "Said he'd be right back.",
    "who": "Grandpa",
@@ -379,5 +353,5 @@
    ]
   }
  },
- "total": 47.52
+ "total": 44.64
 }

@@ -38,7 +38,7 @@ def harp(semis, level=0.5):
     return T.st(T.note("block.note_block.harp", T.NB(semis), level))
 
 
-def score(total, lines, hushes, swells):
+def score(total, lines, hushes, swells, hits=()):
     """A slow note-block lullaby in D (original), a soft low pad, silence over each `hush` span, a swell into each `swell`."""
     mix = np.zeros((int((total + 6) * SR), 2), np.float32)
     # the motif (semitones from F#3): D4 F#4 A4 F#4 | E4 A4 G4 F#4 | D4 F#4 A4 D5 | C#5 A4 E4 _
@@ -72,6 +72,11 @@ def score(total, lines, hushes, swells):
     mix = T.reverb(mix, 3.2, 0.4)[: len(mix)]
     for s in swells:
         place(mix, T.reverse_swell(1.0, 0.25), s - 1.0)
+    for t, soft in hits:   # the payoff's sound hit: a harp chord over a low thump (soft: one low note, the sting)
+        notes = [(D4 - 12, 0.5)] if soft else [(D4 - 12, 0.55), (D4, 0.5), (Fs4, 0.45), (A4, 0.45), (D5, 0.4)]
+        for n, lv in notes:
+            place(mix, T.reverb(harp(n, lv), 2.8, 0.45), t)
+        place(mix, T.thump(44 if not soft else 40, 0.5, 0.9 if not soft else 0.5), t)
     return mix
 
 
@@ -167,7 +172,8 @@ def main():
     if o.score_only:
         lines = [(omap(e["t"] / 1000), e["who"], e.get("vox") or e.get("id"), e.get("dur", 2.0)) for e in tl if e["event"] == "line"]
         hushes = list(zip([omap(e["t"] / 1000) for e in tl if e["event"] == "hush"], [omap(e["t"] / 1000) for e in tl if e["event"] == "hush_end"]))
-        m = score(total + 1, lines, hushes, [omap(e["t"] / 1000) for e in tl if e["event"] == "swell"])[: int((total + 1) * SR)]
+        hits = [(omap(e["t"] / 1000), bool(e.get("soft"))) for e in tl if e["event"] == "hit"]
+        m = score(total + 1, lines, hushes, [omap(e["t"] / 1000) for e in tl if e["event"] == "swell"], hits)[: int((total + 1) * SR)]
         m /= max(1e-6, np.abs(m).max()) / 0.9
         T.write_wav(o.score_only, m)
         print("wrote", o.score_only, f"({total:.1f} s)")

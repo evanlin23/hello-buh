@@ -3,9 +3,9 @@
 //
 // A tamed wolf has sat on the flat top of the hill above a real generated plains village (-160, -864) for 900 days,
 // facing one empty patch of grass in front of an old dirt hut. Pip (a baby villager, the narrator) brings bones, begs;
-// Grandpa says only one voice gets him up. One night: "HelloBuh joined the game" and the player (the recording bot)
+// Grandpa says only one voice gets him up. One night: "Milo joined the game" and the player (the recording bot)
 // is standing on the patch, where he logged out (vanilla: you come back where you left). The dog stands for the first
-// time. "Sit, boy. I'll be right back." The dog sits. "HelloBuh left the game." Day one.
+// time. "Sit, boy. I'll be right back." The dog sits. "Milo left the game." Day one.
 //
 // Set origin D = the dog's block: village + (-42, ~27, -34), near the hill's east edge. The dog faces east (MC yaw -90)
 // at the patch P = D + (3, 0, 0), the drop and the village below; the hut is north-east (D + (3..7, *, -8..-4), door south).
@@ -29,7 +29,7 @@ module.exports = {
   botTimeout: 600,
   brightness: 0.8,
   cast: { self: 'steve' },
-  selfName: 'HelloBuh',
+  selfName: 'Milo',
   idleLife: true,
   look: { grade: { lift: [0.01, 0.012, 0.03], gamma: [1.0, 1.0, 0.97], gain: [1.08, 1.02, 0.92], sat: 1.12, contrast: 0.14, exposure: 1.05 },
     bloom: 0.5, bloomThreshold: 0.72, vignette: 0.38, grain: 0.015, dof: { aperture: 0.35 }, shadows: true, rays: 0.5,
@@ -47,7 +47,7 @@ module.exports = {
     // L04: the collar, close (the one close-up before the reveal)
     collar: { path: [[0, 2.6, 1.3, -1.4], [4, 2.3, 1.2, -1.2]], look: [0.55, 0.85, 0.5], fov: 45 },
     // L05: over his back at the empty patch, the valley beyond
-    patch: { path: [[0, -2.6, 2.8, 1.7], [4, -2.0, 2.5, 1.5]], look: [3.2, 0.1, 0.1], fov: 50 },
+    patch: { path: [[0, -2.4, 1.7, 1.5], [4, -1.9, 1.6, 1.3]], look: [10, 0.2, -0.3], fov: 46 },   // (low, the horizon high: the drop and the village beyond the patch)
     // L06: the hut, wide, the dog small in the foreground
     hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.5, -5], fov: 58 },
     // L07: Pip begging in front of him (side on)
@@ -60,10 +60,10 @@ module.exports = {
     dusk: { path: [[0, 4.8, 2.6, 2.4], [3, 4.4, 2.4, 2.2]], look: [0, 0.4, 0.9], fov: 56 },
     night: { path: [[0, 3.0, 1.6, 3.3], [3, 2.7, 1.5, 3.0]], look: [0.2, 0.6, 1.1], fov: 48 },   // (closer than dusk: a time cut on the same framing read as a jump cut)
     // L12: behind them: the player appears on the patch, the dog stands, the village lights below
-    reveal: { path: [[0, -3.8, 2.9, 2.0], [4, -3.4, 2.7, 1.8]], look: [3, 0.8, 0.5], fov: 50 },
+    reveal: { path: [[0, -2.6, 2.2, 6.6], [4, -2.2, 2.0, 6.0]], look: [2.2, 0.9, -1.2], fov: 52 },   // (from the south-west: the hut, boulders and trees behind them, not the flat meadow)
     // L13-L14: side on, the reunion and the sit
     reunion: { path: [[0, 1.6, 1.5, 4.6], [5, 1.8, 1.4, 4.2]], look: [2.4, 0.9, 0.5], fov: 50 },
-    sit: { path: [[0, 1.2, 2.4, 6.8], [5, 1.0, 2.6, 7.4]], look: [2.4, 0.7, 0.5], fov: 52 },
+    sit: { path: [[0, 1.0, 2.3, 5.3], [5, 0.8, 2.5, 5.8]], look: [2.4, 0.7, 0.5], fov: 52 },   // (in front of the tall grass at dz 7)
     // L15: the opening frame again, pulling up and away
     end: { dof: false, path: [[0, -4.5, 5.5, -3.5], [4, -10, 14, -8]], look: [11, -11, 11], fov: 60 }
   },
@@ -94,12 +94,29 @@ module.exports = {
       await c(`/fill ${A(x0, -14, dz)} ${A(x1, -1, dz)} dirt replace air`)
       await c(`/fill ${A(x0, 0, dz)} ${A(x1, 0, dz)} grass_block`)
     }
+    // relief, so the hilltop isn't a flat plain (owner gate: "not superflat"): a grassy ridge rising 1-3 blocks to the
+    // west behind the dog, a mound to the south-east, mossy boulders, leaf bushes, a birch
+    for (let dz = -9; dz <= 9; dz++) {
+      for (let dx = -12; dx <= -5; dx++) {
+        const h = Math.max(0, Math.min(3, Math.round((-4.5 - dx) * 0.55 + Math.sin(dz * 0.7 + dx) * 0.6)))
+        if (h <= 0 || (dz >= 6 && dx >= -8)) continue
+        if (h > 1) await c(`/fill ${A(dx, 1, dz)} ${A(dx, h - 1, dz)} dirt`)
+        await c(`/setblock ${A(dx, h, dz)} grass_block`)
+      }
+    }
+    for (const [dx, dz, h] of [[3, 5, 1], [4, 5, 1], [4, 6, 1], [5, 5, 1], [5, 6, 2], [6, 6, 1], [4, 7, 1], [5, 7, 1]]) {
+      if (h > 1) await c(`/setblock ${A(dx, 1, dz)} dirt`)
+      await c(`/setblock ${A(dx, h, dz)} grass_block`)
+    }
+    for (const [dx, dy, dz, b] of [[-4, 1, -6, 'mossy_cobblestone'], [-3, 1, -6, 'cobblestone'], [-4, 2, -6, 'mossy_cobblestone'], [-4, 1, -7, 'andesite'], [6, 1, 2, 'mossy_cobblestone'], [7, 1, 2, 'andesite']]) await c(`/setblock ${A(dx, dy, dz)} ${b}`)
+    for (const [dx, dz] of [[-2, -8], [-1, -8], [7, 4], [-7, 4]]) await c(`/setblock ${A(dx, 1, dz)} oak_leaves[persistent=true]`)
+    await c(`/place feature minecraft:birch ${A(-11, 3, 2)}`)
     // a dense meadow of low flowers and grass (seeded: the same every take), so the one bare patch reads; tall grass
     // only out past r 6. Kept clear: the dog, Pip's spot and the bones, the patch P, the hut, Grandpa's rim
     let seed = 7
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
     const flowers = ['dandelion', 'poppy', 'cornflower', 'oxeye_daisy', 'azure_bluet', 'dandelion', 'poppy']
-    const keep = (dx, dz) => (dx >= -1 && dx <= 2 && dz >= -1 && dz <= 2) || (dx === 3 && dz === 0) || (dx >= 2 && dx <= 8 && dz >= -9 && dz <= -3) || (dz >= 6 && dx >= -8 && dx <= -2)
+    const keep = (dx, dz) => (dx >= -3 && dx <= 2 && dz >= -1 && dz <= 2) || (dx === 3 && dz === 0) || (dx >= 2 && dx <= 8 && dz >= -9 && dz <= -3) || (dz >= 6 && dx >= -8 && dx <= -2)
     for (let dz = -13; dz <= 13; dz++) {
       for (let dx = -13; dx <= 8; dx++) {
         if (keep(dx, dz) || Math.hypot(dx, dz) > 13) continue
@@ -238,9 +255,6 @@ module.exports = {
     line('Grandpa', 'L08')
     const t8 = T('L08')
     await run(t8, (k) => { tp('gramps', gx, gy + 1, gz + 1.5 - Math.min(1.5, k * 0.05), 180 + 8 * Math.sin(k / 10), -32); tp('pip', -5, 1, 7.5, 0, 28 + 4 * Math.sin(k / 8)) })
-    cut('whose')
-    line('N', 'L09')
-    await run(T('L09'), (k) => { tp('pip', -5, 1, 7.5, lerp(0, -25, k / 30) + 6 * Math.sin(k / 6), 25); tp('gramps', gx, gy + 1, gz, 180, -30) })
     cut('rightback')
     line('Grandpa', 'L10')
     await run(T('L10'), (k) => tp('gramps', gx, gy + 1, gz, lerp(180, 235, ease(k / 40)), lerp(-30, -5, ease(k / 40))))   // he looks away, out over the valley
@@ -253,17 +267,17 @@ module.exports = {
     await run(a11, (k) => tp('pip', 0.5, 1, 1.6, -90 + 6 * Math.sin(k / 15), 0))
     cut('night', { time: 18000 })
     await run(t11 - a11, (k) => tp('pip', 0.5, 1, 1.6, -90 - 10 * Math.sin(k / 18), 0))
-    // ---- L12: the reveal: "HelloBuh joined the game", he's on the patch, the dog stands
+    // ---- L12: the reveal: "Milo joined the game", he's on the patch, the dog stands
     cut('reveal')
     ctx.mark('hush'); ctx.mark('swell')
     await run(4)
     await ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5)
-    ctx.mark('chat', { text: 'HelloBuh joined the game', hold: 2.6 })
+    ctx.mark('chat', { text: 'Milo joined the game', hold: 2.6 })
     await run(14)
     line('N', 'L12')
     const t12 = T('L12')
     await run(t12, (k) => {
-      if (k === Math.round(t12 * 0.62)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1) }
+      if (k === Math.round(t12 * 0.62)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit') }
       tp('pip', 0.5, 1, 1.6, lerp(-90, -80, k / 20), 0)
     })
     ctx.mark('hush_end')
@@ -289,7 +303,7 @@ module.exports = {
     })
     await run(8)
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
-    ctx.mark('chat', { text: 'HelloBuh left the game', hold: 2.6 })
+    ctx.mark('chat', { text: 'Milo left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
     await run(26)
     // ---- L15: Day one. The opening frame, pulling away
     cut('end')

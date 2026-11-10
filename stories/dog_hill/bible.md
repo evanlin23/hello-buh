@@ -31,10 +31,10 @@
 ## Cast and costume
 | who | mob / skin | look | where | state changes |
 |---|---|---|---|---|
-| the dog | wolf (pale), tame, red collar, owner = HelloBuh | sitting, facing west at P, never turns his head | on D always | stands L12 (first time), runs to the player, sits again on "SIT" (L14) |
+| the dog | wolf (pale), tame, red collar, owner = Milo (the player) | sitting, facing west at P, never turns his head | on D always | stands L12 (first time), runs to the player, sits again on "SIT" (L14) |
 | Pip (narrator, "me") | baby villager, plains, no profession | small | L03: walks up from the path with a bone; L07: in front of the dog; L11-L15: sitting (still) beside him, on his right (D + (0, 0, 1)) | none |
 | Grandpa | villager, plains, cartographer outfit (monocle) | old | on the hill path, D + (8, -5, 9), looking up at the plateau | none |
-| HelloBuh (the player) | the recording bot, Steve skin, no armor, empty hands | appears only L12-L14 | on P, then crouches by the dog | logs out (vanishes on the spot) after L14 |
+| Milo (the player) | the recording bot, Steve skin, no armor, empty hands | appears only L12-L14 | on P, then crouches by the dog | logs out (vanishes on the spot) after L14 |
 | zombies x2 | zombie, NoAI, walked by /tp | L02 only, night | walk past the dog north to south, 2-3 blocks away | none |
 
 ## Props

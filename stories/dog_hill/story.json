@@ -6,7 +6,7 @@
   "logline": "A villager kid tries for 900 days to get the dog on the hill to stand up, until the one person it obeys logs back in.",
   "question": "why tf has the dog sat on that hill for 900 days?",
   "premise": "A tamed wolf has sat on one hilltop block above the village for 900 days, staring at an empty patch of grass beside an old dirt hut. Bones pile up untouched. A villager kid decides to sit with him so he doesn't wait alone.",
-  "twist": "A sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago (players come back where they left). 'HelloBuh joined the game': he appears on the patch and the dog stands for the first time. He says 'Sit, boy. I'll be right back.' and logs out again. The dog sits. Day one.",
+  "twist": "A sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago (players come back where they left). 'Milo joined the game': he appears on the patch and the dog stands for the first time. He says 'Sit, boy. I'll be right back.' and logs out again. The dog sits. Day one.",
   "key_color": "#FFC94A",
   "gap": 0.3,
   "voice": {
@@ -32,11 +32,11 @@
     },
     "Player": {
       "role": "character",
-      "name": "HelloBuh (the player)",
+      "name": "Milo (the player)",
       "voice": "Achird",
       "color": "#FFC94A",
       "profile": "a young man who logged in for a minute between other things; warm, casual, a bit distracted",
-      "on_screen": "the recording bot (Steve-like player skin), only in the last 12 s"
+      "on_screen": "the recording bot, default Steve skin, only in the last 12 s"
     }
   },
   "requests": [
@@ -120,14 +120,6 @@
       "say": "Leave him be, kid. Only one voice gets him up.",
       "direction": "slow and gentle, tired",
       "shot": "S06"
-    },
-    {
-      "id": "L09",
-      "who": "N",
-      "text": "WHOSE? / Nobody's come up here / in YEARS.",
-      "say": "Whose? Nobody's come up here in years.",
-      "direction": "frustrated, a kid arguing",
-      "shot": "S07"
     },
     {
       "id": "L10",
