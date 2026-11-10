@@ -1,9 +1,9 @@
 [
  {
-  "id": "n1",
-  "direction": "A kid, Milo, tells the camera about his grandpa and the raids.",
+  "id": "p1",
+  "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]",
   "speakers": {
-   "N": "Puck"
+   "N": "Leda"
   },
   "lines": [
    [
@@ -25,16 +25,7 @@
     "N",
     "L04",
     "Grandpa said, \"They know who beats them.\""
-   ]
-  ]
- },
- {
-  "id": "n2",
-  "direction": "A kid, Milo, tells the camera about his grandpa and the raids.",
-  "speakers": {
-   "N": "Puck"
-  },
-  "lines": [
+   ],
    [
     "N",
     "L05",
@@ -54,12 +45,27 @@
     "N",
     "L08",
     "He calls it his courage. He drinks it at the gate."
+   ],
+   [
+    "N",
+    "L10",
+    "Since Grandma died a raid is the only time anyone's glad to see him."
+   ],
+   [
+    "N",
+    "L11",
+    "Tonight, he came home too tired to fight."
+   ],
+   [
+    "N",
+    "L12",
+    "So I drank his courage. Somebody had to fight."
    ]
   ]
  },
  {
   "id": "g1",
-  "direction": "An old soldier who has fought many raids.",
+  "direction": "",
   "speakers": {
    "Grandpa": "Charon"
   },

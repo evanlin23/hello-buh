@@ -2,7 +2,7 @@
   "name": "thirty_one_raids",
   "stunt": "story_thirty_one_raids",
   "version": 2,
-  "revision": "r4 (2026-11-10): r3 + the owner's narrator-first rules (main docs/stories.md): one kid narrator (cast `narrator`, Leda) carries the story; Grandpa's own voice only for his two on-screen punchlines (L09, L13, 6 words or fewer); L04 quoted with a said tag; L01 in one breath; r4.1: narrator re-voiced as kid Puck (owner pick), cut at the quietest point (fixed resplit)",
+  "revision": "r4 (2026-11-10): r3 + the owner's narrator-first rules (main docs/stories.md): one kid narrator (cast `narrator`, Leda) carries the story; Grandpa's own voice only for his two on-screen punchlines (L09, L13, 6 words or fewer); L04 quoted with a said tag; L01 in one breath; r4.2: narrator re-voiced with the Pip recipe (owner pick, supersedes kid Puck), cut at the quietest point (fixed resplit)",
   "caption": "why do raiders always follow grandpa home 😶",
   "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; the night Grandpa comes home too tired to fight, the boy drinks Grandpa's 'courage' himself.",
   "question": "why tf do raids start every night grandpa comes home?",
@@ -12,8 +12,9 @@
   "gap": 0.3,
   "voice": {
     "engine": "gemini",
-    "model": "gemini-3.1-flash-tts-preview (every character, one model per story)",
-    "note": "single-speaker requests of at most 4 lines, identical scene text for the narrator (owner: voice drift); narrator = cast `narrator` (Puck, kid), Grandpa = `elder` (Charon)"
+    "narrator": "Pip recipe: gemini-3.8-flash-lite-tts, Leda, one request (owner 2026-11-10: Pip 'a lot a lot better')",
+    "grandpa": "gemini-3.1-flash-tts-preview, Charon (elder)",
+    "rule": "one model per character"
   },
   "cast": {
     "N": {
@@ -38,7 +39,7 @@
   },
   "requests": [
     {
-      "id": "n1",
+      "id": "p1",
       "speakers": [
         "N"
       ],
@@ -46,34 +47,16 @@
         "L01",
         "L02",
         "L03",
-        "L04"
-      ],
-      "direction": "A kid, Milo, tells the camera about his grandpa and the raids."
-    },
-    {
-      "id": "n2",
-      "speakers": [
-        "N"
-      ],
-      "lines": [
+        "L04",
         "L05",
         "L06",
         "L07",
-        "L08"
-      ],
-      "direction": "A kid, Milo, tells the camera about his grandpa and the raids."
-    },
-    {
-      "id": "n3",
-      "speakers": [
-        "N"
-      ],
-      "lines": [
+        "L08",
         "L10",
         "L11",
         "L12"
       ],
-      "direction": "A kid, Milo, tells the camera about his grandpa and the raids."
+      "direction": "Pip recipe (voices/recipes/pip.md): one request, gemini-3.8-flash-lite-tts, Leda, the bracketed direction"
     },
     {
       "id": "g1",
@@ -132,7 +115,7 @@
       "direction": "bright and quick, all in one breath, a proud grin",
       "shot": "S01",
       "look": "actor:Grandpa",
-      "request": "n1"
+      "request": "p1"
     },
     {
       "id": "L02",
@@ -141,7 +124,7 @@
       "direction": "quick, the grin fading on the last word",
       "shot": "S02",
       "look": "actor:Gramps",
-      "request": "n1"
+      "request": "p1"
     },
     {
       "id": "L03",
@@ -150,7 +133,7 @@
       "direction": "matter-of-fact, quick",
       "shot": "S03",
       "look": "actor:Grandpa",
-      "request": "n1"
+      "request": "p1"
     },
     {
       "id": "L04",
@@ -159,7 +142,7 @@
       "direction": "doing a gruff grandpa impression, proud, quick",
       "shot": "S04",
       "look": "actor:Grandpa",
-      "request": "n1"
+      "request": "p1"
     },
     {
       "id": "L05",
@@ -168,7 +151,7 @@
       "direction": "amazed, bright",
       "shot": "S05",
       "look": "actor:Gramps",
-      "request": "n2"
+      "request": "p1"
     },
     {
       "id": "L06",
@@ -177,7 +160,7 @@
       "direction": "quick, a little in awe",
       "shot": "S06",
       "look": "actor:Grandpa",
-      "request": "n2"
+      "request": "p1"
     },
     {
       "id": "L07",
@@ -189,7 +172,7 @@
         "what": "actor:Gramps",
         "word": "BOTTLES"
       },
-      "request": "n2"
+      "request": "p1"
     },
     {
       "id": "L08",
@@ -198,7 +181,7 @@
       "direction": "admiring, quick",
       "shot": "S08",
       "look": "actor:Grandpa",
-      "request": "n2"
+      "request": "p1"
     },
     {
       "id": "L09",
@@ -218,7 +201,7 @@
       "direction": "still quick, but the grin is gone; a little sad",
       "shot": "S10",
       "look": "actor:Gramps",
-      "request": "n3"
+      "request": "p1"
     },
     {
       "id": "L11",
@@ -228,7 +211,7 @@
       "direction": "worried, a little faster",
       "shot": "S11",
       "look": "actor:Grandpa",
-      "request": "n3"
+      "request": "p1"
     },
     {
       "id": "L12",
@@ -240,7 +223,7 @@
       "hold": 1.8,
       "hold_note": "no words: the raid horn; pillagers and a ravager come up the road toward the gate (S13)",
       "look": false,
-      "request": "n3"
+      "request": "p1"
     },
     {
       "id": "L13",

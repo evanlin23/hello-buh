@@ -6,25 +6,25 @@
   "L01": {
    "text": "Grandpa has saved our village from thirty-one raids.",
    "who": "N",
-   "dur": 4.66,
-   "onset": 0.24,
-   "end": 4.52,
+   "dur": 3.32,
+   "onset": 0.0,
+   "end": 3.08,
    "chunks": [
     [
-     0.24,
-     1.667
+     0.0,
+     0.84
     ],
     [
-     1.667,
-     2.674
+     0.84,
+     1.24
     ],
     [
-     2.674,
-     3.933
+     1.24,
+     1.76
     ],
     [
-     3.933,
-     4.52
+     2.24,
+     3.08
     ]
    ],
    "captions": [
@@ -32,103 +32,107 @@
     "our village",
     "from THIRTY-ONE",
     "RAIDS."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L02": {
    "text": "Every single one started the night he came home.",
    "who": "N",
-   "dur": 4.105,
-   "onset": 0.02,
-   "end": 3.9,
+   "dur": 3.11,
+   "onset": 0.0,
+   "end": 2.78,
    "chunks": [
     [
-     0.02,
-     1.4
+     0.0,
+     0.82
     ],
     [
-     1.4,
-     2.865
+     0.82,
+     1.76
     ],
     [
-     2.865,
-     3.9
+     1.76,
+     2.78
     ]
    ],
    "captions": [
     "Every single one",
     "started the night",
     "he came HOME."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L03": {
    "text": "He says they follow him.",
    "who": "N",
-   "dur": 1.94,
-   "onset": 0.58,
-   "end": 1.67,
+   "dur": 1.67,
+   "onset": 0.0,
+   "end": 1.64,
    "chunks": [
     [
-     0.58,
-     0.959
+     0.0,
+     0.24
     ],
     [
-     0.959,
-     1.67
+     0.24,
+     1.64
     ]
    ],
    "captions": [
     "He says",
     "they FOLLOW him."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L04": {
    "text": "Grandpa said, \"They know who beats them.\"",
    "who": "N",
-   "dur": 3.655,
-   "onset": 0.77,
-   "end": 3.19,
+   "dur": 2.58,
+   "onset": 0.0,
+   "end": 2.42,
    "chunks": [
     [
-     0.77,
-     1.62
+     0.0,
+     0.6
     ],
     [
-     1.62,
-     2.274
+     0.6,
+     1.28
     ],
     [
-     2.274,
-     3.19
+     1.28,
+     2.42
     ]
    ],
    "captions": [
     "Grandpa said,",
     "\"They know",
     "who BEATS them.\""
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L05": {
    "text": "When he walks by, the villagers throw him bread.",
    "who": "N",
-   "dur": 3.66,
-   "onset": 0.29,
-   "end": 3.5,
+   "dur": 2.86,
+   "onset": 0.0,
+   "end": 2.56,
    "chunks": [
     [
-     0.29,
-     0.848
+     0.0,
+     0.3
     ],
     [
-     0.848,
-     1.476
+     0.3,
+     0.88
     ],
     [
-     1.476,
-     2.453
+     0.88,
+     1.18
     ],
     [
-     2.453,
-     3.5
+     1.18,
+     2.56
     ]
    ],
    "captions": [
@@ -136,56 +140,58 @@
     "walks by,",
     "the villagers",
     "throw him BREAD."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L06": {
    "text": "He hunts at the old tower on the hill.",
    "who": "N",
-   "dur": 3.345,
-   "onset": 0.68,
-   "end": 3.06,
+   "dur": 2.04,
+   "onset": 0.0,
+   "end": 2.02,
    "chunks": [
     [
-     0.68,
-     1.428
+     0.0,
+     0.44
     ],
     [
-     1.428,
-     2.312
+     0.44,
+     0.96
     ],
     [
-     2.312,
-     3.06
+     0.96,
+     2.02
     ]
    ],
    "captions": [
     "He hunts at",
     "the old TOWER",
     "on the hill."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L07": {
    "text": "He brings back grey bottles. He's got a whole chest.",
    "who": "N",
-   "dur": 3.68,
-   "onset": 0.19,
-   "end": 3.52,
+   "dur": 3.3,
+   "onset": 0.0,
+   "end": 3.28,
    "chunks": [
     [
-     0.19,
-     1.161
+     0.0,
+     0.56
     ],
     [
-     1.161,
-     2.063
+     0.56,
+     1.66
     ],
     [
-     2.063,
-     2.618
+     1.84,
+     2.02
     ],
     [
-     2.618,
-     3.52
+     2.02,
+     3.28
     ]
    ],
    "captions": [
@@ -193,30 +199,31 @@
     "grey BOTTLES.",
     "He's got",
     "a whole CHEST."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L08": {
    "text": "He calls it his courage. He drinks it at the gate.",
    "who": "N",
-   "dur": 4.285,
-   "onset": 0.7,
-   "end": 3.97,
+   "dur": 3.09,
+   "onset": 0.0,
+   "end": 3.08,
    "chunks": [
     [
-     0.7,
-     1.482
+     0.0,
+     0.5
     ],
     [
-     1.482,
-     2.335
+     0.5,
+     1.72
     ],
     [
-     2.335,
-     3.188
+     1.88,
+     2.3
     ],
     [
-     3.188,
-     3.97
+     2.3,
+     3.08
     ]
    ],
    "captions": [
@@ -224,60 +231,164 @@
     "his COURAGE.",
     "He drinks it",
     "at the GATE."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   },
   "L09": {
    "text": "Lock the door, kid. They're coming.",
    "who": "Grandpa",
-   "dur": 3.92,
-   "onset": 0.38,
-   "end": 3.53,
+   "dur": 5.54,
+   "onset": 0.0,
+   "end": 3.92,
    "chunks": [
     [
-     0.38,
-     1.66
+     0.0,
+     1.34
     ],
     [
-     1.66,
-     2.152
+     1.34,
+     2.34
     ],
     [
-     2.152,
-     3.53
+     2.88,
+     3.92
     ]
    ],
    "captions": [
     "Lock the DOOR,",
     "kid.",
     "They're COMING."
-   ]
+   ],
+   "aligned": "whisper-base.en"
+  },
+  "L10": {
+   "text": "Since Grandma died, a raid is the only time anyone's glad to see him.",
+   "who": "N",
+   "dur": 4.595,
+   "onset": 0.0,
+   "end": 4.08,
+   "chunks": [
+    [
+     0.0,
+     1.36
+    ],
+    [
+     1.36,
+     1.6
+    ],
+    [
+     1.6,
+     2.52
+    ],
+    [
+     2.52,
+     3.3
+    ],
+    [
+     3.3,
+     4.08
+    ]
+   ],
+   "captions": [
+    "Since Grandma died,",
+    "a RAID",
+    "is the only time",
+    "anyone's GLAD",
+    "to see him."
+   ],
+   "aligned": "whisper-base.en"
+  },
+  "L11": {
+   "text": "Tonight he came home too tired to fight.",
+   "who": "N",
+   "dur": 2.375,
+   "onset": 0.0,
+   "end": 2.36,
+   "chunks": [
+    [
+     0.0,
+     0.58
+    ],
+    [
+     0.58,
+     1.12
+    ],
+    [
+     1.12,
+     1.64
+    ],
+    [
+     1.64,
+     2.36
+    ]
+   ],
+   "captions": [
+    "Tonight",
+    "he came home",
+    "too TIRED",
+    "to fight."
+   ],
+   "aligned": "whisper-base.en"
+  },
+  "L12": {
+   "text": "So I drank his courage. Somebody had to fight.",
+   "who": "N",
+   "dur": 3.605,
+   "onset": 0.0,
+   "end": 3.58,
+   "chunks": [
+    [
+     0.0,
+     1.08
+    ],
+    [
+     1.08,
+     2.04
+    ],
+    [
+     2.04,
+     2.5
+    ],
+    [
+     2.5,
+     3.58
+    ]
+   ],
+   "captions": [
+    "So I drank",
+    "his COURAGE.",
+    "Somebody",
+    "had to FIGHT."
+   ],
+   "aligned": "whisper-base.en"
   },
   "L13": {
    "text": "Now they'll love you too, kid.",
    "who": "Grandpa",
-   "dur": 6.105,
-   "onset": 2.04,
-   "end": 4.36,
+   "dur": 4.515,
+   "onset": 0.0,
+   "end": 3.12,
    "chunks": [
     [
-     2.04,
-     2.951
+     0.0,
+     1.14
     ],
     [
-     2.951,
-     3.697
+     1.14,
+     1.7
     ],
     [
-     3.697,
-     4.36
+     1.7,
+     3.12
     ]
    ],
    "captions": [
     "Now they'll",
     "love YOU",
     "too, kid."
-   ]
+   ],
+   "aligned": "whisper-base.en"
   }
  },
- "total": 42.36
+ "total": 46.5
 }
