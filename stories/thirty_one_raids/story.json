@@ -9,7 +9,7 @@
   "premise": "Grandpa keeps a totem from every raid he has saved the village from: 31 on his wall, and one empty frame. Every raid started the night he came home; he says they follow him because he beats them. The villagers throw him bread when he walks by. He hunts at the old pillager tower on the hill and brings back grey bottles, a whole chest of them; he calls it his courage and drinks it at the gate, then tells the boy to lock the door. Since Grandma died, a raid is the only time anyone is glad to see him.",
   "twist": "The 'courage' is an ominous bottle: drinking it gives Bad Omen, and a player with it in a village starts a raid. Grandpa has been bringing every raid himself, so the village will need him. Tonight he comes home too tired to fight and leaves the bottle undrunk; the boy, sure a raid is coming anyway, drinks it so somebody can fight. The raid horn sounds, pillagers and a ravager come up the road, and Grandpa stands beside him loading his crossbow: 'Now they'll love you too, kid.'",
   "key_color": "#E0B44C",
-  "gap": 0.12,
+  "gap": 0.08,
   "voice": {
     "engine": "gemini",
     "narrator": "Pip recipe: gemini-3.8-flash-lite-tts, Leda, one request (owner 2026-11-10: Pip 'a lot a lot better')",
@@ -116,7 +116,7 @@
       "shot": "S01",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.07
+      "after": -0.08
     },
     {
       "id": "L02",
@@ -126,7 +126,7 @@
       "shot": "S02",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": 0.15
+      "after": 0.0
     },
     {
       "id": "L03",
@@ -136,7 +136,7 @@
       "shot": "S03",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.01
+      "after": -0.14
     },
     {
       "id": "L04",
@@ -146,7 +146,7 @@
       "shot": "S04",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.25
+      "after": -0.4
     },
     {
       "id": "L05",
@@ -156,7 +156,7 @@
       "shot": "S05",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": 0.05
+      "after": -0.1
     },
     {
       "id": "L06",
@@ -166,7 +166,7 @@
       "shot": "S06",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.04
+      "after": -0.11
     },
     {
       "id": "L07",
@@ -179,7 +179,7 @@
         "word": "BOTTLES"
       },
       "request": "p1",
-      "after": -0.03
+      "after": -0.18
     },
     {
       "id": "L08",
@@ -189,7 +189,7 @@
       "shot": "S08",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.14
+      "after": -0.01
     },
     {
       "id": "L09",
@@ -200,7 +200,8 @@
       "shot": "S09",
       "look": "actor:Grandpa",
       "request": "g1",
-      "after": -0.3
+      "after": -0.45,
+      "revoice_note": "at the re-voice: one breath, no pause between 'kid.' and 'They're coming.' (the 0.7 s menace pause goes: owner, 'yaps on and on' reference; take gate: 0.3 s inside a line)"
     },
     {
       "id": "L10",
@@ -211,7 +212,7 @@
       "shot": "S10",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": 0.07
+      "after": -0.08
     },
     {
       "id": "L11",
@@ -222,7 +223,7 @@
       "shot": "S11",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.17
+      "after": -0.32
     },
     {
       "id": "L12",
@@ -364,5 +365,5 @@
   "bible": "stories/thirty_one_raids/bible.md",
   "payoff": "payoff",
   "payoff_note": "the payoff is Grandpa's \"kid\" with the crossbow's loaded click, over the raiders up the road (the horn reveal 2 s before is the build to it)",
-  "after_note": "lines[].after: seconds added to (or taken from) a line's scene so the silence between one line's last sound and the next line's first sound (-45 dB of the line's peak) is ~0.28 s (owner 2026-11-10: 'the pacing is off'); the L12 hold is the dramatic beat. Recompute after any re-voice."
+  "after_note": "lines[].after: seconds added to (or taken from) a line's scene so the silence between one line's last sound and the next line's first sound (-45 dB of its peak) is ~0.09 s (owner 2026-11-10: 'the narrator just yaps on and on' is the reference: under 0.3 s everywhere but the dramatic beats); the L12 hold (the horn) is the dramatic beat. Recompute after any re-voice."
 }

@@ -1,7 +1,7 @@
 {
  "voice": "gemini cast",
  "sr": 24000,
- "gap": 0.12,
+ "gap": 0.08,
  "lines": {
   "L01": {
    "text": "Grandpa has saved our village from thirty-one raids.",
@@ -403,7 +403,7 @@
    "aligned_wav": "3890e24184de"
   }
  },
- "total": 39.19,
+ "total": 38.67,
  "models": {
   "N": "gemini-3.8-flash-lite-tts",
   "Grandpa": "gemini-2.5-flash-preview-tts"
