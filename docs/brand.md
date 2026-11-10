@@ -67,9 +67,41 @@ The owner picks the voice. `voices/cast.json` is unchanged. Candidates: `out/bra
 | never | a clone, or a soundalike of a real person or product voice; whisper; "dramatic" pauses | owner |
 
 ## Narrator candidates, round 1: adult voices (2026-11-10; rejected by the owner: "i think it should still sound like a child")
-Round 2 (kid voices) runs after the 08:00 UTC quota reset: Pip (Leda) at the new pace, young-reading library voices,
-a designed voice described without an age number (an age like "seventeen-year-old" got the description refused), and
-a prebuilt voice with a strong kid direction. Samples go on the branch `claude/brand-samples`, under `brand/voice_samples/`.
+### Round 2: kid voices (2026-11-10)
+The same 78 words. 8 requests:
+- 6 takes on gemini-3.8-flash-lite-tts, in Pip's layout ("[direction]" + the text, generateContent);
+- 1 per-minute 429 on lite, retried after a minute;
+- 1 voice create on 3.8-flash-tts, **refused by safety**: "Generated voice prompt was flagged", even though the
+  description had no age ("a high, bright, boyish voice, small and excited, quick and cheeky"). A designed child-like
+  voice looks blocked by policy. We don't work around that.
+
+The chain: no pitch shift, silences capped at 0.12 s, then an atempo (pitch kept) up to about 5.0 words/s while
+speaking. The cold-listener check (`scripts/brand_voice/coldlisten.py`) gives each clip to gemini-3.5-flash alone, heard
+once, with no script. Samples are on the branch `claude/brand-samples`, under `brand/voice_samples/kid/`, as
+`reel_kid_brand_pace.mp3` and `reel_kid_natural.mp3`.
+
+| # | take | voice, direction | natural w/s | atempo -> w/s | pitch | cold listener: age, sex, sounds like, clarity, grating |
+|---|---|---|---|---|---|---|
+| 1 | k1_pip | Leda, Pip's bubbly direction + "one breath, keep going: each new sentence lifts, hit the key word" | 3.72 | 1.40 -> 4.92 | 229 Hz | 20-25, male, AI, 10, 3 |
+| 2 | k2_cheeky | Leda, "cheeky kid ... bouncing higher" | 3.60 | 1.44 -> 4.83 | 229 Hz | 18-25, female, adult playing a kid, 10, 2 |
+| 3 | k3_deadpan | Leda, "deadpan kid ... like it's totally normal" | 4.25 | 1.22 -> 4.97 | 178 Hz | 20-30, female, AI, 10, 2 |
+| 4 | **k4_sleepover** | Leda, "spooky-funny story at a sleepover, fast and gleeful" | 4.07 | 1.28 -> 5.01 | 211 Hz | **10-14**, female, AI, 9, 4 ("rushed") |
+| 5 | k5_laomedeia | Laomedeia, the k1 direction | 3.93 | 1.32 -> 5.00 | 198 Hz | 15-22, male, adult playing a kid, 10, 2 |
+| 6 | k6_zephyr | Zephyr, the k1 direction | 4.07 | 1.28 -> 4.95 | 193 Hz | 20-30, female, AI, 10, 2 |
+
+What it says:
+- **Clarity is fine everywhere.** The listener caught 95-97 % of the words on one listen, missing only "9,000" written
+  as digits and "doghouse" as two words.
+- **The kid read mostly doesn't survive the speed-up.** Kid voices read at 3.6-4.3 words/s, so the 5.0 target takes a
+  1.22-1.44 atempo. At that tempo only k4 was heard as a kid. Pip at 1.40 was heard as a man in his early twenties.
+- **Untested:** a cold-listener pass on the natural-pace takes, to confirm the tempo is the cause. The listener model
+  hit a 429.
+- The listener is one noisy pass. Judge by ear.
+
+**Round 2 recommendation:** **k4_sleepover** (Leda, the sleepover direction): the only one heard as a kid at the brand
+pace, at the second-smallest atempo (1.28). If the owner hears every one as too old, the trade-off is the pace target:
+- at atempo 1.15 the voices land around 4.2-4.9 words/s and keep more of the kid;
+- `reel_kid_natural.mp3` is the other end, at 3.6-4.3 words/s.
 
 Round 1, kept for the record:
 The same 78 words for each: Light Sleeper vNext L01-L04, then Dog on the Hill vNext L01-L03. Each take is

@@ -4,6 +4,8 @@
   gem.py design <name> <male|female> <description>        voices.create (type prompted): a custom voice from words;
                                                            saves its id and Google's own sample_audio
   gem.py say <name> <voice id> <style> [text file]         Interactions API: read the audition text in that voice
+  gem.py gc <name> <model> <prebuilt voice> <direction>    generateContent, Pip's layout: "[direction]" + blank line +
+                                                           the text (voices/recipes/pip.md); works on flash-lite-tts
 
 No reference audio is ever sent: these voices come from text descriptions or the stock library, never a clone."""
 import base64
@@ -23,7 +25,7 @@ def post(path, body):
     req = urllib.request.Request(f"{API}/{path}", data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json", "x-goog-api-key": "proxy"})
     with open(f"{OUT}/requests.log", "a") as f:
-        f.write(f"{time.strftime('%H:%M:%S')} {path} {MODEL} {sys.argv[2]}\n")
+        f.write(f"{time.strftime('%H:%M:%S')} {path} {sys.argv[2]}\n")
     try:
         return json.loads(urllib.request.urlopen(req, timeout=300).read())
     except urllib.error.HTTPError as e:
@@ -46,6 +48,18 @@ if mode == "design":
         wav(sa["data"], f"{OUT}/{name}_google_sample.wav")
     json.dump({"description": desc, "response": r}, open(f"{OUT}/{name}.voice.json", "w"), indent=1)
     print(json.dumps(r)[:400])
+elif mode == "gc":
+    MODEL, voice, direction = sys.argv[3:6]
+    text = open("scripts/brand_voice/text.txt").read().strip()
+    prompt = f"[{direction}]\n\n{text}"
+    r = post(f"models/{MODEL}:generateContent", {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {
+        "responseModalities": ["AUDIO"], "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}})
+    part = r["candidates"][0]["content"]["parts"][0]["inlineData"]
+    args = ["-f", "s16le", "-ar", "24000", "-ac", "1"] if "wav" not in part["mimeType"] else []
+    subprocess.run(["ffmpeg", "-v", "error", "-y", *args, "-i", "-", "-ac", "1", "-ar", "24000", f"{OUT}/{name}_raw.wav"],
+                   input=base64.b64decode(part["data"]), check=True)
+    json.dump({"model": MODEL, "voice": voice, "prompt": prompt}, open(f"{OUT}/{name}_raw.wav.json", "w"), indent=1)
+    print(name, "ok", part["mimeType"])
 else:
     voice, style = sys.argv[3:5]
     text = open(sys.argv[5] if len(sys.argv) > 5 else "scripts/brand_voice/text.txt").read().strip()
