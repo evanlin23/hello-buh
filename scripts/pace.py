@@ -234,6 +234,20 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     voice_end = {lid: round(t + (vo.get(lid) or {}).get("end", 0), 2) for t, lid in lines} if voice_gaps else {}
     spoken = sum(max(0.0, (vo.get(l) or {}).get("end", 0) - (vo.get(l) or {}).get("onset", 0)) for _, l in lines) if voice_gaps else None
 
+    # ---- voice cut off or overlapping (owner 2026-11-10: "the voices seem to be edited in a way that cuts stuff off")
+    if voice_end:
+        spoken_lines = [l for l in lines if not text_of or l[1] in text_of]   # narration_wav plays story.json's lines only
+        for (t0, lid), nxt in zip(spoken_lines, spoken_lines[1:] + [(None, None)]):
+            e = voice_end.get(lid)
+            if e is None:
+                continue
+            if e > dur - 0.05:
+                add("BLOCK", "voice", e, f"{lid} is still speaking when the video ends ({e:.2f} s vs end {dur:.2f} s): its last word is cut off",
+                    "end after the line (endAfter on its last word + 0.2 s), or move the line earlier")
+            if nxt[0] is not None and e > nxt[0] + 0.03:
+                add("BLOCK", "voice", nxt[0], f"{nxt[1]} starts at {nxt[0]:.2f} s while {lid} is still speaking (to {e:.2f} s): the lines overlap",
+                    "space the line marks so each line ends before the next starts (or shorten the take's tail padding)")
+
     # ---- 6. length
     if dur < LEN_MIN:
         add("BLOCK", "length", dur, f"{dur:.1f} s: under the owner's 30 s minimum", "more beats (an escalating series), not slower ones")
