@@ -144,7 +144,40 @@ def caption_events(story_dir, timeline, start, dur):
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
             t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text))
+    # a chunk due just before a picture cut inside a line starts on the cut (the voice's word timing put
+    # "He doesn't" 6-9 frames before the night/day cuts it belongs to: story_sheep_stares f222, f262)
+    cuts = _cut_times(timeline, start)
+    for k in range(1, len(ev)):
+        t0 = ev[k][0]
+        c = next((c for c in cuts if t0 < c <= t0 + CUT_SNAP and c < ev[k][1]), None)
+        if c is not None and ev[k - 1][1] == t0:
+            ev[k - 1] = (ev[k - 1][0], c, ev[k - 1][2])
+            ev[k] = (c, ev[k][1], ev[k][2])
     return [e for e in ev if e[1] > e[0]]
+
+
+CUT_SNAP = 0.25   # s: how far ahead of a cut a chunk may start and still be moved onto it
+
+
+def _cut_times(timeline, start):
+    """Seconds into the Short at which the picture cuts: each `cut` mark's camera jump (the first tick
+    from 2 before to 6 after the mark whose pose moved over 0.6 block), or the mark itself when it also
+    changes the time of day (a day/night cut on the spot)."""
+    out = []
+    times = {e["t"] // 50 for e in timeline if e["event"] == "time"}
+    for e in timeline:
+        if e["event"] != "cut":
+            continue
+        m = e["t"] // 50
+        jump = None
+        if POSES:
+            jump = next((i for i in range(max(1, m - 2), min(len(POSES), m + 7))
+                         if sum((POSES[i][j] - POSES[i - 1][j]) ** 2 for j in (1, 2, 3)) > 0.36), None)
+        if jump is None and m in times:
+            jump = m
+        if jump is not None:
+            out.append(jump / 20 - start)
+    return sorted(out)
 
 
 def caption_concat(story_dir, timeline, start, dur, tmp):
