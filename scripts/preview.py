@@ -247,8 +247,29 @@ def nearest_mark(plan, F):
 
 def render_parallel(rec_path, out, fps, w, h, frames, env, jobs):
     """render.js FRAMES=... split into `jobs` contiguous chunks run side by side. render.js draws on one
-    core (software GL), so 3 jobs on 4 cores take ~1/3 of the time; each job pays the world mesh once."""
+    core (software GL), so 3 jobs on 4 cores take ~1/3 of the time; each job pays the world mesh once.
+    The chunks are cut to about equal render TIME (scripts/render_cost.py), not equal frame counts: a sunset
+    re-meshes the whole world at every sky-light step, and the job holding it ran far past the others."""
     chunks = [frames[i * len(frames) // jobs:(i + 1) * len(frames) // jobs] for i in range(jobs)]
+    if jobs > 1:
+        try:
+            import render_cost
+            rec = json.loads(pathlib.Path(rec_path).read_text())
+            m = render_cost.Model(rec, fps, w, h)
+            _, costs = m.costs(frames)
+            first = {}
+
+            def start_cost(a):
+                if a not in first:
+                    s0, c0 = m.costs([frames[a]])
+                    first[a] = s0 + c0[0] - costs[a]
+                return first[a]
+            ranges = render_cost.split(costs, start_cost, jobs)
+            chunks = [frames[a:b] for a, b in ranges]
+            est = [start_cost(a) + sum(costs[a:b]) for a, b in ranges]
+            print("  jobs by estimated cost: " + ", ".join(f"{len(c)} frames ~{e / 60:.1f} min" for c, e in zip(chunks, est)))
+        except Exception as e:   # the even split still works
+            print(f"  (cost split failed: {e}; equal chunks)")
     procs = []
     for k, ch in enumerate(c for c in chunks if c):
         log = open(out.parent / f"{out.name}.render{k}.log", "w")

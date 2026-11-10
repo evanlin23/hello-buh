@@ -2147,6 +2147,8 @@ function camAtLive (t) {
   }
   const secs = (Date.now() - t1) / 1000
   if (process.env.PROFILE) { const tot = Object.values(PROF).reduce((x, y) => x + y, 0); for (const [k, v] of Object.entries(PROF).sort((x, y) => y[1] - x[1])) console.log(`  ${k.padEnd(20)} ${(v / 1000).toFixed(1)} s  ${(v / tot * 100).toFixed(0)}%`) }
-  console.log(`rendered ${frames} frames (${(frames / FPS).toFixed(2)} s of video) in ${secs.toFixed(1)} s = ${(secs / (frames / FPS)).toFixed(1)} s per video second`)
+  // (a sparse render, FRAMES= / ONLY=, said "rendered 2583 frames" for 200: count what it drew)
+  const nDrawn = only ? only.length : frames
+  console.log(`rendered ${nDrawn} frames${only ? ` of ${frames}` : ''} (${(nDrawn / FPS).toFixed(2)} s of video) in ${secs.toFixed(1)} s = ${(secs / Math.max(1e-9, nDrawn / FPS)).toFixed(1)} s per video second`)
   await browser.close(); server.close(); process.exit(0)
 })()
