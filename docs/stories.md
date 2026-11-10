@@ -44,6 +44,41 @@ ending) on `lib/story.js`. Every story so far hand-rolled the same helpers (`c`,
 | the cast | `K.actor(tag, {x, z, yaw})` (a mob /tp'd every tick from the object; `K.step(a, dx, dz)` walks and faces it, `K.bury(tag)`), `K.tp(tag, dx, dy, dz, yaw)`, `K.flee(tag, speed)`, tag idle mobs `warm` (nudged every tick), `K.every(fn)` for ambient motion |
 | the rest | `K.go(on)`, `K.ctl(key, on)`, `K.stop()`, `K.setTime(n)` (no 4-tick stall), `K.setMeter(v)`, `K.groan()`, `K.knockback(() => attackerPos)` (mineflayer drops hit knockback on 1.21.11), `K.dig(block)` (vanilla dig speed; mineflayer's is a bare hand's), `ease`, `mcYaw` |
 
+## Cinematic story Shorts (movie engine + Gemini cast): `dog_hill` is the worked example
+The 2026-11-10 direction (real voices, cinematic sets) in one pipeline, on top of the movie engine (docs/movie_engine.md):
+```bash
+# 1. stories/<name>/story.json v2 (docs/story_craft.md section 6) + bible.md; run the story-critic before voicing
+# 2. voices: one Gemini request per speaker pair (scripts/tts.py, voices.json); the auto-split cuts at the longest pauses,
+#    which lands INSIDE lines that have "..." pauses. Cut by word timings instead: faster-whisper base.en
+#    (pip install faster-whisper; the model comes from Hugging Face) gives each word's start; cut at the silence before
+#    each line's first word. Per-line wavs go in stories/<name>/vox/<id>.wav, lengths in durations.json, chunk start times
+#    in vox/timing.json (the captions use them). Tempo: atempo 1.08 kept Erinome natural and saved 4 s.
+# 3. the stunt: movie-engine `shots` (hand-placed `path` cameras, offsets from the set origin), NoAI mobs moved by /tp per
+#    tick, `line` marks {who, vox, dur}, `chat` marks {text, hold} for "X joined the game", `hush`/`hush_end`/`swell`
+#    for the score, `time` marks on cuts and `weather` marks with `cut: true` (render.js lands them at once)
+STUNT=story_<name> ./scripts/record.sh
+# 4. check frames: two per shot at 360x640 (render.js FRAMES=, ~2-4 min), fix cameras without re-recording
+# 5. render on Actions: 12 slices + assemble, committed back to the branch (~10-15 min)
+./scripts/queue_story.sh <name> && git push      # then: git pull -> renders/out/story_<name>.mp4
+```
+`scripts/story_short.py stories/<name>` is the editor (1080x1920 30 fps): voices on their marks, the story's own caption
+chunks with key words in colour (characters in their cast colour with a small name over the caption), the game's chat
+line in yellow bottom-left, the hook from story.json `hook` at the top, a made note-block score (no licensed music).
+Set `edit.ownScore: true` in the stunt so publish.js/add_song.py doesn't lay an NCS bed over it.
+Lessons from dog_hill:
+- **Scout a real place:** `stunts/scout_village.js` (/locate village_plains from 10 starts, the highest ground 20-70 blocks
+  out) found a village with a 28-block hill; `stunts/probe_dog_hill.js` prints a heightmap and renders test cameras.
+  Level only a small disc (r 9) and fill holes deep (`replace air` down 14), or the disc's rim floats.
+- **Park cast in loaded chunks:** a park 300 blocks away is unloaded (every /tp "No entity was found"). In the sky
+  ~70 blocks away is loaded and far enough (>64) that hops through it don't glide. Mobs parked inside stone in a chunk
+  that the harness refreshes crashed the server twice (LongOpenHashSet in chunk ticking). Zombies burn in a daytime
+  park: summon them in their own night shot and kill them after (park first, so the death fall isn't on screen).
+- **A retried attempt reruns setup in the same world:** kill the cast by tag at the top of setup, or the duplicates stay.
+- **Low cameras sit in the flowers:** keep cameras 2.3+ blocks up in a meadow, or keep the blocks under them clear.
+- **Wolves:** the renderer drew the converted Bedrock wolf standing upright; renderer/entities.js now builds WolfModel
+  from Java's numbers (standing, and the sitting pose from setupAnim), the tame skin and the dyed collar; the harness
+  records `sit`, `tame` and `collar`. `/data merge entity @e[tag=dog,limit=1] {Sitting:0b}` stands a NoAI wolf up.
+
 ## Setup (once per container)
 ```bash
 apt-get update && apt-get install -y espeak-ng   # Kokoro's phonemizer for unknown words (a fresh container's apt lists are empty)
