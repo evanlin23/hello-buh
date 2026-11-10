@@ -127,7 +127,7 @@ recipe direction says "not whispery, breathy or soft".
 ## Delivery plan
 - **Narrator:** Pip's recipe exactly (voices/recipes/pip.md). The model is `gemini-3.8-flash-lite-tts` with Leda as a
   single speaker. All twelve narrator lines go in two single-speaker requests (r1, r2) with the recipe's verbatim
-  bracketed direction, identical both times. There are no extra scene sentences, no "true story" wording, no pitch or
+  bracketed direction, identical both times. There are no extra scene sentences, no story-framing extras, no pitch or
   tempo post, and no fallback to another model mid-story (re-take both requests on a new model if one is forced).
 - **Dad:** his one line, L04, is in his own request (r3) on one model, library `smith` (Orus). He shouts it from the
   water while he's on screen.
