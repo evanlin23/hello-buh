@@ -68,6 +68,26 @@ drift gate blocked his 3.1 L09, and the Short was re-recorded, rendered and revi
   dropping it was declined by the permission classifier, so it's still there (harmless).
 
 ## Changed
-stories/thirty_one_raids (r3 fixes, r4 narrator-first, voice, NEXT.md), stunts/story_thirty_one_raids.js,
+stories/thirty_one_raids (r3 fixes, r4 narrator-first, voice), stunts/story_thirty_one_raids.js,
 stunts/scout_raids.js and scout_site.js (outpost/site scouting), scripts/voice_bridge_31.py, scripts/tts.py (the
 per-line request, branch only), docs/stories.md (premise status).
+
+## Outcome
+- **Published** 2026-11-10 10:11 UTC: `node scripts/publish.js story_thirty_one_raids --pass` -> videos 2f286e3
+  (`shorts/story_thirty_one_raids/short.mp4`, 45.0 s, score "Magistar" added at publish). Render: Actions run
+  42792926162. Added to the review page (`shorts/story_thirty_one_raids`). Upload queue untouched.
+- **Recordings:** 2 scouts + 14 story recordings. **Renders:** 5 on Actions (the first two with superseded voices).
+- **Review:** 1 round (independent session session_019n1tKGLsK5jsUpsgs3hSBJ): READY, 0 blockers. Nitpicks: the
+  closed-chest POV shows 3 frames before the chest screen; the S11-S12 sky reads as day before the dusk glow; no raid
+  bar or Bad Omen icon (the raid is staged); S05's bread wide is small on a phone; S07's bottle is held low; S09 is soft
+  (depth of field); Grandpa's shoulder fills the frame for ~0.3 s as he steps in.
+- **Gates at publish:** hb check clean, `./hb pace` 0 blockers (1 warning), voice edges 0 cut, speaker check OK,
+  `./hb drift` 0 blockers (6 warnings).
+- **Not merged to main:** no shared code needs it. The per-line `request` routing in tts.py was dropped (main's
+  tts.py taken in the merge); `scripts/voice_bridge_31.py` and the scout stunts stay on the branch.
+
+## For next time (lessons)
+- Voice last: the narrator voice and its rules changed four times in two hours; the picture work survived each
+  change, but every voice change cost a re-record and a render. Ask which voice before recording.
+- The pace gate needs story.json `payoff` when the twist line isn't the last beat (it guessed L12 here).
+- An idle actor between moves reads as "nobody moves" to the lint: give every on-screen actor a gesture on the line.
