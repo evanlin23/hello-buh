@@ -1,0 +1,145 @@
+"""Tests for the caption timing (docs/voices.md "Caption timing"): words spelled for matching, caption words mapped onto timed words by
+their text (not by index), the CTC Viterbi, the hiss refinement, and the caption frame rounding. Synthetic data only:
+no model, no API. Run: python3 -m unittest scripts/test_caption_sync.py (npm test runs it through
+lib/hb/test/captions.test.js)."""
+import json
+import pathlib
+import sys
+import tempfile
+import unittest
+
+import numpy as np
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import ctc_align as A  # noqa: E402
+
+
+class Spelling(unittest.TestCase):
+    def test_spoken_words(self):
+        self.assertEqual(A.spoken_words("31"), ["thirty", "one"])
+        self.assertEqual(A.spoken_words("9,000"), ["nine", "thousand"])
+        self.assertEqual(A.spoken_words("THIRTY-SEVEN."), ["thirty", "seven"])
+        self.assertEqual(A.spoken_words("DON'T,"), ["don't"])
+        self.assertEqual(A.spoken_words("50%"), ["fifty", "percent"])
+        self.assertEqual(A.spoken_words("1998"), ["nineteen", "ninety", "eight"])
+        self.assertEqual(A.spoken_words("—"), [])
+        self.assertEqual(A.letters("SIXTY-FOUR."), "sixtyfour")
+
+
+class MatchByText(unittest.TestCase):
+    def test_whisper_split_number_does_not_shift_later_words(self):
+        # gold_for_the_portal L01: Whisper heard "9" ",000" and "inks"; by index, "gold" got ",000"'s time
+        toks = "My grandma has thrown NINE THOUSAND gold ingots".split()
+        heard = [["My", 0.32, 0.54], ["grandma", 0.54, 0.76], ["has", 0.76, 1.2], ["thrown", 1.2, 1.48], ["9", 1.48, 2.26],
+                 [",000", 2.26, 2.88], ["gold", 2.88, 3.16], ["inks", 3.16, 3.48]]
+        m = A.match_words(toks, heard)
+        self.assertAlmostEqual(m[4][0], 1.48)               # NINE
+        self.assertTrue(1.48 < m[5][0] < 2.88)              # THOUSAND inside the merged "9,000"
+        self.assertAlmostEqual(m[6][0], 2.88)               # gold on "gold", not on ",000"
+        self.assertAlmostEqual(m[7][0], 3.16)               # ingots on "inks" (letters in common)
+
+    def test_merged_and_split_words(self):
+        m = A.match_words(["pork", "chops", "now"], [["porkchops", 1.0, 1.9], ["now", 2.0, 2.2]])
+        self.assertAlmostEqual(m[0][0], 1.0)
+        self.assertAlmostEqual(m[1][0], 1.4)                # 4 of porkchops' 9 letters in
+        self.assertAlmostEqual(m[2][0], 2.0)
+        m = A.match_words(["THIRTY-SEVEN", "times"], [["37", 2.0, 2.5], ["times", 2.5, 2.9]])
+        self.assertAlmostEqual(m[0][0], 2.0)
+        self.assertAlmostEqual(m[1][0], 2.5)
+        m = A.match_words(["pork", "chops"], [["pork", 1.0, 1.3], ["chop", 1.3, 1.6], ["s", 1.6, 1.7]])
+        self.assertEqual([round(x[0], 2) for x in m], [1.0, 1.3])
+
+    def test_aligned_words_map_one_to_one(self):
+        toks = ["Buh", "ran", "31", "laps."]
+        heard = [["Buh", 0.1, 0.3], ["ran", 0.35, 0.5], ["31", 0.6, 1.1], ["laps.", 1.2, 1.5]]
+        self.assertEqual([x[0] for x in A.match_words(toks, heard)], [0.1, 0.35, 0.6, 1.2])
+
+    def test_unmatched_word_is_none(self):
+        m = A.match_words(["hello", "zzz", "world"], [["hello", 0.0, 0.3], ["world", 0.5, 0.9]])
+        self.assertIsNone(m[1])
+        self.assertAlmostEqual(m[2][0], 0.5)
+
+
+class Captions(unittest.TestCase):
+    """story_track's one-word captions take each word's time from words.json by text."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        d = self.d = pathlib.Path(self.tmp.name)
+        (d / "voice").mkdir()
+        text = "My grandma / NINE THOUSAND / gold ingots."
+        (d / "story.json").write_text(json.dumps({"captions": "word", "lines": [{"id": "L01", "who": "N", "text": text}]}))
+        caps = ["My grandma", "NINE THOUSAND", "gold ingots."]
+        (d / "voice" / "voice.json").write_text(json.dumps({"lines": {"L01": {
+            "who": "N", "text": "My grandma nine thousand gold ingots.", "dur": 4.0, "onset": 0.3, "end": 3.5,
+            "chunks": [[0.3, 1.0], [1.5, 2.9], [2.9, 3.5]], "captions": caps}}}))
+        self.words = [["My", 0.3, 0.5], ["grandma", 0.55, 1.0], ["9", 1.5, 2.2], [",000", 2.2, 2.85], ["gold", 2.9, 3.1], ["ingots.", 3.15, 3.5]]
+        (d / "voice" / "words.json").write_text(json.dumps({"L01": self.words}))
+        import story_track
+        self.st = story_track
+        story_track.POSES = None
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_one_word_by_text(self):
+        tl = [{"t": 1000, "event": "line", "id": "L01"}]
+        ev = self.st.caption_events(self.d, tl, 0.0, 6.0)
+        got = {w: round(t0 - 1.0 - self.st.CAPTION_LEAD * 0, 3) for t0, _, w in ev}
+        lead = self.st.CAPTION_LEAD
+        self.assertAlmostEqual(got["grandma"], 0.55 - lead, places=3)
+        self.assertAlmostEqual(got["NINE"], 1.5 - lead, places=3)
+        self.assertTrue(1.5 < got["THOUSAND"] + lead < 2.85)
+        self.assertAlmostEqual(got["gold"], 2.9 - lead, places=3)     # by index it took ",000"'s 2.2
+        self.assertAlmostEqual(got["ingots."], 3.15 - lead, places=3)
+
+    def test_frame_of_floors(self):
+        self.assertEqual(self.st.frame_of(1.0), 60)
+        self.assertEqual(self.st.frame_of(1.0166), 60)    # the frame the word starts in, never the next one
+        self.assertEqual(self.st.frame_of(1.0167), 61)
+        self.assertEqual(self.st.frame_of(59 / 60), 59)   # (float noise doesn't drop a frame)
+
+
+class Viterbi(unittest.TestCase):
+    def test_spans_follow_the_spikes(self):
+        # vocab: 0 blank, 1 "|", 2 A, 3 B. "AB B" over 30 frames: A at 5-6, B at 10, sep at 14, B at 20-21
+        T, V = 30, 4
+        lp = np.full((T, V), -8.0)
+        lp[:, 0] = -0.01
+        for t, c in ((5, 2), (6, 2), (10, 3), (14, 1), (20, 3), (21, 3)):
+            lp[t] = -8.0
+            lp[t, c] = -0.01
+        spans, score = A.viterbi(lp, [[2, 3], [3]], 0, 1)
+        self.assertEqual(spans, [(5, 11), (20, 22)])
+        self.assertGreater(score, -1)
+        spans, _ = A.viterbi(lp, [[2, 3], [3]], 0, None)   # without a separator token too
+        self.assertEqual(spans[1], (20, 22))
+
+    def test_repeated_letters_need_a_blank(self):
+        T = 12
+        lp = np.full((T, 3), -8.0)
+        lp[:, 0] = -0.01
+        for t in (3, 7):   # "LL": two separate spikes of L (id 2)
+            lp[t] = -8.0
+            lp[t, 2] = -0.01
+        spans, _ = A.viterbi(lp, [[2, 2]], 0, None)
+        self.assertEqual(spans, [(3, 8)])
+
+
+class Hiss(unittest.TestCase):
+    def test_fricative_onset_moves_back_to_the_hiss(self):
+        sr, rng = A.SR, np.random.default_rng(3)
+        quiet = rng.standard_normal(int(0.3 * sr)) * 1e-4
+        hiss = np.diff(rng.standard_normal(int(0.12 * sr) + 1)) * 0.05     # an "s": high-passed noise
+        t = np.arange(int(0.3 * sr)) / sr
+        vowel = 0.4 * np.sin(2 * np.pi * 180 * t) + 0.2 * np.sin(2 * np.pi * 360 * t)
+        x = np.concatenate([quiet, hiss, vowel]).astype(np.float32)
+        fr = A._fricative_frames(x)
+        # the CTC start 80 ms into the hiss moves back to the hiss's start (0.30 s)
+        self.assertAlmostEqual(A._fricative_onset(fr, 0.38, 0.0), 0.29, delta=0.011)   # (a 20 ms window: it starts a little before)
+        self.assertAlmostEqual(A._fricative_onset(fr, 0.38, 0.35), 0.35)   # never before the floor
+        self.assertEqual(A._fricative_onset(fr, 0.55, 0.0), 0.55)        # no hiss at the start: unchanged
+
+
+if __name__ == "__main__":
+    unittest.main()

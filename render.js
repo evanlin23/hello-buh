@@ -219,6 +219,44 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
   }
   if (extra.length || (rec.timeline || []).some(e => e.event === 'slide_blocks')) { rec.blocks = blocks.concat(extra).sort((a, b) => a[0] - b[0]) }
 }
+// Motion fixes (owner, 2026-11-10: "The movement sometimes still feels jerky and botlike"; docs/engine_features.md
+// "Motion by construction"): the renderer's half. On for recordings from engine 3 (lib/harness.js), or
+// stunt.motionFixes: true / MOTION_FIXES=1 for an older one (MOTION_FIXES=0: off). Older recordings render as before.
+//   - the camera holds still while a container window is open, and eases back into motion after it closes
+//   - a cast member moved with a cut lands on the cut (its teleport reached the client up to 3 ticks late: a dash)
+//   - dropped items: the item model standing, right side up, bobbing and spinning (ItemEntityRenderer)
+//   - camera shots cut away the blocks within half a block of the lens (a crane through leaves)
+//   - an egg, snowball or arrow that lands on a mob flashes it red (Invulnerable cast send no damage event)
+const MOTION_FIXES = process.env.MOTION_FIXES ? process.env.MOTION_FIXES === '1' : !!(STUNT_MOD.motionFixes ?? ((rec.engine || 0) >= 3))
+// A cast member repositioned with a cut: the server sends the mob's teleport with its next update (every 1-3 ticks),
+// so the new shot showed it in its old spot for up to 3 ticks and then the 3-tick client lerp dashed it across
+// (gold_for_the_portal L07, 3.2 blocks at 31.7 s: "Grandma teleports"). A jump of over a block within 6 ticks after a
+// cut or a shot change is moved back onto the cut: the entity is at its new place from the cut's own tick.
+if (MOTION_FIXES) {
+  const cuts = (rec.timeline || []).filter(e => e.event === 'cut' || e.event === 'shot' || e.event === 'respawn').map(e => Math.round(e.t / 50))
+  const ticks = [...ENT.keys()].sort((a, b) => a - b)
+  let n = 0
+  for (const c of [...new Set(cuts)]) {
+    const seen = new Set()
+    for (let tk = c + 1; tk <= c + 6; tk++) {
+      const now = ENT.get(tk), before = ENT.get(tk - 1)
+      if (!now || !before) continue
+      for (const [id, row] of now) {
+        const pr = before.get(id)
+        if (!pr || seen.has(id) || row[2] === 'item' || row[2] === 'falling_block' || row[2] === 'moving_block') continue
+        if (Math.hypot(row[3] - pr[3], row[4] - pr[4], row[5] - pr[5]) <= 1) continue
+        seen.add(id); n++
+        for (const k of ticks) {
+          if (k < c || k >= tk) continue
+          const r = ENT.get(k).get(id); if (!r) continue
+          const q = r.slice(); q[3] = row[3]; q[4] = row[4]; q[5] = row[5]; q[6] = row[6]; q[7] = row[7]; if (row[8] !== null && row[8] !== undefined) q[8] = row[8]
+          ENT.get(k).set(id, q)
+        }
+      }
+    }
+  }
+  if (n) console.log(`motion fixes: ${n} cast member${n > 1 ? 's' : ''} moved with a cut land on it`)
+}
 // The server sends mob moves every few ticks, so recorded positions are steps (a creeper "glided"
 // in 0.4-block hops). The vanilla client eases toward each new position over 3 ticks
 // (Entity.lerpTo / lerpSteps); do the same, per tick, before the per-frame interpolation.
@@ -1432,6 +1470,22 @@ function bodyAfterDeath (d, t) {
 // bounce. A synced position snaps. A pickup ('collect') flies the item to the collector over 3 ticks
 // (ItemPickupParticle), then it's gone: they froze at the spawn and blinked out (fortune f1613).
 const THROWN = new Set(['ender_pearl', 'snowball', 'egg', 'splash_potion', 'lingering_potion', 'experience_bottle', 'potion'])
+// the living entity (id) whose hitbox the step from p by v passes through, or null: ProjectileUtil.getEntityHitResult
+// tests the mob's box inflated by 0.3 (a 0.6-wide humanoid: 0.6 a side). For the motion fixes' projectile hits.
+const NOT_LIVING = /^(item|experience_orb|falling_block|moving_block|egg|snowball|arrow|spectral_arrow|trident|ender_pearl|splash_potion|lingering_potion|experience_bottle|firework_rocket|armor_stand|painting|item_frame|glow_item_frame|marker|text_display|block_display|item_display|interaction|boat|minecart|lightning_bolt|player)$/
+function projectileHit (rows, self, p, v) {
+  if (!rows) return null
+  let best = null
+  for (const [id, m] of rows) {
+    if (id === self || NOT_LIVING.test(m[2])) continue
+    const h = ENT_H[m[2]] || 1.8, r = 0.3 + 0.3
+    for (let k = 1; k <= 4; k++) {
+      const x = p[0] + v[0] * k / 4, y = p[1] + v[1] * k / 4, z = p[2] + v[2] * k / 4
+      if (Math.abs(x - m[3]) < r && Math.abs(z - m[5]) < r && y > m[4] - 0.3 && y < m[4] + h + 0.3) { if (best === null || k < best[1]) best = [id, k]; break }
+    }
+  }
+  return best ? best[0] : null
+}
 function simulateDrops (world) {
   const tl = rec.timeline || []
   const vel = new Map(), coll = new Map()
@@ -1459,7 +1513,9 @@ function simulateDrops (world) {
     let x = rows[0][3], y = rows[0][4], z = rows[0][5], vx = 0, vy = 0, vz = 0, onGround = false, vi = 0, last = rows[0]
     const t0 = rows[0][0], t1 = rows[rows.length - 1][0]
     const byTick = new Map(rows.map(r => [r[0], r]))
+    let gone = false
     for (let tick = t0; tick <= t1; tick++) {
+      if (gone) { if (ENT.has(tick)) ENT.get(tick).delete(id); continue }
       while (vi < vs.length && vs[vi][0] <= tick) { [, vx, vy, vz] = vs[vi++] }
       const row = byTick.get(tick)
       if (row && (row[3] !== last[3] || row[4] !== last[4] || row[5] !== last[5])) { x = row[3]; y = row[4]; z = row[5] }   // a sync
@@ -1469,6 +1525,19 @@ function simulateDrops (world) {
       // x 0.99 and y - 0.03; it stops where it hits (the server removes it a tick later). They sat at
       // the thrower's eye until the first position sync, ~9 ticks (worker 15, noob_pro_hacker)
       if (thrown) {
+        // motion fixes: a thrown egg / snowball that reaches a mob's hitbox on this step breaks on it and hurts it
+        // (ThrownEgg / Snowball.onHitEntity: hurt(..., 0), so the red flash still plays). The cast is Invulnerable and
+        // sends no damage event, and the flight here ignored mobs: names_in_the_woods' eggs flew through Hugo and Pia
+        // with no red ("the villagers dont have hte damage red when theyre hit")
+        if (MOTION_FIXES && vx * vx + vy * vy + vz * vz > 1e-6) {
+          const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz])
+          if (hit !== null) {
+            const hs = MOB_HURT.get(hit) || []
+            if (!hs.some(h => Math.abs(h - (tick + 1)) <= 3)) { hs.push(tick + 1); MOB_HURT.set(hit, hs) }
+            gone = true
+            continue
+          }
+        }
         if (solid(x + vx, y + vy, z + vz, tick)) { vx = vy = vz = 0; continue }
         x += vx; y += vy; z += vz; vx *= 0.99; vy = vy * 0.99 - 0.03; vz *= 0.99
         continue
@@ -1487,6 +1556,16 @@ function simulateDrops (world) {
       vx *= f; vy *= 0.98; vz *= f
       if (onGround && vy < 0) vy *= orb ? -0.9 : -0.5
       if (onGround && Math.abs(vy) < 0.005) vy = 0
+    }
+    // motion fixes: a projectile the server removed in flight (its last rows still flying) hit something the flight
+    // above didn't reach in time (the server's own spawn point and tick differ a little): the mob ahead within 3 steps
+    if (thrown && MOTION_FIXES && !gone && vx * vx + vy * vy + vz * vz > 1e-6) {
+      let q = [x, y, z], w = [vx, vy, vz]
+      for (let k = 0; k < 3; k++) {
+        const hit = projectileHit(ENT.get(t1), id, q, w)
+        if (hit !== null) { const hs = MOB_HURT.get(hit) || []; if (!hs.some(h => Math.abs(h - (t1 + 1)) <= 3)) { hs.push(t1 + 1); MOB_HURT.set(hit, hs) } break }
+        q = [q[0] + w[0], q[1] + w[1], q[2] + w[2]]; w = [w[0] * 0.99, w[1] * 0.99 - 0.03, w[2] * 0.99]
+      }
     }
     // picked up: ItemPickupParticle, 3 ticks from the item to the collector's position + 0.5 (eased f^2)
     const c = coll.get(id)
@@ -1673,6 +1752,33 @@ if (DIG_SMOOTH && DIGS.length) {
     }
   }
 }
+// motion fixes: while a container window is open (the harness's container / container_close marks) the view does not
+// move at all, as in vanilla, where the mouse drives the cursor and the movement keys do nothing: aim and position
+// hold the opening tick's. After the close the aim eases (smoothstep, 8 ticks) from the held view to the recorded one.
+// Recorded, the bot kept swaying under the chest screen (thirty_one_raids 19.7-20.8 s, the barrel in
+// gold_for_the_portal, names_in_the_woods' kitchen chest: "the background shouldnt move while the chest is open").
+const GUI_WIN = []
+if (MOTION_FIXES) {
+  let a = null
+  for (const e of rec.timeline || []) {
+    if (e.event === 'container' && a === null) a = Math.round(e.t / 50)
+    if (e.event === 'container_close' && a !== null) { GUI_WIN.push([a, Math.round(e.t / 50)]); a = null }
+  }
+  if (a !== null) GUI_WIN.push([a, P.length - 1])
+  const EASE = 8
+  for (const [a0, b0] of GUI_WIN) {
+    if (a0 >= P.length) continue
+    const b = Math.min(P.length - 1, b0), y0 = SMOOTH.yaw[a0], p0 = SMOOTH.pitch[a0], pos = P[a0]
+    for (let i = a0 + 1; i <= b; i++) { SMOOTH.yaw[i] = y0; SMOOTH.pitch[i] = p0; const q = P[i].slice(); q[1] = pos[1]; q[2] = pos[2]; q[3] = pos[3]; P[i] = q }
+    for (let k = 1; k <= EASE && b + k < P.length; k++) {
+      const i = b + k, u = k / (EASE + 1), e = u * u * (3 - 2 * u)
+      let dy = SMOOTH.yaw[i] - y0; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      SMOOTH.yaw[i] = y0 + dy * e; SMOOTH.pitch[i] = p0 + (SMOOTH.pitch[i] - p0) * e
+      const q = P[i].slice(); for (const c of [1, 2, 3]) q[c] = pos[c] + (P[i][c] - pos[c]) * e; P[i] = q
+    }
+  }
+  if (GUI_WIN.length) console.log(`motion fixes: the view holds still through ${GUI_WIN.length} container window${GUI_WIN.length > 1 ? 's' : ''}`)
+}
 // the held tool through a run of digs. Vanilla (Minecraft.continueAttack) swings every tick the attack key is held on a
 // block, even in the 5-tick destroyDelay between blocks; LivingEntity.swing restarts only once swingTime >= 3 of 6,
 // so swingTime runs 0 1 2 3 0 1 2 3... and getAttackAnim wraps FORWARD (attackAnim 0.5 -> 0 is drawn as 0.5 -> 1):
@@ -1858,7 +1964,7 @@ else:
     const r = L.reflect, c = r.center || [0, 0]
     return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null, engine: rec.engine || 0 })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null, engine: rec.engine || 0, motionFixes: MOTION_FIXES })
 
   let meshCapture = null   // (the stills mesh cache below collects the first mesh's blobs here)
   const send = async (list) => {
@@ -2408,6 +2514,19 @@ else:
     if (camShot) {
       const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
       const c = shotCam(shotNow, t, solidAt); if (c) Object.assign(cam, c); cam.aim = null
+      // motion fixes: blocks within half a block of the lens are cut away, and within 1.6 when the lens is among leaves
+      // (a crane through a canopy filled the frame with single leaf faces a block wide: good_boy 7.7-7.9 s, "a glitch
+      // in the visuals while we move in through the leaves"; vanilla's spectator camera would show the same faces)
+      if (MOTION_FIXES) {
+        let leafy = false
+        for (let dx = -2; dx <= 2 && !leafy; dx++) for (let dy = -2; dy <= 2 && !leafy; dy++) for (let dz = -2; dz <= 2 && !leafy; dz++) {
+          const bx = Math.floor(cam.x) + dx, by = Math.floor(cam.y) + dy, bz = Math.floor(cam.z) + dz
+          if (Math.hypot(bx + 0.5 - cam.x, by + 0.5 - cam.y, bz + 0.5 - cam.z) > 2.2) continue
+          const b = mesher.world.getBlock(new Vec3(bx, by, bz))
+          if (b && /_leaves$/.test(b.name)) leafy = true
+        }
+        cam.nearCut = leafy ? 1.6 : 0.5
+      }
       // the cinematic look (stunt.look): letterbox bars and depth of field on camera shots (a shot's dof: false,
       // or { aperture, focus: TARGET }; the stunt's look.dof turns it on for every camera shot)
       const LK = LOOK_RAW   // (LOOK_JSON='{...}': try a look on any recording)
@@ -2538,9 +2657,20 @@ else:
     for (const e of ents) {
       if (e.name !== 'item' || !e.extra || !e.extra.item) continue
       const it = e.extra.item
-      if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
       const bl = MC.blocksByName[it]
       const age = t - (FIRST_SEEN.get(e.id) ?? t)
+      // motion fixes: the item's own model (the 1/16-thick extruded sprite), standing, right side up, with its
+      // 'ground' display, bobbing and spinning like a block item (ItemEntityRenderer). The camera-facing sprite drew
+      // it upside down ("String is upsidedown on the floor", gold_for_the_portal 11 s)
+      if (spriteOf(it) && MOTION_FIXES) {
+        const d = thirdPersonDisplay(it, false, 'ground') || { translation: [0, 2, 0], scale: [0.5, 0.5, 0.5] }, gs = d.scale || [1, 1, 1]
+        e.shadowName = 'item'; e.shadowY = e.y
+        e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
+        e.yaw = age / 20 + (e.id % 7)
+        e.extra = { item: it, dropped: { key: it + '|ground', display: d, tex: spriteOf(it), glint: GLINT_ITEMS.has(it) || undefined } }
+        continue
+      }
+      if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
       // special item models (beds, chests, heads, banners, shulker boxes): their block-entity model with
       // the 'ground' display (ItemEntityRenderer: bob sin(age/10)*0.1+0.1, plus the model's ground-scaled
       // lift, spin age/20 rad about y); the shadow stays the item's
