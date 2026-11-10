@@ -42,6 +42,8 @@ def job():
         "fps": int(j.get("fps") or 60),
         "queued": j.get("queued"),
         "source": j.get("source"),
+        "reuse_run": j.get("reuse_run"),
+        "picture_key": j.get("picture_key"),
     }
 
 
