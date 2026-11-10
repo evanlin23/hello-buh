@@ -22,7 +22,7 @@ const STORY = path.join(__dirname, '..', 'stories', 'broken_rail')
 const CAPTION = 'why does grandpa wait at an empty rail 🛤️'
 const X = -318, Z = -770, F = 116                 // the buffer stop (map.json rail_town station: buffer at -318,117,-770)
 const VX = -1798, VZ = 674, VF = -38               // the crater's centre (-2116, 78, -96) from O (bed level; rails at 79)
-const DUSK = 12500, LATE_DUSK = 12850, MIDNIGHT = 18000, SUNRISE = 23300, MORNING = 4700
+const DUSK = 12500, LATE_DUSK = 12850, MIDNIGHT = 18000, SUNRISE = 23850, MORNING = 4700
 const v = (x, y, z) => [VX + x, VF + y, VZ + z]    // a valley point as an O offset
 const POCKET = [-6, -5, 6], VPOCKET = [-6, -5, 9]  // where Buh waits while the shot is a camera (under the platform / the valley floor)
 // the cast's marks
@@ -218,7 +218,7 @@ module.exports = {
     await line('L11', async (k, at) => {
       if (k < at(2)) { from = from || { ...K.base }; K.turnTo(from, P(VX + 0.5, VF + 1.6, VZ + 4.5), k / 9); K.look(k) }
       if (k === at(2)) K.shot('s11b')
-      gma.pitch = k >= at(2) ? 4 * Math.sin((k - at(2)) / 10) : 0
+      gma.pitch = k >= at(2) ? 7 * Math.sin((k - at(2)) / 7) : 0   // she looks up at him, a little nod
       gma.yaw = 180 + 3 * Math.sin(k / 14)
     })
 
@@ -334,11 +334,11 @@ module.exports.shots = {
   // S07: a crane from just behind Grandpa's shoulder up over the station, looking south to the bridge
   s07: { at: [-1.4, 3.3, -3.8], look: [0.5, 2.9, -0.5], fov: 50, push: 0.2, dof: false, subject: [[0.5, 2.6, -0.5]] },
   // S07b ('And I wasn't allowed past the BRIDGE'): the bridge side-on from the ravine's west rim, its lamps lit, a slow crane up
-  s07b: { path: [[0, -15, -4, 43.5], [2.2, -13, -3, 43]], lookPath: [[0, 0, -2, 43], [2.2, 0, -1.5, 43]], ease: true, fov: 50, dof: false, subject: [[0, 1, 43]] },
+  s07b: { path: [[0, -27, 1.6, 43.5], [2.2, -25, 2.4, 43]], lookPath: [[0, 0, -3, 43], [2.2, 0, -2.5, 43]], ease: true, fov: 50, dof: false, subject: [[0, -3, 43]] },
   // S09: a high crane over the ridge, looking south down the line into the basin
-  s09: { path: [[0, ...v(-4, 42, -48)], [3, ...v(-3, 38, -42)]], lookPath: [[0, ...v(0, 16, -12)], [3, ...v(0, 12, -4)]], ease: true, fov: 55, dof: false },
+  s09: { path: [[0, ...v(3, 9, -4)], [3, ...v(3, 10, -8)]], lookPath: [[0, ...v(0, 22, -30)], [3, ...v(0, 19, -24)]], ease: true, fov: 55, dof: false },
   // S11b: the only close-up: Grandma in her cart, facing the lens (home)
-  s11b: { at: v(0.5, 2.5, 1.1), look: v(0.5, 2.0, 4.5), fov: 50, push: 0.12, dof: { aperture: 0.7 }, subject: [v(0.5, 1.9, 4.5)] },
+  s11b: { at: v(0.5, 2.5, 1.1), look: v(0.5, 2.0, 4.5), fov: 50, push: 0.35, dof: { aperture: 0.7 }, subject: [v(0.5, 1.9, 4.5)] },
   // S12b: from the west, side-on: the cart shoots left (north) over the new rails
   s12b: { at: v(-11, 4.6, 3.4), lookPath: [[0, ...v(0.5, 1.5, 3.4)], [0.4, ...v(0.5, 1.5, 3.4)], [1.4, ...v(0.5, 1.5, 0.6)]], fov: 50, dof: false, subject: [v(0.5, 1.5, 4.5)] },
   // S14: side-on from the platform's west edge, looking east: Grandpa left, the cart in from the right

@@ -225,7 +225,7 @@
           "word": "GRANDPA"
         },
         {
-          "what": "prop:bridge",
+          "what": "prop:bridge_arch",
           "word": "BRIDGE"
         }
       ]
@@ -402,6 +402,14 @@
     },
     "rails_in_hand": {
       "block": "rail"
+    },
+    "bridge_arch": {
+      "at": [
+        0,
+        -3,
+        43
+      ],
+      "note": "the bridge's arch seen from the ravine (S07b)"
     }
   },
   "shots": [
