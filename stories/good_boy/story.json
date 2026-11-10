@@ -8,7 +8,7 @@
  "premise": "The narrator has tried to leave a man 37 times. Every time he gets twelve blocks away he is standing next to him again. He's fed raw porkchops, sits when told, everyone is tall, he can't open doors, he waits by the door all day, skeletons run from him, and a dog is always exactly where he is.",
  "twist": "He's the man's dog: a tamed wolf. Tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons and attack whatever hurts their owner. First-person shots hide it (a wolf's eye height); every camera shot shows the wolf at the man's side. The reveal (no line: owner 2026-11-10, the picture says it): a head pat; the camera pulls out of his head; a wolf with a red collar barks and wags. Played physical and funny (owner, 2026-11-10: never tender or whispered).",
  "key_color": "#FFB84A",
- "gap": 0.05,
+ "gap": 0.08,
  "voice": {
   "engine": "gemini",
   "model_hint": "gemini-2.5-flash-preview-tts"
