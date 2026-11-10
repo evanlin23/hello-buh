@@ -199,10 +199,6 @@ module.exports = {
     await bot.waitForTicks(2)
     await line('L01', async (k) => { K.look(k) })
 
-    // L02 (S02): the dolly along the street fence: posts, roofs, hay, the grass
-    K.shot('s02')
-    await line('L02', async (k) => { K.look(k) })
-
     // L03 (S03): the meeting point: the golem walking slowly through the torches
     K.shot('s03')
     await line('L03', async (k) => { K.step(golem, 0, -0.04); golem.yaw = 180; K.look(k) })
@@ -264,66 +260,58 @@ module.exports = {
       if (k === at(1) - 2) { K.stop(); K.sway = 0; try { bot.openContainer(bot.blockAt(new V(X + 3, F + 1, Z - 6))) } catch (e) { ctx.log('chest:', e.message) } }
       K.look(k)
     })
-    // L10 (S10): the screen closes; on the bed under the window, looking out north-west at the lit village
     try { bot.closeWindow(bot.currentWindow) } catch (e) {}
     K.sway = 1
-    await K.cut(1.5, -5.5, P(-9, 3.4, -9), 1.5625, { time: 23296 })   // standing on the bed, out the west window
-    await line('L10', async (k) => { K.look(k) })
 
     // L11 (S11): the plot from the S05 angle at dawn: a 9 x 9 of torches
     await K.cut(0.5, 3.5, P(0.5, 1.2, 0), 1, { time: 23328, shot: 's11' })
     await line('L11', async (k) => { K.look(k) })
 
-    // L12 (S12): POV at the south end of the strip: the row runs up to the corner; it grows round it
+    // L12 (S12 then S13): POV at the south end of the strip: the row runs up to the corner and grows round it; on
+    // 'I followed it' (~7 s later in game time: the row done to one short of the door) the follow shot: the kid runs
+    // round the corner and on 'MY door' Jonah is crouched at our doorstep with one torch
     for (const [dx, , dz] of STRIP) setTorch(dx, dz)
     give(FRONT.length + NORTH.length + 1)
     const fr0 = FRONT[0]
     jtp(fr0[0] - 2.5, (this.rowY[`${fr0[0]},${fr0[2]}`] ?? F) + 1 - F, fr0[2] + 0.5, -90)
     await K.cut(STRIP_X + 0.5, FRONT_Z + 11.5, P(STRIP_X + 0.5, 2.2, FRONT_Z - 1), (this.rowY[`${STRIP_X},${FRONT_Z + 8}`] ?? F) + 1 - F, { time: 23450, shot: 'pov' })
-    let placed = 0
+    let placed = 0, ran = false, turned = null
     await line('L12', async (k, at) => {
-      if (k === at(1) && placed === 0) { placed++; jPlace(FRONT[0][0], FRONT[0][2]) }
-      if (k === at(1) + 14 && placed === 1) { placed++; jPlace(FRONT[1][0], FRONT[1][2]) }
-      if (k >= at(2)) K.go(k < at(2) + 8)
+      if (!ran) {
+        if (k === at(1) && placed === 0) { placed++; jPlace(FRONT[0][0], FRONT[0][2]) }
+        if (k === at(1) + 12 && placed === 1) { placed++; jPlace(FRONT[1][0], FRONT[1][2]) }
+        if (k >= at(1) + 16 && k < at(2) - 2) K.go(true)
+        if (k === at(2) - 2) {
+          ran = true
+          K.stop()
+          for (const [dx, , dz] of [...FRONT.slice(2), ...NORTH]) setTorch(dx, dz)
+          give(1); jtp(0.5, 1, 0.3, -90); sneak(true)
+          await K.cut(STRIP_X + 0.5, FRONT_Z + 2.5, P(-1, 1.2, 1), (this.rowY[`${STRIP_X},${FRONT_Z + 2}`] ?? F) + 1 - F, { time: 23652, shot: 's13' })
+        }
+        K.look(k); return
+      }
+      K.go(bot.entity.position.x > X + 3.5); K.ctl('sprint', bot.entity.position.x > X + 3.5)
       K.look(k)
     })
     K.stop()
 
-    // the ~7 s skip: the row done to one short of the door; Jonah crouched at our doorstep with one torch
-    for (const [dx, , dz] of [...FRONT.slice(2), ...NORTH]) setTorch(dx, dz)
-    give(1)
-    jtp(0.5, 1, 0.3, -90)
-    sneak(true)
-    // L13 (S13): the follow shot: the kid runs up the strip and round the corner; on 'MY door', Jonah at our door
-    await K.cut(STRIP_X + 0.5, FRONT_Z + 6.5, P(STRIP_X + 0.5, 2.2, FRONT_Z - 2), (this.rowY[`${STRIP_X},${FRONT_Z + 6}`] ?? F) + 1 - F, { time: 23652, shot: 's13' })
-    let turned = null
-    await line('L13', async (k, at) => {
-      K.go(true); K.ctl('sprint', true)
-      const p = bot.entity.position
-      if (p.z < Z + FRONT_Z - 0.6 && !turned) turned = { ...K.base }
-      if (turned) K.turnTo(turned, P(-1, 1.2, 1), Math.min(1, (k % 1000) / 8))
-      if (p.x < X + 3.5) K.stop()
-      K.look(k)
-    })
-    K.stop()
-
-    // L14 (S14): the same axis as S06: the last torch on the door spot; after 'ONCE' he stands and waves
+    // L14 (S14): the same axis as S06: the last torch on the door spot on 'LAST'; after 'ONCE' he stands and waves
     await K.cut(2.5, 2.7, P(0.5, 1.2, -1), 1, { time: 23688, shot: 's14' })
     await line('L14', async (k, at, n) => {
       if (k === at(1)) jPlace(DOOR_SPOT[0], DOOR_SPOT[2])
-      if (k === at(3) + 6) sneak(false)
-      if (k === at(3) + 10) jb.look(Math.PI * 0.75, 0, true)
+      if (k === at(5) + 6) sneak(false)                       // after 'ONCE' he stands
+      if (k === at(5) + 10) jb.look(Math.PI * 0.75, 0, true)
       if (k === n - 14 || k === n - 7) jb.swingArm('right')
       K.look(k)
     }, 0.6)
 
-    // L15 (S15): POV 2.5 blocks from him, looking up; on the first word he leaves the game
+    // S15 (no line): POV 2.5 blocks from him, looking up; ~0.5 s, then he leaves the game: gone at once, the chat shows
+    // only 'Jonah left the game' (S06 had '<Jonah> see you tomorrow' above it). The payoff: the 'quit' mark, held 1.2 s
     await K.cut(1.6, 2.9, P(0.5, 2.5, 0.3), 1, { time: 23742, shot: 'pov' })
-    let gone = false
-    await line('L15', async (k) => {
-      if (k === 3 && !gone) { gone = true; try { jb.quit() } catch (e) {} chat('Jonah left the game', 'yellow') }
-      K.look(k)
-    }, 0.8)
+    for (let k = 0; k < 10; k++) { K.look(k); await bot.waitForTicks(1) }
+    try { jb.quit() } catch (e) {}
+    ctx.mark('quit'); chat('Jonah left the game', 'yellow')
+    for (let k = 10; k < 34; k++) { K.look(k); await bot.waitForTicks(1) }
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return true

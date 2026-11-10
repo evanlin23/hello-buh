@@ -2,7 +2,7 @@
   "name": "nine_thousand_torches",
   "stunt": "story_nine_thousand_torches",
   "version": 2,
-  "revision": "r4 (2026-11-10): the owner's mystery test (STANDARDS 1.0): 25-40 s and nothing that doesn't move the question: L02 (the fences list) and L10 (the hiding misread) cut, L12-L13 merged ('One row was still GROWING. I followed it to MY door.'); 104 words. r3: L06 'so nothing SPAWNS', L14 'Every night at ONCE'",
+  "revision": "r5 (2026-11-10): the r4 critic (REVISE 7.5: L15 said what the game already shows and ran ~3 s past the reveal) and the cold reader (75% sure at the midpoint from 'One LAST night'; 'Every night at ONCE' unclear): L15 cut, the story ends on the vanish and the chat line (payoff mark 'quit', 1.2 s hold); L07 ends on 'Mom made me PROMISE.'; L14 'Every night he'll MISS. All at ONCE.'; stale S02/S10 removed. r4: L02/L10 cut, L12-L13 merged. r3: L06 'so nothing SPAWNS'",
   "caption": "who put 6,000 torches on my village 🔥",
   "logline": "A villager kid wakes to find a torch on every block of his village and thinks something terrible is coming, but follows the last growing row to his own door, where his best friend, the village's player, places the final torch, the one he used to place there every night, and leaves the game for good.",
   "question": "why tf is there a torch on every single block of this village?",
@@ -14,7 +14,7 @@
     "eerie",
     "sad"
   ],
-  "payoff": "L15",
+  "payoff": "quit",
   "look": {
     "time": "dawn",
     "ticks": {
@@ -105,16 +105,6 @@
         "L14"
       ],
       "direction": "[A nine-year-old kid, a little slower, plain and steady, full voice, getting it; not whispery, breathy or soft]"
-    },
-    {
-      "id": "b5",
-      "speakers": [
-        "N"
-      ],
-      "lines": [
-        "L15"
-      ],
-      "direction": "[A nine-year-old kid, sad and plain, slow and steady, full voice; not whispery, breathy or soft]"
     }
   ],
   "lines": [
@@ -187,7 +177,7 @@
     {
       "id": "L07",
       "who": "N",
-      "text": "Yesterday / Jonah said, / Mom made me PROMISE. / One LAST night.",
+      "text": "Yesterday / Jonah said, / Mom made me PROMISE.",
       "say": "Yesterday Jonah said, \"Mom made me promise. One last night.\"",
       "direction": "light, no weight on it",
       "shot": "S07",
@@ -249,7 +239,7 @@
     {
       "id": "L14",
       "who": "N",
-      "text": "Jonah put / the LAST one / THERE. / Every night / at ONCE.",
+      "text": "Jonah put / the LAST one / THERE. / Every night / he'll MISS. / All at ONCE.",
       "direction": "happy on 'Jonah', then quieter on 'Every night at ONCE', getting it",
       "shot": "S14",
       "look": [
@@ -266,29 +256,18 @@
           "word": "ONCE"
         }
       ]
-    },
-    {
-      "id": "L15",
-      "who": "N",
-      "text": "He didn't say, / see you / TOMORROW.",
-      "direction": "slower, plain and steady, full volume",
-      "shot": "S15",
-      "look": {
-        "what": "prop:door_spot",
-        "word": "He"
-      }
     }
   ],
   "reveal": {
-    "at": "L15 first word",
-    "echo": "S06 showed the ordinary night: '<Jonah> see you tomorrow' then 'Jonah left the game'. S15 shows only the second line.",
-    "game": "Jonah's actor bot quits the server: his entity is removed (vanishes at once, as vanilla) and the server's system message 'Jonah left the game' (yellow, ChatFormatting.YELLOW #FFFF55) shows in the chat at the bottom left of the game view",
-    "caption": "the caption track also shows 'Jonah left the game' in yellow during the hold after 'TOMORROW'",
-    "hold": "0.8 s after the last word, built in the edit (no pause tag in the TTS text), then cut; nothing after it"
+    "at": "the 'quit' mark, S15 (no line): ~0.5 s after the cut into the kid's POV",
+    "game": "Jonah looks down at the kid, then his bot quits: he vanishes at once (vanilla) and the chat shows only, in yellow, 'Jonah left the game' (S06 showed '<Jonah> see you tomorrow' above it; now there is none)",
+    "hit": "the score drops out before S15; a low hit on the vanish (within 0.3 s)",
+    "hold": "1.2 s after the vanish (a text payoff), then cut",
+    "echo": "S06's ordinary night: '<Jonah> see you tomorrow' then 'Jonah left the game'. S15: only the second line. Nobody says it: the game does (STANDARDS 1.3)"
   },
   "ending": {
-    "after": "L15",
-    "loop": "cause and effect: the goodbye at the door is why L01's village has six thousand torches 'last night'; L01's 'someone' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going; the last torch is the nightly door torch, the habit done one final time"
+    "after": "L14, S15 picture only",
+    "loop": "cause and effect: the goodbye at the door is why L01's village has six thousand torches 'last night'; L04's 'Something BIG must be COMING' turns into someone going"
   },
   "shots": [
     {
@@ -298,14 +277,6 @@
       "size": "ews",
       "camera": "path: a crane forward and down. Key 0 (0 s): 34 blocks above the village's west edge, already moving east at ~2 blocks/s, looking down ~35 degrees across the whole village; key 1 (end of L01, ~3 s): 22 blocks up over the meeting point (the bell), still looking east toward the dawn. FOV 60. wideMaster, centre crop.",
       "frame": "fg: the torch-topped roof ridges and fence posts of the west houses passing under the lens; mid: the whole village, about 78 x 78 blocks, every grass block, fence post, hay bale and roof ridge carrying a torch: a carpet of thousands of warm points, the dirt paths and fields reading as dark lines between them (paths and farmland take no torch and spawn nothing); bg: the dark forest ring, hills, the pale band of dawn over the east hills, and on the highest hill at frame right a speck against the dawn band: the dog sitting on Dog Hill's top, Pip beside him (the easter egg, canon `dog_on_hill`, never the subject). Dawn (23000): no sun yet, torch glow and bloom at their strongest. The count shot: the viewer must believe 6,000."
-    },
-    {
-      "id": "S02",
-      "line": "L02",
-      "place": "west_lane",
-      "size": "ms",
-      "camera": "at: low (0.8 blocks up, the kid's eye) beside a fence line, a slow dolly east along it (~1.5 blocks/s), tilting up on 'ROOFS'; FOV 50",
-      "frame": "on 'FENCES': fence posts sliding past at frame left, a torch on every post; on 'ROOFS': the tilt finds a house's roof ridge, a torch on every ridge block; on 'HAY': the hay-bale pile by the meeting point, a torch on every exposed top, lower-centre; on 'DARK block': the dolly ends on the grass, a torch on every block to the houses. Dawn (23060)."
     },
     {
       "id": "S03",
@@ -380,14 +351,6 @@
       "frame": "opens: the room (the largest house in the village): bed, window, our chest against the west wall 4 blocks ahead; on 'STUFF' the chest screen fills the middle of the game view: diamond sword, iron helmet, chestplate, leggings and boots, red bed, shield, filled map, fishing rod, 16 bread, bucket; title 'Chest'; the lower (player) inventory empty. Dawn (23250)."
     },
     {
-      "id": "S10",
-      "line": "L10",
-      "place": "our_house_inside",
-      "size": "ms",
-      "camera": "pov (kid's eye) the screen closes; he hops onto the bed under the window as the shot opens (eye now ~1.4 above the floor, over the sill), looking out north-west",
-      "frame": "fg: the window frame and sill; through the window: the village lit by thousands of torches, and above the roofs the dark forest edge. Dawn (23296)."
-    },
-    {
       "id": "S11",
       "line": "L11",
       "place": "jonah_plot",
@@ -405,10 +368,10 @@
     },
     {
       "id": "S13",
-      "line": "L13",
+      "line": "L12",
       "place": "our_street",
       "size": "wide",
-      "camera": "follow: behind the kid at 6 blocks, 1.6 up, lag 0.3, as he runs to the corner and turns left round it; FOV 55",
+      "camera": "mid-line cut on 'I followed it': follow: behind the kid at 6 blocks, 1.6 up, lag 0.3, as he runs to the corner and turns left round it; FOV 55",
       "frame": "opens: the kid small, running up the strip; at the corner the camera turns with him and clears it: the row runs a few blocks along the house front, then straight north across the street (no torch on the dirt path) to our doorstep, ending one block short; on 'MY door' Jonah (name over him) is crouched at our doorstep, 9 blocks ahead, beside the last gap. Dawn (23652: ~7 s of game time pass at the cut from S12 while Jonah finishes the row; from here S13, S14 and S15 run as one continuous moment)."
     },
     {
@@ -421,11 +384,11 @@
     },
     {
       "id": "S15",
-      "line": "L15",
+      "line": null,
       "place": "our_door",
       "size": "ms",
       "camera": "pov (kid's eye, 0.81) 2.5 blocks from Jonah, looking up at him, still",
-      "frame": "subject: Jonah waist up on our doorstep, looking at the camera, the last torch burning at his feet; the chat is empty (no '<Jonah> see you tomorrow'); Jonah stands, so his name shows at full strength; on the line's first word he is gone at once (vanilla quit, no animation) and the chat shows, yellow, bottom left: 'Jonah left the game' (also on the caption track); the doorstep empty, the last torch burning beside our door; bg: past the house corner the lit village in gold light. Sunrise (23742, S14's end tick). Hold ~0.8 s after 'TOMORROW', then cut."
+      "frame": "kid's POV 2.5 blocks from Jonah, looking up at him on our doorstep, the last torch at his feet; ~0.5 s, then he quits (the 'quit' mark): gone at once, the chat shows only yellow 'Jonah left the game'; hold 1.2 s, cut. No line."
     }
   ],
   "props": {
