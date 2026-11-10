@@ -162,7 +162,7 @@ function build (geo, texInfo, extraCubes = {}) {
 }
 
 // What to draw for an entity: texture layers + model key + extra cubes.
-function look (name, extra, regs) {
+function look (name, extra, regs, engine = 0) {
   if (name === 'villager') {
     const t = regs['minecraft:villager_type']?.[String(extra?.type)] || 'plains'
     const p = regs['minecraft:villager_profession']?.[String(extra?.profession)] || 'none'
@@ -198,6 +198,15 @@ function look (name, extra, regs) {
   }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
+  // mobs that share another's model (scripts/mob_audit.js), drawn from recordings made from 2026-11-10 on (engine 2;
+  // older recordings never showed them, and must render as published): the skeleton family (BoggedRenderer,
+  // ParchedRenderer: SkeletonModel), the illusioner (IllagerModel), the glow squid (SquidModel) and the trader llama
+  // (LlamaModel + LlamaDecorLayer's trader blanket)
+  if (engine >= 2) {
+    const A = { bogged: ['skeleton', 'entity/skeleton/bogged'], parched: ['skeleton', 'entity/skeleton/parched'], illusioner: ['vindicator', 'entity/illager/illusioner'], glow_squid: ['squid', 'entity/squid/glow_squid'] }[name]
+    if (A && MODELS && MODELS[A[0]]) return { model: A[0], layers: [A[1]] }
+    if (name === 'trader_llama' && MODELS && MODELS.llama) return { model: 'llama', layers: ['entity/llama/creamy', 'entity/equipment/llama_body/trader_llama'] }
+  }
   // any other mob with converted geometry: its default texture (checked by eye in a line-up render)
   // not yet: the witch draws only its hat and the horse family gets stray saddle/bag parts (their
   // converted geometry needs animation-placed bones); better hidden than broken
@@ -861,7 +870,7 @@ export class EntityLayer {
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
       }
     } else {
-      const l = look(name, extra, this.regs)
+      const l = look(name, extra, this.regs, this.engine)
       const geo = l && MODELS[l.model]?.geometry?.[l.geo || 'default']
       const t = l && await texture(l.layers)
       if (geo && t) {
@@ -908,7 +917,7 @@ export class EntityLayer {
       obj.add(g); bones.contentMat = m.material
     }
     if (extra && extra.glint && mat && this.glintify) this.glintify(mat, name === 'falling_block' ? 8 : 0.25)
-    const rec = { key, obj, bones, mat, woolMat, underMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
+    const rec = { key, obj, bones, mat, woolMat, underMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs, this.engine) || {}).yOff || 0, walk: 0, last: null }
     if (obj) this.scene.add(obj)
     this.live.set(id, rec)
     return rec

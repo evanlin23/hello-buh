@@ -8,6 +8,7 @@
 //   ./hb still _poses_test tick:5 tick:40 --out /tmp/x # render it (stunts/_poses_test.js reads it)
 //
 // --life (with --stunt _life_test): villagers asleep / shaking their heads, a line spoken (heads turn), a look_at mark.
+// --mobs: a line-up of the mobs drawn since the mob audit (bogged, parched, illusioner, glow squid, trader llama).
 // --stunt NAME the stunt module the recording names (default _poses_test; _light_test has a fog sea and a moon phase).
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
 // Light tests (look.smoothLight): --time N (the time of day, e.g. 18000 midnight), --lights (the Girl holds a lantern,
@@ -78,6 +79,9 @@ if (args.includes('--life')) {   // villagers: one asleep, one shaking its head,
   out.timeline.push({ t: 0, event: 'pose', ids: [9201], sleep: true }, { t: 0, event: 'pose', ids: [9202], shake: true })
   out.timeline.push({ t: 10 * 50, event: 'line', who: 'Girl', text: 'Did everyone hear that? Something is under the well.', dur: 1.5 })
   out.timeline.push({ t: 5 * 50, event: 'look_at', ids: [9002], at: 9100 })
+}
+if (args.includes('--mobs')) {   // the mobs scripts/mob_audit.js found missing that share a model: a line-up across the street
+  ;['bogged', 'parched', 'illusioner', 'glow_squid', 'trader_llama'].forEach((n, k) => { const [x, y, z] = at(3, -3.2 + k * 1.6); for (let t = 0; t < N; t++) out.entities.push([t, 9300 + k, n, +x.toFixed(3), y + (n === 'glow_squid' ? 0.5 : 0), +z.toFixed(3), +faceCam.toFixed(4), 0, +faceCam.toFixed(4), null]) })
 }
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)

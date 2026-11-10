@@ -171,6 +171,16 @@ identical). The key is the recording (path, size, mtime), the visible depth, Bri
 One entry is kept (~180 MB for story_nitwit; `MESH_CACHE_KEEP=n`), `MESH_CACHE=0` turns it off, and full renders
 never touch it. Delete the folder to free the space.
 
+## Mob coverage (scripts/mob_audit.js)
+`node scripts/mob_audit.js` lists every living entity in minecraft-data and what the renderer has for it (a converted
+model, a hand-built one, a pose function). 2026-11-10: 89 living entities (1.21.11), 71 drawn before and 76 now. Added for engine-2 recordings
+(older ones never showed them and must stay as published): **bogged, parched** (skeleton model), **illusioner**
+(illager model), **glow squid** (squid model, lit 15), **trader llama** (llama + the trader blanket); line-up:
+`node scripts/pose_fixture.js --mobs`. Still not drawn (each needs its model built from the vanilla `*Model` class,
+by value for stories): **goat, camel, axolotl, armadillo** (common animals), **breeze, creaking** (1.21 threats),
+glow squid's tentacle glow, tadpole, copper golem, happy ghast, nautilus / zombie nautilus, camel husk, giant (unused).
+A mob with no model is skipped, not drawn wrong: `render.js` prints nothing for it, so check the audit before casting.
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

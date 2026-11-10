@@ -300,7 +300,8 @@ function entitiesAt (t, mesher) {
       }
     }
     // BlazeRenderer / MagmaCubeRenderer.getBlockLightLevel: always 15 (they glow in the dark)
-    if (ra[2] === 'blaze' || ra[2] === 'magma_cube' || ra[2] === 'allay' || ra[2] === 'vex') blk = 15   // (AllayRenderer / VexRenderer too)
+    if (ra[2] === 'blaze' || ra[2] === 'magma_cube' || ra[2] === 'allay' || ra[2] === 'vex') blk = 15
+    if (ra[2] === 'glow_squid' && (rec.engine || 0) >= 2) blk = 15   // GlowSquidRenderer.getBlockLightLevel (15 unless just hurt)   // (AllayRenderer / VexRenderer too)
     if (DYN.length) blk = Math.max(blk, dynLightAt(cell.x + 0.5, cell.y + 0.5, cell.z + 0.5))
     out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(sky, blk) })
   }
@@ -1717,7 +1718,7 @@ else:
     const r = L.reflect, c = r.center || [0, 0]
     return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null, engine: rec.engine || 0 })
 
   let meshCapture = null   // (the stills mesh cache below collects the first mesh's blobs here)
   const send = async (list) => {
