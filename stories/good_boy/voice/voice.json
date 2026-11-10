@@ -6,16 +6,16 @@
   "L01": {
    "text": "I've tried to leave this guy thirty-seven times.",
    "who": null,
-   "dur": 2.61,
-   "onset": 0.19,
-   "end": 2.61,
+   "dur": 2.62,
+   "onset": 0.2,
+   "end": 2.62,
    "chunks": [
     [
      0.0,
-     0.52
+     0.54
     ],
     [
-     0.52,
+     0.54,
      0.98
     ],
     [
@@ -24,11 +24,11 @@
     ],
     [
      1.4,
-     1.86
+     1.88
     ],
     [
-     1.86,
-     2.42
+     1.88,
+     2.44
     ]
    ],
    "captions": [
@@ -42,24 +42,24 @@
   "L02": {
    "text": "Every time I get twelve blocks away, boom. Right next to him again.",
    "who": null,
-   "dur": 3.54,
-   "onset": 0.02,
-   "end": 3.54,
+   "dur": 3.55,
+   "onset": 0.03,
+   "end": 3.55,
    "chunks": [
     [
      0.0,
-     0.48
+     0.5
     ],
     [
-     0.48,
-     1.0
+     0.5,
+     1.02
     ],
     [
-     1.0,
-     1.86
+     1.02,
+     1.88
     ],
     [
-     1.86,
+     1.88,
      2.46
     ],
     [
@@ -83,17 +83,17 @@
   "L03": {
    "text": "There you are, buddy!",
    "who": "Sam",
-   "dur": 1.84,
-   "onset": 0.01,
-   "end": 1.84,
+   "dur": 2.89,
+   "onset": 0.03,
+   "end": 2.79,
    "chunks": [
     [
      0.0,
-     1.46
+     2.2
     ],
     [
-     1.46,
-     1.66
+     2.2,
+     2.54
     ]
    ],
    "captions": [
@@ -140,25 +140,25 @@
   "L05": {
    "text": "He feeds me raw porkchops. Who does that?",
    "who": null,
-   "dur": 2.72,
-   "onset": 0.04,
-   "end": 2.7,
+   "dur": 2.73,
+   "onset": 0.05,
+   "end": 2.71,
    "chunks": [
     [
      0.0,
-     0.62
+     0.64
     ],
     [
-     0.62,
-     0.88
+     0.64,
+     0.9
     ],
     [
-     0.88,
-     1.28
+     0.9,
+     1.26
     ],
     [
-     1.28,
-     2.3
+     1.26,
+     2.32
     ]
    ],
    "captions": [
@@ -171,16 +171,16 @@
   "L06": {
    "text": "Everyone here is so tall.",
    "who": null,
-   "dur": 1.7,
-   "onset": 0.02,
-   "end": 1.7,
+   "dur": 1.71,
+   "onset": 0.03,
+   "end": 1.71,
    "chunks": [
     [
      0.0,
-     0.64
+     0.66
     ],
     [
-     0.64,
+     0.66,
      1.12
     ],
     [
@@ -197,9 +197,9 @@
   "L07": {
    "text": "And there's this dog. Wherever I go, it's already there!",
    "who": null,
-   "dur": 3.4,
-   "onset": 0.02,
-   "end": 3.4,
+   "dur": 3.41,
+   "onset": 0.03,
+   "end": 3.41,
    "chunks": [
     [
      0.0,
@@ -207,18 +207,18 @@
     ],
     [
      0.78,
-     1.74
+     1.76
     ],
     [
-     1.74,
+     1.76,
      1.94
     ],
     [
      1.94,
-     2.52
+     2.54
     ],
     [
-     2.52,
+     2.54,
      2.94
     ],
     [
@@ -280,9 +280,9 @@
   "L11": {
    "text": "Then a zombie went for him.",
    "who": null,
-   "dur": 1.29,
-   "onset": 0.02,
-   "end": 1.29,
+   "dur": 1.3,
+   "onset": 0.03,
+   "end": 1.3,
    "chunks": [
     [
      0.0,
@@ -290,7 +290,7 @@
     ],
     [
      0.62,
-     1.26
+     1.28
     ]
    ],
    "captions": [
@@ -301,17 +301,17 @@
   "L12": {
    "text": "Hey! Get back!",
    "who": "Sam",
-   "dur": 0.86,
-   "onset": 0.02,
-   "end": 0.81,
+   "dur": 1.04,
+   "onset": 0.03,
+   "end": 0.94,
    "chunks": [
     [
      0.0,
-     0.34
+     0.32
     ],
     [
-     0.34,
-     0.66
+     0.32,
+     0.72
     ]
    ],
    "captions": [
@@ -322,7 +322,7 @@
   "L13": {
    "text": "And I just lost it!",
    "who": null,
-   "dur": 1.74,
+   "dur": 1.77,
    "onset": 0.0,
    "end": 1.7,
    "chunks": [
@@ -343,17 +343,17 @@
   "L14": {
    "text": "good boy!",
    "who": "Sam",
-   "dur": 1.05,
-   "onset": 0.02,
-   "end": 1.05,
+   "dur": 1.68,
+   "onset": 0.03,
+   "end": 1.57,
    "chunks": [
     [
      0.0,
-     0.48
+     0.46
     ],
     [
-     0.48,
-     0.84
+     0.46,
+     0.94
     ]
    ],
    "captions": [
@@ -362,5 +362,5 @@
    ]
   }
  },
- "total": 29.56
+ "total": 31.51
 }
