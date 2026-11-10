@@ -27,11 +27,74 @@ from qa_frames import gray_frames, probe, runs  # noqa: E402
 SKIP = {"sound", "particles", "hotbar", "start", "end", "face_on", "face_off", "line", "cut"}
 
 
-def edit_config(name):
-    js = f"const s=require('./stunts/{name}.js');console.log(JSON.stringify(s.edit||{{}}))"
-    out = subprocess.run(["node", "-e", js], cwd=HERE, capture_output=True, text=True)
-    import os
-    return {**json.loads(out.stdout or "{}"), **json.loads(os.environ.get("EDIT_EXTRA") or "{}")}   # same override as edit_args.js
+def edit_config(name, stunt_file=None):
+    """The stunt's edit block, with EDIT_EXTRA merged over it (the same override as edit_args.js). stunt_file: a
+    module elsewhere, e.g. a videos-branch package's source/<name>.js: whatever it requires that doesn't resolve
+    next to it ('../lib/story') resolves from stunts/ here."""
+    f = pathlib.Path(stunt_file).resolve() if stunt_file else HERE / "stunts" / f"{name}.js"
+    js = r"""
+const Module = require('module'), path = require('path')
+const repo = process.argv[1], file = process.argv[2]
+const orig = Module._resolveFilename
+const alt = path.join(repo, 'stunts', '_edit_config.js'), fake = new Module(alt)
+fake.filename = alt; fake.paths = Module._nodeModulePaths(path.dirname(alt))
+Module._resolveFilename = function (req, parent, ...r) { try { return orig.call(this, req, parent, ...r) } catch (e) { return orig.call(this, req, fake, ...r) } }
+process.chdir(repo)
+const m = require(file)
+process.stdout.write(JSON.stringify({ ...(m.edit || {}), ...JSON.parse(process.env.EDIT_EXTRA || '{}') }))
+"""
+    out = subprocess.run(["node", "-e", js, str(HERE), str(f)], capture_output=True, text=True)
+    if out.returncode != 0:
+        sys.exit(f"could not load the edit block of {f}: {(out.stderr.strip().splitlines() or [out.returncode])[-1]}")
+    return json.loads(out.stdout or "{}")
+
+
+def load_rec(path):
+    """A recording: work/<name>.rec.json, or a videos-branch package's recording.json.gz."""
+    import gzip
+    path = pathlib.Path(path)
+    return json.loads(gzip.decompress(path.read_bytes())) if path.suffix == ".gz" else json.loads(path.read_text())
+
+
+def trim_start(ed, first):
+    """Where the Short starts in the (output-time) recording, as edit.py trims it. first: event -> first time (s)."""
+    start = float(ed.get("start", 0) or 0)
+    if ed.get("startAt"):
+        ev, off = ed["startAt"].rsplit(":", 1)
+        if ev in first:
+            start = max(0.0, first[ev] + float(off))
+    elif ed.get("start") is None and "start" in first:
+        # the same origin as edit.py: edit_args.js passes --start_at start:0 when a stunt sets none
+        # (every mark and the tail were off by the pre-roll: worker 2, speed_build)
+        start = first["start"]
+    return start
+
+
+def payoff_report(ed, first, start, dur, payoff=None, text_payoff=False):
+    """The ending: (report lines, tail seconds or None, ok). The video ends <= 1.0 s after the payoff mark
+    (payoff: default the edit's endAfter event); a text payoff (a death message, a card) gets up to 1.8 s.
+    first: event -> first output time (s); start: the trim; dur: the Short's length without a hook preview."""
+    pay = payoff or (ed.get("endAfter", "").rsplit(":", 1)[0] if ed.get("endAfter") else None)
+    if not (pay and pay in first):
+        return ["payoff: no mark given (--payoff EVENT); judge the tail from the frames"], None, True
+    lim = (1.8 if text_payoff else 1.0) + 0.02   # (+ a frame of rounding: 'boom7:1.0' ends 1.0000001 s after)
+    out = []
+    pt = first[pay] - start
+    tail = dur - pt
+    verdict = "OK" if tail <= lim else "LONG: end sooner after the payoff"
+    rp = ed.get("replay")
+    ok = tail <= lim
+    if rp:   # an instant replay after the payoff: the replay's own payoff is the end that counts
+        rlen = (float(rp.get("before", 1.5)) + float(rp.get("after", 0.5))) / float(rp.get("speed", 0.5))
+        rtail = float(rp.get("after", 0.5)) / float(rp.get("speed", 0.5))
+        out.append(f"payoff '{pay}' at {pt:.2f}s, then a {rlen:.2f}s replay from {dur - rlen:.2f}s (its payoff at {dur - rtail:.2f}s)")
+        tail, verdict = rtail, ("OK" if rtail <= lim else "LONG: shorten the replay's `after`")
+        pre = dur - rlen - pt
+        out.append(f"  before the replay: {pre:.2f}s after the payoff -> {'OK' if pre <= lim else 'LONG: end sooner after the payoff'}")
+        ok = rtail <= lim and pre <= lim
+    out.append(f"payoff '{pay}' at {pt:.2f}s; the video ends {tail:.2f}s after {'the replay payoff' if rp else 'it'} -> {verdict}"
+               + (" (text payoff: up to 1.8 s)" if text_payoff else ""))
+    return out, tail, ok
 
 
 def camera_turns(poses, cuts):
@@ -72,15 +135,15 @@ def main():
     ap.add_argument("name")
     ap.add_argument("--payoff", help="timeline event that is the payoff (default: the edit's endAfter event)")
     ap.add_argument("--video")
+    ap.add_argument("--stunt-file", help="the stunt module (default stunts/<name>.js; e.g. a package's source/<name>.js)")
     ap.add_argument("--rec", help="recording (default work/<name>.rec.json; .gz works, e.g. a videos-branch package)")
     a = ap.parse_args()
     video = pathlib.Path(a.video or HERE / "out" / f"{a.name}.mp4")
-    ed = edit_config(a.name)
+    ed = edit_config(a.name, a.stunt_file)
     rec_p = HERE / "work" / f"{a.name}.rec.json"
     if a.rec:
         rec_p = pathlib.Path(a.rec)
-    import gzip
-    rec = (json.loads(gzip.decompress(rec_p.read_bytes())) if rec_p.suffix == ".gz" else json.loads(rec_p.read_text())) if rec_p.exists() else {}
+    rec = load_rec(rec_p) if rec_p.exists() else {}
     tl = rec.get("timeline", [])
     # camera turns: the look swinging 40+ degrees and back within 1.5 s, or 70+ degrees one way within
     # 1 s, outside a cut. The pixel-art Shorts all had a scripted mid-build glance to the left that
@@ -95,15 +158,7 @@ def main():
     first = {}
     for e in tl:
         first.setdefault(e["event"], e["t"] / 1000)
-    start = float(ed.get("start", 0) or 0)
-    if ed.get("startAt"):
-        ev, off = ed["startAt"].rsplit(":", 1)
-        if ev in first:
-            start = max(0.0, first[ev] + float(off))
-    elif ed.get("start") is None and "start" in first:
-        # the same origin as edit.py: edit_args.js passes --start_at start:0 when a stunt sets none
-        # (every mark and the tail were off by the pre-roll: worker 2, speed_build)
-        start = first["start"]
+    start = trim_start(ed, first)
     fps, dur = probe(video)
     from retention import hook_len
     if hook_len(ed):   # the hook preview plays first: every mark is that much later in the video
@@ -161,24 +216,8 @@ def main():
     print("\ncamera turns (each needs an on-screen reason; an unmotivated turn reads as weird):")
     print("\n".join(f"  {vt:6.2f}s  {ev}" for vt, ev in tn) if tn else "  none")
 
-    pay = a.payoff or (ed.get("endAfter", "").rsplit(":", 1)[0] if ed.get("endAfter") else None)
     print()
-    if pay and pay in first:
-        pt = first[pay] - start
-        tail = dur - pt
-        verdict = "OK" if tail <= 1.0 else "LONG: end sooner after the payoff"
-        rp = ed.get("replay")
-        if rp:   # an instant replay after the payoff: the replay's own payoff is the end that counts
-            rlen = (float(rp.get("before", 1.5)) + float(rp.get("after", 0.5))) / float(rp.get("speed", 0.5))
-            rtail = float(rp.get("after", 0.5)) / float(rp.get("speed", 0.5))
-            print(f"payoff '{pay}' at {pt:.2f}s, then a {rlen:.2f}s replay from {dur - rlen:.2f}s (its payoff at {dur - rtail:.2f}s)")
-            tail, verdict = rtail, ("OK" if rtail <= 1.0 else "LONG: shorten the replay's `after`")
-            pre = dur - rlen - pt
-            print(f"  before the replay: {pre:.2f}s after the payoff -> {'OK' if pre <= 1.0 else 'LONG: end sooner after the payoff'}")
-        print(f"payoff '{pay}' at {pt:.2f}s; the video ends {tail:.2f}s after {'the replay payoff' if rp else 'it'} -> {verdict}")
-    else:
-        print("payoff: no mark given (--payoff EVENT); judge the tail from the frames")
-
+    print("\n".join(payoff_report(ed, first, start, dur, a.payoff)[0]))
 
 if __name__ == "__main__":
     main()

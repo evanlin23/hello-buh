@@ -12,10 +12,16 @@ narrator turns out to be the creeper).
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
 ~/.hb-tts/bin/python scripts/voice.py stories/<name>        # -> stories/<name>/voice/<id>.wav + voice.json
 # 3. the scenes: stunts/story_<name>.js, one scene per line (copy stunts/story_runaway.js)
-STUNT=story_<name> ./run.sh                                  # -> out/story_<name>.mp4
+STUNT=story_<name> REC_CHECK_STRICT=1 ./run.sh             # -> out/story_<name>.mp4; stops before the render on a rec_check blocker
 # 4. QA (docs/qa.md) as for every Short, then
 node scripts/publish.js story_<name> --pass
 ```
+**Run rec_check before rendering; fix blockers by re-recording.** Story Shorts took 4-12 review rounds, each a full
+render, and most findings were in the recording: the aim snapping a tick after a cut, the sneak dropping for a tick
+at a cut (a `stopAll()` before the teleport: the eye height bobs 0.2 blocks into every shot), two jumps in one cut,
+a time-of-day change a tick off its cut, held pauses, a long tail. `run.sh` prints the report after the recording;
+by hand: `python3 scripts/rec_check.py story_<name>` (docs/worker.md has the list of checks).
+
 Re-run `voice.py` after any script change (`--only L03,L07` redoes single lines), then re-run the stunt: the scene
 lengths come from voice.json, so a new voice means a new recording.
 
@@ -74,7 +80,9 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
 - No block entities render (beds, bells, chests, signs): build sets without them.
-- Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands.
+- Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands. Keep sneak (and
+  any other key the next shot needs) held through the cut: a stunt that clears its controls before the teleport
+  stands the camera up for a tick and it eases back down on screen. `scripts/rec_check.py` flags both.
 - Pre-roll motion that must start on a word (mobs idle for a while update ~1 s late), keep the camera out of
   crowds, and set `/gamerule log_admin_commands false` for per-tick `execute as` moves.
 - Captions switch on the cut. A death screen needs something moving behind it.

@@ -51,6 +51,14 @@ done
 [ "$ok" = 1 ] || { echo "stunt failed $TRIES times"; exit 1; }
 stop_server; trap - EXIT
 
+# --- the recording check, before the slow render (scripts/rec_check.py: cut glitches, held shots, the ending,
+# camera turns, the set, vanilla speeds). Blockers mean re-record; REC_CHECK_STRICT=1 stops here on one.
+rc=0; python3 scripts/rec_check.py "$STUNT" "$REC" || rc=$?
+if [ "$rc" = 1 ]; then
+  if [ "${REC_CHECK_STRICT:-0}" = 1 ]; then echo "rec_check: blockers, not rendering (REC_CHECK_STRICT=1). Fix the stunt and re-record."; exit 1; fi
+  echo "rec_check: blockers above. Rendering anyway (REC_CHECK_STRICT=1 stops here); fix them by re-recording."
+elif [ "$rc" != 0 ]; then echo "rec_check could not run (exit $rc); rendering anyway"; fi
+
 # --- render, audio, edit ---
 rm -rf "work/$NAME.frames"
 node render.js "$REC" "work/$NAME.frames" "$FPS" 1080 1011
