@@ -43,6 +43,9 @@ def resplit(sd):
     import subprocess
     import numpy as np
     import tts
+    if json.load(open(f"{sd}/story.json")).get("voice_takes") == "beat":
+        raise SystemExit("a continuous-take story (\"voice_takes\": \"beat\"): its takes are never re-cut into lines; "
+                         "re-take a beat with ./hb voice <stunt> --only <line> (docs/voices.md \"Continuous takes\")")
     reqs = json.load(open(f"{sd}/voices.json"))
     for r in reqs:
         x = np.fromfile(f"{sd}/voice/{r['id']}_take.f32", np.float32)
