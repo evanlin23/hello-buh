@@ -37,9 +37,9 @@ module.exports = {
   // offsets from D (dy from the ground's top; the dog's head is ~dy 1.6)
   shots: {
     // L01: behind him, craning down: his back, the empty patch, the drop and the village far below (sunrise)
-    open: { dof: false, path: [[0, -10, 14, -8], [5, -4.5, 5.5, -3.5]], look: [11, -11, 11], fov: 60 },
+    open: { dof: false, path: [[0, 5.6, 1.9, 1.9], [3, 4.0, 1.4, 1.2]], look: [0.4, 0.75, 0.5], fov: 54 },   // (a push-in on his face: line 1 names him; the ridge, birch and oaks behind)
     // L02: three days of not moving
-    rain: { path: [[0, 3.6, 2.2, 2.6], [2, 3.2, 2.0, 2.3]], look: [0.5, 0.6, 0.5], fov: 55 },
+    rain: { path: [[0, 0.9, 1.5, -3.0], [2, 0.8, 1.4, -2.7]], look: [0.4, 0.7, 0.6], fov: 44 },
     storm: { path: [[0, -1.2, 2.3, 7], [2, -1, 2.2, 6.4]], look: [0.3, 1.4, 0], fov: 58 },
     zombies: { path: [[0, 3.6, 2.4, 5.6], [2, 3.3, 2.3, 5.3]], look: [-1.5, 0.8, -1], fov: 55 },
     // L03: morning, Pip walks up from the south rim with a bone
@@ -47,7 +47,7 @@ module.exports = {
     // L04: the collar, close (the one close-up before the reveal)
     collar: { path: [[0, 2.6, 1.3, -1.4], [4, 2.3, 1.2, -1.2]], look: [0.55, 0.85, 0.5], fov: 45 },
     // L05: over his back at the empty patch, the valley beyond
-    patch: { path: [[0, -2.4, 1.7, 1.5], [4, -1.9, 1.6, 1.3]], look: [10, 0.2, -0.3], fov: 46 },   // (low, the horizon high: the drop and the village beyond the patch)
+    patch: { path: [[0, -2.2, 1.4, 1.5], [4, -1.8, 1.3, 1.3]], look: [3.4, 0.4, -1.2], fov: 50 },   // (over his back: the bare patch mid-frame, the hut beyond it)
     // L06: the hut, wide, the dog small in the foreground
     hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.5, -5], fov: 58 },
     // L07: Pip begging in front of him (side on)
@@ -57,15 +57,15 @@ module.exports = {
     whose: { path: [[0, -2.4, 1.6, 5.8], [4, -2.6, 1.5, 6.1]], look: [-5, 0.7, 7.5], fov: 50 },
     rightback: { path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.5, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night
-    dusk: { path: [[0, 4.4, 1.8, 2.2], [3, 4.0, 1.7, 2.0]], look: [-2, 1.0, 0.8], fov: 50 },   // (low: the ridge and the sunset sky behind them, not the meadow)
-    night: { path: [[0, 3.0, 1.6, 3.3], [3, 2.7, 1.5, 3.0]], look: [0.2, 0.6, 1.1], fov: 48 },   // (closer than dusk: a time cut on the same framing read as a jump cut)
+    dusk: { path: [[0, 4.2, 1.5, 2.1], [3, 3.8, 1.4, 1.9]], look: [-2, 1.1, 0.8], fov: 50 },   // (low: the ridge and the sunset behind them)
+    night: { path: [[0, 2.8, 1.2, 3.0], [3, 2.5, 1.15, 2.8]], look: [0.0, 1.0, 1.0], fov: 46 },   // (closer and lower than dusk: no jump cut, no flat meadow)
     // L12: behind them: the player appears on the patch, the dog stands, the village lights below
     reveal: { path: [[0, -2.6, 2.2, 6.6], [4, -2.2, 2.0, 6.0]], look: [2.2, 0.9, -1.2], fov: 52 },   // (from the south-west: the hut, boulders and trees behind them, not the flat meadow)
     // L13-L14: side on, the reunion and the sit
     reunion: { path: [[0, 1.6, 1.5, 4.6], [5, 1.8, 1.4, 4.2]], look: [2.4, 0.9, 0.5], fov: 50 },
-    sit: { path: [[0, 1.0, 2.3, 5.3], [5, 0.8, 2.5, 5.8]], look: [2.4, 0.7, 0.5], fov: 52 },   // (in front of the tall grass at dz 7)
+    sit: { path: [[0, 0.4, 1.5, 4.4], [5, 0.2, 1.6, 4.8]], look: [2.8, 1.1, -0.8], fov: 50 },   // (low, the hut and trees behind them: the owner gate's flat-ground check)
     // L15: the opening frame again, pulling up and away
-    end: { dof: false, path: [[0, -4.5, 5.5, -3.5], [4, -10, 14, -8]], look: [11, -11, 11], fov: 60 }
+    end: { dof: false, path: [[0, 4.6, 1.6, 1.5], [3, 6.4, 2.1, 2.3]], look: [1.8, 0.75, 0.6], fov: 54 }   // (the opening frame pulling back: it loops into line 1)
   },
   caption: 'why won\'t this dog stand up?',
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
@@ -116,7 +116,8 @@ module.exports = {
     let seed = 7
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
     const flowers = ['dandelion', 'poppy', 'cornflower', 'oxeye_daisy', 'azure_bluet', 'dandelion', 'poppy']
-    const keep = (dx, dz) => (dx >= -3 && dx <= 2 && dz >= -1 && dz <= 2) || (dx === 3 && dz === 0) || (dx >= 2 && dx <= 8 && dz >= -9 && dz <= -3) || (dz >= 6 && dx >= -8 && dx <= -2)
+    const keep = (dx, dz) => (dx >= 4 && dx <= 7 && dz >= -1 && dz <= 3) || (dx >= -1 && dx <= 2 && dz >= -5 && dz <= -2) || (dx >= -1 && dx <= 2 && dz >= 3 && dz <= 5)   // camera spots (open/end, rain, sit) clear of flowers
+      || (dx >= -3 && dx <= 2 && dz >= -1 && dz <= 2) || (dx === 3 && dz === 0) || (dx >= 2 && dx <= 8 && dz >= -9 && dz <= -3) || (dz >= 6 && dx >= -8 && dx <= -2)
     for (let dz = -13; dz <= 13; dz++) {
       for (let dx = -13; dx <= 8; dx++) {
         if (keep(dx, dz) || Math.hypot(dx, dz) > 13) continue
