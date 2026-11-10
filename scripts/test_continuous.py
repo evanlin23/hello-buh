@@ -383,6 +383,14 @@ class SpeedUp(unittest.TestCase):
             tmp.cleanup()
 
 
+class BeatLimits(unittest.TestCase):
+    def test_narrator_and_character_limits(self):   # owner: the kid narrator's ~0.5 s sentence breaks are "fine"
+        cs = tts.resolve({"N": {"ref": "narrator", "role": "narrator"}, "M": {"ref": "mom"}})
+        self.assertEqual(tts.beat_limits({}, cs, "N", "N")["rest"]["between"], 0.6)
+        self.assertEqual(tts.beat_limits({}, cs, "M", "N")["rest"]["between"], 1.0)
+        self.assertEqual(tts.beat_limits({"max_pause": 0.3}, cs, "M", "N")["rest"]["between"], 0.3)   # the story wins
+
+
 class PauseCap(unittest.TestCase):
     def test_capped_take_passes_the_gate_and_keeps_the_words(self):
         x = take(vowel(0.6), quiet(0.7), vowel(0.6), quiet(0.5), vowel(0.6))

@@ -52,7 +52,7 @@ How it's built (the owner's rule: by construction first, check second):
   in the box x 30-70 %, y 28-58 % (faces on the upper third, clear of the captions) and at most 14 deg; the offset holds
   0.5 s, then eases back to the shot's own framing by 2 s (a re-frame the eye follows; held offsets crept to the edge).
   Name what the eye should be on with the shot's `subject` (the lint's list: `['actor:Grok']`, `['entity:wolf']`,
-  `['self']`, or a point `[dx, dy, dz]`); otherwise the biggest cast member near the middle wins, so a stray mob in
+  `['self']`, or a point `[dx, dy, dz]`; a story kit actor by its tag, `['actor:pip']`, from its K.actor 'actor' mark); otherwise the biggest cast member near the middle wins, so a stray mob in
   the set (dog_hill's village horse beside the dog) steals the eye: clear it. Shot options: `eyeTrace: false`,
   `eyeTrace: { max, hold, settle }`; the stunt: `eyeTrace: false`; `EYETRACE=0` renders without it.
 - Cut timing (lib/story.js `K.line`): inside a continuous take a line ends early enough that the next cut shows
