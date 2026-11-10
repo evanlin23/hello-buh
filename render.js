@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap, setBrightness, setDayTime, setDimension, particleTint } = require('./renderer/models')
+const { lightmap, setBrightness, setDayTime, setDimension, particleTint, dayInfo } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -1872,8 +1872,13 @@ function camAtLive (t) {
       }
     }
     if (dayTimeAt(t) !== curDayTime || weatherKey(t) !== curWeather) {   // the time or the rain changed: re-light everything
-      curDayTime = dayTimeAt(t); curWeather = weatherKey(t); setDayTime(curDayTime, ...weatherLight(t)); dirty.clear()
-      await send(mesher.sections(minVisibleY))
+      // ...but only when the block light it bakes in changes: the sky darkening (getSkyDarken) is 1 all day long, so a
+      // sun moving through a day (scripts/cinematic.py: a time mark every frame) re-meshes nothing. DAY_LIGHT_STEP=0.025
+      // also rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame
+      const step = Number(process.env.DAY_LIGHT_STEP || 0), lk = (d, w) => { const v = dayInfo(d, ...weatherLight(t)).dark; return `${step ? Math.round(v / step) : v}|${w}` }
+      const same = lk(dayTimeAt(t), weatherKey(t)) === lk(curDayTime, curWeather)
+      curDayTime = dayTimeAt(t); curWeather = weatherKey(t)
+      if (!same) { setDayTime(curDayTime, ...weatherLight(t)); dirty.clear(); await send(mesher.sections(minVisibleY)) }
     }
     prof('blocks+relight')
     if (dirty.size && process.env.PROFILE) console.log("send", t.toFixed(1), dirty.size)
