@@ -351,7 +351,7 @@ module.exports = {
     })
     ctx.mark('syschat', { text: `${GUY} left the game`, color: 'yellow', scale: 2.5 })
     K.park(TAG)
-    for (let k = 0; k < 20; k++) { look(k, Math.sin(k / 4) * 0.04, 0); await bot.waitForTicks(1) }   // the wolf's head, watching the empty patch
+    for (let k = 0; k < 20; k++) { look(k, Math.sin(k / 5) * 0.08, -k * 0.012); await bot.waitForTicks(1) }   // the wolf's head turns a little and lowers, watching the empty patch (a still hold: lint 'nobody moves')
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     M.quitActors(ctx)
@@ -421,7 +421,7 @@ module.exports.shots = {
   // L03: over the wheat looking down the rows at him crouched in it (never inside the crop: visual audit)
   wheat_cam: { at: [23.8, H + 2.9, 22.6], look: [20.6, H + 1.4, 19.6], fov: 50, push: 0.15, dof: false },
   // L03: the north road at night, ahead of him, the lantern post beside his path
-  hills_night: { at: [8.6, H + 2.3, 16.8], look: [7.5, H + 1.6, 24.0], fov: 52, push: 0.15, dof: false },
+  hills_night: { at: [8.4, H + 1.3, 17.6], look: [7.5, H + 2.4, 24.0], fov: 48, push: 0.15, dof: false },
   // L03: from the cliff top, Buh swimming out to the island
   swim_cam: { at: [49.5, H - 1.2, 17.0], look: [60.5, H - 7.2, 14.0], fov: 50, push: 0.2, dof: false },
   // L03: on the island looking east over the open sea (the sunset behind the camera): he climbs out, the wolf pops up
@@ -429,7 +429,7 @@ module.exports.shots = {
   // L04: the road: the other tamed wolf sitting alone outside the empty house; Buh and his wolf walk past
   other_wolf: { at: [14.6, H + 1.5, -1.5], look: [19.6, H + 1.0, -6.0], fov: 54, push: 0.2 },
   // L05: the yard facing the sea (fence, sea horizon, the oak and birch: not the plain)
-  yard_sea: { at: [33.0, H + 2.3, 15.8], look: [45.0, H + 1.6, 16.8], fov: 54, push: 0.15, dof: false },
+  yard_sea: { at: [32.2, H + 1.6, 18.6], look: [44.0, H + 2.5, 16.6], fov: 50, push: 0.15, dof: false },
   // L06: medium at wolf-eye height, 3.6 blocks out: Buh crouched on the cottage step, the cottage behind him
   step: { at: [36.6, H + 1.7, 15.4], look: [36.5, H + 1.9, 19.0], fov: 50, push: 0.15, dof: false },
   // L07: dusk, from behind them over the sea (sharp: the blur was the "blurry light" note)
