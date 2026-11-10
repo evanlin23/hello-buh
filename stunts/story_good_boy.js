@@ -219,12 +219,12 @@ module.exports = {
     await K.cut(buh.x + 2.6, roadZ, P(buh.x - 6, buh.y + 1.2, buh.z), gy(buh.x + 2.6, roadZ), { shot: 'pov' })
     K.ctl('sprint', true); K.go(true)
     await line('L02', async (k, at) => {
-      if (k < at(3)) {
+      if (k < at.cut(3)) {
         walkG(buh, k < at(2) ? -0.27 : -0.3, 0)
         if (k === at(2)) K.go(false)   // he pulls away: twelve blocks
         autoJump(); K.base = K.aim(P(buh.x, buh.y + 1.2, buh.z)); look(k)
       }
-      if (k === at(3)) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
+      if (k === at.cut(3)) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
       if (k === at(3) + 5) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
       if (k > at(3)) { buh.pitch = 15 + Math.sin(k / 6) * 8; if (k > at(3) + 5) buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.15; look(k) }
     })
@@ -236,23 +236,23 @@ module.exports = {
     await hide('wheat_cam', { x: 20.5, z: 19.5, y: gy(20.5, 19.5), yaw: 45, pitch: 10 })
     sneak(true)
     await line('L03', async (k, at) => {
-      if (k < at(2)) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }
+      if (k < at.cut(2)) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }
       if (k === at(1)) await blink(21.6, 20.3, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.6, 20.3))
-      if (k === at(2)) {
+      if (k === at.cut(2)) {
         sneak(false)
         await scut(7.5, 12.5, P(7.5, 1.4, 20), 1, { shot: 'hills_night', time: NIGHT, after: moveWith({ x: 7.5, z: 26.0, y: gy(7.5, 26.0), yaw: 180, pitch: 0 }) })   // the wolf waits behind the camera
       }
-      if (k > at(2) && k < at(4)) { walkG(buh, 0, -0.17); look(k) }
+      if (k > at.cut(2) && k < at.cut(4)) { walkG(buh, 0, -0.17); look(k) }
       if (k === at(3)) await blink(8.4, buh.z + 0.6, P(7.5, 1.4, buh.z - 5), gy(8.4, buh.z + 0.6))
-      if (k > at(3) && k < at(4)) { K.go(true); K.base = K.aim(P(8.4, 1.4, buh.z - 6)) }
-      if (k === at(4)) {
+      if (k > at(3) && k < at.cut(4)) { K.go(true); K.base = K.aim(P(8.4, 1.4, buh.z - 6)) }
+      if (k === at.cut(4)) {
         await scut(46.5, 17.0, P(60, 0.6, 15), gy(46.5, 17.0), { shot: 'swim_cam', time: GOLD, after: moveWith({ x: 57.5, z: 13.8, y: 62.2 - F, yaw: -90, pitch: 0 }) })   // the wolf behind the camera on the cliff
       }
-      if (k > at(4) && k < at(6)) { K.step(buh, 0.12, 0); buh.y = 62.2 - F; look(k) }
-      if (k === at(6)) {
+      if (k > at.cut(4) && k < at.cut(6)) { K.step(buh, 0.12, 0); buh.y = 62.2 - F; look(k) }
+      if (k === at.cut(6)) {
         await scut(62.6, 11.0, P(66, 64.5 - F, 13.5), 63 - F, { shot: 'beach', after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // (the wolf is behind the beach camera)
       }
-      if (k > at(6)) { if (buh.x > 68.2) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
+      if (k > at.cut(6)) { if (buh.x > 68.2) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
       if (k === at(6) + 6) await blink(67.6, 14.2, P(buh.x, buh.y + 1.5, buh.z), 64 - F)   // 4 blocks out (at 2.4 it was a huge blur at the frame edge)
     })
 
@@ -303,20 +303,20 @@ module.exports = {
     const zom = K.actor('zom', { x: 36.6, y: gy(36.6, 9.5), z: 9.5, yaw: 0 })
     await scut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1, { shot: 'night_yard', time: NIGHT, self: [{ sitting: true }, SIT_EYE], after: moveWith({ x: 37.5, z: 15.2, y: H + 1, yaw: 180, pitch: 0 }) })
     await line('L08', async (k, at, n) => {
-      if (k < at(3)) {
+      if (k < at.cut(3)) {
         const dx = buh.x - 0.2 - zom.x, dz = buh.z - 2.0 - zom.z, d = Math.hypot(dx, dz)
         if (d > 0.2) walkG(zom, dx / d * 0.1, dz / d * 0.1)
         if (k === 6) ctx.sound('entity.zombie.ambient', 0.8, 1)
         buh.yaw = yawTo(buh.x, buh.z, zom.x, zom.z)
         K.base = K.aim(P(zom.x, zom.y + 1.5, zom.z)); look(k)
       }
-      if (k === at(3)) {
+      if (k === at.cut(3)) {
         K.actors.delete('zom')   // the real zombie from here: the wolf bites it
         await K.cut(36.4, 15.6, P(zom.x, zom.y + 1.6, zom.z), H + 1, { shot: 'pov', self: [{ sitting: false, angry: true }, EYE] })
         ctx.sound('entity.wolf.growl', 1, 1.1)
         K.ctl('sprint', true); K.go(true)
       }
-      if (k > at(3)) {
+      if (k > at.cut(3)) {
         const [sy, sp] = shake(k, 0.03)
         const z = zEnt()
         if (z && bot.entity.position.distanceTo(z.position) < 2.4) K.go(false)
