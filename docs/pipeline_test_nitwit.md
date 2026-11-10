@@ -107,7 +107,8 @@ setup, and ~15 if slices were balanced), still renders by hand before the previe
 16. **scripts/preview.sh took 26 min here** (claimed ~10): render.js renders only the listed frames but still
     simulates every frame, three times over (one per job). With Actions at ~10 min now, a local preview only pays
     when the box is idle; the sheets are the valuable part. (open: a sparse render that skips simulation work)
-17. **ENGINE: lava placed with /fill (water -> lava in a 2x2x2 well) draws near-black** with one orange quarter for
+17. **NOT the engine (agent/test-gaps): the server turned 7 of the 8 blocks to obsidian** (lava placed next to water still
+    in the pool), and the renderer drew obsidian; two-step fill in the stunt, docs/lessons.md. Was: lava placed with /fill (water -> lava in a 2x2x2 well) draws near-black with one orange quarter for
     1 s+, even with a lantern above it. Repro: stunts/story_nitwit.js L06 (`/fill ... lava replace water`), output
     ~12.3-13.4 s. Later shots of the same well show it orange. (open, engine)
 18. **Slices are split by frame count, not cost**: the explosion-heavy last 3.5 s took 12 min while the other 11

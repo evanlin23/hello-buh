@@ -388,3 +388,8 @@ each section.
 - FIXED: subtitles (`--subs`) blinked off for 3 frames at every line change (they ended 0.05 s early); story word chunks due just before a picture cut now start on it (story_sheep_stares' day/night cuts).
 - FIXED: dusk/dawn clouds took the fog colour (orange toward the sun, grey away). Clouds now fade by alpha over distance like rendertype_clouds.fsh, with no fog colour; `clouds: false` is no longer needed for sunsets.
 - VANILLA, not bugs (story_sheep_stares nitpicks): the death puffs are drawn in the world under the death screen (edit.py overlays the screen on the finished frame; the white text over light-grey puffs is just low contrast); the hearts blink for 20 ticks after the killing hit (Gui.renderHearts); a dropped item stands upright facing the camera (sprite items are still billboards rather than vanilla's spinning 1-pixel-thick model: open).
+- VANILLA, not an engine bug (story_nitwit "lava drawn near-black with one orange quarter"): `/fill ... lava replace water`
+  over a 2x2x2 water pool places the lava block by block, and every lava source that lands next to water still in the
+  pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
+  the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
+  `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).

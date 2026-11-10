@@ -232,7 +232,9 @@ module.exports = {
       nWell.pitch = 40 + Math.sin(ctx.tick / 5) * 8
       if (!lava && k === at(3)) {
         lava = true
-        say(`/fill ${X - 1} ${F} ${Z + 51} ${X} ${F + 1} ${Z + 52} lava replace water`)
+        // two steps: lava placed next to water still in the pool turns to obsidian (7 of 8 went black: docs/lessons.md)
+        say(`/fill ${X - 1} ${F} ${Z + 51} ${X} ${F + 1} ${Z + 52} air replace water`)
+        say(`/fill ${X - 1} ${F} ${Z + 51} ${X} ${F + 1} ${Z + 52} lava replace air`)
         ctx.sound('item.bucket.empty_lava', 1, 1); ctx.sound('block.lava.pop', 1, 1)
       }
       look(k, 0, -0.08 * K.ease(k / 20))
