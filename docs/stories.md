@@ -13,11 +13,17 @@ narrator turns out to be the creeper).
 ~/.hb-tts/bin/python scripts/voice.py stories/<name>        # -> stories/<name>/voice/<id>.wav + voice.json
 # 3. the scenes: start from the template, then fill in one set per scene and one block per line
 cp stunts/_story_template.js stunts/story_<name>.js          # replace every <name>
-STUNT=story_<name> ./run.sh                                  # -> out/story_<name>.mp4
+STUNT=story_<name> REC_CHECK_STRICT=1 ./run.sh             # -> out/story_<name>.mp4; stops before the render on a rec_check blocker
 #    (or record here and render on Actions in 12 slices: docs/worker.md "Render on GitHub Actions")
 # 4. QA (docs/qa.md) as for every Short, then
 node scripts/publish.js story_<name> --pass
 ```
+**Run rec_check before rendering; fix blockers by re-recording.** Story Shorts took 4-12 review rounds, each a full
+render, and most findings were in the recording: the aim snapping a tick after a cut, the sneak dropping for a tick
+at a cut (a `stopAll()` before the teleport: the eye height bobs 0.2 blocks into every shot), two jumps in one cut,
+a time-of-day change a tick off its cut, held pauses, a long tail. `run.sh` prints the report after the recording;
+by hand: `python3 scripts/rec_check.py story_<name>` (docs/worker.md has the list of checks).
+
 Re-run `voice.py` after any script change (`--only L03,L07` redoes single lines), then re-run the stunt: the scene
 lengths come from voice.json, so a new voice means a new recording.
 
@@ -90,7 +96,9 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
 - No block entities render (beds, bells, chests, signs): build sets without them.
-- Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands.
+- Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands. Keep sneak (and
+  any other key the next shot needs) held through the cut (`K.cut` does): a stunt that clears its controls before the
+  teleport stands the camera up for a tick and it eases back down on screen. `scripts/rec_check.py` flags both.
 - A time-of-day change belongs on the cut's own frame: `K.cut(..., { time })` (set before, the new sky showed on the
   old shot; marked after, it came a tick late). Don't use `ctx.setTime` mid-scene: its 4-tick wait freezes the shot.
 - Hits on the bot need `K.knockback` and digs need `K.dig`: mineflayer drops the knockback and times digs as a bare hand.
