@@ -20,7 +20,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
    effect). Never say what the last shot already shows ("Good boy.", "Day one. Again." cut by the owner): end on the
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
-4. **The plot survives "why?"**: every character's action has a reason the viewer can state, and every accident has
+4. **Understood on one watch, nothing extra**: no unexplained names (set up every name first), no punchline that
+   explains a twist the picture already landed, no sting after the story ends. Check: cold reader, story-critic.
+   r:r0d320b
+4b. **The plot survives "why?"**: every character's action has a reason the viewer can state, and every accident has
    a cause you can SEE that exists in the game (a blast, a hit, a block breaking, powder snow, an arrow; never "I
    tripped/slipped/fell asleep"). Check: owner (`sync`: an uncaused fall), story-critic. r:rd497c4 r:r1d5238
 5. **Narrator-first**: one first-person narrator carries the whole story; other characters are quoted with a "said"
@@ -85,7 +88,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 2. **Builds follow docs/building_guide.md** and score **7+ (focal building 8+)** on its checklist, on stills, before
    recording. Check: review (manual). r:r4b6024
 3. **No glitches, and the title's promise is on screen**: no doors moving by themselves, never stuck on a block, no
-   jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4
+   jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4 r:rff9341
+   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla.
 4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
 
 5. **One shared world** (seed `hellobuh`): every story happens at a canonical place in docs/world/map.json, built by
@@ -122,6 +126,8 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinem
    2-3 word chunks for a test.) r:rbd7cb6
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
+3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
+   r:r62de46
 
 ## 7. Audio
 The lead's mix (docs/audio.md), automatic in `edit.py --story` + publish: voice -15 LUFS, master **-14 LUFS +-0.5,
