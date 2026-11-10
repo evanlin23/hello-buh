@@ -250,12 +250,14 @@ def caption_events(story_dir, timeline, start, dur, who=False):
     ev = [(max(line_t.get(e[3], 0.0), e[0] - CAPTION_LEAD),
            (e[1] - CAPTION_LEAD) if k + 1 < len(ev) and ev[k + 1][3] == e[3] and abs(ev[k + 1][0] - e[1]) < 1e-6 else e[1],
            *e[2:]) for k, e in enumerate(ev)]
-    # a chunk due just before a picture cut inside a line starts on the cut (the voice's word timing put
-    # "He doesn't" 6-9 frames before the night/day cuts it belongs to: story_sheep_stares f222, f262)
+    # a caption due right by a picture cut inside a line changes on the cut (the voice's word timing put "He doesn't"
+    # 6-9 frames before the night/day cuts it belongs to: story_sheep_stares f222, f262). Only a little later than its
+    # word (CUT_LATE) but up to CUT_EARLY earlier: picture ahead of sound is tolerated far longer than behind. (It
+    # used to wait up to 0.25 s for a cut: gold_for_the_portal's "BACK." and "NIGHT." came 0.21 and 0.11 s late.)
     cuts = _cut_times(timeline, start)
     for k in range(1, len(ev)):
         t0 = ev[k][0]
-        c = next((c for c in cuts if t0 < c <= t0 + CUT_SNAP and c < ev[k][1]), None)
+        c = next((c for c in cuts if t0 - CUT_EARLY <= c <= t0 + CUT_LATE and c != t0 and ev[k - 1][0] + 1 / FPS < c < ev[k][1]), None)
         if c is not None and ev[k - 1][1] == t0:
             ev[k - 1] = (ev[k - 1][0], c, *ev[k - 1][2:])
             ev[k] = (c, *ev[k][1:])
@@ -264,40 +266,57 @@ def caption_events(story_dir, timeline, start, dur, who=False):
 
 def _one_word(ev, story_dir, marks):
     """Split each (t0, t1, text, lid) chunk into one event per word. marks: [(where the line's audio starts, id)]
-    (words.json times are from the start of each line's wav)."""
+    (words.json times are from the start of each line's wav).
+
+    Each caption word is matched to its timed word by its letters (ctc_align.match_words: numbers spelled out, split
+    and merged words handled), not by index: Whisper's "9" ",000" for "NINE THOUSAND" put every later word of the
+    line one word off (gold_for_the_portal). A word with no match is placed by its share of the letters between
+    its matched neighbours."""
     import json as _json
+    import ctc_align
     wf = pathlib.Path(story_dir) / "voice" / "words.json"
     words = _json.loads(wf.read_text()) if wf.exists() else {}
     line_t = {lid: t for t, lid in marks}
-    used = {}
-    out = []
+    by_line, used, out = {}, {}, []
     for t0, t1, text, lid in ev:
         toks = text.split()
+        if lid not in by_line:   # the line's caption words in order, matched once to its timed words
+            line_toks = [w for e in ev if e[3] == lid for w in e[2].split()]
+            by_line[lid] = ctc_align.match_words(line_toks, words.get(lid) or [])
+        k = used.get(lid, 0)
+        used[lid] = k + len(toks)
         if len(toks) <= 1:
             out.append((t0, t1, text, lid))
             continue
-        ww = words.get(lid) or []
-        k = used.get(lid, 0)
-        starts = None
-        if ww and k + len(toks) <= len(ww):
-            starts = [line_t[lid] + float(w[1]) for w in ww[k:k + len(toks)]]
-            starts[0] = t0
-            if any(b <= a for a, b in zip(starts, starts[1:])) or starts[-1] >= t1:
-                starts = None
-        used[lid] = k + len(toks)
-        if starts is None:
-            n = [max(1, len(w.strip(".,!?;:'\"").replace("'", ""))) + 1 for w in toks]
-            tot, acc, starts = sum(n), 0, []
-            for x in n:
-                starts.append(t0 + (t1 - t0) * acc / tot)
-                acc += x
+        got = by_line[lid][k:k + len(toks)]
+        starts = [None if g is None else line_t[lid] + g[0] for g in got]
+        starts[0] = t0   # the chunk's own start (its first word, or the line's first caption on the speech onset)
+        anchors = [(0, t0)]
+        for i in range(1, len(toks)):   # matched words inside the chunk, in order (1 frame apart at least)
+            if starts[i] is not None and anchors[-1][1] + 1 / FPS <= starts[i] < t1 - 1 / FPS:
+                anchors.append((i, starts[i]))
+        anchors.append((len(toks), max(t1, t0)))
+        n = [max(1, len(ctc_align.letters(w))) + 1 for w in toks]
+        fill = list(starts)
+        for (ia, ta), (ib, tb) in zip(anchors, anchors[1:]):   # letter share between matched words
+            tot = sum(n[ia:ib])
+            acc = 0
+            for i in range(ia, ib):
+                fill[i] = ta + (tb - ta) * acc / tot
+                acc += n[i]
         for i, w in enumerate(toks):
-            out.append((starts[i], starts[i + 1] if i + 1 < len(toks) else t1, w, lid))
+            out.append((fill[i], fill[i + 1] if i + 1 < len(toks) else t1, w, lid))
     return out
 
 
-CAPTION_LEAD = 0.10   # s: captions appear this far ahead of the spoken word (owner 2026-11-10)
-CUT_SNAP = 0.25   # s: how far ahead of a cut a chunk may start and still be moved onto it
+# s: captions appear this far ahead of the spoken word. 0 since the forced-aligned word times (scripts/ctc_align.py):
+# the 0.10 s here (owner 2026-11-10: "The captions actually seem behind") was making up for Whisper, whose word starts
+# are 0.1 s EARLY on median; on top of them it put captions 0.19 s early on all 5 held cuts ("a bit early now").
+# Measured with scripts/caption_av_check.py (docs/voices.md "Caption timing"). caption_concat floors each start to its 60 fps frame,
+# so a caption shows on the frame in which its word starts (0-17 ms ahead of it).
+CAPTION_LEAD = 0.0
+CUT_LATE = 0.034    # s: a caption may move this much later than its word to change on a picture cut (2 frames)...
+CUT_EARLY = 0.083   # s: ...or this much earlier (5 frames)
 
 
 def _cut_times(timeline, start):
@@ -321,6 +340,12 @@ def _cut_times(timeline, start):
     return sorted(out)
 
 
+def frame_of(t):
+    """The 60 fps frame a caption due at t seconds goes on: the frame t falls in (floor), so the caption is never
+    after its word. (Rounding put half the captions on the frame after the word starts.)"""
+    return int(math.floor(t * FPS + 1e-6))
+
+
 def caption_concat(story_dir, timeline, start, dur, tmp):
     """Write the caption PNGs and an ffconcat list (durations in whole 60 fps frames) into tmp."""
     story, _ = _lines(story_dir)
@@ -334,7 +359,7 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     spk = speakers(story)
     cast_v = any(c for c in spk.values() if c[1])   # the story has a voiced character
     for k, (t0, t1, text, lid) in enumerate(caption_events(story_dir, timeline, start, dur, who=True)):
-        f0, f1 = int(round(t0 * FPS)), int(round(t1 * FPS))
+        f0, f1 = frame_of(t0), frame_of(t1)
         if f0 > frame:
             runs.append((blank, f0 - frame))
         f0 = max(f0, frame)
