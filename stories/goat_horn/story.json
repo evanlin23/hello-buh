@@ -6,7 +6,7 @@
   "caption": "my dad vs this goat: 0 wins, 213 losses 🐐",
   "logline": "A kid whose dad gets rammed off the same cliff by the same goat every day finds out what Dad was really after the morning Dad leaves for the far mines.",
   "question": "why tf does my dad let a goat knock him off a cliff every day?",
-  "premise": "A goat on the shelf above the lake has knocked Dad off the same cliff 213 times. He lands in the deep lake, climbs the stairs back up, and stands in front of it again, one step in front of a big oak, trying to dodge at the last second. He's too slow. Ida next door has a goat horn on her wall and says a goat missed her. Dad's donkey is packed for the far mines for the winter, and he said he can't go till he gets his kid one thing. The kid thinks he means a win. This morning Dad left anyway.",
+  "premise": "A goat on the shelf above the lake has knocked Dad off the same cliff 213 times. He lands in the deep lake, climbs the stairs back up, and stands in front of it again, one step in front of a big oak, trying to dodge at the last second. He's too slow. Ida next door has a goat horn on her wall and says a goat missed her. Dad's donkey is packed for the far mines for the winter, and he said he can't go till he gets his kid one thing. The kid thinks he means beating the goat. This morning, out of time, Dad left.",
   "twist": "Dad wasn't losing a grudge match. A goat drops a goat horn only when it rams a solid block, never a player, so Dad was trying to make it miss him and hit the oak: a horn for his kid, to call him from anywhere while he's away (a goat horn is heard 256 blocks off). The kid, who has watched all 213 tries and knows the tell, takes Dad's spot, steps as the goat drops its head, the goat hits the oak, out pops a GOAT HORN, he blows it, and far down the road Dad turns around.",
   "key_color": "#F5D58A",
   "gap": 0.3,
@@ -33,14 +33,14 @@
   },
   "voice": {
     "engine": "gemini",
-    "model_hint": "narrator: gemini-3.8-flash-lite-tts, Leda, single speaker, the recipe's exact direction (voices/recipes/pip.md) in both requests. Dad: the library smith (Orus) on one model for the whole story, in his own request. Never fall back to another model mid-story."
+    "model_hint": "narrator: gemini-3.8-flash-lite-tts, Leda, single speaker, the recipe's exact direction (voices/recipes/pip.md) in both requests. Dad: the library smith (Orus) on gemini-3.8-flash-lite-tts, single speaker, for the whole story, in his own request. Never fall back to another model mid-story."
   },
   "cast": {
     "N": {
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "Milo as a kid, default Steve skin: POV in S05, S07, S10, S11b, seen from outside in S06 (small), S09, S11, S12. Empty hand until he picks up the horn (S11b)."
+      "on_screen": "Milo as a kid, default Steve skin: POV in S05, S10, S11b. Seen from outside in S09, S11, S12, S12b (not in S06 or S07). Empty hand until he picks up the horn (S11b)."
     },
     "Dad": {
       "role": "character",
@@ -96,7 +96,10 @@
       "lines": [
         "L04"
       ],
-      "direction": "A mountain lake. A big gruff dad, soaked to the skin, shouts a score up a cliff to his kid: full volume, cheerful, proud of it."
+      "direction": "A mountain lake. A big gruff dad, soaked to the skin, shouts a score up a cliff to his kid: full volume, cheerful, proud of it.",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Orus",
+      "ref": "smith"
     }
   ],
   "lines": [
@@ -177,8 +180,8 @@
     {
       "id": "L07",
       "who": "N",
-      "text": "Dad said / he can't go / till he gets me / ONE thing. / I figured / he meant a WIN.",
-      "say": "Dad said he can't go till he gets me one thing. <short pause> I figured he meant a win.",
+      "text": "Dad said / he can't go / till he gets me / ONE thing. / I figured / he meant BEATING it.",
+      "say": "Dad said he can't go till he gets me one thing. <short pause> I figured he meant beating it.",
       "direction": "bouncing back to funny, a know-it-all shrug on the last sentence",
       "shot": "S07",
       "look": {
@@ -189,7 +192,7 @@
     {
       "id": "L08",
       "who": "N",
-      "text": "And this morning, / he LEFT anyway.",
+      "text": "This morning, / out of TIME, / he LEFT.",
       "direction": "the one sad line: plain and quiet in feeling, still full volume, no whisper",
       "shot": "S08",
       "look": {
@@ -200,7 +203,7 @@
     {
       "id": "L09",
       "who": "N",
-      "text": "So I took / his SPOT.",
+      "text": "I took / his SPOT.",
       "direction": "a breath, then determined and proud",
       "shot": "S09",
       "look": {
@@ -285,16 +288,16 @@
       "line": "L02",
       "place": "lake_shore",
       "size": "wide",
-      "camera": "at: camera (-18,-27,16) on the west shore, 1 block above the water, aimed at the landing (4,-28,9), still, a slow tilt up the stairs on 'BACK up'",
-      "frame": "fg: reeds, and the easter egg: the village nitwit in his green coat knee-deep at (-12,-28,11), 6 blocks out at frame left, watching, subject: Dad hits the water on 'LAKE' (a big splash at (4,-28,9)) and surfaces, on 'BACK up' the tilt follows the stairs zigzagging up the cliff face (from (-14,-28,8)) to the oak on the skyline (no swim shown), bg: sky. Yesterday, noon (6000)."
+      "camera": "at: camera (-5,-27,34) on the south-west shore, 1 block above the water, looking north, still, a slow tilt up the stairs to the oak on 'BACK up'",
+      "frame": "fg: reeds, and the easter egg: the village nitwit in his green coat knee-deep at (-9,-28,28), 6 blocks out at frame left, watching, subject: Dad hits the water on 'LAKE' (a big splash at (4,-28,9)) and surfaces, on 'BACK up' the tilt follows the stairs zigzagging up the cliff face (from (-14,-28,8)) to the oak on the skyline (no swim shown), bg: sky. Yesterday, noon (6000)."
     },
     {
       "id": "S03",
       "line": "L03",
       "place": "shelf",
       "size": "full",
-      "camera": "at: camera (-5.65,1.6,-1.5), eye height, looking east across the ram line (x 1.6), side-on (the goat enters from frame left, the drop at frame right), still, FOV 50",
-      "frame": "fg: the mossy boulder at (-2,-3) low left, subject: Dad head to foot at (1.6,0,-1), the oak one block behind him, the goat 4 blocks north at (1.6,0,-5), in frame the whole time, the goat lowers its head and stamps (the tell, ~0.8 s, on 'DODGE'), charges, Dad starts his step a beat late and is launched south-east off the lip at frame right, on 'Too SLOW' the frame holds on the empty lip, the goat standing where Dad stood, both horns on, bg: the lake far below, the far ridge. Yesterday, noon (6000)."
+      "camera": "at: camera (-5.65,1.6,-1.5), eye height, aimed at (1.6,1,-2.5) (about 8 degrees north of east, across the ram line at x 1.6), side-on (the goat enters from frame left, the drop at frame right), still, FOV 50",
+      "frame": "fg: the mossy boulder at (-2,-3) low left, subject: Dad head to foot at (1.6,0,-1), the oak one block behind him, the goat 4 blocks north at (1.6,0,-5), at 18 degrees left of centre, in frame the whole time, the goat lowers its head and stamps (the tell, ~0.8 s, on 'DODGE'), charges, Dad starts his step a beat late and is launched south-east off the lip, out of frame right, on 'Too SLOW' the frame holds on the empty lip, the goat standing where Dad stood, both horns on, bg: the lake far below, the far ridge. Yesterday, noon (6000)."
     },
     {
       "id": "S04",
@@ -318,7 +321,7 @@
       "place": "our_gate",
       "size": "ews",
       "camera": "at: camera (-44,-21,19), 3 blocks up, aimed between our gate and the far mine (east-south-east), slow push, render distance 16 chunks",
-      "frame": "fg: the gate lanterns and the garden fence, subject: the donkey at the gate with chests strapped on both sides, Dad beside it with a map in his hand, bg: across the lake the shore road climbing to the far ridge, on 'MINES' the mine's timber portal small at frame right. No Milo in frame. Today, morning (1000), the sun low ahead."
+      "frame": "fg: the gate lanterns and the garden fence, subject: the donkey at the gate with chests strapped on both sides, Dad beside it with a map in his hand, bg: across the lake the shore road climbing to the far ridge, the far ridge where the road goes, with the mine's portal as a tiny backdrop at frame left (about 4 px at phone size: scenery, not a clue). No Milo in frame. Today, morning (1000), the sun low ahead."
     },
     {
       "id": "S07",
@@ -333,8 +336,8 @@
       "line": "L08",
       "place": "valley",
       "size": "ews",
-      "camera": "at: high on the slope above our cottage, 20 blocks up, looking east down the lake, still, FOV 50",
-      "frame": "fg: our cottage roof and chimney smoke low left, subject: Dad and the donkey, on the shore road 30-40 blocks from the camera, walking east away from us, bg: the lake, the cliff and the oak at frame left (the goat small on the shelf), the road climbing toward the far ridge and the mine. Today, morning (1500). Render distance 16 chunks."
+      "camera": "at: camera (-60,-4,20) high on the slope above our cottage, aimed east (about 5 degrees south of east), still, FOV 50, render distance 16 chunks",
+      "frame": "fg: our cottage roof and chimney smoke low left, subject: Dad and the donkey, small, farther down the shore road, walking east away from us, bg: the lake, the cliff and the oak at frame left (the goat small on the shelf), the road climbing toward the far ridge. Today, morning (1500)."
     },
     {
       "id": "S09",
@@ -348,16 +351,16 @@
       "id": "S10",
       "line": "L10",
       "place": "shelf",
-      "size": "ms",
+      "size": "full",
       "camera": "pov at Dad's spot (1.6,0,-1), facing north at the goat 4 blocks away, on 'STEPPED' a quick strafe east to (2.6,0,-1) and the camera turns with the goat as it thunders past",
-      "frame": "fg: the grass of the shelf, subject: the goat waist-up size, on '213 TIMES' it is standing, on 'HEAD' it lowers its head and stamps (the same tell as S03, held ~0.8 s), it charges, on 'STEPPED' the frame slides right and the goat fills the left side going by, bg: the meadow shelf, the outcrops and peaks. (The oak is behind the camera.) Today, morning (2000)."
+      "frame": "fg: the grass of the shelf, subject: the goat full size, 4 blocks out, on '213 TIMES' it is standing, on 'HEAD' it lowers its head and stamps (the same tell as S03, held ~0.8 s), it charges, on 'STEPPED' the frame slides right and the goat fills the left side going by, bg: the meadow shelf, the outcrops and peaks. (The oak is behind the camera.) Today, morning (2000)."
     },
     {
       "id": "S11",
       "line": "L11",
       "place": "shelf",
       "size": "wide",
-      "camera": "at: the S03 camera (-5.65,1.6,-1.5), looking east, FOV 50, still, cut to S11b on 'Out popped'",
+      "camera": "at: the S03 camera (-5.65,1.6,-1.5), aimed at (1.6,1,-2.5), FOV 50, still, cut to S11b on 'Out popped'",
       "frame": "fg: the same boulder at (-2,-3), subject: the goat slams head-first into the oak's trunk on 'BONK' (the thud), its RIGHT horn (the near side, facing camera) pops off onto the grass by the roots, the goat steps back with one horn, Milo at (2.6,0,-1) just east of the ram line, safe, bg: the lake far below. Today, morning (2000)."
     },
     {
@@ -374,7 +377,7 @@
       "place": "shelf",
       "size": "ms",
       "camera": "at: out over the drop, 4 blocks south of Milo at (3.3,0,1.4), at his eye height, looking north at him, FOV 50, a slow push",
-      "frame": "subject: Milo waist-up at the lip, looking at the horn (look_item) on 'for ME', raising it to his mouth (the use / TOOT_HORN pose) on 'CALL him', bg: the big oak behind him at frame left, the one-horned goat peering round the trunk. Today, morning (2000)."
+      "frame": "subject: Milo waist-up at the lip, looking at the horn (look_item) on 'for ME', raising it to his mouth (the use / TOOT_HORN pose) on 'CALL him', bg: the big oak behind him at frame left, the one-horned goat peering round the trunk's north-east corner at (2.4,0,-1.2), between the trunk and Milo. Today, morning (2000)."
     },
     {
       "id": "S12b",
@@ -415,7 +418,7 @@
         0,
         -1
       ],
-      "note": "one block north of the trunk, on the ram line (x 1.6): the goat's body (x 1.15..2.05) meets the trunk (x 0..2) if nobody is there. Dad's staged launch veers south-east past the trunk's south-east corner and off the lip"
+      "note": "one block north of the trunk, on the ram line (x 1.6). Dad's staged launch goes east first (to x 2.4 or more before z 0, clear of the trunk), then south-east off the lip to the landing (4,-28,9)"
     },
     "lip": {
       "at": [
@@ -485,6 +488,21 @@
         4,
         -28,
         9
+      ]
+    },
+    "goat_s12": {
+      "at": [
+        2.4,
+        0,
+        -1.2
+      ],
+      "note": "S12: the goat peers round the trunk's north-east corner, between the trunk and Milo"
+    },
+    "nitwit": {
+      "at": [
+        -9,
+        -28,
+        28
       ]
     }
   },

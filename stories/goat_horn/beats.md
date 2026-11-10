@@ -2,7 +2,7 @@
 
 r2 (2026-11-10) applies the r1 critic's and continuity's must-fixes (reviews/r1-response.md). The main changes:
 - L03 no longer gives away the plan: "He tries to DODGE. Too SLOW." The oak behind him is in the picture only.
-- L07 sets up that the thing is for the kid: "till he gets me ONE thing". The kid misreads it as "a WIN".
+- L07 sets up that the thing is for the kid: "till he gets me ONE thing". The kid misreads it as "BEATING it" (the goat).
 - L12-L13 make the ending explain itself: "It was for ME. To CALL him." / "I BLASTED it. Down the ROAD, Dad turned and
   WAVED."
 - The count is 213 everywhere. The kid can dodge because he has watched all 213 tries (L10).
@@ -18,7 +18,7 @@ cliff. The 213 knocks were 213 tries at the horn that just called him.
 - **Every day,** a goat rams Dad off the cliff into the lake. He climbs back up and stands in front of it again, one
   step in front of the big oak, trying to dodge at the last second. He's too slow.
 - **One day,** his donkey is packed for the mines, all winter, and he says he can't go till he gets me one thing. I
-  figure he means a win. This morning he leaves anyway.
+  figure he means beating the goat. This morning, out of time, he leaves.
 - **Because of that,** I take his spot. I've watched 213 times: when the goat drops its head, I step.
 - **Until finally,** the goat hits the oak and out pops a goat horn. It was for me, to call him. I blow it, and down
   the road Dad turns and waves.
@@ -36,9 +36,9 @@ and the `<short pause>` tags. `voice.json` sets the real ones.
 | 9.9-11.0 | **A character speaks** | L04 Dad (own voice): "Two hundred THIRTEEN!" | S04 MS: Dad in the lake, face to us, waving up at the cliff | he counts the tries and he's cheerful (a grudge doesn't wave) |
 | 11.3-16.0 | test 2 | L05 N: "IDA has a GOAT HORN. She says a goat MISSED her. Goats don't MISS." | S05 WS POV push to FS: Ida's cottage, Ida in her doorway, the goat horn in an item frame by the door | **the horn rule, fair**: a horn comes from a goat that missed. Misread as a fib. **Players get ahead here (~16 s, 38%): the dodge plus the oak plus "missed"** |
 | 16.3-19.6 | the stakes | L06 N: "Dad's DONKEY is packed for the MINES. ALL winter." | S06 EWS: the donkey with chests at our gate, Dad with a map, the far mine portal across the lake | **why Dad must be callable**: he'll be far away for a long time |
-| 19.9-25.4 | the misread | L07 N: "Dad said he can't go till he gets me ONE thing. I figured he meant a WIN." | S07 MS over Dad's shoulder: he looks up at the cliff, the oak on the skyline | **the key line**: the thing is *for me*, misheard as a win over the goat. **The attentive viewer gets ahead here (~25 s, 60%)** |
-| 25.7-27.6 | the low point | L08 N: "And this morning, he LEFT anyway." | S08 EWS: Dad and the donkey on the shore road walking away, the cliff and the oak at frame left | he left without it, on the road he'll be on at the end |
-| 27.9-29.5 | **The want and the choice** | L09 N: "So I took his SPOT." | S09 crane up behind the goat: Milo where Dad stood, in front of the oak | agency: the kid chooses (to get Dad his win) |
+| 19.9-25.4 | the misread | L07 N: "Dad said he can't go till he gets me ONE thing. I figured he meant BEATING it." | S07 MS over Dad's shoulder: he looks up at the cliff, the oak on the skyline | **the key line**: the thing is *for me*, misheard as a win over the goat. **The attentive viewer gets ahead here (~25 s, 60%)** |
+| 25.7-27.6 | the low point | L08 N: "This morning, out of TIME, he LEFT." | S08 EWS: Dad and the donkey on the shore road walking away, the cliff and the oak at frame left | he left without it, on the road he'll be on at the end |
+| 27.9-29.5 | **The want and the choice** | L09 N: "I took his SPOT." | S09 crane up behind the goat: Milo where Dad stood, in front of the oak | agency: the kid chooses (to get Dad his win) |
 | 29.8-33.8 | **The act** | L10 N: "I'd watched 213 TIMES. It dropped its HEAD. I STEPPED." | S10 MS POV: the goat drops its head (the same tell as S03), he strafes east on "STEPPED", the goat thunders past | why he can do it when Dad can't: he knows the tell |
 | 34.1-37.2 | **The reveal (the game)** | L11 N: "BONK. Into the OAK. Out popped a GOAT HORN." | S11 WS side-on (S03's camera): the goat slams the trunk, its near horn pops off, it steps back with one horn. S11b CU POV: the pickup, "Goat Horn" over the hotbar, GOAT HORN big in the captions | the vanilla rule doing the reveal |
 | 37.5-39.6 | the one step | L12 N: "It was for ME. To CALL him." | S12 MS from over the drop: Milo looks at the horn, then raises it, the one-horned goat peering round the oak | "one thing" was a horn, for me, to call him |
@@ -62,7 +62,7 @@ and the `<short pause>` tags. `voice.json` sets the real ones.
 | "Two hundred THIRTEEN!", waving | L04, S04, 10-11 s | Dad is goofy about a losing streak | he's counting tries, cheerfully: a job, not a grudge |
 | Ida's goat horn in an item frame | S05 (picture), L05, 11-16 s | an old lady's tall tale ("Goats don't MISS") | goats do miss, and a miss is where horns come from |
 | the packed donkey, the map, the mine on the far ridge | S06 (picture), L06, 16-20 s | Dad's trip, sad but nothing to do with the goat | he'll be far away all winter, so the kid needs a way to call him |
-| "can't go till he gets me ONE thing" | L07, S07, 20-25 s | "a WIN" over the goat | the horn, for his kid |
+| "can't go till he gets me ONE thing" | L07, S07, 20-25 s | "BEATING it", a win over the goat | the horn, for his kid |
 | Dad looking up at the cliff while he says it | S07 (picture) | Dad wants to beat the goat | he's looking at the job he didn't finish |
 | the shore road seen from the cliff | S08, S09 (picture) | scenery | where Dad will be when the horn calls him |
 
@@ -76,7 +76,7 @@ The reveal adds nothing new: a goat ramming a log drops a horn, and a horn is lo
       me ONE thing") and why (the mines) are shown before the reveal.
 - [x] **Planted twice, one in the picture.** Ida's horn in its frame (S05), the oak behind Dad (S01-S03), the donkey and
       map (S06), Dad gazing at the cliff (S07), the tell (S03).
-- [x] **Misread, not hidden.** A tall tale ("Goats don't MISS"), a win ("he meant a WIN"), a goofy dad ("Two hundred
+- [x] **Misread, not hidden.** A tall tale ("Goats don't MISS"), a grudge match ("he meant BEATING it"), a goofy dad ("Two hundred
       THIRTEEN!").
 - [x] **Someone gets ahead.** Players at L05 (38%), attentive viewers at L07 (60%), everyone by L10 (78%).
 - [x] **The game says it.** A goat rams a log and drops a goat horn (vanilla: `#snaps_goat_horn` blocks, never a
@@ -87,7 +87,7 @@ The reveal adds nothing new: a goat ramming a log drops a horn, and a horn is lo
 - [x] **Visible causes.** Every fall is a goat ram on screen (S01, S03). Every splash is deep water (no damage, he's a
       player). The horn drops from a ram into the trunk (S11), and Dad turns at the horn's sound.
 - [x] **A rewatch plays differently.** L01 (213 tries), L03 "He tries to DODGE" (in front of the oak), L04 (the
-      count), L05 "Goats don't MISS", L07 "gets me ONE thing" / "a WIN".
+      count), L05 "Goats don't MISS", L07 "gets me ONE thing" / "BEATING it".
 
 ## "Why?" interrogation
 - **Why does Dad stand in front of the goat?** He needs it to charge so he can step aside and let it hit the oak. A
@@ -111,7 +111,7 @@ The reveal adds nothing new: a goat ramming a log drops a horn, and a horn is lo
 
 ## The out-of-context read
 Here is each line as a stranger would hear it for 3 s. L01-L03 are a goat and a cliff, and L04 is a score. L05 is
-gossip about a horn, L06 a trip, and L07 "gets me one thing / a win" is plainly a present. "He left anyway" is sad,
+gossip about a horn, L06 a trip, and L07 "gets me one thing / beating it" is a present and a game. "Out of time, he left" is sad,
 not intimate, and "took his spot" sounds like a game. "Dropped its head / I stepped" is action and "BONK" is comic.
 "It was for me. To call him." has the horn in frame. "I blasted it" refers to a horn on screen ("blew it" was cut for
 this test). "Dad turned and waved" is plain. Nothing reads as intimate, obedient or innuendo. Nothing is hushed: Pip's
@@ -121,7 +121,7 @@ recipe direction says "not whispery, breathy or soft".
 - 120 spoken words (the cap), 13 lines, counted from the `say` text with tags removed. "Two hundred thirteen" is three
   words, twice.
 - Estimated 41 s of speech with gaps, about 42 s with the hold. If the take runs past 45 s, cut in this order:
-  "ALL winter" (L06, keep the picture), "And" (L08), "So" (L09).
+  "ALL winter" (L06, keep the picture), "This morning" (L08).
 - The quotable line: "Goats don't MISS."
 
 ## Delivery plan

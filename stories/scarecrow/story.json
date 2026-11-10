@@ -2,12 +2,12 @@
   "name": "scarecrow",
   "stunt": "story_scarecrow",
   "version": 2,
-  "revision": "r1 (2026-11-10): first script from the critic's parked pitch 5, fix applied (stalker read up front, the guard at the reveal), see beats.md for the one deviation (vanilla snowballs leave no splats)",
+  "revision": "r2 (2026-11-10): the r1 critic's and continuity's must-fixes and the cheap should-fixes applied, see reviews/r1-response.md",
   "caption": "who leaves snow under my window? 😨",
-  "logline": "In a meadow village where it never snows, a boy finds a trail of snow from Grandpa's scarecrow to his window every morning, stays up to catch his stalker, and opens the window on the night watch Grandpa left him.",
+  "logline": "In a meadow village where it never snows, a boy finds a trail of snow every morning from Grandpa's scarecrow to his window, stays up to catch his stalker, and throws the window open on the night guard Grandpa left him.",
   "question": "why tf is there snow leading to his window when it never snows?",
-  "premise": "Sixty-three mornings in a row, a trail of snow runs across the green grass from the scarecrow in Grandpa's wheat to the boy's bedroom window, in a meadow where it never snows. He shovels it up, it's back every night, ending in a trampled patch where someone seems to stand all night staring at his window. He hears groaning outside and doesn't look, finds rotten flesh under his window, and Mom said Grandpa built that scarecrow the week before he died. Grandpa always said he'd keep an eye on him.",
-  "twist": "The scarecrow is a snow golem Grandpa built (a carved pumpkin on two snow blocks, standing in the wheat). Every night zombies come for the boy (a player) and crowd the wall under his window, the golem walks out of the wheat to the spot where it can see them, leaving its vanilla snow trail, and pelts them with snowballs all night, knocking them back from his window until they burn at sunrise (the rotten flesh). The night he opens the window, the wide shows it: the stalker was a guard.",
+  "premise": "Sixty-three mornings in a row, a trail of snow runs across the green grass from the scarecrow in Grandpa's wheat to the boy's bedroom window, in a meadow where it never snows. He shovels it up and it's back every night, ending in a trampled patch where someone seems to stand all night staring at him. He hears groaning every night and doesn't look, finds rotten flesh under his window, and Mom said Grandpa built that scarecrow out of snow the week before he died. Grandpa always said he'd keep an eye on him.",
+  "twist": "The stalker is a guard. Every night zombies come for the boy (a player) and crowd the wall under his window, groaning up at him. The scarecrow is a snow golem Grandpa built: it walks out of the wheat to the spot where it can see them, leaving its vanilla snow trail, and pelts them with snowballs all night, shoving them off his wall until they burn at sunrise (the rotten flesh). He throws the window open expecting the stalker in his face, finds the scarecrow gone from the wheat, and the camera looks down: the zombies were under his window, and the thing staring at him all night was keeping an eye out for him.",
   "key_color": "#9FE3FF",
   "gap": 0.25,
   "mood": [
@@ -22,26 +22,28 @@
   },
   "weather": "clear",
   "world": {
-    "where": "a meadow farm at the top edge of a plains-style village, on the high meadows (the same world as the approved stories, biome meadow, which never snows)",
-    "easter_egg": "the village nitwit in his green coat (story_nitwit) standing in our paddock among the cows, background of S07. Provisional: re-check against docs/world/canon.md when it lands."
+    "where": "a meadow farm at the top edge of a plains-style village, on the high meadows (biome meadow, which never snows); the village itself is off screen down the south slope",
+    "easter_egg": "the village nitwit in his green coat (story_nitwit) standing in our paddock among the cows, background of S02. Provisional: re-check against docs/world/canon.md when it lands."
   },
   "voice": {
     "engine": "gemini",
-    "model_hint": "gemini-3.8-flash-lite-tts (the narrator recipe, voices/recipes/pip.md)"
+    "model": "gemini-3.8-flash-lite-tts",
+    "voice": "Leda",
+    "recipe": "voices/recipes/pip.md (single speaker, no post-processing)"
   },
   "cast": {
     "N": {
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "Milo as a nine-year-old player kid (default Steve skin): POV in S03, S09, S10, seen in camera shots in S05 (sitting on his bed) and S11 (head and shoulders in the open window)"
+      "on_screen": "Milo as a nine-year-old player kid (default Steve skin): POV in S03, S09, S10; seen in camera shots in S05 (sitting on his bed) and S11 (head and shoulders in the open window)"
     },
     "Mom": {
       "role": "character",
       "ref": "mom",
       "color": "#FFC2A8",
       "voiced": false,
-      "on_screen": "villager, plains farmer outfit, no name tag, S07 only (on the farmhouse porch). Quoted by the narrator with 'said', she has no voiced line"
+      "on_screen": "villager, plains farmer outfit, no name tag, S07 only (on the farmhouse porch). Quoted by the narrator with 'said', no voiced line"
     }
   },
   "requests": [
@@ -50,6 +52,7 @@
       "speakers": [
         "N"
       ],
+      "model": "gemini-3.8-flash-lite-tts",
       "lines": [
         "L01",
         "L02",
@@ -63,15 +66,15 @@
         "L10",
         "L11"
       ],
-      "direction": "A sunny farm, then night. A bubbly nine-year-old boy tells a friend a spooky true story about the snow outside his window, at full volume, quick and bright, creeped out and loving it, it turns warm at the very end. Never whispery or breathy."
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
     }
   ],
   "lines": [
     {
       "id": "L01",
       "who": "N",
-      "text": "For SIXTY-THREE mornings, / a trail of SNOW / goes from our SCARECROW / to my WINDOW.",
-      "direction": "spooked and excited at once, like the first line of a sleepover ghost story, quick, one breath, a tiny lift on the number, full volume, never hushed or breathy",
+      "text": "SIXTY-THREE mornings / in a row, / a trail of SNOW / runs from our SCARECROW / to my WINDOW.",
+      "direction": "spooked and excited at once, one quick breath straight through to the end, a tiny lift on the number, full volume, never hushed or breathy",
       "shot": "S01",
       "look": {
         "what": "prop:trail",
@@ -81,28 +84,27 @@
     {
       "id": "L02",
       "who": "N",
-      "text": "It does NOT / snow here. / EVER.",
-      "direction": "flat-out amazed, the last word punched, full volume, never hushed or breathy",
+      "text": "It never SNOWS here. / I shovel it UP. / It comes BACK.",
+      "direction": "amazed on the first part, proud on the shoveling, grumpy on the last two words, full volume, never hushed or breathy",
       "shot": "S02",
-      "look": {
-        "what": "prop:trail"
-      }
+      "look": [
+        {
+          "what": "prop:trail"
+        },
+        {
+          "what": "prop:trail",
+          "word": "UP"
+        }
+      ],
+      "shots": [
+        "S02",
+        "S03"
+      ]
     },
     {
       "id": "L03",
       "who": "N",
-      "text": "I shovel it UP. / It comes BACK / every night.",
-      "direction": "a little proud of the shoveling, then grumpy, full volume, never hushed or breathy",
-      "shot": "S03",
-      "look": {
-        "what": "prop:trail",
-        "word": "SNOW"
-      }
-    },
-    {
-      "id": "L04",
-      "who": "N",
-      "text": "It always ENDS / by my window. / Like someone / STOOD there all night, / STARING at it.",
+      "text": "It ENDS / by my window. / Like someone / STOOD there, / STARING at me.",
       "direction": "the fun drains out and the creeped-out kid shows, still loud and quick, lean on the last two words, full volume, never hushed or breathy",
       "shot": "S04",
       "look": {
@@ -110,9 +112,9 @@
       }
     },
     {
-      "id": "L05",
+      "id": "L04",
       "who": "N",
-      "text": "Some nights, / I hear GROANING / out there. / I don't LOOK.",
+      "text": "EVERY night, / I hear GROANING. / I don't LOOK.",
       "direction": "scared but brave-sounding, the last three words fast and firm, full volume, never hushed or breathy",
       "shot": "S05",
       "look": {
@@ -120,9 +122,9 @@
       }
     },
     {
-      "id": "L06",
+      "id": "L05",
       "who": "N",
-      "text": "And there's ROTTEN FLESH / under my window. / A GROSS / little GIFT.",
+      "text": "There's ROTTEN FLESH / under my window. / A GROSS / little GIFT.",
       "direction": "grossed out and giggly at the same time, full volume, never hushed or breathy",
       "shot": "S06",
       "look": {
@@ -131,21 +133,21 @@
       }
     },
     {
-      "id": "L07",
+      "id": "L06",
       "who": "N",
-      "text": "Mom said / GRANDPA built / that scarecrow / the week / before he DIED.",
-      "direction": "the bounce goes out of it for a moment, plain and a bit sad, still clear and loud, full volume, never hushed or breathy",
+      "text": "Mom said / GRANDPA built that scarecrow / out of SNOW. / The week / before he DIED.",
+      "direction": "the bounce goes out of it for a moment, plain and a bit sad, still clear, full volume, never hushed or breathy",
       "shot": "S07",
       "look": [
         "Mom",
         {
-          "what": "entity:snow_golem",
+          "what": "prop:scarecrow_spot",
           "word": "scarecrow"
         }
       ]
     },
     {
-      "id": "L08",
+      "id": "L07",
       "who": "N",
       "text": "He always SAID / he'd keep an EYE / on me. / NOT helping.",
       "say": "He always said he'd keep an eye on me. <short pause> Not helping.",
@@ -158,39 +160,52 @@
       }
     },
     {
-      "id": "L09",
+      "id": "L08",
       "who": "N",
       "text": "So last night, / I stayed UP / to CATCH it.",
       "direction": "determined, a detective on a mission, speeding up, full volume, never hushed or breathy",
       "shot": "S09",
       "look": {
-        "what": "actor:Milo"
+        "what": "prop:window"
+      }
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "The GROANING came. / I threw the window OPEN.",
+      "direction": "brave and fast, building to a big burst on the last word, ready for a fight, full volume, never hushed or breathy",
+      "shot": "S10",
+      "look": {
+        "what": "prop:window",
+        "word": "OPEN"
       }
     },
     {
       "id": "L10",
       "who": "N",
-      "text": "The GROANING came. / I OPENED the window. / The scarecrow / was GONE.",
-      "say": "The groaning came. I opened the window. <short pause> The scarecrow was gone.",
-      "direction": "brave and fast through the first two, then a real jolt of fear on the last part (the one scared line, still voiced, not whispered)",
-      "shot": "S10",
+      "text": "The scarecrow / was GONE.",
+      "say": "<short pause> The scarecrow was gone.",
+      "direction": "a real jolt of fear, short and sharp, still full volume, not whispered",
+      "shot": "S10b",
       "look": {
         "what": "prop:scarecrow_spot",
-        "word": "scarecrow"
+        "word": "GONE"
       }
     },
     {
       "id": "L11",
       "who": "N",
-      "text": "Grandpa was STILL / keeping an EYE / on me.",
-      "direction": "wonder and a lump in the throat, a slow smile, the last word soft but clear, not whispered",
+      "text": "It wasn't STARING / at me. / It was keeping / an EYE OUT / for me.",
+      "direction": "warm and bright, a smile in it, full volume, never soft, whispered or breathy",
       "shot": "S11",
       "look": [
         {
-          "what": "entity:snow_golem"
+          "what": "entity:zombie",
+          "word": "STARING"
         },
         {
-          "what": "entity:zombie"
+          "what": "entity:snow_golem",
+          "word": "EYE"
         }
       ]
     }
@@ -201,8 +216,8 @@
       "line": "L01",
       "place": "field_edge",
       "size": "wide",
-      "camera": "path: a slow push west along the trail. Key 0: 2.6 blocks up, 1.5 blocks behind (east of) the scarecrow at (22.5, 2.6, 0), looking west-south-west down the trail at our back window, key 1 (end of line): (17, 2.2, -1.5), same look. FOV 55. wideMaster, cropX 0",
-      "frame": "fg: the back of the scarecrow's carved pumpkin at the bottom edge (plain orange, no face), ripe wheat round it, mid: the white snow trail leaving the field at the fence gap and running 12 blocks across green meadow grass toward the cottage, ending in a trampled white patch off to the left of the back window, subject: our cottage's back wall on its stone foundation, the shuttered window over the bed in the upper third, bg: the meadow rising behind the cottage, a grove, hills into the fog. Morning (1000): the sun low behind the camera lights the wall.",
+      "camera": "path: a slow push west along the trail. Key 0: (23, 1.5, 0.6), 1.5 behind (east of) the scarecrow, eye level with the pumpkin; key 1 (end of line): (18, 1.8, -0.6). Both look at (8, 0, -3). FOV 55. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+). wideMaster, cropX 0",
+      "frame": "fg: the back of the scarecrow's carved pumpkin at the bottom edge (plain orange, no face), cut by the frame bottom at its base: the white body is below the frame and inside the wheat; the lantern on its fence post at (22, 1, 3) at frame left; mid: the snow trail leaving the field at the fence gap and running across green grass toward the cottage, the trampled patch at frame right of centre; subject: the cottage's back wall on its stone foundation, the shuttered window (12 degrees left of centre) over the patch; bg: the meadow rising behind the cottage, a grove, hills to the horizon. Morning (1000): the sun low behind the camera lights the wall.",
       "look": {
         "time": 1000
       },
@@ -213,8 +228,8 @@
       "line": "L02",
       "place": "farm",
       "size": "ews",
-      "camera": "path: crane up and back. Key 0: (8, 6, 14) looking north-east at (14, 0, -2), key 1 (end): (2, 22, 30) looking at (16, 0, -4). FOV 50",
-      "frame": "from above: green meadow everywhere, flowers, the field's four plots, the farmhouse and barn, the paddock with cows, our cottage at frame left, the snow trail the only white thing in the whole picture, a line from the wheat to our wall, bg: rolling meadow, groves, hills into the fog, the plains-style village roofs further down the slope (west). Morning (1000), clear sky.",
+      "camera": "path: crane up and back, plays to 'snow here'. Key 0: (8, 6, 14) looking north-east at (12, 0, -2); key 1: (2, 20, 26) looking at (10, 0, -3). FOV 50. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
+      "frame": "from above: green meadow everywhere, flowers, our cottage at frame left, the trail the only white thing in the picture, entering from the right edge (the wheat and the scarecrow are cut by the right edge: no white body in frame); bg: the farmhouse roof and barn, the paddock with cows, and the nitwit in his green coat standing among them (easter egg), rolling meadow and groves to the horizon. Morning (1000), clear sky.",
       "look": {
         "time": 1000
       },
@@ -222,11 +237,11 @@
     },
     {
       "id": "S03",
-      "line": "L03",
+      "line": "L02",
       "place": "yard",
       "size": "ms",
-      "camera": "pov standing on the trail 4 blocks from the field fence, facing west toward the cottage, iron shovel in hand",
-      "frame": "fg: the hand and shovel, the snow layer under the crosshair, on 'UP' the shovel digs it (vanilla dig speed: K.dig), a snowball pops out and is picked up (hotbar slot 2: snowballs), on 'BACK' the camera lifts along the rest of the trail to the patch by our wall, bg: the cottage's back wall and window. Morning (1000).",
+      "camera": "pov from 'I shovel': standing on the trail at (15, 0, -2) facing west, iron shovel in hand (hotbar 1, snowballs already in slot 2)",
+      "frame": "fg: the hand and shovel, the snow layer under the crosshair; on 'UP' the shovel digs it (K.dig), a snowball pops out and is picked up into slot 2; on 'BACK' the camera lifts along the rest of the trail to the patch by the wall; bg: the cottage's back wall and window. Morning (1000).",
       "look": {
         "time": 1000
       },
@@ -234,11 +249,11 @@
     },
     {
       "id": "S04",
-      "line": "L04",
+      "line": "L03",
       "place": "yard",
-      "size": "full",
-      "camera": "at: low (0.8 up) on the grass at (9, 0.8, -12), looking south-west at the patch and the wall, a slow push in. FOV 50",
-      "frame": "fg: meadow grass and flowers, subject: the trampled white patch (3x3 snow layers, footprint-ragged edges) at (6, -6), the wall and the shuttered window above it 8 blocks behind, head to foot of the wall in frame, the trail running out of the patch to frame left toward the field, bg: the cottage roof, chimney smoke, sky. Morning (1000).",
+      "size": "wide",
+      "camera": "at: low (0.8 up) at (9, 0.8, -12), looking south-west at (3, 1.5, -3), a slow push in. FOV 50. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
+      "frame": "fg: meadow grass and flowers; subject: the trampled white patch at (6, -6), the back wall and the shuttered window 8 blocks behind it, the whole wall in frame; the trail running out of the patch to frame left; bg: the cottage roof, chimney smoke, sky. Morning (1000).",
       "look": {
         "time": 1000
       },
@@ -246,11 +261,11 @@
     },
     {
       "id": "S05",
-      "line": "L05",
+      "line": "L04",
       "place": "bedroom",
-      "size": "wide",
-      "camera": "at: the cottage's `inside` anchor look (from the far corner by the hearth toward the back wall), eye height, still. FOV 55",
-      "frame": "fg: the table and a chair in shadow, subject: Milo (small, Steve skin) sitting on the edge of his bed (sit pose), his back to the closed shutters above the bed, facing into the room, one lantern on the far wall, low (he keeps a light on), moonlight lines through the shutter slats, on 'GROANING' a zombie groan from outside the back wall. Night (18000).",
+      "size": "full",
+      "camera": "at: the cottage's `inside` anchor look (from the corner by the hearth toward the back wall), eye height, still. FOV 55",
+      "frame": "fg: the table edge; subject: Milo head to foot, sitting on the edge of his bed (sit pose), his back to the closed shutters above the bed, facing into the room; the hanging lantern and the hearth campfire both lit; moonlight in the shutter slats; on 'GROANING' a zombie groan from outside the back wall. Night (18000).",
       "look": {
         "time": 18000
       },
@@ -258,11 +273,11 @@
     },
     {
       "id": "S06",
-      "line": "L06",
+      "line": "L05",
       "place": "yard",
       "size": "ms",
-      "camera": "at: 2.5 blocks out from the wall at (2.8, 1.2, 1.5), looking down-west at the foot of the wall, slow push",
-      "frame": "fg: grass, subject: two rotten flesh items bobbing and turning on the grass at the foot of the stone foundation under the window (dropped items, vanilla bob and spin), a scorched-looking bare spot (coarse dirt) beside them, bg (upper edge): the foundation and the shutters above. Morning (1000).",
+      "camera": "at: (2.8, 1.2, 1.5) looking down-west at (0.8, 0.2, 0), slow push. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
+      "frame": "fg: grass; subject: two rotten flesh items bobbing and turning on the grass at the foot of the stone foundation under the window (dropped items, vanilla bob and spin); bg (upper edge): the foundation, the shutters above, the rain barrel at frame left. Morning (1000).",
       "look": {
         "time": 1000
       },
@@ -270,11 +285,11 @@
     },
     {
       "id": "S07",
-      "line": "L07",
+      "line": "L06",
       "place": "farmhouse_porch",
       "size": "wide",
-      "camera": "at: (31, 2.5, -2) looking north-west at the porch, the field at frame left, still. FOV 50",
-      "frame": "fg: the field's east plot (carrots) and its fence, subject: Mom (villager, plains farmer outfit) on the farmhouse porch at (25, 1, -8), and a row of four carved pumpkins along the porch edge (Grandpa's, faces out), the scarecrow small in the wheat at frame left (21, 0), bg: the farmhouse front, the barn at frame right, and the nitwit in his green coat standing in the paddock among the cows (easter egg). Morning (1000).",
+      "camera": "at: (36, 4, 10) looking at (23, 1, -5), still. FOV 50. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
+      "frame": "fg: the field's south-east plot and its fence; subject: Mom (villager, plains farmer outfit) on the farmhouse porch at (25, 1, -8) beside four carved pumpkins on the porch's front edge (Grandpa's, faces out); the scarecrow small in the wheat at frame left (21, 0), its lantern post beside it; bg: the farmhouse front and roof, the meadow beyond. Morning (1000).",
       "look": {
         "time": 1000
       },
@@ -282,11 +297,11 @@
     },
     {
       "id": "S08",
-      "line": "L08",
+      "line": "L07",
       "place": "field",
       "size": "ms",
-      "camera": "at: (16.5, 1.9, 2.5) looking east-north-east at the scarecrow's face, slow push from 4.5 to 3.5 blocks. FOV 50",
-      "frame": "fg: the field fence gap, the first wheat, subject: the scarecrow from the front, waist up above the wheat: the carved pumpkin face (the eye) and the white body under it, bg: the farmhouse porch and its carved pumpkins, the barn, sky. Morning (1000).",
+      "camera": "at: (16.5, 1.6, 2.5) looking east-north-east at the pumpkin (21, 1.6, 0), slow push from 4.5 to 3.5 blocks. FOV 50. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
+      "frame": "fg: the field fence gap, the first wheat; subject: the scarecrow from the front, waist up above the wheat: the carved pumpkin face (the eye) and the white snow body under it (now named: L06 said snow); the lantern post at frame right; bg: the field, the barn roof, sky. Morning (1000).",
       "look": {
         "time": 1000
       },
@@ -294,11 +309,11 @@
     },
     {
       "id": "S09",
-      "line": "L09",
+      "line": "L08",
       "place": "bedroom",
       "size": "full",
-      "camera": "pov sitting on the bed (eye at the sitting height), facing the shutters 1.5 blocks away, lights out (the lantern off), still",
-      "frame": "fg: the red blanket of the bed, subject: the closed spruce shutters head to foot, moonlight in the slats, bg: dark wall. Night (18000).",
+      "camera": "pov sitting on the bed (sitting eye height), facing the shutters 1.5 blocks away, empty hand (hotbar slot 3, empty), still",
+      "frame": "fg: the red blanket; subject: the four closed spruce shutters (2x2) head to foot, moonlight in the slats; the room dark (lantern taken down, hearth campfire out); bg: the dark wall. Night (18000).",
       "look": {
         "time": 18000
       },
@@ -306,11 +321,23 @@
     },
     {
       "id": "S10",
-      "line": "L10",
+      "line": "L09",
       "place": "bedroom_window",
       "size": "ms",
-      "camera": "pov standing at the window: on 'OPENED' the hand flips both shutters up (use the trapdoors: they swing flat to the top of the opening), the camera looks straight out east over the yard to the field",
-      "frame": "opens: the shutters filling the frame 1 block away, on 'OPENED' they swing up and the night opens: the moonlit yard, the snow trail, the field, on 'GONE' the wheat where the scarecrow always stands is empty (moonlight on the bare spot), one snowball streaks across the bottom-left corner, groans from below the window. Night (18000).",
+      "camera": "pov standing at the window, facing east: on 'OPEN' the hand flips the four shutters (the lower pair drops flat at the bottom of the opening, the upper pair flat at the top); a fast push forward into the opening",
+      "frame": "opens: the shutters filling the frame 1 block away (he expects a face behind them); on 'OPEN' they fly flat and the night opens: the moonlit yard straight ahead, empty, the trail running away toward the field, the lit lantern post small in the distance; groans from below the window. Night (18000).",
+      "look": {
+        "time": 18000
+      },
+      "weather": "clear"
+    },
+    {
+      "id": "S10b",
+      "line": "L10",
+      "place": "field",
+      "size": "full",
+      "camera": "at: S08's camera (16.5, 1.6, 2.5) looking at (21, 0.8, 0), a slow push in. FOV 50. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
+      "frame": "subject: the 1x1 bare coarse-dirt gap in the wheat where the scarecrow always stands, empty, lit warm by the lantern on its fence post beside it; fg: the fence gap, the trail's first snow leaving the wheat; bg: dark wheat, the farmhouse porch lantern. Night (18000).",
       "look": {
         "time": 18000
       },
@@ -321,8 +348,8 @@
       "line": "L11",
       "place": "yard",
       "size": "wide",
-      "camera": "path: a slow pull back and up. Key 0: (9, 4, 7) looking at (2, 1.5, -2), key 1 (end + 1 s hold): (12, 6, 10), same look. FOV 50. wideMaster, cropX chosen to keep the window and the golem in",
-      "frame": "fg: the moonlit grass and the end of the trail, subject: our back wall with the shutters open and Milo's head and shoulders in the window (moonlit, his room is dark), a lantern on a post at the cottage's back corner, three zombies at the foot of the wall under the window, arms up, the snow golem standing on its trampled patch at (6, -6) throwing snowballs at them, white puffs on every hit, each zombie shoved back along the wall away from the window, the snow trail running from the golem's feet back to the dark wheat, bg: the field, the farmhouse's porch lantern, hills under the moon. Night (18000).",
+      "camera": "path, a reveal pull-out. Key 0 (0 s): the POV eye in the window (-0.3, 3.6, 0) looking down at the zombies (1, 0.5, 0); key 1 (1.2 s): (4, 5, 5) looking at (3, 1, -3); key 2 (end + 0.8 s hold): (7, 5, 6), same look. FOV 50. wideMaster, cropX chosen to keep the window and the golem in. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
+      "frame": "opens straight down from the window onto three zombies at the foot of the wall, arms up, faces up at us (the stalker he expected was never at the window: these were); pulls out and up: our back wall with the four shutters open and Milo's head and shoulders in the window (moonlit), the zombies under it, and on its trampled patch at (6, -6), 12 blocks from the lens, the snow golem throwing snowballs at them, a white puff on every hit, each zombie shoved south along the wall away from the window; the trail leaving the patch at frame right; the lantern on its post at (1, -9). Night (18000).",
       "look": {
         "time": 18000
       },
@@ -347,7 +374,7 @@
     "window": {
       "at": [
         0,
-        3,
+        3.5,
         0
       ]
     },
@@ -365,6 +392,13 @@
         0
       ]
     },
+    "lantern_post": {
+      "at": [
+        22,
+        1,
+        3
+      ]
+    },
     "pumpkins": {
       "at": [
         25,
@@ -379,7 +413,7 @@
   "ending": {
     "after": "L10",
     "beats": [
-      "S11 (camera): the pull-back starts on L11's first word, the golem throws on 'STILL' and 'EYE', puffs and knockback on each",
+      "S11 (camera): starts in the POV eye looking down at the zombies on L11's first word, pulls out to the wide by 'EYE', the golem throws on 'STARING' and 'EYE', a puff and a shove on each hit",
       "hold 0.8 s after 'me' on the picture, then cut, no line after L11"
     ],
     "loop": "cause and effect: the guard's nightly walk is line 1's trail"

@@ -54,16 +54,15 @@ the lake surface is y -28.
 | shot | fg | mid | bg |
 |---|---|---|---|
 | S01 (over the lake, looking north-west at the cliff, launch on "CLIFF", no splash) | the oak's outer leaves | the shelf, the goat, Dad, the sheer face | the stone outcrops and peaks behind the shelf, sky, the lake at the bottom of frame |
-| S02 (camera (-18,-27,16), aimed at the landing (4,-28,9)) | reeds, the nitwit knee-deep at (-12,-28,11) (easter egg) | the splash on "LAKE", the cliff foot, the stairs (no swim shown) | the stairs climbing to the oak on the skyline |
-| S06 EWS (camera (-44,-21,19), aimed between the gate and the mine, 16 chunks) | gate lanterns, fence | the donkey, Dad (no Milo) | across the lake: the shore road, the far ridge, the mine portal small at frame right |
+| S02 (camera (-5,-27,34), looking north) | reeds, the nitwit knee-deep at (-9,-28,28) (easter egg) | the splash on "LAKE", the cliff foot, the stairs (no swim shown) | the stairs climbing to the oak on the skyline |
+| S06 EWS (camera (-44,-21,19), aimed between the gate and the mine, 16 chunks) | gate lanterns, fence | the donkey, Dad (no Milo) | across the lake: the shore road, the far ridge, the mine portal a tiny backdrop at frame left (scenery, not a clue) |
 | S05 (opens 12 blocks east of Ida's door on the lane, looking west) | lane fence, flowers | Ida's cottage whole, then Ida and the framed horn | the slope and spruces behind her house |
-| S08 (above our cottage, looking east, 16 chunks) | our roof and smoke | Dad and the donkey 30-40 blocks out on the road | the cliff and oak at frame left, the far ridge and mine |
-| S08 (above our cottage, looking east) | our roof and chimney smoke | Dad and the donkey on the shore road, the lake | the cliff and the oak at frame left, the road climbing to the far ridge and the mine |
+| S08 (camera (-60,-4,20), aimed ~5 degrees south of east, 16 chunks) | our roof and smoke | Dad and the donkey small, farther down the road | the cliff and oak at frame left, the far ridge and mine |
 | S09 (a straight crane up behind the goat, (1.6,1,-8) to 6 up, looking south at the oak) | the goat's back and horns | Milo at Dad's spot | the lake and the empty road below |
 | S13 (camera (107,-18,75) on the oak-to-Dad line, FOV 40) | the road and a lamp post running along that line | Dad and the donkey | 125 blocks off: the cliff with the oak on its top (render distance 16 chunks, no fog, the oak centred) |
 
 ## The easter egg
-The village nitwit (story_nitwit) in his green coat, knee-deep in the west shallows at (-18,-28,13), facing the cliff,
+The village nitwit (story_nitwit) in his green coat, knee-deep in the south-west shallows at (-9,-28,28), facing the cliff,
 NoAI, S02 frame left. Provisional: re-check against docs/world/canon.md when it lands.
 
 ## Engine needs
@@ -71,7 +70,7 @@ NoAI, S02 frame left. Provisional: re-check against docs/world/canon.md when it 
 |---|---|---|---|
 | **goat model** | **missing**: no `goat` in `renderer/entity_models.json` and no pose function in `renderer/entities.js` (render.js already has its height 1.3 and shadow 0.7) | ~1.5 h | **build it** (under 2 h): GoatModel's body layer from the client (body, head with the beard, left and right horns as separate parts, four legs, texture `entity/goat/goat`), quadruped walk like the cow's. The horns must hide one by one from `extra.leftHorn` / `extra.rightHorn` (Goat `DATA_HAS_LEFT_HORN` / `DATA_HAS_RIGHT_HORN`, read in `lib/harness.js` `onEntities`, a staged `ctx.mark('pose', { ids, leftHorn: false })` for S11). Test on `scripts/pose_fixture.js` (add a goat) and the rule-zero pixel check. |
 | **goat ram animation** | missing | ~45 min | build with the model: GoatModel's `setupAnim` lowers the head by `getRammingXHeadRot()` (head xRot up to ~0.9 rad over the 20-tick lower, from entity events 58 START_RAM / 59 STOP_RAM), a staged `ram` flag (`ctx.mark('pose', { ids, ram: true })`) plus 2-3 front-hoof stamps, the charge itself is the goat moved by `K.actor` at ram speed (~0.6 blocks a tick) with a fast gallop. If the pair overruns 2 h: stage the tell as a head-pitch override only and log the rest in docs/engine_requests.md. |
-| the ram knockback and the fall | staged | (stunt work) | Dad is a player actor moved on a ballistic arc by the stunt (launch ~1.2 blocks a tick south-east past the trunk's corner, 0.45 up, gravity 0.08, drag 0.98: he clears the face and lands at (4,-28,9)), the splash particle (`renderer/particles.js` `splash`, count 40) on the water tick |
+| the ram knockback and the fall | staged | (stunt work) | Dad is a player actor moved on a ballistic arc by the stunt (a first leg east to x 2.4 or more before z 0, clear of the trunk, then ~1.2 blocks a tick south-east, 0.45 up, gravity 0.08, drag 0.98: he clears the face and lands at (4,-28,9)), the splash particle (`renderer/particles.js` `splash`, count 40) on the water tick |
 | donkey chests (ChestedHorse) | **check**: the horse/donkey model is drawn, the chests layer probably not | ~30 min | add the two chest boxes to `HORSE_PARTS` from `DonkeyModel` when `extra.chest` is set (harness: `DATA_ID_CHEST`). Fallback: a saddle and a barrel on a cart is worse, build it. |
 | item name above the hotbar ("Goat Horn" on select) | **check** edit.py's HUD: no selected-item-name toast found | ~45 min | vanilla `Gui.renderSelectedItemName` (white, 2 s with a 0.5 s fade, above the hotbar). Under 2 h: build it. The big GOAT HORN caption carries the reveal either way. |
 | the horn blown | renders | | `use` pose (ArmPose.TOOT_HORN) in `renderer/poses.js` for S12 (a camera shot, so no first-person horn animation needed) |
@@ -81,11 +80,13 @@ NoAI, S02 frame left. Provisional: re-check against docs/world/canon.md when it 
 | render distance for S06, S08, S13 (the mine at ~230, the cliff at 125) | check | | 16 chunks for those recordings, no fog |
 
 ## Staging notes
-- **Before recording (critic must-fix 4):** build the goat model and prove it on `scripts/pose_fixture.js` with a goat summoned `HasRightHorn:0b` (and one with both horns): the missing horn must read in S11's frame at 300 px. No recording until it does.
+- **Before recording (critic must-fix 4):** build the goat model and prove it on `scripts/pose_fixture.js` with a goat summoned `HasRightHorn:0b` (and one with both horns): test whether the missing horn reads in S11's frame at 300 px before recording (if it does not, see the S11 note below).
 - Every mob is NoAI and staged: the goat (ram, step back, peering), the donkey, Ida, the nitwit. The goat's ram must be
   the same in S03 and S11 (same speed, same tell length) so the rewatch compares them.
 - S01 starts with the charge already going (`K.preroll`), the launch lands on "CLIFF". The fall to the water is ~2.4 s
   and the splash belongs to S02 on "LAKE" (one splash, never two).
+- S03 and S11: one camera at (-5.65,1.6,-1.5) aimed at (1.6,1,-2.5) (the goat at 4 blocks in frame, not at the edge).
+- S11: if the goat model's missing horn fails at 300 px, the dropped horn plus S11b carries the reveal alone. Don't stall the shoot over it.
 - S10's step: `K.ctl('right', true)` for 4 ticks on "STEPPED" (one block east, to (2.6,0,-1)), the goat passing within a block of the
   lens, the camera turns with it.
 - S11: the horn pops off on the impact tick (the drop item spawned at the trunk's north face with a small hop), the

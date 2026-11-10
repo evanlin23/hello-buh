@@ -332,7 +332,7 @@
       "place": "cellar",
       "size": "ms",
       "camera": "pov from the foot of the ladder, a few steps toward the stand",
-      "frame": "fg: the hand, subject: Grandpa waist up, asleep in his chair (sit pose, head dropped), the brewing stand at arm's length with three bottles, on 'ONE' the hand takes one and the stand shows two, the peach bottle now in the hand (hotbar slot 2). bg: the lantern and the barrels. Night (18000, the birthday).",
+      "frame": "fg: the hand, subject: Grandpa waist up, asleep in his chair (doze pose: sit, head dropped), the brewing stand at arm's length with three bottles, on 'ONE' the hand takes one and the stand shows two, the peach bottle now in the hand (hotbar slot 2). bg: the lantern and the potions in item frames. Night (18000, the birthday).",
       "look": {
         "time": 18000
       }

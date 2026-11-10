@@ -51,3 +51,22 @@ script is now 120 words, about 41 s of speech and about 42 s with the hold.
   No extra scene text.
 - Dad (`smith`) has his own request (r3, L04), on one model for the whole story.
 - No "true story" framing anywhere, and no ellipses.
+
+## r2 fixes (final round, from r2-continuity.md and r2-critic.md)
+| item | change |
+|---|---|
+| continuity blocker: S03/S11 tell at the frame edge | Both shots use the camera (-5.65,1.6,-1.5) aimed at (1.6,1,-2.5), about 8 degrees north of east. The goat sits at 18 degrees left, Dad 12 right, the boulder 14 left, the horn drop centred, and Dad exits frame right. |
+| note 1, S02 never shows the stairs | The camera is now (-5,-27,34) looking north. The nitwit moved to (-9,-28,28). |
+| note 2, S06 mine side | The mine is a tiny backdrop at frame LEFT, scenery and not a clue. |
+| note 3, S08 doesn't fit | The camera is now (-60,-4,20), aimed about 5 degrees south of east. Dad is small, farther down the road. |
+| note 4, Dad's launch clips the trunk | The staged path goes east first, to x 2.4 or more before z 0, then south-east to (4,-28,9). |
+| note 5, S12 goat hidden | The goat peers round the trunk's north-east corner at (2.4,0,-1.2), between the trunk and Milo. |
+| note 6, nitwit in the bible | The bible now has (-9,-28,28), matching story.json and set.md. |
+| note 7, cast N lists S07 | POV is now listed in S05, S10 and S11b only. |
+| note 8, S10 size | Relabelled `full` (the goat full size at 4 blocks). |
+| critic should-fix, L08 | "This morning, / out of TIME, / he LEFT." "So" was cut from L09 ("I took / his SPOT.") to stay at 120 words. |
+| critic should-fix, L07 | "I figured / he meant BEATING it." |
+| critic should-fix, r3 model | r3 now names `gemini-3.8-flash-lite-tts`, voice Orus (ref `smith`), single speaker, one model for the story. |
+| critic should-fix, S11 gate | set.md: if the missing horn fails at 300 px, the dropped horn plus S11b carries the reveal. Don't stall the shoot over it. |
+
+The script is still 120 words, about 41-42 s, with no ellipses, and story.json is valid. shots.md is regenerated.
