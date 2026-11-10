@@ -43,7 +43,8 @@ module.exports = {
   shots: {},
   edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0',
     // the reveal's sound: a whoosh as the camera leaves his head (L14 is the 13th line mark), a hit on the bark
-    sfx: [['whoosh', 'line', { nth: 12, gain: 0.45 }], ['impact', 'bark', { gain: 0.5 }]] },
+    sfx: [['whoosh', 'line', { nth: 12, gain: 0.45 }], ['impact', 'bark', { gain: 0.5 }]],
+    punch: [['bark', 0, 0.1]] },   // a push-in on the bark: the payoff's picture hit (./hb pace)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -203,15 +204,15 @@ module.exports = {
     })
     // L06: on the village road: villagers pass close and look down at me
     K.self({ sitting: false }, EYE)
-    const v1 = actorG('v1', { x: 25.4, z: -9.0, yaw: 0, pitch: 30 }), v2 = actorG('v2', { x: 22.6, z: -3.0, yaw: 180, pitch: 30 })
-    const v3 = actorG('v3', { x: 28.5, z: -5.0, yaw: 90, pitch: 25 })
-    await cutG(24.6, -5.6, P(25.4, gy(25.4, -8) + 2.6, -8))
+    const v1 = actorG('v1', { x: 27.6, z: -5.2, yaw: 90, pitch: 30 }), v2 = actorG('v2', { x: 21.4, z: -6.0, yaw: -90, pitch: 30 })
+    const v3 = actorG('v3', { x: 30.2, z: -6.1, yaw: 90, pitch: 25 })
+    await cutG(24.4, -5.6, P(27.6, gy(27.6, -5.2) + 2.4, -5.2))   // (aimed along the road: at z -8 it looked into the road's fence)
     looking = K.base
     looking = K.base
     await line('L06', async (k, at) => {
-      stepG(v1, -0.01, 0.04); v1.pitch = 28
-      stepG(v2, 0.004, -0.032); v2.pitch = 25
-      stepG(v3, -0.03, 0); v3.pitch = 20
+      stepG(v1, -0.045, 0.002); v1.pitch = 28
+      stepG(v2, 0.04, 0); v2.pitch = 25
+      stepG(v3, -0.035, 0); v3.pitch = 20
       if (k >= at(1)) K.turnTo(looking, P(v2.x, v2.y + 2.5, v2.z), (k - at(1)) / 16)
       look(k)
     })
