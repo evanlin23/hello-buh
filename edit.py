@@ -1206,6 +1206,72 @@ def cut_times(args):
     return [w.out(a) - args.start for a, b, f in (w.spans if w else []) if f == math.inf]
 
 
+def premix_sfx(args, dur, tmp):
+    """edit.sfx (scripts/sfx.py) premixed into the game audio, in Short time -> (audio path, its start offset)."""
+    import loud
+    if not (args.sfx and args.timeline):
+        return args.audio, args.start
+    import sfx
+    sfx_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
+    track = sfx.build_track(args.sfx, sfx_tl, args.start, dur, tmp / "sfx.wav", args.cards, args.counter)
+    if track and args.audio:
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-i", str(track), "-filter_complex",
+                        f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)},aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
+                        "-map", "[a]", "-ar", str(sfx.SR), str(tmp / "game_sfx.wav")], check=True)
+        return str(tmp / "game_sfx.wav"), 0.0
+    if track:
+        return str(track), 0.0
+    return args.audio, args.start
+
+
+def story_sound(args, narration, audio, audio_ss, story_tl, dur, tmp):
+    """The story mix (scripts/story_audio.py, standard and evidence in docs/audio.md): the voice through a clarity chain
+    at -15 LUFS, the game at -27 ducked under the lines (with every on-screen event's vanilla sound, from audio.py), the
+    scene's ambience, the mood score (ducked 2.5 dB, out before the payoff, no sting after), a soft riser and the hit
+    on the payoff, room tone, the clarity guard. -> (wav, the end fade's seconds, the mp4 comment tag: the score for
+    publish). The master (-14 LUFS, true peak -1 dBTP) runs after the encode."""
+    import story_audio
+    import story_track
+    rec = json.loads(pathlib.Path(args.rec_path).read_text())
+    rec["_path"] = str(args.rec_path)
+    name = "story_" + pathlib.Path(args.story).name
+    wav = story_audio.mix_story(narration, audio, audio_ss, args.story, story_tl, args.start, dur, tmp / "story_mix.wav",
+                                song=args.song, song_start=args.song_start, stunt_sfx=args.sfx, end_after=args.end_after,
+                                name=name, rec=rec, stems=os.environ.get("HB_STEMS") or None)
+    meta = json.loads(pathlib.Path(str(wav) + ".json").read_text())
+    # a fade at the very end: a Short that ends on a blast cut the boom off at full volume (frame review,
+    # story_runaway). It covers the air after the last spoken word (0.25 s for a spoken ending, up to 0.6 s)
+    _story, _voice = story_track._lines(args.story)
+    _vs, _ = story_track.voice_starts(_voice, story_track._marks(story_tl, args.start, {l["id"] for l in _story["lines"]}, _story.get("start_on_respawn", ())))
+    _ends = [t + _voice["lines"][lid]["end"] for lid, t in _vs.items()]   # (a continuous take's lines: their place in the take)
+    fade = min(0.6, max(0.25, dur - max(_ends, default=0) - 0.05))
+    tag = json.dumps({"hb_score": meta.get("score"), "levels": meta.get("levels_lufs_premaster")}, separators=(",", ":"))
+    return wav, fade, tag
+
+
+def audio_only(args, dur, tmp):
+    """--audio_only: the story's sound re-edited onto a finished mp4's picture (stream-copied: the frames, captions
+    and overlays are reused as they are). For a sound fix without re-rendering or re-encoding the picture."""
+    import story_audio
+    import story_track
+    if not (args.story and args.timeline):
+        sys.exit("--audio_only re-edits a story's sound: it needs --story and --timeline")
+    if args.hook or args.replay or args.loop:
+        sys.exit("--audio_only: not for an edit with a hook, replay or loop (their audio is spliced with the picture)")
+    story_rec = json.loads(pathlib.Path(args.timeline).read_text())
+    story_tl, story_track.POSES = story_rec["timeline"], story_rec.get("poses")
+    narration = story_track.narration_wav(args.story, story_tl, args.start, dur, tmp / "narration.wav")
+    audio, audio_ss = premix_sfx(args, dur, tmp)
+    wav, fade, tag = story_sound(args, narration, audio, audio_ss, story_tl, dur, tmp)
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", args.audio_only, "-i", str(wav), "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+                    "-af", f"afade=t=out:st={max(0, dur - fade):.3f}:d={fade:.3f},aresample=48000", "-c:a", "aac", "-b:a", "192k",
+                    "-t", f"{dur:.3f}", "-metadata", f"comment={tag}", "-movflags", "+faststart", args.out], check=True)
+    story_audio.master(args.out)
+    print("wrote", args.out, f"{dur:.2f}s (sound only, picture from {args.audio_only})")
+    import shutil
+    shutil.rmtree(tmp, ignore_errors=True)   # (its narration, game and mix wavs: ~30 MB a Short)
+
+
 def probe_duration(args):
     if args.video:
         out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.video], capture_output=True, text=True).stdout
@@ -1263,6 +1329,7 @@ def main():
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
+    ap.add_argument("--audio_only", metavar="MP4", help="re-edit only a story's sound onto this finished mp4's picture (stream copy; hb render --reuse locally)")
     ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
@@ -1311,11 +1378,17 @@ def main():
             w, c = pair.split("=", 1)
             colors[w.strip().lower()] = named.get(c.strip().lower(), (255, 255, 255, 255))
     caption_png(args.caption, args.red, tmp / "caption.png", colors, bands=args.bands)
-    dur = probe_duration(args) - args.start
+    if args.audio_only:   # the finished picture is already cut to the edit: its length is the Short's
+        dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.audio_only],
+                                   capture_output=True, text=True).stdout)
+    else:
+        dur = probe_duration(args) - args.start
     if args.end_after:
         ev_, secs_ = args.end_after.rsplit(":", 1)
         if ev_ in _tl:
             dur = min(dur, _tl[ev_] + float(secs_) - args.start)
+    if args.audio_only:
+        return audio_only(args, dur, tmp)
     inputs = (["-ss", str(args.start), "-i", args.video] if args.video else
               ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps + 1e-6)), "-i", args.frames])
     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / "caption.png")]
@@ -1608,32 +1681,14 @@ def main():
         args.song = None
     if args.sfx and args.timeline:   # sound effects (scripts/sfx.py) premixed into the game audio, in Short time
         import sfx
-        sfx_tl = json.loads(pathlib.Path(args.timeline).read_text())["timeline"]
-        track = sfx.build_track(args.sfx, sfx_tl, args.start, dur, tmp / "sfx.wav", args.cards, args.counter)
-        duck = sfx.duck_filter(sfx.dips(args.sfx, sfx_tl, args.start))
-        if track and args.audio:
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{args.start:.4f}", "-i", args.audio, "-i", str(track), "-filter_complex",
-                            f"[0:a]atrim=0:{dur + 0.5:.3f},{loud.static(args.audio, -20, args.start, dur)},aresample={sfx.SR},aformat=channel_layouts=stereo[g];[g][1:a]amix=inputs=2:normalize=0:duration=longest[a]",
-                            "-map", "[a]", "-ar", str(sfx.SR), str(tmp / "game_sfx.wav")], check=True)
-            args.audio, audio_ss = str(tmp / "game_sfx.wav"), 0.0
-        elif track:
-            args.audio, audio_ss = str(track), 0.0
+        duck = sfx.duck_filter(sfx.dips(args.sfx, json.loads(pathlib.Path(args.timeline).read_text())["timeline"], args.start))
+        args.audio, audio_ss = premix_sfx(args, dur, tmp)
     maps = ["-map", "[v]"]
-    if args.story and args.timeline:
-        # the story mix (scripts/story_audio.py, standard and evidence in docs/audio.md): the voice through a clarity
-        # chain at -15 LUFS, the game at -27 ducked under the lines (with every on-screen event's vanilla sound, from
-        # audio.py), whooshes on scene cuts, a riser and a hit on the payoff, room tone; the mood score goes in at
-        # publish (scripts/add_song.py); the master (-14 LUFS, true peak -1 dBTP) after the encode
-        import story_audio
-        story_wav = story_audio.mix_story(narration, args.audio, audio_ss, args.story, story_tl, args.start, dur, tmp / "story_mix.wav",
-                                          song=args.song, song_start=args.song_start, stunt_sfx=args.sfx, end_after=args.end_after)
+    tag = []
+    if args.story and args.timeline:   # the whole story mix, the score included (story_sound, scripts/story_audio.py)
+        story_wav, story_fade, comment = story_sound(args, narration, args.audio, audio_ss, story_tl, dur, tmp)
+        tag = ["-metadata", f"comment={comment}"]   # the score's credit, for publish (scripts/add_song.py)
         inputs += ["-i", str(story_wav)]
-        # a fade at the very end: a Short that ends on a blast cut the boom off at full volume (frame review,
-        # story_runaway). It covers the air after the last spoken word (0.25 s for a spoken ending, up to 0.6 s)
-        _story, _voice = story_track._lines(args.story)
-        _vs, _ = story_track.voice_starts(_voice, story_track._marks(story_tl, args.start, {l["id"] for l in _story["lines"]}, _story.get("start_on_respawn", ())))
-        _ends = [t + _voice["lines"][lid]["end"] for lid, t in _vs.items()]   # (a continuous take's lines: their place in the take)
-        story_fade = min(0.6, max(0.25, dur - max(_ends, default=0) - 0.05))
         graph.append(f"[{n_in}:a]afade=t=out:st={max(0, dur - story_fade):.3f}:d={story_fade:.3f},aresample=48000[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     elif args.audio and not args.song:
@@ -1657,7 +1712,7 @@ def main():
             graph.append("[song]anull[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     cmd = ["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", ";".join(graph), *maps,
-           "-t", f"{dur:.3f}", "-c:v", "libx264", *retention.x264(), "-pix_fmt", "yuv420p",
+           "-t", f"{dur:.3f}", "-c:v", "libx264", *retention.x264(), "-pix_fmt", "yuv420p", *tag,
            "-movflags", "+faststart", args.out]
     subprocess.run(cmd, check=True)
     got = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.out], capture_output=True, text=True).stdout or 0)
