@@ -134,3 +134,79 @@ and a clue second; a character's loving line is the truest clue; and the camera 
 
 The cold-reader check for 4 and 8 is in the story-critic (`.claude/agents/story-critic.md`): at the midpoint, a guess
 but not certainty; after the cut, one sentence.
+
+## 5. Other characters' voices: what do the big channels do? (owner's question, 2026-11-10)
+
+The owner asked: *"I also think its hard to have the other characters speaking, waht do the big channels do? Do they
+just put the character on the screen acting like theyre talking but then its just the narrotor telling us what they
+would say?"*
+
+**What could be checked.** On the second pass, YouTube's "Sign in to confirm you're not a bot" wall blocked captions,
+descriptions and lengths for every video page. We didn't get around it (that's bot-check circumvention). So none of
+the 18 Shorts below could be watched or transcribed. The only evidence is the six Shorts whose auto-captions came
+through on the first pass (section 1). Even those captions can't tell two voices apart.
+
+### Evidence from the first pass (captions read)
+In all six, **another character's words come through the narrator**, as reported speech or a quote inside the
+narration. None of the captions shows a second speaker's line standing on its own.
+
+| Short | how other characters' words appear in the captions |
+|---|---|
+| [Every Kid He Takes Home D*ES...](https://www.youtube.com/shorts/nOiaaf60W0U) | narrated: "He only picked kids nobody would come looking for" |
+| [In This Town, You Are Not Allowed To Speak](https://www.youtube.com/shorts/crvPRFMpKLA) | narrated: "a new kid grew obsessed with finding out why" (the premise is silence) |
+| [Every person in this town has a copy..](https://www.youtube.com/shorts/ypFSN5k8tBg) | narrated: "Liam punishes it so it will never disobey him again" |
+| [In This World, NIGHT is deadly...](https://www.youtube.com/shorts/odSPeoZTr1g) | narrated: "Blue's the weakest color there is" |
+| [In This Town, Nobody Can Look Down](https://www.youtube.com/shorts/UJbRy0FqxDc) | narrated |
+| [Has Anyone Seen My Little Brother?](https://www.youtube.com/shorts/Oit5nlayRJY) | first-person reported speech: "My mom screamed that my little brother had gone under" |
+
+### Top Shorts found, but not watchable this session (metadata only)
+Gneef:
+- [Uh Oh](https://www.youtube.com/shorts/ae02q5cgwts), 20M
+- [Future Devil](https://www.youtube.com/shorts/wpsEmdaFEf4), 19M
+- [The Line](https://www.youtube.com/shorts/h18gGn18T1Q), 18M
+- [Rock, Paper, Scissors](https://www.youtube.com/shorts/HF9AbMtIUr0), 15M
+- [Superpowers Transfer…](https://www.youtube.com/shorts/6itQc__qa7U), 14M
+- [100 Passengers](https://www.youtube.com/shorts/BuNawqymyAY), 4.8M
+- [Duck, Duck, Goose](https://www.youtube.com/shorts/9SDhBOAhTD0), 4.5M
+
+Bloopo:
+- [He Escapes Prison!](https://www.youtube.com/shorts/S_MmOSpfopQ), 10M
+- [Diamond Changed His Life!](https://www.youtube.com/shorts/BF-g148OWYc), 10M
+- [His Brother Left Him Homeless!](https://www.youtube.com/shorts/aujoQsKlihg), 9.7M
+- [He Scammed The Entire Town!](https://www.youtube.com/shorts/HpNY0JlXtmw), 6.6M
+
+Bloxolox:
+- [Same Footprints](https://www.youtube.com/shorts/KQuncRReaJg), 259K
+- [Carry An Umbrella](https://www.youtube.com/shorts/52YV9UG2QpA), 216K
+
+Minecraft:
+- Hapico, clay animation with no narration:
+  - [Endermen vs. Water Survival](https://www.youtube.com/shorts/NRf4CHWx9g0), 32M
+  - [Trying To Find The Nether Portal](https://www.youtube.com/shorts/56fGq_AlmCg), 16M
+  - [A Day At The Beach](https://www.youtube.com/shorts/MKIRZSs0Spw), 34.7M
+- Alexa Real: [NEVER dig straight Down!!!](https://www.youtube.com/shorts/4693Fm09cas), 2.2M
+
+Gneef's channel description says only "All scripting, editing, and animations are done by my team and I". It says
+nothing about voices.
+
+### Tally
+| pattern | verified | from the first pass's captions (6) |
+|---|---|---|
+| the narrator carries other characters' words (reported or quoted) | 0 of 18 | 6 of 6 |
+| a second character voice | 0 of 18 | 0 of 6 seen, but captions can't show a voice change |
+| the character acts it on screen | 0 of 18 | not checked (no picture) |
+| quotes shown as on-screen text (bubbles, chat, name tags) | 0 of 18 | not checked |
+
+### What it suggests, and how to settle it
+- **What it suggests.** At this length, the big narrated channels most likely do what the owner describes. The
+  narrator says what the character said ("my mom said..."). Meanwhile the character acts on screen: turns, gestures,
+  a talking head-bob. The big burned-in captions carry the words.
+- **How sure that is.** This is a strong hypothesis from six caption reads, not a finding.
+- **How to settle it.** Watch five on a phone, which takes about 3 minutes: Gneef #1 and #4, Bloopo #8 and #10, and
+  Bloxolox #13. For each, note who speaks each line and how it appears on screen. Or rerun the research from a session
+  with YouTube cookies set up.
+- **For us.** It supports what STANDARDS 1.5 already says: narrator-first, other characters at most 1-3 lines of
+  six words or fewer.
+  - The four new scripts have at most one character line each, so each could also be said by the narrator ("Grandpa
+    says they're our EYES") without losing a clue.
+  - That makes each script work whichever way the owner decides.
