@@ -11,7 +11,8 @@
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
 // Light tests (look.smoothLight): --time N (the time of day, e.g. 18000 midnight), --lights (the Girl holds a lantern,
 // the Grandpa a torch), --bolt TICK (a lightning mark 10 blocks ahead at that tick), --sunset (time marks every
-// tick from 12000 to 13800 over the recording: the relight steps vs the shader's smooth dusk).
+// tick from 12000 to 13800 over the recording: the relight steps vs the shader's smooth dusk), --whip (the camera
+// pans 0.25 rad a tick over ticks 20-30: look.motionBlur).
 const fs = require('fs')
 const path = require('path')
 const { Scene, loadRec, ROOT } = require('../lib/hb/scene')
@@ -69,5 +70,6 @@ if (STAGED) {
 if (args.includes('--lights')) for (const e of out.entities) { if (e[1] === 9003) e[9] = { ...e[9], held: 'lantern' }; if (e[1] === 9001) e[9] = { ...e[9], held: 'torch' } }
 if (opt('bolt')) { const [bx, by, bz] = at(10, -3); out.timeline.push({ t: Number(opt('bolt')) * 50, event: 'lightning', x: bx, y: by, z: bz, ticks: 6 }) }
 if (args.includes('--sunset')) for (let t = 1; t < N; t++) out.timeline.push({ t: t * 50, event: 'time', time: Math.round(12000 + 1800 * t / (N - 1)) })
+if (args.includes('--whip')) out.poses.forEach((p, t) => { p[4] = +(p[4] + 0.25 * Math.min(10, Math.max(0, t - 20))).toFixed(5) })   // a whip pan: 0.25 rad a tick over ticks 20-30
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)

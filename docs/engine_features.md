@@ -138,6 +138,15 @@ no post pass. The pose fixture has the cases: `node scripts/pose_fixture.js --st
   slide with the wind, each sheet a little faster than the one below, so the fog rolls. Test: `stunts/_light_test.js`
   (`node scripts/pose_fixture.js --stunt _light_test --time 18000`).
 
+## Motion blur (look.motionBlur)
+`look.motionBlur: 0.5` (the shutter: 0.5 = a 180-degree shutter) or `{ shutter, trail }` blurs the camera's own motion
+per pixel (renderer/page.js `makePost`: depth reprojected through the previous frame's camera, 12 taps), so whips,
+fast pans and cranes smear instead of strobing on a phone; the first-person hand stays sharp. `trail` (0..0.85) mixes
+in the previous frames too, for time-lapses whose blocks pop. It needs the frame before: a cut, a gap over 2 ticks or
+a big jump resets it, and a single `./hb still` shows none (give it two consecutive ticks: `tick:24 tick:25`, the
+second is blurred). Moving mobs aren't blurred (camera motion only). Test: `node scripts/pose_fixture.js --staged
+--whip`. Off unless the look asks.
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

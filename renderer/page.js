@@ -389,7 +389,35 @@ function makePost (look, w, h) {
     vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 },
     sharpK: { value: look.sharpen || 0 }, raysBlocks: { value: look.raysOverBlocks ?? 1 }
   })
-  return { rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1, bloomPasses: look.bloomPasses ?? 2 }
+  // motion blur (look.motionBlur: a number = the shutter, 0.5 = a 180-degree shutter; or { shutter, trail }): the
+  // camera's own motion, per pixel from the depth buffer reprojected through the previous frame's camera (whips, fast
+  // pans and cranes), 12 taps along it; the first-person hand (depth < 0.6 blocks) stays sharp. `trail` (0..0.85)
+  // also mixes in the previous frames (an exponential afterimage: time-lapses whose blocks pop strobe less). Both
+  // need the frame before (consecutive frames of one render); a jump (a cut, > 2 ticks or a big move) resets them.
+  let mb = null
+  if (look.motionBlur) {
+    const o = typeof look.motionBlur === 'object' ? look.motionBlur : { shutter: Number(look.motionBlur) }
+    const mbMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform mat4 projInv; uniform mat4 camWorld; uniform mat4 prevVP; uniform float k;
+      uniform float near; uniform float far; varying vec2 vUv;
+      void main () {
+        float d = texture2D(depth, vUv).x;
+        vec3 c = texture2D(src, vUv).rgb;
+        float z = near * far / (far - d * (far - near));
+        if (k <= 0.0 || z < 0.6) { gl_FragColor = vec4(c, 1.0); return; }
+        vec4 v = projInv * vec4(vUv * 2.0 - 1.0, d * 2.0 - 1.0, 1.0); v /= v.w;
+        vec4 p = prevVP * (camWorld * v);
+        vec2 vel = (vUv - (p.xy / p.w * 0.5 + 0.5)) * k;
+        if (p.w <= 0.0) vel = vec2(0.0);
+        float L = length(vel); if (L > 0.12) vel *= 0.12 / L;
+        vec3 acc = vec3(0.0);
+        for (int i = 0; i < 12; i++) acc += texture2D(src, vUv + vel * (float(i) / 11.0 - 0.5)).rgb;
+        gl_FragColor = vec4(acc / 12.0, 1.0);
+      }`, { src: { value: null }, depth: { value: rt.depthTexture }, projInv: { value: new THREE.Matrix4() }, camWorld: { value: new THREE.Matrix4() }, prevVP: { value: new THREE.Matrix4() }, k: { value: 0 }, near: { value: 0.05 }, far: { value: 1000 } })
+    const mix2 = mk(`uniform sampler2D src; uniform sampler2D prev; uniform float a; varying vec2 vUv;
+      void main () { gl_FragColor = vec4(mix(texture2D(src, vUv).rgb, texture2D(prev, vUv).rgb, a), 1.0); }`, { src: { value: null }, prev: { value: null }, a: { value: 0 } })
+    mb = { shutter: o.shutter ?? 0.5, trail: Math.min(0.85, o.trail || 0), mbMat, mix2, out: new THREE.WebGLRenderTarget(w, h), ta: new THREE.WebGLRenderTarget(w, h), tb: new THREE.WebGLRenderTarget(w, h), prev: null }
+  }
+  return { mb, rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1, bloomPasses: look.bloomPasses ?? 2 }
 }
 function runPost (cam, tick) {
   const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
@@ -401,6 +429,23 @@ function runPost (cam, tick) {
     if (sun) su.sunDir.value.copy(sun.position).sub(camera.position).normalize()
     su.under.value = cam.underwater || cam.inLava ? 1 : 0
     pass(P.shadeMat, P.rs); frame = P.rs.texture
+  }
+  if (P.mb) {   // motion blur (makePost): against the camera of the frame before, when this one follows it
+    const M = P.mb, vp = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)
+    const dt = M.prev ? (tick || 0) - M.prev.tick : 0
+    const jump = !M.prev || dt <= 0 || dt > 2 || camera.position.distanceTo(M.prev.pos) > 3 * dt || camera.quaternion.angleTo(M.prev.q) > 1.2 * dt
+    const ft = cam.frameTicks || 1
+    if (!jump && M.shutter > 0) {
+      const mu = M.mbMat.uniforms
+      mu.src.value = frame; mu.projInv.value.copy(camera.projectionMatrixInverse); mu.camWorld.value.copy(camera.matrixWorld)
+      mu.prevVP.value.copy(M.prev.vp); mu.k.value = M.shutter * ft / dt; mu.near.value = camera.near; mu.far.value = camera.far
+      pass(M.mbMat, M.out); frame = M.out.texture
+    }
+    if (M.trail > 0) {
+      const m2 = M.mix2.uniforms; m2.src.value = frame; m2.prev.value = M.ta.texture; m2.a.value = jump ? 0 : M.trail
+      pass(M.mix2, M.tb); frame = M.tb.texture; const t0 = M.ta; M.ta = M.tb; M.tb = t0
+    }
+    M.prev = { tick: tick || 0, vp, pos: camera.position.clone(), q: camera.quaternion.clone() }
   }
   P.dofMat.uniforms.src.value = frame; P.fin.uniforms.src.value = frame; if (P.rayMat) P.rayMat.uniforms.src.value = frame
   P.bright.uniforms.src.value = frame; pass(P.bright, P.ba)

@@ -2589,6 +2589,7 @@ else:
     }
     prof('entities+hand')
     cam.blockEntities = blockEntitiesAt(t, cam)
+    if (LOOK_RAW && LOOK_RAW.motionBlur) cam.frameTicks = 20 / FPS   // (the page's motion blur: one frame's worth of the camera's move)
     if (BOLTS.length) { const bl = boltsAt(t); cam.bolts = bl.bolts; cam.skyFlash = bl.flash }
     cam.dimension = DIM
     cam.weather = cam.underwater ? [] : weatherColumns(cam, t, cam.rain)   // (precipitation stops at the surface: snow fell under the ice)
