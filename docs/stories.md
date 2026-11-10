@@ -232,6 +232,9 @@ STANDARDS.md in the same commit.
   in Dog on the Hill v2: Leda, "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing
   story; not whispery, breathy or soft" in plain sentence case, natural tempo, no speed-up, no pitch shift, no pause cap (`voices/cast.json` `narrator`). This replaces the
   sleepover 1.1x +1 pick (kept as `narrator_sleepover`). Tell the owner when a new take drifts from that sound.
+- **Owner, 2026-11-10, on the daily story producer (the scheduled task that starts one new story a day): "keep off
+  until more are done".** The producer is switched off until the held stories are finished; switch it back on only
+  when the owner says so.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
