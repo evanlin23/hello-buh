@@ -176,6 +176,10 @@ module.exports = {
       K.ctl('jump', !!(b && b.boundingBox === 'block'))
     }
     const roadZ = -5.5
+    // an event that fires once, the first tick at or past its time (K.line runs on the recording clock: after an awaited
+    // cut k jumps ahead, and a `k === X` test could be skipped: kit b4cd314)
+    const did = new Set()
+    const once = (key, cond) => { if (!cond || did.has(key)) return false; did.add(key); return true }
 
     // the wolf's on-screen pop (vanilla: a tamed wolf more than 12 blocks from its owner appears beside him, in view,
     // no particles, no sound): K.blink when the story kit has it (visual audit blocker 2), else a cut of the wolf alone
@@ -209,7 +213,7 @@ module.exports = {
     await K.preroll(10, () => { walkG(buh, -0.27, 0); autoJump() })
     await line('L01', async (k) => {
       walkG(buh, -0.27, 0); buh.pitch = 5
-      if (k === 8) await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y)
+      if (once('L01pop', k >= 8)) await blink(buh.x + 1.3, buh.z + 0.8, P(buh.x - 30, buh.y + 0.6, buh.z + 0.8), buh.y)
       autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, buh.y + 0.6, -4.2)); look(k)   // (a block south of his line: right behind him his body hid it)
     })
 
@@ -221,11 +225,11 @@ module.exports = {
     await line('L02', async (k, at) => {
       if (k < at.cut(3)) {
         walkG(buh, k < at(2) ? -0.27 : -0.3, 0)
-        if (k === at(2)) K.go(false)   // he pulls away: twelve blocks
+        if (once('L02away', k >= at(2))) K.go(false)   // he pulls away: twelve blocks
         autoJump(); K.base = K.aim(P(buh.x, buh.y + 1.2, buh.z)); look(k)
       }
-      if (k === at.cut(3)) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
-      if (k === at(3) + 5) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
+      if (once('L02cut', k >= at.cut(3))) await hide('est', { x: 37.5, z: 17.5, y: H + 1, yaw: 90, pitch: 15 })
+      if (once('L02pop', k >= at(3) + 5)) await blink(36.7, 18.3, P(37.5, eyeY(1.6), 17.5), H + 1)
       if (k > at(3)) { buh.pitch = 15 + Math.sin(k / 6) * 8; if (k > at(3) + 5) buh.yaw += (yawTo(37.5, 17.5, 36.7, 18.3) - buh.yaw) * 0.15; look(k) }
     })
 
@@ -237,23 +241,23 @@ module.exports = {
     sneak(true)
     await line('L03', async (k, at) => {
       if (k < at.cut(2)) { buh.yaw = 45 + Math.sin(k / 6) * 20; look(k) }
-      if (k === at(1)) await blink(21.6, 20.3, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.6, 20.3))
-      if (k === at.cut(2)) {
+      if (once('L03pop1', k >= at(1))) await blink(21.6, 20.3, P(20.5, gy(20.5, 19.5) + 1.0, 19.5), gy(21.6, 20.3))
+      if (once('L03cut2', k >= at.cut(2))) {
         sneak(false)
         await scut(7.5, 12.5, P(7.5, 1.4, 20), 1, { shot: 'hills_night', time: NIGHT, after: moveWith({ x: 7.5, z: 26.0, y: gy(7.5, 26.0), yaw: 180, pitch: 0 }) })   // the wolf waits behind the camera
       }
       if (k > at.cut(2) && k < at.cut(4)) { walkG(buh, 0, -0.17); look(k) }
-      if (k === at(3)) await blink(8.4, buh.z + 0.6, P(7.5, 1.4, buh.z - 5), gy(8.4, buh.z + 0.6))
+      if (once('L03pop3', k >= at(3))) await blink(8.4, buh.z + 0.6, P(7.5, 1.4, buh.z - 5), gy(8.4, buh.z + 0.6))
       if (k > at(3) && k < at.cut(4)) { K.go(true); K.base = K.aim(P(8.4, 1.4, buh.z - 6)) }
-      if (k === at.cut(4)) {
+      if (once('L03cut4', k >= at.cut(4))) {
         await scut(46.5, 17.0, P(60, 0.6, 15), gy(46.5, 17.0), { shot: 'swim_cam', time: GOLD, after: moveWith({ x: 57.5, z: 13.8, y: 62.2 - F, yaw: -90, pitch: 0 }) })   // the wolf behind the camera on the cliff
       }
       if (k > at.cut(4) && k < at.cut(6)) { K.step(buh, 0.12, 0); buh.y = 62.2 - F; look(k) }
-      if (k === at.cut(6)) {
+      if (once('L03cut6', k >= at.cut(6))) {
         await scut(62.6, 11.0, P(66, 64.5 - F, 13.5), 63 - F, { shot: 'beach', after: moveWith({ x: 70.6, z: 13.6, y: 62.2 - F, yaw: 90, pitch: 10 }) })   // (the wolf is behind the beach camera)
       }
       if (k > at.cut(6)) { if (buh.x > 68.2) { K.step(buh, -0.09, 0); buh.y = Math.min(64 - F, buh.y + 0.05) } else { buh.yaw = yawTo(buh.x, buh.z, 67.6, 14.2); buh.pitch = 35 } }
-      if (k === at(6) + 6) await blink(67.6, 14.2, P(buh.x, buh.y + 1.5, buh.z), 64 - F)   // 4 blocks out (at 2.4 it was a huge blur at the frame edge)
+      if (once('L03pop6', k >= at(6) + 6)) await blink(67.6, 14.2, P(buh.x, buh.y + 1.5, buh.z), 64 - F)   // 4 blocks out (at 2.4 it was a huge blur at the frame edge)
     })
 
     // L04 "But SITTING? / I STAY put. / A SITTING dog / waits FOREVER.": the village road, another tamed wolf sitting
@@ -310,7 +314,7 @@ module.exports = {
         buh.yaw = yawTo(buh.x, buh.z, zom.x, zom.z)
         K.base = K.aim(P(zom.x, zom.y + 1.5, zom.z)); look(k)
       }
-      if (k === at.cut(3)) {
+      if (once('L08cut', k >= at.cut(3))) {
         K.actors.delete('zom')   // the real zombie from here: the wolf bites it
         await K.cut(36.4, 15.6, P(zom.x, zom.y + 1.6, zom.z), H + 1, { shot: 'pov', self: [{ sitting: false, angry: true }, EYE] })
         ctx.sound('entity.wolf.growl', 1, 1.1)
@@ -320,13 +324,14 @@ module.exports = {
         const [sy, sp] = shake(k, 0.03)
         const z = zEnt()
         if (z && bot.entity.position.distanceTo(z.position) < 2.4) K.go(false)
-        if (k === at(3) + 6 || k === at(4) + 2) { if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.15) }
-        if (k === n - 1) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
+        if (once('L08bite1', k >= at(3) + 6) || once('L08bite2', k >= at(4) + 2)) { if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.15) }
+        if (once('L08kill', k >= n - 1)) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
         if (k >= n - 1) say('/kill @e[type=experience_orb]')
         if (z) K.base = K.aim(z.position.offset(0, 1.5, 0))   // its head and chest in frame
         look(k, sy, sp)
       }
     })
+    if (once('L08kill', true)) say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s')   // (the line ended before its last tick ran)
     K.stop()
 
     // L09 "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.": Dog Hill, morning: a crane down as
