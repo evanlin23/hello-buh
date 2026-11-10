@@ -1,10 +1,9 @@
 [
  {
-  "id": "r1",
-  "direction": "Read this funny short film dialogue, fast and upbeat. N: a young guy telling his friends a ridiculous story; bright, quick, goofy, excitable, easily distracted. Sam: a cheerful old farmer; loud, warm, jolly, a big laugh in his voice.",
+  "id": "n1",
+  "direction": "Read this funny short film narration, fast, bright and upbeat. N: a young guy telling his friends a ridiculous story; bright, quick, goofy, excitable, easily distracted.",
   "speakers": {
-   "N": "Puck",
-   "Sam": "Algenib"
+   "N": "Puck"
   },
   "lines": [
    [
@@ -16,11 +15,6 @@
     "N",
     "L02",
     "Every time I get twelve blocks away... boom. Right next to him again."
-   ],
-   [
-    "Sam",
-    "L03",
-    "There you are, buddy!"
    ],
    [
     "N",
@@ -45,22 +39,16 @@
   ]
  },
  {
-  "id": "r2",
-  "direction": "Read this funny short film dialogue, fast and upbeat, then excited. N: a young guy telling his friends a ridiculous story; bright, quick, goofy, excitable, easily distracted. Sam: a cheerful old farmer; loud, warm, jolly, a big laugh in his voice.",
+  "id": "n2",
+  "direction": "Read this funny short film narration, fast and upbeat, then excited. N: a young guy telling his friends a ridiculous story; bright, quick, goofy, excitable, easily distracted.",
   "speakers": {
-   "N": "Puck",
-   "Sam": "Algenib"
+   "N": "Puck"
   },
   "lines": [
    [
     "N",
     "L08",
     "I can't even open a door."
-   ],
-   [
-    "Sam",
-    "L09",
-    "Door's open, buddy!"
    ],
    [
     "N",
@@ -73,14 +61,33 @@
     "Then a zombie went for him."
    ],
    [
-    "Sam",
-    "L12",
-    "Hey! Get back!"
-   ],
-   [
     "N",
     "L13",
     "And I just... lost it."
+   ]
+  ]
+ },
+ {
+  "id": "s1",
+  "direction": "A jolly old farmer calls out to his friend: loud, warm, cheerful, a laugh in his voice. Sam: a cheerful old farmer; loud, warm, jolly, a big laugh in his voice.",
+  "speakers": {
+   "Sam": "Algenib"
+  },
+  "lines": [
+   [
+    "Sam",
+    "L03",
+    "There you are, buddy!"
+   ],
+   [
+    "Sam",
+    "L09",
+    "Door's open, buddy!"
+   ],
+   [
+    "Sam",
+    "L12",
+    "Hey! Get back!"
    ],
    [
     "Sam",

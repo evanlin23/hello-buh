@@ -33,98 +33,103 @@
  },
  "requests": [
   {
-   "id": "r1",
+   "id": "n1",
    "speakers": [
-    "N",
-    "Sam"
+    "N"
    ],
-   "direction": "Read this funny short film dialogue, fast and upbeat."
+   "direction": "Read this funny short film narration, fast, bright and upbeat."
   },
   {
-   "id": "r2",
+   "id": "n2",
    "speakers": [
-    "N",
+    "N"
+   ],
+   "direction": "Read this funny short film narration, fast and upbeat, then excited."
+  },
+  {
+   "id": "s1",
+   "speakers": [
     "Sam"
    ],
-   "direction": "Read this funny short film dialogue, fast and upbeat, then excited."
+   "direction": "A jolly old farmer calls out to his friend: loud, warm, cheerful, a laugh in his voice."
   }
  ],
  "lines": [
   {
    "id": "L01",
    "text": "I've tried / to LEAVE / this guy / THIRTY-SEVEN / times.",
-   "request": "r1"
+   "request": "n1"
   },
   {
    "id": "L02",
    "text": "Every time / I get TWELVE / blocks away... / BOOM. / Right next / to him AGAIN.",
-   "request": "r1"
+   "request": "n1"
   },
   {
    "id": "L03",
    "who": "Sam",
    "text": "There you ARE, / buddy!",
-   "request": "r1"
+   "request": "s1"
   },
   {
    "id": "L04",
    "text": "I tried / at NIGHT. / Through the WHEAT. / I even / SWAM!",
-   "request": "r1"
+   "request": "n1"
   },
   {
    "id": "L05",
    "text": "He feeds me / RAW / PORKCHOPS. / Who DOES that?",
-   "request": "r1"
+   "request": "n1"
   },
   {
    "id": "L06",
    "text": "Everyone here / is SO / TALL.",
-   "request": "r1"
+   "request": "n1"
   },
   {
    "id": "L07",
    "text": "And there's / this DOG. / Wherever / I go... / it's ALREADY / there!",
-   "request": "r1"
+   "request": "n1"
   },
   {
    "id": "L08",
    "text": "I can't even / open a DOOR.",
-   "request": "r2"
+   "request": "n2"
   },
   {
    "id": "L09",
    "who": "Sam",
    "text": "Door's OPEN, / buddy!",
-   "request": "r2"
+   "request": "s1"
   },
   {
    "id": "L10",
    "text": "SKELETONS / run from ME. / ME!",
-   "request": "r2"
+   "request": "n2"
   },
   {
    "id": "L11",
    "text": "Then a ZOMBIE / went for HIM.",
-   "request": "r2"
+   "request": "n2"
   },
   {
    "id": "L12",
    "who": "Sam",
    "text": "Hey! / Get BACK!",
    "say": "Hey! Get back!",
-   "request": "r2"
+   "request": "s1"
   },
   {
    "id": "L13",
    "text": "And I just... / LOST it.",
-   "request": "r2"
+   "request": "n2"
   },
   {
    "id": "L14",
    "who": "Sam",
    "text": "GOOD / BOY!",
    "say": "Good boy!",
-   "request": "r2"
+   "request": "s1"
   }
  ]
 }

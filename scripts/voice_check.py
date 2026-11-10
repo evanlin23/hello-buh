@@ -72,12 +72,21 @@ def resplit(sd):
         counts = [c - sum(1 for w in re.split(r"\s+", t) if '-' in w and norm(w.replace('-', '')).isalpha() and len(w) > 6 and w.lower().split('-')[0] in ('twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety')) * 0 for c, (_, _, t) in zip(counts, r['lines'])]
         if sum(counts) != len(words):
             print(f"{r['id']}: script {sum(counts)} words, Whisper {len(words)}: scaling the split")
-        scale = len(words) / max(1, sum(counts))
-        bounds, acc = [], 0.0
-        for c in counts[:-1]:
-            acc += c * scale
-            i = max(1, min(len(words) - 1, round(acc)))
-            bounds.append((words[i - 1][2] + words[i][1]) / 2)
+        # the cuts: the len(lines) - 1 longest gaps between words (lines are separated by the longest pauses), kept when
+        # every line gets about its word count; else by word count (a model's added laugh shifts counts, not gaps)
+        n = len(counts)
+        gaps = sorted(range(1, len(words)), key=lambda i: words[i][1] - words[i - 1][2], reverse=True)[:n - 1]
+        idx = sorted(gaps)
+        got = [b - a for a, b in zip([0] + idx, idx + [len(words)])]
+        if len(idx) == n - 1 and all(abs(g - c) <= max(2, c // 2) for g, c in zip(got, counts)):
+            bounds = [(words[i - 1][2] + words[i][1]) / 2 for i in idx]
+        else:
+            scale = len(words) / max(1, sum(counts))
+            bounds, acc = [], 0.0
+            for c in counts[:-1]:
+                acc += c * scale
+                i = max(1, min(len(words) - 1, round(acc)))
+                bounds.append((words[i - 1][2] + words[i][1]) / 2)
         cuts = [0.0] + bounds + [len(x) / SR]
         for (who, lid, t), a, b in zip(r['lines'], cuts, cuts[1:]):
             seg = x[int(a * SR):int(b * SR)]
