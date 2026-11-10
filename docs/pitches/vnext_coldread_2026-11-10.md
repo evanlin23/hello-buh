@@ -13,3 +13,15 @@ A fresh agent read the first halves under neutral letters, then the second halve
 The midpoint numbers are high (80-90 %) for Light Sleeper, Dog on the Hill and Thirty-One Raids. That's a known
 trade-off for stories whose hook *is* the vanilla rule. They still score 8-9, because the twist the cold reader
 feels is emotional (the owner left; Grandpa wants to be needed), not mechanical.
+
+## good_boy rework (r1, before the r2 fixes)
+- **Question after line 1:** why does his human keep trying to ditch him?
+- **Midpoint:** "he's leaving (college / quitting) and never makes it sit, so it can follow" (60 %).
+- **After the reveal:** "he tells it to sit, says he'll be right back, and logs off, leaving the wolf on the hill for good".
+- **Line 1 changed meaning:** yes, from mean to "trying to leave without saying goodbye".
+- **Loop:** good ("he's still counting").
+- **Flags:** none: no flirty lines, no innuendo; "sit, boy" read as tender in a good way.
+- **Confusions, both fixed in r2:**
+  - "I don't remember what happened next" (did the dog die?);
+  - the vague sea line.
+- **Score:** 7/10.

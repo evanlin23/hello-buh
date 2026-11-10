@@ -1,7 +1,7 @@
 [
  {
   "id": "r1",
-  "direction": "Read this short film dialogue. N: a young man, earnest and hushed, telling a friend something he can't explain. Sam: an old man, gravelly, slow and gentle.",
+  "direction": "Read this short film dialogue. N: a dog, bright and quick, warm, never hushed or breathy. Sam: an old man, gravelly, slow and gentle.",
   "speakers": {
    "N": "Puck",
    "Sam": "Algenib"
@@ -56,7 +56,7 @@
  },
  {
   "id": "r2",
-  "direction": "Read this short film dialogue, the night scene: quieter, then frightened, then tender. N: a young man, earnest and hushed, telling a friend something he can't explain. Sam: an old man, gravelly, slow and gentle.",
+  "direction": "Read this short film dialogue, the night scene: quieter, then frightened, then tender. N: a dog, bright and quick, warm, never hushed or breathy. Sam: an old man, gravelly, slow and gentle.",
   "speakers": {
    "N": "Puck",
    "Sam": "Algenib"

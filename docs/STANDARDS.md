@@ -27,6 +27,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
    reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
    story-critic, cold reader (does the end flow into the start?). r:r30c821
+0c. **The held stories use their approved arc rewrites** (stories/<name>/script_vNext.md; Good Boy: a new premise);
+   the finished cut is still held for the owner's OK. Check: owner. r:r69e712
 4. **Understood on one watch, nothing extra**: no unexplained names (set up every name first), no punchline that
    explains a twist the picture already landed, no sting after the story ends. Check: cold reader, story-critic.
    r:r0d320b
