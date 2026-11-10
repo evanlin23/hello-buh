@@ -399,10 +399,10 @@ module.exports.shots = {
   // L09: walking the road beside him: a follow ahead of them and low (they walk east, toward it)
   dog_walk: { follow: `actor:${GUY}`, offset: [4.0, 0.25, 2.4], look: { of: `actor:${GUY}`, offset: [0.2, -0.9, 0.7] }, lag: 2, fov: 50 },
   // L09: on the yard's sea edge, sitting there already as he walks up (from the south-east, the sea behind them)
-  dog_sea: { at: [43.6, H + 2.2, 20.2], look: [40.0, H + 1.1, 15.4], fov: 48, push: 0.3 },
+  dog_sea: { at: [42.2, H + 2.0, 20.6], look: [40.4, H + 1.0, 15.6], fov: 46, push: 0.3, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -1.1, 0] } } },
   // L14-L15: night, the yard from its south-west corner: the road, the zombie walking in, the man and the wolf
-  night_yard: { at: [33.2, H + 2.0, 17.6], look: [38.4, H + 1.1, 13.2], fov: 50, push: 0.35 },
+  night_yard: { at: [32.4, H + 2.7, 18.8], look: [38.2, H + 1.4, 13.6], fov: 52, push: 0.35, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } },
   // L18-L19: the reveal. From the narrator's eye (sitting, looking up at him) back and out to a low three-quarter
   // shot of the wolf at his feet, then up into a crane over the yard, the village and the sea as the night turns
-  reveal: { path: [[0, 37.5, H + 1.5, 16.2], [0.8, 36.4, H + 1.62, 17.6], [2.0, 34.6, H + 1.9, 18.8], [5.2, 31.2, H + 6.5, 13.2]], lookPath: [[0, 38.7, H + 2.3, 16.2], [0.8, 38.0, H + 1.5, 16.2], [2.0, 37.8, H + 1.35, 16.0], [5.2, 37.6, H + 1.2, 16.0]], ease: true, dof: { aperture: 0.7 } }
+  reveal: { path: [[0, 37.5, H + 1.5, 16.2], [0.8, 36.4, H + 1.62, 17.6], [2.0, 34.6, H + 1.9, 18.8], [5.2, 34.0, H + 3.6, 13.6]], lookPath: [[0, 38.7, H + 2.3, 16.2], [0.8, 38.0, H + 1.5, 16.2], [2.0, 37.8, H + 1.35, 16.0], [5.2, 37.7, H + 1.1, 16.1]], ease: true, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } }
 }
