@@ -109,12 +109,12 @@
    "who": "N",
    "text": "Mom says:",
    "dur": 0.998,
-   "onset": 0.1,
-   "end": 0.98,
+   "onset": 0.14,
+   "end": 0.74,
    "chunks": [
     [
-     0.1,
-     0.98
+     0.14,
+     0.74
     ]
    ],
    "captions": [
@@ -126,7 +126,7 @@
    "model": "gemini-3.8-flash-lite-tts",
    "beat": "L01",
    "offset": 9.312,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "ce4b7145b3cb"
   },
   "L05": {
