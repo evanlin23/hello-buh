@@ -113,6 +113,12 @@ module.exports = {
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F }, { warm: null })
     const { P, line, say } = K
+    // K.line runs on the recording clock (main b4cd314): k can skip a value after a slow tick, so one-shot events
+    // fire once at or after their tick (hit), never on k === t alone. A new line (or loop) starts k again from 0:
+    // that clears what has fired
+    let lastK = -1
+    const seen = new Set()
+    const hit = (k, t) => { if (k < lastK) seen.clear(); lastK = k; if (k < t || seen.has(t)) return false; seen.add(t); return true }
     const A = (dx, dy, dz) => `${(X + dx).toFixed(2)} ${(F + dy).toFixed(2)} ${(Z + dz).toFixed(2)}`
     const ent = (name, near) => Object.values(bot.entities).filter(e => e.name === name).sort((a, b) => (near ? a.position.distanceTo(near) - b.position.distanceTo(near) : 0))[0]
     // the portal: purple specks drifting off the sheet, and its hum now and then
@@ -137,8 +143,8 @@ module.exports = {
     // L01 (S01): the cellar, night. Grandma full-figure at the portal, tonight's ingot already crossing the purple
     K.shot('s01')
     // (a 30-tick preroll, not in the Short: an idle mob's first moves reach the client ~1 s late, so she's warm by frame 1)
-    await K.preroll(30, (k) => { if (k === 27) toss('gold_ingot', [9.6, 2.25, 5.0], [11.4, 2.2, 5.5], 8); portalLife(k); const j = Math.max(0, k - 24); gma.pitch = k < 24 ? 20 + 6 * Math.sin(k / 4) : 42 - j * 2; gma.yaw = k < 24 ? -70 + 8 * Math.sin(k / 5) : -60 - j * 1.5 })
-    await line('L01', async (k) => { portalLife(k); if (k < 16) gma.x -= 0.025; gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = k < 8 ? -69 - k * 1.2 : turnToward(gma.yaw, 0, 5) + (k > 22 ? 4 * Math.sin((k - 22) / 9) : 0); if (k === 5) gone(); if (k === 3) ctx.sound('block.portal.trigger', 0.12, 1.6) })
+    await K.preroll(30, (k) => { if (hit(k, 27)) toss('gold_ingot', [9.6, 2.25, 5.0], [11.4, 2.2, 5.5], 8); portalLife(k); const j = Math.max(0, k - 24); gma.pitch = k < 24 ? 20 + 6 * Math.sin(k / 4) : 42 - j * 2; gma.yaw = k < 24 ? -70 + 8 * Math.sin(k / 5) : -60 - j * 1.5 })
+    await line('L01', async (k) => { portalLife(k); if (k < 16) gma.x -= 0.025; gma.pitch = k < 14 ? 30 - k * 2 : 4 + 10 * Math.sin((k - 14) / 9); gma.yaw = k < 8 ? -69 - k * 1.2 : turnToward(gma.yaw, 0, 5) + (k > 22 ? 4 * Math.sin((k - 22) / 9) : 0); if (hit(k, 5)) gone(); if (hit(k, 3)) ctx.sound('block.portal.trigger', 0.12, 1.6) })
     K.base = K.aim(P(11, 2.0, 5.6))
 
     // L02 (S02): the ridge at night, the crane down to the cottage; on 'MORNING' (S03) the cellar at sunrise, POV from
@@ -151,13 +157,13 @@ module.exports = {
     let from2 = null, walking = false
     await line('L02', async (k, at) => {
       if (k < at(1) - 2) { gma.yaw += 1.2 * Math.sin(k / 5); gma.pitch = 6 + 6 * Math.sin(k / 7) }   // still at the portal under the crane
-    if (k === at(1) - 2) K.park('gma')
-    if (k === at(1) + 1) say(`/tp @e[type=bat,tag=bat] ${X} ${F - 200} ${Z}`)   // motion-ok: the bat leaves after the cut, unseen from the cellar (a /kill drew its red death poof: audit F9)
-      if (k === at.cut(1)) K.cut(2.4, 3.4, P(11, 2.0, 5.6), 1, { shot: 'pov_morning', time: MORNING }).catch(e => ctx.log(e.message))   // on the spot, arriving aimed at the portal (a bare shot switch kept the crane-time north aim)   // already standing there: no cut, no in-between frames
-      if (k === at(1) + 4) { walking = true; K.walkTo([P(3.6, 1, 3.4), P(4.6, 1, 3.85)], { max: 60 }).catch(e => ctx.log(e.message)).finally(() => { walking = false }) }
+    if (hit(k, at(1) - 2)) K.park('gma')
+    if (hit(k, at(1) + 1)) say(`/tp @e[type=bat,tag=bat] ${X} ${F - 200} ${Z}`)   // motion-ok: the bat leaves after the cut, unseen from the cellar (a /kill drew its red death poof: audit F9)
+      if (hit(k, at.cut(1))) K.cut(2.4, 3.4, P(11, 2.0, 5.6), 1, { shot: 'pov_morning', time: MORNING }).catch(e => ctx.log(e.message))   // on the spot, arriving aimed at the portal (a bare shot switch kept the crane-time north aim)   // already standing there: no cut, no in-between frames
+      if (hit(k, at(1) + 4)) { walking = true; K.walkTo([P(3.6, 1, 3.4), P(4.6, 1, 3.85)], { max: 60 }).catch(e => ctx.log(e.message)).finally(() => { walking = false }) }
       if (k > at(1)) portalLife(k)
-      if (k === at(2)) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.26d,0.2d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
-      if (k === at(2) + 9) ctx.sound('block.stone.step', 0.8, 0.9)
+      if (hit(k, at(2))) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.26d,0.2d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
+      if (hit(k, at(2) + 9)) ctx.sound('block.stone.step', 0.8, 0.9)
       if (!walking && k > at(2) + 6) { from2 = from2 || { ...K.base }; K.turnTo(from2, P(11.2, 1.55, 5.6), Math.min(1, (k - at(2) - 6) / 14)) }   // eyes on the obsidian that came out
       if (k >= at(1) && !walking) look(k, 0.1 * Math.sin(k / 7), 0.03 * Math.sin(k / 9))
     })
@@ -172,9 +178,9 @@ module.exports = {
     const aimG = (i) => P(9.55 + 0.15 * (morning[i][1][0] - 9.75), 1.3, 6.45)   // the gifts' spot (cellar block 9,1,6), the portal's foot above it
     await K.cut(morning[0][3][0], morning[0][3][1], aimG(0), 1, { after: () => gift(...morning[0].slice(0, 3)) })
     await line('L03', async (k, at) => {
-      for (let i = 1; i < 3; i++) if (k === at.cut(i)) K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { shot: i === 1 ? 's04b' : 'pov_morning', after: () => gift(...morning[i].slice(0, 3)) }).catch(e => ctx.log(e.message))   // not awaited: a cut inside a line must not delay the take's next mark
-      for (let i = 0; i < 3; i++) if (k === Math.min(at(i) + 12, at(i + 1) - 3)) pickUp(i)
-      if (k === at.cut(3)) {
+      for (let i = 1; i < 3; i++) if (hit(k, at.cut(i))) K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { shot: i === 1 ? 's04b' : 'pov_morning', after: () => gift(...morning[i].slice(0, 3)) }).catch(e => ctx.log(e.message))   // not awaited: a cut inside a line must not delay the take's next mark
+      for (let i = 0; i < 3; i++) if (hit(k, Math.min(at(i) + 12, at(i + 1) - 3))) pickUp(i)
+      if (hit(k, at.cut(3))) {
         bot.setQuickBarSlot(1)   // the fire resistance potion (story.json hotbar slot 2)
         // not awaited: the garden is a long teleport, and an awaited cut here made L04 land 0.33 s late on the take
         K.cut(1.5, 10.2, P(-28, 9, 85), 12, { shot: 's05' }).then(() => { ctx.mark('pose', { ids: SELF, pose: 'drink' }); ctx.sound('entity.generic.drink', 0.6, 1) }).catch(e => ctx.log(e.message))
@@ -188,7 +194,7 @@ module.exports = {
     // slope to Hushwell
     await line('L04', async (k) => {
       if (k < 16 && k % 4 === 0) { ctx.particles('entity_effect', P(1.5 + (Math.random() - 0.5) * 0.6, 12.4 + Math.random() * 1.4, 10.2 + (Math.random() - 0.5) * 0.6), { count: 2, color: 0xE49A3A }); if (k % 8 === 0) ctx.sound('entity.generic.drink', 0.45, 0.95 + Math.random() * 0.1) }
-      if (k === 16) ctx.mark('pose_off', { ids: SELF })
+      if (hit(k, 16)) ctx.mark('pose_off', { ids: SELF })
       look(k, 0.12 * Math.sin(k / 7), Math.max(0, 0.45 - k * 0.025))
     })
     ctx.mark('pose_off', { ids: SELF })
@@ -205,9 +211,9 @@ module.exports = {
       const G = this.cast.Grandpa, h = at(3)
       gma0.pitch = 15 + 8 * Math.sin(k / 12); gma0.yaw = -60 + 6 * Math.sin(k / 16)
       if (k % 2 === 0) G.look(Math.PI / 2 - (k < h ? 0.15 * Math.sin(k / 6) : 0.5 * Math.min(1, (k - h) / 10) + 0.12 * Math.sin((k - h) / 7)), k < h ? -0.75 : -0.75 + 0.85 * Math.min(1, (k - h) / 8), true)
-      if (k === h - 3) G.swingArm('right')
-      if (k === h) { say(`/item replace entity Grandpa armor.head with ${HELMET}`); say('/item replace entity Grandpa weapon.mainhand with air'); ctx.sound('item.armor.equip_gold', 0.8, 1) }
-      if (k === at.cut(4)) K.shot('s06b')   // 'BLUE stripe and ALL': close on the helmet
+      if (hit(k, h - 3)) G.swingArm('right')
+      if (hit(k, h)) { say(`/item replace entity Grandpa armor.head with ${HELMET}`); say('/item replace entity Grandpa weapon.mainhand with air'); ctx.sound('item.armor.equip_gold', 0.8, 1) }
+      if (hit(k, at.cut(4))) K.shot('s06b')   // 'BLUE stripe and ALL': close on the helmet
     })
 
     // L06 (S07): wide from the ladder: "GOLD keeps you SAFE, Grandma SAID. PIGLINS won't TOUCH you in GOLD."
@@ -230,9 +236,9 @@ module.exports = {
     await line('L07', async (k, at, n) => {
       portalLife(k, DOWN)
       gma0.pitch = 10 * Math.sin(k / 8); gma0.yaw = -90 + 12 * Math.sin(k / 7)   // she keeps looking round the empty cellar (a slower sway read as nobody moving)
-      if (k === Math.max(1, n - 12)) bot.setQuickBarSlot(0)
+      if (hit(k, Math.max(1, n - 12))) bot.setQuickBarSlot(0)
       // tonight's Grandma takes her place in the real cellar (30 blocks over this shot, unseen) before the cut to it
-      if (k === Math.max(1, n - 10)) { Object.assign(gma, { x: 6.8, y: 1, z: 7.0, yaw: -90, pitch: 5 }); K.actors.set('gma', gma); K.warp('gma') }
+      if (hit(k, Math.max(1, n - 10))) { Object.assign(gma, { x: 6.8, y: 1, z: 7.0, yaw: -90, pitch: 5 }); K.actors.set('gma', gma); K.warp('gma') }
     })
 
     // L08 (S08, S09): tonight. "So I KEEP his GIFTS in a BARREL. Grandma SAYS he's still TRADING. So he's ALIVE.
@@ -244,11 +250,11 @@ module.exports = {
     let win = null, from = null
     await line('L08', async (k, at) => {
       portalLife(k)
-      if (k === 4) K.park('gma0')   // the flashback's Grandma leaves, off screen now
-      if (k === at.cut(2)) { ctx.mark('cut'); K.shot('pov'); K.open(P(10, 1, 3)).then(w => { win = w }).catch(e => ctx.log('barrel:', e.message)) }
-      if (k === at.cut(5) - 2) { if (win) { K.close(win); win = null } else K.close() }
-      if (k === at.cut(5)) K.shot('s_high_portal')
-      if (k === at.cut(6)) K.shot('s_rev')
+      if (hit(k, 4)) K.park('gma0')   // the flashback's Grandma leaves, off screen now
+      if (hit(k, at.cut(2))) { ctx.mark('cut'); K.shot('pov'); K.open(P(10, 1, 3)).then(w => { win = w }).catch(e => ctx.log('barrel:', e.message)) }
+      if (hit(k, at.cut(5) - 2)) { if (win) { K.close(win); win = null } else K.close() }
+      if (hit(k, at.cut(5))) K.shot('s_high_portal')
+      if (hit(k, at.cut(6))) K.shot('s_rev')
       // she walks to the portal behind the screen (south of the gold stack), then watches it
       if (gma.x < 10.0) K.step(gma, 0.11, -0.03); else { gma.yaw = -60 + 10 * Math.sin(k / 8); gma.pitch = 5 + 8 * Math.sin(k / 6) }
       if (k > at(5)) { from = from || { ...K.base }; K.turnTo(from, P(gma.x, 2.6, gma.z), Math.min(1, (k - at(5)) / 10)) }
@@ -262,8 +268,8 @@ module.exports = {
       portalLife(k)
       if (gma.x < 10.0) K.step(gma, 0.11, -0.03)
       from = from || { ...K.base }; K.turnTo(from, P(gma.x, 2.6, gma.z), Math.min(1, k / 8))
-      if (k === at(1) - 4) toss('gold_ingot', [10.3, 2.2, 6.0], [11.4, 2.1, 5.8], 6)
-      if (k === at(1) + 2) gone()
+      if (hit(k, at(1) - 4)) toss('gold_ingot', [10.3, 2.2, 6.0], [11.4, 2.1, 5.8], 6)
+      if (hit(k, at(1) + 2)) gone()
       gma.pitch = 5 + 10 * Math.sin(k / 6); gma.yaw = -60 + 12 * Math.sin(k / 9)   // she watches the purple
       look(k, 0.08 * Math.sin(k / 9), 0.04 * Math.sin(k / 13))
     })
@@ -291,17 +297,17 @@ module.exports = {
         if (ld > 0.12) { K.step(gma, lx / ld * 0.2, lz / ld * 0.2); gma.pitch = 10 } else { gma.x = 1.5; gma.z = 1.75; gma.yaw = 180; gma.pitch = -20; gma.y += 0.3 }
         if (gma.y >= 10.2) { hatch(false); shut = k }   // she shuts the hatch behind her at the top of the shaft
       }
-      if (shut >= 0 && k === shut + 2) K.park('gma')
-      if (k === at.cut(2)) K.shot('s_rev')
+      if (shut >= 0 && hit(k, shut + 2)) K.park('gma')
+      if (hit(k, at.cut(2))) K.shot('s_rev')
       if (k >= at(2) - 6 && k < at(5)) { from = from || { ...K.base }; K.turnTo(from, P(11, 2.0, 5.5), (k - at(2) + 6) / 12) }
-      if (k === at(3) && !thrown) {
+      if (hit(k, at(3)) && !thrown) {
         thrown = true; bot.swingArm('right')
         say('/item replace entity @s hotbar.0 with air')
         toss('gold_ingot', [7.6, 2.4, 5.5], [11.4, 2.2, 5.5], 9, 64)
         ctx.sound('entity.item.pickup', 0.3, 0.6)
       }
-      if (k === at(3) + 10) gone()
-      if (k === at.cut(5)) K.shot('s10')
+      if (hit(k, at(3) + 10)) gone()
+      if (hit(k, at.cut(5))) K.shot('s10')
       K.go(k >= at(3) + 12 && k < at(3) + 18, 'back')   // a step back from the purple after the throw
       look(k, k > at(3) + 10 ? 0.25 * Math.sin((k - at(3)) / 8) : 0, k > at(3) + 10 ? 0.06 * Math.sin((k - at(3)) / 6) : 0)
     })
@@ -313,11 +319,11 @@ module.exports = {
     let pig = null, pg = null
     await line('L12', async (k, at) => {
       portalLife(k)
-      if (k === at(2) - 4) { pg = K.actor('pig', { x: 11.75, y: 1, z: 5.6, yaw: 90, pitch: 0 }); K.warp('pig') }
-      if (k === at(2) - 1) { pig = ent('piglin', P(11, 1, 5.5)); if (pig) ctx.mark('pose', { ids: [pig.id], converting: true }); else ctx.log('no piglin entity for the shake') }
+      if (hit(k, at(2) - 4)) { pg = K.actor('pig', { x: 11.75, y: 1, z: 5.6, yaw: 90, pitch: 0 }); K.warp('pig') }
+      if (hit(k, at(2) - 1)) { pig = ent('piglin', P(11, 1, 5.5)); if (pig) ctx.mark('pose', { ids: [pig.id], converting: true }); else ctx.log('no piglin entity for the shake') }
       if (k >= at(2) && pg && pg.x > 10.1) pg.x -= 0.14
-      if (k === at(2)) { ctx.sound('entity.piglin.ambient', 1, 1); ctx.particles('portal', P(11.2, 2, 5.6), { count: 30 }) }
-      if (k === at(2) + 6 || k === at(2) + 11) ctx.sound('entity.piglin.step', 0.6, 1)
+      if (hit(k, at(2))) { ctx.sound('entity.piglin.ambient', 1, 1); ctx.particles('portal', P(11.2, 2, 5.6), { count: 30 }) }
+      if (hit(k, at(2) + 6) || hit(k, at(2) + 11)) ctx.sound('entity.piglin.step', 0.6, 1)
       // 'Then I WAITED': glancing at the hatch and back to the purple; eyes fixed on it from 'And SOMETHING'
       look(k, k < at(1) ? 0.4 * Math.sin(k / 9) : 0.04 * Math.sin(k / 9), k < at(1) ? 0.1 * Math.sin(k / 6) : 0.03 * Math.sin(k / 11))
     })
@@ -328,7 +334,7 @@ module.exports = {
     for (let k = 0; k < 30; k++) {
       portalLife(k)
       if (pg) { if (pg.x > 10.1) pg.x -= 0.14; pg.yaw = 90 + 10 * Math.sin(k / 7); pg.pitch = 4 * Math.sin(k / 6) }
-      if (k === 10) { ctx.mark('reveal'); ctx.sound('entity.piglin.ambient', 0.8, 0.9) }
+      if (hit(k, 10)) { ctx.mark('reveal'); ctx.sound('entity.piglin.ambient', 0.8, 0.9) }
       look(k)
       await bot.waitForTicks(1)
     }
