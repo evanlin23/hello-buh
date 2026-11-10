@@ -90,3 +90,131 @@ Not used: ElevenLabs (owner: "not 11 labs") and any cloning of a real person or 
 
 Reproduce: `scripts/voice_search/` (`gem.py` = 1 Gemini request; `chatterbox_onnx.py`; `kokoro_sample.py`;
 `measure.py`). The Chatterbox model was deleted after the run.
+
+## Closest match (2026-11-10, by measurement)
+
+The owner sent the exact voice they want: a 35.6 s Roblox story Short ("I don't have a twin. That's what I said at my
+twin's wedding..."). It is the **primary reference**. Three public ElevenLabs **Adam** previews are the second reference
+(ElevenLabs' own two preview mp3s for voice `pNInz6obpgDQGcFmaJgB`, 2.3 s and 5.3 s, and a 3.1 s copy found on a public
+S3 bucket). Both were **only measured**: no model was ever given either one as a prompt or reference clip, and
+neither is committed. The Short's narration was separated from its music with Demucs (htdemucs) before measuring.
+Meter: `scripts/voice_match/vm.py` (Resemblyzer GE2E embedding from speaker_check.py, autocorrelation pitch, the
+long-term spectrum, LPC formants, Whisper base.en for the rate).
+
+### What the reference is: Adam, played about 1.45x faster
+
+| | median pitch | pitch spread (p10-p90) | F1 / F2 / F3 | tilt | nasal band (0.8-1.5 kHz) | words/s speaking (overall) | pauses |
+|---|---|---|---|---|---|---|---|
+| **the owner's Short** (narration stem) | **232 Hz** | 11.6 st | **701 / 2054 / 3362 Hz** | -3.3 dB/oct | -8.4 dB | **5.92 (5.52)** | none: gaps 0.07-0.10 s, the longest 0.15 s |
+| Adam previews, as published | 114-148 Hz | 3-11 st | 462-603 / 1398-1585 / 2160-2461 | -4.2 to -5.7 | -6.2 to -8.7 | 3.5-4.3 | - |
+| Adam previews played 1.45x faster | 180-213 Hz | 7-11 st | 695-831 / 1931-2099 / 3497-3541 | -2.8 to -4.4 | -7.6 to -8.0 | 5.2-6.3 | - |
+
+Cosine similarity of the Adam previews to the Short: **0.51-0.53 as published, 0.89-0.90 played 1.45x faster**
+(resampled, so pitch, formants and tempo all rise together, like a speed change with no pitch correction). The peak is
+at 1.4-1.5x (1.0x 0.54, 1.2x 0.67, 1.3x 0.82, 1.4x 0.90, 1.5x 0.89, 1.6x 0.87), and the formants line up there too.
+So the voice in these Shorts is **ElevenLabs Adam sped up ~1.45x, pitch and all**. That is the owner's "deep bass but
+somewhat nasally ... push stuff together": a deep voice, sped up, with every formant raised ~45%. It is also exactly what
+`scripts/voice.py`'s old narrator did (`am_adam`, tempo 1.03, rate 1.45).
+
+What this means for the search: **no unprocessed free voice comes close** (the best untouched voice scores 0.60:
+Kokoro's best untouched blend 0.59, Gemini Puck 0.60). Every deep male voice played ~1.4x faster scores 0.83-0.89.
+The speed-up does most of the matching; the choice of voice adds the last ~0.05. Post-processing *did* fail before
+(the Charon variants), but those changed pitch and formants without the tempo; this one is the reference's own chain.
+It does break docs/voices.md's "never pitch-shift a voice" (asetrate) rule, so it is the owner's call.
+
+### Ranking (cosine similarity to the Short; best playback rate in brackets)
+
+Kokoro and Gemini voices were scored on the same two sentences; Gemini's prebuilt voices on Google's public Chirp 3 HD
+samples of the same names (cloud.google.com text-to-speech "Chirp 3: HD voices"), plus 2 live requests.
+
+| rank | candidate | licence | untouched | best (rate) |
+|---|---|---|---|---|
+| ref | Adam preview (S3 copy) / (ElevenLabs preview) | not usable | 0.52 / 0.51 | 0.90 / 0.89 (x1.45) |
+| 1 | Gemini **Orus**, Google's public sample | Gemini API terms | 0.59 | **0.887** (x1.4) |
+| 2 | **Kokoro blend A**: am_adam 0.74, am_fenrir 0.19, am_santa 0.07 | Apache-2.0 | - | **0.886** (x1.4) |
+| 3 | Kokoro blend B: am_adam 0.69, am_onyx 0.10, am_fenrir 0.09, am_puck 0.07, am_liam 0.06 | Apache-2.0 | - | 0.884 (x1.45) |
+| 4 | Gemini Achird, public sample | Gemini API terms | 0.55 | 0.882 (x1.4) |
+| 5 | Kokoro blend C: am_adam 0.66, am_fenrir 0.24, am_santa 0.10 | Apache-2.0 | - | 0.880 (x1.45) |
+| 6 | Gemini Puck, public sample | Gemini API terms | 0.60 | 0.875 (x1.4) |
+| 7 | Gemini Sadaltager / Iapetus / Schedar, public samples | Gemini API terms | 0.50-0.51 | 0.864-0.873 |
+| 8 | Kokoro **am_adam** alone (the old narrator's voice) | Apache-2.0 | 0.53 | 0.868 (x1.45) |
+| 9 | Gemini Charon, public sample (the rejected g1) | Gemini API terms | 0.46 | 0.845 (x1.5) |
+| 10 | Gemini Orus / Achird, **live takes** with the direction in `scripts/voice_match/gem.py` | Gemini API terms | 0.52 / 0.48 | 0.837 / 0.833 (x1.45 / x1.4) |
+| 11 | Kokoro am_fenrir / am_puck | Apache-2.0 | 0.59 / 0.57 | 0.825 / 0.823 (x1.3 / x1.35) |
+| 12 | Kokoro am_liam, am_santa, am_echo, am_onyx, am_michael, bm_fable, bm_lewis, bm_george, am_eric, bm_daniel | Apache-2.0 | 0.42-0.55 | 0.80 down to 0.69 |
+| 13 | Chatterbox's built-in voice (its `default_voice.wav`, which sets the timbre) | MIT | 0.50 | 0.766 (x1.35) |
+| - | the best **untouched** Kokoro blend (am_puck 0.51, am_fenrir 0.09, am_liam/echo/adam/eric 0.10) | Apache-2.0 | 0.59 | - |
+
+The blends were searched by `scripts/voice_match/search.py`: 40 random mixes of the 6 best voices, then 25 steps of
+moving 0.1 of weight between pairs for the best 3, at rates 1.0-1.5. Speed was left at 1.0 for the search, because
+Kokoro's speed changes only durations. Chatterbox wasn't downloaded: its built-in voice scored lowest, and it was
+rejected before.
+
+### The four samples (`out/voice_match/`, not committed)
+
+Each reads the four texts from the top of this page (82 words) and is loudness-matched to -16 LUFS. `reel_top4.mp3`
+plays s1-s4 with a beep between. Rate = the playback speed-up (pitch and formants rise with it). "Natural" is the
+voice's own words/s while speaking before any speed change. Whisper heard every sample the same, with no misheard words
+beyond its usual number and homophone slips ("share" for "shear").
+
+| file | voice | natural rate | speed change | cos | pitch (spread) | F1/F2/F3 | tilt | nasal | words/s speaking (overall) | gaps |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **the Short** | - | - | - | 1 | 232 Hz (11.6 st) | 701/2054/3362 | -3.3 | -8.4 | 5.92 (5.52) | 0.07-0.10 s |
+| `s1_kokoro_blend_a` | blend A | 3.9 | Kokoro speed 1.10, rate 1.40 (1.54x) | **0.872** | 200 Hz (8.1 st) | 629/1939/3433 | -4.7 | -9.7 | 5.84 (5.05) | 0.06-0.09 s |
+| `s2_kokoro_blend_b` | blend B | 3.9 | speed 1.05, rate 1.45 (1.52x) | **0.876** | 184 Hz (7.6 st) | 667/1986/3507 | -5.0 | -9.2 | 5.82 (5.05) | 0.06-0.09 s |
+| `s3_gemini_orus` | Orus, gemini-3.8-flash-tts, 1 request | 4.4 | gaps cut to 0.06 s, tempo 0.95, rate 1.45 (1.38x) | 0.862 | 208 Hz (**10.7 st**) | 635/1872/3301 | -5.0 | **-7.5** | 5.94 (4.83) | 0.12-0.15 s |
+| `s4_gemini_achird` | Achird, gemini-3.8-flash-tts, 1 request | 4.3 | gaps cut to 0.06 s, rate 1.40 | 0.865 | 178 Hz (7.2 st) | 578/1860/3458 | -5.3 | -9.1 | 5.92 (4.75) | 0.11-0.23 s |
+
+What the numbers say:
+- **Timbre:** the Kokoro blends are closest (0.87-0.88), within about 0.02 of real sped-up Adam (0.89-0.90).
+- **Melody:** the Short swings 11.6 semitones. Kokoro manages ~8, which is the "not expressive enough" the owner heard
+  in Kokoro Adam. Orus, directed, gets 10.7.
+- **Nasal band:** Orus is closest (-7.5 against -8.4); Kokoro sits 1.3 dB under it.
+- **Pace:** each sample was tuned to 5.8-5.9 words/s while speaking, matching the Short's 5.9 ("the fast pace is
+  good", owner 2026-11-10). The Short's overall rate (5.5) is higher than the samples' (4.8-5.1) because its sentences
+  are longer than this text's three-word fragments ("Not for rain.").
+- **Speed change needed:** Kokoro reads at 3.9 words/s on its own, so it needs ~1.5x in total: Kokoro speed 1.05-1.10
+  (near natural) and the 1.4-1.45 playback rate that makes the timbre. Gemini, directed at a "steady natural pace",
+  reads at 4.3-4.4, so it needs only the rate (1.38-1.40x). Neither reaches 5-5.5 words/s untouched; neither does
+  Adam itself (3.5-4.3 in its previews).
+
+Gemini requests: 2 (Orus and Achird on gemini-3.8-flash-tts; none on flash-lite). The third was not spent.
+
+### Recommendation
+
+Listen to `reel_top4.mp3`. **s1/s2 (Kokoro blend, x1.4)** are the closest by measurement, and they're free, local,
+unlimited and come with word timings. They are also, in effect, the old 1.45x Kokoro narrator with a slightly
+different voice. Earlier the owner found that "not expressive enough" and its delivery "kinda bad" (docs/story_craft.md),
+though that delivery also had no planned pauses. **s3 (Gemini Orus, x1.45)** is a little further in timbre (0.86) but
+has the Short's melody (10.7 st) and nasal band. If expressiveness is what the owner misses, s3 is the pick, at one
+Gemini request per take. Decide by ear; voices/cast.json is unchanged.
+
+### If the owner picks a Kokoro blend: how the pipeline would use it
+
+`scripts/voice.py` already has the chain: `NARRATOR = {"voice", "tempo", "rate"}`, Kokoro at `tempo`, then
+`speed_up(x, rate)` (an FFT-band-limited resample that raises pitch and tempo together). Its chunk times are Kokoro's
+own word timestamps divided by the rate. The only new piece is a blended voice:
+- **Cast entry** (voices/cast.json, owner's word only):
+  `"roblox_narrator": {"engine": "kokoro", "model": "kokoro-82m-v1.0", "blend": {"am_adam": 0.74, "am_fenrir": 0.19, "am_santa": 0.07}, "speed": 1.10, "rate": 1.40, "gap": 0.04, "color": "#FFFFFF"}`
+  (blend B: the weights above, speed 1.05, rate 1.45).
+- **Blend:** `pack = sum(w * pipe.load_single_voice(v) for v, w in blend.items())`, then `pipe(text, voice=pack, speed=speed)`.
+  KPipeline takes a tensor as `voice`. The weights sum to 1, and the pack is deterministic, so the voice never drifts.
+- **Word timings:** native. `tokens[].start_ts / end_ts` divided by `rate`, as voice.py does now; no align.py/Whisper.
+- **Pauses:** one generation per sentence, each trimmed and joined with `gap` s (0.04 s, so 0.03 s after the rate).
+  The Short has none longer than 0.15 s. Planned beats (docs/story_craft.md "Pauses are the delivery") become explicit
+  `gap` values per line.
+- **Take gate (scripts/take_gate.py):** mostly doesn't apply. Kokoro can't breathe, whisper or clip a word, and its
+  pauses are the ones we insert. Keep only the `words` check (Whisper against the script), which catches G2P misreads.
+  A failure can't be fixed by a re-take, because the same text gives the same audio. Fix it by respelling the word in
+  the spoken text (voice.py already lowercases CAPS for speech).
+- **Speaker and drift checks:** the blend's own output is its reference voiceprint. It can't drift, so voice_drift is
+  a formality.
+
+### If the owner picks Gemini Orus (s3)
+Add the same `rate` (1.45) as a `post` step after the take (an `asetrate`-style resample, not rubberband), and keep
+the direction in `scripts/voice_match/gem.py`. Cap the gaps at 0.06 s before the rate (tts.py `cap_pauses`). The
+take gate applies as now; its pause limits are looser than this voice needs.
+
+Reproduce: `scripts/voice_match/` (`vm.py` the meter, `search.py` the blend search, `score_files.py` to score sample
+files, `sample.py` for a Kokoro blend sample, `gem.py` for 1 Gemini request). Demucs was installed in a scratch folder
+only to separate the reference, and was deleted afterwards. No reference audio is in the repo.
