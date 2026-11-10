@@ -445,13 +445,14 @@ const WOLF_PARTS = [
 // WolfModel.prepareMobModel + setupAnim: sitting (extra.sitting) folds the hind legs under and tips the body up;
 // walking swings the legs; a tamed wolf at full health holds its tail high (0.55 pi), a wild one at pi/5; the tail
 // wags with the walk unless angry
-function poseWolf (r, s, walkPos, walkSpeed) {
+function poseWolf (r, s, walkPos, walkSpeed, tick = 0) {
   const B = r.bones, x = s.extra || {}
   let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
   r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
   B.head.rotation.set(-(s.pitch || 0), net, 0)
   const tail = x.tame ? 0.55 * Math.PI : Math.PI / 5
-  B.tail.rotation.set(tail, x.angry ? 0 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
+  // extra.wag: a happy wag (fast side to side), whatever the walk does
+  B.tail.rotation.set(tail, x.angry ? 0 : x.wag ? Math.sin(tick * 1.6) * 0.7 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
   if (x.sitting) {
     B.upperBody.position.set(-1, 16, -3); B.upperBody.rotation.set(1.2566371, 0, 0)
     B.body.position.set(0, 18, 0); B.body.rotation.set(Math.PI / 4, 0, 0)
@@ -1009,7 +1010,7 @@ export class EntityLayer {
         continue
       }
       if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
-      if (B.wolf) { poseWolf(r, s, r.walk, r.amt || 0); continue }
+      if (B.wolf) { poseWolf(r, s, r.walk, r.amt || 0, tick); continue }
       if (B.spider) { poseSpider(r, s, r.walk, r.amt || 0); continue }
       // AllayModel.setupAnim: the wings swept back 35 degrees (yRot +-0.61, xRot 0.44) and flapping with
       // the age (cos(age x 20 deg) x 0.15 pi), NoAI too; the arms angled out a little. The converted

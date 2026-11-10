@@ -5,6 +5,7 @@ base.en model downloads on first use, 139 MB).
 
     ~/.hb-tts/bin/python scripts/voice_check.py stories/<name>            # transcript + pitch per line
     ~/.hb-tts/bin/python scripts/voice_check.py stories/<name> --words    # voice/words.json for the caption times
+    ~/.hb-tts/bin/python scripts/voice_check.py stories/<name> --resplit  # re-cut the takes at Whisper's word gaps
 """
 import json
 import sys
@@ -50,5 +51,42 @@ def words(sd):
     print(f"{sd}/voice/words.json: {sum(len(v) for v in out.values())} words")
 
 
+def resplit(sd):
+    """Re-cut every request's cached take (voice/<req>_take.f32) into its lines by Whisper's word timestamps: words are
+    matched to the script in order (by count, with a fuzzy check), and each cut falls in the gap between a line's last
+    word and the next line's first. Fixes splits that the pause-based cut got wrong."""
+    import re
+    import subprocess
+    SR = 24000
+    d = json.load(open(f"{sd}/story.json"))
+    reqs = json.load(open(f"{sd}/voices.json"))
+    m = whisper.load_model('base.en')
+    norm = lambda w: re.sub(r"[^a-z0-9]", "", w.lower())
+    for r in reqs:
+        x = np.fromfile(f"{sd}/voice/{r['id']}_take.f32", np.float32)
+        x16 = subprocess.run(["ffmpeg", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-ar", "16000", "-f", "f32le", "-"], input=x.tobytes(), capture_output=True).stdout
+        res = m.transcribe(np.frombuffer(x16, np.float32).copy(), language='en', fp16=False, word_timestamps=True)
+        words = [(norm(w['word']), w['start'], w['end']) for s in res['segments'] for w in s['words'] if norm(w['word'])]
+        counts = [len([w for w in re.split(r"\s+", t) if norm(w)]) for _, _, t in r['lines']]
+        # numbers: "thirty-seven" is one script word but Whisper writes "37": count script words as Whisper would
+        counts = [c - sum(1 for w in re.split(r"\s+", t) if '-' in w and norm(w.replace('-', '')).isalpha() and len(w) > 6 and w.lower().split('-')[0] in ('twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety')) * 0 for c, (_, _, t) in zip(counts, r['lines'])]
+        if sum(counts) != len(words):
+            print(f"{r['id']}: script {sum(counts)} words, Whisper {len(words)}: scaling the split")
+        scale = len(words) / max(1, sum(counts))
+        bounds, acc = [], 0.0
+        for c in counts[:-1]:
+            acc += c * scale
+            i = max(1, min(len(words) - 1, round(acc)))
+            bounds.append((words[i - 1][2] + words[i][1]) / 2)
+        cuts = [0.0] + bounds + [len(x) / SR]
+        for (who, lid, t), a, b in zip(r['lines'], cuts, cuts[1:]):
+            seg = x[int(a * SR):int(b * SR)]
+            nz = np.nonzero(np.abs(seg) > 0.01)[0]
+            if len(nz):
+                seg = seg[max(0, nz[0] - 1200):nz[-1] + 2400]
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", f"{sd}/voice/{lid}.wav"], input=seg.astype(np.float32).tobytes(), check=True)
+        print(f"{r['id']}: {len(r['lines'])} lines cut at {[round(c, 2) for c in bounds]}")
+
+
 if __name__ == "__main__":
-    (words if "--words" in sys.argv else main)(sys.argv[1])
+    (resplit if "--resplit" in sys.argv else words if "--words" in sys.argv else main)(sys.argv[1])

@@ -1,4 +1,4 @@
-// Story Short "i can't get away from this man 😭" (stories/good_boy, story.json v2): the cinematic pilot
+// Story Short "i can't get away from this guy 😭" (stories/good_boy, story.json v2): the cinematic pilot
 // (docs/stories.md "Cinematic stories"). The narrator has tried to leave an old man 37 times; every time he gets
 // twelve blocks away he is standing next to him again. Raw porkchops, "Sit." and he sits, everyone is tall, a dog
 // that is always already there, he can't open doors, he waits by the door all day, skeletons run from him. A zombie
@@ -19,7 +19,7 @@ const M = require('../lib/movie')
 const { storyLines, storyKit, setKit } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'good_boy')
-const CAPTION = "i can't get away from this man 😭"
+const CAPTION = "i can't get away from this guy 😭"
 const GOLD = 12300, NIGHT = 18000, DUSK = 12900
 const GUY = 'Sam'
 const SIT_EYE = 0.5, EYE = 0.68
@@ -41,7 +41,7 @@ module.exports = {
   // camera shots (positions are offsets from O; y from the village centre's ground). Set in setup once the pad's
   // height is known: see shotsFor()
   shots: {},
-  edit: { caption: CAPTION, red: 'man', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0' },
+  edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -173,7 +173,7 @@ module.exports = {
     await cutG(7.5, 34, P(7.5, gy(7.5, 14) + 0.6, 0), { time: NIGHT })
     K.ctl('sprint', true); K.go(true)
     await line('L04', async (k, at) => {
-      if (k === at(1)) { await cutG(27.5, 19.5, P(0, gy(14, 19.5) + 0.6, 19.5), { time: GOLD }); K.ctl('sprint', true); K.go(true) }
+      if (k === at(2)) { await cutG(27.5, 19.5, P(0, gy(14, 19.5) + 0.6, 19.5), { time: GOLD }); K.ctl('sprint', true); K.go(true) }
       if (k === at(3)) {
         K.self({}, 1.3)   // a swimming wolf's head is just over the water
         await K.cutTo(55.5, 62.4, 13.5, new ctx.Vec3(X + 90, 63.2, Z + 13.5)); K.go(true); K.ctl('jump', true)
@@ -196,22 +196,14 @@ module.exports = {
       if (k >= at(4)) K.turnTo(looking, P(37.4, eyeY(1.6), 14.6), (k - at(4)) / 8)
       look(k)
     })
-    // L06: "Sit." L07: I sit (the eye drops), and he nods
-    looking = K.base
-    await line('L06', async (k) => { if (k === 3) swingGuy(); K.turnTo(looking, P(37.4, eyeY(1.6), 14.6), 1); look(k) })
-    await line('L07', async (k, at) => {
-      if (k === at(2)) { K.self({ sitting: true }, SIT_EYE); say('/kill @e[type=item]'); ctx.sound('entity.wolf.pant', 0.3, 1) }
-      if (k >= at(3) && k < at(3) + 8) { guy.pitch = 42 + Math.sin((k - at(3)) / 8 * Math.PI) * 14; placeGuy() }
-      look(k)
-    })
-
-    // L08: the village square: villagers pass close and look down at me
+    // L06: on the village road: villagers pass close and look down at me
     K.self({ sitting: false }, EYE)
     const v1 = actorG('v1', { x: 25.4, z: -9.0, yaw: 0, pitch: 30 }), v2 = actorG('v2', { x: 22.6, z: -3.0, yaw: 180, pitch: 30 })
     const v3 = actorG('v3', { x: 28.5, z: -5.0, yaw: 90, pitch: 25 })
     await cutG(24.6, -5.6, P(25.4, gy(25.4, -8) + 2.6, -8))
     looking = K.base
-    await line('L08', async (k, at) => {
+    looking = K.base
+    await line('L06', async (k, at) => {
       stepG(v1, -0.01, 0.04); v1.pitch = 28
       stepG(v2, 0.004, -0.032); v2.pitch = 25
       stepG(v3, -0.03, 0); v3.pitch = 20
@@ -220,14 +212,14 @@ module.exports = {
     })
     for (const t of ['v1', 'v2', 'v3']) K.bury(t, -60)
 
-    // L09: "And there's this DOG." Camera shots: walking the road beside him (a follow, low, ahead of them); then on
+    // L07: "And there's this DOG." Camera shots: walking the road beside him (a follow, low, ahead of them); then on
     // the yard's sea edge, already sitting there as he walks up
     await putGuy(31.6, 14.4, -90, 5)
     await bot.waitForTicks(3)   // (the follow opened on him still at the hop: a red blur)
     K.shot('dog_walk')
     await K.cut(31.8, 15.5, P(50, eyeY(0.4), 15.5), H + 1)
     K.go(true)
-    await line('L09', async (k, at) => {
+    await line('L07', async (k, at) => {
       if (k < at(2)) { guy.x += 0.215; guy.yaw = -90; guy.pitch = 8; placeGuy() }
       if (k === at(2)) {
         K.stop()
@@ -241,17 +233,18 @@ module.exports = {
       look(k)
     })
 
-    // L10: dusk, at the shut door: I push at it. L11: "Come on in, you." He opens it
+    // L08: dusk, at the shut door: I push at it. L09: "Door's OPEN, buddy!" He opens it
     K.self({ sitting: false }, EYE)
     await putGuy(36.5, 22.2, 180, 30)
     await K.cut(36.5, 18.6, P(36.5, eyeY(1.0), 21.0), H + 1, { time: DUSK })
     K.shot('pov')
     K.go(true)
     looking = K.base
-    await line('L10', async (k) => { if (k === 6) K.go(false); if (k === 14) K.go(true); if (k === 20) K.go(false); look(k) })
-    await line('L11', async (k) => {
+    await line('L08', async (k) => { if (k === 6) K.go(false); if (k === 14) K.go(true); if (k === 20) K.go(false); look(k) })
+    await line('L09', async (k) => {
       if (k === 0) {
-        say(`/setblock ${X + 36} ${Y + 2} ${Z + 20} oak_door[half=upper,facing=north,open=true]`); say(`/setblock ${X + 36} ${Y + 1} ${Z + 20} oak_door[half=lower,facing=north,open=true]`)
+        this.cast[GUY].swingArm('right')   // he opens it (the door is his)
+        say(`/setblock ${X + 36} ${Y + 2} ${Z + 20} spruce_door[half=upper,facing=north,open=true]`); say(`/setblock ${X + 36} ${Y + 1} ${Z + 20} spruce_door[half=lower,facing=north,open=true]`)
         ctx.sound('block.wooden_door.open', 0.8, 1)
       }
       K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), k / 10)
@@ -260,25 +253,14 @@ module.exports = {
     })
     K.stop()
 
-    // L12: he leaves; I wait by the door all day (a time-lapse, morning to evening, on one shot)
-    await putGuy(36.4, 17.0, 180, 0)
-    K.self({ sitting: true }, SIT_EYE)
-    say(`/setblock ${X + 36} ${Y + 2} ${Z + 20} oak_door[half=upper,facing=north,open=false]`); say(`/setblock ${X + 36} ${Y + 1} ${Z + 20} oak_door[half=lower,facing=north,open=false]`)
-    await K.cut(36.5, 18.6, P(36.5, eyeY(0.9), -10), H + 1, { time: 1000 })
-    let tl = 1000
-    await line('L12', async (k) => {
-      if (guy.z > 4) { guy.z -= 0.2; guy.y = guy.z > 9 ? H + 1 : gy(36.4, guy.z); placeGuy() } else if (guy.z > -100) { say(`/tp ${GUY} ${X} ${F + 60} ${Z + 90}`); guy.z = -200 }
-      tl += 11500 / K.T('L12'); K.setTime(tl)
-      look(k)
-    })
     K.self({ sitting: false }, EYE)
 
-    // L13: night on the north road in the hills: two skeletons see me, turn and run (skeletons flee from wolves)
+    // L10: night on the north road in the hills: two skeletons see me, turn and run (skeletons flee from wolves)
     await putMob('sk1', 23.5, -18.2, 90); await putMob('sk2', 21.5, -16.8, 90)
     const sk1 = actorG('sk1', { x: 23.5, z: -18.2, yaw: -90 }), sk2 = actorG('sk2', { x: 21.5, z: -16.8, yaw: -90 })
     await cutG(30.5, -17.5, P(23, gy(23, -17.5) + 1.6, -17.5), { time: NIGHT })
     K.go(true)
-    await line('L13', async (k, at) => {
+    await line('L10', async (k, at) => {
       if (k < at(1)) { sk1.yaw = -90; sk2.yaw = -95 }
       if (k >= at(1)) { stepG(sk1, -0.2, 0.02); stepG(sk2, -0.22, -0.02) }
       if (k === at(1)) ctx.sound('entity.skeleton.ambient', 0.6, 1.2)
@@ -286,7 +268,7 @@ module.exports = {
     })
     K.stop(); K.bury('sk1', -60); K.bury('sk2', -60)
 
-    // L14: night, the yard: the zombie walks in from the road. L15: "Hey! Get back!" it hits him; the wolf at his
+    // L11: night, the yard: the zombie walks in from the road. L12: "Hey! Get back!" it hits him; the wolf at his
     // side gets up, eyes red. A camera shot from the yard's west corner
     await putGuy(37.5, 15.2, 0, 0)
     await putMob('zom', 36.6, 6.0, 0)
@@ -296,54 +278,50 @@ module.exports = {
     K.shot('night_yard')
     await K.cut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1)
     const zWalk = (speed) => { const dx = 37.6 - zom.x, dz = 14.0 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
-    await line('L14', async (k) => {
+    await line('L11', async (k) => {
       zWalk(0.12)
       if (k === 6) ctx.sound('entity.zombie.ambient', 0.8, 1)
       if (k > 10) { guy.yaw = yawTo(37.5, 15.2, zom.x, zom.z); placeGuy() }
       K.base = K.aim(P(zom.x, zom.y + 1.5, zom.z)); look(k)
     })
-    await line('L15', async (k) => {
+    await line('L12', async (k) => {
       zWalk(0.08)
       if (k === 2) { say(`/damage ${GUY} 4 minecraft:mob_attack by @e[tag=zom,limit=1]`); K.self({ sitting: false, angry: true }, EYE); ctx.sound('entity.wolf.growl', 0.9, 1) }
       guy.yaw = yawTo(37.5, 15.2, zom.x, zom.z); placeGuy()
       K.base = K.aim(P(zom.x, zom.y + 1.4, zom.z)); look(k)
     })
 
-    // L16: POV: I go for it. Two bites and it's down
+    // L13: POV: "And I just... LOST it." Two bites and it's down
     K.shot('pov')
     K.ctl('sprint', true); K.go(true)
     const zEnt = () => Object.values(bot.entities).find(e => e.name === 'zombie')
-    await line('L16', async (k, at) => {
+    await line('L13', async (k, at) => {
       const [sy, sp] = shake(k, 0.035)
       if (k === at(0) + 4 || k === at(1) + 2) { const z = zEnt(); if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.1) }
-      if (k === at(2)) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
-      if (k < at(2)) { const z = zEnt(); if (z && bot.entity.position.distanceTo(z.position) < 1.3) K.go(false) }
+      if (k === at(1) + 10) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
+      if (k < at(1) + 10) { const z = zEnt(); if (z && bot.entity.position.distanceTo(z.position) < 1.3) K.go(false) }
       const zp = P(zom.x, zom.y + 1.0, zom.z); if (bot.entity.position.distanceTo(zp) > 1.6) K.base = K.aim(zp); look(k, sy, sp)
     })
     K.stop(); K.actors.delete('zom')
 
-    // L17: "Easy... easy. It's gone." He kneels (sneaks) by me, looking down; I'm breathing hard
+    // L14: "GOOD BOY!" Cheerful and loud, a pat on the head, and the camera pulls out of my head: a wolf with a red
+    // collar, wagging, barking. Hard cut (owner: the payoff is physical and funny, never tender)
     K.self({ sitting: true, angry: false }, SIT_EYE)
-    await putGuy(38.7, 16.2, 90, 45)
+    await putGuy(38.7, 16.2, 90, 40)
     this.cast[GUY].setControlState('sneak', true)
-    await K.cut(37.5, 16.2, P(38.7, eyeY(1.25), 16.2), H + 1)
-    await line('L17', async (k) => { if (k % 14 === 0) ctx.sound('entity.wolf.pant', 0.5, 1); look(k, Math.sin(k / 3) * 0.01, Math.sin(k / 2.5) * 0.012) })
-    // L18: "Good boy." The camera leaves my head and pulls back: the wolf with the red collar sitting at his feet.
-    // L19 over the rising crane while the night turns to morning; then the end
+    await bot.waitForTicks(3)
     K.shot('reveal')
-    await line('L18', async (k) => {
-      if (k === 2) swingGuy()
-      if (k === 26) { ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 7 }); ctx.sound('entity.wolf.pant', 0.6, 1) }   // (at 8 the camera was still in his head: the hearts filled the frame)
-      guy.pitch = 45 + Math.sin(k / 4) * 3; placeGuy()
-      look(k)
-    })
-    let dawn = NIGHT
-    await line('L19', async (k) => {
-      if (k === 4) ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 5 })
-      dawn += 5600 / K.T('L19'); K.setTime(dawn % 24000)
-      guy.pitch = 45 + Math.sin(k / 5) * 3; placeGuy()
-      look(k, Math.sin(k / 9) * 0.08)
-    })
+    await K.cut(37.5, 16.2, P(38.7, eyeY(1.25), 16.2), H + 1)
+    await line('L14', async (k) => {
+      if (k === 0 || k === 6) swingGuy()   // the pat
+      if (k === 4) K.self({ wag: true })
+      if (k === 10) ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 7 })
+      guy.pitch = 40 + Math.sin(k / 3) * 4; placeGuy()
+      look(k, 0, Math.sin(k / 2) * 0.03)
+    }, 0.35)
+    ctx.sound('entity.wolf.ambient', 1, 1.05)   // the bark: the hard cut lands on it
+    ctx.mark('bark')
+    for (let k = 0; k < 10; k++) { look(k, 0, k < 3 ? 0.12 : 0); await bot.waitForTicks(1) }
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     this.cast[GUY].setControlState('sneak', false)
@@ -417,5 +395,5 @@ module.exports.shots = {
   night_yard: { at: [32.4, H + 2.7, 18.8], look: [38.2, H + 1.4, 13.6], fov: 52, push: 0.35, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } },
   // L18-L19: the reveal. From the narrator's eye (sitting, looking up at him) back and out to a low three-quarter
   // shot of the wolf at his feet, then up into a crane over the yard, the village and the sea as the night turns
-  reveal: { path: [[0, 37.5, H + 1.5, 16.2], [0.8, 36.4, H + 1.62, 17.6], [2.0, 34.6, H + 1.9, 18.8], [5.2, 34.0, H + 3.6, 13.6]], lookPath: [[0, 38.7, H + 2.3, 16.2], [0.8, 38.0, H + 1.5, 16.2], [2.0, 37.8, H + 1.35, 16.0], [5.2, 37.7, H + 1.1, 16.1]], ease: true, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } }
+  reveal: { path: [[0, 37.5, H + 1.5, 16.2], [0.45, 36.6, H + 1.6, 17.5], [1.2, 35.4, H + 1.75, 18.4], [2.6, 35.0, H + 2.2, 18.6]], lookPath: [[0, 38.7, H + 2.3, 16.2], [0.45, 38.0, H + 1.5, 16.2], [1.2, 37.8, H + 1.3, 16.1], [2.6, 37.8, H + 1.3, 16.1]], ease: true, dof: { aperture: 0.7, focus: { of: 'self', offset: [0, -1.1, 0] } } }
 }
