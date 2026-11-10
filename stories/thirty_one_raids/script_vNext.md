@@ -38,3 +38,30 @@ Format rules:
 **Recordings:** the sets, the stunt and the shots carry over. Re-voice with the new narrator, then do a re-record pass, because the scene lengths come from voice.json. No rebuild is needed.
 
 **Reviews:** `reviews/vnext-critic.md` (r1, on the first vNext) and `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+## r-ear (2026-11-10): rewritten for the ear (STANDARDS 2.000)
+The owner: "only works if tis clear what is beign said"; the narrator is "a child that doesnt understand teh wrold... figuring it out".
+These lines **replace the table above**. The beats, the shots and the reveal and cut are unchanged unless noted.
+
+How they're written:
+- one short, simple thought per sentence, in time order, joined by So / Then / But;
+- no stacked clauses, and numbers kept apart from other information;
+- each sentence lands on its key word;
+- told by a happy kid who misreads what the viewer understands (model: "Mom SAID it was a FOX").
+
+The cold listener (audio-style, one fast pass) followed it. Its notes are applied here and logged in `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+**Length:** 116 words, ~22 s spoken at 5.25 words/s, plus ~2 s of reveal.
+
+| # | line (r-ear) | plays over |
+|---|---|---|
+| L01 | THIRTY-ONE raids. / EVERY one / started the NIGHT / Grandpa came HOME. | S01 |
+| L02 | Raid ONE? / He WON. / Raid TWELVE? / He WON. / Raid TWENTY? / He WON. / Raid THIRTY-ONE? / He WON. | S02-S03 |
+| L03 | He SAYS / they FOLLOW him. / They KNOW / who BEATS them. | S03 |
+| L04 | So the VILLAGERS / throw him BREAD. | S05 |
+| L05 | Since GRANDMA died, / he's always ALONE. / But RAID nights? / EVERYONE cheers / for HIM. | S10 |
+| L06 | Every WEEK, / he HUNTS / at the TOWER. / He brings BACK / OMINOUS bottles. / He CALLS them / his LUCK. | S06-S07 |
+| L07 | He DRINKS one / at the GATE. / Then he SAYS, / lock the DOOR, / kid, they're COMING. | S08-S09 |
+| L08 | Then a HORN / goes OFF. / And Grandpa SMILES. / He must LOVE / a good FIGHT. | S09 |
+| L09 | Tonight he CAME / home too TIRED / to FIGHT. | S11 |
+| L10 | So I DRANK / his LUCK. / SOMEBODY had / to FIGHT. | S12: the horn, the Raid bar, Grandpa turns; cut 1.0 s |

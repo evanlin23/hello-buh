@@ -42,3 +42,34 @@ Format rules:
 **Reviews:** `reviews/vnext-critic.md` (r1, on the first vNext) and `docs/pitches/vnext_coldread_2026-11-10.md`.
 
 **Where the story lives:** its story.json and recordings are on `claude/story-cine-2-render-story_dog_hill`.
+
+## r-ear (2026-11-10): rewritten for the ear (STANDARDS 2.000)
+The owner: "only works if tis clear what is beign said"; the narrator is "a child that doesnt understand teh wrold... figuring it out".
+These lines **replace the table above**. The beats, the shots and the reveal and cut are unchanged unless noted.
+
+How they're written:
+- one short, simple thought per sentence, in time order, joined by So / Then / But;
+- no stacked clauses, and numbers kept apart from other information;
+- each sentence lands on its key word;
+- told by a happy kid who misreads what the viewer understands (model: "Mom SAID it was a FOX").
+
+The cold listener (audio-style, one fast pass) followed it. Its notes are applied here and logged in `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+**Length:** 141 words, ~27 s spoken at 5.25 words/s, plus ~2 s of reveal.
+
+| # | line (r-ear) | plays over |
+|---|---|---|
+| L01 | The DOG / on the HILL / hasn't MOVED / in nine-hundred DAYS. | S01 |
+| L02 | Not for RAIN. / Not for THUNDER. / Not for CREEPERS. / Not even ZOMBIES. | S02 |
+| L03 | Kids THROW / STICKS for him. / He doesn't BLINK. | S03 |
+| L04 | So every MORNING, / I BRING him / a BONE. / He never LOOKS. | S03 |
+| L05 | He's GOT / a red COLLAR. / But NOBODY here / OWNS him. | S03b |
+| L06 | He just STARES / at one EMPTY / patch of GRASS. / Maybe he LIKES / the GRASS. | S04 |
+| L07 | And BEHIND him, / an OLD / dirt HUT. / Nobody KNOWS / who BUILT it. | S05 |
+| L08 | I ASKED him / to STAND. / I even BEGGED. | S05b |
+| L09 | Then Grandpa SAID, / leave him BE. / Only ONE voice / gets him UP. | S06 |
+| L10 | SOMEBODY told him / be right BACK. | S08 |
+| L11 | So every NIGHT, / I SIT there. / NOBODY should / wait ALONE. | S09 |
+| L12 | Then last NIGHT, / he STOOD up. | S11 |
+| L13 | A GUY / just APPEARED / on the PATCH. / He SAID, / hey BUDDY, / sorry, got BUSY. | S12 |
+| L14 | Then he SAID, / sit, BOY. / Be right BACK. | S13: chat 'Buh left the game'; the dog sits; cut 1.0 s |
