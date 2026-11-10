@@ -8,27 +8,27 @@
    "who": null,
    "dur": 2.96,
    "onset": 0.08,
-   "end": 2.7,
+   "end": 2.5,
    "chunks": [
     [
      0.08,
-     0.3
+     0.42
     ],
     [
-     0.3,
-     0.7
+     0.48,
+     0.78
     ],
     [
-     0.7,
-     1.08
+     0.86,
+     1.18
     ],
     [
-     1.08,
-     1.64
+     1.42,
+     2.06
     ],
     [
-     1.64,
-     2.7
+     2.16,
+     2.5
     ]
    ],
    "captions": [
@@ -38,38 +38,39 @@
     "THIRTY-SEVEN",
     "times."
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "41a04a67e973"
   },
   "L02": {
    "text": "Every time I get twelve blocks away, boom. Right next to him again.",
    "who": null,
    "dur": 4.165,
-   "onset": 0.08,
-   "end": 4.14,
+   "onset": 0.14,
+   "end": 4.06,
    "chunks": [
     [
-     0.08,
-     0.46
+     0.14,
+     0.52
     ],
     [
-     0.46,
-     1.1
+     0.58,
+     1.22
     ],
     [
-     1.1,
-     2.28
+     1.3,
+     1.9
     ],
     [
-     2.28,
-     2.86
+     2.44,
+     2.58
     ],
     [
-     2.86,
-     3.52
+     3.14,
+     3.58
     ],
     [
-     3.52,
-     4.14
+     3.6,
+     4.06
     ]
    ],
    "captions": [
@@ -80,56 +81,58 @@
     "Right next",
     "to him AGAIN."
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "cb0e2f0f8821"
   },
   "L03": {
    "text": "There you are, buddy!",
    "who": "Sam",
    "dur": 1.52,
-   "onset": 0.09,
-   "end": 1.5,
+   "onset": 0.14,
+   "end": 1.16,
    "chunks": [
     [
-     0.09,
+     0.14,
      0.78
     ],
     [
-     0.78,
-     1.5
+     0.84,
+     1.16
     ]
    ],
    "captions": [
     "There you ARE,",
     "buddy!"
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "168722cf7bb5"
   },
   "L04": {
    "text": "I tried at night. Through the wheat. I even swam!",
    "who": null,
    "dur": 3.73,
-   "onset": 0.07,
-   "end": 3.36,
+   "onset": 0.1,
+   "end": 3.28,
    "chunks": [
     [
-     0.07,
-     0.32
+     0.1,
+     0.42
     ],
     [
-     0.32,
-     1.08
+     0.48,
+     0.84
     ],
     [
-     1.08,
-     1.98
+     1.22,
+     1.78
     ],
     [
-     1.98,
-     2.34
+     2.18,
+     2.42
     ],
     [
-     2.34,
-     3.36
+     2.465,
+     3.28
     ]
    ],
    "captions": [
@@ -139,30 +142,31 @@
     "I even",
     "SWAM!"
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "780920b3c18e"
   },
   "L05": {
    "text": "He feeds me raw porkchops. Who does that?",
    "who": null,
    "dur": 3.88,
-   "onset": 0.11,
-   "end": 3.86,
+   "onset": 0.12,
+   "end": 3.62,
    "chunks": [
     [
-     0.11,
-     0.78
+     0.12,
+     0.82
     ],
     [
-     0.78,
-     1.4
+     1.24,
+     1.56
     ],
     [
-     1.96,
-     2.74
+     1.82,
+     2.4
     ],
     [
-     3.0,
-     3.86
+     2.92,
+     3.62
     ]
    ],
    "captions": [
@@ -171,26 +175,27 @@
     "PORKCHOPS.",
     "Who DOES that?"
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "7a071a3dd731"
   },
   "L06": {
    "text": "Everyone here is so tall.",
    "who": null,
    "dur": 1.716,
-   "onset": 0.1,
-   "end": 1.7,
+   "onset": 0.12,
+   "end": 1.62,
    "chunks": [
     [
-     0.1,
-     0.54
+     0.12,
+     0.62
     ],
     [
-     0.54,
-     0.92
+     0.68,
+     0.94
     ],
     [
-     0.92,
-     1.7
+     1.1,
+     1.62
     ]
    ],
    "captions": [
@@ -198,38 +203,39 @@
     "is SO",
     "TALL."
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "3724034f3aec"
   },
   "L07": {
    "text": "And there's this dog. Wherever I go, it's already there!",
    "who": null,
-   "dur": 4.34,
-   "onset": 0.09,
-   "end": 4.28,
+   "dur": 3.98,
+   "onset": 0.08,
+   "end": 3.6,
    "chunks": [
     [
-     0.09,
-     0.68
+     0.08,
+     0.36
     ],
     [
-     0.68,
-     1.62
+     0.38,
+     0.94
     ],
     [
-     1.62,
-     1.9
+     1.4,
+     1.76
     ],
     [
-     1.9,
-     2.7
+     1.82,
+     2.1
     ],
     [
-     2.7,
-     3.3
+     2.46,
+     3.1
     ],
     [
-     3.3,
-     4.28
+     3.2,
+     3.6
     ]
    ],
    "captions": [
@@ -240,118 +246,124 @@
     "it's ALREADY",
     "there!"
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "6a0ca40eafd9"
   },
   "L08": {
    "text": "I can't even open a door.",
    "who": null,
    "dur": 1.69,
-   "onset": 0.09,
-   "end": 1.66,
+   "onset": 0.1,
+   "end": 1.46,
    "chunks": [
     [
-     0.09,
-     0.48
+     0.1,
+     0.56
     ],
     [
-     0.48,
-     1.66
+     0.72,
+     1.46
     ]
    ],
    "captions": [
     "I can't even",
     "open a DOOR."
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "f16d7d1b08af"
   },
   "L10": {
    "text": "skeletons run from me!",
    "who": null,
    "dur": 2.6,
-   "onset": 0.09,
-   "end": 2.14,
+   "onset": 0.08,
+   "end": 2.0,
    "chunks": [
     [
-     0.09,
-     0.78
+     0.08,
+     0.86
     ],
     [
-     0.78,
-     2.14
+     1.18,
+     2.0
     ]
    ],
    "captions": [
     "SKELETONS",
     "run from ME!"
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "1f4a9b9582a4"
   },
   "L11": {
    "text": "Then a zombie went for him.",
    "who": null,
    "dur": 2.03,
    "onset": 0.08,
-   "end": 1.78,
+   "end": 1.62,
    "chunks": [
     [
      0.08,
-     1.06
+     1.12
     ],
     [
-     1.06,
-     1.78
+     1.16,
+     1.62
     ]
    ],
    "captions": [
     "Then a ZOMBIE",
     "went for HIM."
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "0eada3d164fe"
   },
   "L12": {
    "text": "Hey! Get back!",
    "who": "Sam",
    "dur": 1.8,
-   "onset": 0.15,
-   "end": 1.78,
+   "onset": 0.14,
+   "end": 1.26,
    "chunks": [
     [
-     0.15,
-     0.76
+     0.14,
+     0.42
     ],
     [
      0.76,
-     1.78
+     1.26
     ]
    ],
    "captions": [
     "Hey!",
     "Get BACK!"
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "5006b9d2614d"
   },
   "L13": {
    "text": "And I just lost it!",
    "who": null,
    "dur": 1.31,
-   "onset": 0.08,
-   "end": 1.28,
+   "onset": 0.1,
+   "end": 1.04,
    "chunks": [
     [
-     0.08,
-     0.38
+     0.1,
+     0.44
     ],
     [
-     0.38,
-     1.28
+     0.5,
+     1.04
     ]
    ],
    "captions": [
     "And I just",
     "LOST it!"
    ],
-   "aligned": "whisper-base.en"
+   "aligned": "ctc:wav2vec2-base-960h",
+   "aligned_wav": "b98f5b936c2b"
   }
  },
- "total": 32.34
+ "total": 31.98
 }
