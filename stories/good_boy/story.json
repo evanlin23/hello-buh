@@ -17,9 +17,9 @@
   "N": {
    "role": "narrator",
    "name": "me",
-   "voice": "Leda",
+   "voice": "Puck",
    "color": "#FFFFFF",
-   "profile": "a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft",
+   "profile": "a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy",
    "on_screen": "POV at a wolf's eye height; in camera shots, a tamed wolf with a red collar"
   },
   "Sam": {
@@ -37,21 +37,21 @@
    "speakers": [
     "N"
    ],
-   "direction": "Read this funny story quickly, like an excited kid talking fast to friends: bright, energetic, full volume, no pauses between sentences; not whispery, breathy or soft."
+   "direction": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences."
   },
   {
    "id": "n2",
    "speakers": [
     "N"
    ],
-   "direction": "Read this funny story quickly, like an excited kid talking fast to friends: bright, energetic, full volume, no pauses between sentences; not whispery, breathy or soft."
+   "direction": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences."
   },
   {
    "id": "s1",
    "speakers": [
     "Sam"
    ],
-   "direction": "A jolly old farmer calls out to his friend: loud, warm, cheerful, a laugh in his voice."
+   "direction": "A jolly old farmer calls out to his dog, loud and warm, a laugh in his voice. A short pause between lines."
   }
  ],
  "lines": [
