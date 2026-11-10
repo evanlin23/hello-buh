@@ -426,5 +426,17 @@
  "beats": "stories/gold_for_the_portal/beats.md",
  "set": "stories/gold_for_the_portal/set.md",
  "voice_note": "Owner's voice-drift rule and Pip's recipe: every narrator line goes in a single-speaker request on gemini-3.8-flash-lite-tts with Pip's direction verbatim and identical in r1 and r2; no per-line directions are sent for the narrator (lines[].note is for the builder and the take check only). Grandma has her own request (r3). Two narrator requests, not one, to keep the brief's limit of about 6 lines per character per request; if one take must carry all ten, merge r1 and r2 unchanged.",
- "voice_takes": "beat"
+ "voice_takes": "beat",
+ "hotbar": [
+  "gold_ingot 64",
+  "potion[potion_contents={potion:\"minecraft:fire_resistance\"}] 1",
+  "golden_carrot 12",
+  "torch 32",
+  "lantern 3",
+  "shears 1",
+  "milk_bucket 1",
+  "cake 1",
+  "egg 16"
+ ],
+ "hotbar_note": "Slots 1-6 are his own things in a cottage with a Nether portal in the cellar: his saved gold (thrown in L11, so slot 1 empties on the throw), a fire resistance potion from the gifts barrel (selected and drunk in S05, then the slot stays the same), golden carrots, torches, lanterns, shears. Slots 7-9 are the ridiculous ones (owner 2026-11-10): a bucket of milk, a whole cake, 16 eggs. The mornings' gifts (S04) go into the inventory, not the hotbar: the hotbar is the same in every shot except the throw."
 }
