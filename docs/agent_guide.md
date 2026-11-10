@@ -150,13 +150,13 @@ true })`). Test without the server: `node scripts/pose_fixture.js --staged` + `.
 | render.js exits 2: `stunts/x.js failed to load` | the stunt has an error: `node -e "require('./stunts/x')"`. It used to render silently without hideHand, brightness, fovZoom |
 | `hb still` is slow (15+ s a frame) | each still re-lights and re-meshes the world for the blocks and time of day since the last one; a busy box (load > 4) doubles it. Fewer stills, or `hb describe` first. (agent/test-gaps is cutting the re-mesh cost) |
 | rec_check says a check was skipped | `node_modules` missing (a fresh checkout): `npm ci` or link it; `hb check` lists skipped checks |
-| `apt-get install espeak-ng` can't find it | `apt-get update` first |
-| an Actions render takes 40 min | a slow apt mirror on a runner; the setup is cached now (~20 s). `hb render --wait` keeps polling |
-| `hb review` refuses: output older than the recording | you re-recorded: render again before reviewing (freshness, docs/qa.md step 4) |
 | `hb render --wait` returned an old Short | a working branch carried an old renders/result.json; fixed: the queue drops it and --fetch checks the job's queued stamp |
 | a re-render after an edit-only fix takes 20 min | `./hb make <stunt> --from render` (or `./hb render <stunt> --reuse`): reuses the frames |
 | `voice_check.py`: No module named 'whisper' | not needed any more: it runs on faster-whisper or transformers (scripts/whisper_compat.py); `./hb doctor` says which |
 | a `fix:` line you don't trust / an error with none | the step's full output is in `work/hb/logs/<step>.log`; add the error and its fix to lib/hb/fixes.js |
+| `apt-get install espeak-ng` can't find it | `apt-get update` first |
+| an Actions render takes 40 min | a slow apt mirror on a runner; the setup is cached now (~20 s). `hb render --wait` keeps polling |
+| `hb review` refuses: output older than the recording | you re-recorded: render again before reviewing (freshness, docs/qa.md step 4) |
 | a v2 story (cast voices) | voiced by hand with `tts.py` until the adapter lands (docs/story_craft.md 6): write `voice/voice.json` |
 
 ## Knobs, if you really need them
