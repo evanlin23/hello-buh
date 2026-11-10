@@ -1550,6 +1550,9 @@ function camAtLive (t) {
   let bi = 0
   const sentBlocks = new Set()
   let relightBB = null, lastRelight = -99
+  // RELIGHT_TICKS: fewest ticks between relights for small changes (default 4). scripts/preview.py raises it:
+  // a relight re-propagates the whole world's light (~2 s), so a sparse preview was mostly relights
+  const RELIGHT_TICKS = Number(process.env.RELIGHT_TICKS || 4)
   let curDayTime = dayTimeAt(0), curWeather = weatherKey(0)
   const t1 = Date.now()
   // Block entities drawn by entity renderers (renderer/blockentities.js): signs with their text,
@@ -1692,7 +1695,7 @@ function camAtLive (t) {
     // pitch black, lava placed during a stunt lit nothing, crater walls stayed black). Any change
     // marks the light dirty; it's recomputed at once for big changes, else at most every 4 ticks.
     if (bb) relightBB = relightBB ? [Math.min(relightBB[0], bb[0]), Math.min(relightBB[1], bb[1]), Math.min(relightBB[2], bb[2]), Math.max(relightBB[3], bb[3]), Math.max(relightBB[4], bb[4]), Math.max(relightBB[5], bb[5])] : bb
-    if (relightBB && (nChanged >= 24 || t - lastRelight >= 4)) {
+    if (relightBB && (nChanged >= 24 || t - lastRelight >= RELIGHT_TICKS)) {
       bb = relightBB; relightBB = null; lastRelight = t
       const Lw = mesher.world.light
       const L0 = Lw && { sky: Lw.sky, blk: Lw.blk, x0: Lw.x0, z0: Lw.z0, yMin: Lw.yMin }   // propagate() makes new arrays
