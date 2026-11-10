@@ -132,6 +132,11 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "do 1 at a time if the top do it 1 at a time. the font is ok yes just whatever is best".**
+  Story captions show **one word at a time** (Xenost and Ashyyy: one word in all 48 sampled frames), timed by
+  voice/words.json word starts, in Poppins Black. Each word pops in (0.1 s, the existing `POP`) and cuts out hard
+  on the next word: no fade or slide out, which top channels don't use either. story.json `"captions": "chunk"`
+  brings back the 2-3 word chunks.
 - **Owner, 2026-11-10: "you choose for the audio mix, im not an expert there".** The lead picked the new story mix
   (docs/audio.md): mood score with ducking, a drop-out and hit at the payoff, room tone, vanilla on-screen sounds,
   -14 LUFS. It's measured, not listened to by the owner, so a story's review checks the mix by ear-proxy

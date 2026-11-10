@@ -149,6 +149,12 @@ def caption_events(story_dir, timeline, start, dur, who=False):
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
             t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text, lid))
+    # owner 2026-11-10: "do 1 at a time if the top do it 1 at a time" (Xenost and Ashyyy show one word per caption in
+    # all 48 sampled frames): story.json "captions": "word" (the default) splits every chunk into single words,
+    # timed by voice/words.json (Whisper word starts) when present, else by each word's share of the chunk's letters.
+    # "captions": "chunk" keeps the 2-3 word chunks.
+    if story.get("captions", "word") == "word":
+        ev = _one_word(ev, story_dir, marks)
     # a chunk due just before a picture cut inside a line starts on the cut (the voice's word timing put
     # "He doesn't" 6-9 frames before the night/day cuts it belongs to: story_sheep_stares f222, f262)
     cuts = _cut_times(timeline, start)
@@ -159,6 +165,39 @@ def caption_events(story_dir, timeline, start, dur, who=False):
             ev[k - 1] = (ev[k - 1][0], c, *ev[k - 1][2:])
             ev[k] = (c, *ev[k][1:])
     return [e if who else e[:3] for e in ev if e[1] > e[0]]
+
+
+def _one_word(ev, story_dir, marks):
+    """Split each (t0, t1, text, lid) chunk into one event per word."""
+    import json as _json
+    wf = pathlib.Path(story_dir) / "voice" / "words.json"
+    words = _json.loads(wf.read_text()) if wf.exists() else {}
+    line_t = {lid: t for t, lid in marks}
+    used = {}
+    out = []
+    for t0, t1, text, lid in ev:
+        toks = text.split()
+        if len(toks) <= 1:
+            out.append((t0, t1, text, lid))
+            continue
+        ww = words.get(lid) or []
+        k = used.get(lid, 0)
+        starts = None
+        if ww and k + len(toks) <= len(ww):
+            starts = [line_t[lid] + float(w[1]) for w in ww[k:k + len(toks)]]
+            starts[0] = t0
+            if any(b <= a for a, b in zip(starts, starts[1:])) or starts[-1] >= t1:
+                starts = None
+        used[lid] = k + len(toks)
+        if starts is None:
+            n = [max(1, len(w.strip(".,!?;:'\"").replace("'", ""))) + 1 for w in toks]
+            tot, acc, starts = sum(n), 0, []
+            for x in n:
+                starts.append(t0 + (t1 - t0) * acc / tot)
+                acc += x
+        for i, w in enumerate(toks):
+            out.append((starts[i], starts[i + 1] if i + 1 < len(toks) else t1, w, lid))
+    return out
 
 
 CUT_SNAP = 0.25   # s: how far ahead of a cut a chunk may start and still be moved onto it
