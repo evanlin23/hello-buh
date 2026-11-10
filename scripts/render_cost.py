@@ -17,6 +17,7 @@ from PROFILE=1 runs of story_nitwit (2026-11-10). They only have to be right rel
 import bisect
 import json
 import math
+import os
 import sys
 
 FRAME_PX = 0.5           # s per frame at 1080x1011 (SwiftShader draw + PNG capture), scales with the pixels
@@ -80,7 +81,10 @@ class Model:
                 day = d
         rain = round(self._level(self.rain, t) * 16) / 16
         thunder = round(self._level(self.thunder, t) * 16) / 16
-        return f"{day_dark(day, rain, thunder):.6f}"
+        # render.js skyKey: the darkening (rounded to DAY_LIGHT_STEP if set) plus the rain/thunder 1/16 steps
+        d = day_dark(day, rain, thunder)
+        step = float(os.environ.get("DAY_LIGHT_STEP") or 0)
+        return f"{round(d / step) if step else f'{d:.6f}'}|{round(rain * 16)},{round(thunder * 16)}"
 
     def costs(self, frames):
         """Per-frame seconds for rendering `frames` (sorted frame numbers) in one render.js run, in order;

@@ -1,5 +1,8 @@
 # hello-buh: automated Minecraft stunt Shorts for @HelloBuh
 
+**Agents: start with `docs/agent_guide.md` and `./hb help`** (one command for doctor, status, record, check, describe,
+continuity, framing, still, sheet, preview, render, review, publish).
+
 A bot plays a scripted stunt on a private local server, the stunt is rendered offline at 60 fps,
 and the clip is edited into the channel's format. No human at the keyboard, no Minecraft account.
 

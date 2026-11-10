@@ -7,6 +7,12 @@ camera, and that is the format's best trick: the viewer never sees who "I" am (p
 narrator turns out to be the creeper).
 
 ## Make one
+**Write it first:** `/story-write` (`.claude/skills/story-write/SKILL.md`) takes a story from ten pitches to a
+script with a voiced cast, a shot list and a continuity bible, checked by the `story-critic` and `story-continuity`
+agents and a cold reader, before anything is built. Craft guide: `docs/story_craft.md`.
+The build steps below are `./hb` commands, with time estimates, in `docs/agent_guide.md`. Before any render, `./hb check`,
+`./hb framing` (shot sizes: the owner's "too zoomed in") and `./hb continuity` (time, cast and props across cuts) read
+the recording in seconds, and `./hb describe <stunt> L05` tells you what a moment shows without rendering it.
 ```bash
 # 1. the script: stories/<name>/story.json (lines, chunks, key words), see stories/put_back
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
@@ -41,6 +47,63 @@ ending) on `lib/story.js`. Every story so far hand-rolled the same helpers (`c`,
 | the cast | `K.actor(tag, {x, z, yaw})` (a mob /tp'd every tick from the object; `K.step(a, dx, dz)` walks and faces it, `K.bury(tag)`), `K.tp(tag, dx, dy, dz, yaw)`, `K.flee(tag, speed)`, tag idle mobs `warm` (nudged every tick), `K.every(fn)` for ambient motion |
 | the rest | `K.go(on)`, `K.ctl(key, on)`, `K.stop()`, `K.setTime(n)` (no 4-tick stall), `K.setMeter(v)`, `K.groan()`, `K.knockback(() => attackerPos)` (mineflayer drops hit knockback on 1.21.11), `K.dig(block)` (vanilla dig speed; mineflayer's is a bare hand's), `ease`, `mcYaw` |
 
+## Cinematic stories (the default look from 2026-11-10)
+Owner, 2026-11-10: "I feel like the cinematic should be the default." The movie engine (docs/movie_engine.md) is on
+main, so a story stunt gets it by exporting a few fields; nothing else in the pipeline changes (voice.py, edit.py
+--story, rec_check, preview.sh, render_on_actions.sh all work as before). Pilot: `story_good_boy`.
+```js
+look: { grade: {...} | 'dawn' | 'night', bloom: 0.5, vignette: 0.38, grain: 0.02, dof: { aperture: 0.9 }, shadows: true, rays: 0.5 },
+shots: { pov: { pov: true }, est: { path: [[0, dx, dy, dz], [2.4, ...]], lookPath: [...], ease: true }, ... },
+self: { model: 'wolf', eye: 0.68, extra: { tame: true, collar: 14 } },   // only for a narrator who isn't a player
+hud: false,                                                               // ...who has no HUD either
+```
+- **The look on every frame** (POV too): grade, bloom, vignette, grain, sun shadows, god rays. No letterbox (the game
+  view is the frame). Depth of field applies to camera shots. Costs ~0.25 s a frame at 1080: fine on Actions.
+- **Camera shots** with `K.shot(name)` (lib/story.js): from this tick the picture is `stunt.shots[name]`, a pure
+  function of time, so a camera is re-tuned and re-rendered without re-recording (`scripts/shot_sheet.py` for one
+  frame per shot in ~30 s, `scripts/try_shots.py` for candidates). `K.shot('pov')` goes back to first person.
+  Camera shots hide the HUD and draw the narrator from outside (the player with `cast.self`'s skin, or
+  `stunt.self.model`). Specs: `path`/`lookPath` (cranes, pull-outs), `follow` + `offset` + `lag`, `orbit`,
+  `at` + `look` (+ `push`), the auto-framed `two`/`single`/`ots` (movie_engine.md has them all).
+- **The format is always the Short** (owner, 2026-11-10: "the same title and then gameplay in the middle"): the
+  channel's 1080x1920 layout from edit.py, the game view 1080x1011. Set `wideMaster: true` on the stunt to render
+  each frame as a 16:9 master at the game view's height (1797x1011) and crop the game view from it: the centre, or a
+  camera shot's `cropX` (-1 = the master's left edge, 1 = its right) to keep a subject in. The crop is the same picture
+  (scale, field of view, the hand) as a plain 1080x1011 render (checked: 0 pixels differ). `WIDE_DIR=dir` also keeps
+  the masters for trailers and 16:9 cuts. Compose for the crop: the shot sheet is 16:9, so judge its middle 60%.
+- **Which shots, when** (from the pilot):
+  - POV carries the narrator's experience and the mystery (what "I" see, the low eye, the clues that live in the
+    first person). Camera shots carry the world and the truth: the establishing crane, the follow, the night wide.
+  - **The camera can show what the narrator can't.** In good_boy every camera shot shows the "dog" beside the guy:
+    that's the narrator. The POV hides who I am, the cameras show it all along, and the reveal is the first shot
+    that starts inside my head and pulls out (`reveal`: a path whose first key is the POV eye). Rewatchable.
+  - An establishing shot after a run of POV lines resets the viewer (where we are, what time it is); a camera shot
+    on a story beat (the zombie hits him) reads better than POV, which can't see the hit.
+  - Keep camera shots 1-3 s, one per line at most; the 9:16-ish game view (1080x1011) is nearly square: frame two
+    subjects side by side or one big; keep the faces in the upper half (the captions sit at 70%).
+  - Cuts between POV and camera shots are free (the camera director switches on the mark's tick), but the cast
+    still has to be in place before the shot's first frame: move them in the line before, or with a >64-block hop.
+- **rec_check** skips its POV checks (cuts, held, turns, set) inside camera shots and says so; check those cameras
+  with `LINT=1 node render.js work/<name>.rec.json` (camera in a block, subject hidden or too small, frozen shots).
+- **A narrator who isn't a player** (`stunt.self`): `eye` puts the POV camera at that height (a wolf 0.68, sitting
+  0.5), `model`/`extra` draw them in camera shots; `K.self({ sitting: true }, 0.5)` changes it on a word.
+  The wolf model is Java-accurate (sitting, tail, tame/angry eyes, dyed collar); other mobs draw from their
+  converted models.
+- **The pilot's whole recipe** (`story_good_boy`, 2026-11-10; stage timings in its commit log):
+  1. Script as story.json v2 (docs/story_craft.md): a narrator plus voiced characters, `requests` pairing speakers.
+  2. Voices: `python3 scripts/voice_cast.py stories/<name>` (Gemini via scripts/tts.py, one request per pair of
+     speakers, short directions; takes cached in voice/*_take.f32, `--only r2 --fresh` re-asks one), then
+     `~/.hb-tts/bin/python scripts/voice_check.py stories/<name>` (Whisper transcript + pitch per line: catches a word
+     split into the wrong line and two voices too alike) and `--words` + `voice_cast.py --timing` (captions on
+     Whisper's word times). Pilot: 2 requests, 57 s of lines, one split fixed by hand.
+  3. Site: a real generated place, not a clearing. `STUNT=scout_village ./scripts/record.sh` records the nearest
+     plains village (seed fixed: centre (-304, -384)); `scripts/still.py` top-down plus a grid to plan positions;
+     build only the focal set (the cottage, docs/building_guide.md) on a levelled pad; read ground heights at run time.
+  4. `RECORD_ONLY=1 STUNT=story_<name> ./run.sh` (rec_check runs), `scripts/shot_sheet.py` for every camera
+     (~1 min), fix cameras in `stunt.shots` without re-recording, `scripts/render_on_actions.sh story_<name>`.
+- **Channel art and thumbnails** from any recording: `scripts/still.py REC out.png --at S --size WxH --shot '{...}'
+  [--look '{...}'] [--time N] [--ss 2]`, text with `scripts/channel_art.py`.
+
 ## Setup (once per container)
 ```bash
 apt-get update && apt-get install -y espeak-ng   # Kokoro's phonemizer for unknown words (a fresh container's apt lists are empty)
@@ -74,12 +137,43 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   multi-speaker with acting direction, as the AI-dilemma Shorts do), no 1.45x sped-up narrator by default, real
   delivery (emotion, pauses, emphasis), built sets that look designed (not a clearing in the wild), and plots with
   more invention. The cinematic engine (shots, looks) is the direction for the look.
+- **Owner, 2026-11-10: "i think i kinda believe in this sort of storytelling minecraft thing. it feels somewhat
+  serious, and if we can do actual voices and make it seem super professional and high quality, that would be
+  amazing."** This is the channel's direction: serious, professional, high-quality Minecraft storytelling with real
+  character voices. Judge every story against a polished animated short, not against other Minecraft Shorts.
+- **Owner, 2026-11-10, on the stories so far:** "Like the creeper was good. i think the respawn tax is somewhat mid. I
+  like the sheep thing (at least it feels like a mystery, I was hooked, the delivery was just kinda bad). Like the sheep
+  worked bc its like why tf is this sheep staring at this block? I also think we need to work on like continuity and
+  stuff. And also stuff might be too zoomed in at times? Theres just a ton of micro and macro to work on." So: the
+  hook is ONE strange, concrete image that makes the viewer ask "why?" (a sheep staring at a block); the twist must
+  re-explain everything (the creeper); fix continuity (props, time of day, positions, who is where across cuts);
+  use wider shots so the viewer sees the place and the action, not just a close-up. Craft guide: docs/story_craft.md.
+- **Owner review, 2026-11-10 (22 notes on the review page, all six published stories).** Patterns, now hard rules:
+  1. **Superflat is banned** (8 notes: "the hill is just a 3x3 and the rest is super flat", "the library's store seems
+     to be right next to the hill"). Sets are built into real terrain with relief and depth; places that are far apart
+     in the story are far apart on screen.
+  2. **Look at what the line names** ("when we say 'another torch' we should look at the torch not around it", "why
+     are we staring down instead of at the librarian's face"): the named subject is in frame, near centre, readable.
+  3. **The picture never runs ahead of the words or contradicts them** ("when we say 'dug under it' we are already in
+     the hole", "why do we start falling without us digging?", "you dig straight down when you say 'never dig straight
+     down'").
+  4. **The plot must survive "why?"** ("this story don't make sense, wtf does it even mean?", "why would grampa say to
+     do that if the main character is the one that's slow", "why does he even think he's the one who pulled the lever"):
+     every character's action has a reason the viewer can state; the critic interrogates every line with "why?".
+  5. **Delivery** ("too quickly delivered", "the voice's delivery doesn't work"): no sped-up narrator; acted voices from
+     voices/cast.json; key lines get room (a pause before, slower pace); "who do you trust" style lines land slowly.
+  6. **No glitches** ("the door closes automatically", "we keep getting stuck on the door", "it looks like it's
+     glitching", "there's no fog" in the fog story): what the title promises is on screen.
 - **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
   effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
   a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
   distance), never a few blocks on a flat cleared plain. `clearSet`'s wide flat clearing is the look to avoid: pick a
   site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
   or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog.
+- **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
+  good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
+  overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its
+  checklist before recording. Sources: `docs/research/building_research.md`.
 
 - **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
   minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
@@ -153,6 +247,7 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 10 | **The Sun Won't Set** | "The sun hasn't set in my world for 300 days." | villagers yawning; a bed nobody sleeps in; my grandpa asks every day if tonight's the night | I froze the time (`advance_time false`) because zombies come at night and grandpa is too slow to run | grandpa asks me to let the night come | open |
 | 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | made (`story_nitwit`, pipeline test 2026-11-10: 2 h 40 min, 2 review rounds; docs/pipeline_test_nitwit.md) |
 | 12 | **Last Seen** | "My friend's armor stand has stood at the village gate for 900 days. Today it turned around." | his armor gets one more scratch a day; a bed still warm; the golem salutes it | (armor stands don't render yet: needs an engine model) | | parked: engine |
+| 13 | **Good Boy** (cinematic pilot) | "I've tried to run away from this guy thirty-seven times." | every time I get 12 blocks away I'm right back next to him; raw porkchops; I sit when he says sit; everyone is tall; sheep look delicious; I can't open doors; skeletons run from me; a dog is always exactly where I am (every camera shot shows it) | I'm his dog: a tamed wolf (vanilla: tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons, attack whatever hurts their owner). Revealed when the camera pulls out of my head | "Tomorrow I'm leaving for real." loops into line 1 | building: cinematic-default worker (`story_good_boy`, branch claude/cinematic-default; v2: voiced cast, real village) |
 
 ## Format: "Who do you trust?" (interactive mystery). Owner, 2026-11-06
 Owner, describing a Short he liked: someone turns 13 and gets a call from themselves 10 years in

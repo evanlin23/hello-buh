@@ -76,6 +76,317 @@ const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 2048)
 camera.rotation.order = 'YXZ'
 const sections = new Map()
 let opaqueMat, translucentMat, clouds, sky, sun, moon, stars, entities, blockEntities
+let fogSea = null
+
+// The cinematic look (docs/movie_engine.md; stunt.look): what shader packs add on top of the game, as a post chain.
+// The world, the hand and the darkness quad draw into an off-screen target; then bloom (bright pixels blurred at
+// quarter size), depth of field (camera shots with a focus distance), and one finishing pass: exposure, a colour
+// grade (lift / gamma / gain, saturation, an S-curve), vignette, grain, and letterbox bars (camera shots). The HUD
+// is drawn later by edit.py, so it stays clean. Off unless a stunt sets `look`.
+const GRADES = {
+  neutral: { lift: [0, 0, 0], gamma: [1, 1, 1], gain: [1, 1, 1], sat: 1.04, contrast: 0.08, exposure: 1 },
+  night: { lift: [0.0, 0.012, 0.03], gamma: [1.0, 1.0, 1.04], gain: [1.07, 1.0, 0.9], sat: 1.06, contrast: 0.14, exposure: 1.06 },
+  dawn: { lift: [0.02, 0.008, 0.015], gamma: [0.97, 1.0, 1.03], gain: [1.09, 1.0, 0.88], sat: 1.12, contrast: 0.1, exposure: 1.03 },
+  day: { lift: [0.0, 0.0, 0.01], gamma: [1, 1, 1], gain: [1.04, 1.01, 0.96], sat: 1.1, contrast: 0.1, exposure: 1.02 }
+}
+let POST = null
+
+// Sun and moon shadows (stunt.look.shadows: true or { radius, size, strength }; docs/movie_engine.md). Not vanilla:
+// what shader packs add. A depth map of the world's opaque blocks from the sun (or the moon at night), an
+// orthographic box of `radius` blocks around the camera, and the block material darkened where a texel is behind
+// something. Cached: it re-renders only when blocks change, the time changes or the camera moves to another 16-block
+// cell, so a still scene pays for it once. v1: blocks cast shadows, entities don't (they keep their shadow discs).
+let SHADOW = null
+function makeShadow (spec, atlas) {
+  const o = typeof spec === 'object' ? spec : {}
+  const size = o.size || 2048, R = o.radius || 72
+  const rt = new THREE.WebGLRenderTarget(size, size)
+  rt.depthTexture = new THREE.DepthTexture(size, size)
+  const cam = new THREE.OrthographicCamera(-R, R, R, -R, 1, 700)
+  cam.layers.set(1)   // only the shadow casters (opaque block sections)
+  const depthMat = new THREE.MeshBasicMaterial({ map: atlas, alphaTest: 0.1, colorWrite: false, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 4 })
+  const uniforms = { shadowMap: { value: rt.depthTexture }, shadowMatrix: { value: new THREE.Matrix4() }, shadowStrength: { value: 0 }, shadowTexel: { value: 1 / size } }
+  return { rt, cam, depthMat, uniforms, R, size, strength: o.strength ?? 0.45, key: '', dirty: true }
+}
+function shadowMaterial (mat) {   // the block material reads the shadow map (a 4-tap PCF), darkening the lit colour
+  mat.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, SHADOW.uniforms)
+    sh.vertexShader = 'varying vec3 vShWorld;\n' + sh.vertexShader.replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\n  vShWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;')
+    sh.fragmentShader = 'uniform sampler2D shadowMap; uniform mat4 shadowMatrix; uniform float shadowStrength; uniform float shadowTexel; varying vec3 vShWorld;\n' +
+      sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+  if (shadowStrength > 0.0) {
+    vec4 sc = shadowMatrix * vec4(vShWorld, 1.0);
+    if (sc.x > 0.0 && sc.x < 1.0 && sc.y > 0.0 && sc.y < 1.0 && sc.z < 1.0) {
+      float lit = 0.0;
+      for (int i = 0; i < 4; i++) {
+        vec2 o = vec2(i == 1 || i == 3 ? 1.0 : -1.0, i >= 2 ? 1.0 : -1.0) * 0.75 * shadowTexel;
+        lit += step(sc.z - 0.0015, texture2D(shadowMap, sc.xy + o).x);
+      }
+      diffuseColor.rgb *= 1.0 - shadowStrength * (1.0 - lit / 4.0);
+    }
+  }`)
+  }
+  mat.needsUpdate = true
+}
+function updateShadow (dayTime, rain) {
+  const S = SHADOW
+  const a = dayInfo(dayTime).angle * Math.PI * 2
+  let dir = new THREE.Vector3(-Math.sin(a), Math.cos(a), 0)   // toward the sun (placeSun)
+  let k = 1
+  if (dir.y < 0.06) { dir = dir.clone().negate(); k = 0.35 }   // the sun is down: the moon, fainter
+  const elev = Math.max(0, dir.y)
+  const strength = S.strength * k * Math.min(1, elev * 4) * (1 - (rain || 0))
+  S.uniforms.shadowStrength.value = strength
+  if (strength <= 0.001) return
+  const cx = Math.floor(camera.position.x / 16) * 16 + 8, cy = Math.floor(camera.position.y / 16) * 16 + 8, cz = Math.floor(camera.position.z / 16) * 16 + 8
+  const key = `${cx},${cy},${cz},${dayTime},${sections.size}`
+  if (!S.dirty && key === S.key) return
+  S.key = key; S.dirty = false
+  const c = new THREE.Vector3(cx, cy, cz)
+  S.cam.position.copy(c).addScaledVector(dir, 350)
+  S.cam.up.set(0, 0, 1)
+  S.cam.lookAt(c)
+  S.cam.updateMatrixWorld(); S.cam.updateProjectionMatrix()
+  const bias = new THREE.Matrix4().set(0.5, 0, 0, 0.5, 0, 0.5, 0, 0.5, 0, 0, 0.5, 0.5, 0, 0, 0, 1)
+  S.uniforms.shadowMatrix.value.copy(bias).multiply(S.cam.projectionMatrix).multiply(S.cam.matrixWorldInverse)
+  const prevBg = scene.background, prevFog = scene.fog, prevOver = scene.overrideMaterial, prevTarget = renderer.getRenderTarget()
+  scene.background = null; scene.fog = null; scene.overrideMaterial = S.depthMat
+  renderer.setRenderTarget(S.rt); renderer.clear(); renderer.render(scene, S.cam)
+  scene.background = prevBg; scene.fog = prevFog; scene.overrideMaterial = prevOver
+  renderer.setRenderTarget(prevTarget)
+}
+function makePost (look, w, h) {
+  const g = typeof look.grade === 'object' ? { ...GRADES.neutral, ...look.grade } : (GRADES[look.grade] || GRADES.neutral)
+  const rt = new THREE.WebGLRenderTarget(w, h, { depthBuffer: true })
+  rt.depthTexture = new THREE.DepthTexture(w, h)
+  const bw = Math.max(1, Math.floor(w / 4)), bh = Math.max(1, Math.floor(h / 4))
+  const ba = new THREE.WebGLRenderTarget(bw, bh), bb = new THREE.WebGLRenderTarget(bw, bh)
+  const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), quadScene = new THREE.Scene()
+  const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2)); quadScene.add(quad)
+  const vs = 'varying vec2 vUv; void main () { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }'
+  const mk = (fs, uniforms) => new THREE.ShaderMaterial({ vertexShader: vs, fragmentShader: fs, uniforms, depthTest: false, depthWrite: false })
+  const bright = mk(`uniform sampler2D src; uniform float thr; varying vec2 vUv;
+    void main () { vec3 c = texture2D(src, vUv).rgb; float l = max(c.r, max(c.g, c.b));
+      gl_FragColor = vec4(c * max(0.0, l - thr) / max(1e-3, (1.0 - thr) * l), 1.0); }`, { src: { value: null }, thr: { value: look.bloomThreshold ?? 0.7 } })
+  const blur = mk(`uniform sampler2D src; uniform vec2 dir; varying vec2 vUv;
+    void main () { vec3 c = texture2D(src, vUv).rgb * 0.2270;
+      c += (texture2D(src, vUv + dir * 1.3846).rgb + texture2D(src, vUv - dir * 1.3846).rgb) * 0.3162;
+      c += (texture2D(src, vUv + dir * 3.2308).rgb + texture2D(src, vUv - dir * 3.2308).rgb) * 0.0703;
+      gl_FragColor = vec4(c, 1.0); }`, { src: { value: null }, dir: { value: new THREE.Vector2() } })
+  const COC = `uniform sampler2D depth; uniform vec2 res; uniform float near; uniform float far; uniform float focus; uniform float aperture;
+    float lin (float d) { return near * far / (far - d * (far - near)); }
+    // the circle of confusion in pixels at 540 high, scaled to the frame: the preview and the final match
+    float coc (vec2 uv) { float z = lin(texture2D(depth, uv).x); float k = res.y / 540.0; return clamp(aperture * abs(z - focus) / max(z, 0.1) * 12.0 * k, 0.0, 14.0 * k); }`
+  // depth of field at half size (blur hides it; a quarter of the cost): a 24-tap golden-angle disc gather, each tap
+  // weighted by its own blur so a sharp subject in front doesn't bleed into the background behind it
+  const rd = new THREE.WebGLRenderTarget(Math.max(1, Math.floor(w / 2)), Math.max(1, Math.floor(h / 2)))
+  const dofMat = mk(`uniform sampler2D src; ${COC} varying vec2 vUv;
+    void main () {
+      float r = coc(vUv); vec3 c = texture2D(src, vUv).rgb;
+      if (r > 0.5) {
+        vec3 acc = c; float wsum = 1.0;
+        for (int k = 0; k < 24; k++) {
+          float a = float(k) * 2.39996, rr = sqrt((float(k) + 0.5) / 24.0);
+          vec2 o = vec2(cos(a), sin(a)) * rr * r / res;
+          float w = clamp(coc(vUv + o) / max(0.5, rr * r), 0.0, 1.0);
+          acc += texture2D(src, vUv + o).rgb * w; wsum += w;
+        }
+        c = acc / wsum;
+      }
+      gl_FragColor = vec4(c, 1.0);
+    }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) }, near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 } })
+  // god rays (look.rays: strength): the bright open sky (depth at the far plane) streaked toward the sun's place
+  // on screen, at quarter size; added in the finishing pass, fading as the sun leaves the frame
+  const rr = new THREE.WebGLRenderTarget(bw, bh)
+  const rayMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform vec2 sun; uniform float sunOn; varying vec2 vUv;
+    void main () {
+      vec2 d = (sun - vUv) / 32.0; vec2 uv = vUv; vec3 acc = vec3(0.0); float decay = 1.0;
+      for (int i = 0; i < 32; i++) {
+        float sky = step(0.9999, texture2D(depth, uv).x);
+        vec3 c = texture2D(src, uv).rgb;
+        // only the sun and its glow give light (luminance near white, close to the sun): with the whole bright
+        // sky as the source, a clear day washed out white (test frame, boat_clutch)
+        float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+        float near = smoothstep(0.35, 0.0, distance(uv, sun));
+        acc += c * sky * smoothstep(0.86, 1.0, l) * near * decay;
+        decay *= 0.96; uv += d;
+      }
+      gl_FragColor = vec4(acc / 32.0 * sunOn, 1.0);
+    }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, sun: { value: new THREE.Vector2(0.5, 0.5) }, sunOn: { value: 0 } })
+  // the shader-pack pass (look.shade, look.reflect): screen-space reflections on the lake (a plane y inside an ellipse:
+  // ice and the water in its holes), ambient occlusion from the depth buffer, haze glowing warm toward the sun and cool
+  // away from it, a warm/cool light split. Runs on the rendered frame before bloom and depth of field.
+  const rs = new THREE.WebGLRenderTarget(w, h)
+  const SH = look.shade || {}, RF = look.reflect || null
+  const shadeMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform vec2 res; uniform mat4 projInv; uniform mat4 proj; uniform mat4 camWorld; uniform mat4 view;
+    uniform vec3 sunDir; uniform vec3 warm; uniform vec3 cool; uniform float aoK; uniform float hazeK; uniform float hazeDist; uniform float split; uniform float glow;
+    uniform float reflK; uniform float planeY; uniform vec2 ctr; uniform vec2 rad; uniform float under; varying vec2 vUv;
+    vec3 vpos (vec2 uv) { float d = texture2D(depth, uv).x; vec4 q = projInv * vec4(uv * 2.0 - 1.0, d * 2.0 - 1.0, 1.0); return q.xyz / q.w; }
+    float hash (vec2 p) { return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
+    void main () {
+      vec3 c = texture2D(src, vUv).rgb;
+      float d = texture2D(depth, vUv).x;
+      vec3 P = vpos(vUv);
+      vec3 Vw = normalize((camWorld * vec4(P, 0.0)).xyz);
+      float sunA = max(dot(Vw, normalize(sunDir)), 0.0);
+      if (d >= 0.99999) {   // sky: a glow round the sun
+        c += warm * pow(sunA, 18.0) * glow;
+        gl_FragColor = vec4(c, 1.0); return;
+      }
+      vec3 W = (camWorld * vec4(P, 1.0)).xyz;
+      vec3 N = normalize(cross(dFdx(P), dFdy(P)));
+      if (dot(N, P) > 0.0) N = -N;
+      // ambient occlusion: 12 taps in a spiral, a world radius of ~0.9 blocks
+      float occ = 0.0;
+      if (aoK > 0.0) {
+        float r = clamp(0.9 * res.y * proj[1][1] * 0.5 / max(0.3, -P.z), 2.0, 60.0);
+        float a0 = hash(vUv * res) * 6.283;
+        for (int k = 0; k < 12; k++) {
+          float fk = float(k) + 0.5, a = a0 + fk * 2.39996;
+          vec2 o = vec2(cos(a), sin(a)) * r * sqrt(fk / 12.0) / res;
+          vec3 v = vpos(vUv + o) - P;
+          float dd = dot(v, v);
+          occ += max(0.0, dot(v, N) - 0.02 * -P.z) / (dd + 0.05) * smoothstep(4.0, 0.5, dd);
+        }
+        occ = clamp(occ / 12.0 * 1.6, 0.0, 1.0);
+        c *= mix(vec3(1.0), cool * 1.25, occ * aoK);
+      }
+      // reflections on the lake
+      if (reflK > 0.0 && under < 0.5) {
+        vec2 e = (W.xz - ctr) / rad;
+        bool onIce = abs(W.y - planeY) < 0.04, onWater = abs(W.y - (planeY - 0.111)) < 0.05;
+        if ((onIce || onWater) && dot(e, e) < 1.0 && N.y > -2.0) {
+          vec3 Nv = normalize((view * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
+          vec3 Vv = normalize(P), R = reflect(Vv, Nv);
+          float fres = 0.04 + 0.96 * pow(1.0 - max(0.0, dot(-Vv, Nv)), 5.0);
+          vec3 Rw = normalize((camWorld * vec4(R, 0.0)).xyz);
+          // the sky it would see, if the march finds nothing: the haze colours and the sun
+          vec3 refl = mix(cool * 0.9, warm, pow(max(dot(Rw, normalize(sunDir)), 0.0), 3.0)) * (0.6 + 0.4 * smoothstep(0.0, 0.4, Rw.y));
+          float hit = 0.0;
+          for (int i = 1; i <= 40; i++) {
+            float t = 0.15 * float(i) + 0.012 * float(i * i);
+            vec3 Q = P + R * t;
+            vec4 cq = proj * vec4(Q, 1.0); vec2 uq = cq.xy / cq.w * 0.5 + 0.5;
+            if (uq.x < 0.0 || uq.x > 1.0 || uq.y < 0.0 || uq.y > 1.0) break;
+            float sd = texture2D(depth, uq).x;
+            if (sd >= 0.99999) continue;
+            float sz = vpos(uq).z;
+            if (Q.z < sz && sz - Q.z < 0.6 + t * 0.12) {
+              float edge = smoothstep(0.0, 0.08, min(min(uq.x, 1.0 - uq.x), min(uq.y, 1.0 - uq.y)));
+              refl = mix(refl, texture2D(src, uq).rgb, edge); hit = 1.0; break;
+            }
+          }
+          float k = reflK * (onWater ? 0.9 : 0.62) * (0.5 + 0.5 * fres);
+          c = mix(c, refl, clamp(k, 0.0, 0.9));
+        }
+      }
+      // haze: warm toward the sun, cool away, thicker with distance
+      float dist = length(P);
+      float hz = (1.0 - exp(-dist / hazeDist)) * hazeK;
+      vec3 hcol = mix(cool, warm, pow(sunA, 4.0));
+      c = mix(c, hcol, hz);
+      // the light split: warm highlights, cool shadows
+      float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+      c *= mix(mix(vec3(1.0), cool * 1.35, split), mix(vec3(1.0), warm * 1.2, split), smoothstep(0.15, 0.7, l));
+      gl_FragColor = vec4(c, 1.0);
+    }`, { src: { value: rt.texture }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) }, projInv: { value: new THREE.Matrix4() }, proj: { value: new THREE.Matrix4() },
+    camWorld: { value: new THREE.Matrix4() }, view: { value: new THREE.Matrix4() }, sunDir: { value: new THREE.Vector3(0, 1, 0) },
+    warm: { value: new THREE.Vector3(...(SH.warm || [1.0, 0.66, 0.38])) }, cool: { value: new THREE.Vector3(...(SH.cool || [0.42, 0.52, 0.72])) },
+    aoK: { value: SH.ao ?? 0 }, hazeK: { value: SH.haze ?? 0 }, hazeDist: { value: SH.hazeDist ?? 60 }, split: { value: SH.split ?? 0 }, glow: { value: SH.glow ?? 0 },
+    reflK: { value: RF ? (RF.strength ?? 0.8) : 0 }, planeY: { value: RF ? RF.y : 0 }, ctr: { value: new THREE.Vector2(RF ? RF.cx : 0, RF ? RF.cz : 0) }, rad: { value: new THREE.Vector2(...(RF && RF.radius ? RF.radius : [1, 1])) }, under: { value: 0 } })
+  shadeMat.extensions = { derivatives: true }
+  const shadeOn = !!(look.shade || look.reflect)
+  const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D rays; uniform float raysK; uniform sampler2D depth; uniform vec2 res;
+    uniform float near; uniform float far; uniform float focus; uniform float aperture; uniform float bloomK;
+    uniform vec3 lift; uniform vec3 gam; uniform vec3 gain; uniform float sat; uniform float contrast; uniform float exposure;
+    uniform float vig; uniform float grain; uniform float seed; uniform float bars; varying vec2 vUv;
+    float lin (float d) { return near * far / (far - d * (far - near)); }
+    float coc (vec2 uv) { float z = lin(texture2D(depth, uv).x); float k = res.y / 540.0; return clamp(aperture * abs(z - focus) / max(z, 0.1) * 12.0 * k, 0.0, 14.0 * k); }
+    float hash (vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233)) + seed) * 43758.5453); }
+    void main () {
+      vec3 c = texture2D(src, vUv).rgb;
+      if (focus > 0.0) c = mix(c, texture2D(dof, vUv).rgb, smoothstep(0.5, 2.5, coc(vUv)));   // the half-size blur where it's out of focus
+      c += texture2D(bloom, vUv).rgb * bloomK;
+      c += texture2D(rays, vUv).rgb * raysK;
+      c *= exposure;
+      c = pow(max(vec3(0.0), c * gain + lift * (1.0 - c)), 1.0 / gam);
+      float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
+      c = mix(vec3(l), c, sat);
+      // (clamped first: the S-curve on a value over 1 goes negative, and a blown sky near the sun lost its red: cyan blotches)
+      c = clamp(c, 0.0, 1.0);
+      c = mix(c, c * c * (3.0 - 2.0 * c), contrast);
+      vec2 q = vUv - 0.5; q.x *= res.x / res.y;
+      c *= mix(1.0, smoothstep(0.95, 0.25, length(q)), vig);
+      c += (hash(vUv * res) - 0.5) * grain;
+      if (bars > 0.0 && abs(vUv.y - 0.5) > 0.5 * (res.x / res.y) / bars) c = vec3(0.0);
+      gl_FragColor = vec4(clamp(c, 0.0, 1.0), 1.0);
+    }`, {
+    src: { value: rt.texture }, bloom: { value: ba.texture }, dof: { value: rd.texture }, rays: { value: rr.texture }, raysK: { value: look.rays || 0 }, depth: { value: rt.depthTexture }, res: { value: new THREE.Vector2(w, h) },
+    near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 }, bloomK: { value: look.bloom ?? 0.6 },
+    lift: { value: new THREE.Vector3(...g.lift) }, gam: { value: new THREE.Vector3(...g.gamma) }, gain: { value: new THREE.Vector3(...g.gain) },
+    sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 },
+    vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 }
+  })
+  return { rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1 }
+}
+function runPost (cam, tick) {
+  const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
+  let frame = P.rt.texture
+  if (P.shadeOn) {
+    const su = P.shadeMat.uniforms
+    su.projInv.value.copy(camera.projectionMatrixInverse); su.proj.value.copy(camera.projectionMatrix)
+    su.camWorld.value.copy(camera.matrixWorld); su.view.value.copy(camera.matrixWorldInverse)
+    if (sun) su.sunDir.value.copy(sun.position).sub(camera.position).normalize()
+    su.under.value = cam.underwater || cam.inLava ? 1 : 0
+    pass(P.shadeMat, P.rs); frame = P.rs.texture
+  }
+  P.dofMat.uniforms.src.value = frame; P.fin.uniforms.src.value = frame; if (P.rayMat) P.rayMat.uniforms.src.value = frame
+  P.bright.uniforms.src.value = frame; pass(P.bright, P.ba)
+  for (let i = 0; i < 2; i++) {   // two blur rounds at quarter size: a wide, soft glow
+    P.blur.uniforms.src.value = P.ba.texture; P.blur.uniforms.dir.value.set(1 / P.bw, 0); pass(P.blur, P.bb)
+    P.blur.uniforms.src.value = P.bb.texture; P.blur.uniforms.dir.value.set(0, 1 / P.bh); pass(P.blur, P.ba)
+  }
+  if (P.rays > 0 && sun && sun.visible) {   // the sun's place on screen: on (or just off) the frame, in front of the camera
+    const v = sun.position.clone().project(camera), on = v.z < 1 && Math.abs(v.x) < 1.6 && Math.abs(v.y) < 1.6 ? 1 - Math.max(0, Math.max(Math.abs(v.x), Math.abs(v.y)) - 1) / 0.6 : 0
+    P.rayMat.uniforms.sun.value.set(v.x * 0.5 + 0.5, v.y * 0.5 + 0.5); P.rayMat.uniforms.sunOn.value = Math.max(0, on) * (sun.material.opacity ?? 1)
+    if (on > 0) pass(P.rayMat, P.rr)
+    P.fin.uniforms.raysK.value = on > 0 ? P.rays : 0
+  }
+  const u = P.fin.uniforms
+  u.near.value = camera.near; u.far.value = camera.far
+  u.focus.value = cam.focus || 0; u.aperture.value = cam.aperture ?? 1
+  if (cam.focus > 0) {
+    const d = P.dofMat.uniforms
+    d.near.value = camera.near; d.far.value = camera.far; d.focus.value = cam.focus; d.aperture.value = cam.aperture ?? 1
+    pass(P.dofMat, P.rd)
+  }
+  // look.underwater: an exposure lift while the camera is in water (the cold-biome water fog graded to near black: ai_thin_ice)
+  if (P.exp0 === undefined) P.exp0 = u.exposure.value
+  u.exposure.value = P.exp0 * (cam.underwater ? (P.underwater ?? 1) : 1)
+  u.bars.value = cam.bars || 0; u.seed.value = ((tick || 0) * 0.6180339) % 1 * 100
+  pass(P.fin, null)
+}
+
+// The fog sea (docs/movie_engine.md; stunt.fogSea = { y0, y1, layers, density, color, fade, night }): a white
+// band between y0 and y1 that reads as a sea of fog from above, as an overcast ceiling from below, and
+// that you can fall through. Not vanilla (no block looks like that and lets you through): stacked
+// translucent sheets centred on the camera, bunched toward the top so the surface is soft, with
+// `density` (default 0.97) of the light stopped by the whole stack. Inside the band the scene fog closes
+// in to a white-out over `fade` blocks (default 4). Its colour follows the daylight, down to `night` (0.34) of it.
+function makeFogSea (spec, blocks) {
+  const n = spec.layers || 14, dens = spec.density ?? 0.97
+  const alpha = 1 - Math.pow(1 - dens, 1 / n)
+  const grp = new THREE.Group(); grp.userData = { spec }
+  const geo = new THREE.PlaneGeometry(blocks * 3, blocks * 3)
+  for (let k = 0; k < n; k++) {
+    const u = n === 1 ? 1 : k / (n - 1)
+    const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: alpha, depthWrite: false, side: THREE.DoubleSide, fog: true })
+    const m = new THREE.Mesh(geo, mat)
+    m.rotation.x = -Math.PI / 2; m.position.y = spec.y0 + (spec.y1 - spec.y0) * Math.pow(u, 0.6); m.renderOrder = 3; m.frustumCulled = false
+    grp.add(m)
+  }
+  return grp
+}
 const env = { skyColor: 0x78a7ff, fogColor: 0xc0d8ff, renderDistance: 12, cloudHeight: 192.33, time: 6000 }
 
 function srgb (hex) { return new THREE.Color().setHex(hex, THREE.LinearSRGBColorSpace) }
@@ -484,6 +795,9 @@ window.HB = {
     try { moon = await makeSun('/assets/env/moon.png'); moon.scale.setScalar(20 / 30); scene.add(moon) } catch (e) { moon = null }
     stars = makeStars(); scene.add(stars)
     clouds = await makeClouds('/assets/env/clouds.png'); scene.add(clouds)
+    if (env.fogSea) { fogSea = makeFogSea(env.fogSea, blocks); scene.add(fogSea) }
+    if (env.look) POST = makePost(env.look, W, H)
+    if (env.look && env.look.shadows) { SHADOW = makeShadow(env.look.shadows, atlas); shadowMaterial(opaqueMat) }
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
     entities = new EntityLayer(scene, regs); entities.camera = camera
@@ -532,6 +846,7 @@ window.HB = {
       geo.setIndex(new THREE.BufferAttribute(d.indices, 1))
       const m = new THREE.Mesh(geo, mat)
       if (part === 'translucent') m.renderOrder = 1
+      else m.layers.enable(1)   // a shadow caster (SHADOW)
       grp.add(m)
     }
     if (s.endPortal && s.endPortal.positions.length) {
@@ -542,6 +857,7 @@ window.HB = {
     }
     scene.add(grp)
     sections.set(key, grp)
+    if (SHADOW) SHADOW.dirty = true
   },
 
   removeSection (key) {
@@ -603,6 +919,9 @@ window.HB = {
     sky.material.uniforms.below.value = (cam.dimension || 'overworld') === 'overworld' && cam.y < 63 ? 1 : 0
     env.fogColorC = fogC
     const cloudC = new THREE.Color().setScalar(day.bright * 0.9 + 0.1)
+    // look.cloudNight (a movie scene's choice, not vanilla): moonlit clouds at least this bright. At vanilla's 0.1 they
+    // were black holes over a moonlit fog sea (reel 1 v3)
+    if (env.look && env.look.cloudNight) { const k = env.look.cloudNight; cloudC.setRGB(Math.max(cloudC.r, k * 0.85), Math.max(cloudC.g, k * 0.9), Math.max(cloudC.b, k)) }
     if (rain > 0) grey(cloudC, 0.6, rain, 0.95)
     if (thunder > 0) grey(cloudC, 0.2, thunder, 0.95)
     // darkness: the short fog swallows the clouds, sun, moon and stars (they fade with the blend)
@@ -624,6 +943,29 @@ window.HB = {
     const under = cam.underwater || cam.inLava; sky.visible = !under; clouds.visible = !under && env.clouds !== false;   // a stunt can set `clouds: false` (Video Settings > Clouds: OFF)
     sun.visible = !under && !window.DEBUG_NOSUN; if (moon) moon.visible = sun.visible; if (stars) stars.visible = !under
     scene.background = cam.inLava ? srgb(0x991a00) : cam.underwater ? srgb(cam.waterFog ?? 0x050533) : env.fogColorC.clone()
+    if (fogSea) {   // (makeFogSea above)
+      const sp = fogSea.userData.spec
+      const c = srgb(sp.color ?? 0xeef2ff).multiplyScalar((sp.night ?? 0.34) + (1 - (sp.night ?? 0.34)) * day.bright * (1 - rain * 0.4))   // (at 0.16 the night sea was black on black: test reel)
+      fogSea.position.set(camera.position.x, 0, camera.position.z)
+      // a sheet fades as the camera nears it, so passing through one is smooth (each sheet is ~23% of the haze: crossing
+      // them popped the Below's POV twice on the way out, QA f22 and f42)
+      for (const m of fogSea.children) {
+        m.material.color.copy(c)
+        const base = m.userData.alpha ?? (m.userData.alpha = m.material.opacity)
+        m.material.opacity = base * Math.min(1, Math.abs(m.position.y - camera.position.y) / 3)
+      }
+      const depth = sp.y1 - cam.y
+      if (depth > 0 && cam.y > sp.y0 - 2 && !cam.underwater && !cam.inLava) {
+        // (and out again over the band's last `fade` blocks: you come out of its floor gradually; the white held until
+        // the eye was 2 below it, 2 s of white at the start of the Below's POV)
+        const k = Math.max(0, Math.min(1, depth / (sp.fade ?? 4), (cam.y - sp.y0) / (sp.fade ?? 4)))
+        // (from the full distance at k = 0, so the edges of the band don't pop: a fixed 32 left a haze that vanished in one
+        // frame as the camera left the band's floor, QA f42)
+        if (k > 0.001) { scene.fog.color.lerp(c, k); scene.fog.near = envFog((1 - k) * (1 - k) * blocks); scene.fog.far = blocks * (1 - k) + 3 * k }
+        scene.background.lerp(c, k)
+        if (k > 0.9) { sky.visible = false; clouds.visible = false; sun.visible = false; if (moon) moon.visible = false; if (stars) stars.visible = false }
+      }
+    }
     sky.position.copy(camera.position)
     // the Nether (DimensionSpecialEffects NETHER: no sky, sun or clouds; the clear colour is the biome
     // fog colour, not darkened by time; thick fog from renderDistance * 0.05 to min(renderDistance,
@@ -655,6 +997,8 @@ window.HB = {
     drawSelection(cam)
     drawAim(cam)
     cullClouds()
+    if (SHADOW) updateShadow(env.time, rain)
+    if (POST) renderer.setRenderTarget(POST.rt)   // the cinematic look: everything below draws off screen first
     renderer.render(scene, camera)
     // vanilla's mipmap chain stops at level 4 (Options mipmapLevels: 16 px -> 1 px per tile); three
     // builds it down to 1x1, where the 32 px atlas cells (8 px padding) blend into their neighbours
@@ -667,6 +1011,7 @@ window.HB = {
         renderer.state.reset(); opaqueMat.map.userData.maxLevel = true
       }
     }
+    if (POST) renderer.setRenderTarget(POST.rt)   // (state.reset above can unbind it)
     if (await drawHand(cam)) {
       const ac = renderer.autoClear; renderer.autoClear = false
       renderer.clearDepth(); renderer.render(handScene, handCam)
@@ -684,6 +1029,7 @@ window.HB = {
       const ac = renderer.autoClear; renderer.autoClear = false
       renderer.render(darkScene, darkCam); renderer.autoClear = ac
     }
+    if (POST) runPost(cam, tick)
     return true
   }
 }

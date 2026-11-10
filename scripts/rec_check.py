@@ -133,6 +133,25 @@ class Report:
         self.items.append((level, check, t, msg, near))
 
 
+def camera_shot_spans(stunt, stunt_file, tl):
+    """[(tick0, tick1)] where a camera shot (not a POV one) is on screen: each 'shot' mark to the next."""
+    marks = [(e["t"] / 50, e.get("name")) for e in tl if e["event"] == "shot"]
+    if not marks:
+        return []
+    mod = stunt_file or str(HERE / "stunts" / f"{stunt}.js")
+    try:
+        js = "const m=require(process.argv[1]);process.stdout.write(JSON.stringify(m.shots||{}))"
+        shots = json.loads(subprocess.run(["node", "-e", js, os.path.abspath(mod)], capture_output=True, text=True, check=True).stdout or "{}")
+    except Exception:
+        shots = {}
+    out = []
+    for k, (t0, name) in enumerate(marks):
+        t1 = marks[k + 1][0] if k + 1 < len(marks) else 1e9
+        if not (shots.get(name) or {}).get("pov"):
+            out.append((t0, t1))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("stunt")
@@ -249,8 +268,18 @@ def main():
         """'12.35s (src 34.20s)' for output frame index j (into ks)."""
         return vt(ks[j] / FPS), src_tick[j]
 
+    # camera shots (stunt.shots + 'shot' marks: the movie engine's camera director, docs/movie_engine.md): the picture
+    # there comes from the shot's camera, not the bot's eye, so the POV checks (cuts, held, turns, set) don't apply.
+    # `LINT=1 node render.js <rec>` checks those spans (camera in a block, subject hidden or frozen, line crossed).
+    cam_spans = camera_shot_spans(a.stunt, a.stunt_file, tl)
+    in_cam = lambda tick: any(c0 <= tick < c1 for c0, c1 in cam_spans)
+    skipped = {}
+
     def add(level, check, j, msg, tick=None):
         t_short, st = where(j) if j is not None else (None, tick)
+        if check in ("cuts", "held", "turns", "set") and in_cam(tick if tick is not None else st):
+            skipped[check] = skipped.get(check, 0) + 1
+            return
         R.add(level, check, (t_short, (tick if tick is not None else st) / 20), msg, near(tick if tick is not None else st))
 
     # ---------------------------------------------------------------- 1. cuts
@@ -706,6 +735,10 @@ def main():
         print("  held-shot check" + caps_note)
     if world_note:
         print("  " + world_note)
+    if cam_spans:
+        secs = sum(min(c1, len(P)) - c0 for c0, c1 in cam_spans) / 20
+        print(f"  {len(cam_spans)} camera shot(s), {secs:.1f}s: POV checks skipped there"
+              f"{' (' + ', '.join(f'{v} {k}' for k, v in skipped.items()) + ')' if skipped else ''}; run LINT=1 node render.js {rec_p} for the cameras")
     order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "edit": -1}
     for level, title in (("BLOCK", "BLOCKERS"), ("WARN", "WARNINGS")):
         items = sorted([it for it in R.items if it[0] == level], key=lambda it: (order.get(it[1], 9), it[2][0] if it[2] and it[2][0] is not None else -1))

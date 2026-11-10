@@ -1,0 +1,1 @@
+{"grade": {"lift": [0.03, 0.012, 0.02], "gamma": [0.95, 1.0, 1.06], "gain": [1.2, 1.03, 0.8], "sat": 1.22, "contrast": 0.16, "exposure": 1.12}, "bloom": 0.6, "bloomThreshold": 0.68, "vignette": 0.5, "grain": 0.015, "dof": {"aperture": 1.1}, "shadows": true, "rays": 0.8}

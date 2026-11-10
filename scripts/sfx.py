@@ -4,6 +4,7 @@
     ['whoosh', 'cut1b'],              // peak on the mark (teleport cuts, tier changes)
     ['riser', 'drop5', 'splash5'],    // rising sweep over a span, ending exactly on the second mark
     ['wind', 'drop5', 'splash5'],     // fall wind, rising with the fall
+    ['air', 'start', 'fall'],         // a steady ambient wind bed (high places, night), faded in and out
     ['impact', 'splash5'],            // sub-bass boom + a punchy hit, layered under the game audio
     ['boom', 'splash5'],              // the big one: deep boom with a long tail
     ['dip', 'splash5', 0.3],          // the SONG ducks to near silence for 0.3 s before the mark
@@ -39,7 +40,7 @@ LIB = {
     "ding": ["sfx/kenney/interface-sounds/confirmation_001.ogg"],
     "hit": ["sfx/kenney/impact-sounds/impactPunch_heavy_000.ogg"],
 }
-GAIN = {"whoosh": 0.55, "riser": 0.45, "wind": 0.35, "impact": 0.9, "boom": 1.0, "pop": 0.5, "ding": 0.45, "scratch": 0.6, "file": 0.7}
+GAIN = {"whoosh": 0.55, "riser": 0.45, "wind": 0.35, "air": 0.12, "impact": 0.9, "boom": 1.0, "pop": 0.5, "ding": 0.45, "scratch": 0.6, "file": 0.7}
 
 
 def _load(x):
@@ -120,6 +121,16 @@ def synth_wind(dur):
     return norm(np.stack([l * env, r * env], 1).astype(np.float32), 0.8)
 
 
+def synth_air(dur, fade=0.8):
+    """Ambient wind: dark, slowly gusting noise at a steady level, faded in and out (no rise)."""
+    n = max(1, int(dur * SR)); t = np.arange(n) / SR
+    gust = 1 + 0.3 * np.sin(2 * np.pi * 0.13 * t) + 0.18 * np.sin(2 * np.pi * 0.31 * t + 2)
+    l = band(RNG.standard_normal(n), 60, 420) * gust
+    r = band(RNG.standard_normal(n), 60, 420) * (2 - gust)
+    env = np.minimum(1, np.minimum(t / fade, (dur - t) / fade).clip(0, None))
+    return norm(np.stack([l * env, r * env], 1).astype(np.float32), 0.8)
+
+
 def synth_whoosh(dur=0.55):
     """Band-passed noise sweeping up then down, loudest in the middle (the peak is the mark)."""
     n = int(dur * SR); t = np.arange(n) / SR; k = t / dur
@@ -184,7 +195,7 @@ def plan(spec, timeline, start, cards=None, counter=None):
         if t0 is None:
             print(f"sfx {kind} {s[1:]} skipped (event missing)")
             continue
-        if kind in ("riser", "wind"):
+        if kind in ("riser", "wind", "air"):
             t1 = at(s[2], nth) if len(s) > 2 else None
             if t1 is None or t1 <= t0:
                 print(f"sfx {kind} {s[1:]} skipped (span empty)")
@@ -231,6 +242,8 @@ def build_track(spec, timeline, start, dur, out_wav, cards=None, counter=None):
             put(synth_riser(t1 - t0), t0, g)
         elif kind == "wind":
             put(synth_wind(t1 - t0 + 0.15), t0, g)
+        elif kind == "air":
+            put(synth_air(t1 - t0 + 0.4), t0, g)
         elif kind == "impact":
             put(synth_boom(1.1, 110, 40, 0.3), t0, g)
             put(library("hit"), t0, g * 0.7)
