@@ -74,9 +74,10 @@ def main(sd):
             elif abs(d) > 0.06 and not forced:
                 print(f"WARN  {lid}: {what} {d:+.2f} s from the speech onset")
                 warns += 1
-    if whisper:
-        print(f"WARN  {', '.join(whisper)}: Whisper word times (0.1-0.3 s off per word), not forced-aligned: re-run scripts/align.py")
-        warns += 1
+    if whisper:   # owner: "Some of them are earlier, some of them are after": Whisper's per-word jitter. Never ship it.
+        print(f"BLOCK {', '.join(whisper)}: Whisper word times (0.1-0.3 s off per word), not forced-aligned: install the "
+              f"aligner (~/.hb-tts/bin/pip install transformers torch) and re-run scripts/align.py")
+        blocks += 1
     print(("FAIL" if blocks else "OK") + f": {blocks} blocker(s), {warns} warning(s) (caption sync)")
     if blocks:
         print("fix: ~/.hb-tts/bin/python scripts/align.py " + sd + "   (re-aligns voice.json chunks + words.json to the current wavs)")

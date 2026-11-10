@@ -210,3 +210,27 @@ S05 clips 7.5 % (B2). DoF is used only on S14, a close-up (aperture 0.7), so the
    - S01, measured on Grandma's face: ≥ 0.25, with `--box`;
    - S03: with F2 in place, ≥ 0.35 by day;
    - S05: under 2 % clipped.
+
+## Addendum (lead, 2026-11-10): premise-breaking set details and shot variety
+
+**B5. "Nine thousand GOLD" has nothing on screen.**
+- Across the whole recording the only gold is the single thrown ingot and Grandpa's helmet in the flashback. The
+  cellar has no gold supply, no tally and no gold dust, and Grandma wears none.
+- A viewer can't believe 9,000 ingots from what they see, and L09/L10's "SIXTY-FOUR ingots" never shows (F6).
+- Fix (dress):
+  - stack gold in the cellar: two or three open chests showing gold, a few gold blocks used as a step or table, and
+    a tally of 9,000 as signs or item frames on the wall;
+  - put the 64-stack in the hotbar in a POV beat on "SIXTY-FOUR".
+- Keep it gold-coloured in frame from S01 on. This also fixes B1's first frame.
+
+**B6. 27.5-50.5 s: 23 s on the same cellar angle (lead note).**
+- Shots 13-17 all look at the portal from the cellar floor. Shots 15-17 run 4.9, 5.8 and 5.0 s, over the 1.5-4 s
+  camera-shot rule (STANDARDS 4.5).
+- Shots 4-6 (9.65-13.45 s) are three "close on the set" POVs in a row.
+- Fix (camera): cut on every line, and alternate at least three set-ups:
+  - the portal from the stairs, high;
+  - a low reverse from the portal side, looking at Grandma and the boy;
+  - an over-the-shoulder at the barrel or chest.
+- Split S10 and S11 at their chunk boundaries.
+
+**Same-framing cuts:** MS → MS at 26.90 s (s07b → s07b) and FS → FS at 34.85 s.
