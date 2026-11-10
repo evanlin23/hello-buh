@@ -15,8 +15,8 @@
   - Drowned may spawn holding a trident.
 - **Nobody becomes a drowned in this story.** Grandpa (a player) is lost at sea; the story never says how.
 - **The backstory (never staged):** Grandpa dove the old shipwreck in the bay for its treasure. He found a Heart of
-  the Sea, hid it on the wreck's deck in a chest he had renamed For Rosa (Grandma's name; his boat was the ROSA too),
-  meaning to give it to her on her birthday. One night he dove late in the ROSA and neither he nor the boat came back.
+  the Sea, hid it on the wreck's deck in a chest he had renamed For Mae (Grandma's name; his boat was the MAE too),
+  meaning to give it to her on her birthday. One night he dove late in the MAE and neither he nor the boat came back.
   301 nights ago. The next night Grandma placed the first lantern at the foot of the dock. She has placed one a night
   since, 2 blocks apart, straight toward the wreck: 300 lanterns before tonight, a road 600 blocks long. Tonight's is
   the 301st, and it lands on the deck.
@@ -46,12 +46,12 @@ Coordinates: the dock's shore landing is (0,0); the bay opens to the **west** (-
 | place | where (x,z) | what's there | establishing shot (first seen) | changes during the story |
 |---|---|---|---|---|
 | cottage | (14,-6), on the bank 6 blocks above the water | a spruce cottage, the bedroom window facing west over the dock; lamp in the window | seen in S02 (from inside), S10 (far behind) | window lit in E |
-| dock | from the landing (0,0) west to the T-head at (-20,0) | library `dock`: stone landing, plank walk on piles, rail, lamps, the fishing shack on the T-head, a bell; **the mooring** on the T-head's south side: an oak fence post with a lead knot hanging slack, an oak sign on it reading `ROSA`, no boat | S01 (from above, night) | none |
+| dock | from the landing (0,0) west to the T-head at (-20,0) | library `dock`: stone landing, plank walk on piles, rail, lamps, the fishing shack on the T-head, a bell; **the mooring** on the T-head's south side: an oak fence post with a lead knot hanging slack, an oak sign on it reading `MAE`, no boat | S01 (from above, night) | none |
 | headland | (-30,-55), the north arm of the bay | library `lighthouse` on the rocks, lantern room lit at night | S01, S02, S04, S08, S09 (bg, frame right when looking west) | none |
 | bay_shallows | x -20..-60 | floor slopes from 4 to 13 water blocks deep; sand, gravel, seagrass, some kelp; the lantern line starts at the dock's foot (-20,0) | S01 | none |
 | line_mid | x -60..-560 | floor 13 deep, sand and gravel, seagrass and kelp near the lanterns; the line at z=0, a lantern every 2 blocks | S07 (staged at x ~ -100) | none |
 | line_end | x ~ -560 (the edge of the light on the noon flashback, scene C) | the last lantern, then black water; drowned 8-10 blocks past it | S05, S06 | in C the end is at x = -560 (some 20 nights before tonight); in S03b (scene A) the end is wherever that night's was |
-| line_end_wreck | x -618..-600 (tonight's end) | the line ends 2 blocks short of the shipwreck's bow; vanilla `shipwreck` (upright, on the sand, floor 13 deep), deck ~8 deep; **the For Rosa chest** on the deck, 2 blocks aft of the bow; drowned (3) in the black beyond the wreck | S10b (the hull shape), S11, S12 | S12: Milo places lantern 301 on the deck at the bow; the deck lights up. S13: the chest opened |
+| line_end_wreck | x -618..-600 (tonight's end) | the line ends 2 blocks short of the shipwreck's bow; vanilla `shipwreck` (upright, on the sand, floor 13 deep), deck ~8 deep; **the For Mae chest** on the deck, 2 blocks aft of the bow; drowned (3) in the black beyond the wreck | S10b (the hull shape), S11, S12 | S12: Milo places lantern 301 on the deck at the bow; the deck lights up. S13: the chest opened |
 
 Staging: the far end is built as its own set where the bay is deep enough (the line's last 60 blocks and the wreck);
 the near end (dock to x -140) is the main set. The two never share a frame: S01-S04, S08-S10 look from the shore; S05-S07,
@@ -71,10 +71,10 @@ S03b, S10b-S13 are underwater with 24-block underwater fog.
 |---|---|---|---|---|
 | the lantern line | S01 | `lantern[waterlogged=true]` on the floor, one every 2 blocks along z=0, glowing | from the dock's foot (-20,0) west | S02, S03, S04 (faint by day), S07, S08, S10, S10b, S11 |
 | Grandma's nightly lantern | S01 (in hand) | carried, then placed at the end in S03b on "ONE" | | |
-| the empty mooring | S04 | fence post, lead knot hanging slack, oak sign `ROSA` (one line, centred), no boat | T-head south side (-19,2) | S08 (fg) |
+| the empty mooring | S04 | fence post, lead knot hanging slack, oak sign `MAE` (one line, centred), no boat | T-head south side (-19,2) | S08 (fg) |
 | the last lantern (tonight's, #301) | S09 (Grandma's hand) | tossed to Milo on "WITH her"; in his hand S10-S12 | | placed on the wreck's deck at the bow in S12 on "light" |
 | the shipwreck | S10b (a dark mass), S11 (a hull shape) | vanilla shipwreck, upright, rotted planks, a broken mast | line_end_wreck | lit in S12 |
-| the For Rosa chest | S12 | a single chest, closed, on the deck 2 blocks aft of the bow, facing the bow; `CustomName` "For Rosa"; contents: 1 heart_of_the_sea in slot 13 | | S13 opened: the chest screen |
+| the For Mae chest | S12 | a single chest, closed, on the deck 2 blocks aft of the bow, facing the bow; `CustomName` "For Mae"; contents: 1 heart_of_the_sea in slot 13 | | S13 opened: the chest screen |
 
 ## Positions and screen direction
 - **Out to sea is screen-forward / west.** Every shore shot looks west, out along the line: the dock runs away from the
@@ -102,11 +102,11 @@ S03b, S10b-S13 are underwater with 24-block underwater fog.
 | L05-L07 | the end is black at noon; tridents; the lit part is empty: lucky | the dark is death; the light is safety | players: drowned only spawn in the dark; the road is protection |
 | L08 | Grandpa dove at the shipwreck and didn't come back | the road points at the wreck | the road goes to where Grandpa was lost (the 300 = nights) |
 | L09-L11 | tonight's the last; he gets to go and to place it | the road reaches the wreck tonight; not what's on it | the road arrives tonight |
-| L12-L13 | there's a chest for Rosa; Rosa is Grandma | (now) Grandpa left her something | Grandpa's last present was waiting at the end of the road |
+| L12-L13 | there's a chest for Mae; Mae is Grandma | (now) Grandpa left her something | Grandpa's last present was waiting at the end of the road |
 
 ## Clue map
 See `beats.md` (clue map table): the count (L01), the secret (L02), one-and-sprint (L03), "It's a ROAD" (L04), the
-ROSA sign (S04, S08), pitch black at noon (L05), the tridents (L06, S03b, S06), the empty lit road (L07), Grandpa and the
+MAE sign (S04, S08), pitch black at noon (L05), the tridents (L06, S03b, S06), the empty lit road (L07), Grandpa and the
 shipwreck (L08), the line pointing at the sunset (S08), "LAST one" (L09), the hull shape (S10b, S11).
 
 ## The provisional world link

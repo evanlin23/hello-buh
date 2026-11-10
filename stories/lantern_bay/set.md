@@ -22,7 +22,7 @@ the line) and the **far end** (the line's last ~60 blocks and the shipwreck). Ev
 ## Library pieces
 | piece | variant | facing | where | anchors used |
 |---|---|---|---|---|
-| `dock` | `length` to reach 4-deep water (~20), `depth` per the site | facing west (out over the water), `y` the bank | landing at (0,0), T-head at (-20,0) | `end` (Grandma, S01/S04/S09), `walk` (S02), `moor` (the empty mooring: no boat; add the fence post, lead knot and the `ROSA` sign), `shack`, `approach` |
+| `dock` | `length` to reach 4-deep water (~20), `depth` per the site | facing west (out over the water), `y` the bank | landing at (0,0), T-head at (-20,0) | `end` (Grandma, S01/S04/S09), `walk` (S02), `moor` (the empty mooring: no boat; add the fence post, lead knot and the `MAE` sign), `shack`, `approach` |
 | `lighthouse` | default `height`, red stripe | door facing the bay | on the headland ~(-30,-55) | `light` (lit at night: it is a sea lantern room), `shots.wide` for checks |
 | `cottage` | `palette: 'spruce'`, garden on | facing west (the bedroom window toward the dock) | on the bank ~(14,-6) | `window_in` (S02's POV eye: sitting on the bed by the window), `bed` |
 | vanilla `shipwreck` | upright, not beached (`/place structure minecraft:shipwreck`) | bow facing east (toward home, so the line arrives at the bow) | far end | none: read the deck height after placing; put the chest by hand |
@@ -33,7 +33,7 @@ the line) and the **far end** (the line's last ~60 blocks and the shipwreck). Ev
   Each sits on sand or gravel; clear kelp off the line itself but leave seagrass and kelp 2-4 blocks to the sides so the
   light has something to land on (S07).
 - **The mooring:** an oak fence post on the T-head's south side, a lead knot on it (summon a `leash_knot` or a fence
-  with a lead from a NoAI boat removed: the knot alone), an oak sign on the post facing the dock walk: `ROSA` on line 2.
+  with a lead from a NoAI boat removed: the knot alone), an oak sign on the post facing the dock walk: `MAE` on line 2.
   No boat anywhere at the dock.
 - **The dock:** the piece's lamps lit; a coiled rope (a few chains), crates and a barrel by the shack; one fishing rod
   in an item frame on the shack wall (Grandpa's: never mentioned).
@@ -41,8 +41,8 @@ the line) and the **far end** (the line's last ~60 blocks and the shipwreck). Ev
 - **The shore:** sand and gravel beach either side of the landing, a few boulders (`dress.rocks`), grass and flowers
   up the bank, a `grove` of spruce and oak behind the cottage and on the headland.
 - **The far end:** sand floor with seagrass, kelp forests 10+ blocks either side of the line (they turn into black
-  shapes past the light), a few magma-free rocks. **The For Rosa chest:** `setblock` a chest on the wreck's deck 2
-  blocks aft of the bow with `{CustomName:'"For Rosa"', Items:[{Slot:13b, id:"minecraft:heart_of_the_sea", count:1}]}`
+  shapes past the light), a few magma-free rocks. **The For Mae chest:** `setblock` a chest on the wreck's deck 2
+  blocks aft of the bow with `{CustomName:'"For Mae"', Items:[{Slot:13b, id:"minecraft:heart_of_the_sea", count:1}]}`
   (check that the harness's container mark carries the custom title through `contTitle`).
 - **The drowned:** summoned NoAI, persistent, each with a trident in the main hand (`HandItems`/`equipment`), floating
   8-10 blocks into the black at light level 2-4 (the fringe), drifting slowly with `K.actor`. Never inside the light.
@@ -52,9 +52,9 @@ the line) and the **far end** (the line's last ~60 blocks and the shipwreck). Ev
 |---|---|---|---|
 | S01 (EWS, night, crane over the dock looking west) | the dock rail and a lit dock lamp, low right | Grandma on the T-head; the lantern line glowing on the floor from the dock out to sea | the line shrinking into the dark fog at centre; the lighthouse on the headland frame right, its lantern room lit; stars, half moon high left |
 | S02 (POV from the bedroom) | the window frame, the foot of the bed | the dock 20 blocks downhill, Grandma walking it | the line on the water, the lighthouse frame right, the headland's trees |
-| S04 (POV, morning) | the dock planks and rail | Grandma, the mooring post with the ROSA sign | the calm bay, the first lanterns faint under the shallows, the lighthouse, **the nitwit knee-deep in the shallows frame right** (the easter egg) |
+| S04 (POV, morning) | the dock planks and rail | Grandma, the mooring post with the MAE sign | the calm bay, the first lanterns faint under the shallows, the lighthouse, **the nitwit knee-deep in the shallows frame right** (the easter egg) |
 | S07 (underwater EWS looking back east) | two lanterns, seagrass, kelp | the bright road running back to the shallows | black water both sides, one drowned silhouette at the edge frame left; the underwater fog |
-| S08 (dusk, low behind the mooring) | the mooring post, lead knot and the ROSA sign | the line glowing under the water, straight out | the setting sun on the horizon exactly where the line points; the headland and lighthouse frame right |
+| S08 (dusk, low behind the mooring) | the mooring post, lead knot and the MAE sign | the line glowing under the water, straight out | the setting sun on the horizon exactly where the line points; the headland and lighthouse frame right |
 | S10 (EWS crane over the bay, night) | dark water | the two swimmers on the glowing line | the dock and the lit cottage window far behind, the lighthouse, the glow ending ahead in the dark |
 
 ## The easter egg
@@ -80,7 +80,7 @@ re-check against docs/world/canon.md when it lands.**
 | **Player swim pose** (sprint-swimming underwater, Pose.SWIMMING: the body horizontal, arms stroking) for Grandma | **missing**: `renderer/poses.js` has no `swim`; data only (`root.rot` -PI/2 plus an arm stroke on `c.age`, from `PlayerModel`/`HumanoidModel.setupAnim`'s swimAmount branch); or record `metadata[6] === 3` (SWIMMING) in the harness for player actors that really swim | 45 min | **build** (under 2 h). Without it, stage her upright (treading water) and never show a sprint-swim on camera |
 | **Trident in a drowned's hand** | **likely missing**: the 1.21.4+ trident item model is `minecraft:special` (type `trident`) in hand, which `renderer/specialitems.js` doesn't handle (beds, chests, shulkers, heads, banners only): the held trident may draw as nothing. Add the `TridentModel` (from `TridentModel.createLayer`, texture `entity/trident`) as a special piece | 1-1.5 h | **build** (under 2 h); fallback: the flat `item/trident` sprite (its GUI model) in hand, acceptable at the fringe of the light |
 | Drowned model (body + `drowned_outer_layer`) | the zombie-family pose code covers drowned; **verify** the outer layer draws | 15 min | check |
-| Chest screen with a custom title ("For Rosa") and a Heart of the Sea | exists (`container_png`, harness `container` mark with `title`); **verify** `contTitle` passes a custom name through and `CONTAINER_TITLES` doesn't map it away; the GUI title is small: the caption track carries FOR ROSA | 15 min | check |
+| Chest screen with a custom title ("For Mae") and a Heart of the Sea | exists (`container_png`, harness `container` mark with `title`); **verify** `contTitle` passes a custom name through and `CONTAINER_TITLES` doesn't map it away; the GUI title is small: the caption track carries FOR MAE | 15 min | check |
 | A player tossing an item to another (S09) | a dropped item entity renders; the bot picks it up | none | stage it |
 | Lighthouse light, dock lamps, cottage window | real light sources in the library pieces | none | |
 
