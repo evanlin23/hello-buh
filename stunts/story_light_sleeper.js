@@ -382,7 +382,7 @@ module.exports = {
     await K.cut(0.5, -2.75, C(0.4, 1.5, 0.2), PLAZA)
     const from14 = { ...K.base }
     await line('L14', async (k, at, n) => {
-      if (k === at(1)) say('/effect give @s minecraft:darkness 600 0 true')   // "went DARK": the 22-tick fade eats the lantern pools on the word (F8)
+      if (k === at(1)) { say('/effect give @s minecraft:darkness 600 0 true'); K.darkPeak(12) }   // the pulse peaks as the fade lands (main 5a71e91)   // "went DARK": the 22-tick fade eats the lantern pools on the word (F8)
       K.turnTo(from14, C(12, 2.6, 1), k / (n * 0.85)); look(k)
     })
 
