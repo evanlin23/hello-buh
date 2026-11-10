@@ -83,6 +83,8 @@ for (const name of names) {
     // rendered on Actions (scripts/render_on_actions.sh): no frames or game wav here, so add_song.py had neither
     // short_nosong.mp4 nor game_audio.flac and baked no song in. A stunt without a reference song (every story)
     // was edited song-less, so its out/<name>.mp4 already is the no-song version (voice + game audio).
+    // (A story edited since 2026-11-10 carries its mood score from the edit, stamped in the mp4's comment tag:
+    // add_song.py below sees the tag and only writes the credit, never a second bed. docs/audio.md)
     let e0 = {}
     try { e0 = require(path.join(ROOT, 'stunts', `${name}.js`)).edit || {} } catch (e) {}
     if (!e0.song || !fs.existsSync(path.join(ROOT, e0.song))) fs.copyFileSync(mp4, path.join(dir, 'short_nosong.mp4'))

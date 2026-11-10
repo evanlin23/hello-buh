@@ -38,3 +38,54 @@ Format rules:
 **Recordings:** the sets, the stunt and the shots carry over. Re-voice with the new narrator, then do a re-record pass, because the scene lengths come from voice.json. No rebuild is needed.
 
 **Reviews:** `reviews/vnext-critic.md` (r1, on the first vNext) and `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+## r-ear (2026-11-10): rewritten for the ear (STANDARDS 2.000)
+The owner: "only works if tis clear what is beign said"; the narrator is "a child that doesnt understand teh wrold... figuring it out".
+These lines **replace the table above**. The beats, the shots and the reveal and cut are unchanged unless noted.
+
+How they're written:
+- one short, simple thought per sentence, in time order, joined by So / Then / But;
+- no stacked clauses, and numbers kept apart from other information;
+- each sentence lands on its key word;
+- told by a happy kid who misreads what the viewer understands (model: "Mom SAID it was a FOX").
+
+The cold listener (audio-style, one fast pass) followed it. Its notes are applied here and logged in `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+**Length:** 116 words, ~22 s spoken at 5.25 words/s, plus ~2 s of reveal.
+
+| # | line (r-ear) | plays over |
+|---|---|---|
+| L01 | THIRTY-ONE raids. / EVERY one / started the NIGHT / Grandpa came HOME. | S01 |
+| L02 | Raid ONE? / He WON. / Raid TWELVE? / He WON. / Raid TWENTY? / He WON. / Raid THIRTY-ONE? / He WON. | S02-S03 |
+| L03 | He SAYS / they FOLLOW him. / They KNOW / who BEATS them. | S03 |
+| L04 | So the VILLAGERS / throw him BREAD. | S05 |
+| L05 | Since GRANDMA died, / he's always ALONE. / But RAID nights? / EVERYONE cheers / for HIM. | S10 |
+| L06 | Every WEEK, / he HUNTS / at the TOWER. / He brings BACK / OMINOUS bottles. / He CALLS them / his LUCK. | S06-S07 |
+| L07 | He DRINKS one / at the GATE. / Then he SAYS, / lock the DOOR, / kid, they're COMING. | S08-S09 |
+| L08 | Then a HORN / goes OFF. / And Grandpa SMILES. / He must LOVE / a good FIGHT. | S09 |
+| L09 | Tonight he CAME / home too TIRED / to FIGHT. | S11 |
+| L10 | So I DRANK / his LUCK. / SOMEBODY had / to FIGHT. | S12: the horn, the Raid bar, Grandpa turns; cut 1.0 s |
+
+## r-cast (2026-11-10): character lines in their own voices, plus spoken stress
+This **replaces the r-ear table above**. Two changes, both ruled by the lead on main:
+
+- **Characters speak their own short lines in their own voices** (STANDARDS 2.00: "the narrator does all of it essentially, plus short lines from other characters"). The narrator's lead-ins stay short ("Mom SAYS:"). Each character line is 6 words or fewer; Light Sleeper's "Walk SOFT, sweetie..." (8) is the allowed exception.
+- **Spoken stress:** the caption still colours one key word per chunk, but the voice stresses ONE word per sentence, its last key word, shown in **bold**. The delivery note says to hit only the bold words and keep the rest level and quick.
+
+**Voices:** Grandpa: `elder` (Charon), canon. Narrator: the house narrator (STANDARDS 2.0-2.1).
+
+**Length:** 116 words, ~22 s spoken at 5.25 words/s, plus ~2 s of reveal.
+
+| # | who | line (bold = the spoken stress) | plays over |
+|---|---|---|---|
+| L01 | N | **THIRTY-ONE** raids. / EVERY one / started the NIGHT / Grandpa came **HOME**. | S01 |
+| L02 | N | Raid ONE, / raid TWELVE, / raid **THIRTY-ONE**. / He WON / every **ONE**. | S02-S03 |
+| L03 | N | He SAYS / they **FOLLOW** him. / They KNOW / who **BEATS** them. | S03 |
+| L04 | N | So the VILLAGERS / throw him **BREAD**. | S05 |
+| L05 | N | Since GRANDMA died, / he's always **ALONE**. / But **RAID** nights? / EVERYONE cheers / for **HIM**. | S10 |
+| L06 | N | Every WEEK, / he HUNTS / at the **TOWER**. / He brings BACK / **OMINOUS** bottles. / OMINOUS means / **LUCKY**, I think. / He CALLS them / his **LUCK**. | S06-S07 |
+| L07 | N | He DRINKS one / at the **GATE**. / Then he SAYS: | S08-S09 |
+| L08 | Grandpa | Lock the **DOOR**, / kid. They're **COMING**. | S08-S09 |
+| L09 | N | Then a HORN / goes **OFF**. / And Grandpa **SMILES**. / He must LOVE / the **RAIDS**. | S09 |
+| L10 | N | Tonight he CAME / home too TIRED / to **FIGHT**. | S11 |
+| L11 | N | So I DRANK / his **LUCK**. / SOMEBODY had / to **FIGHT**. | S12: the horn, the Raid bar, Grandpa turns; cut 1.0 s |

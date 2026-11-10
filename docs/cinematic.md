@@ -25,3 +25,46 @@ rounds it at dawn and dusk), the grade clamps before its S-curve (blown skies ne
 
 Costs: each render.js call meshes the world (~25 s) and walks to its frames; a dusk clip re-meshes a few times
 (~20-50 s each). On Actions the 16:9 film's slices took 4-16 minutes each.
+
+# Invisible cuts (story Shorts; STANDARDS 3b.3)
+
+Owner, 2026-11-10: "the cuts don't seem to be correct, because i keep noticing them ... the focus of attention stays in
+the same location between cuts? Also idk if our timings for the cuts are correct?" (r:rfa229d). What editors and the
+eye-tracking research say, and what we build in:
+
+| finding | number | what we do |
+|---|---|---|
+| Eye-trace: put the new shot's point of interest where the eye already is (Murch, *In the Blink of an Eye*; Bruce Block's "continuum of attention") | a matched location is fixated in ~600 ms after the cut, a mismatched one in ~1000 ms (Valuch et al. 2017, PMC5502321); viewers start moving to an expected screen spot ~200 ms after a voice cue (Smith 2012) | render.js `eyeTrace` (default on): each camera shot is re-aimed so its subject lands where the last frame's subject was |
+| Edit blindness: matched action/attention hides the cut | a third of match-action cuts go unseen (Smith & Henderson 2008); removing the motion after the cut makes cuts easier to spot (Smith & Santacreu 2016) | every camera shot moves (path / push / drift) from its first frame; keep it |
+| Murch's rule of six | emotion 51 %, story 23 %, rhythm 10 %, eye-trace 7 %, 2D plane 5 %, 3D space 4 % | eye-trace gives way to story: `eyeTrace: false` on a deliberate jump (a shock cut, the reveal) |
+| Where the eye is after a cut | a strong pull to the centre and to faces/motion right after a cut (Carmi & Itti 2006) | attention = the shot's `subject`, else the most salient cast member (size x closeness to the middle), else the aim |
+| Cut timing vs the words | sound ahead of picture is noticed from ~45 ms, picture ahead of sound only from ~125 ms (ITU-R BT.1359); editors cut a few frames before the word (J/L cuts: 3-5 frames) | cut in the pause, 2-9 frames at 60 fps (33-150 ms) before the line's first word, never after it; never inside a word |
+
+Numbers we hold (lib/hb/cuts.js, `./hb cuts <stunt>`, a step of `./hb check`):
+- **Eye jump across a cut** (attention point, last frame before vs first frame after, in % of the game view's width):
+  <= 15 % fine (inside the ~5 deg the eye takes in at phone distance), > 20 % WARN, > 33 % BLOCK (unless the shot
+  says `eyeTrace: false`).
+- **Cut vs the line's voice**: a cut that opens a line lands within 100 ms of where that line's voice starts (WARN),
+  250 ms (BLOCK); the first word starts 33-150 ms after the cut, never > 50 ms before it (WARN).
+
+How it's built (the owner's rule: by construction first, check second):
+- `eyeTrace` (render.js, lib/eyetrace.js): the new shot's subject goes onto the previous frame's attention point, kept
+  in the box x 30-70 %, y 28-58 % (faces on the upper third, clear of the captions) and at most 14 deg; the offset holds
+  0.5 s, then eases back to the shot's own framing by 2 s (a re-frame the eye follows; held offsets crept to the edge).
+  Name what the eye should be on with the shot's `subject` (the lint's list: `['actor:Grok']`, `['entity:wolf']`,
+  `['self']`, or a point `[dx, dy, dz]`; a story kit actor by its tag, `['actor:pip']`, from its K.actor 'actor' mark); otherwise the biggest cast member near the middle wins, so a stray mob in
+  the set (dog_hill's village horse beside the dog) steals the eye: clear it. Shot options: `eyeTrace: false`,
+  `eyeTrace: { max, hold, settle }`; the stunt: `eyeTrace: false`; `EYETRACE=0` renders without it.
+- Cut timing (lib/story.js `K.line`): inside a continuous take a line ends early enough that the next cut shows
+  `cutLead` (0.033 s) before the next line's first word, allowing for the last `K.cut`'s landing time (2-4 ticks),
+  never before the line's own last word. `stunt.cutLead: null` turns it off. A stunt that runs its own clock
+  (dog_hill: `dur + 0.08` per line against a take with no gaps) drifts 85 ms per line: 1.4 s late by the end.
+- First-person cuts (`K.cut`) are recorded, so eyeTrace can't move them: aim the new view where the last shot's
+  subject was, or cut to a camera shot.
+
+Measured 2026-11-10 (render branches, `./hb cuts`): dog_hill eye jump median 12 %, max 36 % (reveal -> reunion),
+3 cuts over 20 %; with eyeTrace median 1 %, max 11 %. Its picture runs +85 ms (L02) to +1375 ms (L14) behind the
+voice and 5 cuts come over 50 ms after their word starts (65-135 ms). light_sleeper: median 7 %, max 30 %, 4 over 20 %;
+with eyeTrace max 30 % (both left are first-person cuts); K.shot cuts sit within 25 ms of their line's voice, K.cut
+cuts 125-195 ms late (the teleport's landing), 3 after their word.
+Stills (top EYETRACE=0, bottom eyeTrace; pairs = last frame / first frame of hut -> beg, beg -> gramps, reveal -> reunion): `docs/runs/invisible_cuts_dog_hill_2026-11-10.jpg`.

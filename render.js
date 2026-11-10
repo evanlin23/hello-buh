@@ -232,8 +232,9 @@ const MOTION_FIXES = process.env.MOTION_FIXES ? process.env.MOTION_FIXES === '1'
 // so the new shot showed it in its old spot for up to 3 ticks and then the 3-tick client lerp dashed it across
 // (gold_for_the_portal L07, 3.2 blocks at 31.7 s: "Grandma teleports"). A jump of over a block within 6 ticks after a
 // cut or a shot change is moved back onto the cut: the entity is at its new place from the cut's own tick.
+const CAST_CUT_TICKS = MOTION_FIXES ? [...new Set((rec.timeline || []).filter(e => e.event === 'cut' || e.event === 'shot' || e.event === 'respawn').map(e => Math.round(e.t / 50)))] : []
 if (MOTION_FIXES) {
-  const cuts = (rec.timeline || []).filter(e => e.event === 'cut' || e.event === 'shot' || e.event === 'respawn').map(e => Math.round(e.t / 50))
+  const cuts = CAST_CUT_TICKS
   const ticks = [...ENT.keys()].sort((a, b) => a - b)
   let n = 0
   for (const c of [...new Set(cuts)]) {
@@ -278,6 +279,8 @@ const BLINK_SELF = []
     if (BLINK.size) console.log(`blink: ${BLINK.size} on-screen teleport${BLINK.size > 1 ? 's' : ''} (K.blink) snap with no lerp`)
   }
 }
+const CAST_CUT_SET = new Set(CAST_CUT_TICKS)
+const CUT_SNAP = new Set()   // `${id}|${tick}`: a cast member placed with a cut lands on that tick with no glide
 // The server sends mob moves every few ticks, so recorded positions are steps (a creeper "glided"
 // in 0.4-block hops). The vanilla client eases toward each new position over 3 ticks
 // (Entity.lerpTo / lerpSteps); do the same, per tick, before the per-frame interpolation.
@@ -288,7 +291,13 @@ const BLINK_SELF = []
       if (row[2] === 'falling_block' || row[2] === 'item' || row[2] === 'moving_block') continue
       let c = cur.get(id)
       if (!c || c.last !== tick - 1) c = { x: row[3], y: row[4], z: row[5], tx: row[3], ty: row[4], tz: row[5], steps: 0 }
-      if (Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz) > 4 || (BLINK.size && BLINK.has(`${id}|${tick}`))) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }   // teleport (or a K.blink): no easing
+      // a teleport (or a K.blink), or a cast member placed with a cut (over half a block on the cut's own tick, where
+      // K.cutShot lands it, or the fix above moved its late landing): no easing. The ease toward it from the old spot undid
+      // that fix: the new shot opened with the cast gliding 1-2 blocks out of the old shot's place (dog_hill 'beg', 2026-11-10)
+      const jump = Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz)
+      const onCut = jump > 0.5 && jump <= 4 && CAST_CUT_SET.has(tick)
+      if (onCut) CUT_SNAP.add(`${id}|${tick}`)   // (entitiesAt holds the old spot until the tick, like a teleport)
+      if (jump > 4 || (BLINK.size && BLINK.has(`${id}|${tick}`)) || onCut) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }
       else if (row[3] !== c.tx || row[4] !== c.ty || row[5] !== c.tz) { c.tx = row[3]; c.ty = row[4]; c.tz = row[5]; c.steps = 3 }
       if (c.steps > 0) { c.x += (c.tx - c.x) / c.steps; c.y += (c.ty - c.y) / c.steps; c.z += (c.tz - c.z) / c.steps; c.steps-- }
       // rotation: lerpTo / lerpHeadTo ease yaw and head yaw over the same 3 steps (wrapped), so a
@@ -352,7 +361,7 @@ function entitiesAt (t, mesher) {
   const out = []
   for (const [id, ra] of a) {
     let rb = b.get(id) || ra
-    if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4 || (BLINK.size && BLINK.has(`${id}|${i + 1}`))) rb = ra   // teleport (or a K.blink): hold, then snap on the next tick
+    if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4 || (BLINK.size && BLINK.has(`${id}|${i + 1}`)) || CUT_SNAP.has(`${id}|${i + 1}`)) rb = ra   // teleport (or a K.blink, or placed with a cut): hold, then snap on the next tick
     const L = (k) => ra[k] + (rb[k] - ra[k]) * f
     const pos = { x: L(3), y: L(4), z: L(5) }
     // EntityRenderer.getPackedLightCoords samples at getLightProbePosition = the eye (0.85 x height
@@ -1071,6 +1080,10 @@ const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick
     if (user) ACTOR_ID.set(user, id)
   }
 }
+// the story kit's cast (lib/story.js K.actor marks 'actor' { tag, id } once it knows the entity): a shot's subject or a
+// look target can name them as 'actor:TAG' (dog_hill: subject ['actor:pip']), like a movie's player actors
+const KIT_TAG = new Map()   // id -> tag
+for (const m of rec.timeline || []) if (m.event === 'actor' && m.tag && m.id !== undefined) { KIT_TAG.set(m.id, m.tag); if (!ACTOR_ID.has(m.tag)) ACTOR_ID.set(m.tag, m.id) }
 // Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
 // time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
 const LINES = []
@@ -1161,6 +1174,8 @@ function talkMotion (who, t) {
 //   fov: degrees (default 70), roll: degrees, push: blocks/s toward the subject on `at` shots (default 0.2), drift (default 1)
 //   two: [A, B] | ots: S, over: A | single: S, toward: B   auto-framed from where they stand (renderer/framing.js):
 //                                     side (compass), size (close|medium|wide), anchor (start|live), height
+//   subject: [TARGET, ...]            what the eye should be on (the lint checks it; eyeTrace puts it where the last
+//                                     shot's subject was); eyeTrace: false | { max, hold, settle } (see eyeTraceOffset)
 // TARGET is [dx, dy, dz] from the set origin, 'self' (the player's eye), 'actor:NAME' (that actor's eye)
 // or { of: TARGET, offset: [dx, dy, dz] }. Everything is a function of the time alone, so frames can be
 // rendered in any order (FRAMES=) and a camera can be re-tuned without re-recording.
@@ -1200,7 +1215,11 @@ function targetAt (tg, t) {
   if (tg === 'self') { const c = camAt(Math.max(0, t)); return { x: c.x, y: c.y, z: c.z } }
   if (typeof tg === 'string' && tg.startsWith('actor:')) {
     const id = ACTOR_ID.get(tg.slice(6)), p = id !== undefined ? entityPosAt(id, Math.max(0, t)) : null
-    return p ? { x: p.x, y: p.y + (p.sneak ? 1.27 : 1.62), z: p.z } : null
+    if (!p) return null
+    // a kit actor that isn't a player (a wolf, a baby villager): its eye at 0.85 x its height, not a player's 1.62
+    const row = KIT_TAG.has(id) && ENT.get(Math.floor(Math.max(0, t))) && ENT.get(Math.floor(Math.max(0, t))).get(id)
+    const h = row && row[2] !== 'player' && row[2] !== 'mannequin' ? (ENT_H[row[2]] || 1) * ((row[9] && row[9].baby) ? 0.5 : 1) : null
+    return { x: p.x, y: p.y + (h ? 0.85 * h : (p.sneak ? 1.27 : 1.62)), z: p.z }
   }
   if (Array.isArray(tg)) return { x: rec.set.x + tg[0], y: rec.set.y + tg[1], z: rec.set.z + tg[2] }
   if (tg && tg.of) { const p = targetAt(tg.of, t), o = tg.offset || [0, 0, 0]; return p ? { x: p.x + o[0], y: p.y + o[1], z: p.z + o[2] } : null }
@@ -1228,7 +1247,7 @@ function actorsAt (t) {
   return out
 }
 const FRAME_HELP = (solidAt) => ({ targetAt, solidAt: solidAt || (() => false), actors: actorsAt, side: STUNT_MOD.coverage && STUNT_MOD.coverage.side })
-function shotCam (sh, t, solidAt) {
+function shotCamBase (sh, t, solidAt) {
   const u = (t - sh.t0) / 20
   let pos = null
   const auto = FRAMING.frame(sh, t, FRAME_HELP(solidAt))   // { two | ots | single }: placed from the actors (renderer/framing.js)
@@ -1274,6 +1293,77 @@ function shotCam (sh, t, solidAt) {
   else if (auto && auto.focus) focus = Math.hypot(auto.focus.x - pos.x, auto.focus.y - pos.y, auto.focus.z - pos.z)
   if (dr) { yaw += Math.sin(t * 0.041) * 0.0035 * dr; pitch += Math.sin(t * 0.035 + 1) * 0.0025 * dr }
   return { x: pos.x, y: pos.y, z: pos.z, yaw, pitch, bobX: 0, bobY: 0, roll: (sh.roll || 0) * Math.PI / 180, bobPitch: 0, fov: sh.fov || (auto ? 50 : undefined), focusDist: focus }
+}
+// Eye-trace (docs/cinematic.md "Invisible cuts", STANDARDS 3b.3; owner 2026-11-10: "i keep noticing them"): a camera
+// shot starts with its subject where the previous shot's subject was on screen, so the eye doesn't search the new
+// frame (~0.6 s to find it instead of ~1 s). The new shot is re-aimed by a constant yaw/pitch for its whole length:
+// its subject (shot.subject, else the most salient cast member, else its aim: lib/eyetrace.js) lands on the
+// previous frame's point of attention, kept inside the framing box (x 30-70 %, y 28-58 %) and at most 14 degrees.
+// eyeTrace: false on a shot (a deliberate jump: a shock cut, a reveal) or on the stunt turns it off; EYETRACE=0 too.
+// lib/hb/cuts.js measures the same thing on the same cameras (./hb check, step "cuts").
+const ET = require('./lib/eyetrace')
+const ET_ON = STUNT_MOD.eyeTrace !== false && process.env.EYETRACE !== '0'
+const ET_MEMO = new Map()
+const ET_MD = (() => { try { return require('minecraft-data')(rec.version).entitiesByName } catch (e) { return {} } })()
+function etEntities (t, withSelf) {
+  const out = []
+  for (const [id, a] of ENT.get(Math.floor(Math.max(0, t))) || []) {
+    const p = entityPosAt(id, t)
+    if (!p) continue
+    const ex = a[9] || {}
+    out.push({ id, type: a[2], label: a[2], user: ex.user || KIT_TAG.get(id), x: p.x, y: p.y, z: p.z, h: ENT_H[a[2]] || (ET_MD[a[2]] && ET_MD[a[2]].height) || 1, baby: !!ex.baby })
+  }
+  if (withSelf) { const c = camAt(Math.max(0, t)), s = selfAt(t); out.push({ id: 'self', type: 'player', label: 'the narrator', x: c.x, y: c.y - ((s && s.eye) || EYE), z: c.z, h: 1.8 }) }
+  return out
+}
+const etOccluded = (solidAt) => (cam, p) => {
+  const dx = p.x - cam.x, dy = p.y - cam.y, dz = p.z - cam.z, L = Math.hypot(dx, dy, dz)
+  for (let s = 0.3; s < L - 0.4; s += 0.25) if (solidAt(cam.x + dx * s / L, cam.y + dy * s / L, cam.z + dz * s / L)) return true
+  return false
+}
+function etAttention (cam, t, sh, solidAt) {
+  const camShot = !!(sh && !sh.pov)
+  const g = ET.geom({ W, H, MW, cropX: camShot ? sh.cropX : 0 })
+  const aim = camShot && sh.look && !sh.lookPath ? targetAt(sh.look, t) : null   // what the shot frames (the centre before eyeTrace)
+  return ET.attention({ ...cam, fov: cam.fov || 70 }, g, { entities: etEntities(t, camShot), subject: camShot ? ET.subjectOf(sh, rec.set) : null, aim, occluded: etOccluded(solidAt) })
+}
+const START_T = (() => { const e = (rec.timeline || []).find(m => m.event === 'start'); return e ? e.t / 50 : 0 })()
+function eyeTraceOffset (sh, solidAt) {
+  if (!ET_ON || sh.eyeTrace === false || sh.pov) return null
+  const key = `${sh.name}@${sh.t0}`
+  if (ET_MEMO.has(key)) return ET_MEMO.get(key)
+  ET_MEMO.set(key, null)   // (a re-entrant call while this one computes gets no offset)
+  let off = null
+  const solid = solidAt || (() => false)
+  const tp = sh.t0 - 20 / FPS   // the last frame before the cut
+  if (tp >= START_T) {
+    const prev = shotAt(tp)
+    const pc = prev && !prev.pov ? shotCam(prev, tp, solidAt) : (() => { const c = camAt(tp), s = selfAt(tp); return { ...c, y: s && s.eye ? c.y - (EYE - s.eye) : c.y, fov: 70 } })()
+    const was = pc && etAttention(pc, tp, prev, solid)
+    const nc = shotCamBase(sh, sh.t0, solidAt)
+    const now = nc && etAttention(nc, sh.t0, sh, solid)
+    if (was && now) {
+      const g = ET.geom({ W, H, MW, cropX: sh.cropX || 0 })
+      const o = ET.aimOffset({ ...nc, fov: nc.fov || 70 }, g, now.point, ET.clampBox(was), sh.eyeTrace && sh.eyeTrace.max)
+      off = { ...o, subject: now.label }
+    }
+  }
+  ET_MEMO.set(key, off)
+  return off
+}
+function shotCam (sh, t, solidAt) {
+  const c = shotCamBase(sh, t, solidAt)
+  if (!c) return c
+  const o = eyeTraceOffset(sh, solidAt)
+  if (o) {
+    // held for the cut, then eased back to the shot's own framing (the eye follows a slow re-frame; a held offset crept
+    // shot to shot until everything sat at the box's edge): full for `hold` s, none from `settle` s (0.5 / 2.0)
+    const et = typeof sh.eyeTrace === 'object' ? sh.eyeTrace : {}, u = (t - sh.t0) / 20
+    const h = et.hold ?? 0.5, st = Math.max(h + 0.1, et.settle ?? 2.0), x = Math.max(0, Math.min(1, (u - h) / (st - h)))
+    const w = 1 - x * x * (3 - 2 * x)
+    c.yaw += o.dyaw * w; c.pitch += o.dpitch * w
+  }
+  return c
 }
 // the model an item draws with: its item definition (items/<name>.json, 1.21.4+; many block items
 // have no models/item/<name>.json, e.g. lectern -> block/lectern), else item/<name>
