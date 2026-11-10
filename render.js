@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap, setBrightness, setDayTime, setDimension, particleTint, dayInfo } = require('./renderer/models')
+const { lightmap, setBrightness, setDayTime, setDimension, particleTint, dayInfo, setLightAttr, lightParams, setBlockFactor } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -301,6 +301,7 @@ function entitiesAt (t, mesher) {
     }
     // BlazeRenderer / MagmaCubeRenderer.getBlockLightLevel: always 15 (they glow in the dark)
     if (ra[2] === 'blaze' || ra[2] === 'magma_cube' || ra[2] === 'allay' || ra[2] === 'vex') blk = 15   // (AllayRenderer / VexRenderer too)
+    if (DYN.length) blk = Math.max(blk, dynLightAt(cell.x + 0.5, cell.y + 0.5, cell.z + 0.5))
     out.push({ id, name: ra[2], ...pos, yaw: lerpAngle(ra[6], rb[6], f), pitch: L(7), headYaw: ra[8] === null ? null : lerpAngle(ra[8], rb[8] ?? ra[8], f), extra: ra[9], light: lightmap(sky, blk) })
   }
   return out
@@ -999,11 +1000,37 @@ const LINES = []
     LINES.push({ who: l.who, t0: l.t0, t1: Math.min(l.t0 + want * 20, next - 1) })
   })
 }
+const MOON_PHASES = ['full_moon', 'waning_gibbous', 'third_quarter', 'waning_crescent', 'new_moon', 'waxing_crescent', 'first_quarter', 'waxing_gibbous']
+const MOON_PHASE = (() => {
+  const m = process.env.MOON_PHASE ?? STUNT_MOD.moonPhase
+  if (m !== undefined && m !== null && m !== '') {
+    const i = /^\d+$/.test(String(m)) ? Number(m) % 8 : MOON_PHASES.indexOf(String(m))
+    if (i < 0) throw new Error(`moonPhase '${m}': one of ${MOON_PHASES.join(', ')} or 0-7`)
+    return i ? MOON_PHASES[i] : null   // (full: the texture every Short already uses)
+  }
+  const day = Math.floor((rec.time ?? 6000) / 24000) % 8
+  return (rec.engine || 0) >= 2 && day > 0 ? MOON_PHASES[day] : null
+})()
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
 // stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
 const LOOKS = require('./renderer/looks')
 const LOOK_RAW = LOOKS.resolveLook(process.env.LOOK_JSON ? (/^\s*[{"]/.test(process.env.LOOK_JSON) ? JSON.parse(process.env.LOOK_JSON) : process.env.LOOK_JSON.trim()) : STUNT_MOD.look)
 const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : LOOK_RAW
+// Light in the shader (look.smoothLight: true, or SHADER_LIGHT=1; docs/engine_features.md): the world is meshed once
+// with each vertex's light level and the page lights it every frame, so a sunset is smooth (no DAY_LIGHT_STEP
+// re-meshes), a lightning bolt lights the world (LightTexture: sky darken 1 while skyFlashTime > 0), and held
+// torches/lanterns light what's around their holder (look.heldLight: false turns that off). Two more look keys work
+// with it: moonlight (0.2..1: the night's darkest sky factor, vanilla 0.2, for nights that read black) and
+// torchGlow (x vanilla's block light factor 1.5). Off (every published Short): the light stays baked, unchanged.
+const SHADER_LIGHT = process.env.SHADER_LIGHT ? process.env.SHADER_LIGHT === '1' : !!(LOOK_RAW && LOOK_RAW.smoothLight)
+const MOONLIGHT = SHADER_LIGHT ? Number((LOOK_RAW && LOOK_RAW.moonlight) || 0) : 0
+const HELD_LIGHT = SHADER_LIGHT && process.env.HELD_LIGHT !== '0' && !(LOOK_RAW && LOOK_RAW.heldLight === false)
+if (SHADER_LIGHT) { setLightAttr(true); if (LOOK_RAW && LOOK_RAW.torchGlow) setBlockFactor(Number(LOOK_RAW.torchGlow)) }
+// held light sources (the light level of the item's block, as the LambDynamicLights mod and Bedrock do; vanilla
+// Java has no held light): main or off hand, players and mobs
+const LIGHT_ITEMS = { torch: 14, soul_torch: 10, lantern: 15, soul_lantern: 10, redstone_torch: 7, glowstone: 15, sea_lantern: 15, jack_o_lantern: 15, shroomlight: 15, lava_bucket: 15, glow_berries: 14, end_rod: 14, campfire: 15, soul_campfire: 10, ochre_froglight: 15, verdant_froglight: 15, pearlescent_froglight: 15, beacon: 15, conduit: 15, magma_block: 3, glow_ink_sac: 6, blaze_rod: 10, nether_star: 10 }
+let DYN = []   // this frame's held lights: [x, y, z, level]
+function dynLightAt (x, y, z) { let b = 0; for (const d of DYN) { const v = d[3] - Math.hypot(x - d[0], y - d[1], z - d[2]); if (v > b) b = v } return b }
 // Idle life (docs/movie_engine.md): nobody stands perfectly still. Two slow sines per entity (periods of
 // 6-24 s, phases from its id), in [-1, 1]; deterministic, so frames render in any order.
 function idleNoise (id, t) {
@@ -1557,6 +1584,7 @@ function camAtLive (t) {
 ;(async () => {
   const mesher = new Mesher(rec.version)
   mesher.noSky = DIM === 'the_nether' || DIM === 'the_end'
+  mesher.lightAttr = SHADER_LIGHT
   mesher.addColumns(rec.columns)
   solidWorld = mesher.world
   hmapWorld = mesher.world
@@ -1643,6 +1671,24 @@ function camAtLive (t) {
       try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/snow.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), snow]) } catch (e) { console.error('no snow texture:', e.message) }
     }
   }
+  // Moon phases (DimensionType.moonPhase: (dayTime / 24000) % 8; 0 full, 1 waning gibbous, 2 third quarter, 3 waning
+  // crescent, 4 new, 5 waxing crescent, 6 first quarter, 7 waxing gibbous). A stunt's `moonPhase` (a name or 0-7)
+  // picks one; a recording from 2026-11-10 on (rec.engine >= 2) whose time is past day 0 gets its day's phase.
+  // Otherwise the full moon, as every Short so far drew. 1.21.11 has one texture per phase; older jars a 4x2 sheet.
+  if (MOON_PHASE) {
+    const out = path.join(ASSETS_DIR, 'env', `moon_${MOON_PHASE}.png`)
+    if (!fs.existsSync(out)) {
+      try {
+        require('child_process').execFileSync('python3', ['-c', `import zipfile,sys,io
+from PIL import Image
+z=zipfile.ZipFile(sys.argv[1]); n='assets/minecraft/textures/environment/celestial/moon/'+sys.argv[3]+'.png'
+if n in z.namelist(): open(sys.argv[2],'wb').write(z.read(n))
+else:
+  im=Image.open(io.BytesIO(z.read('assets/minecraft/textures/environment/moon_phases.png'))); i=int(sys.argv[4]); w,h=im.size[0]//4,im.size[1]//2
+  im.crop((i%4*w,i//4*h,i%4*w+w,i//4*h+h)).save(sys.argv[2])`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), out, MOON_PHASE, String(MOON_PHASES.indexOf(MOON_PHASE))])
+      } catch (e) { console.error('no moon phase texture:', e.message) }
+    }
+  }
   { // the moon texture (assets built before night support lack it)
     const moon = path.join(ASSETS_DIR, 'env', 'moon.png')
     if (!fs.existsSync(moon)) {
@@ -1655,7 +1701,7 @@ function camAtLive (t) {
     const r = L.reflect, c = r.center || [0, 0]
     return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null) })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null })
 
   const send = async (list) => {
     const id = String(blobId++)
@@ -1676,7 +1722,7 @@ function camAtLive (t) {
     const list = mesher.sections(minVisibleY)
     const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
     if (nw > 1) {
-      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
+      const blobsOut = await mesher.packParallel(list, nw, { lightAttr: SHADER_LIGHT, recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
       for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
     } else await send(list)
   }
@@ -1911,7 +1957,7 @@ function camAtLive (t) {
   // A rain step (weatherKey: rain/thunder in 1/16ths) always re-lights. DAY_LIGHT_STEP=0.025 (scripts/cinematic.py) also
   // rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame.
   const DAY_STEP = Number(process.env.DAY_LIGHT_STEP || 0)
-  const skyKey = (t) => { const d = dayInfo(dayTimeAt(t), ...weatherLight(t)).dark; return `${DAY_STEP ? Math.round(d / DAY_STEP) : d.toFixed(6)}|${weatherKey(t)}` }
+  const skyKey = SHADER_LIGHT ? () => 'shader' : (t) => { const d = dayInfo(dayTimeAt(t), ...weatherLight(t)).dark; return `${DAY_STEP ? Math.round(d / DAY_STEP) : d.toFixed(6)}|${weatherKey(t)}` }
   let curDayTime = dayTimeAt(0), curWeather = weatherKey(0), curSky = skyKey(0)
   const t1 = Date.now()
   // Block entities drawn by entity renderers (renderer/blockentities.js): signs with their text,
@@ -2111,6 +2157,26 @@ function camAtLive (t) {
     Object.assign(cam, darknessAt(t))
     cam.aim = AIMS.length && !process.env.CAM ? aimAt(t) : null   // first person only: in the third-person replay it showed as red bars under the player
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
+    if (SHADER_LIGHT) {   // the light this frame (look.smoothLight): continuous time of day, rain, lightning; held lights
+      const flash = BOLTS.length ? boltsAt(t).flash / 0.45 : 0
+      setDayTime(curDayTime, levelAt(RAIN, t), levelAt(THUNDER, t), flash, MOONLIGHT)
+      cam.lm = lightParams()
+      DYN = []
+      if (HELD_LIGHT) {
+        const i = Math.floor(t), fr = t - i, a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
+        for (const [id, ra] of a) {
+          const x = ra[9], lv = x ? Math.max(LIGHT_ITEMS[x.held] || 0, LIGHT_ITEMS[x.offhand] || 0) : 0
+          if (!lv) continue
+          const rb = b.get(id) || ra, h = ENT_H[ra[2]] || 1.8
+          DYN.push([ra[3] + (rb[3] - ra[3]) * fr, ra[4] + (rb[4] - ra[4]) * fr + h * 0.6, ra[5] + (rb[5] - ra[5]) * fr, lv])
+        }
+        let own = null; for (const [tk, n] of HELD) { if (tk <= t) own = n; else break }
+        if (own && LIGHT_ITEMS[own] && !HIDE_HAND) DYN.push([eye.x, eye.y - 0.5, eye.z, LIGHT_ITEMS[own]])
+        DYN.sort((p, q) => Math.hypot(p[0] - eye.x, p[1] - eye.y, p[2] - eye.z) - Math.hypot(q[0] - eye.x, q[1] - eye.y, q[2] - eye.z))
+        DYN = DYN.slice(0, 8)
+      }
+      cam.dyn = DYN
+    }
     // stunt.self.eye: the narrator isn't a player (story_good_boy: a wolf, eye 0.68): the POV camera sits at that
     // height over the feet. Only the camera moves; targeting and the body keep the player's eye.
     const selfNow = selfAt(t)
@@ -2191,7 +2257,8 @@ function camAtLive (t) {
     if (hd) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = !!spriteOf(hd.name)
-      const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
+      let [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
+      if (DYN.length) hb = Math.max(hb, dynLightAt(cam.x, cam.y, cam.z))
       // look.handLift (0..1): lift the first-person hand's light toward white, so a held item reads at night (at
       // midnight sky light 15 is about (0.22, 0.22, 0.45): reel 1's bucket read as a dark sleeve, review v2 B2)
       const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
@@ -2219,7 +2286,8 @@ function camAtLive (t) {
       if (deathTime < 21) {
         const i = Math.max(0, Math.min(P.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i))
         const body = lerpAngle(PBODY[i], PBODY[i + 1], f), wk = [0, 1].map(k => PWALK[i][k] + (PWALK[i + 1][k] - PWALK[i][k]) * f)
-        const [ls, lb] = mesher.world.getLight(new Vec3(eye.x, eye.y - EYE + 0.5, eye.z))
+        let [ls, lb] = mesher.world.getLight(new Vec3(eye.x, eye.y - EYE + 0.5, eye.z))
+        if (DYN.length) lb = Math.max(lb, dynLightAt(eye.x, eye.y - 0.5, eye.z))
         let held = null
         if (ph && ph.name) {
           held = { key: ph.name + (glintAt(t) ? '#glint' : ''), display: thirdPersonDisplay(ph.name), glint: glintAt(t) }

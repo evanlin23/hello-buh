@@ -4,14 +4,16 @@
 const { parentPort, workerData } = require('worker_threads')
 const fs = require('fs')
 const { Mesher } = require('./mesher')
-const { setBrightness, setDayTime, setDimension } = require('./models')
+const { setBrightness, setDayTime, setDimension, setLightAttr } = require('./models')
 
-const { recPath, minVisibleY, brightness, dayTime, rain, thunder, list, dimension, blocksDone } = workerData
+const { recPath, minVisibleY, brightness, dayTime, rain, thunder, list, dimension, blocksDone, lightAttr } = workerData
+if (lightAttr) setLightAttr(true)
 setBrightness(brightness)
 setDimension(dimension)
 setDayTime(dayTime, rain, thunder)
 const rec = JSON.parse(fs.readFileSync(recPath))
 const m = new Mesher(rec.version)
+m.lightAttr = !!lightAttr
 m.noSky = dimension === 'the_nether' || dimension === 'the_end'
 m.addColumns(rec.columns)
 // a re-mesh later in the recording: the world as it is after the first blocksDone block changes

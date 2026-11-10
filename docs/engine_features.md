@@ -105,6 +105,39 @@ editor, the inventory):
 Test without a full edit: run `edit.py` on a few `ffmpeg -f lavfi -i testsrc` frames and a hand-written timeline
 with your marks (`--caption test --fps 20 --out_fps 20`), and look at a frame.
 
+## Light in the shader: smooth dusk, lightning, held torches (engine-2)
+By default the light is baked into the block vertex colours, and a change of the sky factor (time of day, rain)
+re-meshes the whole world (`DAY_LIGHT_STEP` rounds a sunset to a few steps). `look.smoothLight: true` (or
+`SHADER_LIGHT=1`) moves the lightmap into the block material instead: the mesher writes each vertex's (sky, block)
+light level as an attribute `lt` (`renderer/models.js` `setLightAttr`, a 5th array per part in `Mesher.pack`) and the
+page runs `models.lightmap()` per vertex in GLSL (`renderer/page.js` `lightMaterial`) from uniforms render.js sends
+every frame (`cam.lm` = `models.lightParams()`). With no held lights it renders **pixel-identical** to the baked light
+(checked at midnight on the pose fixture), and the world is meshed once:
+- **dusk and dawn are smooth**: a `time` mark every tick drew 59, 57.7, 56.4, 55.0, 53.7... mean luma instead of the
+  baked 59, 59, 59, 55, 55, 52.4..., and 8 stills took 31 s instead of 98 s (no re-meshes);
+- **lightning lights the world** (LightTexture: sky darken 1 while `skyFlashTime` > 0): a bolt (`lightning_bolt`
+  entity or a stunt's `ctx.mark('lightning', {x, y, z})`) flashes the blocks and the mobs, fading with the sky flash;
+- **held light** (`look.heldLight: false` turns it off): a player, actor or mob holding a torch (14), lantern (15),
+  soul torch/lantern (10), glowstone, sea lantern, lava bucket... in either hand (`extra.held` / `extra.offhand`), and
+  the narrator's own held item, light blocks and entities around them to `level - distance` (the 8 nearest the
+  camera). Vanilla Java has no held light (the LambDynamicLights mod and Bedrock do): it's a look choice;
+- `look.moonlight` (0.2-1): the night's darkest sky factor (vanilla 0.2), for night scenes that read black;
+- `look.torchGlow` (x, default 1): scales lightmap.fsh's block-light factor 1.5, so lanterns and torches throw
+  more light on the faces round them at night.
+Placed torches, lanterns, campfires, lava already light their surroundings through the block light engine
+(`renderer/light.js`), baked or shader. Try it on any recording: `./hb still <stunt> T --look '{"smoothLight":true}'`
+(a look turns the cinematic post pass on: compare against `--look '{}'`), or `SHADER_LIGHT=1 ./hb still ...` with
+no post pass. The pose fixture has the cases: `node scripts/pose_fixture.js --staged --lights --time 18000 --bolt 40`.
+
+## Sky: moon phases, drifting fog
+- `stunt.moonPhase`: `'new_moon'`, `'waxing_crescent'`, ... or 0-7 (DimensionType.moonPhase order, 0 = full). A
+  recording with `rec.engine >= 2` and a time past day 0 gets its day's phase (`(time / 24000) % 8`); anything else
+  draws the full moon as before. `MOON_PHASE=` overrides. The sun, moon and stars were already drawn (`placeSun`).
+- `stunt.fogSea.drift` (blocks a tick: a number along +x, or `[dx, dz]`), `fogSea.wisps` (0..1, how patchy, default
+  0.6) and `fogSea.wispSize` (blocks, default 40): the sheets thin in soft patches that stay put in the world and
+  slide with the wind, each sheet a little faster than the one below, so the fog rolls. Test: `stunts/_light_test.js`
+  (`node scripts/pose_fixture.js --stunt _light_test --time 18000`).
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

@@ -7,7 +7,11 @@
 //   node scripts/pose_fixture.js --staged              # + sit, drink, off-hand, warden emerge, lit campfire
 //   ./hb still _poses_test tick:5 tick:40 --out /tmp/x # render it (stunts/_poses_test.js reads it)
 //
+// --stunt NAME the stunt module the recording names (default _poses_test; _light_test has a fog sea and a moon phase).
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
+// Light tests (look.smoothLight): --time N (the time of day, e.g. 18000 midnight), --lights (the Girl holds a lantern,
+// the Grandpa a torch), --bolt TICK (a lightning mark 10 blocks ahead at that tick), --sunset (time marks every
+// tick from 12000 to 13800 over the recording: the relight steps vs the shader's smooth dusk).
 const fs = require('fs')
 const path = require('path')
 const { Scene, loadRec, ROOT } = require('../lib/hb/scene')
@@ -29,7 +33,8 @@ const fx = -Math.sin(p0[4]), fz = -Math.cos(p0[4]), rx = -fz, rz = fx   // forwa
 const at = (ahead, right) => { const x = p0[1] + fx * ahead + rx * right, z = p0[3] + fz * ahead + rz * right; return [x, ground(x, z), z] }
 const faceCam = Math.atan2(fx, fz)   // a yaw that looks back at the camera
 
-const out = { version: rec.version, engine: 2, stunt: '_poses_test', time: 6000, weather: 'clear', columns: rec.columns, blocks: [], entities: [], timeline: [] }
+const out = { version: rec.version, engine: 2, stunt: opt('stunt', '_poses_test'), time: Number(opt('time', 6000)), weather: 'clear', columns: rec.columns, blocks: [], entities: [], timeline: [] }
+out.set = { x: Math.floor(p0[1]), y: Math.floor(p0[2]), z: Math.floor(p0[3]) }   // (CAM=dx,dy,dz,yaw,pitch is relative to it)
 out.poses = Array.from({ length: N }, (_, i) => [i, ...p0.slice(1)])
 const cast = [['Grandpa', 4, -1.6], ['Boy', 4.2, 0.2], ['Girl', 4, 1.8]].concat(STAGED ? [['Kid', 7, -2.6], ['Mum', 7.5, 2.6]] : [])
 cast.forEach(([user, ahead, right], k) => {
@@ -61,5 +66,8 @@ if (STAGED) {
   for (let s = camp.minStateId; s <= camp.maxStateId; s++) { const p = Block.fromStateId(s, 0).getProperties(); if (p.lit === true && p.signal_fire === false && p.waterlogged === false && p.facing === 'north') { sid = s; break } }
   out.blocks.push([0, Math.floor(cx), cy, Math.floor(cz), sid])
 }
+if (args.includes('--lights')) for (const e of out.entities) { if (e[1] === 9003) e[9] = { ...e[9], held: 'lantern' }; if (e[1] === 9001) e[9] = { ...e[9], held: 'torch' } }
+if (opt('bolt')) { const [bx, by, bz] = at(10, -3); out.timeline.push({ t: Number(opt('bolt')) * 50, event: 'lightning', x: bx, y: by, z: bz, ticks: 6 }) }
+if (args.includes('--sunset')) for (let t = 1; t < N; t++) out.timeline.push({ t: t * 50, event: 'time', time: Math.round(12000 + 1800 * t / (N - 1)) })
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)
