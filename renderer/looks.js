@@ -66,12 +66,16 @@ function autoGrade (dayTime) {
   return moodGrade('village_day')
 }
 // the grade for one frame, or null to keep the look's own: a shot's mood wins, then 'auto' by time of day
-function gradeAt (L, dayTime, shotMood) {
+// shot: the camera shot's spec; its `grade` ({ exposure: 1.2 }) and `vignette` override the shot's mood (or the auto
+// grade) for that shot only, as docs/look.md's night variant asks: { mood: 'eerie_night', grade: { contrast: 0.22 }, vignette: 0.48 }
+function gradeAt (L, dayTime, shotMood, shot) {
+  let g
   if (shotMood) {
     if (!MOODS[shotMood]) throw new Error(`shot mood '${shotMood}': not one of ${Object.keys(MOODS).join(', ')}`)
-    return moodGrade(shotMood)
-  }
-  return L && L.auto ? autoGrade(dayTime ?? 6000) : null
+    g = moodGrade(shotMood)
+  } else g = L && L.auto ? autoGrade(dayTime ?? 6000) : null
+  if (g && shot && (shot.grade || shot.vignette != null)) g = { ...g, ...(shot.grade || {}), ...(shot.vignette != null ? { vignette: shot.vignette } : {}) }
+  return g
 }
 
 function resolveLook (L) {
