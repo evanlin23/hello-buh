@@ -150,7 +150,9 @@ STANDARDS.md in the same commit.
   like higher quality, more expressive, but have like the same pace, tone, etc. And then we can have like other
   characters use like 11 Labs for just like super duper short sort of things."** Narrator-first stays; the narrator's
   voice changes to a Roblox-story-style voice (being chosen: docs/voice_search.md); other characters only in very short
-  lines, voiced separately (ElevenLabs proposed: needs a licence decision).
+  lines, voiced separately. Owner, later the same day: "not 11 labs. We can use like the Gemini voices for the short
+  ones, but we should definitely try and find like a better like voice for like the Roblox like first person
+  narrator." Characters stay on Gemini; the narrator is the search.
 - **Owner, 2026-11-10 (review page): "I think we don't need the grandpa labeling, just the color"; "Gandma doesnt need
   the label"; "dont need the mom tag".** No speaker name tags: the caption colour alone says who speaks
   (story_track: off by default).

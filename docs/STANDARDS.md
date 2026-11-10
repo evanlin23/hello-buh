@@ -46,7 +46,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 
 ## 2. Voice
 0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone (being chosen:
-   docs/voice_search.md; nothing is voiced until the owner picks); other characters only in very short lines.
+   docs/voice_search.md; nothing is voiced until the owner picks); other characters only in very short lines, on Gemini.
    r:r4f221c
 1. **The narrator is `voices/cast.json` `narrator` = Pip**: Leda, the bubbly nine-year-old direction,
    gemini-3.8-flash-lite-tts, single speaker, **natural tempo, no time-stretch, no pitch shift** (`post` empty; atempo
