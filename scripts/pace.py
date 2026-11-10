@@ -266,6 +266,16 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             "the first line or a hit on frame 0 (startAt the line's mark, no lead-in)")
     first_line = lines[0] if lines else None
     first_hit = next((t for t, r in hits if t <= HOOK_S), None)
+    # owner 2026-11-10: "the audio must land like start talking the first moment the video starts, same with the
+    # visual hook": a story's first word by 0.2 s (a blocker after 0.4 s), and the picture already moving on frame 1
+    if is_story and first_line and first_line[0] > 0.4:
+        add("BLOCK", "hook", first_line[0], f"the narrator starts talking at {first_line[0]:.2f} s (owner: talking from the first moment)",
+            "startAt the first line's mark; no lead-in, no title card before the voice")
+    elif is_story and first_line and first_line[0] > 0.2:
+        add("WARN", "hook", first_line[0], f"the first word at {first_line[0]:.2f} s (aim for <= 0.2 s)", "trim the lead-in so the first word is on frame 0-5")
+    if is_story and early < 0.3 and not any(c <= 0.3 for c in hook_cuts):
+        add("BLOCK", "hook", 0, f"the opening picture is frozen for its first 0.3 s (motion {early:.2f}): it must move from frame 1",
+            "start the opening shot mid-move (startAt a few frames into the push) or open on the subject moving")
     if first_line and first_line[0] <= HOOK_S:
         txt = " ".join(norm(text_of.get(first_line[1], "")))
         q = (story or {}).get("question")
@@ -276,6 +286,20 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         add("WARN", "hook", first_line[0], f"the first line starts at {first_line[0]:.2f} s, after {HOOK_S} s", "startAt the first line's mark")
     else:
         add("WARN", "hook", None, f"no line mark and no sound hit in the first {HOOK_S} s", "open on the question line or a hit")
+
+    # ---- speech rate (docs/research/narration_2026-11-10.md: narrator channels 3.8-5.8 words/s, median 4.57;
+    # runaway 4.4, both counted over speaking time). Here: words over first line start .. last line start + 2 s, gaps
+    # included, so the numbers run lower: runaway (the benchmark) 3.47, respawn_tax 3.58, old good_boy 3.13.
+    if is_story and text_of and lines:
+        nwords = sum(len(norm(text_of.get(lid, ""))) for _, lid in lines)
+        span = max(1e-6, (lines[-1][0] if len(lines) > 1 else dur) - lines[0][0] + 2.0)
+        wps = nwords / span
+        notes.append(f"speech rate: {nwords} words over {span:.1f} s = {wps:.2f} words/s (runaway, the benchmark: 3.47 by this count)")
+        if wps < 2.7:
+            add("BLOCK", "pace", None, f"the narration is slow: {wps:.2f} words/s (runaway 3.47 by this count)",
+                "re-take faster (direct 'fast, energetic' in the style prompt) or atempo the takes; tighten the gaps between lines")
+        elif wps < 3.3:
+            add("WARN", "pace", None, f"the narration is slowish: {wps:.2f} words/s (runaway 3.47 by this count)", "a faster take, atempo 1.1-1.2, shorter gaps")
 
     # ---- 5. payoff (located first: build-up runs to it)
     payoff, how = None, ""
