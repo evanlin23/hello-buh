@@ -138,6 +138,14 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "Can we also fill our hotbar with like ridiculous items? like buckets of milk for example".** The
+  player's hotbar is full (all 9 slots), like a real player's: the story's own tools first (Light Sleeper: carpets,
+  wool, shears), then 1-3 ridiculous ones that fit the world (milk buckets, a stack of cake, 67 eggs, a pufferfish,
+  a name tag...; the eggs are 67, owner: "make it 67 eggs"). It never contradicts the story, and it stays consistent between shots. Set in story.json "hotbar".
+- **Owner, 2026-11-10 (on Light Sleeper's bare cobblestone well in the all-carpet village): "whyisnt the well covered in
+  carpet too".** The set must match every claim the narration makes about it ("everything is carpeted" means every
+  block in shot is, except a deliberate, planted exception). Each story's set.md lists its claims and the set is checked
+  against them on stills from every shot angle before recording.
 - **Owner, 2026-11-10 (asked to approve the arc rewrites of the held stories): "Yes. Okay. Rewriting the stories is
   fine. Whatever you think is best, whatever is best based on what you've seen before"; on Good Boy: "Yeah, we can
   rework it."** Light Sleeper, Dog on the Hill, Thirty-One Raids and Gold for the Portal adopt their script_vNext;
