@@ -24,7 +24,9 @@ const POTION = '{"minecraft:potion_contents":{potion:"minecraft:weakness"}}'
 const shots = {
   pov: { pov: true },
   // S01 / S11: just inside the gate looking west up the meadow at the zombies 14-16 blocks out, the treeline behind
-  gate_west: { at: [2.2, 6.2, 0.2], look: [-14, 6.4, 0], fov: 50, push: 0.4, dof: false },
+  gate_west: { at: [2.2, 6.2, 0.2], look: [-14, 6.4, 0], fov: 50, push: 0.9, dof: false },
+  // L01 from "named TOMAS": the three tags up close, the dark oaks they came out of behind them
+  names: { at: [-2.4, 6.4, 0.9], look: [-11, 6.5, 0], fov: 50, push: 0.4, dof: { aperture: 0.25, focus: [-10, 6.4, 0] } },
   // S02: over Mom's left shoulder at the shut gate, the three staring at her over the fence
   ots_mom: { at: [4.0, 2.8, 1.15], look: [-1.5, 2.6, -0.2], fov: 50, dof: { aperture: 0.6, focus: [-1.5, 2.4, 0] } },
   // S03: crane down from over the lane (the hamlet, the inlet, Fernbank and its empty boat at frame right) to Mom
@@ -57,7 +59,7 @@ module.exports = {
   wideMaster: true,            // a 16:9 master cropped to the Short's middle frame (owner, 2026-11-10)
   look: 'auto',
   shots,
-  edit: { caption: CAPTION, red: 'NAMES', story: 'stories/names_in_the_woods', startAt: 'line:0', endAfter: 'story_end:0', itemNames: { splash_potion: 'Splash Potion of Weakness' } },
+  edit: { caption: CAPTION, red: 'NAMES', story: 'stories/names_in_the_woods', startAt: 'line:0.27', endAfter: 'story_end:-0.15', sfx: [['impact', 'payoff']], punch: [['payoff', 0, 0.07]], itemNames: { splash_potion: 'Splash Potion of Weakness' } },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -174,7 +176,10 @@ module.exports = {
     await cutAt(8.5, 3.5, P(-14, 5, 0), { time: 13100, shot: 'gate_west' })
     await K.preroll(8, () => { for (const t in zombies) walk(zombies[t], 0.03, 0) })
     let mom = null
-    await line('L01', async (k) => { for (const t in zombies) walk(zombies[t], 0.03, 0); groans(k); look(k) },
+    await line('L01', async (k, at) => {
+      if (k === at(2)) K.shot('names')   // a camera shot: the narrator doesn't move, only the picture cuts
+      for (const t in zombies) walk(zombies[t], 0.03, 0); groans(k); look(k)
+    },
       0, { tail () { mom = actor('mom', { x: 1.5, z: 0.2, yaw: 90 }) } })   // under the high camera, out of its frame
 
     // L02 (S02): at the fence; they stop 1.5 out and stare at Mom over it (Mom 1.5 inside, back to us)
@@ -337,6 +342,7 @@ module.exports = {
     let thrown = false
     await line('L15', async (k, at) => {
       if (k < at(1) - 2) look(k, 0, -0.08 * Math.min(1, k / 8))       // the wind-up: the eye lifts a little
+      if (k === at(1) + 4) ctx.mark('payoff')   // the bottle shatters on her (thrown 6 ticks before)
       if (k === at(1) - 2 && !thrown) {
         thrown = true
         K.base = K.aim(P(-16, gy(-16, 0) + 1.2, 0)); await bot.look(K.base.yaw, K.base.pitch + 0.12, true)
