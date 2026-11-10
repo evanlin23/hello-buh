@@ -312,10 +312,12 @@ def take(scene, lines, cs):
 
 
 def voice_lines(groups, cs, out):
-    """groups: [(scene, [(who, id, text, note)], room)] -> {id: (who, text, wav samples)}. room: a ROOMS key or ""."""
+    """groups: [(scene, [(who, id, text, note)], room)] -> {id: (who, text, wav samples)}. room: a ROOMS key or ""
+    (a 2-tuple, or a non-string third item, means the default small room)."""
     out.mkdir(parents=True, exist_ok=True)
     done = {}
-    for scene, lines, room in groups:
+    for g in groups:
+        scene, lines, room = (*g, "small")[:3] if len(g) == 2 or not isinstance(g[2], str) else g
         ys = level([shape(seg, cs[w].get("post", ""), room) for (w, _, _, _), seg in zip(lines, take(scene, lines, cs))])
         for (w, lid, t, _), y in zip(lines, ys):
             pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(out / f"{lid}.wav")], y.astype(np.float32).tobytes())
