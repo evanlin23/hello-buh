@@ -130,6 +130,22 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like
+  sensual asmr."** Read every script for how it could be misheard, out of context, by a stranger scrolling past. A
+  hushed, breathy first-person voice plus lines about obeying, sitting when told, waiting all day for someone, or a
+  slow tender "good boy" reads as intimate or kink, whatever the twist. Hushed and whispered is for fear and mystery,
+  never for affection or obedience. When the twist is "you're an animal", play the narrator bright, quick and goofy
+  (pet energy), and make the reveal physical and funny (a bark, a head pat, a wagging tail), not a whispered line.
+  Good Boy is held (not published) until it's reworked.
+- **Owner, 2026-11-10: "we still need to ensure that the pacing is good, and theres still a good visual and audio
+  hook and build up and a good payoff."** Cinematic doesn't mean slow. Every story still needs: a hook in the first
+  1-2 s that works both muted (a striking picture or motion) and with sound (a sound or line that makes you ask "why?");
+  something new on screen or in the ear every ~3 s; build-up that escalates (stakes, music and cut rate rise toward the
+  payoff); a payoff that lands in one clear picture plus a sound hit; the end ≤1 s after it. The `pacing` gate
+  (`./hb pace`) measures these and short-review treats its blockers as blockers.
+- **Owner, 2026-11-10: "We don't need the character's name to be Buh" / "sure milo is fine".** The hero is **Milo**
+  (default Steve skin, voice `milo` in voices/cast.json). HelloBuh is the channel, not the character; in-game names
+  on death screens and chat say Milo.
 - **Owner, 2026-11-10: "The voice is definitely an issue. And also the sets. I think we can be more creative with the
   story telling, and better with the delivery and the plots and using other voices for the other characters. I think
   we don't necessarily need to use this sped up voice. this voice i dont think does a good job of playing different
@@ -248,6 +264,8 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | made (`story_nitwit`, pipeline test 2026-11-10: 2 h 40 min, 2 review rounds; docs/pipeline_test_nitwit.md) |
 | 12 | **Last Seen** | "My friend's armor stand has stood at the village gate for 900 days. Today it turned around." | his armor gets one more scratch a day; a bed still warm; the golem salutes it | (armor stands don't render yet: needs an engine model) | | parked: engine |
 | 13 | **Good Boy** (cinematic pilot) | "I've tried to run away from this guy thirty-seven times." | every time I get 12 blocks away I'm right back next to him; raw porkchops; I sit when he says sit; everyone is tall; sheep look delicious; I can't open doors; skeletons run from me; a dog is always exactly where I am (every camera shot shows it) | I'm his dog: a tamed wolf (vanilla: tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons, attack whatever hurts their owner). Revealed when the camera pulls out of my head | "Tomorrow I'm leaving for real." loops into line 1 | building: cinematic-default worker (`story_good_boy`, branch claude/cinematic-default; v2: voiced cast, real village) |
+| 14 | **Light Sleeper** | "My village is covered in nine thousand carpets." | the bell boxed in wool and the well under a white wool lid; Mom: "walk soft, the ground's a light sleeper"; he pulled the wool off the well and the bottom screamed ("a fox"); the lights go dark with the music | the village sits on an ancient city: carpet makes no vibration, and the bottom of the well is a sculk shrieker. He puts a jukebox on the well ("wells echo") and steps off the carpet onto the bare stone rim to dance; the warden rises out of the square | "obliterated by a sonically-charged shriek"; loops by cause into line 1 | script approved, ready to build (r2: `agent/scripts-revised`, `stories/light_sleeper/`) |
+| 15 | **Thirty-One Raids** | "Grandpa has saved our village from thirty-one raids." | 31 totems and one empty frame; every raid started the night he came home; villagers throw him bread; grey bottles from the tower, "his courage", drunk at the gate; "Lock the door, kid. They're coming."; since Grandma died it's the only time anyone's glad to see him | the courage is an ominous bottle (Bad Omen starts a raid in a village): he brings every raid himself. Tonight he's too tired, so the boy drinks it; the horn, pillagers and a ravager up the road | Grandpa beside him, loading his crossbow: "Now they'll love you too, kid." (the 32nd frame) | script approved, ready to build (r2: `agent/scripts-revised`, `stories/thirty_one_raids/`) |
 
 ## Format: "Who do you trust?" (interactive mystery). Owner, 2026-11-06
 Owner, describing a Short he liked: someone turns 13 and gets a call from themselves 10 years in

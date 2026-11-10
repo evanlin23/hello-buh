@@ -58,6 +58,13 @@ seconds of the Short, the source time and the marks nearby. Checks, most-flagged
 4. **set**: floating sand/gravel/concrete powder and liquids that should have flowed, in view within 16 blocks.
 5. **vanilla**: digs under half the vanilla time for the held tool, mobs faster than vanilla, the player faster than
    sprint-jumping (outside cuts and F1 drone shots).
+6. **flat / subject / sync / glitch** (the owner's 22 notes of 2026-11-10, from `./hb owner`, lib/hb/owner.js; `--no-owner`
+   skips them): a story shot whose visible world is mostly a flat cleared plain; the camera off what the line names
+   (`lines[].look`, else inferred from TORCH / MOM / LIBRARIAN...: a warning); an action before the word that announces
+   it, already in the hole when the line says "dug", a fall with no dig/hit/edge before it, "never X" over X; a door
+   that moves with nobody using it, the player stopped dead against a door, jitter, one-tick aim snaps (often the
+   landing tick of a /tp with yaw 0), a fall-stop-fall stutter, and fog/night/rain the story promises but the recording
+   lacks. In the camera shots of a wide master, the subject and flat checks judge the cropped middle frame.
 Blockers are what reviews always flagged; warnings need a reason ("planned: the turn follows the creeper") or a fix.
 A clean check doesn't replace the frame review: lighting, models, the HUD and the joke still need eyes.
 

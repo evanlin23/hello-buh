@@ -22,7 +22,8 @@ name): `ln -s /home/user/hello-buh/{node_modules,songs,work} .`
 | `./hb status [stunt]` | what exists and what's next | 2 s |
 | `./hb voice <stunt> [--only L03]` | the narration (Kokoro, v1 stories); v2 cast voices: `docs/story_craft.md` 5-6 | 30 s |
 | `./hb record <stunt>` | server + bot -> `work/<stunt>.rec.json`, then rec_check; stops on blockers (`--no-strict` to keep going); refuses while another server batch runs | 3 min a try (5 tries) |
-| `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing | 10-30 s |
+| `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing + owner | 10-40 s |
+| `./hb owner <stunt>` | the owner's review notes as checks (lib/hb/owner.js): superflat shots (and the set's footprint, the plain, the relief), the camera off what the line names (`lines[].look`), the picture ahead of / against the words, an uncaused fall, glitches (doors by themselves, stuck on a door, jitter, one-tick snaps, stutter, fog/night/rain missing); `--shots` prints each shot's fill, `--story DIR` reads another story dir | 5-15 s |
 | `./hb describe <stunt> [T...]` | a moment as text (below); no T = the middle of every shot | 1-2 s |
 | `./hb continuity <stunt>` | per shot: time, weather, held item, camera, cast; flags pops, time jumps, cast that moved or vanished across a cut | 2 s |
 | `./hb framing <stunt>` | per shot: size (EWS/WS/FS/MS/CU), place; flags too-tight shots (subject over 60% of the frame height), cameras against a wall, new places with no wide shot, sizes tighter than story.json v2 planned | 2 s |
@@ -78,7 +79,8 @@ Measured on story_nitwit (docs/pipeline_test_nitwit.md: 2 h 40 min start to publ
 5. **Check before any render** (seconds): `./hb check story_<name>` (rec_check blockers mean re-record), then read
    `./hb framing` and `./hb continuity` and `./hb describe` the moments you're unsure of. Fix, re-record, re-check.
 6. **Look**: `./hb sheet story_<name>` (one frame per shot) and `./hb still` at anything describe or check flagged.
-   Optional: `./hb preview` for the captions, cards and pacing (10-25 min; worth it on a free box).
+   Skip `./hb preview` by default: on this shared 4-core box it takes 12-26 min, longer than the ~10 min Actions render
+   of the real thing. Use `./hb sheet` / `./hb still` for staging and `./hb render` (Actions) to see it move.
 7. **Render on Actions**: commit what the render reads (`render.js`, `renderer/`, `edit.py`, `scripts/`: hb refuses
    otherwise), `./hb render story_<name>`, then `./hb render story_<name> --wait` (~10-20 min). Look at sheets meanwhile.
 8. **Review**: `./hb review story_<name>`, then an independent reviewer with `.claude/skills/short-review/SKILL.md`
