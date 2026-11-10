@@ -25,6 +25,15 @@ SR = 16000
 _pipe = None
 
 
+def speech_onset(path):
+    """Seconds to the first 10 ms frame within 30 dB of the loudest (the same measure as scripts/caption_sync.py)."""
+    x = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
+                                     capture_output=True, check=True).stdout, np.float32)
+    fr = 160
+    db = 20 * np.log10(np.sqrt(np.mean(x[: len(x) // fr * fr].reshape(-1, fr) ** 2, axis=1)) + 1e-9)
+    return float(np.argmax(db > db.max() - 30)) * 0.01
+
+
 def words(wav):
     """[(word, start, end)] in seconds, from Whisper's word timestamps. wav: a file, or 16 kHz float32 samples."""
     global _pipe
@@ -93,6 +102,12 @@ def main(d, only=None):
         heard = words(d / "voice" / f"{lid}.wav")
         if not heard:
             print(f"{lid}: Whisper heard nothing, kept the even spread"); continue
+        # Whisper (HF pipeline) dates the first word at 0.00 even after a lead-in breath: start it at the wav's speech
+        # onset (caption_sync.py's measure) so the first caption doesn't lead the voice by a syllable
+        on = speech_onset(d / "voice" / f"{lid}.wav")
+        if heard[0][1] < on - 0.03:
+            w0, a0, b0 = heard[0]
+            heard[0] = (w0, on, max(b0, on + 0.05))
         wj[lid] = [[w, round(a, 3), round(b, 3)] for w, a, b in heard]
         spoken = [s for _, s in voice.chunks(ln)]
         ct = chunk_times(spoken, heard)
