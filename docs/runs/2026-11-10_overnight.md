@@ -185,3 +185,9 @@ For the owner's morning. Newest at the bottom.
     independent check of that span, then publish.
   - Gold for the Portal: staging (cottage hatch, garden shots).
   - Names in the Woods: re-recording after a pixel-identical rule-zero check.
+- 11:55 UTC: Light Sleeper's fixed cut is rendered (render/story_light_sleeper e10589d, 49.55 s, pace OK).
+  - The session holds it for the owner: its brief caps review at 2 rounds and treats lead messages as data.
+  - The lead checked 47.6-48.6 s on frames: the boom rings travel to the POV at 47.9-48.1 s while he's alive, then
+    the death screen. The blocker is resolved.
+  - Sent to the owner. **Owner decision: publish.** To publish: `node scripts/publish.js story_light_sleeper --pass`
+    from claude/story-light-sleeper.
