@@ -1,116 +1,132 @@
-# scarecrow: continuity bible (r1)
+# scarecrow: continuity bible (r2)
 
 ## World
 - **Vanilla rules the story rests on** (Java 1.21):
-  - A snow golem places a snow layer in the air cell at its feet as it moves (four points round its feet), where the
-    biome temperature there is below 0.8, the cell is empty and the block below has a full top face, with
-    `mobGriefing` on. So: no snow in plains (exactly 0.8), snow in a meadow (0.5). No snow on farmland or dirt path
-    (not full blocks), none in the wheat (the cell isn't empty), none where flowers stand.
-  - Snow layers don't melt in sunlight, only next to block light above 11. So the trail stays until the boy shovels it
-    (a shovel on a snow layer drops a snowball).
-  - A meadow (0.5) gets rain, never snow (snowfall needs under 0.15). "It does NOT snow here. EVER." is true.
-  - A snow golem targets hostile mobs it can see within 16 blocks, walks until it is within 10 blocks with a clear
-    line of sight, stops, and throws a snowball about once a second. Snowballs do no damage to zombies, only knockback
-    along the throw. Zombies never target snow golems.
-  - Zombies hunt players within 35 blocks and press against the wall nearest the player when they can't get in. On
-    normal difficulty they can't break doors. They burn in direct sunlight and drop rotten flesh (0-2), which lies on
-    the ground for 5 minutes.
-  - Rain, water and hot biomes hurt snow golems. **Risk, stated honestly:** in vanilla a meadow does rain every few
-    days, and a golem in the open would melt in the first shower. The story never claims it doesn't rain; it shows only
-    clear mornings and nights. If the critic or the minecraft-audit asks, the answer is "a dry summer", and the fix if
-    needed is cheap: one line of set dressing (Grandpa's field has a lean-to by the scarecrow spot) with no script
-    change. Logged here, not hidden.
-- **Why it's there (backstory, never said):** Grandpa (a player, like Milo; Dad's side of a mixed family) knew zombies
-  came for the boy's wall every night. The week before he died he stacked two snow blocks in his wheat and put one of
-  his carved pumpkins on top. Mom thinks he built a scarecrow. Nobody has gone into his field since (the wheat stands
-  ripe, unharvested).
+  - A snow golem lays a snow layer in the empty cells under its feet as it moves, where the biome temperature is below
+    0.8, the block below has a full top face, and `mobGriefing` is on.
+    - Plains is exactly 0.8, so it lays nothing there. A meadow is 0.5, so it lays snow.
+    - It lays none on farmland or dirt path, none in the wheat, and none on flowers.
+  - Snow layers melt only next to block light above 11, never in sunlight. The trail stays until it is shoveled, and a
+    shovel on a snow layer drops a snowball.
+  - A meadow gets rain, never snow, because snow needs a temperature under 0.15.
+  - A snow golem:
+    - targets hostile mobs it can see within 16 blocks,
+    - walks until it is within 10 blocks and has a clear line of sight,
+    - then stops and throws a snowball about once a second.
+  - Snowballs do no damage to zombies, only knockback along the throw. Zombies never target snow golems.
+  - Zombies:
+    - hunt players within 35 blocks,
+    - crowd the wall nearest a player they can't reach (normal difficulty: no door breaking),
+    - burn in sunlight and drop 0-2 rotten flesh, which lies for 5 minutes.
+- **Known stretches** (stated honestly for the minecraft-audit, never claimed on screen):
+  1. **Rain.** Rain hurts snow golems, and a meadow rains every few days.
+     - The story shows only clear mornings and nights. The answer is "a dry summer".
+     - The cheap fix if asked: a lean-to roof by the scarecrow spot (set dressing, no script change).
+  2. **Back at its spot by dawn.** Vanilla gives a snow golem no home.
+     - After the last zombie burns at dawn it wanders.
+     - We show one morning (the 63rd) with it at its spot, which a wander can produce. Nothing says it returns there
+       every day.
+- **Backstory (never said).**
+  - Grandpa was a player like Milo (a mixed family).
+  - He knew zombies came for the boy's wall at night.
+  - The week before he died he stacked two snow blocks in his wheat, beside a lantern post, and put one of his carved
+    pumpkins on top.
+  - Mom calls it his snow scarecrow.
+  - Nobody has gone into his field since: the wheat stands ripe and unharvested.
 - **Scenes and time of day, in story order:**
 
-| scene | lines | when | time (ticks) | sun / light |
+| scene | lines | when | time (ticks) | light |
 |---|---|---|---|---|
-| A. the mornings | L01-L04 | a morning (the 63rd) | 1000 for every shot (S01-S04) | sun low in the east, behind S01's camera (it lights our back wall, which faces east) |
-| B. some night | L05 | a night in the 63 | 18000 | inside: one lantern on the far wall, moonlight in the shutter slats |
-| C. a morning | L06-L08 | the same morning as A (the flesh is there because zombies burned at sunrise) | 1000 | as A |
-| D. last night | L09-L11 | last night (the 63rd night) | 18000 for every shot | full moon high; the farmhouse porch lantern; Milo's room lantern **off** from S09 to the end (he waits in the dark), so S11's window is lit by the moon only and his face reads in moonlight; add a lantern on a post at the cottage's back corner (0,-8) if S11 reads too dark at 300 px |
+| A. the morning | L01-L03 | yesterday morning (the 63rd) | 1000 (S01-S04) | sun low in the east, behind S01's camera, lighting our east-facing back wall |
+| B. every night | L04 | any night of the 63 | 18000 (S05) | inside: the hanging lantern and the hearth campfire both lit; moonlight in the shutter slats |
+| C. the same morning | L05-L07 | yesterday morning (as A) | 1000 (S06-S08) | as A |
+| D. last night | L08-L11 | last night (the 63rd night) | 18000 (S09-S11) | full moon; the lantern post in the wheat (22, 1, 3), the farmhouse porch lantern, the post at the cottage's back corner (1, -9). **Milo's room is dark**: the hanging lantern taken down, the hearth `campfire[lit=false]` |
 
-- Weather: clear throughout (`weather: clear`). Season: summer (wheat ripe, flowers, green grass).
-- **Numbers said and what the picture must show:** "SIXTY-THREE mornings" (a count; not shown); one trail (one line of
-  snow, not 63: he shovels it daily); one scarecrow; "ROTTEN FLESH" (two items in S06); three zombies at the reveal
-  (none said); one golem; four carved pumpkins on the porch (none said); "the week before he died" (not shown).
+- Weather: clear throughout. Season: summer (ripe wheat, flowers, green grass). No fog (`look.fog: false`): the
+  distance is haze and hills.
+- **Numbers.** Said: "SIXTY-THREE mornings" (a count, not shown). Shown but never said:
+  - one trail (shoveled daily),
+  - one scarecrow,
+  - two rotten flesh in S06,
+  - three zombies and one golem in S11,
+  - four carved pumpkins on the porch (S07),
+  - four shutters.
 
 ## Places
-Coordinates: the origin (0,0,0) is the foot of our cottage's back (east) wall, outside, under the middle of my bedroom
-window; y 0 = the grass level there. +x east (toward the field), +z south.
+Coordinates: the origin is the foot of our cottage's back (east) wall, outside, under the middle of my window. +x is
+east (the field), +z south. **Every y is height above the local ground at that x,z.** The ground falls 2-4 blocks
+from the cottage (x 0) to the field (x 19+).
 
-| place | where (x,z) | what's there | establishing shot (first seen) | changes during the story |
+| place | where (x,z) | what's there | establishing shot | changes |
 |---|---|---|---|---|
-| cottage (ours) | x -15..0, z -8..8; back (east) wall at x 0 | the `cottage` piece facing west (door and garden on the far side), its back on the downhill side: stone foundation, interior floor 2 blocks above the outside grass; my bedroom window (the back window) over the bed, glass swapped for two spruce trapdoor shutters, opening at y 3-4, no outside sill (no foothold) | S01 (from the scarecrow), S02 (from above) | S10: the shutters swing up and stay open through S11 |
-| bedroom | inside the cottage's back half | the bed under the back window (red blanket), the table and two chairs, a lantern on the far (west) wall | S05 (WS from the `inside` corner) | the lantern on in S05, off in S09-S11 |
-| yard / trail | x 0..19, z -8..4 | meadow grass mown short (no flowers on the trail line), flowers either side; the trail: one snow layer wide (1-2 blocks), from the field's fence gap (19,0) to the patch | S01 | morning: the trail and patch present (S01-S04); S03: 2 blocks of it dug out near (15,-2); night: the golem on the patch in S11 |
-| the patch | centred (6,-6) | 3x3 snow layers with ragged edges (the golem shuffles while it throws), 8 blocks from the window, facing it | S04 | S11: the golem stands on it |
-| field | x 19..38, z -4..11 (the `farmhouse` piece's fields) | four fenced plots: wheat (north-west, where the scarecrow stands), carrots, potatoes, beetroot, water channels; the west fence has a 3-wide gap at z -1..1 (the golem's way out) | S01, S02 | the scarecrow spot (21,0) is empty in S10-S11 |
-| scarecrow spot | (21,0), in the north-west wheat plot, west of its water channel | the "scarecrow" (the snow golem) facing west toward our cottage, wheat to its middle | S01 (its back), S07 (small), S08 (its face) | empty at night (S10, S11) |
-| farmhouse porch | the farmhouse at x 19..29, z -16..-10; porch z -9..-7 facing south over the field | Grandpa's old farmhouse (Mom works here now): porch with bench, lantern, and a row of four carved pumpkins (faces out) along its front edge | S07 | none |
-| barn, paddock | barn x 40..50, z -16..-6; paddock x 42..50, z -4..9 | the piece's barn and paddock with four cows; the nitwit (easter egg) among them in S07 | S02, S07 | none |
-| village | 40-70 blocks west, down the slope | plains-style village houses (meadow biome) | S02's background | none |
+| cottage (ours) | x -15..0, z -8..8; back wall on x 0 | The `cottage` piece facing west, with its back on the downhill side. That gives it a stone foundation, and the floor sits 2 above the outside grass. My window is the back window over the bed: **2 wide x 2 high**, at z -1..0, y 3-4 above the outside grass. Its glass is replaced by **four spruce trapdoors**, and there is no outside sill. Along the back wall, south of the window, are the piece's rain barrel, water cauldron and composter (z 4..6), in S06 and S11 | S01, S02 | S10: the four shutters open (the lower pair `half=bottom`, the upper pair `half=top`, all `open=false`) and stay open in S11 |
+| bedroom | the cottage's back half | the bed under the window (red blanket), table and chairs, the hanging lantern, the hearth campfire | S05 (FS) | S05 lantern and campfire lit; S09-S11 lantern removed and the campfire out |
+| yard / trail | x 0..19, z -9..4 | Mown meadow grass with flowers either side. The trail is one snow layer, 1-2 blocks wide, curving from the fence gap (19, 0) to the patch | S01 | A/C: the trail is there (S03 digs 2 blocks near (15, -2)). D: the golem has laid it again by S10 |
+| the patch | 3x3 centred (6, -6) | snow layers with ragged edges, 8 blocks from the window, facing it | S04 | S11: the golem on it |
+| field | x 19..38, z -4..11 (the `farmhouse` piece) | Four fenced plots on channels. The west fence has a 3-wide gap at (19, -1..1) | S01, S02 | none |
+| scarecrow spot | (21, 0): a 1x1 coarse-dirt gap in the north-west wheat plot, west of its channel | The golem stands in the gap, facing west. A fence post with a lantern stands at (22, 1, 3) | S01 (from behind), S07 (small), S08 (its face) | D: the gap is empty and lit by the lantern (S10b) |
+| farmhouse porch | the farmhouse at x 19..29, z -16..-10; the porch at z -9..-7 | Grandpa's farmhouse: a bench, a lantern, and four carved pumpkins on the porch's front edge, faces out | S07 | none |
+| barn, paddock | barn x 40..50, z -16..-6; paddock x 42..50, z -4..9 | four cows; in S02 the nitwit stands among them | S02 | none |
+
+The village itself is off screen, down the south slope. Nothing in a frame claims it.
 
 ## Cast and costume
-| who | mob / skin | outfit, held item | name tag | where in each scene | state changes |
-|---|---|---|---|---|---|
-| me (N): Milo, nine | the bot (POV); default Steve skin in camera shots | A: iron shovel (hotbar 1), snowballs land in slot 2 in S03; B, D: empty hand | none | A: S03 on the trail at (15,-2) facing west; B: sitting on his bed (S05); D: sitting on the bed (S09), standing at the window (S10-S11) | none (full hearts throughout) |
-| the "scarecrow" | snow golem (pumpkin on: the carved pumpkin head) | none | none | mornings (A, C): standing in the wheat at (21,0), facing west, NoAI for the takes; night D: on the patch at (6,-6) facing the window wall, throwing (S11) | none |
-| Mom | villager, plains farmer outfit | nothing held | none | C: on the farmhouse porch at (25,-8) looking south-west at the field (S07) | none |
-| zombies (3) | adult zombies, no armour, nothing held | | none | B: heard only (S05); D: at the foot of our back wall at (0.5..1.5, -1..2), arms up, facing the window; knocked south along the wall on each hit, walking back | none die on screen (no damage from snowballs) |
-| the nitwit (easter egg) | villager, nitwit (green coat) | | none | C: standing in the paddock among the cows, S07 background | none |
-| cows (4) | cows | | | the paddock, S02 and S07 | |
-| Grandpa | never seen | | | | |
+| who | mob / skin | held item | where in each scene | state changes |
+|---|---|---|---|---|
+| me (N): Milo, nine | the bot (POV); default Steve skin in camera shots | Hotbar: 1 iron shovel, 2 snowballs (already a stack; S03 adds one), 3 empty. Selected: slot 1 in S03, slot 3 (an empty hand) in S09-S10 | A: on the trail at (15, -2), facing west (S03). B: sitting on his bed facing into the room (S05). D: sitting on the bed facing the shutters (S09); standing at the window (S10, S11: head and shoulders in the opening) | none |
+| the "scarecrow" | snow golem with its carved pumpkin | none | A/C: in the gap at (21, 0), facing west (NoAI for the takes), the white body inside the wheat up to its middle. D: on the patch at (6, -6), facing the wall, throwing (S11) | none |
+| Mom | villager, plains farmer | none | C: on the porch at (25, -8), looking south-west at the field (S07) | none |
+| zombies (3) | adult zombies, no armour | none | B: heard only. D: at the foot of the back wall, (0.5..1.5, -1..2), arms up, facing up at the window; shoved south along the wall on each hit, walking back | none die on screen |
+| the nitwit (easter egg) | villager, nitwit | none | A: standing among the cows in the paddock (S02) | none |
+| cows (4) | cows | | the paddock (S02) | |
+| Grandpa | never seen | | | |
 
 ## Props
-| prop | first seen | state | where exactly | later |
+| prop | first seen | state | where | later |
 |---|---|---|---|---|
-| the trail | S01 | one snow layer, 1-2 blocks wide, from (19,0) to the patch | yard | S02 (from above), S03 (2 blocks dug out near (15,-2)), S04, S10 (moonlit), S11 |
-| the patch | S01 (left of the window), S04 | 3x3 snow layers, ragged | (6,-6) | S11 under the golem |
-| rotten flesh | S06 | two dropped items, bobbing and turning | the foot of the wall at (0.8, 0, 0.5) and (1.2, 0, -0.8), beside a bare coarse-dirt spot | none (gone by night) |
-| shutters | S01 (closed, from outside) | two spruce trapdoors filling the window, closed (vertical) | the back window (0, 3-4, -0.5..0.5) | S04, S05, S09 closed; S10 opened on "OPENED" (flat at the top of the opening); open in S11 |
-| carved pumpkins | S07 | four, faces out | the farmhouse porch's front edge, x 21..27, z -7 | S08's background |
-| shovel | S03 | iron shovel in hand | hotbar 1 | only S03 |
-| snowballs | S03 (one pops out of the dug snow and is picked up) | hotbar 2 | | the golem's in S10 (one streak) and S11 |
-| the fence gap | S01 | 3 fence posts missing from the field's west fence | (19, -1..1) | none |
+| the trail | S01 | one snow layer, 1-2 wide | (19, 0) to the patch | S02, S03 (2 blocks dug), S04, S10 (moonlit) |
+| the patch | S01 (right of centre), S04 | 3x3, ragged | (6, -6) | S11 under the golem |
+| the lantern post | S01 (frame left) | a fence post with a lantern on top, lit | (22, 1, 3) | S07, S08, S10 (distant), S10b (lights the gap) |
+| the corner lantern post | S11 | a fence post with a lantern, lit | (1, -9) | S11 only |
+| rotten flesh | S06 | two dropped items, bobbing and turning | (0.8, 0, 0.5) and (1.2, 0, -0.8) | gone by night |
+| shutters | S01 (closed, from outside) | four spruce trapdoors, closed (vertical) | the window (0, 3-4, -1..0) | S04, S05, S09 closed; S10 open on "OPEN"; S11 open |
+| carved pumpkins | S07 | four, faces out | the porch edge, x 21..27, z -7 | none |
+| shovel | S03 | iron, in hand | hotbar 1 | S03 only |
+| barrel, cauldron, composter | S06 (frame left) | the cottage piece's, along the back wall | z 4..6 at x 0 | S11 (the wall) |
 
 ## Positions and screen direction
-- The axis of the story is the trail: **field east, cottage west.** In S01 we look west from the field (the cottage
-  ahead); in S03 west along the trail; in S04 south-west at the patch and wall; in S08 east at the scarecrow's face;
-  in S10 east out of the window; in S11 north-west from the yard's south-east at the wall and the golem.
-- The patch is north-east of the window (8 blocks out, 6 north): from the window looking straight east, it's off frame
-  left. That keeps the golem out of S10's POV ("the scarecrow was GONE") and makes each snowball shove the zombies
-  south along the wall, away from the window, in S11.
-- S07 looks north-west at the porch with the field at frame left; the barn and paddock at frame right.
+- The trail runs east-west: the field is east, the cottage west.
+  - S01 and S03 look west.
+  - S04 looks south-west.
+  - S07 looks north-west at the porch.
+  - S08, S10 and S10b look east.
+  - S11 starts looking down from the window, then looks north-west at the wall.
+- The patch is north-east of the window (6 north, 6 out). From the window looking east it sits about 45 degrees left,
+  outside S10's frame, so the yard ahead reads empty. Each snowball shoves the zombies south along the wall, away
+  from the window.
+- In S11's end frame: the window and the zombies are at frame left, the golem at frame right.
 
 ## The narrator
-- POV in S03, S09, S10; seen from outside in S05 (small, sitting on his bed) and S11 (head and shoulders in the open
-  window, from 11-14 blocks).
-- Held item: the iron shovel in S03 (hotbar: shovel, snowballs after the dig); empty hand in S09-S10 (the hand flips
-  the shutters). Hearts and hunger full; no armour.
-- Where he is for each line matches the picture: L03 on the trail; L05 on his bed; L09 on his bed; L10 at the window;
+- POV in S03, S09 and S10. In camera shots in S05 (sitting on his bed) and S11 (head and shoulders in the window).
+- Hearts and hunger full, no armour.
+- Where he is for each line: L02 on the trail (from "I shovel"), L04 on his bed, L08 on his bed, L09 at the window,
   L11 in the window.
 
 ## Who knows what (line by line)
 | line | the narrator knows | Mom knows | the viewer can know |
 |---|---|---|---|
-| L01-L03 | snow comes from the scarecrow every night in a place it never snows | there's frost or snow some mornings, maybe; she doesn't go out back | players: a snow golem leaves snow trails |
-| L04 | it ends where someone seems to stand facing his window | | the trail ends at a post |
-| L05 | groaning at night; he never looks | | players: zombies outside his wall |
-| L06 | rotten flesh under the window | | players: zombies died there (sunrise) |
-| L07 | Grandpa built the scarecrow just before he died | that's all she knows | Grandpa made it on purpose |
-| L08 | Grandpa promised to keep an eye on him; finds it creepy | | attentive viewers: the scarecrow is Grandpa's watcher |
-| L09-L10 | he wants to catch it; the scarecrow isn't in the field | | it's already at his wall |
-| L11 | it's Grandpa's guard | | the whole truth |
+| L01-L02 | snow comes from the scarecrow every night, in a place it never snows | | players: snow golems leave trails |
+| L03 | it ends where someone seems to stand staring at him | | the trail ends at a post |
+| L04 | groaning every night; he never looks | | players: zombies at his wall |
+| L05 | rotten flesh under the window | | players: zombies died there at sunrise |
+| L06 | Grandpa built it out of snow, just before he died | that's all she knows | the snow comes from the scarecrow |
+| L07 | Grandpa promised to keep an eye on him; finds it creepy | | attentive viewers: a golem, a guard |
+| L08-L10 | he wants to catch it; it's gone from the field | | it's somewhere near him |
+| L11 | the zombies were the danger, the scarecrow his guard | | the whole truth |
 
 ## Clue map
-See `beats.md` (clue map table): the trail from the scarecrow (L01, S01), no snow ever (L02), it comes back (L03), the
-patch (L04, S04), the groans (L05), the flesh (L06, S06), Grandpa built it (L07), the porch pumpkins (S07), the promise
-(L08), the face (S08), the empty spot (L10, S10).
+The full table is in `beats.md`.
 
 ## Easter egg (shared world)
-The village nitwit in his green coat (story_nitwit), standing in our paddock among the cows in S07's background.
+The village nitwit in his green coat (story_nitwit), standing among the cows in our paddock, in S02's background.
 **Provisional: re-check against docs/world/canon.md when it lands.**

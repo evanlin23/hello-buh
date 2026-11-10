@@ -210,10 +210,16 @@
       "say": "Wait. <short pause> I'm not light. It only goes up.",
       "direction": "the grin drops into a funny dawning panic, a beat after the first word, full volume, fast and bright",
       "shot": "S09",
-      "look": {
-        "what": "prop:market_below",
-        "word": "UP"
-      }
+      "look": [
+        {
+          "what": "prop:market_below",
+          "word": "LIGHT"
+        },
+        {
+          "what": "prop:fountain",
+          "word": "UP"
+        }
+      ]
     },
     {
       "id": "L10",
@@ -240,7 +246,7 @@
       "shot": "S11",
       "look": {
         "what": "prop:market_below",
-        "word": "TOO"
+        "word": "OFF"
       }
     },
     {
@@ -281,7 +287,7 @@
       "place": "windmill_top",
       "size": "wide",
       "camera": "at: in the air 9 blocks south-west of the step (looking north-east, the sails at a three-quarter angle), eye level with the balcony (y 24), FOV 55, lookPath tilts down after her from 'WINDMILL' so the drop opens under her, slow drift down",
-      "frame": "fg: the tip of a canvas sail at frame right, subject: Grandma head to foot at the end of the little jetty off the balcony (the step, 3 blocks west of the cliff face), empty hands, she steps off on 'WINDMILL', bg: the timber cap and roof, the stone tower, the glass fountain column running down the tower with bubbles rising, and as the camera tilts: the cliff, the striped stall roofs of the market 23 blocks below, the forested valley. No bottle, no drink in this shot (the juice is first seen in S03). Morning (1000): the sun low at frame right behind the cap (east), a rim light on Grandma and the sails."
+      "frame": "fg: the tip of a canvas sail at frame right, subject: Grandma head to foot at the end of the little jetty off the balcony (the step, 2 blocks west of the cliff face), empty hands, she hops off on 'jumped' (a vanilla jump off the end: up ~1.25 blocks, then down), bg: the timber cap and roof, the stone tower, the glass fountain column running down the tower with bubbles rising, and as the camera tilts: the cliff, the striped stall roofs of the market 23 blocks below, the forested valley. No bottle, no drink in this shot (the juice is first seen in S03). Morning (1000): the sun low at frame right behind the cap (east), a rim light on Grandma and the sails."
     },
     {
       "id": "S02",
@@ -351,7 +357,7 @@
       "place": "windmill_top",
       "size": "ews",
       "camera": "pov on the balcony beside the column's exit at (1, 24, -1), looking north-west over the rail and down, then down into the column (bubbles only rising). Grandma is off frame left, walking out on the jetty",
-      "frame": "fg: the fence rail and the hand (empty hand selected, the peach potion in slot 2), subject: the drop: the cliff and the market's roofs tiny below, the bench, bg: the valley, forest and hills to the fog. Morning (1000)."
+      "frame": "fg: the fence rail and the hand (empty hand selected, the peach potion in slot 2), subject: the drop: the cliff and the market's roofs tiny below, the bench, bg: the valley, forest and hills to the fog. On 'LIGHT' the drop to the market, on 'UP' the view drops into the glass column at the bubbles rising past. Morning (1000)."
     },
     {
       "id": "S10",
@@ -436,7 +442,7 @@
   "set": "stories/slow_falling/set.md",
   "timing": {
     "slow_falling_drop": "vanilla LivingEntity.travel: with Slow Falling and falling, gravity is min(gravity, 0.01) per tick, then x0.98 drag, terminal 0.49 blocks/tick = 9.8 blocks/s (minecraft.wiki/w/Slow_Falling: 'terminal velocity of 9.8 m/s'). From rest, the 23-block drop (feet y 24 to y 1) takes 88 ticks = 4.4 s. Recompute with the real recorded curve.",
-    "scene_A": "she steps on 'WINDMILL' (L01, ~1.0 s), lands 4.4 s later: ~1.7 s into L02, on 'Not one SCRATCH'",
+    "scene_A": "she hops off on 'jumped' (~0.4 s into L01): a vanilla jump (0.42 up, normal gravity while rising) peaks ~1.25 blocks up after 0.3 s, then 24.25 blocks of slow falling: lands ~4.8 s after the hop, ~1.5 s into L02, on 'Not one SCRATCH'",
     "scene_C": "Grandma drinks 1.6 s on L10 'drank her JUICE' while walking to the step, Milo selects the bottle on 'TEA' (name pops) and drinks on L11 'So I drank MINE' (1.6 s), she steps on 'we stepped', he steps 0.5 s later on 'OFF' (gap ~2 blocks at the same rate: 2.0 blocks at 2 s, 2.3 at 2.4 s). L12 plays 1.1-2.4 s into her fall. She touches down at +4.4 s (on 'Eleven thousand'), he at +4.9 s, 'TIMES' ~+5.6 s, cut ~+6.1 s."
   }
 }
