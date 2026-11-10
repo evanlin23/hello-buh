@@ -6,21 +6,21 @@
   "L01": {
    "text": "The dog on the hill hasn't moved in nine hundred days.",
    "who": "N",
-   "dur": 3.25,
+   "dur": 2.714,
    "onset": 0.03,
-   "end": 3.2,
+   "end": 2.664,
    "chunks": [
     [
      0.0,
-     0.76
+     0.63
     ],
     [
-     0.76,
-     1.38
+     0.63,
+     1.15
     ],
     [
-     1.38,
-     3.15
+     1.15,
+     2.62
     ]
    ],
    "captions": [
@@ -32,21 +32,21 @@
   "L02": {
    "text": "Not for rain. Not for thunder. Not even for zombies.",
    "who": "N",
-   "dur": 3.32,
+   "dur": 2.775,
    "onset": 0.03,
-   "end": 3.27,
+   "end": 2.725,
    "chunks": [
     [
      0.0,
-     1.12
+     0.93
     ],
     [
-     1.12,
-     1.92
+     0.93,
+     1.6
     ],
     [
-     1.92,
-     3.2199999999999998
+     1.6,
+     2.68
     ]
    ],
    "captions": [
@@ -58,21 +58,21 @@
   "L03": {
    "text": "I bring him a bone every morning. He never even looks.",
    "who": "N",
-   "dur": 3.18,
+   "dur": 2.662,
    "onset": 0.03,
-   "end": 3.13,
+   "end": 2.612,
    "chunks": [
     [
      0.0,
-     0.7
+     0.58
     ],
     [
-     0.7,
-     1.98
+     0.58,
+     1.65
     ],
     [
-     1.98,
-     3.08
+     1.65,
+     2.57
     ]
    ],
    "captions": [
@@ -84,21 +84,21 @@
   "L04": {
    "text": "He wears a red collar. But nobody in the village owns him.",
    "who": "N",
-   "dur": 3.28,
+   "dur": 2.747,
    "onset": 0.03,
-   "end": 3.23,
+   "end": 2.697,
    "chunks": [
     [
      0.0,
-     1.24
+     1.03
     ],
     [
-     1.24,
-     2.34
+     1.03,
+     1.95
     ],
     [
-     2.34,
-     3.1799999999999997
+     1.95,
+     2.65
     ]
    ],
    "captions": [
@@ -110,21 +110,21 @@
   "L05": {
    "text": "He just stares at one empty patch of grass.",
    "who": "N",
-   "dur": 2.69,
+   "dur": 2.259,
    "onset": 0.03,
-   "end": 2.64,
+   "end": 2.209,
    "chunks": [
     [
      0.0,
-     0.48
+     0.4
     ],
     [
-     0.48,
-     1.9
+     0.4,
+     1.58
     ],
     [
-     1.9,
-     2.59
+     1.58,
+     2.16
     ]
    ],
    "captions": [
@@ -136,25 +136,25 @@
   "L06": {
    "text": "And behind him, an old dirt hut. Nobody knows who built it.",
    "who": "N",
-   "dur": 4.1,
+   "dur": 3.432,
    "onset": 0.03,
-   "end": 4.05,
+   "end": 3.382,
    "chunks": [
     [
      0.0,
-     0.64
+     0.53
     ],
     [
-     0.64,
-     2.8
+     0.53,
+     2.33
     ],
     [
-     2.8,
-     3.24
+     2.33,
+     2.7
     ],
     [
-     3.24,
-     3.9999999999999996
+     2.7,
+     3.33
     ]
    ],
    "captions": [
@@ -167,21 +167,21 @@
   "L07": {
    "text": "I tried to make him stand. I begged. He won't budge.",
    "who": "N",
-   "dur": 3.26,
+   "dur": 2.726,
    "onset": 0.03,
-   "end": 3.21,
+   "end": 2.676,
    "chunks": [
     [
      0.0,
-     1.4
+     1.17
     ],
     [
-     1.4,
-     2.44
+     1.17,
+     2.03
     ],
     [
-     2.44,
-     3.1599999999999997
+     2.03,
+     2.63
     ]
    ],
    "captions": [
@@ -240,21 +240,21 @@
   "L11": {
    "text": "So every night now, I sit with him. Nobody should wait alone.",
    "who": "N",
-   "dur": 4.02,
+   "dur": 3.357,
    "onset": 0.03,
-   "end": 3.97,
+   "end": 3.307,
    "chunks": [
     [
      0.0,
-     1.7
+     1.42
     ],
     [
-     1.7,
-     2.74
+     1.42,
+     2.28
     ],
     [
-     2.74,
-     3.9199999999999995
+     2.28,
+     3.27
     ]
    ],
    "captions": [
@@ -266,17 +266,17 @@
   "L12": {
    "text": "And then he stood up!",
    "who": "N",
-   "dur": 1.15,
+   "dur": 0.968,
    "onset": 0.03,
-   "end": 1.1,
+   "end": 0.918,
    "chunks": [
     [
      0.0,
-     0.22
+     0.18
     ],
     [
-     0.22,
-     1.0499999999999998
+     0.18,
+     0.87
     ]
    ],
    "captions": [
@@ -339,17 +339,17 @@
   "L15": {
    "text": "Day one. Again.",
    "who": "N",
-   "dur": 1.43,
+   "dur": 1.194,
    "onset": 0.03,
-   "end": 1.38,
+   "end": 1.144,
    "chunks": [
     [
      0.0,
-     0.74
+     0.62
     ],
     [
-     0.74,
-     1.3299999999999998
+     0.62,
+     1.11
     ]
    ],
    "captions": [
@@ -358,5 +358,5 @@
    ]
   }
  },
- "total": 39.47
+ "total": 34.63
 }
