@@ -2,7 +2,7 @@
   "name": "light_sleeper",
   "stunt": "story_light_sleeper",
   "version": 2,
-  "revision": "vNext r2 (2026-11-10, writers' room arc revision, adopted on the lead's relay of the owner's OK: 'Rewriting the stories is fine'): one narrator (cast narrator: Orus) says every line, 2-3 word captions with one CAPS key word, continuous beat takes with no dramatic pauses, cut 1 s after the warden's roar (no death screen), L01 on a high wide. r7 (2026-11-10, owner review of v2): L16 cut ('We dont need to say Oh thats why we have 9000 carpets'): the ending is the picture; the dig and the jukebox turns smoothed. r6 (2026-11-10): the hero is Buh and nobody says his name (owner rule on main): L13 is 'Don't. MOVE.', botName Buh. r5 (2026-11-10): narrator-first under the owner rules on main (docs/stories.md): one bright, fast kid narrator (cast narrator: Leda, no stretch or pitch shift), Mom's saying quoted by the narrator, one Mom punchline in her own voice while she's on screen (L13), no '...', line 1 in one breath, and an ending line that explains itself (L16). r4: Milo, 35-45 s, L03 cut. r3: the pre-build fixes (reviews/r3-fixes.md)",
+  "revision": "r-cast (2026-11-10): script_vNext.md 'r-cast' adopted (16 lines; Mom's two lines in her own voice; one spoken stress per sentence, in CAPS in `say`); the brand kid narrator (cast `narrator`); one continuous narrator take (narrator_take: one); S01, S03 and S17 dropped; the reveal cuts 1.0 s after the warden's roar",
   "caption": "why is my whole village carpeted 😶",
   "logline": "A boy in a village where every inch is carpeted, the bell is wrapped in wool and the well wears a wool lid wants everyone to hear one song, so he puts a jukebox on the well.",
   "question": "why tf is the whole village covered in carpet?",
@@ -11,170 +11,136 @@
   "key_color": "#3FD0D4",
   "voice": {
     "engine": "gemini",
-    "model_hint": "gemini-2.5-flash-preview-tts"
+    "model_hint": "the cast locks each speaker's model: narrator gemini-3.8-flash-lite-tts; Mom per voices/cast.json"
   },
   "cast": {
     "N": {
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "pov (the hand, never his face); Buh as a kid; seen from outside only from behind (S07, S12's crane start, S16), default Steve skin (owner: the hero stays Steve)"
+      "on_screen": "pov (the hand, never his face); Milo as a kid; seen from outside only small and from behind (S07, S12's crane start, S13's shoulder, S16), default Steve skin (owner: the hero stays Steve)"
     },
     "Mom": {
       "role": "character",
       "ref": "mom",
       "color": "#FFB38A",
-      "silent": true,
-      "on_screen": "villager, plains farmer (straw hat), no name tag"
+      "on_screen": "villager, plains farmer (straw hat), no name tag",
+      "model": "gemini-3.8-flash-tts"
     }
   },
-  "requests": [
-    {
-      "id": "b1",
-      "speakers": [
-        "N"
-      ],
-      "lines": [
-        "L01",
-        "L02",
-        "L03",
-        "L04",
-        "L05"
-      ],
-      "direction": "A guy tells his friends the craziest story about the village he grew up in, where everything is covered in carpet. He keeps going, sentence after sentence, no pauses."
-    },
-    {
-      "id": "b2",
-      "speakers": [
-        "N"
-      ],
-      "lines": [
-        "L06",
-        "L07",
-        "L08",
-        "L09",
-        "L10"
-      ],
-      "direction": "A guy tells his friends the craziest story about the village he grew up in, where everything is covered in carpet. He keeps going, sentence after sentence, no pauses."
-    },
-    {
-      "id": "b3",
-      "speakers": [
-        "N"
-      ],
-      "lines": [
-        "L11",
-        "L12",
-        "L13",
-        "L14",
-        "L15"
-      ],
-      "direction": "A guy tells his friends the craziest story about the village he grew up in, where everything is covered in carpet. He keeps going, sentence after sentence, no pauses."
-    }
-  ],
   "lines": [
     {
       "id": "L01",
       "who": "N",
       "text": "My VILLAGE / is COVERED in / nine thousand CARPETS.",
-      "shot": "S01"
+      "say": "My village is covered in nine thousand CARPETS.",
+      "shot": "S02"
     },
     {
       "id": "L02",
       "who": "N",
       "text": "The road? CARPET. / The stairs? CARPET. / The DOGHOUSE? / Also CARPET.",
+      "say": "The road? CARPET. The stairs? CARPET. The DOGHOUSE? Also CARPET.",
       "shot": "S02"
     },
     {
       "id": "L03",
       "who": "N",
-      "text": "We SHEAR / three hundred SHEEP / every MORNING / to keep UP.",
-      "shot": "S03"
+      "text": "Even the BELL / wears a SWEATER.",
+      "say": "Even the bell wears a SWEATER.",
+      "shot": "S04"
     },
     {
       "id": "L04",
       "who": "N",
-      "text": "Even our BELL / is WRAPPED / in white WOOL.",
-      "shot": "S04",
-      "look": {
-        "what": [
-          5.4,
-          3.3,
-          0.5
-        ],
-        "word": "BELL"
-      }
+      "text": "Mom SAYS:",
+      "say": "Mom says:",
+      "shot": "S05"
     },
     {
       "id": "L05",
-      "who": "N",
-      "text": "Mom SAYS, / walk SOFT, sweetie. / The GROUND'S / a light SLEEPER.",
+      "who": "Mom",
+      "text": "Walk SOFT, sweetie. / The GROUND'S / a light SLEEPER.",
+      "say": "Walk SOFT, sweetie. The ground's a light SLEEPER.",
       "shot": "S05",
-      "look": "Mom"
+      "direction": "warm and gentle, reminding her kid of the house rule like she's said it a hundred times"
     },
     {
       "id": "L06",
       "who": "N",
-      "text": "Once I PULLED / the WOOL / off the WELL.",
+      "text": "But ONE time, / I PULLED / the WOOL / off the WELL.",
+      "say": "But one time, I pulled the wool off the WELL.",
       "shot": "S06"
     },
     {
       "id": "L07",
       "who": "N",
-      "text": "The BOTTOM / of the WELL / just SCREAMED.",
+      "text": "Then SOMETHING / down the WELL / just SCREAMED.",
+      "say": "Then something down the well just SCREAMED.",
       "shot": "S07"
     },
     {
       "id": "L08",
       "who": "N",
-      "text": "Mom HELD me / in the DARK. / She SAID it / was a FOX.",
+      "text": "Mom SAID it / was a FOX. / I didn't KNOW / FOXES lived / in WELLS.",
+      "say": "Mom said it was a FOX. I didn't know foxes lived in WELLS.",
       "shot": "S08"
     },
     {
       "id": "L09",
       "who": "N",
-      "text": "Then a SKELETON / shot a CREEPER, / and it DROPPED / a music DISC.",
-      "shot": "S09",
-      "look": {
-        "what": "entity:skeleton",
-        "word": "skeleton"
-      }
+      "text": "Then I FOUND / a music DISC / by the FARM.",
+      "say": "Then I found a music disc by the FARM.",
+      "shot": "S09"
     },
     {
       "id": "L10",
       "who": "N",
-      "text": "A real SONG. / In a VILLAGE / that has NEVER / heard ONE.",
+      "text": "A real SONG. / Nobody HERE / has HEARD one.",
+      "say": "A real SONG. Nobody here has HEARD one.",
       "shot": "S10"
     },
     {
       "id": "L11",
       "who": "N",
-      "text": "So TONIGHT I / put a JUKEBOX / on the WELL. / Wells ECHO.",
+      "text": "So TONIGHT, / I PUT / a JUKEBOX / on the WELL. / Wells ECHO, / you KNOW.",
+      "say": "So tonight, I put a jukebox on the WELL. Wells echo, you KNOW.",
       "shot": "S11"
     },
     {
       "id": "L12",
       "who": "N",
-      "text": "The FOX / screamed AGAIN. / I didn't CARE.",
+      "text": "The FOX / screamed AGAIN. / It LOVED / the MUSIC.",
+      "say": "The fox screamed AGAIN. It loved the MUSIC.",
       "shot": "S12"
     },
     {
       "id": "L13",
       "who": "N",
-      "text": "Mom FROZE. / Don't MOVE, sweetie.",
-      "shot": "S13",
-      "look": "Mom"
+      "text": "Then the LIGHTS / went DARK. / Just LIKE / a PARTY.",
+      "say": "Then the lights went DARK. Just like a PARTY.",
+      "shot": "S14"
     },
     {
       "id": "L14",
       "who": "N",
-      "text": "The LIGHTS / went DARK. / JUST like / a PARTY.",
-      "shot": "S14"
+      "text": "Mom FROZE / in the DOOR.",
+      "say": "Mom froze in the DOOR.",
+      "shot": "S13"
     },
     {
       "id": "L15",
+      "who": "Mom",
+      "text": "Sweetie, don't MOVE.",
+      "say": "Sweetie, don't MOVE.",
+      "shot": "S13",
+      "direction": "suddenly scared but keeping it gentle; quick and low, not whispering"
+    },
+    {
+      "id": "L16",
       "who": "N",
-      "text": "I'd NEVER / danced BEFORE. / So I STEPPED / off the CARPET, / onto the STONE.",
+      "text": "But I'd NEVER / danced BEFORE. / So I STEPPED / off the CARPET / onto the STONE.",
+      "say": "But I'd never DANCED before. So I stepped off the carpet onto the STONE.",
       "shot": "S15"
     }
   ],
@@ -183,83 +149,60 @@
       "n": 1,
       "cause": "S11: he shears the lid's middle row off the well (a block broken by a player: a vibration straight down the open shaft)",
       "sound_at": "L11 'ECHO'",
-      "darkness_at": "off screen: the S11->S12 cut carries ~20 s of game time"
+      "darkness_at": "+4.5 s (vanilla: the shrieker's response comes when its 90-tick shriek ends), i.e. after S12's crane has landed, around S13's first word"
     },
     {
       "n": 2,
-      "cause": "S12 end: the disc goes into the jukebox (POV, on 'CARE')",
-      "sound_at": "'CARE' + 0.5 s",
-      "darkness_at": "fades in on L13 'Milo' (4.5 s later) and pulses to the end"
+      "cause": "S12 end: the disc goes into the jukebox (POV, on L12 'screamed AGAIN')",
+      "sound_at": "the cut into S14 (the S12-S13 cuts carry the warning cooldown)",
+      "darkness_at": "renews the pulse through S14-S15"
     },
     {
       "n": 3,
-      "cause": "S15: he jumps off the carpet up onto the well's bare cobble rim (a landing on stone); 3 cuts after shriek 2 (S12->S13->S14->S15)",
-      "sound_at": "L15 'DANCED' (the landing)",
-      "darkness_at": "renews the pulse"
+      "cause": "S15: he jumps off the carpet up onto the well's bare cobble rim (a landing on stone)",
+      "sound_at": "L16 'STONE' (the landing)",
+      "darkness_at": "full pulse into S16"
     },
     {
       "n": 4,
-      "cause": "another landing on the rim, after 3 quick inserts (S15b-S15d) that carry the cooldown and raise the cut rate",
+      "cause": "S16 opens on another landing on the rim (after a cut)",
       "sound_at": "S16 frame 1",
-      "warden": "the warden bursts up through the carpet at (0,4), south of the well, with block-break particles, and rises (staged, ~2 s)"
+      "warden": "the warden bursts up through the carpet south of the well and rises (staged, ~2 s)"
     }
   ],
   "ending": {
-    "after": "L15",
+    "after": "L16",
     "beats": [
-      "S15: he steps off the carpet onto the well's bare stone rim (L15 'onto the STONE'), the first footstep on stone",
-      "S16 (camera, low, behind him): shriek 4, the carpet at (0,4) bursts and the warden rises beside the well and roars; cut 1.0 s after the roar (no S17, no death screen)"
+      "S15: he steps off the carpet onto the well's bare stone rim on 'STONE' (shriek 3, the landing)",
+      "S16 (camera, low behind the boy): shriek 4 on frame 1, the Darkness at full pulse; the carpet 3 blocks south of the well bursts and the warden rises out of the square, roaring",
+      "cut 1.0 s after the roar; no death screen, no spoken line after the reveal"
     ],
-    "loop": "cause and effect, unspoken: the warden rising is why line 1's village is covered in nine thousand carpets"
+    "loop": "cause and effect: the shriek is why L01's village is covered in nine thousand carpets"
   },
   "shots": [
     {
-      "id": "S01",
-      "line": "L01",
-      "place": "village (high)",
-      "size": "ews",
-      "camera": "camera 'hook': a high wide over the south street looking north over the whole carpeted plaza and village, a slow push",
-      "frame": "the striped carpet plaza, the lidded well, the wool-boxed bell, carpeted roofs to the hill; moving on frame 0. Morning."
-    },
-    {
-      "id": "S01",
-      "line": "L01",
-      "place": "street_top",
-      "size": "wide",
-      "camera": "pov at the top of the 3 carpeted steps where the south street drops into the plaza (eye ~4.5 blocks above the plaza floor, 14 blocks south of the well), looking north, walking slowly forward and down the first step; the carpet makes no sound",
-      "frame": "fg: the carpeted step treads under the camera and a house's carpeted front stairs at frame left; mid: the striped carpet road running into the striped plaza, the well 14 blocks ahead just left of centre with its white wool lid reading as a white square on the grey rim, the bell post right of centre boxed in white wool; bg: carpet-roofed houses ringing the plaza (our door behind the well), then the green north slope and hills. Morning (1000), sun low at frame right."
-    },
-    {
-      "id": "S03",
-      "line": "L03",
-      "place": "sheep_meadow",
-      "size": "wide",
-      "camera": "camera 'meadow': on the meadow fence, a slow push",
-      "frame": "the fenced meadow on the east slope, sheep half sheared, the carpeted village beyond. Morning."
-    },
-    {
       "id": "S02",
-      "line": "L02",
+      "line": "L01",
       "place": "carpet_street to hill_overlook",
       "size": "ews",
-      "camera": "path: crane up and back. Key 0 (0 s): 2 blocks above the striped road near (-12,-14), looking south-east down carpet_street toward the plaza. Key 1 (~1.2 s, 'STAIRS'): rising and pulling back north-west up the slope, past the carpeted stairs of the houses on both sides. Key 2 (~2.4 s, 'DOGHOUSE'): about (-22,-31), 5 blocks above the doghouse's roof (the doghouse's ground is ~12 above the plaza, so the lens is ~20 above the plaza floor). The look holds south-east the whole way, tilting down so the doghouse ends lower-centre",
-      "frame": "on 'ROADS' the road stripes run away from the lens at centre; on 'STAIRS' carpeted stairs climb to doors at both sides; on 'DOGHOUSE' the doghouse (carpet roof, a sitting wolf with a red collar) sits lower-centre at the top of the street, and above it the whole village fills the frame: every road, stair and roof in carpet, the plaza with the wool-lidded well and the boxed bell, the sheep meadow on the far slope, forest and hills into the fog. Morning (1000). The sheep meadow on the far slope is half sheared (the wool supply), in the crane's last frame."
+      "camera": "path: crane up. Key 0 (0 s): 2 blocks above the striped road at the plaza end of carpet_street (which climbs the north slope from the plaza's north-west corner), looking down it. Key 1 (~1.2 s, 'STAIRS'): 5 blocks up, passing the carpeted stairs of the houses on both sides. Key 2 (~2.4 s, 'DOGHOUSE'): 12 blocks above the plaza on the hill shoulder, lookPath tilting down so the doghouse is lower-centre",
+      "frame": "on 'ROADS' the road stripes run away from the lens at centre; on 'STAIRS' carpeted stairs climb to doors at both sides; on 'DOGHOUSE' the doghouse (carpet roof, a sitting wolf with a red collar) sits lower-centre at the top of the street, and above it the whole village fills the frame: every road, stair and roof in carpet, the plaza with the wool-lidded well and the boxed bell, the sheep meadow on the far slope, forest and hills into the fog. Morning (1000)."
     },
     {
       "id": "S04",
-      "line": "L04",
+      "line": "L03",
       "place": "plaza",
       "size": "ms",
-      "camera": "pov from (-5,3), just south-west of the well, walking slowly east along z=+3 past it toward the bell (silent on carpet); ends 3 blocks from the bell box",
-      "frame": "opens: the well's rim edge-on at frame left, the bell 11 blocks ahead in its wool-wrapped frame (open to the west, the gold showing); ends: the boxed bell waist-up size, centred; bg: house fronts and lanterns. Morning (1000)."
+      "camera": "pov from just west of the well, walking slowly east past it toward the bell (silent on carpet); ends 3 blocks from the bell box",
+      "frame": "opens: fg the well's white wool lid at lower left; subject: the bell post 9 blocks ahead in its box of white wool (open to the west, the gold showing). Ends: the boxed bell waist-up size, centred; bg: house fronts and lanterns. Morning (1000)."
     },
     {
       "id": "S05",
-      "line": "L05",
+      "line": "L04",
       "place": "our_house_door",
       "size": "full",
       "camera": "pov sneaking (a child's eye height), looking slightly up, 3 blocks from the door",
-      "frame": "fg: the two carpeted steps up to our door and the lantern post beside them; subject: Mom, head to foot in the open doorway, looking down at the camera; bg: the lit room behind her, carpet on the floor, a second chair. Our door is on the plaza's north edge, 8 blocks north of the well, 2 steps above the plaza. Morning (1000)."
+      "frame": "fg: the carpeted doorstep; subject: Mom, head to foot in the open doorway, looking down at the camera; bg: the lit room behind her, carpet on the floor, a second chair. Our door is on the plaza's north edge, 8 blocks north of the well. Morning (1000)."
     },
     {
       "id": "S06",
@@ -267,23 +210,23 @@
       "place": "well",
       "size": "ms",
       "camera": "pov at the well's north rim, looking down at the lid; shears in hand",
-      "frame": "fg: the grey cobble rim; subject: the white wool lid filling the lower half; on 'WOOL' the hand swings the shears and the lid's middle row pops off (3 blocks, ~0.8 s); on 'WELL' the open slot shows the shaft going dark, sculk on the walls under the lid; bg (upper edge): the plaza carpet. Afternoon (9000, the flashback: warm light)."
+      "frame": "fg: the grey cobble rim; subject: the white wool lid filling the lower half; on 'WOOL' the hand swings the shears and the lid's middle row pops off (3 blocks, ~0.8 s); on 'WELL' the open slot shows the shaft going dark and a faint teal glow at the bottom (5 blocks down); bg (upper edge): the plaza carpet. Afternoon (9000, the flashback: warm light)."
     },
     {
       "id": "S07",
       "line": "L07",
       "place": "plaza",
       "size": "wide",
-      "camera": "at: low (0.6 above the carpet) at (-6,-7), north-west of the well, FOV 50, looking south-east past the boy's back to the well, still, a slow push",
-      "frame": "fg: plaza carpet stripes; subject: the boy from behind (shears in hand) at the well's north rim, the slot open in its white lid; on 'SCREAMED' the shriek (sound) and a teal pulse up the shaft, and the boy steps back; bg: the south side of the plaza and the south street's steps (S01's spot), the wool-wrapped bell just left of centre. Afternoon (9000). No close-up of the shrieker: it is never seen until the end."
+      "camera": "at: low on the plaza 7 blocks south-west of the well, still, a slow push",
+      "frame": "fg: plaza carpet stripes; subject: the boy (small, from behind, shears in hand) at the well with the slot open in its white lid; on 'SCREAMED' the shriek (sound) and a teal pulse up the shaft, and the boy steps back off the rim; bg: our house door on the plaza edge, doorways, the boxed bell at frame right. Afternoon (9000). No close-up of the shrieker: it is never seen until the end."
     },
     {
       "id": "S08",
       "line": "L08",
       "place": "our_house_inside",
-      "size": "full",
-      "camera": "pov, sneaking, still, Mom 3.5 blocks away",
-      "frame": "fg: the carpet floor; subject: Mom head to foot, 3.5 blocks away, looking down at the camera, the 7x7 room around her: the table with the unused second chair, the lantern on the wall, the window toward the well. The Darkness (the flashback shriek's answer) fades in on 'DARK' and pulses. Afternoon (9100)."
+      "size": "ms",
+      "camera": "pov, sneaking, still, Mom close",
+      "frame": "fg: the carpet floor; subject: Mom, waist up, 1.5 blocks away, looking down at the camera; bg: the lantern on the wall and the window toward the well. The Darkness (shriek 1's response, 4.5 s after the shriek) fades in on 'DARK' and pulses. Afternoon (9100)."
     },
     {
       "id": "S09",
@@ -299,86 +242,62 @@
       "place": "our_house_door",
       "size": "ms",
       "camera": "pov in our doorway, the disc held in the hand, a slow turn toward the plaza",
-      "frame": "fg: the hand holding the music disc; mid: the doorstep and the plaza carpet; bg: from 2 steps up, the well 8 blocks ahead with its white lid reading as a square, every door around the plaza shut, lanterns. Night (18000)."
+      "frame": "fg: the hand holding the music disc; mid: the doorstep and the plaza carpet; bg: the well 8 blocks ahead with its white lid, every door around the plaza shut, lanterns. Night (18000)."
     },
     {
       "id": "S11",
       "line": "L11",
       "place": "well",
       "size": "wide",
-      "camera": "pov from (0,-4), 4 blocks north of the well's centre (the whole well in frame), pushing in to (0,-3) while he works; tilts down into the shaft at the end",
-      "frame": "fg: plaza carpet; subject: the well and its lid. On 'I opened the WELL' the shears take the lid's middle row off again; on 'a JUKEBOX on it' the jukebox (hotbar slot 2) goes on the rim's north-east block (1,-2), right of the slot, so it never blocks the look down; on 'Wells ECHO' the camera tips down into the open slot: dark shaft, sculk on the walls under the lid. Shriek 1 starts on 'ECHO'. bg: the plaza ring of shut doors. Night (18000)."
+      "camera": "pov 2 blocks north of the well, the whole well in frame; tilts down into the shaft at the end",
+      "frame": "fg: plaza carpet; subject: the well and its lid. On 'So tonight' the shears take the lid's middle row off again; on 'JUKEBOX / on the WELL' the jukebox (hotbar slot 2) goes on top of the north rim; on 'Wells ECHO' the camera tips down into the open slot: dark shaft, the teal glow. Shriek 1 starts on 'ECHO'. bg: the plaza ring of shut doors. Night (18000)."
     },
     {
       "id": "S12",
       "line": "L12",
       "place": "plaza",
       "size": "ews",
-      "camera": "path: crane down. Key 0: ~16 blocks above (0,-12), above our roof, looking south and down at the well. The yaw stays south the whole way; lands (~2.0 s) in the POV eye at (0,-3), the jukebox at (1,-2) low at frame left. The S11->S12 cut carries ~20 s of game time, so shriek 1's Darkness has come and gone off screen: no Darkness on the crane",
-      "frame": "from above: the well with the jukebox on its rim and the open slot, the boy small beside it, back to us; on 'screamed AGAIN' doors around the plaza open and villagers step into their doorways, the boxed bell at frame left (east); the crane drops into his head; POV on 'I didn't CARE': the hand puts the music disc into the jukebox on 'CARE' and the song starts, the first loud sound in the Short. Shriek 2 on 'CARE' + 0.5 s (the disc going in). Night (18000)."
+      "camera": "path: crane down. Key 0: 14 blocks above the plaza, south-west of the well, looking down on it. Lands (~2.0 s) in the POV eye at the jukebox; the rest of the line is POV. No Darkness until the crane has landed (shriek 1's response comes 4.5 s after its start)",
+      "frame": "from above: the well with the jukebox on its north rim and the open slot, the boy small beside it, back to us; on 'screamed AGAIN' doors around the plaza open and villagers step into their doorways, the boxed bell at the east edge; the crane drops into his head; POV on 'I didn't CARE': the hand puts the music disc into the jukebox on 'CARE' and the song starts, the first loud sound in the Short. Night (18000)."
     },
     {
       "id": "S13",
-      "line": "L13",
+      "line": "L14",
       "place": "plaza",
       "size": "full",
       "camera": "at: 1 block east of the boy at his eye height, looking north to our door 5 blocks away, FOV 50, still (a reverse from where he stands; he is just out of frame left)",
-      "frame": "fg: the plaza carpet stripes and the lantern post by our 2 steps; subject: Mom head to foot, frozen in our doorway on the plaza edge, eyes on him; bg: the lit room behind her. The jukebox's song carries from behind the camera. The Darkness (shriek 2's answer) fades in on 'Don't' and pulses; everything is within 6 blocks of the lens. Night (18000)."
+      "frame": "fg: the plaza carpet stripes and the lantern post by our steps; subject: Mom head to foot, frozen in our doorway on the plaza edge, eyes on him; bg: the lit room behind her. The jukebox's song carries from behind the camera. The Darkness (shriek 1's response) fades in on 'Sweetie' and pulses; everything is within 6 blocks of the lens. Night (18000)."
     },
     {
       "id": "S14",
-      "line": "L14",
+      "line": "L13",
       "place": "plaza",
       "size": "wide",
       "camera": "pov standing on the carpet north of the well: a slow turn left from the jukebox (south, low in frame) to the east side of the plaza",
-      "frame": "opens: fg the jukebox with music-note particles, the open well beyond it; ends: villagers motionless in the east doorways 8-11 blocks away (inside the Darkness fog), the boxed bell about 27 degrees right of centre. The Darkness pulses; a dark pulse lands on 'DARK'. Night (18000)."
+      "frame": "opens: fg the jukebox with music-note particles, the open well beyond it; ends: villagers motionless in the east doorways 8-11 blocks away (inside the Darkness fog) and the boxed bell. Shriek 2 on the cut in; a dark pulse lands on 'DARK'. Night (18000)."
     },
     {
       "id": "S15",
-      "line": "L15",
+      "line": "L16",
       "place": "well",
       "size": "full",
-      "camera": "pov: on 'I'd never' he jumps off the carpet up onto the well's bare cobble rim at (0,-2), straight ahead, then jumps in place on the stone, facing south across the open slot",
-      "frame": "fg: the grey cobble rim under his feet (bare stone, no carpet), the jukebox at frame left (east, (1,-2)); mid: the open slot into the shaft; bg: the far side of the well and the plaza carpet, the south doorways sunk in the Darkness. Shriek 3 on the landing on 'DANCED'. Night (18000)."
-    },
-    {
-      "id": "S15b",
-      "line": null,
-      "place": "our_house_door",
-      "size": "full",
-      "camera": "at: 4 blocks south of our door at Mom's eye height, FOV 50, still; 0.4 s",
-      "frame": "Mom head to foot in our doorway, frozen, facing the well; the Darkness pulsing. Night (18000)."
-    },
-    {
-      "id": "S15c",
-      "line": null,
-      "place": "plaza",
-      "size": "wide",
-      "camera": "at: on the plaza's east side looking at the east doorways, FOV 50, still; 0.4 s",
-      "frame": "two villagers motionless in their doorways 5-6 blocks away, the wool-wrapped bell beside them, the Darkness closing in. Night (18000)."
-    },
-    {
-      "id": "S15d",
-      "line": null,
-      "place": "well",
-      "size": "full",
-      "camera": "pov on the rim at (0,-2), a jump in place, looking down-south across the open slot; 0.4 s",
-      "frame": "the bare cobble under his feet, the open slot, the carpet at (0,4) beyond it. Night (18000)."
+      "camera": "pov: on 'I'd never' he jumps off the carpet up onto the well's bare cobble rim beside the jukebox, then jumps in place on the stone, facing south across the open slot",
+      "frame": "fg: the grey cobble rim under his feet (bare stone, no carpet), the jukebox at frame left; mid: the open slot into the shaft; bg: the far side of the well and the plaza carpet, the south doorways sunk in the Darkness. Shriek 3 on the landing on 'DANCED'. Night (18000)."
     },
     {
       "id": "S16",
-      "line": null,
+      "line": "L16",
       "place": "plaza",
       "size": "wide",
-      "camera": "at: low (1 block up), 2-3 blocks north-west of the boy, about (-2,-4), FOV 50, looking south past him; the warden comes up at (0,4), about 8 blocks from the lens",
-      "frame": "fg: the boy's back at frame left, large, on the rim mid-jump; the jukebox beside him; subject: shriek 4 on frame 1, then the carpet at (0,4) south of the well bursts (block-break particles, the carpet and the stone under it gone) and the warden rises out of the square (~2 s), facing him across the open well, and roars; bg: doorways sinking into the black."
+      "camera": "at: low (1 block up) 5 blocks north-west of the boy, looking south past him; the warden is 11-12 blocks from the lens",
+      "frame": "fg: the boy small at lower left, on the rim, mid-jump, back to us; the jukebox beside him; subject: shriek 4 on frame 1, then the carpet 3 blocks south of the well bursts and the warden rises out of the square (~2 s), facing him across the open well, and roars; bg: the boxed bell at frame left, doorways sinking into the black. Night (18000)."
     }
   ],
   "bible": "stories/light_sleeper/bible.md",
   "beats": "stories/light_sleeper/beats.md",
   "set": "stories/light_sleeper/set.md",
-  "payoff": "roar",
   "voice_takes": "beat",
+  "narrator_take": "one",
   "hotbar": [
     "shears",
     [
