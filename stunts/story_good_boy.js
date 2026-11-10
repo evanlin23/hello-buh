@@ -44,7 +44,7 @@ module.exports = {
   edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0',
     // the reveal's sound: a whoosh as the camera leaves his head (L14 is the 13th line mark), a hit on the bark
     sfx: [['whoosh', 'line', { nth: 12, gain: 0.45 }], ['impact', 'bark', { gain: 0.5 }]],
-    punch: [['bark', 0, 0.1]] },   // a push-in on the bark: the payoff's picture hit (./hb pace)
+    punch: [['bark', 0, 0.12]], flash: [['bark', 0, 0.55]] },   // a push-in on the bark: the payoff's picture hit (./hb pace)
 
   async setup (ctx) {
     const { bot } = ctx
