@@ -1368,6 +1368,29 @@
    ],
    "status": "claimed",
    "label_dir": "e"
+  },
+  "portal_cottage": {
+   "name": "The Portal Cottage",
+   "kind": "homestead",
+   "region": "the_green",
+   "at": [
+    -136,
+    92,
+    -950
+   ],
+   "footprint": [
+    -147,
+    -962,
+    -123,
+    -932
+   ],
+   "about": "A spruce cottage on the hill's east shoulder north of Hushwell, looking south-south-west down the slope to Hushwell's plaza. The cellar under it has a lit Nether portal in its east wall; Nico's grandpa walked into it on day ~175 and never came back.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "gold_for_the_portal"
+   ],
+   "status": "claimed 2026-11-10 by gold_for_the_portal"
   }
  },
  "stories": {
@@ -1519,6 +1542,16 @@
    ],
    "status": "rendered",
    "cameos": []
+  },
+  "gold_for_the_portal": {
+   "day": 9300,
+   "places": [
+    "portal_cottage"
+   ],
+   "cameos": [
+    "boxed_bell"
+   ],
+   "status": "claimed"
   }
  },
  "cameos": {
