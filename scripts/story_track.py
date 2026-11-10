@@ -404,7 +404,7 @@ def chat_concat(timeline, start, dur, tmp):
     tmp = pathlib.Path(tmp)
     blank = tmp / "chat_blank.png"
     Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
-    f = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 46)
+    f = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 62)   # (46 read tiny on a phone: the chat carries the twist)
     runs, frame, total = [], 0, int(round(dur * FPS))
     for k, (t0, text, hold, col) in enumerate(sorted(marks)):
         f0, f1 = max(frame, int(round(t0 * FPS))), min(total, int(round((t0 + hold) * FPS)))
@@ -413,7 +413,7 @@ def chat_concat(timeline, start, dur, tmp):
         if f0 > frame:
             runs.append((blank, f0 - frame))
         tw = f.getlength(text)
-        x, y = 36, BAND + GAME_H - 150
+        x, y = 34, BAND + GAME_H - 170
         fade = int(0.4 * FPS)
         steps = [(1.0, f1 - f0 - fade)] + [(1 - (i + 1) / (fade + 1), 1) for i in range(fade)]
         for j, (a, n) in enumerate(steps):
@@ -421,8 +421,8 @@ def chat_concat(timeline, start, dur, tmp):
                 continue
             img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
             d = ImageDraw.Draw(img)
-            d.rectangle([x - 14, y - 10, x + tw + 14, y + 60], fill=(0, 0, 0, int(128 * a)))
-            d.text((x + 4, y + 4), text, font=f, fill=(63, 63, 21, int(255 * a)))   # the game's text shadow (colour / 4)
+            d.rectangle([x - 16, y - 12, x + tw + 16, y + 80], fill=(0, 0, 0, int(128 * a)))
+            d.text((x + 5, y + 5), text, font=f, fill=(63, 63, 21, int(255 * a)))   # the game's text shadow (colour / 4)
             d.text((x, y), text, font=f, fill=_rgba(col)[:3] + (int(255 * a),))
             p = tmp / f"chat{k}_{j}.png"; img.save(p)
             runs.append((p, n))
