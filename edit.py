@@ -723,14 +723,14 @@ def syschat_windows(timeline, hold=10.0):
     for e in timeline or []:
         t = e["t"] / 1000
         if e["event"] == "syschat":
-            lines.append([t, t + hold, e.get("text", ""), COL.get(e.get("color"), COL["white"])])
+            lines.append([t, t + hold, e.get("text", ""), COL.get(e.get("color"), COL["white"]), float(e.get("scale") or 1)])
         elif e["event"] == "syschat_clear":
             for ln in lines:
                 ln[1] = min(ln[1], t)
     pts = sorted({p for ln in lines for p in ln[:2]})
     out = []
     for a, b in zip(pts, pts[1:]):
-        vis = tuple((ln[2], ln[3]) for ln in lines if ln[0] <= a and ln[1] >= b)
+        vis = tuple((ln[2], ln[3], ln[4]) for ln in lines if ln[0] <= a and ln[1] >= b)
         if vis and b > a:
             out.append((a, b, vis))
     return out
@@ -741,10 +741,16 @@ def syschat_png(jar, lines, path):
     the newest bottom line's foot 40 GUI px above the bottom of the game view, text in the game font with its shadow."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bottom = BAND + GAME_H
-    for n_, (text, col) in enumerate(reversed(lines)):
-        y_ = bottom - (49 + 9 * n_) * GUI
-        ImageDraw.Draw(img).rectangle((0, y_, 320 * GUI, y_ + 9 * GUI), fill=(0, 0, 0, 128))
-        draw_text(img, jar, text, 2 * GUI, y_ + GUI, color=col)
+    # a mark's optional `scale` (default 1: vanilla GUI 3) enlarges the chat for a line the story turns on (Good Boy's
+    # "Buh left the game" must read at 300 px wide): the strip then fits the text instead of 320 GUI px
+    sc = max([ln[2] if len(ln) > 2 else 1 for ln in lines] or [1])
+    G = int(round(GUI * sc))
+    for n_, ln in enumerate(reversed(lines)):
+        text, col = ln[0], ln[1]
+        y_ = bottom - (49 + 9 * n_) * G
+        wide = 320 * G if sc == 1 else min(W, (len(text) * 6 + 4) * G)
+        ImageDraw.Draw(img).rectangle((0, y_, wide, y_ + 9 * G), fill=(0, 0, 0, 128))
+        draw_text(img, jar, text, 2 * G, y_ + G, color=col, scale=None if sc == 1 else G)
     img.save(path)
 
 
