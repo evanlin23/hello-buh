@@ -54,3 +54,16 @@ For the owner's morning. Newest at the bottom.
   - Owner decision for the morning: #8 or #3.
   - The shared TTS quota ran out today and resets at 08:00 UTC; story sessions wait for it rather than falling
     back to old voices.
+- 07:50 UTC: the owner liked Dog on the Hill's Pip voice ("the current ones seem too sped up"). The narrator is now
+  Leda at natural tempo, with no stretch or pitch shift (354482f).
+- Merged the audio standard (051142e, docs/audio.md):
+  - a clearer voice chain;
+  - Kevin MacLeod CC BY mood scores instead of NCS for stories, credited;
+  - ducking;
+  - a riser, drop-out and hit at the payoff;
+  - room tone, so there's no dead silence;
+  - on-screen vanilla sounds filled in;
+  - a master at -14 LUFS / -1 dBTP.
+
+  Sent the owner the A/B on runaway and nitwit.
+- Owner decision for the morning: the new mix vs the old one (A/B), and any music track to veto.
