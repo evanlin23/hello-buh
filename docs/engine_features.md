@@ -181,6 +181,13 @@ by value for stories): **goat, camel, axolotl, armadillo** (common animals), **b
 glow squid's tentacle glow, tadpole, copper golem, happy ghast, nautilus / zombie nautilus, camel husk, giant (unused).
 A mob with no model is skipped, not drawn wrong: `render.js` prints nothing for it, so check the audit before casting.
 
+## Hiding the cast's waiting room (stunt.hideBoxes)
+A cast parked out of view (a barrier floor and a stone roof 60 blocks up: story_good_boy) is a real build: looking up,
+vanilla draws its roof too (a dark slab in the dusk sky over the librarian, L06 19.9 s). `stunt.hideBoxes:
+[[dx0, dy0, dz0, dx1, dy1, dz1], ...]` (from the set origin, corners inclusive) leaves those blocks out of the drawn
+world and its light (render.js and the mesh workers, `renderer/hidebox.js`) and skips entities while they're inside.
+List every waiting room a stunt builds. `./hb describe` shows mobs parked far above the set as "EWS extreme wide".
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

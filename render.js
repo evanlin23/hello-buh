@@ -34,6 +34,19 @@ let STUNT_MOD = {}
     }
   }
 }
+// Hidden boxes (stunt.hideBoxes: [[dx0, dy0, dz0, dx1, dy1, dz1], ...] from the set origin, corners inclusive): a
+// cast's waiting room (a barrier floor and a stone roof 60 blocks up, story_good_boy) is a real build the camera can
+// see: a dark slab in the sky over the librarian. Its blocks are left out of the drawn world (and the light), and the
+// entities inside it aren't drawn. Only stunts that list boxes change.
+const HIDE_BOXES = (STUNT_MOD.hideBoxes || []).map(b => {
+  const o = rec.set || { x: 0, y: 0, z: 0 }
+  return [Math.min(b[0], b[3]) + o.x, Math.min(b[1], b[4]) + o.y, Math.min(b[2], b[5]) + o.z, Math.max(b[0], b[3]) + o.x, Math.max(b[1], b[4]) + o.y, Math.max(b[2], b[5]) + o.z]
+})
+const { inHideBoxes, hideInWorld } = require('./renderer/hidebox')
+if (HIDE_BOXES.length) {
+  rec.blocks = (rec.blocks || []).filter(b => !inHideBoxes(HIDE_BOXES, b[1], b[2], b[3]))
+  rec.entities = (rec.entities || []).filter(r => !inHideBoxes(HIDE_BOXES, Math.floor(r[3]), Math.floor(r[4] + 0.01), Math.floor(r[5])))
+}
 const FOV_ZOOM = []   // [startTick, endTick, scale] from stunt.fovZoom (see the frame loop)
 for (const [sa, sb, sc] of STUNT_MOD.fovZoom || []) {
   const at = (spec) => { const [ev, off] = String(spec).split(':'); const e = (rec.timeline || []).find(m => m.event === ev); return e ? e.t / 50 + Number(off || 0) * 20 : null }
@@ -1603,6 +1616,7 @@ function camAtLive (t) {
   mesher.noSky = DIM === 'the_nether' || DIM === 'the_end'
   mesher.lightAttr = SHADER_LIGHT
   mesher.addColumns(rec.columns)
+  if (HIDE_BOXES.length) hideInWorld(mesher, HIDE_BOXES)
   solidWorld = mesher.world
   hmapWorld = mesher.world
   simulateDrops(mesher.world)
@@ -1740,7 +1754,7 @@ else:
     const list = mesher.sections(minVisibleY)
     const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
     if (nw > 1) {
-      const blobsOut = await mesher.packParallel(list, nw, { lightAttr: SHADER_LIGHT, recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
+      const blobsOut = await mesher.packParallel(list, nw, { lightAttr: SHADER_LIGHT, hideBoxes: HIDE_BOXES, recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
       for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); if (meshCapture) meshCapture.push(b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
     } else await send(list)
   }
@@ -1756,8 +1770,8 @@ else:
   if (sparse && process.env.MESH_CACHE !== '0') {
     try {
       const h = require('crypto').createHash('sha1'), st = fs.statSync(recPath)
-      h.update(JSON.stringify([path.resolve(recPath), st.size, st.mtimeMs, minVisibleY, Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTimeAt(0), weatherLight(0), DIM, SHADER_LIGHT, rec.version]))
-      for (const f of ['models.js', 'mesher.js', 'light.js', 'world.js', 'mesh_worker.js', 'modelsBuilder.js']) { const fp = path.join(__dirname, 'renderer', f); if (fs.existsSync(fp)) h.update(fs.readFileSync(fp)) }
+      h.update(JSON.stringify([path.resolve(recPath), st.size, st.mtimeMs, minVisibleY, Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTimeAt(0), weatherLight(0), DIM, SHADER_LIGHT, rec.version, HIDE_BOXES]))
+      for (const f of ['models.js', 'mesher.js', 'light.js', 'world.js', 'mesh_worker.js', 'modelsBuilder.js', 'hidebox.js']) { const fp = path.join(__dirname, 'renderer', f); if (fs.existsSync(fp)) h.update(fs.readFileSync(fp)) }
       for (const f of ['blocksStates.json', 'blockstates.json', 'atlas.json']) { const fp = path.join(ASSETS_DIR, f); if (fs.existsSync(fp)) h.update(String(fs.statSync(fp).mtimeMs)) }
       cacheFile = path.join(cacheDir, h.digest('hex').slice(0, 20) + '.bin')
     } catch (e) { cacheFile = null }

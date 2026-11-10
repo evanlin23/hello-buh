@@ -6,7 +6,7 @@ const fs = require('fs')
 const { Mesher } = require('./mesher')
 const { setBrightness, setDayTime, setDimension, setLightAttr } = require('./models')
 
-const { recPath, minVisibleY, brightness, dayTime, rain, thunder, list, dimension, blocksDone, lightAttr } = workerData
+const { recPath, minVisibleY, brightness, dayTime, rain, thunder, list, dimension, blocksDone, lightAttr, hideBoxes } = workerData
 if (lightAttr) setLightAttr(true)
 setBrightness(brightness)
 setDimension(dimension)
@@ -16,6 +16,11 @@ const m = new Mesher(rec.version)
 m.lightAttr = !!lightAttr
 m.noSky = dimension === 'the_nether' || dimension === 'the_end'
 m.addColumns(rec.columns)
+if (hideBoxes && hideBoxes.length) {   // (render.js HIDE_BOXES: the same blocks left out as on the main thread)
+  const { inHideBoxes, hideInWorld } = require('./hidebox')
+  rec.blocks = (rec.blocks || []).filter(b => !inHideBoxes(hideBoxes, b[1], b[2], b[3]))
+  hideInWorld(m, hideBoxes)
+}
 // a re-mesh later in the recording: the world as it is after the first blocksDone block changes
 for (let i = 0; i < (blocksDone || 0); i++) { const [, x, y, z, st] = rec.blocks[i]; m.setBlock(x, y, z, st) }
 m.changed = []
