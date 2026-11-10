@@ -18,7 +18,7 @@ const VOX = require('../stories/dog_hill/durations.json')
 
 const VX = -160, VZ = -864
 const X = VX - 42, Z = VZ - 34
-const GAP = 0.3
+const GAP = 0.15   // (the clips carry their own 80 ms lead and 200 ms tail: owner, no cut-off words)
 
 module.exports = {
   name: 'story_dog_hill',

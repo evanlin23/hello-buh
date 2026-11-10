@@ -1,93 +1,93 @@
 [
  {
-  "id": "r1",
-  "direction": "Read this scene aloud. A quiet hilltop above a village at dusk. Pip is a young kid telling a friend a strange, sad story: hushed, earnest, unhurried, with real pauses between sentences. Grandpa is an old man: gravelly, slow, gentle, tired of explaining.",
+  "id": "pip",
   "speakers": {
-   "Pip": "Erinome",
-   "Grandpa": "Algenib"
+   "Kid": "Leda"
   },
   "lines": [
    [
-    "Pip",
+    "Kid",
     "L01",
-    "The dog on the hill... hasn't moved... in nine hundred days."
+    "The dog on the hill hasn't moved in nine hundred days."
    ],
    [
-    "Pip",
+    "Kid",
     "L02",
     "Not for rain. Not for thunder. Not even for zombies."
    ],
    [
-    "Pip",
+    "Kid",
     "L03",
     "I bring him a bone every morning. He never even looks."
    ],
    [
-    "Pip",
+    "Kid",
     "L04",
     "He wears a red collar. But nobody in the village owns him."
    ],
    [
-    "Pip",
+    "Kid",
     "L05",
-    "He just stares... at one empty patch of grass."
+    "He just stares at one empty patch of grass."
    ],
    [
-    "Pip",
+    "Kid",
     "L06",
-    "And behind him... an old dirt hut. Nobody knows who built it."
+    "And behind him, an old dirt hut. Nobody knows who built it."
    ],
    [
-    "Pip",
+    "Kid",
     "L07",
     "I tried to make him stand. I begged. He won't budge."
    ],
+   [
+    "Kid",
+    "L11",
+    "So every night now, I sit with him. Nobody should wait alone."
+   ],
+   [
+    "Kid",
+    "L12",
+    "And then he stood up!"
+   ],
+   [
+    "Kid",
+    "L15",
+    "Day one. Again."
+   ]
+  ]
+ },
+ {
+  "id": "grandpa",
+  "speakers": {
+   "Grandpa": "Algenib"
+  },
+  "lines": [
    [
     "Grandpa",
     "L08",
     "Leave him be, kid. Only one voice gets him up."
    ],
    [
-    "Pip",
-    "L09",
-    "Whose? Nobody's come up here in years."
-   ],
-   [
     "Grandpa",
     "L10",
     "Said he'd be right back."
-   ],
-   [
-    "Pip",
-    "L11",
-    "So every night now... I sit with him. Nobody should wait alone."
-   ],
-   [
-    "Pip",
-    "L12",
-    "And then... he stood up."
-   ],
-   [
-    "Pip",
-    "L15",
-    "Day one."
    ]
   ]
  },
  {
-  "id": "r2",
-  "direction": "Read aloud as a young man, warm and casual, a little distracted, greeting his dog happily for a moment before he has to go again:",
+  "id": "milo",
   "speakers": {
-   "Buh": "Achird"
+   "Milo": "Achird"
   },
   "lines": [
    [
-    "Buh",
+    "Milo",
     "L13",
     "Hey, buddy! Sorry... got busy."
    ],
    [
-    "Buh",
+    "Milo",
     "L14",
     "Okay. Sit, boy. I'll be right back."
    ]

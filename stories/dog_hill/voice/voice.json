@@ -6,21 +6,21 @@
   "L01": {
    "text": "The dog on the hill hasn't moved in nine hundred days.",
    "who": "N",
-   "dur": 3.25,
-   "onset": 0.03,
-   "end": 3.2,
+   "dur": 3.56,
+   "onset": 0.0,
+   "end": 3.1,
    "chunks": [
     [
      0.0,
-     0.76
+     0.95
     ],
     [
-     0.76,
-     1.38
+     0.95,
+     1.57
     ],
     [
-     1.38,
-     3.15
+     1.57,
+     3.46
     ]
    ],
    "captions": [
@@ -32,21 +32,21 @@
   "L02": {
    "text": "Not for rain. Not for thunder. Not even for zombies.",
    "who": "N",
-   "dur": 3.32,
-   "onset": 0.03,
-   "end": 3.27,
+   "dur": 3.24,
+   "onset": 0.0,
+   "end": 2.74,
    "chunks": [
     [
      0.0,
-     0.96
+     1.13
     ],
     [
-     0.96,
-     1.66
+     1.13,
+     1.97
     ],
     [
-     1.66,
-     3.2199999999999998
+     1.97,
+     3.14
     ]
    ],
    "captions": [
@@ -58,21 +58,21 @@
   "L03": {
    "text": "I bring him a bone every morning. He never even looks.",
    "who": "N",
-   "dur": 3.18,
-   "onset": 0.03,
-   "end": 3.13,
+   "dur": 3.625,
+   "onset": 0.0,
+   "end": 3.14,
    "chunks": [
     [
      0.0,
-     0.7
+     0.77
     ],
     [
-     0.7,
-     1.98
+     0.77,
+     2.11
     ],
     [
-     1.98,
-     3.08
+     2.11,
+     3.525
     ]
    ],
    "captions": [
@@ -84,21 +84,21 @@
   "L04": {
    "text": "He wears a red collar. But nobody in the village owns him.",
    "who": "N",
-   "dur": 3.28,
-   "onset": 0.03,
-   "end": 3.23,
+   "dur": 3.6,
+   "onset": 0.0,
+   "end": 3.1,
    "chunks": [
     [
      0.0,
-     1.24
+     1.43
     ],
     [
-     1.24,
-     2.34
+     1.43,
+     2.55
     ],
     [
-     2.34,
-     3.1799999999999997
+     2.55,
+     3.5
     ]
    ],
    "captions": [
@@ -110,21 +110,21 @@
   "L05": {
    "text": "He just stares at one empty patch of grass.",
    "who": "N",
-   "dur": 2.69,
-   "onset": 0.03,
-   "end": 2.64,
+   "dur": 3.08,
+   "onset": 0.0,
+   "end": 2.52,
    "chunks": [
     [
      0.0,
-     0.48
+     0.67
     ],
     [
-     0.48,
-     1.9
+     0.67,
+     2.09
     ],
     [
-     1.9,
-     2.59
+     2.09,
+     2.98
     ]
    ],
    "captions": [
@@ -136,25 +136,25 @@
   "L06": {
    "text": "And behind him, an old dirt hut. Nobody knows who built it.",
    "who": "N",
-   "dur": 4.1,
-   "onset": 0.03,
-   "end": 4.05,
+   "dur": 4.58,
+   "onset": 0.0,
+   "end": 4.38,
    "chunks": [
     [
      0.0,
-     0.64
+     0.75
     ],
     [
-     0.64,
-     2.8
+     0.75,
+     3.17
     ],
     [
-     2.8,
-     3.24
+     3.17,
+     3.67
     ],
     [
-     3.24,
-     3.9999999999999996
+     3.67,
+     4.48
     ]
    ],
    "captions": [
@@ -167,21 +167,21 @@
   "L07": {
    "text": "I tried to make him stand. I begged. He won't budge.",
    "who": "N",
-   "dur": 3.26,
-   "onset": 0.03,
-   "end": 3.21,
+   "dur": 4.095,
+   "onset": 0.42,
+   "end": 3.88,
    "chunks": [
     [
      0.0,
-     1.4
+     2.07
     ],
     [
-     1.4,
-     2.44
+     2.07,
+     3.17
     ],
     [
-     2.44,
-     3.1599999999999997
+     3.17,
+     3.9949999999999997
     ]
    ],
    "captions": [
@@ -193,21 +193,21 @@
   "L08": {
    "text": "Leave him be, kid. Only one voice gets him up.",
    "who": "Grandpa",
-   "dur": 3.588,
-   "onset": 0.05,
-   "end": 3.538,
+   "dur": 4.31,
+   "onset": 0.0,
+   "end": 3.82,
    "chunks": [
     [
      0.0,
-     1.82
+     1.25
     ],
     [
-     1.82,
-     2.64
+     1.25,
+     3.07
     ],
     [
-     2.64,
-     3.588
+     3.07,
+     4.21
     ]
    ],
    "captions": [
@@ -219,17 +219,17 @@
   "L10": {
    "text": "Said he'd be right back.",
    "who": "Grandpa",
-   "dur": 1.546,
-   "onset": 0.05,
-   "end": 1.496,
+   "dur": 1.76,
+   "onset": 0.0,
+   "end": 1.32,
    "chunks": [
     [
      0.0,
-     0.6
+     0.69
     ],
     [
-     0.6,
-     1.44
+     0.69,
+     1.66
     ]
    ],
    "captions": [
@@ -240,21 +240,21 @@
   "L11": {
    "text": "So every night now, I sit with him. Nobody should wait alone.",
    "who": "N",
-   "dur": 4.02,
-   "onset": 0.03,
-   "end": 3.97,
+   "dur": 4.885,
+   "onset": 0.0,
+   "end": 4.54,
    "chunks": [
     [
      0.0,
-     1.7
+     1.89
     ],
     [
-     1.7,
-     2.74
+     1.89,
+     3.59
     ],
     [
-     2.74,
-     3.9199999999999995
+     3.59,
+     4.785
     ]
    ],
    "captions": [
@@ -266,17 +266,17 @@
   "L12": {
    "text": "And then he stood up!",
    "who": "N",
-   "dur": 1.15,
-   "onset": 0.03,
-   "end": 1.1,
+   "dur": 1.83,
+   "onset": 0.0,
+   "end": 1.34,
    "chunks": [
     [
      0.0,
-     0.22
+     0.77
     ],
     [
-     0.22,
-     1.0499999999999998
+     0.77,
+     1.73
     ]
    ],
    "captions": [
@@ -287,21 +287,21 @@
   "L13": {
    "text": "Hey, buddy! Sorry... got busy.",
    "who": "Player",
-   "dur": 2.38,
-   "onset": 0.05,
-   "end": 2.33,
+   "dur": 2.72,
+   "onset": 0.0,
+   "end": 2.24,
    "chunks": [
     [
      0.0,
-     0.9
+     1.03
     ],
     [
-     0.9,
-     1.68
+     1.03,
+     1.73
     ],
     [
-     1.68,
-     2.38
+     1.73,
+     2.62
     ]
    ],
    "captions": [
@@ -313,21 +313,21 @@
   "L14": {
    "text": "Okay. Sit, boy. I'll be right back.",
    "who": "Player",
-   "dur": 2.28,
-   "onset": 0.05,
-   "end": 2.23,
+   "dur": 2.595,
+   "onset": 0.0,
+   "end": 2.16,
    "chunks": [
     [
      0.0,
-     1.4
+     1.47
     ],
     [
-     1.4,
-     1.68
+     1.47,
+     1.79
     ],
     [
-     1.68,
-     2.28
+     1.79,
+     2.495
     ]
    ],
    "captions": [
@@ -339,17 +339,17 @@
   "L15": {
    "text": "Day one. Again.",
    "who": "N",
-   "dur": 1.43,
-   "onset": 0.03,
-   "end": 1.38,
+   "dur": 2.125,
+   "onset": 0.0,
+   "end": 1.64,
    "chunks": [
     [
      0.0,
-     0.74
+     0.63
     ],
     [
-     0.74,
-     1.3299999999999998
+     0.63,
+     2.025
     ]
    ],
    "captions": [
@@ -358,5 +358,5 @@
    ]
   }
  },
- "total": 39.47
+ "total": 46.01
 }
