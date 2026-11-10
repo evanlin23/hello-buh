@@ -15,7 +15,9 @@ Gemini voice (voices/samples/<id>.mp3), which anchor a speaker with only a few s
 every cast member: cosine similarity to their reference, minus a pitch penalty (semitones from their median pitch,
 weighted more for short lines, where the embedding is weak). Flags:
 
-  SWAP      the closest voice is not the line's `who` (by more than the noise margin): Gemini swapped the voices
+  SWAP      the closest voice is not the line's `who` (by more than the noise margin): Gemini swapped the voices.
+            Only the speakers of the request that voiced the line count (voice.json `with`, or story.json
+            `requests`): a single-speaker request can't swap
   THIN      the right voice wins, but by too little to trust; listen to it (a warning, not a blocker)
   WORDS     Whisper's transcript is under 60% like the script, or it has words the script doesn't (a direction read
             aloud, a word from the next line): a bad cut or a misread
@@ -247,8 +249,10 @@ def check(items, cast_voice, words=True, only=None, library=True):
         if only and r["id"] not in only:
             continue
         own = sc.get(r["who"], 0.0)
-        best = max(sc, key=sc.get) if sc else r["who"]
-        other = max([v for w, v in sc.items() if w != r["who"]], default=None)
+        # a voice can only swap with the other speaker of the same request: Gemini never heard the rest
+        riv = {w: v for w, v in sc.items() if r.get("rivals") is None or w in r["rivals"] or w == r["who"]}
+        best = max(riv, key=riv.get) if riv else r["who"]
+        other = max([v for w, v in riv.items() if w != r["who"]], default=None)
         margin = round(own - other, 3) if other is not None else None
         flags = []
         if margin is not None and margin < -SWAP_MARGIN:
@@ -286,11 +290,19 @@ def story_items(d):
     cast = story.get("cast") or {}
     cs = resolve(cast) if cast else {}
     narrator = next((k for k, c in cs.items() if c.get("role") == "narrator"), "N")
+    vj = d / "voice" / "voice.json"
+    vl = (json.loads(vj.read_text()).get("lines") or {}) if vj.exists() else {}
+    reqs = story.get("requests") or []
     items = []
     for ln in story["lines"]:
         p = d / "voice" / f"{ln['id']}.wav"
         if p.exists():
-            items.append({"id": ln["id"], "who": ln.get("who") or narrator, "path": p, "say": ln.get("say") or kvoice.spoken(ln)})
+            who = ln.get("who") or narrator
+            # who could have swapped into this line: the speakers of the request that voiced it (voice.json `with`,
+            # written by tts.py), else the first story request listing the speaker (tts.py's rule), else anyone
+            r = next((r for r in reqs if who in r.get("speakers", [])), None)
+            rivals = (vl.get(ln["id"]) or {}).get("with") or (r["speakers"] if r else None)
+            items.append({"id": ln["id"], "who": who, "path": p, "say": ln.get("say") or kvoice.spoken(ln), "rivals": rivals})
     voices = {w: (cs.get(w) or {}).get("voice") for w in dict.fromkeys([narrator] + [i["who"] for i in items])}
     return items, {w: v for w, v in voices.items() if w in {i["who"] for i in items}}
 

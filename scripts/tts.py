@@ -395,17 +395,19 @@ def speaker_check(d, ids):
         return None
 
 
-def retake(d, done, items, cs, n_max, prior=None):
+def retake(d, done, items, cs, n_max, prior=None, groups_of=None):
     """Check the lines just voiced; re-take the ones in the wrong voice or with the wrong words, at most n_max times
     each, always as a single-speaker request (one voice can't swap). Lines that pass are never re-taken. prior: the
     re-take each line already has (voice.json `take`), so a new run asks for a NEW take, not the cached bad one.
     -> {id: n}"""
     takes, ids = dict(prior or {}), list(done)
+    solo = {lid for lid in done if takes.get(lid) or len({it[0] for it in (groups_of or {}).get(lid, [])}) == 1}
     for n in range(1, n_max + 1):
         rep = speaker_check(d, ids)
         if rep is None:
             break
-        bad = [l for l in rep["lines"] if l["id"] in ids and ("SWAP" in l["flags"] or "WORDS" in l["flags"])]
+        # a single-speaker take can't swap voices, so a re-taken line fails only on its words
+        bad = [l for l in rep["lines"] if l["id"] in ids and ("WORDS" in l["flags"] or ("SWAP" in l["flags"] and l["id"] not in solo))]
         for l in rep["lines"]:
             if l["flags"]:
                 print(f"  {l['id']}: {' '.join(l['flags'])} (closest {l['closest']}, margin {l['margin']}"
@@ -418,10 +420,11 @@ def retake(d, done, items, cs, n_max, prior=None):
         for lid in ids:
             sc, it, rm = items[lid]
             k = takes.get(lid, 0) + 1
-            done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{k}")); takes[lid] = k
+            done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{k}")); takes[lid] = k; solo.add(lid)
     rep = speaker_check(d, ids) if ids and set(ids) & set(takes) else None
-    if rep and rep["blockers"]:
-        print(f"STILL WRONG after {n_max} re-takes: {', '.join(rep['blockers'])}: listen, then fix the line's text or "
+    left = [l["id"] for l in (rep or {}).get("lines", []) if l["id"] in ids and "WORDS" in l["flags"]]
+    if left:
+        print(f"STILL WRONG after {n_max} re-takes: {', '.join(left)}: listen, then fix the line's text or "
               f"direction (or --retakes more); a swapped voice is a blocker")
     return takes
 
@@ -460,13 +463,14 @@ def run_story(d, only=None, check=True, retakes=2):
     room = lambda r: (r if isinstance(r, dict) else {}).get("room", story.get("room", "small"))   # a solo group: the story's room
     done = voice_lines([(s, l, room(r)) for s, l, r in groups], cs, d / "voice")
     items = {it[1]: (sc, it, room(r)) for sc, l, r in groups for it in l}
+    groups_of = {it[1]: l for _, l, _ in groups for it in l}
     takes = {}
     for lid, (sc, it, rm) in items.items():   # a line that passed on an earlier re-take keeps that take (from the cache)
         n = (old["lines"].get(lid) or {}).get("take", 0)
         if n and old["lines"][lid].get("text") == it[2]:
             done.update(voice_lines([(sc, [it], rm)], cs, d / "voice", f"retake{n}")); takes[lid] = n
     if check:
-        takes = retake(d, done, items, cs, retakes, takes)
+        takes = retake(d, done, items, cs, retakes, takes, groups_of)
     meta = old if only else {"lines": {}}
     meta.update({"model": f"Gemini TTS ({MODELS[0]} first), voices/cast.json", "sr": SR, "gap": story.get("gap", 0.25)})
     for ln in story["lines"]:
@@ -479,7 +483,8 @@ def run_story(d, only=None, check=True, retakes=2):
         share = np.cumsum([0] + [len(c) for c in caps]) / max(1, sum(len(c) for c in caps))
         meta["lines"][ln["id"]] = {"who": w, "text": t, "dur": round(len(y) / SR, 3), "onset": round(a, 3), "end": round(b, 3),
                                    "chunks": [[round(a + (b - a) * s, 3), round(a + (b - a) * e, 3)] for s, e in zip(share, share[1:])],
-                                   "captions": caps, **({"take": takes[ln["id"]]} if takes.get(ln["id"]) else {})}
+                                   "captions": caps, "with": [w] if takes.get(ln["id"]) else sorted({it[0] for it in groups_of[ln["id"]]}),   # the request's speakers (speaker_check)
+                                   **({"take": takes[ln["id"]]} if takes.get(ln["id"]) else {})}
     meta["lines"] = {ln["id"]: meta["lines"][ln["id"]] for ln in story["lines"] if ln["id"] in meta["lines"]}
     meta["total"] = round(sum(l["dur"] + meta["gap"] for l in meta["lines"].values()), 2)
     vf.write_text(json.dumps(meta, indent=1))
