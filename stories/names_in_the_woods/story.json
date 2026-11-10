@@ -6,13 +6,19 @@
   "caption": "why do these zombies have NAMES 😶",
   "logline": "A player kid in a hamlet where every villager wears a name tag watches three named zombies walk out of the woods every night, until the night Mom goes to visit the neighbors 'in the city' and four walk out.",
   "question": "why tf do these zombies have name tags?",
-  "premise": "Every villager in Milo's hamlet at the edge of a dark oak forest gets a name tag at birth; Mom's says ROSA, and Milo, the only player, got his free. Every night three zombies named TOMAS, GRETA and OLD BEN walk out of the woods. Mom says the zombies stole the tags, and that the neighbors (three empty cottages with those names on their signs) moved to the city. Every week Mom, the hamlet's cleric, takes them golden apples and a splash potion ('potion, then apple, fixes anything') and brings it all back unused, so Milo gets the apples. Nobody in the hamlet can throw anything, so Milo wins every egg fight. Tonight Mom goes to visit Tomas and says she'll be back by dark.",
+  "premise": "Every villager in Milo's hamlet at the edge of a dark oak forest gets a name tag at birth. Mom's says ROSA, and Milo, the only player, got his free. Every night three zombies named TOMAS, GRETA and OLD BEN walk out of the woods. Mom says the zombies stole the tags, and that the neighbors (three empty cottages with those names on their signs) moved to the city. Every week Mom, the hamlet's cleric, takes them golden apples and a splash potion ('potion, then apple, fixes anything') and brings it all back unused, so Milo gets the apples. Nobody in the hamlet can throw anything, so Milo wins every egg fight. Tonight Mom goes to visit Tomas and says she'll be back by dark.",
   "twist": "The zombies are the neighbors, converted in a siege: a named villager keeps its name tag (and its profession outfit) when a zombie converts it. Mom has been trying to cure them every week with the vanilla cure (a splash potion of weakness, then a golden apple), but only a player can throw a splash potion and feed the apple, and villagers can't throw. She lied so her son, the one person who could do it, would never go into the woods. Tonight she stays out past dark: four zombies walk out and the fourth tag says ROSA, still holding the golden apple, her potion dropped in the grass. Milo picks it up, has a hotbar full of the apples she gave him, and throws.",
   "key_color": "#F5C542",
   "gap": 0.3,
-  "mood": ["eerie", "heroic"],
+  "mood": [
+    "eerie",
+    "heroic"
+  ],
   "payoff": "L14",
-  "look": { "time": 13000, "fog": false },
+  "look": {
+    "time": 13000,
+    "fog": false
+  },
   "weather": "clear",
   "world": {
     "place": "a cleric's hamlet of seven cottages on a slope at the east edge of a dark oak forest, one valley west of the carpeted village (Light Sleeper)",
@@ -40,21 +46,45 @@
   "requests": [
     {
       "id": "r1",
-      "speakers": ["N", "Mom"],
-      "lines": ["L01", "L02", "L03", "L04", "L05"],
-      "direction": "A kid tells a friend the strangest true thing about his village at the edge of a dark forest: fast, bright and at full volume, never whispery or breathy; he only gets scared near the end."
+      "speakers": [
+        "N",
+        "Mom"
+      ],
+      "lines": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05"
+      ],
+      "direction": "A kid tells a friend the strangest true thing about his village at the edge of a dark forest: fast, bright and at full volume, never whispery or breathy, and he only gets scared near the end."
     },
     {
       "id": "r2",
-      "speakers": ["N"],
-      "lines": ["L06", "L07", "L08", "L09", "L10"],
-      "direction": "A kid tells a friend the strangest true thing about his village at the edge of a dark forest: fast, bright and at full volume, never whispery or breathy; he only gets scared near the end."
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L06",
+        "L07",
+        "L08",
+        "L09",
+        "L10"
+      ],
+      "direction": "A kid tells a friend the strangest true thing about his village at the edge of a dark forest: fast, bright and at full volume, never whispery or breathy, and he only gets scared near the end."
     },
     {
       "id": "r3",
-      "speakers": ["N"],
-      "lines": ["L11", "L12", "L13", "L14"],
-      "direction": "A kid tells a friend the strangest true thing about his village at the edge of a dark forest: fast, bright and at full volume, never whispery or breathy; he only gets scared near the end."
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L11",
+        "L12",
+        "L13",
+        "L14"
+      ],
+      "direction": "A kid tells a friend the strangest true thing about his village at the edge of a dark forest: fast, bright and at full volume, never whispery or breathy, and he only gets scared near the end."
     }
   ],
   "lines": [
@@ -63,9 +93,12 @@
       "who": "N",
       "text": "Every night, / THREE zombies / named TOMAS, / GRETA / and OLD BEN / walk out of the WOODS.",
       "say": "Every night, three zombies named Tomas, Greta and Old Ben walk out of the woods.",
-      "direction": "one quick breath with no stop in it, bright and amazed, like the weirdest fact he knows; full volume",
+      "direction": "one quick breath with no stop in it, bright and amazed, like the weirdest fact he knows, full volume",
       "shot": "S01",
-      "look": { "what": "entity:zombie_villager", "word": "ZOMBIES" }
+      "look": {
+        "what": "entity:zombie_villager",
+        "word": "ZOMBIES"
+      }
     },
     {
       "id": "L02",
@@ -81,7 +114,10 @@
       "text": "Mom's says ROSA. / I'm a PLAYER. / Mine came FREE.",
       "direction": "cheerful, a little smug on the last bit, like a joke he's told before",
       "shot": "S03",
-      "look": { "what": "Mom", "word": "ROSA" }
+      "look": {
+        "what": "Mom",
+        "word": "ROSA"
+      }
     },
     {
       "id": "L04",
@@ -89,13 +125,16 @@
       "text": "Mom says / the zombies / STOLE the tags.",
       "direction": "repeating what he was told, fully believing it, a little indignant",
       "shot": "S04",
-      "look": ["Mom", "entity:zombie_villager"]
+      "look": [
+        "Mom",
+        "entity:zombie_villager"
+      ]
     },
     {
       "id": "L05",
       "who": "Mom",
       "text": "Our neighbors / moved to the CITY.",
-      "direction": "warm and quick and a bit too bright, a mom changing the subject; full volume, a smile on it",
+      "direction": "warm and quick and a bit too bright, a mom changing the subject, full volume, a smile on it",
       "shot": "S05",
       "look": "Mom"
     },
@@ -105,7 +144,10 @@
       "text": "Every week, / she takes them / GOLDEN APPLES / and a SPLASH POTION.",
       "direction": "fast and impressed, listing fancy presents",
       "shot": "S06",
-      "look": ["Mom", "prop:brewing_stand"]
+      "look": [
+        "Mom",
+        "prop:brewing_stand"
+      ]
     },
     {
       "id": "L07",
@@ -113,7 +155,10 @@
       "text": "Potion, / then APPLE, / she says. / Fixes ANYTHING.",
       "direction": "doing his mom's saying, sing-song and fond, then plain on the last two words",
       "shot": "S07",
-      "look": ["Mom", "prop:brewing_stand"]
+      "look": [
+        "Mom",
+        "prop:brewing_stand"
+      ]
     },
     {
       "id": "L08",
@@ -135,7 +180,7 @@
       "id": "L10",
       "who": "N",
       "text": "Tonight, / Mom said / she'd be back / by DARK.",
-      "direction": "the brightness drops a notch; plain and steady, full volume, a short beat before the last two words",
+      "direction": "the brightness drops a notch, plain and steady, full volume, a short beat before the last two words",
       "shot": "S10",
       "look": "Mom"
     },
@@ -145,15 +190,22 @@
       "text": "At dark, / FOUR zombies / walked out.",
       "direction": "scared now but still full volume, quick, the number hits hard",
       "shot": "S11",
-      "look": { "what": "entity:zombie_villager", "word": "FOUR" }
+      "look": {
+        "what": "entity:zombie_villager",
+        "word": "FOUR"
+      }
     },
     {
       "id": "L12",
       "who": "N",
       "text": "The new one / said ROSA. / She still had / the APPLE.",
-      "direction": "the fear turns small and plain, a breath after the name, then steady; full volume, not whispered",
+      "direction": "the fear turns small and plain, a breath after the name, then steady, full volume, not whispered",
       "shot": "S12",
-      "look": { "what": "actor:ROSA", "word": "ROSA", "size": "ms" }
+      "look": {
+        "what": "actor:ROSA",
+        "word": "ROSA",
+        "size": "ms"
+      }
     },
     {
       "id": "L13",
@@ -161,15 +213,27 @@
       "text": "Her POTION / was in / the GRASS.",
       "direction": "quick, focused, getting an idea",
       "shot": "S13",
-      "look": { "what": "prop:potion", "word": "POTION" }
+      "look": {
+        "what": "prop:potion",
+        "word": "POTION"
+      }
     },
     {
       "id": "L14",
       "who": "N",
       "text": "Mom lied / to keep me HOME. / She can't THROW. / I CAN.",
-      "direction": "figuring it out as he says it, then brave and certain; the last two words loud and sure, like a wind-up before a throw",
+      "direction": "figuring it out as he says it, then brave and certain, the last two words loud and sure, like a wind-up before a throw",
       "shot": "S14",
-      "look": [{ "what": "actor:ROSA", "word": "Mom" }, { "what": "actor:ROSA", "word": "THROW" }]
+      "look": [
+        {
+          "what": "actor:ROSA",
+          "word": "Mom"
+        },
+        {
+          "what": "actor:ROSA",
+          "word": "THROW"
+        }
+      ]
     }
   ],
   "ending": {
@@ -189,7 +253,9 @@
       "size": "wide",
       "camera": "at: 3 blocks east of the west gate inside the hamlet, 2.5 up, looking west up the meadow, FOV 32 (a long lens), slow push in (0.4 blocks over the line); already moving on frame 1",
       "frame": "fg: the fence and the gate's two lantern posts, dark against the sky, framing the lower third; mid: the meadow climbing west 30 blocks to the treeline; subject: three zombie villagers stepping out of the dark oak trees at the meadow's top, side by side, walking down toward camera, pure silhouettes against an orange sky (the sun just set behind the forest), their hats differ (straw hat, librarian cap, fisherman's hat); three white nameplates float over them, TOMAS, GRETA, OLD BEN, the only bright things in their half of the frame; faces unreadable; bg: the black wall of dark oaks and the glowing sky. Dusk.",
-      "look": { "time": 13000 }
+      "look": {
+        "time": 13000
+      }
     },
     {
       "id": "S02",
@@ -198,7 +264,9 @@
       "size": "ews",
       "camera": "path: crane up and over. Key 0: 3 blocks above the lane at the well, looking east down the lane; key 1 (~2.2 s, on 'BIRTH'): 14 blocks up over the lane's east end, lookPath tilting down so the baby villager is lower-centre",
       "frame": "on 'villagers get' the lane with villagers at their doors and gardens, each with a white nameplate (HUGO the farmer, PIA the shepherd, NELL); on 'BIRTH' a baby villager tagged LIL TEO runs across the lane lower-centre; above: the whole hamlet (seven cottages, the well, gardens, lanterns), fields beyond, and on the far east hill in the haze the carpet roofs and the wool-boxed bell of the carpeted village (the easter egg). Midday.",
-      "look": { "time": 6000 }
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S03",
@@ -207,7 +275,9 @@
       "size": "full",
       "camera": "at: 6 blocks in front of Mom's garden gate, 1.6 up, FOV 50, a slow push; staged in depth: Mom 1 block nearer the lens at frame left, Milo at frame right a step behind",
       "frame": "fg: the garden fence and flowers; subject: Mom (cleric, purple robe) head to foot by her gate with ROSA over her head, and Milo (Steve) beside her with his own player nameplate 'Milo'; on 'FREE' Milo hops once; bg: Mom's cottage, the brewing stand on the garden table by the door, the lane. Midday.",
-      "look": { "time": 6000 }
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S04",
@@ -216,7 +286,9 @@
       "size": "wide",
       "camera": "ots: low behind Mom's right shoulder at the west gate, looking west up the meadow, FOV 45, still",
       "frame": "fg: Mom's back and purple robe at frame right, her ROSA tag in the upper right, her hand on the shut gate; mid/subject: the meadow and, at its top, the three zombie villagers standing at the treeline, backlit, tags TOMAS, GRETA, OLD BEN; bg: the dark oaks, the orange sky. Another dusk.",
-      "look": { "time": 13000 }
+      "look": {
+        "time": 13000
+      }
     },
     {
       "id": "S05",
@@ -225,7 +297,9 @@
       "size": "full",
       "camera": "pov in the lane at (8,0), 4 blocks from Mom, looking east-south-east down the lane past her; hotbar visible (eggs in slot 1, golden apples x6 in slot 2)",
       "frame": "subject: Mom head to foot in the lane at (12,2), facing camera, ROSA over her head, a quick smile; bg: the empty row receding along the lane's south side behind her, three cottages in depth (TOMAS nearest at frame right, then GRETA, then OLD BEN), shutters closed, gardens gone to tall grass, a cobweb on a door, and at each gate a sign: TOMAS, GRETA, OLD BEN (readable; the same names as the zombies), with a composter, a lectern and a barrel (their old job blocks) by the doors. Morning.",
-      "look": { "time": 2500 }
+      "look": {
+        "time": 2500
+      }
     },
     {
       "id": "S06",
@@ -234,7 +308,9 @@
       "size": "wide",
       "camera": "at: low beside the brewing stand on Mom's garden table, looking west across the garden and out of the gate to the meadow, FOV 50, slow push",
       "frame": "fg: the brewing stand at lower left with three bottles in it (on 'SPLASH POTION' the focus pulls to it); mid/subject: Mom walking out of the west gate onto the meadow path, a golden apple in her crossed arms, ROSA over her head (on 'GOLDEN APPLES'); bg: the meadow climbing to the dark oak treeline, bright morning sun. The same path S01 looked up.",
-      "look": { "time": 3000 }
+      "look": {
+        "time": 3000
+      }
     },
     {
       "id": "S07",
@@ -243,7 +319,9 @@
       "size": "full",
       "camera": "at: 4 blocks from Mom in her garden, 1.5 up, FOV 50, still",
       "frame": "subject: Mom at the brewing stand on her garden table (her job site), head to foot, the golden apple in her crossed arms, ROSA over her head; the brewing stand's bottles catch the light; bg: the cottage wall, a window, the lane. Morning, before she leaves (the saying is hers).",
-      "look": { "time": 2800 }
+      "look": {
+        "time": 2800
+      }
     },
     {
       "id": "S08",
@@ -252,7 +330,9 @@
       "size": "ms",
       "camera": "pov at the kitchen chest, which opens on 'Nobody': the vanilla chest screen",
       "frame": "the chest screen: one Splash Potion of Weakness and one golden apple in it (brought back again); behind the screen, Mom by the window in the evening light; on 'APPLES' the golden apple goes into the hotbar and slot 2 ticks from 6 to 7. Late afternoon.",
-      "look": { "time": 11000 }
+      "look": {
+        "time": 11000
+      }
     },
     {
       "id": "S09",
@@ -261,7 +341,9 @@
       "size": "wide",
       "camera": "pov in the lane, eggs in hand (slot 1), throwing",
       "frame": "fg: the lane's path; subject: HUGO the farmer 7 blocks ahead in the lane, tag over his head; on 'THROW' an egg flies and pops on him (egg crumbs), he just stands there, arms crossed; on 'EGG FIGHT' a second egg pops on PIA beside him, who also just stands; bg: cottages, the well, the hamlet. Midday.",
-      "look": { "time": 6000 }
+      "look": {
+        "time": 6000
+      }
     },
     {
       "id": "S10",
@@ -270,7 +352,9 @@
       "size": "ews",
       "camera": "at: high (9 blocks up) behind and above the west gate, looking west over the whole meadow, FOV 55, slow push",
       "frame": "fg: the gate's lanterns (just lit) and Milo small at the gate at lower left, back to us; mid/subject: Mom halfway up the meadow path walking away from us toward the forest, purple robe, ROSA over her head, the golden apple in her arms; on 'DARK' she steps into the shadow under the first dark oaks; bg: the sun low and orange right above the black treeline, long shadows down the meadow. Tonight, late afternoon.",
-      "look": { "time": 11800 }
+      "look": {
+        "time": 11800
+      }
     },
     {
       "id": "S11",
@@ -279,7 +363,9 @@
       "size": "wide",
       "camera": "at: S01's camera exactly (the echo), FOV 32, the same slow push",
       "frame": "the S01 frame: fence and lanterns in front, the meadow, the dark oaks against a deeper red sky; FOUR silhouettes step out of the trees, four nameplates: TOMAS, GRETA, OLD BEN and, a step behind, ROSA. Dusk, a little later than S01.",
-      "look": { "time": 13400 }
+      "look": {
+        "time": 13400
+      }
     },
     {
       "id": "S12",
@@ -288,7 +374,9 @@
       "size": "ms",
       "camera": "at: on the meadow path 3 blocks in front of ROSA, 1.7 up, looking slightly up and west at her, FOV 50, a slow push back (she walks toward the lens)",
       "frame": "subject: ROSA waist up to the top of her tag, a zombie villager in Mom's purple cleric robe, at (-18,0), her green face lit by the path's lamp post ahead of her, arms out like a zombie, the golden apple in her right hand, nameplate ROSA large and readable; bg: the meadow rising to the black trees, the other three tags coming down behind her, the red last light. The reveal: the only close-up.",
-      "look": { "time": 13400 }
+      "look": {
+        "time": 13400
+      }
     },
     {
       "id": "S13",
@@ -297,7 +385,9 @@
       "size": "full",
       "camera": "pov: Milo has stepped out of the gate onto the meadow path; looking down at the grass, then up",
       "frame": "fg: the splash potion of weakness lying in the grass by the path, bobbing (the item on the ground); on 'GRASS' he picks it up: it lands in hotbar slot 3, the selection moves to it and 'Splash Potion of Weakness' pops above the hotbar; the camera tilts up: ROSA head to foot 7 blocks up the path, coming, the golden apple in her hand, ROSA tag; bg: the three other tags further up. Dusk.",
-      "look": { "time": 13450 }
+      "look": {
+        "time": 13450
+      }
     },
     {
       "id": "S14",
@@ -306,7 +396,9 @@
       "size": "wide",
       "camera": "at: low behind ROSA's left shoulder, looking east down the meadow, FOV 50, still (from 'Mom lied' to 'HOME')",
       "frame": "fg: ROSA's back and purple robe at frame left, the golden apple in her hand, the ROSA tag at upper left; mid/subject: Milo 6 blocks down the path, small, facing us, the potion in his hand, his 'Milo' nameplate; bg: home: the fence, the lit gate lanterns and the hamlet's warm windows. Dusk.",
-      "look": { "time": 13500 }
+      "look": {
+        "time": 13500
+      }
     },
     {
       "id": "S15",
@@ -315,23 +407,65 @@
       "size": "ms",
       "camera": "pov on 'She can't THROW': ROSA 5 blocks up the path, arms out, the apple in her hand; the arm winds up and throws on 'I', the bottle arcs and shatters on her on 'CAN'",
       "frame": "subject: ROSA waist up, the ROSA tag, the golden apple; the splash potion's arc; the grey-purple splash and swirl around her; then (hold ~0.8 s) the hotbar selection slides to the golden apples (x7) and 'Golden Apple' pops above the hotbar; bg: TOMAS, GRETA and OLD BEN coming down the meadow behind her. Dusk. Cut.",
-      "look": { "time": 13500 }
+      "look": {
+        "time": 13500
+      }
     }
   ],
   "props": {
-    "gate": { "at": [0, 1, 0] },
-    "brewing_stand": { "block": "brewing_stand" },
-    "chest": { "block": "chest" },
-    "potion": { "at": [-11, 1, 0] },
-    "sign_tomas": { "block": "oak_sign" },
-    "golden_apple": { "actor": "ROSA" }
+    "gate": {
+      "at": [
+        0,
+        1,
+        0
+      ]
+    },
+    "brewing_stand": {
+      "block": "brewing_stand"
+    },
+    "chest": {
+      "block": "chest"
+    },
+    "potion": {
+      "at": [
+        -11,
+        1,
+        0
+      ]
+    },
+    "sign_tomas": {
+      "block": "oak_sign"
+    },
+    "golden_apple": {
+      "actor": "ROSA"
+    }
   },
   "sfx": [
-    { "under": "S09", "sound": "entity.egg.throw", "note": "two egg throws and their pops; the villagers make no sound and do not react" },
-    { "under": "S13", "sound": "entity.item.pickup", "note": "on 'GRASS'" },
-    { "under": "S15", "sound": "entity.splash_potion.throw", "note": "on 'I'" },
-    { "under": "S15", "sound": "entity.splash_potion.break", "note": "on 'CAN': the payoff hit lands here" },
-    { "under": "S11-S15", "sound": "entity.zombie_villager.ambient", "note": "low groans from the meadow" }
+    {
+      "under": "S09",
+      "sound": "entity.egg.throw",
+      "note": "two egg throws and their pops; the villagers make no sound and do not react"
+    },
+    {
+      "under": "S13",
+      "sound": "entity.item.pickup",
+      "note": "on 'GRASS'"
+    },
+    {
+      "under": "S15",
+      "sound": "entity.splash_potion.throw",
+      "note": "on 'I'"
+    },
+    {
+      "under": "S15",
+      "sound": "entity.splash_potion.break",
+      "note": "on 'CAN': the payoff hit lands here"
+    },
+    {
+      "under": "S11-S15",
+      "sound": "entity.zombie_villager.ambient",
+      "note": "low groans from the meadow"
+    }
   ],
   "bible": "stories/names_in_the_woods/bible.md",
   "beats": "stories/names_in_the_woods/beats.md",

@@ -112,7 +112,7 @@ Times are estimates at Pip's natural tempo (~4.1 words/s while speaking, ~0.45 s
 - L14 "Mom lied to keep me home. She can't throw. I can.": brave, family. Nothing obedient, intimate or innuendo.
 - Eerie, never gory: no hit, no death, no blood; the conversion happens off screen; zombies are backlit silhouettes
   until the one close-up.
-- Delivery: bright and full volume throughout; scared (not whispered) from L11; no "...".
+- Delivery: bright and full volume throughout; scared (not whispered) from L11; no ellipsis anywhere.
 
 ## Word count and length
 - 120 spoken words (L01 15, L02 7, L03 9, L04 7, L05 6, L06 11, L07 7, L08 8, L09 9, L10 8, L11 6, L12 10, L13 6,
