@@ -260,12 +260,13 @@ module.exports = {
     // L09 (S09): POV through our door to the chest; the chest screen opens on 'STUFF'
     await K.cut(3.5, -3.6, P(3.5, 1.3, -6), 1, { time: 23250, shot: 'pov' })
     await line('L09', async (k, at) => {
-      K.go(k > 2 && bot.entity.position.z > Z - 4.4)
-      if (k === at(1) - 2) { K.stop(); try { bot.openContainer(bot.blockAt(new V(X + 3, F + 1, Z - 6))) } catch (e) { ctx.log('chest:', e.message) } }
+      K.go(k > 2 && k < at(1) - 2 && bot.entity.position.z > Z - 4.4)   // still once the chest is open (STANDARDS 3.3: the camera holds while a container is open)
+      if (k === at(1) - 2) { K.stop(); K.sway = 0; try { bot.openContainer(bot.blockAt(new V(X + 3, F + 1, Z - 6))) } catch (e) { ctx.log('chest:', e.message) } }
       K.look(k)
     })
     // L10 (S10): the screen closes; on the bed under the window, looking out north-west at the lit village
     try { bot.closeWindow(bot.currentWindow) } catch (e) {}
+    K.sway = 1
     await K.cut(1.5, -5.5, P(-9, 3.4, -9), 1.5625, { time: 23296 })   // standing on the bed, out the west window
     await line('L10', async (k) => { K.look(k) })
 
