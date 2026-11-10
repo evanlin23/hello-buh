@@ -183,7 +183,7 @@ module.exports = {
     const tp = (tag, dx, dy, dz, yaw = 0, pitch = 0) => say(`/tp @e[tag=${tag},limit=1] ${(X + dx).toFixed(3)} ${(F + dy).toFixed(3)} ${(Z + dz).toFixed(3)} ${yaw.toFixed(1)} ${pitch.toFixed(1)}`)
     const park = (tag) => say(`/tp @e[tag=${tag},limit=1] ${this.PARK.join(' ')}`)
     const put = (tag, dx, dy, dz, yaw, pitch = 0) => { park(tag); tp(tag, dx, dy, dz, yaw, pitch) }   // through the park: no glide
-    const T = (id) => Math.round((VOX[id] + GAP) * 20)
+    const T = (id) => Math.round((VOX[id] + (id === 'L01' ? 0.0 : GAP)) * 20)   // (line 1 runs straight into line 2: no pause in the opening)
     const line = (who, id) => ctx.mark('line', { id, who, vox: id, dur: VOX[id] })
     const run = async (n, fn) => { for (let k = 0; k < n; k++) { if (fn) fn(k); await bot.waitForTicks(1) } }
     const time = (n) => { say(`/time set ${n}`); ctx.mark('time', { time: n }) }
