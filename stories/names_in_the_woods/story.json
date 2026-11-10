@@ -223,8 +223,8 @@
       "line": "L05",
       "place": "empty_row",
       "size": "full",
-      "camera": "pov in the lane, 4 blocks from Mom, looking slightly down at her; hotbar visible (eggs in slot 1, golden apples x6 in slot 2)",
-      "frame": "subject: Mom head to foot in the lane, facing camera, ROSA over her head, a quick smile; bg: the three empty cottages side by side behind her, shutters closed, gardens gone to tall grass, a cobweb on a door, and at each gate a sign: TOMAS, GRETA, OLD BEN (readable; the same names as the zombies), with a composter, a lectern and a barrel (their old job blocks) by the doors. Morning.",
+      "camera": "pov in the lane at (8,0), 4 blocks from Mom, looking east-south-east down the lane past her; hotbar visible (eggs in slot 1, golden apples x6 in slot 2)",
+      "frame": "subject: Mom head to foot in the lane at (12,2), facing camera, ROSA over her head, a quick smile; bg: the empty row receding along the lane's south side behind her, three cottages in depth (TOMAS nearest at frame right, then GRETA, then OLD BEN), shutters closed, gardens gone to tall grass, a cobweb on a door, and at each gate a sign: TOMAS, GRETA, OLD BEN (readable; the same names as the zombies), with a composter, a lectern and a barrel (their old job blocks) by the doors. Morning.",
       "look": { "time": 2500 }
     },
     {
@@ -287,7 +287,7 @@
       "place": "meadow",
       "size": "ms",
       "camera": "at: on the meadow path 3 blocks in front of ROSA, 1.7 up, looking slightly up and west at her, FOV 50, a slow push back (she walks toward the lens)",
-      "frame": "subject: ROSA waist up to the top of her tag, a zombie villager in Mom's purple cleric robe, green face lit by the lamp post beside the path, arms out like a zombie, the golden apple in her right hand, nameplate ROSA large and readable; bg: the meadow rising to the black trees, the other three tags coming down behind her, the red last light. The reveal: the only close-up.",
+      "frame": "subject: ROSA waist up to the top of her tag, a zombie villager in Mom's purple cleric robe, at (-18,0), her green face lit by the path's lamp post ahead of her, arms out like a zombie, the golden apple in her right hand, nameplate ROSA large and readable; bg: the meadow rising to the black trees, the other three tags coming down behind her, the red last light. The reveal: the only close-up.",
       "look": { "time": 13400 }
     },
     {
