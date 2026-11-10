@@ -1,0 +1,266 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.0,
+ "rate": 1.0,
+ "sr": 24000,
+ "gap": 0.15,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "N01": {
+   "text": "This is a jump from build limit, into one block of water, in the middle of a lava lake.",
+   "dur": 5.525,
+   "onset": 0.25,
+   "end": 5.225,
+   "chunks": [
+    [
+     0.25,
+     5.225
+    ]
+   ],
+   "captions": [
+    "This is a jump from build limit, into one block of water, in the middle of a lava lake."
+   ]
+  },
+  "N02": {
+   "text": "By the end of this video, I'm landing it. But first, the easy stuff.",
+   "dur": 4.425,
+   "onset": 0.25,
+   "end": 4.125,
+   "chunks": [
+    [
+     0.25,
+     4.125
+    ]
+   ],
+   "captions": [
+    "By the end of this video, I'm landing it. But first, the easy stuff."
+   ]
+  },
+  "N03": {
+   "text": "Clutch number one. The boat.",
+   "dur": 2.3,
+   "onset": 0.25,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.25,
+     2.0
+    ]
+   ],
+   "captions": [
+    "Clutch number one. The boat."
+   ]
+  },
+  "N04": {
+   "text": "Getting into a boat resets your fall distance. So if you place it right before the ground and hop in, you take no damage at all. Let's see how high it goes.",
+   "dur": 9.175,
+   "onset": 0.25,
+   "end": 8.875,
+   "chunks": [
+    [
+     0.25,
+     8.875
+    ]
+   ],
+   "captions": [
+    "Getting into a boat resets your fall distance. So if you place it right before the ground and hop in, you take no damage at all. Let's see how high it goes."
+   ]
+  },
+  "N05": {
+   "text": "Seventy nine blocks. Full hearts. The boat is kind of broken.",
+   "dur": 4.25,
+   "onset": 0.275,
+   "end": 3.95,
+   "chunks": [
+    [
+     0.275,
+     3.95
+    ]
+   ],
+   "captions": [
+    "Seventy nine blocks. Full hearts. The boat is kind of broken."
+   ]
+  },
+  "N06": {
+   "text": "Clutch number two. The ladder.",
+   "dur": 2.5,
+   "onset": 0.25,
+   "end": 2.2,
+   "chunks": [
+    [
+     0.25,
+     2.2
+    ]
+   ],
+   "captions": [
+    "Clutch number two. The ladder."
+   ]
+  },
+  "N07": {
+   "text": "Too late. A ladder catches you the moment you touch it, but you have to stick it on the wall a couple of ticks before you land.",
+   "dur": 7.1,
+   "onset": 0.275,
+   "end": 6.8,
+   "chunks": [
+    [
+     0.275,
+     6.8
+    ]
+   ],
+   "captions": [
+    "Too late. A ladder catches you the moment you touch it, but you have to stick it on the wall a couple of ticks before you land."
+   ]
+  },
+  "N08": {
+   "text": "Every wall gets fancier. There is no reason for this.",
+   "dur": 3.825,
+   "onset": 0.25,
+   "end": 3.525,
+   "chunks": [
+    [
+     0.25,
+     3.525
+    ]
+   ],
+   "captions": [
+    "Every wall gets fancier. There is no reason for this."
+   ]
+  },
+  "N09": {
+   "text": "Clutch number three. The water bucket. Everyone knows this one, so every time, it gets harder.",
+   "dur": 6.05,
+   "onset": 0.25,
+   "end": 5.75,
+   "chunks": [
+    [
+     0.25,
+     5.75
+    ]
+   ],
+   "captions": [
+    "Clutch number three. The water bucket. Everyone knows this one, so every time, it gets harder."
+   ]
+  },
+  "N10": {
+   "text": "Now with ender pearls.",
+   "dur": 2.1,
+   "onset": 0.275,
+   "end": 1.8,
+   "chunks": [
+    [
+     0.275,
+     1.8
+    ]
+   ],
+   "captions": [
+    "Now with ender pearls."
+   ]
+  },
+  "N11": {
+   "text": "And to finish, an easy one.",
+   "dur": 2.425,
+   "onset": 0.25,
+   "end": 2.15,
+   "chunks": [
+    [
+     0.25,
+     2.15
+    ]
+   ],
+   "captions": [
+    "And to finish, an easy one."
+   ]
+  },
+  "N12": {
+   "text": "That was lava.",
+   "dur": 1.75,
+   "onset": 0.25,
+   "end": 1.425,
+   "chunks": [
+    [
+     0.25,
+     1.425
+    ]
+   ],
+   "captions": [
+    "That was lava."
+   ]
+  },
+  "N13": {
+   "text": "Quick break from falling. Every way to cross lava, rated.",
+   "dur": 4.1,
+   "onset": 0.25,
+   "end": 3.8,
+   "chunks": [
+    [
+     0.25,
+     3.8
+    ]
+   ],
+   "captions": [
+    "Quick break from falling. Every way to cross lava, rated."
+   ]
+  },
+  "N14": {
+   "text": "And then there's this guy.",
+   "dur": 2.15,
+   "onset": 0.25,
+   "end": 1.85,
+   "chunks": [
+    [
+     0.25,
+     1.85
+    ]
+   ],
+   "captions": [
+    "And then there's this guy."
+   ]
+  },
+  "N15": {
+   "text": "The final test. Five drops. Every one is higher, and every landing is smaller.",
+   "dur": 5.325,
+   "onset": 0.25,
+   "end": 5.025,
+   "chunks": [
+    [
+     0.25,
+     5.025
+    ]
+   ],
+   "captions": [
+    "The final test. Five drops. Every one is higher, and every landing is smaller."
+   ]
+  },
+  "N16": {
+   "text": "And this is the one from the start.",
+   "dur": 2.55,
+   "onset": 0.25,
+   "end": 2.25,
+   "chunks": [
+    [
+     0.25,
+     2.25
+    ]
+   ],
+   "captions": [
+    "And this is the one from the start."
+   ]
+  },
+  "N17": {
+   "text": "So the boat is the easiest, the ladder is the hardest to time, and the lava bucket is, well, a choice. If you want the next one to be even more ridiculous, subscribe. It really helps.",
+   "dur": 10.825,
+   "onset": 0.275,
+   "end": 10.55,
+   "chunks": [
+    [
+     0.275,
+     10.55
+    ]
+   ],
+   "captions": [
+    "So the boat is the easiest, the ladder is the hardest to time, and the lava bucket is, well, a choice. If you want the next one to be even more ridiculous, subscribe. It really helps."
+   ]
+  }
+ },
+ "total": 78.92
+}

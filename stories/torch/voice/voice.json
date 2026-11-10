@@ -1,0 +1,376 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.12,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "There's a torch on the hill behind my house. I never placed it.",
+   "dur": 2.776,
+   "onset": 0.155,
+   "end": 2.586,
+   "chunks": [
+    [
+     0.155,
+     0.595
+    ],
+    [
+     0.595,
+     0.897
+    ],
+    [
+     0.897,
+     1.638
+    ],
+    [
+     1.707,
+     1.966
+    ],
+    [
+     1.966,
+     2.586
+    ]
+   ],
+   "captions": [
+    "There's a TORCH",
+    "on the hill",
+    "behind my house.",
+    "I never",
+    "PLACED it."
+   ]
+  },
+  "L02": {
+   "text": "I asked mom. She just sighed and said, again?",
+   "dur": 2.207,
+   "onset": 0.172,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.759
+    ],
+    [
+     0.828,
+     1.026
+    ],
+    [
+     1.026,
+     1.25
+    ],
+    [
+     1.25,
+     1.466
+    ],
+    [
+     1.491,
+     2.0
+    ]
+   ],
+   "captions": [
+    "I asked",
+    "MOM.",
+    "She just",
+    "sighed",
+    "and said,",
+    "AGAIN?"
+   ]
+  },
+  "L03": {
+   "text": "The librarian sold me sixty four torches. I didn't ask for them.",
+   "dur": 3.034,
+   "onset": 0.172,
+   "end": 2.845,
+   "chunks": [
+    [
+     0.172,
+     0.647
+    ],
+    [
+     0.647,
+     0.991
+    ],
+    [
+     0.991,
+     1.397
+    ],
+    [
+     1.397,
+     1.862
+    ],
+    [
+     1.931,
+     2.155
+    ],
+    [
+     2.155,
+     2.845
+    ]
+   ],
+   "captions": [
+    "The LIBRARIAN",
+    "sold me",
+    "sixty four",
+    "TORCHES.",
+    "I didn't",
+    "ASK for them."
+   ]
+  },
+  "L04": {
+   "text": "So I dug under it. The dirt was soft. Like someone filled it in.",
+   "dur": 2.966,
+   "onset": 0.172,
+   "end": 2.759,
+   "chunks": [
+    [
+     0.172,
+     0.543
+    ],
+    [
+     0.543,
+     0.845
+    ],
+    [
+     0.897,
+     1.129
+    ],
+    [
+     1.129,
+     1.586
+    ],
+    [
+     1.655,
+     2.078
+    ],
+    [
+     2.078,
+     2.759
+    ]
+   ],
+   "captions": [
+    "So I DUG",
+    "under it.",
+    "The dirt",
+    "was SOFT.",
+    "Like someone",
+    "FILLED it IN."
+   ]
+  },
+  "L05": {
+   "text": "And under the dirt? another torch.",
+   "dur": 1.759,
+   "onset": 0.155,
+   "end": 1.552,
+   "chunks": [
+    [
+     0.155,
+     0.371
+    ],
+    [
+     0.371,
+     0.707
+    ],
+    [
+     0.776,
+     1.034
+    ],
+    [
+     1.034,
+     1.552
+    ]
+   ],
+   "captions": [
+    "And under",
+    "the dirt?",
+    "ANOTHER",
+    "TORCH."
+   ]
+  },
+  "L06": {
+   "text": "My dog sat at the top and whined. He wouldn't come down.",
+   "dur": 2.638,
+   "onset": 0.172,
+   "end": 2.431,
+   "chunks": [
+    [
+     0.172,
+     0.5
+    ],
+    [
+     0.5,
+     0.94
+    ],
+    [
+     0.94,
+     1.414
+    ],
+    [
+     1.483,
+     1.724
+    ],
+    [
+     1.724,
+     2.431
+    ]
+   ],
+   "captions": [
+    "My DOG",
+    "sat at the top",
+    "and WHINED.",
+    "He wouldn't",
+    "come DOWN."
+   ]
+  },
+  "L07": {
+   "text": "Ten torches. twenty. All on the left wall. That's how I place them.",
+   "dur": 2.983,
+   "onset": 0.172,
+   "end": 2.793,
+   "chunks": [
+    [
+     0.172,
+     0.672
+    ],
+    [
+     0.733,
+     1.052
+    ],
+    [
+     1.121,
+     1.379
+    ],
+    [
+     1.379,
+     1.793
+    ],
+    [
+     1.819,
+     2.06
+    ],
+    [
+     2.06,
+     2.793
+    ]
+   ],
+   "captions": [
+    "TEN torches.",
+    "TWENTY.",
+    "All on the",
+    "LEFT wall.",
+    "That's how",
+    "I place them."
+   ]
+  },
+  "L08": {
+   "text": "Thirty. The stone got warm. Something down there was bubbling.",
+   "dur": 2.776,
+   "onset": 0.172,
+   "end": 2.586,
+   "chunks": [
+    [
+     0.172,
+     0.431
+    ],
+    [
+     0.466,
+     0.776
+    ],
+    [
+     0.776,
+     1.31
+    ],
+    [
+     1.405,
+     1.621
+    ],
+    [
+     1.621,
+     1.871
+    ],
+    [
+     1.871,
+     2.586
+    ]
+   ],
+   "captions": [
+    "THIRTY.",
+    "The stone",
+    "got WARM.",
+    "Something",
+    "down there",
+    "was BUBBLING."
+   ]
+  },
+  "L09": {
+   "text": "Forty. That's when I remembered the one rule of Minecraft.",
+   "dur": 2.569,
+   "onset": 0.19,
+   "end": 2.362,
+   "chunks": [
+    [
+     0.19,
+     0.466
+    ],
+    [
+     0.517,
+     0.802
+    ],
+    [
+     0.802,
+     1.129
+    ],
+    [
+     1.129,
+     1.578
+    ],
+    [
+     1.578,
+     2.362
+    ]
+   ],
+   "captions": [
+    "FORTY.",
+    "That's when",
+    "I remembered",
+    "the ONE rule",
+    "of Minecraft."
+   ]
+  },
+  "L10": {
+   "text": "Never dig straight down.",
+   "dur": 1.552,
+   "onset": 0.19,
+   "end": 1.345,
+   "chunks": [
+    [
+     0.19,
+     0.422
+    ],
+    [
+     0.422,
+     0.603
+    ],
+    [
+     0.603,
+     0.828
+    ],
+    [
+     0.828,
+     1.345
+    ]
+   ],
+   "captions": [
+    "NEVER",
+    "dig",
+    "straight",
+    "DOWN."
+   ]
+  }
+ },
+ "total": 26.46
+}

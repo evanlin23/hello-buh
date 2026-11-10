@@ -510,9 +510,20 @@ def spoken(t):
 
 
 def run_list(spec, out):
-    groups = [(r.get("direction", ""), [(w, lid, spoken(t), "") for w, lid, t in r["lines"]], r.get("room", "small"))
-              for r in json.loads(spec.read_text())]
-    voice_lines(groups, library(), out)
+    """A request list. A request's own `speakers` ({name: Gemini voice}: the AI-dilemma and trailer voices.json) voices
+    names that aren't in voices/cast.json; the request's `direction` describes them."""
+    reqs = json.loads(spec.read_text())
+    cs = library()
+    for r in reqs:
+        for name, v in (r.get("speakers") or {}).items():
+            cs.setdefault(name, {"name": name, "voice": v, "profile": "the character the scene describes"})
+    groups = [(r.get("direction", ""), [(w, lid, spoken(t), "") for w, lid, t in r["lines"]], r.get("room", "small")) for r in reqs]
+    voice_lines(groups, cs, out)
+
+
+def write(path, x):
+    """A float32 mono line at SR to a file (scripts/cut_vox.py)."""
+    pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(path)], np.asarray(x, np.float32).tobytes())
 
 
 def speaker_check(d, ids):
