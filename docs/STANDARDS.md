@@ -48,19 +48,21 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
 
 ## 2. Voice
-0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone (being chosen:
-   docs/voice_search.md; nothing is voiced until the owner picks); other characters only in very short lines, on Gemini.
-   r:r4f221c
-1. **The narrator is `voices/cast.json` `narrator` = Pip**: Leda, the bubbly nine-year-old direction,
-   gemini-3.8-flash-lite-tts, single speaker, **natural tempo, no time-stretch, no pitch shift** (`post` empty; atempo
-   1.1 at most if a take drags); the recipe is `voices/recipes/pip.md`. Kid Puck is `puck_kid`, an alternative only.
-   An adult woman storyteller is `storyteller` (Despina), never a kid; a kid *character* is `child` (Laomedeia).
-   r:r5519b8 r:rb9756b r:r350819 r:r810b66
+0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone; one narrator says
+   every line, quotes included, so other characters speak only in very short lines, on Gemini. r:r4f221c r:r30c821
+1. **The narrator is `voices/cast.json` `narrator` = `narrator_roblox`**: Gemini **Orus**, gemini-3.8-flash-tts
+   (locked), single speaker, the voice-match direction as the bracketed prefix, and every take played **tempo 0.95,
+   then 1.45x faster by resampling** (cast `tempo`/`rate`: pitch and formants rise with it; tts.py `speed_up`, on the
+   whole raw take before the trim, the slices and the take gate). The one owner-approved exception to "never
+   pitch-shift a voice", for this speed-up only. The recipe is `voices/recipes/narrator_roblox.md`. Pip (`pip`, Leda on
+   3.8-flash-lite, natural tempo, `voices/recipes/pip.md`) and kid Puck (`puck_kid`) are named alternatives only. An
+   adult woman storyteller is `storyteller` (Despina); a kid *character* is `child` (Laomedeia). Check: speaker
+   (the take gate on the sped-up take). r:r63a3a1 r:r350819 r:r810b66
 2. **Never whispery**: every style prompt says "fast, bright, energetic; not whispery, breathy or soft"; drop to
    scared (not hushed) only for real danger. r:r350819 r:raf72e0
 3. **Fast**: about 5-5.5 words per second while speaking (the owner's reference Short), from short sentences, little
-   air between them and the voice's natural speed (never a sped-up file). Check: pace. r:r1ed23c (supersedes
-   r:r00f92f, "speed is not a target")
+   air between them and the narrator's 0.95 x 1.45 speed-up (Voice 1; Orus reads ~4.4 words/s, ~5.9 after it).
+   Check: pace. r:r1ed23c r:r63a3a1 (supersedes r:r00f92f, "speed is not a target")
 4. **The opening in one breath**: no pause inside line 1 over **0.2 s**; in the first 5 s no pause inside a line over
    **0.35 s** and no gap between lines over **0.6 s** (pace BLOCK; WARN over 0.25 / 0.45 s). Re-take, don't trim. r:r810b66 r:r961104
 5. **Cut safely**: at the quietest point between lines (`voice_check.py --resplit`), never at Whisper's word start or
@@ -190,6 +192,9 @@ Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
   no-pauses-in-the-opening part stands (Voice 4).
 - **The 1.45x sped-up Kokoro narrator** (`am_adam`, scripts/voice.py; docs/stories.md "How it fits together"), and
   "no sped-up voice, a cast" as an open question (r:r4b4332): the cast narrator is Voice 1.
+- **Pip as the default narrator** (r:r5519b8 r:rb9756b: Leda, natural tempo) and "the voice's natural speed (not a
+  sped-up file)" (r:r1ed23c's last clause): replaced by the Roblox narrator, Orus x1.45 (r:r63a3a1, Voice 1). Pip
+  stays a named alternative.
 - **Leda at 1.5x tempo +1.5 semitones** (the kid-narrator audition; still in the docs/voices.md table): replaced by Pip's
   natural tempo (r:rb9756b). "A kid narrator is Leda (cast `child`)" (r:r810b66): Leda is the `narrator` now and `child`
   is Laomedeia.

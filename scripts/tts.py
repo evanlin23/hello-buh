@@ -25,7 +25,8 @@ Each line keeps its in-breath and natural tail (the cut pads into the pauses), t
 `post` (EQ, or the narrator's formant-preserving tempo/pitch), a light room (the request's or story's `room`: small,
 hall, outdoor, or "" for dry), and ONE gain per take (-16 LUFS, a limiter on rare peaks only) so a whisper stays
 quieter than a shout. No de-esser, no per-line loudnorm, no asetrate pitch shift: each one made the realism judge say
-"AI" (docs/voices.md "Realism"). Writes <id>.wav and, for a story,
+"AI" (docs/voices.md "Realism"). The one exception, owner-approved: a cast entry's `tempo`/`rate` (the Roblox narrator,
+Orus x1.45) speeds up the WHOLE raw take before anything is cut or gated (speed_up). Writes <id>.wav and, for a story,
 voice/voice.json (dur, onset, end, caption chunks spread over the speech by length, who): the file lib/story.js and
 edit.py --story already read. Check the printed lengths and pitch: a take far longer than its text means the model
 read the direction aloud; a pitch that belongs to the other speaker means a bad cut (fix the text's punctuation, or split the request).
@@ -539,6 +540,28 @@ def lufs(x):
     return float(err.rsplit("I:", 1)[1].split("LUFS")[0])
 
 
+def speed_of(who, cs):
+    """(tempo, rate) of a request's speakers: one value for the whole take, so every speaker in it must agree."""
+    sp = {(float(cs[w].get("tempo") or 1.0), float(cs[w].get("rate") or 1.0)) for w in who}
+    if len(sp) > 1:
+        raise SystemExit(f"{list(who)}: different tempo/rate in one request {sorted(sp)}: the speed-up is applied to the "
+                         f"whole take, so voice them in separate requests (story `requests`, or \"voice_takes\": \"beat\")")
+    return sp.pop() if sp else (1.0, 1.0)
+
+
+def speed_up(x, tempo=1.0, rate=1.0):
+    """The Roblox narrator's speed-up of a WHOLE raw take (owner 2026-11-10: "s3_gemini_orus.mp3 is good", "we can just
+    do 1.45 thats fine"; docs/voices.md "The Roblox narrator"), before it is trimmed, sliced, gated or shaped: `tempo`
+    = atempo (pitch kept), then `rate` = played faster by resampling (asetrate + aresample: pitch, formants and tempo
+    all rise by `rate`, no pitch correction). The same ffmpeg filters as out/voice_match/s3, minus its gap cut: a
+    continuous take is never edited inside; a take with pauses is re-taken (take_gate on the sped-up take)."""
+    if tempo == 1.0 and rate == 1.0:
+        return x
+    af = ([f"atempo={tempo:g}"] if tempo != 1.0 else []) + ([f"asetrate={round(SR * rate)}", f"aresample={SR}"] if rate != 1.0 else [])
+    return np.frombuffer(pcm(["-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-af", ",".join(af), "-f", "f32le", "-"],
+                             np.asarray(x, np.float32).tobytes()), np.float32).copy()
+
+
 def shape(x, post="", room="small"):
     """One line, gently (docs/voices.md "Realism"): high-pass 60 Hz, the character's `post` (EQ only, never a pitch
     shift), the scene's room, a 60 ms fade at the end instead of a cut at the last word. No de-esser, no loudnorm."""
@@ -620,6 +643,7 @@ def take(scene, lines, cs, salt=""):
     """Voice one request's lines [(who, id, text, note)] (at most 2 speakers) -> [float32 per line], cached.
     salt: a re-take's name ("retake1"): the same prompt, a new request and its own cache entry."""
     x, _, _ = raw_take(scene, lines, cs, salt)
+    x = speed_up(x, *speed_of(dict.fromkeys(w for w, _, _, _ in lines), cs))   # the whole take, before it is cut
     return cut(x, [t for _, _, t, _ in lines])
 
 
@@ -848,6 +872,7 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None)
     fixes, tried, salt = [], [], ""
     for n in range(max(1, tries)):
         x, model, raw = raw_take(scene, lines, cs, salt, fixes)
+        x = speed_up(x, *speed_of([w], cs))   # the take as it will be heard: the gate judges ITS pauses
         y = level([shape(trim_take(x), cs[w].get("post", ""), room)])[0]
         heard = hear_fn(y)
         try:
@@ -882,7 +907,9 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None)
         print(f"GATE FAILED after {len(tried)} take(s): beat {beat['id']} keeps take {best['try']} with "
               + "; ".join(f["why"] for f in best["res"]["fails"]) + ": a blocker (speaker_check GATE). Fix the text or "
               "the direction, or ./hb voice <stunt> --retakes more")
+    tempo, rate = speed_of([w], cs)
     meta = {"lines": [lid for _, lid, _, _ in lines], "file": f"beat_{beat['id']}.wav", "dur": round(len(y) / SR, 3),
+            **({"tempo": tempo, "rate": rate} if (tempo, rate) != (1.0, 1.0) else {}),
             "offsets": [round(a / SR, 3) for a in starts[:-1]], "model": best["model"], "try": best["try"],
             "tries": len(tried), "fixes": best["fixes"], "ok": best["res"]["ok"], "gate": best["res"]["fails"],
             "rejected": [{"try": t["try"], "why": [f["why"] for f in t["res"]["fails"]]} for t in tried if not t["res"]["ok"]]}
@@ -919,7 +946,13 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
     narrator = next((k for k, c in cs.items() if c.get("role") == "narrator"), "narrator")
     vf = d / "voice" / "voice.json"
     LOCK.update((json.loads(vf.read_text()).get("models") or {}) if vf.exists() else {})   # one model per character
-    for cid, m in (relock or {}).items():   # move a character to another model: ALL of its lines are re-taken
+    relock = dict(relock or {})
+    for cid, c in cs.items():   # a recast (the narrator became Orus on 3.8-flash-tts): the cast's locked model wins, and
+        # ALL of that character's lines are re-taken, never mixed with the old voice's takes
+        if c.get("model") and LOCK.get(cid) and LOCK[cid] != c["model"] and cid not in relock:
+            print(f"{cid}: voice.json locks {LOCK[cid]}, the cast locks {c['model']} (recast): re-taking all of its lines")
+            relock[cid] = c["model"]
+    for cid, m in relock.items():   # move a character to another model: ALL of its lines are re-taken
         LOCK[cid] = m
         if only:
             only = list(only) + [ln["id"] for ln in story["lines"] if ln.get("who", narrator) == cid]

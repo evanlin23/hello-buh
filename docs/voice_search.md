@@ -180,6 +180,9 @@ What the numbers say:
 
 Gemini requests: 2 (Orus and Achird on gemini-3.8-flash-tts; none on flash-lite). The third was not spent.
 
+### Decision (owner, 2026-11-10)
+"s3_gemini_orus.mp3 is good", then, after hearing it at 1.30x-1.60x, "we can just do 1.45 thats fine". The narrator is now `narrator_roblox` = `narrator` (voices/recipes/narrator_roblox.md, docs/voices.md "The Roblox narrator"). The speed-up is in tts.py; the gap cut is not (a continuous take is re-taken, never cut).
+
 ### Recommendation
 
 Listen to `reel_top4.mp3`. **s1/s2 (Kokoro blend, x1.4)** are the closest by measurement, and they're free, local,

@@ -396,7 +396,11 @@ def story_items(d):
                 if not b.get("ok", True):
                     it["gate"] = [f["why"] for f in b.get("gate", [])]
             items.append(it)
-    voices = {w: (cs.get(w) or {}).get("voice") for w in dict.fromkeys([narrator] + [i["who"] for i in items])}
+    def voice_of(w):   # a sped-up voice (the Roblox narrator, Orus x1.45) is not the library sample of that voice
+        c = cs.get(w) or {}
+        sp = (float(c.get("tempo") or 1.0), float(c.get("rate") or 1.0))
+        return c.get("voice") if sp == (1.0, 1.0) or not c.get("voice") else f"{c['voice']}@x{sp[0] * sp[1]:.2f}"
+    voices = {w: voice_of(w) for w in dict.fromkeys([narrator] + [i["who"] for i in items])}
     return items, {w: v for w, v in voices.items() if w in {i["who"] for i in items}}
 
 
