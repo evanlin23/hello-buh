@@ -39,8 +39,9 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 | maker checks meanwhile: beat_audit | 03:58:20 | 03:59:00 | 0.7 min | working | flagged the same 0.9 s pause as blocker 3 (I'd judged it acceptable) |
 | round 1 fixes (campfires in the ruin, wall-top wide shot, burning room, lantern over the well + rim camera, crown blown off + fire, HMMS 4097) | 04:03:00 | 04:05:13 | 2.2 min | working | |
 | recording 6 | 04:05:13 | 04:08:14 | 3 min | waiting | 1 attempt, rec_check clean |
-| Actions render 3 queued | 04:08:20 | | | waiting | |
-| preview (`scripts/preview.sh`, now on main) in parallel | 04:08:32 | | | waiting | checks the fixes before the 40-min render lands |
+| Actions render 3 queued (old setup) | 04:08:20 | 04:19:54 | (superseded) | waiting | re-queued after merging main's no-apt render setup (lead) |
+| Actions render 4 (no-apt setup) | 04:19:54 | | | waiting | |
+| preview (`scripts/preview.sh`, now on main) in parallel | 04:08:32 | 04:34:31 | 26 min | waiting | slower than the new Actions render: 3 parallel render.js jobs each still step through all 2583 frames (5-12 min each on this 4-CPU box with other work running), edit 3.3 min. Sheets are excellent (every cut ±3 frames, labelled). They showed the ruin and tree fixes reading, the ending's blasts in view, and the new lava still drawing near-black with one orange quarter (engine) |
 | Actions render 2 queued + stills 4 (12 ticks) | 03:15:32 | 03:17:36 | 2 min | waiting | stills: roof nitwit visible, ruin readable, no hand (the hand in stills 3 is unexplained; render.js silently ignores a stunt module that fails to load) |
 
 ## Counts
@@ -88,6 +89,12 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
     `list_events`. Works, but costs a fresh container + setup per round. (open: doc how a worker should do it)
 15. **rec_check's set/vanilla checks silently skip when node_modules is missing** (the reviewer's fresh checkout:
     `prismarine-chunk` not found, and the report still said OK). It should say the check didn't run. (open)
+16. **scripts/preview.sh took 26 min here** (claimed ~10): render.js renders only the listed frames but still
+    simulates every frame, three times over (one per job). With Actions at ~10 min now, a local preview only pays
+    when the box is idle; the sheets are the valuable part. (open: a sparse render that skips simulation work)
+17. **ENGINE: lava placed with /fill (water -> lava in a 2x2x2 well) draws near-black** with one orange quarter for
+    1 s+, even with a lantern above it. Repro: stunts/story_nitwit.js L06 (`/fill ... lava replace water`), output
+    ~12.3-13.4 s. Later shots of the same well show it orange. (open, engine)
 3. Worker setup says symlink nothing; the lead's brief had me symlink node_modules, songs, sfx/mixkit and work. The
    docs don't say a worktree needs `work/` (server, assets) linked: without it run.sh would re-download and rebuild
    the server and assets. (open: doc note)
