@@ -393,8 +393,8 @@
       "id": "S04",
       "line": "L04",
       "place": "sidings",
-      "size": "full",
-      "camera": "at: 1.5 blocks up, 6 blocks south of the two spurs' buffer stops, looking north, slow push; FOV 50",
+      "size": "ms",
+      "camera": "at: 1.5 blocks up, 4 blocks south of ROSE's buffer stop, looking north, slow push; FOV 50",
       "frame": "fg: platform slabs; subject: ROSE's spur centred, empty, its oak sign 'ROSE' over the buffer (the sign text also in the caption track); OTTO's spur with its minecart at frame left; bg (north): the village roofs and chimney smoke. Dusk (12650).",
       "look": {
         "time": 12650

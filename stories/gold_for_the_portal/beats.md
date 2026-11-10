@@ -1,4 +1,4 @@
-# gold_for_the_portal: beat sheet, clue map, writer's checks (r1)
+# gold_for_the_portal: beat sheet, clue map, writer's checks (r2)
 
 r1 (2026-11-10): written from the parked pitch (critic rank 6) with the critic's fix applied: the reveal is a piglin
 stepping through the portal wearing Grandpa's gold helmet, planted early (Grandpa putting the helmet on in S06, the
@@ -25,23 +25,23 @@ trading", "one's plenty".
 - **Until finally,** something steps out after the gold: a piglin, shaking, wearing Grandpa's helmet, and Grandma,
   who has known all along, tosses it tonight's ingot back into the purple to send it home.
 
-## Beat sheet (115 words; ~43.5 s of speech with the gaps and pauses, ~44.4 s with the 0.9 s hold)
+## Beat sheet (113 words; ~42.9 s of speech with the gaps and pauses, ~43.8 s with the 0.9 s hold)
 Timings estimated at Pip's natural pace (~2.9 words a second plus the `<short pause>` tags); re-time from voice.json.
 
 | t (s) | beat | line | picture | plants |
 |---|---|---|---|---|
-| 0.0-3.8 | **The image** | L01 N: "My grandma has thrown NINE THOUSAND gold ingots into a PORTAL." | S01 WS cellar: the purple portal in the corner, Grandma beside it, the ingot already mid-arc on frame 1, gone into the purple on "PORTAL" | the number; the ritual; the gold chest behind her |
+| 0.0-3.8 | **The image** | L01 N: "My grandma has thrown NINE THOUSAND gold ingots into a PORTAL." | S01 FS cellar from 4 blocks: Grandma full-figure beside the purple portal, the ingot crossing into the purple on frame 1 (thrown in the preroll), then a slow push on her and the portal | the number; the ritual; the gold chest behind her |
 | 4.1-7.2 | **Worse than you thought** | L02 N: "One every NIGHT. And every MORNING, something comes BACK." | S02 EWS crane down onto the cottage on the ridge at night; S03 WS POV morning, the hatch open, an obsidian block pops out of the purple on "BACK" | **picture clue**: items come back through a portal (vanilla: items cross portals) |
-| 7.5-11.1 | test 1 (the gifts) | L03 N: "OBSIDIAN. STRING. ENDER PEARLS. A potion that makes you FIREPROOF." | S04 MS POV: the three items on the floor, picked up word by word; S05 WS garden, morning: Milo drinks the fire resistance potion (drink pose), the valley and the carpeted village on the far hill | **picture + line clue**: every gift is on the piglin barter table |
+| 7.5-11.1 | test 1 (the gifts) | L03 N: "OBSIDIAN. STRING. ENDER PEARLS. A potion that makes you FIREPROOF." | S04 MS POV: three quick mornings, one gift each (obsidian, string, a stack of 3 pearls), picked up word by word; S05 WS garden, morning: Milo drinks the fire resistance potion (drink pose), the valley and the carpeted village on the far hill | **picture + line clue**: every gift is on the piglin barter table |
 | 11.4-15.9 | test 2 (the legend) | L04 N: "Twenty-five years ago, Grandma gave Grandpa her gold HELMET. With a BLUE stripe." | S06 MS flashback: Grandpa puts on the gold helmet, the lapis stripe readable on "BLUE" | **the key picture plant**: the helmet the piglin will wear |
 | 16.2-21.6 | test 2 (pivot) | L05 N: "Gold keeps you SAFE in the NETHER, she said. He went IN. He never came BACK." | S07 WS flashback: Grandpa walks into the purple; Grandma alone beside it | **line clue**: why gold is safe (piglins leave gold-wearers alone); 25 years = 9,000 nights |
 | 21.9-26.0 | test 3 (the misread) | L06 N: "I keep his gifts in a BARREL. Grandma says he's still TRADING." | S08 POV barrel screen "Grandpa's Gifts": obsidian, crying obsidian, string, pearls, soul sand, gravel, quartz, leather, iron nuggets, blackstone, fire resistance potions; S09 FS POV: Grandma tosses tonight's ingot, a faint piglin snort from the purple | **the barter table in one screen** (players: "that's piglin bartering"); "still trading" is literally true; the snort (sound clue) |
-| 26.3-28.7 | **The want** | L07 N: "So he's ALIVE over there. I KNOW it." | S10 WS: Milo small in front of the portal, lit purple | the misread stated; sympathy |
-| 29.0-31.2 | **A character speaks** | L08 Grandma: "Just ONE, Milo. One's PLENTY." | S11 MS POV: Grandma at the ladder's foot looking at the stack of 64 in his hand | **the subtext line**: one ingot, one barter; more gold could bring it through. **The attentive player gets ahead here (~30 s, 68%)**: Grandpa isn't trading, a piglin is |
-| 31.5-37.1 | **The try** | L09 N: "When she went to BED, I threw in ALL my gold. SIXTY-FOUR. To buy his way HOME." | S12 FS POV: Grandma's feet leave up the ladder, the hatch shuts; turn; the stack arcs into the purple; the hotbar slot empties | his act is the visible cause of what comes next (piglins go after gold) |
-| 37.4-41.0 | dread | L10 N: "Then I sat and WAITED. And something stepped OUT." | S13 WS: Milo sitting on the bed (sit pose); a gold helmet pushes out of the purple, a piglin steps onto the stone, shaking; Grandma's feet come down the ladder at frame left | the picture runs level with the words: "something", not "Grandpa" |
-| 41.3-43.5 | **The reveal (payoff L11)** | L11 N: "It was wearing Grandpa's HELMET." | S14 CU: the piglin, shaking, the blue-striped gold helmet centred on "HELMET" | the game says it: a piglin wears gold, and this gold has the stripe |
-| 43.5-44.4 | **The last beat (hold 0.9 s)** | (no line) | S14 continues: Grandma's ingot sails past its head into the purple; its head turns after the gold. Cut. | she knew; she feeds it; she sends it home before it turns |
+| 26.3-28.1 | **The want** | L07 N: "So he's ALIVE. I KNOW it." | S10 WS: Milo small in front of the portal, lit purple, the gold stack in hand; Grandma walks out of frame left toward the ladder | the misread stated; sympathy |
+| 28.4-30.6 | **A character speaks** | L08 Grandma: "Just ONE, Milo. One's PLENTY." | S11 MS POV: Grandma mid-cellar, 3 blocks away on her way to the ladder, looking at the stack of 64 in his hand | **the subtext line**: one ingot, one barter; more gold could bring it through. **The attentive player gets ahead here (~30 s, 69%)**: Grandpa isn't trading, a piglin is |
+| 30.9-36.5 | **The try** | L09 N: "When she went to BED, I threw in ALL my gold. SIXTY-FOUR. To buy his way HOME." | S12 FS POV: Grandma already climbing the ladder, the hatch shuts on "BED"; turn to the portal 4 blocks away; the stack arcs into the purple on "ALL" and the slot empties on the throw | his act is the visible cause of what comes next (piglins go after gold) |
+| 36.8-40.4 | dread | L10 N: "Then I sat and WAITED. And something stepped OUT." | S13 WS: Milo sitting on the bed (sit pose); a gold helmet pushes out of the purple, a piglin steps onto the stone, shaking; Grandma's feet come down the ladder on the frame's left edge (camera aimed north-east from behind the bed) | the picture runs level with the words: "something", not "Grandpa" |
+| 40.7-42.9 | **The reveal (payoff L11)** | L11 N: "It was wearing Grandpa's HELMET." | S14 CU: the piglin, Grandma at the frame's left edge,, shaking, the blue-striped gold helmet centred on "HELMET" | the game says it: a piglin wears gold, and this gold has the stripe |
+| 42.9-43.8 | **The last beat (hold 0.9 s)** | (no line) | S14 continues: Grandma, in frame at the left edge, tosses tonight's ingot; it sails past its head into the purple; its head turns after the gold. Cut. | she knew; she feeds it; she sends it home before it turns |
 
 ## The second the viewer gets ahead
 - A barter-savvy player: S04/S08 (obsidian, string, pearls, fire resistance, soul sand, gravel, quartz) at 8-26 s
@@ -61,7 +61,7 @@ Timings estimated at Pip's natural pace (~2.9 words a second plus the `<short pa
 | "Gold keeps you SAFE in the NETHER" | L05, S07, 16-18 s | a grandma's saying | literally true: piglins leave gold-wearers alone, and pick gold up |
 | the barrel screen | L06, S08 (picture), 22-24 s | Grandpa's gifts, kept with love | the whole barter list on one screen |
 | "he's still TRADING" | L06, S09, 24-26 s | Grandpa is alive and busy | true of the piglin, not of Grandpa |
-| the snort from the portal | S09 (sound), 25 s | the portal's noise | a piglin waits on the other side |
+| the snort from the portal | S09 (sound, clearly audible over the hum), 25 s | the portal's noise | a piglin waits on the other side |
 | "Just ONE, Milo. One's PLENTY." | L08, S11, 29-31 s | Grandma being careful with gold | she knows one ingot buys one barter, and a stack could pull the trader through |
 | the stack of 64 | L09, S11-S12 (hotbar 64), 31-37 s | a ticket home for Grandpa | piglins go after gold: the cause of S13 |
 | Milo's golden boots | S05, S10, S13 (picture, unremarked) | a kid in Grandma's spare gold | her rule, "gold keeps you safe": she has always known what's over there |
@@ -133,7 +133,9 @@ wearing gold armour it picked up is vanilla.
 No intimate, obedient or innuendo reads. Every line at full volume; L10-L11 slow down with nerves, never whisper.
 
 ## Delivery plan
-- Pip's voice (cast `narrator`, Leda), bubbly and fast, full volume all the way; proud in L01-L04, the energy drops
+- Pip's recipe (voices/recipes/pip.md): Leda on gemini-3.8-flash-lite-tts, single-speaker requests r1 and r2 with the
+  recipe's direction verbatim and identical; Grandma alone in r3. The per-line `note`s below are for the take check,
+  not sent. Bubbly and fast, full volume all the way; proud in L01-L04, the energy drops
   once on "He never came BACK", back up for L06-L07 ("I KNOW it" defiant), sneaky-fast L09, then slower nerves in
   L10-L11 with no whisper. One extra voice: Grandma (Gacrux), L08 only, on screen.
 - Pauses: `<short pause>` before "He never came back" (L05), after "Milo" (L08), before "And something stepped out"
@@ -143,6 +145,6 @@ No intimate, obedient or innuendo reads. Every line at full volume; L10-L11 slow
 - Quotable line: "Grandma says he's still TRADING."
 
 ## Word count and length
-115 spoken words (11 lines; 10 narrator, 1 Grandma). Estimated ~43.5 s of speech with gaps and pauses, ~44.4 s with
-the hold: inside 35-45 s, near the top; if the take runs long, cut "over there" from L07 and "Twenty-five years ago" can
+113 spoken words (11 lines; 10 narrator, 1 Grandma). Estimated ~42.9 s of speech with gaps and pauses, ~43.8 s with
+the hold: inside 35-45 s, near the top; if the take runs long, "Twenty-five years ago" can
 become "Long ago" (but the number is worth keeping: it is the 9,000).
