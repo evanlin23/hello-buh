@@ -87,5 +87,6 @@ def take(scene, lines, cs):
     return segs
 
 
-tts.take = take
-tts.run_story(pathlib.Path(sys.argv[1]), sys.argv[3].split(",") if "--only" in sys.argv else None)
+if __name__ == "__main__":
+    tts.take = take
+    tts.run_story(pathlib.Path(sys.argv[1]), sys.argv[3].split(",") if "--only" in sys.argv else None)

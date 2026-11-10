@@ -57,9 +57,10 @@ def resplit(sd):
             for w in re.split(r"[\s-]+", t):
                 n = norm(w)
                 if n:
-                    out.append({"thirtyseven": "37", "twelve": "12", "porkchops": "pork"}.get(n, n))
+                    out.append({"thirtyseven": "37", "twelve": "12", "porkchops": "pork", "id": "i", "nine": "9", "thousand": "000"}.get(n, n))
             return out
-        same = lambda a, b: a == b or (len(a) > 2 and len(b) > 2 and (a.startswith(b[:3]) or b.startswith(a[:3])))
+        # (a compound heard as two words matches either half: "doghouse" ~ "dog", "house")
+        same = lambda a, b: a == b or (len(a) > 2 and len(b) > 2 and (a.startswith(b[:3]) or b.startswith(a[:3]) or a in b or b in a))
         W = [w[0] for w in words]
         spans, ptr = [], 0
         for _, _, t in r['lines']:
@@ -73,6 +74,8 @@ def resplit(sd):
             lim = spans[k + 1][0] if k + 1 < len(spans) else len(W)
             cand = [i for i in range(st, lim) if same(W[i], tk[-1])]
             en = min(cand, key=lambda i: abs(i - (st + len(tk) - 1))) if cand else min(lim, st + len(tk)) - 1   # the match nearest the line's length
+            while en + 1 < lim and same(W[en + 1], tk[-1]) and words[en + 1][1] - words[en][2] < 0.15:
+                en += 1   # a compound heard as two words ("dog house"): end on its second half
             spans[k][1] = en
         # cut at the quietest 10 ms between one line's last word and the next line's first (Whisper's word ends run
         # early on fast speech: a cut at its timestamp clipped "times" in Good Boy's L01)
@@ -83,7 +86,14 @@ def resplit(sd):
             f = 240; m = (i1 - i0) // f
             e = np.abs(x[i0:i0 + m * f]).reshape(m, f).mean(1)
             return (i0 + int(np.argmin(e)) * f + f // 2) / SR
-        cutsq = [quiet(words[spans[k][1]][2] - 0.05, words[spans[k + 1][0]][1] + 0.1) for k in range(len(spans) - 1)]
+        # the quietest point that still leaves >= 200 ms after the last word and >= 80 ms before the next (the rule); only
+        # when the gap is too short for that, the quietest point anywhere between them
+        def qcut(e, s_):
+            for tail, lead in ((0.2, 0.08), (0.12, 0.06)):
+                if s_ - lead - (e + tail) >= 0.01:
+                    return quiet(e + tail, s_ - lead)
+            return quiet(e - 0.05, s_ + 0.1)
+        cutsq = [qcut(words[spans[k][1]][2], words[spans[k + 1][0]][1]) for k in range(len(spans) - 1)]
         segs = []
         for k, (a, b) in enumerate(spans):
             # margins (owner rule, docs/stories.md): >= 80 ms before the first word, >= 200 ms after the last, but never

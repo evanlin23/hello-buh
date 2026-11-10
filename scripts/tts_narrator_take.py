@@ -16,7 +16,7 @@ story = json.loads((sd / "story.json").read_text())
 cs = tts.resolve(story.get("cast"))
 nid = next(k for k, c in cs.items() if c.get("role") == "narrator")
 nl = [l for l in story["lines"] if (l.get("who") or nid) == nid]
-pref = story.get("narrator_prefix") or f"[{cs[nid]['profile']}; quick, about four and a half words a second, one breath per sentence, no pauses inside a sentence]"
+pref = story.get("narrator_prefix") or f"[{cs[nid]['profile']}]"   # Pip's recipe: the profile verbatim (voices/recipes/pip.md)
 text = pref + "\n\n" + "\n\n".join(l.get("say") or tts.spoken(l["text"]) for l in nl)
 raw = tts.CACHE / f"narr_{hashlib.sha1(json.dumps([text, cs[nid]['voice'], model]).encode()).hexdigest()[:16]}.wav"
 if raw.exists():
@@ -27,6 +27,25 @@ else:
     tts.CACHE.mkdir(parents=True, exist_ok=True)
     tts.pcm(["-y", "-f", "f32le", "-ar", str(tts.SR), "-ac", "1", "-i", "-", str(raw)], x.astype(np.float32).tobytes())
 print(f"narrator take {len(x) / tts.SR:.1f} s ({raw.name})")
+if "--raw" in sys.argv:   # hand the takes to voice_check.py --resplit (the safe quiet-point cut, docs/voices.md "The cut")
+    (sd / "voice").mkdir(exist_ok=True)
+    x.astype(np.float32).tofile(sd / "voice" / "narr_take.f32")
+    reqs = [{"id": "narr", "lines": [[nid, l["id"], l.get("say") or tts.spoken(l["text"])] for l in nl]}]
+    for r in story.get("requests", []):
+        if nid in r["speakers"]:
+            continue
+        ls = [l for l in story["lines"] if l["id"] in r["lines"]]
+        group = [((l.get("who")), l["id"], l.get("say") or tts.spoken(l["text"]), l.get("direction", "")) for l in ls]
+        text = tts.prompt(r.get("direction", ""), group, cs)
+        voices = {cs[w]["name"]: cs[w]["voice"] for w, _, _, _ in group}
+        rp = tts.CACHE / f"{hashlib.sha1(json.dumps([text, voices]).encode()).hexdigest()[:16]}.wav"
+        if not rp.exists():
+            tts.take(r.get("direction", ""), group, cs)
+        y = np.frombuffer(tts.pcm(["-i", str(rp), "-f", "f32le", "-"]), np.float32)
+        y.astype(np.float32).tofile(sd / "voice" / f"{r['id']}_take.f32")
+        reqs.append({"id": r["id"], "lines": [[w, lid, t] for w, lid, t, _ in group]})
+    (sd / "voices.json").write_text(json.dumps(reqs, indent=1))
+    sys.exit(0)
 x16 = np.interp(np.arange(0, len(x), tts.SR / 16000), np.arange(len(x)), x).astype(np.float32)
 r = R.MODEL.transcribe(x16, language="en", fp16=False, word_timestamps=True)
 heard = [(n, w["start"], w["end"]) for s in r["segments"] for w in s["words"] for n in R.norm(w["word"])]
