@@ -1,9 +1,9 @@
 [
  {
   "id": "n1",
-  "direction": "Read this funny short film narration, fast, bright and upbeat. N: a young guy telling his friends a ridiculous story; bright, quick, goofy, excitable, easily distracted.",
+  "direction": "Read this funny story fast, bright and energetic, full volume, excited; not whispery, breathy or soft. N: a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft.",
   "speakers": {
-   "N": "Puck"
+   "N": "Leda"
   },
   "lines": [
    [
@@ -14,7 +14,7 @@
    [
     "N",
     "L02",
-    "Every time I get twelve blocks away... boom. Right next to him again."
+    "Every time I get twelve blocks away, boom. Right next to him again."
    ],
    [
     "N",
@@ -34,15 +34,15 @@
    [
     "N",
     "L07",
-    "And there's this dog. Wherever I go... it's already there!"
+    "And there's this dog. Wherever I go, it's already there!"
    ]
   ]
  },
  {
   "id": "n2",
-  "direction": "Read this funny short film narration, fast and upbeat, then excited. N: a young guy telling his friends a ridiculous story; bright, quick, goofy, excitable, easily distracted.",
+  "direction": "Read this funny story fast, bright and energetic, full volume, excited; not whispery, breathy or soft. N: a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft.",
   "speakers": {
-   "N": "Puck"
+   "N": "Leda"
   },
   "lines": [
    [
@@ -63,7 +63,7 @@
    [
     "N",
     "L13",
-    "And I just... lost it."
+    "And I just lost it!"
    ]
   ]
  },
@@ -78,11 +78,6 @@
     "Sam",
     "L03",
     "There you are, buddy!"
-   ],
-   [
-    "Sam",
-    "L09",
-    "Door's open, buddy!"
    ],
    [
     "Sam",

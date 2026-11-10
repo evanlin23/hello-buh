@@ -17,9 +17,9 @@
   "N": {
    "role": "narrator",
    "name": "me",
-   "voice": "Puck",
+   "voice": "Leda",
    "color": "#FFFFFF",
-   "profile": "a young guy telling his friends a ridiculous story; bright, quick, goofy, excitable, easily distracted",
+   "profile": "a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft",
    "on_screen": "POV at a wolf's eye height; in camera shots, a tamed wolf with a red collar"
   },
   "Sam": {
@@ -37,14 +37,14 @@
    "speakers": [
     "N"
    ],
-   "direction": "Read this funny short film narration, fast, bright and upbeat."
+   "direction": "Read this funny story fast, bright and energetic, full volume, excited; not whispery, breathy or soft."
   },
   {
    "id": "n2",
    "speakers": [
     "N"
    ],
-   "direction": "Read this funny short film narration, fast and upbeat, then excited."
+   "direction": "Read this funny story fast, bright and energetic, full volume, excited; not whispery, breathy or soft."
   },
   {
    "id": "s1",
@@ -62,7 +62,7 @@
   },
   {
    "id": "L02",
-   "text": "Every time / I get TWELVE / blocks away... / BOOM. / Right next / to him AGAIN.",
+   "text": "Every time / I get TWELVE / blocks away, / BOOM. / Right next / to him AGAIN.",
    "request": "n1"
   },
   {
@@ -88,7 +88,7 @@
   },
   {
    "id": "L07",
-   "text": "And there's / this DOG. / Wherever / I go... / it's ALREADY / there!",
+   "text": "And there's / this DOG. / Wherever / I go, / it's ALREADY / there!",
    "request": "n1",
    "look": false
   },
@@ -99,7 +99,7 @@
   },
   {
    "id": "L10",
-   "text": "SKELETONS / run from ME. / ME!",
+   "text": "SKELETONS / run from ME!",
    "request": "n2"
   },
   {
@@ -116,7 +116,7 @@
   },
   {
    "id": "L13",
-   "text": "And I just... / LOST it.",
+   "text": "And I just / LOST it!",
    "request": "n2"
   },
   {

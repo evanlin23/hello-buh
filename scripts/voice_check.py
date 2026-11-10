@@ -67,26 +67,37 @@ def resplit(sd):
         x16 = subprocess.run(["ffmpeg", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-ar", "16000", "-f", "f32le", "-"], input=x.tobytes(), capture_output=True).stdout
         res = m.transcribe(np.frombuffer(x16, np.float32).copy(), language='en', fp16=False, word_timestamps=True)
         words = [(norm(w['word']), w['start'], w['end']) for s in res['segments'] for w in s['words'] if norm(w['word'])]
-        counts = [len([w for w in re.split(r"\s+", t) if norm(w)]) for _, _, t in r['lines']]
-        # numbers: "thirty-seven" is one script word but Whisper writes "37": count script words as Whisper would
-        counts = [c - sum(1 for w in re.split(r"\s+", t) if '-' in w and norm(w.replace('-', '')).isalpha() and len(w) > 6 and w.lower().split('-')[0] in ('twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety')) * 0 for c, (_, _, t) in zip(counts, r['lines'])]
-        if sum(counts) != len(words):
-            print(f"{r['id']}: script {sum(counts)} words, Whisper {len(words)}: scaling the split")
-        # the cuts: the len(lines) - 1 longest gaps between words (lines are separated by the longest pauses), kept when
-        # every line gets about its word count; else by word count (a model's added laugh shifts counts, not gaps)
-        n = len(counts)
-        gaps = sorted(range(1, len(words)), key=lambda i: words[i][1] - words[i - 1][2], reverse=True)[:n - 1]
-        idx = sorted(gaps)
-        got = [b - a for a, b in zip([0] + idx, idx + [len(words)])]
-        if len(idx) == n - 1 and all(abs(g - c) <= max(2, c // 2) for g, c in zip(got, counts)):
-            bounds = [(words[i - 1][2] + words[i][1]) / 2 for i in idx]
-        else:
-            scale = len(words) / max(1, sum(counts))
-            bounds, acc = [], 0.0
-            for c in counts[:-1]:
-                acc += c * scale
-                i = max(1, min(len(words) - 1, round(acc)))
-                bounds.append((words[i - 1][2] + words[i][1]) / 2)
+        # align each line by its own words: its first two words' first match after the previous line, and its last
+        # word's last match before the next line starts. Words that match no line (a direction read aloud before the
+        # lines, a line dropped from the script but still in a cached take) are left out
+        def toks(t):
+            out = []
+            for w in re.split(r"[\s-]+", t):
+                n = norm(w)
+                if n:
+                    out.append({"thirtyseven": "37", "twelve": "12", "porkchops": "pork"}.get(n, n))
+            return out
+        same = lambda a, b: a == b or (len(a) > 2 and len(b) > 2 and (a.startswith(b[:3]) or b.startswith(a[:3])))
+        W = [w[0] for w in words]
+        spans, ptr = [], 0
+        for _, _, t in r['lines']:
+            tk = toks(t)
+            st = next((i for i in range(ptr, len(W)) if same(W[i], tk[0]) and (len(tk) < 2 or (i + 1 < len(W) and same(W[i + 1], tk[1])))), None)
+            if st is None:
+                st = next((i for i in range(ptr, len(W)) if same(W[i], tk[0])), ptr)
+            spans.append([st, None]); ptr = st + 1
+        for k, (_, _, t) in enumerate(r['lines']):
+            tk, st = toks(t), spans[k][0]
+            lim = spans[k + 1][0] if k + 1 < len(spans) else len(W)
+            cand = [i for i in range(st, lim) if same(W[i], tk[-1])]
+            en = min(cand, key=lambda i: abs(i - (st + len(tk) - 1))) if cand else min(lim, st + len(tk)) - 1   # the match nearest the line's length
+            spans[k][1] = en
+        segs = [(max(words[a - 1][2] + 0.02 if a else 0.0, words[a][1] - 0.08), min(words[b + 1][1] - 0.02 if b + 1 < len(words) else 1e9, words[b][2] + 0.12)) for a, b in spans]
+        for (who, lid, t), (a, b) in zip(r['lines'], segs):
+            seg = x[int(a * SR):int(b * SR)]
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", f"{sd}/voice/{lid}.wav"], input=seg.astype(np.float32).tobytes(), check=True)
+        print(f"{r['id']}: {len(r['lines'])} lines at {[(round(a, 2), round(b, 2)) for a, b in segs]}")
+        continue
         cuts = [0.0] + bounds + [len(x) / SR]
         for (who, lid, t), a, b in zip(r['lines'], cuts, cuts[1:]):
             seg = x[int(a * SR):int(b * SR)]
