@@ -67,6 +67,12 @@ Write the ending first (the reveal frame), then:
 
 ## 4. The script (stories/<name>/story.json, version 2)
 
+**The deliverable is story.json itself, committed on your branch** (lead, 2026-11-10: the writers' fixed scripts lived
+only in `stories/<name>/script_vNext.md` while story.json kept the old lines; voicing would have voiced the wrong
+script). Draft in markdown if it helps, but every revision round ends with the lines written into story.json (`text`,
+`say`, `who`, `direction`) and committed after the markdown. A `script*.md` is notes only: `./hb check` warns and
+`./hb voice` refuses (without `--force`) while a script*.md is newer than story.json and its last table's lines differ.
+
 - Lines in the house format (` / ` chunks of 2-3 words, CAPS key words), about 90-120 spoken words for 35-45 s
   (story_runaway, the owner's benchmark, is 36.5 s; `./hb pace` warns over 45 s; story_good_boy's 19 lines ran 60 s).
 - `"payoff": "<line id>"`: the line the twist lands on (the reveal). `./hb pace` checks a sound hit and a picture change
@@ -112,14 +118,15 @@ Run these three independently (in parallel if you can spawn agents):
 3. **`story-continuity`** in **pre-build mode**: the bible, the shots and the script against each other, and the
    story against the world canon (docs/world/canon.md: the place, the day, the recurring characters, the easter egg).
 
-Apply the must-fixes, re-run only what failed. Round 2 only confirms round 1's must-fixes (a new finding is a
+Apply the must-fixes **to story.json** (not to a markdown copy), re-run only what failed. Round 2 only confirms round 1's must-fixes (a new finding is a
 should-fix unless it breaks an owner rule). If it still fails after round 2, go back to step 1 with the next premise:
 don't build a weak story.
 
 ## 7. Hand-off to the build
 
 - Claim the premise in `docs/stories.md`'s premise bank (`building: <worker>`), or add it as a new row.
-- Commit `stories/<name>/story.json`, `bible.md` and the review notes on your branch.
+- Commit `stories/<name>/story.json` (the script: the build and the voice read only this), `bible.md` and the review
+  notes on your branch. `./hb check story_<name>` before the hand-off shows no "script drift" warning.
 - Voice: Gemini via `scripts/tts.py` + `scripts/align.py` (docs/voices.md; cast from `voices/cast.json`) from the `requests` (see `docs/story_craft.md` section 6 for
   the mapping), then check each take's duration and emphasis; or `scripts/voice.py` for a narrator-only v1 story.
 - Build per `docs/stories.md` "Make one" (the stunt from `stunts/_story_template.js`, or the movie engine's camera

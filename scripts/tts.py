@@ -1527,7 +1527,7 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     only = a[a.index("--only") + 1].split(",") if "--only" in a else None
     p = pathlib.Path(a[0])
-    RERUN[0] = (f"./hb voice {a[0].rstrip('/')}" + (f" --only {','.join(only)}" if only else "")) if p.is_dir() else "python3 scripts/tts.py " + " ".join(a)
+    RERUN[0] = os.environ.get("HB_RERUN") or (f"./hb voice {a[0].rstrip('/')}" + (f" --only {','.join(only)}" if only else "")) if p.is_dir() else "python3 scripts/tts.py " + " ".join(a)
     try:
         if p.is_dir():
             relock = dict(kv.split("=", 1) for kv in a[a.index("--relock") + 1].split(",")) if "--relock" in a else None
