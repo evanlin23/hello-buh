@@ -138,6 +138,18 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (told the s3 sample he liked had every gap cut to ~0.06 s): "its fine to have those cuts, i didnt
+  even notice".** For the narrator, silences inside a take are shortened to 0.12 s (tts.shorten_pauses, cast
+  `pause_cap`): only the silent middle, never within 40 ms of a word, crossfaded. Words are never cut or spliced; a
+  take with a wrong, clipped, breathy or whispered word is still re-taken.
+- **Owner, 2026-11-10 (choosing the narrator from the voice-match samples): "s3_gemini_orus.mp3 is good"; then, after
+  hearing it at 1.30x-1.60x: "we can just do 1.45 thats fine".** The narrator is `narrator_roblox` (the default
+  `narrator`): Gemini Orus on gemini-3.8-flash-tts with the voice-match direction, and every take played tempo 0.95
+  then 1.45x faster by resampling (pitch and formants rise with it), the way the Roblox-story voice is ElevenLabs Adam
+  sped up (docs/voice_search.md "Closest match"). This is the one owner-approved exception to "never pitch-shift a
+  voice", for the narrator's speed-up only; it supersedes "the voice's natural speed (not a sped-up file)". The
+  speed-up goes on the whole raw take before the trim, the slices and the take gate, so the gate judges the pauses as
+  heard; a take with pauses is re-taken, never cut.
 - **Owner, 2026-11-10: "I have a lot of pauses for like dramatics, but the ones i've watched the narrator just yaps on
   and on".** No dramatic pauses anywhere: the narrator talks continuously from the first frame to the cut, sentence
   after sentence, the way the reference Short does; drama comes from the words and the picture, never from silence.

@@ -19,8 +19,9 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
 
 | id | name (what Gemini sees) | Gemini voice | caption colour | direction (`profile`) | Kokoro fallback | from |
 |---|---|---|---|---|---|---|
-| `narrator` | Narrator | Leda (no post) | `#FFFFFF` white | Pip's voice: a bubbly kid of about nine, fast, bright, energetic; not whispery | am_adam | Dog on the Hill v3 (owner: "a lot a lot better" than kid Puck) |
-| `pip` | Pip | Leda | `#FFFFFF` white | Pip, Dog on the Hill's kid narrator (kept: the owner liked it) | am_adam | Dog on the Hill v3 |
+| `narrator` | Narrator | **Orus, tempo 0.95 + rate 1.45** (gemini-3.8-flash-tts, locked) | `#FFFFFF` white | the Roblox-story narrator: a deep-voiced guy in his twenties telling a crazy true story, first person, punchy, no gaps (= `narrator_roblox`) | am_adam | voice match, owner 2026-11-10: "s3_gemini_orus.mp3 is good" |
+| `narrator_roblox` | Narrator | Orus, tempo 0.95 + rate 1.45 | `#FFFFFF` white | the same entry under its own name (recipe: voices/recipes/narrator_roblox.md) | am_adam | out/voice_match/s3 |
+| `pip` | Pip | Leda | `#FFFFFF` white | Pip, Dog on the Hill's kid narrator (the default narrator until 2026-11-10; a named alternative now) | am_adam | Dog on the Hill v3 |
 | `puck_kid` | Narrator (kid Puck, alt) | Puck | `#FFFFFF` white | a twelve-year-old boy telling his friends a funny story (the alternative narrator) | am_adam | Good Boy audition |
 | `storyteller` | Storyteller | Despina | `#D9C8FF` pale lilac | a woman in her thirties telling a friend a story late at night, low and close, plain, never an announcer | bf_emma | the old narrator (was Erinome) |
 | `milo` | Milo | Achird | `#4FD8E6` Steve's cyan | Milo, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Milo |
@@ -190,6 +191,30 @@ usual. Stories without it are voiced exactly as above (the prompt and the cache 
   0.57-0.99 s, evened out by the margins; continuous, they are the take's own 0.38-0.74 s (the same numbers measured in
   the raw take), and the 8-line beat is 1.35 s shorter.
 
+## The Roblox narrator (owner, 2026-11-10: "s3_gemini_orus.mp3 is good"; "we can just do 1.45 thats fine")
+
+The default `narrator` (= `narrator_roblox`) is Gemini **Orus** on gemini-3.8-flash-tts, directed as a deep-voiced guy
+telling his own crazy story with no gaps, and **played tempo 0.95 then 1.45x faster by resampling**. Pitch, formants
+and tempo all rise by 1.45, with no pitch correction. That is how the Roblox-story voice is made: it measures as
+ElevenLabs Adam sped up ~1.45x (docs/voice_search.md "Closest match"). It is the one exception to "never pitch-shift a
+voice", for this narrator's speed-up only (STANDARDS Voice 1). The recipe and the numbers are in
+`voices/recipes/narrator_roblox.md`.
+
+- **Where:** cast `tempo` and `rate`. `tts.speed_up` runs on the WHOLE raw take, straight after the cache or the request,
+  before `trim_take`, `shape`, `level`, Whisper, the take gate and the line slices. So the gate judges every pause as
+  the viewer hears it, the beat file is the sped-up take, and the slices tile it. Alignment (align.py, story_track)
+  runs on those final wavs as before. In the per-line path (`take()`), the speed-up also runs before the cut.
+- **No splicing.** A take with pauses over the gate's limits (0.3 s inside a line, 0.35 s between lines, sped-up time)
+  is re-taken with the gate's fix, never cut. The s3 sample's `silenceremove` gap cut is not part of the pipeline
+  (the recipe has the numbers and the risk).
+- **One speed per request:** tts.py refuses a request whose speakers have different tempo/rate. A character is voiced
+  in its own request at natural speed. With one narrator saying every quote, that is rare.
+- **Recast:** an already-voiced story whose voice.json locks the narrator to the old model (Pip's 3.8-flash-lite) is
+  re-locked to the cast's model automatically, and ALL its narrator lines are re-taken. Old and new voices never mix.
+- **voice.json:** each beat records `tempo` and `rate`.
+- Test: `python3 -m unittest scripts/test_continuous.py` (class `SpeedUp`). Offline replay of the s3 take through this
+  path: `scripts/voice_match/replay_s3.py` (no requests).
+
 ## Speaker check (`scripts/speaker_check.py`)
 
 For each line's wav: a speaker embedding (Resemblyzer's GE2E encoder: 17 MB, CPU, ~0.2 s a line with torch on 2
@@ -353,8 +378,8 @@ What made the biggest difference, largest first:
    `## THE SCENE` / `### DIRECTOR'S NOTES` / `#### TRANSCRIPT`) takes scored 6-9. The 2.5-flash takes we already had
    scored 3-8. `tts.py` now tries 3.1 first, with 2.5-flash as the fallback. The headings were never read aloud
    (3 takes checked with Whisper; the listener flagged none in 9).
-2. **Never pitch-shift a voice.** The Kid's +2 semitones (`asetrate`) came last every time ("chipmunk", "warble",
-   "metallic"). Unshifted Laomedeia was heard as a real child. If a younger sound is really needed (the narrator),
+2. **Never pitch-shift a voice** (one owner-approved exception: the Roblox narrator's 1.45x speed-up, below). The
+   Kid's +2 semitones (`asetrate`) came last every time ("chipmunk", "warble", "metallic"). Unshifted Laomedeia was heard as a real child. If a younger sound is really needed (the narrator),
    use `rubberband=pitch=...:formant=preserved`. It scored 7 against 5-6 for `asetrate` or a plain rubberband
    shift. The unshifted voice is still the most real (10).
 3. **Write the direction as a scene, not as adjectives.** The same lines with the old terse profile ("calm, clear,

@@ -1,17 +1,36 @@
 {
- "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ, or a tempo/formant-preserving rubberband shift for the narrator; never asetrate (docs/voices.md \"Realism\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\"). `model` (optional) locks the character to one TTS model: tts.py never voices it with another (docs/voices.md \"Drift gate\": a different model is a different-sounding person).",
+ "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ only; never asetrate (docs/voices.md \"Realism\"). `tempo` and `rate` (optional; the Roblox narrator only, owner-approved 2026-11-10) speed up the WHOLE raw take before anything else: `tempo` = atempo (pitch kept), then `rate` = a resample that raises pitch, formants and tempo together (docs/voices.md \"The Roblox narrator\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\"). `model` (optional) locks the character to one TTS model: tts.py never voices it with another (docs/voices.md \"Drift gate\": a different model is a different-sounding person).",
  "narrator": {
   "name": "Narrator",
-  "voice": "Leda",
+  "voice": "Orus",
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
-  "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
+  "profile": "A deep-voiced American guy in his twenties telling a crazy true story from his own life, first person, straight into a phone mic; confident, punchy and matter-of-fact, every sentence driven forward with no gaps between sentences, a little smug, landing each line hard on the last word; full, close and clear, not an announcer, not an audiobook, never whispery; steady natural speaking pace",
   "post": "",
+  "tempo": 0.95,
+  "rate": 1.45,
   "fallback": "am_adam",
-  "from": "Pip, Dog on the Hill voices v3: owner 'i kinda like the pip here', 'what about pip? i liked the audio i sent earlier', and vs kid Puck: 'i like this one a lot a lot better'",
-  "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
-  "model_hint": "gemini-3.8-flash-lite-tts, single speaker, all narrator lines in one request separated by blank lines, the profile as a short bracketed prefix (Pip v3); see voices/recipes/pip.md",
-  "model": "gemini-3.8-flash-lite-tts"
+  "from": "owner 2026-11-10: \"s3_gemini_orus.mp3 is good\" (docs/voice_search.md \"Closest match\": the Roblox-story voice is ElevenLabs Adam played ~1.45x faster; Orus x1.45 has its melody and nasal band)",
+  "notes": "The Roblox-story first-person narrator, and the default `narrator` since 2026-11-10. ONE narrator says every line, quotes included (owner), so characters are rarely voiced. tts.py plays every raw take `tempo` 0.95 (atempo, pitch kept) then `rate` 1.45 faster (a resample: pitch, formants and tempo all rise, no pitch correction) BEFORE trimming, slicing or the take gate, so the gate judges the pauses as they are heard; then every silence inside the take is shortened to `pause_cap` 0.12 s, in its silent middle only (owner: \"its fine to have those cuts, i didnt even notice\", on s3's gap cut); words are never cut. The owner-approved exception to \"never pitch-shift a voice\", for this narrator only (docs/STANDARDS.md). Recipe: voices/recipes/narrator_roblox.md",
+  "model_hint": "gemini-3.8-flash-tts, single speaker, the profile as the bracketed prefix, lines separated by blank lines (voices/recipes/narrator_roblox.md)",
+  "model": "gemini-3.8-flash-tts",
+  "pause_cap": 0.12
+ },
+ "narrator_roblox": {
+  "name": "Narrator",
+  "voice": "Orus",
+  "color": "#FFFFFF",
+  "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
+  "profile": "A deep-voiced American guy in his twenties telling a crazy true story from his own life, first person, straight into a phone mic; confident, punchy and matter-of-fact, every sentence driven forward with no gaps between sentences, a little smug, landing each line hard on the last word; full, close and clear, not an announcer, not an audiobook, never whispery; steady natural speaking pace",
+  "post": "",
+  "tempo": 0.95,
+  "rate": 1.45,
+  "fallback": "am_adam",
+  "from": "owner 2026-11-10: \"s3_gemini_orus.mp3 is good\" (docs/voice_search.md \"Closest match\": the Roblox-story voice is ElevenLabs Adam played ~1.45x faster; Orus x1.45 has its melody and nasal band)",
+  "notes": "The Roblox-story first-person narrator, and the default `narrator` since 2026-11-10. ONE narrator says every line, quotes included (owner), so characters are rarely voiced. tts.py plays every raw take `tempo` 0.95 (atempo, pitch kept) then `rate` 1.45 faster (a resample: pitch, formants and tempo all rise, no pitch correction) BEFORE trimming, slicing or the take gate, so the gate judges the pauses as they are heard; then every silence inside the take is shortened to `pause_cap` 0.12 s, in its silent middle only (owner: \"its fine to have those cuts, i didnt even notice\", on s3's gap cut); words are never cut. The owner-approved exception to \"never pitch-shift a voice\", for this narrator only (docs/STANDARDS.md). Recipe: voices/recipes/narrator_roblox.md",
+  "model_hint": "gemini-3.8-flash-tts, single speaker, the profile as the bracketed prefix, lines separated by blank lines (voices/recipes/narrator_roblox.md)",
+  "model": "gemini-3.8-flash-tts",
+  "pause_cap": 0.12
  },
  "storyteller": {
   "name": "Storyteller",
@@ -131,7 +150,7 @@
   "post": "",
   "fallback": "am_adam",
   "from": "Pip, Dog on the Hill voices v3 (owner 2026-11-10: 'i kinda like the pip here'; the 1.5x audition takes were 'too sped up')",
-  "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
+  "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; the Roblox narrator (`narrator`, Orus x1.45) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
   "model_hint": "gemini-3.8-flash-lite-tts worked for Pip (single speaker, all narrator lines in one request, separated by blank lines, the profile as a short bracketed prefix); 3.1-flash-tts with the structured prompt is the default in tts.py",
   "model": "gemini-3.8-flash-lite-tts"
  },
