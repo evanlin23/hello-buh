@@ -35,7 +35,7 @@ module.exports = {
   idleLife: true,
   hideHand: false,
   look: { mood: 'auto', shadows: true, dof: { aperture: 0.85 }, cloudNight: 0.42 },   // docs/look.md: the grade follows the clock
-  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true },
+  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true, punch: ['death'] },   // a punch-in on the death: the payoff's picture change (pace gate)
   expectDeath: true,
 
   async setup (ctx) {
