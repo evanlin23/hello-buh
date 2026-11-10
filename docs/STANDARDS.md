@@ -126,7 +126,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
 6. **A full, funny hotbar**: all 9 slots filled, the story's own tools first, then 1-3 ridiculous items that fit the
-   world (milk buckets, cake, 64 eggs); never contradicting the story, the same between shots. story.json "hotbar".
+   world (milk buckets, cake, 67 eggs); never contradicting the story, the same between shots. story.json "hotbar".
    Check: review (stills), rec_check (hotbar). r:rdc3c4c
 
 ## 3b. Motion (built in, not caught)
