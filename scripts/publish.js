@@ -38,10 +38,27 @@ if (!fs.existsSync(path.join(VID, '.git'))) { console.error(`no videos worktree 
 
 const sh = (cmd, a, opts = {}) => execFileSync(cmd, a, { cwd: ROOT, encoding: 'utf8', ...opts }).trim()
 const sha256 = (f) => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex')
-// the code a video was made with: the last commit before it was rendered (videos made before a
-// commit that fixed something are marked; uncommitted work at render time can't be seen)
-const commitAt = (file) => sh('git', ['log', '-1', '--format=%H', `--until=${fs.statSync(file).mtime.toISOString()}`, 'main'])
+const quiet = (cmd, a) => { try { return execFileSync(cmd, a, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() } catch (e) { return null } }
+// the code a video was made with:
+// - rendered on Actions (scripts/render_on_actions.sh --fetch wrote out/<name>.render.json): the commit the run
+//   rendered, on its render/<name> branch (it carries the stunt as recorded, uncommitted edits included)
+// - rendered here: the last commit of the branch checked out (HEAD, not main: a branch's stunt isn't on main
+//   yet, and `git show <main commit>:stunts/<name>.js` failed) from before the render; uncommitted work at
+//   render time can't be seen
 const head = sh('git', ['rev-parse', 'HEAD'])
+const headBranch = quiet('git', ['rev-parse', '--abbrev-ref', 'HEAD']) || 'HEAD'
+function codeOf (name, mp4) {
+  const side = path.join(ROOT, 'out', `${name}.render.json`)
+  if (fs.existsSync(side)) {
+    try {
+      const r = JSON.parse(fs.readFileSync(side, 'utf8'))
+      if (r.commit && r.sha256 === sha256(mp4) && quiet('git', ['cat-file', '-e', `${r.commit}^{commit}`]) !== null) return { commit: r.commit, branch: r.branch, run: r.run, where: 'actions' }
+      console.error(`${name}: out/${name}.render.json doesn't match out/${name}.mp4 (or its commit isn't here): using HEAD`)
+    } catch (e) { console.error(`${name}: unreadable out/${name}.render.json: ${e.message}`) }
+  }
+  const c = quiet('git', ['log', '-1', '--format=%H', `--until=${fs.statSync(mp4).mtime.toISOString()}`, 'HEAD']) || head
+  return { commit: c, branch: headBranch, where: 'local' }
+}
 
 for (const name of names) {
   const mp4 = path.join(ROOT, 'out', `${name}.mp4`)
@@ -49,7 +66,7 @@ for (const name of names) {
   // GitHub rejects files over 100 MB (GH001): a rejected push leaves a local package commit that blocks
   // every later publish (worker 4, boat_clutch at 106 MB). edit.py caps the bitrate at 18 Mbit/s now.
   if (fs.statSync(mp4).size > 95e6) { console.error(`skip ${name}: out/${name}.mp4 is ${(fs.statSync(mp4).size / 1e6).toFixed(1)} MB (GitHub's limit is 100 MB): re-edit it (scripts/reedit.sh) to get the bitrate cap`); continue }
-  const commit = commitAt(mp4)
+  const code = codeOf(name, mp4), commit = code.commit
   const dir = path.join(VID, 'shorts', name)
   fs.mkdirSync(path.join(dir, 'source'), { recursive: true })
   fs.copyFileSync(mp4, path.join(dir, 'short.mp4'))
@@ -80,7 +97,10 @@ for (const name of names) {
     seen.add(f)
     // the file as of the video's commit (fall back to the working copy for files added since)
     let text
-    try { text = sh('git', ['show', `${commit}:${path.relative(ROOT, f)}`]) + '\n' } catch (e) { text = fs.readFileSync(f, 'utf8') }
+    // (quiet: git's 'fatal: path ... exists on disk, but not in <commit>' is expected for a file added since)
+    const atCommit = quiet('git', ['show', `${commit}:${path.relative(ROOT, f)}`])
+    if (atCommit !== null) text = atCommit + '\n'
+    else { text = fs.readFileSync(f, 'utf8'); console.error(`${name}: ${path.relative(ROOT, f)} is not in ${commit.slice(0, 9)}: packaged the working copy`) }
     fs.writeFileSync(path.join(dir, 'source', path.basename(f)), text)
     for (const m of text.matchAll(/require\('(\.{1,2}\/[^']+)'\)/g)) copySrc(path.resolve(path.dirname(f), m[1].endsWith('.js') ? m[1] : m[1] + '.js'))
   }
@@ -150,7 +170,7 @@ for (const name of names) {
     },
     edit: { ...edit, args: editArgs },
     recording,
-    code: { repo: 'evanlin23/hello-buh', branch: 'main', commit, rendered_at: fs.statSync(mp4).mtime.toISOString(), head_at_publish: head, stunt: `stunts/${name}.js`, source_snapshot: [...seen].map(f => 'source/' + path.basename(f)) },
+    code: { repo: 'evanlin23/hello-buh', branch: code.branch, commit, rendered: code.where, ...(code.run ? { run: code.run } : {}), rendered_at: fs.statSync(mp4).mtime.toISOString(), head_at_publish: head, stunt: `stunts/${name}.js`, source_snapshot: [...seen].map(f => 'source/' + path.basename(f)) },
     rebuild: [
       `git checkout ${commit.slice(0, 12)}`,
       `gunzip -c shorts/${name}/recording.json.gz > work/${name}.rec.json`,
