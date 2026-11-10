@@ -91,3 +91,14 @@ For the owner's morning. Newest at the bottom.
   2. Captions: test one word at a time (Xenost/Ashyyy style) vs 2-3 words?
   3. The kid narrator: settled (Pip).
   4. The audio mix: the lead's call (new mix).
+- 08:00-08:20 UTC:
+  - Merged agent/ergonomics: poses, off-hand items, armour, chest screen, smoke, the warden emerge, `hb map`,
+    `hb rules`, render branches, server robustness. Smoke-tested on a live server and on Actions.
+  - Owner: 4.5 words/s is not a target any more; Pip's natural tempo is the reference, and pace never blocks on rate.
+  - Owner: "voices cut stuff off". The cause is Gemini takes split at Whisper word starts plus splices inside lines.
+    New cutting rules, scripts/voice_edges.py, and pace blocks a line cut by the end or overlapping the next.
+    The speakers agent is making `./hb voice` cut safely, with a listening check. Good Boy and Dog on the Hill are
+    re-cutting from their raw takes.
+  - Merged sets round 2 (e99250d): a builder's fit (retaining walls, stairs, natural edges; no stepped pyramids),
+    whole-layout site choice, the floating tower fixed, a tavern, windmill and dock, and run.sh's lock plus per-run
+    log (no more server collisions). Sent the owner the before/after.
