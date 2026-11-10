@@ -22,6 +22,12 @@ Checks (ranked by how often reviews flagged them):
                have flowed (a source with air beside it, water over air) near the camera (scripts/rec_world.js).
   5. vanilla   digs faster than the held tool allows (dig/dig_end marks), mobs faster than vanilla, the player
                faster than sprint-jumping outside cuts.
+  6-9. the owner's notes (2026-11-10), from `./hb owner` (lib/hb/owner.js; --no-owner skips them):
+     flat      a story shot whose visible world is mostly a flat cleared plain (and the set's footprint and relief)
+     subject   a line names a subject (lines[].look, or TORCH / MOM / LIBRARIAN...) and the camera isn't on it
+     sync      an action before the word that announces it, a fall with no cause, "never X" over X
+     glitch    doors moving by themselves, the player stuck on a block, camera jitter / one-tick snaps / stutter,
+               fog / night / rain the story promises and the recording lacks
 """
 import argparse
 import contextlib
@@ -156,6 +162,7 @@ def main():
     ap.add_argument("--story-dir", help="stories/<name> with voice/voice.json, for the caption times (default: the edit's `story`)")
     ap.add_argument("--radius", type=int, default=16, help="set check: blocks from the camera (default 16)")
     ap.add_argument("--no-world", action="store_true", help="skip the set check (chunk scan, the slow part)")
+    ap.add_argument("--no-owner", action="store_true", help="skip the owner-note checks (./hb owner; hb check runs them itself)")
     ap.add_argument("--package", help="a videos-branch package (shorts/<name>): its recording.json.gz, source/<name>.js and the "
                     "edit it was published with (metadata.json), for checking published Shorts")
     a = ap.parse_args()
@@ -686,6 +693,32 @@ def main():
         add("WARN", "vanilla", j, f"the player moves {hd * 20:.1f} blocks/s on the ground for 0.4s (sprint-jumping tops out near 7.1): "
             f"a camera dolly faster than a player can run", tick=i)
 
+    # ---------------------------------------------------------------- 6-9. the owner's notes (./hb owner, lib/hb/owner.js)
+    owner_note = ""
+    if not a.no_owner:
+        cmd = ["node", str(HERE / "hb"), "owner", a.stunt, "--rec", str(rec_p.resolve()), "--json"]
+        if a.stunt_file:
+            cmd += ["--stunt-file", str(pathlib.Path(a.stunt_file).resolve())]
+        if a.story_dir:
+            cmd += ["--story", str(pathlib.Path(a.story_dir).resolve())]
+        res = subprocess.run(cmd, capture_output=True, text=True, cwd=HERE)
+        try:
+            ow = json.loads((res.stdout or "").strip().splitlines()[-1])
+        except Exception:
+            ow = None
+        if not ow or ow.get("error"):
+            owner_note = f"owner checks could not run: {((ow or {}).get('error') or (res.stderr or '').strip().splitlines()[-1:] or ['?'])}"
+        else:
+            for f in ow.get("findings", []):
+                if f["level"] not in ("BLOCK", "WARN"):
+                    continue
+                tick = f.get("tick")
+                t_short = f.get("out")
+                R.add(f["level"], f["check"], (t_short, tick / 20) if tick is not None else None,
+                      (f"{f['line']}: " if f.get("line") else "") + f["msg"], near(tick) if tick is not None else "")
+            for n_ in ow.get("notes", []):
+                owner_note += f"\n  owner: {n_}"
+
     # ---------------------------------------------------------------- the report
     nb = sum(1 for it in R.items if it[0] == "BLOCK")
     nw = len(R.items) - nb
@@ -700,11 +733,13 @@ def main():
         print("  held-shot check" + caps_note)
     if world_note:
         print("  " + world_note)
+    if owner_note:
+        print("  " + owner_note.strip())
     if cam_spans:
         secs = sum(min(c1, len(P)) - c0 for c0, c1 in cam_spans) / 20
         print(f"  {len(cam_spans)} camera shot(s), {secs:.1f}s: POV checks skipped there"
               f"{' (' + ', '.join(f'{v} {k}' for k, v in skipped.items()) + ')' if skipped else ''}; run LINT=1 node render.js {rec_p} for the cameras")
-    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "edit": -1}
+    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
     for level, title in (("BLOCK", "BLOCKERS"), ("WARN", "WARNINGS")):
         items = sorted([it for it in R.items if it[0] == level], key=lambda it: (order.get(it[1], 9), it[2][0] if it[2] and it[2][0] is not None else -1))
         print(f"\n{title} ({len(items)}):" if items else f"\n{title}: none")
