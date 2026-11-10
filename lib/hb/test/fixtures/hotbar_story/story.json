@@ -1,0 +1,5 @@
+{
+  "title": "hotbar fixture (stunts/_hotbar_test.js, lib/hb/test/hotbar.test.js)",
+  "lines": [],
+  "hotbar": [["iron_pickaxe", 1, true], ["torch", 32], "iron_shovel", ["bread", 12], "water_bucket", ["oak_planks", 64], "milk_bucket", ["egg", 67], "cake"]
+}

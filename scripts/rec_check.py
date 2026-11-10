@@ -139,6 +139,43 @@ class Report:
         self.items.append((level, check, t, msg, near))
 
 
+HOTBAR_MIN = 7        # filled slots (lib/story.js HOTBAR_MIN; docs/STANDARDS.md 3.6)
+HOTBAR_MAX_LOW = 0.2  # the share of first-person frames allowed under it
+
+
+def hotbar_coverage(tl, frames):
+    """The hotbar check (STANDARDS 3.6; owner 2026-11-10: "fill our hotbar with like ridiculous items"): frames is
+    [(source tick, hud_visible)] per output frame. Only frames where the HUD is on screen count (not a camera shot,
+    F1, the death screen or an open container). -> {visible, low, frac, min_filled, first_low}: low = visible frames
+    whose last 'hotbar' mark has fewer than HOTBAR_MIN filled slots (none at all counts as 0)."""
+    bars = sorted((e["t"] / 50, sum(1 for x in (e.get("items") or []) if x)) for e in tl if e.get("event") == "hotbar")
+    bt = [b[0] for b in bars]
+    vis = low = 0
+    mn, first = None, None
+    for tick, shown in frames:
+        if not shown:
+            continue
+        vis += 1
+        k = bisect_right(bt, tick + 1e-9) - 1
+        n = bars[k][1] if k >= 0 else 0
+        mn = n if mn is None else min(mn, n)
+        if n < HOTBAR_MIN:
+            low += 1
+            if first is None:
+                first = tick
+    return {"visible": vis, "low": low, "frac": low / vis if vis else 0.0, "min_filled": mn, "first_low": first}
+
+
+def stunt_hud(stunt, stunt_file):
+    """stunt.hud (false: no HUD anywhere in the Short)."""
+    mod = stunt_file or str(HERE / "stunts" / f"{stunt}.js")
+    try:
+        js = "const m=require(process.argv[1]);process.stdout.write(JSON.stringify(m.hud===undefined?null:m.hud))"
+        return json.loads(subprocess.run(["node", "-e", js, os.path.abspath(mod)], capture_output=True, text=True, check=True, cwd=HERE).stdout or "null")
+    except Exception:
+        return None
+
+
 def camera_shot_spans(stunt, stunt_file, tl):
     """[(tick0, tick1)] where a camera shot (not a POV one) is on screen: each 'shot' mark to the next."""
     marks = [(e["t"] / 50, e.get("name")) for e in tl if e["event"] == "shot"]
@@ -739,6 +776,29 @@ def main():
         add("WARN", "vanilla", j, f"the player moves {hd * 20:.1f} blocks/s on the ground for 0.4s (sprint-jumping tops out near 7.1): "
             f"a camera dolly faster than a player can run", tick=i)
 
+    # ---------------------------------------------------------------- 5b. hotbar (story Shorts, STANDARDS 3.6)
+    # all 9 slots filled (the story's tools, then 1-3 ridiculous items): fewer than 7 on more than 20% of the frames
+    # where the HUD is on screen is a WARN. Not counted: camera shots and F1 (no HUD), the death screen, an open
+    # container (its screen covers the hotbar), stunt.hud === false.
+    if ed.get("story") or a.stunt.startswith("story_"):
+        if stunt_hud(a.stunt, a.stunt_file) is not False:
+            conts, c_on = [], None
+            for e in tl:
+                if e["event"] == "container" and c_on is None:
+                    c_on = e["t"] / 50
+                elif e["event"] == "container_close" and c_on is not None:
+                    conts.append((c_on, e["t"] / 50)); c_on = None
+            if c_on is not None:
+                conts.append((c_on, 1e9))
+            shown = [not (in_f1(st) or in_cam(st) or in_death[j] or any(c0 <= st < c1 for c0, c1 in conts)) for j, st in enumerate(src_tick)]
+            hc = hotbar_coverage(tl, list(zip(src_tick, shown)))
+            if hc["visible"] and hc["frac"] > HOTBAR_MAX_LOW:
+                ft = hc["first_low"]
+                add("WARN", "hotbar", None, f"the hotbar has fewer than {HOTBAR_MIN} filled slots on {hc['frac'] * 100:.0f}% of the "
+                    f"{hc['visible']} first-person frames (at least {hc['min_filled']}; max {HOTBAR_MAX_LOW * 100:.0f}%): fill story.json "
+                    f"\"hotbar\" (the story's tools, then 1-3 ridiculous items: STANDARDS 3.6); a stunt's own ctx.hotbar replaces it "
+                    f"(lib/story.js mergeHotbar keeps the story's items)", tick=ft)
+
     # ---------------------------------------------------------------- 6-9. the owner's notes (./hb owner, lib/hb/owner.js)
     owner_note = ""
     if not a.no_owner:
@@ -802,7 +862,7 @@ def main():
         secs = sum(min(c1, len(P)) - c0 for c0, c1 in cam_spans) / 20
         print(f"  {len(cam_spans)} camera shot(s), {secs:.1f}s: POV checks skipped there"
               f"{' (' + ', '.join(f'{v} {k}' for k, v in skipped.items()) + ')' if skipped else ''}; run LINT=1 node render.js {rec_p} for the cameras")
-    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
+    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "hotbar": 5.5, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
     for level, title in (("BLOCK", "BLOCKERS"), ("WARN", "WARNINGS")):
         items = sorted([it for it in R.items if it[0] == level], key=lambda it: (order.get(it[1], 9), it[2][0] if it[2] and it[2][0] is not None else -1))
         print(f"\n{title} ({len(items)}):" if items else f"\n{title}: none")
