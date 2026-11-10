@@ -221,15 +221,15 @@ module.exports = {
     await run(t2 - c2[3], (k) => {
       tp('z1', -1.8, 1, -2.6 + k * 0.09, 0); tp('z2', -3.2, 1, -3.8 + k * 0.09, 0)
       if (k === 2) ctx.sound('entity.zombie.ambient', 0.5, 0.9)
-      if (k === t2 - c2[3] - 12) put('pip', -4, 1, 6, -131)   // early: a mob back from the park shows ~0.5 s late
+      if (k === t2 - c2[3] - 12) put('pip', -2.5, 1, 5, -137)   // early: a mob back from the park shows ~0.5 s late
     })
     park('z1'); park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
     // ---- L03: morning: Pip walks up with a bone and drops it on the pile; he never looks
     cut('bone', { time: 1000 }); say1('L03')
-    const t3 = L('L03'), b3 = C('L03', 1)
+    const t3 = L('L03'), b3 = Math.max(C('L03', 2), 24) - 4   // a walk, not a dash: ~3.6 blocks over 1+ s
     await run(t3, (k) => {
       const u = ease(k / Math.max(1, b3 + 4))
-      tp('pip', lerp(-4, 0.6, u), 1, lerp(6, 2.0, u), u < 1 ? -131 : 180, u < 1 ? 0 : 25)
+      tp('pip', lerp(-2.5, 0.6, u), 1, lerp(5, 2.0, u), u < 1 ? -137 : 180, u < 1 ? 0 : 25)
       if (k === b3 + 4) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
     })
     // ---- L04: kids throw sticks: Pip throws one past his nose on THROW; he doesn't blink
