@@ -10,7 +10,7 @@
   - S06 a sunset on another day, 12000 (looking east: the ridge in warm side light).
   - S07 inside, 14000. S08-S09 at the gate, 13000 (a typical raid night: "He drinks it at the GATE").
   - S10 inside, another night, 14000.
-  - S11-S14 **the final night**: S11 12400 (at his door), S12 12500 (the drink), S13-S14 13100 (the raid starts 30 s
+  - S11-S14 **the final night**: S11 12300 (at his door), S12 12400 (the drink), S13-S14 13000 (the raid starts 30 s
     after the drink: 600 ticks, while the sky still reads; the S12→S13 cut carries it, the horn marks it).
 - Weather clear throughout.
 - **Numbers the script says:** THIRTY-ONE raids (L01) = 31 totems in the frames (S01) = 31 filled frames of 32.
@@ -33,7 +33,7 @@
 | who | mob / skin | outfit, held item | name tag | where | state changes |
 |---|---|---|---|---|---|
 | Narrator (N), Milo | the bot (POV); default Steve skin if a camera ever shows him (none planned) | empty hand until the end of S11, then the ominous bottle in slot 1 (selected) through S12; empty again after the drink; no armor; hearts full | none | S01 inside the door; S02 palisade top; S03-S04 Grandpa's yard; S05 the square's edge; S06 the slope; S07 beside the chest; S08-S09 behind Grandpa at the gate; S10 the room's corner; S11 the yard; S12-S14 in the gate | drinks the bottle in S12 (consumed: the hand is empty in S13-S14) |
-| Grandpa | player actor, default `zuri` skin (accepted: no default skin looks old; his age is in the voice, the slow walk and the slump) | one main-hand item at a time (the engine draws only the main hand): his crossbow (S02, S05, S06, S08 from "GATE", S09, S14 loading it); a totem in S01; empty at the grindstone (S03-S04) and at the table (S10); an ominous bottle in S07, S08 (drunk) and S11 (undrunk, taken by the boy on "FIGHT"); the crossbow hangs in the frame by his door in S03-S04 and S10-S11 | none | S01 at the totem wall, frame right; S02 on the road walking west; S03-S04 at the grindstone; S05 crossing the square west to east; S06 on the hill path; S07 at the chest; S08-S09 in the gate facing east; S10 standing crouched over the table; S11 crouched against his door frame; S14 2 east and 2 south of the boy, just outside the south gate post, facing east up the road | S10-S11 crouched, head down (sneak pose: actors can't sit); S14 upright, awake, loading his crossbow (sounds + an arm pump); **he never hands the crossbow over** |
+| Grandpa | player actor, default `zuri` skin (accepted: no default skin looks old; his age is in the voice, the slow walk and the slump) | one main-hand item at a time (the engine draws only the main hand): his crossbow (S02, S05, S06, S08 from "GATE", S09, S14 loading it); a totem in S01; empty at the grindstone (S03-S04) and at the table (S10); an ominous bottle in S07, S08 (drunk) and S11 (undrunk, taken by the boy on "FIGHT"); the crossbow hangs in the frame by his door in S03-S04 and S10-S11 | none | S01 at the totem wall, right of centre, hanging frame 31; S02 on the road walking west; S03-S04 at the grindstone; S05 crossing the square west to east; S06 on the hill path; S07 at the chest; S08-S09 in the gate facing up the road; S10 standing crouched over the table; S11 crouched against his door frame; S14 a step ahead on the boy's right, just outside the gate, facing up the road | S10-S11 crouched, head down (sneak pose: actors can't sit); two actor bots with the same skin play him in alternate shots (no pops at cuts); S14 upright, awake, loading his crossbow (sounds + an arm pump); **he never hands the crossbow over** |
 | villagers | 8+ villagers, mixed professions; farmers (straw hats) throw the bread | | none | S05 around the square; S14 none needed (the gate faces out) | none |
 | raiders | 5 pillagers (crossbows), 1 ravager; **no captain, no banners, no torches** (staged; see World) | | none | S13 walking up the road toward the gate from 20 to 16 blocks; S14 16 to 13 blocks | none |
 
@@ -56,9 +56,12 @@
 - S02: Grandpa walks toward camera (west) on the road. S05: he crosses the square left to right.
 - S08-S09: Grandpa in the gate faces east; the narrator is behind him (west). In S09 he turns his head back over his
   right shoulder.
-- S12-S13: the narrator in the gate faces east, the raiders coming up the road ahead. S14: he turns about 25 degrees
-  right (east-south-east): Grandpa 2 blocks east and 2 south of him, just outside the south post, facing east, at
-  about +23 degrees (frame right, MS at 2.8 blocks); the raiders at about -22 degrees (frame left). Keep every gate shot on the south
+- S12: the narrator in the gate looks up the road to the tower as he drinks, then back over his shoulder at Grandpa
+  asleep at his door on "Somebody had to fight" (the raiders arrive while he looks away). S13: the cut back to the
+  road, the horn, a step forward through the gate. S14: he turns 20 degrees right of the raiders; Grandpa walks up
+  past his right shoulder and stops a step ahead on his right, 2.4 blocks off, 10 degrees right of the aim, facing up
+  the road (built: the road leaves the gate east, then bends south-east up onto the plateau to the tower, so "up the
+  road" is east-south-east from the gate). Keep every gate shot on the south
   side of the road (the 180-degree line is the road).
 
 ## The narrator

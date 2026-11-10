@@ -259,7 +259,7 @@
       "place": "road",
       "size": "ews",
       "camera": "pov high on the palisade by the east gate at dusk, looking east down the road, a slow drift",
-      "frame": "fg: the palisade's log tops; subject: Grandpa small on the road walking home toward the gate, alone, crossbow in hand; bg: fields, the river, and on the far ridge the dark pillager tower against the sky. Dusk (12500)."
+      "frame": "fg: the palisade's log tops; subject: Grandpa small on the road walking home toward the gate, alone, crossbow in hand; bg: fields, the river, and on the far ridge the dark pillager tower against the sky. Dusk (12400)."
     },
     {
       "id": "S03",
@@ -331,7 +331,7 @@
       "place": "grandpa_yard",
       "size": "wide",
       "camera": "pov in the yard, 7 blocks from his door, a slow push",
-      "frame": "the final night, visibly different: not at the gate. fg: the yard fence; subject: Grandpa crouched against his door frame, head pitched down, an ominous bottle undrunk in his slack hand; the crossbow hangs in its frame on the wall beside him; on 'FIGHT' the bottle leaves his hand and is in mine (the first-person hand comes up with it at the end of the push); bg: the open gate posts at frame right, the ridge darkening. Dusk (12400)."
+      "frame": "the final night, visibly different: not at the gate. fg: the yard fence; subject: Grandpa crouched against his door frame, head pitched down, an ominous bottle undrunk in his slack hand; the crossbow hangs in its frame on the wall beside him; on 'FIGHT' the bottle leaves his hand and is in mine (the first-person hand comes up with it at the end of the push); bg: the open gate posts at frame right, the ridge darkening. Dusk (12300)."
     },
     {
       "id": "S12",
@@ -339,7 +339,7 @@
       "place": "gate",
       "size": "full",
       "camera": "pov at the open gate, the bottle in hand, raising it to drink",
-      "frame": "fg: the ominous bottle in the first-person hand (HUD: the bottle selected); subject: the open gate posts and the empty road ahead running east into the dusk; bg: the ridge and the tower. The first-person drink starts on 'drank' (1.6 s) and the bottle is gone by 'Somebody'; 'had to FIGHT' as I look back at Grandpa asleep at his door. Dusk (12500)."
+      "frame": "fg: the ominous bottle in the first-person hand (HUD: the bottle selected); subject: the open gate posts and the empty road ahead running east into the dusk; bg: the ridge and the tower. The first-person drink starts on 'drank' (1.6 s) and the bottle is gone by 'Somebody'; 'had to FIGHT' as I look back at Grandpa asleep at his door. Dusk (12400)."
     },
     {
       "id": "S13",
@@ -347,7 +347,7 @@
       "place": "gate",
       "size": "wide",
       "camera": "pov at the gate, still, a slow push up the road; 1.8 s",
-      "frame": "the reveal: the raid horn on frame 1; up the road, 20 blocks out and walking to 16, five pillagers (crossbows) and a ravager coming toward the gate; no torches, no banners (staged: vanilla's wave 1 is 4 pillagers with a bannered captain and ravagers come from wave 3; we show the threat, not wave 1); fg: the gate posts; bg: the fields and the ridge, the sky darkening. Dusk (13100: the raid starts 30 s after the drink; the cut carries it)."
+      "frame": "the reveal: the raid horn on frame 1; up the road, 20 blocks out and walking to 16, five pillagers (crossbows) and a ravager coming toward the gate; no torches, no banners (staged: vanilla's wave 1 is 4 pillagers with a bannered captain and ravagers come from wave 3; we show the threat, not wave 1); fg: the gate posts; bg: the fields and the ridge, the sky darkening. Dusk (13000: the raid starts 30 s after the drink; the cut carries it)."
     },
     {
       "id": "S14",
@@ -355,7 +355,7 @@
       "place": "gate",
       "size": "ms",
       "camera": "pov turns about 25 degrees right, from east to east-south-east",
-      "frame": "subject: Grandpa, waist up (MS, 2.8 blocks), standing 2 blocks east and 2 south of the boy, just outside the south gate post, awake, his own crossbow in hand, eyes on the road; he loads it (the crossbow loading sounds, an arm pump) and glances at the camera on 'YOU'; at about +23 degrees, frame right; bg (frame left, about -22 degrees): the raiders 13-16 blocks up the road, the ravager biggest. Cut 0.3 s after 'kid'. Dusk (13100)."
+      "frame": "subject: Grandpa, waist up (MS, 2.8 blocks), standing 2 blocks east and 2 south of the boy, just outside the south gate post, awake, his own crossbow in hand, eyes on the road; he loads it (the crossbow loading sounds, an arm pump) and glances at the camera on 'YOU'; at about +23 degrees, frame right; bg (frame left, about -22 degrees): the raiders 13-16 blocks up the road, the ravager biggest. Cut 0.3 s after 'kid'. Dusk (13000)."
     }
   ],
   "bible": "stories/thirty_one_raids/bible.md"

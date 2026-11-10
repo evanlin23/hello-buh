@@ -29,7 +29,7 @@ const PARK = [0, 80, 140]                   // the off-stage Grandpa waits here 
 // the road out of the gate: the centre line (gate-relative x, z), east then south-east up onto the plateau
 const ROAD = [[0, 0.5], [14, 0.5], [26, 12.5], [34, 24.5], [38, 32.5]]
 const TOWER = [44, 40]                      // the watchtower's centre (template corner at TOWER - 7)
-const TIMES = { S01: 23500, S02: 12500, S03: 12600, S05: 23800, S06: 12000, S07: 14000, S08: 13000, S10: 14000, S11: 12400, S12: 12500, S13: 13100 }
+const TIMES = { S01: 23500, S02: 12500, S03: 12600, S05: 23800, S06: 12000, S07: 14000, S08: 13000, S10: 14000, S11: 12300, S12: 12400, S13: 13000 }
 
 // the voice timing at module load (the camera shots key on words: S07's tilt on "CHEST")
 let V = null
@@ -234,7 +234,7 @@ module.exports = {
     const grind = (k) => { if (k % 12 === 0) { swing(GA); sound('block.grindstone.use', 0.35, 1) } }
     await line('L03', async (k) => { grind(k); look(k) })
     // ---- L04 (S04): closer: "They know who BEATS them, kid." (not looking up)
-    put(GB, -79.5, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side (clear of the market stalls)
+    put(GB, -77.5, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side (clear of the market stalls)
     await shot('s04', -3.0, 2.0, P(-7.4, 2.2, -4.6))
     await line('L04', async (k, at) => { grind(k + 6); if (k === at(2)) G[GA].pitch = 25; look(k) })
 
@@ -244,7 +244,7 @@ module.exports = {
     const fa = farmers.map(([t, x, z]) => K.actor(t, { x, z, y: gy(x, z), yaw: yawTo(x, z, -74, 4) }))
     await bot.waitForTicks(3)
     frameEmpty('xbf')
-    await shot('s05', -72.5, 16.5, P(-74, 1, 3), TIMES.S05)
+    await shot('s05', -72.5, 19.5, P(-74, 1, 3), TIMES.S05)
     park(GA)
     await line('L05', async (k, at) => {
       const s = G[GB]
@@ -290,7 +290,7 @@ module.exports = {
     const gate = { x: 0.6, z: 0.3, yaw: K.mcYaw(TOWER[0] - 0.6, TOWER[1] - 0.3) }
     put(GA, gate.x, gate.z, gate.yaw, 0); hold(GA, 'ominous_bottle')
     await bot.waitForTicks(3)
-    await shot('s08', -7.6, -3.8, P(-3, 2, 0), TIMES.S08)
+    await shot('s08', -5.8, -2.0, P(-3, 2, 0), TIMES.S08)
     park(GB)
     await line('L08', async (k, at) => {
       if (k >= at(2) && k < at(3)) { G[GA].pitch = Math.max(-42, G[GA].pitch - 6); if ((k - at(2)) % 4 === 0) sound('entity.generic.drink', 0.8, 0.95 + ((k - at(2)) % 8) * 0.01) }
@@ -306,7 +306,7 @@ module.exports = {
     })
 
     // ---- L10 (S10): another night, inside: Grandpa crouched over the table set for two; he lifts his head on "GLAD"
-    put(GB, -10.5, -14.6, 0, 50, 2, [7, 6, 10]); hold(GB, 'air'); sneak(GB, true)
+    put(GB, -10.5, -14.6, 0, 50, 2, [11, 8, 8]); hold(GB, 'air'); sneak(GB, true)
     frameItem('xbf', 'crossbow')
     await bot.waitForTicks(3)
     await shot('s10', -6.0, -6.5, P(-6, 2, -9), TIMES.S10)
@@ -335,8 +335,8 @@ module.exports = {
     say('/item replace entity @s hotbar.0 with ominous_bottle'); bot.setQuickBarSlot(0)
     await bot.waitForTicks(4)
     K.shot('pov')
-    const roadAim = P(20, 2.2, 6.5)
-    await K.cut(0.5, 0.6, P(14, 1.7, 3.6), 1, { time: TIMES.S12 })
+    const roadAim = P(44, 12, 40)   // up at the tower, where the bottles come from
+    await K.cut(0.5, 0.6, P(30, 5.5, 20), 1, { time: TIMES.S12 })
     // the raiders: a ravager with five pillagers in a loose wedge, walking down the road toward the gate
     const along = (d) => {   // the point d blocks along the road from the gate, and the road's direction there
       for (let i = 0; i + 1 < ROAD.length; i++) {
@@ -489,13 +489,13 @@ module.exports.shots = {
   // S04: a few steps closer, from the south-east, a little lower: him knees-up, the door and the crossbow behind
   s04: { at: [-4.6, 2.45, -0.4], look: [-7.4, 2.4, -4.6], fov: 56, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.4, 0] } } },
   // S05: the square at dawn from its south edge, past a hay bale and a fence: he crosses left to right, the bell behind
-  s05: { at: [-73.0, 1.62, 12.6], look: [-74.2, 1.4, 1.5], fov: 56, push: 0.2, dof: false },
+  s05: { at: [-73.0, 1.62, 16.0], look: [-73.8, 1.5, 3.0], fov: 56, push: 0.25, dof: false },
   // S06: below the tower at sunset, looking up the slope: the tower on the hill, Grandpa climbing the path
-  s06: { at: [8.0, 3.8, 14.0], look: [30, 9.5, 24], fov: 50, push: 0.15, dof: false },
+  s06: { at: [8.0, 3.8, 14.0], look: [30, 7.6, 24], fov: 50, push: 0.15, dof: false },
   // S07: beside Grandpa at the chest under the east window; the tilt down to the open chest on "CHEST"
   s07: { at: [-9.0, 3.6, -11.2], lookPath: [[0, -6.6, 3.4, -14.3], [l07Chest, -6.6, 3.4, -14.3], [l07Chest + 0.7, -5.9, 2.5, -12.8], [8, -5.9, 2.5, -12.8]], ease: true, fov: 58, dof: false },
   // S08: the gate at dusk, 4 behind Grandpa and 2 to his right: the bottle in profile, the road and the tower
-  s08: { at: [-5.2, 2.62, -2.2], look: [20.8, 4.6, 12.8], fov: 54, push: 0.1, dof: false },
+  s08: { at: [-3.5, 2.62, -0.5], look: [22.4, 5.2, 14.5], fov: 54, push: 0.1, dof: false },
   // S09: closer, the same side: he turns his head back over his right shoulder
   s09: { at: [-2.6, 2.45, 3.8], look: [0.6, 2.35, 0.3], fov: 58, push: 0.1, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.5, 0] } } },
   // S10: the room from its south-east corner: Grandma's chair nearest the lens, Grandpa crouched over the table
