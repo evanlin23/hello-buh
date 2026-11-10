@@ -107,7 +107,8 @@
    "who": "N",
    "text": "He KNOWS that. / A SITTING dog / waits FOREVER. / He WANTS me / to FORGET him. / So he NEVER / makes me SIT.",
    "request": "b2",
-   "beat": "b2"
+   "beat": "b2",
+   "look": false
   },
   {
    "id": "L06",

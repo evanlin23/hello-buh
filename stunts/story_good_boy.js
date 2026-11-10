@@ -48,7 +48,10 @@ module.exports = {
     const { bot } = ctx
     const X = VX, Z = VZ
     // the set's origin height is the cottage pad's: the natural ground where the yard goes (all shots are relative to it)
-    const F = groundAt(ctx, X + 37, Z + 16)
+    // pinned at 70 (the pad's grass): groundAt read 70 on the pilot's runs and 69 on a later world, and every shot
+    // (Dog Hill's too: HILL = 109 - F) is relative to it; the pad is built at F whatever the natural ground
+    const F = 70
+    ctx.log(`good_boy: natural ground at the pad ${groundAt(ctx, X + 37, Z + 16)}, set origin ${F}`)
     const Y = F
     Object.assign(this, { X, Z, F, Y })
     const { c } = setKit(ctx, { X, Z, F })
@@ -63,6 +66,8 @@ module.exports = {
     await world.build(ctx, { story: 'good_boy', day: 3400 })
     await c('/kill @e[tag=dog]')
     await c('/kill @e[type=item,x=-202,y=109,z=-898,distance=..16]')
+    // Hushwell's villagers below the hill: frozen (far from the bot their moves arrived in 2-block jumps: rec_check)
+    await c('/execute as @e[type=villager,x=-190,y=90,z=-880,distance=..90] run data merge entity @s {NoAI:1b}')
     await c(`/tp @s ${X + 37} ${F + 30} ${Z + 16}`)
     if (ctx.waitChunks) await ctx.waitChunks({ x0: X - 40, z0: Z - 40, x1: X + 80, z1: Z + 60 }, 90000)
     await c('/kill @e[type=iron_golem]')           // the village golem would hunt the story's zombie
@@ -86,7 +91,7 @@ module.exports = {
     await c(`/setblock ${A(38, 1, 19)} barrel[facing=up]`); await c(`/setblock ${A(39, 1, 19)} hay_block`)
     await c(`/place feature minecraft:fancy_oak ${A(31, 1, 31)}`); await c(`/place feature minecraft:oak ${A(43, 1, 31)}`)
     for (const [f, dx, dz] of [['birch', 46, 10], ['oak', 27, 9], ['fancy_oak', 47, 22], ['birch', 26, 30]]) await c(`/place feature minecraft:${f} ${A(dx, 1, dz)}`)
-    for (const [dx, dz] of [[31, 15], [42, 21], [41, 13], [32, 25]]) await c(`/setblock ${A(dx, 1, dz)} azalea`)
+    for (const [dx, dz] of [[31, 15], [42, 23], [41, 13], [32, 25]]) await c(`/setblock ${A(dx, 1, dz)} azalea`)   // (42, 21) was the dog_sea camera's spot
     for (const [dx, dz] of [[44, 14], [45, 15], [28, 20], [28, 21]]) await c(`/fill ${A(dx, 1, dz)} ${A(dx, 2, dz)} mossy_cobblestone`)
     // a wheat field west of the yard: farmland on the natural ground, a water channel (L03 "He HID in the WHEAT")
     for (let dx = 12; dx <= 27; dx++) for (let dz = 15; dz <= 27; dz++) {
@@ -167,7 +172,7 @@ module.exports = {
 
     // L01 "My HUMAN has TRIED to LOSE me thirty-seven TIMES.": Buh sprints west down the road (a low follow ahead of
     // him); the wolf blinks in beside him on the line's 3rd tick (the mechanic is the first frame), and runs with him
-    K.shot('run_follow')
+    await K.cut(36.5, 24.5, P(36.5, eyeY(0.6), 27), H + 1, { shot: 'run_follow' })   // the wolf waits inside the cottage, out of the shot, until it blinks in
     await K.preroll(10, () => { walkG(buh, -0.27, 0); buh.pitch = 5 })
     await line('L01', async (k) => {
       walkG(buh, -0.27, 0); buh.pitch = 5
@@ -226,9 +231,10 @@ module.exports = {
 
     // L05 "He KNOWS that. / A SITTING dog / waits FOREVER. / He WANTS me / to FORGET him. / So he NEVER / makes me
     // SIT.": the yard, POV looking up at him; he looks down at me, and on "So he NEVER" turns away
-    await K.cut(36.4, 15.6, P(37.4, eyeY(1.6), 14.6), H + 1, { shot: 'pov', self: [{ sitting: false }, EYE], after: moveWith({ x: 37.4, z: 14.6, y: H + 1, yaw: yawTo(37.4, 14.6, 36.4, 15.6), pitch: 42 }) })
+    await K.cut(36.4, 16.4, P(37.6, eyeY(1.6), 14.4), H + 1, { shot: 'pov', self: [{ sitting: false }, EYE], after: moveWith({ x: 37.6, z: 14.4, y: H + 1, yaw: yawTo(37.6, 14.4, 36.4, 16.4), pitch: 35 }) })   // (1.4 blocks read as a close-up: about 2.3 now)
     await line('L05', async (k, at) => {
-      if (k < at(5)) { buh.pitch = 42 + Math.sin(k / 5) * 4 }
+      if (k === at(1) || k === at(3)) swing()
+      if (k < at(5)) { buh.pitch = 35 + Math.sin(k / 5) * 5; buh.yaw = yawTo(37.6, 14.4, 36.4, 16.4) + Math.sin(k / 9) * 12 }
       else { buh.yaw += (yawTo(37.4, 14.6, 40, 10) - buh.yaw) * 0.12; buh.pitch += (5 - buh.pitch) * 0.12 }
       look(k)
     })
@@ -281,7 +287,7 @@ module.exports = {
         if (k === at(3) + 6 || k === at(4) + 2) { if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.15) }
         if (k === n - 1) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
         if (k >= n - 1) say('/kill @e[type=experience_orb]')
-        if (z) K.base = K.aim(z.position.offset(0, 1.0, 0))
+        if (z) K.base = K.aim(z.position.offset(0, 1.6, 0))   // its face (1.0 looked 23 deg under its eyes)
         look(k, sy, sp)
       }
     })
@@ -310,13 +316,14 @@ module.exports = {
     // chat says "Buh left the game" (readable at 300 px: scale 2.5) and he is gone; the wolf sits facing the empty
     // patch. Cut 1.0 s after it reads (STANDARDS: no sting, nothing after)
     K.shot('hill_end')
-    await line('L11', async (k) => {
-      buh.yaw = 90; buh.pitch = 25 + Math.sin(k / 6) * 3
+    await line('L11', async (k, at) => {
+      buh.yaw = 90 + Math.sin(k / 7) * 14; buh.pitch = 25 + Math.sin(k / 6) * 4
+      if (k === at(2)) swing()   // a wave on "right BACK"
       look(k)
     })
     ctx.mark('syschat', { text: `${GUY} left the game`, color: 'yellow', scale: 2.5 })
     K.park(TAG)
-    for (let k = 0; k < 20; k++) { look(k); await bot.waitForTicks(1) }
+    for (let k = 0; k < 20; k++) { look(k, Math.sin(k / 4) * 0.04, 0); await bot.waitForTicks(1) }   // the wolf's head, watching the empty patch
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     M.quitActors(ctx)
