@@ -50,9 +50,24 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
 
 ## 2. Voice
-0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone; one narrator says
-   every line, quotes included, so other characters speak only in very short lines, on Gemini. r:r4f221c r:r30c821
-1. **The narrator is `voices/cast.json` `narrator` = `narrator_roblox`**: Gemini **Orus**, gemini-3.8-flash-tts
+000. **A bubbly kid who's figuring the world out, and always easy to follow**: Pip-based, happy and bubbly, misreading
+   what the viewer understands. Fast only works when clear: scripts written for the ear (one short thought per
+   sentence, in time order, joined by So/Then/But), takes PERFORMED continuously (not cut out of a paused read), each
+   sentence landing on its key word. Spoken stress goes on ONE word per sentence (its last key word); the caption still
+   colours one key word per chunk, but the voice doesn't hit every CAPS word (a cold listener heard that as "a flat
+   drumbeat"). Character lines of about 6 words or fewer are spoken by the character in their own voice (00).
+   Check: cold listener, audio only, one listen. r:r919ea3
+0000. **The narrator recipe (owner's pick)**: Gemini Leda with the "sleepover" direction (spooky-funny story at a
+   sleepover, fast and gleeful; brand/voice_samples/kid k4), rubberband tempo 1.1x and +1 semitone, nothing else (no
+   pause cap, no formant mode, no room: "weird artifacts"); performed continuously so no pause is cut. It is
+   `voices/cast.json` `narrator`; the Orus x1.45 voice is now `narrator_roblox` only. Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256
+00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
+   our own (not an imitation of another channel's), telling almost everything; other characters say short lines
+   (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.
+   Check: owner (voice pick), speaker_check, panel. r:r4c881f The narrator sounds like a kid. r:r7fabda
+0. *(Superseded by 00 and 000: the narrator is our own bubbly kid voice, not a Roblox-story imitation, and the short
+   character lines are spoken in the characters' own voices.)* Still true: fast, never padded. r:r4f221c r:r30c821
+1. *(Being replaced: the kid brand voice is being picked, 00/000. Until then the cast default is still:)* **The narrator is `voices/cast.json` `narrator` = `narrator_roblox`**: Gemini **Orus**, gemini-3.8-flash-tts
    (locked), single speaker, the voice-match direction as the bracketed prefix, and every take played **tempo 0.95,
    then 1.45x faster by resampling** (cast `tempo`/`rate`: pitch and formants rise with it; tts.py `speed_up`, on the
    whole raw take before the trim, the slices and the take gate). The one owner-approved exception to "never
@@ -135,6 +150,16 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    (eased turns, pathing walks, vanilla-speed NPCs, a still camera while a GUI is open); a lint before recording
    rejects raw look/teleport calls. Post-render checks are the safety net, never the method; the same for every
    quality rule: build it into the tool first, check it second. Check: lint (`./hb check`), then rec_check. r:rd9b7d0
+2. **Cast move only through the kit** (`K.actor`: every tick, at mob speed), placed before the shot mark so the new
+   shot's first frame already has them in place; never a stunt's own `/tp @e` loop (dog_hill's hop read as a teleport).
+   Check: lint (raw `/tp @e`), rec_check (cast jump after a cut; stepped motion). r:rfa229d
+3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
+   (eye-trace), and the cut lands on an edit point, not wherever the line starts. Check: cut check (in progress). r:rfa229d
+4. **Clear line of sight to every dig and place**: nothing between the eye and the face being broken or placed on.
+   The kit's K.dig/K.place aim at a point on a face the eye can see (lib/sight.js; a place: the clicked face of a block
+   it goes against), and refuse otherwise, naming the block in the way and a stand spot that sees it ({ walk: true }
+   steps there). Check: rec_check `sight` (scripts/rec_sight.js: no visible face, or the crosshair hits another block
+   first). r:rd0b2b1
 
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
@@ -170,6 +195,9 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinem
    r:r62de46
 
 ## 7. Audio
+0. **Music in every render, sound for every action**: the score bed is in every render (previews included), at the
+   reference Short's level under a clear voice; every visible action has its vanilla sound, ambience fits, nothing
+   visible is silent. Check: the silent-action check, review. 
 The lead's mix (docs/audio.md), automatic in `edit.py --story` + publish: voice -15 LUFS, master **-14 LUFS +-0.5,
 true peak <= -1 dBTP**, room tone (never digital silence), a Kevin MacLeod mood score (CC BY, credited; not NCS) from
 story.json `mood`, the bed out 0.45 s before the payoff, then a hit. Any owner note on a track or level overrides it.

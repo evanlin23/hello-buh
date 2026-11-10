@@ -221,3 +221,7 @@ take gate applies as now; its pause limits are looser than this voice needs.
 Reproduce: `scripts/voice_match/` (`vm.py` the meter, `search.py` the blend search, `score_files.py` to score sample
 files, `sample.py` for a Kokoro blend sample, `gem.py` for 1 Gemini request). Demucs was installed in a scratch folder
 only to separate the reference, and was deleted afterwards. No reference audio is in the repo.
+
+## Superseded by the brand narrator search (2026-11-10)
+The owner moved from the sped-up imitation to a voice of our own ("Instead of the sped up trying to copy"). See
+docs/brand.md "Narrator candidates": one designed voice and three library voices, each at its own pace or a mild atempo.
