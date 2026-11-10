@@ -48,3 +48,22 @@
 
 ## Numbers
 113 spoken words, about 42.9 s of speech and about 43.8 s with the 0.9 s hold. Valid JSON, and no ellipsis in any file I wrote.
+
+## r2 fixes (from r2-continuity.md and r2-critic.md)
+- **S13:**
+  - Milo now sits on the bed's north-east corner (about x2.9, z9.0), facing the portal (east-south-east), his back to
+    the lens.
+  - The camera is at about (1.3, F+2.0, 9.7), FOV 70, aimed 40 degrees east of north, pitch -10. Milo lines up with
+    the portal, and Grandma on the ladder lands about 6 degrees inside the left edge.
+  - The fallback stays: her steps on the ladder and the trapdoor sound on "OUT". Check on a still before the build.
+- **S14:** Grandma stands at about (8.8, F+1, 4.8), 1.3 blocks in front of the lens on the left edge. She stays in
+  frame for the last ingot, which is now "one more ingot", not "tonight's". The same wording is in the ending beats,
+  the twist, the bible and beats.md.
+- **S11:** Grandma is at about x6 z3, outside S10's frame.
+- **S01:** the gold chest is out of frame and dropped from the frame text, the bible's L01 row and shots.md. The portal
+  is centred behind Grandma.
+- **S12:** the ladder is 5 blocks west. Milo steps back to about x7.
+- **S07:** the camera is at about (0.5, z2.8), aimed 95 degrees, so the ladder rungs sit on the left edge.
+- **S05:** a note to confirm the garden is at least 6 blocks deep north of the gate, or else move the camera along the
+  fence.
+- **`gold_chest`:** the prop now has `at: [8,1,1]`.
