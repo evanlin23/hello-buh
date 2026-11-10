@@ -67,3 +67,11 @@ For the owner's morning. Newest at the bottom.
 
   Sent the owner the A/B on runaway and nitwit.
 - Owner decision for the morning: the new mix vs the old one (A/B), and any music track to veto.
+- 07:46 UTC check-in. Everything is moving:
+  - Good Boy: re-recording v14 at the natural-tempo voice.
+  - Dog on the Hill: re-aiming its shots off flat ground, then re-recording.
+  - Light Sleeper: running.
+  - Thirty-One Raids: script r4 is narrator-first; it re-voices at 08:00 when the TTS quota resets.
+  - The ergonomics smoke test: main merged in, now checking the chest-screen frames.
+  - Engine round 2 is queued (docs/engine_requests.md backlog); it starts once ergonomics and cinematic are on main.
+  - Audio: the owner left the mix to the lead, so the new mix stays.
