@@ -644,7 +644,7 @@ module.exports.shots = {
   // S13 (the reveal, after L12's POV drink): over the boy's right shoulder through the gate, up the road: the raiders
   // centre, Grandpa steps in at frame right and turns to him
   s13: { at: [-2.2, 2.9, 1.6], look: [14, 2.4, 1.8], fov: 54, push: 0.12, dof: false },
-  s10b: { at: [-7.4, 3.9, -13.7], look: [-10.3, 3.65, -12.6], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GB}`, offset: [0, 1.4, 0] } } }
+  s10b: { at: [-7.4, 3.9, -13.7], look: [-10.3, 3.65, -12.6], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.4, 0] } } }   // r-cast: GA is at the table
 }
 
 module.exports.ROAD = ROAD
