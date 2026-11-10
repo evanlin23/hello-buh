@@ -221,6 +221,10 @@ STANDARDS.md in the same commit.
   try to make it more realisitc?"; "maybe 1.1 with +1 pitch".** The narrator is the Leda "sleepover" take direction
   (brand/voice_samples/kid k4) at 1.1x, pitch 0 or +1 (being decided), never more processing than that; the next
   takes are performed continuously so no pause has to be cut (a 0.12 s gap cap made it sound spliced).
+- **Owner, 2026-11-10: "C and D feel like they have weird artifacts in them, so A sounds the best here"** (A = the
+  sleepover take, rubberband tempo 1.1, +1 semitone; C = formant-preserving speech mode, D = a room added). The
+  narrator recipe is A exactly: `voices/cast.json` `narrator` (Leda, sleepover direction, tempo 1.1, semitones 1,
+  stretch rubberband, no pause cap), nothing else on top.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
