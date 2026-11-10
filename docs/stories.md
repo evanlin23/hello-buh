@@ -52,6 +52,7 @@ Owner, 2026-11-10: "I feel like the cinematic should be the default." The movie 
 main, so a story stunt gets it by exporting a few fields; nothing else in the pipeline changes (voice.py, edit.py
 --story, rec_check, preview.sh, render_on_actions.sh all work as before). Pilot: `story_good_boy`.
 ```js
+look: 'auto',   // the grade follows the time of day (docs/look.md); or a mood, or { mood, ...overrides }, or the full form:
 look: { grade: {...} | 'dawn' | 'night', bloom: 0.5, vignette: 0.38, grain: 0.02, dof: { aperture: 0.9 }, shadows: true, rays: 0.5 },
 shots: { pov: { pov: true }, est: { path: [[0, dx, dy, dz], [2.4, ...]], lookPath: [...], ease: true }, ... },
 self: { model: 'wolf', eye: 0.68, extra: { tame: true, collar: 14 } },   // only for a narrator who isn't a player
@@ -124,7 +125,8 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 | stunt options | top level of the stunt module | `hideHand: true` (no first-person hand: a narrator who isn't Steve), `time`, `weather` ('rain'/'thunder'), `brightness`; mid-stunt `ctx.setTime(n)`, `ctx.setWeather(w)`. Set `/gamerule log_admin_commands false` for per-tick `execute as` moves. |
 | song | `scripts/add_song.py` (via publish.js) | a story gets the **mood score** (docs/audio.md), not NCS phonk: story.json `mood` picks a Kevin MacLeod CC BY track (music/score.json, fetched by scripts/fetch_music.py, credited in the description) at -26 LUFS ducked 7 dB under each line, out 0.45 s before `payoff`, then the payoff track. Stunt Shorts keep NCS at -13. |
 
-Captions: Schibsted Grotesk Black (OFL, `assets/fonts/`) at 96 px, white with a dark outline and a soft shadow,
+Captions: Poppins Black (OFL, `assets/fonts/`; chosen by a font A/B, docs/look.md) at 96 px, max 840 px wide (clear of
+the Shorts action column), white with a dark outline and a soft shadow,
 key words in the story's colour, centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
