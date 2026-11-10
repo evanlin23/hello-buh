@@ -35,8 +35,7 @@ module.exports = {
   idleLife: true,
   hideHand: false,
   look: { mood: 'auto', shadows: true, dof: { aperture: 0.85 }, cloudNight: 0.42 },   // docs/look.md: the grade follows the clock
-  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true, flash: ['death'] },   // the hit's flash on the death: the payoff's picture change (pace gate)
-  expectDeath: true,
+  edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', flash: ['roar'] },   // the payoff: the warden's roar (a flash on it for the pace gate's picture change)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -199,27 +198,27 @@ module.exports = {
     bot.setQuickBarSlot(3)                                   // empty-handed in the morning scenes
 
     // the cast: actors /tp'd every tick; put() hops a mob far out first so a short move doesn't glide on screen
-    const put = async (tag, s) => { say(`/tp @e[tag=${tag},limit=1] ${X} ${F + WAIT + 30} ${Z + 90}`); await bot.waitForTicks(2); return K.actor(tag, s) }
-    const away = (tag) => { K.actors.delete(tag); say(`/tp @e[tag=${tag},limit=1] ${X} ${F + WAIT + 1} ${Z}`) }
+    // the cast: K.actor (moved every tick); put() places one with a jump (K.warp: only ever while it's off screen),
+    // away() parks it out of the set
+    const put = async (tag, s) => { const a = K.actor(tag, s); K.warp(tag); await bot.waitForTicks(2); return a }
+    const away = (tag) => K.park(tag)
     const swing = () => bot.swingArm('right')
     const shriek = () => { ctx.sound('block.sculk_shrieker.shriek', 1.6, 1); ctx.particles('dust', C(0, 1.4, 0), { color: [0.1, 0.75, 0.8], count: 14 }) }
     const breakBlock = (dx, dy, dz, block, snd = 'block.wool.break') => { say(`/setblock ${X + dx} ${F + dy} ${Z + dz} air`); ctx.sound(snd, 0.8, 1); ctx.particles('block', P(dx, dy, dz), { block }) }
 
     // ---- L01: the hook. POV at the top of the south steps, the whole carpeted plaza ahead; a few soft steps
     const w1 = await put('walk1', { x: -7.5, y: PLAZA, z: 5.5, yaw: -90 }), w2 = await put('walk2', { x: 6.5, y: PLAZA, z: -4.5, yaw: 90 })
+    K.shot('hook')   // L01 over the high wide of the whole carpeted village, moving on frame 0 (vNext)
     await K.cut(2.5, 19.6, C(0, 1.5, -3), 7.07)
-    K.go(true)
     await K.preroll(6, () => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01) })
-    await line('L01', async (k) => {
-      K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01)
-      if (bot.entity.position.z < Z + 18.2) K.go(false)
-      K.base = K.aim(C(0, 1.5, -3)); look(k)
-    }, -S.gap)   // the opening in one breath (owner): L02 starts as L01's take ends (its own breath is in the wav)
-    K.stop()
+    await line('L01', async (k) => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
 
     // ---- L02: the crane up and back over the carpet street to the doghouse on the hill (camera shot 'est')
     K.shot('est')
-    await line('L02', async (k) => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) }, -S.gap - 0.1)   // the next cut's landing adds ~0.1 s
+    await line('L02', async (k) => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
+    // L03: the sheep meadow on the east slope, half sheared (camera 'meadow')
+    K.shot('meadow')
+    await line('L03', async (k) => { look(k) })
     away('walk1'); away('walk2')
 
     // ---- L04: POV walking east past the well toward the wool-wrapped bell (Mom already in our doorway, frame left)
@@ -246,20 +245,17 @@ module.exports = {
     await K.cut(0.5, -2.75, C(0, 1.6, 0), PLAZA, { time: AFTERNOON })
     let digging = false, dug = 0
     const lidRow = [[-1, 0], [0, 0], [1, 0]]
-    const digRow = async () => {
-      for (const [x, z] of lidRow) {
+    const digRow = async (row = lidRow) => {
+      for (const [x, z] of row) {
         const b = bot.blockAt(new ctx.Vec3(X + x, F + 1, Z + z))
         if (!b || b.name === 'air') continue
-        const from = { ...K.base }   // an eased turn to each block (owner: the dig looked jerky)
-        for (let t = 1; t <= 4; t++) { K.turnTo(from, C(x, 1.5, z), t / 4); await look(0); await bot.waitForTicks(1) }
-        swing()
-        try { await K.dig(b, 250) } catch (e) { breakBlock(x, 1, z, 'white_wool') }   // shears on wool: 5 ticks
+        try { await K.dig(b) } catch (e) { breakBlock(x, 1, z, 'white_wool') }   // K.dig: glides on, vanilla speed and destroy delay
         ctx.particles('block', P(x, 1, z), { block: 'white_wool' })
         dug++
       }
     }
     await line('L06', async (k, at) => {
-      if (k === at(2) - 4 && !digging) { digging = true; digRow().then(() => { digging = false }) }
+      if (k === 0 && !digging) { digging = true; digRow().then(() => { digging = false }) }   // "Once I PULLED the WOOL off the WELL"
       if (!digging && dug === 0) K.base = K.aim(C(0, 1.6, 0))   // before the dig; after it, hold the last look (owner: "why does it go back to looking down afterward?")
       if (!digging) look(k)
     })
@@ -324,15 +320,13 @@ module.exports = {
     let placed = false, craneAt = null
     await line('L11', async (k, at) => {
       if (bot.entity.position.z > Z - 2.75) K.go(false)
-      if (k === at(1) && !digging) { digging = true; digRow().then(() => { digging = false }) }
-      if (k === at(4) - 2) { bot.setQuickBarSlot(1); }
-      if (k === at(4) + 2 && !placed) { placed = true; swing(); say(`/setblock ${X + 1} ${F + 2} ${Z - 2} jukebox`); ctx.sound('block.wood.place', 0.9, 1); say('/item replace entity @s hotbar.1 with air') }
-      if (k === at(5)) { shriek(); K.shot('crane'); craneAt = ctx.tick }   // ECHO: the crane from above, straight down into the open slot
+      if (k === 0 && !digging) { digging = true; digRow([[0, 0]]).then(() => { digging = false }) }   // tonight: the lid's middle block
+      if (k === at(1) - 4) bot.setQuickBarSlot(1)
+      if (k >= at(1) && !placed && !digging) { placed = true; K.place(new ctx.Vec3(X + 1, F + 2, Z - 2), 'jukebox').then(() => say('/item replace entity @s hotbar.1 with air')) }
+      if (k === at(3)) { shriek(); K.shot('crane'); craneAt = ctx.tick }   // ECHO: the crane from above, straight down into the open slot
       if (!digging) {
         // before the dig: the lid; after it, hold; on the jukebox, one slow turn to it (owner: "the head jerking around")
-        if (k < at(4) && dug === 0) K.base = K.aim(C(0, 1.6, 0))
-        if (k === at(4)) K._from = { ...K.base }
-        if (k >= at(4)) K.turnTo(K._from, C(1, 2.4, -2), (k - at(4)) / 12)
+        if (!placed && dug === 0) K.base = K.aim(C(0, 1.6, 0))
         look(k)
       }
     })
@@ -358,7 +352,7 @@ module.exports = {
       }
       if (K.shotName === 'crane' && ctx.tick - craneAt >= 40) K.shot('pov')
       if (k === at(2) && !song) {
-        swing(); say(`/setblock ${X + 1} ${F + 2} ${Z - 2} jukebox[has_record=true]`); say('/item replace entity @s hotbar.2 with air')
+        K.place(new ctx.Vec3(X + 1, F + 2, Z - 2), 'jukebox[has_record=true]', { against: new ctx.Vec3(X + 1, F + 2, Z - 2), sound: null }).then(() => say('/item replace entity @s hotbar.2 with air'))
         song = startSong(ctx, K, C(1, 3.1, -2))
       }
       if (k === at(2) + 10) shriek()
@@ -383,15 +377,11 @@ module.exports = {
     const from15 = { ...K.base }
     let onRim = false
     await line('L15', async (k, at, n) => {
-      if (k === 10) { K.go(true); K.ctl('jump', true) }
+      if (k === Math.max(10, at(2))) { K.go(true); K.ctl('jump', true) }   // "So I STEPPED off the CARPET, onto the STONE"
       if (!onRim && bot.entity.position.y > F + 1.5) K.go(false)
       if (!onRim && bot.entity.onGround && bot.entity.position.y > F + 1.9) { onRim = true; K.go(false); shriek() }
       K.turnTo(from15, C(0, 0.6, 4), k / 9); look(k)
-    }, 0.35)
-    // three short inserts (the cut rate climbs): Mom, the east doorways, POV on the rim (he keeps jumping)
-    K.shot('ins_mom'); await bot.waitForTicks(7)
-    K.shot('ins_door'); await bot.waitForTicks(7)
-    K.shot('pov'); for (let k = 0; k < 7; k++) { K.base = K.aim(C(0, 0.6, 4)); look(k); await bot.waitForTicks(1) }
+    }, 0.2)
 
     // ---- the reveal. S16: behind him, low: shriek 4, the carpet south of the well bursts, the warden rises and roars,
     // and roars; S17: POV, it steps up, the sonic boom (no closing line: the picture ends it)
@@ -403,30 +393,15 @@ module.exports = {
     const wd = await put('warden', { x: 0.5, y: -2.8, z: 4.5, yaw: 180, pitch: 0 })
     const wEnt = () => Object.values(bot.entities).find(e => e.name === 'warden')
     for (let k = 0; k < 6; k++) { wd.y = -2.8 + 3.8 * K.ease(k / 30); look(k); await bot.waitForTicks(1) }
-    // no closing line (owner, 2026-11-10: "We dont need to say 'Oh thats why we have 9000 carpets'"): the picture ends it.
-    // S16 the rise and roar (behind him), S17 POV: it steps up, the beam crosses, the hit
-    const END = 62, toPov = 34, beamAt = END - 16
-    for (let k = 0; k < END; k++) {
+    // the rise and the roar, then the cut 1 s after the roar (vNext: no S17, no death screen; the picture ends it)
+    for (let k = 0; k < 24 + 20; k++) {
       const r = k + 6
       if (r <= 30) wd.y = Math.min(1.0, -2.8 + 3.8 * K.ease(r / 30))
       if (r % 6 === 0 && r < 30) ctx.particles('block', P(0, 1, 4), { block: 'white_carpet' })
-      if (r === 26) { const e = wEnt(); if (e) ctx.mark('pose', { ids: [e.id], roar: true }); ctx.sound('entity.warden.roar', 1.4, 1) }
-      if (k === toPov) { K.ctl('jump', false); K.shot('pov') }
-      if (k === beamAt) {   // the beam on the live picture, 0.8 s before the hit: its rings (16 ticks) are gone by the death screen
-        const eye = bot.entity.position
-        ctx.sound('entity.warden.sonic_boom', 1.6, 1)
-        ctx.particles('sonic_boom', P(0.5, 2.6, wd.z), { tx: +eye.x.toFixed(3), ty: +(eye.y + 1.62).toFixed(3), tz: +eye.z.toFixed(3) })
-      }
-      if (k >= toPov) {
-        const u = (k - toPov) / (END - toPov)
-        wd.z = 4.5 - 1.0 * K.ease(u * 1.4); wd.pitch = Math.sin(k / 4) * 10
-        K.base = K.aim(P(0.5, 3.4, wd.z))
-      }
+      if (r === 26) { const e = wEnt(); if (e) ctx.mark('pose', { ids: [e.id], roar: true }); ctx.sound('entity.warden.roar', 1.4, 1); ctx.mark('roar') }
+      if (r > 30) { wd.yaw = 180 + Math.sin(k / 5) * 12 }
       look(k); await bot.waitForTicks(1)
     }
-    // the hit, then the death screen ~1.2 s, the plaza pulsing behind it
-    say('/damage @s 15 minecraft:sonic_boom')   // vanilla hard: 15; the arrow left him at 15
-    for (let k = 0; k < 26; k++) { wd.yaw = 180 + Math.sin(k / 5) * 22; wd.pitch = 10 + Math.sin(k / 7) * 8; await bot.waitForTicks(1) }
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     if (song) song()
@@ -611,6 +586,10 @@ module.exports.shots = {
   // L02: the crane up and back from the carpet street to over the doghouse on the hill, looking south-east over the
   // whole carpeted village (the plaza, the boxed bell, the lidded well, the roofs, the meadow on the far slope)
   est: { path: [[0, -12.5, 3.2, -13.5], [1.3, -21, 10, -24], [2.8, -33, 20, -33]], lookPath: [[0, 0.5, 1.5, 0.5], [1.3, -10, 4, -9], [2.8, -9, 1, -7]], ease: true, fov: 62, dof: false },
+  // L01: the hook, a high wide over the south street looking north over the whole carpeted village, a slow push
+  hook: { path: [[0, 2.5, 18, 36], [3.5, 2.5, 14.5, 29]], lookPath: [[0, 0.5, 2, -6], [3.5, 0.5, 2, -6]], ease: true, fov: 60, dof: false },
+  // L03: the sheep meadow on the east slope from its fence, a slow push
+  meadow: { at: [33, -3, 19], look: [48, -10, 33], fov: 55, push: 0.3, dof: false },
   // L07: low from the north-west, behind him, looking south-east past his back at the well (the south steps beyond)
   s07: { at: [-5.5, 2.4, -6.5], look: [0.6, 2.0, -1.4], fov: 50, push: 0.25, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -0.4, 0] } } },
   // L12: the crane from ~16 above our roof (0,-12), looking south and down, into his head at (0.5, -2.75)
