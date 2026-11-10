@@ -3,6 +3,7 @@
 // own entity textures. Unlit like Minecraft: per-face fixed shading x light at the entity.
 import * as THREE from 'three'
 import { nameTagTexture } from '/blockentities.js'
+import { applyPoses } from '/poses.js'
 
 // box-UV layout per face (same as prismarine-viewer's Entity.js, Bedrock/Java box mapping)
 const FACES = {
@@ -215,8 +216,9 @@ const FALLBACK_TEX = { squid: 'entity/squid/squid', cat: 'entity/cat/tabby', oce
 // part's pivot, y down. Model space -> world: T(pos) Ry(180 - bodyYaw) Rz(death flip)
 // S(-1,-1,1) S(0.9375) T(0,-1.501,0), then pixels/16.
 const PSHADE = { down: 1.0, up: 0.5, north: 0.8, south: 0.8, west: 0.6, east: 0.6 }   // visual top is model -y
-function javaCube (min, size, uv, grow, texW, texH, out) {
-  const [x0, y0, z0] = min.map(v => v - grow), [x1, y1, z1] = [min[0] + size[0] + grow, min[1] + size[1] + grow, min[2] + size[2] + grow]
+function javaCube (min, size, uv, grow, texW, texH, out, mirror = false) {
+  let [x0, y0, z0] = min.map(v => v - grow), [x1, y1, z1] = [min[0] + size[0] + grow, min[1] + size[1] + grow, min[2] + size[2] + grow]
+  if (mirror) [x0, x1] = [x1, x0]   // ModelPart.Cube with mirror: x swapped, each face's texture flipped (below)
   const [dx, dy, dz] = size, [u, v] = uv
   const V = { a: [x0, y0, z0], b: [x1, y0, z0], c: [x1, y1, z0], d: [x0, y1, z0], e: [x0, y0, z1], f: [x1, y0, z1], g: [x1, y1, z1], h: [x0, y1, z1] }
   const f4 = u, f5 = u + dz, f6 = u + dz + dx, f7 = u + dz + dx + dx, f8 = u + dz + dx + dz, f9 = u + dz + dx + dz + dx
@@ -232,7 +234,7 @@ function javaCube (min, size, uv, grow, texW, texH, out) {
   ]
   for (const [face, vs, u1, v1, u2, v2] of polys) {
     const n = out.pos.length / 3
-    const uvs = [[u2, v1], [u1, v1], [u1, v2], [u2, v2]]
+    const uvs = mirror ? [[u1, v1], [u2, v1], [u2, v2], [u1, v2]] : [[u2, v1], [u1, v1], [u1, v2], [u2, v2]]
     for (let k = 0; k < 4; k++) { out.pos.push(...vs[k]); out.uv.push(uvs[k][0] / texW, uvs[k][1] / texH); const s = PSHADE[face]; out.col.push(s, s, s) }
     out.idx.push(n, n + 1, n + 2, n, n + 2, n + 3)
   }
@@ -295,7 +297,47 @@ function buildPlayer (texInfo, parts = PLAYER_PARTS, scale = 0.9375, eyes = null
   hand.matrix.makeRotationX(-Math.PI / 2).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(1 / 16, 0.125, -0.625))
   bones.rightArm.add(hand)
   bones.hand = hand
+  // the off hand (ItemInHandLayer for the left arm: T(-1/16, 0.125, -0.625)); empty unless something is held there
+  if (bones.leftArm) {
+    const handL = new THREE.Group(); handL.matrixAutoUpdate = false
+    handL.matrix.makeRotationX(-Math.PI / 2).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(-1 / 16, 0.125, -0.625))
+    bones.leftArm.add(handL)
+    bones.handL = handL
+  }
   return { root, bones, mat }
+}
+// Armour on a player model (HumanoidArmorLayer): HumanoidModel's parts again, grown 1.0 (helmet, chestplate, boots)
+// or 0.5 (leggings), textured from entity/equipment/humanoid[_leggings]/<material>, on the player's own bones so
+// they follow every pose. armor = [feet, legs, chest, head] item names (harness: equipment slots 2-5).
+const ARMOR_PARTS = {   // [bone, cube min, size, uv, mirror]
+  head: [['head', [-4, -8, -4], [8, 8, 8], [0, 0]], ['head', [-4, -8, -4], [8, 8, 8], [32, 0], false, 0.5]],
+  chest: [['body', [-4, 0, -2], [8, 12, 4], [16, 16]], ['rightArm', [-3, -2, -2], [4, 12, 4], [40, 16]], ['leftArm', [-1, -2, -2], [4, 12, 4], [40, 16], true]],
+  legs: [['body', [-4, 0, -2], [8, 12, 4], [16, 16]], ['rightLeg', [-2, 0, -2], [4, 12, 4], [0, 16]], ['leftLeg', [-2, 0, -2], [4, 12, 4], [0, 16], true]],
+  feet: [['rightLeg', [-2, 0, -2], [4, 12, 4], [0, 16]], ['leftLeg', [-2, 0, -2], [4, 12, 4], [0, 16], true]]
+}
+const ARMOR_MATERIAL = (item) => { const m = /^(leather|chainmail|iron|golden|diamond|netherite|copper|turtle)_(helmet|chestplate|leggings|boots)$/.exec(item || ''); return m ? (m[1] === 'golden' ? 'gold' : m[1] === 'turtle' ? 'turtle_scute' : m[1]) : null }
+async function addArmor (bones, armor) {
+  const slots = ['feet', 'legs', 'chest', 'head']
+  for (let i = 0; i < 4; i++) {
+    const mat = ARMOR_MATERIAL(armor[i]); if (!mat) continue
+    const legs = slots[i] === 'legs', dir = legs ? 'humanoid_leggings' : 'humanoid'
+    // leather: the dyed base (default leather colour A06540) under the undyed overlay (DyedItemColor)
+    const t = await texture(mat === 'leather' ? [`entity/equipment/${dir}/leather#a06540`, `entity/equipment/${dir}/leather_overlay`] : [`entity/equipment/${dir}/${mat}`])
+    if (!t) continue
+    const m = new THREE.MeshBasicMaterial({ map: t.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
+    for (const [bone, min, size, uv, mirror, extra] of ARMOR_PARTS[slots[i]]) {
+      if (!bones[bone]) continue
+      const all = { pos: [], uv: [], col: [], idx: [] }
+      javaCube(min, size, uv, (legs ? 0.5 : 1.0) + (extra || 0), t.w, t.h, all, !!mirror)
+      const geom = new THREE.BufferGeometry()
+      geom.setAttribute('position', new THREE.Float32BufferAttribute(all.pos, 3))
+      geom.setAttribute('uv', new THREE.Float32BufferAttribute(all.uv, 2))
+      geom.setAttribute('color', new THREE.Float32BufferAttribute(all.col, 3))
+      geom.setIndex(all.idx)
+      bones[bone].add(new THREE.Mesh(geom, m))
+    }
+    ;(bones.armorMats = bones.armorMats || []).push(m)
+  }
 }
 // WitchModel.createBodyLayer: VillagerModel's body (texture 64x128) with the bent four-piece hat and
 // a mole on the nose instead of the villager hat. The converted geometry held only the hat pieces.
@@ -387,6 +429,24 @@ function poseWarden (r, s, walkPos, walkSpeed, tick) {
     const shake = q * Math.sin(tick * 2.1) * 0.04
     B.head.rotation.z = shake
   } else if (B.body) B.body.rotation.x = 0
+  // emerging (Pose.EMERGING, WardenAnimation.WARDEN_EMERGE, 6.68 s) and digging back down (Pose.DIGGING, 5 s): the
+  // body rises out of the ground in three heaves, the arms reaching up and then pushing on the ground; digging plays
+  // it backwards and faster. extra.emerge / extra.dig = { t: the start tick } (render.js: recorded poses, or a
+  // staged ctx.mark('pose', { ids, emerge: true })).
+  const ed = s.extra && (s.extra.emerge || s.extra.dig)
+  if (ed) {
+    const dig = !s.extra.emerge, len = dig ? 5 : 6.68
+    let e = Math.max(0, Math.min(1, ((tick || 0) - (ed.t ?? tick)) / 20 / len))
+    if (dig) e = 1 - e
+    // the height out of the ground, 0..1, in heaves (each a quick pull then a hold)
+    const heave = (u, a, b) => { const v = Math.max(0, Math.min(1, (u - a) / (b - a))); return v * v * (3 - 2 * v) }
+    const up = 0.3 * heave(e, 0.08, 0.22) + 0.35 * heave(e, 0.3, 0.5) + 0.35 * heave(e, 0.58, 0.85)
+    r.obj.position.y -= 3.1 * (1 - up)
+    const reach = 1 - heave(e, 0.45, 0.7), push = heave(e, 0.4, 0.55) * (1 - heave(e, 0.85, 1))
+    B.rightArm.rotation.set(-2.6 * reach - 0.9 * push, 0, 0.25 * reach); B.leftArm.rotation.set(-2.6 * reach - 0.9 * push, 0, -0.25 * reach)
+    B.body.rotation.x = 0.3 * (1 - heave(e, 0.8, 1))
+    B.head.rotation.x += -0.35 * reach
+  }
   if (B.layers) {
     // spots: max(0, cos(age * 0.045) * 0.25) and its opposite phase; the heart flashes to 1 every
     // 40 ticks (a calm warden's heartbeat) and fades over 10
@@ -570,6 +630,7 @@ function posePlayer (r, s) {
   B.rightLeg.rotation.x = Math.cos(pos * 0.6662) * 1.4 * spd
   B.leftLeg.rotation.x = Math.cos(pos * 0.6662 + Math.PI) * 1.4 * spd
   if (p.holding) B.rightArm.rotation.x = B.rightArm.rotation.x * 0.5 - Math.PI / 10   // ArmPose.ITEM
+  if (p.offHeld) B.leftArm.rotation.x = B.leftArm.rotation.x * 0.5 - Math.PI / 10      // the off hand's ArmPose.ITEM
   // HumanoidModel.setupAnim, crouching (movie actors and the player seen from outside, docs/movie_engine.md): the body
   // leans 0.5, the arms come forward 0.4, the legs step back 4 px, everything above the hips drops; PlayerRenderer
   // lowers the whole model 0.125 blocks (getRenderOffset)
@@ -595,6 +656,16 @@ function posePlayer (r, s) {
   const age = p.age || 0
   B.rightArm.rotation.z += Math.cos(age * 0.09) * 0.05 + 0.05; B.rightArm.rotation.x += Math.sin(age * 0.067) * 0.05
   B.leftArm.rotation.z -= Math.cos(age * 0.09) * 0.05 + 0.05; B.leftArm.rotation.x -= Math.sin(age * 0.067) * 0.05
+  // staged poses (renderer/poses.js: sit, drink, wave, lie...), eased in by render.js; nothing changes without one
+  if (p.poses && p.poses.length) {
+    const { drop, root } = applyPoses(B, p.poses, age)
+    r.obj.position.y -= drop
+    if (root) {
+      const q = new THREE.Quaternion().setFromEuler(new THREE.Euler(root.rot[0], root.rot[1], root.rot[2], 'XYZ'))
+      const off = new THREE.Vector3(...root.off).applyQuaternion(r.obj.quaternion)
+      r.obj.quaternion.multiply(q); r.obj.position.add(off)
+    }
+  }
   r.mat.userData.red.value = (p.hurt || p.deathTime > 0) ? 1 : 0
 }
 
@@ -648,7 +719,7 @@ export class EntityLayer {
   async ensure (id, name, extra) {
     // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
     // rebuilt the bear and lost its stand animation, so it snapped down: worker 13)
-    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'roar' || k === 'roarT' ? undefined : v)
+    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
     if (ek === '{}' || ek === undefined) ek = 'null'
     const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
@@ -776,7 +847,7 @@ export class EntityLayer {
       const t = await texture([`entity/player/wide/${skin}`])
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
       const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
-      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat }
+      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor) }
     } else if (name === 'item' && extra && extra.special && this.itemFactory) {
       // a dropped special item (bed, chest, head, banner, shulker box): its model with the 'ground'
       // display, turned about y by the spin (render.js)
@@ -950,6 +1021,7 @@ export class EntityLayer {
       }
       if (s.name === 'player' || s.name === 'mannequin') {
         posePlayer(r, s)
+        if (r.bones.armorMats) for (const m of r.bones.armorMats) m.color.setRGB(...LL)
         // the held item (ItemInHandLayer), built by the page (block models / extruded sprites)
         const held = s.player && s.player.held, hk = held ? held.key : null
         if (r.heldKey !== hk) {
@@ -959,6 +1031,15 @@ export class EntityLayer {
           r.heldKey = hk
         }
         if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
+        // the off-hand item (ItemInHandLayer, left arm)
+        const off = s.player && s.player.offHeld, ok = off ? off.key : null
+        if (r.offKey !== ok && r.bones.handL) {
+          if (r.offObj) r.bones.handL.remove(r.offObj.obj)
+          r.offObj = ok && this.itemFactory ? await this.itemFactory(off) : null
+          if (r.offObj) r.bones.handL.add(r.offObj.obj)
+          r.offKey = ok
+        }
+        if (r.offObj && r.offObj.mat) r.offObj.mat.color.setRGB(...LL)
         continue
       }
       if ((s.name === 'falling_block' && s.extra && s.extra.spin) || (s.name === 'item' && s.extra && s.extra.special)) { r.obj.rotation.set(0, s.yaw, 0); continue }

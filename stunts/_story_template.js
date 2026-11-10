@@ -24,7 +24,8 @@
 //     and sand a cut hillside leaves hanging over the set
 // Staging rules that still are yours: nothing still for more than ~1 s, no held pauses around cuts (lines run
 // back to back, the next cut comes straight after K.line returns), face_on/face_off one at a time, no block
-// entities in shot (beds, chests and signs don't render), /difficulty normal before summoning monsters.
+// entities without checking a still (docs/engine_features.md: what renders, and how to add what doesn't),
+// /difficulty normal before summoning monsters.
 const path = require('path')
 const { storyLines, storyKit, setKit, house, clearSet, plainsBiome, resendChunks } = require('../lib/story')
 
@@ -40,6 +41,7 @@ module.exports = {
   edit: { caption: CAPTION, red: 'sheep', story: 'stories/<name>', startAt: 'line:0', endAfter: 'story_end:0' },
   hideHand: true,          // the narrator isn't Steve: no first-person arm
   // time: 18000,          // the opening time of day (night); change it later with K.cut(..., { time }) or K.setTime
+  look: 'auto',            // the grade follows the time of day (renderer/looks.js, docs/look.md); a shot's mood: 'tense' for one shot
 
   async setup (ctx) {
     const { bot } = ctx

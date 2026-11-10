@@ -104,8 +104,13 @@ def resplit(sd):
         cutsq = [quiet(words[spans[k][1]][2] - 0.05, words[spans[k + 1][0]][1] + 0.1) for k in range(len(spans) - 1)]
         segs = []
         for k, (a, b) in enumerate(spans):
-            s0 = max(cutsq[k - 1], words[a][1] - 0.15) if k else max(0.0, words[a][1] - 0.15)
-            s1 = min(cutsq[k], words[b][2] + 0.4) if k + 1 < len(spans) else min(len(x) / SR, words[b][2] + 0.4)   # (never past its own words: a stale line sat between two)
+            # margins (owner rule, docs/stories.md): >= 80 ms before the first word, >= 200 ms after the last, but never
+            # into the neighbouring line's words; the cut itself at the quietest point between them
+            prev_end = words[spans[k - 1][1]][2] if k else 0.0
+            next_start = words[spans[k + 1][0]][1] if k + 1 < len(spans) else len(x) / SR
+            s0 = max(prev_end + 0.02, min(cutsq[k - 1] if k else words[a][1] - 0.15, words[a][1] - 0.08))
+            s1 = min(next_start - 0.02, max(cutsq[k] if k + 1 < len(spans) else words[b][2] + 0.4, words[b][2] + 0.2))
+            s1 = min(s1, words[b][2] + 0.5)
             segs.append((s0, s1))
         for (who, lid, t), (a, b) in zip(r['lines'], segs):
             seg = x[int(a * SR):int(b * SR)].copy()
