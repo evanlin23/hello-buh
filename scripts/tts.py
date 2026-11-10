@@ -317,7 +317,8 @@ def voice_lines(groups, cs, out):
     out.mkdir(parents=True, exist_ok=True)
     done = {}
     for g in groups:
-        scene, lines, room = (*g, "small")[:3] if len(g) == 2 or not isinstance(g[2], str) else g
+        scene, lines = g[:2]
+        room = g[2] if len(g) > 2 and isinstance(g[2], str) else "small"
         ys = level([shape(seg, cs[w].get("post", ""), room) for (w, _, _, _), seg in zip(lines, take(scene, lines, cs))])
         for (w, lid, t, _), y in zip(lines, ys):
             pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(out / f"{lid}.wav")], y.astype(np.float32).tobytes())
