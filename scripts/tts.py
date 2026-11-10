@@ -18,7 +18,9 @@ holds at most 6 lines (MAX_LINES: longer takes drift).
 Quota: the free tier is a handful of requests a day per model, so a whole exchange goes in ONE request (Gemini's
 multi-speaker mode takes at most 2 speakers) and is cut into lines at its pauses afterwards. Every raw take is cached
 in work/tts/<hash>.wav by its exact prompt and voices: a re-run costs nothing unless a line, a note or a voice changed.
-On a 429 the next model in MODELS is tried (the proxy injects the API key). --only re-voices just those lines (one new
+A 429 is read (request()): per-minute -> wait RetryInfo's delay, retry the same model; per-day -> the next model; none
+left -> exit 75 with a NEXT line (UTC retry time, the command). Requests are paced TTS_MIN_GAP s apart (default 20) and
+logged to work/tts/quota.json (./hb quota). The proxy injects the API key. --only re-voices just those lines (one new
 request per speaker pair) and keeps the others.
 
 Each line keeps its in-breath and natural tail (the cut pads into the pauses), then: high-pass 60 Hz, the character's
@@ -36,6 +38,8 @@ import hashlib
 import json
 import os
 import pathlib
+import random
+import re
 import subprocess
 import sys
 import time
@@ -62,10 +66,6 @@ SHORT_WORDS = 3  # a character line this short goes in a single-speaker request 
 PITCH_W = 3.0   # weight of the pitch term in cut() (tuned on the voices/samples takes)
 
 
-class QuotaOut(SystemExit):
-    """The locked model is out of quota: stop (the takes so far are cached) rather than switch a character's model."""
-
-
 def library():
     return {k: v for k, v in json.loads((ROOT / "voices" / "cast.json").read_text()).items() if not k.startswith("_")}
 
@@ -87,68 +87,229 @@ def resolve(story_cast=None):
     return out
 
 
-# shared-quota pacing (the lead, 2026-11-10: several sessions share the TTS quota): TTS_MIN_GAP seconds between
-# this process's requests, and on a 429 TTS_429_WAIT seconds then a retry, up to TTS_429_RETRIES times (both
-# default 0: a 429 moves on as before)
-_LAST_REQ = [0.0]
+# Shared-quota pacing and 429s (2026-11-10: several sessions share the key; every 429 that day was per-MINUTE contention,
+# and one session read them as the daily quota). Read at each call, the names the Good Boy session introduced:
+#   TTS_MIN_GAP      s between this process's requests (default 20)
+#   TTS_429_RETRIES  a per-minute 429: retries of the SAME model, each after RetryInfo's delay + jitter (default 4)
+#   TTS_429_WAIT     the wait when a per-minute 429 gives no retryDelay (default 65 s)
+# A per-DAY 429 (quotaId ...PerDay..., about 10 requests a day per model on the free tier) moves to the next model; when
+# none is left tts.py stops with exit 75 (EX_TEMPFAIL: retry later) and a NEXT line naming the UTC retry time and the
+# command. Every request and 429 is logged to work/tts/quota.json (`./hb quota` reads it; no request made).
+EX_TEMPFAIL = 75
+QUOTA_LOG = ROOT / "work" / "tts" / "quota.json"
+RERUN = ["./hb voice <story>"]   # the command a NEXT line tells the session to run again (set by __main__)
 
 
-def _pace():
-    gap = float(os.environ.get("TTS_MIN_GAP", "0") or 0)
-    wait = _LAST_REQ[0] + gap - time.time()
-    if wait > 0:
-        print(f"  (pacing: {wait:.0f} s before the next request)")
-        time.sleep(wait)
-    _LAST_REQ[0] = time.time()
+def _env(name, default):
+    try:
+        return float(os.environ.get(name, "") or default)
+    except ValueError:
+        return float(default)
+
+
+_LAST = [None]      # time.monotonic() of the last request this process sent
+
+
+class QuotaLater(SystemExit):
+    """A quota stop: retry later (exit 75). .next is the NEXT line: what happened, when to retry (UTC), the command."""
+    def __init__(self, msg, next_line):
+        super().__init__(EX_TEMPFAIL)
+        self.msg, self.next = msg, next_line
+
+    def __str__(self):
+        return f"{self.msg}\nNEXT: {self.next}"
+
+
+class QuotaOut(QuotaLater):
+    """The locked model is out of quota: stop (the takes so far are cached) rather than switch a character's model."""
+
+
+def duration_s(s):
+    """'35s', '32693s', '9h4m38s', '1m5.5s' -> seconds, or None."""
+    m = re.fullmatch(r"\s*(?:(\d+)h)?\s*(?:(\d+)m(?!s))?\s*(?:([\d.]+)s)?\s*", str(s or ""))
+    if not m or not any(m.groups()):
+        return None
+    h, mi, se = m.groups()
+    return int(h or 0) * 3600 + int(mi or 0) * 60 + float(se or 0)
+
+
+def quota_info(body):
+    """A 429's body (google.rpc error JSON) -> {scope: "minute" | "day" | "unknown", ids: [quotaId / quotaMetric],
+    limit: quotaValue or None, retry: the retry delay in s (RetryInfo, else "retry in 9h4m38s" in the message) or None,
+    message}."""
+    try:
+        err = json.loads(body).get("error", {})
+    except (ValueError, AttributeError):
+        err = {}
+    ids, limit, retry = [], None, None
+    for d in err.get("details", []) or []:
+        t = d.get("@type", "")
+        if t.endswith("QuotaFailure"):
+            for v in d.get("violations", []) or []:
+                ids += [x for x in (v.get("quotaId"), v.get("quotaMetric")) if x]
+                limit = v.get("quotaValue", limit)
+        elif t.endswith("RetryInfo"):
+            retry = duration_s(d.get("retryDelay"))
+    msg = str(err.get("message") or (body if isinstance(body, str) else ""))
+    if not ids:   # no details: the message sometimes names the metric
+        ids = re.findall(r"[\w/.-]*Per(?:Minute|Day)[\w/.-]*", msg)
+    if retry is None:
+        m = re.search(r"retry in ([\dhms.]+)", msg)
+        retry = duration_s(m.group(1).rstrip(".")) if m else None
+    if limit is None:
+        m = re.search(r"limit: (\d+)", msg)
+        limit = m.group(1) if m else None
+    joined = " ".join(ids)
+    scope = ("day" if "PerDay" in joined or re.search(r"per day", msg, re.I) else
+             "minute" if "PerMinute" in joined or re.search(r"per minute", msg, re.I) else "unknown")
+    return {"scope": scope, "ids": list(dict.fromkeys(ids)), "limit": limit, "retry": retry, "message": msg[:300]}
+
+
+def midnight_pacific():
+    """The next midnight Pacific (the free tier's daily reset) as an aware UTC datetime."""
+    import datetime
+    from zoneinfo import ZoneInfo
+    now = datetime.datetime.now(ZoneInfo("America/Los_Angeles"))
+    return (now + datetime.timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0).astimezone(datetime.timezone.utc)
+
+
+def utc_at(delay_s):
+    """now + delay -> an aware UTC datetime."""
+    import datetime
+    return datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=delay_s)
+
+
+def utc_str(t):
+    import datetime
+    today = datetime.datetime.now(datetime.timezone.utc).date()
+    return t.strftime("%H:%M UTC") if t.date() == today else t.strftime("%Y-%m-%d %H:%M UTC")
+
+
+def _pacific_day():
+    import datetime
+    from zoneinfo import ZoneInfo
+    return datetime.datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%Y-%m-%d")
+
+
+def log_quota(model, event, q=None, retry_at=None):
+    """work/tts/quota.json: per Pacific day (the quota's day) and model, requests sent / ok / 429s; the last 429 per model.
+    Best effort: a failure to log never stops a take."""
+    try:
+        import datetime
+        j = json.loads(QUOTA_LOG.read_text()) if QUOTA_LOG.exists() else {}
+        day = j.setdefault("days", {}).setdefault(_pacific_day(), {}).setdefault(model, {"requests": 0, "ok": 0, "429": 0})
+        day[event] = day.get(event, 0) + 1
+        if q is not None:
+            j.setdefault("last_429", {})[model] = {
+                "at": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "scope": q["scope"],
+                "ids": q["ids"], "limit": q["limit"], "retry_at": retry_at.strftime("%Y-%m-%dT%H:%M:%SZ") if retry_at else None}
+        j["days"] = dict(sorted(j["days"].items())[-14:])
+        QUOTA_LOG.parent.mkdir(parents=True, exist_ok=True)
+        tmp = QUOTA_LOG.with_suffix(f".{os.getpid()}.tmp")
+        tmp.write_text(json.dumps(j, indent=1))
+        tmp.replace(QUOTA_LOG)
+    except Exception as e:   # noqa: BLE001
+        print(f"  (quota log: {e})")
+
+
+def pace():
+    """At least TTS_MIN_GAP s between this process's requests: back-to-back requests trip the per-minute limit."""
+    gap = _env("TTS_MIN_GAP", 20)
+    if _LAST[0] is not None:
+        wait = gap - (time.monotonic() - _LAST[0])
+        if wait > 0:
+            print(f"  (pacing: {wait:.0f} s before the next request; TTS_MIN_GAP={gap:g})")
+            time.sleep(wait)
+    _LAST[0] = time.monotonic()
+
+
+def _quota_line(model, q):
+    s = f"  {model}: 429 {q['scope']} quota: {', '.join(q['ids']) or 'no quota id given'}"
+    if q["limit"]:
+        s += f", limit {q['limit']}"
+    if q["retry"] is not None:
+        s += f", retry in {q['retry']:.0f} s"
+    return s
 
 
 def request(text, voices, models=None):
     """One TTS call -> (float32 mono at SR, the model that made it). voices: {label: Gemini voice name} (1 or 2
     entries). `text` is the prompt, or a function model -> prompt (each model family gets the layout it was tested
-    with). models: the ones this request may use, in order (a locked character: exactly one; default MODELS)."""
+    with). models: the ones this request may use, in order (a locked character: exactly one; default MODELS).
+    A 429 is read, not assumed: a per-MINUTE limit waits its retryDelay (+ jitter) and retries the SAME model up to
+    TTS_429_RETRIES times; a per-DAY limit moves to the next model; none left -> QuotaLater (exit 75, a NEXT line)."""
     if len(voices) == 1:
         sc = {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": list(voices.values())[0]}}}
     else:
         sc = {"multiSpeakerVoiceConfig": {"speakerVoiceConfigs": [
             {"speaker": s, "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": v}}} for s, v in voices.items()]}}
+    daily, later = [], []   # per-day refusals (model, ids, limit, retry_at); per-minute give-ups (model, retry_at)
     for model in models or MODELS:
         body = json.dumps({"contents": [{"parts": [{"text": text(model) if callable(text) else text}]}],
                            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
-        # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
-        r429 = int(os.environ.get("TTS_429_RETRIES", "0") or 0)
-        for attempt in range(2 + r429):
+        errors5, minute = 0, 0
+        tries = int(_env("TTS_429_RETRIES", 4))
+        while True:
             try:
-                _pace()
+                pace()
                 STATS["requests"] += 1
+                log_quota(model, "requests")
                 req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                                              data=body, headers={"Content-Type": "application/json", "x-goog-api-key": "proxy"})
                 part = json.loads(urllib.request.urlopen(req, timeout=240).read())["candidates"][0]["content"]["parts"][0]["inlineData"]
                 data = base64.b64decode(part["data"])
                 print(f"  {model}: ok")
+                log_quota(model, "ok")
                 if "wav" in part["mimeType"]:
                     data = subprocess.run(["ffmpeg", "-v", "error", "-i", "-", "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"],
                                           input=data, capture_output=True, check=True).stdout
                 return np.frombuffer(data, "<i2").astype(np.float32) / 32768, model
             except urllib.error.HTTPError as e:
-                msg = e.read()[:4000].decode(errors="replace")
-                print(f"  {model}: {e.code} {msg[:120]!r}")
+                raw = e.read().decode(errors="replace")
                 if e.code == 429:
-                    print(f"  429 (full): {msg}")
-                    if r429 > 0:
-                        r429 -= 1
-                        w = float(os.environ.get("TTS_429_WAIT", "65") or 65)
-                        print(f"  429: waiting {w:.0f} s, then again ({r429} retries left)")
-                        time.sleep(w)
-                        continue
-                    break
+                    q = quota_info(raw)
+                    print(_quota_line(model, q))
+                    if q["scope"] == "day":
+                        at = utc_at(q["retry"]) if q["retry"] is not None else midnight_pacific()
+                        log_quota(model, "429", q, at)
+                        daily.append((model, q["ids"], q["limit"], at))
+                        lim = f" ({q['limit']}/day)" if q["limit"] else ""
+                        print(f"  {model}: its DAILY limit{lim} is spent; it resets at {utc_str(at)}: next model")
+                        break
+                    # per-minute (or not named): the day is NOT spent. Wait and retry the same model
+                    n = tries if q["scope"] == "minute" else min(1, tries)
+                    wait = (q["retry"] if q["retry"] is not None else _env("TTS_429_WAIT", 65)) + random.uniform(1, 8)
+                    log_quota(model, "429", q, utc_at(wait))
+                    if minute >= n:
+                        print(f"  {model}: still 429 after {minute} wait(s): next model")
+                        later.append((model, utc_at(wait)))
+                        break
+                    minute += 1
+                    print(f"  {model}: per-minute limit (other sessions share the key), not the day's: waiting {wait:.0f} s, "
+                          f"retry {minute}/{n} on the same model")
+                    time.sleep(wait)
+                    continue
+                print(f"  {model}: {e.code} {raw[:120]!r}")
                 if e.code not in (500, 502, 503, 504):
-                    raise SystemExit(f"TTS {e.code}: {msg}")
+                    raise SystemExit(f"TTS {e.code}: {raw[:300]}")
+                errors5 += 1
+                if errors5 >= 2:
+                    later.append((model, utc_at(300)))
+                    break
                 time.sleep(20)
-    if models and len(models) == 1:
-        raise QuotaOut(f"TTS: {models[0]} is out of quota and it is locked for this voice (docs/voices.md \"Drift gate\"): "
-                       f"run again after the quota resets (the takes so far are cached), or re-take ALL of the character's "
-                       f"lines on another model: --relock <cast id>=<model>")
-    raise SystemExit("TTS: every model refused (quota?)")
+    rerun = RERUN[0]
+    if daily and not later:   # every model's day is spent: the earliest reset
+        m, ids, lim, at = min(daily, key=lambda d: d[3])
+        spent = ", ".join(f"{d[0]}{f' ({d[2]}/day)' if d[2] else ''}" for d in daily)
+        cls = QuotaOut if models and len(models) == 1 else QuotaLater
+        locked = " (locked for this voice: docs/voices.md \"Drift gate\")" if cls is QuotaOut else ""
+        raise cls(f"TTS: the DAILY limit is spent for {spent}{locked}",
+                  f"daily limit for {spent} reached; retry after {utc_str(at)}: {rerun} (takes so far are cached)")
+    at = min([a for _, a in later] + [d[3] for d in daily])
+    names = ", ".join(m for m, _ in later)
+    cls = QuotaOut if models and len(models) == 1 else QuotaLater
+    raise cls(f"TTS: {names} still refused after the per-minute retries (other sessions are voicing; not the daily limit)",
+              f"per-minute limit on {names} (sessions contending); retry after {utc_str(at)}: {rerun} (takes so far are cached)")
 
 
 def loud_frames(x, thr):
@@ -1210,6 +1371,36 @@ def split_runs(out, beat, m, done):
     return metas
 
 
+def request_models(story, cs, narrator):
+    """A request's `model` locks its speakers (it was ignored: in "voice_takes": "beat" mode only a cast `model` locked
+    one, so a story asking for gemini-3.8-flash-lite-tts was voiced on MODELS[0]; Dog session, 2026-11-10). Written into
+    cs[speaker]["model"], where allowed() reads it in both modes. A speaker given two models (two requests, or a request
+    against its cast entry) is a SystemExit with a NEXT line: one model per character (docs/voices.md "Drift gate")."""
+    want = {}
+    for r in story.get("requests") or []:
+        if not r.get("model"):
+            continue
+        who = set(r.get("speakers") or []) | {ln.get("who", narrator) for ln in story["lines"] if ln["id"] in (r.get("lines") or [])}
+        for w in who:
+            want.setdefault(w, set()).add(r["model"])
+    for w, ms in want.items():
+        if w not in cs:
+            continue
+        cast_m = cs[w].get("model")
+        if len(ms) > 1 or (cast_m and cast_m not in ms):
+            all_m = sorted(ms | ({cast_m} if cast_m else set()))
+            raise SystemExit(f"{w}: requests[].model / cast model disagree {all_m}: one model per character\n"
+                             f"NEXT: put \"model\": \"<one of {all_m}>\" on cast {w} in story.json and drop the requests' "
+                             f"`model`, then: {RERUN[0]}")
+        m = next(iter(ms))
+        if LOCK.get(w) and LOCK[w] != m and not cast_m:   # voiced before on another model: never mix, never re-take silently
+            print(f"WARNING: {w}: a request asks for {m} but voice.json locks {LOCK[w]}: kept {LOCK[w]}. To move it: "
+                  f"--relock {w}={m} (re-takes ALL of its lines)")
+            continue
+        cs[w]["model"] = m
+    return cs
+
+
 def run_story(d, only=None, check=True, retakes=2, relock=None):
     sys.path.insert(0, str(ROOT / "scripts"))
     import voice   # the caption format (" / " chunks, CAPS lowered for speech) stays voice.py's
@@ -1222,6 +1413,7 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
     narrator = next((k for k, c in cs.items() if c.get("role") == "narrator"), "narrator")
     vf = d / "voice" / "voice.json"
     LOCK.update((json.loads(vf.read_text()).get("models") or {}) if vf.exists() else {})   # one model per character
+    request_models(story, cs, narrator)
     relock = dict(relock or {})
     for cid, c in cs.items():   # a recast (the narrator became Orus on 3.8-flash-tts): the cast's locked model wins, and
         # ALL of that character's lines are re-taken, never mixed with the old voice's takes
@@ -1335,10 +1527,17 @@ if __name__ == "__main__":
     a = sys.argv[1:]
     only = a[a.index("--only") + 1].split(",") if "--only" in a else None
     p = pathlib.Path(a[0])
-    if p.is_dir():
-        relock = dict(kv.split("=", 1) for kv in a[a.index("--relock") + 1].split(",")) if "--relock" in a else None
-        run_story(p, only, check="--no-check" not in a, retakes=int(a[a.index("--retakes") + 1]) if "--retakes" in a else 2,
-                  relock=relock)
-    else:
-        run_list(p, pathlib.Path(a[1]))
+    RERUN[0] = (f"./hb voice {a[0].rstrip('/')}" + (f" --only {','.join(only)}" if only else "")) if p.is_dir() else "python3 scripts/tts.py " + " ".join(a)
+    try:
+        if p.is_dir():
+            relock = dict(kv.split("=", 1) for kv in a[a.index("--relock") + 1].split(",")) if "--relock" in a else None
+            run_story(p, only, check="--no-check" not in a, retakes=int(a[a.index("--retakes") + 1]) if "--retakes" in a else 2,
+                      relock=relock)
+        else:
+            run_list(p, pathlib.Path(a[1]))
+    except QuotaLater as e:   # a quota stop: exit 75 (EX_TEMPFAIL), so a session can schedule its own retry
+        print(f"{STATS['requests']} API request(s), {STATS['cached']} take(s) from the cache")
+        print(e.msg)
+        print(f"NEXT: {e.next}")
+        sys.exit(EX_TEMPFAIL)
     print(f"{STATS['requests']} API request(s), {STATS['cached']} take(s) from the cache")
