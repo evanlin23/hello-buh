@@ -35,6 +35,7 @@ renders those frames (frame n = n / 10 s at fps 10).
 | acting | `lib/movie.js` | `nod`, `shake`, `lookAway`, `point`, `stepBack`, `walkTo`; `shotIn(ctx, name, ticks)` cuts a few ticks into an action; render.js adds idle life (head drift while standing), a talking head while that actor's line is up (`selfName` for the POV character), and the crouch pose |
 | extras | `/summon minecraft:mannequin ... {CustomName:"Mira"}` | drawn as players with `cast[name]`'s skin, idle life included |
 | cameras | render.js `shotCam` | Catmull-Rom paths through several keys, `orbit`, a camera pulled out of any block, handheld `drift` (default 1) |
+| wide master + crop | render.js `stunt.wideMaster`, shot `cropX`, `WIDE_DIR` | a 16:9 master at the output height, the output cropped from it (the centre or `cropX` -1..1); the masters kept with WIDE_DIR |
 | shot sheet | `scripts/shot_sheet.py rec.json [out.jpg]` | one labelled frame per shot in ~30 s, the look included: check cameras before a full render |
 | record only | `scripts/record.sh` (`KEEP_WORLD=1` keeps the world) | run.sh's server + bot half (no Shorts render) |
 | local scenes | `scripts/longform.py` (`"local": true`) | a segment from `work/<name>.rec.json` with its stunt module's own `edit` block, instead of a `videos` package |

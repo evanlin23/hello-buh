@@ -12,6 +12,8 @@ the story path: docs/stories.md "Cinematic stories". Values marked (pilot) were 
 ## The frame
 - **Story Shorts:** the game view is 1080x1011 between the caption bands (edit.py), nearly square. No letterbox
   (`look.letterbox` only for 16:9 movies). Frame for a square: one subject big, or two side by side.
+- **Wide master, cropped:** `wideMaster: true` renders 1797x1011 and crops the 1080x1011 game view (per camera shot
+  `cropX` -1..1); `WIDE_DIR=dir` keeps the 16:9 masters. Shot sheets are 16:9: only their middle 60% is the Short.
 - **Eyes on the upper third** (y ~0.33 of the game view). Captions sit at 0.70: nothing important below 0.62.
 - **Room in front** of a face or a walk: the subject a third in from the side it comes from.
 

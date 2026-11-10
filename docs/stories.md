@@ -65,6 +65,12 @@ hud: false,                                                               // ...
   Camera shots hide the HUD and draw the narrator from outside (the player with `cast.self`'s skin, or
   `stunt.self.model`). Specs: `path`/`lookPath` (cranes, pull-outs), `follow` + `offset` + `lag`, `orbit`,
   `at` + `look` (+ `push`), the auto-framed `two`/`single`/`ots` (movie_engine.md has them all).
+- **The format is always the Short** (owner, 2026-11-10: "the same title and then gameplay in the middle"): the
+  channel's 1080x1920 layout from edit.py, the game view 1080x1011. Set `wideMaster: true` on the stunt to render
+  each frame as a 16:9 master at the game view's height (1797x1011) and crop the game view from it: the centre, or a
+  camera shot's `cropX` (-1 = the master's left edge, 1 = its right) to keep a subject in. The crop is the same picture
+  (scale, field of view, the hand) as a plain 1080x1011 render (checked: 0 pixels differ). `WIDE_DIR=dir` also keeps
+  the masters for trailers and 16:9 cuts. Compose for the crop: the shot sheet is 16:9, so judge its middle 60%.
 - **Which shots, when** (from the pilot):
   - POV carries the narrator's experience and the mystery (what "I" see, the low eye, the clues that live in the
     first person). Camera shots carry the world and the truth: the establishing crane, the follow, the night wide.

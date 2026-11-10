@@ -1010,6 +1010,13 @@ function selfAt (t) {
   for (const m of SELF_MARKS) { if (m.t / 50 > t) break; if (m.eye !== undefined) s.eye = m.eye; if (m.model) s.model = m.model; if (m.extra) Object.assign(s.extra, m.extra) }
   return s
 }
+// stunt.wideMaster (or WIDE_MASTER=1): render a 16:9 master at the output height (1797x1011 for a Short) and write
+// the W x H output cropped from it: the centre, or a camera shot's `cropX` (-1 left edge .. 1 right edge). Same
+// vertical field of view and scale, so a POV frame (hand included) is the same picture as a W x H render. WIDE_DIR=dir
+// also saves every master frame (trailers, 16:9 cuts). Owner, 2026-11-10: "we should have the full wide, but then
+// crop it or smth for the final video"
+let cropNow = 0
+const MW = (STUNT_MOD.wideMaster || process.env.WIDE_MASTER) ? Math.max(W, Math.round(H * 16 / 9)) : W
 const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
 for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
 function shotAt (t) {
@@ -1556,7 +1563,7 @@ function camAtLive (t) {
   await new Promise(r => server.listen(0, '127.0.0.1', r))
 
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] })
-  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 })
+  const page = await browser.newPage({ viewport: { width: MW, height: H }, deviceScaleFactor: 1 })
   page.on('pageerror', e => console.error('page error:', e.message))
   page.on('console', m => { if (m.type() === 'error') console.error('page:', m.text()) })
   await page.goto(`http://127.0.0.1:${server.address().port}/`)
@@ -2016,6 +2023,7 @@ function camAtLive (t) {
     // the camera director (stunt.shots + 'shot' marks, above): a camera shot draws the player's body and
     // no hand, like CAM=; a POV shot is the plain first-person view
     const shotNow = process.env.CAM ? null : shotAt(t)
+    cropNow = shotNow && !shotNow.pov && shotNow.cropX ? Math.max(-1, Math.min(1, shotNow.cropX)) : 0
     const camShot = !!(shotNow && !shotNow.pov)
     if (camShot) {
       const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
@@ -2424,7 +2432,15 @@ function camAtLive (t) {
     const outPng = `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png`
     if (process.env.SCREENSHOT) {   // the old capture: let the compositor present the frame, then screenshot
       await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
-      await page.screenshot({ path: outPng })
+      await page.screenshot({ path: outPng, clip: { x: Math.round((MW - W) / 2 * (1 + cropNow)), y: 0, width: W, height: H } })
+    } else if (MW > W) {   // stunt.wideMaster: the output is a crop of the wide master (and the master itself with WIDE_DIR)
+      const [crop, wide] = await page.evaluate(([x0, w, h, keep]) => {
+        const c = document.querySelector('canvas'), o = document.createElement('canvas'); o.width = w; o.height = h
+        o.getContext('2d').drawImage(c, x0, 0, w, h, 0, 0, w, h)
+        return [o.toDataURL('image/png'), keep ? c.toDataURL('image/png') : null]
+      }, [Math.round((MW - W) / 2 * (1 + cropNow)), W, H, !!process.env.WIDE_DIR])
+      fs.writeFileSync(outPng, Buffer.from(crop.slice(crop.indexOf(',') + 1), 'base64'))
+      if (wide) { fs.mkdirSync(process.env.WIDE_DIR, { recursive: true }); fs.writeFileSync(`${process.env.WIDE_DIR}/${path.basename(outPng)}`, Buffer.from(wide.slice(wide.indexOf(',') + 1), 'base64')) }
     } else {
       // read the WebGL drawing buffer itself (preserveDrawingBuffer, alpha off). A screenshot comes
       // from the compositor, and on a busy machine it sometimes returned the previous frame: walks
