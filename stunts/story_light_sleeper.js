@@ -406,6 +406,11 @@ module.exports = {
       if (r % 6 === 0 && r < 30) ctx.particles('block', P(0, 1, 4), { block: 'white_carpet' })
       if (r === 26) { const e = wEnt(); if (e) ctx.mark('pose', { ids: [e.id], roar: true }); ctx.sound('entity.warden.roar', 1.4, 1) }
       if (k === toPov) { K.ctl('jump', false); K.shot('pov') }
+      if (k === T16 - 9) {   // the beam on the live picture, 0.45 s before the hit lands (review round 2)
+        const eye = bot.entity.position
+        ctx.sound('entity.warden.sonic_boom', 1.6, 1)
+        ctx.particles('sonic_boom', P(0.5, 2.6, wd.z), { tx: +eye.x.toFixed(3), ty: +(eye.y + 1.62).toFixed(3), tz: +eye.z.toFixed(3) })
+      }
       if (k >= toPov) {
         const u = (k - toPov) / Math.max(1, T16 - toPov)
         wd.z = 4.5 - 1.0 * K.ease(u * 1.4); wd.pitch = Math.sin(k / 4) * 10
@@ -414,9 +419,6 @@ module.exports = {
       look(k)
     })
     // the sonic boom right as the line lands, then the death screen ~1.2 s, the plaza pulsing behind it
-    const eye = bot.entity.position
-    ctx.sound('entity.warden.sonic_boom', 1.6, 1)
-    ctx.particles('sonic_boom', P(0.5, 2.6, wd.z), { tx: +eye.x.toFixed(3), ty: +(eye.y + 1.62).toFixed(3), tz: +eye.z.toFixed(3) })
     say('/damage @s 15 minecraft:sonic_boom')   // vanilla hard: 15; the arrow left him at 15
     for (let k = 0; k < 26; k++) { wd.yaw = 180 + Math.sin(k / 5) * 22; wd.pitch = 10 + Math.sin(k / 7) * 8; await bot.waitForTicks(1) }
     ctx.mark('story_end')

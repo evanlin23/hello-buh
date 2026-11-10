@@ -123,9 +123,12 @@ function spawn (ev, blockTex) {
     // the warden's sonic boom (SonicBoom.tick): from its chest (x, y, z) toward the target (tx, ty, tz), one
     // SonicBoomParticle per block for distance + 7 blocks, all on the same tick; each is a HugeExplosionParticle with
     // quadSize 2 (multiplier 0), lifetime 16, sonic_boom_0..15, full bright, white
+    // Drawn here at about a block across (size 0.6: in game the rings read ~1 block, and size 2 filled a POV frame),
+    // fanning out from the chest half a tick a block so the beam reads as travelling, and none within 1.2 blocks of
+    // the target (the camera, in a POV shot: those were screen-filling blobs; review, story_light_sleeper)
     const dx = ev.tx - ev.x, dy = ev.ty - ev.y, dz = ev.tz - ev.z, d = Math.hypot(dx, dy, dz) || 1
-    for (let i = 1; i < Math.floor(d) + 7; i++) {
-      out.push({ t0: T0, x: ev.x + dx / d * i, y: ev.y + dy / d * i, z: ev.z + dz / d * i, vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 16, size: 2, anim: ['particle/sonic_boom_', 16], bright: true, color: [1, 1, 1] })
+    for (let i = 1; i < d - 1.2; i++) {
+      out.push({ t0: T0 + i * 0.5, x: ev.x + dx / d * i, y: ev.y + dy / d * i, z: ev.z + dz / d * i, vx: 0, vy: 0, vz: 0, g: 0, drag: 1, life: 16, size: ev.size || 0.6, anim: ['particle/sonic_boom_', 16], bright: true, color: [1, 1, 1] })
     }
   }
   if (ev.type === 'explosion') {
