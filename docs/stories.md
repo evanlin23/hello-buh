@@ -130,6 +130,10 @@ the Shorts action column), white with a dark outline and a soft shadow,
 key words in the story's colour, centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
+**The current rules, de-duplicated by stage with their checks: `docs/STANDARDS.md` (`./hb rules`).** The house rules
+below are the dated history (newest first, some superseded); a new owner rule goes at the top here and into
+STANDARDS.md in the same commit.
+
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
 - **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart

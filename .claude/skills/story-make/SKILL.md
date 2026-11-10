@@ -9,12 +9,14 @@ The owner (2026-11-10): "you should do your best to automate everything, this en
 skill takes one story from an empty page to a published package on the `videos` branch. The auto-uploader
 (`uploads/queue.txt`, `scripts/youtube_upload.py`, 3 a day) posts it; nobody has to press anything.
 
-The bar is in `docs/stories.md` (house rules: the owner's dated quotes outrank everything) and
-`docs/story_craft.md`. Serious, professional, cinematic, real acted voices, built sets with depth, wide enough
+The bar is **`docs/STANDARDS.md`**: every current rule once, by stage, with its number and the check that enforces
+it (`./hb rules` prints it; `docs/stories.md` "House rules" is the dated history behind it, and the owner's quotes
+outrank everything) and `docs/story_craft.md`. Serious, professional, cinematic, real acted voices, built sets with depth, wide enough
 shots, clean continuity, a "why tf?" hook and a twist worth a rewatch.
 
 ## Before you start (5 min)
-1. `git pull` main. Read `docs/stories.md` (house rules + the premise bank: what's claimed or made),
+1. `git pull` main. Read `docs/STANDARDS.md` (the checklist), `docs/stories.md` (the premise bank: what's claimed or
+   made; the house rules only when a standard's source needs its reason),
    `docs/story_craft.md`, `docs/building_guide.md`, `docs/agent_guide.md` and `docs/voices.md` if present, and the
    `cinematic-style` skill if present.
 2. **Owner notes first.** Read the review notes the owner left on the review page (see "Feedback" below) and
@@ -22,7 +24,7 @@ shots, clean continuity, a "why tf?" hook and a twist worth a rewatch.
    style skill before you make anything new.
 3. Check `pgrep -af "server.jar|bot.js"`: one server batch at a time per container (`./hb doctor` says whose).
    **Run `./hb rules` now and again before voicing (2), recording (4) and rendering (5):** the owner adds rules during
-   the day; a new `id` or newest date means re-read docs/stories.md "House rules" and fix the story before that step.
+   the day; a new `id`, or "STANDARDS.md IS BEHIND", means read the listed new rule(s) and fix the story before that step.
 4. Create your branch `claude/story-<name>` once you have a name; claim the premise in `docs/stories.md` in its own
    commit and push it, so two sessions never make the same story.
 
@@ -44,6 +46,13 @@ too close to a made story; vary the lane: eerie / absurd / heart) → beat sheet
 - **Gate:** critic `approve` and premise test ≥ 8/10. Max 2 revision rounds; if it still fails, take the next pitch.
   Scripts already written and approved by a writers' room (`stories/*/` with `beats.md`, `bible.md`, not yet made)
   may be used instead of writing a new one.
+
+## 2-7. One command: `./hb make story_<name>`
+From here to the publish gate, run `./hb make story_<name>` and fix what it stops on: it voices, records, checks,
+renders on Actions, fetches, paces and prepares the review, skipping whatever is already fresh, and prints each
+blocker with its fix (docs/agent_guide.md "One command"). Re-run it after every fix or wait; after a container restart
+it resumes from `work/story_<name>.make.json`. Edit-only fixes (pace/review blockers in the edit): `./hb make
+story_<name> --from render` reuses the frames. The sections below are what each stage checks and what you decide.
 
 ## 2. Voice (~10 min)
 Gemini TTS via `scripts/tts.py` (the proxy injects the key: header `x-goog-api-key: proxy`). Cast from
@@ -94,6 +103,12 @@ survives round 2, stop, push, and report it to the owner instead of publishing.
 backwards compatible (existing stunts render unchanged); otherwise leave the branch. Don't edit the upload queue:
 the uploader ranks ready Shorts itself.
 
+## Owner rules -> STANDARDS.md
+A new owner note (below, "Owner notes go to main at once") is added to docs/stories.md "House rules" **and** folded into
+docs/STANDARDS.md in the same commit: the standard in its stage (replace what it supersedes, and list that under
+"Superseded"), its number, its check, `r:<key>` (`./hb rules --log` shows the new rule's key), and the "Updated:"
+stamp. `npm test` and `./hb rules --check` fail until both agree.
+
 ## 8. Report
 Write `docs/runs/<date>_<name>.md`: the premise, minutes per stage (active vs waiting), recordings, renders, review
 rounds, blockers, tool problems and what you changed. End your session with a 5-line summary for the owner.
@@ -127,8 +142,8 @@ more than ~2 h gets staged around, and it's logged in docs/engine_requests.md.
 
 ## Owner notes go to main at once (lead, 2026-11-10)
 When the owner gives you a note in your session, it's a rule for every story, not just yours. In the same hour:
-add it as a dated quote (and what it means in practice) to the top of docs/stories.md "House rules" **on main**, in
-its own small commit (`git fetch origin main && git checkout -B rules origin/main`, edit, commit,
+add it as a dated quote (and what it means in practice) to the top of docs/stories.md "House rules" **on main**, and
+fold it into docs/STANDARDS.md ("Owner rules -> STANDARDS.md" above), in its own small commit (`git fetch origin main && git checkout -B rules origin/main`, edit, commit,
 `git push origin rules:main`; retry on a race), then go back to your branch. This is the one thing you push to main
 directly. Shared tools you build (a checker, a splitter, a map) also go to main once tested, so the next session
 doesn't rebuild them.
