@@ -106,3 +106,18 @@ the first time (now in the skill).
     nobody moving, so Grandma now sways under it.
 - Tool fix (main cca4086): `./hb render X --wait` doesn't queue a render. When the recording was newer than the last
   queue, it fetched the old Short (it did that here once). It now refuses and says "./hb render X" first.
+- The lead's addendum and the owner's direction, folded in for preview 3 (render/ after 22:10 UTC):
+  - B5, gold on screen: a "GOLD SENT: 9,000" sign, 4 ingots in frames beside the portal, a gold step at the
+    ladder, a gold-block table and the S01 stack.
+  - B6, set-ups: over the shoulder at the barrel, high from the ladder (L08, L10), a low reverse from the portal's
+    north side (L08, L11), the middle gift from low at the portal's foot. 22 shots.
+  - F1, the pad's cut edges: lib/sets `banks` (opt-in; main 7879439), so the portal cottage meets the hill in
+    earth banks and cut slopes, not retaining walls.
+  - B3: edit.guiScale 4 and tinted potions (main 1337b60).
+- Previews 1 and 2 had the S14 camera inside the narrator's head: the payoff frame was a blur of Steve's skin.
+  In the vNext port L11 leaves him at 7.0, 5.5, and s14 stood at 6.9, 5.5. Only the sheet showed it: the lint and
+  the subject check passed it, because the subject (the piglin) was 100% seen and the narrator was too close to
+  count as an occluder. Moved to 7.65, 5.95.
+- A server stall (~1.6 s) at L01's start once froze Grandma and then jumped her 75 degrees, and the lint caught it
+  ("nobody moves"). The next recording was clean.
+- Voicing: on hold. The owner wants a new brand narrator voice, not the sped-up Orus.
