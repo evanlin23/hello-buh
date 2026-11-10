@@ -27,6 +27,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
    reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
    story-critic, cold reader (does the end flow into the start?). r:r30c821
+0c. **The held stories use their approved arc rewrites** (stories/<name>/script_vNext.md; Good Boy: a new premise);
+   the finished cut is still held for the owner's OK. Check: owner. r:r69e712
 4. **Understood on one watch, nothing extra**: no unexplained names (set up every name first), no punchline that
    explains a twist the picture already landed, no sting after the story ends. Check: cold reader, story-critic.
    r:r0d320b
@@ -120,6 +122,13 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
    docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
    check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
+5. **The set matches the narration's claims**: every claim the lines make about the place ("everything is carpeted",
+   "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
+   them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
+6. **A full, funny hotbar**: all 9 slots filled, the story's own tools first, then 1-3 ridiculous items that fit the
+   world (milk buckets, cake, 64 eggs); never contradicting the story, the same between shots. story.json "hotbar".
+   Check: review (stills), rec_check (hotbar). r:rdc3c4c
+
 ## 3b. Motion (built in, not caught)
 1. **Smooth by construction**: stunts move the camera, the player and NPCs only through the story kit's primitives
    (eased turns, pathing walks, vanilla-speed NPCs, a still camera while a GUI is open); a lint before recording

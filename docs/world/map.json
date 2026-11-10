@@ -1593,11 +1593,18 @@
   },
   "good_boy": {
    "day": 3300,
-   "places": [
-    "saltmouth"
+   "span": [
+    3300,
+    3400
    ],
-   "status": "held (rework)",
-   "cameos": []
+   "places": [
+    "saltmouth",
+    "dog_hill"
+   ],
+   "status": "script approved (rework, 2026-11-10): to build",
+   "cameos": [
+    "boxed_bell"
+   ]
   },
   "dog_hill": {
    "day": 4300,
