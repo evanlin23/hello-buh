@@ -136,6 +136,7 @@ module.exports = {
 
     // ---- the sheep meadow on the east slope (S02's last frame): a fence on the ground, ~50 sheep, half sheared
     const mx0 = 34, mx1 = 62, mz0 = 22, mz1 = 44, fence = []
+    for (const tag of ['#minecraft:leaves', '#minecraft:logs']) for (const [y0, y1] of [[-18, -4], [-3, 12]]) await ctx.cmd(`/fill ${A(34, y0, 18)} ${A(62, y1, 44)} air replace ${tag}`, { mayFail: true })   // no trees between the L03 camera and the flock
     for (let x = mx0; x <= mx1; x++) for (const z of [mz0, mz1]) fence.push([x, z])
     for (let z = mz0; z <= mz1; z++) for (const x of [mx0, mx1]) fence.push([x, z])
     await fast(fence.map(([x, z]) => `/setblock ${A(x, G(x, z) + 1, z)} oak_fence`))
@@ -145,6 +146,7 @@ module.exports = {
       const x = mx0 + 1.5 + rnd() * (mx1 - mx0 - 3), z = mz0 + 1.5 + rnd() * (mz1 - mz0 - 3)
       await mob('sheep', x, G(Math.floor(x), Math.floor(z)) + 1, z, Math.floor(rnd() * 360), ['sheep'], `Sheared:${i % 2 ? 1 : 0}b,Color:0b`)
     }
+    for (const [t, x, z, sh] of [['g1', 44.5, 30.5, 1], ['g2', 47.5, 33.5, 0], ['g3', 50.5, 29.5, 1]]) await mob('sheep', x, G(Math.floor(x), Math.floor(z)) + 1, z, 30, [t], `Sheared:${sh}b,Color:0b`)   // the grazers (L03)
     await c(`/fill ${A(mx0 + 1, G(mx0 + 1, mz0 + 1) + 1, mz0 + 1)} ${A(mx0 + 2, G(mx0 + 1, mz0 + 1) + 2, mz0 + 2)} white_wool`)
 
     // ---- the farm edge (S09), west of the plaza on level ground: the carpet stops at x -24; grass, a wheat field, trees
@@ -218,7 +220,10 @@ module.exports = {
     await line('L02', async (k) => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
     // L03: the sheep meadow on the east slope, half sheared (camera 'meadow')
     K.shot('meadow')
-    await line('L03', async (k) => { look(k) })
+    await K.cut(38.5, 19.5, C(47, -9, 32), standY(ctx, X, Z, 38, 19))   // Buh at the meadow fence, behind the camera (off screen)
+    const grazers = [['g1', 44.5, 30.5], ['g2', 47.5, 33.5], ['g3', 50.5, 29.5]].map(([t, x, z]) => [t, K.actor(t, { x, z, y: G2(ctx, X, Z, Math.floor(x), Math.floor(z)) + 1, yaw: 30 })])
+    await line('L03', async (k) => { for (const [, a] of grazers) { K.step(a, 0.03, 0.02); a.y = G2(ctx, X, Z, Math.floor(a.x), Math.floor(a.z)) + 1; a.pitch = 20 + Math.sin(k / 6) * 15 } look(k) })
+    for (const [t] of grazers) away(t)
     away('walk1'); away('walk2')
 
     // ---- L04: POV walking east past the well toward the wool-wrapped bell (Mom already in our doorway, frame left)
@@ -255,7 +260,7 @@ module.exports = {
       }
     }
     await line('L06', async (k, at) => {
-      if (k === 0 && !digging) { digging = true; digRow().then(() => { digging = false }) }   // "Once I PULLED the WOOL off the WELL"
+      if (k === 0 && !digging) { digging = true; digRow([[0, 0]]).then(() => { digging = false }) }   // "Once I PULLED the WOOL off the WELL" (one block: K.dig's vanilla delays)
       if (!digging && dug === 0) K.base = K.aim(C(0, 1.6, 0))   // before the dig; after it, hold the last look (owner: "why does it go back to looking down afterward?")
       if (!digging) look(k)
     })
@@ -589,7 +594,7 @@ module.exports.shots = {
   // L01: the hook, a high wide over the south street looking north over the whole carpeted village, a slow push
   hook: { path: [[0, 2.5, 18, 36], [3.5, 2.5, 14.5, 29]], lookPath: [[0, 0.5, 2, -6], [3.5, 0.5, 2, -6]], ease: true, fov: 60, dof: false },
   // L03: the sheep meadow on the east slope from its fence, a slow push
-  meadow: { at: [33, -3, 19], look: [48, -10, 33], fov: 55, push: 0.3, dof: false },
+  meadow: { at: [40.5, 0, 22.5], look: [47.5, -9.5, 32], fov: 55, push: 0.3, dof: false },
   // L07: low from the north-west, behind him, looking south-east past his back at the well (the south steps beyond)
   s07: { at: [-5.5, 2.4, -6.5], look: [0.6, 2.0, -1.4], fov: 50, push: 0.25, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -0.4, 0] } } },
   // L12: the crane from ~16 above our roof (0,-12), looking south and down, into his head at (0.5, -2.75)
