@@ -87,7 +87,8 @@ scripts/render_on_actions.sh --wait story_<name>           # polls (git only), t
 - Songs aren't in git, so as with run.sh here the output has the game audio and voice only (publish.js adds the song).
 - The slices are lossless and join into the same frames, except particles on a slice's first frames (their history
   starts with the slice): on pickaxe_race 0.2% of pixels differed from a render started 60 frames earlier.
-- Never merge a `render/*` branch; delete it once you have the MP4 (`git push origin --delete render/<name>`).
+- Never merge a `render/*` branch. Delete it once you have the MP4 if your git allows it (`git push origin --delete render/<name>`; the session proxy refuses deletes, so it may stay: harmless, re-queueing force-pushes it).
+- Tested 2026-11-10: story_respawn_tax (44.4 s) rendered on Actions in ~21 min end to end, frame-identical to the published Short (mean pixel difference 0-0.4 of 255).
 
 ## QA before publishing (required)
 0. Both audits must say ready: `.claude/skills/retention-audit/SKILL.md` (with `python3 scripts/beat_audit.py <name>`)
