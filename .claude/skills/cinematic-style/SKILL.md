@@ -82,8 +82,8 @@ look: { grade: { lift: [0.02, 0.01, 0.018], gamma: [0.97, 1.0, 1.04], gain: [1.1
 9. A sneaking actor's eye is 1.27: aim at it, not 1.62.
 10. Heavy CPU work (Whisper, renders) during a recording stalls the server: the bot times out. Record alone.
 11. Placing scenes by eye from a top-down still put a swim on land and a run inside a tower (the still was
-    mis-oriented): map the recorded blocks with `node scripts/set_map.js work/<name>.rec.json map.png` and read
-    exact ground and water from map.png.json.
+    mis-oriented): map the recorded blocks (`./hb map`, or scripts/set_map.js on claude/cinematic-default) and read
+    exact ground and water from the map.
 12. A ground finder that scans from the sky lands on barrier platforms and roofs: start just above the set.
 13. Gemini swaps speakers on short lines in a two-speaker take: one speaker per request for short character lines;
     check pitch and transcript with `scripts/voice_check.py`, re-cut with `--resplit` (Whisper word gaps).
