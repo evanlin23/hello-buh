@@ -41,6 +41,45 @@ ending) on `lib/story.js`. Every story so far hand-rolled the same helpers (`c`,
 | the cast | `K.actor(tag, {x, z, yaw})` (a mob /tp'd every tick from the object; `K.step(a, dx, dz)` walks and faces it, `K.bury(tag)`), `K.tp(tag, dx, dy, dz, yaw)`, `K.flee(tag, speed)`, tag idle mobs `warm` (nudged every tick), `K.every(fn)` for ambient motion |
 | the rest | `K.go(on)`, `K.ctl(key, on)`, `K.stop()`, `K.setTime(n)` (no 4-tick stall), `K.setMeter(v)`, `K.groan()`, `K.knockback(() => attackerPos)` (mineflayer drops hit knockback on 1.21.11), `K.dig(block)` (vanilla dig speed; mineflayer's is a bare hand's), `ease`, `mcYaw` |
 
+## Cinematic stories (the default look from 2026-11-10)
+Owner, 2026-11-10: "I feel like the cinematic should be the default." The movie engine (docs/movie_engine.md) is on
+main, so a story stunt gets it by exporting a few fields; nothing else in the pipeline changes (voice.py, edit.py
+--story, rec_check, preview.sh, render_on_actions.sh all work as before). Pilot: `story_good_boy`.
+```js
+look: { grade: {...} | 'dawn' | 'night', bloom: 0.5, vignette: 0.38, grain: 0.02, dof: { aperture: 0.9 }, shadows: true, rays: 0.5 },
+shots: { pov: { pov: true }, est: { path: [[0, dx, dy, dz], [2.4, ...]], lookPath: [...], ease: true }, ... },
+self: { model: 'wolf', eye: 0.68, extra: { tame: true, collar: 14 } },   // only for a narrator who isn't a player
+hud: false,                                                               // ...who has no HUD either
+```
+- **The look on every frame** (POV too): grade, bloom, vignette, grain, sun shadows, god rays. No letterbox (the game
+  view is the frame). Depth of field applies to camera shots. Costs ~0.25 s a frame at 1080: fine on Actions.
+- **Camera shots** with `K.shot(name)` (lib/story.js): from this tick the picture is `stunt.shots[name]`, a pure
+  function of time, so a camera is re-tuned and re-rendered without re-recording (`scripts/shot_sheet.py` for one
+  frame per shot in ~30 s, `scripts/try_shots.py` for candidates). `K.shot('pov')` goes back to first person.
+  Camera shots hide the HUD and draw the narrator from outside (the player with `cast.self`'s skin, or
+  `stunt.self.model`). Specs: `path`/`lookPath` (cranes, pull-outs), `follow` + `offset` + `lag`, `orbit`,
+  `at` + `look` (+ `push`), the auto-framed `two`/`single`/`ots` (movie_engine.md has them all).
+- **Which shots, when** (from the pilot):
+  - POV carries the narrator's experience and the mystery (what "I" see, the low eye, the clues that live in the
+    first person). Camera shots carry the world and the truth: the establishing crane, the follow, the night wide.
+  - **The camera can show what the narrator can't.** In good_boy every camera shot shows the "dog" beside the guy:
+    that's the narrator. The POV hides who I am, the cameras show it all along, and the reveal is the first shot
+    that starts inside my head and pulls out (`reveal`: a path whose first key is the POV eye). Rewatchable.
+  - An establishing shot after a run of POV lines resets the viewer (where we are, what time it is); a camera shot
+    on a story beat (the zombie hits him) reads better than POV, which can't see the hit.
+  - Keep camera shots 1-3 s, one per line at most; the 9:16-ish game view (1080x1011) is nearly square: frame two
+    subjects side by side or one big; keep the faces in the upper half (the captions sit at 70%).
+  - Cuts between POV and camera shots are free (the camera director switches on the mark's tick), but the cast
+    still has to be in place before the shot's first frame: move them in the line before, or with a >64-block hop.
+- **rec_check** skips its POV checks (cuts, held, turns, set) inside camera shots and says so; check those cameras
+  with `LINT=1 node render.js work/<name>.rec.json` (camera in a block, subject hidden or too small, frozen shots).
+- **A narrator who isn't a player** (`stunt.self`): `eye` puts the POV camera at that height (a wolf 0.68, sitting
+  0.5), `model`/`extra` draw them in camera shots; `K.self({ sitting: true }, 0.5)` changes it on a word.
+  The wolf model is Java-accurate (sitting, tail, tame/angry eyes, dyed collar); other mobs draw from their
+  converted models.
+- **Channel art and thumbnails** from any recording: `scripts/still.py REC out.png --at S --size WxH --shot '{...}'
+  [--look '{...}'] [--time N] [--ss 2]`, text with `scripts/channel_art.py`.
+
 ## Setup (once per container)
 ```bash
 apt-get install -y espeak-ng                     # Kokoro's phonemizer for unknown words
