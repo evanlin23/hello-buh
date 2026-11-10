@@ -24,7 +24,8 @@
    "role": "character",
    "ref": "mom",
    "color": "#FFB38A",
-   "on_screen": "villager, plains farmer (straw hat), no name tag"
+   "on_screen": "villager, plains farmer (straw hat), no name tag",
+   "model": "gemini-3.8-flash-tts"
   }
  },
  "lines": [
