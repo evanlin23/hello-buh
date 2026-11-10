@@ -20,13 +20,17 @@ const rec = JSON.parse(fs.readFileSync(recPath))
 // to load stops the render: swallowed, it rendered with a first-person hand, the default brightness and no zoom, and
 // said nothing (pipeline test gap 11: a hand in every still of story_nitwit). STUNT_OPTIONAL=1 renders without it.
 let STUNT_MOD = {}
+// the stunt module carries render options (hideHand, brightness, fovZoom, dimension, weather...): a stunt that
+// fails to load used to be skipped silently, and the render came out with a hand and the wrong light (story_nitwit
+// stills 3). Exit 2, unless STUNT_OPTIONAL=1 (ALLOW_NO_STUNT=1 is the same) renders without its options, said loudly.
 {
   const f = path.join(__dirname, 'stunts', `${rec.stunt}.js`)
-  if (!fs.existsSync(f)) console.log(`render.js: no stunts/${rec.stunt}.js: rendering with the default options`)
+  if (!rec.stunt || !fs.existsSync(f)) console.log(`render.js: no stunts/${rec.stunt}.js: rendering with the default options`)
   else {
     try { STUNT_MOD = require(f) } catch (e) {
-      console.error(`render.js: stunts/${rec.stunt}.js failed to load, so its render options (hideHand, brightness, fovZoom...) would be lost:\n${e.stack.split('\n').slice(0, 4).join('\n')}`)
-      if (!process.env.STUNT_OPTIONAL) { console.error('fix the stunt (node -e "require(\'./stunts/' + rec.stunt + '\')"), or STUNT_OPTIONAL=1 to render without it'); process.exit(2) }
+      console.error(`\n*** render.js: stunts/${rec.stunt}.js failed to load, so its render options (hideHand, brightness, fovZoom...) would be lost ***\n${(e && e.stack || String(e)).split('\n').slice(0, 6).join('\n')}`)
+      if (!process.env.STUNT_OPTIONAL && process.env.ALLOW_NO_STUNT !== '1') { console.error('*** stopping: fix the stunt (node -e "require(\'./stunts/' + rec.stunt + '\')"), or STUNT_OPTIONAL=1 to render without its options ***\n'); process.exit(2) }
+      console.error('*** STUNT_OPTIONAL: rendering WITHOUT the stunt\'s options ***\n')
     }
   }
 }
@@ -568,8 +572,8 @@ const RAIN = [], THUNDER = []
 }
 const levelAt = (A, t) => { const i = Math.max(0, Math.min(A.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i)); return A[i] + (A[i + 1] - A[i]) * f }
 // the lightmap's sky darkening follows the rain in 1/16 steps (each step re-lights the whole world)
-const weatherKey = (t) => `${Math.round(levelAt(RAIN, t) * 16)},${Math.round(levelAt(THUNDER, t) * 16)}`
 const weatherLight = (t) => [Math.round(levelAt(RAIN, t) * 16) / 16, Math.round(levelAt(THUNDER, t) * 16) / 16]
+const weatherKey = (t) => `${Math.round(levelAt(RAIN, t) * 16)},${Math.round(levelAt(THUNDER, t) * 16)}`
 setDayTime(dayTimeAt(0), ...weatherLight(0))
 // LevelRenderer rain: columns within 10 blocks (fancy) of the camera, from the MOTION_BLOCKING
 // heightmap up to camera + 10, a texture that scrolls per column, and splash particles where drops land.
@@ -1626,16 +1630,20 @@ function camAtLive (t) {
   const minVisibleY = Math.min(mesher.lowestSurface(), Math.floor(Math.min(...P.map(p => p[2]))) - 24) - 8
   console.log('meshing from y', minVisibleY)
   console.log(`light computed in ${(mesher.computeLight(minVisibleY) / 1000).toFixed(1)} s`)
-  {
-    // the first mesh of the whole area, split over worker threads (MESH_WORKERS, default: the core
-    // count, at most 4); each slice is byte-identical to meshing it here. 1 = the old single thread.
+  // the whole area meshed again (the first mesh, and every change of the lightmap's sky factor: time of
+  // day, rain), split over worker threads (MESH_WORKERS, default: the core count, at most 4); each slice is
+  // byte-identical to meshing it here. 1 = the old single thread. A worker rebuilds the world from the
+  // recording plus the first `blocksDone` block changes, so it meshes the world as it is now (one full
+  // re-mesh was ~38 s on one core for story_nitwit's 391 columns, and its sunset had 14 of them).
+  const sendAll = async (blocksDone, t) => {
     const list = mesher.sections(minVisibleY)
     const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
     if (nw > 1) {
-      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(0), rain: weatherLight(0)[0], thunder: weatherLight(0)[1], dimension: DIM })
+      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
       for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
     } else await send(list)
   }
+  await sendAll(0, 0)
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
 
   // particles from recorded events (block crumbs use the block's particle texture in the atlas)
@@ -1803,7 +1811,15 @@ function camAtLive (t) {
   let bi = 0
   const sentBlocks = new Set()
   let relightBB = null, lastRelight = -99
-  let curDayTime = dayTimeAt(0), curWeather = weatherKey(0)
+  // the baked vertex light only depends on the lightmap's sky factor (getSkyDarken from the time of day,
+  // rain and thunder: models.setDayTime), so the world is re-meshed only when that changes. From noon to
+  // ~11200 it stays 1: story_nitwit's 43-step sunset re-meshed the world 43 times (~38 s each on one
+  // core), of which 29 drew exactly the same, and its last Actions slice took 12 min
+  // A rain step (weatherKey: rain/thunder in 1/16ths) always re-lights. DAY_LIGHT_STEP=0.025 (scripts/cinematic.py) also
+  // rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame.
+  const DAY_STEP = Number(process.env.DAY_LIGHT_STEP || 0)
+  const skyKey = (t) => { const d = dayInfo(dayTimeAt(t), ...weatherLight(t)).dark; return `${DAY_STEP ? Math.round(d / DAY_STEP) : d.toFixed(6)}|${weatherKey(t)}` }
+  let curDayTime = dayTimeAt(0), curWeather = weatherKey(0), curSky = skyKey(0)
   const t1 = Date.now()
   // Block entities drawn by entity renderers (renderer/blockentities.js): signs with their text,
   // chests (lid from block_action marks), beds. Signs carry NBT in the chunk data and in
@@ -1957,15 +1973,24 @@ function camAtLive (t) {
         // its edges, so a changed cell marks the sections of its 26 neighbours too). Re-meshing the
         // bounding box of all changes re-did ~2000 sections per relight when a recording had block
         // changes scattered far apart (water_clutch: 12 s per relight)
+        // (the arrays are ~35M cells for a 20x20-chunk recording: compare 4 kB blocks with memcmp first,
+        // and only walk the blocks that differ; the plain loop was ~2 s per relight)
         const { SX, SZ, x0, z0, yMin } = L1, plane = SX * SZ, a0 = L0.sky, b0 = L0.blk, a1 = L1.sky, b1 = L1.blk
+        const A0 = Buffer.from(a0.buffer, a0.byteOffset, a0.length), A1 = Buffer.from(a1.buffer, a1.byteOffset, a1.length)
+        const B0 = Buffer.from(b0.buffer, b0.byteOffset, b0.length), B1 = Buffer.from(b1.buffer, b1.byteOffset, b1.length)
         const seen = new Set()
-        for (let i = 0; i < a1.length; i++) {
-          if (a0[i] === a1[i] && b0[i] === b1[i]) continue
-          const x = x0 + i % SX, z = z0 + Math.floor(i / SX) % SZ, y = yMin + Math.floor(i / plane)
-          for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
-            const sx = Math.floor((x + dx) / 16) * 16, sy = Math.floor((y + dy) / 16) * 16, sz = Math.floor((z + dz) / 16) * 16
-            const k = `${sx},${sy},${sz}`
-            if (!seen.has(k)) { seen.add(k); mark(sx, sy, sz) }
+        const near = (v) => (v & 15) === 0 ? [(v - 1) >> 4, v >> 4] : (v & 15) === 15 ? [v >> 4, (v + 1) >> 4] : [v >> 4]
+        for (let s0 = 0; s0 < a1.length; s0 += 4096) {
+          const s1 = Math.min(a1.length, s0 + 4096)
+          if (A1.compare(A0, s0, s1, s0, s1) === 0 && B1.compare(B0, s0, s1, s0, s1) === 0) continue
+          for (let i = s0; i < s1; i++) {
+            if (a0[i] === a1[i] && b0[i] === b1[i]) continue
+            const x = x0 + i % SX, z = z0 + Math.floor(i / SX) % SZ, y = yMin + Math.floor(i / plane)
+            // the sections of its 26 neighbours = its own, plus the next one over where it sits on an edge
+            for (const qx of near(x)) for (const qy of near(y)) for (const qz of near(z)) {
+              const k = `${qx},${qy},${qz}`
+              if (!seen.has(k)) { seen.add(k); mark(qx * 16, qy * 16, qz * 16) }
+            }
           }
         }
       } else {
@@ -1976,14 +2001,12 @@ function camAtLive (t) {
         }
       }
     }
-    if (dayTimeAt(t) !== curDayTime || weatherKey(t) !== curWeather) {   // the time or the rain changed: re-light everything
-      // ...but only when the block light it bakes in changes: the sky darkening (getSkyDarken) is 1 all day long, so a
-      // sun moving through a day (scripts/cinematic.py: a time mark every frame) re-meshes nothing. DAY_LIGHT_STEP=0.025
-      // also rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame
-      const step = Number(process.env.DAY_LIGHT_STEP || 0), lk = (d, w) => { const v = dayInfo(d, ...weatherLight(t)).dark; return `${step ? Math.round(v / step) : v}|${w}` }
-      const same = lk(dayTimeAt(t), weatherKey(t)) === lk(curDayTime, curWeather)
-      curDayTime = dayTimeAt(t); curWeather = weatherKey(t)
-      if (!same) { setDayTime(curDayTime, ...weatherLight(t)); dirty.clear(); await send(mesher.sections(minVisibleY)) }
+    curDayTime = dayTimeAt(t); curWeather = weatherKey(t)   // the sky, sun, stars, fog and rain follow them every frame (page.js)
+    if (skyKey(t) !== curSky) {   // the baked light changed (sky darkening from the time of day or the rain): re-light everything
+      curSky = skyKey(t); setDayTime(curDayTime, ...weatherLight(t)); dirty.clear()
+      const tr = Date.now()
+      await sendAll(bi, t)
+      if (process.env.PROFILE) console.log('sky factor', curSky, 'at', t.toFixed(1), ': re-meshed the world in', Date.now() - tr, 'ms')
     }
     prof('blocks+relight')
     if (dirty.size && process.env.PROFILE) console.log("send", t.toFixed(1), dirty.size)
@@ -2453,6 +2476,8 @@ function camAtLive (t) {
   }
   const secs = (Date.now() - t1) / 1000
   if (process.env.PROFILE) { const tot = Object.values(PROF).reduce((x, y) => x + y, 0); for (const [k, v] of Object.entries(PROF).sort((x, y) => y[1] - x[1])) console.log(`  ${k.padEnd(20)} ${(v / 1000).toFixed(1)} s  ${(v / tot * 100).toFixed(0)}%`) }
-  console.log(`rendered ${frames} frames (${(frames / FPS).toFixed(2)} s of video) in ${secs.toFixed(1)} s = ${(secs / (frames / FPS)).toFixed(1)} s per video second`)
+  // (a sparse render, FRAMES= / ONLY=, said "rendered 2583 frames" for 200: count what it drew)
+  const nDrawn = only ? only.length : frames
+  console.log(`rendered ${nDrawn} frames${only ? ` of ${frames}` : ''} (${(nDrawn / FPS).toFixed(2)} s of video) in ${secs.toFixed(1)} s = ${(secs / Math.max(1e-9, nDrawn / FPS)).toFixed(1)} s per video second`)
   await browser.close(); server.close(); process.exit(0)
 })()

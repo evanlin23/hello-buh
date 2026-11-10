@@ -114,7 +114,8 @@ class LightEngine {
     const { SX, SZ, SY, op, emit } = this
     const sky = this.sky = new Uint8Array(SX * SZ * SY)
     const blk = this.blk = new Uint8Array(SX * SZ * SY)
-    const queue = new Int32Array(SX * SZ * SY + 16)
+    // the ring buffer is reused: a fresh 140 MB array per relight was a good part of each relight's time
+    const queue = this.queue && this.queue.length === SX * SZ * SY + 16 ? this.queue : (this.queue = new Int32Array(SX * SZ * SY + 16))
     // sky: straight down from the top
     let qh = 0, qt = 0
     const plane = SX * SZ
