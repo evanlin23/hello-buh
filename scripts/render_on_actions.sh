@@ -18,7 +18,9 @@
 # three folders are carried over. The finished Short comes back on the render branch (renders/out/<name>.mp4 +
 # renders/result.json), so fetching needs only git; it's also the run's "short" artifact.
 # Env: SLICES (16, at most 32; cut to equal estimated render time), FPS (60), RENDER_BRANCH, REMOTE (origin),
-# PICTURE_KEY / REUSE_RUN (set by `hb render --reuse`: re-run only the edit on a finished run's frames).
+# PICTURE_KEY / REUSE_RUN (set by `hb render --reuse`: re-run only the edit on a finished run's frames), PREVIEW=1
+# (hb render --preview: queued over known check blockers). The run checks the recording too (./hb check, in parallel
+# with the slices): a Short with blockers comes back labelled "CHECK FAILED: <n> blockers" with out/<name>.check.txt.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 REMOTE=${REMOTE:-origin}
@@ -69,7 +71,12 @@ import hashlib, json, sys
 p, commit, branch, run, mp4 = sys.argv[1:]
 json.dump({"commit": commit, "branch": branch, "run": run, "sha256": hashlib.sha256(open(mp4, "rb").read()).hexdigest()}, open(p, "w"), indent=1)
 EOF
+  # the run's ./hb check report (render-slices.yml "check" job): next to the mp4, and its verdict said out loud
+  rm -f "out/$name.check.json" "out/$name.check.txt"
+  git show "FETCH_HEAD:renders/out/$name.check.json" > "out/$name.check.json" 2>/dev/null || rm -f "out/$name.check.json"
+  git show "FETCH_HEAD:renders/out/$name.check.txt" > "out/$name.check.txt" 2>/dev/null || rm -f "out/$name.check.txt"
   echo "out/$name.mp4 ($(du -h "out/$name.mp4" | cut -f1)) from $run"
+  if [ -f "out/$name.check.txt" ]; then head -1 "out/$name.check.txt"; else echo "$name: NO CHECK REPORT from the run (the check job did not finish): run ./hb check $name before showing it"; fi
 }
 
 case "${1:-}" in
@@ -113,15 +120,17 @@ gzip -9 -c "$REC" > "$WT/renders/slices/$NAME.rec.json.gz"
 SRC=$(git rev-parse --short HEAD)
 # PICTURE_KEY (hb render): what decides the frames; REUSE_RUN: a finished run with the same key whose frames (seg-*
 # artifacts) the workflow reuses, re-running only the edit (render_slices.py plan checks they still exist)
-python3 - "$WT/renders/slices.json" "$NAME" "$STUNT" "${SLICES:-16}" "${FPS:-60}" "$SRC" "${PICTURE_KEY:-}" "${REUSE_RUN:-}" <<'EOF'
+python3 - "$WT/renders/slices.json" "$NAME" "$STUNT" "${SLICES:-16}" "${FPS:-60}" "$SRC" "${PICTURE_KEY:-}" "${REUSE_RUN:-}" "${PREVIEW:-}" <<'EOF'
 import json, sys, time
-p, name, stunt, slices, fps, src, key, reuse = sys.argv[1:]
+p, name, stunt, slices, fps, src, key, reuse, preview = sys.argv[1:]
 j = {"name": name, "stunt": stunt, "slices": int(slices), "fps": int(fps), "source": src,
      "queued": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
 if key:
     j["picture_key"] = key
 if reuse:
     j["reuse_run"] = reuse
+if preview:   # hb render --preview: rendered although the local ./hb check had blockers (the run labels it)
+    j["preview"] = True
 json.dump(j, open(p, "w"), indent=1)
 EOF
 (

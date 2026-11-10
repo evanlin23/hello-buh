@@ -14,6 +14,28 @@ it (`./hb rules` prints it; `docs/stories.md` "House rules" is the dated history
 outrank everything) and `docs/story_craft.md`. Serious, professional, cinematic, real acted voices, built sets with depth, wide enough
 shots, clean continuity, a "why tf?" hook and a twist worth a rewatch.
 
+## The run order (lead, 2026-11-10: quality built into the tools first, checks second)
+Every story run goes in this order; a step that fails is fixed before the next one starts. Every `./hb` stop ends with
+one `NEXT:` line: do what it says.
+1. **Pull main** (`git pull --rebase origin main`): other sessions push fixes all day.
+2. **`./hb doctor --story` must pass**: disk (fail under 2 GB free; `./hb clean --dry-run` then `./hb clean`), the TTS
+   venv and the caption aligner (without it captions fall back to Whisper times and caption_sync blocks), node, assets.
+3. **`npm test` green.** A red test on main is fixed (or reported to the lead) before you build on it.
+4. **Voice**: `./hb voice story_<name>` (refuses while a `stories/<name>/script*.md` is newer than story.json with other
+   lines: story.json is the script). Exit 75 is the Gemini quota: its NEXT line has the UTC retry time and the command;
+   `./hb quota` shows today's counts. A per-minute 429 is retried by tts.py itself; never read it as "the day is spent".
+5. **Align**: `./hb voice` runs `scripts/align.py`; `python3 scripts/caption_sync.py stories/<name>` must be OK.
+6. **`./hb check story_<name>` before recording** (motion lint incl. own line clocks, hotbar, script drift, caption sync).
+7. **Record**: `./hb record story_<name>` (refuses under 2 GB free and on motion-lint hits).
+8. **`./hb check story_<name>`**: every check (rec_check with the cast-motion and sight sections, lint, continuity,
+   framing, owner, cuts, caption sync, on-screen sound --strict). Fix every blocker by re-recording.
+9. **Render**: `./hb render story_<name>` (refused while the check has blockers; `--preview` renders anyway and the
+   Short comes back labelled "CHECK FAILED: <n> blockers" with `out/<name>.check.txt`). Then `--wait`.
+10. **Review**: `./hb pace`, `./hb panel`, the short-review skill.
+11. **Package HELD**: `node scripts/publish.js story_<name> --pass --notes "..."` (a story package is `held` until the
+    owner OKs it in person). **Never `--owner-ok`**: only the owner gives it.
+`./hb make story_<name>` runs 4-10 in this order and stops where a step fails.
+
 ## Before you start (5 min)
 1. `git pull` main. Read `docs/STANDARDS.md` (the checklist), `docs/stories.md` (the premise bank: what's claimed or
    made; the house rules only when a standard's source needs its reason),
@@ -115,14 +137,18 @@ old sped-up single narrator.
 
 ## 4. Record and check (~15 min per pass)
 `./hb record story_<name>` (the motion lint first, then record + rec_check, stops on blockers), then `./hb check
-story_<name>` (the motion lint, rec_check, the movie engine's lint, continuity, framing, the owner gate with its motion
-safety net: the view moving under a chest, teleports, whips, stalls: seconds, no render). Fix every blocker by re-recording; give every warning
+story_<name>` (the one gate: the motion lint, rec_check with its cast-motion and sight sections, the movie engine's
+lint, continuity, framing, the owner gate with its motion safety net: the view moving under a chest, teleports, whips,
+stalls; cuts, caption sync, on-screen sound; pace once a render is here: seconds, no render; it prints what ran and
+what did not, and writes work/hb/story_<name>.check.txt). Fix every blocker by re-recording; give every warning
 a reason or a fix. `./hb describe story_<name> L05` reads a moment as text; then `./hb sheet story_<name>` (one frame
 per shot) and `./hb still` at anything flagged, and `story-continuity` on them (docs/agent_guide.md). Max 4 recordings; if the
 same blocker survives, log it in the run report and simplify the scene.
 
 ## 5. Render (~15 min, unattended)
-`./hb render story_<name>` then `./hb render story_<name> --wait` (= `scripts/render_on_actions.sh`). Never render full Shorts locally (container
+`./hb render story_<name>` then `./hb render story_<name> --wait` (= `scripts/render_on_actions.sh`). The run checks
+the recording again in parallel and labels a Short with blockers "CHECK FAILED: <n> blockers" on the picture; never
+show the owner an unlabelled preview with a known blocker (`--preview` only to look at one). Never render full Shorts locally (container
 restarts kill them). Sharpness rules apply (subject in focus, crisp textures, high-quality encode).
 
 ## 5b. Pace (~1 min, after the render)
@@ -155,7 +181,8 @@ After the review: the story's row in docs/world/map.json `stories` gets `status:
 good (a building, a grave, a character gone) is in docs/world/canon.md and map.json with its `since` day.
 
 ## 7. Publish (~2 min)
-`node scripts/publish.js story_<name> --pass --notes "<one line: premise, rounds, nitpicks>"`. Mark the premise
+`node scripts/publish.js story_<name> --pass --notes "<one line: premise, rounds, nitpicks>"`: the package is HELD
+until the owner OKs it; never pass `--owner-ok`. Mark the premise
 `made` in docs/stories.md. Merge your branch to main only if it changed shared code and that code is tested and
 backwards compatible (existing stunts render unchanged); otherwise leave the branch. Don't edit the upload queue:
 the uploader ranks ready Shorts itself.
