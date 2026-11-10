@@ -163,6 +163,14 @@ second is blurred). Moving mobs aren't blurred (camera motion only). Test: `node
   over their heads (EntityRenderer.renderNameTag, 0.5 above the hitbox), as CustomNameVisible does.
 Test: `node scripts/pose_fixture.js --stunt _life_test --life` (stunts/_life_test.js).
 
+## Faster stills: the mesh cache
+`./hb still` (any `ONLY=`/`FRAMES=` render) keeps the first mesh of the world in `work/hb/meshcache/` and the next
+still of the same recording loads it instead of meshing (story_nitwit, two stills: 56 s -> 25 s; the PNGs are
+identical). The key is the recording (path, size, mtime), the visible depth, Brightness, the time and weather at tick
+0, the dimension, shader light and the source of the mesher files, so an edit to the mesher or a re-record misses.
+One entry is kept (~180 MB for story_nitwit; `MESH_CACHE_KEEP=n`), `MESH_CACHE=0` turns it off, and full renders
+never touch it. Delete the folder to free the space.
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

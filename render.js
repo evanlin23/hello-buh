@@ -1719,9 +1719,10 @@ else:
   }
   await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null })
 
+  let meshCapture = null   // (the stills mesh cache below collects the first mesh's blobs here)
   const send = async (list) => {
     const id = String(blobId++)
-    blobs.set(id, mesher.pack(list))
+    blobs.set(id, mesher.pack(list)); if (meshCapture) meshCapture.push(blobs.get(id))
     await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`)
   }
   const t0 = Date.now()
@@ -1739,10 +1740,50 @@ else:
     const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
     if (nw > 1) {
       const blobsOut = await mesher.packParallel(list, nw, { lightAttr: SHADER_LIGHT, recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
-      for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
+      for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); if (meshCapture) meshCapture.push(b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
     } else await send(list)
   }
-  await sendAll(0, 0)
+  // Stills cache the first mesh (./hb still, ONLY= / FRAMES= renders; MESH_CACHE=0 turns it off): the world as recorded
+  // meshes the same every time, so its blobs are kept in work/hb/meshcache, keyed by the recording (path, size, mtime),
+  // everything the mesh depends on (the visible depth, Brightness, time and weather at tick 0, the dimension, shader
+  // light) and the source of the mesher files. The next still of the same recording skips the mesh (story_nitwit: two
+  // stills 56 s -> 25 s). An entry is big (story_nitwit: 178 MB), so only the newest is kept (MESH_CACHE_KEEP=n for
+  // more). Full renders never read it.
+  const sparse = !!(process.env.ONLY || process.env.FRAMES)
+  const cacheDir = path.join(__dirname, 'work', 'hb', 'meshcache')
+  let cacheFile = null
+  if (sparse && process.env.MESH_CACHE !== '0') {
+    try {
+      const h = require('crypto').createHash('sha1'), st = fs.statSync(recPath)
+      h.update(JSON.stringify([path.resolve(recPath), st.size, st.mtimeMs, minVisibleY, Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTimeAt(0), weatherLight(0), DIM, SHADER_LIGHT, rec.version]))
+      for (const f of ['models.js', 'mesher.js', 'light.js', 'world.js', 'mesh_worker.js', 'modelsBuilder.js']) { const fp = path.join(__dirname, 'renderer', f); if (fs.existsSync(fp)) h.update(fs.readFileSync(fp)) }
+      for (const f of ['blocksStates.json', 'blockstates.json', 'atlas.json']) { const fp = path.join(ASSETS_DIR, f); if (fs.existsSync(fp)) h.update(String(fs.statSync(fp).mtimeMs)) }
+      cacheFile = path.join(cacheDir, h.digest('hex').slice(0, 20) + '.bin')
+    } catch (e) { cacheFile = null }
+  }
+  if (cacheFile && fs.existsSync(cacheFile)) {
+    const buf = fs.readFileSync(cacheFile)
+    let o = 0
+    while (o < buf.length) { const n = buf.readUInt32LE(o); o += 4; const id = String(blobId++); blobs.set(id, buf.subarray(o, o + n)); o += n; await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
+    fs.utimesSync(cacheFile, new Date(), new Date())
+    console.log('mesh from the stills cache', path.basename(cacheFile))
+  } else {
+    if (cacheFile) meshCapture = []
+    await sendAll(0, 0)
+    const got = meshCapture; meshCapture = null
+    if (cacheFile && got && got.length) {
+      try {
+        fs.mkdirSync(cacheDir, { recursive: true })
+        const parts = []
+        for (const b of got) { const l = Buffer.alloc(4); l.writeUInt32LE(b.length); parts.push(l, b) }
+        if (parts.length) {
+          fs.writeFileSync(cacheFile + '.tmp', Buffer.concat(parts)); fs.renameSync(cacheFile + '.tmp', cacheFile)
+          const old = fs.readdirSync(cacheDir).filter(f => f.endsWith('.bin')).map(f => [f, fs.statSync(path.join(cacheDir, f)).mtimeMs]).sort((x, y) => y[1] - x[1])
+          for (const [f] of old.slice(Math.max(1, Number(process.env.MESH_CACHE_KEEP || 1)))) fs.unlinkSync(path.join(cacheDir, f))
+        }
+      } catch (e) { console.error('mesh cache not written:', e.message) }
+    }
+  }
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
 
   // particles from recorded events (block crumbs use the block's particle texture in the atlas)
