@@ -1,0 +1,511 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.12,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "I've tried to run away from this guy thirty-seven times.",
+   "dur": 2.466,
+   "onset": 0.155,
+   "end": 2.276,
+   "chunks": [
+    [
+     0.155,
+     0.44
+    ],
+    [
+     0.44,
+     0.793
+    ],
+    [
+     0.793,
+     1.259
+    ],
+    [
+     1.259,
+     1.672
+    ],
+    [
+     1.672,
+     2.276
+    ]
+   ],
+   "captions": [
+    "I've tried",
+    "to RUN AWAY",
+    "from this guy",
+    "THIRTY-SEVEN",
+    "TIMES."
+   ]
+  },
+  "L02": {
+   "text": "Every time I get twelve blocks away, I'm right back next to him.",
+   "dur": 2.983,
+   "onset": 0.172,
+   "end": 2.793,
+   "chunks": [
+    [
+     0.172,
+     0.543
+    ],
+    [
+     0.543,
+     0.741
+    ],
+    [
+     0.741,
+     1.224
+    ],
+    [
+     1.224,
+     1.586
+    ],
+    [
+     1.672,
+     1.931
+    ],
+    [
+     1.931,
+     2.121
+    ],
+    [
+     2.121,
+     2.793
+    ]
+   ],
+   "captions": [
+    "Every time",
+    "I get",
+    "TWELVE BLOCKS",
+    "away,",
+    "I'm right",
+    "BACK",
+    "next to HIM."
+   ]
+  },
+  "L03": {
+   "text": "I tried at night. I tried through the wheat. I even tried swimming.",
+   "dur": 2.759,
+   "onset": 0.155,
+   "end": 2.569,
+   "chunks": [
+    [
+     0.155,
+     0.422
+    ],
+    [
+     0.422,
+     0.741
+    ],
+    [
+     0.793,
+     1.069
+    ],
+    [
+     1.069,
+     1.448
+    ],
+    [
+     1.483,
+     1.991
+    ],
+    [
+     1.991,
+     2.569
+    ]
+   ],
+   "captions": [
+    "I tried",
+    "at NIGHT.",
+    "I tried",
+    "through the WHEAT.",
+    "I even tried",
+    "SWIMMING."
+   ]
+  },
+  "L04": {
+   "text": "He feeds me raw porkchops. He's never cooked one. not once.",
+   "dur": 2.724,
+   "onset": 0.155,
+   "end": 2.517,
+   "chunks": [
+    [
+     0.155,
+     0.5
+    ],
+    [
+     0.5,
+     1.138
+    ],
+    [
+     1.19,
+     1.431
+    ],
+    [
+     1.431,
+     1.81
+    ],
+    [
+     1.845,
+     2.517
+    ]
+   ],
+   "captions": [
+    "He feeds me",
+    "RAW PORKCHOPS.",
+    "He's never",
+    "COOKED one.",
+    "NOT ONCE."
+   ]
+  },
+  "L05": {
+   "text": "When he says sit, I sit. I don't even know why.",
+   "dur": 2.207,
+   "onset": 0.155,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.155,
+     0.474
+    ],
+    [
+     0.474,
+     0.621
+    ],
+    [
+     0.647,
+     1.017
+    ],
+    [
+     1.086,
+     1.379
+    ],
+    [
+     1.379,
+     2.0
+    ]
+   ],
+   "captions": [
+    "When he says",
+    "SIT,",
+    "I SIT.",
+    "I don't even",
+    "know WHY."
+   ]
+  },
+  "L06": {
+   "text": "Everybody in this village is so tall.",
+   "dur": 1.914,
+   "onset": 0.172,
+   "end": 1.724,
+   "chunks": [
+    [
+     0.172,
+     0.491
+    ],
+    [
+     0.491,
+     0.931
+    ],
+    [
+     0.931,
+     1.216
+    ],
+    [
+     1.216,
+     1.724
+    ]
+   ],
+   "captions": [
+    "Everybody",
+    "in this village",
+    "is SO",
+    "TALL."
+   ]
+  },
+  "L07": {
+   "text": "Sheep look so delicious to me.",
+   "dur": 1.603,
+   "onset": 0.19,
+   "end": 1.414,
+   "chunks": [
+    [
+     0.19,
+     0.336
+    ],
+    [
+     0.336,
+     0.603
+    ],
+    [
+     0.603,
+     0.966
+    ],
+    [
+     0.966,
+     1.414
+    ]
+   ],
+   "captions": [
+    "SHEEP",
+    "look SO",
+    "DELICIOUS",
+    "to me."
+   ]
+  },
+  "L08": {
+   "text": "And there's this dog. Wherever I go, it's already there.",
+   "dur": 2.569,
+   "onset": 0.155,
+   "end": 2.379,
+   "chunks": [
+    [
+     0.155,
+     0.431
+    ],
+    [
+     0.431,
+     0.966
+    ],
+    [
+     1.034,
+     1.284
+    ],
+    [
+     1.284,
+     1.552
+    ],
+    [
+     1.578,
+     1.897
+    ],
+    [
+     1.897,
+     2.379
+    ]
+   ],
+   "captions": [
+    "And there's",
+    "this DOG.",
+    "Wherever",
+    "I go,",
+    "it's ALREADY",
+    "THERE."
+   ]
+  },
+  "L09": {
+   "text": "I can't even open a door. He has to let me in.",
+   "dur": 2.328,
+   "onset": 0.155,
+   "end": 2.121,
+   "chunks": [
+    [
+     0.155,
+     0.388
+    ],
+    [
+     0.388,
+     0.698
+    ],
+    [
+     0.698,
+     1.069
+    ],
+    [
+     1.138,
+     1.448
+    ],
+    [
+     1.448,
+     2.121
+    ]
+   ],
+   "captions": [
+    "I can't",
+    "even open",
+    "a DOOR.",
+    "He has to",
+    "LET ME IN."
+   ]
+  },
+  "L10": {
+   "text": "When he leaves, I sit by the door for hours.",
+   "dur": 2.086,
+   "onset": 0.155,
+   "end": 1.897,
+   "chunks": [
+    [
+     0.155,
+     0.569
+    ],
+    [
+     0.595,
+     0.862
+    ],
+    [
+     0.862,
+     1.19
+    ],
+    [
+     1.19,
+     1.897
+    ]
+   ],
+   "captions": [
+    "When he LEAVES,",
+    "I sit",
+    "by the door",
+    "for HOURS."
+   ]
+  },
+  "L11": {
+   "text": "Skeletons run away when they see me.",
+   "dur": 1.828,
+   "onset": 0.172,
+   "end": 1.638,
+   "chunks": [
+    [
+     0.172,
+     0.552
+    ],
+    [
+     0.552,
+     0.905
+    ],
+    [
+     0.905,
+     1.095
+    ],
+    [
+     1.095,
+     1.638
+    ]
+   ],
+   "captions": [
+    "SKELETONS",
+    "RUN AWAY",
+    "when they",
+    "see me."
+   ]
+  },
+  "L12": {
+   "text": "Last night a zombie hit him.",
+   "dur": 1.655,
+   "onset": 0.172,
+   "end": 1.466,
+   "chunks": [
+    [
+     0.172,
+     0.517
+    ],
+    [
+     0.517,
+     0.914
+    ],
+    [
+     0.914,
+     1.466
+    ]
+   ],
+   "captions": [
+    "Last night",
+    "a ZOMBIE",
+    "HIT him."
+   ]
+  },
+  "L13": {
+   "text": "I don't know what happened. I just went crazy.",
+   "dur": 2.155,
+   "onset": 0.155,
+   "end": 1.948,
+   "chunks": [
+    [
+     0.155,
+     0.431
+    ],
+    [
+     0.431,
+     0.914
+    ],
+    [
+     0.983,
+     1.19
+    ],
+    [
+     1.19,
+     1.948
+    ]
+   ],
+   "captions": [
+    "I don't know",
+    "WHAT happened.",
+    "I just",
+    "went CRAZY."
+   ]
+  },
+  "L14": {
+   "text": "This morning he gave me a porkchop and scratched my ears.",
+   "dur": 2.5,
+   "onset": 0.172,
+   "end": 2.31,
+   "chunks": [
+    [
+     0.172,
+     0.474
+    ],
+    [
+     0.474,
+     0.733
+    ],
+    [
+     0.733,
+     1.241
+    ],
+    [
+     1.241,
+     1.638
+    ],
+    [
+     1.638,
+     2.31
+    ]
+   ],
+   "captions": [
+    "This morning",
+    "he gave me",
+    "a PORKCHOP",
+    "and scratched",
+    "my EARS."
+   ]
+  },
+  "L15": {
+   "text": "Tomorrow I'm leaving for real.",
+   "dur": 1.621,
+   "onset": 0.172,
+   "end": 1.431,
+   "chunks": [
+    [
+     0.172,
+     0.483
+    ],
+    [
+     0.483,
+     0.828
+    ],
+    [
+     0.828,
+     1.431
+    ]
+   ],
+   "captions": [
+    "TOMORROW",
+    "I'm leaving",
+    "for REAL."
+   ]
+  }
+ },
+ "total": 35.2
+}

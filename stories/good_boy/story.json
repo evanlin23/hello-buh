@@ -1,0 +1,76 @@
+{
+  "name": "good_boy",
+  "stunt": "story_good_boy",
+  "caption": "i can't get away from this guy 😭",
+  "premise": "The narrator keeps trying to run away from a guy, and every time he gets twelve blocks away he is suddenly right back next to him. Everyone is tall, he can't open doors, he's fed raw porkchops, and there's a dog that is always exactly where he is.",
+  "twist": "He's the guy's dog: a tamed wolf. Tamed wolves teleport to their owner from 12 blocks away. The first-person shots hide it; every camera shot shows the wolf with the red collar from the second line on. The reveal is the first time the camera leaves his head.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.12,
+  "key_color": "#FFB84A",
+  "lines": [
+    {
+      "id": "L01",
+      "text": "I've tried / to RUN AWAY / from this guy / THIRTY-SEVEN / TIMES."
+    },
+    {
+      "id": "L02",
+      "text": "Every time / I get / TWELVE BLOCKS / away, / I'm right / BACK / next to HIM."
+    },
+    {
+      "id": "L03",
+      "text": "I tried / at NIGHT. / I tried / through the WHEAT. / I even tried / SWIMMING."
+    },
+    {
+      "id": "L04",
+      "text": "He feeds me / RAW PORKCHOPS. / He's never / COOKED one. / NOT ONCE."
+    },
+    {
+      "id": "L05",
+      "text": "When he says / SIT, / I SIT. / I don't even / know WHY."
+    },
+    {
+      "id": "L06",
+      "text": "Everybody / in this village / is SO / TALL."
+    },
+    {
+      "id": "L07",
+      "text": "SHEEP / look SO / DELICIOUS / to me."
+    },
+    {
+      "id": "L08",
+      "text": "And there's / this DOG. / Wherever / I go, / it's ALREADY / THERE."
+    },
+    {
+      "id": "L09",
+      "text": "I can't / even open / a DOOR. / He has to / LET ME IN."
+    },
+    {
+      "id": "L10",
+      "text": "When he LEAVES, / I sit / by the door / for HOURS."
+    },
+    {
+      "id": "L11",
+      "text": "SKELETONS / RUN AWAY / when they / see me."
+    },
+    {
+      "id": "L12",
+      "text": "Last night / a ZOMBIE / HIT him."
+    },
+    {
+      "id": "L13",
+      "text": "I don't know / WHAT happened. / I just / went CRAZY."
+    },
+    {
+      "id": "L14",
+      "text": "This morning / he gave me / a PORKCHOP / and scratched / my EARS."
+    },
+    {
+      "id": "L15",
+      "text": "TOMORROW / I'm leaving / for REAL."
+    }
+  ]
+}
