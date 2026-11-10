@@ -118,7 +118,7 @@ This **replaces the r-ear table above**. Two changes, both ruled by the lead on 
 
 **Voices:** Buh: `milo`/`buh` (Achird), canon. Narrator: the house narrator (STANDARDS 2.0-2.1).
 
-**Length:** 126 words, ~24 s spoken at 5.25 words/s, plus ~2 s of reveal.
+**Length:** 127 words, ~24 s spoken at 5.25 words/s, plus ~2 s of reveal.
 
 | # | who | line (bold = the spoken stress) | plays over |
 |---|---|---|---|
@@ -128,10 +128,10 @@ This **replaces the r-ear table above**. Two changes, both ruled by the lead on 
 | L04 | N | But **SITTING**? / I **STAY** put. / A SITTING dog / waits **FOREVER**. | new: another tamed wolf sitting alone by an empty house; Buh looks at it |
 | L05 | N | He doesn't WANT / me to **WAIT**. / So he NEVER / makes me **SIT**. | new: Buh walks on, his own wolf standing at his side |
 | L06 | N | He keeps TALKING / about a PLACE / called **COLLEGE**. / It sounds **BORING**. | old L05 yard |
-| L07 | N | Every NIGHT / he SAYS, / sorry, **BUDDY**. / I don't KNOW / what **FOR**. | dusk on the sea edge (old L09 camera) |
+| L07 | N | Every NIGHT / he SAYS, / **sorry**, BUDDY. / I don't KNOW / what **FOR**. | dusk on the sea edge (old L09 camera) |
 | L08 | N | Then last NIGHT, / a ZOMBIE / came for **HIM**. / But I GOT / there **FIRST**. | old L14-L16 |
-| L09 | N | So this MORNING, / he WALKED me / BACK home, / up the HILL / to his **HUT**. | new: Dog Hill (world.build), the boxed bell below |
-| L10 | N | He **SAID**: | new: the wolf sits on D |
+| L09 | N | This MORNING, / he WALKED me / BACK home, / up the HILL / to his **HUT**. | new: Dog Hill (world.build), the boxed bell below |
+| L10 | N | He TURNED / to **ME**. | new: the wolf sits on D |
 | L11 | Buh | Sit, **BOY**. | new: the wolf sits on D |
-| L12 | N | Then he **SAID**: | new: chat 'Buh left the game'; cut 1.0 s |
+| L12 | N | Then he SAID: | new: chat 'Buh left the game'; cut 1.0 s |
 | L13 | Buh | I'll BE / right **BACK**. | new: chat 'Buh left the game'; cut 1.0 s |

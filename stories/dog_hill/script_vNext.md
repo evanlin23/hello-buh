@@ -82,7 +82,7 @@ This **replaces the r-ear table above**. Two changes, both ruled by the lead on 
 
 **Voices:** Grandpa: Hushwell's grandpa, Algenib (canon); Buh: `milo`/`buh` (Achird), canon. Narrator: the house narrator (STANDARDS 2.0-2.1).
 
-**Length:** 141 words, ~27 s spoken at 5.25 words/s, plus ~2 s of reveal.
+**Length:** 135 words, ~26 s spoken at 5.25 words/s, plus ~2 s of reveal.
 
 | # | who | line (bold = the spoken stress) | plays over |
 |---|---|---|---|
@@ -94,13 +94,12 @@ This **replaces the r-ear table above**. Two changes, both ruled by the lead on 
 | L06 | N | He just STARES / at one EMPTY / patch of **GRASS**. / Maybe he LIKES / the **GRASS**. | S04 |
 | L07 | N | And BEHIND him, / an OLD / dirt **HUT**. / Nobody KNOWS / who **BUILT** it. | S05 |
 | L08 | N | I ASKED him / to **STAND**. / I even **BEGGED**. | S05b |
-| L09 | N | Then **GRANDPA** said: | S06 |
-| L10 | Grandpa | Leave him **BE**. | S06 |
-| L11 | N | He SAYS / only ONE voice / gets him **UP**. | S06 |
-| L12 | N | SOMEBODY told him / be right **BACK**. | S08 |
-| L13 | N | So every NIGHT, / I **SIT** there. / NOBODY should / wait **ALONE**. | S09 |
-| L14 | N | Then last NIGHT, / he **STOOD** up. | S11 |
-| L15 | N | A GUY / just APPEARED / on the **PATCH**. | S12 |
-| L16 | Buh | Hey **BUDDY**! / Sorry, got **BUSY**. | S12 |
-| L17 | N | Then he **SAID**: | S13: chat 'Buh left the game'; the dog sits; cut 1.0 s |
-| L18 | Buh | Sit, **BOY**. / Be right **BACK**. | S13: chat 'Buh left the game'; the dog sits; cut 1.0 s |
+| L09 | N | Then GRANDPA said: | S06 |
+| L10 | Grandpa | Only ONE voice / gets him **UP**. | S06 |
+| L11 | N | Somebody **PROMISED** / to come BACK. | S08 |
+| L12 | N | So every NIGHT, / I **SIT** there. / NOBODY should / wait **ALONE**. | S09 |
+| L13 | N | Then last NIGHT, / he **STOOD** up. | S11 |
+| L14 | N | A GUY / just APPEARED / on the **PATCH**. | S12 |
+| L15 | Buh | Hey **BUDDY**! / **Sorry**, got BUSY. | S12 |
+| L16 | N | Then he SAID: | S13: chat 'Buh left the game'; the dog sits; cut 1.0 s |
+| L17 | Buh | Sit, **BOY**. / Be right **BACK**. | S13: chat 'Buh left the game'; the dog sits; cut 1.0 s |

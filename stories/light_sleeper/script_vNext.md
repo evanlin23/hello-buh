@@ -88,7 +88,7 @@ This **replaces the r-ear table above**. Two changes, both ruled by the lead on 
 | L01 | N | My VILLAGE / is COVERED in / nine thousand **CARPETS**. | S02 high wide (first frame) |
 | L02 | N | The road? **CARPET**. / The stairs? **CARPET**. / The **DOGHOUSE**? / Also **CARPET**. | S02 |
 | L03 | N | Even the BELL / wears a **SWEATER**. | S04 |
-| L04 | N | Mom **SAYS**: | S05 |
+| L04 | N | Mom SAYS: | S05 |
 | L05 | Mom | Walk **SOFT**, sweetie. / The GROUND'S / a light **SLEEPER**. | S05 |
 | L06 | N | But ONE time, / I PULLED / the WOOL / off the **WELL**. | S06 |
 | L07 | N | Then SOMETHING / down the WELL / just **SCREAMED**. | S07 |
@@ -100,4 +100,4 @@ This **replaces the r-ear table above**. Two changes, both ruled by the lead on 
 | L13 | N | Then the LIGHTS / went **DARK**. / Just LIKE / a **PARTY**. | S14 |
 | L14 | N | Mom FROZE / in the **DOOR**. | S13 |
 | L15 | Mom | Sweetie, don't **MOVE**. | S13 |
-| L16 | N | But I'd NEVER / danced **BEFORE**. / So I STEPPED / off the CARPET / onto the **STONE**. | S15, then S16: the warden rises; cut 1.0 s after the roar |
+| L16 | N | But I'd NEVER / **danced** BEFORE. / So I STEPPED / off the CARPET / onto the **STONE**. | S15, then S16: the warden rises; cut 1.0 s after the roar |
