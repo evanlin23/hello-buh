@@ -2,7 +2,7 @@
   "name": "thirty_one_raids",
   "stunt": "story_thirty_one_raids",
   "version": 2,
-  "revision": "r2 (2026-11-10): the critic's 6 must-fixes and both should-fixes applied; lines renumbered in the new order; see reviews/r2-selfcheck.md",
+  "revision": "r3 (2026-11-10): the pre-build continuity breaks and notes (reviews/continuity_prebuild.md) and the critic's r2 should-fixes (reviews/critic_r2_shouldfix.md) applied; the hero is Milo; staged for the engine (no sit, no drink pose: crouch and head-tilt staging)",
   "caption": "why do raiders always follow grandpa home 😶",
   "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; the night Grandpa comes home too tired to fight, the boy drinks Grandpa's 'courage' himself.",
   "question": "why tf do raids start every night grandpa comes home?",
@@ -19,14 +19,14 @@
       "role": "narrator",
       "ref": "milo",
       "color": "#FFFFFF",
-      "on_screen": "pov (HelloBuh, default Steve skin per the owner; never seen from outside in this story); hotbar: empty hand, then the ominous bottle (S12), empty again once drunk"
+      "on_screen": "pov (Milo, the default Steve skin per the owner; never seen from outside in this story); hand: empty, then the ominous bottle (end of S11, S12), empty again once drunk"
     },
     "Grandpa": {
       "role": "character",
       "ref": "elder",
       "name": "Grandpa",
       "color": "#E0B44C",
-      "on_screen": "a player actor with the default `zuri` skin (owner chose Steve for the hero; no default skin looks old, accepted: his age is in the voice, the slow walk and the slump); a crossbow in his main hand, always his own; on screen from S01"
+      "on_screen": "a player actor with the default `zuri` skin (no default skin looks old, accepted: his age is in the voice, the slow walk and the crouched slump); one main-hand item at a time (the engine draws only the main hand): a totem (S01), the crossbow (S02, S05, S06, S09, S14), an ominous bottle (S07, S08, S11); in S10-S11 the crossbow hangs in an item frame by his door"
     }
   },
   "requests": [
@@ -46,7 +46,7 @@
         "L07",
         "L08"
       ],
-      "direction": "A village at dusk after many raids. A teenage boy tells, low and proud, how his grandpa saves the village; the grandpa speaks rarely, slow and tired."
+      "direction": "A village at dusk after many raids. A teenage boy, Milo, tells proudly and clearly how his grandpa saves the village; the grandpa speaks rarely, slow, dry and tired."
     },
     {
       "id": "r2",
@@ -89,6 +89,16 @@
       "under": "S13",
       "sound": "event.raid.horn",
       "note": "the raid horn, loud, the reveal"
+    },
+    {
+      "under": "S14",
+      "sound": "item.crossbow.loading_end",
+      "note": "the crossbow clicks loaded on 'kid'"
+    },
+    {
+      "under": "S07",
+      "sound": "block.chest.open",
+      "note": "the lid on the cut"
     }
   ],
   "lines": [
@@ -97,7 +107,7 @@
       "who": "N",
       "text": "Grandpa has saved / our village / from THIRTY-ONE / RAIDS.",
       "say": "Grandpa has saved our village <short pause> from thirty-one raids.",
-      "direction": "proud, low; a held beat before the number",
+      "direction": "proud and clear, a held beat before the number",
       "shot": "S01"
     },
     {
@@ -160,8 +170,8 @@
     {
       "id": "L10",
       "who": "N",
-      "text": "Since Grandma died, / it's the only / time anyone's / GLAD / to see him.",
-      "say": "Since Grandma died, <short pause> it's the only time anyone's glad to see him.",
+      "text": "Since Grandma died, / a RAID / is the only time / anyone's GLAD / to see him.",
+      "say": "Since Grandma died, <short pause> a raid is the only time anyone's glad to see him.",
       "direction": "softer, a sadness he only half understands",
       "shot": "S10"
     },
@@ -170,7 +180,7 @@
       "who": "N",
       "text": "Tonight / he came home / too TIRED / to fight.",
       "say": "Tonight, he came home too tired to fight.",
-      "direction": "worried, low, slower",
+      "direction": "worried, slower, a little quieter (fear, not tenderness)",
       "shot": "S11"
     },
     {
@@ -188,7 +198,7 @@
       "who": "Grandpa",
       "text": "Now they'll / love YOU / too, kid.",
       "say": "Now they'll love you too, kid.",
-      "direction": "gentle, tired, almost proud: the warmth is the worst part; a breath before the last word",
+      "direction": "dry and tired, a grim little pride: an old soldier, not a tender one; plain voice, not a whisper",
       "shot": "S14"
     }
   ],
@@ -199,7 +209,7 @@
       "place": "grandpa_house",
       "size": "wide",
       "camera": "pov just inside the door, slow push to the north wall",
-      "frame": "establishing the room: the north wall of item frames, 4 rows of 8; Grandpa at frame left, back three-quarters to us, puts the 31st totem of undying into its frame on 'THIRTY-ONE'; the push ends on 'RAIDS' with the one EMPTY frame (bottom row, last) in the lower third, lit by the lantern below it; morning light through the east window. Dawn after raid 31 (23500)."
+      "frame": "establishing the room (inside 9 E-W x 7 N-S x 5 high): the north wall of item frames, 4 rows of 8 at heights 1-4 above the floor; Grandpa at frame RIGHT, back three-quarters to us, puts the 31st totem of undying into the bottom row's 7th frame on 'THIRTY-ONE'; beside his hand the one EMPTY frame (bottom row, last, the 32nd), lit by a lantern standing on the floor directly under it; the push ends on 'RAIDS' with the empty frame in the lower third. Morning light through the east window. Dawn after raid 31 (23500)."
     },
     {
       "id": "S02",
@@ -213,17 +223,17 @@
       "id": "S03",
       "line": "L03",
       "place": "grandpa_yard",
-      "size": "full",
-      "camera": "pov across Grandpa's yard",
-      "frame": "fg: the yard fence; subject: Grandpa at his grindstone beside his door, working; bg: the gate a few blocks behind him. Evening (12000)."
+      "size": "wide",
+      "camera": "pov at the yard's west side, about (-14,-4) from the gate, looking east, still",
+      "frame": "establishing the yard: fg: the yard fence; subject: Grandpa at his grindstone at about (-6,-4), working, crossbow-less (both hands on the work: the main hand empty); his door at frame left, the gate posts at frame right about 22 degrees off; the crossbow hangs in an item frame on the wall by his door. Evening (12600), the same evening he came home."
     },
     {
       "id": "S04",
       "line": "L04",
       "place": "grandpa_yard",
-      "size": "ms",
-      "camera": "pov a step closer, slightly lower",
-      "frame": "fg: the grindstone's edge; subject: Grandpa waist up, not looking up; bg: his door. Evening (12000)."
+      "size": "full",
+      "camera": "pov a few steps closer, 3.5 blocks from him, slightly lower",
+      "frame": "fg: the grindstone's edge; subject: Grandpa knees up, not looking up, the crossbow frame on the wall beside his door; bg: his door and the yard fence. Evening (12600)."
     },
     {
       "id": "S05",
@@ -231,7 +241,7 @@
       "place": "square",
       "size": "wide",
       "camera": "pov at the edge of the square, slow push as Grandpa crosses left to right",
-      "frame": "fg: a fence and a hay bale low; subject: Grandpa walking across the square, crossbow in hand, farmers stepping up to throw bread at him on 'BREAD' (items arcing to him); bg: the bell, houses, the butcher's roof still smoking from raid 31. Dawn after raid 31 (23800)."
+      "frame": "fg: a fence and a hay bale low; subject: Grandpa walking across the square, crossbow in hand, farmers stepping up to throw bread at him on 'BREAD' (items arcing to him); bg: the bell, houses, the butcher's roof with a fresh hole in it (raid 31's damage, no smoke). Dawn after raid 31 (23800)."
     },
     {
       "id": "S06",
@@ -247,23 +257,23 @@
       "place": "grandpa_house",
       "size": "ms",
       "camera": "pov beside Grandpa at the open chest",
-      "frame": "fg: the chest under the east window, lid up, full of grey bottles; subject: Grandpa's hand lifting an ominous bottle out on 'BOTTLES'; bg: the shelf of item frames with more bottles on the wall above the chest, the window's dark. Night (14000), lantern-lit."
+      "frame": "fg: the chest under the east window; subject: the lid opens, and on 'BOTTLES' Grandpa's hand comes up into frame holding an ominous bottle (chest contents never render); on 'CHEST' the camera tilts down to the open chest; bg: the east window (dark) with 4 item frames of ominous bottles on either side of it, 2 and 2. Night (14000), lantern-lit."
     },
     {
       "id": "S08",
       "line": "L08",
       "place": "gate",
       "size": "wide",
-      "camera": "pov 4 blocks behind Grandpa inside the gate, at dusk",
-      "frame": "fg: the gate's log posts; subject: Grandpa standing in the open gate, back to camera, the bottle raised on 'drinks' and drunk through 'at the GATE'; bg: the road into the dusk and the ridge with the tower. Dusk (13000), a typical raid night."
+      "camera": "pov 4 blocks behind Grandpa and 2 blocks south, inside the gate, at dusk (the 180-degree side the bible uses)",
+      "frame": "fg: the gate's log posts; subject: Grandpa standing in the open gate in profile-three-quarters, the ominous bottle in his right hand; on 'drinks' he tips his head back with the bottle (drink sound); on 'GATE' the bottle is gone and the crossbow is in his hand; bg: the road into the dusk and the ridge with the tower. Dusk (13000), a typical raid night."
     },
     {
       "id": "S09",
       "line": "L09",
       "place": "gate",
-      "size": "ms",
-      "camera": "pov closer; Grandpa turns his head over his right shoulder",
-      "frame": "subject: Grandpa waist up, turning to look back at the camera, the bottle gone (drunk), the crossbow in his hand; bg: the dark ridge. Dusk (13000)."
+      "size": "full",
+      "camera": "pov 3.5 blocks behind him, south of the line; Grandpa turns his head over his right shoulder",
+      "frame": "subject: Grandpa knees up between the gate posts, turning to look back at the camera, the bottle gone (drunk), the crossbow in his hand; bg: the road and the dark ridge. Dusk (13000)."
     },
     {
       "id": "S10",
@@ -271,15 +281,15 @@
       "place": "grandpa_house",
       "size": "full",
       "camera": "pov from the room's south-east corner, still, then a slow drift",
-      "frame": "fg: a chair back; subject: Grandpa sitting alone at a table set for two: one bowl, two chairs, the second chair pushed in (Grandma's); he lifts his head once on 'GLAD'; bg: the totem wall above him, the window with the dark square beyond. Night (14000), another night."
+      "frame": "fg: Grandma's chair (pushed in), nearest the lens; subject: Grandpa standing at the far side of the table set for two (one bowl), crouched over it, head down; he lifts his head once on 'GLAD'; bg: the totem wall above him. Night (14000), another night."
     },
     {
       "id": "S11",
       "line": "L11",
       "place": "grandpa_yard",
       "size": "wide",
-      "camera": "pov across the yard, a slow push",
-      "frame": "the final night, visibly different: not at the gate. fg: the yard fence; subject: Grandpa slumped on the bench by his door, head down, dozing, the crossbow across his knees, an ominous bottle undrunk in his slack hand; bg: the open gate a few blocks behind him, the ridge darkening. Dusk (12800)."
+      "camera": "pov the S03 camera (yard west side, looking east), a slow push",
+      "frame": "the final night, visibly different: not at the gate. fg: the yard fence; subject: Grandpa crouched against his door frame, head pitched down, an ominous bottle undrunk in his slack hand; the crossbow hangs in its frame on the wall beside him; on 'FIGHT' the bottle leaves his hand and is in mine (the first-person hand comes up with it at the end of the push); bg: the open gate posts at frame right, the ridge darkening. Dusk (12800)."
     },
     {
       "id": "S12",
@@ -295,15 +305,15 @@
       "place": "gate",
       "size": "wide",
       "camera": "pov at the gate, still, a slow push up the road; 1.8 s",
-      "frame": "the reveal: the raid horn on frame 1; up the road, 25 blocks out and closing to 15, five pillagers (crossbows) and a ravager walking toward the gate; no torches, no banners; fg: the gate posts; bg: the fields and the ridge, the sky darkening. Dusk (13300: the raid starts 30 s after the drink; the cut carries it)."
+      "frame": "the reveal: the raid horn on frame 1; up the road, 22 blocks out and walking to 18, five pillagers (crossbows) and a ravager coming toward the gate; no torches, no banners (staged: vanilla's wave 1 is 4 pillagers with a bannered captain and ravagers come from wave 3; we show the threat, not wave 1); fg: the gate posts; bg: the fields and the ridge, the sky darkening. Dusk (13500: the raid starts 30 s after the drink; the cut carries it)."
     },
     {
       "id": "S14",
       "line": "L13",
       "place": "gate",
       "size": "ms",
-      "camera": "pov turns right (south) from the road to the gate post beside him",
-      "frame": "subject: Grandpa, waist up, standing beside the boy at the south gate post, awake, loading his own crossbow (charging pose), eyes on the road, then a glance at the camera on 'YOU'; fg: the gate post; bg (frame left): the raiders 12-15 blocks up the road, the ravager biggest. Cut 0.3 s after 'kid'. Dusk (13300)."
+      "camera": "pov turns about 25 degrees right, from east to east-south-east",
+      "frame": "subject: Grandpa, waist up (MS, 2.8 blocks), standing 2 blocks east and 2 south of the boy, just outside the south gate post, awake, his own crossbow in hand, eyes on the road; he loads it (the crossbow loading sounds, an arm pump) and glances at the camera on 'YOU'; at about +23 degrees, frame right; bg (frame left, about -22 degrees): the raiders 15-17 blocks up the road, the ravager biggest. Cut 0.3 s after 'kid'. Dusk (13500)."
     }
   ],
   "bible": "stories/thirty_one_raids/bible.md"
