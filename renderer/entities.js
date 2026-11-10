@@ -1232,6 +1232,33 @@ export class EntityLayer {
       // a mob's main-hand item (ItemInHandLayer): the Java hand transform Rx(-90) Ry(180)
       // T(1/16, 0.125, -0.625) under the right arm, with the Bedrock bone's y-up flipped to Java's y-down
       const mh = s.mobHeld, mk = mh ? mh.key : null
+      // a villager's item over its crossed arms (CrossedArmsItemLayer: VillagerModel.translateToArms, then
+      // T(0, 0.4, -0.4) Rx(180), ItemDisplayContext.GROUND), Java's y-down flipped to the bone's y-up
+      if (r.heldKey !== mk && !B.rightArm && B.arms && mh && mh.crossed) {
+        if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
+        if (!r.heldGrp) {
+          r.heldGrp = new THREE.Group(); r.heldGrp.matrixAutoUpdate = false
+          r.heldGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(0, 0.4, -0.4)).multiply(new THREE.Matrix4().makeRotationX(Math.PI))
+          B.arms.add(r.heldGrp)
+        }
+        r.heldObj = mk && this.itemFactory ? await this.itemFactory(mh) : null
+        if (r.heldObj) r.heldGrp.add(r.heldObj.obj)
+        r.heldKey = mk
+      }
+      // a mob's off-hand item (ItemInHandLayer, the left arm: T(-1/16, 0.125, -0.625))
+      const mo = s.mobOff, mok = mo ? mo.key : null
+      if (r.offKey !== mok && B.leftArm) {
+        if (r.offObj) r.offGrp.remove(r.offObj.obj)
+        if (!r.offGrp) {
+          r.offGrp = new THREE.Group(); r.offGrp.matrixAutoUpdate = false
+          r.offGrp.matrix.makeScale(1, -1, 1).multiply(new THREE.Matrix4().makeRotationX(-Math.PI / 2)).multiply(new THREE.Matrix4().makeRotationY(Math.PI)).multiply(new THREE.Matrix4().makeScale(16, 16, 16)).multiply(new THREE.Matrix4().makeTranslation(-1 / 16, 0.125, -0.625))
+          B.leftArm.add(r.offGrp)
+        }
+        r.offObj = mok && this.itemFactory ? await this.itemFactory(mo) : null
+        if (r.offObj) r.offGrp.add(r.offObj.obj)
+        r.offKey = mok
+      }
+      if (r.offObj && r.offObj.mat) r.offObj.mat.color.setRGB(...LL)
       if (r.heldKey !== mk && B.rightArm) {
         if (r.heldObj) r.heldGrp.remove(r.heldObj.obj)
         if (!r.heldGrp) {

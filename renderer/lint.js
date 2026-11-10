@@ -153,24 +153,28 @@ function run (h) {
   // nobody moving: every 0.2 s, how far anyone moved or turned their head over the next 1.2 s (the recording alone,
   // so idle life and talking heads don't count: they're the render's polish, not acting)
   const POSE = new Map(); for (const p of rec.poses || []) POSE.set(p[0], p)
-  // (players and mannequins anywhere; and the living mobs acting within 32 blocks of the set: a story's cast is often
-  // a villager or a piglin moved by /tp. Items, projectiles and the 0.002 idle jitter of a parked actor don't count)
-  const SET = rec.set || null, NOT_ACTING = /^(item|experience_orb|arrow|spectral_arrow|trident|snowball|egg|ender_pearl|potion|splash_potion|lingering_potion|firework_rocket|falling_block|tnt|item_frame|glow_item_frame|painting|armor_stand|marker|interaction|block_display|item_display|text_display|.*_boat|.*_raft|minecart|.*_minecart)$/
-  const acting = (r) => r[2] === 'player' || r[2] === 'mannequin' || (SET && !NOT_ACTING.test(r[2]) && Math.hypot(r[3] - SET.x, r[5] - SET.z) < 32)
-  const ent = new Map(); for (const r of rec.entities || []) { if (!acting(r)) continue; if (!ent.has(r[1])) ent.set(r[1], new Map()); ent.get(r[1]).set(r[0], r) }
+  // players and mannequins anywhere; mobs too when within 24 blocks of the player (a story's cast are NoAI mobs moved
+  // by /tp: Mom, villagers in doorways, the warden), items and projectiles never
+  const MOB_SKIP = /^(item|arrow|experience_orb|falling_block|tnt|marker|area_effect_cloud|firework_rocket|snowball|egg|ender_pearl)$/
+  const ent = new Map(); for (const r of rec.entities || []) { if (MOB_SKIP.test(r[2])) continue; if (!ent.has(r[1])) ent.set(r[1], new Map()); ent.get(r[1]).set(r[0], r) }
+  const isMob = new Map(); for (const r of rec.entities || []) isMob.set(r[1], r[2] !== 'player' && r[2] !== 'mannequin')
   const nearest = (m, t) => { for (let d = 0; d < 6; d++) { if (m.has(t - d)) return m.get(t - d); if (m.has(t + d)) return m.get(t + d) } return null }
   const wrap = (a) => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
-  let deadFrom = null
+  let deadFrom = null, lastMe = null
   const lineAt = (t) => lines.some(l => t >= l.t0 && t < l.t1)
   const dead = []
   const flushDead = (t) => { if (deadFrom !== null) { const l = dead[dead.length - 1]; if (l && deadFrom <= l[1]) l[1] = Math.max(l[1], t); else dead.push([deadFrom, t]) } deadFrom = null }
   // (summed over 4-tick steps inside the window, not end to end: a nod that dips and comes back is motion)
   const poseMove = (t0) => { let m = 0; for (let k = 0; k < 24; k += 4) { const a = nearest(POSE, Math.round(t0 + k)), b = nearest(POSE, Math.round(t0 + k + 4)); if (a && b) m += Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3]) + Math.abs(wrap(b[4] - a[4])) * 1.5 + Math.abs(b[5] - a[5]) } return m }
-  const entMove = (m, t0) => { let s = 0; for (let k = 0; k < 24; k += 4) { const ra = nearest(m, Math.round(t0 + k)), rb = nearest(m, Math.round(t0 + k + 4)); if (ra && rb) s += Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) + Math.abs(wrap((rb[8] ?? rb[6]) - (ra[8] ?? ra[6]))) * 1.5 + Math.abs((rb[7] || 0) - (ra[7] || 0)) } return s }
+  const entMove = (m, t0) => { let s = 0; for (let k = 0; k < 24; k += 4) { const ra = nearest(m, Math.round(t0 + k)), rb = nearest(m, Math.round(t0 + k + 4)); if (ra && rb) s += Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) + Math.max(Math.abs(wrap((rb[8] ?? rb[6]) - (ra[8] ?? ra[6]))), Math.abs(wrap(rb[6] - ra[6]))) * 1.5 + Math.abs((rb[7] || 0) - (ra[7] || 0)) } return s }
   const swingsAt = new Set(tl.filter(e => e.event === 'ent_swing' || e.event === 'swing').map(e => Math.round(e.t / 50)))
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
     let mv = poseMove(t)
-    for (const m of ent.values()) mv = Math.max(mv, entMove(m, t))
+    let me = nearest(POSE, Math.round(t)); if (me) lastMe = me; else me = lastMe   // dead: the last place we stood
+    for (const [id, m] of ent) {
+      if (isMob.get(id)) { const r = nearest(m, Math.round(t)); if (!r || !me || Math.hypot(r[3] - me[1], r[4] - me[2], r[5] - me[3]) > 24) continue }
+      mv = Math.max(mv, entMove(m, t))
+    }
     for (let k = 0; k < 24; k++) if (swingsAt.has(Math.round(t + k))) { mv = Math.max(mv, 0.3); break }   // an arm swing is a gesture
     if (mv < 0.25) { if (deadFrom === null) deadFrom = t } else flushDead(t + 12)
   }

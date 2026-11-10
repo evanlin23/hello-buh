@@ -163,6 +163,20 @@ second is blurred). Moving mobs aren't blurred (camera motion only). Test: `node
   over their heads (EntityRenderer.renderNameTag, 0.5 above the hitbox), as CustomNameVisible does.
 Test: `node scripts/pose_fixture.js --stunt _life_test --life` (stunts/_life_test.js).
 
+## Held items on mobs: villagers' crossed arms, mob off hands; the narrator's nameplate; the selected item's name
+From names_in_the_woods (2026-11-10). All off for older recordings (rule zero: nitwit, thirty_one_raids and the pose
+fixture re-rendered pixel-identical).
+- **A villager holding an item** (`equipment:{mainhand:{...}}` on the summon, or `/item replace entity ... weapon.mainhand`)
+  shows it over its crossed arms (CrossedArmsItemLayer: VillagerModel.translateToArms, T(0, 0.4, -0.4), Rx(180), the item's
+  `ground` display). Recordings with `rec.engine >= 2` only.
+- **A mob's off-hand item** (a zombie villager still holding a potion in its left hand) is recorded (`extra.offhand`, as for
+  player actors) and drawn on the left arm (ItemInHandLayer, T(-1/16, 0.125, -0.625), the left-hand display).
+- **The narrator's player nameplate** in camera shots: list `stunt.selfName` in `stunt.nameTags`
+  (`selfName: 'Remy', nameTags: ['Remy']`).
+- **The selected item's name over the hotbar** (Gui.renderSelectedItemName): `edit.itemNames: { splash_potion: 'Splash
+  Potion of Weakness' }` (`{}` for title-cased ids) draws the name for 2 s whenever the selected stack changes, fading over
+  the last 0.5 s, in its rarity colour (a golden apple is aqua). Off without `itemNames`.
+
 ## Faster stills: the mesh cache
 `./hb still` (any `ONLY=`/`FRAMES=` render) keeps the first mesh of the world in `work/hb/meshcache/` and the next
 still of the same recording loads it instead of meshing (story_nitwit, two stills: 56 s -> 25 s; the PNGs are
