@@ -365,11 +365,10 @@ module.exports = {
     say(`/setblock ${X - 9} ${F + 3} ${Z - 13} lantern`)   // his table lantern, this night (audit B2)
     await shot('s10', -6.0, -6.5, P(-6, 2, -9), TIMES.S10)
     M.pose(ctx, GA, 'sit')
-    for (const [t] of farmers) K.bury(t, -60)   // out of the square after the cut
-    say('/kill @e[type=item]')
     put(GB, 21.0, 7.6, yawTo(21, 7.6, 26, 12.5), -5)             // S06's Grandpa on the road to the tower
     await K.line('L05', async (k, at) => {
       const up = at(3)   // "EVERYONE cheers"
+      if (k >= 20 && !fa.buried) { fa.buried = true; for (const [t] of farmers) K.bury(t, -60); say('/kill @e[type=item]') }   // the square cleared 1 s into the table scene (not on its cut)
       if (k === 10 || k === 34) swing(GA)   // he nudges the one bowl across the table
       if (k === at.cut(2)) K.shot('s10b')        // "But RAID nights?": in on his face
       G[GA].pitch = k < up - 3 ? 50 : k < up + 16 ? Math.max(4, G[GA].pitch - 9) : Math.min(50, G[GA].pitch + 5)
