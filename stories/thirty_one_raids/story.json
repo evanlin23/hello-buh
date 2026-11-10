@@ -116,7 +116,7 @@
       "shot": "S01",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.33
+      "after": 0.07
     },
     {
       "id": "L02",
@@ -126,7 +126,7 @@
       "shot": "S02",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": -0.36
+      "after": 0.15
     },
     {
       "id": "L03",
@@ -136,7 +136,7 @@
       "shot": "S03",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.43
+      "after": 0.01
     },
     {
       "id": "L04",
@@ -146,7 +146,7 @@
       "shot": "S04",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.29
+      "after": -0.25
     },
     {
       "id": "L05",
@@ -156,7 +156,7 @@
       "shot": "S05",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": -0.35
+      "after": 0.05
     },
     {
       "id": "L06",
@@ -166,7 +166,7 @@
       "shot": "S06",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.26
+      "after": 0.04
     },
     {
       "id": "L07",
@@ -179,7 +179,7 @@
         "word": "BOTTLES"
       },
       "request": "p1",
-      "after": -0.46
+      "after": -0.03
     },
     {
       "id": "L08",
@@ -189,7 +189,7 @@
       "shot": "S08",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.27
+      "after": 0.14
     },
     {
       "id": "L09",
@@ -200,7 +200,7 @@
       "shot": "S09",
       "look": "actor:Grandpa",
       "request": "g1",
-      "after": -0.39
+      "after": -0.3
     },
     {
       "id": "L10",
@@ -211,7 +211,7 @@
       "shot": "S10",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": -0.28
+      "after": 0.07
     },
     {
       "id": "L11",
@@ -364,5 +364,5 @@
   "bible": "stories/thirty_one_raids/bible.md",
   "payoff": "payoff",
   "payoff_note": "the payoff is Grandpa's \"kid\" with the crossbow's loaded click, over the raiders up the road (the horn reveal 2 s before is the build to it)",
-  "after_note": "lines[].after: seconds added to (or taken from) a line's scene so the silence to the next line's first word is ~0.28 s (owner 2026-11-10: 'the pacing is off'); the L12 hold is the dramatic beat"
+  "after_note": "lines[].after: seconds added to (or taken from) a line's scene so the silence between one line's last sound and the next line's first sound (-45 dB of the line's peak) is ~0.28 s (owner 2026-11-10: 'the pacing is off'); the L12 hold is the dramatic beat. Recompute after any re-voice."
 }
