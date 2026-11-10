@@ -108,7 +108,7 @@ module.exports = {
     await M.place(ctx, GUY, X + 37.5, Y + 1, Z + 15.5, 180, 20)
     await M.give(ctx, GUY, 'porkchop')
     await c('/clear @s')
-    await ctx.tpCheck(X + 34.5, Y + 1, Z + 6.5, 90, 0)
+    await ctx.tpCheck(X + 36.5, Y + 1, Z + 15.5, 0, 0)
     await bot.waitForChunksToLoad()
     await c('/gamemode survival')
     await c('/effect give @s resistance infinite 255 true')
