@@ -87,6 +87,8 @@ module.exports = {
     const c = (s) => ctx.cmd(s)
     for (const t of ['dog', 'pip', 'gramps', 'z1', 'z2']) await c(`/kill @e[tag=${t}]`)   // (a retried attempt runs setup again on the same world)
     await c(`/kill @e[type=item,x=${X - 20},y=${F - 20},z=${Z - 20},dx=40,dy=40,dz=40]`)
+    // the village's horses and donkeys graze up onto the hilltop and stood beside the dog in the first frame: none on the set
+    for (const t of ['horse', 'donkey', 'mule']) await c(`/kill @e[type=${t},x=${X - 24},y=${F - 30},z=${Z - 24},dx=48,dy=50,dz=48]`)
     // the meadow: a disc (r 9) round the dog, levelled to F, cut off at the east edge (holes below filled deep)
     for (let dz = -9; dz <= 9; dz++) {
       const hw = Math.floor(Math.sqrt(81 - dz * dz))
