@@ -91,6 +91,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    are forced-aligned to the caption words (`scripts/align.py` -> `scripts/ctc_align.py`; Whisper only as a fallback,
    flagged), caption words matched to them by text. Measured on the finished Short: |median offset| <= 33 ms and
    <= 10% of words over 100 ms off, else BLOCK. Check: `scripts/caption_av_check.py` (in `./hb review`). r:r27d123
+5. **No dramatic pauses**: the narrator talks continuously from frame 0 to the cut; drama comes from the words and
+   the picture, never silence. Pause limits (take gate) and line spacing follow the owner's reference Short's measured
+   gaps. Check: take_gate (pause), pace. r:rc95ed3
 4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
    pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
    only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a

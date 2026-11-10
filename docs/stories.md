@@ -138,6 +138,10 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "I have a lot of pauses for like dramatics, but the ones i've watched the narrator just yaps on
+  and on".** No dramatic pauses anywhere: the narrator talks continuously from the first frame to the cut, sentence
+  after sentence, the way the reference Short does; drama comes from the words and the picture, never from silence.
+  The take gate's pause limits and the line spacing are set from the reference Short's measured gaps.
 - **Owner, 2026-11-10 (on the reference Roblox Short's captions): "the captions can be 2-3 words thats fine".**
   Captions are 2-3 word chunks again (the script's " / " splits), one CAPS key word per chunk in the key colour
   (supersedes "one word at a time"); quotes keep their quote marks.
