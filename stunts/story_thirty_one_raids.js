@@ -272,7 +272,6 @@ module.exports = {
     const SJ = JSON.parse(fs.readFileSync(path.join(STORY, 'story.json'), 'utf8'))
     const HOLD = (SJ.reveal || {}).hold ?? 2.1
     bot.setQuickBarSlot(0)   // the boy's hotbar is story.json's (the harness puts it on before the first frame): slot 1, the bread
-    const line = (id, fn, extra = 0, o) => K.line(id, fn, extra, o)
     const P = (dx, dy, dz) => new ctx.Vec3(X + dx, F + dy, Z + dz)
     const gy = (dx, dz) => ground(ctx, X + dx, Z + dz) + 1 - F           // feet height (from F) at a spot
     const cutG = (dx, dz, target, o) => K.cut(dx, dz, target, gy(dx, dz), o)
@@ -309,7 +308,7 @@ module.exports = {
     hold(GB, 'crossbow'); frameEmpty('xbf')
     await bot.waitForTicks(6)
     await shot('s01', -10.5, -5.5, P(-10, 3, -12), TIMES.S01)
-    await line('L01', async (k, at) => {
+    await K.line('L01', async (k, at) => {
       if (k === at(0) + 1) swing(GA)
       if (k === at(0) + 4) { frameItem('f31', 'totem_of_undying'); hold(GA, 'air'); sound('entity.item_frame.add_item', 1, 1) }
       if (k > at(0) + 8) { G[GA].yaw = yawTo(-8.0, -14.4, -6.0, -15.9); G[GA].pitch = 18 }   // he looks at the empty one
@@ -323,7 +322,7 @@ module.exports = {
     await shot('s02', -3.5, -12.5, P(20, 2, 6), TIMES.S02)
     M.pose(ctx, GA, 'sit_ground')   // knees up on the ground at the grindstone (audit F6), set while S02 is on screen
     const grind = (k) => { if (k % 12 === 0) { swing(GA); sound('block.grindstone.use', 0.35, 1) } }
-    await line('L02', async (k, at) => {
+    await K.line('L02', async (k, at) => {
       if (k < at(3)) {
         const s = G[GB]; const d = Math.hypot(s.x - 6.5, s.z - 0.6)
         if (d > 0.3) { s.x -= 0.075 * (s.x - 6.5) / d; s.z -= 0.075 * (s.z - 0.6) / d; s.yaw = yawTo(s.x, s.z, 0.5, 0.5); s.y = gy(s.x, s.z) }
@@ -334,9 +333,9 @@ module.exports = {
     })
     // ---- L03 (S03 -> S04): "He SAYS they FOLLOW him"; on "They KNOW" the cut in, closer; he doesn't look up
     put(GB, -76.0, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side
-    await line('L03', async (k, at) => {
+    await K.line('L03', async (k, at) => {
       if (k === at.cut(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 1.8, -4.6)) }
-      grind(k); if (k === at(3)) G[GA].pitch = 25
+      grind(k); if (k >= at(3)) G[GA].pitch = 25   // a range: after the awaited cut, k jumps ahead (K.line on the recording clock)
       look(k)
     })
 
@@ -349,7 +348,7 @@ module.exports = {
     M.poseOff(ctx, GA)
     put(GA, -10.28, -12.5, -90, 50, 2.5, [11, 8, 8]); hold(GA, 'air')   // S10's Grandpa at his table (out of this shot)
     frameEmpty('xbf')
-    await line('L04', async (k, at) => {
+    await K.line('L04', async (k, at) => {
       const s = G[GB]
       if (s.x < -72.0) { s.x += 0.06; s.yaw = -90 }
       fa.forEach((f) => { f.yaw = yawTo(f.x, f.z, s.x, s.z) })
@@ -369,7 +368,7 @@ module.exports = {
     for (const [t] of farmers) K.bury(t, -60)   // out of the square after the cut
     say('/kill @e[type=item]')
     put(GB, 21.0, 7.6, yawTo(21, 7.6, 26, 12.5), -5)             // S06's Grandpa on the road to the tower
-    await line('L05', async (k, at) => {
+    await K.line('L05', async (k, at) => {
       const up = at(3)   // "EVERYONE cheers"
       if (k === 10 || k === 34) swing(GA)   // he nudges the one bowl across the table
       if (k === at.cut(2)) K.shot('s10b')        // "But RAID nights?": in on his face
@@ -386,12 +385,15 @@ module.exports = {
     hold(GB, 'crossbow')
     put(GA, -7.0, -14.6, yawTo(-7, -14.6, -5.5, -12.5), 30, 2); hold(GA, 'air')   // S07's Grandpa at the chest (out of shot)
     let chest = null
-    await line('L06', async (k, at) => {
+    const l06 = {}
+    await K.line('L06', async (k, at) => {
       if (k < at(3)) { const s = G[GB]; if (s.z < 13) { s.x += 0.045; s.z += 0.045; s.yaw = yawTo(0, 0, 1, 1); s.y = gy(s.x, s.z) } }
-      if (k === at.cut(3)) { K.shot('s07'); await cutG(-8.5, -6.5, P(-8, 2, -9), { time: TIMES.S07 }); park(GB) }
-      if (k === at(3) + 2) swing(GA)
-      if (k === at(3) + 6) { hold(GA, 'ominous_bottle'); G[GA].pitch = 10; G[GA].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === at.cut(5)) {   // first person beside him; I open his chest (the vanilla chest screen), aimed at the block centre K.open uses
+      if (k >= at.cut(3) && !l06.s07) { l06.s07 = true; K.shot('s07'); await cutG(-8.5, -6.5, P(-8, 2, -9), { time: TIMES.S07 }); park(GB) }
+      // ranges with flags: after the awaited cut to S07, k jumps ahead (K.line on the recording clock)
+      if (k >= at(3) + 2 && !l06.swung) { l06.swung = true; swing(GA) }
+      if (k >= at(3) + 6 && !l06.bottle) { l06.bottle = true; hold(GA, 'ominous_bottle'); G[GA].pitch = 10; G[GA].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
+      if (k >= at.cut(5) && !l06.pov) {   // first person beside him; I open his chest (the vanilla chest screen), aimed at the block centre K.open uses
+        l06.pov = true
         K.shot('pov')
         await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2)
         K.open(P(-6, 2, -13)).then(w => { chest = w }).catch(e => ctx.log('chest', e.message))
@@ -407,7 +409,7 @@ module.exports = {
     await bot.waitForTicks(3)
     await shot('s08', -5.8, -2.0, P(-3, 2, 0), TIMES.S08)
     park(GA)
-    await line('L07', async (k, at) => {
+    await K.line('L07', async (k, at) => {
       if (k === at(0) + 2) M.pose(ctx, GB, 'drink')
       if (k >= at(0) + 2 && k < at(2) - 2) { G[GB].pitch = Math.max(-30, G[GB].pitch - 5); if ((k - at(0)) % 4 === 0) sound('entity.generic.drink', 0.8, 0.95 + ((k - at(0)) % 8) * 0.01) }
       if (k === at(2) - 2) { M.poseOff(ctx, GB); hold(GB, 'crossbow') }
@@ -417,14 +419,14 @@ module.exports = {
     // ---- L08 (S09, Grandpa's own voice): closer; he turns his head back over his right shoulder on "Lock the DOOR",
     // a nod on "kid. They're COMING"
     await shot('s09', -4.2, 5.6, P(0, 2, 0))
-    await line('L08', async (k, at) => {
+    await K.line('L08', async (k, at) => {
       if (G[GB].yaw < gate.yaw + 95) G[GB].yaw += 9
       if (k >= at(1) && k < at(1) + 12) G[GB].pitch = Math.sin((k - at(1)) / 12 * Math.PI) * 16
       look(k)
     })
     // ---- L09 (S09): "Then a HORN goes OFF" (the raid horn, far off up the road): he turns back to the road; "And
     // Grandpa SMILES": he looks round at me and nods; "He must LOVE the RAIDS": he shoulders the crossbow
-    await line('L09', async (k, at) => {
+    await K.line('L09', async (k, at) => {
       const s = G[GB]
       if (k === at(1) - 2) sound('event.raid.horn', 1.2, 1)
       if (k >= at(1) && k < at(2)) s.yaw = Math.max(gate.yaw, s.yaw - 10)
@@ -441,7 +443,7 @@ module.exports = {
     await shot('s11', -24, -4.5, P(-6, 2, -4.5), TIMES.S11)
     M.pose(ctx, GA, 'sit')
     park(GB)
-    await line('L10', async (k, at) => {
+    await K.line('L10', async (k, at) => {
       if (k === at(1)) G[GA].pitch = 62   // "too TIRED"
       // Grandpa's bottle is mine now, in place of the bread: one slot (the harness records the slot change for the HUD)
       if (k === at(2)) say('/item replace entity @s hotbar.0 with ominous_bottle')
@@ -534,7 +536,7 @@ module.exports = {
       if (k >= E + 16) K.turnTo(from, P(me.x + 10 * Math.cos(aim), 2.3, me.z + 10 * Math.sin(aim)), Math.min(1, (k - E - 16) / 16))
       look(k)
     }
-    await line('L11', async (k, at, n) => { N12 = n; AT12 = at; await scene12(k, at, n) })
+    await K.line('L11', async (k, at, n) => { N12 = n; AT12 = at; await scene12(k, at, n) })
     for (let k = N12; k < N12 + 2 + RISE + AFTERBAR; k++) { await scene12(k, AT12, N12); await bot.waitForTicks(1); K._clock++ }
     ctx.mark('story_end')
     for (const s of Object.values(G)) s.on = false
