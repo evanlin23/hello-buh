@@ -1,0 +1,102 @@
+{
+  "name": "thirty_one_raids",
+  "stunt": "story_thirty_one_raids",
+  "version": 2,
+  "caption": "why do raiders always follow grandpa home 😶",
+  "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; when Grandpa is too tired to fight, the boy drinks his medicine to be brave like him.",
+  "question": "why tf do raiders show up every time grandpa comes home?",
+  "premise": "The villagers throw bread at Grandpa when he walks by: he has saved them from 31 raids, and keeps a totem from each on his wall. Every raid started the night he came home. He says the raiders follow him because he beats them. He hunts at the old pillager tower and brings back grey bottles he calls his medicine; he drinks one at the village gate and tells the boy to lock the door. Since Grandma died, a raid is the only time anyone is glad to see him.",
+  "twist": "The medicine is an ominous bottle: drinking it gives Bad Omen, and walking into a village with it starts a raid. Grandpa has been bringing every raid himself, so the village will need him. Tonight he's too tired to fight, so the boy drinks it to be brave; the raid horn sounds, and Grandpa tells him: now they'll love you too.",
+  "key_color": "#E0B44C",
+  "gap": 0.3,
+  "voice": { "engine": "gemini", "model_hint": "gemini-2.5-flash-preview-tts" },
+  "cast": {
+    "N": {
+      "role": "narrator", "name": "me", "voice": "Charon", "color": "#FFFFFF",
+      "profile": "a boy of about eleven who worships his grandpa, telling the story low and steady; the pride drains out of him as he goes",
+      "on_screen": "pov (never seen); hotbar: empty hand, then the ominous bottle (S12)"
+    },
+    "Grandpa": {
+      "role": "character", "name": "Grandpa", "voice": "Algenib", "color": "#E0B44C",
+      "profile": "an old fighter, gravelly and dry, proud and very tired; few words, never wasted; calls the boy 'kid'",
+      "on_screen": "a player with an old man's skin (grey beard, brown coat), a crossbow on his back; on screen from S01"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": ["N", "Grandpa"],
+      "direction": "A village at dusk after many raids. A boy tells how his grandpa saves the village; the grandpa speaks rarely, gravelly and tired."
+    }
+  ],
+  "sfx": [
+    { "under": "S01", "sound": "entity.villager.celebrate", "note": "villagers cheering as they throw him bread" },
+    { "under": "S12", "sound": "item.ominous_bottle.dispose", "note": "the bottle drunk (or entity.generic.drink)" },
+    { "under": "S13", "sound": "event.raid.horn", "note": "the raid horn, far, on the hill: the reveal" }
+  ],
+  "lines": [
+    { "id": "L01", "who": "N", "text": "Grandpa has saved / our village / from THIRTY-ONE / RAIDS.",
+      "say": "Grandpa has saved our village <short pause> from thirty-one raids.",
+      "direction": "proud, hushed; a held beat before the number", "shot": "S01" },
+    { "id": "L02", "who": "N", "text": "Every single one / started the night / he came HOME.",
+      "direction": "the pride draining; slower; it lands on the last word", "shot": "S02" },
+    { "id": "L03", "who": "N", "text": "He says / they FOLLOW him.",
+      "direction": "repeating what he was told, believing it", "shot": "S03" },
+    { "id": "L04", "who": "Grandpa", "text": "They know / who BEATS them, / kid.",
+      "direction": "dry and proud, not looking up from his work", "shot": "S04" },
+    { "id": "L05", "who": "N", "text": "He keeps a TOTEM / from every raid. / Thirty-one / on his WALL.",
+      "direction": "awe, counting it out", "shot": "S05" },
+    { "id": "L06", "who": "N", "text": "Since Grandma died, / it's the only time / anyone's GLAD / to see him.",
+      "say": "Since Grandma died, <short pause> it's the only time anyone's glad to see him.",
+      "direction": "softer, a sadness he only half understands", "shot": "S06" },
+    { "id": "L07", "who": "N", "text": "He hunts / at the old TOWER / on the hill.",
+      "direction": "a little in awe of the place", "shot": "S07" },
+    { "id": "L08", "who": "N", "text": "He brings back / grey BOTTLES. / He's got / a whole CHEST.",
+      "direction": "curious, matter-of-fact", "shot": "S08" },
+    { "id": "L09", "who": "N", "text": "He calls it / his MEDICINE. / He drinks it / at the GATE.",
+      "direction": "steady; a tiny hitch before the last part", "shot": "S09" },
+    { "id": "L10", "who": "Grandpa", "text": "Lock the DOOR, / kid. / They're COMING.",
+      "say": "Lock the door, kid. <short pause> They're coming.",
+      "direction": "calm, certain, almost bored; he knows exactly when", "shot": "S10" },
+    { "id": "L11", "who": "N", "text": "Tonight / he was too TIRED / to fight.",
+      "direction": "worried, quiet", "shot": "S11" },
+    { "id": "L12", "who": "N", "text": "So I drank / his MEDICINE. / I wanted / to be BRAVE / like HIM.",
+      "say": "So I drank his medicine. <short pause> I wanted to be brave like him.",
+      "direction": "a small brave breath first; the last words proud and young", "shot": "S12",
+      "hold": 1.5, "hold_note": "no words: the horn on the hill, banners and torches rising over the ridge (S13)" },
+    { "id": "L13", "who": "Grandpa", "text": "Now they'll / love YOU / too, kid.",
+      "say": "Now they'll love you too, kid.",
+      "direction": "gentle, tired, almost proud: the warmth is the worst part; a breath before the last word", "shot": "S14" }
+  ],
+  "shots": [
+    { "id": "S01", "line": "L01", "place": "square", "size": "wide", "camera": "pov at the edge of the square at dawn, slow push as Grandpa crosses",
+      "frame": "foreground: a fence and a hay bale low; subject: Grandpa walking across the square, crossbow on his back, villagers stepping up to throw bread at him (items arcing); background: the bell, houses, one roof still smoking" },
+    { "id": "S02", "line": "L02", "place": "road", "size": "ews", "camera": "pov high on the palisade by the east gate at dusk, looking out down the road",
+      "frame": "foreground: the palisade's log tops; subject: Grandpa small on the road walking home toward the gate, alone; background: fields, the river, and on the far ridge the dark pillager tower against the sunset" },
+    { "id": "S03", "line": "L03", "place": "grandpa_yard", "size": "full", "camera": "pov across Grandpa's yard",
+      "frame": "Grandpa at his grindstone beside his door, working; the gate a few blocks behind him; evening light" },
+    { "id": "S04", "line": "L04", "place": "grandpa_yard", "size": "medium", "camera": "pov a step closer, slightly lower",
+      "frame": "Grandpa waist up at the grindstone, not looking up; the crossbow on his back; his door behind" },
+    { "id": "S05", "line": "L05", "place": "grandpa_house", "size": "wide", "camera": "pov just inside the door, slow push to the wall",
+      "frame": "establishing the room: the north wall covered in item frames, 4 rows of 8, 31 holding totems of undying and one EMPTY frame at the end of the bottom row; a lantern; the table below" },
+    { "id": "S06", "line": "L06", "place": "grandpa_house", "size": "full", "camera": "pov from the room's corner, still, then a slow drift",
+      "frame": "Grandpa sitting alone at a table set for two: one bowl, two chairs, the second chair pushed in; the totem wall above; a window with the dark square beyond" },
+    { "id": "S07", "line": "L07", "place": "hill", "size": "ews", "camera": "pov on the slope below the ridge at sunset, looking up",
+      "frame": "foreground: tall grass and a birch; subject: the pillager tower (outpost) on the ridge, a white flag on its top; Grandpa's small figure climbing the path toward it; background: the sunset sky" },
+    { "id": "S08", "line": "L08", "place": "grandpa_house", "size": "medium", "camera": "pov beside Grandpa at the open chest",
+      "frame": "the chest open (lid up), Grandpa's hand lifting a grey ominous bottle out of it; more bottles on the shelf behind (item frames with ominous bottles); the totem wall at the frame's top edge" },
+    { "id": "S09", "line": "L09", "place": "gate", "size": "wide", "camera": "pov a few blocks behind Grandpa inside the gate, at dusk",
+      "frame": "foreground: the gate's log posts; subject: Grandpa at the open gate, back to camera, the bottle raised to drink; background: the road into the dark and the ridge with the tower" },
+    { "id": "S10", "line": "L10", "place": "gate", "size": "medium", "camera": "pov closer; Grandpa turns his head over his shoulder",
+      "frame": "Grandpa waist up, turning to look back at the camera, his hand empty (the bottle is gone once drunk); the dark hill behind him" },
+    { "id": "S11", "line": "L11", "place": "grandpa_yard", "size": "wide", "camera": "pov across the yard at dusk",
+      "frame": "Grandpa sitting on the bench by his door, crossbow across his knees, head down; the lantern lit; the gate and the dark ridge behind" },
+    { "id": "S12", "line": "L12", "place": "gate", "size": "full", "camera": "pov at the gate, the bottle in hand, raising it to drink",
+      "frame": "the ominous bottle in the first-person hand (HUD: the bottle selected); the open gate and the road ahead into the dusk; the ridge with the tower" },
+    { "id": "S13", "line": null, "place": "gate", "size": "ews", "camera": "pov at the gate, slow push toward the ridge",
+      "frame": "the reveal: the raid horn; over the ridge, a line of torches, white banners and the first pillagers and a ravager coming down toward the village; the sky darkening. Held 1.5 s" },
+    { "id": "S14", "line": "L13", "place": "gate", "size": "medium", "camera": "pov turns back toward the village",
+      "frame": "Grandpa has come up behind the narrator: waist up, holding out his crossbow to him; behind him the village, villagers running inside; the bell" }
+  ],
+  "bible": "stories/thirty_one_raids/bible.md"
+}
