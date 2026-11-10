@@ -19,7 +19,7 @@
 const path = require('path')
 const fs = require('fs')
 const M = require('../lib/movie')
-const { storyLines, storyKit, setKit, mergeHotbar } = require('../lib/story')
+const { storyLines, storyKit, setKit } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'thirty_one_raids')
 const CAPTION = 'why do raiders always follow grandpa home 😶'
@@ -29,7 +29,7 @@ const PARK = [0, 80, 140]                   // the off-stage Grandpa waits here 
 // the road out of the gate: the centre line (gate-relative x, z), east then south-east up onto the plateau
 const ROAD = [[0, 0.5], [14, 0.5], [26, 12.5], [34, 24.5], [38, 32.5]]
 const TOWER = [44, 40]                      // the watchtower's centre (template corner at TOWER - 7)
-const TIMES = { S01: 23500, S02: 12500, S03: 12600, S05: 23800, S06: 12000, S07: 14000, S08: 13000, S10: 14000, S11: 12300, S12: 12400, S13: 12800 }
+const TIMES = { S01: 23500, S02: 12500, S03: 12600, S05: 23800, S06: 12000, S07: 14000, S08: 13000, S10: 14000, S11: 12300, S12: 12400, S13: 12500 }   // S13 at 12500: the moon still under the trees on the horizon (the raiders weren't to be backlit)
 
 // the voice timing at module load (the camera shots key on words: S07's tilt on "CHEST")
 let V = null
@@ -153,6 +153,7 @@ module.exports = {
       }
       await bot.waitForTicks(6)
     }
+    for (const dz of [-2, 3]) { const g = groundAt(12, dz); await c(`/fill ${A(12, g + 1, dz)} ${A(12, g + 2, dz)} spruce_fence`); await c(`/setblock ${A(12, g + 3, dz)} lantern`) }   // the raiders lit as they reach the fields (audit F7)
     // --- the tower on the hill: the vanilla watchtower template on the plateau's bluff, without its banners
     {
       const [tx, tz] = [TOWER[0] - 7, TOWER[1] - 7], ty = groundAt(TOWER[0], TOWER[1]) + 1
@@ -333,12 +334,12 @@ module.exports = {
     await shot('s07', -8.5, -6.5, P(-8, 2, -9), TIMES.S07)
     park(GA)
     let chest = null
-    await line('L07', async (k, at) => {
-      if (k === at(1) - 2) swing(GB)
-      if (k === at(1)) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === Math.max(at(2) + 4, at(1) + 17)) {   // "a whole CHEST" (after OMINOUS's look on him): first person, beside him; I open his chest (the vanilla chest screen)
+    await line('L07', async (k, at, n) => {
+      if (k === at(0) + 2) swing(GB)
+      if (k === at(0) + 6) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
+      if (k === Math.max(at(2) - 1, Math.round(n * 0.6))) {   // "A whole CHEST" over the chest screen full of bottles (the owner check wants him on screen for half the line from "BACK"): first person, beside him; I open his chest (the vanilla chest screen)
         K.shot('pov')
-        await K.cut(-8.2, -12.0, P(-5.5, 2.45, -12.5), 2)
+        await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2)   // aimed at the block centre K.open uses: the screen opens on the cut, no turn first
         K.open(P(-6, 2, -13)).then(w => { chest = w }).catch(e => ctx.log('chest', e.message))
       }
       look(k)
@@ -394,7 +395,9 @@ module.exports = {
     M.poseOff(ctx, GB); park(GB)
     await line('L11', async (k, at) => {
       if (k === at(1)) G[GA].pitch = 62   // "too TIRED"
-      if (k === at(2)) ctx.hotbar(mergeHotbar(ctx.storyHotbar, ['ominous_bottle'])).then(() => bot.setQuickBarSlot(0)).catch(e => ctx.log('hotbar', e.message))   // Grandpa's bottle is mine now, in place of the bread (the HUD is off in this camera shot)
+      // Grandpa's bottle is mine now, in place of the bread: one slot (ctx.hotbar clears and refills all 9 over ~1 s, which ran
+      // into L12's first-person frames); the harness records the slot change for the HUD
+      if (k === at(2)) say('/item replace entity @s hotbar.0 with ominous_bottle')
       if (k === at(2)) { hold(GA, 'air'); G[GA].pitch = 66; sound('item.armor.equip_generic', 0.4, 1.3) }
       look(k)
     })
@@ -447,10 +450,10 @@ module.exports = {
       }
       if (k === E) {   // S13: the cut (on the spot, a step forward) to the road; the horn on its frame
         say('/effect clear @s')
-        await K.cut(0.9, 0.55, P(19, 2.0, 5.5), 1, { time: TIMES.S13 })
+        await K.cut(0.9, 0.55, P(19, 2.0, 5.5), 1, { time: TIMES.S13, shot: 's13' })   // S13: over my shoulder (not a second POV in a row: audit addendum)
         sound('event.raid.horn', 2.2, 1)
         K.go(true)   // a step forward through the gate, toward them
-        put(GB, -1.6, 1.3, -80, 0); hold(GB, 'crossbow')            // Grandpa, behind me, out of view
+        put(GB, 2.6, 6.2, 180, 0); hold(GB, 'crossbow')            // Grandpa, outside the palisade south of the gate, off frame right
       }
       if (k === E + 7) K.go(false)
       if (k >= E + 2 && k <= E + 2 + RISE && (k - E - 2) % 2 === 0) {
@@ -591,6 +594,9 @@ module.exports.shots = {
   // S10: the room from its south-east corner: Grandma's chair nearest the lens, Grandpa crouched over the table
   s10: { at: [-6.6, 3.75, -10.4], look: [-10.4, 3.0, -13.0], fov: 46, push: 0.1, dof: false },   // a medium (addendum: not FS after S09's FS)
   // S10b: in on his face across the table on "a RAID" (the ceiling glowstone lights him)
+  // S13 (the reveal, after L12's POV drink): over the boy's right shoulder through the gate, up the road: the raiders
+  // centre, Grandpa steps in at frame right and turns to him
+  s13: { at: [-2.2, 2.9, 1.6], look: [14, 2.4, 1.8], fov: 54, push: 0.12, dof: false },
   s10b: { at: [-7.2, 3.9, -12.3], look: [-10.3, 3.65, -12.5], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GB}`, offset: [0, 1.4, 0] } } }
 }
 

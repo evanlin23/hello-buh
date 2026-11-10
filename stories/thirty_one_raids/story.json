@@ -126,7 +126,7 @@
       "shot": "S07",
       "look": {
         "what": "actor:Gramps",
-        "word": "OMINOUS"
+        "word": "BACK"
       }
     },
     {
@@ -233,7 +233,7 @@
       "place": "grandpa_house",
       "size": "ms",
       "camera": "pov beside Grandpa at the open chest",
-      "frame": "Grandpa at the chest under the east window, the bottle coming up in his hand on 'BOTTLES' (camera beside him); on 'CHEST' first person: Buh opens the chest and the chest screen shows it full of ominous bottles. Night (14000), lantern-lit."
+      "frame": "Grandpa at the chest under the east window, the bottle coming up in his hand on 'BOTTLES' (camera beside him); on 'CHEST' first person: Buh opens the chest and the chest screen shows it full of ominous bottles. Night (14000), lantern-lit. (vNext: the bottle comes up in his hand on 'BACK'; on 'OMINOUS bottles' first person, the chest screen full of ominous bottles through 'A whole CHEST'.)"
     },
     {
       "id": "S08",
@@ -280,7 +280,7 @@
       "line": "L12",
       "place": "gate",
       "size": "wide",
-      "camera": "pov at the gate, still, a slow push up the road; 1.8 s",
+      "camera": "a camera shot over the boy's right shoulder through the gate, up the road (not a second POV after S12's drink), a slow push",
       "frame": "the reveal, after L12's last word: the cut to the road, the raid horn on its frame; the vanilla Raid boss bar (red, notched) appears at the top and fills over 1 s; up the road five pillagers (crossbows) and a ravager walk toward the gate (staged: no banners; we show the threat, not wave 1). Dusk (13000)."
     },
     {
@@ -288,7 +288,7 @@
       "line": "L12",
       "place": "gate",
       "size": "ms",
-      "camera": "the same take: once the bar is full the pov turns about 25 degrees right",
+      "camera": "the same camera shot: the boy steps forward; Grandpa steps in at frame right, crossbow in hand, and turns his head to the boy",
       "frame": "Grandpa, awake, steps up beside me just outside the south gate post, crossbow in hand, eyes on the road, then turns his head to see me; the raiders 14-16 blocks up the road at frame left; the Raid bar full at the top. The cut 1.0 s after the bar is full. No line."
     }
   ],
