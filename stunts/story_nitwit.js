@@ -16,7 +16,7 @@ const { storyLines, storyKit, setKit, house, clearSet, plainsBiome, resendChunks
 
 const STORY = path.join(__dirname, '..', 'stories', 'nitwit')
 const CAPTION = 'the nitwit finally said something 😳'
-const DAY = 6000, NIGHT = 18000
+const DAY = 6000, NIGHT = 14500   // 14500: dark, but the ruin still reads (18000 was near-black in the stills)
 
 module.exports = {
   name: 'story_nitwit',
@@ -65,6 +65,7 @@ module.exports = {
     await c(`/fill ${A(-1, 0, 51)} ${A(0, 1, 52)} water`)
     for (const [dx, dz] of [[-2, 50], [1, 50], [-2, 53], [1, 53]]) await c(`/fill ${A(dx, 2, dz)} ${A(dx, 3, dz)} oak_fence`)
     await c(`/fill ${A(-2, 4, 50)} ${A(1, 4, 53)} cobblestone_slab`)
+    await c(`/setblock ${A(6, 5, 40)} spruce_planks`)   // a step on the roof's ridge: he stands on it, in the sky
     // the torch path north (L09-L10): torches on fence posts, the last one at z 3
     await c(`/fill ${A(0, 0, -26)} ${A(0, 0, 7)} dirt_path`)
     for (const dz of [12, 7, 3]) { await c(`/setblock ${A(2, 1, dz)} oak_fence`); await c(`/setblock ${A(2, 2, dz)} torch`) }
@@ -103,10 +104,10 @@ module.exports = {
 
     // --- the cast (NoAI, tagged per scene). The nitwit has a twin at every place he stands, so no one hops
     await vil(0.5, 28.5, 90, 'nitwit', ['nS'])                // the street nitwit: L01-L02, L07-L08, L14-L17
-    await vil(6.5, 40.5, 0, 'nitwit', ['nRoof', 'warm'], { y: 5.5 })   // L03, L07: on my roof
+    await vil(6.5, 40.5, 0, 'nitwit', ['nRoof', 'warm'], { y: 6 })   // L03, L07: on my roof
     await vil(19.5, 24.2, 0, 'nitwit', ['nTree', 'warm'])     // L04: under the tree
-    await vil(-21.5, 23.5, -45, 'nitwit', ['nWheat', 'warm'], { y: 0.94 })   // L05: in the wheat
-    await vil(2.6, 51.5, 90, 'nitwit', ['nWell', 'warm'])     // L06: at the well, looking in
+    await vil(-18.5, 20.5, -45, 'nitwit', ['nWheat', 'warm'])   // L05: in the wheat
+    await vil(-0.5, 49.2, 0, 'nitwit', ['nWell', 'warm'])     // L06: at the well, looking in
     await vil(0.5, 1.5, 180, 'nitwit', ['nPath'])             // L09-L10: walking north at night
     await vil(0.5, -28.5, 180, 'nitwit', ['nRuin'])           // L11-L15: in the ruin
     // the crowd (L07): five villagers in the street south of the nitwit
@@ -155,7 +156,7 @@ module.exports = {
       nS.yaw = 90 + Math.sin(ctx.tick / 6) * 25
       nS.pitch = k % 20 < 6 ? 20 : 0   // the nod a villager does when it grunts
       if (k === 1 || k === at(2) || k === at(3)) { hmm(); K.setMeter(++meter) }
-      K.go(k > 2 && k < 26)
+      K.go(k > 2 && k < 12)   // a few steps (to k 26 it walked into him)
       K.base = K.aim(P(0.5, 2.1, 28.5)); look(k)
     })
     K.go(false)
@@ -171,27 +172,25 @@ module.exports = {
     })
 
     // L03: always somewhere weird: on a roof
-    await cut(0.8, 33.5, P(6.5, 6.8, 40.5))
-    // the street nitwit walks off to the crowd's end of the street while the camera is elsewhere (L07 brings him in)
-    nS.x = 3.5; nS.z = 36.0; nS.yaw = 45
+    await cut(1.5, 35.0, P(6.5, 7.3, 40.5))
+    const nRoof = K.actor('nRoof', { x: 6.5, y: 6, z: 40.5, yaw: 0 })
     await line('L03', async (k, at) => {
       if (k === at(3)) hmm(0.6)
-      K.go(k > 4 && k < 18)
-      look(k)
+      nRoof.yaw = Math.sin(ctx.tick / 6) * 35; nRoof.pitch = k >= at(3) ? 25 : 0   // looking about up there, then down at me
+      look(k, 0, 0.06 * K.ease(k / 30))   // a slow tilt up to him (walking, it hit the wall)
     })
-    K.go(false)
 
     // L04: under a tree; that night, lightning split it
     const nTree = K.actor('nTree', { x: 19.5, z: 24.2, yaw: 0 })
     await cut(11.5, 18.5, P(20, 4, 26))
     let night4 = false, struck = false
     await line('L04', async (k, at) => {
-      if (!night4 && k === at(1) - 1) { night4 = true; away(nTree); await cut(12.5, 19.5, P(20, 4.5, 26), 1, { time: NIGHT }) }
+      if (!night4 && k === at(1) - 1) { night4 = true; away(nTree); await cut(13.5, 15.5, P(20, 4.5, 26), 1, { time: NIGHT }) }
       if (!struck && k === at(2)) {
         struck = true
         bolt(20.5, 7, 26.5)
         say(`/fill ${X + 20} ${F + 3} ${Z + 26} ${X + 20} ${F + 6} ${Z + 26} air`)
-        say(`/fill ${X + 18} ${F + 4} ${Z + 24} ${X + 20} ${F + 7} ${Z + 28} air`)
+        say(`/fill ${X + 18} ${F + 4} ${Z + 24} ${X + 20} ${F + 7} ${Z + 28} air`); say(`/setblock ${X + 21} ${F + 6} ${Z + 26} oak_log[axis=x]`)
       }
       if (struck && k % 3 === 0) ctx.particles('smoke', P(20.5 + (Math.random() - 0.5), 3.5, 26.5 + (Math.random() - 0.5)))
       if (!night4) K.go(k > 2)
@@ -201,9 +200,10 @@ module.exports = {
     K.go(false)
 
     // L05: in the wheat; a creeper walked in and BOOM (day again on the cut)
-    const nWheat = K.actor('nWheat', { x: -21.5, y: 0.94, z: 23.5, yaw: -45 })
+    nS.x = 3.5; nS.z = 36.0; nS.yaw = 45   // the street nitwit to the crowd's end of the street, out of every shot (L08 brings him in)
+    const nWheat = K.actor('nWheat', { x: -18.5, z: 20.5, yaw: -45 })
     const creeper = K.actor('creeper', { x: -29.5, y: 90, z: 26.5, yaw: -90 })   // out of sight until its cut
-    await cut(-12.5, 15.5, P(-21.5, 1.6, 23.5), 1, { time: DAY })
+    await cut(-12.5, 15.5, P(-19, 1.6, 21.5), 1, { time: DAY })
     let boomed = false, cut5 = false
     await line('L05', async (k, at) => {
       nWheat.yaw = -45 + Math.sin(ctx.tick / 7) * 20
@@ -219,8 +219,8 @@ module.exports = {
     })
 
     // L06: by the well; the water turned to lava
-    const nWell = K.actor('nWell', { x: 2.6, z: 51.5, yaw: 90, pitch: 40 })
-    await cut(-4.5, 45.5, P(0, 1.6, 51.5))
+    const nWell = K.actor('nWell', { x: -0.5, z: 49.2, yaw: 0, pitch: 40 })
+    await cut(3.5, 45.5, P(-0.5, 1.4, 50.5))
     let lava = false
     await line('L06', async (k, at) => {
       nWell.pitch = 40 + Math.sin(ctx.tick / 5) * 8
@@ -229,15 +229,13 @@ module.exports = {
         say(`/fill ${X - 1} ${F} ${Z + 51} ${X} ${F + 1} ${Z + 52} lava replace water`)
         ctx.sound('item.bucket.empty_lava', 1, 1); ctx.sound('block.lava.pop', 1, 1)
       }
-      if (lava && k % 4 === 0) ctx.particles('smoke', P(-0.5 + Math.random(), 2.2, 51.5 + Math.random()))
-      K.go(k > 3 && k < at(3))
+      K.go(k > 3 && k < 14)
       look(k)
     })
     K.go(false)
     away(nWell)
 
     // L07: on MY roof; the next day it rained anvils (the L03 roof again, then anvils from the sky)
-    const nRoof = K.actor('nRoof', { x: 6.5, y: 5.5, z: 40.5, yaw: 0 })
     await cut(-1.5, 34.5, P(6.5, 6.2, 41))
     let next7 = false, rained = 0
     const anvil = (x, z) => say(`/summon falling_block ${(X + x).toFixed(2)} ${F + 12} ${(Z + z).toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,DropItem:0b}`)
@@ -266,13 +264,13 @@ module.exports = {
     })
 
     // L09: even the iron golem goes around him (walking up the street toward me, an arc round the nitwit)
-    const golem = K.actor('golem', { x: 0.5, z: 55.5, yaw: 180 })
+    const golem = K.actor('golem', { x: 0.5, z: 47.5, yaw: 180 })
     nS.x = 0.5; nS.z = 40.5; nS.yaw = 0
-    await cut(-1.5, 33.5, P(0.5, 2, 44))
-    await K.preroll(4, () => K.step(golem, 0, -0.14))
+    await cut(-1.5, 35.5, P(0.5, 2, 44))
+    await K.preroll(4, () => K.step(golem, 0, -0.12))
     await line('L09', async (k) => {
       // z 55 -> ~36 over the line; x bulges 2.6 blocks east past the nitwit at z 40.5
-      const nz = golem.z - 0.16
+      const nz = golem.z - 0.14
       const nx = 0.5 + 2.6 * Math.exp(-Math.pow((nz - 40.5) / 3.2, 2))
       K.step(golem, nx - golem.x, nz - golem.z)
       nS.yaw = K.mcYaw(golem.x - nS.x, golem.z - nS.z)
@@ -280,12 +278,12 @@ module.exports = {
     })
     away(golem)
 
-    // L10: so one night, I followed him (sneaking along the torch path behind him)
+    // L10: so one night, I followed him (walking the torch path behind him; no sneak: a crouch changed on a cut
+    // eases the eye height into the new shot, rec_check blocker)
     const nPath = K.actor('nPath', { x: 0.5, z: 1.5, yaw: 180 })
-    K.ctl('sneak', true)
-    await cut(0.5, 7.5, P(0.5, 1.6, 0), 1, { time: NIGHT })
+    await cut(0.5, 9.5, P(0.5, 1.6, 0), 1, { time: NIGHT })
     await line('L10', async (k) => {
-      K.step(nPath, 0, -0.07)
+      K.step(nPath, 0, -0.12)
       K.go(true)
       K.base = K.aim(P(0.5, 1.7, nPath.z - 3)); look(k)
     })
@@ -293,7 +291,7 @@ module.exports = {
     let ruinCut = false
     const nRuin = K.actor('nRuin', { x: 0.5, z: -28.5, yaw: 180 })
     await line('L11', async (k, at) => {
-      if (!ruinCut) { K.step(nPath, 0, -0.07); K.go(true); K.base = K.aim(P(0.5, 1.7, nPath.z - 3)) }
+      if (!ruinCut) { K.step(nPath, 0, -0.12); K.go(true); K.base = K.aim(P(0.5, 1.7, nPath.z - 3)) }
       if (!ruinCut && k === at(2) - 1) {
         ruinCut = true
         await cut(0.5, -24.5, P(0.5, 1.5, -44), 1, { stop: false })
@@ -302,7 +300,7 @@ module.exports = {
       if (ruinCut) { K.step(nRuin, 0, -0.06); K.go(true) }
       look(k)
     })
-    K.go(false); K.ctl('sneak', false)
+    K.go(false)
 
     // L12: MY village. BURNED. EMPTY. (jump cuts on each word)
     await cut(9.5, -27.5, P(-2, 1.5, -46))
@@ -321,11 +319,9 @@ module.exports = {
     let c13 = 0
     await line('L13', async (k, at) => {
       if (c13 === 0 && k === at(1) - 1) { c13 = 1; await cut(-15.5, -40.5, P(-21, -0.5, -45)) }
-      if (c13 === 1 && k === at(2) - 1) { c13 = 2; await cut(3.5, -26.5, P(6.5, -0.5, -30.5)) }
-      K.go(k > 2)
+      if (c13 === 1 && k === at(2) - 1) { c13 = 2; await cut(2.5, -24.0, P(6.5, -0.5, -30.5)) }
       look(k)
     })
-    K.go(false)
 
     // L14: he's not from here; his world already ended (he turns to me; a bolt behind him on "ENDED")
     await cut(0.5, -37.0, P(0.5, 2.2, -42.5))
@@ -342,9 +338,8 @@ module.exports = {
     await cut(0.5, -47.5, P(0.5, 1.4, -20))
     await line('L15', async (k, at) => {
       if (k >= at(1) - 4) K.step(nRuin, 0, 0.09)
-      K.go(k > at(1)); look(k)
+      look(k)
     })
-    K.go(false)
 
     // L16: but a nitwit can only say one word (day, his face). The word: "hmm", with the card
     away(nRuin)
@@ -371,14 +366,15 @@ module.exports = {
     await line('L18', async (k, at, n) => {
       if (k % 6 === 0) hmm(0.35)
       K.setTime(DAY + (12800 - DAY) * K.ease(k / n))
-      if (k === at(3)) bolt(16, 10, 30)
+      if (k === at(3)) bolt(-4, 10, 62)
       look(k)
     })
 
     // L19: it's TODAY (bolts and blasts behind him, the flash; end on it)
     await line('L19', async (k, at) => {
-      if (k === at(1)) { ctx.mark('today_word'); bolt(10, 8, 46); bolt(14, 8, 36); boom(15, 1, 44); ctx.mark('flash') }
-      if (k === at(1) + 4) { bolt(22, 8, 40); boom(18, 1, 34) }
+      // down the street behind him (the house right behind him hid them in the stills)
+      if (k === at(1)) { ctx.mark('today_word'); bolt(2, 8, 50); bolt(-5, 8, 58); boom(3, 1, 54); ctx.mark('flash') }
+      if (k === at(1) + 4) { bolt(6, 8, 62); boom(-3, 1, 58) }
       look(k)
     }, 0.5)
     ctx.mark('story_end')
