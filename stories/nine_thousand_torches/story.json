@@ -1,0 +1,477 @@
+{
+  "name": "nine_thousand_torches",
+  "stunt": "story_nine_thousand_torches",
+  "version": 2,
+  "revision": "r1 (2026-11-10): written from the critic's park note: the trading-hall answer dropped for the goodbye",
+  "caption": "who put 9,000 torches on my village 🔥",
+  "logline": "A villager kid wakes to find a torch on every block of his village and thinks something terrible is coming, but follows the last row to his own door, where his best friend, the village's player, places the final torch and leaves the game for good.",
+  "question": "why tf is there a torch on every single block of this village?",
+  "premise": "One morning a plains village wakes up with a torch on every grass block, fence post and hay bale: nine thousand of them. The villager kid who tells it knows zombies can't spawn on a lit block, so he decides something big must be coming. Milo, the player who lives in the village and his best friend, says 'see you tomorrow' every night when he logs off; yesterday Milo said his mom made him promise, one last night, which the kid reads as Milo being grounded again. This morning all of Milo's things are in the kid's family chest and Milo's house is gone, just a square of torches. One row of torches is still growing; the kid follows it to his own door.",
+  "twist": "Nothing is coming: Milo is going. He is leaving the world for good (his mom's rule: one last night), so he spent the whole night spawn-proofing every block of the village, so no zombie can ever spawn in it once nobody is there to fight them. He took his own house down so it wouldn't be one dark room left behind, gave everything he owned to his best friend, and saved the friend's door for the last torch. He places it, waves, and the chat says 'Milo left the game'. He didn't say 'see you tomorrow' because it isn't true. The torches are the goodbye.",
+  "key_color": "#FFB13B",
+  "gap": 0.3,
+  "mood": [
+    "eerie",
+    "sad"
+  ],
+  "payoff": "L15",
+  "look": {
+    "time": "dawn",
+    "ticks": {
+      "today": "23000 rising to 23850 across L01-L15 (never backwards)",
+      "flashback": "11600-12600 (S05-S08)"
+    },
+    "fog": false,
+    "grade": "auto"
+  },
+  "weather": "clear",
+  "world": {
+    "where": "a plains village on the river road, a valley south of the carpeted village (Light Sleeper); Milo's own village before he quits the world",
+    "easter_egg": "the village nitwit in his green coat (story_nitwit) standing on top of the well's roof among the torches, background of S03. Provisional: re-check against docs/world/canon.md when it lands."
+  },
+  "voice": {
+    "engine": "gemini",
+    "model_hint": "one model for every narrator line (voices/recipes/pip.md: gemini-3.8-flash-lite-tts); never switch mid-story"
+  },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "ref": "narrator",
+      "name": "me",
+      "color": "#FFFFFF",
+      "on_screen": "a baby villager (plains, no profession: brown robe), unnamed; pov at the kid's eye (0.81) in S04, S09, S10, S12, S15; seen from outside in S06, S08, S13, S14 (stunt.self = { model: 'villager', eye: 0.81, extra: { baby: true } }, hud: false, hideHand: true)"
+    },
+    "Milo": {
+      "role": "character",
+      "ref": "milo",
+      "name": "Milo",
+      "color": "#4FD8E6",
+      "voiced": false,
+      "on_screen": "a player actor (mineflayer bot named Milo), default Steve skin, his vanilla name tag over his head; holds a torch (main hand) in S07, S08, S12 (hidden), S14; empty hand in S05, S06, S15. Never voiced: the narrator quotes him (L07). Leaves by quitting the server in S15"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05"
+      ],
+      "direction": "A plains village at sunrise. A bubbly nine-year-old villager kid tells a friend the strangest morning of his life: fast, bright, full volume, never whispery or breathy; a short breath between sentences."
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L06",
+        "L07",
+        "L08",
+        "L09",
+        "L10"
+      ],
+      "direction": "A plains village at sunrise. A bubbly nine-year-old villager kid tells a friend the strangest morning of his life: fast, bright, full volume, never whispery or breathy; a short breath between sentences."
+    },
+    {
+      "id": "r3",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L11",
+        "L12",
+        "L13",
+        "L14",
+        "L15"
+      ],
+      "direction": "A plains village at sunrise. A bubbly nine-year-old villager kid tells a friend the strangest morning of his life: fast, bright, full volume, never whispery or breathy; a short breath between sentences."
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "Someone put / NINE THOUSAND / TORCHES / on my village / last NIGHT.",
+      "say": "Someone put nine thousand torches on my village last night.",
+      "direction": "one quick breath, no pause inside; amazed and bright, a lift on the number",
+      "shot": "S01",
+      "look": {
+        "what": "block:torch",
+        "word": "TORCHES"
+      }
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "The GRASS. / The FENCES. / Even the HAY BALES.",
+      "direction": "a fast list, each item more amazed than the last, a laugh on the last one",
+      "shot": "S02",
+      "look": [
+        {
+          "what": "block:torch",
+          "word": "GRASS"
+        },
+        {
+          "what": "prop:fence_torches",
+          "word": "FENCES"
+        },
+        {
+          "what": "prop:hay_torches",
+          "word": "HAY"
+        }
+      ]
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "Zombies can't SPAWN / on a lit block. / So why / EVERY block?",
+      "direction": "the first half proud, he knows this rule; the question quick and puzzled",
+      "shot": "S03",
+      "look": {
+        "what": "block:torch",
+        "word": "EVERY"
+      }
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "Something BIG / must be COMING.",
+      "direction": "full volume, spooked and thrilled at once, eyes wide; not whispered",
+      "shot": "S04",
+      "look": {
+        "what": "prop:dark_forest",
+        "word": "COMING"
+      }
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "My best friend / MILO / is our PLAYER.",
+      "direction": "proud and happy, a grin on the name",
+      "shot": "S05",
+      "look": {
+        "what": "actor:Milo",
+        "word": "MILO"
+      }
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "Every night, / he says / see you TOMORROW / and logs OFF.",
+      "direction": "matter-of-fact and fond, quick; the quoted words said the way a friend says them",
+      "shot": "S06",
+      "look": {
+        "what": "actor:Milo",
+        "word": "TOMORROW"
+      }
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "Yesterday / Milo said, / Mom made me PROMISE. / One LAST night.",
+      "say": "Yesterday Milo said, \"Mom made me promise. One last night.\"",
+      "direction": "telling it lightly, no weight on it at all, he doesn't get it",
+      "shot": "S07",
+      "look": {
+        "what": "actor:Milo",
+        "word": "Milo"
+      }
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "He's grounded / a LOT.",
+      "direction": "a deadpan little joke, quick",
+      "shot": "S08",
+      "look": {
+        "what": "actor:Milo",
+        "word": "grounded"
+      }
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "This morning, / all his STUFF / was in OUR chest.",
+      "direction": "back to the strange morning, excited, a lift on the last word",
+      "shot": "S09",
+      "look": {
+        "what": "prop:our_chest",
+        "word": "STUFF"
+      }
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "He's HIDING it / from whatever's COMING.",
+      "direction": "sure of himself, a little thrilled; full volume",
+      "shot": "S10",
+      "look": {
+        "what": "prop:dark_forest",
+        "word": "COMING"
+      }
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "His HOUSE / was GONE. / Just a square / of TORCHES.",
+      "direction": "puzzled, a beat of surprise on the second phrase, not scared",
+      "shot": "S11",
+      "look": {
+        "what": "prop:milo_plot",
+        "word": "HOUSE"
+      }
+    },
+    {
+      "id": "L12",
+      "who": "N",
+      "text": "One row / was still GROWING.",
+      "direction": "quick and curious, leaning in, full volume",
+      "shot": "S12",
+      "look": {
+        "what": "prop:growing_row",
+        "word": "GROWING"
+      }
+    },
+    {
+      "id": "L13",
+      "who": "N",
+      "text": "I followed it / right to MY door.",
+      "direction": "fast, running; surprised on the last word",
+      "shot": "S13",
+      "look": [
+        {
+          "what": "prop:growing_row",
+          "word": "followed"
+        },
+        {
+          "what": "prop:our_door",
+          "word": "door"
+        }
+      ]
+    },
+    {
+      "id": "L14",
+      "who": "N",
+      "text": "Milo put / the LAST one / by my DOOR. / And WAVED.",
+      "direction": "happy to see him, a smile in it; the last two words simple",
+      "shot": "S14",
+      "look": {
+        "what": "actor:Milo",
+        "word": "Milo"
+      }
+    },
+    {
+      "id": "L15",
+      "who": "N",
+      "text": "He didn't say, / see you / TOMORROW.",
+      "say": "He didn't say, see you tomorrow. <short pause>",
+      "direction": "full volume, slower, the bubbles gone; plain and steady, he just understood; not whispered, not breathy",
+      "shot": "S15",
+      "look": [
+        {
+          "what": "actor:Milo",
+          "word": "He"
+        },
+        {
+          "what": "prop:our_door",
+          "word": "TOMORROW"
+        }
+      ]
+    }
+  ],
+  "reveal": {
+    "at": "L15 first word",
+    "game": "Milo's actor bot quits the server: his entity is removed (vanishes at once, as vanilla) and the server's system message 'Milo left the game' (yellow, ChatFormatting.YELLOW #FFFF55) shows in the chat at the bottom left of the game view",
+    "caption": "the caption track also shows 'Milo left the game' in yellow during the hold after 'TOMORROW'",
+    "hold": "0.8 s after the last word, then cut; nothing after it"
+  },
+  "ending": {
+    "after": "L15",
+    "loop": "cause and effect: the goodbye at the door is why L01's village has nine thousand torches 'last night'; L01's 'someone' is Milo, and 'Something BIG must be COMING' (L04) turns into someone going"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "village",
+      "size": "ews",
+      "camera": "path: a crane forward and down. Key 0 (0 s): 34 blocks above the village's west edge, already moving east at ~2 blocks/s, looking down ~35 degrees across the whole village; key 1 (end of L01, ~3 s): 22 blocks up over the meeting point (the bell), still looking east toward the dawn. FOV 60. wideMaster, centre crop.",
+      "frame": "fg: the torch-studded roof ridges and fence posts of the west houses passing under the lens; mid: the whole village, about 95 x 95 blocks, every grass block, fence post, hay bale and roof ridge carrying a torch: a carpet of thousands of warm points, the dirt paths and fields reading as dark lines between them (paths and farmland take no torch); bg: the dark forest ring, hills, the pale band of dawn over the east hills. Dawn (23000): sky blue-grey, no sun yet, torch glow and bloom at their strongest. This is the count shot: the viewer must believe 9,000."
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "west_lane",
+      "size": "ms",
+      "camera": "at: low (0.8 blocks up, the kid's eye) beside a fence line, a slow dolly east along it (~1.5 blocks/s); FOV 50",
+      "frame": "on 'GRASS': fg the grass at the lens, one torch per block running away in a grid; on 'FENCES': fence posts sliding past at frame left, a torch on every post; on 'HAY': the dolly reveals the hay-bale pile by the meeting point, a torch on every exposed top, lower-centre; bg: house walls with torches on their ridges, the bell post. Dawn (23050)."
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "meeting_point",
+      "size": "full",
+      "camera": "at: 1.2 blocks up, 7 blocks from the iron golem, looking along the grass between two houses, a slow push in; FOV 50",
+      "frame": "fg: torches on the grass at the lens, out of focus; subject: the village iron golem head to foot, walking slowly through the grid of torches (warm), torch light on its legs; bg: houses, every block lit, and on 'EVERY' the push reveals the torches going on and on past the houses. The easter egg: the nitwit in his green coat standing on top of the well's roof, deadpan, among the torches (provisional). Dawn (23100)."
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "village_edge",
+      "size": "wide",
+      "camera": "pov (the kid's eye, 0.81) at the village's north edge on a rise, looking north out of the village; a slow step forward",
+      "frame": "fg: the last rows of torches on the grass, ending in a clean line 4 blocks ahead; mid: open grass, unlit, then the forest edge 20 blocks out; bg: the dark oak forest, black under the canopy, hills above it fading into the blue dawn fog. The village's lights end and the dark begins in one frame. Dawn (23150)."
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "milo_house",
+      "size": "ews",
+      "camera": "path: a slow crane down from 14 blocks up to 4, east of Milo's house, looking west into the dusk; FOV 55",
+      "frame": "FLASHBACK (yesterday, no 9,000 torches: the village as vanilla built it, its own lamp posts only). fg: the meeting point's hay bales and fences; mid: Milo (default Steve skin, name tag 'Milo' over his head) in front of his birch cottage at the village's west edge, its lit windows; bg: the village roofs, the sunset sky behind the west hills. Late afternoon going gold (11600), sun low at frame centre.",
+      "look": {
+        "fog": false,
+        "time": 11600
+      }
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "our_door",
+      "size": "full",
+      "camera": "at: 1 block up, 5 blocks out from our doorstep, looking north at the door, the kid (baby villager) at frame right edge, back three-quarters to us; still, a tiny push",
+      "frame": "FLASHBACK. subject: Milo head to foot on our doorstep path, turning from the door and waving at the kid (wave pose on 'TOMORROW'); fg: the path and a lamp post at frame left; bg: our house front (oak and cobble plains house), its door, the window lit. Sunset (12000). Cut before he leaves: he never vanishes here.",
+      "look": {
+        "fog": false,
+        "time": 12000
+      }
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "milo_house",
+      "size": "ms",
+      "camera": "at: 2 blocks from Milo at his eye height, three-quarter front, FOV 50, slow push",
+      "frame": "FLASHBACK. subject: Milo waist up beside two open chests and a crafting table outside his cottage door, a torch in his hand (main hand, held), the chests' lids up; in the chest tops and on the ground: stacks of coal and sticks, dropped torches; bg: his birch cottage, door open, the room behind it lit. Dusk (12300).",
+      "look": {
+        "fog": false,
+        "time": 12300
+      }
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "village_street",
+      "size": "wide",
+      "camera": "at: 1.6 blocks up behind the kid at our door, looking down the street west; still",
+      "frame": "FLASHBACK. fg: the kid (baby villager) small at lower right on our doorstep, back to us; subject: Milo walking away down the street, 12-15 blocks out, a torch in hand, his name tag over him; bg: his cottage still standing at the end of the street (lit windows: the house exists), the last glow of dusk. Late dusk (12600).",
+      "look": {
+        "fog": false,
+        "time": 12600
+      }
+    },
+    {
+      "id": "S09",
+      "line": "L09",
+      "place": "our_house_inside",
+      "size": "cu",
+      "camera": "pov (kid's eye) at our chest, the vanilla chest screen opens on 'STUFF' (container overlay, 27 slots)",
+      "frame": "the chest screen fills the game view's middle: a diamond sword, a full set of iron armour, a red bed, a shield, a filled map, a fishing rod, a stack of bread, a bucket, a stack of 64 torches; title 'Chest'. Behind the screen (dimmed): our room, the lit window. Dawn (23250). The only close-up."
+    },
+    {
+      "id": "S10",
+      "line": "L10",
+      "place": "our_house_inside",
+      "size": "wide",
+      "camera": "pov (kid's eye) a slow turn from the chest to the window, a step toward it",
+      "frame": "fg: the window frame and the room's floor; through the window: the village lit by thousands of torches, the dark forest at the top of frame. Dawn (23300)."
+    },
+    {
+      "id": "S11",
+      "line": "L11",
+      "place": "milo_plot",
+      "size": "ews",
+      "camera": "at: 12 blocks up and 10 east of the plot, looking down at it; a slow descending push; FOV 55",
+      "frame": "subject: a bare square where Milo's cottage stood (the house gone, its plinth and garden gone), grass and dirt, a torch on every block, a neat square of points inside the slightly worn edge; fg: the street's torch-topped fence; bg: neighbour houses with torches on their ridges, the forest beyond. Dawn (23350)."
+    },
+    {
+      "id": "S12",
+      "line": "L12",
+      "place": "village_south",
+      "size": "wide",
+      "camera": "pov (kid's eye) at the corner of a house, looking south along an unlit strip of grass between two houses",
+      "frame": "fg: the house corner at frame left; subject: a single row of torches running away across the grass toward the plaza; the last one 14 blocks out; on 'GROWING' a new torch appears at the row's end, then another one block further, then another (one every ~0.4 s), placed by someone hidden behind the far house corner (an arm's swing just visible at the corner on the last one); bg: the rest of the village fully lit. Dawn (23450)."
+    },
+    {
+      "id": "S13",
+      "line": "L13",
+      "place": "village_south",
+      "size": "full",
+      "camera": "follow: behind the kid (baby villager) at 3 blocks, 1.4 up, lag 0.3, as he runs along the row; FOV 55",
+      "frame": "subject: the kid head to foot running away from us along the new row of torches; the row turns left round the far house corner and runs straight across the street toward our house; on 'MY door' the camera clears the corner and our house is ahead, 10 blocks out, the row ending a few blocks short of our doorstep; bg: the sky brightening, gold at the horizon. Dawn (23550)."
+    },
+    {
+      "id": "S14",
+      "line": "L14",
+      "place": "our_door",
+      "size": "wide",
+      "camera": "at: 1 block up, 7 blocks from our doorstep, the reverse of S06 (looking north at the door), FOV 50, still",
+      "frame": "fg: the kid (baby villager) at lower left, back three-quarters to us, stopped on the path; subject: Milo kneeling at our doorstep (kneel pose), placing the last torch on the grass block beside the door on 'LAST', standing, turning, and waving at the kid on 'WAVED' (wave pose), name tag 'Milo' over him; bg: our house front, the window, the torch-lit roofs behind, the first edge of the sun. Sunrise (23700). The same door and the same wave as S06."
+    },
+    {
+      "id": "S15",
+      "line": "L15",
+      "place": "our_door",
+      "size": "full",
+      "camera": "pov (kid's eye, 0.81) 4 blocks from Milo, looking slightly up at him, still",
+      "frame": "subject: Milo head to foot on our doorstep, mid-wave, the new last torch burning at his feet; on the line's first word he is gone (vanilla: a player who quits vanishes at once, no animation) and the chat shows, yellow, bottom left: 'Milo left the game' (also on the caption track); the doorstep empty, the last torch burning, our door; bg: past the house the village, every block lit, and the sun clearing the hill. Sunrise (23850). Hold ~0.8 s after 'TOMORROW', then cut."
+    }
+  ],
+  "props": {
+    "torches": {
+      "block": "torch",
+      "count": "9,000 to 9,400, placed by the dressing script on every sturdy-top block in the village box (bible: Props)"
+    },
+    "fence_torches": {
+      "block": "torch",
+      "on": "every fence post of the west lane (S02)"
+    },
+    "hay_torches": {
+      "block": "torch",
+      "on": "the hay-bale pile by the meeting point (S02)"
+    },
+    "dark_forest": {
+      "at": "the dark oak forest edge 20+ blocks north of the village (S04, S10)"
+    },
+    "our_chest": {
+      "block": "chest",
+      "at": "inside our house, against the west wall (S09)"
+    },
+    "our_door": {
+      "block": "oak_door",
+      "at": "our house's door, facing south onto the street (S06, S13-S15)"
+    },
+    "last_torch": {
+      "block": "torch",
+      "at": "the grass block one east of our doorstep, placed by Milo on L14 'LAST'"
+    },
+    "milo_plot": {
+      "at": "where Milo's birch cottage stood at the village's west edge: bare, a torch on every block (S11)"
+    },
+    "growing_row": {
+      "block": "torch",
+      "at": "a row from the south strip round the last house corner to our doorstep (S12-S13)"
+    }
+  },
+  "bible": "stories/nine_thousand_torches/bible.md",
+  "beats": "stories/nine_thousand_torches/beats.md",
+  "shots_md": "stories/nine_thousand_torches/shots.md",
+  "set": "stories/nine_thousand_torches/set.md"
+}
