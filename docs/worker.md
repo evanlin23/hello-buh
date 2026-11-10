@@ -30,7 +30,10 @@ adds songs.
   `drops.js`, `fortune.js`. Use `edit.startAt` / `edit.endAfter` to trim to the action, `subs`
   for beat labels (no emoji in subs), `deathScreen` + `expectDeath` for deaths.
 - 1.21.11 game rules are snake_case (`immediate_respawn`, `spawn_mobs`...). `/fill` is capped
-  at 32768 blocks. Check logs for `COMMAND ERROR:`.
+  at 32768 blocks. Check logs for `COMMAND ERROR:`. During set-up (before the recording starts) a command error
+  fails the attempt ("SETUP FAILED", exit 6, run.sh retries), except benign ones (/kill with nothing to kill, a /setblock
+  to the same block); a command that may fail on purpose: `ctx.cmd(c, { mayFail: true })` (or `allowSetupErrors: true`
+  on the stunt, `ALLOW_SETUP_ERRORS=1`).
 - **30 s minimum** (owner rule, 2026-11-06), reached with MORE escalating beats, never by stretching
   one. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
   Short ends <= 1.0 s after the final payoff. Owner: "We don't want any deadspace and we should end
