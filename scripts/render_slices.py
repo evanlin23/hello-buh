@@ -150,6 +150,14 @@ def result(status, url):
          "finished": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     if status == "done":
         r["mp4"] = f"renders/out/{j['name']}.mp4"
+        # the parallel ./hb check's verdict (scripts/check_label.py burned it on the picture when it failed)
+        cj = HERE / "renders" / "out" / f"{j['name']}.check.json"
+        try:
+            c = json.loads(cj.read_text())
+            r["check"] = {"ok": bool(c.get("ok")), "label": c.get("label"), "blockers": c.get("blockers"), "failed": c.get("failed")}
+        except (OSError, ValueError):
+            r["check"] = {"ok": False, "label": "CHECK DID NOT RUN"}
+        r["preview"] = bool(j.get("preview"))
     (HERE / "renders" / "result.json").write_text(json.dumps(r, indent=1) + "\n")
     print(json.dumps(r))
 

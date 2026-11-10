@@ -69,17 +69,20 @@ The owner picks the voice. `voices/cast.json` is unchanged. Candidates: `out/bra
     the clarity and let the pace give way. The direction should get the speed, not the filter.
   - **Check:** a cold listener, audio only, one listen: "could you follow it?", their transcript against the script,
     and the age they hear (`scripts/brand_voice/coldlisten.py`).
-- **Voice spec:**
+- **The voice: Pip** (owner's final pick, 2026-11-10: the narrator exactly as in Dog on the Hill v2; main ea2d845/1a15e71).
+  Recipe: voices/recipes/pip.md (on claude/story-cine-2); cast `narrator` in voices/cast.json.
 
 | | spec | check |
 |---|---|---|
-| words/s while speaking | **5.0-5.5 as performed** (about 4.6-5.0 overall on short-fragment scripts). If the kid voice can't reach it, clarity and the kid sound win over the number | pace, cold listener |
-| silences inside a take | performed short; **0.12 s** cap as a safety net (tts.shorten_pauses); words never cut | take_gate |
-| speed change | the voice's own pace from the direction first; at most **atempo 1.15, pitch kept**. Above that the kid stops sounding like a kid (round 2). Never a resample (no asetrate) | cast `tempo`, cold listener age |
-| sounds like | a real kid, unshifted. No pitch lift (the +2 st lift was heard as "chipmunk", docs/voices.md "Realism") | panel, owner |
-| delivery | happy, bubbly, continuous from frame 0 to the cut; one take per beat (STANDARDS 2b.4-5); one stress per sentence | panel, cold listener |
-| identity | one voice + one model + one direction string, byte for byte, in every Short (docs/voices.md) | voice_drift |
-| never | a clone, or a soundalike of a real person or product voice; whisper; "dramatic" pauses; a take cut out of a paused read | owner |
+| model, voice | **gemini-3.8-flash-lite-tts, Leda**, single speaker, Pip's layout: "[direction]", a blank line, the text | drift gate (model locked) |
+| direction | verbatim: "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft" | voice_drift |
+| text | plain sentence case (cast `plain_say` lowers CAPS in `say`); no ellipses ("..." made the model stop and whisper) | take_gate (words) |
+| pace | the voice's **natural tempo** (about 3.2-3.8 words/s while speaking): no speed-up, no pitch shift, no pause cap. The fast 5.0-5.5 words/s target and the 1.1x/+1 st sleepover recipe are superseded | pace, owner |
+| pauses | performed continuously; the take gate allows sentence breaks up to 0.6 s (cast `max_pause` rest 0.6); character lines 1.0 s | take_gate |
+| one voice | the same model + voice + direction, byte for byte, in every Short; the sleepover recipe stays as `narrator_sleepover` (not the brand voice) | voice_drift |
+| never | a clone or soundalike of a real person or product voice; whisper; "dramatic" pauses | owner |
+
+## The search that led here (history)
 
 ## Narrator candidates, round 1: adult voices (2026-11-10; rejected by the owner: "i think it should still sound like a child")
 ### Round 3: Light Sleeper's real lines (2026-11-10)
