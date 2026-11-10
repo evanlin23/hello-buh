@@ -826,11 +826,13 @@ function hurtTilt (t) {
 // max(0, cos(tickCount * PI * 0.025) * 0.45 * blend) (a 4 s period).
 const DARK = []
 {
-  const evs = (rec.timeline || []).filter(e => (e.event === 'effect' || e.event === 'effect_end') && e.effect === 'darkness').map(e => ({ k: Math.round(e.t / 50), on: e.event === 'effect', dur: e.dur })).sort((a, b) => a.k - b.k)
+  // a stunt's 'darkness_snap' mark { to: 0 } sets the blend at once (a cut out of a dark scene: no 22-tick fade
+  // over the next scene's first second)
+  const evs = (rec.timeline || []).filter(e => ((e.event === 'effect' || e.event === 'effect_end') && e.effect === 'darkness') || e.event === 'darkness_snap').map(e => ({ k: Math.round(e.t / 50), on: e.event === 'effect', snap: e.event === 'darkness_snap' ? (e.to ?? 0) : null, dur: e.dur })).sort((a, b) => a.k - b.k)
   if (evs.length) {
     let f = 0, until = -1, j = 0
     for (let k = 0; k <= P.length + 1; k++) {
-      while (j < evs.length && evs[j].k <= k) { const e = evs[j++]; until = e.on ? (e.dur < 0 ? Infinity : k + e.dur) : k }
+      while (j < evs.length && evs[j].k <= k) { const e = evs[j++]; if (e.snap !== null) { f = e.snap; continue } until = e.on ? (e.dur < 0 ? Infinity : k + e.dur) : k }
       const target = k < until ? 1 : 0
       f = target > f ? Math.min(1, f + 1 / 22) : Math.max(0, f - 1 / 22)
       DARK[k] = f
