@@ -45,26 +45,41 @@ The owner picks the voice. `voices/cast.json` is unchanged. Candidates: `out/bra
 - **Who:** the voice of the HelloBuh world. Whoever lived the story tells it, and they all speak in this one voice:
   kid Buh in Light Sleeper, Pip on Dog Hill, the dog in Good Boy. One actor plays every "I", like a friend doing all
   the parts at a sleepover. The narrator is never named and never says Buh's name (STANDARDS 1.8).
-- **Age and attitude: a kid.** Owner, 2026-11-10, after hearing the adult candidates: "i think it should still sound like
-  a child". The narrator sounds like a kid of about 10-12, which is never said aloud or written in a prompt. Most of
-  the stories' "I"s are kids (kid Buh, Pip), so the voice fits them. It is bright, quick and cheeky, and talks like
-  it's telling a friend the craziest thing in its town before the bell rings. It is matter-of-fact about the strange
-  details, so they land as a joke or a chill. It is never hushed or breathy (STANDARDS 2.2) and never squeaky or
-  cartoonish. It drops to plain and honest for one line per story, the one that matters.
-- **Relationship to Buh and the world:** grew up in this world and knows every legend in it (the carpets, the boxed
-  bell, the dog), so it talks about the places like home ("our bell", "my village"). It is fond of Buh and never mocks
-  him.
+- **Age and attitude: a happy, bubbly kid who's figuring the world out** (STANDARDS 2.000). The owner, 2026-11-10:
+  "i think it should still sound like a child", then "it should sound happy, bubbly. maybe like a child that doesnt
+  understand teh wrold? like theyre figuring it out? I kinda like pip."
+  - **Who it sounds like:** a kid of about 9-11, Pip-based (Leda). The age is never said aloud. It's in a TTS direction
+    only where the model accepts it, as Pip's recipe does. Most of the stories' "I"s are kids anyway (kid Buh, Pip).
+  - **The comedy is the misreading.** The kid says the strange detail proudly and innocently, as if it were normal,
+    and the viewer understands what the kid doesn't: "Our bell is wrapped in wool. I've never heard it!" said as a fun
+    fact, not a clue. That's how one cheerful voice carries a creepy twist without going hushed (STANDARDS 1.6).
+  - **Never:** hushed, breathy, whispery, squeaky or cartoonish. For the one line per story that matters, the kid goes
+    plain and puzzled ("Why would he do that?"), not sad-voiced.
+- **Relationship to Buh and the world:** grew up in this world and takes its rules for granted (the carpets, the boxed
+  bell, the dog). It talks about the places like home ("our bell", "my village"), and it's fond of Buh.
+- **Clarity first** (the owner: "The no pause only works if tis clear what is beign said ... somehow in the ohter ones
+  i never get lost"):
+  - **Write for the ear:** one short thought per sentence, in time order, joined by So, Then and But. One spoken stress
+    per sentence, on its last key word. The captions still colour one key word per chunk.
+  - **Perform it fast, don't cut it fast.** The take is directed continuously ("one breath, keep going: each new
+    sentence lifts, hit the key word"). A take performed with pauses and then cut confused the owner. `pause_cap` is
+    only a safety net.
+  - **Keep any speed-up mild.** Round 2 showed that an atempo of 1.3-1.4, needed to push a kid voice from about 4 to 5
+    words/s, made 5 of 6 voices sound like adults to a cold listener. If the kid reads slower than 5.0, keep the kid and
+    the clarity and let the pace give way. The direction should get the speed, not the filter.
+  - **Check:** a cold listener, audio only, one listen: "could you follow it?", their transcript against the script,
+    and the age they hear (`scripts/brand_voice/coldlisten.py`).
 - **Voice spec:**
 
 | | spec | check |
 |---|---|---|
-| words/s while speaking | **5.0-5.5** (about 4.6-5.0 overall on short-fragment scripts) | pace |
-| silences inside a take | capped at **0.12 s** (tts.shorten_pauses); words never cut | take_gate |
-| speed change | the voice's own pace (direct it "speaking rapidly"), else **atempo with pitch kept, 1.15 or less preferred**. Kid voices read slowly (2.5-3.4 words/s, docs/voices.md), so a kid voice may need up to ~1.4; mark anything over 1.15 in the candidate table. Never a resample (no asetrate) | cast `tempo` |
-| sounds like | a real kid, unshifted. No pitch lift unless the owner asks (the +2 st lift was heard as "chipmunk", docs/voices.md "Realism") | panel, owner |
-| delivery | continuous from frame 0 to the cut; one take per beat (STANDARDS 2b.4-5) | panel |
-| identity | one voice id + one direction string, byte for byte, in every Short (docs/voices.md) | voice_drift |
-| never | a clone, or a soundalike of a real person or product voice; whisper; "dramatic" pauses | owner |
+| words/s while speaking | **5.0-5.5 as performed** (about 4.6-5.0 overall on short-fragment scripts). If the kid voice can't reach it, clarity and the kid sound win over the number | pace, cold listener |
+| silences inside a take | performed short; **0.12 s** cap as a safety net (tts.shorten_pauses); words never cut | take_gate |
+| speed change | the voice's own pace from the direction first; at most **atempo 1.15, pitch kept**. Above that the kid stops sounding like a kid (round 2). Never a resample (no asetrate) | cast `tempo`, cold listener age |
+| sounds like | a real kid, unshifted. No pitch lift (the +2 st lift was heard as "chipmunk", docs/voices.md "Realism") | panel, owner |
+| delivery | happy, bubbly, continuous from frame 0 to the cut; one take per beat (STANDARDS 2b.4-5); one stress per sentence | panel, cold listener |
+| identity | one voice + one model + one direction string, byte for byte, in every Short (docs/voices.md) | voice_drift |
+| never | a clone, or a soundalike of a real person or product voice; whisper; "dramatic" pauses; a take cut out of a paused read | owner |
 
 ## Narrator candidates, round 1: adult voices (2026-11-10; rejected by the owner: "i think it should still sound like a child")
 ### Round 2: kid voices (2026-11-10)
@@ -97,6 +112,11 @@ What it says:
 - **Untested:** a cold-listener pass on the natural-pace takes, to confirm the tempo is the cause. The listener model
   hit a 429.
 - The listener is one noisy pass. Judge by ear.
+
+**Next round (owner's later note: happy, bubbly, figuring it out):** Pip (Leda) as the base, with 2-3 variations
+that add "a kid who doesn't quite get it, proudly telling you something they think is totally normal", plus 1-2
+alternative kid voices. Same text, the continuous direction, atempo 1.15 or less. Judge with the cold listener
+("could you follow it?" and the age heard).
 
 **Round 2 recommendation:** **k4_sleepover** (Leda, the sleepover direction): the only one heard as a kid at the brand
 pace, at the second-smallest atempo (1.28). If the owner hears every one as too old, the trade-off is the pace target:
