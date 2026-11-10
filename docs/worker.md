@@ -57,7 +57,10 @@ seconds of the Short, the source time and the marks nearby. Checks, most-flagged
 2. **held**: 0.6 s+ where the camera barely moves and nothing in view changes (mobs, blocks, particles, captions,
    cards): a warning, a blocker from 1 s. The ending: <= 1.0 s after the endAfter mark, 1.8 s for a text payoff.
 3. **turns**: beat_audit's big camera turns; name the on-screen reason for each.
-4. **set**: floating sand/gravel/concrete powder and liquids that should have flowed, in view within 16 blocks.
+4. **set**: floating sand/gravel/concrete powder and liquids that should have flowed, in view within 16 blocks; and
+   terrain (stone, dirt, snow, gravel, ores...) still standing inside a box `clearSet` emptied (it records the box in the
+   recording), in view within 48 blocks: a blocker from 64 blocks / 0.5 s. If the set check can't run (no `npm ci`)
+   the verdict says "OK, BUT THE SET CHECK DID NOT RUN" (exit 2 with `--strict` / `REC_CHECK_STRICT=1`).
 5. **vanilla**: digs under half the vanilla time for the held tool, mobs faster than vanilla, the player faster than
    sprint-jumping (outside cuts and F1 drone shots).
 Blockers are what reviews always flagged; warnings need a reason ("planned: the turn follows the creeper") or a fix.

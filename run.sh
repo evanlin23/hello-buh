@@ -60,7 +60,11 @@ rc=0; python3 scripts/rec_check.py "$STUNT" "$REC" || rc=$?
 if [ "$rc" = 1 ]; then
   if [ "${REC_CHECK_STRICT:-0}" = 1 ]; then echo "rec_check: blockers, not rendering (REC_CHECK_STRICT=1). Fix the stunt and re-record."; exit 1; fi
   echo "rec_check: blockers above. Fix them by re-recording (REC_CHECK_STRICT=1 stops here)."
-elif [ "$rc" != 0 ]; then echo "rec_check could not run (exit $rc); rendering anyway"; fi
+elif [ "$rc" != 0 ]; then
+  # exit 2: a check couldn't run (no node_modules, a stunt that won't load...): the report says which
+  if [ "${REC_CHECK_STRICT:-0}" = 1 ]; then echo "rec_check: a check did not run (exit $rc), not rendering (REC_CHECK_STRICT=1)."; exit 1; fi
+  echo "rec_check could not run every check (exit $rc); rendering anyway"
+fi
 # RECORD_ONLY=1: stop at the recording, after its check (render it on Actions: scripts/render_on_actions.sh,
 # docs/worker.md). Before, RECORD_ONLY exited ahead of rec_check, so the Actions route never printed the report.
 [ "${RECORD_ONLY:-0}" = 1 ] && { echo "recorded $REC"; exit 0; }

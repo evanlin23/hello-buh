@@ -20,6 +20,10 @@ Checks (ranked by how often reviews flagged them):
   3. turns     big camera turns (scripts/beat_audit.py camera_turns): each needs an on-screen reason.
   4. set       visible falling blocks with nothing under them (floating sand/gravel) and liquids that should
                have flowed (a source with air beside it, water over air) near the camera (scripts/rec_world.js).
+               And terrain still standing inside a set's cleared box (lib/story.js clearSet records it): stone,
+               dirt, snow, gravel... over the set floor, in view (a /fill layer that failed left a hill in the set).
+               If this check can't run (no node_modules, an exception) the report says so: the last line is
+               "OK, BUT THE SET CHECK DID NOT RUN", and with --strict / REC_CHECK_STRICT=1 the exit code is 2.
   5. vanilla   digs faster than the held tool allows (dig/dig_end marks), mobs faster than vanilla, the player
                faster than sprint-jumping outside cuts.
 """
@@ -137,6 +141,8 @@ def main():
     ap.add_argument("--story-dir", help="stories/<name> with voice/voice.json, for the caption times (default: the edit's `story`)")
     ap.add_argument("--radius", type=int, default=16, help="set check: blocks from the camera (default 16)")
     ap.add_argument("--no-world", action="store_true", help="skip the set check (chunk scan, the slow part)")
+    ap.add_argument("--strict", action="store_true", default=os.environ.get("REC_CHECK_STRICT") == "1",
+                    help="exit 2 when a check could not run (default with REC_CHECK_STRICT=1)")
     ap.add_argument("--package", help="a videos-branch package (shorts/<name>): its recording.json.gz, source/<name>.js and the "
                     "edit it was published with (metadata.json), for checking published Shorts")
     a = ap.parse_args()
@@ -541,6 +547,7 @@ def main():
 
     # ---------------------------------------------------------------- 4. set edges (rec_world.js)
     world_note = ""
+    not_run = []   # checks that should have run and didn't (said in the verdict; exit 2 under --strict)
     # digs (for check 5): the held item from the hotbar marks (every mark carries the slot)
     digs, bar = [], [None] * 9
     for i_, e in enumerate(tl):
@@ -557,6 +564,9 @@ def main():
             and not any(x["event"] == "effect_end" and x.get("effect") in ("haste", "conduit_power") and x["t"] <= e["t"] for x in tl)
         digs.append((e, end_e["t"] - e["t"], it, haste))
     world = {"found": [], "digs": [None] * len(digs)}
+    cleared = rec.get("cleared") or []
+    if not rec.get("columns") and not a.no_world:
+        not_run.append("set (the recording has no chunk columns)")
     if (not a.no_world or digs) and rec.get("columns"):
         samp = []
         for j in range(0, n, 6):
@@ -567,12 +577,37 @@ def main():
         if a.no_world:
             samp = []
         dig_in = [[e["t"] / 50, e.get("x"), e.get("y"), e.get("z"), it[0] if it else None, bool(it and len(it) > 2 and it[2])] for e, _, it, _ in digs]
-        res = subprocess.run(["node", str(HERE / "scripts" / "rec_world.js")], input=json.dumps({"rec": str(rec_p.resolve()), "radius": a.radius, "samples": samp, "digs": dig_in}),
-                             capture_output=True, text=True, cwd=HERE)
-        if res.returncode != 0:
-            world_note = f"set check failed: {(res.stderr.strip().splitlines() or ['?'])[-1]}"
+        try:
+            res = subprocess.run(["node", str(HERE / "scripts" / "rec_world.js")],
+                                 input=json.dumps({"rec": str(rec_p.resolve()), "radius": a.radius, "samples": samp, "digs": dig_in,
+                                                   "cleared": [] if a.no_world else cleared}),
+                                 capture_output=True, text=True, cwd=HERE)
+            err = None if res.returncode == 0 else (res.stderr.strip().splitlines() or ["?"])
+        except OSError as e:   # no node at all
+            res, err = None, [str(e)]
+        if err is not None:
+            # e.g. a fresh checkout without `npm ci`: "Cannot find module 'prismarine-chunk'". The report used to end
+            # "OK" all the same (story_nitwit's reviewer); say plainly that the set was NOT checked
+            why = next((ln.strip() for ln in reversed(err) if "Cannot find module" in ln or "Error" in ln), err[-1].strip())
+            if "Cannot find module" in why:
+                why += " (run `npm ci`)"
+            world_note = f"SET CHECK DID NOT RUN: {why}"
+            not_run.append("set" + ("" if a.no_world else " (floating blocks, unflowed liquids, terrain left in the set)") + (", digs" if digs else ""))
         else:
             world = json.loads(res.stdout or "{}")
+            if not a.no_world and not cleared:
+                world_note = "terrain check: no cleared box in the recording (lib/story.js clearSet records one), skipped"
+            for tr in sorted(world.get("terrain", []), key=lambda f: f["ticks"][0] if f["ticks"][0] is not None else 1e9):
+                secs = tr["seen"] * 6 / FPS
+                if tr["seen"] == 0 or (tr["n"] < 6 and "snow" not in tr["block"]) or secs < 0.3:
+                    continue
+                o = out_t(tr["ticks"][0] / 20)
+                j = min(n - 1, max(0, int(round(o * FPS)) - k0))
+                bx = tr["box"]
+                lvl = "BLOCK" if tr["n"] >= 64 and secs >= 0.5 else "WARN"
+                add(lvl, "set", j, f"terrain left in the cleared set: {tr['n']} blocks ({tr['block']}) at {bx[0]}..{bx[3]} {bx[1]}..{bx[4]} "
+                    f"{bx[2]}..{bx[5]}, {tr['dist']} blocks from the camera, in view ~{secs:.1f}s (a clearing /fill failed? "
+                    f"look for COMMAND ERROR in the bot log; built on purpose: clearSet(..., {{ checkTerrain: false }}))", tick=tr["ticks"][0])
             for f in sorted(world.get("found", []), key=lambda f: f["ticks"][0]):
                 secs = f["seen"] * 6 / FPS
                 if secs < 0.3:
@@ -678,8 +713,10 @@ def main():
         for _, check, t, msg, nr in items:
             ts = f"{t[0]:6.2f}s (src {t[1]:6.2f}s)" if t and t[0] is not None else (f"   src {t[1]:6.2f}s     " if t else " " * 22)
             print(f"  [{check:<7}] {ts}  {msg}" + (f"   [{nr}]" if nr else ""))
-    print(f"\n{'FAIL' if nb else 'OK'}: {nb} blocker(s), {nw} warning(s)" + (" -- fix by re-recording before rendering" if nb else ""))
-    sys.exit(1 if nb else 0)
+    verdict = "FAIL" if nb else ("OK, BUT THE SET CHECK DID NOT RUN" if not_run else "OK")
+    print(f"\n{verdict}: {nb} blocker(s), {nw} warning(s)" + (" -- fix by re-recording before rendering" if nb else "")
+          + (f"\n  not checked: {'; '.join(not_run)}" + (" (exit 2: --strict / REC_CHECK_STRICT=1)" if a.strict else "") if not_run else ""))
+    sys.exit(1 if nb else (2 if not_run and a.strict else 0))
 
 
 if __name__ == "__main__":
