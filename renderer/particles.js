@@ -9,6 +9,7 @@
 //   angry   - angry_villager clouds rising from a villager's head
 //   poof    - a mob vanishing: 20 light-grey poof clouds in its box (ev.w, ev.h)
 //   smoke   - large_smoke puffs where water meets lava (LevelEvent.LAVA_FIZZ: 8 per block, rising)
+//   dust    - DustParticle specks (redstone dust: mining redstone ore)
 function rng (seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000 } }
 
 function spawn (ev, blockTex) {
@@ -143,6 +144,19 @@ function spawn (ev, blockTex) {
     const g = r() * 0.3
     P({ x: ev.x, y: ev.y, z: ev.z, vx: (r() - 0.5) * 0.01, vy: 0.008 + r() * 0.006, vz: (r() - 0.5) * 0.01,
       g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
+  }
+  if (ev.type === 'dust') {
+    // DustParticle (DustParticleOptions, REDSTONE: colour (1, 0, 0), scale 1): Particle's random start
+    // velocity x 0.1 (a slow drift, +0.01 up), friction 0.96, no gravity, colour x (0.6..1) x (0.8..1),
+    // quadSize x 0.75, lives 8/(r*0.8+0.2) ticks, sprite generic_7 -> generic_0
+    const c = ev.color || [1, 0, 0]
+    for (let i = 0; i < (ev.count || 1); i++) {
+      let vx = r() * 2 - 1, vy = r() * 2 - 1, vz = r() * 2 - 1
+      const d0 = (r() + r() + 1) * 0.15, d1 = Math.hypot(vx, vy, vz) || 1
+      vx = vx / d1 * d0 * 0.4 * 0.1; vy = (vy / d1 * d0 * 0.4 + 0.1) * 0.1; vz = vz / d1 * d0 * 0.4 * 0.1
+      const f = r() * 0.4 + 0.6, col = c.map(v => (r() * 0.2 + 0.8) * v * f)
+      P({ x: ev.x, y: ev.y, z: ev.z, vx, vy, vz, g: 0, drag: 0.96, life: Math.floor(8 / (r() * 0.8 + 0.2)), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: col })
+    }
   }
   if (ev.type === 'item_break') {
     // LivingEntity.spawnItemParticles(stack, 5): velocity ((r-0.5)*0.1, r*0.1+0.1, 0) and offset

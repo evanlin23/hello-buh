@@ -1485,6 +1485,24 @@ function camAtLive (t) {
     if (!sp || !pose) continue
     PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
   }
+  // starting to mine redstone ore (RedStoneOreBlock.attack -> spawnParticles): one redstone dust speck
+  // 0.5625 out from the centre of each face not against a solid block, at a random spot on that face
+  // (mining it showed nothing: worker 3)
+  {
+    const stateAt = (x, y, z, t) => { let s = null; for (const b of rec.blocks || []) { if (b[0] > t) break; if (b[1] === x && b[2] === y && b[3] === z) s = b[4] } if (s !== null) return mcDataR.blocks[require('prismarine-block')(rec.version).fromStateId(s, 0).type]; const b = mesher.world.getBlock(new Vec3(x, y, z)); return b }
+    const solidR = (b) => !!(b && b.boundingBox === 'block' && !b.transparent)
+    let k = 0
+    for (const [a, , x, y, z] of DIGS) {
+      const b = stateAt(x, y, z, a)
+      if (!b || !/^(deepslate_)?redstone_ore$/.test(b.name)) continue
+      for (const [dx, dy, dz] of [[0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1], [-1, 0, 0], [1, 0, 0]]) {
+        if (solidR(stateAt(x + dx, y + dy, z + dz, a))) continue
+        const rr = () => ((Math.sin((++k) * 12.9898 + a * 78.233) * 43758.5453) % 1 + 1) % 1
+        const px = dx ? 0.5 + 0.5625 * dx : rr(), py = dy ? 0.5 + 0.5625 * dy : rr(), pz = dz ? 0.5 + 0.5625 * dz : rr()
+        PARTS.push(...particles.spawn({ type: 'dust', t: a * 50, x: x + px, y: y + py, z: z + pz, color: [1, 0, 0] }))
+      }
+    }
+  }
   PARTS.sort((a, b) => a.t0 - b.t0)
   const MAXLIFE = PARTS.reduce((m, p) => Math.max(m, p.life || 0), 0) + 1
   const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
