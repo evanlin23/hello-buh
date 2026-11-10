@@ -1,4 +1,4 @@
-# names_in_the_woods: set brief (r2)
+# names_in_the_woods: set brief (r2 polish)
 
 The set is a hamlet on a slope at the east edge of a dark oak forest, with a meadow climbing west from the hamlet's
 fence to the trees. The shots that carry the story (S01 and its echo S11) look west from just inside the gate, up the
@@ -28,6 +28,7 @@ terrain with relief. Every piece follows `docs/building_guide.md`.
 | `well` | (24,0) | south | default | the lane's centre (S03, S09 background) |
 
 - **The lane:** `sets.dress.path` from the gate east to (52,0), w 3, with branches to every gate. Lamps every ~10 blocks.
+- **S07:** the west gate is already open when the shot starts (Mom stands in it).
 - **The fence and gate:** `sets.dress.fence` along x=0 from z -22 to +22, an oak fence gate at (0,0), lantern posts
   (`dress.lamp` h 3) at (0,-2) and (0,2), always lit.
 - **The meadow path:** `sets.dress.path` from (-1,0) to (-30,2), w 2, frayed. **One lamp post at (-15,2)**: the key
@@ -43,10 +44,10 @@ terrain with relief. Every piece follows `docs/building_guide.md`.
 - Mom (cleric villager) holds the golden apple in S06, S07 and S10 (`HandItems`; vanilla villagers show a held item
   over their crossed arms). In S06 a bottle leaves the brewing stand on "SPLASH POTION" (a block-state change to
   `has_bottle_2=false`): she has taken it.
-- ROSA: `HandItems:[{id:"golden_apple"},{id:"splash_potion",components:{potion_contents:{potion:"weakness"}}}]`. On
-  "DROPPED" (S13) clear her off hand and summon the potion item at her left hand with a small forward motion, so it
-  falls and lands at (-13.5,0), `PickupDelay:10`.
-- The zombies stop and stare: at the fence in S02 (3 blocks beyond Mom), at the lamp post from S13 (ROSA at (-16,0),
+- ROSA: `HandItems:[{id:"golden_apple"},{id:"splash_potion",components:{potion_contents:{potion:"weakness"}}}]`. In S13 she looks down at
+  the bottle, then at Milo (head turn), and on "DROPPED" her off hand clears and the potion item is summoned at her left
+  hand with a small motion toward him, landing at (-13.5,0), `PickupDelay:10`.
+- The zombies stop and stare: 1.5 blocks out from the fence in S02 (Mom 1.5 blocks inside it), at the lamp post from S13 (ROSA at (-16,0),
   the three at x -20 to -22). Staged actors.
 - Difficulty Hard. Kill chickens every tick in S09 (an egg can hatch one).
 - The throw (S15): the bot really throws the splash potion on "Potion" (`bot.activateItem`, slot 3, aimed at ROSA's
@@ -59,7 +60,7 @@ terrain with relief. Every piece follows `docs/building_guide.md`.
 | S01 / S11 (from (2, 2.0, 0) looking west, FOV 50) | the gate's top rail | the zombies 14-16 blocks out on the rising path, arms raised, the lamp post at (-15,2) on their faces, tags in the upper third | the dark oak treeline across the width at ~32 blocks, the forest rising behind, the orange sky; no build visible west |
 | S03 (crane from 14 up over x 4 looking east, down to Mom's gate) | the lane, villagers with tags | seven cottages, the well, gardens, lamps, the sheep pen | fields to x 80, hills, **the easter egg** on the far east hill, fog |
 | S05 (WS POV from (4,0), east-south-east down the lane) | the lane | Mom 8 blocks away; the three empty cottages receding, signs and job blocks | the lane's far end, the stone cottage, fields |
-| S10 (9 up behind the gate, looking west) | the gate lanterns, Milo small | the meadow, Mom from (-22,1) to the trees | the treeline with the low sun over it |
+| S10 (from (3,8,0) pushing to (-1,7,0), FOV 40, looking west) | the gate lanterns, Milo small | the meadow, Mom from (-22,1) to the trees | the treeline with the low sun over it |
 
 ## Easter egg (provisional: re-check against docs/world/canon.md when it lands)
 The carpeted village of Light Sleeper on the far east hill, seen at the start of S03's crane. Build a stand-in on a

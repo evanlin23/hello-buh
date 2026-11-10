@@ -1,4 +1,4 @@
-# names_in_the_woods: beat sheet, clue map, writer's checks (r2)
+# names_in_the_woods: beat sheet, clue map, writer's checks (r2 polish)
 
 r2 (2026-11-10) applies the r1 critic's and continuity's fixes (reviews/r1-response.md). The ending explains itself
 ("She can't THROW." / "I CAN. Potion, then APPLE." with the throw on "Potion"). The backstory second beat is gone: the
@@ -34,11 +34,11 @@ Estimates at Pip's natural tempo (~4.1 words/s speaking, ~0.45 s at a full stop,
 | 12.7-15.4 | the gifts | L06 "Every week, she takes them a GOLDEN APPLE and a SPLASH POTION." | S06 FS: Mom at her brewing stand with the apple; a bottle is gone from the stand on "SPLASH POTION" | **the cure, planted**; she takes the potion on screen |
 | 15.7-18.3 | the saying | L07 "Potion, then APPLE, she says. Fixes ANYTHING." | S07 WS: Mom at the west gate, turning back to us, then out toward the woods | **the cure's order**; she walks to the woods, not a city. **Players get ahead (~17 s, 44%)** |
 | 18.6-20.7 | misread 2 | L08 "Nobody TAKES them. I get the APPLES." | S08 POV chest screen: the potion and apple back again; slot 2 goes 6 to 7 | she fails every week; the apples end up in HIS hotbar |
-| 21.0-23.7 | the throw rule | L09 "Nobody here can THROW. I win every EGG FIGHT." | S09 WS POV: eggs pop on HUGO and PIA, who don't throw back | why she fails; why only he can |
+| 21.0-23.7 | the throw rule | L09 "Nobody here can THROW. I win EGG FIGHTS." | S09 WS POV: eggs pop on HUGO and PIA, who don't throw back | why she fails; why only he can |
 | 24.0-26.3 | **The turn** | L10 "Tonight, Mom said she'd be back by DARK." | S10 EWS: Mom walks into the dark oaks in the low sun, Milo small at the gate | the bomb under the table. **Everyone gets ahead here (~26 s, 67%)** |
 | 26.6-28.1 | **The reveal (count)** | L11 "At dark, FOUR zombies walked out." | S11 WS, S01's frame: four tags, ROSA first and nearest | 3 to 4; the game says it with a tag |
-| 28.4-31.3 | **The reveal (name)** | L12 "The new one said ROSA. She still had the APPLE." | S12 MS: zombie ROSA in the cleric robe, apple in one hand, potion in the other | one step: Mom was converted (a named villager keeps its name) |
-| 31.6-32.6 | **The want** | L13 "She DROPPED her POTION." | S13 FS POV: the bottle slips from her hand onto the path; he runs up and grabs it ("Splash Potion of Weakness") | a visible cause; he has both halves |
+| 28.4-31.3 | **The reveal (name)** | L12 "The new one said ROSA. She had the APPLE." (a short pause before the name; 0.4 s gap after L11) | S12 MS: zombie ROSA in the cleric robe, apple in one hand, potion in the other | one step: Mom was converted (a named villager keeps its name) |
+| 31.6-33.0 | **The gift** | L13 "She DROPPED her POTION for ME." | S13 WS POV from (-8,0): ROSA stops by the lamp, looks at the bottle, at him, lets it fall toward him; he sprints and grabs it ("Splash Potion of Weakness") | Mom's last act, a choice; he has both halves |
 | 32.9-35.5 | the why | L14 "Mom lied to keep me HOME. She can't THROW." | S14 WS reverse over ROSA's right shoulder: Milo 3.5 blocks away, home lit behind him | answers "why lie" and "why no cure" |
 | 35.8-37.9 | **The choice (payoff)** | L15 "I CAN. Potion, then APPLE." | S15 MS POV: wind-up, the throw and splash on "Potion", the hotbar to the apples on "APPLE" | the ending says the cure in Mom's own words; the hit on the splash |
 | 37.9-38.9 | out | (none) | S15 holds at most 1 s on ROSA in the swirl, "Golden Apple" over the hotbar | cut |
@@ -79,7 +79,7 @@ Estimates at Pip's natural tempo (~4.1 words/s speaking, ~0.45 s at a full stop,
 - [x] **Readable at 300 px.** Every name is spoken (L01, L03, L12), so it's in the captions. S12 is a medium shot.
   POTION and APPLE are spoken over the hotbar text.
 - [x] **Visible causes.** The conversion: Mom walks into the woods at sunset (S10) where the zombies are (S01). The
-  potion: it slips from ROSA's hand on screen (S13). Milo walks out by choice, and L14-L15 say why.
+  potion: ROSA looks at Milo and lets it fall toward him on screen (S13). Milo walks out by choice, and L14-L15 say why.
 - [x] **A rewatch plays differently.** L02 "STARE at MOM", L04 "STOLE the tags", L05 "moved to the CITY", L07 "Potion,
   then APPLE", L08 "Nobody TAKES them", L09 "Nobody here can THROW".
 
@@ -95,7 +95,7 @@ Estimates at Pip's natural tempo (~4.1 words/s speaking, ~0.45 s at a full stop,
 | Why does she give Milo the apples? | They come back every week and she's his mom. On a rewatch: she hands the cure to the only one who can use it. |
 | Why was she caught tonight? | She left late (S10: the low sun) and wasn't back by dark (L10). |
 | Why does ROSA still hold the apple and the potion? | Conversion keeps what a mob held in both hands (Mob.convertTo). |
-| Why does she drop the potion? | Shown, not explained: it slips from her hand as she stops at the lamp post (S13). (Staged; see bible.) |
+| Why does she drop the potion? | For him (L13): she looks at it, at Milo, and lets it fall toward him, the one who can throw. Staged; see bible. |
 | Why does ROSA stop at the lamp post instead of coming at him? | The same as the fence: she stares, as the three stare at Mom (L02). She's slow enough for one throw. |
 | Why does Milo walk out at dark toward four zombies? | It's Mom, and he's worked it out: she can't throw, he can (L14-L15). |
 | Why don't the other villagers help? | Nobody here can throw (L09). |
@@ -109,5 +109,5 @@ Estimates at Pip's natural tempo (~4.1 words/s speaking, ~0.45 s at a full stop,
 
 ## Word count and length
 120 spoken words: L01 15, L02 7, L03 9, L04 6, L05 6, L06 12, L07 7, L08 7, L09 9, L10 8, L11 6, L12 10, L13 4,
-L14 9, L15 5. Estimated ~38 s of speech with gaps and ~39 s with the cut, inside 35-45 s. One extra voice: Mom, 6
+L14 9, L15 5 (after r2 polish: L09 8, L12 9, L13 6). Estimated ~39 s of speech with gaps and pauses and ~40 s with the cut, inside 35-45 s. One extra voice: Mom, 6
 words, on screen, in her own request.

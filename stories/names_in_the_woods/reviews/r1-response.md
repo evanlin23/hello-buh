@@ -39,3 +39,19 @@
 - 120 spoken words. Estimated ~38 s of speech, ~39 s with the cut.
 - No ellipsis anywhere in the folder. story.json is valid.
 - Every size changes at each cut. The one close shot is S12.
+
+## r2 polish (r2-continuity notes, r2-critic should-fixes)
+- `world.easter_egg` now points at S03 (the start of the crane down, looking east).
+- S13 is now WIDE. The POV starts at (-8,0), 8 blocks from ROSA, and he sprints 4.5 blocks (~0.8 s) to the potion. S14 is now FULL (Milo head to foot at 3.5 blocks). The run is S12 ms, S13 wide, S14 full, S15 ms.
+- The subjects are big and central:
+  - L02 looks at `{"what":"Mom","word":"MOM"}`, with the zombies centred and big.
+  - L03's "Everyone" maps to Mom, and the crane lands with HUGO and PIA in the lane behind her.
+  - L04's look is "Mom" (centred, 4 blocks).
+  - S10 is now at FOV 40 from (3,8,0), pushing to (-1,7,0), with Mom centred.
+- S02: the zombies stand 1.5 blocks out from the fence and Mom 1.5 blocks inside it. The bible is updated to match.
+- S07: the west gate is already open, with Mom standing in it.
+- Critic 1: L13 is now "She DROPPED / her POTION / for ME." ROSA looks at the bottle, then at Milo, and lets it fall toward him (Mom's last act, a choice). The bible's staging note and the "why?" table are updated.
+- Critic 2: S04 is at 13200 and is a later night than S02 (bible).
+- Critic 3: a 0.4 s gap after L11 and a `<short pause>` before "Rosa" in L12. Estimated ~40 s, under 45.
+- Critic 4: shots.md notes that the S01 nameplate still comes first, with the zombies moving to 12 blocks if the tags don't read.
+- To hold 120 words: L09 is now "I win EGG FIGHTS." and L12 is now "She had the APPLE."

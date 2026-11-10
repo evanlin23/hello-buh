@@ -1,4 +1,4 @@
-# names_in_the_woods: continuity bible (r2)
+# names_in_the_woods: continuity bible (r2 polish)
 
 ## World
 - **Vanilla rules the story rests on** (Java 1.21):
@@ -13,8 +13,9 @@
     CustomNameVisible. **Fiction:** the hamlet tags every newborn and the tags are always visible (the stunt summons with
     `CustomName` and `CustomNameVisible:1b`). A vanilla name-tag item alone shows on the crosshair only. That's the
     premise; the audit may call it a nitpick.
-- **Staged, not vanilla (audit risk, low):** ROSA drops the potion from her left hand in S13 (a zombie doesn't drop a
-  held item by itself). The cause is on screen (it slips from her hand as she stops), so the viewer has one. Also
+- **Staged, not vanilla (audit risk, low):** ROSA lets the potion fall toward Milo in S13 (a zombie doesn't drop a held
+  item by itself). It's played as her choice on screen: she looks at the bottle, then at him, then lets it go (L13 "for
+  ME"), Mom's last act. Also
   staged: ROSA and the three stop and stare (at the fence in S02, at the lamp post in S13-S15), and the shutters close
   in S04.
 - **Backstory (never said):** a zombie siege, months ago, converted Tomas (farmer), Greta (librarian) and Old Ben
@@ -29,7 +30,7 @@
 |---|---|---|---|---|
 | A. any night (habitual) | L01-L02 | dusk | S01 13000, S02 13100 | the sun just set behind the forest (west): an orange sky over the black treeline; the path lamp (-15,2) and the gate lanterns light the zombies' faces |
 | B. the hamlet, a day | L03 | midday | S03 6000 | high sun |
-| C. another dusk, indoors | L04 | dusk | S04 13100 | the room lantern-lit; dusk through the window until the shutters close |
+| C. another dusk (a later night than A), indoors | L04 | dusk | S04 13200 | the room lantern-lit; dusk through the window until the shutters close |
 | D. the empty row, a morning | L05 | morning | S05 2500 | low sun from the east, behind the camera |
 | E. a gift day | L06-L08 | morning, then late afternoon | S06 3000, S07 3200, S08 11000 (indoors) | bright morning; S08 warm late light through the window |
 | F. an egg-fight day | L09 | midday | S09 6000 | high sun |
@@ -61,11 +62,11 @@ are relative to the gate's ground.
 ## Cast and costume
 | who | mob / skin | outfit, held item | name tag | where in each scene | state changes |
 |---|---|---|---|---|---|
-| Milo (N) | the player, default Steve | hotbar: slot 1 eggs (16, then 14 after S09), slot 2 golden apples (6, then 7 from S08), slot 3 the potion (S13-S15) | player nameplate "Milo" (readable in S14) | S05, S08, S09 POV; S10 at the west gate, small, from behind; S13 runs from (-10,0) to (-12.5,0); S14-S15 at (-12.5,0) | full hearts throughout |
-| Mom / ROSA | plains cleric villager (purple robe); from S11 a plains cleric zombie villager | villager: the golden apple over her crossed arms (S06, S07, S10); zombie: the apple in her right hand, the potion in her left (S11-S13), only the apple from S13 | ROSA, always visible | S02 inside the west gate, back to us; S03 at her gate (10,-6); S04 at her west window; S05 in the lane at (12,2); S06 at her brewing stand; S07 at the west gate going out; S08 by her window; S10 from (-22,1) into the trees at (-30,2) on "DARK"; S11 first out, nearest, at (-17,0); S12 walking slowly east to the lamp post at (-16,0); S13-S15 stopped at (-16,0) | villager until S10; zombie villager from S11; S15 Weakness swirl on her |
-| TOMAS | zombie villager, plains farmer (straw hat) | none | TOMAS | S01 at (-13,-1.5); S02 at the fence (-3,-1); S04 at the fence (through the window); S11 at (-21,-2); S12-S15 behind ROSA at (-20,-2) | none |
-| GRETA | zombie villager, plains librarian | none | GRETA | S01 (-14,0); S02 (-3,0.5); S11 (-22,1); S12-S15 (-21,1) | none |
-| OLD BEN | zombie villager, plains fisherman | none | OLD BEN | S01 (-12,1.5); S02 (-3,2); S11 (-23,3); S12-S15 (-22,3) | none |
+| Milo (N) | the player, default Steve | hotbar: slot 1 eggs (16, then 14 after S09), slot 2 golden apples (6, then 7 from S08), slot 3 the potion (S13-S15) | player nameplate "Milo" (readable in S14) | S05, S08, S09 POV; S10 at the west gate, small, from behind; S13 sprints from (-8,0) to (-12.5,0); S14-S15 at (-12.5,0) | full hearts throughout |
+| Mom / ROSA | plains cleric villager (purple robe); from S11 a plains cleric zombie villager | villager: the golden apple over her crossed arms (S06, S07, S10); zombie: the apple in her right hand, the potion in her left (S11-S13), only the apple from S13 | ROSA, always visible | S02 1.5 blocks inside the west gate at (1.5,0), back to us; S03 at her gate (10,-6); S04 at her west window; S05 in the lane at (12,2); S06 at her brewing stand; S07 at the west gate going out; S08 by her window; S10 from (-22,1) into the trees at (-30,2) on "DARK"; S11 first out, nearest, at (-17,0); S12 walking slowly east to the lamp post at (-16,0); S13-S15 stopped at (-16,0) (S13: looks at the bottle, at Milo, lets it fall toward him) | villager until S10; zombie villager from S11; S15 Weakness swirl on her |
+| TOMAS | zombie villager, plains farmer (straw hat) | none | TOMAS | S01 at (-13,-1.5); S02 1.5 out from the fence (-1.5,-1); S04 at the fence (through the window); S11 at (-21,-2); S12-S15 behind ROSA at (-20,-2) | none |
+| GRETA | zombie villager, plains librarian | none | GRETA | S01 (-14,0); S02 (-1.5,0.5); S11 (-22,1); S12-S15 (-21,1) | none |
+| OLD BEN | zombie villager, plains fisherman | none | OLD BEN | S01 (-12,1.5); S02 (-1.5,2); S11 (-23,3); S12-S15 (-22,3) | none |
 | HUGO / PIA | villagers, farmer / shepherd | none, crossed arms | HUGO / PIA | S03 in their gardens; S09 in the lane 7 blocks from Milo | an egg pops on each in S09 (no reaction) |
 | NELL, LIL TEO | villager (armorer), baby villager | none | NELL, LIL TEO | S03 only (LIL TEO runs across the lane) | none |
 
@@ -79,7 +80,7 @@ All three zombies in S01 have their arms raised (the zombie pose) and walk towar
 | brewing stand | S03 (behind Mom) | 3 bottles, then 2 from S06 "SPLASH POTION" | Mom's garden table | none |
 | golden apple (Mom's) | S06 | held | Mom's arms (S06, S07, S10), ROSA's right hand (S11-S15) | still held at the cut |
 | kitchen chest | S04 (in the room) | S08: chest screen with 1 Splash Potion of Weakness and 1 golden apple; the apple taken | by the window | none |
-| splash potion of weakness | S06 (taken from the stand) | in Mom's inventory; ROSA's left hand (S12); falls at (-13.5,0) (S13); Milo's slot 3; thrown (S15) | | shatters on ROSA in S15 |
+| splash potion of weakness | S06 (taken from the stand) | in Mom's inventory; ROSA's left hand (S12); let fall toward Milo, lands at (-13.5,0) (S13); Milo's slot 3; thrown (S15) | | shatters on ROSA in S15 |
 | west window shutters | S04 | open, then shut on "STOLE" | Mom's west window | none |
 | lamp post | S01 | lit (always) | (-15,2) | the key light for S12-S15 |
 | eggs | S05 (hotbar) | 16, then 14 | slot 1 | none |
@@ -95,8 +96,8 @@ Kill chickens every tick in S09 (a thrown egg can hatch one).
 - **The S12-S15 line** runs along the path, and the camera stays on its south side. S12 is from in front of ROSA,
   looking west, her right (apple) hand at frame left. S14 is behind ROSA's **right** shoulder, looking east, her back at
   frame left with the apple toward the lens. S13 and S15 are POV from the path, looking west.
-- **Distances, ROSA to Milo:** 3.5 blocks in S14 and S15 (ROSA (-16,0), Milo (-12.5,0)). In S13 he starts 6 blocks
-  from her and runs 2.5 blocks to the potion.
+- **Distances, ROSA to Milo:** 3.5 blocks in S14 and S15 (ROSA (-16,0), Milo (-12.5,0)). In S13 he starts 8 blocks
+  from her at (-8,0) and sprints 4.5 blocks (~0.8 s) to the potion.
 
 ## The narrator
 | shot | where Milo is | hand / HUD |
@@ -105,7 +106,7 @@ Kill chickens every tick in S09 (a thrown egg can hatch one).
 | S08 | Mom's kitchen chest | chest screen; slot 2 6 to 7 |
 | S09 | lane | eggs 16 to 14; slot 2 x7 |
 | S10 | at the west gate (camera shot, small) | |
-| S13 | path (-10,0) to (-12.5,0) | picks up the potion: slot 3, selected, "Splash Potion of Weakness" over the hotbar |
+| S13 | path (-8,0) to (-12.5,0) | picks up the potion: slot 3, selected, "Splash Potion of Weakness" over the hotbar |
 | S14 | (-12.5,0) (camera shot, nameplate "Milo") | the potion in hand |
 | S15 | (-12.5,0) | throws on "Potion" (slot 3 empties), selection to slot 2 on "APPLE": x7, "Golden Apple" over the hotbar |
 
@@ -117,7 +118,7 @@ Kill chickens every tick in S09 (a thrown egg can hatch one).
 | L06-L08 | Mom takes presents and they come back | she's failing at the cure | players: that's the cure, and it fails |
 | L09 | villagers can't throw | why she fails | why she fails |
 | L10 | she'll be back by dark | she's late | what comes out at dark |
-| L11-L13 | four zombies; the first is ROSA; she dropped her potion | (converted) | Mom is a zombie villager, still holding the apple |
+| L11-L13 | four zombies; the first is ROSA; she dropped her potion for him | (converted) | Mom is a zombie villager, still holding the apple |
 | L14-L15 | she lied to keep him home; she can't throw, he can; potion, then apple | | he is curing her |
 
 ## Clue map
