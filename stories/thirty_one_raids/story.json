@@ -51,7 +51,7 @@
         "L07",
         "L08"
       ],
-      "direction": "A kid, Milo, tells the camera about his grandpa, proud and quick."
+      "direction": "A kid, Milo, rattles off his grandpa's legend to the camera, fast and proud: about four and a half words a second, one breath per line, no pauses inside a line."
     },
     {
       "id": "n2",
@@ -63,7 +63,7 @@
         "L11",
         "L12"
       ],
-      "direction": "The same kid, the last evening: the pride turns to worry, then a brave decision."
+      "direction": "The same kid on the last evening, still talking fast, about four and a half words a second: the grin fades into worry, then a firm, brave decision. No pauses inside a line."
     },
     {
       "id": "g1",
@@ -204,7 +204,7 @@
       "id": "L10",
       "who": "N",
       "text": "Since Grandma died, / a RAID / is the only time / anyone's GLAD / to see him.",
-      "say": "Since Grandma died, a raid is the only time anyone's glad to see him.",
+      "say": "Since Grandma died a raid is the only time anyone's glad to see him.",
       "direction": "still quick, but the grin is gone; a little sad",
       "shot": "S10",
       "look": "actor:Gramps",

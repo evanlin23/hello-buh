@@ -79,6 +79,7 @@ module.exports = {
     await c(`/setblock ${A(-6, 1, -5)} grindstone[face=floor,facing=east]`)
     await c(`/fill ${A(-15, 1, -3)} ${A(-15, 2, -3)} spruce_fence`); await c(`/setblock ${A(-15, 3, -3)} lantern`)
     await c(`/setblock ${A(-10, 1, -8)} spruce_stairs[facing=north]`)
+    await c(`/fill ${A(-8, 1, -8)} ${A(-7, 1, -8)} spruce_stairs[facing=north]`)   // the bench by his door (S11)
     for (const [dx, dz, b] of [[-16, -6, 'poppy'], [-14, -7, 'cornflower'], [-17, -4, 'dandelion'], [-4, -8, 'oxeye_daisy']]) await c(`/setblock ${A(dx, 1, dz)} ${b}`)
     await c(`/setblock ${A(-4, 1, -7)} barrel[facing=up]`); await c(`/setblock ${A(-4, 1, -6)} hay_block`)
 
@@ -153,6 +154,7 @@ module.exports = {
     for (const dz of [-15, -14, -12, -11]) await frame(-6, 4, dz, 4, 'ominous_bottle', 'bf')
     await frame(-11, 3, -8, 3, null, 'xbf')
     await frame(-10, 3, -13, 1, 'bowl', 'bowl')
+    for (let i = 0; i < 27; i++) await ctx.cmd(`/item replace block ${A(-6, 2, -13)} container.${i} with ominous_bottle`)   // his chest of courage (S07)
 
     // --- Grandpa: two actor bots, both waiting on the slab
     await c(`/setworldspawn ${A(-8, 1, -4)}`)
@@ -279,9 +281,13 @@ module.exports = {
     park(GA)
     let chest = null
     await line('L07', async (k, at) => {
-      if (k === 2) { chest = bot.blockAt(P(-6, 2, -13)); try { this.cast[GB].openContainer(this.cast[GB].blockAt(P(-6, 2, -13))).then(w => { chest = w }).catch(() => {}) } catch (e) {} sound('block.chest.open', 0.7, 1) }
       if (k === at(1) - 2) swing(GB)
-      if (k === at(1)) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10 }
+      if (k === at(1)) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
+      if (k === at(2) - 1) {   // "He's got": first person, beside him; I open his chest (the vanilla chest screen)
+        K.shot('pov')
+        await K.cut(-8.2, -12.0, P(-5.5, 2.45, -12.5), 2)
+        try { bot.openContainer(bot.blockAt(P(-6, 2, -13))).then(w => { chest = w }).catch(e => ctx.log('chest', e.message)) } catch (e) { ctx.log('chest', e.message) }
+      }
       look(k)
     })
     try { if (chest && chest.close) chest.close() } catch (e) {}
@@ -294,8 +300,9 @@ module.exports = {
     await shot('s08', -5.8, -2.0, P(-3, 2, 0), TIMES.S08)
     park(GB)
     await line('L08', async (k, at) => {
-      if (k >= at(2) && k < at(3)) { G[GA].pitch = Math.max(-42, G[GA].pitch - 6); if ((k - at(2)) % 4 === 0) sound('entity.generic.drink', 0.8, 0.95 + ((k - at(2)) % 8) * 0.01) }
-      if (k === at(3) - 1) { hold(GA, 'crossbow') }
+      if (k === at(2)) M.pose(ctx, GA, 'drink')
+      if (k >= at(2) && k < at(3)) { G[GA].pitch = Math.max(-30, G[GA].pitch - 5); if ((k - at(2)) % 4 === 0) sound('entity.generic.drink', 0.8, 0.95 + ((k - at(2)) % 8) * 0.01) }
+      if (k === at(3) - 1) { M.poseOff(ctx, GA); hold(GA, 'crossbow') }
       if (k >= at(3)) G[GA].pitch = Math.min(0, G[GA].pitch + 7)
       look(k)
     })
@@ -307,10 +314,11 @@ module.exports = {
     })
 
     // ---- L10 (S10): another night, inside: Grandpa crouched over the table set for two; he lifts his head on "GLAD"
-    put(GB, -10.5, -14.6, 0, 50, 2, [11, 8, 8]); hold(GB, 'air'); sneak(GB, true)
+    put(GB, -10.28, -12.5, -90, 50, 2.5, [11, 8, 8]); hold(GB, 'air')
     frameItem('xbf', 'crossbow')
     await bot.waitForTicks(3)
     await shot('s10', -6.0, -6.5, P(-6, 2, -9), TIMES.S10)
+    M.pose(ctx, GB, 'sit')
     park(GA)
     await line('L10', async (k, at) => {
       const up = at(3)
@@ -320,10 +328,11 @@ module.exports = {
 
     // ---- L11 (S11): the final night, the yard: Grandpa crouched against his door frame, the bottle undrunk in his
     // slack hand; it leaves his hand on "FIGHT"
-    put(GA, -8.6, -7.6, 25, 50, 1, [3, 14, 7]); hold(GA, 'ominous_bottle'); sneak(GA, true)
+    put(GA, -7.5, -7.72, 15, 50, 1.5, [3, 14, 7]); hold(GA, 'ominous_bottle')
     await bot.waitForTicks(3)
     await shot('s11', -24, -4.5, P(-6, 2, -4.5), TIMES.S11)
-    park(GB); sneak(GB, false)
+    M.pose(ctx, GA, 'sit')
+    M.poseOff(ctx, GB); park(GB)
     await line('L11', async (k, at) => {
       if (k === at(2)) G[GA].pitch = 62
       if (k === at(3)) { hold(GA, 'air'); G[GA].pitch = 66; sound('item.armor.equip_generic', 0.4, 1.3) }
@@ -363,7 +372,7 @@ module.exports = {
       if (k === at(0) + 2) { bot.activateItem(); for (let j = 0; j < 7; j++) setTimeout(() => sound('entity.generic.drink', 0.6, 1 + j * 0.01), j * 220) }
       if (k === at(0) + 36) { say('/effect clear @s bad_omen'); say('/effect clear @s raid_omen'); say('/effect clear @s trial_omen') }
       if (k === at(2) - 2) base = K.base
-      if (k >= at(2) - 2 && k < endSpeech) K.turnTo(base, P(-8.6, 2.0, -7.6), (k - at(2) + 2) / 14)   // back at Grandpa, asleep at his door
+      if (k >= at(2) - 2 && k < endSpeech) K.turnTo(base, P(-7.5, 2.0, -7.7), (k - at(2) + 2) / 14)   // back at Grandpa, asleep on his bench
       if (k === endSpeech - 6) {   // the raiders onto the road while I'm looking back at him
         raidD = 20; raiders = new Map(WEDGE.map(([t]) => [t, K.actor(t, { x: 20, z: 6, y: gy(20, 6), yaw: 90 })])); placeRaiders()
       }
@@ -486,7 +495,7 @@ module.exports.shots = {
   s02: { at: [-1.2, 6.6, -10.5], look: [22, 3.0, 9.0], fov: 50, push: 0.12, dof: false },
   // S03 / S11: the yard from its west side, looking east: the door at frame left, the grindstone, the gate posts right
   s03: { at: [-19.6, 3.62, -4.6], look: [-4.0, 2.0, -3.4], fov: 60, push: 0.08, dof: false },
-  s11: { at: [-15.0, 3.3, -3.6], look: [-8.8, 2.0, -7.4], fov: 56, push: 0.25, dof: false },
+  s11: { at: [-15.0, 3.3, -3.6], look: [-7.9, 2.0, -7.6], fov: 56, push: 0.25, dof: false },
   // S04: a few steps closer, from the south-east, a little lower: him knees-up, the door and the crossbow behind
   s04: { at: [-4.6, 2.45, -0.4], look: [-7.4, 2.4, -4.6], fov: 56, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.4, 0] } } },
   // S05: the square at dawn from its south edge, past a hay bale and a fence: he crosses left to right, the bell behind
@@ -494,13 +503,13 @@ module.exports.shots = {
   // S06: below the tower at sunset, looking up the slope: the tower on the hill, Grandpa climbing the path
   s06: { at: [8.0, 3.8, 14.0], look: [30, 7.6, 24], fov: 50, push: 0.15, dof: false },
   // S07: beside Grandpa at the chest under the east window; the tilt down to the open chest on "CHEST"
-  s07: { at: [-9.0, 3.6, -11.2], lookPath: [[0, -6.6, 3.4, -14.3], [l07Chest, -6.6, 3.4, -14.3], [l07Chest + 0.7, -5.9, 2.5, -12.8], [8, -5.9, 2.5, -12.8]], ease: true, fov: 58, dof: false },
+  s07: { at: [-9.0, 3.6, -11.2], look: [-6.6, 3.4, -14.3], fov: 58, push: 0.15, dof: false },
   // S08: the gate at dusk, 4 behind Grandpa and 2 to his right: the bottle in profile, the road and the tower
   s08: { at: [-3.5, 2.62, -0.5], look: [22.4, 5.2, 14.5], fov: 54, push: 0.1, dof: false },
   // S09: closer, the same side: he turns his head back over his right shoulder
   s09: { at: [-2.6, 2.45, 3.8], look: [0.6, 2.35, 0.3], fov: 58, push: 0.1, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.5, 0] } } },
   // S10: the room from its south-east corner: Grandma's chair nearest the lens, Grandpa crouched over the table
-  s10: { at: [-6.6, 3.75, -10.4], look: [-10.8, 3.0, -14.8], fov: 62, push: 0.1, dof: false }
+  s10: { at: [-6.6, 3.75, -10.4], look: [-10.6, 2.9, -13.6], fov: 62, push: 0.1, dof: false }
 }
 
 module.exports.ROAD = ROAD

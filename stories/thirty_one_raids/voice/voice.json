@@ -1,0 +1,381 @@
+{
+ "lines": {
+  "L01": {
+   "who": "N",
+   "text": "Grandpa has saved our village from thirty-one raids.",
+   "dur": 2.78,
+   "onset": 0.19,
+   "end": 2.78,
+   "chunks": [
+    [
+     0.19,
+     1.089
+    ],
+    [
+     1.089,
+     1.67
+    ],
+    [
+     1.67,
+     2.463
+    ],
+    [
+     2.463,
+     2.78
+    ]
+   ],
+   "captions": [
+    "Grandpa has saved",
+    "our village",
+    "from THIRTY-ONE",
+    "RAIDS."
+   ]
+  },
+  "L02": {
+   "who": "N",
+   "text": "Every single one started the night he came home.",
+   "dur": 2.46,
+   "onset": 0.0,
+   "end": 2.46,
+   "chunks": [
+    [
+     0.0,
+     0.856
+    ],
+    [
+     0.856,
+     1.765
+    ],
+    [
+     1.765,
+     2.46
+    ]
+   ],
+   "captions": [
+    "Every single one",
+    "started the night",
+    "he came HOME."
+   ]
+  },
+  "L03": {
+   "who": "N",
+   "text": "He says they follow him.",
+   "dur": 1.26,
+   "onset": 0.13,
+   "end": 1.26,
+   "chunks": [
+    [
+     0.13,
+     0.474
+    ],
+    [
+     0.474,
+     1.26
+    ]
+   ],
+   "captions": [
+    "He says",
+    "they FOLLOW him."
+   ]
+  },
+  "L04": {
+   "who": "N",
+   "text": "Grandpa said, \"They know who beats them.\"",
+   "dur": 2.48,
+   "onset": 0.17,
+   "end": 2.48,
+   "chunks": [
+    [
+     0.17,
+     0.94
+    ],
+    [
+     0.94,
+     1.532
+    ],
+    [
+     1.532,
+     2.48
+    ]
+   ],
+   "captions": [
+    "Grandpa said,",
+    "\"They know",
+    "who BEATS them.\""
+   ]
+  },
+  "L05": {
+   "who": "N",
+   "text": "When he walks by, the villagers throw him bread.",
+   "dur": 2.9,
+   "onset": 0.47,
+   "end": 2.9,
+   "chunks": [
+    [
+     0.47,
+     0.848
+    ],
+    [
+     0.848,
+     1.334
+    ],
+    [
+     1.334,
+     2.036
+    ],
+    [
+     2.036,
+     2.9
+    ]
+   ],
+   "captions": [
+    "When he",
+    "walks by,",
+    "the villagers",
+    "throw him BREAD."
+   ]
+  },
+  "L06": {
+   "who": "N",
+   "text": "He hunts at the old tower on the hill.",
+   "dur": 2.08,
+   "onset": 0.19,
+   "end": 2.08,
+   "chunks": [
+    [
+     0.19,
+     0.767
+    ],
+    [
+     0.767,
+     1.45
+    ],
+    [
+     1.45,
+     2.08
+    ]
+   ],
+   "captions": [
+    "He hunts at",
+    "the old TOWER",
+    "on the hill."
+   ]
+  },
+  "L07": {
+   "who": "N",
+   "text": "He brings back grey bottles. He's got a whole chest.",
+   "dur": 3.46,
+   "onset": 0.13,
+   "end": 3.46,
+   "chunks": [
+    [
+     0.13,
+     1.081
+    ],
+    [
+     1.081,
+     1.965
+    ],
+    [
+     1.965,
+     2.509
+    ],
+    [
+     2.509,
+     3.46
+    ]
+   ],
+   "captions": [
+    "He brings back",
+    "grey BOTTLES.",
+    "He's got",
+    "a whole CHEST."
+   ]
+  },
+  "L08": {
+   "who": "N",
+   "text": "He calls it his courage. He drinks it at the gate.",
+   "dur": 3.0,
+   "onset": 0.25,
+   "end": 3.0,
+   "chunks": [
+    [
+     0.25,
+     0.894
+    ],
+    [
+     0.894,
+     1.596
+    ],
+    [
+     1.596,
+     2.298
+    ],
+    [
+     2.298,
+     3.0
+    ]
+   ],
+   "captions": [
+    "He calls it",
+    "his COURAGE.",
+    "He drinks it",
+    "at the GATE."
+   ]
+  },
+  "L09": {
+   "who": "Grandpa",
+   "text": "Lock the door, kid. They're coming.",
+   "dur": 3.6,
+   "onset": 0.27,
+   "end": 3.6,
+   "chunks": [
+    [
+     0.27,
+     1.683
+    ],
+    [
+     1.683,
+     2.086
+    ],
+    [
+     2.086,
+     3.6
+    ]
+   ],
+   "captions": [
+    "Lock the DOOR,",
+    "kid.",
+    "They're COMING."
+   ]
+  },
+  "L10": {
+   "who": "N",
+   "text": "Since Grandma died a raid is the only time anyone's glad to see him.",
+   "dur": 4.42,
+   "onset": 0.23,
+   "end": 4.42,
+   "chunks": [
+    [
+     0.23,
+     1.455
+    ],
+    [
+     1.455,
+     1.842
+    ],
+    [
+     1.842,
+     2.873
+    ],
+    [
+     2.873,
+     3.711
+    ],
+    [
+     3.711,
+     4.42
+    ]
+   ],
+   "captions": [
+    "Since Grandma died,",
+    "a RAID",
+    "is the only time",
+    "anyone's GLAD",
+    "to see him."
+   ]
+  },
+  "L11": {
+   "who": "N",
+   "text": "Tonight, he came home too tired to fight.",
+   "dur": 3.0,
+   "onset": 0.35,
+   "end": 3.0,
+   "chunks": [
+    [
+     0.35,
+     0.851
+    ],
+    [
+     0.851,
+     1.711
+    ],
+    [
+     1.711,
+     2.355
+    ],
+    [
+     2.355,
+     3.0
+    ]
+   ],
+   "captions": [
+    "Tonight",
+    "he came home",
+    "too TIRED",
+    "to fight."
+   ]
+  },
+  "L12": {
+   "who": "N",
+   "text": "So I drank his courage. Somebody had to fight.",
+   "dur": 4.06,
+   "onset": 0.29,
+   "end": 4.06,
+   "chunks": [
+    [
+     0.29,
+     1.167
+    ],
+    [
+     1.167,
+     2.219
+    ],
+    [
+     2.219,
+     2.92
+    ],
+    [
+     2.92,
+     4.06
+    ]
+   ],
+   "captions": [
+    "So I drank",
+    "his COURAGE.",
+    "Somebody",
+    "had to FIGHT."
+   ]
+  },
+  "L13": {
+   "who": "Grandpa",
+   "text": "Now they'll love you too, kid.",
+   "dur": 2.12,
+   "onset": 0.0,
+   "end": 2.12,
+   "chunks": [
+    [
+     0.0,
+     0.833
+    ],
+    [
+     0.833,
+     1.439
+    ],
+    [
+     1.439,
+     2.12
+    ]
+   ],
+   "captions": [
+    "Now they'll",
+    "love YOU",
+    "too, kid."
+   ]
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.3,
+ "total": 41.52
+}
