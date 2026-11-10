@@ -37,4 +37,4 @@ Format rules:
 | L15 | I'd NEVER / danced BEFORE. / So I STEPPED / off the CARPET, / onto the STONE. | S15 |
 | L16 | And THAT'S / when I FOUND / out WHY | S16 (the warden rises) |
 
-**Recordings:** the shots are re-used where the column names one. Re-cut to the new voice's timings, and re-voice everything with the new narrator. The review notes are in `reviews/vnext-critic.md` and the cold read once run.
+**Recordings:** the shots are re-used where the column names one. Re-cut to the new voice's timings, and re-voice everything with the new narrator. The review notes are in `reviews/vnext-critic.md`; the cold read is in `docs/pitches/vnext_coldread_2026-11-10.md`.
