@@ -164,11 +164,17 @@
    "who": "N",
    "text": "Some OBSIDIAN. / A little STRING. / Ender PEARLS. / A FIREPROOF potion.",
    "shot": "S04",
-   "look": {
-    "what": "prop:gifts_floor",
-    "word": "OBSIDIAN",
-    "size": "cu"
-   },
+   "look": [
+    {
+     "what": "prop:gifts_floor",
+     "word": "OBSIDIAN",
+     "size": "cu"
+    },
+    {
+     "what": "player",
+     "word": "FIREPROOF"
+    }
+   ],
    "direction": "hit only OBSIDIAN, STRING, PEARLS and FIREPROOF, one each; the rest level and quick"
   },
   {

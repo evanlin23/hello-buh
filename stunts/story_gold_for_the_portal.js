@@ -127,7 +127,7 @@ module.exports = {
     }
     const gone = () => say(`/kill @e[type=item,tag=toss,x=${X + 11},y=${F + 2},z=${Z + 5.5},distance=..1.6]`)   // into the purple
     const gift = (item, at, count = 1, tag = 'gift') => say(`/summon item ${A(...at)} {Item:{id:"minecraft:${item}",count:${count}},PickupDelay:32767,NoGravity:0b,Tags:["${tag}"],Motion:[0d,0d,0d]}`)
-    const look = (k, a = 0, b = 0) => K.look(k, a, b)
+    const look = (k, a = 0, b = 0) => K._cutting ? null : K.look(k, a, b)   // never re-aim while a cut lands (the cut arrives aimed)
     const hatch = (open, sound = true) => { say(`/setblock ${X + 1} ${F + 11} ${Z + 1} spruce_trapdoor[facing=south,half=top,open=${open}]`); if (sound) ctx.sound(open ? 'block.wooden_trapdoor.open' : 'block.wooden_trapdoor.close', 0.7, 1) }
     const gma = K.actor('gma', { x: 9.3, y: 1, z: 4.75, yaw: -80, pitch: 10 })     // tonight's Grandma (yaw: mc degrees, -90 = east)
     const SELF = [-1]
@@ -153,7 +153,7 @@ module.exports = {
       if (k < at(1) - 2) { gma.yaw += 1.2 * Math.sin(k / 5); gma.pitch = 6 + 6 * Math.sin(k / 7) }   // still at the portal under the crane
     if (k === at(1) - 2) K.park('gma')
     if (k === at(1) + 1) say(`/tp @e[type=bat,tag=bat] ${X} ${F - 200} ${Z}`)   // motion-ok: the bat leaves after the cut, unseen from the cellar (a /kill drew its red death poof: audit F9)
-      if (k === at(1)) await K.cut(2.4, 3.4, P(11, 2.0, 5.6), 1, { shot: 'pov_morning', time: MORNING })   // on the spot, arriving aimed at the portal (a bare shot switch kept the crane-time north aim)   // already standing there: no cut, no in-between frames
+      if (k === at.cut(1)) K.cut(2.4, 3.4, P(11, 2.0, 5.6), 1, { shot: 'pov_morning', time: MORNING }).catch(e => ctx.log(e.message))   // on the spot, arriving aimed at the portal (a bare shot switch kept the crane-time north aim)   // already standing there: no cut, no in-between frames
       if (k === at(1) + 4) { walking = true; K.walkTo([P(3.6, 1, 3.4), P(4.6, 1, 3.85)], { max: 60 }).catch(e => ctx.log(e.message)).finally(() => { walking = false }) }
       if (k > at(1)) portalLife(k)
       if (k === at(2)) { say(`/summon item ${A(11.1, 1.9, 5.6)} {Item:{id:"minecraft:obsidian",count:1},PickupDelay:32767,Tags:["gift"],Motion:[-0.26d,0.2d,0.02d]}`); ctx.sound('block.portal.trigger', 0.08, 2) }
@@ -172,12 +172,12 @@ module.exports = {
     const aimG = (i) => P(9.55 + 0.15 * (morning[i][1][0] - 9.75), 1.3, 6.45)   // the gifts' spot (cellar block 9,1,6), the portal's foot above it
     await K.cut(morning[0][3][0], morning[0][3][1], aimG(0), 1, { after: () => gift(...morning[0].slice(0, 3)) })
     await line('L03', async (k, at) => {
-      for (let i = 1; i < 3; i++) if (k === at(i)) await K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { shot: i === 1 ? 's04b' : 'pov_morning', after: () => gift(...morning[i].slice(0, 3)) })
+      for (let i = 1; i < 3; i++) if (k === at.cut(i)) K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { shot: i === 1 ? 's04b' : 'pov_morning', after: () => gift(...morning[i].slice(0, 3)) }).catch(e => ctx.log(e.message))   // not awaited: a cut inside a line must not delay the take's next mark
       for (let i = 0; i < 3; i++) if (k === Math.min(at(i) + 12, at(i + 1) - 3)) pickUp(i)
-      if (k === at(3)) {
+      if (k === at.cut(3)) {
         bot.setQuickBarSlot(1)   // the fire resistance potion (story.json hotbar slot 2)
-        await K.cut(1.5, 10.2, P(-28, 9, 85), 12, { shot: 's05' })
-        ctx.mark('pose', { ids: SELF, pose: 'drink' }); ctx.sound('entity.generic.drink', 0.6, 1)
+        // not awaited: the garden is a long teleport, and an awaited cut here made L04 land 0.33 s late on the take
+        K.cut(1.5, 10.2, P(-28, 9, 85), 12, { shot: 's05' }).then(() => { ctx.mark('pose', { ids: SELF, pose: 'drink' }); ctx.sound('entity.generic.drink', 0.6, 1) }).catch(e => ctx.log(e.message))
       }
       if (k > at(3) && k % 4 === 0) { ctx.particles('entity_effect', P(1.5 + (Math.random() - 0.5) * 0.6, 12.4 + Math.random() * 1.4, 10.2 + (Math.random() - 0.5) * 0.6), { count: 2, color: 0xE49A3A }); if (k % 8 === 0) ctx.sound('entity.generic.drink', 0.45, 0.95 + Math.random() * 0.1) }
       const bend = [0, 1, 2].map(i => Math.min(at(i) + 12, at(i + 1) - 3)).map(p => Math.max(0, 1 - Math.abs(k - p) / 6)).reduce((a, b) => Math.max(a, b), 0)
@@ -207,7 +207,7 @@ module.exports = {
       if (k % 2 === 0) G.look(Math.PI / 2 - (k < h ? 0.15 * Math.sin(k / 6) : 0.5 * Math.min(1, (k - h) / 10) + 0.12 * Math.sin((k - h) / 7)), k < h ? -0.75 : -0.75 + 0.85 * Math.min(1, (k - h) / 8), true)
       if (k === h - 3) G.swingArm('right')
       if (k === h) { say(`/item replace entity Grandpa armor.head with ${HELMET}`); say('/item replace entity Grandpa weapon.mainhand with air'); ctx.sound('item.armor.equip_gold', 0.8, 1) }
-      if (k === at(4)) K.shot('s06b')   // 'BLUE stripe and ALL': close on the helmet
+      if (k === at.cut(4)) K.shot('s06b')   // 'BLUE stripe and ALL': close on the helmet
     })
 
     // L06 (S07): wide from the ladder: "GOLD keeps you SAFE, Grandma SAID. PIGLINS won't TOUCH you in GOLD."
@@ -231,22 +231,24 @@ module.exports = {
       portalLife(k, DOWN)
       gma0.pitch = 10 * Math.sin(k / 8); gma0.yaw = -90 + 12 * Math.sin(k / 7)   // she keeps looking round the empty cellar (a slower sway read as nobody moving)
       if (k === Math.max(1, n - 12)) bot.setQuickBarSlot(0)
+      // tonight's Grandma takes her place in the real cellar (30 blocks over this shot, unseen) before the cut to it
+      if (k === Math.max(1, n - 10)) { Object.assign(gma, { x: 6.8, y: 1, z: 7.0, yaw: -90, pitch: 5 }); K.actors.set('gma', gma); K.warp('gma') }
     })
-    K.park('gma0')
 
     // L08 (S08, S09): tonight. "So I KEEP his GIFTS in a BARREL. Grandma SAYS he's still TRADING. So he's ALIVE.
     // Grandpa's the BEST TRADER ever." Over my shoulder at the barrel, the screen on 'in a BARREL' (POV), then the
     // stairs-high shot on 'So he's ALIVE' (Grandma at the portal), the low reverse on me for 'the BEST TRADER'
-    Object.assign(gma, { x: 6.8, y: 1, z: 7.0, yaw: -90, pitch: 5 }); K.actors.set('gma', gma); K.warp('gma')
-    // (the cut to the barrel lands here, not under L07: from the barrel the flashback cast is out of the lint's reach)
+    // (the cut to the barrel lands here, not under L07: from the barrel the flashback cast is out of the lint's reach;
+    // Grandma is placed with the cut, so the new shot never shows her old spot)
     await K.cut(7.95, 3.5, P(10.5, 1.5, 3.5), 1, { shot: 's08ots' })
     let win = null, from = null
     await line('L08', async (k, at) => {
       portalLife(k)
-      if (k === at(2)) { ctx.mark('cut'); K.shot('pov'); K.open(P(10, 1, 3)).then(w => { win = w }).catch(e => ctx.log('barrel:', e.message)) }
-      if (k === at(5) - 2) { if (win) { K.close(win); win = null } else K.close() }
-      if (k === at(5)) K.shot('s_high_portal')
-      if (k === at(6)) K.shot('s_rev')
+      if (k === 4) K.park('gma0')   // the flashback's Grandma leaves, off screen now
+      if (k === at.cut(2)) { ctx.mark('cut'); K.shot('pov'); K.open(P(10, 1, 3)).then(w => { win = w }).catch(e => ctx.log('barrel:', e.message)) }
+      if (k === at.cut(5) - 2) { if (win) { K.close(win); win = null } else K.close() }
+      if (k === at.cut(5)) K.shot('s_high_portal')
+      if (k === at.cut(6)) K.shot('s_rev')
       // she walks to the portal behind the screen (south of the gold stack), then watches it
       if (gma.x < 10.0) K.step(gma, 0.11, -0.03); else { gma.yaw = -60 + 10 * Math.sin(k / 8); gma.pitch = 5 + 8 * Math.sin(k / 6) }
       if (k > at(5)) { from = from || { ...K.base }; K.turnTo(from, P(gma.x, 2.6, gma.z), Math.min(1, (k - at(5)) / 10)) }
@@ -290,7 +292,7 @@ module.exports = {
         if (gma.y >= 10.2) { hatch(false); shut = k }   // she shuts the hatch behind her at the top of the shaft
       }
       if (shut >= 0 && k === shut + 2) K.park('gma')
-      if (k === at(2)) K.shot('s_rev')
+      if (k === at.cut(2)) K.shot('s_rev')
       if (k >= at(2) - 6 && k < at(5)) { from = from || { ...K.base }; K.turnTo(from, P(11, 2.0, 5.5), (k - at(2) + 6) / 12) }
       if (k === at(3) && !thrown) {
         thrown = true; bot.swingArm('right')
@@ -299,7 +301,7 @@ module.exports = {
         ctx.sound('entity.item.pickup', 0.3, 0.6)
       }
       if (k === at(3) + 10) gone()
-      if (k === at(5)) K.shot('s10')
+      if (k === at.cut(5)) K.shot('s10')
       K.go(k >= at(3) + 12 && k < at(3) + 18, 'back')   // a step back from the purple after the throw
       look(k, k > at(3) + 10 ? 0.25 * Math.sin((k - at(3)) / 8) : 0, k > at(3) + 10 ? 0.06 * Math.sin((k - at(3)) / 6) : 0)
     })
@@ -345,7 +347,7 @@ module.exports.shots = {
   pov_morning: { pov: true, mood: 'golden_hour' },
   // S01: low on the throw line from the south-west: the ingot over the purple, the gold and its lantern at frame right, Grandma turning to us (audit B1)
   // S01's subject: her eye (y 1.9 sat in the carpet's block, which the lint read as hidden)
-  s01: { at: [6.5, 2.0, 7.8], look: [10.2, 2.0, 5.3], fov: 62, push: 0.12, dof: false, subject: [[9.2, 2.6, 4.85]] },
+  s01: { at: [6.5, 2.0, 7.8], look: [10.2, 2.0, 5.3], fov: 62, push: 0.12, dof: false, subject: ['actor:gma'] },
   // S02: the ridge at night, an extreme-wide crane down from over the slope south-east of the cottage to the gate
   s02: { path: [[0, 10, 19, 18], [1.3, 7.5, 16.5, 15.5]], look: [3.5, 13.3, 3.5], ease: true, fov: 60, dof: false, subject: [[4.4, 12.6, 7.4]] },   // the carrot bed (in view all the way down): eyeTrace takes the cut from S01's Grandma
   // S05: the garden, morning: behind the grandson at the gate, looking south-south-west down the slope to Hushwell's plaza
@@ -359,14 +361,15 @@ module.exports.shots = {
   // S07b: 'He never came BACK': Grandma alone by the portal, medium, the purple at frame right
   s07b: { at: [5.0, 2.7 + DOWN, 7.6], look: [9.0, 2.3 + DOWN, 4.4], fov: 50, push: 0.2, mood: 'flashback', subject: [[8.6, 1.9 + DOWN, 3.9]] },
   // S04's middle gift: low at the portal's foot, the string on the floor and me kneeling behind it (audit B6)
-  s04b: { at: [10.5, 1.45, 6.3], look: [8.6, 1.45, 6.75], fov: 60, dof: false, subject: ['self'] },
+  // S04b's subject: the string on the floor (the boy kneels behind it, at the top of the frame)
+  s04b: { at: [10.5, 1.45, 6.3], look: [9.2, 1.25, 6.62], fov: 72, dof: false, eyeTrace: false, subject: [[9.5, 1.1, 6.6]] },
   // S08: over my shoulder at the barrel, before the screen (audit B6)
   s08ots: { at: [6.6, 3.0, 4.6], look: [10.3, 1.6, 3.3], fov: 55, push: 0.15, dof: false, subject: ['self'] },
   // the stairs, high: the ladder's top looking down the cellar to the portal (audit B6)
   s_high_portal: { at: [1.6, 3.9, 2.2], look: [10.0, 1.6, 5.8], fov: 60, push: 0.1, dof: false, subject: ['self'] },
   s_high_gma: { at: [1.6, 3.9, 2.2], look: [8.0, 1.8, 4.6], fov: 60, push: 0.1, dof: false, subject: [[6.1, 2.6, 3.1]] },
   // L10: over my shoulder (I'm at the barrel, frame left) on Grandma at the portal, turning to me
-  s10ots: { at: [6.9, 2.9, 3.6], look: [10.0, 2.5, 6.1], fov: 55, push: 0.15, dof: false, subject: [[10.0, 2.6, 6.1]] },
+  s10ots: { at: [6.9, 2.9, 3.6], look: [10.0, 2.5, 6.1], fov: 55, push: 0.15, dof: false, subject: ['actor:gma'] },
   // the low reverse from the portal's north side, back at me (audit B6)
   s_rev: { at: [10.5, 2.3, 1.6], look: [7.5, 2.3, 4.8], fov: 58, push: 0,   // low but over the corner's floor dressing (at y 1.7 the lint found the camera inside a block)
     dof: false, subject: ['self'] },
