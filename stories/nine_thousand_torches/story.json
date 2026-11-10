@@ -2,7 +2,7 @@
   "name": "nine_thousand_torches",
   "stunt": "story_nine_thousand_torches",
   "version": 2,
-  "revision": "r3 (2026-11-10): motive tightened: L06 ties the nightly door torch to L03's spawn rule ('so nothing SPAWNS'), L14 names it ('Every night at ONCE'); the wave stays in the picture (S14) unsaid; voice r3b (2026-11-10): continuous beat takes with per-beat directions (owner rules 2b.1, 2b.4)",
+  "revision": "r4 (2026-11-10): the owner's mystery test (STANDARDS 1.0): 25-40 s and nothing that doesn't move the question: L02 (the fences list) and L10 (the hiding misread) cut, L12-L13 merged ('One row was still GROWING. I followed it to MY door.'); 104 words. r3: L06 'so nothing SPAWNS', L14 'Every night at ONCE'",
   "caption": "who put 6,000 torches on my village 🔥",
   "logline": "A villager kid wakes to find a torch on every block of his village and thinks something terrible is coming, but follows the last growing row to his own door, where his best friend, the village's player, places the final torch, the one he used to place there every night, and leaves the game for good.",
   "question": "why tf is there a torch on every single block of this village?",
@@ -66,7 +66,6 @@
       ],
       "lines": [
         "L01",
-        "L02",
         "L03",
         "L04"
       ],
@@ -92,7 +91,6 @@
       ],
       "lines": [
         "L09",
-        "L10",
         "L11",
         "L12"
       ],
@@ -104,7 +102,6 @@
         "N"
       ],
       "lines": [
-        "L13",
         "L14"
       ],
       "direction": "[A nine-year-old kid, a little slower, plain and steady, full voice, getting it; not whispery, breathy or soft]"
@@ -132,31 +129,6 @@
         "what": "block:torch",
         "word": "TORCHES"
       }
-    },
-    {
-      "id": "L02",
-      "who": "N",
-      "text": "FENCES. / ROOFS. / HAY bales. / Not one DARK block.",
-      "direction": "a fast list, then the topper, amazed",
-      "shot": "S02",
-      "look": [
-        {
-          "what": "prop:fence_torches",
-          "word": "FENCES"
-        },
-        {
-          "what": "prop:ridge_torches",
-          "word": "ROOFS"
-        },
-        {
-          "what": "prop:hay_torches",
-          "word": "HAY"
-        },
-        {
-          "what": "block:torch",
-          "word": "DARK"
-        }
-      ]
     },
     {
       "id": "L03",
@@ -247,17 +219,6 @@
       }
     },
     {
-      "id": "L10",
-      "who": "N",
-      "text": "He's HIDING it / from whatever's COMING.",
-      "direction": "sure of himself, full volume",
-      "shot": "S10",
-      "look": {
-        "what": "prop:dark_forest",
-        "word": "COMING"
-      }
-    },
-    {
       "id": "L11",
       "who": "N",
       "text": "His HOUSE / was GONE. / Just TORCHES.",
@@ -271,30 +232,13 @@
     {
       "id": "L12",
       "who": "N",
-      "text": "One row / was still GROWING. / I had to know WHO.",
-      "direction": "curious, then determined",
-      "shot": "S12",
+      "text": "One row / was still GROWING. / I followed it / to MY door.",
+      "direction": "curious, then quick",
+      "shot": "S12+S13",
       "look": [
         {
-          "what": "prop:growing_row",
+          "what": "prop:row",
           "word": "GROWING"
-        },
-        {
-          "what": "prop:corner_arm",
-          "word": "WHO"
-        }
-      ]
-    },
-    {
-      "id": "L13",
-      "who": "N",
-      "text": "I followed it / to MY door.",
-      "direction": "running, surprised at the end",
-      "shot": "S13",
-      "look": [
-        {
-          "what": "prop:growing_row",
-          "word": "followed"
         },
         {
           "what": "actor:Jonah",
