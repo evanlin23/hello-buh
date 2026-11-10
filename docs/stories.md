@@ -138,6 +138,10 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "Can we also fill our hotbar with like ridiculous items? like buckets of milk for example".** The
+  player's hotbar is full (all 9 slots), like a real player's: the story's own tools first (Light Sleeper: carpets,
+  wool, shears), then 1-3 ridiculous ones that fit the world (milk buckets, a stack of cake, 64 eggs, a pufferfish,
+  a name tag...). It never contradicts the story, and it stays consistent between shots. Set in story.json "hotbar".
 - **Owner, 2026-11-10 (on Light Sleeper's bare cobblestone well in the all-carpet village): "whyisnt the well covered in
   carpet too".** The set must match every claim the narration makes about it ("everything is carpeted" means every
   block in shot is, except a deliberate, planted exception). Each story's set.md lists its claims and the set is checked
