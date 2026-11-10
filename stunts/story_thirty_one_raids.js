@@ -300,162 +300,156 @@ module.exports = {
     // the narrator's body stands behind each camera shot, out of frame; the camera shot switches on the cut
     const shot = async (name, bx, bz, target, time) => { K.shot(name); await cutG(bx, bz, target, time !== undefined ? { time } : {}) }
 
-    // ---- L01 (S01): dawn after raid 31. The totem wall; Grandpa (frame right) hangs the 31st; the push ends on the
-    // one empty frame, lit by the lantern under it
+    // r-cast (story.json): 11 lines; Grandpa speaks L08 in his own voice. Actors take turns so the next shot's
+    // Grandpa is already placed: GA = S01, S03/S04, S10 (L05), S07, S11; GB = S02, S05, S06, S08/S09, the reveal
+    // ---- L01 (S01): dawn after raid 31. The totem wall; Grandpa (frame right) hangs the 31st on "THIRTY-ONE"; the
+    // push ends on the one empty frame, lit by the lantern under it
     put(GA, -8.0, -14.4, yawTo(-8.0, -14.4, -6.5, -15.9), 12, 2); hold(GA, 'totem_of_undying')   // left of the 31st frame, in profile (audit B1)
     put(GB, 13.5, 1.0, yawTo(13.5, 1.0, 0.5, 0.5), 8)             // S02's Grandpa, already on the road, near enough to read (audit F3)
     hold(GB, 'crossbow'); frameEmpty('xbf')
     await bot.waitForTicks(6)
     await shot('s01', -10.5, -5.5, P(-10, 3, -12), TIMES.S01)
     await line('L01', async (k, at) => {
-      if (k === at(0) + 1) swing(GA)   // the 31st totem goes in on "THIRTY-ONE"
+      if (k === at(0) + 1) swing(GA)
       if (k === at(0) + 4) { frameItem('f31', 'totem_of_undying'); hold(GA, 'air'); sound('entity.item_frame.add_item', 1, 1) }
       if (k > at(0) + 8) { G[GA].yaw = yawTo(-8.0, -14.4, -6.0, -15.9); G[GA].pitch = 18 }   // he looks at the empty one
       look(k)
     })
 
-    // ---- L02 (S02): dusk, from the palisade walkway by the gate: Grandpa small on the road, walking home; the tower
+    // ---- L02 (S02 -> S03): dusk, from the palisade walkway: Grandpa walking home up the road ("Raid ONE, raid
+    // TWELVE, raid THIRTY-ONE"); on "He WON" the cut to the yard: Grandpa at his grindstone, the crossbow on the wall
     put(GA, -7.3, -4.5, -90, 35, 1)                               // S03's Grandpa sitting at the grindstone (audit F6)
+    frameItem('xbf', 'crossbow')
     await shot('s02', -3.5, -12.5, P(20, 2, 6), TIMES.S02)
-    await line('L02', async (k) => {
-      const s = G[GB]; const d = Math.hypot(s.x - 6.5, s.z - 0.6)
-      if (d > 0.3) { s.x -= 0.075 * (s.x - 6.5) / d; s.z -= 0.075 * (s.z - 0.6) / d; s.yaw = yawTo(s.x, s.z, 0.5, 0.5); s.y = gy(s.x, s.z) }
+    M.pose(ctx, GA, 'sit_ground')   // knees up on the ground at the grindstone (audit F6), set while S02 is on screen
+    const grind = (k) => { if (k % 12 === 0) { swing(GA); sound('block.grindstone.use', 0.35, 1) } }
+    await line('L02', async (k, at) => {
+      if (k < at(3)) {
+        const s = G[GB]; const d = Math.hypot(s.x - 6.5, s.z - 0.6)
+        if (d > 0.3) { s.x -= 0.075 * (s.x - 6.5) / d; s.z -= 0.075 * (s.z - 0.6) / d; s.yaw = yawTo(s.x, s.z, 0.5, 0.5); s.y = gy(s.x, s.z) }
+      }
+      if (k === at(3)) { K.shot('s03'); await cutG(-24, -4.5, P(-6, 2, -4.5), { time: TIMES.S03 }); park(GB) }
+      if (k > at(3)) grind(k)
       look(k)
     })
-
-    // ---- L03 (S03): the same evening, the yard: Grandpa at his grindstone, the crossbow on the wall by his door
-    frameItem('xbf', 'crossbow')
-    await shot('s03', -24, -4.5, P(-6, 2, -4.5), TIMES.S03)
-    park(GB)
-    M.pose(ctx, GA, 'sit_ground')   // knees up on the ground at the grindstone (audit F6)
-    const grind = (k) => { if (k % 12 === 0) { swing(GA); sound('block.grindstone.use', 0.35, 1) } }
-    // ...and on "They KNOW" the cut in (S04, closer; he doesn't look up)
-    put(GB, -76.0, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side (clear of the market stalls)
+    // ---- L03 (S03 -> S04): "He SAYS they FOLLOW him"; on "They KNOW" the cut in, closer; he doesn't look up
+    put(GB, -76.0, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side
     await line('L03', async (k, at) => {
       if (k === at(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 1.8, -4.6)) }
       grind(k); if (k === at(3)) G[GA].pitch = 25
       look(k)
     })
-    // ---- L04 (S04W): first person, inside, the same evening: the totem wall; on "ONE frame" the eyes go to the
-    // empty 32nd frame (bottom row, right), the lantern under it
-    K.shot('pov')
-    await K.cut(-8.5, -11.0, P(-9.5, 4.0, -15.5), 2, { time: TIMES.S03 })
-    M.poseOff(ctx, GA)
-    let wall = null
-    await line('L04', async (k, at) => {
-      if (k === 0) wall = K.base
-      if (k >= at(2) - 4) K.turnTo(wall, P(-5.5, 3.5, -15.5), (k - at(2) + 4) / 18)
-      look(k)
-    })
 
-    // ---- L05 (S05): dawn after raid 31, the square: he walks across; the farmers throw him bread on "BREAD"
+    // ---- L04 (S05): dawn after a raid, the square: he walks across; the farmers throw him bread on "BREAD"
     const farmers = [['f1', -78.5, -1.5], ['f2', -69.5, -2.0], ['f3', -81.0, 9.5], ['f4', -66.5, 6.0]]
     const fa = farmers.map(([t, x, z]) => K.actor(t, { x, z, y: gy(x, z), yaw: yawTo(x, z, -74, 4) }))
     for (const [t] of farmers) K.warp(t)   // into the square while the camera is elsewhere (before S05's cut)
     await bot.waitForTicks(3)
-    frameEmpty('xbf')
     await shot('s05', -72.5, 19.5, P(-74, 1, 3), TIMES.S05)
-    park(GA)
-    await line('L05', async (k, at) => {
+    M.poseOff(ctx, GA)
+    put(GA, -10.28, -12.5, -90, 50, 2.5, [11, 8, 8]); hold(GA, 'air')   // S10's Grandpa at his table (out of this shot)
+    frameEmpty('xbf')
+    await line('L04', async (k, at) => {
       const s = G[GB]
       if (s.x < -72.0) { s.x += 0.06; s.yaw = -90 }
-      fa.forEach((f, i) => { f.yaw = yawTo(f.x, f.z, s.x, s.z) })
-      if (k >= at(2) - 2 && k <= at(2) + 6 && (k - at(2) + 2) % 2 === 0) {   // on "BREAD"
-        const f = fa[(k - at(2) + 2) / 2 % fa.length], dx = s.x + 1.2 - f.x, dz = s.z - f.z, d = Math.hypot(dx, dz)
+      fa.forEach((f) => { f.yaw = yawTo(f.x, f.z, s.x, s.z) })
+      if (k >= at(1) - 2 && k <= at(1) + 6 && (k - at(1) + 2) % 2 === 0) {   // on "throw him BREAD"
+        const f = fa[(k - at(1) + 2) / 2 % fa.length], dx = s.x + 1.2 - f.x, dz = s.z - f.z, d = Math.hypot(dx, dz)
         say(`/summon item ${(X + f.x).toFixed(2)} ${(F + f.y + 1.4).toFixed(2)} ${(Z + f.z).toFixed(2)} {Item:{id:"minecraft:bread",count:1},PickupDelay:32767,Motion:[${(dx / d * 0.28).toFixed(3)},0.32,${(dz / d * 0.28).toFixed(3)}]}`)
         sound('entity.villager.celebrate', 0.5, 1 + (k % 3) * 0.05)
       }
       look(k)
     })
 
-    // ---- L06 (S06): sunset another day, the slope below the tower: Grandpa climbing the path toward it
-    put(GA, 21.0, 7.6, yawTo(21, 7.6, 26, 12.5), -5); hold(GA, 'crossbow')   // on the road ahead of the lens (audit F4)
-    await bot.waitForTicks(3)
-    await shot('s06', 9.0, -3.0, P(44, 14, 40), TIMES.S06)
-    park(GB)
+    // ---- L05 (S10 -> S10b): another night, inside: Grandpa alone over the table set for two ("Since GRANDMA died,
+    // he's always ALONE"); on "But RAID nights?" in on his face; he lifts his head on "EVERYONE cheers"
+    say(`/setblock ${X - 9} ${F + 3} ${Z - 13} lantern`)   // his table lantern, this night (audit B2)
+    await shot('s10', -6.0, -6.5, P(-6, 2, -9), TIMES.S10)
+    M.pose(ctx, GA, 'sit')
     for (const [t] of farmers) K.bury(t, -60)   // out of the square after the cut
     say('/kill @e[type=item]')
-    await line('L06', async (k) => {
-      const s = G[GA]; if (s.z < 13) { s.x += 0.045; s.z += 0.045; s.yaw = yawTo(0, 0, 1, 1); s.y = gy(s.x, s.z) }
+    put(GB, 21.0, 7.6, yawTo(21, 7.6, 26, 12.5), -5)             // S06's Grandpa on the road to the tower
+    await line('L05', async (k, at) => {
+      const up = at(3)   // "EVERYONE cheers"
+      if (k === 10 || k === 34) swing(GA)   // he nudges the one bowl across the table
+      if (k === at(2)) K.shot('s10b')        // "But RAID nights?": in on his face
+      G[GA].pitch = k < up - 3 ? 50 : k < up + 16 ? Math.max(4, G[GA].pitch - 9) : Math.min(50, G[GA].pitch + 5)
       look(k)
     })
 
-    // ---- L07 (S07): night, inside: the chest under the east window; the lid opens, the bottle comes up in his
-    // hand on "BOTTLES"; the camera tilts down to the open chest on "CHEST"
-    put(GB, -7.0, -14.6, yawTo(-7, -14.6, -5.5, -12.5), 30, 2); hold(GB, 'air')
-    await bot.waitForTicks(3)
-    await shot('s07', -8.5, -6.5, P(-8, 2, -9), TIMES.S07)
-    park(GA)
+    // ---- L06 (S06 -> S07 -> POV): sunset, the road up to the tower ("Every WEEK, he HUNTS at the TOWER"); on "He
+    // brings BACK" night inside: the bottle comes up in his hand at the chest; on "OMINOUS means LUCKY, I think" first
+    // person, his chest screen full of ominous bottles, through "his LUCK"
+    say(`/setblock ${X - 9} ${F + 3} ${Z - 13} air`)
+    await shot('s06', 9.0, -3.0, P(44, 14, 40), TIMES.S06)
+    M.poseOff(ctx, GA)
+    hold(GB, 'crossbow')
+    put(GA, -7.0, -14.6, yawTo(-7, -14.6, -5.5, -12.5), 30, 2); hold(GA, 'air')   // S07's Grandpa at the chest (out of shot)
     let chest = null
-    await line('L07', async (k, at, n) => {
-      if (k === at(0) + 2) swing(GB)
-      if (k === at(0) + 6) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === Math.max(at(2) - 1, Math.round(n * 0.6))) {   // "A whole CHEST" over the chest screen full of bottles (the owner check wants him on screen for half the line from "BACK"): first person, beside him; I open his chest (the vanilla chest screen)
+    await line('L06', async (k, at) => {
+      if (k < at(3)) { const s = G[GB]; if (s.z < 13) { s.x += 0.045; s.z += 0.045; s.yaw = yawTo(0, 0, 1, 1); s.y = gy(s.x, s.z) } }
+      if (k === at(3)) { K.shot('s07'); await cutG(-8.5, -6.5, P(-8, 2, -9), { time: TIMES.S07 }); park(GB) }
+      if (k === at(3) + 2) swing(GA)
+      if (k === at(3) + 6) { hold(GA, 'ominous_bottle'); G[GA].pitch = 10; G[GA].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
+      if (k === at(5)) {   // first person beside him; I open his chest (the vanilla chest screen), aimed at the block centre K.open uses
         K.shot('pov')
-        await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2)   // aimed at the block centre K.open uses: the screen opens on the cut, no turn first
+        await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2)
         K.open(P(-6, 2, -13)).then(w => { chest = w }).catch(e => ctx.log('chest', e.message))
       }
       look(k)
     })
     try { K.close(chest) } catch (e) {}
 
-    // ---- L08 (S08): dusk, a raid night: Grandpa in the open gate, the bottle in his right hand; head back on
-    // "drinks" (the drink sound), the crossbow back in his hand by "GATE"
+    // ---- L07 (S08): dusk, a raid night: Grandpa in the open gate, the bottle up on "He DRINKS one" (the drink sound),
+    // the crossbow back in his hand by "Then he SAYS"
     const gate = { x: 0.6, z: 0.3, yaw: K.mcYaw(TOWER[0] - 0.6, TOWER[1] - 0.3) }
-    put(GA, gate.x, gate.z, gate.yaw, 0); hold(GA, 'ominous_bottle')
+    put(GB, gate.x, gate.z, gate.yaw, 0); hold(GB, 'ominous_bottle')
     await bot.waitForTicks(3)
     await shot('s08', -5.8, -2.0, P(-3, 2, 0), TIMES.S08)
-    park(GB)
-    await line('L08', async (k, at) => {
-      if (k === at(2)) M.pose(ctx, GA, 'drink')
-      if (k >= at(2) && k < at(3)) { G[GA].pitch = Math.max(-30, G[GA].pitch - 5); if ((k - at(2)) % 4 === 0) sound('entity.generic.drink', 0.8, 0.95 + ((k - at(2)) % 8) * 0.01) }
-      if (k === at(3) - 1) { M.poseOff(ctx, GA); hold(GA, 'crossbow') }
-      if (k >= at(3)) G[GA].pitch = Math.min(0, G[GA].pitch + 7)
-      look(k)
-    })
-    // ---- L09 (S09): closer; he turns his head back over his right shoulder on "lock the DOOR", a nod on "kid"
-    await shot('s09', -4.2, 5.6, P(0, 2, 0))
-    await line('L09', async (k, at) => {
-      if (k >= at(1) - 4 && G[GA].yaw < gate.yaw + 95) G[GA].yaw += 9
-      if (k >= at(2) && k < at(2) + 12) G[GA].pitch = Math.sin((k - at(2)) / 12 * Math.PI) * 16   // a nod on "kid, they're COMING"
-      if (k === at(2) + 14) swing(GA)                                                           // he shoulders the crossbow
-      look(k)
-    })
-
-    // ---- L10 (S10): another night, inside: Grandpa crouched over the table set for two; he lifts his head on "GLAD"
-    put(GB, -10.28, -12.5, -90, 50, 2.5, [11, 8, 8]); hold(GB, 'air')
-    frameItem('xbf', 'crossbow')
-    await bot.waitForTicks(3)
-    say(`/setblock ${X - 9} ${F + 3} ${Z - 13} lantern`)   // his table lantern, this night (audit B2)
-    await shot('s10', -6.0, -6.5, P(-6, 2, -9), TIMES.S10)
-    M.pose(ctx, GB, 'sit')
     park(GA)
-    await line('L10', async (k, at) => {
-      const up = at(2)   // "GLAD"
-      if (k === 10 || k === 34) swing(GB)   // he nudges the one bowl across the table
-      if (k === at(1)) K.shot('s10b')        // "a RAID": in on his face
-      G[GB].pitch = k < up - 3 ? 50 : k < up + 16 ? Math.max(4, G[GB].pitch - 9) : Math.min(50, G[GB].pitch + 5)
+    await line('L07', async (k, at) => {
+      if (k === at(0) + 2) M.pose(ctx, GB, 'drink')
+      if (k >= at(0) + 2 && k < at(2) - 2) { G[GB].pitch = Math.max(-30, G[GB].pitch - 5); if ((k - at(0)) % 4 === 0) sound('entity.generic.drink', 0.8, 0.95 + ((k - at(0)) % 8) * 0.01) }
+      if (k === at(2) - 2) { M.poseOff(ctx, GB); hold(GB, 'crossbow') }
+      if (k >= at(2) - 2) G[GB].pitch = Math.min(0, G[GB].pitch + 7)
+      look(k)
+    })
+    // ---- L08 (S09, Grandpa's own voice): closer; he turns his head back over his right shoulder on "Lock the DOOR",
+    // a nod on "kid. They're COMING"
+    await shot('s09', -4.2, 5.6, P(0, 2, 0))
+    await line('L08', async (k, at) => {
+      if (G[GB].yaw < gate.yaw + 95) G[GB].yaw += 9
+      if (k >= at(1) && k < at(1) + 12) G[GB].pitch = Math.sin((k - at(1)) / 12 * Math.PI) * 16
+      look(k)
+    })
+    // ---- L09 (S09): "Then a HORN goes OFF" (the raid horn, far off up the road): he turns back to the road; "And
+    // Grandpa SMILES": he looks round at me and nods; "He must LOVE the RAIDS": he shoulders the crossbow
+    await line('L09', async (k, at) => {
+      const s = G[GB]
+      if (k === at(1) - 2) sound('event.raid.horn', 1.2, 1)
+      if (k >= at(1) && k < at(2)) s.yaw = Math.max(gate.yaw, s.yaw - 10)
+      if (k >= at(2) && k < at(3)) { s.yaw = Math.min(gate.yaw + 100, s.yaw + 12); s.pitch = Math.sin((k - at(2)) / 10 * Math.PI) * 10 }
+      if (k === at(3) + 2) swing(GB)
+      if (k >= at(3) + 4) s.yaw = Math.max(gate.yaw, s.yaw - 8)
       look(k)
     })
 
-    say(`/setblock ${X - 9} ${F + 3} ${Z - 13} air`)
-    // ---- L11 (S11): the final night, the yard: Grandpa crouched against his door frame, the bottle undrunk in his
-    // slack hand; it leaves his hand on "FIGHT"
+    // ---- L10 (S11): the final night, the yard: Grandpa slumped on his bench by the door, the bottle undrunk in his
+    // slack hand; it leaves his hand on "to FIGHT"
     put(GA, -7.5, -7.72, 15, 50, 1.5, [3, 14, 7]); hold(GA, 'ominous_bottle')
     await bot.waitForTicks(3)
     await shot('s11', -24, -4.5, P(-6, 2, -4.5), TIMES.S11)
     M.pose(ctx, GA, 'sit')
-    M.poseOff(ctx, GB); park(GB)
-    await line('L11', async (k, at) => {
+    park(GB)
+    await line('L10', async (k, at) => {
       if (k === at(1)) G[GA].pitch = 62   // "too TIRED"
-      // Grandpa's bottle is mine now, in place of the bread: one slot (ctx.hotbar clears and refills all 9 over ~1 s, which ran
-      // into L12's first-person frames); the harness records the slot change for the HUD
+      // Grandpa's bottle is mine now, in place of the bread: one slot (the harness records the slot change for the HUD)
       if (k === at(2)) say('/item replace entity @s hotbar.0 with ominous_bottle')
       if (k === at(2)) { hold(GA, 'air'); G[GA].pitch = 66; sound('item.armor.equip_generic', 0.4, 1.3) }
       look(k)
     })
 
-    // ---- L12 (S12): first person, at the open gate, the bottle in my hand: the drink on "drank"; "had to FIGHT"
+    // ---- L11 (S12): first person, at the open gate, the bottle in my hand: the drink on "drank"; "had to FIGHT"
     // over the empty hand. Then S13 (the hold): the horn, and they're coming up the road
     await bot.waitForTicks(4)
     K.shot('pov')
@@ -540,7 +534,7 @@ module.exports = {
       if (k >= E + 16) K.turnTo(from, P(me.x + 10 * Math.cos(aim), 2.3, me.z + 10 * Math.sin(aim)), Math.min(1, (k - E - 16) / 16))
       look(k)
     }
-    await line('L12', async (k, at, n) => { N12 = n; AT12 = at; await scene12(k, at, n) })
+    await line('L11', async (k, at, n) => { N12 = n; AT12 = at; await scene12(k, at, n) })
     for (let k = N12; k < N12 + 2 + RISE + AFTERBAR; k++) { await scene12(k, AT12, N12); await bot.waitForTicks(1); K._clock++ }
     ctx.mark('story_end')
     for (const s of Object.values(G)) s.on = false

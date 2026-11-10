@@ -2,7 +2,7 @@
   "name": "thirty_one_raids",
   "stunt": "story_thirty_one_raids",
   "version": 2,
-  "revision": "vNext r2 (2026-11-10, owner: 'Rewriting the stories is fine. Whatever you think is best', relayed by the lead): stories/thirty_one_raids/script_vNext.md adopted: new line 1, the raid litany, OMINOUS bottles / his LUCK, one narrator for every line, no closing line (ends on the horn and the Raid bar), continuous beat takes",
+  "revision": "vNext r-cast (2026-11-10, main stories/thirty_one_raids/script_vNext.md 'r-cast': the writers' r-ear lines with Grandpa's 'Lock the DOOR, kid. They're COMING.' in his own voice (elder, Charon); spoken stress on one word per sentence (lines[].stress); the house narrator (voices/cast.json narrator: Leda, the sleepover direction, 3.8-flash-lite, rubberband 1.1 / +1); owner-approved rewrite r69e712)",
   "caption": "why do raiders always follow grandpa home 😶",
   "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; the night Grandpa comes home too tired to fight, the boy drinks Grandpa's 'courage' himself.",
   "question": "why tf do raids start every night grandpa comes home?",
@@ -14,7 +14,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "pov (Buh, never seen from outside in this story; the narrator voices every line, Grandpa's quotes included)",
+      "on_screen": "pov (Buh); the narrator voices every line but Grandpa's own L08",
       "name": "Buh"
     },
     "Grandpa": {
@@ -22,7 +22,7 @@
       "ref": "elder",
       "name": "Grandpa",
       "color": "#E0B44C",
-      "on_screen": "a player actor with the default `zuri` skin (no default skin looks old, accepted: his age is in the voice, the slow walk and the crouched slump); one main-hand item at a time (the engine draws only the main hand): a totem (S01), the crossbow (S02, S05, S06, S09, S14), an ominous bottle (S07, S08, S11); in S10-S11 the crossbow hangs in an item frame by his door; silent in vNext (the narrator quotes him)",
+      "on_screen": "a player actor with the default `zuri` skin (no default skin looks old, accepted: his age is in the voice, the slow walk and the crouched slump); one main-hand item at a time (the engine draws only the main hand): a totem (S01), the crossbow (S02, S05, S06, S09, S14), an ominous bottle (S07, S08, S11); in S10-S11 the crossbow hangs in an item frame by his door; speaks L08 in his own voice (elder, Charon)",
       "actors": [
         "Grandpa",
         "Gramps"
@@ -76,15 +76,17 @@
       "shot": "S01",
       "look": {
         "what": "actor:Grandpa"
-      }
+      },
+      "stress": "THIRTY-ONE, HOME"
     },
     {
       "id": "L02",
       "who": "N",
-      "text": "Raid ONE? / He WON. / Raid TWELVE? / He WON. / Raid TWENTY? / He WON. / Raid THIRTY-ONE? / He won ALONE.",
+      "text": "Raid ONE, / raid TWELVE, / raid THIRTY-ONE. / He WON / every ONE.",
       "beat": "A",
       "shot": "S02",
-      "look": "actor:Gramps"
+      "look": false,
+      "stress": "THIRTY-ONE, ONE"
     },
     {
       "id": "L03",
@@ -92,82 +94,95 @@
       "text": "He SAYS / they FOLLOW him. / They KNOW / who BEATS them.",
       "beat": "A",
       "shot": "S03",
-      "look": "actor:Grandpa"
+      "look": {
+        "what": "actor:Grandpa"
+      },
+      "stress": "FOLLOW, BEATS"
     },
     {
       "id": "L04",
       "who": "N",
-      "text": "THIRTY-ONE totems / on his WALL. / And ONE frame / still EMPTY.",
+      "text": "So the VILLAGERS / throw him BREAD.",
       "beat": "A",
-      "shot": "S04W",
-      "look": false
+      "shot": "S05",
+      "look": {
+        "what": "actor:Gramps",
+        "word": "VILLAGERS"
+      },
+      "stress": "BREAD"
     },
     {
       "id": "L05",
       "who": "N",
-      "text": "When he WALKS / by, the VILLAGERS / throw him BREAD.",
+      "text": "Since GRANDMA died, / he's always ALONE. / But RAID nights? / EVERYONE cheers / for HIM.",
       "beat": "A",
-      "shot": "S05",
-      "look": "actor:Gramps"
+      "shot": "S10",
+      "look": {
+        "what": "actor:Grandpa"
+      },
+      "stress": "ALONE, RAID, HIM"
     },
     {
       "id": "L06",
       "who": "N",
-      "text": "He HUNTS / at the TOWER / on the HILL.",
-      "beat": "A",
+      "text": "Every WEEK, / he HUNTS / at the TOWER. / He brings BACK / OMINOUS bottles. / OMINOUS means / LUCKY, I think. / He CALLS them / his LUCK.",
+      "beat": "B",
       "shot": "S06",
-      "look": "actor:Grandpa"
+      "look": false,
+      "stress": "TOWER, OMINOUS, LUCKY, LUCK"
     },
     {
       "id": "L07",
       "who": "N",
-      "text": "He brings BACK / OMINOUS bottles. / A whole CHEST.",
+      "text": "He DRINKS one / at the GATE. / Then he SAYS:",
       "beat": "B",
-      "shot": "S07",
+      "shot": "S08",
       "look": {
-        "what": "actor:Gramps",
-        "word": "BACK"
-      }
+        "what": "actor:Gramps"
+      },
+      "stress": "GATE"
     },
     {
       "id": "L08",
-      "who": "N",
-      "text": "He CALLS them / his LUCK. / He DRINKS it / at the GATE.",
-      "beat": "B",
-      "shot": "S08",
-      "look": "actor:Grandpa"
+      "who": "Grandpa",
+      "text": "Lock the DOOR, / kid. They're COMING.",
+      "beat": "G",
+      "shot": "S09",
+      "look": {
+        "what": "actor:Gramps"
+      },
+      "stress": "DOOR, COMING"
     },
     {
       "id": "L09",
       "who": "N",
-      "text": "Then he SAYS, / lock the DOOR, / kid, they're COMING.",
-      "beat": "B",
+      "text": "Then a HORN / goes OFF. / And Grandpa SMILES. / He must LOVE / the RAIDS.",
+      "beat": "C",
       "shot": "S09",
-      "look": "actor:Grandpa"
+      "look": {
+        "what": "actor:Gramps"
+      },
+      "stress": "OFF, SMILES, RAIDS"
     },
     {
       "id": "L10",
       "who": "N",
-      "text": "Since GRANDMA died, / it's the ONLY / time anyone's GLAD / to SEE him.",
-      "beat": "B",
-      "shot": "S10",
-      "look": "actor:Gramps"
+      "text": "Tonight he CAME / home too TIRED / to FIGHT.",
+      "beat": "C",
+      "shot": "S11",
+      "look": {
+        "what": "actor:Grandpa"
+      },
+      "stress": "FIGHT"
     },
     {
       "id": "L11",
       "who": "N",
-      "text": "Tonight he CAME / home too TIRED / to FIGHT.",
-      "beat": "B",
-      "shot": "S11",
-      "look": "actor:Grandpa"
-    },
-    {
-      "id": "L12",
-      "who": "N",
       "text": "So I DRANK / his LUCK. / SOMEBODY had / to FIGHT.",
-      "beat": "B",
+      "beat": "C",
       "shot": "S12",
-      "look": false
+      "look": false,
+      "stress": "LUCK, FIGHT"
     }
   ],
   "shots": [
@@ -189,7 +204,7 @@
     },
     {
       "id": "S03",
-      "line": "L03",
+      "line": "L02",
       "place": "grandpa_yard",
       "size": "wide",
       "camera": "pov at the yard's west side, about (-14,-4) from the gate, looking east, still",
@@ -204,16 +219,8 @@
       "frame": "fg: the grindstone's edge; subject: Grandpa knees up, not looking up, the crossbow frame on the wall beside his door; bg: his door and the yard fence. Evening (12600)."
     },
     {
-      "id": "S04W",
-      "line": "L04",
-      "place": "grandpa_house",
-      "size": "ms",
-      "camera": "pov inside, by the table, facing the north wall; on 'ONE frame' the eyes ease right and down to the empty frame",
-      "frame": "the totem wall: 31 totems in their frames (the 31st hung this morning in S01); on 'And ONE frame' the look settles on the empty 32nd frame (bottom row, right), lit by the lantern under it. Evening (12600), Grandpa out in the yard."
-    },
-    {
       "id": "S05",
-      "line": "L05",
+      "line": "L04",
       "place": "square",
       "size": "wide",
       "camera": "pov at the edge of the square, slow push as Grandpa crosses left to right",
@@ -229,7 +236,7 @@
     },
     {
       "id": "S07",
-      "line": "L07",
+      "line": "L06",
       "place": "grandpa_house",
       "size": "ms",
       "camera": "pov beside Grandpa at the open chest",
@@ -237,7 +244,7 @@
     },
     {
       "id": "S08",
-      "line": "L08",
+      "line": "L07",
       "place": "gate",
       "size": "wide",
       "camera": "pov 4 blocks behind Grandpa and 2 blocks south, inside the gate, at dusk (the 180-degree side the bible uses)",
@@ -245,7 +252,7 @@
     },
     {
       "id": "S09",
-      "line": "L09",
+      "line": "L08",
       "place": "gate",
       "size": "full",
       "camera": "pov 3.5 blocks behind him, south of the line; Grandpa turns his head over his right shoulder",
@@ -253,7 +260,7 @@
     },
     {
       "id": "S10",
-      "line": "L10",
+      "line": "L05",
       "place": "grandpa_house",
       "size": "full",
       "camera": "pov from the room's south-east corner, still, then a slow drift",
@@ -261,7 +268,7 @@
     },
     {
       "id": "S11",
-      "line": "L11",
+      "line": "L10",
       "place": "grandpa_yard",
       "size": "wide",
       "camera": "pov in the yard, 7 blocks from his door, a slow push",
@@ -269,7 +276,7 @@
     },
     {
       "id": "S12",
-      "line": "L12",
+      "line": "L11",
       "place": "gate",
       "size": "full",
       "camera": "pov at the open gate, the bottle in hand, raising it to drink",
@@ -277,7 +284,7 @@
     },
     {
       "id": "S13",
-      "line": "L12",
+      "line": "L11",
       "place": "gate",
       "size": "wide",
       "camera": "a camera shot over the boy's right shoulder through the gate, up the road (not a second POV after S12's drink), a slow push",
@@ -285,7 +292,7 @@
     },
     {
       "id": "S14",
-      "line": "L12",
+      "line": "L11",
       "place": "gate",
       "size": "ms",
       "camera": "the same camera shot: the boy steps forward; Grandpa steps in at frame right, crossbow in hand, and turns his head to the boy",
@@ -297,7 +304,7 @@
   "payoff_note": "the payoff: the raid horn and the Raid bar rising over the gate after the drink (no closing line); the cut 1.0 s after the bar",
   "voice_takes": "beat",
   "reveal": {
-    "after": "L12",
+    "after": "L11",
     "hold": 2.1,
     "note": "S13: the horn on the cut, the raiders up the road, the Raid bar fills over 1 s (the payoff mark `raidbar`, a punch); S14: Grandpa steps up and turns to see him; the cut 1.0 s after the bar"
   },
