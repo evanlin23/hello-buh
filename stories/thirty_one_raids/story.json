@@ -116,7 +116,7 @@
       "shot": "S01",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.08
+      "after": -0.33
     },
     {
       "id": "L02",
@@ -126,7 +126,7 @@
       "shot": "S02",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": -0.04
+      "after": -0.36
     },
     {
       "id": "L03",
@@ -136,7 +136,7 @@
       "shot": "S03",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.05
+      "after": -0.43
     },
     {
       "id": "L04",
@@ -146,7 +146,7 @@
       "shot": "S04",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": -0.08
+      "after": -0.29
     },
     {
       "id": "L05",
@@ -156,7 +156,7 @@
       "shot": "S05",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": -0.08
+      "after": -0.35
     },
     {
       "id": "L06",
@@ -166,7 +166,7 @@
       "shot": "S06",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.08
+      "after": -0.26
     },
     {
       "id": "L07",
@@ -179,7 +179,7 @@
         "word": "BOTTLES"
       },
       "request": "p1",
-      "after": 0.07
+      "after": -0.46
     },
     {
       "id": "L08",
@@ -189,7 +189,7 @@
       "shot": "S08",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.07
+      "after": -0.27
     },
     {
       "id": "L09",
@@ -200,7 +200,7 @@
       "shot": "S09",
       "look": "actor:Grandpa",
       "request": "g1",
-      "after": -0.12
+      "after": -0.39
     },
     {
       "id": "L10",
@@ -211,7 +211,7 @@
       "shot": "S10",
       "look": "actor:Gramps",
       "request": "p1",
-      "after": -0.12
+      "after": -0.28
     },
     {
       "id": "L11",
@@ -222,7 +222,7 @@
       "shot": "S11",
       "look": "actor:Grandpa",
       "request": "p1",
-      "after": 0.06
+      "after": -0.17
     },
     {
       "id": "L12",
