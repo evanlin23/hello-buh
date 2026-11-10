@@ -60,6 +60,46 @@ ending first, then make its last spoken words the hook.
 | runaway (ours, the bar) | Who Am I | how everyone treats me | at 65 %: the bomb | the game reveals it, then a loop question |
 | light_sleeper (ours, the bar) | Town Rule | 9,000 carpets | at 44 %: the shriek | the warden (cut on it) |
 
+
+## 2b. More verified transcripts (sozai.app, timestamped; structure only)
+
+YouTube and TikTok text were walled. sozai.app hosts timestamped Short transcripts, and its robots.txt allows
+crawlers. It shows no YouTube view counts. None of these is a Roblox "In this town" story; they're the closest the
+second pass could get.
+
+| Short | channel, length | hook | escalation | turn (% of runtime) | ending |
+|---|---|---|---|---|---|
+| [Everyone Has A Window On Their Back](https://sozai.app/transcript/everyone-has-a-window-on-their-back/) | GreenBroRants, 1:32 | "In this town" rule | consequence, then a rule of three of odd behaviour | 62 % glimpse (a rapid image list), 76 % widens to everyone | stinger, no loop |
+| [This Parrot Was Worse Than a Monster](https://sozai.app/transcript/parrot-worse-than-monster/) | Movies Shelter, 1:08 | a rule with a counter | bargain, then a plea | 56 %, 66 %, 82 % (three turns) | **cut mid-sentence** ("But suddenly,"), verified |
+| [I Became Natural Survival Expert](https://sozai.app/transcript/became-natural-survival-expert-roblox/) | Racket Hour, 1:02, Roblox rant | a relatable rule plus a 2-second clock | choices in a rule of three, then a frozen pose | 55 % complication, 68 % false relief | an identity tag, cut a word short |
+| [I Found the Loneliest Mob in Minecraft](https://sozai.app/transcript/loneliest-mob-minecraft/) | UltraHound, 0:41 | a question | three wrong answers knocked down | 54 % a bait interrupt | answer at 78 %, then a joke |
+| [Minecraft, but I'm ONLY telling LIES!](https://sozai.app/transcript/minecraft-only-telling-lies/) | Mike Craft, 0:35 | "Minecraft, but..." | a list of gags | none | cut mid-interaction |
+| [Fall Into The Void vs 1000 IQ Ideas From Mobs](https://sozai.app/transcript/fall-void-vs-1000-iq-mobs/) | SlippyCat, 1:01 | an impossible goal | a try-fail ladder (8 mobs) | 80 % success | bait |
+| [The Smartest Glasses Ever Made](https://sozai.app/transcript/smartest-glasses-ever-made/) | Movies Shelter, 1:02 | in medias res | three gadget mishaps | 42 % backfire | a series hook |
+| [Kids Drawings with DISTURBING Backstories](https://sozai.app/transcript/kids-drawings-disturbing-backstories/) | Heidi Wong, 0:39 | "three disturbing..." | three items, each darker | 67 % | a call to action |
+
+**What recurs, and how it adds to section 3:**
+- **Turns land at 55-82 %.** Two have two or three turns, each widening the stakes (one person, then everyone).
+- **Mid-sentence cuts are real and deliberate** ("But suddenly,"; two 3:00 recaps end mid-sentence exactly at the
+  limit).
+- **The rule of three** is in almost every one.
+
+Two more templates appear, but **they don't suit a mystery**. We note them and don't use them:
+- the **Try-Fail Ladder:** each attempt fails bigger; success at ~70 %, backfire at ~85 %;
+- the **Withheld Answer with a bait interrupt:** "and it is..." then like-bait at 55 %.
+
+New to us, and worth stealing for T2 and T4: the **widening turn**. After the reveal, one beat shows it isn't just
+me, it's everyone (or the reverse). It raises the stakes with no new setup. Use it only if it lands inside the
+1-s cut.
+
+## 2c. The links to ask the owner for (mp4s)
+We couldn't get audio or full text for the top examples. These five would let us time them beat by beat:
+1. https://www.youtube.com/shorts/nOiaaf60W0U (Tyler, "Every Kid He Takes Home", 7.45M, 26 s: the Sinister Reread)
+2. https://www.youtube.com/shorts/crvPRFMpKLA (Gneef, "In This Town, You Are Not Allowed To Speak", 4.66M: the Town Rule)
+3. https://www.youtube.com/shorts/ae02q5cgwts (Gneef, "Uh Oh", 20M: the channel's top Short)
+4. https://www.youtube.com/shorts/S_MmOSpfopQ (Bloopo, "He Escapes Prison!", 10M: a third-person narrated arc)
+5. https://www.youtube.com/shorts/ypFSN5k8tBg (ItsBeans, "Every person in this town has a copy", 2.67M: the rule plus a swap)
+
 ## 3. The templates
 
 Every template gets the same five fixed parts:
