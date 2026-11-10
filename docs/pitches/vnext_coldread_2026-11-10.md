@@ -39,3 +39,16 @@ feels is emotional (the owner left; Grandpa wants to be needed), not mechanical.
 stressed, so at speed the stress becomes "a flat drumbeat". The words that carry the story (TRADING, LUCK, SIT) don't
 stand out. That's for the lead and owner to rule on (STANDARDS 6.1). One option: keep the caption colour on one word
 per chunk, but direct the *spoken* stress only on each sentence's last key word.
+
+## Cold listener: r-cast (character voices plus spoken stress, before its fixes)
+| story | followed? | score | caught on | fix applied |
+|---|---|---|---|---|
+| good_boy | yes | 8 | "Then he SAID" twice in a row; "So this morning" (So doesn't follow) | "He TURNED / to ME." before "Sit, BOY."; "So" dropped |
+| dog_hill | mostly | 7 | "He says only one voice..." (who is he?); "Somebody told him be right back" (crowded) | Grandpa says it himself: "Only ONE voice / gets him UP."; then "Somebody PROMISED / to come BACK." |
+| light_sleeper | mostly | 7 | the stress on BEFORE, not DANCED; "Mom SAYS" took the stress | stress overrides (DANCED); lead-ins ending ":" are never stressed |
+| gold_for_the_portal | mostly | 7 | "blue stripe" is hard to hold on audio; "piglins won't touch you" vs "never came back" | kept: the helmet is on screen at the reveal, and the snag is the mystery itself |
+| thirty_one_raids | mostly | 6 | "Raid ONE? He WON." four times (the worst drumbeat); FIGHT stressed three times; "ominous" unexplained | "Raid ONE, raid TWELVE, raid THIRTY-ONE. He WON every ONE."; "He must LOVE the RAIDS."; the kid's misread "OMINOUS means LUCKY, I think." |
+
+**Spoken stress, revised:** one stress per sentence on its key content word. That's the last key word unless an
+override names the word that matters (DANCED, PLENTY, PROMISED, ALIVE, SORRY, TRADER). Lead-ins that end in ":" are
+never stressed. The listener's note: always stressing the last word becomes its own drumbeat.
