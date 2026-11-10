@@ -361,8 +361,7 @@ module.exports = {
 
     // ---- L12 (S12): first person, at the open gate, the bottle in my hand: the drink on "drank"; "had to FIGHT"
     // over the empty hand. Then S13 (the hold): the horn, and they're coming up the road
-    say('/clear @s'); await bot.waitForTicks(2)
-    say('/item replace entity @s hotbar.0 with ominous_bottle'); bot.setQuickBarSlot(0)
+    say('/item replace entity @s hotbar.0 with ominous_bottle'); bot.setQuickBarSlot(0)   // Grandpa's bottle, in place of the bread (story.json hotbar_note)
     await bot.waitForTicks(4)
     K.shot('pov')
     const roadAim = P(44, 12, 40)   // up at the tower, where the bottles come from

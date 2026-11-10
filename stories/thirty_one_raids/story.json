@@ -300,5 +300,35 @@
     "after": "L12",
     "hold": 2.1,
     "note": "S13: the horn on the cut, the raiders up the road, the Raid bar fills over 1 s (the payoff mark `raidbar`, a punch); S14: Grandpa steps up and turns to see him; the cut 1.0 s after the bar"
-  }
+  },
+  "hotbar": [
+    [
+      "bread",
+      9
+    ],
+    "wooden_sword",
+    [
+      "torch",
+      32
+    ],
+    [
+      "wheat_seeds",
+      23
+    ],
+    "shears",
+    [
+      "lantern",
+      4
+    ],
+    "milk_bucket",
+    [
+      "cake",
+      1
+    ],
+    [
+      "egg",
+      64
+    ]
+  ],
+  "hotbar_note": "the boy's bar (owner r:rdc3c4c): slot 1 selected (the bread the village throws Grandpa), then a kid's tools; milk, a cake and 64 eggs are the ridiculous ones. The one change is the story's: at L12 Grandpa's ominous bottle (L11, 'FIGHT') is in slot 1 in place of the bread. No totems, crossbow or bottles before L12: those are Grandpa's."
 }
