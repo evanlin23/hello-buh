@@ -1,0 +1,54 @@
+# Shared runner setup for the render workflows (render-slices.yml): Java (build_assets runs the server jar's data
+# generator), node + npm ci, ffmpeg, fonts, pillow/numpy, Chromium for render.js, and the game files (client jar,
+# asset index, the renderer's extracted assets), cached by version and asset-script hash. `extra-cache: true` also
+# caches what the edit pulls lazily (sounds, emoji, Mixkit sfx).
+name: render-setup
+description: Java, node, ffmpeg, Chromium and the cached Minecraft assets for render.js / audio.py / edit.py
+inputs:
+  extra-cache:
+    description: also cache work/sounds, work/emoji and sfx/mixkit (the audio + edit job)
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-java@v4
+      with: { distribution: temurin, java-version: "21" }
+    - uses: actions/setup-node@v4
+      with: { node-version: "22", cache: npm }
+    - name: system deps
+      shell: bash
+      run: |
+        sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-inter
+        pip install -q pillow==12.3.0 numpy==2.5.3
+    - name: cache game files
+      if: inputs.extra-cache != 'true'
+      uses: actions/cache@v4
+      with:
+        path: |
+          work/server/server.jar
+          work/client
+          work/assets
+        key: mc-assets-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js') }}
+    - name: cache game files, sounds and sfx
+      if: inputs.extra-cache == 'true'
+      uses: actions/cache@v4
+      with:
+        path: |
+          work/server/server.jar
+          work/client
+          work/assets
+          work/sounds
+          work/emoji
+          sfx/mixkit
+        key: mc-edit-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js', 'sfx/mixkit/manifest.json') }}
+        restore-keys: mc-assets-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js') }}
+    - shell: bash
+      run: npm ci --no-audit --no-fund
+    - shell: bash
+      run: npx playwright install --with-deps chromium
+    - name: game assets
+      shell: bash
+      run: |
+        python3 scripts/fetch.py
+        VER=$(grep '^MC_VERSION=' versions.env | cut -d= -f2)
+        [ -f "work/assets/$VER/resolved.json" ] || { python3 renderer/build_assets.py "$VER" && node renderer/prepare.js "$VER"; }

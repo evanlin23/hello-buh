@@ -4,6 +4,7 @@
 #   ./run.sh                       # water bucket clutch, default caption
 #   STUNT=pearl_clutch ./run.sh          (any stunts/<name>.js; caption/song/drop come from its `edit`)
 #   CAPTION="..." SONG=songs/x.mp3 ./run.sh   (overrides)
+#   RECORD_ONLY=1 STUNT=x ./run.sh       (just work/x.rec.json: render it on Actions with scripts/render_on_actions.sh x)
 set -euo pipefail
 cd "$(dirname "$0")"
 STUNT=${STUNT:-water_clutch}
@@ -50,6 +51,8 @@ for t in $(seq 1 "$TRIES"); do
 done
 [ "$ok" = 1 ] || { echo "stunt failed $TRIES times"; exit 1; }
 stop_server; trap - EXIT
+# RECORD_ONLY=1: stop at the recording (render it on Actions: scripts/render_on_actions.sh, docs/worker.md)
+[ "${RECORD_ONLY:-0}" = 1 ] && { echo "recorded $REC"; exit 0; }
 
 # --- render, audio, edit ---
 rm -rf "work/$NAME.frames"

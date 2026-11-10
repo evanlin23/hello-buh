@@ -1,0 +1,127 @@
+# Renders a recording made in a session (work/<name>.rec.json) on GitHub's runners in parallel slices: ~12 min for a
+# 60 s Short instead of ~25 in one container, and immune to the container's hourly restarts. docs/worker.md
+# "Render on GitHub Actions".
+#
+# Queue with scripts/render_on_actions.sh <name> [stunt]: it commits the gzipped recording (renders/slices/<name>.rec.json.gz)
+# and the job (renders/slices.json) on top of your HEAD, with your uncommitted stunts/, lib/ and stories/, and
+# force-pushes that to the branch render/<name>. The push starts this workflow (push triggers work from any branch;
+# the Run-workflow button needs this file on main). Jobs:
+#   plan     reads the job and counts the frames
+#   slice    N runners (default 12) each render one contiguous range of frames with render.js FRAMES= and keep it
+#            as a lossless RGB video (artifact seg-<i>)
+#   finish   decodes the slices back into work/<name>.frames/, then audio + replay/slow-mo + edit
+#            (scripts/finish_render.sh), uploads out/<name>.mp4 (artifact "short") and commits it to the render
+#            branch as renders/out/<name>.mp4 with renders/result.json, so `render_on_actions.sh --fetch <name>`
+#            gets it back with plain git (no gh token needed)
+#   failed   on any failure: renders/result.json says so, with the run's URL
+name: render-slices
+on:
+  push:
+    branches-ignore: [main, videos]
+    paths: ['renders/slices.json']
+  workflow_dispatch:
+    inputs:
+      name:
+        description: recording name (renders/slices/<name>.rec.json.gz on this ref); empty = from renders/slices.json
+        default: ""
+      stunt:
+        description: stunt module (stunts/<stunt>.js); empty = from renders/slices.json, else the name
+        default: ""
+      slices:
+        description: number of parallel slices; empty = from renders/slices.json, else 12
+        default: ""
+concurrency:
+  group: render-slices-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      name: ${{ steps.plan.outputs.name }}
+      stunt: ${{ steps.plan.outputs.stunt }}
+      fps: ${{ steps.plan.outputs.fps }}
+      frames: ${{ steps.plan.outputs.frames }}
+      n: ${{ steps.plan.outputs.n }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: plan
+        id: plan
+        env: { IN_NAME: "${{ inputs.name }}", IN_STUNT: "${{ inputs.stunt }}", IN_SLICES: "${{ inputs.slices }}" }
+        run: python3 scripts/render_slices.py plan >> "$GITHUB_OUTPUT"
+
+  slice:
+    needs: plan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: true
+      matrix:
+        i: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    env:
+      NAME: ${{ needs.plan.outputs.name }}
+      FPS: ${{ needs.plan.outputs.fps }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/render-setup
+      - name: render slice ${{ matrix.i }} of ${{ needs.plan.outputs.n }}
+        run: |
+          gunzip -c "renders/slices/$NAME.rec.json.gz" > "work/$NAME.rec.json"
+          python3 scripts/render_slices.py slice ${{ matrix.i }} ${{ needs.plan.outputs.n }} ${{ needs.plan.outputs.frames }}
+      - uses: actions/upload-artifact@v4
+        with: { name: "seg-${{ matrix.i }}", path: "work/segs/*.mkv", retention-days: 3, compression-level: 0, if-no-files-found: error }
+
+  finish:
+    needs: [plan, slice]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      NAME: ${{ needs.plan.outputs.name }}
+      STUNT: ${{ needs.plan.outputs.stunt }}
+      FPS: ${{ needs.plan.outputs.fps }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/render-setup
+        with: { extra-cache: "true" }
+      - name: sound effects
+        run: python3 scripts/fetch_sfx.py || echo "fetch_sfx failed, the edit uses its fallbacks"
+      - uses: actions/download-artifact@v4
+        with: { pattern: "seg-*", path: work/segs, merge-multiple: true }
+      - name: join the slices
+        run: |
+          gunzip -c "renders/slices/$NAME.rec.json.gz" > "work/$NAME.rec.json"
+          python3 scripts/render_slices.py join ${{ needs.plan.outputs.frames }}
+      - name: audio, replay, edit
+        run: scripts/finish_render.sh "$NAME" "$STUNT"
+      - uses: actions/upload-artifact@v4
+        with: { name: short, path: "out/${{ needs.plan.outputs.name }}.mp4", retention-days: 14, if-no-files-found: error }
+      - name: commit the Short to the render branch
+        if: github.ref_type == 'branch' && github.ref_name != 'main'
+        run: |
+          mkdir -p renders/out
+          cp "out/$NAME.mp4" "renders/out/$NAME.mp4"
+          python3 scripts/render_slices.py result done "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          git config user.name github-actions[bot]
+          git config user.email 41898299+github-actions[bot]@users.noreply.github.com
+          git add -f renders/out renders/result.json
+          git commit -qm "render-slices: out/$NAME.mp4 [skip ci]"
+          git push origin "HEAD:$GITHUB_REF_NAME" || echo "the branch moved on (re-queued?): the Short is still the 'short' artifact"
+
+  failed:
+    needs: [plan, slice, finish]
+    if: failure() && github.ref_type == 'branch' && github.ref_name != 'main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: record the failure on the render branch
+        run: |
+          python3 scripts/render_slices.py result failed "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          git config user.name github-actions[bot]
+          git config user.email 41898299+github-actions[bot]@users.noreply.github.com
+          git add -f renders/result.json
+          git commit -qm "render-slices: failed [skip ci]"
+          git push origin "HEAD:$GITHUB_REF_NAME" || true
