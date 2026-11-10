@@ -1,0 +1,256 @@
+{
+  "name": "lantern_bay",
+  "stunt": "story_lantern_bay",
+  "version": 2,
+  "revision": "r1 (2026-11-10): rebuilt on the true rule (critic pitch #8 fix): drowned only spawn in dark water, so a lit path through the deep is safe to swim; nobody turns into a drowned.",
+  "caption": "why is grandma lighting the bottom of the sea 🏮",
+  "logline": "Every night a boy's grandma swims out over a road of lanterns on the bay floor and adds one more; tonight he places the last one, and its light lands on the shipwreck where Grandpa disappeared, and on a chest he left there for her.",
+  "question": "why tf are there 300 lanterns on the bottom of the sea?",
+  "premise": "A line of 300 lanterns glows on the floor of a bay at night, running straight out from the dock. Every night, when she thinks the boy is asleep, Grandma swims out over it, dives at the end, puts down one more and sprints home. She says it's a road (he thinks: for fish). He once swam to the end at noon: past the last lantern the deep water is pitch black even by day, with tridents moving in it, and nothing is ever in the lit part (lucky water, he thinks). Grandpa used to dive at the old shipwreck out there; one night he didn't come back. His boat, the ROSA, never came back either.",
+  "twist": "The lanterns are a road to Grandpa. Drowned spawn only in dark water (vanilla: they need block light 0; 13 blocks down, the sky light is 2 even at noon, too dim to stop a spawn), so the only safe way across the deep bay is to light the floor ahead of you, one lantern at the edge of the dark each night, out of reach of the drowned already waiting in it. Tonight the line reaches the wreck. The boy places the last lantern, the light lands on the shipwreck's deck and on a chest; he opens it, and the chest screen's title says FOR ROSA (a renamed chest), with one Heart of the Sea inside. Rosa is Grandma (and the empty mooring's boat). Grandpa hid her present in the one place she would never look; she spent 300 nights building a road to it.",
+  "key_color": "#FFC24B",
+  "gap": 0.25,
+  "mood": ["eerie", "sad"],
+  "payoff": "L13",
+  "look": { "time": "night", "fog": false },
+  "weather": "clear",
+  "world": {
+    "place": "a fishing bay on the coast south of the carpeted village of Light Sleeper (the village's hill is the far ridge east of the bay)",
+    "easter_egg": "the village nitwit in his green coat (story_nitwit), standing knee-deep in the shallows at the foot of the dock, staring at nothing, in S04 (the morning dock shot), frame right in the middle ground. Provisional: re-check against docs/world/canon.md when it lands."
+  },
+  "voice": { "engine": "gemini", "model_hint": "gemini-3.8-flash-lite-tts (the narrator's recipe model, voices/recipes/pip.md); one model per character for the whole story" },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "ref": "narrator",
+      "color": "#FFFFFF",
+      "on_screen": "Milo as a kid (default Steve skin). POV for S02, S04, S05, S06, S10b, S12, S13 (hotbar: empty, then one lantern from S09); seen from outside only small: S09 (beside Grandma on the dock) and S10 (swimming behind her at the surface)."
+    },
+    "Grandma": {
+      "role": "character",
+      "name": "Grandma",
+      "voice": "Gacrux",
+      "color": "#8FE3D0",
+      "color_why": "sea-glass green: the bay, the water she swims every night; clearly not the narrator's white or the lantern-gold key words",
+      "profile": "Grandma: a woman in her seventies, warm, low and steady, a little rough, few words; full volume, never whispery or breathy",
+      "on_screen": "a player actor with the default `noor` skin (no default skin looks old: her age is in the voice and the slow walk); a lantern in her main hand in S01-S03 and S09; no armor; speaks one line, on screen (S11)",
+      "note": "Not in voices/cast.json yet. Gacrux is the library's spare for 'a grandmother' (_spares). Add her to the library as `grandma` if she recurs."
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": ["N"],
+      "lines": ["L01", "L02", "L03", "L04", "L05", "L06"],
+      "direction": "A kid tells a friend about his grandma and the lanterns in the bay. Narrator: A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft. Full volume. A short breath between sentences."
+    },
+    {
+      "id": "r2",
+      "speakers": ["N"],
+      "lines": ["L07", "L08", "L09", "L10", "L12", "L13"],
+      "direction": "A kid tells a friend about his grandma and the lanterns in the bay. Narrator: A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft. Full volume. A short breath between sentences."
+    },
+    {
+      "id": "r3",
+      "speakers": ["Grandma"],
+      "lines": ["L11"],
+      "direction": "Deep water at night, a lantern in a boy's hand. Grandma: a woman in her seventies, warm, low and steady, a little rough, few words; full volume, never whispery or breathy."
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "There are / THREE HUNDRED / lanterns / on the bottom / of our BAY, / and Grandma / adds ONE / every NIGHT.",
+      "say": "There are three hundred lanterns on the bottom of our bay, and Grandma adds one every night.",
+      "direction": "all in one quick breath, bright and amazed, landing on the last word",
+      "shot": "S01",
+      "look": [{ "what": "prop:lantern_line", "word": "LANTERNS" }, { "what": "Grandma", "word": "Grandma" }]
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "She thinks / I'm ASLEEP. / I'm NEVER asleep.",
+      "direction": "proud and cheeky, a little grin on the second sentence",
+      "shot": "S02",
+      "look": "Grandma"
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "She swims / to the END, / puts ONE more, / and SPRINTS home.",
+      "direction": "quick, picking up speed through the list, impressed by the last part",
+      "shot": "S03",
+      "look": [{ "what": "Grandma", "word": "swims" }, { "what": "prop:last_lantern", "word": "ONE" }, { "what": "Grandma", "word": "SPRINTS" }]
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "Grandma said, / \"It's a ROAD.\" / For FISH, / I think.",
+      "say": "Grandma said, \"It's a road.\" <short pause> For fish, I think.",
+      "direction": "bright, reporting it plainly, then totally sure of his own theory",
+      "shot": "S04",
+      "look": "Grandma"
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "I swam out there / ONCE, / at NOON. / Past the end, / PITCH BLACK.",
+      "direction": "excited to tell it, then a little spooked on the last two words, still full volume",
+      "shot": "S05",
+      "look": [{ "what": "prop:last_lantern", "word": "end" }, { "what": "prop:the_dark", "word": "BLACK" }]
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "With TRIDENTS / in it.",
+      "direction": "a real shiver of fear, quick, full volume",
+      "shot": "S06",
+      "look": { "what": "entity:drowned", "word": "TRIDENTS" }
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "NOTHING'S ever / in the LIT part. / LUCKY water.",
+      "say": "Nothing's ever in the lit part. Lucky water.",
+      "direction": "back to bright, shrugging it off, a happy theory",
+      "shot": "S07",
+      "look": "prop:lantern_line"
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "Grandpa / used to dive / at the old SHIPWRECK. / One night, / he didn't / come BACK.",
+      "say": "Grandpa used to dive at the old shipwreck. <short pause> One night, he didn't come back.",
+      "direction": "still quick, matter-of-fact the way kids say sad things, a small drop on the last two words",
+      "shot": "S08",
+      "look": [{ "what": "prop:mooring", "word": "Grandpa" }, { "what": "prop:lantern_line", "word": "SHIPWRECK" }]
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "Tonight / Grandma said, / \"LAST one.\" / And she took me / WITH her.",
+      "say": "Tonight Grandma said, \"Last one.\" And she took me with her.",
+      "direction": "lifting, thrilled, the best night of his life",
+      "shot": "S09",
+      "look": "Grandma"
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "We swam / the WHOLE road, / then DOVE.",
+      "direction": "fast and breathless with excitement, full volume",
+      "shot": "S10",
+      "look": [{ "what": "Grandma", "word": "swam" }, { "what": "prop:last_lantern", "word": "DOVE" }]
+    },
+    {
+      "id": "L11",
+      "who": "Grandma",
+      "text": "You put / the LAST one.",
+      "direction": "warm and steady, a gift, not an order; a small smile in it",
+      "shot": "S11",
+      "look": "Grandma"
+    },
+    {
+      "id": "L12",
+      "who": "N",
+      "text": "The light / hit the SHIPWRECK. / And a CHEST.",
+      "direction": "wonder, rising, the second sentence a discovery",
+      "shot": "S12",
+      "look": [{ "what": "prop:shipwreck", "word": "SHIPWRECK" }, { "what": "prop:rosa_chest", "word": "CHEST", "size": "ms" }]
+    },
+    {
+      "id": "L13",
+      "who": "N",
+      "text": "It said, / FOR ROSA. / That's GRANDMA.",
+      "say": "It said, For Rosa. <short pause> That's Grandma.",
+      "direction": "reading it slowly, then the realization, quiet surprise but still full voice, not whispered",
+      "shot": "S13",
+      "look": { "what": "prop:rosa_chest", "word": "ROSA", "size": "cu" },
+      "captions_extra": "the chest screen title FOR ROSA and the item name HEART OF THE SEA go in the caption track (the GUI title is small at phone size)"
+    }
+  ],
+  "ending": {
+    "after": "L13",
+    "beats": [
+      "S13 holds 0.6 s past 'GRANDMA' on the open chest screen (title 'For Rosa', one Heart of the Sea in the middle slot), then cut. No line after the payoff."
+    ]
+  },
+  "shots": [
+    {
+      "id": "S01", "line": "L01", "place": "bay_night", "size": "ews", "master": "wide",
+      "camera": "path: a slow crane forward and down, from 9 blocks above the shore end of the dock to 5 blocks above the dock's T-head, lookPath along the lantern line out to sea (west); already moving on frame 1",
+      "frame": "fg: the dock's rail and a dock lamp, low right; mid: Grandma at the end of the dock, a lantern in hand, small; below her the line of glowing lanterns on the bay floor starts at the dock's foot and runs straight out to sea, lantern after lantern, shrinking into the dark fog at the centre of frame; bg: the lighthouse on the headland at frame right, its lantern room lit; the night sky, stars, a half moon high left. Night (18000)."
+    },
+    {
+      "id": "S02", "line": "L02", "place": "cottage_upstairs", "size": "wide", "camera": "pov",
+      "frame": "fg: the bedroom window frame and the foot of the bed, lower edge; mid: through the window, the dock 20 blocks downhill, Grandma walking down it with her lantern, her back to us; bg: the glowing line out on the water, the lighthouse at frame right. Night (18000). The eye is just above the window sill (he's sitting up in bed)."
+    },
+    {
+      "id": "S03", "line": "L03", "place": "bay_surface to line_end", "size": "wide",
+      "camera": "path: follows Grandma from above and behind, 6 blocks up and 8 back, as she swims at the surface over the glowing line; on 'END' the camera dips under the surface (S03b)",
+      "frame": "fg: the black water surface; mid: Grandma swimming, head above water, the lantern line glowing on the floor under her, running ahead to where the glow stops; bg: dark water and the fog. Night (18000)."
+    },
+    {
+      "id": "S03b", "line": "L03", "place": "line_end", "size": "wide", "camera": "at: underwater, 7 blocks from the last lantern, side-on, a slow push",
+      "frame": "fg: seagrass on the lit floor; mid: Grandma (sprint-swim pose) at the end of the line, she places one lantern on the floor ('ONE'), the light pushes 2 blocks further into the dark; she turns and sprint-swims back toward the shore, frame left ('SPRINTS'); bg: the wall of black past the light, the faint outline of a drowned with a trident 10 blocks into it. Night (18000), depth 13."
+    },
+    {
+      "id": "S04", "line": "L04", "place": "dock_morning", "size": "ms", "camera": "pov",
+      "frame": "fg: the dock planks and the rail; mid: Grandma at the end of the dock, half turned to us, looking out over the bay; beside her the empty mooring post with a lead knot hanging slack and a sign on it reading ROSA; bg: the calm bay in morning light, the first lanterns faint on the shallow floor under the water, the lighthouse on the headland, and the village nitwit (green coat) knee-deep in the shallows frame right (the easter egg). Morning (1000)."
+    },
+    {
+      "id": "S05", "line": "L05", "place": "line_end", "size": "wide", "camera": "pov",
+      "frame": "underwater, noon, depth 13: fg: the last lanterns glowing on the sand just below the eye; mid: the line stops; past it the floor fades into a wall of black water; bg: black. The HUD shows the breath bar (air bubbles) dropping, two of ten already gone. Noon (6000): the surface far above is a faint lighter band at the top edge, the bottom is still black."
+    },
+    {
+      "id": "S06", "line": "L06", "place": "line_end", "size": "wide", "camera": "pov, a slow push of half a block toward the dark",
+      "frame": "the same view as S05: in the black, 8-10 blocks past the last lantern, two drowned drifting, their tridents catching the lantern light at the edge of the glow; neither is inside the light. Breath bar down to six. Noon (6000)."
+    },
+    {
+      "id": "S07", "line": "L07", "place": "line_mid", "size": "ews", "master": "wide",
+      "camera": "at: underwater, 3 blocks above the floor, looking back along the line toward the shore, a slow drift forward",
+      "frame": "fg: two lanterns on the sand, seagrass and kelp in their light; mid: the line of lanterns running away toward the shallows, a bright road through the deep, empty of anything; bg: on both sides of the road the black water, one drowned silhouette at the very edge of the light, frame left, outside it. Noon (6000)."
+    },
+    {
+      "id": "S08", "line": "L08", "place": "dock_dusk", "size": "wide", "camera": "at: low on the dock's T-head behind the mooring post, a slow push past it",
+      "frame": "fg: the empty mooring post, the slack lead knot and the ROSA sign, frame left; mid: the lantern line glowing under the water, running straight out from the dock to the west; bg: the sun setting over the open sea exactly where the line points, the headland and lighthouse frame right. Dusk (12600)."
+    },
+    {
+      "id": "S09", "line": "L09", "place": "dock_night", "size": "full", "camera": "two: Grandma and Milo at the end of the dock, in depth (Grandma nearer, three-quarter front; Milo a step behind)",
+      "frame": "fg: the dock lamp; mid: Grandma holding a lantern; on 'WITH her' she tosses it to Milo (a dropped item), it pops into his hand (his hotbar has it from here); bg: the glowing line below the dock, out to sea; the lighthouse frame right. Night (18000)."
+    },
+    {
+      "id": "S10", "line": "L10", "place": "bay_surface", "size": "ews", "master": "wide",
+      "camera": "path: a high wide crane over the bay, 14 blocks up, travelling out to sea with the two swimmers",
+      "frame": "fg: the dark water; mid: two small swimmers, Grandma ahead, Milo behind, heads above water, riding the glowing line out to sea; bg: the dock and the lit cottage window far behind them, the lighthouse beam, the end of the glow ahead. Night (18000)."
+    },
+    {
+      "id": "S10b", "line": "L10", "place": "line_end_wreck", "size": "wide", "camera": "pov",
+      "frame": "on 'DOVE': under the surface, diving: the lanterns below on the floor, Grandma swimming down ahead (sprint-swim pose), a dark mass at the end of the light. HUD: the breath bar appears and starts to drop; the lantern in hand. Night (18000), depth 0 to 12."
+    },
+    {
+      "id": "S11", "line": "L11", "place": "line_end_wreck", "size": "ms", "camera": "single: Grandma, underwater, three-quarter front, from beside Milo",
+      "frame": "fg: the last lantern on the sand, bottom edge; mid: Grandma, waist up, beside the last lantern, turning to Milo, then pointing past him into the dark gap ahead; bg: the faint, dark shape of a ship's hull 3 blocks into the black. Night (18000), depth 13."
+    },
+    {
+      "id": "S12", "line": "L12", "place": "line_end_wreck", "size": "wide", "camera": "pov",
+      "frame": "the hand places the lantern on the shipwreck's deck ('The light'); the light blooms over the rotted planks, the broken mast, the hull ('SHIPWRECK'); 2 blocks ahead on the deck a single chest, lit ('CHEST'). Breath bar at four. Night (18000)."
+    },
+    {
+      "id": "S13", "line": "L13", "place": "line_end_wreck", "size": "cu", "camera": "pov: the chest opened, the chest screen over the dimmed underwater view",
+      "frame": "the vanilla chest screen (generic 9x3): the title in the top left reads 'For Rosa'; one item, a Heart of the Sea, in the middle slot; the player's inventory below (one empty hotbar). Behind the screen, dimmed, the lit deck. Caption track: FOR ROSA, HEART OF THE SEA. Night (18000). Holds 0.6 s past the last word."
+    }
+  ],
+  "props": {
+    "lantern_line": { "block": "lantern" },
+    "last_lantern": { "block": "lantern", "note": "the end of the line: moves 2 blocks further out each night; tonight it is placed by Milo on the wreck's deck" },
+    "the_dark": { "note": "the unlit deep water past the end of the line" },
+    "mooring": { "block": "oak_fence", "note": "the empty mooring post on the dock's T-head, a lead knot, a sign reading ROSA" },
+    "shipwreck": { "note": "vanilla shipwreck structure on the bay floor at the end of the line" },
+    "rosa_chest": { "block": "chest", "note": "a chest renamed 'For Rosa' placed on the shipwreck's deck; holds one heart_of_the_sea" }
+  },
+  "bible": "stories/lantern_bay/bible.md",
+  "beats": "stories/lantern_bay/beats.md",
+  "set": "stories/lantern_bay/set.md"
+}
