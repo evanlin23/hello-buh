@@ -1,4 +1,4 @@
-# light_sleeper: shot list (r3)
+# light_sleeper: shot list (r5)
 
 Generated from `story.json` `shots` (the source of truth; edit there). The Short format: vertical 1080 x 1920, the game
 view 1080 x 1011 cropped from a 1797 x 1011 (wide) master, black bands above and below. Compose for the middle of the

@@ -109,3 +109,13 @@ Coordinates: the well's centre is (0,0); +x east, +z south. The plaza floor is c
 See `beats.md` (clue map table): carpet (L01-L02), 300 sheep (L03), bell box (L04), the lid (S01, S04, L06), Mom's line
 (L05), the scream (L07), the dark (L08), the sculk under the lid (S06, S11), "Don't. Move." (L13), the lights going dark (L14), the
 step off the carpet (L15).
+
+## r5 changes (2026-11-10, built)
+- Narrator-first (owner rule on main): Milo (cast `narrator`, Leda, natural tempo) tells it all; Mom's saying is quoted
+  ("Mom says, walk soft..."); Mom speaks only L13 "Milo. Don't. MOVE." while on screen (Sulafat).
+- L16 over the death screen: "Oh. THAT'S why we have nine thousand CARPETS." (endings explain themselves).
+- As built: the doghouse sits at the top of the carpet street at (-27..-25, -26..-24), about 6 above the plaza (the
+  hill behind it is too steep for a camera NW of a doghouse 12 up); S02's crane ends over it looking south-east.
+  The south street climbs 6 steps (not 3) so S01's eye is ~7 above the plaza. The farm edge is west of the plaza on
+  level ground (carpet stops at x -24). Our door's step is where Mom stands (z -7.35), outside the open door.
+- The jukebox song is an original note-block tune (no C418 track in the Short).
