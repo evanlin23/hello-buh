@@ -69,10 +69,14 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 ## 2b. Voice delivery and caption sync (owner 2026-11-10)
 1. **Delivery follows the line's emotion**: the narrator's lines split by beat into requests with one scene direction
    each (same voice, model, profile); a sad or quiet ending is never read bubbly. Check: panel, review. r:r08bb81
-2. **Captions start with the speech**: voice.json/words.json re-aligned after every cut; caption start within 0.12 s of
-   the speech onset. Check: `scripts/caption_sync.py` (in `./hb review`). r:r08bb81
-3. **Captions lead the word by 0.1 s** (`story_track.CAPTION_LEAD`), never before the line's own cut. Check: built in.
-   r:r221d0a
+2. **Captions start with the speech**: voice.json/words.json re-aligned after every cut (a take that changed since its
+   alignment is a BLOCK); Whisper-timed lines: caption start within 0.12 s of the speech onset. Check:
+   `scripts/caption_sync.py` (in `./hb review`). r:r08bb81
+3. **Captions land on the word**: each caption appears on the frame in which its word starts (no lead:
+   `story_track.CAPTION_LEAD = 0`, starts floored to the 60 fps frame), never before the line's own cut. Word times
+   are forced-aligned to the caption words (`scripts/align.py` -> `scripts/ctc_align.py`; Whisper only as a fallback,
+   flagged), caption words matched to them by text. Measured on the finished Short: |median offset| <= 33 ms and
+   <= 10% of words over 100 ms off, else BLOCK. Check: `scripts/caption_av_check.py` (in `./hb review`). r:r27d123
 4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
    pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
    only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a
@@ -165,4 +169,6 @@ Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
 - **Kid Puck as the default narrator** (r:rc4689d, r:r710834, Good Boy session): Pip is the narrator again (r:r5519b8);
   Puck is `puck_kid`, an alternative.
 - **Captions of 2-3 words** (r:re512f6; cinematic-style "words per chunk"): one word at a time (r:rbd7cb6).
+- **Captions lead the word by 0.1 s** (r:r221d0a, `CAPTION_LEAD = 0.10`) and Whisper word times: captions land on the
+  word, forced-aligned (2b.3, r:r27d123).
 - **40-75 s stories** (docs/stories.md intro): 30-45 s (Script 9).
