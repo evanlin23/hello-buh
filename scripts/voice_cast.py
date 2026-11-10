@@ -80,6 +80,8 @@ def split_lines(x, texts, gap=0.18):
 
 
 def timing(story, vdir):
+    wf = vdir / "words.json"
+    words = json.loads(wf.read_text()) if wf.exists() else {}
     out = {"voice": "gemini cast", "sr": SR, "gap": story.get("gap", 0.25), "lines": {}}
     total = 0.0
     for ln in story["lines"]:
@@ -92,6 +94,19 @@ def timing(story, vdir):
         loud = np.nonzero(np.abs(x[:m * f]).reshape(m, f).max(1) > 0.02)[0]
         onset, end = (loud[0] * f / SR, (loud[-1] + 1) * f / SR) if len(loud) else (0.0, dur)
         caps = [c.strip() for c in ln["text"].split(" / ")]
+        wl = words.get(ln["id"])
+        if wl:   # Whisper's word times (scripts/voice_check.py --words): each chunk starts on its first word
+            n0, chunks = 0, []
+            for cap in caps:
+                nw = len(cap.split())
+                seg = wl[n0:n0 + nw] or wl[-1:]
+                chunks.append([seg[0][1], seg[-1][2]]); n0 += nw
+            for i in range(len(chunks) - 1):
+                chunks[i][1] = max(chunks[i][1], chunks[i + 1][0])
+            out["lines"][ln["id"]] = {"text": spoken(ln["text"]), "who": ln.get("who"), "dur": round(dur, 3), "onset": round(onset, 3), "end": round(end, 3), "chunks": chunks, "captions": caps}
+            total += dur + out["gap"]
+            print(f"{ln['id']:4s} {ln.get('who') or '':6s} {dur:5.2f}s  {spoken(ln['text'])}  (word times)")
+            continue
         weights = [max(1, len(re.sub(r"[^A-Za-z0-9]", "", c))) + 2 for c in caps]
         span, acc, chunks = end - onset, 0, []
         for w in weights:
