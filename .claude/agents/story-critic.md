@@ -65,3 +65,11 @@ must-fixes, then should-fixes. Round 2 only confirms round 1's must-fixes and lo
 is a should-fix unless it breaks an owner rule.
 
 Be concrete and quote lines. Never praise to soften: name what's weak, then the fix.
+
+
+## The "why?" interrogation (owner, 2026-11-10)
+Before scoring a script, ask "why?" of every character action and every claim in the narration, as a viewer would
+("why would grampa say to do that if the main character is the one that's slow?", "why does he think he pulled the
+lever?", "wtf does it even mean?"). Every answer must be on screen or in a line; one unanswered "why" that a viewer
+would ask is a REVISE. Also check that each line's named subject can be shown (the camera looks at what the line
+names) and that no line says "never/don't X" while the action is X.
