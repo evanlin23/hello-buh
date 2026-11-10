@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Render a recording on GitHub Actions in parallel slices (.github/workflows/render-slices.yml, docs/worker.md):
-# ~12 min for a 60 s Short instead of ~25 here, and the container's hourly restart can't kill it.
+# ~10 min for a 45 s Short instead of ~25 here, and the container's hourly restart can't kill it.
 #
 #   RECORD_ONLY=1 STUNT=<name> ./run.sh                record only (no local render)
 #   scripts/render_on_actions.sh <name> [stunt]       queue work/<name>.rec.json

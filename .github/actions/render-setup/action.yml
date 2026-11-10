@@ -15,10 +15,31 @@ runs:
       with: { distribution: temurin, java-version: "21" }
     - uses: actions/setup-node@v4
       with: { node-version: "22", cache: npm }
-    - name: system deps
+    # No apt: the runners' Ubuntu mirror ran at ~119 kB/s on some runners (a slice spent 14 min installing ffmpeg,
+    # the finish job 15 of its 21 min in setup; pipeline test 2026-11-10). ffmpeg (static, GitHub release), Inter
+    # (GitHub release) and Playwright's Chromium come from fast hosts and are cached. DejaVu is on the image.
+    - name: cache ffmpeg, Inter and Chromium
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/hb-tools
+          ~/.cache/ms-playwright
+        key: hb-tools-v1-${{ hashFiles('package-lock.json') }}
+    - name: system deps (ffmpeg, Inter, pillow, numpy)
       shell: bash
       run: |
-        sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-inter
+        T=~/hb-tools; mkdir -p $T
+        if [ ! -x $T/ffmpeg/bin/ffmpeg ]; then
+          curl -sSL --retry 3 -o /tmp/ff.tar.xz https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz
+          mkdir -p $T/ffmpeg && tar -xJf /tmp/ff.tar.xz -C $T/ffmpeg --strip-components=1
+        fi
+        echo "$T/ffmpeg/bin" >> "$GITHUB_PATH"
+        if [ ! -f $T/Inter-ExtraBold.otf ]; then
+          curl -sSL --retry 3 -o /tmp/inter.zip https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip
+          unzip -q -o -j /tmp/inter.zip 'extras/otf/Inter-ExtraBold.otf' -d $T
+        fi
+        sudo mkdir -p /usr/share/fonts/opentype/inter && sudo cp $T/Inter-ExtraBold.otf /usr/share/fonts/opentype/inter/
+        $T/ffmpeg/bin/ffmpeg -version | head -1
         pip install -q pillow==12.3.0 numpy==2.5.3
     - name: cache game files
       if: inputs.extra-cache != 'true'
@@ -45,7 +66,10 @@ runs:
     - shell: bash
       run: npm ci --no-audit --no-fund
     - shell: bash
-      run: npx playwright install --with-deps chromium
+      run: |
+        npx playwright install chromium   # no --with-deps (apt): the image has Chrome's libraries already
+        node -e "require('playwright').chromium.launch().then(b => b.close()).then(() => console.log('chromium ok'))" \
+          || npx playwright install-deps chromium   # only if a launch fails
     - name: game assets
       shell: bash
       run: |

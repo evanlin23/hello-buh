@@ -88,7 +88,7 @@ scripts/render_on_actions.sh --wait story_<name>           # polls (git only), t
 - The slices are lossless and join into the same frames, except particles on a slice's first frames (their history
   starts with the slice): on pickaxe_race 0.2% of pixels differed from a render started 60 frames earlier.
 - Never merge a `render/*` branch. Delete it once you have the MP4 if your git allows it (`git push origin --delete render/<name>`; the session proxy refuses deletes, so it may stay: harmless, re-queueing force-pushes it).
-- Tested 2026-11-10: story_respawn_tax (44.4 s) rendered on Actions in ~21 min end to end, frame-identical to the published Short (mean pixel difference 0-0.4 of 255).
+- Tested 2026-11-10: story_respawn_tax (44.4 s) renders on Actions in **~10 min** end to end (21 min before the no-apt setup; 41 min when the Ubuntu mirror was slow), matching the published Short frame for frame.
 
 ## Iterate on previews; render full-res once
 A full render is 15-35 min (every frame at 1080x1011, 60 fps). Staging problems (framing, a cut that
