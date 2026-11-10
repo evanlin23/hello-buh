@@ -28,6 +28,15 @@ Costs: each render.js call meshes the world (~25 s) and walks to its frames; a d
 
 # Invisible cuts (story Shorts; STANDARDS 3b.3)
 
+- **First-person cuts are eye-traced too** (2026-11-10): a first-person shot right after a camera shot is turned so the
+  camera shot's subject, if it's in the first-person frame, lands where the eye was, then eased back (hold 0.5 s,
+  settle 2 s; render.js eyeTraceOffset, lib/eyetrace.js `traced`/`weight`). If the subject was the narrator (you can't
+  see yourself in first person), it can't: end the camera shot with the narrator near the centre or aim K.cut there.
+  Opt out per cut with `K.shot(name, { eyeTrace: false })` or `K.cut(..., { shot, eyeTrace: false })`. ./hb cuts
+  measures the same thing and BLOCKs any jump over 33 % not opted out. Test: lib/hb/test/pov_eyetrace.test.js.
+- **Cuts inside a line start on `at.cut(i)`**, never `at(i)` (the word's own start: the cut lands after it, splitting
+  the word). The motion lint flags `if (k === at(i)) ... K.cut/K.shot/K.cutShot(...)` (lib/hb/motion_lint.js AT_CUT).
+
 Owner, 2026-11-10: "the cuts don't seem to be correct, because i keep noticing them ... the focus of attention stays in
 the same location between cuts? Also idk if our timings for the cuts are correct?" (r:rfa229d). What editors and the
 eye-tracking research say, and what we build in:
