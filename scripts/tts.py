@@ -35,6 +35,7 @@ import base64
 import hashlib
 import json
 import pathlib
+import os
 import subprocess
 import sys
 import time
@@ -55,6 +56,12 @@ CACHE = ROOT / "work" / "tts"
 STATS = {"requests": 0, "cached": 0}
 MAX_LINES = 6    # lines per request: longer takes drift over the take (owner, 2026-11-10: voices "change ... even within take")
 LOCK = {}        # cast id -> the one model that voices it in this story (voice.json `models`; docs/voices.md "Drift gate")
+# pacing, opt-in (unset: as before): TTS_MIN_GAP seconds between requests; on a 429, TTS_429_RETRIES more tries of the
+# same model after TTS_429_WAIT seconds each, before moving on (a shared per-minute quota recovers in about a minute)
+MIN_GAP = float(os.environ.get("TTS_MIN_GAP") or 0)
+RETRY_429 = int(os.environ.get("TTS_429_RETRIES") or 0)
+WAIT_429 = float(os.environ.get("TTS_429_WAIT") or 65)
+_LAST = [0.0]
 
 
 SHORT_WORDS = 3  # a character line this short goes in a single-speaker request (multi-speaker takes swapped them)
@@ -98,9 +105,17 @@ def request(text, voices, models=None):
     for model in models or MODELS:
         body = json.dumps({"contents": [{"parts": [{"text": text(model) if callable(text) else text}]}],
                            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
-        # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
-        for attempt in range(2):
+        # a 429 is the model's daily quota: move to the next one (after TTS_429_RETRIES waits); a 5xx gets one more try
+        tries_429 = 0
+        attempt = 0
+        while attempt < 2:
+            attempt += 1
             try:
+                if MIN_GAP:
+                    gap = MIN_GAP - (time.time() - _LAST[0])
+                    if gap > 0:
+                        time.sleep(gap)
+                _LAST[0] = time.time()
                 STATS["requests"] += 1
                 req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                                              data=body, headers={"Content-Type": "application/json", "x-goog-api-key": "proxy"})
@@ -115,6 +130,11 @@ def request(text, voices, models=None):
                 msg = e.read()[:300].decode(errors="replace")
                 print(f"  {model}: {e.code} {msg[:120]!r}")
                 if e.code == 429:
+                    if tries_429 < RETRY_429:
+                        tries_429 += 1; attempt -= 1
+                        print(f"  {model}: 429, waiting {WAIT_429:.0f} s (retry {tries_429}/{RETRY_429})")
+                        time.sleep(WAIT_429)
+                        continue
                     break
                 if e.code not in (500, 502, 503, 504):
                     raise SystemExit(f"TTS {e.code}: {msg}")
