@@ -96,6 +96,16 @@ edit-only: `endAfter`, an `sfx` impact on the payoff, `punch`/`flash`; a length 
 script/shot fix for the next recording). Set `"payoff": "<line id>"` in story.json so the gate checks the right moment.
 Write the story to land under 45 s: the gate warns above it.
 
+## 5c. Viewer panel (~2 min, after the pace gate)
+`./hb panel story_<name>` (`scripts/viewer_panel.py`): Gemini watches the finished mp4 as three viewers (a 12-year-old
+Minecraft fan, a casual scroller, a strict editor) and reports what the measured gates can't: where each would swipe,
+whether the hook reads in 2 s, cut-off words, voices drifting between takes, a voice of the wrong sex/age for its
+character ("is milo a woman?"), an annoying/squeaky voice, an intimate/ASMR read, a pause in the opening, blurry/dark/
+too-zoomed picture, and each viewer's one-sentence explanation of the ending checked against story.json's `twist`
+("what does the day one mean bro"). **BLOCK** lines (2+ viewers agree on a cut word, drift, a wrong voice or a missed
+ending) are review blockers once the reviewer confirms them by ear/eye; FLAGs go to the reviewer as inputs. Two Gemini
+calls on the proxy's shared daily quota: run it once per cut (it's cached per mp4), not in a fix loop.
+
 ## 6. Review (≤ 2 rounds)
 `.claude/skills/short-review/SKILL.md` with an independent reviewer (subagent, or a fresh session). Blockers get
 fixed (edit-only fixes via `scripts/reedit.sh`, staging via a re-record); nitpicks go in the notes. If a blocker
