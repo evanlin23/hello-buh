@@ -106,7 +106,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | ~2000 | Leo's House | Put Back (pilot, not canon until made): Leo's house, blown up three years before, comes back block by block. |
 | 2600 | Tidewater | One Block Higher (in progress). |
 | ~2500 | Oakend | A zombie siege converts Tomas, Greta and Old Ben; they keep their name tags and walk out of the woods every night. Their cleric, Rosa, takes them a golden apple and a splash potion every week and can't use either. |
-| 2700 | Oakend | **Names in the Woods.** Every night three named zombies walk out of the woods. Tonight a fourth wears Mom's tag, ROSA, still holding the apple, and her son Remy, the hamlet's only player, throws the cure: potion, then apple. Whether he cures the other three is never said. |
+| 2700 | Oakend | **Names in the Woods.** Every night three named zombies walk out of the woods. Tonight Rosa goes into the woods after them and doesn't come back: a fourth walks out wearing her tag, ROSA, still holding the apple. The Short ends on the reveal; whether her son, the hamlet's only player, ever cures her is never said (open). |
 | 2900 | Frostgate | More Golems (in progress). |
 | 3000 | Leo's House | One More Eye (in progress): eleven eyes; Leo left six years ago (day ~810). |
 | 3300 | Saltmouth | **Good Boy** (held for rework). Buh at 16 and his dog, who keeps trying to leave him and keeps teleporting back. |
@@ -131,7 +131,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | **The fisherman** | | | Fernbank's. Jumped in his boat and never came back. His boat floats empty at the dock. |
 | **Gary** | zombie villager, farmer's straw hat, name tag "Gary" | | Stillwater's farmer. Taken the night the Long Day ended. Every night since, he walks out of the fog, works his field, pays an emerald, and knocks on his own door. The golem lets him pass. |
 | **The Digger** | Steve-like; his death screens say HelloBuh | | Digs straight down under Torch Hill, dies, forgets, and starts again. "Never dig straight down." "Who digs straight down?" |
-| **Remy** | default Steve skin, a kid; player nameplate "Remy" | `narrator` (Leda, Pip's voice) | Oakend's only player (not Milo's family). Wins every egg fight because nobody else there can throw. Cures his mom on day 2700. Never in a Short with Pip or kid Milo narrating (conflict 12). |
+| **Remy** | default Steve skin, a kid; player nameplate "Remy" | `narrator` (Leda, Pip's voice) | Oakend's only player (not Milo's family). Wins every egg fight because nobody else there can throw. His mom is turned on day 2700. Never in a Short with Pip or kid Milo narrating (conflict 12). |
 | **Rosa** | plains cleric villager (purple robe), name tag ROSA; on day 2700 a zombie villager in the same robe, still holding the golden apple | Aoede (her own, not the cast `mom`) | Remy's mom, Oakend's cleric. Told him the named zombies stole the tags and the neighbours moved to the city, to keep him out of the woods. |
 | **Leo** | never seen | | The brother who went to the End with a wooden sword six years before One More Eye (in progress) and Put Back (pilot). |
 
