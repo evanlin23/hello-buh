@@ -178,7 +178,10 @@ for (const name of names) {
       `python3 audio.py work/${name}.rec.json work/${name}.wav`,
       `python3 edit.py --frames work/${name}.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/${name}.rec.json --audio work/${name}.wav ${editArgs.map(a => /\s/.test(a) ? JSON.stringify(a) : a).join(' ')} --out out/${name}.mp4`
     ],
-    status: args.includes('--pass') ? 'ready' : 'pending-qa',   // ready only after a frame review passed (docs/qa.md)
+    // ready only after a frame review passed (docs/qa.md). A story is "held" until the OWNER okays it in person
+    // (owner 2026-11-10: "none of these new stories should go out until i've OKed them"): --owner-ok marks it ready,
+    // and only the lead session passes it, after the owner said so for that story by name.
+    status: !args.includes('--pass') ? 'pending-qa' : (name.startsWith('story_') && !args.includes('--owner-ok') ? 'held' : 'ready'),
     notes: notes || prev.notes || '',
     published_at: new Date().toISOString()
   }

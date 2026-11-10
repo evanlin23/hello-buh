@@ -207,3 +207,29 @@ For the owner's morning. Newest at the bottom.
     - Sent to the owner; it's on the review page.
   - Started the Six Thousand Torches build (no lost grandparent, so the grandparent stories stay spread out), with
     one critic-guided fix to the motive first. Names in the Woods resumes at 08:07 UTC tomorrow.
+
+## 15:50 UTC: the owner is in class ("do everything you can without manual review from me")
+- **Owner notes this morning:**
+  - Captions lead the word by 0.1 s (CAPTION_LEAD).
+  - Continuous takes, merged and now the story-make default.
+  - Endings: no closing line naming what's on screen; "Good boy." and "Day one. Again." cut.
+- **Merged to main:** smooth digging (rec.smoothDig) and K.face/K.top aim.
+- **Private assets repo:** evanlin23/hello-buh-assets holds the MC jars, renderer assets, sounds, Mixkit sfx and songs; scripts/assets_restore.sh restores them.
+- **Republish / publish orders sent:**
+  - Dog Hill v2: republish.
+  - Thirty-One v2 and Gold: republish after `./hb review` shows 0 blockers.
+  - Good Boy v2 and Light Sleeper: an independent short-review each, then publish.
+- **Started:** the Broken Rail build (session_019n1tKE7T7i6CLSUGJQYD39), using continuous takes. The hourly daytime check-in is trig_01XDerVsGhec3FvjDtEFkMPT.
+- **Cleanup (owner OK):**
+  - Removed /tmp/hb-edit-*, the npm cache, 29 merged agent worktrees and the local assets clone. Free disk went from 238 MB to 4.3 GB.
+  - Deleting the 2 hbtest branches on the remote was blocked by permissions and is left for the owner.
+- **Decided by the lead:**
+  - Good Boy is already Buh at 16 in docs/world/canon.md, so there's no Milo link left to decide.
+  - Pip stays as is (owner: Pip is final). The panel's "breathy" note is now handled by the take gate, which re-takes whispers and breaths.
+
+## 16:51 UTC check-in
+- **Owner rule:** "none of these new stories should go out until i've OKed them". publish.js (f4c0605) now packages every story_* as held; only the lead's --owner-ok makes one ready. Thirty-One and Gold were set back to held (videos 5de29cb). Nothing new has reached YouTube.
+- **Held on the review page for the owner:** Dog on the Hill v2 (videos 45e1708c), Thirty-One v2, Gold v2 and Light Sleeper v2 (render 16:37).
+- **Good Boy v3** is rendering. Its round-3 review found 3 blockers: the librarian vanishing on screen, murky frames at the swim cut, and a reveal that was too quiet.
+- **Broken Rail and Six Thousand Torches** are waiting for Pip's quota (08:00 UTC). In the meantime they're building sets; Broken Rail's new set tools go to main once tested.
+- **videos branch:** no new story is marked ready; the ready ones are the older approved stories. npm test passes on main.

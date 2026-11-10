@@ -204,6 +204,14 @@ before and after.
   idle variety is `stunt.idleLife` (a slow look-around, docs/movie_engine.md).
 - **Name tags**: `stunt.nameTags: true` (every actor and named mob) or a list of names draws the vanilla nameplate
   over their heads (EntityRenderer.renderNameTag, 0.5 above the hitbox), as CustomNameVisible does.
+- **Player names** (Six Thousand Torches, 2026-11-10): `stunt.playerNames: true` draws every other player's name over
+  their head, as vanilla always does (within 64 blocks). While the player crouches the plate sits on the 1.5-tall
+  hitbox and draws at reduced opacity (renderNameTag: isDiscrete, 0x80FFFFFF, no see-through pass), still readable.
+  Opt-in: recordings without the flag render unchanged.
+- **Chat lines** (Six Thousand Torches): `ctx.mark('syschat', { text: '<Jonah> see you tomorrow', color: 'white' })`
+  and `{ text: 'Jonah left the game', color: 'yellow' }` (vanilla ChatFormatting.YELLOW #FFFF55); `ctx.mark('syschat_clear')`
+  empties it on a cut. edit.py draws the closed chat (ChatComponent: a 320-GUI-px translucent strip a line, newest at
+  the bottom, 40 GUI px above the bottom of the game view) for 10 s a line. Nothing changes without the marks.
 Test: `node scripts/pose_fixture.js --stunt _life_test --life` (stunts/_life_test.js).
 
 ## Held items on mobs: villagers' crossed arms, mob off hands; the narrator's nameplate; the selected item's name

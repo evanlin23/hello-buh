@@ -146,6 +146,9 @@ Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
 
 ## 10. Publish
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
+- **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
+  story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
+  posts a story. Check: publish.js (status), youtube_upload.py (posts "ready" only). r:r016732
 - Mark the premise `made` in docs/stories.md. Don't edit the upload queue; the older stories keep posting. r:r62fae3
 - **New owner rule** (any session): add the dated quote to docs/stories.md "House rules" on main, and update this file
   in the same commit (the standard, its number, its check, `r:<key>` from `./hb rules --log`, and the "Updated:"
