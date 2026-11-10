@@ -212,6 +212,10 @@ STANDARDS.md in the same commit.
   20 Hz, placed before the cut), never a stunt's own `/tp @e`. Cuts are invisible by construction: the subject the eye
   is on sits at about the same place in the frame on both sides of the cut (eye-trace), and the cut lands where an
   editor would put it, not just on the line start.
+- **Owner, 2026-11-10: "for the looking and the breaking, something i noticed is that sometimes there will be a block
+  int eh way. we need to ensure there is a clear line fo sight to teh stuff we are placing or breaking."** Every dig
+  and place has a clear line of sight from the eye to the face being hit (vanilla can't reach through blocks either):
+  the kit picks a stand spot and a face the eye can see, and refuses a dig/place through a block.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

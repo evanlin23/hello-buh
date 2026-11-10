@@ -151,6 +151,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Check: lint (raw `/tp @e`), rec_check (cast jump after a cut; stepped motion). r:rfa229d
 3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
    (eye-trace), and the cut lands on an edit point, not wherever the line starts. Check: cut check (in progress). r:rfa229d
+4. **Clear line of sight to every dig and place**: nothing between the eye and the face being broken or placed on.
+   The kit's K.dig/K.place choose a visible face and stand spot, and refuse otherwise. Check: rec_check (line of
+   sight, in progress). r:rd0b2b1
 
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
