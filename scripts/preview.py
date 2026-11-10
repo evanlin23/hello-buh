@@ -15,9 +15,8 @@ one before it, so edit.py sees a normal 60 fps frame folder and runs unchanged (
 edit.py's `--preview` only makes its encodes fast. The 60 fps edit is then cut down to PREVIEW_FPS: every
 frame the preview keeps, and every sheet frame, is a real render of the right source frame.
 
-Env: PREVIEW_FPS (12; divides 60), PREVIEW_W (360 -> game view 360x337), NAME (stunt), RELIGHT_TICKS (20:
-small block changes relight once a second instead of every 4 ticks), RENDER_DISTANCE, EDIT_EXTRA (as
-reedit.sh), KEEP=1 (keep the frames and the 60 fps edit). Not in a preview: real slow-mo in-between frames
+Env: PREVIEW_FPS (12; divides 60), PREVIEW_W (360 -> game view 360x337), PREVIEW_JOBS (3 render.js processes
+side by side), NAME (stunt), EDIT_EXTRA (as reedit.sh), KEEP=1 (keep the frames and the 60 fps edit). Not in a preview: real slow-mo in-between frames
 (edit.py blends the two neighbours, as without render_replay.py).
 """
 import argparse
@@ -54,6 +53,30 @@ def edit_parse(argv):
 def run(cmd, **kw):
     print("+", " ".join(str(c) if len(str(c)) < 200 else str(c)[:80] + "..." for c in cmd), flush=True)
     return subprocess.run(cmd, cwd=HERE, check=True, **kw)
+
+
+def hook_frames(h, t_video):
+    """How many frames retention.hook_prepend really puts in front (it came out one more than its n: the
+    concat holds the clip's last frame for a frame), measured by running it on a dummy Short."""
+    import tempfile
+    import retention
+    os.environ["HB_PREVIEW"] = "1"
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-hookcal-"))
+    a = max(0.0, t_video - float(h.get("before", 1.5)))
+    n = int(round((t_video + float(h.get("after", 0.0)) - a) * FPS))
+    for i in range(int(round(a * FPS)), int(round(a * FPS)) + n + 8):
+        Image.new("RGB", (16, 15)).save(tmp / f"f{i:05d}.png")
+    Image.new("RGBA", (1080, 1920)).save(tmp / "cap.png")
+    body = tmp / "body.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "color=c=black:s=1080x1920:r=60:d=0.5", "-c:v", "libx264",
+                    "-preset", "ultrafast", "-pix_fmt", "yuv420p", str(body)], check=True)
+    count = lambda f: int(subprocess.run(["ffprobe", "-v", "error", "-count_frames", "-select_streams", "v", "-show_entries", "stream=nb_read_frames",
+                                          "-of", "csv=p=0", str(f)], capture_output=True, text=True).stdout)
+    n0 = count(body)
+    retention.hook_prepend(str(body), h, t_video, FPS, frames=str(tmp / "f%05d.png"), start_index=0, caption=tmp / "cap.png")
+    got = count(body) - n0
+    shutil.rmtree(tmp, ignore_errors=True)
+    return got
 
 
 class Plan:
@@ -97,7 +120,7 @@ class Plan:
         if h and h.get("at") in ev:
             tv = ev[h["at"]] - self.start
             a, b = max(0.0, tv - float(h.get("before", 1.5))), tv + float(h.get("after", 0.0))
-            self.n_hook, self.hook_a, self.hook = int(round((b - a) * FPS)), self.start_idx + int(round(a * FPS)), h
+            self.n_hook, self.hook_a, self.hook = hook_frames(h, tv), self.start_idx + int(round(a * FPS)), h
         else:
             self.hook = None
         # replay (render_replay.py window, appended after the body; one replay frame per output frame)
@@ -222,6 +245,26 @@ def nearest_mark(plan, F):
     return f"{best[1]}{best[0]:+.2f}s" + (" (hook)" if kind == "hook" else "") if best else kind
 
 
+def render_parallel(rec_path, out, fps, w, h, frames, env, jobs):
+    """render.js FRAMES=... split into `jobs` contiguous chunks run side by side. render.js draws on one
+    core (software GL), so 3 jobs on 4 cores take ~1/3 of the time; each job pays the world mesh once."""
+    chunks = [frames[i * len(frames) // jobs:(i + 1) * len(frames) // jobs] for i in range(jobs)]
+    procs = []
+    for k, ch in enumerate(c for c in chunks if c):
+        log = open(out.parent / f"{out.name}.render{k}.log", "w")
+        procs.append((subprocess.Popen(["node", "render.js", str(rec_path), str(out), str(fps), str(w), str(h)], cwd=HERE,
+                                       env={**env, "FRAMES": ",".join(map(str, ch))}, stdout=log, stderr=subprocess.STDOUT), log))
+    bad = [p.wait() for p, _ in procs]
+    for k, (p, log) in enumerate(procs):
+        log.close()
+        lp = pathlib.Path(log.name)
+        print(f"  job {k}: " + next((ln for ln in reversed(lp.read_text().splitlines()) if ln.startswith("rendered")), "?"))
+        if bad[k] == 0:
+            lp.unlink()
+    if any(bad):
+        sys.exit(f"render.js failed (logs: {out.parent}/{out.name}.render*.log)")
+
+
 def fill(out, names, rendered):
     """Hardlink every missing frame name to the nearest rendered frame before it (render_needed.py)."""
     have = None
@@ -251,7 +294,7 @@ def sheets(plan, groups, video, outdir, scale_w):
     except OSError:
         font = ImageFont.load_default()
     tw = scale_w
-    th = int(round(scale_w * 1920 / 1080))
+    th = int(round(scale_w * (455 + 1011) / 1080))   # the caption band + the game view (the bottom band is black)
     lab = 38
     cols, rows_per = 6, 4
     shdir = outdir / "sheets"
@@ -268,7 +311,7 @@ def sheets(plan, groups, video, outdir, scale_w):
             for c, F in enumerate(fs[:cols]):
                 x0 = c * tw
                 if F in img:
-                    sheet.paste(Image.open(img[F]).convert("RGB"), (x0, y0 + 22))
+                    sheet.paste(Image.open(img[F]).convert("RGB").crop((0, 0, tw, th)), (x0, y0 + 22))
                 m = nearest_mark(plan, F)
                 d.text((x0 + 4, y0 + 22 + th + 2), f"{F / FPS:6.3f}s  f{F}", fill=(255, 255, 255), font=font)
                 d.text((x0 + 4, y0 + 22 + th + 19), m[:34], fill=(170, 220, 255), font=font)
@@ -315,11 +358,11 @@ def main():
     need = sorted(i for i in need_hook_body if 0 <= i < plan.n_src)
     frames = outdir / "frames"
     shutil.rmtree(frames, ignore_errors=True)
-    env = {**os.environ, "FRAMES": ",".join(map(str, need)), "RELIGHT_TICKS": os.environ.get("RELIGHT_TICKS", "20")}
-    env.pop("CAM", None)
+    env = {k: v for k, v in os.environ.items() if k not in ("CAM", "FRAMES", "ONLY")}
     t = time.time()
-    print(f"render: {len(need)} of {plan.n_src} source frames at {gw}x{gh}")
-    run(["node", "render.js", str(rec_path), str(frames), str(FPS), str(gw), str(gh)], env=env)
+    jobs = max(1, min(int(os.environ.get("PREVIEW_JOBS", 3)), len(need) // 40 or 1))
+    print(f"render: {len(need)} of {plan.n_src} source frames at {gw}x{gh}, {jobs} render.js jobs")
+    render_parallel(rec_path, frames, FPS, gw, gh, need, env, jobs)
     t_render = time.time() - t
     fill(frames, range(plan.n_src), set(need))
     t_replay = 0.0
@@ -331,7 +374,7 @@ def main():
         if r["spec"].get("skin"):
             renv["SKIN"] = r["spec"]["skin"]
         t = time.time()
-        run(["node", "render.js", str(rec_path), str(rdir), str(r["fps"]), str(gw), str(gh)], env=renv)
+        render_parallel(rec_path, rdir, r["fps"], gw, gh, sorted(need_replay), renv, 1)
         t_replay = time.time() - t
         fill(rdir, r["frames"], need_replay)
         a, b, tp = r["win"]
@@ -345,14 +388,14 @@ def main():
     edit60 = outdir / "edit60.mp4"
     t = time.time()
     run(["python3", "edit.py", "--frames", str(frames / "f%05d.png"), "--fps", str(FPS), "--out_fps", str(FPS),
-         "--timeline", str(rec_path), "--audio", str(audio), *eargs, "--out", str(edit60)])
+         "--timeline", str(rec_path), "--audio", str(audio), *eargs, "--preview", "--out", str(edit60)])
     t_edit = time.time() - t
     got = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(edit60)],
                                capture_output=True, text=True).stdout)
     if abs(got - plan.total / FPS) > 1.5 / FPS:
         print(f"WARNING: the edit is {got:.3f}s but the plan says {plan.total / FPS:.3f}s: sheet frames may be off")
     out = outdir / "preview.mp4"
-    run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(edit60), "-vf", f"fps={P},scale={pw}:-2", "-c:v", "libx264", "-preset", "veryfast",
+    run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(edit60), "-vf", f"select='not(mod(n\\,{stride}))',setpts=N/{P}/TB,scale={pw}:-2", "-r", str(P), "-c:v", "libx264", "-preset", "veryfast",
          "-crf", "23", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(out)])
     sheets(plan, groups, edit60, outdir, pw * 3 // 4 // 2 * 2)
     if not os.environ.get("KEEP"):

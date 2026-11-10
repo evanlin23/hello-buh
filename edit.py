@@ -19,6 +19,7 @@ import re
 import bisect
 import math
 import pathlib
+import os
 import subprocess
 import sys
 import tempfile
@@ -981,8 +982,11 @@ def main():
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
+    ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    if args.preview:
+        os.environ["HB_PREVIEW"] = "1"
     args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
     frames_dir0 = pathlib.Path(args.frames).parent if args.frames else None
     if (args.speed or args.slowmo or args.freeze) and args.timeline:
@@ -1340,7 +1344,7 @@ def main():
             graph.append("[song]anull[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     cmd = ["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", ";".join(graph), *maps,
-           "-t", f"{dur:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-maxrate", "18M", "-bufsize", "36M", "-pix_fmt", "yuv420p",
+           "-t", f"{dur:.3f}", "-c:v", "libx264", *retention.x264(), "-pix_fmt", "yuv420p",
            "-movflags", "+faststart", args.out]
     subprocess.run(cmd, check=True)
     got = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.out], capture_output=True, text=True).stdout or 0)
