@@ -2667,7 +2667,10 @@ else:
         e.shadowName = 'item'; e.shadowY = e.y
         e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
         e.yaw = age / 20 + (e.id % 7)
-        e.extra = { item: it, dropped: { key: it + '|ground', display: d, tex: spriteOf(it), glint: GLINT_ITEMS.has(it) || undefined } }
+        // a stack draws 1-5 copies (ItemEntityRenderer.getRenderedAmount); only recordings that carry the count
+        // (lib/harness.js, from 2026-11-10) have extra.count, so published Shorts draw one as before
+        const offsets = require('./lib/item_stack').stackOffsets(e.extra.count, e.id, gs, false)
+        e.extra = { item: it, dropped: { key: it + '|ground', display: d, tex: spriteOf(it), glint: GLINT_ITEMS.has(it) || undefined, ...(offsets ? { offsets } : {}) } }
         continue
       }
       if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
