@@ -283,7 +283,7 @@ module.exports = {
     await line('L07', async (k, at) => {
       if (k === at(1) - 2) swing(GB)
       if (k === at(1)) { hold(GB, 'ominous_bottle'); G[GB].pitch = 10; G[GB].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === at(2) - 1) {   // "He's got": first person, beside him; I open his chest (the vanilla chest screen)
+      if (k === at(3) - 3) {   // "a whole CHEST": first person, beside him; I open his chest (the vanilla chest screen)
         K.shot('pov')
         await K.cut(-8.2, -12.0, P(-5.5, 2.45, -12.5), 2)
         try { bot.openContainer(bot.blockAt(P(-6, 2, -13))).then(w => { chest = w }).catch(e => ctx.log('chest', e.message)) } catch (e) { ctx.log('chest', e.message) }
@@ -505,7 +505,7 @@ module.exports.shots = {
   // S07: beside Grandpa at the chest under the east window; the tilt down to the open chest on "CHEST"
   s07: { at: [-9.0, 3.6, -11.2], look: [-6.6, 3.4, -14.3], fov: 58, push: 0.15, dof: false },
   // S08: the gate at dusk, 4 behind Grandpa and 2 to his right: the bottle in profile, the road and the tower
-  s08: { at: [-3.5, 2.62, -0.5], look: [22.4, 5.2, 14.5], fov: 54, push: 0.1, dof: false },
+  s08: { at: [-3.5, 2.62, -0.5], look: [20, 3.0, 6.5], fov: 54, push: 0.1, dof: false },
   // S09: closer, the same side: he turns his head back over his right shoulder
   s09: { at: [-2.6, 2.45, 3.8], look: [0.6, 2.35, 0.3], fov: 58, push: 0.1, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.5, 0] } } },
   // S10: the room from its south-east corner: Grandma's chair nearest the lens, Grandpa crouched over the table
