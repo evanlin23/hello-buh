@@ -1,0 +1,135 @@
+# Story standards: the current checklist
+
+Updated: 2026-11-10
+
+Every rule a story Short must meet **today**, once, by stage, with its number and the check that enforces it. The
+newest owner decision wins; superseded rules are listed at the end and must not be applied. The dated history (the
+owner's quotes, the reasons) stays in `docs/stories.md` "House rules": each standard cites its source as `r:xxxxxx`
+(`./hb rules --log` lists every rule with its key, `./hb rules --key r00f92f` prints one in full).
+Checks: **pace** = `./hb pace` (the finished mp4), **owner** = `./hb owner`, **check** = `./hb check` (rec_check, lint,
+continuity, framing, owner), **edges** = `python3 scripts/voice_edges.py stories/<name>`, **speaker** =
+`scripts/speaker_check.py` (run by `./hb voice`), **review** = the short-review skill. BLOCK stops the line; WARN
+needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order.
+
+## 1. Script (before any voice)
+1. **Line 1 is the title and the hook**: one strange, concrete image or threat to me, with something countable, said
+   flatly in first person over the picture it describes, in the first second ("why tf is this sheep staring at this
+   block?"). Then quick escalating examples, the twist, the loop. Check: review, pace (hook). r:rc07fa1 r:rb1b445 r:raf72e0
+2. **The twist turns the whole story over**, planted at least twice where a rewatch catches it, said in one short line
+   or shown by the game itself (runaway ends on the blast + "blown up by Creeper", no spoken reveal). Check: review. r:r9f677e
+3. **The ending explains itself** ("Day one." failed, "Day one. Again." worked) and **the last line loops into
+   line 1** (as one sentence or as cause and effect). Check: review. r:r810b66 r:r1fc6a3
+4. **The plot survives "why?"**: every character's action has a reason the viewer can state, and every accident has
+   a cause you can SEE that exists in the game (a blast, a hit, a block breaking, powder snow, an arrow; never "I
+   tripped/slipped/fell asleep"). Check: owner (`sync`: an uncaused fall), story-critic. r:rd497c4 r:r1d5238
+5. **Narrator-first**: one first-person narrator carries the whole story; other characters are quoted with a "said"
+   tag. A second voice only for **1-3 punchlines of <= 6 words**, only while that character is on screen, another
+   age or sex, never two extra voices of the same sex, never exposition, no back-and-forth dialogue. Check: review. r:raf72e0 r:r845f53
+6. **The out-of-context read**: nothing hushed, breathy or tender about obeying, sitting, waiting for someone or
+   "good boy". An animal twist is played bright, quick and goofy, the reveal physical (a bark, a pat). Check: review. r:rb41dc3
+7. **Write like a person**: short sentences, **no "..." anywhere**, no em dashes or semicolons, US English, no AI
+   words; fiction, never "true story"; nothing aimed at kids in the title or description; one quotable line short
+   enough to type. Check: review (an ellipsis shows up in pace as an opening pause). r:rd2e17b r:rc7ba87 r:r810b66
+8. **The hero is Milo** (default Steve skin); HelloBuh is the channel. In-game names (death screen, chat) say Milo. r:raa4daf r:rc1ccff
+9. **Length 30-45 s** (pace BLOCK < 30 s, WARN > 45 s). r:rcb4ffc
+10. **The bar is a polished animated short**, serious and professional, with more invention in the plots. r:r416ae4 r:r4b4332
+11. **The story decides, the engine follows**: a shot the renderer can't draw is a feature to build
+    (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
+
+## 2. Voice
+1. **The narrator is `voices/cast.json` `narrator`**: Leda as Pip (Dog on the Hill v3), a bubbly kid, fast and bright,
+   **natural tempo, no time-stretch, no pitch shift** (`post` empty; atempo 1.1 at most if a take drags). An adult
+   woman storyteller is `storyteller` (Despina), never a kid; a kid *character* is `child` (Laomedeia). r:rb9756b r:r350819 r:r810b66
+2. **Never whispery**: every style prompt says "fast, bright, energetic; not whispery, breathy or soft"; drop to
+   scared (not hushed) only for real danger. r:r350819 r:raf72e0
+3. **Speed is not a target**: no stretching, no re-take loops chasing words/s. Speed comes from short sentences and
+   the direction. Pace only warns when clearly slower than Pip (~4.1 words/s speaking, ~2.85 overall). r:r00f92f
+4. **The opening in one breath**: no pause inside line 1 over **0.2 s**; in the first 5 s no pause inside a line over
+   **0.35 s** and no gap between lines over **0.6 s** (pace BLOCK; WARN over 0.25 / 0.45 s). Re-take, don't trim. r:r810b66 r:r961104
+5. **Cut safely**: at the quietest point between lines, never at Whisper's word start; **>= 80 ms** before the first
+   word, **>= 200 ms** after the last, 10-20 ms fades; never splice inside a line (only shorten the silent middle of a
+   pause, 30 ms crossfade, >= 60 ms from speech). Check: edges (an edge within 30 dB of the peak = CUT), pace (a line
+   cut by the end, two lines overlapping: BLOCK), a listening pass. r:r9b64f0
+6. **The right voice and the right words on every line**: a line in the wrong voice or with the wrong words is a
+   blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
+7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
+   any two voices that talk differ in age, sex or pitch. r:r4b4332 r:raf72e0
+8. **Quota out (429 on every TTS model)**: stop, push, leave the story for the next run; never fall back to the old
+   sped-up narrator. Short bracketed directions only (long ones get read aloud). r:r810b66
+9. **Re-voice after any script change**; the scene lengths come from voice.json, so a new voice = a new recording.
+
+## 3. Set
+1. **No superflat**: built into real terrain with relief, at full scale, with depth in every shot (foreground,
+   mid-ground, distance); places far apart in the story are far apart on screen; never a clearing on a flat plain.
+   Use `lib/sets` (docs/sets.md). Check: owner (`flat`: BLOCK). r:rd497c4 r:r47a143
+2. **Builds follow docs/building_guide.md** and score **7+ (focal building 8+)** on its checklist, on stills, before
+   recording. Check: review (manual). r:r4b6024
+3. **No glitches, and the title's promise is on screen**: no doors moving by themselves, never stuck on a block, no
+   jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4
+4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
+
+## 4. Shots
+1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
+2. **The picture never runs ahead of or against the words** ("dug under it" before we dig; "never dig straight down"
+   while digging straight down). Check: owner (`sync`). r:rd497c4
+3. **Wide enough**: an establishing shot for every new place; subject size in the game view: medium **>= 45 %** of its
+   height, close face **>= 25 %**, wide **>= 12 %**. Check: check (`framing`: too tight over 60 %, a new place with no
+   wide shot). r:rb1b445
+4. **Continuity**: props, time of day, positions and who is where match across cuts. Check: check (`continuity`). r:rb1b445
+5. **Something new every 1-2 s**, nothing still over 1 s; a cut on almost every line; camera shots 1.5-4 s.
+   Check: check (rec_check `held` 0.6 s+), pace (`dead`). r:r65434d
+6. **The format**: a 1080x1920 Short, title band on top, the game view 1080x1011 in the middle, black bands;
+   cinematic shots from a wide master cropped to the middle (compose for the centre crop); never a 16:9 Short.
+   Check: owner and framing judge the cropped frame. r:r77975c
+
+## 5. Look
+Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinematic is the default (`look: 'auto'`).
+- Subject luma 0.35-0.70 by day, >= 0.25 at night; black point p1 >= 0.015; < 2 % clipped. Check: `scripts/look_stats.py`.
+- Sharp: bloom threshold >= 0.7, no DoF on wide/establishing shots, crf <= 18.
+- No onomatopoeia or emoji; punch-in 0.06-0.10 at most twice, shake 6-10 px only on a visible impact.
+
+## 6. Captions
+1. **One word at a time**, timed by `voice/words.json` word starts, Poppins Black 96 px, centred at 0.70 of the game
+   view, max 840 px wide; each word pops in (0.1 s) and cuts out hard on the next. (`"captions": "chunk"` brings back
+   2-3 word chunks for a test.) r:rbd7cb6
+2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
+   colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
+
+## 7. Audio
+The lead's mix (docs/audio.md), automatic in `edit.py --story` + publish: voice -15 LUFS, master **-14 LUFS +-0.5,
+true peak <= -1 dBTP**, room tone (never digital silence), a Kevin MacLeod mood score (CC BY, credited; not NCS) from
+story.json `mood`, the bed out 0.45 s before the payoff, then a hit. Any owner note on a track or level overrides it.
+Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
+
+## 8. Pacing (pace, on the finished mp4)
+- **Hook**: the first word by **0.2 s** (BLOCK after 0.4 s); the picture moving from frame 1 (frozen first 0.3 s:
+  BLOCK); sound by 0.3 s; a hook that works muted (a striking picture) and with sound (a line that makes you ask why). r:r350819 r:rcb4ffc
+- **No dead air**: a new event (cut, caption, line, hit, motion) at least every 2 s (WARN), never a 3 s gap (BLOCK). r:rcb4ffc
+- **Build-up** escalates toward the payoff (cut rate, loudness, stakes); the last third doesn't sag (WARN). r:rcb4ffc
+- **Payoff**: one clear picture change plus a sound hit within 0.3 s; set story.json `"payoff": "L18"`; the end
+  **<= 1.0 s** after it (1.2-1.8 s for a text payoff), with 0.2-0.3 s after the last word. r:rcb4ffc r:rfd98bb
+
+## 9. Review
+- An **independent reviewer** runs the short-review skill (subagent, or a fresh session); `./hb review` prepares it
+  (qa_frames, beat_audit, pace, owner, voice edges in one report) and records the verdict.
+- **Pace BLOCKs are review blockers.** Fix blockers only; nitpicks go in the notes. **2 rounds at most**: a blocker
+  that survives round 2 goes to the owner/lead, never a round 3.
+- A finding that has happened before becomes a rule (cinematic-style "Mistakes already solved", or the house rules).
+
+## 10. Publish
+- `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
+- Mark the premise `made` in docs/stories.md. Don't edit the upload queue; the older stories keep posting. r:r62fae3
+- **New owner rule** (any session): add the dated quote to docs/stories.md "House rules" on main, and update this file
+  in the same commit (the standard, its number, its check, `r:<key>` from `./hb rules --log`, and the "Updated:"
+  stamp). `npm test` (`node --test 'lib/hb/test/*.test.js'`) and `./hb rules --check` fail until both agree.
+
+## Superseded (history only; do not apply)
+- **4.5 words/s as a speed target** (r:r961104, its speed part): replaced by "speed is not a target" (r:r00f92f). Its
+  no-pauses-in-the-opening part stands (Voice 4).
+- **The 1.45x sped-up Kokoro narrator** (`am_adam`, scripts/voice.py; docs/stories.md "How it fits together"), and
+  "no sped-up voice, a cast" as an open question (r:r4b4332): the cast narrator is Voice 1.
+- **Leda at 1.5x tempo +1.5 semitones** (the kid-narrator audition; still in the docs/voices.md table): replaced by Pip's
+  natural tempo (r:rb9756b). "A kid narrator is Leda (cast `child`)" (r:r810b66): Leda is the `narrator` now and `child`
+  is Laomedeia.
+- **Captions of 2-3 words** (r:re512f6; cinematic-style "words per chunk"): one word at a time (r:rbd7cb6).
+- **40-75 s stories** (docs/stories.md intro): 30-45 s (Script 9).
