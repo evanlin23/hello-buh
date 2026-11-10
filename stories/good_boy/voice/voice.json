@@ -1,7 +1,7 @@
 {
  "voice": "gemini cast",
  "sr": 24000,
- "gap": 0.25,
+ "gap": 0.1,
  "lines": {
   "L01": {
    "text": "I've tried to leave this guy thirty-seven times.",
@@ -362,5 +362,5 @@
    ]
   }
  },
- "total": 29.62
+ "total": 27.67
 }

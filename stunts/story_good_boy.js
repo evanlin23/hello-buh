@@ -246,7 +246,7 @@ module.exports = {
     await K.cut(36.5, 18.4, P(36.5, eyeY(1.4), 20.6), H + 1, { time: DUSK })
     K.shot('pov')
     looking = K.base
-    const opensAt = K.T('L08') + 2
+    const opensAt = K.T('L08') - 2
     await line('L08', async (k) => {
       if (k === opensAt) {
         this.cast[GUY].swingArm('right')
@@ -257,7 +257,7 @@ module.exports = {
       if (k > opensAt) K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), (k - opensAt) / 8)
       if (k > opensAt + 6) { guy.pitch = 30 + Math.sin((k - opensAt) / 5) * 6; placeGuy() }   // he looks down at me (no walk-in: the open door's panel stopped him dead)
       look(k, 0, Math.sin(k / 6) * 0.03)
-    }, 1.2)
+    }, 0.5)
     K.stop()
 
     K.self({ sitting: false }, EYE)
