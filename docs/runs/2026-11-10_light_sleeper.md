@@ -22,7 +22,11 @@ ancient city, the well bottom is a sculk shrieker, and the fourth shriek brings 
 | r5 rewrite (lead's relayed owner rules, verified on main) | 07:50-08:00 | 10 | |
 | voices: Leda/3.1 take, then Pip recipe; cuts re-done twice for the new cut rules | 08:01-08:50 | 35 | 10 |
 | re-records (6-11), lint/owner fixes | 08:05-09:00 | 25 | 30 |
-| render on Actions, review, publish | 09:00- | | |
+| renders on Actions (5 used), pace gate | 09:00-11:50 | 30 | 90 (each render ~15 min) |
+| review round 1 (independent session) | 10:03-10:08 | | 5 |
+| round-1 fixes: sonic_boom particle, arrow + hard, crane on ECHO, opening gap | 10:20-11:00 | 35 | 15 |
+| review round 2 | 11:22-11:25 | | 3 |
+| round-2 fix prepared (beam before the hit, ring size), held for the owner | 11:25-11:55 | 15 | 15 |
 
 ## Recordings and renders
 - 11 recordings (`./hb record`): 1-5 staged the set on estimated line lengths (blockers fixed: crouch easing at cuts
@@ -30,7 +34,7 @@ ancient city, the well bottom is a sculk shrieker, and the fourth shriek brings 
   the vanilla composter and house in S09's view cleared), 6 failed setup (main's harness now fails on any bad
   command: an invalid gamerule), 7-11 on the real voices (subject blockers fixed with lines[].look and aims; lint
   motion).
-- Renders on Actions: 1 stale (old voice cuts, superseded the same hour), then the final.
+- 17 recordings in all; renders on Actions: 2 stale (voice re-cuts, L04 drift re-take), then 4 for the pace gate and the review rounds.
 
 ## Voices
 - r2 audition note (child / milo / Iapetus) superseded by the owner's narrator rules on main: the cast `narrator`
@@ -66,5 +70,24 @@ ancient city, the well bottom is a sculk shrieker, and the fourth shriek brings 
 - lint "nobody moves": the crane (camera motion isn't counted), the disc going in (POV), the death screen (a still
   overlay by design, the Darkness pulsing behind).
 
+## Review rounds
+- **Round 1** (independent session, short-review): NOT READY, 2 blockers. (1) the sonic boom: no beam, and it killed at full
+  health (vanilla: 10/15 damage); (2) "Wells ECHO" looked at cobble, not into the well. Fixed: the renderer's new
+  `sonic_boom` particle; the S09 skeleton's arrow hits Milo (hard, natural_health_regeneration false: 12.5 health), the
+  boom does a real 15; on ECHO the shot cuts to the crane looking straight down into the open slot (from the carpet the
+  near lid row hides the shaft: the pre-build continuity note C1 was right).
+- **Round 2**: NOT READY, 1 blocker. ECHO fixed; the boom's beam appeared only after the death screen, as huge blobs
+  (rings at quad size 2, the ones at the camera filling the frame). Per the skill, no round 3 and no publish.
+- **Prepared fix (not reviewed)**: rings at ~1 block, fanning out from the chest half a tick per block, none within 1.2
+  blocks of the eye; the beam fires 0.45 s before the hit (stills: rings visible on the live POV at 47.9-48.2 s, then the
+  death screen).
+
 ## Result
-(filled in at the end)
+**Not published.** A blocker survived review round 2 (the sonic-boom beam); its fix is rendered on `render/story_light_sleeper`
+(out/story_light_sleeper.mp4) but unreviewed. Owner: OK to publish the fixed cut (`node scripts/publish.js
+story_light_sleeper --pass`), or ask for a round 3. Nitpicks logged: 49.5 s (over 45), narration 2.7 words/s while
+speaking (not chased, per the owner's tempo rule), the S09 arrow hit isn't visibly an arrow, the S07 teal pulse is
+sound-only.
+Shared code merged to main (737c589, existing Shorts pixel-identical): botName, darkness_snap, sonic_boom particle,
+lint mob motion, scout_valley. The round-2 particle fix and the voice_check.py resplit fixes (aliases, compounds,
+200/80 ms quiet cut) stay on the branch (voice_check conflicts with main's newer resplit).
