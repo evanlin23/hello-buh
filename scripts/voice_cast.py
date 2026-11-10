@@ -163,7 +163,7 @@ def main():
                 x = np.fromfile(take, np.float32)
             else:
                 text = r["direction"] + "\n" + "\n".join(f"{w}: {t}" if len(r["speakers"]) > 1 else t for w, _, t in r["lines"])
-                x = tts.request(text, r["speakers"]); x.astype(np.float32).tofile(take)
+                x = tts.request(text, r["speakers"]); x = x[0] if isinstance(x, tuple) else x; x.astype(np.float32).tofile(take)   # request() returns (audio, model) since the drift gate
             for (who, lid, t), seg in zip(r["lines"], split_lines(x, [t for _, _, t in r["lines"]])):
                 write_wav(vdir / f"{lid}.wav", seg)
     timing(story, vdir)
