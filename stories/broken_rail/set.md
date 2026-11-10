@@ -108,3 +108,8 @@ about 48 blocks ahead and below, left of centre. Nothing to build: `world.build`
   under it): not in frame. Logged in the run report.
 - **Engine**: riders are drawn seated with `ctx.mark('pose', { ids, seated: true })` (renderer/entities.js), /tp'd with
   their carts; `./hb check` knows the seat drop (lib/hb/scene.js).
+- **Building-guide score (stills, r3):** the station (focal) 8/10: natural plateau with a ravine and trees, but the
+  meadow top is flat (line 1 half-met: the shots look along the line at the bridge and the drop, never across the
+  plain); L-shaped platform + sidings, stone-brick base, pitched spruce canopy with a ridge, lamps, bench, sign,
+  barrels, ballast frayed with coarse dirt, flowers; fg/mid/bg in every shot. Our cottage and the neighbours' houses are
+  library pieces (8+). The crater site 7/10 (natural basin, ridge and wall behind; a crater is not a building).
