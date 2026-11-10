@@ -1391,6 +1391,29 @@
     "gold_for_the_portal"
    ],
    "status": "claimed 2026-11-10 by gold_for_the_portal"
+  },
+  "oakend": {
+   "name": "Oakend",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -497,
+    63,
+    -1054
+   ],
+   "footprint": [
+    -552,
+    -1080,
+    -451,
+    -1028
+   ],
+   "about": "A cleric's hamlet on the North Inlet's west bank, facing Fernbank across the water: a lane of cottages east of an oak fence and its west gate, and a meadow that climbs west from the gate to a dark oak treeline. Every villager wears a name tag. A siege (~day 2500) converted Tomas, Greta and Old Ben, whose cottages stand shut; on day 2700 their cleric, Rosa, is converted at dusk and her son Remy, the hamlet's only player, throws the cure.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "names_in_the_woods"
+   ],
+   "status": "claimed 2026-11-10 by names_in_the_woods"
   }
  },
  "stories": {
@@ -1550,6 +1573,16 @@
    ],
    "cameos": [
     "boxed_bell"
+   ],
+   "status": "claimed"
+  },
+  "names_in_the_woods": {
+   "day": 2700,
+   "places": [
+    "oakend"
+   ],
+   "cameos": [
+    "empty_boat"
    ],
    "status": "claimed"
   }
