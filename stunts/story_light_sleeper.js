@@ -273,8 +273,8 @@ module.exports = {
 
     // ---- L08: inside our house. Mom holds the room; the Darkness (the shriek's answer) is already on us
     K.shot('pov')
-    await K.cut(0.5, -9.9, C(0, 4.4, -13), 3.07, { time: AFTERNOON + 100, after: () => say('/effect give @s minecraft:darkness 30 0 true') })
-    await line('L08', async (k) => { mom.pitch = 25 + Math.sin(k / 8) * 4; mom.yaw = Math.sin(k / 3.2) * 20; K.base = K.aim(C(0, 4.4, -13)); look(k) })   // she shakes her head: a fox
+    await K.cut(0.5, -9.9, C(0, 4.72, -13), 3.07, { time: AFTERNOON + 100, after: () => say('/effect give @s minecraft:darkness 30 0 true') })
+    await line('L08', async (k) => { mom.pitch = 25 + Math.sin(k / 8) * 4; mom.yaw = Math.sin(k / 3.2) * 20; K.base = K.aim(C(0, 4.72, -13)); look(k) })   // she shakes her head: a fox (aimed at her eyes: feet 3.07 + 1.62)
     // the lid is whole again by tonight (Mom re-laid it, bible)
     say(`/fill ${X - 1} ${F + 1} ${Z} ${X + 1} ${F + 1} ${Z} white_wool`)
 
@@ -284,7 +284,7 @@ module.exports = {
     const sk = await put('skel', { x: -38.5, y: standY(ctx, X, Z, -39, 6), z: 6.5, yaw: -90, pitch: 0 })
     const cr = await put('creep', { x: -33.5, y: standY(ctx, X, Z, -34, 8), z: 8.0, yaw: -90 })
     bot.setQuickBarSlot(3)
-    await K.cut(-22.5, 8.5, C(-33, fy + 1.4, 7.5), standY(ctx, X, Z, -23, 8), { time: DUSK, after: () => ctx.mark('darkness_snap', { to: 0 }) })
+    await K.cut(-22.5, 8.5, P((cr.x + sk.x) / 2 + 0.6, (cr.y + sk.y) / 2 + 1.6, (cr.z + sk.z) / 2), standY(ctx, X, Z, -23, 8), { time: DUSK, after: () => ctx.mark('darkness_snap', { to: 0 }) })
     away('mom')
     K.go(true)
     let creeperDead = false, disc = null
@@ -297,7 +297,7 @@ module.exports = {
       if (k === at(1) + 4 && !disc) { disc = { x: cr.x, z: cr.z }; say(`/summon item ${(X + cr.x).toFixed(2)} ${(F + cr.y + 0.3).toFixed(2)} ${(Z + cr.z).toFixed(2)} {Item:{id:"minecraft:music_disc_cat",count:1},PickupDelay:32767,Age:-32768}`) }
       if (bot.entity.position.x < X - 28.0) K.go(false)
       const fx = disc ? disc.x : cr.x, fz = disc ? disc.z : cr.z   // between the skeleton and the creeper (then the disc)
-      const tgt = P((fx + sk.x) / 2 + 0.6, (cr.y + sk.y) / 2 + (disc ? 0.6 : 1.0), (fz + sk.z) / 2)
+      const tgt = P((fx + sk.x) / 2 + 0.6, (cr.y + sk.y) / 2 + (disc ? 1.2 : 1.6), (fz + sk.z) / 2)   // eye level (owner: not too low)
       K.base = K.aim(tgt); look(k)
     })
     K.stop()
