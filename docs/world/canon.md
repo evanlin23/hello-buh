@@ -74,6 +74,7 @@ coast at Tidewater.
 | **Saltmouth** | (-286, 69, -381): generated plains village | The south peninsula's village, a ruined portal on its east edge. Good Boy's yard is village + (37, 16). Milo lived here with the dog at 16. | Good Boy (3300, held) |
 | **Frostgate** | (-801, 104, -697): generated snowy village | At the White's east edge, on the old road west | More Golems (2900, in progress) |
 | **Ravenford** | (-2044, 71, -485): the east gate; generated plains village at (-2111, -497) | Grandpa's village across the White: the log palisade and east gate, Grandpa's house with the totem wall, the road over the ford to the Ridge and the old tower (-2000, -445). A real pillager outpost stands at (-1913, -393). | Thirty-One Raids (1900) |
+| **Oakend** | (-505, 63, -1054): the west gate | A cleric's hamlet on the North Inlet's west bank, facing Fernbank across the water: a lane of cottages east of an oak fence and its west gate, a meadow climbing west to a dark oak treeline (lamp post at gate + (-15, 2)). Every villager wears a name tag. Tomas, Greta and Old Ben's cottages stand shut since a siege (~2500). | Names in the Woods (2700) |
 | **Leo's House** | (-2195, 63, -548) | Stone cottage on the shore facing the islets over the stronghold. Its basement holds an end portal frame. | One More Eye (3000, in progress), Put Back (pilot) |
 
 Regions: **the Green** (-620..-40, -1140..-300), **the White** (-1850..-640), **the West March** (-2400..-1860).
@@ -102,6 +103,8 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 1900 | Ravenford | **Thirty-One Raids.** Milo (about 11) drinks Grandpa's "courage". Raid 32. The 32nd frame on the totem wall is filled after it. |
 | ~2000 | Leo's House | Put Back (pilot, not canon until made): Leo's house, blown up three years before, comes back block by block. |
 | 2600 | Tidewater | One Block Higher (in progress). |
+| ~2500 | Oakend | A zombie siege converts Tomas, Greta and Old Ben; they keep their name tags and walk out of the woods every night. Their cleric, Rosa, takes them a golden apple and a splash potion every week and can't use either. |
+| 2700 | Oakend | **Names in the Woods.** Every night three named zombies walk out of the woods. Tonight a fourth wears Mom's tag, ROSA, still holding the apple, and her son Remy, the hamlet's only player, throws the cure: potion, then apple. Whether he cures the other three is never said. |
 | 2900 | Frostgate | More Golems (in progress). |
 | 3000 | Leo's House | One More Eye (in progress): eleven eyes; Leo left six years ago (day ~810). |
 | 3300 | Saltmouth | **Good Boy** (held for rework). Milo at 16 and his dog, who keeps trying to leave him and keeps teleporting back. |
@@ -125,6 +128,8 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | **The fisherman** | | | Fernbank's. Jumped in his boat and never came back. His boat floats empty at the dock. |
 | **Gary** | zombie villager, farmer's straw hat, name tag "Gary" | | Stillwater's farmer. Taken the night the Long Day ended. Every night since, he walks out of the fog, works his field, pays an emerald, and knocks on his own door. The golem lets him pass. |
 | **The Digger** | Steve-like; his death screens say HelloBuh | | Digs straight down under Torch Hill, dies, forgets, and starts again. "Never dig straight down." "Who digs straight down?" |
+| **Remy** | default Steve skin, a kid; player nameplate "Remy" | `narrator` (Leda, Pip's voice) | Oakend's only player (not Milo's family). Wins every egg fight because nobody else there can throw. Cures his mom on day 2700. Never in a Short with Pip or kid Milo narrating (conflict 12). |
+| **Rosa** | plains cleric villager (purple robe), name tag ROSA; on day 2700 a zombie villager in the same robe, still holding the golden apple | Aoede (her own, not the cast `mom`) | Remy's mom, Oakend's cleric. Told him the named zombies stole the tags and the neighbours moved to the city, to keep him out of the woods. |
 | **Leo** | never seen | | The brother who went to the End with a wooden sword six years before One More Eye (in progress) and Put Back (pilot). |
 
 ## The links between stories

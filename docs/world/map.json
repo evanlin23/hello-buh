@@ -1397,23 +1397,109 @@
    "kind": "village",
    "region": "the_green",
    "at": [
-    -497,
+    -505,
     63,
     -1054
    ],
    "footprint": [
-    -552,
+    -562,
     -1080,
     -451,
     -1028
    ],
    "about": "A cleric's hamlet on the North Inlet's west bank, facing Fernbank across the water: a lane of cottages east of an oak fence and its west gate, and a meadow that climbs west from the gate to a dark oak treeline. Every villager wears a name tag. A siege (~day 2500) converted Tomas, Greta and Old Ben, whose cottages stand shut; on day 2700 their cleric, Rosa, is converted at dusk and her son Remy, the hamlet's only player, throws the cure.",
-   "pieces": [],
+   "pieces": [
+    {
+     "id": "mom",
+     "piece": "cottage",
+     "x": -497,
+     "z": -1068,
+     "y": 63,
+     "facing": "south",
+     "variant": {
+      "palette": "plaster",
+      "garden": true,
+      "bed": "purple",
+      "seed": 7
+     },
+     "note": "Rosa's cottage (the cleric): brewing stand on the garden table, trapdoor shutters on the west window"
+    },
+    {
+     "id": "hugo",
+     "piece": "house2",
+     "x": -481,
+     "z": -1066,
+     "y": 63,
+     "facing": "south",
+     "note": "Hugo the farmer and Nell"
+    },
+    {
+     "id": "pia",
+     "piece": "cottage",
+     "x": -465,
+     "z": -1068,
+     "y": 63,
+     "facing": "south",
+     "variant": {
+      "palette": "stone",
+      "seed": 24
+     },
+     "note": "Pia the shepherd"
+    },
+    {
+     "id": "tomas",
+     "piece": "cottage",
+     "x": -497,
+     "z": -1040,
+     "y": 63,
+     "facing": "north",
+     "variant": {
+      "palette": "oak",
+      "seed": 21
+     },
+     "note": "Tomas's cottage, shut since the siege (~2500)"
+    },
+    {
+     "id": "greta",
+     "piece": "cottage",
+     "x": -482,
+     "z": -1040,
+     "y": 63,
+     "facing": "north",
+     "variant": {
+      "palette": "birch",
+      "seed": 22
+     },
+     "note": "Greta's cottage, shut since the siege"
+    },
+    {
+     "id": "oldben",
+     "piece": "cottage",
+     "x": -467,
+     "z": -1040,
+     "y": 63,
+     "facing": "north",
+     "variant": {
+      "palette": "spruce",
+      "seed": 23
+     },
+     "note": "Old Ben's cottage, shut since the siege"
+    },
+    {
+     "id": "well",
+     "piece": "well",
+     "x": -481,
+     "z": -1054,
+     "y": 62,
+     "facing": "south"
+    }
+   ],
    "stamps": [],
    "stories": [
     "names_in_the_woods"
    ],
-   "status": "claimed 2026-11-10 by names_in_the_woods"
+   "status": "claimed 2026-11-10 by names_in_the_woods",
+   "story_builds": "the west fence and gate (x -505), the lane, the meadow path, the lamp post at gate + (-15, 2), the dark oak treeline from gate x -31, the empty row's signs and shutters, and the cast are built by stunts/story_names_in_the_woods.js (gate-relative); move them into this entry when the next Oakend story needs them"
   }
  },
  "stories": {

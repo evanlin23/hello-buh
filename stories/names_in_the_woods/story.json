@@ -135,7 +135,7 @@
           "word": "STARE"
         },
         {
-          "what": "Mom",
+          "what": "actor:ROSA",
           "word": "MOM"
         }
       ]
@@ -148,11 +148,7 @@
       "shot": "S03",
       "look": [
         {
-          "what": "Mom",
-          "word": "Everyone"
-        },
-        {
-          "what": "Mom",
+          "what": "actor:ROSA",
           "word": "ROSA"
         }
       ]
@@ -163,7 +159,7 @@
       "text": "Mom says / they STOLE / the tags.",
       "direction": "believing it, a little indignant",
       "shot": "S04",
-      "look": "Mom"
+      "look": "actor:ROSA"
     },
     {
       "id": "L05",
@@ -171,7 +167,7 @@
       "text": "Our neighbors / moved to the CITY.",
       "direction": "quick and warm, a smile on it",
       "shot": "S05",
-      "look": "Mom"
+      "look": "actor:ROSA"
     },
     {
       "id": "L06",
@@ -180,7 +176,7 @@
       "direction": "fast and impressed, listing fancy presents",
       "shot": "S06",
       "look": [
-        "Mom",
+        "actor:ROSA",
         "prop:brewing_stand"
       ]
     },
@@ -190,7 +186,7 @@
       "text": "Potion, / then APPLE, / she says. / Fixes ANYTHING.",
       "direction": "doing Mom's saying, sing-song, then plain",
       "shot": "S07",
-      "look": "Mom"
+      "look": "actor:ROSA"
     },
     {
       "id": "L08",
@@ -214,7 +210,7 @@
       "text": "Tonight, / Mom said / she'd be back / by DARK.",
       "direction": "plain and steady, a beat before the last two words",
       "shot": "S10",
-      "look": "Mom"
+      "look": "actor:ROSA"
     },
     {
       "id": "L11",
@@ -473,15 +469,15 @@
     },
     "potion": {
       "at": [
-        -13.5,
-        1,
-        0
+        -13.9,
+        4.6,
+        -0.5
       ]
     },
     "lamp_post": {
       "at": [
         -15,
-        1,
+        6,
         2
       ]
     },

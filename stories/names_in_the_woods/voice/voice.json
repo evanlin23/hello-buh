@@ -1,0 +1,502 @@
+{
+ "lines": {
+  "L01": {
+   "who": "N",
+   "text": "Every night three zombies named Tomas, Greta and Old Ben walk out of the woods.",
+   "dur": 5.052,
+   "onset": 0.35,
+   "end": 5.052,
+   "chunks": [
+    [
+     0.35,
+     1.049
+    ],
+    [
+     1.049,
+     1.875
+    ],
+    [
+     1.875,
+     2.638
+    ],
+    [
+     2.638,
+     2.955
+    ],
+    [
+     2.955,
+     3.654
+    ],
+    [
+     3.654,
+     5.052
+    ]
+   ],
+   "captions": [
+    "Every night",
+    "THREE zombies",
+    "named TOMAS,",
+    "GRETA",
+    "and OLD BEN",
+    "walk out of the WOODS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L02": {
+   "who": "N",
+   "text": "At our fence, they stare at mom.",
+   "dur": 2.888,
+   "onset": 0.53,
+   "end": 2.7,
+   "chunks": [
+    [
+     0.53,
+     1.47
+    ],
+    [
+     1.47,
+     2.194
+    ],
+    [
+     2.194,
+     2.7
+    ]
+   ],
+   "captions": [
+    "At our FENCE,",
+    "they STARE",
+    "at MOM."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L03": {
+   "who": "N",
+   "text": "Everyone here gets a name tag. Mom's says rosa.",
+   "dur": 3.38,
+   "onset": 0.09,
+   "end": 3.22,
+   "chunks": [
+    [
+     0.09,
+     0.994
+    ],
+    [
+     0.994,
+     2.107
+    ],
+    [
+     2.107,
+     3.22
+    ]
+   ],
+   "captions": [
+    "Everyone here",
+    "gets a NAME TAG.",
+    "Mom's says ROSA."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L04": {
+   "who": "N",
+   "text": "Mom says they stole the tags.",
+   "dur": 2.27,
+   "onset": 0.19,
+   "end": 1.94,
+   "chunks": [
+    [
+     0.19,
+     0.709
+    ],
+    [
+     0.709,
+     1.357
+    ],
+    [
+     1.357,
+     1.94
+    ]
+   ],
+   "captions": [
+    "Mom says",
+    "they STOLE",
+    "the tags."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L05": {
+   "who": "Mom",
+   "text": "Our neighbors moved to the city.",
+   "dur": 2.52,
+   "onset": 0.19,
+   "end": 2.26,
+   "chunks": [
+    [
+     0.19,
+     1.058
+    ],
+    [
+     1.058,
+     2.26
+    ]
+   ],
+   "captions": [
+    "Our neighbors",
+    "moved to the CITY."
+   ],
+   "with": [
+    "Mom"
+   ],
+   "model": "gemini-3.1-flash-tts-preview"
+  },
+  "L06": {
+   "who": "N",
+   "text": "Every week, she takes them a golden apple and a splash potion.",
+   "dur": 4.17,
+   "onset": 0.27,
+   "end": 3.8,
+   "chunks": [
+    [
+     0.27,
+     0.928
+    ],
+    [
+     0.928,
+     1.766
+    ],
+    [
+     1.766,
+     2.603
+    ],
+    [
+     2.603,
+     3.8
+    ]
+   ],
+   "captions": [
+    "Every week,",
+    "she takes them",
+    "a GOLDEN APPLE",
+    "and a SPLASH POTION."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L07": {
+   "who": "N",
+   "text": "Potion, then apple, she says. Fixes anything.",
+   "dur": 3.22,
+   "onset": 0.15,
+   "end": 3.06,
+   "chunks": [
+    [
+     0.15,
+     0.635
+    ],
+    [
+     0.635,
+     1.397
+    ],
+    [
+     1.397,
+     2.021
+    ],
+    [
+     2.021,
+     3.06
+    ]
+   ],
+   "captions": [
+    "Potion,",
+    "then APPLE,",
+    "she says.",
+    "Fixes ANYTHING."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L08": {
+   "who": "N",
+   "text": "Nobody takes them. I get the apples.",
+   "dur": 2.768,
+   "onset": 0.21,
+   "end": 2.7,
+   "chunks": [
+    [
+     0.21,
+     0.663
+    ],
+    [
+     0.663,
+     1.493
+    ],
+    [
+     1.493,
+     1.87
+    ],
+    [
+     1.87,
+     2.7
+    ]
+   ],
+   "captions": [
+    "Nobody",
+    "TAKES them.",
+    "I get",
+    "the APPLES."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L09": {
+   "who": "N",
+   "text": "Nobody here can throw. I win egg fights.",
+   "dur": 3.332,
+   "onset": 0.01,
+   "end": 3.08,
+   "chunks": [
+    [
+     0.01,
+     0.923
+    ],
+    [
+     0.923,
+     1.752
+    ],
+    [
+     1.752,
+     2.167
+    ],
+    [
+     2.167,
+     3.08
+    ]
+   ],
+   "captions": [
+    "Nobody here",
+    "can THROW.",
+    "I win",
+    "EGG FIGHTS."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L10": {
+   "who": "N",
+   "text": "Tonight, Mom said she'd be back by dark.",
+   "dur": 3.068,
+   "onset": 0.19,
+   "end": 2.74,
+   "chunks": [
+    [
+     0.19,
+     0.741
+    ],
+    [
+     0.741,
+     1.293
+    ],
+    [
+     1.293,
+     2.189
+    ],
+    [
+     2.189,
+     2.74
+    ]
+   ],
+   "captions": [
+    "Tonight,",
+    "Mom said",
+    "she'd be back",
+    "by DARK."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L11": {
+   "who": "N",
+   "text": "At dark, four zombies walked out.",
+   "dur": 2.779,
+   "onset": 0.0,
+   "end": 2.46,
+   "chunks": [
+    [
+     0.0,
+     0.635
+    ],
+    [
+     0.635,
+     1.587
+    ],
+    [
+     1.587,
+     2.46
+    ]
+   ],
+   "captions": [
+    "At dark,",
+    "FOUR zombies",
+    "walked out."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L12": {
+   "who": "N",
+   "text": "The new one said <short pause> Rosa. She had the apple.",
+   "dur": 3.78,
+   "onset": 0.03,
+   "end": 3.58,
+   "chunks": [
+    [
+     0.03,
+     1.058
+    ],
+    [
+     1.058,
+     1.992
+    ],
+    [
+     1.992,
+     2.646
+    ],
+    [
+     2.646,
+     3.58
+    ]
+   ],
+   "captions": [
+    "The new one",
+    "said ROSA.",
+    "She had",
+    "the APPLE."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L13": {
+   "who": "N",
+   "text": "She dropped her potion for me.",
+   "dur": 2.24,
+   "onset": 0.27,
+   "end": 2.04,
+   "chunks": [
+    [
+     0.27,
+     0.965
+    ],
+    [
+     0.965,
+     1.598
+    ],
+    [
+     1.598,
+     2.04
+    ]
+   ],
+   "captions": [
+    "She DROPPED",
+    "her POTION",
+    "for ME."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L14": {
+   "who": "N",
+   "text": "Mom lied to keep me home. She can't throw.",
+   "dur": 3.86,
+   "onset": 0.23,
+   "end": 3.58,
+   "chunks": [
+    [
+     0.23,
+     0.9
+    ],
+    [
+     0.9,
+     2.24
+    ],
+    [
+     2.24,
+     3.58
+    ]
+   ],
+   "captions": [
+    "Mom lied",
+    "to keep me HOME.",
+    "She can't THROW."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  },
+  "L15": {
+   "who": "N",
+   "text": "I can. Potion, then apple.",
+   "dur": 3.2,
+   "onset": 0.21,
+   "end": 2.96,
+   "chunks": [
+    [
+     0.21,
+     0.898
+    ],
+    [
+     0.898,
+     1.7
+    ],
+    [
+     1.7,
+     2.96
+    ]
+   ],
+   "captions": [
+    "I CAN.",
+    "Potion,",
+    "then APPLE."
+   ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts"
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.3,
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts",
+  "Mom": "gemini-3.1-flash-tts-preview"
+ },
+ "total": 53.03
+}
