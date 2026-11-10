@@ -1,7 +1,8 @@
 """Word timings for Gemini-voiced lines (docs/voices.md). Gemini TTS returns audio only, but the captions
 (scripts/story_track.py) and the stunt's beats (lib/story.js `S.line(id).at(k)`) need each caption chunk's start and
 end. This runs Whisper (openai/whisper-base.en, MIT, ~290 MB in the HF cache, CPU) on every line's wav with word
-timestamps and rewrites voice/voice.json's `chunks`, `onset` and `end` with them, in the format scripts/voice.py
+timestamps and rewrites voice/voice.json's `chunks`, `onset` and `end` with them (and voice/words.json, every word's
+times, for the one-word captions), in the format scripts/voice.py
 writes for Kokoro, so a Gemini story plugs into the same caption pipeline.
 
     ~/.hb-tts/bin/python scripts/align.py stories/<name> [--only L03,L07]     (after scripts/tts.py stories/<name>)
@@ -83,6 +84,8 @@ def main(d, only=None):
     story = json.loads((d / "story.json").read_text())
     vf = d / "voice" / "voice.json"
     meta = json.loads(vf.read_text())
+    wf = d / "voice" / "words.json"   # every word's time, for one-word captions (story_track._one_word)
+    wj = json.loads(wf.read_text()) if wf.exists() else {}
     for ln in story["lines"]:
         lid = ln["id"]
         if lid not in meta["lines"] or (only and lid not in only):
@@ -90,6 +93,7 @@ def main(d, only=None):
         heard = words(d / "voice" / f"{lid}.wav")
         if not heard:
             print(f"{lid}: Whisper heard nothing, kept the even spread"); continue
+        wj[lid] = [[w, round(a, 3), round(b, 3)] for w, a, b in heard]
         spoken = [s for _, s in voice.chunks(ln)]
         ct = chunk_times(spoken, heard)
         said, got = norm(" ".join(spoken)), norm(" ".join(w for w, _, _ in heard))
@@ -99,6 +103,7 @@ def main(d, only=None):
         print(f"{lid}: {' | '.join(f'{a:.2f}' for a, _ in ct)}  heard: {' '.join(w for w, _, _ in heard)}"
               + ("" if match > 0.6 else f"   WARNING: only {match:.0%} like the script"))
     vf.write_text(json.dumps(meta, indent=1))
+    wf.write_text(json.dumps({ln["id"]: wj[ln["id"]] for ln in story["lines"] if ln["id"] in wj}, indent=0))
 
 
 if __name__ == "__main__":

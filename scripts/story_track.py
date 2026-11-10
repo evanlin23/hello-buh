@@ -107,11 +107,12 @@ def _wrap(words, f, max_w):
     return [words[:best], words[best:]]
 
 
-def caption_image(text, key, base=(255, 255, 255, 255), speaker=False, tag=None):
+def caption_image(text, key, base=(255, 255, 255, 255), speaker=False, tag=None, bar=None):
     """base: the colour of the plain words (white; a v2 story's character lines use that speaker's cast colour).
-    speaker: a character's line (docs/voices.md "Caption colours"): its key words stay in the speaker's colour,
-    drawn brighter, with a bar under them in that colour, instead of the story's key colour, so the colour always
-    says who is talking and a key word still pops. tag: a small name over the caption (the speaker's first line)."""
+    speaker: a line in a story with a voiced cast (docs/voices.md "Caption colours"): the word colour always says who
+    is talking, so key words stay in the speaker's colour (lifted toward white) with a bar under them, in `bar` (the
+    narrator: the story's key colour) or else the speaker's colour. Without `speaker` (v1 stories): key words in
+    `key`, as always. tag: a small name over the caption (a character's first line)."""
     f = ImageFont.truetype(str(FONT), CAP_PX)
     stroke = 8
     lines = _wrap(text.split(), f, MAX_W - 2 * stroke)
@@ -133,7 +134,7 @@ def caption_image(text, key, base=(255, 255, 255, 255), speaker=False, tag=None)
             k = _is_key(w)
             if k and speaker:
                 ww = f.getlength(w.rstrip(".,!?;:…"))
-                d.rounded_rectangle((x - 2, y + asc + 4, x + ww + 2, y + asc + 17), 5, fill=base, outline=INK, width=4)
+                d.rounded_rectangle((x - 2, y + asc + 4, x + ww + 2, y + asc + 17), 5, fill=bar or base, outline=INK, width=4)
             d.text((x, y), w, font=f, fill=(hot if speaker else key) if k else base, stroke_width=stroke, stroke_fill=INK)
             x += f.getlength(w) + sp
     shadow = Image.new("RGBA", txt.size, (0, 0, 0, 0))
@@ -282,13 +283,16 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     total = int(round(dur * FPS))
     # story.json v2: a character's lines in that speaker's colour (the narrator's, and v1 stories', white)
     spk = speakers(story)
+    cast_v = any(c for c in spk.values() if c[1])   # the story has a voiced character
     for k, (t0, t1, text, lid) in enumerate(caption_events(story_dir, timeline, start, dur, who=True)):
         f0, f1 = int(round(t0 * FPS)), int(round(t1 * FPS))
         if f0 > frame:
             runs.append((blank, f0 - frame))
         f0 = max(f0, frame)
         col, is_char, tag = spk.get(lid, ((255, 255, 255, 255), False, None))
-        base = caption_image(text, key, col, is_char, tag)   # the tag over every word of a character's first line
+        # with characters in the story, a narrator's key word can't be in a colour (it would read as a character
+        # talking, one word at a time): white with a bar in the key colour. v1 stories: unchanged.
+        base = caption_image(text, key, col, is_char or cast_v, tag, None if is_char else key)   # the tag over every word of a character's first line
         for j in range(f1 - f0):
             s = POP[j] if j < len(POP) else 1.0
             if j >= len(POP):

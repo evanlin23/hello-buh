@@ -140,8 +140,8 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   right words before anything is recorded (`./hb voice` runs `scripts/speaker_check.py` and re-takes failures); a
   line in the wrong voice is a blocker. Each character's captions are in its own colour, matched to its look and role
   (`color` in voices/cast.json: the narrator white, Milo Steve's cyan, the elder amber...), with a small name tag
-  over its first line; the narrator's key words keep the story's key colour, a character's key words are underlined
-  in its own colour (docs/voices.md "Caption colours").
+  over its first line; the word colour only ever says who is talking, and a key word is a bar under it (docs/voices.md
+  "Caption colours").
 - **Owner, 2026-11-10: "do 1 at a time if the top do it 1 at a time. the font is ok yes just whatever is best".**
   Story captions show **one word at a time** (Xenost and Ashyyy: one word in all 48 sampled frames), timed by
   voice/words.json word starts, in Poppins Black. Each word pops in (0.1 s, the existing `POP`) and cuts out hard

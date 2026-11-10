@@ -145,19 +145,22 @@ character thats supposed to be speaking."
   above). A story's cast `color` wins; a one-off character with no colour gets the first library colour no one in the
   story uses. Pick a one-off's colour the same way (a witch purple, a creeper green, the warden deep teal) and check it
   against the cast (below).
-- The narrator (the `role: narrator` cast member, whoever it is: Milo narrating is white) is white, key words in the
-  story's `key_color`, exactly as before. v1 stories and every non-story Short render unchanged (pixel-identical).
-- A character's line: every word in its colour; its key words lifted toward white and underlined with a bar in its
-  colour. Tried the story key colour for a character's key words too: a two-colour line no longer says who is
-  talking, and Good Boy's amber key colour read as the Elder. The bar keeps the emphasis without a second colour.
-  story_track.py warns when a character's colour is close to the story's key colour: change the key colour.
-- A name tag (the cast `name`, small caps in the speaker's colour) sits over a character's first caption, the words
-  staying where they'd be without it. Narrator-first stories give a character 1-3 lines, often off-camera in POV,
-  so naming the voice once is worth it. `"name_tags": false` in story.json turns them off.
+- Captions run one word at a time (docs/stories.md); each word takes its line's speaker colour, so a single word on
+  screen says who is talking. Chunk mode (`"captions": "chunk"`) colours the same way.
+- **The word colour is only ever the speaker.** Emphasis (a CAPS key word) is a bar under the word, never a second
+  colour: a character's key word is its colour lifted toward white over a bar in its colour; in a story with a voiced
+  character, the narrator's key word is white over a bar in the story's `key_color`. Tried first: the narrator's key
+  words in the key colour, and character key words in the key colour too; one word at a time, Good Boy's amber key
+  word read as the Elder talking. A v1 story (no cast) and every non-story Short render as before (pixel-identical:
+  white, key words in the key colour). story_track.py warns when a character's colour is near the key colour.
+- A name tag (the cast `name`, small caps in the speaker's colour) sits over every word of a character's first line
+  (one word alone is too short to read a tag), the word staying where it would be without it. Narrator-first
+  stories give a character 1-3 short lines, often off-camera in POV, so naming the voice once is worth it (the
+  narration research recommends it). `"name_tags": false` in story.json turns them off.
 - Checked for colour blindness (Viénot simulation, CIE Lab): every pair of library colours is at least ΔE 12 apart
   under deuteranopia, protanopia and tritanopia (31+ with normal vision), except the storyteller's lilac against
   Milo's cyan (7 under deuteranopia; the storyteller is normally the narrator, and so white), and every colour has 6:1 or more contrast
-  against the caption's dark outline. Stills: out/captions_colour/ (not committed).
+  against the caption's dark outline. Stills: out/captions_colour/ (not committed; `sheet_phone_size.png` at phone size).
 
 `voice.json` keeps the shape `lib/story.js` and `edit.py --story` read (`dur`, `onset`, `end`, `chunks`,
 `captions`, plus `who`), so stunts and captions don't change. tts.py first spreads the chunks evenly by letters;
