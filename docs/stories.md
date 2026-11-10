@@ -66,6 +66,13 @@ key words in the story's colour, centred at 70% of the game view's height (under
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
+
+- **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
+  minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
+  accident needs a cause the viewer can SEE and that exists in the game: knocked in by a creeper blast or a mob hit,
+  a block breaking under you, falling through powder snow or a trapdoor, an arrow, lag. Never "I tripped", "I
+  slipped", "I fell asleep" played as the bot simply walking in. If the bot has to walk into danger, the story
+  must say why it chose to. The creeper story (runaway) is the bar: one simple premise and a twist you can rewatch.
 - **The first line is a concrete mystery or threat to me, with something countable** ("All FOURTEEN villagers
   in my village RUN when they see ME."), over the picture it describes, in the first second.
 - **The twist turns the whole story over,** planted at least twice where a rewatch catches it, and said plainly

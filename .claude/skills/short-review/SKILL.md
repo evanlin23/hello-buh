@@ -40,6 +40,8 @@ Work in this order, and stop collecting once you have the verdict's evidence:
   - a dead or still ending, or one more than 1 s after the payoff;
   - the payoff not readable;
   - clearly un-vanilla behaviour (wrong mob, impossible physics or dig speed, missing HUD);
+  - an "accident" with no visible in-game cause (owner: "you can't really trip in Minecraft, so it just looks like
+    him intentionally walking into the lava");
   - black or void terrain, a cut world edge in shot, a broken render;
   - under 30 s without the owner's OK;
   - the story not understandable without pausing.
