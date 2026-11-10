@@ -273,7 +273,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
   or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog. The set library
   (`lib/sets`, catalog and anchors in docs/sets.md) does both: `sets.findSite`, `sets.place(ctx, 'cottage', {...})`
-  (14 dressed pieces that land on the terrain and return door/bed/window anchors), `sets.vanilla` and `sets.dress`.
+  (17 dressed pieces that land on the terrain and return door/bed/window anchors), `sets.vanilla` and `sets.dress`.
 - **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
   good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
   overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its

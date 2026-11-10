@@ -23,22 +23,42 @@ if [ ! -f "work/assets/$VER/resolved.json" ] || [ renderer/build_assets.py -nt "
 fi
 
 # --- private local server (offline mode, 127.0.0.1 only; the bot is the only player) ---
+# One server per box: every worktree's server listens on 127.0.0.1:25565, and worktrees often share work/server
+# through a symlink. Two runs at once raced (2026-11-10): both deleted the world and the console FIFO, the second
+# matched the first's 'Done (' and its bot connected to nothing, and an orphaned server kept the port. So: a box-wide
+# lock held from here until this run's server has stopped (a run waits for it, SERVER_LOCK_WAIT seconds, default 1 h).
+LOCK=/tmp/hellobuh-mc-25565.lock
+exec 9>"$LOCK"
+if ! flock -n 9; then
+  echo "another run has the Minecraft server ($LOCK); waiting for it..."
+  flock -w "${SERVER_LOCK_WAIT:-3600}" 9 || { echo "gave up waiting for the server lock"; exit 1; }
+fi
 S=work/server
 cp server.properties "$S/server.properties"
 echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEULA), accepted for this private server
 python3 make_ops.py HelloBuh "$S/ops.json"
 rm -rf "$S/world"                 # fresh world every run
 rm -f "$S/console" && mkfifo "$S/console"
-# (the log by absolute path: in a worktree whose work/server is a symlink to the main checkout's, ../server.log
-# landed in the main checkout's work/ and this run waited 3 min for a 'Done' that never showed here)
-SLOG=$PWD/work/server.log; rm -f "$SLOG"
+# this run's own log (absolute path: in a worktree whose work/server is a symlink to the main checkout's, ../server.log
+# landed in the main checkout's work/), with work/server.log pointing at it for the tools that read that name
+SLOG=$PWD/work/server.$$.log; rm -f "$SLOG"
+find work -maxdepth 1 -name 'server.*.log' -mmin +240 -delete 2>/dev/null || true
+ln -sfn "server.$$.log" work/server.log
 ( cd "$S" && tail -f console | java -Xmx2G -jar server.jar nogui > "$SLOG" 2>&1 ) &
 SERVER_PID=$!
-# (timeout: writing to the console FIFO blocks forever if the server already exited)
-stop_server() { timeout 5 sh -c "echo stop > '$S/console'" 2>/dev/null || true; sleep 3; pkill -f "tail -f console" 2>/dev/null || true; }
+# stop: 'stop' on the console (timeout: writing to the FIFO blocks forever if the server already exited), wait for
+# this run's java to exit, then end this run's own `tail` only (a box-wide pkill ended other runs' consoles), and
+# release the lock
+stop_server() {
+  timeout 5 sh -c "echo stop > '$S/console'" 2>/dev/null || true
+  for _ in $(seq 1 30); do pgrep -P "$SERVER_PID" -f server.jar >/dev/null || break; sleep 1; done
+  pkill -P "$SERVER_PID" -f server.jar 2>/dev/null || true
+  pkill -P "$SERVER_PID" -f "tail -f console" 2>/dev/null || true
+  flock -u 9 2>/dev/null || true
+}
 trap stop_server EXIT
-for i in $(seq 1 90); do grep -q 'Done (' work/server.log 2>/dev/null && break; sleep 2; done
-grep -q 'Done (' work/server.log || { echo "server did not start"; tail -20 work/server.log; exit 1; }
+for i in $(seq 1 90); do grep -q 'Done (' "$SLOG" 2>/dev/null && break; sleep 2; done
+grep -q 'Done (' "$SLOG" || { echo "server did not start"; tail -20 "$SLOG"; exit 1; }
 
 # --- the stunt, retried until it lands ---
 REC=work/$NAME.rec.json

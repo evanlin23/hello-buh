@@ -24,52 +24,56 @@ module.exports = {
     else if (process.env.FRESH) await sets.freshLand(ctx, module.exports.biome, process.env.FRESH === '1' ? {} : { starts: [process.env.FRESH.split(',').map(Number)] })
     await ctx.sleep(5000)
     try { await bot.waitForChunksToLoad() } catch (e) {}
-    const site = await sets.findSite(ctx, { w: 64, d: 64, reach: 64, stride: 16, maxRange: 10, maxTrees: 0.4, ring: 56 })
+    // the layout, relative to the square: everything faces the square; the tavern and the windmill are the landmarks
+    const PLAN = [
+      ['market', 'market', 0, 0, 'south'],
+      ['church', 'church', 2, -38, 'south'],
+      ['graveyard', 'graveyard', 25, -40, 'west'],
+      ['tavern', 'tavern', -36, 2, 'east', { seed: 5 }],
+      ['cottageB', 'cottage', 32, 2, 'west', { palette: 'spruce', seed: 8, bed: 'blue' }],
+      ['houseA', 'house2', -28, -27, 'east'],
+      ['houseB', 'house2', 29, 27, 'north', { palette: 'birch', seed: 4 }],
+      ['well', 'well', -2, 24, 'north'],
+      ['farm', 'farmhouse', -30, 50, 'north'],
+      ['mill', 'windmill', 52, -12, 'west']
+    ]
+    // where the whole layout costs least to build (flattest under every footprint, no water, few trees, even heights)
+    const best = await sets.planSite(ctx, PLAN.map(([, name, dx, dz, facing, variant]) => ({ name, dx, dz, facing, variant })), { reach: 112, stride: 8 })
     const p = bot.entity.position.floored()
-    // DEMO_AT=x,z: build the village there (reuse a stretch of land already generated: new land is slow to make)
-    const O = site ? { x: site.x, z: site.z } : { x: p.x, z: p.z }
+    const O = best ? { x: best.x, z: best.z } : { x: p.x, z: p.z }
     this.O = O
-    // each piece on the flattest ground within a few blocks of where the plan puts it (organic, fitted to the land)
-    const taken = []
-    const at = (dx, dz, name) => {
-      const want = { x: O.x + dx, z: O.z + dz }
-      if (!name) return want
-      const { size } = sets.build(name).bounds()
-      return (async () => {
-        const s = await sets.findSite(ctx, { w: size[0] + 4, d: size[2] + 4, near: want, reach: 12, stride: 4, maxRange: 6, maxTrees: 0.6, ring: 20, avoid: taken }) ||
-          await sets.findSite(ctx, { w: size[0] + 4, d: size[2] + 4, near: want, reach: 16, stride: 4, maxRange: 30, maxTrees: 1, ring: 20, avoid: taken })   // the least bad
-        const p = s ? { x: s.x, z: s.z } : want
-        taken.push({ x: p.x, z: p.z, w: size[0] + 6, d: size[2] + 6 })
-        return p
-      })()
-    }
     const S = this.S = {}
-    // the plan: the market in the middle, everything else facing it, each on its own ground
-    S.market = await sets.place(ctx, 'market', { ...(await at(0, 0, 'market')), facing: 'south' })
-    O.x = Math.round((S.market.box.x0 + S.market.box.x1) / 2); O.z = Math.round((S.market.box.z0 + S.market.box.z1) / 2)   // the square is the centre
-    S.church = await sets.place(ctx, 'church', { ...(await at(2, -36, 'church')), facing: 'south' })
-    S.graveyard = await sets.place(ctx, 'graveyard', { ...(await at(24, -38, 'graveyard')), facing: 'west' })
-    S.cottageA = await sets.place(ctx, 'cottage', { ...(await at(-31, 4, 'cottage')), facing: 'east', variant: { palette: 'oak', seed: 3 } })
-    S.cottageB = await sets.place(ctx, 'cottage', { ...(await at(31, 2, 'cottage')), facing: 'west', variant: { palette: 'spruce', seed: 8, bed: 'blue' } })
-    S.houseA = await sets.place(ctx, 'house2', { ...(await at(-27, -21, 'house2')), facing: 'east' })
-    S.houseB = await sets.place(ctx, 'house2', { ...(await at(28, 26, 'house2')), facing: 'north', variant: { palette: 'birch', seed: 4 } })
-    S.well = await sets.place(ctx, 'well', { ...(await at(-2, 23, 'well')), facing: 'north' })
-    S.farm = await sets.place(ctx, 'farmhouse', { ...(await at(-30, 46, 'farmhouse')), facing: 'north' })
-    S.tower = await sets.place(ctx, 'watchtower', { ...(await at(50, -10, 'watchtower')), facing: 'west' })
-    // a vanilla village beyond the church: roofs and a bell in the distance
-    if (process.env.VILLAGE !== '0') try { S.village = await sets.vanilla(ctx, 'village_plains', { ...at(-10, -135), radius: 80, scan: false }) } catch (e) { ctx.log('village:', e.message) }
+    // the village's clearing: the trees inside the layout go (groves are planted back round it afterwards)
+    await sets.forceload(ctx, O.x - 64, O.z - 64, O.x + 72, O.z + 72)
+    await dress.clearTrees(ctx, { x0: O.x - 50, z0: O.z - 56, x1: O.x + 62, z1: O.z + 66, y0: 55, y1: 110 })
+    // each piece where the plan puts it, nudged at most a few blocks to the flattest spot there
+    const taken = []
+    for (const [key, name, dx, dz, facing, variant] of PLAN) {
+      const want = { x: O.x + dx, z: O.z + dz }
+      const z = sets.build(name, variant || {}).bounds().size, turned = facing === 'east' || facing === 'west'
+      const w = (turned ? z[2] : z[0]) + 4, d = (turned ? z[0] : z[2]) + 4
+      const s2 = await sets.findSite(ctx, { w, d, near: want, reach: 4, stride: 2, maxRange: 30, maxTrees: 1, ring: 16, avoid: taken })
+      const at = s2 ? { x: s2.x, z: s2.z } : want
+      taken.push({ x: at.x, z: at.z, w: w + 2, d: d + 2 })
+      S[key] = await sets.place(ctx, name, { ...at, facing, variant })
+      if (key === 'market') { O.x = Math.round((S.market.box.x0 + S.market.box.x1) / 2); O.z = Math.round((S.market.box.z0 + S.market.box.z1) / 2) }
+    }
+    S.cottageA = S.tavern   // (the street shot starts from the tavern's street anchor)
+    S.tower = S.mill
+    // VILLAGE=1: a vanilla village beyond the church for the distance (slow on new land: the server generates it)
+    if (process.env.VILLAGE === '1') try { S.village = await sets.vanilla(ctx, 'village_plains', { x: O.x - 10, z: O.z - 135, radius: 80, scan: false }) } catch (e) { ctx.log('village:', e.message) }
 
     // worn paths from every door to the square
     const door = (s, a = 'doorstep') => [Math.round(s.anchors[a].x), Math.round(s.anchors[a].z)]
     const m = S.market.anchors
     const edgeW = [O.x - 14, O.z + 1], edgeE = [O.x + 14, O.z], edgeN = [O.x, O.z - 14], edgeS = [O.x + 1, O.z + 14]
-    await dress.path(ctx, [door(S.cottageA, 'street'), [O.x - 20, O.z + 3], edgeW], { w: 3 })
+    await dress.path(ctx, [door(S.tavern, 'street'), [O.x - 20, O.z + 3], edgeW], { w: 3 })
     await dress.path(ctx, [door(S.cottageB, 'street'), [O.x + 20, O.z + 1], edgeE], { w: 3 })
     await dress.path(ctx, [door(S.houseA, 'street'), [O.x - 18, O.z - 12], [O.x - 9, O.z - 10]], { w: 3 })
     await dress.path(ctx, [door(S.houseB, 'street'), [O.x + 18, O.z + 16], [O.x + 9, O.z + 11]], { w: 3 })
     await dress.path(ctx, [door(S.church), edgeN], { w: 4, blocks: ['dirt_path', 'gravel', 'dirt_path', 'cobblestone'] })
     await dress.path(ctx, [edgeS, [O.x, O.z + 20], door(S.farm, 'doorstep')], { w: 3 })
-    await dress.path(ctx, [edgeE, [O.x + 36, O.z - 6], door(S.tower, 'doorstep')], { w: 2 })
+    await dress.path(ctx, [edgeE, [O.x + 38, O.z - 6], door(S.mill, 'approach')], { w: 2 })
     // lamps along the paths and at the square's corners
     for (const [x, z] of [[-20, 6], [20, -3], [-17, -15], [17, 18], [4, -18], [5, 18], [36, -2]]) await dress.lamp(ctx, O.x + x, O.z + z, { h: 3, fence: 'dark_oak_fence' })
     // tree clumps round the village (big ones for the skyline), boulders, flowers and long grass in the gaps
@@ -112,6 +116,8 @@ module.exports = {
     // 3. the market: from the south entrance past a stall, the fountain, the church
     const e = S.market.anchors.entrance
     await sets.shoot(ctx, { pos: { x: e.x + 7, y: e.y + 0.5, z: e.z + 5 }, look: { x: church.x, y: y0 + 6, z: church.z } }, 10, 'market')
+    // the tavern, front three-quarter, the clearest line
+    await sets.shoot(ctx, sets.frame(ctx, S.tavern, 'wide'), 10, 'tavern')
     // 4. the establishing shot again at dusk: lamps, windows and the hearths lit
     ctx.dayTime = 12900; ctx.bot.chat('/time set 12900'); ctx.mark('time', { time: 12900 })
     await sets.shoot(ctx, sets.frame(ctx, { shots: { wide: establish } }), 10, 'dusk')
