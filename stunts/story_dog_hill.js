@@ -311,9 +311,9 @@ module.exports = {
     // ---- L15: "Day one." over the dog alone where Milo vanished; on "Again." the cut to the opening frame pulling
     // back (the loop) with the payoff's sound hit; the end 0.25 s after the word (owner: end as the payoff lands)
     line('N', 'L15')
-    await run(15)
+    await run(27)   // "Day one." and the breath (the quiet re-take: "again" at 1.37 s)
     cut('end'); ctx.mark('hit'); ctx.mark('payoff')
-    await run(29)
+    await run(26)   // "again" ends at 2.41 s: the end 0.25 s after it
     ctx.mark('end_scene')
     await run(10)
     return true
