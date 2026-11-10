@@ -25,15 +25,15 @@
   "notes": "The old default narrator (Erinome until 2026-11-10, recast to Despina: Erinome was heard as 'announcer'/'audiobook' in three listening tests, Despina 9/10). Third-person framing for serious mystery stories; the default narrator is now the kid (`narrator`)."
  },
  "milo": {
-  "name": "Milo",
+  "name": "Buh",
   "voice": "Achird",
   "color": "#4FD8E6",
   "color_why": "cyan: Steve's shirt (Milo is the default Steve skin)",
-  "profile": "Milo, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
+  "profile": "Buh, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
   "post": "",
   "fallback": "am_michael",
   "from": "the AI-dilemma voice for Claude, the trailer's Buh (renamed Milo, owner 2026-11-10) and the movie's brothers",
-  "notes": "First person. Range: scared/funny ('Okay. That's... not normal.'), serious, whispering. Never sped up."
+  "notes": "First person. Range: scared/funny ('Okay. That's... not normal.'), serious, whispering. Never sped up. Owner 2026-11-10: the hero is called Buh again, and nobody ever says his name aloud (it only appears as in-game text: chat, death screen, name tag)."
  },
  "elder": {
   "name": "Elder",
@@ -146,5 +146,16 @@
   "from": "Good Boy narrator audition, owner 2026-11-10: \"kid puck is fine\" (Leda was 'so high pitched and annoying'; wants a kid 'like the roblox shorts but more refined')",
   "notes": "No post filter, no tempo or pitch change. Measured ~235 Hz median on the audition (240-330 per line in a story), ~3.4 words/s while speaking. The short breath between sentences is what lets the splitter cut cleanly (voice_edges.py: 0 cut). No ellipses. Owner later: 'er that does not sound right'; Pip is 'a lot a lot better'. Alternative only.",
   "model_hint": "single-speaker requests; gemini-3.1-flash-tts-preview first, gemini-2.5-flash-preview-tts on 429 (same voice)"
+ },
+ "buh": {
+  "name": "Buh",
+  "voice": "Achird",
+  "color": "#4FD8E6",
+  "color_why": "cyan: Steve's shirt (Milo is the default Steve skin)",
+  "profile": "Buh, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
+  "post": "",
+  "fallback": "am_michael",
+  "from": "the AI-dilemma voice for Claude, the trailer's Buh (renamed Milo, owner 2026-11-10) and the movie's brothers",
+  "notes": "First person. Range: scared/funny ('Okay. That's... not normal.'), serious, whispering. Never sped up. Owner 2026-11-10: the hero is called Buh again, and nobody ever says his name aloud (it only appears as in-game text: chat, death screen, name tag)."
  }
 }

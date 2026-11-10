@@ -54,7 +54,7 @@ plot never depends on them.
 ![The Green](world_map_hub.jpg)
 
 `node scripts/world.js map` redraws both (full size in `out/world/`). Establishing stills from a `_world_build`
-recording on day 4300: Hushwell with the boxed bell and Dog Hill above it, the dog and Pip by Milo's hut, and the
+recording on day 4300: Hushwell with the boxed bell and Dog Hill above it, the dog and Pip by Buh's hut, and the
 coast at Tidewater.
 
 ![Hushwell](still_hushwell.jpg) ![Dog Hill](still_dog_hill.jpg) ![Tidewater](still_coast.jpg)
@@ -63,19 +63,19 @@ coast at Tidewater.
 
 | place | where (at) | what's there | stories (day) |
 |---|---|---|---|
-| **Hushwell** | (-162, 79, -860): the well; generated plains village at (-170, -852) | Milo's home village on a terrace above the east coast. The vanilla houses, the well over the shrieker, and the bell boxed in white wool (from day 1400, for good). Carpeted from day 1400 until Milo stopped playing (day 3400). | Light Sleeper (1500), Dog on the Hill (4300) |
-| **Dog Hill** | (-202, 108, -898): the dog's block, D | The hilltop north-west of Hushwell, 29 blocks above the plaza, as Dog on the Hill built it (the render is canon; its bible's sketch differs). A meadow levelled round D with a ridge to the west, Milo's 5x5 dirt hut north-east of D (D + (3..7, -8..-4), door south), the patch where he logged out (D + (3, 0, 0)), the dog on D facing it, and a pile of 14 bones. | Dog on the Hill (4300); the carpet street climbs toward it in Light Sleeper |
+| **Hushwell** | (-162, 79, -860): the well; generated plains village at (-170, -852) | Buh's home village on a terrace above the east coast. The vanilla houses, the well over the shrieker, and the bell boxed in white wool (from day 1400, for good). Carpeted from day 1400 until Buh stopped playing (day 3400). | Light Sleeper (1500), Dog on the Hill (4300) |
+| **Dog Hill** | (-202, 108, -898): the dog's block, D | The hilltop north-west of Hushwell, 29 blocks above the plaza, as Dog on the Hill built it (the render is canon; its bible's sketch differs). A meadow levelled round D with a ridge to the west, Buh's 5x5 dirt hut north-east of D (D + (3..7, -8..-4), door south), the patch where he logged out (D + (3, 0, 0)), the dog on D facing it, and a pile of 14 bones. | Dog on the Hill (4300); the carpet street climbs toward it in Light Sleeper |
 | **Fernbank** | (-380, 64, -1030): the well | Riverside village on the east bank of the North Inlet, 60 blocks west of the Lava Field. Cottages, the librarian's town house, a church, the churchyard, and a dock with the fisherman's boat. Empty except for the librarian and the iron golem from day 520. | Runaway (400), Nitwit (470), Respawn Tax (520) |
 | **The Burned Copy** | (-448, 66, -912) | Past the last torch on Fernbank's south road: a burned, empty copy of a Fernbank house and well (the nitwit's world, which already ended) | Nitwit (470) |
 | **The Digger's House** | (-245, 67, -650) | Birch cottage on the lowland under the High Meadow's east slope. Behind it is **Torch Hill**: a torch at (-290, -684) over a one-wide shaft 40 deep, with a torch every 4 blocks on the left wall. The blue sheep's dirt block (-268, -664), with a line of torches from the door, is an open hole from day 1112. | Torch (300), Sheep Stares (1112) |
 | **Stillwater** | (-215, 68, -1060) | Small farming village on the north shore: Grandpa's cottage, the lever house, the neighbour's cottage, Gary's cottage and field, the one tree (-188, -1058), and the Long Day lever on a stone post (-214, -1062) | The Sun Won't Set (800-1100), The Chunk Next Door (1800) |
 | **The Cliff House** | (-514, 121, -765) | Family house on the west rim of the High Meadow, above a 40-block fall to the White's frozen shore | Respawn Voice (1300) |
 | **Tidewater** | (-200, 63, -700) | Lowland fishing hamlet one block above the sea, south of Hushwell; the lighthouse on the rise at (-150, -712), a dock | One Block Higher (2600, in progress) |
-| **Saltmouth** | (-286, 69, -381): generated plains village | The south peninsula's village, a ruined portal on its east edge. Good Boy's yard is village + (37, 16). Milo lived here with the dog at 16. | Good Boy (3300, held) |
+| **Saltmouth** | (-286, 69, -381): generated plains village | The south peninsula's village, a ruined portal on its east edge. Good Boy's yard is village + (37, 16). Buh lived here with the dog at 16. | Good Boy (3300, held) |
 | **Frostgate** | (-801, 104, -697): generated snowy village | At the White's east edge, on the old road west | More Golems (2900, in progress) |
 | **Ravenford** | (-2044, 71, -485): the east gate; generated plains village at (-2111, -497) | Grandpa's village across the White: the log palisade and east gate, Grandpa's house with the totem wall, the road over the ford to the Ridge and the old tower (-2000, -445). A real pillager outpost stands at (-1913, -393). | Thirty-One Raids (1900) |
 | **Leo's House** | (-2195, 63, -548) | Stone cottage on the shore facing the islets over the stronghold. Its basement holds an end portal frame. | One More Eye (3000, in progress), Put Back (pilot) |
-| **The Portal Cottage** | (-128, 85, -940): the cottage | A spruce cottage on the hill's south-east slope north of Hushwell, its garden looking down to the plaza (the boxed bell in view). The cellar, sunk under it on a ladder shaft, has a lit Nether portal in its east wall, a barrel of 25 years of barters ("Grandpa's Gifts") and obsidian patching the walls. Nico and his grandma live here (not Milo's family). | Gold for the Portal (9300) |
+| **The Portal Cottage** | (-128, 85, -940): the cottage | A spruce cottage on the hill's south-east slope north of Hushwell, its garden looking down to the plaza (the boxed bell in view). The cellar, sunk under it on a ladder shaft, has a lit Nether portal in its east wall, a barrel of 25 years of barters ("Grandpa's Gifts") and obsidian patching the walls. Nico and his grandma live here (not Buh's family). | Gold for the Portal (9300) |
 
 Regions: **the Green** (-620..-40, -1140..-300), **the White** (-1850..-640), **the West March** (-2400..-1860).
 Empty land is there to be claimed: the High Meadow's top, the north forest, the coves east of Hushwell, the
@@ -97,29 +97,29 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 1100 | Stillwater | **The Sun Won't Set.** The lever goes back, the sun sets, and the zombies from under the one tree come out. The narrator is slain. Gary the farmer is taken that night. |
 | 1112 | Digger's House | **Sheep Stares.** 412 days on, the Digger breaks the block, falls and dies to the same zombie. The hole stays open. |
 | 1300 | Cliff House | **Respawn Voice.** A first death, two voices. The Short leaves the question open (the intended answer is in the stunt file). |
-| 1300-1400 | Hushwell | Kid Milo builds his dirt hut on the hilltop. Hushwell finds the shrieker under its well and carpets everything, boxes the bell and lids the well (day 1400). |
-| 1500 | Hushwell | **Light Sleeper.** Milo (about 10) plays a music disc on the open well and the warden rises. "Milo was obliterated by a sonically-charged shriek." His dog sits by its doghouse on the north slope. |
-| ~1550 | | After the warden night Milo is sent across the White to Grandpa in Ravenford. |
+| 1300-1400 | Hushwell | Kid Buh builds his dirt hut on the hilltop. Hushwell finds the shrieker under its well and carpets everything, boxes the bell and lids the well (day 1400). |
+| 1500 | Hushwell | **Light Sleeper.** Buh (about 10) plays a music disc on the open well and the warden rises. "Buh was obliterated by a sonically-charged shriek." His dog sits by its doghouse on the north slope. |
+| ~1550 | | After the warden night Buh is sent across the White to Grandpa in Ravenford. |
 | 1800 | Stillwater | **The Chunk Next Door.** 700 nights after the Long Day ended, the neighbour looks Gary in the face. |
-| 1900 | Ravenford | **Thirty-One Raids.** Milo (about 11) drinks Grandpa's "courage". Raid 32. The 32nd frame on the totem wall is filled after it. |
+| 1900 | Ravenford | **Thirty-One Raids.** Buh (about 11) drinks Grandpa's "courage". Raid 32. The 32nd frame on the totem wall is filled after it. |
 | ~2000 | Leo's House | Put Back (pilot, not canon until made): Leo's house, blown up three years before, comes back block by block. |
 | 2600 | Tidewater | One Block Higher (in progress). |
 | 2900 | Frostgate | More Golems (in progress). |
 | 3000 | Leo's House | One More Eye (in progress): eleven eyes; Leo left six years ago (day ~810). |
-| 3300 | Saltmouth | **Good Boy** (held for rework). Milo at 16 and his dog, who keeps trying to leave him and keeps teleporting back. |
-| 3400 | Dog Hill | Milo's last login: "Sit, boy. I'll be right back." The dog sits on the hilltop. Hushwell takes its carpets up (the shrieker only answers players). The bell stays boxed. |
-| 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Milo joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
+| 3300 | Saltmouth | **Good Boy** (held for rework). Buh at 16 and his dog, who keeps trying to leave him and keeps teleporting back. |
+| 3400 | Dog Hill | Buh's last login: "Sit, boy. I'll be right back." The dog sits on the hilltop. Hushwell takes its carpets up (the shrieker only answers players). The bell stays boxed. |
+| 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Buh joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
 | 9300 | The Portal Cottage | **Gold for the Portal.** Nico throws in a whole stack to buy his grandpa's way home. The piglin in Grandpa's helmet steps out, shaking, and Grandma sends it home with one more ingot. |
 
 ## Recurring characters
 
 | who | look | voice (voices/cast.json) | canon |
 |---|---|---|---|
-| **Milo** | default Steve skin; the bot name and death screens say Milo (owner, 2026-11-10) | `milo` (Achird, 16) for Milo himself. As a kid (about 10-11) he narrates in the house narrator voice (`narrator`, Leda). | Grew up in Hushwell with Mom (Light Sleeper), spent a year or more with Grandpa in Ravenford (Thirty-One Raids), lived in Saltmouth with his dog at 16 (Good Boy), stopped playing on day 3400, came back for a minute on day 4300 (Dog on the Hill). He's a player: he respawns and he logs out. |
-| **The dog** | pale wolf, tame, **red collar (CollarColor 14)**, Milo's | barks only | Milo's dog since his Hushwell childhood. Doghouse on Hushwell's north slope (Light Sleeper). Tries to leave Milo 37 times and teleports back every time (Good Boy, after its rework). Has sat on Dog Hill's D since day 3400, facing the patch where Milo logged out. Never stands up for anyone else. |
+| **Buh** | default Steve skin; the bot name and death screens say Buh (owner, 2026-11-10) | `milo` (Achird, 16) for Buh himself. As a kid (about 10-11) he narrates in the house narrator voice (`narrator`, Leda). | Grew up in Hushwell with Mom (Light Sleeper), spent a year or more with Grandpa in Ravenford (Thirty-One Raids), lived in Saltmouth with his dog at 16 (Good Boy), stopped playing on day 3400, came back for a minute on day 4300 (Dog on the Hill). He's a player: he respawns and he logs out. |
+| **The dog** | pale wolf, tame, **red collar (CollarColor 14)**, Buh's | barks only | Buh's dog since his Hushwell childhood. Doghouse on Hushwell's north slope (Light Sleeper). Tries to leave Buh 37 times and teleports back every time (Good Boy, after its rework). Has sat on Dog Hill's D since day 3400, facing the patch where Buh logged out. Never stands up for anyone else. |
 | **Pip** | baby plains villager, no profession | `narrator` (Leda) | Hushwell kid, about nine at day 4300. Brings the dog a bone every morning. Sits with him every night from Dog on the Hill on. Doesn't know who built the hut. |
-| **Mom** | plains villager, farmer (straw hat) | `mom` (Sulafat) | Milo's mom in Hushwell. "Walk soft, Milo. The ground's a light sleeper." |
-| **Grandpa (Ravenford)** | player actor, `zuri` skin; the slow walk | `elder` (Charon) | Milo's grandpa. Saved Ravenford from 31 raids that he brought himself with ominous bottles. Grandma died. Since raid 32 he and Milo fight together. |
+| **Mom** | plains villager, farmer (straw hat) | `mom` (Sulafat) | Buh's mom in Hushwell. "Walk soft, Buh. The ground's a light sleeper." |
+| **Grandpa (Ravenford)** | player actor, `zuri` skin; the slow walk | `elder` (Charon) | Buh's grandpa. Saved Ravenford from 31 raids that he brought himself with ominous bottles. Grandma died. Since raid 32 he and Buh fight together. |
 | **Grandpa (Hushwell)** | plains villager, cartographer (monocle) | Algenib (Dog on the Hill) | Hushwell's elder. He knows whose dog it is ("Only one voice gets him up", "Said he'd be right back"). |
 | **Grandpa (Stillwater)** | as in The Sun Won't Set | Kokoro (that Short) | Asked every day of the Long Day whether tonight was the night. "Already gone" when the sun set on day 1100. Never shown alive after it. |
 | **The nitwit** | plains nitwit (green coat) | "hmm" | Fernbank's. He stands where something bad is about to happen: near the creeper (Runaway), in the wheat before a creeper, by the well, on a roof (Nitwit), on the respawn point (Respawn Tax). Gone from day 520. |
@@ -156,17 +156,17 @@ follow any Short.
 6. **Hushwell is both villages** (on screen in coordinates; plant for viewers). Light Sleeper and Dog on the Hill
    were both built on the generated village at (-170, -852) and its north-west hill. Light Sleeper's carpet street
    climbs to the doghouse and the red-collared dog. Dog on the Hill is the same hill 2,800 days later. Plant: in
-   Light Sleeper's S02, put the doghouse on the hilltop beside Milo's hut (around D + (0, 0, -6)) instead of 25 blocks
+   Light Sleeper's S02, put the doghouse on the hilltop beside Buh's hut (around D + (0, 0, -6)) instead of 25 blocks
    downhill, so the crane ends on the exact spot where Dog on the Hill's dog will wait.
 7. **The dog who tried to leave** (plant: Good Boy's rework). Good Boy's narrator is a tamed wolf with a red collar
    who has tried to leave "this guy" 37 times. Dog on the Hill's dog won't leave the hill for 900 days, waiting for
-   Milo. Make them the same dog: in the rework the man is **Milo at 16** (he's already the Steve skin; recast his voice
-   from Algenib to `milo`, Achird, the voice of Dog on the Hill's Milo). Both Shorts already have him say **"buddy"**
+   Buh. Make them the same dog: in the rework the man is **Buh at 16** (he's already the Steve skin; recast his voice
+   from Algenib to `milo`, Achird, the voice of Dog on the Hill's Buh). Both Shorts already have him say **"buddy"**
    ("There you ARE, buddy!", "Hey, BUDDY!"), and Good Boy's "GOOD BOY!" fits Dog on the Hill's "SIT, boy."
    The dog who wanted to get away ends up waiting 900 days. Good Boy stays a comedy that stands alone.
-8. **Milo's childhood** (plant, no change needed). Light Sleeper (Hushwell, day 1500) and Thirty-One Raids
-   (Ravenford, day 1900) are kid Milo two years apart, on opposite sides of the White. After he woke the warden,
-   he was sent to Grandpa's. Dog on the Hill's Milo is him at 18, back for a minute.
+8. **Buh's childhood** (plant, no change needed). Light Sleeper (Hushwell, day 1500) and Thirty-One Raids
+   (Ravenford, day 1900) are kid Buh two years apart, on opposite sides of the White. After he woke the warden,
+   he was sent to Grandpa's. Dog on the Hill's Buh is him at 18, back for a minute.
 9. **The HelloBuh graves** (theory). The early Shorts' death screens all say HelloBuh: Runaway "HelloBuh was blown up
    by Creeper", Sheep Stares "slain by Zombie using [HelloBuh's Sword]", The Sun Won't Set "slain by Zombie",
    Respawn Tax, Torch and Respawn Voice. Fernbank's churchyard has a row of headstones that all say HELLOBUH. Same
@@ -180,18 +180,18 @@ follow any Short.
 
 | # | conflict | resolution |
 |---|---|---|
-| 1 | Light Sleeper's Milo is a Hushwell kid, but in Dog on the Hill (rendered) Pip says "Nobody knows who built" the hut and "nobody in the village OWNS him" | Timeline: kid Milo (1500) stopped playing at 3400. Pip (about 9 at 4300) was small then. Grandpa knows ("only ONE voice"). Pip's lines are a kid's: true for him. No change. |
-| 2 | Light Sleeper carpets all of Hushwell; Dog on the Hill shows a bare village | Light Sleeper's own vanilla rule: a natural shrieker answers only vibrations a **player** makes. The carpets were for Milo, Hushwell's only player, and came up when he left (day 3400). The bell stayed boxed. |
+| 1 | Light Sleeper's Buh is a Hushwell kid, but in Dog on the Hill (rendered) Pip says "Nobody knows who built" the hut and "nobody in the village OWNS him" | Timeline: kid Buh (1500) stopped playing at 3400. Pip (about 9 at 4300) was small then. Grandpa knows ("only ONE voice"). Pip's lines are a kid's: true for him. No change. |
+| 2 | Light Sleeper carpets all of Hushwell; Dog on the Hill shows a bare village | Light Sleeper's own vanilla rule: a natural shrieker answers only vibrations a **player** makes. The carpets were for Buh, Hushwell's only player, and came up when he left (day 3400). The bell stayed boxed. |
 | 3 | Light Sleeper rebuilds Hushwell's plaza (8 cottages); Dog on the Hill's background shows the generated houses | Dog on the Hill was rendered first: the canonical Hushwell is the **generated village** plus the well and boxed bell. Light Sleeper's builder: keep the vanilla houses that ring the plaza where you can (the plaza floor, the well and the bell are what the story needs). In Dog on the Hill the plaza is far in the background. |
-| 4 | Light Sleeper's dog and doghouse sit 25 blocks downhill from Dog on the Hill's D | Plant 6: move the doghouse to the hilltop (one shot, unpublished). If it isn't moved, it's the dog's daytime spot while Milo still lived there. |
-| 5 | Kid Milo has two home villages: "My village" (Hushwell, with Mom) and "our village" (Ravenford, with Grandpa) | Sent to Grandpa after the warden night (~1550). By day 1900 Ravenford is "our village". Neither Short says otherwise. How Mom (a villager) and Grandpa (a human) are related is never said (open question). |
-| 6 | Good Boy's man is "a cheerful old farmer" (Algenib), and the dog in Dog on the Hill is Milo's | Good Boy is held for a rework anyway: the man becomes Milo at 16 (plant 7). If it ships unchanged, its dog is another red-collared wolf (red is vanilla's default collar) and the link is dropped. |
-| 7 | The early Shorts' death screens say HelloBuh; the hero is Milo from 2026-11-10 | The early narrators are not Milo: the creeper, the respawner, the Digger, the Stillwater grandson, the Cliff House kid. HelloBuh is the name on their death screens, and in canon that's an open mystery (link 9). From now on, death screens say Milo or a character's own name. |
+| 4 | Light Sleeper's dog and doghouse sit 25 blocks downhill from Dog on the Hill's D | Plant 6: move the doghouse to the hilltop (one shot, unpublished). If it isn't moved, it's the dog's daytime spot while Buh still lived there. |
+| 5 | Kid Buh has two home villages: "My village" (Hushwell, with Mom) and "our village" (Ravenford, with Grandpa) | Sent to Grandpa after the warden night (~1550). By day 1900 Ravenford is "our village". Neither Short says otherwise. How Mom (a villager) and Grandpa (a human) are related is never said (open question). |
+| 6 | Good Boy's man is "a cheerful old farmer" (Algenib), and the dog in Dog on the Hill is Buh's | Good Boy is held for a rework anyway: the man becomes Buh at 16 (plant 7). If it ships unchanged, its dog is another red-collared wolf (red is vanilla's default collar) and the link is dropped. |
+| 7 | The early Shorts' death screens say HelloBuh; the hero is Buh from 2026-11-10 | The early narrators are not Buh: the creeper, the respawner, the Digger, the Stillwater grandson, the Cliff House kid. HelloBuh is the name on their death screens, and in canon that's an open mystery (link 9). From now on, death screens say Buh or a character's own name. |
 | 8 | Runaway and Respawn Tax explain the fisherman's disappearance differently | Both are kept as two unreliable narrators' readings (link 1). |
 | 9 | Nitwit says "the date of the END: it's TODAY", but the nitwit is still there in Respawn Tax | Order: Nitwit (470), then Respawn Tax (520). "The end" is the end of Fernbank, emptied by the respawn tax within 50 days. The nitwit volunteers because he knew. |
 | 10 | The Sun Won't Set freezes the sun, and time is global | The Long Day (800-1100) is a world event. No story shows a night in it. Checked: every story day is outside it. Sheep Stares' 412 days overlap it, but its night shots fall after day 1100. |
 | 11 | Three different grandpas | Three people with three looks and voices (characters table). Rule: one grandpa per Short, called "Grandpa" only by his own grandchild. |
-| 12 | Voices: Pip and kid Milo both use Leda; Hushwell's grandpa (Algenib) shares the cast's `stranger` voice | Never have Pip and kid Milo narrate in the same Short. Hushwell's grandpa keeps Algenib (he's on screen), so cast the stranger with a different voice before his first story. |
+| 12 | Voices: Pip and kid Buh both use Leda; Hushwell's grandpa (Algenib) shares the cast's `stranger` voice | Never have Pip and kid Buh narrate in the same Short. Hushwell's grandpa keeps Algenib (he's on screen), so cast the stranger with a different voice before his first story. |
 | 13 | Light Sleeper's ancient city under Hushwell isn't generated (the seed's are 1,200 blocks west, under the White) | It's built by the story: a buried shrieker under the well. Canon: "something old under Hushwell's well". |
 | 14 | Thirty-One Raids builds its own palisade, gate, Grandpa's house and totem wall in its stunt (gate-relative) | Canon at those coordinates (map.json `ravenford.story_builds`). Move them into map.json pieces and stamps when the next Ravenford story needs them. |
 | 15 | Dog on the Hill's bible puts the hut west of D with the patch at D + (-3, 0, 0); its stunt (and render) builds the hut north-east of D, the patch at D + (3, 0, 0), the dog facing east | The render is canon. map.json's Dog Hill stamps are the stunt's own build, ported (meadow, ridge, hut, ledge, patch, bones, dog). |
@@ -257,4 +257,4 @@ WORLD_AT=x,z STUNT=_world_build ./run.sh` builds places and records them for sti
 - How are Mom (a Hushwell villager) and Grandpa (a Ravenford man) related?
 - Whose world was the Burned Copy, and when does Fernbank burn?
 - What came through One More Eye's portal?
-- Will Milo come back to the hill?
+- Will Buh come back to the hill?
