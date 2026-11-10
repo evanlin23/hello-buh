@@ -48,6 +48,14 @@ Walk the story line by line with the bible open. For every line ask:
    - *no glitches by design*: doors are used by someone, walks don't end against a door, and a story about fog, night
      or rain says so in story.json `look` / `weather` (so the check can hold the recording to it).
 
+11. **The world canon** (`docs/world/canon.md`, `docs/world/map.json`, `node scripts/world.js story <name>`): the
+   story's place is the canonical one (same coordinates, same buildings, same landmarks on the skyline: the dog's
+   hill north-west of Hushwell, the outpost ridge east of Ravenford), on the story's day; every canon fact holds on
+   that day (who lives there, who is dead or gone, what has been built or burned, the Long Day has no nights); a
+   recurring character matches canon.md (skin, collar colour, voice id, profession); the easter egg is true on that
+   day and sits in the background. The stunt uses `world.build` and never searches for a site (`node scripts/world.js
+   stunt story_<name>`). A new fact the story creates is written into canon.md and map.json.
+
 ## Post-build mode (the preview or recording)
 
 Start from the recording, in seconds: `./hb owner <stunt>` (the owner's four patterns: superflat shots, the camera

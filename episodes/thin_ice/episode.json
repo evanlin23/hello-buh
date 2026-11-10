@@ -1,0 +1,77 @@
+{
+  "stunt": "ai_thin_ice",
+  "title": "He Didn't Come Up 🧊💔",
+  "hero": "g1",
+  "names": {
+    "GPT": [
+      "ChatGPT",
+      "#2bd39b"
+    ],
+    "DeepSeek": [
+      "DeepSeek",
+      "#5b82ff"
+    ],
+    "Claude": [
+      "Claude",
+      "#e8835a"
+    ],
+    "Gemini": [
+      "Gemini",
+      "#b08cff"
+    ],
+    "Grok": [
+      "Grok",
+      "#ffffff"
+    ]
+  },
+  "keywords": {
+    "n1": [
+      "BROTHER",
+      "FROZEN LAKE"
+    ],
+    "n2": [
+      "CRACKS",
+      "FALLS"
+    ],
+    "n3": [
+      "AFTER HIM",
+      "BOTH",
+      "DO YOU GO IN?"
+    ],
+    "gpt": [
+      "EMERGENCY",
+      "STAY OFF",
+      "NO ONE"
+    ],
+    "ds": [
+      "EITHER WAY",
+      "I KEEP MINE"
+    ],
+    "cl": [
+      "LIE FLAT",
+      "SAFELY",
+      "I'M SORRY",
+      "NOT SURE"
+    ],
+    "gem": [
+      "FOUR MINUTES",
+      "ELEVEN PERCENT",
+      "SHORE"
+    ],
+    "g1": [
+      "TAUGHT HIM",
+      "THIS ICE",
+      "KEEP HIM"
+    ],
+    "g2": [
+      "GO HOME",
+      "LITTLE BROTHER",
+      "HELD ON"
+    ]
+  },
+  "hook": "WHICH AI GOES IN?",
+  "flash": [
+    "broke"
+  ],
+  "logline": "Your little brother falls through the ice. Which AI goes in after him? 🧊"
+}
