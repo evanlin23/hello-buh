@@ -256,27 +256,6 @@
     "open a DOOR."
    ]
   },
-  "L09": {
-   "text": "Door's open, buddy!",
-   "who": "Sam",
-   "dur": 1.363,
-   "onset": 0.05,
-   "end": 1.26,
-   "chunks": [
-    [
-     0.0,
-     0.6
-    ],
-    [
-     0.6,
-     1.18
-    ]
-   ],
-   "captions": [
-    "Door's OPEN,",
-    "buddy!"
-   ]
-  },
   "L10": {
    "text": "skeletons run from me. me!",
    "who": null,
@@ -388,5 +367,5 @@
    ]
   }
  },
- "total": 34.93
+ "total": 33.32
 }

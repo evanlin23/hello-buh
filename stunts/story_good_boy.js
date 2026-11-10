@@ -240,17 +240,19 @@ module.exports = {
     K.shot('pov')
     K.go(true)
     looking = K.base
-    await line('L08', async (k) => { if (k === 6) K.go(false); if (k === 14) K.go(true); if (k === 20) K.go(false); look(k) })
-    await line('L09', async (k) => {
-      if (k === 0) {
-        this.cast[GUY].swingArm('right')   // he opens it (the door is his)
+    // he hears me and opens it (no line: narrator-first, owner 2026-11-10), and I trot in
+    const opensAt = K.T('L08') - 18
+    await line('L08', async (k) => {
+      if (k === 6) K.go(false); if (k === 12) K.go(true); if (k === 18) K.go(false)
+      if (k === opensAt) {
+        this.cast[GUY].swingArm('right')
         say(`/setblock ${X + 36} ${Y + 2} ${Z + 20} spruce_door[half=upper,facing=north,open=true]`); say(`/setblock ${X + 36} ${Y + 1} ${Z + 20} spruce_door[half=lower,facing=north,open=true]`)
         ctx.sound('block.wooden_door.open', 0.8, 1)
       }
-      K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), k / 10)
-      if (k > 12) { K.go(true); guy.z = Math.min(23.4, guy.z + 0.05); placeGuy() }
+      if (k > opensAt) { K.turnTo(looking, P(36.5, eyeY(1.6), 22.2), (k - opensAt) / 8) }
+      if (k > opensAt + 6) { K.go(true); guy.z = Math.min(23.4, guy.z + 0.05); placeGuy() }
       look(k)
-    })
+    }, 0.3)
     K.stop()
 
     K.self({ sitting: false }, EYE)
