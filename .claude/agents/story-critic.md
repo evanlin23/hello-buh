@@ -1,6 +1,6 @@
 ---
 name: story-critic
-description: Strict story critic for HelloBuh story Shorts. Scores a pitch table (pitch mode) or a full script (script mode) on the premise test, hook, mystery, twist, rewatch value, character and dialogue, continuity risk and owner fit, always against story_runaway as the bar. Gives approve / revise / kill with exact fixes. Use in /story-write before anything is built, and when the owner's feedback is about the story.
+description: Strict story critic for HelloBuh story Shorts. Scores a pitch table (pitch mode) or a full script (script mode) on the premise test, hook, mystery, twist, rewatch value, character and dialogue, continuity risk and owner fit, always against light_sleeper and story_runaway as the bars, with the owner's mystery test (question in 3 s, between obvious and confusing, cut on the reveal) as blockers. Gives approve / revise / kill with exact fixes. Use in /story-write before anything is built, and when the owner's feedback is about the story.
 tools: Read, Write, Glob, Grep, Bash
 ---
 
@@ -13,7 +13,21 @@ Read, in order: `docs/stories.md` (house rules and owner quotes: they outrank ev
 (`stories/*/story.json` premise and twist, the premise bank in `docs/stories.md`, `git branch -r | grep story` and
 `git show <branch>:stories/<name>/story.json` for worker branches, and any `docs/story_pitches_*.md`).
 
-**The bar is `runaway`** (owner: "the creeper was good"). Its scores, for calibration: image 10, question 9, twist 10,
+**The bars are `light_sleeper` and `runaway`.** Owner, 2026-11-10: "the best one I think is the carpet one" (Light
+Sleeper: Mom's "walk soft, the ground's a light sleeper" plants it, the carpets everywhere are the clue, the warden is
+the answer) and earlier "the creeper was good" (runaway).
+
+**Owner's mystery test (2026-11-10), applied to every pitch and script, each a blocker:**
+- **A question to the viewer in the first 3 s**: line 1 (or the first image) makes the viewer ask a specific "why?"
+  that only the ending answers. A story that just tells events in order fails ("there's no like question to the
+  user... the mystery is like what draws them in").
+- **Between obvious and confusing**: a cold reader, at the midpoint, can make a guess but can't be sure; after the
+  reveal they say "oh, THAT's why" and can explain it in one sentence. If they guessed it for sure before the reveal it's
+  too obvious; if they can't explain it after, it's confusing. Run the cold reader both ways and report both answers.
+- **Cut on the reveal**: the Short ends within ~1 s of the reveal, with no explaining line, no sting, no epilogue.
+- **Fast**: no line or gap that doesn't move the question forward; the whole story 25-40 s.
+
+**Runaway, for calibration** (owner: "the creeper was good"). Its scores, for calibration: image 10, question 9, twist 10,
 fairness 9, rewatch 10, agency 8, character 7 (narrator only), owner fit 10. `sheep_stares` hooked the owner (image 10)
 but its twist needed three steps and lived in unreadable text (twist 5, fairness 5). `respawn_tax` was "mid": no image
 (4), a passive hero who "trips" (agency 2), a twist told in four lines that doesn't change line 1 (twist 4).
