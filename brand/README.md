@@ -1,33 +1,36 @@
 # Channel art (avatar + banner)
 
-Rendered with the cinematic movie engine from THE KEEP's castle recording (`renders/keep/lapse_castle.rec.json.gz`,
-branch `agent/cinematic`): no server and no new recording. The look comes from `stunts/cinematic_keep.js` (bloom, grade,
-god rays, fog sea, depth of field, shadows) with per-shot overrides in the scene files.
+Rendered with the cinematic movie engine from `stunts/brand_keep.js`: a castle built to `docs/building_guide.md`
+(the "Stone keep / castle" palette) on a rocky crag rising out of the fog sea. Curtain wall with buttresses, corbels
+and merlons, four round towers of different heights with overhanging tile cones and spires, a gatehouse with banners
+and lanterns, a keep with a stair gable roof and a tall tower, lit windows, weathered stone (mossy and cracked low),
+trees and rocks. The avatar pairs (a Mannequin "Buh" in Steve's skin and a creeper) stand on two small rocks at
+x +-150 with the castle behind them, so the sun or moon is behind them in every shot (both move along x).
 
 | file | what |
 |---|---|
-| `avatar_golden.png` | **pick.** Buh (Steve) and the creeper shoulder to shoulder, the sunset behind them and the castle out of focus |
-| `avatar_moon.png` | the same pair by moonlight, cool grade |
-| `avatar_dawn.png` | the same pair at sunrise, warm sky and the fog low on the ground |
-| `banner_fogsea.png` | **pick.** The castle rising out of a fog sea at sunrise, the sun behind the keep |
-| `banner_moon.png` | the castle in the fog by moonlight, the moon behind the keep |
-| `banner_sunset.png` | golden hour from the east, high angle |
+| `avatar_golden.png` | **pick.** Steve and the creeper, faces level, the sunset and the castle's silhouette behind them |
+| `avatar_nebula.png` | the same pair by moonlight with a purple-blue (nebula) grade, the moon behind the keep |
+| `avatar_dawn.png` | the same pair against a bright sunrise sky |
+| `banner_fogsea.png` | **pick.** The castle on its crag over the fog sea at sunrise, the sun behind the keep |
+| `banner_nebula.png` | the same by moonlight, the moon behind the keep, nebula grade |
+| `banner_sunset.png` | from the east at golden hour, the castle backlit |
 | `contact.jpg` | all six: each avatar at 176 / 88 / 40 px circles, each banner with the desktop strip and the safe band outlined |
 
-Banners: 2560x1440. The title ("HELLO BUH", Inter ExtraBold, with "minecraft stories, stunts & mysteries") and the
-castle both sit inside the centred 1546x423 band, so phones, desktop and TV all show them. Avatars: 800x800.
+Banners 2560x1440 (title and castle inside the centred 1546x423 band), avatars 800x800. Sharpness: banners render at
+2x (5120x2880) and avatars at 4800x2700 (a 2700 px square, 3.4x), Lanczos down, a light unsharp mask; no grain, bloom
+only above 0.9, depth of field focused on the faces (avatars) or off (banners).
 
 ## Re-make
 ```bash
-python3 brand/make_avatar_rec.py                                                         # castle recording + two posed pairs
-python3 scripts/cinematic.py brand/avatar_scene.json --sheet --at 0.5 --scale 1.5        # 2880x1620 stills
-python3 scripts/cinematic.py brand/banner_scene.json --sheet --at 0.5 --scale 1.33334    # 2560x1440 stills
+STUNT=brand_keep ./scripts/record.sh                                                     # ~2 min -> work/brand_keep.rec.json
+python3 scripts/cinematic.py brand/avatar_scene.json --sheet --at 0.5 --scale 2.5        # 4800x2700 stills
+python3 scripts/cinematic.py brand/banner_scene.json --sheet --at 0.5 --scale 2.66667    # 5120x2880 stills
 python3 brand/compose.py                                                                 # crops, title, contact sheet
 ```
-- The avatar characters are injected entity rows (a `mannequin` named Buh, skinned by `stunts/brand_castle.js` `cast`, and
-  a `creeper`), standing 100 blocks east of the castle facing east and 131 blocks west facing west, so the sun or moon
-  is behind them in every shot. Move or turn them in `make_avatar_rec.py`.
-- Cameras, hours (`day`), fog and grades are in `avatar_scene.json` / `banner_scene.json` (cinematic.py clip format).
-  In Minecraft the sun and the moon always rise due east (+x) and set due west, so a backlit shot looks along x.
-- Known: `banner_sunset.png` shows fog-sheet stripes along the bottom, which only TVs show. Past x 140 east of the
-  castle the camera ends up in terrain.
+- The server only sends entities near the bot, so `perform` visits each pair: the east pair is in the recording at
+  0.75-4.9 s, the west pair at 4.95-9.1 s (the clips' `t0`).
+- Cameras, hours (`day`), fog and grades are in the two scene files (cinematic.py clip format); a clip's look and
+  fog reach the stunt through CINE_CLIP.
+- Known: below the safe band the banners show the fog sea's lower edge (ocean terrain faintly through it); only TVs
+  show that part.

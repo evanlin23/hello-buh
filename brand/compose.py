@@ -4,7 +4,7 @@
     python3 scripts/cinematic.py brand/banner_scene.json --sheet --at 0.5 --scale 1.33334   # 2560x1440 stills
     python3 brand/compose.py                                                                # -> brand/*.png
 
-(brand/make_avatar_rec.py first: the avatar scene's recording is THE KEEP's plus Buh and the creeper.)
+(STUNT=brand_keep ./scripts/record.sh first: the castle set and the avatar pairs.)
 """
 import pathlib
 
@@ -15,13 +15,18 @@ HERE = pathlib.Path(__file__).resolve().parent.parent
 OUT = HERE / "brand"
 CINE = HERE / "work" / "cine"
 INTER = str(HERE / "fonts" / "Inter-ExtraBold.ttf")
-AVATARS = ["golden", "moon", "dawn"]
+AVATARS = ["golden", "nebula", "dawn"]
 BANNERS = {  # name -> (text colour, glow colour)
     "fogsea": ((255, 248, 236), (255, 170, 80)),
-    "moon": ((240, 246, 255), (120, 160, 255)),
+    "nebula": ((246, 240, 255), (170, 120, 255)),
     "sunset": ((255, 248, 236), (255, 160, 60)),
 }
 SAFE = (2560 - 1546) // 2, (1440 - 423) // 2, (2560 + 1546) // 2, (1440 + 423) // 2   # the band every device shows
+
+
+def sharp(im):
+    """A light unsharp mask after the supersampled downscale (block pixels stay crisp at 100%)."""
+    return im.filter(ImageFilter.UnsharpMask(radius=1.2, percent=70, threshold=2))
 
 
 def still(scene, clip, w):
@@ -29,11 +34,10 @@ def still(scene, clip, w):
 
 
 def avatar(name):
-    im = still("brand_avatar", name, 2880)
+    im = still("brand_avatar", name, 4800)   # 2.5x: the square is 2700 px, 3.4x the output
     W, H = im.size
-    cx, side, top = int(W * 0.5), int(H * 0.82), int(H * 0.07)   # the pair's centre; a square on their heads
-    box = (cx - side // 2, top, cx + side // 2, top + side)
-    return im.crop(box).resize((800, 800), Image.LANCZOS)
+    cx = W // 2                              # the pair's centre: a full-height square on their faces
+    return sharp(im.crop((cx - H // 2, 0, cx + H // 2, H)).resize((800, 800), Image.LANCZOS))
 
 
 def tracked_width(d, text, font, sp):
@@ -48,7 +52,8 @@ def draw_tracked(d, x, y, text, font, sp, fill):
 
 def banner(name):
     ink, glow = BANNERS[name]
-    im = still("brand_banner", name, 2560)
+    im = still("brand_banner", name, 5120)   # rendered at 2x, Lanczos down, then sharpened
+    im = sharp(im.resize((2560, 1440), Image.LANCZOS))
     W, H = im.size
     title, tag = "HELLO BUH", "minecraft stories, stunts & mysteries"
     big, small = ImageFont.truetype(INTER, 150), ImageFont.truetype(INTER, 44)
