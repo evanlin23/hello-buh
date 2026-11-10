@@ -90,3 +90,19 @@ the first time (now in the skill).
 - 16:05: owner rule "none of these new stories should go out until i've OKed them": the lead set the package back to
   held on `videos` (5de29cb). Main f4c0605 is merged (publish.js packages story_* as held unless the owner OKs one).
   Not re-marked ready.
+
+## vNext previews for the owner's visual audit (20:55-21:35 UTC)
+- The story.json hotbar: all 9 slots, 67 eggs (owner). Since main f10c3ae the kit applies it after setup, so the
+  stunt keeps only the slot selection (the potion slot in S05, the gold slot from L06).
+- Preview 1: the vNext port, recorded against the old voice.json as the timing stand-in. 57.45 s; render/ b6451dd.
+- The lead's visual audit (docs/runs/visual_audit_2026-11-10/gold_for_the_portal.md), folded in for preview 2:
+  - B1: S01 low on the throw line, with gold and a lantern in frame.
+  - B2: S05 framed over the shoulder.
+  - B4: the S03 waypoint.
+  - F1 (the crane only), F2, F4-F7, F9.
+  - Left open: B3 (the GUI scale and the potion tint) goes to the engine agent; F1's landscaping is a world change.
+  - 3 recordings. One blocker came up: S07b's re-framing put Grandma off-centre, which the subject check caught.
+    Two lint problems also came up. The S01 subject point sat inside the carpet's block. The crane second had
+    nobody moving, so Grandma now sways under it.
+- Tool fix (main cca4086): `./hb render X --wait` doesn't queue a render. When the recording was newer than the last
+  queue, it fetched the old Short (it did that here once). It now refuses and says "./hb render X" first.
