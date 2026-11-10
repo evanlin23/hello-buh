@@ -30,7 +30,7 @@
   "voice": {
     "engine": "gemini",
     "model_hint": "gemini-3.8-flash-lite-tts",
-    "recipe": "voices/recipes/pip.md (narrator: Leda, single speaker, no post); Mom on the same model in her own request"
+    "recipe": "voices/recipes/pip.md (narrator: Leda, single speaker, no post), split by beat into five requests with one scene direction each (STANDARDS 2b.1); Mom's one line on gemini-3.1-flash-tts-preview (the model her take came from)"
   },
   "cast": {
     "N": {
@@ -61,10 +61,9 @@
         "L01",
         "L02",
         "L03",
-        "L04",
-        "L06"
+        "L04"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A nine-year-old kid telling a friend a story. This part: a spooky thing that happens every night, told quick, wide-eyed and a little thrilled; full voice, not whispery, breathy or soft]"
     },
     {
       "id": "r2",
@@ -74,13 +73,12 @@
       "model": "gemini-3.8-flash-lite-tts",
       "voice": "Leda",
       "lines": [
+        "L06",
         "L07",
         "L08",
-        "L09",
-        "L10",
-        "L11"
+        "L09"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A nine-year-old kid telling a friend a story. This part: Mom's weird presents and winning egg fights, bright, bouncy and proud, a bit goofy; full voice, not whispery, breathy or soft]"
     },
     {
       "id": "r3",
@@ -90,19 +88,43 @@
       "model": "gemini-3.8-flash-lite-tts",
       "voice": "Leda",
       "lines": [
-        "L12",
-        "L13",
-        "L14",
-        "L15"
+        "L10",
+        "L11"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A nine-year-old kid telling a friend a story. This part: tonight Mom is late, plain and uneasy, then scared; full voice, not whispery, breathy or soft]"
     },
     {
       "id": "r4",
       "speakers": [
-        "Mom"
+        "N"
       ],
       "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L12",
+        "L13"
+      ],
+      "direction": "[A nine-year-old kid telling a friend a story. This part: he sees his mom's name on the zombie, stunned and quiet, close to tears, then amazed she gave him the potion; slow and serious, never bubbly; full voice, not whispery, breathy or soft]"
+    },
+    {
+      "id": "r5",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L14",
+        "L15"
+      ],
+      "direction": "[A nine-year-old kid telling a friend a story. This part: he understands why she lied, then decides to save her, steady and brave, getting louder; full voice, not whispery, breathy or soft]"
+    },
+    {
+      "id": "r6",
+      "speakers": [
+        "Mom"
+      ],
+      "model": "gemini-3.1-flash-tts-preview",
       "voice": "Aoede",
       "lines": [
         "L05"
@@ -228,7 +250,7 @@
       "id": "L12",
       "who": "N",
       "text": "The new one / said ROSA. / She had / the APPLE.",
-      "direction": "small and plain, a breath after the name, full volume",
+      "direction": "stunned and quiet, a breath after the name, close to tears; full voice, never bubbly",
       "shot": "S12",
       "look": {
         "what": "actor:ROSA",
@@ -241,7 +263,7 @@
       "id": "L13",
       "who": "N",
       "text": "She DROPPED / her POTION / for ME.",
-      "direction": "quick, amazed, it lands as a gift",
+      "direction": "quiet amazement, it lands as a gift; not bubbly",
       "shot": "S13",
       "look": {
         "what": "prop:potion",
