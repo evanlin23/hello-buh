@@ -22,4 +22,4 @@ Every break in `continuity_prebuild.md` and every item in `critic_r2_shouldfix.m
 | critic: crossbow pose | checked: the engine has no charging pose; staged as loading sounds + an arm pump, `loading_end` on "kid" |
 | critic: widen S04, S09 | both FS at 3.5 blocks |
 | critic: bottle leaves his hand in S11 | on "FIGHT" it leaves his hand and comes up in the first-person hand |
-| owner rules 2026-11-10 | the hero is Milo; no hushed tenderness (L01 "proud and clear", L13 "dry, tired, grim little pride, not a whisper") |
+| owner rules 2026-11-10 | the hero is Buh; no hushed tenderness (L01 "proud and clear", L13 "dry, tired, grim little pride, not a whisper") |

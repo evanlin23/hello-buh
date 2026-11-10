@@ -2,7 +2,7 @@
 // Grandpa has saved the village from thirty-one raids, and every one started the night he came home. He hunts at
 // the old pillager tower on the hill, brings back grey bottles, calls them his courage and drinks one at the gate:
 // "Lock the door, kid. They're coming." Since Grandma died, a raid is the only time anyone's glad to see him.
-// Tonight he comes home too tired to fight, so Milo drinks the courage. The raid horn. "Now they'll love you too, kid."
+// Tonight he comes home too tired to fight, so Buh drinks the courage. The raid horn. "Now they'll love you too, kid."
 // (Vanilla: an ominous bottle gives Bad Omen, and a player with it in a village starts a raid; the Hero of the
 // Village effect makes villagers throw you gifts.)
 //

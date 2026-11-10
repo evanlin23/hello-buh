@@ -1,7 +1,7 @@
 # thirty_one_raids: shot list (r3)
 
 The Short format: vertical 1080 x 1920, the game view 1080 x 1011 cropped from a 1797 x 1011 (wide) master, black
-bands above and below. POV for the narrator (Milo, never seen); Grandpa is on screen as a player actor with the
+bands above and below. POV for the narrator (Buh, never seen); Grandpa is on screen as a player actor with the
 default `zuri` skin. FOV 70 unless noted. Wide by default, an establishing shot for every place, size changes at every
 cut. Compose for the middle of the 16:9 master (the crop): judge the shot sheet's middle 60%.
 

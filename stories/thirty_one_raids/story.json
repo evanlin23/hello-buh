@@ -21,8 +21,8 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "pov (Milo, about eleven, voiced by the cast `narrator`; the default Steve skin per the owner; never seen from outside in this story); hand: empty, then the ominous bottle (end of S11, S12), empty again once drunk",
-      "name": "Milo"
+      "on_screen": "pov (Buh, about eleven, voiced by the cast `narrator`; the default Steve skin per the owner; never seen from outside in this story); hand: empty, then the ominous bottle (end of S11, S12), empty again once drunk",
+      "name": "Buh"
     },
     "Grandpa": {
       "role": "character",
@@ -291,7 +291,7 @@
       "place": "grandpa_house",
       "size": "ms",
       "camera": "pov beside Grandpa at the open chest",
-      "frame": "Grandpa at the chest under the east window, the bottle coming up in his hand on 'BOTTLES' (camera beside him); on 'CHEST' first person: Milo opens the chest and the chest screen shows it full of ominous bottles. Night (14000), lantern-lit."
+      "frame": "Grandpa at the chest under the east window, the bottle coming up in his hand on 'BOTTLES' (camera beside him); on 'CHEST' first person: Buh opens the chest and the chest screen shows it full of ominous bottles. Night (14000), lantern-lit."
     },
     {
       "id": "S08",
