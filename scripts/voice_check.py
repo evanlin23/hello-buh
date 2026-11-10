@@ -122,11 +122,15 @@ def resplit(sd):
             if k + 1 == len(spans):
                 s1 = len(x) / SR   # and its last line runs to the take's own fade (Whisper's last word ends early)
             segs.append((s0, s1))
-        for (who, lid, t), (a, b) in zip(r['lines'], segs):
+        tight = [k + 1 < len(spans) and words[spans[k + 1][0]][1] - words[spans[k][1]][2] < 0.4 for k in range(len(spans))]
+        for k, ((who, lid, t), (a, b)) in enumerate(zip(r['lines'], segs)):
             seg = x[int(a * SR):int(b * SR)].copy()
-            fd = min(len(seg) // 4, int(0.012 * SR))   # 12 ms fades: no click where a cut lands inside a word's tail
-            if fd:
-                seg[:fd] *= np.linspace(0, 1, fd); seg[-fd:] *= np.linspace(1, 0, fd)
+            # 12 ms fades (no click); 50 ms where two lines were spoken without a pause (the tail decays, not stops)
+            f0 = min(len(seg) // 4, int((0.05 if k and tight[k - 1] else 0.012) * SR)); f1 = min(len(seg) // 4, int((0.05 if tight[k] else 0.012) * SR))
+            if f0:
+                seg[:f0] *= np.linspace(0, 1, f0)
+            if f1:
+                seg[-f1:] *= np.linspace(1, 0, f1)
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", f"{sd}/voice/{lid}.wav"], input=seg.astype(np.float32).tobytes(), check=True)
         print(f"{r['id']}: {len(r['lines'])} lines at {[(round(a, 2), round(b, 2)) for a, b in segs]}")
         continue

@@ -40,13 +40,6 @@
    "direction": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences."
   },
   {
-   "id": "n2",
-   "speakers": [
-    "N"
-   ],
-   "direction": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences."
-  },
-  {
    "id": "s1",
    "speakers": [
     "Sam"
@@ -95,17 +88,17 @@
   {
    "id": "L08",
    "text": "I can't even / open a DOOR.",
-   "request": "n2"
+   "request": "n1"
   },
   {
    "id": "L10",
    "text": "SKELETONS / run from ME!",
-   "request": "n2"
+   "request": "n1"
   },
   {
    "id": "L11",
    "text": "Then a ZOMBIE / went for HIM.",
-   "request": "n2"
+   "request": "n1"
   },
   {
    "id": "L12",
@@ -117,7 +110,7 @@
   {
    "id": "L13",
    "text": "And I just / LOST it!",
-   "request": "n2"
+   "request": "n1"
   },
   {
    "id": "L14",
