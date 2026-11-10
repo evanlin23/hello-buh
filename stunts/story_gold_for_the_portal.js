@@ -24,14 +24,7 @@ const NIGHT = 18000, RIDGE_NIGHT = 14500, MORNING = 1000
 const X = -132, Z = -943, F = 74          // the cellar's local origin (map.json: basement centre -126,-938 at y 80)
 const DOWN = -30                          // the flashback cellar, 30 blocks under the real one
 const HELMET = 'golden_helmet[trim={pattern:"minecraft:sentry",material:"minecraft:lapis"}]'
-// story.json "hotbar" (owner 2026-11-10: a full hotbar, the story's tools then the ridiculous items). A count over
-// the item's stack size gets the max_stack_size component (67 eggs), until the kit does it for every story.
-const STACK16 = new Set(['egg', 'snowball', 'ender_pearl', 'bucket', 'sign', 'honey_bottle', 'armor_stand'])
-const HOTBAR = require(path.join(STORY, 'story.json')).hotbar.map(([n, c]) => {
-  const one = /(bucket|potion|shears|cake|helmet|boots|sword|pickaxe|axe|shovel|hoe)/.test(n) && !/^bucket$/.test(n)
-  const max = one ? 1 : STACK16.has(n) ? 16 : 64
-  return [c > max ? `${n}[max_stack_size=${Math.min(99, c)}]` : n, c]
-})
+// the hotbar is story.json "hotbar" (the kit puts it on after setup, before the first frame)
 const POCKET = [6, -12, 5]                // where the narrator waits while he's not in a camera shot (under the cellar)
 
 module.exports = {
@@ -93,7 +86,6 @@ module.exports = {
 
     // the grandson: golden boots, full hearts, nothing in hand
     await c('/clear @s')
-    for (let i = 0; i < HOTBAR.length; i++) await c(`/item replace entity @s hotbar.${i} with ${HOTBAR[i][0]} ${HOTBAR[i][1]}`)
     bot.setQuickBarSlot(0)
     await c('/item replace entity @s armor.feet with golden_boots')
     await c('/effect give @s resistance infinite 255 true')
