@@ -74,6 +74,10 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   multi-speaker with acting direction, as the AI-dilemma Shorts do), no 1.45x sped-up narrator by default, real
   delivery (emotion, pauses, emphasis), built sets that look designed (not a clearing in the wild), and plots with
   more invention. The cinematic engine (shots, looks) is the direction for the look.
+- **Owner, 2026-11-10: "i think i kinda believe in this sort of storytelling minecraft thing. it feels somewhat
+  serious, and if we can do actual voices and make it seem super professional and high quality, that would be
+  amazing."** This is the channel's direction: serious, professional, high-quality Minecraft storytelling with real
+  character voices. Judge every story against a polished animated short, not against other Minecraft Shorts.
 - **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
   effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
   a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
