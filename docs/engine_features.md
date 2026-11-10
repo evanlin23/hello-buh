@@ -189,6 +189,70 @@ off. Stories need no change to their dig code: `K.dig(block)` / `bot.dig(b, true
 smooth. Measuring tool: CAM_PROBE at 60 fps (`CAM_PROBE=t1,t2,...` with fractional ticks) through the dig windows,
 before and after.
 
+## Motion by construction (the story kit), the renderer's motion fixes (engine 3), and the safety net
+Owner, 2026-11-10, on five story Shorts: "The movement sometimes still feels jerky and botlike", then: "the movement
+shouldn't be caught... the processes should be such that the movement is [smooth] in the first place. Like we of
+course we can still have the check later on, but this check later on shouldn't be the main way". So, in that order:
+
+**1. Built in: the story kit moves like a player** (`lib/story.js` on `lib/motion.js`; every new recording, no flag)
+- **Looks are targets, the camera turns to them like a hand on a mouse.** A governor runs every tick: the aim moves
+  along the shortest line to its target at up to 180 deg/s, speeding up at 900 deg/s^2 and braking in time to stop
+  on it (no overshoot): a 50-degree turn takes 0.45 s. `K.look`, `K.aim`, `K.turnTo`, `K.cut`'s arrival, and raw
+  `bot.look` / `bot.lookAt` (overridden by the kit, so mineflayer's own lookAt in openContainer/placeBlock too) all
+  set the target. A teleport (a cut, a respawn) puts the aim where the server says, at rest. `stunt.motion
+  { turnSpeed, turnAccel }` (deg/s, deg/s^2) tunes it per story. `await K.aimAt(p)` turns and waits until it has
+  landed (`{ block: true }`: until the crosshair is on that block).
+- **The view holds still while a container window is open** (`bot.currentWindow`): from open to close nothing turns
+  (vanilla: the mouse drives the cursor), then the aim eases back into motion from rest. Marks `gui_freeze` /
+  `gui_thaw`. `const w = await K.open(pos)` turns onto the chest first; `K.close(w)`.
+- **Digging**: `K.dig(block)` waits vanilla's destroyDelay (5 ticks after a break: back to back, light_sleeper's 3 wool
+  blocks broke in 15 ticks and read "sped up"), glides onto the block (`K.aimAt`), then digs at vanilla speed.
+  `rec.smoothDig` stays on for every recording.
+- **Placing**: `K.place(pos, block)` waits the 4-tick use delay, turns onto the block it goes against, swings, sets it
+  and plays its sound (light_sleeper's jukebox went down mid-whip: "the head jerking around").
+- **Walking**: `K.walkTo([p1, p2, ...], { sprint })` checks every leg first (a 0.6-wide player pushing into a block:
+  it throws, naming the block, "add a point around it"), then walks with the camera looking ~3 blocks ahead along the
+  path, the forward key only while facing the way, a jump for a full-block step (slabs, carpets, stairs step up by
+  themselves). Any walk (K.go too) that stalls against a block is marked `stuck` and logged at once.
+- **The cast walks, it doesn't pop**: `K.actor` sends each cast member toward where the scene put it at <= 0.3 blocks
+  and 20 deg (yaw) a tick. A jump happens at once only while a `K.cut` lands (the warp window stays open a tick past
+  the landing), on the first placement, or after `K.warp(tag)` (off screen only); any other jump is walked and marked
+  `motion_warn` with a log line. `K.hurt(entity)` marks a staged hit's red flash (Invulnerable cast send no damage
+  event).
+- **The lint, before recording** (`lib/hb/motion_lint.js`): `./hb motion <stunt>`, step 0 of `./hb check`, and
+  `./hb record` refuses a story until it's clean. It names raw `bot.look`/`bot.lookAt`, `bot.entity.yaw/pitch =`,
+  raw `bot.dig` / `placeBlock` / `activateBlock` / `openContainer`, `/tp @e` and `K.tp` of the cast, `/tp @s`, raw
+  movement keys and `-S.gap` timing hacks in `perform`, each with the primitive to use. A line that must stay raw says
+  why: `// motion-ok: <reason>`. `stunts/_story_template.js` is clean; the older stories are not (re-recording one
+  means porting its moves to the primitives).
+
+**2. The renderer's motion fixes** (`render.js MOTION_FIXES`): on for `rec.engine >= 3` (the harness writes 3 from
+2026-11-10), `stunt.motionFixes: true` or `MOTION_FIXES=1` for an older recording (`MOTION_FIXES=0`: off). Rule zero:
+engine-2 recordings render pixel-identical (story_nitwit tick 120/450 and creeper tick 40/150, base vs after: 0 px).
+- **Container windows**: from the `container` mark to `container_close` the view's aim and position hold the opening
+  tick's, then ease (smoothstep, 8 ticks) to the recording. thirty_one_raids / gold_for_the_portal /
+  names_in_the_woods: the view drifted 5.8 / 6.0 / 6.4 deg under the chest screen -> 0.00.
+- **A cast member moved with a cut lands on the cut**: the mob's teleport reaches the client with its next update (1-3
+  ticks late), so the new shot showed it in its old spot, then the client's 3-tick lerp dashed it across (Grandma, 3.2
+  blocks, gold_for_the_portal 31.7 s). A jump over a block within 6 ticks after a cut/shot/respawn mark is moved back
+  onto the cut's tick.
+- **Dropped items** stand on the ground as their own model (the 1/16-thick extruded sprite with its `ground` display),
+  right side up, bobbing sin(age/10) x 0.1 + 0.1 and spinning age/20 rad (ItemEntityRenderer), like block items always
+  did. The camera-facing sprite drew the entity texture upside down ("String is upsidedown on the floor"); thrown
+  eggs, snowballs and pearls (ThrownItemRenderer, still sprites) are flipped upright too.
+- **Camera shots through foliage**: world fragments within 0.5 blocks of the lens are discarded, 1.6 when leaves are
+  within ~2 blocks of it (`renderer/page.js nearCutMaterial`, `cam.nearCut`): good_boy's crane through the oak canopy
+  filled the frame with single leaf faces a block wide (7.7-7.9 s). POV frames are never cut.
+- **Projectile hits on mobs**: the flight simulation of a thrown egg/snowball tests mobs' hitboxes (inflated 0.3,
+  ProjectileUtil) and, on a hit, ends the projectile and flashes the mob red for 10 ticks (hurtTime). The cast is
+  Invulnerable, so the server sends no damage event (names_in_the_woods: two eggs on Hugo and Pia, no red).
+
+**3. The safety net** (`lib/hb/motion.js`, in the owner gate `./hb owner` / `./hb check`): the view moving under an
+open container (BLOCK; a NOTE where the renderer's fix holds it), a mob jumping over 1.5 blocks in a tick with no cut,
+or landing late after one (BLOCK in view, WARN out of it), first-person whips over 240 deg/s or turn-speed kicks over
+140 deg/s in a tick (WARN), the forward key held while the player slides along a block at under 60% of its walk
+(WARN), and the kit's own `stuck` / `motion_warn` marks. Tests: `lib/hb/test/motion.test.js`.
+
 ## Life: heads that turn, sleeping and head-shaking mobs, name tags
 - **Look at the speaker**: `stunt.lookAtSpeaker: true` (or a range in blocks, default 10): while a `line` mark's speaker
   talks (lib/movie.js `M.line`/`M.say`), every other actor and mob within range eases its head to them over 8 ticks

@@ -98,10 +98,22 @@ old sped-up single narrator.
 - Scenes: `stunts/_story_template.js` on the story kit (`lib/story.js`) with the movie engine's camera shots and
   look (`docs/movie_engine.md`); an establishing shot for every new place; close-ups only for reveals.
 - Every accident needs a visible in-game cause.
+- **Use only K.* motion; raw calls fail the lint** (owner, 2026-11-10: "the movement shouldn't be caught... the
+  processes should be such that the movement is [smooth] in the first place"; docs/engine_features.md "Motion by
+  construction"). The kit moves like a player by construction: every look (`K.base = K.aim(p)` + `K.look(k)`,
+  `K.turnTo`, `await K.aimAt(p)`) eases at <= 180 deg/s; `K.dig(block)` glides onto the block and waits vanilla's
+  5-tick destroyDelay; `K.place(pos, block)` turns onto the spot first; `K.open(pos)` / `K.close(w)` hold the view
+  still while the chest is open; `K.walkTo([p1, p2])` walks a path (looks ahead, steps up, jumps a block; a leg into
+  a block throws); `K.actor` walks a cast member to wherever the scene puts it (a jump only on a `K.cut`, or
+  `K.warp(tag)` off screen); `K.hurt(entity)` flashes a hit on Invulnerable cast. Never `bot.look`/`bot.lookAt`,
+  `bot.entity.yaw =`, `/tp @e` or `K.tp` of an on-screen cast member, raw `bot.dig`/`openContainer`/`placeBlock`,
+  or `-S.gap`: `./hb motion story_<name>` lists them and `./hb record` refuses to start until they are gone (a line
+  that must stay raw says why: `// motion-ok: <reason>`).
 
 ## 4. Record and check (~15 min per pass)
-`./hb record story_<name>` (record + rec_check, stops on blockers), then `./hb check story_<name>` (rec_check, the
-movie engine's lint, continuity, framing: seconds, no render). Fix every blocker by re-recording; give every warning
+`./hb record story_<name>` (the motion lint first, then record + rec_check, stops on blockers), then `./hb check
+story_<name>` (the motion lint, rec_check, the movie engine's lint, continuity, framing, the owner gate with its motion
+safety net: the view moving under a chest, teleports, whips, stalls: seconds, no render). Fix every blocker by re-recording; give every warning
 a reason or a fix. `./hb describe story_<name> L05` reads a moment as text; then `./hb sheet story_<name>` (one frame
 per shot) and `./hb still` at anything flagged, and `story-continuity` on them (docs/agent_guide.md). Max 4 recordings; if the
 same blocker survives, log it in the run report and simplify the scene.

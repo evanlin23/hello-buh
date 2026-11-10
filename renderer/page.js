@@ -147,6 +147,21 @@ function lightMaterial (mat) {
   mat.customProgramCacheKey = () => 'hbLight|' + (prev ? prev.toString() : '')
   mat.needsUpdate = true
 }
+// A camera that passes through blocks (a crane through a canopy) drew the face just past the near plane as a wall of
+// magnified texels (good_boy 7.9 s). Fragments of the world nearer than hbNearCut (blocks from the lens; vFogRel is the
+// custom fog's camera-relative position above) are discarded;
+// 0 (POV, every frame of older recordings) discards nothing. Chains any earlier onBeforeCompile.
+const NEAR_CUT = { hbNearCut: { value: 0 } }
+function nearCutMaterial (mat) {
+  const prev = mat.onBeforeCompile, prevKey = mat.customProgramCacheKey ? mat.customProgramCacheKey.bind(mat) : () => ''
+  mat.onBeforeCompile = (sh, r) => {
+    if (prev) prev(sh, r)
+    Object.assign(sh.uniforms, NEAR_CUT)
+    sh.fragmentShader = 'uniform float hbNearCut;\n' + sh.fragmentShader.replace('#include <clipping_planes_fragment>', '#include <clipping_planes_fragment>\n  if (hbNearCut > 0.0 && length(vFogRel) < hbNearCut) discard;')
+  }
+  mat.customProgramCacheKey = () => 'hbNearCut|' + prevKey()
+  mat.needsUpdate = true
+}
 function setLightUniforms (cam) {
   const l = cam.lm
   if (l) {
@@ -962,10 +977,13 @@ window.HB = {
       if (SHADOW) shadowMaterial(worldOpaqueMat)
       lightMaterial(worldOpaqueMat); lightMaterial(worldTransMat)
     }
+    // motion fixes (render.js MOTION_FIXES): a camera shot cuts away the world within cam.nearCut blocks of the lens
+    if (env.motionFixes) { nearCutMaterial(worldOpaqueMat); if (worldTransMat !== worldOpaqueMat) nearCutMaterial(worldTransMat) }
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
     entities = new EntityLayer(scene, regs); entities.camera = camera
     entities.engine = env.engine || 0   // (renderer/entities.js look: mobs added for engine-2 recordings)
+    entities.motionFixes = !!env.motionFixes   // (render.js MOTION_FIXES: upright thrown-item sprites)
     blockEntities = new BlockEntityLayer(scene)
     entities.itemFactory = thirdPersonItem
     entities.glintify = glintify
@@ -1037,6 +1055,7 @@ window.HB = {
   // pos = eye position; yaw/pitch in mineflayer convention; bob = {x,y,roll,pitch} offsets
   async frame (cam, tick, ents, parts) {
     if (END_LOADS.length) await Promise.all(END_LOADS)
+    NEAR_CUT.hbNearCut.value = cam.nearCut || 0
     if (env.shaderLight) setLightUniforms(cam)   // the portal's textures before its first frame (it drew black for one)
     animate(tick || 0)
     if (entities) await entities.update(ents || [], tick || 0)
