@@ -350,6 +350,67 @@ async function particleMaterial (tex) {
   partTex.set(tex, m)
   return m
 }
+// Lightning bolts (LightningBoltRenderer.render): 8 segments of 16 blocks, a jagged main path from a
+// java.util.Random seeded by the bolt (nextInt(11) - 5 per segment) and two forks (nextInt(31) - 15),
+// four nested shells 0.1 + 0.2j wide, colour (0.45, 0.45, 0.5) at alpha 0.3, blended SRC_ALPHA, ONE
+function javaRandom (seed) {
+  const M = (1n << 48n) - 1n
+  let s = (BigInt(seed) ^ 0x5DEECE66Dn) & M
+  const next = (bits) => { s = (s * 0x5DEECE66Dn + 0xBn) & M; return Number(s >> BigInt(48 - bits)) }
+  return {
+    nextInt (bound) {
+      if ((bound & -bound) === bound) return Number((BigInt(bound) * BigInt(next(31))) >> 31n)
+      let bits, val
+      do { bits = next(31); val = bits % bound } while (bits - val + (bound - 1) >= 2 ** 31)
+      return val
+    }
+  }
+}
+function boltGeometry (seed) {
+  const pos = []
+  const xs = new Array(8), zs = new Array(8)
+  let f = 0, f1 = 0
+  { const r = javaRandom(seed); for (let i = 7; i >= 0; i--) { xs[i] = f; zs[i] = f1; f += r.nextInt(11) - 5; f1 += r.nextInt(11) - 5 } }
+  const quad = (x1, z1, idx, x2, z2, o2, o1, ox1, oz1, ox2, oz2) => {
+    const v = [[x1 + (ox1 ? o1 : -o1), idx * 16, z1 + (oz1 ? o1 : -o1)], [x2 + (ox1 ? o2 : -o2), (idx + 1) * 16, z2 + (oz1 ? o2 : -o2)],
+      [x2 + (ox2 ? o2 : -o2), (idx + 1) * 16, z2 + (oz2 ? o2 : -o2)], [x1 + (ox2 ? o1 : -o1), idx * 16, z1 + (oz2 ? o1 : -o1)]]
+    for (const k of [0, 1, 2, 0, 2, 3]) pos.push(...v[k])
+  }
+  for (let j = 0; j < 4; j++) {
+    const r1 = javaRandom(seed)
+    for (let k = 0; k < 3; k++) {
+      let l = 7, i1 = 0
+      if (k > 0) { l = 7 - k; i1 = l - 2 }
+      let f2 = xs[l] - f, f3 = zs[l] - f1
+      for (let j1 = l; j1 >= i1; j1--) {
+        const f4 = f2, f5 = f3
+        if (k === 0) { f2 += r1.nextInt(11) - 5; f3 += r1.nextInt(11) - 5 } else { f2 += r1.nextInt(31) - 15; f3 += r1.nextInt(31) - 15 }
+        let f10 = 0.1 + j * 0.2; if (k === 0) f10 *= j1 * 0.1 + 1
+        let f11 = 0.1 + j * 0.2; if (k === 0) f11 *= (j1 - 1) * 0.1 + 1
+        quad(f2, f3, j1, f4, f5, f10, f11, false, false, true, false)
+        quad(f2, f3, j1, f4, f5, f10, f11, true, false, true, true)
+        quad(f2, f3, j1, f4, f5, f10, f11, true, true, false, true)
+        quad(f2, f3, j1, f4, f5, f10, f11, false, true, false, false)
+      }
+    }
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  return g
+}
+let boltMat = null
+const boltMeshes = []
+function drawBolts (list) {
+  for (const m of boltMeshes) { scene.remove(m); m.geometry.dispose() }
+  boltMeshes.length = 0
+  if (!list || !list.length) return
+  if (!boltMat) boltMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.45, 0.45, 0.5), transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: true })
+  for (const b of list) {
+    const m = new THREE.Mesh(boltGeometry(b.seed), boltMat)
+    m.position.set(b.x, b.y, b.z); m.frustumCulled = false; m.renderOrder = 2
+    scene.add(m); boltMeshes.push(m)
+  }
+}
+
 // Entity shadows (EntityRenderDispatcher.renderShadow): misc/shadow.png flat on the ground under each
 // entity, radius per renderer, alpha from render.js (height above the ground, camera distance)
 let shadowMat = null, shadowMesh = null
@@ -519,6 +580,8 @@ window.HB = {
     const grey = (c, k, lv, s) => { const g = (c.r * 0.3 + c.g * 0.59 + c.b * 0.11) * k, f = 1 - lv * s; c.setRGB(c.r * f + g * (1 - f), c.g * f + g * (1 - f), c.b * f + g * (1 - f)) }
     if (rain > 0) { grey(skyC, 0.6, rain, 0.75); fogC.setRGB(fogC.r * (1 - rain * 0.5), fogC.g * (1 - rain * 0.5), fogC.b * (1 - rain * 0.4)) }
     if (thunder > 0) { grey(skyC, 0.2, thunder, 0.75); fogC.multiplyScalar(1 - thunder * 0.5) }
+    // ClientLevel.getSkyColor: a lightning flash pulls the sky toward (0.8, 0.8, 1) by skyFlash (<= 0.45)
+    if (cam.skyFlash > 0) { const k = cam.skyFlash; skyC.setRGB(skyC.r * (1 - k) + 0.8 * k, skyC.g * (1 - k) + 0.8 * k, skyC.b * (1 - k) + k) }
     sky.material.uniforms.top.value.copy(skyC); sky.material.uniforms.horizon.value.copy(fogC)
     // FogRenderer: looking toward the sunrise/sunset side tints the fog by its colour (x the glow alpha)
     {
@@ -584,6 +647,7 @@ window.HB = {
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawShadows(cam.shadows)
+    drawBolts(cam.bolts)
     await drawParticles(parts)
     await drawWeather(cam)
     GLINT.ms.value = (tick || 0) * 50

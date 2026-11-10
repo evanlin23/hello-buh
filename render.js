@@ -290,6 +290,23 @@ const POTION_COLOR = new Map()
 }
 const FIRST_SEEN = new Map()
 for (const r of rec.entities || []) if (!FIRST_SEEN.has(r[1])) FIRST_SEEN.set(r[1], r[0])
+// Lightning (LightningBoltRenderer, drawn by the page): lightning_bolt entities while they exist, and
+// `lightning` marks {x, y, z, ticks?} for a stunt's own bolt (default 6 ticks). Storms had the thunder
+// sound only (worker 18). The sky flashes while a bolt is out (ClientLevel.skyFlashTime 2, fading
+// over the next 2 ticks).
+const BOLTS = []
+{
+  const span = new Map()
+  for (const r of rec.entities || []) if (r[2] === 'lightning_bolt') { const s0 = span.get(r[1]); if (!s0) span.set(r[1], { a: r[0], b: r[0] + 1, x: r[3], y: r[4], z: r[5], seed: r[1] }); else s0.b = r[0] + 1 }
+  BOLTS.push(...span.values())
+  for (const e of rec.timeline || []) if (e.event === 'lightning' && Number.isFinite(e.x)) BOLTS.push({ a: e.t / 50, b: e.t / 50 + (e.ticks || 6), x: e.x, y: e.y, z: e.z, seed: Math.round(e.t) })
+}
+function boltsAt (t) {
+  const bolts = BOLTS.filter(b => t >= b.a && t < b.b).map(b => ({ x: b.x, y: b.y, z: b.z, seed: b.seed }))
+  let flash = 0
+  for (const b of BOLTS) if (t >= b.a) flash = Math.max(flash, t < b.b ? 1 : Math.min(1, Math.max(0, b.b + 2 - t)))
+  return { bolts, flash: flash * 0.45 }
+}
 const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a lit one 80)
 for (const r of rec.entities || []) if (r[2] === 'tnt' && r[9] && r[9].fuse !== undefined && TNT_FUSE[r[1]] === undefined && FIRST_SEEN.get(r[1]) === r[0]) TNT_FUSE[r[1]] = r[9].fuse
 const TNT_STATE = require('minecraft-data')(rec.version).blocksByName.tnt.defaultState
@@ -2011,6 +2028,7 @@ function camAtLive (t) {
     }
     prof('entities+hand')
     cam.blockEntities = blockEntitiesAt(t, cam)
+    if (BOLTS.length) { const bl = boltsAt(t); cam.bolts = bl.bolts; cam.skyFlash = bl.flash }
     cam.dimension = DIM
     cam.weather = weatherColumns(cam, t, cam.rain)
     const parts = partsAt(t, cam)
