@@ -49,7 +49,7 @@ module.exports = {
   idleLife: true,
   look: { grade: { lift: [0.02, 0.012, 0.02], gamma: [0.98, 1.0, 1.03], gain: [1.1, 1.0, 0.9], sat: 1.08, contrast: 0.12, exposure: 1.04 }, bloom: 0, bloomThreshold: 0.72, vignette: 0.36, grain: 0, dof: { aperture: 0.7 }, shadows: true, rays: 0.4, cloudNight: 0.42 },
   shots: {},   // below (module.exports.shots)
-  edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0' },
+  edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0', punch: ['payoff'] },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -415,7 +415,7 @@ module.exports = {
       if (k === 6) sound('item.crossbow.loading_start', 0.8, 1)
       if (k === 12 || k === at(1) - 4) swing(GB)
       if (k === 20) sound('item.crossbow.loading_middle', 0.8, 1)
-      if (k === at(2) + 8) { sound('item.crossbow.loading_end', 1.2, 1); swing(GB) }   // the click on "kid" (the payoff)
+      if (k === at(2) + 8) { sound('item.crossbow.loading_end', 1.2, 1); swing(GB); ctx.mark('payoff') }   // the click on "kid" (the payoff: a punch-in)
       K.turnTo(from, P(me.x + 10 * Math.cos(aim), 2.3, me.z + 10 * Math.sin(aim)), Math.min(1, k / 16))
       raidD = Math.max(13, raidD - 0.055); placeRaiders()
       look(k)
