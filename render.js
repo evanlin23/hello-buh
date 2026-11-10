@@ -16,8 +16,20 @@ const [recPath, outDir, fpsArg, wArg, hArg] = process.argv.slice(2)
 const FPS = Number(fpsArg || 60), W = Number(wArg || 1080), H = Number(hArg || 1011)
 const EYE = 1.62
 const rec = JSON.parse(fs.readFileSync(recPath))
+// The stunt module's render options (hideHand, brightness, fovZoom, dimension, weather...). A stunt file that fails
+// to load stops the render: swallowed, it rendered with a first-person hand, the default brightness and no zoom, and
+// said nothing (pipeline test gap 11: a hand in every still of story_nitwit). STUNT_OPTIONAL=1 renders without it.
 let STUNT_MOD = {}
-try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {}
+{
+  const f = path.join(__dirname, 'stunts', `${rec.stunt}.js`)
+  if (!fs.existsSync(f)) console.log(`render.js: no stunts/${rec.stunt}.js: rendering with the default options`)
+  else {
+    try { STUNT_MOD = require(f) } catch (e) {
+      console.error(`render.js: stunts/${rec.stunt}.js failed to load, so its render options (hideHand, brightness, fovZoom...) would be lost:\n${e.stack.split('\n').slice(0, 4).join('\n')}`)
+      if (!process.env.STUNT_OPTIONAL) { console.error('fix the stunt (node -e "require(\'./stunts/' + rec.stunt + '\')"), or STUNT_OPTIONAL=1 to render without it'); process.exit(2) }
+    }
+  }
+}
 const FOV_ZOOM = []   // [startTick, endTick, scale] from stunt.fovZoom (see the frame loop)
 for (const [sa, sb, sc] of STUNT_MOD.fovZoom || []) {
   const at = (spec) => { const [ev, off] = String(spec).split(':'); const e = (rec.timeline || []).find(m => m.event === ev); return e ? e.t / 50 + Number(off || 0) * 20 : null }
@@ -1507,6 +1519,25 @@ function camAtLive (t) {
   if (process.env.LINT) {
     const n = require('./renderer/lint').run({ rec, stunt: STUNT_MOD, marks: SHOT_MARKS, shots: SHOTS, shotCam, camAt, targetAt, actorsAt, lines: LINES, mesher, Vec3 })
     process.exit(n ? 1 : 0)
+  }
+  // CAM_PROBE=all|t1,t2,...: print the camera of those ticks (one JSON line each) and stop, no browser. The same
+  // director the frames use (shot marks, shotCam, auto-framing, stunt.self's eye), so lib/hb (hb describe /
+  // continuity / framing) can reason about camera shots it can't compute itself. Block changes aren't applied:
+  // a camera pulled out of a block placed mid-recording may differ slightly.
+  if (process.env.CAM_PROBE) {
+    const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
+    const ticks = process.env.CAM_PROBE === 'all' ? P.map((_, i) => i) : process.env.CAM_PROBE.split(',').map(Number)
+    const r3 = (v) => Math.round(v * 1000) / 1000
+    const lines = []
+    for (const t of ticks) {
+      const sh = shotAt(t)
+      let c = sh && !sh.pov ? shotCam(sh, t, solidAt) : null
+      const mode = c ? `shot ${sh.name}` : sh ? `shot ${sh.name} (pov)` : 'pov'
+      if (!c) { c = camAt(t); const s = selfAt(t); if (s && s.eye) c = { ...c, y: c.y - (EYE - s.eye) } }
+      lines.push(JSON.stringify({ t, mode, x: r3(c.x), y: r3(c.y), z: r3(c.z), yaw: r3(c.yaw), pitch: r3(c.pitch), fov: c.fov || 70 }))
+    }
+    process.stdout.write(lines.join('\n') + '\n')
+    process.exit(0)
   }
 
   const app = express()
