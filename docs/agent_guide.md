@@ -131,4 +131,5 @@ the POV camera, entities, time, weather, HUD, ray casts), `lib/hb/analyze.js` (d
 sheets). The movie engine: `hb check` runs `LINT=1` (renderer/lint.js), `hb lint` runs it alone, `hb still`/`sheet`
 render its shots and looks, `--look`/`--day-time` pass `LOOK_JSON`/`DAY_TIME`, and describe/continuity/framing read
 every camera from `CAM_PROBE=all node render.js <rec>` (one JSON line per tick: mode, position, yaw, pitch, fov).
-`scripts/shot_sheet.py` / `scripts/try_shots.py` stay the tools for tuning a camera spec.
+`scripts/shot_sheet.py` / `scripts/try_shots.py` stay the tools for tuning a camera spec, and `scripts/still.py` for key
+art (any camera, look and size).
