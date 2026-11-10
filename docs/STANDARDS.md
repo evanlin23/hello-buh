@@ -126,8 +126,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    "every sheep is blue") holds in every shot, except a deliberate, planted exception. set.md lists the claims; check
    them on stills from every shot angle before recording. Check: review (stills), visual audit. r:r41b413
 6. **A full, funny hotbar**: all 9 slots filled, the story's own tools first, then 1-3 ridiculous items that fit the
-   world (milk buckets, cake, 64 eggs); never contradicting the story, the same between shots. story.json "hotbar".
-   Check: review (stills), rec_check (hotbar). r:rdc3c4c
+   world (milk buckets, cake, 67 eggs: owner "make it 67 eggs"); never contradicting the story, the same between shots.
+   story.json "hotbar" (the harness puts it on before the first frame; docs/engine_features.md "The story's hotbar").
+   Check: check (story hotbar: BLOCK on an unknown item id), rec_check (hotbar), review (stills). r:rdc3c4c
 
 ## 3b. Motion (built in, not caught)
 1. **Smooth by construction**: stunts move the camera, the player and NPCs only through the story kit's primitives
