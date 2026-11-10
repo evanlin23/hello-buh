@@ -1501,5 +1501,41 @@
   "file": "win/winning_swoosh_2017.mp3",
   "seconds": 1.54,
   "licence": "Mixkit Sound Effects Free License (sfxFree): commercial use incl. YouTube, no attribution; no standalone redistribution"
+ },
+ {
+  "id": "1789",
+  "title": "Summer night crickets loop",
+  "category": "ambience",
+  "url": "https://assets.mixkit.co/active_storage/sfx/1789/1789-preview.mp3",
+  "file": "ambience/summer_night_crickets_loop_1789.mp3",
+  "seconds": 42.03,
+  "licence": "Mixkit Sound Effects Free License (sfxFree): commercial use incl. YouTube, no attribution; no standalone redistribution"
+ },
+ {
+  "id": "1220",
+  "title": "Quiet forest ambience",
+  "category": "ambience",
+  "url": "https://assets.mixkit.co/active_storage/sfx/1220/1220-preview.mp3",
+  "file": "ambience/quiet_forest_ambience_1220.mp3",
+  "seconds": 152.11,
+  "licence": "Mixkit Sound Effects Free License (sfxFree): commercial use incl. YouTube, no attribution; no standalone redistribution"
+ },
+ {
+  "id": "1172",
+  "title": "Wind cold interior",
+  "category": "ambience",
+  "url": "https://assets.mixkit.co/active_storage/sfx/1172/1172-preview.mp3",
+  "file": "ambience/wind_cold_interior_1172.mp3",
+  "seconds": 26.28,
+  "licence": "Mixkit Sound Effects Free License (sfxFree): commercial use incl. YouTube, no attribution; no standalone redistribution"
+ },
+ {
+  "id": "2427",
+  "title": "Breeze through the trees",
+  "category": "ambience",
+  "url": "https://assets.mixkit.co/active_storage/sfx/2427/2427-preview.mp3",
+  "file": "ambience/breeze_through_the_trees_2427.mp3",
+  "seconds": 14.37,
+  "licence": "Mixkit Sound Effects Free License (sfxFree): commercial use incl. YouTube, no attribution; no standalone redistribution"
  }
 ]

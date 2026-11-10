@@ -61,7 +61,8 @@ runs:
           work/sounds
           work/emoji
           sfx/mixkit
-        key: mc-edit-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js', 'sfx/mixkit/manifest.json') }}
+          songs/score
+        key: mc-edit-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js', 'sfx/mixkit/manifest.json', 'music/score.json') }}
         restore-keys: mc-assets-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js') }}
     - shell: bash
       run: npm ci --no-audit --no-fund

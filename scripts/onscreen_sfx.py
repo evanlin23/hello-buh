@@ -9,14 +9,30 @@ the camera, and checks for a `sound` mark of the right kind near it.
 
   python3 scripts/onscreen_sfx.py work/<stunt>.rec.json [--story stories/<name>]   # the check: events with no sound
   python3 scripts/onscreen_sfx.py <stunt>                                          # (the package's recording on hb-videos)
+  python3 scripts/onscreen_sfx.py <rec> --strict     # exit 1 if a visible action would stay silent after the fills
 
 audio.py calls fills() for story recordings (a `line` mark), so a story's game track gets the missing sounds.
 Not under the narrator's key words (the caption chunks with a capitalised key word): there a minor sound
-(pickup, place, dig ticks) is dropped and a causal one (a break, a door, a hit, a death, a fuse) goes in 6 dB
-down. Non-story Shorts are untouched.
+(pickup, place, dig ticks, steps, a mob's idle voice) is dropped and a causal one (a break, a door, a hit, a
+death, a fuse) goes in 6 dB down. Non-story Shorts are untouched.
+
+Owner, 2026-11-10: "The sound effects need work as well". Also detected since (the audit of thirty_one_raids,
+good_boy and gold_for_the_portal: the cast is summoned Silent, so no mob made a sound on its own):
+- a mob's idle voice (villager hmm, wolf bark/pant/growl, zombie groan, pillager, ravager, piglin, warden, ...):
+  vanilla's Mob.baseTick timer (a 1/1000 chance per tick rising after an 80-tick reset), per mob within hearing,
+  at most one every MOB_VOICE_GAP s across the mix, volume falling off with distance like vanilla
+- steps of every walking mob or actor (not the camera: the harness logs those): one per 1/0.6 blocks walked
+  on the ground, the mob's own step sound or the block underfoot's
+- splashes and swimming: an entity (or the camera) entering water, then a swim stroke per 1/0.6 blocks in it
+- barrels: open/close (they were given the wooden door's sound)
+- an item picked up by anyone in hearing, not only the camera
+- the scene's ambience (scenes()): night / day / indoors / cave / rain / nether / underwater, per cut, mixed by
+  scripts/story_audio.py
+The hotbar switch makes no sound in vanilla Java (only equipping armour does), so none is added.
 """
 import gzip
 import json
+import math
 import pathlib
 import random
 import re
@@ -62,9 +78,15 @@ FLUIDS = {"water", "lava", "bubble_column"}
 AIRS = {"air", "cave_air", "void_air", "unknown"}
 # a sound mark of this kind near the event means it already has its sound
 HAS = {"break": r"\.break$|explode", "place": r"\.place$", "door": r"door|gate", "pickup": r"pickup", "hurt": r"\.hurt|attack",
-       "death": r"\.death", "bell": r"bell", "chest": r"chest", "eat": r"eat|drink|burp", "primed": r"primed|fuse", "thunder": r"thunder",
-       "hit": r"\.hit$"}
-MINOR = {"pickup", "place", "hit"}
+       "death": r"\.death", "bell": r"bell", "chest": r"chest|barrel", "eat": r"eat|drink|burp", "primed": r"primed|fuse", "thunder": r"thunder",
+       "hit": r"\.hit$", "step": r"\.step$", "voice": r"\.ambient$|growl|pant|whine|celebrate|roar|\.horn", "splash": r"splash", "swim": r"swim|splash"}
+MINOR = {"pickup", "place", "hit", "step", "voice", "swim"}
+MOB_VOICE_GAP = 1.2   # s: at most one idle mob voice this often in the whole mix (ten villagers in hearing are a choir)
+STEP_EVERY = 1.0      # vanilla Entity.move: moveDist += horizontal * 0.6; a step each time it passes the next whole number
+NOT_LIVING = re.compile(r"item|frame|minecart|armor_stand|marker|display|interaction|painting|arrow|orb|falling_block|^tnt$|firework|"
+                        r"lightning|cloud|bobber|eye_of_ender|snowball|egg$|pearl|potion|trident|boat|raft|leash|wind_charge|fireball|skull")
+WATER = {"water", "bubble_column", "kelp", "kelp_plant", "seagrass", "tall_seagrass"}
+NO_COVER = re.compile(r"leaves|glass|pane|fence|wall_torch|^torch|lantern|chain|bars|vine|flower|sapling|grass$|fern|rail|carpet|button|sign|banner|cobweb|scaffolding|candle")
 
 
 def defs():
@@ -154,6 +176,149 @@ def story_dir_of(rec):
     return str(cand) if cand.exists() else None
 
 
+def in_view(p, x, y, z, cone=50):
+    """Is (x, y, z) inside the camera's view (a cone around its look direction; pose = [tick, x, y, z, yaw, pitch])?"""
+    dx, dy, dz = x - p[1], y - (p[2] + 1.62), z - p[3]
+    d = math.sqrt(dx * dx + dy * dy + dz * dz)
+    if d < 1.5:
+        return True
+    v = (-math.sin(p[4]) * math.cos(p[5]), math.sin(p[5]), -math.cos(p[4]) * math.cos(p[5]))
+    return (dx * v[0] + dy * v[1] + dz * v[2]) / d >= math.cos(math.radians(cone))
+
+
+def blocks(rec, at):
+    """scripts/rec_blocks.js: {changes, at: [block name at [tick, x, y, z]]} for the recording."""
+    return json.loads(subprocess.run(["node", str(ROOT / "scripts" / "rec_blocks.js")], input=json.dumps({"rec": rec["_path"], "at": at}),
+                                     capture_output=True, text=True, check=True, cwd=ROOT).stdout)
+
+
+def living(typ, known):
+    return typ == "player" or (not NOT_LIVING.search(typ) and f"entity.{typ}.hurt" in known)
+
+
+def _movers(rec, poses, ents, k0, k1, known):
+    """Step candidates of every walking entity within hearing ([{tick, id, type, x, y, z}]) and water samples of every
+    moving entity and the camera ([{tick, id, type, x, y, z, moved}]), between ticks k0 and k1."""
+    steps, wet = [], []
+    for eid, rows in ents.items():
+        typ = rows[0][2]
+        if not living(typ, known):
+            continue
+        walk, nxt, prev = 0.0, STEP_EVERY, None
+        for r in rows:
+            if not (k0 <= r[0] <= k1):
+                prev = r
+                continue
+            p = _pose_at(poses, r[0])
+            near = p is not None and _dist(p, r[3], r[4] + 1, r[5]) <= HEAR
+            if prev is not None and r[0] == prev[0] + 1:
+                h = math.hypot(r[3] - prev[3], r[5] - prev[5])
+                moved = math.sqrt(h * h + (r[4] - prev[4]) ** 2)
+                if h > 2.5:   # a teleport (a cut): no steps across it
+                    walk, nxt = 0.0, STEP_EVERY
+                elif abs(r[4] - prev[4]) < 0.6 and h > 0.005:   # walking (on a slope too; a jump or fall rises or drops faster)
+                    walk += 0.6 * h
+                    if walk > nxt:
+                        nxt = int(walk) + STEP_EVERY
+                        if near:
+                            steps.append({"tick": r[0], "id": eid, "type": typ, "x": r[3], "y": r[4], "z": r[5]})
+                if near and moved > 0.02 and r[0] % 2 == 0:
+                    wet.append({"tick": r[0], "id": eid, "type": typ, "x": r[3], "y": r[4], "z": r[5], "moved": moved * 2})
+            prev = r
+    cam = "self"
+    for a, b in zip(poses, poses[1:]):   # the camera itself (a dog swimming to the island): splashes and strokes only
+        if k0 <= b[0] <= k1 and b[0] % 2 == 0:
+            m = math.dist(a[1:4], b[1:4])
+            if 0.02 < m < 2.5:
+                wet.append({"tick": b[0], "id": cam, "type": cam, "x": b[1], "y": b[2], "z": b[3], "moved": m * 2})
+    return steps, wet
+
+
+def _wolf_voice(row, rng):
+    meta = row[9] if len(row) > 9 and isinstance(row[9], dict) else {}
+    if meta.get("angry"):
+        return "entity.wolf.growl"
+    return ("entity.wolf.pant" if rng.random() < 0.5 else "entity.wolf.ambient") if rng.randrange(3) == 0 else "entity.wolf.ambient"
+
+
+def _voices(rec, poses, ents, k0, k1, known):
+    """[(t ms, type, xyz, sound)]: vanilla Mob.baseTick's idle-sound timer (a random.nextInt(1000) < ambientSoundTime++
+    roll each tick, reset to -80 after a sound) for every mob within hearing of the camera."""
+    out = []
+    for eid, rows in ents.items():
+        typ = rows[0][2]
+        if typ == "player" or not living(typ, known):
+            continue
+        snd = f"entity.{typ}.ambient"
+        if typ != "wolf" and snd not in known:
+            continue
+        rng = random.Random(f"{eid}:{len(poses)}")
+        ast = -rng.randrange(80)
+        for r in rows:
+            if not (k0 <= r[0] <= k1):
+                continue
+            p = _pose_at(poses, r[0])
+            if p is None or _dist(p, r[3], r[4] + 1, r[5]) > HEAR:
+                continue
+            if rng.randrange(1000) < ast:
+                ast = -80
+                out.append((r[0] * 50, typ, (r[3], r[4] + 1, r[5]), _wolf_voice(r, rng) if typ == "wolf" else snd))
+            else:
+                ast += 1
+    return sorted(out)
+
+
+def scenes(rec, timeline=None):
+    """The ambience of each shot: [(t0, t1, kind)] in recording seconds, one per stretch between `cut` / `time` marks.
+    kind: nether | end | underwater | rain | rain_indoor | cave | indoor_night | indoor_day | night | dusk | day,
+    from the camera's dimension, the clock (13000-23000 night, 12000-13000 dusk), the weather, the block at the eye
+    and the 24 blocks above it (covered by anything solid: indoors; under 8+ solid blocks: a cave)."""
+    tl = timeline or rec["timeline"]
+    poses = rec.get("poses") or []
+    if not poses:
+        return []
+    lines = [e["t"] for e in tl if e["event"] in ("line", "start")]
+    t0 = (min(lines) - 1000) if lines else 0
+    t1 = max([e["t"] for e in tl if e["event"] in ("end", "story_end")] or [len(poses) * 50])
+    marks = sorted({e["t"] for e in tl if e["event"] in ("cut", "time") and t0 < e["t"] < t1} | {t0, t1})
+    segs = [(a, b) for a, b in zip(marks, marks[1:]) if b - a >= 100]
+    clock = [(-1e12, rec.get("time", 6000))] + [(e["t"], e["time"]) for e in tl if e["event"] == "time" and "time" in e]
+    weather = [(-1e12, rec.get("weather", "clear"))] + [(e["t"], e.get("weather") or e.get("value")) for e in tl if e["event"] == "weather"]
+    dim = str(rec.get("dimension", "overworld"))
+    q, probe = [], []
+    for a, b in segs:
+        p = _pose_at(poses, ((a + b) // 2) // 50)
+        x, y, z = math.floor(p[1]), math.floor(p[2] + 1.62), math.floor(p[3])
+        probe.append(len(q))
+        q += [[p[0], x, y, z]] + [[p[0], x, y + k, z] for k in range(1, 25)]
+    at = blocks(rec, q)["at"] if q else []
+    out = []
+    for (a, b), i in zip(segs, probe):
+        if out and b - a < 800 and out[-1][1] == a / 1000:   # a flash of a shot keeps the scene around it
+            out[-1] = (out[-1][0], b / 1000, out[-1][2])
+            continue
+        eye, above = at[i], at[i + 1:i + 25]
+        solid = [n for n in above if n not in AIRS and n not in FLUIDS and not NO_COVER.search(n)]
+        tod = next(v for t, v in reversed(clock) if t <= a) % 24000
+        rain = next(v for t, v in reversed(weather) if t <= a) in ("rain", "thunder")
+        if "nether" in dim:
+            kind = "nether"
+        elif "end" in dim:
+            kind = "end"
+        elif eye in WATER:
+            kind = "underwater"
+        elif rain:
+            kind = "rain_indoor" if solid else "rain"
+        elif len(solid) >= 8:
+            kind = "cave"
+        elif solid:
+            kind = "indoor_night" if 12500 <= tod < 23200 else "indoor_day"
+        else:
+            kind = "night" if 13000 <= tod < 23000 else "dusk" if 12000 <= tod < 13000 else "day"
+        out.append((a / 1000, b / 1000, kind))
+    return out
+
+
 def events(rec, known=None):
     """Every visible event that makes a sound in vanilla: dicts {t (s), kind, sound, volume, pitch, what, dist, has}."""
     known = known or defs()
@@ -169,13 +334,17 @@ def events(rec, known=None):
     digs = [e for e in tl if e["event"] == "dig"]
     acts = [e for e in tl if e["event"] == "block_action"]
     q = [[e["t"] // 50, e["x"], e["y"], e["z"]] for e in digs] + [[e["t"] // 50, e["x"], e["y"], e["z"]] for e in acts]
-    rb = json.loads(subprocess.run(["node", str(ROOT / "scripts" / "rec_blocks.js")], input=json.dumps({"rec": rec["_path"], "at": q}),
-                                   capture_output=True, text=True, check=True, cwd=ROOT).stdout)
+    steps, wet = _movers(rec, poses, ents, t_from // 50, t_to // 50, known)
+    q0 = len(q)
+    q += [[s["tick"], math.floor(s["x"]), math.floor(s["y"] - 0.2), math.floor(s["z"])] for s in steps]
+    q1 = len(q)
+    q += [[w["tick"], math.floor(w["x"]), math.floor(w["y"] + 0.3), math.floor(w["z"])] for w in wet]
+    rb = blocks(rec, q)
     dig_name = {id(e): n for e, n in zip(digs, rb["at"][:len(digs)])}
-    act_name = {id(e): n for e, n in zip(acts, rb["at"][len(digs):])}
+    act_name = {id(e): n for e, n in zip(acts, rb["at"][len(digs):q0])}
     out = []
 
-    def add(t_ms, kind, sound, what, xyz=None, volume=1.0, pitch=1.0):
+    def add(t_ms, kind, sound, what, xyz=None, volume=1.0, pitch=1.0, falloff=False):
         if not (t_from <= t_ms <= t_to):
             return
         p = _pose_at(poses, t_ms // 50)
@@ -183,8 +352,49 @@ def events(rec, known=None):
         if d > HEAR:
             return
         rx = re.compile(HAS[kind])
-        has = any(abs(st - t_ms) <= NEAR_MS and rx.search(sn) for st, sn in sounds)
-        out.append({"t": t_ms / 1000, "kind": kind, "sound": sound, "volume": volume, "pitch": pitch, "what": what, "dist": round(d, 1), "has": has})
+        # (the harness logs only the camera's own steps: an actor's step is never one of them)
+        has = kind != "step" and any(abs(st - t_ms) <= NEAR_MS and rx.search(sn) for st, sn in sounds)
+        if falloff:   # vanilla's linear attenuation over 16 blocks (the fills of the older kinds play at full volume)
+            volume *= max(0.05, 1 - d / HEAR)
+        out.append({"t": t_ms / 1000, "kind": kind, "sound": sound, "volume": volume, "pitch": pitch, "what": what, "dist": round(d, 1), "has": has,
+                    "seen": bool(p and xyz and in_view(p, *xyz))})
+
+    # steps of walking mobs and actors (the block underfoot's step, or the mob's own: wolf, zombie, piglin, ravager, ...)
+    for s, under in zip(steps, rb["at"][q0:q1]):
+        if under in AIRS or under in FLUIDS or under in WATER:
+            continue
+        own = f"entity.{s['type']}.step"
+        snd = own if own in known else block_sound(under, "step", known)
+        add(s["tick"] * 50, "step", snd, f"{s['type']} step on {under}", (s["x"], s["y"], s["z"]), 0.15 if snd.startswith("block.") else 0.3,
+            1.0 if snd.startswith("block.") else (rng.random() - rng.random()) * 0.1 + 1.0, True)
+    # splashes into water and swim strokes in it
+    state = {}
+    for w, here in zip(wet, rb["at"][q1:]):
+        k = w["id"]
+        inside = here in WATER
+        was, dist = state.get(k, (None, 0.0))
+        player = w["type"] in ("player", "self")
+        xyz = (w["x"], w["y"], w["z"])
+        if inside and was is False:
+            add(w["tick"] * 50, "splash", "entity.player.splash" if player else "entity.generic.splash", f"{w['type']} into the water", xyz, 0.5,
+                (rng.random() - rng.random()) * 0.4 + 1.0, w["type"] != "self")
+            dist = 0.0
+        elif inside:
+            dist += 0.6 * w["moved"]
+            if dist > STEP_EVERY:
+                dist = 0.0
+                add(w["tick"] * 50, "swim", "entity.player.swim" if player else "entity.generic.swim", f"{w['type']} swimming", xyz, 0.25,
+                    (rng.random() - rng.random()) * 0.4 + 1.0, w["type"] != "self")
+        state[k] = (inside, dist)
+    # idle voices (the cast is summoned Silent: vanilla's ambient timer, per mob within hearing)
+    last_voice = -1e9
+    for t_ms, typ, xyz, snd in _voices(rec, poses, ents, t_from // 50, t_to // 50, known):
+        if t_ms - last_voice < MOB_VOICE_GAP * 1000:
+            continue
+        n0 = len(out)
+        add(t_ms, "voice", snd, f"{typ} idle voice", xyz, 1.0, (rng.random() - rng.random()) * 0.2 + 1.0, True)
+        if len(out) > n0:
+            last_voice = t_ms
 
     # player digging: the hit sound every 4 ticks while mining, then the break (dig_end ok)
     broken = set()
@@ -219,13 +429,20 @@ def events(rec, known=None):
             if k in seen_doors:
                 continue
             seen_doors.add(k)
-            opening = pb.get("open") == "true"
+            opening = str(pb.get("open")).lower() == "true"   # (prismarine gives a bool, older dumps the string: every door read "closed")
+            if b == "barrel":   # a barrel's `open` state is its lid (BarrelBlockEntity plays block.barrel.open/close, 0.5)
+                add(t, "chest", f"block.barrel.{'open' if opening else 'close'}", f"barrel {'opened' if opening else 'closed'}", xyz, 0.5, rng.random() * 0.1 + 0.9)
+                continue
             add(t, "door", door_sound(b, opening, known), f"{b} {'opened' if opening else 'closed'}", xyz, 1.0, rng.random() * 0.1 + 0.9)
     for e in tl:
         ev, t = e["event"], e["t"]
         if ev == "collect" and e.get("by") == "self":
             p = _pose_at(poses, t // 50)
             add(t, "pickup", "entity.item.pickup", "picked up an item", p[1:4] if p else None, 0.2, ((rng.random() - rng.random()) * 0.7 + 1.0) * 2.0)
+        elif ev == "collect" and e.get("by") is not None:   # an actor or mob picking an item up: heard like any other sound
+            r = _ent_at(ents, e.get("by"), t // 50)
+            if r:
+                add(t, "pickup", "entity.item.pickup", f"{r[2]} picked up an item", r[3:6], 0.2, ((rng.random() - rng.random()) * 0.7 + 1.0) * 2.0, True)
         elif ev in ("mob_hurt", "mob_death"):
             r = _ent_at(ents, e.get("id"), t // 50)
             typ = r[2] if r else "generic"
@@ -266,29 +483,81 @@ def events(rec, known=None):
     return sorted(out, key=lambda o: o["t"])
 
 
-def fills(rec, story_dir=None, known=None):
-    """The missing sounds to play: (t, sound, volume, pitch, note), with the key-word rule applied."""
+def fills(rec, story_dir=None, known=None, evs=None):
+    """The missing sounds to play: (t, sound, volume, pitch, note), with the key-word rule applied: under a key word a
+    mob's idle voice is dropped (it is no action), a minor sound goes in 9 dB down and a causal one 6 dB down
+    (scripts/story_audio.py's clarity guard keeps every one of them under the voice besides)."""
     keys = key_windows(rec, story_dir)
     out = []
-    for o in events(rec, known):
+    for o in (evs if evs is not None else events(rec, known)):
         if o["has"]:
             continue
         on_key = any(a <= o["t"] <= b for a, b in keys)
-        if on_key and o["kind"] in MINOR:
+        if on_key and o["kind"] == "voice":
             continue
-        out.append((o["t"], o["sound"], o["volume"] * (0.5 if on_key else 1.0), o["pitch"], o["what"] + (" (under a key word: -6 dB)" if on_key else "")))
+        g = (0.35 if o["kind"] in MINOR else 0.5) if on_key else 1.0
+        out.append((o["t"], o["sound"], o["volume"] * g, o["pitch"], o["what"] + (f" (under a key word: {20 * math.log10(g):.0f} dB)" if on_key else "")))
     return out
+
+
+# visible marks that make a sound in vanilla, and the sound (a mark or a fill) that must come with them
+NEEDS = [("container", r"chest|barrel|shulker|ender_chest|open", 0.4, "a container opened with no open sound"),
+         ("use_start", r"eat|drink|bow|crossbow|shield|bucket|spyglass|horn|honey|brush|trident|use|equip", 1.2, "an item used with no use sound"),
+         ("mob_hurt", r"hurt|attack|death", 0.3, "a mob hit with no hurt sound"),
+         ("mob_death", r"death", 0.3, "a mob died with no death sound"),
+         ("lightning", r"thunder", 0.5, "lightning with no thunder")]
+
+
+def silent_actions(rec, evs=None, story_dir=None):
+    """Visible actions that would stay silent in the mix: a mark from NEEDS with no matching sound (a recorded `sound`
+    mark or one of the fills) close after it, and every detected event whose fill is dropped. [(t s, what)]"""
+    tl = rec["timeline"]
+    evs = evs if evs is not None else events(rec)
+    have = [(e["t"] / 1000, e.get("sound", "")) for e in tl if e["event"] == "sound"] + [(t, snd) for t, snd, *_ in fills(rec, story_dir, evs=evs)]
+    lines = [e["t"] for e in tl if e["event"] in ("line", "start")]
+    t0 = (min(lines) - 1000) / 1000 if lines else 0.0
+    t1 = max([e["t"] for e in tl if e["event"] in ("end", "story_end")] or [1e12]) / 1000
+    poses = rec.get("poses") or []
+    ents = {}
+    for r in rec.get("entities") or []:
+        ents.setdefault(r[1], []).append(r)
+    out = []
+    for ev, rx, win, what in NEEDS:
+        r = re.compile(rx)
+        for e in tl:
+            t = e["t"] / 1000
+            if e["event"] != ev or not (t0 <= t <= t1):
+                continue
+            if ev == "use_start" and not e.get("item"):
+                continue
+            if ev in ("mob_hurt", "mob_death"):   # only within hearing of the camera
+                row, p = _ent_at(ents, e.get("id"), e["t"] // 50), _pose_at(poses, e["t"] // 50)
+                if not row or not p or _dist(p, *row[3:6]) > HEAR:
+                    continue
+            if not any(t - 0.15 <= st <= t + win and r.search(sn) for st, sn in have):
+                out.append((t, what + (f" ({e.get('item') or e.get('title') or ''})" if ev in ("use_start", "container") else "")))
+    return sorted(out)
 
 
 def report(rec, story_dir=None):
     ev = events(rec)
     keys = key_windows(rec, story_dir)
     miss = [o for o in ev if not o["has"]]
-    print(f"{len(ev)} visible sound-making events, {len(ev) - len(miss)} with a sound mark, {len(miss)} without")
+    kinds = {}
+    for o in ev:
+        kinds[o["kind"]] = kinds.get(o["kind"], 0) + 1
+    print(f"{len(ev)} visible sound-making events ({', '.join(f'{k} {n}' for k, n in sorted(kinds.items()))}), "
+          f"{len(ev) - len(miss)} with a sound mark, {len(miss)} without (audio.py adds those for a story)")
     for o in miss:
         tag = "key word" if any(a <= o["t"] <= b for a, b in keys) else ""
-        print(f"  {o['t']:7.2f}s  {o['what']:<34} -> {o['sound']:<32} {o['dist']:5.1f} blocks  {tag}")
-    return miss
+        print(f"  {o['t']:7.2f}s  {o['what']:<34} -> {o['sound']:<32} {o['dist']:5.1f} blocks {'in view' if o['seen'] else '       '}  {tag}")
+    sc = scenes(rec)
+    print("ambience per shot: " + ", ".join(f"{a:.2f}-{b:.2f}s {k}" for a, b, k in sc))
+    silent = silent_actions(rec, ev, story_dir)
+    print(f"{len(silent)} visible action(s) that stay silent after the fills" + (":" if silent else ""))
+    for t, what in silent:
+        print(f"  {t:7.2f}s  {what}")
+    return silent
 
 
 if __name__ == "__main__":
@@ -296,7 +565,9 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("rec")
     ap.add_argument("--story")
+    ap.add_argument("--strict", action="store_true", help="exit 1 if a visible action stays silent")
     a = ap.parse_args()
     rec, p = load_rec(a.rec)
     rec["_path"] = str(p)   # rec_blocks.js reads the file itself (gzipped or not)
-    report(rec, a.story or story_dir_of(rec))
+    silent = report(rec, a.story or story_dir_of(rec))
+    sys.exit(1 if a.strict and silent else 0)

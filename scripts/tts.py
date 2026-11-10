@@ -1105,6 +1105,21 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None,
     return done, meta
 
 
+CHARACTER_MAX_PAUSE = {"rest": 1.0}   # a character's short line may breathe between its sentences: the pace rules are the narrator's
+
+
+def beat_limits(story, cs, who, narrator):
+    """The take gate's pause limits for one beat (in a continuous take a limit, never a trim). Story `max_pause` first,
+    then the speaker's cast `max_pause`: the owner's kid narrator performs sentence breaks at ~0.4-0.6 s and the owner
+    said "this is fine" of exactly that take (docs/stories.md, r:rcf486c), so its cast entry allows rest 0.6. A
+    character (anyone but the narrator) gets CHARACTER_MAX_PAUSE: Mom's "Walk SOFT, sweetie. The ground's a light
+    SLEEPER." has a natural sentence gap and failed five takes against the narrator's 0.35 s."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import take_gate
+    mp = cs.get(who, {}).get("max_pause") or (None if who == narrator else CHARACTER_MAX_PAUSE)
+    return take_gate.limits_for(story.get("max_pause") or mp)
+
+
 def run_beats(d, story, cs, narrator, voice, only=None, retakes=2):
     """A story with "voice_takes": "beat": every beat (or the beats holding an `--only` line) as one gated
     continuous take. No single-line re-takes: re-taking one line would splice a second take into the beat.
@@ -1112,11 +1127,11 @@ def run_beats(d, story, cs, narrator, voice, only=None, retakes=2):
     sys.path.insert(0, str(ROOT / "scripts"))
     import take_gate
     beats = beat_groups(story, cs, narrator, voice.spoken)
-    lim = take_gate.limits_for(story.get("max_pause"))   # in a continuous take max_pause is a gate limit, never a trim
     done, metas = {}, {}
     for i, b in enumerate(beats):
         if only and not any(lid in only for _, lid, _, _ in b["lines"]):
             continue
+        lim = beat_limits(story, cs, b["lines"][0][0], narrator)
         d_, m = voice_beat(b, cs, d / "voice", tries=1 + retakes, opening=(i == 0), limits=lim)
         done.update(d_)
         metas[b["id"]] = m

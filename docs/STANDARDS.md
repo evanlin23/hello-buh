@@ -60,7 +60,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 0000. **The narrator recipe (owner's pick)**: Gemini Leda with the "sleepover" direction (spooky-funny story at a
    sleepover, fast and gleeful; brand/voice_samples/kid k4), rubberband tempo 1.1x and +1 semitone, nothing else (no
    pause cap, no formant mode, no room: "weird artifacts"); performed continuously so no pause is cut. It is
-   `voices/cast.json` `narrator`; the Orus x1.45 voice is now `narrator_roblox` only. Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c
+   `voices/cast.json` `narrator`; the Orus x1.45 voice is now `narrator_roblox` only. Its take gate allows sentence
+   breaks up to 0.6 s (cast `max_pause`: the take the owner called "fine" had them); character lines up to 1.0 s. Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
    (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.
@@ -198,13 +199,15 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinem
    r:r62de46
 
 ## 7. Audio
-0. **Music in every render, sound for every action**: the score bed is in every render (previews included), at the
-   reference Short's level under a clear voice; every visible action has its vanilla sound, ambience fits, nothing
-   visible is silent. Check: the silent-action check, review. 
-The lead's mix (docs/audio.md), automatic in `edit.py --story` + publish: voice -15 LUFS, master **-14 LUFS +-0.5,
-true peak <= -1 dBTP**, room tone (never digital silence), a Kevin MacLeod mood score (CC BY, credited; not NCS) from
-story.json `mood`, the bed out 0.45 s before the payoff, then a hit. Any owner note on a track or level overrides it.
-Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
+The lead's mix (docs/audio.md), all of it in `edit.py --story` (previews included: what the owner reviews is what
+gets posted; publish only writes the credit): voice -15 LUFS, master **-14 LUFS +-0.5, true peak <= -1 dBTP**, room
+tone (never digital silence), a Kevin MacLeod mood score (CC BY, credited; not NCS) from story.json `mood`, **~14 dB
+under the voice while it speaks** (the owner's reference: 13.8 dB, constant), out 0.45 s before the payoff, then a
+hit, and **no music after the payoff**. **No whooshes** on cuts; the riser soft (peak -24 dBFS). Every visible action
+has its vanilla sound (mob voices, steps, splashes included) and every shot its ambience; nothing but the voice
+covers a word (the clarity guard). Any owner note on a track or level overrides it.
+Check: `python3 scripts/audio_measure.py out/<name>.mp4`; `python3 scripts/onscreen_sfx.py <rec> --strict` (visible
+actions left silent). r:rc85ccc r:r36632d
 
 ## 8. Pacing (pace, on the finished mp4)
 - **Hook**: the first word by **0.2 s** (BLOCK after 0.4 s); the picture moving from frame 1 (frozen first 0.3 s:
