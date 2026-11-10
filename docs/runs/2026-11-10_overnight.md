@@ -226,3 +226,16 @@ For the owner's morning. Newest at the bottom.
 - **Decided by the lead:**
   - Good Boy is already Buh at 16 in docs/world/canon.md, so there's no Milo link left to decide.
   - Pip stays as is (owner: Pip is final). The panel's "breathy" note is now handled by the take gate, which re-takes whispers and breaths.
+
+## 16:51 UTC check-in
+- **Owner rule:** "none of these new stories should go out until i've OKed them". publish.js (f4c0605) now packages every story_* as held; only the lead's --owner-ok makes one ready. Thirty-One and Gold were set back to held (videos 5de29cb). Nothing new has reached YouTube.
+- **Held on the review page for the owner:** Dog on the Hill v2 (videos 45e1708c), Thirty-One v2, Gold v2 and Light Sleeper v2 (render 16:37).
+- **Good Boy v3** is rendering. Its round-3 review found 3 blockers: the librarian vanishing on screen, murky frames at the swim cut, and a reveal that was too quiet.
+- **Broken Rail and Six Thousand Torches** are waiting for Pip's quota (08:00 UTC). In the meantime they're building sets; Broken Rail's new set tools go to main once tested.
+- **videos branch:** no new story is marked ready; the ready ones are the older approved stories. npm test passes on main.
+
+## 17:51 UTC check-in
+- **Good Boy v3** (render cd4cb4d) is on the review page, held. Its fixes: no villager vanishes, a clean swim cut, and the reveal at -18 LUFS with the bark hit. The K.cut {self} option is on main (88ac4d6).
+- **Broken Rail's set tools are on main** (58e8ebd, fa42bb9): the station piece, sets.dress.rails, and the world stamps rails, ravine and crater. The voice is 1 of 7 beats; the rest wait for the 08:00 UTC reset.
+- **videos branch:** only the older approved stories are ready; every new one is held. npm test 18/18.
+- **Waiting for the owner's OK:** Dog on the Hill v2, Thirty-One v2, Gold v2, Light Sleeper v2, Good Boy v3.

@@ -7,7 +7,8 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
 - `voices/cast.json`: the library (below). A character keeps its id, Gemini voice and `profile` string in every
   story. Change any of the three and it is a different person to the viewer.
 - `scripts/tts.py`: Gemini TTS, multi-speaker in one request, cut into lines, cached, loudness-normalised.
-- `scripts/align.py`: Whisper word timings into `voice.json`, so captions and stunt beats line up with the take.
+- `scripts/align.py`: forced-aligned word timings (`scripts/ctc_align.py`) into `voice.json` and `voice/words.json`,
+  so captions and stunt beats line up with the take ("Caption timing" below).
 - `scripts/speaker_check.py`: is every line in its own speaker's voice, with the right words (below).
 - `./hb voice <stunt>`: the one path for a cast story: takes, word cuts, the check, automatic re-takes, alignment.
 - `voices/samples/`: one line per character and a two-character exchange (`exchange.mp3`: Max and Milo), made from
@@ -256,9 +257,10 @@ character thats supposed to be speaking."
 
 `voice.json` keeps the shape `lib/story.js` and `edit.py --story` read (`dur`, `onset`, `end`, `chunks`,
 `captions`, plus `who`), so stunts and captions don't change. tts.py first spreads the chunks evenly by letters;
-align.py replaces them with Whisper's word times (openai/whisper-base.en via transformers, in the TTS venv; ~290 MB
-in the HF cache on first run). It matches by position, not spelling (Whisper hears "Milo" as "Buzz"), and warns when
-the transcript is under 60% like the script: that line is a wrong cut or a dropped line. Listen to it.
+align.py replaces them with forced-aligned word times ("Caption timing" below). Whisper (openai/whisper-base.en via
+transformers, in the TTS venv; ~290 MB in the HF cache) is only its fallback for a take the aligner can't fit: it
+matches by position, not spelling (Whisper hears "Milo" as "Buzz"), and warns when the transcript is under 60% like
+the script: that line is a wrong cut or a dropped line. Listen to it.
 
 What tts.py does to a take: it cuts the take into lines (every pause is a candidate; dynamic programming matches
 each line's share of the speech to its share of the text, follows Whisper's word times where it heard a line's first
@@ -267,6 +269,54 @@ the pause's quietest point with the in-breath and tail kept ("The cut" above), t
 and formant-kept lift), a light room, and one gain per take (see "Realism"). It prints each line's length and pitch:
 a pitch that belongs to the
 other speaker means a bad cut.
+
+## Caption timing (owner 2026-11-10: "Some of them are earlier, some of them are after")
+
+Each caption appears on the frame in which its word starts (STANDARDS 2b.3). The chain:
+1. `scripts/align.py stories/<name>` force-aligns each line's caption words to its wav (`scripts/ctc_align.py`:
+   facebook/wav2vec2-base-960h, ~360 MB in the HF cache, CPU, ~20 s a story; a small numpy CTC Viterbi, no
+   torchaudio) and writes `voice/words.json`: one `[word, start, end]` per caption word, in order, numbers as shown
+   ("31", "9,000"; the aligner hears them spelled out). For a word that starts with a hiss (s, f, z, sh, soft c) the
+   CTC spike comes 50-100 ms into the hiss, so its start moves back to where the hiss begins. A take the aligner can't
+   fit (it says another text) falls back to Whisper, with a WARNING: listen to that line.
+2. `story_track._one_word` matches the caption words to words.json by their letters (`ctc_align.match_words`:
+   numbers spelled out, split and merged words handled), so an old Whisper words.json still lines up; `CAPTION_LEAD`
+   is 0 and `frame_of` floors each start to its 60 fps frame. A caption may still move onto a picture cut inside its
+   line, at most 2 frames later or 5 frames earlier than its word (`CUT_LATE`, `CUT_EARLY`).
+3. `scripts/caption_av_check.py out/<stunt>.mp4 stories/<name>` (in `./hb review`) measures the finished Short:
+   "heard" is each line's stretch of the narration track (story_track.narration_wav) force-aligned to its caption
+   words and placed in the video by cross-correlating that track with the final mix; "shown" is each caption's first
+   frame, found in the video where the caption band changes. BLOCK when |median offset| > 33 ms or over 10% of words
+   are more than 100 ms off; it prints a per-line table (a constant offset, drift, one bad line) and the worst words.
+   `--events stories/<name> --rec <rec>` does the same math without a video. `scripts/caption_sync.py` (caption start
+   vs the speech onset, no model) still runs too: it is the quick check before a render.
+
+Re-timing a story that was aligned with Whisper (every story before 2026-11-10 evening): `~/.hb-tts/bin/python
+scripts/align.py stories/<name>`, then re-edit from the same recording (`./hb render <stunt> --reuse`: no new
+recording, no Gemini request). The stunt's beats (`S.line(id).at(k)`) read the new chunk times only at the next
+recording.
+
+**Aligners, measured** (38 word onsets hand-marked on 0.4 s waveform + spectrogram strips, 28 across the 5 held cuts
+and a hold-out of 10 marked after the hiss rule was written; error = aligner start - marked onset):
+
+| aligner | median | abs median | abs p90 | over 50 ms |
+|---|---|---|---|---|
+| Whisper-base word timestamps (what shipped) | -102 ms | 102 ms | 180 ms | 74% |
+| wav2vec2-base-960h CTC (WhisperX's English aligner) | +18 ms | 20 ms | 77 ms | 24% |
+| wav2vec2-large-960h-lv60-self CTC | +38 ms | 38 ms | 97 ms | 39% |
+| MMS-300m forced aligner (MahmoudAshraf/mms-300m-1130-forced-aligner, the torchaudio MMS_FA recipe; 1.2 GB) | +3 ms | 21 ms | 65 ms | 18% |
+| **wav2vec2-base + hiss rule (MODEL)** | **+6 ms** | **14 ms** | **39 ms** | **5%** |
+| MMS + hiss rule | -4 ms | 13 ms | 33 ms | 3% |
+
+Base and MMS with the hiss rule are within the marking error of each other; base is a third of the size and fitted
+every line (MMS rejected one). torchaudio itself has no build for this venv's torch, so MMS was run through
+transformers. The remaining misses are nasal onsets inside connected speech (m, n), where the marks themselves are a
+judgement call.
+
+Native timings: ElevenLabs' `/text-to-speech/{voice}/with-timestamps` returns per-character start and end times
+(`alignment` and `normalized_alignment`), and Kokoro returns each token's start and end (scripts/voice.py uses them);
+for those voices align.py could take the times as given (sum a word's characters) instead of aligning, but run
+`caption_av_check.py` on the result either way. Gemini TTS returns audio only.
 
 ## Directing Gemini (first tested on gemini-2.5-flash-preview-tts; "Realism" below supersedes where they differ)
 
