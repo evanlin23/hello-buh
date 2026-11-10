@@ -138,6 +138,11 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (later): "Im thinking we do the unique voices", "Instead of the sped up trying to copy", "We need
+  a brand identity", "I think the narrator does all of it essentially, plus short lines from other characters".**
+  Supersedes the Orus x1.45 narrator (an imitation of the Roblox-story Adam sound). The narrator gets OUR OWN distinctive
+  voice, part of a channel brand identity (docs/brand.md), not a copy of anyone's sound. The narrator tells almost
+  everything; other characters say short lines (about 6 words or fewer) in their own distinct voices.
 - **Owner, 2026-11-10: "Can we also fill our hotbar with like ridiculous items? like buckets of milk for example".** The
   player's hotbar is full (all 9 slots), like a real player's: the story's own tools first (Light Sleeper: carpets,
   wool, shears), then 1-3 ridiculous ones that fit the world (milk buckets, a stack of cake, 67 eggs, a pufferfish,

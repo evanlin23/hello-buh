@@ -322,6 +322,49 @@ Owner, 2026-11-10: "Can we also fill our hotbar with like ridiculous items? like
   lib/hb/test/fixtures/hotbar_story: an enchanted pickaxe, 67 eggs, milk and water buckets, a cake; slot 6 and 7 held;
   then the stunt's own sword over slot 0). `npm test` (lib/hb/test/hotbar.test.js) covers the kit on a fake ctx and both checks.
 
+## Potions, phone-readable screens, on-screen teleports, the Darkness phase, lightning light
+The engine items of the visual audit (docs/runs/visual_audit_2026-11-10/README.md "Engine items reported, not fixed").
+Rule zero holds for all of them: story_nitwit (tick 120, 450, and its bolts at 180, 628) and creeper (tick 40, 150),
+base vs after, 0 px differ; edit.py's container screens and HUDs of gold_for_the_portal and thirty_one_raids, 0 px.
+Before/after stills: `docs/runs/visual_audit_2026-11-10/engine2_*.jpg`. Live test: `stunts/_engine2_test.js`
+(`./hb record _engine2_test --no-strict`, then stills at t_bar, t_chat, t_bolt, t_blink, t_dark). `npm test`:
+lib/hb/test/engine2.test.js.
+- **Potions are tinted in the HUD and container screens.** The harness records each potion, splash and lingering
+  potion and tipped arrow with its `potion_contents` colour as the slot's 6th element: `[name, count, glint, damage,
+  maxDamage, 0xRRGGBB]` (hotbar marks and container marks). mineflayer's shape, checked on a live 1.21.11 server:
+  `components: [{ type: 'potion_contents', data: { potionId: 11, customEffects: [] } }]` (`customColor` for a custom
+  colour). `lib/potion_color.js` is PotionContents.getColor: the custom colour, else the effects' colours averaged by
+  amplifier + 1, else 0x385DC6 (fire resistance 0xFF9900). edit.py `potion_icon` draws the item model: layer0
+  `potion_overlay` multiplied by the colour under the bottle (a tipped arrow: the head under the shaft). Older
+  recordings have no 6th element and draw as before. The first-person held potion is still the renderer's own sprite.
+- **Phone-readable container screens and chat** (opt-in; the default stays GUI 3): `edit.guiScale: 4` draws chests,
+  barrels and shulker boxes at GUI 4 (704 px wide: inside the caption-safe width; vanilla's largest scale at this
+  window), `edit.chatScale: 5` draws the chat lines ("Buh left the game") at 5 (it defaults to guiScale). A scale too
+  big for the view falls back to the largest that fits; the chat's strip stops at the frame's edge. The HUD stays at 3.
+- **`await K.blink(tag | 'self', to?)`: a teleport that is the story** (vanilla: a tamed wolf more than 12 blocks from
+  its owner teleports to within 1-2 blocks of him, no particles; good_boy L01/L03). `to` is set-relative `{ x, y?, z,
+  yaw? }` or `[dx, dy, dz]`; left out, 1.5 blocks to the player's right, facing his way. An actor jumps on its next
+  tick (no walking, no `motion_warn`); `'self'` /tp's the player keeping its aim. It writes no cut mark, and a
+  `teleport_ok` mark `{ tag, self, x, y, z }` (absolute): the owner gate's teleport rule accepts a jump landing within
+  3 blocks of it within 6 ticks, the motion lint has nothing to say (a kit verb), and the renderer snaps the entity
+  there with no client lerp at any distance (a 2-block blink would otherwise glide over 3 ticks); a `'self'` blink is a
+  camera jump like a cut. Recordings without the mark: unchanged.
+- **The Darkness pulse on the word: `K.darkPeak(offset = 0)`** marks `darkness_phase`: the pulse (cos(t x PI x 0.025),
+  LightTexture.calculateDarknessScale) peaks on the mark's tick + offset and every 80 ticks either side, instead of on
+  absolute recording ticks that are multiples of 80 (vanilla's tickCount, which nobody can see). The latest mark at or
+  before a tick rules; before the first, the first does. `lib/darkness.js`. Without a mark: bit for bit as before.
+- **Lightning lights the world without `look.smoothLight`.** The flash needs the shader light (the baked light can't
+  change for 2-4 ticks without re-meshing the world), so a recording with a bolt (a `lightning_bolt` entity or a
+  `lightning` mark) turns it on for the flash alone: no held lights, no moonlight or torchGlow (those stay look keys).
+  Outside the flash the frame is the baked light's (the _engine2_test night frame: 1 px of 546k differs). On for
+  `rec.engine >= 3` (new recordings), `stunt.lightningLight: true` or `LIGHTNING_LIGHT=1` for an older one
+  (`LIGHTNING_LIGHT=0` / `SHADER_LIGHT=0`: off). `lib/lightning_light.js`. On the test, a night bolt lifts the frame's
+  mean luma from 62 to 81 (the grass, the barrel and the hand lit as LightTexture does).
+- **`./hb owner` flags only jumps in or near view** (dog_hill: villagers 40-60 blocks away behind the hill "teleported"
+  2 blocks, the server's sparse updates at that range). `MO.viewClass`: in the frame, under 48 blocks and not behind
+  blocks: BLOCK; just off the frame (a quarter each side) or behind blocks under 32 blocks, or within 8 blocks of the
+  camera: WARN; anything else is no finding.
+
 ## Faster stills: the mesh cache
 `./hb still` (any `ONLY=`/`FRAMES=` render) keeps the first mesh of the world in `work/hb/meshcache/` and the next
 still of the same recording loads it instead of meshing (story_nitwit, two stills: 56 s -> 25 s; the PNGs are
