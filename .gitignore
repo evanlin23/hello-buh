@@ -6,3 +6,11 @@ songs/
 
 # Mixkit audio: licence forbids standalone redistribution (public repo); fetch with scripts/fetch_sfx.py
 sfx/mixkit/*/
+stories/*/voice/*_take.f32
+# hb: published stunts read from their package (lib/hb/cli.js)
+stunts/.hb_pkg_*
+# worktree links to the main checkout (the dir patterns above miss symlinks)
+/node_modules
+/songs
+/work
+/out

@@ -7,8 +7,10 @@
 //   portal  - PortalParticle: purple specks drifting in to where a pearl lands
 //   happy   - happy_villager sparkles (glint) around a villager's head
 //   angry   - angry_villager clouds rising from a villager's head
+//   heart   - HeartParticle: a fed or tamed animal (ev.w, ev.h: its box)
 //   poof    - a mob vanishing: 20 light-grey poof clouds in its box (ev.w, ev.h)
 //   smoke   - large_smoke puffs where water meets lava (LevelEvent.LAVA_FIZZ: 8 per block, rising)
+//   dust    - DustParticle specks (redstone dust: mining redstone ore)
 function rng (seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000 } }
 
 function spawn (ev, blockTex) {
@@ -52,6 +54,13 @@ function spawn (ev, blockTex) {
     for (let i = 0; i < (ev.count || 7); i++) {
       P({ x: ev.x + (r() - 0.5) * 1.0, y: ev.y + r() * 0.8, z: ev.z + (r() - 0.5) * 1.0, vx: (r() - 0.5) * 0.02, vy: ev.type === 'angry' ? 0.03 : 0.01, vz: (r() - 0.5) * 0.02,
         g: 0, drag: 0.96, life: ev.type === 'angry' ? 16 + r() * 10 : 20 + r() * 20, size: ev.type === 'angry' ? 0.2 : 0.16, tex: ev.type === 'angry' ? 'particle/angry' : 'particle/glint', color: [1, 1, 1] })
+    }
+  }
+  if (ev.type === 'heart') {
+    // HeartParticle (a fed/tamed animal, Animal.handleEntityEvent 18: 7 hearts in its box): rises 0.1 a tick, slowing
+    for (let i = 0; i < (ev.count || 7); i++) {
+      P({ x: ev.x + (r() - 0.5) * (ev.w || 0.6), y: ev.y + 0.5 + r() * (ev.h || 0.85), z: ev.z + (r() - 0.5) * (ev.w || 0.6), vx: (r() - 0.5) * 0.04, vy: 0.04 + r() * 0.02, vz: (r() - 0.5) * 0.04,
+        g: 0, drag: 0.86, life: 16 + r() * 8, size: 0.16, tex: 'particle/heart', color: [1, 1, 1] })
     }
   }
   if (ev.type === 'obsidian_tear') {
@@ -143,6 +152,19 @@ function spawn (ev, blockTex) {
     const g = r() * 0.3
     P({ x: ev.x, y: ev.y, z: ev.z, vx: (r() - 0.5) * 0.01, vy: 0.008 + r() * 0.006, vz: (r() - 0.5) * 0.01,
       g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
+  }
+  if (ev.type === 'dust') {
+    // DustParticle (DustParticleOptions, REDSTONE: colour (1, 0, 0), scale 1): Particle's random start
+    // velocity x 0.1 (a slow drift, +0.01 up), friction 0.96, no gravity, colour x (0.6..1) x (0.8..1),
+    // quadSize x 0.75, lives 8/(r*0.8+0.2) ticks, sprite generic_7 -> generic_0
+    const c = ev.color || [1, 0, 0]
+    for (let i = 0; i < (ev.count || 1); i++) {
+      let vx = r() * 2 - 1, vy = r() * 2 - 1, vz = r() * 2 - 1
+      const d0 = (r() + r() + 1) * 0.15, d1 = Math.hypot(vx, vy, vz) || 1
+      vx = vx / d1 * d0 * 0.4 * 0.1; vy = (vy / d1 * d0 * 0.4 + 0.1) * 0.1; vz = vz / d1 * d0 * 0.4 * 0.1
+      const f = r() * 0.4 + 0.6, col = c.map(v => (r() * 0.2 + 0.8) * v * f)
+      P({ x: ev.x, y: ev.y, z: ev.z, vx, vy, vz, g: 0, drag: 0.96, life: Math.floor(8 / (r() * 0.8 + 0.2)), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: col })
+    }
   }
   if (ev.type === 'item_break') {
     // LivingEntity.spawnItemParticles(stack, 5): velocity ((r-0.5)*0.1, r*0.1+0.1, 0) and offset

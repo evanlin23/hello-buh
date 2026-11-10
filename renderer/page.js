@@ -71,7 +71,8 @@ renderer.outputColorSpace = THREE.LinearSRGBColorSpace
 document.body.appendChild(renderer.domElement)
 
 const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 1000)   // vanilla FOV 70 (vertical)
+// vanilla FOV 70 (vertical); far plane GameRenderer.getDepthFar: max(renderDistance x 64, Cloud Distance x 16)
+const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 2048)
 camera.rotation.order = 'YXZ'
 const sections = new Map()
 let opaqueMat, translucentMat, clouds, sky, sun, moon, stars, entities, blockEntities
@@ -424,6 +425,7 @@ function makeSky () {
   return m
 }
 
+const CLOUDS_END = 128 * 16
 // Fancy clouds: the game's 256x256 clouds.png, 12 blocks per pixel, 4 blocks thick, one shell
 // mesh (only faces next to empty pixels), vanilla face tints, 80% opaque.
 async function makeClouds (url) {
@@ -452,7 +454,16 @@ async function makeClouds (url) {
   }
   for (let k = 0; k < segs.length; k++) segs[k][1] = (k + 1 < segs.length ? segs[k + 1][0] : pos.length / 3) - segs[k][0]
   const P = new THREE.Float32BufferAttribute(pos, 3), C = new THREE.Float32BufferAttribute(col, 3)
-  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: true, fog: true })
+  // rendertype_clouds.fsh: clouds take no fog colour; they fade out by alpha over the spherical
+  // distance, 0 to FogCloudsEnd (Cloud Distance x 16, default 128 chunks). With the scene fog they took
+  // the dusk fog colour, orange toward the sun and grey away from it (story_sun_wont_set)
+  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: true, fog: false })
+  mat.onBeforeCompile = (sh) => {
+    sh.uniforms.uCloudsEnd = { value: CLOUDS_END }
+    sh.vertexShader = 'varying float vCloudDist;\n' + sh.vertexShader.replace('#include <project_vertex>', '#include <project_vertex>\n  vCloudDist = length((modelMatrix * vec4(transformed, 1.0)).xyz - cameraPosition);')
+    sh.fragmentShader = 'varying float vCloudDist;\nuniform float uCloudsEnd;\n' + sh.fragmentShader.replace('#include <fog_fragment>', '#include <fog_fragment>\n  gl_FragColor.a *= 1.0 - clamp(vCloudDist / uCloudsEnd, 0.0, 1.0);')
+  }
+  mat.customProgramCacheKey = () => 'clouds'
   const grp = new THREE.Group()
   for (const dx of [-1, 0]) for (const dz of [-1, 0]) {   // tile 2x2 so the camera is always covered
     const geo = new THREE.BufferGeometry(); geo.setAttribute('position', P); geo.setAttribute('color', C)   // shared buffers
@@ -463,7 +474,7 @@ async function makeClouds (url) {
   grp.userData.segs = segs
   return grp
 }
-// Draw only the cloud segments inside the view frustum (the far plane is at 1000 blocks; the four
+// Draw only the cloud segments inside the view frustum (the far plane is at 2048 blocks; the four
 // tiles cover 6144 blocks). The visible segments' vertices go into the index buffer in buffer order and
 // the mesh stays one render item: three draws a transparent double-sided mesh in two passes (back
 // faces, then front), and geometry groups interleaved those passes and shifted the blend (1-3 levels).
@@ -651,6 +662,67 @@ async function particleMaterial (tex) {
   partTex.set(tex, m)
   return m
 }
+// Lightning bolts (LightningBoltRenderer.render): 8 segments of 16 blocks, a jagged main path from a
+// java.util.Random seeded by the bolt (nextInt(11) - 5 per segment) and two forks (nextInt(31) - 15),
+// four nested shells 0.1 + 0.2j wide, colour (0.45, 0.45, 0.5) at alpha 0.3, blended SRC_ALPHA, ONE
+function javaRandom (seed) {
+  const M = (1n << 48n) - 1n
+  let s = (BigInt(seed) ^ 0x5DEECE66Dn) & M
+  const next = (bits) => { s = (s * 0x5DEECE66Dn + 0xBn) & M; return Number(s >> BigInt(48 - bits)) }
+  return {
+    nextInt (bound) {
+      if ((bound & -bound) === bound) return Number((BigInt(bound) * BigInt(next(31))) >> 31n)
+      let bits, val
+      do { bits = next(31); val = bits % bound } while (bits - val + (bound - 1) >= 2 ** 31)
+      return val
+    }
+  }
+}
+function boltGeometry (seed) {
+  const pos = []
+  const xs = new Array(8), zs = new Array(8)
+  let f = 0, f1 = 0
+  { const r = javaRandom(seed); for (let i = 7; i >= 0; i--) { xs[i] = f; zs[i] = f1; f += r.nextInt(11) - 5; f1 += r.nextInt(11) - 5 } }
+  const quad = (x1, z1, idx, x2, z2, o2, o1, ox1, oz1, ox2, oz2) => {
+    const v = [[x1 + (ox1 ? o1 : -o1), idx * 16, z1 + (oz1 ? o1 : -o1)], [x2 + (ox1 ? o2 : -o2), (idx + 1) * 16, z2 + (oz1 ? o2 : -o2)],
+      [x2 + (ox2 ? o2 : -o2), (idx + 1) * 16, z2 + (oz2 ? o2 : -o2)], [x1 + (ox2 ? o1 : -o1), idx * 16, z1 + (oz2 ? o1 : -o1)]]
+    for (const k of [0, 1, 2, 0, 2, 3]) pos.push(...v[k])
+  }
+  for (let j = 0; j < 4; j++) {
+    const r1 = javaRandom(seed)
+    for (let k = 0; k < 3; k++) {
+      let l = 7, i1 = 0
+      if (k > 0) { l = 7 - k; i1 = l - 2 }
+      let f2 = xs[l] - f, f3 = zs[l] - f1
+      for (let j1 = l; j1 >= i1; j1--) {
+        const f4 = f2, f5 = f3
+        if (k === 0) { f2 += r1.nextInt(11) - 5; f3 += r1.nextInt(11) - 5 } else { f2 += r1.nextInt(31) - 15; f3 += r1.nextInt(31) - 15 }
+        let f10 = 0.1 + j * 0.2; if (k === 0) f10 *= j1 * 0.1 + 1
+        let f11 = 0.1 + j * 0.2; if (k === 0) f11 *= (j1 - 1) * 0.1 + 1
+        quad(f2, f3, j1, f4, f5, f10, f11, false, false, true, false)
+        quad(f2, f3, j1, f4, f5, f10, f11, true, false, true, true)
+        quad(f2, f3, j1, f4, f5, f10, f11, true, true, false, true)
+        quad(f2, f3, j1, f4, f5, f10, f11, false, true, false, false)
+      }
+    }
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  return g
+}
+let boltMat = null
+const boltMeshes = []
+function drawBolts (list) {
+  for (const m of boltMeshes) { scene.remove(m); m.geometry.dispose() }
+  boltMeshes.length = 0
+  if (!list || !list.length) return
+  if (!boltMat) boltMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.45, 0.45, 0.5), transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: true })
+  for (const b of list) {
+    const m = new THREE.Mesh(boltGeometry(b.seed), boltMat)
+    m.position.set(b.x, b.y, b.z); m.frustumCulled = false; m.renderOrder = 2
+    scene.add(m); boltMeshes.push(m)
+  }
+}
+
 // Entity shadows (EntityRenderDispatcher.renderShadow): misc/shadow.png flat on the ground under each
 // entity, radius per renderer, alpha from render.js (height above the ground, camera distance)
 let shadowMat = null, shadowMesh = null
@@ -825,6 +897,8 @@ window.HB = {
     const grey = (c, k, lv, s) => { const g = (c.r * 0.3 + c.g * 0.59 + c.b * 0.11) * k, f = 1 - lv * s; c.setRGB(c.r * f + g * (1 - f), c.g * f + g * (1 - f), c.b * f + g * (1 - f)) }
     if (rain > 0) { grey(skyC, 0.6, rain, 0.75); fogC.setRGB(fogC.r * (1 - rain * 0.5), fogC.g * (1 - rain * 0.5), fogC.b * (1 - rain * 0.4)) }
     if (thunder > 0) { grey(skyC, 0.2, thunder, 0.75); fogC.multiplyScalar(1 - thunder * 0.5) }
+    // ClientLevel.getSkyColor: a lightning flash pulls the sky toward (0.8, 0.8, 1) by skyFlash (<= 0.45)
+    if (cam.skyFlash > 0) { const k = cam.skyFlash; skyC.setRGB(skyC.r * (1 - k) + 0.8 * k, skyC.g * (1 - k) + 0.8 * k, skyC.b * (1 - k) + k) }
     sky.material.uniforms.top.value.copy(skyC); sky.material.uniforms.horizon.value.copy(fogC)
     // FogRenderer: looking toward the sunrise/sunset side tints the fog by its colour (x the glow alpha)
     {
@@ -916,6 +990,7 @@ window.HB = {
     clouds.position.x = Math.floor((camera.position.x - drift) / span) * span + drift + span / 2
     clouds.position.z = Math.floor(camera.position.z / span) * span + span / 2
     await drawShadows(cam.shadows)
+    drawBolts(cam.bolts)
     await drawParticles(parts)
     await drawWeather(cam)
     GLINT.ms.value = (tick || 0) * 50
@@ -1158,11 +1233,30 @@ function extrudedItemGeometry (img) {
   g.setIndex(idx)
   return g
 }
+// A special item model (beds, chests, shulker boxes, heads, banners: render.js specialItem): its
+// block-entity pieces in the model's 0..1 space, moved by -0.5 like ItemRenderer does after the display
+// transform. Returns { obj, mat } with one mat that lights every piece.
+const _beBuilder = new BlockEntityLayer(null)
+async function specialItemObject (sp, d) {
+  const model = new THREE.Group(), mats = []
+  for (const b of sp.pieces) { const r = await _beBuilder.build(b); model.add(r.obj); mats.push(...r.mats) }
+  model.position.set(-0.5, -0.5, -0.5)
+  const obj = new THREE.Group(), tr = (d && d.translation) || [0, 0, 0], ro = (d && d.rotation) || [0, 0, 0], sc = (d && d.scale) || [1, 1, 1]
+  obj.position.set(tr[0] / 16, tr[1] / 16, tr[2] / 16)
+  obj.rotation.set(ro[0] * D2R, ro[1] * D2R, ro[2] * D2R, 'XYZ')
+  obj.scale.set(sc[0], sc[1], sc[2])
+  obj.add(model)
+  return { obj, mat: { userData: {}, color: { setRGB: (...c) => { for (const m of mats) m.color.setRGB(...c) } } } }
+}
 async function handObject (h) {
   const ck = h.key + (h.glint ? '#glint' : '')
   if (handCache.has(ck)) return handCache.get(ck)
   let inner = null, mat = null
-  if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
+  if (h.special) {
+    // the model's display.firstperson_righthand (item/template_bed: rotation [30, 160, 0], translation [0, 3, 0], scale 0.375)
+    const r = await specialItemObject(h.special, h.special.display.firstperson_righthand)
+    inner = r.obj; mat = r.mat
+  } else if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {
     const bm = entities.blockModels.get(h.state)
     const m = new THREE.Mesh(bm.geo, bm.mat.clone()); m.position.set(-0.5, -0.5, -0.5); mat = m.material
     inner = new THREE.Group(); inner.add(m)
@@ -1184,7 +1278,7 @@ async function handObject (h) {
   }
   const out = inner ? { obj: new THREE.Group(), mat } : null
   if (out) { out.obj.add(inner); out.obj.matrixAutoUpdate = false }
-  if (out && h.glint && mat) glintify(mat, h.state !== undefined ? 8 : 0.25)
+  if (out && h.glint && mat && !h.special) glintify(mat, h.state !== undefined ? 8 : 0.25)
   handCache.set(ck, out)
   return out
 }
@@ -1226,6 +1320,7 @@ function glintify (mat, scale) {
 // the jar's model parents by render.js), then translate(-0.5) for block models. Sprite items use the
 // same 1-pixel-thick extruded geometry as the first-person hand (already centred).
 async function thirdPersonItem (h) {
+  if (h.special) return specialItemObject(h.special, h.display || h.special.display.thirdperson_righthand)
   const d = h.display || { rotation: [0, 0, 0], translation: [0, 3, 1], scale: [0.55, 0.55, 0.55] }
   let inner = null, mat = null
   if (h.state !== undefined && entities && entities.blockModels.has(h.state)) {

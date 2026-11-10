@@ -375,13 +375,24 @@ each section.
 - **Round answer cards must end before the cut** (they spilled into the next dark room): hold the round until the card is gone.
 - **Never single-pass loudnorm a build-up.** ffmpeg's one-pass loudnorm is a dynamic compressor: it lifted chain_reaction's quiet start by ~45 dB and left the 486-TNT payoff no louder than the bells (worker 17). Stems get a static gain from their measured loudness and the master a static gain plus a true-peak limiter, re-measured to target (`scripts/loud.py`; edit.py game-only/song/late-song paths, the sfx premix, the replay, add_song.py).
 
-## Engine bugs to fix later (reported by worker 3, 2026-11-07)
-- red_bed (special block-entity item model) is not drawn in the hotbar slot or in the first-person hand.
-- Dropped item entities on the death screen draw only their shadow discs, with no item on top (every_clutch f1795-1812, drops).
-- Possible: lava stays visible next to flowing water for 0.2-0.3 s before it turns to cobblestone (lava_cast f672-684, f1590-1610). Vanilla converts on the same tick, so the renderer may apply the block update late. (worker 4)
+## Engine bugs to fix later (reported by worker 3, 2026-11-07; status 2026-11-10, branch agent/engine-fixes)
+- FIXED: red_bed (and every special item model: beds, chests, ender/trapped chests, shulker boxes, mob heads, banners) is drawn in the hotbar slot (renderer/icons.js, display.gui), the first-person hand, third-person hands, item frames and as a dropped item (renderer/specialitems.js + the block-entity models). Shields still draw nothing.
+- FIXED: dropped items on the death screen drew only their shadow discs: those were the special items above (hidden since 0534e6f); they now draw.
+- NOT A BUG: lava next to flowing water staying visible 0.2-0.3 s (lava_cast f672-684). In the recording every lava cell turns to obsidian/cobblestone on the same tick the water reaches it (140/140 contacts), and render.js applies block changes on their tick. What shows is the lava one cell ahead of the water, seen through the water's translucent edge, for one water spread step (5 ticks = 0.25 s), as in vanilla.
 - Tooling: when run.sh's botTimeout kills a try, nothing is logged except "stunt failed N times", and the stale out/*.mp4 stays in place. Add a timeout log line and remove the stale output on failure. (worker 4)
-- Engine (worker 3): no tool-break particles or sound (golem's sword); seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666; every_clutch's frozen lake); redstone ore shows no dust while being mined; bucket use shows no arm swing.
-- Engine (worker 18): no lightning bolt is drawn, so storms have thunder sound only.
+- FIXED: tool-break sound and crumbs: the harness records entity.item.break on entity event 47 (the bot's main-hand item breaking) for new recordings; render.js already drew the crumbs on that sound.
+- NOT REPRODUCED: seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666 re-rendered clean on 2026-11-10; the fluid mesher reads neighbours across chunks). every_clutch's recording wasn't available to recheck the ice.
+- FIXED: redstone ore puffs redstone dust when a dig starts on it (RedStoneOreBlock.attack). There are still no hit crumbs (ParticleEngine.crack) while digging any block.
+- FIXED: bucket use swings the arm (a bucket <-> filled bucket change in the held slot is a use when no swing mark is near).
+- FIXED (worker 18's report): lightning bolts draw (lightning_bolt entities, or a stunt's own `lightning` mark {x, y, z, ticks?}) and the sky flashes; the lightmap flash is not done.
+- FIXED: subtitles (`--subs`) blinked off for 3 frames at every line change (they ended 0.05 s early); story word chunks due just before a picture cut now start on it (story_sheep_stares' day/night cuts).
+- FIXED: dusk/dawn clouds took the fog colour (orange toward the sun, grey away). Clouds now fade by alpha over distance like rendertype_clouds.fsh, with no fog colour; `clouds: false` is no longer needed for sunsets.
+- VANILLA, not bugs (story_sheep_stares nitpicks): the death puffs are drawn in the world under the death screen (edit.py overlays the screen on the finished frame; the white text over light-grey puffs is just low contrast); the hearts blink for 20 ticks after the killing hit (Gui.renderHearts); a dropped item stands upright facing the camera (sprite items are still billboards rather than vanilla's spinning 1-pixel-thick model: open).
+- VANILLA, not an engine bug (story_nitwit "lava drawn near-black with one orange quarter"): `/fill ... lava replace water`
+  over a 2x2x2 water pool places the lava block by block, and every lava source that lands next to water still in the
+  pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
+  the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
+  `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
 - Audio (orchestrator, long-form pilot): recordings made before the harness logged sounds (no `sound` or `hurt` events,
   e.g. boat_clutch) fall back to audio.py's water-clutch rebuild, which plays `item.bucket.empty` and a high-speed
   splash on the last `placed` mark. On boat_clutch that's a bucket and a splash on the final boat landing (in the

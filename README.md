@@ -1,5 +1,8 @@
 # hello-buh: automated Minecraft stunt Shorts for @HelloBuh
 
+**Agents: start with `docs/agent_guide.md` and `./hb help`** (one command for doctor, status, record, check, describe,
+continuity, framing, still, sheet, preview, render, review, publish).
+
 A bot plays a scripted stunt on a private local server, the stunt is rendered offline at 60 fps,
 and the clip is edited into the channel's format. No human at the keyboard, no Minecraft account.
 
@@ -64,6 +67,7 @@ second (`research/music_and_length_2026-11-06.md`).
 
 ## Process and QA (every Short, before publishing)
 The loop is in `docs/process.md`: make, render, frame QA, independent review, classify each finding as engine or stunt, fix, re-render, publish, freshness check.
+- While staging: `scripts/preview.sh <stunt>` (low-res, 12 fps, the real edit + contact sheets of every cut and mark, ~10 min vs ~30); render full-res once.
 - `python3 scripts/qa_frames.py out/<name>.mp4` checks every frame and makes labelled sheets (`docs/qa.md`).
 - An independent reviewer agent reads every sheet (`docs/reviewer_prompt.md`).
 - Each fix adds a rule to `docs/lessons.md`.
@@ -141,7 +145,9 @@ Movies (several actors, a camera director, the fog sea; the BUILD LIMIT test ree
 
 More: `shake`, `flash`, `freeze`, `fallen`, `replay`, `loop` and `sfx` (see `docs/process.md`).
 Try one on rendered frames without touching the stunt: `EDIT_EXTRA='{"punch":["boom"]}' scripts/reedit.sh <name> /tmp/x.mp4`.
-`beat_audit.py` and `add_song.py` follow the same time map (slow-mo and the hook offset).
+`beat_audit.py`, `rec_check.py` and `add_song.py` follow the same time map (slow-mo and the hook offset).
+`python3 scripts/rec_check.py <stunt>` checks a recording before the render (cut glitches, held shots, the ending,
+the set, vanilla speeds); `run.sh` runs it after recording (docs/worker.md).
 
 ## Known gaps vs real HelloBuh frames
 - Our renderer is a re-implementation, not the game: no particles, rain, animated textures, or first-person hand (HelloBuh crops the centre of a 16:9 window, so the hand is mostly out of frame anyway). Mobs: only those with a converted model; no armour/held items on mobs.

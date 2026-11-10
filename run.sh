@@ -4,6 +4,7 @@
 #   ./run.sh                       # water bucket clutch, default caption
 #   STUNT=pearl_clutch ./run.sh          (any stunts/<name>.js; caption/song/drop come from its `edit`)
 #   CAPTION="..." SONG=songs/x.mp3 ./run.sh   (overrides)
+#   RECORD_ONLY=1 STUNT=x ./run.sh       (just work/x.rec.json: render it on Actions with scripts/render_on_actions.sh x)
 set -euo pipefail
 cd "$(dirname "$0")"
 STUNT=${STUNT:-water_clutch}
@@ -28,7 +29,10 @@ echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEUL
 python3 make_ops.py HelloBuh "$S/ops.json"
 rm -rf "$S/world"                 # fresh world every run
 rm -f "$S/console" && mkfifo "$S/console"
-( cd "$S" && tail -f console | java -Xmx2G -jar server.jar nogui > ../server.log 2>&1 ) &
+# (the log by absolute path: in a worktree whose work/server is a symlink to the main checkout's, ../server.log
+# landed in the main checkout's work/ and this run waited 3 min for a 'Done' that never showed here)
+SLOG=$PWD/work/server.log; rm -f "$SLOG"
+( cd "$S" && tail -f console | java -Xmx2G -jar server.jar nogui > "$SLOG" 2>&1 ) &
 SERVER_PID=$!
 # (timeout: writing to the console FIFO blocks forever if the server already exited)
 stop_server() { timeout 5 sh -c "echo stop > '$S/console'" 2>/dev/null || true; sleep 3; pkill -f "tail -f console" 2>/dev/null || true; }
@@ -50,6 +54,20 @@ for t in $(seq 1 "$TRIES"); do
 done
 [ "$ok" = 1 ] || { echo "stunt failed $TRIES times"; exit 1; }
 stop_server; trap - EXIT
+# --- the recording check, before the slow render (scripts/rec_check.py: cut glitches, held shots, the ending,
+# camera turns, the set, vanilla speeds). Blockers mean re-record; REC_CHECK_STRICT=1 stops here on one.
+rc=0; python3 scripts/rec_check.py "$STUNT" "$REC" || rc=$?
+if [ "$rc" = 1 ]; then
+  if [ "${REC_CHECK_STRICT:-0}" = 1 ]; then echo "rec_check: blockers, not rendering (REC_CHECK_STRICT=1). Fix the stunt and re-record."; exit 1; fi
+  echo "rec_check: blockers above. Fix them by re-recording (REC_CHECK_STRICT=1 stops here)."
+elif [ "$rc" != 0 ]; then
+  # exit 2: a check couldn't run (no node_modules, a stunt that won't load...): the report says which
+  if [ "${REC_CHECK_STRICT:-0}" = 1 ]; then echo "rec_check: a check did not run (exit $rc), not rendering (REC_CHECK_STRICT=1)."; exit 1; fi
+  echo "rec_check could not run every check (exit $rc); rendering anyway"
+fi
+# RECORD_ONLY=1: stop at the recording, after its check (render it on Actions: scripts/render_on_actions.sh,
+# docs/worker.md). Before, RECORD_ONLY exited ahead of rec_check, so the Actions route never printed the report.
+[ "${RECORD_ONLY:-0}" = 1 ] && { echo "recorded $REC"; exit 0; }
 
 # --- render, audio, edit ---
 rm -rf "work/$NAME.frames"

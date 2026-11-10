@@ -29,7 +29,16 @@ async function img (url) {
 async function texture (layers) {
   const key = layers.join('|')
   if (texCache.has(key)) return texCache.get(key)
-  const imgs = (await Promise.all(layers.map(l => img(`/assets/env/${l}.png`)))).filter(Boolean)
+  // a layer 'path#rrggbb' is tinted (multiplied) by that colour, keeping its alpha: a wolf's collar (WolfCollarLayer)
+  const imgs = (await Promise.all(layers.map(async l => {
+    const [p, tint] = l.split('#'); const im = await img(`/assets/env/${p}.png`)
+    if (!im || !tint) return im
+    const o = document.createElement('canvas'); o.width = im.width; o.height = im.height
+    const og = o.getContext('2d'); og.drawImage(im, 0, 0)
+    og.globalCompositeOperation = 'multiply'; og.fillStyle = '#' + tint; og.fillRect(0, 0, o.width, o.height)
+    og.globalCompositeOperation = 'destination-in'; og.drawImage(im, 0, 0)
+    return o
+  }))).filter(Boolean)
   if (!imgs.length) { texCache.set(key, null); return null }
   const c = document.createElement('canvas'); c.width = imgs[0].width; c.height = imgs[0].height
   const g = c.getContext('2d')
@@ -165,11 +174,27 @@ function look (name, extra, regs) {
       // straw hat (transparent for the other professions). Without it the hat vanished from behind.
       { origin: [-8, 16, -6], size: [16, 16, 1], uv: [30, 47], rotation: [-90, 0, 0], pivot: [0, 24, 0] }] } }
   }
+  // a zombie villager keeps its villager's biome outfit, profession outfit and hat (ZombieVillagerModel: the
+  // villager head and hat on a zombie's body); only the profession overlay drew before, as black boxes
+  if (name === 'zombie_villager') {
+    const t = regs['minecraft:villager_type']?.[String(extra?.type)] || 'plains'
+    const p = regs['minecraft:villager_profession']?.[String(extra?.profession)] || 'none'
+    const layers = ['entity/zombie_villager/zombie_villager', `entity/zombie_villager/type/${t}`]
+    if (p !== 'none') layers.push(`entity/zombie_villager/profession/${p}`)
+    return { model: 'zombie_villager', layers, extra: { head: [{ origin: [-4, 24, -4], size: [8, 10, 8], uv: [32, 0], inflate: 0.5 },
+      { origin: [-8, 16, -6], size: [16, 16, 1], uv: [30, 47], rotation: [-90, 0, 0], pivot: [0, 24, 0] }] } }
+  }
   if (/_boat$|^boat$/.test(name)) return { model: 'boat', layers: [`entity/boat/${name === 'boat' ? 'oak' : name.replace(/_boat$/, '')}`], yOff: -1.0 }   // the Bedrock boat geometry sits its hull ~15 px up; Java's hull bottom is at the entity's feet
   if (name === 'parrot') return { model: 'parrot', layers: [`entity/parrot/parrot_${['red_blue', 'blue', 'green', 'yellow_blue', 'grey'][(extra && extra.variant) || 0] || 'red_blue'}`] }   // Parrot.Variant
   if (name === 'cow') return { model: 'cow', layers: ['entity/cow/temperate_cow'] }
   if (name === 'chicken') return { model: 'chicken', layers: ['entity/chicken/temperate_chicken'] }
   if (name === 'sheep') return { model: 'sheep', geo: 'sheared', layers: ['entity/sheep/sheep'], wool: extra && !extra.sheared }
+  // a wolf: tame or angry eyes, and a tamed one's collar in its dye colour (extra { tame, angry, collar: dye id })
+  if (name === 'wolf') {
+    const layers = [`entity/wolf/${extra?.angry ? 'wolf_angry' : extra?.tame ? 'wolf_tame' : 'wolf'}`]
+    if (extra && extra.collar !== undefined && extra.collar !== null) layers.push(`entity/wolf/wolf_collar#${(DYE[extra.collar] ?? DYE[14]).toString(16).padStart(6, '0')}`)
+    return { model: 'wolf', layers }
+  }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
   // any other mob with converted geometry: its default texture (checked by eye in a line-up render)
@@ -405,6 +430,47 @@ const FOX_PARTS = [
   ['rightFrontLeg', null, [-5, 17.5, 0], [[[2, 0.5, -1], [2, 6, 2], [13, 24], 0.001]]],
   ['leftFrontLeg', null, [-1, 17.5, 0], [[[2, 0.5, -1], [2, 6, 2], [4, 24], 0.001]]]
 ]
+// WolfModel.createBodyLayer (texture 64x32): the head (with ears and snout), the body and the mane turned flat
+// (xRot pi/2), four 8 px legs and the tail. The converted Bedrock geometry needs its wolf_setup animation for that
+// turn, which we never ran: the body stood upright
+const WL = [[[0, 0, -1], [2, 8, 2], [0, 18], 0]]
+const WOLF_PARTS = [
+  ['head', null, [-1, 13.5, -7], [[[-2, -3, -2], [6, 6, 4], [0, 0], 0], [[-2, -5, 0], [2, 2, 1], [16, 14], 0], [[2, -5, 0], [2, 2, 1], [16, 14], 0], [[-0.5, -0.001, -5], [3, 3, 4], [0, 10], 0]]],
+  ['body', null, [0, 14, 2], [[[-3, -2, -3], [6, 9, 6], [18, 14], 0]], [Math.PI / 2, 0, 0]],
+  ['upperBody', null, [-1, 14, -3], [[[-3, -3, -3], [8, 6, 7], [21, 0], 0]], [Math.PI / 2, 0, 0]],
+  ['rightHindLeg', null, [-2.5, 16, 7], WL], ['leftHindLeg', null, [0.5, 16, 7], WL],
+  ['rightFrontLeg', null, [-2.5, 16, -4], WL], ['leftFrontLeg', null, [0.5, 16, -4], WL],
+  ['tail', null, [-1, 12, 8], [[[0, 0, -1], [2, 8, 2], [9, 18], 0]], [Math.PI / 5, 0, 0]]
+]
+// WolfModel.prepareMobModel + setupAnim: sitting (extra.sitting) folds the hind legs under and tips the body up;
+// walking swings the legs; a tamed wolf at full health holds its tail high (0.55 pi), a wild one at pi/5; the tail
+// wags with the walk unless angry
+function poseWolf (r, s, walkPos, walkSpeed) {
+  const B = r.bones, x = s.extra || {}
+  let net = -((s.headYaw ?? s.yaw) - s.yaw); while (net > Math.PI) net -= 2 * Math.PI; while (net < -Math.PI) net += 2 * Math.PI
+  r.obj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeRotationY(s.yaw))
+  B.head.rotation.set(-(s.pitch || 0), net, 0)
+  const tail = x.tame ? 0.55 * Math.PI : Math.PI / 5
+  B.tail.rotation.set(tail, x.angry ? 0 : Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, 0)
+  if (x.sitting) {
+    B.upperBody.position.set(-1, 16, -3); B.upperBody.rotation.set(1.2566371, 0, 0)
+    B.body.position.set(0, 18, 0); B.body.rotation.set(Math.PI / 4, 0, 0)
+    B.tail.position.set(-1, 21, 6)
+    B.rightHindLeg.position.set(-2.5, 22.7, 2); B.rightHindLeg.rotation.set(4.712389, 0, 0)
+    B.leftHindLeg.position.set(0.5, 22.7, 2); B.leftHindLeg.rotation.set(4.712389, 0, 0)
+    B.rightFrontLeg.position.set(-2.49, 17, -4); B.rightFrontLeg.rotation.set(5.811947, 0, 0)
+    B.leftFrontLeg.position.set(0.51, 17, -4); B.leftFrontLeg.rotation.set(5.811947, 0, 0)
+  } else {
+    B.body.position.set(0, 14, 2); B.body.rotation.set(Math.PI / 2, 0, 0)
+    B.upperBody.position.set(-1, 14, -3); B.upperBody.rotation.set(Math.PI / 2, 0, 0)
+    B.tail.position.set(-1, 12, 8)
+    const a = Math.cos(walkPos * 0.6662) * 1.4 * walkSpeed, b = Math.cos(walkPos * 0.6662 + Math.PI) * 1.4 * walkSpeed
+    B.rightHindLeg.position.set(-2.5, 16, 7); B.leftHindLeg.position.set(0.5, 16, 7)
+    B.rightFrontLeg.position.set(-2.5, 16, -4); B.leftFrontLeg.position.set(0.5, 16, -4)
+    B.rightHindLeg.rotation.set(a, 0, 0); B.leftHindLeg.rotation.set(b, 0, 0)
+    B.rightFrontLeg.rotation.set(b, 0, 0); B.leftFrontLeg.rotation.set(a, 0, 0)
+  }
+}
 // FoxModel.setupAnim: the head looks; quadruped legs (hind and front pairs opposite)
 function poseFox (r, s, walkPos, walkSpeed) {
   const B = r.bones
@@ -626,6 +692,9 @@ export class EntityLayer {
     } else if (name === 'magma_cube') {
       const t = await texture(['entity/slime/magmacube'])
       if (t) { const b = buildPlayer(t, MAGMA_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat; bones.magma = true }
+    } else if (name === 'wolf') {
+      const t = await texture(look('wolf', extra, this.regs).layers)
+      if (t) { const b = buildPlayer(t, WOLF_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat; bones.wolf = true }
     } else if (name === 'fox') {
       const t = await texture([(extra && extra.snow) ? 'entity/fox/snow_fox' : 'entity/fox/fox'])
       if (t) { const b = buildPlayer(t, FOX_PARTS, 1); obj = b.root; bones = b.bones; mat = b.mat; bones.fox = true }
@@ -707,6 +776,11 @@ export class EntityLayer {
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
       const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
       if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat }
+    } else if (name === 'item' && extra && extra.special && this.itemFactory) {
+      // a dropped special item (bed, chest, head, banner, shulker box): its model with the 'ground'
+      // display, turned about y by the spin (render.js)
+      const r = await this.itemFactory({ special: extra.special, display: extra.special.display.ground })
+      if (r) { obj = new THREE.Group(); obj.add(r.obj); mat = r.mat }
     } else if (/^(ender_pearl|snowball|egg|item|splash_potion|lingering_potion|experience_bottle|firework_rocket)$/.test(name)) {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       // thrown potions: the bottle plus potion_overlay tinted with the potion colour (ThrownItemRenderer)
@@ -886,7 +960,7 @@ export class EntityLayer {
         if (r.heldObj && r.heldObj.mat) r.heldObj.mat.color.setRGB(...LL)
         continue
       }
-      if (s.name === 'falling_block' && s.extra && s.extra.spin) { r.obj.rotation.set(0, s.yaw, 0); continue }
+      if ((s.name === 'falling_block' && s.extra && s.extra.spin) || (s.name === 'item' && s.extra && s.extra.special)) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
       // BodyRotationControl: the body is dragged so the head never turns more than 75° from it
       // (a fast turn had heads spun round while bodies still faced away: staring_villagers review)
@@ -935,6 +1009,7 @@ export class EntityLayer {
         continue
       }
       if (B.fox) { poseFox(r, s, r.walk, r.amt || 0); continue }
+      if (B.wolf) { poseWolf(r, s, r.walk, r.amt || 0); continue }
       if (B.spider) { poseSpider(r, s, r.walk, r.amt || 0); continue }
       // AllayModel.setupAnim: the wings swept back 35 degrees (yRot +-0.61, xRot 0.44) and flapping with
       // the age (cos(age x 20 deg) x 0.15 pi), NoAI too; the arms angled out a little. The converted

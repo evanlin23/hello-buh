@@ -16,8 +16,24 @@ const [recPath, outDir, fpsArg, wArg, hArg] = process.argv.slice(2)
 const FPS = Number(fpsArg || 60), W = Number(wArg || 1080), H = Number(hArg || 1011)
 const EYE = 1.62
 const rec = JSON.parse(fs.readFileSync(recPath))
+// The stunt module's render options (hideHand, brightness, fovZoom, dimension, weather...). A stunt file that fails
+// to load stops the render: swallowed, it rendered with a first-person hand, the default brightness and no zoom, and
+// said nothing (pipeline test gap 11: a hand in every still of story_nitwit). STUNT_OPTIONAL=1 renders without it.
 let STUNT_MOD = {}
-try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {}
+// the stunt module carries render options (hideHand, brightness, fovZoom, dimension, weather...): a stunt that
+// fails to load used to be skipped silently, and the render came out with a hand and the wrong light (story_nitwit
+// stills 3). Exit 2, unless STUNT_OPTIONAL=1 (ALLOW_NO_STUNT=1 is the same) renders without its options, said loudly.
+{
+  const f = path.join(__dirname, 'stunts', `${rec.stunt}.js`)
+  if (!rec.stunt || !fs.existsSync(f)) console.log(`render.js: no stunts/${rec.stunt}.js: rendering with the default options`)
+  else {
+    try { STUNT_MOD = require(f) } catch (e) {
+      console.error(`\n*** render.js: stunts/${rec.stunt}.js failed to load, so its render options (hideHand, brightness, fovZoom...) would be lost ***\n${(e && e.stack || String(e)).split('\n').slice(0, 6).join('\n')}`)
+      if (!process.env.STUNT_OPTIONAL && process.env.ALLOW_NO_STUNT !== '1') { console.error('*** stopping: fix the stunt (node -e "require(\'./stunts/' + rec.stunt + '\')"), or STUNT_OPTIONAL=1 to render without its options ***\n'); process.exit(2) }
+      console.error('*** STUNT_OPTIONAL: rendering WITHOUT the stunt\'s options ***\n')
+    }
+  }
+}
 const FOV_ZOOM = []   // [startTick, endTick, scale] from stunt.fovZoom (see the frame loop)
 for (const [sa, sb, sc] of STUNT_MOD.fovZoom || []) {
   const at = (spec) => { const [ev, off] = String(spec).split(':'); const e = (rec.timeline || []).find(m => m.event === ev); return e ? e.t / 50 + Number(off || 0) * 20 : null }
@@ -309,6 +325,23 @@ const POTION_COLOR = new Map()
 }
 const FIRST_SEEN = new Map()
 for (const r of rec.entities || []) if (!FIRST_SEEN.has(r[1])) FIRST_SEEN.set(r[1], r[0])
+// Lightning (LightningBoltRenderer, drawn by the page): lightning_bolt entities while they exist, and
+// `lightning` marks {x, y, z, ticks?} for a stunt's own bolt (default 6 ticks). Storms had the thunder
+// sound only (worker 18). The sky flashes while a bolt is out (ClientLevel.skyFlashTime 2, fading
+// over the next 2 ticks).
+const BOLTS = []
+{
+  const span = new Map()
+  for (const r of rec.entities || []) if (r[2] === 'lightning_bolt') { const s0 = span.get(r[1]); if (!s0) span.set(r[1], { a: r[0], b: r[0] + 1, x: r[3], y: r[4], z: r[5], seed: r[1] }); else s0.b = r[0] + 1 }
+  BOLTS.push(...span.values())
+  for (const e of rec.timeline || []) if (e.event === 'lightning' && Number.isFinite(e.x)) BOLTS.push({ a: e.t / 50, b: e.t / 50 + (e.ticks || 6), x: e.x, y: e.y, z: e.z, seed: Math.round(e.t) })
+}
+function boltsAt (t) {
+  const bolts = BOLTS.filter(b => t >= b.a && t < b.b).map(b => ({ x: b.x, y: b.y, z: b.z, seed: b.seed }))
+  let flash = 0
+  for (const b of BOLTS) if (t >= b.a) flash = Math.max(flash, t < b.b ? 1 : Math.min(1, Math.max(0, b.b + 2 - t)))
+  return { bolts, flash: flash * 0.45 }
+}
 const TNT_FUSE = {}   // fuse when first seen (chain-lit TNT gets 10-30 ticks, a lit one 80)
 for (const r of rec.entities || []) if (r[2] === 'tnt' && r[9] && r[9].fuse !== undefined && TNT_FUSE[r[1]] === undefined && FIRST_SEEN.get(r[1]) === r[0]) TNT_FUSE[r[1]] = r[9].fuse
 const TNT_STATE = require('minecraft-data')(rec.version).blocksByName.tnt.defaultState
@@ -368,6 +401,27 @@ const SWINGS = []
     const g = !!(it && ((Array.isArray(it) && it[2]) || GLINT_ITEMS.has(name)))
     if (g !== curGlint) { GLINTS.push([e.t / 50, g]); curGlint = g }
   }
+}
+// A bucket use swings the arm (BucketItem.use succeeds and the client swings), but mineflayer's
+// activateItem sends no swing, so recordings only had one when the stunt called swingArm (worker 3).
+// The held stack turning from a bucket to a filled one or back, in the same slot, is a use: swing on
+// that tick unless a swing mark is already within 3 ticks.
+{
+  const BUCKET = /^(bucket|water_bucket|lava_bucket|powder_snow_bucket|milk_bucket|(cod|salmon|pufferfish|tropical_fish|axolotl|tadpole)_bucket)$/
+  let items = null, slot = 0, prev = null, prevSlot = null
+  const add = []
+  for (const e of rec.timeline || []) {
+    if (e.event === 'hotbar') items = e.items
+    if (e.slot !== undefined) slot = e.slot
+    if (!items) continue
+    const it = items[slot], name = it ? (Array.isArray(it) ? it[0] : it) : null
+    if (e.event === 'hotbar' && slot === prevSlot && name !== prev && BUCKET.test(name || '') && BUCKET.test(prev || '') && (name === 'bucket' || prev === 'bucket') && name !== 'milk_bucket') {
+      const t = e.t / 50
+      if (!SWINGS.some(s => Math.abs(s - t) < 3) && !add.some(s => Math.abs(s - t) < 3)) add.push(t)
+    }
+    prev = name; prevSlot = slot
+  }
+  if (add.length) { SWINGS.push(...add); SWINGS.sort((a, b) => a - b) }
 }
 // the held stack's enchantment glint over time (hotbar entries [name, count, 1] are enchanted)
 function glintAt (t) { let g = false; for (const [a, v] of GLINTS) if (a <= t) g = v; return g }
@@ -447,7 +501,7 @@ const ATLAS_UV = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(_
 // the block under the crosshair within reach (4.5, survival): vanilla outlines it in black
 // hitbox [width, height] of mobs that can be targeted (EntityType sizes); an entity under the crosshair
 // within the 3-block entity reach is the target, and vanilla draws no outline for it
-const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
+const HITBOX = { villager: [0.6, 1.95], zombie: [0.6, 1.95], zombie_villager: [0.6, 1.95], skeleton: [0.6, 1.99], creeper: [0.6, 1.7], cow: [0.9, 1.4], sheep: [0.9, 1.3], pig: [0.9, 0.9], chicken: [0.4, 0.7], iron_golem: [1.4, 2.7], enderman: [0.6, 2.9], spider: [1.4, 0.9], wandering_trader: [0.6, 1.95], witch: [0.6, 1.95] }
 // outline shapes (Block.getShape) where they differ from the collision shape: fences, walls and
 // gates outline 1 block tall (their collision is 1.5), and blocks you walk through still get targeted
 // and outlined: crops by age, plants, torches (a ray used to pass through wheat and outline the
@@ -518,8 +572,8 @@ const RAIN = [], THUNDER = []
 }
 const levelAt = (A, t) => { const i = Math.max(0, Math.min(A.length - 2, Math.floor(t))), f = Math.min(1, Math.max(0, t - i)); return A[i] + (A[i + 1] - A[i]) * f }
 // the lightmap's sky darkening follows the rain in 1/16 steps (each step re-lights the whole world)
-const weatherKey = (t) => `${Math.round(levelAt(RAIN, t) * 16)},${Math.round(levelAt(THUNDER, t) * 16)}`
 const weatherLight = (t) => [Math.round(levelAt(RAIN, t) * 16) / 16, Math.round(levelAt(THUNDER, t) * 16) / 16]
+const weatherKey = (t) => `${Math.round(levelAt(RAIN, t) * 16)},${Math.round(levelAt(THUNDER, t) * 16)}`
 setDayTime(dayTimeAt(0), ...weatherLight(0))
 // LevelRenderer rain: columns within 10 blocks (fancy) of the camera, from the MOTION_BLOCKING
 // heightmap up to camera + 10, a texture that scrolls per column, and splash particles where drops land.
@@ -951,6 +1005,22 @@ function talkMotion (who, t) {
 // or { of: TARGET, offset: [dx, dy, dz] }. Everything is a function of the time alone, so frames can be
 // rendered in any order (FRAMES=) and a camera can be re-tuned without re-recording.
 const SHOTS = { ...(STUNT_MOD.shots || {}), ...(process.env.SHOTS_JSON ? JSON.parse(process.env.SHOTS_JSON) : {}) }   // (SHOTS_JSON='{"name": {...}}': try a camera without editing the stunt)
+// stunt.self = { model, eye, extra }: who the narrator is when not a player (lib/story.js docs). A 'self' mark
+// ({ eye?, model?, extra? }) changes it from that tick on (a wolf sitting down: { extra: { sitting: true }, eye: 0.5 })
+const SELF_MARKS = (rec.timeline || []).filter(e => e.event === 'self').sort((a, b) => a.t - b.t)
+function selfAt (t) {
+  if (!STUNT_MOD.self) return null
+  const s = { ...STUNT_MOD.self, extra: { ...(STUNT_MOD.self.extra || {}) } }
+  for (const m of SELF_MARKS) { if (m.t / 50 > t) break; if (m.eye !== undefined) s.eye = m.eye; if (m.model) s.model = m.model; if (m.extra) Object.assign(s.extra, m.extra) }
+  return s
+}
+// stunt.wideMaster (or WIDE_MASTER=1): render a 16:9 master at the output height (1797x1011 for a Short) and write
+// the W x H output cropped from it: the centre, or a camera shot's `cropX` (-1 left edge .. 1 right edge). Same
+// vertical field of view and scale, so a POV frame (hand included) is the same picture as a W x H render. WIDE_DIR=dir
+// also saves every master frame (trailers, 16:9 cuts). Owner, 2026-11-10: "we should have the full wide, but then
+// crop it or smth for the final video"
+let cropNow = 0
+const MW = (STUNT_MOD.wideMaster || process.env.WIDE_MASTER) ? Math.max(W, Math.round(H * 16 / 9)) : W
 const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
 for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
 function shotAt (t) {
@@ -1057,6 +1127,8 @@ function itemModel (item) {
   }
   return ((def && find(def)) || `item/${item}`).replace(/^minecraft:/, '')
 }
+// special item models (beds, chests, shulker boxes, heads, banners): renderer/specialitems.js
+const specialItem = require('./renderer/specialitems').specialItems(jarJson)
 // an item's display.fixed (item frames), following the model's parents
 const FIXED_DISPLAY = new Map()
 function fixedDisplay (item) {
@@ -1459,6 +1531,25 @@ function camAtLive (t) {
     const n = require('./renderer/lint').run({ rec, stunt: STUNT_MOD, marks: SHOT_MARKS, shots: SHOTS, shotCam, camAt, targetAt, actorsAt, lines: LINES, mesher, Vec3 })
     process.exit(n ? 1 : 0)
   }
+  // CAM_PROBE=all|t1,t2,...: print the camera of those ticks (one JSON line each) and stop, no browser. The same
+  // director the frames use (shot marks, shotCam, auto-framing, stunt.self's eye), so lib/hb (hb describe /
+  // continuity / framing) can reason about camera shots it can't compute itself. Block changes aren't applied:
+  // a camera pulled out of a block placed mid-recording may differ slightly.
+  if (process.env.CAM_PROBE) {
+    const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
+    const ticks = process.env.CAM_PROBE === 'all' ? P.map((_, i) => i) : process.env.CAM_PROBE.split(',').map(Number)
+    const r3 = (v) => Math.round(v * 1000) / 1000
+    const lines = []
+    for (const t of ticks) {
+      const sh = shotAt(t)
+      let c = sh && !sh.pov ? shotCam(sh, t, solidAt) : null
+      const mode = c ? `shot ${sh.name}` : sh ? `shot ${sh.name} (pov)` : 'pov'
+      if (!c) { c = camAt(t); const s = selfAt(t); if (s && s.eye) c = { ...c, y: c.y - (EYE - s.eye) } }
+      lines.push(JSON.stringify({ t, mode, x: r3(c.x), y: r3(c.y), z: r3(c.z), yaw: r3(c.yaw), pitch: r3(c.pitch), fov: c.fov || 70 }))
+    }
+    process.stdout.write(lines.join('\n') + '\n')
+    process.exit(0)
+  }
 
   const app = express()
   const blobs = new Map(); let blobId = 0
@@ -1476,7 +1567,7 @@ function camAtLive (t) {
   await new Promise(r => server.listen(0, '127.0.0.1', r))
 
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] })
-  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 })
+  const page = await browser.newPage({ viewport: { width: MW, height: H }, deviceScaleFactor: 1 })
   page.on('pageerror', e => console.error('page error:', e.message))
   page.on('console', m => { if (m.type() === 'error') console.error('page:', m.text()) })
   await page.goto(`http://127.0.0.1:${server.address().port}/`)
@@ -1539,16 +1630,20 @@ function camAtLive (t) {
   const minVisibleY = Math.min(mesher.lowestSurface(), Math.floor(Math.min(...P.map(p => p[2]))) - 24) - 8
   console.log('meshing from y', minVisibleY)
   console.log(`light computed in ${(mesher.computeLight(minVisibleY) / 1000).toFixed(1)} s`)
-  {
-    // the first mesh of the whole area, split over worker threads (MESH_WORKERS, default: the core
-    // count, at most 4); each slice is byte-identical to meshing it here. 1 = the old single thread.
+  // the whole area meshed again (the first mesh, and every change of the lightmap's sky factor: time of
+  // day, rain), split over worker threads (MESH_WORKERS, default: the core count, at most 4); each slice is
+  // byte-identical to meshing it here. 1 = the old single thread. A worker rebuilds the world from the
+  // recording plus the first `blocksDone` block changes, so it meshes the world as it is now (one full
+  // re-mesh was ~38 s on one core for story_nitwit's 391 columns, and its sunset had 14 of them).
+  const sendAll = async (blocksDone, t) => {
     const list = mesher.sections(minVisibleY)
     const nw = Math.max(1, Math.min(list.length, Number(process.env.MESH_WORKERS || Math.min(4, require('os').cpus().length))))
     if (nw > 1) {
-      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(0), rain: weatherLight(0)[0], thunder: weatherLight(0)[1], dimension: DIM })
+      const blobsOut = await mesher.packParallel(list, nw, { recPath: path.resolve(recPath), minVisibleY, brightness: Number(process.env.BRIGHTNESS ?? STUNT_MOD.brightness ?? 0.5), dayTime: dayTimeAt(t), rain: weatherLight(t)[0], thunder: weatherLight(t)[1], dimension: DIM, blocksDone })
       for (const b of blobsOut) { const id = String(blobId++); blobs.set(id, b); await page.evaluate((u) => window.HB.loadMeshes(u), `/mesh/${id}`) }
     } else await send(list)
   }
+  await sendAll(0, 0)
   console.log(`meshed + uploaded world in ${((Date.now() - t0) / 1000).toFixed(1)} s`)
 
   // particles from recorded events (block crumbs use the block's particle texture in the atlas)
@@ -1651,6 +1746,24 @@ function camAtLive (t) {
     if (!sp || !pose) continue
     PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
   }
+  // starting to mine redstone ore (RedStoneOreBlock.attack -> spawnParticles): one redstone dust speck
+  // 0.5625 out from the centre of each face not against a solid block, at a random spot on that face
+  // (mining it showed nothing: worker 3)
+  {
+    const stateAt = (x, y, z, t) => { let s = null; for (const b of rec.blocks || []) { if (b[0] > t) break; if (b[1] === x && b[2] === y && b[3] === z) s = b[4] } if (s !== null) return mcDataR.blocks[require('prismarine-block')(rec.version).fromStateId(s, 0).type]; const b = mesher.world.getBlock(new Vec3(x, y, z)); return b }
+    const solidR = (b) => !!(b && b.boundingBox === 'block' && !b.transparent)
+    let k = 0
+    for (const [a, , x, y, z] of DIGS) {
+      const b = stateAt(x, y, z, a)
+      if (!b || !/^(deepslate_)?redstone_ore$/.test(b.name)) continue
+      for (const [dx, dy, dz] of [[0, -1, 0], [0, 1, 0], [0, 0, -1], [0, 0, 1], [-1, 0, 0], [1, 0, 0]]) {
+        if (solidR(stateAt(x + dx, y + dy, z + dz, a))) continue
+        const rr = () => ((Math.sin((++k) * 12.9898 + a * 78.233) * 43758.5453) % 1 + 1) % 1
+        const px = dx ? 0.5 + 0.5625 * dx : rr(), py = dy ? 0.5 + 0.5625 * dy : rr(), pz = dz ? 0.5 + 0.5625 * dz : rr()
+        PARTS.push(...particles.spawn({ type: 'dust', t: a * 50, x: x + px, y: y + py, z: z + pz, color: [1, 0, 0] }))
+      }
+    }
+  }
   PARTS.sort((a, b) => a.t0 - b.t0)
   const MAXLIFE = PARTS.reduce((m, p) => Math.max(m, p.life || 0), 0) + 1
   const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
@@ -1698,7 +1811,15 @@ function camAtLive (t) {
   let bi = 0
   const sentBlocks = new Set()
   let relightBB = null, lastRelight = -99
-  let curDayTime = dayTimeAt(0), curWeather = weatherKey(0)
+  // the baked vertex light only depends on the lightmap's sky factor (getSkyDarken from the time of day,
+  // rain and thunder: models.setDayTime), so the world is re-meshed only when that changes. From noon to
+  // ~11200 it stays 1: story_nitwit's 43-step sunset re-meshed the world 43 times (~38 s each on one
+  // core), of which 29 drew exactly the same, and its last Actions slice took 12 min
+  // A rain step (weatherKey: rain/thunder in 1/16ths) always re-lights. DAY_LIGHT_STEP=0.025 (scripts/cinematic.py) also
+  // rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame.
+  const DAY_STEP = Number(process.env.DAY_LIGHT_STEP || 0)
+  const skyKey = (t) => { const d = dayInfo(dayTimeAt(t), ...weatherLight(t)).dark; return `${DAY_STEP ? Math.round(d / DAY_STEP) : d.toFixed(6)}|${weatherKey(t)}` }
+  let curDayTime = dayTimeAt(0), curWeather = weatherKey(0), curSky = skyKey(0)
   const t1 = Date.now()
   // Block entities drawn by entity renderers (renderer/blockentities.js): signs with their text,
   // chests (lid from block_action marks), beds. Signs carry NBT in the chunk data and in
@@ -1852,15 +1973,24 @@ function camAtLive (t) {
         // its edges, so a changed cell marks the sections of its 26 neighbours too). Re-meshing the
         // bounding box of all changes re-did ~2000 sections per relight when a recording had block
         // changes scattered far apart (water_clutch: 12 s per relight)
+        // (the arrays are ~35M cells for a 20x20-chunk recording: compare 4 kB blocks with memcmp first,
+        // and only walk the blocks that differ; the plain loop was ~2 s per relight)
         const { SX, SZ, x0, z0, yMin } = L1, plane = SX * SZ, a0 = L0.sky, b0 = L0.blk, a1 = L1.sky, b1 = L1.blk
+        const A0 = Buffer.from(a0.buffer, a0.byteOffset, a0.length), A1 = Buffer.from(a1.buffer, a1.byteOffset, a1.length)
+        const B0 = Buffer.from(b0.buffer, b0.byteOffset, b0.length), B1 = Buffer.from(b1.buffer, b1.byteOffset, b1.length)
         const seen = new Set()
-        for (let i = 0; i < a1.length; i++) {
-          if (a0[i] === a1[i] && b0[i] === b1[i]) continue
-          const x = x0 + i % SX, z = z0 + Math.floor(i / SX) % SZ, y = yMin + Math.floor(i / plane)
-          for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) for (let dz = -1; dz <= 1; dz++) {
-            const sx = Math.floor((x + dx) / 16) * 16, sy = Math.floor((y + dy) / 16) * 16, sz = Math.floor((z + dz) / 16) * 16
-            const k = `${sx},${sy},${sz}`
-            if (!seen.has(k)) { seen.add(k); mark(sx, sy, sz) }
+        const near = (v) => (v & 15) === 0 ? [(v - 1) >> 4, v >> 4] : (v & 15) === 15 ? [v >> 4, (v + 1) >> 4] : [v >> 4]
+        for (let s0 = 0; s0 < a1.length; s0 += 4096) {
+          const s1 = Math.min(a1.length, s0 + 4096)
+          if (A1.compare(A0, s0, s1, s0, s1) === 0 && B1.compare(B0, s0, s1, s0, s1) === 0) continue
+          for (let i = s0; i < s1; i++) {
+            if (a0[i] === a1[i] && b0[i] === b1[i]) continue
+            const x = x0 + i % SX, z = z0 + Math.floor(i / SX) % SZ, y = yMin + Math.floor(i / plane)
+            // the sections of its 26 neighbours = its own, plus the next one over where it sits on an edge
+            for (const qx of near(x)) for (const qy of near(y)) for (const qz of near(z)) {
+              const k = `${qx},${qy},${qz}`
+              if (!seen.has(k)) { seen.add(k); mark(qx * 16, qy * 16, qz * 16) }
+            }
           }
         }
       } else {
@@ -1871,14 +2001,12 @@ function camAtLive (t) {
         }
       }
     }
-    if (dayTimeAt(t) !== curDayTime || weatherKey(t) !== curWeather) {   // the time or the rain changed: re-light everything
-      // ...but only when the block light it bakes in changes: the sky darkening (getSkyDarken) is 1 all day long, so a
-      // sun moving through a day (scripts/cinematic.py: a time mark every frame) re-meshes nothing. DAY_LIGHT_STEP=0.025
-      // also rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame
-      const step = Number(process.env.DAY_LIGHT_STEP || 0), lk = (d, w) => { const v = dayInfo(d, ...weatherLight(t)).dark; return `${step ? Math.round(v / step) : v}|${w}` }
-      const same = lk(dayTimeAt(t), weatherKey(t)) === lk(curDayTime, curWeather)
-      curDayTime = dayTimeAt(t); curWeather = weatherKey(t)
-      if (!same) { setDayTime(curDayTime, ...weatherLight(t)); dirty.clear(); await send(mesher.sections(minVisibleY)) }
+    curDayTime = dayTimeAt(t); curWeather = weatherKey(t)   // the sky, sun, stars, fog and rain follow them every frame (page.js)
+    if (skyKey(t) !== curSky) {   // the baked light changed (sky darkening from the time of day or the rain): re-light everything
+      curSky = skyKey(t); setDayTime(curDayTime, ...weatherLight(t)); dirty.clear()
+      const tr = Date.now()
+      await sendAll(bi, t)
+      if (process.env.PROFILE) console.log('sky factor', curSky, 'at', t.toFixed(1), ': re-meshed the world in', Date.now() - tr, 'ms')
     }
     prof('blocks+relight')
     if (dirty.size && process.env.PROFILE) console.log("send", t.toFixed(1), dirty.size)
@@ -1890,6 +2018,10 @@ function camAtLive (t) {
     Object.assign(cam, darknessAt(t))
     cam.aim = AIMS.length && !process.env.CAM ? aimAt(t) : null   // first person only: in the third-person replay it showed as red bars under the player
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
+    // stunt.self.eye: the narrator isn't a player (story_good_boy: a wolf, eye 0.68): the POV camera sits at that
+    // height over the feet. Only the camera moves; targeting and the body keep the player's eye.
+    const selfNow = selfAt(t)
+    if (selfNow && selfNow.eye) cam.y -= EYE - selfNow.eye
     // stunt.fovZoom [[EVENT[:s], EVENT[:s], SCALE]]: a sharp zoom rendered as a narrower FOV (a 2.2x crop
     // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.
     // The first-person hand keeps its own camera, so it doesn't zoom. Not with CAM= (the replay pass).
@@ -1914,6 +2046,7 @@ function camAtLive (t) {
     // the camera director (stunt.shots + 'shot' marks, above): a camera shot draws the player's body and
     // no hand, like CAM=; a POV shot is the plain first-person view
     const shotNow = process.env.CAM ? null : shotAt(t)
+    cropNow = shotNow && !shotNow.pov && shotNow.cropX ? Math.max(-1, Math.min(1, shotNow.cropX)) : 0
     const camShot = !!(shotNow && !shotNow.pov)
     if (camShot) {
       const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
@@ -1968,6 +2101,7 @@ function camAtLive (t) {
       const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
       cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb).map(v => v + (1 - v) * lift), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
+      else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
         cam.hand.state = bl.defaultState
         if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
@@ -1995,13 +2129,16 @@ function camAtLive (t) {
           held = { key: ph.name + (glintAt(t) ? '#glint' : ''), display: thirdPersonDisplay(ph.name), glint: glintAt(t) }
           const bl = MC.blocksByName[ph.name]
           if (spriteOf(ph.name)) held.tex = spriteOf(ph.name)
+          else if (specialItem(ph.name)) held.special = specialItem(ph.name)
           else if (bl) {
             held.state = bl.defaultState
             if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
           }
         }
         const sw = SWINGS.find(s0 => s0 <= t && t - s0 < 6)
-        ents.push({
+        // stunt.self.model: seen from a camera shot, the narrator is that mob (a wolf with its collar), not a player
+        if (selfNow && selfNow.model) ents.push({ id: -1, name: selfNow.model, x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: body, pitch: eye.pitch, headYaw: eye.yaw, extra: selfNow.extra || null, light: lightmap(ls, lb), hurt: HURTS.some(h => t >= h.t && t - h.t < 10) })
+        else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
           extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),
@@ -2041,10 +2178,21 @@ function camAtLive (t) {
       const it = e.extra.item
       if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }
       const bl = MC.blocksByName[it]
-      // an item we can't draw (special item models: beds, chests, heads, banners, shields; no sprite
-      // and an empty block model): no model, so no shadow either (a red bed was a lone shadow: every_clutch)
-      if (!bl || blockModelEmpty(bl.defaultState)) { e.hidden = true; continue }
       const age = t - (FIRST_SEEN.get(e.id) ?? t)
+      // special item models (beds, chests, heads, banners, shulker boxes): their block-entity model with
+      // the 'ground' display (ItemEntityRenderer: bob sin(age/10)*0.1+0.1, plus the model's ground-scaled
+      // lift, spin age/20 rad about y); the shadow stays the item's
+      if (specialItem(it)) {
+        const sp = specialItem(it), gs = (sp.display.ground && sp.display.ground.scale) || [1, 1, 1]
+        e.shadowName = 'item'; e.shadowY = e.y
+        e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
+        e.yaw = age / 20 + (e.id % 7)
+        e.extra = { item: it, special: sp }
+        continue
+      }
+      // an item we can't draw (shields, ...; no sprite and an empty block model): no model, so no
+      // shadow either (a red bed was a lone shadow: every_clutch)
+      if (!bl || blockModelEmpty(bl.defaultState)) { e.hidden = true; continue }
       // the shadow stays the item's (ItemEntityRenderer.shadowRadius 0.15, from the entity's own y,
       // not the bobbing model): drawn as a falling block it cast a 0.5 one, 3x vanilla (lapse_statue)
       e.shadowName = 'item'; e.shadowY = e.y
@@ -2067,6 +2215,7 @@ function camAtLive (t) {
         held = { key: it }
         const bl = MC.blocksByName[it]
         if (spriteOf(it)) held.tex = spriteOf(it)
+        else if (specialItem(it)) held.special = specialItem(it)
         else if (bl) { held.state = bl.defaultState; if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) } }
         held.display = fixedDisplay(it)
       }
@@ -2248,6 +2397,7 @@ function camAtLive (t) {
     }
     prof('entities+hand')
     cam.blockEntities = blockEntitiesAt(t, cam)
+    if (BOLTS.length) { const bl = boltsAt(t); cam.bolts = bl.bolts; cam.skyFlash = bl.flash }
     cam.dimension = DIM
     cam.weather = cam.underwater ? [] : weatherColumns(cam, t, cam.rain)   // (precipitation stops at the surface: snow fell under the ice)
     const parts = partsAt(t, cam)
@@ -2305,7 +2455,15 @@ function camAtLive (t) {
     const outPng = `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png`
     if (process.env.SCREENSHOT) {   // the old capture: let the compositor present the frame, then screenshot
       await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
-      await page.screenshot({ path: outPng })
+      await page.screenshot({ path: outPng, clip: { x: Math.round((MW - W) / 2 * (1 + cropNow)), y: 0, width: W, height: H } })
+    } else if (MW > W) {   // stunt.wideMaster: the output is a crop of the wide master (and the master itself with WIDE_DIR)
+      const [crop, wide] = await page.evaluate(([x0, w, h, keep]) => {
+        const c = document.querySelector('canvas'), o = document.createElement('canvas'); o.width = w; o.height = h
+        o.getContext('2d').drawImage(c, x0, 0, w, h, 0, 0, w, h)
+        return [o.toDataURL('image/png'), keep ? c.toDataURL('image/png') : null]
+      }, [Math.round((MW - W) / 2 * (1 + cropNow)), W, H, !!process.env.WIDE_DIR])
+      fs.writeFileSync(outPng, Buffer.from(crop.slice(crop.indexOf(',') + 1), 'base64'))
+      if (wide) { fs.mkdirSync(process.env.WIDE_DIR, { recursive: true }); fs.writeFileSync(`${process.env.WIDE_DIR}/${path.basename(outPng)}`, Buffer.from(wide.slice(wide.indexOf(',') + 1), 'base64')) }
     } else {
       // read the WebGL drawing buffer itself (preserveDrawingBuffer, alpha off). A screenshot comes
       // from the compositor, and on a busy machine it sometimes returned the previous frame: walks
@@ -2318,6 +2476,8 @@ function camAtLive (t) {
   }
   const secs = (Date.now() - t1) / 1000
   if (process.env.PROFILE) { const tot = Object.values(PROF).reduce((x, y) => x + y, 0); for (const [k, v] of Object.entries(PROF).sort((x, y) => y[1] - x[1])) console.log(`  ${k.padEnd(20)} ${(v / 1000).toFixed(1)} s  ${(v / tot * 100).toFixed(0)}%`) }
-  console.log(`rendered ${frames} frames (${(frames / FPS).toFixed(2)} s of video) in ${secs.toFixed(1)} s = ${(secs / (frames / FPS)).toFixed(1)} s per video second`)
+  // (a sparse render, FRAMES= / ONLY=, said "rendered 2583 frames" for 200: count what it drew)
+  const nDrawn = only ? only.length : frames
+  console.log(`rendered ${nDrawn} frames${only ? ` of ${frames}` : ''} (${(nDrawn / FPS).toFixed(2)} s of video) in ${secs.toFixed(1)} s = ${(secs / Math.max(1e-9, nDrawn / FPS)).toFixed(1)} s per video second`)
   await browser.close(); server.close(); process.exit(0)
 })()

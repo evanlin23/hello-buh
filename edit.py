@@ -19,6 +19,7 @@ import re
 import bisect
 import math
 import pathlib
+import os
 import subprocess
 import sys
 import tempfile
@@ -75,12 +76,19 @@ def split_emoji(tok):
     return out
 
 
-def caption_png(text, red_word, path, colors=None):
-    """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red."""
+def caption_png(text, red_word, path, colors=None, bands="black"):
+    """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red.
+    bands="blur": the bands stay transparent (the blurred game shows through) under a soft dark wash."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.rectangle((0, 0, W, BAND), fill=(0, 0, 0, 255))
-    d.rectangle((0, BAND + GAME_H, W, H), fill=(0, 0, 0, 255))
+    if bands == "blur":
+        for y in range(BAND):                      # darker toward the caption's middle, so the text reads
+            d.line((0, y, W, y), fill=(0, 0, 0, int(70 + 60 * (1 - abs(y - BAND * 0.42) / (BAND * 0.6)) ** 1)))
+        for y in range(BAND + GAME_H, H):
+            d.line((0, y, W, y), fill=(0, 0, 0, 90))
+    else:
+        d.rectangle((0, 0, W, BAND), fill=(0, 0, 0, 255))
+        d.rectangle((0, BAND + GAME_H, W, H), fill=(0, 0, 0, 255))
     tokens = [t for tok in text.split(" ") for t in split_emoji(tok)]
 
     def is_emoji(tok):
@@ -944,6 +952,7 @@ def main():
     ap.add_argument("--out_fps", type=int, default=30)
     ap.add_argument("--caption", required=True)
     ap.add_argument("--red")
+    ap.add_argument("--bands", choices=["blur", "black"], default="black", help="top/bottom bands: a blurred copy of the game (stories, owner 2026-11-10) or black")
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
@@ -981,8 +990,11 @@ def main():
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
     ap.add_argument("--end_after", help="EVENT:SECONDS - end SECONDS after a timeline event (cuts dead tails)")
+    ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    if args.preview:
+        os.environ["HB_PREVIEW"] = "1"
     args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
     frames_dir0 = pathlib.Path(args.frames).parent if args.frames else None
     if (args.speed or args.slowmo or args.freeze) and args.timeline:
@@ -1025,7 +1037,7 @@ def main():
         if "=" in pair:
             w, c = pair.split("=", 1)
             colors[w.strip().lower()] = named.get(c.strip().lower(), (255, 255, 255, 255))
-    caption_png(args.caption, args.red, tmp / "caption.png", colors)
+    caption_png(args.caption, args.red, tmp / "caption.png", colors, bands=args.bands)
     dur = probe_duration(args) - args.start
     if args.end_after:
         ev_, secs_ = args.end_after.rsplit(":", 1)
@@ -1034,8 +1046,13 @@ def main():
     inputs = (["-ss", str(args.start), "-i", args.video] if args.video else
               ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps + 1e-6)), "-i", args.frames])
     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / "caption.png")]
-    graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},"
-             f"pad={W}:{H}:0:{BAND}:black,fps={args.out_fps},format=rgba[g0]"]
+    if args.bands == "blur":   # owner 2026-11-10: "the top and bottom can be blur rather than black"
+        graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},split=2[gm][gb]",
+                 f"[gb]scale=-2:{H}:flags=bilinear,crop={W}:{H},gblur=sigma=42,eq=brightness=-0.16:saturation=1.1[gbg]",
+                 f"[gbg][gm]overlay=0:{BAND},fps={args.out_fps},format=rgba[g0]"]
+    else:
+        graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},"
+                 f"pad={W}:{H}:0:{BAND}:black,fps={args.out_fps},format=rgba[g0]"]
     last = "g0"
     n_in = 2
     # on-fire overlay first: vanilla draws the HUD on top of the flames
@@ -1069,10 +1086,10 @@ def main():
         states = hud_states(tl, dur + shift)
         # missing icons, and ones older than the icon renderer or the mesher (a stale empty honey_block
         # icon from before the translucent fix stayed invisible: worker 3, every_clutch)
-        made = max((HERE / "renderer" / f).stat().st_mtime for f in ("icons.js", "models.js", "mesher.js"))
+        made = max((HERE / "renderer" / f).stat().st_mtime for f in ("icons.js", "models.js", "mesher.js", "specialitems.js", "blockentities.js"))
         stale = lambda n: not (ICONS / f"{n}.png").exists() or (ICONS / f"{n}.png").stat().st_mtime < made
         need = sorted({it[0] for st in states for it in st[3] if isinstance(it, tuple) and it and it[0] and stale(it[0])})
-        if need:   # 3D icons for block items (skips non-block items itself)
+        if need:   # 3D icons for block items and special item models (skips flat items itself)
             subprocess.run(["node", str(HERE / "renderer" / "icons.js"), CLIENT_JAR.stem, *need], check=True)
         ticks = hud_ticks(tl, dur + shift, bool(json.loads(pathlib.Path(args.timeline).read_text()).get('keepInventory')) if args.timeline else False)
         first = int(shift * 20 + 1e-6)
@@ -1181,7 +1198,11 @@ def main():
             tts = [e["t"] / 1000 for e in all_ev if e["event"] == sub[0]]
             nth_ = sub[3] if len(sub) > 3 else 0
             if len(tts) > nth_:
-                sub_starts.append(tts[nth_] - args.start)
+                t_ = tts[nth_] - args.start
+                for c in cut_times(args):    # (the same snap as below: a line due a frame or two before a cut starts on it)
+                    if c - 0.07 < t_ < c:
+                        t_ = c
+                sub_starts.append(t_)
         for k, sub in enumerate(json.loads(args.subs)):
             ev_name, text = sub[0], sub[1]
             dur_s = sub[2] if len(sub) > 2 else 1.8
@@ -1190,14 +1211,15 @@ def main():
             if len(ts) <= nth:
                 continue
             t0 = ts[nth] - args.start
+            for c in cut_times(args):
+                if c - 0.07 < t0 < c:        # a line due a frame or two before a cut starts on it
+                    dur_s -= c - t0; t0 = c
             starts = sorted(x for x in sub_starts if x > t0 + 1e-3)
-            if starts:                       # never overlap the next line (they doubled up)
-                dur_s = min(dur_s, starts[0] - t0 - 0.05)
+            if starts and t0 + dur_s >= starts[0] - 0.05:   # never overlap the next line (they doubled up), and
+                dur_s = starts[0] - t0       # hand over on its first frame (a 0.05 s gap blanked 3 frames at every change: pickaxe_race)
             for c in cut_times(args):        # a line ending just after a hard cut ends ON the cut (it stayed a frame on the new shot)
                 if t0 + 0.3 < c < t0 + dur_s <= c + 0.3:
                     dur_s = c - t0
-                if c - 0.07 < t0 < c:        # a line due a frame or two before a cut starts on it
-                    dur_s -= c - t0; t0 = c
             # a line shown during a death screen goes below its buttons, drawn over the screen (it sat on
             # "Respawn" at 42% of the game height: worker 7, die_rating)
             dws = [(a - args.start, b - args.start) for a, b in death_windows(all_ev)] if args.death_screen else []
@@ -1335,7 +1357,7 @@ def main():
             graph.append("[song]anull[a]")
         maps += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
     cmd = ["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", ";".join(graph), *maps,
-           "-t", f"{dur:.3f}", "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-maxrate", "18M", "-bufsize", "36M", "-pix_fmt", "yuv420p",
+           "-t", f"{dur:.3f}", "-c:v", "libx264", *retention.x264(), "-pix_fmt", "yuv420p",
            "-movflags", "+faststart", args.out]
     subprocess.run(cmd, check=True)
     got = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.out], capture_output=True, text=True).stdout or 0)

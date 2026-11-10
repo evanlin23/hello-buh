@@ -1,0 +1,117 @@
+[
+ {
+  "id": "r1",
+  "direction": "Read this short film dialogue. N: a young man, earnest and hushed, telling a friend something he can't explain. Sam: an old man, gravelly, slow and gentle.",
+  "speakers": {
+   "N": "Puck",
+   "Sam": "Algenib"
+  },
+  "lines": [
+   [
+    "N",
+    "L01",
+    "I've tried to leave this man thirty-seven times."
+   ],
+   [
+    "N",
+    "L02",
+    "Every time I get twelve blocks away... I'm standing right next to him."
+   ],
+   [
+    "Sam",
+    "L03",
+    "There you are."
+   ],
+   [
+    "N",
+    "L04",
+    "I've tried at night. Through the wheat. I even swam for it."
+   ],
+   [
+    "N",
+    "L05",
+    "He feeds me raw porkchops. Never cooked. Not once."
+   ],
+   [
+    "Sam",
+    "L06",
+    "sit."
+   ],
+   [
+    "N",
+    "L07",
+    "And when he says sit... I sit. I don't know why."
+   ],
+   [
+    "N",
+    "L08",
+    "Everyone in this village is so tall."
+   ],
+   [
+    "N",
+    "L09",
+    "And there's this dog. Wherever I go... it's already there."
+   ]
+  ]
+ },
+ {
+  "id": "r2",
+  "direction": "Read this short film dialogue, the night scene: quieter, then frightened, then tender. N: a young man, earnest and hushed, telling a friend something he can't explain. Sam: an old man, gravelly, slow and gentle.",
+  "speakers": {
+   "N": "Puck",
+   "Sam": "Algenib"
+  },
+  "lines": [
+   [
+    "N",
+    "L10",
+    "I can't even open a door."
+   ],
+   [
+    "Sam",
+    "L11",
+    "Come on in, you."
+   ],
+   [
+    "N",
+    "L12",
+    "When he leaves, I wait by the door. all day."
+   ],
+   [
+    "N",
+    "L13",
+    "skeletons run when they see me."
+   ],
+   [
+    "N",
+    "L14",
+    "Then one night, a zombie came for him."
+   ],
+   [
+    "Sam",
+    "L15",
+    "Hey! Get back!"
+   ],
+   [
+    "N",
+    "L16",
+    "I don't remember what happened next."
+   ],
+   [
+    "Sam",
+    "L17",
+    "Easy... easy. It's gone."
+   ],
+   [
+    "Sam",
+    "L18",
+    "good boy."
+   ],
+   [
+    "N",
+    "L19",
+    "Tomorrow, I'm leaving. For real."
+   ]
+  ]
+ }
+]

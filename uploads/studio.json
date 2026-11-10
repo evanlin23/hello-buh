@@ -1,0 +1,6 @@
+{
+ "_": "Subscribers gained per Short as YouTube Studio shows them (owner, by hand). YouTube Analytics' API lags 1-3 days; family_scores uses whichever count is higher. views: the public count on the same day.",
+ "story_runaway": {"subs": 71, "views": 22390, "date": "2026-11-09"},
+ "spot_wrong": {"subs": 50, "views": 20533, "date": "2026-11-09"},
+ "lapse_castle": {"subs": 12, "views": 15769, "date": "2026-11-09"}
+}

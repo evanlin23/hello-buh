@@ -106,7 +106,8 @@ def _wrap(words, f, max_w):
     return [words[:best], words[best:]]
 
 
-def caption_image(text, key):
+def caption_image(text, key, base=(255, 255, 255, 255)):
+    """base: the colour of the plain words (white; a v2 story's character lines use that speaker's cast colour)."""
     f = ImageFont.truetype(str(FONT), CAP_PX)
     stroke = 8
     lines = _wrap(text.split(), f, MAX_W - 2 * stroke)
@@ -118,7 +119,7 @@ def caption_image(text, key):
     for i, (ln, lw) in enumerate(zip(lines, widths)):
         x, y = (bw - lw) / 2, stroke + 8 + i * lh
         for w in ln:
-            d.text((x, y), w, font=f, fill=key if _is_key(w) else (255, 255, 255, 255), stroke_width=stroke, stroke_fill=INK)
+            d.text((x, y), w, font=f, fill=key if _is_key(w) else base, stroke_width=stroke, stroke_fill=INK)
             x += f.getlength(w) + sp
     shadow = Image.new("RGBA", txt.size, (0, 0, 0, 0))
     shadow.putalpha(txt.split()[3].filter(ImageFilter.GaussianBlur(7)).point(lambda v: int(v * 0.55)))
@@ -128,7 +129,11 @@ def caption_image(text, key):
     return out
 
 
-def caption_events(story_dir, timeline, start, dur):
+def _rgba(h):
+    return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
+
+
+def caption_events(story_dir, timeline, start, dur, who=False):
     """[(t0, t1, text)] in seconds of the Short: each chunk from its first word until the next chunk starts.
     A line's first chunk appears on its cut (the line's mark), and its last chunk holds until the next line's cut
     (0.3 s past its last word only when the next line is over 1.2 s away)."""
@@ -143,8 +148,41 @@ def caption_events(story_dir, timeline, start, dur):
             # the last chunk holds to the next line's cut (the caption changes on the cut frame; dropping it 0.3 s after
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
             t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
-            ev.append((max(0.0, t0), min(dur, t1), text))
-    return [e for e in ev if e[1] > e[0]]
+            ev.append((max(0.0, t0), min(dur, t1), text, lid))
+    # a chunk due just before a picture cut inside a line starts on the cut (the voice's word timing put
+    # "He doesn't" 6-9 frames before the night/day cuts it belongs to: story_sheep_stares f222, f262)
+    cuts = _cut_times(timeline, start)
+    for k in range(1, len(ev)):
+        t0 = ev[k][0]
+        c = next((c for c in cuts if t0 < c <= t0 + CUT_SNAP and c < ev[k][1]), None)
+        if c is not None and ev[k - 1][1] == t0:
+            ev[k - 1] = (ev[k - 1][0], c, *ev[k - 1][2:])
+            ev[k] = (c, *ev[k][1:])
+    return [e if who else e[:3] for e in ev if e[1] > e[0]]
+
+
+CUT_SNAP = 0.25   # s: how far ahead of a cut a chunk may start and still be moved onto it
+
+
+def _cut_times(timeline, start):
+    """Seconds into the Short at which the picture cuts: each `cut` mark's camera jump (the first tick
+    from 2 before to 6 after the mark whose pose moved over 0.6 block), or the mark itself when it also
+    changes the time of day (a day/night cut on the spot)."""
+    out = []
+    times = {e["t"] // 50 for e in timeline if e["event"] == "time"}
+    for e in timeline:
+        if e["event"] != "cut":
+            continue
+        m = e["t"] // 50
+        jump = None
+        if POSES:
+            jump = next((i for i in range(max(1, m - 2), min(len(POSES), m + 7))
+                         if sum((POSES[i][j] - POSES[i - 1][j]) ** 2 for j in (1, 2, 3)) > 0.36), None)
+        if jump is None and m in times:
+            jump = m
+        if jump is not None:
+            out.append(jump / 20 - start)
+    return sorted(out)
 
 
 def caption_concat(story_dir, timeline, start, dur, tmp):
@@ -156,12 +194,17 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     Image.new("RGBA", (W, H), (0, 0, 0, 0)).save(blank)
     runs, frame = [], 0                      # [(png, frames)]
     total = int(round(dur * FPS))
-    for k, (t0, t1, text) in enumerate(caption_events(story_dir, timeline, start, dur)):
+    # story.json v2: a character's lines in that speaker's cast colour (the narrator's, and v1 stories', white)
+    cast, spk = story.get("cast") or {}, {l["id"]: l.get("who") for l in story["lines"]}
+    def base_of(lid):
+        c = cast.get(spk.get(lid) or "", {})
+        return _rgba(c["color"]) if c.get("role") == "character" and c.get("color") else (255, 255, 255, 255)
+    for k, (t0, t1, text, lid) in enumerate(caption_events(story_dir, timeline, start, dur, who=True)):
         f0, f1 = int(round(t0 * FPS)), int(round(t1 * FPS))
         if f0 > frame:
             runs.append((blank, f0 - frame))
         f0 = max(f0, frame)
-        base = caption_image(text, key)
+        base = caption_image(text, key, base_of(lid))
         for j in range(f1 - f0):
             s = POP[j] if j < len(POP) else 1.0
             if j >= len(POP):
