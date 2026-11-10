@@ -80,6 +80,18 @@ hud: false,                                                               // ...
   0.5), `model`/`extra` draw them in camera shots; `K.self({ sitting: true }, 0.5)` changes it on a word.
   The wolf model is Java-accurate (sitting, tail, tame/angry eyes, dyed collar); other mobs draw from their
   converted models.
+- **The pilot's whole recipe** (`story_good_boy`, 2026-11-10; stage timings in its commit log):
+  1. Script as story.json v2 (docs/story_craft.md): a narrator plus voiced characters, `requests` pairing speakers.
+  2. Voices: `python3 scripts/voice_cast.py stories/<name>` (Gemini via scripts/tts.py, one request per pair of
+     speakers, short directions; takes cached in voice/*_take.f32, `--only r2 --fresh` re-asks one), then
+     `~/.hb-tts/bin/python scripts/voice_check.py stories/<name>` (Whisper transcript + pitch per line: catches a word
+     split into the wrong line and two voices too alike) and `--words` + `voice_cast.py --timing` (captions on
+     Whisper's word times). Pilot: 2 requests, 57 s of lines, one split fixed by hand.
+  3. Site: a real generated place, not a clearing. `STUNT=scout_village ./scripts/record.sh` records the nearest
+     plains village (seed fixed: centre (-304, -384)); `scripts/still.py` top-down plus a grid to plan positions;
+     build only the focal set (the cottage, docs/building_guide.md) on a levelled pad; read ground heights at run time.
+  4. `RECORD_ONLY=1 STUNT=story_<name> ./run.sh` (rec_check runs), `scripts/shot_sheet.py` for every camera
+     (~1 min), fix cameras in `stunt.shots` without re-recording, `scripts/render_on_actions.sh story_<name>`.
 - **Channel art and thumbnails** from any recording: `scripts/still.py REC out.png --at S --size WxH --shot '{...}'
   [--look '{...}'] [--time N] [--ss 2]`, text with `scripts/channel_art.py`.
 
@@ -206,7 +218,7 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 10 | **The Sun Won't Set** | "The sun hasn't set in my world for 300 days." | villagers yawning; a bed nobody sleeps in; my grandpa asks every day if tonight's the night | I froze the time (`advance_time false`) because zombies come at night and grandpa is too slow to run | grandpa asks me to let the night come | open |
 | 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | made (`story_nitwit`, pipeline test 2026-11-10: 2 h 40 min, 2 review rounds; docs/pipeline_test_nitwit.md) |
 | 12 | **Last Seen** | "My friend's armor stand has stood at the village gate for 900 days. Today it turned around." | his armor gets one more scratch a day; a bed still warm; the golem salutes it | (armor stands don't render yet: needs an engine model) | | parked: engine |
-| 13 | **Good Boy** (cinematic pilot) | "I've tried to run away from this guy thirty-seven times." | every time I get 12 blocks away I'm right back next to him; raw porkchops; I sit when he says sit; everyone is tall; sheep look delicious; I can't open doors; skeletons run from me; a dog is always exactly where I am (every camera shot shows it) | I'm his dog: a tamed wolf (vanilla: tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons, attack whatever hurts their owner). Revealed when the camera pulls out of my head | "Tomorrow I'm leaving for real." loops into line 1 | building: cinematic-default worker (`story_good_boy`, branch claude/cinematic-default) |
+| 13 | **Good Boy** (cinematic pilot) | "I've tried to run away from this guy thirty-seven times." | every time I get 12 blocks away I'm right back next to him; raw porkchops; I sit when he says sit; everyone is tall; sheep look delicious; I can't open doors; skeletons run from me; a dog is always exactly where I am (every camera shot shows it) | I'm his dog: a tamed wolf (vanilla: tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons, attack whatever hurts their owner). Revealed when the camera pulls out of my head | "Tomorrow I'm leaving for real." loops into line 1 | building: cinematic-default worker (`story_good_boy`, branch claude/cinematic-default; v2: voiced cast, real village) |
 
 ## Format: "Who do you trust?" (interactive mystery). Owner, 2026-11-06
 Owner, describing a Short he liked: someone turns 13 and gets a call from themselves 10 years in
