@@ -316,14 +316,17 @@ module.exports = {
     K.shot('pov')
     K.ctl('sprint', true); K.go(true)
     const zEnt = () => Object.values(bot.entities).find(e => e.name === 'zombie')
-    await line('L13', async (k, at) => {
+    await line('L13', async (k, at, n) => {
       const [sy, sp] = shake(k, 0.035)
-      if (k === at(0) + 4 || k === at(1) + 2) { const z = zEnt(); if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.1) }
-      // the kill on the second bite (at + 10 its smoke was still up when the reveal opened)
-      if (k === at(1) + 3) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
-      if (k >= at(1) + 3 && k <= at(1) + 9) say('/kill @e[type=experience_orb]')   // (and if mob_drops is a no-op)
-      if (k < at(1) + 3) { const z = zEnt(); if (z && bot.entity.position.distanceTo(z.position) < 1.3) K.go(false) }
-      const zp = P(zom.x, zom.y + 1.0, zom.z); if (bot.entity.position.distanceTo(zp) > 1.6) K.base = K.aim(zp); look(k, sy, sp)
+      // three bites with the zombie in view (hurt red, knocked back); the kill on the line's last tick, the hard cut to
+      // the reveal right on it (final check: killed mid-line it fell out of frame, the POV stared at an empty yard,
+      // then its smoke burst from nowhere). Its death spot is west of the reveal camera's view
+      if (k === at(0) + 4 || k === at(1) + 2 || k === at(1) + 12) { const z = zEnt(); if (z) bot.attack(z); ctx.sound('entity.wolf.growl', 1, 1.1) }
+      if (k === n - 1) { say('/damage @e[tag=zom,limit=1] 100 minecraft:mob_attack by @s'); K.stop() }
+      // never inside it (the camera clipped into its body on a bite)
+      { const z = zEnt(); if (z && bot.entity.position.distanceTo(z.position) < 1.6) K.go(false) }
+      const zr = zEnt(), zp = zr ? zr.position.offset(0, 1.0, 0) : P(zom.x, zom.y + 1.0, zom.z)
+      K.base = K.aim(zp); look(k, sy, sp)
     })
     K.stop(); K.actors.delete('zom')
 
@@ -336,6 +339,7 @@ module.exports = {
     K.shot('reveal')
     await K.cut(37.5, 16.2, P(38.7, eyeY(1.25), 16.2), H + 1)
     await line('L14', async (k) => {
+      if (k < 8) say('/kill @e[type=experience_orb]')   // (if mob_drops is a no-op)
       if (k === 0 || k === 6) swingGuy()   // the pat
       if (k === 4) K.self({ wag: true })
       if (k === 10) ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 7 })
