@@ -1,0 +1,15 @@
+{
+ "name": "k5_laomedeia",
+ "tempo": 1.0,
+ "raw_s": 23.48,
+ "final_s": 19.91,
+ "raw_wps_speaking": 3.93,
+ "raw_wps_overall": 2.96,
+ "raw_pauses_max": 0.65,
+ "raw_pauses_over_0.12": 15,
+ "wps_speaking": 3.93,
+ "wps_overall": 3.47,
+ "pauses_max": 0.12,
+ "f0_median": 195.0,
+ "f0_spread_st": 12.7
+}

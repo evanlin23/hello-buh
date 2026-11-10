@@ -1,0 +1,15 @@
+{
+ "name": "k2_cheeky",
+ "tempo": 1.44,
+ "raw_s": 24.44,
+ "final_s": 15.38,
+ "raw_wps_speaking": 3.63,
+ "raw_wps_overall": 2.85,
+ "raw_pauses_max": 0.57,
+ "raw_pauses_over_0.12": 12,
+ "wps_speaking": 4.83,
+ "wps_overall": 4.5,
+ "pauses_max": 0.15,
+ "f0_median": 229.0,
+ "f0_spread_st": 10.8
+}

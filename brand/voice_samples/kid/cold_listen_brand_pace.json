@@ -1,0 +1,136 @@
+{
+ "k1_pip.mp3": {
+  "transcript": "My village is covered in 9,000 carpets. The road, carpet. The stairs, carpet. The dog house, also carpet. We shear 300 sheep every morning to keep up. Even our bell is wrapped in white wool. The dog on the hill hasn't moved in 900 days. Not for rain, not for thunder, not for creepers, not even zombies. I bring him a bone every morning. He never looks.",
+  "unclear_words": [],
+  "clarity": 10,
+  "apparent_age": "20-25",
+  "sex": "male",
+  "sounds_like": "AI",
+  "squeaky_or_grating": 3,
+  "pace": "right",
+  "energy": "dramatic fast intriguing intense",
+  "would_you_keep_listening": "yes, intriguing Minecraft storyline keeps viewer very engaged",
+  "word_match": 0.95,
+  "misses": [
+   [
+    "nine thousand",
+    "9 000"
+   ],
+   [
+    "doghouse",
+    "dog house"
+   ]
+  ]
+ },
+ "k2_cheeky.mp3": {
+  "transcript": "My village is covered in 9,000 carpets. The road? Carpet. The stairs? Carpet. The dog house? Also carpet. We shear 300 sheep every morning to keep up. Even our bell is wrapped in white wool. The dog on the hill hasn't moved in 900 days. Not for rain, not for thunder, not for creepers, not even zombies. I bring him a bone every morning. He never looks.",
+  "unclear_words": [],
+  "clarity": 10,
+  "apparent_age": "18-25",
+  "sex": "female",
+  "sounds_like": "adult playing a kid",
+  "squeaky_or_grating": 2,
+  "pace": "right",
+  "energy": "lively enthusiastic storytelling expressive",
+  "would_you_keep_listening": "Yes, engaging Minecraft lore keeps me very hooked.",
+  "word_match": 0.95,
+  "misses": [
+   [
+    "nine thousand",
+    "9 000"
+   ],
+   [
+    "doghouse",
+    "dog house"
+   ]
+  ]
+ },
+ "k3_deadpan.mp3": {
+  "transcript": "My village is covered in 9,000 carpets. The road, carpet. The stairs, carpet. The doghouse, also carpet. We shear 300 sheep every morning to keep up. Even our bell is wrapped in white wool. The dog on the hill hasn't moved in 900 days. Not for rain, not for thunder, not for creepers, not even zombies. I bring him a bone every morning. He never looks.",
+  "unclear_words": [],
+  "clarity": 10,
+  "apparent_age": "20-30",
+  "sex": "female",
+  "sounds_like": "AI",
+  "squeaky_or_grating": 2,
+  "pace": "right",
+  "energy": "calm deadpan rhythmic narrative",
+  "would_you_keep_listening": "Yes, quirky Minecraft story hook grabs my interest immediately.",
+  "word_match": 0.971,
+  "misses": [
+   [
+    "nine thousand",
+    "9 000"
+   ]
+  ]
+ },
+ "k4_sleepover.mp3": {
+  "transcript": "My village is covered in 9,000 carpets. The road, carpet. The stairs, carpet. The dog house, also carpet. We shear 300 sheep every morning to keep up. Even our bell is wrapped in white wool. The dog on the hill hasn't moved in 900 days. Not for rain, not for thunder, not for creepers, not even zombies. I bring him a bone every morning. He never looks.",
+  "unclear_words": [],
+  "clarity": 9,
+  "apparent_age": "10-14",
+  "sex": "female",
+  "sounds_like": "AI",
+  "squeaky_or_grating": 4,
+  "pace": "rushed",
+  "energy": "fast whimsical storytelling energy",
+  "would_you_keep_listening": "Yes, fast Minecraft storytelling keeps viewer very hooked.",
+  "word_match": 0.95,
+  "misses": [
+   [
+    "nine thousand",
+    "9 000"
+   ],
+   [
+    "doghouse",
+    "dog house"
+   ]
+  ]
+ },
+ "k5_laomedeia.mp3": {
+  "transcript": "My village is covered in 9,000 carpets. The road, carpet. The stairs, carpet. The dog house, also carpet. We shear 300 sheep every morning to keep up. Even our bell is wrapped in white wool. The dog on the hill hasn't moved in 900 days. Not for rain, not for thunder, not for creepers, not even zombies. I bring him a bone every morning. He never looks.",
+  "unclear_words": [],
+  "clarity": 10,
+  "apparent_age": "15-22",
+  "sex": "male",
+  "sounds_like": "adult playing a kid",
+  "squeaky_or_grating": 2,
+  "pace": "right",
+  "energy": "deadpan calm stoic fast",
+  "would_you_keep_listening": "Yes, amusing minecraft lore with great pacing and delivery.",
+  "word_match": 0.95,
+  "misses": [
+   [
+    "nine thousand",
+    "9 000"
+   ],
+   [
+    "doghouse",
+    "dog house"
+   ]
+  ]
+ },
+ "k6_zephyr.mp3": {
+  "transcript": "My village is covered in 9,000 carpets. The road? Carpet. The stairs? Carpet. The dog house? Also carpet. We shear 300 sheep every morning to keep up. Even our bell is wrapped in white wool. The dog on the hill hasn't moved in 900 days. Not for rain, not for thunder, not for creepers, not even zombies. I bring him a bone every morning. He never looks.",
+  "unclear_words": [],
+  "clarity": 10,
+  "apparent_age": "20-30",
+  "sex": "female",
+  "sounds_like": "AI",
+  "squeaky_or_grating": 2,
+  "pace": "right",
+  "energy": "Calm yet engaging narration",
+  "would_you_keep_listening": "Yes, creative Minecraft story hooks viewer curiosity fast.",
+  "word_match": 0.95,
+  "misses": [
+   [
+    "nine thousand",
+    "9 000"
+   ],
+   [
+    "doghouse",
+    "dog house"
+   ]
+  ]
+ }
+}

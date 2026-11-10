@@ -1,0 +1,15 @@
+{
+ "name": "k1_pip",
+ "tempo": 1.4,
+ "raw_s": 23.76,
+ "final_s": 14.99,
+ "raw_wps_speaking": 3.79,
+ "raw_wps_overall": 2.93,
+ "raw_pauses_max": 0.63,
+ "raw_pauses_over_0.12": 15,
+ "wps_speaking": 4.92,
+ "wps_overall": 4.6,
+ "pauses_max": 0.1,
+ "f0_median": 229.0,
+ "f0_spread_st": 10.7
+}

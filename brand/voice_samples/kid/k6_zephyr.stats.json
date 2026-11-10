@@ -1,0 +1,15 @@
+{
+ "name": "k6_zephyr",
+ "tempo": 1.28,
+ "raw_s": 23.16,
+ "final_s": 15.37,
+ "raw_wps_speaking": 4.1,
+ "raw_wps_overall": 3.03,
+ "raw_pauses_max": 0.5,
+ "raw_pauses_over_0.12": 18,
+ "wps_speaking": 4.95,
+ "wps_overall": 4.51,
+ "pauses_max": 0.1,
+ "f0_median": 193.0,
+ "f0_spread_st": 10.8
+}

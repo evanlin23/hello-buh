@@ -1,0 +1,15 @@
+{
+ "name": "k4_sleepover",
+ "tempo": 1.0,
+ "raw_s": 23.88,
+ "final_s": 19.81,
+ "raw_wps_speaking": 4.1,
+ "raw_wps_overall": 2.92,
+ "raw_pauses_max": 0.68,
+ "raw_pauses_over_0.12": 19,
+ "wps_speaking": 4.07,
+ "wps_overall": 3.48,
+ "pauses_max": 0.13,
+ "f0_median": 211.0,
+ "f0_spread_st": 11.5
+}
