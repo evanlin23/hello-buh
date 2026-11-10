@@ -38,6 +38,35 @@ adds songs.
 - Creative freedom (owner): "We can have creative freedom as well to make it more eye catching or
   anything for retention". Ridiculous, escalating, eye-catching beats beat safe ones.
 
+## Render on GitHub Actions (parallel slices)
+A long render (a 60 s story is ~25 min here) can run on GitHub's runners instead: 12 runners each render a slice of
+the frames, one more joins them and does audio, replay/slow-mo and the edit. Expect ~12 min end to end (the same split renders the
+movies on claude/ai-dilemma), and the container's hourly restart can't kill it. Record here, render there:
+```bash
+RECORD_ONLY=1 STUNT=story_<name> ./run.sh                 # just work/story_<name>.rec.json (no local render)
+scripts/render_on_actions.sh story_<name>                  # queue: pushes branch render/story_<name>, starts the run
+scripts/render_on_actions.sh --wait story_<name>           # polls (git only), then -> out/story_<name>.mp4
+```
+- **What gets pushed:** a commit on top of your HEAD with your working copies of `stunts/`, `lib/` and `stories/`
+  (uncommitted edits too: the edit must use the stunt as recorded), the recording gzipped at
+  `renders/slices/<name>.rec.json.gz` and the job `renders/slices.json`, force-pushed to `render/<name>`
+  (`RENDER_BRANCH=` to change it, e.g. if your session may only push its own branch prefix). Commit changes to
+  anything else the render reads (`render.js`, `renderer/`, `edit.py`, `scripts/`) before queueing.
+- **The run** (`.github/workflows/render-slices.yml`, setup in `.github/actions/render-setup`): `plan` counts the
+  frames (render.js: `(poses - 1) / 20 * FPS`); `slice` x N renders its range with `render.js` `FRAMES=` (frames keep
+  their real numbers) and stores it as a lossless RGB video; `finish` decodes them back into
+  `work/<name>.frames/`, checks every frame is there, and runs `scripts/finish_render.sh` (= the tail of `run.sh`:
+  `audio.py`, `render_replay.py` for `edit.replay`/`slowmo`, `edit.py` with the stunt's `edit` args). The Short is
+  the run's `short` artifact and is committed back to the branch as `renders/out/<name>.mp4` with
+  `renders/result.json` (`done` or `failed`, with the run's URL), so fetching needs no gh token.
+- `SLICES=` (default 12, at most 32, never under ~30 frames a slice) and `FPS=` (60) go in the job. Re-queueing the
+  same name force-pushes and cancels the run in progress. A manual run: Actions -> render-slices -> Run workflow on
+  the `render/<name>` branch (inputs name, stunt, slices override the job file).
+- Songs aren't in git, so as with run.sh here the output has the game audio and voice only (publish.js adds the song).
+- The slices are lossless and join into the same frames, except particles on a slice's first frames (their history
+  starts with the slice): on pickaxe_race 0.2% of pixels differed from a render started 60 frames earlier.
+- Never merge a `render/*` branch; delete it once you have the MP4 (`git push origin --delete render/<name>`).
+
 ## QA before publishing (required)
 0. Both audits must say ready: `.claude/skills/retention-audit/SKILL.md` (with `python3 scripts/beat_audit.py <name>`)
    and `.claude/skills/minecraft-audit/SKILL.md`. Then the frame review below.
