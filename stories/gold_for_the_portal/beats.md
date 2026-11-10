@@ -1,5 +1,9 @@
 # gold_for_the_portal: beat sheet, clue map, writer's checks (r2)
 
+r2 (2026-11-10): the r1 critic's and continuity's must-fixes applied (reviews/r1-response.md): Pip's recipe for the
+narrator's requests, S01 at 4 blocks with the ingot crossing the purple on frame 1, one gift per morning, Grandma in
+frame for the last ingot, the trim pinned (sentry, lapis), L07 trimmed, the cellar blocking fixed.
+
 r1 (2026-11-10): written from the parked pitch (critic rank 6) with the critic's fix applied: the reveal is a piglin
 stepping through the portal wearing Grandpa's gold helmet, planted early (Grandpa putting the helmet on in S06, the
 blue stripe named in L04, "Gold keeps you SAFE in the NETHER" quoted in L05). The critic's other note ("barters land on
