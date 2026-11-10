@@ -147,6 +147,48 @@ a big jump resets it, and a single `./hb still` shows none (give it two consecut
 second is blurred). Moving mobs aren't blurred (camera motion only). Test: `node scripts/pose_fixture.js --staged
 --whip`. Off unless the look asks.
 
+## Smooth digging (rec.smoothDig)
+Owner, 2026-11-10: "can we make the movement smoother when we are breaking blocks? right now it looks very jerky".
+The cause, measured on pickaxe_race / fortune / villager_fired / story_torch (camera through every run of digs at
+60 fps, `CAM_PROBE`): the bot aims at each block's centre in 1-2 ticks (`bot.dig(b, true)` snaps; `ctx.easeLookAt(p,
+100)` is 7 degrees a tick for 2 ticks), holds dead still while it digs, then snaps to the next block. Each snap is a
+burst of 2-3 degrees a frame between frozen holds: speed kicks of 2000-9000 deg/s^2, 130 of them in pickaxe_race. The
+held pickaxe stuttered too: mineflayer swings once per dig and every 350 ms, so the arm stopped at rest between
+swings (55 frames in pickaxe_race) and the 3-tick restart rule snapped it from half-swung back to the start (24-30
+per Short). Crack stages and the fall into a dug-out hole are vanilla and stay.
+
+The fix (render.js, after `SMOOTH`):
+- **Aim**: through each run of digs (the harness's `dig`/`dig_end` marks, windows 8 ticks either side, runs closer
+  than 20 ticks merged, split at cuts) yaw and pitch are a Gaussian average of the recorded aim (sigma 2.5 ticks),
+  eased in and out over the window's ends. The crosshair must stay on the block being dug (vanilla cancels a dig
+  that leaves it): per tick, the largest share of the smoothing that keeps the ray inside the block (shrunk 0.1 a
+  side, 6-block reach) is found by bisection, and that share is eased over +-4 ticks so a pull back is never a kink.
+  The mouse starts moving before a block breaks and glides onto the next one. Between ticks the camera follows a
+  Catmull-Rom curve (no speed step at each tick), falling back to the straight line where the curve would bulge off
+  the block.
+- **Hand**: through a run (digs under 6 ticks apart) the swing is vanilla's held-attack chop: `continueAttack` swings
+  every tick, `LivingEntity.swing` restarts at swingTime 3 of 6, and `getAttackAnim` wraps forward (0.5 -> 1, not
+  back to 0). When the run ends the swing in progress plays out. (`digHandAt`)
+
+Measured, before -> after, frames inside runs of digs (`peak/p99/rms` angular acceleration in deg/s^2, kicks =
+frames over 2000):
+| recording | peak accel | p99 | rms | kicks | arm stalls / back-snaps |
+|---|---|---|---|---|---|
+| pickaxe_race (45 digs) | 9010 -> 4130 | 8467 -> 1487 | 2042 -> 365 | 80 -> 7 | 55 / 24 -> 0 / 0 |
+| fortune (10 digs) | 5194 -> 652 | 3142 -> 461 | 558 -> 201 | 12 -> 0 | 0 / 30 -> 0 / 0 |
+| villager_fired (3 digs) | 2063 -> 744 | 2063 -> 744 | 379 -> 308 | 1 -> 0 | 4 / 0 -> 0 / 0 |
+story_torch's digging was already smooth (looking straight down, a slow sway); there the change is the scripted
+whip onto the first block, which gets rounded (whole windows: rms 1561 -> 912, p99 8597 -> 3433). The crosshair stays
+on the block in every frame of every dig except 1 frame in pickaxe_race (the last third of a tick before a break
+whose next dig starts the same tick).
+
+**Turning it on**: recordings made from 2026-11-10 carry `rec.smoothDig: true` (lib/harness.js), so every new story or
+stunt gets it with nothing to do. An older recording stays as it was (Rule zero): opt it in with `smoothDig: true`
+in the stunt module (a re-render of an unpublished Short), or `SMOOTH_DIG=1` for one render; `SMOOTH_DIG=0` turns it
+off. Stories need no change to their dig code: `K.dig(block)` / `bot.dig(b, true)` / `ctx.easeLookAt` all come out
+smooth. Measuring tool: CAM_PROBE at 60 fps (`CAM_PROBE=t1,t2,...` with fractional ticks) through the dig windows,
+before and after.
+
 ## Life: heads that turn, sleeping and head-shaking mobs, name tags
 - **Look at the speaker**: `stunt.lookAtSpeaker: true` (or a range in blocks, default 10): while a `line` mark's speaker
   talks (lib/movie.js `M.line`/`M.say`), every other actor and mob within range eases its head to them over 8 ticks

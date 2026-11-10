@@ -17,8 +17,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    block?"). Then quick escalating examples, the twist, the loop. Check: review, pace (hook). r:rc07fa1 r:rb1b445 r:raf72e0
 2. **The twist turns the whole story over**, planted at least twice where a rewatch catches it, said in one short line
    or shown by the game itself (runaway ends on the blast + "blown up by Creeper", no spoken reveal). Check: review. r:r9f677e
-3. **The ending explains itself** ("Day one." failed, "Day one. Again." worked) and **the last line loops into
-   line 1** (as one sentence or as cause and effect). Check: review. r:r810b66 r:r1fc6a3
+3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
+   effect). Never say what the last shot already shows ("Good boy.", "Day one. Again." cut by the owner): end on the
+   picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
 4. **The plot survives "why?"**: every character's action has a reason the viewer can state, and every accident has
    a cause you can SEE that exists in the game (a blast, a hit, a block breaking, powder snow, an arrow; never "I
    tripped/slipped/fell asleep"). Check: owner (`sync`: an uncaused fall), story-critic. r:rd497c4 r:r1d5238
@@ -70,6 +71,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    each (same voice, model, profile); a sad or quiet ending is never read bubbly. Check: panel, review. r:r08bb81
 2. **Captions start with the speech**: voice.json/words.json re-aligned after every cut; caption start within 0.12 s of
    the speech onset. Check: `scripts/caption_sync.py` (in `./hb review`). r:r08bb81
+3. **Captions lead the word by 0.1 s** (`story_track.CAPTION_LEAD`), never before the line's own cut. Check: built in.
+   r:r221d0a
+4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
+   pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
+   only between beats. Check: pace (pauses), speaker_check (CLIPPED), panel. r:rfd4907
 
 ## 3. Set
 1. **No superflat**: built into real terrain with relief, at full scale, with depth in every shot (foreground,
