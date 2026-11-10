@@ -138,6 +138,10 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (on Light Sleeper's bare cobblestone well in the all-carpet village): "whyisnt the well covered in
+  carpet too".** The set must match every claim the narration makes about it ("everything is carpeted" means every
+  block in shot is, except a deliberate, planted exception). Each story's set.md lists its claims and the set is checked
+  against them on stills from every shot angle before recording.
 - **Owner, 2026-11-10 (asked to approve the arc rewrites of the held stories): "Yes. Okay. Rewriting the stories is
   fine. Whatever you think is best, whatever is best based on what you've seen before"; on Good Boy: "Yeah, we can
   rework it."** Light Sleeper, Dog on the Hill, Thirty-One Raids and Gold for the Portal adopt their script_vNext;
