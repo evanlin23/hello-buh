@@ -2,173 +2,148 @@
  "name": "good_boy",
  "stunt": "story_good_boy",
  "version": 2,
- "caption": "i can't get away from this man 😭",
- "logline": "Someone keeps trying to leave an old man and keeps ending up right back at his side; only the camera knows why.",
- "question": "why does he keep ending up next to this guy??",
- "premise": "The narrator has tried to leave a man 37 times. Every time he gets twelve blocks away he is standing next to him again. He's fed raw porkchops, sits when told, everyone is tall, he can't open doors, he waits by the door all day, skeletons run from him, and a dog is always exactly where he is.",
- "twist": "He's the man's dog: a tamed wolf. Tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons and attack whatever hurts their owner. First-person shots hide it (a wolf's eye height); every camera shot shows the wolf at the man's side. The reveal is the first shot that starts in his head and pulls out, on 'Good boy.'",
+ "revision": "vNext r-cast (2026-11-10): script_vNext.md's r-cast table: Buh speaks L11 and L13 in his own voice; one spoken stress per sentence (the CAPS word in `say`)",
+ "caption": "my human tried to lose me 37 times 🐺",
+ "logline": "A dog tells how its human tried to lose it thirty-seven times, and why he never once made it sit.",
+ "question": "why tf would he try to lose his own dog?",
+ "premise": "The narrator is Buh's tamed wolf, said openly from line 1. Buh (16, never named aloud) has tried to lose it 37 times: tamed wolves teleport back to their owner from 12 blocks, unless they're sitting, and a sitting dog waits forever. He wants it to forget him, so he never makes it sit. He keeps talking about college; every night he says sorry.",
+ "twist": "He was leaving the game for good and wanted the dog free, not waiting. On the last morning he walks it up Dog Hill to his old hut, says 'sit, boy' and 'I'll be right back', and the chat says 'Buh left the game': the one sit he avoided 37 times is the one he finally used. The first frame of Dog on the Hill.",
  "key_color": "#FFB84A",
- "voice": {
-  "engine": "gemini",
-  "model_hint": "gemini-2.5-flash-preview-tts"
+ "mood": [
+  "funny",
+  "sad"
+ ],
+ "payoff": "syschat",
+ "audio": {
+  "hit": false
  },
+ "voice_takes": "beat",
  "cast": {
   "N": {
    "role": "narrator",
-   "name": "me",
-   "voice": "Puck",
+   "ref": "narrator",
    "color": "#FFFFFF",
-   "profile": "a young man, earnest and hushed, telling a friend something he can't explain",
-   "on_screen": "POV at a wolf's eye height; in camera shots, a tamed wolf with a red collar"
+   "name": "me (the dog)",
+   "on_screen": "Buh's tamed wolf, red collar: the POV at a wolf's eye height; in camera shots the wolf at his side"
   },
-  "Sam": {
+  "Buh": {
    "role": "character",
-   "name": "the man",
-   "voice": "Algenib",
-   "color": "#9FD4FF",
-   "profile": "an old man, gravelly, slow and gentle",
-   "on_screen": "actor bot, steve skin"
+   "ref": "buh",
+   "color": "#4FD8E6",
+   "on_screen": "actor bot Buh, Steve skin; speaks only L11 and L13",
+   "model": "gemini-3.8-flash-tts"
   }
  },
- "requests": [
-  {
-   "id": "r1",
-   "speakers": [
-    "N",
-    "Sam"
-   ],
-   "direction": "Read this short film dialogue."
-  },
-  {
-   "id": "r2",
-   "speakers": [
-    "N",
-    "Sam"
-   ],
-   "direction": "Read this short film dialogue, the night scene: quieter, then frightened, then tender."
-  }
- ],
  "lines": [
   {
    "id": "L01",
-   "text": "I've tried / to LEAVE / this man / THIRTY-SEVEN / times.",
-   "direction": "steady, a held breath before the number",
-   "request": "r1"
+   "who": "N",
+   "text": "My HUMAN / has TRIED / to LOSE me / thirty-seven TIMES.",
+   "say": "My human has tried to lose me thirty-seven TIMES."
   },
   {
    "id": "L02",
-   "text": "Every time / I get TWELVE / blocks away... / I'm standing / RIGHT / next to him.",
-   "direction": "puzzled, the pause before standing",
-   "request": "r1"
+   "who": "N",
+   "text": "He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM.",
+   "say": "He RUNS. I FOLLOW. Twelve blocks out, I just appear right next to HIM."
   },
   {
    "id": "L03",
-   "who": "Sam",
-   "text": "There you ARE.",
-   "direction": "gentle, unsurprised, almost a sigh",
-   "request": "r1"
+   "who": "N",
+   "text": "He HID / in the WHEAT. / He tried HILLS / at NIGHT. / He SWAM / to an ISLAND. / I POPPED up / on the BEACH.",
+   "say": "He hid in the WHEAT. He tried hills at NIGHT. He swam to an ISLAND. I popped up on the BEACH."
   },
   {
    "id": "L04",
-   "text": "I've tried / at NIGHT. / Through the WHEAT. / I even / SWAM for it.",
-   "direction": "listing, building, a little out of breath",
-   "request": "r1"
+   "who": "N",
+   "text": "But SITTING? / I STAY put. / A SITTING dog / waits FOREVER.",
+   "say": "But SITTING? I STAY put. A sitting dog waits FOREVER.",
+   "look": false
   },
   {
    "id": "L05",
-   "text": "He feeds me / RAW / porkchops. / Never COOKED. / Not ONCE.",
-   "direction": "a dry aside, matter of fact",
-   "request": "r1"
+   "who": "N",
+   "text": "He doesn't WANT / me to WAIT. / So he NEVER / makes me SIT.",
+   "say": "He doesn't want me to WAIT. So he never makes me SIT.",
+   "look": false
   },
   {
    "id": "L06",
-   "who": "Sam",
-   "text": "SIT.",
-   "direction": "soft and patient",
-   "request": "r1"
+   "who": "N",
+   "text": "He keeps TALKING / about a PLACE / called COLLEGE. / It sounds BORING.",
+   "say": "He keeps talking about a place called COLLEGE. It sounds BORING."
   },
   {
    "id": "L07",
-   "text": "And when he / says SIT... / I SIT. / I don't / know WHY.",
-   "direction": "confused, quieter at the end",
-   "request": "r1"
+   "who": "N",
+   "text": "Every NIGHT / he SAYS, / sorry, BUDDY. / I don't KNOW / what FOR.",
+   "say": "Every night he says, SORRY, buddy. I don't know what FOR."
   },
   {
    "id": "L08",
-   "text": "Everyone / in this village / is so TALL.",
-   "direction": "wondering",
-   "request": "r1"
+   "who": "N",
+   "text": "Then last NIGHT, / a ZOMBIE / came for HIM. / But I GOT / there FIRST.",
+   "say": "Then last night, a zombie came for HIM. But I got there FIRST."
   },
   {
    "id": "L09",
-   "text": "And there's / this DOG. / Wherever / I go... / it's ALREADY / there.",
-   "direction": "suspicious, slower, the last word low",
-   "request": "r1"
+   "who": "N",
+   "text": "This MORNING, / he WALKED me / BACK home, / up the HILL / to his HUT.",
+   "say": "This morning, he walked me back home, up the hill to his HUT."
   },
   {
    "id": "L10",
-   "text": "I can't / even open / a DOOR.",
-   "direction": "a little ashamed",
-   "request": "r2"
+   "who": "N",
+   "text": "He TURNED / to ME.",
+   "say": "He turned to ME."
   },
   {
    "id": "L11",
-   "who": "Sam",
-   "text": "Come on IN, / you.",
-   "direction": "warm, amused",
-   "request": "r2"
+   "who": "Buh",
+   "text": "Sit, BOY.",
+   "say": "Sit, BOY."
   },
   {
    "id": "L12",
-   "text": "When he LEAVES, / I wait / by the door. / ALL day.",
-   "direction": "simple, a small ache in it",
-   "request": "r2"
+   "who": "N",
+   "text": "Then he SAID:",
+   "say": "Then he SAID:"
   },
   {
    "id": "L13",
-   "text": "SKELETONS / run when / they SEE me.",
-   "direction": "puzzled, almost proud",
-   "request": "r2"
-  },
-  {
-   "id": "L14",
-   "text": "Then one night, / a ZOMBIE / came for HIM.",
-   "direction": "dropping to a hush, serious",
-   "request": "r2"
-  },
-  {
-   "id": "L15",
-   "who": "Sam",
-   "text": "Hey! / Get BACK!",
-   "say": "Hey! Get back!",
-   "direction": "startled, in pain, an old man's shout",
-   "request": "r2"
-  },
-  {
-   "id": "L16",
-   "text": "I don't REMEMBER / what happened / NEXT.",
-   "direction": "fast and shaken",
-   "request": "r2"
-  },
-  {
-   "id": "L17",
-   "who": "Sam",
-   "text": "Easy... / easy. / It's GONE.",
-   "direction": "out of breath, calming, very close",
-   "request": "r2"
-  },
-  {
-   "id": "L18",
-   "who": "Sam",
-   "text": "GOOD / boy.",
-   "direction": "tender, a smile in it, slow",
-   "request": "r2"
-  },
-  {
-   "id": "L19",
-   "text": "Tomorrow, / I'm leaving. / For REAL.",
-   "direction": "quiet, not convincing anyone",
-   "request": "r2"
+   "who": "Buh",
+   "text": "I'll BE / right BACK.",
+   "say": "I'll be right BACK."
   }
+ ],
+ "hotbar": [
+  [
+   "bone",
+   14
+  ],
+  "lead",
+  [
+   "bread",
+   9
+  ],
+  [
+   "cooked_beef",
+   6
+  ],
+  "name_tag",
+  [
+   "oak_planks",
+   32
+  ],
+  "milk_bucket",
+  [
+   "egg",
+   67
+  ],
+  "cake"
+ ],
+ "hotbar_note": "Buh's hotbar (STANDARDS 3.6): his dog things first (bones, a lead, food, a name tag), then the ridiculous (milk, 67 eggs, a cake). Not on screen in this story: every POV is the wolf's (hud: false).",
+ "one_take": [
+  "N"
  ]
 }
