@@ -188,6 +188,26 @@ vanilla draws its roof too (a dark slab in the dusk sky over the librarian, L06 
 world and its light (render.js and the mesh workers, `renderer/hidebox.js`) and skips entities while they're inside.
 List every waiting room a stunt builds. `./hb describe` shows mobs parked far above the set as "EWS extreme wide".
 
+## Armour on mobs, armour trims, a piglin shaking in the Overworld
+- **Armour on mobs** (gold_for_the_portal, 2026-11-10): the harness records `extra.armor` ([feet, legs, chest, head]
+  item names) for every living entity that wears something, not only players (a new key: older recordings have
+  none). `addMobArmor` (renderer/entities.js) draws HumanoidArmorLayer on the converted geometry's own bones (zombie,
+  husk, drowned, skeleton family, piglin, zombified piglin...): the armour cubes come from each bone's first cube,
+  the helmet is the 8x8x8 humanoid head on the head's pivot (a piglin's 10-wide head gets the plain helmet, grown
+  1.02 like vanilla's PIGLIN_OUTER_ARMOR). Dress a mob with `/item replace entity <uuid|@e[...]> armor.head with
+  golden_helmet`.
+- **Armour trims** on players and mobs: the harness records `extra.trims` (per slot, `pattern/material`, from the
+  item's `trim` component; the trim registries come from the server's registry_data). The renderer draws
+  `trims/entity/humanoid[_leggings]/<pattern>` recoloured from `trims/color_palettes/trim_palette` to the material's
+  palette (`<material>_darker` on armour of the same metal), composited over the armour texture
+  (`armorLayers`). `renderer/build_assets.py` now copies `textures/trims/`. Give one with
+  `/item replace entity @s armor.head with golden_helmet[trim={pattern:"sentry",material:"lapis"}]`.
+- **Shaking** (Piglin/Hoglin.isConverting -> LivingEntityRenderer.isShaking): a staged mark
+  `ctx.mark('pose', { ids, converting: true })` (until `pose_off`) turns the whole body by
+  cos(age x 3.25) x PI x 0.4 degrees each frame. A NoAI mob never converts in vanilla, so stage it.
+- Test: `node scripts/pose_fixture.js --armor` (a trimmed-helmet piglin, shaking; a zombie in iron with a trimmed
+  chestplate; a skeleton in a chain helmet; the Grandpa actor in the trimmed helmet).
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.

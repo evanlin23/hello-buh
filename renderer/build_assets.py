@@ -108,8 +108,9 @@ def main(ver):
         p = f"assets/minecraft/textures/{src}"
         if p in names and not (out / "env" / dst).exists():
             (out / "env" / dst).write_bytes(jar.read(p))
-    for n in names:  # entity + particle textures
-        if (n.startswith("assets/minecraft/textures/entity/") or n.startswith("assets/minecraft/textures/particle/")) and n.endswith(".png"):
+    for n in names:  # entity + particle + armour trim textures
+        if (n.startswith("assets/minecraft/textures/entity/") or n.startswith("assets/minecraft/textures/particle/")
+                or n.startswith("assets/minecraft/textures/trims/")) and n.endswith(".png"):   # + armour trims
             dst = out / "env" / n[len("assets/minecraft/textures/"):]
             dst.parent.mkdir(parents=True, exist_ok=True)
             dst.write_bytes(jar.read(n))
