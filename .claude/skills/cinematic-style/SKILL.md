@@ -84,7 +84,7 @@ look: { grade: { lift: [0.02, 0.01, 0.018], gamma: [0.97, 1.0, 1.04], gain: [1.1
 11. "Some parts with the light are a bit blurry" (owner, THE KEEP, 2026-11-10). Measured on the golden-hour still (1080x1920,
     grain off): edge acuity (p99 gradient) 10.0 -> 19.8 and brick texture 1.54 -> 3.53 (x2.3). Causes, biggest first:
     depth of field on a wide shot (aperture 0.35 at 60 blocks blurred towers 20 blocks nearer: off = +43% edges, +77%
-    texture); a wide bloom (0.55, threshold 0.8, two blur rounds) haloing every silhouette against the sky (0.35 /
+    texture; the moat glide, focused past its tower, went from 6.1 to 23.1 p99 edges in the phone copy); a wide bloom (0.55, threshold 0.8, two blur rounds) haloing every silhouette against the sky (0.35 /
     0.9 / `bloomPasses: 1`: +8%); god rays laid over the blocks (`raysOverBlocks: 0.35` keeps them on the sky) and no
     sharpening (`sharpen: 0.4`, an unsharp mask after the grade: together +28%). Then the re-encode: grain 0.035 is
     noise the encoder must keep or smear (CRF 22 smeared it and the bricks with it, SSIM 0.959 at 3.7 Mbps; keeping it
