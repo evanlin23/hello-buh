@@ -10,6 +10,9 @@ narrator turns out to be the creeper).
 **Write it first:** `/story-write` (`.claude/skills/story-write/SKILL.md`) takes a story from ten pitches to a
 script with a voiced cast, a shot list and a continuity bible, checked by the `story-critic` and `story-continuity`
 agents and a cold reader, before anything is built. Craft guide: `docs/story_craft.md`.
+The build steps below are `./hb` commands, with time estimates, in `docs/agent_guide.md`. Before any render, `./hb check`,
+`./hb framing` (shot sizes: the owner's "too zoomed in") and `./hb continuity` (time, cast and props across cuts) read
+the recording in seconds, and `./hb describe <stunt> L05` tells you what a moment shows without rendering it.
 ```bash
 # 1. the script: stories/<name>/story.json (lines, chunks, key words), see stories/put_back
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
@@ -66,7 +69,7 @@ chunks with key words in colour (characters in their cast colour with a small na
 line in yellow bottom-left, the hook from story.json `hook` at the top, a made note-block score (no licensed music).
 Set `edit.ownScore: true` in the stunt so publish.js/add_song.py doesn't lay an NCS bed over it.
 Lessons from dog_hill:
-- **Scout a real place:** `stunts/scout_village.js` (/locate village_plains from 10 starts, the highest ground 20-70 blocks
+- **Scout a real place:** a village scout (/locate village_plains from 10 starts, the highest ground 20-70 blocks
   out) found a village with a 28-block hill; `stunts/probe_dog_hill.js` prints a heightmap and renders test cameras.
   Level only a small disc (r 9) and fill holes deep (`replace air` down 14), or the disc's rim floats.
 - **Park cast in loaded chunks:** a park 300 blocks away is unloaded (every /tp "No entity was found"). In the sky
@@ -75,9 +78,9 @@ Lessons from dog_hill:
   park: summon them in their own night shot and kill them after (park first, so the death fall isn't on screen).
 - **A retried attempt reruns setup in the same world:** kill the cast by tag at the top of setup, or the duplicates stay.
 - **Low cameras sit in the flowers:** keep cameras 2.3+ blocks up in a meadow, or keep the blocks under them clear.
-- **Wolves:** the renderer drew the converted Bedrock wolf standing upright; renderer/entities.js now builds WolfModel
-  from Java's numbers (standing, and the sitting pose from setupAnim), the tame skin and the dyed collar; the harness
-  records `sit`, `tame` and `collar`. `/data merge entity @e[tag=dog,limit=1] {Sitting:0b}` stands a NoAI wolf up.
+- **Wolves:** renderer/entities.js draws WolfModel (standing, sitting, tame skin, dyed collar) from `extra`; the harness
+  now records a real wolf's `sitting`, `tame` and `collar` from its metadata. `/data merge entity @e[tag=dog,limit=1]
+  {Sitting:0b}` stands a NoAI wolf up.
 
 ## Setup (once per container)
 ```bash
@@ -123,12 +126,32 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   hook is ONE strange, concrete image that makes the viewer ask "why?" (a sheep staring at a block); the twist must
   re-explain everything (the creeper); fix continuity (props, time of day, positions, who is where across cuts);
   use wider shots so the viewer sees the place and the action, not just a close-up. Craft guide: docs/story_craft.md.
+- **Owner review, 2026-11-10 (22 notes on the review page, all six published stories).** Patterns, now hard rules:
+  1. **Superflat is banned** (8 notes: "the hill is just a 3x3 and the rest is super flat", "the library's store seems
+     to be right next to the hill"). Sets are built into real terrain with relief and depth; places that are far apart
+     in the story are far apart on screen.
+  2. **Look at what the line names** ("when we say 'another torch' we should look at the torch not around it", "why
+     are we staring down instead of at the librarian's face"): the named subject is in frame, near centre, readable.
+  3. **The picture never runs ahead of the words or contradicts them** ("when we say 'dug under it' we are already in
+     the hole", "why do we start falling without us digging?", "you dig straight down when you say 'never dig straight
+     down'").
+  4. **The plot must survive "why?"** ("this story don't make sense, wtf does it even mean?", "why would grampa say to
+     do that if the main character is the one that's slow", "why does he even think he's the one who pulled the lever"):
+     every character's action has a reason the viewer can state; the critic interrogates every line with "why?".
+  5. **Delivery** ("too quickly delivered", "the voice's delivery doesn't work"): no sped-up narrator; acted voices from
+     voices/cast.json; key lines get room (a pause before, slower pace); "who do you trust" style lines land slowly.
+  6. **No glitches** ("the door closes automatically", "we keep getting stuck on the door", "it looks like it's
+     glitching", "there's no fog" in the fog story): what the title promises is on screen.
 - **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
   effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
   a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
   distance), never a few blocks on a flat cleared plain. `clearSet`'s wide flat clearing is the look to avoid: pick a
   site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
   or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog.
+- **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
+  good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
+  overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its
+  checklist before recording. Sources: `docs/research/building_research.md`.
 
 - **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
   minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
@@ -202,7 +225,10 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 10 | **The Sun Won't Set** | "The sun hasn't set in my world for 300 days." | villagers yawning; a bed nobody sleeps in; my grandpa asks every day if tonight's the night | I froze the time (`advance_time false`) because zombies come at night and grandpa is too slow to run | grandpa asks me to let the night come | open |
 | 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | made (`story_nitwit`, pipeline test 2026-11-10: 2 h 40 min, 2 review rounds; docs/pipeline_test_nitwit.md) |
 | 12 | **Last Seen** | "My friend's armor stand has stood at the village gate for 900 days. Today it turned around." | his armor gets one more scratch a day; a bed still warm; the golem salutes it | (armor stands don't render yet: needs an engine model) | | parked: engine |
-| 13 | **The Dog on the Hill** | "The dog on the hill hasn't moved in NINE HUNDRED days." (a tamed wolf sitting on a snowy hilltop above a village, facing one empty patch of grass) | my bone every morning and he never looks (he's already tamed: the red collar); an overgrown dirt starter hut beside him; the empty patch the villagers never build on; Grandpa: "He said he'd be RIGHT back." | a sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago: "HelloBuh joined the game", the player appears on the patch, the dog stands for the first time | "Sit, boy. I'll be RIGHT back." "HelloBuh left the game." The dog sits. Loops into line 1 | building: story-cine-2 (`story_dog_hill`, cinematic engine + Gemini cast) |
+| 13 | **Good Boy** (cinematic pilot) | "I've tried to run away from this guy thirty-seven times." | every time I get 12 blocks away I'm right back next to him; raw porkchops; I sit when he says sit; everyone is tall; sheep look delicious; I can't open doors; skeletons run from me; a dog is always exactly where I am (every camera shot shows it) | I'm his dog: a tamed wolf (vanilla: tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons, attack whatever hurts their owner). Revealed when the camera pulls out of my head | "Tomorrow I'm leaving for real." loops into line 1 | building: cinematic-default worker (`story_good_boy`, branch claude/cinematic-default; v2: voiced cast, real village) |
+| 14 | **Light Sleeper** | "My village is covered in nine thousand carpets." | the bell boxed in wool and the well under a white wool lid; Mom: "walk soft, the ground's a light sleeper"; he pulled the wool off the well and the bottom screamed ("a fox"); the lights go dark with the music | the village sits on an ancient city: carpet makes no vibration, and the bottom of the well is a sculk shrieker. He puts a jukebox on the well ("wells echo") and steps off the carpet onto the bare stone rim to dance; the warden rises out of the square | "obliterated by a sonically-charged shriek"; loops by cause into line 1 | script approved, ready to build (r2: `agent/scripts-revised`, `stories/light_sleeper/`) |
+| 15 | **Thirty-One Raids** | "Grandpa has saved our village from thirty-one raids." | 31 totems and one empty frame; every raid started the night he came home; villagers throw him bread; grey bottles from the tower, "his courage", drunk at the gate; "Lock the door, kid. They're coming."; since Grandma died it's the only time anyone's glad to see him | the courage is an ominous bottle (Bad Omen starts a raid in a village): he brings every raid himself. Tonight he's too tired, so the boy drinks it; the horn, pillagers and a ravager up the road | Grandpa beside him, loading his crossbow: "Now they'll love you too, kid." (the 32nd frame) | script approved, ready to build (r2: `agent/scripts-revised`, `stories/thirty_one_raids/`) |
+| 16 | **The Dog on the Hill** | "The dog on the hill hasn't moved in NINE HUNDRED days." (a tamed wolf sitting on a hilltop above a village, facing one empty patch of grass) | my bone every morning and he never looks (he's already tamed: the red collar); an overgrown dirt starter hut beside him; the empty patch the villagers never build on; Grandpa: "He said he'd be RIGHT back." | a sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago: "HelloBuh joined the game", the player appears on the patch, the dog stands for the first time | "Sit, boy. I'll be RIGHT back." "HelloBuh left the game." The dog sits. Loops into line 1 | building: story-cine-2 (`story_dog_hill`, cinematic engine + Gemini cast) |
 
 ## Format: "Who do you trust?" (interactive mystery). Owner, 2026-11-06
 Owner, describing a Short he liked: someone turns 13 and gets a call from themselves 10 years in

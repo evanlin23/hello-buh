@@ -93,7 +93,7 @@ don't build a weak story.
 
 - Claim the premise in `docs/stories.md`'s premise bank (`building: <worker>`), or add it as a new row.
 - Commit `stories/<name>/story.json`, `bible.md` and the review notes on your branch.
-- Voice: Gemini via `scripts/tts.py` (`agent/cinematic`) from the `requests` (see `docs/story_craft.md` section 6 for
+- Voice: Gemini via `scripts/tts.py` + `scripts/align.py` (docs/voices.md; cast from `voices/cast.json`) from the `requests` (see `docs/story_craft.md` section 6 for
   the mapping), then check each take's duration and emphasis; or `scripts/voice.py` for a narrator-only v1 story.
 - Build per `docs/stories.md` "Make one" (the stunt from `stunts/_story_template.js`, or the movie engine's camera
   shots for a cinematic story), with the bible open. `python3 scripts/rec_check.py` before rendering.

@@ -1,7 +1,8 @@
 # Worker brief: building a new Short in a parallel session
 
 You are one of several parallel sessions building HelloBuh Minecraft Shorts. The orchestrator
-session assigned you formats. Read `README.md` and `docs/lessons.md` first: they cover how
+session assigned you formats. Read `docs/agent_guide.md` first (the `./hb` command: every step below as one command,
+with `./hb doctor` for the setup), then `README.md` and `docs/lessons.md`: they cover how
 everything works and every gotcha found so far.
 
 ## Setup (fresh container)

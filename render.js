@@ -16,8 +16,20 @@ const [recPath, outDir, fpsArg, wArg, hArg] = process.argv.slice(2)
 const FPS = Number(fpsArg || 60), W = Number(wArg || 1080), H = Number(hArg || 1011)
 const EYE = 1.62
 const rec = JSON.parse(fs.readFileSync(recPath))
+// The stunt module's render options (hideHand, brightness, fovZoom, dimension, weather...). A stunt file that fails
+// to load stops the render: swallowed, it rendered with a first-person hand, the default brightness and no zoom, and
+// said nothing (pipeline test gap 11: a hand in every still of story_nitwit). STUNT_OPTIONAL=1 renders without it.
 let STUNT_MOD = {}
-try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {}
+{
+  const f = path.join(__dirname, 'stunts', `${rec.stunt}.js`)
+  if (!fs.existsSync(f)) console.log(`render.js: no stunts/${rec.stunt}.js: rendering with the default options`)
+  else {
+    try { STUNT_MOD = require(f) } catch (e) {
+      console.error(`render.js: stunts/${rec.stunt}.js failed to load, so its render options (hideHand, brightness, fovZoom...) would be lost:\n${e.stack.split('\n').slice(0, 4).join('\n')}`)
+      if (!process.env.STUNT_OPTIONAL) { console.error('fix the stunt (node -e "require(\'./stunts/' + rec.stunt + '\')"), or STUNT_OPTIONAL=1 to render without it'); process.exit(2) }
+    }
+  }
+}
 const FOV_ZOOM = []   // [startTick, endTick, scale] from stunt.fovZoom (see the frame loop)
 for (const [sa, sb, sc] of STUNT_MOD.fovZoom || []) {
   const at = (spec) => { const [ev, off] = String(spec).split(':'); const e = (rec.timeline || []).find(m => m.event === ev); return e ? e.t / 50 + Number(off || 0) * 20 : null }
@@ -990,6 +1002,22 @@ function talkMotion (who, t) {
 // or { of: TARGET, offset: [dx, dy, dz] }. Everything is a function of the time alone, so frames can be
 // rendered in any order (FRAMES=) and a camera can be re-tuned without re-recording.
 const SHOTS = { ...(STUNT_MOD.shots || {}), ...(process.env.SHOTS_JSON ? JSON.parse(process.env.SHOTS_JSON) : {}) }   // (SHOTS_JSON='{"name": {...}}': try a camera without editing the stunt)
+// stunt.self = { model, eye, extra }: who the narrator is when not a player (lib/story.js docs). A 'self' mark
+// ({ eye?, model?, extra? }) changes it from that tick on (a wolf sitting down: { extra: { sitting: true }, eye: 0.5 })
+const SELF_MARKS = (rec.timeline || []).filter(e => e.event === 'self').sort((a, b) => a.t - b.t)
+function selfAt (t) {
+  if (!STUNT_MOD.self) return null
+  const s = { ...STUNT_MOD.self, extra: { ...(STUNT_MOD.self.extra || {}) } }
+  for (const m of SELF_MARKS) { if (m.t / 50 > t) break; if (m.eye !== undefined) s.eye = m.eye; if (m.model) s.model = m.model; if (m.extra) Object.assign(s.extra, m.extra) }
+  return s
+}
+// stunt.wideMaster (or WIDE_MASTER=1): render a 16:9 master at the output height (1797x1011 for a Short) and write
+// the W x H output cropped from it: the centre, or a camera shot's `cropX` (-1 left edge .. 1 right edge). Same
+// vertical field of view and scale, so a POV frame (hand included) is the same picture as a W x H render. WIDE_DIR=dir
+// also saves every master frame (trailers, 16:9 cuts). Owner, 2026-11-10: "we should have the full wide, but then
+// crop it or smth for the final video"
+let cropNow = 0
+const MW = (STUNT_MOD.wideMaster || process.env.WIDE_MASTER) ? Math.max(W, Math.round(H * 16 / 9)) : W
 const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
 for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
 function shotAt (t) {
@@ -1500,6 +1528,25 @@ function camAtLive (t) {
     const n = require('./renderer/lint').run({ rec, stunt: STUNT_MOD, marks: SHOT_MARKS, shots: SHOTS, shotCam, camAt, targetAt, actorsAt, lines: LINES, mesher, Vec3 })
     process.exit(n ? 1 : 0)
   }
+  // CAM_PROBE=all|t1,t2,...: print the camera of those ticks (one JSON line each) and stop, no browser. The same
+  // director the frames use (shot marks, shotCam, auto-framing, stunt.self's eye), so lib/hb (hb describe /
+  // continuity / framing) can reason about camera shots it can't compute itself. Block changes aren't applied:
+  // a camera pulled out of a block placed mid-recording may differ slightly.
+  if (process.env.CAM_PROBE) {
+    const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
+    const ticks = process.env.CAM_PROBE === 'all' ? P.map((_, i) => i) : process.env.CAM_PROBE.split(',').map(Number)
+    const r3 = (v) => Math.round(v * 1000) / 1000
+    const lines = []
+    for (const t of ticks) {
+      const sh = shotAt(t)
+      let c = sh && !sh.pov ? shotCam(sh, t, solidAt) : null
+      const mode = c ? `shot ${sh.name}` : sh ? `shot ${sh.name} (pov)` : 'pov'
+      if (!c) { c = camAt(t); const s = selfAt(t); if (s && s.eye) c = { ...c, y: c.y - (EYE - s.eye) } }
+      lines.push(JSON.stringify({ t, mode, x: r3(c.x), y: r3(c.y), z: r3(c.z), yaw: r3(c.yaw), pitch: r3(c.pitch), fov: c.fov || 70 }))
+    }
+    process.stdout.write(lines.join('\n') + '\n')
+    process.exit(0)
+  }
 
   const app = express()
   const blobs = new Map(); let blobId = 0
@@ -1517,7 +1564,7 @@ function camAtLive (t) {
   await new Promise(r => server.listen(0, '127.0.0.1', r))
 
   const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] })
-  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 })
+  const page = await browser.newPage({ viewport: { width: MW, height: H }, deviceScaleFactor: 1 })
   page.on('pageerror', e => console.error('page error:', e.message))
   page.on('console', m => { if (m.type() === 'error') console.error('page:', m.text()) })
   await page.goto(`http://127.0.0.1:${server.address().port}/`)
@@ -1949,6 +1996,10 @@ function camAtLive (t) {
     Object.assign(cam, darknessAt(t))
     cam.aim = AIMS.length && !process.env.CAM ? aimAt(t) : null   // first person only: in the third-person replay it showed as red bars under the player
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
+    // stunt.self.eye: the narrator isn't a player (story_good_boy: a wolf, eye 0.68): the POV camera sits at that
+    // height over the feet. Only the camera moves; targeting and the body keep the player's eye.
+    const selfNow = selfAt(t)
+    if (selfNow && selfNow.eye) cam.y -= EYE - selfNow.eye
     // stunt.fovZoom [[EVENT[:s], EVENT[:s], SCALE]]: a sharp zoom rendered as a narrower FOV (a 2.2x crop
     // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.
     // The first-person hand keeps its own camera, so it doesn't zoom. Not with CAM= (the replay pass).
@@ -1973,6 +2024,7 @@ function camAtLive (t) {
     // the camera director (stunt.shots + 'shot' marks, above): a camera shot draws the player's body and
     // no hand, like CAM=; a POV shot is the plain first-person view
     const shotNow = process.env.CAM ? null : shotAt(t)
+    cropNow = shotNow && !shotNow.pov && shotNow.cropX ? Math.max(-1, Math.min(1, shotNow.cropX)) : 0
     const camShot = !!(shotNow && !shotNow.pov)
     if (camShot) {
       const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
@@ -2062,7 +2114,9 @@ function camAtLive (t) {
           }
         }
         const sw = SWINGS.find(s0 => s0 <= t && t - s0 < 6)
-        ents.push({
+        // stunt.self.model: seen from a camera shot, the narrator is that mob (a wolf with its collar), not a player
+        if (selfNow && selfNow.model) ents.push({ id: -1, name: selfNow.model, x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: body, pitch: eye.pitch, headYaw: eye.yaw, extra: selfNow.extra || null, light: lightmap(ls, lb), hurt: HURTS.some(h => t >= h.t && t - h.t < 10) })
+        else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
           extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),
@@ -2379,7 +2433,15 @@ function camAtLive (t) {
     const outPng = `${outDir}/f${String(frameList ? frameList[f] : f).padStart(5, '0')}.png`
     if (process.env.SCREENSHOT) {   // the old capture: let the compositor present the frame, then screenshot
       await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
-      await page.screenshot({ path: outPng })
+      await page.screenshot({ path: outPng, clip: { x: Math.round((MW - W) / 2 * (1 + cropNow)), y: 0, width: W, height: H } })
+    } else if (MW > W) {   // stunt.wideMaster: the output is a crop of the wide master (and the master itself with WIDE_DIR)
+      const [crop, wide] = await page.evaluate(([x0, w, h, keep]) => {
+        const c = document.querySelector('canvas'), o = document.createElement('canvas'); o.width = w; o.height = h
+        o.getContext('2d').drawImage(c, x0, 0, w, h, 0, 0, w, h)
+        return [o.toDataURL('image/png'), keep ? c.toDataURL('image/png') : null]
+      }, [Math.round((MW - W) / 2 * (1 + cropNow)), W, H, !!process.env.WIDE_DIR])
+      fs.writeFileSync(outPng, Buffer.from(crop.slice(crop.indexOf(',') + 1), 'base64'))
+      if (wide) { fs.mkdirSync(process.env.WIDE_DIR, { recursive: true }); fs.writeFileSync(`${process.env.WIDE_DIR}/${path.basename(outPng)}`, Buffer.from(wide.slice(wide.indexOf(',') + 1), 'base64')) }
     } else {
       // read the WebGL drawing buffer itself (preserveDrawingBuffer, alpha off). A screenshot comes
       // from the compositor, and on a busy machine it sometimes returned the previous frame: walks

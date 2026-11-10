@@ -76,12 +76,19 @@ def split_emoji(tok):
     return out
 
 
-def caption_png(text, red_word, path, colors=None):
-    """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red."""
+def caption_png(text, red_word, path, colors=None, bands="black"):
+    """White bold caption, centered in the top band; emoji drawn from Twemoji, one word optionally red.
+    bands="blur": the bands stay transparent (the blurred game shows through) under a soft dark wash."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.rectangle((0, 0, W, BAND), fill=(0, 0, 0, 255))
-    d.rectangle((0, BAND + GAME_H, W, H), fill=(0, 0, 0, 255))
+    if bands == "blur":
+        for y in range(BAND):                      # darker toward the caption's middle, so the text reads
+            d.line((0, y, W, y), fill=(0, 0, 0, int(70 + 60 * (1 - abs(y - BAND * 0.42) / (BAND * 0.6)) ** 1)))
+        for y in range(BAND + GAME_H, H):
+            d.line((0, y, W, y), fill=(0, 0, 0, 90))
+    else:
+        d.rectangle((0, 0, W, BAND), fill=(0, 0, 0, 255))
+        d.rectangle((0, BAND + GAME_H, W, H), fill=(0, 0, 0, 255))
     tokens = [t for tok in text.split(" ") for t in split_emoji(tok)]
 
     def is_emoji(tok):
@@ -945,6 +952,7 @@ def main():
     ap.add_argument("--out_fps", type=int, default=30)
     ap.add_argument("--caption", required=True)
     ap.add_argument("--red")
+    ap.add_argument("--bands", choices=["blur", "black"], default="black", help="top/bottom bands: a blurred copy of the game (stories, owner 2026-11-10) or black")
     ap.add_argument("--colors", help="word=color pairs, e.g. 'pov=red,villager=green'")
     ap.add_argument("--countdown", help="START_EVENT:END_EVENT:Label:item/icon overlay countdown")
     ap.add_argument("--on_fire", help="START_EVENT:END_EVENT burning overlay")
@@ -1029,7 +1037,7 @@ def main():
         if "=" in pair:
             w, c = pair.split("=", 1)
             colors[w.strip().lower()] = named.get(c.strip().lower(), (255, 255, 255, 255))
-    caption_png(args.caption, args.red, tmp / "caption.png", colors)
+    caption_png(args.caption, args.red, tmp / "caption.png", colors, bands=args.bands)
     dur = probe_duration(args) - args.start
     if args.end_after:
         ev_, secs_ = args.end_after.rsplit(":", 1)
@@ -1038,8 +1046,13 @@ def main():
     inputs = (["-ss", str(args.start), "-i", args.video] if args.video else
               ["-framerate", str(args.fps), "-start_number", str(int(args.start * args.fps + 1e-6)), "-i", args.frames])
     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / "caption.png")]
-    graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},"
-             f"pad={W}:{H}:0:{BAND}:black,fps={args.out_fps},format=rgba[g0]"]
+    if args.bands == "blur":   # owner 2026-11-10: "the top and bottom can be blur rather than black"
+        graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},split=2[gm][gb]",
+                 f"[gb]scale=-2:{H}:flags=bilinear,crop={W}:{H},gblur=sigma=42,eq=brightness=-0.16:saturation=1.1[gbg]",
+                 f"[gbg][gm]overlay=0:{BAND},fps={args.out_fps},format=rgba[g0]"]
+    else:
+        graph = [f"[0:v]scale={W}:{GAME_H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{GAME_H},"
+                 f"pad={W}:{H}:0:{BAND}:black,fps={args.out_fps},format=rgba[g0]"]
     last = "g0"
     n_in = 2
     # on-fire overlay first: vanilla draws the HUD on top of the flames
