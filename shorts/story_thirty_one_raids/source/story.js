@@ -78,6 +78,19 @@ function vanillaDigMs (bot, block, item = bot.heldItem) {
   return dmg >= 1 ? 0 : Math.ceil(1 / dmg) * 50
 }
 
+// Vanilla eye heights (EntityType eyeHeight, blocks over the feet), for K.face: a look at a cast member lands on its eyes
+const EYE_H = { player: 1.62, villager: 1.62, wandering_trader: 1.62, witch: 1.62, pillager: 1.62, vindicator: 1.62, evoker: 1.62, illusioner: 1.62,
+  zombie: 1.74, husk: 1.74, drowned: 1.74, zombie_villager: 1.74, skeleton: 1.74, stray: 1.74, bogged: 1.74, wither_skeleton: 2.1,
+  piglin: 1.79, piglin_brute: 1.79, zombified_piglin: 1.79, creeper: 1.445, enderman: 2.55, iron_golem: 2.29, snow_golem: 1.7, blaze: 1.53,
+  wolf: 0.68, cat: 0.35, ocelot: 0.35, fox: 0.4, cow: 1.3, mooshroom: 1.3, sheep: 1.235, pig: 0.765, goat: 1.105, chicken: 0.644, horse: 1.52,
+  donkey: 1.425, llama: 1.7765, camel: 2.275, spider: 0.65, allay: 0.36, armor_stand: 1.7775 }
+const SNEAK_DROP = 0.35   // a crouching player's eye: 1.27, not 1.62 (render.js eases the camera to it, ~3 ticks)
+// The look's headroom (owner, 2026-11-10: "when we 'look' at things, it feels we are looking slightly too low"): every
+// K.aim / K.cut / K.turnTo aim is raised by this many degrees. Measured on 5 stories (docs/look.md "Where a look lands"):
+// first-person looks landed a median 1.9 deg (0.2 blocks) below the subject's eyes, because the hand-picked points sat at
+// chests, feet and block centres. K.face / K.top points are exact (no lift). stunt.aimLift sets it (0: off), K.lift too.
+const AIM_LIFT = 2
+
 // The per-line machinery every story stunt needs (stunts/_story_template.js shows it all in use):
 //   const K = storyKit(ctx, S, { X, Z, F })
 //   await K.cut(dx, dz, K.P(dx, dy, dz))       teleport (a cut in the renderer), arriving already aimed
@@ -87,6 +100,9 @@ function vanillaDigMs (bot, block, item = bot.heldItem) {
 //   await K.preroll(10, (k) => {...})          motion that must already be moving on the line's first frame
 //   K.look(k, dyaw, dpitch)                     aim + a slow sway (no shot is ever still)
 //   K.turnTo(from, p, u)                        an eased turn toward a point, u 0..1
+//   K.face(feet, 'villager') / K.face(entity)  the point to look at for a cast member: its eyes (exact, no lift)
+//   K.top(x, y, z)                              a block's visible face (its top when it's below the eye), exact
+//   every aim (K.aim, K.cut, K.turnTo) is lifted K.lift degrees (2; stunt.aimLift; 0 or { lift: 0 } per cut: off)
 //   K.flee(tag, speed)                          a tagged group steps away from the camera, facing away
 //   K.actor(tag, {x, z, yaw}) / K.step / K.bury a mob /tp'd every tick from a state object you edit
 //   K.park(tag)                                 a cast member out of shot: in the air off the set (never in stone)
@@ -120,9 +136,36 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
     T: (id) => Math.round((S.line(id).dur + S.gap) * 20),   // a line's length in ticks
     // the POV camera's height over the feet: 1.62, or stunt.self.eye for a narrator who isn't a player (a wolf: 0.68)
     eye: (ctx.stunt && ctx.stunt.self && ctx.stunt.self.eye) || 1.62,
-    aim (p) {
-      const eye = bot.entity.position.offset(0, K.eye, 0), d = p.minus(eye)
-      return { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
+    // the camera's height over the feet right now: crouching lowers it 0.35 (an aim from 1.62 while sneaking landed
+    // 0.35 blocks low: the renderer draws the crouched eye)
+    eyeNow: () => K.eye - (bot.controlState && bot.controlState.sneak ? SNEAK_DROP : 0),
+    lift: (ctx.stunt && ctx.stunt.aimLift !== undefined ? ctx.stunt.aimLift : AIM_LIFT),
+    // yaw/pitch from an eye point to p, lifted K.lift degrees (or `lift`) unless p is exact (K.face, K.top)
+    aimFrom (eye, p, lift = K.lift) {
+      const d = p.minus(eye), up = p.exact ? 0 : (lift || 0) * Math.PI / 180
+      return { yaw: Math.atan2(-d.x, -d.z), pitch: Math.min(Math.PI / 2, Math.atan2(d.y, Math.hypot(d.x, d.z)) + up) }
+    },
+    aim (p, lift) { return K.aimFrom(bot.entity.position.offset(0, K.eyeNow(), 0), p, lift) },
+    // where to look at a cast member: its eyes. who = a mineflayer entity, or feet (a Vec3) + type ('villager', 'zombie'...)
+    // o: { sneak, baby, sitting } (a sitting wolf/cat: eye 0.5 / 0.25 lower)
+    face (who, type = 'player', o = {}) {
+      const ent = who && who.position ? who : null
+      const feet = ent ? ent.position : who
+      const name = ent ? ent.name || type : type
+      let h = EYE_H[name] ?? ((ent && ent.height) || 1.95) * 0.85
+      if (o.sneak || (ent && ent.metadata && typeof ent.metadata[0] === 'number' && (ent.metadata[0] & 2))) h -= SNEAK_DROP
+      if (o.baby) h *= 0.5
+      if (o.sitting) h -= name === 'wolf' ? 0.18 : 0.15
+      const p = new ctx.Vec3(feet.x, feet.y + h, feet.z); p.exact = true
+      return p
+    },
+    // a block's visible face: its top when it is below the eye (the face the camera sees), else its middle
+    top (x, y, z) {
+      const b = x && x.x !== undefined ? x : new ctx.Vec3(x, y, z)
+      const bx = Math.floor(b.x), by = Math.floor(b.y), bz = Math.floor(b.z)
+      const below = by + 1 <= bot.entity.position.y + K.eyeNow()
+      const p = new ctx.Vec3(bx + 0.5, by + (below ? 1 : 0.5), bz + 0.5); p.exact = true
+      return p
     },
     swayY: () => Math.sin(ctx.tick / 19) * 0.1 * K.sway,
     swayP: () => Math.sin(ctx.tick / 27) * 0.04 * K.sway,
@@ -139,18 +182,18 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
     //   during()  every tick while the teleport lands (the old shot keeps moving)
     //   after()   once, right after the /tp is sent (grow a pillar, move the cast with the cut)
     //   time      the time of day of the new shot, set on the cut's own frame
+    //   shot      a stunt.shots name to switch to on the landing tick (the old camera never shows the cast already moved)
     //   stop      release the movement keys first (default K.stopOnCut)
     cut (dx, dz, target, dy = 1, o = {}) { return K.cutTo(dx, F + dy, dz, target, o) },
     async cutTo (dx, y, dz, target, o = {}) {
       if (typeof o === 'function') o = { during: o }
-      const { during = null, after = null, time, stop = K.stopOnCut } = o
+      const { during = null, after = null, time, shot, stop = K.stopOnCut, lift } = o
       if (stop) K.stop()
       const x = X + dx, z = Z + dz
       // always decimals: /tp centres a whole-number x/z on the block (+0.5) and the arrival check never matched
       // arrive already aimed (the rotation rides on the teleport): aiming after it showed the new
       // place at the old angle for 2 frames, then a snap (frame review, story_runaway)
-      const d = target.minus(new ctx.Vec3(x, y + K.eye, z))
-      const nb = { yaw: Math.atan2(-d.x, -d.z), pitch: Math.atan2(d.y, Math.hypot(d.x, d.z)) }
+      const nb = K.aimFrom(new ctx.Vec3(x, y + K.eyeNow(), z), target, lift)
       const yaw = nb.yaw + K.swayY(), pitch = nb.pitch + K.swayP()
       // the landing: mineflayer applies the teleport (position and rotation together) and emits forcedMove. That
       // is the tick the new pose is recorded, so a time change is marked there: set before the cut the new sky
@@ -161,6 +204,8 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
         if (landed || !near()) return
         landed = true
         if (time !== undefined) ctx.mark('time', { time })
+        if (shot) K.shot(shot)   // o.shot: the new shot starts on the landing tick (switched after the cut returned, the old
+        // camera ran on for 2-6 frames with the cast already gone: story_good_boy review)
       }
       bot.on('forcedMove', onMove)
       if (time !== undefined) { ctx.dayTime = time; K.say(`/time set ${time}`) }
@@ -184,8 +229,8 @@ function storyKit (ctx, S, { X, Z, F }, opts = {}) {
     },
     flee (tag, speed) { K.say(`/execute as @e[tag=${tag}] at @s facing entity ${bot.username} feet rotated ~180 0 positioned ^ ^ ^${speed} run tp @s ~ ${F + 1} ~ facing ^ ^ ^5`) },
     // turn the camera to a point over n ticks (eased), from inside a scene: call every tick with u = (k - start) / n
-    turnTo (from, p, u) {
-      const to = K.aim(p), e = ease(u)
+    turnTo (from, p, u, lift) {
+      const to = K.aim(p, lift), e = ease(u)
       let dy = to.yaw - from.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy <= -Math.PI) dy += 2 * Math.PI
       K.base = { yaw: from.yaw + dy * e, pitch: from.pitch + (to.pitch - from.pitch) * e }
     },
@@ -406,3 +451,5 @@ module.exports.vanillaDigMs = vanillaDigMs
 module.exports.ease = ease
 module.exports.mcYaw = mcYaw
 module.exports.angDiff = angDiff
+module.exports.EYE_H = EYE_H
+module.exports.AIM_LIFT = AIM_LIFT

@@ -1,601 +1,600 @@
 {
- "name": "story_thirty_one_raids",
- "caption": "why do raiders always follow grandpa home \ud83d\ude36",
- "youtube": {
-  "title": "why do raiders always follow grandpa home \ud83d\ude36 #minecraft #shorts",
-  "description": "why do raiders always follow grandpa home \ud83d\ude36\n\n\"Magistar\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
-  "hashtags": [
-   "#minecraft",
-   "#shorts",
-   "#minecraftmemes",
-   "#funny"
-  ],
-  "made_for_kids": false
- },
- "song": {
-  "file": "songs/score/magistar.ogg",
-  "title": "Magistar",
-  "artist": "Kevin MacLeod",
-  "tracks": [
-   "magistar"
-  ],
-  "licence": "CC BY 4.0 (incompetech.com): monetized YouTube OK with the credit in the description. The tracks are pre-registered in Content ID; a credited video normally isn't claimed, and a claim is released after a dispute (credit first; usually within 72 h; ISRC logged here)",
-  "mood": [
-   "heroic",
-   "heroic"
-  ],
-  "payoff_in_short_s": 44.1,
-  "mix": "scripts/story_audio.py (docs/audio.md)"
- },
- "video": {
-  "file": "short.mp4",
-  "duration_s": 45,
-  "width": 1080,
-  "height": 1920,
-  "fps": "60/1",
-  "codec": "h264",
-  "bytes": 35345009,
-  "sha256": "d4ccfd86f7aebefeab7cb2f6a293fd44d92c5faef9699cf094b8aa8435facb68"
- },
- "edit": {
+  "name": "story_thirty_one_raids",
   "caption": "why do raiders always follow grandpa home \ud83d\ude36",
-  "red": "grandpa",
-  "story": "stories/thirty_one_raids",
-  "startAt": "line:0",
-  "endAfter": "story_end:0",
-  "punch": [
-   "payoff"
+  "youtube": {
+    "title": "why do raiders always follow grandpa home \ud83d\ude36 #minecraft #shorts",
+    "description": "why do raiders always follow grandpa home \ud83d\ude36\n\n\"Magistar\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "songs/score/magistar.ogg",
+    "title": "Magistar",
+    "artist": "Kevin MacLeod",
+    "tracks": [
+      "magistar"
+    ],
+    "licence": "CC BY 4.0 (incompetech.com): monetized YouTube OK with the credit in the description. The tracks are pre-registered in Content ID; a credited video normally isn't claimed, and a claim is released after a dispute (credit first; usually within 72 h; ISRC logged here)",
+    "mood": [
+      "heroic",
+      "heroic"
+    ],
+    "payoff_in_short_s": 44.1,
+    "mix": "scripts/story_audio.py (docs/audio.md)"
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 45,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 35378892,
+    "sha256": "e8708156a93c30cab9f17eb8c2d36022d5dfa9c574b45865d4922bbad82d98cb"
+  },
+  "edit": {
+    "caption": "why do raiders always follow grandpa home \ud83d\ude36",
+    "red": "grandpa",
+    "story": "stories/thirty_one_raids",
+    "startAt": "line:0",
+    "endAfter": "story_end:0",
+    "punch": [
+      "payoff"
+    ],
+    "args": [
+      "--caption",
+      "why do raiders always follow grandpa home \ud83d\ude36",
+      "--red",
+      "grandpa",
+      "--punch",
+      "[\"payoff\"]",
+      "--story",
+      "stories/thirty_one_raids",
+      "--start_at",
+      "line:0",
+      "--end_after",
+      "story_end:0"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": -2044,
+      "y": 71,
+      "z": -485
+    },
+    "ticks": 927,
+    "seconds": 46.35,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 1.1,
+        "event": "f1_on"
+      },
+      {
+        "t": 1.1,
+        "event": "shot"
+      },
+      {
+        "t": 1.1,
+        "event": "cut"
+      },
+      {
+        "t": 1.1,
+        "event": "time"
+      },
+      {
+        "t": 1.15,
+        "event": "line"
+      },
+      {
+        "t": 2.55,
+        "event": "ent_swing"
+      },
+      {
+        "t": 4.7,
+        "event": "shot"
+      },
+      {
+        "t": 4.7,
+        "event": "cut"
+      },
+      {
+        "t": 4.7,
+        "event": "time"
+      },
+      {
+        "t": 4.75,
+        "event": "line"
+      },
+      {
+        "t": 8,
+        "event": "shot"
+      },
+      {
+        "t": 8,
+        "event": "cut"
+      },
+      {
+        "t": 8,
+        "event": "time"
+      },
+      {
+        "t": 8.05,
+        "event": "line"
+      },
+      {
+        "t": 8.05,
+        "event": "ent_swing"
+      },
+      {
+        "t": 8.7,
+        "event": "ent_swing"
+      },
+      {
+        "t": 9.3,
+        "event": "ent_swing"
+      },
+      {
+        "t": 9.9,
+        "event": "shot"
+      },
+      {
+        "t": 9.9,
+        "event": "cut"
+      },
+      {
+        "t": 9.95,
+        "event": "line"
+      },
+      {
+        "t": 10.25,
+        "event": "ent_swing"
+      },
+      {
+        "t": 10.35,
+        "event": "block_entity"
+      },
+      {
+        "t": 10.35,
+        "event": "block_entity"
+      },
+      {
+        "t": 10.85,
+        "event": "ent_swing"
+      },
+      {
+        "t": 11.45,
+        "event": "ent_swing"
+      },
+      {
+        "t": 12.05,
+        "event": "ent_swing"
+      },
+      {
+        "t": 12.8,
+        "event": "shot"
+      },
+      {
+        "t": 12.8,
+        "event": "cut"
+      },
+      {
+        "t": 12.8,
+        "event": "time"
+      },
+      {
+        "t": 12.85,
+        "event": "line"
+      },
+      {
+        "t": 14,
+        "event": "vel"
+      },
+      {
+        "t": 14.1,
+        "event": "vel"
+      },
+      {
+        "t": 14.2,
+        "event": "vel"
+      },
+      {
+        "t": 14.3,
+        "event": "vel"
+      },
+      {
+        "t": 14.4,
+        "event": "vel"
+      },
+      {
+        "t": 14.95,
+        "event": "vel"
+      },
+      {
+        "t": 15,
+        "event": "vel"
+      },
+      {
+        "t": 15.05,
+        "event": "vel"
+      },
+      {
+        "t": 15.1,
+        "event": "vel"
+      },
+      {
+        "t": 15.15,
+        "event": "vel"
+      },
+      {
+        "t": 15.2,
+        "event": "vel"
+      },
+      {
+        "t": 15.25,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.35,
+        "event": "vel"
+      },
+      {
+        "t": 15.4,
+        "event": "vel"
+      },
+      {
+        "t": 15.65,
+        "event": "vel"
+      },
+      {
+        "t": 15.7,
+        "event": "vel"
+      },
+      {
+        "t": 15.75,
+        "event": "vel"
+      },
+      {
+        "t": 15.8,
+        "event": "vel"
+      },
+      {
+        "t": 15.85,
+        "event": "vel"
+      },
+      {
+        "t": 15.95,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "shot"
+      },
+      {
+        "t": 16.05,
+        "event": "cut"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "time"
+      },
+      {
+        "t": 16.1,
+        "event": "line"
+      },
+      {
+        "t": 16.1,
+        "event": "vel"
+      },
+      {
+        "t": 18.45,
+        "event": "shot"
+      },
+      {
+        "t": 18.45,
+        "event": "cut"
+      },
+      {
+        "t": 18.45,
+        "event": "time"
+      },
+      {
+        "t": 18.5,
+        "event": "line"
+      },
+      {
+        "t": 18.95,
+        "event": "ent_swing"
+      },
+      {
+        "t": 20.75,
+        "event": "f1_off"
+      },
+      {
+        "t": 20.75,
+        "event": "shot"
+      },
+      {
+        "t": 20.75,
+        "event": "cut"
+      },
+      {
+        "t": 20.8,
+        "event": "swing"
+      },
+      {
+        "t": 20.8,
+        "event": "container",
+        "type": "minecraft:generic_9x3"
+      },
+      {
+        "t": 20.8,
+        "event": "block_action"
+      },
+      {
+        "t": 21,
+        "event": "block_action"
+      },
+      {
+        "t": 21.25,
+        "event": "block_action"
+      },
+      {
+        "t": 21.5,
+        "event": "block_action"
+      },
+      {
+        "t": 21.75,
+        "event": "block_action"
+      },
+      {
+        "t": 21.95,
+        "event": "container_close"
+      },
+      {
+        "t": 21.95,
+        "event": "block_action"
+      },
+      {
+        "t": 22,
+        "event": "block_action"
+      },
+      {
+        "t": 22.1,
+        "event": "f1_on"
+      },
+      {
+        "t": 22.1,
+        "event": "shot"
+      },
+      {
+        "t": 22.1,
+        "event": "cut"
+      },
+      {
+        "t": 22.1,
+        "event": "time"
+      },
+      {
+        "t": 22.15,
+        "event": "line"
+      },
+      {
+        "t": 24.05,
+        "event": "pose"
+      },
+      {
+        "t": 24.4,
+        "event": "pose_off"
+      },
+      {
+        "t": 25.35,
+        "event": "shot"
+      },
+      {
+        "t": 25.35,
+        "event": "cut"
+      },
+      {
+        "t": 25.4,
+        "event": "line"
+      },
+      {
+        "t": 29.4,
+        "event": "ent_swing"
+      },
+      {
+        "t": 30,
+        "event": "shot"
+      },
+      {
+        "t": 30,
+        "event": "cut"
+      },
+      {
+        "t": 30,
+        "event": "time"
+      },
+      {
+        "t": 30.05,
+        "event": "pose"
+      },
+      {
+        "t": 30.05,
+        "event": "line"
+      },
+      {
+        "t": 30.6,
+        "event": "ent_swing"
+      },
+      {
+        "t": 31.45,
+        "event": "shot"
+      },
+      {
+        "t": 31.8,
+        "event": "ent_swing"
+      },
+      {
+        "t": 34.95,
+        "event": "shot"
+      },
+      {
+        "t": 34.95,
+        "event": "cut"
+      },
+      {
+        "t": 34.95,
+        "event": "time"
+      },
+      {
+        "t": 35,
+        "event": "pose"
+      },
+      {
+        "t": 35,
+        "event": "pose_off"
+      },
+      {
+        "t": 35,
+        "event": "line"
+      },
+      {
+        "t": 37.8,
+        "event": "f1_off"
+      },
+      {
+        "t": 37.8,
+        "event": "shot"
+      },
+      {
+        "t": 37.8,
+        "event": "cut"
+      },
+      {
+        "t": 37.8,
+        "event": "time"
+      },
+      {
+        "t": 37.85,
+        "event": "line"
+      },
+      {
+        "t": 37.95,
+        "event": "use_start"
+      },
+      {
+        "t": 39.5,
+        "event": "effect"
+      },
+      {
+        "t": 39.55,
+        "event": "use_stop"
+      },
+      {
+        "t": 39.65,
+        "event": "effect_end"
+      },
+      {
+        "t": 41.6,
+        "event": "cut"
+      },
+      {
+        "t": 41.6,
+        "event": "effect_end"
+      },
+      {
+        "t": 41.6,
+        "event": "effect_end"
+      },
+      {
+        "t": 41.6,
+        "event": "time"
+      },
+      {
+        "t": 43.5,
+        "event": "line"
+      },
+      {
+        "t": 44.1,
+        "event": "ent_swing"
+      },
+      {
+        "t": 45.25,
+        "event": "payoff"
+      },
+      {
+        "t": 45.25,
+        "event": "ent_swing"
+      },
+      {
+        "t": 46.15,
+        "event": "story_end"
+      },
+      {
+        "t": 46.35,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "render/story_thirty_one_raids",
+    "commit": "7ae9490cc585a7ddbb8b54f004268e6d04f67337",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42844451555",
+    "rendered_at": "2026-11-10T15:40:26.148Z",
+    "head_at_publish": "6e492efc835c6ca6d29c86345880e79519c68f42",
+    "stunt": "stunts/story_thirty_one_raids.js",
+    "source_snapshot": [
+      "source/story_thirty_one_raids.js",
+      "source/movie.js",
+      "source/story.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 7ae9490cc585",
+    "gunzip -c shorts/story_thirty_one_raids/recording.json.gz > work/story_thirty_one_raids.rec.json",
+    "node render.js work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.frames 60 1080 1011",
+    "python3 audio.py work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.wav",
+    "python3 edit.py --frames work/story_thirty_one_raids.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_thirty_one_raids.rec.json --audio work/story_thirty_one_raids.wav --caption \"why do raiders always follow grandpa home \ud83d\ude36\" --red grandpa --punch [\"payoff\"] --story stories/thirty_one_raids --start_at line:0 --end_after story_end:0 --out out/story_thirty_one_raids.mp4"
   ],
-  "args": [
-   "--caption",
-   "why do raiders always follow grandpa home \ud83d\ude36",
-   "--red",
-   "grandpa",
-   "--punch",
-   "[\"payoff\"]",
-   "--story",
-   "stories/thirty_one_raids",
-   "--start_at",
-   "line:0",
-   "--end_after",
-   "story_end:0"
-  ]
- },
- "recording": {
-  "file": "recording.json.gz",
-  "minecraft": "1.21.11",
-  "world": {
-   "seed": "hellobuh",
-   "level_type": "minecraft:normal"
-  },
-  "set": {
-   "x": -2044,
-   "y": 71,
-   "z": -485
-  },
-  "ticks": 927,
-  "seconds": 46.35,
-  "deaths": 0,
-  "events": [
-   {
-    "t": 0.75,
-    "event": "start"
-   },
-   {
-    "t": 1.1,
-    "event": "f1_on"
-   },
-   {
-    "t": 1.1,
-    "event": "shot"
-   },
-   {
-    "t": 1.1,
-    "event": "cut"
-   },
-   {
-    "t": 1.1,
-    "event": "time"
-   },
-   {
-    "t": 1.15,
-    "event": "line"
-   },
-   {
-    "t": 2.55,
-    "event": "ent_swing"
-   },
-   {
-    "t": 4.7,
-    "event": "shot"
-   },
-   {
-    "t": 4.7,
-    "event": "cut"
-   },
-   {
-    "t": 4.7,
-    "event": "time"
-   },
-   {
-    "t": 4.75,
-    "event": "line"
-   },
-   {
-    "t": 8,
-    "event": "shot"
-   },
-   {
-    "t": 8,
-    "event": "cut"
-   },
-   {
-    "t": 8,
-    "event": "time"
-   },
-   {
-    "t": 8.05,
-    "event": "line"
-   },
-   {
-    "t": 8.05,
-    "event": "ent_swing"
-   },
-   {
-    "t": 8.7,
-    "event": "ent_swing"
-   },
-   {
-    "t": 9.3,
-    "event": "ent_swing"
-   },
-   {
-    "t": 9.9,
-    "event": "shot"
-   },
-   {
-    "t": 9.9,
-    "event": "cut"
-   },
-   {
-    "t": 9.95,
-    "event": "line"
-   },
-   {
-    "t": 10.25,
-    "event": "ent_swing"
-   },
-   {
-    "t": 10.35,
-    "event": "block_entity"
-   },
-   {
-    "t": 10.35,
-    "event": "block_entity"
-   },
-   {
-    "t": 10.85,
-    "event": "ent_swing"
-   },
-   {
-    "t": 11.45,
-    "event": "ent_swing"
-   },
-   {
-    "t": 12.05,
-    "event": "ent_swing"
-   },
-   {
-    "t": 12.8,
-    "event": "shot"
-   },
-   {
-    "t": 12.8,
-    "event": "cut"
-   },
-   {
-    "t": 12.8,
-    "event": "time"
-   },
-   {
-    "t": 12.85,
-    "event": "line"
-   },
-   {
-    "t": 14,
-    "event": "vel"
-   },
-   {
-    "t": 14.1,
-    "event": "vel"
-   },
-   {
-    "t": 14.2,
-    "event": "vel"
-   },
-   {
-    "t": 14.3,
-    "event": "vel"
-   },
-   {
-    "t": 14.4,
-    "event": "vel"
-   },
-   {
-    "t": 14.95,
-    "event": "vel"
-   },
-   {
-    "t": 15,
-    "event": "vel"
-   },
-   {
-    "t": 15.05,
-    "event": "vel"
-   },
-   {
-    "t": 15.1,
-    "event": "vel"
-   },
-   {
-    "t": 15.15,
-    "event": "vel"
-   },
-   {
-    "t": 15.2,
-    "event": "vel"
-   },
-   {
-    "t": 15.25,
-    "event": "vel"
-   },
-   {
-    "t": 15.3,
-    "event": "vel"
-   },
-   {
-    "t": 15.35,
-    "event": "vel"
-   },
-   {
-    "t": 15.4,
-    "event": "vel"
-   },
-   {
-    "t": 15.65,
-    "event": "vel"
-   },
-   {
-    "t": 15.7,
-    "event": "vel"
-   },
-   {
-    "t": 15.75,
-    "event": "vel"
-   },
-   {
-    "t": 15.8,
-    "event": "vel"
-   },
-   {
-    "t": 15.85,
-    "event": "vel"
-   },
-   {
-    "t": 15.95,
-    "event": "vel"
-   },
-   {
-    "t": 16,
-    "event": "vel"
-   },
-   {
-    "t": 16,
-    "event": "vel"
-   },
-   {
-    "t": 16.05,
-    "event": "shot"
-   },
-   {
-    "t": 16.05,
-    "event": "cut"
-   },
-   {
-    "t": 16.05,
-    "event": "vel"
-   },
-   {
-    "t": 16.05,
-    "event": "vel"
-   },
-   {
-    "t": 16.05,
-    "event": "time"
-   },
-   {
-    "t": 16.1,
-    "event": "line"
-   },
-   {
-    "t": 16.1,
-    "event": "vel"
-   },
-   {
-    "t": 18.45,
-    "event": "shot"
-   },
-   {
-    "t": 18.45,
-    "event": "cut"
-   },
-   {
-    "t": 18.45,
-    "event": "time"
-   },
-   {
-    "t": 18.5,
-    "event": "line"
-   },
-   {
-    "t": 18.95,
-    "event": "ent_swing"
-   },
-   {
-    "t": 20.75,
-    "event": "f1_off"
-   },
-   {
-    "t": 20.75,
-    "event": "shot"
-   },
-   {
-    "t": 20.75,
-    "event": "cut"
-   },
-   {
-    "t": 20.8,
-    "event": "swing"
-   },
-   {
-    "t": 20.8,
-    "event": "container",
-    "type": "minecraft:generic_9x3"
-   },
-   {
-    "t": 20.8,
-    "event": "block_action"
-   },
-   {
-    "t": 21,
-    "event": "block_action"
-   },
-   {
-    "t": 21.25,
-    "event": "block_action"
-   },
-   {
-    "t": 21.5,
-    "event": "block_action"
-   },
-   {
-    "t": 21.75,
-    "event": "block_action"
-   },
-   {
-    "t": 21.95,
-    "event": "container_close"
-   },
-   {
-    "t": 21.95,
-    "event": "block_action"
-   },
-   {
-    "t": 22,
-    "event": "block_action"
-   },
-   {
-    "t": 22.1,
-    "event": "f1_on"
-   },
-   {
-    "t": 22.1,
-    "event": "shot"
-   },
-   {
-    "t": 22.1,
-    "event": "cut"
-   },
-   {
-    "t": 22.1,
-    "event": "time"
-   },
-   {
-    "t": 22.15,
-    "event": "line"
-   },
-   {
-    "t": 24.05,
-    "event": "pose"
-   },
-   {
-    "t": 24.4,
-    "event": "pose_off"
-   },
-   {
-    "t": 25.35,
-    "event": "shot"
-   },
-   {
-    "t": 25.35,
-    "event": "cut"
-   },
-   {
-    "t": 25.4,
-    "event": "line"
-   },
-   {
-    "t": 29.4,
-    "event": "ent_swing"
-   },
-   {
-    "t": 30,
-    "event": "shot"
-   },
-   {
-    "t": 30,
-    "event": "cut"
-   },
-   {
-    "t": 30,
-    "event": "time"
-   },
-   {
-    "t": 30.05,
-    "event": "pose"
-   },
-   {
-    "t": 30.05,
-    "event": "line"
-   },
-   {
-    "t": 30.6,
-    "event": "ent_swing"
-   },
-   {
-    "t": 31.45,
-    "event": "shot"
-   },
-   {
-    "t": 31.8,
-    "event": "ent_swing"
-   },
-   {
-    "t": 34.95,
-    "event": "shot"
-   },
-   {
-    "t": 34.95,
-    "event": "cut"
-   },
-   {
-    "t": 34.95,
-    "event": "time"
-   },
-   {
-    "t": 35,
-    "event": "pose"
-   },
-   {
-    "t": 35,
-    "event": "pose_off"
-   },
-   {
-    "t": 35,
-    "event": "line"
-   },
-   {
-    "t": 37.8,
-    "event": "f1_off"
-   },
-   {
-    "t": 37.8,
-    "event": "shot"
-   },
-   {
-    "t": 37.8,
-    "event": "cut"
-   },
-   {
-    "t": 37.8,
-    "event": "time"
-   },
-   {
-    "t": 37.85,
-    "event": "line"
-   },
-   {
-    "t": 37.95,
-    "event": "use_start"
-   },
-   {
-    "t": 39.5,
-    "event": "effect"
-   },
-   {
-    "t": 39.55,
-    "event": "use_stop"
-   },
-   {
-    "t": 39.65,
-    "event": "effect_end"
-   },
-   {
-    "t": 41.6,
-    "event": "cut"
-   },
-   {
-    "t": 41.6,
-    "event": "effect_end"
-   },
-   {
-    "t": 41.6,
-    "event": "effect_end"
-   },
-   {
-    "t": 41.6,
-    "event": "time"
-   },
-   {
-    "t": 43.5,
-    "event": "line"
-   },
-   {
-    "t": 44.1,
-    "event": "ent_swing"
-   },
-   {
-    "t": 45.25,
-    "event": "payoff"
-   },
-   {
-    "t": 45.25,
-    "event": "ent_swing"
-   },
-   {
-    "t": 46.15,
-    "event": "story_end"
-   },
-   {
-    "t": 46.35,
-    "event": "end"
-   }
-  ]
- },
- "code": {
-  "repo": "evanlin23/hello-buh",
-  "branch": "render/story_thirty_one_raids",
-  "commit": "d7500b30d77121a6291d3dafb5bfeaf7b00ce951",
-  "rendered": "actions",
-  "run": "https://github.com/evanlin23/hello-buh/actions/runs/42792926162",
-  "rendered_at": "2026-11-10T09:57:38.783Z",
-  "head_at_publish": "26c390641c56d204152eccd25da8918e64b39422",
-  "stunt": "stunts/story_thirty_one_raids.js",
-  "source_snapshot": [
-   "source/story_thirty_one_raids.js",
-   "source/movie.js",
-   "source/story.js"
-  ]
- },
- "rebuild": [
-  "git checkout d7500b30d771",
-  "gunzip -c shorts/story_thirty_one_raids/recording.json.gz > work/story_thirty_one_raids.rec.json",
-  "node render.js work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.frames 60 1080 1011",
-  "python3 audio.py work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.wav",
-  "python3 edit.py --frames work/story_thirty_one_raids.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_thirty_one_raids.rec.json --audio work/story_thirty_one_raids.wav --caption \"why do raiders always follow grandpa home \ud83d\ude36\" --red grandpa --punch [\"payoff\"] --story stories/thirty_one_raids --start_at line:0 --end_after story_end:0 --out out/story_thirty_one_raids.mp4"
- ],
- "status": "held",
- "notes": "Thirty-One Raids: Grandpa's 'courage' is an ominous bottle; he brings every raid himself because it's the only time anyone's glad to see him; Milo drinks it. Narrator Pip (3.8-flash-lite), Grandpa Charon (2.5-flash). 1 review round, READY, 0 blockers; nitpicks: chest-screen 3-frame lead-in, S11-12 sky reads day, no raid bar/omen icon (staged raid), S05 small on a phone, S07 bottle low, S09 soft DOF, Grandpa's step-in shoulder ~0.3 s.",
- "published_at": "2026-11-10T10:10:38.349Z",
- "held_reason": "owner 2026-11-10: captions run early (first word of each line on the lead silence); re-align + re-edit, then republish"
+  "status": "ready",
+  "notes": "Thirty-One Raids, re-edit: captions re-aligned to the speech (owner: captions out of sync), hero Buh (never named aloud), re-rendered on main's render code. Narrator Pip (3.8-flash-lite), Grandpa Charon (2.5-flash). Review: r1 READY, r2 READY (0 blockers). Nitpicks: L01 caption 0.18 s before the full voice, 0.2 s whip turn at 39 s, chest-screen lead-in, S11-12 sky reads day, no raid bar/omen icon (staged raid), S05 small on a phone, S09 soft DOF.",
+  "published_at": "2026-11-10T15:51:17.908Z"
 }
