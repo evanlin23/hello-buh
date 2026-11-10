@@ -143,8 +143,9 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   --resplit`), and ask for a breath between sentences so a quiet point exists; check with `scripts/voice_edges.py`.
 - **Owner, 2026-11-10 (Good Boy session): Leda is "so high pitched and annoying"; wants a kid "like the roblox shorts but
   more refined"; picked "kid puck is fine".** The narrator is now **Puck** directed as a twelve-year-old boy (quick,
-  excited, mid-pitch, not squeaky, full volume, a short breath between sentences), no post filter. Pip/Leda is retired
-  as the narrator (kept in cast.json as `pip_leda` for a younger character). Supersedes the Pip rule below.
+  excited, mid-pitch, not squeaky, full volume, a short breath between sentences), no post filter. Then: "what about pip? i liked
+  the audio i sent earlier": **Pip keeps his voice** (cast `pip`: Leda, the bubbly nine-year-old direction, natural
+  tempo) in Dog on the Hill and for Pip-like young narrators; **Puck** (`narrator`) is the default elsewhere.
 - **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
   per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
   Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. Until `./hb voice` cuts safely:
