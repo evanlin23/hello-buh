@@ -1,0 +1,507 @@
+{
+  "name": "broken_rail",
+  "stunt": "story_broken_rail",
+  "version": 2,
+  "revision": "r1 (2026-11-10): first draft from the writers' room pitch (critic rank 1, develop) with the critic's fixes applied",
+  "caption": "why does grandpa wait at an empty rail 🛤️",
+  "logline": "Every evening for 22 years a villager grandpa has met an empty rail line and said 'She's coming'; the day his grandson is finally old enough to cross the bridge, he walks the line and finds out why she never arrived.",
+  "question": "why tf is grandpa waiting for a minecart on a rail nobody uses?",
+  "premise": "Grandpa (a villager) stands at the buffer stop of the station at the edge of our rail town every evening and has for 22 years. Nothing ever comes down the line. Mom says Grandma left him: she rode the cart to her sister's village and never came back, and kept the cart. Grandpa just says 'She's coming.' Villagers never leave the village and Milo wasn't allowed past the bridge, so nobody walked the line. Our pig sits in his minecart in the yard all day ('he loves it').",
+  "twist": "She was coming. On her way home from her sister's, 3,000 blocks out in a valley, a creeper had blown the line; the blast took the redstone torch of the last powered rail, which braked her cart to a stop at the edge of the crater. Mobs can't get out of a minecart on their own (the pig shows it), so Grandma has sat there for 22 years, facing home. Milo bridges the crater, lays rail, relights the gold rail and pushes; that evening her cart rolls into the buffer stop where Grandpa is waiting.",
+  "key_color": "#F2B544",
+  "gap": 0.3,
+  "mood": [
+    "sad",
+    "heroic"
+  ],
+  "payoff": "L14",
+  "look": {
+    "time": 12500,
+    "fog": false
+  },
+  "weather": "clear",
+  "world": {
+    "place": "the rail town two valleys east of the carpeted village (Light Sleeper); its line runs south over a river bridge through the hills toward Grandma's sister's village",
+    "easter_egg": "S09 (the dawn crane over the line): the carpeted village of Light Sleeper on a far hill at frame left, carpet roofs in red and orange, the bell boxed in white wool. Provisional: re-check against docs/world/canon.md when it lands."
+  },
+  "voice": {
+    "engine": "gemini",
+    "model_hint": "the narrator library model (cast `narrator`); Grandma on the same model, one model per character for the whole story"
+  },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "ref": "narrator",
+      "color": "#FFFFFF",
+      "on_screen": "Milo, ten, the player kid (default Steve skin); POV in S04, S08, S10, S11a, S12a (the hand and the hotbar); seen small from outside in S09 and S12b"
+    },
+    "Grandma": {
+      "role": "character",
+      "ref": null,
+      "voice": "Gacrux",
+      "color": "#F4A6C0",
+      "profile": "Grandma: a woman in her seventies, warm and a little dry, a smile in her voice, full volume, unhurried; never breathy",
+      "on_screen": "villager, plains farmer (straw hat), sitting in a minecart; S11a, S11b, S12a, S12b, S13 (far), S14",
+      "audition": "No library voice fits an old woman. Audition Gacrux (mature) and Sulafat directed thirty years older on L14 only, two takes each; pick the one that sounds like a grandmother and nothing like the narrator; record the pick here."
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05"
+      ],
+      "direction": "A bright, fast nine-year-old boy tells his friends an amazing true story about his grandpa: quick, excited, full volume, a grin in his voice even in the sad parts, a short breath between sentences; never whispery or breathy."
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L06",
+        "L07",
+        "L08",
+        "L09",
+        "L10"
+      ],
+      "direction": "A bright, fast nine-year-old boy tells his friends an amazing true story about his grandpa: quick, excited, full volume, a grin in his voice even in the sad parts, a short breath between sentences; never whispery or breathy."
+    },
+    {
+      "id": "r3",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L11",
+        "L12",
+        "L13"
+      ],
+      "direction": "A bright, fast nine-year-old boy tells his friends an amazing true story about his grandpa: quick, excited, full volume, a grin in his voice even in the sad parts, a short breath between sentences; never whispery or breathy."
+    },
+    {
+      "id": "r4",
+      "speakers": [
+        "Grandma"
+      ],
+      "lines": [
+        "L14"
+      ],
+      "direction": "A rail station at sunset. Grandma: a woman in her seventies, warm and a little dry, a smile in her voice, full volume, unhurried; never breathy."
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "My grandpa / has waited for / the SAME MINECART / for TWENTY-TWO / YEARS.",
+      "direction": "one quick breath, bright and amazed, a tiny lift on the number",
+      "shot": "S01",
+      "look": {
+        "what": "actor:Grandpa",
+        "word": "GRANDPA"
+      }
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "Every EVENING. / Empty RAIL. / He just says, / \"She's COMING.\"",
+      "say": "Every evening. Empty rail. <short pause> He just says, \"She's coming.\"",
+      "direction": "matter-of-fact, then quoting him plainly and fondly, no impression of an old voice",
+      "shot": "S02",
+      "look": {
+        "what": "actor:Grandpa",
+        "word": "COMING"
+      }
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "Our PIG / lives in / his CART. / He LOVES it.",
+      "direction": "proud and cheerful, sure of it",
+      "shot": "S03",
+      "look": {
+        "what": "entity:pig",
+        "word": "PIG"
+      }
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "Won't even / get out / for a CARROT.",
+      "direction": "laughing at how silly the pig is",
+      "shot": "S04",
+      "look": {
+        "what": "entity:pig",
+        "word": "CARROT"
+      }
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "Mom said / Grandma LEFT him. / Went to her SISTER'S. / Never came BACK.",
+      "direction": "the grin drops a notch, still full volume, repeating what grown-ups say",
+      "shot": "S05",
+      "look": {
+        "what": "actor:Mom",
+        "word": "MOM"
+      }
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "Kept the CART, / too. / RUDE.",
+      "direction": "indignant on the last word, a kid taking Grandpa's side",
+      "shot": "S06",
+      "look": {
+        "what": "prop:empty_spur",
+        "word": "CART"
+      }
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "Villagers / never leave / the VILLAGE. / And I wasn't / allowed past / the BRIDGE.",
+      "direction": "explaining the rules fast, a little fed up with the second one",
+      "shot": "S07",
+      "look": {
+        "what": "prop:bridge",
+        "word": "BRIDGE"
+      }
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "At MIDNIGHT / I turned TEN. / I packed RAILS / and WENT.",
+      "direction": "lit up and brave, speeding up, the big moment",
+      "shot": "S08",
+      "look": {
+        "what": "prop:rails_in_hand",
+        "word": "RAILS"
+      }
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "THREE THOUSAND / blocks.",
+      "direction": "big and a little out of breath, impressed with himself",
+      "shot": "S09",
+      "look": {
+        "what": "prop:the_line",
+        "word": "BLOCKS"
+      }
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "Then the rail / STOPPED. / A CREEPER hole, / all grassed OVER.",
+      "direction": "a sudden stop in the voice on the second phrase, then puzzled, still full volume",
+      "shot": "S10",
+      "look": {
+        "what": "prop:crater",
+        "word": "CREEPER"
+      }
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "Past it, / a MINECART. / GRANDMA / in it. / Still facing HOME.",
+      "direction": "the speed goes out of him; wonder, not sadness; a beat before the last phrase, which lands warm",
+      "shot": "S11a",
+      "look": [
+        {
+          "what": "prop:her_cart",
+          "word": "MINECART"
+        },
+        {
+          "what": "actor:Grandma",
+          "word": "GRANDMA",
+          "size": "cu"
+        }
+      ]
+    },
+    {
+      "id": "L12",
+      "who": "N",
+      "text": "I bridged / the HOLE, / laid RAILS, / and PUSHED.",
+      "direction": "fast and determined, building speed to the last word like a launch",
+      "shot": "S12a",
+      "look": [
+        {
+          "what": "prop:crater",
+          "word": "HOLE"
+        },
+        {
+          "what": "prop:her_cart",
+          "word": "PUSHED"
+        }
+      ]
+    },
+    {
+      "id": "L13",
+      "who": "N",
+      "text": "That EVENING, / Grandpa was / waiting. / Like ALWAYS.",
+      "direction": "gentle and proud, smiling, full volume, slowing only on the last two words",
+      "shot": "S13",
+      "look": {
+        "what": "actor:Grandpa",
+        "word": "GRANDPA"
+      }
+    },
+    {
+      "id": "L14",
+      "who": "Grandma",
+      "text": "Sorry I'm LATE, / dear.",
+      "say": "Sorry I'm late, dear.",
+      "direction": "warm and a little sheepish, a smile in it, as if she missed the bus",
+      "shot": "S14",
+      "look": {
+        "what": "actor:Grandma",
+        "word": "LATE"
+      }
+    }
+  ],
+  "ending": {
+    "after": "L13",
+    "beats": [
+      "S13: the cart comes over the far hill crest on 'waiting' and rolls down toward Grandpa",
+      "S14: the cart knocks into the buffer stop 0.3 s before L14; Grandma, facing Grandpa a block away, says it; his head tips toward her on 'dear'",
+      "cut 0.6 s after the last word (payoff L14: the score drops out 0.45 s before, the hit on the buffer knock)"
+    ],
+    "loop": "line 1 re-read: he really was waiting for the same minecart, and she really was coming"
+  },
+  "props": {
+    "Grandpa": {
+      "actor": "Grandpa"
+    },
+    "Grandma": {
+      "actor": "Grandma"
+    },
+    "Mom": {
+      "actor": "Mom"
+    },
+    "pig": {
+      "actor": "Pig"
+    },
+    "buffer_stop": {
+      "block": "stone_brick_wall"
+    },
+    "empty_spur": {
+      "at": [
+        4,
+        0,
+        -3
+      ]
+    },
+    "bridge": {
+      "block": "stone_bricks"
+    },
+    "rails_in_hand": {
+      "block": "rail"
+    },
+    "the_line": {
+      "block": "powered_rail"
+    },
+    "crater": {
+      "at": [
+        0,
+        -2,
+        0
+      ]
+    },
+    "her_cart": {
+      "actor": "GrandmaCart"
+    },
+    "dead_gold_rail": {
+      "block": "powered_rail"
+    }
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "station",
+      "size": "wide",
+      "camera": "path: a slow push (2 blocks over the line) from 12 blocks behind Grandpa, 2.5 blocks up over the platform, looking south past his back down the empty rail; FOV 50; moving from frame 1",
+      "frame": "fg: the buffer stop (stone-brick wall block, slab cap, a lantern) and the platform's lamp post at frame left; subject: Grandpa (toolsmith, black apron) head to foot at the buffer, back to us, facing down the line; bg: the single rail running straight south, over the bridge and up into green hills toward a sunset at frame right (west). Dusk (12500).",
+      "look": {
+        "time": 12500
+      }
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "station to village edge",
+      "size": "ews",
+      "camera": "path: crane up and back. Key 0: 3 blocks up, 8 blocks west of the platform, side-on looking east; key 1 (~2.6 s): 16 blocks up, 30 blocks west, lookPath tilting down so Grandpa stays lower-centre on 'COMING'",
+      "frame": "opens: the platform side-on, Grandpa at the buffer at frame left (north), the rail running right (south); ends: the whole station small at lower centre (platform, two sidings, the destination sign), our cottage and the village roofs with chimney smoke behind it (left), the line running right over the bridge and the river into hills, nothing on it. Dusk (12500). Home is frame left in every side-on shot.",
+      "look": {
+        "time": 12500
+      }
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "our_yard",
+      "size": "full",
+      "camera": "at: 1.5 blocks up behind the yard fence, 7 blocks from the cart, slow push in; FOV 50",
+      "frame": "fg: the oak fence and a carrot patch; subject: the pig sitting in a minecart on a little 5x5 loop of rail Milo laid in the yard, head turning; bg: our cottage (spruce) and, small over its shoulder, the station lamp and Grandpa at the buffer. Dusk (12500).",
+      "look": {
+        "time": 12500
+      }
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "our_yard",
+      "size": "ms",
+      "camera": "pov 2.5 blocks from the cart, the carrot (hotbar slot 2) held out and swung slowly left to right",
+      "frame": "fg: the hand with the carrot; subject: the pig's head following the carrot left and right, its body staying in the cart (it can't get out: vanilla); the hotbar shows rails in slot 1, carrot in slot 2, dirt in 3, a redstone torch in 4; bg: the yard fence and the cottage wall. Dusk (12500).",
+      "look": {
+        "time": 12500
+      }
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "our_door",
+      "size": "wide",
+      "camera": "at: 14 blocks from the door, low (1 block up) behind the garden gate lanterns, still with a slight push; FOV 50",
+      "frame": "fg: the garden gate and its lanterns; subject: Mom (cleric, purple robe) head to foot in our open doorway, looking across at the station; bg (frame right, over the garden): the station 30 blocks off, Grandpa small at the buffer, the line running south into the hills where her sister's village would be. Dusk (12600).",
+      "look": {
+        "time": 12600
+      }
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "sidings",
+      "size": "full",
+      "camera": "at: 1.5 blocks up, 6 blocks from the two spurs' buffer stops, slow push; FOV 50",
+      "frame": "fg: platform slabs; subject: two short sidings side by side with buffer stops: the left one with a minecart and a sign over it 'OTTO', the right one empty with a sign 'ROSE' (the sign text also in the caption track); bg: the main line and the hills. Dusk (12650).",
+      "look": {
+        "time": 12650
+      }
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "bridge",
+      "size": "ews",
+      "camera": "path: rising from 4 to 10 blocks over the village bank, 10 blocks north of the bridge's end_a, looking south along the rail across the bridge; FOV 50",
+      "frame": "fg: the last cobbled path and a lamp post at the bridge foot; mid: a villager (fletcher) walks to the bridge foot, stops at the first lamp post and turns back toward the village (on 'never leave'); subject on 'BRIDGE': the whole stone bridge (piers, arches, lamp posts lit) with the rail down its deck, over the river ravine; bg: the line climbing into dark hills. Late dusk (13000).",
+      "look": {
+        "time": 13000
+      }
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "bridge deck",
+      "size": "wide",
+      "camera": "pov walking south along the rail on the bridge deck at a sprint-walk; the hotbar has the rails stack (64) selected on 'RAILS'",
+      "frame": "fg: the rail running away under the camera, the hotbar (rails selected, carrot, dirt, redstone torch); mid: the deck walls and lamp posts passing; bg: the far end of the bridge, the line climbing a hill under the moon. Midnight (18000).",
+      "look": {
+        "time": 18000
+      }
+    },
+    {
+      "id": "S09",
+      "line": "L09",
+      "place": "the_line (hills and valley)",
+      "size": "ews",
+      "camera": "path: a high crane (30 blocks up) drifting along the line, looking down it as it winds over a ridge and descends into a long valley; Milo tiny on the rail mid-frame, walking away from the lens (south, away from home)",
+      "frame": "fg: the ridge top's spruces at the lower edge; mid: the rail with a powered rail every 8 blocks glinting gold, each with a redstone torch beside it; Milo small on the line; bg: the valley floor with a stream, more hills to the fog, and on a far hill at frame left the carpet-roofed village (the easter egg). Sunrise (23300), the sun low at frame left (the camera looks south, so east is frame left).",
+      "look": {
+        "time": 23300
+      }
+    },
+    {
+      "id": "S10",
+      "line": "L10",
+      "place": "valley_floor / crater",
+      "size": "wide",
+      "camera": "pov walking south along the rail on the valley floor; stops at the crater's lip on 'STOPPED'; tilts down into it on 'grassed OVER'",
+      "frame": "fg: the rail ending in mid-air at the lip (the last two rails broken off, the ballast gone); subject: a round creeper crater ~7 wide and 3 deep, its sides and floor all grass with ferns, short grass and two dandelions (old: grown over); bg: the line picking up again on the far side, the valley walls. Morning (4700).",
+      "look": {
+        "time": 4700
+      }
+    },
+    {
+      "id": "S11a",
+      "line": "L11",
+      "place": "crater",
+      "size": "wide",
+      "camera": "pov at the lip, tilting up from the crater floor to the far side on 'Past it'",
+      "frame": "continuous with S10 (no cut: the same POV take tilts up). fg: the grassy crater; subject: 9 blocks away on the far lip, a minecart stopped on a dark (unpowered) gold rail at the very end of the far stub, a villager in a straw hat sitting in it facing us; beside the rail the bare spot where its redstone torch stood (the blast took it); bg: the line running on into the valley. Morning (4700).",
+      "look": {
+        "time": 4700
+      }
+    },
+    {
+      "id": "S11b",
+      "line": "L11",
+      "place": "crater far lip",
+      "size": "cu",
+      "camera": "at: 2 blocks in front of the cart, 1.2 blocks up, a slow push from 'GRANDMA' to the end; FOV 50; the only close-up",
+      "frame": "subject: Grandma (farmer, straw hat) sitting in the minecart, face and shoulders, facing the lens (home); fg: the cart's rim; bg: the valley wall behind her, soft. Morning (4700).",
+      "look": {
+        "time": 4700
+      }
+    },
+    {
+      "id": "S12a",
+      "line": "L12",
+      "place": "crater",
+      "size": "wide",
+      "camera": "pov at the near lip: places a row of 7 dirt blocks across the crater at rail height (from the hotbar, ~1 s), walks out on it laying 7 rails (~1 s), places a redstone torch by her gold rail (it lights)",
+      "frame": "fg: the hand and the hotbar; subject: the dirt row and new rails reaching across to her cart; bg: Grandma in the cart on the far lip. Morning (5000).",
+      "look": {
+        "time": 5000
+      }
+    },
+    {
+      "id": "S12b",
+      "line": "L12",
+      "place": "crater",
+      "size": "full",
+      "camera": "at: 7 blocks west of the cart, 1.6 blocks up, looking east; FOV 50; still; the camera pans left with the cart for its first 3 blocks",
+      "frame": "fg: ferns on the valley floor; subject: Milo behind the cart on the far lip walks into it on 'PUSHED', the lit gold rail fires it and the cart with Grandma shoots left (north, home) over the new rails across the crater; bg: the valley side with the line climbing out of it. Morning (5000).",
+      "look": {
+        "time": 5000
+      }
+    },
+    {
+      "id": "S13",
+      "line": "L13",
+      "place": "station",
+      "size": "wide",
+      "camera": "at: S01's camera spot (12 blocks behind Grandpa, 2.5 up), FOV 50, still then a slow push",
+      "frame": "the S01 frame again: fg the buffer stop and lamp post; subject: Grandpa at the buffer, back to us; bg: the line south over the bridge into the hills at sunset, and on 'waiting' a minecart comes over the far hill crest and rolls down the line toward us, growing. Dusk (12800).",
+      "look": {
+        "time": 12800
+      }
+    },
+    {
+      "id": "S14",
+      "line": "L14",
+      "place": "station",
+      "size": "full",
+      "camera": "at: side-on from the platform's west edge, 6 blocks from the buffer, 1.6 up, looking east; FOV 50; still",
+      "frame": "left: Grandpa head to foot at the buffer (north, home side); right: the cart rolls in from the right and stops against the buffer with a knock 0.3 s before the line, Grandma sitting in it facing him a block away; bg: the platform lamp lit, the village roofs and chimney smoke behind. On 'dear' Grandpa's head tips toward her. Ends 0.6 s after the last word. Dusk (12800).",
+      "look": {
+        "time": 12800
+      }
+    }
+  ],
+  "bible": "stories/broken_rail/bible.md",
+  "beats": "stories/broken_rail/beats.md",
+  "set": "stories/broken_rail/set.md"
+}
