@@ -138,6 +138,17 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (on the reference Roblox Short's captions): "the captions can be 2-3 words thats fine".**
+  Captions are 2-3 word chunks again (the script's " / " splits), one CAPS key word per chunk in the key colour
+  (supersedes "one word at a time"); quotes keep their quote marks.
+- **Owner, 2026-11-10 (on the reference Roblox Short at ~5.5 words/s): "the fast pace is good".** The narration runs
+  fast, about 5-5.5 words per second while speaking (supersedes "4.5 is not a target, Pip's natural tempo"): short
+  sentences, little air between them, the voice's natural speed (not a sped-up file).
+- **Owner, 2026-11-10 (sending a top Roblox story Short as the model): "this one also has a loop. can we look at the
+  story arcs for the best stories in this area? we can try to make our stories based on those then".** Our stories
+  follow the arcs of the top stories in the niche (docs/story_arcs.md, being written). The reference Short: a paradox
+  hook in line 1, a rule-of-three escalation, a reversal, and it ends mid-sentence on the climax so the last words run
+  straight into line 1 (a loop); one narrator says every quote; about 5.5 words/s.
 - **Owner, 2026-11-10: "the movement shouldn't be caught... the processes should be such that the movement is [smooth]
   in the first place. Like we of course we can still have the check later on, but this check later on shouldn't be
   the main way that we're doing it. Stuff should be front loaded."** Smooth, player-like motion comes from the story
@@ -186,6 +197,15 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-10: "The captions actually seem behind".** Captions lead the spoken word by 0.1 s
   (`story_track.CAPTION_LEAD`; Whisper's word times measured on time, but picture behind sound reads as late from
   ~45 ms and picture ahead of sound is tolerated to ~125 ms, ITU-R BT.1359). Never before the line's own cut.
+- **Owner, 2026-11-10, after that lead: "The captions are a bit early now" (Dog on the Hill), "The captions are still
+  not lined up correclty" (Thirty-One Raids), "captions not lined up" (Good Boy at 7 s), "Captions not lined up..."
+  (Gold for the Portal at 22.1 s), "Some of them are earlier, some of them are after... is there no better model that
+  we can use for captions?"** Captions land on the word: each caption appears on the frame in which its word starts,
+  measured on the finished Short. Word times come from forced alignment of the caption words (scripts/ctc_align.py),
+  not Whisper, whose word starts were 0.12 s early on median and up to 0.3 s off (the 0.1 s lead on top put all 5 held
+  cuts 0.19-0.22 s early); no lead (`CAPTION_LEAD = 0`); caption words are matched to timed words by their text, not by
+  index. `scripts/caption_av_check.py` (in `./hb review`) blocks a Short whose median is more than 33 ms off or with
+  over 10% of words more than 100 ms off. Supersedes the 0.1 s lead. (docs/voices.md "Caption timing".)
 - **Owner, 2026-11-10: "Can we have the main character be called buh, and just not have anyone say his name?"**
   The hero is **Buh** again (supersedes Milo): in-game text only (chat "Buh joined the game", death screens, name tags;
   stunt `botName: 'Buh'`). **No line ever says his name aloud**: not the narrator, not any character. The critic
