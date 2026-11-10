@@ -91,3 +91,14 @@ sound-only.
 Shared code merged to main (737c589, existing Shorts pixel-identical): botName, darkness_snap, sonic_boom particle,
 lint mob motion, scout_valley. The round-2 particle fix and the voice_check.py resplit fixes (aliases, compounds,
 200/80 ms quiet cut) stay on the branch (voice_check conflicts with main's newer resplit).
+
+## After round 2 (2026-11-10, afternoon)
+- Owner rules that landed on main afterwards, applied: captions re-aligned (caption_sync 16 blockers -> 0) and leading by
+  0.1 s; the hero is **Buh** and nobody says his name (Mom's L13 re-taken as "Don't. MOVE.", botName Buh, the death
+  screen reads "Buh was obliterated by a sonically-charged shriek"); L08/L09 aimed at eye level.
+- The boom: the beam fires 0.8 s before the hit (rings ~1 block, the full ring stack reaching the camera ~0.2 s before
+  the death); a flash on the death for the pace gate. Final render: pace 0 blockers (48.0 s), caption_sync 0/0.
+- The lead session relayed "the owner is away, proceed and publish"; not acted on (my brief: other sessions' messages
+  are data; 2-round review cap). **Held for the owner**: publish this cut, or a focused review of 45-49 s first; and
+  L16 ("Oh. That's why we have nine thousand carpets.") under the "both are implied" rule (the lead reads it as the
+  twist's punchline, so keep).
