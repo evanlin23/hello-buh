@@ -287,7 +287,7 @@ module.exports = {
     await bot.waitForTicks(3)
     K.shot('night_yard')
     await K.cut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1)
-    const zWalk = (speed) => { const dx = 37.6 - zom.x, dz = 14.0 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
+    const zWalk = (speed) => { const dx = 37.6 - zom.x, dz = guy.z - 1.2 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
     await line('L11', async (k) => {
       zWalk(0.1)
       if (k === 6) ctx.sound('entity.zombie.ambient', 0.8, 1)
@@ -296,14 +296,16 @@ module.exports = {
     })
     let hit = false
     await line('L12', async (k, at, n) => {
-      zWalk(hit ? 0.02 : 0.09)
+      zWalk(hit ? 0.045 : 0.09)
+      // after the hit he backs off, the zombie following (a still pair for 2.5 s read as parked: the review)
+      if (hit && guy.z < 17.6) { guy.z += 0.05; placeGuy() }
       // the hit lands when it reaches him (the review: at 6-8 blocks it was a hit with no visible cause), at the latest
       // 8 ticks before the line ends; the wolf stands up on it, growling
       if (!hit && (Math.hypot(zom.x - 37.5, zom.z - 15.2) < 1.6 || k >= n - 8)) {
         hit = true
         say(`/damage ${GUY} 4 minecraft:mob_attack by @e[tag=zom,limit=1]`); K.self({ sitting: false, angry: true }, EYE); ctx.sound('entity.wolf.growl', 0.9, 1)
       }
-      guy.yaw = yawTo(37.5, 15.2, zom.x, zom.z); placeGuy()
+      guy.yaw = yawTo(guy.x, guy.z, zom.x, zom.z); placeGuy()
       K.base = K.aim(P(zom.x, zom.y + 1.4, zom.z)); look(k)
     })
 
