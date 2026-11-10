@@ -67,7 +67,8 @@ module.exports = {
     // L15: the opening frame again, pulling up and away
     end: { dof: false, path: [[0, -4.5, 5.5, -3.5], [4, -10, 14, -8]], look: [11, -11, 11], fov: 60 }
   },
-  edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.25' },
+  caption: 'why won\'t this dog stand up?',
+  edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.25', ownScore: true, caption: 'why won\'t this dog stand up?' },
 
   async setup (ctx) {
     const { bot } = ctx

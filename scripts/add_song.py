@@ -46,6 +46,8 @@ def main(name, song_override=None, out_override=None, gen=None, seed=None, ncs=F
     meta = json.loads((d / "metadata.json").read_text())
     stunt = json.loads(subprocess.run(["node", "-e", f"console.log(JSON.stringify(require('./stunts/{name}').edit||{{}}))"], cwd=ROOT, capture_output=True, text=True, check=True).stdout)
     src = d / "short_nosong.mp4"
+    if stunt.get("ownScore"):   # a cinematic story with its own made score (scripts/story_short.py): no song on top
+        print(name, "own score: no song added"); return
     tl = json.loads(gzip.decompress((d / "recording.json.gz").read_bytes()))["timeline"]
     sys.path.insert(0, str(ROOT / "scripts"))
     from timewarp import edit_timeline
