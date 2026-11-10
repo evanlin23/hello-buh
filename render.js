@@ -878,14 +878,39 @@ const ROAR_START = new Map()   // id -> [[startTick, endTick]]
 // staged poses (NoAI mobs posed on cue): ctx.mark('pose', { ids, creepy | standing: true }) until a
 // 'pose_off' for those ids: an enderman's scream, a polar bear rearing up (the roar is above)
 const STAGED = new Map()   // id -> [[a, b, flags]]
+// staged actor poses (player actors and mannequins, lib/movie.js M.pose): named poses from renderer/poses.js, from
+// the mark until a 'pose_off' for those ids or the next pose mark, each eased in and out over its `blend` ticks
+const ACT_POSE = new Map()  // id -> [[a, b, [{ name, ...params }]]]
+const POSES = require('./renderer/poses.js')
+// a warden's emerge / dig (Pose.EMERGING / DIGGING): recorded, or staged with ctx.mark('pose', { ids, emerge: true })
+const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
 {
-  const open = new Map()
+  const open = new Map(), openA = new Map()
   for (const e of rec.timeline || []) {
     if (e.event === 'pose') {
       const fl = {}; if (e.creepy) fl.creepy = true; if (e.standing) fl.standing = true
       if (Object.keys(fl).length) for (const id of e.ids || []) { const run = [e.t / 50, Infinity, fl]; if (!STAGED.has(id)) STAGED.set(id, []); STAGED.get(id).push(run); open.set(id, run) }
+      // { pose: 'wave' | ['sit', 'drink'], ...params }, or the flags sit / drink / use (ground: sit on the floor)
+      const names = [].concat(e.pose || [])
+      if (e.sit) names.push(e.ground ? 'sit_ground' : 'sit')
+      if (e.drink) names.push('drink'); else if (e.use) names.push('use')
+      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, ...params } = e
+      const ap = names.filter(n => { if (POSES.POSES[n]) return true; console.log(`pose mark at tick ${e.t / 50}: no pose '${n}' in renderer/poses.js (${POSES.POSE_NAMES.join(', ')})`); return false }).map(name => ({ name, ...params }))
+      if (ap.length) for (const id of e.ids || []) { if (openA.has(id)) openA.get(id)[1] = e.t / 50; const run = [e.t / 50, Infinity, ap]; if (!ACT_POSE.has(id)) ACT_POSE.set(id, []); ACT_POSE.get(id).push(run); openA.set(id, run) }
+      for (const k of ['emerge', 'dig']) if (e[k]) for (const id of e.ids || []) { if (!WARDEN_ANIM.has(id)) WARDEN_ANIM.set(id, []); WARDEN_ANIM.get(id).push([e.t / 50, e.t / 50 + (k === 'emerge' ? 134 : 100), k]) }
     }
-    if (e.event === 'pose_off') for (const id of e.ids || []) if (open.has(id)) { open.get(id)[1] = e.t / 50; open.delete(id) }
+    if (e.event === 'pose_off') for (const id of e.ids || []) {
+      if (open.has(id)) { open.get(id)[1] = e.t / 50; open.delete(id) }
+      if (openA.has(id)) { openA.get(id)[1] = e.t / 50; openA.delete(id) }
+    }
+  }
+  // recorded: the entity's pose (harness: extra.emerge / extra.dig while Pose is EMERGING / DIGGING)
+  const run = new Map()
+  for (const row of rec.entities || []) {
+    if (row[2] !== 'warden') continue
+    const k = row[9] && (row[9].emerge ? 'emerge' : row[9].dig ? 'dig' : null), cur = run.get(row[1])
+    if (k && (!cur || cur[2] !== k)) { const r = [row[0], Infinity, k]; run.set(row[1], r); if (!WARDEN_ANIM.has(row[1])) WARDEN_ANIM.set(row[1], []); WARDEN_ANIM.get(row[1]).push(r) }
+    if (!k && cur) { cur[1] = row[0]; run.delete(row[1]) }
   }
 }
 // TNT minecarts primed (harness cart_primed marks, entity status 10): id -> tick
@@ -975,7 +1000,10 @@ const LINES = []
   })
 }
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
-const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : (process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look)
+// stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
+const LOOKS = require('./renderer/looks')
+const LOOK_RAW = LOOKS.resolveLook(process.env.LOOK_JSON ? (/^\s*[{"]/.test(process.env.LOOK_JSON) ? JSON.parse(process.env.LOOK_JSON) : process.env.LOOK_JSON.trim()) : STUNT_MOD.look)
+const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : LOOK_RAW
 // Idle life (docs/movie_engine.md): nobody stands perfectly still. Two slow sines per entity (periods of
 // 6-24 s, phases from its id), in [-1, 1]; deterministic, so frames render in any order.
 function idleNoise (id, t) {
@@ -1145,17 +1173,25 @@ function fixedDisplay (item) {
 }
 // an item's display.thirdperson_righthand, following the model's parents in the client jar
 const DISPLAY = new Map()
-function thirdPersonDisplay (item) {
-  if (DISPLAY.has(item)) return DISPLAY.get(item)
+function thirdPersonDisplay (item, left = false) {
+  const key = left ? `${item}|left` : item
+  if (DISPLAY.has(key)) return DISPLAY.get(key)
   const jar = path.join(__dirname, 'work', 'client', `${rec.version}.jar`)
   let name = itemModel(item), out = null
+  const slot = left ? 'thirdperson_lefthand' : 'thirdperson_righthand'
   for (let k = 0; k < 8 && name && !out; k++) {
     let m = null
     try { m = JSON.parse(require('child_process').execFileSync('unzip', ['-p', jar, `assets/minecraft/models/${name.replace(/^minecraft:/, '')}.json`], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch (e) { break }
-    if (m.display && m.display.thirdperson_righthand) out = m.display.thirdperson_righthand
+    if (m.display && m.display[slot]) out = m.display[slot]
     name = m.parent
   }
-  DISPLAY.set(item, out)
+  // the left hand: its own transform, else the right hand's (ItemTransforms), mirrored by ItemTransform.apply
+  // (rotation y and z and translation x negated)
+  if (left) {
+    const d = out || thirdPersonDisplay(item)
+    out = d && { rotation: [(d.rotation || [0, 0, 0])[0], -(d.rotation || [0, 0, 0])[1], -(d.rotation || [0, 0, 0])[2]], translation: [-(d.translation || [0, 0, 0])[0], (d.translation || [0, 0, 0])[1], (d.translation || [0, 0, 0])[2]], scale: d.scale || [1, 1, 1] }
+  }
+  DISPLAY.set(key, out)
   return out
 }
 // an item's flat sprite ('item/<texture>'), or null for block items: its own name, else the
@@ -1558,6 +1594,7 @@ function camAtLive (t) {
   app.get('/page.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'page.js')))
   app.get('/entities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entities.js')))
   app.get('/blockentities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'blockentities.js')))
+  app.get('/poses.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'poses.js')))
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
   // our own player skins (skins/, scripts/make_skins.py) beside the jar's: stunt.cast names either; <skin>_glow.png lights a part full bright
@@ -1618,7 +1655,7 @@ function camAtLive (t) {
     const r = L.reflect, c = r.center || [0, 0]
     return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look) || null) })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null) })
 
   const send = async (list) => {
     const id = String(blobId++)
@@ -1649,7 +1686,19 @@ function camAtLive (t) {
   // particles from recorded events (block crumbs use the block's particle texture in the atlas)
   const PARTS = []
   const mcDataR = require('minecraft-data')(rec.version)
-  for (let ev of (rec.timeline || []).filter(e => e.event === 'particles')) {
+  // a warden emerging or digging (Warden.clientDiggingParticles): crumbs of the block it's coming through, every
+  // other tick while the animation runs (only recordings with an emerge/dig: nothing changes for the others)
+  const DIG_EVENTS = []
+  for (const [id, runs] of WARDEN_ANIM) {
+    for (const [a, b, k] of runs) {
+      for (let tk = Math.ceil(a); tk < Math.min(b, a + (k === 'emerge' ? 120 : 90)) && tk < P.length; tk += 2) {
+        const p = entityPosAt(id, tk); if (!p) continue
+        const below = mesher.world.getBlock(new Vec3(Math.floor(p.x), Math.floor(p.y) - 1, Math.floor(p.z)))
+        if (below && below.name !== 'air') DIG_EVENTS.push({ event: 'particles', type: 'dig', t: tk * 50, x: p.x, y: Math.floor(p.y), z: p.z, block: below.name })
+      }
+    }
+  }
+  for (let ev of (rec.timeline || []).filter(e => e.event === 'particles').concat(DIG_EVENTS)) {
     // a drip (obsidian tear) falls to the first solid block below its face
     if (ev.type === 'obsidian_tear' && ev.floorY === undefined) {
       let fy = null
@@ -1764,6 +1813,48 @@ function camAtLive (t) {
       }
     }
   }
+  // lit campfires smoke (CampfireBlockEntity.particleTick, client side: each tick a 0.11 chance of 2-3 cosy-smoke
+  // puffs, a signal fire's live ~3x longer), from 130 ticks before the recording so the column is already up. Found
+  // by block state like the block entities below: in the chunks, and placed or lit by the recording's block changes.
+  // Effects added after Shorts were published stay off for older recordings, so a re-render of a published Short
+  // is pixel-identical: on for rec.engine >= 2 (lib/harness.js writes it), or stunt.campfireSmoke / CAMPFIRE_SMOKE=1
+  // (false / 0 turn it off)
+  const smokeOn = process.env.CAMPFIRE_SMOKE ? process.env.CAMPFIRE_SMOKE === '1' : STUNT_MOD.campfireSmoke ?? ((rec.engine || 1) >= 2)
+  if (smokeOn) {
+    const PB = require('prismarine-block')(rec.version), FIRE = new Map()   // state -> { lit, signal }
+    for (const nm of ['campfire', 'soul_campfire']) {
+      const b = MC.blocksByName[nm]; if (!b) continue
+      for (let sid = b.minStateId; sid <= b.maxStateId; sid++) { const pr = PB.fromStateId(sid, 0).getProperties(); FIRE.set(sid, { lit: pr.lit === true || pr.lit === 'true', signal: pr.signal_fire === true || pr.signal_fire === 'true' }) }
+    }
+    const fires = new Map()   // 'x,y,z' -> [[tick, state]]
+    if (FIRE.size) {
+      const v = new Vec3(0, 0, 0)
+      for (const [key, col] of Object.entries(mesher.world.columns)) {
+        const [cx, cz] = key.split(',').map(Number)
+        ;(col.sections || []).forEach((sec, si) => {
+          if (!sec || (sec.palette && !sec.palette.some(id => FIRE.has(id)))) return
+          const y0 = mesher.minY + si * 16
+          for (let y = y0; y < y0 + 16; y++) for (let z = 0; z < 16; z++) for (let x = 0; x < 16; x++) {
+            v.x = x; v.y = y; v.z = z
+            const st = col.getBlockStateId(v)
+            if (FIRE.has(st)) fires.set(`${cx + x},${y},${cz + z}`, [[-Infinity, st]])
+          }
+        })
+      }
+      for (const b of rec.blocks || []) {
+        const k = `${b[1]},${b[2]},${b[3]}`
+        if (FIRE.has(b[4]) || fires.has(k)) { if (!fires.has(k)) fires.set(k, [[-Infinity, -1]]); fires.get(k).push([b[0], b[4]]) }
+      }
+    }
+    for (const [k, runs] of fires) {
+      const [x, y, z] = k.split(',').map(Number)
+      for (let tick = -130; tick < P.length; tick++) {
+        let st = -1; for (const [a, s0] of runs) if (a <= tick) st = s0
+        const f = FIRE.get(st)
+        if (f && f.lit) PARTS.push(...particles.spawn({ type: 'campfire_smoke', t: tick * 50, x, y, z, signal: f.signal }))
+      }
+    }
+  }
   PARTS.sort((a, b) => a.t0 - b.t0)
   const MAXLIFE = PARTS.reduce((m, p) => Math.max(m, p.life || 0), 0) + 1
   const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(x, y, z)); return !!(b && b.isCube && !b.transparent) }
@@ -1796,7 +1887,9 @@ function camAtLive (t) {
         }
       }
       const l = p.bright ? [1, 1, 1] : lightmap(ls, lb)
-      out.push({ x: s.x, y: s.y, z: s.z, size: s.size, tex: s.tex || p.tex, uv: p.uv, color: p.color.map((c, i) => c * l[i]) })
+      const o = { x: s.x, y: s.y, z: s.z, size: s.size, tex: s.tex || p.tex, uv: p.uv, color: p.color.map((c, i) => c * l[i]) }
+      if (s.alpha !== undefined) { if (s.alpha <= 0.01) continue; o.alpha = s.alpha }   // translucent sprites (campfire smoke)
+      out.push(o)
     }
     return out
   }
@@ -2053,7 +2146,7 @@ function camAtLive (t) {
       const c = shotCam(shotNow, t, solidAt); if (c) Object.assign(cam, c); cam.aim = null
       // the cinematic look (stunt.look): letterbox bars and depth of field on camera shots (a shot's dof: false,
       // or { aperture, focus: TARGET }; the stunt's look.dof turns it on for every camera shot)
-      const LK = process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look   // (LOOK_JSON='{...}': try a look on any recording)
+      const LK = LOOK_RAW   // (LOOK_JSON='{...}': try a look on any recording)
       if (LK && !process.env.LOOK_OFF) {
         if (LK.letterbox && !process.env.NO_BARS) cam.bars = LK.letterbox   // (NO_BARS=1: a vertical Short from a movie scene)
         const dof = shotNow.dof ?? LK.dof
@@ -2062,6 +2155,9 @@ function camAtLive (t) {
       }
     }
     const third = THIRD || camShot
+    // the grade per frame (renderer/looks.js): look 'auto' follows the time of day (day -> golden -> night), and a
+    // shot's `mood` ('tense') grades that shot; a fixed look leaves cam.grade unset and renders exactly as before
+    if (LOOK_RAW && !process.env.LOOK_OFF && process.env.LOOK !== '0') { const gr = LOOKS.gradeAt(LOOK_RAW, curDayTime, shotNow && shotNow.mood); if (gr) cam.grade = gr }
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
     cam.inLava = !!(inBlock && inBlock.name === 'lava')
@@ -2341,6 +2437,28 @@ function camAtLive (t) {
       }
       const sw = (ENT_SWINGS.get(e.id) || []).find(s0 => s0 <= t && t - s0 < 6)
       e.player = { walkPos: wp, walkSpeed: ws, attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime: 0, hurt: (MOB_HURT.get(e.id) || []).some(h => t >= h && t - h < 10), crouch: !!e.extra.sneak }
+      // the off-hand item (harness: extra.offhand) and staged poses (ACT_POSE: sitting, an item at the face)
+      if (e.extra.offhand) {
+        const o = e.extra.offhand, oh = { key: o, display: thirdPersonDisplay(o, true) }, bl = MC.blocksByName[o]
+        if (spriteOf(o)) oh.tex = spriteOf(o)
+        else if (bl) {
+          oh.state = bl.defaultState
+          if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+        }
+        e.player.offHeld = oh
+      }
+      // staged poses, each eased in over its blend from the mark and out over it after the run ends (a pose that a
+      // new mark replaces hands over: the old one eases out while the new one eases in)
+      const poses = []
+      for (const [a, b, list] of ACT_POSE.get(e.id) || []) {
+        for (const q of list) {
+          const bl = POSES.blendOf(q.name), k = Math.min(1, (t - a) / bl, (b + bl - t) / bl)
+          if (t >= a && k > 0) { const ez = k * k * (3 - 2 * k); poses.push({ ...q, k: ez }) }
+        }
+      }
+      // using an item, recorded (harness extra.using: LivingEntity's using-item flag): drink or eat, that hand
+      if (e.extra.using && !poses.length) { const it = (e.extra.usingOff ? e.extra.offhand : n) || ''; poses.push({ name: /potion|bottle|milk|stew|soup/.test(it) ? 'drink' : /horn|spyglass/.test(it) ? 'use' : 'eat', off: !!e.extra.usingOff, k: 1 }) }
+      if (poses.length) e.player.poses = poses
       // idle life (standing still: a slow head drift) and the talking head (lines marked with this name)
       const still = Math.max(0, 1 - ws * 8), nz = idleNoise(e.id, t), tk = talkMotion(user, t)
       e.headYaw = (e.headYaw ?? e.yaw) + nz[0] * 0.09 * still + (tk ? tk.yaw : 0)
@@ -2361,6 +2479,12 @@ function camAtLive (t) {
       const st = STAGED.get(e.id); if (!st) continue
       const run = st.find(([a, b]) => t >= a && t < b)
       if (run) e.extra = { ...(e.extra || {}), ...run[2] }
+    }
+    for (const e of ents) {
+      if (e.name !== 'warden' || !WARDEN_ANIM.has(e.id)) continue
+      const run = WARDEN_ANIM.get(e.id).find(([a, b]) => t >= a && t < b)
+      if (run) e.extra = { ...(e.extra || {}), [run[2]]: { t: run[0] } }
+      else if (e.extra) { delete e.extra.emerge; delete e.extra.dig }
     }
     for (const e of ents) {
       if (e.name !== 'warden' || !ROAR_START.has(e.id)) continue

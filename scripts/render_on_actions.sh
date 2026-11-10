@@ -9,18 +9,35 @@
 #
 # Queueing commits, on top of your HEAD in a throwaway worktree: your working copies of stunts/, lib/ and stories/
 # (uncommitted edits included, so the edit uses the stunt exactly as recorded), the gzipped recording at
-# renders/slices/<name>.rec.json.gz and the job at renders/slices.json, then force-pushes it to render/<name>
-# (RENDER_BRANCH to change it). That push starts the workflow. Commit other uncommitted changes (edit.py, render.js...)
-# first: only those three folders are carried over. The finished Short comes back on the same branch
-# (renders/out/<name>.mp4 + renders/result.json), so fetching needs only git; it's also the run's "short" artifact.
-# Env: SLICES (16, at most 32; cut to equal estimated render time), FPS (60), RENDER_BRANCH (render/<name>), REMOTE (origin).
+# renders/slices/<name>.rec.json.gz and the job at renders/slices.json, then force-pushes it to its OWN render branch:
+# render/<name>, or, if this session may only push its own prefix (claude/...), <prefix>/render-<name>. Your working
+# branch is never pushed or written: the run commits the Short back to the render branch, and pushing to your branch
+# while it renders can't break anything. RENDER_BRANCH still picks a branch, but never your current branch (it becomes
+# <branch>-render-<name>). The branch used is kept in work/<name>.render_branch for --fetch/--wait, which also look at
+# render/<name> and <prefix>/render-<name>. Commit other uncommitted changes (edit.py, render.js...) first: only those
+# three folders are carried over. The finished Short comes back on the render branch (renders/out/<name>.mp4 +
+# renders/result.json), so fetching needs only git; it's also the run's "short" artifact.
+# Env: SLICES (16, at most 32; cut to equal estimated render time), FPS (60), RENDER_BRANCH, REMOTE (origin).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 REMOTE=${REMOTE:-origin}
 
+# the render branches to look in, most likely first: RENDER_BRANCH, the one the queue used, render/<name>, <prefix>/render-<name>
+candidates () {
+  local name=$1 cur prefix
+  cur=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true); prefix=${cur%%/*}
+  { [ -n "${RENDER_BRANCH:-}" ] && echo "$RENDER_BRANCH"
+    [ -f "work/$name.render_branch" ] && cat "work/$name.render_branch"
+    echo "render/$name"
+    [ -n "$prefix" ] && [ "$prefix" != "$cur" ] && echo "$prefix/render-$name"; } | awk 'NF && !seen[$0]++'
+}
 fetch () {
-  local name=$1 branch=${RENDER_BRANCH:-render/$1}
-  git fetch -q "$REMOTE" "$branch" || { echo "no branch $branch on $REMOTE"; return 2; }
+  local name=$1 branch="" b
+  for b in $(candidates "$name"); do
+    if git ls-remote --exit-code --heads "$REMOTE" "$b" >/dev/null 2>&1; then branch=$b; break; fi
+  done
+  [ -n "$branch" ] || { echo "no render branch for $name on $REMOTE (looked for: $(candidates "$name" | tr '\n' ' '))"; return 2; }
+  git fetch -q "$REMOTE" "$branch" || { echo "could not fetch $branch from $REMOTE"; return 2; }
   local res
   if ! res=$(git show FETCH_HEAD:renders/result.json 2>/dev/null); then echo "$branch: still rendering"; return 3; fi
   local status run
@@ -57,7 +74,10 @@ esac
 NAME=$1
 STUNT=${2:-${STUNT:-$NAME}}
 REC=work/$NAME.rec.json
+CUR=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo HEAD)
 BRANCH=${RENDER_BRANCH:-render/$NAME}
+# never the working branch: the run commits the finished Short back to the branch it was queued on
+if [ "$BRANCH" = "$CUR" ]; then BRANCH="$CUR-render-$NAME"; echo "RENDER_BRANCH is your working branch: using $BRANCH instead (Actions would write to it)"; fi
 [ -f "$REC" ] || { echo "no $REC: record it first"; exit 1; }
 [ -f "stunts/$STUNT.js" ] || { echo "no stunts/$STUNT.js"; exit 1; }
 node -e "JSON.parse(require('fs').readFileSync(process.argv[1], 'utf8')).poses.length || process.exit(1)" "$REC" || { echo "$REC has no poses"; exit 1; }
@@ -89,7 +109,17 @@ EOF
   git add -f renders/slices.json "renders/slices/$NAME.rec.json.gz"
   git -c user.name="${GIT_AUTHOR_NAME:-$(git config user.name || echo hellobuh)}" -c user.email="${GIT_AUTHOR_EMAIL:-$(git config user.email || echo hellobuh@users.noreply.github.com)}" \
     commit -qm "render-slices: $NAME ($STUNT) from $SRC"
-  git push -qf "$REMOTE" "HEAD:refs/heads/$BRANCH"
+  if ! git push -qf "$REMOTE" "HEAD:refs/heads/$BRANCH" 2>"$WT.push.err"; then
+    # a session that may only push its own prefix (claude/...): the same render branch under that prefix
+    prefix=${CUR%%/*}
+    if [ -z "${RENDER_BRANCH:-}" ] && [ -n "$prefix" ] && [ "$prefix" != "$CUR" ] && git push -qf "$REMOTE" "HEAD:refs/heads/$prefix/render-$NAME"; then
+      echo "render/$NAME was refused ($(head -c 200 "$WT.push.err" | tr '\n' ' ')): queued on $prefix/render-$NAME"
+      echo "$prefix/render-$NAME" > "$WT.branch"
+    else cat "$WT.push.err" >&2; rm -f "$WT.push.err"; exit 1; fi
+  fi
+  rm -f "$WT.push.err"
 )
+[ -f "$WT.branch" ] && { BRANCH=$(cat "$WT.branch"); rm -f "$WT.branch"; }
+mkdir -p work && echo "$BRANCH" > "work/$NAME.render_branch"
 echo "queued $NAME on $BRANCH ($(du -h "$WT/renders/slices/$NAME.rec.json.gz" | cut -f1) recording). Actions renders it in ${SLICES:-16} slices;"
 echo "get it with: scripts/render_on_actions.sh --wait $NAME"

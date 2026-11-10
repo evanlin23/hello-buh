@@ -67,3 +67,27 @@ For the owner's morning. Newest at the bottom.
 
   Sent the owner the A/B on runaway and nitwit.
 - Owner decision for the morning: the new mix vs the old one (A/B), and any music track to veto.
+- 07:46 UTC check-in. Everything is moving:
+  - Good Boy: re-recording v14 at the natural-tempo voice.
+  - Dog on the Hill: re-aiming its shots off flat ground, then re-recording.
+  - Light Sleeper: running.
+  - Thirty-One Raids: script r4 is narrator-first; it re-voices at 08:00 when the TTS quota resets.
+  - The ergonomics smoke test: main merged in, now checking the chest-screen frames.
+  - Engine round 2 is queued (docs/engine_requests.md backlog); it starts once ergonomics and cinematic are on main.
+  - Audio: the owner left the mix to the lead, so the new mix stays.
+- 07:55 UTC: Pip's exact setup is now the cast narrator (23146e3, de6c94a).
+- Merged the look standards (7b101ab, docs/look.md):
+  - captions in Poppins Black, max 840 px wide (clear of the like column);
+  - mood grades village_day / golden_hour / eerie_night / tense, with `look: 'auto'` following the time of day;
+    night is no longer crushed to black;
+  - framing sizes (a medium-shot subject at least 45% of the game view);
+  - lighting rules (a lantern within 4 blocks of every face at night);
+  - a casting guide and a set readability checklist;
+  - no text or emoji pops (top story channels use none).
+
+  Non-story Shorts render identically. Sent the owner the font sheet, the grade before/after and the effects sheet.
+- Questions for the owner's morning:
+  1. Font: Poppins Black OK?
+  2. Captions: test one word at a time (Xenost/Ashyyy style) vs 2-3 words?
+  3. The kid narrator: settled (Pip).
+  4. The audio mix: the lead's call (new mix).

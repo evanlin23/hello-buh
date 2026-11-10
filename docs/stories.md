@@ -52,6 +52,7 @@ Owner, 2026-11-10: "I feel like the cinematic should be the default." The movie 
 main, so a story stunt gets it by exporting a few fields; nothing else in the pipeline changes (voice.py, edit.py
 --story, rec_check, preview.sh, render_on_actions.sh all work as before). Pilot: `story_good_boy`.
 ```js
+look: 'auto',   // the grade follows the time of day (docs/look.md); or a mood, or { mood, ...overrides }, or the full form:
 look: { grade: {...} | 'dawn' | 'night', bloom: 0.5, vignette: 0.38, grain: 0.02, dof: { aperture: 0.9 }, shadows: true, rays: 0.5 },
 shots: { pov: { pov: true }, est: { path: [[0, dx, dy, dz], [2.4, ...]], lookPath: [...], ease: true }, ... },
 self: { model: 'wolf', eye: 0.68, extra: { tame: true, collar: 14 } },   // only for a narrator who isn't a player
@@ -124,12 +125,22 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 | stunt options | top level of the stunt module | `hideHand: true` (no first-person hand: a narrator who isn't Steve), `time`, `weather` ('rain'/'thunder'), `brightness`; mid-stunt `ctx.setTime(n)`, `ctx.setWeather(w)`. Set `/gamerule log_admin_commands false` for per-tick `execute as` moves. |
 | song | `scripts/add_song.py` (via publish.js) | a story gets the **mood score** (docs/audio.md), not NCS phonk: story.json `mood` picks a Kevin MacLeod CC BY track (music/score.json, fetched by scripts/fetch_music.py, credited in the description) at -26 LUFS ducked 7 dB under each line, out 0.45 s before `payoff`, then the payoff track. Stunt Shorts keep NCS at -13. |
 
-Captions: Schibsted Grotesk Black (OFL, `assets/fonts/`) at 96 px, white with a dark outline and a soft shadow,
+Captions: Poppins Black (OFL, `assets/fonts/`; chosen by a font A/B, docs/look.md) at 96 px, max 840 px wide (clear of
+the Shorts action column), white with a dark outline and a soft shadow,
 key words in the story's colour, centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "do 1 at a time if the top do it 1 at a time. the font is ok yes just whatever is best".**
+  Story captions show **one word at a time** (Xenost and Ashyyy: one word in all 48 sampled frames), timed by
+  voice/words.json word starts, in Poppins Black. Each word pops in (0.1 s, the existing `POP`) and cuts out hard
+  on the next word: no fade or slide out, which top channels don't use either. story.json `"captions": "chunk"`
+  brings back the 2-3 word chunks.
+- **Owner, 2026-11-10: "you choose for the audio mix, im not an expert there".** The lead picked the new story mix
+  (docs/audio.md): mood score with ducking, a drop-out and hit at the payoff, room tone, vanilla on-screen sounds,
+  -14 LUFS. It's measured, not listened to by the owner, so a story's review checks the mix by ear-proxy
+  (scripts/audio_measure.py) and any owner note on a track or level overrides it.
 - **Owner, 2026-11-10, after the kid-narrator audition: "all of the current ones seem to be too sped up. i kinda like
   the pip here"** (Dog on the Hill v3: Leda, natural tempo, no pitch shift; measured ~4.1 words/s while speaking,
   ~0.45 s between sentences, 2.85 words/s overall). The narrator is Leda as voiced there: **no time-stretch and no
@@ -288,7 +299,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - `face_on` windows are sequential (one open at a time): `face_off` before the next `face_on`.
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
-- No block entities render (beds, bells, chests, signs): build sets without them.
+- Block entities render now (beds, bells, chests with their lids, signs, banners, skulls, shulkers), and an opened chest, barrel or shulker box shows its container screen with the contents (docs/engine_features.md). Anything else the renderer lacks: build it (docs/engine_features.md), don't stage around it.
 - Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands. Keep sneak (and
   any other key the next shot needs) held through the cut (`K.cut` does): a stunt that clears its controls before the
   teleport stands the camera up for a tick and it eases back down on screen. `scripts/rec_check.py` flags both.

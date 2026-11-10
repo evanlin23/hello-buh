@@ -153,6 +153,32 @@ function spawn (ev, blockTex) {
     P({ x: ev.x, y: ev.y, z: ev.z, vx: (r() - 0.5) * 0.01, vy: 0.008 + r() * 0.006, vz: (r() - 0.5) * 0.01,
       g: -0.004, drag: 0.96, life: 8 / (r() * 0.8 + 0.2), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 0.75, anim: ['particle/generic_', 8, 'rev'], color: [g, g, g] })
   }
+  if (ev.type === 'dig' && blockTex) {
+    // a warden coming up through the ground (Warden.clientDiggingParticles): crumbs of the block under it thrown up
+    // around its feet (ev.w: the ring's width, default the warden's 0.9)
+    const w = ev.w || 0.9
+    for (let i = 0; i < (ev.count || 8); i++) {
+      const uo = r() * 3, vo = r() * 3
+      P({ x: ev.x + (r() - 0.5) * w * 1.6, y: ev.y + 0.05, z: ev.z + (r() - 0.5) * w * 1.6, vx: (r() - 0.5) * 0.12, vy: 0.12 + r() * 0.15, vz: (r() - 0.5) * 0.12,
+        g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1) + 4, size: 0.05 * (r() * 0.5 + 0.5) * 2 * 1.5, collide: true,
+        tex: 'atlas', uv: [blockTex.u + uo * blockTex.su / 4, blockTex.v + vo * blockTex.sv / 4, blockTex.su / 4, blockTex.sv / 4], color: ev.tint ? ev.tint.map(c => c * 0.6) : [0.6, 0.6, 0.6] })
+    }
+  }
+  if (ev.type === 'campfire_smoke') {
+    // one tick of a lit campfire (CampfireBlockEntity.particleTick): a 0.11 chance of 2-3 CampfireSmokeParticles
+    // (CampfireBlock.makeParticles) at x/z + 0.5 +- r/3, y + r + r, rising 0.07 a tick (+ r/500), drifting by
+    // +-r/5000 a tick, no friction; big_smoke_0..11 (one picked), 3x the base size, alpha 0.9 (signal 0.95),
+    // lives 80-129 ticks (signal 280-329) and fades 0.015 a tick over its last 60 (translucent)
+    if (r() < 0.11) {
+      const n = 2 + Math.floor(r() * 2)
+      for (let i = 0; i < n; i++) {
+        P({ x: ev.x + 0.5 + r() / 3 * (r() < 0.5 ? 1 : -1), y: ev.y + r() + r(), z: ev.z + 0.5 + r() / 3 * (r() < 0.5 ? 1 : -1),
+          vx: (r() - 0.5) / 2500 * 8, vy: 0.07 + r() / 500, vz: (r() - 0.5) / 2500 * 8, g: 3e-6, drag: 1,
+          life: ev.signal ? 280 + Math.floor(r() * 50) : 80 + Math.floor(r() * 50), size: 0.1 * (r() * 0.5 + 0.5) * 2 * 3,
+          tex: `particle/big_smoke_${Math.floor(r() * 12)}`, color: [1, 1, 1], alpha: ev.signal ? 0.95 : 0.9, fade: 60 })
+      }
+    }
+  }
   if (ev.type === 'dust') {
     // DustParticle (DustParticleOptions, REDSTONE: colour (1, 0, 0), scale 1): Particle's random start
     // velocity x 0.1 (a slow drift, +0.01 up), friction 0.96, no gravity, colour x (0.6..1) x (0.8..1),
@@ -253,7 +279,9 @@ function state (p, t, solidAt) {
   }
   const f = age - steps
   const frame = p.anim ? Math.min(p.anim[1] - 1, Math.floor(age * p.anim[1] / p.life)) : null
-  return { x: x + vx * f, y: y + vy * f, z: z + vz * f, size: p.size, tex: p.anim ? p.anim[0] + (p.anim[2] === 'rev' ? p.anim[1] - 1 - frame : frame) : undefined }
+  const o = { x: x + vx * f, y: y + vy * f, z: z + vz * f, size: p.size, tex: p.anim ? p.anim[0] + (p.anim[2] === 'rev' ? p.anim[1] - 1 - frame : frame) : undefined }
+  if (p.alpha !== undefined) o.alpha = p.fade ? p.alpha - Math.max(0, age - (p.life - p.fade)) * p.alpha / p.fade : p.alpha
+  return o
 }
 
 module.exports = { spawn, state }
