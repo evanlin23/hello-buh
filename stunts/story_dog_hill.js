@@ -66,7 +66,7 @@ module.exports = {
     reunion: { dof: { aperture: 0.6 }, path: [[0, 1.6, 1.8, 4.6], [5, 1.8, 1.7, 4.2]], look: [2.8, 1.9, 0.5], fov: 50 },
     sit: { path: [[0, 14, 2.6, 4.0], [5, 14.6, 2.7, 4.4]], look: [2.5, 1.8, 0.4], fov: 46 },   // a wide from out over the slope: the two small on the hill (addendum)
     // the end: the opening crane in reverse, pulling up and out over the drop (the loop, shown not said)
-    end: { path: [[0, 3.8, 3.0, -2.6], [1.6, -1.5, 9, -4.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // the opening swoop in reverse
+    end: { path: [[0, -3, 10, -4.6], [1.6, -7.5, 15, -6.6]], look: [0.6, 1.6, 0.5], fov: 54 },   // rising into the opening's frame: the dog alone above the village (the loop)
   },
   caption: 'why won\'t this dog stand up?',
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
@@ -282,14 +282,15 @@ module.exports = {
     say1('L04')
     await run(L('L04'), (k) => {
       Object.assign(pip, { yaw: k < 6 ? 180 : 160, pitch: k < 6 ? 10 : -10 })
-      if (k === 2) say(`/summon item ${X + 0.7} ${F + 1.7} ${Z + 1.6} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Motion:[0.18d,0.22d,-0.12d]}`)
+      if (k === 3) say(`/summon item ${X + 0.8} ${F + 1.9} ${Z + 1.5} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.16d,0.3d,-0.2d]}`)   // high past his nose, on THROW
     })
-    // ---- L05: the collar
+    // ---- L05: the collar (the stick goes on the cut: it landed on the patch and read as something there)
+    say('/kill @e[type=item,tag=stick]')
     cut('collar'); say1('L05')
     await run(L('L05'), (k) => { pip.yaw = 180 + 8 * Math.sin(k / 9); pip.pitch = 10 })
     // ---- L06: the empty patch (Pip steps back out of the over-the-shoulder lens: behind the camera, by the lantern)
     cut('patch', { time: 6000 }, () => place('pip', { x: -0.6, y: 1, z: -1.2, yaw: -33 })); say1('L06')
-    await run(L('L06'), (k) => { pip.yaw = -33 + 8 * Math.sin(k / 12) })
+    await run(L('L06'), (k) => { const u = ease(k / 30); pip.x = lerp(-0.6, 0.0, u); pip.z = lerp(-1.2, -0.7, u); pip.yaw = -33 + 8 * Math.sin(k / 12) })   // a step closer (the top-down holds still otherwise)
     // ---- L07: the hut
     cut('hut'); say1('L07')
     await run(L('L07'), (k) => { pip.yaw = lerp(-33, 20, k / 40) })
