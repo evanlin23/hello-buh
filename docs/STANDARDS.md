@@ -30,7 +30,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 7. **Write like a person**: short sentences, **no "..." anywhere**, no em dashes or semicolons, US English, no AI
    words; fiction, never "true story"; nothing aimed at kids in the title or description; one quotable line short
    enough to type. Check: review (an ellipsis shows up in pace as an opening pause). r:rd2e17b r:rc7ba87 r:r810b66
-8. **The hero is Milo** (default Steve skin); HelloBuh is the channel. In-game names (death screen, chat) say Milo. r:raa4daf r:rc1ccff
+8. **The hero is Buh** (default Steve skin); HelloBuh is the channel. His name is only in-game text (chat, death screen, name tag); **nobody says it aloud**. r:raa4daf r:rc1ccff r:rf8d2e6 r:rdd0a3e
 9. **Length 30-45 s** (pace BLOCK < 30 s, WARN > 45 s). r:rcb4ffc
 10. **The bar is a polished animated short**, serious and professional, with more invention in the plots. r:r416ae4 r:r4b4332
 11. **The story decides, the engine follows**: a shot the renderer can't draw is a feature to build

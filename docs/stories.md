@@ -138,6 +138,11 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "Can we have the main character be called buh, and just not have anyone say his name?"**
+  The hero is **Buh** again (supersedes Milo): in-game text only (chat "Buh joined the game", death screens, name tags;
+  stunt `botName: 'Buh'`). **No line ever says his name aloud**: not the narrator, not any character. The critic
+  treats a spoken hero name as a must-fix; characters address him without it ("kid", "buddy", or nothing). Voice
+  `milo` and `buh` are the same cast entry. Canon and STANDARDS use Buh.
 - **Owner, 2026-11-10: "can we make the movement smoother when we are breaking blocks? right now it looks very
   jerky" and "when we 'look' at things, it feels we are looking slightly too low."** Digging moves the camera the
   way a real player's mouse does (smooth, no snaps between blocks: agent/smooth-dig), and a look puts the subject's
