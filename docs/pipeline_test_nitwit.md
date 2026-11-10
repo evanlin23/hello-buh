@@ -117,3 +117,15 @@ setup, and ~15 if slices were balanced), still renders by hand before the previe
 3. Worker setup says symlink nothing; the lead's brief had me symlink node_modules, songs, sfx/mixkit and work. The
    docs don't say a worktree needs `work/` (server, assets) linked: without it run.sh would re-download and rebuild
    the server and assets. (open: doc note)
+
+## Follow-up fixes (agent/test-gaps, 2026-11-10)
+- 18 / Actions: slices cut by estimated render time (scripts/render_cost.py), 16 by default; render.js re-meshes the world only
+  when the sky light factor changes, in worker threads, with a faster relight diff. story_nitwit on Actions: slices 2.1-3.75 min
+  (were 2.5-12), the whole run 10.4 min (was 20.5).
+- 8 / 16 preview: 26 min -> 12.6 min on the same recording (render jobs split by cost, 5.5-6.4 min each; the rest is the edit).
+- 10 flaky set-up: waits for the chunk under the bot and the set's chunks (4.5-9.8 s after the biome teleport); 3/3 first tries.
+- 6 set-up COMMAND ERROR now fails the attempt (exit 6); rec_check flags terrain left in a cleared set (9) and says when its
+  set check did not run (15).
+- 11 render.js stops on a stunt that fails to load (ALLOW_NO_STUNT=1 to go on).
+- 5 publish.js records the commit the render used (render branch on Actions, HEAD here), no `fatal:`.
+- 17 was obsidian (vanilla), not the renderer: see that item.
