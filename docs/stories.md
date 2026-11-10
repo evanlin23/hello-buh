@@ -130,6 +130,19 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (in the Dog on the Hill session): "the start should be delivered all at once right?" / "we can
+  have pauses later, the opening must be in one breath"; "is milo a woman?"; "what does the day one mean bro".**
+  - Line 1 is one quick breath, no internal pause (`./hb pace` blocks one over 0.2 s). Re-take it; trimming silence
+    doesn't fix a dragged word.
+  - **No "..." anywhere in a script.** Gemini turns an ellipsis into a stop and drops dramatic lines into a breathy
+    whisper. Use short sentences, and direct dramatic lines "full volume, excited".
+  - A kid narrator is **Leda** (cast `child`), unshifted (the +2 semitone filter warbles). Erinome reads as an adult
+    woman: she's the storyteller, never a kid.
+  - Endings explain themselves: a sting the viewer has to decode doesn't land ("Day one." failed, "Day one. Again."
+    worked).
+  - TTS models (2026-11-10): gemini-2.5-flash/pro-preview-tts hit the shared daily quota first; gemini-3.8-flash-tts
+    works (keep bracketed directions short or it reads them aloud); gemini-3.1-flash-tts-preview can refuse with SAFETY.
+    Listening checks: gemini-3.5-flash (retry 502/503).
 - **Owner, 2026-11-10: "sure 4.5 is fine bc that matches the best. also, we should have absolutely no pauses in like
   the first few seconds right, bc those are the most critical? Like the other this dog has been sitting there has a
   brief pause right in the first few seconds."** The narrator talks at ~4.5 words/s while speaking (runaway: 4.6).

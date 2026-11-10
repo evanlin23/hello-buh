@@ -322,9 +322,11 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         # pause inside a line, or a gap over ~0.5 s, reads as the video stalling
         for at, ln, where in sorted(pauses):
             between = where.startswith("between")
-            if ln > (0.6 if between else 0.35):
+            first = where == f"inside {lines[0][1]}"
+            if ln > (0.6 if between else 0.2 if first else 0.35):
                 add("BLOCK", "hook", at, f"a {ln:.2f} s pause in the opening ({where}); owner: no pauses in the first seconds",
-                    "re-take the line without the '...' / tighten the cut between lines (gap <= 0.15 s) in the first 5 s")
+                    ("owner: \"the opening must be in one breath\": re-take line 1 as one quick breath (trimming silence isn't enough)" if first else
+                     "re-take the line without the '...' / tighten the cut between lines (gap <= 0.15 s) in the first 5 s"))
             elif ln > (0.45 if between else 0.25):
                 add("WARN", "hook", at, f"a {ln:.2f} s pause in the opening ({where})", "tighten it (runaway's sentence gaps: ~0.4 s)")
 
