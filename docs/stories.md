@@ -140,11 +140,14 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   voices/recipes/pip.md). Kid Puck is kept as `puck_kid`, alternative only. Supersedes the Puck rule below.
 - **Owner, 2026-11-10: "i think gemini is really bad with the voices drifting. can you ensure theres a gate or some way
   to audit this? The voices for the people seem to change like all the time take to take and even within take."**
-  Until the drift gate (agent/voice-drift: `scripts/voice_drift.py`, per line and per 1.5 s window against a locked
-  reference voiceprint) lands: **one model per character per story** (never fall back to another model on a 429
-  mid-story: wait, or re-take all of that character's lines on the new model); **short requests** (one character,
-  at most ~6 lines); **identical direction text** for a character every time; re-take a line that sounds like a
-  different person. Drift is a review blocker.
+  The drift gate: `./hb drift <stunt>` (`scripts/voice_drift.py`; docs/voices.md "Drift gate") compares every line
+  and every 1.5 s window with the character's locked reference voiceprint (`voices/refs/`) and with its other lines,
+  and blocks DRIFT, OFFREF, WOBBLE and MODELS; `./hb voice` runs it and re-takes a drifting line (max 2, the closest
+  take kept). tts.py enforces the rest: **one model per character per story** (voice.json `models`; on a 429 it stops
+  and waits instead of switching, or `--relock` re-takes all of that character's lines on the new model; the model is
+  in the take cache's key, so a fallback take can't pass as the first model's), **short requests** (at most 6 lines),
+  **identical direction text** (a story that overrides a library character's profile gets a warning). Drift is a
+  review blocker.
 - **Owner, 2026-11-10 (Good Boy session), on the narrator: "this voice is so high pitched and annoying lowkey"**
   (Leda, ~350 Hz) / **"it should still be like a kid/child? idk"** / **"kinda like the roblox shorts but more
   refined?"** / after five auditions: **"kid puck is fine"**. So: a kid narrator that isn't squeaky: Gemini Puck,

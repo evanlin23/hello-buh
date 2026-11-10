@@ -50,15 +50,23 @@ One command: `./hb voice story_<name>` (docs/voices.md "Making the voice"). It v
 proxy injects the key), cuts each take safely (Whisper picks the boundary, the cut sits in the pause's quietest point with 80+ ms
 before and 200+ ms after each line), runs `scripts/speaker_check.py` on every line (the
 right voice? the right words? any word cut off, by level and by a listening model?), re-takes the failures as single-speaker requests (at most 2 each; lines that pass
-are never re-taken), aligns the word times into `voice.json` and prints the final check. Don't hand-roll this step
+are never re-taken), then runs the drift gate (`scripts/voice_drift.py`: is every character the same person in every
+line, and against its locked reference voiceprint in `voices/refs/`?) and re-takes a drifting line up to 2 times on
+the character's locked model, keeping the closest take; aligns the word times into `voice.json` and prints the final check. Don't hand-roll this step
 (no extra Whisper installs: `./hb doctor` says what the TTS venv needs). Cast from `voices/cast.json` so recurring
 characters keep their voice and caption colour. Narrator-first: character lines of 3 words or fewer are voiced alone
 (Gemini's multi-speaker mode swapped short lines into the other voice). Save quota: cheapest model first, every
 take cached, only changed lines re-taken (`--only L05`).
+**A drifting voice is a blocker too** (owner, 2026-11-10: "The voices for the people seem to change like all the time
+take to take and even within take"): `./hb drift story_<name>` must end OK or WARN. One model per character per story
+(voice.json `models`; the narrator is locked to gemini-3.8-flash-lite-tts in voices/cast.json): if its model is out of
+quota, tts.py stops instead of switching; wait for the reset, or `--relock <cast id>=<model>` re-takes ALL of that
+character's lines on the other model. Requests stay short (at most 6 lines); never override a library character's
+`profile` in a story.
 **A line in the wrong voice is a blocker** (owner, 2026-11-10: "make sure the voices are distinct and correct"): if
 `./hb voice` ends with BLOCKERS after its re-takes, listen, change the line's text or direction, and `./hb voice
 story_<name> --only <id>`; never record over a swapped line. THIN lines: listen to them.
-**Quota out (429 on every model):** stop here, push, and leave the story for the next run; never fall back to the
+**Quota out (429 on every model, or on a character's locked model):** stop here, push, and leave the story for the next run; never fall back to the
 old sped-up single narrator.
 
 ## 3. Build the set and scenes (~40 min)

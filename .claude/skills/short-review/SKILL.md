@@ -73,6 +73,11 @@ Work in this order, and stop collecting once you have the verdict's evidence:
     a word cut off at a line's start or end or clipped in the middle (owner: "cuts stuff off"), or a caption in the
     wrong speaker's colour: `./hb voice <stunt> --check` lists SWAP, WORDS, EDGE and CLIPPED lines (re-take them:
     `./hb voice <stunt> --only <id>`), then confirm by ear;
+  - **a voice that drifts** (owner, 2026-11-10: "The voices for the people seem to change like all the time take to
+    take and even within take"): `./hb drift <stunt>` (scripts/voice_drift.py) blocks a line that sounds like a
+    different person from the character's other lines (DRIFT) or its locked reference (OFFREF), a voice that changes
+    inside a line (WOBBLE: two 1.5 s windows in a row), and a character voiced by two TTS models (MODELS). Fix with
+    `./hb voice <stunt>` (it re-takes drifting lines on the locked model and keeps the closest take); confirm by ear;
   - **the owner's four patterns (2026-11-10, 22 notes on 6 stories; `./hb owner <stunt>` checks each, with the output
     time and line id; confirm its flags on the frames and look for what it can't measure):**
     1. *superflat / tiny sets*: a shot whose visible world is mostly a flat cleared plain, a 3x3 hill, the next
