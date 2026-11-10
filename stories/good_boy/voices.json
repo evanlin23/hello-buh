@@ -1,7 +1,7 @@
 [
  {
   "id": "n1",
-  "direction": "Read this funny story fast, bright and energetic, full volume, excited; not whispery, breathy or soft. N: a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft.",
+  "direction": "Read this funny story quickly, like an excited kid talking fast to friends: bright, energetic, full volume, no pauses between sentences; not whispery, breathy or soft. N: a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft.",
   "speakers": {
    "N": "Leda"
   },
@@ -40,7 +40,7 @@
  },
  {
   "id": "n2",
-  "direction": "Read this funny story fast, bright and energetic, full volume, excited; not whispery, breathy or soft. N: a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft.",
+  "direction": "Read this funny story quickly, like an excited kid talking fast to friends: bright, energetic, full volume, no pauses between sentences; not whispery, breathy or soft. N: a bubbly, happy kid telling friends a ridiculous story; fast, bright, energetic; not whispery, breathy or soft.",
   "speakers": {
    "N": "Leda"
   },
@@ -53,7 +53,7 @@
    [
     "N",
     "L10",
-    "skeletons run from me. me!"
+    "skeletons run from me!"
    ],
    [
     "N",

@@ -84,6 +84,10 @@ def split_lines(x, texts, gap=0.18):
             for i in range(n, 0, -1):
                 k = back[i][j]; groups.append((S[k][0], S[j - 1][1])); j = k
             best = (c, groups[::-1], skip)
+    if best is None:   # fewer pauses than lines (a fast take): equal parts; voice_check.py --resplit cuts it by words
+        print(f"  split: {m} stretches for {n} lines: equal parts (run voice_check.py --resplit)")
+        k = len(x) // n
+        return [x[i * k:(i + 1) * k] for i in range(n)]
     print(f"  split: {m} stretches -> {n} lines (skipped {best[2]} leading)")
     return [x[a:b] for a, b in best[1]]
 
