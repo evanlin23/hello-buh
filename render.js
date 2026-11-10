@@ -2540,7 +2540,7 @@ else:
     const third = THIRD || camShot
     // the grade per frame (renderer/looks.js): look 'auto' follows the time of day (day -> golden -> night), and a
     // shot's `mood` ('tense') grades that shot; a fixed look leaves cam.grade unset and renders exactly as before
-    if (LOOK_RAW && !process.env.LOOK_OFF && process.env.LOOK !== '0') { const gr = LOOKS.gradeAt(LOOK_RAW, curDayTime, shotNow && shotNow.mood); if (gr) cam.grade = gr }
+    if (LOOK_RAW && !process.env.LOOK_OFF && process.env.LOOK !== '0') { const gr = LOOKS.gradeAt(LOOK_RAW, curDayTime, shotNow && shotNow.mood, shotNow); if (gr) cam.grade = gr }
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
     cam.inLava = !!(inBlock && inBlock.name === 'lava')

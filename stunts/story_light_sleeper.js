@@ -20,7 +20,7 @@ const { storyLines, storyKit, setKit } = require('../lib/story')
 const STORY = path.join(__dirname, '..', 'stories', 'light_sleeper')
 const CAPTION = 'why is my whole village carpeted 😶'
 const WX = -162, WZ = -860, F = 79      // the well's centre block, and the village terrace's ground (top block)
-const MORNING = 1000, AFTERNOON = 9000, DUSK = 12500, NIGHT = 18000
+const MORNING = 1000, AFTERNOON = 9000, DUSK = 12000, NIGHT = 18000
 const WAIT = 60                           // the cast's waiting room: a barrier floor this high over the set
 
 module.exports = {
@@ -61,8 +61,8 @@ module.exports = {
 
     // ---- the well: a 5x5 cobble rim 1 high, a 3x3 dry shaft 5 deep, sculk under the lid, the shrieker at the bottom
     await c(`/fill ${A(-2, -5, -2)} ${A(2, 0, 2)} mossy_cobblestone`)
-    await c(`/fill ${A(-2, 1, -2)} ${A(2, 1, 2)} cobblestone`)
-    for (const [x, z] of [[-2, 1], [2, -1], [1, 2], [-1, -2]]) await c(`/setblock ${A(x, 1, z)} mossy_cobblestone`)
+    await c(`/fill ${A(-2, 1, -2)} ${A(2, 1, 2)} yellow_wool`)            // the rim, padded like everything else (owner B4)
+    await c(`/setblock ${A(0, 1, -2)} cobblestone`)                      // ...but ONE block: the only bare stone in the village (L15)
     await c(`/fill ${A(-2, -1, -2)} ${A(2, 0, 2)} sculk`)                 // the top 2 blocks of the wall under the lid
     await c(`/fill ${A(-1, -4, -1)} ${A(1, 1, 1)} air`)
     await c(`/fill ${A(-1, -5, -1)} ${A(1, -5, 1)} sculk`)
@@ -70,6 +70,7 @@ module.exports = {
     for (const [x, z, f] of [[-1, -1, 'north'], [1, -1, 'east'], [-1, 1, 'west'], [1, 1, 'south'], [0, -1, 'north'], [0, 1, 'south']]) await c(`/setblock ${A(x, -1, z)} glow_lichen[${f}=true]`)
     for (const [x, z, f] of [[-1, 0, 'west'], [1, 0, 'east']]) await c(`/setblock ${A(x, 0, z)} sculk_vein[${f}=true]`)
     await c(`/fill ${A(-1, 1, -1)} ${A(1, 1, 1)} white_wool`)             // the lid, flush with the rim's top
+    for (const [x, z] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) await c(`/setblock ${A(x, 1, z)} light_gray_wool`)   // a checker (F2)
 
     // ---- the bell frame, 6 east of the well: two oak posts and a beam, the bell under it, wrapped in white wool
     await c(`/fill ${A(6, 1, -1)} ${A(6, 4, -1)} oak_log`); await c(`/fill ${A(6, 1, 1)} ${A(6, 4, 1)} oak_log`)
@@ -97,10 +98,13 @@ module.exports = {
     for (let k = 1; k <= 6; k++) await c(`/fill ${A(-3, k - (k === 1 ? 5 : 1), 11 + k)} ${A(5, k, 26)} stone_bricks`)
     await c(`/fill ${A(-4, -4, 12)} ${A(-4, 6, 26)} cobblestone`); await c(`/fill ${A(6, -4, 12)} ${A(6, 6, 26)} cobblestone`); await c(`/fill ${A(-4, -4, 27)} ${A(6, 6, 27)} cobblestone`)
     for (let k = 1; k <= 6; k++) { await c(`/setblock ${A(-4, k, 11 + k)} stone_brick_wall`); await c(`/setblock ${A(6, k, 11 + k)} stone_brick_wall`) }
+    for (let k = 1; k <= 6; k++) await c(`/fill ${A(-3, k, 11 + k)} ${A(5, k, 11 + k)} yellow_wool`)   // the risers: "The stairs? CARPET." (B4)
+    await c(`/fill ${A(-4, -1, 27)} ${A(6, 6, 27)} yellow_wool replace cobblestone`); await c(`/fill ${A(-4, -1, 12)} ${A(-4, 6, 27)} yellow_wool replace cobblestone`); await c(`/fill ${A(6, -1, 12)} ${A(6, 6, 27)} yellow_wool replace cobblestone`)
+    for (let k = 1; k <= 6; k++) { await c(`/setblock ${A(-4, k, 11 + k)} yellow_wool`); await c(`/setblock ${A(6, k, 11 + k)} yellow_wool`) }
     for (const [x, z] of [[-4, 18], [6, 18], [-4, 24], [6, 24]]) { await c(`/setblock ${A(x, 7, z)} cobblestone_wall`); await c(`/setblock ${A(x, 8, z)} lantern`) }
 
     // ---- lanterns around the plaza (posts), one by the well (south-west, out of S11-S17's frames)
-    for (const [x, z] of [[-9, -7], [9, -7], [-9, 10], [9, 10], [4, 3], [3, -7], [-10, 2], [10, 3]]) {
+    for (const [x, z] of [[-9, -7], [9, -7], [-9, 10], [9, 10], [4, 3], [3, -7], [-10, 2], [10, 3], [-3, 5]]) {   // (-3,5)+(4,3): the warden's key lights (B3)
       await c(`/fill ${A(x, 1, z)} ${A(x, 2, z)} spruce_fence`); await c(`/setblock ${A(x, 3, z)} lantern`)
     }
 
@@ -163,7 +167,7 @@ module.exports = {
     for (let y = -14; y <= 40; y += 6) for (const pl of ['short_grass', 'tall_grass', 'fern', 'large_fern', 'dandelion', 'poppy', 'bush', 'oxeye_daisy', 'azure_bluet', 'cornflower']) bot.chat(`/fill ${A(-40, y, -40)} ${A(32, Math.min(40, y + 5), 24)} air replace ${pl}`)
     await bot.waitForTicks(10)
     await carpetAll(ctx, { X, Z, F, x0: -40, x1: 32, z0: -40, z1: -9 })
-    await carpetAll(ctx, { X, Z, F, x0: -24, x1: 32, z0: -8, z1: 26 })
+    await carpetAll(ctx, { X, Z, F, x0: -24, x1: 32, z0: -8, z1: 27 })
 
     // ---- the cast, waiting high above the set on a barrier floor until each scene puts them in place
     await c(`/fill ${A(-8, WAIT, -8)} ${A(8, WAIT, 8)} barrier`)
@@ -179,8 +183,8 @@ module.exports = {
     await vil(7.5, -5.5, -90, 'librarian', ['walk2'])
 
     await c('/clear @s')
-    await ctx.hotbar(['shears'])                   // the jukebox and the disc come when he gets them (L10, L11)
-    for (let i = 3; i < 9; i++) await c(`/item replace entity @s hotbar.${i} with air`)
+    // the hotbar is story.json "hotbar" (the harness puts it on after setup): shears, carpet x2, an empty hand, wool,
+    // milk, 67 eggs, a cake; the disc (L09) and the jukebox (L11) take slots 2 and 1 and give the carpet back when placed
     await ctx.tpCheck(X + 2.5, F + 7.07, Z + 19.5, 180, 0)
     try { await bot.waitForChunksToLoad() } catch (e) {}
     await c('/gamemode survival')
@@ -217,7 +221,7 @@ module.exports = {
 
     // ---- L02: the crane up and back over the carpet street to the doghouse on the hill (camera shot 'est')
     K.shot('est')
-    await line('L02', async (k) => { K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })
+    await line('L02', async (k, at) => { if (k === at(2)) K.shot('dog'); K.step(w1, 0.05, 0); K.step(w2, -0.04, 0.01); look(k) })   // "The DOGHOUSE?": the insert (B2)
     // L03: the sheep meadow on the east slope, half sheared (camera 'meadow')
     K.shot('meadow')
     await K.cut(38.5, 19.5, C(47, -9, 32), standY(ctx, X, Z, 38, 19))   // Buh at the meadow fence, behind the camera (off screen)
@@ -229,7 +233,7 @@ module.exports = {
     // ---- L04: POV walking east past the well toward the wool-wrapped bell (Mom already in our doorway, frame left)
     const mom = await put('mom', { x: 0.5, y: 3.07, z: -7.35, yaw: 0, pitch: 25 })
     K.shot('pov')
-    await K.cut(-4.5, 4.6, C(6, 2.6, 0), PLAZA)
+    await K.cut(-4.5, 5.6, C(6, 2.6, 0), PLAZA)   // a block south of the rim: its carpet stays out of the line to the bell
     K.go(true)
     await line('L04', async (k, at, n) => {
       if (bot.entity.position.x > X + 1.0) K.go(false)
@@ -276,17 +280,17 @@ module.exports = {
     K.stop()
 
     // ---- L08: inside our house. Mom holds the room; the Darkness (the shriek's answer) is already on us
+    const sk = await put('skel', { x: -36.5, y: standY(ctx, X, Z, -37, 6), z: 6.5, yaw: -90, pitch: 0 })   // F6: on the grass, out of the canopy;
+    const cr = await put('creep', { x: -34.0, y: standY(ctx, X, Z, -34, 8), z: 8.0, yaw: -90 })            // placed now, 40 blocks off, so L09 doesn't pop them in
     K.shot('pov')
     await K.cut(0.5, -9.9, C(0, 4.72, -13), 3.07, { time: AFTERNOON + 100, after: () => say('/effect give @s minecraft:darkness 30 0 true') })
     await line('L08', async (k) => { mom.pitch = 25 + Math.sin(k / 8) * 4; mom.yaw = Math.sin(k / 3.2) * 20; K.base = K.aim(C(0, 4.72, -13)); look(k) })   // she shakes her head: a fox (aimed at her eyes: feet 3.07 + 1.62)
     // the lid is whole again by tonight (Mom re-laid it, bible)
-    say(`/fill ${X - 1} ${F + 1} ${Z} ${X + 1} ${F + 1} ${Z} white_wool`)
+    say(`/setblock ${X} ${F + 1} ${Z} white_wool`)
 
     // ---- L09: dusk at the farm edge: off the carpet onto the grass; the skeleton shoots, the creeper takes it
     say('/effect clear @s minecraft:darkness')
     const fy = this.fy
-    const sk = await put('skel', { x: -38.5, y: standY(ctx, X, Z, -39, 6), z: 6.5, yaw: -90, pitch: 0 })
-    const cr = await put('creep', { x: -33.5, y: standY(ctx, X, Z, -34, 8), z: 8.0, yaw: -90 })
     bot.setQuickBarSlot(3)
     await K.cut(-22.5, 8.5, P((cr.x + sk.x) / 2 + 0.6, (cr.y + sk.y) / 2 + 1.6, (cr.z + sk.z) / 2), standY(ctx, X, Z, -23, 8), { time: DUSK, after: () => ctx.mark('darkness_snap', { to: 0 }) })
     away('mom')
@@ -299,7 +303,7 @@ module.exports = {
       if (k === at(1) - 3) { ctx.sound('entity.skeleton.shoot', 0.8, 1); const dd = Math.hypot(cr.x - sk.x, cr.z - sk.z) || 1, ux = (cr.x - sk.x) / dd, uz = (cr.z - sk.z) / dd; say(`/summon arrow ${(X + sk.x + ux * 0.8).toFixed(2)} ${(F + sk.y + 1.5).toFixed(2)} ${(Z + sk.z + uz * 0.8).toFixed(2)} {Motion:[${(ux * 1.2).toFixed(3)},0.02,${(uz * 1.2).toFixed(3)}],Tags:["arr"]}`) }
       if (k === at(1) + 1) { creeperDead = true; K.actors.delete('creep'); say('/kill @e[tag=arr]'); say('/damage @e[tag=creep,limit=1] 100 minecraft:arrow'); ctx.sound('entity.creeper.death', 0.7, 1) }
       if (k === at(1) + 4 && !disc) { disc = { x: cr.x, z: cr.z }; say(`/summon item ${(X + cr.x).toFixed(2)} ${(F + cr.y + 0.3).toFixed(2)} ${(Z + cr.z).toFixed(2)} {Item:{id:"minecraft:music_disc_cat",count:1},PickupDelay:32767,Age:-32768}`) }
-      if (bot.entity.position.x < X - 28.0) K.go(false)
+      if (bot.entity.position.x < X - 26.5) K.go(false)   // ~7 blocks short of the creeper: it dies mid-frame, not under the hand
       const fx = disc ? disc.x : cr.x, fz = disc ? disc.z : cr.z   // between the skeleton and the creeper (then the disc)
       const tgt = P((fx + sk.x) / 2 + 0.6, (cr.y + sk.y) / 2 + (disc ? 1.2 : 1.6), (fz + sk.z) / 2)   // eye level (owner: not too low)
       K.base = K.aim(tgt); look(k)
@@ -320,6 +324,7 @@ module.exports = {
     say('/item replace entity @s hotbar.1 with jukebox')
     bot.setQuickBarSlot(0)
     dug = 0
+    K.shot('s11')
     await K.cut(0.5, -3.5, C(0, 1.4, 0), PLAZA)
     K.go(true)
     let placed = false, craneAt = null
@@ -327,7 +332,7 @@ module.exports = {
       if (bot.entity.position.z > Z - 2.75) K.go(false)
       if (k === 0 && !digging) { digging = true; digRow([[0, 0]]).then(() => { digging = false }) }   // tonight: the lid's middle block
       if (k === at(1) - 4) bot.setQuickBarSlot(1)
-      if (k >= at(1) && !placed && !digging) { placed = true; K.place(new ctx.Vec3(X + 1, F + 2, Z - 2), 'jukebox').then(() => say('/item replace entity @s hotbar.1 with air')) }
+      if (k >= at(1) && !placed && !digging) { placed = true; K.place(new ctx.Vec3(X + 1, F + 2, Z - 2), 'jukebox').then(() => say('/item replace entity @s hotbar.1 with white_carpet 64')) }
       if (k === at(3)) { shriek(); K.shot('crane'); craneAt = ctx.tick }   // ECHO: the crane from above, straight down into the open slot
       if (!digging) {
         // before the dig: the lid; after it, hold; on the jukebox, one slow turn to it (owner: "the head jerking around")
@@ -343,6 +348,7 @@ module.exports = {
     const doors = [[10, -9, 'south', 'v1', 0], [12, -3, 'west', 'v2', 90], [12, 6, 'west', 'v3', 90], [-12, -3, 'east', 'v4', -90], [-12, 6, 'east', 'v5', -90], [-9, 13, 'north', 'v6', 180], [12, 13, 'north', 'w1', 180], [-9, -18, 'south', 'w2', 0]]
     if (craneAt === null) { K.shot('crane'); craneAt = ctx.tick }
     let song = null
+    await put('mom', { x: 0.5, y: 3.07, z: -7.35, yaw: 34, pitch: 8 })   // in our doorway already (under our roof in the crane): on set for L13
     const T12 = K.T('L12')
     await line('L12', async (k, at) => {
       if (k === at(1)) {
@@ -357,7 +363,7 @@ module.exports = {
       }
       if (K.shotName === 'crane' && ctx.tick - craneAt >= 40) K.shot('pov')
       if (k === at(2) && !song) {
-        K.place(new ctx.Vec3(X + 1, F + 2, Z - 2), 'jukebox[has_record=true]', { against: new ctx.Vec3(X + 1, F + 2, Z - 2), sound: null }).then(() => say('/item replace entity @s hotbar.2 with air'))
+        K.place(new ctx.Vec3(X + 1, F + 2, Z - 2), 'jukebox[has_record=true]', { against: new ctx.Vec3(X + 1, F + 2, Z - 2), sound: null }).then(() => say('/item replace entity @s hotbar.2 with cyan_carpet 64'))
         song = startSong(ctx, K, C(1, 3.1, -2))
       }
       if (k === at(2) + 10) shriek()
@@ -366,18 +372,19 @@ module.exports = {
     })
 
     // ---- L13: the reverse: Mom frozen in our doorway, 5 blocks away; the Darkness comes in
-    await put('mom', { x: 0.5, y: 3.07, z: -7.35, yaw: 34, pitch: 8 })
     K.shot('mom')
-    say('/effect give @s minecraft:darkness 600 0 true')
     const mom13 = K.actors.get('mom')
     await line('L13', async (k) => { mom13.yaw = 34 * Math.max(0, 1 - k / 14) ** 2 + Math.sin(k / 1.7) * 4; mom13.pitch = 8 + Math.min(k, 26) * 0.5;   // from the well (the scream) to him: "Don't move"; her head sinks as the Darkness comes
       look(k) })   // frozen, trembling
 
     // ---- L14: POV turning from the jukebox to the east doorways: villagers frozen, the bell; "a real PARTY"
-    K.shot('pov')
+    K.shot('s14')
     await K.cut(0.5, -2.75, C(0.4, 1.5, 0.2), PLAZA)
     const from14 = { ...K.base }
-    await line('L14', async (k, at, n) => { K.turnTo(from14, C(12, 2.6, 1), k / (n * 0.85)); look(k) })
+    await line('L14', async (k, at, n) => {
+      if (k === at(1)) say('/effect give @s minecraft:darkness 600 0 true')   // "went DARK": the 22-tick fade eats the lantern pools on the word (F8)
+      K.turnTo(from14, C(12, 2.6, 1), k / (n * 0.85)); look(k)
+    })
 
     // ---- L15: off the carpet, up onto the bare stone rim; he jumps, he dances. Shriek 3 on the landing
     const from15 = { ...K.base }
@@ -438,7 +445,7 @@ async function cottage (c, A, h) {
   const { x0, z0, w, d, wood, door: [dx, dz], face } = h
   const y = h.y || 0, x1 = x0 + w - 1, z1 = z0 + d - 1, wall = 4
   const f = (a, b, blk) => c(`/fill ${A(a[0], a[1] + y, a[2])} ${A(b[0], b[1] + y, b[2])} ${blk}`)
-  await f([x0, -4, z0], [x1, 1, z1], 'cobblestone')
+  await f([x0, -4, z0], [x1, -2, z1], 'cobblestone'); await f([x0, -1, z0], [x1, 1, z1], 'yellow_wool')   // the visible courses padded (B4)
   await f([x0, 2, z0], [x1, wall, z1], `${wood}_planks`)
   await f([x0 + 1, 2, z0 + 1], [x1 - 1, wall, z1 - 1], 'air')
   for (const [x, z] of [[x0, z0], [x1, z0], [x0, z1], [x1, z1]]) await f([x, 2, z], [x, wall, z], `stripped_${wood}_log`)
@@ -453,7 +460,7 @@ async function cottage (c, A, h) {
   await f([dx, 2, dz], [dx, 2, dz], `oak_door[half=lower,facing=${face},open=false]`)
   await f([dx, 3, dz], [dx, 3, dz], `oak_door[half=upper,facing=${face},open=false]`)
   const out = { north: [0, -1], south: [0, 1], east: [1, 0], west: [-1, 0] }[face]
-  await f([dx + out[0], 1, dz + out[1]], [dx + out[0], 1, dz + out[1]], 'cobblestone')
+  await f([dx + out[0], 1, dz + out[1]], [dx + out[0], 1, dz + out[1]], 'yellow_wool')
   // the roof: stepped full blocks, 1 up per 1 in, 1 overhang; the ridge along the longer side
   const alongX = w >= d, half = Math.floor(((alongX ? d : w) + 1) / 2)
   for (let k = 0; k <= half; k++) {
@@ -478,7 +485,8 @@ async function cottage (c, A, h) {
 async function ourHouse (c, A) {
   const f = (a, b, blk) => c(`/fill ${A(...a)} ${A(...b)} ${blk}`)
   await f([-4, -4, -16], [4, 2, -8], 'cobblestone')
-  await f([-4, 3, -16], [4, 6, -8], 'stone_bricks'); await f([-3, 3, -15], [3, 6, -9], 'air')
+  await f([-4, -1, -16], [4, 2, -8], 'yellow_wool')                           // the foundation's visible courses, padded (B4)
+  await f([-4, 3, -16], [4, 6, -8], 'light_blue_wool'); await f([-3, 3, -15], [3, 6, -9], 'air')   // the ground floor: wool, not stone (B4)
   await f([-4, 7, -16], [4, 10, -8], 'spruce_planks'); await f([-3, 7, -15], [3, 10, -9], 'air')
   await f([-3, 6, -15], [3, 6, -9], 'spruce_planks')                          // the upper floor
   for (const [x, z] of [[-4, -16], [4, -16], [-4, -8], [4, -8]]) await f([x, 3, z], [x, 10, z], 'spruce_log')
@@ -489,10 +497,10 @@ async function ourHouse (c, A) {
   await f([0, 3, -8], [0, 3, -8], 'oak_door[half=lower,facing=south,open=true]')
   await f([0, 4, -8], [0, 4, -8], 'oak_door[half=upper,facing=south,open=true]')
   // the two steps up from the plaza, full blocks (carpeted later), and the lantern post beside them
-  await f([-1, 1, -7], [1, 2, -7], 'stone_bricks'); await f([-1, 1, -6], [1, 1, -6], 'stone_bricks')
+  await f([-1, 1, -7], [1, 2, -7], 'yellow_wool'); await f([-1, 1, -6], [1, 1, -6], 'yellow_wool')
   await f([2, 1, -6], [2, 3, -6], 'spruce_fence'); await f([2, 4, -6], [2, 4, -6], 'lantern')
   // inside: the table and two chairs, lanterns
-  await f([2, 3, -13], [2, 3, -13], 'spruce_fence'); await f([2, 4, -13], [2, 4, -13], 'spruce_pressure_plate')
+  await f([2, 3, -13], [2, 3, -13], 'spruce_fence'); await f([2, 4, -13], [2, 4, -13], 'lantern')   // the table's lantern: Mom's key light (F5)
   await f([2, 3, -14], [2, 3, -14], 'spruce_stairs[facing=south]'); await f([2, 3, -12], [2, 3, -12], 'spruce_stairs[facing=north]')
   await f([-3, 5, -12], [-3, 5, -12], 'lantern[hanging=true]'); await f([3, 5, -10], [3, 5, -10], 'lantern[hanging=true]'); await f([0, 5, -14], [0, 5, -14], 'lantern[hanging=true]')
   // the roof: stepped full blocks, ridge along x, 1 overhang
@@ -501,7 +509,7 @@ async function ourHouse (c, A) {
     if (-16 + k <= -8 - k) { await f([-4, 11 + k, -16 + k], [-4, 11 + k, -8 - k], 'spruce_planks'); await f([4, 11 + k, -16 + k], [4, 11 + k, -8 - k], 'spruce_planks') }
   }
   await f([-5, 10, -17], [5, 10, -17], 'dark_oak_stairs[facing=south,half=top]'); await f([-5, 10, -7], [5, 10, -7], 'dark_oak_stairs[facing=north,half=top]')
-  await f([3, 11, -10], [3, 17, -10], 'cobblestone'); await f([3, 18, -10], [3, 18, -10], 'campfire[lit=true]')
+  await f([3, 11, -10], [3, 17, -10], 'bricks'); await f([3, 18, -10], [3, 18, -10], 'campfire[lit=true]')
 }
 
 // Carpet every exposed top in the box (well-relative x0..x1, z0..z1, from F - 14 to F + 40): stairs and slabs with
@@ -519,7 +527,8 @@ async function carpetAll (ctx, { X, Z, F, x0, x1, z0, z1 }) {
     const flush = () => { if (run) { cmds.push(`/fill ${X + run.x0} ${run.y} ${Z + dz} ${X + run.x1} ${run.y} ${Z + dz} ${run.col}_carpet replace air`); run = null } }
     for (let dx = x0; dx <= x1 + 1; dx++) {
       if (dx > x1) { flush(); break }
-      const inWell = Math.abs(dx) <= 2 && Math.abs(dz) <= 2
+      const inWell = Math.abs(dx) <= 1 && Math.abs(dz) <= 1 || (dx === 0 && dz === -2)   // the lid, and the one bare stone
+      if (!inWell && Math.abs(dx) <= 2 && Math.abs(dz) <= 2) { flush(); cmds.push(`/setblock ${X + dx} ${F + 2} ${Z + dz} ${(dx + dz) % 2 ? 'cyan' : 'light_blue'}_carpet`); continue }   // the rim
       let ground = null, tops = []
       for (let y = F + 40; y >= F - 14; y--) {
         const b = bot.blockAt(new Vec3(X + dx, y, Z + dz))
@@ -546,7 +555,7 @@ async function carpetAll (ctx, { X, Z, F, x0, x1, z0, z1 }) {
         else {
           const b = bot.blockAt(new Vec3(X + dx, y, Z + dz))
           const road = (Math.abs(dx) <= 10 && dz >= -8 && dz <= 11) || (b && (b.name === 'dirt_path' || b.name === 'gravel' || b.name === 'stone_bricks' || b.name === 'cobblestone'))
-          col = road ? ['white', 'light_gray', 'cyan', 'light_blue'][Math.floor((dz + 99) / 3) % 4] : (Math.floor((dx + 100) / 2) % 2 ? 'lime' : 'green')
+          col = road ? ['white', 'yellow', 'cyan', 'light_blue'][Math.floor((dz + 99) / 3) % 4] : (Math.floor((dx + 100) / 2) % 2 ? 'lime' : 'green')
         }
         if (y === tops[0][0] && run && run.y === y + 1 && run.col === col && run.x1 === dx - 1) { run.x1 = dx; continue }
         if (y === tops[0][0]) { flush(); run = { x0: dx, x1: dx, y: y + 1, col }; continue }
@@ -591,20 +600,27 @@ module.exports.shots = {
   pov: { pov: true },
   // L02: the crane up and back from the carpet street to over the doghouse on the hill, looking south-east over the
   // whole carpeted village (the plaza, the boxed bell, the lidded well, the roofs, the meadow on the far slope)
-  est: { path: [[0, -12.5, 3.2, -13.5], [1.3, -21, 10, -24], [2.8, -33, 20, -33]], lookPath: [[0, 0.5, 1.5, 0.5], [1.3, -10, 4, -9], [2.8, -9, 1, -7]], ease: true, fov: 62, dof: false },
+  est: { path: [[0, -12.5, 4.2, -13.5], [1.3, -21, 10, -24], [2.8, -33, 20, -33]], lookPath: [[0, 0.5, 1.5, 0.5], [1.3, -10, 4, -9], [2.8, -9, 1, -7]], ease: true, fov: 62, dof: false },
   // L01: the hook, a high wide over the south street looking north over the whole carpeted village, a slow push
-  hook: { path: [[0, 2.5, 18, 36], [3.5, 2.5, 14.5, 29]], lookPath: [[0, 0.5, 2, -6], [3.5, 0.5, 2, -6]], ease: true, fov: 60, dof: false },
+  hook: { path: [[0, 2.5, 18, 36], [3.5, 2.5, 14.5, 29]], lookPath: [[0, 0.5, 4.2, -6], [3.5, 0.5, 4.2, -6]],   // tilted 3 deg up: the cyan road under the captions (F1)
+ ease: true, fov: 60, dof: false },
   // L03: the sheep meadow on the east slope from its fence, a slow push
   meadow: { at: [40.5, 0, 22.5], look: [47.5, -9.5, 32], fov: 55, push: 0.3, dof: false },
   // L07: low from the north-west, behind him, looking south-east past his back at the well (the south steps beyond)
-  s07: { at: [-5.5, 2.4, -6.5], look: [0.6, 2.0, -1.4], fov: 50, push: 0.25, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -0.4, 0] } } },
+  s07: { at: [-5.5, 2.4, -6.5], look: [0.6, 2.0, -1.4], fov: 50, push: 0.25, dof: false },   // a wide: no DoF (F3)
+  // L02 on "The DOGHOUSE?": an insert 5 blocks south-east of the doghouse, the wolf in its door, the carpet roof (B2)
+  dog: { at: [-19.5, 10, -18.5], look: [-24.5, 7.8, -23.5], fov: 55, push: 0.3, dof: false },
+  // L11: low from the north-east, 4 blocks out: him at the rim, the slot, the jukebox going down; lanterns behind (B5)
+  s11: { mood: 'eerie_night', grade: { exposure: 1.2 }, vignette: 0.45, at: [5.0, 2.2, -4.8], look: [0.4, 2.0, -2.2], fov: 55, push: 0.25, dof: false },
+  // L14: the reverse wide from the south: the east doorways, the bell box, the lantern pools going dark (B5, F8)
+  s14: { mood: 'eerie_night', grade: { exposure: 1.2 }, vignette: 0.45, at: [2.5, 4.5, 11.5], look: [8.5, 2.2, -1.0], fov: 62, push: 0.2, dof: false },
   // L12: the crane from ~16 above our roof (0,-12), looking south and down, into his head at (0.5, -2.75)
-  crane: { path: [[0, 0.5, 21, -6.2], [1.1, 0.5, 9, -5.2], [2.0, 0.5, 3.2, -3.7]], lookPath: [[0, 0.5, 1, 2.5], [1.1, 0.5, 1.5, 0.5], [2.0, 0.4, 1.5, 0]], ease: true, fov: 60, dof: false },
+  crane: { mood: 'eerie_night', grade: { exposure: 1.2 }, vignette: 0.45, path: [[0, 0.5, 21, -6.2], [1.1, 0.5, 9, -5.2], [2.0, 0.5, 3.2, -3.7]], lookPath: [[0, 0.5, 1, 2.5], [1.1, 0.5, 1.5, 0.5], [2.0, 0.4, 1.5, 0]], ease: true, fov: 60, dof: false },
   // L13: the reverse: 1 block east of him at his eye height, looking north at Mom in our doorway
-  mom: { at: [1.6, 2.65, -2.9], look: [0.5, 4.5, -7.35], fov: 50, push: 0.3, dof: { aperture: 0.8 } },
+  mom: { mood: 'eerie_night', grade: { exposure: 1.2 }, vignette: 0.45, at: [1.0, 2.7, -2.9], look: [0.5, 4.6, -7.35], fov: 42, push: 0.3, dof: { aperture: 0.8 } },   // the post clears her (F7)
   // the inserts before the reveal (0.35 s each)
   ins_mom: { at: [2.2, 3.6, -3.0], look: [0.5, 4.4, -7.35], fov: 50, push: 0.5, dof: false },
   ins_door: { at: [6.5, 2.9, -4.2], look: [12.0, 3.2, -2.6], fov: 50, push: 0.5, dof: false },
   // S16: low behind him (2-3 blocks north-west), looking south past him at the burst carpet and the rising warden
-  s16: { mood: 'tense', at: [-1.9, 3.6, -6.8], look: [0.9, 3.0, 4.5], fov: 44, push: 0.2, dof: false }
+  s16: { mood: 'eerie_night', grade: { contrast: 0.22 }, vignette: 0.48, at: [-1.2, 3.0, -5.0], look: [0.5, 3.5, 4.5], fov: 40, push: 0.2, dof: false }   // B3: the warden ~45% of the frame, his shoulder at the right edge, the jukebox out of the line
 }

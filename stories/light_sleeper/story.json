@@ -378,5 +378,31 @@
   "beats": "stories/light_sleeper/beats.md",
   "set": "stories/light_sleeper/set.md",
   "payoff": "roar",
-  "voice_takes": "beat"
+  "voice_takes": "beat",
+  "hotbar": [
+    "shears",
+    [
+      "white_carpet",
+      64
+    ],
+    [
+      "cyan_carpet",
+      64
+    ],
+    null,
+    [
+      "white_wool",
+      64
+    ],
+    [
+      "light_gray_wool",
+      64
+    ],
+    "milk_bucket",
+    [
+      "egg",
+      67
+    ],
+    "cake"
+  ]
 }
