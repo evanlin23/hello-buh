@@ -32,18 +32,22 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 | stills 3 (66 ticks) | 02:55:50 | 03:05:18 | 9.5 min | waiting | roof nitwit still hidden (eaves), ruin still dark, a first-person hand showed in every still (hideHand ignored?), golem drawn tilted/lying while it walks round the nitwit |
 | fixes (roof edge, brightness 1.0, ending framing) | 03:05:20 | 03:07:16 | 2 min | working | one typo cost a run.sh start (syntax error; run.sh exits after the asset fetch) |
 | recording 5 | 03:07:16 | 03:15:21 | 8 min | waiting | attempts 1 and 2 died (`Timeout waiting for 4 ticks`, then a silent bot timeout), attempt 3 OK; rec_check clean |
+| lead: preview tool merged to main; merged main into the branch (419fe92). Skipped a preview this round: the Actions render was already 4 min in (~21 min total) and a ~10 min preview would only save ~7 min of the wait, while my own stills had already checked the staging | 03:19:00 | 03:19:20 | 0.3 min | working | trade-off |
+| Actions render 2 (`render_on_actions.sh` + `--wait`) | 03:15:32 | 03:57:03 | 41.5 min | waiting | docs say ~21 min. Each slice's actual render is ~2 min; the rest is runner setup: apt-get from the Azure Ubuntu mirror ran at ~119 kB/s on some runners (slice 8: 14 min in `apt-get install ffmpeg`, 3 min in playwright's `--with-deps` apt), and the finish job spent 15.5 of its 21 min in render-setup |
+| own look at the Short (2 fps sheets) | 03:57:10 | 03:57:40 | 0.5 min | working | readable; the ending's blasts are small at the right edge |
+| independent review round 1 (a new cloud session, `create_session`: no subagent tool here) | 03:57:43 | | | waiting | |
 | Actions render 2 queued + stills 4 (12 ticks) | 03:15:32 | 03:17:36 | 2 min | waiting | stills: roof nitwit visible, ruin readable, no hand (the hand in stills 3 is unexplained; render.js silently ignores a stunt module that fails to load) |
 
 ## Counts
 - recordings attempted: 5 runs of run.sh (9 bot attempts; 4 died in setup)
-- renders: 0
+- renders: 2 queued on Actions (1 cancelled by a re-queue, 1 finished); 4 local still renders by hand
 - review rounds: 0
 - tool fixes needed: 0
 
 ## Gaps, bugs, confusing docs (running)
 1. **docs/stories.md Setup: `apt-get install -y espeak-ng` fails in a fresh container** (`Unable to locate package`):
    the apt lists are empty. Needs `apt-get update` first. (open: doc fix)
-2. **The preview tool isn't on main**: the short-review skill's step 2 says `bash scripts/preview.sh <stunt>`, but
+2. **The preview tool wasn't on main** (merged at ~03:19, after 4 recordings and 3 still renders by hand): the short-review skill's step 2 says `bash scripts/preview.sh <stunt>`, but
    neither scripts/preview.sh nor scripts/preview.py exists on main (it's WIP on agent/preview). Skipped. (open)
 4. **run.sh with RECORD_ONLY=1 skipped rec_check** (it exited before the check), although worker.md says run.sh
    prints the report after every recording. FIXED in 7bfeecb.
@@ -68,6 +72,15 @@ the story template, lib/story.js, the short-review skill). Times are UTC wall cl
 12. **Twins vs one actor**: the docs say "move cast between scenes with a >64-block hop"; with one nitwit in 9
     places, a twin per place (summoned in setup, idle until its scene) was simpler and never glides. Worth a line in
     the staging lessons. (doc)
+13. **Actions render took 41.5 min, not ~21**: the render itself is ~2 min a slice; runner setup (`apt-get install
+    ffmpeg fonts-inter` + `playwright install --with-deps`) took 0.7-17 min per runner depending on the Azure apt
+    mirror, and the finish job waits for the slowest slice and then does the same setup again (15.5 min). Biggest
+    single time sink of the run. Fix: cache the .debs / use a container image with ffmpeg + Chromium deps, or a
+    static ffmpeg download; skip `--with-deps` when the cache has Chromium; run finish's setup in parallel with the
+    slices (start it with them and wait on artifacts). (open)
+14. **No subagent tool in this worker** for the "independent reviewer subagent" the brief and short-review ask
+    for: used `create_session` (a separate cloud session on render/story_nitwit) and read its answer with
+    `list_events`. Works, but costs a fresh container + setup per round. (open: doc how a worker should do it)
 3. Worker setup says symlink nothing; the lead's brief had me symlink node_modules, songs, sfx/mixkit and work. The
    docs don't say a worktree needs `work/` (server, assets) linked: without it run.sh would re-download and rebuild
    the server and assets. (open: doc note)
