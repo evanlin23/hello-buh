@@ -227,6 +227,8 @@ actions left silent). r:rc85ccc r:r36632d
 - A finding that has happened before becomes a rule (cinematic-style "Mistakes already solved", or the house rules).
 
 ## 10. Publish
+- **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
+  on. Check: owner. r:r77977b
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
