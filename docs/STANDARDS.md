@@ -174,6 +174,9 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinem
    r:r62de46
 
 ## 7. Audio
+0. **Music in every render, sound for every action**: the score bed is in every render (previews included), at the
+   reference Short's level under a clear voice; every visible action has its vanilla sound, ambience fits, nothing
+   visible is silent. Check: the silent-action check, review. 
 The lead's mix (docs/audio.md), automatic in `edit.py --story` + publish: voice -15 LUFS, master **-14 LUFS +-0.5,
 true peak <= -1 dBTP**, room tone (never digital silence), a Kevin MacLeod mood score (CC BY, credited; not NCS) from
 story.json `mood`, the bed out 0.45 s before the payoff, then a hit. Any owner note on a track or level overrides it.
