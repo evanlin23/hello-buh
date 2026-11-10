@@ -66,6 +66,7 @@ module.exports = {
     await c(`/fill ${A(-1, 0, 51)} ${A(0, 1, 52)} water`)
     for (const [dx, dz] of [[-2, 50], [1, 50], [-2, 53], [1, 53]]) await c(`/fill ${A(dx, 2, dz)} ${A(dx, 3, dz)} oak_fence`)
     await c(`/fill ${A(-2, 4, 50)} ${A(1, 4, 53)} cobblestone_slab`)
+    await c(`/setblock ${A(-1, 3, 51)} lantern[hanging=true]`)   // lights the well's inside (the new lava read black: review 1)
     // the torch path north (L09-L10): torches on fence posts, the last one at z 3
     await c(`/fill ${A(0, 0, -26)} ${A(0, 0, 7)} dirt_path`)
     for (const dz of [12, 7, 3]) { await c(`/setblock ${A(2, 1, dz)} oak_fence`); await c(`/setblock ${A(2, 2, dz)} torch`) }
@@ -85,9 +86,10 @@ module.exports = {
         await c(`/fill ${A(x0 + 5, 2, z0 + 1)} ${A(x0 + 5, 3, z0 + 3)} air`)
         await c(`/fill ${A(x0, 1, z0 + 2)} ${A(x0, 2, z0 + 2)} air`)
         await c(`/fill ${A(x0 + 1, 3, z0 + 5)} ${A(x0 + 3, 3, z0 + 5)} air`)
-        await c(`/setblock ${A(x0 + 2, 1, z0 + 2)} magma_block`)
+        await c(`/setblock ${A(x0 + 2, 1, z0 + 2)} campfire[lit=true]`)   // still burning (review 1: nothing read as burned)
       }
     }
+    for (const [dx, dz] of [[-2.5, -34], [2.5, -47], [-2.5, -57], [10, -44], [-17, -42], [4, -30]]) await c(`/setblock ${A(Math.floor(dx), 1, dz)} campfire[lit=true]`)
     // the dead tree: a bare charred trunk, split
     await c(`/fill ${A(12, 1, -46)} ${A(12, 4, -46)} stripped_dark_oak_log`)
     await c(`/setblock ${A(11, 4, -46)} stripped_dark_oak_log[axis=x]`)
@@ -107,7 +109,7 @@ module.exports = {
     await vil(4.6, 40.5, 0, 'nitwit', ['nRoof', 'warm'], { y: 5.5 })   // L03, L07: on my roof
     await vil(19.5, 24.2, 0, 'nitwit', ['nTree', 'warm'])     // L04: under the tree
     await vil(-18.5, 20.5, -45, 'nitwit', ['nWheat', 'warm'])   // L05: in the wheat
-    await vil(-0.5, 49.2, 0, 'nitwit', ['nWell', 'warm'])     // L06: at the well, looking in
+    await vil(-2.6, 51.5, -90, 'nitwit', ['nWell', 'warm'])     // L06: at the well, looking in
     await vil(0.5, 1.5, 180, 'nitwit', ['nPath'])             // L09-L10: walking north at night
     await vil(0.5, -28.5, 180, 'nitwit', ['nRuin'])           // L11-L15: in the ruin
     // the crowd (L07): five villagers in the street south of the nitwit
@@ -190,12 +192,14 @@ module.exports = {
       if (!struck && k === at(2)) {
         struck = true
         bolt(20.5, 7, 26.5)
-        say(`/fill ${X + 20} ${F + 3} ${Z + 26} ${X + 20} ${F + 6} ${Z + 26} air`)
-        say(`/fill ${X + 18} ${F + 4} ${Z + 24} ${X + 20} ${F + 7} ${Z + 28} air`); say(`/setblock ${X + 21} ${F + 6} ${Z + 26} oak_log[axis=x]`)
+        // split: the crown blown off, the trunk snapped at 3, a fire at its foot (review 1: the tree read whole)
+        say(`/fill ${X + 18} ${F + 4} ${Z + 24} ${X + 22} ${F + 7} ${Z + 28} air`)
+        say(`/fill ${X + 20} ${F + 4} ${Z + 26} ${X + 20} ${F + 6} ${Z + 26} air`)
+        say(`/setblock ${X + 21} ${F + 1} ${Z + 26} oak_log[axis=x]`); say(`/setblock ${X + 22} ${F + 1} ${Z + 26} oak_log[axis=x]`)
+        say(`/setblock ${X + 19} ${F + 1} ${Z + 26} campfire[lit=true]`)
       }
       if (struck && k % 3 === 0) ctx.particles('smoke', P(20.5 + (Math.random() - 0.5), 3.5, 26.5 + (Math.random() - 0.5)))
-      if (!night4) K.go(k > 2)
-      else K.go(false)
+      K.go(k > 2)   // keeps creeping toward it at night too (0.9 s near-still: review 1)
       look(k)
     })
     K.go(false)
@@ -220,8 +224,8 @@ module.exports = {
     })
 
     // L06: by the well; the water turned to lava
-    const nWell = K.actor('nWell', { x: -0.5, z: 49.2, yaw: 0, pitch: 40 })
-    await cut(3.5, 45.5, P(-0.5, 1.4, 50.5))
+    const nWell = K.actor('nWell', { x: -2.6, z: 51.5, yaw: -90, pitch: 40 })
+    await cut(2.5, 51.4, P(-0.6, 1.4, 51.5))   // at the rim, looking down in (review 1: villagers hid it, the lava read black)
     let lava = false
     await line('L06', async (k, at) => {
       nWell.pitch = 40 + Math.sin(ctx.tick / 5) * 8
@@ -230,7 +234,8 @@ module.exports = {
         say(`/fill ${X - 1} ${F} ${Z + 51} ${X} ${F + 1} ${Z + 52} lava replace water`)
         ctx.sound('item.bucket.empty_lava', 1, 1); ctx.sound('block.lava.pop', 1, 1)
       }
-      K.go(k > 3 && k < 14)
+      look(k, 0, -0.08 * K.ease(k / 20))
+      return
       look(k)
     })
     K.go(false)
@@ -298,18 +303,19 @@ module.exports = {
         await cut(0.5, -24.5, P(0.5, 1.5, -44), 1, { stop: false })
         away(nPath)
       }
-      if (ruinCut) { K.step(nRuin, 0, -0.06); K.go(true) }
+      if (ruinCut) { K.step(nRuin, 0, -0.1); K.go(false) }   // he walks off into it (walking, the camera ran into his head: review 1)
       look(k)
     })
     K.go(false)
 
     // L12: MY village. BURNED. EMPTY. (jump cuts on each word)
-    await cut(9.5, -27.5, P(-2, 1.5, -46))
+    // up on a ruined wall's corner: the street, the broken houses and their fires against the sky (review 1)
+    await K.cutTo(4.5, F + 4, -36.5, P(-3, 1.5, -54))
     let c12 = 0
     await line('L12', async (k, at) => {
-      if (c12 === 0 && k === at(1) - 1) { c12 = 1; await cut(-1.5, -36.5, P(-4, 2, -40)) }
+      if (c12 === 0 && k === at(1) - 1) { c12 = 1; await cut(-5.5, -38.5, P(-7, 1.3, -40.5)) }   // inside a roofless room, its fire
       if (c12 === 1 && k === at(2) - 1) { c12 = 2; away(nRuin); await cut(0.5, -35.5, P(0.5, 1.6, -62)) }
-      K.go(k > 2)
+      K.go(c12 === 2)
       look(k)
     })
     K.go(false)
@@ -348,7 +354,7 @@ module.exports = {
     await cut(0.5, 38.3, P(0.5, 2.2, 40.5), 1, { time: DAY })
     let said = false
     await line('L16', async (k, at, n) => {
-      if (!said && k === n - 14) { said = true; hmm(1.2); ctx.mark('hmm') }
+      if (!said && k === n - 14) { said = true; hmm(1.2); ctx.mark('hmm'); K.setMeter(4097) }
       nS.pitch = said ? 18 : 0
       look(k)
     }, 0.6)
