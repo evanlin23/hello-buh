@@ -37,15 +37,15 @@ module.exports = {
   // offsets from D (dy from the ground's top; the dog's head is ~dy 1.6)
   shots: {
     // L01: behind him, craning down: his back, the empty patch, the drop and the village far below (sunrise)
-    open: { dof: false, path: [[0, -8, 7, -3], [5, -4.2, 3.0, -1.1]], look: [6, -1.5, 0.6], fov: 60 },
+    open: { dof: false, path: [[0, -10, 14, -8], [5, -4.5, 5.5, -3.5]], look: [11, -11, 11], fov: 60 },
     // L02: three days of not moving
     rain: { path: [[0, 3.6, 2.2, 2.6], [2, 3.2, 2.0, 2.3]], look: [0.5, 0.6, 0.5], fov: 55 },
     storm: { path: [[0, -1.2, 1.7, 7], [2, -1, 1.6, 6.4]], look: [0.3, 1.6, 0], fov: 58 },
-    zombies: { path: [[0, 4.6, 1.8, -2.6], [2, 4.3, 1.7, -2.4]], look: [-0.3, 0.6, 0.6], fov: 55 },
+    zombies: { path: [[0, 2.6, 1.8, 4.6], [2, 2.3, 1.7, 4.3]], look: [-1.5, 0.8, -1], fov: 55 },
     // L03: morning, Pip walks up from the south rim with a bone
     bone: { path: [[0, -3.6, 2.2, 6.2], [4, -3.2, 2.0, 5.6]], look: [0.4, 0.5, 1.4], fov: 55 },
     // L04: the collar, close (the one close-up before the reveal)
-    collar: { path: [[0, 2.1, 1.15, -1.2], [4, 1.8, 1.05, -0.9]], look: [0.55, 0.85, 0.5], fov: 40 },
+    collar: { path: [[0, 2.6, 1.3, -1.4], [4, 2.3, 1.2, -1.2]], look: [0.55, 0.85, 0.5], fov: 45 },
     // L05: over his back at the empty patch, the valley beyond
     patch: { path: [[0, -2.6, 1.9, 0.4], [4, -2.0, 1.6, 0.45]], look: [3.5, 0.4, 0.5], fov: 50 },
     // L06: the hut, wide, the dog small in the foreground
@@ -53,8 +53,8 @@ module.exports = {
     // L07: Pip begging in front of him (side on)
     beg: { path: [[0, 1.0, 1.5, 4.8], [4, 0.9, 1.3, 4.2]], look: [1.0, 0.6, 0.5], fov: 50 },
     // L08-L10: Grandpa on the path below the south rim; Pip at the rim above
-    gramps: { path: [[0, -6.0, 2.8, 4.6], [4, -6.3, 2.6, 4.9]], look: [-5, -1.5, 11.5], fov: 50 },
-    whose: { path: [[0, -3.0, -0.8, 13.4], [4, -3.2, -0.9, 13.0]], look: [-5, 1.2, 7], fov: 52 },
+    gramps: { path: [[0, -5.2, 3.0, 4.6], [4, -5.4, 2.8, 5.0]], look: [-5, -1.5, 11.5], fov: 50 },
+    whose: { path: [[0, -2.4, 1.6, 5.8], [4, -2.6, 1.5, 6.1]], look: [-5, 0.7, 7.5], fov: 50 },
     rightback: { path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.5, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night
     dusk: { path: [[0, 4.8, 2.6, 2.4], [3, 4.4, 2.4, 2.2]], look: [0, 0.4, 0.9], fov: 56 },
@@ -65,7 +65,7 @@ module.exports = {
     reunion: { path: [[0, 1.6, 1.5, 4.6], [5, 1.8, 1.4, 4.2]], look: [2.4, 0.9, 0.5], fov: 50 },
     sit: { path: [[0, 1.2, 2.4, 6.8], [5, 1.0, 2.6, 7.4]], look: [2.4, 0.7, 0.5], fov: 52 },
     // L15: the opening frame again, pulling up and away
-    end: { dof: false, path: [[0, -4.2, 3.0, -1.1], [4, -8, 7, -3]], look: [6, -1.5, 0.6], fov: 60 }
+    end: { dof: false, path: [[0, -4.5, 5.5, -3.5], [4, -10, 14, -8]], look: [11, -11, 11], fov: 60 }
   },
   edit: { startAt: 'start:0.1', endAfter: 'end_scene:0.25' },
 
@@ -90,23 +90,22 @@ module.exports = {
       await c(`/fill ${A(x0, -14, dz)} ${A(x1, -1, dz)} dirt replace air`)
       await c(`/fill ${A(x0, 0, dz)} ${A(x1, 0, dz)} grass_block`)
     }
-    // flowers and grass (seeded), kept low and sparse in the lane the cameras look down (dz -3..5); tall grass only outside it
+    // a dense meadow of low flowers and grass (seeded: the same every take), so the one bare patch reads; tall grass
+    // only out past r 6. Kept clear: the dog, Pip's spot and the bones, the patch P, the hut, Grandpa's rim
     let seed = 7
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647 }
-    const plants = ['short_grass', 'short_grass', 'dandelion', 'poppy', 'cornflower', 'oxeye_daisy', 'azure_bluet']
-    const flowers = ['dandelion', 'poppy', 'cornflower', 'oxeye_daisy', 'azure_bluet']
-    const keep = (dx, dz) => (dx >= -2 && dx <= 5 && dz >= -1 && dz <= 2) || (dx >= 2 && dx <= 9 && dz >= -9 && dz <= -2) || (dz >= 4 && dx >= -8 && dx <= -2)
-    for (let i = 0; i < 260; i++) {
-      const dx = Math.round((rnd() * 2 - 1) * 14), dz = Math.round((rnd() * 2 - 1) * 14)
-      if (keep(dx, dz) || dx > 8) continue
-      const b = ctx.surface(X + dx, Z + dz)
-      if (!b || b.name !== 'grass_block') continue
-      const y = b.position.y - F
-      const lane = dz >= -3 && dz <= 5 && dx >= -6
-      if (lane && rnd() < 0.6) continue
-      const p = lane ? flowers[Math.floor(rnd() * flowers.length)] : plants[Math.floor(rnd() * plants.length)]
-      if (!lane && rnd() < 0.15) await c(`/setblock ${A(dx, y + 1, dz)} tall_grass[half=lower]`), await c(`/setblock ${A(dx, y + 2, dz)} tall_grass[half=upper]`)
-      else await c(`/setblock ${A(dx, y + 1, dz)} ${p}`)
+    const flowers = ['dandelion', 'poppy', 'cornflower', 'oxeye_daisy', 'azure_bluet', 'dandelion', 'poppy']
+    const keep = (dx, dz) => (dx >= -1 && dx <= 2 && dz >= -1 && dz <= 2) || (dx === 3 && dz === 0) || (dx >= 2 && dx <= 8 && dz >= -9 && dz <= -3) || (dz >= 6 && dx >= -8 && dx <= -2)
+    for (let dz = -13; dz <= 13; dz++) {
+      for (let dx = -13; dx <= 8; dx++) {
+        if (keep(dx, dz) || Math.hypot(dx, dz) > 13) continue
+        const r = rnd(), far = Math.hypot(dx, dz) > 6
+        if (r > (far ? 0.55 : 0.7)) continue
+        const b = ctx.surface(X + dx, Z + dz)
+        if (!b || b.name !== 'grass_block') continue
+        const y = b.position.y - F
+        if (far && r < 0.1) { await c(`/setblock ${A(dx, y + 1, dz)} tall_grass[half=lower]`); await c(`/setblock ${A(dx, y + 2, dz)} tall_grass[half=upper]`) } else await c(`/setblock ${A(dx, y + 1, dz)} ${r < 0.35 ? flowers[Math.floor(rnd() * flowers.length)] : 'short_grass'}`)
+      }
     }
     // the dog's spot: worn to coarse dirt (900 days); the patch P (D + 3): one clean grass block
     await c(`/setblock ${A(0, 0, 0)} coarse_dirt`)
