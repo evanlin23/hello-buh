@@ -4,6 +4,11 @@
   "caption": "the nitwit finally said something 😳",
   "premise": "The village nitwit only ever says 'hmm'. He always stands exactly where something bad is about to happen (a tree before lightning, the wheat before a creeper, the well before it turns to lava), and every other villager walks away from him. The narrator follows him one night past the last torch and finds a burned, empty copy of his own village.",
   "twist": "The nitwit is from a world that already ended, sent back to warn this one, and 'hmm' is all the game lets a nitwit say. Today he stands right next to the narrator: the bad thing is about to happen to him. He says the date of the end, and it's today.",
+  "mood": [
+    "eerie",
+    "eerie"
+  ],
+  "payoff": "today_word",
   "voice": {
     "voice": "am_adam",
     "tempo": 1.03,

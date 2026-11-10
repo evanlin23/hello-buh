@@ -5,7 +5,7 @@ recording's `line` marks. edit.py calls these when a stunt sets `edit.story`.
   caption_concat(story_dir, timeline, start, dur, tmp)  -> ffconcat list of full-frame caption PNGs (60 fps steps)
 
 Captions follow the owner's Roblox story channel (blocky-stories RULES.md "Captions"): a heavy grotesk
-(Schibsted Grotesk Black, OFL, assets/fonts/), 2 or 3 words at a time, white with the key words (CAPS in the
+(Poppins Black, OFL, assets/fonts/; Schibsted Grotesk Black before 2026-11-10), 2 or 3 words at a time, white with the key words (CAPS in the
 script) in the story's key colour, a dark outline and a soft shadow, each chunk appearing on its own first word
 with a quick pop. They sit in the lower middle of the game view: clear of the crosshair, above the hearts.
 """
@@ -18,11 +18,11 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 HERE = pathlib.Path(__file__).resolve().parent.parent
-FONT = HERE / "assets" / "fonts" / "SchibstedGrotesk-Black.ttf"
+FONT = HERE / "assets" / "fonts" / "Poppins-Black.ttf"   # font A/B 2026-11-10 (docs/look.md): most ink per width at phone size
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
 CAP_PX = 96
 TAG_PX = 54                              # the speaker's name tag, over a character's first caption (story.json "name_tags": false turns it off)
-MAX_W = 900
+MAX_W = 840                              # x 120..960: clear of the Shorts like/comment column on the right (docs/look.md)
 CY = BAND + int(GAME_H * 0.70)          # caption block centre: below the crosshair, above the hearts
 INK = (14, 12, 18, 255)
 FPS = 60
@@ -148,8 +148,8 @@ def caption_image(text, key, base=(255, 255, 255, 255), speaker=False, tag=None)
 def speakers(story):
     """{line id: (plain-word colour, is a character, name tag or None)} for a story. v1 stories and the narrator:
     white. A v2 character: its cast `color`, else its library character's `color` (voices/cast.json, via `ref`),
-    else the first unused colour of the library palette; a name tag over its first line (story.json
-    "name_tags": false turns them off)."""
+    else the first unused colour of the library palette; a name tag over every caption of its first line (one word at
+    a time is too short to read a tag; story.json "name_tags": false turns them off)."""
     cast = story.get("cast") or {}
     lib = json.loads((HERE / "voices" / "cast.json").read_text())
     used = {c.get("color", "").upper() for c in cast.values()}
@@ -196,6 +196,12 @@ def caption_events(story_dir, timeline, start, dur, who=False):
             # the word left 1-8 blank frames before most cuts: frame review); only a long gap clears it early
             t1 = t + v["chunks"][i + 1][0] if i + 1 < len(v["chunks"]) else (nxt if nxt - (t + b) <= 1.2 else t + b + 0.3)
             ev.append((max(0.0, t0), min(dur, t1), text, lid))
+    # owner 2026-11-10: "do 1 at a time if the top do it 1 at a time" (Xenost and Ashyyy show one word per caption in
+    # all 48 sampled frames): story.json "captions": "word" (the default) splits every chunk into single words,
+    # timed by voice/words.json (Whisper word starts) when present, else by each word's share of the chunk's letters.
+    # "captions": "chunk" keeps the 2-3 word chunks.
+    if story.get("captions", "word") == "word":
+        ev = _one_word(ev, story_dir, marks)
     # a chunk due just before a picture cut inside a line starts on the cut (the voice's word timing put
     # "He doesn't" 6-9 frames before the night/day cuts it belongs to: story_sheep_stares f222, f262)
     cuts = _cut_times(timeline, start)
@@ -206,6 +212,39 @@ def caption_events(story_dir, timeline, start, dur, who=False):
             ev[k - 1] = (ev[k - 1][0], c, *ev[k - 1][2:])
             ev[k] = (c, *ev[k][1:])
     return [e if who else e[:3] for e in ev if e[1] > e[0]]
+
+
+def _one_word(ev, story_dir, marks):
+    """Split each (t0, t1, text, lid) chunk into one event per word."""
+    import json as _json
+    wf = pathlib.Path(story_dir) / "voice" / "words.json"
+    words = _json.loads(wf.read_text()) if wf.exists() else {}
+    line_t = {lid: t for t, lid in marks}
+    used = {}
+    out = []
+    for t0, t1, text, lid in ev:
+        toks = text.split()
+        if len(toks) <= 1:
+            out.append((t0, t1, text, lid))
+            continue
+        ww = words.get(lid) or []
+        k = used.get(lid, 0)
+        starts = None
+        if ww and k + len(toks) <= len(ww):
+            starts = [line_t[lid] + float(w[1]) for w in ww[k:k + len(toks)]]
+            starts[0] = t0
+            if any(b <= a for a, b in zip(starts, starts[1:])) or starts[-1] >= t1:
+                starts = None
+        used[lid] = k + len(toks)
+        if starts is None:
+            n = [max(1, len(w.strip(".,!?;:'\"").replace("'", ""))) + 1 for w in toks]
+            tot, acc, starts = sum(n), 0, []
+            for x in n:
+                starts.append(t0 + (t1 - t0) * acc / tot)
+                acc += x
+        for i, w in enumerate(toks):
+            out.append((starts[i], starts[i + 1] if i + 1 < len(toks) else t1, w, lid))
+    return out
 
 
 CUT_SNAP = 0.25   # s: how far ahead of a cut a chunk may start and still be moved onto it
@@ -242,15 +281,14 @@ def caption_concat(story_dir, timeline, start, dur, tmp):
     runs, frame = [], 0                      # [(png, frames)]
     total = int(round(dur * FPS))
     # story.json v2: a character's lines in that speaker's colour (the narrator's, and v1 stories', white)
-    spk, tagged = speakers(story), set()
+    spk = speakers(story)
     for k, (t0, t1, text, lid) in enumerate(caption_events(story_dir, timeline, start, dur, who=True)):
         f0, f1 = int(round(t0 * FPS)), int(round(t1 * FPS))
         if f0 > frame:
             runs.append((blank, f0 - frame))
         f0 = max(f0, frame)
         col, is_char, tag = spk.get(lid, ((255, 255, 255, 255), False, None))
-        base = caption_image(text, key, col, is_char, tag if lid not in tagged else None)   # the tag on the line's first chunk
-        tagged.add(lid)
+        base = caption_image(text, key, col, is_char, tag)   # the tag over every word of a character's first line
         for j in range(f1 - f0):
             s = POP[j] if j < len(POP) else 1.0
             if j >= len(POP):

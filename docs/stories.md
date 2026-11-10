@@ -52,6 +52,7 @@ Owner, 2026-11-10: "I feel like the cinematic should be the default." The movie 
 main, so a story stunt gets it by exporting a few fields; nothing else in the pipeline changes (voice.py, edit.py
 --story, rec_check, preview.sh, render_on_actions.sh all work as before). Pilot: `story_good_boy`.
 ```js
+look: 'auto',   // the grade follows the time of day (docs/look.md); or a mood, or { mood, ...overrides }, or the full form:
 look: { grade: {...} | 'dawn' | 'night', bloom: 0.5, vignette: 0.38, grain: 0.02, dof: { aperture: 0.9 }, shadows: true, rays: 0.5 },
 shots: { pov: { pov: true }, est: { path: [[0, dx, dy, dz], [2.4, ...]], lookPath: [...], ease: true }, ... },
 self: { model: 'wolf', eye: 0.68, extra: { tame: true, collar: 14 } },   // only for a narrator who isn't a player
@@ -121,13 +122,14 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 | narrator | `scripts/voice.py` | Kokoro `am_adam`, tempo 1.03, sped up 1.45x (pitch up with it): the blocky-stories narrator, ~290 wpm. Writes each line's wav and `voice.json` (each line's `dur`, and every chunk's start/end from Kokoro's word timestamps). |
 | kit | `lib/story.js` | `storyLines(dir)`: `line(id).dur`, `line(id).at(k)` (tick where chunk k starts), `gap`. `storyKit(ctx, S, {X, Z, F})`: cuts, lines, the camera, the cast (table under "Make one"). `setKit` for `setup`. Set helpers: `clearSet(ctx, A, 64)` (a wide flat clearing, hanging gravel swept), `plainsBiome(ctx, A)` + `resendChunks(ctx, X, Z)` (one grass colour; mineflayer needs the chunks again), `house(...)` (a real lit room). |
 | scenes | `stunts/story_<name>.js` | sets every scene up front in `setup` (all mobs NoAI, tagged per scene), then for each line: a cut (teleport), `ctx.mark('line', { id })`, and a per-tick scene function for exactly `dur + gap` seconds. Actions land on a chunk with `at(k)` ("They SLAM" closes the door on that word). |
-| edit | `edit.py --story stories/<name>` (from `edit.story`) | lays each line's wav on its `line` mark (snapped to the camera cut), draws the captions (`scripts/story_track.py`), and mixes: voice -15 LUFS, game -27, song bed -31, master corrected to -14 LUFS. Optional: a rule meter (story.json `"meter": {"label": "VILLAGERS"}` + `ctx.mark('meter', { value })`), white flashes (`ctx.mark('flash')`). |
+| edit | `edit.py --story stories/<name>` (from `edit.story`) | lays each line's wav on its `line` mark (snapped to the camera cut), draws the captions (`scripts/story_track.py`), and mixes by the audio standard (docs/audio.md, scripts/story_audio.py): voice -15 LUFS through a clarity chain, game -27 ducked under the lines (with every visible event's vanilla sound: scripts/onscreen_sfx.py), whooshes on scene changes, a riser + silence + hit on the payoff, room tone, master -14 LUFS / -1 dBTP. Optional: a rule meter (story.json `"meter": {"label": "VILLAGERS"}` + `ctx.mark('meter', { value })`), white flashes (`ctx.mark('flash')`). |
 | stunt options | top level of the stunt module | `hideHand: true` (no first-person hand: a narrator who isn't Steve), `time`, `weather` ('rain'/'thunder'), `brightness`; mid-stunt `ctx.setTime(n)`, `ctx.setWeather(w)`. Set `/gamerule log_admin_commands false` for per-tick `execute as` moves. |
-| song | `scripts/add_song.py` (via publish.js) | for a story stunt the NCS track is a quiet bed under the voice (-31 LUFS), not the -13 lead the stunt Shorts use. |
+| song | `scripts/add_song.py` (via publish.js) | a story gets the **mood score** (docs/audio.md), not NCS phonk: story.json `mood` picks a Kevin MacLeod CC BY track (music/score.json, fetched by scripts/fetch_music.py, credited in the description) at -26 LUFS ducked 7 dB under each line, out 0.45 s before `payoff`, then the payoff track. Stunt Shorts keep NCS at -13. |
 
-Captions: Schibsted Grotesk Black (OFL, `assets/fonts/`) at 96 px, white with a dark outline and a soft shadow,
-key words in the story's colour (in a v2 story a character's line is in that character's colour, key words underlined;
-docs/voices.md "Caption colours"), centred at 70% of the game view's height (under the crosshair, above the
+Captions: Poppins Black (OFL, `assets/fonts/`; chosen by a font A/B, docs/look.md) at 96 px, max 840 px wide (clear of
+the Shorts action column), white with a dark outline and a soft shadow,
+key words in the story's colour (in a v2 story a character's words are in that character's colour, key words
+underlined; docs/voices.md "Caption colours"), centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
@@ -140,6 +142,20 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   (`color` in voices/cast.json: the narrator white, Milo Steve's cyan, the elder amber...), with a small name tag
   over its first line; the narrator's key words keep the story's key colour, a character's key words are underlined
   in its own colour (docs/voices.md "Caption colours").
+- **Owner, 2026-11-10: "do 1 at a time if the top do it 1 at a time. the font is ok yes just whatever is best".**
+  Story captions show **one word at a time** (Xenost and Ashyyy: one word in all 48 sampled frames), timed by
+  voice/words.json word starts, in Poppins Black. Each word pops in (0.1 s, the existing `POP`) and cuts out hard
+  on the next word: no fade or slide out, which top channels don't use either. story.json `"captions": "chunk"`
+  brings back the 2-3 word chunks.
+- **Owner, 2026-11-10: "you choose for the audio mix, im not an expert there".** The lead picked the new story mix
+  (docs/audio.md): mood score with ducking, a drop-out and hit at the payoff, room tone, vanilla on-screen sounds,
+  -14 LUFS. It's measured, not listened to by the owner, so a story's review checks the mix by ear-proxy
+  (scripts/audio_measure.py) and any owner note on a track or level overrides it.
+- **Owner, 2026-11-10, after the kid-narrator audition: "all of the current ones seem to be too sped up. i kinda like
+  the pip here"** (Dog on the Hill v3: Leda, natural tempo, no pitch shift; measured ~4.1 words/s while speaking,
+  ~0.45 s between sentences, 2.85 words/s overall). The narrator is Leda as voiced there: **no time-stretch and no
+  pitch shift**. Speed comes from the direction (quick, bright, one breath per sentence), never from the 1.5x filter;
+  atempo 1.1 at most if a take drags. `voices/cast.json` narrator `post` is now empty.
 - **Owner, 2026-11-10 (in the Dog on the Hill session): "the start should be delivered all at once right?" / "we can
   have pauses later, the opening must be in one breath"; "is milo a woman?"; "what does the day one mean bro".**
   - Line 1 is one quick breath, no internal pause (`./hb pace` blocks one over 0.2 s). Re-take it; trimming silence
