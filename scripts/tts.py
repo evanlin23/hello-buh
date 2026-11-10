@@ -34,6 +34,7 @@ read the direction aloud; a pitch that belongs to the other speaker means a bad 
 import base64
 import hashlib
 import json
+import os
 import pathlib
 import subprocess
 import sys
@@ -86,6 +87,21 @@ def resolve(story_cast=None):
     return out
 
 
+# shared-quota pacing (the lead, 2026-11-10: several sessions share the TTS quota): TTS_MIN_GAP seconds between
+# this process's requests, and on a 429 TTS_429_WAIT seconds then a retry, up to TTS_429_RETRIES times (both
+# default 0: a 429 moves on as before)
+_LAST_REQ = [0.0]
+
+
+def _pace():
+    gap = float(os.environ.get("TTS_MIN_GAP", "0") or 0)
+    wait = _LAST_REQ[0] + gap - time.time()
+    if wait > 0:
+        print(f"  (pacing: {wait:.0f} s before the next request)")
+        time.sleep(wait)
+    _LAST_REQ[0] = time.time()
+
+
 def request(text, voices, models=None):
     """One TTS call -> (float32 mono at SR, the model that made it). voices: {label: Gemini voice name} (1 or 2
     entries). `text` is the prompt, or a function model -> prompt (each model family gets the layout it was tested
@@ -99,8 +115,10 @@ def request(text, voices, models=None):
         body = json.dumps({"contents": [{"parts": [{"text": text(model) if callable(text) else text}]}],
                            "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": sc}}).encode()
         # a 429 is the model's daily quota: move to the next one; a 5xx gets one more try
-        for attempt in range(2):
+        r429 = int(os.environ.get("TTS_429_RETRIES", "0") or 0)
+        for attempt in range(2 + r429):
             try:
+                _pace()
                 STATS["requests"] += 1
                 req = urllib.request.Request(f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                                              data=body, headers={"Content-Type": "application/json", "x-goog-api-key": "proxy"})
@@ -112,9 +130,16 @@ def request(text, voices, models=None):
                                           input=data, capture_output=True, check=True).stdout
                 return np.frombuffer(data, "<i2").astype(np.float32) / 32768, model
             except urllib.error.HTTPError as e:
-                msg = e.read()[:300].decode(errors="replace")
+                msg = e.read()[:4000].decode(errors="replace")
                 print(f"  {model}: {e.code} {msg[:120]!r}")
                 if e.code == 429:
+                    print(f"  429 (full): {msg}")
+                    if r429 > 0:
+                        r429 -= 1
+                        w = float(os.environ.get("TTS_429_WAIT", "65") or 65)
+                        print(f"  429: waiting {w:.0f} s, then again ({r429} retries left)")
+                        time.sleep(w)
+                        continue
                     break
                 if e.code not in (500, 502, 503, 504):
                     raise SystemExit(f"TTS {e.code}: {msg}")
