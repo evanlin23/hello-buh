@@ -57,7 +57,7 @@ module.exports = {
     whose: { path: [[0, -2.4, 1.6, 5.8], [4, -2.6, 1.5, 6.1]], look: [-5, 0.7, 7.5], fov: 50 },
     rightback: { path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.5, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night
-    dusk: { path: [[0, 4.8, 2.6, 2.4], [3, 4.4, 2.4, 2.2]], look: [0, 0.4, 0.9], fov: 56 },
+    dusk: { path: [[0, 4.4, 1.8, 2.2], [3, 4.0, 1.7, 2.0]], look: [-2, 1.0, 0.8], fov: 50 },   // (low: the ridge and the sunset sky behind them, not the meadow)
     night: { path: [[0, 3.0, 1.6, 3.3], [3, 2.7, 1.5, 3.0]], look: [0.2, 0.6, 1.1], fov: 48 },   // (closer than dusk: a time cut on the same framing read as a jump cut)
     // L12: behind them: the player appears on the patch, the dog stands, the village lights below
     reveal: { path: [[0, -2.6, 2.2, 6.6], [4, -2.2, 2.0, 6.0]], look: [2.2, 0.9, -1.2], fov: 52 },   // (from the south-west: the hut, boulders and trees behind them, not the flat meadow)
