@@ -1,0 +1,310 @@
+{
+  "name": "bed_in_the_square",
+  "stunt": "story_bed_in_the_square",
+  "version": 2,
+  "caption": "why is there a BED in our village square 🛏️",
+  "logline": "A boy guards the bed his grandma has kept in the middle of the village for forty years, the day his dad comes to take it down, and finds out what it was for.",
+  "question": "why tf is there a bed in the middle of the village?",
+  "premise": "A single red bed has stood in the middle of the village square for forty years. Nobody may sleep in it or build around it; when the village paved the square they moved the well instead. Grandma makes it every morning. Grandpa Walt walked east forty years ago to see where the world ends. Dad says she's waiting for a dead man and plans to take the bed down for the market.",
+  "twist": "The bed is Grandpa's respawn point. He never slept anywhere else, so the only way home from the far side of the world was to die. At dawn the chat says 'Walt left the confines of this world' (the world border's death message): he reached the edge, and the edge sent him home. He appears beside the bed. Grandma: 'You're late.'",
+  "key_color": "#FF6B5B",
+  "gap": 0.25,
+  "voice": {
+    "engine": "gemini",
+    "model_hint": "gemini-2.5-flash-preview-tts"
+  },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "name": "me (Finn)",
+      "voice": "Iapetus",
+      "color": "#FFFFFF",
+      "profile": "a teenage boy telling a friend about his grandma; hushed, fond, a little embarrassed for her at first; steadier and braver by the end",
+      "on_screen": "player actor (recording bot, skin noor), seen in camera shots from behind or the side; POV for one shot"
+    },
+    "Grandma": {
+      "role": "character",
+      "name": "Grandma Ada",
+      "voice": "Gacrux",
+      "color": "#F5D06F",
+      "profile": "old, dry and completely certain; never raises her voice; a smile under every line, even the stern ones",
+      "on_screen": "player actor 'Ada', skin alex (the second default skin: the original couple)"
+    },
+    "Dad": {
+      "role": "character",
+      "name": "Dad (Hal)",
+      "voice": "Alnilam",
+      "color": "#8FB8DE",
+      "profile": "tired, practical, loves his mother and has given up hoping; gentle, not cruel; breaks once",
+      "on_screen": "player actor 'Hal', skin kai, an iron axe from L08 on"
+    },
+    "Walt": {
+      "role": "character",
+      "name": "Grandpa Walt",
+      "voice": null,
+      "color": "#FFFFFF",
+      "profile": "never speaks",
+      "on_screen": "player actor 'Walt', skin steve (the first default skin), empty-handed and unarmored (he dropped everything at the border); seen only in S13-S14"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N",
+        "Grandma"
+      ],
+      "direction": "A village at dawn. A teenage boy tells a friend about his grandmother and the bed she keeps in the square; the grandmother is old, dry and sure of herself.",
+      "lines": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L06",
+        "L08",
+        "L09",
+        "L10",
+        "L12"
+      ]
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "Dad"
+      ],
+      "direction": "A tired, gentle man in his forties talks to his elderly mother in a village square.",
+      "lines": [
+        "L07",
+        "L11"
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "There's a BED / in the middle / of my village. / It's been there / FORTY YEARS.",
+      "say": "There's a bed in the middle of my village. <short pause> It's been there... forty years.",
+      "direction": "hushed, like sharing a family secret; a held breath before the number",
+      "shot": "S01"
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "Nobody's allowed / to SLEEP in it. / When they built / the square, / they moved / the WELL / instead.",
+      "direction": "dry and amused; a tiny beat before the last word",
+      "shot": "S02"
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "Grandma makes it / every MORNING. / Like he's / coming home / TONIGHT.",
+      "direction": "fond, a little embarrassed for her",
+      "shot": "S03"
+    },
+    {
+      "id": "L04",
+      "who": "Grandma",
+      "text": "Keep it CLEAR. / If it's BLOCKED, / he wakes up / somewhere ELSE.",
+      "say": "Keep it clear. <short pause> If it's blocked, he wakes up somewhere else.",
+      "direction": "stern but unhurried, shooing someone away; certain, as if stating the weather",
+      "shot": "S04"
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "Grandpa WALT / walked EAST / forty years ago / to see where / the world ENDS.",
+      "direction": "storytelling, a little wonder; slow down on the last three words",
+      "shot": "S05"
+    },
+    {
+      "id": "L06",
+      "who": "Grandma",
+      "text": "He never slept / in another bed. / Not ONCE.",
+      "say": "He never slept in another bed. <short pause> Not once.",
+      "direction": "quiet pride, private, almost to herself",
+      "shot": "S06"
+    },
+    {
+      "id": "L07",
+      "who": "Dad",
+      "text": "There IS / no end, / Ma. / He's GONE.",
+      "say": "There is no end, Ma. <short pause> He's gone.",
+      "direction": "gentle and worn out, a speech he has made many times",
+      "shot": "S07"
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "The village wants / the square / for the MARKET. / Dad said / he'd take / the bed / at DAWN.",
+      "direction": "flat dread creeping in; the last word lands heavy",
+      "shot": "S08"
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "So I sat up / with Grandma. / ALL night.",
+      "say": "So I sat up with Grandma. <short pause> All night.",
+      "direction": "a decision, simple and firm",
+      "shot": "S09"
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "At DAWN, / Dad came / with the AXE. / I stood / in his WAY.",
+      "say": "At dawn, Dad came with the axe. <short pause> I stood in his way.",
+      "direction": "tense, quick; the second sentence slower and braver",
+      "shot": "S10"
+    },
+    {
+      "id": "L11",
+      "who": "Dad",
+      "text": "Ma... / I'm SO sorry.",
+      "say": "Ma... <long pause> I'm so sorry.",
+      "direction": "his voice catches on the second word; very soft",
+      "shot": "S12"
+    },
+    {
+      "id": "L12",
+      "who": "Grandma",
+      "text": "You're LATE.",
+      "say": "<short pause> You're late.",
+      "direction": "dry as ever, trembling underneath, a smile you can hear",
+      "shot": "S14"
+    }
+  ],
+  "beats_without_lines": [
+    {
+      "id": "B1",
+      "after": "L10",
+      "shot": "S11",
+      "dur": 2.0,
+      "what": "Silence. The chat line appears bottom-left: 'Walt left the confines of this world' (vanilla death.attack.outsideBorder). Dad stops mid-step. Also drawn in the caption track, white, two chunks."
+    },
+    {
+      "id": "B2",
+      "after": "L11",
+      "shot": "S13",
+      "dur": 2.2,
+      "what": "Grandma stands, smooths the blanket, steps back. Walt appears beside the bed (vanilla respawn: standing, empty-handed), his name 'Walt' above his head. Hold ~1.3 s before L12."
+    }
+  ],
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "square",
+      "size": "ews",
+      "camera": "path: from 28 blocks SW and 18 up, slow push-in to 20 blocks, looking NE down at the square; FOV 50; already moving on frame 1",
+      "frame": "fg: two roof ridges and a chimney with smoke, low; subject: the red bed alone in the exact middle of the cobbled square, three villagers crossing and curving around it; bg: hills to the east with the torch line, low morning sun at frame right, fog"
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "square",
+      "size": "wide",
+      "camera": "at: 10 blocks S of the bed, eye height 1.0, slow drift right; FOV 50",
+      "frame": "fg: the bed's foot, low centre; mid: the well pushed off to frame left, a librarian walking a curve around the bed; bg: house fronts, lantern posts, the church tower"
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "square",
+      "size": "full",
+      "camera": "single on actor:Ada, 7 blocks, side W, slight push; FOV 50",
+      "frame": "fg: a lantern post at frame right; subject: Grandma at the bed's side, head down, arm swinging as she straightens it; bg: the bakery and the east road"
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "square",
+      "size": "medium",
+      "camera": "single on actor:Ada, 3.5 blocks, side W; FOV 50",
+      "frame": "subject: Grandma waist up, turning her head to frame right as she speaks; a nitwit villager in green shuffling out of frame right; bg: the bed's red edge low frame left, houses"
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "east_gate",
+      "size": "ews",
+      "camera": "path: from just inside the east arch, crane up 6 blocks while pushing east; looking E; FOV 55",
+      "frame": "fg: the arch's two stone posts framing the shot; mid: the torch line leaving the village, a torch every 8 blocks over the first hill; bg: ridges fading to fog, the torches shrinking to dots"
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "square",
+      "size": "medium",
+      "camera": "single on actor:Ada seated, 3 blocks, side S, she faces E (frame right); FOV 50",
+      "frame": "subject: Grandma on her stool (an oak stair) beside the bed, looking frame right (east); fg: the bed's red blanket edge low; bg: the east road and morning sky"
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "square",
+      "size": "wide",
+      "camera": "ots: over Ada's left shoulder (near, back to camera), Hal far in his doorway across the square (12 blocks W); FOV 45",
+      "frame": "fg: Grandma's shoulder and head, frame left; mid: the bed between them; subject: Dad in his open door, frame right-centre, small; bg: his house, the west hills"
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "square",
+      "size": "ews",
+      "camera": "path: crane from 16 blocks NW and 14 up, slow drift; noon; FOV 50",
+      "frame": "fg: a half-built market stall (fence posts, red and white wool awning); mid: villagers and two players placing stalls in a ring around the bed, leaving it a 3-block gap; bg: Dad leaning an iron axe against his door frame"
+    },
+    {
+      "id": "S09",
+      "line": "L09",
+      "place": "square",
+      "size": "wide",
+      "camera": "at: 11 blocks S, 5 up, slow push; night (tick 18000), moon high; FOV 50",
+      "frame": "fg: dark roofs; subject: a pool of lantern light in the square: the bed, Grandma on her stool, me sitting on a stair-block beside her; bg: the dark village, a zombie's silhouette at the edge of the light, turning away"
+    },
+    {
+      "id": "S10",
+      "line": "L10",
+      "place": "square",
+      "size": "full",
+      "camera": "at: 10 blocks N, looking S across the bed; dawn (tick 23300), sun rising frame left (east); FOV 50",
+      "frame": "subject: Dad walking in from frame right (west) with the axe; me stepping in from frame left (east) between him and the bed; bg: house fronts, low gold light"
+    },
+    {
+      "id": "S11",
+      "line": null,
+      "place": "square",
+      "size": "medium",
+      "camera": "two: Dad and me, side N, 3.5 blocks, waist up; FOV 50",
+      "frame": "subject: Dad and me face to face, a block apart; he stops; chat line appears bottom-left; bg: the bed's corner and Grandma's stool"
+    },
+    {
+      "id": "S12",
+      "line": "L11",
+      "place": "square",
+      "size": "full",
+      "camera": "single on actor:Hal, 6 blocks, side N, head to foot; FOV 50",
+      "frame": "subject: Dad waist up, lowering the axe, looking past me to frame left (Grandma); bg: dawn sky, roofs"
+    },
+    {
+      "id": "S13",
+      "line": null,
+      "place": "square",
+      "size": "wide",
+      "camera": "at: 9 blocks E, low (eye 1.2), looking W at the bed with the sunrise behind the camera; slow push; FOV 50",
+      "frame": "subject: the bed centre; Grandma standing at its far side smoothing it, then stepping back; Walt appears at the bed's near side, standing; Dad and me small at frame right; bg: the west houses lit gold"
+    },
+    {
+      "id": "S14",
+      "line": "L12",
+      "place": "square",
+      "size": "medium",
+      "camera": "ots: over Walt's shoulder (near, frame right), Ada facing him across the bed; FOV 45",
+      "frame": "fg: Walt's shoulder and 'Walt' nameplate; subject: Grandma waist up, facing camera, the bed between them; bg: her house and the morning sky"
+    }
+  ],
+  "bible": "stories/bed_in_the_square/bible.md",
+  "set": "stories/bed_in_the_square/set.md",
+  "beats": "stories/bed_in_the_square/beats.md"
+}

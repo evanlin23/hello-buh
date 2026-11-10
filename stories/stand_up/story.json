@@ -1,0 +1,296 @@
+{
+  "name": "stand_up",
+  "stunt": "story_stand_up",
+  "version": 2,
+  "caption": "400 people tried to make this dog stand 🐕",
+  "logline": "A young man logs back into his childhood server after ten years to find his old dirt hut, joins the town's queue to try to stand up the dog nobody can move, and remembers too late whose dog it is.",
+  "question": "why tf is there a line of people trying to stand up a dog?",
+  "premise": "In the middle of a big server town, a tamed wolf has sat on the same block for ten years, under a little roof the players built over it. Four hundred players have queued to try to make it stand; only a tamed dog's owner can. A kid called Pia runs the line. The narrator, back for the first time in ten years to find his first house (a dirt hut with a lime wool roof on the hill behind the dog), gets in line because the path up the hill goes right past it.",
+  "twist": "It's his dog. At eight he tamed it, named it BESTFREND, dyed its collar lime (only an owner can), told it to sit at the foot of his hill, logged off and never came back. The town grew around the dog. When he clicks it, it stands up. 'I told him I'd be back tomorrow.'",
+  "key_color": "#A6E22E",
+  "gap": 0.25,
+  "voice": {
+    "engine": "gemini",
+    "model_hint": "gemini-2.5-flash-preview-tts"
+  },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "name": "me (Theo)",
+      "voice": "Charon",
+      "color": "#FFFFFF",
+      "profile": "a young man of eighteen, wry and a little too cool, telling a friend about going back to an old server; the cool cracks at the end",
+      "on_screen": "player actor = recording bot, skin efe, seen from behind and side in camera shots; POV for the click"
+    },
+    "Pia": {
+      "role": "character",
+      "name": "Pia, the kid who runs the line",
+      "voice": "Leda",
+      "color": "#FFB0D0",
+      "profile": "about ten, bossy and bright, proud of her job; blunt; her loud voice drops when she means something",
+      "on_screen": "player actor 'Pia', skin sunny, standing on a barrel by the plot's gate; scale 0.75 if the renderer supports the vanilla scale attribute"
+    },
+    "Bestfrend": {
+      "role": "character",
+      "name": "the dog",
+      "voice": null,
+      "color": "#A6E22E",
+      "profile": "never makes a sound until he stands (a single vanilla wolf bark/whine is allowed)",
+      "on_screen": "tamed wolf, sitting, lime collar, name tag BESTFREND"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N",
+        "Pia"
+      ],
+      "direction": "A busy town square on an old Minecraft server. A young man tells a friend about going back after ten years; a bossy ten-year-old girl runs a queue.",
+      "lines": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L06",
+        "L07",
+        "L08",
+        "L09",
+        "L10",
+        "L11",
+        "L12",
+        "L13"
+      ]
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "FOUR HUNDRED players / have tried / to make / this dog / STAND UP.",
+      "say": "<short pause> Four hundred players have tried to make this dog stand up.",
+      "direction": "hushed disbelief; a small breath before the number",
+      "shot": "S01"
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "He's been SITTING / on that block / for TEN YEARS.",
+      "direction": "slow, letting the number land",
+      "shot": "S02"
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "A CREEPER / took out / the house / next to him. / He didn't MOVE.",
+      "say": "A creeper took out the house next to him. <short pause> He didn't move.",
+      "direction": "matter-of-fact, then a beat of respect",
+      "shot": "S03"
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "People tried / STEAK. / BONES. / A whole BAND.",
+      "say": "People tried steak. Bones. <short pause> A whole band.",
+      "direction": "dry comic timing, a list that gets sillier",
+      "shot": "S04"
+    },
+    {
+      "id": "L05",
+      "who": "Pia",
+      "text": "Only his OWNER / can make / him stand. / NEXT!",
+      "say": "Only his owner can make him stand. <short pause> NEXT!",
+      "direction": "a tour guide who has said it a thousand times, sing-song; the last word shouted",
+      "shot": "S05"
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "I hadn't / logged in here / in TEN years. / I came back / to find / my first HOUSE.",
+      "direction": "lighter, nostalgic, a half smile",
+      "shot": "S06"
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "A DIRT HUT / on that hill. / LIME wool roof. / I was EIGHT.",
+      "say": "A dirt hut on that hill. Lime wool roof. <short pause> I was eight.",
+      "direction": "fond and a bit embarrassed by his younger self",
+      "shot": "S07"
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "The dog's / name tag / says BESTFREND. / Some kid / couldn't SPELL.",
+      "say": "The dog's name tag says... Bestfrend. <short pause> Some kid couldn't spell.",
+      "direction": "amused, a little smug",
+      "shot": "S08"
+    },
+    {
+      "id": "L09",
+      "who": "Pia",
+      "text": "Somebody / told him SIT. / And never / came BACK.",
+      "say": "Somebody told him sit. <short pause> And never came back.",
+      "direction": "suddenly quiet and serious, a kid stating something unfair",
+      "shot": "S09"
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "The path / up the hill / goes right / past him. / So I got / in LINE.",
+      "direction": "shrugging it off, casual",
+      "shot": "S10"
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "When it was / my TURN, / I almost / didn't BOTHER.",
+      "say": "When it was my turn... I almost didn't bother.",
+      "direction": "slower, the cool starting to slip; a held breath at the end",
+      "shot": "S11"
+    },
+    {
+      "id": "L12",
+      "who": "Pia",
+      "text": "...Where've / you BEEN?",
+      "say": "<long pause> ...Where've you been?",
+      "direction": "barely above a whisper, to him, not the dog; the bossiness gone",
+      "shot": "S13"
+    },
+    {
+      "id": "L13",
+      "who": "N",
+      "text": "I told him / I'd be back / TOMORROW.",
+      "say": "I told him... I'd be back tomorrow.",
+      "direction": "holding it together and only just; a catch before the last word",
+      "shot": "S14"
+    }
+  ],
+  "beats_without_lines": [
+    {
+      "id": "B1",
+      "after": "L11",
+      "shot": "S12",
+      "dur": 2.4,
+      "what": "The click. POV: the crosshair on the dog, the hand swings, and the dog stands up (vanilla: only the owner's interaction toggles sit). Cut to a WS from behind Pia: the dog up on four legs for the first time in ten years, the queue turning, someone drops a steak. One vanilla wolf whine."
+    }
+  ],
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "square",
+      "size": "ews",
+      "camera": "path: from 26 blocks W and 16 up, slow push-in E along the queue toward the plot; FOV 50; moving on frame 1",
+      "frame": "fg: roofs and a market awning low; subject: a long queue of players (~30) snaking along a fence to a small roofed plot where a grey wolf sits; bg: the hill rising behind the plot with a tiny dirt hut and a lime roof on top, fog"
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "square",
+      "size": "full",
+      "camera": "at: 6 blocks SW of the dog, eye 1.2, slow drift; FOV 50",
+      "frame": "fg: the plot's flower border; subject: the wolf sitting under a little spruce roof on four posts, lanterns on two posts, a worn ring of path round it; bg: town buildings"
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "square",
+      "size": "wide",
+      "camera": "at: 11 blocks S, looking N past the dog to the crater; slow push; FOV 50",
+      "frame": "fg: the dog small and sitting in profile, facing frame right (east); subject: half a brick house just north of him with a creeper crater bitten out of it (never rebuilt); bg: town roofs and sky"
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "square",
+      "size": "full",
+      "camera": "two: the gate of the plot, side S, 6 blocks; FOV 50",
+      "frame": "subject: a player at the fence holding out a steak, another with a bone, behind them three players with note blocks/goat horns (the 'band'); the dog unmoved at frame right; bg: the queue"
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "square",
+      "size": "medium",
+      "camera": "single on actor:Pia, 3 blocks, side S; FOV 50",
+      "frame": "subject: Pia on her barrel by the gate, waist up, waving the next player through with her arm; fg: the gate post; bg: the sign 'ONE TRY EACH'"
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "town_edge",
+      "size": "ews",
+      "camera": "path: behind me (over the shoulder, 6 blocks back and 3 up) as I walk E into town from the old forest road; FOV 55",
+      "frame": "fg: the last big spruce trees of the old forest, framing; subject: me small from behind, walking into the town; bg: the whole town spread in the valley, the square, the hill beyond"
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "square",
+      "size": "wide",
+      "camera": "at: 3 blocks behind the dog, low (eye 0.9), looking E up the hill path; slow push; FOV 45",
+      "frame": "fg: the sitting dog's back and head, frame centre-low, his lime collar; mid: the path climbing straight up the hill; bg: the dirt hut with the lime wool roof at the top, exactly in line with the dog's gaze"
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "square",
+      "size": "cu",
+      "camera": "single on the dog, 1.5 blocks, side W, slight push; FOV 45",
+      "frame": "subject: the dog's head and the lime collar, the nameplate BESTFREND above; bg: soft, the queue out of focus behind"
+    },
+    {
+      "id": "S09",
+      "line": "L09",
+      "place": "square",
+      "size": "medium",
+      "camera": "single on actor:Pia, 3.5 blocks from the SW (same side of the Pia-dog line as S05), she turns to look NE at the dog, frame right; FOV 50",
+      "frame": "subject: Pia looking at the dog (frame right), not at camera; fg: a fence post; bg: the crater house"
+    },
+    {
+      "id": "S10",
+      "line": "L10",
+      "place": "square",
+      "size": "wide",
+      "camera": "path: 12 blocks S of the queue fence, looking N, lateral drift E following the queue; FOV 50",
+      "frame": "fg: tall grass and the queue fence low; subject: me joining the end of the queue (players before me shuffling forward, left to right); bg: the plot at frame right, the crater house and town roofs behind"
+    },
+    {
+      "id": "S11",
+      "line": "L11",
+      "place": "square",
+      "size": "medium",
+      "camera": "pov: at the plot's fence, 1.5 blocks from the dog, eye height, slow lean in; HUD on, empty hand",
+      "frame": "subject: the sitting dog filling the lower middle, the BESTFREND plate above; around the edges, Pia's arm and the fence; bg: the hill and the hut"
+    },
+    {
+      "id": "S12",
+      "line": null,
+      "place": "square",
+      "size": "wide",
+      "camera": "two parts: (a) the POV continues for the click and the stand (0.8 s); (b) cut to at: 8 blocks behind Pia, looking E over her at the plot; FOV 50",
+      "frame": "(b) fg: Pia's back on her barrel; subject: the dog standing up on four legs, me in front of him; mid: queue players turning, one dropping a steak; bg: the hill and the hut"
+    },
+    {
+      "id": "S13",
+      "line": "L12",
+      "place": "square",
+      "size": "medium",
+      "camera": "ots: over my right shoulder (near, frame left), Pia 2.5 blocks away facing camera; FOV 45",
+      "frame": "fg: my shoulder; subject: Pia waist up, looking up at me, climbing down from the barrel; bg: the queue gone quiet, the town"
+    },
+    {
+      "id": "S14",
+      "line": "L13",
+      "place": "hill_path",
+      "size": "ews",
+      "camera": "path: from 14 blocks S of the path and 6 up, slow crane up and back as we walk; FOV 50",
+      "frame": "fg: the empty plot with its little roof; subject: me walking up the hill path, the dog walking at my side for the first time; bg: the dirt hut with the lime roof on the hilltop, the sky"
+    }
+  ],
+  "bible": "stories/stand_up/bible.md",
+  "set": "stories/stand_up/set.md",
+  "beats": "stories/stand_up/beats.md"
+}
