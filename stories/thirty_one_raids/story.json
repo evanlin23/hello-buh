@@ -298,7 +298,7 @@
       "place": "grandpa_house",
       "size": "ms",
       "camera": "pov beside Grandpa at the open chest",
-      "frame": "fg: the chest under the east window; subject: the lid opens, and on 'BOTTLES' Grandpa's hand comes up into frame holding an ominous bottle (chest contents never render); on 'CHEST' the camera tilts down to the open chest; bg: the east window (dark) with 4 item frames of ominous bottles on either side of it, 2 and 2. Night (14000), lantern-lit."
+      "frame": "Grandpa at the chest under the east window, the bottle coming up in his hand on 'BOTTLES' (camera beside him); on 'CHEST' first person: Milo opens the chest and the chest screen shows it full of ominous bottles. Night (14000), lantern-lit."
     },
     {
       "id": "S08",
@@ -306,7 +306,7 @@
       "place": "gate",
       "size": "wide",
       "camera": "pov 4 blocks behind Grandpa and 2 blocks south, inside the gate, at dusk (the 180-degree side the bible uses)",
-      "frame": "fg: the gate's log posts; subject: Grandpa standing in the open gate in profile-three-quarters, the ominous bottle in his right hand; on 'drinks' he tips his head back with the bottle (drink sound); on 'GATE' the bottle is gone and the crossbow is in his hand; bg: the road into the dusk and the ridge with the tower. Dusk (13000), a typical raid night."
+      "frame": "fg: the gate's log posts; subject: Grandpa standing in the open gate in profile-three-quarters, the ominous bottle in his right hand; on 'drinks' the drink pose, bottle to his mouth, head back (drink sound); on 'GATE' the bottle is gone and the crossbow is in his hand; bg: the road into the dusk and the ridge with the tower. Dusk (13000), a typical raid night."
     },
     {
       "id": "S09",
@@ -322,7 +322,7 @@
       "place": "grandpa_house",
       "size": "full",
       "camera": "pov from the room's south-east corner, still, then a slow drift",
-      "frame": "fg: Grandma's chair (pushed in), nearest the lens; subject: Grandpa standing at the far side of the table set for two (one bowl), crouched over it, head down; he lifts his head once on 'GLAD'; bg: the totem wall above him. Night (14000), another night."
+      "frame": "fg: Grandma's chair (pushed in), nearest the lens; subject: Grandpa sitting in his chair at the table set for two (one bowl), head down; he lifts his head once on 'GLAD'; bg: the totem wall. Night (14000), another night."
     },
     {
       "id": "S11",
@@ -330,7 +330,7 @@
       "place": "grandpa_yard",
       "size": "wide",
       "camera": "pov in the yard, 7 blocks from his door, a slow push",
-      "frame": "the final night, visibly different: not at the gate. fg: the yard fence; subject: Grandpa crouched against his door frame, head pitched down, an ominous bottle undrunk in his slack hand; the crossbow hangs in its frame on the wall beside him; on 'FIGHT' the bottle leaves his hand and is in mine (the first-person hand comes up with it at the end of the push); bg: the open gate posts at frame right, the ridge darkening. Dusk (12300)."
+      "frame": "the final night, visibly different: not at the gate. fg: the yard fence; subject: Grandpa slumped on the bench by his door, head down, dozing, an ominous bottle undrunk in his slack hand; the crossbow hangs in its frame on the wall beside him; on 'FIGHT' the bottle leaves his hand and is in mine (the first-person hand comes up with it at the end of the push); bg: the open gate posts at frame right, the ridge darkening. Dusk (12300)."
     },
     {
       "id": "S12",
