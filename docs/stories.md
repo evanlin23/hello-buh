@@ -7,6 +7,9 @@ camera, and that is the format's best trick: the viewer never sees who "I" am (p
 narrator turns out to be the creeper).
 
 ## Make one
+**Write it first:** `/story-write` (`.claude/skills/story-write/SKILL.md`) takes a story from ten pitches to a
+script with a voiced cast, a shot list and a continuity bible, checked by the `story-critic` and `story-continuity`
+agents and a cold reader, before anything is built. Craft guide: `docs/story_craft.md`.
 ```bash
 # 1. the script: stories/<name>/story.json (lines, chunks, key words), see stories/put_back
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
