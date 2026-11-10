@@ -1,542 +1,392 @@
 {
- "voice": "gemini cast",
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
  "sr": 24000,
- "gap": 0.25,
+ "gap": 0.12,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
  "lines": {
   "L01": {
-   "text": "I've tried to leave this man thirty-seven times.",
-   "who": null,
-   "dur": 3.63,
-   "onset": 0.05,
-   "end": 3.53,
+   "text": "My human has tried to lose me thirty-seven times.",
+   "dur": 2.431,
+   "onset": 0.172,
+   "end": 2.241,
    "chunks": [
     [
-     0.0,
-     0.48
+     0.172,
+     0.534
     ],
     [
-     0.48,
-     1.06
+     0.534,
+     0.836
     ],
     [
-     1.06,
-     1.64
+     0.836,
+     1.233
     ],
     [
-     1.64,
-     2.26
-    ],
-    [
-     2.26,
-     3.18
+     1.233,
+     2.241
     ]
    ],
    "captions": [
-    "I've tried",
-    "to LEAVE",
-    "this man",
-    "THIRTY-SEVEN",
-    "times."
+    "My HUMAN",
+    "has TRIED",
+    "to LOSE me",
+    "thirty-seven TIMES."
    ]
   },
   "L02": {
-   "text": "Every time I get twelve blocks away... I'm standing right next to him.",
-   "who": null,
-   "dur": 4.57,
-   "onset": 0.05,
-   "end": 4.47,
+   "text": "He runs. I follow. Twelve blocks out, I just appear right next to him.",
+   "dur": 3.19,
+   "onset": 0.155,
+   "end": 3.0,
    "chunks": [
     [
-     0.0,
-     0.7
+     0.155,
+     0.5
     ],
     [
-     0.7,
-     1.34
+     0.534,
+     1.034
     ],
     [
-     1.34,
-     2.68
+     1.155,
+     1.759
     ],
     [
-     2.68,
-     3.22
+     1.784,
+     2.172
     ],
     [
-     3.22,
-     3.66
+     2.172,
+     2.509
     ],
     [
-     3.66,
-     4.36
+     2.509,
+     3.0
     ]
    ],
    "captions": [
-    "Every time",
-    "I get TWELVE",
-    "blocks away...",
-    "I'm standing",
-    "RIGHT",
-    "next to him."
+    "He RUNS.",
+    "I FOLLOW.",
+    "Twelve BLOCKS out,",
+    "I just APPEAR",
+    "right NEXT",
+    "to HIM."
    ]
   },
   "L03": {
-   "text": "There you are.",
-   "who": "Sam",
-   "dur": 1.07,
-   "onset": 0.06,
-   "end": 0.97,
+   "text": "He hid in the wheat. He tried hills at night. He swam to an island. I popped up on the beach.",
+   "dur": 3.759,
+   "onset": 0.155,
+   "end": 3.552,
    "chunks": [
     [
-     0.0,
-     0.8
+     0.155,
+     0.371
+    ],
+    [
+     0.371,
+     0.707
+    ],
+    [
+     0.759,
+     1.25
+    ],
+    [
+     1.25,
+     1.569
+    ],
+    [
+     1.621,
+     2.0
+    ],
+    [
+     2.0,
+     2.431
+    ],
+    [
+     2.466,
+     2.888
+    ],
+    [
+     2.888,
+     3.552
     ]
    ],
    "captions": [
-    "There you ARE."
+    "He HID",
+    "in the WHEAT.",
+    "He tried HILLS",
+    "at NIGHT.",
+    "He SWAM",
+    "to an ISLAND.",
+    "I POPPED up",
+    "on the BEACH."
    ]
   },
   "L04": {
-   "text": "I've tried at night. Through the wheat. I even swam for it.",
-   "who": null,
-   "dur": 4.47,
-   "onset": 0.06,
-   "end": 4.37,
+   "text": "The only time I don't pop up next to him is when I'm sitting.",
+   "dur": 2.638,
+   "onset": 0.172,
+   "end": 2.448,
    "chunks": [
     [
-     0.0,
-     0.46
+     0.172,
+     0.647
     ],
     [
-     0.46,
-     1.6
+     0.647,
+     0.81
     ],
     [
-     1.6,
-     3.02
+     0.81,
+     1.103
     ],
     [
-     3.02,
-     3.44
+     1.103,
+     1.543
     ],
     [
-     3.44,
-     4.34
+     1.543,
+     1.75
+    ],
+    [
+     1.75,
+     2.448
     ]
    ],
    "captions": [
-    "I've tried",
-    "at NIGHT.",
-    "Through the WHEAT.",
-    "I even",
-    "SWAM for it."
+    "The ONLY time",
+    "I DON'T",
+    "POP up",
+    "next to HIM",
+    "is WHEN",
+    "I'm SITTING."
    ]
   },
   "L05": {
-   "text": "He feeds me raw porkchops. Never cooked. Not once.",
-   "who": null,
-   "dur": 4.71,
-   "onset": 0.05,
-   "end": 4.61,
+   "text": "He knows that. A sitting dog waits forever. He wants me to forget him. So he never makes me sit.",
+   "dur": 4.017,
+   "onset": 0.172,
+   "end": 3.81,
    "chunks": [
     [
-     0.0,
-     0.76
+     0.172,
+     0.638
     ],
     [
-     0.76,
-     1.04
+     0.698,
+     1.241
     ],
     [
-     1.04,
-     1.4
+     1.241,
+     1.879
     ],
     [
-     1.4,
-     2.7
+     1.966,
+     2.267
     ],
     [
-     2.7,
-     3.92
+     2.267,
+     2.672
+    ],
+    [
+     2.707,
+     3.034
+    ],
+    [
+     3.034,
+     3.81
     ]
    ],
    "captions": [
-    "He feeds me",
-    "RAW",
-    "porkchops.",
-    "Never COOKED.",
-    "Not ONCE."
+    "He KNOWS that.",
+    "A SITTING dog",
+    "waits FOREVER.",
+    "He WANTS me",
+    "to FORGET him.",
+    "So he NEVER",
+    "makes me SIT."
    ]
   },
   "L06": {
-   "text": "sit.",
-   "who": "Sam",
-   "dur": 0.61,
-   "onset": 0.06,
-   "end": 0.51,
+   "text": "He keeps talking about a place called college.",
+   "dur": 2.052,
+   "onset": 0.155,
+   "end": 1.845,
    "chunks": [
     [
-     0.0,
-     0.3
+     0.155,
+     0.664
+    ],
+    [
+     0.664,
+     1.086
+    ],
+    [
+     1.086,
+     1.845
     ]
    ],
    "captions": [
-    "SIT."
+    "He keeps TALKING",
+    "about a PLACE",
+    "called COLLEGE."
    ]
   },
   "L07": {
-   "text": "And when he says sit... I sit. I don't know why.",
-   "who": null,
-   "dur": 4.03,
-   "onset": 0.06,
-   "end": 3.92,
+   "text": "Every night he says, sorry, buddy. I don't know what for.",
+   "dur": 2.5,
+   "onset": 0.172,
+   "end": 2.293,
    "chunks": [
     [
-     0.0,
-     0.52
+     0.172,
+     0.474
     ],
     [
-     0.52,
-     1.68
+     0.474,
+     0.776
     ],
     [
-     1.68,
-     2.9
+     0.819,
+     1.379
     ],
     [
-     2.9,
-     3.34
+     1.448,
+     1.741
     ],
     [
-     3.34,
-     3.78
+     1.741,
+     2.293
     ]
    ],
    "captions": [
-    "And when he",
-    "says SIT...",
-    "I SIT.",
-    "I don't",
-    "know WHY."
+    "Every NIGHT",
+    "he SAYS,",
+    "SORRY, buddy.",
+    "I don't KNOW",
+    "what FOR."
    ]
   },
   "L08": {
-   "text": "Everyone in this village is so tall.",
-   "who": null,
-   "dur": 2.59,
-   "onset": 0.06,
-   "end": 2.48,
+   "text": "Last night, a zombie came for him. I got there first, though.",
+   "dur": 2.638,
+   "onset": 0.172,
+   "end": 2.431,
    "chunks": [
     [
-     0.0,
-     0.4
+     0.172,
+     0.5
     ],
     [
-     0.4,
-     1.24
+     0.526,
+     0.845
     ],
     [
-     1.24,
-     2.28
+     0.845,
+     1.362
+    ],
+    [
+     1.431,
+     1.767
+    ],
+    [
+     1.767,
+     2.431
     ]
    ],
    "captions": [
-    "Everyone",
-    "in this village",
-    "is so TALL."
+    "Last NIGHT,",
+    "a ZOMBIE",
+    "came for HIM.",
+    "I got THERE",
+    "FIRST, though."
    ]
   },
   "L09": {
-   "text": "And there's this dog. Wherever I go... it's already there.",
-   "who": null,
-   "dur": 4.51,
-   "onset": 0.06,
-   "end": 4.4,
+   "text": "This morning, he walked me back home, up the hill to his hut.",
+   "dur": 2.724,
+   "onset": 0.172,
+   "end": 2.534,
    "chunks": [
     [
-     0.0,
-     0.48
+     0.172,
+     0.534
     ],
     [
-     0.48,
-     1.58
+     0.56,
+     0.914
     ],
     [
-     1.58,
-     1.88
+     0.914,
+     1.448
     ],
     [
-     1.88,
-     3.22
+     1.517,
+     1.879
     ],
     [
-     3.22,
-     3.8
-    ],
-    [
-     3.8,
-     4.22
+     1.879,
+     2.534
     ]
    ],
    "captions": [
-    "And there's",
-    "this DOG.",
-    "Wherever",
-    "I go...",
-    "it's ALREADY",
-    "there."
+    "This MORNING,",
+    "he WALKED me",
+    "BACK home,",
+    "up the HILL",
+    "to his HUT."
    ]
   },
   "L10": {
-   "text": "I can't even open a door.",
-   "who": null,
-   "dur": 2.23,
-   "onset": 0.06,
-   "end": 2.12,
+   "text": "He said, sit, boy.",
+   "dur": 1.293,
+   "onset": 0.155,
+   "end": 1.086,
    "chunks": [
     [
-     0.0,
-     0.74
+     0.155,
+     0.414
     ],
     [
-     0.74,
-     1.4
-    ],
-    [
-     1.4,
-     1.92
+     0.448,
+     1.086
     ]
    ],
    "captions": [
-    "I can't",
-    "even open",
-    "a DOOR."
+    "He SAID,",
+    "sit, BOY."
    ]
   },
   "L11": {
-   "text": "Come on in, you.",
-   "who": "Sam",
-   "dur": 1.27,
-   "onset": 0.05,
-   "end": 1.16,
+   "text": "He said, I'll be right back.",
+   "dur": 1.5,
+   "onset": 0.155,
+   "end": 1.293,
    "chunks": [
     [
-     0.0,
-     0.66
+     0.155,
+     0.448
     ],
     [
-     0.66,
-     0.96
+     0.474,
+     0.655
+    ],
+    [
+     0.655,
+     1.293
     ]
    ],
    "captions": [
-    "Come on IN,",
-    "you."
-   ]
-  },
-  "L12": {
-   "text": "When he leaves, I wait by the door. all day.",
-   "who": null,
-   "dur": 3.77,
-   "onset": 0.06,
-   "end": 3.67,
-   "chunks": [
-    [
-     0.0,
-     1.24
-    ],
-    [
-     1.24,
-     1.58
-    ],
-    [
-     1.58,
-     2.3
-    ],
-    [
-     2.3,
-     3.48
-    ]
-   ],
-   "captions": [
-    "When he LEAVES,",
-    "I wait",
-    "by the door.",
-    "ALL day."
-   ]
-  },
-  "L13": {
-   "text": "skeletons run when they see me.",
-   "who": null,
-   "dur": 2.23,
-   "onset": 0.06,
-   "end": 2.13,
-   "chunks": [
-    [
-     0.0,
-     0.72
-    ],
-    [
-     0.72,
-     1.44
-    ],
-    [
-     1.44,
-     2.04
-    ]
-   ],
-   "captions": [
-    "SKELETONS",
-    "run when",
-    "they SEE me."
-   ]
-  },
-  "L14": {
-   "text": "Then one night, a zombie came for him.",
-   "who": null,
-   "dur": 2.71,
-   "onset": 0.06,
-   "end": 2.6,
-   "chunks": [
-    [
-     0.0,
-     1.26
-    ],
-    [
-     1.26,
-     1.72
-    ],
-    [
-     1.72,
-     2.48
-    ]
-   ],
-   "captions": [
-    "Then one night,",
-    "a ZOMBIE",
-    "came for HIM."
-   ]
-  },
-  "L15": {
-   "text": "Hey! Get back!",
-   "who": "Sam",
-   "dur": 1.41,
-   "onset": 0.05,
-   "end": 1.31,
-   "chunks": [
-    [
-     0.0,
-     0.64
-    ],
-    [
-     0.64,
-     1.12
-    ]
-   ],
-   "captions": [
-    "Hey!",
-    "Get BACK!"
-   ]
-  },
-  "L16": {
-   "text": "I don't remember what happened next.",
-   "who": null,
-   "dur": 2.52,
-   "onset": 0.06,
-   "end": 2.19,
-   "chunks": [
-    [
-     0.0,
-     0.84
-    ],
-    [
-     0.84,
-     1.5
-    ],
-    [
-     1.5,
-     1.86
-    ]
-   ],
-   "captions": [
-    "I don't REMEMBER",
-    "what happened",
-    "NEXT."
-   ]
-  },
-  "L17": {
-   "text": "Easy... easy. It's gone.",
-   "who": "Sam",
-   "dur": 2.817,
-   "onset": 0.05,
-   "end": 2.72,
-   "chunks": [
-    [
-     0.0,
-     0.9
-    ],
-    [
-     0.9,
-     2.2
-    ],
-    [
-     2.2,
-     2.54
-    ]
-   ],
-   "captions": [
-    "Easy...",
-    "easy.",
-    "It's GONE."
-   ]
-  },
-  "L18": {
-   "text": "good boy.",
-   "who": "Sam",
-   "dur": 1.01,
-   "onset": 0.06,
-   "end": 0.91,
-   "chunks": [
-    [
-     0.0,
-     0.22
-    ],
-    [
-     0.22,
-     0.48
-    ]
-   ],
-   "captions": [
-    "GOOD",
-    "boy."
-   ]
-  },
-  "L19": {
-   "text": "Tomorrow, I'm leaving. For real.",
-   "who": null,
-   "dur": 2.53,
-   "onset": 0.05,
-   "end": 2.42,
-   "chunks": [
-    [
-     0.0,
-     0.3
-    ],
-    [
-     0.3,
-     1.7
-    ],
-    [
-     1.7,
-     2.18
-    ]
-   ],
-   "captions": [
-    "Tomorrow,",
-    "I'm leaving.",
-    "For REAL."
+    "He SAID,",
+    "I'll BE",
+    "right BACK."
    ]
   }
  },
- "total": 57.44
+ "total": 30.06,
+ "placeholder": "Kokoro placeholder for the owner's visual preview (2026-11-10); replaced by ./hb voice (Orus, beats) before the real render"
 }
