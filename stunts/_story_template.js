@@ -40,6 +40,7 @@ module.exports = {
   edit: { caption: CAPTION, red: 'sheep', story: 'stories/<name>', startAt: 'line:0', endAfter: 'story_end:0' },
   hideHand: true,          // the narrator isn't Steve: no first-person arm
   // time: 18000,          // the opening time of day (night); change it later with K.cut(..., { time }) or K.setTime
+  look: 'auto',            // the grade follows the time of day (renderer/looks.js, docs/look.md); a shot's mood: 'tense' for one shot
 
   async setup (ctx) {
     const { bot } = ctx

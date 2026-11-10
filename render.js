@@ -975,7 +975,10 @@ const LINES = []
   })
 }
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
-const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : (process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look)
+// stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
+const LOOKS = require('./renderer/looks')
+const LOOK_RAW = LOOKS.resolveLook(process.env.LOOK_JSON ? (/^\s*[{"]/.test(process.env.LOOK_JSON) ? JSON.parse(process.env.LOOK_JSON) : process.env.LOOK_JSON.trim()) : STUNT_MOD.look)
+const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : LOOK_RAW
 // Idle life (docs/movie_engine.md): nobody stands perfectly still. Two slow sines per entity (periods of
 // 6-24 s, phases from its id), in [-1, 1]; deterministic, so frames render in any order.
 function idleNoise (id, t) {
@@ -1618,7 +1621,7 @@ function camAtLive (t) {
     const r = L.reflect, c = r.center || [0, 0]
     return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look) || null) })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null) })
 
   const send = async (list) => {
     const id = String(blobId++)
@@ -2053,7 +2056,7 @@ function camAtLive (t) {
       const c = shotCam(shotNow, t, solidAt); if (c) Object.assign(cam, c); cam.aim = null
       // the cinematic look (stunt.look): letterbox bars and depth of field on camera shots (a shot's dof: false,
       // or { aperture, focus: TARGET }; the stunt's look.dof turns it on for every camera shot)
-      const LK = process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look   // (LOOK_JSON='{...}': try a look on any recording)
+      const LK = LOOK_RAW   // (LOOK_JSON='{...}': try a look on any recording)
       if (LK && !process.env.LOOK_OFF) {
         if (LK.letterbox && !process.env.NO_BARS) cam.bars = LK.letterbox   // (NO_BARS=1: a vertical Short from a movie scene)
         const dof = shotNow.dof ?? LK.dof
@@ -2062,6 +2065,9 @@ function camAtLive (t) {
       }
     }
     const third = THIRD || camShot
+    // the grade per frame (renderer/looks.js): look 'auto' follows the time of day (day -> golden -> night), and a
+    // shot's `mood` ('tense') grades that shot; a fixed look leaves cam.grade unset and renders exactly as before
+    if (LOOK_RAW && !process.env.LOOK_OFF && process.env.LOOK !== '0') { const gr = LOOKS.gradeAt(LOOK_RAW, curDayTime, shotNow && shotNow.mood); if (gr) cam.grade = gr }
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
     cam.inLava = !!(inBlock && inBlock.name === 'lava')

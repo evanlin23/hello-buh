@@ -360,6 +360,13 @@ function runPost (cam, tick) {
     d.near.value = camera.near; d.far.value = camera.far; d.focus.value = cam.focus; d.aperture.value = cam.aperture ?? 1
     pass(P.dofMat, P.rd)
   }
+  // a per-frame grade (renderer/looks.js gradeAt: look 'auto' by time of day, a shot's mood); absent, the look's own stays
+  if (cam.grade) {
+    const g = cam.grade
+    u.lift.value.set(...g.lift); u.gam.value.set(...g.gamma); u.gain.value.set(...g.gain)
+    u.sat.value = g.sat; u.contrast.value = g.contrast; P.exp0 = g.exposure ?? 1
+    if (g.vignette !== undefined) u.vig.value = g.vignette
+  }
   // look.underwater: an exposure lift while the camera is in water (the cold-biome water fog graded to near black: ai_thin_ice)
   if (P.exp0 === undefined) P.exp0 = u.exposure.value
   u.exposure.value = P.exp0 * (cam.underwater ? (P.underwater ?? 1) : 1)

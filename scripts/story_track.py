@@ -5,7 +5,7 @@ recording's `line` marks. edit.py calls these when a stunt sets `edit.story`.
   caption_concat(story_dir, timeline, start, dur, tmp)  -> ffconcat list of full-frame caption PNGs (60 fps steps)
 
 Captions follow the owner's Roblox story channel (blocky-stories RULES.md "Captions"): a heavy grotesk
-(Schibsted Grotesk Black, OFL, assets/fonts/), 2 or 3 words at a time, white with the key words (CAPS in the
+(Poppins Black, OFL, assets/fonts/; Schibsted Grotesk Black before 2026-11-10), 2 or 3 words at a time, white with the key words (CAPS in the
 script) in the story's key colour, a dark outline and a soft shadow, each chunk appearing on its own first word
 with a quick pop. They sit in the lower middle of the game view: clear of the crosshair, above the hearts.
 """
@@ -18,10 +18,10 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 HERE = pathlib.Path(__file__).resolve().parent.parent
-FONT = HERE / "assets" / "fonts" / "SchibstedGrotesk-Black.ttf"
+FONT = HERE / "assets" / "fonts" / "Poppins-Black.ttf"   # font A/B 2026-11-10 (docs/look.md): most ink per width at phone size
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
 CAP_PX = 96
-MAX_W = 900
+MAX_W = 840                              # x 120..960: clear of the Shorts like/comment column on the right (docs/look.md)
 CY = BAND + int(GAME_H * 0.70)          # caption block centre: below the crosshair, above the hearts
 INK = (14, 12, 18, 255)
 FPS = 60
