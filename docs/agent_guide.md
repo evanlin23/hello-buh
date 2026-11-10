@@ -2,28 +2,50 @@
 
 One page for an agent making or fixing a HelloBuh Short. Everything goes through one command, `./hb` (run from the
 repo root; `./hb help` lists it). Each command prints plain results (paths, counts, a `next:` line), `--json` prints one
-JSON object instead, and a failure exits non-zero with the reason on stderr. Deeper docs, only when a step needs them:
-`docs/stories.md` (story rules and owner quotes, which outrank everything), `docs/story_craft.md` (writing, shots,
+JSON object instead, and a failure exits non-zero with the reason on stderr and a `fix:` line for every known error
+(lib/hb/fixes.js; the full output of each long step is in `work/hb/logs/`). **The rules are `docs/STANDARDS.md`**: the
+current checklist by stage, each rule once with its number and its check (`./hb rules` prints it). Deeper docs, only
+when a step needs them: `docs/stories.md` (the dated history of the owner's rules and quotes), `docs/story_craft.md` (writing, shots,
 continuity bible), `docs/worker.md`, `docs/qa.md`, `docs/movie_engine.md` (camera shots and looks, on its branch).
 
 ## Start of a session (1 minute)
 ```bash
 ./hb doctor          # packages, Chromium, Java, ffmpeg, assets, server jar, songs, TTS venv + whisper, Gemini, disk,
                      # server free; flags a stale Minecraft server (run.sh gone, no bot, 30+ min): --fix stops it
-./hb rules           # the owner's current rules (newest date, an id): again before voicing, recording, rendering
+./hb rules           # docs/STANDARDS.md + whether it covers the newest owner rule: again before voicing, recording, rendering
 ./hb status          # every story stunt: voice / recording / preview / Actions render / reviews / published / queue,
                      # and the next step for each; also whether the Minecraft server is in use and the free disk
 ```
 In a git worktree, link the shared files first (never commit the links: they show as untracked, so `git add` files by
 name): `ln -s /home/user/hello-buh/{node_modules,songs,work} .`
 
+## One command: `./hb make`
+```bash
+./hb make story_<name>                 # voice -> record -> check -> render -> fetch -> pace -> review -> publish
+```
+Runs the commands below in order, skips every stage whose output is already fresh, and stops at the first blocker
+with its fix (exit 1), or at a wait (exit 3: the server is busy, Actions is rendering, the reviewer hasn't answered).
+Run it again after a fix, after the wait, or in a fresh container: it resumes from `work/<name>.make.json` (stage,
+timestamps, artifacts, the last blockers; `./hb status` shows it).
+- `--from STAGE` runs that stage even if fresh (and everything after it), `--to STAGE` stops after it.
+- **An edit-only fix** (endAfter, sfx, punch, captions, story.json payoff/mood: a pace or review blocker):
+  `./hb make story_<name> --from render`. The recording is unchanged, so the Actions run reuses the last render's
+  frames and only re-runs the edit (~6-8 min instead of 10-20). A changed stunt otherwise means a re-record (the
+  recording stage sees the stunt is newer).
+- `--wait` polls the Actions render instead of stopping (up to 60 min: run it in the background); `--tries N` for the
+  recording; `--publish --notes "..."` publishes once the review is READY (without it, make stops at the gate and
+  prints the command); `--no-reuse` renders every frame.
+- The review stage prepares round N (`./hb review`) and waits: an independent reviewer runs the short-review skill and
+  records `./hb review <stunt> --verdict ...`; then `./hb make` again.
+
 ## The commands
 | command | what | time |
 |---|---|---|
+| `./hb make <stunt> [--from S] [--to S]` | the whole pipeline over the commands below, resumable (above) | the sum |
 | `./hb doctor` | is this box ready; each failure has its fix; `--fix` stops a stale server (only one it can prove is orphaned) | 5 s |
-| `./hb rules [--since DATE]` | the owner's rules from docs/stories.md, newest first, with the newest date and an id: re-run before voicing, recording, rendering; a new id = re-read | 1 s |
+| `./hb rules` | docs/STANDARDS.md (the current checklist by stage: number, check, source key) and whether it cites every owner rule in the history; `--log` the dated history with keys (`--since DATE`, `--full`), `--key rXXXXXX` one rule in full, `--check` exit 1 when STANDARDS.md is behind | 1 s |
 | `./hb status [stunt]` | what exists and what's next | 2 s |
-| `./hb voice <stunt> [--only L03]` | the narration (Kokoro, v1 stories); v2 cast voices: `docs/story_craft.md` 5-6 | 30 s |
+| `./hb voice <stunt> [--only L03]` | the voices: a v2 cast on Gemini (word cuts, speaker check, automatic re-takes, word times; `--check` only checks: docs/voices.md), a v1 story on Kokoro | 30 s - 10 min |
 | `./hb record <stunt>` | server + bot -> `work/<stunt>.rec.json`, then rec_check; stops on blockers (`--no-strict` to keep going); refuses while another server batch runs | 3 min a try (5 tries) |
 | `./hb check <stunt>` | rec_check + the movie engine's lint (when present) + continuity + framing + owner | 10-40 s |
 | `./hb owner <stunt>` | the owner's review notes as checks (lib/hb/owner.js): superflat shots (and the set's footprint, the plain, the relief), the camera off what the line names (`lines[].look`), the picture ahead of / against the words, an uncaused fall, glitches (doors by themselves, stuck on a door, jitter, one-tick snaps, stutter, fog/night/rain missing); `--shots` prints each shot's fill, `--story DIR` reads another story dir | 5-15 s |
@@ -34,9 +56,10 @@ name): `ln -s /home/user/hello-buh/{node_modules,songs,work} .`
 | `./hb still <stunt> T [T...]` | renders only those moments in one render.js -> PNGs + a labelled sheet (`--cam back:4`, `--size 360`) | ~30 s + 3-15 s each |
 | `./hb sheet <stunt>` | one labelled frame per shot (`--at first,mid,last` adds the cut edges) | 3-10 min |
 | `./hb preview <stunt>` | the whole edited Short at 360x640 + sheets of every cut and caption | 10-25 min |
-| `./hb render <stunt>` | queues the full render on GitHub Actions on its own branch (`render/<stunt>`, or `<prefix>/render-<stunt>` when only your prefix may be pushed; never your working branch); `--wait` / `--fetch` brings back `out/<stunt>.mp4` | 10-20 min |
+| `./hb render <stunt>` | queues the full render on GitHub Actions on its own branch (`render/<stunt>`, or `<prefix>/render-<stunt>` when only your prefix may be pushed; never your working branch); `--wait` / `--fetch` brings back `out/<stunt>.mp4` (only this job's result: an older inherited one is refused); `--reuse` re-runs only the edit on the last render's frames when the picture can't have changed | 10-20 min (reuse ~6-8) |
 | `./hb pace <stunt>` | the pacing gate on the finished `out/<stunt>.mp4`: visual + audio hook, dead spots, the same picture held, build-up over thirds, the payoff (a hit + a picture change, the end ≤1 s after), length; BLOCK/WARN with output times and the cheapest fix, exit 1 on blockers (`scripts/pace.py`; `--payoff L18`, `--video`, `--rec`). Needs the render, so it isn't in `hb check` | 20-40 s |
-| `./hb review <stunt>` | qa_frames + beat_audit + pace, counts the round; `--verdict "READY"` records the reviewer's answer | 2-4 min |
+| `./hb panel <stunt>` | the viewer panel: Gemini watches the finished mp4 as a 12-year-old fan, a scroller and a strict editor: swipe point, hook in 2 s, cut-off / drifting / wrong-sex-or-age / annoying / ASMR voices, the ending explained back vs story.json's twist, dark/blurry/zoomed picture. BLOCK when 2+ agree on a cut word, drift, a wrong voice or a missed ending; FLAGs are review inputs (`scripts/viewer_panel.py`; 2 Gemini calls on the shared quota, cached per mp4; calibration in the short-review skill) | 1-5 min |
+| `./hb review <stunt>` | one report: qa_frames + beat_audit + pace + owner + voice edges + speaker check (when scripts/speaker_check.py is there); exit 1 on any blocker; counts the round; `--verdict "READY"` records the reviewer's answer | 2-5 min |
 | `./hb publish <stunt> --notes "..."` | to the videos branch (needs a READY verdict) | 1 min |
 
 **Times (T)**, the same in every command: `12.5` = seconds of the finished Short (trims, speed spans, slow-mo and the
@@ -74,6 +97,7 @@ body in frame too. Shot names show in `hb framing` as `[camera est]`; `hb check`
 
 ## Making a story, end to end
 Measured on story_nitwit (docs/pipeline_test_nitwit.md: 2 h 40 min start to publish, ~50 min of it work).
+Steps 2 and 4-9 are `./hb make story_<name>` (re-run it after each fix or wait); the list says what each stage does.
 1. **Write** with `/story-write` (writers' room: pitch, beat sheet, story.json v2, shot list, bible, table read).
    ~30-60 min, no renders.
 2. **Voice**: `./hb voice <stunt>` (v1 Kokoro) or the cast voices (`docs/story_craft.md` 5). Re-voice after any script
@@ -88,7 +112,7 @@ Measured on story_nitwit (docs/pipeline_test_nitwit.md: 2 h 40 min start to publ
    of the real thing. Use `./hb sheet` / `./hb still` for staging and `./hb render` (Actions) to see it move.
 7. **Render on Actions**: commit what the render reads (`render.js`, `renderer/`, `edit.py`, `scripts/`: hb refuses
    otherwise), `./hb render story_<name>`, then `./hb render story_<name> --wait` (~10-20 min). Look at sheets meanwhile.
-8. **Review**: `./hb review story_<name>` (includes `./hb pace`: its blockers are blockers), then an independent reviewer with `.claude/skills/short-review/SKILL.md`
+8. **Review**: `./hb review story_<name>` (includes `./hb pace`: its blockers are blockers) and `./hb panel story_<name>` once, then an independent reviewer with `.claude/skills/short-review/SKILL.md`
    (a subagent, or a fresh session: docs/worker.md). Record its answer: `./hb review story_<name> --verdict "NOT READY:
    2 blockers" --notes "..."`. Fix blockers only, re-record/re-render, review again. **Two rounds at most.**
 9. **Publish**: `./hb publish story_<name> --notes "one line: what, rounds, nitpicks"`. Then delete
@@ -127,10 +151,14 @@ true })`). Test without the server: `node scripts/pose_fixture.js --staged` + `.
 | render.js exits 2: `stunts/x.js failed to load` | the stunt has an error: `node -e "require('./stunts/x')"`. It used to render silently without hideHand, brightness, fovZoom |
 | `hb still` is slow (15+ s a frame) | each still re-lights and re-meshes the world for the blocks and time of day since the last one; a busy box (load > 4) doubles it. Fewer stills, or `hb describe` first. (agent/test-gaps is cutting the re-mesh cost) |
 | rec_check says a check was skipped | `node_modules` missing (a fresh checkout): `npm ci` or link it; `hb check` lists skipped checks |
+| `hb render --wait` returned an old Short | a working branch carried an old renders/result.json; fixed: the queue drops it and --fetch checks the job's queued stamp |
+| a re-render after an edit-only fix takes 20 min | `./hb make <stunt> --from render` (or `./hb render <stunt> --reuse`): reuses the frames |
+| No module named 'whisper' / 'resemblyzer' / 'scipy' | never install openai-whisper (torch): the voice tools use transformers, `scripts/whisper_shim/` covers old `import whisper` tools on faster-whisper; the speaker check: `~/.hb-tts/bin/pip install transformers scipy && ~/.hb-tts/bin/pip install --no-deps resemblyzer` (`./hb doctor` checks all three) |
+| a `fix:` line you don't trust / an error with none | the step's full output is in `work/hb/logs/<step>.log`; add the error and its fix to lib/hb/fixes.js |
 | `apt-get install espeak-ng` can't find it | `apt-get update` first |
 | an Actions render takes 40 min | a slow apt mirror on a runner; the setup is cached now (~20 s). `hb render --wait` keeps polling |
 | `hb review` refuses: output older than the recording | you re-recorded: render again before reviewing (freshness, docs/qa.md step 4) |
-| a v2 story (cast voices) | voiced by hand with `tts.py` until the adapter lands (docs/story_craft.md 6): write `voice/voice.json` |
+| a v2 story (cast voices) | `./hb voice <stunt>` (docs/voices.md); `./hb doctor` says what the TTS venv still needs (transformers, resemblyzer) |
 
 ## Knobs, if you really need them
 `hb` covers these; the raw environment variables still work for the scripts underneath:
@@ -141,7 +169,8 @@ change in a preview), `STUNT_OPTIONAL=1` (render without a broken stunt module),
 `MESH_WORKERS`, `BRIGHTNESS`, `WEATHER`, `DIMENSION`, `RENDER_DISTANCE`, `SKIN`, `SHOW_PLAYER` (render.js overrides).
 
 ## How it's built (for changing hb)
-`hb` -> `lib/hb/cli.js` (commands), `lib/hb/scene.js` (a recording without rendering: chunks + block changes,
+`hb` -> `lib/hb/cli.js` (commands), `lib/hb/make.js` (`hb make`'s stages and state), `lib/hb/fixes.js` (known errors
+-> fixes), `lib/hb/standards.js` (STANDARDS.md vs the rule history; `npm test` runs lib/hb/test/), `lib/hb/scene.js` (a recording without rendering: chunks + block changes,
 the POV camera, entities, time, weather, HUD, ray casts), `lib/hb/analyze.js` (describe, continuity, framing),
 `scripts/pace.py` (the pacing gate on the mp4: picture motion/cuts at 20 fps, the sound's level, ebur128 short-term
 loudness, plus hb_time's marks and story_track's caption chunks), `scripts/hb_time.py` (the Short's clock, from `scripts/preview.py`'s frame plan), `scripts/hb_sheet.py` (labelled

@@ -49,6 +49,11 @@ standing up on a pad). The ground is natural terrain blocks only (`site.js` GROU
 plants instead, read a bee nest in a canopy as the ground, and a watchtower stood on air 20 blocks over a hill.
 
 Choosing ground:
+- **Stories live in the shared world** (docs/world/canon.md; owner, 2026-11-10: "wouldnt the lore be crazy if all of
+  the sets were the same world"): a story's places have canonical coordinates in `docs/world/map.json`, built by
+  `world.build(ctx, { story })` (lib/world.js) with `place()` at fixed x, y, z. After `world.build`, `planSite`,
+  `findSite` and `findShore` throw (a search lands somewhere else when anything changes); use them only to scout a
+  new place before claiming it (`node scripts/world.js claim`), or with `{ free: true }` for a set outside the canon.
 - `sets.planSite(ctx, [{ name, dx, dz, facing, variant }...], { reach, stride })`: the best centre for a whole
   layout, scored on the height range under every footprint (squared), water and snow under them, trees, and the
   height differences between pieces. Use it for any set of more than one piece.

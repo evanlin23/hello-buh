@@ -110,6 +110,7 @@ hud: false,                                                               // ...
 apt-get update && apt-get install -y espeak-ng   # Kokoro's phonemizer for unknown words (a fresh container's apt lists are empty)
 python3.11 -m venv ~/.hb-tts
 ~/.hb-tts/bin/pip install --extra-index-url https://download.pytorch.org/whl/cpu torch kokoro soundfile numpy
+~/.hb-tts/bin/pip install transformers && ~/.hb-tts/bin/pip install --no-deps resemblyzer   # Whisper word cuts + the speaker check
 ```
 CPU torch only (no CUDA download). The first run fetches the Kokoro-82M weights (Apache 2.0) and spaCy's small
 English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
@@ -127,14 +128,60 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 
 Captions: Poppins Black (OFL, `assets/fonts/`; chosen by a font A/B, docs/look.md) at 96 px, max 840 px wide (clear of
 the Shorts action column), white with a dark outline and a soft shadow,
-key words in the story's colour, centred at 70% of the game view's height (under the crosshair, above the
+key words in the story's colour (in a v2 story a character's words are in that character's colour, key words
+underlined; docs/voices.md "Caption colours"), centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
+
+**The current rules, de-duplicated by stage with their checks: `docs/STANDARDS.md` (`./hb rules`).** The house rules
+below are the dated history (newest first, some superseded); a new owner rule goes at the top here and into
+STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, comparing Pip (Dog on the Hill v3) with kid Puck: "i like this one a lot a lot better" (Pip);
+  Puck: "er that does not sound right".** **The default narrator is Pip's voice again** (cast `narrator` = Leda, the
+  bubbly nine-year-old direction, gemini-3.8-flash-lite-tts, single speaker, natural tempo; recipe in
+  voices/recipes/pip.md). Kid Puck is kept as `puck_kid`, alternative only. Supersedes the Puck rule below.
+- **Owner, 2026-11-10: "i think gemini is really bad with the voices drifting. can you ensure theres a gate or some way
+  to audit this? The voices for the people seem to change like all the time take to take and even within take."**
+  The drift gate: `./hb drift <stunt>` (`scripts/voice_drift.py`; docs/voices.md "Drift gate") compares every line
+  and every 1.5 s window with the character's locked reference voiceprint (`voices/refs/`) and with its other lines,
+  and blocks DRIFT, OFFREF, WOBBLE and MODELS; `./hb voice` runs it and re-takes a drifting line (max 2, the closest
+  take kept). tts.py enforces the rest: **one model per character per story** (voice.json `models`; on a 429 it stops
+  and waits instead of switching, or `--relock` re-takes all of that character's lines on the new model; the model is
+  in the take cache's key, so a fallback take can't pass as the first model's), **short requests** (at most 6 lines),
+  **identical direction text** (a story that overrides a library character's profile gets a warning). Drift is a
+  review blocker.
+- **Owner, 2026-11-10 (Good Boy session), on the narrator: "this voice is so high pitched and annoying lowkey"**
+  (Leda, ~350 Hz) / **"it should still be like a kid/child? idk"** / **"kinda like the roblox shorts but more
+  refined?"** / after five auditions: **"kid puck is fine"**. So: a kid narrator that isn't squeaky: Gemini Puck,
+  directed "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not
+  squeaky; full volume, not whispery or breathy. Take a short breath between sentences." (~235 Hz, natural tempo,
+  no post filter). Audition 3-5 voices on the same two lines before voicing a whole story.
+- **Owner, 2026-11-10: "why does it be like ive tried ot leave this guy 37 ti*? something wierd gets cut off"**: a
+  line cut at Whisper's word end clipped "times". Cut at the quietest point between lines (`voice_check.py
+  --resplit`), and ask for a breath between sentences so a quiet point exists; check with `scripts/voice_edges.py`.
+- **Owner, 2026-11-10 (Good Boy session): Leda is "so high pitched and annoying"; wants a kid "like the roblox shorts but
+  more refined"; picked "kid puck is fine".** The narrator is now **Puck** directed as a twelve-year-old boy (quick,
+  excited, mid-pitch, not squeaky, full volume, a short breath between sentences), no post filter. Then: "what about pip? i liked
+  the audio i sent earlier": **Pip keeps his voice** (cast `pip`: Leda, the bubbly nine-year-old direction, natural
+  tempo) in Dog on the Hill and for Pip-like young narrators; **Puck** (`narrator`) is the default elsewhere.
+- **Owner, 2026-11-10: "wouldnt the lore be crazy if all of the sets were the same world".** Every story happens in
+  **one persistent world** (seed `hellobuh`): `docs/world/canon.md` (the places, the timeline, the recurring characters,
+  the links between stories) and `docs/world/map.json` (every place's canonical coordinates and the set pieces it uses).
+  - Pitch inside the world: use a place from the map or claim a new one (`node scripts/world.js claim`), give the
+    story a day on the world timeline, and check the canon for that place and day.
+  - Build at the canonical spot: `world.build(ctx, { story })` (lib/world.js) rebuilds the places on the seed's own
+    terrain every run; no site searches, no clearings, no `/locate`.
+  - **Every Short still stands alone.** No line or clue needs another Short; links live in the background.
+  - One easter egg per story (the dog on his hill on the skyline, the boxed bell, the totem frames...), background
+    only, true on the story's day, never spoken.
+  - Facts a story creates (a grave, a building, someone gone) go into canon.md and map.json in the same commit; a
+    published Short's facts are never contradicted (canon.md lists them and how earlier conflicts are read).
 - **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
   per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
-  Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. Until `./hb voice` cuts safely:
+  Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. `./hb voice` now cuts by these rules and
+  checks every line (speaker_check EDGE and CLIPPED are blockers, re-taken automatically; docs/voices.md "The cut"):
   - cut each line at the quietest point between lines, never at Whisper's word start (it lands late, on the
     consonant); keep >= 80 ms before the first word and >= 200 ms after the last, with a 10-20 ms fade at each edge;
   - never splice a pause out of the middle of a line: if a pause is too long, re-take the line (or shorten only the
@@ -147,6 +194,14 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   sentences), never from stretching, and never from re-take loops chasing a number. What matters is no dead air:
   the opening in one breath, short gaps, holds with something happening, the end right after the payoff. `./hb pace`
   only warns on a rate clearly slower than Pip and never blocks on rate.
+- **Owner, 2026-11-10: "can you make sure the voices are distinct and correct? It felt like stuff was getting mixed
+  up... Maybe we can have color coded captions?"** and, on the colours: **"It should generally just "match" the vibe
+  of the character thats supposed to be speaking."** Every voiced line is checked for the right speaker and the
+  right words before anything is recorded (`./hb voice` runs `scripts/speaker_check.py` and re-takes failures); a
+  line in the wrong voice is a blocker. Each character's captions are in its own colour, matched to its look and role
+  (`color` in voices/cast.json: the narrator white, Milo Steve's cyan, the elder amber...), with a small name tag
+  over its first line; the word colour only ever says who is talking, and a key word is a bar under it (docs/voices.md
+  "Caption colours").
 - **Owner, 2026-11-10: "do 1 at a time if the top do it 1 at a time. the font is ok yes just whatever is best".**
   Story captions show **one word at a time** (Xenost and Ashyyy: one word in all 48 sampled frames), timed by
   voice/words.json word starts, in Poppins Black. Each word pops in (0.1 s, the existing `POP`) and cuts out hard

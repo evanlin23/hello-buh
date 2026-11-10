@@ -84,3 +84,13 @@ kill the pitch. Hushed delivery belongs to fear and mystery only.
 ## Delivery checks (owner, 2026-11-10)
 Must-fix: any "..." in a line (Gemini pauses and whispers on it); a line 1 that can't be said in one quick breath; an
 ending the viewer has to decode ("Day one." didn't land; "Day one. Again." did).
+
+## The shared world (owner, 2026-11-10: "wouldnt the lore be crazy if all of the sets were the same world")
+Read `docs/world/canon.md`. In script mode, add a **Canon** line to the scores:
+- **Stands alone (must-fix if it fails):** the cold reader, who has seen no other Short, understands the whole story.
+  A line or a clue that only works if you know another Short (a name never introduced, "like last time", a twist
+  that needs the dog's backstory) is a must-fix: cut it or make it a background easter egg.
+- **True to the canon:** the place and its day exist in docs/world/map.json; nothing contradicts a published Short
+  (canon.md "Published facts"); a recurring character keeps his look, voice and what he knows on that day.
+- **One easter egg**, in the background of one shot, true on the story's day, never spoken, never needed.
+- **Lore value:** does the story add one fact a fan can connect (a place, a consequence), without explaining it?

@@ -1,0 +1,20 @@
+{
+ "_about": "Where each character's locked reference voiceprint comes from (scripts/voice_drift.py --make-refs writes <id>.json and a few seconds of <id>.mp3). A story take the owner approved beats a library sample; `provisional` = a library sample made before the 2026-11-10 recast or with another direction: replace it with the first approved story take of that character (then --make-refs <id>). Old samples are named for the old roster: voices/samples/elder.mp3 is Algenib (now the stranger), stranger.mp3 is Charon (now the elder), buh.mp3 is Achird (Milo).",
+ "narrator": {"voice": "Leda", "model": "gemini-3.8-flash-lite-tts", "rev": "0cd96bd", "dir": "stories/dog_hill/voice",
+              "lines": ["L01", "L02", "L03", "L04", "L05", "L06", "L07", "L11", "L12", "L15"],
+              "note": "Pip, Dog on the Hill voices v3 (owner: 'i kinda like the pip here'; narrator since main 93708c7)"},
+ "pip": {"voice": "Leda", "model": "gemini-3.8-flash-lite-tts", "rev": "0cd96bd", "dir": "stories/dog_hill/voice",
+         "lines": ["L01", "L02", "L03", "L04", "L05", "L06", "L07", "L11", "L12", "L15"], "note": "the same take as narrator"},
+ "puck_kid": {"voice": "Puck", "model": "gemini-3.1-flash-tts-preview", "rev": "c6f6c70", "dir": "stories/good_boy/voice",
+              "lines": ["L01", "L02", "L04", "L05", "L07"],
+              "note": "Good Boy's kid Puck take (owner: 'kid puck is fine'); its first five lines, which agree with each other (L08-L13 of that take drift: voice_drift)"},
+ "milo": {"voice": "Achird", "file": "voices/samples/buh.mp3", "words": 11, "provisional": true},
+ "elder": {"voice": "Charon", "file": "voices/samples/stranger.mp3", "words": 14, "provisional": true,
+           "note": "Charon directed as the old stranger (the sample predates the recast)"},
+ "stranger": {"voice": "Algenib", "file": "voices/samples/elder.mp3", "words": 20, "provisional": true,
+              "note": "Algenib directed as the old elder (the sample predates the recast)"},
+ "smith": {"voice": "Orus", "file": "voices/samples/smith.mp3", "words": 23, "provisional": true},
+ "villain": {"voice": "Schedar", "file": "voices/samples/villain.mp3", "words": 18, "provisional": true},
+ "mom": {"voice": "Sulafat", "file": "voices/samples/mom.mp3", "words": 18, "provisional": true},
+ "friend": {"voice": "Fenrir", "file": "voices/samples/friend.mp3", "words": 15, "provisional": true}
+}

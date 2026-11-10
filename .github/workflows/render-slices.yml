@@ -10,6 +10,8 @@
 #   slice    N runners (default 16, at most 32) each render one contiguous range of frames with render.js FRAMES=
 #            and keep it as a lossless RGB video (artifact seg-<i>). The ranges are cut to about equal render TIME
 #            (scripts/render_cost.py), not equal length: a stretch of relights / sky-light re-meshes gets short slices
+#            (skipped when renders/slices.json has reuse_run and that run's seg-* artifacts still exist: `hb render
+#            --reuse` when only the edit changed; finish then downloads that run's slices)
 #   finish   decodes the slices back into work/<name>.frames/, then audio + replay/slow-mo + edit
 #            (scripts/finish_render.sh), uploads out/<name>.mp4 (artifact "short") and commits it to the render
 #            branch as renders/out/<name>.mp4 with renders/result.json, so `render_on_actions.sh --fetch <name>`
@@ -36,6 +38,7 @@ concurrency:
   cancel-in-progress: true
 permissions:
   contents: write
+  actions: read     # list and download an earlier run's seg-* artifacts (reuse_run)
 jobs:
   plan:
     runs-on: ubuntu-24.04
@@ -47,15 +50,18 @@ jobs:
       frames: ${{ steps.plan.outputs.frames }}
       n: ${{ steps.plan.outputs.n }}
       matrix: ${{ steps.plan.outputs.matrix }}
+      reuse: ${{ steps.plan.outputs.reuse }}
     steps:
       - uses: actions/checkout@v4
       - name: plan
         id: plan
-        env: { IN_NAME: "${{ inputs.name }}", IN_STUNT: "${{ inputs.stunt }}", IN_SLICES: "${{ inputs.slices }}" }
+        env: { IN_NAME: "${{ inputs.name }}", IN_STUNT: "${{ inputs.stunt }}", IN_SLICES: "${{ inputs.slices }}", GITHUB_TOKEN: "${{ github.token }}" }
         run: python3 scripts/render_slices.py plan >> "$GITHUB_OUTPUT"
 
   slice:
     needs: plan
+    # skipped when the job reuses an earlier run's frames (renders/slices.json reuse_run: only the edit changed)
+    if: needs.plan.outputs.reuse == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     strategy:
@@ -76,6 +82,7 @@ jobs:
 
   finish:
     needs: [plan, slice]
+    if: always() && needs.plan.result == 'success' && (needs.slice.result == 'success' || needs.slice.result == 'skipped')
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     env:
@@ -89,7 +96,12 @@ jobs:
       - name: sound effects
         run: python3 scripts/fetch_sfx.py || echo "fetch_sfx failed, the edit uses its fallbacks"
       - uses: actions/download-artifact@v4
+        if: needs.plan.outputs.reuse == ''
         with: { pattern: "seg-*", path: work/segs, merge-multiple: true }
+      - name: the reused frames (run ${{ needs.plan.outputs.reuse }})
+        if: needs.plan.outputs.reuse != ''
+        uses: actions/download-artifact@v4
+        with: { pattern: "seg-*", path: work/segs, merge-multiple: true, run-id: "${{ needs.plan.outputs.reuse }}", github-token: "${{ github.token }}" }
       - name: join the slices
         run: |
           gunzip -c "renders/slices/$NAME.rec.json.gz" > "work/$NAME.rec.json"

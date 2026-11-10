@@ -1,0 +1,90 @@
+[
+ {
+  "id": "plank",
+  "speakers": {
+   "Highkeeper": "Algenib",
+   "Ash": "Puck"
+  },
+  "direction": "Read this short exchange between two characters in a dark mystery film trailer. Highkeeper is an old man in his seventies: slow, soft, kind, and quietly unsettling, almost a whisper. Ash is a brave, cocky sixteen-year-old boy who isn't scared, short answers. Leave a pause after every line.",
+  "lines": [
+   [
+    "Highkeeper",
+    "hk1",
+    "How many in your family?"
+   ],
+   [
+    "Highkeeper",
+    "hk2",
+    "Which floor?"
+   ],
+   [
+    "Highkeeper",
+    "hk3",
+    "You fall once."
+   ]
+  ],
+  "note": "Highkeeper takes from the first two-speaker request; Ash re-cast in 'ash' below (Puck read as a young woman)"
+ },
+ {
+  "id": "fen_buh",
+  "speakers": {
+   "Fen": "Charon",
+   "Buh": "Achird"
+  },
+  "direction": "Read these two lines from a dark mystery film trailer. Fen is a very old, gravelly man who knows a terrible secret: a slow, low whisper. Buh is a sixteen-year-old boy, quiet and shaken, realising something huge. Leave a long pause between them.",
+  "lines": [
+   [
+    "Fen",
+    "fen1",
+    "It rings twice... for the one."
+   ],
+   [
+    "Buh",
+    "buh1",
+    "That's not an echo."
+   ]
+  ]
+ },
+ {
+  "id": "ash_a",
+  "speakers": {
+   "Ash": "Achird"
+  },
+  "direction": "Say quietly, like a brave teenage boy:",
+  "lines": [
+   [
+    "Ash",
+    "ash1",
+    "Four."
+   ]
+  ]
+ },
+ {
+  "id": "ash_b",
+  "speakers": {
+   "Ash": "Achird"
+  },
+  "direction": "Say quietly, like a brave teenage boy:",
+  "lines": [
+   [
+    "Ash",
+    "ash2",
+    "Forty."
+   ]
+  ]
+ },
+ {
+  "id": "ash_c",
+  "speakers": {
+   "Ash": "Achird"
+  },
+  "direction": "Say warmly, with a smile, like a big brother who has waited a long time:",
+  "lines": [
+   [
+    "Ash",
+    "ash3",
+    "Took you long enough, Buh."
+   ]
+  ]
+ }
+]

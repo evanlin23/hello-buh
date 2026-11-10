@@ -220,7 +220,7 @@ function makePost (look, w, h) {
   const SH = look.shade || {}, RF = look.reflect || null
   const shadeMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform vec2 res; uniform mat4 projInv; uniform mat4 proj; uniform mat4 camWorld; uniform mat4 view;
     uniform vec3 sunDir; uniform vec3 warm; uniform vec3 cool; uniform float aoK; uniform float hazeK; uniform float hazeDist; uniform float split; uniform float glow;
-    uniform float reflK; uniform float planeY; uniform vec2 ctr; uniform vec2 rad; uniform float under; varying vec2 vUv;
+    uniform float reflK; uniform float iceOn; uniform float planeY; uniform vec2 ctr; uniform vec2 rad; uniform float under; varying vec2 vUv;
     vec3 vpos (vec2 uv) { float d = texture2D(depth, uv).x; vec4 q = projInv * vec4(uv * 2.0 - 1.0, d * 2.0 - 1.0, 1.0); return q.xyz / q.w; }
     float hash (vec2 p) { return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
     void main () {
@@ -254,7 +254,7 @@ function makePost (look, w, h) {
       // reflections on the lake
       if (reflK > 0.0 && under < 0.5) {
         vec2 e = (W.xz - ctr) / rad;
-        bool onIce = abs(W.y - planeY) < 0.04, onWater = abs(W.y - (planeY - 0.111)) < 0.05;
+        bool onIce = iceOn > 0.5 && abs(W.y - planeY) < 0.04, onWater = abs(W.y - (planeY - 0.111)) < 0.05;
         if ((onIce || onWater) && dot(e, e) < 1.0 && N.y > -2.0) {
           vec3 Nv = normalize((view * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
           vec3 Vv = normalize(P), R = reflect(Vv, Nv);
@@ -293,21 +293,23 @@ function makePost (look, w, h) {
     camWorld: { value: new THREE.Matrix4() }, view: { value: new THREE.Matrix4() }, sunDir: { value: new THREE.Vector3(0, 1, 0) },
     warm: { value: new THREE.Vector3(...(SH.warm || [1.0, 0.66, 0.38])) }, cool: { value: new THREE.Vector3(...(SH.cool || [0.42, 0.52, 0.72])) },
     aoK: { value: SH.ao ?? 0 }, hazeK: { value: SH.haze ?? 0 }, hazeDist: { value: SH.hazeDist ?? 60 }, split: { value: SH.split ?? 0 }, glow: { value: SH.glow ?? 0 },
-    reflK: { value: RF ? (RF.strength ?? 0.8) : 0 }, planeY: { value: RF ? RF.y : 0 }, ctr: { value: new THREE.Vector2(RF ? RF.cx : 0, RF ? RF.cz : 0) }, rad: { value: new THREE.Vector2(...(RF && RF.radius ? RF.radius : [1, 1])) }, under: { value: 0 } })
+    reflK: { value: RF ? (RF.strength ?? 0.8) : 0 }, iceOn: { value: RF && RF.ice === false ? 0 : 1 },   // (ice: false: water only; grass level with the plane mirrored the whole courtyard)
+    planeY: { value: RF ? RF.y : 0 }, ctr: { value: new THREE.Vector2(RF ? RF.cx : 0, RF ? RF.cz : 0) }, rad: { value: new THREE.Vector2(...(RF && RF.radius ? RF.radius : [1, 1])) }, under: { value: 0 } })
   shadeMat.extensions = { derivatives: true }
   const shadeOn = !!(look.shade || look.reflect)
   const fin = mk(`uniform sampler2D src; uniform sampler2D bloom; uniform sampler2D dof; uniform sampler2D rays; uniform float raysK; uniform sampler2D depth; uniform vec2 res;
     uniform float near; uniform float far; uniform float focus; uniform float aperture; uniform float bloomK;
     uniform vec3 lift; uniform vec3 gam; uniform vec3 gain; uniform float sat; uniform float contrast; uniform float exposure;
-    uniform float vig; uniform float grain; uniform float seed; uniform float bars; varying vec2 vUv;
+    uniform float vig; uniform float grain; uniform float seed; uniform float bars; uniform float sharpK; uniform float raysBlocks; varying vec2 vUv;
     float lin (float d) { return near * far / (far - d * (far - near)); }
     float coc (vec2 uv) { float z = lin(texture2D(depth, uv).x); float k = res.y / 540.0; return clamp(aperture * abs(z - focus) / max(z, 0.1) * 12.0 * k, 0.0, 14.0 * k); }
     float hash (vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233)) + seed) * 43758.5453); }
-    void main () {
-      vec3 c = texture2D(src, vUv).rgb;
-      if (focus > 0.0) c = mix(c, texture2D(dof, vUv).rgb, smoothstep(0.5, 2.5, coc(vUv)));   // the half-size blur where it's out of focus
-      c += texture2D(bloom, vUv).rgb * bloomK;
-      c += texture2D(rays, vUv).rgb * raysK;
+    vec3 graded (vec2 uv) {
+      vec3 c = texture2D(src, uv).rgb;
+      if (focus > 0.0) c = mix(c, texture2D(dof, uv).rgb, smoothstep(0.5, 2.5, coc(uv)));   // the half-size blur where it's out of focus
+      c += texture2D(bloom, uv).rgb * bloomK;
+      // look.raysOverBlocks (default 1): how much of the streaks lands on blocks rather than sky (0.35 keeps their texture)
+      c += texture2D(rays, uv).rgb * raysK * mix(raysBlocks, 1.0, step(0.9999, texture2D(depth, uv).x));
       c *= exposure;
       c = pow(max(vec3(0.0), c * gain + lift * (1.0 - c)), 1.0 / gam);
       float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
@@ -315,6 +317,16 @@ function makePost (look, w, h) {
       // (clamped first: the S-curve on a value over 1 goes negative, and a blown sky near the sun lost its red: cyan blotches)
       c = clamp(c, 0.0, 1.0);
       c = mix(c, c * c * (3.0 - 2.0 * c), contrast);
+      return c;
+    }
+    void main () {
+      vec3 c = graded(vUv);
+      // look.sharpen: an unsharp mask on the graded picture (before grain), against the soft bloom/haze/rays look
+      if (sharpK > 0.0) {
+        vec2 px = 1.0 / res;
+        vec3 n = graded(vUv + vec2(px.x, 0.0)) + graded(vUv - vec2(px.x, 0.0)) + graded(vUv + vec2(0.0, px.y)) + graded(vUv - vec2(0.0, px.y));
+        c = clamp(c + (c - n * 0.25) * sharpK, 0.0, 1.0);
+      }
       vec2 q = vUv - 0.5; q.x *= res.x / res.y;
       c *= mix(1.0, smoothstep(0.95, 0.25, length(q)), vig);
       c += (hash(vUv * res) - 0.5) * grain;
@@ -325,9 +337,10 @@ function makePost (look, w, h) {
     near: { value: 0.05 }, far: { value: 1000 }, focus: { value: 0 }, aperture: { value: 1 }, bloomK: { value: look.bloom ?? 0.6 },
     lift: { value: new THREE.Vector3(...g.lift) }, gam: { value: new THREE.Vector3(...g.gamma) }, gain: { value: new THREE.Vector3(...g.gain) },
     sat: { value: g.sat }, contrast: { value: g.contrast }, exposure: { value: g.exposure ?? 1 },
-    vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 }
+    vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 },
+    sharpK: { value: look.sharpen || 0 }, raysBlocks: { value: look.raysOverBlocks ?? 1 }
   })
-  return { rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1 }
+  return { rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1, bloomPasses: look.bloomPasses ?? 2 }
 }
 function runPost (cam, tick) {
   const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
@@ -342,7 +355,7 @@ function runPost (cam, tick) {
   }
   P.dofMat.uniforms.src.value = frame; P.fin.uniforms.src.value = frame; if (P.rayMat) P.rayMat.uniforms.src.value = frame
   P.bright.uniforms.src.value = frame; pass(P.bright, P.ba)
-  for (let i = 0; i < 2; i++) {   // two blur rounds at quarter size: a wide, soft glow
+  for (let i = 0; i < P.bloomPasses; i++) {   // two blur rounds at quarter size: a wide, soft glow (look.bloomPasses: 1 = a tighter one)
     P.blur.uniforms.src.value = P.ba.texture; P.blur.uniforms.dir.value.set(1 / P.bw, 0); pass(P.blur, P.bb)
     P.blur.uniforms.src.value = P.bb.texture; P.blur.uniforms.dir.value.set(0, 1 / P.bh); pass(P.blur, P.ba)
   }
