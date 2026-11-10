@@ -191,7 +191,7 @@ request, three requests in all. Words per second are words over speaking time:
 | 9 | Leda 1.5x + 1.5 st rubberband, formants shifted | 4.1 | - | 5 | 9 | 9 |
 
 (The pitch tracker can't tell the lifted takes apart; Laomedeia and Aoede ran out of quota.) No Gemini voice
-sounds eleven on its own, and they all read at about 2.5-2.7 words a second, against the 4.5 the research asks for.
+sounds eleven on its own, and they all read at about 2.5-2.7 words a second, against the research's 4.5 (not a target any more: the owner chose Pip's natural tempo, docs/stories.md).
 So `narrator` is #8: Leda with `post` `rubberband=tempo=1.5:pitch=1.0905:formant=preserved`. If the owner prefers
 "more real" to "younger", drop the pitch from the post (#3). The old woman narrator is now `storyteller`.
 

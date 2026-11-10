@@ -92,9 +92,41 @@ def resplit(sd):
             cand = [i for i in range(st, lim) if same(W[i], tk[-1])]
             en = min(cand, key=lambda i: abs(i - (st + len(tk) - 1))) if cand else min(lim, st + len(tk)) - 1   # the match nearest the line's length
             spans[k][1] = en
-        segs = [(max(words[a - 1][2] + 0.02 if a else 0.0, words[a][1] - 0.08), min(words[b + 1][1] - 0.02 if b + 1 < len(words) else 1e9, words[b][2] + 0.12)) for a, b in spans]
+        # cut at the quietest 10 ms between one line's last word and the next line's first (Whisper's word ends run
+        # early on fast speech: a cut at its timestamp clipped "times" in Good Boy's L01)
+        def quiet(t0, t1):
+            i0, i1 = max(0, int(t0 * SR)), min(len(x), int(t1 * SR))
+            if i1 - i0 < 480:
+                return (t0 + t1) / 2
+            f = 240; m = (i1 - i0) // f
+            e = np.abs(x[i0:i0 + m * f]).reshape(m, f).mean(1)
+            return (i0 + int(np.argmin(e)) * f + f // 2) / SR
+        cutsq = [quiet(words[spans[k][1]][2] - 0.05, words[spans[k + 1][0]][1] + 0.1) for k in range(len(spans) - 1)]
+        segs = []
+        for k, (a, b) in enumerate(spans):
+            # margins (owner rule, docs/stories.md): >= 80 ms before the first word, >= 200 ms after the last, but never
+            # into the neighbouring line's words; the cut itself at the quietest point between them
+            prev_end = words[spans[k - 1][1]][2] if k else 0.0
+            next_start = words[spans[k + 1][0]][1] if k + 1 < len(spans) else len(x) / SR
+            s0 = max(prev_end + 0.02, min(cutsq[k - 1] if k else words[a][1] - 0.15, words[a][1] - 0.08))
+            s1 = min(next_start - 0.02, max(cutsq[k] if k + 1 < len(spans) else words[b][2] + 0.4, words[b][2] + 0.2))
+            s1 = min(s1, words[b][2] + 0.5)
+            # a tight join (under 0.4 s between the words): both lines meet at the quiet point itself; the margins would
+            # push each into the other's breath
+            if k + 1 < len(spans) and next_start - words[b][2] < 0.4:
+                s1 = cutsq[k]
+            if k and words[a][1] - prev_end < 0.4:
+                s0 = cutsq[k - 1]
+            if k == 0 and words[a][1] < 2.0:
+                s0 = 0.0   # a take's first line keeps what's said just before it (the farmer's laugh)
+            if k + 1 == len(spans):
+                s1 = len(x) / SR   # and its last line runs to the take's own fade (Whisper's last word ends early)
+            segs.append((s0, s1))
         for (who, lid, t), (a, b) in zip(r['lines'], segs):
-            seg = x[int(a * SR):int(b * SR)]
+            seg = x[int(a * SR):int(b * SR)].copy()
+            fd = min(len(seg) // 4, int(0.012 * SR))   # 12 ms fades: no click where a cut lands inside a word's tail
+            if fd:
+                seg[:fd] *= np.linspace(0, 1, fd); seg[-fd:] *= np.linspace(1, 0, fd)
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", f"{sd}/voice/{lid}.wav"], input=seg.astype(np.float32).tobytes(), check=True)
         print(f"{r['id']}: {len(r['lines'])} lines at {[(round(a, 2), round(b, 2)) for a, b in segs]}")
         continue
