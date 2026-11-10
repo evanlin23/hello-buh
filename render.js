@@ -350,6 +350,27 @@ const SWINGS = []
     if (g !== curGlint) { GLINTS.push([e.t / 50, g]); curGlint = g }
   }
 }
+// A bucket use swings the arm (BucketItem.use succeeds and the client swings), but mineflayer's
+// activateItem sends no swing, so recordings only had one when the stunt called swingArm (worker 3).
+// The held stack turning from a bucket to a filled one or back, in the same slot, is a use: swing on
+// that tick unless a swing mark is already within 3 ticks.
+{
+  const BUCKET = /^(bucket|water_bucket|lava_bucket|powder_snow_bucket|milk_bucket|(cod|salmon|pufferfish|tropical_fish|axolotl|tadpole)_bucket)$/
+  let items = null, slot = 0, prev = null, prevSlot = null
+  const add = []
+  for (const e of rec.timeline || []) {
+    if (e.event === 'hotbar') items = e.items
+    if (e.slot !== undefined) slot = e.slot
+    if (!items) continue
+    const it = items[slot], name = it ? (Array.isArray(it) ? it[0] : it) : null
+    if (e.event === 'hotbar' && slot === prevSlot && name !== prev && BUCKET.test(name || '') && BUCKET.test(prev || '') && (name === 'bucket' || prev === 'bucket') && name !== 'milk_bucket') {
+      const t = e.t / 50
+      if (!SWINGS.some(s => Math.abs(s - t) < 3) && !add.some(s => Math.abs(s - t) < 3)) add.push(t)
+    }
+    prev = name; prevSlot = slot
+  }
+  if (add.length) { SWINGS.push(...add); SWINGS.sort((a, b) => a - b) }
+}
 // the held stack's enchantment glint over time (hotbar entries [name, count, 1] are enchanted)
 function glintAt (t) { let g = false; for (const [a, v] of GLINTS) if (a <= t) g = v; return g }
 // Equip animation, per tick like ItemInHandRenderer.tick: the shown item's height moves toward 1
