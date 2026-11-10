@@ -41,7 +41,9 @@ module.exports = {
   // camera shots (positions are offsets from O; y from the village centre's ground). Set in setup once the pad's
   // height is known: see shotsFor()
   shots: {},
-  edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0' },
+  edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0',
+    // the reveal's sound: a whoosh as the camera leaves his head (L14 is the 13th line mark), a hit on the bark
+    sfx: [['whoosh', 'line', { nth: 12, gain: 0.45 }], ['impact', 'bark', { gain: 0.5 }]] },
 
   async setup (ctx) {
     const { bot } = ctx
