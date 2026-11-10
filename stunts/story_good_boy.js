@@ -193,9 +193,9 @@ module.exports = {
     // for 6 frames before the cut: review round 3)
 
     // L05: in the yard, looking up at him. He holds out a raw porkchop and drops it in front of me
-    K.self({}, EYE)
     await putGuy(37.4, 14.6, yawTo(37.4, 14.6, 36.4, 15.6), 42)
-    await K.cut(36.4, 15.6, P(37.4, eyeY(1.6), 14.6), H + 1)
+    // the standing eye height on the cut's landing (set before it, the swim camera sank under the water: review round 3)
+    await K.cut(36.4, 15.6, P(37.4, eyeY(1.6), 14.6), H + 1, { self: [{}, EYE] })
     let looking = K.base
     await line('L05', async (k, at) => {
       // he holds the porkchop out (the review: a look down at the ground found nothing there and whipped back up)
