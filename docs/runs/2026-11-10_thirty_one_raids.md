@@ -104,3 +104,26 @@ per-line request, branch only), docs/stories.md (premise status).
 - 16:05 UTC: the owner said "none of these new stories should go out until i've OKed them"; the lead set the package
   back to **held** (videos 5de29cb). It waits for the owner's OK; publish.js now packages stories held unless
   --owner-ok (main f4c0605, merged here).
+
+## Evening: vNext, the visual audit, r-cast (17:00-23:00 UTC)
+- **Script:** vNext adopted (owner r69e712), then the writers' r-cast (`script_vNext.md`): 11 lines, Grandpa's "Lock the
+  DOOR, kid. They're COMING." in his own voice (elder, Charon), a spoken stress per sentence (`lines[].stress`). The
+  stunt was restaged twice (vNext, then r-cast order: wall, road/yard, square, table, tower/chest, gate, Grandpa, horn,
+  bench, the drink and the reveal).
+- **Engine (edit.py, opt-in):** vanilla boss bars from `bossbar` marks (title, progress, colour, overlay); the Raid bar
+  fills after the horn. Checked against the vanilla sprites.
+- **Visual audit (docs/runs/visual_audit_2026-11-10/thirty_one_raids.md):** all blockers and fixes folded in: the lit
+  totem wall + glow frame + a RAIDS WON / 31 sign, S01 recomposed, L10's lanterns and S10/S10b, bread in frame, Grandpa
+  bigger in the wides, sitting at the grindstone, no DoF on full shots, the gatehouse, the reveal at 12500 with lantern
+  posts (no moon behind the raiders), a camera shot for the reveal (not a second POV), the chest screen open on "A
+  whole CHEST" (pre-aimed cut). The owner's hotbar rule (story.json `hotbar`, 67 eggs).
+- **Relief:** the set's plain measured 179 x 123 (owner.js `clearingOf`, a real measurement, not a cache): continuous
+  natural ridges east/north/west and behind the square, trees and boulders, now 56 x 37 and no superflat warning.
+- **Previews for the owner:** three no-voice renders on Actions (render/story_thirty_one_raids, labelled PREVIEW: NO
+  VOICE / PLACEHOLDER TIMING); dry runs on placeholder timing (5.25 words/s) with `hb check` 0 blockers each time.
+- **Voice (blocked):** the house narrator (Leda, sleepover, 3.8-flash-lite, rubberband 1.1 / +1): 7 takes, Grandpa on
+  3.8-flash-tts: 2 takes; then both models' free-tier daily limit (10 requests/day/model). Every take fails the take
+  gate's pause limits (0.3-0.7 s sentence breaths against 0.2-0.35 s); asked the lead for the gate/direction call.
+- **Tool notes:** a reveal inside a line's `extra` was squeezed to nothing when the picture ran late (now its own fixed
+  ticks after the line); `ctx.hotbar` clears and refills all 9 slots over ~1 s (use one `/item replace` mid-story);
+  `ground()` must skip slabs (the gate roof); piping `hb record` into `head` kills the recording.
