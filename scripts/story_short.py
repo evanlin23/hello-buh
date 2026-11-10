@@ -75,7 +75,7 @@ def score(total, lines, hushes, swells):
     return mix
 
 
-def captions(story, lines, chats, end, path):
+def captions(story, lines, chats, end, path, timing=None):
     """Each line's own chunks (` / `), timed by characters across the voice, CAPS words in the key colour (the
     speaker's colour for characters); the chat lines as the game draws them (bottom-left, yellow), scaled for a phone;
     the hook (story.caption) at the top for the opening seconds."""
@@ -111,10 +111,14 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         total_chars = sum(len(ch) + 1 for ch in chunks)
         lead, speech = 0.06, dur * 0.95
         c0 = 0
+        cs = (timing or {}).get(vox, {}).get("chunk_starts")   # word timings (vox/timing.json): the chunk on its first word
         for j, ch in enumerate(chunks):
             a_ = t + lead + speech * c0 / total_chars
             c0 += len(ch) + 1
             b_ = t + lead + speech * c0 / total_chars if j + 1 < len(chunks) else t + dur + 0.2
+            if cs and len(cs) == len(chunks):
+                a_ = t + (cs[j] if j else 0.0)
+                b_ = t + cs[j + 1] if j + 1 < len(chunks) else t + dur + 0.2
             words = []
             for w in ch.split():
                 core = w.strip("?!.,'\"")
@@ -248,7 +252,8 @@ def main():
     wav = work / "mix.wav"
     T.write_wav(wav, mix)
     ass = work / "captions.ass"
-    captions(story, lines, chats, total, ass)
+    tf = sd / "vox" / "timing.json"
+    captions(story, lines, chats, total, ass, json.loads(tf.read_text()) if tf.exists() else None)
     out = HERE / "out" / f"{stunt}.mp4"
     out.parent.mkdir(exist_ok=True)
     fonts = work / "fonts"; fonts.mkdir(exist_ok=True)

@@ -55,7 +55,7 @@ module.exports = {
     // L08-L10: Grandpa on the path below the south rim; Pip at the rim above
     gramps: { path: [[0, -6.0, 2.8, 4.6], [4, -6.3, 2.6, 4.9]], look: [-5, -1.5, 11.5], fov: 50 },
     whose: { path: [[0, -3.0, -0.8, 13.4], [4, -3.2, -0.9, 13.0]], look: [-5, 1.2, 7], fov: 52 },
-    rightback: { path: [[0, -2.6, -0.6, 10.2], [4, -2.8, -0.6, 10.5]], look: [-5, -0.6, 11.5], fov: 44 },
+    rightback: { path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.5, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night
     dusk: { path: [[0, 4.8, 2.6, 2.4], [3, 4.4, 2.4, 2.2]], look: [0, 0.4, 0.9], fov: 56 },
     night: { path: [[0, 4.4, 2.4, 2.2], [3, 4.0, 2.2, 2.0]], look: [0, 0.4, 0.9], fov: 56 },
@@ -80,7 +80,8 @@ module.exports = {
     ctx.log('D ground', F, g.name)
     const A = (dx, dy, dz) => `${X + dx} ${F + dy} ${Z + dz}`
     const c = (s) => ctx.cmd(s)
-    await c('/kill @e[type=!minecraft:player,type=!minecraft:villager,type=!minecraft:iron_golem,type=!minecraft:cat,distance=..30]')
+    for (const t of ['dog', 'pip', 'gramps', 'z1', 'z2']) await c(`/kill @e[tag=${t}]`)   // (a retried attempt runs setup again on the same world)
+    await c(`/kill @e[type=item,x=${X - 20},y=${F - 20},z=${Z - 20},dx=40,dy=40,dz=40]`)
     // the meadow: a disc (r 9) round the dog, levelled to F, cut off at the east edge (holes below filled deep)
     for (let dz = -9; dz <= 9; dz++) {
       const hw = Math.floor(Math.sqrt(81 - dz * dz))
@@ -144,13 +145,12 @@ module.exports = {
       await c(`/summon item ${X + bx} ${F + 1.05} ${Z + bz} {Item:{id:"minecraft:bone",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}`)
     }
     // the cast
-    const PARK = `${X + 50} ${F - 60} ${Z}`
-    this.PARK = [X + 50, F - 60, Z]
+    const PARK = `${X + 60} ${F + 40} ${Z}`
+    this.PARK = [X + 60, F + 40, Z]
     await c(`/summon wolf ${X + 0.5} ${F + 1} ${Z + 0.5} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Sitting:1b,Tags:["dog"],Rotation:[-90f,0f],variant:"minecraft:pale",CollarColor:14b}`)
     await c('/execute as @s run data modify entity @e[tag=dog,limit=1] Owner set from entity @s UUID')
     await c(`/summon villager ${PARK} {NoAI:1b,NoGravity:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Age:-24000,Tags:["pip"],VillagerData:{type:"minecraft:plains",profession:"minecraft:none",level:1}}`)
     await c(`/summon villager ${PARK} {NoAI:1b,NoGravity:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["gramps"],VillagerData:{type:"minecraft:plains",profession:"minecraft:cartographer",level:5}}`)
-    for (const t of ['z1', 'z2']) await c(`/summon zombie ${PARK} {NoAI:1b,NoGravity:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"]}`)
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     return { x: X, y: F, z: Z }
   },
@@ -186,13 +186,14 @@ module.exports = {
       if (k === 6) { ctx.mark('lightning', { x: X - 14, y: F, z: Z - 16 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
       if (k === 15) ctx.mark('lightning', { x: X - 18, y: F, z: Z - 10 })
     })
-    put('z1', -1.8, 1, -2.6, 0); put('z2', -3.2, 1, -3.8, 0)
+    // the zombies exist only for their shot (summoned at night: a parked zombie burns in the daytime sky)
+    for (const [t, dx, dz] of [['z1', -1.8, -2.6], ['z2', -3.2, -3.8]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
     cut('zombies', { weather: 'clear' })
     await run(t2 - b2, (k) => {   // two zombies shuffle past behind him, north to south (zombie walk ~0.23 b/t... slower here)
       tp('z1', -1.8, 1, -2.6 + k * 0.09, 0); tp('z2', -3.2, 1, -3.8 + k * 0.09, 0)
       if (k === 4) ctx.sound('entity.zombie.ambient', 0.5, 0.9)
     })
-    park('z1'); park('z2')
+    park('z1'); park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')   // (die at the park: no death fall in the next shot)
     // ---- L03: morning: Pip walks up from the edge with a bone and drops it on the pile
     put('pip', -4, 1, 6, -131)
     cut('bone', { time: 1000 })
