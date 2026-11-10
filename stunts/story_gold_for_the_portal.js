@@ -129,6 +129,8 @@ module.exports = {
     const hatch = (open, sound = true) => { say(`/setblock ${X + 1} ${F + 11} ${Z + 1} spruce_trapdoor[facing=south,half=top,open=${open}]`); if (sound) ctx.sound(open ? 'block.wooden_trapdoor.open' : 'block.wooden_trapdoor.close', 0.7, 1) }
     const gma = K.actor('gma', { x: 9.3, y: 1, z: 4.75, yaw: -80, pitch: 10 })     // tonight's Grandma (yaw: mc degrees, -90 = east)
     const SELF = [-1]
+    // turn a mob's yaw (mc degrees) toward a target by at most `step` degrees a tick
+    const turnToward = (a, b, step) => { let d = ((b - a) % 360 + 540) % 360 - 180; return a + Math.max(-step, Math.min(step, d)) }
 
     // L01 (S01): the cellar, night. Grandma full-figure at the portal, tonight's ingot already crossing the purple
     K.shot('s01')
@@ -233,16 +235,23 @@ module.exports = {
     // L07 (S10): over Nico's shoulder from the ceiling: Nico at the portal, gold in hand; Grandma walks off frame left
     K.shot('s10')
     jump(9.0, 5.5, P(11, 2.0, 5.5))
-    Object.assign(gma, { x: 9.2, z: 3.9, yaw: 120 })
+    // Grandma walks on from where L06 left her (no jump): west behind Nico's back, then north-west toward the
+    // ladder, stopping mid-cellar (6.1, 3.1); at the stop she turns to him over ~0.5 s (no one-tick snap)
     let turn = null
+    const legs = [[8.4, 6.9], [6.1, 3.1]]
+    let leg = 0
     await line('L07', async (k, at, n) => {
-      portalLife(k); if (gma.x > 6.1) K.step(gma, -0.1, -0.03); else gma.yaw = K.mcYaw(9.0 - gma.x, 5.5 - gma.z)
+      portalLife(k)
+      if (leg < legs.length) {
+        const [tx, tz] = legs[leg], dx = tx - gma.x, dz = tz - gma.z, d = Math.hypot(dx, dz)
+        if (d < 0.12) leg++; else K.step(gma, dx / d * Math.min(0.12, d), dz / d * Math.min(0.12, d))
+      } else gma.yaw = turnToward(gma.yaw, K.mcYaw(9.0 - gma.x, 5.5 - gma.z), 18)
       if (k >= n - 9) { turn = turn || { ...K.base }; K.turnTo(turn, P(6.0, 2.6, 3.1), (k - n + 9) / 8) }
       look(k, k < n - 9 ? 0.18 * Math.sin(k / 8) : 0, k < n - 9 ? 0.08 * Math.sin(k / 11) : 0)
     })
 
     // L08 (S11): POV turned west: Grandma stopped mid-cellar, looking at the stack, then at me: "Just ONE, Nico."
-    Object.assign(gma, { x: 6.0, z: 3.1, yaw: K.mcYaw(9.0 - 6.0, 5.5 - 3.1), pitch: 30 })
+    Object.assign(gma, { yaw: K.mcYaw(9.0 - gma.x, 5.5 - gma.z), pitch: 30 })   // where L07's walk left her
     K.shot('pov')
     await line('L08', async (k, at) => { gma.pitch = k < at(1) - 4 ? 32 + 4 * Math.sin(k / 5) : Math.max(2, gma.pitch - 3); gma.yaw = K.mcYaw(9.0 - gma.x, 5.5 - gma.z) + (k > at(1) ? 9 * Math.sin((k - at(1)) / 4) : 4 * Math.sin(k / 9)); K.go(k >= at(1) && k < at(1) + 5, 'back'); look(k) })
     K.stop()

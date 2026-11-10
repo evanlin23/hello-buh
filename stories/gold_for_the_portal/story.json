@@ -6,8 +6,8 @@
  "caption": "why does grandma feed the nether portal 😶",
  "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson Nico is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
  "question": "why tf does grandma throw gold into a nether portal every night?",
- "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Nico keeps the gifts in a barrel and knows Grandpa is alive.",
- "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Nico. One's plenty.'). Tonight Nico throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
+ "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Her grandson keeps the gifts in a barrel and knows Grandpa is alive.",
+ "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, sweetie. One's plenty.'). Tonight Nico throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
  "key_color": "#B07CFF",
  "gap": 0.12,
  "mood": [
@@ -156,7 +156,9 @@
     "what": "prop:portal",
     "word": "PORTAL"
    },
-   "note": "one quick bright breath, amazed and proud of her; the number lands hardest"
+   "note": "one quick bright breath, amazed and proud of her; the number lands hardest",
+   "say": "My grandma has thrown nine thousand gold ingots into a portal.",
+   "retake": "owner 2026-11-10: a pause (it sounds like a breath) before NINE THOUSAND. Re-take as one continuous phrase, no breath or pause before the number (the continuous-take gate). The emphasis comes from the voice, not a stop."
   },
   {
    "id": "L02",
@@ -247,13 +249,14 @@
   {
    "id": "L08",
    "who": "Grandma",
-   "text": "Just ONE, Nico. / One's PLENTY.",
+   "text": "Just ONE, sweetie. / One's PLENTY.",
    "direction": "gentle and firm, a small smile; a beat after the name",
-   "say": "Just one, Nico. <short pause> One's plenty.",
+   "say": "Just one, sweetie. <short pause> One's plenty.",
    "shot": "S11",
    "look": {
     "what": "Grandma"
-   }
+   },
+   "owner_note": "2026-11-10 'Who is nico?': the narrator's name is never set up, so Grandma doesn't say it. Re-voice L08."
   },
   {
    "id": "L09",
