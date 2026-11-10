@@ -20,6 +20,13 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
    effect). Never say what the last shot already shows ("Good boy.", "Day one. Again." cut by the owner): end on the
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
+0. **The mystery test** (bar: light_sleeper, runaway): a question to the viewer in the first 3 s that only the ending
+   answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
+   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. Check: story-critic (blockers),
+   cold reader. r:ra807e9
+0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
+   reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
+   story-critic, cold reader (does the end flow into the start?). r:r30c821
 4. **Understood on one watch, nothing extra**: no unexplained names (set up every name first), no punchline that
    explains a twist the picture already landed, no sting after the story ends. Check: cold reader, story-critic.
    r:r0d320b
@@ -41,6 +48,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
 
 ## 2. Voice
+0. **Narrator voice: Roblox-story style**, higher quality and more expressive, same pace and tone (being chosen:
+   docs/voice_search.md; nothing is voiced until the owner picks); other characters only in very short lines, on Gemini.
+   r:r4f221c
 1. **The narrator is `voices/cast.json` `narrator` = Pip**: Leda, the bubbly nine-year-old direction,
    gemini-3.8-flash-lite-tts, single speaker, **natural tempo, no time-stretch, no pitch shift** (`post` empty; atempo
    1.1 at most if a take drags); the recipe is `voices/recipes/pip.md`. Kid Puck is `puck_kid`, an alternative only.
@@ -72,10 +82,14 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 ## 2b. Voice delivery and caption sync (owner 2026-11-10)
 1. **Delivery follows the line's emotion**: the narrator's lines split by beat into requests with one scene direction
    each (same voice, model, profile); a sad or quiet ending is never read bubbly. Check: panel, review. r:r08bb81
-2. **Captions start with the speech**: voice.json/words.json re-aligned after every cut; caption start within 0.12 s of
-   the speech onset. Check: `scripts/caption_sync.py` (in `./hb review`). r:r08bb81
-3. **Captions lead the word by 0.1 s** (`story_track.CAPTION_LEAD`), never before the line's own cut. Check: built in.
-   r:r221d0a
+2. **Captions start with the speech**: voice.json/words.json re-aligned after every cut (a take that changed since its
+   alignment is a BLOCK); Whisper-timed lines: caption start within 0.12 s of the speech onset. Check:
+   `scripts/caption_sync.py` (in `./hb review`). r:r08bb81
+3. **Captions land on the word**: each caption appears on the frame in which its word starts (no lead:
+   `story_track.CAPTION_LEAD = 0`, starts floored to the 60 fps frame), never before the line's own cut. Word times
+   are forced-aligned to the caption words (`scripts/align.py` -> `scripts/ctc_align.py`; Whisper only as a fallback,
+   flagged), caption words matched to them by text. Measured on the finished Short: |median offset| <= 33 ms and
+   <= 10% of words over 100 ms off, else BLOCK. Check: `scripts/caption_av_check.py` (in `./hb review`). r:r27d123
 4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
    pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
    only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a
@@ -96,6 +110,12 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
    docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
    check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
+## 3b. Motion (built in, not caught)
+1. **Smooth by construction**: stunts move the camera, the player and NPCs only through the story kit's primitives
+   (eased turns, pathing walks, vanilla-speed NPCs, a still camera while a GUI is open); a lint before recording
+   rejects raw look/teleport calls. Post-render checks are the safety net, never the method; the same for every
+   quality rule: build it into the tool first, check it second. Check: lint (`./hb check`), then rec_check. r:rd9b7d0
+
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
 2. **The picture never runs ahead of or against the words** ("dug under it" before we dig; "never dig straight down"
@@ -171,4 +191,6 @@ Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
 - **Kid Puck as the default narrator** (r:rc4689d, r:r710834, Good Boy session): Pip is the narrator again (r:r5519b8);
   Puck is `puck_kid`, an alternative.
 - **Captions of 2-3 words** (r:re512f6; cinematic-style "words per chunk"): one word at a time (r:rbd7cb6).
+- **Captions lead the word by 0.1 s** (r:r221d0a, `CAPTION_LEAD = 0.10`) and Whisper word times: captions land on the
+  word, forced-aligned (2b.3, r:r27d123).
 - **40-75 s stories** (docs/stories.md intro): 30-45 s (Script 9).

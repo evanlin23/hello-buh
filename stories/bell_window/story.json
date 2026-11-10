@@ -1,0 +1,309 @@
+{
+  "name": "bell_window",
+  "stunt": "story_bell_window",
+  "version": 2,
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md) + r2 critic leftovers (reviews/r2-critic.md)",
+  "caption": "why does my village hide when I open my window 🔔",
+  "logline": "Every time a boy in Saltmouth opens his bedroom window, the bell outside rings and the whole village runs indoors; tonight he leans out to catch whoever rings it.",
+  "question": "why tf does the whole village hide when he opens his window?",
+  "premise": "For three hundred nights, every time the boy opens his window, the village bell right outside it rings and every villager runs inside. Nobody's ever there. Mom: 'Shutters SHUT, honey.' Every morning there's an arrow in the bell post, which Mom pulls out. His is the only lit window in the village. Up on the cliff, under an old oak, something white stands all day. Tonight he leans out to catch whoever it is.",
+  "twist": "Nobody rings the bell. A skeleton lives in the oak's shade on the cliff above the village (skeletons shelter from the sun) and shoots at the only player in the village whenever it sees him: the boy at his lit window. The bell hangs between the cliff and his window, so every arrow hits the bell (vanilla: a projectile rings a bell; a ringing bell sends villagers indoors). The bell was a shield. Tonight, when the bell rings again, he leans out past it, and the skeleton draws with nothing between them. Cut.",
+  "key_color": "#E8C547",
+  "mood": [
+    "eerie",
+    "tense"
+  ],
+  "payoff": "L07+1.0",
+  "gap": 0.25,
+  "look": {
+    "time": 13500,
+    "fog": false,
+    "note": "per shot in shots[].look; nights at 13500 (villagers are in bed by 18000 and wouldn't run)"
+  },
+  "weather": "clear",
+  "world": {
+    "place": "saltmouth (canonical). Layout from his window sill, the window facing north: the skeleton's feet at (0, 10, -11) on a 9-11 high rise under a stamped oak (since 1700); the bell hung from an oak beam on two fence posts so that it sits ON the ray from the skeleton's eyes (0, 11.6, -11) to his eyes at the sill: about (0, 4.5, -3); check the ray on the shot sheet, on the line between the two; the square between the bell and the rise; his house stamped two storeys (room 7x7x3). Skeleton range 15 blocks. If no rise lines up at Saltmouth, move the house.",
+    "day": 2000,
+    "canon": "A Saltmouth family (not Buh's). The kid is a player; Mom is a villager. New canon fact: a skeleton lives under the oak on Saltmouth's north cliff from about day 1700 (the stamp: the oak and its shade).",
+    "easter_egg": "saltmouth_portal (register as a cameo, since 0): Saltmouth's ruined portal at (-269, -366), framed in a daytime shot that looks south-east (S05)"
+  },
+  "voice": {
+    "engine": "tbd",
+    "note": "the house narrator voice is being changed (docs/voice_search.md, STANDARDS 2.0); voice nothing until the owner picks. Characters: voices/cast.json refs below."
+  },
+  "voice_takes": "beat",
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "ref": "narrator",
+      "color": "#FFFFFF",
+      "on_screen": "a Saltmouth kid, a default skin that is NOT Steve (alex): Steve reads as Buh; POV in S01, S07; seen in S08"
+    },
+    "Mom": {
+      "role": "character",
+      "ref": null,
+      "color": "#FFC2A8",
+      "on_screen": "plains villager (no profession outfit), unarmed",
+      "voice": "Gacrux",
+      "note": "not `mom` (Sulafat is Buh's mom): a spare; add a cast entry before voicing"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L01",
+        "L02"
+      ],
+      "direction": "[A kid telling a friend a story, fast, bright and energetic, Roblox-story pace; not whispery, breathy or soft] Beat 1: puzzled and excited."
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "Mom"
+      ],
+      "lines": [
+        "L03"
+      ],
+      "direction": "[A warm woman in her forties, quick and firm; not whispery]"
+    },
+    {
+      "id": "r3",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L04",
+        "L05",
+        "L06",
+        "L07"
+      ],
+      "direction": "[A kid telling a friend a story, fast, bright and energetic, Roblox-story pace; not whispery, breathy or soft] Beat 2: a sly detective, then brave; not hushed."
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "Every time / I open my WINDOW, / the whole village / RUNS inside.",
+      "say": "[puzzled and excited] Every time I open my window, the whole village runs inside.",
+      "direction": "puzzled and excited, one quick breath",
+      "shot": "S01",
+      "look": {
+        "what": "prop:village",
+        "word": "VILLAGE"
+      }
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "The bell RINGS. / Three hundred NIGHTS. / Nobody's ever / THERE.",
+      "say": "[amazed] The bell rings. Three hundred nights. Nobody's ever there.",
+      "direction": "amazed, a lift on THREE HUNDRED, spooked on THERE",
+      "shot": "S02",
+      "look": {
+        "what": "block:bell",
+        "word": "BELL"
+      }
+    },
+    {
+      "id": "L03",
+      "who": "Mom",
+      "text": "Shutters SHUT, / honey.",
+      "say": "[warm] Shutters shut, honey.",
+      "direction": "warm, quick, firmer than she sounds",
+      "shot": "S03",
+      "look": {
+        "what": "Mom"
+      }
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "Every morning / there's an ARROW / in the bell post. / Mom pulls it OUT.",
+      "say": "[matter-of-fact] Every morning there's an arrow in the bell post. Mom pulls it out.",
+      "direction": "matter-of-fact, then sly: he noticed",
+      "shot": "S04",
+      "look": {
+        "what": "prop:arrow",
+        "word": "ARROW"
+      }
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "Every window / in the village / is OPEN. / Except MINE.",
+      "say": "[smug] Every window in the village is open. Except mine.",
+      "direction": "smug, a small brag",
+      "shot": "S05",
+      "look": {
+        "what": "prop:window"
+      }
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "Up on the CLIFF / there's an old OAK. / Something WHITE / stands under it / all DAY.",
+      "say": "[curious] Up on the cliff there's an old oak. Something white stands under it all day.",
+      "direction": "curious, a little scared on WHITE",
+      "shot": "S06",
+      "look": {
+        "what": "prop:oak",
+        "word": "OAK"
+      }
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "Tonight / the bell RANG again. / So I LEANED out / PAST it.",
+      "say": "[determined] Tonight the bell rang again. So I leaned out past it.",
+      "direction": "brave, fast, determined, the last word up",
+      "shot": "S07",
+      "look": {
+        "what": "block:bell"
+      }
+    }
+  ],
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "bedroom",
+      "size": "wide",
+      "camera": "pov: hand opens the shutters; through them the night square: on 'RUNS' the bell rings and every villager in the square runs for a door",
+      "frame": "fg: the shutters swinging open; subject: the moonlit square, the bell on its post 3 blocks outside the window, villagers running; bg: Saltmouth's roofs, the dark cliff with the lone oak against the stars (planted from frame 1); the ruined portal tiny at frame right.",
+      "look": {
+        "time": 13500
+      }
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "square",
+      "size": "ews",
+      "camera": "at: high over the square (0, 18, 16) looking at the bell and the window (0, 2, 0), slow push",
+      "frame": "subject: the empty square, every door shut, the bell still swinging, the one lit window behind it; bg: the cliff and the oak above the village, in line with the bell and the window (the axis, hidden in plain sight). Night.",
+      "look": {
+        "time": 13500
+      }
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "bedroom",
+      "size": "wide",
+      "camera": "at: (1.5, 1.6, 1.5) looking at Mom (0, 1.6, 0), still",
+      "frame": "subject: the bedroom established, Mom full figure at his door, nodding at the shutters; the bed, the lantern lit. Night 13500.",
+      "look": {
+        "time": 13500
+      }
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "square",
+      "size": "full",
+      "camera": "at: (2, 1.4, 2) looking at the bell post (0, 1.5, 0), push",
+      "frame": "subject: an arrow stuck in the bell post at (0, 1.5, -3), angled down from the rise; on 'OUT' it's gone and Mom holds it (a held item). Morning 1000.",
+      "look": {
+        "time": 1000
+      }
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "square",
+      "size": "wide",
+      "camera": "at: (0, 3, -20) from the square looking south at his house, still",
+      "frame": "subject: the village by day, every window's shutters open but his (shut); the bell right in front of his. Day 6000. (Skeletons ignore villagers: this plants 'only me'.) The easter egg: Saltmouth's ruined portal small at frame left, south-east of the house.",
+      "look": {
+        "time": 6000
+      }
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "cliff",
+      "size": "ews",
+      "camera": "at: (0, 2, -2) looking up north at the oak on the rise (0, 10, -11), slow push",
+      "frame": "subject: the oak on the cliff edge in full sun; in its shade, a white shape standing still (the skeleton, too small and shaded to read as one); villagers working below, unarmed. Day 6000.",
+      "look": {
+        "time": 6000
+      }
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "bedroom",
+      "size": "full",
+      "camera": "pov at the window, then leaning out past the bell",
+      "frame": "fg: the open shutters, the sill; on 'RANG' an arrow hits the bell 3 blocks ahead (the ring, doors slam below); on 'PAST' the camera leans out clear of the bell, looking up at the ledge and the oak. Night 13500.",
+      "look": {
+        "time": 13500
+      }
+    },
+    {
+      "id": "S08",
+      "line": "L07",
+      "place": "cliff",
+      "size": "wide",
+      "camera": "at: behind the skeleton under the oak on the ledge, looking down along its aim at the window. The reveal, one shot: the kid leaning out, the bell now off the line; the skeleton draws at him. Cut 1.0 s after L07",
+      "frame": "fg: the skeleton's bow and skull in the oak's shade; subject: the kid leaning out of the one window, the bell to one side, swinging; bg: the dark village, every door shut. Night 13500 (no lantern: the night floor; the skeleton readable at 300 px).",
+      "look": {
+        "time": 13500
+      }
+    }
+  ],
+  "props": {
+    "village": {
+      "at": [
+        0,
+        1,
+        -8
+      ]
+    },
+    "arrow": {
+      "at": [
+        0,
+        1.5,
+        -3
+      ]
+    },
+    "window": {
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    "bell": {
+      "at": [
+        0,
+        4.5,
+        -3
+      ]
+    },
+    "oak": {
+      "at": [
+        0,
+        10,
+        -11
+      ]
+    }
+  },
+  "ending": {
+    "after": "L07",
+    "beats": [
+      "S07: the arrow rings the bell; he leans out past it",
+      "S08: from behind the skeleton, nothing between them; it draws; cut 1.0 s after L07. No line."
+    ],
+    "loop": "cause and effect: why the village runs when he opens the window (line 1)"
+  },
+  "bible": "stories/bell_window/bible.md",
+  "beats": "stories/bell_window/beats.md",
+  "set": "stories/bell_window/set.md",
+  "shotlist": "stories/bell_window/shots.md"
+}
