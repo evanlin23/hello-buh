@@ -71,6 +71,14 @@ same blocker survives, log it in the run report and simplify the scene.
 `./hb render story_<name>` then `./hb render story_<name> --wait` (= `scripts/render_on_actions.sh`). Never render full Shorts locally (container
 restarts kill them). Sharpness rules apply (subject in focus, crisp textures, high-quality encode).
 
+## 5b. Pace (~1 min, after the render)
+`./hb pace story_<name>`: hook, dead spots, build-up, payoff, length on the finished mp4 (short-review skill, "The
+pacing gate"). Owner, 2026-11-10: "we still need to ensure that the pacing is good, and theres still a good visual
+and audio hook and build up and a good payoff." **Blockers are blockers**: fix them before the review (most are
+edit-only: `endAfter`, an `sfx` impact on the payoff, `punch`/`flash`; a length or a "same picture" problem is a
+script/shot fix for the next recording). Set `"payoff": "<line id>"` in story.json so the gate checks the right moment.
+Write the story to land under 45 s: the gate warns above it.
+
 ## 6. Review (≤ 2 rounds)
 `.claude/skills/short-review/SKILL.md` with an independent reviewer (subagent, or a fresh session). Blockers get
 fixed (edit-only fixes via `scripts/reedit.sh`, staging via a re-record); nitpicks go in the notes. If a blocker
