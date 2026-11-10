@@ -37,19 +37,20 @@ def words(wav):
         x = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
                                          capture_output=True, check=True).stdout, np.float32).copy()
     r = _pipe({"raw": x, "sampling_rate": SR}, return_timestamps="word")
-    # the HF pipeline puts a line's first word at 0.00 s whatever the lead silence (captions ran early: Good Boy's
-    # first words 0.13-0.50 s ahead of the speech): no word starts before the speech onset, measured as
-    # scripts/caption_sync.py measures it (the first 10 ms frame within 30 dB of the peak)
-    fr = 160
-    db = 20 * np.log10(np.sqrt(np.mean(x[: len(x) // fr * fr].reshape(-1, fr) ** 2, axis=1)) + 1e-9)
-    on = float(np.argmax(db > db.max() - 30)) * fr / SR if len(db) else 0.0
     out = []
     for c in r["chunks"]:
         a, b = c["timestamp"]
-        b = float(b if b is not None else len(x) / SR)
-        a = max(float(a), on) if float(a) < on else float(a)
-        out.append((c["text"].strip(), a, max(b, a + 0.05)))
+        out.append((c["text"].strip(), float(a), float(b if b is not None else len(x) / SR)))
     return out
+
+
+def speech_onset(wav):
+    """Seconds to the first 10 ms frame within 30 dB of the take's peak."""
+    x = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(wav), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"],
+                                     capture_output=True, check=True).stdout, np.float32)
+    fr = SR // 100
+    db = 20 * np.log10(np.sqrt(np.mean(x[: len(x) // fr * fr].reshape(-1, fr) ** 2, axis=1)) + 1e-9)
+    return float(np.argmax(db > db.max() - 30)) / 100
 
 
 def norm(t):
@@ -114,6 +115,12 @@ def main(d, only=None):
         if lid not in meta["lines"] or (only and lid not in only):
             continue
         heard = words(d / "voice" / f"{lid}.wav")
+        if heard:   # Whisper stamps the first word at 0.0 when the take starts with lead silence: clamp it to the
+            # speech onset (owner 2026-11-10: "the captions are not lined up correctly")
+            on = speech_onset(d / "voice" / f"{lid}.wav")
+            w0, a0, b0 = heard[0]
+            if a0 < on - 0.03:
+                heard[0] = (w0, round(min(on, b0 - 0.05), 3), b0)
         if not heard:
             print(f"{lid}: Whisper heard nothing, kept the even spread"); continue
         wj[lid] = [[w, round(a, 3), round(b, 3)] for w, a, b in heard]
