@@ -15,6 +15,8 @@ the story path: docs/stories.md "Cinematic stories". Values marked (pilot) were 
 - **Wide master, cropped:** `wideMaster: true` renders 1797x1011 and crops the 1080x1011 game view (per camera shot
   `cropX` -1..1); `WIDE_DIR=dir` keeps the 16:9 masters. Shot sheets are 16:9: only their middle 60% is the Short.
 - **Eyes on the upper third** (y ~0.33 of the game view). Captions sit at 0.70: nothing important below 0.62.
+- **First person looks land on the face** (owner, 2026-11-10: "it feels we are looking slightly too low"): aim with
+  `K.face(feet, type)` / `K.top(block)`, never a chest, feet or block middle; plain points get a 2 deg lift (docs/look.md 1).
 - **Big enough to read on a phone** (the game view is 53 % of the screen): a medium shot's subject >= 45 % of the game
   view's height, a close face >= 25 %, a wide shot's subject >= 12 %.
 - **Room in front** of a face or a walk: the subject a third in from the side it comes from.
