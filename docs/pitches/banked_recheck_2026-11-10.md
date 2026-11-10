@@ -125,3 +125,45 @@ guess "to find him" without being sure what's at the end.
 3. **lantern_bay**
 4. **goat_horn**, after the goat model.
 5. **slow_falling**, last, and only if the cold reader passes it.
+
+## The five held finished stories (the lead's addition, 2026-11-10)
+These are already voiced and rendered. "Cheap fix" means a re-cut, or a re-take of a single line. "Rework" means a new
+script or a new recording.
+
+| story | Q (3 s) | Mid | Cut | Fast | verdict |
+|---|---|---|---|---|---|
+| dog_hill (`claude/story-cine-2-render-story_dog_hill`) | pass: "why has the dog sat there 900 days?" | pass: Grandpa's "Said he'd be RIGHT BACK" (L10) at ~60 %, a guess that he's waiting for an owner who left | **fail**: L15 "Day ONE. AGAIN." comes after the picture already shows it (the owner cut this line by name) | borderline | **cheap fix (re-cut)** |
+| thirty_one_raids | pass: "why does the village keep getting raided?" | pass: "started the night he came HOME" plus the "grey BOTTLES" he calls courage. Players think of the ominous bottle at ~55 %; non-players don't. | **fail**: L13 "Now they'll love YOU too, kid." explains after the raid starts. L10 has already said it. | ok | **cheap fix (re-cut)** |
+| gold_for_the_portal | pass: "why does grandma throw gold into a portal?" | pass: the barter list (L03) tells players "piglins" early, but whether Grandpa is alive stays open, and the helmet (L04) is the fair plant | pass, **if** the render cuts within 1 s of the piglin in the blue-striped helmet stepping out (no "sent home" epilogue) | ok | **cheap fix (one line)** |
+| good_boy | pass | **fail, too obvious**: SIT, raw porkchops, can't open a door. Every viewer calls "dog" by ~25 %. | fail: "GOOD boy" after the reveal (the owner's "wtf is the beat at the end") | fail: 19 lines, ~60 s, ellipses in L02/L07/L17 | **rework** (already held; canon plant 7: the man becomes Buh at 16) |
+| light_sleeper | pass: the bar | pass: the shriek (L07) at ~44 % | **fail**: L15, then the death screen ~3 s after the warden rises | **fail**: 134 words, ~47 s spoken, ~58 s cut | **story pass; re-cut plus trims at the re-voice** |
+
+The fixes:
+
+- **dog_hill (re-cut).** Drop L15. The cut moves to 0.8 s after L14's "BACK", on the dog sitting back down facing the
+  empty patch, with the chat "Buh left the game" on screen. That frame *is* line 1 again, so the loop is shown, not
+  said. Set `"payoff": "L14"`.
+  - Optional, still a re-cut: drop L07 ("I tried to make him STAND...") to tighten the middle.
+- **thirty_one_raids (re-cut).** Drop L13. End ~1 s after L12, on the raid horn and the "Raid" bar rising over the
+  gate with Grandpa turning to see the boy. Set `"payoff": "L12"`.
+  - The owner's note on L05's "throw him BREAD": that's vanilla (Hero of the Village gifts). Keep it.
+- **gold_for_the_portal (one line).** The owner asked "Who is nico?" about L08, so **re-take L08 in Grandma's voice
+  as "Just ONE, sweetie. / One's PLENTY."** Never splice the name out inside the take (STANDARDS voice 5).
+  - Then check the render: the end must be ≤1 s after the helmet's blue stripe reads, with no epilogue on screen.
+- **good_boy (rework).** It's already held for the canon rework. Under the mystery test, the clues must stop naming
+  the answer:
+  - cut SIT, the door and "GOOD boy";
+  - keep the 12-block teleport (L02) and the skeletons running (L13) as the only dog clues;
+  - end on the game (the wolf's collar, or the "Sit" when the zombie dies).
+  - Aim for ≤ 30 s.
+- **light_sleeper (story pass).** The story is the bar; what's off is the delivery (the hush and the "..."
+  pauses). It gets re-voiced anyway when the owner picks the new narrator. At that re-voice:
+  - **cut the ending to the warden**: end ~1 s after it rises out of the square, on the roar. Drop L15 ("I'd never
+    DANCED before.") and the 3 s death-screen hold, so the warden is the last frame;
+  - **trim to ~100 words**:
+    - cut L03 (the sheep);
+    - cut L12 ("The fox screamed AGAIN. I didn't CARE.");
+    - merge L09-L10 into "A skeleton shot a CREEPER. / It dropped / a music DISC. / Nobody here / has heard / a SONG.";
+  - **remove every "..."** from `say` (L01, L06, L07, L11; STANDARDS 1.7);
+  - set `"payoff"` to the warden shot.
+  - That gives ~36 s, the same story.
