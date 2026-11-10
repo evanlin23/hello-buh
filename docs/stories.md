@@ -138,6 +138,11 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "can we make the movement smoother when we are breaking blocks? right now it looks very
+  jerky" and "when we 'look' at things, it feels we are looking slightly too low."** Digging moves the camera the
+  way a real player's mouse does (smooth, no snaps between blocks: agent/smooth-dig), and a look puts the subject's
+  face, or the named object's visible top, at eye level with headroom, never centred low (agent/aim). Until those
+  land: aim at faces (eye height), not feet or block centres.
 - **Owner, 2026-11-10, on the published Dog on the Hill: "the captions are not lined up correctly. Day 1 again is not
   delivered correctly, it seems too excited..."** (Held on `videos` until fixed.)
   - **Captions:** a re-cut moved the speech 0.2-0.37 s into every wav but voice.json still said onset 0.0, so every

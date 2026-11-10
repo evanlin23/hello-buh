@@ -99,6 +99,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    cinematic shots from a wide master cropped to the middle (compose for the centre crop); never a 16:9 Short.
    Check: owner and framing judge the cropped frame. r:r77975c
 
+- **Smooth digging, eye-level looks** (owner 2026-11-10): no aim snaps between dug blocks; a look puts faces at
+  eye level with headroom (never the feet or a block centre). Check: review; agent/smooth-dig and agent/aim add
+  measured checks. r:rb9aa2d
+
 ## 5. Look
 Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinematic is the default (`look: 'auto'`).
 - Subject luma 0.35-0.70 by day, >= 0.25 at night; black point p1 >= 0.015; < 2 % clipped. Check: `scripts/look_stats.py`.
