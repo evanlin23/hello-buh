@@ -199,3 +199,4 @@ For the owner's morning. Newest at the bottom.
       the item-name popup.
     - The trial render's pace blockers (late sound, a 3.6 s tail) are fixed for the re-record.
   - Gold for the Portal: the first cut is 57.6 s; it's being restructured to about 45 s.
+- 13:46 UTC: Gold for the Portal is in review, with a HELMET punch-in re-edit running (~6-8 min). Names waits for the 08:00 UTC quota. Light Sleeper and Good Boy are held for the owner.
