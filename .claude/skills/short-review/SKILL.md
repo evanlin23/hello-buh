@@ -21,7 +21,28 @@ The three checklists still apply. This skill doesn't repeat them; it says how to
    rendering.**
 2. `bash scripts/preview.sh <stunt>`: a low-res preview with the real edit, plus sheets at every cut and
    caption. Fix staging here; there's no need to wait for a full render.
-3. Full render once, then `python3 scripts/beat_audit.py <name>` and `python3 scripts/qa_frames.py out/<name>.mp4`.
+3. Full render once, then `./hb pace <name>` (below), `python3 scripts/beat_audit.py <name>` and
+   `python3 scripts/qa_frames.py out/<name>.mp4` (`./hb review <name>` runs all three).
+
+## The pacing gate: `./hb pace <name>` (after the render; ~25 s, no render)
+Owner, 2026-11-10: "we still need to ensure that the pacing is good, and theres still a good visual and audio hook and
+build up and a good payoff." `scripts/pace.py` measures it on `out/<name>.mp4` (+ the recording's marks, the caption
+chunks, story.json and voice.json when they exist) and prints BLOCK/WARN lines with the output time and the cheapest
+fix. **Its BLOCKs are review blockers** (confirm on the frames; a wrong payoff guess is fixed by setting
+story.json `"payoff": "L18"` or `--payoff MARK`, not by ignoring the line). WARNs need a reason or a fix.
+- hook: first frame not black / a bare card; picture moving or cutting in 0-1.5 s (still opener = BLOCK); sound by
+  0.3 s (BLOCK); a line or hit by 1.5 s.
+- dead: longest span with no new event (cut, caption chunk, line, sound hit, motion onset): BLOCK > 3 s, WARN > 2 s;
+  the picture alone (cuts + motion onsets) WARN > 5 s; the same picture (layout unchanged across small cuts) WARN > 5 s.
+- buildup: cut rate, short-term LUFS, the bed under the voice and motion over thirds of 0..payoff: WARN when the last
+  third sags on 2+ of them.
+- payoff: story.json `payoff`, else the edit's endAfter event, else the death, else the line the `twist` quotes, else
+  the biggest hit in the last 40% (a guess: never blocks). BLOCK: no sound hit and no line on it, no picture change
+  within 0.3 s, or the end > 1.8 s after it / any line after it (> 2.3 s for a text payoff). WARN 1.0-1.8 s
+  (1.8-2.3 s text). A reveal that lands only on a voice line is a WARN (add a sting).
+- length: BLOCK < 30 s, WARN > 45 s for a story.
+Calibrated on the published stories (2026-11-10): story_runaway (the owner's "good") passes clean; sheep_stares
+("hooked but delivery bad") blocks on a silent payoff; respawn_tax ("mid") blocks on a 2.7 s tail.
 
 ## The review (an independent agent; give it this skill and the Short)
 Work in this order, and stop collecting once you have the verdict's evidence:

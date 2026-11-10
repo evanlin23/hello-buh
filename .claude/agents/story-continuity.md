@@ -70,3 +70,8 @@ numbered findings, each with the line or shot id (or output time and frame), wha
 cheapest fix (a line edit, a bible entry, a shot change, a re-record). Separate **breaks** (a viewer would notice once at
 full speed, or an owner rule) from **notes** (everything else; they never block). When the bible is missing a row the
 build will need, write the row yourself in the finding so the builder can paste it.
+
+## Missing engine features (owner, 2026-11-10)
+A shot the renderer can't draw yet is a feature to build, not a reason to rewrite the scene: build it
+(docs/engine_features.md) and merge it to main once existing Shorts render unchanged. Only a feature that would take
+more than ~2 h gets staged around, and it's logged in docs/engine_requests.md.

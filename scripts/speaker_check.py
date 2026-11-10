@@ -42,7 +42,6 @@ THIN_MARGIN = 0.06      # ...and THIN when its own voice wins by less than this
 WORDS_MATCH = 0.6       # transcript vs script letters (align.py's threshold)
 SIMILAR_COS = 0.88      # two cast references this alike...
 SIMILAR_ST = 2.5        # ...and within this many semitones of each other: too alike
-SAMPLE_FILE = {"milo": "buh"}   # voices/samples/ file names that differ from the cast id (Milo was Buh)
 
 
 # ---- the voice encoder (Resemblyzer's GE2E LSTM: 40 mel bands -> 3x256 LSTM -> 256-d, L2-normed) ----
@@ -185,15 +184,20 @@ def word_check(spoken, heard):
 
 # ---- the check ----
 
+# What each voices/samples/ file really holds (made 2026-11-10 with the first roster; voices/cast.json has been recast
+# since, so the cast ids no longer say the voice). Update this when the samples are made again. The Kid's sample is
+# left out: it was pitch-lifted (asetrate), which changes the timbre.
+SAMPLE_VOICES = {"narrator": "Erinome", "buh": "Achird", "elder": "Algenib", "smith": "Orus", "stranger": "Charon",
+                 "villain": "Schedar", "mom": "Sulafat", "friend": "Fenrir"}
+
+
 def library_refs(voices):
-    """Gemini voice -> [embedding] from voices/samples/<id>.mp3 for every library character with that voice."""
-    lib = json.loads((ROOT / "voices" / "cast.json").read_text())
+    """Gemini voice -> [embedding] of the voices/samples/ takes in that voice (they anchor a speaker with few lines)."""
     out = {}
-    for cid, c in lib.items():
-        p = ROOT / "voices" / "samples" / f"{SAMPLE_FILE.get(cid, cid)}.mp3"
-        if cid.startswith("_") or c.get("voice") not in voices or c.get("post") or not p.exists():
-            continue   # a `post` filter (the Kid's pitch lift) changes the timbre: its sample isn't the raw voice
-        out.setdefault(c["voice"], []).append(embed(trim(load(p))))
+    for f, v in SAMPLE_VOICES.items():
+        p = ROOT / "voices" / "samples" / f"{f}.mp3"
+        if v in voices and p.exists():
+            out.setdefault(v, []).append(embed(trim(load(p))))
     return out
 
 

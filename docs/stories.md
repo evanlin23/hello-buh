@@ -140,14 +140,61 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   (`color` in voices/cast.json: the narrator white, Milo Steve's cyan, the elder amber...), with a small name tag
   over its first line; the narrator's key words keep the story's key colour, a character's key words are underlined
   in its own colour (docs/voices.md "Caption colours").
+- **Owner, 2026-11-10 (in the Dog on the Hill session): "the start should be delivered all at once right?" / "we can
+  have pauses later, the opening must be in one breath"; "is milo a woman?"; "what does the day one mean bro".**
+  - Line 1 is one quick breath, no internal pause (`./hb pace` blocks one over 0.2 s). Re-take it; trimming silence
+    doesn't fix a dragged word.
+  - **No "..." anywhere in a script.** Gemini turns an ellipsis into a stop and drops dramatic lines into a breathy
+    whisper. Use short sentences, and direct dramatic lines "full volume, excited".
+  - A kid narrator is **Leda** (cast `child`), unshifted (the +2 semitone filter warbles). Erinome reads as an adult
+    woman: she's the storyteller, never a kid.
+  - Endings explain themselves: a sting the viewer has to decode doesn't land ("Day one." failed, "Day one. Again."
+    worked).
+  - TTS models (2026-11-10): gemini-2.5-flash/pro-preview-tts hit the shared daily quota first; gemini-3.8-flash-tts
+    works (keep bracketed directions short or it reads them aloud); gemini-3.1-flash-tts-preview can refuse with SAFETY.
+    Listening checks: gemini-3.5-flash (retry 502/503).
+- **Owner, 2026-11-10: "sure 4.5 is fine bc that matches the best. also, we should have absolutely no pauses in like
+  the first few seconds right, bc those are the most critical? Like the other this dog has been sitting there has a
+  brief pause right in the first few seconds."** The narrator talks at ~4.5 words/s while speaking (runaway: 4.6).
+  No "..." in any line spoken in the first 5 s (Gemini turns it into a half-second stop: Dog on the Hill's L01 had
+  0.53 s and L02 0.54 + 0.71 s), and the gap between opening lines stays at one breath (runaway's 0.37-0.40 s).
+  `./hb pace` blocks a pause inside an opening line over 0.35 s or a gap between opening lines over 0.6 s.
+- **Owner, 2026-11-10: "why does the narrator keep whispering? is the narrator the child or like a woman? i think it
+  should be like a child most of the time right? like bubbly happy" and "the audio must land like start talking the
+  first moment the video starts, same with the visual hook".** The whispering was ours: the library narrator was
+  directed "a little hushed", Good Boy's "earnest and hushed", and Gemini leans soft and breathy unless told otherwise.
+  So: **the default narrator is a kid (about 10-12), bubbly, happy and fast**, curious, a little funny, deadpan on
+  the absurd lines, and only drops to scared (never whispery) for real danger. Every style prompt says "fast,
+  bright, energetic; not whispery, breathy or soft". The first word lands on frame 0-5 and the first frame is already
+  moving (`./hb pace` blocks a first word after 0.4 s or a frozen first 0.3 s for stories, and warns on narration
+  slower than runaway's pace).
+- **Owner, 2026-11-10: "we can keep posting, to get more data."** The 5 older-style stories stay in the upload queue.
+  On caption colours: "It should generally just "match" the vibe of the character thats supposed to be speaking." And on
+  craft: "everything should be the best and optimized in the process" (format, font, music, sound effects, grade,
+  audio, sets, characters, lighting). Each of those has a measured standard in the `cinematic-style` skill, with the
+  evidence behind it; change a standard only with evidence (our numbers or what works on top channels).
+- **Owner, 2026-11-10, on engine gaps (no sitting, no drink pose, no off-hand item, chests not showing their contents,
+  campfire smoke): "why cant we build the renderer out to allow all of these? and more when they come up?"** So the
+  story decides and the engine follows. When a script needs something the renderer can't draw yet, **build the feature**
+  (docs/engine_features.md: poses, particles, block-entity animations, GUI screens, mob animations), test it so existing
+  Shorts render unchanged, and merge it to main for every story. Don't rewrite the scene around the gap. Only if the
+  feature would take more than about 2 hours: stage around it this time, and log it in docs/engine_requests.md so it
+  gets built next.
 - **Owner, 2026-11-10, on voices: "maybe we should have a narrator?" … then, on narrator-first with a few character
   lines: "i think that makes the most sense yeah".** Our best story (runaway: one first-person narrator, 3.2 subs per
   1k views, the channel's best) and the cinematic pilots (several voices: "mixed up", one read as ASMR) point the same
   way. So: **one first-person narrator (Milo, or whoever's POV it is) carries the whole story**; other characters get
   at most 1-3 short lines, only at key beats (the hook, the turn, the payoff), each in a clearly different voice
   (age/sex/pitch apart) and a colour-coded caption. No back-and-forth dialogue scenes. The narrator is never hushed
-  for warmth (see the ASMR rule); he's quick, curious and a little funny, and goes quiet only for fear. Pending the
-  narration research (docs/research/narration_2026-11-10.md), which may tune the details.
+  for warmth (see the ASMR rule); he's quick, curious and a little funny, and goes quiet only for fear. The narration research
+  (docs/research/narration_2026-11-10.md: 26 channels, ~11.5k Shorts) backs it: first-person narrator channels had a
+  3.4M median per Short and 3.09 views per subscriber, against 0.45-0.56 for dialogue-only or multi-voice. So, tuned:
+  **other characters' lines are quoted by the narrator with a "said" tag by default** (Mom said, "He's just shy.");
+  a second voice is allowed for at most 1-3 punchlines of 6 words or fewer, only while that character is on screen,
+  very different from the narrator (other age or sex), never two extra voices of the same sex, never exposition.
+  The narrator: young male, fast and deadpan, about **4.5 words per second** (runaway is 4.4), never whispery or breathy:
+  say so in the Gemini style prompt. Line 1 is the title: an absurd premise stated flatly in first person, then quick
+  escalating examples, the twist, the loop. Test A vs A+ (one extra voice) on the next 4 stories.
 - **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like
   sensual asmr."** Read every script for how it could be misheard, out of context, by a stranger scrolling past. A
   hushed, breathy first-person voice plus lines about obeying, sitting when told, waiting all day for someone, or a
@@ -203,7 +250,9 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
   distance), never a few blocks on a flat cleared plain. `clearSet`'s wide flat clearing is the look to avoid: pick a
   site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
-  or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog.
+  or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog. The set library
+  (`lib/sets`, catalog and anchors in docs/sets.md) does both: `sets.findSite`, `sets.place(ctx, 'cottage', {...})`
+  (14 dressed pieces that land on the terrain and return door/bed/window anchors), `sets.vanilla` and `sets.dress`.
 - **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
   good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
   overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its
