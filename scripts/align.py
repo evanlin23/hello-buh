@@ -111,6 +111,10 @@ def main(d, only=None):
         wj[lid] = [[w, round(a, 3), round(b, 3)] for w, a, b in heard]
         spoken = [s for _, s in voice.chunks(ln)]
         ct = chunk_times(spoken, heard)
+        # the first chunk starts with the first word heard, even when the script and Whisper spell it differently
+        # ("Twenty-five" heard as "25" matched nothing, and the line's first caption waited for the next word)
+        if ct and heard and heard[0][1] < ct[0][0]:
+            ct[0][0] = round(heard[0][1], 3)
         said, got = norm(" ".join(spoken)), norm(" ".join(w for w, _, _ in heard))
         match = difflib.SequenceMatcher(None, said, got).ratio()
         m = meta["lines"][lid]
