@@ -247,3 +247,9 @@ the dog is the narrator, but the hook needs both of them in frame.
 - candidate framings with `./hb still --cam`:
   - the yard: `33.0,2.3,15.8,-90,-4` at 7.63 s, with and without `--day-time 13000`;
   - Dog Hill, on render/story_dog_hill's recording at 12.78 s: `6.5,1.9,2.2,75,-4` and `-4,3.5,-4,-135,-14`.
+
+## Addendum (lead, 2026-11-10): premise-breaking set details and shot variety
+
+Already covered as blockers above: the old shots show the dog fleeing Buh (against "He RUNS. I FOLLOW."), the wolf
+swimming (against "I POPPED up on the BEACH"), and the bones stamp at Dog Hill on day 3400. For the new shot list:
+alternate sizes at every cut, and no two POVs back to back. Each run of POV lines resets with one camera shot.

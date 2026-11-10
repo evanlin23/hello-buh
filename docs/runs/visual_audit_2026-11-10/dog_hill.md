@@ -149,3 +149,27 @@ empty plateau (tested: `--cam -1.9,3.4,-1.3,-127,-24` and `-4.5,6,-3.3,-127,-30`
 - **`./hb owner` glitch check counts hidden far-away entities** (lib/hb/owner.js): the village villagers 40-60 blocks away,
   behind the hill, are flagged as teleports (their 2-block jumps are probably the server's sparse position updates at that
   range). Skip entities that are hidden or > 32 blocks away, as `describe` already knows.
+
+## Addendum (lead, 2026-11-10): premise-breaking set details and shot variety
+
+**What the old recording shows against the lines:**
+- **The red collar: pass** (collar 14).
+- **Rain and thunder: pass** (rain at tick 86, thunder at 107, bolts at 113 and 122). But the bolts are off frame (F3).
+- **Moving:** the dog sits for the whole recording until L12. Pass: "hasn't MOVED".
+- **No creeper and no thrown stick** in the old recording, against L02 "Not for CREEPERS" and L04 "Kids THROW STICKS".
+  The vNext stunt adds both (`stunts/story_dog_hill.js:215` creeper, `:240` stick). Verify both are in frame on their
+  words after the re-record.
+- **BLOCKER:** the creeper is moved with a raw `tp('cr', ...)` every tick (line 217). That is the owner's "mobs
+  teleporting" class and fails `./hb motion`. Walk it with `K.actor`.
+- **"one EMPTY patch of GRASS": BLOCKER (B6 above).** The patch isn't unique because the bare area around the dog is
+  6x4.
+- **"NOBODY here OWNS him"** while the wolf is `tame: true` with a collar. That is correct: a tame wolf whose owner is
+  gone, which is the twist.
+
+**Shot variety:**
+- Five same-size cuts at the same place: 5.75 s and 6.95 s (WS → WS → WS: rain, storm, zombies, bone), 14.65 s
+  (FS → FS), 45.35 s (MS → MS) and 49.20 s (FS → FS).
+- Fix (camera):
+  - make L02's rain/thunder/creeper/zombie chunks alternate WS / FS / WS / CU;
+  - make `patch` a high top-down of the patch, not another FS of the dog;
+  - make `sit` a wide on the hill, the two figures small against the sky.

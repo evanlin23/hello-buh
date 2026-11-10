@@ -162,3 +162,41 @@ Pass, apart from E1:
 - the music disc lies flat on the grass;
 - the warden emerges and roars as in vanilla;
 - the Darkness fog and pulse match vanilla (the 22-tick fade, the 0.45 pulse).
+
+## Addendum (lead, 2026-11-10): premise-breaking set details and shot variety
+
+The lead asked for two more checks: anything on screen that contradicts the narration (a BLOCKER), and no two
+consecutive shots at the same framing.
+
+**B4. Bare stone in an "all carpet" village** (owner: "whyisnt the well covered in carpet too").
+- The bare grey on screen:
+  - the well's cobble rim and the cobble ring around it (L06, L11, L12, L15: 32 % of the L06 frame is cobblestone);
+  - the big stone-brick staircase on the plaza's north side, bare except for a cyan trim (L06, L10, L11, L15);
+  - the stone-brick house fronts behind Mom (L05, L13).
+- That contradicts L01 ("COVERED in nine thousand CARPETS") and L02 ("The stairs? CARPET.").
+- Fix (dress):
+  - carpet every horizontal surface in view, including the stair treads (carpet sits on stair blocks) and the rim's
+    top;
+  - keep exactly one bare stone block: the rim block he jumps onto in L15. Strip its carpet on screen in L11 while he
+    works (or leave it bare where the lid came off), so that "off the CARPET, onto the STONE" is the only grey in a
+    carpet world;
+  - face the house fronts in wool, or frame Mom against the wool door frame.
+- The lead has already sent this to the light_sleeper session.
+
+**B5. 28-42 s: three near-identical POVs at the well (lead note).**
+- Shots 10, 12 and 14 (L11, L12, L14 in vNext) are all first person, standing at the well facing south. The jukebox
+  fills a third of the frame in two of them. `./hb framing`: 44 %, 65 % and 69 % of the frame is within 3 blocks.
+- The night doesn't read as night: the plaza is lit evenly. Subject luma at L10/L11 is 0.46 with lavender-white
+  carpet everywhere, which reads as dusk.
+- Fix (camera):
+  - L11: a low camera shot from the north-east (the boy kneeling at the rim, the jukebox going down, the lanterns
+    behind him);
+  - L12: keep the crane;
+  - L14: a reverse wide from the south-east corner, with the east doorways, the bell box and the lantern pools, so the
+    Darkness pulse visibly eats the lanterns.
+- Fix (look): one POV at most in that run. Night plaza at `{ mood: 'eerie_night', grade: { exposure: 1.2 }, vignette:
+  0.45 }`, so the lantern pools give the frame its shape (docs/look.md: dark gaps between lights).
+
+**Same-framing cuts** (`./hb framing`):
+- L07 → L08: FS → FS at the same place. Make L08 a medium.
+- L12 → L13 → L14: alternates, but all are "close on the set". Fixed by B5.

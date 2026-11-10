@@ -138,3 +138,20 @@ is kept), the palisade continuing both sides so it reads as a gate at 300 px.
 No confirmed engine bugs in this story. The owner-check blockers (GUI view motion, whip) are stunt-side and the kit
 now prevents both. The continuity tool's item-frame "appears" warning (N4) looks like a visibility false positive
 through a window, not a renderer pop-in.
+
+## Addendum (lead, 2026-11-10): premise-breaking set details and shot variety
+
+**Totems: pass.**
+- The recording holds 38 item frames: 31 with `totem_of_undying`, one empty (the plant), plus bottles, a crossbow and
+  a bowl. That matches L04 "THIRTY-ONE totems ... ONE frame still EMPTY".
+- Keep them readable: the B1 light and camera fixes are what make 31 countable.
+
+**Other premise checks:**
+- L05 "the VILLAGERS throw him BREAD": the bread throw happens after he has left frame (F4). This contradicts the line:
+  promote to BLOCKER. Fix: hold the throw while he is in frame.
+- L07 "A whole CHEST" of ominous bottles: the chest GUI must show a full chest of them.
+- Nothing on screen contradicts "Raid THIRTY-ONE? He won ALONE." in the vNext shots.
+
+**Shot variety:**
+- FS → FS at the same place at 28.85 s (s09 → s10). Make s10 a medium.
+- 36.65-45.0 s is two POVs back to back (shots 14-15, 8.3 s first person): cut a camera shot between them.
