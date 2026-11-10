@@ -75,6 +75,7 @@ def resplit(sd):
             for w in re.split(r"[\s-]+", t):
                 n = norm(w)
                 if n:
+                    # (Whisper writes numbers as digits and may expand contractions: "I've" -> "I have")
                     out.append({"thirtyseven": "37", "twelve": "12", "porkchops": "pork"}.get(n, n))
             return out
         same = lambda a, b: a == b or (len(a) > 2 and len(b) > 2 and (a.startswith(b[:3]) or b.startswith(a[:3])))
@@ -100,8 +101,15 @@ def resplit(sd):
                 return (t0 + t1) / 2
             f = 240; m = (i1 - i0) // f
             e = np.abs(x[i0:i0 + m * f]).reshape(m, f).mean(1)
-            return (i0 + int(np.argmin(e)) * f + f // 2) / SR
-        cutsq = [quiet(words[spans[k][1]][2] - 0.05, words[spans[k + 1][0]][1] + 0.1) for k in range(len(spans) - 1)]
+            # among the frames within 6 dB of the quietest, the one nearest the gap's middle (the quietest alone was
+            # once the soft "s" starting the next word: "Skeletons" heard as "Gelatin's")
+            ok = np.nonzero(e <= e.min() * 2.0 + 1e-7)[0]
+            mid = ((t0 + t1) / 2 * SR - i0) / f
+            return (i0 + int(ok[np.argmin(np.abs(ok - mid))]) * f + f // 2) / SR
+        # (a wide window: Whisper's word times can sit 0.2-0.3 s off the real pause, Good Boy's Leda take)
+        pk = float(np.abs(x).max()) or 1.0
+        silent = lambda t: float(np.abs(x[max(0, int(t * SR) - 120):int(t * SR) + 120]).max(initial=0)) < pk * 0.01
+        cutsq = [quiet(min(words[spans[k][1]][2] - 0.05, words[spans[k][1]][1] + 0.1), max(words[spans[k + 1][0]][1] + 0.3, words[spans[k][1]][2] + 0.1)) for k in range(len(spans) - 1)]
         segs = []
         for k, (a, b) in enumerate(spans):
             # margins (owner rule, docs/stories.md): >= 80 ms before the first word, >= 200 ms after the last, but never
@@ -117,7 +125,13 @@ def resplit(sd):
                 s1 = cutsq[k]
             if k and words[a][1] - prev_end < 0.4:
                 s0 = cutsq[k - 1]
-            if k == 0 and words[a][1] < 2.0:
+            # a quiet point that is real silence (under -40 dB of the take's peak) wins over Whisper's word times, which
+            # can sit 0.2 s early (Good Boy L01: "times" cut at -28 dB while the pause was 0.2 s later)
+            if k + 1 < len(spans) and silent(cutsq[k]) and cutsq[k] >= words[b][2] - 0.05:
+                s1 = cutsq[k]
+            if k and silent(cutsq[k - 1]) and cutsq[k - 1] <= words[a][1] + 0.25:
+                s0 = cutsq[k - 1]
+            if k == 0 and words[a][1] < 2.0:   # (trim a direction read aloud off the take first: it is not a lead-in)
                 s0 = 0.0   # a take's first line keeps what's said just before it (the farmer's laugh)
             if k + 1 == len(spans):
                 s1 = len(x) / SR   # and its last line runs to the take's own fade (Whisper's last word ends early)
