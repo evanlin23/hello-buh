@@ -1,0 +1,167 @@
+{
+ "name": "brand_avatar",
+ "about": "Avatar: Buh (Steve) and the creeper, close, backlit. brand/make_avatar_rec.py puts a pair at set + [100.5, 1, -45.5] facing east and one at [-130.5, 1, -45.5] facing west; the castle is between them.",
+ "rec": "work/brand/avatar.rec.json.gz",
+ "stunt": "brand_art",
+ "drop": [
+  {
+   "ticks": [
+    10,
+    653
+   ],
+   "near": [
+    0,
+    0
+   ],
+   "r": 12
+  }
+ ],
+ "clips": [
+  {
+   "id": "golden",
+   "dur": 0.2,
+   "t0": 92.2,
+   "rate": 0.05,
+   "day": 12000,
+   "shot": {
+    "at": [
+     104.3,
+     1.95,
+     -45.5
+    ],
+    "look": [
+     100.5,
+     2.5,
+     -45.5
+    ],
+    "fov": 25,
+    "drift": 0
+   },
+   "look": {
+    "letterbox": 0,
+    "grade": {
+     "lift": [
+      0.03,
+      0.012,
+      0.0
+     ],
+     "gamma": [
+      0.96,
+      1.0,
+      1.06
+     ],
+     "gain": [
+      1.16,
+      1.0,
+      0.8
+     ],
+     "sat": 1.15,
+     "contrast": 0.14,
+     "exposure": 1.0
+    },
+    "rays": 1.0,
+    "bloom": 0.7,
+    "vignette": 0.5,
+    "dof": {
+     "aperture": 0.5,
+     "focus": 3.8
+    }
+   }
+  },
+  {
+   "id": "moon",
+   "dur": 0.2,
+   "t0": 92.2,
+   "rate": 0.05,
+   "day": 13200,
+   "shot": {
+    "at": [
+     -134.3,
+     1.95,
+     -45.5
+    ],
+    "look": [
+     -130.5,
+     2.5,
+     -45.5
+    ],
+    "fov": 25,
+    "drift": 0
+   },
+   "look": {
+    "letterbox": 0,
+    "grade": {
+     "lift": [
+      0.0,
+      0.01,
+      0.035
+     ],
+     "gamma": [
+      1.08,
+      1.03,
+      0.95
+     ],
+     "gain": [
+      1.0,
+      1.08,
+      1.22
+     ],
+     "sat": 1.0,
+     "contrast": 0.12,
+     "exposure": 1.8
+    },
+    "rays": 0.8,
+    "bloom": 0.9,
+    "vignette": 0.5,
+    "dof": {
+     "aperture": 0.5,
+     "focus": 3.8
+    }
+   }
+  },
+  {
+   "id": "dawn",
+   "dur": 0.2,
+   "t0": 92.2,
+   "rate": 0.05,
+   "day": 23300,
+   "shot": {
+    "at": [
+     -134.3,
+     1.95,
+     -45.5
+    ],
+    "look": [
+     -130.5,
+     2.5,
+     -45.5
+    ],
+    "fov": 25,
+    "drift": 0
+   },
+   "look": {
+    "letterbox": 0,
+    "grade": "dawn",
+    "rays": 1.0,
+    "bloom": 0.7,
+    "vignette": 0.5,
+    "dof": {
+     "aperture": 0.5,
+     "focus": 3.8
+    }
+   },
+   "fogSea": {
+    "y0": 66.5,
+    "y1": 68.6,
+    "layers": 8,
+    "density": 0.5,
+    "fade": 3
+   }
+  }
+ ],
+ "title": {
+  "title": "",
+  "at": 0
+ },
+ "cues": {}
+}

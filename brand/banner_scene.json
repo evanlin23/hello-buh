@@ -1,0 +1,174 @@
+{
+ "name": "brand_banner",
+ "about": "Banner backgrounds from THE KEEP recording (scripts/cinematic.py --sheet). Castle centre = set + [0, 1, -45]; ground y 68; sun sets in -x.",
+ "rec": "renders/keep/lapse_castle.rec.json.gz",
+ "stunt": "cinematic_keep",
+ "drop": [
+  {
+   "ticks": [
+    10,
+    653
+   ],
+   "near": [
+    0,
+    0
+   ],
+   "r": 12
+  }
+ ],
+ "clips": [
+  {
+   "id": "sunset",
+   "dur": 0.2,
+   "t0": 92.2,
+   "rate": 0.05,
+   "day": 12100,
+   "shot": {
+    "at": [
+     140,
+     30,
+     -46
+    ],
+    "look": [
+     0,
+     4,
+     1
+    ],
+    "fov": 60,
+    "drift": 0
+   },
+   "fogSea": {
+    "y0": 66.5,
+    "y1": 70.5,
+    "layers": 10,
+    "density": 0.6,
+    "fade": 3
+   },
+   "look": {
+    "letterbox": 0,
+    "grade": {
+     "lift": [
+      0.03,
+      0.012,
+      0.0
+     ],
+     "gamma": [
+      0.96,
+      1.0,
+      1.06
+     ],
+     "gain": [
+      1.16,
+      1.0,
+      0.8
+     ],
+     "sat": 1.25,
+     "contrast": 0.22,
+     "exposure": 0.82
+    },
+    "rays": 1.0,
+    "bloom": 0.7,
+    "dof": false,
+    "shade": {
+     "haze": 0.08
+    }
+   }
+  },
+  {
+   "id": "fogsea",
+   "dur": 0.2,
+   "t0": 92.2,
+   "rate": 0.05,
+   "day": 23500,
+   "shot": {
+    "at": [
+     -150,
+     24,
+     -46
+    ],
+    "look": [
+     0,
+     22,
+     -100
+    ],
+    "fov": 62,
+    "drift": 0
+   },
+   "fogSea": {
+    "y0": 66.5,
+    "y1": 75.5,
+    "layers": 10,
+    "density": 0.7,
+    "fade": 3
+   },
+   "look": {
+    "letterbox": 0,
+    "grade": "dawn",
+    "rays": 1.0,
+    "bloom": 0.7,
+    "dof": false
+   }
+  },
+  {
+   "id": "moon",
+   "dur": 0.2,
+   "t0": 92.2,
+   "rate": 0.05,
+   "day": 13150,
+   "shot": {
+    "at": [
+     -150,
+     16,
+     -46
+    ],
+    "look": [
+     0,
+     24,
+     -100
+    ],
+    "fov": 62,
+    "drift": 0
+   },
+   "fogSea": {
+    "y0": 66.5,
+    "y1": 72.0,
+    "layers": 10,
+    "density": 0.7,
+    "fade": 3,
+    "night": 0.3
+   },
+   "look": {
+    "letterbox": 0,
+    "grade": {
+     "lift": [
+      0.0,
+      0.01,
+      0.035
+     ],
+     "gamma": [
+      1.08,
+      1.03,
+      0.95
+     ],
+     "gain": [
+      0.95,
+      1.05,
+      1.25
+     ],
+     "sat": 1.0,
+     "contrast": 0.12,
+     "exposure": 1.35
+    },
+    "rays": 0.8,
+    "bloom": 0.9,
+    "dof": false,
+    "cloudNight": 0.25
+   }
+  }
+ ],
+ "title": {
+  "title": "",
+  "at": 0
+ },
+ "cues": {}
+}
