@@ -18,8 +18,9 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
 
 | id | name (what Gemini sees) | Gemini voice | caption colour | direction (`profile`) | Kokoro fallback | from |
 |---|---|---|---|---|---|---|
-| `narrator` | Narrator | Puck (no post) | `#FFFFFF` white | a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, full volume; not whispery | am_adam | Good Boy audition: "kid puck is fine" (2026-11-10) |
+| `narrator` | Narrator | Leda (no post) | `#FFFFFF` white | Pip's voice: a bubbly kid of about nine, fast, bright, energetic; not whispery | am_adam | Dog on the Hill v3 (owner: "a lot a lot better" than kid Puck) |
 | `pip` | Pip | Leda | `#FFFFFF` white | Pip, Dog on the Hill's kid narrator (kept: the owner liked it) | am_adam | Dog on the Hill v3 |
+| `puck_kid` | Narrator (kid Puck, alt) | Puck | `#FFFFFF` white | a twelve-year-old boy telling his friends a funny story (the alternative narrator) | am_adam | Good Boy audition |
 | `storyteller` | Storyteller | Despina | `#D9C8FF` pale lilac | a woman in her thirties telling a friend a story late at night, low and close, plain, never an announcer | bf_emma | the old narrator (was Erinome) |
 | `milo` | Milo | Achird | `#4FD8E6` Steve's cyan | Milo, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Milo |
 | `elder` | Elder | Charon | `#F0A845` robe amber | an old man in his seventies, tired, low and a little rough in the throat, slow and quiet; has seen this before | bm_george | the trailer's Highkeeper (recast from Algenib) |

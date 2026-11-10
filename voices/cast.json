@@ -2,15 +2,15 @@
  "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ, or a tempo/formant-preserving rubberband shift for the narrator; never asetrate (docs/voices.md \"Realism\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\").",
  "narrator": {
   "name": "Narrator",
-  "voice": "Puck",
+  "voice": "Leda",
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
-  "profile": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences.",
+  "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
   "post": "",
   "fallback": "am_adam",
-  "from": "Good Boy narrator audition, owner 2026-11-10: \"kid puck is fine\" (Leda was 'so high pitched and annoying'; wants a kid 'like the roblox shorts but more refined')",
-  "notes": "No post filter, no tempo or pitch change. Measured ~235 Hz median on the audition (240-330 per line in a story), ~3.4 words/s while speaking. The short breath between sentences is what lets the splitter cut cleanly (voice_edges.py: 0 cut). No ellipses.",
-  "model_hint": "single-speaker requests; gemini-3.1-flash-tts-preview first, gemini-2.5-flash-preview-tts on 429 (same voice)"
+  "from": "Pip, Dog on the Hill voices v3: owner 'i kinda like the pip here', 'what about pip? i liked the audio i sent earlier', and vs kid Puck: 'i like this one a lot a lot better'",
+  "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
+  "model_hint": "gemini-3.8-flash-lite-tts, single speaker, all narrator lines in one request separated by blank lines, the profile as a short bracketed prefix (Pip v3); see voices/recipes/pip.md"
  },
  "storyteller": {
   "name": "Storyteller",
@@ -132,5 +132,17 @@
   "from": "Pip, Dog on the Hill voices v3 (owner 2026-11-10: 'i kinda like the pip here'; the 1.5x audition takes were 'too sped up')",
   "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
   "model_hint": "gemini-3.8-flash-lite-tts worked for Pip (single speaker, all narrator lines in one request, separated by blank lines, the profile as a short bracketed prefix); 3.1-flash-tts with the structured prompt is the default in tts.py"
+ },
+ "puck_kid": {
+  "name": "Narrator (kid Puck, alt)",
+  "voice": "Puck",
+  "color": "#FFFFFF",
+  "color_why": "white: an alternative narrator voice",
+  "profile": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences.",
+  "post": "",
+  "fallback": "am_adam",
+  "from": "Good Boy narrator audition, owner 2026-11-10: \"kid puck is fine\" (Leda was 'so high pitched and annoying'; wants a kid 'like the roblox shorts but more refined')",
+  "notes": "No post filter, no tempo or pitch change. Measured ~235 Hz median on the audition (240-330 per line in a story), ~3.4 words/s while speaking. The short breath between sentences is what lets the splitter cut cleanly (voice_edges.py: 0 cut). No ellipses. Owner later: 'er that does not sound right'; Pip is 'a lot a lot better'. Alternative only.",
+  "model_hint": "single-speaker requests; gemini-3.1-flash-tts-preview first, gemini-2.5-flash-preview-tts on 429 (same voice)"
  }
 }
