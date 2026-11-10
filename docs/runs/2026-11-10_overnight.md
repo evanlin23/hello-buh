@@ -191,3 +191,11 @@ For the owner's morning. Newest at the bottom.
     the death screen. The blocker is resolved.
   - Sent to the owner. **Owner decision: publish.** To publish: `node scripts/publish.js story_light_sleeper --pass`
     from claude/story-light-sleeper.
+- 12:46 UTC:
+  - Names in the Woods: all 15 lines voiced, speaker check clean. Drift blocks 4 narrator lines, and the narrator's
+    locked model (3.8-flash-lite) is at 429, so it waits for the 08:00 UTC reset rather than mixing models; a
+    check-in is scheduled for 08:07 UTC tomorrow.
+    - Renderer additions on main: Mom's apple pose, ROSA holding the apple and potion, nameplates in camera shots,
+      the item-name popup.
+    - The trial render's pace blockers (late sound, a 3.6 s tail) are fixed for the re-record.
+  - Gold for the Portal: the first cut is 57.6 s; it's being restructured to about 45 s.
