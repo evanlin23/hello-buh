@@ -1,0 +1,10 @@
+{
+ "name": "story_nitwit",
+ "stunt": "story_nitwit",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/42762053913",
+ "source": "c1feaa4",
+ "queued": "2026-11-10T05:25:31Z",
+ "finished": "2026-11-10T05:35:51Z",
+ "mp4": "renders/out/story_nitwit.mp4"
+}
