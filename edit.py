@@ -52,6 +52,52 @@ def big(im):
     return im.resize((im.width * GUI, im.height * GUI), Image.NEAREST)
 
 
+class gui_scale:
+    """`with gui_scale(4): container_png(...)`: draw with another GUI scale (edit.guiScale / edit.chatScale, opt-in for
+    phone-readable container screens and chat); None keeps the scale as it is."""
+    def __init__(self, s):
+        self.s = int(s) if s else None
+
+    def __enter__(self):
+        global GUI
+        self.old = GUI
+        if self.s:
+            GUI = self.s
+
+    def __exit__(self, *a):
+        global GUI
+        GUI = self.old
+
+
+POTION_TINTED = ("potion", "splash_potion", "lingering_potion", "tipped_arrow")
+
+
+def potion_icon(jar, name, color):
+    """A potion's inventory icon as the item model draws it: layer0 `item/potion_overlay` multiplied by the
+    potion_contents colour, layer1 the bottle on top (a tipped arrow: the head tinted under the shaft). Unscaled.
+    The colour comes from the recording (lib/harness.js, lib/potion_color.js); older recordings carry none."""
+    under, over = ("item/tipped_arrow_head", "item/tipped_arrow_base") if name == "tipped_arrow" else ("item/potion_overlay", f"item/{name}")
+    ov = sprite(jar, under).copy()
+    r, g, b = (color >> 16) & 255, (color >> 8) & 255, color & 255
+    px = ov.load()
+    for y in range(ov.height):
+        for x in range(ov.width):
+            pr, pg, pb, pa = px[x, y]
+            px[x, y] = (pr * r // 255, pg * g // 255, pb * b // 255, pa)
+    top = sprite(jar, over)
+    out = Image.new("RGBA", top.size, (0, 0, 0, 0))
+    out.alpha_composite(ov.resize(top.size, Image.NEAREST) if ov.size != top.size else ov)
+    out.alpha_composite(top)
+    return out
+
+
+def tint_of(it):
+    """The recorded potion colour of a hotbar / container slot ([name, count, glint, damage, max, 0xRRGGBB]), or None."""
+    if isinstance(it, (list, tuple)) and len(it) > 5 and isinstance(it[5], int) and it[0] in POTION_TINTED:
+        return it[5]
+    return None
+
+
 def emoji_png(ch):
     code = "-".join(f"{ord(c):x}" for c in ch if ord(c) != 0xFE0F)
     cache = HERE / "work" / "emoji" / f"{code}.png"
@@ -202,6 +248,8 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
             elif name:   # no texture named after it: the item definition's own model (a compass, a crossbow)
                 d = item_def_icon(jar, name)
                 icon = big(d) if d is not None else None
+        if name and tint_of(it) is not None:   # a potion with its recorded colour (new recordings only)
+            icon = big(potion_icon(jar, name, tint_of(it)))
         if icon is not None:
             g = it[2] if isinstance(it, (list, tuple)) and len(it) > 2 else None
             if isinstance(g, tuple) and g[0] == "glint":   # enchanted stack (hud_ticks puts the tick here)
@@ -822,7 +870,7 @@ def syschat_png(jar, lines, path):
     bottom = BAND + GAME_H
     for n_, (text, col) in enumerate(reversed(lines)):
         y_ = bottom - (49 + 9 * n_) * GUI
-        ImageDraw.Draw(img).rectangle((0, y_, 320 * GUI, y_ + 9 * GUI), fill=(0, 0, 0, 128))
+        ImageDraw.Draw(img).rectangle((0, y_, min(320 * GUI, W), y_ + 9 * GUI), fill=(0, 0, 0, 128))   # (wider than the view at chat scale 4+)
         draw_text(img, jar, text, 2 * GUI, y_ + GUI, color=col)
     img.save(path)
 
@@ -841,6 +889,9 @@ def container_png(jar, state, path):
     rows = max(1, min(6, int(state.get("rows") or 3)))
     shulker = "shulker_box" in str(state.get("type", ""))
     ih = 166 if shulker else 114 + rows * 18
+    if 176 * GUI > W or ih * GUI > GAME_H:   # a guiScale too big for this screen: the largest that fits (vanilla caps it too)
+        with gui_scale(min(W // 176, GAME_H // ih)):
+            return container_png(jar, state, path)
     ox, oy = (W - 176 * GUI) // 2, BAND + (GAME_H - ih * GUI) // 2
     if shulker:
         img.alpha_composite(big(sprite(jar, "gui/container/shulker_box").crop((0, 0, 176, 166))), (ox, oy))
@@ -862,7 +913,7 @@ def container_png(jar, state, path):
         if not it:
             continue
         ix, iy = ox + sx * GUI, oy + sy * GUI
-        icon = item_icon(jar, it[0])
+        icon = big(potion_icon(jar, it[0], tint_of(it))) if tint_of(it) is not None else item_icon(jar, it[0])
         if icon is not None:
             if len(it) > 2 and it[2]:
                 icon = glint_icon(jar, icon, 0)
@@ -1206,6 +1257,8 @@ def main():
     ap.add_argument("--loop", help='true or SECONDS: the last 0.25 s dissolve into the first frame')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 1.5, "after": 0, "text": ...} finale preview in front (1.2-1.5 s)')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
+    ap.add_argument("--gui_scale", type=int, help="GUI scale of container screens (edit.guiScale; default 3, vanilla's auto scale here; 4 is vanilla's largest at this window): phone-readable chests and barrels")
+    ap.add_argument("--chat_scale", type=int, help="GUI scale of the chat lines (edit.chatScale; default --gui_scale, else 3): a story's payoff line ('Buh left the game') readable on a phone")
     ap.add_argument("--item_names", help='JSON {item id: name}: draw the selected item\'s name over the hotbar when it changes (Gui.renderSelectedItemName); {} for title-cased ids')
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
     ap.add_argument("--start_at", help="EVENT:OFFSET - start OFFSET seconds after a timeline event (overrides --start)")
@@ -1489,7 +1542,8 @@ def main():
                     a, b = a_ - args.start, min(b_ - args.start, 1e6)
                     if b <= 0 or b <= a:
                         continue
-                    container_png(jar, st, tmp / f"cont{ci}.png")
+                    with gui_scale(args.gui_scale):
+                        container_png(jar, st, tmp / f"cont{ci}.png")
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"cont{ci}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[ct{ci}]")
                     last, n_in = f"ct{ci}", n_in + 1
@@ -1502,7 +1556,8 @@ def main():
                     a, b = a_ - args.start, min(b_ - args.start, 1e6)
                     if b <= 0 or b <= a:
                         continue
-                    syschat_png(jar, lines_, tmp / f"chat{si}.png")
+                    with gui_scale(args.chat_scale or args.gui_scale):
+                        syschat_png(jar, lines_, tmp / f"chat{si}.png")
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"chat{si}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sc{si}]")
                     last, n_in = f"sc{si}", n_in + 1

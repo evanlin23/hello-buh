@@ -257,6 +257,27 @@ if (MOTION_FIXES) {
   }
   if (n) console.log(`motion fixes: ${n} cast member${n > 1 ? 's' : ''} moved with a cut land on it`)
 }
+// K.blink (lib/story.js): a teleport that is the story (vanilla: a tamed wolf teleports to its owner). An entity landing
+// on a `teleport_ok` mark's spot jumps there with no client lerp, at any distance (TamableAnimal.teleportTo: no
+// particles, the wolf just appears); `${id}|${tick}` of each landing. The player's own blink is a camera jump (isCutStep).
+// Recordings without the marks: empty, unchanged.
+const BLINK = new Set()
+const BLINK_SELF = []
+{
+  const MO = require('./lib/hb/motion')
+  const ok = MO.teleportOk(rec.timeline)
+  for (const m of ok) if (m.self) BLINK_SELF.push(Math.round(m.tick))
+  if (ok.some(m => !m.self)) {
+    const prev = new Map()
+    for (const tick of [...ENT.keys()].sort((a, b) => a - b)) {
+      for (const [id, row] of ENT.get(tick)) {
+        const p = prev.get(id); prev.set(id, row)
+        if (p && p[0] === tick - 1 && Math.hypot(row[3] - p[3], row[4] - p[4], row[5] - p[5]) > 0.5 && MO.blinked(ok, row)) BLINK.add(`${id}|${tick}`)
+      }
+    }
+    if (BLINK.size) console.log(`blink: ${BLINK.size} on-screen teleport${BLINK.size > 1 ? 's' : ''} (K.blink) snap with no lerp`)
+  }
+}
 // The server sends mob moves every few ticks, so recorded positions are steps (a creeper "glided"
 // in 0.4-block hops). The vanilla client eases toward each new position over 3 ticks
 // (Entity.lerpTo / lerpSteps); do the same, per tick, before the per-frame interpolation.
@@ -267,7 +288,7 @@ if (MOTION_FIXES) {
       if (row[2] === 'falling_block' || row[2] === 'item' || row[2] === 'moving_block') continue
       let c = cur.get(id)
       if (!c || c.last !== tick - 1) c = { x: row[3], y: row[4], z: row[5], tx: row[3], ty: row[4], tz: row[5], steps: 0 }
-      if (Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz) > 4) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }   // teleport: no easing
+      if (Math.hypot(row[3] - c.tx, row[4] - c.ty, row[5] - c.tz) > 4 || (BLINK.size && BLINK.has(`${id}|${tick}`))) { c.x = c.tx = row[3]; c.y = c.ty = row[4]; c.z = c.tz = row[5]; c.steps = 0 }   // teleport (or a K.blink): no easing
       else if (row[3] !== c.tx || row[4] !== c.ty || row[5] !== c.tz) { c.tx = row[3]; c.ty = row[4]; c.tz = row[5]; c.steps = 3 }
       if (c.steps > 0) { c.x += (c.tx - c.x) / c.steps; c.y += (c.ty - c.y) / c.steps; c.z += (c.tz - c.z) / c.steps; c.steps-- }
       // rotation: lerpTo / lerpHeadTo ease yaw and head yaw over the same 3 steps (wrapped), so a
@@ -331,7 +352,7 @@ function entitiesAt (t, mesher) {
   const out = []
   for (const [id, ra] of a) {
     let rb = b.get(id) || ra
-    if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4) rb = ra   // teleport: hold, then snap on the next tick
+    if (Math.hypot(rb[3] - ra[3], rb[4] - ra[4], rb[5] - ra[5]) > 4 || (BLINK.size && BLINK.has(`${id}|${i + 1}`))) rb = ra   // teleport (or a K.blink): hold, then snap on the next tick
     const L = (k) => ra[k] + (rb[k] - ra[k]) * f
     const pos = { x: L(3), y: L(4), z: L(5) }
     // EntityRenderer.getPackedLightCoords samples at getLightProbePosition = the eye (0.85 x height
@@ -907,11 +928,15 @@ function aimAt (t) {
   }
   return null
 }
+// The pulse's phase (lib/darkness.js): on the absolute recording tick, or from a story's `darkness_phase` marks
+// (K.darkPeak: a peak on the word). No marks: exactly as before.
+const DARKNESS = require('./lib/darkness')
+const DARK_PHASE = DARKNESS.phaseMarks(rec.timeline)
 function darknessAt (t) {
   if (!DARK.length) return { darkBlend: 0, darkScale: 0 }
   const k = Math.max(0, Math.floor(t)), u = t - k
   const b = (DARK[k] || 0) * (1 - u) + (DARK[k + 1] ?? DARK[k] ?? 0) * u
-  return { darkBlend: b, darkScale: Math.max(0, Math.cos(t * Math.PI * 0.025) * 0.45 * b) }
+  return { darkBlend: b, darkScale: Math.max(0, DARKNESS.pulse(t, DARK_PHASE) * 0.45 * b) }
 }
 // a warden's roar: the tick each run of the roar flag starts (the animation runs from there)
 const ROAR_START = new Map()   // id -> [[startTick, endTick]]
@@ -1094,10 +1119,18 @@ const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : LOOK
 // torches/lanterns light what's around their holder (look.heldLight: false turns that off). Two more look keys work
 // with it: moonlight (0.2..1: the night's darkest sky factor, vanilla 0.2, for nights that read black) and
 // torchGlow (x vanilla's block light factor 1.5). Off (every published Short): the light stays baked, unchanged.
-const SHADER_LIGHT = process.env.SHADER_LIGHT ? process.env.SHADER_LIGHT === '1' : !!(LOOK_RAW && LOOK_RAW.smoothLight)
-const MOONLIGHT = SHADER_LIGHT ? Number((LOOK_RAW && LOOK_RAW.moonlight) || 0) : 0
-const HELD_LIGHT = SHADER_LIGHT && process.env.HELD_LIGHT !== '0' && !(LOOK_RAW && LOOK_RAW.heldLight === false)
-if (SHADER_LIGHT) { setLightAttr(true); if (LOOK_RAW && LOOK_RAW.torchGlow) setBlockFactor(Number(LOOK_RAW.torchGlow)) }
+const LOOK_SHADER_LIGHT = process.env.SHADER_LIGHT ? process.env.SHADER_LIGHT === '1' : !!(LOOK_RAW && LOOK_RAW.smoothLight)
+// Lightning lights the world without look.smoothLight too (dog_hill: under the default look only the sky tinted, so a
+// storm's bolts lit nothing). A recording with a bolt (a lightning_bolt entity or a `lightning` mark) turns the shader
+// light on for the flash alone: the world's light is the baked light's to the pixel (same lightmap, run per vertex), no
+// held lights, no moonlight or torchGlow (those stay look keys). On for rec.engine >= 3 (new recordings),
+// stunt.lightningLight: true or LIGHTNING_LIGHT=1 for an older one (=0: off). Older recordings: unchanged.
+const LIGHTNING_LIGHT = require('./lib/lightning_light').lightningLight({ engine: rec.engine || 0, bolts: BOLTS.length, lookShader: LOOK_SHADER_LIGHT, stunt: STUNT_MOD, env: process.env })
+if (LIGHTNING_LIGHT) console.log(`lightning light: ${BOLTS.length} bolt${BOLTS.length > 1 ? 's' : ''} light the world (shader light, flash only)`)
+const SHADER_LIGHT = LOOK_SHADER_LIGHT || LIGHTNING_LIGHT
+const MOONLIGHT = LOOK_SHADER_LIGHT ? Number((LOOK_RAW && LOOK_RAW.moonlight) || 0) : 0
+const HELD_LIGHT = LOOK_SHADER_LIGHT && process.env.HELD_LIGHT !== '0' && !(LOOK_RAW && LOOK_RAW.heldLight === false)
+if (SHADER_LIGHT) { setLightAttr(true); if (LOOK_SHADER_LIGHT && LOOK_RAW && LOOK_RAW.torchGlow) setBlockFactor(Number(LOOK_RAW.torchGlow)) }
 // held light sources (the light level of the item's block, as the LambDynamicLights mod and Bedrock do; vanilla
 // Java has no held light): main or off hand, players and mobs
 const LIGHT_ITEMS = { torch: 14, soul_torch: 10, lantern: 15, soul_lantern: 10, redstone_torch: 7, glowstone: 15, sea_lantern: 15, jack_o_lantern: 15, shroomlight: 15, lava_bucket: 15, glow_berries: 14, end_rod: 14, campfire: 15, soul_campfire: 10, ochre_froglight: 15, verdant_froglight: 15, pearlescent_froglight: 15, beacon: 15, conduit: 15, magma_block: 3, glow_ink_sac: 6, blaze_rod: 10, nether_star: 10 }
@@ -1624,6 +1657,7 @@ const CUT_TICKS = (rec.timeline || []).filter(e => e.event === 'cut' || e.event 
 const isCutStep = (i, a, b) => {
   const d = Math.hypot(b[1] - a[1], b[2] - a[2], b[3] - a[3])
   if (d > 4) return true
+  if (BLINK_SELF.length && d > 0.8 && BLINK_SELF.some(c => i + 1 >= c && i + 1 <= c + 4)) return true   // K.blink('self'): a jump, never a glide
   if (!CUT_TICKS.some(c => i + 1 >= c && i + 1 <= c + 4)) return false
   let dy = Math.abs(b[4] - a[4]) % (2 * Math.PI); if (dy > Math.PI) dy = 2 * Math.PI - dy
   return d > 0.8 || dy > 0.35 || Math.abs(b[5] - a[5]) > 0.35
