@@ -132,6 +132,10 @@ key words in the story's colour (in a v2 story a character's words are in that c
 underlined; docs/voices.md "Caption colours"), centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
+**The current rules, de-duplicated by stage with their checks: `docs/STANDARDS.md` (`./hb rules`).** The house rules
+below are the dated history (newest first, some superseded); a new owner rule goes at the top here and into
+STANDARDS.md in the same commit.
+
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
 - **Owner, 2026-11-10, comparing Pip (Dog on the Hill v3) with kid Puck: "i like this one a lot a lot better" (Pip);
