@@ -133,7 +133,10 @@
     "torch",
     "cake",
     "milk_bucket",
-    "egg"
+    [
+      "egg",
+      67
+    ]
   ],
-  "hotbar_note": "Buh's bar (the only player). No POV shot in this story, so it never shows; kept the same throughout if a POV is ever added. Story tools first (bone, lead, name tag, his hut's door, crafting table, torch), then the ridiculous ones: a whole cake, a milk bucket, an egg."
+  "hotbar_note": "Buh's bar (the only player). No POV shot in this story, so it never shows; kept the same throughout if a POV is ever added. Story tools first (bone, lead, name tag, his hut's door, crafting table, torch), then the ridiculous ones: a whole cake, a milk bucket, 67 eggs (owner)."
 }
