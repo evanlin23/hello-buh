@@ -920,6 +920,11 @@ export class EntityLayer {
       // display, turned about y by the spin (render.js)
       const r = await this.itemFactory({ special: extra.special, display: extra.special.display.ground })
       if (r) { obj = new THREE.Group(); obj.add(r.obj); mat = r.mat }
+    } else if (name === 'item' && extra && extra.dropped && this.itemFactory) {
+      // a dropped item (motion fixes, render.js): its extruded model with the 'ground' display, standing, turned
+      // about y by the spin (ItemEntityRenderer), not a camera-facing sprite (which drew it upside down)
+      const r = await this.itemFactory(extra.dropped)
+      if (r) { obj = new THREE.Group(); obj.add(r.obj); mat = r.mat }
     } else if (/^(ender_pearl|snowball|egg|item|splash_potion|lingering_potion|experience_bottle|firework_rocket)$/.test(name)) {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       // thrown potions: the bottle plus potion_overlay tinted with the potion colour (ThrownItemRenderer)
@@ -927,6 +932,9 @@ export class EntityLayer {
       if (t) {
         mat = new THREE.SpriteMaterial({ map: t.tex, alphaTest: 0.1, fog: true })
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
+        // the entity textures load unflipped (the models' UVs run top-down), so a sprite showed the item upside down;
+        // ThrownItemRenderer draws it upright (motion fixes only: older Shorts stay as published)
+        if (this.motionFixes) obj.scale.y *= -1
       }
     } else {
       const l = look(name, extra, this.regs, this.engine)
@@ -1115,7 +1123,7 @@ export class EntityLayer {
         if (r.offObj && r.offObj.mat) r.offObj.mat.color.setRGB(...LL)
         continue
       }
-      if ((s.name === 'falling_block' && s.extra && s.extra.spin) || (s.name === 'item' && s.extra && s.extra.special)) { r.obj.rotation.set(0, s.yaw, 0); continue }
+      if ((s.name === 'falling_block' && s.extra && s.extra.spin) || (s.name === 'item' && s.extra && (s.extra.special || s.extra.dropped))) { r.obj.rotation.set(0, s.yaw, 0); continue }
       if (r.obj.isSprite || s.name === 'falling_block') continue
       // BodyRotationControl: the body is dragged so the head never turns more than 75° from it
       // (a fast turn had heads spun round while bodies still faced away: staring_villagers review)
