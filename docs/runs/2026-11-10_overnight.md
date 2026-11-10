@@ -163,3 +163,9 @@ For the owner's morning. Newest at the bottom.
   - The Good Boy "black square" was the cast's waiting-room roof, now hidden with `hideBoxes`.
 - Good Boy: review round 2 left 2 blockers (the sky square, zombie smoke at the reveal), both fixed. A final
   independent check of those two spans plus `hb panel` follows the re-render. Held for the owner.
+- 10:47 UTC:
+  - **Thirty-One Raids is published** (videos 2f286e3, 45.0 s). Independent review: 0 blockers. Pip narrates;
+    Grandpa has 2 own-voice punchlines; real sit, drink and chest screen. Sent to the owner; it's on the review page.
+  - Light Sleeper: review round 1 found an edit-only fix (end S11 near 31.4 s, start the S12 crane on "ECHO") plus a
+    trim toward 45 s; it's being re-edited.
+  - Started the Gold for the Portal build (session_019n1tKFps1v8fgz5VZis629).
