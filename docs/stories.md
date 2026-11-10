@@ -132,6 +132,15 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (Good Boy session), on the narrator: "this voice is so high pitched and annoying lowkey"**
+  (Leda, ~350 Hz) / **"it should still be like a kid/child? idk"** / **"kinda like the roblox shorts but more
+  refined?"** / after five auditions: **"kid puck is fine"**. So: a kid narrator that isn't squeaky: Gemini Puck,
+  directed "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not
+  squeaky; full volume, not whispery or breathy. Take a short breath between sentences." (~235 Hz, natural tempo,
+  no post filter). Audition 3-5 voices on the same two lines before voicing a whole story.
+- **Owner, 2026-11-10: "why does it be like ive tried ot leave this guy 37 ti*? something wierd gets cut off"**: a
+  line cut at Whisper's word end clipped "times". Cut at the quietest point between lines (`voice_check.py
+  --resplit`), and ask for a breath between sentences so a quiet point exists; check with `scripts/voice_edges.py`.
 - **Owner, 2026-11-10 (Good Boy session): Leda is "so high pitched and annoying"; wants a kid "like the roblox shorts but
   more refined"; picked "kid puck is fine".** The narrator is now **Puck** directed as a twelve-year-old boy (quick,
   excited, mid-pitch, not squeaky, full volume, a short breath between sentences), no post filter. Pip/Leda is retired
