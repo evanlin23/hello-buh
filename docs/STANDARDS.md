@@ -57,9 +57,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    colours one key word per chunk, but the voice doesn't hit every CAPS word (a cold listener heard that as "a flat
    drumbeat"). Character lines of about 6 words or fewer are spoken by the character in their own voice (00).
    Check: cold listener, audio only, one listen. r:r919ea3
-0000. **The narrator recipe (owner's pick)**: Pip as heard in Dog on the Hill v2: Gemini Leda, "a bubbly village kid,
-   about nine: fast, bright, energetic; not whispery, breathy or soft", gemini-3.8-flash-lite-tts, natural tempo, no
-   speed-up, no pitch shift, no pause cap; performed continuously, re-taken never trimmed; the take gate allows
+0000. **The narrator recipe (owner's pick)**: Pip as heard in Dog on the Hill v2: Gemini Leda on gemini-3.8-flash-lite-tts,
+   one single-speaker request "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing
+   story; not whispery, breathy or soft]" + the lines in plain sentence case (`plain_say`: no CAPS, no ellipses);
+   natural tempo, no speed-up, no pitch shift, no pause cap; performed continuously, re-taken never trimmed; the take gate allows
    sentence breaks up to 0.6 s (cast `max_pause`), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
    earlier picks are `narrator_sleepover` (k4, rubberband 1.1x +1 st) and `narrator_roblox` (Orus x1.45), history only.
    Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c r:r754946
