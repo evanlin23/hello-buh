@@ -1,0 +1,104 @@
+{
+ "lines": {
+  "L15": {
+   "who": "Buh",
+   "text": "Hey BUDDY! SORRY, got busy.",
+   "dur": 4.74,
+   "onset": 0.21,
+   "end": 4.4,
+   "chunks": [
+    [
+     0.21,
+     1.822
+    ],
+    [
+     1.822,
+     4.4
+    ]
+   ],
+   "captions": [
+    "Hey BUDDY!",
+    "Sorry, got BUSY."
+   ],
+   "with": [
+    "Buh"
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "beat": "L15",
+   "offset": 0.0
+  },
+  "L17": {
+   "who": "Buh",
+   "text": "Sit, BOY. Be right BACK.",
+   "dur": 3.76,
+   "onset": 0.07,
+   "end": 3.46,
+   "chunks": [
+    [
+     0.07,
+     1.397
+    ],
+    [
+     1.397,
+     3.46
+    ]
+   ],
+   "captions": [
+    "Sit, BOY.",
+    "Be right BACK."
+   ],
+   "with": [
+    "Buh"
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "beat": "L17",
+   "offset": 0.0
+  }
+ },
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "sr": 24000,
+ "gap": 0.25,
+ "models": {
+  "Buh": "gemini-3.1-flash-tts-preview"
+ },
+ "voice_takes": "beat",
+ "beats": {
+  "L15": {
+   "lines": [
+    "L15"
+   ],
+   "file": "beat_L15.wav",
+   "dur": 4.74,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": []
+  },
+  "L17": {
+   "lines": [
+    "L17"
+   ],
+   "file": "beat_L17.wav",
+   "dur": 3.76,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.1-flash-tts-preview",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": []
+  }
+ },
+ "total": 9.0
+}
