@@ -6,7 +6,7 @@
   "L01": {
    "text": "I've tried to leave this guy thirty-seven times.",
    "who": null,
-   "dur": 3.23,
+   "dur": 2.99,
    "onset": 0.11,
    "end": 2.74,
    "chunks": [
@@ -108,11 +108,11 @@
    "text": "I tried at night. Through the wheat. I even swam!",
    "who": null,
    "dur": 4.265,
-   "onset": 0.5,
+   "onset": 0.49,
    "end": 3.78,
    "chunks": [
     [
-     0.5,
+     0.49,
      0.74
     ],
     [
@@ -246,11 +246,11 @@
    "text": "I can't even open a door.",
    "who": null,
    "dur": 1.81,
-   "onset": 0.16,
+   "onset": 0.15,
    "end": 1.78,
    "chunks": [
     [
-     0.16,
+     0.15,
      0.54
     ],
     [
@@ -351,29 +351,7 @@
     "LOST it!"
    ],
    "aligned": "whisper-base.en"
-  },
-  "L14": {
-   "text": "good boy!",
-   "who": "Sam",
-   "dur": 1.4,
-   "onset": 0.34,
-   "end": 0.78,
-   "chunks": [
-    [
-     0.34,
-     0.46
-    ],
-    [
-     0.46,
-     0.78
-    ]
-   ],
-   "captions": [
-    "GOOD",
-    "BOY!"
-   ],
-   "aligned": "whisper-base.en"
   }
  },
- "total": 37.27
+ "total": 35.53
 }

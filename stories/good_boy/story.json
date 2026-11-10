@@ -6,7 +6,7 @@
  "logline": "Someone keeps trying to leave an old man and keeps ending up right back at his side; only the camera knows why.",
  "question": "why does he keep ending up next to this guy??",
  "premise": "The narrator has tried to leave a man 37 times. Every time he gets twelve blocks away he is standing next to him again. He's fed raw porkchops, sits when told, everyone is tall, he can't open doors, he waits by the door all day, skeletons run from him, and a dog is always exactly where he is.",
- "twist": "He's the man's dog: a tamed wolf. Tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons and attack whatever hurts their owner. First-person shots hide it (a wolf's eye height); every camera shot shows the wolf at the man's side. The reveal: the man yells a cheerful GOOD BOY with a head pat; the camera pulls out of his head; a wolf with a red collar barks and wags. Played physical and funny (owner, 2026-11-10: never tender or whispered).",
+ "twist": "He's the man's dog: a tamed wolf. Tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons and attack whatever hurts their owner. First-person shots hide it (a wolf's eye height); every camera shot shows the wolf at the man's side. The reveal (no line: owner 2026-11-10, the picture says it): a head pat; the camera pulls out of his head; a wolf with a red collar barks and wags. Played physical and funny (owner, 2026-11-10: never tender or whispered).",
  "key_color": "#FFB84A",
  "gap": 0.1,
  "voice": {
@@ -111,13 +111,6 @@
    "id": "L13",
    "text": "And I just / LOST it!",
    "request": "n1"
-  },
-  {
-   "id": "L14",
-   "who": "Sam",
-   "text": "GOOD / BOY!",
-   "say": "Good boy!",
-   "request": "s1"
   }
  ],
  "payoff": "bark"

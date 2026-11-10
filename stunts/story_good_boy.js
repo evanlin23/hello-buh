@@ -43,8 +43,8 @@ module.exports = {
   // height is known: see shotsFor()
   shots: {},
   edit: { caption: CAPTION, red: 'guy', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0',
-    // the reveal's sound: a whoosh as the camera leaves his head (L14 is the 13th line mark), a hit on the bark
-    sfx: [['whoosh', 'line', { nth: 12, gain: 0.45 }], ['impact', 'bark', { gain: 0.5 }]],
+    // the reveal's sound: a whoosh as the camera leaves his head (the reveal mark, on the cut), a hit on the bark
+    sfx: [['whoosh', 'reveal', { nth: 0, gain: 0.45 }], ['impact', 'bark', { gain: 0.5 }]],
     punch: [['bark', 0, 0.12]], flash: [['bark', 0, 0.55]] },   // a push-in on the bark: the payoff's picture hit (./hb pace)
 
   async setup (ctx) {
@@ -330,22 +330,25 @@ module.exports = {
     })
     K.stop(); K.actors.delete('zom')
 
-    // L14: "GOOD BOY!" Cheerful and loud, a pat on the head, and the camera pulls out of my head: a wolf with a red
-    // collar, wagging, barking. Hard cut (owner: the payoff is physical and funny, never tender)
+    // The reveal, no line (owner 2026-11-10: "I lowkey dont think we need the 'Good boy'... both are implied"; STANDARDS
+    // 1.3): a pat on the head, and the camera pulls out of my head: a wolf with a red collar, wagging, hearts, a bark.
+    // Hard cut on the bark (the payoff is physical and funny, never tender)
     K.self({ sitting: true, angry: false }, SIT_EYE)
     await putGuy(38.7, 16.2, 90, 40)
     this.cast[GUY].setControlState('sneak', true)
     await bot.waitForTicks(3)
     K.shot('reveal')
     await K.cut(37.5, 16.2, P(38.7, eyeY(1.25), 16.2), H + 1)
-    await line('L14', async (k) => {
+    ctx.mark('reveal')
+    for (let k = 0; k < 22; k++) {
       if (k < 8) say('/kill @e[type=experience_orb]')   // (if mob_drops is a no-op)
       if (k === 0 || k === 6) swingGuy()   // the pat
       if (k === 4) K.self({ wag: true })
       if (k === 10) ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 7 })
       guy.pitch = 40 + Math.sin(k / 3) * 4; placeGuy()
       look(k, 0, Math.sin(k / 2) * 0.03)
-    }, 0.35)
+      await bot.waitForTicks(1)
+    }
     ctx.sound('entity.wolf.ambient', 1, 1.05)   // the bark: the hard cut lands on it
     ctx.mark('bark')
     for (let k = 0; k < 10; k++) { look(k, 0, k < 3 ? 0.12 : 0); await bot.waitForTicks(1) }
