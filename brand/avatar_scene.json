@@ -2,7 +2,7 @@
  "name": "brand_avatar",
  "about": "Avatar: Buh (Steve) and the creeper, close, backlit. brand/make_avatar_rec.py puts a pair at set + [100.5, 1, -45.5] facing east and one at [-130.5, 1, -45.5] facing west; the castle is between them.",
  "rec": "work/brand/avatar.rec.json.gz",
- "stunt": "brand_art",
+ "stunt": "brand_castle",
  "drop": [
   {
    "ticks": [

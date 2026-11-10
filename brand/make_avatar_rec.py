@@ -1,4 +1,4 @@
-"""THE KEEP's recording plus the avatar's two characters: a mannequin named Buh (Steve's skin, stunts/brand_art.js)
+"""THE KEEP's recording plus the avatar's two characters: a mannequin named Buh (Steve's skin, stunts/brand_castle.js)
 and a creeper, shoulder to shoulder, standing still. Writes work/brand/avatar.rec.json.gz.
 
     python3 brand/make_avatar_rec.py

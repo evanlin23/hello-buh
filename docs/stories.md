@@ -7,21 +7,88 @@ camera, and that is the format's best trick: the viewer never sees who "I" am (p
 narrator turns out to be the creeper).
 
 ## Make one
+**Write it first:** `/story-write` (`.claude/skills/story-write/SKILL.md`) takes a story from ten pitches to a
+script with a voiced cast, a shot list and a continuity bible, checked by the `story-critic` and `story-continuity`
+agents and a cold reader, before anything is built. Craft guide: `docs/story_craft.md`.
+The build steps below are `./hb` commands, with time estimates, in `docs/agent_guide.md`. Before any render, `./hb check`,
+`./hb framing` (shot sizes: the owner's "too zoomed in") and `./hb continuity` (time, cast and props across cuts) read
+the recording in seconds, and `./hb describe <stunt> L05` tells you what a moment shows without rendering it.
 ```bash
-# 1. the script: stories/<name>/story.json (lines, chunks, key words), see the pilot
+# 1. the script: stories/<name>/story.json (lines, chunks, key words), see stories/put_back
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
 ~/.hb-tts/bin/python scripts/voice.py stories/<name>        # -> stories/<name>/voice/<id>.wav + voice.json
-# 3. the scenes: stunts/story_<name>.js, one scene per line (copy stunts/story_runaway.js)
-STUNT=story_<name> ./run.sh                                  # -> out/story_<name>.mp4
+# 3. the scenes: start from the template, then fill in one set per scene and one block per line
+cp stunts/_story_template.js stunts/story_<name>.js          # replace every <name>
+STUNT=story_<name> REC_CHECK_STRICT=1 ./run.sh             # -> out/story_<name>.mp4; stops before the render on a rec_check blocker
+#    (or record here and render on Actions in 12 slices: docs/worker.md "Render on GitHub Actions")
 # 4. QA (docs/qa.md) as for every Short, then
 node scripts/publish.js story_<name> --pass
 ```
+**Run rec_check before rendering; fix blockers by re-recording.** Story Shorts took 4-12 review rounds, each a full
+render, and most findings were in the recording: the aim snapping a tick after a cut, the sneak dropping for a tick
+at a cut (a `stopAll()` before the teleport: the eye height bobs 0.2 blocks into every shot), two jumps in one cut,
+a time-of-day change a tick off its cut, held pauses, a long tail. `run.sh` prints the report after the recording;
+by hand: `python3 scripts/rec_check.py story_<name>` (docs/worker.md has the list of checks).
+
 Re-run `voice.py` after any script change (`--only L03,L07` redoes single lines), then re-run the stunt: the scene
 lengths come from voice.json, so a new voice means a new recording.
 
+**Use the kit, don't re-write it.** `stunts/_story_template.js` is a working skeleton (setup, a cast, two lines, the
+ending) on `lib/story.js`. Every story so far hand-rolled the same helpers (`c`, `A`, `vil`, `go`, `setTime`, `ease`,
+`yawOf`, `tp`, `groan`, `setMeter`, a wrapped `line`, a wrapped `cut`); they are all in the kit now:
+
+| want | kit |
+|---|---|
+| build in `setup` | `const { c, A, P, mob, vil } = setKit(ctx, { X, Z, F })`: `mob(type, dx, dy, dz, yaw, tags, nbt)`, `vil(dx, dz, yaw, prof, tags, { type, y })` (NoAI, silent, invulnerable, persistent) |
+| a clearing | `clearSet(ctx, A, 64, top)` (also sweeps the gravel and sand a cut hill leaves hanging: `clearHanging`), `plainsBiome`, `resendChunks`, `house` |
+| a cut | `await K.cut(dx, dz, target, dy, { time, during, after, stop })`, or `K.cutTo(dx, y, dz, target)` with an absolute y. Arrives aimed; waits for the landing (position and angle: a cut on the spot works); the old shot keeps swaying while it lands; movement keys released (sneak kept); `time` changes the light on the cut's own frame |
+| a line | `await K.line(id, (k, at, n) => {...}, extra, { tail })`; `K.preroll(10, fn)` for motion already going on the first frame; `K.T(id)` = a line's ticks |
+| the camera | `K.look(k)` every tick (sway on the recording clock), `K.base = K.aim(p)`, `K.turnTo(from, p, u)` (eased, clamped) |
+| the cast | `K.actor(tag, {x, z, yaw})` (a mob /tp'd every tick from the object; `K.step(a, dx, dz)` walks and faces it, `K.bury(tag)`), `K.tp(tag, dx, dy, dz, yaw)`, `K.flee(tag, speed)`, tag idle mobs `warm` (nudged every tick), `K.every(fn)` for ambient motion |
+| the rest | `K.go(on)`, `K.ctl(key, on)`, `K.stop()`, `K.setTime(n)` (no 4-tick stall), `K.setMeter(v)`, `K.groan()`, `K.knockback(() => attackerPos)` (mineflayer drops hit knockback on 1.21.11), `K.dig(block)` (vanilla dig speed; mineflayer's is a bare hand's), `ease`, `mcYaw` |
+
+## Cinematic stories (the default look from 2026-11-10)
+Owner, 2026-11-10: "I feel like the cinematic should be the default." The movie engine (docs/movie_engine.md) is on
+main, so a story stunt gets it by exporting a few fields; nothing else in the pipeline changes (voice.py, edit.py
+--story, rec_check, preview.sh, render_on_actions.sh all work as before). Pilot: `story_good_boy`.
+```js
+look: { grade: {...} | 'dawn' | 'night', bloom: 0.5, vignette: 0.38, grain: 0.02, dof: { aperture: 0.9 }, shadows: true, rays: 0.5 },
+shots: { pov: { pov: true }, est: { path: [[0, dx, dy, dz], [2.4, ...]], lookPath: [...], ease: true }, ... },
+self: { model: 'wolf', eye: 0.68, extra: { tame: true, collar: 14 } },   // only for a narrator who isn't a player
+hud: false,                                                               // ...who has no HUD either
+```
+- **The look on every frame** (POV too): grade, bloom, vignette, grain, sun shadows, god rays. No letterbox (the game
+  view is the frame). Depth of field applies to camera shots. Costs ~0.25 s a frame at 1080: fine on Actions.
+- **Camera shots** with `K.shot(name)` (lib/story.js): from this tick the picture is `stunt.shots[name]`, a pure
+  function of time, so a camera is re-tuned and re-rendered without re-recording (`scripts/shot_sheet.py` for one
+  frame per shot in ~30 s, `scripts/try_shots.py` for candidates). `K.shot('pov')` goes back to first person.
+  Camera shots hide the HUD and draw the narrator from outside (the player with `cast.self`'s skin, or
+  `stunt.self.model`). Specs: `path`/`lookPath` (cranes, pull-outs), `follow` + `offset` + `lag`, `orbit`,
+  `at` + `look` (+ `push`), the auto-framed `two`/`single`/`ots` (movie_engine.md has them all).
+- **Which shots, when** (from the pilot):
+  - POV carries the narrator's experience and the mystery (what "I" see, the low eye, the clues that live in the
+    first person). Camera shots carry the world and the truth: the establishing crane, the follow, the night wide.
+  - **The camera can show what the narrator can't.** In good_boy every camera shot shows the "dog" beside the guy:
+    that's the narrator. The POV hides who I am, the cameras show it all along, and the reveal is the first shot
+    that starts inside my head and pulls out (`reveal`: a path whose first key is the POV eye). Rewatchable.
+  - An establishing shot after a run of POV lines resets the viewer (where we are, what time it is); a camera shot
+    on a story beat (the zombie hits him) reads better than POV, which can't see the hit.
+  - Keep camera shots 1-3 s, one per line at most; the 9:16-ish game view (1080x1011) is nearly square: frame two
+    subjects side by side or one big; keep the faces in the upper half (the captions sit at 70%).
+  - Cuts between POV and camera shots are free (the camera director switches on the mark's tick), but the cast
+    still has to be in place before the shot's first frame: move them in the line before, or with a >64-block hop.
+- **rec_check** skips its POV checks (cuts, held, turns, set) inside camera shots and says so; check those cameras
+  with `LINT=1 node render.js work/<name>.rec.json` (camera in a block, subject hidden or too small, frozen shots).
+- **A narrator who isn't a player** (`stunt.self`): `eye` puts the POV camera at that height (a wolf 0.68, sitting
+  0.5), `model`/`extra` draw them in camera shots; `K.self({ sitting: true }, 0.5)` changes it on a word.
+  The wolf model is Java-accurate (sitting, tail, tame/angry eyes, dyed collar); other mobs draw from their
+  converted models.
+- **Channel art and thumbnails** from any recording: `scripts/still.py REC out.png --at S --size WxH --shot '{...}'
+  [--look '{...}'] [--time N] [--ss 2]`, text with `scripts/channel_art.py`.
+
 ## Setup (once per container)
 ```bash
-apt-get install -y espeak-ng                     # Kokoro's phonemizer for unknown words
+apt-get update && apt-get install -y espeak-ng   # Kokoro's phonemizer for unknown words (a fresh container's apt lists are empty)
 python3.11 -m venv ~/.hb-tts
 ~/.hb-tts/bin/pip install --extra-index-url https://download.pytorch.org/whl/cpu torch kokoro soundfile numpy
 ```
@@ -33,7 +100,7 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 |---|---|---|
 | script | `stories/<name>/story.json` | `lines`: `{"id": "L03", "text": "I tell / the farmer / his wheat / looks GREAT."}`. ` / ` splits caption chunks (2-3 words), CAPS words are key words (drawn in `key_color`, read lower-case so Kokoro doesn't spell them). `gap`: seconds of air after each line. |
 | narrator | `scripts/voice.py` | Kokoro `am_adam`, tempo 1.03, sped up 1.45x (pitch up with it): the blocky-stories narrator, ~290 wpm. Writes each line's wav and `voice.json` (each line's `dur`, and every chunk's start/end from Kokoro's word timestamps). |
-| kit | `lib/story.js` | `storyLines(dir)`: `line(id).dur`, `line(id).at(k)` (tick where chunk k starts), `gap`. `storyKit(ctx, S, {X, Z, F})`: `cut(dx, dz, target)` (a teleport that arrives already aimed), `line(id, scene, extra)`, `look(k)` (aim + sway, zero on a cut's first tick), `turnTo`, `flee(tag, speed)`, `aim`, `P`. Set helpers: `clearSet(ctx, A, 64)` (a wide flat clearing), `plainsBiome(ctx, A)` + `resendChunks(ctx, X, Z)` (one grass colour; mineflayer needs the chunks again), `house(...)` (a real lit room). |
+| kit | `lib/story.js` | `storyLines(dir)`: `line(id).dur`, `line(id).at(k)` (tick where chunk k starts), `gap`. `storyKit(ctx, S, {X, Z, F})`: cuts, lines, the camera, the cast (table under "Make one"). `setKit` for `setup`. Set helpers: `clearSet(ctx, A, 64)` (a wide flat clearing, hanging gravel swept), `plainsBiome(ctx, A)` + `resendChunks(ctx, X, Z)` (one grass colour; mineflayer needs the chunks again), `house(...)` (a real lit room). |
 | scenes | `stunts/story_<name>.js` | sets every scene up front in `setup` (all mobs NoAI, tagged per scene), then for each line: a cut (teleport), `ctx.mark('line', { id })`, and a per-tick scene function for exactly `dur + gap` seconds. Actions land on a chunk with `at(k)` ("They SLAM" closes the door on that word). |
 | edit | `edit.py --story stories/<name>` (from `edit.story`) | lays each line's wav on its `line` mark (snapped to the camera cut), draws the captions (`scripts/story_track.py`), and mixes: voice -15 LUFS, game -27, song bed -31, master corrected to -14 LUFS. Optional: a rule meter (story.json `"meter": {"label": "VILLAGERS"}` + `ctx.mark('meter', { value })`), white flashes (`ctx.mark('flash')`). |
 | stunt options | top level of the stunt module | `hideHand: true` (no first-person hand: a narrator who isn't Steve), `time`, `weather` ('rain'/'thunder'), `brightness`; mid-stunt `ctx.setTime(n)`, `ctx.setWeather(w)`. Set `/gamerule log_admin_commands false` for per-tick `execute as` moves. |
@@ -44,6 +111,42 @@ key words in the story's colour, centred at 70% of the game view's height (under
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
+
+- **Owner, 2026-11-10: "The voice is definitely an issue. And also the sets. I think we can be more creative with the
+  story telling, and better with the delivery and the plots and using other voices for the other characters. I think
+  we don't necessarily need to use this sped up voice. this voice i dont think does a good job of playing different
+  parts."** So, from now on: a cast of voices (narrator plus a distinct voice per character, e.g. Gemini TTS
+  multi-speaker with acting direction, as the AI-dilemma Shorts do), no 1.45x sped-up narrator by default, real
+  delivery (emotion, pauses, emphasis), built sets that look designed (not a clearing in the wild), and plots with
+  more invention. The cinematic engine (shots, looks) is the direction for the look.
+- **Owner, 2026-11-10: "i think i kinda believe in this sort of storytelling minecraft thing. it feels somewhat
+  serious, and if we can do actual voices and make it seem super professional and high quality, that would be
+  amazing."** This is the channel's direction: serious, professional, high-quality Minecraft storytelling with real
+  character voices. Judge every story against a polished animated short, not against other Minecraft Shorts.
+- **Owner, 2026-11-10, on the stories so far:** "Like the creeper was good. i think the respawn tax is somewhat mid. I
+  like the sheep thing (at least it feels like a mystery, I was hooked, the delivery was just kinda bad). Like the sheep
+  worked bc its like why tf is this sheep staring at this block? I also think we need to work on like continuity and
+  stuff. And also stuff might be too zoomed in at times? Theres just a ton of micro and macro to work on." So: the
+  hook is ONE strange, concrete image that makes the viewer ask "why?" (a sheep staring at a block); the twist must
+  re-explain everything (the creeper); fix continuity (props, time of day, positions, who is where across cuts);
+  use wider shots so the viewer sees the place and the action, not just a close-up. Craft guide: docs/story_craft.md.
+- **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
+  effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
+  a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
+  distance), never a few blocks on a flat cleared plain. `clearSet`'s wide flat clearing is the look to avoid: pick a
+  site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
+  or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog.
+- **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
+  good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
+  overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its
+  checklist before recording. Sources: `docs/research/building_research.md`.
+
+- **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
+  minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
+  accident needs a cause the viewer can SEE and that exists in the game: knocked in by a creeper blast or a mob hit,
+  a block breaking under you, falling through powder snow or a trapdoor, an arrow, lag. Never "I tripped", "I
+  slipped", "I fell asleep" played as the bot simply walking in. If the bot has to walk into danger, the story
+  must say why it chose to. The creeper story (runaway) is the bar: one simple premise and a twist you can rewatch.
 - **The first line is a concrete mystery or threat to me, with something countable** ("All FOURTEEN villagers
   in my village RUN when they see ME."), over the picture it describes, in the first second.
 - **The twist turns the whole story over,** planted at least twice where a rewatch catches it, and said plainly
@@ -74,7 +177,12 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
 - No block entities render (beds, bells, chests, signs): build sets without them.
-- Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands.
+- Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands. Keep sneak (and
+  any other key the next shot needs) held through the cut (`K.cut` does): a stunt that clears its controls before the
+  teleport stands the camera up for a tick and it eases back down on screen. `scripts/rec_check.py` flags both.
+- A time-of-day change belongs on the cut's own frame: `K.cut(..., { time })` (set before, the new sky showed on the
+  old shot; marked after, it came a tick late). Don't use `ctx.setTime` mid-scene: its 4-tick wait freezes the shot.
+- Hits on the bot need `K.knockback` and digs need `K.dig`: mineflayer drops the knockback and times digs as a bare hand.
 - Pre-roll motion that must start on a word (mobs idle for a while update ~1 s late), keep the camera out of
   crowds, and set `/gamerule log_admin_commands false` for per-tick `execute as` moves.
 - Captions switch on the cut. A death screen needs something moving behind it.
@@ -103,8 +211,9 @@ one worker. When it ships, mark it `made` with the Short's name.
 | 8 | **More Golems Every Morning** | "Every morning there's one more iron golem in my village. Nobody builds them." | villagers won't look at me; doors barred at sunset; a golem waiting outside my door | golems spawn when villagers are scared: at night I'm a zombie, and I don't remember | tonight there are twenty of them at my door | open |
 | 9 | **One Block Higher** | "Every time I sleep, I wake up one block higher." | a dirt pillar under my bed; muddy villager footprints; the sea looks closer every day | the sea is rising; every night the villagers lift me above it, one block at a time, while they stay below | I look down for the first time | open |
 | 10 | **The Sun Won't Set** | "The sun hasn't set in my world for 300 days." | villagers yawning; a bed nobody sleeps in; my grandpa asks every day if tonight's the night | I froze the time (`advance_time false`) because zombies come at night and grandpa is too slow to run | grandpa asks me to let the night come | open |
-| 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | open |
+| 11 | **The Nitwit Knows** | "The nitwit in my village has said 'hmm' 4,096 times. Today he said my name." | he always stands where something bad is about to happen; the other villagers avoid him | he's a villager from a world that already ended, sent back to warn this one, and "hmm" is all the game lets him say | he says the date of the end, and it's today | made (`story_nitwit`, pipeline test 2026-11-10: 2 h 40 min, 2 review rounds; docs/pipeline_test_nitwit.md) |
 | 12 | **Last Seen** | "My friend's armor stand has stood at the village gate for 900 days. Today it turned around." | his armor gets one more scratch a day; a bed still warm; the golem salutes it | (armor stands don't render yet: needs an engine model) | | parked: engine |
+| 13 | **Good Boy** (cinematic pilot) | "I've tried to run away from this guy thirty-seven times." | every time I get 12 blocks away I'm right back next to him; raw porkchops; I sit when he says sit; everyone is tall; sheep look delicious; I can't open doors; skeletons run from me; a dog is always exactly where I am (every camera shot shows it) | I'm his dog: a tamed wolf (vanilla: tamed wolves teleport to their owner from 12 blocks, sit on command, can't open doors, scare skeletons, attack whatever hurts their owner). Revealed when the camera pulls out of my head | "Tomorrow I'm leaving for real." loops into line 1 | building: cinematic-default worker (`story_good_boy`, branch claude/cinematic-default) |
 
 ## Format: "Who do you trust?" (interactive mystery). Owner, 2026-11-06
 Owner, describing a Short he liked: someone turns 13 and gets a call from themselves 10 years in

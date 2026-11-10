@@ -1,5 +1,5 @@
 # @HelloBuh auto-upload: one run a day uploads the day's 3 Shorts (YT_PER_DAY), each PRIVATE with a scheduled publish
-# at a random time in its own slice of 9:00-21:00 Central, and on Sundays a weekly report issue with every video's views. docs/upload-setup.md.
+# at a random time in its own slice of 9:00-21:00 Central, and on Sundays a weekly report issue with every video's views, engagement, retention and watch time. docs/upload-setup.md.
 # OFF until set up: does nothing unless the YT_* secrets, the variable YT_CHANNEL_ID and the variable
 # YT_ENABLED=true all exist. Pause any time by creating uploads/PAUSED on main.
 # The clock: cron-job.org dispatches this workflow daily (GitHub's own schedule below is a backup; it has
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "upload | report | dry-run"
+        description: "upload | report | scores | dry-run"
         required: false
         default: "upload"
       short:
@@ -61,6 +61,7 @@ jobs:
           case "${{ inputs.mode }}" in
             report)  python3 scripts/youtube_upload.py --report ;;
             dry-run) python3 scripts/youtube_upload.py --dry-run ;;
+            scores)  python3 scripts/youtube_upload.py --scores ;;
             *)       python3 scripts/youtube_upload.py --short "${{ inputs.short }}" ;;
           esac
       - name: weekly report (Sundays, Central)
@@ -72,4 +73,4 @@ jobs:
         if: ${{ failure() }}
         run: |
           gh issue create --repo "$GITHUB_REPOSITORY" --title "HelloBuh upload failed $(TZ=America/Chicago date +%F)" \
-            --body "The daily upload run failed: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID . Nothing was published by this run. Most common cause: the YouTube token expired (docs/upload-setup.md step 2)."
+            --body "The daily upload run failed: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID . Anything this run uploaded before it failed is recorded in uploads/uploads.json. Most common cause: the YouTube token expired (docs/upload-setup.md step 2)."

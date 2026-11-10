@@ -1,6 +1,7 @@
 # @HelloBuh posting order (scripts/youtube_upload.py takes the next 3 not uploaded yet each morning).
 # Rules (owner): never the same format twice in a row, at most 1 pixel-art per 3. Check: python3 scripts/check_queue.py
 # After this list runs out, any other "ready" Short on the videos branch goes up, still keeping the mix.
+ai_thin_ice   # first: owner, 2026-11-09
 clutch_harder
 guess_sound
 lapse_house

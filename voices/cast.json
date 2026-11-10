@@ -1,0 +1,91 @@
+{
+ "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x).",
+ "narrator": {
+  "name": "Narrator",
+  "voice": "Erinome",
+  "profile": "the storyteller: a woman in her thirties, calm, clear and a little hushed, unhurried, like the opening of a mystery film; she lets the strange detail land with a small pause before it",
+  "post": "",
+  "fallback": "bf_emma",
+  "from": "the AI-dilemma Shorts' narrator (thin_ice, dirk_willems)",
+  "notes": "Third-person framing, chapter cards, the hook line. When HelloBuh tells his own story the first person goes to `buh` and the narrator only frames."
+ },
+ "buh": {
+  "name": "Buh",
+  "voice": "Achird",
+  "profile": "HelloBuh, our hero: a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
+  "post": "",
+  "fallback": "am_michael",
+  "from": "the AI-dilemma voice for Claude, the trailer's Buh and the movie's brothers",
+  "notes": "First person. Range: scared/funny ('Okay. That's... not normal.'), serious, whispering. Never sped up."
+ },
+ "elder": {
+  "name": "Elder",
+  "voice": "Algenib",
+  "profile": "the village elder: an old man in his seventies, slow, soft and warm, wise, a little gravelly; he has seen this before, and that is what makes him quietly unsettling",
+  "post": "",
+  "fallback": "bm_george",
+  "from": "the trailer's Highkeeper (Grok in the AI Shorts is the same voice, directed deep and heroic)",
+  "notes": "Librarian, grandfather, the one who knows the rule. Slow on purpose: give him short sentences."
+ },
+ "child": {
+  "name": "Kid",
+  "voice": "Leda",
+  "profile": "a village kid, about nine: small, bright, earnest and fast, asks questions, scared but trying to be brave",
+  "post": "asetrate=24000*1.12,aresample=24000,atempo=0.893",
+  "fallback": "af_sky",
+  "from": "new",
+  "notes": "No Gemini voice is a child: Leda (youthful) directed young and lifted about 2 semitones (post) at the same speed."
+ },
+ "smith": {
+  "name": "Smith",
+  "voice": "Orus",
+  "profile": "the blacksmith: a big, gruff man in his fifties, low and blunt, short sentences, no patience for nonsense, a soft heart he hides",
+  "post": "equalizer=f=110:t=q:w=1:g=3",
+  "fallback": "am_onyx",
+  "from": "new",
+  "notes": "Also the iron golem's voice if a golem ever talks (direct it slower, fewer words, and no post change)."
+ },
+ "stranger": {
+  "name": "Stranger",
+  "voice": "Charon",
+  "profile": "a mysterious hooded stranger: very old and gravelly, a slow low whisper, knows a terrible secret and says less than he knows",
+  "post": "",
+  "fallback": "bm_fable",
+  "from": "the movie's Fen",
+  "notes": "The wandering trader, the one at the edge of render distance. Keep his lines under ten words where possible."
+ },
+ "villain": {
+  "name": "Villain",
+  "voice": "Schedar",
+  "profile": "the villain: a man in his forties, cold, flat and quiet, perfectly calm, never shouts, sounds faintly amused; the threat is in how polite he is",
+  "post": "equalizer=f=3000:t=q:w=1:g=-2",
+  "fallback": "bm_daniel",
+  "from": "the AI-dilemma voice for DeepSeek",
+  "notes": "Herobrine-type, the thing in the fog, the one behind the twist. Calm beats loud: never direct him to yell."
+ },
+ "mom": {
+  "name": "Mom",
+  "voice": "Sulafat",
+  "profile": "Buh's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it",
+  "post": "",
+  "fallback": "af_sarah",
+  "from": "new",
+  "notes": "Home scenes, the normal life before the strange thing. Her ordinary line is often the scariest one in the twist."
+ },
+ "friend": {
+  "name": "Max",
+  "voice": "Fenrir",
+  "profile": "Buh's best friend: a sixteen-year-old boy, loud, excitable and loyal, talks fast, jokes, always up for it",
+  "post": "",
+  "fallback": "am_puck",
+  "from": "new",
+  "notes": "The sidekick and comic relief; he goes first into the cave. Fenrir is brighter and faster than Buh's Achird, so the two read apart in an exchange."
+ },
+ "_spares": {
+  "Kore": "crisp, firm woman (the AI Shorts' Gemini): a guard captain, an announcer, a cold official",
+  "Iapetus": "measured, polite man (the AI Shorts' GPT): a mayor, a shopkeeper",
+  "Puck": "cast as a 16-year-old boy in the trailer it read as a young woman: use it for a young woman",
+  "Gacrux": "mature woman: a grandmother, a witch",
+  "Enceladus": "breathy man: a ghost, a sick villager"
+ }
+}

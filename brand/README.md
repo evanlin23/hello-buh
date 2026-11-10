@@ -24,7 +24,7 @@ python3 scripts/cinematic.py brand/avatar_scene.json --sheet --at 0.5 --scale 1.
 python3 scripts/cinematic.py brand/banner_scene.json --sheet --at 0.5 --scale 1.33334    # 2560x1440 stills
 python3 brand/compose.py                                                                 # crops, title, contact sheet
 ```
-- The avatar characters are injected entity rows (a `mannequin` named Buh, skinned by `stunts/brand_art.js` `cast`, and
+- The avatar characters are injected entity rows (a `mannequin` named Buh, skinned by `stunts/brand_castle.js` `cast`, and
   a `creeper`), standing 100 blocks east of the castle facing east and 131 blocks west facing west, so the sun or moon
   is behind them in every shot. Move or turn them in `make_avatar_rec.py`.
 - Cameras, hours (`day`), fog and grades are in `avatar_scene.json` / `banner_scene.json` (cinematic.py clip format).

@@ -62,6 +62,14 @@ for (const name of names) {
       const a = execFileSync('node', ['scripts/edit_args.js', name], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, SONG: 'none' } }).trim().split('\n').filter(Boolean)
       execFileSync('python3', ['edit.py', '--frames', path.join(frames, 'f%05d.png'), '--fps', '60', '--out_fps', '60', '--timeline', recFile, '--audio', wavFile, ...a, '--out', path.join(dir, 'short_nosong.mp4')], { cwd: ROOT, stdio: 'ignore' })
     } catch (e) { console.error(`no-song version of ${name} failed: ${e.message}`) }
+  } else {
+    // rendered on Actions (scripts/render_on_actions.sh): no frames or game wav here, so add_song.py had neither
+    // short_nosong.mp4 nor game_audio.flac and baked no song in. A stunt without a reference song (every story)
+    // was edited song-less, so its out/<name>.mp4 already is the no-song version (voice + game audio).
+    let e0 = {}
+    try { e0 = require(path.join(ROOT, 'stunts', `${name}.js`)).edit || {} } catch (e) {}
+    if (!e0.song || !fs.existsSync(path.join(ROOT, e0.song))) fs.copyFileSync(mp4, path.join(dir, 'short_nosong.mp4'))
+    else console.error(`no-song version of ${name}: no work/${name}.frames (rendered elsewhere?) and out/ has its reference song`)
   }
 
   // stunt module + the local stunt/lib modules it requires

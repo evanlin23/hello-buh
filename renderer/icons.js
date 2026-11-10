@@ -40,8 +40,13 @@ function itemModel (name) {
   setBiomeColors(JSON.parse(fs.readFileSync(path.join(A, 'biomes.json'))))
   const mcData = require('minecraft-data')(ver)
   const Chunk = require('prismarine-chunk')(ver)
-  const todo = names.filter(n => (itemModel(n) || '').startsWith('minecraft:block/') && mcData.blocksByName[n])
-  if (!todo.length) { console.log('no 3D block icons needed'); return }
+  const jarJson = (p) => { try { return JSON.parse(require('child_process').execFileSync('unzip', ['-p', path.join(ROOT, 'work', 'client', `${ver}.jar`), p], { stdio: ['ignore', 'pipe', 'ignore'] }).toString()) } catch { return null } }
+  const specialItem = require('./specialitems').specialItems(jarJson)
+  // special item models (beds, chests, heads, banners, shulker boxes): their block-entity model with the
+  // display.gui transform (the red bed's hotbar slot was empty: every_clutch)
+  const special = names.filter(n => specialItem(n))
+  const todo = names.filter(n => !specialItem(n) && (itemModel(n) || '').startsWith('minecraft:block/') && mcData.blocksByName[n])
+  if (!todo.length && !special.length) { console.log('no 3D block icons needed'); return }
 
   const app = express()
   app.get('/', (_, res) => res.type('html').send(`<!doctype html><html><body style="margin:0;background:transparent">
@@ -74,9 +79,27 @@ window.icon = (d) => {
   r.render(scene, cam)
   return r.domElement.toDataURL('image/png')
 }
+const { BlockEntityLayer } = await import('/blockentities.js')
+const be = new BlockEntityLayer(null)
+window.specialIcon = async (sp) => {
+  const scene = new THREE.Scene()
+  const model = new THREE.Group()
+  for (const b of sp.pieces) model.add((await be.build(b)).obj)
+  model.position.set(-0.5, -0.5, -0.5)
+  const d = sp.display.gui || {}, tr = d.translation || [0, 0, 0], ro = d.rotation || [0, 0, 0], sc = d.scale || [1, 1, 1]
+  const grp = new THREE.Group(); grp.add(model)
+  grp.position.set(tr[0] / 16, tr[1] / 16, tr[2] / 16)
+  grp.rotation.order = 'XYZ'; grp.rotation.set(ro[0] * Math.PI / 180, ro[1] * Math.PI / 180, ro[2] * Math.PI / 180); grp.scale.set(sc[0], sc[1], sc[2])
+  scene.add(grp)
+  const cam = new THREE.OrthographicCamera(-0.5, 0.5, 0.5, -0.5, -10, 10)
+  cam.position.set(0, 0, 5); cam.lookAt(0, 0, 0)
+  r.render(scene, cam)
+  return r.domElement.toDataURL('image/png')
+}
 window.READY = true
 </script></body></html>`))
   app.use('/three', express.static(path.join(ROOT, 'node_modules', 'three', 'build')))
+  app.get('/blockentities.js', (_, res) => res.type('application/javascript').sendFile(path.join(__dirname, 'blockentities.js')))
   app.use('/assets', express.static(A))
   const server = http.createServer(app)
   await new Promise(r => server.listen(0, '127.0.0.1', r))
@@ -106,6 +129,11 @@ window.READY = true
     const url = await page.evaluate((d) => window.icon(d), d)
     fs.writeFileSync(path.join(A, 'icons', `${name}.png`), Buffer.from(url.split(',')[1], 'base64'))
     console.log('icon', name)
+  }
+  for (const name of special) {
+    const url = await page.evaluate((sp) => window.specialIcon(sp), specialItem(name))
+    fs.writeFileSync(path.join(A, 'icons', `${name}.png`), Buffer.from(url.split(',')[1], 'base64'))
+    console.log('icon', name, '(special)')
   }
   await browser.close(); server.close()
 })()
