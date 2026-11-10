@@ -8,24 +8,28 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
   story. Change any of the three and it is a different person to the viewer.
 - `scripts/tts.py`: Gemini TTS, multi-speaker in one request, cut into lines, cached, loudness-normalised.
 - `scripts/align.py`: Whisper word timings into `voice.json`, so captions and stunt beats line up with the take.
+- `scripts/speaker_check.py`: is every line in its own speaker's voice, with the right words (below).
+- `./hb voice <stunt>`: the one path for a cast story: takes, word cuts, the check, automatic re-takes, alignment.
 - `voices/samples/`: one line per character and a two-character exchange (`exchange.mp3`: Max and Milo), made from
   `voices/samples/samples.json`. The whole reel with a beep between characters: `out/voices_cast/cast_reel.mp3`
   (not committed; rebuild from the samples).
 
 ## The library
 
-| id | name (what Gemini sees) | Gemini voice | direction (`profile`) | Kokoro fallback | from |
-|---|---|---|---|---|---|
-| `narrator` | Narrator | Leda (1.5x tempo, +1.5 st, formants kept) | a kid of about eleven telling his own story: fast, bright, bubbly, happy, energetic; not whispery | am_adam | kid-narrator audition, 2026-11-10 |
-| `storyteller` | Storyteller | Despina | a woman in her thirties telling a friend a story late at night, low and close, plain, never an announcer | bf_emma | the old narrator (was Erinome) |
-| `milo` | Milo | Achird | Milo, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Milo |
-| `elder` | Elder | Charon | an old man in his seventies, tired, low and a little rough in the throat, slow and quiet; has seen this before | bm_george | the trailer's Highkeeper (recast from Algenib) |
-| `child` | Kid | Laomedeia (no shift) | a real village kid about nine, small and quick, breath catching, words tumbling out; scared but brave | af_sky | recast from Leda +2 st |
-| `smith` | Smith | Orus | a big gruff blacksmith in his fifties, low and blunt, short sentences, a hidden soft heart | am_onyx | new |
-| `stranger` | Stranger | Algenib | a hooded stranger, very old and gravelly, a slow low whisper, says less than he knows | bm_fable | the movie's Fen (Charon went to the elder; audition) |
-| `villain` | Villain | Schedar | a man in his forties, cold, flat, quiet, perfectly calm and faintly amused; never shouts | bm_daniel | AI Shorts' DeepSeek |
-| `mom` | Mom | Sulafat | Milo's mom, a warm woman in her forties, gentle and tired, a little worried under it | af_sarah | new |
-| `friend` | Max | Fenrir | Milo's best friend, 16, loud, excitable, loyal, talks fast and jokes | am_puck | new |
+| id | name (what Gemini sees) | Gemini voice | caption colour | direction (`profile`) | Kokoro fallback | from |
+|---|---|---|---|---|---|---|
+| `narrator` | Narrator | Leda (no post) | `#FFFFFF` white | Pip's voice: a bubbly kid of about nine, fast, bright, energetic; not whispery | am_adam | Dog on the Hill v3 (owner: "a lot a lot better" than kid Puck) |
+| `pip` | Pip | Leda | `#FFFFFF` white | Pip, Dog on the Hill's kid narrator (kept: the owner liked it) | am_adam | Dog on the Hill v3 |
+| `puck_kid` | Narrator (kid Puck, alt) | Puck | `#FFFFFF` white | a twelve-year-old boy telling his friends a funny story (the alternative narrator) | am_adam | Good Boy audition |
+| `storyteller` | Storyteller | Despina | `#D9C8FF` pale lilac | a woman in her thirties telling a friend a story late at night, low and close, plain, never an announcer | bf_emma | the old narrator (was Erinome) |
+| `milo` | Milo | Achird | `#4FD8E6` Steve's cyan | Milo, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Milo |
+| `elder` | Elder | Charon | `#F0A845` robe amber | an old man in his seventies, tired, low and a little rough in the throat, slow and quiet; has seen this before | bm_george | the trailer's Highkeeper (recast from Algenib) |
+| `child` | Kid | Laomedeia (no shift) | `#FFEE70` sunny yellow | a real village kid about nine, small and quick, breath catching, words tumbling out; scared but brave | af_sky | recast from Leda +2 st |
+| `smith` | Smith | Orus | `#9C9C9C` iron grey | a big gruff blacksmith in his fifties, low and blunt, short sentences, a hidden soft heart | am_onyx | new |
+| `stranger` | Stranger | Algenib | `#B39BFF` dusk violet | a hooded stranger, very old and gravelly, a slow low whisper, says less than he knows | bm_fable | the movie's Fen (Charon went to the elder; audition) |
+| `villain` | Villain | Schedar | `#F03A47` redstone red | a man in his forties, cold, flat, quiet, perfectly calm and faintly amused; never shouts | bm_daniel | AI Shorts' DeepSeek |
+| `mom` | Mom | Sulafat | `#FFC2A8` hearth peach | Milo's mom, a warm woman in her forties, gentle and tired, a little worried under it | af_sarah | new |
+| `friend` | Max | Fenrir | `#7DF07D` lime | Milo's best friend, 16, loud, excitable, loyal, talks fast and jokes | am_puck | new |
 
 The full direction strings are in `voices/cast.json` (copy them exactly; the table shortens them). Spares that have
 been heard to work, for new roles: Kore (crisp, firm woman: a guard captain, an official), Iapetus (measured,
@@ -81,12 +85,107 @@ one field, `ref`:
 
 ## Making the voice
 
+One command, for any story with a `cast` (v1 stories still go to Kokoro):
 ```bash
-python3 scripts/tts.py stories/<name>                         # Gemini takes -> voice/<id>.wav + voice/voice.json
-~/.hb-tts/bin/python scripts/align.py stories/<name>          # Whisper word timings -> the chunks in voice.json
-python3 scripts/tts.py stories/<name> --only L05              # re-take one line (a new request), keep the rest
-~/.hb-tts/bin/python scripts/align.py stories/<name> --only L05
+./hb voice story_<name>                 # takes -> word cuts -> speaker check -> re-takes -> align -> final check
+./hb voice story_<name> --only L05      # a fresh take of changed lines only, the rest kept
+./hb voice story_<name> --check         # only the check (no requests)
+./hb voice story_<name> --retakes 1     # fewer automatic re-takes (default 2 per failing line); --no-check: none
 ```
+Underneath (all in the TTS venv, ~/.hb-tts/bin/python): `scripts/tts.py stories/<name>` (the takes, the cut, the
+check and the re-takes), `scripts/align.py stories/<name>` (word timings into voice.json),
+`scripts/speaker_check.py stories/<name>` (the final report; exit 1 on a blocker).
+
+**Requests.** Narrator-first (docs/stories.md): the narrator's lines go in the story's `requests` as before, but a
+character line of 3 words or fewer (`SHORT_WORDS` in tts.py) is voiced in a single-speaker request with that
+character's other short lines. Gemini's multi-speaker mode swapped exactly these into the other voice (Good Boy).
+
+**The cut** (owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off"). Whisper (align.py's
+model) transcribes each multi-line take with word times, but only to pick WHICH pause is the boundary between two
+lines (the first of a line's first three words heard as written; pauses alone went wrong on lines with "...").
+Where the cut goes is the audio's business: each line's first and last sound are found by level (45 dB under the
+take's peak, above its noise floor), so soft consonants, breaths and word tails count as the line; then each edge is
+cut at the quietest 10 ms of the pause (the energy valley), keeping 80-350 ms before the first sound and 200-450 ms
+after the last, never into the neighbour's own sound, with a 15 ms fade. Never at a Whisper word start (it lands
+late, on the consonant). Old cuts (Good Boy, Dog on the Hill: 0.00-0.10 s of quiet at the edges, edges at -36 to
+-50 dB) were the problem; the same test on a take made of clean lines now gives 0.16-0.26 s before and 0.21-0.38 s
+after, edges at -58 to -62 dB, like Kokoro's (0.18-0.20 / 0.25-0.42 s, -81 dB).
+
+**Long pauses** inside a line are left alone unless story.json sets `"max_pause"` (seconds, or `{"opening": 0.3,
+"rest": null}` where opening = the first two lines): then only the silent middle of a longer pause is removed, never
+within 60 ms of a sound, joined with a 30 ms crossfade (`cap_pauses` in tts.py). A pause with no silent middle long
+enough is kept: re-take the line. Speech is never spliced.
+`voice_check.py --resplit` re-cuts cached raw takes (`voice/<req>_take.f32`, the voice_cast.py path) by the same rules.
+
+**Re-takes.** After the takes, every new line goes through the speaker check. A SWAP, WORDS, EDGE or CLIPPED line is re-taken as a
+single-speaker request (one voice can't swap), at most `--retakes` times; lines that pass are never re-taken. The
+re-take is cached like any take (its own cache key), and voice.json records `"take": n` so a later run rebuilds that
+line from the same cached re-take instead of the original bad one. Each re-take is one request of the ~10 a day.
+
+## Speaker check (`scripts/speaker_check.py`)
+
+For each line's wav: a speaker embedding (Resemblyzer's GE2E encoder: 17 MB, CPU, ~0.2 s a line with torch on 2
+threads) and the median pitch; Whisper's transcript. Each cast member's reference is the mean of their own lines
+(long lines weigh more; refined so a line that sounds like someone else doesn't shape its speaker's reference), plus
+the library samples of the same Gemini voice (`voices/samples/`, mapped by the voice each file really holds:
+`SAMPLE_VOICES` in speaker_check.py, since the cast was recast after they were made), which anchor a character with only a few short
+lines. Each line is scored against every cast member (similarity minus a pitch penalty that grows as the line gets
+shorter, where the embedding is weakest) and flagged:
+
+| flag | meaning | |
+|---|---|---|
+| SWAP | another cast voice beats the line's own `who` by more than 0.02 | blocker: re-taken automatically |
+| WORDS | transcript under 60% like the script, or extra words (a direction read aloud, a word of the next line) | blocker: re-taken automatically |
+| THIN | the right voice wins by under 0.06 (short or shouted lines) | listen |
+| SIMILAR | two cast voices with embedding similarity over 0.88 and under 2.5 semitones apart | re-cast one |
+| EDGE | the first or last 20 ms within 30 dB of the line's peak: a word or breath cut off (voice_edges.py's test) | blocker: re-taken automatically |
+| TIGHT | an edge within 40 dB, or under 60 ms of quiet before the first sound / 150 ms after the last | listen |
+| CLIPPED | the listening model (gemini-3.5-flash, then 3.8-flash, then flash-latest; one request per check with every line's audio) hears a word cut off at the start or end, or clipped in the middle, answering per word | blocker: re-taken automatically |
+
+A SWAP only counts against the speakers of the request that voiced the line (voice.json `with`, else story.json
+`requests`): Gemini never heard the others, and a single-speaker request can't swap at all. (Good Boy v4 voiced Sam
+alone: its laughing "Hahaha! There you are" at 314 Hz looked like the narrator to the embedding and pitch, a false
+alarm the request rule removes.) The listening model, given a line cut 0.33 s in, named "I've" missing at the start
+and "times" cut at the end; the untouched line came back clean. No answer from it (quota, network) is a note, not a
+blocker. `--no-listen` skips it, `--no-words` skips Whisper.
+
+Measured (2026-11-10): Good Boy's 13 narrator lines all scored as the narrator (margins 0.09-0.37) and its three
+clean Sam lines as Sam (0.28-0.36); the library samples split in halves (9 voices, 22 clips of 2-3.5 s, each
+identified against the other halves only, no library help) were 19/22 right, the misses being Milo's scared
+falsetto (his only reference was the other half) and one Villain half; in a story the reference is many lines and
+the choice is between 2-3 voices, which is far easier. Pitch alone fails on shouted lines (Good Boy L15 at 182 Hz),
+the embedding alone on sub-second lines, so the check uses both and flags close calls as THIN. The embedding
+model was trained on real voices: TTS voices of different sexes can still look alike to it (Villain/Mom 0.84), so
+SIMILAR needs the pitch to agree too.
+
+Setup (once): `~/.hb-tts/bin/pip install transformers && ~/.hb-tts/bin/pip install --no-deps resemblyzer`
+(`./hb doctor` checks both). Only Resemblyzer's weights and network shape are used; the mel spectrogram is computed
+in speaker_check.py, so librosa and webrtcvad aren't needed. `scripts/voice_check.py` is the quick transcript view.
+
+## Caption colours
+
+Owner, 2026-11-10: "Maybe we can have color coded captions?" and "It should generally just "match" the vibe of the
+character thats supposed to be speaking."
+- Each library character has a `color` (and `color_why`) in voices/cast.json, matched to its look and role (table
+  above). A story's cast `color` wins; a one-off character with no colour gets the first library colour no one in the
+  story uses. Pick a one-off's colour the same way (a witch purple, a creeper green, the warden deep teal) and check it
+  against the cast (below).
+- Captions run one word at a time (docs/stories.md); each word takes its line's speaker colour, so a single word on
+  screen says who is talking. Chunk mode (`"captions": "chunk"`) colours the same way.
+- **The word colour is only ever the speaker.** Emphasis (a CAPS key word) is a bar under the word, never a second
+  colour: a character's key word is its colour lifted toward white over a bar in its colour; in a story with a voiced
+  character, the narrator's key word is white over a bar in the story's `key_color`. Tried first: the narrator's key
+  words in the key colour, and character key words in the key colour too; one word at a time, Good Boy's amber key
+  word read as the Elder talking. A v1 story (no cast) and every non-story Short render as before (pixel-identical:
+  white, key words in the key colour). story_track.py warns when a character's colour is near the key colour.
+- A name tag (the cast `name`, small caps in the speaker's colour) sits over every word of a character's first line
+  (one word alone is too short to read a tag), the word staying where it would be without it. Narrator-first
+  stories give a character 1-3 short lines, often off-camera in POV, so naming the voice once is worth it (the
+  narration research recommends it). `"name_tags": false` in story.json turns them off.
+- Checked for colour blindness (Viénot simulation, CIE Lab): every pair of library colours is at least ΔE 12 apart
+  under deuteranopia, protanopia and tritanopia (31+ with normal vision), except the storyteller's lilac against
+  Milo's cyan (7 under deuteranopia; the storyteller is normally the narrator, and so white), and every colour has 6:1 or more contrast
+  against the caption's dark outline. Stills: out/captions_colour/ (not committed; `sheet_phone_size.png` at phone size).
 
 `voice.json` keeps the shape `lib/story.js` and `edit.py --story` read (`dur`, `onset`, `end`, `chunks`,
 `captions`, plus `who`), so stunts and captions don't change. tts.py first spreads the chunks evenly by letters;
@@ -95,10 +194,11 @@ in the HF cache on first run). It matches by position, not spelling (Whisper hea
 the transcript is under 60% like the script: that line is a wrong cut or a dropped line. Listen to it.
 
 What tts.py does to a take: it cuts the take into lines (every pause is a candidate; dynamic programming matches
-each line's share of the speech to its share of the text, and penalises a line whose stretches disagree in pitch, so
-two speakers don't get merged), keeps each line's in-breath and tail (it pads into the pauses), then high-pass
-60 Hz, the character's `post` (EQ; the narrator's tempo and formant-kept lift), a light room, and one gain per take
-(see "Realism"). It prints each line's length and pitch: a pitch that belongs to the
+each line's share of the speech to its share of the text, follows Whisper's word times where it heard a line's first
+words, and penalises a line whose stretches disagree in pitch, so two speakers don't get merged), cuts each edge in
+the pause's quietest point with the in-breath and tail kept ("The cut" above), then high-pass 60 Hz, the character's `post` (EQ; the narrator's tempo
+and formant-kept lift), a light room, and one gain per take (see "Realism"). It prints each line's length and pitch:
+a pitch that belongs to the
 other speaker means a bad cut.
 
 ## Directing Gemini (first tested on gemini-2.5-flash-preview-tts; "Realism" below supersedes where they differ)
@@ -191,7 +291,7 @@ request, three requests in all. Words per second are words over speaking time:
 | 9 | Leda 1.5x + 1.5 st rubberband, formants shifted | 4.1 | - | 5 | 9 | 9 |
 
 (The pitch tracker can't tell the lifted takes apart; Laomedeia and Aoede ran out of quota.) No Gemini voice
-sounds eleven on its own, and they all read at about 2.5-2.7 words a second, against the 4.5 the research asks for.
+sounds eleven on its own, and they all read at about 2.5-2.7 words a second, against the research's 4.5 (not a target any more: the owner chose Pip's natural tempo, docs/stories.md).
 So `narrator` is #8: Leda with `post` `rubberband=tempo=1.5:pitch=1.0905:formant=preserved`. If the owner prefers
 "more real" to "younger", drop the pitch from the post (#3). The old woman narrator is now `storyteller`.
 

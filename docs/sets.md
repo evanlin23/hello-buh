@@ -32,20 +32,34 @@ anchor's absolute x, y, z with `/summon` as stunts/_sets_demo.js does).
    (a typo fails at build time, not as a missing block on screen).
 2. Writes them as a vanilla structure template (`.nbt`) into the server's `world/generated/hellobuh/structures/`
    (the id carries a content hash: the server caches lookups, misses too).
-3. `fit` (default): a stone plinth and earth under the footprint down to the ground, trees on the footprint removed,
-   and terraces round it (cut down where the hill is higher, banked up 5 deep where it is lower), capped with grass.
+3. `fit` (default; `lib/sets/terrain.js`, round 2): the land round the piece is reworked the way a builder would,
+   from the natural heights read first. Uphill, the hill is cut back and held by a retaining wall of weathered stone
+   (stone/mossy/cracked bricks, cobble) where the cut is 3+ high, and the ground rises back to the natural slope
+   behind it. Downhill, a stone foundation shows under the building, a retaining wall holds the lot where the drop is
+   3+, and small drops become an earth bank. Where a way in (doorstep, street, gate, entrance...) crosses a wall, a
+   3-wide flight of stone-brick stairs with cheeks goes down (or up) to the natural ground. Every edge is irregular
+   (value noise on the blend distance) and the reworked ground is mixed (grass, coarse dirt, rooted dirt, moss, the
+   odd stone) and planted. Water is left as it is. No concentric 1-block rings: round 1's terraces read as pyramids.
 4. One `/place template hellobuh:<id> x y z <rotation>`: the game rotates every block state and recomputes fence,
    pane, wall and stair shapes as it lands. Cells a piece doesn't write keep the terrain (gardens sit in real grass).
 5. Live extras (a minecart in the mine) are summoned; dropped items killed.
 
-`y` defaults to a low percentile of the ground over the footprint (the piece sits a little into a slope rather than
-up on a pad). Pick the spot with `findSite` (or `freshLand` for a new stretch of world): a piece on a steep hilltop
-still gets a stepped mound under it.
+`y` defaults to a low percentile of the ground over the footprint (the piece sinks a little into a slope rather than
+standing up on a pad). The ground is natural terrain blocks only (`site.js` GROUND): round 1 skipped a list of
+plants instead, read a bee nest in a canopy as the ground, and a watchtower stood on air 20 blocks over a hill.
+
+Choosing ground:
+- `sets.planSite(ctx, [{ name, dx, dz, facing, variant }...], { reach, stride })`: the best centre for a whole
+  layout, scored on the height range under every footprint (squared), water and snow under them, trees, and the
+  height differences between pieces. Use it for any set of more than one piece.
+- `sets.findSite(ctx, { w, d, maxRange, minRange, near, avoid })`: one footprint (`minRange` asks for a slope, to
+  show off the fit). `sets.findShore(ctx)`: a bank with open water straight out (for the dock).
+- `sets.dress.clearTrees(ctx, box)`: a village's clearing (then plant groves back round it).
 
 ## The pieces
 Sizes are x by y by z of the template (the front faces +z = south at `facing: 'south'`). Every piece also returns
 `shots.wide / front / low`. Stills: `docs/sets/<piece>.jpg`, rendered from real recordings on natural terrain
-(`stunts/_sets_catalog.js`), except `room` (an offline preview, `scripts/set_preview.js`).
+(`stunts/_sets_catalog.js`), except `room`, `tavern` and `windmill` (offline previews, `scripts/set_preview.js`).
 
 | piece | size | what | anchors | variants |
 |---|---|---|---|---|
@@ -62,6 +76,9 @@ Sizes are x by y by z of the template (the front faces +z = south at `facing: 's
 | `bridge` | 9x18x25 | stone bridge: plank deck, low walls, piers with cutwaters and arches going down `drop` blocks, lamp posts, banners | end_a, end_b, middle, rail, approach_b | `length`, `width`, `drop` |
 | `mine` | 21x13x22 | its own rocky hill with a timber portal, framed tunnel with rails, lanterns, ore, cobwebs, spoil heaps, a minecart, a KEEP OUT sign | mouth, portal, inside, deep (looking back at the light), cart, hilltop | `depth` |
 | `basement` | 13x7x11 | stone cellar under the ground (y -6..-1): hatch and ladder, beams and posts, barrels, chests, bookshelves, bed, cobwebs, dim lanterns | hatch, ladder_bottom, center, corner (+look), bed, portal | `eyes` 0-12: an end portal frame with that many eyes (story: "One More Eye"), `hatch` |
+| `tavern` | 26x17x20 | L plan: a two-storey hall (framed stone ground floor, jettied timber-and-plaster upper floor, steep slate roof with spruce verges, brick chimney with smoke) and a one-storey wing with a cross gable; double doors, hanging signboard, bar with barrels and stools, hearth, tables, rooms upstairs, kitchen in the wing, a fenced beer garden | door, doorstep, street, bar (barkeep), bar_front (customer), table, hearth, inside (+look), wing_door, kitchen, garden, upstairs | `palette` (plaster default), `name` 'THE\|CRAFTY\|CREEPER', `seed` |
+| `windmill` | 25x29x15 | tapering stone tower (darker, mossy at the foot), timber cap with a roof, four canvas sails on an axle, millstone and sacks inside, a granary shed with a lean-to roof, a cart | door, doorstep, approach, inside, cap, granary, sails | `height` |
+| `dock` | 13x15x22 | a timber dock: stone landing, plank walk on log piles down into the water with a rail, a T-head with a fishing shack, cargo, a bell, lamps. Place it with `findShore` (facing out over the water, `y` the bank) | shore, walk, end, shack, moor, approach | `length`, `depth` |
 | `room` | 15x13x13 | a furnished living-room set with a ceiling for interior scenes: fireplace, armchairs, rug, dining table, bed nook, kitchen corner, bookshelves, windows, lanterns on beams | door, doorstep, fire, armchair_l, armchair_r, table, bed, kitchen, wide (+look), reverse (+look) | `palette` |
 
 ![cottage](sets/cottage.jpg) ![house2](sets/house2.jpg) ![farmhouse](sets/farmhouse.jpg)
@@ -70,6 +87,9 @@ Sizes are x by y by z of the template (the front faces +z = south at `facing: 's
 ![lighthouse](sets/lighthouse.jpg) ![bridge](sets/bridge.jpg) ![mine](sets/mine.jpg)
 ![cottage inside](sets/cottage_inside.jpg) ![church aisle](sets/church_aisle.jpg) ![mine, looking back](sets/mine_deep.jpg)
 ![basement](sets/basement.jpg) ![room](sets/room.jpg)
+![tavern](sets/tavern.jpg) ![tavern inside](sets/tavern_inside.jpg) ![windmill cut into a hill](sets/windmill.jpg) ![dock](sets/dock.jpg)
+
+The fit on steep ground (offline previews over recorded terrain): ![church with steps through its retaining wall](sets/fit_church_steps.jpg) ![cottage with a retaining wall](sets/fit_cottage_wall.jpg)
 
 ### Vanilla structures (`sets.vanilla(ctx, id, { x, z, mobs, scan })`)
 `/place structure` with the chunks force-loaded first; returns `anchors.bell`, `beds[]`, `doors[]`, `work[]` (job
@@ -117,21 +137,21 @@ and next to other builds.
   ground). Decorated pots and lectern books don't render. Big pieces (farmhouse, market) need 40x35 of ground.
 
 ## Demo: a village from the library (`stunts/_sets_demo.js`)
-Market square in the middle, church behind it, graveyard beside it, two cottages and two town houses facing the
-square (different palettes and facings, each on its own ground), a well, a farm and a watchtower at the edges, a
-vanilla village beyond the church, paths from every door, lamps, tree clumps, boulders, flowers, villagers at the
-stalls and cows in the paddock.
+Round 2 (2026-11-10): `planSite` picks the centre for the whole layout, the trees inside it are cleared, and every
+piece is placed where the plan puts it (nudged at most 4 blocks). Market square in the middle, the church behind it
+with the graveyard beside it, the tavern (west) and a cottage (east) facing the square, two town houses, a well, the
+farm, the windmill, paths from every door, lamps, groves planted back round the edge, boulders, flowers, villagers at
+the stalls and cows in the paddock. `VILLAGE=1` adds a vanilla village beyond the church (slow on new land).
 
 | | |
 |---|---|
 | ![establishing](sets/demo/establish.jpg) | ![the market, eye level](sets/demo/market.jpg) |
-| ![from the south, over the farm](sets/demo/south.jpg) | ![dusk, the same establishing shot](sets/demo/dusk.jpg) |
+| ![the tavern](sets/demo/tavern.jpg) | ![dusk, the same establishing shot](sets/demo/dusk.jpg) |
+| ![a street toward the square](sets/demo/street.jpg) | |
 
-How these were made (2026-11-10): `_sets_demo` built the village on hilly plains near (3744, -880); the server was
-too slow to generate fresh land for another take, so `_sets_view` re-recorded the built village and the stills are
-fixed cameras over that recording (`CAM=...`), except the market (the demo's own shot). Honest notes: the land there
-is steep, so the north-east town house sits on a stepped mound (`fit` before the 5-deep bank limit), and the wide
-shots show terraces. A flatter site (`findSite` with a lower `maxRange`) fixes both.
+Before and after (round 1's stepped pyramids and floating watchtower, round 2's fit):
+
+![before and after](sets/before_after.jpg)
 
 Compared with the old look (story_sheep_stares, `clearSet`'s flat clearing and a 6x6 `house`):
 
@@ -140,9 +160,9 @@ Compared with the old look (story_sheep_stares, `clearSet`'s flat clearing and a
 ## Tools
 | command | what |
 |---|---|
-| `node scripts/set_preview.js <piece> [--variant '{...}'] [--shots wide,front,low,<anchor>] [--base rec.json --x X --z Z]` | preview a piece with no server: stamps it into a flat world (or a recording's terrain) and renders its shots to `work/set_preview/` (fence/pane shapes approximated; block states not turned for `--facing`) |
-| `RECORD_ONLY=1 STUNT=_sets_catalog ./run.sh` then `node scripts/set_stills.js _sets_catalog docs/sets` | every piece on natural terrain, one still per piece (`PIECES=a,b` limits it; `FRESH=x,z` goes to new land first) |
-| `RECORD_ONLY=1 STUNT=_sets_demo ./run.sh` then `node scripts/set_stills.js _sets_demo docs/sets/demo` | the demo village and its four stills (`FRESH=x,z`, `DEMO_AT=x,z`, `VILLAGE=0`) |
+| `node scripts/set_preview.js <piece> [--variant '{...}'] [--shots wide,front,low,<anchor>] [--base rec.json --x X --z Z] [--fit 0] [--out dir --tag name]` | preview a piece with no server: stamps it into a flat world, or into a recording's terrain with place()'s terrain fit (walls, steps, banks), and renders its shots to `work/set_preview/` (fence/pane shapes approximated; block states not turned for `--facing`) |
+| `RECORD_ONLY=1 STUNT=_sets_catalog ./run.sh` then `node scripts/set_stills.js _sets_catalog docs/sets` | every piece on natural terrain, one still per piece (`PIECES=a,b` limits it; `FRESH=x,z` goes to new land first; `SLOPE=1` puts pieces on moderate slopes to show the fit; the dock goes on a shore) |
+| `RECORD_ONLY=1 STUNT=_sets_demo ./run.sh` then `node scripts/set_stills.js _sets_demo docs/sets/demo` | the demo village and its five stills (`FRESH=x,z`, `DEMO_AT=x,z`, `VILLAGE=1`) |
 | `STUNT=_sets_view AT=x,z node bot.js` (server running) | re-record a set already built in the world for fixed-camera stills (`CAM=dx,dy,dz,yaw,pitch node render.js ...`), optionally re-grading boxes (`REGRADE`) |
 | `node scripts/bake_sets.js` | bakes every default piece to `assets/sets/<name>.nbt` (our own builds; load in any 1.21.11 world with `/place template` after copying to `world/generated/hellobuh/structures/`, or ship in a datapack under `data/hellobuh/structure/`) |
 

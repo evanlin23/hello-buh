@@ -110,6 +110,7 @@ hud: false,                                                               // ...
 apt-get update && apt-get install -y espeak-ng   # Kokoro's phonemizer for unknown words (a fresh container's apt lists are empty)
 python3.11 -m venv ~/.hb-tts
 ~/.hb-tts/bin/pip install --extra-index-url https://download.pytorch.org/whl/cpu torch kokoro soundfile numpy
+~/.hb-tts/bin/pip install transformers && ~/.hb-tts/bin/pip install --no-deps resemblyzer   # Whisper word cuts + the speaker check
 ```
 CPU torch only (no CUDA download). The first run fetches the Kokoro-82M weights (Apache 2.0) and spaCy's small
 English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
@@ -127,11 +128,66 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 
 Captions: Poppins Black (OFL, `assets/fonts/`; chosen by a font A/B, docs/look.md) at 96 px, max 840 px wide (clear of
 the Shorts action column), white with a dark outline and a soft shadow,
-key words in the story's colour, centred at 70% of the game view's height (under the crosshair, above the
+key words in the story's colour (in a v2 story a character's words are in that character's colour, key words
+underlined; docs/voices.md "Caption colours"), centred at 70% of the game view's height (under the crosshair, above the
 hearts), each chunk popping in on its own first word. The top band keeps the channel's caption (the hook).
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, comparing Pip (Dog on the Hill v3) with kid Puck: "i like this one a lot a lot better" (Pip);
+  Puck: "er that does not sound right".** **The default narrator is Pip's voice again** (cast `narrator` = Leda, the
+  bubbly nine-year-old direction, gemini-3.8-flash-lite-tts, single speaker, natural tempo; recipe in
+  voices/recipes/pip.md). Kid Puck is kept as `puck_kid`, alternative only. Supersedes the Puck rule below.
+- **Owner, 2026-11-10: "i think gemini is really bad with the voices drifting. can you ensure theres a gate or some way
+  to audit this? The voices for the people seem to change like all the time take to take and even within take."**
+  Until the drift gate (agent/voice-drift: `scripts/voice_drift.py`, per line and per 1.5 s window against a locked
+  reference voiceprint) lands: **one model per character per story** (never fall back to another model on a 429
+  mid-story: wait, or re-take all of that character's lines on the new model); **short requests** (one character,
+  at most ~6 lines); **identical direction text** for a character every time; re-take a line that sounds like a
+  different person. Drift is a review blocker.
+- **Owner, 2026-11-10 (Good Boy session), on the narrator: "this voice is so high pitched and annoying lowkey"**
+  (Leda, ~350 Hz) / **"it should still be like a kid/child? idk"** / **"kinda like the roblox shorts but more
+  refined?"** / after five auditions: **"kid puck is fine"**. So: a kid narrator that isn't squeaky: Gemini Puck,
+  directed "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not
+  squeaky; full volume, not whispery or breathy. Take a short breath between sentences." (~235 Hz, natural tempo,
+  no post filter). Audition 3-5 voices on the same two lines before voicing a whole story.
+- **Owner, 2026-11-10: "why does it be like ive tried ot leave this guy 37 ti*? something wierd gets cut off"**: a
+  line cut at Whisper's word end clipped "times". Cut at the quietest point between lines (`voice_check.py
+  --resplit`), and ask for a breath between sentences so a quiet point exists; check with `scripts/voice_edges.py`.
+- **Owner, 2026-11-10 (Good Boy session): Leda is "so high pitched and annoying"; wants a kid "like the roblox shorts but
+  more refined"; picked "kid puck is fine".** The narrator is now **Puck** directed as a twelve-year-old boy (quick,
+  excited, mid-pitch, not squeaky, full volume, a short breath between sentences), no post filter. Then: "what about pip? i liked
+  the audio i sent earlier": **Pip keeps his voice** (cast `pip`: Leda, the bubbly nine-year-old direction, natural
+  tempo) in Dog on the Hill and for Pip-like young narrators; **Puck** (`narrator`) is the default elsewhere.
+- **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
+  per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
+  Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. `./hb voice` now cuts by these rules and
+  checks every line (speaker_check EDGE and CLIPPED are blockers, re-taken automatically; docs/voices.md "The cut"):
+  - cut each line at the quietest point between lines, never at Whisper's word start (it lands late, on the
+    consonant); keep >= 80 ms before the first word and >= 200 ms after the last, with a 10-20 ms fade at each edge;
+  - never splice a pause out of the middle of a line: if a pause is too long, re-take the line (or shorten only the
+    silent middle of the pause with a 30 ms crossfade, never within 60 ms of speech);
+  - check every take: `python3 scripts/voice_edges.py stories/<name>` (edges), a listening pass asking "is any word
+    cut off?", and `./hb pace` now blocks a line still speaking when the video ends or two lines overlapping.
+- **Owner, 2026-11-10: "I see a lot of sessions getting caught on the 4.5 words/second, what are your thoughts?"**
+  4.5 words/s is **not a target**. It was the research median, but the owner then chose Pip's natural tempo (~4.1
+  while speaking, ~2.85 overall) over every sped-up take. Speed comes from the direction and the script (short
+  sentences), never from stretching, and never from re-take loops chasing a number. What matters is no dead air:
+  the opening in one breath, short gaps, holds with something happening, the end right after the payoff. `./hb pace`
+  only warns on a rate clearly slower than Pip and never blocks on rate.
+- **Owner, 2026-11-10: "can you make sure the voices are distinct and correct? It felt like stuff was getting mixed
+  up... Maybe we can have color coded captions?"** and, on the colours: **"It should generally just "match" the vibe
+  of the character thats supposed to be speaking."** Every voiced line is checked for the right speaker and the
+  right words before anything is recorded (`./hb voice` runs `scripts/speaker_check.py` and re-takes failures); a
+  line in the wrong voice is a blocker. Each character's captions are in its own colour, matched to its look and role
+  (`color` in voices/cast.json: the narrator white, Milo Steve's cyan, the elder amber...), with a small name tag
+  over its first line; the word colour only ever says who is talking, and a key word is a bar under it (docs/voices.md
+  "Caption colours").
+- **Owner, 2026-11-10: "do 1 at a time if the top do it 1 at a time. the font is ok yes just whatever is best".**
+  Story captions show **one word at a time** (Xenost and Ashyyy: one word in all 48 sampled frames), timed by
+  voice/words.json word starts, in Poppins Black. Each word pops in (0.1 s, the existing `POP`) and cuts out hard
+  on the next word: no fade or slide out, which top channels don't use either. story.json `"captions": "chunk"`
+  brings back the 2-3 word chunks.
 - **Owner, 2026-11-10: "you choose for the audio mix, im not an expert there".** The lead picked the new story mix
   (docs/audio.md): mood score with ducking, a drop-out and hit at the payoff, room tone, vanilla on-screen sounds,
   -14 LUFS. It's measured, not listened to by the owner, so a story's review checks the mix by ear-proxy
@@ -156,7 +212,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
     Listening checks: gemini-3.5-flash (retry 502/503).
 - **Owner, 2026-11-10: "sure 4.5 is fine bc that matches the best. also, we should have absolutely no pauses in like
   the first few seconds right, bc those are the most critical? Like the other this dog has been sitting there has a
-  brief pause right in the first few seconds."** The narrator talks at ~4.5 words/s while speaking (runaway: 4.6).
+  brief pause right in the first few seconds."** (Superseded on speed: see the newer "not a target" rule; Pip's natural tempo is the reference.)
   No "..." in any line spoken in the first 5 s (Gemini turns it into a half-second stop: Dog on the Hill's L01 had
   0.53 s and L02 0.54 + 0.71 s), and the gap between opening lines stays at one breath (runaway's 0.37-0.40 s).
   `./hb pace` blocks a pause inside an opening line over 0.35 s or a gap between opening lines over 0.6 s.
@@ -193,7 +249,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   **other characters' lines are quoted by the narrator with a "said" tag by default** (Mom said, "He's just shy.");
   a second voice is allowed for at most 1-3 punchlines of 6 words or fewer, only while that character is on screen,
   very different from the narrator (other age or sex), never two extra voices of the same sex, never exposition.
-  The narrator: young male, fast and deadpan, about **4.5 words per second** (runaway is 4.4), never whispery or breathy:
+  The narrator: fast and deadpan (speed: Pip's natural tempo, see the "not a target" rule), never whispery or breathy:
   say so in the Gemini style prompt. Line 1 is the title: an absurd premise stated flatly in first person, then quick
   escalating examples, the twist, the loop. Test A vs A+ (one extra voice) on the next 4 stories.
 - **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like
@@ -253,7 +309,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
   or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog. The set library
   (`lib/sets`, catalog and anchors in docs/sets.md) does both: `sets.findSite`, `sets.place(ctx, 'cottage', {...})`
-  (14 dressed pieces that land on the terrain and return door/bed/window anchors), `sets.vanilla` and `sets.dress`.
+  (17 dressed pieces that land on the terrain and return door/bed/window anchors), `sets.vanilla` and `sets.dress`.
 - **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
   good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
   overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its
@@ -294,7 +350,7 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 - `face_on` windows are sequential (one open at a time): `face_off` before the next `face_on`.
 - A summoned TNT with `fuse:0s` at the camera gives "HelloBuh blew up" on the death screen (a creeper would
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
-- No block entities render (beds, bells, chests, signs): build sets without them.
+- Block entities render now (beds, bells, chests with their lids, signs, banners, skulls, shulkers), and an opened chest, barrel or shulker box shows its container screen with the contents (docs/engine_features.md). Anything else the renderer lacks: build it (docs/engine_features.md), don't stage around it.
 - Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands. Keep sneak (and
   any other key the next shot needs) held through the cut (`K.cut` does): a stunt that clears its controls before the
   teleport stands the camera up for a tick and it eases back down on screen. `scripts/rec_check.py` flags both.

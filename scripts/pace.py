@@ -234,6 +234,20 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     voice_end = {lid: round(t + (vo.get(lid) or {}).get("end", 0), 2) for t, lid in lines} if voice_gaps else {}
     spoken = sum(max(0.0, (vo.get(l) or {}).get("end", 0) - (vo.get(l) or {}).get("onset", 0)) for _, l in lines) if voice_gaps else None
 
+    # ---- voice cut off or overlapping (owner 2026-11-10: "the voices seem to be edited in a way that cuts stuff off")
+    if voice_end:
+        spoken_lines = [l for l in lines if not text_of or l[1] in text_of]   # narration_wav plays story.json's lines only
+        for (t0, lid), nxt in zip(spoken_lines, spoken_lines[1:] + [(None, None)]):
+            e = voice_end.get(lid)
+            if e is None:
+                continue
+            if e > dur - 0.05:
+                add("BLOCK", "voice", e, f"{lid} is still speaking when the video ends ({e:.2f} s vs end {dur:.2f} s): its last word is cut off",
+                    "end after the line (endAfter on its last word + 0.2 s), or move the line earlier")
+            if nxt[0] is not None and e > nxt[0] + 0.03:
+                add("BLOCK", "voice", nxt[0], f"{nxt[1]} starts at {nxt[0]:.2f} s while {lid} is still speaking (to {e:.2f} s): the lines overlap",
+                    "space the line marks so each line ends before the next starts (or shorten the take's tail padding)")
+
     # ---- 6. length
     if dur < LEN_MIN:
         add("BLOCK", "length", dur, f"{dur:.1f} s: under the owner's 30 s minimum", "more beats (an escalating series), not slower ones")
@@ -340,15 +354,17 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         notes.append(f"speech rate: {nwords} words over {span:.1f} s = {wps:.2f} words/s (runaway, the benchmark: 3.47 by this count)")
         if spoken:
             swps = nwords / max(1e-6, spoken)
-            notes.append(f"speaking-time rate: {swps:.2f} words/s while talking (owner target 4.5, the top narrator channels' median)")
-            if swps < 3.8:
-                add("WARN", "pace", None, f"the narrator talks at {swps:.2f} words/s while speaking (owner target 4.5)",
-                    "a faster take ('fast, bright, energetic' in the style prompt) or atempo 1.1-1.2")
-        if wps < 2.7:
-            add("BLOCK", "pace", None, f"the narration is slow: {wps:.2f} words/s (runaway 3.47 by this count)",
-                "re-take faster (direct 'fast, energetic' in the style prompt) or atempo the takes; tighten the gaps between lines")
-        elif wps < 3.3:
-            add("WARN", "pace", None, f"the narration is slowish: {wps:.2f} words/s (runaway 3.47 by this count)", "a faster take, atempo 1.1-1.2, shorter gaps")
+            notes.append(f"speaking-time rate: {swps:.2f} words/s while talking (reference: Pip, the owner's pick, ~4.1)")
+            # owner 2026-11-10: the natural-tempo Pip beat every sped-up take ("too sped up"), so the rate is
+            # information, not a target: warn only when clearly slower than Pip, never block, never stretch takes
+            if swps < 3.3:
+                add("WARN", "pace", None, f"the narrator talks at {swps:.2f} words/s while speaking (Pip ~4.1)",
+                    "re-take with a quicker direction; never time-stretch (the owner rejected sped-up takes)")
+        # dead air is what loses viewers, and the gap and pause checks above catch it; overall rate only flags a
+        # story that is mostly silence
+        if wps < 2.3:
+            add("WARN", "pace", None, f"the narration is sparse: {wps:.2f} words/s overall (Pip's Dog on the Hill ~2.85)",
+                "tighten the gaps between lines and the holds with no voice")
 
     # ---- 5. payoff (located first: build-up runs to it)
     payoff, how = None, ""

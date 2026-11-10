@@ -20,7 +20,9 @@ shots, clean continuity, a "why tf?" hook and a twist worth a rewatch.
 2. **Owner notes first.** Read the review notes the owner left on the review page (see "Feedback" below) and
    `uploads/scores.json` (subscribers per 1k views by format). An open note on a published story is fixed in the
    style skill before you make anything new.
-3. Check `pgrep -af "server.jar|bot.js"`: one server batch at a time per container.
+3. Check `pgrep -af "server.jar|bot.js"`: one server batch at a time per container (`./hb doctor` says whose).
+   **Run `./hb rules` now and again before voicing (2), recording (4) and rendering (5):** the owner adds rules during
+   the day; a new `id` or newest date means re-read docs/stories.md "House rules" and fix the story before that step.
 4. Create your branch `claude/story-<name>` once you have a name; claim the premise in `docs/stories.md` in its own
    commit and push it, so two sessions never make the same story.
 
@@ -44,11 +46,18 @@ too close to a made story; vary the lane: eerie / absurd / heart) → beat sheet
   may be used instead of writing a new one.
 
 ## 2. Voice (~10 min)
-Gemini TTS via `scripts/tts.py` (the proxy injects the key: header `x-goog-api-key: proxy`). Cast from
-`voices/cast.json` so recurring characters keep their voice. Save quota: the cheapest TTS model that sounds right,
-a scene's dialogue in ONE multi-speaker request (max 2 speakers per request), cache every take, only re-take lines
-that changed. Align words (Whisper / the aligner in the voice pipeline) into `voice.json`. Listen-check with a
-transcription pass: the take must match the script (the model sometimes reads the direction aloud).
+One command: `./hb voice story_<name>` (docs/voices.md "Making the voice"). It voices the cast on Gemini TTS (the
+proxy injects the key), cuts each take safely (Whisper picks the boundary, the cut sits in the pause's quietest point with 80+ ms
+before and 200+ ms after each line), runs `scripts/speaker_check.py` on every line (the
+right voice? the right words? any word cut off, by level and by a listening model?), re-takes the failures as single-speaker requests (at most 2 each; lines that pass
+are never re-taken), aligns the word times into `voice.json` and prints the final check. Don't hand-roll this step
+(no extra Whisper installs: `./hb doctor` says what the TTS venv needs). Cast from `voices/cast.json` so recurring
+characters keep their voice and caption colour. Narrator-first: character lines of 3 words or fewer are voiced alone
+(Gemini's multi-speaker mode swapped short lines into the other voice). Save quota: cheapest model first, every
+take cached, only changed lines re-taken (`--only L05`).
+**A line in the wrong voice is a blocker** (owner, 2026-11-10: "make sure the voices are distinct and correct"): if
+`./hb voice` ends with BLOCKERS after its re-takes, listen, change the line's text or direction, and `./hb voice
+story_<name> --only <id>`; never record over a swapped line. THIN lines: listen to them.
 **Quota out (429 on every model):** stop here, push, and leave the story for the next run; never fall back to the
 old sped-up single narrator.
 
@@ -122,3 +131,11 @@ reason: docs/stories.md, House rules.
 A shot the renderer can't draw yet is a feature to build, not a reason to rewrite the scene: build it
 (docs/engine_features.md) and merge it to main once existing Shorts render unchanged. Only a feature that would take
 more than ~2 h gets staged around, and it's logged in docs/engine_requests.md.
+
+## Owner notes go to main at once (lead, 2026-11-10)
+When the owner gives you a note in your session, it's a rule for every story, not just yours. In the same hour:
+add it as a dated quote (and what it means in practice) to the top of docs/stories.md "House rules" **on main**, in
+its own small commit (`git fetch origin main && git checkout -B rules origin/main`, edit, commit,
+`git push origin rules:main`; retry on a race), then go back to your branch. This is the one thing you push to main
+directly. Shared tools you build (a checker, a splitter, a map) also go to main once tested, so the next session
+doesn't rebuild them.
