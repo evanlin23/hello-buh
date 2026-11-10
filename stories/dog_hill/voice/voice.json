@@ -4,24 +4,24 @@
    "who": "N",
    "text": "The dog on the hill hasn't moved in nine-hundred days.",
    "dur": 2.565,
-   "onset": 0.1,
-   "end": 2.34,
+   "onset": 0.16,
+   "end": 2.48,
    "chunks": [
     [
-     0.1,
-     0.36
+     0.16,
+     0.46
     ],
     [
-     0.36,
-     0.78
+     0.5,
+     0.8
     ],
     [
-     0.78,
-     1.38
+     0.98,
+     1.46
     ],
     [
-     1.38,
-     2.34
+     1.5,
+     2.48
     ]
    ],
    "captions": [
@@ -37,31 +37,31 @@
    "beat": "L01",
    "offset": 0.0,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "538c17bf7e5b"
   },
   "L02": {
    "who": "N",
    "text": "Not for rain. Not for thunder. Not for creepers. Not even zombies.",
    "dur": 3.07,
-   "onset": 0.07,
-   "end": 2.74,
+   "onset": 0.06,
+   "end": 2.9,
    "chunks": [
     [
-     0.07,
-     0.44
+     0.06,
+     0.5
     ],
     [
      0.7,
-     1.06
+     1.28
     ],
     [
      1.42,
-     2.0
+     2.1
     ],
     [
      2.22,
-     2.74
+     2.9
     ]
    ],
    "captions": [
@@ -77,31 +77,31 @@
    "beat": "L01",
    "offset": 2.565,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "6626970f259b"
   },
   "L03": {
    "who": "N",
    "text": "I bring him a bone every morning. He never looks.",
    "dur": 1.68,
-   "onset": 0.0,
-   "end": 1.44,
+   "onset": 0.02,
+   "end": 1.54,
    "chunks": [
     [
-     0.0,
+     0.02,
      0.28
     ],
     [
-     0.28,
-     0.44
+     0.3,
+     0.5
     ],
     [
-     0.44,
-     0.94
+     0.6,
+     1.02
     ],
     [
-     1.1,
-     1.44
+     1.08,
+     1.54
     ]
    ],
    "captions": [
@@ -117,27 +117,27 @@
    "beat": "L01",
    "offset": 5.635,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "5239b0c3e90c"
   },
   "L04": {
    "who": "N",
    "text": "Kids throw sticks for him. He doesn't blink.",
    "dur": 1.46,
-   "onset": 0.0,
-   "end": 1.3,
+   "onset": 0.02,
+   "end": 1.38,
    "chunks": [
     [
-     0.0,
-     0.3
+     0.02,
+     0.34
     ],
     [
-     0.3,
-     0.9
+     0.375,
+     0.88
     ],
     [
      1.0,
-     1.3
+     1.38
     ]
    ],
    "captions": [
@@ -152,31 +152,31 @@
    "beat": "L01",
    "offset": 7.315,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "d13dfd12a731"
   },
   "L05": {
    "who": "N",
    "text": "He's got a red collar, but nobody here owns him.",
    "dur": 1.84,
-   "onset": 0.05,
-   "end": 1.74,
+   "onset": 0.04,
+   "end": 1.8,
    "chunks": [
     [
-     0.05,
-     0.18
+     0.04,
+     0.22
     ],
     [
-     0.18,
-     0.6
+     0.26,
+     0.76
     ],
     [
-     0.82,
-     1.38
+     0.78,
+     1.44
     ],
     [
-     1.38,
-     1.74
+     1.54,
+     1.8
     ]
    ],
    "captions": [
@@ -192,27 +192,27 @@
    "beat": "L01",
    "offset": 8.775,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "70d2a0716e89"
   },
   "L06": {
    "who": "N",
    "text": "He just stares at one empty patch of grass.",
    "dur": 1.92,
-   "onset": 0.05,
-   "end": 1.64,
+   "onset": 0.04,
+   "end": 1.8,
    "chunks": [
     [
-     0.05,
-     0.42
+     0.04,
+     0.56
     ],
     [
-     0.42,
-     1.06
+     0.6,
+     1.2
     ],
     [
-     1.06,
-     1.64
+     1.24,
+     1.8
     ]
    ],
    "captions": [
@@ -227,7 +227,7 @@
    "beat": "L01",
    "offset": 10.615,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "a1492e8acc69"
   },
   "L07": {
@@ -239,22 +239,22 @@
    "chunks": [
     [
      0.04,
-     0.4
+     0.44
     ],
     [
-     0.54,
-     0.82
+     0.6,
+     0.88
     ],
     [
-     0.82,
-     1.24
+     0.96,
+     1.3
     ],
     [
-     1.42,
-     1.66
+     1.4,
+     1.72
     ],
     [
-     1.66,
+     1.74,
      2.1
     ]
    ],
@@ -272,27 +272,27 @@
    "beat": "L01",
    "offset": 12.535,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "d4774369e48f"
   },
   "L08": {
    "who": "N",
    "text": "I tried to make him stand. I even begged.",
    "dur": 1.54,
-   "onset": 0.05,
-   "end": 1.3,
+   "onset": 0.04,
+   "end": 1.48,
    "chunks": [
     [
-     0.05,
-     0.24
+     0.04,
+     0.28
     ],
     [
-     0.24,
-     0.66
+     0.3,
+     0.82
     ],
     [
-     0.44,
-     1.3
+     0.96,
+     1.48
     ]
    ],
    "captions": [
@@ -307,7 +307,7 @@
    "beat": "L01",
    "offset": 14.665,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "628330cb72fc"
   },
   "L09": {
@@ -315,23 +315,23 @@
    "text": "Grandpa says, leave him be. Only one voice gets him up.",
    "dur": 2.13,
    "onset": 0.04,
-   "end": 2.04,
+   "end": 2.08,
    "chunks": [
     [
      0.04,
-     0.42
+     0.46
     ],
     [
-     0.42,
+     0.6,
      0.9
     ],
     [
-     1.06,
-     1.6
+     1.08,
+     1.7
     ],
     [
-     1.6,
-     2.04
+     1.74,
+     2.08
     ]
    ],
    "captions": [
@@ -347,23 +347,23 @@
    "beat": "L01",
    "offset": 16.205,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "b8c3cf25ac9d"
   },
   "L10": {
    "who": "N",
    "text": "Somebody said be right back.",
    "dur": 1.12,
-   "onset": 0.05,
-   "end": 0.96,
+   "onset": 0.06,
+   "end": 1.04,
    "chunks": [
     [
-     0.05,
-     0.38
+     0.06,
+     0.42
     ],
     [
-     0.54,
-     0.96
+     0.6,
+     1.04
     ]
    ],
    "captions": [
@@ -377,31 +377,31 @@
    "beat": "L01",
    "offset": 18.335,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "be77b4f3e000"
   },
   "L11": {
    "who": "N",
    "text": "So every night, I sit there. nobody should wait alone.",
    "dur": 2.0,
-   "onset": 0.0,
-   "end": 1.8,
+   "onset": 0.04,
+   "end": 1.96,
    "chunks": [
     [
-     0.0,
-     0.62
+     0.04,
+     0.7
     ],
     [
-     0.62,
-     1.06
+     0.72,
+     1.1
     ],
     [
-     1.2,
-     1.48
+     1.22,
+     1.52
     ],
     [
-     1.48,
-     1.8
+     1.54,
+     1.96
     ]
    ],
    "captions": [
@@ -417,23 +417,23 @@
    "beat": "L01",
    "offset": 19.455,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "3ea2632d074a"
   },
   "L12": {
    "who": "N",
    "text": "Then last night, he stood up.",
    "dur": 1.03,
-   "onset": 0.0,
-   "end": 0.92,
+   "onset": 0.02,
+   "end": 0.96,
    "chunks": [
     [
-     0.0,
-     0.42
+     0.02,
+     0.5
     ],
     [
      0.6,
-     0.92
+     0.96
     ]
    ],
    "captions": [
@@ -447,35 +447,35 @@
    "beat": "L01",
    "offset": 21.455,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "a64c09bba32b"
   },
   "L13": {
    "who": "N",
    "text": "Then a guy just appeared on the patch. Hey buddy, sorry, got busy.",
    "dur": 2.44,
-   "onset": 0.04,
-   "end": 2.28,
+   "onset": 0.02,
+   "end": 2.36,
    "chunks": [
     [
-     0.04,
-     0.3
+     0.02,
+     0.34
     ],
     [
-     0.3,
-     0.68
+     0.42,
+     0.82
     ],
     [
-     0.68,
-     1.1
+     0.84,
+     1.2
     ],
     [
-     1.36,
-     1.52
+     1.34,
+     1.6
     ],
     [
-     1.72,
-     2.28
+     1.745,
+     2.36
     ]
    ],
    "captions": [
@@ -492,27 +492,27 @@
    "beat": "L01",
    "offset": 22.485,
    "gap": 0,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "3874948cbb2c"
   },
   "L14": {
    "who": "N",
    "text": "Then he said, sit, boy. be right back.",
    "dur": 1.495,
-   "onset": 0.07,
-   "end": 1.18,
+   "onset": 0.04,
+   "end": 1.24,
    "chunks": [
     [
-     0.07,
-     0.3
+     0.04,
+     0.34
     ],
     [
      0.46,
-     0.7
+     0.74
     ],
     [
      0.84,
-     1.18
+     1.24
     ]
    ],
    "captions": [
@@ -526,7 +526,7 @@
    "model": "gemini-3.8-flash-tts",
    "beat": "L01",
    "offset": 24.925,
-   "aligned": "whisper-base.en",
+   "aligned": "ctc:wav2vec2-base-960h",
    "aligned_wav": "f040c6db23a4"
   }
  },
