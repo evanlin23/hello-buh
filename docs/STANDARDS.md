@@ -75,6 +75,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4
 4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
 
+5. **One shared world** (seed `hellobuh`): every story happens at a canonical place in docs/world/map.json, built by
+   `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
+   docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
+   check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
 2. **The picture never runs ahead of or against the words** ("dug under it" before we dig; "never dig straight down"

@@ -79,9 +79,17 @@ story_<name> --only <id>`; never record over a swapped line. THIN lines: listen 
 old sped-up single narrator.
 
 ## 3. Build the set and scenes (~40 min)
-- Set: a natural site (`scripts/scout.sh`) or a vanilla `/place structure` base, then designed builds from
-  `lib/sets/` and the building guide; score the set with the guide's 0-10 checklist (7+, focal building 8+) on
-  stills before recording the story.
+- **The shared world** (owner, 2026-11-10: "wouldnt the lore be crazy if all of the sets were the same world";
+  docs/world/canon.md). The story's place is in `docs/world/map.json` (claimed in step 1). In `setup`:
+  `const W = await world.build(ctx, { story: '<name>' })` (lib/world.js) builds the story's places and its cameos at
+  their canonical coordinates as of the story's day, on the seed's own terrain (run.sh wipes the world every run; the
+  seed and the map rebuild it the same every time). Stage from `world.origin(place)` and the pieces' anchors. Never
+  `sets.planSite` / `findSite` / `findShore`, `clearSet`, `near` or `/locate` in a story stunt: they move a place
+  that must not move (lib/sets refuses them after world.build). `node scripts/world.js stunt story_<name>` checks it.
+  Story-only props and dressing (the night's mess, a cast) go on top in the stunt; anything that stays in the world
+  after the story goes into map.json as a stamp with `since: <day>`.
+- Set: the canonical place, then designed builds from `lib/sets/` and the building guide; score the set with the
+  guide's 0-10 checklist (7+, focal building 8+) on stills before recording the story.
 - Scenes: `stunts/_story_template.js` on the story kit (`lib/story.js`) with the movie engine's camera shots and
   look (`docs/movie_engine.md`); an establishing shot for every new place; close-ups only for reveals.
 - Every accident needs a visible in-game cause.
@@ -121,6 +129,10 @@ fixed (edit-only fixes via `scripts/reedit.sh`, staging via a re-record); nitpic
 survives round 2, stop, push, and report it to the owner instead of publishing.
 **Repeated finding = a rule.** Any blocker that has happened before goes into the `cinematic-style` skill's
 "mistakes already solved" list (or docs/stories.md staging lessons) in the same run, not only into this video.
+
+## 6b. The world (~2 min)
+After the review: the story's row in docs/world/map.json `stories` gets `status: "made"`, and anything it changed for
+good (a building, a grave, a character gone) is in docs/world/canon.md and map.json with its `since` day.
 
 ## 7. Publish (~2 min)
 `node scripts/publish.js story_<name> --pass --notes "<one line: premise, rounds, nitpicks>"`. Mark the premise

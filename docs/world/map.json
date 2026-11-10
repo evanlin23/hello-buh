@@ -1,0 +1,1641 @@
+{
+ "_": "The HelloBuh shared world: one seed, every place at ONE canonical spot (docs/world/canon.md). lib/world.js builds places from here; never search for a site. Days are the world timeline (day 0 = the world was made). Pieces: lib/sets pieces with canonical x, y, z, facing, variant (y measured from the survey: scripts/world_survey.py). Stamps: small fixed operations (cmds, summon, setblock, fill, sign, frame); live: re-summoned every run. since/until: the days it exists.",
+ "seed": "hellobuh",
+ "spawn": [
+  128,
+  70,
+  16
+ ],
+ "sea_level": 62,
+ "survey": {
+  "area": [
+   -2400,
+   -1400,
+   400,
+   0
+  ]
+ },
+ "view": {
+  "area": [
+   -2400,
+   -1400,
+   400,
+   0
+  ],
+  "scale": 0.6,
+  "detail_in": [
+   -640,
+   -1150,
+   -20,
+   -300
+  ],
+  "detail_label": "The Green: every place, world_map_hub.png",
+  "title": "The HelloBuh world (seed \"hellobuh\")"
+ },
+ "hub": {
+  "area": [
+   -640,
+   -1150,
+   -20,
+   -300
+  ],
+  "scale": 1.6,
+  "title": "The Green: where the stories happen"
+ },
+ "places": {
+  "the_green": {
+   "name": "The Green",
+   "kind": "region",
+   "label_dir": "n",
+   "at": [
+    -360,
+    70,
+    -740
+   ],
+   "footprint": [
+    -620,
+    -1140,
+    -40,
+    -300
+   ],
+   "about": "The green island on the east coast between the White and the sea: forest rim, the High Meadow plateau (y 115-123), the North Inlet, the Lava Field. Almost every story happens here.",
+   "stories": []
+  },
+  "the_white": {
+   "name": "The White",
+   "kind": "region",
+   "label_dir": "n",
+   "at": [
+    -1250,
+    70,
+    -560
+   ],
+   "footprint": [
+    -1850,
+    -1400,
+    -640,
+    0
+   ],
+   "about": "Two kilometres of snowy plains, ice spikes and frozen rivers between the Green and the West March. Snowy villages, igloos, two ancient cities deep under it.",
+   "stories": []
+  },
+  "the_west_march": {
+   "name": "The West March",
+   "kind": "region",
+   "label_dir": "n",
+   "at": [
+    -2130,
+    70,
+    -700
+   ],
+   "footprint": [
+    -2400,
+    -800,
+    -1860,
+    -200
+   ],
+   "about": "Green coast country west of the White: Ravenford, the Ridge and its outpost, the stronghold under the islets.",
+   "stories": []
+  },
+  "hushwell": {
+   "name": "Hushwell",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -162,
+    79,
+    -860
+   ],
+   "footprint": [
+    -225,
+    -915,
+    -110,
+    -795
+   ],
+   "vanilla": [
+    {
+     "id": "village_plains",
+     "start": [
+      -170,
+      -852
+     ],
+     "generated": true,
+     "note": "the seed generates it: nothing to build, never /place it again"
+    }
+   ],
+   "about": "Milo's home village on a terrace above the east coast; the hill north-west of it is Dog Hill. The well (its centre is the origin) sits over a shrieker (Light Sleeper's staging: the ancient city under it is the story's, the seed's nearest are 1,200 blocks west). Carpeted from day 1400 until Milo stops playing (day 3400): shriekers only answer players.",
+   "pieces": [],
+   "stamps": [
+    {
+     "id": "boxed_bell",
+     "since": 1400,
+     "what": "the village bell in a two-post frame, boxed in white wool, open to the west (Light Sleeper's, kept boxed for good)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -156 80 -861 -156 83 -861 oak_log",
+      "/fill -156 80 -859 -156 83 -859 oak_log",
+      "/setblock -156 83 -860 oak_log[axis=z]",
+      "/setblock -156 82 -860 bell[attachment=ceiling,facing=west]",
+      "/fill -155 80 -862 -155 84 -858 white_wool",
+      "/fill -157 80 -862 -155 84 -862 white_wool",
+      "/fill -157 80 -858 -155 84 -858 white_wool",
+      "/fill -157 84 -862 -155 84 -858 white_wool"
+     ]
+    }
+   ],
+   "stories": [
+    "light_sleeper",
+    "dog_hill"
+   ],
+   "status": "canon"
+  },
+  "dog_hill": {
+   "name": "Dog Hill",
+   "kind": "landmark",
+   "region": "the_green",
+   "within": "hushwell",
+   "at": [
+    -202,
+    108,
+    -898
+   ],
+   "footprint": [
+    -216,
+    -906,
+    -196,
+    -890
+   ],
+   "about": "The flat hilltop north-west of Hushwell, 29 blocks above the plaza (as Dog on the Hill built it; its bible's layout differs, the render is canon): Milo's childhood dirt hut north-east of D, the patch where he logged out (D + (3, 0, 0)), and the dog on D facing it, since day 3400.",
+   "pieces": [],
+   "stamps": [
+    {
+     "id": "meadow",
+     "since": 1300,
+     "what": "the hilltop meadow as Dog on the Hill built it: a disc (r 9) round D levelled to y 108, a grassy ridge rising to the west, a mound to the south-east, mossy boulders, leaf bushes, a birch, two oaks, low flowers (same seed); the dog's spot worn to coarse dirt",
+     "do": "cmds",
+     "cmds": [
+      "/fill -202 109 -907 -202 122 -907 air",
+      "/fill -202 94 -907 -202 107 -907 dirt replace air",
+      "/fill -202 108 -907 -202 108 -907 grass_block",
+      "/fill -206 109 -906 -198 122 -906 air",
+      "/fill -206 94 -906 -198 107 -906 dirt replace air",
+      "/fill -206 108 -906 -198 108 -906 grass_block",
+      "/fill -207 109 -905 -197 122 -905 air",
+      "/fill -207 94 -905 -197 107 -905 dirt replace air",
+      "/fill -207 108 -905 -197 108 -905 grass_block",
+      "/fill -208 109 -904 -196 122 -904 air",
+      "/fill -208 94 -904 -196 107 -904 dirt replace air",
+      "/fill -208 108 -904 -196 108 -904 grass_block",
+      "/fill -209 109 -903 -195 122 -903 air",
+      "/fill -209 94 -903 -195 107 -903 dirt replace air",
+      "/fill -209 108 -903 -195 108 -903 grass_block",
+      "/fill -210 109 -902 -194 122 -902 air",
+      "/fill -210 94 -902 -194 107 -902 dirt replace air",
+      "/fill -210 108 -902 -194 108 -902 grass_block",
+      "/fill -210 109 -901 -194 122 -901 air",
+      "/fill -210 94 -901 -194 107 -901 dirt replace air",
+      "/fill -210 108 -901 -194 108 -901 grass_block",
+      "/fill -210 109 -900 -194 122 -900 air",
+      "/fill -210 94 -900 -194 107 -900 dirt replace air",
+      "/fill -210 108 -900 -194 108 -900 grass_block",
+      "/fill -210 109 -899 -194 122 -899 air",
+      "/fill -210 94 -899 -194 107 -899 dirt replace air",
+      "/fill -210 108 -899 -194 108 -899 grass_block",
+      "/fill -211 109 -898 -194 122 -898 air",
+      "/fill -211 94 -898 -194 107 -898 dirt replace air",
+      "/fill -211 108 -898 -194 108 -898 grass_block",
+      "/fill -210 109 -897 -194 122 -897 air",
+      "/fill -210 94 -897 -194 107 -897 dirt replace air",
+      "/fill -210 108 -897 -194 108 -897 grass_block",
+      "/fill -210 109 -896 -194 122 -896 air",
+      "/fill -210 94 -896 -194 107 -896 dirt replace air",
+      "/fill -210 108 -896 -194 108 -896 grass_block",
+      "/fill -210 109 -895 -194 122 -895 air",
+      "/fill -210 94 -895 -194 107 -895 dirt replace air",
+      "/fill -210 108 -895 -194 108 -895 grass_block",
+      "/fill -210 109 -894 -194 122 -894 air",
+      "/fill -210 94 -894 -194 107 -894 dirt replace air",
+      "/fill -210 108 -894 -194 108 -894 grass_block",
+      "/fill -209 109 -893 -195 122 -893 air",
+      "/fill -209 94 -893 -195 107 -893 dirt replace air",
+      "/fill -209 108 -893 -195 108 -893 grass_block",
+      "/fill -208 109 -892 -196 122 -892 air",
+      "/fill -208 94 -892 -196 107 -892 dirt replace air",
+      "/fill -208 108 -892 -196 108 -892 grass_block",
+      "/fill -207 109 -891 -197 122 -891 air",
+      "/fill -207 94 -891 -197 107 -891 dirt replace air",
+      "/fill -207 108 -891 -197 108 -891 grass_block",
+      "/fill -206 109 -890 -198 122 -890 air",
+      "/fill -206 94 -890 -198 107 -890 dirt replace air",
+      "/fill -206 108 -890 -198 108 -890 grass_block",
+      "/fill -202 109 -889 -202 122 -889 air",
+      "/fill -202 94 -889 -202 107 -889 dirt replace air",
+      "/fill -202 108 -889 -202 108 -889 grass_block",
+      "/fill -214 109 -907 -214 110 -907 dirt",
+      "/setblock -214 111 -907 grass_block",
+      "/fill -213 109 -907 -213 110 -907 dirt",
+      "/setblock -213 111 -907 grass_block",
+      "/fill -212 109 -907 -212 110 -907 dirt",
+      "/setblock -212 111 -907 grass_block",
+      "/fill -211 109 -907 -211 109 -907 dirt",
+      "/setblock -211 110 -907 grass_block",
+      "/setblock -210 109 -907 grass_block",
+      "/setblock -209 109 -907 grass_block",
+      "/setblock -208 109 -907 grass_block",
+      "/setblock -207 109 -907 grass_block",
+      "/fill -214 109 -906 -214 110 -906 dirt",
+      "/setblock -214 111 -906 grass_block",
+      "/fill -213 109 -906 -213 110 -906 dirt",
+      "/setblock -213 111 -906 grass_block",
+      "/fill -212 109 -906 -212 110 -906 dirt",
+      "/setblock -212 111 -906 grass_block",
+      "/fill -211 109 -906 -211 109 -906 dirt",
+      "/setblock -211 110 -906 grass_block",
+      "/setblock -210 109 -906 grass_block",
+      "/setblock -209 109 -906 grass_block",
+      "/setblock -208 109 -906 grass_block",
+      "/setblock -207 109 -906 grass_block",
+      "/fill -214 109 -905 -214 110 -905 dirt",
+      "/setblock -214 111 -905 grass_block",
+      "/fill -213 109 -905 -213 110 -905 dirt",
+      "/setblock -213 111 -905 grass_block",
+      "/fill -212 109 -905 -212 110 -905 dirt",
+      "/setblock -212 111 -905 grass_block",
+      "/fill -211 109 -905 -211 109 -905 dirt",
+      "/setblock -211 110 -905 grass_block",
+      "/fill -210 109 -905 -210 109 -905 dirt",
+      "/setblock -210 110 -905 grass_block",
+      "/fill -209 109 -905 -209 109 -905 dirt",
+      "/setblock -209 110 -905 grass_block",
+      "/setblock -208 109 -905 grass_block",
+      "/setblock -207 109 -905 grass_block",
+      "/fill -214 109 -904 -214 110 -904 dirt",
+      "/setblock -214 111 -904 grass_block",
+      "/fill -213 109 -904 -213 110 -904 dirt",
+      "/setblock -213 111 -904 grass_block",
+      "/fill -212 109 -904 -212 109 -904 dirt",
+      "/setblock -212 110 -904 grass_block",
+      "/fill -211 109 -904 -211 109 -904 dirt",
+      "/setblock -211 110 -904 grass_block",
+      "/fill -210 109 -904 -210 109 -904 dirt",
+      "/setblock -210 110 -904 grass_block",
+      "/fill -209 109 -904 -209 109 -904 dirt",
+      "/setblock -209 110 -904 grass_block",
+      "/setblock -208 109 -904 grass_block",
+      "/fill -214 109 -903 -214 110 -903 dirt",
+      "/setblock -214 111 -903 grass_block",
+      "/fill -213 109 -903 -213 110 -903 dirt",
+      "/setblock -213 111 -903 grass_block",
+      "/fill -212 109 -903 -212 110 -903 dirt",
+      "/setblock -212 111 -903 grass_block",
+      "/fill -211 109 -903 -211 110 -903 dirt",
+      "/setblock -211 111 -903 grass_block",
+      "/fill -210 109 -903 -210 109 -903 dirt",
+      "/setblock -210 110 -903 grass_block",
+      "/fill -209 109 -903 -209 109 -903 dirt",
+      "/setblock -209 110 -903 grass_block",
+      "/setblock -208 109 -903 grass_block",
+      "/fill -214 109 -902 -214 110 -902 dirt",
+      "/setblock -214 111 -902 grass_block",
+      "/fill -213 109 -902 -213 110 -902 dirt",
+      "/setblock -213 111 -902 grass_block",
+      "/fill -212 109 -902 -212 110 -902 dirt",
+      "/setblock -212 111 -902 grass_block",
+      "/fill -211 109 -902 -211 110 -902 dirt",
+      "/setblock -211 111 -902 grass_block",
+      "/fill -210 109 -902 -210 110 -902 dirt",
+      "/setblock -210 111 -902 grass_block",
+      "/fill -209 109 -902 -209 109 -902 dirt",
+      "/setblock -209 110 -902 grass_block",
+      "/fill -214 109 -901 -214 110 -901 dirt",
+      "/setblock -214 111 -901 grass_block",
+      "/fill -213 109 -901 -213 110 -901 dirt",
+      "/setblock -213 111 -901 grass_block",
+      "/fill -212 109 -901 -212 110 -901 dirt",
+      "/setblock -212 111 -901 grass_block",
+      "/fill -211 109 -901 -211 110 -901 dirt",
+      "/setblock -211 111 -901 grass_block",
+      "/fill -210 109 -901 -210 109 -901 dirt",
+      "/setblock -210 110 -901 grass_block",
+      "/setblock -209 109 -901 grass_block",
+      "/fill -214 109 -900 -214 110 -900 dirt",
+      "/setblock -214 111 -900 grass_block",
+      "/fill -213 109 -900 -213 110 -900 dirt",
+      "/setblock -213 111 -900 grass_block",
+      "/fill -212 109 -900 -212 110 -900 dirt",
+      "/setblock -212 111 -900 grass_block",
+      "/fill -211 109 -900 -211 110 -900 dirt",
+      "/setblock -211 111 -900 grass_block",
+      "/fill -210 109 -900 -210 109 -900 dirt",
+      "/setblock -210 110 -900 grass_block",
+      "/setblock -209 109 -900 grass_block",
+      "/fill -214 109 -899 -214 110 -899 dirt",
+      "/setblock -214 111 -899 grass_block",
+      "/fill -213 109 -899 -213 110 -899 dirt",
+      "/setblock -213 111 -899 grass_block",
+      "/fill -212 109 -899 -212 110 -899 dirt",
+      "/setblock -212 111 -899 grass_block",
+      "/fill -211 109 -899 -211 110 -899 dirt",
+      "/setblock -211 111 -899 grass_block",
+      "/fill -210 109 -899 -210 109 -899 dirt",
+      "/setblock -210 110 -899 grass_block",
+      "/setblock -209 109 -899 grass_block",
+      "/setblock -208 109 -899 grass_block",
+      "/setblock -207 109 -899 grass_block",
+      "/fill -214 109 -898 -214 110 -898 dirt",
+      "/setblock -214 111 -898 grass_block",
+      "/fill -213 109 -898 -213 110 -898 dirt",
+      "/setblock -213 111 -898 grass_block",
+      "/fill -212 109 -898 -212 110 -898 dirt",
+      "/setblock -212 111 -898 grass_block",
+      "/fill -211 109 -898 -211 109 -898 dirt",
+      "/setblock -211 110 -898 grass_block",
+      "/setblock -210 109 -898 grass_block",
+      "/setblock -209 109 -898 grass_block",
+      "/setblock -208 109 -898 grass_block",
+      "/setblock -207 109 -898 grass_block",
+      "/fill -214 109 -897 -214 110 -897 dirt",
+      "/setblock -214 111 -897 grass_block",
+      "/fill -213 109 -897 -213 110 -897 dirt",
+      "/setblock -213 111 -897 grass_block",
+      "/fill -212 109 -897 -212 110 -897 dirt",
+      "/setblock -212 111 -897 grass_block",
+      "/fill -211 109 -897 -211 109 -897 dirt",
+      "/setblock -211 110 -897 grass_block",
+      "/setblock -210 109 -897 grass_block",
+      "/setblock -209 109 -897 grass_block",
+      "/setblock -208 109 -897 grass_block",
+      "/setblock -207 109 -897 grass_block",
+      "/fill -214 109 -896 -214 110 -896 dirt",
+      "/setblock -214 111 -896 grass_block",
+      "/fill -213 109 -896 -213 110 -896 dirt",
+      "/setblock -213 111 -896 grass_block",
+      "/fill -212 109 -896 -212 110 -896 dirt",
+      "/setblock -212 111 -896 grass_block",
+      "/fill -211 109 -896 -211 109 -896 dirt",
+      "/setblock -211 110 -896 grass_block",
+      "/fill -210 109 -896 -210 109 -896 dirt",
+      "/setblock -210 110 -896 grass_block",
+      "/fill -209 109 -896 -209 109 -896 dirt",
+      "/setblock -209 110 -896 grass_block",
+      "/setblock -208 109 -896 grass_block",
+      "/setblock -207 109 -896 grass_block",
+      "/fill -214 109 -895 -214 110 -895 dirt",
+      "/setblock -214 111 -895 grass_block",
+      "/fill -213 109 -895 -213 110 -895 dirt",
+      "/setblock -213 111 -895 grass_block",
+      "/fill -212 109 -895 -212 109 -895 dirt",
+      "/setblock -212 110 -895 grass_block",
+      "/fill -211 109 -895 -211 109 -895 dirt",
+      "/setblock -211 110 -895 grass_block",
+      "/fill -210 109 -895 -210 109 -895 dirt",
+      "/setblock -210 110 -895 grass_block",
+      "/fill -209 109 -895 -209 109 -895 dirt",
+      "/setblock -209 110 -895 grass_block",
+      "/setblock -208 109 -895 grass_block",
+      "/fill -214 109 -894 -214 110 -894 dirt",
+      "/setblock -214 111 -894 grass_block",
+      "/fill -213 109 -894 -213 110 -894 dirt",
+      "/setblock -213 111 -894 grass_block",
+      "/fill -212 109 -894 -212 110 -894 dirt",
+      "/setblock -212 111 -894 grass_block",
+      "/fill -211 109 -894 -211 110 -894 dirt",
+      "/setblock -211 111 -894 grass_block",
+      "/fill -210 109 -894 -210 109 -894 dirt",
+      "/setblock -210 110 -894 grass_block",
+      "/fill -209 109 -894 -209 109 -894 dirt",
+      "/setblock -209 110 -894 grass_block",
+      "/setblock -208 109 -894 grass_block",
+      "/fill -214 109 -893 -214 110 -893 dirt",
+      "/setblock -214 111 -893 grass_block",
+      "/fill -213 109 -893 -213 110 -893 dirt",
+      "/setblock -213 111 -893 grass_block",
+      "/fill -212 109 -893 -212 110 -893 dirt",
+      "/setblock -212 111 -893 grass_block",
+      "/fill -211 109 -893 -211 110 -893 dirt",
+      "/setblock -211 111 -893 grass_block",
+      "/fill -210 109 -893 -210 110 -893 dirt",
+      "/setblock -210 111 -893 grass_block",
+      "/fill -209 109 -893 -209 109 -893 dirt",
+      "/setblock -209 110 -893 grass_block",
+      "/fill -214 109 -892 -214 110 -892 dirt",
+      "/setblock -214 111 -892 grass_block",
+      "/fill -213 109 -892 -213 110 -892 dirt",
+      "/setblock -213 111 -892 grass_block",
+      "/fill -212 109 -892 -212 110 -892 dirt",
+      "/setblock -212 111 -892 grass_block",
+      "/fill -211 109 -892 -211 110 -892 dirt",
+      "/setblock -211 111 -892 grass_block",
+      "/fill -214 109 -891 -214 110 -891 dirt",
+      "/setblock -214 111 -891 grass_block",
+      "/fill -213 109 -891 -213 110 -891 dirt",
+      "/setblock -213 111 -891 grass_block",
+      "/fill -212 109 -891 -212 110 -891 dirt",
+      "/setblock -212 111 -891 grass_block",
+      "/fill -211 109 -891 -211 110 -891 dirt",
+      "/setblock -211 111 -891 grass_block",
+      "/fill -214 109 -890 -214 110 -890 dirt",
+      "/setblock -214 111 -890 grass_block",
+      "/fill -213 109 -890 -213 110 -890 dirt",
+      "/setblock -213 111 -890 grass_block",
+      "/fill -212 109 -890 -212 110 -890 dirt",
+      "/setblock -212 111 -890 grass_block",
+      "/fill -211 109 -890 -211 110 -890 dirt",
+      "/setblock -211 111 -890 grass_block",
+      "/fill -214 109 -889 -214 110 -889 dirt",
+      "/setblock -214 111 -889 grass_block",
+      "/fill -213 109 -889 -213 110 -889 dirt",
+      "/setblock -213 111 -889 grass_block",
+      "/fill -212 109 -889 -212 110 -889 dirt",
+      "/setblock -212 111 -889 grass_block",
+      "/fill -211 109 -889 -211 109 -889 dirt",
+      "/setblock -211 110 -889 grass_block",
+      "/setblock -199 109 -893 grass_block",
+      "/setblock -198 109 -893 grass_block",
+      "/setblock -198 109 -892 grass_block",
+      "/setblock -197 109 -893 grass_block",
+      "/setblock -197 109 -892 dirt",
+      "/setblock -197 110 -892 grass_block",
+      "/setblock -196 109 -892 grass_block",
+      "/setblock -198 109 -891 grass_block",
+      "/setblock -197 109 -891 grass_block",
+      "/setblock -206 109 -904 mossy_cobblestone",
+      "/setblock -205 109 -904 cobblestone",
+      "/setblock -206 110 -904 mossy_cobblestone",
+      "/setblock -206 109 -905 andesite",
+      "/setblock -196 109 -896 mossy_cobblestone",
+      "/setblock -195 109 -896 andesite",
+      "/setblock -204 109 -906 oak_leaves[persistent=true]",
+      "/setblock -203 109 -906 oak_leaves[persistent=true]",
+      "/setblock -195 109 -894 oak_leaves[persistent=true]",
+      "/setblock -209 109 -894 oak_leaves[persistent=true]",
+      "/place feature minecraft:birch -213 111 -896",
+      "/setblock -211 108 -903 dirt",
+      "/place feature minecraft:oak -211 109 -903",
+      "/setblock -206 108 -908 dirt",
+      "/place feature minecraft:oak -206 109 -908",
+      "/setblock -205 109 -906 azure_bluet",
+      "/setblock -207 110 -905 azure_bluet",
+      "/setblock -205 109 -905 short_grass",
+      "/setblock -203 109 -905 poppy",
+      "/setblock -208 110 -904 tall_grass[half=lower]",
+      "/setblock -208 111 -904 tall_grass[half=upper]",
+      "/setblock -204 109 -904 short_grass",
+      "/setblock -202 109 -904 poppy",
+      "/setblock -201 109 -904 cornflower",
+      "/setblock -208 110 -903 tall_grass[half=lower]",
+      "/setblock -208 111 -903 tall_grass[half=upper]",
+      "/setblock -206 109 -903 poppy",
+      "/setblock -205 109 -903 short_grass",
+      "/setblock -204 109 -903 short_grass",
+      "/setblock -208 109 -902 short_grass",
+      "/setblock -207 109 -902 tall_grass[half=lower]",
+      "/setblock -207 110 -902 tall_grass[half=upper]",
+      "/setblock -206 109 -902 poppy",
+      "/setblock -205 109 -902 azure_bluet",
+      "/setblock -208 109 -901 short_grass",
+      "/setblock -207 109 -901 dandelion",
+      "/setblock -205 109 -901 short_grass",
+      "/setblock -204 109 -901 cornflower",
+      "/setblock -209 110 -900 dandelion",
+      "/setblock -208 109 -900 short_grass",
+      "/setblock -207 109 -900 cornflower",
+      "/setblock -204 109 -900 short_grass",
+      "/setblock -197 109 -900 azure_bluet",
+      "/setblock -196 109 -900 oxeye_daisy",
+      "/setblock -210 111 -899 short_grass",
+      "/setblock -208 110 -899 short_grass",
+      "/setblock -206 109 -899 short_grass",
+      "/setblock -194 109 -899 tall_grass[half=lower]",
+      "/setblock -194 110 -899 tall_grass[half=upper]",
+      "/setblock -211 111 -898 short_grass",
+      "/setblock -210 110 -898 tall_grass[half=lower]",
+      "/setblock -210 111 -898 tall_grass[half=upper]",
+      "/setblock -208 110 -897 tall_grass[half=lower]",
+      "/setblock -208 111 -897 tall_grass[half=upper]",
+      "/setblock -207 110 -897 dandelion",
+      "/setblock -206 109 -897 dandelion",
+      "/setblock -199 109 -897 azure_bluet",
+      "/setblock -210 111 -896 short_grass",
+      "/setblock -207 110 -896 short_grass",
+      "/setblock -206 109 -896 short_grass",
+      "/setblock -199 109 -896 poppy",
+      "/setblock -209 111 -895 dandelion",
+      "/setblock -208 110 -895 azure_bluet",
+      "/setblock -207 109 -895 short_grass",
+      "/setblock -206 109 -895 short_grass",
+      "/setblock -204 109 -895 cornflower",
+      "/setblock -199 109 -895 dandelion",
+      "/setblock -194 109 -895 tall_grass[half=lower]",
+      "/setblock -194 110 -895 tall_grass[half=upper]",
+      "/setblock -205 109 -894 short_grass",
+      "/setblock -204 109 -894 short_grass",
+      "/setblock -199 109 -894 cornflower",
+      "/setblock -198 109 -894 short_grass",
+      "/setblock -197 109 -894 short_grass",
+      "/setblock -209 111 -893 short_grass",
+      "/setblock -208 109 -893 short_grass",
+      "/setblock -205 109 -893 short_grass",
+      "/setblock -204 109 -893 cornflower",
+      "/setblock -201 109 -892 short_grass",
+      "/setblock -200 109 -892 short_grass",
+      "/setblock -196 110 -892 azure_bluet",
+      "/setblock -202 109 -891 azure_bluet",
+      "/setblock -200 109 -891 cornflower",
+      "/setblock -198 110 -891 tall_grass[half=lower]",
+      "/setblock -198 111 -891 tall_grass[half=upper]",
+      "/setblock -197 110 -891 cornflower",
+      "/setblock -202 109 -890 dandelion",
+      "/setblock -200 109 -890 tall_grass[half=lower]",
+      "/setblock -200 110 -890 tall_grass[half=upper]",
+      "/setblock -202 108 -898 coarse_dirt"
+     ]
+    },
+    {
+     "id": "hut",
+     "since": 1300,
+     "what": "Milo's 5x5 dirt hut north-east of D (D + (3..7, 1..4, -8..-4)), oak door south toward the patch, a torch, crafting table and furnace, moss, vines, a cobweb",
+     "do": "cmds",
+     "cmds": [
+      "/fill -199 109 -906 -195 111 -902 dirt",
+      "/fill -198 109 -905 -196 111 -903 air",
+      "/fill -199 112 -906 -195 112 -902 dirt",
+      "/setblock -197 109 -902 oak_door[facing=south,half=lower]",
+      "/setblock -197 110 -902 oak_door[facing=south,half=upper]",
+      "/setblock -198 110 -901 wall_torch[facing=south]",
+      "/setblock -199 109 -901 crafting_table",
+      "/setblock -195 109 -901 furnace[facing=south]",
+      "/setblock -199 110 -904 glass_pane[north=true,south=true]",
+      "/setblock -199 112 -906 moss_block",
+      "/setblock -196 112 -902 moss_block",
+      "/setblock -195 112 -905 moss_block",
+      "/setblock -198 112 -904 moss_block",
+      "/setblock -200 111 -905 vine[east=true]",
+      "/setblock -200 110 -905 vine[east=true]",
+      "/setblock -200 111 -903 vine[east=true]",
+      "/setblock -200 110 -903 vine[east=true]",
+      "/setblock -200 109 -903 vine[east=true]",
+      "/setblock -198 111 -907 vine[south=true]",
+      "/setblock -196 111 -907 vine[south=true]",
+      "/setblock -196 110 -907 vine[south=true]",
+      "/setblock -195 111 -901 cobweb",
+      "/setblock -198 113 -905 short_grass"
+     ]
+    },
+    {
+     "id": "ledge",
+     "since": 1300,
+     "what": "the worn path step below the south rim with two lanterns on posts (where Hushwell's grandpa stands)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -210 106 -889 -203 116 -884 air",
+      "/fill -210 92 -889 -203 104 -884 dirt replace air",
+      "/fill -210 105 -889 -203 105 -884 grass_block",
+      "/fill -208 105 -888 -206 105 -884 dirt_path",
+      "/setblock -210 106 -885 oak_fence",
+      "/setblock -210 107 -885 lantern",
+      "/setblock -203 106 -889 oak_fence",
+      "/setblock -203 107 -889 lantern"
+     ]
+    },
+    {
+     "id": "patch",
+     "since": 3400,
+     "what": "the patch P = D + (3, 0, 0): the one clean grass block where Milo logged out",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -199 108 -898 grass_block",
+      "/setblock -199 109 -898 air"
+     ]
+    },
+    {
+     "id": "dog",
+     "since": 3400,
+     "live": true,
+     "what": "the dog: a pale wolf, tamed (Owner: the recording player, Milo), red collar (CollarColor 14), sitting on D facing east at the patch and the village",
+     "do": "cmds",
+     "cmds": [
+      "/summon wolf -201.5 109 -897.5 {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Sitting:1b,Tags:[\"dog\",\"canon\"],Rotation:[-90f,0f],variant:\"minecraft:pale\",CollarColor:14b}",
+      "/execute as @p run data modify entity @e[tag=dog,limit=1,sort=nearest] Owner set from entity @s UUID"
+     ]
+    },
+    {
+     "id": "bones",
+     "since": 3400,
+     "live": true,
+     "what": "the pile of 14 bones beside him, never eaten",
+     "do": "cmds",
+     "cmds": [
+      "/summon item -200.411 109.05 -896.745 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -201.472 109.05 -897.017 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -201.092 109.05 -896.435 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -201.552 109.05 -896.695 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -201.077 109.05 -896.801 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -201.673 109.05 -897.001 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -201.619 109.05 -896.358 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -201.095 109.05 -896.161 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -200.731 109.05 -896.488 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -200.769 109.05 -896.623 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -200.891 109.05 -895.988 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -200.671 109.05 -895.992 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -200.754 109.05 -896.386 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}",
+      "/summon item -200.626 109.05 -896.862 {Item:{id:\"minecraft:bone\",count:1},PickupDelay:32767,Age:-32768,Motion:[0d,0d,0d]}"
+     ]
+    },
+    {
+     "id": "pip",
+     "since": 4300,
+     "live": true,
+     "what": "Pip (a baby plains villager) sitting on the dog's right (D + (0, 0, 1)), nights only",
+     "do": "summon",
+     "mob": "villager",
+     "pos": [
+      -201.5,
+      109,
+      -896.5
+     ],
+     "nbt": "{NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Age:-2147483647,Tags:[\"pip\",\"canon\"],Rotation:[-90f,0f],VillagerData:{type:\"minecraft:plains\",profession:\"minecraft:none\",level:1}}"
+    }
+   ],
+   "stories": [
+    "dog_hill",
+    "light_sleeper",
+    "good_boy"
+   ],
+   "status": "canon",
+   "label_dir": "w"
+  },
+  "fernbank": {
+   "name": "Fernbank",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -380,
+    64,
+    -1030
+   ],
+   "footprint": [
+    -446,
+    -1063,
+    -323,
+    -986
+   ],
+   "about": "The riverside village on the east bank of the North Inlet, 60 blocks west of the Lava Field. The old tales happen here: the creeper's village party (Runaway), the nitwit who stands where bad things happen (Nitwit), the respawns that cost a villager each (Respawn Tax). Empty but for the librarian and the iron golem from day 520.",
+   "pieces": [
+    {
+     "id": "home",
+     "piece": "cottage",
+     "x": -396,
+     "z": -1050,
+     "y": 64,
+     "facing": "south",
+     "variant": {
+      "palette": "oak",
+      "seed": 11
+     }
+    },
+    {
+     "id": "librarian",
+     "piece": "house2",
+     "x": -364,
+     "z": -1050,
+     "y": 65,
+     "facing": "south"
+    },
+    {
+     "id": "well",
+     "piece": "well",
+     "x": -380,
+     "z": -1030,
+     "y": 64,
+     "facing": "south"
+    },
+    {
+     "id": "house_c",
+     "piece": "cottage",
+     "x": -396,
+     "z": -1008,
+     "y": 65,
+     "facing": "north",
+     "variant": {
+      "palette": "spruce",
+      "seed": 12
+     }
+    },
+    {
+     "id": "church",
+     "piece": "church",
+     "x": -360,
+     "z": -1006,
+     "y": 64,
+     "facing": "north"
+    },
+    {
+     "id": "graveyard",
+     "piece": "graveyard",
+     "x": -338,
+     "z": -1040,
+     "y": 63,
+     "facing": "west",
+     "variant": {
+      "names": [
+       "HELLOBUH|blown up",
+       "HELLOBUH|swam in lava",
+       "HELLOBUH|slain",
+       "HELLOBUH|fell",
+       "HELLOBUH|again",
+       "HELLOBUH|?"
+      ]
+     }
+    },
+    {
+     "id": "dock",
+     "piece": "dock",
+     "x": -423,
+     "z": -1026,
+     "y": 63,
+     "facing": "west"
+    }
+   ],
+   "stamps": [
+    {
+     "id": "empty_boat",
+     "since": 400,
+     "live": true,
+     "what": "the fisherman's boat, empty, tied at the dock end (he jumped in it in Runaway; Respawn Tax found it floating)",
+     "do": "summon",
+     "mob": "oak_boat",
+     "pos": [
+      -436.5,
+      62.6,
+      -1025.5
+     ],
+     "nbt": "{Invulnerable:1b,Rotation:[90f,0f],Tags:[\"canon\"]}"
+    },
+    {
+     "id": "golem",
+     "since": 520,
+     "live": true,
+     "what": "the iron golem, standing on the librarian's respawn line by the well",
+     "do": "summon",
+     "mob": "iron_golem",
+     "pos": [
+      -376.5,
+      65,
+      -1029.5
+     ],
+     "nbt": "{NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,PlayerCreated:0b,Rotation:[180f,0f],Tags:[\"canon\"]}"
+    },
+    {
+     "id": "librarian",
+     "since": 520,
+     "live": true,
+     "what": "the librarian, the last villager in Fernbank, at her door",
+     "do": "summon",
+     "mob": "villager",
+     "pos": [
+      -363.5,
+      66,
+      -1042.5
+     ],
+     "nbt": "{NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Rotation:[0f,0f],Tags:[\"canon\"],VillagerData:{type:\"minecraft:plains\",profession:\"minecraft:librarian\",level:2}}"
+    },
+    {
+     "id": "last_torch",
+     "since": 470,
+     "what": "the last torch on the south road (past it: the Burned Copy)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -414 66 -975 -414 66 -975 oak_fence",
+      "/setblock -414 67 -975 torch"
+     ]
+    }
+   ],
+   "stories": [
+    "runaway",
+    "nitwit",
+    "respawn_tax"
+   ],
+   "status": "canon"
+  },
+  "burned_copy": {
+   "name": "The Burned Copy",
+   "kind": "ruin",
+   "region": "the_green",
+   "at": [
+    -448,
+    66,
+    -912
+   ],
+   "footprint": [
+    -465,
+    -928,
+    -433,
+    -896
+   ],
+   "about": "Past the last torch south of Fernbank: a burned, empty copy of Fernbank's north row (the nitwit's world, which already ended). Same pieces and seeds as Fernbank's, charred.",
+   "pieces": [
+    {
+     "id": "burned_house",
+     "piece": "cottage",
+     "x": -455,
+     "z": -918,
+     "y": 66,
+     "facing": "north",
+     "variant": {
+      "palette": "spruce",
+      "seed": 12
+     }
+    },
+    {
+     "id": "burned_well",
+     "piece": "well",
+     "x": -440,
+     "z": -903,
+     "y": 66,
+     "facing": "south"
+    }
+   ],
+   "stamps": [
+    {
+     "id": "char",
+     "what": "char it: planks and logs to blackened blocks, glass and wool gone, no lights",
+     "do": "cmds",
+     "cmds": [
+      "/fill -465 60 -928 -433 85 -896 blackstone replace #minecraft:planks",
+      "/fill -465 60 -928 -433 85 -896 basalt replace #minecraft:logs",
+      "/fill -465 60 -928 -433 85 -896 air replace #minecraft:wool",
+      "/fill -465 60 -928 -433 85 -896 air replace glass_pane",
+      "/fill -465 60 -928 -433 85 -896 air replace lantern",
+      "/fill -465 60 -928 -433 85 -896 coarse_dirt replace grass_block",
+      "/fill -465 60 -928 -433 85 -896 air replace #minecraft:leaves"
+     ]
+    }
+   ],
+   "stories": [
+    "nitwit"
+   ],
+   "status": "canon",
+   "label_dir": "w"
+  },
+  "digger_house": {
+   "name": "The Digger's House",
+   "kind": "homestead",
+   "region": "the_green",
+   "at": [
+    -245,
+    67,
+    -650
+   ],
+   "footprint": [
+    -300,
+    -692,
+    -232,
+    -636
+   ],
+   "about": "A birch cottage on the lowland under the High Meadow's east slope, the inlet behind it. Its owner digs straight down, dies, and forgets: Torch Hill behind the house is full of one-wide shafts, each under a torch or a dirt block.",
+   "pieces": [
+    {
+     "id": "house",
+     "piece": "cottage",
+     "x": -245,
+     "z": -650,
+     "y": 67,
+     "facing": "east",
+     "variant": {
+      "palette": "birch",
+      "seed": 21
+     }
+    }
+   ],
+   "stamps": [
+    {
+     "id": "torch_hill",
+     "since": 300,
+     "what": "Torch Hill: a torch on the slope behind the house, and under it a one-wide shaft 40 deep with a torch every 4 blocks on the left wall",
+     "do": "cmds",
+     "cmds": [
+      "/fill -290 44 -684 -290 84 -684 air",
+      "/setblock -290 85 -684 torch",
+      "/setblock -291 83 -684 stone",
+      "/setblock -291 82 -684 stone",
+      "/setblock -291 81 -684 stone",
+      "/setblock -291 80 -684 stone",
+      "/setblock -291 79 -684 stone",
+      "/setblock -291 78 -684 stone",
+      "/setblock -291 77 -684 stone",
+      "/setblock -291 76 -684 stone",
+      "/setblock -291 75 -684 stone",
+      "/setblock -291 74 -684 stone",
+      "/setblock -291 73 -684 stone",
+      "/setblock -291 72 -684 stone",
+      "/setblock -291 71 -684 stone",
+      "/setblock -291 70 -684 stone",
+      "/setblock -291 69 -684 stone",
+      "/setblock -291 68 -684 stone",
+      "/setblock -291 67 -684 stone",
+      "/setblock -291 66 -684 stone",
+      "/setblock -291 65 -684 stone",
+      "/setblock -291 64 -684 stone",
+      "/setblock -291 63 -684 stone",
+      "/setblock -291 62 -684 stone",
+      "/setblock -291 61 -684 stone",
+      "/setblock -291 60 -684 stone",
+      "/setblock -291 59 -684 stone",
+      "/setblock -291 58 -684 stone",
+      "/setblock -291 57 -684 stone",
+      "/setblock -291 56 -684 stone",
+      "/setblock -291 55 -684 stone",
+      "/setblock -291 54 -684 stone",
+      "/setblock -291 53 -684 stone",
+      "/setblock -291 52 -684 stone",
+      "/setblock -291 51 -684 stone",
+      "/setblock -291 50 -684 stone",
+      "/setblock -291 49 -684 stone",
+      "/setblock -291 48 -684 stone",
+      "/setblock -291 47 -684 stone",
+      "/setblock -291 46 -684 stone",
+      "/setblock -291 45 -684 stone",
+      "/setblock -291 44 -684 stone",
+      "/setblock -290 80 -684 wall_torch[facing=east]",
+      "/setblock -290 76 -684 wall_torch[facing=east]",
+      "/setblock -290 72 -684 wall_torch[facing=east]",
+      "/setblock -290 68 -684 wall_torch[facing=east]",
+      "/setblock -290 64 -684 wall_torch[facing=east]",
+      "/setblock -290 60 -684 wall_torch[facing=east]",
+      "/setblock -290 56 -684 wall_torch[facing=east]",
+      "/setblock -290 52 -684 wall_torch[facing=east]",
+      "/setblock -290 48 -684 wall_torch[facing=east]",
+      "/setblock -290 44 -684 wall_torch[facing=east]"
+     ]
+    },
+    {
+     "id": "sheep_block",
+     "since": 700,
+     "until": 1112,
+     "what": "the dirt block the blue sheep stares at, with a line of torches from the door",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -268 70 -664 dirt",
+      "/setblock -262 70 -659 torch",
+      "/setblock -256 70 -657 torch",
+      "/setblock -250 69 -656 torch",
+      "/setblock -244 67 -654 torch",
+      "/setblock -238 67 -653 torch"
+     ]
+    },
+    {
+     "id": "shaft_open",
+     "since": 1112,
+     "what": "the hole where the sheep's block was (Sheep Stares): straight down",
+     "do": "cmds",
+     "cmds": [
+      "/fill -268 55 -664 -268 70 -664 air"
+     ]
+    },
+    {
+     "id": "blue_sheep",
+     "since": 700,
+     "until": 1112,
+     "live": true,
+     "what": "the blue sheep, staring at the block",
+     "do": "summon",
+     "mob": "sheep",
+     "pos": [
+      -267.5,
+      71,
+      -661.5
+     ],
+     "nbt": "{NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Color:11b,Rotation:[180f,30f],Tags:[\"canon\"]}"
+    }
+   ],
+   "stories": [
+    "torch",
+    "sheep_stares"
+   ],
+   "status": "canon",
+   "label_dir": "e"
+  },
+  "stillwater": {
+   "name": "Stillwater",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -215,
+    68,
+    -1060
+   ],
+   "footprint": [
+    -249,
+    -1094,
+    -180,
+    -1015
+   ],
+   "about": "A small farming village on the north shore. The Long Day happened here (days 800-1100: the lever froze the sun for the whole world). The night it ended the zombies under the one tree came out; Gary the farmer was taken that night, and has walked out of the fog to his own field every night since.",
+   "pieces": [
+    {
+     "id": "grandpa",
+     "piece": "cottage",
+     "x": -232,
+     "z": -1060,
+     "y": 70,
+     "facing": "east",
+     "variant": {
+      "palette": "oak",
+      "seed": 31
+     }
+    },
+    {
+     "id": "lever_house",
+     "piece": "house2",
+     "x": -205,
+     "z": -1082,
+     "y": 67,
+     "facing": "south"
+    },
+    {
+     "id": "neighbour",
+     "piece": "cottage",
+     "x": -236,
+     "z": -1028,
+     "y": 70,
+     "facing": "east",
+     "variant": {
+      "palette": "spruce",
+      "seed": 32
+     }
+    },
+    {
+     "id": "gary",
+     "piece": "cottage",
+     "x": -205,
+     "z": -1040,
+     "y": 68,
+     "facing": "west",
+     "variant": {
+      "palette": "oak",
+      "seed": 33,
+      "garden": true
+     }
+    }
+   ],
+   "stamps": [
+    {
+     "id": "zombie_tree",
+     "what": "the one tree the zombies hid under through the Long Day",
+     "do": "cmds",
+     "cmds": [
+      "/place feature minecraft:fancy_oak -188 69 -1058"
+     ]
+    },
+    {
+     "id": "lever",
+     "what": "the Long Day lever on a stone post in the square (pulled back since day 1100)",
+     "do": "cmds",
+     "cmds": [
+      "/setblock -214 69 -1062 stone_bricks",
+      "/setblock -214 70 -1062 lever[face=floor,facing=north,powered=false]"
+     ]
+    },
+    {
+     "id": "gary",
+     "since": 1100,
+     "live": true,
+     "night": true,
+     "what": "Gary: a zombie villager farmer (straw hat), name tag \"Gary\", at the fog line by his field; nights only",
+     "do": "summon",
+     "mob": "zombie_villager",
+     "pos": [
+      -196.5,
+      70,
+      -1027.5
+     ],
+     "nbt": "{NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,CustomName:\"Gary\",Rotation:[90f,0f],Tags:[\"canon\"],VillagerData:{type:\"minecraft:plains\",profession:\"minecraft:farmer\",level:2}}"
+    }
+   ],
+   "stories": [
+    "sun_wont_set",
+    "chunk_next_door"
+   ],
+   "status": "canon"
+  },
+  "cliff_house": {
+   "name": "The Cliff House",
+   "kind": "homestead",
+   "region": "the_green",
+   "at": [
+    -514,
+    121,
+    -765
+   ],
+   "footprint": [
+    -545,
+    -780,
+    -512,
+    -750
+   ],
+   "about": "A family house on the west rim of the High Meadow, a 40-block fall to the White's frozen shore below. Respawn Voice's family: a brother, a sister, Dad, the new bed.",
+   "pieces": [
+    {
+     "id": "house",
+     "piece": "cottage",
+     "x": -514,
+     "z": -765,
+     "y": 121,
+     "facing": "west",
+     "variant": {
+      "palette": "spruce",
+      "seed": 41
+     }
+    }
+   ],
+   "stamps": [],
+   "stories": [
+    "respawn_voice"
+   ],
+   "status": "canon",
+   "label_dir": "w"
+  },
+  "tidewater": {
+   "name": "Tidewater",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -200,
+    63,
+    -700
+   ],
+   "footprint": [
+    -228,
+    -725,
+    -137,
+    -655
+   ],
+   "about": "Lowland fishing hamlet one block above the sea, south of Hushwell, with a lighthouse on the rise. One Block Higher happens here: the sea creeping in, the villagers digging.",
+   "pieces": [
+    {
+     "id": "house",
+     "piece": "cottage",
+     "x": -215,
+     "z": -700,
+     "y": 63,
+     "facing": "east",
+     "variant": {
+      "palette": "oak",
+      "seed": 51
+     }
+    },
+    {
+     "id": "lighthouse",
+     "piece": "lighthouse",
+     "x": -150,
+     "z": -712,
+     "y": 67,
+     "facing": "south"
+    },
+    {
+     "id": "dock",
+     "piece": "dock",
+     "x": -182,
+     "z": -672,
+     "y": 63,
+     "facing": "south"
+    }
+   ],
+   "stamps": [],
+   "stories": [
+    "one_block_higher"
+   ],
+   "status": "claimed"
+  },
+  "saltmouth": {
+   "name": "Saltmouth",
+   "kind": "village",
+   "region": "the_green",
+   "at": [
+    -286,
+    69,
+    -381
+   ],
+   "footprint": [
+    -340,
+    -440,
+    -235,
+    -320
+   ],
+   "vanilla": [
+    {
+     "id": "village_plains",
+     "start": [
+      -286,
+      -381
+     ],
+     "generated": true
+    }
+   ],
+   "about": "The village on the south peninsula, a ruined portal on its east edge. Good Boy's yard is at its north-east (village + (37, 16)). Where Milo lived with the dog at 16.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "good_boy"
+   ],
+   "status": "claimed",
+   "label_dir": "e"
+  },
+  "frostgate": {
+   "name": "Frostgate",
+   "kind": "village",
+   "region": "the_white",
+   "at": [
+    -801,
+    104,
+    -697
+   ],
+   "footprint": [
+    -850,
+    -750,
+    -750,
+    -645
+   ],
+   "vanilla": [
+    {
+     "id": "village_snowy",
+     "start": [
+      -801,
+      -697
+     ],
+     "generated": true
+    }
+   ],
+   "about": "The snowy village at the White's east edge, on the old road west. More Golems happens here (19 golems, 6 villagers).",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "more_golems"
+   ],
+   "status": "claimed"
+  },
+  "ravenford": {
+   "name": "Ravenford",
+   "kind": "village",
+   "region": "the_west_march",
+   "at": [
+    -2044,
+    71,
+    -485
+   ],
+   "footprint": [
+    -2165,
+    -545,
+    -1990,
+    -430
+   ],
+   "vanilla": [
+    {
+     "id": "village_plains",
+     "start": [
+      -2111,
+      -497
+     ],
+     "generated": true
+    }
+   ],
+   "about": "Grandpa's village across the White, 2 km west of Hushwell: the log palisade and its east gate (the origin), Grandpa's house and yard just inside it with the totem wall, the road east over the ford and up onto the Ridge. A real pillager outpost stands 200 blocks further east, the stronghold 250 blocks west under the islets.",
+   "pieces": [
+    {
+     "id": "tower",
+     "piece": "watchtower",
+     "x": -2000,
+     "z": -445,
+     "y": 76,
+     "facing": "west",
+     "note": "the old tower on the hill: Thirty-One Raids builds it here (gate O + (44, 40))"
+    }
+   ],
+   "stamps": [],
+   "story_builds": "the palisade, the gate, Grandpa's house, yard and totem wall are built by stunts/story_thirty_one_raids.js (gate-relative); move them into this entry when the next Ravenford story needs them",
+   "stories": [
+    "thirty_one_raids"
+   ],
+   "status": "canon"
+  },
+  "leo_house": {
+   "name": "Leo's House",
+   "kind": "homestead",
+   "region": "the_west_march",
+   "at": [
+    -2195,
+    63,
+    -548
+   ],
+   "footprint": [
+    -2210,
+    -560,
+    -2180,
+    -535
+   ],
+   "about": "A stone cottage on the shore west of Ravenford, facing the islets over the real stronghold. Leo left for the End six years before One More Eye; the basement holds an end portal frame that gains an eye a night.",
+   "pieces": [
+    {
+     "id": "house",
+     "piece": "cottage",
+     "x": -2195,
+     "z": -548,
+     "y": 63,
+     "facing": "west",
+     "variant": {
+      "palette": "stone",
+      "seed": 61
+     }
+    },
+    {
+     "id": "basement",
+     "piece": "basement",
+     "x": -2195,
+     "z": -548,
+     "y": 63,
+     "facing": "west",
+     "variant": {
+      "eyes": 11
+     },
+     "fit": false
+    }
+   ],
+   "stamps": [],
+   "stories": [
+    "one_more_eye",
+    "put_back"
+   ],
+   "status": "claimed",
+   "label_dir": "e"
+  }
+ },
+ "stories": {
+  "torch": {
+   "day": 300,
+   "places": [
+    "digger_house"
+   ],
+   "status": "ready",
+   "short": "there's a torch I never placed",
+   "cameos": []
+  },
+  "runaway": {
+   "day": 400,
+   "places": [
+    "fernbank"
+   ],
+   "status": "published",
+   "short": "why does everyone run from me",
+   "cameos": []
+  },
+  "nitwit": {
+   "day": 470,
+   "places": [
+    "fernbank",
+    "burned_copy"
+   ],
+   "status": "ready",
+   "short": "the nitwit finally said something",
+   "cameos": []
+  },
+  "respawn_tax": {
+   "day": 520,
+   "places": [
+    "fernbank"
+   ],
+   "status": "published",
+   "short": "every time I respawn, someone disappears",
+   "cameos": []
+  },
+  "sun_wont_set": {
+   "day": 1100,
+   "span": [
+    800,
+    1100
+   ],
+   "places": [
+    "stillwater"
+   ],
+   "status": "ready",
+   "short": "the sun hasn't set in 300 days",
+   "cameos": []
+  },
+  "sheep_stares": {
+   "day": 1112,
+   "places": [
+    "digger_house"
+   ],
+   "status": "ready",
+   "short": "why is my sheep staring at this block",
+   "cameos": []
+  },
+  "respawn_voice": {
+   "day": 1300,
+   "places": [
+    "cliff_house"
+   ],
+   "status": "ready",
+   "short": "which voice do I TRUST?",
+   "cameos": []
+  },
+  "light_sleeper": {
+   "day": 1500,
+   "places": [
+    "hushwell",
+    "dog_hill"
+   ],
+   "status": "in progress",
+   "cameos": [],
+   "suggested_cameos": [
+    "the hut on the hilltop at the top of the carpet street"
+   ]
+  },
+  "chunk_next_door": {
+   "day": 1800,
+   "places": [
+    "stillwater"
+   ],
+   "status": "ready",
+   "short": "something walks out of the fog every night",
+   "cameos": []
+  },
+  "thirty_one_raids": {
+   "day": 1900,
+   "places": [
+    "ravenford"
+   ],
+   "status": "in progress",
+   "cameos": []
+  },
+  "put_back": {
+   "day": 2000,
+   "places": [
+    "leo_house"
+   ],
+   "status": "pilot (not made: canon only once made)",
+   "cameos": []
+  },
+  "one_block_higher": {
+   "day": 2600,
+   "places": [
+    "tidewater"
+   ],
+   "status": "in progress",
+   "cameos": [],
+   "suggested_cameos": [
+    "lighthouse"
+   ]
+  },
+  "more_golems": {
+   "day": 2900,
+   "places": [
+    "frostgate"
+   ],
+   "status": "in progress",
+   "cameos": []
+  },
+  "one_more_eye": {
+   "day": 3000,
+   "places": [
+    "leo_house"
+   ],
+   "status": "in progress",
+   "cameos": []
+  },
+  "good_boy": {
+   "day": 3300,
+   "places": [
+    "saltmouth"
+   ],
+   "status": "held (rework)",
+   "cameos": []
+  },
+  "dog_hill": {
+   "day": 4300,
+   "places": [
+    "hushwell",
+    "dog_hill"
+   ],
+   "status": "rendered",
+   "cameos": []
+  }
+ },
+ "cameos": {
+  "dog_on_hill": {
+   "place": "dog_hill",
+   "needs": [
+    "meadow",
+    "dog",
+    "patch",
+    "hut"
+   ],
+   "since": 3400,
+   "what": "the pale wolf with the red collar sitting on the hilltop, a speck on the skyline north-west of Hushwell (from Hushwell, the north road, Stillwater's south fields, Tidewater's beach); with Pip beside him at night from day 4300"
+  },
+  "pip_and_dog": {
+   "place": "dog_hill",
+   "needs": [
+    "meadow",
+    "dog",
+    "pip",
+    "patch",
+    "hut"
+   ],
+   "since": 4300,
+   "what": "the dog and Pip sitting together on the hilltop at night"
+  },
+  "boxed_bell": {
+   "place": "hushwell",
+   "needs": [
+    "boxed_bell"
+   ],
+   "since": 1400,
+   "what": "Hushwell's bell boxed in white wool"
+  },
+  "empty_boat": {
+   "place": "fernbank",
+   "needs": [
+    "dock",
+    "empty_boat"
+   ],
+   "since": 400,
+   "what": "an empty oak boat tied at the end of Fernbank's dock"
+  },
+  "hellobuh_graves": {
+   "place": "fernbank",
+   "needs": [
+    "graveyard"
+   ],
+   "since": 520,
+   "what": "a row of headstones that all say HELLOBUH, in Fernbank's churchyard"
+  },
+  "fernbank_golem": {
+   "place": "fernbank",
+   "needs": [
+    "golem",
+    "well"
+   ],
+   "since": 520,
+   "what": "an iron golem standing by Fernbank's well in an empty village"
+  },
+  "torch_hill": {
+   "place": "digger_house",
+   "needs": [
+    "torch_hill"
+   ],
+   "since": 300,
+   "what": "a lone torch on the slope under the High Meadow"
+  },
+  "blue_sheep": {
+   "place": "digger_house",
+   "needs": [
+    "blue_sheep",
+    "sheep_block"
+   ],
+   "since": 700,
+   "until": 1112,
+   "what": "a blue sheep staring at one dirt block"
+  },
+  "long_day_lever": {
+   "place": "stillwater",
+   "needs": [
+    "lever"
+   ],
+   "since": 0,
+   "what": "a lever on a stone post in Stillwater's square"
+  },
+  "gary": {
+   "place": "stillwater",
+   "needs": [
+    "gary"
+   ],
+   "since": 1100,
+   "what": "a zombie villager in a straw hat at the edge of the fog, named Gary (nights)"
+  },
+  "burned_copy": {
+   "place": "burned_copy",
+   "needs": [
+    "burned_house",
+    "burned_well",
+    "char"
+   ],
+   "since": 0,
+   "what": "a burned copy of a Fernbank house on the plain south of the last torch"
+  },
+  "raven_tower": {
+   "place": "ravenford",
+   "needs": [
+    "tower"
+   ],
+   "since": 0,
+   "what": "the old watchtower on the Ridge east of Ravenford, no banner"
+  },
+  "totem_wall": {
+   "place": "ravenford",
+   "needs": [],
+   "since": 0,
+   "what": "Grandpa's totem wall: 31 totems and one empty frame until day 1900, all 32 full after (built by the Thirty-One Raids set for now)"
+  }
+ }
+}
