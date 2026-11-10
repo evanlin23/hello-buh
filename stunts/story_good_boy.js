@@ -450,13 +450,13 @@ module.exports.shots = {
   // L06: medium at wolf-eye height, 3.6 blocks out: Buh crouched on the cottage step, the cottage behind him
   step: { subject: [`actor:${GUY}`], at: [36.6, H + 1.7, 15.4], look: [36.5, H + 1.9, 19.0], fov: 50, push: 0.15, dof: false },
   // L07: dusk, from behind them over the sea (sharp: the blur was the "blurry light" note)
-  dog_sea: { subject: [`actor:${GUY}`, 'self'], at: [35.4, H + 2.0, 18.4], look: [43.0, H + 1.8, 15.9], fov: 50, push: 0.15, dof: false },
+  dog_sea: { subject: [`actor:${GUY}`, 'self'], at: [35.4, H + 1.3, 18.4], look: [43.0, H + 2.6, 15.9], fov: 50, push: 0.15, dof: false },
   // L08: night, the yard from its south-west corner at face height, the lantern post between: the zombie walking in
-  night_yard: { subject: [`actor:${GUY}`], at: [33.4, H + 1.7, 18.6], look: [37.5, H + 2.3, 13.5], fov: 56, push: 0.2, dof: false },
+  night_yard: { subject: [`actor:${GUY}`], at: [33.4, H + 1.4, 18.6], look: [37.5, H + 2.9, 13.5], fov: 56, push: 0.2, dof: false },
   // L09: Dog Hill, morning: a crane down from over the south rim as they walk up onto the meadow toward the hut
   hill_walk: { subject: [`actor:${GUY}`], path: [[0, DXs - 3.5, HL + 6, DZs + 11], [3.2, DXs - 2.5, HL + 2.2, DZs + 8.0]], lookPath: [[0, DXs, HL + 1, DZs + 3], [3.2, DXs + 1.5, HL + 1.5, DZs - 3]], ease: true },
   // L10-L11: ONE locked camera south of D and the patch, low: the wolf a third in from the left facing right, Buh on
   // the patch in the right third, his hut behind; the logout is the same frame minus him (no push, no drift)
-  hill_lock: { subject: ['self'],   // (Buh leaves the frame at the end: the logout)
+  hill_lock: { subject: [[DXs + 3, HL + 2.3, DZs]],   // Buh's head on the patch: where hill_walk left the eye, and still there after the logout (the wolf low in frame was a 34 % eye jump)
     at: [DXs + 2.5, HL + 1.5, DZs + 4.4], look: [DXs + 1.3, HL + 1.3, DZs - 2.0], fov: 58, dof: false, drift: 0 }   // (aimed down at the meadow it read superflat: level now, the hut behind Buh)
 }
