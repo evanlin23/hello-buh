@@ -29,7 +29,10 @@ echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEUL
 python3 make_ops.py HelloBuh "$S/ops.json"
 rm -rf "$S/world"                 # fresh world every run
 rm -f "$S/console" && mkfifo "$S/console"
-( cd "$S" && tail -f console | java -Xmx2G -jar server.jar nogui > ../server.log 2>&1 ) &
+# (the log by absolute path: in a worktree whose work/server is a symlink to the main checkout's, ../server.log
+# landed in the main checkout's work/ and this run waited 3 min for a 'Done' that never showed here)
+SLOG=$PWD/work/server.log; rm -f "$SLOG"
+( cd "$S" && tail -f console | java -Xmx2G -jar server.jar nogui > "$SLOG" 2>&1 ) &
 SERVER_PID=$!
 # (timeout: writing to the console FIFO blocks forever if the server already exited)
 stop_server() { timeout 5 sh -c "echo stop > '$S/console'" 2>/dev/null || true; sleep 3; pkill -f "tail -f console" 2>/dev/null || true; }

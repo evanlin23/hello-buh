@@ -28,6 +28,7 @@ module.exports = {
     cards: [['hmm', 'HMM.', 0.9, 'white']]
   },
   hideHand: true,
+  botTimeout: 360,   // set-up (biome search, clearing, 6 houses, the ruin) + ~2.5 min of story ran past run.sh's default 180 s
   brightness: 1.0,   // vanilla's Bright: the night ruin read near-black at the default 0.5 in the stills
 
   async setup (ctx) {
