@@ -32,7 +32,7 @@ wasn't STARING at me. It was keeping an EYE OUT for me."
 white trail across green grass to a shuttered window. The stalker's path was a guard's beat.
 
 ## Spine
-- **Every day,** for 63 mornings, a trail of snow runs from Grandpa's scarecrow to the boy's window in a meadow where it
+- **Every day,** for 63 mornings, a trail of snow runs from Grandpa's scarecrow to the boy's window on a hill farm where it
   never snows. He shovels it, it comes back, and it ends where someone seems to stand all night staring at him.
 - **One day,** after the groaning he never looks at and the rotten flesh "gifts", he remembers two things. Mom said
   Grandpa built the scarecrow out of snow the week before he died. And Grandpa always said he'd keep an eye on him.
@@ -40,7 +40,7 @@ white trail across green grass to a shuttered window. The stalker's path was a g
 - **Until finally,** the scarecrow is gone from the wheat. He looks down to find zombies under his window and the
   snow golem pelting them off his wall. It was never staring at him. It was keeping an eye out for him.
 
-## Beat sheet (116 words; ~40 s with the gaps and the 0.8 s hold)
+## Beat sheet (118 words; ~41 s with the gaps, the pauses and the 0.8 s hold)
 Times assume ~3.2 words a second (Pip's measured pace), 0.25 s gaps, and two `<short pause>` tags.
 
 | t (s) | beat | line | picture | plants |
@@ -51,7 +51,7 @@ Times assume ~3.2 words a second (Pip's measured pace), 0.25 s gaps, and two `<s
 | 13.0-15.6 | night | L04: "EVERY night, I hear GROANING. I don't LOOK." | S05 FS: Milo on his bed, his back to the shutters; a zombie groan outside | **the groan** (sound): players hear a zombie. Misread: the stalker |
 | 15.8-19.0 | the gift | L05: "There's ROTTEN FLESH under my window. A GROSS little GIFT." | S06 MS: two rotten flesh items turning at the foot of the wall | **the flesh** (picture): zombies burned there at sunrise. Misread: a creepy present |
 | 19.2-23.6 | **A character's true line** | L06: "Mom said GRANDPA built that scarecrow out of SNOW. The week before he DIED." | S07 WS: Mom on the porch by four carved pumpkins, the scarecrow small in the wheat | **made of snow** (line): the snow comes from it. **Grandpa carved pumpkins** (picture). Misread: a dead man's snowman walks |
-| 23.8-27.6 | the bomb under the table | L07: "He always SAID he'd keep an EYE on me. NOT helping." | S08 MS: the scarecrow's face, a carved pumpkin over a white snow body | **the promise** and **the face** (a snow golem, for anyone who looks). Misread: creepy. **The attentive viewer gets ahead here (~26 s, 65%)**: it's a golem, and golems guard. What it guards against stays hidden |
+| 23.8-27.6 | the bomb under the table | L07: "He always SAID he'd keep an EYE on me. Kind of CREEPY now." | S08 MS: the scarecrow's face, a carved pumpkin over a white snow body | **the promise** and **the face** (a snow golem, for anyone who looks). Misread: creepy. **The attentive viewer gets ahead here (~26 s, 65%)**: it's a golem, and golems guard. What it guards against stays hidden |
 | 27.8-30.6 | **The want** | L08: "So last night, I stayed UP to CATCH it." | S09 FS POV: on the bed in the dark, facing the four shutters | his choice: 63 nights of not looking end here |
 | 30.8-33.3 | **The act** | L09: "The GROANING came. I threw the window OPEN." | S10 MS POV: the shutters fly flat, ready for a face, and the yard is empty | his second choice; the stalker isn't at the window |
 | 33.5-35.1 | the jolt | L10: "The scarecrow was GONE." | S10b FS: the bare, lantern-lit 1x1 gap in the wheat | it's out here somewhere |
@@ -67,14 +67,14 @@ pulls out to the golem, and the stalker turns into the guard.
 | clue | planted (line, shot, time) | how it's misread | what it means after the twist |
 |---|---|---|---|
 | the trail starts at the scarecrow | L01, S01 (picture), 0-5 s; S02 | a stalker from the field | the golem walks out of the wheat every night (vanilla: snow golems leave snow where they walk) |
-| snow where it never snows | L02, S02 | a ghost | only a snow golem makes snow here (a meadow gets rain, never snow) |
+| snow where it never snows | L02, S02 | a ghost | only a snow golem makes snow here (the hill is cool enough for a golem's snow, never cold enough for snowfall) |
 | it comes back | L02, S03 | someone keeps coming | the zombies come every night, so the guard does too |
 | the trampled patch | L03, S04 (picture), S01 | someone stands there all night staring at me | the golem's firing spot, the first place it can see the zombies under my window, within its 10-block throw |
 | groaning every night | L04, S05 (sound) | the stalker | zombies at my wall (they go for the player in the house) |
 | rotten flesh under the window | L05, S06 (picture) | a gross gift | zombies kept off my wall all night burn at sunrise and drop it |
 | built out of snow, the week before he died | L06 | a dead man's snowman | Grandpa built a snow golem to stand guard after him |
 | carved pumpkins on the porch | S07 (picture) | Grandpa's hobby | a snow golem's head is a carved pumpkin |
-| "he'd keep an eye on me" | L07 | creepy ("NOT helping") | a promise, kept (L11 says it) |
+| "he'd keep an eye on me" | L07 | creepy ("Kind of CREEPY now") | a promise, kept (L11 says it) |
 | the pumpkin face on a white body | S08 (picture) | a snowman scarecrow | a snow golem |
 | the empty, lit gap in the wheat | L10, S10b | it's coming for me | it's already at my wall, working |
 
@@ -87,7 +87,7 @@ throws snowballs at hostile mobs, and zombies go for players.
 - [x] **Fair play.** Every plant is on screen or in a line before S11.
 - [x] **Planted at least twice, at least once in the picture, each 1 s+.** In the picture: the patch (S04), the flesh
       (S06), the pumpkins (S07), the face (S08), the empty gap (S10b). In lines: L04, L06, L07.
-- [x] **Misread, not hidden.** "STARING at me", "I don't LOOK", "a GROSS little GIFT", "NOT helping".
+- [x] **Misread, not hidden.** "STARING at me", "I don't LOOK", "a GROSS little GIFT", "Kind of CREEPY now".
 - [x] **Someone gets ahead.** Players hear zombies at ~14 s. The golem can be named from S08 (~26 s, 65%). What it's
       guarding against is only shown at S11.
 - [x] **The game says it.** S11 is vanilla mobs following their rules.
@@ -101,7 +101,8 @@ throws snowballs at hostile mobs, and zombies go for players.
 ## The "why?" interrogation
 - **Why snow, where it never snows?**
   - A snow golem places a snow layer at its feet as it walks, wherever the biome is cooler than 0.8.
-  - The farm is in a meadow (0.5), where rain falls but snow never does.
+  - The farm is on a hill at y 90+, where plains cools to about 0.77 (temperature falls with height above y 80): cool
+    enough for a golem's snow, far too warm for snowfall (under 0.15).
   - It leaves no snow on farmland or in the wheat, so the trail starts at the field's edge.
 - **Why does the trail end 8 blocks from the window?** The golem walks until it is within 10 blocks of its target and
   can see it, then stops and throws.
@@ -124,13 +125,13 @@ throws snowballs at hostile mobs, and zombies go for players.
   that). The golem lays it fresh on its walk the next night.
 - **Why is the golem back in the wheat by morning?**
   - Vanilla gives it no reason to go home.
-  - Once the last zombie burns, it wanders. The open meadow round the field is the only open ground on that side.
+  - Once the last zombie burns, it wanders. The yard and the field are the open ground on that side of the hill.
   - The story shows one morning (the 63rd) with it standing at its spot. It never claims it returns there every day.
   - The bible logs this as a known stretch for the minecraft-audit.
 
 ## The out-of-context read (3 s, sound on, a stranger)
 - "Like someone STOOD there, STARING at me." Creepy, about a window.
-- "He always SAID he'd keep an EYE on me. NOT helping." A kid's joke.
+- "He always SAID he'd keep an EYE on me. Kind of CREEPY now." A kid's joke.
 - "It wasn't STARING at me. It was keeping an EYE OUT for me." Warm.
 
 Nothing reads as intimate, obedient or ASMR. Every direction says full volume, including L11 ("warm and bright, a
@@ -147,14 +148,16 @@ smile in it, full volume, never soft, whispered or breathy").
   - L09: a burst on "OPEN".
   - L10: the one real jolt.
   - L11: warm and bright.
-- **Pauses.** Two `<short pause>` tags: before "Not helping" and before "The scarecrow was gone". No ellipses.
+- **Pauses.** `<short pause>` tags only (never a time-stretch): before "Kind of creepy now", and a breath at the start of
+  L09, L10 and L11. No ellipses.
 - **Sound.**
   - zombie groans in S05 and S10,
   - the shovel and the snow pop in S03,
   - the four trapdoors in S10,
-  - in S11, the golem's throw (`entity.snow_golem.shoot`) and the zombies' hurt sound on each hit.
+  - in S11, the golem's throw (`entity.snow_golem.shoot`) and the snowball hit on each zombie (knockback only: snowballs
+    do zombies no damage).
 - **Score.** The eerie bed drops out 0.45 s before L11, and the sad payoff track comes in on it.
 - **Quotable line:** "A GROSS little GIFT."
 
 ## Word count and length
-116 spoken words (90-120). About 40 s with the gaps, the two pauses and the 0.8 s hold (35-45).
+118 spoken words (90-120). About 41 s with the gaps, the four pauses and the 0.8 s hold (35-45).

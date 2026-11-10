@@ -62,6 +62,55 @@ words, about 40 s. The line ids are renumbered: 11 lines, the payoff is L11.
 
 ## Checks
 - `story.json` is valid JSON.
-- No "..." in any file I wrote. The only hit in the folder is a quotation inside r1-critic.md.
+- No ellipsis in any file I wrote (the only hits in the folder are quotes inside the critics' reviews).
 - 116 spoken words, about 40 s.
 - No semicolons or em dashes in the lines.
+
+## r2 polish + world
+
+**r2-continuity notes**
+| # | note | change |
+|---|---|---|
+| 1 | S02 end frame | Key 1 now looks at (4, 0, -3). The scarecrow sits past the right edge (check the sheet, swing 2 blocks west if any white shows). The nitwit is dropped (see "World" below), so no paddock claim. |
+| 2 | lantern post | Moved to (22, 1, 1). The S01 claim is dropped. It is in S07, S08 and S10b and lights the gap from 1.4 blocks. |
+| 3 | S04 "whole wall" | The claim is dropped. |
+| 4 | S06 rain barrel | The claim is dropped. |
+| 5 | window looks | L08 and L09 look at `prop:window` with `"size": "cu"`. |
+| 6 | S10 | The POV is pinned: yaw due east (Minecraft -90), pitch 0, FOV 70. The patch is 45 degrees left, outside the 36-degree half-width, and the push widens that angle. The golem throws only from S11 (set.md, cast staging). |
+| 7 | S07 Mom | The camera moved closer, to (33, 4, 6), looking at (23, 1, -5). Mom is 16 blocks away, about 13% of the frame height. Check at 300 px and go to FOV 40 if needed. |
+
+**r2-critic should-fixes**
+- **L07:** now "He always SAID he'd keep an EYE on me. Kind of CREEPY now." The script is 118 words, about 41 s.
+- **Breaths:** `<short pause>` at the start of L09 and L11 (L10 already had one). Pauses only, never a time-stretch.
+- **Bible:** snowballs do zombies no damage, only knockback. The golem knocks them off the wall all night, and they
+  burn at dawn by the wall, which is where the rotten flesh comes from. Nothing claims a hurt: the beats' sound plan
+  says "the snowball hit (knockback only)", and set.md's engine row says not to add a red flash or hurt sound
+  unless vanilla plays one.
+
+**World (docs/world/canon.md, map.json, STANDARDS.md)**
+- **Place:** a new place to claim, `hill_farm` ("Hushwell's hill farm"), within Hushwell. It sits on the hillside
+  south-west of Dog Hill, origin about (-250, 95, -868), with the plaza 95 blocks east. The day is 2200.
+- **Why there:**
+  - Mom is canon Hushwell's farmer.
+  - The hero must be Milo, and "one grandpa per Short" makes the dead Grandpa Milo's Ravenford grandpa. He is alive at
+    day 1900, so he dies here on day 2144, after coming east.
+  - The trail needs a snow golem below 0.8. Hushwell is plains (0.8), so only high ground works: at y 90+ the height
+    drops it to about 0.77, and it still never snows.
+  - The meadow plan is replaced (no faked biome).
+- **Claim:** not done here, because it goes in its own commit. The bible gives the exact `claim` command, the pieces,
+  and the y 90+ requirement (read off the survey; slide west along the ridge if lower).
+- **Easter egg:** canon `boxed_bell` (since day 1400). Hushwell's wool-boxed bell is a white speck in the plaza at S08's
+  frame right. The r1 nitwit egg is dropped, because canon has the nitwit gone from day 520.
+- **Consequences recorded** in the bible's "Canon consequences" table, for the claim commit:
+  - the farm,
+  - Grandpa came east and farmed the hill,
+  - the golem stamp (day 2137),
+  - **Grandpa dies on day 2144** (no later story shows him alive),
+  - the unharvested wheat,
+  - a new open question, plus the timeline row.
+
+  The canon files themselves are untouched.
+- **Stands alone:** no line names Hushwell, Ravenford or another story.
+- **Milo's age:** now about 12, voiced by the house narrator, which canon allows for kid Milo.
+- **Night light (STANDARDS 3.4):** a yard lantern at (3, 1, -3) and an eave lantern at (0.5, 5, 1.5) put a lantern within
+  4 blocks of every face in S11. All lanterns stay 4+ blocks from the snow, because block light over 11 melts it.
