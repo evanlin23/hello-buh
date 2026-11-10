@@ -6,7 +6,9 @@ scripts/story_track.py read, so stunts and the edit don't change.
     python3 scripts/voice_cast.py stories/<name> --only r2    # re-voice one request (its wavs are deleted first)
     python3 scripts/voice_cast.py stories/<name> --timing     # only rebuild voice.json from the wavs
 
-- `requests[]` -> stories/<name>/voices.json in scripts/tts.py's format (speakers = {cast id: voice}, lines =
+(main's scripts/tts.py also voices v2 stories, with the voices/cast.json library and its own cut; this script is the
+pilot's path: its splitter groups a take's pauses by expected length, and voice_check.py verifies every line.)
+- `requests[]` -> stories/<name>/voices.json in scripts/tts.py's list format (speakers = {cast id: voice}, lines =
   [[who, id, say]]), one Gemini request each (at most 2 speakers; the free tier allows only a few a day, so a
   scene's lines go in one request and tts.py splits the take at its pauses). The request's direction is its scene
   sentence, each speaker's `profile` and the lines' `direction` notes in order (never inline: models read those out).
@@ -36,6 +38,10 @@ def spoken(text):
         letters = [ch for ch in w if ch.isalpha()]
         words.append(w.lower() if len(letters) > 1 and all(ch.isupper() for ch in letters) else w)
     return " ".join(words)
+
+
+def write_wav(path, x):
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(path)], input=x.astype(np.float32).tobytes(), check=True)
 
 
 def read_wav(p):
@@ -156,7 +162,7 @@ def main():
                 text = r["direction"] + "\n" + "\n".join(f"{w}: {t}" if len(r["speakers"]) > 1 else t for w, _, t in r["lines"])
                 x = tts.request(text, r["speakers"]); x.astype(np.float32).tofile(take)
             for (who, lid, t), seg in zip(r["lines"], split_lines(x, [t for _, _, t in r["lines"]])):
-                tts.write(vdir / f"{lid}.wav", seg)
+                write_wav(vdir / f"{lid}.wav", seg)
     timing(story, vdir)
 
 

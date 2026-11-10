@@ -125,11 +125,12 @@ lines. Character lines get the speaker's colour (see the cast block below).
 | eerie / soft-spoken stranger | Enceladus (breathy) or Achernar (soft) | unsettling intimacy | Schedar (even) |
 
 The `ai_dilemma` Shorts already use Erinome (narrator), Algenib (deep hero), Iapetus, Schedar, Achird and Kore
-(`episodes/thin_ice/voices.json` on `agent/cinematic`): reuse what's been heard to work.
+(`episodes/thin_ice/voices.json` on `agent/cinematic`): reuse what's been heard to work. The recurring cast with
+fixed voices and profiles is the library in `voices/cast.json` (docs/voices.md): cast from it first.
 
 **Directing a take.** Gemini takes at most **2 speakers per request**, and the free tier allows only a few requests a
-day, so: finalise the script, group the lines into pairs of speakers, one request per pair (`scripts/tts.py` on
-`agent/cinematic` splits a take at its pauses). For each request:
+day, so: finalise the script, group the lines into pairs of speakers, one request per pair (`scripts/tts.py`,
+docs/voices.md, cuts a take into lines). For each request:
 - **Direction** (the `direction` field `tts.py` sends): one sentence of scene and one short audio profile per speaker,
   in plain words. "A quiet evening on a farm. Narrator: a teenage boy telling a strange true story to a friend,
   hushed, curious, a little afraid. Mom: warm and tired, hides worry behind cheerfulness." Avoid flatness words
@@ -193,7 +194,7 @@ through `lib/story.js`, `scripts/voice.py` and `scripts/story_track.py`, which r
 |---|---|---|
 | `version: 2` | this story uses the cast extension | writers, critics; tools may branch on it |
 | `logline`, `question` | the one-sentence story and the "why tf" question | the critic; packaging |
-| `cast.<id>` | `role` narrator/character, `voice` (Gemini prebuilt name), `color` (caption colour for their lines), `profile` (the audio profile sent as direction), `on_screen` (POV, an actor skin, a mob) | the voice step; captions; the build |
+| `cast.<id>` | `ref` (a `voices/cast.json` id: its voice, name and profile), `role` narrator/character, `voice` (Gemini prebuilt name), `color` (caption colour for their lines), `profile` (the audio profile sent as direction), `on_screen` (POV, an actor skin, a mob) | the voice step; captions; the build |
 | `requests[]` | which speakers share a TTS request (max 2) and the scene direction | the voice step (maps 1:1 to `tts.py`'s `voices.json` entries: `speakers` = `{cast name: voice}`, `lines` = `[[who, id, say]]`) |
 | `lines[].who` | the speaker (a `cast` id); missing = the narrator | voice, captions |
 | `lines[].say` | the exact text the TTS reads (tags allowed); missing = `text` with ` / ` removed and CAPS lower-cased | voice |

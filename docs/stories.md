@@ -10,6 +10,9 @@ narrator turns out to be the creeper).
 **Write it first:** `/story-write` (`.claude/skills/story-write/SKILL.md`) takes a story from ten pitches to a
 script with a voiced cast, a shot list and a continuity bible, checked by the `story-critic` and `story-continuity`
 agents and a cold reader, before anything is built. Craft guide: `docs/story_craft.md`.
+The build steps below are `./hb` commands, with time estimates, in `docs/agent_guide.md`. Before any render, `./hb check`,
+`./hb framing` (shot sizes: the owner's "too zoomed in") and `./hb continuity` (time, cast and props across cuts) read
+the recording in seconds, and `./hb describe <stunt> L05` tells you what a moment shows without rendering it.
 ```bash
 # 1. the script: stories/<name>/story.json (lines, chunks, key words), see stories/put_back
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
@@ -139,12 +142,32 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   hook is ONE strange, concrete image that makes the viewer ask "why?" (a sheep staring at a block); the twist must
   re-explain everything (the creeper); fix continuity (props, time of day, positions, who is where across cuts);
   use wider shots so the viewer sees the place and the action, not just a close-up. Craft guide: docs/story_craft.md.
+- **Owner review, 2026-11-10 (22 notes on the review page, all six published stories).** Patterns, now hard rules:
+  1. **Superflat is banned** (8 notes: "the hill is just a 3x3 and the rest is super flat", "the library's store seems
+     to be right next to the hill"). Sets are built into real terrain with relief and depth; places that are far apart
+     in the story are far apart on screen.
+  2. **Look at what the line names** ("when we say 'another torch' we should look at the torch not around it", "why
+     are we staring down instead of at the librarian's face"): the named subject is in frame, near centre, readable.
+  3. **The picture never runs ahead of the words or contradicts them** ("when we say 'dug under it' we are already in
+     the hole", "why do we start falling without us digging?", "you dig straight down when you say 'never dig straight
+     down'").
+  4. **The plot must survive "why?"** ("this story don't make sense, wtf does it even mean?", "why would grampa say to
+     do that if the main character is the one that's slow", "why does he even think he's the one who pulled the lever"):
+     every character's action has a reason the viewer can state; the critic interrogates every line with "why?".
+  5. **Delivery** ("too quickly delivered", "the voice's delivery doesn't work"): no sped-up narrator; acted voices from
+     voices/cast.json; key lines get room (a pause before, slower pace); "who do you trust" style lines land slowly.
+  6. **No glitches** ("the door closes automatically", "we keep getting stuck on the door", "it looks like it's
+     glitching", "there's no fog" in the fog story): what the title promises is on screen.
 - **Owner, 2026-11-10: "the sets are all so small, and in a superflat, so when we watch it looks really bad and low
   effort."** Sets must feel like a real, lived-in world: built at full scale on natural terrain (hills, trees, water,
   a real village or a big build), with depth in every shot (something in the foreground, the mid-ground and the
   distance), never a few blocks on a flat cleared plain. `clearSet`'s wide flat clearing is the look to avoid: pick a
   site that already looks good (`scripts/scout.sh` on the movie branch; or a generated village) and build into it,
   or build a big set (structures, paths, fields, lighting) that fills the whole frame out to the fog.
+- **Owner, 2026-11-10: "our builds are not particularly good looking or creative, are there guidelines online about
+  good minecraft building we could look at?"** Every set follows `docs/building_guide.md` (depth, pitched roofs with
+  overhang, foundations into the terrain, a style palette, landscaping, building for the camera) and scores 7+ on its
+  checklist before recording. Sources: `docs/research/building_research.md`.
 
 - **Owner, 2026-11-10: "the creeper story is much better than the current one. bc you can't really 'Trip' in
   minecraft, so it just looks like him intentionally walking into the lava."** (respawn_tax vs runaway.) Every
