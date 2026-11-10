@@ -64,6 +64,7 @@ second (`research/music_and_length_2026-11-06.md`).
 
 ## Process and QA (every Short, before publishing)
 The loop is in `docs/process.md`: make, render, frame QA, independent review, classify each finding as engine or stunt, fix, re-render, publish, freshness check.
+- While staging: `scripts/preview.sh <stunt>` (low-res, 12 fps, the real edit + contact sheets of every cut and mark, ~10 min vs ~30); render full-res once.
 - `python3 scripts/qa_frames.py out/<name>.mp4` checks every frame and makes labelled sheets (`docs/qa.md`).
 - An independent reviewer agent reads every sheet (`docs/reviewer_prompt.md`).
 - Each fix adds a rule to `docs/lessons.md`.
