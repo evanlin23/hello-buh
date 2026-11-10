@@ -47,7 +47,7 @@ module.exports = {
   wideMaster: true,
   cast: { [GA]: 'zuri', [GB]: 'zuri' },
   idleLife: true,
-  look: { grade: { lift: [0.02, 0.012, 0.02], gamma: [0.98, 1.0, 1.03], gain: [1.1, 1.0, 0.9], sat: 1.08, contrast: 0.12, exposure: 1.04 }, bloom: 0.5, bloomThreshold: 0.72, vignette: 0.36, grain: 0.02, dof: { aperture: 0.7 }, shadows: true, rays: 0.4, cloudNight: 0.42 },
+  look: { grade: { lift: [0.02, 0.012, 0.02], gamma: [0.98, 1.0, 1.03], gain: [1.1, 1.0, 0.9], sat: 1.08, contrast: 0.12, exposure: 1.04 }, bloom: 0, bloomThreshold: 0.72, vignette: 0.36, grain: 0, dof: { aperture: 0.7 }, shadows: true, rays: 0.4, cloudNight: 0.42 },
   shots: {},   // below (module.exports.shots)
   edit: { caption: CAPTION, red: 'grandpa', story: 'stories/thirty_one_raids', startAt: 'line:0', endAfter: 'story_end:0' },
 
@@ -91,6 +91,7 @@ module.exports = {
     }
     for (let dz = -14; dz <= -4; dz++) fast(`/setblock ${A(-1, groundAt(-1, dz) + 2, dz)} spruce_slab[type=top]`)   // the walkway (S02)
     await bot.waitForTicks(10)
+    for (const dz of [-3, 4]) { const g = groundAt(3, dz); await c(`/fill ${A(3, g + 1, dz)} ${A(3, g + 2, dz)} spruce_fence`); await c(`/setblock ${A(3, g + 3, dz)} lantern`) }   // light on faces at the gate at dusk (docs/look.md)
     await c(`/setblock ${A(0, 1, -2)} spruce_fence_gate[facing=east,open=true]`)
     await c(`/setblock ${A(0, 1, 2)} spruce_fence_gate[facing=east,open=true]`)
 
