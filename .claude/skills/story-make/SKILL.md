@@ -98,6 +98,9 @@ old sped-up single narrator.
 - Scenes: `stunts/_story_template.js` on the story kit (`lib/story.js`) with the movie engine's camera shots and
   look (`docs/movie_engine.md`); an establishing shot for every new place; close-ups only for reveals.
 - Every accident needs a visible in-game cause.
+- Fill story.json `"hotbar"`: the story's tools first, then 1-3 ridiculous items (milk buckets, cake, 67 eggs). The
+  harness puts it on before the first frame; `./hb check` blocks an unknown item id (docs/engine_features.md "The
+  story's hotbar").
 - **Use only K.* motion; raw calls fail the lint** (owner, 2026-11-10: "the movement shouldn't be caught... the
   processes should be such that the movement is [smooth] in the first place"; docs/engine_features.md "Motion by
   construction"). The kit moves like a player by construction: every look (`K.base = K.aim(p)` + `K.look(k)`,
