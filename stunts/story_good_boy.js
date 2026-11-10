@@ -79,11 +79,21 @@ module.exports = {
     await c(`/setblock ${A(38, 1, 19)} barrel[facing=up]`); await c(`/setblock ${A(39, 1, 19)} hay_block`)
     await c(`/place feature minecraft:fancy_oak ${A(31, 1, 31)}`); await c(`/place feature minecraft:oak ${A(43, 1, 31)}`)
     // the village farms are wheat (the narrator runs through it)
-    for (const crop of ['carrots', 'potatoes', 'beetroots', 'wheat']) await c(`/fill ${X + 4} ${F - 14} ${Z + 14} ${X + 15} ${F + 6} ${Z + 34} wheat[age=7] replace ${crop}`)
+    // a wheat field west of the yard (this village has no farms): farmland on the natural ground, a water channel
+    for (let dx = 12; dx <= 27; dx++) for (let dz = 15; dz <= 27; dz++) {
+      const gy0 = groundAt(ctx, X + dx, Z + dz)
+      if (dz === 21) { bot.chat(`/setblock ${X + dx} ${gy0} ${Z + dz} water`); continue }
+      bot.chat(`/setblock ${X + dx} ${gy0} ${Z + dz} farmland[moisture=7]`); bot.chat(`/setblock ${X + dx} ${gy0 + 1} ${Z + dz} wheat[age=7]`)
+      if (dz % 3 === 0) await bot.waitForTicks(1)
+    }
+    // the village lamp post and fence on the walk out of the gate (L02)
+    await c(`/fill ${A(35, 1, -3)} ${A(37, 6, 11)} air replace oak_fence`); await c(`/fill ${A(35, 1, -3)} ${A(37, 6, 11)} air replace stripped_oak_wood`)
+    await c(`/fill ${A(35, 1, -3)} ${A(37, 6, 11)} air replace lantern`)
 
     // the cast: three villagers for the square (L08), the skeletons and the zombie waiting high above out of view
     const mob = (type, x, y, z, yaw, tag, more = '') => c(`/summon ${type} ${(X + x).toFixed(2)} ${y.toFixed(2)} ${(Z + z).toFixed(2)} {NoAI:1b,Silent:1b,PersistenceRequired:1b,${tag === 'zom' ? '' : 'Invulnerable:1b,'}Tags:["${tag}"],Rotation:[${yaw}f,0f]${more ? ',' + more : ''}}`)
     await c(`/fill ${X - 6} ${F + 60} ${Z - 6} ${X + 6} ${F + 60} ${Z + 6} barrier`)   // the waiting room floor
+    await c(`/fill ${X - 6} ${F + 64} ${Z - 6} ${X + 6} ${F + 64} ${Z + 6} stone`)     // and its roof: skeletons and the zombie burned in the time-lapse's daylight
     for (const [tag, prof] of [['v1', 'farmer'], ['v2', 'librarian'], ['v3', 'fisherman']]) await mob('villager', 0, F + 61, 0, 0, tag, `VillagerData:{profession:"minecraft:${prof}",type:"minecraft:plains",level:2},Xp:1`)
     await mob('skeleton', 2, F + 61, 2, 0, 'sk1', 'equipment:{mainhand:{id:"minecraft:bow",count:1}}')
     await mob('skeleton', -2, F + 61, 2, 0, 'sk2', 'equipment:{mainhand:{id:"minecraft:bow",count:1}}')
@@ -140,11 +150,11 @@ module.exports = {
       K.ctl('jump', !!(b && b.boundingBox === 'block'))
     }
     // L01: POV, low, sprinting west down the village's main road at golden hour (the sun ahead), past the houses
-    const roadZ = 6.5
-    await cutG(-2.5, roadZ, P(-40, gy(-40, roadZ) + 0.6, roadZ))
+    const roadZ = -5.5
+    await cutG(44.5, roadZ, P(-10, gy(10, roadZ) + 0.6, roadZ))
     K.ctl('sprint', true); K.go(true)
     await K.preroll(8, autoJump)
-    await line('L01', async (k) => { autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, gy(-20, roadZ) + 0.6, roadZ)); look(k) })
+    await line('L01', async (k) => { autoJump(); K.base = K.aim(P(bot.entity.position.x - X - 20, gy(Math.max(8, bot.entity.position.x - X - 20), roadZ) + 0.6, roadZ)); look(k) })
     // L02: out of his yard through the gate, walking north: about twelve blocks from him, on "standing", he's next
     // to the man again: the establishing crane, his dog beside him, the sea behind
     K.stop()
@@ -160,15 +170,16 @@ module.exports = {
 
     // L04: the tries. At night up the north road into the hills; through the wheat; swimming in the sea
     K.shot('pov')
-    await cutG(16.5, -12, P(16.5, gy(16.5, -40) + 0.6, -45), { time: NIGHT })
+    await cutG(7.5, 34, P(7.5, gy(7.5, 14) + 0.6, 0), { time: NIGHT })
     K.ctl('sprint', true); K.go(true)
     await line('L04', async (k, at) => {
-      if (k === at(1)) { await cutG(13.5, 24, P(-10, gy(4, 24) + 0.6, 24), { time: GOLD }); K.ctl('sprint', true); K.go(true) }
+      if (k === at(1)) { await cutG(27.5, 19.5, P(0, gy(14, 19.5) + 0.6, 19.5), { time: GOLD }); K.ctl('sprint', true); K.go(true) }
       if (k === at(3)) {
         K.self({}, 1.3)   // a swimming wolf's head is just over the water
-        await K.cutTo(52.5, 62.4, -3.5, new ctx.Vec3(X + 90, 63.2, Z - 3.5)); K.go(true); K.ctl('jump', true)
+        await K.cutTo(55.5, 62.4, 13.5, new ctx.Vec3(X + 90, 63.2, Z + 13.5)); K.go(true); K.ctl('jump', true)
         ctx.sound('entity.generic.splash', 0.5, 1.2)
       }
+      if (k < at(3)) autoJump()
       look(k)
     })
     K.stop()
@@ -196,9 +207,9 @@ module.exports = {
 
     // L08: the village square: villagers pass close and look down at me
     K.self({ sitting: false }, EYE)
-    const v1 = actorG('v1', { x: 4.5, z: 3.5, yaw: 180, pitch: 30 }), v2 = actorG('v2', { x: 1.2, z: 9.5, yaw: 0, pitch: 30 })
-    const v3 = actorG('v3', { x: 7.5, z: 9.0, yaw: 90, pitch: 25 })
-    await cutG(3.6, 7.2, P(4.4, gy(4.4, 4.5) + 2.6, 4.5))
+    const v1 = actorG('v1', { x: 25.4, z: -9.0, yaw: 0, pitch: 30 }), v2 = actorG('v2', { x: 22.6, z: -3.0, yaw: 180, pitch: 30 })
+    const v3 = actorG('v3', { x: 28.5, z: -5.0, yaw: 90, pitch: 25 })
+    await cutG(24.6, -5.6, P(25.4, gy(25.4, -8) + 2.6, -8))
     looking = K.base
     await line('L08', async (k, at) => {
       stepG(v1, -0.01, 0.04); v1.pitch = 28
@@ -212,6 +223,7 @@ module.exports = {
     // L09: "And there's this DOG." Camera shots: walking the road beside him (a follow, low, ahead of them); then on
     // the yard's sea edge, already sitting there as he walks up
     await putGuy(31.6, 14.4, -90, 5)
+    await bot.waitForTicks(3)   // (the follow opened on him still at the hop: a red blur)
     K.shot('dog_walk')
     await K.cut(31.8, 15.5, P(50, eyeY(0.4), 15.5), H + 1)
     K.go(true)
@@ -262,13 +274,13 @@ module.exports = {
     K.self({ sitting: false }, EYE)
 
     // L13: night on the north road in the hills: two skeletons see me, turn and run (skeletons flee from wolves)
-    await putMob('sk1', 15.5, -34.5, 0); await putMob('sk2', 18.0, -36.0, 20)
-    const sk1 = actorG('sk1', { x: 15.5, z: -34.5, yaw: 0 }), sk2 = actorG('sk2', { x: 18.0, z: -36.0, yaw: 20 })
-    await cutG(16.5, -28.5, P(16.8, gy(16.8, -35) + 1.6, -35.5), { time: NIGHT })
+    await putMob('sk1', 23.5, -18.2, 90); await putMob('sk2', 21.5, -16.8, 90)
+    const sk1 = actorG('sk1', { x: 23.5, z: -18.2, yaw: -90 }), sk2 = actorG('sk2', { x: 21.5, z: -16.8, yaw: -90 })
+    await cutG(30.5, -17.5, P(23, gy(23, -17.5) + 1.6, -17.5), { time: NIGHT })
     K.go(true)
     await line('L13', async (k, at) => {
-      if (k < at(1)) { sk1.yaw = 0; sk2.yaw = 15 }
-      if (k >= at(1)) { stepG(sk1, -0.02, -0.2); stepG(sk2, 0.03, -0.22) }
+      if (k < at(1)) { sk1.yaw = -90; sk2.yaw = -95 }
+      if (k >= at(1)) { stepG(sk1, -0.2, 0.02); stepG(sk2, -0.22, -0.02) }
       if (k === at(1)) ctx.sound('entity.skeleton.ambient', 0.6, 1.2)
       look(k)
     })
@@ -280,6 +292,7 @@ module.exports = {
     await putMob('zom', 36.6, 6.0, 0)
     const zom = actorG('zom', { x: 36.6, z: 6.0, yaw: 0 })
     K.self({ sitting: true }, SIT_EYE)
+    await bot.waitForTicks(3)
     K.shot('night_yard')
     await K.cut(36.4, 15.6, P(37.5, eyeY(1.6), 15.2), H + 1)
     const zWalk = (speed) => { const dx = 37.6 - zom.x, dz = 14.0 - zom.z, d = Math.hypot(dx, dz); if (d > 0.15) stepG(zom, dx / d * speed, dz / d * speed); zom.yaw = K.mcYaw(dx, dz) }
@@ -320,7 +333,7 @@ module.exports = {
     K.shot('reveal')
     await line('L18', async (k) => {
       if (k === 2) swingGuy()
-      if (k === 8) { ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 7 }); ctx.sound('entity.wolf.pant', 0.6, 1) }
+      if (k === 26) { ctx.mark('particles', { type: 'heart', x: X + 37.5, y: Y + 1, z: Z + 16.2, count: 7 }); ctx.sound('entity.wolf.pant', 0.6, 1) }   // (at 8 the camera was still in his head: the hearts filled the frame)
       guy.pitch = 45 + Math.sin(k / 4) * 3; placeGuy()
       look(k)
     })
@@ -380,10 +393,10 @@ async function cottage (c, A) {
 // The ground's top solid block at (x, z), ignoring plants, crops, leaves, logs, fences and lanterns
 function groundAt (ctx, x, z) {
   const { bot } = ctx
-  for (let y = 140; y > 40; y--) {
+  for (let y = Math.floor(ctx.bot.entity.position.y) + 40; y > 40; y--) {
     const b = bot.blockAt(new ctx.Vec3(Math.floor(x), y, Math.floor(z)))
     if (!b) continue
-    if (b.boundingBox !== 'block' || /_leaves$|_log$|fence|lantern|^farmland$/.test(b.name)) { if (b.name === 'farmland' || b.name === 'dirt_path') return y; continue }
+    if (b.boundingBox !== 'block' || /_leaves$|_log$|fence|lantern|^farmland$|^barrier$/.test(b.name)) { if (b.name === 'farmland' || b.name === 'dirt_path') return y; continue }
     return y
   }
   return 70
