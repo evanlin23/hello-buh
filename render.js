@@ -17,7 +17,17 @@ const FPS = Number(fpsArg || 60), W = Number(wArg || 1080), H = Number(hArg || 1
 const EYE = 1.62
 const rec = JSON.parse(fs.readFileSync(recPath))
 let STUNT_MOD = {}
-try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {}
+// the stunt module carries render options (hideHand, brightness, fovZoom, dimension, weather...): a stunt
+// that fails to load used to be skipped silently, and the render came out with a hand and the wrong light
+// (story_nitwit stills 3). Fail, unless ALLOW_NO_STUNT=1 (render with no stunt options, said loudly).
+if (rec.stunt) {
+  try { STUNT_MOD = require(`./stunts/${rec.stunt}`) } catch (e) {
+    console.error(`\n*** render.js: stunts/${rec.stunt}.js failed to load: its render options (hideHand, brightness, fovZoom...) would be lost ***`)
+    console.error(e && e.stack || e)
+    if (process.env.ALLOW_NO_STUNT !== '1') { console.error('*** stopping. Fix the stunt, or set ALLOW_NO_STUNT=1 to render without its options ***\n'); process.exit(1) }
+    console.error('*** ALLOW_NO_STUNT=1: rendering WITHOUT the stunt\'s options ***\n')
+  }
+}
 const FOV_ZOOM = []   // [startTick, endTick, scale] from stunt.fovZoom (see the frame loop)
 for (const [sa, sb, sc] of STUNT_MOD.fovZoom || []) {
   const at = (spec) => { const [ev, off] = String(spec).split(':'); const e = (rec.timeline || []).find(m => m.event === ev); return e ? e.t / 50 + Number(off || 0) * 20 : null }
