@@ -2,7 +2,7 @@
 
 ## World
 - **Place:** a new place to claim, `gullwick` ("Gullwick"): a shore hamlet on the West March coast.
-  - The library hut with a librarian, a dock with a tied oak boat, and an island ~120 blocks offshore across open
+  - The library hut with a librarian, a dock with a tied oak boat, and an island 50-70 blocks offshore across open
     cold ocean (not frozen: Frost Walker needs liquid water).
   - Keep clear of Leo's House and the stronghold islets (canon). Pick the site from the survey (cold_ocean along
     the West March, z -400..-900, x -2300..-1900).

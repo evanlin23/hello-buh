@@ -2,7 +2,7 @@
   "name": "bell_window",
   "stunt": "story_bell_window",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md) + r2 critic leftovers (reviews/r2-critic.md)",
   "caption": "why does my village hide when I open my window 🔔",
   "logline": "Every time a boy in Saltmouth opens his bedroom window, the bell outside rings and the whole village runs indoors; tonight he leans out to catch whoever rings it.",
   "question": "why tf does the whole village hide when he opens his window?",
@@ -22,7 +22,7 @@
   },
   "weather": "clear",
   "world": {
-    "place": "saltmouth (canonical). Layout from his window sill, the window facing north: the skeleton's feet at (0, 10, -11) on a 9-11 high rise under a stamped oak (since 1700); the bell hung from an oak beam on two fence posts at (0, 6, -3), on the line between the two; the square between the bell and the rise; his house stamped two storeys (room 7x7x3). Skeleton range 15 blocks. If no rise lines up at Saltmouth, move the house.",
+    "place": "saltmouth (canonical). Layout from his window sill, the window facing north: the skeleton's feet at (0, 10, -11) on a 9-11 high rise under a stamped oak (since 1700); the bell hung from an oak beam on two fence posts so that it sits ON the ray from the skeleton's eyes (0, 11.6, -11) to his eyes at the sill: about (0, 4.5, -3); check the ray on the shot sheet, on the line between the two; the square between the bell and the rise; his house stamped two storeys (room 7x7x3). Skeleton range 15 blocks. If no rise lines up at Saltmouth, move the house.",
     "day": 2000,
     "canon": "A Saltmouth family (not Buh's). The kid is a player; Mom is a villager. New canon fact: a skeleton lives under the oak on Saltmouth's north cliff from about day 1700 (the stamp: the oak and its shade).",
     "easter_egg": "saltmouth_portal (register as a cameo, since 0): Saltmouth's ruined portal at (-269, -366), framed in a daytime shot that looks south-east (S05)"
@@ -218,7 +218,7 @@
       "place": "square",
       "size": "wide",
       "camera": "at: (0, 3, -20) from the square looking south at his house, still",
-      "frame": "subject: the village by day, every window's shutters open but his (shut); the bell right in front of his. Day 6000. (Skeletons ignore villagers: this plants 'only me'.)",
+      "frame": "subject: the village by day, every window's shutters open but his (shut); the bell right in front of his. Day 6000. (Skeletons ignore villagers: this plants 'only me'.) The easter egg: Saltmouth's ruined portal small at frame left, south-east of the house.",
       "look": {
         "time": 6000
       }
@@ -240,7 +240,7 @@
       "place": "bedroom",
       "size": "full",
       "camera": "pov at the window, then leaning out past the bell",
-      "frame": "fg: the open shutters, the sill; on 'RANG' an arrow hits the bell 3 blocks ahead (the ring, doors slam below); on 'PAST' the camera leans out clear of the bell, looking up at the ledge and the oak. Night 18000.",
+      "frame": "fg: the open shutters, the sill; on 'RANG' an arrow hits the bell 3 blocks ahead (the ring, doors slam below); on 'PAST' the camera leans out clear of the bell, looking up at the ledge and the oak. Night 13500.",
       "look": {
         "time": 13500
       }
@@ -282,7 +282,7 @@
     "bell": {
       "at": [
         0,
-        6,
+        4.5,
         -3
       ]
     },

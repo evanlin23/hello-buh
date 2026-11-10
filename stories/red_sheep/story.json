@@ -2,7 +2,7 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md) + r2 critic leftovers (reviews/r2-critic.md)",
   "caption": "why is every sheep in our village blue 🐑",
   "logline": "In Grandpa's walled village every sheep is dyed blue; when a boy leaves the gate open and follows his lamb into the woods at dusk, he learns what the blue is for.",
   "question": "why tf is every sheep in the village blue?",
@@ -260,7 +260,7 @@
       "place": "pasture_gate",
       "size": "ms",
       "camera": "at: (3, 1.2, 3) looking at the red sheep (0, 0.8, 0), slow push",
-      "frame": "subject: ONE red sheep standing in the gateway among blue ones, facing camera; Grandpa's boots and crossbow at frame edge. Day.",
+      "frame": "subject: ONE red sheep standing in the gateway among blue ones, facing camera; Grandpa's legs and crossbow at frame edge. Day.",
       "look": {
         "time": 6000
       }
@@ -314,7 +314,7 @@
       "line": "L10",
       "place": "clearing",
       "size": "full",
-      "camera": "pov stops: the lamb 5 blocks ahead, stopped, facing away into the trees",
+      "camera": "pov stops: the lamb 2.5 blocks ahead, stopped, facing away into the trees",
       "frame": "subject: the lamb 2.5 blocks ahead, stopped, head toward a dark gap between birch trunks; low sun on the lamb (blue must read). Dusk 12200.",
       "look": {
         "time": 12200

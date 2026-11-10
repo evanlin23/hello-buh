@@ -2,11 +2,11 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md) + r2 critic leftovers (reviews/r2-critic.md)",
   "caption": "grandpa broke the same lectern 3,000 times 📚",
   "logline": "A grandpa has broken the same librarian's lectern three thousand times; his grandkid knows Grandma lives on the island across the bay and told him to walk there or not come at all.",
   "question": "why tf has grandpa broken the same lectern 3,000 times?",
-  "premise": "Grandpa has broken the same lectern three thousand times: the librarian holds up a book, he reads it, 'Not THAT one', and breaks the lectern again. Grandma lives on the island across the bay; her window is lit every night. He won't take a boat: 'that's cheating'. When she left, she told him: you'll walk here, or don't come.",
+  "premise": "Grandpa has broken the same lectern three thousand times: the librarian holds up a book, he reads it, 'Not THAT one', and breaks the lectern again. Grandma lives on the island across the bay; her window is lit every night. He won't take a boat or build a bridge, ten years. When she left, she told him: walk the water to me, or don't come.",
   "twist": "He's been re-rolling the librarian for one book, Frost Walker (vanilla: breaking a librarian's lectern before you trade changes the book she offers; Frost Walker freezes water under your feet). She meant 'never'; he took it literally. This morning the librarian holds up a new book, the trade screen reads Frost Walker II, and Grandpa says nothing: he walks off the end of the dock and the sea freezes under every step, a white path toward the lit window. Cut.",
   "key_color": "#8FD8FF",
   "mood": [
@@ -145,8 +145,8 @@
     {
       "id": "L05",
       "who": "N",
-      "text": "He won't / take a BOAT. / Not ONCE / in ten YEARS.",
-      "say": "[baffled] He won't take a boat. Not once in ten years.",
+      "text": "He won't / take a BOAT. / Won't build / a BRIDGE. / Ten YEARS.",
+      "say": "[baffled] He won't take a boat. Won't build a bridge. Ten years.",
       "direction": "baffled, a little funny",
       "shot": "S05",
       "look": {
@@ -156,8 +156,8 @@
     {
       "id": "L06",
       "who": "N",
-      "text": "When she LEFT, / she told him, / you'll WALK here, / or don't COME.",
-      "say": "[mocking] When she left, she told him, you'll walk here, or don't come.",
+      "text": "When she LEFT, / she told him, / WALK the WATER / to me, / or don't COME.",
+      "say": "[mocking] When she left, she told him, walk the water to me, or don't come.",
       "direction": "mocking it like a mean line, not sad",
       "shot": "S06",
       "look": {
@@ -226,7 +226,7 @@
       "line": "L04",
       "place": "dock",
       "size": "ews",
-      "camera": "at: (0, 6, 8) behind Grandpa on the dock looking out at the island (0, 4, -120), still",
+      "camera": "at: (0, 6, 8) behind Grandpa on the dock looking out at the island (0, 4, -60), still, FOV 30",
       "frame": "subject: the bay at dusk, the island 60 blocks out, one lit window in a small house on it; Grandpa at the dock's end, small, looking at it; bg: the sea to the horizon. Dusk 13000.",
       "look": {
         "time": 13000
@@ -248,7 +248,7 @@
       "line": "L06",
       "place": "dock",
       "size": "full",
-      "camera": "at: (0, 1.4, 4) low behind Grandpa looking past him at the island window (0, 3, -120), slow push",
+      "camera": "at: (0, 1.4, 4) low behind Grandpa looking past him at the island window (0, 3, -60), slow push, FOV 30",
       "frame": "subject: Grandpa's back at the dock's end, the lit window far ahead. Dusk.",
       "look": {
         "time": 13000
@@ -260,7 +260,7 @@
       "place": "library_hut",
       "size": "ms",
       "camera": "pov: the kid opens the trade screen; the librarian holds up a new book; Grandpa's face above the screen",
-      "frame": "subject: the trade screen; the book's name (Frost Walker II) is held for S08. Dawn 23200.",
+      "frame": "subject: the trade screen; the book's name (Frost Walker II) is held for S08. Dawn 22800.",
       "look": {
         "time": 22800
       }
@@ -308,7 +308,7 @@
     "after": "L08",
     "beats": [
       "S08: the trade screen reads Frost Walker II",
-      "S09: Grandpa walks off the dock and the sea freezes under him toward the lit window; cut 1.5 s after L08. No line."
+      "S09: Grandpa walks off the dock and the sea freezes under him toward the lit window; cut 1.0 s after the first ice. No line."
     ],
     "loop": "cause and effect: why he broke the lectern (line 1)"
   },

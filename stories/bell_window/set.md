@@ -2,7 +2,7 @@
 
 - `world.build(ctx, { story: 'bell_window' })` builds canonical Saltmouth. Stamp the oak on the north rise (`since: 1700`), the bell beam on two fence posts, and his two-storey house. No lantern under the oak: use the night floor.
 - **Line-up check before anything else:** on the survey grid, find a house whose upper window, the village bell and
-  a 15+ block rise lie on one line within ~40 blocks. Record x, z in map.json. If none exists, the story moves to
+  an 8-11 high rise (the skeleton at most 15 blocks from the window) lie on one line. Record x, z in map.json. If none exists, the story moves to
   another generated plains village, with the critic and continuity agreeing.
 - **The skeleton:** summoned under the oak with `PersistenceRequired`. In S06 at noon it stands in the shade (it
   doesn't burn there). Its shot in S08 is cued with a real arrow (`/summon arrow` with motion along the line), so the

@@ -1,7 +1,7 @@
 # the_walk: set plan (r1)
 
 - Claim `gullwick` on the West March coast:
-  - an open cold-ocean bay with a natural island ~120 blocks out (from the survey; don't build an island unless none
+  - an open cold-ocean bay with a natural island 50-70 blocks out (from the survey; don't build an island unless none
     exists);
   - the dock: an oak plank pier, 12 long;
   - the library hut: a plains `library` set piece from `lib/sets`;

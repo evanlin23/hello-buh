@@ -2,7 +2,7 @@
   "name": "forty_one_cats",
   "stunt": "story_forty_one_cats",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md)",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes + the r1 continuity must-fixes (reviews/r1-continuity.md) + r2 critic leftovers (reviews/r2-critic.md); PARKED (critic r2 7.4, Twist 7: Light Sleeper's shape with runaway's creeper)",
   "caption": "why does grandma keep 41 cats on the wall 🐈",
   "logline": "In a snowy village where nobody locks a door, a boy's grandma keeps forty-one cats on the wall facing out; on the coldest night he takes the one by his window up to his bed.",
   "question": "why tf does grandma keep 41 cats on the wall, facing out?",
@@ -204,7 +204,7 @@
       "place": "wall",
       "size": "ews",
       "camera": "path: crane along the outside of the palisade from (20, 10, 12) to (-20, 8, 12), looking at the wall (0, 2, 0). FOV 55. wideMaster",
-      "frame": "subject: the village's log palisade running away along the snow, a cat sitting on top of it every ten blocks, all facing out at us; bg: snowy roofs, chimney smoke, spruce, the White to the horizon. Day.",
+      "frame": "subject: the village's log palisade running away along the snow, a cat sitting on top of it every ten blocks, all facing out at us; bg: snowy roofs, chimney smoke, spruce, the White to the horizon. Day. The easter egg: the old_road signpost at the south gate (RAVENFORD / FROSTGATE), small at frame right.",
       "look": {
         "time": 1000
       }
@@ -214,8 +214,8 @@
       "line": "L02",
       "place": "lane",
       "size": "ms",
-      "camera": "at: (0, 2.2, 8) looking at the wall (0, 3, 0), still; snow falling",
-      "frame": "subject: one cat close, a second beyond it, on the wall in falling snow, facing out, not moving; a warm lit doorway below them, shut. Day, light snow.",
+      "camera": "at: (0, 2.2, 8) looking at the wall (0, 1.5, 0), still; snow falling",
+      "frame": "subject: one cat close, a second beyond it, on the wall in falling snow, facing out, not moving; a warm lit doorway below them, shut. Day, light snow. The wall is ONE block high: the cats sit at y 1.",
       "look": {
         "time": 1000
       }
@@ -236,8 +236,8 @@
       "line": "L04",
       "place": "wall",
       "size": "full",
-      "camera": "at: (0, 3.2, 3) looking at one old cat on the wall by the gate (0, 3, 0), slow push",
-      "frame": "subject: the oldest cat, on the post nearest the boy's house; bg: the house with his window. Day.",
+      "camera": "at: (0, 1.8, 3) looking at one old cat on the wall by the gate (0, 1.5, 0), slow push",
+      "frame": "subject: the oldest cat, on the post nearest the boy's house; bg: the house with his window. Day. The wall is ONE block high: the cats sit at y 1.",
       "look": {
         "time": 1000
       }
@@ -335,7 +335,7 @@
   "ending": {
     "after": "L09",
     "beats": [
-      "S10: the creeper through the gap, past the open doors, swelling at his window, the cat asleep inside; cut 1.2 s after L09. No line."
+      "S10: the creeper through the gap, past the open doors, swelling at his window, the cat asleep inside; cut 1.0 s after L09. No line."
     ],
     "loop": "cause and effect: why the cats face out (line 1)"
   },
