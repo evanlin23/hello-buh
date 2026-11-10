@@ -87,3 +87,6 @@ the first time (now in the skill).
 - pace 0 blockers, caption_sync 0. The reviewer checked the changed span: READY.
 - Republished `--pass`: `videos` 602e9e0, status ready. The first publish attempt raced the hold commit on `videos`.
   I reset the worktree to origin/videos and re-ran publish.js (no hand push to `videos`).
+- 16:05: owner rule "none of these new stories should go out until i've OKed them": the lead set the package back to
+  held on `videos` (5de29cb). Main f4c0605 is merged (publish.js packages story_* as held unless the owner OKs one).
+  Not re-marked ready.
