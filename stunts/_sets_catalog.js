@@ -5,7 +5,7 @@
 // PIECES=cottage,well limits the run.
 const sets = require('../lib/sets')
 
-const ALL = ['cottage', 'house2', 'farmhouse', 'well', 'camp', 'graveyard', 'market', 'church', 'watchtower', 'lighthouse', 'bridge', 'mine', 'basement', 'room']
+const ALL = ['tavern', 'windmill', 'dock', 'cottage', 'house2', 'farmhouse', 'well', 'camp', 'graveyard', 'market', 'church', 'watchtower', 'lighthouse', 'bridge', 'mine', 'basement', 'room']
 const ONLY = process.env.PIECES ? process.env.PIECES.split(',') : ALL
 
 module.exports = {
@@ -31,7 +31,20 @@ module.exports = {
     for (const name of ONLY) {
       const { size } = sets.build(name).bounds()
       const w = size[0] + 8, d = size[2] + 8
-      const site = await sets.findSite(ctx, { w, d, reach: 88, stride: 8, maxRange: name === 'mine' || name === 'lighthouse' ? 6 : 4, near: p0, avoid: taken }) ||
+      // a dock goes on a shore, facing out over the water, its shore end on the bank
+      if (name === 'dock') {
+        const sh = await sets.findShore(ctx, { reach: 110, near: p0 })
+        if (sh) {
+          const v = { south: [0, 1], north: [0, -1], east: [1, 0], west: [-1, 0] }[sh.facing], off = Math.floor(size[2] / 2) - 1
+          const set = await sets.place(ctx, 'dock', { x: sh.x + v[0] * off, z: sh.z + v[1] * off, y: sh.y, facing: sh.facing })
+          this.placed.push(set); taken.push({ x: sh.x, z: sh.z, w: w + 6, d: d + 6 })
+          continue
+        }
+      }
+      // SLOPE=1: put pieces on moderate slopes on purpose (to show the terrain fit: retaining walls, steps, banks)
+      const slope = process.env.SLOPE === '1' && name !== 'dock' ? { minRange: 4, maxRange: 9, maxTrees: 0.4 } : null
+      const site = (slope && await sets.findSite(ctx, { w, d, reach: 88, stride: 8, near: p0, avoid: taken, ...slope })) ||
+        await sets.findSite(ctx, { w, d, reach: 88, stride: 8, maxRange: name === 'mine' || name === 'lighthouse' ? 6 : 4, near: p0, avoid: taken }) ||
         await sets.findSite(ctx, { w, d, reach: 88, stride: 8, maxRange: 8, maxTrees: 0.5, near: p0, avoid: taken })
       let at = site
       for (let i = 0; !at && i < 64; i++) {   // nothing good left: the first free spot on a spiral
