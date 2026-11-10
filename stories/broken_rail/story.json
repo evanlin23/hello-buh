@@ -38,7 +38,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "Buh, the player kid (default Steve skin), nine turning ten (the voice stays Pip's nine-year-old recipe); POV in S06, S08, S10, S11a, S12a (the hand and the hotbar); seen small from outside in S09 and S12b",
+      "on_screen": "Buh, the player kid (default Steve skin), nine turning ten (the voice stays Pip's nine-year-old recipe); POV in S06, S08, S10, S11a (the hand and the hotbar); seen small from outside in S09 and S12b",
       "voice": "Leda",
       "recipe": "voices/recipes/pip.md (single speaker, the exact bracketed direction, no post-processing)"
     },
@@ -48,7 +48,7 @@
       "voice": "Gacrux",
       "color": "#F4A6C0",
       "profile": "Grandma: a woman in her seventies, warm and a little dry, a smile in her voice, full volume, unhurried; never breathy",
-      "on_screen": "villager, plains farmer (straw hat), sitting in a minecart; S11a, S11b, S12a, S12b, S13 (far), S14",
+      "on_screen": "villager, plains farmer (straw hat), sitting in a minecart; S11a, S11b, S12b (far), S14",
       "model": "gemini-3.8-flash-lite-tts",
       "note": "Gacrux, as gold_for_the_portal's Grandma (the palette's mature woman; no elder woman in voices/cast.json). No audition: quota."
     }
@@ -331,7 +331,7 @@
         -3,
         43
       ],
-      "note": "the bridge's arch seen from the ravine (S07b)"
+      "note": "the bridge's arch seen from the ravine ()"
     }
   },
   "shots": [
@@ -407,7 +407,7 @@
       "place": "bridge foot",
       "size": "wide",
       "camera": "pov standing at the bridge's north foot looking south across the deck; on 'CART' the rails stack (64) appears in hotbar slot 1 and is selected and he steps onto the deck",
-      "frame": "fg: the rail running onto the deck, the hotbar (carrot, dirt, redstone torch; the rails arrive in slot 1 on 'RAILS'); mid: the deck walls and lamp posts; bg: the far end of the bridge, the line climbing a hill under the moon; below and left of centre, about 48 blocks out on the slope under the plateau, one lone torch burning in the dark (the easter egg, canon `torch_hill`: a single warm point, never the subject). Midnight (18000).",
+      "frame": "fg: the rail running onto the deck, the hotbar (carrot, dirt, redstone torch; the rails arrive in slot 1 on 'CART'); mid: the deck walls and lamp posts; bg: the far end of the bridge, the line climbing a hill under the moon; below and left of centre, about 48 blocks out on the slope under the plateau, one lone torch burning in the dark (the easter egg, canon `torch_hill`: a single warm point, never the subject). Midnight (18000).",
       "look": {
         "time": 18000
       }
@@ -462,7 +462,7 @@
       "place": "crater",
       "size": "full",
       "camera": "at: 7 blocks west of the cart, 1.6 up, looking east; FOV 50; pans left with the cart for its first 3 blocks; no line: right after 'HOME' (a jump cut: the crater already bridged, the gold rail lit), about 1.2 s",
-      "frame": "fg: ferns on the valley floor; subject: Buh behind the cart on the far lip walks into it on 'PUSHED', the lit gold rail fires it and the cart with Grandma shoots left (north, home) over the new rails; bg: the valley side with the line climbing out. Morning (5000). About 1 s.",
+      "frame": "fg: ferns on the valley floor; subject: Buh behind the cart on the far lip walks into it 0.3 s in, the lit gold rail fires it and the cart with Grandma shoots left (north, home) over the new rails; bg: the valley side with the line climbing out. Morning (5000). About 1 s.",
       "look": {
         "time": 5000
       }
@@ -473,7 +473,7 @@
       "place": "station",
       "size": "full",
       "camera": "at: (-6, 1.6, 0) from the buffer, side-on from the platform's west edge, looking east; FOV 50; still",
-      "frame": "left: Grandpa head to foot at (0,-1), north of the buffer; right: the cart, hopped to ~3 blocks out at the cut, rolls in from the right over the activator rail at (0,1) and knocks the buffer 0.3 s before the line; the activator sets Grandma down standing on the rail bed facing him across the buffer stop; bg: the sidings, the empty spur behind them, a lamp lit. On 'dear' Grandpa's head tips toward her. Ends 0.6 s after the last word. Dusk (12800).",
+      "frame": "left: Grandpa head to foot at (0,-1), north of the buffer; right: the cart rolls in from the right over the activator rail at (0,1) and knocks the buffer 0.3 s before the line; the activator sets Grandma down standing on the rail bed facing him across the buffer stop; bg: the sidings, the empty spur behind them, a lamp lit. On 'dear' Grandpa's head tips toward her. Ends 0.6 s after the last word. Dusk (12800).",
       "look": {
         "time": 12800
       }

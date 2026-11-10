@@ -1,3 +1,5 @@
+> **Superseded in part by r5 (2026-11-10): story.json is the source of truth (9 lines; L04/L06 merged, L07/L12/L13 and S07/S12a/S13 cut; no name signs). The rest below is the r2 bible.**
+
 # broken_rail: continuity bible (r2 polish)
 
 ## World
