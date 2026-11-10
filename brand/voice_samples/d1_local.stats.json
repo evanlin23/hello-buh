@@ -1,0 +1,15 @@
+{
+ "name": "d1_local",
+ "tempo": 1.1,
+ "raw_s": 17.88,
+ "final_s": 14.88,
+ "raw_wps_speaking": 4.82,
+ "raw_wps_overall": 3.96,
+ "raw_pauses_max": 0.41,
+ "raw_pauses_over_0.12": 12,
+ "wps_speaking": 5.16,
+ "wps_overall": 4.66,
+ "pauses_max": 0.12,
+ "f0_median": 157.0,
+ "f0_spread_st": 11.5
+}

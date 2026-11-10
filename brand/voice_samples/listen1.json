@@ -1,0 +1,51 @@
+[
+  {
+    "label": "Clip A",
+    "apparent_age": "20s-30s",
+    "sex": "Male",
+    "realism": "6/10 - Staccato cadence and robotic pitch jumps on numbers give away its synthetic origin.",
+    "distinctiveness": "4/10 - Sounds like the ubiquitous, generic hype-narration TTS voice seen across cheap Shorts.",
+    "resembles": "Standard YouTube Shorts male stock TTS",
+    "energy_and_attitude": "Aggressive, rushed, mechanical, intense, hyped",
+    "pace": "rushed",
+    "annoying_after_30s": "The relentless robotic punchiness and choppy rhythm become exhausting very quickly."
+  },
+  {
+    "label": "Clip B",
+    "apparent_age": "35-45",
+    "sex": "Male",
+    "realism": "7/10 - Flat intonation and unnatural gaps between short sentences reveal it as AI.",
+    "distinctiveness": "5/10 - Blend-in deep voice common to TikTok movie recap and documentary Shorts.",
+    "resembles": "Deep TikTok male narrator TTS",
+    "energy_and_attitude": "Somber, monotone, calm, restrained, serious",
+    "pace": "right",
+    "annoying_after_30s": "The emotionless, dry delivery lacks the storytelling flare needed to hold viewers."
+  },
+  {
+    "label": "Clip C",
+    "apparent_age": "20s",
+    "sex": "Male",
+    "realism": "8/10 - Expressive phrasing and natural pitch variation, with only minor audio clipping artifacts betraying AI.",
+    "distinctiveness": "8/10 - Raspy, youthful storytelling timbre stands out clearly against standard TTS voices.",
+    "resembles": "Popular Minecraft story YouTuber narrator",
+    "energy_and_attitude": "Engaging, dramatic, expressive, narrative, lively",
+    "pace": "right",
+    "annoying_after_30s": "Slightly repetitive cadence pattern at the end of each sentence."
+  },
+  {
+    "label": "Clip D",
+    "apparent_age": "20s",
+    "sex": "Female",
+    "realism": "6/10 - Completely breathlessly paced phrasing makes the AI nature obvious.",
+    "distinctiveness": "6/10 - Fits the hyperactive female Shorts trope, but memorable enough within that style.",
+    "resembles": "Fast TikTok female storytelling TTS",
+    "energy_and_attitude": "Hyperactive, frantic, anxious, urgent, snappy",
+    "pace": "rushed",
+    "annoying_after_30s": "The manic, ultra-fast delivery causes rapid fatigue and sensory overload."
+  },
+  {
+    "label": "best",
+    "pick": "Clip C",
+    "reason": "Clip C delivers the best narrative character, natural emotional inflection, and ideal pacing required to drive audience retention on a Minecraft story channel."
+  }
+]

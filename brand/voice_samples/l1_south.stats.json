@@ -1,0 +1,15 @@
+{
+ "name": "l1_south",
+ "tempo": 1.15,
+ "raw_s": 18.44,
+ "final_s": 14.75,
+ "raw_wps_speaking": 4.62,
+ "raw_wps_overall": 3.8,
+ "raw_pauses_max": 0.44,
+ "raw_pauses_over_0.12": 12,
+ "wps_speaking": 5.14,
+ "wps_overall": 4.7,
+ "pauses_max": 0.11,
+ "f0_median": 117.0,
+ "f0_spread_st": 13.1
+}

@@ -1,0 +1,49 @@
+{
+  "clips": [
+    {
+      "label": "A",
+      "apparent_age": "20-25",
+      "sex": "female",
+      "realism": "7/10 - rigid rhythm and flat pitch transitions give away the AI",
+      "distinctiveness": "4/10 - blends in with standard flat AI story narrators",
+      "resemble_famous_or_stock_tts": "generic stock female TTS voice",
+      "energy_and_attitude": "calm, deadpan, monotonous, matter-of-fact, understated",
+      "pace": "right",
+      "annoying_after_30s": "the complete lack of emotional contrast becomes monotonous fast"
+    },
+    {
+      "label": "B",
+      "apparent_age": "20-30",
+      "sex": "male",
+      "realism": "8/10 - strong natural voice texture, slight synthetic cadence on sentence ends",
+      "distinctiveness": "7/10 - distinct raspy quality that cuts through standard feed noise",
+      "resemble_famous_or_stock_tts": "popular TikTok/Shorts male narrator stock voice",
+      "energy_and_attitude": "upbeat, engaging, dramatic, storytelling, conversational",
+      "pace": "right",
+      "annoying_after_30s": "the constant hyper-hyped cadence can feel slightly tiring"
+    },
+    {
+      "label": "C",
+      "apparent_age": "35-45",
+      "sex": "male",
+      "realism": "6/10 - heavy bass resonance and unnatural pauses reveal the synthesis",
+      "distinctiveness": "5/10 - generic deep dramatic AI voice used across cinematic clips",
+      "resemble_famous_or_stock_tts": "movie trailer stock male TTS voice",
+      "energy_and_attitude": "serious, grave, dramatic, somber, intense",
+      "pace": "too slow",
+      "annoying_after_30s": "overly theatrical gravitas drags down short-form pacing"
+    },
+    {
+      "label": "D",
+      "apparent_age": "20-25",
+      "sex": "female",
+      "realism": "8/10 - lively inflections, though slightly micro-glitched on fast words",
+      "distinctiveness": "6/10 - expressive tone, but recognizable as a standard Shorts voice",
+      "resemble_famous_or_stock_tts": "popular TikTok storytime female TTS voice",
+      "energy_and_attitude": "expressive, lively, sarcastic, engaging, spirited",
+      "pace": "right",
+      "annoying_after_30s": "overly bouncy cadence becomes grating over longer periods"
+    }
+  ],
+  "best": "Clip B, because its distinct raspy tone and high-energy storytelling pace hold short-form viewer attention best for a Minecraft channel."
+}

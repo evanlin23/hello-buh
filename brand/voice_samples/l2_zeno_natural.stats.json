@@ -1,0 +1,15 @@
+{
+ "name": "l2_zeno",
+ "tempo": 1.0,
+ "raw_s": 18.48,
+ "final_s": 16.31,
+ "raw_wps_speaking": 4.81,
+ "raw_wps_overall": 3.79,
+ "raw_pauses_max": 0.49,
+ "raw_pauses_over_0.12": 13,
+ "wps_speaking": 4.77,
+ "wps_overall": 4.24,
+ "pauses_max": 0.13,
+ "f0_median": 134.0,
+ "f0_spread_st": 15.9
+}

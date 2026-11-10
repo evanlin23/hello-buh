@@ -1,0 +1,15 @@
+{
+ "name": "l3_quick",
+ "tempo": 1.13,
+ "raw_s": 21.16,
+ "final_s": 14.93,
+ "raw_wps_speaking": 4.85,
+ "raw_wps_overall": 3.28,
+ "raw_pauses_max": 0.88,
+ "raw_pauses_over_0.12": 15,
+ "wps_speaking": 5.07,
+ "wps_overall": 4.64,
+ "pauses_max": 0.11,
+ "f0_median": 205.0,
+ "f0_spread_st": 13.1
+}
