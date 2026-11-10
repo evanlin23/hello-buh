@@ -151,7 +151,8 @@
       "look": {
         "what": "actor:Gramps"
       },
-      "stress": "DOOR, COMING"
+      "stress": "DOOR, COMING",
+      "say": "Lock the door, kid, they're coming."
     },
     {
       "id": "L09",
