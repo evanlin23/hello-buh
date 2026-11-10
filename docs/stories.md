@@ -130,6 +130,11 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "we can keep posting, to get more data."** The 5 older-style stories stay in the upload queue.
+  On caption colours: "It should generally just "match" the vibe of the character thats supposed to be speaking." And on
+  craft: "everything should be the best and optimized in the process" (format, font, music, sound effects, grade,
+  audio, sets, characters, lighting). Each of those has a measured standard in the `cinematic-style` skill, with the
+  evidence behind it; change a standard only with evidence (our numbers or what works on top channels).
 - **Owner, 2026-11-10, on engine gaps (no sitting, no drink pose, no off-hand item, chests not showing their contents,
   campfire smoke): "why cant we build the renderer out to allow all of these? and more when they come up?"** So the
   story decides and the engine follows. When a script needs something the renderer can't draw yet, **build the feature**
