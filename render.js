@@ -491,6 +491,8 @@ function handAt (t) {
   // a death or respawn makes a new player entity, which starts at rest: no swing carries over (tries)
   const reset = DEATHS.reduce((m, [a, b]) => Math.max(m, a <= t ? a : -1, b <= t ? b : -1), -1)
   for (const s of SWINGS) if (s <= t && t - s < 6 && s >= reset) swing = (t - s) / 6
+  const ds = DIG_SMOOTH ? digHandAt(t) : null   // a steady chop through a run of digs (below)
+  if (ds !== null) swing = ds
   return { name, equip: 1 - h, swing }
 }
 // Digging (from the harness's block_dig marks): [startTick, endTick, x, y, z, digTicks]. The client
@@ -1585,6 +1587,120 @@ const EYEH = [], FOVM = []
     EYEH.push(eh); FOVM.push(fm)
   }
 }
+// Smooth digging (owner, 2026-11-10: "can we make the movement smoother when we are breaking blocks? right now it
+// looks very jerky"). A bot aims at each block's centre in 1-2 ticks (bot.dig(b, true) snaps; easeLookAt 100 ms is
+// 7 degrees a tick for 2 ticks), holds dead still while it digs, then snaps to the next: at 60 fps that is a
+// 2-3 deg/frame burst between frozen holds, every block. A real player's mouse glides from block to block and
+// starts moving before the block breaks. Through each run of digs (the harness's dig/dig_end marks) the aim is a
+// Gaussian average of the recorded one (sigma 2.5 ticks), eased in and out at the run's ends, and kept on the
+// block being dug: on any tick where the smoothed crosshair would leave that block (vanilla would cancel the
+// dig) it is pulled back toward the recorded aim just enough to stay on it. Between ticks the camera follows a
+// Catmull-Rom curve instead of straight lines, so the speed changes smoothly too. Old recordings are untouched:
+// on for recordings with rec.smoothDig (lib/harness.js writes it from 2026-11-10), stunt.smoothDig, or SMOOTH_DIG=1
+// (SMOOTH_DIG=0 turns it off). The held tool's swing through a run is digHandAt below.
+const DIG_SMOOTH = process.env.SMOOTH_DIG ? process.env.SMOOTH_DIG === '1' : !!(STUNT_MOD.smoothDig ?? rec.smoothDig)
+// does the ray from eye o along (yaw, pitch) enter block (bx, by, bz) within 6 blocks? (slab test) The block is
+// shrunk by 0.1 a side: the crosshair stays well inside it, never grazing an edge
+function digHits (o, yaw, pitch, bx, by, bz) {
+  const d = [-Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), -Math.cos(yaw) * Math.cos(pitch)], M = 0.1, lo = [bx + M, by + M, bz + M]
+  let t0 = 0, t1 = 6
+  for (let k = 0; k < 3; k++) {
+    if (Math.abs(d[k]) < 1e-9) { if (o[k] < lo[k] || o[k] > lo[k] + 1 - 2 * M) return false; continue }
+    let u = (lo[k] - o[k]) / d[k], v = (lo[k] + 1 - 2 * M - o[k]) / d[k]
+    if (u > v) [u, v] = [v, u]
+    t0 = Math.max(t0, u); t1 = Math.min(t1, v)
+    if (t0 > t1) return false
+  }
+  return true
+}
+const DIG_WIN = new Uint8Array(P.length)   // 1 on ticks whose aim the dig smoothing owns (Catmull-Rom between them)
+if (DIG_SMOOTH && DIGS.length) {
+  const n = P.length, PAD = 8, RAMP = 4, SIG = 2.5, R = 7
+  const end = (d) => Math.min(n - 1, Number.isFinite(d[1]) ? d[1] : n - 1)
+  // runs: digs closer than 20 ticks share one window; a cut splits them
+  const wins = []
+  for (const d of [...DIGS].sort((a, b) => a[0] - b[0])) {
+    const a = Math.max(0, Math.floor(d[0]) - PAD), b = Math.min(n - 1, Math.ceil(end(d)) + PAD), w = wins[wins.length - 1]
+    if (w && a <= w.b + 4) { w.b = Math.max(w.b, b); w.digs.push(d) } else wins.push({ a, b, digs: [d] })
+  }
+  const segs = []
+  for (const w of wins) {
+    let s = w.a
+    for (let i = w.a; i < w.b; i++) if (isCutStep(i, P[i], P[i + 1])) { segs.push({ a: s, b: i, digs: w.digs }); s = i + 1 }
+    segs.push({ a: s, b: w.b, digs: w.digs })
+  }
+  const K = []; for (let k = -R; k <= R; k++) K.push(Math.exp(-k * k / (2 * SIG * SIG)))
+  const hits = (i, yaw, pitch, bx, by, bz) => digHits([P[i][1], P[i][2] + (HAS_FLAGS ? EYEH[i] : EYE), P[i][3]], yaw, pitch, bx, by, bz)
+  for (const s of segs) {
+    if (s.b - s.a < 4) continue
+    // unwrapped yaw over the segment (pitch needs none)
+    const uw = [SMOOTH.yaw[s.a]]
+    for (let i = s.a + 1; i <= s.b; i++) { let d = SMOOTH.yaw[i] - SMOOTH.yaw[i - 1]; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; uw.push(uw[uw.length - 1] + d) }
+    const pt = []; for (let i = s.a; i <= s.b; i++) pt.push(SMOOTH.pitch[i])
+    const L = uw.length, sy = [], sp = []
+    for (let j = 0; j < L; j++) {
+      let wy = 0, wp = 0, ws = 0
+      for (let k = -R; k <= R; k++) { const q = Math.min(L - 1, Math.max(0, j + k)); wy += K[k + R] * uw[q]; wp += K[k + R] * pt[q]; ws += K[k + R] }
+      // eased in and out over the window's first and last RAMP ticks: no step where the recorded aim takes over
+      const e = Math.min(1, j / RAMP, (L - 1 - j) / RAMP), r = e * e * (3 - 2 * e)
+      sy.push(uw[j] + (wy / ws - uw[j]) * r); sp.push(pt[j] + (wp / ws - pt[j]) * r)
+    }
+    // how much of the smoothing each tick can take (1: all) with the crosshair still on the block being dug: the
+    // dig that holds the tick (at a boundary, the newer one); the largest share that stays on it, by bisection
+    const need = []
+    for (let j = 0; j < L; j++) {
+      const i = s.a + j
+      let dig = null, lo = 1
+      for (const d of s.digs) if (i >= Math.floor(d[0]) && i <= Math.ceil(end(d))) dig = d
+      if (dig && !hits(i, sy[j], sp[j], dig[2], dig[3], dig[4]) && hits(i, uw[j], pt[j], dig[2], dig[3], dig[4])) {
+        let hi = 1; lo = 0
+        for (let it = 0; it < 10; it++) { const m = (lo + hi) / 2; if (hits(i, uw[j] + (sy[j] - uw[j]) * m, pt[j] + (sp[j] - pt[j]) * m, dig[2], dig[3], dig[4])) lo = m; else hi = m }
+      }
+      need.push(lo)
+    }
+    // ...eased in time, so a pull back onto a block is spread over a few ticks, not a kink in one: the minimum over
+    // +-4 ticks, then a 9-tick average (each tick's share stays at or under what it needed)
+    for (let j = 0; j < L; j++) {
+      let w = 0, ws = 0
+      for (let k = -4; k <= 4; k++) {
+        let m = 1
+        for (let q = j + k - 4; q <= j + k + 4; q++) m = Math.min(m, need[Math.min(L - 1, Math.max(0, q))])
+        const g = Math.exp(-k * k / 4.5); w += g * m; ws += g
+      }
+      const r = Math.min(need[j], w / ws), i = s.a + j
+      SMOOTH.yaw[i] = uw[j] + (sy[j] - uw[j]) * r; SMOOTH.pitch[i] = pt[j] + (sp[j] - pt[j]) * r
+      DIG_WIN[i] = 1
+    }
+  }
+}
+// the held tool through a run of digs. Vanilla (Minecraft.continueAttack) swings every tick the attack key is held on a
+// block, even in the 5-tick destroyDelay between blocks; LivingEntity.swing restarts only once swingTime >= 3 of 6,
+// so swingTime runs 0 1 2 3 0 1 2 3... and getAttackAnim wraps FORWARD (attackAnim 0.5 -> 0 is drawn as 0.5 -> 1):
+// a steady chop with no stop. mineflayer swings once per dig and every 350 ms, and the 3-tick rule above snapped
+// the arm from half-swung back to rest whenever a swing came early. Digs less than 6 ticks apart chop as one run.
+const DIG_CHOP = []
+if (DIG_SMOOTH) for (const d of [...DIGS].sort((a, b) => a[0] - b[0])) {
+  const e = Number.isFinite(d[1]) ? d[1] : P.length, w = DIG_CHOP[DIG_CHOP.length - 1]
+  if (w && d[0] <= w[1] + 6) w[1] = Math.max(w[1], e); else DIG_CHOP.push([d[0], e])
+}
+function digHandAt (t) {
+  for (const [a, b] of DIG_CHOP) {
+    if (t < a || t >= b + 6) continue
+    const chop = (u) => { const p = u % 4; return p < 3 ? p / 6 : 0.5 + (p - 3) / 2 }
+    if (t < b) return chop(t - a)
+    // released: the swing in progress plays out at its normal 1/6 a tick, then rest
+    const s = chop(b - a) % 1 + (t - b) / 6
+    return s >= 1 ? 0 : s
+  }
+  return null
+}
+// Catmull-Rom through the smoothed dig aim (C1: the speed has no step at each tick)
+function digCR (arr, i, f, wrap) {
+  const v = [arr[i - 1], arr[i], arr[i + 1], arr[i + 2]]
+  if (wrap) for (let k = 0; k < 4; k++) { if (k === 1) continue; let d = v[k] - v[1]; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; v[k] = v[1] + d }
+  const [a, b, c, d] = v
+  return b + 0.5 * f * (c - a + f * (2 * a - 5 * b + 4 * c - d + f * (3 * (b - c) + d - a)))
+}
 function camAtLive (t) {
   const i = Math.min(P.length - 2, Math.max(0, Math.floor(t)))
   let a = P[i], b = P[i + 1], A = bobState[i], B = bobState[i + 1]
@@ -1603,10 +1719,17 @@ function camAtLive (t) {
   }
   const f = Math.min(1, Math.max(0, t - i))
   const g = A.walk + (B.walk - A.walk) * f, h = A.bob + (B.bob - A.bob) * f
+  let aim = { yaw: lerpAngle(yaw0, yaw1, f), pitch: pit0 + (pit1 - pit0) * f }
+  if (DIG_SMOOTH && i > 0 && i + 2 < P.length && DIG_WIN[i - 1] && DIG_WIN[i] && DIG_WIN[i + 1] && DIG_WIN[i + 2] && b === P[i + 1]) {
+    const cr = { yaw: digCR(SMOOTH.yaw, i, f, true), pitch: digCR(SMOOTH.pitch, i, f, false) }
+    // the curve can bulge off a block the straight line stays on: keep the crosshair on the block being dug
+    const d = DIGS.find(d => t >= d[0] && t < d[1]), o = [a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f + (HAS_FLAGS ? EYEH[i] : EYE), a[3] + (b[3] - a[3]) * f]
+    if (!d || digHits(o, cr.yaw, cr.pitch, d[2], d[3], d[4]) || !digHits(o, aim.yaw, aim.pitch, d[2], d[3], d[4])) aim = cr
+  }
   return {
     x: a[1] + (b[1] - a[1]) * f, y: a[2] + (b[2] - a[2]) * f + (HAS_FLAGS ? EYEH[i] + (EYEH[Math.min(EYEH.length - 1, i + 1)] - EYEH[i]) * f : EYE), z: a[3] + (b[3] - a[3]) * f,
     fov: HAS_FLAGS ? 70 * (FOVM[i] + (FOVM[Math.min(FOVM.length - 1, i + 1)] - FOVM[i]) * f) : undefined,
-    yaw: lerpAngle(yaw0, yaw1, f), pitch: pit0 + (pit1 - pit0) * f,
+    ...aim,
     bobX: Math.sin(g * Math.PI) * h * 0.5,
     bobY: -Math.abs(Math.cos(g * Math.PI) * h),
     roll: Math.sin(g * Math.PI) * h * 3 * Math.PI / 180,

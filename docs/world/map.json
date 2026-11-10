@@ -123,7 +123,7 @@
      "note": "the seed generates it: nothing to build, never /place it again"
     }
    ],
-   "about": "Milo's home village on a terrace above the east coast; the hill north-west of it is Dog Hill. The well (its centre is the origin) sits over a shrieker (Light Sleeper's staging: the ancient city under it is the story's, the seed's nearest are 1,200 blocks west). Carpeted from day 1400 until Milo stops playing (day 3400): shriekers only answer players.",
+   "about": "Buh's home village on a terrace above the east coast; the hill north-west of it is Dog Hill. The well (its centre is the origin) sits over a shrieker (Light Sleeper's staging: the ancient city under it is the story's, the seed's nearest are 1,200 blocks west). Carpeted from day 1400 until Buh stops playing (day 3400): shriekers only answer players.",
    "pieces": [],
    "stamps": [
     {
@@ -165,7 +165,7 @@
     -196,
     -890
    ],
-   "about": "The flat hilltop north-west of Hushwell, 29 blocks above the plaza (as Dog on the Hill built it; its bible's layout differs, the render is canon): Milo's childhood dirt hut north-east of D, the patch where he logged out (D + (3, 0, 0)), and the dog on D facing it, since day 3400.",
+   "about": "The flat hilltop north-west of Hushwell, 29 blocks above the plaza (as Dog on the Hill built it; its bible's layout differs, the render is canon): Buh's childhood dirt hut north-east of D, the patch where he logged out (D + (3, 0, 0)), and the dog on D facing it, since day 3400.",
    "pieces": [],
    "stamps": [
     {
@@ -554,7 +554,7 @@
     {
      "id": "hut",
      "since": 1300,
-     "what": "Milo's 5x5 dirt hut north-east of D (D + (3..7, 1..4, -8..-4)), oak door south toward the patch, a torch, crafting table and furnace, moss, vines, a cobweb",
+     "what": "Buh's 5x5 dirt hut north-east of D (D + (3..7, 1..4, -8..-4)), oak door south toward the patch, a torch, crafting table and furnace, moss, vines, a cobweb",
      "do": "cmds",
      "cmds": [
       "/fill -199 109 -906 -195 111 -902 dirt",
@@ -601,7 +601,7 @@
     {
      "id": "patch",
      "since": 3400,
-     "what": "the patch P = D + (3, 0, 0): the one clean grass block where Milo logged out",
+     "what": "the patch P = D + (3, 0, 0): the one clean grass block where Buh logged out",
      "do": "cmds",
      "cmds": [
       "/setblock -199 108 -898 grass_block",
@@ -612,7 +612,7 @@
      "id": "dog",
      "since": 3400,
      "live": true,
-     "what": "the dog: a pale wolf, tamed (Owner: the recording player, Milo), red collar (CollarColor 14), sitting on D facing east at the patch and the village",
+     "what": "the dog: a pale wolf, tamed (Owner: the recording player, Buh), red collar (CollarColor 14), sitting on D facing east at the patch and the village",
      "do": "cmds",
      "cmds": [
       "/summon wolf -201.5 109 -897.5 {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Sitting:1b,Tags:[\"dog\",\"canon\"],Rotation:[-90f,0f],variant:\"minecraft:pale\",CollarColor:14b}",
@@ -1233,7 +1233,7 @@
      "generated": true
     }
    ],
-   "about": "The village on the south peninsula, a ruined portal on its east edge. Good Boy's yard is at its north-east (village + (37, 16)). Where Milo lived with the dog at 16.",
+   "about": "The village on the south peninsula, a ruined portal on its east edge. Good Boy's yard is at its north-east (village + (37, 16)). Where Buh lived with the dog at 16.",
    "pieces": [],
    "stamps": [],
    "stories": [
