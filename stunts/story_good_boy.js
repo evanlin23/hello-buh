@@ -27,6 +27,7 @@ const VX = -304, VZ = -384          // the village (scripts: /locate structure m
 
 module.exports = {
   name: 'story_good_boy',
+  hideBoxes: [[-6, 60, -6, 6, 64, 6]],   // the cast's waiting room (barrier floor F+60, stone roof F+64) is not drawn: its roof read as a black square in the dusk sky over the librarian (L06, 19.9 s)
   near: [VX, VZ],
   caption: CAPTION,
   time: GOLD,

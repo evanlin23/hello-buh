@@ -84,10 +84,6 @@ def split_lines(x, texts, gap=0.18):
             for i in range(n, 0, -1):
                 k = back[i][j]; groups.append((S[k][0], S[j - 1][1])); j = k
             best = (c, groups[::-1], skip)
-    if best is None:   # fewer pauses than lines (a fast take): equal parts; voice_check.py --resplit cuts it by words
-        print(f"  split: {m} stretches for {n} lines: equal parts (run voice_check.py --resplit)")
-        k = len(x) // n
-        return [x[i * k:(i + 1) * k] for i in range(n)]
     print(f"  split: {m} stretches -> {n} lines (skipped {best[2]} leading)")
     return [x[a:b] for a, b in best[1]]
 
@@ -167,10 +163,7 @@ def main():
                 x = np.fromfile(take, np.float32)
             else:
                 text = r["direction"] + "\n" + "\n".join(f"{w}: {t}" if len(r["speakers"]) > 1 else t for w, _, t in r["lines"])
-                x = tts.request(text, r["speakers"])
-                if isinstance(x, tuple):   # main's tts.request returns (audio, model)
-                    x = x[0]
-                x.astype(np.float32).tofile(take)
+                x = tts.request(text, r["speakers"]); x = x[0] if isinstance(x, tuple) else x; x.astype(np.float32).tofile(take)   # request() returns (audio, model) since the drift gate
             for (who, lid, t), seg in zip(r["lines"], split_lines(x, [t for _, _, t in r["lines"]])):
                 write_wav(vdir / f"{lid}.wav", seg)
     timing(story, vdir)

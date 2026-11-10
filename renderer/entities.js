@@ -162,7 +162,7 @@ function build (geo, texInfo, extraCubes = {}) {
 }
 
 // What to draw for an entity: texture layers + model key + extra cubes.
-function look (name, extra, regs) {
+function look (name, extra, regs, engine = 0) {
   if (name === 'villager') {
     const t = regs['minecraft:villager_type']?.[String(extra?.type)] || 'plains'
     const p = regs['minecraft:villager_profession']?.[String(extra?.profession)] || 'none'
@@ -198,6 +198,15 @@ function look (name, extra, regs) {
   }
   const tex = { zombie: 'entity/zombie/zombie', skeleton: 'entity/skeleton/skeleton', creeper: 'entity/creeper/creeper', pig: 'entity/pig/temperate_pig', iron_golem: 'entity/iron_golem/iron_golem', enderman: 'entity/enderman/enderman', spider: 'entity/spider/spider' }[name]
   if (tex) return { model: name, layers: [tex] }
+  // mobs that share another's model (scripts/mob_audit.js), drawn from recordings made from 2026-11-10 on (engine 2;
+  // older recordings never showed them, and must render as published): the skeleton family (BoggedRenderer,
+  // ParchedRenderer: SkeletonModel), the illusioner (IllagerModel), the glow squid (SquidModel) and the trader llama
+  // (LlamaModel + LlamaDecorLayer's trader blanket)
+  if (engine >= 2) {
+    const A = { bogged: ['skeleton', 'entity/skeleton/bogged'], parched: ['skeleton', 'entity/skeleton/parched'], illusioner: ['vindicator', 'entity/illager/illusioner'], glow_squid: ['squid', 'entity/squid/glow_squid'] }[name]
+    if (A && MODELS && MODELS[A[0]]) return { model: A[0], layers: [A[1]] }
+    if (name === 'trader_llama' && MODELS && MODELS.llama) return { model: 'llama', layers: ['entity/llama/creamy', 'entity/equipment/llama_body/trader_llama'] }
+  }
   // any other mob with converted geometry: its default texture (checked by eye in a line-up render)
   // not yet: the witch draws only its hat and the horse family gets stray saddle/bag parts (their
   // converted geometry needs animation-placed bones); better hidden than broken
@@ -719,7 +728,7 @@ export class EntityLayer {
   async ensure (id, name, extra) {
     // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
     // rebuilt the bear and lost its stand animation, so it snapped down: worker 13)
-    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
+    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
     if (ek === '{}' || ek === undefined) ek = 'null'
     const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
@@ -862,7 +871,7 @@ export class EntityLayer {
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
       }
     } else {
-      const l = look(name, extra, this.regs)
+      const l = look(name, extra, this.regs, this.engine)
       const geo = l && MODELS[l.model]?.geometry?.[l.geo || 'default']
       const t = l && await texture(l.layers)
       if (geo && t) {
@@ -909,7 +918,7 @@ export class EntityLayer {
       obj.add(g); bones.contentMat = m.material
     }
     if (extra && extra.glint && mat && this.glintify) this.glintify(mat, name === 'falling_block' ? 8 : 0.25)
-    const rec = { key, obj, bones, mat, woolMat, underMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs) || {}).yOff || 0, walk: 0, last: null }
+    const rec = { key, obj, bones, mat, woolMat, underMat, yOff: bones.boat ? 0 : (name && look(name, extra, this.regs, this.engine) || {}).yOff || 0, walk: 0, last: null }
     if (obj) this.scene.add(obj)
     this.live.set(id, rec)
     return rec
@@ -1052,6 +1061,9 @@ export class EntityLayer {
         if (Math.abs(d) > MAXD) s.yaw = s.headYaw - Math.sign(d) * MAXD
       }
       r.obj.rotation.set(0, s.yaw, r.tilt || 0)   // (XYZ order with x 0: Ry then the death tip Rz)
+      // asleep (a staged ctx.mark('pose', { ids, sleep: true }); LivingEntityRenderer.setupRotations for Pose.SLEEPING):
+      // on its side, raised by half its width so it lies on the floor, not in it
+      if (s.extra && s.extra.sleep) { r.obj.rotation.set(0, s.yaw, Math.PI / 2); r.obj.position.y += (HITBOX_W[s.name] || 0.6) / 2 }
       if (s.swell !== undefined) {   // CreeperRenderer.scale
         let f = s.swell; const g = 1 + Math.sin(f * 100) * f * 0.01
         f = Math.min(1, Math.max(0, f)); f *= f; f *= f
@@ -1130,6 +1142,9 @@ export class EntityLayer {
       if (B.head) {
         let dy = (s.headYaw ?? s.yaw) - s.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
         B.head.rotation.set(B.head.userData.rest.x + s.pitch, B.head.userData.rest.y - dy, B.head.userData.rest.z)
+        // VillagerModel.setupAnim while unhappy (a refused trade): the head shakes no, zRot 0.3 sin(0.45 age), xRot 0.4
+        // (staged: ctx.mark('pose', { ids, shake: true }), any mob with a head)
+        if (s.extra && s.extra.shake) { B.head.rotation.z = B.head.userData.rest.z + 0.3 * Math.sin(0.45 * (tick || 0)); B.head.rotation.x = B.head.userData.rest.x + 0.4 }
       }
       // a polar bear rearing up (PolarBear.DATA_STANDING_ID; clientSideStandAnimation moves 1 a tick
       // toward 6). PolarBearModel: the body tips back by f x 0.35 pi about the hips, the front legs reach

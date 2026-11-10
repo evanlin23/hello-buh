@@ -75,7 +75,7 @@ const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(70, W / H, 0.05, 2048)
 camera.rotation.order = 'YXZ'
 const sections = new Map()
-let opaqueMat, translucentMat, clouds, sky, sun, moon, stars, entities, blockEntities
+let opaqueMat, translucentMat, worldOpaqueMat, worldTransMat, clouds, sky, sun, moon, stars, entities, blockEntities
 let fogSea = null
 
 // The cinematic look (docs/movie_engine.md; stunt.look): what shader packs add on top of the game, as a post chain.
@@ -107,6 +107,55 @@ function makeShadow (spec, atlas) {
   const depthMat = new THREE.MeshBasicMaterial({ map: atlas, alphaTest: 0.1, colorWrite: false, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 4 })
   const uniforms = { shadowMap: { value: rt.depthTexture }, shadowMatrix: { value: new THREE.Matrix4() }, shadowStrength: { value: 0 }, shadowTexel: { value: 1 / size } }
   return { rt, cam, depthMat, uniforms, R, size, strength: o.strength ?? 0.45, key: '', dirty: true }
+}
+// Light in the shader (look.smoothLight; render.js SHADER_LIGHT, renderer/models.js setLightAttr): the world's
+// vertices carry their (sky, block) light level in `lt` and their colour without light; lightmap() runs here per
+// vertex with the numbers render.js sends each frame (cam.lm: models.lightParams), so dusk, dawn, rain and a
+// lightning flash change smoothly with no re-mesh. Held torches and lanterns (cam.dyn: [x, y, z, level], up to 8)
+// raise the block light to level - distance. The GLSL is models.js lightmap() line for line.
+const LM = {
+  lmSkyFactor: { value: 1 }, lmSkyCol: { value: new THREE.Vector3(1, 1, 1) }, lmGamma: { value: 0.5 }, lmAmbient: { value: 0 },
+  lmAmbientCol: { value: new THREE.Vector3(1, 1, 1) }, lmBlockFactor: { value: 1.5 }, dynN: { value: 0 }, dyn: { value: Array.from({ length: 8 }, () => new THREE.Vector4()) }
+}
+const LM_GLSL = `attribute vec2 lt;
+uniform float lmSkyFactor; uniform vec3 lmSkyCol; uniform float lmGamma; uniform float lmAmbient; uniform vec3 lmAmbientCol; uniform float lmBlockFactor;
+uniform int dynN; uniform vec4 dyn[8];
+float hbGb (float l) { float x = clamp(l / 15.0, 0.0, 1.0); return x / (4.0 - 3.0 * x); }
+vec3 hbLightmap (float sky, float blk) {
+  float bb = hbGb(blk) * lmBlockFactor, sb = hbGb(sky);
+  vec3 c = vec3(bb, bb * ((bb * 0.6 + 0.4) * 0.6 + 0.4), bb * (bb * bb * 0.6 + 0.4));
+  c += (lmAmbientCol - c) * lmAmbient;
+  c += lmSkyCol * sb * lmSkyFactor;
+  c = clamp(c * 0.96 + 0.03, 0.0, 1.0);
+  float mx = max(c.r, max(c.g, c.b));
+  if (mx > 0.0) { float inv = 1.0 - mx; float k = (1.0 - inv * inv * inv * inv) / mx; c = c + (c * k - c) * lmGamma; }
+  return c * 0.96 + 0.03;
+}
+`
+function lightMaterial (mat) {
+  const prev = mat.onBeforeCompile
+  mat.onBeforeCompile = (sh, r) => {
+    if (prev) prev(sh, r)
+    Object.assign(sh.uniforms, LM)
+    sh.vertexShader = LM_GLSL + sh.vertexShader.replace('#include <color_vertex>', `#include <color_vertex>
+  {
+    vec3 hbW = (modelMatrix * vec4(position, 1.0)).xyz; float hbB = lt.y;
+    for (int i = 0; i < 8; i++) { if (i >= dynN) break; hbB = max(hbB, dyn[i].w - distance(hbW, dyn[i].xyz)); }
+    vColor.rgb *= hbLightmap(lt.x, hbB);
+  }`)
+  }
+  mat.customProgramCacheKey = () => 'hbLight|' + (prev ? prev.toString() : '')
+  mat.needsUpdate = true
+}
+function setLightUniforms (cam) {
+  const l = cam.lm
+  if (l) {
+    LM.lmSkyFactor.value = l.skyFactor; LM.lmSkyCol.value.set(...l.skyCol); LM.lmGamma.value = l.gamma
+    LM.lmAmbient.value = l.ambient; LM.lmAmbientCol.value.set(...l.ambientCol); LM.lmBlockFactor.value = l.blockFactor ?? 1.5
+  }
+  const d = cam.dyn || []
+  LM.dynN.value = Math.min(8, d.length)
+  for (let i = 0; i < LM.dynN.value; i++) LM.dyn.value[i].set(d[i][0], d[i][1], d[i][2], d[i][3])
 }
 function shadowMaterial (mat) {   // the block material reads the shadow map (a 4-tap PCF), darkening the lit colour
   mat.onBeforeCompile = (sh) => {
@@ -340,7 +389,35 @@ function makePost (look, w, h) {
     vig: { value: look.vignette ?? 0.35 }, grain: { value: look.grain ?? 0.03 }, seed: { value: 0 }, bars: { value: 0 },
     sharpK: { value: look.sharpen || 0 }, raysBlocks: { value: look.raysOverBlocks ?? 1 }
   })
-  return { rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1, bloomPasses: look.bloomPasses ?? 2 }
+  // motion blur (look.motionBlur: a number = the shutter, 0.5 = a 180-degree shutter; or { shutter, trail }): the
+  // camera's own motion, per pixel from the depth buffer reprojected through the previous frame's camera (whips, fast
+  // pans and cranes), 12 taps along it; the first-person hand (depth < 0.6 blocks) stays sharp. `trail` (0..0.85)
+  // also mixes in the previous frames (an exponential afterimage: time-lapses whose blocks pop strobe less). Both
+  // need the frame before (consecutive frames of one render); a jump (a cut, > 2 ticks or a big move) resets them.
+  let mb = null
+  if (look.motionBlur) {
+    const o = typeof look.motionBlur === 'object' ? look.motionBlur : { shutter: Number(look.motionBlur) }
+    const mbMat = mk(`uniform sampler2D src; uniform sampler2D depth; uniform mat4 projInv; uniform mat4 camWorld; uniform mat4 prevVP; uniform float k;
+      uniform float near; uniform float far; varying vec2 vUv;
+      void main () {
+        float d = texture2D(depth, vUv).x;
+        vec3 c = texture2D(src, vUv).rgb;
+        float z = near * far / (far - d * (far - near));
+        if (k <= 0.0 || z < 0.6) { gl_FragColor = vec4(c, 1.0); return; }
+        vec4 v = projInv * vec4(vUv * 2.0 - 1.0, d * 2.0 - 1.0, 1.0); v /= v.w;
+        vec4 p = prevVP * (camWorld * v);
+        vec2 vel = (vUv - (p.xy / p.w * 0.5 + 0.5)) * k;
+        if (p.w <= 0.0) vel = vec2(0.0);
+        float L = length(vel); if (L > 0.12) vel *= 0.12 / L;
+        vec3 acc = vec3(0.0);
+        for (int i = 0; i < 12; i++) acc += texture2D(src, vUv + vel * (float(i) / 11.0 - 0.5)).rgb;
+        gl_FragColor = vec4(acc / 12.0, 1.0);
+      }`, { src: { value: null }, depth: { value: rt.depthTexture }, projInv: { value: new THREE.Matrix4() }, camWorld: { value: new THREE.Matrix4() }, prevVP: { value: new THREE.Matrix4() }, k: { value: 0 }, near: { value: 0.05 }, far: { value: 1000 } })
+    const mix2 = mk(`uniform sampler2D src; uniform sampler2D prev; uniform float a; varying vec2 vUv;
+      void main () { gl_FragColor = vec4(mix(texture2D(src, vUv).rgb, texture2D(prev, vUv).rgb, a), 1.0); }`, { src: { value: null }, prev: { value: null }, a: { value: 0 } })
+    mb = { shutter: o.shutter ?? 0.5, trail: Math.min(0.85, o.trail || 0), mbMat, mix2, out: new THREE.WebGLRenderTarget(w, h), ta: new THREE.WebGLRenderTarget(w, h), tb: new THREE.WebGLRenderTarget(w, h), prev: null }
+  }
+  return { mb, rt, ba, bb, rd, rr, rs, shadeMat, shadeOn, quad, quadScene, quadCam, bright, blur, dofMat, rayMat, fin, bw, bh, rays: look.rays || 0, underwater: look.underwater || 1, bloomPasses: look.bloomPasses ?? 2 }
 }
 function runPost (cam, tick) {
   const P = POST, pass = (mat, target) => { P.quad.material = mat; renderer.setRenderTarget(target); renderer.render(P.quadScene, P.quadCam) }
@@ -352,6 +429,23 @@ function runPost (cam, tick) {
     if (sun) su.sunDir.value.copy(sun.position).sub(camera.position).normalize()
     su.under.value = cam.underwater || cam.inLava ? 1 : 0
     pass(P.shadeMat, P.rs); frame = P.rs.texture
+  }
+  if (P.mb) {   // motion blur (makePost): against the camera of the frame before, when this one follows it
+    const M = P.mb, vp = new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)
+    const dt = M.prev ? (tick || 0) - M.prev.tick : 0
+    const jump = !M.prev || dt <= 0 || dt > 2 || camera.position.distanceTo(M.prev.pos) > 3 * dt || camera.quaternion.angleTo(M.prev.q) > 1.2 * dt
+    const ft = cam.frameTicks || 1
+    if (!jump && M.shutter > 0) {
+      const mu = M.mbMat.uniforms
+      mu.src.value = frame; mu.projInv.value.copy(camera.projectionMatrixInverse); mu.camWorld.value.copy(camera.matrixWorld)
+      mu.prevVP.value.copy(M.prev.vp); mu.k.value = M.shutter * ft / dt; mu.near.value = camera.near; mu.far.value = camera.far
+      pass(M.mbMat, M.out); frame = M.out.texture
+    }
+    if (M.trail > 0) {
+      const m2 = M.mix2.uniforms; m2.src.value = frame; m2.prev.value = M.ta.texture; m2.a.value = jump ? 0 : M.trail
+      pass(M.mix2, M.tb); frame = M.tb.texture; const t0 = M.ta; M.ta = M.tb; M.tb = t0
+    }
+    M.prev = { tick: tick || 0, vp, pos: camera.position.clone(), q: camera.quaternion.clone() }
   }
   P.dofMat.uniforms.src.value = frame; P.fin.uniforms.src.value = frame; if (P.rayMat) P.rayMat.uniforms.src.value = frame
   P.bright.uniforms.src.value = frame; pass(P.bright, P.ba)
@@ -397,15 +491,44 @@ function makeFogSea (spec, blocks) {
   const n = spec.layers || 14, dens = spec.density ?? 0.97
   const alpha = 1 - Math.pow(1 - dens, 1 / n)
   const grp = new THREE.Group(); grp.userData = { spec }
+  // drifting fog (spec.drift: blocks a tick, a number along +x like the clouds or [dx, dz]; spec.wisps 0..1, default
+  // 0.6, how patchy; spec.wispSize, blocks, default 40): each sheet thins in soft patches (a tileable value noise as
+  // its alpha map) that stay put in the world and slide with the wind, each sheet a little faster than the one
+  // under it, so the fog rolls. Without drift/wisps the sheets are flat, as before.
+  const wisp = (spec.drift !== undefined || spec.wisps !== undefined) ? wispTexture(spec.wisps ?? 0.6) : null
   const geo = new THREE.PlaneGeometry(blocks * 3, blocks * 3)
   for (let k = 0; k < n; k++) {
     const u = n === 1 ? 1 : k / (n - 1)
     const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: alpha, depthWrite: false, side: THREE.DoubleSide, fog: true })
+    if (wisp) { mat.alphaMap = wisp.clone(); mat.alphaMap.needsUpdate = true; mat.alphaMap.repeat.setScalar(blocks * 3 / (spec.wispSize || 40)) }
     const m = new THREE.Mesh(geo, mat)
     m.rotation.x = -Math.PI / 2; m.position.y = spec.y0 + (spec.y1 - spec.y0) * Math.pow(u, 0.6); m.renderOrder = 3; m.frustumCulled = false
     grp.add(m)
   }
   return grp
+}
+function wispTexture (amount) {
+  const N = 128, c = document.createElement('canvas'); c.width = c.height = N
+  const g = c.getContext('2d'), img = g.createImageData(N, N)
+  let seed = 4242; const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff }
+  const oct = [[4, 0.5], [8, 0.3], [16, 0.2]].map(([n, w]) => ({ n, w, v: Array.from({ length: n * n }, rnd) }))
+  const sm = (t) => t * t * (3 - 2 * t)
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      let v = 0
+      for (const o of oct) {   // tileable: the lattice wraps
+        const fx = x / N * o.n, fy = y / N * o.n, ix = Math.floor(fx), iy = Math.floor(fy), tx = sm(fx - ix), ty = sm(fy - iy)
+        const at = (i, j) => o.v[((j % o.n) * o.n) + (i % o.n)]
+        const a = at(ix, iy) + (at(ix + 1, iy) - at(ix, iy)) * tx, b = at(ix, iy + 1) + (at(ix + 1, iy + 1) - at(ix, iy + 1)) * tx
+        v += (a + (b - a) * ty) * o.w
+      }
+      const k = Math.round(255 * (1 - amount + amount * Math.min(1, Math.max(0, (v - 0.25) * 2))))
+      const i = (y * N + x) * 4; img.data[i] = img.data[i + 1] = img.data[i + 2] = k; img.data[i + 3] = 255
+    }
+  }
+  g.putImageData(img, 0, 0)
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.NoColorSpace
+  return t
 }
 const env = { skyColor: 0x78a7ff, fogColor: 0xc0d8ff, renderDistance: 12, cloudHeight: 192.33, time: 6000 }
 
@@ -826,15 +949,23 @@ window.HB = {
     scene.background = srgb(env.fogColor)
     sky = makeSky(); scene.add(sky)
     sun = await makeSun('/assets/env/sun.png'); scene.add(sun)
-    try { moon = await makeSun('/assets/env/moon.png'); moon.scale.setScalar(20 / 30); scene.add(moon) } catch (e) { moon = null }
+    try { moon = await makeSun(env.moonTex || '/assets/env/moon.png'); moon.scale.setScalar(20 / 30); scene.add(moon) } catch (e) { moon = null }
     stars = makeStars(); scene.add(stars)
     clouds = await makeClouds('/assets/env/clouds.png'); scene.add(clouds)
     if (env.fogSea) { fogSea = makeFogSea(env.fogSea, blocks); scene.add(fogSea) }
     if (env.look) POST = makePost(env.look, W, H)
     if (env.look && env.look.shadows) { SHADOW = makeShadow(env.look.shadows, atlas); shadowMaterial(opaqueMat) }
+    worldOpaqueMat = opaqueMat; worldTransMat = translucentMat
+    if (env.shaderLight) {   // the block sections light themselves (lightMaterial); held and falling blocks keep opaqueMat
+      worldOpaqueMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, alphaTest: 0.1, fog: true })
+      worldTransMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, transparent: true, depthWrite: false, fog: true })
+      if (SHADOW) shadowMaterial(worldOpaqueMat)
+      lightMaterial(worldOpaqueMat); lightMaterial(worldTransMat)
+    }
     await EntityLayer.loadModels()
     const regs = await (await fetch('/assets/registries.json')).json().catch(() => ({}))
     entities = new EntityLayer(scene, regs); entities.camera = camera
+    entities.engine = env.engine || 0   // (renderer/entities.js look: mobs added for engine-2 recordings)
     blockEntities = new BlockEntityLayer(scene)
     entities.itemFactory = thirdPersonItem
     entities.glintify = glintify
@@ -851,7 +982,7 @@ window.HB = {
     const view = ([off, n], T) => new T(buf, base + off, n)
     for (const h of header) {
       if (!h.o) { this.removeSection(h.key); continue }
-      const part = (p) => ({ positions: view(p[0], Float32Array), colors: view(p[1], Float32Array), uvs: view(p[2], Float32Array), indices: view(p[3], Uint32Array) })
+      const part = (p) => ({ positions: view(p[0], Float32Array), colors: view(p[1], Float32Array), uvs: view(p[2], Float32Array), indices: view(p[3], Uint32Array), lights: p[4] ? view(p[4], Float32Array) : null })
       this.setSection(h.key, { x: h.x, y: h.y, z: h.z, opaque: part(h.o), translucent: part(h.t), endPortal: h.e ? { positions: view(h.e[0], Float32Array), indices: view(h.e[1], Uint32Array) } : null })
     }
     return header.length
@@ -870,13 +1001,14 @@ window.HB = {
     this.removeSection(key)
     const grp = new THREE.Group()
     grp.position.set(s.x, s.y, s.z)
-    for (const [part, mat] of [['opaque', opaqueMat], ['translucent', translucentMat]]) {
+    for (const [part, mat] of [['opaque', worldOpaqueMat], ['translucent', worldTransMat]]) {
       const d = s[part]
       if (!d.positions.length) continue
       const geo = new THREE.BufferGeometry()
       geo.setAttribute('position', new THREE.BufferAttribute(d.positions, 3))
       geo.setAttribute('color', new THREE.BufferAttribute(d.colors, 3))
       geo.setAttribute('uv', new THREE.BufferAttribute(d.uvs, 2))
+      if (d.lights) geo.setAttribute('lt', new THREE.BufferAttribute(d.lights, 2))
       geo.setIndex(new THREE.BufferAttribute(d.indices, 1))
       const m = new THREE.Mesh(geo, mat)
       if (part === 'translucent') m.renderOrder = 1
@@ -904,7 +1036,8 @@ window.HB = {
 
   // pos = eye position; yaw/pitch in mineflayer convention; bob = {x,y,roll,pitch} offsets
   async frame (cam, tick, ents, parts) {
-    if (END_LOADS.length) await Promise.all(END_LOADS)   // the portal's textures before its first frame (it drew black for one)
+    if (END_LOADS.length) await Promise.all(END_LOADS)
+    if (env.shaderLight) setLightUniforms(cam)   // the portal's textures before its first frame (it drew black for one)
     animate(tick || 0)
     if (entities) await entities.update(ents || [], tick || 0)
     if (blockEntities && cam.blockEntities) await blockEntities.update(cam.blockEntities)
@@ -981,6 +1114,13 @@ window.HB = {
       const sp = fogSea.userData.spec
       const c = srgb(sp.color ?? 0xeef2ff).multiplyScalar((sp.night ?? 0.34) + (1 - (sp.night ?? 0.34)) * day.bright * (1 - rain * 0.4))   // (at 0.16 the night sea was black on black: test reel)
       fogSea.position.set(camera.position.x, 0, camera.position.z)
+      if (sp.drift !== undefined || sp.wisps !== undefined) {   // the patches stay put in the world and drift (makeFogSea)
+        const dr = Array.isArray(sp.drift) ? sp.drift : [sp.drift || 0, 0], size = sp.wispSize || 40
+        fogSea.children.forEach((m, k) => {
+          const sp2 = 1 + 0.15 * k, am = m.material.alphaMap
+          if (am) am.offset.set((camera.position.x - dr[0] * sp2 * (tick || 0)) / size + k * 0.37, -(camera.position.z - dr[1] * sp2 * (tick || 0)) / size + k * 0.61)
+        })
+      }
       // a sheet fades as the camera nears it, so passing through one is smooth (each sheet is ~23% of the haze: crossing
       // them popped the Below's POV twice on the way out, QA f22 and f42)
       for (const m of fogSea.children) {

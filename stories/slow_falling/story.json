@@ -1,0 +1,452 @@
+{
+  "name": "slow_falling",
+  "stunt": "story_slow_falling",
+  "version": 2,
+  "revision": "r2 (2026-11-10): the r1 critic's and continuity's must-fixes applied, see reviews/r1-response.md",
+  "caption": "why does grandma jump off the windmill 🪶",
+  "logline": "A kid's grandma has stepped off the top of the windmill 11,000 times and floated down to the market like a feather. On his birthday he follows her up Grandpa's fountain, finds out it only goes up, and learns what Grandpa's stinky night tea is.",
+  "question": "why tf does grandma jump off a windmill every morning and live?",
+  "premise": "Every morning Grandma rides Grandpa's 'fountain' (a glass soul-sand bubble column from the market up the cliff and the windmill) to the cap, drinks the juice Grandpa packed her, steps off and floats down to the market without a scratch: 11,000 times. Grandma said she's light as a feather, Grandpa said she was born to fly. Every night Grandpa sits at his 'tea machine' (a brewing stand) in the cellar, and the tea is off limits.",
+  "twist": "The juice is Grandpa's night tea: a potion of slow falling, brewed every night for thirty years and packed for her each morning. He built a fountain that only goes up (a soul-sand bubble column only lifts) because he wanted her to fly every day, and she has never known: she thinks she can fly. The kid takes one 'tea' on his birthday, rides up behind her, gets stuck at the top (it only goes up), sees her juice is the same color as his tea, drinks it and steps off: the game names it (Potion of Slow Falling, the effect icon, the swirls) and he floats down beside her. Grandma beams that he got it from her. Nope: Grandpa brewed her wings, eleven thousand times.",
+  "key_color": "#8FD3FF",
+  "gap": 0.3,
+  "mood": "funny",
+  "payoff": "L13",
+  "look": {
+    "time": 1000,
+    "fog": false
+  },
+  "weather": "clear",
+  "world": {
+    "place": "millcliff (new, to claim): Millcliff, a market town under a west-facing cliff on the West March's east edge, east of the Ridge, origin (the fountain's soul sand) about (-1876, 72, -485), footprint about (-1910, -520, -1860, -455); from the windmill top the Ridge and its old tower stand about 130 blocks west-south-west",
+    "where": "Millcliff: the market, the cliff and Grandpa's fountain, the windmill on the ledge, the grandparents' cottage and cellar",
+    "day": 11300,
+    "canon": "New family, not Milo's: Kit (a player kid, house narrator voice) staying with his grandparents (mannequins with our own grandma and grandpa skins; Grandpa is no recurring character and has no cast ref). The fountain and the brewing began around day 300 (thirty years: about 11,000 mornings). Bible: World.",
+    "easter_egg": "raven_tower (canon cameo, always): the old watchtower on the Ridge, no banner, small on the skyline about 130 blocks west-south-west, left of centre in S11 (POV from the jetty looking west as they step off); world.build places it (Ravenford's piece)"
+  },
+  "voice": {
+    "engine": "gemini",
+    "model_hint": "gemini-3.8-flash-lite-tts for every request (voices/recipes/pip.md, one model per character for the whole story, never fall back mid-story)"
+  },
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "ref": "narrator",
+      "color": "#FFFFFF",
+      "on_screen": "POV (the hand and hotbar), Kit, a player kid (not Milo: his own grandparents), default Steve skin, seen from outside only in S08 (small, in the column), S12 (floating above Grandma, ~1 block west of her) and S13 (far, floating)"
+    },
+    "Grandma": {
+      "role": "character",
+      "name": "Grandma",
+      "voice": "Gacrux",
+      "color": "#FFB3C7",
+      "profile": "a delighted grandmother in her seventies, warm and a little crackly, laughing, full volume, not whispery or breathy",
+      "on_screen": "mannequin (player model) with our own skin skins/grandma.png: grey bun, pink cardigan, flowered skirt, holds the peach potion when she drinks",
+      "lines": "one voiced punchline (L12), on screen, 5 words"
+    },
+    "Grandpa": {
+      "role": "character",
+      "name": "Grandpa",
+      "ref": null,
+      "voiced": false,
+      "on_screen": "mannequin with our own skin skins/grandpa.png: white hair and moustache, brown cardigan, purple scarf, quoted by the narrator only (L05); no cast ref (not the cast `elder`, who is Milo's Ravenford grandpa)"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N"
+      ],
+      "voice": "Leda",
+      "model": "gemini-3.8-flash-lite-tts",
+      "lines": [
+        "L01",
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L06"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "N"
+      ],
+      "voice": "Leda",
+      "model": "gemini-3.8-flash-lite-tts",
+      "lines": [
+        "L07",
+        "L08",
+        "L09",
+        "L10",
+        "L11",
+        "L13"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+    },
+    {
+      "id": "r3",
+      "speakers": [
+        "Grandma"
+      ],
+      "voice": "Gacrux",
+      "model": "gemini-3.8-flash-lite-tts",
+      "lines": [
+        "L12"
+      ],
+      "direction": "[A delighted grandmother in her seventies, warm and a little crackly, laughing, full volume, not whispery or breathy]"
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "My grandma has jumped / off our WINDMILL / ELEVEN THOUSAND / times.",
+      "direction": "one quick breath, proud and amazed, no pause anywhere, full volume, fast and bright",
+      "shot": "S01",
+      "look": {
+        "what": "Grandma",
+        "word": "WINDMILL"
+      }
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "Twenty-three BLOCKS. / Not one SCRATCH. / Grandma said, / \"I'm light / as a FEATHER.\"",
+      "say": "Twenty-three blocks. Not one scratch. Grandma said, I'm light as a feather.",
+      "direction": "matter-of-fact, believing every word, full volume, fast and bright",
+      "shot": "S02",
+      "look": "Grandma"
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "Grandpa packs her / JUICE / for the trip.",
+      "direction": "cheerful, a little jealous of the juice, full volume, fast and bright",
+      "shot": "S03",
+      "look": [
+        {
+          "what": "Grandpa",
+          "word": "Grandpa"
+        },
+        {
+          "what": "prop:bottle_grandma",
+          "word": "JUICE"
+        }
+      ]
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "Up she goes / on his FOUNTAIN. / It only goes UP.",
+      "direction": "excited on the ride, then a shrug on the last phrase like it's obvious, full volume, fast and bright",
+      "shot": "S04",
+      "look": [
+        {
+          "what": "prop:fountain",
+          "word": "FOUNTAIN"
+        },
+        {
+          "what": "Grandma",
+          "word": "UP"
+        }
+      ]
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "Grandpa said, / \"She was BORN / to fly.\"",
+      "say": "Grandpa said, she was born to fly.",
+      "direction": "proud of them both, a big grin, full volume, fast and bright",
+      "shot": "S05",
+      "look": "Grandpa"
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "Every night / he brews TEA. / I'm not allowed ANY.",
+      "direction": "grossed out and a little offended, full volume, fast and bright",
+      "shot": "S06",
+      "look": [
+        {
+          "what": "Grandpa",
+          "word": "TEA"
+        },
+        {
+          "what": "block:brewing_stand",
+          "word": "TEA"
+        }
+      ]
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "On my BIRTHDAY, / he fell asleep / at the tea machine. / I took ONE. / For MY trip.",
+      "direction": "sneaky and pleased with himself, still loud, full volume, fast and bright",
+      "shot": "S07",
+      "look": [
+        {
+          "what": "Grandpa",
+          "word": "asleep"
+        },
+        {
+          "what": "block:brewing_stand",
+          "word": "machine"
+        }
+      ]
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "Next morning / I rode up / BEHIND her.",
+      "direction": "thrilled, speeding up, full volume, fast and bright",
+      "shot": "S08",
+      "look": "prop:fountain"
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "Wait. / I'm not LIGHT. / It only goes UP.",
+      "say": "Wait. <short pause> I'm not light. It only goes up.",
+      "direction": "the grin drops into a funny dawning panic, a beat after the first word, full volume, fast and bright",
+      "shot": "S09",
+      "look": [
+        {
+          "what": "prop:market_below",
+          "word": "LIGHT"
+        },
+        {
+          "what": "prop:fountain",
+          "word": "UP"
+        }
+      ]
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "Grandma drank her JUICE. / Same color / as my TEA.",
+      "direction": "fast, then slowing on the last phrase as he works it out, full volume, fast and bright",
+      "shot": "S10",
+      "look": [
+        {
+          "what": "Grandma",
+          "word": "JUICE"
+        },
+        {
+          "what": "prop:bottle_kid",
+          "word": "TEA"
+        }
+      ]
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "So I drank MINE, / and we stepped OFF.",
+      "direction": "brave and bright, a big grin, full volume, fast and bright",
+      "shot": "S11",
+      "look": {
+        "what": "prop:market_below",
+        "word": "OFF"
+      }
+    },
+    {
+      "id": "L12",
+      "who": "Grandma",
+      "text": "You got it / from ME!",
+      "direction": "beaming up at him mid-air, laughing, proud",
+      "shot": "S12",
+      "look": "Grandma"
+    },
+    {
+      "id": "L13",
+      "who": "N",
+      "text": "Nope. / Grandpa BREWED / her wings. / Eleven thousand TIMES.",
+      "direction": "a fond little laugh on the first word, then warm and certain, the number landing like the end of a joke, full volume, fast and bright",
+      "shot": "S13",
+      "look": [
+        {
+          "what": "Grandpa",
+          "word": "Grandpa"
+        },
+        {
+          "what": "Grandma",
+          "word": "wings"
+        }
+      ]
+    }
+  ],
+  "game_reveal": {
+    "S10": "on 'TEA' the hotbar swaps to slot 2 and the selected-item name pops above it: 'Potion of Slow Falling' (vanilla, 2 s, also in the caption track)",
+    "S11": "the drink (POV item-use, 1.6 s, the drinking sound), the Slow Falling effect icon at the top right, pale swirls round the hand, then the step and the slow descent with no damage",
+    "S12-S13": "both fall at 9.8 blocks/s at most, swirls on both, nobody takes damage"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "windmill_top",
+      "size": "wide",
+      "camera": "at: in the air 9 blocks south-west of the step (looking north-east, the sails at a three-quarter angle), eye level with the balcony (y 24), FOV 55, lookPath tilts down after her from 'WINDMILL' so the drop opens under her, slow drift down",
+      "frame": "fg: the tip of a canvas sail at frame right, subject: Grandma head to foot at the end of the little jetty off the balcony (the step, 2 blocks west of the cliff face), empty hands, she hops off on 'jumped' (a vanilla jump off the end: up ~1.25 blocks, then down), bg: the timber cap and roof, the stone tower, the glass fountain column running down the tower with bubbles rising, and as the camera tilts: the cliff, the striped stall roofs of the market 23 blocks below, the forested valley. No bottle, no drink in this shot (the juice is first seen in S03). Morning (1000): the sun low at frame right behind the cap (east), a rim light on Grandma and the sails."
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "the drop",
+      "size": "full",
+      "camera": "follow Grandma: offset 7 blocks west and 1 below, lag 0.2, FOV 50, descending with her (6+ blocks out so the swirls stay faint)",
+      "frame": "fg: air and the far side of the valley below, subject: Grandma head to foot, upright, drifting down, faint pale swirls round her, smiling, bg: the glass column at frame LEFT of her (north) with bubbles going UP as she goes down, the cliff face, the market's roofs rising into frame, the forested hill behind the windmill. She lands ~1.7 s in, on 'Not one SCRATCH', on the paving 2 blocks west of the cliff by the flower stall, no hurt flash, a soft step. Morning (1000)."
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "market",
+      "size": "wide",
+      "camera": "at: low on the market, 10 blocks west of the fountain door, behind a planter, tilted up a little, slow push in",
+      "frame": "the market's establishing shot. fg: a flower planter, mid: Grandpa hands Grandma a peach bottle at the glass door at the foot of the column (Grandpa left, Grandma right): the first time we see the bottle, called juice, bg: the column of water and bubbles running up the cliff face and out of the top of frame, the stalls either side, the fish stall at frame left, trees and the hill above the cliff. Morning (1000)."
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "fountain",
+      "size": "full",
+      "camera": "path crane: key 0 at 2 blocks up, 4 blocks west of the door, the soul sand dark under the glass, Grandma steps through the door, the crane rises with her up the column (she rises fast, the camera keeps her upper-centre), last key 4 blocks west of the balcony at y 25 as she pops out onto the balcony on 'UP'",
+      "frame": "fg: the glass panes and rising bubbles, subject: Grandma rising inside the column, the peach bottle in hand, bg: the cliff wall with ivy and grass along its top, then the tower stones, then the cap, the forested hill behind it and the sky. Morning (1000)."
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "market",
+      "size": "wide",
+      "camera": "at: low, 3 blocks behind and left of the bench at (-22, 0, 6), FOV 60, looking east and up, slow push",
+      "frame": "fg: Grandpa on the bench, sitting (sit pose), head tilted up, smiling, seen three-quarter from behind, subject: Grandpa, bg: 24 blocks away the cliff, the column and the windmill whole, Grandma tiny at the end of the jetty at the top, the forested hill behind. Morning (1000)."
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "cellar",
+      "size": "ms to wide",
+      "camera": "path: from the cottage floor above, down through the open hatch beside the ladder into the cellar, ending at the cellar's corner (basement anchor 'corner') looking across at the brewing stand",
+      "frame": "the cellar's establishing shot (night). fg: the ladder, the hatch a dark square above, subject: Grandpa sitting on a spruce-stair chair beside a lit brewing stand (blaze-powder flame, three peach potions in its arms) on a stone table, a cauldron beside, bg: bookshelves, a chest, item frames on the wall each holding a peach potion (potions, not jugs: no barrels or casks in this frame), cobwebs, three lanterns. It reads as a potion lab, not a still. Night (18000).",
+      "look": {
+        "time": 18000
+      }
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "cellar",
+      "size": "ms",
+      "camera": "pov from the foot of the ladder, a few steps toward the stand",
+      "frame": "fg: the hand, subject: Grandpa waist up, asleep in his chair (doze pose: sit, head dropped), the brewing stand at arm's length with three bottles, on 'ONE' the hand takes one and the stand shows two, the peach bottle now in the hand (hotbar slot 2). bg: the lantern and the potions in item frames. Night (18000, the birthday).",
+      "look": {
+        "time": 18000
+      }
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "fountain",
+      "size": "wide",
+      "camera": "at: from the market, 10 blocks west of the column, tilting up as they rise",
+      "frame": "fg: the bread stall's awning and Grandpa at frame left, back to the column, holding a loaf, facing the baker (a reason to look away), subject: Grandma rising in the glass column, then Kit (small, Steve) stepping through the door after her and shooting up 4 blocks below her, bg: the cliff, the tower, the cap and the hill. Morning (1000), the next day."
+    },
+    {
+      "id": "S09",
+      "line": "L09",
+      "place": "windmill_top",
+      "size": "ews",
+      "camera": "pov on the balcony beside the column's exit at (1, 24, -1), looking north-west over the rail and down, then down into the column (bubbles only rising). Grandma is off frame left, walking out on the jetty",
+      "frame": "fg: the fence rail and the hand (empty hand selected, the peach potion in slot 2), subject: the drop: the cliff and the market's roofs tiny below, the bench, bg: the valley, forest and hills to the fog. On 'LIGHT' the drop to the market, on 'UP' the view drops into the glass column at the bubbles rising past. Morning (1000)."
+    },
+    {
+      "id": "S10",
+      "line": "L10",
+      "place": "windmill_top",
+      "size": "full",
+      "camera": "pov: turned south-west at the balcony edge at (1, 24, 1), at the jetty's root, 2.5 blocks behind Grandma at the step (-1.5 centre), still",
+      "frame": "subject: Grandma head to foot at the end of the jetty, facing west, her back to us, drinking her peach bottle (drink pose, 1.6 s) on 'drank her JUICE', then waiting at the step, on 'TEA' the hotbar swaps to slot 2, the hand comes up with the same peach bottle in the lower right, and 'Potion of Slow Falling' pops above the hotbar (and in the captions). bg: the sails at frame left, the forested valley and the market far below beyond her. Morning (1000)."
+    },
+    {
+      "id": "S11",
+      "line": "L11",
+      "place": "windmill_top to the drop",
+      "size": "wide",
+      "camera": "pov: drinks (1.6 s, the item-use animation and sound), the Slow Falling icon appears at the top right, swirls round the hand, on 'we stepped' Grandma steps off ahead, he walks out along the jetty as she reaches the end (starting ~0.7 s before her step) and steps off 0.5 s after her on 'OFF', carrying ~1 block further west than her, the view tips down",
+      "frame": "opens: Grandma's back at the step and the open sky over the valley, far off on the skyline at frame left, about 130 blocks west-south-west, the Ridge's old watchtower with no banner (the easter egg, canon `raven_tower`, small, never the subject), ends: looking down past his feet at Grandma floating 2 blocks below, the market below her. Morning (1000)."
+    },
+    {
+      "id": "S12",
+      "line": "L12",
+      "place": "the drop",
+      "size": "full",
+      "camera": "at (moving with them): 7 blocks west of the pair at their height, FOV 50, looking slightly up, a two in depth",
+      "frame": "subject: Grandma head to foot in the lower half, looking up at him and laughing, Kit head to foot above her and ~1 block further west (nearer the lens), 1.4-2.8 blocks higher during the line, in the upper half, faint swirls on both, bg: the glass column at frame LEFT of them, the cliff and tower, the forested hill. Morning (1000)."
+    },
+    {
+      "id": "S13",
+      "line": "L13",
+      "place": "market",
+      "size": "ews",
+      "camera": "at: low behind and left of the bench (25 blocks from the column), slow pull back, FOV 55",
+      "frame": "fg: Grandpa on the bench from behind and a little to the side, head tilted up, tomorrow's peach bottle in his hand on his knee, subject: Grandma and Kit floating down past the column to the paving by the flower stall (she touches down at (-2, 0, 1) on 'Eleven thousand', he half a second later about 1 block west of her at (-3, 0, 1)), bg: the windmill on the cliff with its sails, the fish stall, forest and hills into the morning haze. Hit on 'TIMES', cut 0.5 s after. Morning (1000)."
+    }
+  ],
+  "props": {
+    "fountain": {
+      "at": [
+        1,
+        11,
+        0
+      ],
+      "what": "the glass soul-sand bubble column, market floor to the balcony (soul sand y 0, water y 1-22)"
+    },
+    "step": {
+      "at": [
+        -2,
+        24,
+        1
+      ],
+      "what": "the open end of a 3-block jetty off the balcony, 2 blocks west of the cliff face"
+    },
+    "bottle_grandma": {
+      "actor": "Grandma",
+      "what": "potion of slow falling (peach), her main hand"
+    },
+    "bottle_kid": {
+      "what": "potion of slow falling, POV hotbar slot 2 from S07"
+    },
+    "brewing_stand": {
+      "block": "brewing_stand",
+      "at": [
+        -17,
+        -5,
+        -25
+      ]
+    },
+    "market_below": {
+      "at": [
+        -2,
+        0,
+        1
+      ],
+      "what": "the paving by the flower stall where Grandma lands (-2,0,1), the kid ~1 block west at (-3,0,1)"
+    },
+    "bottle_grandpa": {
+      "actor": "Grandpa",
+      "what": "tomorrow's potion of slow falling in his hand, S13"
+    }
+  },
+  "bible": "stories/slow_falling/bible.md",
+  "beats": "stories/slow_falling/beats.md",
+  "set": "stories/slow_falling/set.md",
+  "timing": {
+    "slow_falling_drop": "vanilla LivingEntity.travel: with Slow Falling and falling, gravity is min(gravity, 0.01) per tick, then x0.98 drag, terminal 0.49 blocks/tick = 9.8 blocks/s (minecraft.wiki/w/Slow_Falling: 'terminal velocity of 9.8 m/s'). From rest, the 23-block drop (feet y 24 to y 1) takes 88 ticks = 4.4 s. Recompute with the real recorded curve.",
+    "scene_A": "she hops off on 'jumped' (~0.4 s into L01): a vanilla jump (0.42 up, normal gravity while rising) peaks ~1.25 blocks up after 6 ticks, then slow falling: lands 91 ticks = 4.55 s after the hop, ~1.3 s into L02, on 'Not one SCRATCH'",
+    "scene_C": "Grandma drinks 1.6 s on L10 'drank her JUICE' while walking to the step, Kit selects the bottle on 'TEA' (name pops) and drinks on L11 'So I drank MINE' (1.6 s), she steps on 'we stepped', he steps 0.5 s later on 'OFF' (vertical gap at the same rate: 1.4 blocks at 1.1 s, 2.5 at 2 s, 2.8 at 2.4 s, 4.0 at her touchdown, and he carries ~1 block further west so he never lands on her). L12 plays 1.1-2.4 s into her fall. She touches down at +4.4 s (on 'Eleven thousand'), he at +4.9 s, 'TIMES' ~+5.6 s, cut ~+6.1 s.",
+    "record_first": "Record the real drops on the server first (the bot with /effect give @s slow_falling, stepping and hopping off the jetty) and retime to the measured curves; these numbers are the simulation."
+  }
+}

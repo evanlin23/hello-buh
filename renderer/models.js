@@ -51,8 +51,13 @@ function dayInfo (dayTime, rain = 0, thunder = 0) {
 }
 // LightTexture: SkyFactor = darken * 0.95 + 0.05, SkyLightColor = (darken, darken, 1) -> white by 0.35
 let SKY_FACTOR = 1, SKY_COL = [1, 1, 1]
-function setDayTime (dayTime, rain = 0, thunder = 0) {
-  const { dark } = dayInfo(dayTime, rain, thunder)
+function setDayTime (dayTime, rain = 0, thunder = 0, flash = 0, floor = 0) {
+  let { dark } = dayInfo(dayTime, rain, thunder)
+  // flash (0..1, shader light only): LightTexture.updateLightTexture uses a sky darken of 1 while the level's
+  // skyFlashTime > 0 (a lightning bolt lights the world like noon). floor (look.moonlight, shader light only): the
+  // night's darkest sky factor (vanilla 0.2), for nights that read black on a phone
+  if (floor > 0) dark = Math.max(dark, Math.min(1, floor))
+  if (flash > 0) dark = dark + (1 - dark) * Math.min(1, flash)
   SKY_FACTOR = dark * 0.95 + 0.05
   SKY_COL = [dark + (1 - dark) * 0.35, dark + (1 - dark) * 0.35, 1]
 }
@@ -68,7 +73,7 @@ function setDimension (dim) {
 }
 function lightmap (sky, block = 0) {
   const gb = (l) => { const x = Math.min(1, Math.max(0, l / 15)); return x / (4 - 3 * x) }
-  const bb = gb(block) * 1.5, sb = gb(sky)
+  const bb = gb(block) * BLOCK_FACTOR, sb = gb(sky)
   let c = [bb, bb * ((bb * 0.6 + 0.4) * 0.6 + 0.4), bb * (bb * bb * 0.6 + 0.4)]
   if (AMBIENT) c = c.map((v, i) => v + (AMBIENT_COL[i] - v) * AMBIENT)
   c = c.map((v, i) => v + SKY_COL[i] * sb * SKY_FACTOR)
@@ -78,6 +83,17 @@ function lightmap (sky, block = 0) {
   return c.map(v => v * 0.96 + 0.03)
 }
 function lightOf (world, pos) { return world.getLight(pos) }
+// Shader light (stunt.look.smoothLight: docs/engine_features.md "Light in the shader"): the mesher leaves the
+// lightmap out of the vertex colours and writes each vertex's (sky, block) light level as its own attribute
+// (attr.lights / t_lights), and the page's block material runs lightmap() per vertex from uniforms. The time of day,
+// rain, a lightning flash and held torches then change the light every frame with no re-mesh. Off: unchanged.
+let LIGHT_ATTR = false
+// lightmap.fsh's BlockFactor (1.5: the torch flicker's average). look.torchGlow scales it (shader light only)
+let BLOCK_FACTOR = 1.5
+function setBlockFactor (k) { BLOCK_FACTOR = 1.5 * k }
+function setLightAttr (on) { LIGHT_ATTR = !!on }
+// the lightmap's inputs now (for the page's uniforms; the same numbers lightmap() uses)
+function lightParams () { return { blockFactor: BLOCK_FACTOR, skyFactor: SKY_FACTOR, skyCol: SKY_COL.slice(), gamma: GAMMA, ambient: AMBIENT, ambientCol: AMBIENT_COL.slice() } }
 
 for (const key of Object.keys(tints)) {
   tints[key] = prepareTints(tints[key])
@@ -246,7 +262,8 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
     if (neighbor.isCube && !neighbor.transparent) continue
 
     let tint = [1, 1, 1]
-    const lm = lightmap(...lightOf(world, isUp ? cursor.offset(0, 1, 0) : cursor))
+    const lv = lightOf(world, isUp ? cursor.offset(0, 1, 0) : cursor)
+    const lm = LIGHT_ATTR ? [1, 1, 1] : lightmap(...lv)
     if (water) {
       const m = faceShade(dir)
       tint = biomeTint(world, cursor, 'water')
@@ -265,6 +282,7 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
     const opaque = !water
     const P = opaque ? attr.positions : attr.t_positions, N = opaque ? attr.normals : attr.t_normals
     const UV = opaque ? attr.uvs : attr.t_uvs, C = opaque ? attr.colors : attr.t_colors
+    const LT = LIGHT_ATTR ? (opaque ? attr.lights : attr.t_lights) : null
     const n0 = P.length / 3
     // vanilla LiquidBlockRenderer: sides and bottom face outward only (culled from inside); the
     // top surface also gets its backward face so it shows from underwater
@@ -278,6 +296,7 @@ function renderLiquid (world, cursor, texture, type, biome, water, attr) {
       N.push(...dir)
       UV.push(pos[3] * su + u, pos[4] * sv * (pos[1] ? 1 : height) + v)
       C.push(tint[0], tint[1], tint[2])
+      if (LT) LT.push(lv[0], lv[1])
     }
     if (opaque) attr.indices.push(n0, n0 + 1, n0 + 2, n0 + 2, n0 + 1, n0 + 3, n0, n0 + 2, n0 + 1, n0 + 2, n0 + 3, n0 + 1)
   }
@@ -468,7 +487,7 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
       attr.uvs.push(baseu * su + u, basev * sv + v)
 
       let light = 1
-      let vlight = lightmap(...centerLight)
+      let vlight = LIGHT_ATTR ? null : lightmap(...centerLight), lv = centerLight
       if (doAO) {
         const dx = pos[0] * 2 - 1
         const dy = pos[1] * 2 - 1
@@ -488,7 +507,8 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
           side1Block ? centerLight : lightOf(world, cursor.offset(...side1Dir)),
           side2Block ? centerLight : lightOf(world, cursor.offset(...side2Dir)),
           (cornerBlock || (side1Block && side2Block)) ? centerLight : lightOf(world, cursor.offset(...cornerDir))]
-        vlight = lightmap((ls[0][0] + ls[1][0] + ls[2][0] + ls[3][0]) / 4, (ls[0][1] + ls[1][1] + ls[2][1] + ls[3][1]) / 4)
+        lv = [(ls[0][0] + ls[1][0] + ls[2][0] + ls[3][0]) / 4, (ls[0][1] + ls[1][1] + ls[2][1] + ls[3][1]) / 4]
+        if (!LIGHT_ATTR) vlight = lightmap(lv[0], lv[1])
 
         // TODO: correctly interpolate ao light based on pos (evaluate once for each corner of the block)
 
@@ -497,7 +517,7 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
         aos.push(ao)
       }
 
-      attr.colors.push(tint[0] * light * shade * vlight[0], tint[1] * light * shade * vlight[1], tint[2] * light * shade * vlight[2])
+      if (LIGHT_ATTR) { attr.colors.push(tint[0] * light * shade, tint[1] * light * shade, tint[2] * light * shade); attr.lights.push(lv[0], lv[1]) } else attr.colors.push(tint[0] * light * shade * vlight[0], tint[1] * light * shade * vlight[1], tint[2] * light * shade * vlight[2])
     }
 
     if (doAO && aos[0] + aos[3] >= aos[1] + aos[2]) {
@@ -526,6 +546,8 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
     t_positions: [],
     t_normals: [],
     t_colors: [],
+    lights: [],
+    t_lights: [],
     t_uvs: [],
     e_positions: [],   // end portal / end gateway surfaces (TheEndPortalRenderer): drawn with the starfield shader
     indices: []
@@ -579,7 +601,7 @@ function getSectionGeometry (sx, sy, sz, world, blocksStates) {
             // alpha test came out a solid flat colour, black_stained_glass solid black (worker 6)
             let A = attr
             if (block.name === 'nether_portal' || /stained_glass(_pane)?$/.test(block.name) || /^(tinted_glass|ice|slime_block|honey_block)$/.test(block.name)) {
-              A = { positions: attr.t_positions, normals: attr.t_normals, uvs: attr.t_uvs, colors: attr.t_colors, indices: [] }
+              A = { positions: attr.t_positions, normals: attr.t_normals, uvs: attr.t_uvs, colors: attr.t_colors, lights: attr.t_lights, indices: [] }
             }
             for (const element of variant.model.elements) {
               renderElement(world, cursor, element, variant.model.ao, A, globalMatrix, globalShift, block, biome)
@@ -669,4 +691,4 @@ function particleTint (world, pos, name, tinted) {
   return biomeTint(world, pos, name.includes('leaves') || name === 'vine' ? 'foliage' : 'grass')
 }
 
-module.exports = { particleTint, getSectionGeometry, setBiomeColors, lightmap, setBrightness, setDayTime, dayInfo, setDimension }
+module.exports = { particleTint, getSectionGeometry, setBiomeColors, lightmap, setBrightness, setDayTime, dayInfo, setDimension, setLightAttr, lightParams, setBlockFactor }

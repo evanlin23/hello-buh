@@ -105,6 +105,89 @@ editor, the inventory):
 Test without a full edit: run `edit.py` on a few `ffmpeg -f lavfi -i testsrc` frames and a hand-written timeline
 with your marks (`--caption test --fps 20 --out_fps 20`), and look at a frame.
 
+## Light in the shader: smooth dusk, lightning, held torches (engine-2)
+By default the light is baked into the block vertex colours, and a change of the sky factor (time of day, rain)
+re-meshes the whole world (`DAY_LIGHT_STEP` rounds a sunset to a few steps). `look.smoothLight: true` (or
+`SHADER_LIGHT=1`) moves the lightmap into the block material instead: the mesher writes each vertex's (sky, block)
+light level as an attribute `lt` (`renderer/models.js` `setLightAttr`, a 5th array per part in `Mesher.pack`) and the
+page runs `models.lightmap()` per vertex in GLSL (`renderer/page.js` `lightMaterial`) from uniforms render.js sends
+every frame (`cam.lm` = `models.lightParams()`). With no held lights it renders **pixel-identical** to the baked light
+(checked at midnight on the pose fixture), and the world is meshed once:
+- **dusk and dawn are smooth**: a `time` mark every tick drew 59, 57.7, 56.4, 55.0, 53.7... mean luma instead of the
+  baked 59, 59, 59, 55, 55, 52.4..., and 8 stills took 31 s instead of 98 s (no re-meshes);
+- **lightning lights the world** (LightTexture: sky darken 1 while `skyFlashTime` > 0): a bolt (`lightning_bolt`
+  entity or a stunt's `ctx.mark('lightning', {x, y, z})`) flashes the blocks and the mobs, fading with the sky flash;
+- **held light** (`look.heldLight: false` turns it off): a player, actor or mob holding a torch (14), lantern (15),
+  soul torch/lantern (10), glowstone, sea lantern, lava bucket... in either hand (`extra.held` / `extra.offhand`), and
+  the narrator's own held item, light blocks and entities around them to `level - distance` (the 8 nearest the
+  camera). Vanilla Java has no held light (the LambDynamicLights mod and Bedrock do): it's a look choice;
+- `look.moonlight` (0.2-1): the night's darkest sky factor (vanilla 0.2), for night scenes that read black;
+- `look.torchGlow` (x, default 1): scales lightmap.fsh's block-light factor 1.5, so lanterns and torches throw
+  more light on the faces round them at night.
+Placed torches, lanterns, campfires, lava already light their surroundings through the block light engine
+(`renderer/light.js`), baked or shader. Try it on any recording: `./hb still <stunt> T --look '{"smoothLight":true}'`
+(a look turns the cinematic post pass on: compare against `--look '{}'`), or `SHADER_LIGHT=1 ./hb still ...` with
+no post pass. The pose fixture has the cases: `node scripts/pose_fixture.js --staged --lights --time 18000 --bolt 40`.
+
+## Sky: moon phases, drifting fog
+- `stunt.moonPhase`: `'new_moon'`, `'waxing_crescent'`, ... or 0-7 (DimensionType.moonPhase order, 0 = full). A
+  recording with `rec.engine >= 2` and a time past day 0 gets its day's phase (`(time / 24000) % 8`); anything else
+  draws the full moon as before. `MOON_PHASE=` overrides. The sun, moon and stars were already drawn (`placeSun`).
+- `stunt.fogSea.drift` (blocks a tick: a number along +x, or `[dx, dz]`), `fogSea.wisps` (0..1, how patchy, default
+  0.6) and `fogSea.wispSize` (blocks, default 40): the sheets thin in soft patches that stay put in the world and
+  slide with the wind, each sheet a little faster than the one below, so the fog rolls. Test: `stunts/_light_test.js`
+  (`node scripts/pose_fixture.js --stunt _light_test --time 18000`).
+
+## Motion blur (look.motionBlur)
+`look.motionBlur: 0.5` (the shutter: 0.5 = a 180-degree shutter) or `{ shutter, trail }` blurs the camera's own motion
+per pixel (renderer/page.js `makePost`: depth reprojected through the previous frame's camera, 12 taps), so whips,
+fast pans and cranes smear instead of strobing on a phone; the first-person hand stays sharp. `trail` (0..0.85) mixes
+in the previous frames too, for time-lapses whose blocks pop. It needs the frame before: a cut, a gap over 2 ticks or
+a big jump resets it, and a single `./hb still` shows none (give it two consecutive ticks: `tick:24 tick:25`, the
+second is blurred). Moving mobs aren't blurred (camera motion only). Test: `node scripts/pose_fixture.js --staged
+--whip`. Off unless the look asks.
+
+## Life: heads that turn, sleeping and head-shaking mobs, name tags
+- **Look at the speaker**: `stunt.lookAtSpeaker: true` (or a range in blocks, default 10): while a `line` mark's speaker
+  talks (lib/movie.js `M.line`/`M.say`), every other actor and mob within range eases its head to them over 8 ticks
+  and back 8 ticks after the line; past 75 degrees the body follows (BodyRotationControl). The narrator (`selfName`)
+  counts as a speaker at the camera's eye.
+- **Look at a mark**: `M.headTo(ctx, who, at)` ... `M.headOff(ctx, who)` (marks `look_at` / `look_at_off`): `at` is an
+  actor's name, an entity id or `[dx, dy, dz]` from the set origin. Renderer-side, so no-AI mobs turn too.
+- **Asleep**: `ctx.mark('pose', { ids: [id], sleep: true })` ... `pose_off`: any mob lies on its side on the floor
+  (Pose.SLEEPING; player actors have the `lie` pose). **Shaking its head no**: `{ shake: true }` (VillagerModel's
+  unhappy head shake, zRot 0.3 sin(0.45 age)) on any mob with a head.
+- Vanilla villagers have no work or panic animation (a panicking villager just runs: record it running), and mob
+  idle variety is `stunt.idleLife` (a slow look-around, docs/movie_engine.md).
+- **Name tags**: `stunt.nameTags: true` (every actor and named mob) or a list of names draws the vanilla nameplate
+  over their heads (EntityRenderer.renderNameTag, 0.5 above the hitbox), as CustomNameVisible does.
+Test: `node scripts/pose_fixture.js --stunt _life_test --life` (stunts/_life_test.js).
+
+## Faster stills: the mesh cache
+`./hb still` (any `ONLY=`/`FRAMES=` render) keeps the first mesh of the world in `work/hb/meshcache/` and the next
+still of the same recording loads it instead of meshing (story_nitwit, two stills: 56 s -> 25 s; the PNGs are
+identical). The key is the recording (path, size, mtime), the visible depth, Brightness, the time and weather at tick
+0, the dimension, shader light and the source of the mesher files, so an edit to the mesher or a re-record misses.
+One entry is kept (~180 MB for story_nitwit; `MESH_CACHE_KEEP=n`), `MESH_CACHE=0` turns it off, and full renders
+never touch it. Delete the folder to free the space.
+
+## Mob coverage (scripts/mob_audit.js)
+`node scripts/mob_audit.js` lists every living entity in minecraft-data and what the renderer has for it (a converted
+model, a hand-built one, a pose function). 2026-11-10: 89 living entities (1.21.11), 71 drawn before and 76 now. Added for engine-2 recordings
+(older ones never showed them and must stay as published): **bogged, parched** (skeleton model), **illusioner**
+(illager model), **glow squid** (squid model, lit 15), **trader llama** (llama + the trader blanket); line-up:
+`node scripts/pose_fixture.js --mobs`. Still not drawn (each needs its model built from the vanilla `*Model` class,
+by value for stories): **goat, camel, axolotl, armadillo** (common animals), **breeze, creaking** (1.21 threats),
+glow squid's tentacle glow, tadpole, copper golem, happy ghast, nautilus / zombie nautilus, camel husk, giant (unused).
+A mob with no model is skipped, not drawn wrong: `render.js` prints nothing for it, so check the audit before casting.
+
+## Hiding the cast's waiting room (stunt.hideBoxes)
+A cast parked out of view (a barrier floor and a stone roof 60 blocks up: story_good_boy) is a real build: looking up,
+vanilla draws its roof too (a dark slab in the dusk sky over the librarian, L06 19.9 s). `stunt.hideBoxes:
+[[dx0, dy0, dz0, dx1, dy1, dz1], ...]` (from the set origin, corners inclusive) leaves those blocks out of the drawn
+world and its light (render.js and the mesh workers, `renderer/hidebox.js`) and skips entities while they're inside.
+List every waiting room a stunt builds. `./hb describe` shows mobs parked far above the set as "EWS extreme wide".
+
 ## What still can't show
 - Inside a closed container: nothing, as in vanilla. Open it on camera and the screen shows the contents.
 - Legs bend at the hip only (Minecraft's player model has no knees): `crouch_sit` and `kneel` are as close as it gets.
