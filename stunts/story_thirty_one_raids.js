@@ -325,6 +325,7 @@ module.exports = {
     await line('L10', async (k, at) => {
       const up = at(3)
       if (k === 10 || k === 34) swing(GB)   // he nudges the one bowl across the table
+      if (k === at(1)) K.shot('s10b')        // "a RAID": in on his face
       G[GB].pitch = k < up - 3 ? 50 : k < up + 16 ? Math.max(4, G[GB].pitch - 9) : Math.min(50, G[GB].pitch + 5)
       look(k)
     })
@@ -414,7 +415,7 @@ module.exports = {
       if (k === 6) sound('item.crossbow.loading_start', 0.8, 1)
       if (k === 12 || k === at(1) - 4) swing(GB)
       if (k === 20) sound('item.crossbow.loading_middle', 0.8, 1)
-      if (k === at(2) + 4) { sound('item.crossbow.loading_end', 1.0, 1); swing(GB) }
+      if (k === at(2) + 8) { sound('item.crossbow.loading_end', 1.2, 1); swing(GB) }   // the click on "kid" (the payoff)
       K.turnTo(from, P(me.x + 10 * Math.cos(aim), 2.3, me.z + 10 * Math.sin(aim)), Math.min(1, k / 16))
       raidD = Math.max(13, raidD - 0.055); placeRaiders()
       look(k)
@@ -512,7 +513,9 @@ module.exports.shots = {
   // S09: closer, the same side: he turns his head back over his right shoulder
   s09: { at: [-2.6, 2.45, 3.8], look: [0.6, 2.35, 0.3], fov: 58, push: 0.1, dof: { aperture: 0.6, focus: { of: `actor:${GA}`, offset: [0, 1.5, 0] } } },
   // S10: the room from its south-east corner: Grandma's chair nearest the lens, Grandpa crouched over the table
-  s10: { at: [-6.6, 3.75, -10.4], look: [-10.6, 2.9, -13.6], fov: 62, push: 0.1, dof: false }
+  s10: { at: [-6.6, 3.75, -10.4], look: [-10.6, 2.9, -13.6], fov: 62, push: 0.1, dof: false },
+  // S10b: in on his face across the table on "a RAID" (the ceiling glowstone lights him)
+  s10b: { at: [-7.3, 3.5, -11.1], look: [-10.3, 3.3, -12.5], fov: 50, push: 0.12, dof: { aperture: 0.6, focus: { of: `actor:${GB}`, offset: [0, 1.4, 0] } } }
 }
 
 module.exports.ROAD = ROAD

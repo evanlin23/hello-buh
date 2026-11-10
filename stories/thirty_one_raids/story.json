@@ -350,5 +350,7 @@
       "frame": "subject: Grandpa, waist up (MS, 2.8 blocks), standing 2 blocks east and 2 south of the boy, just outside the south gate post, awake, his own crossbow in hand, eyes on the road; he loads it (the crossbow loading sounds, an arm pump) and glances at the camera on 'YOU'; at about +23 degrees, frame right; bg (frame left, about -22 degrees): the raiders 13-16 blocks up the road, the ravager biggest. Cut 0.3 s after 'kid'. Dusk (13000)."
     }
   ],
-  "bible": "stories/thirty_one_raids/bible.md"
+  "bible": "stories/thirty_one_raids/bible.md",
+  "payoff": "L13+1.9",
+  "payoff_note": "the payoff is Grandpa's \"kid\" with the crossbow's loaded click, over the raiders up the road (the horn reveal 2 s before is the build to it)"
 }
