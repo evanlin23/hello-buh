@@ -20,6 +20,24 @@ idea -> stunt module -> run.sh (bot + render + edit) -> qa_frames.py -> independ
 ### Retention and SFX toolkit (optional `edit` keys, worker 10)
 Reach for these when a beat needs more punch; none of them replaces a real escalation. Visuals: `punch` (a zoom kick on a mark), `shake`, `flash`, `slowmo` ([EVENT, BEFORE, AFTER]: keep it to ~0.5 s of footage), `freeze` ([EVENT, SECONDS, "1 IN A MILLION"]: a held frame with a push-in and a stamp; it adds SECONDS), `cards` ([EVENT, "NO WAY 💀", SECONDS, COLOR]), `counter` ({at: [marks], total}: "3/5"), `fallen` ([EVENT_A, EVENT_B]: a live blocks-fallen count), `hook` ({at, before: 1.5, after: 0, text}: a preview of the finale before beat 1; make it 1.2-1.5 s, since the owner found 0.5 s "too quick" to read, and use a negative `after` to cut before the landing shows), `replay` ({at, before, after, cam: 'back:6', speed: 0.5}: a third-person slow-mo replay appended after the payoff; run.sh renders it), and `loop: true` (the end dissolves into the first frame). Sound (`sfx`): `['whoosh', EVENT]`, `['riser', A, B]`, `['wind', A, B]`, `['impact', EVENT]`, `['boom', EVENT]`, `['dip', EVENT, 0.3]` (the song ducks before the payoff), `['pops']`, `['scratch', EVENT]`, `['file', EVENT, PATH, GAIN]`. The README table and the docstrings in `scripts/retention.py` and `scripts/sfx.py` have the details. Try them on frames you already rendered, without touching the stunt: `EDIT_EXTRA='{"punch":["splash5"]}' scripts/reedit.sh <name> /tmp/x.mp4`. `beat_audit.py` and `add_song.py` follow the same time map. A `replay` and a `freeze` both count toward the "end <= 1.0 s after the payoff" rule: the replay's payoff becomes the end.
 
+## Story Shorts loop (2026-11-10; why: docs/lessons.md "Process lessons")
+Every quality rule is built into the kit first and checked second; the owner should never be the one who finds a bug.
+1. **Script**: `stories/<name>/story.json` is the only script (the writers deliver it on a branch; `script*.md` is
+   notes). `./hb voice` refuses when a script note is newer and differs.
+2. **Doctor**: pull main, `./hb doctor --story` (disk >= 2 GB, the aligner, assets), `npm test` green.
+3. **Voice**: `./hb voice <stunt>`: the cast `narrator` (Pip as in Dog on the Hill v2, one `one_take` request),
+   characters on their own model. Exit 75 = a quota stop: the NEXT line says when and what to re-run; `./hb quota`
+   shows today's counts. Free tier: 10 requests a day per model, shared by every session, so the lead staggers them.
+   Takes are re-taken, never trimmed (gate: narrator 0.6 s, characters 1.0 s).
+4. **Align**: forced alignment only (caption_sync BLOCKs Whisper times); the recording is stamped with the voice.
+5. **Stage and record**: move and time everything through `K.*` (K.actor, K.cutShot, K.line, `at.cut(i)` for a cut
+   inside a line, K.dig/K.place with line of sight); give every shot a `subject`. `./hb check` before and after.
+6. **Check**: `./hb check` runs every check (motion lint, drift, rec_check incl. cast motion and sight, render lint,
+   continuity, framing, owner, cuts, caption sync, silent actions, pace); 0 BLOCKs before a render.
+7. **Render** on Actions: the check runs alongside; a preview with blockers is burned "CHECK FAILED".
+8. **Review**, then package **HELD**: only the owner's OK by name makes a story ready (`--owner-ok`).
+9. **Housekeeping**: `./hb clean`; remove an agent's worktree once merged; `gc.auto 0` (git's repack filled the disk).
+
 ## 2. Render (one batch at a time)
 - `STUNT=<name> ./run.sh`. Only one Minecraft server can run per container. Check `ps` for `server.jar` before starting anything, and never start a run while a batch is going. A collision orphans a server, and every later run then fails with "FAILED TO BIND TO PORT".
 - Queue runs in one sequential script (see `work/chain*.sh`), never as parallel waiters that each watch a pid.
