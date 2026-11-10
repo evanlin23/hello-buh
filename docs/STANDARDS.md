@@ -20,7 +20,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
    effect). Never say what the last shot already shows ("Good boy.", "Day one. Again." cut by the owner): end on the
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
-4. **The plot survives "why?"**: every character's action has a reason the viewer can state, and every accident has
+4. **Understood on one watch, nothing extra**: no unexplained names (set up every name first), no punchline that
+   explains a twist the picture already landed, no sting after the story ends. Check: cold reader, story-critic.
+   r:r0d320b
+4b. **The plot survives "why?"**: every character's action has a reason the viewer can state, and every accident has
    a cause you can SEE that exists in the game (a blast, a hit, a block breaking, powder snow, an arrow; never "I
    tripped/slipped/fell asleep"). Check: owner (`sync`: an uncaused fall), story-critic. r:rd497c4 r:r1d5238
 5. **Narrator-first**: one first-person narrator carries the whole story; other characters are quoted with a "said"
@@ -75,7 +78,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    r:r221d0a
 4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
    pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
-   only between beats. Check: pace (pauses), speaker_check (CLIPPED), panel. r:rfd4907
+   only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a
+   story with `"voice_takes": "beat"` (scripts/take_gate.py, docs/voices.md "Continuous takes"). r:rfd4907
 
 ## 3. Set
 1. **No superflat**: built into real terrain with relief, at full scale, with depth in every shot (foreground,
@@ -84,7 +88,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 2. **Builds follow docs/building_guide.md** and score **7+ (focal building 8+)** on its checklist, on stills, before
    recording. Check: review (manual). r:r4b6024
 3. **No glitches, and the title's promise is on screen**: no doors moving by themselves, never stuck on a block, no
-   jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4
+   jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4 r:rff9341
+   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla.
 4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
 
 5. **One shared world** (seed `hellobuh`): every story happens at a canonical place in docs/world/map.json, built by
@@ -121,6 +126,8 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinem
    2-3 word chunks for a test.) r:rbd7cb6
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
+3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
+   r:r62de46
 
 ## 7. Audio
 The lead's mix (docs/audio.md), automatic in `edit.py --story` + publish: voice -15 LUFS, master **-14 LUFS +-0.5,
@@ -145,6 +152,9 @@ Check: `python3 scripts/audio_measure.py out/<name>.mp4`. r:rc85ccc
 
 ## 10. Publish
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
+- **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
+  story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
+  posts a story. Check: publish.js (status), youtube_upload.py (posts "ready" only). r:r016732
 - Mark the premise `made` in docs/stories.md. Don't edit the upload queue; the older stories keep posting. r:r62fae3
 - **New owner rule** (any session): add the dated quote to docs/stories.md "House rules" on main, and update this file
   in the same commit (the standard, its number, its check, `r:<key>` from `./hb rules --log`, and the "Updated:"

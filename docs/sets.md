@@ -84,6 +84,7 @@ Sizes are x by y by z of the template (the front faces +z = south at `facing: 's
 | `tavern` | 26x17x20 | L plan: a two-storey hall (framed stone ground floor, jettied timber-and-plaster upper floor, steep slate roof with spruce verges, brick chimney with smoke) and a one-storey wing with a cross gable; double doors, hanging signboard, bar with barrels and stools, hearth, tables, rooms upstairs, kitchen in the wing, a fenced beer garden | door, doorstep, street, bar (barkeep), bar_front (customer), table, hearth, inside (+look), wing_door, kitchen, garden, upstairs | `palette` (plaster default), `name` 'THE\|CRAFTY\|CREEPER', `seed` |
 | `windmill` | 25x29x15 | tapering stone tower (darker, mossy at the foot), timber cap with a roof, four canvas sails on an axle, millstone and sacks inside, a granary shed with a lean-to roof, a cart | door, doorstep, approach, inside, cap, granary, sails | `height` |
 | `dock` | 13x15x22 | a timber dock: stone landing, plank walk on log piles down into the water with a rail, a T-head with a fishing shack, cargo, a bell, lamps. Place it with `findShore` (facing out over the water, `y` the bank) | shore, walk, end, shack, moor, approach | `length`, `depth` |
+| `station` | 15x6x25 | a rail station at the end of a line: buffer stop (wall + lantern) and a powered activator rail with its redstone torch, slab platform on the west with a north apron, lamp posts, a bench, a destination sign, crates; two sidings branching east, each with its own buffer and name sign (a minecart on siding A). Facing = the way the line leaves | buffer, mark, activator, line_end, siding_a, siding_b, bench, sign | `length`, `sign` ("A\|B"), `a`, `b` (siding names), `cart` |
 | `room` | 15x13x13 | a furnished living-room set with a ceiling for interior scenes: fireplace, armchairs, rug, dining table, bed nook, kitchen corner, bookshelves, windows, lanterns on beams | door, doorstep, fire, armchair_l, armchair_r, table, bed, kitchen, wide (+look), reverse (+look) | `palette` |
 
 ![cottage](sets/cottage.jpg) ![house2](sets/house2.jpg) ![farmhouse](sets/farmhouse.jpg)
@@ -115,11 +116,13 @@ and next to other builds.
 | `grass(ctx, { x, z, r, n, tall })` | short grass, ferns, bushes, some tall grass |
 | `path(ctx, [[x, z], ...], { w, blocks, edge })` | a worn path along a polyline: dirt path, frayed coarse dirt and gravel edges, plants cleared |
 | `lamp(ctx, x, z, { h, fence, lantern, style: 'post'\|'hang' })` | a lantern on a post (or hanging from an arm) |
+| `rails(ctx, [[x, z], ...], { y0, y1, fixed_range, skipz, boost, side, smooth })` | a rail line on the real terrain along axis-aligned legs (curves at the corners): the bed smoothed to at most 1 block per block (ascending rails), embankments and cuttings 3 wide, ballast; `boost: 8` a powered rail and a redstone torch every 8. Also a map.json stamp: `{ do: 'rails', pts, opts }` |
 | `tree(ctx, x, z, kind)`, `grove(ctx, { x, z, r, n, kinds, minR })` | vanilla trees (`/place feature`: oak, fancy_oak, birch, spruce, dark_oak, cherry, azalea_tree...) |
 | `rocks(ctx, x, z, { r })` | a mossy boulder with ferns |
 | `clutter(ctx, x, z, kind)` | crates, logs, pots, cart (chest minecart), well, market |
 | `crops(ctx, box, crop)` | farmland on the terrain with a water row every 8, ripe crops |
 | `fence(ctx, [[x, z], ...])` | a fence along the ground |
+| `torches(ctx, { x0, z0, x1, z1, yTop, yBottom, skip, dry })` | a standing torch on every block in a box that takes one (sturdy full tops, fence and wall posts; plants replaced; paths, farmland, stairs, bottom slabs, leaves, crops skipped), counted: `{ count, at }`. Six Thousand Torches: 6,127 at Larkfield |
 | `sign`, `banner`, `frame` (item frame), `light` | at exact spots (signs and banners render; item frames render with their item) |
 
 ## Staging tips

@@ -138,6 +138,19 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (review page): "I think we don't need the grandpa labeling, just the color"; "Gandma doesnt need
+  the label"; "dont need the mom tag".** No speaker name tags: the caption colour alone says who speaks
+  (story_track: off by default).
+- **Owner, 2026-11-10 (review page): "The background shouldnt move while the chest is open" (also the barrel, and
+  Names in the Woods' chest).** While a container GUI is open the camera holds still, as in vanilla.
+- **Owner, 2026-11-10 (review page): "We dont need to say "Oh thats why we have 9000 carpets""; Good Boy: "Wtf is
+  the beat at the end?"; "Pacing needs to be faster"; Gold: "Who is nico?"; Names in the Woods: "I dont understand
+  this one".** Cut the explaining punchline too when the picture already lands the twist; no unexplained names (every
+  name on screen or in a line is set up first); no music sting after the story is over; and a story must be
+  understood on one watch by someone who hasn't read the script.
+- **Owner, 2026-11-10: "none of these new stories should go out until i've OKed them".** Every story is packaged
+  **held** (`publish.js --pass` gives a story_* status "held"), and only the owner's own OK, by story name, makes it
+  ready (`--owner-ok`, run by the lead). "Proceed without my review" never covers posting a story to YouTube.
 - **Owner, 2026-11-10: "I lowkey dont think we need the "Good boy" or the "day 1, again" i feel like both are implied?"**
   Don't say what the picture already says. When the last shot shows the ending (the dog back on the hill, the farmer
   with the dog), end on the picture and the sound, no closing line naming it. Supersedes "endings explain themselves":

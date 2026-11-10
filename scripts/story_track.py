@@ -21,7 +21,7 @@ HERE = pathlib.Path(__file__).resolve().parent.parent
 FONT = HERE / "assets" / "fonts" / "Poppins-Black.ttf"   # font A/B 2026-11-10 (docs/look.md): most ink per width at phone size
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
 CAP_PX = 96
-TAG_PX = 54                              # the speaker's name tag, over a character's first caption (story.json "name_tags": false turns it off)
+TAG_PX = 54                              # the speaker's name tag, over a character's first caption (off by default, owner 2026-11-10: "we don't need the grandpa labeling, just the color"; story.json "name_tags": true turns it on)
 MAX_W = 840                              # x 120..960: clear of the Shorts like/comment column on the right (docs/look.md)
 CY = BAND + int(GAME_H * 0.70)          # caption block centre: below the crosshair, above the hearts
 INK = (14, 12, 18, 255)
@@ -70,12 +70,48 @@ def _marks(timeline, start, ids=None, on_respawn=()):
     return out
 
 
+def voice_starts(voice, marks):
+    """Where each line's audio really starts, in seconds of the Short, and what to lay there. A plain line: its own
+    mark, its own wav. Continuous takes (voice.json `beats`, story.json "voice_takes": "beat"; docs/voices.md): the
+    whole beat take is laid once, at the beat's first marked line minus that line's offset in the take, and every line
+    of the beat starts at that point plus its own offset, whatever its mark says (the stunt times the marks from the
+    same offsets, lib/story.js beatTicks, so they agree to a tick). -> ({line id: s}, [(s, wav name, [line ids])])"""
+    at = {lid: t for t, lid in marks}
+    starts, lay = dict(at), []
+    beats = voice.get("beats") or {}
+    placed = set()
+    for t, lid in marks:
+        bid = (voice["lines"].get(lid) or {}).get("beat")
+        if bid is None or bid not in beats:
+            lay.append((t, f"{lid}.wav", [lid]))
+            continue
+        if bid in placed:
+            continue
+        placed.add(bid)
+        b = beats[bid]
+        t0 = t - voice["lines"][lid]["offset"]
+        ids = [l for l in b["lines"] if l in at]
+        for l in ids:
+            starts[l] = t0 + voice["lines"][l]["offset"]
+        lay.append((t0, b.get("file", f"beat_{bid}.wav"), ids))
+    return starts, lay
+
+
+PICTURE_DRIFT = 0.15   # s: a continuous take's line mark this far from its voice is reported (the picture is off)
+
+
 def narration_wav(story_dir, timeline, start, dur, out):
     story, voice = _lines(story_dir)
     sr = 48000
     track = np.zeros(int((dur + 1) * sr), np.float32)
-    for t, lid in _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ())):
-        with wave.open(str(pathlib.Path(story_dir) / "voice" / f"{lid}.wav")) as w:
+    marks = _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ()))
+    starts, lay = voice_starts(voice, marks)
+    for t, lid in marks:
+        if abs(starts[lid] - t) > PICTURE_DRIFT:
+            print(f"narration: {lid}'s mark is {t - starts[lid]:+.2f} s off its place in the continuous take: the picture "
+                  f"runs {'late' if t > starts[lid] else 'early'} there (time the stunt with K.line, lib/story.js)")
+    for t, wav, _ in lay:
+        with wave.open(str(pathlib.Path(story_dir) / "voice" / wav)) as w:
             x = np.frombuffer(w.readframes(w.getnframes()), np.int16 if w.getsampwidth() == 2 else np.int32).astype(np.float32)
             x /= 32768.0 if w.getsampwidth() == 2 else 2 ** 31
             src_sr = w.getframerate()
@@ -150,7 +186,7 @@ def speakers(story):
     """{line id: (plain-word colour, is a character, name tag or None)} for a story. v1 stories and the narrator:
     white. A v2 character: its cast `color`, else its library character's `color` (voices/cast.json, via `ref`),
     else the first unused colour of the library palette; a name tag over every caption of its first line (one word at
-    a time is too short to read a tag; story.json "name_tags": false turns them off)."""
+    a time is too short to read a tag). Off by default (owner 2026-11-10: "just the color"); story.json "name_tags": true."""
     cast = story.get("cast") or {}
     lib = json.loads((HERE / "voices" / "cast.json").read_text())
     used = {c.get("color", "").upper() for c in cast.values()}
@@ -170,7 +206,7 @@ def speakers(story):
     for ln in story["lines"]:
         w = ln.get("who")
         if w in col:
-            out[ln["id"]] = (col[w][0], True, col[w][1] if story.get("name_tags", True) and w not in seen else None)
+            out[ln["id"]] = (col[w][0], True, col[w][1] if story.get("name_tags", False) and w not in seen else None)
             seen.add(w)
         else:
             out[ln["id"]] = ((255, 255, 255, 255), False, None)
@@ -187,8 +223,11 @@ def caption_events(story_dir, timeline, start, dur, who=False):
     (0.3 s past its last word only when the next line is over 1.2 s away)."""
     story, voice = _lines(story_dir)
     marks = _marks(timeline, start, {l["id"] for l in story["lines"]}, story.get("start_on_respawn", ()))
+    # a line's words are timed from where its audio starts: its mark, or its place in a continuous take (voice_starts)
+    vs, _ = voice_starts(voice, marks)
     ev = []
-    for n, (t, lid) in enumerate(marks):
+    for n, (_, lid) in enumerate(marks):
+        t = vs[lid]
         v = voice["lines"][lid]
         nxt = marks[n + 1][0] if n + 1 < len(marks) else dur
         for i, ((a, b), text) in enumerate(zip(v["chunks"], v["captions"])):
@@ -202,7 +241,7 @@ def caption_events(story_dir, timeline, start, dur, who=False):
     # timed by voice/words.json (Whisper word starts) when present, else by each word's share of the chunk's letters.
     # "captions": "chunk" keeps the 2-3 word chunks.
     if story.get("captions", "word") == "word":
-        ev = _one_word(ev, story_dir, marks)
+        ev = _one_word(ev, story_dir, [(vs[lid], lid) for _, lid in marks])
     # owner 2026-11-10: "The captions actually seem behind". Whisper's word starts are not late (0.14 s earlier than a
     # wav2vec2 forced alignment on gold_for_the_portal, 113 words), but a word shown on its onset reads as late: picture
     # behind sound is noticed from ~45 ms, picture ahead of sound is tolerated to ~125 ms (ITU-R BT.1359). So every
@@ -224,7 +263,8 @@ def caption_events(story_dir, timeline, start, dur, who=False):
 
 
 def _one_word(ev, story_dir, marks):
-    """Split each (t0, t1, text, lid) chunk into one event per word."""
+    """Split each (t0, t1, text, lid) chunk into one event per word. marks: [(where the line's audio starts, id)]
+    (words.json times are from the start of each line's wav)."""
     import json as _json
     wf = pathlib.Path(story_dir) / "voice" / "words.json"
     words = _json.loads(wf.read_text()) if wf.exists() else {}
