@@ -15,7 +15,7 @@ The three checklists still apply. This skill doesn't repeat them; it says how to
 - Minecraft: `.claude/skills/minecraft-audit/SKILL.md`
 
 ## Before anyone reviews (the maker does this; it costs minutes)
-1. `node scripts/rec_check.js <stunt> work/<name>.rec.json`: cut glitches, held shots, set edges and speeds,
+1. `python3 scripts/rec_check.py <stunt> work/<name>.rec.json`: cut glitches, held shots, set edges and speeds,
    read from the recording. **Fix every blocker by re-recording before rendering.**
 2. `bash scripts/preview.sh <stunt>`: a low-res preview with the real edit, plus sheets at every cut and
    caption. Fix staging here; there's no need to wait for a full render.
