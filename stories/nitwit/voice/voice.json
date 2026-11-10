@@ -1,0 +1,531 @@
+{
+ "voice": "am_adam",
+ "tempo": 1.03,
+ "rate": 1.45,
+ "sr": 24000,
+ "gap": 0.1,
+ "model": "hexgrad/Kokoro-82M (Apache 2.0)",
+ "lines": {
+  "L01": {
+   "text": "The nitwit in my village has said hmm 4,096 times.",
+   "dur": 2.931,
+   "onset": 0.172,
+   "end": 2.741,
+   "chunks": [
+    [
+     0.172,
+     0.422
+    ],
+    [
+     0.422,
+     0.836
+    ],
+    [
+     0.836,
+     1.207
+    ],
+    [
+     1.207,
+     2.741
+    ]
+   ],
+   "captions": [
+    "The NITWIT",
+    "in my village",
+    "has said HMM",
+    "4,096 TIMES."
+   ]
+  },
+  "L02": {
+   "text": "Today, he said my name.",
+   "dur": 1.483,
+   "onset": 0.172,
+   "end": 1.293,
+   "chunks": [
+    [
+     0.172,
+     0.414
+    ],
+    [
+     0.44,
+     0.681
+    ],
+    [
+     0.681,
+     1.293
+    ]
+   ],
+   "captions": [
+    "Today,",
+    "he said",
+    "my NAME."
+   ]
+  },
+  "L03": {
+   "text": "He's always standing somewhere weird.",
+   "dur": 1.845,
+   "onset": 0.155,
+   "end": 1.638,
+   "chunks": [
+    [
+     0.155,
+     0.517
+    ],
+    [
+     0.517,
+     0.836
+    ],
+    [
+     0.836,
+     1.112
+    ],
+    [
+     1.112,
+     1.638
+    ]
+   ],
+   "captions": [
+    "He's ALWAYS",
+    "standing",
+    "somewhere",
+    "WEIRD."
+   ]
+  },
+  "L04": {
+   "text": "Under a tree. That night, lightning split it.",
+   "dur": 2.034,
+   "onset": 0.172,
+   "end": 1.845,
+   "chunks": [
+    [
+     0.172,
+     0.672
+    ],
+    [
+     0.741,
+     0.983
+    ],
+    [
+     1.017,
+     1.284
+    ],
+    [
+     1.284,
+     1.845
+    ]
+   ],
+   "captions": [
+    "Under a TREE.",
+    "That night,",
+    "LIGHTNING",
+    "split it."
+   ]
+  },
+  "L05": {
+   "text": "In the wheat. A creeper walked in and boom.",
+   "dur": 2.017,
+   "onset": 0.172,
+   "end": 1.828,
+   "chunks": [
+    [
+     0.172,
+     0.517
+    ],
+    [
+     0.569,
+     0.897
+    ],
+    [
+     0.897,
+     1.216
+    ],
+    [
+     1.216,
+     1.828
+    ]
+   ],
+   "captions": [
+    "In the WHEAT.",
+    "A CREEPER",
+    "walked in",
+    "and BOOM."
+   ]
+  },
+  "L06": {
+   "text": "By the well. The water turned to lava.",
+   "dur": 1.983,
+   "onset": 0.155,
+   "end": 1.759,
+   "chunks": [
+    [
+     0.155,
+     0.569
+    ],
+    [
+     0.621,
+     0.948
+    ],
+    [
+     0.948,
+     1.241
+    ],
+    [
+     1.241,
+     1.759
+    ]
+   ],
+   "captions": [
+    "By the WELL.",
+    "The water",
+    "turned to",
+    "LAVA."
+   ]
+  },
+  "L07": {
+   "text": "On my roof. The next day, it rained anvils.",
+   "dur": 2.19,
+   "onset": 0.172,
+   "end": 2.0,
+   "chunks": [
+    [
+     0.172,
+     0.655
+    ],
+    [
+     0.707,
+     1.086
+    ],
+    [
+     1.112,
+     1.362
+    ],
+    [
+     1.362,
+     2.0
+    ]
+   ],
+   "captions": [
+    "On MY roof.",
+    "The next day,",
+    "it rained",
+    "ANVILS."
+   ]
+  },
+  "L08": {
+   "text": "The other villagers walk away when he comes.",
+   "dur": 2.086,
+   "onset": 0.172,
+   "end": 1.879,
+   "chunks": [
+    [
+     0.172,
+     0.431
+    ],
+    [
+     0.431,
+     0.741
+    ],
+    [
+     0.741,
+     1.147
+    ],
+    [
+     1.147,
+     1.879
+    ]
+   ],
+   "captions": [
+    "The other",
+    "villagers",
+    "WALK AWAY",
+    "when he comes."
+   ]
+  },
+  "L09": {
+   "text": "Even the iron golem goes around him.",
+   "dur": 2.017,
+   "onset": 0.172,
+   "end": 1.828,
+   "chunks": [
+    [
+     0.172,
+     0.422
+    ],
+    [
+     0.422,
+     0.983
+    ],
+    [
+     0.983,
+     1.828
+    ]
+   ],
+   "captions": [
+    "Even the",
+    "IRON GOLEM",
+    "goes AROUND him."
+   ]
+  },
+  "L10": {
+   "text": "So one night, I followed him.",
+   "dur": 1.655,
+   "onset": 0.172,
+   "end": 1.466,
+   "chunks": [
+    [
+     0.172,
+     0.655
+    ],
+    [
+     0.681,
+     1.466
+    ]
+   ],
+   "captions": [
+    "So one night,",
+    "I FOLLOWED him."
+   ]
+  },
+  "L11": {
+   "text": "Past the last torch was another village.",
+   "dur": 2.0,
+   "onset": 0.172,
+   "end": 1.793,
+   "chunks": [
+    [
+     0.172,
+     0.414
+    ],
+    [
+     0.414,
+     0.897
+    ],
+    [
+     0.897,
+     1.259
+    ],
+    [
+     1.259,
+     1.793
+    ]
+   ],
+   "captions": [
+    "Past the",
+    "last torch",
+    "was ANOTHER",
+    "village."
+   ]
+  },
+  "L12": {
+   "text": "My village. burned. empty.",
+   "dur": 1.621,
+   "onset": 0.172,
+   "end": 1.414,
+   "chunks": [
+    [
+     0.172,
+     0.517
+    ],
+    [
+     0.552,
+     0.81
+    ],
+    [
+     0.845,
+     1.414
+    ]
+   ],
+   "captions": [
+    "MY village.",
+    "BURNED.",
+    "EMPTY."
+   ]
+  },
+  "L13": {
+   "text": "The tree. The wheat. The well. All gone.",
+   "dur": 1.897,
+   "onset": 0.172,
+   "end": 1.69,
+   "chunks": [
+    [
+     0.172,
+     0.483
+    ],
+    [
+     0.517,
+     0.724
+    ],
+    [
+     0.759,
+     1.017
+    ],
+    [
+     1.043,
+     1.69
+    ]
+   ],
+   "captions": [
+    "The TREE.",
+    "The WHEAT.",
+    "The WELL.",
+    "All GONE."
+   ]
+  },
+  "L14": {
+   "text": "He's not from here. His world already ended.",
+   "dur": 2.276,
+   "onset": 0.172,
+   "end": 2.069,
+   "chunks": [
+    [
+     0.172,
+     0.466
+    ],
+    [
+     0.466,
+     0.845
+    ],
+    [
+     0.914,
+     1.293
+    ],
+    [
+     1.293,
+     2.069
+    ]
+   ],
+   "captions": [
+    "He's not",
+    "FROM here.",
+    "His world",
+    "already ENDED."
+   ]
+  },
+  "L15": {
+   "text": "They sent him back to warn us.",
+   "dur": 1.586,
+   "onset": 0.155,
+   "end": 1.397,
+   "chunks": [
+    [
+     0.155,
+     0.517
+    ],
+    [
+     0.517,
+     0.724
+    ],
+    [
+     0.724,
+     1.397
+    ]
+   ],
+   "captions": [
+    "They sent him",
+    "BACK",
+    "to WARN us."
+   ]
+  },
+  "L16": {
+   "text": "But a nitwit can only say one word.",
+   "dur": 1.914,
+   "onset": 0.155,
+   "end": 1.707,
+   "chunks": [
+    [
+     0.155,
+     0.586
+    ],
+    [
+     0.586,
+     0.888
+    ],
+    [
+     0.888,
+     1.707
+    ]
+   ],
+   "captions": [
+    "But a NITWIT",
+    "can only",
+    "say one word."
+   ]
+  },
+  "L17": {
+   "text": "And today, he's standing right next to me.",
+   "dur": 1.983,
+   "onset": 0.155,
+   "end": 1.793,
+   "chunks": [
+    [
+     0.155,
+     0.534
+    ],
+    [
+     0.569,
+     0.966
+    ],
+    [
+     0.966,
+     1.336
+    ],
+    [
+     1.336,
+     1.793
+    ]
+   ],
+   "captions": [
+    "And today,",
+    "he's standing",
+    "right next",
+    "to ME."
+   ]
+  },
+  "L18": {
+   "text": "He said my name. Then the date of the end.",
+   "dur": 2.121,
+   "onset": 0.155,
+   "end": 1.914,
+   "chunks": [
+    [
+     0.155,
+     0.388
+    ],
+    [
+     0.388,
+     0.845
+    ],
+    [
+     0.914,
+     1.267
+    ],
+    [
+     1.267,
+     1.914
+    ]
+   ],
+   "captions": [
+    "He said",
+    "my NAME.",
+    "Then the DATE",
+    "of the END."
+   ]
+  },
+  "L19": {
+   "text": "It's today.",
+   "dur": 1.034,
+   "onset": 0.155,
+   "end": 0.81,
+   "chunks": [
+    [
+     0.155,
+     0.81
+    ]
+   ],
+   "captions": [
+    "It's TODAY."
+   ]
+  }
+ },
+ "total": 38.57
+}

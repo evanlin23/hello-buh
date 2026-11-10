@@ -1,0 +1,95 @@
+{
+  "name": "nitwit",
+  "stunt": "story_nitwit",
+  "caption": "the nitwit finally said something 😳",
+  "premise": "The village nitwit only ever says 'hmm'. He always stands exactly where something bad is about to happen (a tree before lightning, the wheat before a creeper, the well before it turns to lava), and every other villager walks away from him. The narrator follows him one night past the last torch and finds a burned, empty copy of his own village.",
+  "twist": "The nitwit is from a world that already ended, sent back to warn this one, and 'hmm' is all the game lets a nitwit say. Today he stands right next to the narrator: the bad thing is about to happen to him. He says the date of the end, and it's today.",
+  "voice": {
+    "voice": "am_adam",
+    "tempo": 1.03,
+    "rate": 1.45
+  },
+  "gap": 0.1,
+  "key_color": "#B4F03C",
+  "meter": {
+    "label": "HMMS"
+  },
+  "lines": [
+    {
+      "id": "L01",
+      "text": "The NITWIT / in my village / has said HMM / 4,096 TIMES."
+    },
+    {
+      "id": "L02",
+      "text": "Today, / he said / my NAME."
+    },
+    {
+      "id": "L03",
+      "text": "He's ALWAYS / standing / somewhere / WEIRD."
+    },
+    {
+      "id": "L04",
+      "text": "Under a TREE. / That night, / LIGHTNING / split it."
+    },
+    {
+      "id": "L05",
+      "text": "In the WHEAT. / A CREEPER / walked in / and BOOM."
+    },
+    {
+      "id": "L06",
+      "text": "By the WELL. / The water / turned to / LAVA."
+    },
+    {
+      "id": "L07",
+      "text": "On MY roof. / The next day, / it rained / ANVILS."
+    },
+    {
+      "id": "L08",
+      "text": "The other / villagers / WALK AWAY / when he comes."
+    },
+    {
+      "id": "L09",
+      "text": "Even the / IRON GOLEM / goes AROUND him."
+    },
+    {
+      "id": "L10",
+      "text": "So one night, / I FOLLOWED him."
+    },
+    {
+      "id": "L11",
+      "text": "Past the / last torch / was ANOTHER / village."
+    },
+    {
+      "id": "L12",
+      "text": "MY village. / BURNED. / EMPTY."
+    },
+    {
+      "id": "L13",
+      "text": "The TREE. / The WHEAT. / The WELL. / All GONE."
+    },
+    {
+      "id": "L14",
+      "text": "He's not / FROM here. / His world / already ENDED."
+    },
+    {
+      "id": "L15",
+      "text": "They sent him / BACK / to WARN us."
+    },
+    {
+      "id": "L16",
+      "text": "But a NITWIT / can only / say one word."
+    },
+    {
+      "id": "L17",
+      "text": "And today, / he's standing / right next / to ME."
+    },
+    {
+      "id": "L18",
+      "text": "He said / my NAME. / Then the DATE / of the END."
+    },
+    {
+      "id": "L19",
+      "text": "It's TODAY."
+    }
+  ]
+}
