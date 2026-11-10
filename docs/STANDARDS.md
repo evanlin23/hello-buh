@@ -103,6 +103,12 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    `world.build(ctx, { story })` (no planSite/findSite/clearSet/`/locate` for canonical places); canon facts in
    docs/world/canon.md; one background easter egg per story; every Short still stands alone. Check: `./hb world
    check`, story-critic (canon line, stands-alone must-fix), story-continuity (canon facts). r:rf4bb26
+## 3b. Motion (built in, not caught)
+1. **Smooth by construction**: stunts move the camera, the player and NPCs only through the story kit's primitives
+   (eased turns, pathing walks, vanilla-speed NPCs, a still camera while a GUI is open); a lint before recording
+   rejects raw look/teleport calls. Post-render checks are the safety net, never the method; the same for every
+   quality rule: build it into the tool first, check it second. Check: lint (`./hb check`), then rec_check. r:rd9b7d0
+
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
 2. **The picture never runs ahead of or against the words** ("dug under it" before we dig; "never dig straight down"

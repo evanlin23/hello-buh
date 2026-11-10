@@ -138,6 +138,12 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "the movement shouldn't be caught... the processes should be such that the movement is [smooth]
+  in the first place. Like we of course we can still have the check later on, but this check later on shouldn't be
+  the main way that we're doing it. Stuff should be front loaded."** Smooth, player-like motion comes from the story
+  kit's primitives (eased turns, pathing walks, vanilla-speed NPCs, a still camera in GUIs), which are the only way a
+  stunt moves anything; a pre-recording lint rejects raw look/teleport calls. Checks after the render are the safety
+  net, never the method. The same goes for every quality rule: build it into the tool first, check it second.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
