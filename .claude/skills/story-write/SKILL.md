@@ -53,7 +53,10 @@ Write the ending first (the reveal frame), then:
 
 ## 4. The script (stories/<name>/story.json, version 2)
 
-- Lines in the house format (` / ` chunks of 2-3 words, CAPS key words), 100-150 spoken words for 45-55 s.
+- Lines in the house format (` / ` chunks of 2-3 words, CAPS key words), about 90-120 spoken words for 35-45 s
+  (story_runaway, the owner's benchmark, is 36.5 s; `./hb pace` warns over 45 s; story_good_boy's 19 lines ran 60 s).
+- `"payoff": "<line id>"`: the line the twist lands on (the reveal). `./hb pace` checks a sound hit and a picture change
+  on it and that the Short ends ≤1 s after it, so no line after the payoff (put a button line before it).
 - The cast block: the narrator plus 1-3 speaking characters, each with a Gemini voice cast for contrast, a caption
   colour and a short audio profile (`docs/story_craft.md` section 5 has the palette).
 - `who` on every character line; `say` where the spoken text needs tags or differs from the caption; `direction` on
