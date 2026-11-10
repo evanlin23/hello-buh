@@ -535,105 +535,15 @@
     },
     {
      "kind": "pause",
-     "at": 6.59,
-     "len": 0.52,
-     "why": "0.52 s pause between lines 1-2 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 9.89,
-     "len": 0.33,
-     "why": "0.33 s pause inside line 3 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 11.71,
-     "len": 0.4,
-     "why": "0.40 s pause between lines 2-3 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
      "at": 13.23,
      "len": 0.67,
-     "why": "0.67 s pause between lines 3-4 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 15.72,
-     "len": 0.33,
-     "why": "0.33 s pause inside line 5 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 17.9,
-     "len": 0.44,
-     "why": "0.44 s pause between lines 5-6 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 19.61,
-     "len": 0.33,
-     "why": "0.33 s pause inside line 6 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 21.3,
-     "len": 0.41,
-     "why": "0.41 s pause between lines 6-7 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 22.48,
-     "len": 0.44,
-     "why": "0.44 s pause between lines 6-7 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 24.39,
-     "len": 0.49,
-     "why": "0.49 s pause inside line 8 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.76,
-     "len": 0.48,
-     "why": "0.48 s pause between lines 7-8 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 30.1,
-     "len": 0.53,
-     "why": "0.53 s pause between lines 8-9 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 30.73,
-     "len": 0.34,
-     "why": "0.34 s pause inside line 10 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 32.18,
-     "len": 0.38,
-     "why": "0.38 s pause inside line 10 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 33.78,
-     "len": 0.4,
-     "why": "0.40 s pause inside line 10 (limit 0.3 s)"
+     "why": "0.67 s pause between lines 3-4 (limit 0.6 s)"
     },
     {
      "kind": "pause",
      "at": 35.28,
      "len": 0.72,
-     "why": "0.72 s pause between lines 9-10 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.51,
-     "len": 0.57,
-     "why": "0.57 s pause inside line 11 (limit 0.3 s)"
+     "why": "0.72 s pause between lines 9-10 (limit 0.6 s)"
     }
    ],
    "cut": "aligned",
@@ -642,23 +552,8 @@
      "try": 1,
      "why": [
       "0.31 s pause inside line 1 (limit 0.2 s, the opening)",
-      "0.52 s pause between lines 1-2 (limit 0.35 s)",
-      "0.33 s pause inside line 3 (limit 0.3 s)",
-      "0.40 s pause between lines 2-3 (limit 0.35 s)",
-      "0.67 s pause between lines 3-4 (limit 0.35 s)",
-      "0.33 s pause inside line 5 (limit 0.3 s)",
-      "0.44 s pause between lines 5-6 (limit 0.35 s)",
-      "0.33 s pause inside line 6 (limit 0.3 s)",
-      "0.41 s pause between lines 6-7 (limit 0.35 s)",
-      "0.44 s pause between lines 6-7 (limit 0.35 s)",
-      "0.49 s pause inside line 8 (limit 0.3 s)",
-      "0.48 s pause between lines 7-8 (limit 0.35 s)",
-      "0.53 s pause between lines 8-9 (limit 0.35 s)",
-      "0.34 s pause inside line 10 (limit 0.3 s)",
-      "0.38 s pause inside line 10 (limit 0.3 s)",
-      "0.40 s pause inside line 10 (limit 0.3 s)",
-      "0.72 s pause between lines 9-10 (limit 0.35 s)",
-      "0.57 s pause inside line 11 (limit 0.3 s)"
+      "0.67 s pause between lines 3-4 (limit 0.6 s)",
+      "0.72 s pause between lines 9-10 (limit 0.6 s)"
      ]
     }
    ],
@@ -694,105 +589,15 @@
     },
     {
      "kind": "pause",
-     "at": 6.59,
-     "len": 0.52,
-     "why": "0.52 s pause between lines 1-2 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 9.89,
-     "len": 0.33,
-     "why": "0.33 s pause inside line 3 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 11.71,
-     "len": 0.4,
-     "why": "0.40 s pause between lines 2-3 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
      "at": 13.23,
      "len": 0.67,
-     "why": "0.67 s pause between lines 3-4 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 15.72,
-     "len": 0.33,
-     "why": "0.33 s pause inside line 5 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 17.9,
-     "len": 0.44,
-     "why": "0.44 s pause between lines 5-6 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 19.61,
-     "len": 0.33,
-     "why": "0.33 s pause inside line 6 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 21.3,
-     "len": 0.41,
-     "why": "0.41 s pause between lines 6-7 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 22.48,
-     "len": 0.44,
-     "why": "0.44 s pause between lines 6-7 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 24.39,
-     "len": 0.49,
-     "why": "0.49 s pause inside line 8 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 28.76,
-     "len": 0.48,
-     "why": "0.48 s pause between lines 7-8 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 30.1,
-     "len": 0.53,
-     "why": "0.53 s pause between lines 8-9 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 30.73,
-     "len": 0.34,
-     "why": "0.34 s pause inside line 10 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 32.18,
-     "len": 0.38,
-     "why": "0.38 s pause inside line 10 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 33.78,
-     "len": 0.4,
-     "why": "0.40 s pause inside line 10 (limit 0.3 s)"
+     "why": "0.67 s pause between lines 3-4 (limit 0.6 s)"
     },
     {
      "kind": "pause",
      "at": 35.28,
      "len": 0.72,
-     "why": "0.72 s pause between lines 9-10 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 36.51,
-     "len": 0.57,
-     "why": "0.57 s pause inside line 11 (limit 0.3 s)"
+     "why": "0.72 s pause between lines 9-10 (limit 0.6 s)"
     }
    ],
    "cut": "aligned",
@@ -801,23 +606,8 @@
      "try": 1,
      "why": [
       "0.31 s pause inside line 1 (limit 0.2 s, the opening)",
-      "0.52 s pause between lines 1-2 (limit 0.35 s)",
-      "0.33 s pause inside line 3 (limit 0.3 s)",
-      "0.40 s pause between lines 2-3 (limit 0.35 s)",
-      "0.67 s pause between lines 3-4 (limit 0.35 s)",
-      "0.33 s pause inside line 5 (limit 0.3 s)",
-      "0.44 s pause between lines 5-6 (limit 0.35 s)",
-      "0.33 s pause inside line 6 (limit 0.3 s)",
-      "0.41 s pause between lines 6-7 (limit 0.35 s)",
-      "0.44 s pause between lines 6-7 (limit 0.35 s)",
-      "0.49 s pause inside line 8 (limit 0.3 s)",
-      "0.48 s pause between lines 7-8 (limit 0.35 s)",
-      "0.53 s pause between lines 8-9 (limit 0.35 s)",
-      "0.34 s pause inside line 10 (limit 0.3 s)",
-      "0.38 s pause inside line 10 (limit 0.3 s)",
-      "0.40 s pause inside line 10 (limit 0.3 s)",
-      "0.72 s pause between lines 9-10 (limit 0.35 s)",
-      "0.57 s pause inside line 11 (limit 0.3 s)"
+      "0.67 s pause between lines 3-4 (limit 0.6 s)",
+      "0.72 s pause between lines 9-10 (limit 0.6 s)"
      ]
     }
    ],
