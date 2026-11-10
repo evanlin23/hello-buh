@@ -3,9 +3,9 @@
 //
 // A tamed wolf has sat on the flat top of the hill above a real generated plains village (-160, -864) for 900 days,
 // facing one empty patch of grass in front of an old dirt hut. Pip (a baby villager, the narrator) brings bones, begs;
-// Grandpa says only one voice gets him up. One night: "Milo joined the game" and the player (the recording bot)
+// Grandpa says only one voice gets him up. One night: "Buh joined the game" and the player (the recording bot)
 // is standing on the patch, where he logged out (vanilla: you come back where you left). The dog stands for the first
-// time. "Sit, boy. I'll be right back." The dog sits. "Milo left the game." Day one.
+// time. "Sit, boy. I'll be right back." The dog sits. "Buh left the game." Day one.
 //
 // Set origin D = the dog's block: village + (-42, ~27, -34), near the hill's east edge. The dog faces east (MC yaw -90)
 // at the patch P = D + (3, 0, 0), the drop and the village below; the hut is north-east (D + (3..7, *, -8..-4), door south).
@@ -29,7 +29,7 @@ module.exports = {
   botTimeout: 600,
   brightness: 0.8,
   cast: { self: 'steve' },
-  selfName: 'Milo',
+  selfName: 'Buh',
   idleLife: true,
   look: { grade: { lift: [0.01, 0.012, 0.03], gamma: [1.0, 1.0, 0.97], gain: [1.08, 1.02, 0.92], sat: 1.12, contrast: 0.14, exposure: 1.05 },
     bloom: 0.5, bloomThreshold: 0.72, vignette: 0.38, grain: 0.015, dof: { aperture: 0.35 }, shadows: true, rays: 0.5,
@@ -268,13 +268,13 @@ module.exports = {
     await run(a11, (k) => tp('pip', 0.5, 1, 1.6, -90 + 6 * Math.sin(k / 15), 0))
     cut('night', { time: 18000 })
     await run(t11 - a11, (k) => tp('pip', 0.5, 1, 1.6, -90 - 10 * Math.sin(k / 18), 0))
-    // ---- L12: the reveal: "Milo joined the game", he's on the patch, the dog stands
+    // ---- L12: the reveal: "Buh joined the game", he's on the patch, the dog stands
     cut('reveal')
     ctx.mark('hush'); ctx.mark('swell')
     await run(4)
     // the chat line on the teleport's own tick (vanilla: the message and the appearance are the same tick; marked after
     // tpCheck's confirm wait it came 1.2 s late: review round 1)
-    ctx.mark('chat', { text: 'Milo joined the game', hold: 2.6 })
+    ctx.mark('chat', { text: 'Buh joined the game', hold: 2.6 })
     await ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5)
     await run(14)
     line('N', 'L12')
@@ -305,7 +305,7 @@ module.exports = {
       if (k === Math.round(t14 * 0.3)) { tp('dog', 2.4, 1, 0.5, -90, 0); sitDog(true); bot.swingArm('right') }
     })
     await run(8)
-    ctx.mark('chat', { text: 'Milo left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
+    ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     await run(16)
     // ---- L15: "Day one." over the dog alone where Milo vanished; on "Again." the cut to the opening frame pulling
