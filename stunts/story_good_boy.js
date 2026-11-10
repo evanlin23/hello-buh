@@ -93,7 +93,7 @@ module.exports = {
       if (dz % 3 === 0) await bot.waitForTicks(1)
     }
     // the village lamp post and fence on the walk out of the gate (L02)
-    await c(`/fill ${A(35, 1, -3)} ${A(37, 6, 11)} air replace oak_fence`); await c(`/fill ${A(35, 1, -3)} ${A(37, 6, 11)} air replace stripped_oak_wood`)
+    for (const blk of ['oak_fence', 'stripped_oak_wood', 'oak_log', 'white_wool', 'oak_fence_gate']) await c(`/fill ${A(34, -2, -3)} ${A(38, 6, 11)} air replace ${blk}`)   // (a fence at z 7 survived the first, narrower clear)
     await c(`/fill ${A(35, 1, -3)} ${A(37, 6, 11)} air replace lantern`)
 
     // the cast: three villagers for the square (L08), the skeletons and the zombie waiting high above out of view
