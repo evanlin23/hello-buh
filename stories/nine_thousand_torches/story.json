@@ -2,7 +2,7 @@
   "name": "nine_thousand_torches",
   "stunt": "story_nine_thousand_torches",
   "version": 2,
-  "revision": "r2 (2026-11-10): the r1 critic's and continuity's must-fixes applied (reviews/r1-response.md): the nightly door torch, six thousand, the corner-and-door restage, Pip's recipe",
+  "revision": "r3 (2026-11-10): motive tightened: L06 ties the nightly door torch to L03's spawn rule ('so nothing SPAWNS'), L14 names it ('Every night at ONCE'); the wave stays in the picture (S14) unsaid",
   "caption": "who put 6,000 torches on my village 🔥",
   "logline": "A villager kid wakes to find a torch on every block of his village and thinks something terrible is coming, but follows the last growing row to his own door, where his best friend, the village's player, places the final torch, the one he used to place there every night, and leaves the game for good.",
   "question": "why tf is there a torch on every single block of this village?",
@@ -176,7 +176,7 @@
     {
       "id": "L06",
       "who": "N",
-      "text": "Every night, / he puts a TORCH / by my door. / Then he says, / see you TOMORROW.",
+      "text": "Every night, / he puts a TORCH / by my door / so nothing SPAWNS. / Then he says, / see you TOMORROW.",
       "direction": "fond and quick",
       "shot": "S06",
       "look": [
@@ -287,7 +287,7 @@
     {
       "id": "L14",
       "who": "N",
-      "text": "Jonah put / the LAST one / THERE. / And WAVED.",
+      "text": "Jonah put / the LAST one / THERE. / Every night / at ONCE.",
       "direction": "happy to see him",
       "shot": "S14",
       "look": [
@@ -298,6 +298,10 @@
         {
           "what": "prop:last_torch",
           "word": "THERE"
+        },
+        {
+          "what": "actor:Jonah",
+          "word": "ONCE"
         }
       ]
     },

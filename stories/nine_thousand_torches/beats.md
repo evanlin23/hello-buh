@@ -1,4 +1,8 @@
-# nine_thousand_torches: beat sheet, clue map, writer's checks (r2, polished)
+# nine_thousand_torches: beat sheet, clue map, writer's checks (r3)
+
+r3 (2026-11-10): the r2 critic's "against runaway" note. L06 now gives the nightly torch its reason in L03's rule
+("by my door so nothing SPAWNS"), so the rule explains the habit the way runaway's rule explains its clues, and L14
+says the bridge in three words ("Every night at ONCE."); the wave is only shown. 121 spoken words.
 
 r2 (2026-11-10) applies reviews/r1-critic.md and reviews/r1-continuity.md (the list is in reviews/r1-response.md).
 The three big changes: Jonah's nightly habit is now the torch by our door before "see you tomorrow", so the whole lit
@@ -36,7 +40,7 @@ the real times from voice.json.
 | 6.1-9.2 | test 1: the rule | L03 "Zombies can't SPAWN on a lit block. So why EVERY block?" | S03 the iron golem among the torches; push past the houses; the well | **the rule the twist stands on**, and the viewer's question |
 | 9.5-10.7 | **The misread** | L04 "Something BIG must be COMING." | S04 POV at the north edge: the last torch row, then the black forest | the wrong theory: a defence |
 | 11.0-12.7 | **The friend** | L05 "My best friend JONAH is our PLAYER." | S05 flashback: Jonah at his cottage gate, villagers on the street, golden hour | Jonah and his house |
-| 13.0-17.5 | **The habit** | L06 "Every night, he puts a TORCH by my door. Then he says, see you TOMORROW." | S06 sunset, a wide on our whole house front: Jonah crouches, places a torch on the door spot, "<Jonah> see you tomorrow" in chat, he vanishes, "Jonah left the game" | **the key plant, line and picture**: he lights my door every night, and how an ordinary goodbye looks in the game |
+| 13.0-17.5 | **The habit** | L06 "Every night, he puts a TORCH by my door so nothing SPAWNS. Then he says, see you TOMORROW." | S06 sunset, a wide on our whole house front: Jonah crouches, places a torch on the door spot, "<Jonah> see you tomorrow" in chat, he vanishes, "Jonah left the game" | **the key plant, line and picture**: he lights my door every night, and how an ordinary goodbye looks in the game |
 | 17.8-21.0 | **A character, quoted** | L07 'Yesterday Jonah said, "Mom made me PROMISE. One LAST night."' | S07 Jonah by two open chests of coal and sticks, a torch in hand | **plant (line): one last night**. The picture shows he's making torches by the chestful |
 | 21.3-22.3 | the joke misread | L08 "He's grounded a LOT." | S08 Jonah walks off down the street with a torch, his cottage standing at the end | misread as a punishment; the house exists |
 | 22.6-24.6 | test 2 | L09 "This morning, his STUFF was in OUR chest." | S09 POV into our room, then the chest screen: sword, armour, bed, shield, map, rod, bread, bucket | **plant (picture): he gave everything away**, even his bed |
@@ -44,7 +48,7 @@ the real times from voice.json.
 | 26.7-28.6 | test 3 | L11 "His HOUSE was GONE. Just TORCHES." | S11 S05's angle again: a coarse-dirt footprint, a torch on every block | **plant (picture): he took his house down**. **The attentive viewer gets ahead here (~28.6 s, 72%)** |
 | 28.9-31.7 | **The want** | L12 "One row was still GROWING. I had to know WHO." | S12 POV up a grass strip: the row turns round a house corner; a torch appears at the corner with Steve's arm swinging, then another | the kid wants something and acts on it |
 | 32.0-33.5 | **The try** | L13 "I followed it to MY door." | S13 follow: the kid rounds the corner; the row runs across the street to our doorstep, Jonah crouched there, one gap left | **plant (picture): the row ends at my door**, on the nightly spot |
-| 33.8-36.5 | **The act** | L14 "Jonah put the LAST one THERE. And WAVED." | S14 the same axis as S06: Jonah places his one torch on the door spot, stands, swings his arm twice at the kid | the habit, one last time |
+| 33.8-36.5 | **The act** | L14 "Jonah put the LAST one THERE. Every night at ONCE." (he still waves, unsaid) | S14 the same axis as S06: Jonah places his one torch on the door spot, stands, swings his arm twice at the kid | the habit, one last time |
 | 36.8-38.7 | **The reveal (the game) = payoff** | L15 "He didn't say, see you TOMORROW." | S15 POV: on the first word Jonah vanishes; the chat says only **Jonah left the game** (yellow; caption track too) | the game shows it and the line lands it: last night he said it, this time he didn't |
 | 38.7-39.5 | hold | (none) | S15 holds 0.8 s: the empty doorstep, the last torch, the lit village in gold light | ends ≤1 s after the payoff |
 
@@ -113,7 +117,7 @@ ordinary "left the game", the viewer can also guess what the last torch is.
 ## The out-of-context read (3 s, a stranger)
 - L01, L02, L03: absurd or game talk.
 - L05 "My best friend JONAH is our PLAYER": a kid talking about a game friend.
-- L06 "Every night, he puts a TORCH by my door. Then he says, see you TOMORROW.": a game habit, plain. L15 echoes it word for word.
+- L06 "Every night, he puts a TORCH by my door so nothing SPAWNS. Then he says, see you TOMORROW.": a game habit, plain. L15 echoes it word for word.
 - L07 'Jonah said, "Mom made me promise. One last night."': a kid's curfew. Read brightly, with L08's joke right after.
 - L12 "I had to know WHO.": curiosity.
 - L14-L15: friendship, full volume, plain and steady. No line about waiting, obeying or love.
