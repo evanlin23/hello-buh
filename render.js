@@ -8,7 +8,7 @@ const http = require('http')
 const express = require('express')
 const { chromium } = require('playwright')
 const { Mesher } = require('./renderer/mesher')
-const { lightmap, setBrightness, setDayTime, setDimension, particleTint } = require('./renderer/models')
+const { lightmap, setBrightness, setDayTime, setDimension, particleTint, dayInfo } = require('./renderer/models')
 const particles = require('./renderer/particles')
 const { Vec3 } = require('vec3')
 
@@ -169,7 +169,26 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
     // hide the blocks being moved from the event tick (their final blocks restore them)
     for (const k of clear) { const [x, y, z] = k.split(',').map(Number); extra.push([t0, x, y, z, 0]) }
   }
-  if (extra.length) { rec.blocks = blocks.concat(extra).sort((a, b) => a[0] - b[0]) }
+  // a stunt's block slide (lib/movie.js slideBlocks: a 'slide_blocks' mark, then one /clone ... move): the server moves
+  // the blocks in one tick, so a sliding Well popped one block over, 2 px at 30 blocks (reel 1 review v2, B1). They
+  // slide over `ticks` (eased) as moving_block entities; each destination's own update lands when its block arrives.
+  for (const ev of (rec.timeline || []).filter(e => e.event === 'slide_blocks' && Array.isArray(e.blocks) && Array.isArray(e.by))) {
+    const t0 = Math.round(ev.t / 50), n = Math.max(1, ev.ticks || 4), [mx, my, mz] = ev.by
+    const MCD = require('minecraft-data')(rec.version)
+    for (const [x, y, z, name] of ev.blocks) {
+      const bl = MCD.blocksByName[String(name).replace(/^minecraft:/, '')]
+      if (!bl) continue
+      const id = nid--
+      for (let tk = t0; tk <= t0 + n; tk++) {
+        const u = (tk - t0) / n, f = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2
+        if (!ENT.has(tk)) ENT.set(tk, new Map())
+        ENT.get(tk).set(id, [tk, id, 'moving_block', x + mx * f + 0.5, y + my * f, z + mz * f + 0.5, 0, 0, null, { state: bl.defaultState }])
+      }
+      for (const b of blocks) if (b[1] === x + mx && b[2] === y + my && b[3] === z + mz && b[0] >= t0 - 1 && b[0] <= t0 + 4) b[0] = t0 + n
+      extra.push([t0, x, y, z, 0])   // the source is empty from the first tick of the slide
+    }
+  }
+  if (extra.length || (rec.timeline || []).some(e => e.event === 'slide_blocks')) { rec.blocks = blocks.concat(extra).sort((a, b) => a[0] - b[0]) }
 }
 // The server sends mob moves every few ticks, so recorded positions are steps (a creeper "glided"
 // in 0.4-block hops). The vanilla client eases toward each new position over 3 ticks
@@ -238,7 +257,7 @@ for (const row of rec.entities || []) { if (!ENT.has(row[0])) ENT.set(row[0], ne
   }
 }
 // entity heights (EntityType sizes) for the light probe at the eye
-const ENT_H = { zombie: 1.95, husk: 1.95, drowned: 1.95, zombie_villager: 1.95, skeleton: 1.99, stray: 1.99, wither_skeleton: 2.4, creeper: 1.7, villager: 1.95, wandering_trader: 1.95, witch: 1.95, pillager: 1.95, vindicator: 1.95, evoker: 1.95, enderman: 2.9, iron_golem: 2.7, snow_golem: 1.9, cow: 1.4, mooshroom: 1.4, sheep: 1.3, pig: 0.9, goat: 1.3, chicken: 0.7, spider: 0.9, cave_spider: 0.5, wolf: 0.85, cat: 0.7, ocelot: 0.7, fox: 0.7, rabbit: 0.5, horse: 1.6, donkey: 1.5, mule: 1.6, llama: 1.87, camel: 2.375, polar_bear: 1.4, panda: 1.25, warden: 2.9, blaze: 1.8, bee: 0.6, frog: 0.55, axolotl: 0.42, turtle: 0.4, parrot: 0.9, allay: 0.6, sniffer: 1.75, armadillo: 0.65, piglin: 1.95, zombified_piglin: 1.95, hoglin: 1.4, strider: 1.7, player: 1.9 }
+const ENT_H = { zombie: 1.95, husk: 1.95, drowned: 1.95, zombie_villager: 1.95, skeleton: 1.99, stray: 1.99, wither_skeleton: 2.4, creeper: 1.7, villager: 1.95, wandering_trader: 1.95, witch: 1.95, pillager: 1.95, vindicator: 1.95, evoker: 1.95, enderman: 2.9, iron_golem: 2.7, snow_golem: 1.9, cow: 1.4, mooshroom: 1.4, sheep: 1.3, pig: 0.9, goat: 1.3, chicken: 0.7, spider: 0.9, cave_spider: 0.5, wolf: 0.85, cat: 0.7, ocelot: 0.7, fox: 0.7, rabbit: 0.5, horse: 1.6, donkey: 1.5, mule: 1.6, llama: 1.87, camel: 2.375, polar_bear: 1.4, panda: 1.25, warden: 2.9, blaze: 1.8, bee: 0.6, frog: 0.55, axolotl: 0.42, turtle: 0.4, parrot: 0.9, allay: 0.6, sniffer: 1.75, armadillo: 0.65, piglin: 1.95, zombified_piglin: 1.95, hoglin: 1.4, strider: 1.7, player: 1.9, mannequin: 1.9 }
 function entitiesAt (t, mesher) {
   const i = Math.floor(t), f = t - i
   const a = ENT.get(i) || new Map(), b = ENT.get(i + 1) || a
@@ -519,7 +538,8 @@ function targetBlock (cam, world, ents = []) {
 // Time of day: the recording's start time (harness: stunt.time, default noon) and `time` marks
 // (ctx.setTime) - [tick, dayTime]. A change re-lights the whole world (the lightmap's sky factor).
 const TIMES = [[0, rec.time ?? 6000], ...(rec.timeline || []).filter(e => e.event === 'time').map(e => [e.t / 50, e.time])]
-const dayTimeAt = (t) => { let v = TIMES[0][1]; for (const [a, d] of TIMES) if (t >= a) v = d; return v }
+// (DAY_TIME=n renders the whole recording at that time of day: try a look or the shadows at another hour)
+const dayTimeAt = (t) => { if (process.env.DAY_TIME) return Number(process.env.DAY_TIME); let v = TIMES[0][1]; for (const [a, d] of TIMES) if (t >= a) v = d; return v }
 // Weather (Level.getRainLevel / getThunderLevel): the recording's start weather (harness: stunt.weather)
 // and `weather` marks (ctx.setWeather); the client moves each level 0.01 a tick toward its target.
 // WEATHER=clear|rain|thunder overrides the whole recording.
@@ -888,6 +908,179 @@ const PBODY = [], PWALK = []
     if (d2 < 16) { wspd += (Math.min(1, Math.sqrt(d2) * 4) - wspd) * 0.4; wpos += wspd }
     PWALK.push([wpos, wspd])
   }
+}
+// Actors (docs/movie_engine.md): the other players in a recording, i.e. extra bots playing cast members
+// (lib/movie.js). The same body turn and limb swing as the player's own above, per actor and per tick,
+// from their recorded positions; their arm swings come from the harness's ent_swing marks, and their
+// skins from stunt.cast (username -> skin), the recording bot's from cast.self.
+const ENT_SWINGS = new Map()
+for (const e of rec.timeline || []) if (e.event === 'ent_swing') { if (!ENT_SWINGS.has(e.id)) ENT_SWINGS.set(e.id, []); ENT_SWINGS.get(e.id).push(e.t / 50) }
+const ACTOR = new Map(), ACTOR_ID = new Map()   // id -> { user, ticks: Map(tick -> [body, walkPos, walkSpeed]) }; username -> id
+{
+  const wrap = (a) => { while (a > Math.PI) a -= 2 * Math.PI; while (a < -Math.PI) a += 2 * Math.PI; return a }
+  const byId = new Map()
+  for (const row of rec.entities || []) if (row[2] === 'player' || row[2] === 'mannequin') { if (!byId.has(row[1])) byId.set(row[1], []); byId.get(row[1]).push(row) }
+  for (const [id, rows] of byId) {
+    rows.sort((a, b) => a[0] - b[0])
+    const sw = ENT_SWINGS.get(id) || [], ticks = new Map()
+    let body = rows[0][8] ?? rows[0][6], wpos = 0, wspd = 0, prev = rows[0]
+    for (const r of rows) {
+      const look = r[8] ?? r[6], dx = r[3] - prev[3], dz = r[5] - prev[5], d2 = dx * dx + dz * dz
+      let target = body
+      if (d2 > 0.0025 && d2 < 16) {
+        target = 1.5 * Math.PI - Math.atan2(dz, dx)
+        if (Math.abs(wrap(look - target)) > 95 * Math.PI / 180) target += Math.PI
+      }
+      if (sw.some(s => r[0] >= s && r[0] - s < 6)) target = look
+      if (d2 >= 16) body = look
+      body += wrap(target - body) * 0.3
+      const off = wrap(look - body), MAX = 50 * Math.PI / 180
+      if (Math.abs(off) > MAX) body += off - Math.sign(off) * MAX
+      body = wrap(body)
+      if (d2 < 16) { wspd += (Math.min(1, Math.sqrt(d2) * 4) - wspd) * 0.4; wpos += wspd }
+      ticks.set(r[0], [body, wpos, wspd])
+      prev = r
+    }
+    const named = rows.find(r => r[9] && (r[9].user || r[9].name))   // a bot's username, or a Mannequin's custom name
+    const user = named ? (named[9].user || named[9].name) : null
+    ACTOR.set(id, { user, ticks })
+    if (user) ACTOR_ID.set(user, id)
+  }
+}
+// Dialogue (lib/movie.js line marks): who speaks when, for the talking head below. A line lasts its reading
+// time (0.8 s + 0.06 s a character, 1-4.5 s, as scripts/longform_build.py's subtitles) or until the next line.
+const LINES = []
+{
+  const ls = (rec.timeline || []).filter(e => e.event === 'line').map(e => ({ who: e.who, t0: e.t / 50, text: e.text || '', dur: e.dur })).sort((a, b) => a.t0 - b.t0)
+  ls.forEach((l, k) => {
+    const want = l.dur || Math.max(1, Math.min(4.5, 0.8 + 0.06 * l.text.length))
+    const next = k + 1 < ls.length ? ls[k + 1].t0 : Infinity
+    LINES.push({ who: l.who, t0: l.t0, t1: Math.min(l.t0 + want * 20, next - 1) })
+  })
+}
+const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
+const HAND_LOOK = process.env.LOOK_OFF || process.env.LOOK === '0' ? null : (process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look)
+// Idle life (docs/movie_engine.md): nobody stands perfectly still. Two slow sines per entity (periods of
+// 6-24 s, phases from its id), in [-1, 1]; deterministic, so frames render in any order.
+function idleNoise (id, t) {
+  const a = (Math.abs(id) * 2.399) % (2 * Math.PI), b = (Math.abs(id) * 1.618 + 1) % (2 * Math.PI)
+  return [0.65 * Math.sin(t * 0.045 + a) + 0.35 * Math.sin(t * 0.019 + b), 0.6 * Math.sin(t * 0.037 + b) + 0.4 * Math.sin(t * 0.013 + a)]
+}
+// A speaking head: a small nod-and-turn rhythm while the line is up, easing in and out over 4 ticks.
+function talkMotion (who, t) {
+  if (!who) return null
+  const l = LINES.find(x => x.who === who && t >= x.t0 && t < x.t1)
+  if (!l) return null
+  const env = Math.min(1, (t - l.t0) / 4, (l.t1 - t) / 4)
+  return { pitch: (Math.sin(t * 0.62) * 0.05 + Math.sin(t * 1.31) * 0.02) * env, yaw: Math.sin(t * 0.27) * 0.045 * env }   // (0.035/0.03 read as still: reel 1 review v2)
+}
+// The camera director (docs/movie_engine.md). stunt.shots = { NAME: spec }; a 'shot' mark ({name}, from
+// lib/movie.js shot()) switches to that spec until the next one. Before the first mark, and on a
+// { pov: true } shot, the camera is the player's own eyes (HUD and hand). A camera spec:
+//   at: TARGET                        a fixed camera
+//   path: [[sec, dx, dy, dz], ...]    keyframes, seconds from the shot's start, smoothstep between each pair
+//   follow: TARGET, offset: [dx, dy, dz], lag: TICKS   ride along with a target (its position LAG ticks back)
+//   look: TARGET  |  yaw: deg, pitch: deg               where it points (mineflayer convention: yaw 0 = north)
+//   lookPath: [[sec, dx, dy, dz], ...]                  a moving look target, keyframed like path
+//   fov: degrees (default 70), roll: degrees, push: blocks/s toward the subject on `at` shots (default 0.2), drift (default 1)
+//   two: [A, B] | ots: S, over: A | single: S, toward: B   auto-framed from where they stand (renderer/framing.js):
+//                                     side (compass), size (close|medium|wide), anchor (start|live), height
+// TARGET is [dx, dy, dz] from the set origin, 'self' (the player's eye), 'actor:NAME' (that actor's eye)
+// or { of: TARGET, offset: [dx, dy, dz] }. Everything is a function of the time alone, so frames can be
+// rendered in any order (FRAMES=) and a camera can be re-tuned without re-recording.
+const SHOTS = { ...(STUNT_MOD.shots || {}), ...(process.env.SHOTS_JSON ? JSON.parse(process.env.SHOTS_JSON) : {}) }   // (SHOTS_JSON='{"name": {...}}': try a camera without editing the stunt)
+const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
+for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
+function shotAt (t) {
+  let s = null
+  for (const m of SHOT_MARKS) { if (m.t <= t + 1e-6) s = m; else break }
+  return s && SHOTS[s.name] ? { ...SHOTS[s.name], name: s.name, t0: s.t } : null
+}
+function entityPosAt (id, t) {
+  const i = Math.floor(t), f = t - i, a = ENT.get(i) && ENT.get(i).get(id)
+  if (!a) return null
+  let b = (ENT.get(i + 1) && ENT.get(i + 1).get(id)) || a
+  if (Math.hypot(b[3] - a[3], b[4] - a[4], b[5] - a[5]) > 4) b = a
+  return { x: a[3] + (b[3] - a[3]) * f, y: a[4] + (b[4] - a[4]) * f, z: a[5] + (b[5] - a[5]) * f, sneak: !!(a[9] && a[9].sneak) }
+}
+function targetAt (tg, t) {
+  if (tg === 'self') { const c = camAt(Math.max(0, t)); return { x: c.x, y: c.y, z: c.z } }
+  if (typeof tg === 'string' && tg.startsWith('actor:')) {
+    const id = ACTOR_ID.get(tg.slice(6)), p = id !== undefined ? entityPosAt(id, Math.max(0, t)) : null
+    return p ? { x: p.x, y: p.y + (p.sneak ? 1.27 : 1.62), z: p.z } : null
+  }
+  if (Array.isArray(tg)) return { x: rec.set.x + tg[0], y: rec.set.y + tg[1], z: rec.set.z + tg[2] }
+  if (tg && tg.of) { const p = targetAt(tg.of, t), o = tg.offset || [0, 0, 0]; return p ? { x: p.x + o[0], y: p.y + o[1], z: p.z + o[2] } : null }
+  return null
+}
+// [[sec, dx, dy, dz], ...] at u seconds: a Catmull-Rom curve through every key (no stop at the middle keys), the
+// move as a whole easing in and out (ease: 'linear' for a constant speed). Two keys: a plain eased move.
+function keyed (keys, u, ease = 'smooth') {
+  const T0 = keys[0][0], T1 = keys[keys.length - 1][0]
+  if (u <= T0 || keys.length === 1) return keys[0].slice(1)
+  if (u >= T1) return keys[keys.length - 1].slice(1)
+  if (ease !== 'linear') { const x = (u - T0) / (T1 - T0); u = T0 + (T1 - T0) * x * x * (3 - 2 * x) }
+  let k = 0
+  while (k < keys.length - 2 && u > keys[k + 1][0]) k++
+  const p1 = keys[k], p2 = keys[k + 1], p0 = keys[Math.max(0, k - 1)], p3 = keys[Math.min(keys.length - 1, k + 2)]
+  const s = (u - p1[0]) / Math.max(1e-6, p2[0] - p1[0]), s2 = s * s, s3 = s2 * s
+  return [1, 2, 3].map(j => 0.5 * (2 * p1[j] + (-p0[j] + p2[j]) * s + (2 * p0[j] - 5 * p1[j] + 4 * p2[j] - p3[j]) * s2 + (-p0[j] + 3 * p1[j] - 3 * p2[j] + p3[j]) * s3))
+}
+const FRAMING = require('./renderer/framing')
+// the helpers renderer/framing.js (auto-framed shots) and renderer/lint.js share with the render
+function actorsAt (t) {
+  const out = []
+  for (const [name, id] of ACTOR_ID) { const p = entityPosAt(id, t); if (p) out.push({ name: `actor:${name}`, eye: { x: p.x, y: p.y + (p.sneak ? 1.27 : 1.62), z: p.z } }) }
+  const c = camAt(Math.max(0, t)); out.push({ name: 'self', eye: { x: c.x, y: c.y, z: c.z } })
+  return out
+}
+const FRAME_HELP = (solidAt) => ({ targetAt, solidAt: solidAt || (() => false), actors: actorsAt, side: STUNT_MOD.coverage && STUNT_MOD.coverage.side })
+function shotCam (sh, t, solidAt) {
+  const u = (t - sh.t0) / 20
+  let pos = null
+  const auto = FRAMING.frame(sh, t, FRAME_HELP(solidAt))   // { two | ots | single }: placed from the actors (renderer/framing.js)
+  if (auto) pos = { ...auto.pos }
+  if (auto) {}
+  else if (sh.path) { const d = keyed(sh.path, u, sh.ease); pos = { x: rec.set.x + d[0], y: rec.set.y + d[1], z: rec.set.z + d[2] } }
+  else if (sh.orbit) {   // orbit: TARGET, radius, height, startDeg (0 = south of it), degPerSec
+    const c = targetAt(sh.orbit, t)
+    if (c) { const a = ((sh.startDeg || 0) + (sh.degPerSec || 6) * u) * Math.PI / 180, r = sh.radius || 6; pos = { x: c.x + Math.sin(a) * r, y: c.y + (sh.height || 1), z: c.z + Math.cos(a) * r } }
+  }
+  else if (auto) {}
+  else if (sh.follow) { const p = targetAt(sh.follow, t - (sh.lag || 0)), o = sh.offset || [0, 0, 0]; if (p) pos = { x: p.x + o[0], y: p.y + o[1], z: p.z + o[2] } }
+  else if (sh.at) pos = targetAt(sh.at, t)
+  if (!pos) return null
+  let yaw = (sh.yaw || 0) * Math.PI / 180, pitch = (sh.pitch || 0) * Math.PI / 180
+  const lk = auto ? auto.look : sh.lookPath ? (() => { const d = keyed(sh.lookPath, u, sh.ease); return { x: rec.set.x + d[0], y: rec.set.y + d[1], z: rec.set.z + d[2] } })()
+    : sh.look ? targetAt(sh.look, t) : sh.orbit ? targetAt(sh.orbit, t) : null
+  // the slow push-in: a fixed camera eases toward its subject, `push` blocks a second (default 0.2; push: 0 locks
+  // it), at most a quarter of the way: dialogue shots read as frozen without it (reel 1 QA: stuck 1.6-2.4 s; 0.12
+  // still read as frozen, review v2)
+  if ((sh.at || auto) && lk && (sh.push ?? 0.2) > 0) {
+    const dx = lk.x - pos.x, dy = lk.y - pos.y, dz = lk.z - pos.z, L = Math.hypot(dx, dy, dz)
+    const e = Math.min((sh.push ?? 0.2) * u, L * 0.25) / Math.max(L, 1e-6)
+    pos = { x: pos.x + dx * e, y: pos.y + dy * e, z: pos.z + dz * e }
+  }
+  // never inside a block: slide toward the subject (or back along the view) until clear, 0.25 a step
+  if (solidAt && solidAt(pos.x, pos.y, pos.z)) {
+    const to = lk || { x: pos.x - Math.sin(yaw), y: pos.y, z: pos.z - Math.cos(yaw) }
+    const L = Math.max(1e-6, Math.hypot(to.x - pos.x, to.y - pos.y, to.z - pos.z)), dir = [(to.x - pos.x) / L, (to.y - pos.y) / L, (to.z - pos.z) / L]
+    for (let k = 0; k < 48 && solidAt(pos.x, pos.y, pos.z); k++) { pos.x += dir[0] * 0.25; pos.y += dir[1] * 0.25; pos.z += dir[2] * 0.25 }
+  }
+  // handheld drift (1 = a few centimetres and a fraction of a degree; drift: 0 locks the camera off)
+  const dr = sh.drift ?? 1
+  if (dr) {
+    pos = { x: pos.x + Math.sin(t * 0.031 + 1) * 0.045 * dr, y: pos.y + Math.sin(t * 0.023 + 2) * 0.03 * dr, z: pos.z + Math.sin(t * 0.027 + 3) * 0.045 * dr }
+  }
+  let focus = 0
+  if (lk) { const dx = lk.x - pos.x, dy = lk.y - pos.y, dz = lk.z - pos.z; yaw = Math.atan2(-dx, -dz); pitch = Math.atan2(dy, Math.hypot(dx, dz)); focus = Math.hypot(dx, dy, dz) }
+  // focus: the shot's dof.focus, else the subject it follows, else what it looks at (a follow looking just past its
+  // subject put the subject itself out of focus: reel 1 walk-out)
+  const ft = (sh.dof && sh.dof.focus) || sh.follow || null
+  if (ft) { const f = targetAt(ft, t); if (f) focus = Math.hypot(f.x - pos.x, f.y - pos.y, f.z - pos.z) }
+  else if (auto && auto.focus) focus = Math.hypot(auto.focus.x - pos.x, auto.focus.y - pos.y, auto.focus.z - pos.z)
+  if (dr) { yaw += Math.sin(t * 0.041) * 0.0035 * dr; pitch += Math.sin(t * 0.035 + 1) * 0.0025 * dr }
+  return { x: pos.x, y: pos.y, z: pos.z, yaw, pitch, bobX: 0, bobY: 0, roll: (sh.roll || 0) * Math.PI / 180, bobPitch: 0, fov: sh.fov || (auto ? 50 : undefined), focusDist: focus }
 }
 // the model an item draws with: its item definition (items/<name>.json, 1.21.4+; many block items
 // have no models/item/<name>.json, e.g. lectern -> block/lectern), else item/<name>
@@ -1301,6 +1494,11 @@ function camAtLive (t) {
   hmapWorld = mesher.world
   simulateDrops(mesher.world)
   mesherRef = mesher
+  // LINT=1: check every shot's geometry against the recording and stop, no browser (renderer/lint.js)
+  if (process.env.LINT) {
+    const n = require('./renderer/lint').run({ rec, stunt: STUNT_MOD, marks: SHOT_MARKS, shots: SHOTS, shotCam, camAt, targetAt, actorsAt, lines: LINES, mesher, Vec3 })
+    process.exit(n ? 1 : 0)
+  }
 
   const app = express()
   const blobs = new Map(); let blobId = 0
@@ -1311,6 +1509,8 @@ function camAtLive (t) {
   app.get('/blockentities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'blockentities.js')))
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
+  // our own player skins (skins/, scripts/make_skins.py) beside the jar's: stunt.cast names either; <skin>_glow.png lights a part full bright
+  app.use('/assets/env/entity/player/wide', express.static(path.join(__dirname, 'skins')))
   app.use('/assets', express.static(path.join(__dirname, 'work', 'assets', rec.version)))
   const server = http.createServer(app)
   await new Promise(r => server.listen(0, '127.0.0.1', r))
@@ -1361,7 +1561,13 @@ function camAtLive (t) {
       try { require('child_process').execFileSync('python3', ['-c', `import zipfile,sys;open(sys.argv[2],'wb').write(zipfile.ZipFile(sys.argv[1]).read('assets/minecraft/textures/environment/celestial/moon/full_moon.png'))`, path.join(__dirname, 'work', 'client', `${rec.version}.jar`), moon]) } catch (e) { console.error('no moon texture:', e.message) }
     }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false })
+// look.reflect is given from the set origin (dy, center [dx, dz]); the page wants world coordinates
+  function worldLook (L) {
+    if (!L || !L.reflect || !rec.set) return L
+    const r = L.reflect, c = r.center || [0, 0]
+    return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
+  }
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look) || null) })
 
   const send = async (list) => {
     const id = String(blobId++)
@@ -1724,8 +1930,13 @@ function camAtLive (t) {
       }
     }
     if (dayTimeAt(t) !== curDayTime || weatherKey(t) !== curWeather) {   // the time or the rain changed: re-light everything
-      curDayTime = dayTimeAt(t); curWeather = weatherKey(t); setDayTime(curDayTime, ...weatherLight(t)); dirty.clear()
-      await send(mesher.sections(minVisibleY))
+      // ...but only when the block light it bakes in changes: the sky darkening (getSkyDarken) is 1 all day long, so a
+      // sun moving through a day (scripts/cinematic.py: a time mark every frame) re-meshes nothing. DAY_LIGHT_STEP=0.025
+      // also rounds the darkening at dusk and dawn to steps, re-meshing a moving sunset a few times instead of every frame
+      const step = Number(process.env.DAY_LIGHT_STEP || 0), lk = (d, w) => { const v = dayInfo(d, ...weatherLight(t)).dark; return `${step ? Math.round(v / step) : v}|${w}` }
+      const same = lk(dayTimeAt(t), weatherKey(t)) === lk(curDayTime, curWeather)
+      curDayTime = dayTimeAt(t); curWeather = weatherKey(t)
+      if (!same) { setDayTime(curDayTime, ...weatherLight(t)); dirty.clear(); await send(mesher.sections(minVisibleY)) }
     }
     prof('blocks+relight')
     if (dirty.size && process.env.PROFILE) console.log("send", t.toFixed(1), dirty.size)
@@ -1758,6 +1969,24 @@ function camAtLive (t) {
         Object.assign(cam, { x: rec.set.x + dx, y: rec.set.y + dy, z: rec.set.z + dz, yaw: yw * Math.PI / 180, pitch: pt * Math.PI / 180, bobX: 0, bobY: 0, roll: 0, bobPitch: 0, fov: undefined })
       }
     }
+    // the camera director (stunt.shots + 'shot' marks, above): a camera shot draws the player's body and
+    // no hand, like CAM=; a POV shot is the plain first-person view
+    const shotNow = process.env.CAM ? null : shotAt(t)
+    const camShot = !!(shotNow && !shotNow.pov)
+    if (camShot) {
+      const solidAt = (x, y, z) => { const b = mesher.world.getBlock(new Vec3(Math.floor(x), Math.floor(y), Math.floor(z))); return !!(b && b.boundingBox === 'block') }
+      const c = shotCam(shotNow, t, solidAt); if (c) Object.assign(cam, c); cam.aim = null
+      // the cinematic look (stunt.look): letterbox bars and depth of field on camera shots (a shot's dof: false,
+      // or { aperture, focus: TARGET }; the stunt's look.dof turns it on for every camera shot)
+      const LK = process.env.LOOK_JSON ? JSON.parse(process.env.LOOK_JSON) : STUNT_MOD.look   // (LOOK_JSON='{...}': try a look on any recording)
+      if (LK && !process.env.LOOK_OFF) {
+        if (LK.letterbox && !process.env.NO_BARS) cam.bars = LK.letterbox   // (NO_BARS=1: a vertical Short from a movie scene)
+        const dof = shotNow.dof ?? LK.dof
+        // (NO_DOF=1: a quick render without depth of field)
+        if (dof && c && c.focusDist && !process.env.NO_DOF) { cam.focus = c.focusDist; cam.aperture = (typeof dof === 'object' && dof.aperture) || (typeof LK.dof === 'object' && LK.dof.aperture) || 1 }
+      }
+    }
+    const third = THIRD || camShot
     const inBlock = mesher.world.getBlock(new Vec3(cam.x, cam.y, cam.z))
     cam.underwater = !!(inBlock && inBlock.name === 'water')
     cam.inLava = !!(inBlock && inBlock.name === 'lava')
@@ -1767,6 +1996,7 @@ function camAtLive (t) {
     if (!DEATHS.find(([a, b]) => t >= a && t < b)) {
       cam.target = targetBlock(eye, mesher.world, entitiesAt(t, mesher))
       if (cam.target && cam.target.entity !== undefined) { cam.targetEntity = cam.target.entity; cam.target = null }
+      if (third) cam.target = null   // (the hit outline is a first-person thing: a camera shot drew the player's targeted block, a box over the hole: ai_thin_ice)
       // an eye inside the targeted shape (a respawn inside a lantern post): the block is culled from
       // in there, and its outline's edges ran past the eye as lines from sky to ground (respawn_tax f1647)
       if (cam.target) {
@@ -1780,18 +2010,21 @@ function camAtLive (t) {
         // only on a block that's still there: under Haste the block breaks before the dig_end mark
         // arrives, and the overlay drawn over empty air read as lace with the sky through it
         const db = mesher.world.getBlock(new Vec3(dg[2], dg[3], dg[4]))
-        if (stage >= 0 && db && !/^(air|cave_air|void_air)$/.test(db.name)) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
+        if (stage >= 0 && db && !/^(air|cave_air|void_air|water|lava)$/.test(db.name)) cam.crack = { x: dg[2], y: dg[3], z: dg[4], uv: ATLAS_UV[`destroy_stage_${Math.min(9, stage)}`] }
       }
     }
     prof('camera+target')
     const ents = entitiesAt(t, mesher)
     // first-person held item
-    const hd = HIDE_HAND || THIRD || F1.some(([a, b]) => t >= a && t < b) ? null : handAt(t)
+    const hd = HIDE_HAND || third || F1.some(([a, b]) => t >= a && t < b) ? null : handAt(t)
     if (hd) {
       const bl = MC.blocksByName[hd.name]
       const hasSprite = !!spriteOf(hd.name)
       const [hs, hb] = mesher.world.getLight(new Vec3(cam.x, cam.y, cam.z))
-      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
+      // look.handLift (0..1): lift the first-person hand's light toward white, so a held item reads at night (at
+      // midnight sky light 15 is about (0.22, 0.22, 0.45): reel 1's bucket read as a dark sleeve, review v2 B2)
+      const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
+      cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb).map(v => v + (1 - v) * lift), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
       else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
@@ -1806,7 +2039,7 @@ function camAtLive (t) {
       // none, and the hand vanished before each cut with the hearts still full: worker 3, tries f214)
       cam.dead = !!DEATHS.find(([a, b]) => t >= (b - a >= 10 ? a - 20 / FPS - 1e-6 : a) && t < b)
     }
-    if (THIRD) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
+    if (third) {   // the player's own body at the eye (the dead body until it's removed at deathTime 20)
       const dw = DEATHS.find(([a, b]) => t >= a && t < b), deathTime = dw ? t - dw[0] + 1 : 0
       // ItemInHandLayer draws the entity's current main-hand item at once: no first-person lowering
       // and raising (the placed boat stayed in the replay hand for ~3 ticks: boat_clutch v3 f1993)
@@ -1829,9 +2062,10 @@ function camAtLive (t) {
         }
         const sw = SWINGS.find(s0 => s0 <= t && t - s0 < 6)
         ents.push({
-          id: -1, name: 'player', x: eye.x, y: eye.y - EYE, z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body, pitch: eye.pitch, headYaw: eye.yaw,
-          extra: { skin: process.env.SKIN || 'steve' }, light: lightmap(ls, lb),
-          player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10) }
+          id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
+          pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
+          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),
+          player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
     }
@@ -1956,7 +2190,7 @@ function camAtLive (t) {
     // the bot (mineflayer) has no entity push, so a creeper could end up inside the camera. Keep
     // mobs at least their half width + the player's (0.3 + 0.3) plus a little, horizontally.
     for (const e of ents) {
-      if (['player', 'item_frame', 'glow_item_frame', 'falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb', 'splash_potion', 'lingering_potion', 'experience_bottle', 'firework_rocket'].includes(e.name)) continue
+      if (['player', 'mannequin', 'item_frame', 'glow_item_frame', 'falling_block', 'item', 'tnt', 'ender_pearl', 'snowball', 'egg', 'experience_orb', 'splash_potion', 'lingering_potion', 'experience_bottle', 'firework_rocket'].includes(e.name)) continue
       if (/_boat$|_raft$|minecart$|^boat$/.test(e.name)) continue   // vehicles: the camera may be riding one (it stays under the camera)
       const dx = e.x - cam.x, dz = e.z - cam.z, d = Math.hypot(dx, dz), min = 0.85
       if (d < min && d > 1e-6 && Math.abs(e.y - (cam.y - 1.62)) < 2) { e.x = cam.x + dx / d * min; e.z = cam.z + dz / d * min }
@@ -2006,6 +2240,46 @@ function camAtLive (t) {
       }
       e.mobHeld = held
     }
+    // actors (other players: the movie cast, lib/movie.js): the skin from stunt.cast, the body turn and
+    // walk from their recorded positions (ACTOR), the arm swing from ent_swing marks, the main-hand item
+    for (const e of ents) {
+      if ((e.name !== 'player' && e.name !== 'mannequin') || e.id === -1) continue
+      const A = ACTOR.get(e.id), user = (e.extra && (e.extra.user || e.extra.name)) || (A && A.user)
+      e.extra = { ...(e.extra || {}), skin: (STUNT_MOD.cast && user && STUNT_MOD.cast[user]) || 'steve' }
+      let wp = 0, ws = 0
+      if (A) {
+        const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a
+        if (a) { e.headYaw = e.headYaw ?? e.yaw; e.yaw = lerpAngle(a[0], b[0], f); wp = a[1] + (b[1] - a[1]) * f; ws = a[2] + (b[2] - a[2]) * f }
+      }
+      let held = null
+      const n = e.extra.held
+      if (n) {
+        held = { key: n, display: thirdPersonDisplay(n) }
+        const bl = MC.blocksByName[n]
+        if (spriteOf(n)) held.tex = spriteOf(n)
+        else if (bl) {
+          held.state = bl.defaultState
+          if (!sentBlocks.has(bl.defaultState)) { sentBlocks.add(bl.defaultState); await page.evaluate(([id, g]) => window.HB.addBlockModel(id, g), [bl.defaultState, mesher.meshSingle(bl.defaultState)]) }
+        }
+      }
+      const sw = (ENT_SWINGS.get(e.id) || []).find(s0 => s0 <= t && t - s0 < 6)
+      e.player = { walkPos: wp, walkSpeed: ws, attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime: 0, hurt: (MOB_HURT.get(e.id) || []).some(h => t >= h && t - h < 10), crouch: !!e.extra.sneak }
+      // idle life (standing still: a slow head drift) and the talking head (lines marked with this name)
+      const still = Math.max(0, 1 - ws * 8), nz = idleNoise(e.id, t), tk = talkMotion(user, t)
+      e.headYaw = (e.headYaw ?? e.yaw) + nz[0] * 0.09 * still + (tk ? tk.yaw : 0)
+      e.pitch = (e.pitch || 0) + nz[1] * 0.05 * still + (tk ? tk.pitch : 0)
+    }
+    // idle life for mobs (stunt.idleLife: true; story casts are no-AI mobs that otherwise freeze between their
+    // moves): a slow look-around while a mob stands still, up to ~12 degrees across and ~5 up or down
+    if (STUNT_MOD.idleLife) {
+      for (const e of ents) {
+        if (e.headYaw === null || e.headYaw === undefined || !ENT_H[e.name] || e.name === 'player' || e.name === 'mannequin') continue
+        const a = entityPosAt(e.id, t), b = entityPosAt(e.id, Math.max(0, t - 6))
+        const still = a && b ? Math.max(0, 1 - Math.hypot(a.x - b.x, a.z - b.z) * 2) : 1
+        const n = idleNoise(e.id, t)
+        e.headYaw += n[0] * 0.2 * still; e.pitch = (e.pitch || 0) + n[1] * 0.09 * still
+      }
+    }
     for (const e of ents) {
       const st = STAGED.get(e.id); if (!st) continue
       const run = st.find(([a, b]) => t >= a && t < b)
@@ -2048,7 +2322,7 @@ function camAtLive (t) {
     cam.blockEntities = blockEntitiesAt(t, cam)
     if (BOLTS.length) { const bl = boltsAt(t); cam.bolts = bl.bolts; cam.skyFlash = bl.flash }
     cam.dimension = DIM
-    cam.weather = weatherColumns(cam, t, cam.rain)
+    cam.weather = cam.underwater ? [] : weatherColumns(cam, t, cam.rain)   // (precipitation stops at the surface: snow fell under the ice)
     const parts = partsAt(t, cam)
     if (cam.rain > 0 && !process.env.NOPARTS) {
       for (const p of rainSplashes(t, camAt)) {

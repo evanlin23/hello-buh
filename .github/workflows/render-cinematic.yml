@@ -1,0 +1,123 @@
+# Renders a cinematic scene (scripts/cinematic.py, docs/cinematic.md) on parallel runners: 12 slices of the 16:9 film
+# and 12 of the vertical cut, each a set of encoded segments; then one job per cut joins them and adds the score (VSCO-2
+# CE orchestra samples, CC0, cached), the title and the fades -> artifacts "film" and "film-vertical".
+# Triggered by pushing renders/cine_job.json ({"scene": "episodes/keep/scene.json", "portrait": true}) on an agent/**
+# or render/** branch.
+name: render-cinematic
+on:
+  push:
+    branches: ['agent/**', 'render/**']
+    paths: ['renders/cine_job.json']
+  workflow_dispatch:
+concurrency:
+  group: render-cinematic-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  frames:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: true
+      matrix:
+        chunk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        cut: [film, vertical]
+    steps:
+      - uses: actions/checkout@v4
+      - name: skip the vertical cut unless asked
+        id: want
+        run: |
+          P=$(python3 -c "import json;print(int(json.load(open('renders/cine_job.json')).get('portrait', False)))")
+          if [ "${{ matrix.cut }}" = vertical ] && [ "$P" = 0 ]; then echo "go=0" >> "$GITHUB_OUTPUT"; else echo "go=1" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/setup-java@v4
+        if: steps.want.outputs.go == '1'
+        with: { distribution: temurin, java-version: "21" }
+      - uses: actions/setup-node@v4
+        if: steps.want.outputs.go == '1'
+        with: { node-version: "22", cache: npm }
+      - name: system deps
+        if: steps.want.outputs.go == '1'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q pillow==12.3.0 numpy==2.5.3
+      - name: cache game files
+        if: steps.want.outputs.go == '1'
+        uses: actions/cache@v4
+        with:
+          path: |
+            work/client
+            work/assets
+          key: mc-assets-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js') }}
+      - if: steps.want.outputs.go == '1'
+        run: npm ci --no-audit --no-fund
+      - if: steps.want.outputs.go == '1'
+        run: npx playwright install --with-deps chromium
+      - name: game assets
+        if: steps.want.outputs.go == '1'
+        run: |
+          python3 scripts/fetch.py
+          VER=$(grep '^MC_VERSION=' versions.env | cut -d= -f2)
+          [ -f "work/assets/$VER/resolved.json" ] || { python3 renderer/build_assets.py "$VER" && node renderer/prepare.js "$VER"; }
+      - name: render slice ${{ matrix.chunk }} (${{ matrix.cut }})
+        if: steps.want.outputs.go == '1'
+        run: |
+          SC=$(python3 -c "import json;print(json.load(open('renders/cine_job.json'))['scene'])")
+          python3 scripts/cinematic.py "$SC" --chunk ${{ matrix.chunk }}/12 ${{ matrix.cut == 'vertical' && '--portrait' || '' }}
+          mkdir -p segs && cp work/cine/*/segs/seg_*.mp4 segs/
+      - uses: actions/upload-artifact@v4
+        if: steps.want.outputs.go == '1'
+        with: { name: "seg-${{ matrix.cut }}-${{ matrix.chunk }}", path: "segs/seg_*.mp4", retention-days: 3 }
+
+  assemble:
+    needs: frames
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      matrix:
+        cut: [film, vertical]
+    steps:
+      - uses: actions/checkout@v4
+      - name: skip the vertical cut unless asked
+        id: want
+        run: |
+          P=$(python3 -c "import json;print(int(json.load(open('renders/cine_job.json')).get('portrait', False)))")
+          if [ "${{ matrix.cut }}" = vertical ] && [ "$P" = 0 ]; then echo "go=0" >> "$GITHUB_OUTPUT"; else echo "go=1" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/setup-java@v4
+        if: steps.want.outputs.go == '1'
+        with: { distribution: temurin, java-version: "21" }
+      - uses: actions/setup-node@v4
+        if: steps.want.outputs.go == '1'
+        with: { node-version: "22", cache: npm }
+      - name: system deps
+        if: steps.want.outputs.go == '1'
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q pillow==12.3.0 numpy==2.5.3
+      - name: cache game files and samples
+        if: steps.want.outputs.go == '1'
+        uses: actions/cache@v4
+        with:
+          path: |
+            work/client
+            work/assets
+            work/sounds
+            work/samples/x
+          key: mc-assets-samples-${{ hashFiles('versions.env', 'renderer/build_assets.py', 'renderer/prepare.js', 'scripts/get_samples.sh') }}
+      - name: game assets and orchestra samples
+        if: steps.want.outputs.go == '1'
+        run: |
+          python3 scripts/fetch.py
+          VER=$(grep '^MC_VERSION=' versions.env | cut -d= -f2)
+          [ -f "work/assets/$VER/resolved.json" ] || { npm ci --no-audit --no-fund && python3 renderer/build_assets.py "$VER" && node renderer/prepare.js "$VER"; }
+          ./scripts/get_samples.sh
+          rm -f work/samples/dl/vsco.zip
+      - uses: actions/download-artifact@v4
+        if: steps.want.outputs.go == '1'
+        with: { pattern: "seg-${{ matrix.cut }}-*", path: segs, merge-multiple: true }
+      - name: assemble
+        if: steps.want.outputs.go == '1'
+        run: |
+          SC=$(python3 -c "import json;print(json.load(open('renders/cine_job.json'))['scene'])")
+          python3 scripts/cinematic.py "$SC" --assemble segs ${{ matrix.cut == 'vertical' && '--portrait' || '' }}
+      - uses: actions/upload-artifact@v4
+        if: steps.want.outputs.go == '1'
+        with: { name: "${{ matrix.cut }}", path: "out/*.mp4", retention-days: 14 }

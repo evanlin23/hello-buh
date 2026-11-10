@@ -1,0 +1,4 @@
+{"_note": "seconds into each take (scripts/cut_vox.py); read off tts.speech_segments with each stretch's pitch",
+ "n1": [0.21, 4.12], "n2": [4.41, 7.58], "n3": [7.77, 12.70], "g1": [13.21, 18.08], "g2": [19.73, 23.64],
+ "gpt": [0.23, 5.06], "ds": [5.47, 8.64],
+ "cl": [0.03, 7.54], "gem": [7.99, 13.08]}
