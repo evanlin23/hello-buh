@@ -199,6 +199,9 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
             sp = path_ or item_sprite(name)
             if sp:
                 icon = big(sprite(jar, sp))
+            elif name:   # no texture named after it: the item definition's own model (a compass, a crossbow)
+                d = item_def_icon(jar, name)
+                icon = big(d) if d is not None else None
         if icon is not None:
             g = it[2] if isinstance(it, (list, tuple)) and len(it) > 2 else None
             if isinstance(g, tuple) and g[0] == "glint":   # enchanted stack (hud_ticks puts the tick here)
@@ -266,6 +269,79 @@ def item_sprite(name):
         if f"assets/minecraft/textures/{p}.png" in names:
             return p
     return None
+
+
+def _model_ref(m):
+    """The model an item definition (assets/minecraft/items/<name>.json) shows when nothing special is going on:
+    'model' as is; 'condition' its on_false; 'select' / 'range_dispatch' the fallback or the first case/entry (a
+    compass's 16, a clock's 00, a crossbow's standby); 'special' its base. -> (model id, tints) or (None, [])."""
+    for _ in range(8):
+        if not isinstance(m, dict):
+            return None, []
+        t = m.get("type", "").replace("minecraft:", "")
+        if t == "model":
+            return m.get("model"), m.get("tints") or []
+        if t == "special":
+            return m.get("base"), []
+        if t == "condition":
+            m = m.get("on_false")
+        elif t == "select":
+            m = m.get("fallback") or ((m.get("cases") or [{}])[0]).get("model")
+        elif t == "range_dispatch":
+            m = m.get("fallback") or ((m.get("entries") or [{}])[0]).get("model")
+        else:
+            return None, []
+    return None, []
+
+
+_def_icons = {}
+def item_def_icon(jar, name):
+    """An item's flat icon from its 1.21.4+ item definition, for items whose texture isn't named after them (no
+    item/<name>.png: a compass, a clock, a crossbow, an enchanted golden apple, a tipped arrow): the model's
+    layer0, layer1... composited, each tinted as the definition says (the potion default's blue). Unscaled
+    (16 px), or None (a 3D special model like the shield). Only reached where the name lookups found nothing, so
+    every icon they draw stays as it was."""
+    if name in _def_icons:
+        return _def_icons[name]
+    out = None
+    try:
+        d = json.loads(jar.read(f"assets/minecraft/items/{name}.json"))
+        ref, tints = _model_ref(d.get("model"))
+        layers = {}
+        while ref:
+            mp = "assets/minecraft/models/" + ref.replace("minecraft:", "") + ".json"
+            if mp not in JAR_NAMES():
+                break
+            md = json.loads(jar.read(mp))
+            for k, v in (md.get("textures") or {}).items():
+                if k.startswith("layer") and k not in layers:
+                    layers[k] = v
+            ref = md.get("parent")
+            if ref and ref.replace("minecraft:", "") in ("item/generated", "item/handheld", "builtin/generated"):
+                break
+        keys = sorted(layers, key=lambda k: int(k[5:]) if k[5:].isdigit() else 99)
+        for i, k in enumerate(keys):
+            tex = layers[k].replace("minecraft:", "")
+            if f"assets/minecraft/textures/{tex}.png" not in JAR_NAMES():
+                continue
+            im = sprite(jar, tex)
+            tint = tints[i] if i < len(tints) else None
+            col = tint.get("default", tint.get("value")) if isinstance(tint, dict) else None
+            if isinstance(col, int):
+                col &= 0xFFFFFF
+                r, g, b = (col >> 16) & 255, (col >> 8) & 255, col & 255
+                px = im.load()
+                for y in range(im.height):
+                    for x in range(im.width):
+                        pr, pg, pb, pa = px[x, y]
+                        px[x, y] = (pr * r // 255, pg * g // 255, pb * b // 255, pa)
+            if out is None:
+                out = Image.new("RGBA", im.size, (0, 0, 0, 0))
+            out.alpha_composite(im.resize(out.size, Image.NEAREST) if im.size != out.size else im)
+    except (KeyError, ValueError):
+        out = None
+    _def_icons[name] = out
+    return out
 
 
 _jar_names = None
@@ -694,7 +770,10 @@ def item_icon(jar, name):
     if icon3d.exists():
         return Image.open(icon3d).convert("RGBA").resize((16 * GUI, 16 * GUI), Image.NEAREST)
     sp = item_sprite(name) or next((p for p in (f"item/{name}_standby", f"item/{name}_00") if f"assets/minecraft/textures/{p}.png" in JAR_NAMES()), None)
-    return big(sprite(jar, sp)) if sp else None
+    if sp:
+        return big(sprite(jar, sp))
+    d = item_def_icon(jar, name)
+    return big(d) if d is not None else None
 
 
 def container_windows(timeline):
