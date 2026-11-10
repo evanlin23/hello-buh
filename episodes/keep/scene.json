@@ -254,10 +254,7 @@
      ]
     ],
     "fov": 55,
-    "drift": 0.8,
-    "dof": {
-     "aperture": 0.2
-    }
+    "drift": 0.8
    },
    "look": {
     "grade": {
