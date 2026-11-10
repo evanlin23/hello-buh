@@ -200,3 +200,10 @@ For the owner's morning. Newest at the bottom.
     - The trial render's pace blockers (late sound, a 3.6 s tail) are fixed for the re-record.
   - Gold for the Portal: the first cut is 57.6 s; it's being restructured to about 45 s.
 - 13:46 UTC: Gold for the Portal is in review, with a HELMET punch-in re-edit running (~6-8 min). Names waits for the 08:00 UTC quota. Light Sleeper and Good Boy are held for the owner.
+- 14:47 UTC:
+  - **Gold for the Portal is published** (53.0 s; review round 2 READY; the panel couldn't run on Gemini 429).
+    - Engine on main: armour and trims on mobs, the piglin shake, and named containers fixed.
+    - It took 26 recordings (blockers kept changing); the run report is in docs/runs.
+    - Sent to the owner; it's on the review page.
+  - Started the Six Thousand Torches build (no lost grandparent, so the grandparent stories stay spread out), with
+    one critic-guided fix to the motive first. Names in the Woods resumes at 08:07 UTC tomorrow.
