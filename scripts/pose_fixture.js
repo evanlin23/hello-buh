@@ -8,6 +8,7 @@
 //   ./hb still _poses_test tick:5 tick:40 --out /tmp/x # render it (stunts/_poses_test.js reads it)
 //
 // --life (with --stunt _life_test): villagers asleep / shaking their heads, a line spoken (heads turn), a look_at mark.
+// --armor: armour on mobs (piglin, zombie, skeleton), armour trims, a converting (shaking) piglin.
 // --mobs: a line-up of the mobs drawn since the mob audit (bogged, parched, illusioner, glow squid, trader llama).
 // --stunt NAME the stunt module the recording names (default _poses_test; _light_test has a fog sea and a moon phase).
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
@@ -82,6 +83,15 @@ if (args.includes('--life')) {   // villagers: one asleep, one shaking its head,
 }
 if (args.includes('--mobs')) {   // the mobs scripts/mob_audit.js found missing that share a model: a line-up across the street
   ;['bogged', 'parched', 'illusioner', 'glow_squid', 'trader_llama'].forEach((n, k) => { const [x, y, z] = at(3, -3.2 + k * 1.6); for (let t = 0; t < N; t++) out.entities.push([t, 9300 + k, n, +x.toFixed(3), y + (n === 'glow_squid' ? 0.5 : 0), +z.toFixed(3), +faceCam.toFixed(4), 0, +faceCam.toFixed(4), null]) })
+}
+if (args.includes('--armor')) {   // armour on mobs and trims: a piglin in a sentry/lapis gold helmet, shaking (converting);
+  // a zombie in iron with a gold-trimmed chestplate; a skeleton in a chain helmet; the Grandpa actor in the same trimmed helmet
+  const ms = [[9400, 'piglin', 3, -1.2, { armor: [null, null, null, 'golden_helmet'], trims: [null, null, null, 'sentry/lapis'] }],
+    [9401, 'zombie', 4, 1.2, { armor: ['iron_boots', 'iron_leggings', 'iron_chestplate', 'iron_helmet'], trims: [null, null, 'coast/gold', null] }],
+    [9402, 'skeleton', 5, 3, { armor: [null, null, null, 'chainmail_helmet'] }]]
+  for (const [id, n, ahead, right, ex] of ms) { const [x, y, z] = at(ahead, right); for (let t = 0; t < N; t++) out.entities.push([t, id, n, +x.toFixed(3), y, +z.toFixed(3), +faceCam.toFixed(4), 0, +faceCam.toFixed(4), ex]) }
+  for (const e of out.entities) if (e[1] === 9001) e[9] = { ...e[9], armor: [null, null, null, 'golden_helmet'], trims: [null, null, null, 'sentry/lapis'] }
+  out.timeline.push({ t: 0, event: 'pose', ids: [9400], converting: true })
 }
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)

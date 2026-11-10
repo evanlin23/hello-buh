@@ -76,6 +76,7 @@ coast at Tidewater.
 | **Ravenford** | (-2044, 71, -485): the east gate; generated plains village at (-2111, -497) | Grandpa's village across the White: the log palisade and east gate, Grandpa's house with the totem wall, the road over the ford to the Ridge and the old tower (-2000, -445). A real pillager outpost stands at (-1913, -393). | Thirty-One Raids (1900) |
 | **Oakend** | (-505, 63, -1054): the west gate | A cleric's hamlet on the North Inlet's west bank, facing Fernbank across the water: a lane of cottages east of an oak fence and its west gate, a meadow climbing west to a dark oak treeline (lamp post at gate + (-15, 2)). Every villager wears a name tag. Tomas, Greta and Old Ben's cottages stand shut since a siege (~2500). | Names in the Woods (2700) |
 | **Leo's House** | (-2195, 63, -548) | Stone cottage on the shore facing the islets over the stronghold. Its basement holds an end portal frame. | One More Eye (3000, in progress), Put Back (pilot) |
+| **The Portal Cottage** | (-128, 85, -940): the cottage | A spruce cottage on the hill's south-east slope north of Hushwell, its garden looking down to the plaza (the boxed bell in view). The cellar, sunk under it on a ladder shaft, has a lit Nether portal in its east wall, a barrel of 25 years of barters ("Grandpa's Gifts") and obsidian patching the walls. Nico and his grandma live here (not Milo's family). | Gold for the Portal (9300) |
 
 Regions: **the Green** (-620..-40, -1140..-300), **the White** (-1850..-640), **the West March** (-2400..-1860).
 Empty land is there to be claimed: the High Meadow's top, the north forest, the coves east of Hushwell, the
@@ -87,6 +88,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | day | where | what happens (and who tells it) |
 |---|---|---|
 | 0 | | The world is made. |
+| ~175 | The Portal Cottage | Nico's grandpa walks into the cellar's Nether portal in Grandma's gold helmet with the blue (lapis) stripe and never comes back. A piglin wears the helmet from then on. Grandma throws in one gold ingot a night (not in the Long Day); a barter comes back each morning. |
 | 300 | Digger's House | **Torch.** A boy finds 40 of his own torches down a shaft on Torch Hill, digs straight down and dies in lava. He forgets every death. |
 | 400 | Fernbank | **Runaway.** The creeper who thinks he's a boy goes to the village party. The fisherman jumps in his boat and never comes back. Only the nitwit stays near him. |
 | 470 | Fernbank | **Nitwit.** The nitwit (4,096 hmms) leads the narrator past the last torch to the Burned Copy, and says his name and the date of the end: today. |
@@ -110,6 +112,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 3300 | Saltmouth | **Good Boy** (held for rework). Milo at 16 and his dog, who keeps trying to leave him and keeps teleporting back. |
 | 3400 | Dog Hill | Milo's last login: "Sit, boy. I'll be right back." The dog sits on the hilltop. Hushwell takes its carpets up (the shrieker only answers players). The bell stays boxed. |
 | 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Milo joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
+| 9300 | The Portal Cottage | **Gold for the Portal.** Nico throws in a whole stack to buy his grandpa's way home. The piglin in Grandpa's helmet steps out, shaking, and Grandma sends it home with one more ingot. |
 
 ## Recurring characters
 

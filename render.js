@@ -826,11 +826,13 @@ function hurtTilt (t) {
 // max(0, cos(tickCount * PI * 0.025) * 0.45 * blend) (a 4 s period).
 const DARK = []
 {
-  const evs = (rec.timeline || []).filter(e => (e.event === 'effect' || e.event === 'effect_end') && e.effect === 'darkness').map(e => ({ k: Math.round(e.t / 50), on: e.event === 'effect', dur: e.dur })).sort((a, b) => a.k - b.k)
+  // a stunt's 'darkness_snap' mark { to: 0 } sets the blend at once (a cut out of a dark scene: no 22-tick fade
+  // over the next scene's first second)
+  const evs = (rec.timeline || []).filter(e => ((e.event === 'effect' || e.event === 'effect_end') && e.effect === 'darkness') || e.event === 'darkness_snap').map(e => ({ k: Math.round(e.t / 50), on: e.event === 'effect', snap: e.event === 'darkness_snap' ? (e.to ?? 0) : null, dur: e.dur })).sort((a, b) => a.k - b.k)
   if (evs.length) {
     let f = 0, until = -1, j = 0
     for (let k = 0; k <= P.length + 1; k++) {
-      while (j < evs.length && evs[j].k <= k) { const e = evs[j++]; until = e.on ? (e.dur < 0 ? Infinity : k + e.dur) : k }
+      while (j < evs.length && evs[j].k <= k) { const e = evs[j++]; if (e.snap !== null) { f = e.snap; continue } until = e.on ? (e.dur < 0 ? Infinity : k + e.dur) : k }
       const target = k < until ? 1 : 0
       f = target > f ? Math.min(1, f + 1 / 22) : Math.max(0, f - 1 / 22)
       DARK[k] = f
@@ -904,13 +906,13 @@ const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
   for (const e of rec.timeline || []) {
     if (e.event === 'pose') {
       const fl = {}; if (e.creepy) fl.creepy = true; if (e.standing) fl.standing = true
-      if (e.sleep) fl.sleep = true; if (e.shake) fl.shake = true   // any mob lying asleep; a villager shaking its head no (entities.js)
+      if (e.sleep) fl.sleep = true; if (e.shake) fl.shake = true; if (e.converting) fl.converting = true   // a piglin/hoglin zombifying in the Overworld (LivingEntityRenderer.isShaking)   // any mob lying asleep; a villager shaking its head no (entities.js)
       if (Object.keys(fl).length) for (const id of e.ids || []) { const run = [e.t / 50, Infinity, fl]; if (!STAGED.has(id)) STAGED.set(id, []); STAGED.get(id).push(run); open.set(id, run) }
       // { pose: 'wave' | ['sit', 'drink'], ...params }, or the flags sit / drink / use (ground: sit on the floor)
       const names = [].concat(e.pose || [])
       if (e.sit) names.push(e.ground ? 'sit_ground' : 'sit')
       if (e.drink) names.push('drink'); else if (e.use) names.push('use')
-      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, shake: _sh, ...params } = e
+      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, shake: _sh, converting: _cv, ...params } = e
       const ap = names.filter(n => { if (POSES.POSES[n]) return true; console.log(`pose mark at tick ${e.t / 50}: no pose '${n}' in renderer/poses.js (${POSES.POSE_NAMES.join(', ')})`); return false }).map(name => ({ name, ...params }))
       if (ap.length) for (const id of e.ids || []) { if (openA.has(id)) openA.get(id)[1] = e.t / 50; const run = [e.t / 50, Infinity, ap]; if (!ACT_POSE.has(id)) ACT_POSE.set(id, []); ACT_POSE.get(id).push(run); openA.set(id, run) }
       for (const k of ['emerge', 'dig']) if (e[k]) for (const id of e.ids || []) { if (!WARDEN_ANIM.has(id)) WARDEN_ANIM.set(id, []); WARDEN_ANIM.get(id).push([e.t / 50, e.t / 50 + (k === 'emerge' ? 134 : 100), k]) }
@@ -2377,7 +2379,7 @@ else:
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),
+          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve', ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
@@ -2617,6 +2619,16 @@ else:
       const still = Math.max(0, 1 - ws * 8), nz = idleNoise(e.id, t), tk = talkMotion(user, t)
       e.headYaw = (e.headYaw ?? e.yaw) + nz[0] * 0.09 * still + (tk ? tk.yaw : 0)
       e.pitch = (e.pitch || 0) + nz[1] * 0.05 * still + (tk ? tk.pitch : 0)
+    }
+    // the narrator's own staged poses, seen from a camera shot (ctx.mark('pose', { ids: [-1], pose: 'sit_ground' })):
+    // the actors' loop above skips the recording bot; only stunts that mark id -1 see a change
+    if (ACT_POSE.has(-1)) {
+      const se = ents.find(e => e.id === -1 && e.player)
+      if (se) {
+        const poses = []
+        for (const [a, b, list] of ACT_POSE.get(-1)) for (const q of list) { const bl = POSES.blendOf(q.name), k = Math.min(1, (t - a) / bl, (b + bl - t) / bl); if (t >= a && k > 0) poses.push({ ...q, k: k * k * (3 - 2 * k) }) }
+        if (poses.length) se.player.poses = poses
+      }
     }
     // idle life for mobs (stunt.idleLife: true; story casts are no-AI mobs that otherwise freeze between their
     // moves): a slow look-around while a mob stands still, up to ~12 degrees across and ~5 up or down

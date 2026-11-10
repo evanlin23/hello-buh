@@ -1374,23 +1374,65 @@
    "kind": "homestead",
    "region": "the_green",
    "at": [
-    -136,
-    92,
-    -950
+    -128,
+    85,
+    -940
    ],
    "footprint": [
-    -147,
-    -962,
-    -123,
-    -932
+    -139,
+    -951,
+    -117,
+    -928
    ],
-   "about": "A spruce cottage on the hill's east shoulder north of Hushwell, looking south-south-west down the slope to Hushwell's plaza. The cellar under it has a lit Nether portal in its east wall; Nico's grandpa walked into it on day ~175 and never came back.",
-   "pieces": [],
-   "stamps": [],
+   "about": "A spruce cottage on the hill's south-east slope north of Hushwell, looking south-south-west down the slope to Hushwell's plaza. The cellar under it has a lit Nether portal in its east wall; Nico's grandpa walked into it on day ~175 and never came back. The cellar's hatch is in the cottage floor by the bed, down a ladder shaft; years of barters (obsidian, crying obsidian, soul sand) patch its walls.",
+   "pieces": [
+    {
+     "id": "cottage",
+     "piece": "cottage",
+     "x": -128,
+     "z": -940,
+     "y": 85,
+     "facing": "south",
+     "variant": {
+      "palette": "spruce",
+      "garden": true,
+      "bed": "red",
+      "seed": 7
+     }
+    },
+    {
+     "id": "cellar",
+     "piece": "basement",
+     "x": -126,
+     "z": -938,
+     "y": 80,
+     "facing": "south",
+     "variant": {
+      "portal": "nether",
+      "gifts": true,
+      "shaft": 5
+     },
+     "fit": false,
+     "since": 175
+    }
+   ],
+   "stamps": [
+    {
+     "id": "view",
+     "since": 180,
+     "what": "the slope below the garden kept clear of trees (Grandma's view down to Hushwell)",
+     "do": "cmds",
+     "cmds": [
+      "/fill -142 82 -932 -118 104 -916 air replace #minecraft:leaves",
+      "/fill -142 82 -932 -118 104 -916 air replace #minecraft:logs",
+      "/fill -142 82 -932 -118 104 -916 air replace vine"
+     ]
+    }
+   ],
    "stories": [
     "gold_for_the_portal"
    ],
-   "status": "claimed 2026-11-10 by gold_for_the_portal"
+   "status": "made (gold_for_the_portal, 2026-11-10)"
   },
   "oakend": {
    "name": "Oakend",
@@ -1660,7 +1702,7 @@
    "cameos": [
     "boxed_bell"
    ],
-   "status": "claimed"
+   "status": "made"
   },
   "names_in_the_woods": {
    "day": 2700,
