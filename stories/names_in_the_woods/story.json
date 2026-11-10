@@ -6,8 +6,8 @@
   "caption": "why do these zombies have NAMES 😶",
   "logline": "A player kid in a hamlet where every villager wears a name tag watches three named zombies walk out of the woods every night, until the night Mom goes to visit the neighbors 'in the city' and four walk out.",
   "question": "why tf do these zombies have name tags?",
-  "premise": "Every villager in Milo's hamlet at the edge of a dark oak forest gets a name tag at birth. Mom's says ROSA. Milo is the only player. Every night three zombies named TOMAS, GRETA and OLD BEN walk out of the woods, stop at the hamlet's fence and stare at Mom. Mom says the zombies stole the tags, and that the neighbors (three empty cottages with those names on their signs) moved to the city. Every week Mom, the hamlet's cleric, takes them a golden apple and a splash potion ('potion, then apple, fixes anything') and brings it all back unused, so Milo gets the apples. Nobody in the hamlet can throw anything, so Milo wins every egg fight. Tonight Mom goes to visit Tomas and says she'll be back by dark.",
-  "twist": "The zombies are the neighbors, converted in a siege: a named villager keeps its name tag (and its profession outfit) when a zombie converts it. Mom has been trying to cure them every week with the vanilla cure (a splash potion of weakness, then a golden apple), but only a player can throw a splash potion and feed the apple, and villagers can't throw. She lied so her son, the one person who could do it, would never go into the woods. Tonight she stays out past dark: four zombies walk out and the first tag says ROSA, still holding the golden apple. She looks at him and lets the potion fall toward him, Milo picks it up, and with a hotbar full of the apples she gave him he throws: potion, then apple.",
+  "premise": "Every villager in Remy's hamlet at the edge of a dark oak forest gets a name tag at birth. Mom's says ROSA. Remy is the only player. Every night three zombies named TOMAS, GRETA and OLD BEN walk out of the woods, stop at the hamlet's fence and stare at Mom. Mom says the zombies stole the tags, and that the neighbors (three empty cottages with those names on their signs) moved to the city. Every week Mom, the hamlet's cleric, takes them a golden apple and a splash potion ('potion, then apple, fixes anything') and brings it all back unused, so Remy gets the apples. Nobody in the hamlet can throw anything, so Remy wins every egg fight. Tonight Mom goes to visit Tomas and says she'll be back by dark.",
+  "twist": "The zombies are the neighbors, converted in a siege: a named villager keeps its name tag (and its profession outfit) when a zombie converts it. Mom has been trying to cure them every week with the vanilla cure (a splash potion of weakness, then a golden apple), but only a player can throw a splash potion and feed the apple, and villagers can't throw. She lied so her son, the one person who could do it, would never go into the woods. Tonight she stays out past dark: four zombies walk out and the first tag says ROSA, still holding the golden apple. She looks at him and lets the potion fall toward him, Remy picks it up, and with a hotbar full of the apples she gave him he throws: potion, then apple.",
   "key_color": "#F5C542",
   "gap": 0.3,
   "mood": [
@@ -21,8 +21,11 @@
   },
   "weather": "clear",
   "world": {
-    "place": "a cleric's hamlet of seven cottages on a slope at the east edge of a dark oak forest, one valley west of the carpeted village (Light Sleeper)",
-    "easter_egg": "S03: at the start of the crane down, looking east over the hamlet, the carpeted village of Light Sleeper sits on the far hill in the haze: red and orange carpet roofs and the white wool box of its bell. Provisional: re-check against docs/world/canon.md when it lands."
+    "place": "oakend (new, to claim): Oakend, a cleric's hamlet on the North Inlet's west bank at the east edge of the north-west dark oak forest, the west gate (origin) about (-512, 66, -1030), footprint about (-545, -1055, -447, -1005); Fernbank lies across the inlet, its dock about 75 blocks east of the gate",
+    "where": "Oakend: the hamlet, the west gate, the meadow and the forest edge",
+    "day": 2700,
+    "canon": "New family, not Milo's: Remy (the hamlet's only player, a kid, house narrator voice) and his mom ROSA (the hamlet's cleric, a villager). Tomas, Greta and Old Ben were converted in a siege months before; ROSA is converted on day 2700 and Remy cures her. Bible: World.",
+    "easter_egg": "empty_boat (canon cameo, since day 400): Fernbank's empty oak boat at the end of its dock across the inlet, a small shape on the water at frame right in S03's opening (the crane looking east over the hamlet); world.build places it (Fernbank's stamp)"
   },
   "voice": {
     "engine": "gemini",
@@ -34,14 +37,16 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "Milo, the hamlet's only player (default Steve skin, a kid in the story; mixed family canon as in light_sleeper). POV for the egg fight, the chest, the potion and the throw; seen from outside in S10 (small, from behind) and S14 (small, facing us, player nameplate 'Milo'). Hotbar: eggs (slot 1), golden apples (slot 2: 6, then 7 from S08 on), the splash potion (slot 3, S13-S15)."
+      "on_screen": "Remy, the hamlet's only player (default Steve skin, a kid; a new family, not Milo's). POV for the egg fight, the chest, the potion and the throw; seen from outside in S10 (small, from behind) and S14 (small, facing us, player nameplate 'Remy'). Hotbar: eggs (slot 1), golden apples (slot 2: 6, then 7 from S08 on), the splash potion (slot 3, S13-S15)."
     },
     "Mom": {
       "role": "character",
-      "ref": "mom",
+      "ref": null,
       "name": "Mom",
       "color": "#FFC2A8",
-      "on_screen": "a plains cleric villager (purple robe), name tag ROSA always visible; holds a golden apple over her crossed arms (S06, S07, S10); the splash potion goes into her inventory in S06 (her off hand: villagers don't show it). After the reveal: a zombie villager in the same purple cleric robe, tag ROSA, the golden apple in her right hand and the splash potion in her left (conversion keeps both hands) until she drops it in S13. One voiced line (L05), on screen, in her own request."
+      "on_screen": "a plains cleric villager (purple robe), name tag ROSA always visible; holds a golden apple over her crossed arms (S06, S07, S10); the splash potion goes into her inventory in S06 (her off hand: villagers don't show it). After the reveal: a zombie villager in the same purple cleric robe, tag ROSA, the golden apple in her right hand and the splash potion in her left (conversion keeps both hands) until she drops it in S13. One voiced line (L05), on screen, in her own request. Voice: her own (Aoede; audition Callirrhoe as the alternate), not the cast `mom` (Sulafat), who is Milo's mom in Hushwell.",
+      "voice": "Aoede",
+      "profile": "[ROSA, the hamlet's cleric and Remy's mom: a warm woman in her forties, gentle and a little too bright, changing the subject; full volume, not whispery]"
     }
   },
   "requests": [
@@ -98,11 +103,11 @@
         "Mom"
       ],
       "model": "gemini-3.8-flash-lite-tts",
-      "voice": "Sulafat",
+      "voice": "Aoede",
       "lines": [
         "L05"
       ],
-      "direction": "[Milo's mom: a warm woman in her forties, gentle and a little too bright, changing the subject; full volume, not whispery]"
+      "direction": "[ROSA, the hamlet's cleric and Remy's mom: a warm woman in her forties, gentle and a little too bright, changing the subject; full volume, not whispery]"
     }
   ],
   "lines": [
@@ -314,7 +319,7 @@
       "place": "hamlet",
       "size": "ews",
       "camera": "path: crane down. Key 0: 14 up over x 4 on the lane, looking east over the whole hamlet; key 1 (on 'ROSA'): 2.5 up, 6 blocks in front of Mom's garden gate (10,-6), FOV 50",
-      "frame": "opens: the hamlet from above looking east: seven cottages either side of the lane, the well, gardens, lanterns, villagers each with a white nameplate (HUGO, PIA, NELL, a baby LIL TEO running across the lane), fields beyond, and on the far east hill in the haze the carpet roofs and wool-boxed bell of the carpeted village (the easter egg); lands on: Mom head to foot at her garden gate, centred, ROSA over her head, HUGO and PIA walking past in the lane behind her with their tags, the brewing stand on the garden table behind her. Midday.",
+      "frame": "opens: the hamlet from above looking east: seven cottages either side of the lane, the well, gardens, lanterns, villagers each with a white nameplate (HUGO, PIA, NELL, a baby LIL TEO running across the lane), fields beyond, the inlet past them and Fernbank on its far bank, and at frame right on the water at the end of Fernbank's dock a small empty oak boat (the easter egg, canon `empty_boat`, never the subject); lands on: Mom head to foot at her garden gate, centred, ROSA over her head, HUGO and PIA walking past in the lane behind her with their tags, the brewing stand on the garden table behind her. Midday.",
       "look": {
         "time": 6000
       }
@@ -358,7 +363,7 @@
       "place": "west_gate",
       "size": "wide",
       "camera": "at: 6 blocks inside the west gate, 2 up, looking west past it, FOV 50, still",
-      "frame": "subject: Mom standing in the west gate, already open, the golden apple in her arms, ROSA tag, turning back toward the lens on 'she says' (to Milo), then out onto the path; bg: the bright meadow rising to the dark oak treeline. Morning (after S06).",
+      "frame": "subject: Mom standing in the west gate, already open, the golden apple in her arms, ROSA tag, turning back toward the lens on 'she says' (to Remy), then out onto the path; bg: the bright meadow rising to the dark oak treeline. Morning (after S06).",
       "look": {
         "time": 3200
       }
@@ -391,7 +396,7 @@
       "place": "meadow",
       "size": "ews",
       "camera": "at: from (3, 8, 0) above and behind the west gate, pushing slowly to (-1, 7, 0), looking west over the meadow, FOV 40",
-      "frame": "fg: the gate's lanterns and Milo small at the gate at lower left, back to us; subject, centred: Mom on the meadow path from (-22,1), walking away toward the forest, purple robe, ROSA tag, the golden apple in her arms; on 'DARK' she steps under the first dark oaks at (-30,2); bg: the sun low and orange right above the black treeline. Tonight, late afternoon.",
+      "frame": "fg: the gate's lanterns and Remy small at the gate at lower left, back to us; subject, centred: Mom on the meadow path from (-22,1), walking away toward the forest, purple robe, ROSA tag, the golden apple in her arms; on 'DARK' she steps under the first dark oaks at (-30,2); bg: the sun low and orange right above the black treeline. Tonight, late afternoon.",
       "look": {
         "time": 11800
       }
@@ -423,7 +428,7 @@
       "line": "L13",
       "place": "meadow",
       "size": "wide",
-      "camera": "pov: Milo is on the path at (-8,0), out of the gate, ROSA 8 blocks ahead; on 'POTION' he sprints 4.5 blocks to (-12.5,0) (about 0.8 s)",
+      "camera": "pov: Remy is on the path at (-8,0), out of the gate, ROSA 8 blocks ahead; on 'POTION' he sprints 4.5 blocks to (-12.5,0) (about 0.8 s)",
       "frame": "subject: ROSA head to foot at (-16,0) by the lamp post, stopped; she looks down at the bottle in her left hand, then at him, and on 'DROPPED' lets it fall toward him: it lands at (-13.5,0) on the path; on 'for ME' he has run up and picked it up: slot 3, selected, 'Splash Potion of Weakness' above the hotbar; bg: the other three tags further up the meadow, the treeline. Dusk.",
       "look": {
         "time": 13450
@@ -435,7 +440,7 @@
       "place": "meadow",
       "size": "full",
       "camera": "ots: low behind ROSA's RIGHT shoulder (the path's south side), looking east down the meadow, FOV 50, still",
-      "frame": "fg: ROSA's back and purple robe at frame left, the golden apple in her right hand toward the lens, the ROSA tag at upper left; subject: Milo head to foot 3.5 blocks away at (-12.5,0), facing us, the potion in his hand, his nameplate 'Milo'; bg: home: the fence, the gate lanterns and the hamlet's warm windows (on 'HOME'). Dusk.",
+      "frame": "fg: ROSA's back and purple robe at frame left, the golden apple in her right hand toward the lens, the ROSA tag at upper left; subject: Remy head to foot 3.5 blocks away at (-12.5,0), facing us, the potion in his hand, his nameplate 'Remy'; bg: home: the fence, the gate lanterns and the hamlet's warm windows (on 'HOME'). Dusk.",
       "look": {
         "time": 13500
       }

@@ -5,11 +5,15 @@ a Nether portal in its east wall (every other shot). The cellar is the story; th
 and carry the easter egg. Every set follows `docs/building_guide.md` and scores 7+ on its checklist.
 
 ## Site
-- `sets.planSite` (two footprints: `cottage` and `basement` under it share x/z) or `sets.findSite(ctx, { w: 20, d: 24,
-  minRange: 3 })` for ground with relief: a ridge or shoulder 15-20 blocks above a valley floor, with a stream below and
-  forest on both slopes, the cottage door facing **south** over the valley. Not a clearing, not superflat.
-- The far hill across the valley (40-80 blocks south) must be visible from the garden for the easter egg (S05); check
-  the line of sight with `sets.frame(ctx, home, 'front')` before building there.
+- **The canonical place** (docs/world/canon.md): The Portal Cottage (`portal_cottage`, to claim; bible "World"), a
+  forested ridge in the Green's north forest north-east of Hushwell, origin about (-110, 85, -990). Built with
+  `world.build(ctx, { story: 'gold_for_the_portal' })`: no `planSite`/`findSite`/`/locate`. The ridge should stand
+  15-20 blocks above a valley floor with a stream below and forest on both slopes, the cottage door facing **south**
+  over the valley. Read the ground y off the survey grid before claiming; if the spot has no ridge, slide the place
+  along the north forest, keeping Hushwell's plaza in S05's view at frame right.
+- From the garden, Hushwell's plaza (about 140 blocks south-south-west, a little lower) must be in line of sight for
+  the easter egg (S05); check it with `sets.frame(ctx, home, 'front')`. Dog Hill (west-south-west of the plaza) stays
+  out of S05's frame, and the cottage stays out of Dog on the Hill's east-facing frames (check that Short's stills).
 - Biome: plains, meadow or a taiga edge (spruce suits the cottage); `plainsBiome` only if the grass colour clashes.
 
 ## Pieces
@@ -46,14 +50,14 @@ and carry the easter egg. Every set follows `docs/building_guide.md` and scores 
 |---|---|---|---|
 | S01 cellar (full figure, 4 blocks west of the portal) | the stone floor | Grandma full-figure beside the purple portal, the ingot crossing the sheet on frame 1 | the gold chest under a lantern at frame left, the obsidian-patched wall (the ladder is behind the camera) |
 | S02 ridge (ews crane, night, time 14500: the moon low, not overhead) | the garden fence and gate lanterns (crane end) | the cottage: lit window, chimney smoke, the open door with a faint purple glow from the hatch | the dark valley, the stream catching moonlight, forest on the far slope, hills |
-| S05 garden (wide, morning, camera north of the gate looking south) | fence, gate lanterns, flowers | Milo at the gate drinking, the cottage's corner at frame right | across the valley: the carpeted village on the far hill (the easter egg), forest, hills into the haze |
+| S05 garden (wide, morning, camera north of the gate looking south) | fence, gate lanterns, flowers | Nico at the gate drinking, the cottage's corner at frame right | across the valley: Hushwell's plaza at frame right with its boxed bell (the easter egg), forest, hills into the haze |
 | S07 cellar 25 years ago (wide; camera about (0.5,z2.8) aimed 95 degrees) | the ladder's bottom rungs on the left edge | Grandpa walking into the portal, Grandma beside it | the bare cellar wall, one lantern |
 
 ## The easter egg
-S05's background: **the carpeted village of Light Sleeper** on the far hill, 50-80 blocks across the valley: carpet
-roofs (red and orange), a bell boxed in white wool on a post in the middle (it needs to read as a white cube beside a
-post at that distance: make it a 3 x 3 x 3 white box for this shot), 6-8 houses. A dressing pass, not the full
-village: roofs and the bell box facing the camera. Provisional: re-check against docs/world/canon.md when it lands.
+Canon cameo `boxed_bell` (since day 1400, for good): Hushwell's bell in its white wool box, in S05's background at
+frame right, about 140 blocks south-south-west across the valley, a white speck among the plaza's roofs. Nothing to
+build or dress: `world.build` puts Hushwell's `boxed_bell` stamp back (map.json `stories.gold_for_the_portal.cameos`).
+It is never the subject, never named, and on screen only for S05's ~2 s. No carpets: Hushwell took them up on day 3400.
 
 ## Engine needs
 | need | status | estimate | plan |
@@ -65,7 +69,7 @@ village: roofs and the bell box facing the camera. Provisional: re-check against
 | a cottage over a basement (hatch through the cottage floor) | not wired: the pieces are separate | ~30 min: place both on the same x/z, cut a trapdoor into the cottage floor over the basement's ladder | **build it** |
 | an item coming out of a portal / a villager throwing an item | staged: `/summon item` at the sheet (or at Grandma's hand) with `Motion`; vanilla items do cross portals and villagers do throw items | 0 | stage |
 | the piglin stepping out of the portal | staged: `K.actor` (NoAI piglin /tp'd every tick) from inside the sheet to the floor; portal particles render? check | 0-15 min | stage; check portal particles on a still |
-| Milo sitting (S13; camera at about (1.3,F+2.0,9.7), FOV 70, yaw 40, pitch -10; Milo on the bed's north-east corner, about x2.9 z9.0) and drinking (S05) | drink: the recorded use flag plays it; sit: `M.pose` is for player actors/mannequins | check whether the recording bot can take a `pose` mark in camera shots; if not, ~30 min | build if needed, or seat Milo on a stair-block "seat" with a mannequin in his skin |
+| Nico sitting (S13; camera at about (1.3,F+2.0,9.7), FOV 70, yaw 40, pitch -10; Nico on the bed's north-east corner, about x2.9 z9.0) and drinking (S05) | drink: the recorded use flag plays it; sit: `M.pose` is for player actors/mannequins | check whether the recording bot can take a `pose` mark in camera shots; if not, ~30 min | build if needed, or seat Nico on a stair-block "seat" with a mannequin in his skin |
 | barrel screen with a custom title | exists (`container_png`, `contTitle`) | 0 | check the title renders |
 | the flashback grade (S06-S07) | per-shot look: check `stunt.shots[name].look` overrides the grade | 0-30 min | build if missing (a shot-level `grade`) |
 

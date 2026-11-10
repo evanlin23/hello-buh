@@ -6,8 +6,8 @@
   "caption": "who put 6,000 torches on my village 🔥",
   "logline": "A villager kid wakes to find a torch on every block of his village and thinks something terrible is coming, but follows the last growing row to his own door, where his best friend, the village's player, places the final torch, the one he used to place there every night, and leaves the game for good.",
   "question": "why tf is there a torch on every single block of this village?",
-  "premise": "One morning a plains village wakes up with a torch on every grass block, fence post, roof ridge and hay bale: six thousand of them. The villager kid who tells it knows zombies can't spawn on a lit block, so he decides something big must be coming. Milo, the player who lives in the village and his best friend, puts a torch by the kid's door every night, then says 'see you tomorrow' and logs off. Yesterday Milo said his mom made him promise, one last night, which the kid reads as Milo being grounded again. This morning all of Milo's things are in the kid's family chest and Milo's house is gone, just a square of torches. One row is still growing round a corner; the kid wants to know who, and follows it to his own door.",
-  "twist": "Nothing is coming: Milo is going. Every night he lit the kid's door before he logged off; he is leaving the world for good (his mom's rule: one last night), so he did every night at once: a torch on every block of the village, so no zombie can ever spawn in it with nobody left to light it. He took his own house down so it wouldn't be one dark room left behind, gave everything he owned to his best friend, and saved the door spot for the last torch, the same spot as every night. He places it, waves, and leaves the game. This time the chat shows no 'see you tomorrow', because it isn't true. The torches are the goodbye.",
+  "premise": "One morning a plains village wakes up with a torch on every grass block, fence post, roof ridge and hay bale: six thousand of them. The villager kid who tells it knows zombies can't spawn on a lit block, so he decides something big must be coming. Jonah, the player who lives in the village and his best friend, puts a torch by the kid's door every night, then says 'see you tomorrow' and logs off. Yesterday Jonah said his mom made him promise, one last night, which the kid reads as Jonah being grounded again. This morning all of Jonah's things are in the kid's family chest and Jonah's house is gone, just a square of torches. One row is still growing round a corner; the kid wants to know who, and follows it to his own door.",
+  "twist": "Nothing is coming: Jonah is going. Every night he lit the kid's door before he logged off; he is leaving the world for good (his mom's rule: one last night), so he did every night at once: a torch on every block of the village, so no zombie can ever spawn in it with nobody left to light it. He took his own house down so it wouldn't be one dark room left behind, gave everything he owned to his best friend, and saved the door spot for the last torch, the same spot as every night. He places it, waves, and leaves the game. This time the chat shows no 'see you tomorrow', because it isn't true. The torches are the goodbye.",
   "key_color": "#FFB13B",
   "gap": 0.3,
   "mood": [
@@ -26,8 +26,11 @@
   },
   "weather": "clear",
   "world": {
-    "where": "a plains village on the river road, a valley south of the carpeted village (Light Sleeper); Milo's own village before he quits the world",
-    "easter_egg": "the village nitwit in his green coat (story_nitwit) standing on top of the well's roof among the torches, background of S03. Provisional: re-check against docs/world/canon.md when it lands."
+    "place": "larkfield (new, to claim): Larkfield, a plains village on the north road west of Dog Hill, the meeting point (bell) about (-275, 80, -935), footprint about (-314, -974, -236, -896); Dog Hill's top stands about 80 blocks east-south-east",
+    "where": "Larkfield: the village, our door, Jonah's plot, the north edge and its forest",
+    "day": 4500,
+    "canon": "The departing player is Jonah, not Milo (canon: Milo stopped playing on day 3400 from Dog Hill). The narrator is a new baby villager, not Pip. From day 4500 a torch stands on every block of Larkfield and Jonah's house is a 9 x 9 square of torches. Bible: World.",
+    "easter_egg": "dog_on_hill (canon cameo, since 3400; Pip beside him at night from 4300): the pale dog on Dog Hill's top, a speck on the east skyline against the dawn band at S01's frame right; world.build places it (Dog Hill's stamps)"
   },
   "voice": {
     "engine": "gemini",
@@ -46,13 +49,13 @@
       "color": "#FFFFFF",
       "on_screen": "a baby villager (plains, no profession: brown robe), unnamed; pov at the kid's eye (0.81; ~1.4 standing on the bed in S10) in S04, S09, S10, S12, S15; seen from outside in S06, S08, S13, S14 (stunt.self = { model: 'villager', eye: 0.81, extra: { baby: true } }, hud: false, hideHand: true)"
     },
-    "Milo": {
+    "Jonah": {
       "role": "character",
-      "ref": "milo",
-      "name": "Milo",
+      "ref": null,
+      "name": "Jonah",
       "color": "#4FD8E6",
       "voiced": false,
-      "on_screen": "a player actor (mineflayer bot named Milo), default Steve skin, his vanilla name tag over his head; holds a torch in S06 (placed on 'TORCH'), S07, S08, S12 (only his arm), S13 (a single torch), S14 (exactly one, placed on 'LAST'); empty hand in S05, S15. Never voiced: the narrator quotes him (L07). Leaves by quitting the server in S15"
+      "on_screen": "a player actor (mineflayer bot named Jonah), default Steve skin, his vanilla name tag over his head; holds a torch in S06 (placed on 'TORCH'), S07, S08, S12 (only his arm), S13 (a single torch), S14 (exactly one, placed on 'LAST'); empty hand in S05, S15. Never voiced: the narrator quotes him (L07). Leaves by quitting the server in S15"
     }
   },
   "requests": [
@@ -162,12 +165,12 @@
     {
       "id": "L05",
       "who": "N",
-      "text": "My best friend / MILO / is our PLAYER.",
+      "text": "My best friend / JONAH / is our PLAYER.",
       "direction": "proud, a grin on the name",
       "shot": "S05",
       "look": {
-        "what": "actor:Milo",
-        "word": "MILO"
+        "what": "actor:Jonah",
+        "word": "JONAH"
       }
     },
     {
@@ -178,7 +181,7 @@
       "shot": "S06",
       "look": [
         {
-          "what": "actor:Milo",
+          "what": "actor:Jonah",
           "word": "TORCH"
         },
         {
@@ -186,7 +189,7 @@
           "word": "door"
         },
         {
-          "what": "actor:Milo",
+          "what": "actor:Jonah",
           "word": "TOMORROW"
         }
       ]
@@ -194,13 +197,13 @@
     {
       "id": "L07",
       "who": "N",
-      "text": "Yesterday / Milo said, / Mom made me PROMISE. / One LAST night.",
-      "say": "Yesterday Milo said, \"Mom made me promise. One last night.\"",
+      "text": "Yesterday / Jonah said, / Mom made me PROMISE. / One LAST night.",
+      "say": "Yesterday Jonah said, \"Mom made me promise. One last night.\"",
       "direction": "light, no weight on it",
       "shot": "S07",
       "look": {
-        "what": "actor:Milo",
-        "word": "Milo"
+        "what": "actor:Jonah",
+        "word": "Jonah"
       }
     },
     {
@@ -210,7 +213,7 @@
       "direction": "a deadpan little joke",
       "shot": "S08",
       "look": {
-        "what": "actor:Milo",
+        "what": "actor:Jonah",
         "word": "grounded"
       }
     },
@@ -243,7 +246,7 @@
       "direction": "puzzled, not scared",
       "shot": "S11",
       "look": {
-        "what": "prop:milo_plot",
+        "what": "prop:jonah_plot",
         "word": "HOUSE"
       }
     },
@@ -276,7 +279,7 @@
           "word": "followed"
         },
         {
-          "what": "actor:Milo",
+          "what": "actor:Jonah",
           "word": "door"
         }
       ]
@@ -284,13 +287,13 @@
     {
       "id": "L14",
       "who": "N",
-      "text": "Milo put / the LAST one / THERE. / And WAVED.",
+      "text": "Jonah put / the LAST one / THERE. / And WAVED.",
       "direction": "happy to see him",
       "shot": "S14",
       "look": [
         {
-          "what": "actor:Milo",
-          "word": "Milo"
+          "what": "actor:Jonah",
+          "word": "Jonah"
         },
         {
           "what": "prop:last_torch",
@@ -312,14 +315,14 @@
   ],
   "reveal": {
     "at": "L15 first word",
-    "echo": "S06 showed the ordinary night: '<Milo> see you tomorrow' then 'Milo left the game'. S15 shows only the second line.",
-    "game": "Milo's actor bot quits the server: his entity is removed (vanishes at once, as vanilla) and the server's system message 'Milo left the game' (yellow, ChatFormatting.YELLOW #FFFF55) shows in the chat at the bottom left of the game view",
-    "caption": "the caption track also shows 'Milo left the game' in yellow during the hold after 'TOMORROW'",
+    "echo": "S06 showed the ordinary night: '<Jonah> see you tomorrow' then 'Jonah left the game'. S15 shows only the second line.",
+    "game": "Jonah's actor bot quits the server: his entity is removed (vanishes at once, as vanilla) and the server's system message 'Jonah left the game' (yellow, ChatFormatting.YELLOW #FFFF55) shows in the chat at the bottom left of the game view",
+    "caption": "the caption track also shows 'Jonah left the game' in yellow during the hold after 'TOMORROW'",
     "hold": "0.8 s after the last word, built in the edit (no pause tag in the TTS text), then cut; nothing after it"
   },
   "ending": {
     "after": "L15",
-    "loop": "cause and effect: the goodbye at the door is why L01's village has six thousand torches 'last night'; L01's 'someone' is Milo, and 'Something BIG must be COMING' (L04) turns into someone going; the last torch is the nightly door torch, the habit done one final time"
+    "loop": "cause and effect: the goodbye at the door is why L01's village has six thousand torches 'last night'; L01's 'someone' is Jonah, and 'Something BIG must be COMING' (L04) turns into someone going; the last torch is the nightly door torch, the habit done one final time"
   },
   "shots": [
     {
@@ -328,7 +331,7 @@
       "place": "village",
       "size": "ews",
       "camera": "path: a crane forward and down. Key 0 (0 s): 34 blocks above the village's west edge, already moving east at ~2 blocks/s, looking down ~35 degrees across the whole village; key 1 (end of L01, ~3 s): 22 blocks up over the meeting point (the bell), still looking east toward the dawn. FOV 60. wideMaster, centre crop.",
-      "frame": "fg: the torch-topped roof ridges and fence posts of the west houses passing under the lens; mid: the whole village, about 78 x 78 blocks, every grass block, fence post, hay bale and roof ridge carrying a torch: a carpet of thousands of warm points, the dirt paths and fields reading as dark lines between them (paths and farmland take no torch and spawn nothing); bg: the dark forest ring, hills, the pale band of dawn over the east hills. Dawn (23000): no sun yet, torch glow and bloom at their strongest. The count shot: the viewer must believe 6,000."
+      "frame": "fg: the torch-topped roof ridges and fence posts of the west houses passing under the lens; mid: the whole village, about 78 x 78 blocks, every grass block, fence post, hay bale and roof ridge carrying a torch: a carpet of thousands of warm points, the dirt paths and fields reading as dark lines between them (paths and farmland take no torch and spawn nothing); bg: the dark forest ring, hills, the pale band of dawn over the east hills, and on the highest hill at frame right a speck against the dawn band: the dog sitting on Dog Hill's top, Pip beside him (the easter egg, canon `dog_on_hill`, never the subject). Dawn (23000): no sun yet, torch glow and bloom at their strongest. The count shot: the viewer must believe 6,000."
     },
     {
       "id": "S02",
@@ -344,7 +347,7 @@
       "place": "meeting_point",
       "size": "full",
       "camera": "at: 1.2 blocks up, 7 blocks from the iron golem, looking along the grass between two houses, a slow push in; FOV 50",
-      "frame": "fg: torches on the grass at the lens, out of focus; subject: the village iron golem head to foot, walking slowly through the grid of torches, torch light on its legs; bg: houses, every block lit; on 'EVERY' the push reveals the torches going on past the houses. The easter egg: the nitwit in his green coat standing on top of the well's roof among the torches (provisional). Dawn (23120)."
+      "frame": "fg: torches on the grass at the lens, out of focus; subject: the village iron golem head to foot, walking slowly through the grid of torches, torch light on its legs; bg: houses, every block lit; on 'EVERY' the push reveals the torches going on past the houses. Dawn (23120)."
     },
     {
       "id": "S04",
@@ -357,10 +360,10 @@
     {
       "id": "S05",
       "line": "L05",
-      "place": "milo_house",
+      "place": "jonah_house",
       "size": "full",
-      "camera": "path: a short crane down from 8 blocks up to 2.5, ending 7 blocks east of Milo, looking west into the low sun; FOV 50",
-      "frame": "FLASHBACK (yesterday: none of the story's torches, the village as vanilla built it, its own lamp posts only; two villagers walking on the street, as on any evening, the cue that this is another time). fg: the cottage's garden fence and gate lanterns; subject: Milo (Steve, name 'Milo' over his head) head to foot at his gate, in front of his birch cottage, lit windows; bg: the west hills and the golden sky. Late afternoon going gold (11600).",
+      "camera": "path: a short crane down from 8 blocks up to 2.5, ending 7 blocks east of Jonah, looking west into the low sun; FOV 50",
+      "frame": "FLASHBACK (yesterday: none of the story's torches, the village as vanilla built it, its own lamp posts only; two villagers walking on the street, as on any evening, the cue that this is another time). fg: the cottage's garden fence and gate lanterns; subject: Jonah (Steve, name 'Jonah' over his head) head to foot at his gate, in front of his birch cottage, lit windows; bg: the west hills and the golden sky. Late afternoon going gold (11600).",
       "look": {
         "fog": false,
         "time": 11600
@@ -372,7 +375,7 @@
       "place": "our_door",
       "size": "wide",
       "camera": "at: 1.5 blocks up, 9 blocks out from our doorstep, looking north at the door (the establishing wide of our_door), the kid (baby villager) at frame right nearer the lens than the door spot, back three-quarters to us; still",
-      "frame": "FLASHBACK (the nightly habit). The whole house front, its roof and the lamp post in frame. subject: Milo by our door; on 'TORCH' he crouches (sneak) and places a torch on the grass block one east of the doorstep (the door spot); he stands and turns to the kid; on 'TOMORROW' the chat shows '<Milo> see you tomorrow' (white, bottom left); after the line he vanishes and the chat adds 'Milo left the game' (yellow). fg: the path and a lamp post at frame left; bg: our house front, the window lit. Sunset (12000). No sun in frame (we look north). At the cut into S07 the chat clears and the S06 torch is removed (he picks it up in the morning; S07-S08 never show it).",
+      "frame": "FLASHBACK (the nightly habit). The whole house front, its roof and the lamp post in frame. subject: Jonah by our door; on 'TORCH' he crouches (sneak) and places a torch on the grass block one east of the doorstep (the door spot); he stands and turns to the kid; on 'TOMORROW' the chat shows '<Jonah> see you tomorrow' (white, bottom left); after the line he vanishes and the chat adds 'Jonah left the game' (yellow). fg: the path and a lamp post at frame left; bg: our house front, the window lit. Sunset (12000). No sun in frame (we look north). At the cut into S07 the chat clears and the S06 torch is removed (he picks it up in the morning; S07-S08 never show it).",
       "look": {
         "fog": false,
         "time": 12000
@@ -381,10 +384,10 @@
     {
       "id": "S07",
       "line": "L07",
-      "place": "milo_house",
+      "place": "jonah_house",
       "size": "ms",
-      "camera": "at: 2 blocks from Milo at his eye height, three-quarter front, FOV 50, slow push",
-      "frame": "FLASHBACK (yesterday). subject: Milo waist up beside two open chests and a crafting table by his cottage door, a torch in his hand; the chests hold stacks of coal and sticks; bg: his cottage, door open, the room lit. Dusk (12300).",
+      "camera": "at: 2 blocks from Jonah at his eye height, three-quarter front, FOV 50, slow push",
+      "frame": "FLASHBACK (yesterday). subject: Jonah waist up beside two open chests and a crafting table by his cottage door, a torch in his hand; the chests hold stacks of coal and sticks; bg: his cottage, door open, the room lit. Dusk (12300).",
       "look": {
         "fog": false,
         "time": 12300
@@ -396,7 +399,7 @@
       "place": "village_street",
       "size": "wide",
       "camera": "at: 1.6 blocks up behind the kid at our door, looking west down the street; still",
-      "frame": "FLASHBACK. fg: the kid (baby villager) small at lower right on our doorstep, back to us; subject: Milo walking away down the street toward his cottage, 8-12 blocks out, a torch in hand, his name over him; bg: his cottage standing at the street's end, 14 blocks from our door (lit windows: the house exists), the last glow of dusk. Late dusk (12600).",
+      "frame": "FLASHBACK. fg: the kid (baby villager) small at lower right on our doorstep, back to us; subject: Jonah walking away down the street toward his cottage, 8-12 blocks out, a torch in hand, his name over him; bg: his cottage standing at the street's end, 14 blocks from our door (lit windows: the house exists), the last glow of dusk. Late dusk (12600).",
       "look": {
         "fog": false,
         "time": 12600
@@ -421,10 +424,10 @@
     {
       "id": "S11",
       "line": "L11",
-      "place": "milo_plot",
+      "place": "jonah_plot",
       "size": "wide",
       "camera": "at: the same angle as S05 (east of the plot, looking west), 5 blocks up, a slow descending push; FOV 50",
-      "frame": "subject: where Milo's cottage stood: a bare 9 x 9 footprint of coarse dirt (the house, plinth and garden gone), a torch on every block, set off from the grass around it; fg: the street fence, a torch on every post; bg: the west hills, the same skyline as S05, now at dawn. The S05/S11 match makes 'gone' instant. Dawn (23328)."
+      "frame": "subject: where Jonah's cottage stood: a bare 9 x 9 footprint of coarse dirt (the house, plinth and garden gone), a torch on every block, set off from the grass around it; fg: the street fence, a torch on every post; bg: the west hills, the same skyline as S05, now at dawn. The S05/S11 match makes 'gone' instant. Dawn (23328)."
     },
     {
       "id": "S12",
@@ -432,7 +435,7 @@
       "place": "village_south",
       "size": "full",
       "camera": "pov (kid's eye) at the south end of a 1-wide grass strip between two houses across the street from ours, looking north up the strip; still, then a step forward on 'WHO'",
-      "frame": "fg: the strip at the kid's feet; subject: a single row of torches running up the strip to the near house's front corner 7 blocks ahead, turning left round it out of sight; on 'GROWING' a torch appears just round the corner edge with Milo's arm (Steve's sleeve and hand, a torch held) swinging into frame, then another a beat later (the arm again). Milo is pinned at block (-22, 9) (bible coordinates: the house's east wall is x -20, the strip x -19, its front corner z 10), feet on the grass in front of the house front, facing east (yaw -90), placing on (-20, 9) then (-21, 9); his body stays hidden behind the east wall and only the sleeve clears the corner: test on the shot sheet and nudge him a block west if more shows; bg: the rest of the village lit, the brightening sky above the roofs. Dawn (23450)."
+      "frame": "fg: the strip at the kid's feet; subject: a single row of torches running up the strip to the near house's front corner 7 blocks ahead, turning left round it out of sight; on 'GROWING' a torch appears just round the corner edge with Jonah's arm (Steve's sleeve and hand, a torch held) swinging into frame, then another a beat later (the arm again). Jonah is pinned at block (-22, 9) (bible coordinates: the house's east wall is x -20, the strip x -19, its front corner z 10), feet on the grass in front of the house front, facing east (yaw -90), placing on (-20, 9) then (-21, 9); his body stays hidden behind the east wall and only the sleeve clears the corner: test on the shot sheet and nudge him a block west if more shows; bg: the rest of the village lit, the brightening sky above the roofs. Dawn (23450)."
     },
     {
       "id": "S13",
@@ -440,7 +443,7 @@
       "place": "our_street",
       "size": "wide",
       "camera": "follow: behind the kid at 6 blocks, 1.6 up, lag 0.3, as he runs to the corner and turns left round it; FOV 55",
-      "frame": "opens: the kid small, running up the strip; at the corner the camera turns with him and clears it: the row runs a few blocks along the house front, then straight north across the street (no torch on the dirt path) to our doorstep, ending one block short; on 'MY door' Milo (name over him) is crouched at our doorstep, 9 blocks ahead, beside the last gap. Dawn (23652: ~7 s of game time pass at the cut from S12 while Milo finishes the row; from here S13, S14 and S15 run as one continuous moment)."
+      "frame": "opens: the kid small, running up the strip; at the corner the camera turns with him and clears it: the row runs a few blocks along the house front, then straight north across the street (no torch on the dirt path) to our doorstep, ending one block short; on 'MY door' Jonah (name over him) is crouched at our doorstep, 9 blocks ahead, beside the last gap. Dawn (23652: ~7 s of game time pass at the cut from S12 while Jonah finishes the row; from here S13, S14 and S15 run as one continuous moment)."
     },
     {
       "id": "S14",
@@ -448,15 +451,15 @@
       "place": "our_door",
       "size": "full",
       "camera": "at: 1 block up, 5 blocks from our doorstep, the same axis as S06 looking north, FOV 50, still",
-      "frame": "fg: the kid (baby villager) at frame right, stopped on the path nearer the lens than the door spot (never covering it), back three-quarters to us; subject: Milo head to foot crouched (sneak; his name dimmed, as vanilla draws a sneaking player's name, still readable) at the doorstep, holding exactly one torch; on 'LAST' he places it on the door spot (the grass block one east of the doorstep: the same spot as S06), closing the row, his hand now empty; he stands, turns to the kid and, on 'WAVED', swings his arm twice (a player's wave); bg: our house front, the window, torch-lit roofs behind, gold sunlight raking across the front from the right (the sun itself out of frame: we look north). Sunrise (23688, S13's end tick)."
+      "frame": "fg: the kid (baby villager) at frame right, stopped on the path nearer the lens than the door spot (never covering it), back three-quarters to us; subject: Jonah head to foot crouched (sneak; his name dimmed, as vanilla draws a sneaking player's name, still readable) at the doorstep, holding exactly one torch; on 'LAST' he places it on the door spot (the grass block one east of the doorstep: the same spot as S06), closing the row, his hand now empty; he stands, turns to the kid and, on 'WAVED', swings his arm twice (a player's wave); bg: our house front, the window, torch-lit roofs behind, gold sunlight raking across the front from the right (the sun itself out of frame: we look north). Sunrise (23688, S13's end tick)."
     },
     {
       "id": "S15",
       "line": "L15",
       "place": "our_door",
       "size": "ms",
-      "camera": "pov (kid's eye, 0.81) 2.5 blocks from Milo, looking up at him, still",
-      "frame": "subject: Milo waist up on our doorstep, looking at the camera, the last torch burning at his feet; the chat is empty (no '<Milo> see you tomorrow'); Milo stands, so his name shows at full strength; on the line's first word he is gone at once (vanilla quit, no animation) and the chat shows, yellow, bottom left: 'Milo left the game' (also on the caption track); the doorstep empty, the last torch burning beside our door; bg: past the house corner the lit village in gold light. Sunrise (23742, S14's end tick). Hold ~0.8 s after 'TOMORROW', then cut."
+      "camera": "pov (kid's eye, 0.81) 2.5 blocks from Jonah, looking up at him, still",
+      "frame": "subject: Jonah waist up on our doorstep, looking at the camera, the last torch burning at his feet; the chat is empty (no '<Jonah> see you tomorrow'); Jonah stands, so his name shows at full strength; on the line's first word he is gone at once (vanilla quit, no animation) and the chat shows, yellow, bottom left: 'Jonah left the game' (also on the caption track); the doorstep empty, the last torch burning beside our door; bg: past the house corner the lit village in gold light. Sunrise (23742, S14's end tick). Hold ~0.8 s after 'TOMORROW', then cut."
     }
   ],
   "props": {
@@ -474,10 +477,10 @@
     },
     "door_spot": {
       "block": "torch",
-      "at": "the grass block one east of our doorstep: Milo's nightly torch (S06) and the last torch (S14-S15)"
+      "at": "the grass block one east of our doorstep: Jonah's nightly torch (S06) and the last torch (S14-S15)"
     },
     "corner_arm": {
-      "actor": "Milo",
+      "actor": "Jonah",
       "at": "just round the front corner of the house across the street (S12): only his arm in frame"
     },
     "hay_torches": {
@@ -497,10 +500,10 @@
     },
     "last_torch": {
       "block": "torch",
-      "at": "the door spot, placed by Milo on L14 'LAST'; the row ends there"
+      "at": "the door spot, placed by Jonah on L14 'LAST'; the row ends there"
     },
-    "milo_plot": {
-      "at": "where Milo's birch cottage stood at the west end of the main street, 14 blocks west of our door: a 9 x 9 coarse-dirt footprint, a torch on every block (S11)"
+    "jonah_plot": {
+      "at": "where Jonah's birch cottage stood at the west end of the main street, 14 blocks west of our door: a 9 x 9 coarse-dirt footprint, a torch on every block (S11)"
     },
     "growing_row": {
       "block": "torch",

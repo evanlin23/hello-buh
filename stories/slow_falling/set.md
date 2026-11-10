@@ -8,8 +8,13 @@ cliff over a market, a 23-block drop, and a glass column of water running from t
 is the premise, so the site is chosen for it. Every set follows `docs/building_guide.md` and scores 7+ on its checklist.
 
 ## Site
+- **The canonical place** (docs/world/canon.md): Millcliff (`millcliff`, to claim; bible "World"), on the West March's
+  east edge east of the Ridge, origin (the soul sand) about (-1876, 72, -485). Built with `world.build(ctx, { story:
+  'slow_falling' })`: no `planSite`/`findSite`/`/locate`. Read the ground off the survey grid before claiming. What
+  the spot needs (and what the old search asked for, kept for reference only):
 - A real slope: a ledge or hill shoulder that stands ~10 blocks over a flatter area right below it (natural relief,
-  forest round it, hills behind). `sets.planSite(ctx, [{ name: 'market', dx: -14, dz: 0 }, { name: 'windmill', dx: 1,
+  forest round it, hills behind). If the spot lacks it, slide the place along the Ridge's east foot, keeping the tower
+  130 blocks west-south-west of the windmill and the pillager outpost (-1913, -393) out of every frame. Old search: `sets.planSite(ctx, [{ name: 'market', dx: -14, dz: 0 }, { name: 'windmill', dx: 1,
   dz: -5, facing: 'south', variant: { height: 12 } }, { name: 'cottage', dx: -14, dz: -26, facing: 'south' }], { reach,
   stride })` scoring for a **height difference** of 8-12 between the windmill footprint and the market footprint (the
   default score punishes it: add a `minRange`-style bonus for the windmill-to-market step, or search with
@@ -59,16 +64,19 @@ is the premise, so the site is chosen for it. Every set follows `docs/building_g
 | shot | fg | mid | bg |
 |---|---|---|---|
 | S01 (in the air SW of the step, tilting down) | a canvas sail tip at frame right | Grandma at the jetty end (empty hands), the cap, the tower with the glass column down its face | first sky and the eastern grove; after the tilt the cliff and the market's striped roofs 23 below |
-| S03 (market, 10 blocks west of the door) | a planter | Grandpa and Grandma at the fountain door | the column up the cliff and tower, the sails, the grove behind the windmill, the fish stall with the nitwit at frame left |
+| S03 (market, 10 blocks west of the door) | a planter | Grandpa and Grandma at the fountain door | the column up the cliff and tower, the sails, the grove behind the windmill, the fish stall at frame left |
 | S06 (crane down through the hatch) | the ladder, the hatch frame | Grandpa at the lit brewing stand | bookshelves, the potions in item frames, cobwebs (no barrels) |
 | S12 (in the air, 7 blocks west) | air | Grandma and the kid above her, ~1 block west | the column at frame left, the cliff with grass along its top, the forested hill behind the windmill |
 | S09 (POV over the rail) | the rail, the hand | the cliff and the market from above | the valley, forests and hills to the fog (needs ~100 blocks of real terrain west) |
+| S11 (POV from the jetty end, looking west, then down) | the jetty rail, Grandma's back | the open sky over the valley, then the market 23 below | the valley and hills west, the Ridge's old tower on the skyline at frame left (the easter egg) |
 | S13 (behind the bench, 25 blocks from the column) | Grandpa from behind, tomorrow's potion in his hand | the two floating figures, the column | the windmill on the cliff, sails, the eastern grove, hills |
 
 ## The easter egg
-The village nitwit in his green coat (story_nitwit) standing on the fish stall's striped roof (stall_0 or whichever
-holds fish), frozen, facing the windmill: background of S03 and S13 at frame left. Provisional: re-check against
-docs/world/canon.md when it lands.
+Canon cameo `raven_tower` (always): the old watchtower on the Ridge east of Ravenford, no banner, about 130 blocks
+west-south-west of the windmill. In **S11 only** (POV from the jetty end looking west as they step off): small on the
+skyline at frame left. Nothing to build: `world.build` places Ravenford's `tower` piece (map.json
+`stories.slow_falling.cameos`). Keep it out of S10's frame (it sits about 25 degrees right of S10's south-west axis:
+check on a still and turn S10 a few degrees south if it shows). Never the subject, never named.
 
 ## Lighting and look
 - Morning, `look: 'auto'` (dawn-warm grade). Night shots S06 and S07 carry `look.time: 18000`. The market looks east into the sun in S03, S05, S13: faces are rim-lit.

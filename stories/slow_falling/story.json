@@ -18,8 +18,11 @@
   },
   "weather": "clear",
   "world": {
-    "where": "the mill-cliff market town, two valleys south of the carpeted village (Light Sleeper)",
-    "easter_egg": "the village nitwit in his green coat (story_nitwit) standing on the striped roof of the fish stall, background of S03 and S13. Provisional: re-check against docs/world/canon.md when it lands."
+    "place": "millcliff (new, to claim): Millcliff, a market town under a west-facing cliff on the West March's east edge, east of the Ridge, origin (the fountain's soul sand) about (-1876, 72, -485), footprint about (-1910, -520, -1860, -455); from the windmill top the Ridge and its old tower stand about 130 blocks west-south-west",
+    "where": "Millcliff: the market, the cliff and Grandpa's fountain, the windmill on the ledge, the grandparents' cottage and cellar",
+    "day": 11300,
+    "canon": "New family, not Milo's: Kit (a player kid, house narrator voice) staying with his grandparents (mannequins with our own grandma and grandpa skins; Grandpa is no recurring character and has no cast ref). The fountain and the brewing began around day 300 (thirty years: about 11,000 mornings). Bible: World.",
+    "easter_egg": "raven_tower (canon cameo, always): the old watchtower on the Ridge, no banner, small on the skyline about 130 blocks west-south-west, left of centre in S11 (POV from the jetty looking west as they step off); world.build places it (Ravenford's piece)"
   },
   "voice": {
     "engine": "gemini",
@@ -30,7 +33,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "POV (the hand and hotbar), Milo as a kid, default Steve skin, seen from outside only in S08 (small, in the column), S12 (floating above Grandma, ~1 block west of her) and S13 (far, floating)"
+      "on_screen": "POV (the hand and hotbar), Kit, a player kid (not Milo: his own grandparents), default Steve skin, seen from outside only in S08 (small, in the column), S12 (floating above Grandma, ~1 block west of her) and S13 (far, floating)"
     },
     "Grandma": {
       "role": "character",
@@ -44,9 +47,9 @@
     "Grandpa": {
       "role": "character",
       "name": "Grandpa",
-      "ref": "elder",
+      "ref": null,
       "voiced": false,
-      "on_screen": "mannequin with our own skin skins/grandpa.png: white hair and moustache, brown cardigan, purple scarf, quoted by the narrator only (L05)"
+      "on_screen": "mannequin with our own skin skins/grandpa.png: white hair and moustache, brown cardigan, purple scarf, quoted by the narrator only (L05); no cast ref (not the cast `elder`, who is Milo's Ravenford grandpa)"
     }
   },
   "requests": [
@@ -303,7 +306,7 @@
       "place": "market",
       "size": "wide",
       "camera": "at: low on the market, 10 blocks west of the fountain door, behind a planter, tilted up a little, slow push in",
-      "frame": "the market's establishing shot. fg: a flower planter, mid: Grandpa hands Grandma a peach bottle at the glass door at the foot of the column (Grandpa left, Grandma right): the first time we see the bottle, called juice, bg: the column of water and bubbles running up the cliff face and out of the top of frame, the stalls either side, the fish stall at frame left with the nitwit standing on its striped roof (easter egg), trees and the hill above the cliff. Morning (1000)."
+      "frame": "the market's establishing shot. fg: a flower planter, mid: Grandpa hands Grandma a peach bottle at the glass door at the foot of the column (Grandpa left, Grandma right): the first time we see the bottle, called juice, bg: the column of water and bubbles running up the cliff face and out of the top of frame, the stalls either side, the fish stall at frame left, trees and the hill above the cliff. Morning (1000)."
     },
     {
       "id": "S04",
@@ -349,7 +352,7 @@
       "place": "fountain",
       "size": "wide",
       "camera": "at: from the market, 10 blocks west of the column, tilting up as they rise",
-      "frame": "fg: the bread stall's awning and Grandpa at frame left, back to the column, holding a loaf, facing the baker (a reason to look away), subject: Grandma rising in the glass column, then Milo (small, Steve) stepping through the door after her and shooting up 4 blocks below her, bg: the cliff, the tower, the cap and the hill. Morning (1000), the next day."
+      "frame": "fg: the bread stall's awning and Grandpa at frame left, back to the column, holding a loaf, facing the baker (a reason to look away), subject: Grandma rising in the glass column, then Kit (small, Steve) stepping through the door after her and shooting up 4 blocks below her, bg: the cliff, the tower, the cap and the hill. Morning (1000), the next day."
     },
     {
       "id": "S09",
@@ -373,7 +376,7 @@
       "place": "windmill_top to the drop",
       "size": "wide",
       "camera": "pov: drinks (1.6 s, the item-use animation and sound), the Slow Falling icon appears at the top right, swirls round the hand, on 'we stepped' Grandma steps off ahead, he walks out along the jetty as she reaches the end (starting ~0.7 s before her step) and steps off 0.5 s after her on 'OFF', carrying ~1 block further west than her, the view tips down",
-      "frame": "opens: Grandma's back at the step and the open sky, ends: looking down past his feet at Grandma floating 2 blocks below, the market below her. Morning (1000)."
+      "frame": "opens: Grandma's back at the step and the open sky over the valley, far off on the skyline at frame left, about 130 blocks west-south-west, the Ridge's old watchtower with no banner (the easter egg, canon `raven_tower`, small, never the subject), ends: looking down past his feet at Grandma floating 2 blocks below, the market below her. Morning (1000)."
     },
     {
       "id": "S12",
@@ -381,7 +384,7 @@
       "place": "the drop",
       "size": "full",
       "camera": "at (moving with them): 7 blocks west of the pair at their height, FOV 50, looking slightly up, a two in depth",
-      "frame": "subject: Grandma head to foot in the lower half, looking up at him and laughing, Milo head to foot above her and ~1 block further west (nearer the lens), 1.4-2.8 blocks higher during the line, in the upper half, faint swirls on both, bg: the glass column at frame LEFT of them, the cliff and tower, the forested hill. Morning (1000)."
+      "frame": "subject: Grandma head to foot in the lower half, looking up at him and laughing, Kit head to foot above her and ~1 block further west (nearer the lens), 1.4-2.8 blocks higher during the line, in the upper half, faint swirls on both, bg: the glass column at frame LEFT of them, the cliff and tower, the forested hill. Morning (1000)."
     },
     {
       "id": "S13",
@@ -389,7 +392,7 @@
       "place": "market",
       "size": "ews",
       "camera": "at: low behind and left of the bench (25 blocks from the column), slow pull back, FOV 55",
-      "frame": "fg: Grandpa on the bench from behind and a little to the side, head tilted up, tomorrow's peach bottle in his hand on his knee, subject: Grandma and Milo floating down past the column to the paving by the flower stall (she touches down at (-2, 0, 1) on 'Eleven thousand', he half a second later about 1 block west of her at (-3, 0, 1)), bg: the windmill on the cliff with its sails, the fish stall with the nitwit, forest and hills into the morning haze. Hit on 'TIMES', cut 0.5 s after. Morning (1000)."
+      "frame": "fg: Grandpa on the bench from behind and a little to the side, head tilted up, tomorrow's peach bottle in his hand on his knee, subject: Grandma and Kit floating down past the column to the paving by the flower stall (she touches down at (-2, 0, 1) on 'Eleven thousand', he half a second later about 1 block west of her at (-3, 0, 1)), bg: the windmill on the cliff with its sails, the fish stall, forest and hills into the morning haze. Hit on 'TIMES', cut 0.5 s after. Morning (1000)."
     }
   ],
   "props": {
@@ -443,7 +446,7 @@
   "timing": {
     "slow_falling_drop": "vanilla LivingEntity.travel: with Slow Falling and falling, gravity is min(gravity, 0.01) per tick, then x0.98 drag, terminal 0.49 blocks/tick = 9.8 blocks/s (minecraft.wiki/w/Slow_Falling: 'terminal velocity of 9.8 m/s'). From rest, the 23-block drop (feet y 24 to y 1) takes 88 ticks = 4.4 s. Recompute with the real recorded curve.",
     "scene_A": "she hops off on 'jumped' (~0.4 s into L01): a vanilla jump (0.42 up, normal gravity while rising) peaks ~1.25 blocks up after 6 ticks, then slow falling: lands 91 ticks = 4.55 s after the hop, ~1.3 s into L02, on 'Not one SCRATCH'",
-    "scene_C": "Grandma drinks 1.6 s on L10 'drank her JUICE' while walking to the step, Milo selects the bottle on 'TEA' (name pops) and drinks on L11 'So I drank MINE' (1.6 s), she steps on 'we stepped', he steps 0.5 s later on 'OFF' (vertical gap at the same rate: 1.4 blocks at 1.1 s, 2.5 at 2 s, 2.8 at 2.4 s, 4.0 at her touchdown, and he carries ~1 block further west so he never lands on her). L12 plays 1.1-2.4 s into her fall. She touches down at +4.4 s (on 'Eleven thousand'), he at +4.9 s, 'TIMES' ~+5.6 s, cut ~+6.1 s.",
+    "scene_C": "Grandma drinks 1.6 s on L10 'drank her JUICE' while walking to the step, Kit selects the bottle on 'TEA' (name pops) and drinks on L11 'So I drank MINE' (1.6 s), she steps on 'we stepped', he steps 0.5 s later on 'OFF' (vertical gap at the same rate: 1.4 blocks at 1.1 s, 2.5 at 2 s, 2.8 at 2.4 s, 4.0 at her touchdown, and he carries ~1 block further west so he never lands on her). L12 plays 1.1-2.4 s into her fall. She touches down at +4.4 s (on 'Eleven thousand'), he at +4.9 s, 'TIMES' ~+5.6 s, cut ~+6.1 s.",
     "record_first": "Record the real drops on the server first (the bot with /effect give @s slow_falling, stepping and hopping off the jetty) and retime to the measured curves; these numbers are the simulation."
   }
 }

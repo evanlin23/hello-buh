@@ -4,10 +4,10 @@
  "version": 2,
  "revision": "r3 (2026-11-10): r2 continuity's S13 fix and notes, and the r2 critic's 'one more ingot'; see reviews/r1-response.md",
  "caption": "why does grandma feed the nether portal 😶",
- "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson Milo is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
+ "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson Nico is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
  "question": "why tf does grandma throw gold into a nether portal every night?",
- "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Milo keeps the gifts in a barrel and knows Grandpa is alive.",
- "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Milo. One's plenty.'). Tonight Milo throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
+ "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Nico keeps the gifts in a barrel and knows Grandpa is alive.",
+ "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Nico. One's plenty.'). Tonight Nico throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
  "key_color": "#B07CFF",
  "gap": 0.3,
  "mood": [
@@ -21,8 +21,11 @@
  },
  "weather": "clear",
  "world": {
-  "where": "a spruce cottage alone on the ridge across the valley from the carpeted village (Light Sleeper); the cellar under it",
-  "easter_egg": "S05 background: the carpeted village on the far hill (carpet roofs, the bell boxed in white wool). Provisional: re-check against docs/world/canon.md when it lands."
+  "place": "portal_cottage (new, to claim): The Portal Cottage, a spruce cottage alone on a forested ridge in the Green's north forest, north-east of Hushwell, origin (the cellar portal) about (-110, 85, -990), footprint about (-125, -1005, -95, -975); the garden looks south-south-west over the valley to Hushwell's plaza about 140 blocks away",
+  "where": "The Portal Cottage on its ridge north-east of Hushwell; the cellar (library basement) under it with the Nether portal in its east wall",
+  "day": 9300,
+  "canon": "New family, not Milo's: Nico (a player kid, house narrator voice) and his grandma (a plains librarian villager). His grandpa (a player, `ari` skin) walked into the cellar portal on day ~175 and never came back. One ingot a night since, minus the 300 nightless days of the Long Day (800-1100): about 8,825, 'nine thousand' in the kid's round number. Bible: World.",
+  "easter_egg": "boxed_bell (canon cameo, since day 1400): Hushwell's bell in its white wool box, a white speck among the plaza's roofs at S05's frame right, about 140 blocks south-south-west across the valley; world.build places it (Hushwell's stamp)"
  },
  "voice": {
   "engine": "gemini",
@@ -33,9 +36,9 @@
   "N": {
    "role": "narrator",
    "ref": "narrator",
-   "name": "Milo",
+   "name": "Nico",
    "color": "#FFFFFF",
-   "on_screen": "Milo, a player kid, default Steve skin: POV in S03, S04, S08, S09, S11, S12; seen from outside small in S05 (drinking), S10 (back to us at the portal), S13 (sitting on the bed). Pip's voice (cast `narrator`, Leda). Wears golden boots in every shot (Grandma's rule in the cellar; armour on players already renders): a picture plant, never mentioned.",
+   "on_screen": "Nico, a player kid, default Steve skin: POV in S03, S04, S08, S09, S11, S12; seen from outside small in S05 (drinking), S10 (back to us at the portal), S13 (sitting on the bed). Pip's voice (cast `narrator`, Leda). Wears golden boots in every shot (Grandma's rule in the cellar; armour on players already renders): a picture plant, never mentioned.",
    "voice": "Leda",
    "model": "gemini-3.8-flash-lite-tts",
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
@@ -53,7 +56,7 @@
    "name": "Grandpa",
    "silent": true,
    "color": "#F2C66B",
-   "on_screen": "player actor, default `zuri` skin, gold helmet with a lapis trim (the blue stripe); flashback only (S06, S07); never speaks"
+   "on_screen": "player actor, default `ari` skin, gold helmet with a lapis trim (the blue stripe); flashback only (S06, S07); never speaks"
   },
   "Piglin": {
    "role": "character",
@@ -120,7 +123,7 @@
   {
    "under": "S05",
    "sound": "entity.generic.drink",
-   "note": "Milo drinks, from 'potion' to 'FIREPROOF'"
+   "note": "Nico drinks, from 'potion' to 'FIREPROOF'"
   },
   {
    "under": "S07",
@@ -243,9 +246,9 @@
   {
    "id": "L08",
    "who": "Grandma",
-   "text": "Just ONE, Milo. / One's PLENTY.",
+   "text": "Just ONE, Nico. / One's PLENTY.",
    "direction": "gentle and firm, a small smile; a beat after the name",
-   "say": "Just one, Milo. <short pause> One's plenty.",
+   "say": "Just one, Nico. <short pause> One's plenty.",
    "shot": "S11",
    "look": {
     "what": "Grandma"
@@ -332,7 +335,7 @@
    "place": "garden",
    "size": "wide",
    "camera": "at: 5 blocks north of the garden gate, 2 blocks up, looking south past the gate over the valley, a slow push; the garden must be at least 6 blocks deep north of the gate or the lens sits in the cottage wall: confirm on the placed piece, else move the camera along the fence line to keep 5 blocks clear",
-   "frame": "fg: the garden fence, gate lanterns and flowers; subject: Milo (Steve, golden boots) at the gate drinking an orange fire-resistance potion (drink pose, swirl particles) on 'potion'; the cottage's corner at frame right; bg: the valley and, on the far hill to the south, the carpeted village (easter egg: carpet roofs, the bell boxed in white wool), forest and hills into the haze. Morning (1000), sun at frame left (east)."
+   "frame": "fg: the garden fence, gate lanterns and flowers; subject: Nico (Steve, golden boots) at the gate drinking an orange fire-resistance potion (drink pose, swirl particles) on 'potion'; the cottage's corner at frame right; bg: the valley and, across it to the south-south-west at frame right (about 140 blocks), Hushwell's plaza with its bell in a white wool box (the easter egg, canon `boxed_bell`: a white speck among the roofs, never the subject), forest and hills into the haze. Morning (1000), sun at frame left (east)."
   },
   {
    "id": "S06",
@@ -340,7 +343,7 @@
    "place": "cellar_then",
    "size": "ms",
    "camera": "at: 3 blocks in front of Grandpa at his eye height, a slow push; flashback grade (warm, faded, soft vignette)",
-   "frame": "fg: the bare stone floor (no barrels yet, no gifts); subject: Grandpa (player actor, zuri skin) waist up, putting on the gold helmet on 'HELMET'; its lapis sentry trim (the blue stripe) across the front readable on 'BLUE stripe'; Grandma's shoulder at frame left; bg: the new portal's purple behind him. Night, 25 years ago (18000)."
+   "frame": "fg: the bare stone floor (no barrels yet, no gifts); subject: Grandpa (player actor, ari skin) waist up, putting on the gold helmet on 'HELMET'; its lapis sentry trim (the blue stripe) across the front readable on 'BLUE stripe'; Grandma's shoulder at frame left; bg: the new portal's purple behind him. Night, 25 years ago (18000)."
   },
   {
    "id": "S07",
@@ -371,8 +374,8 @@
    "line": "L07",
    "place": "cellar",
    "size": "wide",
-   "camera": "at: 6 blocks behind and above Milo's shoulder (2.5 up, near the ceiling beams), looking past him into the portal, slow push",
-   "frame": "fg: a ceiling beam's edge at the top; subject: Milo small (golden boots), standing in front of the portal, his face lit purple, the stack of gold in his hand; Grandma walking out of frame left toward the ladder (behind the camera); bg: the purple sheet filling the upper half, the obsidian frame. Night (18000)."
+   "camera": "at: 6 blocks behind and above Nico's shoulder (2.5 up, near the ceiling beams), looking past him into the portal, slow push",
+   "frame": "fg: a ceiling beam's edge at the top; subject: Nico small (golden boots), standing in front of the portal, his face lit purple, the stack of gold in his hand; Grandma walking out of frame left toward the ladder (behind the camera); bg: the purple sheet filling the upper half, the obsidian frame. Night (18000)."
   },
   {
    "id": "S11",
@@ -387,7 +390,7 @@
    "line": "L09",
    "place": "cellar",
    "size": "full",
-   "camera": "pov: Milo steps back to about x7 (2 blocks west of his S11 spot); opens on Grandma already climbing the ladder 5 blocks west, the hatch shutting behind her on 'BED'; turns east to the portal 4 blocks away; the stack is thrown on 'ALL my gold' and the hotbar slot empties on the throw",
+   "camera": "pov: Nico steps back to about x7 (2 blocks west of his S11 spot); opens on Grandma already climbing the ladder 5 blocks west, the hatch shutting behind her on 'BED'; turns east to the portal 4 blocks away; the stack is thrown on 'ALL my gold' and the hotbar slot empties on the throw",
    "frame": "fg: the hand; subject: the portal head to foot, the gold stack arcing into the purple on 'ALL'; bg: the obsidian frame, the gifts barrel at frame left. Night (18000)."
   },
   {
@@ -395,8 +398,8 @@
    "line": "L10",
    "place": "cellar",
    "size": "wide",
-   "camera": "at: about (1.3, F+2.0, 9.7) behind the bed, FOV 70, yaw aimed 40 degrees east of north, pitch -10: Milo in line with the portal at about 66 degrees, Grandma on the ladder about 6 degrees inside the left edge; check on a still. Fallback if the ladder won't hold the edge: her steps on the ladder and the trapdoor sound on 'OUT'",
-   "frame": "fg: the bed's end; subject: Milo (golden boots) sitting on the bed's north-east corner (about x2.9, z9.0; sit pose) facing the portal (east-south-east), his back to the lens; on 'stepped OUT' a gold helmet pushes out of the purple and a piglin steps onto the floor, shaking (vanilla: a piglin in the Overworld shakes); on the left edge Grandma's feet come down the ladder (she heard it); bg: the purple sheet. Night (18000)."
+   "camera": "at: about (1.3, F+2.0, 9.7) behind the bed, FOV 70, yaw aimed 40 degrees east of north, pitch -10: Nico in line with the portal at about 66 degrees, Grandma on the ladder about 6 degrees inside the left edge; check on a still. Fallback if the ladder won't hold the edge: her steps on the ladder and the trapdoor sound on 'OUT'",
+   "frame": "fg: the bed's end; subject: Nico (golden boots) sitting on the bed's north-east corner (about x2.9, z9.0; sit pose) facing the portal (east-south-east), his back to the lens; on 'stepped OUT' a gold helmet pushes out of the purple and a piglin steps onto the floor, shaking (vanilla: a piglin in the Overworld shakes); on the left edge Grandma's feet come down the ladder (she heard it); bg: the purple sheet. Night (18000)."
   },
   {
    "id": "S14",

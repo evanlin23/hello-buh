@@ -4,9 +4,9 @@
   "version": 2,
   "revision": "r2 (2026-11-10): the r1 critic's and continuity's must-fixes and the cheap should-fixes applied, see reviews/r1-response.md",
   "caption": "who leaves snow under my window? 😨",
-  "logline": "On a hill farm above his village, where it never snows, Milo finds a trail of snow every morning from Grandpa's scarecrow to his window, stays up to catch his stalker, and throws the window open on the night guard Grandpa left him.",
+  "logline": "On a farm high on a meadow, where it never snows, Toby finds a trail of snow every morning from Grandpa's scarecrow to his window, stays up to catch his stalker, and throws the window open on the night guard Grandpa left him.",
   "question": "why tf is there snow leading to his window when it never snows?",
-  "premise": "Sixty-three mornings in a row, a trail of snow runs across the green grass from the scarecrow in Grandpa's wheat to Milo's bedroom window, on a hill farm where it never snows. He shovels it up and it's back every night, ending in a trampled patch where someone seems to stand all night staring at him. He hears groaning every night and doesn't look, finds rotten flesh under his window, and Mom said Grandpa built that scarecrow out of snow the week before he died. Grandpa always said he'd keep an eye on him.",
+  "premise": "Sixty-three mornings in a row, a trail of snow runs across the green grass from the scarecrow in Grandpa's wheat to Toby's bedroom window, on a hill farm where it never snows. He shovels it up and it's back every night, ending in a trampled patch where someone seems to stand all night staring at him. He hears groaning every night and doesn't look, finds rotten flesh under his window, and Mom said Grandpa built that scarecrow out of snow the week before he died. Grandpa always said he'd keep an eye on him.",
   "twist": "The stalker is a guard. Every night zombies come for the boy (a player) and crowd the wall under his window, groaning up at him. The scarecrow is a snow golem Grandpa built: it walks out of the wheat to the spot where it can see them, leaving its vanilla snow trail, and pelts them with snowballs all night, shoving them off his wall until they burn at sunrise (the rotten flesh). He throws the window open expecting the stalker in his face, finds the scarecrow gone from the wheat, and the camera looks down: the zombies were under his window, and the thing staring at him all night was keeping an eye out for him.",
   "key_color": "#9FE3FF",
   "gap": 0.25,
@@ -22,11 +22,11 @@
   },
   "weather": "clear",
   "world": {
-    "place": "hill_farm (new, to claim: within Hushwell, on the hillside south-west of Dog Hill, origin about (-250, 95, -868), footprint about (-268, -888, -196, -852); the yard must be at y 90 or higher)",
-    "where": "Hushwell's hill farm: Grandpa's farmhouse and field and Milo and Mom's cottage, on the hillside above Hushwell, south-west of Dog Hill, the plaza 95 blocks east and about 15 below",
+    "place": "hill_farm (new, to claim): The Meadow Farm, on the High Meadow's north rim, origin (the foot of the cottage's back wall) about (-380, 116, -860), footprint about (-398, -880, -326, -844); the yard must be at y 90 or higher (it is about 115 on the plateau); the Burned Copy lies about 100 blocks north-west on the plain below",
+    "where": "The Meadow Farm: Grandpa's farmhouse and field and Toby and Mom's cottage, on the High Meadow's north rim",
     "day": 2200,
-    "canon": "Milo (about 12) and Mom (Hushwell's farmer). Grandpa is Milo's Ravenford grandpa (player), who came east after Thirty-One Raids, farmed the hill, built the snow golem on day 2137 and died on day 2144. Bible: Canon consequences.",
-    "easter_egg": "boxed_bell (canon cameo, since day 1400): Hushwell's bell boxed in white wool, a white speck in the plaza far below, S08 frame right"
+    "canon": "New family, not Milo's: Toby (a player kid, house narrator voice), Mom (a plains farmer villager) and Grandpa (a player, never seen), who built the snow golem on day 2137 and died on day 2144. No canon character dies. Bible: World.",
+    "easter_egg": "burned_copy (canon cameo, always): the charred shell of a Fernbank house and well on the plain below the rim, small at S07's frame left about 100 blocks out; world.build places it (the Burned Copy's pieces and stamp)"
   },
   "voice": {
     "engine": "gemini",
@@ -39,14 +39,14 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "Milo as a nine-year-old player kid (default Steve skin): POV in S03, S09, S10; seen in camera shots in S05 (sitting on his bed) and S11 (head and shoulders in the open window)"
+      "on_screen": "Toby, a nine-year-old player kid (a new family, not Milo's) (default Steve skin): POV in S03, S09, S10; seen in camera shots in S05 (sitting on his bed) and S11 (head and shoulders in the open window)"
     },
     "Mom": {
       "role": "character",
-      "ref": "mom",
+      "ref": null,
       "color": "#FFC2A8",
       "voiced": false,
-      "on_screen": "villager, plains farmer outfit, no name tag, S07 only (on the farmhouse porch). Quoted by the narrator with 'said', no voiced line"
+      "on_screen": "villager, plains farmer outfit, no name tag, S07 only (on the farmhouse porch). Quoted by the narrator with 'said', no voiced line. Not the cast `mom` (Milo's mom in Hushwell): no ref, never voiced"
     }
   },
   "requests": [
@@ -121,7 +121,7 @@
       "direction": "scared but brave-sounding, the last three words fast and firm, full volume, never hushed or breathy",
       "shot": "S05",
       "look": {
-        "what": "actor:Milo"
+        "what": "actor:Toby"
       }
     },
     {
@@ -272,7 +272,7 @@
       "place": "bedroom",
       "size": "full",
       "camera": "at: the cottage's `inside` anchor look (from the corner by the hearth toward the back wall), eye height, still. FOV 55",
-      "frame": "fg: the table edge; subject: Milo head to foot, sitting on the edge of his bed (sit pose), his back to the closed shutters above the bed, facing into the room; the hanging lantern and the hearth campfire both lit; moonlight in the shutter slats; on 'GROANING' a zombie groan from outside the back wall. Night (18000).",
+      "frame": "fg: the table edge; subject: Toby head to foot, sitting on the edge of his bed (sit pose), his back to the closed shutters above the bed, facing into the room; the hanging lantern and the hearth campfire both lit; moonlight in the shutter slats; on 'GROANING' a zombie groan from outside the back wall. Night (18000).",
       "look": {
         "time": 18000
       },
@@ -296,7 +296,7 @@
       "place": "farmhouse_porch",
       "size": "wide",
       "camera": "at: (33, 4, 6) looking at (23, 1, -5), still. FOV 50 (Mom 16 blocks away, about 13 percent of the frame height: check she reads at 300 px, and go to FOV 40 if not). y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
-      "frame": "fg: the field's south-east plot and its fence; subject: Mom (villager, plains farmer outfit) on the farmhouse porch at (25, 1, -8) beside four carved pumpkins on the porch's front edge (Grandpa's, faces out); the scarecrow small in the wheat at frame left (21, 0), its lantern post beside it; bg: the farmhouse front and roof, the hillside beyond. Morning (1000).",
+      "frame": "fg: the field's south-east plot and its fence; subject: Mom (villager, plains farmer outfit) on the farmhouse porch at (25, 1, -8) beside four carved pumpkins on the porch's front edge (Grandpa's, faces out); the scarecrow small in the wheat at frame left (21, 0), its lantern post beside it; bg: the farmhouse front and roof, the plateau's edge beyond it, and past the edge at frame left, far below on the plain about 100 blocks out, the charred shell of a burned house and well (the easter egg, canon `burned_copy`, small, never the subject). Morning (1000).",
       "look": {
         "time": 1000
       },
@@ -308,7 +308,7 @@
       "place": "field",
       "size": "ms",
       "camera": "at: (16.5, 1.6, 1.0) looking east at the pumpkin (21, 1.6, 0), slow push from 4.6 to 3.6 blocks. FOV 50. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
-      "frame": "fg: the field fence gap, the first wheat; subject: the scarecrow from the front, waist up above the wheat: the carved pumpkin face (the eye) and the white snow body under it (now named: L06 said snow); the lantern post at (22, 1, 1) at frame right; bg: the field falling away east, and far below, 95 blocks out, Hushwell's roofs with the bell boxed in white wool a white speck in the plaza at frame right, below the horizon (the easter egg, never the subject); sky. Morning (1000).",
+      "frame": "fg: the field fence gap, the first wheat; subject: the scarecrow from the front, waist up above the wheat: the carved pumpkin face (the eye) and the white snow body under it (now named: L06 said snow); the lantern post at (22, 1, 1) at frame right; bg: the field falling away east, the meadow and groves beyond; sky. Morning (1000).",
       "look": {
         "time": 1000
       },
@@ -356,7 +356,7 @@
       "place": "yard",
       "size": "wide",
       "camera": "path, a reveal pull-out. Key 0 (0 s): the POV eye in the window (-0.3, 3.6, 0) looking down at the zombies (1, 0.5, 0); key 1 (1.2 s): (4, 5, 5) looking at (2, 1, -4); key 2 (end + 0.8 s hold): (8, 5, 8), same look (window 18 degrees left of centre, golem 19 right, zombies 14 left: all inside the crop). FOV 50. wideMaster, cropX chosen to keep the window and the golem in. y is height above the local ground at that x,z (the ground falls 2-4 blocks from the cottage, x 0, east to the field, x 19+)",
-      "frame": "opens straight down from the window onto three zombies at the foot of the wall, arms up, faces up at us (the stalker he expected was never at the window: these were); pulls out and up: our back wall with the four shutters open and Milo's head and shoulders in the window (moonlit), the zombies under it, and on its trampled patch at (6, -6), 14 blocks from the lens (the zombies 10-11), the snow golem throwing snowballs at them, a white puff on every hit, each zombie shoved south along the wall away from the window; the trail leaving the patch at frame right; lit by Grandpa's yard lantern on a fence post at (3, 1, -3) (within 4 blocks of the golem and the zombies) and a lantern under the eave beside the window at (0.5, 5, 1.5) (Milo's face). Night (18000).",
+      "frame": "opens straight down from the window onto three zombies at the foot of the wall, arms up, faces up at us (the stalker he expected was never at the window: these were); pulls out and up: our back wall with the four shutters open and Toby's head and shoulders in the window (moonlit), the zombies under it, and on its trampled patch at (6, -6), 14 blocks from the lens (the zombies 10-11), the snow golem throwing snowballs at them, a white puff on every hit, each zombie shoved south along the wall away from the window; the trail leaving the patch at frame right; lit by Grandpa's yard lantern on a fence post at (3, 1, -3) (within 4 blocks of the golem and the zombies) and a lantern under the eave beside the window at (0.5, 5, 1.5) (Toby's face). Night (18000).",
       "look": {
         "time": 18000
       },

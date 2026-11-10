@@ -1,8 +1,8 @@
 # scarecrow: set brief (r2)
 
 r2: the 2x2 window with four shutters, the lantern post and the 1x1 gap at the scarecrow spot, the dark room for
-night D, no village in frame, heights above the local ground, no fog. r2 polish + world: the canon place (Hushwell's
-hill farm, y 90+), the boxed-bell easter egg, the lanterns, S02/S07/S08/S10 cameras. See reviews/r1-response.md.
+night D, no village in frame, heights above the local ground, no fog. r2 polish + world: the canon place (the Meadow
+Farm on the High Meadow, y 90+), the Burned Copy easter egg, the lanterns, S02/S07/S08/S10 cameras. See reviews/r1-response.md.
 
 Two library pieces on real ground: the `farmhouse` (Grandpa's farm: the fields with the scarecrow anchor, the porch,
 the barn, the paddock) and a `cottage` (ours) on the slope just west of the field, its back wall facing the wheat.
@@ -11,21 +11,21 @@ Coordinates as in the bible: origin at the foot of my window's wall outside, +x 
 above the local ground at that x,z (the ground falls 2-4 blocks east from the cottage to the field).
 
 ## Site and biome (the honest part)
-- **The place is canon: Hushwell's hill farm** (`hill_farm`, to claim; bible "The place and the day"), on the hillside
-  south-west of Dog Hill. Origin about (-250, 95, -868), with Hushwell's plaza 95 blocks east and about 15 below.
-  Build with `world.build(ctx, { story: 'scarecrow' })` once the claim and its `pieces` are in map.json. **No
+- **The place is canon: the Meadow Farm** (`hill_farm`, to claim; bible "World: the place and the day"), on the High
+  Meadow's north rim. Origin about (-380, 116, -860); the Burned Copy lies about 100 blocks north-west on the plain
+  below. Build with `world.build(ctx, { story: 'scarecrow' })` once the claim and its `pieces` are in map.json. **No
   `planSite`, `findSite` or clearing** (the shared-world rule: lib/sets refuses them).
-- **Why the height matters.** The biome is Hushwell's plains (0.8). On low plains ground a snow golem leaves **no**
-  trail (it lays snow only below 0.8). Above y 80 the temperature falls with height (0.05 per 40 blocks, plus
-  noise), so at y 90+ it is about 0.77-0.79 and the golem lays snow. It still never snows there (snowfall needs under
+- **Why the height matters.** On low plains ground (0.8) a snow golem leaves **no** trail (it lays snow only below
+  0.8). Above y 80 the temperature falls with height (0.05 per 40 blocks, plus noise), so on the plateau at y 115+
+  it is about 0.75 (and a meadow biome is 0.5): the golem lays snow. It still never snows there (snowfall needs under
   0.15). **The whole yard and the trail must be at y 90 or higher.** Read it off the survey grid before claiming. If
-  it's lower, slide the place west along the ridge (keeping the plaza east of the field for S08's easter egg).
+  the rim there is lower or too steep for the 2-4 block fall east, slide the place along the north rim, keeping the
+  Burned Copy in S07's view at frame left.
 - **Never fake the biome**: no `plainsBiome()` (it would be a no-op here anyway) and no `/fillbiome`.
 - **Check it on the server once (2 min):** `/summon snow_golem` on the yard and let it walk 10 blocks. It must leave
   snow layers on the grass. If it doesn't, the yard is too low: move the place, not the story.
 - **The ground** falls gently **east** from the cottage to the field (2-4 blocks over the 20-block yard), with the
-  hill rising behind the cottage to the west and north (Dog Hill's ridge) and the slope running down east to
-  Hushwell. The fit (`lib/sets/terrain.js`) gives the cottage a stone foundation on its downhill (east) side, which is
+  plateau behind the cottage to the west and south and the meadow running on east past the field. The fit (`lib/sets/terrain.js`) gives the cottage a stone foundation on its downhill (east) side, which is
   what we want.
 - `gamerule mobGriefing true` (default) if the golem is ever run live; `difficulty normal` (zombies can't break doors).
 
@@ -54,24 +54,24 @@ above the local ground at that x,z (the ground falls 2-4 blocks east from the co
     cottage's back wall and window; bg the hill rising behind the cottage, a `grove` of oak and birch 25-40 blocks
     west, hills to the horizon.
   - S02 (crane, key 1 (2, 20, 26) looking at (4, 0, -3)): fg the yard and the trail; mid the cottage, the farmhouse
-    roof; bg the hillside, groves 30+ blocks north, Dog Hill's ridge. The scarecrow sits just past the right edge:
+    roof; bg the plateau, groves 30+ blocks north, the rim. The scarecrow sits just past the right edge:
     check the sheet, no white body in frame before L06.
   - S07 (camera (33, 4, 6) looking at (23, 1, -5)): fg the south-east plot and its fence; mid Mom (16 blocks: check
     she reads at 300 px, FOV 40 if not), the porch, its pumpkins, the scarecrow and its lantern post small at frame
-    left; bg the farmhouse front and roof, the hillside beyond.
-  - S08 (camera (16.5, 1.6, 1.0) looking east at the pumpkin): bg the field falling away east and Hushwell far below,
-    the boxed bell a white speck at frame right (the easter egg).
+    left; bg the farmhouse front and roof, the plateau's edge, and past it at frame left the Burned Copy far below on
+    the plain (the easter egg). Check on a still that the rim doesn't hide it; if it does, move the place toward the rim.
+  - S08 (camera (16.5, 1.6, 1.0) looking east at the pumpkin): bg the field falling away east, the meadow and groves
+    beyond.
   - S11 (night, from the window down, then (8, 5, 8) looking at (2, 1, -4)): fg the moonlit grass; mid the wall, the
     window, the zombies, the golem on its patch, the yard and eave lanterns; bg the cottage roof and the hill line
     under the moon. (The field and the porch are off this frame.)
-- **Hushwell** is the seed's generated village plus its canon stamps (`world.build` puts the boxed bell back): nothing
-  to build for it here.
+- **The Burned Copy** is canon (its pieces and the char stamp): `world.build` builds it. Nothing to build for it here.
 
 ## The easter egg
-`boxed_bell` (canon cameo, since day 1400): Hushwell's bell boxed in white wool, a white speck in the plaza 95 blocks
-east and 15 below, at S08's frame right under the horizon. `world.build` builds it (Hushwell's stamp). Check on the
-S08 sheet that it shows (a few pixels is enough: it's an easter egg). If the hill hides the plaza, it's the one
-thing to re-aim. (r1's nitwit egg is dropped: canon has him gone from Fernbank's day 520.)
+`burned_copy` (canon cameo, always): the charred shell of a Fernbank house and well on the plain about 100 blocks
+north-west and ~50 below the rim, small at S07's frame left past the farmhouse, for S07's ~2.5 s. `world.build`
+builds it. Check on the S07 sheet that it shows (a dark shape is enough: it's an easter egg). (r1's nitwit egg and r2's
+boxed bell are dropped: the nitwit is gone from day 520, and the farm is no longer above Hushwell.)
 
 ## Cast staging
 - **The golem**: `snow_golem` with its pumpkin (default `Pumpkin: 1b`). Mornings: NoAI at (21, 0) facing west.
@@ -84,7 +84,7 @@ thing to re-aim. (r1's nitwit egg is dropped: canon has him gone from Fernbank's
   The golem throws only from S11's first frame: in S10 (POV, yaw pinned east) no golem, snowball or puff may show
   (with a live golem, summon it at the patch on S11's cut; staged, start the throws at S11).
 - **Mom**: villager, plains farmer, NoAI, on the porch at (25, -8) facing south-west (S07).
-- **Milo in camera shots**: S05 the player actor sitting on the bed (`sit` pose), facing into the room; S11 the bot
+- **Toby in camera shots**: S05 the player actor sitting on the bed (`sit` pose), facing into the room; S11 the bot
   (or actor) standing in the window, head and shoulders above the opening's bottom.
 
 ## Engine needs

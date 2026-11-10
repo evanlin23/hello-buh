@@ -6,12 +6,16 @@ can put them anywhere on the map, as long as the valley site is out of sight of 
 follows `docs/building_guide.md`; no clearing, no superflat.
 
 ## Site 1: the rail town
-- **Choose with** `sets.planSite(ctx, pieces)` over: a vanilla `village_plains` (placed once with `sets.vanilla`, mobs
-  `freeze`), a `cottage` (spruce) at the village's south edge for our house, the station footprint (12 x 20) south of
-  it, and the `bridge` 40 blocks south of the buffer. Ask for a site where the ground south of the village drops into a
-  river ravine 8-12 deep (`bridge` variant `drop` to match, `length` ~25) and rises again into hills beyond it: those
-  hills fill the top third of S01, S07, S13. If no ravine comes up, `sets.findShore` for a river and put the bridge
-  across it.
+- **The canonical place** (docs/world/canon.md): the rail town (`rail_town`, to claim; bible "World") on the High
+  Meadow's east top, the buffer stop about (-305, 116, -770). Built with `world.build(ctx, { story: 'broken_rail' })`:
+  no `planSite`/`findSite`/`findShore`/`/locate`. Its map.json pieces: a vanilla `village_plains` (placed once with
+  `sets.vanilla` at its canonical spot, mobs `freeze`), a `cottage` (spruce) at the village's south edge for our house,
+  the station footprint (12 x 20) south of it, and the `bridge` 40 blocks south of the buffer over a river ravine
+  8-12 deep (`bridge` variant `drop` to match, `length` ~25), the ground rising into hills beyond it: those hills fill
+  the top third of S01, S07, S13. Read the ground off the survey grid before claiming; if the ravine isn't there,
+  slide the place along the plateau's east top, keeping Torch Hill's torch (-290, -684) about 45-50 blocks south and
+  a little east of the bridge's north foot (S08's easter egg). The line leaves the bridge south-west, never through the
+  Digger's House footprint, and the town stays out of the frames of Torch and Sheep Stares (check their stills).
 - **Station** (no library piece; build by hand, ~40 min, or add a `station` piece if a second story wants one):
   - the main line: one rail running due south from the buffer stop, through the platform, onto the bridge deck centre,
     and on up the far hill for ~120 blocks (out of S01/S13's frame into the fog);
@@ -22,7 +26,7 @@ follows `docs/building_guide.md`; no clearing, no superflat.
   - the platform: smooth stone slabs, 3 wide, 14 long, on the west side, with 2 lamp posts (`dress.lamp`, post style),
     a spruce bench (stairs) at (-2,-1), frame left in S01/S13, clear of Grandpa, a hanging oak sign `ELMWATER | 4500 →` facing north;
   - the sidings: two 6-rail spurs on the east side joined to the main line by a curve, each ending in a buffer stop;
-    an oak sign over each (`OTTO`, `ROSE`); a minecart on OTTO's spur;
+    an oak sign over each (`OTTO`, `JUNE`); a minecart on OTTO's spur;
   - dressing: barrels and crates (`dress.clutter`, crates) at the platform's back, flowers along the ballast
     (gravel under the rails, frayed with coarse dirt by `dress.path`).
 - **The hotbar**: no rails until L08 (S06: carrot, dirt, torch); give the rails stack on "RAILS" in S08.
@@ -36,12 +40,11 @@ follows `docs/building_guide.md`; no clearing, no superflat.
 - **Depth for each establishing shot (fg / mid / bg out to the fog):**
   - S01/S13: camera 5 behind and 2 west of Grandpa: fg Grandpa's face, apron and the buffer lantern (lower-left
     third), the bench at the left edge; mid the activator rail and the line; bg the bridge (its lamp posts) and the
-    hills beyond the ravine, a `grove` of fancy oaks on the far ridge, the sunset at frame right with the easter egg
-    under it.
+    hills beyond the ravine, a `grove` of fancy oaks on the far ridge, the sunset at frame right.
   - S02: fg platform and sidings; mid the station and our cottage; bg the village roofs (left), the bridge and hills
     (right).
   - S03: fg the yard loop and the pig's cart; mid Mom at the gate; bg the station 30 blocks off, the line into the hills.
-  - S04: fg platform slabs; ROSE's spur centred; bg (north) the village roofs.
+  - S04: fg platform slabs; JUNE's spur centred; bg (north) the village roofs.
   - S05: looking north from the yard fence: the pig's cart, the cottage behind; no station (it is behind-right).
   - S07: crane from Grandpa's shoulder: the station, the line, the bridge 40 blocks south, the hills beyond.
 - **Cast placement**: Grandpa at (0,-1), body facing south (NoAI villager), headYaw ~40 deg west toward the sunset in S01/S13; Mom at the garden gate facing the station (S03).
@@ -51,7 +54,9 @@ follows `docs/building_guide.md`; no clearing, no superflat.
   On the knock, the activator rail "sets her down": end the ride and tp her standing at (0,1), facing north.
 
 ## Site 2: the valley
-- **Choose with** `sets.findSite(ctx, { w: 40, d: 120, minRange: 12 })`: a long valley (a river or stream valley,
+- **The canonical place**: the crater (`rail_crater`, to claim; bible "World"), 3,000 blocks down the line in a
+  green valley of the West March's south lakes, about (-2050, 66, -250), built with `world.build` (no `findSite`).
+  Wanted there: a long valley (a river or stream valley,
   plains/meadow, spruce on the ridges) with a ridge 15-25 blocks high at its north end. The line: rails down the ridge
   (slopes), along the valley floor ~80 blocks, a powered rail with a redstone torch beside it every 8 blocks.
 - **Crater**: on the valley floor, 7 wide at rail height and 3 deep. Make it with a real explosion (`/summon creeper`
@@ -68,14 +73,15 @@ follows `docs/building_guide.md`; no clearing, no superflat.
   beside her powered rail in the pause (the rail lights). He ends on the far side, behind the cart, for S12b. **S12b**: the bot walks into the cart from the south; the lit powered rail launches it north
   (lessons.md: empty carts lose speed, but a ridden cart on boosters every 8 blocks is fine; check it clears the crater
   bridge and leaves frame left within ~1 s; S12b's camera pans left with it for 3 blocks).
-- **Depth:** S09: fg ridge-top spruces, mid the line and Milo, bg the valley, hills to the fog;
+- **Depth:** S09: fg ridge-top spruces, mid the line and Ezra, bg the valley, hills to the fog;
   S10/S11a: fg the near rail stub and the crater, mid her cart, bg the line on into the valley and the valley wall;
-  S12b: fg ferns, mid the cart and Milo, bg the valley side.
+  S12b: fg ferns, mid the cart and Ezra, bg the valley side.
 
 ## Easter egg
-S01 and S13, on a far hill at frame right under the sunset (west): the carpeted village of Light Sleeper. If that set isn't built in this world, stand in a
-small cluster of 3-4 houses with red and orange carpet roofs and a wool-boxed bell post on the hill, 120-180 blocks from
-the camera (readable as carpet-roofed houses, not detail). **Provisional: re-check against docs/world/canon.md.**
+Canon cameo `torch_hill` (since day 300): the lone torch on the slope under the High Meadow, over the Digger's shaft
+at (-290, -684). In S08 only (midnight, POV at the bridge's north foot looking south): one warm point in the dark,
+about 48 blocks ahead and below, left of centre. Nothing to build: `world.build` puts the Digger's House stamp back
+(map.json `stories.broken_rail.cameos`). Never the subject, never named. At dusk (S01, S07, S13) it doesn't read.
 
 ## Engine features this story needs
 | need | status | estimate | plan |

@@ -5,7 +5,7 @@
   - A snow golem lays a snow layer in the empty cells under its feet as it moves, where the biome temperature is below
     0.8, the block below has a full top face, and `mobGriefing` is on.
     - Plains is 0.8, so on low plains ground it lays nothing. Above y 80 the temperature falls (0.05 per 40 blocks,
-      plus a little noise), so on Hushwell's hill at y 90+ it is about 0.77-0.79: the golem lays snow.
+      plus a little noise), so on the High Meadow at y 115+ it is about 0.75 (a meadow biome is 0.5): the golem lays snow.
     - It lays none on farmland or dirt path, none in the wheat, and none on flowers.
   - Snow layers melt only next to block light above 11, never in sunlight. The trail stays until it is shoveled, and a
     shovel on a snow layer drops a snowball.
@@ -30,8 +30,8 @@
      - We show one morning (the 63rd) with it at its spot, which a wander can produce. Nothing says it returns there
        every day.
 - **Backstory (never said).**
-  - Grandpa is Milo's Ravenford grandpa (canon: a player, `zuri` skin, `elder` voice; Thirty-One Raids). After raid 32
-    he brought Milo home east across the White and farmed the hill above Hushwell, beside Mom and Milo's cottage.
+  - Grandpa is Toby's grandpa (a player, never seen; not a canon character). He farmed the Meadow Farm on the High
+    Meadow's north rim, beside Mom and Toby's cottage.
   - He knew zombies came for the boy's wall at night.
   - The week before he died he stacked two snow blocks in his wheat, beside a lantern post, and put one of his carved
     pumpkins on top.
@@ -44,7 +44,7 @@
 | A. the morning | L01-L03 | yesterday morning (the 63rd) | 1000 (S01-S04) | sun low in the east, behind S01's camera, lighting our east-facing back wall |
 | B. every night | L04 | any night of the 63 | 18000 (S05) | inside: the hanging lantern and the hearth campfire both lit; moonlight in the shutter slats |
 | C. the same morning | L05-L07 | yesterday morning (as A) | 1000 (S06-S08) | as A |
-| D. last night | L08-L11 | last night (the 63rd night) | 18000 (S09-S11) | full moon; the lantern post in the wheat (22, 1, 1), the farmhouse porch lantern, Grandpa's yard lantern on a fence post (3, 1, -3) and a lantern under the eave beside the window (0.5, 5, 1.5): a lantern within 4 blocks of every face in S11, and none within 4 blocks (Manhattan) of the trail or the patch (block light over 11 melts snow). **Milo's room is dark**: the hanging lantern taken down, the hearth `campfire[lit=false]` |
+| D. last night | L08-L11 | last night (the 63rd night) | 18000 (S09-S11) | full moon; the lantern post in the wheat (22, 1, 1), the farmhouse porch lantern, Grandpa's yard lantern on a fence post (3, 1, -3) and a lantern under the eave beside the window (0.5, 5, 1.5): a lantern within 4 blocks of every face in S11, and none within 4 blocks (Manhattan) of the trail or the patch (block light over 11 melts snow). **Toby's room is dark**: the hanging lantern taken down, the hearth `campfire[lit=false]` |
 
 - Weather: clear throughout. Season: summer (ripe wheat, flowers, green grass). No fog (`look.fog: false`): the
   distance is haze and hills.
@@ -71,14 +71,14 @@ from the cottage (x 0) to the field (x 19+).
 | scarecrow spot | (21, 0): a 1x1 coarse-dirt gap in the north-west wheat plot, west of its channel | The golem stands in the gap, facing west. A fence post with a lantern stands at (22, 1, 1) | S01 (from behind), S07 (small), S08 (its face) | D: the gap is empty and lit by the lantern (S10b) |
 | farmhouse porch | the farmhouse at x 19..29, z -16..-10; the porch at z -9..-7 | Grandpa's farmhouse: a bench, a lantern, and four carved pumpkins on the porch's front edge, faces out | S07 | none |
 | barn, paddock | barn x 40..50, z -16..-6; paddock x 42..50, z -4..9 | four cows | not framed | none |
-| Hushwell (canon) | the plaza about 95 blocks east, 15 below | the generated village; the bell in its white wool box (canon `boxed_bell`, since day 1400) | S08's background (the easter egg) | none |
+| the Burned Copy (canon) | on the plain about 100 blocks north-west, ~50 below the rim | a charred copy of a Fernbank house and well (canon `burned_copy`) | S07's background at frame left (the easter egg) | none |
 
-The village itself is off screen, down the south slope. Nothing in a frame claims it.
+No village is in frame. Nothing in a frame claims one.
 
 ## Cast and costume
 | who | mob / skin | held item | where in each scene | state changes |
 |---|---|---|---|---|
-| me (N): Milo, about 12 | the bot (POV); default Steve skin in camera shots | Hotbar: 1 iron shovel, 2 snowballs (already a stack; S03 adds one), 3 empty. Selected: slot 1 in S03, slot 3 (an empty hand) in S09-S10 | A: on the trail at (15, -2), facing west (S03). B: sitting on his bed facing into the room (S05). D: sitting on the bed facing the shutters (S09); standing at the window (S10, S11: head and shoulders in the opening) | none |
+| me (N): Toby, about 12 | the bot (POV); default Steve skin in camera shots | Hotbar: 1 iron shovel, 2 snowballs (already a stack; S03 adds one), 3 empty. Selected: slot 1 in S03, slot 3 (an empty hand) in S09-S10 | A: on the trail at (15, -2), facing west (S03). B: sitting on his bed facing into the room (S05). D: sitting on the bed facing the shutters (S09); standing at the window (S10, S11: head and shoulders in the opening) | none |
 | the "scarecrow" | snow golem with its carved pumpkin | none | A/C: in the gap at (21, 0), facing west (NoAI for the takes), the white body inside the wheat up to its middle. D: on the patch at (6, -6), facing the wall, throwing (S11) | none |
 | Mom | villager, plains farmer | none | C: on the porch at (25, -8), looking south-west at the field (S07) | none |
 | zombies (3) | adult zombies, no armour | none | B: heard only. D: at the foot of the back wall, (0.5..1.5, -1..2), arms up, facing up at the window; shoved south along the wall on each hit, walking back | none die on screen |
@@ -96,6 +96,7 @@ The village itself is off screen, down the south slope. Nothing in a frame claim
 | rotten flesh | S06 | two dropped items, bobbing and turning | (0.8, 0, 0.5) and (1.2, 0, -0.8) | gone by night |
 | shutters | S01 (closed, from outside) | four spruce trapdoors, closed (vertical) | the window (0, 3-4, -1..0) | S04, S05, S09 closed; S10 open on "OPEN"; S11 open |
 | carved pumpkins | S07 | four, faces out | the porch edge, x 21..27, z -7 | none |
+| the easter egg: the Burned Copy (canon cameo `burned_copy`) | S07 (bg, frame left, ~2.5 s) | a charred house and well, no lights | on the plain about 100 blocks north-west, ~50 below the rim (built by `world.build`) | none (S07 only) |
 | shovel | S03 | iron, in hand | hotbar 1 | S03 only |
 | barrel, cauldron, composter | S06 (frame left) | the cottage piece's, along the back wall | z 4..6 at x 0 | S11 (the wall) |
 
@@ -133,40 +134,40 @@ The village itself is off screen, down the south slope. Nothing in a frame claim
 The full table is in `beats.md`.
 
 ## Easter egg (shared world, canon)
-`boxed_bell` (canon cameo, since day 1400): Hushwell's bell boxed in white wool, a white speck in the plaza 95 blocks
-east and 15 below, at S08's frame right under the horizon, for S08's ~3.8 s. It is never the subject, never named, and
-true on day 2200. It needs no build here: `world.build` places Hushwell's `boxed_bell` stamp.
+`burned_copy` (canon cameo, always): the charred shell of a Fernbank house and well on the plain about 100 blocks
+north-west and ~50 below the rim, small at S07's frame left past the farmhouse, for S07's ~2.5 s. It is never the
+subject, never named, and true on day 2200. It needs no build here: `world.build` places the Burned Copy's pieces and
+char stamp. (Listed in Props.)
 
-## The place and the day (docs/world/canon.md)
-- **Place:** a new place to claim, `hill_farm` ("Hushwell's hill farm"), within Hushwell. It sits on the hillside
-  south-west of Dog Hill, with the plaza 95 blocks east.
-  - Origin (this bible's (0,0,0)): about (-250, 95, -868). Footprint about (-268, -888, -196, -852). It overlaps
-    Hushwell's footprint at its east end, like Dog Hill (`within: hushwell`).
-  - **The yard must be at y 90 or higher** (the snow-trail rule above). Read the ground off the survey grid before
-    claiming. If it's lower, slide the place west along the ridge until it isn't, keeping Hushwell's plaza east of the
-    field so S08 still sees the bell.
+## World: the place and the day (docs/world/canon.md)
+- **Place:** a new place to claim, `hill_farm` ("The Meadow Farm"), on the High Meadow's north rim (empty land in the
+  canon), the Burned Copy about 100 blocks north-west on the plain below.
+  - Origin (this bible's (0,0,0)): about (-380, 116, -860). Footprint about (-398, -880, -326, -844): clear of the
+    Burned Copy, Larkfield (Nine Thousand Torches) and the rail town (The Broken Rail).
+  - **The yard must be at y 90 or higher** (the snow-trail rule above; the plateau is 115-123). Read the ground off
+    the survey grid before claiming. If the rim there won't take the farm, slide the place along the north rim,
+    keeping the Burned Copy at S07's frame left.
   - Claim it in its own commit (not done here):
-    `node scripts/world.js claim hill_farm --name "Hushwell's hill farm" --at -250,95,-868 --footprint -268,-888,-196,-852 --story scarecrow --day 2200`.
+    `./hb world claim hill_farm --name "The Meadow Farm" --kind homestead --region the_green --at -380,116,-860 --footprint -398,-880,-326,-844 --story scarecrow --day 2200`
   - Then add map.json `pieces` (`cottage` facing west at origin + (-8, 0); `farmhouse` facing south at origin
-    + (18, -17)) and `stamps` (below), and run `node scripts/world.js check`. Build with
-    `world.build(ctx, { story: 'scarecrow' })`: no `planSite`/`findSite`.
-- **Day:** 2200, the night of the 63rd morning. It's outside the Long Day (800-1100), after Thirty-One Raids (1900),
-  and before Good Boy (3300) and Milo's last login (3400).
-- **Who:** Milo (about 12, narrating in the house narrator voice, as canon allows for kid Milo) and Mom (Hushwell's
-  farmer villager). Grandpa is Milo's Ravenford grandpa (one grandpa per Short, called Grandpa by his own
-  grandchild). Never in the same Short as Pip.
-- **Stands alone:** no line names Hushwell, Ravenford or any earlier story.
+    + (18, -17)), `stamps` (below) and `stories.scarecrow.cameos: ["burned_copy"]`, and run `./hb world check`.
+    Build with `world.build(ctx, { story: 'scarecrow' })`: no `planSite`/`findSite`.
+- **Day:** 2200, the night of the 63rd morning. It's outside the Long Day (800-1100).
+- **Who:** a new family, not Milo's: Toby (a player kid, narrating in the house narrator voice), Mom (a plains farmer
+  villager, unvoiced, no cast ref: the cast `mom` is Milo's mom) and Grandpa (a player, never seen; one grandpa per
+  Short, called Grandpa by his own grandchild). No canon character is killed or changed: Milo's Ravenford grandpa is
+  not in this story.
+- **Stands alone:** no line names a place or another story.
 
-## Canon consequences to record (for map.json and canon.md, in the claim commit; canon files not edited here)
+## World: canon consequences to record (for map.json and canon.md, in the claim commit; canon files not edited here)
 | what | since | stamp / note |
 |---|---|---|
-| Hushwell's hill farm: Grandpa's farmhouse and field, Milo and Mom's cottage | ~2000 | pieces `cottage` and `farmhouse` as above |
-| Grandpa came east after raid 32 and farmed the hill | ~2000 | canon.md timeline row and the Ravenford Grandpa's character row |
+| The Meadow Farm: Grandpa's farmhouse and field, Toby and Mom's cottage | ~2000 | pieces `cottage` and `farmhouse` as above |
 | Grandpa builds the snow golem in his wheat | 2137 | stamp: `snow_golem` (Pumpkin on, persistent) at origin + (21, 0) in a 1x1 coarse-dirt gap, a lantern post at + (22, 1, 1) |
-| **Grandpa dies** | 2144 | canon.md: the Ravenford Grandpa's row gets "died on day 2144, on the hill farm". No later story may show him alive |
+| Toby's grandpa dies (a new character, not the Ravenford grandpa) | 2144 | canon.md timeline row |
 | the snow trail, every morning (shoveled daily) | 2138 | story-only (not a stamp) |
-| Hushwell's hill farm wheat stays unharvested | 2144 | the farmhouse piece's crops stay ripe |
+| the farm's wheat stays unharvested | 2144 | the farmhouse piece's crops stay ripe |
 | open question (new) | | "How long does Grandpa's golem keep watch?" Never answered; it is still there unless a later story says otherwise |
 
-Timeline row to add: **2200, Hushwell's hill farm. Scarecrow.** "For 63 mornings a snow trail runs from Grandpa's
-scarecrow to Milo's window. He opens the window: zombies under it, and Grandpa's snow golem keeping them off."
+Timeline row to add: **2200, the Meadow Farm. Scarecrow.** "For 63 mornings a snow trail runs from Grandpa's
+scarecrow to Toby's window. He opens the window: zombies under it, and Grandpa's snow golem keeping them off."

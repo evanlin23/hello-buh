@@ -34,6 +34,26 @@ the cellar is a potion lab, and tomorrow's bottle is in Grandpa's hand in S13. S
   built the fountain (up only) and started brewing. 11,000 jumps is about thirty years of mornings. Grandma has never
   known: she thinks she's light. Grandpa brews a batch most nights and keeps spares (potions in item frames on the wall,
   more in the chest) so she can never run out. The kid is staying with his grandparents for the summer.
+- **The place and the day (shared world, docs/world/canon.md):**
+  - **Place:** a new place to claim, `millcliff` ("Millcliff"), a market town under a west-facing cliff on the West
+    March's east edge, east of the Ridge and its old tower. Origin (this bible's (0,0,0), the soul sand) about (-1876,
+    72, -485), footprint about (-1910, -520, -1860, -455). Read the ground off the survey grid before claiming. Claim it
+    in its own commit (not done here):
+    `./hb world claim millcliff --name "Millcliff" --kind village --region the_west_march --at -1876,72,-485 --footprint -1910,-520,-1860,-455 --story slow_falling --day 11300`
+    Then add map.json `pieces` (market, windmill, cottage, basement, the fountain and jetty as stamps) and
+    `stories.slow_falling.cameos: ["raven_tower"]`, and run `./hb world check`.
+  - **Day:** 11300 (the morning after the birthday). "ELEVEN THOUSAND" mornings means the jumps began about day 300,
+    the year Grandma and Grandpa married. Both night scenes (the cellar) are outside the Long Day (800-1100).
+  - **Who:** a new family, not Milo's: Kit (a player kid, the house narrator voice) staying with his grandparents for
+    the summer (mannequins with our own skins; Grandpa has no cast ref: the cast `elder` is Milo's Ravenford grandpa).
+    One grandpa in this Short, called Grandpa only by his own grandchild.
+  - **Stands alone:** no line names a place or another story.
+  - **Canon consequences to record** (map.json and canon.md, in the claim commit; canon files not edited here):
+
+    | what | since | stamp / note |
+    |---|---|---|
+    | Millcliff: the market, the cliff with Grandpa's fountain (a soul-sand bubble column), the windmill and its jetty, the cottage and the cellar potion lab | ~300 | pieces and stamps at `millcliff`. It stands about 130 blocks east of the Ridge: any later Ravenford story whose frames look east over the Ridge shows the windmill's sails |
+    | Kit learns what the "juice" is; Grandma still thinks she can fly | 11300 | timeline row: **11300, Millcliff. Slow Falling.** "Grandma has stepped off the windmill eleven thousand times. Her grandson drinks Grandpa's tea and floats down beside her." |
 - **Scenes and time of day, in story order:**
 
 | scene | lines | when | time (ticks) | light |
@@ -79,10 +99,9 @@ south, y up. The market lies west of the cliff, and the windmill stands on the l
 ## Cast and costume
 | who | mob / skin | outfit, held item | name tag | where in each scene | state changes |
 |---|---|---|---|---|---|
-| me (N), Milo as a kid | the bot, POV; default Steve skin in camera shots (S08, S12, S13) | hotbar: slot 1 empty (selected), slot 2 the peach potion from S07; no armor; full hearts | none | B: the foot of the ladder, then at the stand (S07). C: in the column 4 blocks under Grandma (S08); the balcony beside the column's exit at (1, 24, -1), looking north-west (S09); at the balcony edge at (1, 24, 1), the jetty's root, 2.5 blocks behind her, facing west (S10); walks the jetty and steps off its end 0.5 s after her, carrying ~1 block further west (S11); above her and ~1 block west (S12); landing at about (-3, 0, 1) (S13) | Slow Falling from L11 to the end; no damage |
+| me (N), Kit, a player kid (not Milo) | the bot, POV; default Steve skin in camera shots (S08, S12, S13) | hotbar: slot 1 empty (selected), slot 2 the peach potion from S07; no armor; full hearts | none | B: the foot of the ladder, then at the stand (S07). C: in the column 4 blocks under Grandma (S08); the balcony beside the column's exit at (1, 24, -1), looking north-west (S09); at the balcony edge at (1, 24, 1), the jetty's root, 2.5 blocks behind her, facing west (S10); walks the jetty and steps off its end 0.5 s after her, carrying ~1 block further west (S11); above her and ~1 block west (S12); landing at about (-3, 0, 1) (S13) | Slow Falling from L11 to the end; no damage |
 | Grandma | mannequin, our skin `skins/grandma.png` (grey bun, pink cardigan, flowered skirt; make with scripts/make_skins.py) | **S01-S02 empty hands**; the peach potion from S03 (handed over) and in S04; S10 drinks it (1.6 s), then empty hands to the end | none | A: the step (S01), falling (S02), at the fountain door (S03), rising in the column (S04), tiny at the jetty end (S05). C: rising in the column (S08), at the jetty end facing west, her back to the kid (S10), falling (S11-S13), landing at (-2, 0, 1) | Slow Falling in A (drunk off screen) and from S10; lands without damage |
 | Grandpa | mannequin, our skin `skins/grandpa.png` (white hair and moustache, brown cardigan, purple scarf) | the peach potion in S03 (handing it over); a loaf of bread in S08; **tomorrow's peach potion in his hand, resting on his knee, in S13** | none | A: at the fountain door (S03), on the bench at (-22, 0, 6), sitting, face up (S05). B: on the chair at the brewing stand, awake (S06), asleep with his head dropped (S07, `doze` pose). C: at the bread stall, facing the baker, his back to the column (S08, on screen at frame left); on the bench, face up (S13) | none |
-| the nitwit (easter egg) | villager, nitwit (green coat) | none | none | standing on the fish stall's striped roof (S03, S13 background) | none |
 | market villagers (4-6) | plains villagers at the stalls (`buyer_n`/`stall_n` anchors), frozen; the baker at the bread stall faces Grandpa in S08 | none | none | A and C, at the stalls | none |
 
 ## Props
@@ -95,10 +114,11 @@ south, y up. The market lies west of the cliff, and the windmill stands on the l
 | the potions in frames | S06 | peach potions in item frames on the wall | cellar wall behind the stand | none |
 | the fountain | S01 | water, bubbles rising, soul sand at the foot, door shut | (1, 0..22, 0); `props.fountain` aims at its middle (1, 11, 0) | always the same |
 | the market's centre | S03 | a big planter with a tree (no fountain) | (-14, 0, 0) | none |
+| the easter egg: the Ridge's old tower (canon cameo `raven_tower`) | S11 (bg, skyline, frame left, ~1.5 s) | the watchtower, no banner | on the Ridge about 130 blocks west-south-west of the windmill (built by `world.build`) | none (S11 only) |
 
 ## Positions and screen direction
 - From the market (S03, S05, S08, S13) the column and windmill are **ahead (east) and up**. The flower stall is at
-  frame right of the fountain door, the fish stall (and the nitwit) at frame left.
+  frame right of the fountain door, the fish stall at frame left.
 - Grandma always steps off **west**, toward the market. **In the falling shots (S02, S12) the camera is west of her
   looking east, so the column (z 0, north of her at z 1) is at frame LEFT of her.** Keep it there in both.
 - S03: Grandpa left, Grandma right, the door between them behind.

@@ -9,8 +9,12 @@ terrain with relief. Every piece follows `docs/building_guide.md`.
 - **What to find:** a plains (or meadow) edge against a dark forest, with the ground rising **west** from the hamlet:
   ~6-8 blocks of climb over the 30-block meadow, the forest rising beyond it. The sun sets in the west, so the forest
   must be west of the hamlet.
-- **How:** `sets.planSite(ctx, layout, { reach: 200 })` over the layout below, plus a score term for the ground 25-40
-  blocks west of the gate being 5-10 blocks higher and wooded. If that forest isn't dark oak, plant
+- **Where (canon):** Oakend (`oakend`, to claim; bible "World"), on the North Inlet's west bank at the east edge of the
+  north-west forest, the west gate about (-512, 66, -1030); Fernbank's dock is across the inlet about 75 blocks east
+  of the gate. Built with `world.build(ctx, { story: 'names_in_the_woods' })`: no `planSite`/`findSite`/`/locate`.
+  Read the ground off the survey grid before claiming: the ground 25-40 blocks west of the gate should be 5-10 blocks
+  higher and wooded; if it isn't there, slide the place north or south along the bank, keeping the dock in S03's view
+  at frame right. If that forest isn't dark oak, plant
   `sets.dress.grove(ctx, { x: gate.x - 45, z: gate.z, r: 25, n: 40, kinds: ['dark_oak'] })` and rings north and south,
   so the treeline fills S01's frame width.
 - No `clearSet`, no flat clearing. Clear only the hamlet's footprint (`sets.dress.clearTrees`). Leave the meadow natural
@@ -45,7 +49,7 @@ terrain with relief. Every piece follows `docs/building_guide.md`.
   over their crossed arms). In S06 a bottle leaves the brewing stand on "SPLASH POTION" (a block-state change to
   `has_bottle_2=false`): she has taken it.
 - ROSA: `HandItems:[{id:"golden_apple"},{id:"splash_potion",components:{potion_contents:{potion:"weakness"}}}]`. In S13 she looks down at
-  the bottle, then at Milo (head turn), and on "DROPPED" her off hand clears and the potion item is summoned at her left
+  the bottle, then at Remy (head turn), and on "DROPPED" her off hand clears and the potion item is summoned at her left
   hand with a small motion toward him, landing at (-13.5,0), `PickupDelay:10`.
 - The zombies stop and stare: 1.5 blocks out from the fence in S02 (Mom 1.5 blocks inside it), at the lamp post from S13 (ROSA at (-16,0),
   the three at x -20 to -22). Staged actors.
@@ -58,20 +62,20 @@ terrain with relief. Every piece follows `docs/building_guide.md`.
 | shot | fg | mid | bg |
 |---|---|---|---|
 | S01 / S11 (from (2, 2.0, 0) looking west, FOV 50) | the gate's top rail | the zombies 14-16 blocks out on the rising path, arms raised, the lamp post at (-15,2) on their faces, tags in the upper third | the dark oak treeline across the width at ~32 blocks, the forest rising behind, the orange sky; no build visible west |
-| S03 (crane from 14 up over x 4 looking east, down to Mom's gate) | the lane, villagers with tags | seven cottages, the well, gardens, lamps, the sheep pen | fields to x 80, hills, **the easter egg** on the far east hill, fog |
+| S03 (crane from 14 up over x 4 looking east, down to Mom's gate) | the lane, villagers with tags | seven cottages, the well, gardens, lamps, the sheep pen | fields, the inlet and Fernbank across it, **the easter egg** (Fernbank's empty boat at the dock end, frame right), fog |
 | S05 (WS POV from (4,0), east-south-east down the lane) | the lane | Mom 8 blocks away; the three empty cottages receding, signs and job blocks | the lane's far end, the stone cottage, fields |
-| S10 (from (3,8,0) pushing to (-1,7,0), FOV 40, looking west) | the gate lanterns, Milo small | the meadow, Mom from (-22,1) to the trees | the treeline with the low sun over it |
+| S10 (from (3,8,0) pushing to (-1,7,0), FOV 40, looking west) | the gate lanterns, Remy small | the meadow, Mom from (-22,1) to the trees | the treeline with the low sun over it |
 
-## Easter egg (provisional: re-check against docs/world/canon.md when it lands)
-The carpeted village of Light Sleeper on the far east hill, seen at the start of S03's crane. Build a stand-in on a
-hill ~110-140 blocks east of the gate: 4-5 small houses with red and orange carpet roofs and a post with a bell boxed in
-white wool, small in the haze, never named. If canon lands with real coordinates, place this hamlet "one valley west"
-of it and drop the stand-in.
+## Easter egg
+Canon cameo `empty_boat` (since day 400): Fernbank's empty oak boat tied at the end of its dock (-436.5, 62.6,
+-1025.5), across the inlet, in the opening of S03's crane at frame right, small on the water. Nothing to build:
+`world.build` puts Fernbank's stamp back (map.json `stories.names_in_the_woods.cameos`). Never the subject, never
+named, gone from frame as the crane comes down.
 
 ## Engine needs
 | need | status (checked 2026-11-10) | estimate | decision |
 |---|---|---|---|
-| **Name tags over heads** (docs/engine_requests.md #7, queued) | Mostly there: render.js draws a custom-named mob's nameplate with `CustomNameVisible` (or under the crosshair) within 64 blocks (render.js ~2538; `nameTagTexture` in renderer/blockentities.js). Missing: the **player** nameplate over Milo in camera shots (S14), and a still of S01 to check the plates read at 14-16 blocks at dusk | ~1 h | build; update #7's status when it lands |
+| **Name tags over heads** (docs/engine_requests.md #7, queued) | Mostly there: render.js draws a custom-named mob's nameplate with `CustomNameVisible` (or under the crosshair) within 64 blocks (render.js ~2538; `nameTagTexture` in renderer/blockentities.js). Missing: the **player** nameplate over Remy in camera shots (S14), and a still of S01 to check the plates read at 14-16 blocks at dusk | ~1 h | build; update #7's status when it lands |
 | **Held item on a villager** (CrossedArmsItemLayer: Mom's apple) and **a mob's off-hand item** (ROSA's potion, S11-S13) | Mob main-hand items are recorded (`extra.held`, harness ~516) and drawn in a humanoid `rightArm` (entities.js ~1155), so ROSA's apple already draws. The villager model has one crossed `arms` bone, so Mom's apple doesn't. Mob off hands aren't recorded (equipment[1] is read for players only) | ~1.5 h (CrossedArmsItemLayer under the arms bone; record equipment[1] for mobs and mirror the item group onto `leftArm`) | build |
 | **The selected item's name above the hotbar** (Gui.renderSelectedItemName: "Splash Potion of Weakness" in S13, "Golden Apple" in S15; ~2 s after a slot change, fading) | not drawn by edit.py's HUD | ~1 h (edit.py: the display name in the hotbar font above the hotbar, fade over the last 10 ticks) | build. The narration says POTION and APPLE, so the story reads without it. |
 | Egg throw and pop, splash potion throw and splash | rendered (render.js THROWN, the splash colour) | 0 | verify on the shot sheet |
