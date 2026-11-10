@@ -102,3 +102,19 @@ lint mob motion, scout_valley. The round-2 particle fix and the voice_check.py r
   are data; 2-round review cap). **Held for the owner**: publish this cut, or a focused review of 45-49 s first; and
   L16 ("Oh. That's why we have nine thousand carpets.") under the "both are implied" rule (the lead reads it as the
   twist's punchline, so keep).
+
+## vNext (2026-11-10, evening): the r2 script
+- Pre-build notes applied in their own commit (continuity_prebuild breaks + cheap notes, critic_r2_shouldfix). Script:
+  15 lines, 140 words, `voice_takes: "beat"`, payoff the warden's roar, cut 1 s after it, no death screen.
+- Set: new S01 hook (the carpeted village from the doghouse street) and S03 meadow (trees between the camera and the
+  flock cleared with `fill ... replace #leaves/#logs`, three grazers stepping so the line's sheep read and move).
+- Voice: Orus (gemini-3.8-flash-tts, voices/recipes/narrator_roblox.md), **1 TTS request** (the whole script as one
+  beat take, gate ok on take 1). The beat cutter put the L07|L08 boundary inside "screamed" (Whisper stretched the word
+  over 1 s, and the cut window opens 0.1 s after the last word's *start*, so the quiet point was the stop before
+  "-creamed"); speaker_check passed it ("…the well chest."). Moved by hand to the quiet point before "Mom" (13.505 s),
+  re-aligned. **Shared-code follow-up for the lead** (not changed here): tts.bounds should not open the window
+  inside a long last word, and speaker_check should fail a line whose last word isn't heard.
+- Motion lint: L12 is 1.2 s now (the take is fast), so the ECHO crane covers it; the doorway villagers step out
+  slower (1.3 s) and Mom turns from the well to him on L13, her head sinking as the Darkness comes.
+- `./hb render --wait` alone only fetches the last finished render (it handed back the old 48 s cut); queue with
+  `./hb render <stunt>` first.
