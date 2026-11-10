@@ -39,7 +39,7 @@ module.exports = {
   selfArmor: ['golden_boots', null, null, null],   // Grandma's rule: the grandson wears golden boots (never said)
   look: 'auto',
   shots: {},   // below
-  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', startAt: 'line:0', endAfter: 'story_end:0', punch: [['reveal', 0, 0.08]] },   // the punch: the stripe reads (the payoff; S14 has no line)
+  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', guiScale: 4, startAt: 'line:0', endAfter: 'story_end:0', punch: [['reveal', 0, 0.08]] },   // the punch: the stripe reads (the payoff; S14 has no line)
   // the whole area, Hushwell's plaza (S05's background, ~95 blocks SSW) included
   chunkStops (set) { return [[0, 0], [-30, 60], [-22, 100], [40, 0], [0, -40], [40, 40], [-40, 0]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
 
@@ -172,7 +172,7 @@ module.exports = {
     const aimG = (i) => P(9.55 + 0.15 * (morning[i][1][0] - 9.75), 1.3, 6.45)   // the gifts' spot (cellar block 9,1,6), the portal's foot above it
     await K.cut(morning[0][3][0], morning[0][3][1], aimG(0), 1, { after: () => gift(...morning[0].slice(0, 3)) })
     await line('L03', async (k, at) => {
-      for (let i = 1; i < 3; i++) if (k === at(i)) await K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { shot: i === 1 ? 's04b' : 'pov', after: () => gift(...morning[i].slice(0, 3)) })
+      for (let i = 1; i < 3; i++) if (k === at(i)) await K.cut(morning[i][3][0], morning[i][3][1], aimG(i), 1, { shot: i === 1 ? 's04b' : 'pov_morning', after: () => gift(...morning[i].slice(0, 3)) })
       for (let i = 0; i < 3; i++) if (k === Math.min(at(i) + 12, at(i + 1) - 3)) pickUp(i)
       if (k === at(3)) {
         bot.setQuickBarSlot(1)   // the fire resistance potion (story.json hotbar slot 2)
@@ -283,7 +283,7 @@ module.exports = {
 
     // L11 (S12, S13): she walks to the ladder and climbs, the hatch shuts behind her on 'BED'; I turn to the portal and
     // throw in ALL of it; on 'and SOMETHING' (S13, from behind me) a piglin steps out of the purple on 'stepped OUT'
-    await K.cut(7.0, 5.5, P(2.4, 2.6, 2.2))
+    await K.cut(7.0, 5.5, P(2.4, 2.6, 2.2), 1, { shot: 'pov' })
     from = null
     let thrown = false, shut = -1, pig = null, pg = null
     await line('L11', async (k, at, n) => {
@@ -364,6 +364,7 @@ module.exports.shots = {
   s10: { at: [3.7, 4.05, 5.75], look: [10.8, 1.85, 5.5], fov: 55, push: 0.3, dof: false, subject: ['self'] },
   // S13: from the bed corner behind the grandson, standing where he threw, in line with the portal
   s13: { at: [2.0, 2.9, 7.6], look: [10.9, 2.0, 5.6], fov: 58, push: 0.15, dof: false, subject: ['self'] },
-  // S14: the reveal, close: 2.4 blocks west of the piglin at its eye height, facing east, a very slow push
-  s14: { at: [6.9, 2.55, 5.5], look: [10.1, 2.25, 5.6], fov: 52, push: 0.12, dof: { aperture: 0.7 }, subject: [[10.1, 1.9, 5.6]] }
+  // S14: the reveal, close (just in front of me and to my right: at 6.9 the camera sat inside my head, since L11
+  // leaves me at 7.0, 5.5): 2.4 blocks west of the piglin at its eye height, facing east, a very slow push
+  s14: { at: [7.65, 2.5, 5.95], look: [10.1, 2.25, 5.6], fov: 52, push: 0.12, dof: { aperture: 0.7 }, subject: [[10.1, 1.9, 5.6]] }
 }
