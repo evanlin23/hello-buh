@@ -47,7 +47,7 @@ module.exports = {
     await c(`/tp @s ${X} ${F + 40} ${Z}`); await bot.waitForTicks(60)
     try { await bot.waitForChunksToLoad() } catch (e) {}
     await ctx.defaultRules()
-    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'spawn_wardens false', 'do_warden_spawning false', 'mob_griefing false', 'fire_damage false']) await c(`/gamerule ${g}`)
+    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing false', 'fire_damage false']) await c(`/gamerule ${g}`)
     await c('/difficulty easy')
     await c('/kill @e[type=!player]')
     await c(`/attribute @s minecraft:movement_speed base set 0.07`)   // a kid walking soft: ~3 b/s, not 4.3
@@ -233,10 +233,9 @@ module.exports = {
     K.stop()
 
     // ---- L05: Mom in our doorway, 2 steps up; the camera low (sneaking), 3 blocks out
-    await K.cut(0.5, -4.4, C(0, 4.6, -7.4), PLAZA)
+    await K.cut(0.5, -3.2, C(0, 4.6, -7.4), PLAZA)
     await line('L05', async (k, at) => {
-      mom.pitch = 22 + Math.sin(k / 9) * 3
-      if (k === at(1)) mom.yaw = 6
+      mom.pitch = 18 + Math.sin(k / 5) * 8; mom.yaw = Math.sin(k / 6) * 14   // a mom's 'how many times' nod
       K.base = K.aim(C(0, 4.5, -7.4)); look(k)
     })
 
@@ -250,7 +249,7 @@ module.exports = {
       for (const [x, z] of lidRow) {
         const b = bot.blockAt(new ctx.Vec3(X + x, F + 1, Z + z))
         if (!b || b.name === 'air') continue
-        K.base = K.aim(C(x, 1.5, z)); await look(0)
+        K.base = K.aim(C(x, 1.5, z)); await look(0); swing()
         try { await K.dig(b, 250) } catch (e) { breakBlock(x, 1, z, 'white_wool') }   // shears on wool: 5 ticks
         ctx.particles('block', P(x, 1, z), { block: 'white_wool' })
         dug++
@@ -267,14 +266,14 @@ module.exports = {
     await line('L07', async (k, at) => {
       if (k === at(2)) { shriek(); K.ctl('back', true) }
       if (k === at(2) + 5) K.ctl('back', false)
-      K.base = K.aim(C(0, 0.8, 0)); look(k)
+      K.base = K.aim(C(k < at(2) ? Math.sin(k / 4) * 0.8 : 0, 0.8, 0)); look(k)   // peering into the slot, then the scream
     })
     K.stop()
 
     // ---- L08: inside our house. Mom holds the room; the Darkness (the shriek's answer) is already on us
     K.shot('pov')
     await K.cut(0.5, -9.9, C(0, 4.4, -13), 3.07, { time: AFTERNOON + 100, after: () => say('/effect give @s minecraft:darkness 30 0 true') })
-    await line('L08', async (k) => { mom.pitch = 25 + Math.sin(k / 8) * 3; K.base = K.aim(C(0, 4.4, -13)); look(k) })
+    await line('L08', async (k) => { mom.pitch = 25 + Math.sin(k / 8) * 4; mom.yaw = Math.sin(k / 3.2) * 20; K.base = K.aim(C(0, 4.4, -13)); look(k) })   // she shakes her head: a fox
     // the lid is whole again by tonight (Mom re-laid it, bible)
     say(`/fill ${X - 1} ${F + 1} ${Z} ${X + 1} ${F + 1} ${Z} white_wool`)
 
@@ -290,11 +289,11 @@ module.exports = {
     let creeperDead = false, disc = null
     await line('L09', async (k, at) => {
       if (!creeperDead) { K.step(cr, 0.045, 0); cr.y = standY(ctx, X, Z, Math.floor(cr.x), Math.floor(cr.z)) }
-      sk.yaw = K.mcYaw(cr.x - sk.x, cr.z - sk.z)
+      { const p = bot.entity.position, tx = creeperDead ? p.x - X : cr.x, tz = creeperDead ? p.z - Z : cr.z; sk.yaw = K.mcYaw(tx - sk.x, tz - sk.z); if (creeperDead && k % 30 === 0) sk.x -= 0.0 }
       if (k === at(1) - 3) { ctx.sound('entity.skeleton.shoot', 0.8, 1); const dd = Math.hypot(cr.x - sk.x, cr.z - sk.z) || 1, ux = (cr.x - sk.x) / dd, uz = (cr.z - sk.z) / dd; say(`/summon arrow ${(X + sk.x + ux * 0.8).toFixed(2)} ${(F + sk.y + 1.5).toFixed(2)} ${(Z + sk.z + uz * 0.8).toFixed(2)} {Motion:[${(ux * 1.2).toFixed(3)},0.02,${(uz * 1.2).toFixed(3)}],Tags:["arr"]}`) }
       if (k === at(1) + 1) { creeperDead = true; K.actors.delete('creep'); say('/kill @e[tag=arr]'); say('/damage @e[tag=creep,limit=1] 100 minecraft:arrow'); ctx.sound('entity.creeper.death', 0.7, 1) }
       if (k === at(1) + 4 && !disc) { disc = { x: cr.x, z: cr.z }; say(`/summon item ${(X + cr.x).toFixed(2)} ${(F + cr.y + 0.3).toFixed(2)} ${(Z + cr.z).toFixed(2)} {Item:{id:"minecraft:music_disc_cat",count:1},PickupDelay:32767,Age:-32768}`) }
-      if (bot.entity.position.x < X - 25.6) K.go(false)
+      if (bot.entity.position.x < X - 28.0) K.go(false)
       const tgt = disc ? C(disc.x - 0.5, cr.y + 0.2, disc.z - 0.5) : C(-34, fy + 1.3, 7.5)
       K.base = K.aim(tgt); look(k)
     })
@@ -343,7 +342,9 @@ module.exports = {
         for (const [x, z, f, t, yaw] of doors) {
           say(`/setblock ${X + x} ${F + 2} ${Z + z} oak_door[half=lower,facing=${f},open=true]`); say(`/setblock ${X + x} ${F + 3} ${Z + z} oak_door[half=upper,facing=${f},open=true]`)
           const o = { south: [0, 0.6], north: [0, 0.4], west: [0.4, 0], east: [0.6, 0] }[f]
-          K.actor(t, { x: x + o[0] + (f === 'east' || f === 'west' ? 0 : 0.5), y: 2.07, z: z + o[1] + (f === 'north' || f === 'south' ? 0 : 0.5), yaw: K.mcYaw(-x, -z) })
+          const ix = { south: [0, -1], north: [0, 1], west: [1, 0], east: [-1, 0] }[f]
+          const a = K.actor(t, { x: x + o[0] + (f === 'east' || f === 'west' ? 0 : 0.5) + ix[0], y: 2.07, z: z + o[1] + (f === 'north' || f === 'south' ? 0 : 0.5) + ix[1], yaw: K.mcYaw(-x, -z) })
+          a.walk = { dx: -ix[0] / 12, dz: -ix[1] / 12, n: 12 }
         }
         ctx.sound('block.wooden_door.open', 0.6, 0.9)
       }
@@ -353,6 +354,7 @@ module.exports = {
         song = startSong(ctx, K, C(1, 3.1, -2))
       }
       if (k === at(2) + 10) shriek()
+      for (const [, , , t] of doors) { const a = K.actors.get(t); if (a && a.walk && a.walk.n > 0) { a.x += a.walk.dx; a.z += a.walk.dz; a.walk.n-- } else if (a) a.pitch = Math.sin((ctx.tick + t.length * 7) / 9) * 6 }
       K.base = K.aim(C(0.3, 1.5, 0)); look(k)
     })
 
@@ -360,7 +362,8 @@ module.exports = {
     await put('mom', { x: 0.5, y: 3.07, z: -7.35, yaw: 0, pitch: 8 })
     K.shot('mom')
     say('/effect give @s minecraft:darkness 600 0 true')
-    await line('L13', async (k) => { look(k) })
+    const mom13 = K.actors.get('mom')
+    await line('L13', async (k) => { mom13.yaw = Math.sin(k / 1.7) * 5; mom13.pitch = 8 + Math.sin(k / 2.3) * 4; look(k) })   // frozen, trembling
 
     // ---- L14: POV turning from the jukebox to the east doorways: villagers frozen, the bell; "a real PARTY"
     K.shot('pov')
@@ -401,6 +404,7 @@ module.exports = {
     K.shot('pov')
     for (let k = 0; k < 18; k++) {
       if (k < 12) wd.z = 4.5 - 1.0 * K.ease(k / 12)
+      wd.pitch = Math.sin(k / 4) * 10
       K.base = K.aim(P(0.5, 3.4, wd.z)); look(k)
       if (k === 14) { ctx.sound('entity.warden.sonic_boom', 1.6, 1); ctx.mark('flash') }
       await bot.waitForTicks(1)
@@ -408,7 +412,7 @@ module.exports = {
     say('/damage @s 1000 minecraft:sonic_boom')
     await bot.waitForTicks(8)   // the death screen comes up (the harness keeps ticking while dead)
     // L16 over the death screen, the plaza pulsing behind it: "Oh. THAT'S why we have nine thousand CARPETS."
-    await line('L16', async () => {})
+    await line('L16', async (k) => { wd.yaw = 180 + Math.sin(k / 5) * 22; wd.pitch = 10 + Math.sin(k / 7) * 8 })   // it sniffs the square
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     if (song) song()
@@ -596,7 +600,7 @@ module.exports.shots = {
   // L07: low from the north-west, behind him, looking south-east past his back at the well (the south steps beyond)
   s07: { at: [-5.5, 2.4, -6.5], look: [0.6, 2.0, -1.4], fov: 50, push: 0.25, dof: { aperture: 0.8, focus: { of: 'self', offset: [0, -0.4, 0] } } },
   // L12: the crane from ~16 above our roof (0,-12), looking south and down, into his head at (0.5, -2.75)
-  crane: { path: [[0, 0.5, 22, -13], [1.1, 0.5, 9, -7], [2.0, 0.5, 3.2, -3.7]], lookPath: [[0, 0.5, 1, 1.5], [1.1, 0.5, 1.5, 0.5], [2.0, 0.4, 1.5, 0]], ease: true, fov: 60, dof: false },
+  crane: { path: [[0, 0.5, 21, -6.2], [1.1, 0.5, 9, -5.2], [2.0, 0.5, 3.2, -3.7]], lookPath: [[0, 0.5, 1, 2.5], [1.1, 0.5, 1.5, 0.5], [2.0, 0.4, 1.5, 0]], ease: true, fov: 60, dof: false },
   // L13: the reverse: 1 block east of him at his eye height, looking north at Mom in our doorway
   mom: { at: [1.6, 2.65, -2.9], look: [0.5, 4.5, -7.35], fov: 50, push: 0.3, dof: { aperture: 0.8 } },
   // the inserts before the reveal (0.35 s each)

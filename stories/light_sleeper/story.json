@@ -87,8 +87,8 @@
       "shot": "S04",
       "look": {
         "what": [
-          6.5,
-          3.2,
+          5.4,
+          3.3,
           0.5
         ],
         "word": "BELL"
@@ -130,8 +130,8 @@
       "direction": "the best news of his life, fast and excited, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S09",
       "look": {
-        "what": "entity:creeper",
-        "word": "CREEPER"
+        "what": "entity:skeleton",
+        "word": "skeleton"
       }
     },
     {
