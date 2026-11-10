@@ -26,7 +26,7 @@ fi
 S=work/server
 cp server.properties "$S/server.properties"
 echo "eula=true" > "$S/eula.txt"   # Minecraft EULA (https://aka.ms/MinecraftEULA), accepted for this private server
-python3 make_ops.py HelloBuh "$S/ops.json"
+python3 make_ops.py HelloBuh,Milo "$S/ops.json"   # Milo: a stunt's botName (lib/harness.js)
 rm -rf "$S/world"                 # fresh world every run
 rm -f "$S/console" && mkfifo "$S/console"
 ( cd "$S" && tail -f console | java -Xmx2G -jar server.jar nogui > ../server.log 2>&1 ) &
