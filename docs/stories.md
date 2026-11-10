@@ -132,6 +132,18 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "wouldnt the lore be crazy if all of the sets were the same world".** Every story happens in
+  **one persistent world** (seed `hellobuh`): `docs/world/canon.md` (the places, the timeline, the recurring characters,
+  the links between stories) and `docs/world/map.json` (every place's canonical coordinates and the set pieces it uses).
+  - Pitch inside the world: use a place from the map or claim a new one (`node scripts/world.js claim`), give the
+    story a day on the world timeline, and check the canon for that place and day.
+  - Build at the canonical spot: `world.build(ctx, { story })` (lib/world.js) rebuilds the places on the seed's own
+    terrain every run; no site searches, no clearings, no `/locate`.
+  - **Every Short still stands alone.** No line or clue needs another Short; links live in the background.
+  - One easter egg per story (the dog on his hill on the skyline, the boxed bell, the totem frames...), background
+    only, true on the story's day, never spoken.
+  - Facts a story creates (a grave, a building, someone gone) go into canon.md and map.json in the same commit; a
+    published Short's facts are never contradicted (canon.md lists them and how earlier conflicts are read).
 - **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
   per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
   Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. Until `./hb voice` cuts safely:
