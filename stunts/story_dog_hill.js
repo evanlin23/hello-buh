@@ -47,9 +47,9 @@ module.exports = {
     // L04: the collar, close (the one close-up before the reveal)
     collar: { path: [[0, 2.6, 1.3, -1.4], [4, 2.3, 1.2, -1.2]], look: [0.55, 0.85, 0.5], fov: 45 },
     // L05: over his back at the empty patch, the valley beyond
-    patch: { path: [[0, -2.2, 1.4, 1.5], [4, -1.8, 1.3, 1.3]], look: [3.4, 0.4, -1.2], fov: 50 },   // (over his back: the bare patch mid-frame, the hut beyond it)
+    patch: { dof: false, path: [[0, -2.2, 1.4, 1.5], [4, -1.8, 1.3, 1.3]], look: [3.4, 0.4, -1.2], fov: 50 },   // (over his back: the bare patch mid-frame, the hut beyond it)
     // L06: the hut, wide, the dog small in the foreground
-    hut: { path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.5, -5], fov: 58 },
+    hut: { dof: false, path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.5, -5], fov: 58 },
     // L07: Pip begging in front of him (side on)
     beg: { path: [[0, 1.0, 1.8, 4.8], [4, 0.9, 1.7, 4.2]], look: [1.0, 0.6, 0.5], fov: 50 },
     // L08-L10: Grandpa on the path below the south rim; Pip at the rim above
@@ -272,8 +272,10 @@ module.exports = {
     cut('reveal')
     ctx.mark('hush'); ctx.mark('swell')
     await run(4)
-    await ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5)
+    // the chat line on the teleport's own tick (vanilla: the message and the appearance are the same tick; marked after
+    // tpCheck's confirm wait it came 1.2 s late: review round 1)
     ctx.mark('chat', { text: 'Milo joined the game', hold: 2.6 })
+    await ctx.tpCheck(X + 3.5, F + 1, Z + 0.5, 90, 5)
     await run(14)
     line('N', 'L12')
     const t12 = T('L12')
@@ -303,8 +305,8 @@ module.exports = {
       if (k === Math.round(t14 * 0.3)) { tp('dog', 2.4, 1, 0.5, -90, 0); sitDog(true); bot.swingArm('right') }
     })
     await run(8)
-    await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     ctx.mark('chat', { text: 'Milo left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
+    await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     await run(16)
     // ---- L15: "Day one." over the dog alone where Milo vanished; on "Again." the cut to the opening frame pulling
     // back (the loop) with the payoff's sound hit; the end 0.25 s after the word (owner: end as the payoff lands)
