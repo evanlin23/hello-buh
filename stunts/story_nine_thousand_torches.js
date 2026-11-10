@@ -306,12 +306,12 @@ module.exports = {
     }, 0.6)
 
     // S15 (no line): POV 2.5 blocks from him, looking up; ~0.5 s, then he leaves the game: gone at once, the chat shows
-    // only 'Jonah left the game' (S06 had '<Jonah> see you tomorrow' above it). The payoff: the 'quit' mark, held 1.2 s
+    // only 'Jonah left the game' (S06 had '<Jonah> see you tomorrow' above it). The payoff: the 'quit' mark, held 1.6 s
     await K.cut(1.6, 2.9, P(0.5, 2.5, 0.3), 1, { time: 23742, shot: 'pov' })
     for (let k = 0; k < 10; k++) { K.look(k); await bot.waitForTicks(1) }
     try { jb.quit() } catch (e) {}
     ctx.mark('quit'); chat('Jonah left the game', 'yellow')
-    for (let k = 10; k < 34; k++) { K.look(k); await bot.waitForTicks(1) }
+    for (let k = 10; k < 42; k++) { K.look(k); await bot.waitForTicks(1) }   // 1.6 s (a text payoff: 1.2-1.8 s)
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     return true

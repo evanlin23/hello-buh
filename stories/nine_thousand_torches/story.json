@@ -262,7 +262,7 @@
     "at": "the 'quit' mark, S15 (no line): ~0.5 s after the cut into the kid's POV",
     "game": "Jonah looks down at the kid, then his bot quits: he vanishes at once (vanilla) and the chat shows only, in yellow, 'Jonah left the game' (S06 showed '<Jonah> see you tomorrow' above it; now there is none)",
     "hit": "the score drops out before S15; a low hit on the vanish (within 0.3 s)",
-    "hold": "1.2 s after the vanish (a text payoff), then cut",
+    "hold": "1.6 s after the vanish (a text payoff: 1.2-1.8 s; the cold reader needed the beat to see the missing line), then cut",
     "echo": "S06's ordinary night: '<Jonah> see you tomorrow' then 'Jonah left the game'. S15: only the second line. Nobody says it: the game does (STANDARDS 1.3)"
   },
   "ending": {
