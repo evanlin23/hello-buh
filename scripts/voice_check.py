@@ -1,7 +1,7 @@
 """Check a story's voice takes without listening: Whisper transcribes every line's wav and prints it beside its
 median pitch, so a bad split (a word in the wrong line), a missing word, a direction read aloud or two voices too
-alike shows up at once. Runs in the TTS venv with openai-whisper (~/.hb-tts/bin/pip install openai-whisper; the
-base.en model downloads on first use, 139 MB).
+alike shows up at once. Runs in the TTS venv with any Whisper: openai-whisper, else faster-whisper, else transformers'
+whisper-base.en (scripts/whisper_compat.py).
 
     ~/.hb-tts/bin/python scripts/voice_check.py stories/<name>            # transcript + pitch per line
     ~/.hb-tts/bin/python scripts/voice_check.py stories/<name> --words    # voice/words.json for the caption times
@@ -10,8 +10,12 @@ base.en model downloads on first use, 139 MB).
 import json
 import sys
 
+import pathlib
+
 import numpy as np
-import whisper
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from whisper_compat import whisper  # noqa: E402
 
 
 def f0(x, sr=16000):
