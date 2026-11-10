@@ -132,6 +132,10 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, comparing Pip (Dog on the Hill v3) with kid Puck: "i like this one a lot a lot better" (Pip);
+  Puck: "er that does not sound right".** **The default narrator is Pip's voice again** (cast `narrator` = Leda, the
+  bubbly nine-year-old direction, gemini-3.8-flash-lite-tts, single speaker, natural tempo; recipe in
+  voices/recipes/pip.md). Kid Puck is kept as `puck_kid`, alternative only. Supersedes the Puck rule below.
 - **Owner, 2026-11-10: "i think gemini is really bad with the voices drifting. can you ensure theres a gate or some way
   to audit this? The voices for the people seem to change like all the time take to take and even within take."**
   Until the drift gate (agent/voice-drift: `scripts/voice_drift.py`, per line and per 1.5 s window against a locked
