@@ -42,7 +42,8 @@
 |---|---|---|---|---|
 | bones | L03 | a pile of ~14 bone items + the new one Pip drops | D + (0.5..1.5, 0, 1..2) (the dog's right side) | always there, same pile |
 | red collar | L04 (close) | red | on the dog | visible in every dog shot |
-| torch by the hut door | S01 | lit | hut front, east wall | lit all story (the night scenes' light) |
+| torch by the hut door | S01 | lit | hut front | lit all story |
+| lantern on an oak fence post | S01 | lit | D + (-2, 1, -2), by the dog | lit all story: the night scenes' key light on the faces (visual audit F2) |
 
 ## Positions and screen direction
 - The dog always faces west (toward P and the hut). Camera "front" shots stand west of P looking east: the village
@@ -68,3 +69,9 @@
 | the dirt hut | L06, every front shot | an old ruin | a player's first-night house |
 | "only one voice gets him up" | L08 | a riddle | the owner's |
 | "said he'd be right back" | L10 | about the dog | the owner said it 900 days ago, and says it again in L14 |
+
+## Visual audit 2026-11-10 (docs/runs/visual_audit_2026-11-10/dog_hill.md), folded in
+- The hilltop disc steps down to the natural slope in grass terraces (no sheer dirt walls); the stunt's header (dog faces
+  east at P = D + (3, 0, 0), the hut north-east) is the layout; the tables above predate it.
+- The patch P is the one bare block in a ring of flowers; the bones are spread over 2 x 1.5 blocks, one item each.
+- The cast moves only as K.actors; jumps only on camera cuts. "Buh joined the game" lands on STOOD (L12).
