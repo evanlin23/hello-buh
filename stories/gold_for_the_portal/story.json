@@ -1,0 +1,480 @@
+{
+ "name": "gold_for_the_portal",
+ "stunt": "story_gold_for_the_portal",
+ "version": 2,
+ "revision": "r3 (2026-11-10): r2 continuity's S13 fix and notes, and the r2 critic's 'one more ingot'; see reviews/r1-response.md",
+ "caption": "why does grandma feed the nether portal 😶",
+ "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson Nico is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
+ "question": "why tf does grandma throw gold into a nether portal every night?",
+ "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Nico keeps the gifts in a barrel and knows Grandpa is alive.",
+ "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Nico. One's plenty.'). Tonight Nico throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
+ "key_color": "#B07CFF",
+ "gap": 0.3,
+ "mood": [
+  "eerie",
+  "sad"
+ ],
+ "payoff": "L11",
+ "look": {
+  "time": "night",
+  "fog": false
+ },
+ "weather": "clear",
+ "world": {
+  "place": "portal_cottage (new, to claim): The Portal Cottage, a spruce cottage alone on a forested ridge in the Green's north forest, north-east of Hushwell, origin (the cellar portal) about (-110, 85, -990), footprint about (-125, -1005, -95, -975); the garden looks south-south-west over the valley to Hushwell's plaza about 140 blocks away",
+  "where": "The Portal Cottage on its ridge north-east of Hushwell; the cellar (library basement) under it with the Nether portal in its east wall",
+  "day": 9300,
+  "canon": "New family, not Milo's: Nico (a player kid, house narrator voice) and his grandma (a plains librarian villager). His grandpa (a player, `ari` skin) walked into the cellar portal on day ~175 and never came back. One ingot a night since, minus the 300 nightless days of the Long Day (800-1100): about 8,825, 'nine thousand' in the kid's round number. Bible: World.",
+  "easter_egg": "boxed_bell (canon cameo, since day 1400): Hushwell's bell in its white wool box, a white speck among the plaza's roofs at S05's frame right, about 140 blocks south-south-west across the valley; world.build places it (Hushwell's stamp)"
+ },
+ "voice": {
+  "engine": "gemini",
+  "model_hint": "gemini-3.8-flash-lite-tts",
+  "recipe": "voices/recipes/pip.md"
+ },
+ "cast": {
+  "N": {
+   "role": "narrator",
+   "ref": "narrator",
+   "name": "Nico",
+   "color": "#FFFFFF",
+   "on_screen": "Nico, a player kid, default Steve skin: POV in S03, S04, S08, S09, S11, S12; seen from outside small in S05 (drinking), S10 (back to us at the portal), S13 (sitting on the bed). Pip's voice (cast `narrator`, Leda). Wears golden boots in every shot (Grandma's rule in the cellar; armour on players already renders): a picture plant, never mentioned.",
+   "voice": "Leda",
+   "model": "gemini-3.8-flash-lite-tts",
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  "Grandma": {
+   "role": "character",
+   "name": "Grandma",
+   "voice": "Gacrux",
+   "color": "#F2C66B",
+   "profile": "[An old village grandma in her seventies, warm and steady, slow, a small sad smile in her voice; full volume, never a whisper]",
+   "on_screen": "plains villager, librarian outfit, no name tag; one voiced line (L08), on screen while she says it. No library ref fits (no elder woman in voices/cast.json): Gacrux (mature) is the palette's closest; audition Vindemiatrix as the alternate."
+  },
+  "Grandpa": {
+   "role": "character",
+   "name": "Grandpa",
+   "silent": true,
+   "color": "#F2C66B",
+   "on_screen": "player actor, default `ari` skin, gold helmet with a lapis trim (the blue stripe); flashback only (S06, S07); never speaks"
+  },
+  "Piglin": {
+   "role": "character",
+   "silent": true,
+   "on_screen": "a vanilla adult piglin wearing Grandpa's trimmed gold helmet, no other armour, empty hands; S13-S14 only; shakes from its first frame in the Overworld"
+  }
+ },
+ "requests": [
+  {
+   "id": "r1",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L01",
+    "L02",
+    "L03",
+    "L04",
+    "L05",
+    "L06"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r2",
+   "speakers": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
+   "voice": "Leda",
+   "lines": [
+    "L07",
+    "L09",
+    "L10",
+    "L11"
+   ],
+   "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+  },
+  {
+   "id": "r3",
+   "speakers": [
+    "Grandma"
+   ],
+   "voice": "Gacrux",
+   "lines": [
+    "L08"
+   ],
+   "direction": "[An old village grandma in her seventies, warm and steady, slow, a small sad smile in her voice; full volume, never a whisper]"
+  }
+ ],
+ "sfx": [
+  {
+   "under": "S01",
+   "sound": "block.portal.ambient",
+   "note": "the portal hum under the whole cellar, low; the ingot's whoosh into it"
+  },
+  {
+   "under": "S03",
+   "sound": "block.stone.step",
+   "note": "the obsidian popping out of the purple and landing on the stone on 'BACK' (a soft thud)"
+  },
+  {
+   "under": "S05",
+   "sound": "entity.generic.drink",
+   "note": "Nico drinks, from 'potion' to 'FIREPROOF'"
+  },
+  {
+   "under": "S07",
+   "sound": "block.portal.travel",
+   "note": "Grandpa steps in (cut short, quiet)"
+  },
+  {
+   "under": "S09",
+   "sound": "entity.piglin.ambient",
+   "note": "one clear piglin snort from inside the portal right after 'TRADING', audible over the hum (the creature's sound plant; not buried)"
+  },
+  {
+   "under": "S13",
+   "sound": "entity.piglin.ambient",
+   "note": "the piglin steps out on 'OUT': a snort, then its feet on stone"
+  },
+  {
+   "under": "S14",
+   "sound": "entity.piglin.admiring_item",
+   "note": "in the 0.9 s hold, as the ingot sails past and its head turns after the gold"
+  }
+ ],
+ "lines": [
+  {
+   "id": "L01",
+   "who": "N",
+   "text": "My grandma has thrown / NINE THOUSAND / gold ingots / into a PORTAL.",
+   "shot": "S01",
+   "look": {
+    "what": "prop:portal",
+    "word": "PORTAL"
+   },
+   "note": "one quick bright breath, amazed and proud of her; the number lands hardest"
+  },
+  {
+   "id": "L02",
+   "who": "N",
+   "text": "One every NIGHT. / And every MORNING, / something comes BACK.",
+   "shot": "S02",
+   "look": [
+    {
+     "what": "prop:cottage",
+     "word": "NIGHT"
+    },
+    {
+     "what": "prop:portal",
+     "word": "MORNING"
+    }
+   ],
+   "note": "a storyteller's grin; a small beat before the last two words"
+  },
+  {
+   "id": "L03",
+   "who": "N",
+   "text": "OBSIDIAN. / STRING. / ENDER PEARLS. / A potion that makes you FIREPROOF.",
+   "shot": "S04",
+   "look": [
+    {
+     "what": "prop:gifts_floor",
+     "word": "OBSIDIAN"
+    },
+    {
+     "what": "actor:HelloBuh",
+     "word": "potion"
+    }
+   ],
+   "note": "a quick excited list, each item a little bigger; the last one is the best present in the world"
+  },
+  {
+   "id": "L04",
+   "who": "N",
+   "text": "Twenty-five years ago, / Grandma gave Grandpa / her gold HELMET. / With a BLUE stripe.",
+   "shot": "S06",
+   "look": {
+    "what": "actor:Grandpa",
+    "word": "HELMET",
+    "size": "ms"
+   },
+   "note": "slower, proud, the family legend; lean on the colour"
+  },
+  {
+   "id": "L05",
+   "who": "N",
+   "text": "Gold keeps you SAFE / in the NETHER, she said. / He went IN. / He never came BACK.",
+   "say": "Gold keeps you safe in the Nether, she said. He went in. <short pause> He never came back.",
+   "shot": "S07",
+   "look": {
+    "what": "actor:Grandpa",
+    "word": "IN"
+   },
+   "note": "quoting her proudly, then the energy drops for the last sentence; a short stop before it"
+  },
+  {
+   "id": "L06",
+   "who": "N",
+   "text": "I keep his gifts / in a BARREL. / Grandma says / he's still TRADING.",
+   "shot": "S08",
+   "look": [
+    {
+     "what": "prop:gifts_barrel",
+     "word": "BARREL"
+    },
+    {
+     "what": "Grandma",
+     "word": "Grandma"
+    }
+   ],
+   "note": "bright again, sure of it; the last word said like a fact everybody knows"
+  },
+  {
+   "id": "L07",
+   "who": "N",
+   "text": "So he's ALIVE. / I KNOW it.",
+   "shot": "S10",
+   "look": {
+    "what": "prop:portal"
+   },
+   "note": "full volume, certain, a little defiant, like someone said he wasn't"
+  },
+  {
+   "id": "L08",
+   "who": "Grandma",
+   "text": "Just ONE, Nico. / One's PLENTY.",
+   "direction": "gentle and firm, a small smile; a beat after the name",
+   "say": "Just one, Nico. <short pause> One's plenty.",
+   "shot": "S11",
+   "look": {
+    "what": "Grandma"
+   }
+  },
+  {
+   "id": "L09",
+   "who": "N",
+   "text": "When she went to BED, / I threw in / ALL my gold. / SIXTY-FOUR. / To buy his way HOME.",
+   "shot": "S12",
+   "look": [
+    {
+     "what": "prop:ladder",
+     "word": "BED"
+    },
+    {
+     "what": "prop:portal",
+     "word": "ALL"
+    }
+   ],
+   "note": "sneaky and fast, then huge hope on the last words"
+  },
+  {
+   "id": "L10",
+   "who": "N",
+   "text": "Then I sat / and WAITED. / And something / stepped OUT.",
+   "say": "Then I sat and waited. <short pause> And something stepped out.",
+   "shot": "S13",
+   "look": {
+    "what": "prop:portal",
+    "word": "OUT"
+   },
+   "note": "slower, full volume, real nerves creeping in; a held beat before the last two words"
+  },
+  {
+   "id": "L11",
+   "who": "N",
+   "text": "It was wearing / Grandpa's HELMET.",
+   "shot": "S14",
+   "look": {
+    "what": "entity:piglin",
+    "word": "HELMET",
+    "size": "cu"
+   },
+   "note": "full volume, slow, the wonder cracking into understanding on the last word; no tears, just a kid seeing it"
+  }
+ ],
+ "shots": [
+  {
+   "id": "S01",
+   "line": "L01",
+   "place": "cellar",
+   "size": "full",
+   "camera": "at: 4 blocks west of the portal (about x7, F+1.6, z5.5), at Grandma's eye height, FOV 70, a slow push east; Grandma's throw starts in the preroll so the ingot is crossing into the purple on frame 1",
+   "frame": "fg: the stone floor; subject: Grandma full-figure (head to foot) just left of centre, 1.5 blocks in front of the portal, her throw finishing; the gold ingot crossing the purple sheet on frame 1 (big and readable at 300 px at this distance), gone into it by ~0.4 s; the portal (obsidian frame 4 x 5) centred behind her; bg: the obsidian-patched north-east wall. The gold chest is out of frame (77 degrees off-axis). The ladder is behind the camera, not in frame. Night (18000; the cellar is lit by the portal and two lanterns)."
+  },
+  {
+   "id": "S02",
+   "line": "L02",
+   "place": "ridge",
+   "size": "ews",
+   "camera": "path: crane down. Key 0: 16 blocks up and 20 blocks south-west of the cottage, over the valley, looking at it; key 1 (~1.5 s): 6 blocks up at the garden gate, the cottage filling the upper half",
+   "frame": "fg: the garden fence and gate lanterns (end of the crane); subject: the spruce cottage on the ridge, chimney smoke, one lit window, a faint purple glow leaking up through the floor hatch seen in the open door; bg: the dark valley, the stream, forest on the far slope. Night (14500: the moon low at frame right, not overhead)."
+  },
+  {
+   "id": "S03",
+   "line": "L02",
+   "place": "cellar",
+   "size": "wide",
+   "camera": "pov at the ladder's foot, the hatch open above (a shaft of morning light on the floor), looking east at the portal 8 blocks away; a slow walk toward it",
+   "frame": "fg: the morning light patch on the stone floor; subject: the portal, and on 'BACK' an item (an obsidian block) pops out of the purple and drops onto the floor in front of it; bg: the gifts barrel beside the portal. Morning (1000)."
+  },
+  {
+   "id": "S04",
+   "line": "L03",
+   "place": "cellar",
+   "size": "ms",
+   "camera": "pov 2 blocks from the portal, looking down at the floor in front of it; three quick mornings cut on the three words (a deliberate time-cut montage: the hatch light on the floor shifts, the spot changes by a block each time)",
+   "frame": "one gift per morning: 'OBSIDIAN': one block of obsidian lying in front of the portal's base, the hand picks it up; cut, 'STRING': one string, picked up; cut, 'ENDER PEARLS': one stack of three ender pearls (a single barter drop), picked up (the hotbar fills slot by slot); bg: the bottom of the purple sheet each time. Three mornings (1000)."
+  },
+  {
+   "id": "S05",
+   "line": "L03",
+   "place": "garden",
+   "size": "wide",
+   "camera": "at: 5 blocks north of the garden gate, 2 blocks up, looking south past the gate over the valley, a slow push; the garden must be at least 6 blocks deep north of the gate or the lens sits in the cottage wall: confirm on the placed piece, else move the camera along the fence line to keep 5 blocks clear",
+   "frame": "fg: the garden fence, gate lanterns and flowers; subject: Nico (Steve, golden boots) at the gate drinking an orange fire-resistance potion (drink pose, swirl particles) on 'potion'; the cottage's corner at frame right; bg: the valley and, across it to the south-south-west at frame right (about 140 blocks), Hushwell's plaza with its bell in a white wool box (the easter egg, canon `boxed_bell`: a white speck among the roofs, never the subject), forest and hills into the haze. Morning (1000), sun at frame left (east)."
+  },
+  {
+   "id": "S06",
+   "line": "L04",
+   "place": "cellar_then",
+   "size": "ms",
+   "camera": "at: 3 blocks in front of Grandpa at his eye height, a slow push; flashback grade (warm, faded, soft vignette)",
+   "frame": "fg: the bare stone floor (no barrels yet, no gifts); subject: Grandpa (player actor, ari skin) waist up, putting on the gold helmet on 'HELMET'; its lapis sentry trim (the blue stripe) across the front readable on 'BLUE stripe'; Grandma's shoulder at frame left; bg: the new portal's purple behind him. Night, 25 years ago (18000)."
+  },
+  {
+   "id": "S07",
+   "line": "L05",
+   "place": "cellar_then",
+   "size": "wide",
+   "camera": "at: about (0.5, F+1.2, 2.8) beside the ladder, aimed 95 degrees (just south of east), 10 blocks from the portal, still; flashback grade",
+   "frame": "fg: the ladder's bottom rungs on the frame's left edge; subject: Grandpa in the gold helmet walks into the purple on 'He went IN' and is gone (purple swirl); Grandma (villager) stays beside the portal, alone in frame on 'never came BACK'; bg: the empty cellar, one lantern. Night, 25 years ago (18000)."
+  },
+  {
+   "id": "S08",
+   "line": "L06",
+   "place": "cellar",
+   "size": "screen",
+   "camera": "pov: the gifts barrel opened (container screen over the cellar)",
+   "frame": "the barrel screen titled \"Grandpa's Gifts\": stacks of obsidian, crying obsidian, string, ender pearls, soul sand, gravel, nether quartz, leather, iron nuggets, blackstone and three potions of fire resistance; the inventory below with a stack of 64 gold ingots in hotbar slot 1 (his own gold, kept for this); caption track lists none of them (the picture does). Night (18000)."
+  },
+  {
+   "id": "S09",
+   "line": "L06",
+   "place": "cellar",
+   "size": "full",
+   "camera": "pov from the barrel, the screen closed, turning to the portal 3 blocks away",
+   "frame": "fg: the barrel's lid at lower right; subject: Grandma head to foot in front of the portal tossing tonight's ingot into the purple on 'TRADING'; a piglin snort from inside the portal right after the word, clearly audible over the hum (sound only); bg: the purple sheet and obsidian. Night (18000)."
+  },
+  {
+   "id": "S10",
+   "line": "L07",
+   "place": "cellar",
+   "size": "wide",
+   "camera": "at: 6 blocks behind and above Nico's shoulder (2.5 up, near the ceiling beams), looking past him into the portal, slow push",
+   "frame": "fg: a ceiling beam's edge at the top; subject: Nico small (golden boots), standing in front of the portal, his face lit purple, the stack of gold in his hand; Grandma walking out of frame left toward the ladder (behind the camera); bg: the purple sheet filling the upper half, the obsidian frame. Night (18000)."
+  },
+  {
+   "id": "S11",
+   "line": "L08",
+   "place": "cellar",
+   "size": "ms",
+   "camera": "pov 2 blocks in front of the portal, turned west, the stack of 64 gold ingots in hand (hotbar slot 1 shows 64)",
+   "frame": "fg: the hand holding the gold stack at lower right; subject: Grandma waist up in mid-cellar about 4 blocks away (about x6, z3, out of S10's frame), stopped on her way to the ladder, looking at the stack, then at us; bg: the ladder and the open hatch about 4 blocks behind her (dark). Night (18000)."
+  },
+  {
+   "id": "S12",
+   "line": "L09",
+   "place": "cellar",
+   "size": "full",
+   "camera": "pov: Nico steps back to about x7 (2 blocks west of his S11 spot); opens on Grandma already climbing the ladder 5 blocks west, the hatch shutting behind her on 'BED'; turns east to the portal 4 blocks away; the stack is thrown on 'ALL my gold' and the hotbar slot empties on the throw",
+   "frame": "fg: the hand; subject: the portal head to foot, the gold stack arcing into the purple on 'ALL'; bg: the obsidian frame, the gifts barrel at frame left. Night (18000)."
+  },
+  {
+   "id": "S13",
+   "line": "L10",
+   "place": "cellar",
+   "size": "wide",
+   "camera": "at: about (1.3, F+2.0, 9.7) behind the bed, FOV 70, yaw aimed 40 degrees east of north, pitch -10: Nico in line with the portal at about 66 degrees, Grandma on the ladder about 6 degrees inside the left edge; check on a still. Fallback if the ladder won't hold the edge: her steps on the ladder and the trapdoor sound on 'OUT'",
+   "frame": "fg: the bed's end; subject: Nico (golden boots) sitting on the bed's north-east corner (about x2.9, z9.0; sit pose) facing the portal (east-south-east), his back to the lens; on 'stepped OUT' a gold helmet pushes out of the purple and a piglin steps onto the floor, shaking (vanilla: a piglin in the Overworld shakes); on the left edge Grandma's feet come down the ladder (she heard it); bg: the purple sheet. Night (18000)."
+  },
+  {
+   "id": "S14",
+   "line": "L11",
+   "place": "cellar",
+   "size": "cu",
+   "camera": "at: 2.5 blocks west of the piglin at its eye height, facing east, FOV 50, a very slow push",
+   "frame": "subject: the piglin head and shoulders right of centre, shaking, in the gold helmet with the lapis sentry trim (the blue stripe) across the front, lit purple from behind; on 'HELMET' the stripe is in the upper half. Grandma at the frame's left edge (head and throwing arm, a step nearer the lens, soft focus): she has walked from the ladder's foot to about (8.8, F+1, 4.8), 1.3 blocks in front of the lens. Hold 0.9 s after the word: she tosses one more ingot, it sails past the piglin's head into the purple, and its head turns after the gold. Cut. Night (18000)."
+  }
+ ],
+ "props": {
+  "portal": {
+   "at": [
+    11,
+    1,
+    6
+   ]
+  },
+  "cottage": {
+   "at": [
+    6,
+    7,
+    5
+   ]
+  },
+  "gifts_floor": {
+   "at": [
+    10,
+    1,
+    6
+   ]
+  },
+  "gifts_barrel": {
+   "at": [
+    10,
+    1,
+    3
+   ]
+  },
+  "gold_chest": {
+   "block": "chest",
+   "at": [
+    8,
+    1,
+    1
+   ]
+  },
+  "ladder": {
+   "at": [
+    2,
+    1,
+    2
+   ]
+  },
+  "bed": {
+   "at": [
+    2,
+    1,
+    9
+   ]
+  },
+  "helmet": {
+   "actor": "Grandpa"
+  }
+ },
+ "ending": {
+  "after": "L11",
+  "beats": [
+   "S14 holds 0.9 s past 'HELMET': Grandma, at the frame's left edge, tosses one more ingot past the shaking piglin into the purple; its head turns after the gold. Cut.",
+   "No line after the payoff; the score is out 0.45 s before it, the hit lands on 'HELMET'."
+  ],
+  "loop": "L01 changes: the nine thousand ingots were never for Grandpa. Grandma has been feeding the one who has his helmet, and tonight she sends it home with one more."
+ },
+ "bible": "stories/gold_for_the_portal/bible.md",
+ "beats": "stories/gold_for_the_portal/beats.md",
+ "set": "stories/gold_for_the_portal/set.md",
+ "voice_note": "Owner's voice-drift rule and Pip's recipe: every narrator line goes in a single-speaker request on gemini-3.8-flash-lite-tts with Pip's direction verbatim and identical in r1 and r2; no per-line directions are sent for the narrator (lines[].note is for the builder and the take check only). Grandma has her own request (r3). Two narrator requests, not one, to keep the brief's limit of about 6 lines per character per request; if one take must carry all ten, merge r1 and r2 unchanged."
+}
