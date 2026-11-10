@@ -134,6 +134,27 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "i think gemini is really bad with the voices drifting. can you ensure theres a gate or some way
+  to audit this? The voices for the people seem to change like all the time take to take and even within take."**
+  Until the drift gate (agent/voice-drift: `scripts/voice_drift.py`, per line and per 1.5 s window against a locked
+  reference voiceprint) lands: **one model per character per story** (never fall back to another model on a 429
+  mid-story: wait, or re-take all of that character's lines on the new model); **short requests** (one character,
+  at most ~6 lines); **identical direction text** for a character every time; re-take a line that sounds like a
+  different person. Drift is a review blocker.
+- **Owner, 2026-11-10 (Good Boy session), on the narrator: "this voice is so high pitched and annoying lowkey"**
+  (Leda, ~350 Hz) / **"it should still be like a kid/child? idk"** / **"kinda like the roblox shorts but more
+  refined?"** / after five auditions: **"kid puck is fine"**. So: a kid narrator that isn't squeaky: Gemini Puck,
+  directed "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not
+  squeaky; full volume, not whispery or breathy. Take a short breath between sentences." (~235 Hz, natural tempo,
+  no post filter). Audition 3-5 voices on the same two lines before voicing a whole story.
+- **Owner, 2026-11-10: "why does it be like ive tried ot leave this guy 37 ti*? something wierd gets cut off"**: a
+  line cut at Whisper's word end clipped "times". Cut at the quietest point between lines (`voice_check.py
+  --resplit`), and ask for a breath between sentences so a quiet point exists; check with `scripts/voice_edges.py`.
+- **Owner, 2026-11-10 (Good Boy session): Leda is "so high pitched and annoying"; wants a kid "like the roblox shorts but
+  more refined"; picked "kid puck is fine".** The narrator is now **Puck** directed as a twelve-year-old boy (quick,
+  excited, mid-pitch, not squeaky, full volume, a short breath between sentences), no post filter. Then: "what about pip? i liked
+  the audio i sent earlier": **Pip keeps his voice** (cast `pip`: Leda, the bubbly nine-year-old direction, natural
+  tempo) in Dog on the Hill and for Pip-like young narrators; **Puck** (`narrator`) is the default elsewhere.
 - **Owner, 2026-11-10: "the voices seem to be edited in a way that cuts stuff off".** The Gemini takes are cut apart
   per line and their pauses shortened; our published Kokoro takes start and end in true silence (-83 dB), the
   Gemini splits at -36 to -50 dB, i.e. inside breaths and soft word ends. `./hb voice` now cuts by these rules and

@@ -18,7 +18,8 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
 
 | id | name (what Gemini sees) | Gemini voice | caption colour | direction (`profile`) | Kokoro fallback | from |
 |---|---|---|---|---|---|---|
-| `narrator` | Narrator | Leda (1.5x tempo, +1.5 st, formants kept) | `#FFFFFF` white | a kid of about eleven telling his own story: fast, bright, bubbly, happy, energetic; not whispery | am_adam | kid-narrator audition, 2026-11-10 |
+| `narrator` | Narrator | Puck (no post) | `#FFFFFF` white | a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, full volume; not whispery | am_adam | Good Boy audition: "kid puck is fine" (2026-11-10) |
+| `pip` | Pip | Leda | `#FFFFFF` white | Pip, Dog on the Hill's kid narrator (kept: the owner liked it) | am_adam | Dog on the Hill v3 |
 | `storyteller` | Storyteller | Despina | `#D9C8FF` pale lilac | a woman in her thirties telling a friend a story late at night, low and close, plain, never an announcer | bf_emma | the old narrator (was Erinome) |
 | `milo` | Milo | Achird | `#4FD8E6` Steve's cyan | Milo, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Milo |
 | `elder` | Elder | Charon | `#F0A845` robe amber | an old man in his seventies, tired, low and a little rough in the throat, slow and quiet; has seen this before | bm_george | the trailer's Highkeeper (recast from Algenib) |
@@ -113,7 +114,7 @@ after, edges at -58 to -62 dB, like Kokoro's (0.18-0.20 / 0.25-0.42 s, -81 dB).
 "rest": null}` where opening = the first two lines): then only the silent middle of a longer pause is removed, never
 within 60 ms of a sound, joined with a 30 ms crossfade (`cap_pauses` in tts.py). A pause with no silent middle long
 enough is kept: re-take the line. Speech is never spliced.
-`voice_check.py --resplit` re-cuts cached raw takes (`voice/<req>_take.f32`) with the same safe cut.
+`voice_check.py --resplit` re-cuts cached raw takes (`voice/<req>_take.f32`, the voice_cast.py path) by the same rules.
 
 **Re-takes.** After the takes, every new line goes through the speaker check. A SWAP, WORDS, EDGE or CLIPPED line is re-taken as a
 single-speaker request (one voice can't swap), at most `--retakes` times; lines that pass are never re-taken. The

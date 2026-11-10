@@ -131,3 +131,11 @@ reason: docs/stories.md, House rules.
 A shot the renderer can't draw yet is a feature to build, not a reason to rewrite the scene: build it
 (docs/engine_features.md) and merge it to main once existing Shorts render unchanged. Only a feature that would take
 more than ~2 h gets staged around, and it's logged in docs/engine_requests.md.
+
+## Owner notes go to main at once (lead, 2026-11-10)
+When the owner gives you a note in your session, it's a rule for every story, not just yours. In the same hour:
+add it as a dated quote (and what it means in practice) to the top of docs/stories.md "House rules" **on main**, in
+its own small commit (`git fetch origin main && git checkout -B rules origin/main`, edit, commit,
+`git push origin rules:main`; retry on a race), then go back to your branch. This is the one thing you push to main
+directly. Shared tools you build (a checker, a splitter, a map) also go to main once tested, so the next session
+doesn't rebuild them.
