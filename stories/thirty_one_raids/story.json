@@ -2,7 +2,7 @@
   "name": "thirty_one_raids",
   "stunt": "story_thirty_one_raids",
   "version": 2,
-  "revision": "r3 (2026-11-10): the pre-build continuity breaks and notes (reviews/continuity_prebuild.md) and the critic's r2 should-fixes (reviews/critic_r2_shouldfix.md) applied; the hero is Milo; staged for the engine (no sit, no drink pose: crouch and head-tilt staging)",
+  "revision": "r4 (2026-11-10): r3 + the owner's narrator-first rules (main docs/stories.md): one kid narrator (cast `narrator`, Leda) carries the story; Grandpa's own voice only for his two on-screen punchlines (L09, L13, 6 words or fewer); L04 quoted with a said tag; L01 in one breath",
   "caption": "why do raiders always follow grandpa home 😶",
   "logline": "A boy's grandpa has saved their village from thirty-one raids, and every one started the night he came home; the night Grandpa comes home too tired to fight, the boy drinks Grandpa's 'courage' himself.",
   "question": "why tf do raids start every night grandpa comes home?",
@@ -12,15 +12,15 @@
   "gap": 0.3,
   "voice": {
     "engine": "gemini",
-    "model_hint": "gemini-2.5-flash-preview-tts",
-    "note": "single-speaker requests (owner 2026-11-10: multi-speaker swaps speakers on short lines); each line names its request"
+    "note": "single-speaker requests; narrator first-person kid, fast and bright (owner rules 2026-11-10)"
   },
   "cast": {
     "N": {
       "role": "narrator",
-      "ref": "milo",
+      "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "pov (Milo, the default Steve skin per the owner; never seen from outside in this story); hand: empty, then the ominous bottle (end of S11, S12), empty again once drunk"
+      "on_screen": "pov (Milo, about eleven, voiced by the cast `narrator`; the default Steve skin per the owner; never seen from outside in this story); hand: empty, then the ominous bottle (end of S11, S12), empty again once drunk",
+      "name": "Milo"
     },
     "Grandpa": {
       "role": "character",
@@ -45,12 +45,13 @@
         "L01",
         "L02",
         "L03",
+        "L04",
         "L05",
         "L06",
         "L07",
         "L08"
       ],
-      "direction": "A village at dusk after many raids. A teenage boy, Milo, tells proudly and clearly how his grandpa saves the village; the pride slowly drains as he tells it."
+      "direction": "A kid, Milo, tells the camera about his grandpa, proud and quick."
     },
     {
       "id": "n2",
@@ -62,7 +63,7 @@
         "L11",
         "L12"
       ],
-      "direction": "The same village, the last evening. The boy's pride has turned into worry and then a decision."
+      "direction": "The same kid, the last evening: the pride turns to worry, then a brave decision."
     },
     {
       "id": "g1",
@@ -70,11 +71,10 @@
         "Grandpa"
       ],
       "lines": [
-        "L04",
         "L09",
         "L13"
       ],
-      "direction": "An old soldier who has fought many raids: slow, dry, tired, a grim little pride. Plain speaking voice, never a whisper."
+      "direction": "An old soldier who has fought many raids."
     }
   ],
   "sfx": [
@@ -119,129 +119,128 @@
       "id": "L01",
       "who": "N",
       "text": "Grandpa has saved / our village / from THIRTY-ONE / RAIDS.",
-      "say": "Grandpa has saved our village <short pause> from thirty-one raids.",
-      "direction": "proud and clear, a held beat before the number",
+      "direction": "bright and quick, all in one breath, a proud grin",
       "shot": "S01",
-      "request": "n1",
-      "look": "actor:Grandpa"
+      "look": "actor:Grandpa",
+      "request": "n1"
     },
     {
       "id": "L02",
       "who": "N",
       "text": "Every single one / started the night / he came HOME.",
-      "direction": "the pride draining; slower; it lands on the last word",
+      "direction": "quick, the grin fading on the last word",
       "shot": "S02",
-      "request": "n1",
-      "look": "actor:Gramps"
+      "look": "actor:Gramps",
+      "request": "n1"
     },
     {
       "id": "L03",
       "who": "N",
       "text": "He says / they FOLLOW him.",
-      "direction": "repeating what he was told, believing it",
+      "direction": "matter-of-fact, quick",
       "shot": "S03",
-      "request": "n1",
-      "look": "actor:Grandpa"
+      "look": "actor:Grandpa",
+      "request": "n1"
     },
     {
       "id": "L04",
-      "who": "Grandpa",
-      "text": "They know / who BEATS them, / kid.",
-      "direction": "dry and proud, not looking up from his work",
+      "who": "N",
+      "text": "Grandpa said, / \"They know / who BEATS them.\"",
+      "direction": "doing a gruff grandpa impression, proud, quick",
       "shot": "S04",
-      "request": "g1",
-      "look": "actor:Grandpa"
+      "look": "actor:Grandpa",
+      "request": "n1"
     },
     {
       "id": "L05",
       "who": "N",
       "text": "When he / walks by, / the villagers / throw him BREAD.",
-      "direction": "proud again, a little amazed",
+      "direction": "amazed, bright",
       "shot": "S05",
-      "request": "n1",
-      "look": "actor:Gramps"
+      "look": "actor:Gramps",
+      "request": "n1"
     },
     {
       "id": "L06",
       "who": "N",
       "text": "He hunts at / the old TOWER / on the hill.",
-      "direction": "a little in awe of the place",
+      "direction": "quick, a little in awe",
       "shot": "S06",
-      "request": "n1",
-      "look": "actor:Grandpa"
+      "look": "actor:Grandpa",
+      "request": "n1"
     },
     {
       "id": "L07",
       "who": "N",
       "text": "He brings back / grey BOTTLES. / He's got / a whole CHEST.",
-      "direction": "curious, matter-of-fact",
+      "direction": "curious, quick",
       "shot": "S07",
-      "request": "n1",
       "look": {
         "what": "actor:Gramps",
         "word": "BOTTLES"
-      }
+      },
+      "request": "n1"
     },
     {
       "id": "L08",
       "who": "N",
       "text": "He calls it / his COURAGE. / He drinks it / at the GATE.",
-      "direction": "steady and admiring; a tiny hitch before the last part",
+      "direction": "admiring, quick",
       "shot": "S08",
-      "request": "n1",
-      "look": "actor:Grandpa"
+      "look": "actor:Grandpa",
+      "request": "n1"
     },
     {
       "id": "L09",
       "who": "Grandpa",
       "text": "Lock the DOOR, / kid. / They're COMING.",
-      "say": "Lock the door, kid. <short pause> They're coming.",
-      "direction": "calm, certain, almost bored; he knows exactly when",
+      "say": "Lock the door, kid. They're coming.",
+      "direction": "calm and certain, almost bored; he knows exactly when",
       "shot": "S09",
-      "request": "g1",
-      "look": "actor:Grandpa"
+      "look": "actor:Grandpa",
+      "request": "g1"
     },
     {
       "id": "L10",
       "who": "N",
       "text": "Since Grandma died, / a RAID / is the only time / anyone's GLAD / to see him.",
-      "say": "Since Grandma died, <short pause> a raid is the only time anyone's glad to see him.",
-      "direction": "softer, a sadness he only half understands",
+      "say": "Since Grandma died, a raid is the only time anyone's glad to see him.",
+      "direction": "still quick, but the grin is gone; a little sad",
       "shot": "S10",
-      "request": "n2",
-      "look": "actor:Gramps"
+      "look": "actor:Gramps",
+      "request": "n2"
     },
     {
       "id": "L11",
       "who": "N",
       "text": "Tonight / he came home / too TIRED / to fight.",
       "say": "Tonight, he came home too tired to fight.",
-      "direction": "worried, slower, a little quieter (fear, not tenderness)",
+      "direction": "worried, a little faster",
       "shot": "S11",
-      "request": "n2",
-      "look": "actor:Grandpa"
+      "look": "actor:Grandpa",
+      "request": "n2"
     },
     {
       "id": "L12",
       "who": "N",
       "text": "So I drank / his COURAGE. / Somebody / had to FIGHT.",
-      "say": "So I drank his courage. <short pause> Somebody had to fight.",
-      "direction": "a small brave breath first; the last words firm and young",
+      "say": "So I drank his courage. Somebody had to fight.",
+      "direction": "brave and firm, full volume",
       "shot": "S12",
       "hold": 1.8,
       "hold_note": "no words: the raid horn; pillagers and a ravager come up the road toward the gate (S13)",
-      "request": "n2",
-      "look": false
+      "look": false,
+      "request": "n2"
     },
     {
       "id": "L13",
       "who": "Grandpa",
       "text": "Now they'll / love YOU / too, kid.",
       "say": "Now they'll love you too, kid.",
-      "direction": "dry and tired, a grim little pride: an old soldier, not a tender one; plain voice, not a whisper",
+      "direction": "dry and tired, a grim little pride; plain voice, never a whisper",
       "shot": "S14",
-      "request": "g1",
-      "look": "actor:Gramps"
+      "look": "actor:Gramps",
+      "request": "g1"
     }
   ],
   "shots": [
