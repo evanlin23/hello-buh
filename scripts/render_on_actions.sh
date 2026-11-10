@@ -13,7 +13,7 @@
 # (RENDER_BRANCH to change it). That push starts the workflow. Commit other uncommitted changes (edit.py, render.js...)
 # first: only those three folders are carried over. The finished Short comes back on the same branch
 # (renders/out/<name>.mp4 + renders/result.json), so fetching needs only git; it's also the run's "short" artifact.
-# Env: SLICES (12), FPS (60), RENDER_BRANCH (render/<name>), REMOTE (origin).
+# Env: SLICES (16, at most 32; cut to equal estimated render time), FPS (60), RENDER_BRANCH (render/<name>), REMOTE (origin).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 REMOTE=${REMOTE:-origin}
@@ -63,12 +63,12 @@ for d in stunts lib stories; do [ -d "$d" ] && cp -a "$d/." "$WT/$d/"; done
 mkdir -p "$WT/.github/workflows" "$WT/.github/actions" "$WT/scripts"
 cp .github/workflows/render-slices.yml "$WT/.github/workflows/"
 cp -a .github/actions/render-setup "$WT/.github/actions/"
-cp scripts/render_slices.py scripts/finish_render.sh "$WT/scripts/"
+cp scripts/render_slices.py scripts/render_cost.py scripts/finish_render.sh "$WT/scripts/"
 rm -rf "$WT/renders/slices" "$WT/renders/out" "$WT/renders/result.json"
 mkdir -p "$WT/renders/slices"
 gzip -9 -c "$REC" > "$WT/renders/slices/$NAME.rec.json.gz"
 SRC=$(git rev-parse --short HEAD)
-python3 - "$WT/renders/slices.json" "$NAME" "$STUNT" "${SLICES:-12}" "${FPS:-60}" "$SRC" <<'EOF'
+python3 - "$WT/renders/slices.json" "$NAME" "$STUNT" "${SLICES:-16}" "${FPS:-60}" "$SRC" <<'EOF'
 import json, sys, time
 p, name, stunt, slices, fps, src = sys.argv[1:]
 json.dump({"name": name, "stunt": stunt, "slices": int(slices), "fps": int(fps), "source": src,
@@ -82,5 +82,5 @@ EOF
     commit -qm "render-slices: $NAME ($STUNT) from $SRC"
   git push -qf "$REMOTE" "HEAD:refs/heads/$BRANCH"
 )
-echo "queued $NAME on $BRANCH ($(du -h "$WT/renders/slices/$NAME.rec.json.gz" | cut -f1) recording). Actions renders it in ${SLICES:-12} slices;"
+echo "queued $NAME on $BRANCH ($(du -h "$WT/renders/slices/$NAME.rec.json.gz" | cut -f1) recording). Actions renders it in ${SLICES:-16} slices;"
 echo "get it with: scripts/render_on_actions.sh --wait $NAME"

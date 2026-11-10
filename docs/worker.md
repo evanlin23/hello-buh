@@ -61,7 +61,7 @@ Blockers are what reviews always flagged; warnings need a reason ("planned: the 
 A clean check doesn't replace the frame review: lighting, models, the HUD and the joke still need eyes.
 
 ## Render on GitHub Actions (parallel slices)
-A long render (a 60 s story is ~25 min here) can run on GitHub's runners instead: 12 runners each render a slice of
+A long render (a 60 s story is ~25 min here) can run on GitHub's runners instead: 16 runners each render a slice of
 the frames, one more joins them and does audio, replay/slow-mo and the edit. Expect ~12 min end to end (the same split renders the
 movies on claude/ai-dilemma), and the container's hourly restart can't kill it. Record here, render there:
 ```bash
@@ -75,13 +75,16 @@ scripts/render_on_actions.sh --wait story_<name>           # polls (git only), t
   (`RENDER_BRANCH=` to change it, e.g. if your session may only push its own branch prefix). Commit changes to
   anything else the render reads (`render.js`, `renderer/`, `edit.py`, `scripts/`) before queueing.
 - **The run** (`.github/workflows/render-slices.yml`, setup in `.github/actions/render-setup`): `plan` counts the
-  frames (render.js: `(poses - 1) / 20 * FPS`); `slice` x N renders its range with `render.js` `FRAMES=` (frames keep
+  frames (render.js: `(poses - 1) / 20 * FPS`) and cuts them into ranges of about equal render *time*
+  (`scripts/render_cost.py`: frame size, relights after block changes, whole-world re-meshes when the sky light
+  changes (time of day, rain), each slice's start-up; `python3 scripts/render_cost.py work/<name>.rec.json 16`
+  prints the profile and the split); `slice` x N renders its range with `render.js` `FRAMES=` (frames keep
   their real numbers) and stores it as a lossless RGB video; `finish` decodes them back into
   `work/<name>.frames/`, checks every frame is there, and runs `scripts/finish_render.sh` (= the tail of `run.sh`:
   `audio.py`, `render_replay.py` for `edit.replay`/`slowmo`, `edit.py` with the stunt's `edit` args). The Short is
   the run's `short` artifact and is committed back to the branch as `renders/out/<name>.mp4` with
   `renders/result.json` (`done` or `failed`, with the run's URL), so fetching needs no gh token.
-- `SLICES=` (default 12, at most 32, never under ~30 frames a slice) and `FPS=` (60) go in the job. Re-queueing the
+- `SLICES=` (default 16, at most 32; a heavy stretch such as a sunset gets slices of a few dozen frames) and `FPS=` (60) go in the job. Re-queueing the
   same name force-pushes and cancels the run in progress. A manual run: Actions -> render-slices -> Run workflow on
   the `render/<name>` branch (inputs name, stunt, slices override the job file).
 - Songs aren't in git, so as with run.sh here the output has the game audio and voice only (publish.js adds the song).
