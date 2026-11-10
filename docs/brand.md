@@ -224,3 +224,84 @@ voice." Pinned comment: one lore question ("who built the hut on Dog Hill?").
 Frame 1 is the thumbnail. It shows **line 1's subject, already moving**, at the exact moment line 1 begins. The title
 band is on top, the first caption chunk is on screen, and the strange detail is readable at phone size. No logo, no
 black frame, no channel name, no intro, no establishing pause. If the sound logo is used, it plays under this frame.
+
+# Buh Stories channel (owner, 2026-11-10: the story Shorts get their own channel)
+
+@HelloBuh keeps the Minecraft shitposts and "spot what's wrong". The story Shorts go to a second channel, built on
+everything above: the Pip voice, Buh as the recurring hero (never named aloud), one shared world (docs/world/canon.md).
+Nothing is uploaded until the owner creates the channel and authorises it (docs/upload-setup.md "A second channel").
+The art is in `brand/buh_stories/`, the review page is linked from the session report.
+
+## Identity
+- **Name and handle:** **Buh Stories**, **@BuhStories**. It reads cleanly, says what it is, and keeps the Buh name
+  that ties the two channels. YouTube availability can't be checked from here. Fallbacks, in order:
+  1. @BuhStoriesMC
+  2. @TheBuhStories
+  3. @HelloBuhStories (ties it to the main channel, but it's long)
+  4. "Tales from Hushwell" @HushwellTales (a world name instead of the hero; good if "Buh" is taken)
+- **Promise (one line):** *Short Minecraft mysteries from one world: every story is told by someone who lived it, and
+  every story connects.*
+- **Who's talking:** Pip's voice: a happy, bubbly kid who's figuring the world out and tells you the strange thing
+  like it's a fun fact. Buh is the hero you keep meeting at different ages (kid in Hushwell, Grandpa's helper in
+  Ravenford, the player who left his dog).
+- **Tone:** warm, curious, a little eerie. Cosy on the surface, and the twist is underneath. We never mock the
+  characters, never lie in a title, and never say "true story". Nothing in the copy is aimed at kids (the channel is
+  "not made for kids"); the stories are for everyone who grew up on Minecraft.
+
+## Visuals (`brand/buh_stories/`, rendered with our own renderer from Dog on the Hill's recording)
+- **Avatar** `avatar.png` (800x800): the dog with the red collar at sunset, the channel's mascot (the dog who waits).
+  It reads as "a dog with a red collar" at 48 px.
+- **Banner** `banner.jpg` (2560x1440): the dog alone on Dog Hill against the sunset, in the middle of the 1546x423 safe
+  band. "BUH" in gold and "STORIES" in white (Poppins Black) on the left; "one world. / one dog who waits. / every story
+  connects." on the right.
+- **Watermark** `watermark.png` (150x150): the avatar in a Buh-gold ring, transparent outside.
+- **First frame / title band** `cover_dog_hill.png`: the Short format unchanged (black bands, game view 1080x1011),
+  plus a gold "BUH STORY #N" pill over the title. The title is white Inter ExtraBold (edit.py's band font), with its
+  key word in Buh gold instead of red, and two balanced lines at most. The game view's first frame follows the opening
+  rule above: line 1's subject is already moving.
+- **Colours:** the palette above. Buh gold `#FFD640` is the accent everywhere (the title key word, the kicker, the
+  ring, the caption key colour), white for text, night `#1B2030`, dusk `#BC624A`. Captions as in STANDARDS 6:
+  Poppins Black, with the brand key colour.
+- Commands: `brand/buh_stories/README.md`.
+
+## Titles
+**Format: `<line 1's hook, lowercase> <emoji> | Buh Story #N #minecraft #shorts`.** The hook goes first, because feed
+titles are cut at about 40-60 characters (thin evidence, see above). The series tag goes after it, and the cover's
+gold pill carries the number on the video itself. The number counts releases on this channel. If the owner prefers
+the series tag first ("Buh Story #N: ..."), it's a one-line change.
+
+| # (suggested release order) | story | title | cover title (band) |
+|---|---|---|---|
+| 1 | Light Sleeper | my village is covered in 9,000 carpets 😶 \| Buh Story #1 #minecraft #shorts | My village is covered in 9,000 **carpets** |
+| 2 | Thirty-One Raids | grandpa won 31 raids. he started all of them 😳 \| Buh Story #2 #minecraft #shorts | Thirty-one raids. Every one started the night Grandpa came **home** |
+| 3 | Gold for the Portal | my grandma has thrown 9,000 gold into a portal 🪙 \| Buh Story #3 #minecraft #shorts | My grandma has thrown 9,000 gold into a **portal** |
+| 4 | Good Boy | my human tried to lose me 37 times 🐺 \| Buh Story #4 #minecraft #shorts | My human has tried to lose me 37 **times** |
+| 5 | Dog on the Hill | the dog on the hill hasn't moved in 900 days 🐕 \| Buh Story #5 #minecraft #shorts | The dog on the hill hasn't moved in **900** days |
+
+Why this order: Light Sleeper is the strongest hook and the bar; Good Boy comes before Dog on the Hill, so the
+dog's wait lands for anyone who watches in order (each still stands alone). Raids' title gives away less than its
+twist; check it against the final script before upload.
+
+## Pinned comment (one question per story, one people want to answer)
+1. Light Sleeper: "What do you think is under the well? Wrong answers only 👇"
+2. Thirty-One Raids: "Should Buh ever tell Grandpa where raid 32 came from?"
+3. Gold for the Portal: "What would YOU send through the portal to Grandpa?"
+4. Good Boy: "Be honest: would you have made him sit?"
+5. Dog on the Hill: "He's waited 900 days and still has no name. What should we call him?"
+
+## Description, tags, playlists
+- **Channel description:**
+  "Short Minecraft mysteries from one world. Every story is told by someone who lived it: a village that carpets every
+  road, a grandpa who has won every raid, a dog who never stops waiting. Watch them in order and the world starts to
+  connect. Made in vanilla Minecraft. Fiction, every word. More Minecraft chaos on @HelloBuh."
+- **Video description template:** line 1 = the hook, then "Buh Story #N. Every story happens in the same world.", the
+  pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
+- **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
+- **Keywords (channel and video tags):** minecraft story, minecraft mystery, minecraft shorts, minecraft lore,
+  minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
+- **Playlists:** "Buh Stories (in order)", "Hushwell" (Light Sleeper, Dog on the Hill), "The Dog" (Good Boy, Dog on
+  the Hill), "Grandpa" (Thirty-One Raids, Gold for the Portal).
+
+## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
+"We made a second channel 👀 Buh Stories: short Minecraft mysteries that all happen in the same world. First one: a
+village covered in 9,000 carpets. You'll want to know why. → @BuhStories"
