@@ -130,6 +130,11 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, after the kid-narrator audition: "all of the current ones seem to be too sped up. i kinda like
+  the pip here"** (Dog on the Hill v3: Leda, natural tempo, no pitch shift; measured ~4.1 words/s while speaking,
+  ~0.45 s between sentences, 2.85 words/s overall). The narrator is Leda as voiced there: **no time-stretch and no
+  pitch shift**. Speed comes from the direction (quick, bright, one breath per sentence), never from the 1.5x filter;
+  atempo 1.1 at most if a take drags. `voices/cast.json` narrator `post` is now empty.
 - **Owner, 2026-11-10 (in the Dog on the Hill session): "the start should be delivered all at once right?" / "we can
   have pauses later, the opening must be in one breath"; "is milo a woman?"; "what does the day one mean bro".**
   - Line 1 is one quick breath, no internal pause (`./hb pace` blocks one over 0.2 s). Re-take it; trimming silence

@@ -4,10 +4,10 @@
   "name": "Narrator",
   "voice": "Leda",
   "profile": "a kid of about eleven telling the camera his own story: fast, bright, bubbly, happy and energetic, a big grin in his voice, chatty like he's telling his best friend; not whispery, not breathy, not soft",
-  "post": "rubberband=tempo=1.5:pitch=1.0905:formant=preserved",
+  "post": "",
   "fallback": "am_adam",
   "from": "kid-narrator audition 2026-11-10 (owner: 'it should be like a child most of the time right? like bubbly happy'); out/voices_cast/kid_narrator_audition.mp3",
-  "notes": "Gemini reads him at ~2.7 words/s; post speeds him up 1.5x (~4.1 words/s; target 4.5) and lifts him 1.5 semitones with formants kept (judge: age ~11, bubbly 9/10, realism 7; unlifted Leda is realism 10 but reads 15-18). The asetrate lift (the old Kid filter) warbles: never use it. Scene direction must say 'full volume, excited': an ellipsis or a 'dramatic' note makes Gemini whisper."
+  "notes": "Gemini reads him at ~2.7 words/s; post speeds him up 1.5x (~4.1 words/s; target 4.5) and lifts him 1.5 semitones with formants kept (judge: age ~11, bubbly 9/10, realism 7; unlifted Leda is realism 10 but reads 15-18). The asetrate lift (the old Kid filter) warbles: never use it. Scene direction must say 'full volume, excited': an ellipsis or a 'dramatic' note makes Gemini whisper. Owner 2026-11-10, after the audition: \"all of the current ones seem to be too sped up. i kinda like the pip here\" (Dog on the Hill v3: Leda, unshifted, natural tempo, ~4.1 words/s while speaking from direction alone). So no tempo stretch and no pitch shift: get the speed from the direction (quick, bright, one breath per sentence); atempo at most 1.1 if a take drags."
  },
  "storyteller": {
   "name": "Storyteller",
