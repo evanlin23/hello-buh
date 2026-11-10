@@ -262,21 +262,22 @@ module.exports = {
     let cr = null, z1 = null, z2 = null
     await cut('rain', { time: 6000, weather: 'rain' })
     await line('L02', async (k, at) => {
-      if (k === at(1) - 1) await cut('storm', { time: 18000, weather: 'thunder' })
+      if (k === at.cut(1)) await cut('storm', { time: 18000, weather: 'thunder' })
       // the bolt behind the hut, inside the crop (audit F3); smoothLight lights the world with it
       if (k === at(1) + 2) { ctx.mark('lightning', { x: X + 6, y: F, z: Z - 20 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
-      if (k === at(2) - 3) {
+      // a mob just summoned needs 2 ticks to reach the client: summon it 2 ticks before the cut; the cut on at.cut(i)
+      // (it lands just before the word: at(i) split words by 60-323 ms in Gold)
+      if (k === at.cut(2) - 2) {
         say(`/summon creeper ${X + 0.0} ${F + 1} ${Z - 3.8} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["cr"],Rotation:[0f,0f]}`)
         cr = K.actor('cr', { x: 0.0, z: -3.8, yaw: 0 })
-        await cut('creeper', { weather: 'clear' })
       }
+      if (k === at.cut(2)) await cut('creeper', { weather: 'clear' })
       if (cr && k > at(2) && k < at(3)) { cr.z = -3.8 + (k - at(2)) * 0.06; if (k === at(2) + 3) ctx.sound('entity.creeper.primed', 0.25, 1) }
-      if (k === at(3) - 3) {
-        K.park('cr'); say('/kill @e[tag=cr]'); cr = null
+      if (k === at.cut(3) - 2) {
         for (const [t, dx, dz] of [['z1', -1.8, -3.2], ['z2', -3.2, -4.4]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
         z1 = K.actor('z1', { x: -1.8, z: -3.2, yaw: 0 }); z2 = K.actor('z2', { x: -3.2, z: -4.4, yaw: 0 })
-        await cut('zombies')
       }
+      if (k === at.cut(3)) { await cut('zombies', {}, () => K.park('cr')); say('/kill @e[tag=cr]'); cr = null }   // the creeper leaves with the cut
       if (z1 && k > at(3)) { z1.z = -3.2 + (k - at(3)) * 0.09; z2.z = -4.4 + (k - at(3)) * 0.09; if (k === at(3) + 2) ctx.sound('entity.zombie.ambient', 0.5, 0.9) }
     })
     K.park('z1'); K.park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
@@ -319,7 +320,7 @@ module.exports = {
     // ---- L12: every night, Pip sits with him: dusk, then night on NOBODY
     await cut('dusk', { time: 12700 }, () => { place('pip', { x: 0.5, y: 1, z: 1.6, yaw: -90 }); place('gramps', { ...OFF, z: 2 }) })
     await line('L12', async (k, at) => {
-      if (k === at(2) - 1) {
+      if (k === at.cut(2)) {
         await cut('night', { time: 18000 })
         // Buh logs in on the patch now, behind the night camera (it looks west, away from P): seen first on L14's word.
         // Not awaited: the line's clock goes on while the teleport is checked
