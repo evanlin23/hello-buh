@@ -10,8 +10,8 @@
   - S06 a sunset on another day, 12000 (looking east: the ridge in warm side light).
   - S07 inside, 14000. S08-S09 at the gate, 13000 (a typical raid night: "He drinks it at the GATE").
   - S10 inside, another night, 14000.
-  - S11-S14 **the final night**: S11 12800 (at his door), S12 12900 (the drink), S13-S14 13500 (the raid starts 30 s
-    after the drink: 600 ticks; the S12→S13 cut carries it, the horn marks it).
+  - S11-S14 **the final night**: S11 12400 (at his door), S12 12500 (the drink), S13-S14 13100 (the raid starts 30 s
+    after the drink: 600 ticks, while the sky still reads; the S12→S13 cut carries it, the horn marks it).
 - Weather clear throughout.
 - **Numbers the script says:** THIRTY-ONE raids (L01) = 31 totems in the frames (S01) = 31 filled frames of 32.
   The raid: five pillagers and one ravager on screen (not said). **Staged, not wave 1:** vanilla's first wave is 4
@@ -22,7 +22,7 @@
 | place | where (x, z from the gate; +x east) | what's there | establishing shot | changes |
 |---|---|---|---|---|
 | gate | (0, 0), the east side of the village | a log palisade (2-3 high, spruce logs) ringing the village; a wide gate of fence gates between two tall log posts (5 high) with lanterns | S08 (and S02 from the palisade top) | open in S08-S14 |
-| road | east from the gate through fields to the river ford (+40), then up the ridge | dirt path, wheat both sides | S02 | S13 the raiders walk from 22 to 18 blocks out; S14 15-17 blocks |
+| road | east from the gate through fields to the river ford (+40), then up the ridge | dirt path, wheat both sides | S02 | S13 the raiders walk from 20 to 16 blocks out; S14 16 to 13 |
 | hill / ridge | 130 blocks east, 25-35 blocks above the village | a pillager outpost tower; birches and tall grass on the slope; **no banner on the tower** | S06 | none |
 | square | (-30, 0), the village centre | the bell on a cobble plinth, a well, 10-12 houses around, hay bales, lanterns | S05 | the butcher's roof with a fresh hole after raid 31 (no smoke: the renderer has no campfire smoke); not seen after |
 | Grandpa's yard | (-8, -6), just inside the gate, north side of the road | his house's door facing south, a grindstone at about (-6, -4), an item frame with his crossbow on the wall beside the door, a lantern on a post, a small fence | S03 (camera at about (-14, -4) looking east: door frame left, gate posts frame right) | the crossbow frame is empty in S02/S05/S06/S08/S09/S14 (he carries it); filled in S03-S04 and S10-S11 |
@@ -35,7 +35,7 @@
 | Narrator (N), Milo | the bot (POV); default Steve skin if a camera ever shows him (none planned) | empty hand until the end of S11, then the ominous bottle in slot 1 (selected) through S12; empty again after the drink; no armor; hearts full | none | S01 inside the door; S02 palisade top; S03-S04 Grandpa's yard; S05 the square's edge; S06 the slope; S07 beside the chest; S08-S09 behind Grandpa at the gate; S10 the room's corner; S11 the yard; S12-S14 in the gate | drinks the bottle in S12 (consumed: the hand is empty in S13-S14) |
 | Grandpa | player actor, default `zuri` skin (accepted: no default skin looks old; his age is in the voice, the slow walk and the slump) | one main-hand item at a time (the engine draws only the main hand): his crossbow (S02, S05, S06, S08 from "GATE", S09, S14 loading it); a totem in S01; empty at the grindstone (S03-S04) and at the table (S10); an ominous bottle in S07, S08 (drunk) and S11 (undrunk, taken by the boy on "FIGHT"); the crossbow hangs in the frame by his door in S03-S04 and S10-S11 | none | S01 at the totem wall, frame right; S02 on the road walking west; S03-S04 at the grindstone; S05 crossing the square west to east; S06 on the hill path; S07 at the chest; S08-S09 in the gate facing east; S10 standing crouched over the table; S11 crouched against his door frame; S14 2 east and 2 south of the boy, just outside the south gate post, facing east up the road | S10-S11 crouched, head down (sneak pose: actors can't sit); S14 upright, awake, loading his crossbow (sounds + an arm pump); **he never hands the crossbow over** |
 | villagers | 8+ villagers, mixed professions; farmers (straw hats) throw the bread | | none | S05 around the square; S14 none needed (the gate faces out) | none |
-| raiders | 5 pillagers (crossbows), 1 ravager; **no captain, no banners, no torches** (staged; see World) | | none | S13 walking up the road toward the gate from 22 to 18 blocks; S14 15-17 blocks | none |
+| raiders | 5 pillagers (crossbows), 1 ravager; **no captain, no banners, no torches** (staged; see World) | | none | S13 walking up the road toward the gate from 20 to 16 blocks; S14 16 to 13 blocks | none |
 
 ## Props
 

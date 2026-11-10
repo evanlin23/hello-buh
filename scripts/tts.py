@@ -12,7 +12,7 @@ the profile sent as direction, a post filter). A story's `cast` (docs/story_craf
 Lines: `who` (a cast id; missing = the narrator), `say` (what is read; default `text` with " / " removed and CAPS
 lowered, as voice.py), `direction` (a note for that line: emotion and one rhythmic moment; never quote its words).
 `requests` (optional) pairs the speakers ({"id", "speakers": [<=2 cast ids], "direction": scene}); each line goes to
-the first request with its speaker. Without it, consecutive lines share a request until a third speaker. A request
+its own `request` (an id) if it names one, else the first request with its speaker. Without it, consecutive lines share a request until a third speaker. A request
 holds at most 8 lines.
 
 Quota: the free tier is a handful of requests a day per model, so a whole exchange goes in ONE request (Gemini's
@@ -251,7 +251,8 @@ def run_story(d, only=None):
         if only and ln["id"] not in only:
             continue
         w = ln.get("who", narrator)
-        r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
+        # a line's own `request` (an id) wins; else the first request that lists its speaker
+        r = (next((r for r in reqs if r.get("id") == ln["request"]), None) if ln.get("request") else next((r for r in reqs if w in r["speakers"]), None)) if reqs else None
         item = (w, ln["id"], ln.get("say") or voice.spoken(ln), ln.get("direction", ""))
         if reqs:   # each line in the first request that lists its speaker
             if r is None:
