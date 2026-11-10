@@ -120,6 +120,7 @@ and next to other builds.
 | `clutter(ctx, x, z, kind)` | crates, logs, pots, cart (chest minecart), well, market |
 | `crops(ctx, box, crop)` | farmland on the terrain with a water row every 8, ripe crops |
 | `fence(ctx, [[x, z], ...])` | a fence along the ground |
+| `torches(ctx, { x0, z0, x1, z1, yTop, yBottom, skip, dry })` | a standing torch on every block in a box that takes one (sturdy full tops, fence and wall posts; plants replaced; paths, farmland, stairs, bottom slabs, leaves, crops skipped), counted: `{ count, at }`. Six Thousand Torches: 6,127 at Larkfield |
 | `sign`, `banner`, `frame` (item frame), `light` | at exact spots (signs and banners render; item frames render with their item) |
 
 ## Staging tips

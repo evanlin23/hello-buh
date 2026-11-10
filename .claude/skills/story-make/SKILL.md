@@ -72,6 +72,11 @@ take to take and even within take"): `./hb drift story_<name>` must end OK or WA
 quota, tts.py stops instead of switching; wait for the reset, or `--relock <cast id>=<model>` re-takes ALL of that
 character's lines on the other model. Requests stay short (at most 6 lines); never override a library character's
 `profile` in a story.
+**Continuous takes for every new story** (owner, 2026-11-10: "the voice we get back is all like continuous already
+without the stuff we dont want"; STANDARDS 2b.4): set story.json `"voice_takes": "beat"`. Each beat is one take
+used whole; `scripts/take_gate.py` re-takes a bad one (pause, breath, whisper, wrong word, clipped edge) instead of
+trimming it; time lines with `K.line` so the picture follows the take's own pauses (never `S.gap` by hand). A GATE
+blocker from speaker_check means every retry failed: tighten the beat's direction and re-voice it, don't edit it.
 **A line in the wrong voice is a blocker** (owner, 2026-11-10: "make sure the voices are distinct and correct"): if
 `./hb voice` ends with BLOCKERS after its re-takes, listen, change the line's text or direction, and `./hb voice
 story_<name> --only <id>`; never record over a swapped line. THIN lines: listen to them.
