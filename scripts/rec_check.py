@@ -26,6 +26,9 @@ Checks (ranked by how often reviews flagged them):
                "OK, BUT THE SET CHECK DID NOT RUN", and with --strict / REC_CHECK_STRICT=1 the exit code is 2.
   5. vanilla   digs faster than the held tool allows (dig/dig_end marks), mobs faster than vanilla, the player
                faster than sprint-jumping outside cuts.
+  5c. sight   a clear line of sight to every dig and place (STANDARDS 3b.4, scripts/rec_sight.js): no face of the
+               block (a place: the clicked face of a block it goes against) visible from the eye, or the crosshair
+               hitting another block first
   6-9. the owner's notes (2026-11-10), from `./hb owner` (lib/hb/owner.js; --no-owner skips them):
      flat      a story shot whose visible world is mostly a flat cleared plain (and the set's footprint and relief)
      subject   a line names a subject (lines[].look, or TORCH / MOM / LIBRARIAN...) and the camera isn't on it
@@ -192,6 +195,52 @@ def camera_shot_spans(stunt, stunt_file, tl):
         t1 = marks[k + 1][0] if k + 1 < len(marks) else 1e9
         if not (shots.get(name) or {}).get("pov"):
             out.append((t0, t1))
+    return out
+
+
+# ---------------------------------------------------------------- 5c. sight: line of sight to every dig and place
+# (owner, 2026-11-10: "we need to ensure there is a clear line of sight to the stuff we are placing or breaking",
+# STANDARDS 3b.4). The geometry is lib/sight.js (what K.dig / K.place aim with), run over the recording by
+# scripts/rec_sight.js. Kept apart from the other checks.
+NOISE |= {"place_on"}   # the kit's mark for K.place (which block it went against): not a story beat
+
+
+def sight_findings(rec_p):
+    """scripts/rec_sight.js over the recording -> {digs, places, found: [...]} or {error}."""
+    try:
+        res = subprocess.run(["node", str(HERE / "scripts" / "rec_sight.js"), str(pathlib.Path(rec_p).resolve()), "--json"],
+                             capture_output=True, text=True, cwd=HERE)
+    except OSError as e:
+        return {"error": str(e)}
+    if res.returncode != 0:
+        err = (res.stderr or "").strip().splitlines() or ["?"]
+        why = next((ln.strip() for ln in reversed(err) if "Cannot find module" in ln or "Error" in ln), err[-1].strip())
+        return {"error": why + (" (run `npm ci`)" if "Cannot find module" in why else "")}
+    try:
+        return json.loads((res.stdout or "").strip().splitlines()[-1])
+    except (ValueError, IndexError):
+        return {"error": "rec_sight.js printed no JSON"}
+
+
+def sight_findings_msgs(res):
+    """rec_sight.js findings -> [(level, source tick, message)]. A hidden block, a crosshair through another block on 3+
+    ticks of a dig or on a place's swing: BLOCK; 1-2 ticks of a dig, or a place guessed from a swing (no place mark): WARN."""
+    out = []
+    for f in res.get("found", []):
+        b = f.get("blocker")
+        by = f"{b['name']} at {b['x']} {b['y']} {b['z']}" if b else "nothing faces the eye"
+        what = f"{'breaking' if f['kind'] == 'dig' else 'placing'} {f['block'] if f['block'] != 'block' else 'a block'} at {f['x']} {f['y']} {f['z']}"
+        if f["problem"] == "hidden":
+            on = f" (against {', '.join(f['against'])})" if f.get("against") else ""
+            msg = f"{what}{on}: no face of it is visible from the eye, {by} is in the way"
+            lvl = "BLOCK"
+        else:
+            msg = f"{what}: the crosshair hits {by} first" + (f" on {f['n']}/{f['of']} ticks of the dig" if f["kind"] == "dig" else " on the swing")
+            lvl = "BLOCK" if f["kind"] == "place" or f["n"] >= 3 else "WARN"
+        if f.get("source") == "inferred":
+            lvl = "WARN"
+            msg += " (a place guessed from a swing and a new block: K.place marks its own)"
+        out.append((lvl, f["tick"], msg + ": stand where the eye sees it, or let K.dig / K.place pick the face (STANDARDS 3b.4)"))
     return out
 
 
@@ -799,6 +848,17 @@ def main():
                     f"\"hotbar\" (the story's tools, then 1-3 ridiculous items: STANDARDS 3.6); a stunt's own ctx.hotbar replaces it "
                     f"(lib/story.js mergeHotbar keeps the story's items)", tick=ft)
 
+    # ---------------------------------------------------------------- 5c. sight (STANDARDS 3b.4, scripts/rec_sight.js)
+    sight_res = sight_findings(rec_p)
+    if sight_res.get("error"):
+        not_run.append(f"sight ({sight_res['error']})")
+    for lvl, tick, msg in sight_findings_msgs(sight_res):
+        o = out_t(tick / 20)
+        # (camera shots too: a third-person shot shows the player breaking a block through another just the same)
+        if not (start <= o < end_o) or any(sa <= tick / 20 <= sb for sa, sb in cut_spans):
+            continue
+        add(lvl, "sight", min(n - 1, max(0, int(round(o * FPS)) - k0)), msg, tick=tick)
+
     # ---------------------------------------------------------------- 6-9. the owner's notes (./hb owner, lib/hb/owner.js)
     owner_note = ""
     if not a.no_owner:
@@ -862,7 +922,7 @@ def main():
         secs = sum(min(c1, len(P)) - c0 for c0, c1 in cam_spans) / 20
         print(f"  {len(cam_spans)} camera shot(s), {secs:.1f}s: POV checks skipped there"
               f"{' (' + ', '.join(f'{v} {k}' for k, v in skipped.items()) + ')' if skipped else ''}; run LINT=1 node render.js {rec_p} for the cameras")
-    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "hotbar": 5.5, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
+    order = {"cuts": 0, "held": 1, "ending": 2, "turns": 3, "set": 4, "vanilla": 5, "hotbar": 5.5, "sight": 5.7, "flat": 6, "subject": 7, "sync": 8, "glitch": 9, "edit": -1}
     for level, title in (("BLOCK", "BLOCKERS"), ("WARN", "WARNINGS")):
         items = sorted([it for it in R.items if it[0] == level], key=lambda it: (order.get(it[1], 9), it[2][0] if it[2] and it[2][0] is not None else -1))
         print(f"\n{title} ({len(items)}):" if items else f"\n{title}: none")

@@ -156,8 +156,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
    (eye-trace), and the cut lands on an edit point, not wherever the line starts. Check: cut check (in progress). r:rfa229d
 4. **Clear line of sight to every dig and place**: nothing between the eye and the face being broken or placed on.
-   The kit's K.dig/K.place choose a visible face and stand spot, and refuse otherwise. Check: rec_check (line of
-   sight, in progress). r:rd0b2b1
+   The kit's K.dig/K.place aim at a point on a face the eye can see (lib/sight.js; a place: the clicked face of a block
+   it goes against), and refuse otherwise, naming the block in the way and a stand spot that sees it ({ walk: true }
+   steps there). Check: rec_check `sight` (scripts/rec_sight.js: no visible face, or the crosshair hits another block
+   first). r:rd0b2b1
 
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4
