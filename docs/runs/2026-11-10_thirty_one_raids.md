@@ -1,14 +1,13 @@
-# Run report: thirty_one_raids (2026-11-10, run 1): built, recorded, rendered; held for 3 narrator lines
+# Run report: thirty_one_raids (2026-11-10)
 
 **Premise:** Grandpa has saved the village from 31 raids, and every one started the night he came home. His
 "courage" is an ominous bottle: he brings every raid himself, because a raid is the only time anyone's glad to see
 him. Tonight he's too tired, so Milo drinks it. The horn. "Now they'll love you too, kid."
 
-**Result:** not published. The Short is built, `hb check` is clean, and Actions rendered it (45.5 s, 1080x1920,
-run 42781096996), but that render has the morning's narrator (Leda), which the owner rejected during this run
-("so high pitched and annoying"). The approved narrator (kid Puck) exists only on gemini-3.1-flash-tts, whose shared
-daily quota ran out with L01-L08 and Grandpa voiced. L10-L12 need one 3.1 request: `stories/thirty_one_raids/NEXT.md`
-has the exact steps (~45 min).
+**Result:** see "Outcome" at the end. First half: built, recorded, rendered, then held when the narrator voice changed
+twice (Leda kid, kid Puck) and 3.1-flash ran out of quota. Second half: the owner settled on Pip's voice
+(3.8-flash-lite, its own quota), so the narrator was re-voiced in one request, Grandpa moved to 2.5-flash after the
+drift gate blocked his 3.1 L09, and the Short was re-recorded, rendered and reviewed.
 
 ## Minutes per stage (06:22-08:40 UTC; active / waiting)
 | stage | active | waiting | notes |
@@ -31,14 +30,24 @@ has the exact steps (~45 min).
   (idle head motion and a dozing nod), raiders unreadable at 13500 (13000, trees out of their sightline, closer).
 - 1 Actions render (the picture is final; the audio isn't).
 
-## Voice (TTS requests: 14)
+## Voice (TTS requests: 16)
 1. Milo (Achird) + Grandpa (Algenib), 3.1: 2 requests (then the narrator-first and kid-narrator rules arrived).
 2. Leda kid + Charon, 3.1: 4 + 2 re-takes for pace (the 4.5 w/s target was later dropped).
 3. Puck kid (the owner's pick), 3.1: 2 requests (L01-L08); 3.1 then out of quota.
 4. Puck on 2.5-flash (3 requests) measured an adult (median 107-133 Hz, drifting lower in n3), and on 3.8-flash (1
    test) an adult (~156 Hz): neither is the approved voice, and the drift rule forbids mixing models within one
    character, so L10-L12 wait for 3.1.
-- Cutting: main's fixed `voice_check.py --resplit` (quietest point, padding, fades); `voice_edges.py`: 0 cut.
+5. Pip (the owner's final pick: Leda, gemini-3.8-flash-lite-tts, the bracketed bubbly-nine-year-old direction): all 11
+   narrator lines in ONE request (voices/recipes/pip.md). Grandpa: the drift gate (`./hb drift`) blocked his 3.1 L09
+   (WOBBLE); 3.1 and 3.8-lite were out of quota, so both his lines were re-taken on 2.5-flash (`tts.py --relock`), one
+   model per character.
+- Cutting: main's fixed `voice_check.py --resplit` (quietest point, padding, fades); `voice_edges.py`: 0 cut;
+  `speaker_check.py`: OK; `./hb drift`: 0 blockers (6 warnings: L01/L04 off the narrator's reference, slight wobble on
+  L01/L05/L08, Grandpa's L13 off his provisional reference). The listening model (gemini-3.5-flash) was rate-limited
+  for the final pass.
+- Pacing (`./hb pace`): fixed a 0.62 s gap after line 1 (story gap 0.3 -> 0.12 s), named the payoff (story.json
+  `payoff`: a mark on the crossbow click on "kid", with a punch-in), split a 5 s static picture in S10 with a cut-in.
+  Final: 45.0 s, 0 blockers, 1 warning (a 0.5 s gap after line 1).
 
 ## Engine
 - Used main's new engine features (agent/ergonomics): Grandpa sits at the table and on the bench (`sit`), the real
