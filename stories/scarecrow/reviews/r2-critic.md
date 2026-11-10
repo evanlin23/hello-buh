@@ -2,7 +2,7 @@
 
 Verdict: APPROVE. Overall 7.7/10.
 
-**Cold read.** For 63 mornings a snow trail has run from Grandpa's snow scarecrow to Milo's window, so he thinks something stands there staring at him. He throws the window open and the scarecrow is gone. Then the camera looks down at zombies at his wall: the "stalker" is a snow golem guarding him.
+**Cold read.** A snow trail runs nightly from Grandpa's snow scarecrow to Milo's window, so he thinks something stares at him. He opens the window, the scarecrow is gone, and zombies stand at his wall: the stalker is a snow golem guarding him.
 
 **Round 1 must-fixes**
 1. Pip recipe verbatim in `requests[0].direction`: done.
@@ -10,7 +10,7 @@ Verdict: APPROVE. Overall 7.7/10.
 3. L06 "out of SNOW", no white body in S01-S02: done. S08 is the first look at the body, after the line names it.
 4. "GONE" readable: done. The lantern at (22,1,3) plus S10b's lit empty gap, with its own line (L10).
 
-No regressions in the lines. No "...", L01 is one breath, the ending explains itself (L11 flips L03's "STARING at me"). The out-of-context read passes.
+No regressions: no "...", L01 is one breath, L11 explains itself, and the out-of-context read passes.
 
 **Scores**
 | | r1 | r2 | why |
@@ -26,14 +26,14 @@ No regressions in the lines. No "...", L01 is one breath, the ending explains it
 | Delivery | 6 | 8 | The recipe, a pause before L10, 116 words (about 40 s, short of 45). |
 | Visual | 7 | 8 | Lit gap, the S11 pull-out, full-scale meadow. |
 | Continuity | 7 | 8 | Most breaks are pinned. One risk is below. |
-| Owner fit | 8 | 8 | Every dated rule checked. The sit pose and the snowball puff are engine builds, which is allowed. |
+| Owner fit | 8 | 8 | Every dated rule checked. The sit pose and the puff are engine builds. |
 
-Average 92/12 = 7.7. Against runaway: worse. Runaway hides its answer in who "I" am. Here the answer stands in the field from S08, and players can solve it.
+Average 92/12 = 7.7. Against runaway: worse. Runaway hides its answer in the POV. Here it stands in the field from S08.
 
 **Must-fixes:** none.
 
 **Should-fixes**
-1. S10: pin the POV's yaw and FOV so the patch at (6,-6), about 45 degrees left of east, is out of frame. If the golem is visible as the shutters open, the reveal is spoiled. Check this on the shot sheet.
-2. L07 "NOT helping." Some viewers will ask "why not?". Consider "Kind of CREEPY now." so the misread is stated.
-3. The runtime is about 40 s. A 0.3 s breath before L09 and the 0.8 s hold fit inside 45 s. Don't stretch the voice.
-4. Snowballs push but do no damage, so the zombies must visibly burn or flee at dawn somewhere (the bible), or the flesh is unexplained. Keep S06's flesh at the wall foot.
+1. S10: pin the POV's yaw and FOV so the patch at (6,-6), about 45 degrees left, is out of frame. A visible golem spoils the reveal.
+2. L07 "NOT helping." invites "why not?". Consider "Kind of CREEPY now."
+3. About 40 s. Add breaths before L09 and L11, never a time-stretch.
+4. Snowballs do no damage to zombies. The bible must have them burn at dawn by the wall, which is where the flesh comes from.
