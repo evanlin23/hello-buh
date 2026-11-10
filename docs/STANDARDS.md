@@ -58,8 +58,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    r:r5519b8 r:rb9756b r:r350819 r:r810b66
 2. **Never whispery**: every style prompt says "fast, bright, energetic; not whispery, breathy or soft"; drop to
    scared (not hushed) only for real danger. r:r350819 r:raf72e0
-3. **Speed is not a target**: no stretching, no re-take loops chasing words/s. Speed comes from short sentences and
-   the direction. Pace only warns when clearly slower than Pip (~4.1 words/s speaking, ~2.85 overall). r:r00f92f
+3. **Fast**: about 5-5.5 words per second while speaking (the owner's reference Short), from short sentences, little
+   air between them and the voice's natural speed (never a sped-up file). Check: pace. r:r1ed23c (supersedes
+   r:r00f92f, "speed is not a target")
 4. **The opening in one breath**: no pause inside line 1 over **0.2 s**; in the first 5 s no pause inside a line over
    **0.35 s** and no gap between lines over **0.6 s** (pace BLOCK; WARN over 0.25 / 0.45 s). Re-take, don't trim. r:r810b66 r:r961104
 5. **Cut safely**: at the quietest point between lines (`voice_check.py --resplit`), never at Whisper's word start or
@@ -90,6 +91,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    are forced-aligned to the caption words (`scripts/align.py` -> `scripts/ctc_align.py`; Whisper only as a fallback,
    flagged), caption words matched to them by text. Measured on the finished Short: |median offset| <= 33 ms and
    <= 10% of words over 100 ms off, else BLOCK. Check: `scripts/caption_av_check.py` (in `./hb review`). r:r27d123
+5. **No dramatic pauses**: the narrator talks continuously from frame 0 to the cut; drama comes from the words and
+   the picture, never silence. Pause limits (take gate) and line spacing follow the owner's reference Short's measured
+   gaps: 194/195 word gaps under 0.3 s, so pauses max 0.3 s inside a line and 0.35 s between, lines 0.08 s apart. Length
+   floor 25 s. Check: take_gate (pause), pace. r:rc95ed3
 4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
    pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
    only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a
@@ -141,9 +146,9 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Cinem
 - No onomatopoeia or emoji; punch-in 0.06-0.10 at most twice, shake 6-10 px only on a visible impact.
 
 ## 6. Captions
-1. **One word at a time**, timed by `voice/words.json` word starts, Poppins Black 96 px, centred at 0.70 of the game
-   view, max 840 px wide; each word pops in (0.1 s) and cuts out hard on the next. (`"captions": "chunk"` brings back
-   2-3 word chunks for a test.) r:rbd7cb6
+1. **2-3 word chunks** (the script's " / " splits), one CAPS key word per chunk in the key colour, Poppins Black 96 px,
+   centred at 0.70 of the game view, max 840 px wide; each chunk pops in and cuts out hard on the next; quotes keep
+   their quote marks. (`"captions": "word"` gives one word at a time.) r:r61d371 (supersedes r:rbd7cb6)
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).

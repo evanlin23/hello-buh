@@ -68,7 +68,7 @@ class Captions(unittest.TestCase):
         d = self.d = pathlib.Path(self.tmp.name)
         (d / "voice").mkdir()
         text = "My grandma / NINE THOUSAND / gold ingots."
-        (d / "story.json").write_text(json.dumps({"lines": [{"id": "L01", "who": "N", "text": text}]}))
+        (d / "story.json").write_text(json.dumps({"captions": "word", "lines": [{"id": "L01", "who": "N", "text": text}]}))
         caps = ["My grandma", "NINE THOUSAND", "gold ingots."]
         (d / "voice" / "voice.json").write_text(json.dumps({"lines": {"L01": {
             "who": "N", "text": "My grandma nine thousand gold ingots.", "dur": 4.0, "onset": 0.3, "end": 3.5,
