@@ -423,43 +423,6 @@
     "DANCED before."
    ],
    "aligned": "whisper-base.en"
-  },
-  "L16": {
-   "text": "Oh. that's why we have nine thousand carpets.",
-   "who": "N",
-   "dur": 2.675,
-   "onset": 0.19,
-   "end": 2.66,
-   "chunks": [
-    [
-     0.19,
-     0.54
-    ],
-    [
-     0.54,
-     1.12
-    ],
-    [
-     1.0,
-     1.26
-    ],
-    [
-     1.26,
-     1.94
-    ],
-    [
-     1.94,
-     2.66
-    ]
-   ],
-   "captions": [
-    "Oh.",
-    "THAT'S why",
-    "we have",
-    "nine thousand",
-    "CARPETS."
-   ],
-   "aligned": "whisper-base.en"
   }
  },
  "total": 44.51,

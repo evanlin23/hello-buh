@@ -5,7 +5,7 @@
 // village has ever heard a song. Tonight he opens the well (wells echo), puts a jukebox on it, puts the disc in, and
 // steps off the carpet onto the well's bare stone rim to dance. The village sits on an ancient city: carpet makes no
 // vibration, the bottom of the well is a sculk shrieker, and the fourth shriek brings the warden up through the square.
-// "Milo was obliterated by a sonically-charged shriek." "Oh. That's why we have nine thousand carpets." (line 1 again).
+// "Buh was obliterated by a sonically-charged shriek." No closing line: the picture ends it (owner).
 //
 // The set: a real generated plains village (seed hellobuh, /locate village_plains from [1500, 0] finds the one at
 // (-160, -864)): a level village terrace at y 79 with a hill rising ~30 blocks to the north-west and the land falling
@@ -250,7 +250,9 @@ module.exports = {
       for (const [x, z] of lidRow) {
         const b = bot.blockAt(new ctx.Vec3(X + x, F + 1, Z + z))
         if (!b || b.name === 'air') continue
-        K.base = K.aim(C(x, 1.5, z)); await look(0); swing()
+        const from = { ...K.base }   // an eased turn to each block (owner: the dig looked jerky)
+        for (let t = 1; t <= 4; t++) { K.turnTo(from, C(x, 1.5, z), t / 4); await look(0); await bot.waitForTicks(1) }
+        swing()
         try { await K.dig(b, 250) } catch (e) { breakBlock(x, 1, z, 'white_wool') }   // shears on wool: 5 ticks
         ctx.particles('block', P(x, 1, z), { block: 'white_wool' })
         dug++
@@ -258,7 +260,8 @@ module.exports = {
     }
     await line('L06', async (k, at) => {
       if (k === at(2) - 4 && !digging) { digging = true; digRow().then(() => { digging = false }) }
-      if (!digging) { K.base = K.aim(C(dug >= 3 ? 0 : 0, dug >= 3 ? 0.4 : 1.6, 0)); look(k) }
+      if (!digging && dug === 0) K.base = K.aim(C(0, 1.6, 0))   // before the dig; after it, hold the last look (owner: "why does it go back to looking down afterward?")
+      if (!digging) look(k)
     })
     for (const [x, z] of lidRow) say(`/setblock ${X + x} ${F + 1} ${Z + z} air`)
 
@@ -326,9 +329,10 @@ module.exports = {
       if (k === at(4) + 2 && !placed) { placed = true; swing(); say(`/setblock ${X + 1} ${F + 2} ${Z - 2} jukebox`); ctx.sound('block.wood.place', 0.9, 1); say('/item replace entity @s hotbar.1 with air') }
       if (k === at(5)) { shriek(); K.shot('crane'); craneAt = ctx.tick }   // ECHO: the crane from above, straight down into the open slot
       if (!digging) {
-        const tgt = k < at(4) ? C(0, 1.6, 0) : k < at(5) ? C(1, 2.5, -2) : C(0, 1.9, -0.1)   // ECHO: into the open slot
-        if (k === at(4) || k === at(5)) K._from = { ...K.base }
-        if (k >= at(4)) K.turnTo(K._from, tgt, (k - (k < at(5) ? at(4) : at(5))) / 6); else K.base = K.aim(tgt)
+        // before the dig: the lid; after it, hold; on the jukebox, one slow turn to it (owner: "the head jerking around")
+        if (k < at(4) && dug === 0) K.base = K.aim(C(0, 1.6, 0))
+        if (k === at(4)) K._from = { ...K.base }
+        if (k >= at(4)) K.turnTo(K._from, C(1, 2.4, -2), (k - at(4)) / 12)
         look(k)
       }
     })
@@ -390,7 +394,7 @@ module.exports = {
     K.shot('pov'); for (let k = 0; k < 7; k++) { K.base = K.aim(C(0, 0.6, 4)); look(k); await bot.waitForTicks(1) }
 
     // ---- the reveal. S16: behind him, low: shriek 4, the carpet south of the well bursts, the warden rises and roars,
-    // while he gets it (L16 "Oh. THAT'S why we have nine thousand CARPETS."); S17: POV, it steps up, the sonic boom
+    // and roars; S17: POV, it steps up, the sonic boom (no closing line: the picture ends it)
     K.shot('s16')
     shriek()
     for (let x = -1; x <= 1; x++) for (const dy of [1, 0]) breakBlock(x, dy, 4, dy ? 'white_carpet' : 'grass_block', dy ? 'block.wool.break' : 'block.grass.break')
@@ -399,26 +403,28 @@ module.exports = {
     const wd = await put('warden', { x: 0.5, y: -2.8, z: 4.5, yaw: 180, pitch: 0 })
     const wEnt = () => Object.values(bot.entities).find(e => e.name === 'warden')
     for (let k = 0; k < 6; k++) { wd.y = -2.8 + 3.8 * K.ease(k / 30); look(k); await bot.waitForTicks(1) }
-    const T16 = K.T('L16'), toPov = Math.max(26, T16 - 20)
-    await line('L16', async (k) => {
+    // no closing line (owner, 2026-11-10: "We dont need to say 'Oh thats why we have 9000 carpets'"): the picture ends it.
+    // S16 the rise and roar (behind him), S17 POV: it steps up, the beam crosses, the hit
+    const END = 62, toPov = 34, beamAt = END - 16
+    for (let k = 0; k < END; k++) {
       const r = k + 6
       if (r <= 30) wd.y = Math.min(1.0, -2.8 + 3.8 * K.ease(r / 30))
       if (r % 6 === 0 && r < 30) ctx.particles('block', P(0, 1, 4), { block: 'white_carpet' })
       if (r === 26) { const e = wEnt(); if (e) ctx.mark('pose', { ids: [e.id], roar: true }); ctx.sound('entity.warden.roar', 1.4, 1) }
       if (k === toPov) { K.ctl('jump', false); K.shot('pov') }
-      if (k === T16 - 16) {   // the beam on the live picture, 0.8 s before the hit: its rings (16 ticks) are gone by the death screen
+      if (k === beamAt) {   // the beam on the live picture, 0.8 s before the hit: its rings (16 ticks) are gone by the death screen
         const eye = bot.entity.position
         ctx.sound('entity.warden.sonic_boom', 1.6, 1)
         ctx.particles('sonic_boom', P(0.5, 2.6, wd.z), { tx: +eye.x.toFixed(3), ty: +(eye.y + 1.62).toFixed(3), tz: +eye.z.toFixed(3) })
       }
       if (k >= toPov) {
-        const u = (k - toPov) / Math.max(1, T16 - toPov)
+        const u = (k - toPov) / (END - toPov)
         wd.z = 4.5 - 1.0 * K.ease(u * 1.4); wd.pitch = Math.sin(k / 4) * 10
         K.base = K.aim(P(0.5, 3.4, wd.z))
       }
-      look(k)
-    })
-    // the sonic boom right as the line lands, then the death screen ~1.2 s, the plaza pulsing behind it
+      look(k); await bot.waitForTicks(1)
+    }
+    // the hit, then the death screen ~1.2 s, the plaza pulsing behind it
     say('/damage @s 15 minecraft:sonic_boom')   // vanilla hard: 15; the arrow left him at 15
     for (let k = 0; k < 26; k++) { wd.yaw = 180 + Math.sin(k / 5) * 22; wd.pitch = 10 + Math.sin(k / 7) * 8; await bot.waitForTicks(1) }
     ctx.mark('story_end')
