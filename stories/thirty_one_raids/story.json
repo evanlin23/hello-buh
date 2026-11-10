@@ -77,7 +77,8 @@
       "look": {
         "what": "actor:Grandpa"
       },
-      "stress": "THIRTY-ONE, HOME"
+      "stress": "THIRTY-ONE, HOME",
+      "say": "THIRTY-ONE raids. Every one started the night Grandpa came HOME."
     },
     {
       "id": "L02",
@@ -86,7 +87,8 @@
       "beat": "A",
       "shot": "S02",
       "look": false,
-      "stress": "THIRTY-ONE, ONE"
+      "stress": "THIRTY-ONE, ONE",
+      "say": "Raid one, raid twelve, raid THIRTY-ONE. He won every ONE."
     },
     {
       "id": "L03",
@@ -97,7 +99,8 @@
       "look": {
         "what": "actor:Grandpa"
       },
-      "stress": "FOLLOW, BEATS"
+      "stress": "FOLLOW, BEATS",
+      "say": "He says they FOLLOW him. They know who BEATS them."
     },
     {
       "id": "L04",
@@ -109,7 +112,8 @@
         "what": "actor:Gramps",
         "word": "VILLAGERS"
       },
-      "stress": "BREAD"
+      "stress": "BREAD",
+      "say": "So the villagers throw him BREAD."
     },
     {
       "id": "L05",
@@ -120,7 +124,8 @@
       "look": {
         "what": "actor:Grandpa"
       },
-      "stress": "ALONE, RAID, HIM"
+      "stress": "ALONE, RAID, HIM",
+      "say": "Since Grandma died, he's always ALONE. But RAID nights? Everyone cheers for HIM."
     },
     {
       "id": "L06",
@@ -129,7 +134,8 @@
       "beat": "B",
       "shot": "S06",
       "look": false,
-      "stress": "TOWER, OMINOUS, LUCKY, LUCK"
+      "stress": "TOWER, OMINOUS, LUCKY, LUCK",
+      "say": "Every week, he hunts at the TOWER. He brings back OMINOUS bottles. Ominous means LUCKY, I think. He calls them his LUCK."
     },
     {
       "id": "L07",
@@ -140,7 +146,8 @@
       "look": {
         "what": "actor:Gramps"
       },
-      "stress": "GATE"
+      "stress": "GATE",
+      "say": "He drinks one at the GATE. Then he says:"
     },
     {
       "id": "L08",
@@ -163,7 +170,8 @@
       "look": {
         "what": "actor:Gramps"
       },
-      "stress": "OFF, SMILES, RAIDS"
+      "stress": "OFF, SMILES, RAIDS",
+      "say": "Then a horn goes OFF. And Grandpa SMILES. He must love the RAIDS."
     },
     {
       "id": "L10",
@@ -174,7 +182,8 @@
       "look": {
         "what": "actor:Grandpa"
       },
-      "stress": "FIGHT"
+      "stress": "FIGHT",
+      "say": "Tonight he came home too tired to FIGHT."
     },
     {
       "id": "L11",
@@ -183,7 +192,8 @@
       "beat": "C",
       "shot": "S12",
       "look": false,
-      "stress": "LUCK, FIGHT"
+      "stress": "LUCK, FIGHT",
+      "say": "So I drank his LUCK. Somebody had to FIGHT."
     }
   ],
   "shots": [
@@ -338,5 +348,9 @@
       67
     ]
   ],
-  "hotbar_note": "the boy's bar (owner r:rdc3c4c): slot 1 selected (the bread the village throws Grandpa), then a kid's tools; milk, a cake and 67 eggs (owner: 'make it 67 eggs') are the ridiculous ones. The one change is the story's: at L12 Grandpa's ominous bottle (L11, 'FIGHT') is in slot 1 in place of the bread. No totems, crossbow or bottles before L12: those are Grandpa's."
+  "hotbar_note": "the boy's bar (owner r:rdc3c4c): slot 1 selected (the bread the village throws Grandpa), then a kid's tools; milk, a cake and 67 eggs (owner: 'make it 67 eggs') are the ridiculous ones. The one change is the story's: at L12 Grandpa's ominous bottle (L11, 'FIGHT') is in slot 1 in place of the bread. No totems, crossbow or bottles before L12: those are Grandpa's.",
+  "one_take": [
+    "N"
+  ],
+  "one_take_note": "the narrator's 10 lines in ONE request across Grandpa's L08 (tts.py one_take); say: only the spoken-stress word in caps (cast narrator profile: 'punching only the capitalised key word')"
 }
