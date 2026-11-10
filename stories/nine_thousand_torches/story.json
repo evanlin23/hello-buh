@@ -2,7 +2,7 @@
   "name": "nine_thousand_torches",
   "stunt": "story_nine_thousand_torches",
   "version": 2,
-  "revision": "r3 (2026-11-10): motive tightened: L06 ties the nightly door torch to L03's spawn rule ('so nothing SPAWNS'), L14 names it ('Every night at ONCE'); the wave stays in the picture (S14) unsaid",
+  "revision": "r3 (2026-11-10): motive tightened: L06 ties the nightly door torch to L03's spawn rule ('so nothing SPAWNS'), L14 names it ('Every night at ONCE'); the wave stays in the picture (S14) unsaid; voice r3b (2026-11-10): continuous beat takes with per-beat directions (owner rules 2b.1, 2b.4)",
   "caption": "who put 6,000 torches on my village 🔥",
   "logline": "A villager kid wakes to find a torch on every block of his village and thinks something terrible is coming, but follows the last growing row to his own door, where his best friend, the village's player, places the final torch, the one he used to place there every night, and leaves the game for good.",
   "question": "why tf is there a torch on every single block of this village?",
@@ -38,8 +38,7 @@
     "model": "gemini-3.8-flash-lite-tts",
     "voice": "Leda",
     "single_speaker": true,
-    "direction_verbatim": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]",
-    "rule": "every narrator line on this model in single-speaker requests with the recipe direction verbatim, identical in each request; no post filter; never switch models mid-story (owner voice-drift rule). Per-line notes are short emotion tags only. No other speaker in this story."
+    "rule": "one model for the narrator (gemini-3.8-flash-lite-tts, Leda, Pip's profile), single speaker, no post filter; continuous takes, one per beat (STANDARDS 2b.4), each beat's direction in [brackets] following its emotion (2b.1): amazed, fond, worried, getting it, sad and plain at the end (never bubbly)"
   },
   "cast": {
     "N": {
@@ -61,7 +60,7 @@
   },
   "requests": [
     {
-      "id": "r1",
+      "id": "b1",
       "speakers": [
         "N"
       ],
@@ -69,38 +68,56 @@
         "L01",
         "L02",
         "L03",
-        "L04",
-        "L05"
+        "L04"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A bubbly nine-year-old kid, fast and bright, amazed and a little spooked, telling a friend something unbelievable; not whispery, breathy or soft]"
     },
     {
-      "id": "r2",
+      "id": "b2",
       "speakers": [
         "N"
       ],
       "lines": [
+        "L05",
         "L06",
         "L07",
-        "L08",
-        "L09",
-        "L10"
+        "L08"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A bubbly nine-year-old kid, fast and bright, warm and fond, telling a friend about his best friend; not whispery, breathy or soft]"
     },
     {
-      "id": "r3",
+      "id": "b3",
       "speakers": [
         "N"
       ],
       "lines": [
+        "L09",
+        "L10",
         "L11",
-        "L12",
+        "L12"
+      ],
+      "direction": "[A nine-year-old kid, fast and bright, worried and curious, the suspense building; not whispery, breathy or soft]"
+    },
+    {
+      "id": "b4",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
         "L13",
-        "L14",
+        "L14"
+      ],
+      "direction": "[A nine-year-old kid, a little slower, plain and steady, full voice, getting it; not whispery, breathy or soft]"
+    },
+    {
+      "id": "b5",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
         "L15"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A nine-year-old kid, sad and plain, slow and steady, full voice; not whispery, breathy or soft]"
     }
   ],
   "lines": [
@@ -518,5 +535,6 @@
   "bible": "stories/nine_thousand_torches/bible.md",
   "beats": "stories/nine_thousand_torches/beats.md",
   "shots_md": "stories/nine_thousand_torches/shots.md",
-  "set": "stories/nine_thousand_torches/set.md"
+  "set": "stories/nine_thousand_torches/set.md",
+  "voice_takes": "beat"
 }
