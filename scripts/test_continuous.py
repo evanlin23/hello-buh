@@ -298,5 +298,87 @@ class Meta(unittest.TestCase):
         self.assertEqual([b["scene"] for b in bs[:3]], ["[happy]", "[sad]", "[old]"])
 
 
+def pitch(y):
+    """The strongest frequency (Hz) of a steady tone."""
+    s = np.abs(np.fft.rfft(y * np.hanning(len(y))))
+    return float(np.fft.rfftfreq(len(y), 1 / SR)[np.argmax(s)])
+
+
+class SpeedUp(unittest.TestCase):
+    """The Roblox narrator's speed-up (cast `tempo` then `rate`; docs/voices.md "The Roblox narrator"): applied to the
+    whole raw take, before the trim, the slices and the take gate, so pauses are judged as they are heard."""
+
+    def test_rate_raises_pitch_and_tempo_together(self):
+        x = vowel(2.0, hz=200.0)
+        y = tts.speed_up(x, 1.0, 1.45)
+        self.assertAlmostEqual(len(y) / len(x), 1 / 1.45, delta=0.01)
+        self.assertAlmostEqual(pitch(y[1000:-1000]), 290.0, delta=4)      # 200 Hz x 1.45: played faster, no correction
+
+    def test_tempo_keeps_pitch(self):
+        x = vowel(2.0, hz=200.0)
+        y = tts.speed_up(x, 0.95, 1.0)
+        self.assertAlmostEqual(len(y) / len(x), 1 / 0.95, delta=0.01)
+        self.assertAlmostEqual(pitch(y[1000:-1000]), 200.0, delta=4)
+        z = tts.speed_up(x, 0.95, 1.45)                                      # the narrator: 1 / (0.95 x 1.45) as long
+        self.assertAlmostEqual(len(z) / len(x), 1 / (0.95 * 1.45), delta=0.01)
+        self.assertAlmostEqual(pitch(z[1000:-1000]), 290.0, delta=4)
+
+    def test_no_speed_is_untouched(self):
+        x = vowel(0.5)
+        self.assertIs(tts.speed_up(x), x)
+        self.assertEqual(tts.speed_of(["N"], {"N": {}}), (1.0, 1.0))
+
+    def test_one_speed_per_request(self):
+        cs = {"N": {"tempo": 0.95, "rate": 1.45}, "G": {}}
+        self.assertEqual(tts.speed_of(["N"], cs), (0.95, 1.45))
+        with self.assertRaises(SystemExit):
+            tts.speed_of(["N", "G"], cs)
+
+    def test_cast_narrator_is_orus_x145(self):   # owner 2026-11-10: "we can just do 1.45 thats fine"
+        n = tts.library()["narrator"]
+        self.assertEqual((n["voice"], n["model"], n["tempo"], n["rate"]), ("Orus", "gemini-3.8-flash-tts", 0.95, 1.45))
+        self.assertEqual({k: v for k, v in tts.library()["narrator_roblox"].items()}, n)
+
+    def test_gate_judges_the_sped_up_take(self):
+        # a 0.45 s pause between the lines: over the 0.35 s limit as Gemini read it, 0.33 s once played 1.45x faster
+        raw = take(vowel(0.6), quiet(0.2), vowel(0.6), quiet(0.45), vowel(0.6))
+        tmp = tempfile.TemporaryDirectory()
+        old = tts.raw_take
+        try:
+            tts.raw_take = lambda scene, lines, cs, salt="", fixes=(): (raw, "m", "c.wav")
+            beat = {"id": "L01", "scene": "", "room": "", "lines": [("N", "L01", "one two", ""), ("N", "L02", "three", "")]}
+            hear = lambda y: words_for(y, ["one", "two", "three"], min_gap=0.15 / 1.45)
+            slow = {"N": {"name": "N", "voice": "Orus", "profile": "p", "post": ""}}
+            _, m0 = tts.voice_beat(beat, slow, pathlib.Path(tmp.name) / "a", tries=1, hear_fn=hear)
+            self.assertFalse(m0["ok"])
+            self.assertNotIn("rate", m0)
+            fast = {"N": dict(slow["N"], rate=1.45)}
+            done, m1 = tts.voice_beat(beat, fast, pathlib.Path(tmp.name) / "b", tries=1, hear_fn=hear)
+            self.assertTrue(m1["ok"], m1["gate"])
+            self.assertEqual(m1["rate"], 1.45)
+            # the whole (sped-up) take is the beat file and its slices tile it exactly
+            y = np.concatenate([done["L01"][2], done["L02"][2]])
+            self.assertAlmostEqual(m1["dur"], len(y) / SR, places=2)
+            self.assertLess(m1["dur"], m0["dur"] / 1.3)
+        finally:
+            tts.raw_take = old
+            tmp.cleanup()
+
+
+class PauseCap(unittest.TestCase):
+    def test_capped_take_passes_the_gate_and_keeps_the_words(self):
+        x = take(vowel(0.6), quiet(0.7), vowel(0.6), quiet(0.5), vowel(0.6))
+        self.assertTrue(any(ln > 0.35 for _, ln in G.pauses(x, SR)))
+        y = tts.shorten_pauses(x, 0.12)
+        self.assertTrue(all(ln <= 0.13 for _, ln in G.pauses(y, SR)))      # every silence capped (gate: 0.3/0.35)
+        self.assertAlmostEqual(len(x) - len(y), int((0.7 - 0.12) * SR) + int((0.5 - 0.12) * SR), delta=0.03 * SR)
+        loud = lambda z: int(np.sum(np.abs(z) > 0.05))
+        self.assertAlmostEqual(loud(x), loud(y), delta=0.02 * SR)          # the words are untouched
+
+    def test_cast_narrator_caps_pauses(self):
+        cs = tts.resolve({"N": {"ref": "narrator", "role": "narrator"}})
+        self.assertEqual(cs["N"].get("pause_cap"), 0.12)
+
+
 if __name__ == "__main__":
     unittest.main()

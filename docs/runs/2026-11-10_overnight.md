@@ -239,3 +239,13 @@ For the owner's morning. Newest at the bottom.
 - **Broken Rail's set tools are on main** (58e8ebd, fa42bb9): the station piece, sets.dress.rails, and the world stamps rails, ravine and crater. The voice is 1 of 7 beats; the rest wait for the 08:00 UTC reset.
 - **videos branch:** only the older approved stories are ready; every new one is held. npm test 18/18.
 - **Waiting for the owner's OK:** Dog on the Hill v2, Thirty-One v2, Gold v2, Light Sleeper v2, Good Boy v3.
+
+## 20:10 UTC: narrator voice chosen
+- **The owner sent a reference Roblox story Short.** Measured: ElevenLabs Adam played about 1.45x faster, pitch included; 5.9 words/s; no pauses.
+- **The owner picked s3:** Gemini Orus with the Roblox-story direction, at x1.45 ("s3_gemini_orus.mp3 is good"). The voice-match agent is building it in as `narrator_roblox` (agent/voice-match).
+- **Also today:**
+  - Captions are 2-3 word chunks.
+  - Pace is ~5-5.5 words/s, with no dramatic pauses (take gate 0.3/0.35 s, K.line gap 0.08 s).
+  - Stories follow the niche arcs and loop (docs/story_arcs.md).
+  - No new stories: fix the five held ones (script_vNext.md each).
+  - Caption fix merged (forced alignment); motion by construction merged and live-tested.

@@ -68,7 +68,7 @@ characters keep their voice and caption colour. Narrator-first: character lines 
 take cached, only changed lines re-taken (`--only L05`).
 **A drifting voice is a blocker too** (owner, 2026-11-10: "The voices for the people seem to change like all the time
 take to take and even within take"): `./hb drift story_<name>` must end OK or WARN. One model per character per story
-(voice.json `models`; the narrator is locked to gemini-3.8-flash-lite-tts in voices/cast.json): if its model is out of
+(voice.json `models`; the narrator, Orus x1.45, is locked to gemini-3.8-flash-tts in voices/cast.json; a story voiced with the old narrator's model is re-locked and ALL its narrator lines re-taken automatically): if its model is out of
 quota, tts.py stops instead of switching; wait for the reset, or `--relock <cast id>=<model>` re-takes ALL of that
 character's lines on the other model. Requests stay short (at most 6 lines); never override a library character's
 `profile` in a story.

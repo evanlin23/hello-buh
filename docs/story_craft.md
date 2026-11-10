@@ -10,8 +10,9 @@ by the game. Every story is scored against it (section 11 says why it works, lin
 
 **Owner rules from 2026-11-10 that override the older numbers below** (quotes and reasons: `docs/stories.md`, House
 rules). When a section here disagrees, these win:
-- **Narrator-first.** One first-person kid narrator tells the whole story: cast `narrator` in voices/cast.json (Pip's
-  voice since the owner's "i like this one a lot a lot better"; recipe voices/recipes/pip.md; kid Puck is `puck_kid`). Other characters are quoted by him with a
+- **Narrator-first.** One first-person narrator tells the whole story: cast `narrator` in voices/cast.json (the Roblox
+  narrator, Orus x1.45, since the owner's "s3_gemini_orus.mp3 is good"; recipe voices/recipes/narrator_roblox.md; Pip
+  is `pip` and kid Puck is `puck_kid`, alternatives only). Other characters are quoted by him with a
   "said" tag; at most 1-3 punchlines of 6 words or fewer get their own voice, only while that character is on screen.
   No dialogue scenes. The voice palette and the "hushed, intimate" narrator in section 5 are for those few punchlines
   and for the A+ test, not for the narrator.
