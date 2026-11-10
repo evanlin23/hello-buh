@@ -75,6 +75,8 @@ def resolve(story_cast=None):
         return lib
     out = {}
     for cid, c in story_cast.items():
+        if c.get("silent"):   # on screen, never voiced (a flashback grandpa, a piglin): nothing to cast
+            continue
         base = lib.get(c.get("ref", cid if cid in lib else ""), {})
         out[cid] = {**base, **c}
         out[cid].setdefault("name", cid)
