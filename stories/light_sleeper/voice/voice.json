@@ -63,27 +63,27 @@
    "aligned": "whisper-base.en"
   },
   "L04": {
-   "text": "Our bell wears wool. I've never heard it.",
    "who": "N",
-   "dur": 2.89,
+   "text": "Our bell wears wool. I've never heard it.",
+   "dur": 3.07,
    "onset": 0.0,
-   "end": 2.64,
+   "end": 3.0,
    "chunks": [
     [
      0.0,
-     0.38
+     0.54
     ],
     [
-     0.38,
-     1.34
+     0.54,
+     1.48
     ],
     [
-     1.34,
-     1.88
+     1.48,
+     2.14
     ],
     [
-     1.88,
-     2.64
+     2.14,
+     3.0
     ]
    ],
    "captions": [
@@ -92,6 +92,10 @@
     "I've never",
     "HEARD it."
    ],
+   "with": [
+    "N"
+   ],
+   "model": "gemini-3.8-flash-lite-tts",
    "aligned": "whisper-base.en"
   },
   "L05": {
@@ -459,5 +463,9 @@
    "aligned": "whisper-base.en"
   }
  },
- "total": 45.57
+ "total": 45.75,
+ "model": "Gemini TTS (gemini-3.1-flash-tts-preview first), voices/cast.json",
+ "models": {
+  "N": "gemini-3.8-flash-lite-tts"
+ }
 }
