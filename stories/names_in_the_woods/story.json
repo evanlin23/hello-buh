@@ -24,7 +24,7 @@
     "place": "oakend (new, to claim): Oakend, a cleric's hamlet on the North Inlet's west bank at the east edge of the north-west dark oak forest, the west gate (origin) about (-512, 66, -1030), footprint about (-545, -1055, -447, -1005); Fernbank lies across the inlet, its dock about 75 blocks east of the gate",
     "where": "Oakend: the hamlet, the west gate, the meadow and the forest edge",
     "day": 2700,
-    "canon": "New family, not Milo's: Remy (the hamlet's only player, a kid, house narrator voice) and his mom ROSA (the hamlet's cleric, a villager). Tomas, Greta and Old Ben were converted in a siege months before; ROSA is converted on day 2700 and Remy cures her. Bible: World.",
+    "canon": "New family, not Buh's: Remy (the hamlet's only player, a kid, house narrator voice) and his mom ROSA (the hamlet's cleric, a villager). Tomas, Greta and Old Ben were converted in a siege months before; ROSA is converted on day 2700 and Remy cures her. Bible: World.",
     "easter_egg": "empty_boat (canon cameo, since day 400): Fernbank's empty oak boat at the end of its dock across the inlet, a small shape on the water at frame right in S03's opening (the crane looking east over the hamlet); world.build places it (Fernbank's stamp)"
   },
   "voice": {
@@ -37,14 +37,14 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "Remy, the hamlet's only player (default Steve skin, a kid; a new family, not Milo's). POV for the egg fight, the chest, the potion and the throw; seen from outside in S10 (small, from behind) and S14 (small, facing us, player nameplate 'Remy'). Hotbar: eggs (slot 1), golden apples (slot 2: 6, then 7 from S08 on), the splash potion (slot 3, S13-S15)."
+      "on_screen": "Remy, the hamlet's only player (default Steve skin, a kid; a new family, not Buh's). POV for the egg fight, the chest, the potion and the throw; seen from outside in S10 (small, from behind) and S14 (small, facing us, player nameplate 'Remy'). Hotbar: eggs (slot 1), golden apples (slot 2: 6, then 7 from S08 on), the splash potion (slot 3, S13-S15)."
     },
     "Mom": {
       "role": "character",
       "ref": null,
       "name": "Mom",
       "color": "#FFC2A8",
-      "on_screen": "a plains cleric villager (purple robe), name tag ROSA always visible; holds a golden apple over her crossed arms (S06, S07, S10); the splash potion goes into her inventory in S06 (her off hand: villagers don't show it). After the reveal: a zombie villager in the same purple cleric robe, tag ROSA, the golden apple in her right hand and the splash potion in her left (conversion keeps both hands) until she drops it in S13. One voiced line (L05), on screen, in her own request. Voice: her own (Aoede; audition Callirrhoe as the alternate), not the cast `mom` (Sulafat), who is Milo's mom in Hushwell.",
+      "on_screen": "a plains cleric villager (purple robe), name tag ROSA always visible; holds a golden apple over her crossed arms (S06, S07, S10); the splash potion goes into her inventory in S06 (her off hand: villagers don't show it). After the reveal: a zombie villager in the same purple cleric robe, tag ROSA, the golden apple in her right hand and the splash potion in her left (conversion keeps both hands) until she drops it in S13. One voiced line (L05), on screen, in her own request. Voice: her own (Aoede; audition Callirrhoe as the alternate), not the cast `mom` (Sulafat), who is Buh's mom in Hushwell.",
       "voice": "Aoede",
       "profile": "[ROSA, the hamlet's cleric and Remy's mom: a warm woman in her forties, gentle and a little too bright, changing the subject; full volume, not whispery]"
     }
