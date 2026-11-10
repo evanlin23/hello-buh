@@ -28,6 +28,7 @@ module.exports = {
     cards: [['hmm', 'HMM.', 0.9, 'white']]
   },
   hideHand: true,
+  brightness: 1.0,   // vanilla's Bright: the night ruin read near-black at the default 0.5 in the stills
 
   async setup (ctx) {
     const { bot } = ctx
@@ -65,7 +66,6 @@ module.exports = {
     await c(`/fill ${A(-1, 0, 51)} ${A(0, 1, 52)} water`)
     for (const [dx, dz] of [[-2, 50], [1, 50], [-2, 53], [1, 53]]) await c(`/fill ${A(dx, 2, dz)} ${A(dx, 3, dz)} oak_fence`)
     await c(`/fill ${A(-2, 4, 50)} ${A(1, 4, 53)} cobblestone_slab`)
-    await c(`/setblock ${A(6, 5, 40)} spruce_planks`)   // a step on the roof's ridge: he stands on it, in the sky
     // the torch path north (L09-L10): torches on fence posts, the last one at z 3
     await c(`/fill ${A(0, 0, -26)} ${A(0, 0, 7)} dirt_path`)
     for (const dz of [12, 7, 3]) { await c(`/setblock ${A(2, 1, dz)} oak_fence`); await c(`/setblock ${A(2, 2, dz)} torch`) }
@@ -104,7 +104,7 @@ module.exports = {
 
     // --- the cast (NoAI, tagged per scene). The nitwit has a twin at every place he stands, so no one hops
     await vil(0.5, 28.5, 90, 'nitwit', ['nS'])                // the street nitwit: L01-L02, L07-L08, L14-L17
-    await vil(6.5, 40.5, 0, 'nitwit', ['nRoof', 'warm'], { y: 6 })   // L03, L07: on my roof
+    await vil(4.6, 40.5, 0, 'nitwit', ['nRoof', 'warm'], { y: 5.5 })   // L03, L07: on my roof
     await vil(19.5, 24.2, 0, 'nitwit', ['nTree', 'warm'])     // L04: under the tree
     await vil(-18.5, 20.5, -45, 'nitwit', ['nWheat', 'warm'])   // L05: in the wheat
     await vil(-0.5, 49.2, 0, 'nitwit', ['nWell', 'warm'])     // L06: at the well, looking in
@@ -172,11 +172,12 @@ module.exports = {
     })
 
     // L03: always somewhere weird: on a roof
-    await cut(1.5, 35.0, P(6.5, 7.3, 40.5))
-    const nRoof = K.actor('nRoof', { x: 6.5, y: 6, z: 40.5, yaw: 0 })
+    // he stands on the roof's street edge: in the middle of it the eaves hid all but his head from the street
+    await cut(-2.5, 34.0, P(4.6, 6.8, 40.5))
+    const nRoof = K.actor('nRoof', { x: 4.6, y: 5.5, z: 40.5, yaw: 90 })
     await line('L03', async (k, at) => {
       if (k === at(3)) hmm(0.6)
-      nRoof.yaw = Math.sin(ctx.tick / 6) * 35; nRoof.pitch = k >= at(3) ? 25 : 0   // looking about up there, then down at me
+      nRoof.yaw = 90 + Math.sin(ctx.tick / 6) * 35; nRoof.pitch = k >= at(3) ? 25 : 0   // looking about up there, then down at me
       look(k, 0, 0.06 * K.ease(k / 30))   // a slow tilt up to him (walking, it hit the wall)
     })
 
@@ -236,12 +237,12 @@ module.exports = {
     away(nWell)
 
     // L07: on MY roof; the next day it rained anvils (the L03 roof again, then anvils from the sky)
-    await cut(-1.5, 34.5, P(6.5, 6.2, 41))
+    await cut(-2.0, 33.5, P(4.6, 6.6, 40.5))
     let next7 = false, rained = 0
     const anvil = (x, z) => say(`/summon falling_block ${(X + x).toFixed(2)} ${F + 12} ${(Z + z).toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,DropItem:0b}`)
-    const drops = [[6.5, 40.5], [4.5, 38.5], [8.5, 42.5], [3.5, 36.0], [7.5, 37.5], [5.5, 43.5], [9.5, 39.5], [2.6, 39.0], [6.0, 35.5], [8.8, 36.4]]
+    const drops = [[6.5, 40.5], [4.5, 38.5], [8.5, 42.5], [4.2, 36.5], [7.5, 37.5], [5.5, 43.5], [9.5, 39.5], [4.0, 41.5], [6.0, 35.5], [8.8, 36.4]]
     await line('L07', async (k, at) => {
-      nRoof.yaw = Math.sin(ctx.tick / 9) * 30
+      nRoof.yaw = 90 + Math.sin(ctx.tick / 9) * 30
       if (!next7 && k === at(1) - 1) { next7 = true; away(nRoof); await cut(1.5, 31.5, P(6.0, 5.0, 40.5)) }
       // they fall 12 blocks (~1 s): the first ones drop in before the word so they hit the roof on it
       if (next7 && k >= at(3) - 16 && rained < drops.length && (k - at(3)) % 2 === 0) { anvil(...drops[rained]); rained++ }
@@ -358,7 +359,7 @@ module.exports = {
     let from17 = null
     await line('L17', async (k, at) => {
       for (const v of crowd) if (v.z < 60) K.step(v, 0, 0.03)
-      if (k >= at(2) - 2) { from17 = from17 || { ...K.base }; K.turnTo(from17, P(0.5, 2.2, 40.5), (k - at(2) + 2) / 9) }
+      if (k >= at(2) - 2) { from17 = from17 || { ...K.base }; K.turnTo(from17, P(0.9, 2.1, 42.0), (k - at(2) + 2) / 9) }   // him on the left, the street (the blasts) on the right
       look(k)
     })
 
