@@ -60,8 +60,28 @@ look: { grade: { lift: [0.02, 0.01, 0.018], gamma: [0.97, 1.0, 1.04], gain: [1.1
 - Final encode: crf <= 18.
 
 ## Sound
-- Voices -15 LUFS, the game -27, the song bed -31, master -14 (edit.py --story). SFX: quiet (gain 0.3-0.6), varied
-  (pitch 0.9-1.2), one per beat at most; no SFX under a spoken line's key word. A silent beat before a reveal.
+The full standard and its evidence: docs/audio.md (research: docs/research/audio_2026-11-10.md). All automatic in
+`edit.py --story` + `add_song.py` (scripts/story_audio.py); set story.json `mood` and `payoff`, the rest follows.
+- **Levels:** voice -15 LUFS after the clarity chain (HPF 80 Hz, -2 dB @ 250, +2.5 dB @ 3.5k, de-ess, 3:1); game -27
+  ducked 4 dB under lines; score bed -26 ducked 7 dB under lines (~18 dB under the voice while it talks, ~11 in
+  pauses; the old fixed -31 bed never moved); payoff track -24; room tone -47; master -14 LUFS, true peak <= -1 dBTP
+  (4x-oversampled limiter; no dynamic loudnorm: it flattened the payoff).
+- **Music = mood score, not phonk:** `"mood": "eerie" | ["tense", "sad"]` (eerie / tense / sad / funny / heroic,
+  before/after the twist) picks a Kevin MacLeod CC BY track from music/score.json (credit added to the description).
+  Beds keep the 1-4 kHz voice band free (pick skips a bed with > 15% there).
+- **The payoff (`"payoff": "L13" | "boom"`):** a 1.9 s riser, then the bed drops out **0.45 s before** the payoff
+  (silence before the hit: on runaway the drop-out sits 19.8 dB under the hit, 10.9 dB in the old mix), an impact +
+  sub on the payoff frame, then the payoff track enters on its own drop (funny: a record scratch and the same tune
+  picks up again).
+- **On-screen sounds:** every visible event that makes a sound in vanilla gets it on its frame (digs, breaks,
+  places, doors, pickups, mob hurt/death, bells, chests, eating, fuses, thunder): audio.py adds the missing ones
+  for a story (scripts/onscreen_sfx.py; the check lists them). Not under a key word (minor sounds dropped, causal
+  ones -6 dB).
+- **Design SFX, sparingly:** whooshes only on scene changes (a clock jump or a > 24-block move), at most one per 6 s,
+  peaking 40 ms before the cut. Hand-placed SFX: quiet (gain 0.3-0.6), varied (pitch 0.9-1.2), one per beat at most;
+  no SFX under a spoken line's key word.
+- **Never digital silence:** the room tone runs under everything (the old nosong mixes were 8-12% below -70 LUFS).
+- Check a render: `python3 scripts/audio_measure.py out/<name>.mp4` (I -14 +-0.5, TP <= -1.0, digital silence 0).
 - Character voices: docs/story_craft.md section 5 (Gemini cast; contrast in pitch between any two voices that talk:
   pilot narrator Puck ~115 Hz vs the old man Algenib ~75 Hz). Check takes with `scripts/voice_check.py`.
 

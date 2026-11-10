@@ -754,6 +754,21 @@ def main():
             for n_ in ow.get("notes", []):
                 owner_note += f"\n  owner: {n_}"
 
+    # ---------------------------------------------------------------- on-screen sounds (docs/audio.md): not a gate
+    # every visible event that makes a sound in vanilla gets it; audio.py adds the missing ones for a story
+    sound_note = ""
+    try:
+        import onscreen_sfx
+        _rec, _p = onscreen_sfx.load_rec(rec_p)
+        _rec["_path"] = str(_p)
+        _ev = onscreen_sfx.events(_rec)
+        _miss = [o for o in _ev if not o["has"]]
+        if _ev:
+            sound_note = (f"on-screen sounds: {len(_ev)} visible sound-making events, {len(_miss)} with no sound mark"
+                          + (" (audio.py adds them for a story; list: python3 scripts/onscreen_sfx.py " + str(rec_p) + ")" if _miss else ""))
+    except Exception as e:   # never block on this
+        sound_note = f"on-screen sound check could not run: {e}"
+
     # ---------------------------------------------------------------- the report
     nb = sum(1 for it in R.items if it[0] == "BLOCK")
     nw = len(R.items) - nb
@@ -770,6 +785,8 @@ def main():
         print("  " + world_note)
     if owner_note:
         print("  " + owner_note.strip())
+    if sound_note:
+        print("  " + sound_note)
     if cam_spans:
         secs = sum(min(c1, len(P)) - c0 for c0, c1 in cam_spans) / 20
         print(f"  {len(cam_spans)} camera shot(s), {secs:.1f}s: POV checks skipped there"
