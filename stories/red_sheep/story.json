@@ -2,11 +2,11 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r1 (2026-11-10, claude/writers-mystery): written to the mystery test (STANDARDS 1.0); not voiced (the narrator voice is being changed: docs/voice_search.md)",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes",
   "caption": "why is every sheep in our village blue 🐑",
   "logline": "In Grandpa's walled village every sheep is dyed blue; when a boy leaves the gate open and follows his lamb into the woods at dusk, he learns what the blue is for.",
   "question": "why tf is every sheep in the village blue?",
-  "premise": "Every sheep in Ravenford is blue, all sixty: Grandpa dyes every lamb the day it's born and counts them every night ('Blue. Blue. BLUE.'). 'They're our EYES, kid.' Last spring one came back from the woods red, and Grandpa sat at the gate with his crossbow for a week; that night something snapped in the trees like teeth. Today the boy leaves the gate open, his lamb gets out, Grandpa is asleep, and he follows it into the woods alone at dusk.",
+  "premise": "Every sheep in Ravenford is blue, all sixty: Grandpa won't let a white sheep through the gate and counts them every night ('Blue. Blue. BLUE.'). 'They're our EYES, kid.' Last spring one came back from the woods red, and Grandpa sat at the gate with his crossbow for a week; that night something snapped in the trees like teeth. Today the boy leaves the gate open, his lamb gets out, Grandpa is asleep, and he follows it into the woods alone at dusk.",
   "twist": "The sheep are an alarm. An evoker (vanilla) turns any blue sheep within 16 blocks red with its spell: one is in the woods (a raider left over from the raids, never explained). In the trees the lamb stops, staring at something; it turns red in a puff of spell particles as the evoker behind it lowers its arms, and a line of fangs snaps out of the ground toward the boy. Cut. 'They're our EYES' was literal: blue means safe, red means an evoker is near.",
   "key_color": "#3B6CF0",
   "mood": [
@@ -18,7 +18,7 @@
   "look": {
     "time": 1000,
     "fog": false,
-    "note": "day 1000 (S01-S06, S08), night 18000 (S07), dusk 12500 (S09-S11): per shot"
+    "note": "day 1000 (S01-S06, S08), night 18000 (S07), dusk 12000-12200 (S09-S11): per shot"
   },
   "weather": "clear",
   "world": {
@@ -110,8 +110,8 @@
     {
       "id": "L02",
       "who": "N",
-      "text": "Grandpa dyes / every new LAMB / the day / it's BORN.",
-      "say": "[matter-of-fact] Grandpa dyes every new lamb the day it's born.",
+      "text": "Grandpa won't let / a WHITE one / through the GATE.",
+      "say": "[matter-of-fact] Grandpa won't let a white one through the gate.",
       "direction": "matter-of-fact, this is normal to him",
       "shot": "S02",
       "look": {
@@ -144,7 +144,7 @@
       "id": "L05",
       "who": "N",
       "text": "Last spring, / ONE came back / from the woods / RED.",
-      "say": "[dropping to scared on RED] Last spring, one came back from the woods red.",
+      "say": "[scared] Last spring, one came back from the woods red.",
       "direction": "dropping to scared on RED, not hushed",
       "shot": "S05",
       "look": {
@@ -190,8 +190,8 @@
       "id": "L09",
       "who": "N",
       "text": "Grandpa was ASLEEP. / I went / ALONE.",
-      "say": "[brave and small at once] Grandpa was asleep. I went alone.",
-      "direction": "brave and small at once, determined",
+      "say": "[determined] Grandpa was asleep. I went alone.",
+      "direction": "determined, quick",
       "shot": "S09",
       "look": {
         "what": "prop:lamb"
@@ -221,10 +221,10 @@
     {
       "id": "S02",
       "line": "L02",
-      "place": "dye_yard",
+      "place": "pasture_gate",
       "size": "full",
       "camera": "at: (4, 1.6, 4) looking at Grandpa (0, 1, 0), slow push",
-      "frame": "subject: Grandpa kneeling by a newborn white lamb, blue dye in hand: on 'BORN' the lamb turns blue (use the dye); ewe beside it; bg: the pasture of blue sheep. Morning."
+      "frame": "subject: Grandpa at the pasture gate with blue dye, a white stray sheep in front of him: on 'GATE' it turns blue (use the dye) and trots in; bg: the pasture of blue sheep. Morning. (Blue parents breed blue lambs in vanilla, so only strays and new sheep need dyeing.)"
     },
     {
       "id": "S03",
@@ -264,7 +264,7 @@
       "place": "east_gate",
       "size": "ews",
       "camera": "at: (0, 10, -6) looking east over the palisade at the treeline (0, 4, 40), still",
-      "frame": "subject: the black treeline under the moon; on 'SNAPPED' a snap sound (evoker fangs) deep in the trees and the wolves' heads turn; nothing seen. Night 18000, lanterns on the palisade."
+      "frame": "subject: the black treeline under the moon; on 'SNAPPED' a snap sound (evoker fangs) deep in the trees; nothing seen. Night 18000, lanterns on the palisade."
     },
     {
       "id": "S08",
@@ -280,7 +280,7 @@
       "place": "woods_edge",
       "size": "wide",
       "camera": "pov walking into the woods, following the lamb 6 blocks ahead",
-      "frame": "subject: the lamb between spruce trunks; light falling; bg: dark trunks, nothing moving. Dusk 12800, lanterns: none (dark but readable, look_stats night floor)."
+      "frame": "subject: the lamb between spruce trunks; light falling; bg: dark trunks, nothing moving. Dusk 12200, lanterns: none (dark but readable, look_stats night floor)."
     },
     {
       "id": "S10",
@@ -288,7 +288,7 @@
       "place": "clearing",
       "size": "ms",
       "camera": "pov stops: the lamb 5 blocks ahead, stopped, facing away into the trees",
-      "frame": "subject: the lamb's back, still, its head toward a dark gap between trunks; nothing else visible yet. Dusk 12800."
+      "frame": "subject: the lamb's back, still, its head toward a dark gap between trunks; nothing else visible yet. Dusk 12200. Low sun on the lamb in the clearing so blue-to-red reads at 300 px (check on the shot sheet before recording)."
     },
     {
       "id": "S11",
@@ -296,7 +296,7 @@
       "place": "clearing",
       "size": "wide",
       "camera": "at: low behind and left of Buh (shoulder, -1.5, 1.6, 2) looking past the lamb at the evoker (0, 1.6, -10). The reveal, all in one frame: on L10's end the evoker (arms raised, casting) lowers its arms, the lamb turns from blue to red in a puff of spell particles, then a line of fangs snaps up out of the ground from the evoker toward the camera; cut 1.0 s after the first fang",
-      "frame": "fg: Buh's shoulder; mid: the lamb turning red; subject: the evoker between the trunks; the fangs racing at us. Dusk 12800, the evoker readable at 300 px (a quarter of the frame height)."
+      "frame": "fg: Buh's shoulder; mid: the lamb turning red; subject: the evoker between the trunks; the fangs racing at us. Dusk 12200, the evoker readable at 300 px (a quarter of the frame height)."
     }
   ],
   "props": {

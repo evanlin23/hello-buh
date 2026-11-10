@@ -2,7 +2,7 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "r1 (2026-11-10, claude/writers-mystery): written to the mystery test (STANDARDS 1.0); not voiced (the narrator voice is being changed: docs/voice_search.md)",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes",
   "caption": "grandpa broke the same lectern 3,000 times 📚",
   "logline": "A grandpa has broken the same librarian's lectern three thousand times; his grandkid knows Grandma lives on the island across the bay and told him to walk there or not come at all.",
   "question": "why tf has grandpa broken the same lectern 3,000 times?",
@@ -13,7 +13,7 @@
     "funny",
     "heroic"
   ],
-  "payoff": "L08+1.5",
+  "payoff": "L08+1.0",
   "gap": 0.25,
   "look": {
     "time": 1000,
@@ -22,7 +22,7 @@
   },
   "weather": "clear",
   "world": {
-    "place": "new place to claim: 'Gullwick', a shore hamlet on the West March coast with an island offshore across a bay of open (unfrozen) cold ocean, away from Leo's House and the stronghold islets",
+    "place": "new place to claim: 'Gullwick', a shore hamlet on the West March coast with an island 50-70 blocks offshore (the lit window must read at 300 px) across a bay of open (unfrozen) cold ocean, away from Leo's House and the stronghold islets",
     "day": 2300,
     "canon": "A new family: the kid (a player), Grandpa (a player, an old-man actor skin, not Ravenford's), Grandma (a player, on the island, never seen; her window only), and the librarian (a villager). One grandpa per Short (canon conflict 11).",
     "easter_egg": "raven_tower: the old watchtower on the Ridge, a speck on the skyline inland in S04 if the line of sight allows; else the critic and continuity pick"
@@ -99,7 +99,7 @@
       "id": "L01",
       "who": "N",
       "text": "My grandpa has broken / the same LECTERN / three thousand / TIMES.",
-      "say": "[amazed and exasperated] My grandpa has broken the same lectern three thousand times.",
+      "say": "[exasperated] My grandpa has broken the same lectern three thousand times.",
       "direction": "amazed and exasperated, one quick breath",
       "shot": "S01",
       "look": {
@@ -134,8 +134,8 @@
       "id": "L04",
       "who": "N",
       "text": "Grandma lives / on the ISLAND / across the bay. / Her window's lit / every NIGHT.",
-      "say": "[softer but bright] Grandma lives on the island across the bay. Her window's lit every night.",
-      "direction": "softer but bright, a fact he likes",
+      "say": "[warm] Grandma lives on the island across the bay. Her window's lit every night.",
+      "direction": "warm and bright, a fact he likes",
       "shot": "S04",
       "look": {
         "what": "prop:island_window",
@@ -145,8 +145,8 @@
     {
       "id": "L05",
       "who": "N",
-      "text": "He won't / take a BOAT. / He says / that's CHEATING.",
-      "say": "[baffled] He won't take a boat. He says that's cheating.",
+      "text": "He won't / take a BOAT. / Not ONCE / in ten YEARS.",
+      "say": "[baffled] He won't take a boat. Not once in ten years.",
       "direction": "baffled, a little funny",
       "shot": "S05",
       "look": {
@@ -157,8 +157,8 @@
       "id": "L06",
       "who": "N",
       "text": "When she LEFT, / she told him, / you'll WALK here, / or don't COME.",
-      "say": "[repeating it like a mean] When she left, she told him, you'll walk here, or don't come.",
-      "direction": "repeating it like a mean line, not sad",
+      "say": "[mocking] When she left, she told him, you'll walk here, or don't come.",
+      "direction": "mocking it like a mean line, not sad",
       "shot": "S06",
       "look": {
         "what": "prop:island_window"
@@ -193,8 +193,8 @@
       "line": "L01",
       "place": "library_hut",
       "size": "wide",
-      "camera": "at: (5, 2, 5) looking at the lectern (0, 1, 0), still; a timelapse: on 'THREE THOUSAND' the lectern breaks and is placed 3 times in 2 s",
-      "frame": "subject: Grandpa breaking the lectern by the librarian, a heap of nothing (lecterns drop as items he picks up); bg: through the door, the bay and the island. Day."
+      "camera": "at: (5, 2, 5) looking at the lectern (0, 1, 0); frame 0 mid-break: the lectern pops, the librarian's hat pops off (job lost); then the timelapse: break and place 3 times by 'TIMES'",
+      "frame": "subject: Grandpa breaking the lectern by the librarian; bg: the hut's wall covered in oak signs full of tally marks (the 3,000 as a picture); through the door, the bay and the island. Day."
     },
     {
       "id": "S02",
@@ -218,7 +218,7 @@
       "place": "dock",
       "size": "ews",
       "camera": "at: (0, 6, 8) behind Grandpa on the dock looking out at the island (0, 4, -120), still",
-      "frame": "subject: the bay at dusk, the island 120 blocks out, one lit window in a small house on it; Grandpa at the dock's end, small, looking at it; bg: the sea to the horizon. Dusk 13000."
+      "frame": "subject: the bay at dusk, the island 60 blocks out, one lit window in a small house on it; Grandpa at the dock's end, small, looking at it; bg: the sea to the horizon. Dusk 13000."
     },
     {
       "id": "S05",
@@ -242,7 +242,10 @@
       "place": "library_hut",
       "size": "ms",
       "camera": "pov: the librarian holds up a book; the trade screen opens",
-      "frame": "subject: the trade screen; the book's name (Frost Walker II) is held for S08. Day."
+      "frame": "subject: the trade screen; the book's name (Frost Walker II) is held for S08. Dawn 23200.",
+      "look": {
+        "time": 23200
+      }
     },
     {
       "id": "S08",
@@ -250,15 +253,21 @@
       "place": "library_hut",
       "size": "cu",
       "camera": "the reveal 1: the trade screen, the enchanted book's name readable: 'Frost Walker II' (also in the caption track); on 'ANYTHING' the trade completes",
-      "frame": "subject: the tooltip 'Frost Walker II'. Day."
+      "frame": "subject: the tooltip 'Frost Walker II'. Dawn 23200. On the cut to S09: an anvil clank off screen.",
+      "look": {
+        "time": 23200
+      }
     },
     {
       "id": "S09",
       "line": "L08",
       "place": "dock",
       "size": "wide",
-      "camera": "at: high and behind (0, 10, 14) looking down the dock at the sea (0, 0, -30). The reveal 2: Grandpa walks down the dock and off the end; the water freezes in a circle under every step, a white path growing behind him toward the island's lit window (lit now in daylight? no: dawn 23500 so the window still reads); the kid small on the dock behind. Cut 1.5 s after L08",
-      "frame": "subject: Grandpa on the sea, the ice path behind him; bg: the island and its window. Dawn 23500."
+      "camera": "at: high and behind (0, 10, 14) looking down the dock at the sea. The reveal: opens on Grandpa's boots glinting (enchanted) as he steps off the end of the dock; the water freezes in a white circle under every step, a path toward the island's lit window; cut 1.0 s after the first ice",
+      "frame": "subject: Grandpa on the sea, the ice path behind him; bg: the island and its window. Dawn 23500.",
+      "look": {
+        "time": 23200
+      }
     }
   ],
   "props": {
@@ -266,7 +275,7 @@
       "at": [
         0,
         3,
-        -120
+        -60
       ]
     },
     "boat": {

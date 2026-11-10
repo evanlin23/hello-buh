@@ -2,18 +2,18 @@
   "name": "forty_one_cats",
   "stunt": "story_forty_one_cats",
   "version": 2,
-  "revision": "r1 (2026-11-10, claude/writers-mystery): written to the mystery test (STANDARDS 1.0); not voiced (the narrator voice is being changed: docs/voice_search.md)",
+  "revision": "r2 (2026-11-10): the r1 critic's must-fixes applied (reviews/r1-critic.md), plus the cold-read fixes",
   "caption": "why does grandma keep 41 cats on the wall 🐈",
   "logline": "In a snowy village where nobody locks a door, a boy's grandma keeps forty-one cats on the wall facing out; on the coldest night he takes the one by his window up to his bed.",
   "question": "why tf does grandma keep 41 cats on the wall, facing out?",
   "premise": "Grandma keeps forty-one cats on the village wall, one every ten blocks, all facing out, and none may come in, even in the snow. 'They keep the QUIET ones out.' She got the first one the week the boy came to live with her. The neighbours don't even lock their doors. Once he heard a hiss under his window; Grandma said it was a cat. Tonight it's so cold he takes the cat by his window up to his bed.",
-  "twist": "The cats are for him. Creepers hunt only players, and he's the only player in the village; creepers flee cats (vanilla). Grandma built the cat wall the week he arrived. Tonight there's a gap where his cat sat: a creeper walks through it, past the villagers' unlocked doors without a glance, straight to his window, and swells and hisses, while the cat sleeps on his bed. Cut on the hiss.",
+  "twist": "The cats are for him. Creepers hunt only players, and he's the only player in the village; creepers flee cats (vanilla). Grandma built the cat wall the week he arrived. Tonight there's a gap where his cat sat: a creeper walks through it, past the villagers' unlocked doors without a glance, straight to his window, and swells and hisses, while the cat sleeps by the fire, too far away to help. Cut on the hiss.",
   "key_color": "#7FD36B",
   "mood": [
     "funny",
     "tense"
   ],
-  "payoff": "L09+1.2",
+  "payoff": "L09+1.0",
   "gap": 0.25,
   "look": {
     "time": 1000,
@@ -112,7 +112,7 @@
       "id": "L02",
       "who": "N",
       "text": "Not ONE / is allowed INSIDE. / Not even / when it SNOWS.",
-      "say": "[indignant on their behalf] Not one is allowed inside. Not even when it snows.",
+      "say": "[indignant] Not one is allowed inside. Not even when it snows.",
       "direction": "indignant on their behalf, a little funny",
       "shot": "S02",
       "look": {
@@ -122,8 +122,8 @@
     {
       "id": "L03",
       "who": "Grandma",
-      "text": "They keep / the QUIET ones / out.",
-      "say": "[matter-of-fact] They keep the quiet ones out.",
+      "text": "They keep / YOU safe, / dear.",
+      "say": "[kind and dry] They keep you safe, dear.",
       "direction": "matter-of-fact, kind, a little dry",
       "shot": "S03",
       "look": {
@@ -166,8 +166,8 @@
     {
       "id": "L07",
       "who": "N",
-      "text": "Tonight / it was SO cold. / I took the cat / by my window / up to my BED.",
-      "say": "[cosy and pleased with himself] Tonight it was so cold. I took the cat by my window up to my bed.",
+      "text": "Tonight / it was SO cold. / I took the cat / by my window / IN by the FIRE.",
+      "say": "[cosy] Tonight it was so cold. I took the cat by my window in by the fire.",
       "direction": "cosy and pleased with himself",
       "shot": "S07",
       "look": {
@@ -177,9 +177,9 @@
     {
       "id": "L08",
       "who": "N",
-      "text": "She purred. / I fell / ASLEEP.",
-      "say": "[happy] She purred. I fell asleep.",
-      "direction": "happy, sleepy, slower",
+      "text": "She purred. / I went / to BED.",
+      "say": "[happy] She purred. I went to bed.",
+      "direction": "happy, warm, unhurried",
       "shot": "S08",
       "look": {
         "what": "entity:cat"
@@ -252,15 +252,15 @@
       "place": "boy_house",
       "size": "ms",
       "camera": "pov: at the window, the hand holds out a fish; the cat on the wall top hops down, follows the fish across the room and up onto the bed",
-      "frame": "fg: the fish in hand; subject: the cat stepping off the wall (the gap opens behind it, unremarked); bg: the bed, the lantern. Night 18000."
+      "frame": "fg: the fish in hand; subject: the cat stepping off the wall-top and following the fish across the room to the hearth, curling up by the fire (the gap opens behind it, unremarked); the hearth is 7+ blocks from his window (creepers flee cats within 6). Night 18000."
     },
     {
       "id": "S08",
       "line": "L08",
       "place": "boy_house",
       "size": "full",
-      "camera": "pov lying in bed, the cat curled on the blanket by the camera, lantern dimming; the window and the empty spot on the wall beyond it at frame top",
-      "frame": "subject: the cat asleep; bg: through the window, the gap in the row of cats on the wall. Night."
+      "camera": "pov lying in bed by the window (ground floor)",
+      "frame": "subject: through the window, the row of cats on the wall with one gap; fg: the blanket; bg (across the room, far): the cat asleep by the fire. Night."
     },
     {
       "id": "S09",
@@ -275,8 +275,8 @@
       "line": "L09",
       "place": "village",
       "size": "wide",
-      "camera": "at: outside, high (0, 8, 20) looking at the gap and the boy's window (0, 2, 0). The reveal: a creeper walks through the gap in the cats, along the lane past the villagers' open doors without stopping, straight to his window, and starts to swell and flash; inside, through the window, the cat asleep on the bed. Cut 1.2 s after L09",
-      "frame": "subject: the creeper at his window, swelling; mid: the open doors it passed; fg: the cats on the wall either side of the gap. Night, lanterns on the lane and at his window."
+      "camera": "at: outside, high (0, 6, 10) looking at his window (0, 1, 0). The reveal: the creeper passes the last open door (a villager inside, no glance), 3 blocks from his window, reaches the window and swells and flashes; through the glass, far across the room, the cat asleep by the fire. Cut 1.0 s after L09",
+      "frame": "subject: the creeper at his window, swelling; mid: the open door it passed; bg: the wall and the gap. Night, lanterns on the lane and at his window."
     }
   ],
   "props": {
