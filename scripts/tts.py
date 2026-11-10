@@ -896,6 +896,14 @@ def voice_lines(groups, cs, out, salt=""):
     return done
 
 
+def say_for(ln, who, fallback):
+    """The text a line is voiced from: its `say`, else the caption text made speakable. A cast entry with `plain_say`
+    gets its `say` without the CAPS stress words too: Pip's sound (Dog on the Hill v2, the owner's pick) was voiced
+    from plain sentence case; flash-lite reads a capitalised word louder and flatter."""
+    t = ln.get("say") or fallback(ln)
+    return spoken(t) if who.get("plain_say") and ln.get("say") else t
+
+
 def spoken(t):
     """CAPS key words are for the captions: lower them for the voice (an all-caps word is read louder and flatter)."""
     return " ".join(w.lower() if sum(c.isalpha() for c in w) > 1 and w.isupper() else w for w in t.replace(" / ", " ").split())
@@ -1034,7 +1042,7 @@ def beat_groups(story, cs, narrator, spoken):
         r = req_of(ln, w) or {}
         scene = r.get("direction", story.get("direction", ""))
         key = (w, ("beat", ln["beat"]) if ln.get("beat") is not None else ("direction", scene))
-        item = (w, ln["id"], ln.get("say") or spoken(ln), ln.get("direction", ""))
+        item = (w, ln["id"], say_for(ln, cs.get(w, {}), spoken), ln.get("direction", ""))
         if beats and beats[-1]["key"] == key:
             beats[-1]["lines"].append(item)
         else:
@@ -1236,7 +1244,7 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
             continue
         w = ln.get("who", narrator)
         r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
-        item = (w, ln["id"], ln.get("say") or voice.spoken(ln), ln.get("direction", ""))
+        item = (w, ln["id"], say_for(ln, cs.get(w, {}), voice.spoken), ln.get("direction", ""))
         solo = (LOCK.get(w) or cs[w].get("model") or "").startswith(BRACKET)   # Pip's model: single-speaker requests only
         if solo or (w != narrator and len(item[2].split()) <= SHORT_WORDS):   # narrator-first: a short character line goes alone
             g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < MAX_LINES), None)
