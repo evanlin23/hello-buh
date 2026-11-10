@@ -73,6 +73,10 @@ Tests are in `npm test`, which passes 44/44. Published recordings render pixel-i
 
 ## Engine items reported, not fixed
 
+All six are fixed on `agent/visual-engine-2` (docs/engine_features.md "Potions, phone-readable screens, on-screen
+teleports, the Darkness phase, lightning light"; stills `engine2_*.jpg`). The original notes:
+
+
 - **Potions draw untinted in container screens and the HUD** (gold B3).
   - Cause: `lib/harness.js` `slotOf` records `[name, count, glint]` with no potion contents, and `edit.py item_icon`
     draws the bare sprite.
