@@ -31,7 +31,10 @@ adds songs.
   `drops.js`, `fortune.js`. Use `edit.startAt` / `edit.endAfter` to trim to the action, `subs`
   for beat labels (no emoji in subs), `deathScreen` + `expectDeath` for deaths.
 - 1.21.11 game rules are snake_case (`immediate_respawn`, `spawn_mobs`...). `/fill` is capped
-  at 32768 blocks. Check logs for `COMMAND ERROR:`.
+  at 32768 blocks. Check logs for `COMMAND ERROR:`. During set-up (before the recording starts) a command error
+  fails the attempt ("SETUP FAILED", exit 6, run.sh retries), except benign ones (/kill with nothing to kill, a /setblock
+  to the same block); a command that may fail on purpose: `ctx.cmd(c, { mayFail: true })` (or `allowSetupErrors: true`
+  on the stunt, `ALLOW_SETUP_ERRORS=1`).
 - **30 s minimum** (owner rule, 2026-11-06), reached with MORE escalating beats, never by stretching
   one. The stunt reads in the first second; something new every ~2 s; no frozen 0.5 s+ pause; the
   Short ends <= 1.0 s after the final payoff. Owner: "We don't want any deadspace and we should end
@@ -55,14 +58,24 @@ seconds of the Short, the source time and the marks nearby. Checks, most-flagged
 2. **held**: 0.6 s+ where the camera barely moves and nothing in view changes (mobs, blocks, particles, captions,
    cards): a warning, a blocker from 1 s. The ending: <= 1.0 s after the endAfter mark, 1.8 s for a text payoff.
 3. **turns**: beat_audit's big camera turns; name the on-screen reason for each.
-4. **set**: floating sand/gravel/concrete powder and liquids that should have flowed, in view within 16 blocks.
+4. **set**: floating sand/gravel/concrete powder and liquids that should have flowed, in view within 16 blocks; and
+   terrain (stone, dirt, snow, gravel, ores...) still standing inside a box `clearSet` emptied (it records the box in the
+   recording), in view within 48 blocks: a blocker from 64 blocks / 0.5 s. If the set check can't run (no `npm ci`)
+   the verdict says "OK, BUT THE SET CHECK DID NOT RUN" (exit 2 with `--strict` / `REC_CHECK_STRICT=1`).
 5. **vanilla**: digs under half the vanilla time for the held tool, mobs faster than vanilla, the player faster than
    sprint-jumping (outside cuts and F1 drone shots).
+6. **flat / subject / sync / glitch** (the owner's 22 notes of 2026-11-10, from `./hb owner`, lib/hb/owner.js; `--no-owner`
+   skips them): a story shot whose visible world is mostly a flat cleared plain; the camera off what the line names
+   (`lines[].look`, else inferred from TORCH / MOM / LIBRARIAN...: a warning); an action before the word that announces
+   it, already in the hole when the line says "dug", a fall with no dig/hit/edge before it, "never X" over X; a door
+   that moves with nobody using it, the player stopped dead against a door, jitter, one-tick aim snaps (often the
+   landing tick of a /tp with yaw 0), a fall-stop-fall stutter, and fog/night/rain the story promises but the recording
+   lacks. In the camera shots of a wide master, the subject and flat checks judge the cropped middle frame.
 Blockers are what reviews always flagged; warnings need a reason ("planned: the turn follows the creeper") or a fix.
 A clean check doesn't replace the frame review: lighting, models, the HUD and the joke still need eyes.
 
 ## Render on GitHub Actions (parallel slices)
-A long render (a 60 s story is ~25 min here) can run on GitHub's runners instead: 12 runners each render a slice of
+A long render (a 60 s story is ~25 min here) can run on GitHub's runners instead: 16 runners each render a slice of
 the frames, one more joins them and does audio, replay/slow-mo and the edit. Expect ~12 min end to end (the same split renders the
 movies on claude/ai-dilemma), and the container's hourly restart can't kill it. Record here, render there:
 ```bash
@@ -76,13 +89,16 @@ scripts/render_on_actions.sh --wait story_<name>           # polls (git only), t
   (`RENDER_BRANCH=` to change it, e.g. if your session may only push its own branch prefix). Commit changes to
   anything else the render reads (`render.js`, `renderer/`, `edit.py`, `scripts/`) before queueing.
 - **The run** (`.github/workflows/render-slices.yml`, setup in `.github/actions/render-setup`): `plan` counts the
-  frames (render.js: `(poses - 1) / 20 * FPS`); `slice` x N renders its range with `render.js` `FRAMES=` (frames keep
+  frames (render.js: `(poses - 1) / 20 * FPS`) and cuts them into ranges of about equal render *time*
+  (`scripts/render_cost.py`: frame size, relights after block changes, whole-world re-meshes when the sky light
+  changes (time of day, rain), each slice's start-up; `python3 scripts/render_cost.py work/<name>.rec.json 16`
+  prints the profile and the split); `slice` x N renders its range with `render.js` `FRAMES=` (frames keep
   their real numbers) and stores it as a lossless RGB video; `finish` decodes them back into
   `work/<name>.frames/`, checks every frame is there, and runs `scripts/finish_render.sh` (= the tail of `run.sh`:
   `audio.py`, `render_replay.py` for `edit.replay`/`slowmo`, `edit.py` with the stunt's `edit` args). The Short is
   the run's `short` artifact and is committed back to the branch as `renders/out/<name>.mp4` with
   `renders/result.json` (`done` or `failed`, with the run's URL), so fetching needs no gh token.
-- `SLICES=` (default 12, at most 32, never under ~30 frames a slice) and `FPS=` (60) go in the job. Re-queueing the
+- `SLICES=` (default 16, at most 32; a heavy stretch such as a sunset gets slices of a few dozen frames) and `FPS=` (60) go in the job. Re-queueing the
   same name force-pushes and cancels the run in progress. A manual run: Actions -> render-slices -> Run workflow on
   the `render/<name>` branch (inputs name, stunt, slices override the job file).
 - Songs aren't in git, so as with run.sh here the output has the game audio and voice only (publish.js adds the song).

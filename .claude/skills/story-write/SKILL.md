@@ -105,3 +105,8 @@ don't build a weak story.
 The ten pitches with scores, the pick and why, the logline, the line count and estimated length, the cast with
 voices, the table-read results (cold reader's summary, critic's scores and verdict, continuity findings), and what's
 left to build.
+
+## Voice structure (owner, 2026-11-10)
+Narrator-first: one first-person narrator carries the story; other characters get at most 1-3 short lines at key beats
+(hook, turn, payoff), each in a clearly different voice with a colour-coded caption. No dialogue scenes. Details and the
+reason: docs/stories.md, House rules.

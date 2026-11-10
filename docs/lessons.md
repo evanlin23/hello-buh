@@ -447,3 +447,8 @@ each section.
   durations didn't show: a male character read as a young woman, "Buh" heard as "huh", and the newer TTS models
   reading the delivery note aloud before the line. A Gemini audio model asked "the exact words, the apparent age and
   gender" for each clip caught all three.
+- VANILLA, not an engine bug (story_nitwit "lava drawn near-black with one orange quarter"): `/fill ... lava replace water`
+  over a 2x2x2 water pool places the lava block by block, and every lava source that lands next to water still in the
+  pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
+  the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
+  `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).

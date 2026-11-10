@@ -8,7 +8,7 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
   story. Change any of the three and it is a different person to the viewer.
 - `scripts/tts.py`: Gemini TTS, multi-speaker in one request, cut into lines, cached, loudness-normalised.
 - `scripts/align.py`: Whisper word timings into `voice.json`, so captions and stunt beats line up with the take.
-- `voices/samples/`: one line per character and a two-character exchange (`exchange.mp3`: Max and Buh), made from
+- `voices/samples/`: one line per character and a two-character exchange (`exchange.mp3`: Max and Milo), made from
   `voices/samples/samples.json`. The whole reel with a beep between characters: `out/voices_cast/cast_reel.mp3`
   (not committed; rebuild from the samples).
 
@@ -17,21 +17,21 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
 | id | name (what Gemini sees) | Gemini voice | direction (`profile`) | Kokoro fallback | from |
 |---|---|---|---|---|---|
 | `narrator` | Narrator | Erinome | a woman in her thirties, calm, clear and a little hushed, unhurried; a small pause before the strange detail | bf_emma | the AI Shorts' narrator |
-| `buh` | Buh | Achird | HelloBuh, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Buh |
+| `milo` | Milo | Achird | Milo, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Milo |
 | `elder` | Elder | Algenib | an old man in his seventies, slow, soft, warm, a little gravelly; has seen this before | bm_george | the trailer's Highkeeper (and Grok) |
 | `child` | Kid | Leda (+2 semitones) | a village kid about nine, bright, earnest, fast, scared but brave | af_sky | new |
 | `smith` | Smith | Orus | a big gruff blacksmith in his fifties, low and blunt, short sentences, a hidden soft heart | am_onyx | new |
 | `stranger` | Stranger | Charon | a hooded stranger, very old and gravelly, a slow low whisper, says less than he knows | bm_fable | the movie's Fen |
 | `villain` | Villain | Schedar | a man in his forties, cold, flat, quiet, perfectly calm and faintly amused; never shouts | bm_daniel | AI Shorts' DeepSeek |
-| `mom` | Mom | Sulafat | Buh's mom, a warm woman in her forties, gentle and tired, a little worried under it | af_sarah | new |
-| `friend` | Max | Fenrir | Buh's best friend, 16, loud, excitable, loyal, talks fast and jokes | am_puck | new |
+| `mom` | Mom | Sulafat | Milo's mom, a warm woman in her forties, gentle and tired, a little worried under it | af_sarah | new |
+| `friend` | Max | Fenrir | Milo's best friend, 16, loud, excitable, loyal, talks fast and jokes | am_puck | new |
 
 The full direction strings are in `voices/cast.json` (copy them exactly; the table shortens them). Spares that have
 been heard to work, for new roles: Kore (crisp, firm woman: a guard captain, an official), Iapetus (measured,
 polite man: a mayor), Gacrux (mature woman), Enceladus (breathy man: a ghost). Puck, directed as a 16-year-old boy,
 read as a young woman: use it for one.
 
-Measured on the samples (median pitch): Kid ~330 Hz, Narrator ~190, Buh ~105-175 (higher when scared), Max ~130-200,
+Measured on the samples (median pitch): Kid ~330 Hz, Narrator ~190, Milo ~105-175 (higher when scared), Max ~130-200,
 Mom ~135, Smith ~105, Elder ~105, Villain ~95, Stranger ~75. Elder, Smith and Villain sit close in pitch; they
 differ in pace and texture, so avoid putting two of them in the same scene without a reason.
 
@@ -55,14 +55,14 @@ one field, `ref`:
 ```json
 "cast": {
   "N":   { "role": "narrator", "ref": "narrator", "color": "#FFFFFF", "on_screen": "pov" },
-  "Buh": { "role": "character", "ref": "buh", "color": "#7FD3FF" },
+  "Milo": { "role": "character", "ref": "milo", "color": "#7FD3FF" },
   "Ida": { "role": "character", "name": "Ida", "voice": "Kore", "color": "#F2C14E",
            "profile": "the librarian: a sharp woman in her sixties, dry, precise, kind underneath" }
 },
-"requests": [ { "id": "r1", "speakers": ["N", "Buh"], "direction": "Night, a village square, a bell tower." } ],
+"requests": [ { "id": "r1", "speakers": ["N", "Milo"], "direction": "Night, a village square, a bell tower." } ],
 "lines": [
   { "id": "L01", "who": "N", "text": "The BELL / rang TWICE." },
-  { "id": "L02", "who": "Buh", "text": "Okay. / That's... / not NORMAL.", "direction": "a nervous laugh, then quiet" }
+  { "id": "L02", "who": "Milo", "text": "Okay. / That's... / not NORMAL.", "direction": "a nervous laugh, then quiet" }
 ]
 ```
 
@@ -89,7 +89,7 @@ python3 scripts/tts.py stories/<name> --only L05              # re-take one line
 `voice.json` keeps the shape `lib/story.js` and `edit.py --story` read (`dur`, `onset`, `end`, `chunks`,
 `captions`, plus `who`), so stunts and captions don't change. tts.py first spreads the chunks evenly by letters;
 align.py replaces them with Whisper's word times (openai/whisper-base.en via transformers, in the TTS venv; ~290 MB
-in the HF cache on first run). It matches by position, not spelling (Whisper hears "Buh" as "Buzz"), and warns when
+in the HF cache on first run). It matches by position, not spelling (Whisper hears "Milo" as "Buzz"), and warns when
 the transcript is under 60% like the script: that line is a wrong cut or a dropped line. Listen to it.
 
 What tts.py does to a take: it cuts the take into lines (every pause is a candidate; dynamic programming matches
@@ -124,7 +124,7 @@ other speaker means a bad cut.
 - Same id, same Gemini voice, same profile string, byte for byte (it is also the cache key).
 - Same `post` filter and loudness (tts.py applies both from the library).
 - The scene sentence changes per story; the profile never does. Put this story's mood in the line notes.
-- If a take drifts (Achird read Buh higher when scared, ~175 Hz vs ~105 calm: that's acting, fine), re-take it
+- If a take drifts (Achird read Milo higher when scared, ~175 Hz vs ~105 calm: that's acting, fine), re-take it
   rather than pitch-correct it.
 - Don't re-cast a library character in a story. If the owner dislikes a voice, change it in `voices/cast.json`,
   re-make its sample and note the change there.

@@ -7,8 +7,9 @@
 # force-pushes that to the branch render/<name>. The push starts this workflow (push triggers work from any branch;
 # the Run-workflow button needs this file on main). Jobs:
 #   plan     reads the job and counts the frames
-#   slice    N runners (default 12) each render one contiguous range of frames with render.js FRAMES= and keep it
-#            as a lossless RGB video (artifact seg-<i>)
+#   slice    N runners (default 16, at most 32) each render one contiguous range of frames with render.js FRAMES=
+#            and keep it as a lossless RGB video (artifact seg-<i>). The ranges are cut to about equal render TIME
+#            (scripts/render_cost.py), not equal length: a stretch of relights / sky-light re-meshes gets short slices
 #   finish   decodes the slices back into work/<name>.frames/, then audio + replay/slow-mo + edit
 #            (scripts/finish_render.sh), uploads out/<name>.mp4 (artifact "short") and commits it to the render
 #            branch as renders/out/<name>.mp4 with renders/result.json, so `render_on_actions.sh --fetch <name>`
@@ -28,7 +29,7 @@ on:
         description: stunt module (stunts/<stunt>.js); empty = from renders/slices.json, else the name
         default: ""
       slices:
-        description: number of parallel slices; empty = from renders/slices.json, else 12
+        description: number of parallel slices (at most 32); empty = from renders/slices.json, else 16
         default: ""
 concurrency:
   group: render-slices-${{ github.ref }}
@@ -59,18 +60,17 @@ jobs:
     timeout-minutes: 60
     strategy:
       fail-fast: true
-      matrix:
-        i: ${{ fromJSON(needs.plan.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     env:
       NAME: ${{ needs.plan.outputs.name }}
       FPS: ${{ needs.plan.outputs.fps }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/render-setup
-      - name: render slice ${{ matrix.i }} of ${{ needs.plan.outputs.n }}
+      - name: render slice ${{ matrix.i }} of ${{ needs.plan.outputs.n }} (frames ${{ matrix.a }}-${{ matrix.b }})
         run: |
           gunzip -c "renders/slices/$NAME.rec.json.gz" > "work/$NAME.rec.json"
-          python3 scripts/render_slices.py slice ${{ matrix.i }} ${{ needs.plan.outputs.n }} ${{ needs.plan.outputs.frames }}
+          python3 scripts/render_slices.py slice ${{ matrix.a }} ${{ matrix.b }}
       - uses: actions/upload-artifact@v4
         with: { name: "seg-${{ matrix.i }}", path: "work/segs/*.mkv", retention-days: 3, compression-level: 0, if-no-files-found: error }
 

@@ -108,6 +108,30 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10, on voices: "maybe we should have a narrator?" … then, on narrator-first with a few character
+  lines: "i think that makes the most sense yeah".** Our best story (runaway: one first-person narrator, 3.2 subs per
+  1k views, the channel's best) and the cinematic pilots (several voices: "mixed up", one read as ASMR) point the same
+  way. So: **one first-person narrator (Milo, or whoever's POV it is) carries the whole story**; other characters get
+  at most 1-3 short lines, only at key beats (the hook, the turn, the payoff), each in a clearly different voice
+  (age/sex/pitch apart) and a colour-coded caption. No back-and-forth dialogue scenes. The narrator is never hushed
+  for warmth (see the ASMR rule); he's quick, curious and a little funny, and goes quiet only for fear. Pending the
+  narration research (docs/research/narration_2026-11-10.md), which may tune the details.
+- **Owner, 2026-11-10, on Good Boy: "i dont really like this framing lowkey it feels a bit like "good boy" like
+  sensual asmr."** Read every script for how it could be misheard, out of context, by a stranger scrolling past. A
+  hushed, breathy first-person voice plus lines about obeying, sitting when told, waiting all day for someone, or a
+  slow tender "good boy" reads as intimate or kink, whatever the twist. Hushed and whispered is for fear and mystery,
+  never for affection or obedience. When the twist is "you're an animal", play the narrator bright, quick and goofy
+  (pet energy), and make the reveal physical and funny (a bark, a head pat, a wagging tail), not a whispered line.
+  Good Boy is held (not published) until it's reworked.
+- **Owner, 2026-11-10: "we still need to ensure that the pacing is good, and theres still a good visual and audio
+  hook and build up and a good payoff."** Cinematic doesn't mean slow. Every story still needs: a hook in the first
+  1-2 s that works both muted (a striking picture or motion) and with sound (a sound or line that makes you ask "why?");
+  something new on screen or in the ear every ~3 s; build-up that escalates (stakes, music and cut rate rise toward the
+  payoff); a payoff that lands in one clear picture plus a sound hit; the end ≤1 s after it. The `pacing` gate
+  (`./hb pace`) measures these and short-review treats its blockers as blockers.
+- **Owner, 2026-11-10: "We don't need the character's name to be Buh" / "sure milo is fine".** The hero is **Milo**
+  (default Steve skin, voice `milo` in voices/cast.json). HelloBuh is the channel, not the character; in-game names
+  on death screens and chat say Milo.
 - **Owner, 2026-11-10: "The voice is definitely an issue. And also the sets. I think we can be more creative with the
   story telling, and better with the delivery and the plots and using other voices for the other characters. I think
   we don't necessarily need to use this sped up voice. this voice i dont think does a good job of playing different
