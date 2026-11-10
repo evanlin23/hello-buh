@@ -75,8 +75,7 @@
    },
    "look": {
     "grade": "dawn",
-    "rays": 1.0,
-    "bloom": 0.7
+    "rays": 1.0
    }
   },
   {
@@ -130,7 +129,6 @@
      "contrast": 0.12,
      "exposure": 0.9
     },
-    "bloom": 0.25,
     "bloomThreshold": 0.9,
     "rays": 0.5,
     "shade": {
@@ -208,8 +206,7 @@
      "contrast": 0.14,
      "exposure": 0.94
     },
-    "rays": 0.8,
-    "bloom": 0.55
+    "rays": 0.8
    }
   },
   {
@@ -257,7 +254,10 @@
      ]
     ],
     "fov": 55,
-    "drift": 0.8
+    "drift": 0.8,
+    "dof": {
+     "aperture": 0.2
+    }
    },
    "look": {
     "grade": {
@@ -341,8 +341,7 @@
    },
    "look": {
     "grade": "night",
-    "rays": 0.5,
-    "bloom": 0.6
+    "rays": 0.5
    }
   }
  ],

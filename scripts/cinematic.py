@@ -102,6 +102,7 @@ def clip_rec(sp, c, portrait):
     rec["timeline"].append({"t": t_ms(0) - 1, "event": "shot", "name": "cine"})
     rec["timeline"].sort(key=lambda e: e["t"])
     shot = dict(c["shot"])
+    shot.setdefault("dof", False)   # depth of field only where a clip asks for it: on wide shots it read as blur (owner)
     for key in ("path", "lookPath"):
         if key in shot:
             shot[key] = [[k[0] * c["rate"], *k[1:]] for k in shot[key]]
@@ -392,6 +393,13 @@ def assemble(sp, segdir, portrait, out):
                     "-c:v", "libx264", "-crf", "16", "-preset", "slow", "-pix_fmt", "yuv420p", "-r", str(FPS), "-movflags", "+faststart",
                     "-c:a", "aac", "-b:a", "256k", "-af", "loudnorm=I=-16:TP=-1.5:LRA=11", "-t", f"{total:.3f}", str(out)], check=True)
     print("wrote", out)
+    # the phone-upload copy: film tuning and adaptive quantisation keep block edges; at the master's grain a CRF 22
+    # re-encode spent its bits on noise and smeared the bricks (owner: "a bit blurry")
+    share = out.with_name(out.stem + "_share.mp4")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(out), "-c:v", "libx264", "-preset", "slow", "-tune", "film", "-crf", "20",
+                    "-x264-params", "aq-mode=3", "-maxrate", "14M", "-bufsize", "28M", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+                    "-c:a", "copy", str(share)], check=True)
+    print("wrote", share, f"{share.stat().st_size / 1e6:.1f} MB")
 
 
 def main():
