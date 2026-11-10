@@ -2,12 +2,12 @@
  "name": "gold_for_the_portal",
  "stunt": "story_gold_for_the_portal",
  "version": 2,
- "revision": "r2 (2026-11-10): the r1 critic's and continuity's must-fixes and the cheap should-fixes applied; see reviews/r1-response.md",
+ "revision": "r3 (2026-11-10): r2 continuity's S13 fix and notes, and the r2 critic's 'one more ingot'; see reviews/r1-response.md",
  "caption": "why does grandma feed the nether portal 😶",
  "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson Milo is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
  "question": "why tf does grandma throw gold into a nether portal every night?",
  "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Milo keeps the gifts in a barrel and knows Grandpa is alive.",
- "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Milo. One's plenty.'). Tonight Milo throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the ingot Grandma tosses back into the purple: she sends it home.",
+ "twist": "The gifts are a piglin's barters: piglins take a gold ingot and throw back a random item from the barter list. Grandpa died over there long ago; a piglin picked his helmet up where he fell (piglins pick up and wear gold armour) and has traded with Grandma every night since, because she is the only one who feeds it gold. Grandma has known for years ('Just one, Milo. One's plenty.'). Tonight Milo throws in a whole stack to buy Grandpa's way home, the piglin comes through after the gold, and it is wearing Grandpa's helmet. Shaking (a piglin in the Overworld starts to zombify), it turns after the one more ingot Grandma tosses into the purple: she sends it home.",
  "key_color": "#B07CFF",
  "gap": 0.3,
  "mood": [
@@ -300,7 +300,7 @@
    "place": "cellar",
    "size": "full",
    "camera": "at: 4 blocks west of the portal (about x7, F+1.6, z5.5), at Grandma's eye height, FOV 70, a slow push east; Grandma's throw starts in the preroll so the ingot is crossing into the purple on frame 1",
-   "frame": "fg: the stone floor; subject: Grandma full-figure (head to foot) just left of centre, 1.5 blocks in front of the portal, her throw finishing; the gold ingot crossing the purple sheet on frame 1 (big and readable at 300 px at this distance), gone into it by ~0.4 s; the portal (obsidian frame 4 x 5) filling the right half; bg: the gold chest under its lantern at frame left, the obsidian-patched north-east wall. The ladder is behind the camera, not in frame. Night (18000; the cellar is lit by the portal and two lanterns)."
+   "frame": "fg: the stone floor; subject: Grandma full-figure (head to foot) just left of centre, 1.5 blocks in front of the portal, her throw finishing; the gold ingot crossing the purple sheet on frame 1 (big and readable at 300 px at this distance), gone into it by ~0.4 s; the portal (obsidian frame 4 x 5) centred behind her; bg: the obsidian-patched north-east wall. The gold chest is out of frame (77 degrees off-axis). The ladder is behind the camera, not in frame. Night (18000; the cellar is lit by the portal and two lanterns)."
   },
   {
    "id": "S02",
@@ -331,7 +331,7 @@
    "line": "L03",
    "place": "garden",
    "size": "wide",
-   "camera": "at: 5 blocks north of the garden gate, 2 blocks up, looking south past the gate over the valley, a slow push",
+   "camera": "at: 5 blocks north of the garden gate, 2 blocks up, looking south past the gate over the valley, a slow push; the garden must be at least 6 blocks deep north of the gate or the lens sits in the cottage wall: confirm on the placed piece, else move the camera along the fence line to keep 5 blocks clear",
    "frame": "fg: the garden fence, gate lanterns and flowers; subject: Milo (Steve, golden boots) at the gate drinking an orange fire-resistance potion (drink pose, swirl particles) on 'potion'; the cottage's corner at frame right; bg: the valley and, on the far hill to the south, the carpeted village (easter egg: carpet roofs, the bell boxed in white wool), forest and hills into the haze. Morning (1000), sun at frame left (east)."
   },
   {
@@ -347,8 +347,8 @@
    "line": "L05",
    "place": "cellar_then",
    "size": "wide",
-   "camera": "at: low from the ladder's foot, 8 blocks from the portal, still; flashback grade",
-   "frame": "fg: the ladder's bottom rungs at frame left; subject: Grandpa in the gold helmet walks into the purple on 'He went IN' and is gone (purple swirl); Grandma (villager) stays beside the portal, alone in frame on 'never came BACK'; bg: the empty cellar, one lantern. Night, 25 years ago (18000)."
+   "camera": "at: about (0.5, F+1.2, 2.8) beside the ladder, aimed 95 degrees (just south of east), 10 blocks from the portal, still; flashback grade",
+   "frame": "fg: the ladder's bottom rungs on the frame's left edge; subject: Grandpa in the gold helmet walks into the purple on 'He went IN' and is gone (purple swirl); Grandma (villager) stays beside the portal, alone in frame on 'never came BACK'; bg: the empty cellar, one lantern. Night, 25 years ago (18000)."
   },
   {
    "id": "S08",
@@ -380,14 +380,14 @@
    "place": "cellar",
    "size": "ms",
    "camera": "pov 2 blocks in front of the portal, turned west, the stack of 64 gold ingots in hand (hotbar slot 1 shows 64)",
-   "frame": "fg: the hand holding the gold stack at lower right; subject: Grandma waist up in mid-cellar 3 blocks away (about x6, z4), stopped on her way to the ladder, looking at the stack, then at us; bg: the ladder and the open hatch 4 blocks behind her (dark). Night (18000)."
+   "frame": "fg: the hand holding the gold stack at lower right; subject: Grandma waist up in mid-cellar about 4 blocks away (about x6, z3, out of S10's frame), stopped on her way to the ladder, looking at the stack, then at us; bg: the ladder and the open hatch about 4 blocks behind her (dark). Night (18000)."
   },
   {
    "id": "S12",
    "line": "L09",
    "place": "cellar",
    "size": "full",
-   "camera": "pov: opens on Grandma already climbing the ladder (8 blocks west), the hatch shutting behind her on 'BED'; turns east to the portal 4 blocks away; the stack is thrown on 'ALL my gold' and the hotbar slot empties on the throw",
+   "camera": "pov: Milo steps back to about x7 (2 blocks west of his S11 spot); opens on Grandma already climbing the ladder 5 blocks west, the hatch shutting behind her on 'BED'; turns east to the portal 4 blocks away; the stack is thrown on 'ALL my gold' and the hotbar slot empties on the throw",
    "frame": "fg: the hand; subject: the portal head to foot, the gold stack arcing into the purple on 'ALL'; bg: the obsidian frame, the gifts barrel at frame left. Night (18000)."
   },
   {
@@ -395,8 +395,8 @@
    "line": "L10",
    "place": "cellar",
    "size": "wide",
-   "camera": "at: about (1.3, F+2.5, 9.7) behind the bed, FOV 70, aimed north-east so the ladder sits on the frame's left edge and the portal at right of centre; check on a still",
-   "frame": "fg: the bed's end; subject: Milo (golden boots) sitting on the bed's edge (sit pose) facing the portal; on 'stepped OUT' a gold helmet pushes out of the purple and a piglin steps onto the floor, shaking (vanilla: a piglin in the Overworld shakes); on the left edge Grandma's feet come down the ladder (she heard it); fallback if the ladder won't hold the edge: her steps on the ladder and the trapdoor sound on 'OUT'; bg: the purple sheet. Night (18000)."
+   "camera": "at: about (1.3, F+2.0, 9.7) behind the bed, FOV 70, yaw aimed 40 degrees east of north, pitch -10: Milo in line with the portal at about 66 degrees, Grandma on the ladder about 6 degrees inside the left edge; check on a still. Fallback if the ladder won't hold the edge: her steps on the ladder and the trapdoor sound on 'OUT'",
+   "frame": "fg: the bed's end; subject: Milo (golden boots) sitting on the bed's north-east corner (about x2.9, z9.0; sit pose) facing the portal (east-south-east), his back to the lens; on 'stepped OUT' a gold helmet pushes out of the purple and a piglin steps onto the floor, shaking (vanilla: a piglin in the Overworld shakes); on the left edge Grandma's feet come down the ladder (she heard it); bg: the purple sheet. Night (18000)."
   },
   {
    "id": "S14",
@@ -404,7 +404,7 @@
    "place": "cellar",
    "size": "cu",
    "camera": "at: 2.5 blocks west of the piglin at its eye height, facing east, FOV 50, a very slow push",
-   "frame": "subject: the piglin head and shoulders right of centre, shaking, in the gold helmet with the lapis sentry trim (the blue stripe) across the front, lit purple from behind; on 'HELMET' the stripe is in the upper half. Grandma at the frame's left edge (head and throwing arm, a step nearer the lens, soft focus): she has walked from the ladder's foot to about x7, z4. Hold 0.9 s after the word: she tosses tonight's ingot, it sails past the piglin's head into the purple, and its head turns after the gold. Cut. Night (18000)."
+   "frame": "subject: the piglin head and shoulders right of centre, shaking, in the gold helmet with the lapis sentry trim (the blue stripe) across the front, lit purple from behind; on 'HELMET' the stripe is in the upper half. Grandma at the frame's left edge (head and throwing arm, a step nearer the lens, soft focus): she has walked from the ladder's foot to about (8.8, F+1, 4.8), 1.3 blocks in front of the lens. Hold 0.9 s after the word: she tosses one more ingot, it sails past the piglin's head into the purple, and its head turns after the gold. Cut. Night (18000)."
   }
  ],
  "props": {
@@ -437,7 +437,12 @@
    ]
   },
   "gold_chest": {
-   "block": "chest"
+   "block": "chest",
+   "at": [
+    8,
+    1,
+    1
+   ]
   },
   "ladder": {
    "at": [
@@ -460,7 +465,7 @@
  "ending": {
   "after": "L11",
   "beats": [
-   "S14 holds 0.9 s past 'HELMET': Grandma, at the frame's left edge, tosses tonight's ingot past the shaking piglin into the purple; its head turns after the gold. Cut.",
+   "S14 holds 0.9 s past 'HELMET': Grandma, at the frame's left edge, tosses one more ingot past the shaking piglin into the purple; its head turns after the gold. Cut.",
    "No line after the payoff; the score is out 0.45 s before it, the hit lands on 'HELMET'."
   ],
   "loop": "L01 changes: the nine thousand ingots were never for Grandpa. Grandma has been feeding the one who has his helmet, and tonight she sends it home with one more."

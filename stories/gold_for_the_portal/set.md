@@ -1,4 +1,4 @@
-# gold_for_the_portal: set brief (r2)
+# gold_for_the_portal: set brief (r3)
 
 Two places: a spruce cottage on a ridge on real terrain (S02, S05), and the cellar under it (library `basement`) with
 a Nether portal in its east wall (every other shot). The cellar is the story; the ridge and the garden sell where it is
@@ -26,7 +26,8 @@ and carry the easter egg. Every set follows `docs/building_guide.md` and scores 
 - **Gifts barrel** at (10,F+1,3), named "Grandpa's Gifts" (`/data merge block <x y z> {CustomName:'"Grandpa\'s Gifts"'}`
   or the 1.21 `custom_name` component) and filled per the bible's Props table (`/item replace block <x y z> container.N`).
   Check the title in the barrel screen (`contTitle` reads custom names).
-- **Gold chest** at (8,F+1,1): a few gold blocks inside (never opened on screen).
+- **Gold chest** at (8,F+1,1) (prop `gold_chest`): a few gold blocks inside (never opened, never in frame: set dressing).
+- **The garden for S05**: confirm it is at least 6 blocks deep north of the gate (the camera sits 5 blocks north of it), else move the camera along the fence.
 - **Old gifts in use**: obsidian and crying obsidian blocks patching the north-east wall, soul sand blocks under a shelf.
 - Candles on the barrel tops (S01 foreground), a lantern above the gold chest, one hung near the portal: three warm
   lights against the purple.
@@ -46,7 +47,7 @@ and carry the easter egg. Every set follows `docs/building_guide.md` and scores 
 | S01 cellar (full figure, 4 blocks west of the portal) | the stone floor | Grandma full-figure beside the purple portal, the ingot crossing the sheet on frame 1 | the gold chest under a lantern at frame left, the obsidian-patched wall (the ladder is behind the camera) |
 | S02 ridge (ews crane, night, time 14500: the moon low, not overhead) | the garden fence and gate lanterns (crane end) | the cottage: lit window, chimney smoke, the open door with a faint purple glow from the hatch | the dark valley, the stream catching moonlight, forest on the far slope, hills |
 | S05 garden (wide, morning, camera north of the gate looking south) | fence, gate lanterns, flowers | Milo at the gate drinking, the cottage's corner at frame right | across the valley: the carpeted village on the far hill (the easter egg), forest, hills into the haze |
-| S07 cellar 25 years ago (wide) | the ladder's bottom rungs | Grandpa walking into the portal, Grandma beside it | the bare cellar wall, one lantern |
+| S07 cellar 25 years ago (wide; camera about (0.5,z2.8) aimed 95 degrees) | the ladder's bottom rungs on the left edge | Grandpa walking into the portal, Grandma beside it | the bare cellar wall, one lantern |
 
 ## The easter egg
 S05's background: **the carpeted village of Light Sleeper** on the far hill, 50-80 blocks across the valley: carpet

@@ -27,7 +27,7 @@ trading", "one's plenty".
 - **Because of that,** when Grandma says one ingot is plenty and goes to bed, Milo throws in all 64 to buy Grandpa's
   way home, and sits on the bed to wait.
 - **Until finally,** something steps out after the gold: a piglin, shaking, wearing Grandpa's helmet, and Grandma,
-  who has known all along, tosses it tonight's ingot back into the purple to send it home.
+  who has known all along, tosses one more ingot into the purple to send it home.
 
 ## Beat sheet (113 words; ~42.9 s of speech with the gaps and pauses, ~43.8 s with the 0.9 s hold)
 Timings estimated at Pip's natural pace (~2.9 words a second plus the `<short pause>` tags); re-time from voice.json.
@@ -43,9 +43,9 @@ Timings estimated at Pip's natural pace (~2.9 words a second plus the `<short pa
 | 26.3-28.1 | **The want** | L07 N: "So he's ALIVE. I KNOW it." | S10 WS: Milo small in front of the portal, lit purple, the gold stack in hand; Grandma walks out of frame left toward the ladder | the misread stated; sympathy |
 | 28.4-30.6 | **A character speaks** | L08 Grandma: "Just ONE, Milo. One's PLENTY." | S11 MS POV: Grandma mid-cellar, 3 blocks away on her way to the ladder, looking at the stack of 64 in his hand | **the subtext line**: one ingot, one barter; more gold could bring it through. **The attentive player gets ahead here (~30 s, 69%)**: Grandpa isn't trading, a piglin is |
 | 30.9-36.5 | **The try** | L09 N: "When she went to BED, I threw in ALL my gold. SIXTY-FOUR. To buy his way HOME." | S12 FS POV: Grandma already climbing the ladder, the hatch shuts on "BED"; turn to the portal 4 blocks away; the stack arcs into the purple on "ALL" and the slot empties on the throw | his act is the visible cause of what comes next (piglins go after gold) |
-| 36.8-40.4 | dread | L10 N: "Then I sat and WAITED. And something stepped OUT." | S13 WS: Milo sitting on the bed (sit pose); a gold helmet pushes out of the purple, a piglin steps onto the stone, shaking; Grandma's feet come down the ladder on the frame's left edge (camera aimed north-east from behind the bed) | the picture runs level with the words: "something", not "Grandpa" |
+| 36.8-40.4 | dread | L10 N: "Then I sat and WAITED. And something stepped OUT." | S13 WS: Milo sitting on the bed's north-east corner (sit pose), back to us; a gold helmet pushes out of the purple, a piglin steps onto the stone, shaking; Grandma's feet come down the ladder on the frame's left edge (camera aimed north-east from behind the bed) | the picture runs level with the words: "something", not "Grandpa" |
 | 40.7-42.9 | **The reveal (payoff L11)** | L11 N: "It was wearing Grandpa's HELMET." | S14 CU: the piglin, Grandma at the frame's left edge,, shaking, the blue-striped gold helmet centred on "HELMET" | the game says it: a piglin wears gold, and this gold has the stripe |
-| 42.9-43.8 | **The last beat (hold 0.9 s)** | (no line) | S14 continues: Grandma, in frame at the left edge, tosses tonight's ingot; it sails past its head into the purple; its head turns after the gold. Cut. | she knew; she feeds it; she sends it home before it turns |
+| 42.9-43.8 | **The last beat (hold 0.9 s)** | (no line) | S14 continues: Grandma, in frame at the left edge, tosses one more ingot; it sails past its head into the purple; its head turns after the gold. Cut. | she knew; she feeds it; she sends it home before it turns |
 
 ## The second the viewer gets ahead
 - A barter-savvy player: S04/S08 (obsidian, string, pearls, fire resistance, soul sand, gravel, quartz) at 8-26 s
@@ -122,7 +122,7 @@ wearing gold armour it picked up is vanilla.
 - **Why does the piglin step through tonight, after 25 years?** A whole stack arrives at once; it lands in the portal
   frame on its side, and a piglin goes after every gold ingot it sees: walking into the frame for it takes it through.
 - **Why does Grandma come down?** The snort and the hoofbeats on stone through the floor; she knows what that sound
-  is, so she comes down with tonight's ingot, calm.
+  is, so she comes down with one more ingot, calm.
 - **Why does she throw the ingot past it into the portal?** A piglin shakes and turns into a zombified piglin in the
   Overworld after ~15 s; piglins follow gold. She sends it home before it turns. Nobody fights it: Milo wears the golden
   boots Grandma makes him wear in the cellar (seen in S05, S10, S13: piglins leave a player in gold alone), and
