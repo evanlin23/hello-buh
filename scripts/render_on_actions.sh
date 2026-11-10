@@ -17,7 +17,8 @@
 # render/<name> and <prefix>/render-<name>. Commit other uncommitted changes (edit.py, render.js...) first: only those
 # three folders are carried over. The finished Short comes back on the render branch (renders/out/<name>.mp4 +
 # renders/result.json), so fetching needs only git; it's also the run's "short" artifact.
-# Env: SLICES (16, at most 32; cut to equal estimated render time), FPS (60), RENDER_BRANCH, REMOTE (origin).
+# Env: SLICES (16, at most 32; cut to equal estimated render time), FPS (60), RENDER_BRANCH, REMOTE (origin),
+# PICTURE_KEY / REUSE_RUN (set by `hb render --reuse`: re-run only the edit on a finished run's frames).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 REMOTE=${REMOTE:-origin}
@@ -40,6 +41,19 @@ fetch () {
   git fetch -q "$REMOTE" "$branch" || { echo "could not fetch $branch from $REMOTE"; return 2; }
   local res
   if ! res=$(git show FETCH_HEAD:renders/result.json 2>/dev/null); then echo "$branch: still rendering"; return 3; fi
+  # the result must be THIS job's: a working branch (or HEAD) that carried an older renders/result.json handed it to
+  # every later queue, and --wait took the old Short as new. The run copies slices.json's "queued" stamp into its
+  # result; the queue commit (the last one touching renders/slices.json) must be the one this box queued, if it did
+  local job qc want
+  job=$(git show FETCH_HEAD:renders/slices.json 2>/dev/null || echo '{}')
+  if ! python3 -c "import json,sys;r,j=json.loads(sys.argv[1]),json.loads(sys.argv[2]);sys.exit(0 if r.get('queued') and r.get('queued')==j.get('queued') else 1)" "$res" "$job"; then
+    echo "$branch: stale result (renders/result.json is from an older job than renders/slices.json: an inherited file): still rendering"; return 3
+  fi
+  qc=$(git log -1 --format=%H FETCH_HEAD -- renders/slices.json)
+  want=$(cat "work/$name.render_queued" 2>/dev/null || true)
+  if [ -n "$want" ] && [ "$want" != "$qc" ] && git cat-file -e "$want" 2>/dev/null && ! git merge-base --is-ancestor "$want" FETCH_HEAD 2>/dev/null; then
+    echo "$branch: a result from another queue (job $qc, this box queued $want): still rendering"; return 3
+  fi
   local status run
   status=$(python3 -c "import json,sys;print(json.loads(sys.argv[1])['status'])" "$res")
   run=$(python3 -c "import json,sys;print(json.loads(sys.argv[1]).get('run',''))" "$res")
@@ -97,15 +111,24 @@ rm -rf "$WT/renders/slices" "$WT/renders/out" "$WT/renders/result.json"
 mkdir -p "$WT/renders/slices"
 gzip -9 -c "$REC" > "$WT/renders/slices/$NAME.rec.json.gz"
 SRC=$(git rev-parse --short HEAD)
-python3 - "$WT/renders/slices.json" "$NAME" "$STUNT" "${SLICES:-16}" "${FPS:-60}" "$SRC" <<'EOF'
+# PICTURE_KEY (hb render): what decides the frames; REUSE_RUN: a finished run with the same key whose frames (seg-*
+# artifacts) the workflow reuses, re-running only the edit (render_slices.py plan checks they still exist)
+python3 - "$WT/renders/slices.json" "$NAME" "$STUNT" "${SLICES:-16}" "${FPS:-60}" "$SRC" "${PICTURE_KEY:-}" "${REUSE_RUN:-}" <<'EOF'
 import json, sys, time
-p, name, stunt, slices, fps, src = sys.argv[1:]
-json.dump({"name": name, "stunt": stunt, "slices": int(slices), "fps": int(fps), "source": src,
-           "queued": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}, open(p, "w"), indent=1)
+p, name, stunt, slices, fps, src, key, reuse = sys.argv[1:]
+j = {"name": name, "stunt": stunt, "slices": int(slices), "fps": int(fps), "source": src,
+     "queued": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+if key:
+    j["picture_key"] = key
+if reuse:
+    j["reuse_run"] = reuse
+json.dump(j, open(p, "w"), indent=1)
 EOF
 (
   cd "$WT"
   git add -A stunts lib stories .github scripts
+  # drop a result/Short inherited from HEAD (a branch that once rendered): --fetch would take it as this job's
+  git rm -rq --cached --ignore-unmatch renders/result.json renders/out >/dev/null
   git add -f renders/slices.json "renders/slices/$NAME.rec.json.gz"
   git -c user.name="${GIT_AUTHOR_NAME:-$(git config user.name || echo hellobuh)}" -c user.email="${GIT_AUTHOR_EMAIL:-$(git config user.email || echo hellobuh@users.noreply.github.com)}" \
     commit -qm "render-slices: $NAME ($STUNT) from $SRC"
@@ -118,8 +141,10 @@ EOF
     else cat "$WT.push.err" >&2; rm -f "$WT.push.err"; exit 1; fi
   fi
   rm -f "$WT.push.err"
+  git rev-parse HEAD > "$WT.queued"
 )
 [ -f "$WT.branch" ] && { BRANCH=$(cat "$WT.branch"); rm -f "$WT.branch"; }
 mkdir -p work && echo "$BRANCH" > "work/$NAME.render_branch"
+[ -f "$WT.queued" ] && { mv "$WT.queued" "work/$NAME.render_queued"; }
 echo "queued $NAME on $BRANCH ($(du -h "$WT/renders/slices/$NAME.rec.json.gz" | cut -f1) recording). Actions renders it in ${SLICES:-16} slices;"
 echo "get it with: scripts/render_on_actions.sh --wait $NAME"

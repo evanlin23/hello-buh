@@ -79,7 +79,7 @@ one field, `ref`:
 - `direction` on a line is sent as "Line 3: <note>." in that request's direction block. Never quote the line's
   words in it.
 - `requests` (optional): each line goes into the first request listing its speaker. Without it, consecutive lines
-  share a request until a third speaker appears. At most 8 lines per request (longer takes cut worse).
+  share a request until a third speaker appears. At most 6 lines per request (longer takes cut worse and drift over the take).
 - The movie engine's `M.say(ctx, who, text)` marks carry the same `who`: use the story cast id there too, so a
   scene's line marks and its voice files share names.
 
@@ -305,17 +305,88 @@ So `narrator` is #8: Leda with `post` `rubberband=tempo=1.5:pitch=1.0905:formant
 - Don't re-cast a library character in a story. If the owner dislikes a voice, change it in `voices/cast.json`,
   re-make its sample and note the change there.
 
+## Drift gate (owner, 2026-11-10)
+
+Owner: "i think gemini is really bad with the voices drifting. can you ensure theres a gate or some way to audit this?
+The voices for the people seem to change like all the time take to take and even within take."
+
+```bash
+./hb drift <stunt>                                              # = ~/.hb-tts/bin/python scripts/voice_drift.py stories/<name>
+~/.hb-tts/bin/python scripts/voice_drift.py stories/<name> --json  # tts.py's hook reads this
+~/.hb-tts/bin/python scripts/voice_drift.py --make-refs [id,...]   # rebuild voices/refs/ from voices/refs/refs.json
+```
+
+**What it measures.** For every line, and every 1.5 s window inside a line (hop 0.75 s): a speaker embedding
+(Resemblyzer's GE2E encoder, the same one `speaker_check.py` uses), median pitch (YIN), spectral centroid and tilt,
+mean F1-F3 (LPC) and, per line, words per second. Each comparison becomes one **drift score** in noise units (1.0 =
+two good lines of one character): a weighted RMS where the embedding counts most (weight 3, its noise scale grows on
+short lines: 0.06 + 0.08 / speech s) and pitch, brightness and formants count little with wide scales, because acting
+moves them (Pip's "And then he STOOD UP!" is +10 st and fine). Three comparisons:
+
+| flag | what | warn / block |
+|---|---|---|
+| DRIFT | the line against the character's other lines in this story (leave-one-out, median centre): take-to-take | 1.7 / 2.0 |
+| OFFREF | the line against the character's locked reference (`voices/refs/<id>.json`) | 1.9 / 2.3 |
+| WOBBLE | two windows in a row (>= 2.25 s) against the character (its reference, else its centre): within the take | 1.55 / 1.75 |
+| MODELS | the character's lines were made by more than one TTS model (voice.json `lines[].model`) | always a blocker |
+| spread | the character's median pitch spans more than 7 semitones across lines | a warning |
+| short | under 0.6 s of speech: too short to judge (speaker_check's SWAP covers a swapped "SIT.") | listen |
+
+A reference blocks only for the library character itself (`ref` in the story cast, or the cast id) and only when it
+comes from an approved take; a one-off character that shares a Gemini voice, or a `provisional` library sample, is
+shown and not judged. Exit 1 on any blocker.
+
+**References** (`voices/refs/`, committed: our own generated audio, ~6 s each, and a 256-d embedding + stats). The
+narrator (and `pip`) is Dog on the Hill voices v3 (the owner's pick), `puck_kid` is Good Boy's kid-Puck take (its
+first five lines), the rest are the library samples, marked `provisional` (made before the recast or with another
+direction): replace each with the first approved story take of that character (`refs.json`, then `--make-refs <id>`).
+
+**Calibration (2026-11-10).** Good: Pip v3 (10 lines; max DRIFT score 1.59, his shouted "STOOD UP!"), 16 Kokoro stories
+(one voice; max 1.08), Good Boy's kid Puck lines 1-7. Bad: Pip v3 with 3 Erinome lines mixed in (2.12-2.30), with 3
+Leda lines from gemini-3.8-flash instead of 3.8-flash-lite (one at 1.97, two at ~1.0: same voice, other model, partly
+audible), Good Boy's newest Puck with 3 lines of the first Gemini take (hushed "young man", 2.49-2.86). Windows: good
+takes reach 1.82 in one window but at most 1.47 in two in a row; a Pip line finished by an Erinome take: 2.03, 1.97
+(WOBBLE at 1.5 s). A synthetic story with all three faults (two swapped-in Erinome lines, one spliced line, two models)
+gets DRIFT and OFFREF on both swapped lines, WOBBLE on them and on the spliced one, and MODELS. The Gemini listening judge (gemini-3.5-flash) was out of quota (429) for the whole
+session, so the thresholds rest on the metrics; when it answers, re-check Good Boy's L08-L13 by ear.
+
+**Prevention in tts.py** (the gate catches drift; these stop most of it):
+- **One model per character per story.** The first request that voices a character locks its model (voice.json
+  `models`, and `lines[].model` per line); a `model` in voices/cast.json locks it everywhere (the narrator: Pip's
+  gemini-3.8-flash-lite-tts, with Pip's recipe prompt: `[profile]`, a blank line, the lines; single-speaker requests).
+  A 429 on a locked model stops the run (`QuotaOut`; the takes so far are cached): wait for the reset, or
+  `--relock <cast id>=<model>` to re-take ALL of that character's lines on another model. Good Boy's narrator came out
+  of 3.1-flash for some lines and 2.5-flash for others: two different people.
+- **The model is in the cache key**, so a fallback model's take can't come back as the first model's.
+- **Short requests**: at most 6 lines (MAX_LINES); long multi-line takes drift over the take.
+- **Identical direction**: the profile string comes from voices/cast.json; a story that overrides a library
+  character's `profile` gets a warning.
+- **Auto re-take**: after the speaker check, `./hb voice` runs the gate; a line it blocks is re-taken alone on the
+  locked model, at most 2 times, and the take closest to the reference (lowest drift) is kept (voice.json `take`).
+
+**Voice conversion: tested, not adopted.** OpenVoice v2's tone-colour converter (MIT since April 2024, free for
+commercial use; 131 MB, CPU ~1x real time on 2 threads: 3.3 s for a 3.3 s line) mapping a take onto the
+reference's timbre: it pulled drifting lines toward the reference (an Erinome line 2.70 -> 2.08 against Pip, Good
+Boy's drifted L11 2.76 -> 1.86, its pitch dragged from -13 st to 0) but not under the blocker for a wrong voice, and it
+pushed a clean Pip line AWAY from Pip (0.67 -> 1.04: the converter's own sound). A re-take on the locked model fixes
+drift without processing, and the realism rule is "less processing is more" ("Realism" above). Not tried: seed-vc
+(GPL-3.0), kNN-VC (needs WavLM-Large, ~1.2 GB, more than this box's free disk). The A/B is
+`out/voice_drift/vc_ab.mp3` (not committed).
+
 ## Saving quota
 
 The free tier is about 10 requests a day per model and the owner's rule is "don't necessarily use the latest
 models, we might run out of usage":
-- MODELS order: gemini-3.1-flash-tts-preview first (the realism winner), then gemini-2.5-flash-preview-tts; tts.py
-  moves to the next only on a 429 (quota), and retries a 5xx once on the same model. Each has its own 10 a day, so
-  the pair gives about 20. gemini-2.5-pro-preview-tts is not on the free tier (limit 0): it's out of the list.
+- MODELS order: gemini-3.1-flash-tts-preview first (the realism winner), then gemini-2.5-flash-preview-tts; an
+  unlocked character's first request moves to the next only on a 429 (quota), and retries a 5xx once on the same
+  model. Each has its own 10 a day, so the pair gives about 20. gemini-2.5-pro-preview-tts is not on the free tier
+  (limit 0): it's out of the list. **Once a character has a model in a story, it keeps it** ("Drift gate" below): a
+  429 on it stops the run.
 - One request per scene pair: the narrator and one character, or two characters. A 9-character sample set cost 5
   requests.
 - Finalise the script before voicing (a changed comma is a new request). Re-take only changed lines with `--only`.
-- Every raw take is cached in `work/tts/<hash>.wav` (hash of the prompt and voices). Re-cutting, re-processing and
+- Every raw take is cached in `work/tts/<hash>.wav` (hash of the prompt, the voices and the model: before
+  2026-11-10 the model wasn't in it, so a fallback model's take was reused as the first model's). Re-cutting, re-processing and
   re-aligning are free. Delete bad takes (long run-on takes are megabytes).
 - Whisper and the cut are local: check there before paying for another take.
 - Quota out on every model: stop and leave the story for the next run (story-make skill); never fall back to the

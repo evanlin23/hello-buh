@@ -433,5 +433,10 @@ def main(a):
     return 0 if rep["ok"] else 1
 
 
+SETUP = "~/.hb-tts/bin/pip install transformers scipy && ~/.hb-tts/bin/pip install --no-deps resemblyzer"
+
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    try:
+        sys.exit(main(sys.argv[1:]))
+    except ModuleNotFoundError as e:   # a fresh TTS venv: say the exact install line (./hb doctor checks the same)
+        sys.exit(f"speaker_check: {e}. Install the voice-check packages into the TTS venv:\n  {SETUP}")
