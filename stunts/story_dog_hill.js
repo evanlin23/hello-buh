@@ -71,7 +71,7 @@ module.exports = {
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
   // 16:9 master); the bed is our own score (scripts/story_short.py --score-only, as .ogg), so publish adds no NCS track
   wideMaster: true,
-  edit: { story: 'stories/dog_hill', startAt: 'start:0', endAfter: 'end_scene:-0.1', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?' },
+  edit: { story: 'stories/dog_hill', startAt: 'start:0', endAfter: 'end_scene:0', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -306,10 +306,12 @@ module.exports = {
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     ctx.mark('chat', { text: 'Milo left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
     await run(16)
-    // ---- L15: Day one. The opening frame, pulling away
-    cut('end')
+    // ---- L15: "Day one." over the dog alone where Milo vanished; on "Again." the cut to the opening frame pulling
+    // back (the loop) with the payoff's sound hit; the end 0.25 s after the word (owner: end as the payoff lands)
     line('N', 'L15')
-    await run(T('L15') + 22)
+    await run(15)
+    cut('end'); ctx.mark('hit'); ctx.mark('payoff')
+    await run(29)
     ctx.mark('end_scene')
     await run(10)
     return true
