@@ -132,3 +132,14 @@ Kept in beats.md (the same table); the short version:
 | the snort | S09 sound | portal noise | a piglin at the portal |
 | "Just ONE, Nico. One's PLENTY." | L08 | thrift | she knows |
 | golden boots on Nico | S05, S10, S13 | nothing | her rule: she knows what is over there |
+
+## Build changes (2026-11-10, the make run)
+- **The place moved** down the hill's south-east slope: the cottage centre at (-128, 85, -940), not (-110, 85, -990)
+  (no ridge there, and the hill hid Hushwell). The ground rises north and west of the cottage, so the garden looks
+  south-south-west down the slope to Hushwell's plaza (~85 blocks; the boxed bell at cellar-local (-24, 8, 83)).
+  The cellar is sunk 5 blocks deeper (a ladder shaft from the hatch, the `shaft` variant) so its east wall stays
+  buried on the slope. Stamp `view` (since day 180): the trees below the garden cleared for Grandma's view.
+- Cellar-local O = (-132, 74, -943); the cottage floor is at dy 11, the hatch at (1, 11, 1) by the bed.
+- **S13:** Nico sits on the cellar floor at (4.6, 7.8), facing the portal, not on the bed (the bed corner put him
+  1.6 blocks from the only lens position behind him). "Then I sat and WAITED" still holds.
+- **The flashback cellar** is a bare copy 30 blocks under the real one, with no hatch hole (an aquifer flooded it).
