@@ -5,19 +5,16 @@
   "voice": "Leda",
   "color": "#FFFFFF",
   "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
-  "profile": "A kid telling a spooky-funny story at a sleepover, fast and gleeful, every sentence a bit more excited, one breath, punching only the capitalised key word; full voice, never whispering",
+  "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
   "post": "",
-  "tempo": 1.1,
-  "semitones": 1,
-  "stretch": "rubberband",
-  "model": "gemini-3.8-flash-lite-tts",
-  "fallback": "am_adam",
-  "from": "owner 2026-11-10: \"i kidna like the sleepover\" (brand/voice_samples/kid k4_sleepover), \"maybe 1.1 with +1 pitch\", \"C and D feel like they have weird artifacts in them, so A sounds the best\" (A = rubberband tempo 1.1, +1 semitone, nothing else)",
-  "notes": "Our brand kid narrator (STANDARDS 2.000/2.0000, docs/brand.md). tts.py plays every raw take through rubberband tempo 1.1 and +1 semitone (stretch_of) and nothing else: no pause_cap (a 0.12 s gap cap sounded spliced), no formant-preserving speech mode or room (owner: artifacts). Takes must be PERFORMED continuously; a take with long pauses is re-taken. The Orus x1.45 Roblox narrator is `narrator_roblox`.",
-  "model_hint": "k4_sleepover was voiced on gemini-3.8-flash-lite-tts in Pip's layout: \"[profile]\", a blank line, the text as one paragraph (brand/voice_samples/kid/raw/k4_sleepover_raw.wav.json); the brand session's direction said \"punching the key word\", here \"only the capitalised key word\" (STANDARDS 2.000: one stress per sentence)",
   "max_pause": {
    "rest": 0.6
-  }
+  },
+  "model": "gemini-3.8-flash-lite-tts",
+  "fallback": "am_adam",
+  "from": "owner 2026-11-10: \"can we use this voice actually, the one used in dog on the hill v2 (held: needs your OK) in the preview?\" = Pip (Leda, this profile, natural tempo, no speed-up, no pitch; claude/story-cine-2 58fa5da, voiced on gemini-3.8-flash-lite-tts)",
+  "notes": "Pip exactly as heard in Dog on the Hill v2: natural tempo (no tempo/rate/semitones/stretch), no pause cap; takes performed continuously and re-taken, never trimmed. Earlier picks kept for history: narrator_sleepover (k4, 1.1x +1 st), narrator_roblox (Orus x1.45). Recipe, from the Dog on the Hill session (voices/recipes/pip.md on claude/story-cine-2): one single-speaker flash-lite request, \"[profile]\", a blank line, the lines separated by blank lines; plain sentence case (`plain_say`: the stress CAPS in `say` are lowered for this voice), no ellipses (they made it stop and whisper); measured ~235 Hz, ~3.2 words/s.",
+  "plain_say": true
  },
  "narrator_roblox": {
   "name": "Narrator",
@@ -179,5 +176,24 @@
   "fallback": "am_michael",
   "from": "the AI-dilemma voice for Claude, the trailer's Buh (renamed Milo, owner 2026-11-10) and the movie's brothers",
   "notes": "First person. Range: scared/funny ('Okay. That's... not normal.'), serious, whispering. Never sped up. Owner 2026-11-10: the hero is called Buh again, and nobody ever says his name aloud (it only appears as in-game text: chat, death screen, name tag)."
+ },
+ "narrator_sleepover": {
+  "name": "Narrator",
+  "voice": "Leda",
+  "color": "#FFFFFF",
+  "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
+  "profile": "A kid telling a spooky-funny story at a sleepover, fast and gleeful, every sentence a bit more excited, one breath, punching only the capitalised key word; full voice, never whispering",
+  "post": "",
+  "tempo": 1.1,
+  "semitones": 1,
+  "stretch": "rubberband",
+  "model": "gemini-3.8-flash-lite-tts",
+  "fallback": "am_adam",
+  "from": "owner 2026-11-10: \"i kidna like the sleepover\" (brand/voice_samples/kid k4_sleepover), \"maybe 1.1 with +1 pitch\", \"C and D feel like they have weird artifacts in them, so A sounds the best\" (A = rubberband tempo 1.1, +1 semitone, nothing else)",
+  "notes": "The owner's pick from 2026-11-10 22:48 to 23:05 (k4 sleepover, rubberband 1.1, +1 st), replaced the same night by Pip as in Dog on the Hill v2.",
+  "model_hint": "k4_sleepover was voiced on gemini-3.8-flash-lite-tts in Pip's layout: \"[profile]\", a blank line, the text as one paragraph (brand/voice_samples/kid/raw/k4_sleepover_raw.wav.json); the brand session's direction said \"punching the key word\", here \"only the capitalised key word\" (STANDARDS 2.000: one stress per sentence)",
+  "max_pause": {
+   "rest": 0.6
+  }
  }
 }
