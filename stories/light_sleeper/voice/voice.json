@@ -124,21 +124,21 @@
   "L05": {
    "who": "Mom",
    "text": "Walk SOFT, sweetie. The ground's a light SLEEPER.",
-   "dur": 3.94,
-   "onset": 0.23,
-   "end": 3.46,
+   "dur": 4.49,
+   "onset": 0.21,
+   "end": 4.32,
    "chunks": [
     [
-     0.23,
-     1.536
+     0.21,
+     1.871
     ],
     [
-     1.536,
-     2.36
+     1.871,
+     2.921
     ],
     [
-     2.36,
-     3.46
+     2.921,
+     4.32
     ]
    ],
    "captions": [
@@ -515,96 +515,39 @@
    ],
    "model": "gemini-3.8-flash-lite-tts",
    "try": 1,
-   "tries": 2,
+   "tries": 1,
    "fixes": [],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 8.99,
-     "len": 0.43,
-     "why": "0.43 s pause between lines 2-3 (limit 0.35 s)"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "aligned",
-   "rejected": [
-    {
-     "try": 1,
-     "why": [
-      "0.43 s pause between lines 2-3 (limit 0.35 s)"
-     ]
-    },
-    {
-     "try": 2,
-     "why": [
-      "0.39 s pause between lines 2-3 (limit 0.35 s)",
-      "0.50 s pause between lines 2-3 (limit 0.35 s)"
-     ]
-    }
-   ]
+   "rejected": []
   },
   "L05": {
    "lines": [
     "L05"
    ],
    "file": "beat_L05.wav",
-   "dur": 3.94,
+   "dur": 4.49,
    "offsets": [
     0.0
    ],
    "model": "gemini-3.8-flash-tts",
-   "try": 3,
-   "tries": 5,
+   "try": 2,
+   "tries": 2,
    "fixes": [
     "one continuous take, no pauses between sentences",
     "read every word exactly as written, nothing added or skipped"
    ],
-   "ok": false,
-   "gate": [
-    {
-     "kind": "pause",
-     "at": 1.62,
-     "len": 0.5,
-     "why": "0.50 s pause inside line 1 (limit 0.3 s)"
-    }
-   ],
+   "ok": true,
+   "gate": [],
    "cut": "whole",
    "rejected": [
     {
      "try": 1,
      "why": [
-      "0.31 s pause inside line 1 (limit 0.3 s)",
-      "0.43 s pause inside line 1 (limit 0.3 s)",
-      "0.56 s pause inside line 1 (limit 0.3 s)",
-      "0.35 s pause inside line 1 (limit 0.3 s)",
-      "1.78 s pause inside line 1 (limit 0.3 s)",
-      "0.45 s pause inside line 1 (limit 0.3 s)",
+      "1.78 s pause inside line 1 (limit 1.0 s)",
       "Whisper heard only 46% of the script (\"Milo's mom, a warm woman in her forties, gentle and tired, loving, calls from another room, a little worried under it. W\")",
       "extra words 'milos mom a warm woman in her forties gentle and tired loving calls from another room a little worried under it' (a direction read aloud?)"
-     ]
-    },
-    {
-     "try": 2,
-     "why": [
-      "0.86 s pause inside line 1 (limit 0.3 s)"
-     ]
-    },
-    {
-     "try": 3,
-     "why": [
-      "0.50 s pause inside line 1 (limit 0.3 s)"
-     ]
-    },
-    {
-     "try": 4,
-     "why": [
-      "0.61 s pause inside line 1 (limit 0.3 s)"
-     ]
-    },
-    {
-     "try": 5,
-     "why": [
-      "0.63 s pause inside line 1 (limit 0.3 s)"
      ]
     }
    ]
@@ -646,63 +589,21 @@
    "gate": [
     {
      "kind": "pause",
-     "at": 4.68,
-     "len": 0.48,
-     "why": "0.48 s pause between lines 1-2 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 6.19,
-     "len": 0.35,
-     "why": "0.35 s pause inside line 3 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
      "at": 8.23,
      "len": 0.71,
-     "why": "0.71 s pause between lines 3-4 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 11.95,
-     "len": 0.38,
-     "why": "0.38 s pause inside line 5 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 13.61,
-     "len": 0.53,
-     "why": "0.53 s pause between lines 4-5 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 16.32,
-     "len": 0.4,
-     "why": "0.40 s pause inside line 6 (limit 0.3 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 17.58,
-     "len": 0.52,
-     "why": "0.52 s pause between lines 5-6 (limit 0.35 s)"
-    },
-    {
-     "kind": "pause",
-     "at": 19.27,
-     "len": 0.31,
-     "why": "0.31 s pause inside line 7 (limit 0.3 s)"
+     "why": "0.71 s pause between lines 3-4 (limit 0.6 s)"
     },
     {
      "kind": "pause",
      "at": 20.6,
      "len": 0.61,
-     "why": "0.61 s pause between lines 6-7 (limit 0.35 s)"
+     "why": "0.61 s pause between lines 6-7 (limit 0.6 s)"
     },
     {
      "kind": "pause",
      "at": 23.1,
      "len": 0.67,
-     "why": "0.67 s pause between lines 8-9 (limit 0.35 s)"
+     "why": "0.67 s pause between lines 8-9 (limit 0.6 s)"
     }
    ],
    "cut": "aligned",
@@ -710,20 +611,13 @@
     {
      "try": 1,
      "why": [
-      "0.48 s pause between lines 1-2 (limit 0.35 s)",
-      "0.35 s pause inside line 3 (limit 0.3 s)",
-      "0.71 s pause between lines 3-4 (limit 0.35 s)",
-      "0.38 s pause inside line 5 (limit 0.3 s)",
-      "0.53 s pause between lines 4-5 (limit 0.35 s)",
-      "0.40 s pause inside line 6 (limit 0.3 s)",
-      "0.52 s pause between lines 5-6 (limit 0.35 s)",
-      "0.31 s pause inside line 7 (limit 0.3 s)",
-      "0.61 s pause between lines 6-7 (limit 0.35 s)",
-      "0.67 s pause between lines 8-9 (limit 0.35 s)"
+      "0.71 s pause between lines 3-4 (limit 0.6 s)",
+      "0.61 s pause between lines 6-7 (limit 0.6 s)",
+      "0.67 s pause between lines 8-9 (limit 0.6 s)"
      ]
     }
    ]
   }
  },
- "total": 39.91
+ "total": 40.46
 }
