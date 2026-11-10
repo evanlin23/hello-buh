@@ -90,6 +90,22 @@ scripts/render_on_actions.sh --wait story_<name>           # polls (git only), t
 - Never merge a `render/*` branch. Delete it once you have the MP4 if your git allows it (`git push origin --delete render/<name>`; the session proxy refuses deletes, so it may stay: harmless, re-queueing force-pushes it).
 - Tested 2026-11-10: story_respawn_tax (44.4 s) rendered on Actions in ~21 min end to end, frame-identical to the published Short (mean pixel difference 0-0.4 of 255).
 
+## Iterate on previews; render full-res once
+A full render is 15-35 min (every frame at 1080x1011, 60 fps). Staging problems (framing, a cut that
+glitches, captions over the subject, set edges, dead air) show just as well in a preview:
+```bash
+scripts/preview.sh <stunt> [work/<name>.rec.json]     # ~10 min for a 30-45 s Short (vs ~30 min render + edit)
+#  -> work/preview_<name>/preview.mp4   360x640, 12 fps, with the real edit: caption, subs/story captions, cards,
+#                                        HUD, speed spans and cuts, hook, replay, song. Times match the final.
+#  -> work/preview_<name>/sheets/*.jpg  every cut (3 frames either side), every subs/cards/story-line mark,
+#                                        the hook, the payoff and the last second, labelled with time + nearest mark
+EDIT_EXTRA='{"subsY":0.15}' scripts/preview.sh <stunt>  # try an edit change without touching the stunt
+```
+It needs only the recording (no server). Re-record and preview until the sheets look right, then render
+full-res once (`run.sh`, or `scripts/resume.sh` on the kept recording) and do the QA below on that.
+Details and knobs (`PREVIEW_FPS`, `PREVIEW_W`, `PREVIEW_JOBS`, `KEEP`): `docs/qa.md`, `scripts/preview.py`.
+Delete `work/preview_<name>/` when you're done (disk is tight).
+
 ## QA before publishing (required)
 0. Both audits must say ready: `.claude/skills/retention-audit/SKILL.md` (with `python3 scripts/beat_audit.py <name>`)
    and `.claude/skills/minecraft-audit/SKILL.md`. Then the frame review below.
