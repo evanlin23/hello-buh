@@ -8,16 +8,32 @@ narrator turns out to be the creeper).
 
 ## Make one
 ```bash
-# 1. the script: stories/<name>/story.json (lines, chunks, key words), see the pilot
+# 1. the script: stories/<name>/story.json (lines, chunks, key words), see stories/put_back
 # 2. the narration (Kokoro TTS venv, CPU only, set up once per container: see Setup)
 ~/.hb-tts/bin/python scripts/voice.py stories/<name>        # -> stories/<name>/voice/<id>.wav + voice.json
-# 3. the scenes: stunts/story_<name>.js, one scene per line (copy stunts/story_runaway.js)
+# 3. the scenes: start from the template, then fill in one set per scene and one block per line
+cp stunts/_story_template.js stunts/story_<name>.js          # replace every <name>
 STUNT=story_<name> ./run.sh                                  # -> out/story_<name>.mp4
+#    (or record here and render on Actions in 12 slices: docs/worker.md "Render on GitHub Actions")
 # 4. QA (docs/qa.md) as for every Short, then
 node scripts/publish.js story_<name> --pass
 ```
 Re-run `voice.py` after any script change (`--only L03,L07` redoes single lines), then re-run the stunt: the scene
 lengths come from voice.json, so a new voice means a new recording.
+
+**Use the kit, don't re-write it.** `stunts/_story_template.js` is a working skeleton (setup, a cast, two lines, the
+ending) on `lib/story.js`. Every story so far hand-rolled the same helpers (`c`, `A`, `vil`, `go`, `setTime`, `ease`,
+`yawOf`, `tp`, `groan`, `setMeter`, a wrapped `line`, a wrapped `cut`); they are all in the kit now:
+
+| want | kit |
+|---|---|
+| build in `setup` | `const { c, A, P, mob, vil } = setKit(ctx, { X, Z, F })`: `mob(type, dx, dy, dz, yaw, tags, nbt)`, `vil(dx, dz, yaw, prof, tags, { type, y })` (NoAI, silent, invulnerable, persistent) |
+| a clearing | `clearSet(ctx, A, 64, top)` (also sweeps the gravel and sand a cut hill leaves hanging: `clearHanging`), `plainsBiome`, `resendChunks`, `house` |
+| a cut | `await K.cut(dx, dz, target, dy, { time, during, after, stop })`, or `K.cutTo(dx, y, dz, target)` with an absolute y. Arrives aimed; waits for the landing (position and angle: a cut on the spot works); the old shot keeps swaying while it lands; movement keys released (sneak kept); `time` changes the light on the cut's own frame |
+| a line | `await K.line(id, (k, at, n) => {...}, extra, { tail })`; `K.preroll(10, fn)` for motion already going on the first frame; `K.T(id)` = a line's ticks |
+| the camera | `K.look(k)` every tick (sway on the recording clock), `K.base = K.aim(p)`, `K.turnTo(from, p, u)` (eased, clamped) |
+| the cast | `K.actor(tag, {x, z, yaw})` (a mob /tp'd every tick from the object; `K.step(a, dx, dz)` walks and faces it, `K.bury(tag)`), `K.tp(tag, dx, dy, dz, yaw)`, `K.flee(tag, speed)`, tag idle mobs `warm` (nudged every tick), `K.every(fn)` for ambient motion |
+| the rest | `K.go(on)`, `K.ctl(key, on)`, `K.stop()`, `K.setTime(n)` (no 4-tick stall), `K.setMeter(v)`, `K.groan()`, `K.knockback(() => attackerPos)` (mineflayer drops hit knockback on 1.21.11), `K.dig(block)` (vanilla dig speed; mineflayer's is a bare hand's), `ease`, `mcYaw` |
 
 ## Setup (once per container)
 ```bash
@@ -33,7 +49,7 @@ English model. A 17-line story synthesizes in about 30 s on 4 CPUs.
 |---|---|---|
 | script | `stories/<name>/story.json` | `lines`: `{"id": "L03", "text": "I tell / the farmer / his wheat / looks GREAT."}`. ` / ` splits caption chunks (2-3 words), CAPS words are key words (drawn in `key_color`, read lower-case so Kokoro doesn't spell them). `gap`: seconds of air after each line. |
 | narrator | `scripts/voice.py` | Kokoro `am_adam`, tempo 1.03, sped up 1.45x (pitch up with it): the blocky-stories narrator, ~290 wpm. Writes each line's wav and `voice.json` (each line's `dur`, and every chunk's start/end from Kokoro's word timestamps). |
-| kit | `lib/story.js` | `storyLines(dir)`: `line(id).dur`, `line(id).at(k)` (tick where chunk k starts), `gap`. `storyKit(ctx, S, {X, Z, F})`: `cut(dx, dz, target)` (a teleport that arrives already aimed), `line(id, scene, extra)`, `look(k)` (aim + sway, zero on a cut's first tick), `turnTo`, `flee(tag, speed)`, `aim`, `P`. Set helpers: `clearSet(ctx, A, 64)` (a wide flat clearing), `plainsBiome(ctx, A)` + `resendChunks(ctx, X, Z)` (one grass colour; mineflayer needs the chunks again), `house(...)` (a real lit room). |
+| kit | `lib/story.js` | `storyLines(dir)`: `line(id).dur`, `line(id).at(k)` (tick where chunk k starts), `gap`. `storyKit(ctx, S, {X, Z, F})`: cuts, lines, the camera, the cast (table under "Make one"). `setKit` for `setup`. Set helpers: `clearSet(ctx, A, 64)` (a wide flat clearing, hanging gravel swept), `plainsBiome(ctx, A)` + `resendChunks(ctx, X, Z)` (one grass colour; mineflayer needs the chunks again), `house(...)` (a real lit room). |
 | scenes | `stunts/story_<name>.js` | sets every scene up front in `setup` (all mobs NoAI, tagged per scene), then for each line: a cut (teleport), `ctx.mark('line', { id })`, and a per-tick scene function for exactly `dur + gap` seconds. Actions land on a chunk with `at(k)` ("They SLAM" closes the door on that word). |
 | edit | `edit.py --story stories/<name>` (from `edit.story`) | lays each line's wav on its `line` mark (snapped to the camera cut), draws the captions (`scripts/story_track.py`), and mixes: voice -15 LUFS, game -27, song bed -31, master corrected to -14 LUFS. Optional: a rule meter (story.json `"meter": {"label": "VILLAGERS"}` + `ctx.mark('meter', { value })`), white flashes (`ctx.mark('flash')`). |
 | stunt options | top level of the stunt module | `hideHand: true` (no first-person hand: a narrator who isn't Steve), `time`, `weather` ('rain'/'thunder'), `brightness`; mid-stunt `ctx.setTime(n)`, `ctx.setWeather(w)`. Set `/gamerule log_admin_commands false` for per-tick `execute as` moves. |
@@ -75,6 +91,9 @@ hearts), each chunk popping in on its own first word. The top band keeps the cha
   say "was blown up by Creeper"). Set `/difficulty normal` before summoning a creeper, or it's refused.
 - No block entities render (beds, bells, chests, signs): build sets without them.
 - Cuts carry their aim in the `/tp` (`storyKit.cut` does it); never look before the teleport lands.
+- A time-of-day change belongs on the cut's own frame: `K.cut(..., { time })` (set before, the new sky showed on the
+  old shot; marked after, it came a tick late). Don't use `ctx.setTime` mid-scene: its 4-tick wait freezes the shot.
+- Hits on the bot need `K.knockback` and digs need `K.dig`: mineflayer drops the knockback and times digs as a bare hand.
 - Pre-roll motion that must start on a word (mobs idle for a while update ~1 s late), keep the camera out of
   crowds, and set `/gamerule log_admin_commands false` for per-tick `execute as` moves.
 - Captions switch on the cut. A death screen needs something moving behind it.
