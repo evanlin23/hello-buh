@@ -1,26 +1,26 @@
 {
- "voice": "gemini cast (Leda, Algenib, Achird)",
+ "voice": "gemini cast (Leda fast, Algenib, Achird)",
  "sr": 24000,
  "gap": 0.3,
  "lines": {
   "L01": {
    "text": "The dog on the hill hasn't moved in nine hundred days.",
    "who": "N",
-   "dur": 3.33,
-   "onset": 0.05,
-   "end": 3.28,
+   "dur": 3.25,
+   "onset": 0.03,
+   "end": 3.2,
    "chunks": [
     [
      0.0,
-     1.2
+     0.76
     ],
     [
-     1.2,
-     1.74
+     0.76,
+     1.38
     ],
     [
-     1.74,
-     3.23
+     1.38,
+     3.15
     ]
    ],
    "captions": [
@@ -32,21 +32,21 @@
   "L02": {
    "text": "Not for rain. Not for thunder. Not even for zombies.",
    "who": "N",
-   "dur": 4.47,
-   "onset": 0.05,
-   "end": 4.42,
+   "dur": 3.32,
+   "onset": 0.03,
+   "end": 3.27,
    "chunks": [
     [
      0.0,
-     1.2
+     1.12
     ],
     [
-     1.2,
-     2.88
+     1.12,
+     1.92
     ],
     [
-     2.88,
-     4.18
+     1.92,
+     3.2199999999999998
     ]
    ],
    "captions": [
@@ -58,21 +58,21 @@
   "L03": {
    "text": "I bring him a bone every morning. He never even looks.",
    "who": "N",
-   "dur": 4.03,
-   "onset": 0.05,
-   "end": 3.98,
+   "dur": 3.18,
+   "onset": 0.03,
+   "end": 3.13,
    "chunks": [
     [
      0.0,
-     0.84
+     0.7
     ],
     [
-     0.84,
-     2.52
+     0.7,
+     1.98
     ],
     [
-     2.52,
-     3.72
+     1.98,
+     3.08
     ]
    ],
    "captions": [
@@ -84,21 +84,21 @@
   "L04": {
    "text": "He wears a red collar. But nobody in the village owns him.",
    "who": "N",
-   "dur": 4.07,
-   "onset": 0.05,
-   "end": 4.02,
+   "dur": 3.28,
+   "onset": 0.03,
+   "end": 3.23,
    "chunks": [
     [
      0.0,
-     1.72
+     1.24
     ],
     [
-     1.72,
-     3.18
+     1.24,
+     2.34
     ],
     [
-     3.18,
-     4.06
+     2.34,
+     3.1799999999999997
     ]
    ],
    "captions": [
@@ -108,23 +108,23 @@
    ]
   },
   "L05": {
-   "text": "He just stares... at one empty patch of grass.",
+   "text": "He just stares at one empty patch of grass.",
    "who": "N",
-   "dur": 4.33,
-   "onset": 0.05,
-   "end": 4.28,
+   "dur": 2.69,
+   "onset": 0.03,
+   "end": 2.64,
    "chunks": [
     [
      0.0,
-     1.34
+     0.48
     ],
     [
-     1.34,
-     3.56
+     0.48,
+     1.9
     ],
     [
-     3.56,
-     4.33
+     1.9,
+     2.59
     ]
    ],
    "captions": [
@@ -134,27 +134,27 @@
    ]
   },
   "L06": {
-   "text": "And behind him... an old dirt hut. Nobody knows who built it.",
+   "text": "And behind him, an old dirt hut. Nobody knows who built it.",
    "who": "N",
-   "dur": 3.92,
-   "onset": 0.05,
-   "end": 3.87,
+   "dur": 4.1,
+   "onset": 0.03,
+   "end": 4.05,
    "chunks": [
     [
      0.0,
-     0.66
+     0.64
     ],
     [
-     0.66,
-     2.38
+     0.64,
+     2.8
     ],
     [
-     2.38,
-     3.06
+     2.8,
+     3.24
     ],
     [
-     3.06,
-     3.92
+     3.24,
+     3.9999999999999996
     ]
    ],
    "captions": [
@@ -167,21 +167,21 @@
   "L07": {
    "text": "I tried to make him stand. I begged. He won't budge.",
    "who": "N",
-   "dur": 3.46,
-   "onset": 0.05,
-   "end": 3.41,
+   "dur": 3.26,
+   "onset": 0.03,
+   "end": 3.21,
    "chunks": [
     [
      0.0,
-     1.6
+     1.4
     ],
     [
-     1.6,
+     1.4,
      2.44
     ],
     [
      2.44,
-     3.46
+     3.1599999999999997
     ]
    ],
    "captions": [
@@ -238,23 +238,23 @@
    ]
   },
   "L11": {
-   "text": "So every night now... I sit with him. Nobody should wait alone.",
+   "text": "So every night now, I sit with him. Nobody should wait alone.",
    "who": "N",
-   "dur": 4.8,
-   "onset": 0.05,
-   "end": 4.75,
+   "dur": 4.02,
+   "onset": 0.03,
+   "end": 3.97,
    "chunks": [
     [
      0.0,
-     2.06
+     1.7
     ],
     [
-     2.06,
-     3.26
+     1.7,
+     2.74
     ],
     [
-     3.26,
-     4.72
+     2.74,
+     3.9199999999999995
     ]
    ],
    "captions": [
@@ -266,17 +266,17 @@
   "L12": {
    "text": "And then he stood up!",
    "who": "N",
-   "dur": 2.23,
-   "onset": 0.05,
-   "end": 2.18,
+   "dur": 1.15,
+   "onset": 0.03,
+   "end": 1.1,
    "chunks": [
     [
      0.0,
-     0.52
+     0.22
     ],
     [
-     0.52,
-     2.12
+     0.22,
+     1.0499999999999998
     ]
    ],
    "captions": [
@@ -339,17 +339,17 @@
   "L15": {
    "text": "Day one. Again.",
    "who": "N",
-   "dur": 2.36,
-   "onset": 0.05,
-   "end": 2.31,
+   "dur": 1.43,
+   "onset": 0.03,
+   "end": 1.38,
    "chunks": [
     [
      0.0,
-     0.7
+     0.74
     ],
     [
-     0.7,
-     1.3
+     0.74,
+     1.3299999999999998
     ]
    ],
    "captions": [
@@ -358,5 +358,5 @@
    ]
   }
  },
- "total": 46.79
+ "total": 39.47
 }

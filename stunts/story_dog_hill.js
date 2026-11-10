@@ -304,7 +304,7 @@ module.exports = {
     await run(8)
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
     ctx.mark('chat', { text: 'Milo left the game', hold: 2.6 }); ctx.mark('hit', { soft: true })
-    await run(26)
+    await run(16)
     // ---- L15: Day one. The opening frame, pulling away
     cut('end')
     line('N', 'L15')

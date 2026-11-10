@@ -19,7 +19,7 @@
       "name": "me (Pip, a villager kid)",
       "voice": "Leda",
       "color": "#FFFFFF",
-      "profile": "a village kid, about nine: bright, earnest, a clear voice (never whispering)",
+      "profile": "a bubbly village kid, about nine: fast, bright, energetic; not whispery, breathy or soft",
       "on_screen": "baby villager (plains), seen in camera shots"
     },
     "Grandpa": {
@@ -62,7 +62,7 @@
       "who": "N",
       "text": "The DOG on the hill / hasn't MOVED / in NINE HUNDRED days.",
       "say": "The dog on the hill hasn't moved in nine hundred days.",
-      "direction": "one quick breath, no pauses: the hook",
+      "direction": "fast, bright, energetic",
       "shot": "S01"
     },
     {
@@ -70,7 +70,7 @@
       "who": "N",
       "text": "Not for RAIN. / Not for THUNDER. / Not even for ZOMBIES.",
       "say": "Not for rain. Not for thunder. Not even for zombies.",
-      "direction": "each one a little more amazed",
+      "direction": "fast, bright, energetic",
       "shot": "S02"
     },
     {
@@ -78,7 +78,7 @@
       "who": "N",
       "text": "I bring him a BONE / every MORNING. / He never even LOOKS.",
       "say": "I bring him a bone every morning. He never even looks.",
-      "direction": "a little hurt",
+      "direction": "fast, bright, energetic",
       "shot": "S03"
     },
     {
@@ -86,23 +86,23 @@
       "who": "N",
       "text": "He wears a red COLLAR. / But nobody in the village / OWNS him.",
       "say": "He wears a red collar. But nobody in the village owns him.",
-      "direction": "puzzled, a detail she can't explain",
+      "direction": "fast, bright, energetic",
       "shot": "S03b"
     },
     {
       "id": "L05",
       "who": "N",
       "text": "He just stares / at one EMPTY patch / of GRASS.",
-      "say": "He just stares... at one empty patch of grass.",
-      "direction": "puzzled, slow",
+      "say": "He just stares at one empty patch of grass.",
+      "direction": "fast, bright, energetic",
       "shot": "S04"
     },
     {
       "id": "L06",
       "who": "N",
       "text": "And behind him, / an OLD DIRT HUT. / Nobody knows / who BUILT it.",
-      "say": "And behind him... an old dirt hut. Nobody knows who built it.",
-      "direction": "lower, like a secret",
+      "say": "And behind him, an old dirt hut. Nobody knows who built it.",
+      "direction": "fast, bright, energetic",
       "shot": "S05"
     },
     {
@@ -110,7 +110,7 @@
       "who": "N",
       "text": "I tried to make him STAND. / I BEGGED. / He won't BUDGE.",
       "say": "I tried to make him stand. I begged. He won't budge.",
-      "direction": "frustrated, then deflated",
+      "direction": "fast, bright, energetic",
       "shot": "S05b"
     },
     {
@@ -133,8 +133,8 @@
       "id": "L11",
       "who": "N",
       "text": "So every night now, / I sit with him. / Nobody should wait ALONE.",
-      "say": "So every night now... I sit with him. Nobody should wait alone.",
-      "direction": "quiet resolve, warm",
+      "say": "So every night now, I sit with him. Nobody should wait alone.",
+      "direction": "fast, bright, energetic",
       "shot": "S09"
     },
     {
@@ -142,7 +142,7 @@
       "who": "N",
       "text": "And then / he STOOD UP!",
       "say": "And then he stood up!",
-      "direction": "excited, amazed, a full voice",
+      "direction": "fast, bright, energetic",
       "shot": "S11"
     },
     {
@@ -166,9 +166,10 @@
       "who": "N",
       "text": "Day ONE. / AGAIN.",
       "say": "Day one. Again.",
-      "direction": "quietly sad, a clear voice, a beat before 'again'",
+      "direction": "fast, bright, energetic",
       "shot": "S15"
     }
   ],
-  "hook": "why won't this dog stand up?"
+  "hook": "why won't this dog stand up?",
+  "payoff": "L15"
 }
