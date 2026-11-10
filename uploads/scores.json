@@ -1,0 +1,116 @@
+{
+ "updated": "2026-11-10",
+ "mean": 2.266,
+ "family": {
+  "lapse": 1.002,
+  "story": 3.064,
+  "spot": 2.414,
+  "clutch": 2.266,
+  "guess": 2.266,
+  "ai": 2.266,
+  "chain_reaction": 2.266
+ },
+ "family_totals": {
+  "lapse": {
+   "views": 15769,
+   "subs": 12,
+   "shorts": 2
+  },
+  "story": {
+   "views": 22390,
+   "subs": 71,
+   "shorts": 2
+  },
+  "spot": {
+   "views": 20533,
+   "subs": 50,
+   "shorts": 1
+  },
+  "clutch": {
+   "views": 0,
+   "subs": 0,
+   "shorts": 1
+  },
+  "guess": {
+   "views": 0,
+   "subs": 0,
+   "shorts": 1
+  },
+  "ai": {
+   "views": 0,
+   "subs": 0,
+   "shorts": 1
+  },
+  "chain_reaction": {
+   "views": 0,
+   "subs": 0,
+   "shorts": 1
+  }
+ },
+ "videos": {
+  "lapse_castle": {
+   "family": "lapse",
+   "views": 15769,
+   "subs": 12,
+   "avg_pct": 78.21,
+   "stayed": 0.33432684380747035
+  },
+  "story_runaway": {
+   "family": "story",
+   "views": 22390,
+   "subs": 71,
+   "avg_pct": 97.13,
+   "stayed": 0.217641804376954
+  },
+  "spot_wrong": {
+   "family": "spot",
+   "views": 20533,
+   "subs": 50,
+   "avg_pct": 82.54,
+   "stayed": 0.04616958067501096
+  },
+  "clutch_harder": {
+   "family": "clutch",
+   "views": 0,
+   "subs": 0,
+   "avg_pct": 0,
+   "stayed": null
+  },
+  "guess_sound": {
+   "family": "guess",
+   "views": 0,
+   "subs": 0,
+   "avg_pct": 0,
+   "stayed": null
+  },
+  "lapse_house": {
+   "family": "lapse",
+   "views": 0,
+   "subs": 0,
+   "avg_pct": 0,
+   "stayed": null
+  },
+  "ai_thin_ice": {
+   "family": "ai",
+   "views": 0,
+   "subs": 0,
+   "avg_pct": 0,
+   "stayed": null
+  },
+  "chain_reaction": {
+   "family": "chain_reaction",
+   "views": 0,
+   "subs": 0,
+   "avg_pct": 0,
+   "stayed": null
+  },
+  "story_respawn_tax": {
+   "family": "story",
+   "views": 0,
+   "subs": 0,
+   "avg_pct": 0,
+   "stayed": null
+  }
+ },
+ "note": "subscribers per 1,000 views; YouTube Analytics lags 1-3 days"
+}
