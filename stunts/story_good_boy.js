@@ -41,7 +41,7 @@ module.exports = {
   // camera shots (positions are offsets from O; y from the village centre's ground). Set in setup once the pad's
   // height is known: see shotsFor()
   shots: {},
-  edit: { caption: CAPTION, red: 'man', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0', bands: 'blur' },
+  edit: { caption: CAPTION, red: 'man', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0' },
 
   async setup (ctx) {
     const { bot } = ctx
