@@ -1096,6 +1096,14 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None,
         except ValueError:
             qs = None
         res = take_gate.gate(y, SR, texts, heard, None if qs is None else [q / SR for q in qs], limits, raw=x, opening=opening)
+        if beat.get("runs") and qs is not None:
+            # one_take: the pause at a run boundary is where the other speaker's line goes in, not a pause heard
+            ids = [lid for _, lid, _, _ in lines]
+            rb = [qs[ids.index(r[0]) - 1] / SR for r in beat["runs"][1:]]
+            keep = [f for f in res["fails"] if not (f["kind"] == "pause" and any(f["at"] - 0.1 <= b <= f["at"] + f["len"] + 0.1 for b in rb))]
+            if len(keep) != len(res["fails"]):
+                print(f"  (one take: {len(res['fails']) - len(keep)} pause(s) at a run boundary not counted: another speaker's line goes there)")
+                res = {"ok": not keep, "fails": keep, "fix": list(dict.fromkeys(f["kind"] for f in keep))}
         tried.append({"res": res, "y": y, "qs": qs, "al": al, "model": model, "try": n + 1, "fixes": list(fixes), "raw": str(raw)})
         print(f"beat {beat['id']} ({len(lines)} line(s), take {n + 1}/{tries}, {len(y) / SR:.2f} s): "
               + ("ok" if res["ok"] else "REJECTED: " + "; ".join(f["why"] for f in res["fails"])))
