@@ -2,14 +2,14 @@
   "name": "light_sleeper",
   "stunt": "story_light_sleeper",
   "version": 2,
-  "revision": "r4 (2026-11-10): today's owner rules: Milo, pacing (35-45 s: L03 cut (its meadow stays in S02's last frame), lines trimmed, gap 0.15), the out-of-context read (no affectionate hush; 'sweetie' cut for his name), lines of 3 words or fewer in their own request. r3: the pre-build fixes (reviews/r3-fixes.md)",
+  "revision": "r5 (2026-11-10): narrator-first under the owner rules on main (docs/stories.md): one bright, fast kid narrator (cast narrator: Leda, no stretch or pitch shift), Mom's saying quoted by the narrator, one Mom punchline in her own voice while she's on screen (L13), no '...', line 1 in one breath, and an ending line that explains itself (L16). r4: Milo, 35-45 s, L03 cut. r3: the pre-build fixes (reviews/r3-fixes.md)",
   "caption": "why is my whole village carpeted 😶",
   "logline": "A boy in a village where every inch is carpeted, the bell is wrapped in wool and the well wears a wool lid wants everyone to hear one song, so he puts a jukebox on the well.",
   "question": "why tf is the whole village covered in carpet?",
   "premise": "Every road, stair and doghouse in the boy's village is carpeted, 300 sheep are sheared every morning, the bell is boxed in wool and the well wears a white wool lid. Mom says 'walk soft, the ground's a light sleeper'. Once he pulled the wool off the well and the bottom of the well screamed; Mom said it was a fox. Then a skeleton, shooting at him, hits a creeper, and he gets a music disc in a village where nobody has ever heard a song.",
   "twist": "The carpet is silence (vanilla: walking on wool and carpet makes no vibration, and wool blocks stop vibrations). The village sits on an ancient city and the bottom of the well is a sculk shrieker. Tonight he pulls the lid off again because wells echo, puts a jukebox on the well, puts the disc in, and steps off the carpet onto the well's bare stone rim to dance: four shrieks, the Darkness pulsing ('like a real party'), and the warden rises out of the square. He was obliterated by a sonically-charged shriek.",
   "key_color": "#3FD0D4",
-  "gap": 0.15,
+  "gap": 0.4,
   "voice": {
     "engine": "gemini",
     "model_hint": "gemini-2.5-flash-preview-tts"
@@ -17,10 +17,10 @@
   "cast": {
     "N": {
       "role": "narrator",
-      "ref": "child",
+      "ref": "narrator",
       "color": "#FFFFFF",
       "on_screen": "pov (the hand, never his face); Milo as a kid; seen from outside only from behind (S07, S12's crane start, S16), default Steve skin (owner: the hero stays Steve)",
-      "audition": "Before locking the voice, take L01, L07 and L15 three ways: the library `child` (Leda, lifted 2 semitones), the library `milo` (Achird, directed younger and hushed) and Iapetus (the r1 pick). Pick the one that whispers L01 without going breathy and still lifts on L14-L15; record the pick here. Never override the library profile: the whisper lives in the request's scene sentence and the line notes."
+      "voice_note": "cast narrator (Leda, the owner's chosen Pip setup, 2026-11-10); the r2 audition note is superseded by the owner's narrator rules"
     },
     "Mom": {
       "role": "character",
@@ -33,8 +33,7 @@
     {
       "id": "r1",
       "speakers": [
-        "N",
-        "Mom"
+        "N"
       ],
       "lines": [
         "L01",
@@ -43,34 +42,26 @@
         "L05",
         "L06",
         "L07",
-        "L08"
-      ],
-      "direction": "A strange, quiet village where nobody makes noise. A young kid tells the story of his village like a spooky secret; his mom gives him a quick everyday reminder."
-    },
-    {
-      "id": "r2",
-      "speakers": [
-        "N"
-      ],
-      "lines": [
+        "L08",
         "L09",
         "L10",
         "L11",
         "L12",
         "L14",
-        "L15"
+        "L15",
+        "L16"
       ],
-      "direction": "The same kid, tonight: excited, then giddy, then out loud and laughing, louder with every line."
+      "direction": "A kid tells his friend the craziest story about his village, where everything is covered in carpet. He talks fast and bright; he only gets scared for real danger."
     },
     {
-      "id": "r3",
+      "id": "r2",
       "speakers": [
         "Mom"
       ],
       "lines": [
         "L13"
       ],
-      "direction": "A mother sees a monster behind her child and is too frightened to raise her voice."
+      "direction": "Night in a village square. A mother in her doorway sees her son standing over an open well and something terrible about to happen; she can barely make herself speak."
     }
   ],
   "lines": [
@@ -78,22 +69,21 @@
       "id": "L01",
       "who": "N",
       "text": "My village / is covered in / NINE THOUSAND / CARPETS.",
-      "say": "My village is covered in... nine thousand carpets.",
-      "direction": "quiet and secretive, a kid letting you in on a strange mystery, clear and not breathy; a short beat before the number",
+      "direction": "the absurd premise said flatly in one quick breath, deadpan, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S01"
     },
     {
       "id": "L02",
       "who": "N",
       "text": "The ROADS. / The STAIRS. / Even the DOGHOUSE.",
-      "direction": "quick, each one a little more amazed, a giggle on the last",
+      "direction": "quick list, each one more amazed, a giggle on the last, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S02"
     },
     {
       "id": "L04",
       "who": "N",
       "text": "Our BELL / wears WOOL. / I've never / HEARD it.",
-      "direction": "curious, a small pause before the last phrase",
+      "direction": "curious and bright, a tiny beat before the last part, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S04",
       "look": {
         "what": [
@@ -106,10 +96,9 @@
     },
     {
       "id": "L05",
-      "who": "Mom",
-      "text": "Walk SOFT, / Milo. / The ground's / a light SLEEPER.",
-      "say": "Walk soft, Milo. The ground's a light sleeper.",
-      "direction": "a busy mom's everyday reminder at normal speaking volume, brisk and practical, a knowing weight on the last word",
+      "who": "N",
+      "text": "Mom says, / walk SOFT. / The ground's / a light SLEEPER.",
+      "direction": "quoting Mom's saying, a little sing-song, like a rule he's heard a thousand times, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S05",
       "look": "Mom"
     },
@@ -117,29 +106,28 @@
       "id": "L06",
       "who": "N",
       "text": "Once, / I pulled / the WOOL / off the WELL.",
-      "direction": "a little guilty, a beat after the first word",
+      "direction": "a bit guilty but quick, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S06"
     },
     {
       "id": "L07",
       "who": "N",
       "text": "The bottom / of the well / SCREAMED.",
-      "say": "The bottom of the well... screamed.",
-      "direction": "quieter and spooked, a ghost-story hush, a breath before the last word",
+      "direction": "spooked, full volume, eyes wide, not whispering",
       "shot": "S07"
     },
     {
       "id": "L08",
       "who": "N",
       "text": "Mom said / it was / a FOX.",
-      "direction": "believing it completely, a little shrug",
+      "direction": "shrugging, totally believing it, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S08"
     },
     {
       "id": "L09",
       "who": "N",
       "text": "A skeleton / shot a CREEPER. / It dropped / a music DISC.",
-      "direction": "brightening and fast, the best news of his life",
+      "direction": "the best news of his life, fast and excited, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S09",
       "look": {
         "what": "entity:creeper",
@@ -150,47 +138,52 @@
       "id": "L10",
       "who": "N",
       "text": "Nobody here / has ever heard / a SONG.",
-      "direction": "slower, wistful; this is what he wants",
+      "direction": "a little wistful but still bright, this is what he wants",
       "shot": "S10"
     },
     {
       "id": "L11",
       "who": "N",
-      "text": "So tonight, / I opened / the WELL / and put / a JUKEBOX on it. / Wells ECHO.",
-      "say": "So tonight, I opened the well and put a jukebox on it. Wells echo.",
-      "direction": "determined and a little proud; the last two words a clever secret",
+      "text": "So tonight / I opened / the WELL / and put / a JUKEBOX on it. / Wells ECHO.",
+      "direction": "proud and quick, the last two words a clever secret, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S11"
     },
     {
       "id": "L12",
       "who": "N",
       "text": "The fox / screamed AGAIN. / I didn't CARE.",
-      "direction": "giddy and defiant, a grin in it",
+      "direction": "giddy and defiant, a grin in it, fast, bright, energetic; not whispery, breathy or soft",
       "shot": "S12"
     },
     {
       "id": "L13",
       "who": "Mom",
       "text": "Milo. / Don't. / MOVE.",
-      "say": "Milo... Don't... Move.",
-      "direction": "terrified, barely a whisper, frozen with fear; a gap between the words",
+      "direction": "terrified and frozen, low and tight but clearly voiced, never breathy",
       "shot": "S13",
-      "request": "r3",
-      "look": "Mom"
+      "look": "Mom",
+      "request": "r2"
     },
     {
       "id": "L14",
       "who": "N",
       "text": "The lights / went DARK. / Like a / real PARTY.",
-      "direction": "loud and delighted, his full voice, not hearing her at all",
+      "direction": "loud and delighted, full volume, excited, not hearing her",
       "shot": "S14"
     },
     {
       "id": "L15",
       "who": "N",
       "text": "I'd never / DANCED before.",
-      "direction": "out loud, almost laughing, the happiest he has ever sounded",
+      "direction": "laughing, the happiest he has ever sounded, full volume",
       "shot": "S15"
+    },
+    {
+      "id": "L16",
+      "who": "N",
+      "text": "Oh. / THAT'S why / we have / nine thousand / CARPETS.",
+      "direction": "deadpan and small after the boom, a flat little realisation, clear voice, quick",
+      "shot": "S17"
     }
   ],
   "shrieks": [
@@ -224,10 +217,10 @@
     "beats": [
       "S15 holds 0.3 s past 'DANCED' (one more jump on the rim), then three 0.4 s inserts that speed the cut rate: S15b Mom frozen in the door, S15c the villagers in the east doorways, S15d POV jumping on the rim",
       "S16 (camera, low, 2-3 blocks behind the boy): shriek 4 on frame 1, the Darkness at full pulse; the carpet at (0,4) bursts with block particles and the warden rises out of the square, facing the boy across the open well; the roar (cut at ~1.5 s)",
-      "S17 (POV): the warden steps to the south rim (0,3), 5 blocks away; the sonic boom; death screen 'Milo was obliterated by a sonically-charged shriek', held ~1.0 s, the jukebox song still playing under it",
-      "cut 0.25 s after the hold; no spoken line after the reveal (owner, 2026-11-07)"
+      "S17 (POV): the warden steps to the south rim (0,3), 5 blocks away; the sonic boom; death screen 'Milo was obliterated by a sonically-charged shriek' held under L16 (the narrator, deadpan: 'Oh. That's why we have nine thousand carpets.'), the jukebox song still playing",
+      "cut 0.3 s after L16 (owner 2026-11-10: endings explain themselves; the death screen alone was a sting to decode)"
     ],
-    "loop": "cause and effect: the shriek is why L01's village is covered in nine thousand carpets"
+    "loop": "said out loud in L16, which is line 1 again"
   },
   "shots": [
     {
@@ -385,5 +378,6 @@
   ],
   "bible": "stories/light_sleeper/bible.md",
   "beats": "stories/light_sleeper/beats.md",
-  "set": "stories/light_sleeper/set.md"
+  "set": "stories/light_sleeper/set.md",
+  "payoff": "L16"
 }

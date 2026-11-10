@@ -5,7 +5,7 @@
 // village has ever heard a song. Tonight he opens the well (wells echo), puts a jukebox on it, puts the disc in, and
 // steps off the carpet onto the well's bare stone rim to dance. The village sits on an ancient city: carpet makes no
 // vibration, the bottom of the well is a sculk shrieker, and the fourth shriek brings the warden up through the square.
-// "Milo was obliterated by a sonically-charged shriek." Loops by cause into line 1.
+// "Milo was obliterated by a sonically-charged shriek." "Oh. That's why we have nine thousand carpets." (line 1 again).
 //
 // The set: a real generated plains village (seed hellobuh, /locate village_plains from [1500, 0] finds the one at
 // (-160, -864)): a level village terrace at y 79 with a hill rising ~30 blocks to the north-west and the land falling
@@ -34,7 +34,7 @@ module.exports = {
   wideMaster: true,
   idleLife: true,
   hideHand: false,
-  look: { grade: { lift: [0.015, 0.012, 0.02], gamma: [0.98, 1.0, 1.02], gain: [1.08, 1.03, 0.95], sat: 1.12, contrast: 0.12, exposure: 1.04 }, bloom: 0.45, bloomThreshold: 0.74, vignette: 0.36, grain: 0.02, dof: { aperture: 0.85 }, shadows: true, rays: 0.4, cloudNight: 0.42 },
+  look: { mood: 'auto', shadows: true, dof: { aperture: 0.85 }, cloudNight: 0.42 },   // docs/look.md: the grade follows the clock
   edit: { caption: CAPTION, red: 'carpeted', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', deathScreen: true },
   expectDeath: true,
 
@@ -406,7 +406,9 @@ module.exports = {
       await bot.waitForTicks(1)
     }
     say('/damage @s 1000 minecraft:sonic_boom')
-    await ctx.sleep(1100)    // the death screen held ~1 s, the plaza pulsing behind (physics ticks stop while dead)
+    await bot.waitForTicks(8)   // the death screen comes up (the harness keeps ticking while dead)
+    // L16 over the death screen, the plaza pulsing behind it: "Oh. THAT'S why we have nine thousand CARPETS."
+    await line('L16', async () => {})
     ctx.mark('story_end')
     await bot.waitForTicks(4)
     if (song) song()
@@ -601,5 +603,5 @@ module.exports.shots = {
   ins_mom: { at: [2.2, 3.6, -3.0], look: [0.5, 4.4, -7.35], fov: 50, push: 0.5, dof: false },
   ins_door: { at: [6.5, 2.9, -4.2], look: [12.0, 3.2, -2.6], fov: 50, push: 0.5, dof: false },
   // S16: low behind him (2-3 blocks north-west), looking south past him at the burst carpet and the rising warden
-  s16: { at: [-1.9, 3.6, -6.8], look: [0.9, 3.0, 4.5], fov: 44, push: 0.2, dof: false }
+  s16: { mood: 'tense', at: [-1.9, 3.6, -6.8], look: [0.9, 3.0, 4.5], fov: 44, push: 0.2, dof: false }
 }
