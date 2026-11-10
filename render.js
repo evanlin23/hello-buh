@@ -1148,6 +1148,7 @@ function selfAt (t) {
 // crop it or smth for the final video"
 let cropNow = 0
 const MW = (STUNT_MOD.wideMaster || process.env.WIDE_MASTER) ? Math.max(W, Math.round(H * 16 / 9)) : W
+const WIDE_HAND_X = require('./lib/wide_hand').wideHandX({ outW: W, masterW: MW, H, rec, stunt: STUNT_MOD, env: process.env })   // the hand inside the crop (lib/wide_hand.js)
 const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
 for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
 function shotAt (t) {
@@ -1963,7 +1964,7 @@ else:
     const r = L.reflect, c = r.center || [0, 0]
     return { ...L, reflect: { ...r, y: rec.set.y + (r.dy ?? 1), cx: rec.set.x + c[0] + 0.5, cz: rec.set.z + c[1] + 0.5 } }
   }
-  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null, engine: rec.engine || 0, motionFixes: MOTION_FIXES })
+  await page.evaluate((o) => window.HB.init(o), { renderDistance: Number(process.env.RENDER_DISTANCE || STUNT_MOD.renderDistance || 8), clouds: STUNT_MOD.clouds !== false, fogSea: STUNT_MOD.fogSea || null, look: worldLook((process.env.LOOK === '0' ? null : LOOK_RAW) || null), shaderLight: SHADER_LIGHT, moonTex: MOON_PHASE ? `/assets/env/moon_${MOON_PHASE}.png` : null, engine: rec.engine || 0, motionFixes: MOTION_FIXES, ...(WIDE_HAND_X ? { handX: WIDE_HAND_X } : {}) })
 
   let meshCapture = null   // (the stills mesh cache below collects the first mesh's blobs here)
   const send = async (list) => {
@@ -2666,7 +2667,10 @@ else:
         e.shadowName = 'item'; e.shadowY = e.y
         e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
         e.yaw = age / 20 + (e.id % 7)
-        e.extra = { item: it, dropped: { key: it + '|ground', display: d, tex: spriteOf(it), glint: GLINT_ITEMS.has(it) || undefined } }
+        // a stack draws 1-5 copies (ItemEntityRenderer.getRenderedAmount); only recordings that carry the count
+        // (lib/harness.js, from 2026-11-10) have extra.count, so published Shorts draw one as before
+        const offsets = require('./lib/item_stack').stackOffsets(e.extra.count, e.id, gs, false)
+        e.extra = { item: it, dropped: { key: it + '|ground', display: d, tex: spriteOf(it), glint: GLINT_ITEMS.has(it) || undefined, ...(offsets ? { offsets } : {}) } }
         continue
       }
       if (spriteOf(it)) { e.extra = { ...e.extra, tex: spriteOf(it) }; if (GLINT_ITEMS.has(it)) e.extra.glint = true; continue }

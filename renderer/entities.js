@@ -926,6 +926,12 @@ export class EntityLayer {
       // about y by the spin (ItemEntityRenderer), not a camera-facing sprite (which drew it upside down)
       const r = await this.itemFactory(extra.dropped)
       if (r) { obj = new THREE.Group(); obj.add(r.obj); mat = r.mat }
+      // a stack: more copies (ItemEntityRenderer.renderMultipleFromCount), at the offsets render.js worked out
+      // (lib/item_stack.js), in the item's spinning frame
+      if (r && extra.dropped.offsets) {
+        const base = r.obj.position.clone()
+        extra.dropped.offsets.forEach((o, i) => { const c = i ? r.obj.clone() : r.obj; c.position.set(base.x + o[0], base.y + o[1], base.z + o[2]); if (i) obj.add(c) })
+      }
     } else if (/^(ender_pearl|snowball|egg|item|splash_potion|lingering_potion|experience_bottle|firework_rocket)$/.test(name)) {
       const itemName = name === 'item' ? (extra?.item || 'stone') : name
       // thrown potions: the bottle plus potion_overlay tinted with the potion colour (ThrownItemRenderer)
