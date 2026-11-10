@@ -135,3 +135,9 @@ For the owner's morning. Newest at the bottom.
 - Good Boy: Sam re-voiced on one model; drift 0 blockers.
 - Disk: 1.7 GB free. 2.7 GB of stale /tmp/hb-edit-* folders need the owner's OK to delete (the permission check
   blocked it).
+- 09:45 UTC:
+  - **Dog on the Hill is published** (videos 2802d3a1, 52.75 s, Pip voice, its own note-block score). Review round 2
+    READY; pace, the owner gate and drift all at 0 blockers. Sent it to the owner and added it to the review page.
+    The viewer panel heard Pip as a "breathy young man". It's kept because the owner approved the voice; worth an
+    ear check.
+  - The two voice cutters are now one on main (e9e8e88): 0 CUT on 89 test lines.
