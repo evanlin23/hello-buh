@@ -173,3 +173,23 @@ on a time jump or the twist (edit.punch/shake/flash). Words in the world are die
 16. Undead waiting off-set burn in daylight (and the fire shows): roof their waiting room.
 17. `render_on_actions.sh --wait` right after queueing can fetch the previous run's result: wait for the new
     commit's run to start (or delete out/<name>.mp4 and check the run URL it prints).
+18. "Some parts with the light are a bit blurry" (owner, THE KEEP, 2026-11-10). Measured on the golden-hour still (1080x1920,
+    grain off): edge acuity (p99 gradient) 10.0 -> 19.8 and brick texture 1.54 -> 3.53 (x2.3). Causes, biggest first:
+    depth of field on a wide shot (aperture 0.35 at 60 blocks blurred towers 20 blocks nearer: off = +43% edges, +77%
+    texture; the moat glide, focused past its tower, went from 6.1 to 23.1 p99 edges in the phone copy); a wide bloom (0.55, threshold 0.8, two blur rounds) haloing every silhouette against the sky (0.35 /
+    0.9 / `bloomPasses: 1`: +8%); god rays laid over the blocks (`raysOverBlocks: 0.35` keeps them on the sky) and no
+    sharpening (`sharpen: 0.4`, an unsharp mask after the grade: together +28%). Then the re-encode: grain 0.035 is
+    noise the encoder must keep or smear (CRF 22 smeared it and the bricks with it, SSIM 0.959 at 3.7 Mbps; keeping it
+    took 27 Mbps): grain <= 0.012. Rules: no DoF on wide or establishing shots (scripts/cinematic.py makes DoF opt-in
+    per shot); bloom <= 0.35 with threshold >= 0.9 and one pass; rays 0.35 over blocks; sharpen 0.4; the phone copy
+    is `-preset slow -tune film -crf 20 -x264-params aq-mode=3 -maxrate 14M` (cinematic.py writes `<name>_share.mp4`).
+19. Pauses between lines that no take has (gold_for_the_portal: 0.85 s in the opening, 7.6 s of gaps in all): every
+    `await K.cut`, `M.place`, `ctx.cmd` or `waitForTicks` between or inside lines adds its ticks to the line. Move the
+    narrator during a camera shot that hides him with a /tp that doesn't wait (`jump` in story_gold_for_the_portal: the
+    aim rides on the /tp, `look` holds until it lands), start him where the first POV needs him, place the cast in
+    setup, and open containers without awaiting. Then the line marks sit exactly `dur + gap` apart.
+20. A shot camera inside a block slides toward its subject until clear (render.js): a camera at a villager's "eye
+    height" given as 1.6 over the floor block sat in a carpet and slid 2.8 blocks in. Feet stand at dy 1 in a story's
+    coordinates: an eye-height camera is dy 2.5-2.7. `./hb describe <stunt> <t>` prints where the camera really is.
+21. A NoAI mob idle since setup moves late (~1 s) on its first actor frames, and the Short starts on L01: give a cast
+    member who acts in L01 a 20-30 tick `K.preroll` of motion first (the preroll isn't in the Short).

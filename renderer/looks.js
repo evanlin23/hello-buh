@@ -36,6 +36,12 @@ const MOODS = {
   tense: {
     grade: { lift: [0.006, 0.01, 0.02], gamma: [0.98, 1.0, 1.03], gain: [1.0, 1.0, 1.03], sat: 0.88, contrast: 0.24, exposure: 1.04 },
     vignette: 0.45
+  },
+  // a flashback (a shot's mood: 'flashback'): warm and faded, the blacks lifted like an old photo, less colour, a soft
+  // heavy vignette (gold_for_the_portal S06-S07). Lift keeps the black point well over 0.015.
+  flashback: {
+    grade: { lift: [0.06, 0.045, 0.028], gamma: [1.02, 1.0, 0.98], gain: [1.1, 1.0, 0.84], sat: 0.68, contrast: 0.05, exposure: 1.2 },
+    vignette: 0.5
   }
 }
 

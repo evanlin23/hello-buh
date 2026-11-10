@@ -7,7 +7,15 @@
 //   node scripts/pose_fixture.js --staged              # + sit, drink, off-hand, warden emerge, lit campfire
 //   ./hb still _poses_test tick:5 tick:40 --out /tmp/x # render it (stunts/_poses_test.js reads it)
 //
+// --life (with --stunt _life_test): villagers asleep / shaking their heads, a line spoken (heads turn), a look_at mark.
+// --armor: armour on mobs (piglin, zombie, skeleton), armour trims, a converting (shaking) piglin.
+// --mobs: a line-up of the mobs drawn since the mob audit (bogged, parched, illusioner, glow squid, trader llama).
+// --stunt NAME the stunt module the recording names (default _poses_test; _light_test has a fog sea and a moon phase).
 // --src PATH  the recording to cut (default: the published story_nitwit), --out PATH, --ticks N (default 80).
+// Light tests (look.smoothLight): --time N (the time of day, e.g. 18000 midnight), --lights (the Girl holds a lantern,
+// the Grandpa a torch), --bolt TICK (a lightning mark 10 blocks ahead at that tick), --sunset (time marks every
+// tick from 12000 to 13800 over the recording: the relight steps vs the shader's smooth dusk), --whip (the camera
+// pans 0.25 rad a tick over ticks 20-30: look.motionBlur).
 const fs = require('fs')
 const path = require('path')
 const { Scene, loadRec, ROOT } = require('../lib/hb/scene')
@@ -29,7 +37,8 @@ const fx = -Math.sin(p0[4]), fz = -Math.cos(p0[4]), rx = -fz, rz = fx   // forwa
 const at = (ahead, right) => { const x = p0[1] + fx * ahead + rx * right, z = p0[3] + fz * ahead + rz * right; return [x, ground(x, z), z] }
 const faceCam = Math.atan2(fx, fz)   // a yaw that looks back at the camera
 
-const out = { version: rec.version, engine: 2, stunt: '_poses_test', time: 6000, weather: 'clear', columns: rec.columns, blocks: [], entities: [], timeline: [] }
+const out = { version: rec.version, engine: 2, stunt: opt('stunt', '_poses_test'), time: Number(opt('time', 6000)), weather: 'clear', columns: rec.columns, blocks: [], entities: [], timeline: [] }
+out.set = { x: Math.floor(p0[1]), y: Math.floor(p0[2]), z: Math.floor(p0[3]) }   // (CAM=dx,dy,dz,yaw,pitch is relative to it)
 out.poses = Array.from({ length: N }, (_, i) => [i, ...p0.slice(1)])
 const cast = [['Grandpa', 4, -1.6], ['Boy', 4.2, 0.2], ['Girl', 4, 1.8]].concat(STAGED ? [['Kid', 7, -2.6], ['Mum', 7.5, 2.6]] : [])
 cast.forEach(([user, ahead, right], k) => {
@@ -60,6 +69,29 @@ if (STAGED) {
   let sid = null
   for (let s = camp.minStateId; s <= camp.maxStateId; s++) { const p = Block.fromStateId(s, 0).getProperties(); if (p.lit === true && p.signal_fire === false && p.waterlogged === false && p.facing === 'north') { sid = s; break } }
   out.blocks.push([0, Math.floor(cx), cy, Math.floor(cz), sid])
+}
+if (args.includes('--lights')) for (const e of out.entities) { if (e[1] === 9003) e[9] = { ...e[9], held: 'lantern' }; if (e[1] === 9001) e[9] = { ...e[9], held: 'torch' } }
+if (opt('bolt')) { const [bx, by, bz] = at(10, -3); out.timeline.push({ t: Number(opt('bolt')) * 50, event: 'lightning', x: bx, y: by, z: bz, ticks: 6 }) }
+if (args.includes('--sunset')) for (let t = 1; t < N; t++) out.timeline.push({ t: t * 50, event: 'time', time: Math.round(12000 + 1800 * t / (N - 1)) })
+if (args.includes('--whip')) out.poses.forEach((p, t) => { p[4] = +(p[4] + 0.25 * Math.min(10, Math.max(0, t - 20))).toFixed(5) })   // a whip pan: 0.25 rad a tick over ticks 20-30
+if (args.includes('--life')) {   // villagers: one asleep, one shaking its head, one watching; the Girl speaks over ticks 10-40, the Boy looks at the warden
+  const vs = [[9200, 5.5, -3.2, {}], [9201, 2, 1.6, {}], [9202, 3, 3.2, {}]]
+  for (const [id, ahead, right] of vs) { const [x, y, z] = at(ahead, right); for (let t = 0; t < N; t++) out.entities.push([t, id, 'villager', +x.toFixed(3), y, +z.toFixed(3), +(faceCam + 1.2).toFixed(4), 0, +(faceCam + 1.2).toFixed(4), { type: 2, profession: 5 }]) }
+  out.timeline.push({ t: 0, event: 'pose', ids: [9201], sleep: true }, { t: 0, event: 'pose', ids: [9202], shake: true })
+  out.timeline.push({ t: 10 * 50, event: 'line', who: 'Girl', text: 'Did everyone hear that? Something is under the well.', dur: 1.5 })
+  out.timeline.push({ t: 5 * 50, event: 'look_at', ids: [9002], at: 9100 })
+}
+if (args.includes('--mobs')) {   // the mobs scripts/mob_audit.js found missing that share a model: a line-up across the street
+  ;['bogged', 'parched', 'illusioner', 'glow_squid', 'trader_llama'].forEach((n, k) => { const [x, y, z] = at(3, -3.2 + k * 1.6); for (let t = 0; t < N; t++) out.entities.push([t, 9300 + k, n, +x.toFixed(3), y + (n === 'glow_squid' ? 0.5 : 0), +z.toFixed(3), +faceCam.toFixed(4), 0, +faceCam.toFixed(4), null]) })
+}
+if (args.includes('--armor')) {   // armour on mobs and trims: a piglin in a sentry/lapis gold helmet, shaking (converting);
+  // a zombie in iron with a gold-trimmed chestplate; a skeleton in a chain helmet; the Grandpa actor in the same trimmed helmet
+  const ms = [[9400, 'piglin', 3, -1.2, { armor: [null, null, null, 'golden_helmet'], trims: [null, null, null, 'sentry/lapis'] }],
+    [9401, 'zombie', 4, 1.2, { armor: ['iron_boots', 'iron_leggings', 'iron_chestplate', 'iron_helmet'], trims: [null, null, 'coast/gold', null] }],
+    [9402, 'skeleton', 5, 3, { armor: [null, null, null, 'chainmail_helmet'] }]]
+  for (const [id, n, ahead, right, ex] of ms) { const [x, y, z] = at(ahead, right); for (let t = 0; t < N; t++) out.entities.push([t, id, n, +x.toFixed(3), y, +z.toFixed(3), +faceCam.toFixed(4), 0, +faceCam.toFixed(4), ex]) }
+  for (const e of out.entities) if (e[1] === 9001) e[9] = { ...e[9], armor: [null, null, null, 'golden_helmet'], trims: [null, null, null, 'sentry/lapis'] }
+  out.timeline.push({ t: 0, event: 'pose', ids: [9400], converting: true })
 }
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(`${path.relative(process.cwd(), outPath)}: ${N} ticks, camera at ${p0.slice(1, 4).join(' ')} yaw ${p0[4]}${STAGED ? ', staged poses + campfire' : ''}`)

@@ -384,7 +384,7 @@ each section.
 - NOT REPRODUCED: seam lines on water and ice at chunk borders (water_vs_lava f170-186, f666 re-rendered clean on 2026-11-10; the fluid mesher reads neighbours across chunks). every_clutch's recording wasn't available to recheck the ice.
 - FIXED: redstone ore puffs redstone dust when a dig starts on it (RedStoneOreBlock.attack). There are still no hit crumbs (ParticleEngine.crack) while digging any block.
 - FIXED: bucket use swings the arm (a bucket <-> filled bucket change in the held slot is a use when no swing mark is near).
-- FIXED (worker 18's report): lightning bolts draw (lightning_bolt entities, or a stunt's own `lightning` mark {x, y, z, ticks?}) and the sky flashes; the lightmap flash is not done.
+- FIXED (worker 18's report): lightning bolts draw (lightning_bolt entities, or a stunt's own `lightning` mark {x, y, z, ticks?}) and the sky flashes; the lightmap flash is done with `look.smoothLight` (agent/engine-2: the bolt lights blocks and mobs).
 - FIXED: subtitles (`--subs`) blinked off for 3 frames at every line change (they ended 0.05 s early); story word chunks due just before a picture cut now start on it (story_sheep_stares' day/night cuts).
 - FIXED: dusk/dawn clouds took the fog colour (orange toward the sun, grey away). Clouds now fade by alpha over distance like rendertype_clouds.fsh, with no fog colour; `clouds: false` is no longer needed for sunsets.
 - VANILLA, not bugs (story_sheep_stares nitpicks): the death puffs are drawn in the world under the death screen (edit.py overlays the screen on the finished frame; the white text over light-grey puffs is just low contrast); the hearts blink for 20 ticks after the killing hit (Gui.renderHearts); a dropped item stands upright facing the camera (sprite items are still billboards rather than vanilla's spinning 1-pixel-thick model: open).
@@ -393,3 +393,64 @@ each section.
   pool turns to **obsidian** at once (LiquidBlock.shouldSpreadLiquid). The recording has 7 obsidian + 1 lava at tick 273;
   the renderer drew exactly that (frames 830/860: obsidian and one lava block). Turn water into lava in two steps:
   `/fill ... air replace water`, then `/fill ... lava replace air` (stunts/story_nitwit.js L06 does now).
+- Audio (orchestrator, long-form pilot): recordings made before the harness logged sounds (no `sound` or `hurt` events,
+  e.g. boat_clutch) fall back to audio.py's water-clutch rebuild, which plays `item.bucket.empty` and a high-speed
+  splash on the last `placed` mark. On boat_clutch that's a bucket and a splash on the final boat landing (in the
+  published Short too, under the song). Fix: only rebuild the water-clutch sounds for water-clutch stunts, or
+  re-record. The long-form episode mutes both (`mute_sounds`).
+
+## Long form (orchestrator, 2026-11-08; docs/longform.md)
+- **A clip cut from a segment starts after any cut inside it.** The cold open started 0.2 s before
+  one_in_a_million's teleport to build limit, so 6 frames of the previous beat ("INSANE" on the cactus drop) led the
+  video. Start a clip a frame or two after the cut mark (`plan` lists them).
+- **Every chapter is >= 10 s, or YouTube drops the whole chapter list.** The intro was a 5 s cold open + a 5 s title.
+  Start chapter 1 on its footage, not its card (`build` warns).
+- **Vanilla falls are nearly silent.** Between narration lines the boat and ladder drops measured -70 LUFS of game
+  audio, a 7 dB dip after every line. The NCS bed carries the action (-24 LUFS, ducked 10 dB under the voice) and
+  falls get `wind` (`sfx_extra`); the narrated and action stretches now sit within 2-4 dB.
+- **A long card needs moving footage behind it.** The 12 s outro on a still frame read as a frozen video
+  (`stuck 11.7 s`). Use `bg_clip`.
+- **Thumbnails come from the raw render** (`work/lf/<seg>.frames`), not the edit: the HUD, the beat counter and the
+  block count fought the title. Centre the crop on the subject, not the crosshair (the bot drifts on purpose).
+- **The wider frame shows the neighbouring sets.** clutch_harder's other pillars and the lava pool are in view at
+  16:9; the near-square Short crop hid most of them. Plan sets for 16:9 if they'll be used in long form.
+
+## Movie engine (orchestrator stand-in, 2026-11-08; docs/movie_engine.md)
+- **Other players are already in the recording** (`player` entity rows). They needed a username, a held item and
+  their arm swings recorded, and a body turn and walk computed in render.js. Without those an actor slid around in
+  a T-pose with its head locked to its body.
+- **Walking off an edge needs forward held until the drop.** Three ticks of forward left the bot balanced on the
+  plank's edge (its box still 0.08 blocks over it) for the whole recording.
+- **A one-block Well needs `/tick freeze`.** A water source on a pillar spreads off every side. Frozen, the world
+  keeps it as one block, players still move, and `/clone ... move` still slides it.
+- **A beat at terminal velocity can't use `ctx.cmd`:** it waits 4 ticks per command, about 15 blocks of fall.
+  Send the one command with `bot.chat` from the physics tick.
+- **A night fog sea at 16% of its colour is black on black.** The fog sea keeps at least a third of its light at
+  night (`fogSea.night`, default 0.34).
+- **Look at camera specs on a few frames first** (`FRAMES=15,50,80 node render.js rec dir 10 960 540`): the
+  two-shot sat behind the deck's gold rim and the low angle was too far away, both obvious in one frame each.
+- **Every hand-placed camera needed a re-take; let geometry place them.** Reels 1-2: cameras inside a roof, behind a
+  lantern post, through the Highkeeper's head, a head hiding the other actor, the 180-degree line crossed. The
+  auto-framed `two` / `ots` / `single` shots (renderer/framing.js) and the lint (`LINT=1 node render.js`) catch or
+  prevent all of them in seconds; the lint reproduced the human review's dead stretches exactly.
+- **A set piece at terminal velocity is invisible at full speed.** The Well's one-block slide was 9 ticks and 2 px
+  at 30 blocks. Trigger it closer (6 ticks out, ~18 blocks), make it glide (`M.slideBlocks`), and slow the window
+  down (`edit.slowmo`): 0.65 s of fall over 2.2 s reads.
+- **At midnight a held item is a dark sleeve.** Sky light 15 at night lights it at about (0.22, 0.22, 0.45), and the
+  night grade darkens it more: `look.handLift` lifts the first-person hand. Same for night clouds over a lit fog
+  sea: vanilla's 0.1 grey is a black hole (`look.cloudNight`).
+- **Dialogue needs acting in the recording, not just in the render.** Idle head drift and talking heads are polish;
+  reviewers still called still-standing actors dead. `M.say` moves the speaker and the listeners for real.
+- **The seed is fixed, so /locate is too.** The plains nearest spawn is a quarter snow; `scripts/scout.sh` ranks
+  start points, and a stunt's `near: [x, z]` sends /locate from there.
+- **Blind readers find the holes the writer can't.** Five readers who saw only the screenplay (a kid viewer, a
+  plot-hole hunter, a Minecraft expert, a story editor, a dialogue-only listener) agreed within minutes on the big
+  ones: why the missed can't come back, why nobody builds out, a finale with no clutch, clues that are visual only.
+- **Listen to every TTS take with another model before using it.** Three of eight first takes were wrong in ways
+  durations didn't show: a male character read as a young woman, "Buh" heard as "huh", and the newer TTS models
+  reading the delivery note aloud before the line. A Gemini audio model asked "the exact words, the apparent age and
+  gender" for each clip caught all three.
+- NOT the sky (agent/engine-2, 2026-11-10): story_good_boy's "opaque black square in the dusk sky above the librarian"
+  (L06, 19.9-20.45 s) was the cast's waiting room roof (stone at F+64 over a barrier floor, 66 blocks up and in frame
+  on the low POV shot), lit by sky light 8 under itself at time 12300. Vanilla draws it too. Fix: `stunt.hideBoxes`
+  (docs/engine_features.md); story_good_boy lists its waiting room.

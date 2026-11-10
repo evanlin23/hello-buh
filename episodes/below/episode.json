@@ -1,0 +1,39 @@
+{
+ "name": "lf_movie_below",
+ "title": "BUILD LIMIT: the Below (test reel 2)",
+ "description": "Movie engine test reel 2: BUILD LIMIT scenes 16-17. The fog from inside and below, dawn, Mannequin extras.",
+ "hashtags": [
+  "#minecraft"
+ ],
+ "fps": 30,
+ "segments": {
+  "movie_below": {
+   "local": true
+  }
+ },
+ "pieces": [
+  {
+   "id": "scene",
+   "kind": "seg",
+   "seg": "movie_below"
+  }
+ ],
+ "thumbnail": {
+  "frame": [
+   "movie_below",
+   9.0
+  ],
+  "raw": true,
+  "text": [
+   [
+    "THE",
+    "white"
+   ],
+   [
+    "BELOW",
+    "yellow"
+   ]
+  ],
+  "text_size": 150
+ }
+}
