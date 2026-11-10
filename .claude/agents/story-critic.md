@@ -73,3 +73,10 @@ Before scoring a script, ask "why?" of every character action and every claim in
 lever?", "wtf does it even mean?"). Every answer must be on screen or in a line; one unanswered "why" that a viewer
 would ask is a REVISE. Also check that each line's named subject can be shown (the camera looks at what the line
 names) and that no line says "never/don't X" while the action is X.
+
+## The "out of context" read (owner, 2026-11-10)
+Owner on Good Boy: "it feels a bit like "good boy" like sensual asmr." Before approving, read the lines aloud in
+the cast's directed voices as a stranger hearing 3 seconds of it with no picture. If any line plus its delivery could
+read as flirting, intimacy, kink, obedience play or innuendo (whispered praise, "sit", "good boy", "come here, you",
+breathy confessions about someone), it's a **must-fix**: change the line or the delivery (bright, quick, comic), or
+kill the pitch. Hushed delivery belongs to fear and mystery only.
