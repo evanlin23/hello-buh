@@ -2,7 +2,7 @@
   "name": "broken_rail",
   "stunt": "story_broken_rail",
   "version": 2,
-  "revision": "r3 build (2026-11-10): hero is Buh (never said aloud), continuous takes (voice_takes: beat), narrator requests split by emotional beat, <short pause> markers dropped (the take's own pauses)",
+  "revision": "r3 build (2026-11-10): hero is Buh (never said aloud), continuous takes (voice_takes: beat), narrator requests split by emotional beat, <short pause> markers dropped (the take's own pauses); r4 (main 53239c2): no name signs on the sidings or the platform (no unexplained names)",
   "caption": "why does grandpa wait at an empty rail 🛤️",
   "logline": "Every evening for 22 years a villager grandpa has met an empty rail line and said 'She's on her way.' The night his grandson is finally old enough to cross the bridge, he walks the line and finds out why she never arrived.",
   "question": "why tf is grandpa waiting for a minecart on a rail nobody uses?",
@@ -452,7 +452,7 @@
       "place": "sidings",
       "size": "ms",
       "camera": "at: 1.5 blocks up, 4 blocks south of JUNE's buffer stop, looking north, slow push; FOV 50",
-      "frame": "fg: platform slabs; subject: JUNE's spur centred, empty, its oak sign 'JUNE' over the buffer (the sign text also in the caption track); OTTO's spur with its minecart at frame left; bg (north): the village roofs and chimney smoke. Dusk (12650).",
+      "frame": "fg: platform slabs; subject: Grandma's spur centred, empty, no name sign (owner 2026-11-10: no unexplained names); the other spur with its minecart at frame left; bg (north): the village roofs and chimney smoke. Dusk (12650).",
       "look": {
         "time": 12650
       }

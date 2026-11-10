@@ -1482,9 +1482,9 @@
      "y": 116,
      "facing": "south",
      "variant": {
-      "a": "OTTO",
-      "b": "JUNE",
-      "sign": "ELMWATER|4500 ->"
+      "a": "",
+      "b": "",
+      "sign": ""
      },
      "since": 300
     },
