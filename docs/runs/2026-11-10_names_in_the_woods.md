@@ -36,3 +36,16 @@ apple, and her son throws the cure: "I CAN. Potion, then APPLE."
 - Length: ~50 s with the tighter gaps (pace WARNs over 45 s): the approved script is 15 lines.
 - The hamlet's ground by the inlet is flat (owner check WARN, "flat plain"): every shot has the meadow's rise, the
   treeline, the inlet or the buildings in it.
+
+## Day 1, evening: owner notes, rewrite, pause
+- Owner on the trial render (review page, 18:22): "dont need the mom tag" (the caption speaker label, now off on main),
+  "need to ensure the backgorund is not moving while the chest is open" and "the villargers dont have hte damage red"
+  (the lead's engine agent), and **"I dont understand this one"** (the script).
+- Rewrite with a fresh cold reader and the story-critic each round: v3 (one lie, the failure shown, the cure shown;
+  critic r3 7.4 revise, r4 7.8 approve), then the owner's mystery test landed (STANDARDS 1.0: question in 3 s, guess
+  but not sure at the midpoint, cut within ~1 s of the reveal): v4 ends on the ROSA reveal (r5 7.2 revise), v4.1
+  (r6 APPROVE 7.6, premise 9). Cold reader on v4.1: about 80% sure at the midpoint, the reveal explained in one sentence.
+- Shared fix on main: tts.py sends a request's [bracketed] direction on Pip's model (delivery by beat, 2b.1).
+- **Paused 19:35 UTC** (owner: "Don't start more stories, we should focus on fixing what we have right now"). Nothing
+  of v4.1 is voiced, recorded or built. To resume: the lead's OK and the owner's narrator voice (2.0), then port
+  draft_v4.md into story.json and the stunt (the tree-line attempt, the 2b shutters, the 7b gate POV, end on the reveal).
