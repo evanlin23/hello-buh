@@ -138,6 +138,10 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10 (asked to approve the arc rewrites of the held stories): "Yes. Okay. Rewriting the stories is
+  fine. Whatever you think is best, whatever is best based on what you've seen before"; on Good Boy: "Yeah, we can
+  rework it."** Light Sleeper, Dog on the Hill, Thirty-One Raids and Gold for the Portal adopt their script_vNext;
+  Good Boy gets a new premise. Each story's finished cut is still held for the owner's OK before it posts.
 - **Owner, 2026-11-10 (told the s3 sample he liked had every gap cut to ~0.06 s): "its fine to have those cuts, i didnt
   even notice".** For the narrator, silences inside a take are shortened to 0.12 s (tts.shorten_pauses, cast
   `pause_cap`): only the silent middle, never within 40 ms of a word, crossfaded. Words are never cut or spliced; a
