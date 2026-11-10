@@ -44,25 +44,34 @@ The owner picks the voice. `voices/cast.json` is unchanged. Candidates: `out/bra
 ## The narrator: "the house voice"
 - **Who:** the voice of the HelloBuh world. Whoever lived the story tells it, and they all speak in this one voice:
   kid Buh in Light Sleeper, Pip on Dog Hill, the dog in Good Boy. One actor plays every "I", like a friend doing all
-  the parts at a sleepover. He is never named and never says Buh's name (STANDARDS 1.8).
-- **Age and attitude:** sounds like his twenties. He has spent years on this server and still can't believe what goes
-  on in it. Quick, amused and matter-of-fact about the strangest details, so the strangeness lands as a joke or a
-  chill. He is never hushed or breathy (STANDARDS 2.2). He drops to plain and honest only for one line per story, the
-  one that matters.
-- **His relationship to Buh and the world:** he knows every legend in the world (the carpets, the boxed bell, the
-  dog), so he talks about the places like home ("our bell", "my village"). He is fond of Buh and never mocks him.
+  the parts at a sleepover. The narrator is never named and never says Buh's name (STANDARDS 1.8).
+- **Age and attitude: a kid.** Owner, 2026-11-10, after hearing the adult candidates: "i think it should still sound like
+  a child". The narrator sounds like a kid of about 10-12, which is never said aloud or written in a prompt. Most of
+  the stories' "I"s are kids (kid Buh, Pip), so the voice fits them. It is bright, quick and cheeky, and talks like
+  it's telling a friend the craziest thing in its town before the bell rings. It is matter-of-fact about the strange
+  details, so they land as a joke or a chill. It is never hushed or breathy (STANDARDS 2.2) and never squeaky or
+  cartoonish. It drops to plain and honest for one line per story, the one that matters.
+- **Relationship to Buh and the world:** grew up in this world and knows every legend in it (the carpets, the boxed
+  bell, the dog), so it talks about the places like home ("our bell", "my village"). It is fond of Buh and never mocks
+  him.
 - **Voice spec:**
 
 | | spec | check |
 |---|---|---|
 | words/s while speaking | **5.0-5.5** (about 4.6-5.0 overall on short-fragment scripts) | pace |
 | silences inside a take | capped at **0.12 s** (tts.shorten_pauses); words never cut | take_gate |
-| speed change | the voice's own pace, or a **mild atempo of 1.15 or less, pitch kept**. Never a resample (no asetrate) | cast `tempo` |
+| speed change | the voice's own pace (direct it "speaking rapidly"), else **atempo with pitch kept, 1.15 or less preferred**. Kid voices read slowly (2.5-3.4 words/s, docs/voices.md), so a kid voice may need up to ~1.4; mark anything over 1.15 in the candidate table. Never a resample (no asetrate) | cast `tempo` |
+| sounds like | a real kid, unshifted. No pitch lift unless the owner asks (the +2 st lift was heard as "chipmunk", docs/voices.md "Realism") | panel, owner |
 | delivery | continuous from frame 0 to the cut; one take per beat (STANDARDS 2b.4-5) | panel |
 | identity | one voice id + one direction string, byte for byte, in every Short (docs/voices.md) | voice_drift |
 | never | a clone, or a soundalike of a real person or product voice; whisper; "dramatic" pauses | owner |
 
-## Narrator candidates (2026-11-10; `out/brand_voice/`, not committed)
+## Narrator candidates, round 1: adult voices (2026-11-10; rejected by the owner: "i think it should still sound like a child")
+Round 2 (kid voices) runs after the 08:00 UTC quota reset: Pip (Leda) at the new pace, young-reading library voices,
+a designed voice described without an age number (an age like "seventeen-year-old" got the description refused), and
+a prebuilt voice with a strong kid direction. Samples go on the branch `claude/brand-samples`, under `brand/voice_samples/`.
+
+Round 1, kept for the record:
 The same 78 words for each: Light Sleeper vNext L01-L04, then Dog on the Hill vNext L01-L03. Each take is
 gemini-3.8-flash-tts through the Interactions API, with the style "speaking rapidly and continuously, no pauses between
 sentences, deadpan and amused, full voice". Then the chain we would ship: silences capped at 0.12 s, a mild atempo
@@ -82,7 +91,7 @@ between them; `reel_natural_speed.mp3` plays the same takes without the atempo.
 one pass and female in the other. Whisper heard every take's words right, apart from the usual digits and homophones
 ("share" for "shear"), except Zeno's "hasn't", which came out as "has it" at 1.10: listen to that line.
 
-**Recommendation: `l2_zeno`.** It has the widest melody of the four (15.8 st, against the Orus x1.45 narrator's 10.7
+**Round 1 recommendation (superseded by the owner's verdict): `l2_zeno`.** It has the widest melody of the four (15.8 st, against the Orus x1.45 narrator's 10.7
 and the reference Short's 11.6), and it needs the smallest tempo change (1.10). It was the listener's pick in both
 passes. It is a stock library voice, so the direction string and the persona have to make it ours. The **designed
 voice** is the one nobody else can use; it can be re-described in a few words and tried again once there is quota.
@@ -105,7 +114,7 @@ everywhere. Existing cast entries stay as they are. The new ones are **proposals
 | Grandpa (Ravenford) | **Charon** (`elder`) | man in his seventies, rough, slow; ~105 Hz vs the narrator's ~130 Hz, and much older | in cast, heard ("genuinely aged") |
 | Grandma (Portal Cottage) | **en-us-concierge-11** (library: "62-year-old ... slightly dry humor, and warm") | older woman, dry; fallback **Gacrux** ("mature") | to audition |
 | Buh, at 16+ | **Achird** (`buh`) | friendly, a little nervous | in cast |
-| Villager kid | **Laomedeia** (`child`) | real-kid pitch, unshifted | in cast |
+| Villager kid | **Laomedeia** (`child`) | real-kid pitch, unshifted. With a kid narrator, a kid character's line must differ in sex or texture from the narrator, or be narrated | in cast |
 | Friend | **Fenrir** (`friend`) | loud, excitable teen | in cast |
 | Gruff villager / smith | **Orus** (`smith`) | low and blunt | in cast |
 
