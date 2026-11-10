@@ -182,7 +182,7 @@ module.exports = {
     await line('L04', async (k, at) => {
       if (k === at(2)) { await cutG(27.5, 19.5, P(0, gy(14, 19.5) + 0.6, 19.5), { time: GOLD }); K.ctl('sprint', true); K.go(true) }
       if (k === at(3)) {
-        K.self({}, 1.3)   // a swimming wolf's head is just over the water
+        K.self({}, 1.6)   // a swimming wolf's head over the water (at 1.3 the bob dipped the camera under for a tick before the cut: review round 3)
         await K.cutTo(55.5, 62.4, 13.5, new ctx.Vec3(X + 90, 63.2, Z + 13.5)); K.go(true); K.ctl('jump', true)
         ctx.sound('entity.generic.splash', 0.5, 1.2)
       }
