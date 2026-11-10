@@ -1,3 +1,5 @@
+> **r5 (2026-11-10): the mystery-test cut is in story.json (9 lines: L01 L02 L03 L05 L08 L09 L10 L11 L14; L04/L06 merged in, L07/L12/L13 cut, a silent push S12b before S14). story.json is the source of truth; the beats below are the earlier r2 version.**
+
 # broken_rail: beat sheet, clue map, writer's checks (r2, polished)
 
 r2 (2026-11-10) applies the r1 critic's and continuity's must-fixes (reviews/r1-response.md): L02 "She's on her WAY",

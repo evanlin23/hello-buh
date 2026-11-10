@@ -2,7 +2,7 @@
   "name": "broken_rail",
   "stunt": "story_broken_rail",
   "version": 2,
-  "revision": "r3 build (2026-11-10): hero is Buh (never said aloud), continuous takes (voice_takes: beat), narrator requests split by emotional beat, <short pause> markers dropped (the take's own pauses); r4 (main 53239c2): no name signs on the sidings or the platform (no unexplained names)",
+  "revision": "r5 (2026-11-10, owner mystery test r:ra807e9): critic r3 must-fixes: L03+L04 and L05+L06 merged, L07 cut, L08 rewritten (no answer at the midpoint), L12/L13 cut, a silent push then the payoff; 9 lines, ~33 s. Earlier: r4 no name signs; r3 hero Buh, continuous takes, per-beat directions",
   "caption": "why does grandpa wait at an empty rail 🛤️",
   "logline": "Every evening for 22 years a villager grandpa has met an empty rail line and said 'She's on her way.' The night his grandson is finally old enough to cross the bridge, he walks the line and finds out why she never arrived.",
   "question": "why tf is grandpa waiting for a minecart on a rail nobody uses?",
@@ -76,9 +76,7 @@
       "voice": "Leda",
       "lines": [
         "L03",
-        "L04",
-        "L05",
-        "L06"
+        "L05"
       ],
       "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; cheeky, then giggling]"
     },
@@ -90,11 +88,10 @@
       "model": "gemini-3.8-flash-lite-tts",
       "voice": "Leda",
       "lines": [
-        "L07",
         "L08",
         "L09"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; fed up, then brave]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; brave, on a mission]"
     },
     {
       "id": "r4",
@@ -111,30 +108,6 @@
     },
     {
       "id": "r5",
-      "speakers": [
-        "N"
-      ],
-      "model": "gemini-3.8-flash-lite-tts",
-      "voice": "Leda",
-      "lines": [
-        "L12"
-      ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; determined]"
-    },
-    {
-      "id": "r6",
-      "speakers": [
-        "N"
-      ],
-      "model": "gemini-3.8-flash-lite-tts",
-      "voice": "Leda",
-      "lines": [
-        "L13"
-      ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; proud and warm]"
-    },
-    {
-      "id": "r7",
       "speakers": [
         "Grandma"
       ],
@@ -172,78 +145,51 @@
     {
       "id": "L03",
       "who": "N",
-      "text": "Mom says / Grandma LEFT him / for her SISTER'S.",
-      "direction": "the grin drops a notch, still full volume, repeating what grown-ups say",
+      "text": "Mom says / Grandma LEFT him / for her SISTER'S. / And kept / the CART.",
+      "direction": "repeating what grown-ups say, then indignant on the last words",
       "shot": "S03",
-      "look": {
-        "what": "cleric",
-        "word": "MOM"
-      }
-    },
-    {
-      "id": "L04",
-      "who": "N",
-      "text": "Kept the CART, / too. / RUDE.",
-      "direction": "indignant on the last word, a kid taking Grandpa's side",
-      "shot": "S04",
-      "look": {
-        "what": "prop:empty_spur",
-        "word": "CART"
-      }
+      "look": [
+        {
+          "what": "cleric",
+          "word": "MOM"
+        },
+        {
+          "what": "prop:empty_spur",
+          "word": "CART"
+        }
+      ]
     },
     {
       "id": "L05",
       "who": "N",
-      "text": "Our PIG / lives in / his OWN cart. / LOVES it.",
-      "direction": "proud and cheerful, sure of it",
+      "text": "Our PIG / LOVES his cart. / Won't get out / for a CARROT.",
+      "direction": "proud, then laughing at how silly the pig is",
       "shot": "S05",
-      "look": {
-        "what": "entity:pig",
-        "word": "PIG"
-      }
-    },
-    {
-      "id": "L06",
-      "who": "N",
-      "text": "Won't even / get out / for a CARROT.",
-      "direction": "laughing at how silly the pig is",
-      "shot": "S06",
-      "look": {
-        "what": "entity:pig",
-        "word": "CARROT"
-      }
-    },
-    {
-      "id": "L07",
-      "who": "N",
-      "text": "Grandpa won't leave / the STATION. / And I wasn't / allowed past / the BRIDGE.",
-      "direction": "explaining the rules fast, a little fed up with the second one",
-      "shot": "S07",
       "look": [
         {
-          "what": "toolsmith",
-          "word": "GRANDPA"
+          "what": "entity:pig",
+          "word": "PIG"
         },
         {
-          "what": "prop:bridge_arch",
-          "word": "BRIDGE"
+          "what": "entity:pig",
+          "word": "CARROT"
         }
       ]
     },
     {
       "id": "L08",
       "who": "N",
-      "text": "At MIDNIGHT / I turned TEN. / If she's on her WAY, / the rail's BROKEN. / I packed RAILS.",
-      "direction": "lit up and brave, working it out as he goes, speeding up to the last phrase",
+      "text": "At TEN / I was allowed / past the BRIDGE. / So I went / to get / her CART back.",
+      "direction": "lit up and brave, a kid on a mission",
       "shot": "S08",
       "look": [
         {
           "what": "prop:bridge",
-          "word": "MIDNIGHT"
+          "word": "BRIDGE"
         },
         {
           "what": "prop:rails_in_hand",
-          "word": "RAILS"
+          "word": "CART"
         }
       ]
     },
@@ -288,30 +234,6 @@
       ]
     },
     {
-      "id": "L12",
-      "who": "N",
-      "text": "I bridged / the HOLE, / laid RAILS, / PUSHED.",
-      "direction": "fast and determined, a beat after each of the first two phrases, the last word like a launch",
-      "shot": "S12a",
-      "look": [
-        {
-          "what": "prop:her_cart",
-          "word": "PUSHED"
-        }
-      ]
-    },
-    {
-      "id": "L13",
-      "who": "N",
-      "text": "That EVENING, / Grandpa was / waiting. / Like ALWAYS.",
-      "direction": "gentle and proud, smiling, full volume, slowing only on the last two words",
-      "shot": "S13",
-      "look": {
-        "what": "toolsmith",
-        "word": "GRANDPA"
-      }
-    },
-    {
       "id": "L14",
       "who": "Grandma",
       "text": "Sorry I'm LATE, / dear.",
@@ -324,10 +246,10 @@
     }
   ],
   "ending": {
-    "after": "L13",
+    "after": "L11",
     "beats": [
-      "S13: on 'waiting' the cart rolls off the bridge's north end (~45 blocks out) toward Grandpa, growing; ~27 blocks out at the cut; hop it to ~3 blocks out for S14 so the knock lands 0.3 s before L14",
-      "S14: the cart rolls in from the right over the powered activator rail at (0,1), knocks the buffer 0.3 s before L14, and the activator sets Grandma down standing on the rail bed at (0,1), facing Grandpa across the buffer stop; she says it; his head tips toward her on 'dear'",
+      "S12b (no line, ~1.2 s): a jump cut: the crater bridged, the gold rail lit; Buh walks into her cart and it shoots north, home",
+      "S14: the cart rolls in from the right, knocks the buffer 0.3 s before L14, the activator sets Grandma down beside Grandpa; she says it; his head tips toward her on 'dear'",
       "cut 0.6 s after the last word (payoff L14: the score drops out 0.45 s before, the hit on the buffer knock)"
     ],
     "loop": "line 1 re-read: he really was waiting for the same minecart, and she really was on her way"
@@ -440,7 +362,7 @@
       "line": "L03",
       "place": "our_yard to the gate",
       "size": "wide",
-      "camera": "at: 10 blocks behind Mom, 1.6 up, looking east-south-east over the yard toward the station; FOV 50; slow push",
+      "camera": "at: 10 blocks behind Mom, 1.6 up, looking east-south-east over the yard toward the station; FOV 50; slow push; on 'kept' cut to S04",
       "frame": "fg: the yard's rail loop with the pig sitting in its minecart (lower right, on screen from 6.9 s, not mentioned yet); mid: Mom (cleric, purple robe) head to foot at the garden gate, back three-quarter to us, facing the station; bg: the station 30 blocks off, Grandpa small at the buffer, the line running south into the hills toward her sister's village. Dusk (12600).",
       "look": {
         "time": 12600
@@ -448,7 +370,7 @@
     },
     {
       "id": "S04",
-      "line": "L04",
+      "line": "L03",
       "place": "sidings",
       "size": "ms",
       "camera": "at: 1.5 blocks up, 4 blocks south of JUNE's buffer stop, looking north, slow push; FOV 50",
@@ -462,7 +384,7 @@
       "line": "L05",
       "place": "our_yard",
       "size": "full",
-      "camera": "at: 1.5 blocks up behind the yard fence, 7 blocks from the cart, looking north toward the cottage, slow push; FOV 50",
+      "camera": "at: 1.5 blocks up behind the yard fence, 7 blocks from the cart, looking north toward the cottage, slow push; FOV 50; on 'Won't' cut to S06 (POV with the carrot)",
       "frame": "fg: the oak fence and the carrot patch; subject: the pig sitting in a minecart on Buh's 5x5 yard loop, head turning; bg: our cottage (spruce) with its lit window and chimney smoke. No station in this frame (it is behind the camera's right). Dusk (12650).",
       "look": {
         "time": 12650
@@ -470,7 +392,7 @@
     },
     {
       "id": "S06",
-      "line": "L06",
+      "line": "L05",
       "place": "our_yard",
       "size": "ms",
       "camera": "pov 2.5 blocks from the cart, the carrot (hotbar slot 2) held out and swung slowly left to right",
@@ -480,22 +402,11 @@
       }
     },
     {
-      "id": "S07",
-      "line": "L07",
-      "place": "station to bridge",
-      "size": "ews",
-      "camera": "path: hold 0.5 s on Grandpa (from 'Grandpa won't leave'), then a crane up from just behind his shoulder (2 blocks, at (-1.5,1.8,-3)) to 12 blocks up, looking south along the line; FOV 50",
-      "frame": "fg on 'Grandpa': Grandpa at the buffer, back to us, head and shoulders lower-left; mid as the crane rises: the station, the line running 40 blocks south to the stone bridge; subject on 'BRIDGE': the whole bridge (piers, arches, lamp posts lit) with the rail down its deck over the river ravine; bg: the line climbing into dark hills. Late dusk (13000).",
-      "look": {
-        "time": 13000
-      }
-    },
-    {
       "id": "S08",
       "line": "L08",
       "place": "bridge foot",
       "size": "wide",
-      "camera": "pov standing still at the bridge's north foot (end_a) looking south across the deck; still through 'If she's on her WAY, the rail's BROKEN'; on 'RAILS' the rails stack (64) appears in hotbar slot 1 and is selected and he steps onto the deck",
+      "camera": "pov standing at the bridge's north foot looking south across the deck; on 'CART' the rails stack (64) appears in hotbar slot 1 and is selected and he steps onto the deck",
       "frame": "fg: the rail running onto the deck, the hotbar (carrot, dirt, redstone torch; the rails arrive in slot 1 on 'RAILS'); mid: the deck walls and lamp posts; bg: the far end of the bridge, the line climbing a hill under the moon; below and left of centre, about 48 blocks out on the slope under the plateau, one lone torch burning in the dark (the easter egg, canon `torch_hill`: a single warm point, never the subject). Midnight (18000).",
       "look": {
         "time": 18000
@@ -546,36 +457,14 @@
       }
     },
     {
-      "id": "S12a",
-      "line": "L12",
-      "place": "crater",
-      "size": "wide",
-      "camera": "pov at the near lip, a jump cut in: the dirt row is already 3 blocks across the crater at rail height; on 'I bridged the HOLE' the last 4 dirt go in, walking forward along the row; on 'laid RAILS' he walks on across, laying 7 rails as he goes (1 s); in the pause, standing on the last rail beside her cart, he places a redstone torch beside her gold rail and it lights",
-      "frame": "fg: the hand and the hotbar; subject: the dirt row and the new rails reaching across to her cart; bg: Grandma in the cart on the far lip, growing as he walks out to her (he ends on the far side, ready for S12b). Morning (5000). About 2.8 s.",
-      "look": {
-        "time": 5000
-      }
-    },
-    {
       "id": "S12b",
-      "line": "L12",
+      "line": null,
       "place": "crater",
       "size": "full",
-      "camera": "at: 7 blocks west of the cart, 1.6 up, looking east; FOV 50; pans left with the cart for its first 3 blocks",
+      "camera": "at: 7 blocks west of the cart, 1.6 up, looking east; FOV 50; pans left with the cart for its first 3 blocks; no line: right after 'HOME' (a jump cut: the crater already bridged, the gold rail lit), about 1.2 s",
       "frame": "fg: ferns on the valley floor; subject: Buh behind the cart on the far lip walks into it on 'PUSHED', the lit gold rail fires it and the cart with Grandma shoots left (north, home) over the new rails; bg: the valley side with the line climbing out. Morning (5000). About 1 s.",
       "look": {
         "time": 5000
-      }
-    },
-    {
-      "id": "S13",
-      "line": "L13",
-      "place": "station",
-      "size": "wide",
-      "camera": "at: S01's camera spot (5 behind, 2 west of Grandpa, 1.8 up; his head turned west as in S01), FOV 50, still then a slow push",
-      "frame": "the S01 frame again: fg Grandpa's face in three-quarter (his head turned ~40 deg west toward the sunset, headYaw), apron, the buffer lantern; mid: the activator rail and the line; bg: the bridge and hills at sunset; on 'waiting' a minecart rolls off the north end of the bridge (~45 blocks out) and comes down the line toward us, Grandma readable in it by the cut (~27 blocks out: 45 minus 18 in 2.3 s). Dusk (12800).",
-      "look": {
-        "time": 12800
       }
     },
     {
@@ -584,7 +473,7 @@
       "place": "station",
       "size": "full",
       "camera": "at: (-6, 1.6, 0) from the buffer, side-on from the platform's west edge, looking east; FOV 50; still",
-      "frame": "left: Grandpa head to foot at (0,-1), north of the buffer; right: the cart, hopped to ~3 blocks out at the cut, rolls in from the right over the activator rail at (0,1) and knocks the buffer 0.3 s before the line; the activator sets Grandma down standing on the rail bed facing him across the buffer stop; bg: the sidings, JUNE's empty spur and its sign behind them, a lamp lit. On 'dear' Grandpa's head tips toward her. Ends 0.6 s after the last word. Dusk (12800).",
+      "frame": "left: Grandpa head to foot at (0,-1), north of the buffer; right: the cart, hopped to ~3 blocks out at the cut, rolls in from the right over the activator rail at (0,1) and knocks the buffer 0.3 s before the line; the activator sets Grandma down standing on the rail bed facing him across the buffer stop; bg: the sidings, the empty spur behind them, a lamp lit. On 'dear' Grandpa's head tips toward her. Ends 0.6 s after the last word. Dusk (12800).",
       "look": {
         "time": 12800
       }

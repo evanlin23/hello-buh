@@ -24,7 +24,7 @@ const X = -318, Z = -770, F = 116                 // the buffer stop (map.json r
 const VX = -1798, VZ = 674, VF = -38               // the crater's centre (-2116, 78, -96) from O (bed level; rails at 79)
 const DUSK = 12500, LATE_DUSK = 12850, MIDNIGHT = 18000, SUNRISE = 23850, MORNING = 4700
 const v = (x, y, z) => [VX + x, VF + y, VZ + z]    // a valley point as an O offset
-const POCKET = [-6, -5, 6], VPOCKET = [-6, -5, 9]  // where Buh waits while the shot is a camera (under the platform / the valley floor)
+const POCKET = [-6, -5, 6], VPOCKET = [-6, -5, 9], PARK = [-10, -5, 6]   // PARK: her cart for the ending, under the platform  // where Buh waits while the shot is a camera (under the platform / the valley floor)
 // the cast's marks
 const GPA = [0.5, 1.5, -0.5]                       // Grandpa on the apron, just north of the buffer
 const MOM = [-26.6, 2, 13.5]                       // at the yard's gate, facing the station
@@ -64,7 +64,7 @@ module.exports = {
     // story-only: no mobs but ours
     for (const [x0, z0] of [[X, Z], [X + VX, Z + VZ]]) await c(`/kill @e[type=!player,x=${x0},y=${F},z=${z0},distance=..90]`)
     // the pockets Buh waits in during camera shots
-    for (const [x, y, z] of [POCKET, v(...VPOCKET)]) {
+    for (const [x, y, z] of [POCKET, v(...VPOCKET), PARK]) {
       await c(`/fill ${A(x - 1, y - 1, z - 1)} ${A(x + 1, y + 2, z + 1)} stone`)
       await c(`/fill ${A(x, y, z)} ${A(x, y + 1, z)} air`)
     }
@@ -78,8 +78,8 @@ module.exports = {
     await c(`/summon minecart ${A(...v(...GMA))} {Tags:["gcart"],Rotation:[90f,0f]}`)
     await c(`/summon villager ${A(...v(...GMA))} {${base('gma')},NoGravity:1b,${vd('farmer')},Rotation:[180f,0f]}`)
     // her cart again for the ending (the same cart, home): parked high over the town until S13
-    await c(`/summon minecart ${A(22, 6, -24)} {Tags:["gcart2"],NoGravity:1b}`)
-    await c(`/summon villager ${A(22, 6, -24)} {${base('gma2')},NoGravity:1b,${vd('farmer')},Rotation:[180f,0f]}`)
+    await c(`/summon minecart ${A(PARK[0] + 0.5, PARK[1], PARK[2] + 0.5)} {Tags:["gcart2"],NoGravity:1b}`)
+    await c(`/summon villager ${A(PARK[0] + 0.5, PARK[1], PARK[2] + 0.5)} {${base('gma2')},NoGravity:1b,${vd('farmer')},Rotation:[180f,0f]}`)
     // Buh: carrot, dirt, a redstone torch; full hearts; no rails until L08
     await c('/clear @s')
     await c('/item replace entity @s hotbar.1 with carrot 1')
@@ -108,6 +108,7 @@ module.exports = {
     const ids = []
     const seat = (name, p) => { const e = ent(name, at3(p)); if (e && e.position.distanceTo(at3(p)) < 1.5) { ids.push(e.id); ctx.mark('pose', { ids: [e.id], seated: true }); return e } ctx.log(`no ${name} at ${p} (the bot is too far to see it?) ${Object.values(bot.entities).filter(q => q.name === name).map(q => `${q.id}@${q.position.x.toFixed(1)},${q.position.y.toFixed(1)},${q.position.z.toFixed(1)}`).join(' ')}`); return null }
     seat('pig', PIG)
+    const g2e = seat('villager', [PARK[0] + 0.5, PARK[1], PARK[2] + 0.5])   // her cart for the ending, parked under the platform
     // a rider and its cart moved together (an actor state per tag, /tp'd every tick)
     const cart = (cartTag, riderTag, s) => {
       const st = { ...s }
@@ -124,7 +125,7 @@ module.exports = {
 
     if (setOnly) {
       // the sets, every camera held 1.5 s (stills: ./hb still story_broken_rail tick:N)
-      const town = ['s01', 's02', 's03', 's04', 's05', 's07', 's14']
+      const town = ['s01', 's02', 's03', 's04', 's05', 's14']
       const valley = ['s09', 's11b', 's12b']
       for (const name of town) { ctx.log(`SET_ONLY shot ${name} at tick ${ctx.tick}`); K.shot(name); for (let k = 0; k < 30; k++) { K.look(k); await bot.waitForTicks(1) } }
       await K.cut(0.5, 29.5, P(0.5, 1.6, 45), 1, { time: MIDNIGHT, shot: 'pov' })
@@ -150,45 +151,39 @@ module.exports = {
     K.shot('s02')
     await line('L02', async (k, at) => { gpa.yaw = 35 + 4 * Math.sin((k + 40) / 11); if (k === at(3)) gpa.yaw = 0 })
 
-    // L03 (S03): our yard: Mom at the gate looking at the station, the pig's cart in front
+    // L03 (S03, then S04 on 'kept'): our yard, Mom at the gate looking at the station, the pig's cart in front; then
+    // the sidings: the spur at the right, empty ("And kept the CART")
     K.shot('s03')
     K.setTime(12600)
-    await line('L03', async (k) => { pig.yaw = 10 * Math.sin(k / 15) })
+    await line('L03', async (k, at) => { pig.yaw = 10 * Math.sin(k / 15); if (k === at(3)) { K.shot('s04'); K.setTime(12650) } })
 
-    // L04 (S04): the sidings: JUNE's spur, empty; OTTO's cart at the left
-    K.shot('s04')
-    K.setTime(12650)
-    await line('L04', async () => {})
-
-    // L05 (S05): the pig sitting in his cart on the yard loop, the cottage behind
+    // L05 (S05, then S06 POV on "Won't"): the pig in his cart on the yard loop; then the carrot: his head follows it,
+    // his body stays in the cart
     K.shot('s05')
-    await line('L05', async (k, at) => { pig.yaw = k < at(3) ? 15 * Math.sin(k / 8) : 0; pig.pitch = k >= at(3) ? -10 : 0 })
-
-    // L06 (S06): POV with the carrot: his head follows it, his body stays in the cart
-    await K.cut(PIG[0], PIG[2] + 2.6, K.face(at3(PIG), 'pig'), 2, { shot: 'pov' })
-    bot.setQuickBarSlot(1)
-    await line('L06', async (k, at, n) => {
-      const sw = Math.sin(k / 9)                      // the carrot swung slowly left and right (the camera's yaw)
+    let carrot = -1
+    await line('L05', async (k, at) => {
+      if (k === at(2)) {
+        await K.cut(PIG[0], PIG[2] + 2.6, K.face(at3(PIG), 'pig'), 2, { shot: 'pov' })
+        bot.setQuickBarSlot(1); carrot = k
+      }
+      if (carrot < 0) { pig.yaw = 15 * Math.sin(k / 8); return }
+      const sw = Math.sin((k - carrot) / 7)          // the carrot swung slowly left and right (the camera's yaw)
       K.look(k, 0.22 * sw, 0)
       pig.yaw = -28 * sw; pig.pitch = 8
-      if (k === at(2)) ctx.sound('entity.pig.ambient', 0.8, 1.1)
+      if (k === at(3)) ctx.sound('entity.pig.ambient', 0.8, 1.1)
     })
 
-    // L07 (S07): Grandpa at the buffer, then the crane up over the station to the bridge
-    await pocket(false, { shot: 's07', time: LATE_DUSK })
-    await line('L07', async (k, at) => { gpa.yaw = 5 + 3 * Math.sin(k / 12); if (k === at(2)) K.shot('s07b') })
-
-    // L08 (S08): midnight, POV at the bridge's north foot. On 'RAILS' the stack lands in slot 1 and he steps on
+    // L08 (S08): midnight, POV at the bridge's north foot. On 'CART' the rails stack lands in slot 1 and he steps on
     await K.cut(0.5, 29.5, P(0.5, 1.4, 45), 1, { time: MIDNIGHT, shot: 'pov' })
     bot.setQuickBarSlot(1)
     await line('L08', async (k, at) => {
-      if (k === at(4)) { say('/item replace entity @s hotbar.0 with rail 64'); bot.setQuickBarSlot(0); ctx.sound('entity.item.pickup', 0.5, 1) }
-      K.go(k > at(4) + 3)
+      if (k === at(5)) { say('/item replace entity @s hotbar.0 with rail 64'); bot.setQuickBarSlot(0); ctx.sound('entity.item.pickup', 0.5, 1) }
+      K.go(k > at(5) + 3)
       K.look(k)
     })
     K.stop()
 
-    // L09 (S09): sunrise, the valley: a high crane down the line over the ridge, Buh tiny on it walking south
+    // L09 (S09): sunrise, the valley: from the basin floor, Buh walking down the line over the ridge toward us
     await K.cut(VX + 0.5, VZ - 29.5, P(VX + 0.5, VF - 4, VZ - 8), 101 - F,   // the rail's y there (the line stamp's profile)
       { time: SUNRISE, shot: 's09', lift: 0 })
     await line('L09', async (k) => { K.go(true); K.look(k) })
@@ -201,7 +196,7 @@ module.exports = {
       const L10 = S.line('L10')
       const z0 = lip - speed * L10.at(1)
       await K.cut(VX + 0.5, VZ + z0, P(VX + 0.5, VF + 1.3, VZ + 6), VF + 1, { time: MORNING, shot: 'pov' })
-      if (!ids.some(id => bot.entities[id] && bot.entities[id].name === 'villager')) seat('villager', v(...GMA))
+      if (!ids.some(id => bot.entities[id] && bot.entities[id].name === 'villager' && bot.entities[id].position.distanceTo(at3(v(...GMA))) < 2)) seat('villager', v(...GMA))
       bot.setQuickBarSlot(0)
       await line('L10', async (k, at) => {
         K.go(k < at(1) && bot.entity.position.z < Z + VZ + lip)
@@ -212,7 +207,8 @@ module.exports = {
       K.stop()
     }
 
-    // L11 (S11a then S11b): the same take tilts up to the far lip: her cart on the dark rail; on 'GRANDMA' the close-up
+    // L11 (S11a then S11b): the same take tilts up to the far lip: her cart on the dark rail; on 'GRANDMA' the close-up.
+    // "Still facing HOME" is the reveal
     from = null
     const gma = K.actor('gma', { x: VX + GMA[0], y: VF + GMA[1], z: VZ + GMA[2], yaw: 180, pitch: 0 })
     await line('L11', async (k, at) => {
@@ -222,86 +218,43 @@ module.exports = {
       gma.yaw = 180 + 3 * Math.sin(k / 14)
     })
 
-    // L12 (S12a then S12b): a jump cut in: 3 dirt already across. The last 4 go in, 7 rails, the torch: the gold rail
-    // lights. Then from the side: he walks into her cart and the rail fires it north, home
+    // S12b, no line (~1.2 s): a jump cut, side-on from the west: the crater already bridged (7 dirt, 7 rails), the gold
+    // rail lit by its new torch; Buh walks into her cart from the south and it shoots north, home
     K.actors.delete('gma')
-    for (let i = 0; i < 3; i++) say(`/setblock ${A(VX, VF, VZ - 3 + i)} dirt`)
-    await K.cut(VX + 0.5, VZ - 1.3, K.top(P(VX, VF, VZ + 0)), VF + 1, { shot: 'pov' })
-    bot.setQuickBarSlot(2)
+    say(`/fill ${A(VX, VF, VZ - 3)} ${A(VX, VF, VZ + 3)} dirt`)
+    say(`/fill ${A(VX, VF + 1, VZ - 3)} ${A(VX, VF + 1, VZ + 3)} rail[shape=north_south]`)
+    say(`/setblock ${A(VX + 1, VF + 1, VZ + 4)} redstone_torch`)
+    say(`/setblock ${A(VX, VF + 1, VZ + 4)} powered_rail[shape=north_south,powered=true]`)
+    bot.setQuickBarSlot(3)
+    await K.cut(VX + 0.5, VZ + 6.0, P(VX + 0.5, VF + 1.6, VZ + 4.5), VF + 1, { shot: 's12b' })
     const g1 = cart('gcart', 'gma', { x: VX + GMA[0], y: VF + GMA[1], z: VZ + GMA[2], yaw: 180 })
-    let placed = 0, railed = 0, torch = false, pushT = null
-    from = null
-    await line('L12', async (k, at, n) => {
-      const pushK = at(3) - 6
-      if (k < at(1) + 8) {
-        // the dirt: one block every 4 ticks, walking forward along the row
-        const want = Math.min(4, Math.floor(k / 4) + 1)
-        while (placed < want) { say(`/setblock ${A(VX, VF, VZ + placed)} dirt`); bot.swingArm('right'); ctx.sound('block.gravel.place', 0.8, 0.9); placed++ }
-        K.base = K.aim(K.top(P(VX, VF, VZ + Math.min(3, placed))))
-        K.go(bot.entity.position.z < Z + VZ + 1.2)
-      } else if (k < at(2) + 14) {
-        if (railed === 0) { bot.setQuickBarSlot(0) }
-        const want = Math.min(7, Math.floor((k - at(1) - 8) / 2) + 1)
-        while (railed < want) { say(`/setblock ${A(VX, VF + 1, VZ - 3 + railed)} rail[shape=north_south]`); bot.swingArm('right'); ctx.sound('block.metal.place', 0.7, 1.1); railed++ }
-        K.base = K.aim(K.top(P(VX, VF + 1, VZ + Math.min(3, railed - 3))))
-        K.go(bot.entity.position.z < Z + VZ + 3.2)
-      } else if (!torch) {
-        K.stop(); bot.setQuickBarSlot(3)
-        from = from || { ...K.base }
-        K.turnTo(from, K.top(P(VX + 1, VF + 1, VZ + 4)), (k - at(2) - 14) / 4)
-        if (k >= at(2) + 18) {
-          torch = true; bot.swingArm('right')
-          say(`/setblock ${A(VX + 1, VF + 1, VZ + 4)} redstone_torch`)
-          say(`/setblock ${A(VX, VF + 1, VZ + 4)} powered_rail[shape=north_south,powered=true]`)
-          ctx.sound('block.wood.place', 0.8, 1)
-        }
-      }
-      if (k <= pushK - 1 || !torch) K.look(k)
-      // S12b: from the west, side-on; he walks into the cart from the south, the lit rail launches it north
-      if (k === pushK) {
-        K.shot('s12b'); K.stop()
-        say(`/tp @s ${A(VX + 0.5, VF + 1, VZ + 6.3)} 180 0`)
-      }
-      if (k > pushK) K.go(k < at(3) + 4)
-      if (k === at(3)) { pushT = k; ctx.sound('entity.minecart.riding', 0.6, 1.2) }
-      if (pushT !== null) {
-        const t = k - pushT, sp = Math.min(0.39, 0.12 + t * 0.05)
-        g1.st.z -= sp; g1.put()
-      } else g1.put()
-    })
+    for (let k = 0; k < 24; k++) {
+      K.go(k < 7)
+      if (k === 4) { bot.swingArm('right'); ctx.sound('entity.minecart.riding', 0.6, 1.2) }
+      if (k >= 4) g1.st.z -= Math.min(0.36, 0.12 + (k - 4) * 0.05)
+      g1.put(); K.look(k)
+      await bot.waitForTicks(1)
+    }
     K.stop()
 
-    // L13 (S13): dusk again, the S01 frame: on 'waiting' her cart rolls off the bridge toward us
-    await pocket(false, { time: 12800, shot: 's13' })
-    const g2 = cart('gcart2', 'gma2', { x: 0.5, y: 1, z: 33.5, yaw: 180 })
-    let rolling = false
-    let g2e = null
-    await line('L13', async (k, at) => {
-      gpa.yaw = 35 + 4 * Math.sin(k / 11)
-      if (!g2e && k >= 2 && k % 4 === 2 && k < at(2) - 4) g2e = seat('villager', [0.5, 1, 33.5]) || seat('villager', [22, 6, -24])   // parked, or already at her cart's start (the town's entities come back to the bot a few ticks after the cut home)
-      if (k === at(2) - 2) { rolling = true; ctx.sound('entity.minecart.riding', 0.25, 1) }
-      if (rolling) { g2.st.z -= 0.39; g2.put() }
-      if (k === 0) g2.put()
-    })
-
-    // L14 (S14): side-on from the platform: the cart hops in from the right, knocks the buffer, the activator sets her
-    // down; she says it; his head tips toward her on 'dear'
-    K.shot('s14')
-    g2.st.z = 4.3; g2.put()
+    // L14 (S14): dusk, side-on from the platform: her cart rolls in from the right, knocks the buffer 0.3 s before the
+    // line, the activator sets her down beside him; she says it; his head tips toward her on 'dear'
+    await pocket(false, { time: 12800, shot: 's14' })
+    const g2 = cart('gcart2', 'gma2', { x: 0.5, y: 1, z: 6.2, yaw: 180 })
     let knocked = false
     const gma2 = { x: 0.5, y: 1, z: 1.5, yaw: 180, pitch: 0 }
+    const knock = () => {
+      knocked = true
+      ctx.sound('block.stone.hit', 1, 0.6); ctx.sound('block.wood.hit', 0.8, 0.8)
+      if (g2e) ctx.mark('pose_off', { ids: [g2e.id] })
+      Object.assign(gma2, { x: -0.6, y: 1.5, z: 1.4, yaw: 150, pitch: 0 })
+      K.actors.set('gma2', gma2)
+    }
+    const roll = () => { if (knocked) return; g2.st.z = Math.max(1.5, g2.st.z - 0.36); g2.put(); if (g2.st.z <= 1.5) knock() }
+    ctx.sound('entity.minecart.riding', 0.35, 1)
+    await K.preroll(19, () => roll())
     await line('L14', async (k, at, n) => {
-      if (!knocked) {
-        g2.st.z = Math.max(1.5, g2.st.z - 0.39); g2.put()
-        if (g2.st.z <= 1.5) {
-          knocked = true
-          ctx.sound('entity.minecart.inside', 0.0, 1)
-          ctx.sound('block.stone.hit', 1, 0.6); ctx.sound('block.wood.hit', 0.8, 0.8)
-          if (g2e) ctx.mark('pose_off', { ids: [g2e.id] })
-          Object.assign(gma2, { x: -0.6, y: 1.5, z: 1.4, yaw: 150, pitch: 0 })
-          K.actors.set('gma2', gma2)
-        }
-      }
+      roll()
       gpa.yaw = knocked ? Math.max(-150, gpa.yaw - 12) : gpa.yaw
       gpa.pitch = k >= at(1) ? 12 * Math.min(1, (k - at(1)) / 6) : 0
     }, 0)
@@ -320,9 +273,8 @@ function lineY (ctx, dx, dz) {
 // The camera shots (O offsets; the valley ones through v()). Compose for the centre crop (1080 of the 1920 master).
 module.exports.shots = {
   pov: { pov: true },
-  // S01 / S13: 5 behind and 2 west of Grandpa, 1.8 above his feet, looking south past his right shoulder down the line
+  // S01: 5 behind and 2 west of Grandpa, 1.8 above his feet, looking south past his right shoulder down the line
   s01: { at: [-0.6, 3.4, -5.6], look: [2.8, 2.4, 22], fov: 50, push: 0.3, dof: false, subject: [[0.5, 2.6, -0.5]] },
-  s13: { at: [-0.6, 3.4, -5.6], look: [2.8, 2.4, 22], fov: 50, push: 0.15, dof: false, subject: [[0.5, 2.6, -0.5]] },
   // S02: side-on from the west, the crane up and back: the whole station small, the line running right (south)
   s02: { at: [1.4, 2.3, 30.5], look: [0.3, 1.4, 6], fov: 50, push: 0.6, dof: false, subject: [[0.5, 1.2, 14]], ease: true, fov: 50, dof: false },
   // S03: behind Mom over the yard, looking east-north-east to the station
@@ -331,14 +283,10 @@ module.exports.shots = {
   s04: { at: [4.5, 2.6, 9.6], look: [4.5, 2.0, 4.5], fov: 50, push: 0.25, dof: false, subject: [[4.5, 2, 4.5]] },
   // S05: from behind the yard's south fence, looking north at the pig's cart, the cottage behind
   s05: { at: [-30.5, 4.5, 19.5], look: [-30.5, 2.4, 8], fov: 50, push: 0.25, dof: false, subject: [[PIG[0], 2.6, PIG[2]]] },
-  // S07: a crane from just behind Grandpa's shoulder up over the station, looking south to the bridge
-  s07: { at: [-1.4, 3.3, -3.8], look: [0.5, 2.9, -0.5], fov: 50, push: 0.2, dof: false, subject: [[0.5, 2.6, -0.5]] },
-  // S07b ('And I wasn't allowed past the BRIDGE'): the bridge side-on from the ravine's west rim, its lamps lit, a slow crane up
-  s07b: { path: [[0, -27, 1.6, 43.5], [2.2, -25, 2.4, 43]], lookPath: [[0, 0, -3, 43], [2.2, 0, -2.5, 43]], ease: true, fov: 50, dof: false, subject: [[0, -3, 43]] },
   // S09: a high crane over the ridge, looking south down the line into the basin
   s09: { path: [[0, ...v(3, 9, -4)], [3, ...v(3, 10, -8)]], lookPath: [[0, ...v(0, 22, -30)], [3, ...v(0, 19, -24)]], ease: true, fov: 55, dof: false },
   // S11b: the only close-up: Grandma in her cart, facing the lens (home)
-  s11b: { at: v(0.5, 2.5, 1.1), look: v(0.5, 2.0, 4.5), fov: 50, push: 0.35, dof: { aperture: 0.7 }, subject: [v(0.5, 1.9, 4.5)] },
+  s11b: { path: [[0, ...v(1.3, 2.6, 0.6)], [2.6, ...v(0.2, 2.35, 2.0)]], look: v(0.5, 2.0, 4.5), fov: 50, dof: { aperture: 0.7 }, subject: [v(0.5, 1.9, 4.5)] },
   // S12b: from the west, side-on: the cart shoots left (north) over the new rails
   s12b: { at: v(-11, 4.6, 3.4), lookPath: [[0, ...v(0.5, 1.5, 3.4)], [0.4, ...v(0.5, 1.5, 3.4)], [1.4, ...v(0.5, 1.5, 0.6)]], fov: 50, dof: false, subject: [v(0.5, 1.5, 4.5)] },
   // S14: side-on from the platform's west edge, looking east: Grandpa left, the cart in from the right
