@@ -240,9 +240,12 @@ the camera effects that film uses, sparingly; they exist already in edit.py's re
 - `python3 scripts/look_stats.py still.png [--night] [--box x0,y0,x1,y1]`: subject luma, black point, clipping,
   contrast, saturation, warmth; WARN lines and exit 1 when a frame misses the standard.
 - `python3 scripts/grade_preview.py raw.png out.png --look <mood or JSON> [--side]`: a grade in a second on a frame
-  rendered once with `LOOK=0 ./hb still ...`. Checked against a real render: see the commit for the measured difference.
+  rendered once with `LOOK=0 ./hb still ...`. Checked against real renders (nitwit, 1080x1011): eerie_night with bloom
+  and grain off differs by 0.001 levels on average (99th percentile 0); `look: 'auto'` in one render graded the day
+  frame as village_day and the night frame as eerie_night (mean difference 0.0001).
 - `./hb still <stunt> T --look golden_hour` (or `--look '{"mood": "tense", "vignette": 0.5}'`): the real thing.
-- Non-story Shorts and stunts whose `look` has no `mood` render exactly as before (pixel diff in the commit).
+- Non-story Shorts and stunts whose `look` has no `mood` render exactly as before: boat_clutch and tnt at 2 s and 6 s,
+  and story_good_boy (its own look) at 15.5 s, rendered on main and on this branch: 0 pixels differ.
 
 ## 9. Open questions for the owner
 1. **Font:** Poppins Black is the new caption default (most legible for its width). Keep, or prefer Montserrat Black
