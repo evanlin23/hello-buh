@@ -151,6 +151,10 @@ function pose (ctx, who, names, params = {}) {
   ctx.mark('pose', { ids: idsOf(ctx, who), ...flags })
 }
 function poseOff (ctx, who) { ctx.mark('pose_off', { ids: idsOf(ctx, who) }) }
+// Renderer-side head turns (render.js LOOK_AT): `who` (actors, or entity ids for mobs) turn their heads to `at` (an
+// actor's name, an entity id, or [dx, dy, dz] from the set origin) until M.headOff. No server moves: works on no-AI mobs.
+function headTo (ctx, who, at) { ctx.mark('look_at', { ids: idsOf(ctx, who), at }) }
+function headOff (ctx, who) { ctx.mark('look_at_off', { ids: idsOf(ctx, who) }) }
 function idsOf (ctx, who) {
   return [].concat(who).map(w => {
     if (typeof w === 'number') return w
@@ -219,4 +223,4 @@ async function say (ctx, who, text, { to = null, gesture = 'auto', hold = 0 } = 
 // actor's recorded voice on it. dur: seconds on screen (default: until the next line, at most 3.5 s).
 function line (ctx, who, text, dur) { ctx.mark('line', { who, text, ...(dur ? { dur } : {}) }) }
 
-module.exports = { spawnActors, quitActors, place, lookAt, track, nod, swing, shake, lookAway, point, stepBack, walkTo, give, empty, giveOff, pose, poseOff, shot, shotIn, line, say, readingMs, slideBlocks, sleep }
+module.exports = { spawnActors, quitActors, place, lookAt, track, nod, swing, shake, lookAway, point, stepBack, walkTo, give, empty, giveOff, pose, poseOff, headTo, headOff, shot, shotIn, line, say, readingMs, slideBlocks, sleep }

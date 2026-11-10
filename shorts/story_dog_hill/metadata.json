@@ -1,1193 +1,1192 @@
 {
- "name": "story_dog_hill",
- "caption": "why won't this dog stand up?",
- "youtube": {
-  "title": "why won't this dog stand up? #minecraft #shorts",
-  "description": "why won't this dog stand up?\n\n#minecraft #shorts #minecraftmemes #funny",
-  "hashtags": [
-   "#minecraft",
-   "#shorts",
-   "#minecraftmemes",
-   "#funny"
-  ],
-  "made_for_kids": false
- },
- "song": {
-  "file": "score.ogg",
-  "sha256": "fdad824546ce05931286d6c13d249b8c3bb4e297ec56c867b147a8c3f1a8dab6",
-  "drop_on_event": null
- },
- "video": {
-  "file": "short.mp4",
-  "duration_s": 52.75,
-  "width": 1080,
-  "height": 1920,
-  "fps": "60/1",
-  "codec": "h264",
-  "bytes": 31788473,
-  "sha256": "36635a9f5c862db33e0f364c69b32e82029bed841dd92a0a02f37cc2bb127c67"
- },
- "edit": {
-  "story": "stories/dog_hill",
-  "startAt": "start:0",
-  "endAfter": "end_scene:0",
-  "song": "stories/dog_hill/score.ogg",
-  "ownScore": true,
+  "name": "story_dog_hill",
   "caption": "why won't this dog stand up?",
-  "args": [
-   "--caption",
-   "why won't this dog stand up?",
-   "--story",
-   "stories/dog_hill",
-   "--start_at",
-   "start:0",
-   "--end_after",
-   "end_scene:0",
-   "--song",
-   "stories/dog_hill/score.ogg"
-  ]
- },
- "recording": {
-  "file": "recording.json.gz",
-  "minecraft": "1.21.11",
-  "world": {
-   "seed": "hellobuh",
-   "level_type": "minecraft:normal"
+  "youtube": {
+    "title": "why won't this dog stand up? #minecraft #shorts",
+    "description": "why won't this dog stand up?\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
   },
-  "set": {
-   "x": -202,
-   "y": 108,
-   "z": -898
+  "song": {
+    "file": "score.ogg",
+    "sha256": "6f5e619bf0f5a4ce576388cc0a4f26ee73452167e322f9a32ef0f31133d5142b",
+    "drop_on_event": null
   },
-  "biome": null,
-  "ticks": 1080,
-  "seconds": 54,
-  "deaths": 0,
-  "events": [
-   {
-    "t": 0.75,
-    "event": "start"
-   },
-   {
-    "t": 0.75,
-    "event": "f1_on"
-   },
-   {
-    "t": 0.75,
-    "event": "shot"
-   },
-   {
-    "t": 0.75,
-    "event": "line"
-   },
-   {
-    "t": 4.3,
-    "event": "time"
-   },
-   {
-    "t": 4.3,
-    "event": "weather"
-   },
-   {
-    "t": 4.3,
-    "event": "shot"
-   },
-   {
-    "t": 4.3,
-    "event": "line"
-   },
-   {
-    "t": 4.95,
-    "event": "block_entity"
-   },
-   {
-    "t": 4.95,
-    "event": "block_entity"
-   },
-   {
-    "t": 4.95,
-    "event": "block_entity"
-   },
-   {
-    "t": 4.95,
-    "event": "block_entity"
-   },
-   {
-    "t": 5,
-    "event": "block_entity"
-   },
-   {
-    "t": 5,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.2,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.2,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.25,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.25,
-    "event": "block_entity"
-   },
-   {
-    "t": 5.35,
-    "event": "time"
-   },
-   {
-    "t": 5.35,
-    "event": "weather"
-   },
-   {
-    "t": 5.35,
-    "event": "shot"
-   },
-   {
-    "t": 5.65,
-    "event": "lightning"
-   },
-   {
-    "t": 6.1,
-    "event": "lightning"
-   },
-   {
-    "t": 6.5,
-    "event": "weather"
-   },
-   {
-    "t": 6.5,
-    "event": "shot"
-   },
-   {
-    "t": 7.75,
-    "event": "time"
-   },
-   {
-    "t": 7.75,
-    "event": "shot"
-   },
-   {
-    "t": 7.75,
-    "event": "line"
-   },
-   {
-    "t": 7.75,
-    "event": "mob_hurt"
-   },
-   {
-    "t": 7.75,
-    "event": "vel"
-   },
-   {
-    "t": 7.75,
-    "event": "mob_death"
-   },
-   {
-    "t": 7.75,
-    "event": "mob_hurt"
-   },
-   {
-    "t": 7.75,
-    "event": "vel"
-   },
-   {
-    "t": 7.75,
-    "event": "mob_death"
-   },
-   {
-    "t": 8.05,
-    "event": "vel"
-   },
-   {
-    "t": 8.75,
-    "event": "vel"
-   },
-   {
-    "t": 9.7,
-    "event": "vel"
-   },
-   {
-    "t": 10.05,
-    "event": "vel"
-   },
-   {
-    "t": 10.4,
-    "event": "vel"
-   },
-   {
-    "t": 10.7,
-    "event": "vel"
-   },
-   {
-    "t": 10.95,
-    "event": "vel"
-   },
-   {
-    "t": 11.05,
-    "event": "vel"
-   },
-   {
-    "t": 11.15,
-    "event": "vel"
-   },
-   {
-    "t": 11.55,
-    "event": "shot"
-   },
-   {
-    "t": 11.55,
-    "event": "line"
-   },
-   {
-    "t": 11.55,
-    "event": "vel"
-   },
-   {
-    "t": 11.6,
-    "event": "vel"
-   },
-   {
-    "t": 11.7,
-    "event": "vel"
-   },
-   {
-    "t": 12.05,
-    "event": "vel"
-   },
-   {
-    "t": 12.05,
-    "event": "vel"
-   },
-   {
-    "t": 12.15,
-    "event": "vel"
-   },
-   {
-    "t": 12.25,
-    "event": "vel"
-   },
-   {
-    "t": 12.65,
-    "event": "vel"
-   },
-   {
-    "t": 12.7,
-    "event": "vel"
-   },
-   {
-    "t": 12.85,
-    "event": "vel"
-   },
-   {
-    "t": 13.05,
-    "event": "vel"
-   },
-   {
-    "t": 13.15,
-    "event": "vel"
-   },
-   {
-    "t": 13.7,
-    "event": "vel"
-   },
-   {
-    "t": 13.85,
-    "event": "vel"
-   },
-   {
-    "t": 14.05,
-    "event": "vel"
-   },
-   {
-    "t": 14.15,
-    "event": "vel"
-   },
-   {
-    "t": 14.75,
-    "event": "vel"
-   },
-   {
-    "t": 14.9,
-    "event": "vel"
-   },
-   {
-    "t": 15.1,
-    "event": "vel"
-   },
-   {
-    "t": 15.2,
-    "event": "vel"
-   },
-   {
-    "t": 15.35,
-    "event": "time"
-   },
-   {
-    "t": 15.35,
-    "event": "shot"
-   },
-   {
-    "t": 15.35,
-    "event": "line"
-   },
-   {
-    "t": 15.75,
-    "event": "vel"
-   },
-   {
-    "t": 15.9,
-    "event": "vel"
-   },
-   {
-    "t": 16.1,
-    "event": "vel"
-   },
-   {
-    "t": 16.2,
-    "event": "vel"
-   },
-   {
-    "t": 16.75,
-    "event": "vel"
-   },
-   {
-    "t": 16.9,
-    "event": "vel"
-   },
-   {
-    "t": 17.1,
-    "event": "vel"
-   },
-   {
-    "t": 17.2,
-    "event": "vel"
-   },
-   {
-    "t": 17.75,
-    "event": "vel"
-   },
-   {
-    "t": 17.9,
-    "event": "vel"
-   },
-   {
-    "t": 18.05,
-    "event": "vel"
-   },
-   {
-    "t": 18.15,
-    "event": "vel"
-   },
-   {
-    "t": 18.6,
-    "event": "shot"
-   },
-   {
-    "t": 18.6,
-    "event": "line"
-   },
-   {
-    "t": 18.7,
-    "event": "vel"
-   },
-   {
-    "t": 18.85,
-    "event": "vel"
-   },
-   {
-    "t": 19.1,
-    "event": "vel"
-   },
-   {
-    "t": 19.15,
-    "event": "vel"
-   },
-   {
-    "t": 19.7,
-    "event": "vel"
-   },
-   {
-    "t": 19.85,
-    "event": "vel"
-   },
-   {
-    "t": 20.05,
-    "event": "vel"
-   },
-   {
-    "t": 20.15,
-    "event": "vel"
-   },
-   {
-    "t": 20.7,
-    "event": "vel"
-   },
-   {
-    "t": 20.85,
-    "event": "vel"
-   },
-   {
-    "t": 21.05,
-    "event": "vel"
-   },
-   {
-    "t": 21.15,
-    "event": "vel"
-   },
-   {
-    "t": 21.7,
-    "event": "vel"
-   },
-   {
-    "t": 21.85,
-    "event": "vel"
-   },
-   {
-    "t": 22.05,
-    "event": "vel"
-   },
-   {
-    "t": 22.15,
-    "event": "vel"
-   },
-   {
-    "t": 22.7,
-    "event": "vel"
-   },
-   {
-    "t": 22.85,
-    "event": "vel"
-   },
-   {
-    "t": 23.05,
-    "event": "vel"
-   },
-   {
-    "t": 23.15,
-    "event": "vel"
-   },
-   {
-    "t": 23.35,
-    "event": "time"
-   },
-   {
-    "t": 23.35,
-    "event": "shot"
-   },
-   {
-    "t": 23.35,
-    "event": "line"
-   },
-   {
-    "t": 23.7,
-    "event": "vel"
-   },
-   {
-    "t": 23.85,
-    "event": "vel"
-   },
-   {
-    "t": 24.05,
-    "event": "vel"
-   },
-   {
-    "t": 24.15,
-    "event": "vel"
-   },
-   {
-    "t": 24.7,
-    "event": "vel"
-   },
-   {
-    "t": 24.85,
-    "event": "vel"
-   },
-   {
-    "t": 25.05,
-    "event": "vel"
-   },
-   {
-    "t": 25.15,
-    "event": "vel"
-   },
-   {
-    "t": 25.75,
-    "event": "vel"
-   },
-   {
-    "t": 25.9,
-    "event": "vel"
-   },
-   {
-    "t": 26.1,
-    "event": "vel"
-   },
-   {
-    "t": 26.2,
-    "event": "vel"
-   },
-   {
-    "t": 26.75,
-    "event": "vel"
-   },
-   {
-    "t": 26.9,
-    "event": "vel"
-   },
-   {
-    "t": 27.1,
-    "event": "vel"
-   },
-   {
-    "t": 27.2,
-    "event": "vel"
-   },
-   {
-    "t": 27.65,
-    "event": "time"
-   },
-   {
-    "t": 27.65,
-    "event": "shot"
-   },
-   {
-    "t": 27.65,
-    "event": "line"
-   },
-   {
-    "t": 27.75,
-    "event": "vel"
-   },
-   {
-    "t": 27.9,
-    "event": "vel"
-   },
-   {
-    "t": 28.1,
-    "event": "vel"
-   },
-   {
-    "t": 28.2,
-    "event": "vel"
-   },
-   {
-    "t": 28.7,
-    "event": "vel"
-   },
-   {
-    "t": 28.85,
-    "event": "vel"
-   },
-   {
-    "t": 29.05,
-    "event": "vel"
-   },
-   {
-    "t": 29.2,
-    "event": "vel"
-   },
-   {
-    "t": 29.7,
-    "event": "vel"
-   },
-   {
-    "t": 29.85,
-    "event": "vel"
-   },
-   {
-    "t": 30.05,
-    "event": "vel"
-   },
-   {
-    "t": 30.15,
-    "event": "vel"
-   },
-   {
-    "t": 30.7,
-    "event": "vel"
-   },
-   {
-    "t": 30.85,
-    "event": "vel"
-   },
-   {
-    "t": 31.05,
-    "event": "vel"
-   },
-   {
-    "t": 31.15,
-    "event": "vel"
-   },
-   {
-    "t": 31.7,
-    "event": "vel"
-   },
-   {
-    "t": 31.85,
-    "event": "vel"
-   },
-   {
-    "t": 32.05,
-    "event": "vel"
-   },
-   {
-    "t": 32.1,
-    "event": "shot"
-   },
-   {
-    "t": 32.1,
-    "event": "line"
-   },
-   {
-    "t": 32.15,
-    "event": "vel"
-   },
-   {
-    "t": 32.7,
-    "event": "vel"
-   },
-   {
-    "t": 32.85,
-    "event": "vel"
-   },
-   {
-    "t": 33.05,
-    "event": "vel"
-   },
-   {
-    "t": 33.15,
-    "event": "vel"
-   },
-   {
-    "t": 33.7,
-    "event": "vel"
-   },
-   {
-    "t": 33.85,
-    "event": "vel"
-   },
-   {
-    "t": 34,
-    "event": "time"
-   },
-   {
-    "t": 34,
-    "event": "shot"
-   },
-   {
-    "t": 34,
-    "event": "line"
-   },
-   {
-    "t": 34.05,
-    "event": "vel"
-   },
-   {
-    "t": 34.15,
-    "event": "vel"
-   },
-   {
-    "t": 34.7,
-    "event": "vel"
-   },
-   {
-    "t": 34.85,
-    "event": "vel"
-   },
-   {
-    "t": 35.05,
-    "event": "vel"
-   },
-   {
-    "t": 35.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 35.1,
-    "event": "block_entity"
-   },
-   {
-    "t": 35.15,
-    "event": "vel"
-   },
-   {
-    "t": 35.7,
-    "event": "vel"
-   },
-   {
-    "t": 35.85,
-    "event": "vel"
-   },
-   {
-    "t": 36.05,
-    "event": "vel"
-   },
-   {
-    "t": 36.15,
-    "event": "vel"
-   },
-   {
-    "t": 36.3,
-    "event": "time"
-   },
-   {
-    "t": 36.3,
-    "event": "shot"
-   },
-   {
-    "t": 36.75,
-    "event": "vel"
-   },
-   {
-    "t": 36.9,
-    "event": "vel"
-   },
-   {
-    "t": 37.1,
-    "event": "vel"
-   },
-   {
-    "t": 37.2,
-    "event": "vel"
-   },
-   {
-    "t": 37.7,
-    "event": "vel"
-   },
-   {
-    "t": 37.85,
-    "event": "vel"
-   },
-   {
-    "t": 38.05,
-    "event": "vel"
-   },
-   {
-    "t": 38.15,
-    "event": "vel"
-   },
-   {
-    "t": 38.7,
-    "event": "vel"
-   },
-   {
-    "t": 38.85,
-    "event": "vel"
-   },
-   {
-    "t": 39.05,
-    "event": "vel"
-   },
-   {
-    "t": 39.1,
-    "event": "shot"
-   },
-   {
-    "t": 39.1,
-    "event": "hush"
-   },
-   {
-    "t": 39.1,
-    "event": "swell"
-   },
-   {
-    "t": 39.15,
-    "event": "vel"
-   },
-   {
-    "t": 39.2,
-    "event": "block_entity"
-   },
-   {
-    "t": 39.2,
-    "event": "block_entity"
-   },
-   {
-    "t": 39.3,
-    "event": "cut"
-   },
-   {
-    "t": 39.3,
-    "event": "chat"
-   },
-   {
-    "t": 39.55,
-    "event": "block_entity"
-   },
-   {
-    "t": 39.55,
-    "event": "block_entity"
-   },
-   {
-    "t": 39.7,
-    "event": "vel"
-   },
-   {
-    "t": 39.85,
-    "event": "vel"
-   },
-   {
-    "t": 40.05,
-    "event": "vel"
-   },
-   {
-    "t": 40.15,
-    "event": "vel"
-   },
-   {
-    "t": 40.7,
-    "event": "vel"
-   },
-   {
-    "t": 40.85,
-    "event": "vel"
-   },
-   {
-    "t": 41.05,
-    "event": "vel"
-   },
-   {
-    "t": 41.15,
-    "event": "vel"
-   },
-   {
-    "t": 41.2,
-    "event": "line"
-   },
-   {
-    "t": 41.4,
-    "event": "block_entity"
-   },
-   {
-    "t": 41.4,
-    "event": "block_entity"
-   },
-   {
-    "t": 41.7,
-    "event": "vel"
-   },
-   {
-    "t": 41.85,
-    "event": "vel"
-   },
-   {
-    "t": 42.05,
-    "event": "vel"
-   },
-   {
-    "t": 42.15,
-    "event": "vel"
-   },
-   {
-    "t": 42.45,
-    "event": "hit"
-   },
-   {
-    "t": 42.7,
-    "event": "vel"
-   },
-   {
-    "t": 42.85,
-    "event": "vel"
-   },
-   {
-    "t": 43.05,
-    "event": "vel"
-   },
-   {
-    "t": 43.15,
-    "event": "vel"
-   },
-   {
-    "t": 43.2,
-    "event": "hush_end"
-   },
-   {
-    "t": 43.2,
-    "event": "shot"
-   },
-   {
-    "t": 43.2,
-    "event": "line"
-   },
-   {
-    "t": 43.7,
-    "event": "vel"
-   },
-   {
-    "t": 43.85,
-    "event": "vel"
-   },
-   {
-    "t": 44.05,
-    "event": "vel"
-   },
-   {
-    "t": 44.15,
-    "event": "vel"
-   },
-   {
-    "t": 44.7,
-    "event": "vel"
-   },
-   {
-    "t": 44.85,
-    "event": "vel"
-   },
-   {
-    "t": 45.05,
-    "event": "vel"
-   },
-   {
-    "t": 45.15,
-    "event": "vel"
-   },
-   {
-    "t": 45.75,
-    "event": "vel"
-   },
-   {
-    "t": 45.9,
-    "event": "vel"
-   },
-   {
-    "t": 46.1,
-    "event": "shot"
-   },
-   {
-    "t": 46.1,
-    "event": "line"
-   },
-   {
-    "t": 46.1,
-    "event": "vel"
-   },
-   {
-    "t": 46.2,
-    "event": "vel"
-   },
-   {
-    "t": 46.75,
-    "event": "vel"
-   },
-   {
-    "t": 46.85,
-    "event": "vel"
-   },
-   {
-    "t": 46.95,
-    "event": "swing"
-   },
-   {
-    "t": 47.05,
-    "event": "vel"
-   },
-   {
-    "t": 47.15,
-    "event": "vel"
-   },
-   {
-    "t": 47.45,
-    "event": "block_entity"
-   },
-   {
-    "t": 47.45,
-    "event": "block_entity"
-   },
-   {
-    "t": 47.7,
-    "event": "vel"
-   },
-   {
-    "t": 47.85,
-    "event": "vel"
-   },
-   {
-    "t": 48.05,
-    "event": "vel"
-   },
-   {
-    "t": 48.15,
-    "event": "vel"
-   },
-   {
-    "t": 48.7,
-    "event": "vel"
-   },
-   {
-    "t": 48.85,
-    "event": "vel"
-   },
-   {
-    "t": 49.05,
-    "event": "vel"
-   },
-   {
-    "t": 49.15,
-    "event": "vel"
-   },
-   {
-    "t": 49.25,
-    "event": "cut"
-   },
-   {
-    "t": 49.25,
-    "event": "chat"
-   },
-   {
-    "t": 49.25,
-    "event": "hit"
-   },
-   {
-    "t": 49.7,
-    "event": "vel"
-   },
-   {
-    "t": 49.85,
-    "event": "vel"
-   },
-   {
-    "t": 50.05,
-    "event": "vel"
-   },
-   {
-    "t": 50.15,
-    "event": "vel"
-   },
-   {
-    "t": 50.7,
-    "event": "vel"
-   },
-   {
-    "t": 50.85,
-    "event": "vel"
-   },
-   {
-    "t": 51.05,
-    "event": "vel"
-   },
-   {
-    "t": 51.15,
-    "event": "vel"
-   },
-   {
-    "t": 51.25,
-    "event": "line"
-   },
-   {
-    "t": 51.7,
-    "event": "vel"
-   },
-   {
-    "t": 51.85,
-    "event": "vel"
-   },
-   {
-    "t": 52,
-    "event": "shot"
-   },
-   {
-    "t": 52,
-    "event": "hit"
-   },
-   {
-    "t": 52,
-    "event": "payoff"
-   },
-   {
-    "t": 52.05,
-    "event": "vel"
-   },
-   {
-    "t": 52.15,
-    "event": "vel"
-   },
-   {
-    "t": 52.75,
-    "event": "vel"
-   },
-   {
-    "t": 52.9,
-    "event": "vel"
-   },
-   {
-    "t": 53.1,
-    "event": "vel"
-   },
-   {
-    "t": 53.2,
-    "event": "vel"
-   },
-   {
-    "t": 53.5,
-    "event": "end_scene"
-   },
-   {
-    "t": 53.75,
-    "event": "vel"
-   },
-   {
-    "t": 53.9,
-    "event": "block_entity"
-   },
-   {
-    "t": 53.9,
-    "event": "block_entity"
-   },
-   {
-    "t": 53.9,
-    "event": "vel"
-   },
-   {
-    "t": 54,
-    "event": "end"
-   }
-  ]
- },
- "code": {
-  "repo": "evanlin23/hello-buh",
-  "branch": "claude/story-cine-2",
-  "commit": "cb3ba8b902c6dcc94accf481562e17743489bcda",
-  "rendered": "local",
-  "rendered_at": "2026-11-10T09:40:35.099Z",
-  "head_at_publish": "cb3ba8b902c6dcc94accf481562e17743489bcda",
-  "stunt": "stunts/story_dog_hill.js",
-  "source_snapshot": [
-   "source/story_dog_hill.js",
-   "source/movie.js"
-  ]
- },
- "rebuild": [
-  "git checkout cb3ba8b902c6",
-  "gunzip -c shorts/story_dog_hill/recording.json.gz > work/story_dog_hill.rec.json",
-  "node render.js work/story_dog_hill.rec.json work/story_dog_hill.frames 60 1080 1011",
-  "python3 audio.py work/story_dog_hill.rec.json work/story_dog_hill.wav",
-  "python3 edit.py --frames work/story_dog_hill.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_dog_hill.rec.json --audio work/story_dog_hill.wav --caption \"why won't this dog stand up?\" --story stories/dog_hill --start_at start:0 --end_after end_scene:0 --song stories/dog_hill/score.ogg --out out/story_dog_hill.mp4"
- ],
- "status": "held",
- "notes": "The Dog on the Hill (#16): a tamed wolf waits 900 days on a hilltop for its owner; Milo logs in, says sit, logs out; 'Day one. Again.' Gemini cast (Pip=Leda v3 reference voice, Grandpa=Algenib, Milo=Achird), own note-block score (no NCS). Review: 2 rounds (r1 blocker: chat lines 1.2 s late, fixed). hb pace 0 blockers, owner gate 0, drift 0. Nitpicks: the bare patch doesn't stand out much; no bone visible on 'BONE'; ~1.2 s tail after 'Again'; the night reveal is dark; viewer panel heard Pip as a breathy young man (owner approved this voice).",
- "published_at": "2026-11-10T09:41:55.479Z",
- "held_reason": "owner 2026-11-10: new stories don't go out until the owner OKs them"
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 50.2,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 30581041,
+    "sha256": "f96c126fdbeb4fb44ea8a470887f5e90e6e16df191ff019d317adb5f2e65c0f8"
+  },
+  "edit": {
+    "story": "stories/dog_hill",
+    "startAt": "start:0",
+    "endAfter": "end_scene:0",
+    "song": "stories/dog_hill/score.ogg",
+    "ownScore": true,
+    "caption": "why won't this dog stand up?",
+    "args": [
+      "--caption",
+      "why won't this dog stand up?",
+      "--story",
+      "stories/dog_hill",
+      "--start_at",
+      "start:0",
+      "--end_after",
+      "end_scene:0",
+      "--song",
+      "stories/dog_hill/score.ogg"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": -202,
+      "y": 108,
+      "z": -898
+    },
+    "biome": null,
+    "ticks": 1089,
+    "seconds": 54.45,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "f1_on"
+      },
+      {
+        "t": 0.75,
+        "event": "shot"
+      },
+      {
+        "t": 0.75,
+        "event": "line"
+      },
+      {
+        "t": 4.3,
+        "event": "time"
+      },
+      {
+        "t": 4.3,
+        "event": "weather"
+      },
+      {
+        "t": 4.3,
+        "event": "shot"
+      },
+      {
+        "t": 4.3,
+        "event": "line"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.2,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.25,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.25,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.35,
+        "event": "time"
+      },
+      {
+        "t": 5.35,
+        "event": "weather"
+      },
+      {
+        "t": 5.35,
+        "event": "shot"
+      },
+      {
+        "t": 5.35,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.35,
+        "event": "block_entity"
+      },
+      {
+        "t": 5.65,
+        "event": "lightning"
+      },
+      {
+        "t": 6.1,
+        "event": "lightning"
+      },
+      {
+        "t": 6.5,
+        "event": "weather"
+      },
+      {
+        "t": 6.5,
+        "event": "shot"
+      },
+      {
+        "t": 7.7,
+        "event": "time"
+      },
+      {
+        "t": 7.7,
+        "event": "shot"
+      },
+      {
+        "t": 7.7,
+        "event": "line"
+      },
+      {
+        "t": 7.7,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.7,
+        "event": "vel"
+      },
+      {
+        "t": 7.7,
+        "event": "mob_death"
+      },
+      {
+        "t": 7.7,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 7.7,
+        "event": "vel"
+      },
+      {
+        "t": 7.7,
+        "event": "mob_death"
+      },
+      {
+        "t": 8,
+        "event": "vel"
+      },
+      {
+        "t": 8.7,
+        "event": "vel"
+      },
+      {
+        "t": 9.7,
+        "event": "vel"
+      },
+      {
+        "t": 10.15,
+        "event": "vel"
+      },
+      {
+        "t": 10.5,
+        "event": "vel"
+      },
+      {
+        "t": 10.75,
+        "event": "vel"
+      },
+      {
+        "t": 11,
+        "event": "vel"
+      },
+      {
+        "t": 11.15,
+        "event": "vel"
+      },
+      {
+        "t": 11.2,
+        "event": "vel"
+      },
+      {
+        "t": 11.6,
+        "event": "vel"
+      },
+      {
+        "t": 11.6,
+        "event": "vel"
+      },
+      {
+        "t": 11.65,
+        "event": "shot"
+      },
+      {
+        "t": 11.65,
+        "event": "line"
+      },
+      {
+        "t": 11.75,
+        "event": "vel"
+      },
+      {
+        "t": 12.05,
+        "event": "vel"
+      },
+      {
+        "t": 12.15,
+        "event": "vel"
+      },
+      {
+        "t": 12.2,
+        "event": "vel"
+      },
+      {
+        "t": 12.25,
+        "event": "vel"
+      },
+      {
+        "t": 12.65,
+        "event": "vel"
+      },
+      {
+        "t": 12.75,
+        "event": "vel"
+      },
+      {
+        "t": 12.85,
+        "event": "vel"
+      },
+      {
+        "t": 13.15,
+        "event": "vel"
+      },
+      {
+        "t": 13.2,
+        "event": "vel"
+      },
+      {
+        "t": 13.75,
+        "event": "vel"
+      },
+      {
+        "t": 13.85,
+        "event": "vel"
+      },
+      {
+        "t": 14.15,
+        "event": "vel"
+      },
+      {
+        "t": 14.2,
+        "event": "vel"
+      },
+      {
+        "t": 14.75,
+        "event": "vel"
+      },
+      {
+        "t": 14.85,
+        "event": "vel"
+      },
+      {
+        "t": 15.15,
+        "event": "vel"
+      },
+      {
+        "t": 15.2,
+        "event": "vel"
+      },
+      {
+        "t": 15.4,
+        "event": "time"
+      },
+      {
+        "t": 15.4,
+        "event": "shot"
+      },
+      {
+        "t": 15.4,
+        "event": "line"
+      },
+      {
+        "t": 15.75,
+        "event": "vel"
+      },
+      {
+        "t": 15.85,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "vel"
+      },
+      {
+        "t": 16.2,
+        "event": "vel"
+      },
+      {
+        "t": 16.75,
+        "event": "vel"
+      },
+      {
+        "t": 16.85,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.15,
+        "event": "vel"
+      },
+      {
+        "t": 17.7,
+        "event": "vel"
+      },
+      {
+        "t": 17.8,
+        "event": "vel"
+      },
+      {
+        "t": 18.1,
+        "event": "vel"
+      },
+      {
+        "t": 18.15,
+        "event": "vel"
+      },
+      {
+        "t": 18.65,
+        "event": "shot"
+      },
+      {
+        "t": 18.65,
+        "event": "line"
+      },
+      {
+        "t": 18.7,
+        "event": "vel"
+      },
+      {
+        "t": 18.8,
+        "event": "vel"
+      },
+      {
+        "t": 19.1,
+        "event": "vel"
+      },
+      {
+        "t": 19.15,
+        "event": "vel"
+      },
+      {
+        "t": 19.7,
+        "event": "vel"
+      },
+      {
+        "t": 19.8,
+        "event": "vel"
+      },
+      {
+        "t": 20.1,
+        "event": "vel"
+      },
+      {
+        "t": 20.15,
+        "event": "vel"
+      },
+      {
+        "t": 20.7,
+        "event": "vel"
+      },
+      {
+        "t": 20.8,
+        "event": "vel"
+      },
+      {
+        "t": 21.1,
+        "event": "vel"
+      },
+      {
+        "t": 21.15,
+        "event": "vel"
+      },
+      {
+        "t": 21.7,
+        "event": "vel"
+      },
+      {
+        "t": 21.8,
+        "event": "vel"
+      },
+      {
+        "t": 22.1,
+        "event": "vel"
+      },
+      {
+        "t": 22.15,
+        "event": "vel"
+      },
+      {
+        "t": 22.7,
+        "event": "vel"
+      },
+      {
+        "t": 22.8,
+        "event": "vel"
+      },
+      {
+        "t": 23.15,
+        "event": "vel"
+      },
+      {
+        "t": 23.2,
+        "event": "vel"
+      },
+      {
+        "t": 23.45,
+        "event": "time"
+      },
+      {
+        "t": 23.45,
+        "event": "shot"
+      },
+      {
+        "t": 23.45,
+        "event": "line"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 23.85,
+        "event": "vel"
+      },
+      {
+        "t": 24.15,
+        "event": "vel"
+      },
+      {
+        "t": 24.2,
+        "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 24.85,
+        "event": "vel"
+      },
+      {
+        "t": 25.15,
+        "event": "vel"
+      },
+      {
+        "t": 25.2,
+        "event": "vel"
+      },
+      {
+        "t": 25.75,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "vel"
+      },
+      {
+        "t": 26.15,
+        "event": "vel"
+      },
+      {
+        "t": 26.2,
+        "event": "vel"
+      },
+      {
+        "t": 26.75,
+        "event": "vel"
+      },
+      {
+        "t": 26.85,
+        "event": "vel"
+      },
+      {
+        "t": 27.15,
+        "event": "vel"
+      },
+      {
+        "t": 27.2,
+        "event": "vel"
+      },
+      {
+        "t": 27.7,
+        "event": "time"
+      },
+      {
+        "t": 27.7,
+        "event": "shot"
+      },
+      {
+        "t": 27.7,
+        "event": "line"
+      },
+      {
+        "t": 27.75,
+        "event": "vel"
+      },
+      {
+        "t": 27.85,
+        "event": "vel"
+      },
+      {
+        "t": 28.1,
+        "event": "vel"
+      },
+      {
+        "t": 28.15,
+        "event": "vel"
+      },
+      {
+        "t": 28.7,
+        "event": "vel"
+      },
+      {
+        "t": 28.8,
+        "event": "vel"
+      },
+      {
+        "t": 29.1,
+        "event": "vel"
+      },
+      {
+        "t": 29.15,
+        "event": "vel"
+      },
+      {
+        "t": 29.7,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "vel"
+      },
+      {
+        "t": 30.1,
+        "event": "vel"
+      },
+      {
+        "t": 30.15,
+        "event": "vel"
+      },
+      {
+        "t": 30.7,
+        "event": "vel"
+      },
+      {
+        "t": 30.8,
+        "event": "vel"
+      },
+      {
+        "t": 31.1,
+        "event": "vel"
+      },
+      {
+        "t": 31.15,
+        "event": "vel"
+      },
+      {
+        "t": 31.7,
+        "event": "vel"
+      },
+      {
+        "t": 31.8,
+        "event": "vel"
+      },
+      {
+        "t": 32.1,
+        "event": "vel"
+      },
+      {
+        "t": 32.15,
+        "event": "shot"
+      },
+      {
+        "t": 32.15,
+        "event": "line"
+      },
+      {
+        "t": 32.15,
+        "event": "vel"
+      },
+      {
+        "t": 32.7,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "vel"
+      },
+      {
+        "t": 33.1,
+        "event": "vel"
+      },
+      {
+        "t": 33.15,
+        "event": "vel"
+      },
+      {
+        "t": 33.7,
+        "event": "vel"
+      },
+      {
+        "t": 33.8,
+        "event": "vel"
+      },
+      {
+        "t": 34.05,
+        "event": "time"
+      },
+      {
+        "t": 34.05,
+        "event": "shot"
+      },
+      {
+        "t": 34.05,
+        "event": "line"
+      },
+      {
+        "t": 34.1,
+        "event": "vel"
+      },
+      {
+        "t": 34.15,
+        "event": "vel"
+      },
+      {
+        "t": 34.7,
+        "event": "vel"
+      },
+      {
+        "t": 34.8,
+        "event": "vel"
+      },
+      {
+        "t": 35.1,
+        "event": "vel"
+      },
+      {
+        "t": 35.15,
+        "event": "vel"
+      },
+      {
+        "t": 35.75,
+        "event": "vel"
+      },
+      {
+        "t": 35.85,
+        "event": "vel"
+      },
+      {
+        "t": 36.15,
+        "event": "vel"
+      },
+      {
+        "t": 36.2,
+        "event": "vel"
+      },
+      {
+        "t": 36.35,
+        "event": "time"
+      },
+      {
+        "t": 36.35,
+        "event": "shot"
+      },
+      {
+        "t": 36.75,
+        "event": "vel"
+      },
+      {
+        "t": 36.85,
+        "event": "vel"
+      },
+      {
+        "t": 37.15,
+        "event": "vel"
+      },
+      {
+        "t": 37.2,
+        "event": "vel"
+      },
+      {
+        "t": 37.75,
+        "event": "vel"
+      },
+      {
+        "t": 37.85,
+        "event": "vel"
+      },
+      {
+        "t": 38.15,
+        "event": "vel"
+      },
+      {
+        "t": 38.2,
+        "event": "vel"
+      },
+      {
+        "t": 38.75,
+        "event": "vel"
+      },
+      {
+        "t": 38.85,
+        "event": "vel"
+      },
+      {
+        "t": 39.15,
+        "event": "shot"
+      },
+      {
+        "t": 39.15,
+        "event": "hush"
+      },
+      {
+        "t": 39.15,
+        "event": "swell"
+      },
+      {
+        "t": 39.15,
+        "event": "vel"
+      },
+      {
+        "t": 39.2,
+        "event": "vel"
+      },
+      {
+        "t": 39.35,
+        "event": "chat"
+      },
+      {
+        "t": 39.35,
+        "event": "cut"
+      },
+      {
+        "t": 39.75,
+        "event": "vel"
+      },
+      {
+        "t": 39.85,
+        "event": "vel"
+      },
+      {
+        "t": 40.15,
+        "event": "vel"
+      },
+      {
+        "t": 40.2,
+        "event": "vel"
+      },
+      {
+        "t": 40.75,
+        "event": "vel"
+      },
+      {
+        "t": 40.85,
+        "event": "vel"
+      },
+      {
+        "t": 41.15,
+        "event": "vel"
+      },
+      {
+        "t": 41.2,
+        "event": "vel"
+      },
+      {
+        "t": 41.25,
+        "event": "line"
+      },
+      {
+        "t": 41.75,
+        "event": "vel"
+      },
+      {
+        "t": 41.85,
+        "event": "vel"
+      },
+      {
+        "t": 42.15,
+        "event": "vel"
+      },
+      {
+        "t": 42.2,
+        "event": "vel"
+      },
+      {
+        "t": 42.5,
+        "event": "hit"
+      },
+      {
+        "t": 42.75,
+        "event": "vel"
+      },
+      {
+        "t": 42.85,
+        "event": "vel"
+      },
+      {
+        "t": 43.15,
+        "event": "vel"
+      },
+      {
+        "t": 43.2,
+        "event": "vel"
+      },
+      {
+        "t": 43.25,
+        "event": "hush_end"
+      },
+      {
+        "t": 43.25,
+        "event": "shot"
+      },
+      {
+        "t": 43.25,
+        "event": "line"
+      },
+      {
+        "t": 43.7,
+        "event": "vel"
+      },
+      {
+        "t": 43.8,
+        "event": "vel"
+      },
+      {
+        "t": 44,
+        "event": "block_entity"
+      },
+      {
+        "t": 44,
+        "event": "block_entity"
+      },
+      {
+        "t": 44.1,
+        "event": "vel"
+      },
+      {
+        "t": 44.15,
+        "event": "vel"
+      },
+      {
+        "t": 44.4,
+        "event": "block_entity"
+      },
+      {
+        "t": 44.4,
+        "event": "block_entity"
+      },
+      {
+        "t": 44.7,
+        "event": "vel"
+      },
+      {
+        "t": 44.8,
+        "event": "vel"
+      },
+      {
+        "t": 44.95,
+        "event": "block_entity"
+      },
+      {
+        "t": 44.95,
+        "event": "block_entity"
+      },
+      {
+        "t": 45,
+        "event": "block_entity"
+      },
+      {
+        "t": 45,
+        "event": "block_entity"
+      },
+      {
+        "t": 45.1,
+        "event": "vel"
+      },
+      {
+        "t": 45.15,
+        "event": "vel"
+      },
+      {
+        "t": 45.7,
+        "event": "vel"
+      },
+      {
+        "t": 45.8,
+        "event": "vel"
+      },
+      {
+        "t": 46,
+        "event": "block_entity"
+      },
+      {
+        "t": 46,
+        "event": "block_entity"
+      },
+      {
+        "t": 46.1,
+        "event": "shot"
+      },
+      {
+        "t": 46.1,
+        "event": "line"
+      },
+      {
+        "t": 46.1,
+        "event": "vel"
+      },
+      {
+        "t": 46.15,
+        "event": "vel"
+      },
+      {
+        "t": 46.7,
+        "event": "vel"
+      },
+      {
+        "t": 46.8,
+        "event": "vel"
+      },
+      {
+        "t": 46.95,
+        "event": "swing"
+      },
+      {
+        "t": 47.1,
+        "event": "vel"
+      },
+      {
+        "t": 47.15,
+        "event": "vel"
+      },
+      {
+        "t": 47.7,
+        "event": "vel"
+      },
+      {
+        "t": 47.75,
+        "event": "block_entity"
+      },
+      {
+        "t": 47.75,
+        "event": "block_entity"
+      },
+      {
+        "t": 47.8,
+        "event": "vel"
+      },
+      {
+        "t": 48.1,
+        "event": "vel"
+      },
+      {
+        "t": 48.15,
+        "event": "vel"
+      },
+      {
+        "t": 48.7,
+        "event": "vel"
+      },
+      {
+        "t": 48.8,
+        "event": "vel"
+      },
+      {
+        "t": 49.1,
+        "event": "vel"
+      },
+      {
+        "t": 49.15,
+        "event": "vel"
+      },
+      {
+        "t": 49.25,
+        "event": "chat"
+      },
+      {
+        "t": 49.25,
+        "event": "hit"
+      },
+      {
+        "t": 49.25,
+        "event": "cut"
+      },
+      {
+        "t": 49.25,
+        "event": "payoff"
+      },
+      {
+        "t": 49.7,
+        "event": "vel"
+      },
+      {
+        "t": 49.8,
+        "event": "vel"
+      },
+      {
+        "t": 49.95,
+        "event": "shot"
+      },
+      {
+        "t": 50.1,
+        "event": "vel"
+      },
+      {
+        "t": 50.15,
+        "event": "vel"
+      },
+      {
+        "t": 50.7,
+        "event": "vel"
+      },
+      {
+        "t": 50.8,
+        "event": "vel"
+      },
+      {
+        "t": 50.95,
+        "event": "end_scene"
+      },
+      {
+        "t": 51.1,
+        "event": "vel"
+      },
+      {
+        "t": 51.15,
+        "event": "vel"
+      },
+      {
+        "t": 51.7,
+        "event": "vel"
+      },
+      {
+        "t": 51.8,
+        "event": "vel"
+      },
+      {
+        "t": 52.1,
+        "event": "vel"
+      },
+      {
+        "t": 52.15,
+        "event": "vel"
+      },
+      {
+        "t": 52.75,
+        "event": "vel"
+      },
+      {
+        "t": 52.85,
+        "event": "vel"
+      },
+      {
+        "t": 53.15,
+        "event": "vel"
+      },
+      {
+        "t": 53.2,
+        "event": "vel"
+      },
+      {
+        "t": 53.75,
+        "event": "vel"
+      },
+      {
+        "t": 53.85,
+        "event": "vel"
+      },
+      {
+        "t": 54.15,
+        "event": "vel"
+      },
+      {
+        "t": 54.2,
+        "event": "vel"
+      },
+      {
+        "t": 54.45,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "claude/story-cine-2",
+    "commit": "58fa5da9d53ca4ad4da37931173b842342ee051f",
+    "rendered": "local",
+    "rendered_at": "2026-11-10T16:16:04.937Z",
+    "head_at_publish": "58fa5da9d53ca4ad4da37931173b842342ee051f",
+    "stunt": "stunts/story_dog_hill.js",
+    "source_snapshot": [
+      "source/story_dog_hill.js",
+      "source/movie.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 58fa5da9d53c",
+    "gunzip -c shorts/story_dog_hill/recording.json.gz > work/story_dog_hill.rec.json",
+    "node render.js work/story_dog_hill.rec.json work/story_dog_hill.frames 60 1080 1011",
+    "python3 audio.py work/story_dog_hill.rec.json work/story_dog_hill.wav",
+    "python3 edit.py --frames work/story_dog_hill.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_dog_hill.rec.json --audio work/story_dog_hill.wav --caption \"why won't this dog stand up?\" --story stories/dog_hill --start_at start:0 --end_after end_scene:0 --song stories/dog_hill/score.ogg --out out/story_dog_hill.mp4"
+  ],
+  "status": "held",
+  "notes": "The Dog on the Hill v2 (owner notes: captions re-synced to the speech onsets, 'Day one. Again.' cut: the loop is shown, chat says Buh, plain name tags). Independent review READY (r1 blocker fixed; v2 re-check READY). hb pace 0 blockers, caption_sync 0, owner gate 0, drift 0. Nitpicks: 0.7 s hold before Buh vanishes; the bare patch is subtle; no bone visible on 'BONE'; the night reveal is dark. Held for the owner's OK.",
+  "published_at": "2026-11-10T16:16:59.717Z"
 }
