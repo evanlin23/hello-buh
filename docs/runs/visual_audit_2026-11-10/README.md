@@ -17,11 +17,14 @@ This audit covers the picture only, done before the vNext re-record. The narrato
 
 | story | blockers | fixes | first frame | report | sheet |
 |---|---|---|---|---|---|
-| light_sleeper | 3 | 8 | **pass with the new `hook`** (the old POV first frame is weak) | `light_sleeper.md` | `light_sleeper_sheet.jpg` |
-| dog_hill | 6 | 10 | **fail**: a small dog on a flat lawn, a daisy the brightest thing | `dog_hill.md` | `dog_hill_sheet.jpg`, `dog_hill_stills.jpg` |
-| thirty_one_raids | 2 | 10 | **fail**: a dim brown room, Grandpa's back | `thirty_one_raids.md` | `thirty_one_raids_sheet.jpg`, `thirty_one_raids_cut_frames.jpg` |
-| gold_for_the_portal | 4 | 9 | **fail**: Grandma turned away, the ingot a 15 px speck | `gold_for_the_portal.md` | `gold_for_the_portal_sheet.jpg` |
+| light_sleeper | 5 | 8 | **pass with the new `hook`** (the old POV first frame is weak) | `light_sleeper.md` | `light_sleeper_sheet.jpg` |
+| dog_hill | 7 | 10 | **fail**: a small dog on a flat lawn, a daisy the brightest thing | `dog_hill.md` | `dog_hill_sheet.jpg`, `dog_hill_stills.jpg` |
+| thirty_one_raids | 3 | 10 | **fail**: a dim brown room, Grandpa's back | `thirty_one_raids.md` | `thirty_one_raids_sheet.jpg`, `thirty_one_raids_cut_frames.jpg` |
+| gold_for_the_portal | 6 | 9 | **fail**: Grandma turned away, the ingot a 15 px speck | `gold_for_the_portal.md` | `gold_for_the_portal_sheet.jpg` |
 | good_boy (rework) | 8 | 11 | **fail** (the old cut); the rework's frame 0 is specified | `good_boy.md` | `good_boy_sheet.jpg`, `good_boy_problems.jpg`, `good_boy_candidates.jpg` |
+
+Counts include the addendum blockers added at the lead's request: premise-breaking set details and shot variety,
+at the end of each report.
 
 ## Patterns across the five
 
@@ -36,6 +39,14 @@ These repeat the owner's past notes:
   wheat.
 - **Lines whose named subject isn't on screen.** The light_sleeper doghouse, dog_hill Grandpa, the gold potion and
   "64", the thirty_one_raids raid count.
+- **The set contradicting the narration:**
+  - light_sleeper's bare stone stairs, rim and house fronts in an "all carpet" village;
+  - gold's "nine thousand gold" with no gold on screen;
+  - dog_hill's empty patch that isn't unique.
+- **Repeated angles:**
+  - light_sleeper has three POVs at the well, 28-42 s;
+  - gold has 23 s on one cellar angle, with shots over 4 s;
+  - dog_hill has five same-size cuts.
 - **Motion notes in the old recordings.** Head whips over 240 deg/s, a view moving while a GUI is open, cast landing 3
   ticks after a cut. The vNext ports use the kit (`K.dig`, `K.open`, `K.warp`). Verify with `./hb owner` after each
   re-record.
@@ -61,6 +72,10 @@ Tests are in `npm test`, which passes 44/44. Published recordings render pixel-i
 4. **`./hb owner` flagged "no fog" on a story whose fog is the Darkness.** A recorded darkness effect now counts as fog.
 
 ## Engine items reported, not fixed
+
+All six are fixed on `agent/visual-engine-2` (docs/engine_features.md "Potions, phone-readable screens, on-screen
+teleports, the Darkness phase, lightning light"; stills `engine2_*.jpg`). The original notes:
+
 
 - **Potions draw untinted in container screens and the HUD** (gold B3).
   - Cause: `lib/harness.js` `slotOf` records `[name, count, glint]` with no potion contents, and `edit.py item_icon`

@@ -42,7 +42,7 @@ module.exports = {
   idleLife: true,
   look: 'auto',            // golden hour by day, eerie_night at night (the fixed warm look turned the night magenta: visual audit)
   shots: {},
-  edit: { caption: CAPTION, red: 'human', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0' },
+  edit: { caption: CAPTION, red: 'human', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0', chatScale: 7 },   // "Buh left the game" readable at 300 px wide (vanilla GUI 3 was ~7 px tall there)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -341,7 +341,7 @@ module.exports = {
     })
 
     // L11 "He SAID, / I'll BE / right BACK.": over the sitting wolf's shoulder: Buh on the patch. After the line the
-    // chat says "Buh left the game" (readable at 300 px: scale 2.5) and he is gone; the wolf sits facing the empty
+    // chat says "Buh left the game" (readable at 300 px: edit.chatScale 7) and he is gone; the wolf sits facing the empty
     // patch. Cut 1.0 s after it reads (STANDARDS: no sting, nothing after)
     // (the same locked camera: the logout reads as Buh gone from the same frame, not an edit: visual audit blocker 7)
     await line('L11', async (k, at) => {
@@ -349,7 +349,7 @@ module.exports = {
       if (k === at(2)) swing()   // a wave on "right BACK"
       look(k)
     })
-    ctx.mark('syschat', { text: `${GUY} left the game`, color: 'yellow', scale: 2.5 })
+    ctx.mark('syschat', { text: `${GUY} left the game`, color: 'yellow' })
     K.park(TAG)
     for (let k = 0; k < 20; k++) { look(k, Math.sin(k / 5) * 0.08, -k * 0.012); await bot.waitForTicks(1) }   // the wolf's head turns a little and lowers, watching the empty patch (a still hold: lint 'nobody moves')
     ctx.mark('story_end')
