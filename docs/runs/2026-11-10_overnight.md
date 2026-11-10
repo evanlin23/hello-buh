@@ -179,3 +179,9 @@ For the owner's morning. Newest at the bottom.
     - **Owner decision: publish or not.**
   - Merged K.cut(..., {shot}) to main (aa12714).
   - Started the Names in the Woods build.
+- 11:45 UTC:
+  - Light Sleeper: review round 2 left 1 blocker (the sonic boom's beam is never visible while Milo is alive). Lead
+    decision: re-stage the payoff so the beam is on screen for 0.4 s or more before the hit, then one focused
+    independent check of that span, then publish.
+  - Gold for the Portal: staging (cottage hatch, garden shots).
+  - Names in the Woods: re-recording after a pixel-identical rule-zero check.
