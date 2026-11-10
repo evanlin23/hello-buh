@@ -157,7 +157,7 @@
       "text": "The light / hit the SHIPWRECK. / And a CHEST.",
       "direction": "wonder, rising, the second sentence a discovery",
       "shot": "S12",
-      "look": [{ "what": "prop:shipwreck", "word": "SHIPWRECK" }, { "what": "prop:rosa_chest", "word": "CHEST", "size": "ms" }]
+      "look": [{ "what": "prop:shipwreck", "word": "SHIPWRECK" }, { "what": "prop:mae_chest", "word": "CHEST", "size": "ms" }]
     },
     {
       "id": "L13",
@@ -166,7 +166,7 @@
       "say": "It said, For Mae. <short pause> That's Grandma.",
       "direction": "reading it slowly, then the realization, quiet surprise but still full voice, not whispered",
       "shot": "S13",
-      "look": { "what": "prop:rosa_chest", "word": "MAE", "size": "cu" },
+      "look": { "what": "prop:mae_chest", "word": "MAE", "size": "cu" },
       "captions_extra": "the chest screen title FOR MAE and the item name HEART OF THE SEA go in the caption track (the GUI title is small at phone size)"
     }
   ],
@@ -248,7 +248,7 @@
     "the_dark": { "note": "the unlit deep water past the end of the line" },
     "mooring": { "block": "oak_fence", "note": "the empty mooring post on the dock's T-head, a lead knot, a sign reading MAE" },
     "shipwreck": { "note": "vanilla shipwreck structure on the bay floor at the end of the line" },
-    "rosa_chest": { "block": "chest", "note": "a chest renamed 'For Mae' placed on the shipwreck's deck; holds one heart_of_the_sea" }
+    "mae_chest": { "block": "chest", "note": "a chest renamed 'For Mae' placed on the shipwreck's deck; holds one heart_of_the_sea" }
   },
   "bible": "stories/lantern_bay/bible.md",
   "beats": "stories/lantern_bay/beats.md",
