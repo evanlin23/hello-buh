@@ -41,3 +41,34 @@ Format rules:
 **Recordings:** the sets, the stunt and the shots carry over. Re-voice with the new narrator, then do a re-record pass, because the scene lengths come from voice.json. No rebuild is needed.
 
 **Reviews:** `reviews/vnext-critic.md` (r1, on the first vNext) and `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+## r-ear (2026-11-10): rewritten for the ear (STANDARDS 2.000)
+The owner: "only works if tis clear what is beign said"; the narrator is "a child that doesnt understand teh wrold... figuring it out".
+These lines **replace the table above**. The beats, the shots and the reveal and cut are unchanged unless noted.
+
+How they're written:
+- one short, simple thought per sentence, in time order, joined by So / Then / But;
+- no stacked clauses, and numbers kept apart from other information;
+- each sentence lands on its key word;
+- told by a happy kid who misreads what the viewer understands (model: "Mom SAID it was a FOX").
+
+The cold listener (audio-style, one fast pass) followed it. Its notes are applied here and logged in `docs/pitches/vnext_coldread_2026-11-10.md`.
+
+**Length:** 134 words, ~26 s spoken at 5.25 words/s, plus ~2 s of reveal.
+
+| # | line (r-ear) | plays over |
+|---|---|---|
+| L01 | My VILLAGE / is COVERED in / nine thousand CARPETS. | S02 high wide (first frame) |
+| L02 | The road? CARPET. / The stairs? CARPET. / The DOGHOUSE? / Also CARPET. | S02 |
+| L03 | Even the BELL / wears a SWEATER. | S04 |
+| L04 | Mom SAYS, / walk SOFT, sweetie. / The GROUND'S / a light SLEEPER. | S05 |
+| L05 | But ONE time, / I PULLED / the WOOL / off the WELL. | S06 |
+| L06 | Then SOMETHING / down the WELL / just SCREAMED. | S07 |
+| L07 | Mom SAID it / was a FOX. / I didn't KNOW / FOXES lived / in WELLS. | S08 |
+| L08 | Then I FOUND / a music DISC / by the FARM. | S09 |
+| L09 | A real SONG. / Nobody HERE / has HEARD one. | S10 |
+| L10 | So TONIGHT, / I PUT / a JUKEBOX / on the WELL. / Wells ECHO, / you KNOW. | S11 |
+| L11 | The FOX / screamed AGAIN. / It LOVED / the MUSIC. | S12 |
+| L12 | Then the LIGHTS / went DARK. / Just LIKE / a PARTY. | S14 |
+| L13 | Mom FROZE / in the DOOR. / Don't MOVE, / she SAID. | S13 |
+| L14 | But I'd NEVER / danced BEFORE. / So I STEPPED / off the CARPET / onto the STONE. | S15, then S16: the warden rises; cut 1.0 s after the roar |
