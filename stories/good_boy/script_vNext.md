@@ -1,4 +1,10 @@
-# good_boy: script vNext, the REWORK, r2 (2026-11-10)
+# good_boy: script vNext, the REWORK, r3 (2026-11-10)
+
+**APPROVED.** Critic r2: 8.0 average; Hook, Twist and Fairness 8; lines approved (`reviews/vnext-rework-r2-critic.md`). The two open non-line fixes are applied:
+- The L04-L05 shots now show *another* tamed wolf sitting alone by an empty house. His own dog stands, so the line never plays over the action it denies, and only an owner can make a wolf sit.
+- `voices.json`'s narrator direction is bright, never hushed.
+
+The fresh cold reader on r2 was 55 % at the midpoint and 7/10, but got the motive only half ("wait so why was he trying to lose it tho??"). So L05 adds the motive in one half-line: "He WANTS me / to FORGET him." Losing the dog means it forgets him; making it sit means it waits forever.
 
 **r2:** applies the critic's 4 must-fixes (`reviews/vnext-rework-critic.md`) and the cold read's 2 notes:
 - L05 now gives the motive on screen: "A SITTING dog waits FOREVER. He NEVER makes me SIT." The final sit is the turn.
@@ -33,7 +39,7 @@ is unchanged. Not voiced.
 - **The reveal (the game):** the chat line "Buh left the game" over the sitting wolf, facing the empty patch. Cut 1.0 s after it reads.
 - **Loop:** cause and effect. The 38th try worked, and that's why line 1's count stops at thirty-seven. For fans, it's the first frame of Dog on the Hill.
 - **Pace:** one narrator for every quote; 2-3-word chunks with one CAPS key word each (validated); continuous, with no dramatic pauses.
-- **Length:** 125 words, ~24 s spoken at 5.25 words/s, plus ~2 s of reveal, so ~26 s.
+- **Length:** 132 words, ~25 s spoken at 5.25 words/s, plus ~2 s of reveal, so ~27 s.
 - **Out of context:** no "good boy", no bones, no "best friends". "Sit, boy" and "I'll be right back" are Dog on the Hill's canon lines, read bright, never hushed.
 
 ## Lines
@@ -42,8 +48,8 @@ is unchanged. Not voiced.
 | L01 | My HUMAN / has TRIED / to LOSE me / thirty-seven TIMES. | the teleport (old L02): Buh sprinting away down the road; the wolf blinks in beside him (first frame = the mechanic) |
 | L02 | He RUNS. / I FOLLOW. / Twelve BLOCKS out, / I just APPEAR / right NEXT / to HIM. | POV run down the road (old L01); the crane on the yard (old L02) |
 | L03 | He HID / in the WHEAT. / He tried HILLS / at NIGHT. / He SWAM / to an ISLAND. / I POPPED up / on the BEACH. | old L04: wheat, night hills, the sea swim |
-| L04 | The ONLY time / I DON'T / POP up / next to HIM / is WHEN / I'm SITTING. | new: Buh walks off; the wolf, sitting, stays put |
-| L05 | He KNOWS that. / A SITTING dog / waits FOREVER. / He NEVER / makes me SIT. | new: Buh glances back at the sitting rule (re-use the yard) |
+| L04 | The ONLY time / I DON'T / POP up / next to HIM / is WHEN / I'm SITTING. | new: Saltmouth, another tamed wolf sitting alone outside an empty house; Buh stops and looks at it, then walks on, his own wolf standing at his side |
+| L05 | He KNOWS that. / A SITTING dog / waits FOREVER. / He WANTS me / to FORGET him. / So he NEVER / makes me SIT. | new: Buh glances back at the sitting rule (re-use the yard) |
 | L06 | He keeps TALKING / about a PLACE / called COLLEGE. | old L05 yard, Buh on the step (new line) |
 | L07 | Every NIGHT / he SAYS, / SORRY, buddy. / I don't KNOW / what FOR. | dusk on the cottage's sea edge (old L09 sea-edge camera) |
 | L08 | Last NIGHT, / a ZOMBIE / came for HIM. / I got THERE / FIRST, though. | old L14-L16: the zombie, the bites |
