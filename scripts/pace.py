@@ -19,7 +19,7 @@ Checks (BLOCK = the short-review bar, WARN = needs a reason or a fix):
   payoff    the story.json `payoff` line/mark, else the edit's endAfter event, else the line the `twist` quotes,
             else the biggest sound + picture hit in the last 40%: a sound hit and a picture change within 0.3 s,
             and the end <= 1.0 s after it (1.2-1.8 s for a text payoff: a death screen or a card).
-  length    BLOCK < 30 s, WARN > 45 s (story Shorts: the owner wants them tight).
+  length    BLOCK < 25 s, WARN > 45 s (story Shorts: the owner wants them tight).
 Exit 1 on a blocker, 2 when it can't run.
 """
 import argparse
@@ -50,7 +50,7 @@ PICTURE_WARN = 5.0
 SAME_WARN = 5.0               # runaway (the benchmark) holds one picture 3.3 s at most
 PAYOFF_WIN = 0.3
 TAIL_MAX, TEXT_TAIL = 1.0, (1.2, 1.8)
-LEN_MIN, LEN_WARN = 30.0, 45.0
+LEN_MIN, LEN_WARN = 25.0, 45.0   # 25: no-pause narration at ~5.25 words/s runs 25-29 s (owner: no dramatic pauses)
 
 
 # ---------------------------------------------------------------- measuring
@@ -250,7 +250,7 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
 
     # ---- 6. length
     if dur < LEN_MIN:
-        add("BLOCK", "length", dur, f"{dur:.1f} s: under the owner's 30 s minimum", "more beats (an escalating series), not slower ones")
+        add("BLOCK", "length", dur, f"{dur:.1f} s: under the 25 s minimum", "more beats (an escalating series), not slower ones")
     elif is_story and dur > LEN_WARN:
         add("WARN", "length", dur, f"{dur:.1f} s: over 45 s for a story (owner wants them tight)", "cut the line/shot that adds least (see the slowest spans below), or end on the payoff")
 

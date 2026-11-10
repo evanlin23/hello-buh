@@ -93,7 +93,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    <= 10% of words over 100 ms off, else BLOCK. Check: `scripts/caption_av_check.py` (in `./hb review`). r:r27d123
 5. **No dramatic pauses**: the narrator talks continuously from frame 0 to the cut; drama comes from the words and
    the picture, never silence. Pause limits (take gate) and line spacing follow the owner's reference Short's measured
-   gaps. Check: take_gate (pause), pace. r:rc95ed3
+   gaps: 194/195 word gaps under 0.3 s, so pauses max 0.3 s inside a line and 0.35 s between, lines 0.08 s apart. Length
+   floor 25 s. Check: take_gate (pause), pace. r:rc95ed3
 4. **Continuous takes, not edited ones**: one beat = one take used whole, its inner gaps its own; a take with a long
    pause, breath, whisper, wrong or clipped word is re-taken with a tighter direction, never trimmed into shape. Cuts
    only between beats. Check: pace (pauses), speaker_check (CLIPPED, GATE), panel; the take gate in `./hb voice` for a

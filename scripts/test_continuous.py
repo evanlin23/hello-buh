@@ -149,7 +149,7 @@ class BeatTake(unittest.TestCase):
 
     def test_reject_then_retake_then_slice(self):
         bad = take(vowel(0.6), quiet(1.4), vowel(0.6), quiet(0.45), vowel(0.6))   # a 1.4 s pause inside line 1
-        good = take(vowel(0.6), quiet(0.3), vowel(0.6), quiet(0.45), vowel(0.6))
+        good = take(vowel(0.6), quiet(0.2), vowel(0.6), quiet(0.25), vowel(0.6))   # gaps under the 0.3/0.35 s limits
         calls = []
 
         def fake_raw(scene, lines, cs, salt="", fixes=()):
@@ -168,9 +168,9 @@ class BeatTake(unittest.TestCase):
         self.assertAlmostEqual(meta["dur"], len(y) / SR, places=2)          # the slices tile the take exactly
         self.assertEqual(meta["offsets"][0], 0.0)
         self.assertAlmostEqual(meta["offsets"][1], len(done["L01"][2]) / SR, places=3)
-        # the boundary sits in the 0.45 s pause between the lines (the take's own gap, untouched)
-        self.assertGreater(meta["offsets"][1], 0.3 + 1.5 - 0.1)
-        self.assertLess(meta["offsets"][1], 0.3 + 1.5 + 0.45 + 0.1)
+        # the boundary sits in the 0.25 s pause between the lines (the take's own gap, untouched)
+        self.assertGreater(meta["offsets"][1], 0.3 + 1.4 - 0.1)
+        self.assertLess(meta["offsets"][1], 0.3 + 1.4 + 0.25 + 0.1)
         self.assertTrue((self.d / "L02.wav").exists() and (self.d / "beat_L01.wav").exists())
 
     def test_every_try_fails_keeps_the_least_bad(self):

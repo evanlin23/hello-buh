@@ -31,7 +31,8 @@ SILENT_DB = 30      # a frame this far under the take's peak is silence (pace.py
 OPEN_S = 5.0        # s: the story's opening, where pace.py blocks any pause (owner: "no pauses in the first few seconds")
 LIMITS = {          # longest pause allowed, s (story.json "max_pause" overrides: a number, or {"opening", "rest"})
     "opening": {"first": 0.2, "inside": 0.35, "between": 0.6},   # pace.py's BLOCK thresholds
-    "rest": {"inside": 0.5, "between": 0.8},                     # Pip's own take (the owner's pick): 0.23-0.74 s between sentences
+    "rest": {"inside": 0.3, "between": 0.35},                    # owner 2026-11-10 "the narrator just yaps on and on": the
+    # reference Short has 194 of 195 word gaps under 0.3 s (sentence ends: median ~0, p90 0.1 s, max 0.3)
 }
 BREATH_MIN, BREATH_DB, BREATH_TOP = 0.15, SILENT_DB, 15   # louder than the silence line, never as loud as a word
 BREATH_CENTROID = 4000   # Hz: an "s"/"sh" sits above it, a breath (and an "h") below
