@@ -83,7 +83,7 @@ module.exports = {
     const { P, look, line, cut } = K
 
     // L01: the hook, over the picture it describes, moving on the first frame
-    await cut(-0.5, 0.5, P(-4.5, 1.2, 0.5))                        // stand at (dx, dz), aim at a point
+    await cut(-0.5, 0.5, K.face(P(-4.5, 1, 0.5), 'sheep'))         // stand at (dx, dz), aim at the sheep's eyes (K.face; a plain point gets a 2 deg lift)
     const sheep = K.actor('sheep', { x: -4.5, z: 0.5, yaw: 90 })   // now /tp'd every tick from this object
     await K.preroll(8, () => K.step(sheep, 0.02, 0))               // already walking when the line starts
     await line('L01', async (k, at) => {
@@ -97,7 +97,7 @@ module.exports = {
     let from = null
     await line('L02', async (k, at) => {
       if (k === at(1)) ctx.sound('entity.villager.no', 1, 1)
-      if (k >= at(2)) { from = from || { ...K.base }; K.turnTo(from, P(-4.5, 1, sheep.z), (k - at(2)) / 12) }   // an eased turn to the pen, ~0.6 s
+      if (k >= at(2)) { from = from || { ...K.base }; K.turnTo(from, K.face(P(-4.5, 1, sheep.z), 'sheep'), (k - at(2)) / 12) }   // an eased turn to the pen, ~0.6 s
       look(k)
     })
 
