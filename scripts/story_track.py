@@ -21,7 +21,7 @@ HERE = pathlib.Path(__file__).resolve().parent.parent
 FONT = HERE / "assets" / "fonts" / "Poppins-Black.ttf"   # font A/B 2026-11-10 (docs/look.md): most ink per width at phone size
 W, H, BAND, GAME_H = 1080, 1920, 455, 1011
 CAP_PX = 96
-TAG_PX = 54                              # the speaker's name tag, over a character's first caption (story.json "name_tags": false turns it off)
+TAG_PX = 54                              # the speaker's name tag, over a character's first caption (off by default, owner 2026-11-10: "we don't need the grandpa labeling, just the color"; story.json "name_tags": true turns it on)
 MAX_W = 840                              # x 120..960: clear of the Shorts like/comment column on the right (docs/look.md)
 CY = BAND + int(GAME_H * 0.70)          # caption block centre: below the crosshair, above the hearts
 INK = (14, 12, 18, 255)
@@ -186,7 +186,7 @@ def speakers(story):
     """{line id: (plain-word colour, is a character, name tag or None)} for a story. v1 stories and the narrator:
     white. A v2 character: its cast `color`, else its library character's `color` (voices/cast.json, via `ref`),
     else the first unused colour of the library palette; a name tag over every caption of its first line (one word at
-    a time is too short to read a tag; story.json "name_tags": false turns them off)."""
+    a time is too short to read a tag). Off by default (owner 2026-11-10: "just the color"); story.json "name_tags": true."""
     cast = story.get("cast") or {}
     lib = json.loads((HERE / "voices" / "cast.json").read_text())
     used = {c.get("color", "").upper() for c in cast.values()}
@@ -206,7 +206,7 @@ def speakers(story):
     for ln in story["lines"]:
         w = ln.get("who")
         if w in col:
-            out[ln["id"]] = (col[w][0], True, col[w][1] if story.get("name_tags", True) and w not in seen else None)
+            out[ln["id"]] = (col[w][0], True, col[w][1] if story.get("name_tags", False) and w not in seen else None)
             seen.add(w)
         else:
             out[ln["id"]] = ((255, 255, 255, 255), False, None)
