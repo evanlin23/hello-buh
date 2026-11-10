@@ -64,6 +64,9 @@ Write the ending first (the reveal frame), then:
 - `requests`: group the speakers into Gemini requests of at most 2 speakers (the narrator with one character per
   request), as few requests as possible (the free tier allows a few a day).
 - `premise`, `twist`, `logline`, `question`, `caption` (the top-band hook, under 45 characters, one emoji), `key_color`.
+- `mood` (the score: `eerie` / `tense` / `sad` / `funny` / `heroic`, or `[before, after]` when the twist changes the
+  colour, e.g. `["tense", "sad"]`) and `payoff` (the line id or mark the twist lands on: the music drops out 0.45 s
+  before it and the hit lands on it). docs/audio.md.
 - Run the twist checklist (`docs/story_craft.md` section 3) and the agency rule (no accident without a visible cause).
 - Word count and a rough length: `python3 -c "import json,re,sys;d=json.load(open(sys.argv[1]));w=sum(len(re.sub(r'[/]',' ',l.get('say',l['text'])).split()) for l in d['lines']);print(w,'words, ~',round(w/2.8),'s + pauses')" stories/<name>/story.json`
 

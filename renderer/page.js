@@ -373,6 +373,13 @@ function runPost (cam, tick) {
     d.near.value = camera.near; d.far.value = camera.far; d.focus.value = cam.focus; d.aperture.value = cam.aperture ?? 1
     pass(P.dofMat, P.rd)
   }
+  // a per-frame grade (renderer/looks.js gradeAt: look 'auto' by time of day, a shot's mood); absent, the look's own stays
+  if (cam.grade) {
+    const g = cam.grade
+    u.lift.value.set(...g.lift); u.gam.value.set(...g.gamma); u.gain.value.set(...g.gain)
+    u.sat.value = g.sat; u.contrast.value = g.contrast; P.exp0 = g.exposure ?? 1
+    if (g.vignette !== undefined) u.vig.value = g.vignette
+  }
   // look.underwater: an exposure lift while the camera is in water (the cold-biome water fog graded to near black: ai_thin_ice)
   if (P.exp0 === undefined) P.exp0 = u.exposure.value
   u.exposure.value = P.exp0 * (cam.underwater ? (P.underwater ?? 1) : 1)
@@ -674,6 +681,15 @@ async function particleMaterial (tex) {
   partTex.set(tex, m)
   return m
 }
+// a translucent particle sprite (vertex alpha: campfire smoke fading out), blended, no depth write
+const partTexTr = new Map()
+async function particleMaterialTr (tex) {
+  if (partTexTr.has(tex)) return partTexTr.get(tex)
+  const base = await particleMaterial(tex)
+  const m = base ? new THREE.MeshBasicMaterial({ map: base.map, vertexColors: true, transparent: true, depthWrite: false, alphaTest: 0.01, side: THREE.DoubleSide, fog: true }) : null
+  partTexTr.set(tex, m)
+  return m
+}
 // Lightning bolts (LightningBoltRenderer.render): 8 segments of 16 blocks, a jagged main path from a
 // java.util.Random seeded by the bolt (nextInt(11) - 5 per segment) and two forks (nextInt(31) - 15),
 // four nested shells 0.1 + 0.2j wide, colour (0.45, 0.45, 0.5) at alpha 0.3, blended SRC_ALPHA, ONE
@@ -771,25 +787,30 @@ async function drawParticles (parts) {
   const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0)
   const up = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 1)
   const groups = new Map()
-  for (const p of parts) { if (!groups.has(p.tex)) groups.set(p.tex, []); groups.get(p.tex).push(p) }
-  for (const [tex, list] of groups) {
-    const mat = await particleMaterial(tex); if (!mat) continue
+  // translucent sprites (p.alpha: campfire smoke) go in their own groups, alpha per vertex, drawn after the rest
+  // far to near (PARTICLE_SHEET_TRANSLUCENT); the others are cut out as before
+  const camPos = new THREE.Vector3().setFromMatrixPosition(camera.matrixWorld)
+  for (const p of parts) { const k = p.alpha !== undefined ? `${p.tex}|a` : p.tex; if (!groups.has(k)) groups.set(k, []); groups.get(k).push(p) }
+  for (const [key, list] of groups) {
+    const tr = key.endsWith('|a'), tex = tr ? key.slice(0, -2) : key
+    const mat = tr ? await particleMaterialTr(tex) : await particleMaterial(tex); if (!mat) continue
+    if (tr) list.sort((a, b) => Math.hypot(b.x - camPos.x, b.y - camPos.y, b.z - camPos.z) - Math.hypot(a.x - camPos.x, a.y - camPos.y, a.z - camPos.z))
     const pos = [], uv = [], col = [], idx = []
     for (const p of list) {
       const n = pos.length / 3, h = p.size
       const [u, v, su, sv] = p.uv || [0, 0, 1, 1]
       for (const [a, b, uu, vv] of [[-1, -1, u, v + sv], [1, -1, u + su, v + sv], [1, 1, u + su, v], [-1, 1, u, v]]) {
         pos.push(p.x + (right.x * a + up.x * b) * h, p.y + (right.y * a + up.y * b) * h, p.z + (right.z * a + up.z * b) * h)
-        uv.push(uu, vv); col.push(...p.color)
+        uv.push(uu, vv); col.push(...p.color); if (tr) col.push(p.alpha)
       }
       idx.push(n, n + 1, n + 2, n, n + 2, n + 3)
     }
     const g = new THREE.BufferGeometry()
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
     g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
-    g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3))
+    g.setAttribute('color', new THREE.Float32BufferAttribute(col, tr ? 4 : 3))
     g.setIndex(idx)
-    const mesh = new THREE.Mesh(g, mat); mesh.frustumCulled = false; mesh.renderOrder = 2
+    const mesh = new THREE.Mesh(g, mat); mesh.frustumCulled = false; mesh.renderOrder = tr ? 3 : 2
     scene.add(mesh); partMeshes.push(mesh)
   }
 }

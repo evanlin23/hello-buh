@@ -1,17 +1,34 @@
 {
- "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x).",
+ "_about": "The recurring voices of HelloBuh's stories (docs/voices.md). A character keeps its id, Gemini voice AND direction string in every story: change one and it's a different person. scripts/tts.py reads `voice`, `name` (the speaker name Gemini sees), `profile` (the acting direction) and `post` (an ffmpeg filter run on every take, before loudness). `fallback` is a Kokoro-82M voice for when Gemini is out of quota (scripts/voice.py; tempo 1.0, rate 1.0: never the old 1.45x). `post` is EQ, or a tempo/formant-preserving rubberband shift for the narrator; never asetrate (docs/voices.md \"Realism\"). `color` is the character's caption colour (scripts/story_track.py; a story's cast `color` wins), matched to the character's look and role (owner, 2026-11-10: it should \"match\" the vibe of the character), with `color_why`; all of them read on the captions' dark outline and stay apart in pairs under red-green and blue-yellow colour blindness (docs/voices.md \"Caption colours\"). `model` (optional) locks the character to one TTS model: tts.py never voices it with another (docs/voices.md \"Drift gate\": a different model is a different-sounding person).",
  "narrator": {
   "name": "Narrator",
-  "voice": "Erinome",
-  "profile": "the storyteller: a woman in her thirties, calm, clear and a little hushed, unhurried, like the opening of a mystery film; she lets the strange detail land with a small pause before it",
+  "voice": "Leda",
+  "color": "#FFFFFF",
+  "color_why": "white: the narrator carries the story, so every other colour means someone else is talking",
+  "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
+  "post": "",
+  "fallback": "am_adam",
+  "from": "Pip, Dog on the Hill voices v3: owner 'i kinda like the pip here', 'what about pip? i liked the audio i sent earlier', and vs kid Puck: 'i like this one a lot a lot better'",
+  "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
+  "model_hint": "gemini-3.8-flash-lite-tts, single speaker, all narrator lines in one request separated by blank lines, the profile as a short bracketed prefix (Pip v3); see voices/recipes/pip.md",
+  "model": "gemini-3.8-flash-lite-tts"
+ },
+ "storyteller": {
+  "name": "Storyteller",
+  "voice": "Despina",
+  "color": "#D9C8FF",
+  "color_why": "pale lilac: a late-night story told close (white whenever she is the story's narrator)",
+  "profile": "the storyteller: a woman in her thirties telling a friend a story late at night, low and close, plain and conversational, never an announcer; she lets the strange detail land with a small pause before it",
   "post": "",
   "fallback": "bf_emma",
   "from": "the AI-dilemma Shorts' narrator (thin_ice, dirk_willems)",
-  "notes": "Third-person framing, chapter cards, the hook line. When Milo tells his own story the first person goes to `milo` and the narrator only frames."
+  "notes": "The old default narrator (Erinome until 2026-11-10, recast to Despina: Erinome was heard as 'announcer'/'audiobook' in three listening tests, Despina 9/10). Third-person framing for serious mystery stories; the default narrator is now the kid (`narrator`)."
  },
  "milo": {
   "name": "Milo",
   "voice": "Achird",
+  "color": "#4FD8E6",
+  "color_why": "cyan: Steve's shirt (Milo is the default Steve skin)",
   "profile": "Milo, our hero (played by the default Steve skin): a sixteen-year-old boy, friendly and quick, a little nervous; he jokes when he's scared, and goes quiet and serious when it matters",
   "post": "",
   "fallback": "am_michael",
@@ -20,25 +37,31 @@
  },
  "elder": {
   "name": "Elder",
-  "voice": "Algenib",
-  "profile": "the village elder: an old man in his seventies, slow, soft and warm, wise, a little gravelly; he has seen this before, and that is what makes him quietly unsettling",
+  "voice": "Charon",
+  "color": "#F0A845",
+  "color_why": "warm amber: an old villager's brown-gold robe in lantern light",
+  "profile": "the village elder: an old man in his seventies, tired, low and a little rough in the throat, speaks slowly and quietly; he has seen this before, and that is what makes him unsettling",
   "post": "",
   "fallback": "bm_george",
   "from": "the trailer's Highkeeper (Grok in the AI Shorts is the same voice, directed deep and heroic)",
-  "notes": "Librarian, grandfather, the one who knows the rule. Slow on purpose: give him short sentences."
+  "notes": "Librarian, grandfather, the one who knows the rule. Slow on purpose: give him short sentences. Recast Algenib -> Charon 2026-11-10 (realism test: Charon 'genuinely aged', Algenib 'sounds like a filter, younger than seventy')."
  },
  "child": {
   "name": "Kid",
-  "voice": "Leda",
-  "profile": "a village kid, about nine: small, bright, earnest and fast, asks questions, scared but trying to be brave",
-  "post": "asetrate=24000*1.12,aresample=24000,atempo=0.893",
+  "voice": "Laomedeia",
+  "color": "#FFEE70",
+  "color_why": "sunny yellow: small, bright and quick",
+  "profile": "a real village kid, about nine: small and quick, breath catching, words tumbling out a little too fast; scared but trying to be brave",
+  "post": "",
   "fallback": "af_sky",
   "from": "new",
-  "notes": "No Gemini voice is a child: Leda (youthful) directed young and lifted about 2 semitones (post) at the same speed."
+  "notes": "Recast Leda+2 st -> Laomedeia unshifted 2026-11-10: every listening test put the pitch lift last ('chipmunk', 'warble'); Laomedeia unshifted was heard as a real child. Never pitch-shift him."
  },
  "smith": {
   "name": "Smith",
   "voice": "Orus",
+  "color": "#9C9C9C",
+  "color_why": "iron grey: the anvil, and the iron golem he also voices",
   "profile": "the blacksmith: a big, gruff man in his fifties, low and blunt, short sentences, no patience for nonsense, a soft heart he hides",
   "post": "equalizer=f=110:t=q:w=1:g=3",
   "fallback": "am_onyx",
@@ -47,16 +70,20 @@
  },
  "stranger": {
   "name": "Stranger",
-  "voice": "Charon",
+  "voice": "Algenib",
+  "color": "#B39BFF",
+  "color_why": "dusk violet: the hooded stranger at the edge of render distance, a little enderman",
   "profile": "a mysterious hooded stranger: very old and gravelly, a slow low whisper, knows a terrible secret and says less than he knows",
   "post": "",
   "fallback": "bm_fable",
   "from": "the movie's Fen",
-  "notes": "The wandering trader, the one at the edge of render distance. Keep his lines under ten words where possible."
+  "notes": "The wandering trader, the one at the edge of render distance. Keep his lines under ten words where possible. Voice moved Charon -> Algenib (gravelly) 2026-11-10 when Charon became the elder; audition him before his first story."
  },
  "villain": {
   "name": "Villain",
   "voice": "Schedar",
+  "color": "#F03A47",
+  "color_why": "redstone red: the danger colour; the only red in the cast",
   "profile": "the villain: a man in his forties, cold, flat and quiet, perfectly calm, never shouts, sounds faintly amused; the threat is in how polite he is",
   "post": "equalizer=f=3000:t=q:w=1:g=-2",
   "fallback": "bm_daniel",
@@ -66,6 +93,8 @@
  "mom": {
   "name": "Mom",
   "voice": "Sulafat",
+  "color": "#FFC2A8",
+  "color_why": "warm peach: home, the hearth, the normal life before the strange thing",
   "profile": "Milo's mom: a warm woman in her forties, gentle and tired, loving, calls from another room; a little worried under it",
   "post": "",
   "fallback": "af_sarah",
@@ -75,6 +104,8 @@
  "friend": {
   "name": "Max",
   "voice": "Fenrir",
+  "color": "#7DF07D",
+  "color_why": "lime: loud, quick and loyal, all energy (a slime's green)",
   "profile": "Milo's best friend: a sixteen-year-old boy, loud, excitable and loyal, talks fast, jokes, always up for it",
   "post": "",
   "fallback": "am_puck",
@@ -84,8 +115,36 @@
  "_spares": {
   "Kore": "crisp, firm woman (the AI Shorts' Gemini): a guard captain, an announcer, a cold official",
   "Iapetus": "measured, polite man (the AI Shorts' GPT): a mayor, a shopkeeper",
-  "Puck": "cast as a 16-year-old boy in the trailer it read as a young woman: use it for a young woman",
+  "Puck": "cast as a 16-year-old boy in the trailer it read as a young woman: use it for a young woman; directed as an 11-year-old it read as 19 (kid audition)",
   "Gacrux": "mature woman: a grandmother, a witch",
-  "Enceladus": "breathy man: a ghost, a sick villager"
+  "Enceladus": "breathy man: a ghost, a sick villager",
+  "Erinome": "clear, polished woman: heard as an announcer/audiobook reader; a radio host, a news voice, not a storyteller",
+  "Leda": "unlifted: reads as a teenage girl of 15-18, very natural",
+  "Achernar": "soft, very breathy woman: a ghost, someone sick"
+ },
+ "pip": {
+  "name": "Pip",
+  "voice": "Leda",
+  "color": "#FFFFFF",
+  "color_why": "white: Pip is a narrator voice (a kid telling his own story)",
+  "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
+  "post": "",
+  "fallback": "am_adam",
+  "from": "Pip, Dog on the Hill voices v3 (owner 2026-11-10: 'i kinda like the pip here'; the 1.5x audition takes were 'too sped up')",
+  "notes": "Pip's voice (Dog on the Hill v3; owner: 'i kinda like the pip here', and again 'what about pip? i liked the audio i sent earlier'). Use for Pip and Pip-like young narrators when the story's kid is younger and sweeter; Puck (`narrator`) is the default. In Good Boy's take the same voice read 'so high pitched and annoying' (owner): keep the bubbly-nine-year-old direction and natural tempo, never a pitch lift.",
+  "model_hint": "gemini-3.8-flash-lite-tts worked for Pip (single speaker, all narrator lines in one request, separated by blank lines, the profile as a short bracketed prefix); 3.1-flash-tts with the structured prompt is the default in tts.py",
+  "model": "gemini-3.8-flash-lite-tts"
+ },
+ "puck_kid": {
+  "name": "Narrator (kid Puck, alt)",
+  "voice": "Puck",
+  "color": "#FFFFFF",
+  "color_why": "white: an alternative narrator voice",
+  "profile": "Read this as a twelve-year-old boy telling his friends a funny story: quick, excited, mid-pitch, not squeaky; full volume, not whispery or breathy. Take a short breath between sentences.",
+  "post": "",
+  "fallback": "am_adam",
+  "from": "Good Boy narrator audition, owner 2026-11-10: \"kid puck is fine\" (Leda was 'so high pitched and annoying'; wants a kid 'like the roblox shorts but more refined')",
+  "notes": "No post filter, no tempo or pitch change. Measured ~235 Hz median on the audition (240-330 per line in a story), ~3.4 words/s while speaking. The short breath between sentences is what lets the splitter cut cleanly (voice_edges.py: 0 cut). No ellipses. Owner later: 'er that does not sound right'; Pip is 'a lot a lot better'. Alternative only.",
+  "model_hint": "single-speaker requests; gemini-3.1-flash-tts-preview first, gemini-2.5-flash-preview-tts on 429 (same voice)"
  }
 }

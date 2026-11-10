@@ -80,3 +80,7 @@ the cast's directed voices as a stranger hearing 3 seconds of it with no picture
 read as flirting, intimacy, kink, obedience play or innuendo (whispered praise, "sit", "good boy", "come here, you",
 breathy confessions about someone), it's a **must-fix**: change the line or the delivery (bright, quick, comic), or
 kill the pitch. Hushed delivery belongs to fear and mystery only.
+
+## Delivery checks (owner, 2026-11-10)
+Must-fix: any "..." in a line (Gemini pauses and whispers on it); a line 1 that can't be said in one quick breath; an
+ending the viewer has to decode ("Day one." didn't land; "Day one. Again." did).

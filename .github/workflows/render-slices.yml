@@ -10,6 +10,8 @@
 #   slice    N runners (default 16, at most 32) each render one contiguous range of frames with render.js FRAMES=
 #            and keep it as a lossless RGB video (artifact seg-<i>). The ranges are cut to about equal render TIME
 #            (scripts/render_cost.py), not equal length: a stretch of relights / sky-light re-meshes gets short slices
+#            (skipped when renders/slices.json has reuse_run and that run's seg-* artifacts still exist: `hb render
+#            --reuse` when only the edit changed; finish then downloads that run's slices)
 #   finish   decodes the slices back into work/<name>.frames/, then audio + replay/slow-mo + edit
 #            (scripts/finish_render.sh), uploads out/<name>.mp4 (artifact "short") and commits it to the render
 #            branch as renders/out/<name>.mp4 with renders/result.json, so `render_on_actions.sh --fetch <name>`
@@ -36,6 +38,7 @@ concurrency:
   cancel-in-progress: true
 permissions:
   contents: write
+  actions: read     # list and download an earlier run's seg-* artifacts (reuse_run)
 jobs:
   plan:
     runs-on: ubuntu-24.04
@@ -47,15 +50,18 @@ jobs:
       frames: ${{ steps.plan.outputs.frames }}
       n: ${{ steps.plan.outputs.n }}
       matrix: ${{ steps.plan.outputs.matrix }}
+      reuse: ${{ steps.plan.outputs.reuse }}
     steps:
       - uses: actions/checkout@v4
       - name: plan
         id: plan
-        env: { IN_NAME: "${{ inputs.name }}", IN_STUNT: "${{ inputs.stunt }}", IN_SLICES: "${{ inputs.slices }}" }
+        env: { IN_NAME: "${{ inputs.name }}", IN_STUNT: "${{ inputs.stunt }}", IN_SLICES: "${{ inputs.slices }}", GITHUB_TOKEN: "${{ github.token }}" }
         run: python3 scripts/render_slices.py plan >> "$GITHUB_OUTPUT"
 
   slice:
     needs: plan
+    # skipped when the job reuses an earlier run's frames (renders/slices.json reuse_run: only the edit changed)
+    if: needs.plan.outputs.reuse == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     strategy:
@@ -76,6 +82,7 @@ jobs:
 
   finish:
     needs: [plan, slice]
+    if: always() && needs.plan.result == 'success' && (needs.slice.result == 'success' || needs.slice.result == 'skipped')
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     env:
@@ -89,7 +96,12 @@ jobs:
       - name: sound effects
         run: python3 scripts/fetch_sfx.py || echo "fetch_sfx failed, the edit uses its fallbacks"
       - uses: actions/download-artifact@v4
+        if: needs.plan.outputs.reuse == ''
         with: { pattern: "seg-*", path: work/segs, merge-multiple: true }
+      - name: the reused frames (run ${{ needs.plan.outputs.reuse }})
+        if: needs.plan.outputs.reuse != ''
+        uses: actions/download-artifact@v4
+        with: { pattern: "seg-*", path: work/segs, merge-multiple: true, run-id: "${{ needs.plan.outputs.reuse }}", github-token: "${{ github.token }}" }
       - name: join the slices
         run: |
           gunzip -c "renders/slices/$NAME.rec.json.gz" > "work/$NAME.rec.json"
@@ -108,7 +120,11 @@ jobs:
           git config user.email 41898299+github-actions[bot]@users.noreply.github.com
           git add -f renders/out renders/result.json
           git commit -qm "render-slices: out/$NAME.mp4 [skip ci]"
-          git push origin "HEAD:$GITHUB_REF_NAME" || echo "the branch moved on (re-queued?): the Short is still the 'short' artifact"
+          # only ever a render branch (scripts/render_on_actions.sh queues on render/<name>, <prefix>/render-<name> or
+          # <branch>-render-<name>): a job queued straight on a working branch reports to render/<name>, so the working
+          # branch is never written. Matched by the exact names, not "render" anywhere: agent/render-speed is a working branch
+          case "$GITHUB_REF_NAME" in render/*|*/render-"$NAME"|*-render-"$NAME") OUT_BRANCH=$GITHUB_REF_NAME; F="" ;; *) OUT_BRANCH=render/$NAME; F="-f" ;; esac
+          git push $F origin "HEAD:refs/heads/$OUT_BRANCH" || echo "the branch moved on (re-queued?): the Short is still the 'short' artifact"
 
   failed:
     needs: [plan, slice, finish]
@@ -124,4 +140,5 @@ jobs:
           git config user.email 41898299+github-actions[bot]@users.noreply.github.com
           git add -f renders/result.json
           git commit -qm "render-slices: failed [skip ci]"
-          git push origin "HEAD:$GITHUB_REF_NAME" || true
+          NAME=$(python3 -c "import json;print(json.load(open('renders/slices.json'))['name'])" 2>/dev/null || echo unknown)
+          case "$GITHUB_REF_NAME" in render/*|*/render-"$NAME"|*-render-"$NAME") git push origin "HEAD:refs/heads/$GITHUB_REF_NAME" || true ;; *) git push -f origin "HEAD:refs/heads/render/$NAME" || true ;; esac
