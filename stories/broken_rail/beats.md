@@ -122,7 +122,7 @@ picture at L10-L11.
 
 ## The out-of-context read (3 s, a stranger)
 - "My grandpa has waited for the same minecart for twenty-two years." Fine.
-- "He says, 'She's on her way.'" Fine (r1's "She's coming" removed for innuendo).
+- "He says, 'She's on her way.'" Fine (r1's earlier wording removed for innuendo).
 - "Our pig lives in his own cart. Loves it." Fine.
 - "I bridged the hole, laid rails, pushed." Fine (building).
 - "Sorry I'm late, dear." An old woman to her husband: fine.

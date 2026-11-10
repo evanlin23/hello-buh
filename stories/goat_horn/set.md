@@ -1,4 +1,4 @@
-# goat_horn: set brief (r1)
+# goat_horn: set brief (r2)
 
 The premise is a height: a man knocked off a real mountain cliff into a real lake, 28 blocks down, then the same cliff
 seen from a road 125 blocks away. So the site is chosen for its relief and water first, and the library pieces go
@@ -20,12 +20,13 @@ the lake surface is y -28.
   4..14). Keep the rest of the cliff ragged. No `clearSet`, no flat pad except what `fit` makes under each cottage.
 
 ## The shelf and the oak (hand-built, ~20 commands)
-- The shelf: natural ground, grass and flowers (`dress.flowers`, `dress.grass`), a mossy boulder at (-5,-3)
+- The shelf: natural ground, grass and flowers (`dress.flowers`, `dress.grass`), a mossy boulder at (-2,-3)
   (`dress.rocks`, the foreground of S03 and S11), stone outcrops behind it to the north, a few spruces at the back.
 - **The big oak:** a 2x2 oak-log trunk at x 0..1, z 0..1, 13 high, with a broad oak-leaf canopy (radius 6, two lobes,
   a few branch logs) leaning out over the drop. Hand-built, not `dress.tree` (a vanilla `fancy_oak` has a 1x1 trunk:
   too thin to read as the thing the goat hits). Logs are in `#snaps_goat_horn`.
-- The ram line: north to south at x 2.35, the goat's spot (2.35,0,-7), Dad's spot (2.35,0,-1), the lip at z 2. Keep it
+- The ram line: north to south at x 1.6 (the goat's body meets the 2x2 trunk), the goat's spot (1.6,0,-5), Dad's spot
+  (1.6,0,-1), the kid's step to (2.6,0,-1), the lip at z 2. Dad's launch is staged south-east past the trunk's corner. Keep it
   clear of flowers and grass (the charge and the step read on bare grass).
 - **The switchback stairs:** stone-brick stairs, 3 flights cut into the west end of the face, from the shore at
   (-14,-28,8) to the shelf at (-7,0,-2), a fence rail on the outside, one lantern per landing. They must read as a path
@@ -39,10 +40,10 @@ the lake surface is y -28.
 | `mine` | portal (190,-5,95) on the far ridge | west (toward the lake) | default `depth` | the far mines: S06's background, S08's end of the road |
 
 ## Dressing
-- `dress.frame(ctx, { x: -52, y: -22, z: 23 }, 'east', 'goat_horn')`: Ida's horn at eye height beside her door (item
+- `dress.frame(ctx, { x: -51, y: -22, z: 23 }, 'east', 'goat_horn')`: Ida's horn at eye height beside her door (item
   frames render with their item: check it reads in S05 at 4 blocks, phone size).
-- `dress.path` from our gate along the lake's south shore and up the far slope to the mine portal, `w: 3`, `dress.lamp`
-  every ~16 blocks (one at (109,-20,70) for S13's foreground).
+- `dress.path` from our gate south-east to the south shore, then along the lake's south shore and up the far slope to the mine portal, `w: 3`, `dress.lamp`
+  every ~16 blocks (one at (104,-19,73) on the line from Dad to the S13 camera (107,-18,75), with the road running along that line).
 - A lane between the two cottages with a fence and flowers (S05's foreground).
 - `dress.grove` of spruce and birch on the slopes behind the cottages and along the far shore, `dress.rocks` on the
   shore, reeds (sugar cane) and seagrass in the west shallows (S02's foreground).
@@ -85,6 +86,6 @@ NoAI, S02 frame left. Provisional: re-check against docs/world/canon.md when it 
 - S10's step: `K.ctl('right', true)` for 4 ticks on "STEPPED" (one block east), the goat passing within a block of the
   lens, the camera turns with it.
 - S11: the horn pops off on the impact tick (the drop item spawned at the trunk's north face with a small hop), the
-  goat's left horn hidden on the same tick, the goat steps back 1 block.
+  goat's RIGHT horn (the near side to the S11 camera) hidden on the same tick (`HasRightHorn:0b`), the goat steps back 1 block.
 - S13: the horn's call is on the audio from S12's "BLASTED" through the hold (the vanilla call is ~7 s). Dad stops on
   "TURNED" and the body turn takes ~8 ticks, the wave starts on "AROUND". End under 1 s later.
