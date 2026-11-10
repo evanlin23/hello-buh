@@ -2,12 +2,12 @@
   "name": "broken_rail",
   "stunt": "story_broken_rail",
   "version": 2,
-  "revision": "r2 polish (2026-11-10): r2 continuity notes 1-7 and critic should-fixes 1-3; see reviews/r1-response.md",
+  "revision": "r3 build (2026-11-10): hero is Buh (never said aloud), continuous takes (voice_takes: beat), narrator requests split by emotional beat, <short pause> markers dropped (the take's own pauses)",
   "caption": "why does grandpa wait at an empty rail 🛤️",
   "logline": "Every evening for 22 years a villager grandpa has met an empty rail line and said 'She's on her way.' The night his grandson is finally old enough to cross the bridge, he walks the line and finds out why she never arrived.",
   "question": "why tf is grandpa waiting for a minecart on a rail nobody uses?",
-  "premise": "Grandpa (a villager) stands at the buffer stop of the station at the edge of our rail town every evening and has for 22 years. Nothing ever comes down the line. He says 'She's on her way.' Mom says Grandma left him for her sister's village, and kept the cart. Grandpa won't leave the station (villagers stay in their village) and Ezra wasn't allowed past the bridge, so nobody walked the line. Our pig lives in his own minecart in the yard ('loves it'). At midnight Ezra turns ten and works it out like a kid who believes his grandpa: if she's on her way, the rail's broken.",
-  "twist": "She was coming. On her way home from her sister's, 3,000 blocks out in a valley, a creeper had blown the line; the blast took the redstone torch of the last powered rail, which braked her cart to a stop at the edge of the crater. Mobs can't get out of a minecart on their own (the pig shows it), so Grandma has sat there for 22 years, facing home. Ezra bridges the crater, lays rail, relights the gold rail and pushes; that evening her cart rolls into the buffer stop where Grandpa is waiting, and the station's activator rail sets her down beside him.",
+  "premise": "Grandpa (a villager) stands at the buffer stop of the station at the edge of our rail town every evening and has for 22 years. Nothing ever comes down the line. He says 'She's on her way.' Mom says Grandma left him for her sister's village, and kept the cart. Grandpa won't leave the station (villagers stay in their village) and Buh wasn't allowed past the bridge, so nobody walked the line. Our pig lives in his own minecart in the yard ('loves it'). At midnight Buh turns ten and works it out like a kid who believes his grandpa: if she's on her way, the rail's broken.",
+  "twist": "She was coming. On her way home from her sister's, 3,000 blocks out in a valley, a creeper had blown the line; the blast took the redstone torch of the last powered rail, which braked her cart to a stop at the edge of the crater. Mobs can't get out of a minecart on their own (the pig shows it), so Grandma has sat there for 22 years, facing home. Buh bridges the crater, lays rail, relights the gold rail and pushes; that evening her cart rolls into the buffer stop where Grandpa is waiting, and the station's activator rail sets her down beside him.",
   "key_color": "#F2B544",
   "gap": 0.3,
   "mood": [
@@ -24,7 +24,7 @@
     "place": "rail_town (new, to claim): a rail town on the High Meadow's east top, the buffer stop (station origin) about (-305, 116, -770), footprint about (-345, -815, -280, -700); its line runs south off the plateau over the ravine bridge, south-west down to the bay and west along the White's south edge. rail_crater (new, to claim): the crater 3,000 blocks down the line, in a green valley of the West March's south lakes, about (-2050, 66, -250)",
     "where": "the rail town on the High Meadow (station, sidings, our yard, the bridge); the crater in a West March valley, 3,000 blocks down the line",
     "day": 8400,
-    "canon": "New family, not Milo's: Ezra (a player kid turning ten, house narrator voice), Mom (cleric), Grandpa (toolsmith) and Grandma JUNE (farmer), all villagers. Grandma's cart stopped at the creeper crater on day ~370 (22 years) and comes home on day 8400. Bible: World.",
+    "canon": "New family, not Milo's: Buh (the hero, a player kid turning ten, default Steve skin; never named aloud; the house narrator voice), Mom (cleric), Grandpa (toolsmith) and Grandma JUNE (farmer), all villagers. Grandma's cart stopped at the creeper crater on day ~370 (22 years) and comes home on day 8400. Bible: World.",
     "easter_egg": "torch_hill (canon cameo, since day 300): the lone torch on the slope under the High Meadow, a single warm point in the dark about 48 blocks ahead and below, left of centre, in S08 (midnight, the bridge foot looking south); world.build places it (the Digger's House stamp)"
   },
   "voice": {
@@ -38,7 +38,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "Ezra, the player kid (default Steve skin), nine turning ten (the voice stays Pip's nine-year-old recipe); POV in S06, S08, S10, S11a, S12a (the hand and the hotbar); seen small from outside in S09 and S12b",
+      "on_screen": "Buh, the player kid (default Steve skin), nine turning ten (the voice stays Pip's nine-year-old recipe); POV in S06, S08, S10, S11a, S12a (the hand and the hotbar); seen small from outside in S09 and S12b",
       "voice": "Leda",
       "recipe": "voices/recipes/pip.md (single speaker, the exact bracketed direction, no post-processing)"
     },
@@ -49,8 +49,8 @@
       "color": "#F4A6C0",
       "profile": "Grandma: a woman in her seventies, warm and a little dry, a smile in her voice, full volume, unhurried; never breathy",
       "on_screen": "villager, plains farmer (straw hat), sitting in a minecart; S11a, S11b, S12a, S12b, S13 (far), S14",
-      "audition": "No library voice fits an old woman. Audition Gacrux (mature) and Sulafat directed thirty years older on L14 only, two takes each; pick the one that sounds like a grandmother and nothing like the narrator; record the pick here.",
-      "model": "gemini-3.8-flash-lite-tts"
+      "model": "gemini-3.8-flash-lite-tts",
+      "note": "Gacrux, as gold_for_the_portal's Grandma (the palette's mature woman; no elder woman in voices/cast.json). No audition: quota."
     }
   },
   "requests": [
@@ -63,14 +63,9 @@
       "voice": "Leda",
       "lines": [
         "L01",
-        "L02",
-        "L03",
-        "L04",
-        "L05",
-        "L06",
-        "L07"
+        "L02"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; amazed and grinning, the whole first line in one breath]"
     },
     {
       "id": "r2",
@@ -80,17 +75,66 @@
       "model": "gemini-3.8-flash-lite-tts",
       "voice": "Leda",
       "lines": [
-        "L08",
-        "L09",
-        "L10",
-        "L11",
-        "L12",
-        "L13"
+        "L03",
+        "L04",
+        "L05",
+        "L06"
       ],
-      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; cheeky, telling on the grown-ups, indignant, then laughing about the silly pig]"
     },
     {
       "id": "r3",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L07",
+        "L08",
+        "L09"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; fed up with the rules, then lit up and brave, speeding up, the adventure starting]"
+    },
+    {
+      "id": "r4",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L10",
+        "L11"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; stopping short, puzzled, then full of wonder; never sad]"
+    },
+    {
+      "id": "r5",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L12"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; fast and determined, the last word like a launch]"
+    },
+    {
+      "id": "r6",
+      "speakers": [
+        "N"
+      ],
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "lines": [
+        "L13"
+      ],
+      "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft; proud and smiling, warm, still full volume]"
+    },
+    {
+      "id": "r7",
       "speakers": [
         "Grandma"
       ],
@@ -110,7 +154,7 @@
       "direction": "one quick breath, bright and amazed, a tiny lift on the number",
       "shot": "S01",
       "look": {
-        "what": "actor:Grandpa",
+        "what": "toolsmith",
         "word": "GRANDPA"
       }
     },
@@ -118,7 +162,6 @@
       "id": "L02",
       "who": "N",
       "text": "Every EVENING. / Empty RAIL. / He says, / \"She's on her WAY.\"",
-      "say": "Every evening. Empty rail. <short pause> He says, \"She's on her way.\"",
       "direction": "matter-of-fact, then quoting him plainly and fondly, no impression of an old voice",
       "shot": "S02",
       "look": {
@@ -133,7 +176,7 @@
       "direction": "the grin drops a notch, still full volume, repeating what grown-ups say",
       "shot": "S03",
       "look": {
-        "what": "actor:Mom",
+        "what": "cleric",
         "word": "MOM"
       }
     },
@@ -178,7 +221,7 @@
       "shot": "S07",
       "look": [
         {
-          "what": "actor:Grandpa",
+          "what": "toolsmith",
           "word": "GRANDPA"
         },
         {
@@ -238,25 +281,19 @@
           "word": "MINECART"
         },
         {
-          "what": "actor:Grandma",
+          "what": "farmer",
           "word": "GRANDMA",
           "size": "cu"
         }
-      ],
-      "say": "Past it, a minecart. <short pause> Grandma in it. <short pause> Still facing home."
+      ]
     },
     {
       "id": "L12",
       "who": "N",
       "text": "I bridged / the HOLE, / laid RAILS, / PUSHED.",
-      "say": "I bridged the hole, <short pause> laid rails, <short pause> pushed.",
       "direction": "fast and determined, a beat after each of the first two phrases, the last word like a launch",
       "shot": "S12a",
       "look": [
-        {
-          "what": "prop:crater",
-          "word": "HOLE"
-        },
         {
           "what": "prop:her_cart",
           "word": "PUSHED"
@@ -270,7 +307,7 @@
       "direction": "gentle and proud, smiling, full volume, slowing only on the last two words",
       "shot": "S13",
       "look": {
-        "what": "actor:Grandpa",
+        "what": "toolsmith",
         "word": "GRANDPA"
       }
     },
@@ -278,11 +315,10 @@
       "id": "L14",
       "who": "Grandma",
       "text": "Sorry I'm LATE, / dear.",
-      "say": "Sorry I'm late, dear.",
       "direction": "warm and a little sheepish, a smile in it, as if she missed the bus",
       "shot": "S14",
       "look": {
-        "what": "actor:Grandma",
+        "what": "farmer",
         "word": "LATE"
       }
     }
@@ -298,7 +334,9 @@
   },
   "props": {
     "Grandpa": {
-      "actor": "Grandpa"
+      "actor": "Grandpa",
+      "entity": "villager",
+      "prof": "toolsmith"
     },
     "Grandma": {
       "actor": "Grandma"
@@ -315,42 +353,49 @@
     "empty_spur": {
       "at": [
         4,
-        0,
-        -3
+        1,
+        4
       ]
     },
     "bridge": {
-      "block": "stone_bricks"
+      "at": [
+        0,
+        1,
+        43
+      ]
     },
     "the_line": {
-      "block": "powered_rail"
+      "block": "rail"
     },
     "crater": {
-      "site": "valley",
       "at": [
-        0,
-        -2,
-        0
+        -1798,
+        -39,
+        674
       ],
-      "note": "valley-site coordinates: origin = the crater's centre at rail height (not the station)"
+      "h": 2,
+      "note": "the crater's floor (O offsets: the valley through VX/VF/VZ in the stunt)"
     },
     "her_cart": {
-      "actor": "GrandmaCart",
-      "site": "valley then station"
+      "at": [
+        -1798,
+        -37,
+        678
+      ],
+      "h": 2
     },
     "dead_gold_rail": {
-      "site": "valley",
       "at": [
-        0,
-        0,
-        4
+        -1798,
+        -37,
+        678
       ],
       "block": "powered_rail"
     },
     "activator_rail": {
       "at": [
         0,
-        0,
+        1,
         1
       ],
       "block": "activator_rail"
@@ -376,8 +421,8 @@
       "line": "L02",
       "place": "station to village edge",
       "size": "ews",
-      "camera": "path: crane up and back. Key 0: 3 blocks up, 8 blocks west of the platform, side-on looking east; key 1 (~2.6 s): 16 blocks up, 30 blocks west, lookPath tilting down so the empty line fills the frame running right (south) to the hills on 'RAIL', Grandpa small at frame left",
-      "frame": "opens: the platform side-on, Grandpa at the buffer at frame left (north), the rail running right (south); ends: the whole station small at lower centre (platform, two sidings, the destination sign), our cottage and the village roofs with chimney smoke behind it (left), the line running right over the bridge and the river into hills, nothing on it. Dusk (12500). Home is frame left in every side-on shot.",
+      "camera": "at: on the bridge's north abutment, 1.3 up, looking north back up the empty line to the station, a slow push",
+      "frame": "fg: the empty rail running away from us up the ballast; mid: the station small, the buffer stop and Grandpa at it; bg: our cottage and the neighbours' roofs, chimney smoke, oaks. Dusk (12500). Changed in the build (r3): a side-on crane over the flat meadow top read as superflat.",
       "look": {
         "time": 12500
       }
@@ -410,7 +455,7 @@
       "place": "our_yard",
       "size": "full",
       "camera": "at: 1.5 blocks up behind the yard fence, 7 blocks from the cart, looking north toward the cottage, slow push; FOV 50",
-      "frame": "fg: the oak fence and the carrot patch; subject: the pig sitting in a minecart on Ezra's 5x5 yard loop, head turning; bg: our cottage (spruce) with its lit window and chimney smoke. No station in this frame (it is behind the camera's right). Dusk (12650).",
+      "frame": "fg: the oak fence and the carrot patch; subject: the pig sitting in a minecart on Buh's 5x5 yard loop, head turning; bg: our cottage (spruce) with its lit window and chimney smoke. No station in this frame (it is behind the camera's right). Dusk (12650).",
       "look": {
         "time": 12650
       }
@@ -453,8 +498,8 @@
       "line": "L09",
       "place": "the_line (hills and valley)",
       "size": "ews",
-      "camera": "path: a high crane (30 blocks up) drifting along the line, looking down it as it winds over a ridge and descends into a long valley; Ezra tiny on the rail mid-frame, walking away from the lens (south, away from home)",
-      "frame": "fg: the ridge top's spruces at the lower edge; mid: the rail with a powered rail every 8 blocks glinting gold, each with a redstone torch beside it; Ezra small on the line; bg: the valley floor with a stream, more hills to the fog. Sunrise (23300), the sun low at frame left (the camera looks south, so east is frame left).",
+      "camera": "path: a high crane (30 blocks up) drifting along the line, looking down it as it winds over a ridge and descends into a long valley; Buh tiny on the rail mid-frame, walking away from the lens (south, away from home)",
+      "frame": "fg: the ridge top's spruces at the lower edge; mid: the rail with a powered rail every 8 blocks glinting gold, each with a redstone torch beside it; Buh small on the line; bg: the valley floor with a stream, more hills to the fog. Sunrise (23300), the sun low at frame left (the camera looks south, so east is frame left).",
       "look": {
         "time": 23300
       }
@@ -509,7 +554,7 @@
       "place": "crater",
       "size": "full",
       "camera": "at: 7 blocks west of the cart, 1.6 up, looking east; FOV 50; pans left with the cart for its first 3 blocks",
-      "frame": "fg: ferns on the valley floor; subject: Ezra behind the cart on the far lip walks into it on 'PUSHED', the lit gold rail fires it and the cart with Grandma shoots left (north, home) over the new rails; bg: the valley side with the line climbing out. Morning (5000). About 1 s.",
+      "frame": "fg: ferns on the valley floor; subject: Buh behind the cart on the far lip walks into it on 'PUSHED', the lit gold rail fires it and the cart with Grandma shoots left (north, home) over the new rails; bg: the valley side with the line climbing out. Morning (5000). About 1 s.",
       "look": {
         "time": 5000
       }
@@ -539,5 +584,7 @@
   ],
   "bible": "stories/broken_rail/bible.md",
   "beats": "stories/broken_rail/beats.md",
-  "set": "stories/broken_rail/set.md"
+  "set": "stories/broken_rail/set.md",
+  "voice_takes": "beat",
+  "botName": "Buh"
 }

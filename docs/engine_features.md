@@ -196,6 +196,7 @@ before and after.
   counts as a speaker at the camera's eye.
 - **Look at a mark**: `M.headTo(ctx, who, at)` ... `M.headOff(ctx, who)` (marks `look_at` / `look_at_off`): `at` is an
   actor's name, an entity id or `[dx, dy, dz]` from the set origin. Renderer-side, so no-AI mobs turn too.
+- **Riding a minecart**: `ctx.mark('pose', { ids: [id], seated: true })` ... `pose_off`: the mob sinks into the cart to its passenger height and a villager's legs go out in front (VillagerModel riding). /tp the rider with its cart every tick (the recording never sees vanilla passengers move). stories/broken_rail
 - **Asleep**: `ctx.mark('pose', { ids: [id], sleep: true })` ... `pose_off`: any mob lies on its side on the floor
   (Pose.SLEEPING; player actors have the `lie` pose). **Shaking its head no**: `{ shake: true }` (VillagerModel's
   unhappy head shake, zRot 0.3 sin(0.45 age)) on any mob with a head.

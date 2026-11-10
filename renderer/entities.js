@@ -745,6 +745,10 @@ function sheepColor (s, tick) {
   return woolColor(s.extra?.color || 0)
 }
 // hitbox width / height (EntityType sizes) for the fire overlay
+// riding a minecart: how far the model sinks from the rail-level feet (AbstractMinecart's passenger attachment, the
+// mob's own riding offset; tuned on stills against the cart rim) and the riding legs (the converted space's x sign)
+const SEAT_DROP = { villager: 0.42, wandering_trader: 0.42, witch: 0.42, pig: 0.12, sheep: 0.12, cow: 0.12, chicken: 0.05, wolf: 0.1 }
+const SEAT_LEG_X = -1.4137167, SEAT_LEG_Y = Math.PI / 10
 const HITBOX_W = { zombie: 0.6, skeleton: 0.6, creeper: 0.6, villager: 0.6, cow: 0.9, sheep: 0.9, pig: 0.9, chicken: 0.4, spider: 1.4, enderman: 0.6, iron_golem: 1.4, wolf: 0.6, horse: 1.3965, slime: 0.52, husk: 0.6, drowned: 0.6, witch: 0.6, pillager: 0.6, blaze: 0.6, warden: 0.9 }
 const HITBOX_H = { zombie: 1.95, skeleton: 1.99, creeper: 1.7, villager: 1.95, cow: 1.4, sheep: 1.3, pig: 0.9, chicken: 0.7, spider: 0.9, enderman: 2.9, iron_golem: 2.7, wolf: 0.85, horse: 1.6, slime: 0.52, husk: 1.95, drowned: 1.95, witch: 1.95, pillager: 1.95, blaze: 1.8, warden: 2.9 }
 // Baby models (AgeableListModel / BabyModelTransform): [scaleHead, yHeadOffset, zHeadOffset,
@@ -786,7 +790,7 @@ export class EntityLayer {
   async ensure (id, name, extra) {
     // (an extra left empty once the animated-only keys are dropped is the same as none: a pose_off
     // rebuilt the bear and lost its stand animation, so it snapped down: worker 13)
-    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'shake' || k === 'converting' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
+    let ek = JSON.stringify(extra, (k, v) => k === 'paddle' || k === 'standing' || k === 'sleep' || k === 'seated' || k === 'shake' || k === 'converting' || k === 'roar' || k === 'roarT' || k === 'emerge' || k === 'dig' ? undefined : v)
     if (ek === '{}' || ek === undefined) ek = 'null'
     const key = `${id}|${name}|${ek}`
     const cur = this.live.get(id)
@@ -1127,6 +1131,9 @@ export class EntityLayer {
       // asleep (a staged ctx.mark('pose', { ids, sleep: true }); LivingEntityRenderer.setupRotations for Pose.SLEEPING):
       // on its side, raised by half its width so it lies on the floor, not in it
       if (s.extra && s.extra.sleep) { r.obj.rotation.set(0, s.yaw, Math.PI / 2); r.obj.position.y += (HITBOX_W[s.name] || 0.6) / 2 }
+      // riding a minecart (a staged ctx.mark('pose', { ids, seated: true }): the mob is /tp'd with the cart, its feet at
+      // the rail): sunk into the cart to its passenger height, a villager's legs out in front (VillagerModel riding)
+      if (s.extra && s.extra.seated) r.obj.position.y -= SEAT_DROP[s.name] ?? 0.3
       if (s.swell !== undefined) {   // CreeperRenderer.scale
         let f = s.swell; const g = 1 + Math.sin(f * 100) * f * 0.01
         f = Math.min(1, Math.max(0, f)); f *= f; f *= f
@@ -1196,6 +1203,10 @@ export class EntityLayer {
       // bipeds: legs opposite, arms against the legs. Quadrupeds (QuadrupedModel: creeper, pig):
       // leg0/leg1 hind right/left, leg2/leg3 front right/left; diagonal pairs move together.
       if (!B.leg4) for (const [n, sign] of [['leg0', 1], ['rightLeg', 1], ['leg1', -1], ['leftLeg', -1], ['leg2', -1], ['leg3', 1]]) if (B[n]) B[n].rotation.x = B[n].userData.rest.x + swing * sign
+      // VillagerModel.setupAnim while riding: legs xRot -1.4137167 (forward), yRot +-pi/10, zRot +-0.0785 (as HumanoidModel)
+      if (s.extra && s.extra.seated && /^(villager|wandering_trader|witch)$/.test(s.name)) {
+        for (const [n, sgn] of [['rightLeg', 1], ['leftLeg', -1], ['right_leg', 1], ['left_leg', -1]]) if (B[n]) B[n].rotation.set(SEAT_LEG_X, sgn * SEAT_LEG_Y, sgn * 0.0785)
+      }
       // zombies hold their arms out (AnimationUtils.animateZombieArms: xRot -pi/2.25, replacing the
       // walk swing; the converted space flips the sign), with the vanilla idle bob
       if (/^(zombie|husk|drowned|zombie_villager)$/.test(s.name)) {

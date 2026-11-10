@@ -73,9 +73,9 @@ follows `docs/building_guide.md`; no clearing, no superflat.
   beside her powered rail in the pause (the rail lights). He ends on the far side, behind the cart, for S12b. **S12b**: the bot walks into the cart from the south; the lit powered rail launches it north
   (lessons.md: empty carts lose speed, but a ridden cart on boosters every 8 blocks is fine; check it clears the crater
   bridge and leaves frame left within ~1 s; S12b's camera pans left with it for 3 blocks).
-- **Depth:** S09: fg ridge-top spruces, mid the line and Ezra, bg the valley, hills to the fog;
+- **Depth:** S09: fg ridge-top spruces, mid the line and Buh, bg the valley, hills to the fog;
   S10/S11a: fg the near rail stub and the crater, mid her cart, bg the line on into the valley and the valley wall;
-  S12b: fg ferns, mid the cart and Ezra, bg the valley side.
+  S12b: fg ferns, mid the cart and Buh, bg the valley side.
 
 ## Easter egg
 Canon cameo `torch_hill` (since day 300): the lone torch on the slope under the High Meadow, over the Digger's shaft
@@ -92,3 +92,19 @@ about 48 blocks ahead and below, left of centre. Nothing to build: `world.build`
 | the activator rail setting Grandma down (S14) | staged (end the ride, tp her standing) | 10 min | stage |
 | the pig's head following the carrot (S06) | vanilla tempt goal looks at a player holding a carrot even while riding; if the recording doesn't show it, stage the head turn (`headYaw`) | 10 min | stage if needed |
 | the knock of the cart into the buffer (S14) | vanilla minecart sounds come through `relaySounds()` | none | none |
+
+## As built (r3, 2026-11-10; docs/world/map.json `rail_town`, `rail_crater`)
+- **Rail town** on the High Meadow's flat top, buffer stop at (-318, 117, -770) (stunt O = (-318, 116, -770), bed level).
+  Library pieces: `station` (new: buffer + activator rail + redstone torch, slab platform with apron, lamps, bench,
+  sign ELMWATER 4500, sidings OTTO (x +2, with a cart) and JUNE (x +4), buffers at z +4), `bridge` (deck z +31..+55,
+  over the ravine), our spruce `cottage` (west, facing east) with the yard stamp (fenced 7x7, a 5x5 loop, the pig's cart
+  on its north row), two neighbours' houses north (no vanilla village: library pieces instead, so the town is the same
+  every run). Stamps: the `ravine` (a dry ravine draining east off the plateau; the plateau has no natural one), the
+  `line` (sets.dress.rails: terrain-following, smoothed), `trees` (scattered oaks; a stand south of the ravine).
+- **Crater** at (-2116, 78, -96) (bed level; rails at 79) in a basin south of a West March ridge: the line comes over
+  the ridge (powered rail + redstone torch every 8) down to the floor; `crater_bowl` (7 wide, 3 deep, grassed), the dark
+  powered rail at z +4 with its torch block air, `bridged` since 8401.
+- **Easter egg**: `torch_hill` is built but can't be seen from the bridge foot (the meadow's south edge hides the slope
+  under it): not in frame. Logged in the run report.
+- **Engine**: riders are drawn seated with `ctx.mark('pose', { ids, seated: true })` (renderer/entities.js), /tp'd with
+  their carts; `./hb check` knows the seat drop (lib/hb/scene.js).

@@ -1611,7 +1611,7 @@
     {
      "id": "yard",
      "since": 6000,
-     "what": "our yard: a fenced square south of the cottage with a 5x5 rail loop on grass (the pig's)",
+     "what": "our yard: a fenced square south of the cottage with a 5x5 rail loop on grass (the pig's cart sits on it)",
      "do": "cmds",
      "cmds": [
       "/fill -352 117 -760 -346 117 -754 grass_block",
@@ -1629,8 +1629,33 @@
       "/setblock -347 118 -759 rail[shape=south_west]",
       "/setblock -351 118 -755 rail[shape=north_east]",
       "/setblock -347 118 -755 rail[shape=north_west]",
-      "/fill -350 117 -758 -348 117 -756 farmland[moisture=7]",
-      "/fill -350 118 -758 -348 118 -756 carrots[age=7]"
+      "/fill -368 117 -778 -332 120 -744 air replace tall_grass",
+      "/fill -368 117 -778 -332 120 -744 air replace short_grass",
+      "/fill -368 117 -778 -332 120 -744 air replace large_fern",
+      "/fill -368 117 -778 -332 120 -744 air replace lilac",
+      "/fill -368 117 -778 -332 120 -744 air replace peony",
+      "/fill -368 117 -778 -332 120 -744 air replace rose_bush"
+     ]
+    },
+    {
+     "id": "trees",
+     "since": 0,
+     "what": "the meadow's scattered oaks round the town and a stand of them south of the ravine",
+     "do": "cmds",
+     "cmds": [
+      "/execute positioned -368 0 -778 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:fancy_oak ~ ~ ~",
+      "/execute positioned -371 0 -760 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:oak ~ ~ ~",
+      "/execute positioned -362 0 -792 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:fancy_oak ~ ~ ~",
+      "/execute positioned -342 0 -794 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:oak ~ ~ ~",
+      "/execute positioned -298 0 -750 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:fancy_oak ~ ~ ~",
+      "/execute positioned -301 0 -737 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:oak ~ ~ ~",
+      "/execute positioned -338 0 -744 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:fancy_oak ~ ~ ~",
+      "/execute positioned -347 0 -739 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:birch ~ ~ ~",
+      "/execute positioned -306 0 -702 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:fancy_oak ~ ~ ~",
+      "/execute positioned -331 0 -700 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:fancy_oak ~ ~ ~",
+      "/execute positioned -312 0 -694 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:oak ~ ~ ~",
+      "/execute positioned -326 0 -690 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:birch ~ ~ ~",
+      "/execute positioned -296 0 -706 positioned over motion_blocking_no_leaves if block ~ ~-1 ~ #minecraft:dirt run place feature minecraft:oak ~ ~ ~"
      ]
     }
    ],
@@ -1645,7 +1670,7 @@
    "region": "the_west_march",
    "at": [
     -2116,
-    78,
+    79,
     -96
    ],
    "footprint": [
@@ -1678,7 +1703,7 @@
        [
         136,
         152,
-        78
+        79
        ]
       ]
      }
@@ -1690,7 +1715,7 @@
      "do": "crater",
      "pos": [
       -2116,
-      77,
+      78,
       -96
      ],
      "r": 3.6,
@@ -1702,8 +1727,8 @@
      "what": "the creeper crater cutting the line, 7 wide and 3 deep, grassed over; the last powered rail south of it dark (its torch blown away)",
      "do": "cmds",
      "cmds": [
-      "/setblock -2115 78 -92 air",
-      "/setblock -2116 78 -92 powered_rail[shape=north_south,powered=false]"
+      "/setblock -2115 79 -92 air",
+      "/setblock -2116 79 -92 powered_rail[shape=north_south,powered=false]"
      ]
     },
     {
@@ -1712,10 +1737,10 @@
      "what": "the crater bridged by Buh on day 8400: 7 dirt and 7 rails across at rail height, the dark rail's redstone torch relit",
      "do": "cmds",
      "cmds": [
-      "/fill -2116 77 -99 -2116 77 -93 dirt",
-      "/fill -2116 78 -99 -2116 78 -93 rail[shape=north_south]",
-      "/setblock -2115 78 -92 redstone_torch",
-      "/setblock -2116 78 -92 powered_rail[shape=north_south,powered=true]"
+      "/fill -2116 78 -99 -2116 78 -93 dirt",
+      "/fill -2116 79 -99 -2116 79 -93 rail[shape=north_south]",
+      "/setblock -2115 79 -92 redstone_torch",
+      "/setblock -2116 79 -92 powered_rail[shape=north_south,powered=true]"
      ]
     }
    ],

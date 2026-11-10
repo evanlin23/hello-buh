@@ -908,13 +908,13 @@ const WARDEN_ANIM = new Map()   // id -> [[a, b, 'emerge' | 'dig']]
   for (const e of rec.timeline || []) {
     if (e.event === 'pose') {
       const fl = {}; if (e.creepy) fl.creepy = true; if (e.standing) fl.standing = true
-      if (e.sleep) fl.sleep = true; if (e.shake) fl.shake = true; if (e.converting) fl.converting = true   // a piglin/hoglin zombifying in the Overworld (LivingEntityRenderer.isShaking)   // any mob lying asleep; a villager shaking its head no (entities.js)
+      if (e.sleep) fl.sleep = true; if (e.seated) fl.seated = true; if (e.shake) fl.shake = true; if (e.converting) fl.converting = true   // a piglin/hoglin zombifying in the Overworld (LivingEntityRenderer.isShaking)   // any mob lying asleep; a villager shaking its head no (entities.js)
       if (Object.keys(fl).length) for (const id of e.ids || []) { const run = [e.t / 50, Infinity, fl]; if (!STAGED.has(id)) STAGED.set(id, []); STAGED.get(id).push(run); open.set(id, run) }
       // { pose: 'wave' | ['sit', 'drink'], ...params }, or the flags sit / drink / use (ground: sit on the floor)
       const names = [].concat(e.pose || [])
       if (e.sit) names.push(e.ground ? 'sit_ground' : 'sit')
       if (e.drink) names.push('drink'); else if (e.use) names.push('use')
-      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, shake: _sh, converting: _cv, ...params } = e
+      const { t: _t, event: _e, ids: _i, slot: _s, health: _h, max_health: _m, pose: _p, sit: _st, drink: _d, use: _u, ground: _g, creepy: _c, standing: _sd, roar: _r, emerge: _em, dig: _dg, sleep: _sl, seated: _se, shake: _sh, converting: _cv, ...params } = e
       const ap = names.filter(n => { if (POSES.POSES[n]) return true; console.log(`pose mark at tick ${e.t / 50}: no pose '${n}' in renderer/poses.js (${POSES.POSE_NAMES.join(', ')})`); return false }).map(name => ({ name, ...params }))
       if (ap.length) for (const id of e.ids || []) { if (openA.has(id)) openA.get(id)[1] = e.t / 50; const run = [e.t / 50, Infinity, ap]; if (!ACT_POSE.has(id)) ACT_POSE.set(id, []); ACT_POSE.get(id).push(run); openA.set(id, run) }
       for (const k of ['emerge', 'dig']) if (e[k]) for (const id of e.ids || []) { if (!WARDEN_ANIM.has(id)) WARDEN_ANIM.set(id, []); WARDEN_ANIM.get(id).push([e.t / 50, e.t / 50 + (k === 'emerge' ? 134 : 100), k]) }

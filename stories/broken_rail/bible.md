@@ -34,7 +34,7 @@
   `stories.broken_rail.cameos: ["torch_hill"]`, and run `./hb world check`.
 - **Day:** 8400. Grandma left "TWENTY-TWO YEARS" ago (8,030 days): on day ~370, outside the Long Day (800-1100, no
   evenings then, so Grandpa's "every evening" skipped 300 of them). The midnight scene (S08) is outside it too.
-- **Who:** a new family, not Milo's: Ezra (a player kid turning ten, the house narrator voice), Mom (cleric), Grandpa
+- **Who:** a new family, not Milo's: Buh (a player kid turning ten, the house narrator voice), Mom (cleric), Grandpa
   (toolsmith) and Grandma JUNE (farmer), all plains villagers. One grandpa in this Short, called Grandpa only by his
   own grandchild. JUNE is new (Names in the Woods has ROSA; ROSE was renamed to keep them apart).
 - **Stands alone:** no line names a place or another story.
@@ -45,14 +45,14 @@
 | The rail town: village, station, sidings (OTTO's and JUNE's spurs), our cottage and yard loop, the bridge, the line | ~370 or earlier | pieces and stamps at `rail_town`; the line itself is story-only beyond the bridge |
 | The creeper crater on the line, Grandma's cart stopped on the dead gold rail at its far lip | ~370 | stamp at `rail_crater` (until 8400) |
 | The crater bridged: 7 dirt and 7 rails, the gold rail's redstone torch relit | 8400 | stamp at `rail_crater`, since 8400 |
-| Grandma comes home: her cart at the buffer, JUNE's spur still empty, Grandma standing beside Grandpa | 8400 | stamp at `rail_town`, since 8400; timeline row: **8400, the rail town. The Broken Rail.** "Ezra walks the line, bridges the crater and pushes Grandma home after 22 years." |
+| Grandma comes home: her cart at the buffer, JUNE's spur still empty, Grandma standing beside Grandpa | 8400 | stamp at `rail_town`, since 8400; timeline row: **8400, the rail town. The Broken Rail.** "Buh walks the line, bridges the crater and pushes Grandma home after 22 years." |
 
 ## Every number: said vs shown
 | said | where | the picture must show |
 |---|---|---|
 | "TWENTY-TWO YEARS" | L01 | nothing countable; the crater fully grown over (old), the JUNE sign weathered |
 | "Every EVENING" | L02 | dusk in S01-S07 and again in S13-S14 |
-| "TEN" (his age) | L08 | Ezra is the default Steve skin; nothing contradicts. The narrator voice is Pip's nine-year-old recipe (owner rule) |
+| "TEN" (his age) | L08 | Buh is the default Steve skin; nothing contradicts. The narrator voice is Pip's nine-year-old recipe (owner rule) |
 | "THREE THOUSAND blocks" | L09 | S09 shows a long line over a ridge into a valley; no coordinates or other numbers in frame. ELMWATER 4500 (S02) is further than the crater: consistent |
 | the timing | - | leave the bridge at 18000; sprint 3,000 blocks at 5.6 b/s ≈ 536 s ≈ 10,700 ticks → crater at ~4700 (S10); fix and push by ~5000; the cart at 8 b/s ≈ 375 s ≈ 7,500 ticks → buffer at ~12500-12800 (S13-S14). Dusk at both ends. |
 | 7 dirt, 7 rails | S12a (not said) | the crater is 7 wide at rail height: 7 dirt (3 already placed at the jump cut, 4 on screen) and 7 rails |
@@ -75,7 +75,7 @@ site:** origin = the crater's centre at rail height, x east, z south.
 ## Cast and costume
 | who | mob / skin | outfit | name tag | where, per scene | state changes |
 |---|---|---|---|---|---|
-| Ezra (narrator) | player, default Steve | none | none | yard (S06 POV), bridge foot (S08 POV), line (S09, tiny), crater (S10-S12) | none; not at the station at the end |
+| Buh (narrator) | player, default Steve | none | none | yard (S06 POV), bridge foot (S08 POV), line (S09, tiny), crater (S10-S12) | none; not at the station at the end |
 | Grandpa | villager, plains, toolsmith (black apron) | standing | none | **always at (0,-1), north of the buffer, body facing south**; in S01 and S13 his head is turned ~40 deg west toward the sunset (so the face reads in three-quarter): S01, S02, S03 bg, S07, S13, S14 | S14: head turns to the cart, tips on "dear" |
 | Grandma | villager, plains, farmer (straw hat) | sitting in a minecart, then standing | none | in her cart on the crater's far lip (S11a-S12b), on the line (S13), set down at (0,1) (S14) | facing north (home) in every shot; S14: set down standing by the activator rail |
 | Mom | villager, plains, cleric (purple robe) | standing | none | at our garden gate, facing the station (S03) | none |
@@ -108,12 +108,12 @@ site:** origin = the crater's centre at rail height, x east, z south.
 ## The narrator
 - Holds: the carrot in S06 (no rails yet); the carrot still selected at the start of S08, the rails appear and are selected on "RAILS"; the rails in S10-S11a;
   dirt, then rails, then the redstone torch in S12a. Hearts and hunger full. No armour.
-- Where Ezra is per line: L01-L05 not on screen (narrating; L03-L05 he's in the yard, off frame); L06 at the cart (POV);
+- Where Buh is per line: L01-L05 not on screen (narrating; L03-L05 he's in the yard, off frame); L06 at the cart (POV);
   L07 not on screen; L08 at the bridge foot; L09 on the line (tiny); L10-L12 at the crater (S12a walks him across the new rails to the far side); L13-L14 walking home, off
   screen.
 
 ## Who knows what
-| line | Ezra knows | Grandpa knows | Mom knows | the viewer can know |
+| line | Buh knows | Grandpa knows | Mom knows | the viewer can know |
 |---|---|---|---|---|
 | L01-L02 | Grandpa waits for a cart that never comes | she's on her way (belief) | (thinks) she left | "the same minecart" is odd |
 | L03-L04 | Mom's story; the cart's gone | | she left him (wrong) | the cart is missing too |
