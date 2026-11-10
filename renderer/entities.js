@@ -1065,6 +1065,7 @@ export class EntityLayer {
           r.tag.visible = !!s.nameTag
           r.tag.position.set(s.x, s.y + (s.nameY || 2.3), s.z)
           r.tag.material.color.setRGB(...LL)
+          if (s.nameDim !== undefined) r.tag.material.opacity = s.nameDim ? 0.6 : 1   // a crouching player's plate (stunt.playerNames)
         }
       }
       if (r.underMat) r.underMat.color.setRGB(...sheepColor(s, tick).map((v, i) => v * LL[i]))
