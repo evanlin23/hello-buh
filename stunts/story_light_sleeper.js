@@ -351,7 +351,7 @@ module.exports = {
           const o = { south: [0, 0.6], north: [0, 0.4], west: [0.4, 0], east: [0.6, 0] }[f]
           const ix = { south: [0, -1], north: [0, 1], west: [1, 0], east: [-1, 0] }[f]
           const a = K.actor(t, { x: x + o[0] + (f === 'east' || f === 'west' ? 0 : 0.5) + ix[0], y: 2.07, z: z + o[1] + (f === 'north' || f === 'south' ? 0 : 0.5) + ix[1], yaw: K.mcYaw(-x, -z) })
-          a.walk = { dx: -ix[0] / 12, dz: -ix[1] / 12, n: 12 }
+          a.walk = { dx: -ix[0] / 26, dz: -ix[1] / 26, n: 26 }   // a slow, wary step out (runs into the cut to Mom)
         }
         ctx.sound('block.wooden_door.open', 0.6, 0.9)
       }
@@ -366,11 +366,12 @@ module.exports = {
     })
 
     // ---- L13: the reverse: Mom frozen in our doorway, 5 blocks away; the Darkness comes in
-    await put('mom', { x: 0.5, y: 3.07, z: -7.35, yaw: 0, pitch: 8 })
+    await put('mom', { x: 0.5, y: 3.07, z: -7.35, yaw: 34, pitch: 8 })
     K.shot('mom')
     say('/effect give @s minecraft:darkness 600 0 true')
     const mom13 = K.actors.get('mom')
-    await line('L13', async (k) => { mom13.yaw = Math.sin(k / 1.7) * 5; mom13.pitch = 8 + Math.sin(k / 2.3) * 4; look(k) })   // frozen, trembling
+    await line('L13', async (k) => { mom13.yaw = 34 * Math.max(0, 1 - k / 14) ** 2 + Math.sin(k / 1.7) * 4; mom13.pitch = 8 + Math.min(k, 26) * 0.5;   // from the well (the scream) to him: "Don't move"; her head sinks as the Darkness comes
+      look(k) })   // frozen, trembling
 
     // ---- L14: POV turning from the jukebox to the east doorways: villagers frozen, the bell; "a real PARTY"
     K.shot('pov')
