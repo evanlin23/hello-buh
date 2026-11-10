@@ -229,8 +229,8 @@ STANDARDS.md in the same commit.
   narrator ships uncut (no pause cap); a take with long pauses is re-performed, never trimmed.
 - **Owner, 2026-11-10: "can we use this voice actually, the one used in dog on the hill v2 (held: needs your OK) in
   the preview? Im so sorry, i just cant land on somthing that sounds good and decide."** The narrator is Pip exactly as
-  in Dog on the Hill v2: Leda, "a bubbly village kid, about nine: fast, bright, energetic; not whispery, breathy or
-  soft", natural tempo, no speed-up, no pitch shift, no pause cap (`voices/cast.json` `narrator`). This replaces the
+  in Dog on the Hill v2: Leda, "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing
+  story; not whispery, breathy or soft" in plain sentence case, natural tempo, no speed-up, no pitch shift, no pause cap (`voices/cast.json` `narrator`). This replaces the
   sleepover 1.1x +1 pick (kept as `narrator_sleepover`). Tell the owner when a new take drifts from that sound.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
