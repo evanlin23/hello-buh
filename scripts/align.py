@@ -1,16 +1,17 @@
 """Word timings for Gemini-voiced lines (docs/voices.md). Gemini TTS returns audio only, but the captions
 (scripts/story_track.py) and the stunt's beats (lib/story.js `S.line(id).at(k)`) need each caption chunk's start and
-end. This runs Whisper (openai/whisper-base.en, MIT, ~290 MB in the HF cache, CPU) on every line's wav with word
-timestamps and rewrites voice/voice.json's `chunks`, `onset` and `end` with them (and voice/words.json, every word's
-times, for the one-word captions), in the format scripts/voice.py
-writes for Kokoro, so a Gemini story plugs into the same caption pipeline.
+end. This force-aligns every line's caption words to its wav (scripts/ctc_align.py: wav2vec2-base-960h CTC, ~360 MB
+in the HF cache, CPU; docs/voices.md "Caption timing") and rewrites voice/voice.json's `chunks`, `onset` and `end` with
+them, and voice/words.json with every caption word's start and end (one entry per caption word, in order), in the
+format scripts/voice.py writes for Kokoro, so a Gemini story plugs into the same caption pipeline. Whisper
+(openai/whisper-base.en: `words()` below, which tts.py and voice_check.py also use to hear what a take says) is only
+the fallback for a take the aligner can't fit.
 
     ~/.hb-tts/bin/python scripts/align.py stories/<name> [--only L03,L07]     (after scripts/tts.py stories/<name>)
 
-Matching: Whisper mishears names ("Buh" -> "Buzz"), so chunks are matched by position, not by spelling: each word
-of the script and of the transcript gets its place along the line as a fraction of the line's letters, and a chunk
-starts at the transcript word that sits where the chunk's first letter sits. A transcript far from the script
-(under 60% of its letters in common) is printed as a warning: listen to that line, it may be the wrong cut.
+Whisper fallback matching: Whisper mishears names ("Buh" -> "Buzz"), so chunks are matched by position, not by
+spelling (each word's place along the line as a fraction of its letters). A transcript far from the script (under
+60% of its letters in common) is printed as a warning: listen to that line, it may be the wrong cut.
 """
 import difflib
 import json
@@ -23,15 +24,6 @@ import numpy as np
 
 SR = 16000
 _pipe = None
-
-
-def speech_onset(path):
-    """Seconds to the first 10 ms frame within 30 dB of the loudest (the same measure as scripts/caption_sync.py)."""
-    x = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
-                                     capture_output=True, check=True).stdout, np.float32)
-    fr = 160
-    db = 20 * np.log10(np.sqrt(np.mean(x[: len(x) // fr * fr].reshape(-1, fr) ** 2, axis=1)) + 1e-9)
-    return float(np.argmax(db > db.max() - 30)) * 0.01
 
 
 def words(wav):
@@ -111,46 +103,79 @@ def chunk_times(chunks, heard):
     return out
 
 
+def wav_id(path):
+    """A short fingerprint of a take's audio (voice.json `aligned_wav`): a re-cut take no longer matches it."""
+    import hashlib
+    return hashlib.sha1(Path(path).read_bytes()).hexdigest()[:12]
+
+
+def _whisper_line(wav, spoken):
+    """The old way, kept as the fallback for a take the aligner can't fit: Whisper's words (the first clamped to the
+    speech onset: Whisper stamps it 0.0 when the take starts with lead silence) and chunk times by letter position.
+    -> (words [(w, a, b)], chunk times) or (None, None)"""
+    heard = words(wav)
+    if not heard:
+        return None, None
+    on = speech_onset(wav)
+    w0, a0, b0 = heard[0]
+    if a0 < on - 0.03:
+        heard[0] = (w0, round(min(on, b0 - 0.05), 3), b0)
+    ct = chunk_times(spoken, heard)
+    # the first chunk starts with the first word heard, even when the script and Whisper spell it differently
+    if ct and heard[0][1] < ct[0][0]:
+        ct[0][0] = round(heard[0][1], 3)
+    return heard, ct
+
+
 def main(d, only=None):
+    """Every line's word and chunk times: forced alignment of its caption words (scripts/ctc_align.py), Whisper only
+    when the aligner can't fit the take (owner 2026-11-10: "Some of them are earlier, some of them are after":
+    Whisper-base's word starts were 0.1 s early on median and up to 0.3 s off, docs/voices.md "Caption timing")."""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import ctc_align
     import voice
     story = json.loads((d / "story.json").read_text())
     vf = d / "voice" / "voice.json"
     meta = json.loads(vf.read_text())
-    wf = d / "voice" / "words.json"   # every word's time, for one-word captions (story_track._one_word)
+    wf = d / "voice" / "words.json"   # every caption word's time, for one-word captions (story_track._one_word)
     wj = json.loads(wf.read_text()) if wf.exists() else {}
     for ln in story["lines"]:
         lid = ln["id"]
         if lid not in meta["lines"] or (only and lid not in only):
             continue
-        heard = words(d / "voice" / f"{lid}.wav")
-        if heard:   # Whisper stamps the first word at 0.0 when the take starts with lead silence: clamp it to the
-            # speech onset (owner 2026-11-10: "the captions are not lined up correctly")
-            on = speech_onset(d / "voice" / f"{lid}.wav")
-            w0, a0, b0 = heard[0]
-            if a0 < on - 0.03:
-                heard[0] = (w0, round(min(on, b0 - 0.05), 3), b0)
-        if not heard:
-            print(f"{lid}: Whisper heard nothing, kept the even spread"); continue
-        # Whisper (HF pipeline) dates the first word at 0.00 even after a lead-in breath: start it at the wav's speech
-        # onset (caption_sync.py's measure) so the first caption doesn't lead the voice by a syllable
-        on = speech_onset(d / "voice" / f"{lid}.wav")
-        if heard[0][1] < on - 0.03:
-            w0, a0, b0 = heard[0]
-            heard[0] = (w0, on, max(b0, on + 0.05))
-        wj[lid] = [[w, round(a, 3), round(b, 3)] for w, a, b in heard]
-        spoken = [s for _, s in voice.chunks(ln)]
-        ct = chunk_times(spoken, heard)
-        # the first chunk starts with the first word heard, even when the script and Whisper spell it differently
-        # ("Twenty-five" heard as "25" matched nothing, and the line's first caption waited for the next word)
-        if ct and heard and heard[0][1] < ct[0][0]:
-            ct[0][0] = round(heard[0][1], 3)
-        said, got = norm(" ".join(spoken)), norm(" ".join(w for w, _, _ in heard))
-        match = difflib.SequenceMatcher(None, said, got).ratio()
+        wav = d / "voice" / f"{lid}.wav"
         m = meta["lines"][lid]
-        m.update({"chunks": ct, "onset": ct[0][0], "end": ct[-1][1], "aligned": "whisper-base.en"})
-        print(f"{lid}: {' | '.join(f'{a:.2f}' for a, _ in ct)}  heard: {' '.join(w for w, _, _ in heard)}"
-              + ("" if match > 0.6 else f"   WARNING: only {match:.0%} like the script"))
+        disp = m.get("captions") or [c for c, _ in voice.chunks(ln)]
+        spoken = [s for _, s in voice.chunks(ln)]
+        toks = [t for c in disp for t in c.split()]
+        got = ctc_align.align(wav, toks)
+        note = ""
+        if got is not None:
+            wj[lid] = [[w, a, b] for w, a, b in got]
+            ct, k = [], 0
+            for c in disp:
+                n = len(c.split())
+                ct.append([got[k][1], max(got[k + n - 1][2], got[k][1] + 0.05)])
+                k += n
+            how = "ctc:" + ctc_align.MODEL.split("/")[-1]
+        else:
+            heard, ct = _whisper_line(wav, spoken)
+            if not heard:
+                print(f"{lid}: neither the aligner nor Whisper heard it: kept the old times")
+                continue
+            wj[lid] = [[w, round(a, 3), round(b, 3)] for w, a, b in heard]
+            said, gotw = norm(" ".join(spoken)), norm(" ".join(w for w, _, _ in heard))
+            match = difflib.SequenceMatcher(None, said, gotw).ratio()
+            how = "whisper-base.en"
+            note = ("   WARNING: the aligner could not fit the script to the take (Whisper fallback, ~0.1-0.3 s off)"
+                    + ("" if match > 0.6 else f"; Whisper heard only {match:.0%} of the script: listen, it may be the wrong cut"))
+        for i in range(1, len(ct)):   # keep them in order and not overlapping
+            ct[i][0] = max(ct[i][0], ct[i - 1][0] + 0.05)
+            ct[i][1] = max(ct[i][1], ct[i][0] + 0.05)
+        ct = [[round(a, 3), round(b, 3)] for a, b in ct]
+        m.update({"chunks": ct, "onset": ct[0][0], "end": ct[-1][1], "aligned": how,
+                  "aligned_wav": wav_id(wav)})   # caption_sync blocks when the take changes after this
+        print(f"{lid}: {' | '.join(f'{a:.2f}' for a, _ in ct)}  [{how}]{note}")
     vf.write_text(json.dumps(meta, indent=1))
     wf.write_text(json.dumps({ln["id"]: wj[ln["id"]] for ln in story["lines"] if ln["id"] in wj}, indent=0))
 

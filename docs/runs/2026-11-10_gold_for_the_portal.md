@@ -74,3 +74,16 @@ the first time (now in the skill).
 - pose_fixture `--armor`; docs/engine_features.md "Armour on mobs, armour trims, a piglin shaking".
 - One More Eye: both are `story_` Shorts, and the uploader never posts the same format twice in a row
   (check_queue `mix_ok`), so they can't be neighbours; One More Eye isn't on `videos` yet either. No queue edit.
+
+## Re-edit after the owner's caption notes (15:00-16:20 UTC)
+- The lead held the package on `videos` (a501e91): captions ran early. I merged main's align fix and re-aligned.
+  caption_sync still blocked L04: Whisper hears "Twenty-five" as "25", so the chunk match skipped the first word and
+  the first caption started 0.36 s late. align.py now starts a line's first chunk at the first word heard (on main).
+- Owner rule "both are implied" (STANDARDS 1.3): cut the closing line L11 ("It was wearing Grandpa's HELMET.").
+  S14 shows the striped helmet S06b set up, so the Short ends on the picture and the sound. The payoff is the
+  piglin turning after Grandma's ingot (`look_at`), with the sting and a punch-in; the end is 0.73 s after it.
+- Owner rule "continuous takes" (2b.4): no pause was shortened inside any take, so nothing needed re-taking.
+- 0.1 s caption lead (main 44da05a): merged. One full re-render (the merged render code changed the frames).
+- pace 0 blockers, caption_sync 0. The reviewer checked the changed span: READY.
+- Republished `--pass`: `videos` 602e9e0, status ready. The first publish attempt raced the hold commit on `videos`.
+  I reset the worktree to origin/videos and re-ran publish.js (no hand push to `videos`).

@@ -22,6 +22,7 @@ weighted more for short lines, where the embedding is weak). Flags:
   WORDS     Whisper's transcript is under 60% like the script, or it has words the script doesn't (a direction read
             aloud, a word from the next line): a bad cut or a misread
   SIMILAR   two cast voices are too alike to tell apart (embedding similarity and pitch): re-cast one (a warning)
+  GATE      a continuous take (story.json "voice_takes": "beat") failed its take gate on every try (scripts/take_gate.py)
   EDGE      the line starts or ends within 30 dB of its peak: a word or breath cut off (voice_edges.py's test); TIGHT
             (a warning) = within 40 dB, or under 60 ms of quiet before the first sound / 150 ms after the last
   CLIPPED   the listening model (gemini-3.5-flash, given every line's audio) hears a word cut off at the start or
@@ -207,11 +208,12 @@ def library_refs(voices):
     return out
 
 
-def edges(path):
+def edges(path, inner=(False, False)):
     """Is the line cut off at either end? (scripts/voice_edges.py's test, plus the padding the cut rules ask for.) The
     first and last 20 ms against the line's peak: within 30 dB = CUT (a word or breath sliced; clean takes sit at -50
     and below, Kokoro's at -80); and the quiet kept before the first sound / after the last (rules: >= 80 / 200 ms;
-    TIGHT under 60 / 150 ms, or an edge within 40 dB)."""
+    TIGHT under 60 / 150 ms, or an edge within 40 dB). inner: (start, end) is a line boundary inside a continuous
+    take (voice.json `beats`): the take plays whole across it, so that edge is no cut and isn't judged."""
     x = load(path)
     n = len(x) // 160
     if n < 10:
@@ -221,8 +223,11 @@ def edges(path):
     head, tail = db[:2].max() - pk, db[-2:].max() - pk
     loud = np.nonzero(db > pk - 40)[0]
     lead, trail = loud[0] * 0.01, (n - 1 - loud[-1]) * 0.01
+    hcut, tcut = (not inner[0]) and head > -30, (not inner[1]) and tail > -30
+    htight = (not inner[0]) and (head > -40 or lead < 0.06)
+    ttight = (not inner[1]) and (tail > -40 or trail < 0.15)
     return {"head_db": round(float(head)), "tail_db": round(float(tail)), "lead": round(lead, 2), "trail": round(trail, 2),
-            "cut": bool(head > -30 or tail > -30), "tight": bool(head > -40 or tail > -40 or lead < 0.06 or trail < 0.15)}
+            "cut": bool(hcut or tcut), "tight": bool(htight or ttight), **({"inner": list(inner)} if any(inner) else {})}
 
 
 LISTEN_MODELS = ["gemini-3.5-flash", "gemini-3.8-flash", "gemini-flash-latest"]   # retried on 5xx, the next on anything else
@@ -304,7 +309,7 @@ def check(items, cast_voice, words=True, only=None, library=True, hear=True):
             res.append(sc)
         keep = [max(sc, key=sc.get) == r["who"] if len(sc) > 1 and r["who"] in sc else True for sc, r in zip(res, rows)]
     final = refs(-1, keep)
-    out = {"lines": [], "pairs": [], "swapped": [], "thin": [], "words": [], "edges": [], "clipped": []}
+    out = {"lines": [], "pairs": [], "swapped": [], "thin": [], "words": [], "edges": [], "clipped": [], "gate": []}
     heard_cut = listen([r for r in rows if not only or r["id"] in only]) if hear else None
     if hear and heard_cut is None:
         out["listen"] = "skipped (no answer from the listening model): listen to the edges yourself"
@@ -335,12 +340,15 @@ def check(items, cast_voice, words=True, only=None, library=True, hear=True):
             line.update({"heard": heard, "match": match, "extra": extra})
             if not ok:
                 flags.append("WORDS"); out["words"].append(r["id"])
-        ed = edges(r["path"])
+        ed = edges(r["path"], r.get("inner", (False, False)))
         line["edges"] = ed
         if ed["cut"]:
             flags.append("EDGE"); out["edges"].append(r["id"])
         elif ed["tight"]:
             flags.append("TIGHT")
+        if r.get("gate"):   # a continuous take that failed its gate on every try (tts.py voice_beat): re-take the beat
+            line["gate"] = r["gate"]
+            flags.append("GATE"); out["gate"].append(r["id"])
         if heard_cut and heard_cut.get(r["id"]):
             line["clipped"] = heard_cut[r["id"]]
             flags.append("CLIPPED"); out["clipped"].append(r["id"])
@@ -354,7 +362,7 @@ def check(items, cast_voice, words=True, only=None, library=True, hear=True):
                                      "similar": bool(cos > SIMILAR_COS and d < SIMILAR_ST)})
     out["refs"] = {w: {"hz": int(round(final[w][1])), "lines": sum(1 for i, r in enumerate(rows) if r["who"] == w and keep[i]),
                        "library": len(libref.get(cast_voice[w], []))} for w in who if w in final}
-    out["blockers"] = sorted(set(out["swapped"]) | set(out["words"]) | set(out["edges"]) | set(out["clipped"]))
+    out["blockers"] = sorted(set(out["swapped"]) | set(out["words"]) | set(out["edges"]) | set(out["clipped"]) | set(out["gate"]))
     out["ok"] = not out["blockers"]
     return out
 
@@ -368,7 +376,9 @@ def story_items(d):
     cs = resolve(cast) if cast else {}
     narrator = next((k for k, c in cs.items() if c.get("role") == "narrator"), "N")
     vj = d / "voice" / "voice.json"
-    vl = (json.loads(vj.read_text()).get("lines") or {}) if vj.exists() else {}
+    vjs = json.loads(vj.read_text()) if vj.exists() else {}
+    vl = vjs.get("lines") or {}
+    beats = vjs.get("beats") or {}
     reqs = story.get("requests") or []
     items = []
     for ln in story["lines"]:
@@ -379,8 +389,18 @@ def story_items(d):
             # written by tts.py), else the first story request listing the speaker (tts.py's rule), else anyone
             r = next((r for r in reqs if who in r.get("speakers", [])), None)
             rivals = (vl.get(ln["id"]) or {}).get("with") or (r["speakers"] if r else None)
-            items.append({"id": ln["id"], "who": who, "path": p, "say": ln.get("say") or kvoice.spoken(ln), "rivals": rivals})
-    voices = {w: (cs.get(w) or {}).get("voice") for w in dict.fromkeys([narrator] + [i["who"] for i in items])}
+            it = {"id": ln["id"], "who": who, "path": p, "say": ln.get("say") or kvoice.spoken(ln), "rivals": rivals}
+            b = beats.get((vl.get(ln["id"]) or {}).get("beat"))
+            if b:   # a line of a continuous take: only the take's own ends are cuts; its gate verdict travels with it
+                it["inner"] = (b["lines"][0] != ln["id"], b["lines"][-1] != ln["id"])
+                if not b.get("ok", True):
+                    it["gate"] = [f["why"] for f in b.get("gate", [])]
+            items.append(it)
+    def voice_of(w):   # a sped-up voice (the Roblox narrator, Orus x1.45) is not the library sample of that voice
+        c = cs.get(w) or {}
+        sp = (float(c.get("tempo") or 1.0), float(c.get("rate") or 1.0))
+        return c.get("voice") if sp == (1.0, 1.0) or not c.get("voice") else f"{c['voice']}@x{sp[0] * sp[1]:.2f}"
+    voices = {w: voice_of(w) for w in dict.fromkeys([narrator] + [i["who"] for i in items])}
     return items, {w: v for w, v in voices.items() if w in {i["who"] for i in items}}
 
 
@@ -405,6 +425,8 @@ def table(rep):
         if set(l["flags"]) & {"EDGE", "TIGHT"}:
             e = l["edges"]
             out.append(f"{'':15s}edges: start {e['head_db']} dB, end {e['tail_db']} dB from peak; {e['lead']:.2f} s before the first sound, {e['trail']:.2f} s after the last")
+        if l.get("gate"):
+            out.append(f"{'':15s}take gate: " + "; ".join(l["gate"]))
         if l.get("clipped"):
             out.append(f"{'':15s}heard cut: " + "; ".join(f"\"{p.get('word')}\" {p.get('where')}" + (f" ({p['what']})" if p.get('what') else "") for p in l["clipped"]))
     for p in rep["pairs"]:

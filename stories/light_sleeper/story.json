@@ -2,14 +2,13 @@
   "name": "light_sleeper",
   "stunt": "story_light_sleeper",
   "version": 2,
-  "revision": "r7 (2026-11-10, owner review of v2): L16 cut ('We dont need to say Oh thats why we have 9000 carpets'): the ending is the picture; the dig and the jukebox turns smoothed. r6 (2026-11-10): the hero is Buh and nobody says his name (owner rule on main): L13 is 'Don't. MOVE.', botName Buh. r5 (2026-11-10): narrator-first under the owner rules on main (docs/stories.md): one bright, fast kid narrator (cast narrator: Leda, no stretch or pitch shift), Mom's saying quoted by the narrator, one Mom punchline in her own voice while she's on screen (L13), no '...', line 1 in one breath, and an ending line that explains itself (L16). r4: Milo, 35-45 s, L03 cut. r3: the pre-build fixes (reviews/r3-fixes.md)",
+  "revision": "vNext r2 (2026-11-10, writers' room arc revision, adopted on the lead's relay of the owner's OK: 'Rewriting the stories is fine'): one narrator (cast narrator: Orus) says every line, 2-3 word captions with one CAPS key word, continuous beat takes with no dramatic pauses, cut 1 s after the warden's roar (no death screen), L01 on a high wide. r7 (2026-11-10, owner review of v2): L16 cut ('We dont need to say Oh thats why we have 9000 carpets'): the ending is the picture; the dig and the jukebox turns smoothed. r6 (2026-11-10): the hero is Buh and nobody says his name (owner rule on main): L13 is 'Don't. MOVE.', botName Buh. r5 (2026-11-10): narrator-first under the owner rules on main (docs/stories.md): one bright, fast kid narrator (cast narrator: Leda, no stretch or pitch shift), Mom's saying quoted by the narrator, one Mom punchline in her own voice while she's on screen (L13), no '...', line 1 in one breath, and an ending line that explains itself (L16). r4: Milo, 35-45 s, L03 cut. r3: the pre-build fixes (reviews/r3-fixes.md)",
   "caption": "why is my whole village carpeted 😶",
   "logline": "A boy in a village where every inch is carpeted, the bell is wrapped in wool and the well wears a wool lid wants everyone to hear one song, so he puts a jukebox on the well.",
   "question": "why tf is the whole village covered in carpet?",
   "premise": "Every road, stair and doghouse in the boy's village is carpeted, 300 sheep are sheared every morning, the bell is boxed in wool and the well wears a white wool lid. Mom says 'walk soft, the ground's a light sleeper'. Once he pulled the wool off the well and the bottom of the well screamed; Mom said it was a fox. Then a skeleton, shooting at him, hits a creeper, and he gets a music disc in a village where nobody has ever heard a song.",
   "twist": "The carpet is silence (vanilla: walking on wool and carpet makes no vibration, and wool blocks stop vibrations). The village sits on an ancient city and the bottom of the well is a sculk shrieker. Tonight he pulls the lid off again because wells echo, puts a jukebox on the well, puts the disc in, and steps off the carpet onto the well's bare stone rim to dance: four shrieks, the Darkness pulsing ('like a real party'), and the warden rises out of the square. He was obliterated by a sonically-charged shriek.",
   "key_color": "#3FD0D4",
-  "gap": 0.15,
   "voice": {
     "engine": "gemini",
     "model_hint": "gemini-2.5-flash-preview-tts"
@@ -19,70 +18,83 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "pov (the hand, never his face); Buh as a kid; seen from outside only from behind (S07, S12's crane start, S16), default Steve skin (owner: the hero stays Steve)",
-      "voice_note": "cast narrator (Leda, the owner's chosen Pip setup, 2026-11-10); the r2 audition note is superseded by the owner's narrator rules"
+      "on_screen": "pov (the hand, never his face); Buh as a kid; seen from outside only from behind (S07, S12's crane start, S16), default Steve skin (owner: the hero stays Steve)"
     },
     "Mom": {
       "role": "character",
       "ref": "mom",
       "color": "#FFB38A",
+      "silent": true,
       "on_screen": "villager, plains farmer (straw hat), no name tag"
     }
   },
   "requests": [
     {
-      "id": "r1",
+      "id": "b1",
       "speakers": [
         "N"
       ],
       "lines": [
         "L01",
         "L02",
+        "L03",
         "L04",
-        "L05",
+        "L05"
+      ],
+      "direction": "A guy tells his friends the craziest story about the village he grew up in, where everything is covered in carpet. He keeps going, sentence after sentence, no pauses."
+    },
+    {
+      "id": "b2",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
         "L06",
         "L07",
         "L08",
         "L09",
-        "L10",
+        "L10"
+      ],
+      "direction": "A guy tells his friends the craziest story about the village he grew up in, where everything is covered in carpet. He keeps going, sentence after sentence, no pauses."
+    },
+    {
+      "id": "b3",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
         "L11",
         "L12",
+        "L13",
         "L14",
         "L15"
       ],
-      "direction": "A kid tells his friend the craziest story about his village, where everything is covered in carpet. He talks fast and bright; he only gets scared for real danger."
-    },
-    {
-      "id": "r2",
-      "speakers": [
-        "Mom"
-      ],
-      "lines": [
-        "L13"
-      ],
-      "direction": "Night in a village square. A mother in her doorway sees her son standing over an open well and something terrible about to happen; she can barely make herself speak."
+      "direction": "A guy tells his friends the craziest story about the village he grew up in, where everything is covered in carpet. He keeps going, sentence after sentence, no pauses."
     }
   ],
   "lines": [
     {
       "id": "L01",
       "who": "N",
-      "text": "My village / is covered in / NINE THOUSAND / CARPETS.",
-      "direction": "the absurd premise said flatly in one quick breath, deadpan, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "My VILLAGE / is COVERED in / nine thousand CARPETS.",
       "shot": "S01"
     },
     {
       "id": "L02",
       "who": "N",
-      "text": "The ROADS. / The STAIRS. / Even the DOGHOUSE.",
-      "direction": "quick list, each one more amazed, a giggle on the last, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "The road? CARPET. / The stairs? CARPET. / The DOGHOUSE? / Also CARPET.",
       "shot": "S02"
+    },
+    {
+      "id": "L03",
+      "who": "N",
+      "text": "We SHEAR / three hundred SHEEP / every MORNING / to keep UP.",
+      "shot": "S03"
     },
     {
       "id": "L04",
       "who": "N",
-      "text": "Our BELL / wears WOOL. / I've never / HEARD it.",
-      "direction": "curious and bright, a tiny beat before the last part, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "Even our BELL / is WRAPPED / in white WOOL.",
       "shot": "S04",
       "look": {
         "what": [
@@ -96,37 +108,32 @@
     {
       "id": "L05",
       "who": "N",
-      "text": "Mom says, / walk SOFT. / The ground's / a light SLEEPER.",
-      "direction": "quoting Mom's saying, a little sing-song, like a rule he's heard a thousand times, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "Mom SAYS, / walk SOFT, sweetie. / The GROUND'S / a light SLEEPER.",
       "shot": "S05",
       "look": "Mom"
     },
     {
       "id": "L06",
       "who": "N",
-      "text": "Once, / I pulled / the WOOL / off the WELL.",
-      "direction": "a bit guilty but quick, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "Once I PULLED / the WOOL / off the WELL.",
       "shot": "S06"
     },
     {
       "id": "L07",
       "who": "N",
-      "text": "The bottom / of the well / SCREAMED.",
-      "direction": "spooked, full volume, eyes wide, not whispering",
+      "text": "The BOTTOM / of the WELL / just SCREAMED.",
       "shot": "S07"
     },
     {
       "id": "L08",
       "who": "N",
-      "text": "Mom said / it was / a FOX.",
-      "direction": "shrugging, totally believing it, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "Mom HELD me / in the DARK. / She SAID it / was a FOX.",
       "shot": "S08"
     },
     {
       "id": "L09",
       "who": "N",
-      "text": "A skeleton / shot a CREEPER. / It dropped / a music DISC.",
-      "direction": "the best news of his life, fast and excited, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "Then a SKELETON / shot a CREEPER, / and it DROPPED / a music DISC.",
       "shot": "S09",
       "look": {
         "what": "entity:skeleton",
@@ -136,46 +143,38 @@
     {
       "id": "L10",
       "who": "N",
-      "text": "Nobody here / has ever heard / a SONG.",
-      "direction": "a little wistful but still bright, this is what he wants",
+      "text": "A real SONG. / In a VILLAGE / that has NEVER / heard ONE.",
       "shot": "S10"
     },
     {
       "id": "L11",
       "who": "N",
-      "text": "So tonight / I opened / the WELL / and put / a JUKEBOX on it. / Wells ECHO.",
-      "direction": "proud and quick, the last two words a clever secret, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "So TONIGHT I / put a JUKEBOX / on the WELL. / Wells ECHO.",
       "shot": "S11"
     },
     {
       "id": "L12",
       "who": "N",
-      "text": "The fox / screamed AGAIN. / I didn't CARE.",
-      "direction": "giddy and defiant, a grin in it, fast, bright, energetic; not whispery, breathy or soft",
+      "text": "The FOX / screamed AGAIN. / I didn't CARE.",
       "shot": "S12"
     },
     {
       "id": "L13",
-      "who": "Mom",
-      "text": "Don't. / MOVE.",
-      "direction": "terrified and frozen, low and tight but clearly voiced, never breathy",
+      "who": "N",
+      "text": "Mom FROZE. / Don't MOVE, sweetie.",
       "shot": "S13",
-      "look": "Mom",
-      "request": "r2",
-      "say": "Don't. Move."
+      "look": "Mom"
     },
     {
       "id": "L14",
       "who": "N",
-      "text": "The lights / went DARK. / Like a / real PARTY.",
-      "direction": "loud and delighted, full volume, excited, not hearing her",
+      "text": "The LIGHTS / went DARK. / JUST like / a PARTY.",
       "shot": "S14"
     },
     {
       "id": "L15",
       "who": "N",
-      "text": "I'd never / DANCED before.",
-      "direction": "laughing, the happiest he has ever sounded, full volume",
+      "text": "I'd NEVER / danced BEFORE. / So I STEPPED / off the CARPET, / onto the STONE.",
       "shot": "S15"
     }
   ],
@@ -208,14 +207,20 @@
   "ending": {
     "after": "L15",
     "beats": [
-      "S15 holds past 'DANCED' (he keeps jumping on the rim), then three 0.35 s inserts that speed the cut rate: S15b Mom frozen in the door, S15c the villagers in the east doorways, S15d POV jumping on the rim",
-      "S16 (camera, low, behind him): shriek 4 on frame 1, the carpet at (0,4) bursts and the warden rises out of the square and roars",
-      "S17 (POV): the warden steps to the south rim; the sonic boom's rings cross to the camera 0.8 s before the hit (vanilla 15 on hard; the S09 arrow left him at 12.5)",
-      "death screen 'Buh was obliterated by a sonically-charged shriek' ~1.2 s, then cut. No closing line (owner, 2026-11-10: the picture ends it)"
+      "S15: he steps off the carpet onto the well's bare stone rim (L15 'onto the STONE'), the first footstep on stone",
+      "S16 (camera, low, behind him): shriek 4, the carpet at (0,4) bursts and the warden rises beside the well and roars; cut 1.0 s after the roar (no S17, no death screen)"
     ],
-    "loop": "by cause, unspoken: the warden is why line 1's village is covered in nine thousand carpets"
+    "loop": "cause and effect, unspoken: the warden rising is why line 1's village is covered in nine thousand carpets"
   },
   "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "village (high)",
+      "size": "ews",
+      "camera": "camera 'hook': a high wide over the south street looking north over the whole carpeted plaza and village, a slow push",
+      "frame": "the striped carpet plaza, the lidded well, the wool-boxed bell, carpeted roofs to the hill; moving on frame 0. Morning."
+    },
     {
       "id": "S01",
       "line": "L01",
@@ -223,6 +228,14 @@
       "size": "wide",
       "camera": "pov at the top of the 3 carpeted steps where the south street drops into the plaza (eye ~4.5 blocks above the plaza floor, 14 blocks south of the well), looking north, walking slowly forward and down the first step; the carpet makes no sound",
       "frame": "fg: the carpeted step treads under the camera and a house's carpeted front stairs at frame left; mid: the striped carpet road running into the striped plaza, the well 14 blocks ahead just left of centre with its white wool lid reading as a white square on the grey rim, the bell post right of centre boxed in white wool; bg: carpet-roofed houses ringing the plaza (our door behind the well), then the green north slope and hills. Morning (1000), sun low at frame right."
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "sheep_meadow",
+      "size": "wide",
+      "camera": "camera 'meadow': on the meadow fence, a slow push",
+      "frame": "the fenced meadow on the east slope, sheep half sheared, the carpeted village beyond. Morning."
     },
     {
       "id": "S02",
@@ -359,18 +372,11 @@
       "size": "wide",
       "camera": "at: low (1 block up), 2-3 blocks north-west of the boy, about (-2,-4), FOV 50, looking south past him; the warden comes up at (0,4), about 8 blocks from the lens",
       "frame": "fg: the boy's back at frame left, large, on the rim mid-jump; the jukebox beside him; subject: shriek 4 on frame 1, then the carpet at (0,4) south of the well bursts (block-break particles, the carpet and the stone under it gone) and the warden rises out of the square (~2 s), facing him across the open well, and roars; bg: doorways sinking into the black."
-    },
-    {
-      "id": "S17",
-      "line": null,
-      "place": "plaza",
-      "size": "ms",
-      "camera": "pov from the rim at (0,-2): the warden takes two steps to the south rim edge (0,3), 5 blocks away (about 41% of the frame height), then the sonic boom; then the death screen with the plaza still pulsing behind",
-      "frame": "the warden's chest and head over the open well; the sonic boom ring; 'Buh was obliterated by a sonically-charged shriek' (also in the caption track)"
     }
   ],
   "bible": "stories/light_sleeper/bible.md",
   "beats": "stories/light_sleeper/beats.md",
   "set": "stories/light_sleeper/set.md",
-  "payoff": "death"
+  "payoff": "roar",
+  "voice_takes": "beat"
 }

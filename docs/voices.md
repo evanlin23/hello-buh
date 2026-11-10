@@ -7,7 +7,8 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
 - `voices/cast.json`: the library (below). A character keeps its id, Gemini voice and `profile` string in every
   story. Change any of the three and it is a different person to the viewer.
 - `scripts/tts.py`: Gemini TTS, multi-speaker in one request, cut into lines, cached, loudness-normalised.
-- `scripts/align.py`: Whisper word timings into `voice.json`, so captions and stunt beats line up with the take.
+- `scripts/align.py`: forced-aligned word timings (`scripts/ctc_align.py`) into `voice.json` and `voice/words.json`,
+  so captions and stunt beats line up with the take ("Caption timing" below).
 - `scripts/speaker_check.py`: is every line in its own speaker's voice, with the right words (below).
 - `./hb voice <stunt>`: the one path for a cast story: takes, word cuts, the check, automatic re-takes, alignment.
 - `voices/samples/`: one line per character and a two-character exchange (`exchange.mp3`: Max and Milo), made from
@@ -18,8 +19,9 @@ speaking character gets a Gemini TTS voice with an acting direction, never the o
 
 | id | name (what Gemini sees) | Gemini voice | caption colour | direction (`profile`) | Kokoro fallback | from |
 |---|---|---|---|---|---|---|
-| `narrator` | Narrator | Leda (no post) | `#FFFFFF` white | Pip's voice: a bubbly kid of about nine, fast, bright, energetic; not whispery | am_adam | Dog on the Hill v3 (owner: "a lot a lot better" than kid Puck) |
-| `pip` | Pip | Leda | `#FFFFFF` white | Pip, Dog on the Hill's kid narrator (kept: the owner liked it) | am_adam | Dog on the Hill v3 |
+| `narrator` | Narrator | **Orus, tempo 0.95 + rate 1.45** (gemini-3.8-flash-tts, locked) | `#FFFFFF` white | the Roblox-story narrator: a deep-voiced guy in his twenties telling a crazy true story, first person, punchy, no gaps (= `narrator_roblox`) | am_adam | voice match, owner 2026-11-10: "s3_gemini_orus.mp3 is good" |
+| `narrator_roblox` | Narrator | Orus, tempo 0.95 + rate 1.45 | `#FFFFFF` white | the same entry under its own name (recipe: voices/recipes/narrator_roblox.md) | am_adam | out/voice_match/s3 |
+| `pip` | Pip | Leda | `#FFFFFF` white | Pip, Dog on the Hill's kid narrator (the default narrator until 2026-11-10; a named alternative now) | am_adam | Dog on the Hill v3 |
 | `puck_kid` | Narrator (kid Puck, alt) | Puck | `#FFFFFF` white | a twelve-year-old boy telling his friends a funny story (the alternative narrator) | am_adam | Good Boy audition |
 | `storyteller` | Storyteller | Despina | `#D9C8FF` pale lilac | a woman in her thirties telling a friend a story late at night, low and close, plain, never an announcer | bf_emma | the old narrator (was Erinome) |
 | `milo` | Milo | Achird | `#4FD8E6` Steve's cyan | Milo, 16, friendly and quick, a little nervous; jokes when scared, quiet and serious when it matters | am_michael | AI Shorts' Claude, the trailer's Milo |
@@ -131,6 +133,88 @@ single-speaker request (one voice can't swap), at most `--retakes` times; lines 
 re-take is cached like any take (its own cache key), and voice.json records `"take": n` so a later run rebuilds that
 line from the same cached re-take instead of the original bad one. Each re-take is one request of the ~10 a day.
 
+## Continuous takes (`"voice_takes": "beat"`, STANDARDS 2b.4)
+
+Owner, 2026-11-10: "I think part of the reason the voice pacing feels off is because we are cutting it bc of silence
+and stuff. but i think instead we should be ensuring the voice we get back is all like continuous already without the
+stuff we dont want." Opt-in per story: set `"voice_takes": "beat"` in story.json and run `./hb voice <stunt>` as
+usual. Stories without it are voiced exactly as above (the prompt and the cache keys are unchanged).
+
+- **A beat is one request and one take.** A beat is a run of consecutive lines with the same speaker and the same
+  direction (the request that lists the line in `requests[].lines`, else the first request with its speaker, else the
+  story `direction`). To split or join beats by hand, give lines a `"beat"` marker: consecutive lines with the same
+  marker and speaker are one beat. A beat over 6 lines warns (long takes drift). `tts.beat_groups` prints them.
+- **Used whole.** Only the take's own lead and tail are cut, at its first and last sound, with the safe margins
+  (80-350 ms before, 200-450 ms after, at the quiet point, 15 ms fades: `trim_take`). Nothing inside is cut, spliced or
+  shortened; `max_pause` never trims here, it becomes the gate's pause limit. Then the usual post, room and one gain.
+  The take is `voice/beat_<first line id>.wav`: the narration plays that file.
+- **Line places inside the take.** Whisper hears the finished take; each line's start is the quiet point between its
+  first word and the previous line's last (`tts.bounds`, the same rule as the cut). Each line's `voice/<id>.wav` is
+  its slice from its start to the next line's (the slices tile the take exactly, so speaker_check, the drift gate,
+  align.py and caption_sync run on them unchanged; words.json stays relative to each slice). voice.json gets `beats`
+  (`{id: {lines, file, dur, offsets, model, try, tries, fixes, ok, gate, rejected}}`) and, per line, `beat`, `offset`
+  (s into the take) and `gap: 0` on every line but the beat's last.
+- **The picture follows the voice.** `lib/story.js`: `S.line(id).gap` is 0 inside a beat (the take's own pause is
+  the gap), and `K.line` times a beat's lines from the take's offsets on the recording's clock (`beatTicks`): each
+  mark lands on its offset to the tick, with no drift over the beat; anything that runs between two lines of the beat
+  (a `K.preroll`, a wait) makes that mark late and shortens that line, so the next one is back on the voice; `extra`
+  counts only on the beat's last line (logged and ignored inside). `K.T(id)` uses the same gap. A stunt that times
+  its own lines (runaway's) should switch to K.line before turning beats on.
+- **Narration and captions.** `story_track.voice_starts`: the beat take is laid once, at its first marked line's mark
+  minus that line's offset; every line of the beat starts at that point plus its offset whatever its own mark says
+  (a mark more than 0.15 s off prints a warning: the picture runs early or late there). Captions and one-word timing use
+  these voice starts; `CAPTION_LEAD` and "never before the line's own cut" are unchanged. edit.py's end fade uses them.
+- **The take gate** (`scripts/take_gate.py`) rejects instead of editing. Measured on the finished take:
+  | fail | what | limit |
+  |---|---|---|
+  | pause | silence (every 10 ms under peak - 30 dB, pace.py's measure) | in the story's first beat, first 5 s: 0.2 s inside line 1, 0.35 inside a line, 0.6 between (pace.py's blockers); elsewhere 0.5 inside a line, 0.8 between; story `max_pause` overrides |
+  | breath | unvoiced noise, centroid under 4 kHz (not an "s"), 0.15 s+, above the silence line and under word level, not straight after a word | any |
+  | whisper | a run of Whisper's words with under 20 % of their sound pitched, or 14 dB under the take's median word | 0.5 s of sound |
+  | words | under 75 % of the script's letters heard, a line with under half its words heard, a run of 3+ extra words (a direction read aloud), a line edge Whisper can't place | any |
+  | clipped | the raw take's first or last 20 ms within 30 dB of its peak (Gemini cut a word) | any |
+
+  A rejected take is asked for again with the fix for each kind of failure added to its direction (`take_gate.FIX`:
+  inside the bracket on Pip's model, in DIRECTOR'S NOTES on 3.x), so the re-take is a new prompt and its own cache
+  entry (text + direction + fixes + model + salt); the same failures twice in a row get the same direction with a
+  fresh salt. At most 1 + `--retakes` requests per beat (default 3; `--no-check`: 1). The first passing take is kept,
+  else the least bad (`take_gate.score`); voice.json records its failures and speaker_check flags every line of
+  that beat **GATE** (a blocker). No single-line re-takes and no drift re-takes in this mode: re-taking one line would
+  splice a second take into the beat; re-take the beat (`--only <any line of it>`). `voice_check.py --resplit` refuses
+  these stories. speaker_check and voice_edges judge only the take's own ends (a slice's inner edges are not cuts).
+- **Calibration** (2026-11-10, on the cached thirty_one_raids takes; no requests): Pip's 11-line narrator take
+  (gemini-3.8-flash-lite) passes every check as two beats; its pauses are 0.23-0.74 s. Grandpa's 2-line
+  Charon take, carved into its two beats, fails both: an extra "And" heard between the lines and a 2.56 s pause
+  (L09), and 1.09 s of near-unvoiced speech at the end (L13, which that story later re-took with "never a whisper").
+  Not heard by ear: the whisper and breath thresholds rest on the metrics, so listen to the first gated stories.
+- **What changes in the gaps** (same takes, today's cut vs continuous, `out/continuous/`, not committed): today a
+  line keeps 200-450 ms of tail and 80-350 ms of lead and the stunt adds the story gap, so Pip's sentence gaps came out
+  0.57-0.99 s, evened out by the margins; continuous, they are the take's own 0.38-0.74 s (the same numbers measured in
+  the raw take), and the 8-line beat is 1.35 s shorter.
+
+## The Roblox narrator (owner, 2026-11-10: "s3_gemini_orus.mp3 is good"; "we can just do 1.45 thats fine")
+
+The default `narrator` (= `narrator_roblox`) is Gemini **Orus** on gemini-3.8-flash-tts, directed as a deep-voiced guy
+telling his own crazy story with no gaps, and **played tempo 0.95 then 1.45x faster by resampling**. Pitch, formants
+and tempo all rise by 1.45, with no pitch correction. That is how the Roblox-story voice is made: it measures as
+ElevenLabs Adam sped up ~1.45x (docs/voice_search.md "Closest match"). It is the one exception to "never pitch-shift a
+voice", for this narrator's speed-up only (STANDARDS Voice 1). The recipe and the numbers are in
+`voices/recipes/narrator_roblox.md`.
+
+- **Where:** cast `tempo` and `rate`. `tts.speed_up` runs on the WHOLE raw take, straight after the cache or the request,
+  before `trim_take`, `shape`, `level`, Whisper, the take gate and the line slices. So the gate judges every pause as
+  the viewer hears it, the beat file is the sped-up take, and the slices tile it. Alignment (align.py, story_track)
+  runs on those final wavs as before. In the per-line path (`take()`), the speed-up also runs before the cut.
+- **No splicing.** A take with pauses over the gate's limits (0.3 s inside a line, 0.35 s between lines, sped-up time)
+  is re-taken with the gate's fix, never cut. The s3 sample's `silenceremove` gap cut is not part of the pipeline
+  (the recipe has the numbers and the risk).
+- **One speed per request:** tts.py refuses a request whose speakers have different tempo/rate. A character is voiced
+  in its own request at natural speed. With one narrator saying every quote, that is rare.
+- **Recast:** an already-voiced story whose voice.json locks the narrator to the old model (Pip's 3.8-flash-lite) is
+  re-locked to the cast's model automatically, and ALL its narrator lines are re-taken. Old and new voices never mix.
+- **voice.json:** each beat records `tempo` and `rate`.
+- Test: `python3 -m unittest scripts/test_continuous.py` (class `SpeedUp`). Offline replay of the s3 take through this
+  path: `scripts/voice_match/replay_s3.py` (no requests).
+
 ## Speaker check (`scripts/speaker_check.py`)
 
 For each line's wav: a speaker embedding (Resemblyzer's GE2E encoder: 17 MB, CPU, ~0.2 s a line with torch on 2
@@ -198,9 +282,10 @@ character thats supposed to be speaking."
 
 `voice.json` keeps the shape `lib/story.js` and `edit.py --story` read (`dur`, `onset`, `end`, `chunks`,
 `captions`, plus `who`), so stunts and captions don't change. tts.py first spreads the chunks evenly by letters;
-align.py replaces them with Whisper's word times (openai/whisper-base.en via transformers, in the TTS venv; ~290 MB
-in the HF cache on first run). It matches by position, not spelling (Whisper hears "Milo" as "Buzz"), and warns when
-the transcript is under 60% like the script: that line is a wrong cut or a dropped line. Listen to it.
+align.py replaces them with forced-aligned word times ("Caption timing" below). Whisper (openai/whisper-base.en via
+transformers, in the TTS venv; ~290 MB in the HF cache) is only its fallback for a take the aligner can't fit: it
+matches by position, not spelling (Whisper hears "Milo" as "Buzz"), and warns when the transcript is under 60% like
+the script: that line is a wrong cut or a dropped line. Listen to it.
 
 What tts.py does to a take: it cuts the take into lines (every pause is a candidate; dynamic programming matches
 each line's share of the speech to its share of the text, follows Whisper's word times where it heard a line's first
@@ -209,6 +294,54 @@ the pause's quietest point with the in-breath and tail kept ("The cut" above), t
 and formant-kept lift), a light room, and one gain per take (see "Realism"). It prints each line's length and pitch:
 a pitch that belongs to the
 other speaker means a bad cut.
+
+## Caption timing (owner 2026-11-10: "Some of them are earlier, some of them are after")
+
+Each caption appears on the frame in which its word starts (STANDARDS 2b.3). The chain:
+1. `scripts/align.py stories/<name>` force-aligns each line's caption words to its wav (`scripts/ctc_align.py`:
+   facebook/wav2vec2-base-960h, ~360 MB in the HF cache, CPU, ~20 s a story; a small numpy CTC Viterbi, no
+   torchaudio) and writes `voice/words.json`: one `[word, start, end]` per caption word, in order, numbers as shown
+   ("31", "9,000"; the aligner hears them spelled out). For a word that starts with a hiss (s, f, z, sh, soft c) the
+   CTC spike comes 50-100 ms into the hiss, so its start moves back to where the hiss begins. A take the aligner can't
+   fit (it says another text) falls back to Whisper, with a WARNING: listen to that line.
+2. `story_track._one_word` matches the caption words to words.json by their letters (`ctc_align.match_words`:
+   numbers spelled out, split and merged words handled), so an old Whisper words.json still lines up; `CAPTION_LEAD`
+   is 0 and `frame_of` floors each start to its 60 fps frame. A caption may still move onto a picture cut inside its
+   line, at most 2 frames later or 5 frames earlier than its word (`CUT_LATE`, `CUT_EARLY`).
+3. `scripts/caption_av_check.py out/<stunt>.mp4 stories/<name>` (in `./hb review`) measures the finished Short:
+   "heard" is each line's stretch of the narration track (story_track.narration_wav) force-aligned to its caption
+   words and placed in the video by cross-correlating that track with the final mix; "shown" is each caption's first
+   frame, found in the video where the caption band changes. BLOCK when |median offset| > 33 ms or over 10% of words
+   are more than 100 ms off; it prints a per-line table (a constant offset, drift, one bad line) and the worst words.
+   `--events stories/<name> --rec <rec>` does the same math without a video. `scripts/caption_sync.py` (caption start
+   vs the speech onset, no model) still runs too: it is the quick check before a render.
+
+Re-timing a story that was aligned with Whisper (every story before 2026-11-10 evening): `~/.hb-tts/bin/python
+scripts/align.py stories/<name>`, then re-edit from the same recording (`./hb render <stunt> --reuse`: no new
+recording, no Gemini request). The stunt's beats (`S.line(id).at(k)`) read the new chunk times only at the next
+recording.
+
+**Aligners, measured** (38 word onsets hand-marked on 0.4 s waveform + spectrogram strips, 28 across the 5 held cuts
+and a hold-out of 10 marked after the hiss rule was written; error = aligner start - marked onset):
+
+| aligner | median | abs median | abs p90 | over 50 ms |
+|---|---|---|---|---|
+| Whisper-base word timestamps (what shipped) | -102 ms | 102 ms | 180 ms | 74% |
+| wav2vec2-base-960h CTC (WhisperX's English aligner) | +18 ms | 20 ms | 77 ms | 24% |
+| wav2vec2-large-960h-lv60-self CTC | +38 ms | 38 ms | 97 ms | 39% |
+| MMS-300m forced aligner (MahmoudAshraf/mms-300m-1130-forced-aligner, the torchaudio MMS_FA recipe; 1.2 GB) | +3 ms | 21 ms | 65 ms | 18% |
+| **wav2vec2-base + hiss rule (MODEL)** | **+6 ms** | **14 ms** | **39 ms** | **5%** |
+| MMS + hiss rule | -4 ms | 13 ms | 33 ms | 3% |
+
+Base and MMS with the hiss rule are within the marking error of each other; base is a third of the size and fitted
+every line (MMS rejected one). torchaudio itself has no build for this venv's torch, so MMS was run through
+transformers. The remaining misses are nasal onsets inside connected speech (m, n), where the marks themselves are a
+judgement call.
+
+Native timings: ElevenLabs' `/text-to-speech/{voice}/with-timestamps` returns per-character start and end times
+(`alignment` and `normalized_alignment`), and Kokoro returns each token's start and end (scripts/voice.py uses them);
+for those voices align.py could take the times as given (sum a word's characters) instead of aligning, but run
+`caption_av_check.py` on the result either way. Gemini TTS returns audio only.
 
 ## Directing Gemini (first tested on gemini-2.5-flash-preview-tts; "Realism" below supersedes where they differ)
 
@@ -245,8 +378,8 @@ What made the biggest difference, largest first:
    `## THE SCENE` / `### DIRECTOR'S NOTES` / `#### TRANSCRIPT`) takes scored 6-9. The 2.5-flash takes we already had
    scored 3-8. `tts.py` now tries 3.1 first, with 2.5-flash as the fallback. The headings were never read aloud
    (3 takes checked with Whisper; the listener flagged none in 9).
-2. **Never pitch-shift a voice.** The Kid's +2 semitones (`asetrate`) came last every time ("chipmunk", "warble",
-   "metallic"). Unshifted Laomedeia was heard as a real child. If a younger sound is really needed (the narrator),
+2. **Never pitch-shift a voice** (one owner-approved exception: the Roblox narrator's 1.45x speed-up, below). The
+   Kid's +2 semitones (`asetrate`) came last every time ("chipmunk", "warble", "metallic"). Unshifted Laomedeia was heard as a real child. If a younger sound is really needed (the narrator),
    use `rubberband=pitch=...:formant=preserved`. It scored 7 against 5-6 for `asetrate` or a plain rubberband
    shift. The unshifted voice is still the most real (10).
 3. **Write the direction as a scene, not as adjectives.** The same lines with the old terse profile ("calm, clear,

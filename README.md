@@ -119,6 +119,7 @@ Needs Java 21, Node 22, Python 3 + Pillow + numpy, ffmpeg, and Playwright's Chro
 | step | file | what |
 |---|---|---|
 | fetch | `scripts/fetch.py` | vanilla 1.21.1 server jar, client jar (HUD sprites), asset index (sounds); sha1-pinned in `versions.env` |
+| assets | `scripts/assets_restore.sh` | restores all of the above plus the renderer's extracted assets, vanilla sounds, Mixkit sfx and the music cache from the **private** repo evanlin23/hello-buh-assets (hard links, no download; attach it with add_repo). Never commit those files here |
 | server | `run.sh`, `server.properties` | offline-mode server on 127.0.0.1, fresh superflat world each run |
 | stunt | `bot.js` | Mineflayer bot builds the set with commands, does the stunt, records chunks + per-tick pose + block changes + sounds; exits 1 on a failed clutch so `run.sh` retries |
 | assets | `renderer/build_assets.py`, `renderer/prepare.js` | texture atlas, block models and environment textures straight from the version's client jar |

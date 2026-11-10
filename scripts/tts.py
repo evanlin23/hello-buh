@@ -25,7 +25,8 @@ Each line keeps its in-breath and natural tail (the cut pads into the pauses), t
 `post` (EQ, or the narrator's formant-preserving tempo/pitch), a light room (the request's or story's `room`: small,
 hall, outdoor, or "" for dry), and ONE gain per take (-16 LUFS, a limiter on rare peaks only) so a whisper stays
 quieter than a shout. No de-esser, no per-line loudnorm, no asetrate pitch shift: each one made the realism judge say
-"AI" (docs/voices.md "Realism"). Writes <id>.wav and, for a story,
+"AI" (docs/voices.md "Realism"). The one exception, owner-approved: a cast entry's `tempo`/`rate` (the Roblox narrator,
+Orus x1.45) speeds up the WHOLE raw take before anything is cut or gated (speed_up). Writes <id>.wav and, for a story,
 voice/voice.json (dur, onset, end, caption chunks spread over the speech by length, who): the file lib/story.js and
 edit.py --story already read. Check the printed lengths and pitch: a take far longer than its text means the model
 read the direction aloud; a pitch that belongs to the other speaker means a bad cut (fix the text's punctuation, or split the request).
@@ -169,13 +170,31 @@ def cut_words(x, texts):
     late), so the boundary is searched in a window around them and placed by the audio (quiet_point); the edges are
     then cut by the safe-cut rules (edges_at). A boundary Whisper can't place (it dropped a lone "Sit.") sends the
     whole take to the pauses (cut_pauses, with the first words heard as hints)."""
-    sys.path.insert(0, str(ROOT / "scripts"))
-    import difflib
-    import align
-    x16 = np.interp(np.arange(int(len(x) * 16000 / SR)) * SR / 16000, np.arange(len(x)), x).astype(np.float32)
-    heard = align.words(x16)
+    heard = hear(x)
     if not heard:
         raise ValueError("Whisper heard nothing")
+    qs = bounds(x, texts, heard)
+    if qs is None:
+        hints = line_hints(texts, heard)
+        if not any(h is not None for h in hints):
+            raise ValueError("no line's first word was heard as written")
+        print("  (Whisper didn't hear every line's edge: cutting at the pauses, its first words as hints)")
+        return cut_pauses(x, texts, hints)
+    return edges_at(x, qs)
+
+
+def hear(x):
+    """Whisper's words [(word, start s, end s)] for a take at SR (scripts/align.py's model, in the TTS venv)."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import align
+    x16 = np.interp(np.arange(int(len(x) * 16000 / SR)) * SR / 16000, np.arange(len(x)), x).astype(np.float32)
+    return align.words(x16)
+
+
+def _matched(texts, heard):
+    import difflib
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import align
     sw = [w for t in texts for w in t.split()]
     first = np.cumsum([0] + [len(t.split()) for t in texts])[:-1]
     a, b = [align.norm(w) for w in sw], [align.norm(w) for w, _, _ in heard]
@@ -184,12 +203,26 @@ def cut_words(x, texts):
         for k in range(blk.size):
             m[blk.a + k] = blk.b + k
     ends = list(first[1:]) + [len(sw)]
+    return a, m, first, ends
+
+
+def line_hints(texts, heard):
+    """[(time, tolerance) or None] for lines 2..n: where Whisper heard the line's first words (cut_pauses' hints)."""
+    a, m, first, ends = _matched(texts, heard)
 
     def hint(i):   # (time, tolerance): the first of the line's first 3 words heard as written ("I" and "a" too common)
         for j in range(first[i], min(first[i] + 3, ends[i])):
             if j in m and len(a[j]) > 1:
                 return heard[m[j]][1], 0.3 + 0.4 * (j - first[i])   # a later word: the line starts up to ~0.4 s/word before it
         return None
+    return [hint(i) for i in range(1, len(texts))]
+
+
+def bounds(x, texts, heard):
+    """The sample where each line of a take starts (len(texts) - 1 boundaries), or None when Whisper can't place one:
+    the script matched to what Whisper heard says roughly where (between a line's last word heard and the next line's
+    first), and the audio says exactly (quiet_point). Used by cut_words and by the continuous takes (voice_beat)."""
+    a, m, first, ends = _matched(texts, heard)
 
     def boundary(i):   # (heard index of line i-1's last word, of line i's first word), or None
         lw = next((m[j] + (ends[i - 1] - 1 - j) for j in range(ends[i - 1] - 1, first[i - 1] - 1, -1) if j in m), None)
@@ -202,11 +235,7 @@ def cut_words(x, texts):
         return (lw, fw) if 0 <= lw and fw < len(heard) else None
     bds = [boundary(i) for i in range(1, len(texts))]
     if None in bds:
-        hints = [hint(i) for i in range(1, len(texts))]
-        if not any(h is not None for h in hints):
-            raise ValueError("no line's first word was heard as written")
-        print("  (Whisper didn't hear every line's edge: cutting at the pauses, its first words as hints)")
-        return cut_pauses(x, texts, hints)
+        return None
     # the window (claude/cinematic-default's resplit, which left Good Boy's Pip take with 0 cut edges): from just
     # before the last word's heard end (or 0.1 s into it) to 0.3 s past the next line's heard start (or 0.1 s past
     # the word end), but never past that first word's own end
@@ -219,7 +248,7 @@ def cut_words(x, texts):
         qs.append(quiet_point(x, t0, t1))
     if any(q2 <= q1 for q1, q2 in zip(qs, qs[1:])):
         raise ValueError("boundaries out of order")
-    return edges_at(x, qs)
+    return qs
 
 
 def quiet_point(x, t0, t1, fr=240):
@@ -511,6 +540,67 @@ def lufs(x):
     return float(err.rsplit("I:", 1)[1].split("LUFS")[0])
 
 
+def speed_of(who, cs):
+    """(tempo, rate) of a request's speakers: one value for the whole take, so every speaker in it must agree."""
+    sp = {(float(cs[w].get("tempo") or 1.0), float(cs[w].get("rate") or 1.0)) for w in who}
+    if len(sp) > 1:
+        raise SystemExit(f"{list(who)}: different tempo/rate in one request {sorted(sp)}: the speed-up is applied to the "
+                         f"whole take, so voice them in separate requests (story `requests`, or \"voice_takes\": \"beat\")")
+    return sp.pop() if sp else (1.0, 1.0)
+
+
+def as_heard(x, who, cs):
+    """A whole raw take as it will be heard: the speakers' speed-up (speed_up), then, when their cast entry sets
+    `pause_cap` (s), every silence inside the take shortened to it, only in its silent middle (cap_pauses: never within
+    60 ms of a word, crossfaded). Owner 2026-11-10, on s3, whose gaps were cut to ~0.06 s: "its fine to have those cuts,
+    i didnt even notice" (the narrator "just yaps on and on"). Words are never touched."""
+    x = speed_up(x, *speed_of(who, cs))
+    caps = {float(cs[w]["pause_cap"]) for w in who if cs[w].get("pause_cap")}
+    if caps:
+        x = shorten_pauses(x, min(caps))
+    return x
+
+
+def shorten_pauses(x, cap, keep=0.04, xf=0.02):
+    """Every silence inside the take longer than `cap` s, as take_gate measures silence (frames under the take's peak
+    - 30 dB), shortened to `cap`: the cut comes out of its middle, never within `keep` s of a sound, joined with an
+    `xf` s crossfade. The same silences the gate would reject, so a capped take passes the gate on pauses."""
+    import take_gate
+    out, last = [], 0
+    for at, ln in take_gate.pauses(x, SR, min_len=cap + 1e-3):
+        drop = ln - cap
+        a, b = at + keep, at + ln - keep
+        if b - a < drop + xf:
+            continue
+        s0 = int((a + (b - a - drop) / 2) * SR)
+        n = int(drop * SR)
+        k = int(xf * SR)
+        seg = x[last:s0 + k].copy()
+        nxt = x[s0 + n:s0 + n + k]
+        if len(nxt) == k and k:
+            r = np.linspace(0, 1, k, dtype=np.float32)
+            seg[-k:] = seg[-k:] * (1 - r) + nxt * r
+        out.append(seg)
+        last = s0 + n + k
+    if not out:
+        return x
+    out.append(x[last:])
+    return np.concatenate(out).astype(np.float32)
+
+
+def speed_up(x, tempo=1.0, rate=1.0):
+    """The Roblox narrator's speed-up of a WHOLE raw take (owner 2026-11-10: "s3_gemini_orus.mp3 is good", "we can just
+    do 1.45 thats fine"; docs/voices.md "The Roblox narrator"), before it is trimmed, sliced, gated or shaped: `tempo`
+    = atempo (pitch kept), then `rate` = played faster by resampling (asetrate + aresample: pitch, formants and tempo
+    all rise by `rate`, no pitch correction). The same ffmpeg filters as out/voice_match/s3, minus its gap cut: a
+    continuous take is never edited inside; a take with pauses is re-taken (take_gate on the sped-up take)."""
+    if tempo == 1.0 and rate == 1.0:
+        return x
+    af = ([f"atempo={tempo:g}"] if tempo != 1.0 else []) + ([f"asetrate={round(SR * rate)}", f"aresample={SR}"] if rate != 1.0 else [])
+    return np.frombuffer(pcm(["-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-af", ",".join(af), "-f", "f32le", "-"],
+                             np.asarray(x, np.float32).tobytes()), np.float32).copy()
+
+
 def shape(x, post="", room="small"):
     """One line, gently (docs/voices.md "Realism"): high-pass 60 Hz, the character's `post` (EQ only, never a pitch
     shift), the scene's room, a 60 ms fade at the end instead of a cut at the last word. No de-esser, no loudnorm."""
@@ -546,20 +636,26 @@ REALISM = ("Real people talking, recorded close on a good microphone: not a perf
            "Natural, unpolished, conversational delivery with real breaths and small hesitations.")
 
 
-def prompt(scene, lines, cs, model=MODELS[0]):
+def prompt(scene, lines, cs, model=MODELS[0], fixes=()):
     """What Gemini reads. 3.x models get Google's documented layout (# AUDIO PROFILE: each speaker's profile, the same
     string in every story; ## THE SCENE; ### DIRECTOR'S NOTES: the realism note and the per-line notes by number;
     #### TRANSCRIPT); the headings and notes aren't spoken (6 of 6 takes, Whisper-checked). 2.5 gets the flat layout
-    it was tested with. Never put an emotion in [brackets] inside a line: 3.8 read "[barely a whisper]" aloud."""
+    it was tested with. Never put an emotion in [brackets] inside a line: 3.8 read "[barely a whisper]" aloud.
+    fixes: what a rejected continuous take did wrong (take_gate.FIX lines): added to the direction, so the re-take is
+    asked for a tighter delivery (and is a new request with its own cache key)."""
     who = list(dict.fromkeys(w for w, _, _, _ in lines))
     notes = [f"Line {i + 1}: {note}." for i, (_, _, _, note) in enumerate(lines) if note]
+    fixes = [f for f in fixes if f]
+    if fixes:
+        notes.append("This must be ONE continuous take: " + "; ".join(fixes) + ".")
     body = [t if len(who) == 1 else f"{cs[w]['name']}: {t}" for w, _, t, _ in lines]
     profiles = [f"{cs[w]['name']} is {cs[w]['profile']}." for w in who]
     if model.startswith(BRACKET) and len(who) == 1:   # voices/recipes/pip.md: [profile], a blank line, the lines
         # a request split by emotional beat (STANDARDS 2b.1) brings its own one-line direction: it takes the bracket's
         # place, else the bubbly profile read every beat bubbly (Dog on the Hill's "Day one. Again.")
         beat = scene.strip()[1:-1].strip() if scene.strip().startswith('[') and scene.strip().endswith(']') else ''
-        return f"[{beat or cs[who[0]]['profile']}]\n\n" + "\n\n".join(body)
+        head = beat or cs[who[0]]['profile']   # (byte for byte as before: the prompt is the cache key)
+        return f"[{head}{'; ' + '; '.join(fixes) if fixes else ''}]\n\n" + "\n\n".join(body)
     if model.startswith(STRUCTURED):
         return ("# AUDIO PROFILE\n" + "\n".join(profiles) + "\n\n## THE SCENE\n" + (scene.strip() or "A quiet room.") +
                 "\n\n### DIRECTOR'S NOTES\n" + "\n".join([REALISM, *notes, "Leave a natural pause between lines."]) +
@@ -585,6 +681,14 @@ def allowed(who, cs):
 def take(scene, lines, cs, salt=""):
     """Voice one request's lines [(who, id, text, note)] (at most 2 speakers) -> [float32 per line], cached.
     salt: a re-take's name ("retake1"): the same prompt, a new request and its own cache entry."""
+    x, _, _ = raw_take(scene, lines, cs, salt)
+    x = as_heard(x, list(dict.fromkeys(w for w, _, _, _ in lines)), cs)   # the whole take, before it is cut
+    return cut(x, [t for _, _, t, _ in lines])
+
+
+def raw_take(scene, lines, cs, salt="", fixes=()):
+    """The raw take of one request's lines, from the cache or one Gemini request -> (float32 at SR, model, cache path).
+    The cache key is the exact prompt (the text, the direction, any `fixes`), the voices, the model and the salt."""
     who = list(dict.fromkeys(w for w, _, _, _ in lines))
     if len(who) > 2:
         raise SystemExit(f"{[l for _, l, _, _ in lines]}: {len(who)} speakers in one request (Gemini takes 2)")
@@ -592,7 +696,7 @@ def take(scene, lines, cs, salt=""):
     models = allowed(who, cs)
     # the cache key holds the model: a fallback model's take used to be cached under the first model's prompt and
     # came back later as if the first model had made it (cross-model drift nobody could see)
-    key = lambda m: CACHE / f"{hashlib.sha1(json.dumps([prompt(scene, lines, cs, m), voices, m] + ([salt] if salt else [])).encode()).hexdigest()[:16]}.wav"
+    key = lambda m: CACHE / f"{hashlib.sha1(json.dumps([prompt(scene, lines, cs, m, fixes), voices, m] + ([salt] if salt else [])).encode()).hexdigest()[:16]}.wav"
     hit = next((m for m in models if key(m).exists()), None)
     if hit:
         STATS["cached"] += 1
@@ -600,7 +704,7 @@ def take(scene, lines, cs, salt=""):
         x = np.frombuffer(pcm(["-i", str(raw), "-f", "f32le", "-"]), np.float32)
     else:
         print(f"request: {', '.join(f'{k}={v}' for k, v in voices.items())}, {len(lines)} lines, model {' or '.join(models)}")
-        x, model = request(lambda m: prompt(scene, lines, cs, m), voices, models)
+        x, model = request(lambda m: prompt(scene, lines, cs, m, fixes), voices, models)
         raw = key(model)
         CACHE.mkdir(parents=True, exist_ok=True)
         pcm(["-y", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", str(raw)], x.tobytes())
@@ -610,7 +714,7 @@ def take(scene, lines, cs, salt=""):
     words = sum(len(t.split()) for _, _, t, _ in lines)
     if len(x) / SR > words / 1.5 + 2:   # slower than ~90 wpm: the direction was probably read aloud
         print(f"  WARNING: {len(x) / SR:.1f} s for {words} words: was the direction read aloud? listen to {raw}")
-    return cut(x, [t for _, _, t, _ in lines])
+    return x, model, raw
 
 
 def voice_lines(groups, cs, out, salt=""):
@@ -742,6 +846,133 @@ def drift_retake(d, done, items, cs, takes, n_max=2):
     return {k: v for k, v in takes.items() if v}
 
 
+# ---------------------------------------------------------------- continuous takes (docs/STANDARDS.md 2b.4)
+# Owner, 2026-11-10: "I think part of the reason the voice pacing feels off is because we are cutting it bc of silence
+# and stuff. but i think instead we should be ensuring the voice we get back is all like continuous already without the
+# stuff we dont want." story.json "voice_takes": "beat" turns this on: one request per beat, the take used whole (only
+# its own lead and tail cut, at the speech edges), the lines' places inside it from Whisper, and a gate that rejects a
+# bad take and asks again with a tighter direction instead of editing it (scripts/take_gate.py). docs/voices.md
+# "Continuous takes".
+
+def beat_groups(story, cs, narrator, spoken):
+    """The story's beats: runs of consecutive lines with the same speaker and the same direction (the request's
+    `direction`), or the same line `beat` marker when the story sets them. -> [{"id", "scene", "room", "lines":
+    [(who, id, text, note)]}] in story order; a beat's id is its first line's id."""
+    reqs = story.get("requests") or []
+
+    def req_of(ln, w):   # a request that lists the line (requests[].lines), else the first listing its speaker (tts.py's rule)
+        return (next((r for r in reqs if ln["id"] in (r.get("lines") or [])), None)
+                or next((r for r in reqs if w in r.get("speakers", [])), None))
+    beats = []
+    for ln in story["lines"]:
+        w = ln.get("who", narrator)
+        if w not in cs:
+            raise SystemExit(f"{ln['id']}: speaker {w} is not in the cast (or is silent)")
+        r = req_of(ln, w) or {}
+        scene = r.get("direction", story.get("direction", ""))
+        key = (w, ("beat", ln["beat"]) if ln.get("beat") is not None else ("direction", scene))
+        item = (w, ln["id"], ln.get("say") or spoken(ln), ln.get("direction", ""))
+        if beats and beats[-1]["key"] == key:
+            beats[-1]["lines"].append(item)
+        else:
+            beats.append({"id": ln["id"], "key": key, "scene": scene, "room": r.get("room", story.get("room", "small")),
+                          "lines": [item]})
+    for b in beats:
+        if len(b["lines"]) > MAX_LINES:
+            print(f"WARNING: beat {b['id']} has {len(b['lines'])} lines (> {MAX_LINES}): long takes drift; split it with line `beat` markers")
+    return beats
+
+
+def trim_take(x):
+    """The take's own lead and tail cut at its speech edges, with the safe margins (edges_at with no inner boundary:
+    80-350 ms before the first sound, 200-450 ms after the last, at the quiet point, 15 ms fades). Nothing inside."""
+    return edges_at(x, [])[0]
+
+
+def letter_bounds(y, texts):
+    """Fallback line starts when Whisper can't place them (the take then fails its gate anyway): each line's share
+    of the letters, moved to the quiet point within 0.4 s."""
+    share = np.cumsum([len(t) for t in texts])[:-1] / max(1, sum(len(t) for t in texts))
+    return [quiet_point(y, max(0, f * len(y) / SR - 0.4), f * len(y) / SR + 0.4) for f in share]
+
+
+def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None):
+    """Voice one beat as ONE continuous take, judged by the take gate; a rejected take is asked for again with the
+    gate's fixes added to its direction (a new request, its own cache entry), at most `tries` requests in all; the
+    best take is kept (a passing one, else the least bad: voice.json records its failures, a blocker). Writes
+    out/beat_<id>.wav (the whole take: what the narration plays) and out/<line id>.wav (each line's slice of it, for
+    the checks and the captions; the slices tile the take exactly). -> ({line id: (who, text, slice)}, beat meta)"""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import take_gate
+    hear_fn = hear_fn or hear
+    lines, scene, room = beat["lines"], beat["scene"], beat["room"]
+    w = lines[0][0]
+    texts = [t for _, _, t, _ in lines]
+    fixes, tried, salt = [], [], ""
+    for n in range(max(1, tries)):
+        x, model, raw = raw_take(scene, lines, cs, salt, fixes)
+        x = as_heard(x, [w], cs)   # the take as it will be heard: the gate judges ITS pauses
+        y = level([shape(trim_take(x), cs[w].get("post", ""), room)])[0]
+        heard = hear_fn(y)
+        try:
+            qs = bounds(y, texts, heard) if len(texts) > 1 and heard else ([] if heard else None)
+        except ValueError:
+            qs = None
+        res = take_gate.gate(y, SR, texts, heard, None if qs is None else [q / SR for q in qs], limits, raw=x, opening=opening)
+        tried.append({"res": res, "y": y, "qs": qs, "model": model, "try": n + 1, "fixes": list(fixes), "raw": str(raw)})
+        print(f"beat {beat['id']} ({len(lines)} line(s), take {n + 1}/{tries}, {len(y) / SR:.2f} s): "
+              + ("ok" if res["ok"] else "REJECTED: " + "; ".join(f["why"] for f in res["fails"])))
+        if res["ok"]:
+            break
+        new = [take_gate.FIX[k] for k in res["fix"] if take_gate.FIX[k] not in fixes]
+        if new:
+            fixes = fixes + new
+        else:   # the same faults again: the same direction, a fresh request
+            salt = f"try{n + 1}"
+    best = next((t for t in tried if t["res"]["ok"]), None) or min(tried, key=lambda t: take_gate.score(t["res"]))
+    y, qs = best["y"], best["qs"]
+    if qs is None:
+        qs = letter_bounds(y, texts) if len(texts) > 1 else []
+    starts = [0, *qs, len(y)]
+    out.mkdir(parents=True, exist_ok=True)
+    write(out / f"beat_{beat['id']}.wav", y)
+    done = {}
+    for (who, lid, t, _), a, b in zip(lines, starts, starts[1:]):
+        write(out / f"{lid}.wav", y[a:b])
+        done[lid] = (who, t, y[a:b])
+        TAKE_MODEL[lid] = best["model"]
+        print(f"{lid:8s} {a / SR:6.2f} +{(b - a) / SR:5.2f} s {f0(y[a:b]):4d} Hz  {who}: {t}")
+    if not best["res"]["ok"]:
+        print(f"GATE FAILED after {len(tried)} take(s): beat {beat['id']} keeps take {best['try']} with "
+              + "; ".join(f["why"] for f in best["res"]["fails"]) + ": a blocker (speaker_check GATE). Fix the text or "
+              "the direction, or ./hb voice <stunt> --retakes more")
+    tempo, rate = speed_of([w], cs)
+    meta = {"lines": [lid for _, lid, _, _ in lines], "file": f"beat_{beat['id']}.wav", "dur": round(len(y) / SR, 3),
+            **({"tempo": tempo, "rate": rate} if (tempo, rate) != (1.0, 1.0) else {}),
+            "offsets": [round(a / SR, 3) for a in starts[:-1]], "model": best["model"], "try": best["try"],
+            "tries": len(tried), "fixes": best["fixes"], "ok": best["res"]["ok"], "gate": best["res"]["fails"],
+            "rejected": [{"try": t["try"], "why": [f["why"] for f in t["res"]["fails"]]} for t in tried if not t["res"]["ok"]]}
+    return done, meta
+
+
+def run_beats(d, story, cs, narrator, voice, only=None, retakes=2):
+    """A story with "voice_takes": "beat": every beat (or the beats holding an `--only` line) as one gated
+    continuous take. No single-line re-takes: re-taking one line would splice a second take into the beat.
+    -> ({line id: (who, text, slice)}, {beat id: meta})"""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import take_gate
+    beats = beat_groups(story, cs, narrator, voice.spoken)
+    lim = take_gate.limits_for(story.get("max_pause"))   # in a continuous take max_pause is a gate limit, never a trim
+    done, metas = {}, {}
+    for i, b in enumerate(beats):
+        if only and not any(lid in only for _, lid, _, _ in b["lines"]):
+            continue
+        d_, m = voice_beat(b, cs, d / "voice", tries=1 + retakes, opening=(i == 0), limits=lim)
+        done.update(d_)
+        metas[b["id"]] = m
+    return done, metas
+
+
 def run_story(d, only=None, check=True, retakes=2, relock=None):
     sys.path.insert(0, str(ROOT / "scripts"))
     import voice   # the caption format (" / " chunks, CAPS lowered for speech) stays voice.py's
@@ -754,10 +985,21 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
     narrator = next((k for k, c in cs.items() if c.get("role") == "narrator"), "narrator")
     vf = d / "voice" / "voice.json"
     LOCK.update((json.loads(vf.read_text()).get("models") or {}) if vf.exists() else {})   # one model per character
-    for cid, m in (relock or {}).items():   # move a character to another model: ALL of its lines are re-taken
+    relock = dict(relock or {})
+    for cid, c in cs.items():   # a recast (the narrator became Orus on 3.8-flash-tts): the cast's locked model wins, and
+        # ALL of that character's lines are re-taken, never mixed with the old voice's takes
+        if c.get("model") and LOCK.get(cid) and LOCK[cid] != c["model"] and cid not in relock:
+            print(f"{cid}: voice.json locks {LOCK[cid]}, the cast locks {c['model']} (recast): re-taking all of its lines")
+            relock[cid] = c["model"]
+    for cid, m in relock.items():   # move a character to another model: ALL of its lines are re-taken
         LOCK[cid] = m
         if only:
             only = list(only) + [ln["id"] for ln in story["lines"] if ln.get("who", narrator) == cid]
+    if story.get("voice_takes") == "beat":   # continuous takes (STANDARDS 2b.4): one gated take per beat, used whole
+        old = json.loads(vf.read_text()) if vf.exists() else {"lines": {}}
+        done, beats = run_beats(d, story, cs, narrator, voice, only, retakes if check else 0)
+        _write_meta(d, story, voice, old, only, done, {}, {lid: [(w,)] for lid, (w, _, _) in done.items()}, beats)
+        return
     reqs = story.get("requests") or []
     groups, cur, cur_req = [], [], None
     for ln in story["lines"]:
@@ -800,10 +1042,10 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
     _write_meta(d, story, voice, old, only, done, takes, groups_of)
 
 
-def _write_meta(d, story, voice, old, only, done, takes, groups_of):
+def _write_meta(d, story, voice, old, only, done, takes, groups_of, beats=None):
     vf = d / "voice" / "voice.json"
     mp = story.get("max_pause")   # seconds, or {"opening": s, "rest": s} (opening = the first two lines)
-    if mp:
+    if mp and beats is None:   # (a continuous take is never trimmed: there max_pause is a gate limit, take_gate.py)
         first2 = [ln["id"] for ln in story["lines"][:2]]
         for lid, (w, t, y) in list(done.items()):
             cap = mp if isinstance(mp, (int, float)) else mp.get("opening" if lid in first2 else "rest")
@@ -829,8 +1071,26 @@ def _write_meta(d, story, voice, old, only, done, takes, groups_of):
                                    "captions": caps, "with": [w] if takes.get(ln["id"]) else sorted({it[0] for it in groups_of[ln["id"]]}),   # the request's speakers (speaker_check)
                                    "model": TAKE_MODEL.get(ln["id"]),
                                    **({"take": takes[ln["id"]]} if takes.get(ln["id"]) else {})}
+    if beats is not None:
+        # continuous takes: each line's place in its beat's take (lib/story.js times the picture from these, and
+        # story_track.py lays the whole take at the beat's first mark); inside a beat there is no added gap
+        meta["voice_takes"] = "beat"
+        meta["beats"] = {**((old.get("beats") or {}) if only else {}), **beats}
+        for bid, b in meta["beats"].items():
+            for k, (lid, off) in enumerate(zip(b["lines"], b["offsets"])):
+                if lid in meta["lines"]:
+                    meta["lines"][lid].update({"beat": bid, "offset": off})
+                    meta["lines"][lid].pop("gap", None)
+                    if k + 1 < len(b["lines"]):
+                        meta["lines"][lid]["gap"] = 0
+    else:
+        meta.pop("beats", None)
+        meta.pop("voice_takes", None)
+        for l in meta["lines"].values():
+            for k in ("beat", "offset", "gap"):
+                l.pop(k, None)
     meta["lines"] = {ln["id"]: meta["lines"][ln["id"]] for ln in story["lines"] if ln["id"] in meta["lines"]}
-    meta["total"] = round(sum(l["dur"] + meta["gap"] for l in meta["lines"].values()), 2)
+    meta["total"] = round(sum(l["dur"] + l.get("gap", meta["gap"]) for l in meta["lines"].values()), 2)
     vf.write_text(json.dumps(meta, indent=1))
 
 
