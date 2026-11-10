@@ -25,7 +25,8 @@ plains village on natural terrain, dressed by script, plus one library piece (Mi
 |---|---|---|---|---|
 | `cottage` (Milo's house) | `palette: 'birch'`, `garden: true`, `seed` fixed | east, toward the street | the west end of the main street, about (-38, 4), its door **14 blocks** west of our door (S08 sees it from our doorstep) | **flashback only** (S05-S08) |
 
-Our house is the **largest vanilla plains house** in the village (vanilla rooms are small: S09 needs a room the POV
+Our house is the **largest vanilla plains house** in the village (check at the scout that its room is at least 7 x 7
+inside; if none is, use the library `cottage` interior or `room` as ours) (vanilla rooms are small: S09 needs a room the POV
 can see), on the north side of the main street at about (-24, 6), door facing south, with a bed under a window
 looking north-west over the village toward the forest (S10: the kid stands on the bed to see over the sill). The
 **door spot** is the grass block one east of its doorstep. Across the street is the house of S12-S13, with a 1-wide
@@ -73,7 +74,8 @@ much of the box, so **swap the whole box, not a patch** (continuity fix 3):
 - **The growing row (S12):** the row's strip part is placed except its last 2-3 blocks before S12. During S12, Milo's
   actor stands just round the house's front corner (out of POV sight but for his arm) and really places torches
   (`placeBlock`) on the next blocks round the corner on 'GROWING' and a beat later, his arm swinging into frame at the
-  corner edge each time. The cut S12 → S13 is a ~7 s time skip (bible): before S13's first frame, script the row
+  corner edge each time. Pin Milo at block (-22, 9) facing east (bible: Places) and test the frame on the shot sheet so
+  only his sleeve clears the corner; nudge him a block west if his body shows. The cut S12 → S13 is a ~7 s time skip (bible): before S13's first frame, script the row
   along the house front and across the street (skipping the dirt path) up to **one block short of the door spot**,
   and stand Milo crouched (sneak) at the doorstep holding exactly one torch (`/item replace entity Milo
   weapon.mainhand with torch 1`).
@@ -84,7 +86,8 @@ much of the box, so **swap the whole box, not a patch** (continuity fix 3):
   'WAVED' swings his arm twice. Player moves only: no kneel or wave pose.
 - **S06 (the nightly habit, in B):** Milo crouches and places a torch on the door spot on 'TORCH', stands, turns to
   the kid; on 'TOMORROW' the bot chats `see you tomorrow` (a real chat message: the harness/overlay shows `<Milo> see
-  you tomorrow`); after the line, his bot quits ("Milo left the game"). Reconnect the Milo bot before S07 (offline
+  you tomorrow`); after the line, his bot quits ("Milo left the game"). **At the cut into S07, clear the chat overlay (an
+  `syschat_clear` mark) and remove the S06 torch from the door spot**, so neither carries over Milo in S07-S08. Reconnect the Milo bot before S07 (offline
   auth, same name, same skin) and repeat the join for S07; the join message happens off screen during the S06 → S07
   cut, so hide `joined the game` lines from the overlay. Pick the S06 torch up (remove it) before the B stash is
   re-cloned, or clone over it.
@@ -95,7 +98,7 @@ much of the box, so **swap the whole box, not a patch** (continuity fix 3):
 | S01 (EWS dawn crane, looking east) | west roofs' ridge torches and fence posts passing under the lens | the whole box (~78 x 78): thousands of torches, dark path and field lines threading them, the bell and well near centre | the dark forest ring, the east hills against the pale dawn band |
 | S03 (meeting point, FULL on the golem) | out-of-focus torches on the grass at the lens | the golem among the torches, the well with **the nitwit egg on its roof** | houses, more torches, the forest |
 | S04 (north edge, POV) | the last torch rows, a clean line | open unlit grass rising | the dark oak forest, hills against the blue dawn sky |
-| S05 (flashback crane, ends 11 blocks from Milo, looking west) | the cottage's garden fence and gate lanterns | Milo head to foot at his gate; two villagers walking on the street | the west hills and the golden sky |
+| S05 (flashback crane, ends 7 blocks from Milo at `full`, looking west) | the cottage's garden fence and gate lanterns | Milo head to foot at his gate; two villagers walking on the street | the west hills and the golden sky |
 | S11 (the plot, S05's angle, wide) | the street fence, a torch on every post | the bare 9 x 9 coarse-dirt footprint, a torch on every block | the west hills, the same skyline as S05 |
 | S14 (our door, the S06 axis, looking north) | the kid on the path at frame right | Milo crouched at our doorstep, the last torch on the door spot | our house, the lit roofs behind, gold light raking from the right (the sun out of frame) |
 
@@ -122,7 +125,7 @@ village on the river road, a valley south of the carpeted village (Light Sleeper
 |---|---|---|
 | A player vanishing when he quits (S06, S15) | **exists.** The harness records entities per tick from `bot.entities`; when the actor bot quits (`b.quit()`; `quitActors` in lib/movie.js), the server removes the entity and it stops being recorded, so the renderer draws nothing from that tick. Vanilla has no fade: an instant vanish is correct. | quit Milo's bot at the end of L06 (S06) and on L15's first word; reconnect it between S06 and S07 |
 | `<Milo> see you tomorrow` and "Milo left the game" in chat | **partly exists.** `scripts/retention.py` `chat_img` draws vanilla chat history lines (the translucent background, the game font) and the input box, from `--chat` entries keyed to timeline events, but only as typed player chat, in grey (220,220,220). No system-message colour, and the harness doesn't record system chat. | **build (~1 h, under 2 h):** (1) harness: while recording, on `messagestr` matching `/^(\w+) left the game$/` mark `syschat` { text, color: 'yellow' }, and on a player chat from an actor mark `syschat` { text: '<Milo> see you tomorrow', color: 'white' } (skip `joined the game`); (2) edit.py/retention.py: draw `syschat` marks as a chat history line with no input box, in vanilla yellow (ChatFormatting.YELLOW, #FFFF55), held 10 s then faded like `ChatComponent` (we cut long before); (3) the caption track: a story.json `reveal.caption` card in yellow during the hold. Off unless a `syschat` mark exists (rule zero). |
-| Player name tags over Milo | **missing.** render.js draws nameplates only for custom-named mobs (`extra.name`); vanilla always draws other players' names (within 64 blocks, hidden while sneaking). The harness already records `extra.user` and `extra.sneak`. | **build (~30 min):** a player entity with `extra.user` and not sneaking gets `nameTag = user`, `nameY` 1.8 + 0.5. Gate it (a stunt flag `playerNames: true` or `rec.engine >= 3`) so published Shorts with actors render unchanged. Without it, minecraft-audit flags a player with no name over him. |
+| Player name tags over Milo | **missing.** render.js draws nameplates only for custom-named mobs (`extra.name`); vanilla always draws other players' names (within 64 blocks; while sneaking, drawn dimmer and not seen through walls, never hidden). The harness already records `extra.user` and `extra.sneak`. | **build (~30 min):** a player entity with `extra.user` gets `nameTag = user`, `nameY` 1.8 + 0.5 (1.5 + 0.5 crouched), drawn at reduced opacity while `extra.sneak` is set, so Milo's name still reads crouched in S13-S14. Gate it (a stunt flag `playerNames: true` or `rec.engine >= 3`) so published Shorts with actors render unchanged. Without it, minecraft-audit flags a player with no name over him. |
 | Torch flame and smoke particles | **check.** Vanilla `TorchBlock.animateTick`: one smoke and one flame particle at the flame each client tick. render.js spawns `smoke` for other sources; torches likely draw no flame particles. | **build if missing (~1 h)**, only for torches within ~16 blocks of the camera (6,000 at once would swamp the frame and vanilla's own particle range limits it), gated by `rec.engine` as campfire smoke was. Nice to have, not a blocker: bloom carries the glow at distance. |
 | 6,000 block-light emitters | **check.** `renderer/light.js` / `world.js` give torches light 14 and propagate per chunk. | render one S01 frame on the shot sheet and time it before recording |
 | Baby villager as `self` | exists (`poseBaby`, `stunt.self`) | check `extra.baby` reaches the self model |
@@ -132,7 +135,7 @@ village on the river road, a valley south of the carpeted village (Light Sleeper
 | Cottage swap in and out | exists (`/clone`, `M` clone helper in lib/movie.js; `sets.place`) | |
 
 ## Lighting and look
-- `look: 'auto'` (the grade follows the time of day): dawn (23000-23850; in S14-S15 the camera looks north, so the sun is out of frame and its light rakes from the right) and the flashback's golden hour to dusk
+- `look: 'auto'` (the grade follows the time of day): dawn (23000-23742; in S14-S15 the camera looks north, so the sun is out of frame and its light rakes from the right) and the flashback's golden hour to dusk
   (11600-12600). Bloom matters: it's what makes thousands of torches read as a field of light in S01. Check S01 at
   300 px wide: the box must read as "covered", not "noise".
 - Villagers stay in bed at dawn (none on the streets in A/C/D): the empty, lit streets are part of the eerie read. In

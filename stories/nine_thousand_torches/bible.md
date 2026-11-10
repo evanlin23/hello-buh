@@ -12,7 +12,7 @@ The story's count is **six thousand** since r2 (the folder name stays).
   - A player who quits a server vanishes at once (no animation), and chat prints `<name> left the game` in yellow.
   - A player's chat message shows as `<Milo> text` in white.
   - Players show their name over their head unless they're sneaking. While Milo crouches (sneak) in S06, S13 and S14
-    his name dims to the sneaking nameplate (vanilla: a see-through name, not hidden).
+    his name dims to the sneaking nameplate (vanilla: drawn dimmer, not hidden), so it still reads in S13-S14.
   - Players can't kneel or wave. Milo uses sneak and arm swings only.
 - **The nightly torch (backstory and S06):** at nightfall Milo puts a torch on the grass block one east of the kid's
   doorstep (the **door spot**), types "see you tomorrow" and logs off. When he logs in the next day he picks the torch
@@ -26,10 +26,10 @@ The story's count is **six thousand** since r2 (the folder name stays).
 
 | scene | lines | when | time (ticks) | light |
 |---|---|---|---|---|
-| A. this morning, the village | L01-L04 | today, dawn | S01 23000, S02 23050, S03 23100, S04 23150 | before sunrise, blue-grey, the east sky pale; torches and bloom at their strongest |
+| A. this morning, the village | L01-L04 | today, dawn | S01 23000, S02 23060, S03 23120, S04 23185 (each shot starts at the previous shot's end tick) | before sunrise, blue-grey, the east sky pale; torches and bloom at their strongest |
 | B. Milo (flashback) | L05-L08 | S05-S06 any evening (the habit); S07-S08 yesterday | S05 11600, S06 12000, S07 12300, S08 12600 | golden hour into sunset into late dusk. **None of the story's torches** (only the village's own lamps). Milo's cottage stands. Villagers walk the streets in S05 (the flashback cue) |
-| C. this morning, the chest and the plot | L09-L11 | today, after A | S09 23250, S10 23300, S11 23350 | dawn, brightening |
-| D. the row and the door | L12-L15 | today, minutes later | S12 23450, S13 23600 (~7 s of game time pass at the cut while Milo finishes the row), S14 23700, S15 23850 | first gold. S14-S15 look north, so the sun is out of frame and its light rakes from the right (east) |
+| C. this morning, the chest and the plot | L09-L11 | today, after A | S09 23250, S10 23296, S11 23328 | dawn, brightening |
+| D. the row and the door | L12-L15 | today, minutes later | S12 23450, S13 23652 (~7 s of game time pass at the S12 cut while Milo finishes the row), then S13, S14 and S15 are one continuous moment: S14 23688, S15 23742 (each the previous shot's end tick) | first gold. S14-S15 look north, so the sun is out of frame and its light rakes from the right (east) |
 
   Inside A, C and D time only moves forward. B is the only flashback, and it reads as one: gold light, people on the
   streets, no torches.
@@ -60,7 +60,7 @@ Coordinates: the vanilla village's bell is (0,0); +x east, +z south. The real nu
 | milo_house / milo_plot | the west end of the main street, about (-38, 4) | B: Milo's birch cottage (library `cottage`, birch), two chests and a crafting table by the door (S07), a garden fence with gate lanterns (S05 fg). A, C and D: a bare 9 x 9 footprint of **coarse dirt** with a torch on every block; the street fence in front, a torch on every post | S05 (B), S11 (C, the same angle) | the house stands in B and is gone in A, C and D |
 | main street | from our door west to Milo's | a dirt path (never torched); houses on both sides; the street fence near Milo's | S08 | none |
 | our_door / our_house_inside | about (-24, 6), **14 blocks east of Milo's door**, on the north side of the main street, door facing south; the largest vanilla plains house in the village | the room: bed under a north-west window, our family's chest against the west wall. The doorstep is grass with the dirt path in front. **The door spot** is the grass block one east of the doorstep | S06 (B), S14 (D, same axis) | S06: the nightly torch (picked up the next day). D: empty until S14's last torch |
-| village_south / our_street | the house across the street from ours, about x -27..-20, z 10..17, front facing north onto the street; a **1-wide grass strip** along its east side (x -19, z 11..18) | D: the strip is the last unlit grass. The row runs north up the strip to the house's front corner, turns left (west) along its front for 4 blocks, then straight north across the street (no torch on the dirt path) to the door spot | S12 (POV, the strip), S13 (follow round the corner) | the row grows during S12. By S13 it's complete except the door spot |
+| village_south / our_street (provisional coordinates: confirm at the scout, including grass between the house front and the path, and write the exact row into this table) | the house across the street from ours, about x -27..-20, z 10..17, front facing north onto the street; a **1-wide grass strip** along its east side (x -19, z 11..18) | D: the strip is the last unlit grass. The row runs north up the strip to the house's front corner, turns left (west) along its front for 4 blocks, then straight north across the street (no torch on the dirt path) to the door spot. Provisional row: up the strip x -19 from z 18 to 10, west along z 9 from x -19 to -23 (grass between the front at z 10 and the path), the path gap at (-23, 8), the door spot (-23, 7). **Milo in S12:** pinned at block (-22, 9), facing east (yaw -90), placing on (-20, 9) then (-21, 9), body hidden by the east wall at x -20 | S12 (POV, the strip), S13 (follow round the corner) | the row grows during S12. By S13 it's complete except the door spot |
 
 ## Cast and costume
 
@@ -90,8 +90,10 @@ Coordinates: the vanilla village's bell is (0,0); +x east, +z south. The real nu
 | the last torch | L14, S14 | placed on 'LAST' on the door spot, closing the row | the door spot | S15: burning beside the empty doorstep |
 
 ## Positions and screen direction
-- Our door faces south. S06, S14 and S15 look north at it along the same axis. The kid is at frame right in S06 and
-  S14 (in S14 he came up from the south-east, out of the strip).
+- Our door faces south. S06 (wide, 9 blocks out: the place's establishing shot), S14 and S15 look north at it along
+  the same axis. The kid is at frame right in S06 and S14 (in S14 he came up from the south-east, out of the strip),
+  always nearer the lens than the door spot so he never covers the torch.
+- **S06 → S07 cut:** the chat overlay clears and the S06 torch is removed from the door spot (S07-S08 never show it).
 - S08 looks west down the main street from our door. Milo walks away from the lens to his cottage, 14 blocks away.
 - S12 looks north up the strip. In S13 the kid runs north and turns left round the corner, and our door is ahead
   across the street.

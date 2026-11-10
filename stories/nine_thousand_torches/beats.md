@@ -1,4 +1,4 @@
-# nine_thousand_torches: beat sheet, clue map, writer's checks (r2)
+# nine_thousand_torches: beat sheet, clue map, writer's checks (r2, polished)
 
 r2 (2026-11-10) applies reviews/r1-critic.md and reviews/r1-continuity.md (the list is in reviews/r1-response.md).
 The three big changes: Milo's nightly habit is now the torch by our door before "see you tomorrow", so the whole lit
@@ -25,7 +25,7 @@ as a fortress against something coming. After it, it's Milo's nightly torch, don
 - **Until finally,** the row ends at his own door. Milo places the last torch on the nightly spot, waves, and leaves
   the game without "see you tomorrow".
 
-## Beat sheet (118 words; ~38.7 s of speech with gaps and tails, ~39.5 s with the hold)
+## Beat sheet (120 words; ~38.7 s of speech with gaps and tails, ~39.5 s with the hold)
 Estimates at Pip's natural tempo (~4.1 words/s speaking, 0.3 s gaps, ~0.35 s between sentences). The recording takes
 the real times from voice.json.
 
@@ -36,7 +36,7 @@ the real times from voice.json.
 | 6.1-9.2 | test 1: the rule | L03 "Zombies can't SPAWN on a lit block. So why EVERY block?" | S03 the iron golem among the torches; push past the houses; the nitwit on the well roof (egg) | **the rule the twist stands on**, and the viewer's question |
 | 9.5-10.7 | **The misread** | L04 "Something BIG must be COMING." | S04 POV at the north edge: the last torch row, then the black forest | the wrong theory: a defence |
 | 11.0-12.7 | **The friend** | L05 "My best friend MILO is our PLAYER." | S05 flashback: Milo at his cottage gate, villagers on the street, golden hour | Milo and his house |
-| 13.0-17.5 | **The habit** | L06 "Every night, he puts a TORCH by my door. Then, see you TOMORROW." | S06 sunset: Milo crouches, places a torch on the door spot, "<Milo> see you tomorrow" in chat, he vanishes, "Milo left the game" | **the key plant, line and picture**: he lights my door every night, and how an ordinary goodbye looks in the game |
+| 13.0-17.5 | **The habit** | L06 "Every night, he puts a TORCH by my door. Then he says, see you TOMORROW." | S06 sunset, a wide on our whole house front: Milo crouches, places a torch on the door spot, "<Milo> see you tomorrow" in chat, he vanishes, "Milo left the game" | **the key plant, line and picture**: he lights my door every night, and how an ordinary goodbye looks in the game |
 | 17.8-21.0 | **A character, quoted** | L07 'Yesterday Milo said, "Mom made me PROMISE. One LAST night."' | S07 Milo by two open chests of coal and sticks, a torch in hand | **plant (line): one last night**. The picture shows he's making torches by the chestful |
 | 21.3-22.3 | the joke misread | L08 "He's grounded a LOT." | S08 Milo walks off down the street with a torch, his cottage standing at the end | misread as a punishment; the house exists |
 | 22.6-24.6 | test 2 | L09 "This morning, his STUFF was in OUR chest." | S09 POV into our room, then the chest screen: sword, armour, bed, shield, map, rod, bread, bucket | **plant (picture): he gave everything away**, even his bed |
@@ -113,12 +113,12 @@ ordinary "left the game", the viewer can also guess what the last torch is.
 ## The out-of-context read (3 s, a stranger)
 - L01, L02, L03: absurd or game talk.
 - L05 "My best friend MILO is our PLAYER": a kid talking about a game friend.
-- L06 "Every night, he puts a TORCH by my door. Then, see you TOMORROW.": a game habit, plain.
+- L06 "Every night, he puts a TORCH by my door. Then he says, see you TOMORROW.": a game habit, plain. L15 echoes it word for word.
 - L07 'Milo said, "Mom made me promise. One last night."': a kid's curfew. Read brightly, with L08's joke right after.
 - L12 "I had to know WHO.": curiosity.
 - L14-L15: friendship, full volume, plain and steady. No line about waiting, obeying or love.
 
 ## Word count and length
-118 spoken words (L01 10, L02 8, L03 11, L04 5, L05 7, L06 13, L07 10, L08 4, L09 8, L10 6, L11 6, L12 10, L13 6,
-L14 8, L15 6). About 38.7 s of speech, including gaps and two short action tails (S06's vanish, S14's arm swings);
-about 39.5 s with the hold. The skill's one-liner says 120 because it counts the `<short pause>` tag as two words.
+120 spoken words (L01 10, L02 8, L03 11, L04 5, L05 7, L06 14, L07 10, L08 4, L09 8, L10 6, L11 6, L12 10, L13 6,
+L14 8, L15 6). About 39 s of speech, including gaps and two short action tails (S06's vanish, S14's arm swings);
+about 39.8 s with the 0.8 s hold, which is built in the edit (L15 carries no pause tag).

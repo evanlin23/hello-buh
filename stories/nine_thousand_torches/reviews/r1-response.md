@@ -55,3 +55,25 @@ went from 117 to 118, and the estimate from 36.5 s to about 39.5 s. JSON is vali
 - The chest no longer holds 64 torches: it's his stuff, and he used his torches.
 - The engine list in set.md adds Milo's chat line (white) to the planned chat overlay, plus the bot reconnecting
   between S06 and S07.
+
+## r2 polish (after both reviewers approved; reviews/r2-continuity.md notes, r2-critic.md should-fixes 1-3)
+- **S05/S06 sizes:** S06 is now our_door's establishing `wide` (9 blocks out, the whole house front, roof and lamp
+  post; the kid at frame right, nearer the lens than the door spot). S05's crane now ends 7 blocks from Milo at
+  `full`, so the size still changes at every cut.
+- **Name tag while sneaking:** set.md's engine row now draws a sneaking player's name dimmer, never hidden (vanilla),
+  so Milo's name reads crouched in S13-S14. The bible says the same.
+- **Chat and torch across the S06 → S07 cut:** the chat overlay clears (a `syschat_clear` mark) and the S06 torch is
+  removed from the door spot at that cut (set.md, the bible, S06's frame).
+- **Time of day:** each shot inside a scene now starts at the previous shot's end tick. A: S01 23000, S02 23060, S03
+  23120, S04 23185. C: S09 23250, S10 23296, S11 23328. D: S12 23450, then a ~7 s skip at the cut, then S13 23652,
+  S14 23688, S15 23742 as one continuous moment (story.json, bible.md, shots.md, set.md).
+- **L15 look:** the look on 'He' is now `prop:door_spot`, since Milo vanishes on that word. L14 adds
+  `prop:last_torch` on 'THERE'.
+- **Critic should-fix 1:** L06 is now "Every night, / he puts a TORCH / by my door. / Then he says, / see you
+  TOMORROW." L15 echoes it word for word.
+- **Critic should-fix 2:** L15 has no `say`, so no `<short pause>` tag. The 0.8 s hold is built in the edit.
+- **Critic should-fix 3:** Milo is pinned in S12 at block (-22, 9) facing east, placing on (-20, 9) then (-21, 9),
+  his body hidden by the east wall at x -20. Test on the shot sheet; the provisional row coordinates are in the bible
+  (confirm at the scout).
+- **Also:** set.md now says to check at the scout that our room is at least 7 x 7 inside.
+- **Count:** 120 spoken words (inside 90-120), about 39.8 s. JSON is valid; there are no ellipses in any file.
