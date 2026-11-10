@@ -39,6 +39,11 @@ Walk the story line by line with the bible open. For every line ask:
 
 ## Post-build mode (the preview or recording)
 
+Start from the recording, in seconds: `./hb continuity <stunt>` (per shot: time of day, weather, held item, camera,
+who is in view; flags pops, time jumps and cast that moved or vanished across a cut), `./hb framing <stunt>` (each
+shot's measured size against story.json's planned `shots[].size`, too-tight shots, new places with no wide shot) and
+`./hb describe <stunt> <line id>` for any moment as text. `./hb sheet <stunt>` gives one labelled frame per shot.
+
 Pull one frame per shot at about 300 px wide from the preview (`ffmpeg -ss <t> -i <preview> -frames:v 1 -vf
 scale=300:-1 <scratchpad>/s<id>.png`, the times from the `line` marks or the shot sheet) and the frames on either side
 of every cut (-3/+3). Check each against the bible: positions, props, time of day, held items, counts, outfits,
