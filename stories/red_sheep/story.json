@@ -1,0 +1,332 @@
+{
+  "name": "red_sheep",
+  "stunt": "story_red_sheep",
+  "version": 2,
+  "revision": "r1 (2026-11-10, claude/writers-mystery): written to the mystery test (STANDARDS 1.0); not voiced (the narrator voice is being changed: docs/voice_search.md)",
+  "caption": "why is every sheep in our village blue 🐑",
+  "logline": "In Grandpa's walled village every sheep is dyed blue; when a boy leaves the gate open and follows his lamb into the woods at dusk, he learns what the blue is for.",
+  "question": "why tf is every sheep in the village blue?",
+  "premise": "Every sheep in Ravenford is blue, all sixty: Grandpa dyes every lamb the day it's born and counts them every night ('Blue. Blue. BLUE.'). 'They're our EYES, kid.' Last spring one came back from the woods red, and Grandpa sat at the gate with his crossbow for a week; that night something snapped in the trees like teeth. Today the boy leaves the gate open, his lamb gets out, Grandpa is asleep, and he follows it into the woods alone at dusk.",
+  "twist": "The sheep are an alarm. An evoker (vanilla) turns any blue sheep within 16 blocks red with its spell: one is in the woods (a raider left over from the raids, never explained). In the trees the lamb stops, staring at something; it turns red in a puff of spell particles as the evoker behind it lowers its arms, and a line of fangs snaps out of the ground toward the boy. Cut. 'They're our EYES' was literal: blue means safe, red means an evoker is near.",
+  "key_color": "#3B6CF0",
+  "mood": [
+    "tense",
+    "eerie"
+  ],
+  "payoff": "L10+1.0",
+  "gap": 0.25,
+  "look": {
+    "time": 1000,
+    "fog": false,
+    "note": "day 1000 (S01-S06, S08), night 18000 (S07), dusk 12500 (S09-S11): per shot"
+  },
+  "weather": "clear",
+  "world": {
+    "place": "ravenford (canonical) and the woods on the Ridge road east of the east gate (inside ravenford's footprint toward raven_tower)",
+    "day": 2100,
+    "canon": "Kid Buh (about 12) living with Grandpa (Ravenford) after raid 32 (day 1900). New canon fact: from day ~1950 Grandpa dyes Ravenford's flock blue as an evoker alarm; an evoker lives in the Ridge woods (where it came from is never said). Nobody says 'Buh'.",
+    "easter_egg": "totem_wall: Grandpa's wall of 32 totems (all full after day 1900), out of focus behind Grandpa in S03"
+  },
+  "voice": {
+    "engine": "tbd",
+    "note": "the house narrator voice is being changed (docs/voice_search.md, STANDARDS 2.0); voice nothing until the owner picks. Characters: voices/cast.json refs below."
+  },
+  "voice_takes": "beat",
+  "cast": {
+    "N": {
+      "role": "narrator",
+      "ref": "narrator",
+      "color": "#FFFFFF",
+      "on_screen": "kid Buh, about 12, default Steve skin: POV in S08-S11; seen small from behind in S06"
+    },
+    "Grandpa": {
+      "role": "character",
+      "ref": "elder",
+      "color": "#F0A845",
+      "on_screen": "Ravenford's Grandpa: player actor, `zuri` skin, the slow walk (canon)"
+    }
+  },
+  "requests": [
+    {
+      "id": "r1",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L01",
+        "L02",
+        "L04"
+      ],
+      "direction": "[A kid telling a friend a story, fast, bright and energetic, Roblox-story pace; not whispery, breathy or soft] Beat 1: amazed and proud of his weird village."
+    },
+    {
+      "id": "r2",
+      "speakers": [
+        "Grandpa"
+      ],
+      "lines": [
+        "L03"
+      ],
+      "direction": "[An old man in his seventies, gruff and warm, low; never whispery]"
+    },
+    {
+      "id": "r3",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L05",
+        "L06",
+        "L07"
+      ],
+      "direction": "[A kid telling a friend a story, fast, bright and energetic, Roblox-story pace; not whispery, breathy or soft] Beat 2: the scary memory, scared not hushed."
+    },
+    {
+      "id": "r4",
+      "speakers": [
+        "N"
+      ],
+      "lines": [
+        "L08",
+        "L09",
+        "L10"
+      ],
+      "direction": "[A kid telling a friend a story, fast, bright and energetic, Roblox-story pace; not whispery, breathy or soft] Beat 3: guilty, brave, then frightened; quicker; not hushed."
+    }
+  ],
+  "lines": [
+    {
+      "id": "L01",
+      "who": "N",
+      "text": "Every SHEEP / in our village / is BLUE. / All SIXTY / of them.",
+      "say": "[amazed and proud] Every sheep in our village is blue. All sixty of them.",
+      "direction": "amazed and proud, one quick breath, a tiny lift on SIXTY",
+      "shot": "S01",
+      "look": {
+        "what": "entity:sheep",
+        "word": "SHEEP"
+      }
+    },
+    {
+      "id": "L02",
+      "who": "N",
+      "text": "Grandpa dyes / every new LAMB / the day / it's BORN.",
+      "say": "[matter-of-fact] Grandpa dyes every new lamb the day it's born.",
+      "direction": "matter-of-fact, this is normal to him",
+      "shot": "S02",
+      "look": {
+        "what": "Grandpa"
+      }
+    },
+    {
+      "id": "L03",
+      "who": "Grandpa",
+      "text": "They're our EYES, / kid.",
+      "say": "[gruff and warm] They're our eyes, kid.",
+      "direction": "gruff and warm, certain, a small pause before kid",
+      "shot": "S03",
+      "look": {
+        "what": "Grandpa"
+      }
+    },
+    {
+      "id": "L04",
+      "who": "N",
+      "text": "He counts them / every NIGHT. / Blue. / Blue. / BLUE.",
+      "say": "[quick] He counts them every night. Blue. Blue. Blue.",
+      "direction": "quick, copying Grandpa's counting, the last one firm",
+      "shot": "S04",
+      "look": {
+        "what": "entity:sheep"
+      }
+    },
+    {
+      "id": "L05",
+      "who": "N",
+      "text": "Last spring, / ONE came back / from the woods / RED.",
+      "say": "[dropping to scared on RED] Last spring, one came back from the woods red.",
+      "direction": "dropping to scared on RED, not hushed",
+      "shot": "S05",
+      "look": {
+        "what": "prop:red_sheep",
+        "word": "RED"
+      }
+    },
+    {
+      "id": "L06",
+      "who": "N",
+      "text": "Grandpa sat / at the GATE / with his crossbow / for a WEEK.",
+      "say": "[impressed] Grandpa sat at the gate with his crossbow for a week.",
+      "direction": "impressed, a little worried",
+      "shot": "S06",
+      "look": {
+        "what": "Grandpa"
+      }
+    },
+    {
+      "id": "L07",
+      "who": "N",
+      "text": "That night, / something SNAPPED / in the trees. / Like TEETH.",
+      "say": "[scared] That night, something snapped in the trees. Like teeth.",
+      "direction": "scared, quick, a beat before TEETH",
+      "shot": "S07",
+      "look": {
+        "what": "prop:treeline"
+      }
+    },
+    {
+      "id": "L08",
+      "who": "N",
+      "text": "Today / I left the gate OPEN. / My lamb / got OUT.",
+      "say": "[guilty] Today I left the gate open. My lamb got out.",
+      "direction": "guilty, fast, caught out",
+      "shot": "S08",
+      "look": {
+        "what": "prop:lamb",
+        "word": "LAMB"
+      }
+    },
+    {
+      "id": "L09",
+      "who": "N",
+      "text": "Grandpa was ASLEEP. / I went / ALONE.",
+      "say": "[brave and small at once] Grandpa was asleep. I went alone.",
+      "direction": "brave and small at once, determined",
+      "shot": "S09",
+      "look": {
+        "what": "prop:lamb"
+      }
+    },
+    {
+      "id": "L10",
+      "who": "N",
+      "text": "She stopped. / She was STARING / into the TREES.",
+      "say": "[scared] She stopped. She was staring into the trees.",
+      "direction": "scared, slower, the last word held",
+      "shot": "S10",
+      "look": {
+        "what": "prop:lamb"
+      }
+    }
+  ],
+  "shots": [
+    {
+      "id": "S01",
+      "line": "L01",
+      "place": "pasture",
+      "size": "ews",
+      "camera": "path: crane down from (0, 22, 30) to (0, 8, 18) over the pasture, looking north at (0, 0, -4). FOV 55. wideMaster",
+      "frame": "fg: the pasture fence; subject: sixty blue sheep grazing the green pasture inside the log palisade, at full scale; bg: Ravenford's roofs, the east gate, the Ridge and the old tower on the skyline. Morning. All blue, not one other colour."
+    },
+    {
+      "id": "S02",
+      "line": "L02",
+      "place": "dye_yard",
+      "size": "full",
+      "camera": "at: (4, 1.6, 4) looking at Grandpa (0, 1, 0), slow push",
+      "frame": "subject: Grandpa kneeling by a newborn white lamb, blue dye in hand: on 'BORN' the lamb turns blue (use the dye); ewe beside it; bg: the pasture of blue sheep. Morning."
+    },
+    {
+      "id": "S03",
+      "line": "L03",
+      "place": "grandpa_house",
+      "size": "ms",
+      "camera": "at: (2.5, 1.6, 2) looking at Grandpa's face (0, 1.6, 0), still",
+      "frame": "subject: Grandpa in his doorway, waist up, looking at camera; bg (out of focus): the totem wall inside, 32 totems (the easter egg). Morning."
+    },
+    {
+      "id": "S04",
+      "line": "L04",
+      "place": "pasture_gate",
+      "size": "wide",
+      "camera": "at: (-6, 2.5, 8) looking at the gate (0, 1, 0), slow pan along the flock",
+      "frame": "subject: Grandpa at the pasture gate at dusk, lantern on the post, the flock filing past him, every sheep blue; he nods at each. Dusk 12000."
+    },
+    {
+      "id": "S05",
+      "line": "L05",
+      "place": "pasture_gate",
+      "size": "ms",
+      "camera": "at: (3, 1.2, 3) looking at the red sheep (0, 0.8, 0), slow push",
+      "frame": "subject: ONE red sheep standing in the gateway among blue ones, facing camera; Grandpa's boots and crossbow at frame edge. Day."
+    },
+    {
+      "id": "S06",
+      "line": "L06",
+      "place": "east_gate",
+      "size": "wide",
+      "camera": "at: (0, 6, 14) looking at the gate (0, 2, 0), still",
+      "frame": "subject: Grandpa sitting on a log by the east gate, crossbow across his knees, facing the woods; kid Buh small behind him at a window; bg: the dark treeline of the Ridge woods 40 blocks out, the pillager outpost's tower far on the horizon (why an evoker can be here: never named). Dusk."
+    },
+    {
+      "id": "S07",
+      "line": "L07",
+      "place": "east_gate",
+      "size": "ews",
+      "camera": "at: (0, 10, -6) looking east over the palisade at the treeline (0, 4, 40), still",
+      "frame": "subject: the black treeline under the moon; on 'SNAPPED' a snap sound (evoker fangs) deep in the trees and the wolves' heads turn; nothing seen. Night 18000, lanterns on the palisade."
+    },
+    {
+      "id": "S08",
+      "line": "L08",
+      "place": "pasture_gate",
+      "size": "full",
+      "camera": "pov: at the open pasture gate, looking out at the lamb trotting toward the treeline 15 blocks away",
+      "frame": "fg: the open gate in the hand's reach; subject: the small blue lamb going toward the woods; bg: the treeline, sun low. Dusk 12500."
+    },
+    {
+      "id": "S09",
+      "line": "L09",
+      "place": "woods_edge",
+      "size": "wide",
+      "camera": "pov walking into the woods, following the lamb 6 blocks ahead",
+      "frame": "subject: the lamb between spruce trunks; light falling; bg: dark trunks, nothing moving. Dusk 12800, lanterns: none (dark but readable, look_stats night floor)."
+    },
+    {
+      "id": "S10",
+      "line": "L10",
+      "place": "clearing",
+      "size": "ms",
+      "camera": "pov stops: the lamb 5 blocks ahead, stopped, facing away into the trees",
+      "frame": "subject: the lamb's back, still, its head toward a dark gap between trunks; nothing else visible yet. Dusk 12800."
+    },
+    {
+      "id": "S11",
+      "line": "L10",
+      "place": "clearing",
+      "size": "wide",
+      "camera": "at: low behind and left of Buh (shoulder, -1.5, 1.6, 2) looking past the lamb at the evoker (0, 1.6, -10). The reveal, all in one frame: on L10's end the evoker (arms raised, casting) lowers its arms, the lamb turns from blue to red in a puff of spell particles, then a line of fangs snaps up out of the ground from the evoker toward the camera; cut 1.0 s after the first fang",
+      "frame": "fg: Buh's shoulder; mid: the lamb turning red; subject: the evoker between the trunks; the fangs racing at us. Dusk 12800, the evoker readable at 300 px (a quarter of the frame height)."
+    }
+  ],
+  "props": {
+    "red_sheep": {
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    "lamb": {
+      "actor": "lamb"
+    },
+    "treeline": {
+      "at": [
+        0,
+        4,
+        40
+      ]
+    }
+  },
+  "ending": {
+    "after": "L10",
+    "beats": [
+      "S11: the evoker lowers its arms, the lamb turns red, the fangs snap toward the camera; cut 1.0 s after the first fang. No line."
+    ],
+    "loop": "cause and effect: why the sheep are blue (line 1)"
+  },
+  "bible": "stories/red_sheep/bible.md",
+  "beats": "stories/red_sheep/beats.md",
+  "set": "stories/red_sheep/set.md",
+  "shotlist": "stories/red_sheep/shots.md"
+}

@@ -1,0 +1,18 @@
+# forty_one_cats: shot list (r1)
+
+Generated from `story.json` `shots` (the source of truth; edit there). The Short is vertical 1080 x 1920, with the game view 1080 x 1011. Compose for the centre crop. The size changes at every cut, and there's at most one close-up per four shots.
+
+| shot | line | words | place | size | camera | frame |
+|---|---|---|---|---|---|---|
+| S01 | L01 | My grandma keeps FORTY-ONE cats on the WALL. All facing OUT. | wall | ews | path: crane along the outside of the palisade from (20, 10, 12) to (-20, 8, 12), looking at the wall (0, 2, 0). FOV 55. wideMaster | subject: the village's log palisade running away along the snow, a cat sitting on top of it every ten blocks, all facing out at us; bg: snowy roofs, chimney smoke, spruce, the White to the horizon. Day. |
+| S02 | L02 | Not ONE is allowed INSIDE. Not even when it SNOWS. | lane | wide | at: (0, 2.2, 8) looking at the wall (0, 3, 0), still; snow falling | subject: two cats on the wall in falling snow, facing out, not moving; a warm lit doorway below them, shut. Day, light snow. |
+| S03 | L03 | They keep the QUIET ones out. | grandma_house | ms | at: (1.8, 1.6, 1.8) looking at Grandma (0, 1.6, 0), still | subject: Grandma at the window, looking out at the wall, a fish in her hand for the cats. Day. |
+| S04 | L04 | She got the first one the week I CAME here. | wall | full | at: (0, 3.2, 3) looking at one old cat on the wall by the gate (0, 3, 0), slow push | subject: the oldest cat, on the post nearest the boy's house; bg: the house with his window. Day. |
+| S05 | L05 | The neighbors don't even LOCK their doors. | lane | wide | at: (6, 2, 6) looking down the lane (0, 1, -10), still | subject: a lane of snowy houses, two doors standing open, a villager walking in and out freely; bg: the wall and its cats. Day. |
+| S06 | L06 | Once I heard a HISS under my window. Grandma said it was a CAT. | boy_house | full | at: outside, low (2, 0.6, 3) looking at the wall under his window (0, 1, 0), dusk; on 'HISS' a hiss off screen, on 'CAT' the cat above the window turns its head and the hiss stops | subject: the snow under his window, empty; the cat on the wall top 2 blocks away. Dusk 13000. |
+| S07 | L07 | Tonight it was SO cold. I took the cat by my window up to my BED. | boy_house | ms | pov: at the window, the hand holds out a fish; the cat on the wall top hops down, follows the fish across the room and up onto the bed | fg: the fish in hand; subject: the cat stepping off the wall (the gap opens behind it, unremarked); bg: the bed, the lantern. Night 18000. |
+| S08 | L08 | She purred. I fell ASLEEP. | boy_house | full | pov lying in bed, the cat curled on the blanket by the camera, lantern dimming; the window and the empty spot on the wall beyond it at frame top | subject: the cat asleep; bg: through the window, the gap in the row of cats on the wall. Night. |
+| S09 | L09 | Then I heard the hiss AGAIN. | boy_house | ms | pov: eyes open, look to the window | subject: the window, dark; a hiss from outside. Night. |
+| S10 | L09 | Then I heard the hiss AGAIN. | village | wide | at: outside, high (0, 8, 20) looking at the gap and the boy's window (0, 2, 0). The reveal: a creeper walks through the gap in the cats, along the lane past the villagers' open doors without stopping, straight to his window, and starts to swell and flash; inside, through the window, the cat asleep on the bed. Cut 1.2 s after L09 | subject: the creeper at his window, swelling; mid: the open doors it passed; fg: the cats on the wall either side of the gap. Night, lanterns on the lane and at his window. |
+
+**Sizes in order:** ews, wide, ms, full, wide, full, ms, full, ms, wide.
