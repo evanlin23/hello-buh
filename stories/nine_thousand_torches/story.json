@@ -18,7 +18,7 @@
   "look": {
     "time": "dawn",
     "ticks": {
-      "today": "23000 rising to 23742 across L01-L15, each shot starting at the previous shot's end tick inside a scene (never backwards)",
+      "today": "23000 rising to 23742 across L01-L14 and S15, each shot starting at the previous shot's end tick inside a scene (never backwards)",
       "flashback": "11600-12600 (S05-S08)"
     },
     "fog": false,
@@ -46,7 +46,7 @@
       "ref": "narrator",
       "name": "me",
       "color": "#FFFFFF",
-      "on_screen": "a baby villager (plains, no profession: brown robe), unnamed; pov at the kid's eye (0.81; ~1.4 standing on the bed in S10) in S04, S09, S10, S12, S15; seen from outside in S06, S08, S13, S14 (stunt.self = { model: 'villager', eye: 0.81, extra: { baby: true } }, hud: false, hideHand: true)"
+      "on_screen": "a baby villager (plains, no profession: brown robe), unnamed; pov at the kid's eye (0.81; ~1.4 standing on the bed in) in S04, S09, S12, S15; seen from outside in S06, S08, S13, S14 (stunt.self = { model: 'villager', eye: 0.81, extra: { baby: true } }, hud: false, hideHand: true)"
     },
     "Jonah": {
       "role": "character",
@@ -178,7 +178,7 @@
       "id": "L07",
       "who": "N",
       "text": "Yesterday / Jonah said, / Mom made me PROMISE.",
-      "say": "Yesterday Jonah said, \"Mom made me promise. One last night.\"",
+      "say": "Yesterday Jonah said, \"Mom made me promise.\"",
       "direction": "light, no weight on it",
       "shot": "S07",
       "look": {
@@ -240,7 +240,7 @@
       "id": "L14",
       "who": "N",
       "text": "Jonah put / the LAST one / THERE. / Every night / he'll MISS. / All at ONCE.",
-      "direction": "happy on 'Jonah', then quieter on 'Every night at ONCE', getting it",
+      "direction": "happy on 'Jonah', then quieter on 'Every night he'll MISS. All at ONCE.', getting it",
       "shot": "S14",
       "look": [
         {
@@ -363,7 +363,7 @@
       "line": "L12",
       "place": "village_south",
       "size": "full",
-      "camera": "pov (kid's eye) at the south end of a 1-wide grass strip between two houses across the street from ours, looking north up the strip; still, then a step forward on 'WHO'",
+      "camera": "pov (kid's eye) at the south end of a 1-wide grass strip between two houses across the street from ours, looking north up the strip; still, then a step forward on 'GROWING'",
       "frame": "fg: the strip at the kid's feet; subject: a single row of torches running up the strip to the near house's front corner 7 blocks ahead, turning left round it out of sight; on 'GROWING' a torch appears just round the corner edge with Jonah's arm (Steve's sleeve and hand, a torch held) swinging into frame, then another a beat later (the arm again). Jonah is pinned at block (-22, 9) (bible coordinates: the house's east wall is x -20, the strip x -19, its front corner z 10), feet on the grass in front of the house front, facing east (yaw -90), placing on (-20, 9) then (-21, 9); his body stays hidden behind the east wall and only the sleeve clears the corner: test on the shot sheet and nudge him a block west if more shows; bg: the rest of the village lit, the brightening sky above the roofs. Dawn (23450)."
     },
     {
@@ -380,7 +380,7 @@
       "place": "our_door",
       "size": "full",
       "camera": "at: 1 block up, 5 blocks from our doorstep, the same axis as S06 looking north, FOV 50, still",
-      "frame": "fg: the kid (baby villager) at frame right, stopped on the path nearer the lens than the door spot (never covering it), back three-quarters to us; subject: Jonah head to foot crouched (sneak; his name dimmed, as vanilla draws a sneaking player's name, still readable) at the doorstep, holding exactly one torch; on 'LAST' he places it on the door spot (the grass block one east of the doorstep: the same spot as S06), closing the row, his hand now empty; after 'ONCE', in the gap before L15, he stands, turns to the kid and swings his arm twice (a player's wave); bg: our house front, the window, torch-lit roofs behind, gold sunlight raking across the front from the right (the sun itself out of frame: we look north). Sunrise (23688, S13's end tick)."
+      "frame": "fg: the kid (baby villager) at frame right, stopped on the path nearer the lens than the door spot (never covering it), back three-quarters to us; subject: Jonah head to foot crouched (sneak; his name dimmed, as vanilla draws a sneaking player's name, still readable) at the doorstep, holding exactly one torch; on 'LAST' he places it on the door spot (the grass block one east of the doorstep: the same spot as S06), closing the row, his hand now empty; after 'ONCE', after 'ONCE', he stands, turns to the kid and swings his arm twice (a player's wave); bg: our house front, the window, torch-lit roofs behind, gold sunlight raking across the front from the right (the sun itself out of frame: we look north). Sunrise (23688, S13's end tick)."
     },
     {
       "id": "S15",
@@ -398,11 +398,11 @@
     },
     "fence_torches": {
       "block": "torch",
-      "on": "every fence post of the west lane (S02) and the street fence (S11)"
+      "on": "every fence post of the west lane  and the street fence (S11)"
     },
     "ridge_torches": {
       "block": "torch",
-      "on": "every full block of the roof ridges (S02 tilt)"
+      "on": "every full block of the roof ridges "
     },
     "door_spot": {
       "block": "torch",
@@ -414,10 +414,10 @@
     },
     "hay_torches": {
       "block": "torch",
-      "on": "the hay-bale pile by the meeting point (S02)"
+      "on": "the hay-bale pile by the meeting point "
     },
     "dark_forest": {
-      "at": "the dark oak forest edge 20+ blocks north of the village (S04, S10)"
+      "at": "the dark oak forest edge 20+ blocks north of the village (S04)"
     },
     "our_chest": {
       "block": "chest",

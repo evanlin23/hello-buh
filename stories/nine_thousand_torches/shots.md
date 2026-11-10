@@ -1,5 +1,13 @@
 # nine_thousand_torches: shot list (r2)
 
+> **r5 (2026-11-10), supersedes the lines below where they differ** (story.json is the source of truth). The owner's
+> mystery test (STANDARDS 1.0) and two cold reads: L02 and L10 cut; L12 and L13 merged into "One row was still
+> GROWING. I followed it to MY door." (S12 POV, then a mid-line cut to S13's follow on 'I followed it'); L07 is
+> "Yesterday Jonah said, Mom made me PROMISE." (no "One LAST night"); L14 is "Jonah put the LAST one THERE. Every
+> night he'll MISS. All at ONCE." with the wave after 'ONCE'; **L15 is cut**: S15 is the kid's POV on Jonah, then he
+> quits (payoff mark `quit`), the chat shows only yellow "Jonah left the game", 1.6 s hold, cut. S02 and S10 are gone.
+> 100 words, about 38-39 s. Critic r5: approve once mechanical fixes were in (7.7; reviews/r5-critic.md).
+
 Generated from `story.json` `shots` (the source of truth; edit there). The Short format: 1080 x 1920, the game view
 1080 x 1011 cropped from the 16:9 master (`wideMaster: true`); compose for the middle 60%. Wide by default, the size
 changes at every cut, no close-ups (S09 opens wide on the room; the chest screen is an overlay). Faces in the upper half (captions sit at 70%).
