@@ -78,7 +78,8 @@ Measured on story_nitwit (docs/pipeline_test_nitwit.md: 2 h 40 min start to publ
 5. **Check before any render** (seconds): `./hb check story_<name>` (rec_check blockers mean re-record), then read
    `./hb framing` and `./hb continuity` and `./hb describe` the moments you're unsure of. Fix, re-record, re-check.
 6. **Look**: `./hb sheet story_<name>` (one frame per shot) and `./hb still` at anything describe or check flagged.
-   Optional: `./hb preview` for the captions, cards and pacing (10-25 min; worth it on a free box).
+   Skip `./hb preview` by default: on this shared 4-core box it takes 12-26 min, longer than the ~10 min Actions render
+   of the real thing. Use `./hb sheet` / `./hb still` for staging and `./hb render` (Actions) to see it move.
 7. **Render on Actions**: commit what the render reads (`render.js`, `renderer/`, `edit.py`, `scripts/`: hb refuses
    otherwise), `./hb render story_<name>`, then `./hb render story_<name> --wait` (~10-20 min). Look at sheets meanwhile.
 8. **Review**: `./hb review story_<name>`, then an independent reviewer with `.claude/skills/short-review/SKILL.md`
