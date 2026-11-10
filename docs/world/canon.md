@@ -71,7 +71,7 @@ coast at Tidewater.
 | **Stillwater** | (-215, 68, -1060) | Small farming village on the north shore: Grandpa's cottage, the lever house, the neighbour's cottage, Gary's cottage and field, the one tree (-188, -1058), and the Long Day lever on a stone post (-214, -1062) | The Sun Won't Set (800-1100), The Chunk Next Door (1800) |
 | **The Cliff House** | (-514, 121, -765) | Family house on the west rim of the High Meadow, above a 40-block fall to the White's frozen shore | Respawn Voice (1300) |
 | **Tidewater** | (-200, 63, -700) | Lowland fishing hamlet one block above the sea, south of Hushwell; the lighthouse on the rise at (-150, -712), a dock | One Block Higher (2600, in progress) |
-| **Saltmouth** | (-286, 69, -381): generated plains village | The south peninsula's village, a ruined portal on its east edge. Good Boy's yard is village + (37, 16). Buh lived here with the dog at 16. | Good Boy (3300, held) |
+| **Saltmouth** | (-286, 69, -381): generated plains village | The south peninsula's village, a ruined portal on its east edge. Good Boy's yard is village + (37, 16). Buh lived here with the dog at 16. | Good Boy (3300-3400, reworked) |
 | **Frostgate** | (-801, 104, -697): generated snowy village | At the White's east edge, on the old road west | More Golems (2900, in progress) |
 | **Ravenford** | (-2044, 71, -485): the east gate; generated plains village at (-2111, -497) | Grandpa's village across the White: the log palisade and east gate, Grandpa's house with the totem wall, the road over the ford to the Ridge and the old tower (-2000, -445). A real pillager outpost stands at (-1913, -393). | Thirty-One Raids (1900) |
 | **Leo's House** | (-2195, 63, -548) | Stone cottage on the shore facing the islets over the stronghold. Its basement holds an end portal frame. | One More Eye (3000, in progress), Put Back (pilot) |
@@ -106,7 +106,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | 2600 | Tidewater | One Block Higher (in progress). |
 | 2900 | Frostgate | More Golems (in progress). |
 | 3000 | Leo's House | One More Eye (in progress): eleven eyes; Leo left six years ago (day ~810). |
-| 3300 | Saltmouth | **Good Boy** (held for rework). Buh at 16 and his dog, who keeps trying to leave him and keeps teleporting back. |
+| 3300-3400 | Saltmouth, then Dog Hill | **Good Boy** (reworked, script approved 2026-11-10; to build). Told by the dog. Buh at 16 tries to lose his dog 37 times so it will forget him and not wait when he stops playing. A tamed wolf teleports back unless it's sitting, and he never makes it sit. On day 3400 he walks it up Dog Hill to his old hut: "sit, boy... I'll be right back", and he leaves the game. |
 | 3400 | Dog Hill | Buh's last login: "Sit, boy. I'll be right back." The dog sits on the hilltop. Hushwell takes its carpets up (the shrieker only answers players). The bell stays boxed. |
 | 4300 | Dog Hill | **Dog on the Hill.** 900 days. Pip sits with the dog every night. "Buh joined the game." "Hey, BUDDY! Sorry. Got busy." He leaves again. "Day ONE. AGAIN." **This is the present.** From here on, Pip and the dog sit on the hill together at night. |
 | 9300 | The Portal Cottage | **Gold for the Portal.** Nico throws in a whole stack to buy his grandpa's way home. The piglin in Grandpa's helmet steps out, shaking, and Grandma sends it home with one more ingot. |
@@ -116,7 +116,7 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | who | look | voice (voices/cast.json) | canon |
 |---|---|---|---|
 | **Buh** | default Steve skin; the bot name and death screens say Buh (owner, 2026-11-10) | `milo` (Achird, 16) for Buh himself. As a kid (about 10-11) he narrates in the house narrator voice (`narrator`, Leda). | Grew up in Hushwell with Mom (Light Sleeper), spent a year or more with Grandpa in Ravenford (Thirty-One Raids), lived in Saltmouth with his dog at 16 (Good Boy), stopped playing on day 3400, came back for a minute on day 4300 (Dog on the Hill). He's a player: he respawns and he logs out. |
-| **The dog** | pale wolf, tame, **red collar (CollarColor 14)**, Buh's | barks only | Buh's dog since his Hushwell childhood. Doghouse on Hushwell's north slope (Light Sleeper). Tries to leave Buh 37 times and teleports back every time (Good Boy, after its rework). Has sat on Dog Hill's D since day 3400, facing the patch where Buh logged out. Never stands up for anyone else. |
+| **The dog** | pale wolf, tame, **red collar (CollarColor 14)**, Buh's | barks on screen; narrates Good Boy in the house narrator voice | Buh's dog since his Hushwell childhood. Doghouse on Hushwell's north slope (Light Sleeper). Buh tried to lose him 37 times, so he'd forget him, and he popped back every time (Good Boy: he narrates it, in the house narrator voice). Saved Buh from a zombie at Saltmouth. Has sat on Dog Hill's D since day 3400, facing the patch where Buh logged out. Never stands up for anyone else. |
 | **Pip** | baby plains villager, no profession | `narrator` (Leda) | Hushwell kid, about nine at day 4300. Brings the dog a bone every morning. Sits with him every night from Dog on the Hill on. Doesn't know who built the hut. |
 | **Mom** | plains villager, farmer (straw hat) | `mom` (Sulafat) | Buh's mom in Hushwell. "Walk soft, Buh. The ground's a light sleeper." |
 | **Grandpa (Ravenford)** | player actor, `zuri` skin; the slow walk | `elder` (Charon) | Buh's grandpa. Saved Ravenford from 31 raids that he brought himself with ominous bottles. Grandma died. Since raid 32 he and Buh fight together. |
@@ -158,12 +158,11 @@ follow any Short.
    climbs to the doghouse and the red-collared dog. Dog on the Hill is the same hill 2,800 days later. Plant: in
    Light Sleeper's S02, put the doghouse on the hilltop beside Buh's hut (around D + (0, 0, -6)) instead of 25 blocks
    downhill, so the crane ends on the exact spot where Dog on the Hill's dog will wait.
-7. **The dog who tried to leave** (plant: Good Boy's rework). Good Boy's narrator is a tamed wolf with a red collar
-   who has tried to leave "this guy" 37 times. Dog on the Hill's dog won't leave the hill for 900 days, waiting for
-   Buh. Make them the same dog: in the rework the man is **Buh at 16** (he's already the Steve skin; recast his voice
-   from Algenib to `milo`, Achird, the voice of Dog on the Hill's Buh). Both Shorts already have him say **"buddy"**
-   ("There you ARE, buddy!", "Hey, BUDDY!"), and Good Boy's "GOOD BOY!" fits Dog on the Hill's "SIT, boy."
-   The dog who wanted to get away ends up waiting 900 days. Good Boy stays a comedy that stands alone.
+7. **The dog he tried to set free** (on screen once Good Boy is made, reworked 2026-11-10). Good Boy is told by the
+   dog: Buh at 16 tried to lose him 37 times, so he'd forget him ("A sitting dog waits forever"). Good Boy ends on
+   Buh's last login on Dog Hill ("sit, boy... I'll be right back", day 3400), which is Dog on the Hill's first frame.
+   Both Shorts have Buh say "buddy" (in Good Boy the narrator quotes him). Each stands alone: Good Boy is the why,
+   Dog on the Hill is the 900 days after.
 8. **Buh's childhood** (plant, no change needed). Light Sleeper (Hushwell, day 1500) and Thirty-One Raids
    (Ravenford, day 1900) are kid Buh two years apart, on opposite sides of the White. After he woke the warden,
    he was sent to Grandpa's. Dog on the Hill's Buh is him at 18, back for a minute.
@@ -185,7 +184,7 @@ follow any Short.
 | 3 | Light Sleeper rebuilds Hushwell's plaza (8 cottages); Dog on the Hill's background shows the generated houses | Dog on the Hill was rendered first: the canonical Hushwell is the **generated village** plus the well and boxed bell. Light Sleeper's builder: keep the vanilla houses that ring the plaza where you can (the plaza floor, the well and the bell are what the story needs). In Dog on the Hill the plaza is far in the background. |
 | 4 | Light Sleeper's dog and doghouse sit 25 blocks downhill from Dog on the Hill's D | Plant 6: move the doghouse to the hilltop (one shot, unpublished). If it isn't moved, it's the dog's daytime spot while Buh still lived there. |
 | 5 | Kid Buh has two home villages: "My village" (Hushwell, with Mom) and "our village" (Ravenford, with Grandpa) | Sent to Grandpa after the warden night (~1550). By day 1900 Ravenford is "our village". Neither Short says otherwise. How Mom (a villager) and Grandpa (a human) are related is never said (open question). |
-| 6 | Good Boy's man is "a cheerful old farmer" (Algenib), and the dog in Dog on the Hill is Buh's | Good Boy is held for a rework anyway: the man becomes Buh at 16 (plant 7). If it ships unchanged, its dog is another red-collared wolf (red is vanilla's default collar) and the link is dropped. |
+| 6 | Good Boy's man was "a cheerful old farmer" (Algenib), but the dog in Dog on the Hill is Buh's | **Resolved by the rework (2026-11-10):** the man is Buh at 16 and the dog is his (link 7). The old render is never published. |
 | 7 | The early Shorts' death screens say HelloBuh; the hero is Buh from 2026-11-10 | The early narrators are not Buh: the creeper, the respawner, the Digger, the Stillwater grandson, the Cliff House kid. HelloBuh is the name on their death screens, and in canon that's an open mystery (link 9). From now on, death screens say Buh or a character's own name. |
 | 8 | Runaway and Respawn Tax explain the fisherman's disappearance differently | Both are kept as two unreliable narrators' readings (link 1). |
 | 9 | Nitwit says "the date of the END: it's TODAY", but the nitwit is still there in Respawn Tax | Order: Nitwit (470), then Respawn Tax (520). "The end" is the end of Fernbank, emptied by the respawn tax within 50 days. The nitwit volunteers because he knew. |

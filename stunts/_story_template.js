@@ -67,7 +67,7 @@ module.exports = {
     await mob('sheep', -4.5, 1, 0.5, 90, ['sheep', 'warm'], 'Color:0b')
     await vil(1.5, 6.5, 180, 'farmer', ['farmer', 'warm'])
 
-    await c('/clear @s')                            // nothing in hand
+    await c('/clear @s')                            // the story.json "hotbar" goes on after setup (lib/harness.js), before frame 0
     await resendChunks(ctx, X, Z)                   // mineflayer ignores biome updates: get the chunks again
     await ctx.tpCheck(X + 0.5, F + 1, Z + 8.5, 180, 0)
     await bot.waitForChunksToLoad()
