@@ -343,10 +343,12 @@ class SpeedUp(unittest.TestCase):
         with self.assertRaises(SystemExit):
             tts.speed_of(["N", "G"], cs)
 
-    def test_cast_narrator_is_the_sleepover_kid(self):   # owner 2026-11-10: "maybe 1.1 with +1 pitch", "A sounds the best"
+    def test_cast_narrator_is_pip(self):   # owner 2026-11-10: "the one used in dog on the hill v2"
         n = tts.library()["narrator"]
-        self.assertEqual((n["voice"], n["model"], n["tempo"], n.get("rate"), n["semitones"], n["stretch"]),
-                         ("Leda", "gemini-3.8-flash-lite-tts", 1.1, None, 1, "rubberband"))
+        self.assertEqual((n["voice"], n["model"], n.get("tempo"), n.get("rate"), n.get("semitones"), n.get("stretch")),
+                         ("Leda", "gemini-3.8-flash-lite-tts", None, None, None, None))   # owner: Pip as in Dog on the Hill v2
+        self.assertIn("bubbly nine-year-old kid", n["profile"])
+        self.assertEqual(tts.say_for({"say": "Grandpa came HOME."}, n, tts.spoken), "Grandpa came home.")
         r = tts.library()["narrator_roblox"]
         self.assertEqual((r["voice"], r["tempo"], r["rate"]), ("Orus", 0.95, 1.45))
 

@@ -896,6 +896,14 @@ def voice_lines(groups, cs, out, salt=""):
     return done
 
 
+def say_for(ln, who, fallback):
+    """The text a line is voiced from: its `say`, else the caption text made speakable. A cast entry with `plain_say`
+    gets its `say` without the CAPS stress words too: Pip's sound (Dog on the Hill v2, the owner's pick) was voiced
+    from plain sentence case; flash-lite reads a capitalised word louder and flatter."""
+    t = ln.get("say") or fallback(ln)
+    return spoken(t) if who.get("plain_say") and ln.get("say") else t
+
+
 def spoken(t):
     """CAPS key words are for the captions: lower them for the voice (an all-caps word is read louder and flatter)."""
     return " ".join(w.lower() if sum(c.isalpha() for c in w) > 1 and w.isupper() else w for w in t.replace(" / ", " ").split())
@@ -1034,7 +1042,7 @@ def beat_groups(story, cs, narrator, spoken):
         r = req_of(ln, w) or {}
         scene = r.get("direction", story.get("direction", ""))
         key = (w, ("beat", ln["beat"]) if ln.get("beat") is not None else ("direction", scene))
-        item = (w, ln["id"], ln.get("say") or spoken(ln), ln.get("direction", ""))
+        item = (w, ln["id"], say_for(ln, cs.get(w, {}), spoken), ln.get("direction", ""))
         if beats and beats[-1]["key"] == key:
             beats[-1]["lines"].append(item)
         else:
@@ -1096,6 +1104,14 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None,
         except ValueError:
             qs = None
         res = take_gate.gate(y, SR, texts, heard, None if qs is None else [q / SR for q in qs], limits, raw=x, opening=opening)
+        if beat.get("runs") and qs is not None:
+            # one_take: the pause at a run boundary is where the other speaker's line goes in, not a pause heard
+            ids = [lid for _, lid, _, _ in lines]
+            rb = [qs[ids.index(r[0]) - 1] / SR for r in beat["runs"][1:]]
+            keep = [f for f in res["fails"] if not (f["kind"] == "pause" and any(f["at"] - 0.1 <= b <= f["at"] + f["len"] + 0.1 for b in rb))]
+            if len(keep) != len(res["fails"]):
+                print(f"  (one take: {len(res['fails']) - len(keep)} pause(s) at a run boundary not counted: another speaker's line goes there)")
+                res = {"ok": not keep, "fails": keep, "fix": list(dict.fromkeys(f["kind"] for f in keep))}
         tried.append({"res": res, "y": y, "qs": qs, "al": al, "model": model, "try": n + 1, "fixes": list(fixes), "raw": str(raw)})
         print(f"beat {beat['id']} ({len(lines)} line(s), take {n + 1}/{tries}, {len(y) / SR:.2f} s): "
               + ("ok" if res["ok"] else "REJECTED: " + "; ".join(f["why"] for f in res["fails"])))
@@ -1228,7 +1244,7 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
             continue
         w = ln.get("who", narrator)
         r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
-        item = (w, ln["id"], ln.get("say") or voice.spoken(ln), ln.get("direction", ""))
+        item = (w, ln["id"], say_for(ln, cs.get(w, {}), voice.spoken), ln.get("direction", ""))
         solo = (LOCK.get(w) or cs[w].get("model") or "").startswith(BRACKET)   # Pip's model: single-speaker requests only
         if solo or (w != narrator and len(item[2].split()) <= SHORT_WORDS):   # narrator-first: a short character line goes alone
             g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < MAX_LINES), None)
