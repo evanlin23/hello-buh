@@ -151,3 +151,15 @@ For the owner's morning. Newest at the bottom.
 - Light Sleeper: its first render failed pace (nothing on screen at the payoff, a 2.8 s tail). It restaged the ending
   (the warden bursts up during the line, the boom is the payoff) and is re-rendering.
 - Thirty-One Raids: recording 14 passes check; rendering.
+- 10:05 UTC: merged engine round 2 (8d891d0). Everything is opt-in; existing Shorts are pixel-identical.
+  - `look.smoothLight`: smooth dusk light in the shader; lightning and held torches light blocks and mobs.
+  - `look.moonlight` and `look.torchGlow`.
+  - Moon phases and drifting fog wisps.
+  - `look.motionBlur`.
+  - `stunt.lookAtSpeaker`, `M.headTo`, sleep and shake poses, `stunt.nameTags`.
+  - A mesh cache: stills about 2x faster.
+  - A mob audit: 76 of 89 drawn. Still missing: goat, camel, axolotl, armadillo, breeze, creaking.
+  - Not done: Nether/End ambient particles, a wet look in rain, vertical camera helpers.
+  - The Good Boy "black square" was the cast's waiting-room roof, now hidden with `hideBoxes`.
+- Good Boy: review round 2 left 2 blockers (the sky square, zombie smoke at the reveal), both fixed. A final
+  independent check of those two spans plus `hb panel` follows the re-render. Held for the owner.
