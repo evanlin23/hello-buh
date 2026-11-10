@@ -111,6 +111,16 @@ def resplit(sd):
             s0 = max(prev_end + 0.02, min(cutsq[k - 1] if k else words[a][1] - 0.15, words[a][1] - 0.08))
             s1 = min(next_start - 0.02, max(cutsq[k] if k + 1 < len(spans) else words[b][2] + 0.4, words[b][2] + 0.2))
             s1 = min(s1, words[b][2] + 0.5)
+            # a tight join (under 0.4 s between the words): both lines meet at the quiet point itself; the margins would
+            # push each into the other's breath
+            if k + 1 < len(spans) and next_start - words[b][2] < 0.4:
+                s1 = cutsq[k]
+            if k and words[a][1] - prev_end < 0.4:
+                s0 = cutsq[k - 1]
+            if k == 0 and words[a][1] < 2.0:
+                s0 = 0.0   # a take's first line keeps what's said just before it (the farmer's laugh)
+            if k + 1 == len(spans):
+                s1 = len(x) / SR   # and its last line runs to the take's own fade (Whisper's last word ends early)
             segs.append((s0, s1))
         for (who, lid, t), (a, b) in zip(r['lines'], segs):
             seg = x[int(a * SR):int(b * SR)].copy()
