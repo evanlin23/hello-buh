@@ -138,6 +138,19 @@ STANDARDS.md in the same commit.
 
 ## House rules (from blocky-stories RULES.md, the ones that transfer)
 
+- **Owner, 2026-11-10: "it should sound happy, bubbly. maybe like a child that doesnt understand teh wrold? like theyre
+  figuring it out? I kinda like pip. The no pause only works if tis clear what is beign said. like here it gets. abit
+  confusing. but somehow in the ohter ones i never get lost. why is that?"**
+  - The narrator: a happy, bubbly kid (Pip is the base) who doesn't understand the world and is figuring it out out
+    loud; the viewer understands what the kid doesn't (the kid misreads, the viewer works it out: that gap is the
+    mystery).
+  - No-pause only works when it's clear: (1) the script is written for the ear: one short simple thought per
+    sentence, in time order, each joined to the last ("So I... Then she... But..."), no stacked clauses, names and
+    numbers spaced out; (2) the take is PERFORMED continuously (directed "one breath, keep going", each new sentence
+    lifts, the key word hit), not cut afterwards: cutting pauses out of a paused performance leaves sentence-final
+    falls running into the next line and reads as confusing; pause capping is only a safety net; (3) each sentence
+    lands on its one key word (the CAPS word in its caption chunk).
+  - Check: a cold listener follows the narration on one listen (audio only), before the picture.
 - **Owner, 2026-11-10 (on the brand narrator candidates, all adult): "i think it should still sound like a child".** The
   brand narrator is a kid: our own distinctive child voice (as Pip was), at the fast, no-pause pace, not an adult and not
   a copy of anyone. docs/brand.md's "twenties" narrator is superseded on age.

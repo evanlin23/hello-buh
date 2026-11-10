@@ -50,6 +50,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
 
 ## 2. Voice
+000. **A bubbly kid who's figuring the world out, and always easy to follow**: Pip-based, happy and bubbly, misreading
+   what the viewer understands. Fast only works when clear: scripts written for the ear (one short thought per
+   sentence, in time order, joined by So/Then/But), takes PERFORMED continuously (not cut out of a paused read), each
+   sentence landing on its key word. Check: cold listener, audio only, one listen. r:r919ea3
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
    (about 6 words or fewer) in their own distinct voices. Supersedes the Orus x1.45 narrator and narrator-only quotes.
