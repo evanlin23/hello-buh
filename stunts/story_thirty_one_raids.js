@@ -328,14 +328,14 @@ module.exports = {
         const s = G[GB]; const d = Math.hypot(s.x - 6.5, s.z - 0.6)
         if (d > 0.3) { s.x -= 0.075 * (s.x - 6.5) / d; s.z -= 0.075 * (s.z - 0.6) / d; s.yaw = yawTo(s.x, s.z, 0.5, 0.5); s.y = gy(s.x, s.z) }
       }
-      if (k === at(3)) { K.shot('s03'); await cutG(-24, -4.5, P(-6, 2, -4.5), { time: TIMES.S03 }); park(GB) }
+      if (k === at.cut(3)) { K.shot('s03'); await cutG(-24, -4.5, P(-6, 2, -4.5), { time: TIMES.S03 }); park(GB) }
       if (k > at(3)) grind(k)
       look(k)
     })
     // ---- L03 (S03 -> S04): "He SAYS they FOLLOW him"; on "They KNOW" the cut in, closer; he doesn't look up
     put(GB, -76.0, 6.6, -90, 5, 0); hold(GB, 'crossbow')         // S05's Grandpa at the square's west side
     await line('L03', async (k, at) => {
-      if (k === at(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 1.8, -4.6)) }
+      if (k === at.cut(2)) { K.shot('s04'); await cutG(-3.0, 2.0, P(-7.4, 1.8, -4.6)) }
       grind(k); if (k === at(3)) G[GA].pitch = 25
       look(k)
     })
@@ -372,7 +372,7 @@ module.exports = {
     await line('L05', async (k, at) => {
       const up = at(3)   // "EVERYONE cheers"
       if (k === 10 || k === 34) swing(GA)   // he nudges the one bowl across the table
-      if (k === at(2)) K.shot('s10b')        // "But RAID nights?": in on his face
+      if (k === at.cut(2)) K.shot('s10b')        // "But RAID nights?": in on his face
       G[GA].pitch = k < up - 3 ? 50 : k < up + 16 ? Math.max(4, G[GA].pitch - 9) : Math.min(50, G[GA].pitch + 5)
       look(k)
     })
@@ -388,10 +388,10 @@ module.exports = {
     let chest = null
     await line('L06', async (k, at) => {
       if (k < at(3)) { const s = G[GB]; if (s.z < 13) { s.x += 0.045; s.z += 0.045; s.yaw = yawTo(0, 0, 1, 1); s.y = gy(s.x, s.z) } }
-      if (k === at(3)) { K.shot('s07'); await cutG(-8.5, -6.5, P(-8, 2, -9), { time: TIMES.S07 }); park(GB) }
+      if (k === at.cut(3)) { K.shot('s07'); await cutG(-8.5, -6.5, P(-8, 2, -9), { time: TIMES.S07 }); park(GB) }
       if (k === at(3) + 2) swing(GA)
       if (k === at(3) + 6) { hold(GA, 'ominous_bottle'); G[GA].pitch = 10; G[GA].yaw = yawTo(-7, -14.6, -9.0, -11.2) }
-      if (k === at(5)) {   // first person beside him; I open his chest (the vanilla chest screen), aimed at the block centre K.open uses
+      if (k === at.cut(5)) {   // first person beside him; I open his chest (the vanilla chest screen), aimed at the block centre K.open uses
         K.shot('pov')
         await K.cut(-8.2, -12.0, Object.assign(P(-5.5, 2.5, -12.5), { exact: true }), 2)
         K.open(P(-6, 2, -13)).then(w => { chest = w }).catch(e => ctx.log('chest', e.message))
