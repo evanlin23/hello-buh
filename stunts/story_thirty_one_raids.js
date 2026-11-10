@@ -179,7 +179,12 @@ module.exports = {
     const { bot } = ctx
     const S = storyLines(STORY)
     const K = storyKit(ctx, S, { X, Z, F }, { warm: null })
-    const { look, line, say } = K
+    const { look, say } = K
+    // pacing (story.json): lines[].after evens the silence between lines to ~0.28 s; L12's hold is the horn beat
+    const SJ = JSON.parse(fs.readFileSync(path.join(STORY, 'story.json'), 'utf8'))
+    const AFTER = Object.fromEntries(SJ.lines.map(l => [l.id, l.after || 0]))
+    const HOLD = (SJ.lines.find(l => l.id === 'L12') || {}).hold ?? 1.8
+    const line = (id, fn, extra = 0, o) => K.line(id, fn, extra + (AFTER[id] || 0), o)
     const P = (dx, dy, dz) => new ctx.Vec3(X + dx, F + dy, Z + dz)
     const gy = (dx, dz) => ground(ctx, X + dx, Z + dz) + 1 - F           // feet height (from F) at a spot
     const cutG = (dx, dz, target, o) => K.cut(dx, dz, target, gy(dx, dz), o)
@@ -391,7 +396,7 @@ module.exports = {
       if (raiders) { raidD = Math.max(16, raidD - 0.105); placeRaiders() }
       if (k > endSpeech) { K.base = K.aim(P(along(raidD).x, 2.0, along(raidD).z)) }
       look(k)
-    }, 1.8)
+    }, HOLD)
 
     // ---- L13 (S14): I turn right: Grandpa steps up beside me at the gate post, awake, loading his crossbow, eyes on
     // the road; a glance at me on "YOU". The crossbow clicks loaded on "kid"; the end 0.3 s after

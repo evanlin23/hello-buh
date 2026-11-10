@@ -115,7 +115,8 @@
       "direction": "bright and quick, all in one breath, a proud grin",
       "shot": "S01",
       "look": "actor:Grandpa",
-      "request": "p1"
+      "request": "p1",
+      "after": -0.08
     },
     {
       "id": "L02",
@@ -124,7 +125,8 @@
       "direction": "quick, the grin fading on the last word",
       "shot": "S02",
       "look": "actor:Gramps",
-      "request": "p1"
+      "request": "p1",
+      "after": -0.04
     },
     {
       "id": "L03",
@@ -133,7 +135,8 @@
       "direction": "matter-of-fact, quick",
       "shot": "S03",
       "look": "actor:Grandpa",
-      "request": "p1"
+      "request": "p1",
+      "after": 0.05
     },
     {
       "id": "L04",
@@ -142,7 +145,8 @@
       "direction": "doing a gruff grandpa impression, proud, quick",
       "shot": "S04",
       "look": "actor:Grandpa",
-      "request": "p1"
+      "request": "p1",
+      "after": -0.08
     },
     {
       "id": "L05",
@@ -151,7 +155,8 @@
       "direction": "amazed, bright",
       "shot": "S05",
       "look": "actor:Gramps",
-      "request": "p1"
+      "request": "p1",
+      "after": -0.08
     },
     {
       "id": "L06",
@@ -160,7 +165,8 @@
       "direction": "quick, a little in awe",
       "shot": "S06",
       "look": "actor:Grandpa",
-      "request": "p1"
+      "request": "p1",
+      "after": 0.08
     },
     {
       "id": "L07",
@@ -172,7 +178,8 @@
         "what": "actor:Gramps",
         "word": "BOTTLES"
       },
-      "request": "p1"
+      "request": "p1",
+      "after": 0.07
     },
     {
       "id": "L08",
@@ -181,7 +188,8 @@
       "direction": "admiring, quick",
       "shot": "S08",
       "look": "actor:Grandpa",
-      "request": "p1"
+      "request": "p1",
+      "after": 0.07
     },
     {
       "id": "L09",
@@ -191,7 +199,8 @@
       "direction": "calm and certain, almost bored; he knows exactly when",
       "shot": "S09",
       "look": "actor:Grandpa",
-      "request": "g1"
+      "request": "g1",
+      "after": -0.12
     },
     {
       "id": "L10",
@@ -201,7 +210,8 @@
       "direction": "still quick, but the grin is gone; a little sad",
       "shot": "S10",
       "look": "actor:Gramps",
-      "request": "p1"
+      "request": "p1",
+      "after": -0.12
     },
     {
       "id": "L11",
@@ -211,7 +221,8 @@
       "direction": "worried, a little faster",
       "shot": "S11",
       "look": "actor:Grandpa",
-      "request": "p1"
+      "request": "p1",
+      "after": 0.06
     },
     {
       "id": "L12",
@@ -220,7 +231,7 @@
       "say": "So I drank his courage. Somebody had to fight.",
       "direction": "brave and firm, full volume",
       "shot": "S12",
-      "hold": 1.8,
+      "hold": 1.4,
       "hold_note": "no words: the raid horn; pillagers and a ravager come up the road toward the gate (S13)",
       "look": false,
       "request": "p1"
@@ -352,5 +363,6 @@
   ],
   "bible": "stories/thirty_one_raids/bible.md",
   "payoff": "payoff",
-  "payoff_note": "the payoff is Grandpa's \"kid\" with the crossbow's loaded click, over the raiders up the road (the horn reveal 2 s before is the build to it)"
+  "payoff_note": "the payoff is Grandpa's \"kid\" with the crossbow's loaded click, over the raiders up the road (the horn reveal 2 s before is the build to it)",
+  "after_note": "lines[].after: seconds added to (or taken from) a line's scene so the silence to the next line's first word is ~0.28 s (owner 2026-11-10: 'the pacing is off'); the L12 hold is the dramatic beat"
 }
