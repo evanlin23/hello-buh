@@ -146,6 +146,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    (eased turns, pathing walks, vanilla-speed NPCs, a still camera while a GUI is open); a lint before recording
    rejects raw look/teleport calls. Post-render checks are the safety net, never the method; the same for every
    quality rule: build it into the tool first, check it second. Check: lint (`./hb check`), then rec_check. r:rd9b7d0
+2. **Cast move only through the kit** (`K.actor`: every tick, at mob speed), placed before the shot mark so the new
+   shot's first frame already has them in place; never a stunt's own `/tp @e` loop (dog_hill's hop read as a teleport).
+   Check: lint (raw `/tp @e`), rec_check (cast jump after a cut; stepped motion). r:rfa229d
+3. **Invisible cuts**: the subject the eye is on stays at about the same place in the frame across the cut
+   (eye-trace), and the cut lands on an edit point, not wherever the line starts. Check: cut check (in progress). r:rfa229d
 
 ## 4. Shots
 1. **Look at what the line names**: the named subject in frame, near centre, readable (`lines[].look`). Check: owner (`subject`). r:rd497c4

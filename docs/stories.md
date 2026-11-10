@@ -204,6 +204,14 @@ STANDARDS.md in the same commit.
   kit's primitives (eased turns, pathing walks, vanilla-speed NPCs, a still camera in GUIs), which are the only way a
   stunt moves anything; a pre-recording lint rejects raw look/teleport calls. Checks after the render are the safety
   net, never the method. The same goes for every quality rule: build it into the tool first, check it second.
+- **Owner, 2026-11-10: "the villager keeps teleporting" ... "right at the 'i even begged' line. Also the cuts don't
+  seem to be correct, because i keep noticing them. Something i learned is about cuts that you don't notice the cuts
+  beucase the focus of attention stays int eh same location between cuts? Also idk if our timigns for the cuts are
+  correct?"** (dog_hill: the stunt hopped its villager with its own `/tp` every few ticks, a stepped "teleport", and
+  placed cast 1-2 ticks AFTER the cut, so they jump on screen.) Cast move only through the kit (`K.actor`, smooth at
+  20 Hz, placed before the cut), never a stunt's own `/tp @e`. Cuts are invisible by construction: the subject the eye
+  is on sits at about the same place in the frame on both sides of the cut (eye-trace), and the cut lands where an
+  editor would put it, not just on the line start.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
