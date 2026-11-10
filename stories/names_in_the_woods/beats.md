@@ -1,121 +1,113 @@
-# names_in_the_woods: beat sheet, clue map, writer's checks (r1)
+# names_in_the_woods: beat sheet, clue map, writer's checks (r2)
 
-r1 (2026-11-10) from the critic's pitch notes (rank 2, develop): the cure is planted (Mom takes golden apples and a
-splash potion "to the neighbors in the city", L06-L07); ROSA is planted on Mom's own tag (L03, S03) before it walks out
-of the woods (L12, S12); the first zombies are far and backlit (S01: the names read, the faces don't); the ending gives
-the kid the potion while she holds the apple and ends on the throw; "why didn't Mom cure them?" (villagers can't throw,
-L09 and L14) and "why did Mom lie?" (to keep me home, L14) are both answered in a line.
+r2 (2026-11-10) applies the r1 critic's and continuity's fixes (reviews/r1-response.md). The ending explains itself
+("She can't THROW." / "I CAN. Potion, then APPLE." with the throw on "Potion"). The backstory second beat is gone: the
+zombies stop at our fence and stare at Mom. The hook zombies are 14-16 blocks out, arms raised, faces lamp-lit. ROSA
+walks out first and drops the potion on screen. All narration is on the Pip recipe.
 
 ## The ending first
-The reveal frame (S12): a zombie villager in Mom's purple cleric robe walking down a dusk meadow toward the lens, a
-golden apple in her hand, the nameplate ROSA over her head, three more tags coming out of the dark oaks behind her.
-The payoff frame (S15): POV, a splash potion arcing out of the kid's hand and bursting grey-purple on ROSA, then the
-hotbar sliding to the golden apples. The first frame it re-explains (S01): three backlit silhouettes walking out of a
-black forest at sunset under the white tags TOMAS, GRETA and OLD BEN. Everything between plants names, the cure, and
-who can throw.
+The reveal frame (S12): a zombie villager in Mom's purple cleric robe by the path's lamp post, a golden apple in her
+hand and a splash potion in the other, the nameplate ROSA over her head, three more tags on the meadow behind her.
+The payoff (S15, L15): POV, "I CAN": the potion leaves the kid's hand on "Potion" and bursts grey-purple on ROSA. On
+"APPLE" the hotbar slides to his golden apples and the screen reads "Golden Apple". Cut. The first frame it re-explains
+(S01): three zombies with raised arms coming down a dusk meadow under the white tags TOMAS, GRETA and OLD BEN.
 
 ## Spine
-- **Every day,** every villager in Milo's hamlet wears a name tag, three named zombies walk out of the woods each
-  night, Mom says they stole the tags and the neighbors moved to the city, and every week she takes the "city"
-  golden apples and a splash potion and brings them back unused.
-- **One day,** Mom goes to visit Tomas and says she'll be back by dark.
-- **Because of that,** when it gets dark, four zombies walk out, and the fourth tag says ROSA, still holding the apple.
-- **Until finally,** Milo picks up the potion she dropped and, being the only one in the hamlet who can throw, throws
-  it: potion, then apple.
+- **Every day,** three named zombies walk out of the woods at night and stare at Mom over the fence. Mom says they
+  stole the tags and the neighbors moved to the city, and every week she takes the "city" a golden apple and a splash
+  potion and brings both back.
+- **One day,** Mom goes into the woods and says she'll be back by dark.
+- **Because of that,** at dark four zombies walk out. The first tag says ROSA, still holding the apple, and she drops
+  the potion.
+- **Until finally,** Milo, the only one in the hamlet who can throw, picks it up and throws: potion, then apple.
 
-## Beat sheet (120 words; est. ~38 s of speech with gaps, ~39 s with the 0.8 s hold)
-
-Times are estimates at Pip's natural tempo (~4.1 words/s while speaking, ~0.45 s at a full stop, gap 0.3 s).
+## Beat sheet (120 words; est. ~38 s of speech with gaps, ~39 s with the cut)
+Estimates at Pip's natural tempo (~4.1 words/s speaking, ~0.45 s at a full stop, gap 0.3 s).
 
 | t (s) | beat | line | picture | plants |
 |---|---|---|---|---|
-| 0.0-3.7 | **The image** | L01 N: "Every night, THREE zombies named TOMAS, GRETA and OLD BEN walk out of the WOODS." | S01 WS, long lens from inside the gate at dusk: three backlit silhouettes leave the dark oaks under white tags | the count (3); names on zombies (a rule broken: zombies don't have names); villager hats in silhouette, faces unreadable |
-| 4.0-5.7 | **Worse than you thought** | L02 N: "Here, villagers get NAME TAGS at BIRTH." | S02 EWS crane over the hamlet at noon: every villager tagged, a baby (LIL TEO) on "BIRTH"; the carpeted village on the far hill | the tags are the hamlet's custom (so a tagged zombie came from here); establishing shot; easter egg |
-| 6.0-9.1 | the family | L03 N: "Mom's says ROSA. I'm a PLAYER. Mine came FREE." | S03 FS: Mom (cleric, purple robe, ROSA) and Milo (Steve, nameplate Milo) at her gate | **plant 1 of ROSA** (word and picture), Mom's purple robe; Milo is a player (a laugh: players' names are free) |
-| 9.4-11.1 | misread 1 | L04 N: "Mom says the zombies STOLE the tags." | S04 WS over Mom's shoulder at the shut gate, the three tags at the treeline at dusk | Mom watches them every night (she knows them); "stole" is the lie he believes |
-| 11.4-13.1 | **A character speaks** | L05 Mom: "Our neighbors moved to the CITY." | S05 FS POV: Mom in the lane, three empty cottages behind her with signs TOMAS, GRETA, OLD BEN | **picture clue**: the zombies' names are on the empty houses (and their job blocks match the zombies' hats); the lie, in her own voice |
-| 13.4-16.1 | test 1: the gifts | L06 N: "Every week, she takes them GOLDEN APPLES and a SPLASH POTION." | S06 WS: the brewing stand in the foreground, Mom walking out of the west gate toward the forest with a golden apple | **the cure, planted** (vanilla: splash of weakness + golden apple cures a zombie villager); she walks to the woods, not to a city |
-| 16.4-19.0 | test 1: the saying | L07 N: "Potion, then APPLE, she says. Fixes ANYTHING." | S07 FS: Mom at her brewing stand with the apple | **the cure's order**, as a mom-ism; **players get ahead here (~17 s, 45%)**: those are zombie villagers and she's trying to cure them |
-| 19.3-21.7 | misread 2 | L08 N: "Nobody TAKES them. So I get the APPLES." | S08 POV: the chest screen, the potion and the apple back again; he takes the apple, slot 2 goes 6 -> 7 | she fails every week (why: L09); the golden apples end up in HIS hotbar (the cure's second half) |
-| 22.0-24.6 | test 2: the throw rule | L09 N: "Nobody here can THROW. I win every EGG FIGHT." | S09 WS POV: eggs pop on HUGO and PIA, who just stand there | **the answer, planted as a joke**: villagers can't throw, so Mom could never splash them; Milo can |
-| 24.9-27.2 | **The turn** | L10 N: "Tonight, Mom said she'd be back by DARK." | S10 EWS: Mom walks up the meadow into the dark oaks at late afternoon, Milo small at the gate | **the bomb under the table**: everyone who watched S01 knows what walks out at dark. **The attentive viewer gets ahead of the narrator here (~26 s, 68%).** |
-| 27.5-29.0 | **The reveal (count)** | L11 N: "At dark, FOUR zombies walked out." | S11 WS: S01's frame again, four tags: TOMAS, GRETA, OLD BEN, ROSA | the count changes 3 -> 4; the game says it with a tag |
-| 29.3-32.2 | **The reveal (name)** | L12 N: "The new one said ROSA. She still had the APPLE." | S12 MS: zombie ROSA in Mom's cleric robe, the golden apple in her hand, tag readable | one step: Mom is a zombie villager now (a named villager keeps its name when converted); she was carrying the cure |
-| 32.5-34.0 | **The want** | L13 N: "Her POTION was in the GRASS." | S13 POV: he has walked out of the gate; the splash potion in the grass, picked up ("Splash Potion of Weakness" above the hotbar); ROSA coming | he has both halves now: the potion (slot 3) and the apples (slot 2) |
-| 34.3-37.6 | **The choice and the throw (payoff)** | L14 N: "Mom lied to keep me HOME. She can't THROW. I CAN." | S14 WS reverse: Milo small on the path, home lit behind him; S15 POV: the throw, the splash on ROSA on "CAN" | answers "why lie" (to keep the only thrower out of the woods) and "why no cure" (she can't throw); the hit lands on the splash |
-| 37.6-38.4 | hold | (none) | S15 holds 0.8 s: the hotbar slides to the golden apples, "Golden Apple" pops above it; three tags behind her | potion, then apple: the viewer knows the next click. Cut. |
+| 0.0-3.7 | **The image** | L01 "Every night THREE zombies named TOMAS, GRETA and OLD BEN walk out of the WOODS." | S01 WS dusk: three zombie villagers 14-16 blocks out, arms raised, green faces lamp-lit, tags in the upper third | count 3; named zombies (a rule broken); their hats |
+| 4.0-5.7 | **Worse than you thought** | L02 "At our FENCE, they STARE at MOM." | S02 FS over Mom's left shoulder: the three at the fence 3 blocks beyond her, staring | they know her (and she stands there: she knows them) |
+| 6.0-8.6 | the rule + plant | L03 "Everyone here gets a NAME TAG. Mom's says ROSA." | S03 crane from the hamlet (tags everywhere, the easter egg) down to Mom at her gate, ROSA | **ROSA plant 1** (word and picture); the tag custom; establishing shot |
+| 8.9-10.4 | misread 1 | L04 "Mom says they STOLE the tags." | S04 FS inside: Mom at her window, three tags at the fence outside; the shutters close on "STOLE" | she shuts them out rather than look |
+| 10.7-12.4 | **A character speaks** | L05 Mom: "Our neighbors moved to the CITY." | S05 WS POV: Mom in the lane, the empty row behind her with signs TOMAS, GRETA, OLD BEN | **picture clue**: same names on the empty houses; the lie in her own voice |
+| 12.7-15.4 | the gifts | L06 "Every week, she takes them a GOLDEN APPLE and a SPLASH POTION." | S06 FS: Mom at her brewing stand with the apple; a bottle is gone from the stand on "SPLASH POTION" | **the cure, planted**; she takes the potion on screen |
+| 15.7-18.3 | the saying | L07 "Potion, then APPLE, she says. Fixes ANYTHING." | S07 WS: Mom at the west gate, turning back to us, then out toward the woods | **the cure's order**; she walks to the woods, not a city. **Players get ahead (~17 s, 44%)** |
+| 18.6-20.7 | misread 2 | L08 "Nobody TAKES them. I get the APPLES." | S08 POV chest screen: the potion and apple back again; slot 2 goes 6 to 7 | she fails every week; the apples end up in HIS hotbar |
+| 21.0-23.7 | the throw rule | L09 "Nobody here can THROW. I win every EGG FIGHT." | S09 WS POV: eggs pop on HUGO and PIA, who don't throw back | why she fails; why only he can |
+| 24.0-26.3 | **The turn** | L10 "Tonight, Mom said she'd be back by DARK." | S10 EWS: Mom walks into the dark oaks in the low sun, Milo small at the gate | the bomb under the table. **Everyone gets ahead here (~26 s, 67%)** |
+| 26.6-28.1 | **The reveal (count)** | L11 "At dark, FOUR zombies walked out." | S11 WS, S01's frame: four tags, ROSA first and nearest | 3 to 4; the game says it with a tag |
+| 28.4-31.3 | **The reveal (name)** | L12 "The new one said ROSA. She still had the APPLE." | S12 MS: zombie ROSA in the cleric robe, apple in one hand, potion in the other | one step: Mom was converted (a named villager keeps its name) |
+| 31.6-32.6 | **The want** | L13 "She DROPPED her POTION." | S13 FS POV: the bottle slips from her hand onto the path; he runs up and grabs it ("Splash Potion of Weakness") | a visible cause; he has both halves |
+| 32.9-35.5 | the why | L14 "Mom lied to keep me HOME. She can't THROW." | S14 WS reverse over ROSA's right shoulder: Milo 3.5 blocks away, home lit behind him | answers "why lie" and "why no cure" |
+| 35.8-37.9 | **The choice (payoff)** | L15 "I CAN. Potion, then APPLE." | S15 MS POV: wind-up, the throw and splash on "Potion", the hotbar to the apples on "APPLE" | the ending says the cure in Mom's own words; the hit on the splash |
+| 37.9-38.9 | out | (none) | S15 holds at most 1 s on ROSA in the swirl, "Golden Apple" over the hotbar | cut |
 
 ## The second the viewer gets ahead
-- **~17 s (L07, 45%)**, Minecraft players: golden apple + splash potion = the zombie villager cure, so the named
-  zombies are the "city" neighbors and Mom is trying to cure them. This is the critic's "players read it early" risk,
-  turned into the first layer of suspense, not the twist.
-- **~26 s (L10, 68%)**, everyone: Mom walks into the woods with the apple and says "back by dark", and we have seen what
-  walks out of those woods at dark. The narrator doesn't connect it; the viewer dreads S11.
+- ~17 s (L07, 44%), players: golden apple + splash potion is the zombie villager cure, so the named zombies are the
+  neighbors and Mom is trying to cure them. Nothing is said to confirm it, so it is suspense, not the twist.
+- ~26 s (L10, 67%), everyone: Mom walks into the woods at sunset, and we know what comes out at dark.
 
 ## Clue map
 | clue | where planted | how it's misread | what it means after the twist |
 |---|---|---|---|
-| zombies with villager names | L01/S01, L04/S04 | "the zombies stole the tags" (Mom, believed) | they are the villagers; a converted villager keeps its name tag |
-| ROSA | L03/S03 (word + Mom's tag), every shot of Mom | just Mom's name | the fourth tag in S11/S12 is Mom |
-| Mom's purple cleric robe | S03, S06, S07, S10 | just what Mom wears | zombie ROSA wears the same robe (zombie villagers keep their profession) |
-| the empty cottages with signs TOMAS, GRETA, OLD BEN, their job blocks (composter, lectern, barrel) | S05 (picture) | the neighbors moved to the city | the same names (and the farmer/librarian/fisherman hats) are on the zombies in S01 |
-| "moved to the CITY" | L05 (Mom, voiced) | true | the lie; there is no city past those woods |
-| golden apples + splash potion | L06/S06 (picture: the brewing stand, the apple in her arms) | presents for the city | the zombie villager cure |
-| "Potion, then apple. Fixes anything." | L07/S07 | a mom saying | literally the cure's order |
-| she brings it all back, he gets the apples | L08/S08 (picture: the chest screen, slot 2 to 7) | city people are rude | she can't use them; the cure's apples are in his hotbar |
-| nobody here can throw, egg fight | L09/S09 (picture: villagers don't throw back) | bragging | why Mom never cured anyone, and why only Milo can |
-| "back by DARK", Mom walking into the oaks | L10/S10 | a normal promise | the zombies come out at dark (S01) |
+| zombies with villager names | L01/S01 | "they stole the tags" (L04) | they are the villagers; a converted villager keeps its tag |
+| the zombies stare at Mom over the fence | L02/S02 | spooky zombies | they were her neighbors; she comes to the fence to see them |
+| ROSA | L03/S03, every Mom shot | Mom's name | the first tag at dark (S11/S12) |
+| Mom's purple cleric robe | S02-S07, S10 | what Mom wears | zombie ROSA wears it (zombie villagers keep the profession) |
+| Mom shuts the shutters on them | S04 | they're scary | she can't bear to look |
+| empty cottages signed TOMAS, GRETA, OLD BEN (composter, lectern, barrel) | S05 | they moved to the city | the same names (and farmer, librarian, fisherman hats) on the zombies |
+| "moved to the CITY" | L05 (voiced) | true | the lie |
+| a golden apple + a splash potion, taken on screen | L06/S06 | presents | the zombie villager cure |
+| "Potion, then APPLE. Fixes ANYTHING." | L07 | a mom saying | the cure's order; L15 says it back |
+| it all comes back; he gets the apples | L08/S08 | city people are rude | she can't use them; the apples are in his hotbar |
+| nobody here can throw | L09/S09 | a brag | why she never cured anyone; why he can |
+| "back by DARK" | L10/S10 | a promise | the zombies come out at dark |
 
 ## Twist checklist (docs/story_craft.md section 3)
-- [x] **It changes what line 1 means.** "Three zombies named Tomas, Greta and Old Ben" goes from a spooky village
-  oddity to three neighbors Mom has visited every week; and by the end, three people Milo can bring back.
-- [x] **Fair play.** Everything the ending needs is on screen first: names on zombies (S01), Mom's tag ROSA (S03), the
-  empty houses with the same names (S05), the cure items (S06-S08), nobody throws (S09), "back by dark" (S10).
-- [x] **Planted at least twice, at least once in the picture, each 1 s+.** ROSA: L03 word + S03 tag + every Mom shot.
-  The cure: S06 picture (apple, brewing stand) + L07 line + S08 picture (chest screen). Who can throw: S09 picture +
-  L09 line.
-- [x] **Misread, not hidden.** Stolen tags, the city, rude city people, a mom saying, a brag: each plant is explained
-  wrongly and cheerfully by the kid.
-- [x] **Someone gets ahead.** Players at ~45% (the cure), everyone at ~68% (back by dark).
-- [x] **The game says it.** The fourth nameplate ROSA over a zombie villager in Mom's robe holding the golden apple
-  (S11, S12). No "it was Mom" spoken: the narrator reads the tag aloud, which also puts ROSA in the captions.
-- [x] **One step.** ROSA is a zombie = Mom got converted in the woods. The cure is already known from L06-L07.
-- [x] **Readable at 300 px.** The names are said in the lines (L01, L03, L12), so they are in the caption track too;
-  S12 is a medium shot with the tag ~40 px tall in the 1011 px game view. "Splash Potion of Weakness" and "Golden
-  Apple" pop above the hotbar and the narration says POTION and APPLE.
-- [x] **Visible causes.** The conversion: Mom walks into the woods at sunset (S10), it gets dark, and S01/S04 showed
-  what walks out at dark (zombies attack villagers; on Normal/Hard they convert them). The potion in the grass: she
-  dropped it on the path when they caught her (bible). Milo walks into danger by choice, and L14 says why.
-- [x] **A rewatch plays differently.** L04 "STOLE the tags", L05 "moved to the CITY", L07 "Potion, then APPLE",
-  L08 "Nobody TAKES them", L09 "Nobody here can THROW".
+- [x] **It changes what line 1 means.** Three spooky named zombies become three neighbors Mom has tried to save, and by
+  the end, three people Milo can bring back.
+- [x] **Fair play.** Names on zombies (S01), Mom's tag (S03), the same names on empty houses (S05), the cure (S06-S08),
+  nobody throws (S09), "back by dark" (S10): all shown before S11.
+- [x] **Planted twice, once in the picture, 1 s+.** ROSA: L03 + S03 + every Mom shot. The cure: S06 picture + L07 line
+  + S08 chest screen. Throwing: S09 picture + L09.
+- [x] **Misread, not hidden.** Stolen tags, the city, rude city people, a mom saying, a brag.
+- [x] **Someone gets ahead.** Players ~44%, everyone ~67%.
+- [x] **The game says it.** The nameplate ROSA over a zombie villager in Mom's robe (S11-S12), and the payoff is the
+  game's own cure: a splash potion breaking on her and "Golden Apple" over the hotbar.
+- [x] **One step.** ROSA is a zombie, so Mom was converted. The cure was told in L07 and is said back in L15.
+- [x] **Readable at 300 px.** Every name is spoken (L01, L03, L12), so it's in the captions. S12 is a medium shot.
+  POTION and APPLE are spoken over the hotbar text.
+- [x] **Visible causes.** The conversion: Mom walks into the woods at sunset (S10) where the zombies are (S01). The
+  potion: it slips from ROSA's hand on screen (S13). Milo walks out by choice, and L14-L15 say why.
+- [x] **A rewatch plays differently.** L02 "STARE at MOM", L04 "STOLE the tags", L05 "moved to the CITY", L07 "Potion,
+  then APPLE", L08 "Nobody TAKES them", L09 "Nobody here can THROW".
 
 ## The "why?" interrogation
-| action | why (and where the viewer gets it) |
+| action | why |
 |---|---|
-| Why do the zombies have villager names? | Tagged villagers converted in a siege keep the tag (vanilla). The viewer sees the same names on the empty houses (S05). |
-| Why do they walk out every night? | Zombies hide from the sun under the dark oak canopy and come out at dark; they come to their old village and stand at the fence (zombies can't open fence gates). |
-| Why did Mom say they stole the tags, and that the neighbors moved to the city? | To keep her son from caring enough to go into the woods: he's the one person in the hamlet who could cure them, and he's a kid. L14: "Mom lied to keep me HOME." |
-| Why does Mom take a cure she can't use, every week? | She keeps trying: she holds the apple out to them from the sunlit edge of the trees in daytime, hoping. She can't throw the potion (L09) and won't ask her son. She brings it all back (L08). |
-| Why didn't Mom cure the others? | Villagers can't throw a splash potion, and only a player can feed the apple (vanilla). L09 "Nobody here can THROW" and L14 "She can't THROW. I CAN." |
-| Why does she give Milo the apples? | They come back every week and she's his mom (L08). On a rewatch: she's quietly handing the cure to the only one who can use it. |
-| Why was she caught tonight? | She went later than usual and promised to be back by dark (L10, S10: late-afternoon sun); she wasn't. She'd started back: the potion lies on the path near the village (S13). |
-| Why is ROSA still holding the apple? | A mob keeps what it held when it converts (Mob.convertTo copies the hand slots). |
-| Why is the potion in the grass? | She dropped it on the path home when they caught her (it's the off-screen moment; the item lies on the path, the side of the meadow nearest the gate). |
-| Why does Milo walk out of the gate at dark, toward four zombies? | It's Mom, and he has worked it out: she can't throw, he can (L14). He has the apples in his hotbar already and the potion is right there. |
-| Why doesn't he just wait for morning? | The sun would burn her (zombies burn in daylight), and she's coming at him now. The bible's reason; the line's reason is simply "I CAN". |
+| Why do the zombies have villager names? | Tagged villagers converted in a siege keep their tags (vanilla). Shown: the same names on the empty houses (S05). |
+| Why do they come to the fence and stare at Mom? | Zombies go for villagers. A fence gate stops them (they can't open it), so they stand at the fence facing the nearest villager. To us, they're looking at her. |
+| Why does Mom stand at the gate with them 3 blocks away? | She knows the gate holds, and they're her neighbors. In S04 she can't watch any more and shuts the shutters. |
+| Why did Mom lie (stolen tags, the city)? | To keep her son, the one person who could cure them, out of the woods. L14: "Mom lied to keep me HOME." |
+| Why does she take a cure she can't use, every week? | She keeps hoping. She holds the apple out to them in daylight from the sunny edge of the trees. She can't throw the potion (L09) and won't ask her son, so it all comes back (L08). |
+| Why didn't Mom cure the others? | Villagers can't throw, and only a player feeds the apple (vanilla). L09 + L14 "She can't THROW." |
+| Why does she give Milo the apples? | They come back every week and she's his mom. On a rewatch: she hands the cure to the only one who can use it. |
+| Why was she caught tonight? | She left late (S10: the low sun) and wasn't back by dark (L10). |
+| Why does ROSA still hold the apple and the potion? | Conversion keeps what a mob held in both hands (Mob.convertTo). |
+| Why does she drop the potion? | Shown, not explained: it slips from her hand as she stops at the lamp post (S13). (Staged; see bible.) |
+| Why does ROSA stop at the lamp post instead of coming at him? | The same as the fence: she stares, as the three stare at Mom (L02). She's slow enough for one throw. |
+| Why does Milo walk out at dark toward four zombies? | It's Mom, and he's worked it out: she can't throw, he can (L14-L15). |
 | Why don't the other villagers help? | Nobody here can throw (L09). |
 
-## Out-of-context read (3 s, a stranger scrolling)
-- L01 "Every night, three zombies named Tomas, Greta and Old Ben walk out of the woods": spooky and funny.
-- L05 Mom "Our neighbors moved to the city": ordinary, warm, a little bright. No "sweetie", nothing intimate.
-- L09 "I win every egg fight": goofy.
-- L14 "Mom lied to keep me home. She can't throw. I can.": brave, family. Nothing obedient, intimate or innuendo.
-- Eerie, never gory: no hit, no death, no blood; the conversion happens off screen; zombies are backlit silhouettes
-  until the one close-up.
-- Delivery: bright and full volume throughout; scared (not whispered) from L11; no ellipsis anywhere.
+## Out-of-context read
+- L01, L02 ("At our fence, they stare at Mom"): spooky, not intimate.
+- L05 Mom: "Our neighbors moved to the city." Plain.
+- L14-L15: "Mom lied to keep me home. She can't throw. I can. Potion, then apple." Brave, family.
+- Eerie, never gory. No hit, no death, no blood. The conversion is off screen.
+- Delivery: bright and full volume. Scared (not whispered) from L11. No ellipsis anywhere.
 
 ## Word count and length
-- 120 spoken words (L01 15, L02 7, L03 9, L04 7, L05 6, L06 11, L07 7, L08 8, L09 9, L10 8, L11 6, L12 10, L13 6,
-  L14 11).
-- Estimated ~38 s of speech with 0.3 s gaps, ~39 s with the 0.8 s hold after the splash: inside 35-45 s.
-- One extra voice (Mom, 6 words, on screen, the lie); everything else is the narrator.
+120 spoken words: L01 15, L02 7, L03 9, L04 6, L05 6, L06 12, L07 7, L08 7, L09 9, L10 8, L11 6, L12 10, L13 4,
+L14 9, L15 5. Estimated ~38 s of speech with gaps and ~39 s with the cut, inside 35-45 s. One extra voice: Mom, 6
+words, on screen, in her own request.

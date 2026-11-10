@@ -55,7 +55,7 @@ Coordinates: the dock's shore landing is (0,0); the bay opens to the **west** (-
 |---|---|---|---|---|
 | cottage | (14,-6), on the bank 6 blocks above the water | library `cottage` (one room), spruce; the bed under the west window, which looks down on the dock; a lantern in the window | S02 (over Milo's shoulder) | window lit in A and E |
 | dock | from the landing (0,0) west to the T-head at (-20,0) | library `dock`: stone landing, plank walk on piles, rail, lamps, the shack, a bell. **The mooring** on the T-head's south side at (-19,2): an oak fence post, a slack lead knot, a big oak sign `MAE` in glow ink, no boat | S01 (from above, night) | none |
-| headland | lighthouse at (-80,-20), on the north arm of the bay | library `lighthouse` on rocks, its lantern room lit at night; 14 deg right of due west from the T-head, so it is in frame right in every shot looking out to sea | S01, S02, S04, S08, S09 (bg, frame right) | none |
+| headland | lighthouse at (-80,-20), on the north arm of the bay | library `lighthouse` on rocks, its lantern room lit at night; about 18 deg right of due west from the T-head, so it is in frame right in every shot looking out to sea | S01, S02, S04, S08, S09 (bg, frame right) | none |
 | bay_shallows | x -20..-60 | the floor slopes from 4 to 13 water blocks deep; sand, gravel, seagrass; the line starts at the T-head (#1 at x -20); a 1-deep rock at (-34,-12) (the nitwit's) | S01 | none |
 | bay_surface | the water over the line, x -20 to -618 | calm surface; the glow of the line below | S10 (crane, the T-head at the bottom edge on frame 1) | none |
 | line_mid | x -60..-560 | floor 13 deep, sand and gravel, seagrass and kelp near the lanterns; the line along z=0 | S07 (staged at x ~ -100) | none |
