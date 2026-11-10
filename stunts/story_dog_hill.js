@@ -261,38 +261,40 @@ module.exports = {
     // ---- L02: rain / thunder / a creeper / zombies, one chunk each (the picture on its word)
     let cr = null, z1 = null, z2 = null
     await cut('rain', { time: 6000, weather: 'rain' })
+    // (K.line runs on the recording clock: after an awaited cut `k` jumps ahead, so every step is a one-shot on k >= its tick)
+    const once = new Set(), at1 = (key, cond) => cond && !once.has(key) && once.add(key)
     await line('L02', async (k, at) => {
-      if (k === at.cut(1)) await cut('storm', { time: 18000, weather: 'thunder' })
+      if (at1('storm', k >= at.cut(1))) await cut('storm', { time: 18000, weather: 'thunder' })
       // the bolt behind the hut, inside the crop (audit F3); smoothLight lights the world with it
-      if (k === at(1) + 2) { ctx.mark('lightning', { x: X + 6, y: F, z: Z - 20 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
+      if (at1('bolt', k >= at(1) + 2)) { ctx.mark('lightning', { x: X + 6, y: F, z: Z - 20 }); ctx.sound('entity.lightning_bolt.thunder', 0.6, 1) }
       // a mob just summoned needs 2 ticks to reach the client: summon it 2 ticks before the cut; the cut on at.cut(i)
       // (it lands just before the word: at(i) split words by 60-323 ms in Gold)
-      if (k === at.cut(2) - 2) {
+      if (at1('cr+', k >= at.cut(2) - 2)) {
         say(`/summon creeper ${X + 0.0} ${F + 1} ${Z - 3.8} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["cr"],Rotation:[0f,0f]}`)
         cr = K.actor('cr', { x: 0.0, z: -3.8, yaw: 0 })
       }
-      if (k === at.cut(2)) await cut('creeper', { weather: 'clear' })
-      if (cr && k > at(2) && k < at(3)) { cr.z = -3.8 + (k - at(2)) * 0.06; if (k === at(2) + 3) ctx.sound('entity.creeper.primed', 0.25, 1) }
-      if (k === at.cut(3) - 2) {
+      if (at1('creeper', k >= at.cut(2))) await cut('creeper', { weather: 'clear' })
+      if (cr && k > at(2)) { cr.z = -3.8 + Math.min(k - at(2), 30) * 0.06; if (at1('hiss', k >= at(2) + 3)) ctx.sound('entity.creeper.primed', 0.25, 1) }
+      if (at1('z+', k >= at.cut(3) - 2)) {
         for (const [t, dx, dz] of [['z1', -1.8, -3.2], ['z2', -3.2, -4.4]]) say(`/summon zombie ${X + dx} ${F + 1} ${Z + dz} {NoAI:1b,Silent:1b,Invulnerable:1b,PersistenceRequired:1b,Tags:["${t}"],Rotation:[0f,0f]}`)
         z1 = K.actor('z1', { x: -1.8, z: -3.2, yaw: 0 }); z2 = K.actor('z2', { x: -3.2, z: -4.4, yaw: 0 })
       }
-      if (k === at.cut(3)) { await cut('zombies', {}, () => K.park('cr')); say('/kill @e[tag=cr]'); cr = null }   // the creeper leaves with the cut
-      if (z1 && k > at(3)) { z1.z = -3.2 + (k - at(3)) * 0.09; z2.z = -4.4 + (k - at(3)) * 0.09; if (k === at(3) + 2) ctx.sound('entity.zombie.ambient', 0.5, 0.9) }
+      if (at1('zombies', k >= at.cut(3))) { await cut('zombies', {}, () => K.park('cr')); say('/kill @e[tag=cr]'); cr = null }   // the creeper leaves with the cut
+      if (z1 && k > at(3)) { z1.z = -3.2 + (k - at(3)) * 0.09; z2.z = -4.4 + (k - at(3)) * 0.09; if (at1('groan', k >= at(3) + 2)) ctx.sound('entity.zombie.ambient', 0.5, 0.9) }
     })
     K.park('z1'); K.park('z2'); say('/kill @e[tag=z1]'); say('/kill @e[tag=z2]')
     // ---- L03 (r-cast): kids throw sticks: Pip, beside the dog, throws one high past his nose on STICKS; he doesn't blink
     await cut('bone', { time: 1000 }, () => place('pip', { x: -1.4, y: 1, z: 3.4, yaw: -150 }))
     await line('L03', (k, at) => {
       Object.assign(pip, { yaw: k < at(1) ? -150 : -135, pitch: k < at(1) ? 10 : -10 })
-      if (k === at(1)) say(`/summon item ${X - 1.0} ${F + 1.9} ${Z + 3.0} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.2d,0.3d,-0.24d]}`)   // high past his nose, on STICKS
+      if (at1('stick', k >= at(1))) say(`/summon item ${X - 1.0} ${F + 1.9} ${Z + 3.0} {Item:{id:"minecraft:stick",count:1},PickupDelay:32767,Age:-32768,Tags:["stick"],Motion:[0.2d,0.3d,-0.24d]}`)   // high past his nose, on STICKS
     })
     // ---- L04: so every morning I bring him a bone: Pip walks to the pile and drops it on BONE; he never looks
     await line('L04', (k, at) => {
       const b = Math.max(at(2), 16)
       const u = ease(k / b)
       Object.assign(pip, { x: lerp(-1.4, 0.6, u), z: lerp(3.4, 2.0, u), yaw: u < 1 ? -125 : 180, pitch: u < 1 ? 0 : 25 })
-      if (k === b) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{n:99}}},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
+      if (at1('bone', k >= b)) { say(`/summon item ${X + 0.8} ${F + 1.4} ${Z + 1.4} {Item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{n:99}}},PickupDelay:32767,Age:-32768,Motion:[-0.05d,0.1d,0d]}`); ctx.sound('entity.item.pickup', 0.4, 0.8) }
     })
     // ---- L05: the collar (the stick goes on the cut: it landed on the patch and read as something there)
     say('/kill @e[type=item,tag=stick]')
@@ -320,7 +322,7 @@ module.exports = {
     // ---- L12: every night, Pip sits with him: dusk, then night on NOBODY
     await cut('dusk', { time: 12700 }, () => { place('pip', { x: 0.5, y: 1, z: 1.6, yaw: -90 }); place('gramps', { ...OFF, z: 2 }) })
     await line('L12', async (k, at) => {
-      if (k === at.cut(2)) {
+      if (at1('night', k >= at.cut(2))) {
         await cut('night', { time: 18000 })
         // Buh logs in on the patch now, behind the night camera (it looks west, away from P): seen first on L14's word.
         // Not awaited: the line's clock goes on while the teleport is checked
@@ -331,7 +333,7 @@ module.exports = {
     // ---- L13: then last night he stood up: the dog stands on STOOD, "Buh joined the game" with it (audit F8: not before)
     ctx.mark('hush'); ctx.mark('swell')
     await line('L13', (k, at) => {
-      if (k === Math.max(0, at(1) - 3)) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit'); ctx.mark('chat', { text: 'Buh joined the game', hold: 2.6 }) }
+      if (at1('stand', k >= Math.max(0, at(1) - 3))) { sitDog(false); ctx.sound('entity.wolf.ambient', 0.8, 1.1); ctx.mark('hit'); ctx.mark('chat', { text: 'Buh joined the game', hold: 2.6 }) }
       pip.yaw = -90 + 4 * Math.sin(k / 6)
     })
     ctx.mark('hush_end')
@@ -344,13 +346,13 @@ module.exports = {
       const u = ease(k / 12)
       const hop = k > 12 ? Math.max(0, Math.sin((k - 12) / 2.2)) * 0.35 : 0
       Object.assign(dog, { x: lerp(0.5, 2.4, u), y: 1 + hop, z: 0.5 + (k > 12 ? 0.25 * Math.sin((k - 12) / 5) : 0), yaw: -90 })
-      if (k === 6) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
+      if (at1('bark', k >= 6)) ctx.sound('entity.wolf.ambient', 0.9, 1.2)
     })
     // ---- L16: "Then he SAID:"; L17: Buh, "Sit, BOY." (the dog sits on BOY) "Be right BACK." He logs out after BACK (the payoff)
     await cut('sit')
-    await line('L16', (k) => { if (k === 3) bot.setControlState('sneak', false) })
+    await line('L16', (k) => { if (at1('unsneak', k >= 3)) bot.setControlState('sneak', false) })
     await line('L17', (k, at) => {
-      if (k === Math.max(2, at(1) - 4)) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90 }); sitDog(true); bot.swingArm('right') }
+      if (at1('sit', k >= Math.max(2, at(1) - 4))) { Object.assign(dog, { x: 2.4, y: 1, z: 0.5, yaw: -90 }); sitDog(true); bot.swingArm('right') }
     })
     ctx.mark('chat', { text: 'Buh left the game', hold: 2.6 }); ctx.mark('hit'); ctx.mark('payoff')
     await ctx.tpCheck(X - 2.5, F - 13, Z + 0.5, -90, 0)
