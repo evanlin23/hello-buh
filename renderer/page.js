@@ -956,6 +956,7 @@ async function drawParticles (parts) {
 window.HB = {
   async init (opts) {
     Object.assign(env, opts || {})
+    if (env.handX) { HAND_X = env.handX; HAND_TURN = new THREE.Matrix4().makeRotationY(Math.atan(0.56 / 0.72) - Math.atan(0.56 * HAND_X / 0.72)) }
     const atlas = await loadAnimatedAtlas()
     opaqueMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, alphaTest: 0.1, fog: true })
     translucentMat = new THREE.MeshBasicMaterial({ map: atlas, vertexColors: true, transparent: true, depthWrite: false, fog: true })
@@ -1377,11 +1378,13 @@ function drawSelection (cam) {
 // the hand sits where vanilla puts it relative to a 16:9 view: same fraction of the half-width from
 // the centre. Unscaled, our near-square game view cut tools and torches down to a sliver at the
 // edge (every frame review flagged it).
-const HAND_X = Math.min(1, (W / H) / (16 / 9))
+// render.js passes `handX` (env) for a wide master cropped to a narrower game view: the hand then sits
+// where it would in a render at the output size (rec.wideHand; older recordings keep the master's place)
+let HAND_X = Math.min(1, (W / H) / (16 / 9))
 // ...but moved by turning the whole rig about the eye, not by sliding it sideways: a slide changes the
 // angle we see the item from, so tools went edge-on and the swing stretched toward the crosshair.
 // Turning keeps vanilla's exact view of the item (its rest point lands where HAND_X puts it).
-const HAND_TURN = new THREE.Matrix4().makeRotationY(Math.atan(0.56 / 0.72) - Math.atan(0.56 * HAND_X / 0.72))
+let HAND_TURN = new THREE.Matrix4().makeRotationY(Math.atan(0.56 / 0.72) - Math.atan(0.56 * HAND_X / 0.72))
 const handScene = new THREE.Scene()
 const handCam = new THREE.PerspectiveCamera(70, W / H, 0.05, 10)
 const handCache = new Map()
