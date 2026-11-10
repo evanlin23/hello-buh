@@ -40,7 +40,7 @@ Estimates at Pip's natural tempo (~4.1 words/s speaking, ~0.45 s at a full stop,
 | 28.4-31.3 | **The reveal (name)** | L12 "The new one said ROSA. She had the APPLE." (a short pause before the name; 0.4 s gap after L11) | S12 MS: zombie ROSA in the cleric robe, apple in one hand, potion in the other | one step: Mom was converted (a named villager keeps its name) |
 | 31.6-33.0 | **The gift** | L13 "She DROPPED her POTION for ME." | S13 WS POV from (-8,0): ROSA stops by the lamp, looks at the bottle, at him, lets it fall toward him; he sprints and grabs it ("Splash Potion of Weakness") | Mom's last act, a choice; he has both halves |
 | 32.9-35.5 | the why | L14 "Mom lied to keep me HOME. She can't THROW." | S14 WS reverse over ROSA's right shoulder: Remy 3.5 blocks away, home lit behind him | answers "why lie" and "why no cure" |
-| 35.8-37.9 | **The choice (payoff)** | L15 "I CAN. Potion, then APPLE." | S15 MS POV: wind-up, the throw and splash on "Potion", the hotbar to the apples on "APPLE" | the ending says the cure in Mom's own words; the hit on the splash |
+| 35.8-37.9 | **The choice (payoff)** | L15 "I CAN." (build 2026-11-10: "Potion, then APPLE." cut by the owner rule "both are implied", STANDARDS 1.3) | S15 MS POV: the wind-up and throw on "I CAN", the splash on her, then the hotbar slides to the apples and "Golden Apple" pops up | the picture says the cure in Mom's order; the hit on the splash |
 | 37.9-38.9 | out | (none) | S15 holds at most 1 s on ROSA in the swirl, "Golden Apple" over the hotbar | cut |
 
 ## The second the viewer gets ahead

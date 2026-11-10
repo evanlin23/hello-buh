@@ -18,6 +18,7 @@ const { storyLines, storyKit, setKit } = require('../lib/story')
 const STORY = path.join(__dirname, '..', 'stories', 'names_in_the_woods')
 const CAPTION = 'why do these zombies have NAMES 😶'
 const X = -505, Z = -1054, F = 63
+const BEAT = 0.2   // air between beats (STANDARDS 2b.4: inside a beat the take's own pauses are the gaps)
 const POTION = '{"minecraft:potion_contents":{potion:"minecraft:weakness"}}'
 
 // the camera shots, offsets from O = (X, F, Z) (y from the gate's ground block; the meadow is 4 up from x -10 on)
@@ -215,14 +216,14 @@ module.exports = {
       }
       if (k > at(1)) momB.yaw = Math.max(-20, momB.yaw - 6)   // she turns from the window
       look(k)
-    }, 0, { tail () { Object.assign(mom, { x: 12, z: 2.5, yaw: 90, y: gy(12, 2.5) }) } })
+    }, BEAT, { tail () { Object.assign(mom, { x: 12, z: 2.5, yaw: 90, y: gy(12, 2.5) }) } })
 
     // L05 (S05): morning, POV in the lane: Mom says it, the three empty cottages behind her
     for (const t in zombies) hide(t)
     await cutAt(4.5, 0.4, P(12, 2.9, 2.8), { time: 2500, shot: 'pov' })
     const from5 = K.base
     await line('L05', async (k) => { K.turnTo(from5, P(16, 3.4, 4.5), k / K.T('L05')); look(k) },
-      0, { tail () { Object.assign(momB, { x: 8.5, z: -10.6, yaw: 0, y: 1 }); hand('momb', 'golden_apple') } })   // under the eaves: the garden's ground (F)
+      BEAT, { tail () { Object.assign(momB, { x: 8.5, z: -10.6, yaw: 0, y: 1 }); hand('momb', 'golden_apple') } })   // under the eaves: the garden's ground (F)
 
     // L06 (S06): Mom at her brewing stand, the golden apple in her arms; on "SPLASH POTION" a bottle is gone
     await cutAt(-5, 0.5, P(8, 2, -10), { time: 3000, shot: 'brew' })
@@ -273,7 +274,7 @@ module.exports = {
       if (k > at(1) && k < at(3) - 3) K.turnTo(from9, P(pia9.x, pia9.y + 1.6, pia9.z), (k - at(1)) / 10)
       if (k === at(3) - 3) { K.base = K.aim(P(pia9.x, pia9.y + 1.6, pia9.z)); bot.look(K.base.yaw, K.base.pitch, true); bot.activateItem() }
       look(k)
-    })
+    }, BEAT)
     say('/kill @e[type=chicken]')
     K.bury('hugo'); K.bury('pia')
 
@@ -289,7 +290,7 @@ module.exports = {
     const rosa = actor('rosa', { x: -18.6, z: 0, yaw: -90 })
     for (const [t, x, z] of [['z1', -21.5, -2], ['z2', -22.5, 1], ['z3', -23.5, 3]]) zombies[t] = actor(t, { x, z, yaw: -90 })
     await cutAt(8.5, 3.5, P(-14, 5, 0), { time: 13400, shot: 'gate_west' })
-    await line('L11', async (k) => { walk(rosa, 0.025, 0); for (const t in zombies) walk(zombies[t], 0.02, 0); groans(k, 17); look(k) })
+    await line('L11', async (k) => { walk(rosa, 0.025, 0); for (const t in zombies) walk(zombies[t], 0.02, 0); groans(k, 17); look(k) }, BEAT)
 
     // L12 (S12): in front of her by the lamp post: ROSA's tag, the apple in her right hand, the potion in her left
     Object.assign(rosa, { y: gy(rosa.x, 0) })   // she walks on from where S11 left her
@@ -325,7 +326,7 @@ module.exports = {
       if (slot >= 0 && bot.quickBarSlot !== slot - 36) { bot.setQuickBarSlot(slot - 36); ctx.sound('entity.item.pickup', 0.6, 1) }
       for (const t in zombies) face(zombies[t], -12.5, 0)
       look(k)
-    })
+    }, BEAT)
     K.stop()
     say('/kill @e[type=item]')
     // if the pickup missed, the potion is in his hand anyway (the line said so)
@@ -337,20 +338,17 @@ module.exports = {
     await cutAt(-12.5, 0.1, P(-16, gy(-16, 0) + 1.6, 0), { shot: 'ots_rosa' })
     await line('L14', async (k) => { look(k, 0, 0); groans(k, 31) })
 
-    // L15 (S15): POV: the wind-up on "I CAN", the throw on "Potion" (it shatters on her: the payoff), then the apples
+    // L15 (S15): POV, "I CAN.": the throw on the words, the bottle shatters on her (the payoff), then the picture says the
+    // rest (owner, "both are implied"): the selection slides to the golden apples and "Golden Apple" pops over the hotbar
     await cutAt(-12.5, 0.1, P(-16, gy(-16, 0) + 1.3, 0), { shot: 'pov' })
-    let thrown = false
-    await line('L15', async (k, at) => {
-      if (k < at(1) - 2) look(k, 0, -0.08 * Math.min(1, k / 8))       // the wind-up: the eye lifts a little
-      if (k === at(1) + 4) ctx.mark('payoff')   // the bottle shatters on her (thrown 6 ticks before)
-      if (k === at(1) - 2 && !thrown) {
-        thrown = true
-        K.base = K.aim(P(-16, gy(-16, 0) + 1.2, 0)); await bot.look(K.base.yaw, K.base.pitch + 0.12, true)
-        bot.activateItem()
-      }
-      if (k === at(2)) bot.setQuickBarSlot(1)
-      if (k >= at(1) - 2) look(k)
-    })
+    const T15 = Math.max(K.T('L15'), 31)
+    await line('L15', async (k) => {
+      if (k < 4) look(k, 0, -0.03 * k)                          // the wind-up: the eye lifts a little
+      if (k === 4) { K.base = K.aim(P(-16, gy(-16, 0) + 1.2, 0)); await bot.look(K.base.yaw, K.base.pitch + 0.12, true); bot.activateItem() }
+      if (k === 10) ctx.mark('payoff')                           // the bottle shatters on her (thrown 6 ticks before)
+      if (k === 18) bot.setQuickBarSlot(1)                       // then the apple
+      if (k >= 4) look(k)
+    }, (T15 - K.T('L15')) / 20)
     ctx.mark('story_end')
     await bot.waitForTicks(6)
     return true
