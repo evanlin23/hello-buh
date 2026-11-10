@@ -284,7 +284,7 @@
     {
       "id": "L14",
       "who": "N",
-      "text": "Milo put / the LAST one / by my DOOR. / And WAVED.",
+      "text": "Milo put / the LAST one / THERE. / And WAVED.",
       "direction": "happy to see him",
       "shot": "S14",
       "look": {
@@ -351,7 +351,7 @@
       "id": "S04",
       "line": "L04",
       "place": "village_edge",
-      "size": "wide",
+      "size": "ews",
       "camera": "pov (the kid's eye, 0.81) at the village's north edge on a rise, looking north out of the village; a slow step forward",
       "frame": "fg: the last rows of torches on the grass, ending in a clean line 4 blocks ahead; mid: open grass, unlit, then the forest edge 20 blocks out; bg: the dark oak forest, black under the canopy, hills above it against the blue dawn sky. The lights end and the dark begins in one frame. Dawn (23150)."
     },
