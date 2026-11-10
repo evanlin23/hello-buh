@@ -989,6 +989,15 @@ function talkMotion (who, t) {
 // or { of: TARGET, offset: [dx, dy, dz] }. Everything is a function of the time alone, so frames can be
 // rendered in any order (FRAMES=) and a camera can be re-tuned without re-recording.
 const SHOTS = { ...(STUNT_MOD.shots || {}), ...(process.env.SHOTS_JSON ? JSON.parse(process.env.SHOTS_JSON) : {}) }   // (SHOTS_JSON='{"name": {...}}': try a camera without editing the stunt)
+// stunt.self = { model, eye, extra }: who the narrator is when not a player (lib/story.js docs). A 'self' mark
+// ({ eye?, model?, extra? }) changes it from that tick on (a wolf sitting down: { extra: { sitting: true }, eye: 0.5 })
+const SELF_MARKS = (rec.timeline || []).filter(e => e.event === 'self').sort((a, b) => a.t - b.t)
+function selfAt (t) {
+  if (!STUNT_MOD.self) return null
+  const s = { ...STUNT_MOD.self, extra: { ...(STUNT_MOD.self.extra || {}) } }
+  for (const m of SELF_MARKS) { if (m.t / 50 > t) break; if (m.eye !== undefined) s.eye = m.eye; if (m.model) s.model = m.model; if (m.extra) Object.assign(s.extra, m.extra) }
+  return s
+}
 const SHOT_MARKS = (rec.timeline || []).filter(e => e.event === 'shot' && e.name).map(e => ({ t: e.t / 50, name: e.name })).sort((a, b) => a.t - b.t)
 for (const m of SHOT_MARKS) if (!SHOTS[m.name]) console.log(`shot '${m.name}' is marked but not in stunt.shots: that stretch stays first person`)
 function shotAt (t) {
@@ -1943,6 +1952,10 @@ function camAtLive (t) {
     Object.assign(cam, darknessAt(t))
     cam.aim = AIMS.length && !process.env.CAM ? aimAt(t) : null   // first person only: in the third-person replay it showed as red bars under the player
     const eye = { ...cam }   // the player's own eye (the CAM override moves only the camera)
+    // stunt.self.eye: the narrator isn't a player (story_good_boy: a wolf, eye 0.68): the POV camera sits at that
+    // height over the feet. Only the camera moves; targeting and the body keep the player's eye.
+    const selfNow = selfAt(t)
+    if (selfNow && selfNow.eye) cam.y -= EYE - selfNow.eye
     // stunt.fovZoom [[EVENT[:s], EVENT[:s], SCALE]]: a sharp zoom rendered as a narrower FOV (a 2.2x crop
     // of the finished frame was a bicubic blur). Recording time; eases in 0.4 s, out 0.25 s after the end.
     // The first-person hand keeps its own camera, so it doesn't zoom. Not with CAM= (the replay pass).
@@ -2056,7 +2069,9 @@ function camAtLive (t) {
           }
         }
         const sw = SWINGS.find(s0 => s0 <= t && t - s0 < 6)
-        ents.push({
+        // stunt.self.model: seen from a camera shot, the narrator is that mob (a wolf with its collar), not a player
+        if (selfNow && selfNow.model) ents.push({ id: -1, name: selfNow.model, x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: body, pitch: eye.pitch, headYaw: eye.yaw, extra: selfNow.extra || null, light: lightmap(ls, lb), hurt: HURTS.some(h => t >= h.t && t - h.t < 10) })
+        else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
           extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve' }, light: lightmap(ls, lb),

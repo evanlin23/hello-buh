@@ -312,6 +312,7 @@ function makePost (look, w, h) {
       c = pow(max(vec3(0.0), c * gain + lift * (1.0 - c)), 1.0 / gam);
       float l = dot(c, vec3(0.2126, 0.7152, 0.0722));
       c = mix(vec3(l), c, sat);
+      c = clamp(c, 0.0, 1.0);   // (the S-curve folds back above 1: a bright sun under a warm gain came out cyan)
       c = mix(c, c * c * (3.0 - 2.0 * c), contrast);
       vec2 q = vUv - 0.5; q.x *= res.x / res.y;
       c *= mix(1.0, smoothstep(0.95, 0.25, length(q)), vig);
