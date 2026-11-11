@@ -1,9 +1,9 @@
 {
   "name": "villager_job",
-  "caption": "POV: THE VILLAGER IS UNEMPLOYED 💀",
+  "caption": "POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80",
   "youtube": {
-    "title": "POV: THE VILLAGER IS UNEMPLOYED 💀 #minecraft #shorts",
-    "description": "POV: THE VILLAGER IS UNEMPLOYED 💀\n\nSong: DR MØB - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80\n\nSong: DR M\u00d8B - Fearless Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FearlessFunk\nWatch: http://ncs.lnk.to/FearlessFunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -15,7 +15,7 @@
   "song": {
     "file": "fearless_funk.mp3",
     "title": "Fearless Funk",
-    "artist": "DR MØB, Chris Linton",
+    "artist": "DR M\u00d8B, Chris Linton",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "hired",
     "drop_in_song_s": 29.5,
@@ -47,14 +47,14 @@
     }
   },
   "edit": {
-    "caption": "POV: THE VILLAGER IS UNEMPLOYED 💀",
+    "caption": "POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80",
     "colors": "pov=red,villager=green",
     "song": "songs/payphone.mp3",
     "dropAt": "hired",
     "start": 0.5,
     "args": [
       "--caption",
-      "POV: THE VILLAGER IS UNEMPLOYED 💀",
+      "POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80",
       "--colors",
       "pov=red,villager=green",
       "--start",
@@ -140,9 +140,9 @@
     "gunzip -c shorts/villager_job/recording.json.gz > work/villager_job.rec.json",
     "node render.js work/villager_job.rec.json work/villager_job.frames 60 1080 1011",
     "python3 audio.py work/villager_job.rec.json work/villager_job.wav",
-    "python3 edit.py --frames work/villager_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_job.rec.json --audio work/villager_job.wav --caption \"POV: THE VILLAGER IS UNEMPLOYED 💀\" --colors pov=red,villager=green --start 0.5 --song songs/payphone.mp3 --song_drop_at hired --out out/villager_job.mp4"
+    "python3 edit.py --frames work/villager_job.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_job.rec.json --audio work/villager_job.wav --caption \"POV: THE VILLAGER IS UNEMPLOYED \ud83d\udc80\" --colors pov=red,villager=green --start 0.5 --song songs/payphone.mp3 --song_drop_at hired --out out/villager_job.mp4"
   ],
   "status": "needs-fix",
-  "notes": "backlog worker D 2026-11-11: needs-fix, superseded. A 9.6 s single hire/fire cycle: fails the owner's 30 s minimum (retention-audit check 5) and its only beat is already act 1 of villager_fired (ready, 31.7 s: hired/fired x3, all 13 jobs, TNT ring). Growing it to 30 s would remake villager_fired. Recommend retiring it (do not queue).",
+  "notes": "backlog worker D 2026-11-11: needs-fix. Re-recorded on the current engine (angry particles on the job loss removed: not vanilla). Pace on the new render: 6.6 s, under the 8 s stunt minimum (BLOCK), sound only from 1.3 s with a frozen first 1.25 s (BLOCK), one picture for the whole Short; a single hire/fire/rehire on a flat field; the lectern goes down off the crosshair (r:rffba12). Its one beat is act 1 of villager_fired (ready, 31.7 s). Saving it means a new design (more beats: several jobs, a crowd), i.e. remaking villager_fired: recommend retiring it.",
   "published_at": "2026-11-06T15:39:41.586Z"
 }

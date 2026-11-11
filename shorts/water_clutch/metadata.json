@@ -1,9 +1,9 @@
 {
   "name": "water_clutch",
-  "caption": "water bucket clutch 💀",
+  "caption": "water bucket clutch \ud83d\udc80",
   "youtube": {
-    "title": "water bucket clutch 💀 #minecraft #shorts",
-    "description": "water bucket clutch 💀\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "water bucket clutch \ud83d\udc80 #minecraft #shorts",
+    "description": "water bucket clutch \ud83d\udc80\n\nSong: DIPIENS, HRXSTAL - INDUSTRY KISS\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/INDUSTRYKISS\nWatch: http://ncs.lnk.to/INDUSTRYKISSAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -47,14 +47,14 @@
     }
   },
   "edit": {
-    "caption": "water bucket clutch 💀",
+    "caption": "water bucket clutch \ud83d\udc80",
     "song": "songs/misery.mp3",
     "dropAt": "placed",
     "startAt": "jump:-1.0",
     "endAfter": "placed:2.4",
     "args": [
       "--caption",
-      "water bucket clutch 💀",
+      "water bucket clutch \ud83d\udc80",
       "--start_at",
       "jump:-1.0",
       "--end_after",
@@ -116,9 +116,9 @@
     "gunzip -c shorts/water_clutch/recording.json.gz > work/water_clutch.rec.json",
     "node render.js work/water_clutch.rec.json work/water_clutch.frames 60 1080 1011",
     "python3 audio.py work/water_clutch.rec.json work/water_clutch.wav",
-    "python3 edit.py --frames work/water_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_clutch.rec.json --audio work/water_clutch.wav --caption \"water bucket clutch 💀\" --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/water_clutch.mp4"
+    "python3 edit.py --frames work/water_clutch.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/water_clutch.rec.json --audio work/water_clutch.wav --caption \"water bucket clutch \ud83d\udc80\" --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/water_clutch.mp4"
   ],
   "status": "needs-fix",
-  "notes": "backlog worker D 2026-11-11: needs-fix, superseded. A 5.9 s single water clutch: fails the owner's 30 s minimum (retention-audit check 5; one beat, no build-up) and the same clutch is tiers 1-4 of clutch_harder (ready, 31.1 s; also boat_clutch, ladder_clutch). Growing it to 30 s would remake clutch_harder. Recommend retiring it (do not queue).",
+  "notes": "backlog worker D 2026-11-11: needs-fix. A 5.9 s single water clutch: under the 8 s stunt minimum (pace BLOCK) with one beat and no build-up, and the same clutch is tiers 1-4 of clutch_harder (ready, 31.1 s; also boat_clutch, ladder_clutch). Not re-recorded (its edit now ends 1.0 s after the splash and has no reference song, for whoever picks it up). Recommend retiring it.",
   "published_at": "2026-11-06T15:38:29.457Z"
 }
