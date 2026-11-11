@@ -80,7 +80,8 @@ module.exports = {
     if (c) await ctx.easeLookAt(c.position.offset(0, 0.9, 0), 300)   // spin round: oh no
     // stumble back a step or two so the whole creeper (legs, swelling, white flashes) is in frame
     bot.setControlState('back', true)
-    for (let i = 0; i < 9; i++) { await bot.waitForTicks(1); const cc = Object.values(bot.entities).find(e => e.name === 'creeper'); if (cc) bot.lookAt(cc.position.offset(0, 0.9, 0), true) }
+    // (9 ticks back: the blast left 4 hearts even on hard)
+    for (let i = 0; i < 4; i++) { await bot.waitForTicks(1); const cc = Object.values(bot.entities).find(e => e.name === 'creeper'); if (cc) bot.lookAt(cc.position.offset(0, 0.9, 0), true) }
     bot.setControlState('back', false)
     for (let i = 0; i < 60 && !ctx.died; i++) await bot.waitForTicks(1)
     await bot.waitForTicks(50)                                  // the death screen
