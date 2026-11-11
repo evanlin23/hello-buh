@@ -312,7 +312,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. New stories are made by hand in owner-audited stages: premise shortlist (owner picks), then one session per
-  picked premise writes the script, owner audits the scripts, then voice and build. Check: owner. r:r77977b r:ra5bc8f r:rd2d42e. Premises: diverge by lens first, cold-read gate, then the checks and the critic; the owner sees a top 8 plus wild cards. r:rbf6467 r:rfc2828 (Honey Thief's giant is Jonah, r:r1a3843; Bastion approved, r:r7c6526; Pulled Away, Singing Box approved, r:r9a1a75)
+  picked premise writes the script, owner audits the scripts, then voice and build. Check: owner. r:r77977b r:ra5bc8f r:rd2d42e. Premises: diverge by lens first, cold-read gate, then the checks and the critic; the owner sees a top 8 plus wild cards. r:rbf6467 r:rfc2828 (Honey Thief's giant is Jonah, r:r1a3843; Bastion approved, r:r7c6526; Pulled Away, Singing Box approved, r:r9a1a75; Seventy Below approved, r:rbb90ac)
 - **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
   swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
   Check: owner. r:r1f2a80
