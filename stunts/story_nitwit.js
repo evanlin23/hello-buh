@@ -40,13 +40,14 @@ module.exports = {
   brightness: 1.0,
   renderDistance: 12, recordRadius: 150,
   look: { mood: 'bright', rolloff: 0.8 },
+  shots: { pov: { pov: true } },   // every shot is first-person; K.cutShot('pov') places the cast with the cut
   chunkStops (set) { return [[0, 0], [-40, 60], [-60, 110], [30, 10], [-30, -20]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
 
   async setup (ctx) {
     const { bot } = ctx
     const { c, A, mob, vil } = setKit(ctx, { X, Z, F })
     await ctx.defaultRules()
-    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing true', 'do_fire_tick false']) await c(`/gamerule ${g}`)
+    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing true', 'fire_spread_radius_around_player 0']) await c(`/gamerule ${g}`)
     await c('/difficulty normal')
     await c(`/setworldspawn ${X} ${F + 1} ${Z + 8}`)
     const W = await world.build(ctx, { story: 'nitwit' })
@@ -119,8 +120,20 @@ module.exports = {
     const gy = (dx, dz) => groundAt(ctx, X + dx, Z + dz) - F + 1          // feet height (from F) of the ground at a spot
     const cut = (dx, dz, target, o = {}) => K.cut(dx, dz, target, gy(dx, dz), o)
     const hmm = (vol = 1) => ctx.sound('entity.villager.ambient', vol, 1)
-    const away = (tag, a) => { a.y = 90; K.warp(tag) }   // off screen (90 up), placed at once
-    const walk = (a, dx, dz) => { K.step(a, dx, dz); a.y = gy(a.x, a.z) }   // walk on the real ground
+    const away = (tag, a) => { a.y = 90; K.warp(tag) }   // off screen (90 up): only inside a cut's moves
+    // walk on the real ground: the feet ease up or down a step (a whole block in one tick read as a jump)
+    const walk = (a, dx, dz) => { K.step(a, dx, dz); const g = gy(a.x, a.z); a.y += Math.max(-0.25, Math.min(0.25, g - a.y)) }
+    const face = (a, type = 'villager') => K.face(P(a.x, a.y, a.z), type)
+    // a cut that moves the cast with it (K.cutShot: the shot mark waits until every moved actor and the narrator have
+    // landed, so the new shot's first frame already has them in place)
+    const cutP = async (dx, dz, target, moves, o = {}) => {
+      const y = gy(dx, dz)
+      const nb = K.aimFrom(new ctx.Vec3(X + dx, F + y + 1.62, Z + dz), target)
+      K.stop()
+      await K.cutShot('pov', moves, { ...o, self: { x: dx, y, z: dz, yaw: 180 - nb.yaw * 180 / Math.PI, pitch: -nb.pitch * 180 / Math.PI } })
+      K.base = nb
+      await K.look(0)
+    }
     const bolt = (x, y, z) => {
       ctx.mark('lightning', { x: X + x, y: F + y, z: Z + z })
       ctx.sound('entity.lightning_bolt.thunder', 2, 0.9)
@@ -130,25 +143,26 @@ module.exports = {
 
     const nS = K.actor('nS', { x: 0.5, y: gy(0.5, 7.5), z: 7.5, yaw: 90 })
     const crowd = this.crowd.map((v, i) => K.actor(`v${i}`, { x: v[1], y: v[4], z: v[2], yaw: v[3] }))
+    const creeper = K.actor('creeper', { x: -37.5, y: gy(-37.5, -10.5) + 60, z: -10.5, yaw: -90 })   // waiting in the air (where setup put it)
     let meter = 4093
     K.setMeter(meter)
 
     // L01: the hook. The nitwit by the well, head bobbing on each "hmm", the counter ticking up to 4,096; behind him
     // the well's roof and the home cottage, the river beyond
-    await cut(0.5, 14.5, P(0.5, gy(0.5, 7.5) + 1.2, 7.5))
+    await cut(0.5, 14.5, face(nS))
     await K.preroll(6, () => { nS.yaw = 90 + Math.sin(ctx.tick / 6) * 25 })
     await line('L01', async (k, at) => {
       nS.yaw = 90 + Math.sin(ctx.tick / 6) * 25
       nS.pitch = k % 20 < 6 ? 20 : 0
       if (k === 1 || k === at(2) || k === at(3)) { hmm(); K.setMeter(++meter) }
       K.go(k > 2 && k < 14)
-      K.base = K.aim(P(0.5, gy(0.5, 7.5) + 1.1, 7.5)); look(k)
+      K.base = K.aim(face(nS)); look(k)
     })
     K.go(false)
     if (meter < 4096) K.setMeter(meter = 4096)
 
     // L02: closer. He turns his head to me on "my NAME"
-    await cut(0.5, 10.6, P(0.5, gy(0.5, 7.5) + 1.2, 7.5))
+    await cut(0.5, 10.6, face(nS))
     await line('L02', async (k, at) => {
       const u = K.ease((k - at(2) + 6) / 8)
       nS.yaw = 90 - 90 * u; nS.pitch = 0                  // west -> south (facing me)
@@ -171,7 +185,8 @@ module.exports = {
     await cut(TREE[0] - 9, TREE[1] - 7, P(TREE[0], tg + 4, TREE[1]))
     let night4 = false, struck = false
     await line('L04', async (k, at) => {
-      if (!night4 && k >= at.cut(1)) { night4 = true; await cut(TREE[0] - 7, TREE[1] - 9, P(TREE[0], tg + 4.5, TREE[1]), { time: NIGHT, after: () => away('nTree', nTree) }) }
+      if (k === 12) { Object.assign(nS, { x: 3.5, z: 16.0, y: gy(3.5, 16), yaw: 45 }); K.warp('nS') }   // off screen (behind the camera): to the crowd's end of the lane
+      if (!night4 && k >= at.cut(1)) { night4 = true; await cut(TREE[0] - 7, TREE[1] - 9, P(TREE[0], tg + 4.5, TREE[1]), { time: NIGHT }) }
       if (!struck && k >= at(2)) {
         struck = true
         bolt(TREE[0] + 0.5, tg + 7, TREE[1] + 0.5)
@@ -187,21 +202,19 @@ module.exports = {
     K.go(false)
 
     // L05: in the wheat by the river; a creeper walks in and BOOM (day again on the cut)
-    nS.x = 3.5; nS.z = 16.0; nS.y = gy(3.5, 16); nS.yaw = 45; K.warp('nS')   // to the crowd's end of the street, out of every shot
     const nWheat = K.actor('nWheat', { x: -25.5, y: gy(-25.5, -11.5), z: -11.5, yaw: -45 })
-    const creeper = K.actor('creeper', { x: -37.5, y: 60, z: -10.5, yaw: -90 })
-    await cut(-17.5, -9.5, P(-25.5, gy(-25.5, -11.5) + 0.9, -11.5), { time: DAY })
+    await cut(-17.5, -9.5, face(nWheat), { time: DAY })
     let boomed = false, cut5 = false
     await line('L05', async (k, at) => {
       nWheat.yaw = -45 + Math.sin(ctx.tick / 7) * 20
       if (!cut5 && k >= at.cut(1)) {
         cut5 = true
-        await cut(-18.5, -8.0, P(-30, gy(-30, -10) + 0.4, -10.5), { after: () => { Object.assign(creeper, { x: -34.5, y: gy(-34.5, -10.5) }); K.warp('creeper'); away('nWheat', nWheat) } })
+        await cutP(-18.5, -8.0, P(-30, gy(-30, -10) + 0.9, -10.5), () => { Object.assign(creeper, { x: -34.5, y: gy(-34.5, -10.5) }); away('nWheat', nWheat) })
       }
       if (cut5 && !boomed) walk(creeper, 0.11, -0.01)
       if (!boomed && k >= at(3)) {
         boomed = true
-        boom(creeper.x, creeper.y, creeper.z); away('creeper', creeper)
+        boom(creeper.x, creeper.y, creeper.z); K.actors.delete('creeper'); say('/kill @e[tag=creeper]')   // gone in the blast (no teleport)
         ctx.mark('flash')
       }
       look(k)
@@ -223,20 +236,19 @@ module.exports = {
     })
 
     // L07: on MY roof; the next day it rained anvils
-    await cut(-12.0, -12.5, P(ROOF[0], ROOF[1] + 1.2, ROOF[2]), { after: () => away('nWell', nWell) })
+    await cutP(-12.0, -12.5, face(nRoof), () => away('nWell', nWell))
     let next7 = false, rained = 0
     const anvil = (x, z) => say(`/summon falling_block ${(X + x).toFixed(2)} ${F + ROOF[1] + 12} ${(Z + z).toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,DropItem:0b}`)
     const drops = [[-15.5, -22.5], [-17.5, -21.5], [-13.5, -23.5], [-19.5, -22.5], [-12.5, -21.5], [-16.5, -23.5], [-14.0, -21.0], [-18.5, -23.0], [-11.5, -22.5], [-20.5, -21.5]]
     await line('L07', async (k, at) => {
       nRoof.yaw = 90 + Math.sin(ctx.tick / 9) * 30
-      if (!next7 && k >= at.cut(1)) { next7 = true; await cut(-10.5, -9.0, P(ROOF[0] - 0.5, ROOF[1] - 1.5, ROOF[2]), { after: () => away('nRoof', nRoof) }) }
+      if (!next7 && k >= at.cut(1)) { next7 = true; await cutP(-10.5, -9.0, P(ROOF[0] - 0.5, ROOF[1] - 1.5, ROOF[2]), () => away('nRoof', nRoof)) }
       if (next7 && k >= at(3) - 16 && rained < drops.length && (k - at(3)) % 2 === 0) { anvil(...drops[rained]); rained++ }
       look(k)
     })
 
     // L08: the villagers walk away when he comes (down the lane south of the well)
-    nS.x = 0.5; nS.z = 8.5; nS.y = gy(0.5, 8.5); nS.yaw = 0; K.warp('nS')
-    await cut(-4.5, 5.0, P(0.5, gy(0.5, 13) + 0.6, 13))
+    await cutP(-4.5, 5.0, P(0.5, gy(0.5, 13) + 1.2, 13), () => { Object.assign(nS, { x: 0.5, z: 8.5, y: gy(0.5, 8.5), yaw: 0 }) })
     await K.preroll(6, () => walk(nS, 0, 0.06))
     await line('L08', async (k, at) => {
       if (nS.z < 11.5) walk(nS, 0, 0.07)
@@ -246,22 +258,22 @@ module.exports = {
           walk(v, dx / d * 0.1, dz / d * 0.1)
         }
       }
-      K.base = K.aim(P(0.5, gy(0.5, Math.max(13, nS.z + 2)) + 0.6, Math.max(13, nS.z + 2))); look(k)
+      K.base = K.aim(P(0.5, gy(0.5, Math.max(13, nS.z + 2)) + 1.3, Math.max(13, nS.z + 2))); look(k)
     })
 
     // L09: even the iron golem goes around him (up the lane toward me, an arc round the nitwit)
-    const golem = K.actor('golem', { x: 0.5, y: gy(0.5, 26.5), z: 26.5, yaw: 180 })
-    nS.yaw = 0
-    await cut(-1.5, 5.5, P(0.5, gy(0.5, 14) + 1.0, 14))
-    await K.preroll(4, () => walk(golem, 0, -0.12))
+    // from the south looking north: the well's roof, the home cottage and the river beyond; the golem comes up the
+    // lane east of the well and bends round him
+    const golem = K.actor('golem', { x: 4.5, y: gy(4.5, 6.5), z: 6.5, yaw: 0 })
+    await cutP(2.5, 23.5, K.face(P(4.5, gy(4.5, 4), 4), 'iron_golem'), () => { Object.assign(nS, { x: 4.0, z: 11.5, y: gy(4.0, 11.5), yaw: 180 }) })
+    await K.preroll(4, () => walk(golem, 0, 0.12))
     await line('L09', async (k) => {
-      const nz = golem.z - 0.14
-      const nx = 0.5 + 2.6 * Math.exp(-Math.pow((nz - nS.z) / 3.2, 2))
+      const nz = golem.z + 0.14
+      const nx = 4.5 + 2.6 * Math.exp(-Math.pow((nz - nS.z) / 3.2, 2))
       walk(golem, nx - golem.x, nz - golem.z)
       nS.yaw = K.mcYaw(golem.x - nS.x, golem.z - nS.z)
-      look(k)
+      K.base = K.aim(K.face(P(golem.x, golem.y, golem.z), 'iron_golem')); look(k)
     })
-    away('golem', golem)
 
     // L10: so one night, I followed him (down the road south, behind him, the torches on their posts)
     const nPath = K.actor('nPath', { x: -22.5, y: gy(-22.5, 38.5), z: 38.5, yaw: 160 })
@@ -269,19 +281,20 @@ module.exports = {
     await cut(-21.0, 32.5, ahead(), { time: NIGHT })
     const pathStep = () => walk(nPath, -0.045, 0.115)
     await line('L10', async (k) => {
-      pathStep(); K.go(true)
+      if (k === 12) { away('golem', golem); Object.assign(nS, { x: 0.5, z: 9.5, y: gy(0.5, 9.5), yaw: 0, pitch: 0 }); K.warp('nS') }   // both off screen: back in the village, 30+ blocks behind
+      pathStep()
       K.base = K.aim(ahead()); look(k)
     })
     // L11: past the last torch was ANOTHER village (cut: the Burned Copy's lane, him walking into it)
     let ruinCut = false
     const nRuin = K.actor('nRuin', { x: RUIN[0], y: gy(RUIN[0], RUIN[1]), z: RUIN[1], yaw: 180 })
     await line('L11', async (k, at) => {
-      if (!ruinCut) { pathStep(); K.go(true); K.base = K.aim(ahead()) }
+      if (!ruinCut) { pathStep(); K.base = K.aim(ahead()) }
       if (!ruinCut && k >= at.cut(2)) {
         ruinCut = true
-        await cut(RUIN[0] + 0.5, RUIN[1] - 5, P(RUIN[0], gy(RUIN[0], RUIN[1] + 14) + 0.5, RUIN[1] + 14), { after: () => away('nPath', nPath) })
+        await cutP(RUIN[0] + 0.5, RUIN[1] - 5, P(RUIN[0], gy(RUIN[0], RUIN[1] + 14) + 1.0, RUIN[1] + 14), () => away('nPath', nPath))
       }
-      if (ruinCut) { walk(nRuin, 0, 0.1); K.go(false) }
+      if (ruinCut) walk(nRuin, 0, 0.1)
       look(k)
     })
     K.go(false)
@@ -292,16 +305,13 @@ module.exports = {
     let c12 = 0
     await line('L12', async (k, at) => {
       if (c12 === 0 && k >= at.cut(1)) { c12 = 1; await cut(RUIN[0] - 3, RUIN[1] - 7, P(-455 - X, gy(-455 - X, -918 - Z) + 2, -918 - Z)) }
-      if (c12 === 1 && k >= at.cut(2)) { c12 = 2; await cut(RUIN[0] + 4, RUIN[1] + 2, P(RUIN[0] - 10, gy(RUIN[0] - 10, RUIN[1] + 18) + 1, RUIN[1] + 18), { after: () => away('nRuin', nRuin) }) }
-      K.go(c12 === 2)
+      if (c12 === 1 && k >= at.cut(2)) { c12 = 2; await cutP(RUIN[0] + 4, RUIN[1] + 2, P(RUIN[0] - 10, gy(RUIN[0] - 10, RUIN[1] + 18) + 1, RUIN[1] + 18), () => away('nRuin', nRuin)) }
       look(k)
     })
-    K.go(false)
 
     // L13: the tree, the wheat, the well: all gone (each place he stood, already destroyed here)
     const [tx, ty, tz] = this.deadTree, [cx, cy, cz] = this.crater
-    await cut(tx - 5, tz - 4, P(tx, ty + 2.5, tz))
-    Object.assign(nRuin, { x: RUIN[0], z: RUIN[1] + 6, y: gy(RUIN[0], RUIN[1] + 6), yaw: 0 }); K.warp('nRuin')
+    await cutP(tx - 5, tz - 4, P(tx, ty + 2.5, tz), () => Object.assign(nRuin, { x: RUIN[0], z: RUIN[1] + 6, y: gy(RUIN[0], RUIN[1] + 6), yaw: 0 }))
     let c13 = 0
     await line('L13', async (k, at) => {
       if (c13 === 0 && k >= at.cut(1)) { c13 = 1; await cut(cx + 6, cz - 5, P(cx, cy, cz)) }
@@ -310,7 +320,7 @@ module.exports = {
     })
 
     // L14: he's not from here; his world already ended (he turns to me; a bolt behind him on "ENDED")
-    await cut(RUIN[0], RUIN[1] + 1.5, P(RUIN[0], nRuin.y + 1.2, RUIN[1] + 6))
+    await cut(RUIN[0], RUIN[1] + 1.5, face(nRuin))
     let b14 = false
     await line('L14', async (k, at) => {
       nRuin.yaw = 180 * K.ease((k - at(1) + 4) / 10)
@@ -319,17 +329,15 @@ module.exports = {
     })
 
     // L15: they sent him back to warn us (behind him, looking north up the road to our village's torches)
-    Object.assign(nRuin, { z: RUIN[1] + 4, yaw: 180 }); K.warp('nRuin')
-    await cut(RUIN[0] + 0.5, RUIN[1] + 9, P(RUIN[0] + 10, gy(RUIN[0] + 10, RUIN[1] - 30) + 2, RUIN[1] - 30))
+    // behind him as he walks off east, up toward the hills between the ruin and our village
+    await cutP(RUIN[0] - 4.5, RUIN[1] + 9, P(RUIN[0] + 22, gy(RUIN[0] + 22, RUIN[1] - 6) + 3, RUIN[1] - 6), () => Object.assign(nRuin, { x: RUIN[0] - 1.5, z: RUIN[1] + 6, y: gy(RUIN[0] - 1.5, RUIN[1] + 6), yaw: -110 }))
     await line('L15', async (k, at) => {
-      if (k >= at(1) - 4) walk(nRuin, 0.02, -0.09)
+      if (k >= at(1) - 4) walk(nRuin, 0.085, -0.035)
       look(k)
     })
 
     // L16: but a nitwit can only say one word (day, his face by the well). The word: "hmm", with the card
-    away('nRuin', nRuin)
-    Object.assign(nS, { x: 0.5, z: 9.5, y: gy(0.5, 9.5), yaw: 0, pitch: 0 }); K.warp('nS')
-    await cut(0.5, 11.7, P(0.5, gy(0.5, 9.5) + 1.2, 9.5), { time: DAY })
+    await cut(0.5, 11.7, K.face(P(0.5, gy(0.5, 9.5), 9.5), 'villager'), { time: DAY })
     let said = false
     await line('L16', async (k, at, n) => {
       if (!said && k >= n - 14) { said = true; hmm(1.2); ctx.mark('hmm'); K.setMeter(4097) }
@@ -338,13 +346,11 @@ module.exports = {
     })
 
     // L17: and today, he's standing right next to ME (looking down the lane, then turn: he's right there)
-    nS.yaw = -90
-    await cut(-0.7, 10.6, P(-0.7, gy(-0.7, 22) + 0.6, 22))
     let from17 = null
-    for (const [i, v] of crowd.entries()) { Object.assign(v, { x: crowd[i].x, z: 22 + i, y: gy(crowd[i].x, 22 + i) }); K.warp(`v${i}`) }
+    await cutP(-0.7, 10.6, P(-0.7, gy(-0.7, 22) + 1.2, 22), () => { nS.yaw = -90; for (const [i, v] of crowd.entries()) Object.assign(v, { z: 22 + i, y: gy(v.x, 22 + i) }) })
     await line('L17', async (k, at) => {
       for (const v of crowd) if (v.z < 30) walk(v, 0, 0.03)
-      if (k >= at(2) - 2) { from17 = from17 || { ...K.base }; K.turnTo(from17, P(0.9, gy(0.5, 9.5) + 1.6, 9.5), (k - at(2) + 2) / 9) }
+      if (k >= at(2) - 2) { from17 = from17 || { ...K.base }; K.turnTo(from17, K.face(P(0.5, gy(0.5, 9.5), 9.5), 'villager'), (k - at(2) + 2) / 9) }
       look(k)
     })
 
