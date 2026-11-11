@@ -1227,16 +1227,17 @@ def fgrid(t, fps):
 
 
 def band_captions(args, tl_ev, dur, tmp, colors):
-    """edit.captions [[EVENT, TEXT], ...] -> [(t0, t1, png)] in Short time: the top band's caption from each mark to the
+    """edit.captions [[EVENT[:OFFSET_S], TEXT], ...] -> [(t0, t1, png)] in Short time: the top band's caption from each mark to the
     next (the last to the end). A mark due a frame or two before a hard cut starts on the cut (the label of the next
     item never flashes over the last frames of the one before). Marks missing from the timeline are skipped, loudly."""
     out = []
     for k, c in enumerate(json.loads(args.captions)):
         ev_, text = c[0], c[1]
-        if ev_ not in tl_ev:
-            print(f"WARNING captions: no {ev_!r} mark, {text!r} skipped")
+        name, _, off = str(ev_).rpartition(":") if ":" in str(ev_) else (str(ev_), "", "0")
+        if name not in tl_ev:
+            print(f"WARNING captions: no {name!r} mark, {text!r} skipped")
             continue
-        t0 = tl_ev[ev_] - args.start
+        t0 = tl_ev[name] + float(off) - args.start
         for ct in cut_times(args):
             if ct - 0.07 < t0 < ct:
                 t0 = ct
@@ -1342,7 +1343,7 @@ def main():
     ap.add_argument("--timer", help="START_EVENT:END_EVENT count-up timer overlay (speed builds)")
     ap.add_argument("--speed", help='JSON list of [START_EVENT, END_EVENT, FACTOR|"cut"] time-lapse spans (scripts/timewarp.py)')
     ap.add_argument("--clock", help='JSON list of [START_EVENT, END_EVENT, TARGET_SECONDS, LABEL] clocks counting to a target time')
-    ap.add_argument("--captions", help='JSON list of [EVENT, TEXT]: the top band\'s caption switches to TEXT at EVENT (a numbered list: "1. ...", "2. ..."); --caption shows before the first')
+    ap.add_argument("--captions", help='JSON list of [EVENT[:OFFSET_S], TEXT]: the top band\'s caption switches to TEXT at EVENT (a numbered list: "1. ...", "2. ..."); --caption shows before the first')
     ap.add_argument("--subs", help='JSON list of [event, text, seconds?] green narration subtitles')
     ap.add_argument("--subs_y", type=float, default=0.42, help="subtitle height as a fraction of the game view (0.15 = top third; default 0.42, mid view)")
     ap.add_argument("--death_screen", help="timeline event at which the vanilla death screen appears (+0.6 s)")

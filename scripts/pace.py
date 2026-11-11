@@ -377,6 +377,15 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     cut_marks = sorted({round(m["out"], 2) for m in marks if m["event"] in ("cut", "respawn") and 0.05 < m["out"] < dur - 0.05})
     # a cut is a cut if the picture shows it; a cut mark the picture doesn't show (a same-place cut) still counts
     cuts = sorted(set(cuts_v) | {c for c in cut_marks if not any(abs(c - v) < 0.2 for v in cuts_v)})
+    if not caps and clock and edit.get("captions"):   # a stunt's band captions switching on marks (edit.captions): each change is news
+        for spec, text in ((c[0], c[1]) for c in edit["captions"]):
+            try:
+                name, _, off = str(spec).rpartition(":") if ":" in str(spec) else (str(spec), "", "0")
+                o = clock.resolve(f"{name}{float(off):+.3f}")["out"]
+            except (ValueError, KeyError):
+                o = None
+            if o is not None and 0 < o < dur:
+                caps.append((round(o, 3), text, None))
     cap_times = sorted({round(t, 2) for t, _, _ in caps} | set(edit_caption_times(video, edit, rec, clock)))
     other_marks = [(round(m["out"], 2), m["event"]) for m in marks if m["event"] not in ("line", "cut", "shot", "self", "start", "end", "f1_on", "f1_off", "story_end")]
     builds = build_events(rec.get("timeline", []), clock.out_of_src) if rec and clock else []
