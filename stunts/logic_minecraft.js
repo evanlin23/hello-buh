@@ -32,10 +32,14 @@ const quirks = [
     async perform (ctx, L) {
       await L.A.dig(L.block(0, 1, -3))
       await L.A.dig(L.block(0, 2, -3))
+      // the Short opens HERE (openOn 'q0', owner r:r0f3da0: frame 0 = the subject): the view already on the gap, the
+      // canopy hanging over the stump, "trees: float" up; the chop before it is cut
+      const gap = L.at(0.5, 2.6, -2.5)
+      await L.A.turnTo(gap, { hold: 2 })
       L.quirk()
-      // step back, eyes on the gap: the whole tree hanging over the stump
-      await L.A.back(7, { look: L.at(0.5, 3.0, -2.5) })
-      await L.hold(8, L.at(0.5, 3.6, -2.5))
+      // and it moves at once: a step back, eyes rising to the canopy, the whole tree hanging over the stump
+      await L.A.back(9, { look: L.at(0.5, 3.4, -2.5) })
+      await L.hold(10, L.at(0.5, 3.6, -2.5))
     },
     hold: 4
   },
@@ -195,6 +199,7 @@ const quirks = [
 module.exports = makeLogic({
   name: 'logic_minecraft',
   caption: 'minecraft logic 💀',
+  openOn: 'q0',
   red: 'logic',
   // two of each block placed: the hand is never empty (review 1: the bare arm drew wrong)
   hotbar: ['diamond_axe', 'diamond_shovel', 'diamond_pickaxe', ['sponge', 2], ['carved_pumpkin', 2], 'flint_and_steel', ['glowstone', 4]],
