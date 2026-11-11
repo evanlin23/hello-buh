@@ -1,9 +1,10 @@
 {
   "name": "story_thirty_one_raids",
-  "caption": "why do raiders always follow grandpa home 😶",
+  "channel": "buhstories",
+  "caption": "Thirty-one raids. Every one started the night Grandpa came home",
   "youtube": {
-    "title": "why do raiders always follow grandpa home 😶 #minecraft #shorts",
-    "description": "why do raiders always follow grandpa home 😶\n\n\"Magistar\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "Thirty-one raids. Every one started the night Grandpa came home #minecraft #shorts",
+    "description": "Thirty-one raids. Every one started the night Grandpa came home\n\n\"Magistar\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -24,49 +25,57 @@
       "heroic",
       "heroic"
     ],
-    "payoff_in_short_s": 44.1,
-    "mix": "scripts/story_audio.py (docs/audio.md)"
+    "payoff_in_short_s": 40.9,
+    "mix": "scripts/story_audio.py (docs/audio.md)",
+    "mixed_in": "edit"
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 45,
+    "duration_s": 41.9,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 35447073,
-    "sha256": "002ea4735805e0c14854b3654925c3051521d27510a0a68d628aa37f8daecb5a",
+    "bytes": 61146841,
+    "sha256": "9d552d45ea16d81b5346bbaa401b0af98e610b2f392acf40112fca3749ce2bae",
     "release": {
       "tag": "pkg-story_thirty_one_raids",
-      "asset": "story_thirty_one_raids.short.002ea4735805e0c1.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short.002ea4735805e0c1.mp4",
-      "sha256": "002ea4735805e0c14854b3654925c3051521d27510a0a68d628aa37f8daecb5a",
-      "bytes": 35447073
+      "asset": "story_thirty_one_raids.short.9d552d45ea16d81b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short.9d552d45ea16d81b.mp4",
+      "sha256": "9d552d45ea16d81b5346bbaa401b0af98e610b2f392acf40112fca3749ce2bae",
+      "bytes": 61146841
     },
     "nosong_release": {
       "tag": "pkg-story_thirty_one_raids",
-      "asset": "story_thirty_one_raids.short_nosong.e8708156a93c30ca.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short_nosong.e8708156a93c30ca.mp4",
-      "sha256": "e8708156a93c30cab9f17eb8c2d36022d5dfa9c574b45865d4922bbad82d98cb",
-      "bytes": 35378892
+      "asset": "story_thirty_one_raids.short_nosong.9d552d45ea16d81b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_thirty_one_raids/story_thirty_one_raids.short_nosong.9d552d45ea16d81b.mp4",
+      "sha256": "9d552d45ea16d81b5346bbaa401b0af98e610b2f392acf40112fca3749ce2bae",
+      "bytes": 61146841
     }
   },
   "edit": {
-    "caption": "why do raiders always follow grandpa home 😶",
-    "red": "grandpa",
+    "caption": "Thirty-one raids. Every one started the night Grandpa came home",
+    "red": "home",
     "story": "stories/thirty_one_raids",
     "startAt": "line:0",
     "endAfter": "story_end:0",
     "punch": [
-      "payoff"
+      "raidbar"
     ],
+    "punchStress": true,
     "args": [
       "--caption",
-      "why do raiders always follow grandpa home 😶",
+      "Thirty-one raids. Every one started the night Grandpa came home",
       "--red",
-      "grandpa",
+      "home",
+      "--red_rgb",
+      "FFD640",
       "--punch",
-      "[\"payoff\"]",
+      "[\"raidbar\"]",
+      "--punch_stress",
+      "[[\"L01\",3.04,0.07],[\"L08\",2.82,0.07],[\"L11\",2.74,0.07]]",
+      "--chat_align",
+      "center",
       "--story",
       "stories/thirty_one_raids",
       "--start_at",
@@ -87,12 +96,12 @@
       "y": 71,
       "z": -485
     },
-    "ticks": 927,
-    "seconds": 46.35,
+    "ticks": 986,
+    "seconds": 49.3,
     "deaths": 0,
     "events": [
       {
-        "t": 0.75,
+        "t": 0.8,
         "event": "start"
       },
       {
@@ -112,11 +121,11 @@
         "event": "time"
       },
       {
-        "t": 1.15,
+        "t": 1.2,
         "event": "line"
       },
       {
-        "t": 2.55,
+        "t": 1.55,
         "event": "ent_swing"
       },
       {
@@ -132,88 +141,192 @@
         "event": "time"
       },
       {
-        "t": 4.75,
+        "t": 4.8,
+        "event": "pose"
+      },
+      {
+        "t": 4.8,
         "event": "line"
       },
       {
-        "t": 8,
-        "event": "shot"
-      },
-      {
-        "t": 8,
+        "t": 7.05,
         "event": "cut"
       },
       {
-        "t": 8,
+        "t": 7.05,
         "event": "time"
       },
       {
-        "t": 8.05,
-        "event": "line"
-      },
-      {
-        "t": 8.05,
-        "event": "ent_swing"
-      },
-      {
-        "t": 8.7,
-        "event": "ent_swing"
-      },
-      {
-        "t": 9.3,
-        "event": "ent_swing"
-      },
-      {
-        "t": 9.9,
+        "t": 7.05,
         "event": "shot"
       },
       {
-        "t": 9.9,
+        "t": 7.2,
+        "event": "ent_swing"
+      },
+      {
+        "t": 7.8,
+        "event": "ent_swing"
+      },
+      {
+        "t": 8.4,
+        "event": "ent_swing"
+      },
+      {
+        "t": 8.45,
+        "event": "line"
+      },
+      {
+        "t": 9.05,
+        "event": "ent_swing"
+      },
+      {
+        "t": 9.65,
+        "event": "ent_swing"
+      },
+      {
+        "t": 9.75,
         "event": "cut"
       },
       {
-        "t": 9.95,
-        "event": "line"
+        "t": 9.75,
+        "event": "shot"
       },
       {
         "t": 10.25,
         "event": "ent_swing"
       },
       {
-        "t": 10.35,
-        "event": "block_entity"
-      },
-      {
-        "t": 10.35,
-        "event": "block_entity"
-      },
-      {
         "t": 10.85,
         "event": "ent_swing"
       },
       {
+        "t": 11.4,
+        "event": "actor"
+      },
+      {
+        "t": 11.4,
+        "event": "actor"
+      },
+      {
+        "t": 11.4,
+        "event": "actor"
+      },
+      {
+        "t": 11.4,
+        "event": "actor"
+      },
+      {
         "t": 11.45,
-        "event": "ent_swing"
-      },
-      {
-        "t": 12.05,
-        "event": "ent_swing"
-      },
-      {
-        "t": 12.8,
         "event": "shot"
       },
       {
-        "t": 12.8,
+        "t": 11.45,
         "event": "cut"
       },
       {
-        "t": 12.8,
+        "t": 11.45,
         "event": "time"
       },
       {
-        "t": 12.85,
+        "t": 11.55,
+        "event": "pose_off"
+      },
+      {
+        "t": 11.55,
         "event": "line"
+      },
+      {
+        "t": 12.25,
+        "event": "vel"
+      },
+      {
+        "t": 12.35,
+        "event": "vel"
+      },
+      {
+        "t": 12.45,
+        "event": "vel"
+      },
+      {
+        "t": 12.55,
+        "event": "vel"
+      },
+      {
+        "t": 12.65,
+        "event": "vel"
+      },
+      {
+        "t": 13.1,
+        "event": "shot"
+      },
+      {
+        "t": 13.1,
+        "event": "cut"
+      },
+      {
+        "t": 13.1,
+        "event": "time"
+      },
+      {
+        "t": 13.2,
+        "event": "pose"
+      },
+      {
+        "t": 13.2,
+        "event": "line"
+      },
+      {
+        "t": 13.2,
+        "event": "vel"
+      },
+      {
+        "t": 13.25,
+        "event": "vel"
+      },
+      {
+        "t": 13.3,
+        "event": "vel"
+      },
+      {
+        "t": 13.35,
+        "event": "vel"
+      },
+      {
+        "t": 13.4,
+        "event": "vel"
+      },
+      {
+        "t": 13.45,
+        "event": "vel"
+      },
+      {
+        "t": 13.5,
+        "event": "vel"
+      },
+      {
+        "t": 13.55,
+        "event": "vel"
+      },
+      {
+        "t": 13.6,
+        "event": "vel"
+      },
+      {
+        "t": 13.65,
+        "event": "vel"
+      },
+      {
+        "t": 13.7,
+        "event": "ent_swing"
+      },
+      {
+        "t": 13.8,
+        "event": "vel"
+      },
+      {
+        "t": 13.85,
+        "event": "vel"
       },
       {
         "t": 14,
@@ -224,308 +337,236 @@
         "event": "vel"
       },
       {
+        "t": 14.15,
+        "event": "vel"
+      },
+      {
         "t": 14.2,
         "event": "vel"
       },
       {
-        "t": 14.3,
-        "event": "vel"
-      },
-      {
-        "t": 14.4,
-        "event": "vel"
-      },
-      {
-        "t": 14.95,
-        "event": "vel"
-      },
-      {
-        "t": 15,
-        "event": "vel"
-      },
-      {
-        "t": 15.05,
-        "event": "vel"
-      },
-      {
-        "t": 15.1,
-        "event": "vel"
-      },
-      {
-        "t": 15.15,
-        "event": "vel"
-      },
-      {
-        "t": 15.2,
-        "event": "vel"
-      },
-      {
-        "t": 15.25,
-        "event": "vel"
-      },
-      {
-        "t": 15.3,
-        "event": "vel"
-      },
-      {
-        "t": 15.35,
-        "event": "vel"
-      },
-      {
-        "t": 15.4,
-        "event": "vel"
-      },
-      {
-        "t": 15.65,
-        "event": "vel"
-      },
-      {
-        "t": 15.7,
-        "event": "vel"
-      },
-      {
-        "t": 15.75,
-        "event": "vel"
-      },
-      {
-        "t": 15.8,
-        "event": "vel"
-      },
-      {
-        "t": 15.85,
-        "event": "vel"
-      },
-      {
-        "t": 15.95,
-        "event": "vel"
-      },
-      {
-        "t": 16,
-        "event": "vel"
-      },
-      {
-        "t": 16,
-        "event": "vel"
-      },
-      {
-        "t": 16.05,
-        "event": "shot"
-      },
-      {
-        "t": 16.05,
-        "event": "cut"
-      },
-      {
-        "t": 16.05,
-        "event": "vel"
-      },
-      {
-        "t": 16.05,
-        "event": "vel"
-      },
-      {
-        "t": 16.05,
-        "event": "time"
-      },
-      {
-        "t": 16.1,
-        "event": "line"
-      },
-      {
-        "t": 16.1,
-        "event": "vel"
-      },
-      {
-        "t": 18.45,
-        "event": "shot"
-      },
-      {
-        "t": 18.45,
-        "event": "cut"
-      },
-      {
-        "t": 18.45,
-        "event": "time"
-      },
-      {
-        "t": 18.5,
-        "event": "line"
-      },
-      {
-        "t": 18.95,
+        "t": 14.9,
         "event": "ent_swing"
       },
       {
-        "t": 20.75,
-        "event": "f1_off"
-      },
-      {
-        "t": 20.75,
+        "t": 15.65,
         "event": "shot"
       },
       {
-        "t": 20.75,
+        "t": 17.8,
+        "event": "shot"
+      },
+      {
+        "t": 17.8,
         "event": "cut"
       },
       {
-        "t": 20.8,
+        "t": 17.8,
+        "event": "time"
+      },
+      {
+        "t": 17.9,
+        "event": "pose_off"
+      },
+      {
+        "t": 17.9,
+        "event": "line"
+      },
+      {
+        "t": 19.9,
+        "event": "cut"
+      },
+      {
+        "t": 19.9,
+        "event": "time"
+      },
+      {
+        "t": 19.9,
+        "event": "shot"
+      },
+      {
+        "t": 20.1,
+        "event": "ent_swing"
+      },
+      {
+        "t": 21.9,
+        "event": "cut"
+      },
+      {
+        "t": 21.9,
+        "event": "f1_off"
+      },
+      {
+        "t": 21.9,
+        "event": "shot"
+      },
+      {
+        "t": 22,
         "event": "swing"
       },
       {
-        "t": 20.8,
+        "t": 22,
         "event": "container",
         "type": "minecraft:generic_9x3"
-      },
-      {
-        "t": 20.8,
-        "event": "block_action"
-      },
-      {
-        "t": 21,
-        "event": "block_action"
-      },
-      {
-        "t": 21.25,
-        "event": "block_action"
-      },
-      {
-        "t": 21.5,
-        "event": "block_action"
-      },
-      {
-        "t": 21.75,
-        "event": "block_action"
-      },
-      {
-        "t": 21.95,
-        "event": "container_close"
-      },
-      {
-        "t": 21.95,
-        "event": "block_action"
       },
       {
         "t": 22,
         "event": "block_action"
       },
       {
-        "t": 22.1,
+        "t": 22.05,
+        "event": "gui_freeze"
+      },
+      {
+        "t": 22.2,
+        "event": "block_action"
+      },
+      {
+        "t": 22.45,
+        "event": "block_action"
+      },
+      {
+        "t": 22.7,
+        "event": "block_action"
+      },
+      {
+        "t": 22.95,
+        "event": "block_action"
+      },
+      {
+        "t": 23.2,
+        "event": "block_action"
+      },
+      {
+        "t": 23.45,
+        "event": "block_action"
+      },
+      {
+        "t": 23.7,
+        "event": "block_action"
+      },
+      {
+        "t": 23.95,
+        "event": "block_action"
+      },
+      {
+        "t": 24.2,
+        "event": "block_action"
+      },
+      {
+        "t": 24.45,
+        "event": "block_action"
+      },
+      {
+        "t": 24.7,
+        "event": "block_action"
+      },
+      {
+        "t": 24.95,
+        "event": "block_action"
+      },
+      {
+        "t": 25.05,
+        "event": "container_close"
+      },
+      {
+        "t": 25.1,
+        "event": "gui_thaw"
+      },
+      {
+        "t": 25.1,
+        "event": "block_action"
+      },
+      {
+        "t": 25.2,
         "event": "f1_on"
       },
       {
-        "t": 22.1,
+        "t": 25.2,
         "event": "shot"
       },
       {
-        "t": 22.1,
+        "t": 25.2,
         "event": "cut"
       },
       {
-        "t": 22.1,
+        "t": 25.2,
+        "event": "block_action"
+      },
+      {
+        "t": 25.2,
         "event": "time"
       },
       {
-        "t": 22.15,
+        "t": 25.3,
         "event": "line"
       },
       {
-        "t": 24.05,
+        "t": 25.6,
         "event": "pose"
       },
       {
-        "t": 24.4,
+        "t": 26.7,
         "event": "pose_off"
       },
       {
-        "t": 25.35,
+        "t": 27.4,
         "event": "shot"
       },
       {
-        "t": 25.35,
+        "t": 27.4,
         "event": "cut"
       },
       {
-        "t": 25.4,
+        "t": 27.55,
         "event": "line"
       },
       {
-        "t": 29.4,
-        "event": "ent_swing"
+        "t": 30.75,
+        "event": "line"
       },
       {
-        "t": 30,
-        "event": "shot"
-      },
-      {
-        "t": 30,
-        "event": "cut"
-      },
-      {
-        "t": 30,
-        "event": "time"
-      },
-      {
-        "t": 30.05,
+        "t": 30.85,
         "event": "pose"
       },
       {
-        "t": 30.05,
-        "event": "line"
-      },
-      {
-        "t": 30.6,
+        "t": 33.9,
         "event": "ent_swing"
       },
       {
-        "t": 31.45,
+        "t": 35.25,
         "event": "shot"
       },
       {
-        "t": 31.8,
-        "event": "ent_swing"
-      },
-      {
-        "t": 34.95,
-        "event": "shot"
-      },
-      {
-        "t": 34.95,
+        "t": 35.25,
         "event": "cut"
       },
       {
-        "t": 34.95,
+        "t": 35.25,
         "event": "time"
       },
       {
-        "t": 35,
-        "event": "pose"
-      },
-      {
-        "t": 35,
-        "event": "pose_off"
-      },
-      {
-        "t": 35,
+        "t": 35.35,
         "event": "line"
       },
       {
-        "t": 37.8,
+        "t": 37.65,
+        "event": "cut"
+      },
+      {
+        "t": 37.65,
+        "event": "time"
+      },
+      {
+        "t": 37.65,
         "event": "f1_off"
       },
       {
-        "t": 37.8,
+        "t": 37.65,
         "event": "shot"
       },
       {
-        "t": 37.8,
-        "event": "cut"
-      },
-      {
-        "t": 37.8,
-        "event": "time"
-      },
-      {
-        "t": 37.85,
+        "t": 37.75,
         "event": "line"
       },
       {
@@ -545,43 +586,127 @@
         "event": "effect_end"
       },
       {
-        "t": 41.6,
+        "t": 40.7,
+        "event": "actor"
+      },
+      {
+        "t": 40.7,
+        "event": "actor"
+      },
+      {
+        "t": 40.7,
+        "event": "actor"
+      },
+      {
+        "t": 40.7,
+        "event": "actor"
+      },
+      {
+        "t": 40.7,
+        "event": "actor"
+      },
+      {
+        "t": 40.7,
+        "event": "actor"
+      },
+      {
+        "t": 40.9,
         "event": "cut"
       },
       {
-        "t": 41.6,
+        "t": 40.9,
         "event": "effect_end"
       },
       {
-        "t": 41.6,
+        "t": 40.9,
         "event": "effect_end"
       },
       {
-        "t": 41.6,
+        "t": 40.9,
         "event": "time"
       },
       {
-        "t": 43.5,
-        "event": "line"
+        "t": 40.9,
+        "event": "f1_on"
       },
       {
-        "t": 44.1,
+        "t": 40.9,
+        "event": "shot"
+      },
+      {
+        "t": 41.1,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.15,
+        "event": "motion_warn"
+      },
+      {
+        "t": 41.2,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.3,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.4,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.5,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.6,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.7,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.8,
+        "event": "bossbar"
+      },
+      {
+        "t": 41.9,
+        "event": "bossbar"
+      },
+      {
+        "t": 42,
+        "event": "motion_warn"
+      },
+      {
+        "t": 42,
+        "event": "bossbar"
+      },
+      {
+        "t": 42,
         "event": "ent_swing"
       },
       {
-        "t": 45.25,
-        "event": "payoff"
+        "t": 42.1,
+        "event": "motion_warn"
       },
       {
-        "t": 45.25,
-        "event": "ent_swing"
+        "t": 42.1,
+        "event": "bossbar"
       },
       {
-        "t": 46.15,
+        "t": 42.1,
+        "event": "raidbar"
+      },
+      {
+        "t": 42.45,
+        "event": "motion_warn"
+      },
+      {
+        "t": 43.1,
         "event": "story_end"
       },
       {
-        "t": 46.35,
+        "t": 49.3,
         "event": "end"
       }
     ]
@@ -589,27 +714,52 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/story_thirty_one_raids",
-    "commit": "7ae9490cc585a7ddbb8b54f004268e6d04f67337",
+    "commit": "ee9820e688cdfb44f6a4dfbcff9b60a3fcd8bc40",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42844451555",
-    "rendered_at": "2026-11-10T15:40:26.148Z",
-    "head_at_publish": "6e492efc835c6ca6d29c86345880e79519c68f42",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43002818513",
+    "rendered_at": "2026-11-11T10:44:06.527Z",
+    "head_at_publish": "d2a0c1f721a86637db6e56eb796eb5f15afe61d5",
     "stunt": "stunts/story_thirty_one_raids.js",
     "source_snapshot": [
       "source/story_thirty_one_raids.js",
       "source/movie.js",
-      "source/story.js"
+      "source/story.js",
+      "source/motion.js",
+      "source/sight.js",
+      "source/act.js"
     ]
   },
   "rebuild": [
-    "git checkout 7ae9490cc585",
+    "git checkout ee9820e688cd",
     "gunzip -c shorts/story_thirty_one_raids/recording.json.gz > work/story_thirty_one_raids.rec.json",
     "node render.js work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.frames 60 1080 1011",
     "python3 audio.py work/story_thirty_one_raids.rec.json work/story_thirty_one_raids.wav",
-    "python3 edit.py --frames work/story_thirty_one_raids.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_thirty_one_raids.rec.json --audio work/story_thirty_one_raids.wav --caption \"why do raiders always follow grandpa home 😶\" --red grandpa --punch [\"payoff\"] --story stories/thirty_one_raids --start_at line:0 --end_after story_end:0 --out out/story_thirty_one_raids.mp4"
+    "python3 edit.py --frames work/story_thirty_one_raids.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_thirty_one_raids.rec.json --audio work/story_thirty_one_raids.wav --caption \"Thirty-one raids. Every one started the night Grandpa came home\" --red home --red_rgb FFD640 --punch [\"raidbar\"] --punch_stress [[\"L01\",3.04,0.07],[\"L08\",2.82,0.07],[\"L11\",2.74,0.07]] --chat_align center --story stories/thirty_one_raids --start_at line:0 --end_after story_end:0 --out out/story_thirty_one_raids.mp4"
   ],
   "status": "held",
-  "notes": "Thirty-One Raids, re-edit: captions re-aligned to the speech (owner: captions out of sync), hero Buh (never named aloud), re-rendered on main's render code. Narrator Pip (3.8-flash-lite), Grandpa Charon (2.5-flash). Review: r1 READY, r2 READY (0 blockers). Nitpicks: L01 caption 0.18 s before the full voice, 0.2 s whip turn at 39 s, chest-screen lead-in, S11-12 sky reads day, no raid bar/omen icon (staged raid), S05 small on a phone, S09 soft DOF.",
-  "published_at": "2026-11-10T15:51:17.908Z",
-  "held_reason": "owner 2026-11-10: new stories don't go out until the owner OKs them"
+  "notes": "Buh Stories #3, voiced r-cast build (Pip one take + Grandpa), bright look, gold title; independent review READY (session_019n1tKHZw9eftzBtUsVjnYa), 0 blockers; HELD for the owner's OK",
+  "published_at": "2026-11-11T11:05:52.761Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T11:06:07+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 41.90 s vs the reviewed render 41.90 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 1,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T10:21:38.636Z",
+      "report": "out/story_thirty_one_raids.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
