@@ -337,11 +337,10 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/mega_sponge",
-    "commit": "9fc2c31a87646ff15739d7b1154d3c2e1fca3313",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43016543598",
-    "rendered_at": "2026-11-11T12:12:17.533Z",
+    "branch": "main",
+    "commit": "58ea2def4b4db2f611a5cfa13c5baa3b65fe73e8",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T12:27:26.621Z",
     "head_at_publish": "58ea2def4b4db2f611a5cfa13c5baa3b65fe73e8",
     "stunt": "stunts/mega_sponge.js",
     "source_snapshot": [
@@ -351,18 +350,18 @@
     ]
   },
   "rebuild": [
-    "git checkout 9fc2c31a8764",
+    "git checkout 58ea2def4b4d",
     "gunzip -c shorts/mega_sponge/recording.json.gz > work/mega_sponge.rec.json",
     "node render.js work/mega_sponge.rec.json work/mega_sponge.frames 60 1080 1011",
     "python3 audio.py work/mega_sponge.rec.json work/mega_sponge.wav",
     "python3 edit.py --frames work/mega_sponge.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mega_sponge.rec.json --audio work/mega_sponge.wav --caption \"rate my starter house\" --punch [[\"thread\",0,1.08]] --flash [[\"inside\",0,0.45],[\"thread\",0,0.3]] --sfx [[\"dip\",\"thread\",0.4],[\"impact\",\"thread\",{\"gain\":1.4}],[\"dip\",\"swing\",0.25,{\"nth\":1}],[\"impact\",\"swing\",{\"nth\":1,\"gain\":0.6}],[\"dip\",\"swing\",0.25,{\"nth\":3}]] --start_at start:0 --end_after thread:0.8 --out out/mega_sponge.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "format mega, Short 1 (owner r:r8bb1e3). Awaiting independent review (pending-qa): round 1 was a self-review (3 blockers, all fixed: the climb's straight-down spin, the run leaving the build, the dark east face); round 2 not done. pace OK (25.45 s, 0 blockers), mixcheck OK on the NCS mix. Nitpicks: no hit in the first 1.5 s (pace WARN), the climb is close to the north face for ~1 s. Caption alternates: 'small build, don't judge' / 'quick build before dinner' / 'my first build, be nice'.",
-  "published_at": "2026-11-11T12:18:21.786Z",
+  "status": "ready",
+  "notes": "mega #1 (lib/mega.js): a level-4 Menger sponge (81 blocks, 160k) in a flower forest at golden light, elytra runs + build shots, dive and thread through the core; round 1 (self) 3 blockers fixed, independent review READY (0 blockers). Nitpicks: 20 fps steps on the first 0.2 s of each first-person run; no game hit before 1.5 s (the bed covers it); no flowers in shot; tiny speck at 25.4 s.",
+  "published_at": "2026-11-11T12:28:34.428Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T12:18:54+00:00",
+    "at": "2026-11-11T12:29:07+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -378,8 +377,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T12:01:15.932Z",
-      "report": "out/mega_sponge.check.json"
+      "at": "2026-11-11T12:27:57.322Z",
+      "report": "work/hb/mega_sponge.check.json"
     },
     "key_sounds": "n/a"
   }
