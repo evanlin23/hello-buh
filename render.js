@@ -2452,7 +2452,8 @@ else:
     const sp = name && spriteOf(name)
     const pose = P[Math.max(0, Math.min(P.length - 1, Math.floor(t0)))]
     if (!sp || !pose) continue
-    PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
+    if (Number.isFinite(ev.x)) PARTS.push(...particles.spawn({ type: 'crumbs', t: ev.t, tex: sp, x: ev.x, y: ev.y, z: ev.z, n: ev.n, scale: ev.scale }))   // at a held thing
+    else PARTS.push(...particles.spawn({ type: 'item_break', t: ev.t, tex: sp, x: pose[1], y: pose[2] + EYE, z: pose[3], jyaw: Math.PI - pose[4], jpitch: -pose[5] }))
   }
   // starting to mine redstone ore (RedStoneOreBlock.attack -> spawnParticles): one redstone dust speck
   // 0.5625 out from the centre of each face not against a solid block, at a random spot on that face

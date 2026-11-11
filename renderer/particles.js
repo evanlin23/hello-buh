@@ -233,6 +233,16 @@ function spawn (ev, blockTex) {
         g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * 2 / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
     }
   }
+  if (ev.type === 'crumbs') {
+    // eating crumbs from a held thing at (x, y, z) (a stunt's item_crumbs mark with a position: lib/interrupt.js eats a
+    // held mob): ev.n bits of the item sprite (BreakingItemParticle: a random quarter, gravity 0.04, friction 0.98,
+    // life 4/(r*0.9+0.1)), thrown a little up and out, ev.scale times vanilla's size
+    for (let i = 0; i < (ev.n || 5); i++) {
+      const uo = r() * 3, vo = r() * 3
+      P({ x: ev.x + (r() - 0.5) * 0.12, y: ev.y + (r() - 0.5) * 0.08, z: ev.z + (r() - 0.5) * 0.12, vx: (r() - 0.5) * 0.08, vy: r() * 0.06 + 0.02, vz: (r() - 0.5) * 0.08,
+        g: 0.04, drag: 0.98, life: 4 / (r() * 0.9 + 0.1), size: 0.1 * (r() * 0.5 + 0.5) * (ev.scale ?? 1) / 2, tex: ev.tex, uv: [uo / 4, vo / 4, 0.25, 0.25], color: [1, 1, 1] })
+    }
+  }
   if (ev.type === 'poof') {
     // a mob vanishing (LivingEntity.makePoofParticles): 20 ExplodeParticles (poof) at random points in
     // its box (ev.w, ev.h; default a player-sized 0.6 x 1.8, from ev.y up), gaussian x 0.02 plus +-0.05
