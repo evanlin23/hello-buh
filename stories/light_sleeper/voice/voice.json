@@ -486,6 +486,28 @@
    "beat": "L06",
    "offset": 25.787
   },
+  "L15": {
+   "who": "Mom",
+   "text": "Sweetie, don't MOVE.",
+   "dur": 2.92,
+   "onset": 0.17,
+   "end": 2.52,
+   "chunks": [
+    [
+     0.17,
+     2.52
+    ]
+   ],
+   "captions": [
+    "Sweetie, don't MOVE."
+   ],
+   "with": [
+    "Mom"
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "beat": "L15",
+   "offset": 0.0
+  },
   "L16": {
    "who": "N",
    "text": "But I'd never danced before. So I stepped off the carpet onto the stone.",
@@ -775,7 +797,25 @@
    ],
    "take": "L01",
    "take_at": 39.013
+  },
+  "L15": {
+   "lines": [
+    "L15"
+   ],
+   "file": "beat_L15.wav",
+   "dur": 2.92,
+   "offsets": [
+    0.0
+   ],
+   "model": "gemini-3.8-flash-tts",
+   "try": 1,
+   "tries": 1,
+   "fixes": [],
+   "ok": true,
+   "gate": [],
+   "cut": "whole",
+   "rejected": []
   }
  },
- "total": 48.77
+ "total": 51.94
 }
