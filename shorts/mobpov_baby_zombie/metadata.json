@@ -25,26 +25,26 @@
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 8.85,
+    "duration_s": 8.65,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 13310767,
-    "sha256": "c3c6ba747ff8fa992a3512692ece452c5f78ea5a6d9d750e203c4a95de79ee13",
+    "bytes": 13199099,
+    "sha256": "590704a75c6a451b612dfd78f94d274328f3178f1b40ad0ad90712c664331902",
     "release": {
       "tag": "pkg-mobpov_baby_zombie",
-      "asset": "mobpov_baby_zombie.short.c3c6ba747ff8fa99.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mobpov_baby_zombie/mobpov_baby_zombie.short.c3c6ba747ff8fa99.mp4",
-      "sha256": "c3c6ba747ff8fa992a3512692ece452c5f78ea5a6d9d750e203c4a95de79ee13",
-      "bytes": 13310767
+      "asset": "mobpov_baby_zombie.short.590704a75c6a451b.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mobpov_baby_zombie/mobpov_baby_zombie.short.590704a75c6a451b.mp4",
+      "sha256": "590704a75c6a451b612dfd78f94d274328f3178f1b40ad0ad90712c664331902",
+      "bytes": 13199099
     },
     "nosong_release": {
       "tag": "pkg-mobpov_baby_zombie",
-      "asset": "mobpov_baby_zombie.short_nosong.45473a2aa0079181.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mobpov_baby_zombie/mobpov_baby_zombie.short_nosong.45473a2aa0079181.mp4",
-      "sha256": "45473a2aa00791815e38118cbcbcf0c932f62e36299f636b7e9ad2c37df17382",
-      "bytes": 13301311
+      "asset": "mobpov_baby_zombie.short_nosong.54b2bded814a7754.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mobpov_baby_zombie/mobpov_baby_zombie.short_nosong.54b2bded814a7754.mp4",
+      "sha256": "54b2bded814a775403a741b24257a30363c40bc1024db754d28fd85da883604d",
+      "bytes": 13185905
     }
   },
   "edit": {
@@ -112,6 +112,13 @@
       ],
       [
         "impact",
+        "go",
+        {
+          "gain": 0.8
+        }
+      ],
+      [
+        "impact",
         "smash",
         {
           "nth": 0,
@@ -135,7 +142,7 @@
       "--flash",
       "[[\"payoff\",0,0.4]]",
       "--sfx",
-      "[[\"whoosh\",\"leg\",{\"nth\":0,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":1,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":2,\"gain\":0.35}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"impact\",\"smash\",{\"nth\":0,\"gain\":0.5}]]",
+      "[[\"whoosh\",\"leg\",{\"nth\":0,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":1,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":2,\"gain\":0.35}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"impact\",\"go\",{\"gain\":0.8}],[\"impact\",\"smash\",{\"nth\":0,\"gain\":0.5}]]",
       "--start_at",
       "go:-0.05",
       "--end_after",
@@ -492,10 +499,10 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "main",
-    "commit": "832d95f7a8e2550318358e451a604899e03214a6",
+    "commit": "298125b3e8383c12749d2e4bce514168d0cb3183",
     "rendered": "local",
-    "rendered_at": "2026-11-11T23:04:15.272Z",
-    "head_at_publish": "945377ede470caf7fd2f3e8173ba587b54131d5f",
+    "rendered_at": "2026-11-11T23:47:29.328Z",
+    "head_at_publish": "298125b3e8383c12749d2e4bce514168d0cb3183",
     "stunt": "stunts/mobpov_baby_zombie.js",
     "source_snapshot": [
       "source/mobpov_baby_zombie.js",
@@ -504,34 +511,34 @@
     ]
   },
   "rebuild": [
-    "git checkout 832d95f7a8e2",
+    "git checkout 298125b3e838",
     "gunzip -c shorts/mobpov_baby_zombie/recording.json.gz > work/mobpov_baby_zombie.rec.json",
     "node render.js work/mobpov_baby_zombie.rec.json work/mobpov_baby_zombie.frames 60 1080 1011",
     "python3 audio.py work/mobpov_baby_zombie.rec.json work/mobpov_baby_zombie.wav",
-    "python3 edit.py --frames work/mobpov_baby_zombie.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mobpov_baby_zombie.rec.json --audio work/mobpov_baby_zombie.wav --caption \"this baby zombie will NOT stop 😭\" --self_name 56e --red \"baby zombie\" --subs \"[[\\\"found\\\",\\\"found you.\\\",0.65,0]]\" --subs_y 0.12 --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.4]] --sfx [[\"whoosh\",\"leg\",{\"nth\":0,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":1,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":2,\"gain\":0.35}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"impact\",\"smash\",{\"nth\":0,\"gain\":0.5}]] --start_at go:-0.05 --end_after payoff:0.8 --out out/mobpov_baby_zombie.mp4"
+    "python3 edit.py --frames work/mobpov_baby_zombie.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mobpov_baby_zombie.rec.json --audio work/mobpov_baby_zombie.wav --caption \"this baby zombie will NOT stop 😭\" --self_name 56e --red \"baby zombie\" --subs \"[[\\\"found\\\",\\\"found you.\\\",0.65,0]]\" --subs_y 0.12 --punch [[\"payoff\",0,1.08]] --flash [[\"payoff\",0,0.4]] --sfx [[\"whoosh\",\"leg\",{\"nth\":0,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":1,\"gain\":0.35}],[\"whoosh\",\"leg\",{\"nth\":2,\"gain\":0.35}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\"],[\"impact\",\"go\",{\"gain\":0.8}],[\"impact\",\"smash\",{\"nth\":0,\"gain\":0.5}]] --start_at go:-0.05 --end_after payoff:0.8 --out out/mobpov_baby_zombie.mp4"
   ],
   "status": "ready",
-  "notes": "worker: mobpov #1 (lib/mobpov.js); independent review r2 3 blockers fixed, r3 fix-check 1 blocker (sub timing) fixed edit-only, lead checked frames 7.3-8.0 s (clear of 56e); reaction caption + opening per r:r0f3da0",
-  "published_at": "2026-11-11T23:06:44.083Z",
+  "notes": "mobpov #1 re-cut: end 0.8 s after the payoff (r:r188b46) and an impact on 'go' so the opening has a real hit at ~0.1 s (r:r0f3da0); edit/sfx-only, lead checked audio + frames; earlier independent review r3 READY",
+  "published_at": "2026-11-11T23:48:59.241Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T23:07:07+00:00",
+    "at": "2026-11-11T23:49:19+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 8.85 s vs the reviewed render 8.85 s"
+      "summary": "short.mp4 8.66 s vs the reviewed render 8.65 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T23:05:15.830Z",
+      "at": "2026-11-11T23:47:49.054Z",
       "report": "work/hb/mobpov_baby_zombie.check.json"
     },
     "key_sounds": "n/a"
