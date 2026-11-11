@@ -528,6 +528,12 @@ STANDARDS.md in the same commit.
   claude/audition-mom-grandma): "mom D / grandma J".** Mom is **Pulcherrima** (was Sulafat, too close to Pip);
   Grandma is **Autonoe** (was Vindemiatrix, read as a man). Each is directed with one short bracketed clause and
   voiced on the story's character model; Light Sleeper's two Mom lines and Gold's Grandma line are re-voiced.
+- **Owner, 2026-11-11, after watching the held cuts (Light Sleeper 52 s, Gold 50 s, Dog on the Hill 50 s): "i think the
+  current length is fine, we shouldnt harp too much on length".** About 50 s at Pip's natural pace is fine. Length is
+  not a reason to cut lines or re-voice; a line goes only if it doesn't move the question. pace keeps only its floor
+  BLOCK; anything over 45 s is a note, never a blocker or a fix request.
+- **Owner, 2026-11-11, asked whether the narrator heard as a girl by the viewer panel is OK: "narrator is fine".** Pip
+  stays as is; the viewer panel's girl/boy read of the narrator is not a finding.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
