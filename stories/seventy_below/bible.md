@@ -54,8 +54,8 @@ Code names for the checker: `NaturalSpawner.createState` / `LocalMobCapCalculato
    story claims only that the narrator heard one spider on his wall, the first ever. Spiders hunt players at night
    and climb walls; it climbs toward his lit window. While it's within 8 blocks of the bed he can't sleep (S13: he's
    awake). It wanders off by day and despawns, or the village golem gets it (never said).
-8. **The new one.** The next night, after the spider is gone, a zombie spawns in the free slot and follows him (zombies
-   chase players within 35 blocks). Zombies path around a drop, so at the hole he hits it once (knockback) and it tips
+8. **The new one.** The next night, after the spider is gone, one of the night's spawns (a pack of up to 4) is a zombie
+   and follows him (zombies chase players within 35 blocks); the others despawn or wander. Zombies path around a drop, so at the hole he hits it once (knockback) and it tips
    in: 7 blocks (feet y 72 to 65), 4 damage, it lives. Seventy again.
 9. **Not stopped by the cap (never said, theory bonus):** raids, pillager patrols, phantoms (he sleeps anyway), zombie
    sieges, and spawners. So Thirty-One Raids' raids could still come.
