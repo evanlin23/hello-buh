@@ -1444,9 +1444,9 @@
   "notes": "interrupt #1 (lib/interrupt.js): lamp dance floor build; a skeleton's arrow interrupts, he eats a golden apple in its face, it poofs, back to work, the floor lights up; independent review READY (0 blockers). Nitpicks: badlands/ice spikes behind the plains 12.8-14.2 s; the skeleton never raises its bow; no absorption hearts drawn; no eating crumbs; small arrow on a phone.",
   "published_at": "2026-11-11T09:48:53.739Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:49:36+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:15:03+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 23.59 s vs the reviewed render 23.58 s"
@@ -1461,7 +1461,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:48:05.658Z",
+      "at": "2026-11-11T10:12:21.601Z",
       "report": "work/hb/interrupt_lamps.check.json"
     },
     "key_sounds": {

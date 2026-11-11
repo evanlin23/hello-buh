@@ -184,9 +184,9 @@
   "notes": "inside #1 v2 (owner r:r81cb9c): no pause, seamless mid-stride cut (frame scrub: max diff 1.09x walk median, 0 px shift); reviewer READY; nitpick: near-still last 0.3 s",
   "published_at": "2026-11-11T09:25:44.306Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:26:02+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:14:52+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 8.26 s vs the reviewed render 8.25 s"
@@ -201,7 +201,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:24:58.255Z",
+      "at": "2026-11-11T10:12:13.432Z",
       "report": "work/hb/inside_library.check.json"
     },
     "key_sounds": "n/a"

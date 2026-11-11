@@ -379,9 +379,9 @@
   "notes": "desire #1 v2 (owner r:r81cb9c): the path breaks straight through every obstacle (fence, bushes, tree, boulder, pond causeway, road walls, shed) and comes back across the lava; fresh independent review READY; payoff fix (edit only): dip + impact on 'final', riser ends before the dip. Nitpicks: dirt (not dirt_path) under broken obstacles; LAVA card over the first 0.2 s of the return; 2-block wall gaps small on a phone; path on lava low-contrast.",
   "published_at": "2026-11-11T09:42:06.524Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:42:37+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:14:37+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 13.12 s vs the reviewed render 13.10 s"
@@ -396,7 +396,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:39:48.874Z",
+      "at": "2026-11-11T10:14:25.826Z",
       "report": "work/hb/desire_town.check.json"
     },
     "key_sounds": {

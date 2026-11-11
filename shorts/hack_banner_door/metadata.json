@@ -559,9 +559,9 @@
   "notes": "hack #1 (banners have no hitbox): 6 nested banner doors, den -> vault; review r1 3 blockers (daylight through mined ore, turn to blank wall, under 30 s) fixed, r2 READY; mixcheck dead span fixed with a 'how deep does this go?' beat on the stair, re-checked READY. Nitpicks: decoy bump ~0.6 s of dark frames; the stair sub briefly over the green banner at ~9.8 s; stair-descent stutter WARN is vanilla stair stepping.",
   "published_at": "2026-11-11T09:46:11.198Z",
   "gates": {
-    "version": 3,
-    "at": "2026-11-11T09:46:59+00:00",
-    "by": "publish.js",
+    "version": 4,
+    "at": "2026-11-11T10:14:48+00:00",
+    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
     "package": {
       "ok": true,
       "summary": "short.mp4 30.21 s vs the reviewed render 30.20 s"
@@ -576,7 +576,7 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:43:36.860Z",
+      "at": "2026-11-11T10:12:08.694Z",
       "report": "work/hb/hack_banner_door.check.json"
     },
     "key_sounds": "n/a"
