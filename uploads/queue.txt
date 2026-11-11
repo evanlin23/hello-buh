@@ -58,3 +58,5 @@ sandart_tnt  # first
 logic_minecraft  # first
 cave_reveal
 half_heart
+stages_friends  # first
+trap_free_diamonds  # first
