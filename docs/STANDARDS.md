@@ -255,6 +255,10 @@ actions left silent). r:rc85ccc r:r36632d
 - **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
   swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
   Check: owner. r:r1f2a80
+- **Rank by views x conversion, and diagnose a flop before blaming its format**: the uploader orders formats by
+  expected subscribers per upload; a Short that stalls gets its execution checked (music level vs voice/key sound,
+  the first 1.5 s, readability) and the same fault fixed in queued Shorts of its format. Check: youtube_upload.py
+  (scores), the numbers check. r:rd56a20
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

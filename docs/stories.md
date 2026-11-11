@@ -282,6 +282,12 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11: "We should be trying for high views and high conversion right?" (yes to ranking formats by
+  expected subscribers per upload); "low views might be the format, but it could also just be us not doing it well.
+  for example the guess the mob had super loud music..."** The uploader ranks formats by expected subscribers per
+  upload (typical views x subs per 1k views, both shrunk toward the channel average, so one weak Short doesn't sink a
+  format). A Short that flops gets a cause before its format is blamed: check its execution first (music over the
+  voice or the key sound, a slow first 1.5 s, an unreadable stunt), fix the same fault in its queued siblings.
 - **Owner, 2026-11-11, on HelloBuh's views stalling under ~3k after the first three Shorts: "Check numbers... Maybe we
   can have an exnteion gather all of the metrics you need?"** Studio numbers the API lacks (viewed vs swiped away, the
   retention curve, traffic sources, busiest hours) come from Claude in Chrome with docs/studio-metrics-prompt.md, every
