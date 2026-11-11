@@ -5,8 +5,8 @@
 //   1. a diamond ore in the grass at spawn, mined after the netherite       "diamods (after netherite??)"
 //   2. an obsidian frame missing all 4 corners, lit with flint and steel    "portal (corners are optinal)"
 //   3. "the nether": a netherrack patch under a blue sky, a blaze, one hit  "nether (blaze rods: 1 of 6)"
-//      then an enderman, one hit ("ender perls x12 (1 enderman)"), and one eye of ender thrown (a real throw:
-//      it flies toward the world's real nearest stronghold) "throwed 1 eye (it knows)"
+//      then an enderman, one hit ("ender perls x12 (1 enderman)"), then digs straight down "dug strait down (pro tip)"
+//      (an eye of ender throw was tried: vanilla's eye flies 0.7-0.9 blocks a tick and rec_check reads it as a teleport)
 //   4. the stronghold: a roofless room, every eye in, LAVA inside the ring  "end portel is lit" -> jumps in
 //   5. "the end": an end stone island in a blue sky, the dragon alive       "dragon kiled (trust)" -> NEW WORLD RECORD
 // The clock counts to 0:09.41 over the whole run (it runs slow: on purpose, more for the comments).
@@ -27,13 +27,13 @@ const LABELS = [
   ['portal (corners are optinal)', 2.4],
   ['nether (blaze rods: 1 of 6)', 2.2],
   ['ender perls x12 (1 enderman)', 2.2],
-  ['throwed 1 eye (it knows)', 1.8],
+  ['dug strait down (pro tip)', 1.6],
   ['found strongold 1st try', 1.8],
   ['end portel is lit', 1.6],
   ['THE END (looks diferent)', 1.8],
   ['dragon kiled (trust)', 1.6]
 ]
-const SLOT = { sword: 0, pick: 1, flint: 2, eye: 3 }
+const SLOT = { sword: 0, pick: 1, flint: 2 }
 
 module.exports = {
   name: 'fakerun_any',
@@ -177,7 +177,8 @@ module.exports = {
     await A.dig(ore)
     ctx.sound('block.stone.break', 1, 1)
     ctx.particles('block', at(0.5, 0.6, -1.5), { block: 'diamond_ore', count: 12 })
-    await still(22)
+    await still(6)
+    await drift(at(0.5, 1.4, -6), 16)   // up off the hole, toward the next split
 
     // ---- 2. the portal with no corners
     const P = SX.portal
@@ -238,20 +239,16 @@ module.exports = {
     ctx.sound('entity.player.attack.strong', 1, 1); ctx.sound('entity.enderman.death', 1, 1)
     ctx.mark('ender_hit', { id: ender.id })
     await still(30)
-    // one eye of ender, thrown up ahead: the camera follows it (a governed turn every tick)
-    ctx.select(SLOT.eye)
-    await A.turnTo({ yaw: bot.entity.yaw + 0.9, pitch: 0.35 }, { max: 24 })
-    await still(4)
-    bot.activateItem(); bot.swingArm('right')
-    ctx.sound('entity.ender_eye.launch', 1, 1)
+    // the speedrunner's pro tip: dig straight down (the netherrack under the feet), and fall into the cut
+    ctx.select(SLOT.pick)
+    await A.turnTo({ yaw: bot.entity.yaw, pitch: -1.45 }, { max: 30, hold: 2 })
     R.label(ctx, 5)
-    let eye = null
-    for (let k = 0; k < 34; k++) {
-      eye = eye || Object.values(bot.entities).find(e => e.name === 'eye_of_ender')
-      if (eye && eye.isValid !== false) await A.view(eye.position); else await A.view({ yaw: bot.entity.yaw, pitch: bot.entity.pitch })
-      await still(1)
-    }
-    ctx.log('eye seen', !!eye)
+    await still(4)
+    const under = bot.blockAt(at(N, 0, 0))
+    ctx.log('under', under && under.name)
+    await A.dig(under)
+    ctx.sound('block.netherrack.break', 1, 1)
+    await still(10)
 
     // ---- 4. the stronghold: lava in the end portal, and in we go
     const H = SX.hold
@@ -298,14 +295,18 @@ module.exports = {
     })
     R.label(ctx, 8)
     ctx.sound('entity.enderman.teleport', 0.8, 1)
-    await drift(at(E + 0.5, ISLE + 9, -16), 24)
-    await still(4)
+    // never a still frame here (rec_check: held): one slow pan across the dragon, left to right and a little back
+    const pan = async (a, b, ticks) => { for (let k = 1; k <= ticks; k++) { await A.view(a.plus(b.minus(a).scaled(k / ticks))); await still(1) } }
+    const D = at(E + 0.5, ISLE + 9.5, -16)
+    await drift(D.offset(-6, -1, 0), 16)
+    await pan(D.offset(-6, -1, 0), D.offset(-1, 0, 0), 30)
     R.label(ctx, 9)
     bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.7, 1)
-    await still(30)
+    await pan(D.offset(-1, 0, 0), D.offset(3, 0.5, 0), 30)
     R.finish(ctx)
     ctx.sound('ui.toast.challenge_complete', 1, 1)
-    await still(50)
+    bot.swingArm('right')
+    await pan(D.offset(3, 0.5, 0), D.offset(7, 1.5, 0), 60)
     return lit && over
   }
 }
