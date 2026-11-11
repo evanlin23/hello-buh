@@ -1,0 +1,1004 @@
+{
+  "name": "rainbow_sheep",
+  "channel": "hellobuh",
+  "caption": "dyeing sheep until it's a rainbow 🌈",
+  "youtube": {
+    "title": "dyeing sheep until it's a rainbow 🌈 #minecraft #shorts",
+    "description": "dyeing sheep until it's a rainbow 🌈\n\nSong: Syn Cole x Nakama - Feel Good Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/feelgoodfunk\nWatch: http://ncs.lnk.to/feelgoodfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "feel_good_funk.mp3",
+    "title": "Feel Good Funk",
+    "artist": "Syn Cole, Nakama",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "jeb",
+    "drop_in_song_s": 16.5,
+    "drop_in_short_s": 10.1,
+    "song_start_s": 6.4
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 11.1,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 15678734,
+    "sha256": "279a5bc0e3750edbe83f7c598bbfc2ac7559e73f180c4f29e2183f4f3fb279fb",
+    "release": {
+      "tag": "pkg-rainbow_sheep",
+      "asset": "rainbow_sheep.short.279a5bc0e3750edb.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-rainbow_sheep/rainbow_sheep.short.279a5bc0e3750edb.mp4",
+      "sha256": "279a5bc0e3750edbe83f7c598bbfc2ac7559e73f180c4f29e2183f4f3fb279fb",
+      "bytes": 15678734
+    },
+    "nosong_release": {
+      "tag": "pkg-rainbow_sheep",
+      "asset": "rainbow_sheep.short_nosong.09592967c1a6ea86.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-rainbow_sheep/rainbow_sheep.short_nosong.09592967c1a6ea86.mp4",
+      "sha256": "09592967c1a6ea86c34931ff9eac6fced93e7f1ad97ec57562ee02e2905acd51",
+      "bytes": 15677774
+    }
+  },
+  "edit": {
+    "subsY": 0.15,
+    "caption": "dyeing sheep until it's a rainbow 🌈",
+    "red": "rainbow",
+    "dropAt": "jeb",
+    "startAt": "dye:-0.45",
+    "endAfter": "jeb:1.0",
+    "speed": [
+      [
+        "jeb:0.25",
+        "jeb:3.25",
+        3
+      ]
+    ],
+    "subs": [
+      [
+        "dye",
+        "red",
+        0.9,
+        0
+      ],
+      [
+        "dye",
+        "orange",
+        0.9,
+        1
+      ],
+      [
+        "dye",
+        "yellow",
+        0.9,
+        2
+      ],
+      [
+        "dye",
+        "lime",
+        0.9,
+        3
+      ],
+      [
+        "dye",
+        "light blue",
+        0.9,
+        4
+      ],
+      [
+        "dye",
+        "blue",
+        0.9,
+        5
+      ],
+      [
+        "dye",
+        "purple",
+        0.9,
+        6
+      ]
+    ],
+    "punch": [
+      [
+        "jeb",
+        0,
+        1.06
+      ]
+    ],
+    "sfx": [
+      [
+        "air",
+        "start",
+        "jeb",
+        {
+          "gain": 0.5
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "dyeing sheep until it's a rainbow 🌈",
+      "--red",
+      "rainbow",
+      "--subs",
+      "[[\"dye\",\"red\",0.9,0],[\"dye\",\"orange\",0.9,1],[\"dye\",\"yellow\",0.9,2],[\"dye\",\"lime\",0.9,3],[\"dye\",\"light blue\",0.9,4],[\"dye\",\"blue\",0.9,5],[\"dye\",\"purple\",0.9,6]]",
+      "--subs_y",
+      "0.15",
+      "--speed",
+      "[[\"jeb:0.25\",\"jeb:3.25\",3]]",
+      "--punch",
+      "[[\"jeb\",0,1.06]]",
+      "--sfx",
+      "[[\"air\",\"start\",\"jeb\",{\"gain\":0.5}]]",
+      "--start_at",
+      "dye:-0.45",
+      "--end_after",
+      "jeb:1.0"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 377,
+      "y": 82,
+      "z": -46
+    },
+    "biome": "minecraft:plains",
+    "ticks": 656,
+    "seconds": 32.8,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 1.25,
+        "event": "swing"
+      },
+      {
+        "t": 1.25,
+        "event": "dye"
+      },
+      {
+        "t": 2.4,
+        "event": "swing"
+      },
+      {
+        "t": 2.4,
+        "event": "dye"
+      },
+      {
+        "t": 3.4,
+        "event": "swing"
+      },
+      {
+        "t": 3.4,
+        "event": "dye"
+      },
+      {
+        "t": 4.4,
+        "event": "swing"
+      },
+      {
+        "t": 4.4,
+        "event": "dye"
+      },
+      {
+        "t": 5.45,
+        "event": "swing"
+      },
+      {
+        "t": 5.45,
+        "event": "dye"
+      },
+      {
+        "t": 6.45,
+        "event": "swing"
+      },
+      {
+        "t": 6.45,
+        "event": "dye"
+      },
+      {
+        "t": 7.45,
+        "event": "swing"
+      },
+      {
+        "t": 7.45,
+        "event": "dye"
+      },
+      {
+        "t": 9.05,
+        "event": "reveal"
+      },
+      {
+        "t": 10.9,
+        "event": "swing"
+      },
+      {
+        "t": 10.9,
+        "event": "jeb"
+      },
+      {
+        "t": 12.5,
+        "event": "alljeb"
+      },
+      {
+        "t": 14.1,
+        "event": "swing"
+      },
+      {
+        "t": 14.8,
+        "event": "swing"
+      },
+      {
+        "t": 14.95,
+        "event": "tagfast_a"
+      },
+      {
+        "t": 15.55,
+        "event": "swing"
+      },
+      {
+        "t": 16.3,
+        "event": "swing"
+      },
+      {
+        "t": 17,
+        "event": "swing"
+      },
+      {
+        "t": 17.15,
+        "event": "tagfast_b"
+      },
+      {
+        "t": 17.75,
+        "event": "swing"
+      },
+      {
+        "t": 18.5,
+        "event": "swing"
+      },
+      {
+        "t": 18.95,
+        "event": "alljeb_reveal"
+      },
+      {
+        "t": 19.65,
+        "event": "shear"
+      },
+      {
+        "t": 21,
+        "event": "swing"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.05,
+        "event": "vel"
+      },
+      {
+        "t": 21.2,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "swing"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.6,
+        "event": "vel"
+      },
+      {
+        "t": 21.65,
+        "event": "vel"
+      },
+      {
+        "t": 21.65,
+        "event": "vel"
+      },
+      {
+        "t": 21.65,
+        "event": "vel"
+      },
+      {
+        "t": 21.8,
+        "event": "vel"
+      },
+      {
+        "t": 21.8,
+        "event": "vel"
+      },
+      {
+        "t": 22,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "swing"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.3,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.35,
+        "event": "vel"
+      },
+      {
+        "t": 22.4,
+        "event": "vel"
+      },
+      {
+        "t": 22.45,
+        "event": "vel"
+      },
+      {
+        "t": 22.5,
+        "event": "vel"
+      },
+      {
+        "t": 22.6,
+        "event": "vel"
+      },
+      {
+        "t": 22.85,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "swing"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 22.95,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.1,
+        "event": "vel"
+      },
+      {
+        "t": 23.15,
+        "event": "vel"
+      },
+      {
+        "t": 23.15,
+        "event": "vel"
+      },
+      {
+        "t": 23.3,
+        "event": "vel"
+      },
+      {
+        "t": 23.55,
+        "event": "vel"
+      },
+      {
+        "t": 23.6,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "swing"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.65,
+        "event": "vel"
+      },
+      {
+        "t": 23.7,
+        "event": "vel"
+      },
+      {
+        "t": 23.7,
+        "event": "vel"
+      },
+      {
+        "t": 23.7,
+        "event": "vel"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 23.75,
+        "event": "vel"
+      },
+      {
+        "t": 23.85,
+        "event": "vel"
+      },
+      {
+        "t": 23.85,
+        "event": "vel"
+      },
+      {
+        "t": 23.95,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "vel"
+      },
+      {
+        "t": 24.05,
+        "event": "vel"
+      },
+      {
+        "t": 24.25,
+        "event": "vel"
+      },
+      {
+        "t": 24.3,
+        "event": "swing"
+      },
+      {
+        "t": 24.3,
+        "event": "vel"
+      },
+      {
+        "t": 24.3,
+        "event": "vel"
+      },
+      {
+        "t": 24.3,
+        "event": "vel"
+      },
+      {
+        "t": 24.3,
+        "event": "vel"
+      },
+      {
+        "t": 24.3,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.35,
+        "event": "vel"
+      },
+      {
+        "t": 24.45,
+        "event": "vel"
+      },
+      {
+        "t": 24.45,
+        "event": "vel"
+      },
+      {
+        "t": 24.5,
+        "event": "vel"
+      },
+      {
+        "t": 24.6,
+        "event": "vel"
+      },
+      {
+        "t": 24.65,
+        "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 24.75,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "swing"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "vel"
+      },
+      {
+        "t": 25.05,
+        "event": "vel"
+      },
+      {
+        "t": 25.1,
+        "event": "vel"
+      },
+      {
+        "t": 25.15,
+        "event": "vel"
+      },
+      {
+        "t": 25.2,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
+        "event": "vel"
+      },
+      {
+        "t": 25.3,
+        "event": "vel"
+      },
+      {
+        "t": 25.45,
+        "event": "vel"
+      },
+      {
+        "t": 25.55,
+        "event": "vel"
+      },
+      {
+        "t": 25.6,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "swing"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.65,
+        "event": "vel"
+      },
+      {
+        "t": 25.7,
+        "event": "vel"
+      },
+      {
+        "t": 25.7,
+        "event": "vel"
+      },
+      {
+        "t": 25.75,
+        "event": "lastshear"
+      },
+      {
+        "t": 25.75,
+        "event": "vel"
+      },
+      {
+        "t": 25.75,
+        "event": "vel"
+      },
+      {
+        "t": 25.8,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "vel"
+      },
+      {
+        "t": 25.85,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26,
+        "event": "vel"
+      },
+      {
+        "t": 26.05,
+        "event": "vel"
+      },
+      {
+        "t": 26.25,
+        "event": "vel"
+      },
+      {
+        "t": 26.35,
+        "event": "vel"
+      },
+      {
+        "t": 26.35,
+        "event": "vel"
+      },
+      {
+        "t": 26.35,
+        "event": "collect"
+      },
+      {
+        "t": 26.5,
+        "event": "vel"
+      },
+      {
+        "t": 26.5,
+        "event": "vel"
+      },
+      {
+        "t": 26.5,
+        "event": "vel"
+      },
+      {
+        "t": 26.55,
+        "event": "collect"
+      },
+      {
+        "t": 26.65,
+        "event": "vel"
+      },
+      {
+        "t": 26.65,
+        "event": "vel"
+      },
+      {
+        "t": 26.75,
+        "event": "vel"
+      },
+      {
+        "t": 26.75,
+        "event": "vel"
+      },
+      {
+        "t": 27.05,
+        "event": "vel"
+      },
+      {
+        "t": 27.1,
+        "event": "vel"
+      },
+      {
+        "t": 27.35,
+        "event": "vel"
+      },
+      {
+        "t": 27.35,
+        "event": "vel"
+      },
+      {
+        "t": 27.45,
+        "event": "vel"
+      },
+      {
+        "t": 27.45,
+        "event": "vel"
+      },
+      {
+        "t": 27.6,
+        "event": "vel"
+      },
+      {
+        "t": 27.65,
+        "event": "vel"
+      },
+      {
+        "t": 27.75,
+        "event": "vel"
+      },
+      {
+        "t": 27.75,
+        "event": "vel"
+      },
+      {
+        "t": 27.85,
+        "event": "collect"
+      },
+      {
+        "t": 28,
+        "event": "vel"
+      },
+      {
+        "t": 28.05,
+        "event": "vel"
+      },
+      {
+        "t": 28.3,
+        "event": "vel"
+      },
+      {
+        "t": 28.4,
+        "event": "collect"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.6,
+        "event": "vel"
+      },
+      {
+        "t": 28.75,
+        "event": "vel"
+      },
+      {
+        "t": 28.9,
+        "event": "collect"
+      },
+      {
+        "t": 29,
+        "event": "vel"
+      },
+      {
+        "t": 29.05,
+        "event": "vel"
+      },
+      {
+        "t": 29.3,
+        "event": "vel"
+      },
+      {
+        "t": 29.35,
+        "event": "collect"
+      },
+      {
+        "t": 29.6,
+        "event": "vel"
+      },
+      {
+        "t": 29.75,
+        "event": "vel"
+      },
+      {
+        "t": 29.8,
+        "event": "collect"
+      },
+      {
+        "t": 30,
+        "event": "vel"
+      },
+      {
+        "t": 30.05,
+        "event": "vel"
+      },
+      {
+        "t": 30.25,
+        "event": "collect"
+      },
+      {
+        "t": 30.4,
+        "event": "collected"
+      },
+      {
+        "t": 32.8,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "render/rainbow_sheep",
+    "commit": "1736a6d43aa9b173b1f5d4250dd57644cede3f6a",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42977955183",
+    "rendered_at": "2026-11-11T07:20:54.732Z",
+    "head_at_publish": "3ed8cdc9c361d5c3a8f0b9a7bae4794e42a043d9",
+    "stunt": "stunts/rainbow_sheep.js",
+    "source_snapshot": [
+      "source/rainbow_sheep.js",
+      "source/plateau.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 1736a6d43aa9",
+    "gunzip -c shorts/rainbow_sheep/recording.json.gz > work/rainbow_sheep.rec.json",
+    "node render.js work/rainbow_sheep.rec.json work/rainbow_sheep.frames 60 1080 1011",
+    "python3 audio.py work/rainbow_sheep.rec.json work/rainbow_sheep.wav",
+    "python3 edit.py --frames work/rainbow_sheep.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/rainbow_sheep.rec.json --audio work/rainbow_sheep.wav --caption \"dyeing sheep until it's a rainbow 🌈\" --red rainbow --subs \"[[\\\"dye\\\",\\\"red\\\",0.9,0],[\\\"dye\\\",\\\"orange\\\",0.9,1],[\\\"dye\\\",\\\"yellow\\\",0.9,2],[\\\"dye\\\",\\\"lime\\\",0.9,3],[\\\"dye\\\",\\\"light blue\\\",0.9,4],[\\\"dye\\\",\\\"blue\\\",0.9,5],[\\\"dye\\\",\\\"purple\\\",0.9,6]]\" --subs_y 0.15 --speed [[\"jeb:0.25\",\"jeb:3.25\",3]] --punch [[\"jeb\",0,1.06]] --sfx [[\"air\",\"start\",\"jeb\",{\"gain\":0.5}]] --start_at dye:-0.45 --end_after jeb:1.0 --out out/rainbow_sheep.mp4"
+  ],
+  "status": "ready",
+  "notes": "backlog worker A 2026-11-11: the fix for rainbow_wool (whose 30 s successor this stunt already was), cut short per the lead: seven sheep dyed red to purple, the rainbow, then a jeb_ name tag turns the last white one into every colour (its cycle x3 in the last second): 11.1 s (stunt floor 8 s). Plateau field. 2 review rounds (fresh-session reviewer), READY. Nitpicks: the rainbow shot at 8.4-9.3 s is small and far, the white sheep behind the hand; a grass tint gradient early on (biome border); the jeb_ nameplate drops when the crosshair leaves the sheep (vanilla). The all-jeb_ and shearing beats are recorded but unused",
+  "published_at": "2026-11-11T07:28:47.493Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:29:09+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 11.11 s vs the reviewed render 11.10 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 1,
+      "warnings": 1,
+      "summary": "payoff: no sound hit within 0.3 s of the payoff"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T07:14:25.957Z",
+      "report": "out/rainbow_sheep.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
