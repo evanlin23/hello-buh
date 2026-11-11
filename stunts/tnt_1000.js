@@ -116,7 +116,7 @@ module.exports = {
     // takes at least 2 * D / 200 s
     const capMs = (yaw, pitch, ms) => {
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-      const deg = Math.hypot(dy * Math.cos(bot.entity.pitch), pitch - bot.entity.pitch) * 180 / Math.PI
+      const deg = Math.hypot(dy * Math.max(Math.cos(bot.entity.pitch), Math.cos(pitch)), pitch - bot.entity.pitch) * 180 / Math.PI
       return Math.max(ms, Math.ceil(2000 * deg / 200 / 50) * 50)
     }
     const easeLook = (yaw, pitch, ms) => ctx.easeLook(yaw, pitch, capMs(yaw, pitch, ms))
@@ -157,9 +157,13 @@ module.exports = {
         ctx.mark(`lit${n}`)
         const litAt = ctx.tick
         await easeLook(bot.entity.yaw + 0.2, -1.2, 350)
+        await bot.waitForTicks(3)                                         // (the cut's edges on a still view)
         ctx.mark(`fuse${n}a`)
+        // inside the cut: spin round to face west, the way he runs (a 174 deg spin after the cut whipped at 300+ deg/s)
+        await easeLook(W, -0.45, 300)
         while (ctx.tick - litAt < 50) await bot.waitForTicks(1)          // skipped by the cut
         ctx.mark(`fuse${n}b`)
+        await bot.waitForTicks(2)
         // ~1.5 s left: eyes up and sprint west across the top... not fast enough (one ease at a time: the look up runs
         // while he sprints, the glance starts once it's done)
         bot.setControlState('sprint', true); bot.setControlState('forward', true)
@@ -179,7 +183,7 @@ module.exports = {
       }
       if (i > 0) {   // cut to the next pile
         // ...once the last pile's flung dirt has landed (rec_check settle, r:r24d99a: tier 3's flew 2.8 s), eyes drifting
-        for (let k = 0; k < 80 && ctx.tick - lastBoom < 60; k++) await aimStep(bot.entity.yaw + 0.03 * Math.sin(k / 7), bot.entity.pitch + 0.01 * Math.sin(k / 5), 0.3)
+        for (let k = 0; k < 140 && ctx.tick - lastBoom < 85; k++) await aimStep(bot.entity.yaw + 0.03 * Math.sin(k / 7), bot.entity.pitch + 0.01 * Math.sin(k / 5), 0.3)
         ctx.mark(`cut${n}a`)
         await ctx.cmd('/kill @e[type=tnt]', { mayFail: true })   // inside the cut: a TNT the last chain flung can't set off this pile early
         await tp(t.cx + 0.5, floor + 1, t.zf + 2.5, 180, 15)

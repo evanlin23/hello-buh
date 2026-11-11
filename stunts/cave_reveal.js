@@ -38,7 +38,11 @@ module.exports = {
       ['dig0', 'just digging down...', 3], ['l1', 'oh, a cave', 2.2], ['dig1', 'keep going', 2],
       ['l2', 'a mineshaft??', 2.4], ['dig2', 'keep going...', 2], ['l3', 'a DUNGEON', 2.2], ['dig3', 'one more...', 1.8],
       ['l4', 'a GEODE?!', 2.4], ['dig4', 'just one more', 1.8], ['l5', 'oh no', 3]
-    ]
+    ],
+    // the burn sped up (6 s of one shot in the lava: pace), and a hit on the death (pace: no sound hit on the payoff;
+    // the lava's burning keeps the game track busy, so the impact doesn't flatten the rest)
+    speed: [['in_lava:1.0', 'death:-0.4', 2]],
+    sfx: [['dip', 'death', 0.4], ['impact', 'death', { gain: 1.4 }]]
   },
 
   async setup (ctx) {
@@ -206,7 +210,7 @@ module.exports = {
     // (two swings 0.05-0.15 s apart read as one jerk: want 0.3 s on something)
     const capMs = (yaw, pitch, ms) => {
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
-      const deg = Math.hypot(dy * Math.cos(bot.entity.pitch), pitch - bot.entity.pitch) * 180 / Math.PI
+      const deg = Math.hypot(dy * Math.max(Math.cos(bot.entity.pitch), Math.cos(pitch)), pitch - bot.entity.pitch) * 180 / Math.PI
       return Math.max(ms, Math.ceil(2000 * deg / 200 / 50) * 50)
     }
     const ease = (yaw, pitch, ms) => ctx.easeLook(yaw, pitch, capMs(yaw, pitch, ms))
