@@ -28,7 +28,7 @@
 |---|---|---|---|
 | the kid (narrator) | player, the default `kai` skin (not Steve, not zuri); never named; no armour | Pip (`narrator`) | beside the counter S02, S09 (shoulder only); POV screen S10; small next to Mom S08 |
 | Grandpa | player actor, a grey-haired old-man skin (to make); iron axe in the hut (S01-S03, S09), empty-handed on the dock and in the flashback; **no boots** until S11, put on at the dock's end, leather with the enchant glint | Iapetus directed old (not `elder`: canon conflict 11), one clause; to audition | S01-S09, S11 |
-| Grandma | player actor, a grey-haired old-woman skin (to make) | `grandma` (Autonoe) | in the boat S06-S07; head to toe in the window (sill at floor level) S04, S08, S11 |
+| Grandma | player actor, a grey-haired old-woman skin (to make) | `grandma_island` (Callirrhoe) | in the boat S06-S07; head to toe in the window (sill at floor level) S04, S08, S11 |
 | Mom | player actor, the default `makena` skin | silent | S08 |
 | the librarian | plains villager; librarian outfit while a lectern stands, plain after each break (plain in S03) | none | S01-S03, S09 |
 
@@ -93,3 +93,5 @@ Aoede are taken; Alnilam is proposed for Red Sheep's Dad). Audition each saying 
 1. **Kore** (recommended): "crisp, firm woman" (cast.json spares), suits "stubborn, a dare". Caveat: the AI Shorts'
    Gemini voice, a different series. Must read old, not just firm.
 2. **Callirrhoe** ("easy-going"): used by no character; a warmer reading, so the dare sounds fond.
+
+**Decided (owner, 2026-11-11):** Grandma is `grandma_island` (Callirrhoe, "calirrhoe is fine"), her own voice. Grandpa still to audition (Iapetus vs Sadaltager).

@@ -2,7 +2,7 @@
   "name": "the_walk",
   "stunt": "story_the_walk",
   "version": 2,
-  "revision": "r5 (2026-11-11): the owner's audit: Grandma 'Come back when the sea FREEZES.' and the kid 'Mom says it NEVER freezes here.' (replacing 'walk the water' / 'that means never'); three hundred kept; Grandpa and Grandma voices proposed for audition (bible.md 'Voices').",
+  "revision": "r5 (2026-11-11): the owner's audit: Grandma 'Come back when the sea FREEZES.' and the kid 'Mom says it NEVER freezes here.' (replacing 'walk the water' / 'that means never'); three hundred kept; Grandpa and Grandma voices proposed for audition (bible.md 'Voices'). r5.1: Grandma cast as `grandma_island` (Callirrhoe), the owner's pick.",
   "caption": "grandpa broke the same lectern 300 times 📚",
   "logline": "A grandpa has broken the same librarian's lectern three hundred times, rerolling her book; ten years ago Grandma rowed to the island across the bay and told him to come back when the sea freezes, and the sea there never freezes, until this morning's book is Frost Walker II.",
   "question": "why tf has grandpa broken the same lectern 300 times?",
@@ -51,11 +51,11 @@
     },
     "Grandma": {
       "role": "character",
-      "ref": "grandma",
+      "ref": "grandma_island",
       "name": "Grandma",
-      "color": "#F2C66B",
+      "color": "#C9B6E8",
       "on_screen": "a player actor, a grey-haired old-woman skin (to make); in the flashback (S06-S07) in an oak boat a few blocks off the dock, facing back at Grandpa; in the present, standing in her lit window on the island, the sill at floor level so she shows head to toe (S04, S08, S11). One line, L07, on screen while she says it.",
-      "note": "Working: `grandma` (Autonoe), shared with Gold for the Portal's Grandma. Recommended: her own voice, audition Kore vs Callirrhoe (bible.md 'Voices'); keep Autonoe only if neither reads as an old woman."
+      "note": "cast `grandma_island` (Callirrhoe, owner 2026-11-11 \"calirrhoe is fine\"): her own voice, not Gold's Grandma (STANDARDS 7a). The first take must read 60-85 to the blind listener, else back to the owner."
     },
     "Mom": {
       "role": "character",
@@ -106,7 +106,7 @@
       "lines": [
         "L07"
       ],
-      "direction": "[An old woman, stubborn, a dare]"
+      "direction": "[An old woman in her seventies, stubborn, a dare]"
     }
   ],
   "lines": [
