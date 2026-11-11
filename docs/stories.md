@@ -642,6 +642,9 @@ STANDARDS.md in the same commit.
   scripts: Pulled Away (round 1), Saving Up for a Bastion, The Singing Box Next Door, The Honey Thief (round 2), one
   session each (briefs: docs/pitches/batch3_script_briefs/); a round 3 of premises from the moods lens only (the lens
   readers couldn't predict). A Ghost for Five Minutes (hardcore, outside the shared world) is banked, not made.
+- **Owner, 2026-11-11, auditing The Honey Thief: "giant can be jonah. no name tag".** The giant is Jonah (Six
+  Thousand Torches' player, kai skin, his voice), 300 days before Torches; never named, his name tag hidden (the bees
+  don't know his name; fans know the skin).
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
