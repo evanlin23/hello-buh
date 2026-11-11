@@ -96,14 +96,25 @@ def aim_report(sight_res: dict, keep) -> dict:
         w = max(over, key=lambda a: a["deg"])
         F.append(("WARN", w["tick"], f"{len(over)}/{len(acts)} actions over {AIM_MAX_DEG:g} deg off the crosshair (under the "
                   f"{AIM_SHARE_MAX * 100:.0f}% that blocks); worst {what(w)} {w['deg']:.1f} deg"))
+    # 'look at' beats (r:r52f94c, guess_sound_2: "when we look over at the mob, we arent looking directly at it"): the
+    # turn onto a mob or thing ends with it more than LOOK_MAX_DEG off the view's centre (lib/aim.js lookAts)
+    aim = sight_res.get("aim") or {}
+    looks = [L for L in aim.get("looks", []) if keep(L["tick"])]
+    lmax = aim.get("lookMax", 6)
+    for L in looks:
+        if L["deg"] > lmax:
+            F.append(("BLOCK", L["tick"], f"the look at {L['what']} ends {L['deg']:.1f} deg off the centre of the view (max {lmax:g}): "
+                      "the turn has to land with the crosshair on its body/head (lib/act.js A.turnTo onto the target's eye-height point, "
+                      "and mark the landing ctx.mark('look_at', { id }); r:r52f94c)"))
     fix = (" (aim before the action: lib/act.js A.place / A.dig / A.use / A.useOn, or K.place / K.dig / K.use / K.useOn in a story;"
            " a factory's own packet through A.click / A.breakStart / A.strike, gated on the crosshair; STANDARDS r:rffba12)")
-    F = [(lvl, t, m + (fix if lvl == "BLOCK" else "")) for lvl, t, m in F]
+    F = [(lvl, t, m + (fix if lvl == "BLOCK" and "look at" not in m else "")) for lvl, t, m in F]
     nb = sum(1 for f in F if f[0] == "BLOCK")
     summ = (f"{len(acts)} action(s): median {q(0.5):.1f} deg, p90 {q(0.9):.1f}, worst {D[-1]:.1f}, {len(over)} over {AIM_MAX_DEG:g} deg "
             f"({share * 100:.0f}%), {sum(1 for a in acts if a['deg'] == 0)} dead on" if acts else "no player actions in the Short")
     return {"n": len(acts), "median": q(0.5), "p90": q(0.9), "worst": D[-1] if D else None, "over": len(over), "share": round(share, 3),
-            "ok": nb == 0, "blockers": nb, "findings": F, "summary": summ}
+            "looks": looks, "ok": nb == 0, "blockers": nb, "findings": F,
+            "summary": summ + (f"; {len(looks)} look-at beat(s), worst {max(L['deg'] for L in looks):.1f} deg off centre" if looks else "")}
 
 
 # ---------------------------------------------------------------- settle
