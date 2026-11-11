@@ -92,7 +92,7 @@
    "say": "Nobody has slept. The farmer keeps walking into his own FENCE.",
    "shot": "S02",
    "look": {
-    "what": "actor:farmer",
+    "what": "actor:gary",
     "word": "FENCE"
    }
   },
@@ -116,7 +116,7 @@
    "say": "Every day, Grandpa asks me the same THING.",
    "shot": "S05",
    "look": {
-    "what": "actor:grandpa",
+    "what": "actor:gp",
     "word": "GRANDPA"
    }
   },
@@ -127,8 +127,8 @@
    "say": "Will the sun go DOWN today?",
    "shot": "S05",
    "look": {
-    "what": "actor:grandpa",
-    "word": "TONIGHT"
+    "what": "actor:gp",
+    "word": "DOWN"
    },
    "direction": "hopeful and tired, an old man asking again"
   },
@@ -140,7 +140,7 @@
    "say": "And every day I tell him, not YET.",
    "shot": "S06",
    "look": {
-    "what": "actor:grandpa",
+    "what": "actor:gp",
     "word": "NOT YET"
    }
   },
@@ -185,7 +185,7 @@
      "word": "NIGHT"
     },
     {
-     "what": "actor:grandpa",
+     "what": "actor:gp",
      "word": "SLOW"
     }
    ]
@@ -211,7 +211,7 @@
    "say": "But today, Grandpa SAID,",
    "shot": "S11",
    "look": {
-    "what": "actor:grandpa",
+    "what": "actor:gp",
     "word": "TODAY"
    }
   },
@@ -222,7 +222,7 @@
    "say": "Let the night come. You need sleep, kid.",
    "shot": "S11",
    "look": {
-    "what": "actor:grandpa",
+    "what": "actor:gp",
     "word": "SLEEP",
     "size": "ms"
    },
@@ -236,7 +236,7 @@
    "say": "Me? HE'S the one who's tired.",
    "shot": "S12",
    "look": {
-    "what": "actor:grandpa",
+    "what": "actor:gp",
     "word": "TIRED"
    },
    "note": "a laugh in it: the kid's misreading"
@@ -290,7 +290,7 @@
    "say": "Then something screamed up in the SKY.",
    "shot": "S16",
    "look": {
-    "what": "sky",
+    "what": "entity:phantom",
     "word": "SKY"
    },
    "punch": true,
@@ -298,7 +298,7 @@
   }
  ],
  "ending": {
-  "after": "L17",
+  "after": "L16",
   "beats": [
    "S17 (no line): the view tips up to the moon behind six circling phantoms; one dives (a third of the frame), two hits, the narrator dies. Death screen 'slain by Phantom' (the mark `death` is the payoff). End 1.0 s after."
   ],
@@ -335,7 +335,7 @@
    "place": "grandpa_house",
    "size": "full",
    "camera": "POV on Grandpa's porch, Grandpa at his door, 3 blocks away",
-   "frame": "subject: Grandpa, centred, looks at the kid; he says L06 (on screen)"
+   "frame": "subject: Grandpa, centred, looks at the kid; he says L05 (on screen)"
   },
   {
    "id": "S06",
@@ -383,7 +383,7 @@
    "place": "grandpa_house",
    "size": "ms",
    "camera": "POV, Grandpa at the door, close, looking at the kid",
-   "frame": "subject: Grandpa, centred, eye level; he says L13 (on screen)"
+   "frame": "subject: Grandpa, centred, eye level; he says L12 (on screen)"
   },
   {
    "id": "S12",
@@ -441,13 +441,18 @@
   "lever": {
    "block": "lever",
    "at": [
-    0,
     1,
-    0
+    2,
+    -2
    ]
   },
   "tree": {
-   "note": "the one tree, 26 blocks east of the lever (-188, -1058)"
+   "at": [
+    27,
+    6,
+    2
+   ],
+   "h": 8
   },
   "bed_mine": {
    "item": "white_bed",
@@ -482,7 +487,7 @@
   {
    "under": "S17",
    "sound": "entity.phantom.swoop",
-   "note": "the dive, then entity.player.hurt x3, the death"
+   "note": "the dive, then entity.player.hurt x2, the death"
   }
  ],
  "requests": [
