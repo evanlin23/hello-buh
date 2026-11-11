@@ -17,6 +17,7 @@ module.exports = {
   name: 'half_heart',
   height: 30,
   fast: true,
+  upHold: 10,   // 0.5 s on the pillar's top after the look up, then the cut to the course
   caption: "POV: you're on half a heart 💀",
   expectDeath: true,
   edit: {
@@ -24,9 +25,9 @@ module.exports = {
     startAt: 'jump:-0.5', endAfter: 'death:1.6', deathScreen: true,
     // sound from frame 0: the wind up on the pillar and the fall's rising wind (the 2.3 s fall is silent in vanilla)
     sfx: [['air', 'start', 'jump', { gain: 0.25 }], ['wind', 'jump', 'placed', { gain: 0.5 }],
-      // over the NCS bed the bridge's lava pops don't count: a whoosh on 'almost there...' (the 15th sound), and a
+      // over the NCS bed the bridge's lava pops don't count: pops on the bridge's lava pops (the 13th and 17th sounds) and a ding on 'almost there...' (the 15th; a whoosh didn't count as a hit), and a
       // song dip + impact on the death (v2 gates on the packaged mix: 4.45 s dead on the bridge, no hit on the payoff)
-      ['whoosh', 'sound', { nth: 14 }], ['dip', 'death', 0.3], ['impact', 'death']],
+      ['pop', 'sound', { nth: 12, gain: 0.6 }], ['ding', 'sound', { nth: 14 }], ['pop', 'sound', { nth: 16, gain: 0.6 }], ['dip', 'death', 0.3], ['impact', 'death']],
     subs: [
       ['jump', 'water clutch', 2.4], ['magma', 'magma: sneak', 2.0],
       ['drop', '3 blocks = 0 damage', 1.6], ['bridge', 'lava bridge', 2.8],
@@ -34,8 +35,8 @@ module.exports = {
       // death screen; on 'bush' it ran 0.25 s and then sat over "You Died!" (re-record: give it its own mark)
       ['sound', 'almost there...', 1.6, 14]
     ],
-    // the look up the pillar holds 1.45 s (the camera parked: review); 1.0 s of it cut, an invisible cut on the same view
-    speed: [['placed:1.25', 'placed:2.25', 'cut']]
+    // (the look up the pillar held 1.45 s, 1.0 s of it cut: now it rests 0.5 s on the top, water_clutch upHold, and
+    // cuts to the course: r:r38374d)
   },
 
   async setup (ctx) {
@@ -83,7 +84,11 @@ module.exports = {
     const zz = () => z + 0.5 - bot.entity.position.z            // blocks north of the pillar
     const until = async (n, ticks = 200) => { for (let w = 0; w < ticks && zz() < n && !ctx.died; w++) { steer(); await bot.waitForTicks(1) } }
     ctx.select(2)                                                  // cobblestone in hand (the bucket's put away)
-    await ctx.easeLook(0, -0.35, 450)                             // and north: the course
+    // and north: the course, by a hard cut on the same spot, not a 180-degree whip (owner r:r38374d: the 0.45 s ease
+    // turned at ~750 deg/s). The /tp carries the aim (MC yaw 180 = north, pitch 20 = mineflayer -0.35)
+    ctx.mark('cut'); ctx.mark('course')
+    bot.chat('/tp @s ~ ~ ~ 180 20')
+    for (let w = 0; w < 10 && Math.abs(Math.atan2(Math.sin(bot.entity.yaw), Math.cos(bot.entity.yaw))) > 0.05; w++) await bot.waitForTicks(1)
     bot.setControlState('forward', true)
     // 2. magma: sneak from a block before it to a block after
     await until(C.magma0 - 1.3)
