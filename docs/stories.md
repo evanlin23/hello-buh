@@ -249,6 +249,9 @@ STANDARDS.md in the same commit.
   the name of the channel should be generally stories".** The channel's name and tagline stay general ("Buh Stories",
   "short minecraft stories"); the stories themselves stay mysteries (the mystery test is what works). A story's own
   title, description or pinned question may set up its mystery.
+- **Owner, 2026-11-11, on the cover's gold "BUH STORY #5" pill: "Do we need BUH STORY #5? It can just be in the title?
+  or idk".** No series pill or number on the video (frame 1 is the thumbnail: only the story's hook). No number in the
+  title either (each story stands alone, r:rca5363); the channel name under the Short and `#buhstories` carry the brand.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

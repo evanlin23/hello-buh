@@ -231,6 +231,8 @@ actions left silent). r:rc85ccc r:r36632d
   up. Check: owner. r:r732bc0
 - **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
   Check: owner. r:rca5363
+- **No series number**: no "BUH STORY #N" on the video or in the title; frame 1 shows only the story's hook.
+  Check: owner. r:rc0d90d
 - **The channel says "stories"; the stories are mysteries**: the channel's name, tagline and description are general
   ("Buh Stories", "short minecraft stories"); each story keeps the mystery test, and its own title, description and
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
