@@ -70,6 +70,8 @@ if (e.loop) out.push('--loop', JSON.stringify(e.loop))
 if (e.sfx) out.push('--sfx', JSON.stringify(e.sfx))       // sound effects (scripts/sfx.py)
 if (e.onFire) out.push('--on_fire', e.onFire)
 if (e.deathScreen) out.push('--death_screen', 'death')
+if (e.hardcore) out.push('--hardcore')                      // hardcore hearts (the dilemma format)
+if (e.armor) out.push('--armor', String(e.armor))           // armor points over the hearts (worn armour's total)
 if (e.itemNames) out.push('--item_names', JSON.stringify(e.itemNames))   // the selected item's name over the hotbar
 if (e.guiScale) out.push('--gui_scale', String(e.guiScale))   // container screens at another GUI scale (phone-readable; default 3)
 if (e.chatScale) out.push('--chat_scale', String(e.chatScale))   // chat lines at another GUI scale (default guiScale, else 3)

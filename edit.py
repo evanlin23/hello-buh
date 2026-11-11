@@ -217,6 +217,9 @@ def glint_icon(jar, icon, tick):
     return Image.fromarray((a * 255 + 0.5).astype(np.uint8), "RGBA")
 
 
+HUD_STYLE = {"hardcore": False, "armor": 0}   # edit.hardcore / edit.armor (--hardcore, --armor): the dilemma format
+
+
 def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=None, max_health=20, xp_state=None, item_name=None):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bar = big(sprite(jar, "gui/sprites/hud/hotbar"))
@@ -269,8 +272,10 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
                 draw.rectangle([ix + 2 * GUI, iy + 13 * GUI, ix + (2 + w) * GUI - 1, iy + 14 * GUI - 1], fill=(round(r_ * 255), round(g_ * 255), round(b_ * 255), 255))
         if count and count > 1:                   # stack count, like GuiGraphics.renderItemDecorations
             draw_text(img, jar, str(count), ix + (19 - 2) * GUI, iy + (6 + 3) * GUI, align_right=True)
-    heart_c, heart = big(sprite(jar, "gui/sprites/hud/heart/container")), big(sprite(jar, "gui/sprites/hud/heart/full"))
-    half = big(sprite(jar, "gui/sprites/hud/heart/half"))
+    # a hardcore world (Gui.HeartType: the hardcore sprites, the container's too)
+    hc = "hardcore_" if HUD_STYLE["hardcore"] else ""
+    heart_c, heart = big(sprite(jar, f"gui/sprites/hud/heart/container{'_hardcore' if hc else ''}")), big(sprite(jar, f"gui/sprites/hud/heart/{hc}full"))
+    half = big(sprite(jar, f"gui/sprites/hud/heart/{hc}half"))
     food_e, food = big(sprite(jar, "gui/sprites/hud/food_empty")), big(sprite(jar, "gui/sprites/hud/food_full"))
     xp_bg, xp = big(sprite(jar, "gui/sprites/hud/experience_bar_background")), big(sprite(jar, "gui/sprites/hud/experience_bar_progress"))
     img.alpha_composite(xp_bg, (bx + GUI, by - 7 * GUI))
@@ -283,8 +288,8 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
             draw_text(img, jar, str(level), W // 2, by - 13 * GUI, center=True, color=(0x80, 0xFF, 0x20, 255), outline=True)
     # no XP progress: a fresh player (the death screen says "Score: 0"; a 35% bar contradicted it)
     hy = by - 17 * GUI
-    hc_blink = big(sprite(jar, "gui/sprites/hud/heart/container_blinking"))
-    full_b, half_b = big(sprite(jar, "gui/sprites/hud/heart/full_blinking")), big(sprite(jar, "gui/sprites/hud/heart/half_blinking"))
+    hc_blink = big(sprite(jar, f"gui/sprites/hud/heart/container{'_hardcore' if hc else ''}_blinking"))
+    full_b, half_b = big(sprite(jar, f"gui/sprites/hud/heart/{hc}full_blinking")), big(sprite(jar, f"gui/sprites/hud/heart/{hc}half_blinking"))
     cur = math.ceil(health)
     disp = cur if display is None else display
     # Gui.renderHearts: ceil(max health / 2) containers, rows of 10 stacked upward, the row step
@@ -301,6 +306,13 @@ def hud_png(jar, slot, items, health, path, display=None, blink=False, shake=Non
             img.alpha_composite(half_b if q + 1 == disp else full_b, (hx, y_))
         if q < cur:
             img.alpha_composite(half if q + 1 == cur else heart, (hx, y_))
+    arm = int(HUD_STYLE["armor"] or 0)
+    if arm > 0:   # Gui.renderArmor: 10 icons in a row over the hearts (above every heart row), 2 points an icon
+        ay = hy - ((rows - 1) * row_h + 10) * GUI
+        a_full, a_half, a_empty = (big(sprite(jar, f"gui/sprites/hud/armor_{k}")) for k in ("full", "half", "empty"))
+        for i in range(10):
+            k = 2 * i + 1
+            img.alpha_composite(a_full if k < arm else a_half if k == arm else a_empty, (bx + 8 * GUI * i, ay))
     for i in range(10):
         fx = bx + bar.width - 9 * GUI - 8 * GUI * i
         img.alpha_composite(food_e, (fx, hy))
@@ -1181,6 +1193,11 @@ def apply_speed(args):
     # work/<name>.slowmo (blends turned a placed boat into a 50% double exposure: worker 4)
     slow_dir = src_dir.with_suffix(".slowmo")
     slow_fps = json.loads((slow_dir / "slowmo.json").read_text())["fps"] if (slow_dir / "slowmo.json").exists() else None
+    seq_mode, _sizes = None, {}
+    def seq_size(f):
+        if f not in _sizes:
+            _sizes[f] = Image.open(f).size
+        return _sizes[f]
     while True:
         x = warp.src(k / args.fps) * args.fps
         i = warp.frame(k, args.fps)
@@ -1189,12 +1206,25 @@ def apply_speed(args):
         frac = x - math.floor(x)
         step = warp.src((k + 1) / args.fps) * args.fps - x      # < 1 only inside a slow-motion span
         real = None
-        if step < 0.99 and 0.2 < frac < 0.8 and slow_fps:   # slow motion: a real in-between frame from the high-fps pass
+        # slow motion: a real in-between frame from the high-fps pass, for every in-between frame (it renders all of
+        # them). Only the middle 60 % real held each 60 fps frame ~7 frames at 0.06x, then jumped (dilemma_mace r1),
+        # and a span's last frame (step 0.34, frac 0.95) fell back to floor(x): the picture snapped back (r2)
+        mid = (frac > 1e-6 and 1 - frac > 1e-6) if slow_fps else (0.2 < frac < 0.8)
+        if step < 0.99 and mid and slow_fps:
             j = int(round(x / args.fps * slow_fps))
             real = slow_dir / f"f{j:05d}.png"
             real = real if real.exists() else None
         if real:
-            (wd / (pat % k)).symlink_to(real.resolve())
+            # the same pixel format as the sequence: on Actions the 60 fps frames are decoded from the slices (RGB) and
+            # the slow pass is render.js PNGs; a format change mid-sequence makes ffmpeg re-init the graph, and that
+            # frame went out with no caption, cards or HUD (dilemma_mace r2: 5 blinks, one at the landing)
+            if seq_mode is None:
+                seq_mode = Image.open(src_dir / (pat % 0)).mode
+            im = Image.open(real)
+            if im.mode != seq_mode or im.size != seq_size(src_dir / (pat % 0)):
+                im.convert(seq_mode).resize(seq_size(src_dir / (pat % 0))).save(wd / (pat % k), compress_level=1)
+            else:
+                (wd / (pat % k)).symlink_to(real.resolve())
             rendered += 1
         elif step < 0.99 and 0.2 < frac < 0.8 and math.floor(x) + 1 < n_src:   # fallback: blend the two neighbours (fast things ghost)
             lo = Image.open(src_dir / (pat % math.floor(x))).convert("RGB")
@@ -1420,6 +1450,8 @@ def main():
     ap.add_argument("--loop", help='true or SECONDS: the last 0.25 s dissolve into the first frame')
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 1.5, "after": 0, "text": ...} finale preview in front (1.2-1.5 s)')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
+    ap.add_argument("--hardcore", action="store_true", help="hardcore hearts on the HUD (edit.hardcore)")
+    ap.add_argument("--armor", type=int, default=0, help="armor points shown over the hearts (edit.armor: the worn armour's total, 0-20)")
     ap.add_argument("--gui_scale", type=int, help="GUI scale of container screens (edit.guiScale; default 3, vanilla's auto scale here; 4 is vanilla's largest at this window): phone-readable chests and barrels")
     ap.add_argument("--chat_align", default="left", choices=["left", "center"], help="chat lines (syschat marks) at vanilla's bottom-left, or centred (edit.chatAlign; story Shorts default to center)")
     ap.add_argument("--chat_y", type=float, default=0.70, help="with --chat_align center: the newest line's middle as a fraction of the game area's height (edit.chatY; 0.70 = the caption line)")
@@ -1432,6 +1464,7 @@ def main():
     ap.add_argument("--preview", action="store_true", help="fast encodes for scripts/preview.py (HB_PREVIEW=1): the picture and timing are unchanged")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
+    HUD_STYLE.update(hardcore=args.hardcore, armor=args.armor)
     if args.preview:
         os.environ["HB_PREVIEW"] = "1"
     args.warp, args.rec_path, args.audio0 = None, args.timeline, args.audio
