@@ -20,7 +20,17 @@
     "drop_on_event": "final_reveal",
     "drop_in_song_s": 39.75,
     "drop_in_short_s": 31.95,
-    "song_start_s": 7.8
+    "song_start_s": 7.8,
+    "key_sounds": {
+      "marks": [
+        "hear"
+      ],
+      "duck_db": -24,
+      "min_margin_db": 12.2,
+      "median_margin_db": 15.0,
+      "gate_db": 8.0,
+      "check": "scripts/key_sounds.py"
+    }
   },
   "video": {
     "file": "short.mp4",
@@ -29,8 +39,8 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 15393240,
-    "sha256": "a06bc43614c0e53e0eed906723d8ae6cfcebbc2cd1dd985542958fab4866ff4f"
+    "bytes": 15744409,
+    "sha256": "200aef3a582d4297c83ab352db937a02a6c5d393685d66e7d7d79307dc380cc1"
   },
   "edit": {
     "caption": "guess the mob from its sound pt 2 \ud83d\udd0a",
@@ -681,6 +691,6 @@
     "python3 edit.py --frames work/guess_sound_2.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/guess_sound_2.rec.json --audio work/guess_sound_2.wav --caption \"guess the mob from its sound pt 2 \ud83d\udd0a\" --red sound --subs \"[[\\\"hint\\\",\\\"parrots copy ghasts\\\",1.6,0]]\" --subs_y 0.77 --punch [[\"lit\",0,1.1],[\"lit\",1,1.1],[\"lit\",2,1.1],[\"lit\",3,1.1],[\"lit\",4,1.1],[\"lit\",5,1.1]] --counter {\"at\":[[\"count\",0],[\"count\",1],[\"count\",2],[\"count\",3],[\"count\",4],[\"count\",5]],\"total\":6} --cards \"[[\\\"lit\\\",\\\"PIG\\\",1.25,\\\"green\\\",0],[\\\"lit\\\",\\\"ZOMBIE\\\",1.25,\\\"green\\\",1],[\\\"lit\\\",\\\"SPIDER\\\",1.25,\\\"red\\\",2],[\\\"lit\\\",\\\"WITCH\\\",1.25,\\\"blue\\\",3],[\\\"lit\\\",\\\"ALLAY\\\",1.25,\\\"blue\\\",4],[\\\"lit\\\",\\\"THE PARROT AGAIN\\\",1.75,\\\"red\\\",5]]\" --countdowns \"[[\\\"cd3\\\",\\\"turn\\\",\\\"EASY\\\",0,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"MEDIUM\\\",1,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"HARD\\\",2,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"VERY HARD\\\",3,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"EXPERT\\\",4,0.5,0.42],[\\\"cd3\\\",\\\"turn\\\",\\\"IMPOSSIBLE\\\",5,0.5,0.42]]\" --start_at round:-0.05 --end_after final_reveal:1.45 --out out/guess_sound_2.mp4"
   ],
   "status": "ready",
-  "notes": "worker 13: guess the mob from its sound pt 2 (pig, zombie, spider, witch, allay, then the parrot again imitating a ghast); independent review r5 ready on retention, minecraft and frame review. Post after pt 1, before pt 3.",
+  "notes": "worker 13: guess the mob from its sound pt 2 (pig, zombie, spider, witch, allay, then the parrot again imitating a ghast); independent review r5 ready on retention, minecraft and frame review. Post after pt 1, before pt 3. | 2026-11-11 remix (owner on guess_sound: \"had super loud music\"): the song now ducks to -24 dB under each mob call (scripts/key_sounds.py: each call +12.2 dB over the music at worst, was -12.3 dB); same track, drop and picture",
   "published_at": "2026-11-07T15:44:47.075Z"
 }
