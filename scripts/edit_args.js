@@ -56,6 +56,11 @@ if (e.deathScreen) out.push('--death_screen', 'death')
 if (e.itemNames) out.push('--item_names', JSON.stringify(e.itemNames))   // the selected item's name over the hotbar
 if (e.guiScale) out.push('--gui_scale', String(e.guiScale))   // container screens at another GUI scale (phone-readable; default 3)
 if (e.chatScale) out.push('--chat_scale', String(e.chatScale))   // chat lines at another GUI scale (default guiScale, else 3)
+// chat lines centred (owner, 2026-11-11: "Buh left the game" centred, off the dog): on by default for story Shorts,
+// chatAlign: 'left' keeps vanilla's corner; chatY = the line's height as a fraction of the game area (0.70: captions)
+const chatAlign = e.chatAlign || (e.story ? 'center' : null)
+if (chatAlign && chatAlign !== 'left') out.push('--chat_align', chatAlign)
+if (e.chatY !== undefined) out.push('--chat_y', String(e.chatY))
 if (e.story) out.push('--story', e.story)            // narrated story Short (docs/stories.md)
 if (e.start !== undefined) out.push('--start', String(e.start))
 else if (!e.startAt) out.push('--start_at', 'start:0')   // skip the harness pre-roll before 'start'
