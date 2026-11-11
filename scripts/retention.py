@@ -10,8 +10,9 @@ Every feature is optional and comes from the stunt's `edit` block (scripts/edit_
                                                    of footage) so it never reads as dead space.
   counter: {"at": [EVENT, ...], "total": N}        "3/5" beat counter in the top-left of the game
            or [EVENT, ...]                         view, popping up on each mark
-  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?]]  big impact text popping on a mark ("10/10",
-                                                   "NO WAY"); COLOR: white|red|green|yellow|blue|gold
+  cards:   [[EVENT, TEXT, SECONDS?, COLOR?, NTH?, STYLE?, {y}?]]  big impact text popping on a mark ("10/10",
+                                                   "NO WAY"); COLOR: white|red|green|yellow|blue|gold;
+                                                   {"y": 0.8}: its height in the game view (default 0.36)
   zoom:    [[START[:off], END[:off], SCALE]]       a held push-in on the crosshair (eases in 0.4 s,
                                                    back out over 0.25 s after END); multiplies with punch.
                                                    It upscales the rendered frame, so above ~1.3-1.4x
@@ -503,7 +504,7 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             if len(ts) > nth:
                 marks.append((ts[nth] - start, k + 1))
         marks.sort()
-    cds = []                                         # cards: (t0, t1, text, color, tilt)
+    cds = []                                         # cards: (t0, t1, text, color, tilt, y)
     for j, cd in enumerate(_load(cards)):
         ts = event_times(timeline, cd[0])
         nth = int(cd[4]) if len(cd) > 4 else 0
@@ -511,7 +512,8 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
             t0 = ts[nth] - start
             cds.append((t0, t0 + (float(cd[2]) if len(cd) > 2 and cd[2] else 1.0), cd[1],
                         COLORS.get((cd[3] if len(cd) > 3 else "yellow") or "yellow", COLORS["yellow"]),
-                        "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4)))
+                        "stamp" if len(cd) > 5 and cd[5] == "stamp" else (-5 if j % 2 == 0 else 4),
+                        float(next((o for o in cd[5:] if isinstance(o, dict)), {}).get("y", 0.36))))   # (desire: off the obstacle)
     cdw = countdown_windows(countdowns, timeline, start)
     rgw = ring_windows(rings, timeline, start)
     tgw = tag_windows(tags, timeline, start, dur)
@@ -530,9 +532,9 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
         cc = None
         on = [cd for cd in cds if cd[0] <= t + 1e-6 < cd[1]]
         if on:
-            t0, t1, text, color, tilt = on[-1]
+            t0, t1, text, color, tilt, cy_frac = on[-1]
             fade = min(1.0, (t1 - t) / 0.12)
-            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1))
+            cc = (text, color, tilt, round(_pop(t - t0), 2), round(fade, 1), cy_frac)
         fk = None
         for t0, t1, label, fn, hold in fallen:   # live "blocks fallen" counter, held after the landing
             if t0 <= t + 1e-6 < hold - 1e-6:
@@ -593,7 +595,7 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                 cx, cy = 40 + imgs[("c", k)].width // 2, BAND + 26 + imgs[("c", k)].height // 2
                 img.alpha_composite(im, (cx - im.width // 2, cy - im.height // 2))
             if cc:
-                text, color, tilt, s, fade = cc
+                text, color, tilt, s, fade, cy_frac = cc
                 if ("t", text, color) not in imgs:
                     imgs[("t", text, color)] = stamp_img(text, color) if tilt == "stamp" else \
                         block_text(text, 150 if len(text) <= 8 else 116, color).rotate(tilt, Image.BICUBIC, expand=True)
@@ -603,7 +605,7 @@ def fx_concat(counter, cards, timeline, start, dur, outdir, fps=60, fallen=(), c
                     im = im.resize((max(1, int(im.width * s)), max(1, int(im.height * s))), Image.BICUBIC)
                 if fade < 1:
                     im = im.copy(); im.putalpha(im.split()[3].point(lambda v: int(v * fade)))
-                cy = BAND + int(GAME_H * 0.36)   # below the corner counters
+                cy = BAND + int(GAME_H * cy_frac)   # below the corner counters (0.36), or the card's own {y}
                 img.alpha_composite(im, ((W - im.width) // 2, cy - im.height // 2))
             if cwk:
                 img.alpha_composite(countdown_img(*cwk))

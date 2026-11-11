@@ -95,6 +95,7 @@ module.exports = {
 
   async perform (ctx) {
     const { bot } = ctx
+    const A = require('../lib/act')(ctx)
     const { floor, z, x0 } = this
     await bot.waitForTicks(4)
     for (let i = 0; i < N; i++) {
@@ -122,8 +123,7 @@ module.exports = {
       if (i === N - 1) break                         // the name tag comes after the reveal
       // the crosshair on THIS sheep when the dye goes on (owner, r:rffba12: "we are not looking at the right sheep
       // when we dye"): the look above was aimed from where the strafe started, so settle it from where I stand now
-      await this.aimAt(ctx, s)
-      await this.use(ctx, s)
+      await A.useOn(s)                               // lib/act.js: acts only once the crosshair is on this sheep
       ctx.mark('dye', { n: i })
       ctx.sound('item.dye.use', 1, 1)
       await bot.waitForTicks(3)
@@ -166,8 +166,7 @@ module.exports = {
     }
     bot.setControlState('forward', false)
     await look
-    await this.aimAt(ctx, last)
-    await this.use(ctx, last)
+    await A.useOn(last)
     ctx.mark('jeb')
     ctx.sound('entity.sheep.ambient', 1, 1.3)
     await bot.waitForTicks(6)

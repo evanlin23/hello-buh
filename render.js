@@ -647,10 +647,11 @@ const dayTimeAt = (t) => { if (process.env.DAY_TIME) return Number(process.env.D
 const RAIN = [], THUNDER = []
 {
   const w0 = DIM !== 'overworld' ? 'clear' : (process.env.WEATHER || rec.weather || STUNT_MOD.weather || 'clear')
-  const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather])
+  // a mark with `cut: true` lands the new weather at once (a montage cut to another day: not a 5 s fade on screen)
+  const marks = process.env.WEATHER ? [] : (rec.timeline || []).filter(e => e.event === 'weather').map(e => [e.t / 50, e.weather, !!e.cut])
   let r = w0 !== 'clear' ? 1 : 0, th = w0 === 'thunder' ? 1 : 0, w = w0, k = 0
   for (let i = 0; i <= P.length + 2; i++) {
-    while (k < marks.length && marks[k][0] <= i) w = marks[k++][1]
+    while (k < marks.length && marks[k][0] <= i) { w = marks[k][1]; if (marks[k][2]) { r = w !== 'clear' ? 1 : 0; th = w === 'thunder' ? 1 : 0 } k++ }
     if (i > 0) { r = Math.max(0, Math.min(1, r + (w !== 'clear' ? 0.01 : -0.01))); th = Math.max(0, Math.min(1, th + (w === 'thunder' ? 0.01 : -0.01))) }
     RAIN.push(r); THUNDER.push(th)
   }
@@ -1613,11 +1614,11 @@ const THROWN = new Set(['ender_pearl', 'snowball', 'egg', 'splash_potion', 'ling
 // the living entity (id) whose hitbox the step from p by v passes through, or null: ProjectileUtil.getEntityHitResult
 // tests the mob's box inflated by 0.3 (a 0.6-wide humanoid: 0.6 a side). For the motion fixes' projectile hits.
 const NOT_LIVING = /^(item|experience_orb|falling_block|moving_block|egg|snowball|arrow|spectral_arrow|trident|ender_pearl|splash_potion|lingering_potion|experience_bottle|firework_rocket|armor_stand|painting|item_frame|glow_item_frame|marker|text_display|block_display|item_display|interaction|boat|minecart|lightning_bolt|player)$/
-function projectileHit (rows, self, p, v) {
+function projectileHit (rows, self, p, v, skip) {
   if (!rows) return null
   let best = null
   for (const [id, m] of rows) {
-    if (id === self || NOT_LIVING.test(m[2])) continue
+    if (id === self || NOT_LIVING.test(m[2]) || (skip && skip.has(id))) continue
     const h = ENT_H[m[2]] || 1.8, r = 0.3 + 0.3
     for (let k = 1; k <= 4; k++) {
       const x = p[0] + v[0] * k / 4, y = p[1] + v[1] * k / 4, z = p[2] + v[2] * k / 4
@@ -1625,6 +1626,19 @@ function projectileHit (rows, self, p, v) {
     }
   }
   return best ? best[0] : null
+}
+// Projectile.leftOwner: a projectile can't hit the mob that shot it until it has been outside that mob's box (inflated
+// by 1) once. Its owner here: the living entities whose box holds the spawn point (a snow golem's snowballs flashed the
+// golem itself red on every throw, cells_lab). Returns the ids still to skip at p (empty once it has left).
+function insideOf (rows, self, p) {
+  const out = new Set()
+  if (!rows) return out
+  for (const [id, m] of rows) {
+    if (id === self || NOT_LIVING.test(m[2])) continue
+    const h = ENT_H[m[2]] || 1.8
+    if (Math.abs(p[0] - m[3]) < 1.3 && Math.abs(p[2] - m[5]) < 1.3 && p[1] > m[4] - 1 && p[1] < m[4] + h + 1) out.add(id)
+  }
+  return out
 }
 function simulateDrops (world) {
   const tl = rec.timeline || []
@@ -1654,6 +1668,7 @@ function simulateDrops (world) {
     const t0 = rows[0][0], t1 = rows[rows.length - 1][0]
     const byTick = new Map(rows.map(r => [r[0], r]))
     let gone = false
+    let owner = thrown && MOTION_FIXES ? insideOf(ENT.get(t0), id, [x, y, z]) : null
     for (let tick = t0; tick <= t1; tick++) {
       if (gone) { if (ENT.has(tick)) ENT.get(tick).delete(id); continue }
       while (vi < vs.length && vs[vi][0] <= tick) { [, vx, vy, vz] = vs[vi++] }
@@ -1670,7 +1685,8 @@ function simulateDrops (world) {
         // sends no damage event, and the flight here ignored mobs: names_in_the_woods' eggs flew through Hugo and Pia
         // with no red ("the villagers dont have hte damage red when theyre hit")
         if (MOTION_FIXES && vx * vx + vy * vy + vz * vz > 1e-6) {
-          const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz])
+          if (owner && owner.size) { const still = insideOf(ENT.get(tick), id, [x, y, z]); for (const o of [...owner]) if (!still.has(o)) owner.delete(o) }
+          const hit = projectileHit(ENT.get(tick), id, [x, y, z], [vx, vy, vz], owner)
           if (hit !== null) {
             const hs = MOB_HURT.get(hit) || []
             if (!hs.some(h => Math.abs(h - (tick + 1)) <= 3)) { hs.push(tick + 1); MOB_HURT.set(hit, hs) }

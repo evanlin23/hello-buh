@@ -35,3 +35,5 @@ creeper_art
 sand_tower
 water_vs_lava
 rainbow_sheep
+desire_town
+inside_library

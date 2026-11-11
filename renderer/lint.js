@@ -214,8 +214,13 @@ function run (h) {
   // is a new picture (hide_seek's seeker waits out the hiding time inside its cuts)
   CUTS = (ed.speed || []).filter(s => s[2] === 'cut').map(s => [parseAt(s[0]), parseAt(s[1])]).filter(([a, b]) => a !== null && b !== null && b > a)
   const inCut = (t) => CUTS.some(([a, b]) => t >= a && t < b)
+  // blocks changing are action too (a build rising, a path wearing in, a flood: lib/desire.js has no cast at all):
+  // 3+ block changes in the window count as motion
+  const bt = (rec.blocks || []).map(b => b[0]).sort((a, b) => a - b)
+  const blocksIn = (a, b) => { let lo = 0, hi = bt.length; while (lo < hi) { const m = (lo + hi) >> 1; if (bt[m] < a) lo = m + 1; else hi = m } let n = 0; for (let i = lo; i < bt.length && bt[i] < b; i++) n++; return n }
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
     if (inGui(t) || inGui(t + 12) || inCut(t)) { flushDead(t); continue }
+    if (blocksIn(t, t + 24) >= 3) { flushDead(t + 12); continue }
     let mv = poseMove(t)
     let me = nearest(POSE, Math.round(t)); if (me) lastMe = me; else me = lastMe   // dead: the last place we stood
     for (const [id, m] of ent) {
