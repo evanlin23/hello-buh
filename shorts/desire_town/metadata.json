@@ -1,10 +1,10 @@
 {
   "name": "desire_town",
   "channel": "hellobuh",
-  "caption": "the town REALLY hates this shortcut \ud83d\udc80",
+  "caption": "the town REALLY hates this shortcut 💀",
   "youtube": {
-    "title": "the town REALLY hates this shortcut \ud83d\udc80 #minecraft #shorts",
-    "description": "the town REALLY hates this shortcut \ud83d\udc80\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "the town REALLY hates this shortcut 💀 #minecraft #shorts",
+    "description": "the town REALLY hates this shortcut 💀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -20,35 +20,35 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "final",
     "drop_in_song_s": 14.5,
-    "drop_in_short_s": 11.45,
-    "song_start_s": 3.05
+    "drop_in_short_s": 12.1,
+    "song_start_s": 2.4
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 12.45,
+    "duration_s": 13.1,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 6701640,
-    "sha256": "ce7d1184e8510baab6d6dec695ffbea53c52d9a483725eac92f41baed4ece5b7",
+    "bytes": 7664592,
+    "sha256": "5883717d5523c9e2b1e38919f6ded98c9d860992f38915b5c70c9563bab482b9",
     "release": {
       "tag": "pkg-desire_town",
-      "asset": "desire_town.short.ce7d1184e8510baa.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short.ce7d1184e8510baa.mp4",
-      "sha256": "ce7d1184e8510baab6d6dec695ffbea53c52d9a483725eac92f41baed4ece5b7",
-      "bytes": 6701640
+      "asset": "desire_town.short.5883717d5523c9e2.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short.5883717d5523c9e2.mp4",
+      "sha256": "5883717d5523c9e2b1e38919f6ded98c9d860992f38915b5c70c9563bab482b9",
+      "bytes": 7664592
     },
     "nosong_release": {
       "tag": "pkg-desire_town",
-      "asset": "desire_town.short_nosong.36cd64ff3c422467.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short_nosong.36cd64ff3c422467.mp4",
-      "sha256": "36cd64ff3c422467c3b872b91fc6ecea269e33c84c09407921612219a82f50b0",
-      "bytes": 6633323
+      "asset": "desire_town.short_nosong.b8854adb87275fc6.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-desire_town/desire_town.short_nosong.b8854adb87275fc6.mp4",
+      "sha256": "b8854adb87275fc6ee673b579178538f2c07a524fe6b6f5c2545914d96c69a09",
+      "bytes": 7643332
     }
   },
   "edit": {
-    "caption": "the town REALLY hates this shortcut \ud83d\udc80",
+    "caption": "the town REALLY hates this shortcut 💀",
     "red": "REALLY",
     "song": null,
     "startAt": "start:0",
@@ -56,7 +56,7 @@
     "dropAt": "final",
     "keySounds": [
       "obstacle",
-      "path"
+      "break"
     ],
     "cards": [
       [
@@ -138,7 +138,7 @@
       ],
       [
         "ob_lava",
-        "LAVA \ud83d\udd25",
+        "LAVA 🔥",
         1,
         "red",
         0,
@@ -161,6 +161,23 @@
         }
       ],
       [
+        "riser",
+        "flood",
+        "final_a"
+      ],
+      [
+        "dip",
+        "final",
+        0.4
+      ],
+      [
+        "impact",
+        "final",
+        {
+          "gain": 1.4
+        }
+      ],
+      [
         "boom",
         "final"
       ],
@@ -171,15 +188,15 @@
     ],
     "args": [
       "--caption",
-      "the town REALLY hates this shortcut \ud83d\udc80",
+      "the town REALLY hates this shortcut 💀",
       "--red",
       "REALLY",
       "--punch",
       "[\"flood\",\"final\"]",
       "--cards",
-      "[[\"ob_fence\",\"FENCE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_bush\",\"BUSHES\",0.75,\"white\",0,null,{\"y\":0.17}],[\"ob_tree\",\"A TREE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_boulder\",\"A BOULDER\",0.75,\"yellow\",0,null,{\"y\":0.17}],[\"ob_pond\",\"A POND\",0.75,\"yellow\",0,null,{\"y\":0.8}],[\"ob_walls\",\"WALLS\",0.75,\"orange\",0,null,{\"y\":0.14}],[\"ob_shed\",\"A WHOLE SHED\",0.75,\"orange\",0,null,{\"y\":0.17}],[\"ob_lava\",\"LAVA \ud83d\udd25\",1,\"red\",0,null,{\"y\":0.36}]]",
+      "[[\"ob_fence\",\"FENCE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_bush\",\"BUSHES\",0.75,\"white\",0,null,{\"y\":0.17}],[\"ob_tree\",\"A TREE\",0.75,\"white\",0,null,{\"y\":0.8}],[\"ob_boulder\",\"A BOULDER\",0.75,\"yellow\",0,null,{\"y\":0.17}],[\"ob_pond\",\"A POND\",0.75,\"yellow\",0,null,{\"y\":0.8}],[\"ob_walls\",\"WALLS\",0.75,\"orange\",0,null,{\"y\":0.14}],[\"ob_shed\",\"A WHOLE SHED\",0.75,\"orange\",0,null,{\"y\":0.17}],[\"ob_lava\",\"LAVA 🔥\",1,\"red\",0,null,{\"y\":0.36}]]",
       "--sfx",
-      "[[\"impact\",\"flood\",{\"gain\":0.7}],[\"boom\",\"final\"],[\"ding\",\"final\"]]",
+      "[[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}],[\"boom\",\"final\"],[\"ding\",\"final\"]]",
       "--start_at",
       "start:0",
       "--end_after",
@@ -194,13 +211,13 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 615,
-      "y": 68,
-      "z": -2577
+      "x": -1377,
+      "y": 70,
+      "z": 1041
     },
     "biome": "minecraft:plains",
-    "ticks": 270,
-    "seconds": 13.5,
+    "ticks": 403,
+    "seconds": 20.15,
     "deaths": 0,
     "events": [
       {
@@ -228,165 +245,167 @@
         "event": "ob_fence"
       },
       {
-        "t": 1.45,
-        "event": "path"
+        "t": 1.55,
+        "event": "break"
       },
       {
-        "t": 2.35,
+        "t": 2.45,
         "event": "obstacle"
       },
       {
-        "t": 2.35,
+        "t": 2.45,
         "event": "ob_bush"
       },
       {
-        "t": 2.85,
-        "event": "path"
+        "t": 3,
+        "event": "break"
       },
       {
-        "t": 3.75,
+        "t": 3.95,
         "event": "obstacle"
       },
       {
-        "t": 3.75,
+        "t": 3.95,
         "event": "ob_tree"
       },
       {
-        "t": 4.45,
-        "event": "path"
+        "t": 4.7,
+        "event": "break"
       },
       {
-        "t": 5.35,
+        "t": 5.65,
         "event": "obstacle"
       },
       {
-        "t": 5.35,
+        "t": 5.65,
         "event": "ob_boulder"
       },
       {
-        "t": 5.9,
-        "event": "path"
+        "t": 6.25,
+        "event": "break"
       },
       {
-        "t": 6.8,
+        "t": 7.2,
         "event": "obstacle"
       },
       {
-        "t": 6.8,
+        "t": 7.2,
         "event": "ob_pond"
       },
       {
-        "t": 7.25,
-        "event": "path"
+        "t": 7.7,
+        "event": "break"
       },
       {
-        "t": 8.15,
+        "t": 8.6,
         "event": "obstacle"
       },
       {
-        "t": 8.15,
+        "t": 8.6,
         "event": "ob_walls"
       },
       {
-        "t": 8.65,
-        "event": "path"
+        "t": 9.2,
+        "event": "break"
       },
       {
-        "t": 9.55,
+        "t": 10.15,
         "event": "obstacle"
       },
       {
-        "t": 9.55,
+        "t": 10.15,
         "event": "ob_shed"
       },
       {
-        "t": 10.1,
-        "event": "path"
+        "t": 10.75,
+        "event": "break"
       },
       {
-        "t": 11,
+        "t": 11.65,
         "event": "obstacle"
       },
       {
-        "t": 11,
+        "t": 11.65,
         "event": "ob_lava"
       },
       {
-        "t": 11,
+        "t": 11.65,
         "event": "flood"
       },
       {
-        "t": 11.75,
+        "t": 12.4,
         "event": "final_a"
       },
       {
-        "t": 11.75,
+        "t": 12.4,
         "event": "path"
       },
       {
-        "t": 12.2,
+        "t": 12.85,
         "event": "final"
       },
       {
-        "t": 13.5,
+        "t": 20.15,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/desire_town",
-    "commit": "cd839aecd3e36fec4295c250b4065f7a4210de9e",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42986876101",
-    "rendered_at": "2026-11-11T08:32:59.884Z",
-    "head_at_publish": "107e5fd8aced8f272c8356f1d880f037ee6c87bf",
+    "branch": "main",
+    "commit": "ce7359812870d05d10b38af79fc6414733769301",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T09:39:32.689Z",
+    "head_at_publish": "3a7aa2fd95be56ef3fe4d0fbce51305b1d89a221",
     "stunt": "stunts/desire_town.js",
     "source_snapshot": [
       "source/desire_town.js",
       "source/desire.js",
       "source/hide_seek.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js",
       "source/movie.js"
     ]
   },
   "rebuild": [
-    "git checkout cd839aecd3e3",
+    "git checkout ce7359812870",
     "gunzip -c shorts/desire_town/recording.json.gz > work/desire_town.rec.json",
     "node render.js work/desire_town.rec.json work/desire_town.frames 60 1080 1011",
     "python3 audio.py work/desire_town.rec.json work/desire_town.wav",
-    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut \ud83d\udc80\" --red REALLY --punch [\"flood\",\"final\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA \ud83d\udd25\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}]]\" --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"boom\",\"final\"],[\"ding\",\"final\"]] --start_at start:0 --end_after final:1 --out out/desire_town.mp4"
+    "python3 edit.py --frames work/desire_town.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/desire_town.rec.json --audio work/desire_town.wav --caption \"the town REALLY hates this shortcut 💀\" --red REALLY --punch [\"flood\",\"final\"] --cards \"[[\\\"ob_fence\\\",\\\"FENCE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_bush\\\",\\\"BUSHES\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_tree\\\",\\\"A TREE\\\",0.75,\\\"white\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_boulder\\\",\\\"A BOULDER\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_pond\\\",\\\"A POND\\\",0.75,\\\"yellow\\\",0,null,{\\\"y\\\":0.8}],[\\\"ob_walls\\\",\\\"WALLS\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.14}],[\\\"ob_shed\\\",\\\"A WHOLE SHED\\\",0.75,\\\"orange\\\",0,null,{\\\"y\\\":0.17}],[\\\"ob_lava\\\",\\\"LAVA 🔥\\\",1,\\\"red\\\",0,null,{\\\"y\\\":0.36}]]\" --sfx [[\"impact\",\"flood\",{\"gain\":0.7}],[\"riser\",\"flood\",\"final_a\"],[\"dip\",\"final\",0.4],[\"impact\",\"final\",{\"gain\":1.4}],[\"boom\",\"final\"],[\"ding\",\"final\"]] --start_at start:0 --end_after final:1 --out out/desire_town.mp4"
   ],
-  "status": "needs-fix",
-  "notes": "owner 2026-11-11: the path should visibly break through each obstacle the town puts in its way, not reroute around them | desire ep 1: locked top-down, 7 obstacles then a lava flood, the path comes back straight; independent review 2 rounds READY (session_019n1tKGFphywAiSBsKjBjxW); nitpicks: fence reads as a ladder from above, tree looks like the bushes",
-  "published_at": "2026-11-11T08:35:59.792Z",
+  "status": "ready",
+  "notes": "desire #1 v2 (owner r:r81cb9c): the path breaks straight through every obstacle (fence, bushes, tree, boulder, pond causeway, road walls, shed) and comes back across the lava; fresh independent review READY; payoff fix (edit only): dip + impact on 'final', riser ends before the dip. Nitpicks: dirt (not dirt_path) under broken obstacles; LAVA card over the first 0.2 s of the return; 2-block wall gaps small on a phone; path on lava low-contrast.",
+  "published_at": "2026-11-11T09:42:06.524Z",
   "gates": {
     "version": 3,
-    "at": "2026-11-11T08:36:26+00:00",
+    "at": "2026-11-11T09:42:37+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 12.46 s vs the reviewed render 12.45 s"
+      "summary": "short.mp4 13.12 s vs the reviewed render 13.10 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 2,
+      "warnings": 1,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T08:33:24.712Z",
+      "at": "2026-11-11T09:39:48.874Z",
       "report": "work/hb/desire_town.check.json"
     },
     "key_sounds": {
       "ok": true,
       "keys": [
         "obstacle",
-        "path"
+        "break"
       ],
-      "summary": "key sounds over the music: worst +12.8 dB over 16 clips (need >= 8 dB)"
+      "summary": "key sounds over the music: worst +10.9 dB over 15 clips (need >= 8 dB)"
     }
   }
 }
