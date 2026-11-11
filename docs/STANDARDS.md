@@ -234,8 +234,8 @@ actions left silent). r:rc85ccc r:r36632d
 - **Explore first, then double down**: early stories vary premise family, arc and outcome (never two in a row the
   same); a Short at 5x the channel median gets 2-3 standalone follow-ups in its family within 7 days. Check: owner,
   the weekly numbers. r:r1bebb1
-- **Stories go to the second channel, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**, never @HelloBuh; uploads wait for the owner to set that channel
-  up. Check: owner. r:r732bc0
+- **Stories go to the second channel by default, "Buh Stories" (@BuhStoriesMC, r:re8ac1e)**; uploads there wait for the owner to set that channel
+  up. Check: owner. r:r732bc0 r:rd63b43 (HelloBuh may also post stories as experiments, set per package with `channel: hellobuh`)
 - **Each story stands alone**: no "one world / every story connects" framing in titles, descriptions or channel art.
   Check: owner. r:rca5363
 - **No series number**: no "BUH STORY #N" on the video or in the title; frame 1 shows only the story's hook.
@@ -252,6 +252,13 @@ actions left silent). r:rc85ccc r:r36632d
   pinned question may set up its mystery. Check: owner. r:rae1fcc r:rbddb28
 - **No new stories while held ones are unfinished**: the daily story producer stays off until the owner turns it back
   on. Check: owner. r:r77977b
+- **Check the numbers every 2-3 days from Studio**: Claude in Chrome runs docs/studio-metrics-prompt.md (viewed vs
+  swiped away, retention, traffic, busiest hours); `scripts/studio_import.py` loads it into uploads/studio.json.
+  Check: owner. r:r1f2a80
+- **Rank by views x conversion, and diagnose a flop before blaming its format**: the uploader orders formats by
+  expected subscribers per upload; a Short that stalls gets its execution checked (music level vs voice/key sound,
+  the first 1.5 s, readability) and the same fault fixed in queued Shorts of its format. Check: youtube_upload.py
+  (scores), the numbers check. r:rd56a20
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

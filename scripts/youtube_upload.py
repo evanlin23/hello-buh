@@ -17,8 +17,9 @@ exists. Ported from evanlin23/buh-explains buhexplains/pipeline/upload.py, with 
 
 Order (owner 2026-11-09: "post the content that gets the most subscribers"; the goal is 100k): queue lines marked
 "# first" go first; then every other ready Short (queue.txt and the rest of the videos branch) ranked by its format's
-SUBSCRIBERS PER 1,000 VIEWS (family_scores: YouTube Analytics, lifetime, shrunk toward the channel average so a format
-with little data isn't over- or under-rated; a format not posted yet gets the average, so new formats still get tried),
+EXPECTED SUBSCRIBERS PER UPLOAD = typical views per Short x subscribers per 1,000 views (family_scores: YouTube
+Analytics + Studio numbers, lifetime, both shrunk toward the channel average so a format with little data isn't over-
+or under-rated; a format not posted yet gets the average, so new formats still get tried),
 queue order breaking ties, always keeping the mix. The scores are saved to uploads/scores.json each run.
     python3 scripts/youtube_upload.py --scores   # print the ranking only
 Every upload is recorded in uploads/uploads.json on main.
@@ -57,7 +58,10 @@ def env(key: str, default: str = "") -> str:
 
 
 def channel_of(meta: dict) -> str:
-    return (meta.get("channel") or "hellobuh").strip().lower()
+    """The package's channel; with none, the same default as lib/channel.js: story_* Shorts are Buh Stories (owner,
+    2026-11-10: stories never go to @HelloBuh), everything else HelloBuh. Older story packages carry no field."""
+    c = meta.get("channel") or ("buhstories" if str(meta.get("name", "")).startswith("story_") else "hellobuh")
+    return c.strip().lower()
 
 
 UP = ROOT / "uploads" if CHANNEL == "hellobuh" else ROOT / "uploads" / CHANNEL
@@ -125,8 +129,8 @@ def meta_of(vd: Path, name: str) -> dict | None:
 
 
 def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, str]:
-    """The next Short: queue lines marked "# first", then the rest ranked by their format's subscribers per 1,000
-    views (scores["family"], higher first; queue order, then the oldest published, breaking ties), skipping anything
+    """The next Short: queue lines marked "# first", then the rest ranked by their format's expected subscribers
+    per upload (scores["family"], higher first; queue order, then the oldest published, breaking ties), skipping anything
     uploaded or posted by hand, not ready, or that would break the mix after what went up last."""
     history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
     lines = QUEUE.read_text().splitlines() if QUEUE.exists() else []
@@ -313,13 +317,20 @@ def video_analytics(ya, ids: list, start: str, end: str) -> tuple[dict, str]:
 
 
 PRIOR_VIEWS = 3000   # how many views of evidence a format needs before its own rate outweighs the channel average
+PRIOR_SHORTS = 2     # how many settled Shorts a format needs before its own typical reach outweighs the channel's
+SETTLED_H = 48       # a Short's views count toward its format's reach once it has been public this long
 
 
 def family_scores(ya, done: dict) -> dict:
-    """Subscribers gained per 1,000 views for each format family (check_queue.series), lifetime to date, from YouTube
-    Analytics. Shrunk toward the channel's average: (subs + mean * PRIOR_VIEWS) / (views + PRIOR_VIEWS), so one lucky
-    Short with 300 views doesn't top the ranking. Writes uploads/scores.json and returns it."""
+    """Rank formats by EXPECTED SUBSCRIBERS PER UPLOAD (owner, 2026-11-11): the format's typical views per Short times
+    its subscribers per 1,000 views, so a format that converts well but that nobody gets shown doesn't top the list.
+      rate  = (subs + mean_rate * PRIOR_VIEWS) / (views + PRIOR_VIEWS) * 1000      (shrunk toward the channel's)
+      reach = (views of its settled Shorts + mean_reach * PRIOR_SHORTS) / (settled Shorts + PRIOR_SHORTS)
+      family score = reach * rate / 1000
+    Views and subs per Short: the larger of YouTube Analytics (lags 1-3 days) and uploads/studio.json (Studio, via
+    Claude in Chrome). Writes uploads/scores.json and returns it."""
     ids = {v["video_id"]: k for k, v in done.items() if v.get("video_id")}
+    now = dt.datetime.now(dt.timezone.utc)
     end = central_now().date().isoformat()
     start = min([v.get("uploaded", end) for v in done.values()] + [end])
     an, note = video_analytics(ya, list(ids), start, end)
@@ -327,22 +338,40 @@ def family_scores(ya, done: dict) -> dict:
     per, fam = {}, {}
     for vid, name in ids.items():
         A = an.get(vid, {})
-        v, sg = int(A.get("views", 0) or 0), int(A.get("subscribersGained", 0) or 0)
         S = studio.get(name) or {}
-        if S.get("subs", 0) > sg:   # Studio's newer count (uploads/studio.json) beats the lagging API
-            v, sg = max(v, int(S.get("views", 0))), int(S["subs"])
-        per[name] = {"family": series(name), "views": v, "subs": sg, "avg_pct": A.get("averageViewPercentage"),
+        v = max(int(A.get("views", 0) or 0), int(S.get("views", 0) or 0))
+        sg = max(int(A.get("subscribersGained", 0) or 0), int(S.get("subs", 0) or 0))
+        e = done[name]
+        when = e.get("publish_at") or (e.get("uploaded", end) + "T12:00:00Z")
+        try:
+            age_h = (now - dt.datetime.strptime(when, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc)).total_seconds() / 3600
+        except ValueError:
+            age_h = SETTLED_H
+        settled = age_h >= SETTLED_H
+        per[name] = {"family": series(name), "views": v, "subs": sg, "settled": settled,
+                     "avg_pct": A.get("averageViewPercentage") or S.get("avg_pct_viewed"),
+                     "viewed_pct": S.get("viewed_pct"),
                      "stayed": (A["engagedViews"] / v) if A.get("engagedViews") is not None and v else None}
-        f = fam.setdefault(series(name), {"views": 0, "subs": 0, "shorts": 0})
+        f = fam.setdefault(series(name), {"views": 0, "subs": 0, "shorts": 0, "settled_views": 0, "settled": 0})
         f["views"] += v; f["subs"] += sg; f["shorts"] += 1
+        if settled:
+            f["settled_views"] += v; f["settled"] += 1
     tv, ts = sum(f["views"] for f in fam.values()), sum(f["subs"] for f in fam.values())
-    mean = 1000 * ts / tv if tv else 0.0
-    rate = {k: round(1000 * (f["subs"] + mean / 1000 * PRIOR_VIEWS) / (f["views"] + PRIOR_VIEWS), 3) for k, f in fam.items()}
-    out = {"updated": end, "mean": round(mean, 3), "family": rate, "family_totals": fam, "videos": per,
-           "note": note or "subscribers per 1,000 views; YouTube Analytics lags 1-3 days"}
+    mean_rate = 1000 * ts / tv if tv else 0.0
+    sv, sn = sum(f["settled_views"] for f in fam.values()), sum(f["settled"] for f in fam.values())
+    mean_reach = sv / sn if sn else 0.0
+    rate = {k: (f["subs"] + mean_rate / 1000 * PRIOR_VIEWS) / (f["views"] + PRIOR_VIEWS) * 1000 for k, f in fam.items()}
+    reach = {k: (f["settled_views"] + mean_reach * PRIOR_SHORTS) / (f["settled"] + PRIOR_SHORTS) for k, f in fam.items()}
+    score = {k: round(reach[k] * rate[k] / 1000, 2) for k in fam}
+    out = {"updated": end, "mean": round(mean_reach * mean_rate / 1000, 2), "family": score,
+           "rate_per_1k": {k: round(r, 3) for k, r in rate.items()}, "mean_rate_per_1k": round(mean_rate, 3),
+           "reach": {k: round(r) for k, r in reach.items()}, "mean_reach": round(mean_reach),
+           "family_totals": fam, "videos": per,
+           "note": note or ("family = expected subscribers per upload (typical views x subs per 1k views); "
+                            "YouTube Analytics lags 1-3 days, Studio numbers from uploads/studio.json")}
     SCORES.write_text(json.dumps(out, indent=1) + "\n")
-    print(f"scores (subs per 1k views, channel {mean:.2f}): " +
-          ", ".join(f"{k} {r:.2f} ({fam[k]['subs']} subs / {fam[k]['views']:,} views)" for k, r in sorted(rate.items(), key=lambda kv: -kv[1])), flush=True)
+    print(f"scores (expected subs per upload, channel {out['mean']:.1f}): " +
+          ", ".join(f"{k} {score[k]:.1f} (~{reach[k]:,.0f} views x {rate[k]:.2f}/1k)" for k in sorted(score, key=lambda k: -score[k])), flush=True)
     return out
 
 

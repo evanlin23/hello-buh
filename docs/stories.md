@@ -269,6 +269,21 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11: "We should be trying for high views and high conversion right?" (yes to ranking formats by
+  expected subscribers per upload); "low views might be the format, but it could also just be us not doing it well.
+  for example the guess the mob had super loud music..."** The uploader ranks formats by expected subscribers per
+  upload (typical views x subs per 1k views, both shrunk toward the channel average, so one weak Short doesn't sink a
+  format). A Short that flops gets a cause before its format is blamed: check its execution first (music over the
+  voice or the key sound, a slow first 1.5 s, an unreadable stunt), fix the same fault in its queued siblings.
+- **Owner, 2026-11-11, on HelloBuh's views stalling under ~3k after the first three Shorts: "Check numbers... Maybe we
+  can have an exnteion gather all of the metrics you need?"** Studio numbers the API lacks (viewed vs swiped away, the
+  retention curve, traffic sources, busiest hours) come from Claude in Chrome with docs/studio-metrics-prompt.md, every
+  2-3 days; `scripts/studio_import.py` loads the answer into uploads/studio.json for the scores and the numbers check.
+- **Owner, 2026-11-11: "wait why cant hello buh still post these stories? we can use it sorta like experimentation?"**
+  @HelloBuh may post story Shorts too, as experiments: the older ready stories (chunk_next_door, nitwit, respawn_voice,
+  sheep_stares, sun_wont_set) stay on HelloBuh's queue (`channel: hellobuh`). A story package with no channel field
+  defaults to Buh Stories; the lead sets `channel` per story. Story subs per 1k views on HelloBuh are data for both
+  channels.
 - **Owner, 2026-11-11, after the Gold A/B (A cinematic, B bright with zoom punches): "I think that bright looks
   better".** Story Shorts use B: the stunt's `look: 'bright'` and `edit.punchStress: true` (main 6632d43), on every
   story from now on.

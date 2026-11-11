@@ -86,7 +86,7 @@ the owner's OK by name (status "ready" via `publish --owner-ok`). What the owner
    cannot upload there, and vice versa.
 4. **GitHub** → Settings → Secrets and variables → Actions:
    - Secret `YT_REFRESH_TOKEN_BUHSTORIES` (the token from step 3). `YT_CLIENT_ID` / `YT_CLIENT_SECRET` are shared.
-   - Variables `YT_CHANNEL_ID_BUHSTORIES` = the UC... id, `YT_ENABLED_BUHSTORIES` = `true`. Optional
+   - Variables `YT_CHANNEL_ID_BUHSTORIES` = `UC5m8kcDO2cSlXT49VoJjpRw` (Buh Stories' id, from the owner 2026-11-11), `YT_ENABLED_BUHSTORIES` = `true`. Optional
      `YT_PER_DAY_BUHSTORIES` (default 3; stories are fewer, 1 is probably right).
    - Test: Actions → upload-short → Run workflow → channel `buhstories`, mode `dry-run`.
 5. **The daily clock:** a second cron-job.org job like step 4 above, at another minute, with the body
