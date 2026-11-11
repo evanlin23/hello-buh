@@ -49,7 +49,7 @@
 ## Cast and costume
 - **The kid (narrator):** a player, `alex` skin, never named. POV in S09, S11, S12; small from behind, crossing the ford, in S10; her shoulder in S13. Hearts full,
   no armour, the lead selected (held: she means to bring the lamb back), the same 9-slot bar in every POV shot (story.json `hotbar`).
-- **Dad:** a player actor, `kai` skin. Blue dye in hand S02-S03; crossbow S06 (legs and crossbow only) and S07 (in his off hand, on the camera's side); a
+- **Dad:** a player actor, `sunny` skin (not `kai`: Six Thousand Torches' Jonah). Blue dye in hand S02-S03; crossbow S06 (legs and crossbow only) and S07 (in his off hand, on the camera's side); a
   lantern on the post in S05 (not in his hand); empty-handed, mending the field fence outside the palisade in S10 (13 blocks from the lens, facing south).
 - **The lamb:** a baby sheep, `Color:11` blue from S01 (unsingled) to S12; red only from S13 +0.3 s. `PersistenceRequired`.
 - **The flock:** 60 sheep, all blue in every shot (no white, no other colour) except the stray in S02 (white until

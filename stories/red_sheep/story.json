@@ -2,7 +2,7 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r4.4 (2026-11-11): r4 continuity must-fixes (S13 camera clears the hiding trunk, S07 crossbow in the off hand, S10 Dad in the field 13 blocks out) and should-fixes; r4.3: r4 critic's 0a blocker: L05 gets its innocent reading ('I think it helps him SLEEP'); r4.2: r3 continuity fixes; r4.1: r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
+  "revision": "r4.5 (2026-11-11): owner approved (new kid narrator, end on the evoker's look); Dad's skin sunny (kai is Jonah's), a second voice candidate (Rasalgethi); r4.4: r4 continuity must-fixes (S13 camera clears the hiding trunk, S07 crossbow in the off hand, S10 Dad in the field 13 blocks out) and should-fixes; r4.3: r4 critic's 0a blocker: L05 gets its innocent reading ('I think it helps him SLEEP'); r4.2: r3 continuity fixes; r4.1: r3 critic must-fixes (cut 1.0 s after the reveal, no fangs, no puff), crossbow on the camera side, the lead in hand, pinned question; r4: owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
   "caption": "why is every sheep in our village blue 🐑",
   "upload": {
     "title": "every sheep in our village is blue. all sixty of them 🐑 #minecraft #shorts",
@@ -68,7 +68,12 @@
           50
         ]
       },
-      "on_screen": "Ravenford's shepherd: a player actor, `kai` skin; blue dye in hand (S02, S03), a crossbow (S06 legs and crossbow only; S07 in his off hand), walking among the flock at nightfall (S05), mending the field fence (S10). One voiced line (L03), on screen while he says it. Voice: Alnilam on gemini-3.8-flash-tts, a one-clause bracket (not `elder`: he is a dad, not a grandpa); audition against Pip before voicing (owner rule: told apart at first hearing)."
+      "on_screen": "Ravenford's shepherd: a player actor, `sunny` skin (not `kai`: Six Thousand Torches' Jonah); blue dye in hand (S02, S03), a crossbow (S06 legs and crossbow only; S07 in his off hand), walking among the flock at nightfall (S05), mending the field fence (S10). One voiced line (L03), on screen while he says it. Voice: Alnilam on gemini-3.8-flash-tts, a one-clause bracket (not `elder`: he is a dad, not a grandpa); audition against Pip before voicing (owner rule: told apart at first hearing).",
+      "audition": [
+        "Alnilam",
+        "Rasalgethi"
+      ],
+      "audition_note": "Owner 2026-11-11 (via the lead): Dad's voice is auditioned on the lead's quota against Pip, saying L03. Candidates: Alnilam (firm; docs/story_craft.md's dad) and Rasalgethi (informative; story_craft's dad alternate). Neither is used by another character (voices/cast.json, stories/*, canon.md Planned characters). `voice` stays Alnilam until the owner picks."
     },
     "Evoker": {
       "role": "character",

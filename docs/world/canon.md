@@ -144,8 +144,8 @@ White's villages (-1998, -994), (-1585, -692), (-1284, -435), the West March's s
 | Grandma (the island) | The Walk | grey-haired old woman (new skin) | `grandma` (Autonoe) shared with Gold's Grandma: decide | decide |
 | the villager kid | Six Thousand Torches | baby villager, Larkfield | `narrator` (Leda) | cast |
 | Jonah | Six Thousand Torches | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
-| the kid | Red Sheep | baby villager, Ravenford | `narrator` (Leda) | cast |
-| Dad | Red Sheep | villager, crossbow | Alnilam proposed, audition | audition |
+| the kid | Red Sheep | player, `alex` skin, Ravenford (POV; never named, not Buh) | `narrator` (Leda) | cast |
+| Dad | Red Sheep | player, `sunny` skin, Ravenford's shepherd, crossbow | Alnilam or Rasalgethi (both unused), audition against Pip on L03 | audition |
 
 ## The links between stories
 Each link has a status. **On screen** means both Shorts already show it. **Plant** means it needs a small change in
