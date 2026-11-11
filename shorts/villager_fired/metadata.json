@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 56921652,
-    "sha256": "5db073f2cede74c12c51d9b9c6aba07a15da8105ae002c08f69dd27c572b35e5",
+    "bytes": 56940283,
+    "sha256": "ac9c6fb47e9dd85ed8e12ed0bb9d7b08af58d79ea59f193aa4df658463289507",
     "release": {
       "tag": "pkg-villager_fired",
-      "asset": "villager_fired.short.5db073f2cede74c1.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.5db073f2cede74c1.mp4",
-      "sha256": "5db073f2cede74c12c51d9b9c6aba07a15da8105ae002c08f69dd27c572b35e5",
-      "bytes": 56921652
+      "asset": "villager_fired.short.ac9c6fb47e9dd85e.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short.ac9c6fb47e9dd85e.mp4",
+      "sha256": "ac9c6fb47e9dd85ed8e12ed0bb9d7b08af58d79ea59f193aa4df658463289507",
+      "bytes": 56940283
     },
     "nosong_release": {
       "tag": "pkg-villager_fired",
-      "asset": "villager_fired.short_nosong.b4314aed0da5b894.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short_nosong.b4314aed0da5b894.mp4",
-      "sha256": "b4314aed0da5b894b80a98264f3cc6d1714ed7b41750e33265d84100dc8d24c4",
-      "bytes": 56713034
+      "asset": "villager_fired.short_nosong.2e9bf7cbb22a52d4.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-villager_fired/villager_fired.short_nosong.2e9bf7cbb22a52d4.mp4",
+      "sha256": "2e9bf7cbb22a52d4a65b7e4a2ae7decfa65e94b2a661d8d6e0b4306cb1c43f37",
+      "bytes": 56743101
     }
   },
   "edit": {
@@ -2223,11 +2223,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/villager_fired",
-    "commit": "a43caa6a43f7eb7e5d014c18cba7a636488abf8b",
+    "commit": "d8626a4a966d96123d4e3e2e892b8158f1194e9a",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43027779263",
-    "rendered_at": "2026-11-11T13:31:24.993Z",
-    "head_at_publish": "0fb94b41014705645843e2a0cb07849d7f5eebc0",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43073860349",
+    "rendered_at": "2026-11-11T18:15:09.082Z",
+    "head_at_publish": "885440e1470ecdef9043ddac2b77c382fc9efaa7",
     "stunt": "stunts/villager_fired.js",
     "source_snapshot": [
       "source/villager_fired.js",
@@ -2239,18 +2239,18 @@
     ]
   },
   "rebuild": [
-    "git checkout a43caa6a43f7",
+    "git checkout d8626a4a966d",
     "gunzip -c shorts/villager_fired/recording.json.gz > work/villager_fired.rec.json",
     "node render.js work/villager_fired.rec.json work/villager_fired.frames 60 1080 1011",
     "python3 audio.py work/villager_fired.rec.json work/villager_fired.wav",
     "python3 edit.py --frames work/villager_fired.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/villager_fired.rec.json --audio work/villager_fired.wav --caption \"I gave the villager every job 💀\" --red every --subs \"[[\\\"hire\\\",\\\"job 1: librarian\\\",1.6,0],[\\\"fire\\\",\\\"fired\\\",1.2,0],[\\\"hire\\\",\\\"job 2: farmer\\\",1.4,1],[\\\"fire\\\",\\\"fired again\\\",1.2,1],[\\\"hire\\\",\\\"job 3: fisherman\\\",1.2,2],[\\\"fire\\\",\\\"FIRED AGAIN\\\",1.2,2],[\\\"every\\\",\\\"fine. EVERY job\\\",1.6,0],[\\\"job\\\",\\\"job 4: armorer\\\",1.1,3],[\\\"job\\\",\\\"job 5: butcher\\\",1,4],[\\\"job\\\",\\\"job 6: cartographer\\\",1,5],[\\\"job\\\",\\\"job 7: cleric\\\",0.9,6],[\\\"job\\\",\\\"job 8: fletcher\\\",0.9,7],[\\\"job\\\",\\\"jobs 9, 10, 11...\\\",1.4,8],[\\\"job\\\",\\\"13 JOBS\\\",1.4,12],[\\\"all_jobs\\\",\\\"all 13 at once\\\",2.8,0],[\\\"faster\\\",\\\"FASTER\\\",1.2,0],[\\\"crowd\\\",\\\"the rest of the village: 0 jobs\\\",2.2,0],[\\\"tnt\\\",\\\"one problem...\\\",1.6,0],[\\\"lit\\\",\\\"he is about to get FIRED\\\",2.2,0],[\\\"ring_boom\\\",\\\"fired from 13 jobs at once\\\",1.5,0],[\\\"gone\\\",\\\"permanently\\\",1.5,0]]\" --speed [[\"fuse_a\",\"fuse_b\",\"cut\"],[\"all_jobs:0.3\",\"faster\",1.4]] --punch [[\"mob_death:0.6\",0,1.3]] --flash [[\"mob_death\",0,0.6],[\"mob_death:0.6\",0,0.9],[\"gone\",0,0.4]] --sfx [[\"pop\",\"beat\"],[\"dip\",\"mob_death:0.6\",0.4],[\"gamedip\",\"mob_death:0.6\",0.35],[\"impact\",\"mob_death:0.6\",{\"gain\":1.3}],[\"pop\",\"gone\"]] --start_at beat:-0.05 --end_after settle:0.6 --out out/villager_fired.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 backlog-finish worker: re-recorded after the settle fix (blast window 44 ticks, recording tail) so the ring's smoke has cleared before the end; he dies in the TNT ring (vanilla death, unemployed, no nitwit); flash/punch/dip/impact + game duck on the ring's last blast; 34.3 s; mixcheck OK, pace 0 blockers, check OK. Reviews: round 1 NOT READY (cut mid-blast, nitwit), round 2 READY (prev take), confirmation READY on this take (independent). Nitpicks: ends ~2.8 s after the last blast (settle rule); smoke fills the frame 2-3 frames at the peak; sub over smoke; crowd villagers flash red",
-  "published_at": "2026-11-11T13:41:24.419Z",
+  "notes": "audio re-mix (audio.py vanilla clamp, main 5530388b): quiet game audio +23.3 dB; picture unchanged; audio fix-check READY",
+  "published_at": "2026-11-11T18:39:54.779Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T13:42:03+00:00",
+    "at": "2026-11-11T18:40:37+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -2266,8 +2266,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T13:18:16.469Z",
-      "report": "out/villager_fired.check.json"
+      "at": "2026-11-11T18:23:45.724Z",
+      "report": "work/hb/villager_fired.check.json"
     },
     "key_sounds": "n/a"
   }
