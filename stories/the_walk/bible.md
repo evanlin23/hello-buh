@@ -8,7 +8,7 @@
 - **Day:** 4000 (the flashback, "ten years" before, is about day 350: canon counts 365 days a year; outside the Long Day 800-1100).
 - **Coordinates:** outside, dock-relative. (0, 0, 0) is the dock's end, its deck flush at sea level (stand at sea
   level + 1); -z is out to sea (west). Grandma's window is (0, 3, -60). The hut's door is about 20 blocks inland.
-- **Hut coordinates are hut-local:** (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) facing +z; Grandpa at (-1, 0, 1.2); the kid at (1, 0, 1.2); the tally wall at z -3; the door at (0, 0, 6) facing the bay. The hut is a `room` from lib/sets (15x13x13).
+- **Hut coordinates are hut-local:** (0, 0, 0) is the lectern's block; the librarian at (0, 0, -1.5) facing +z; Grandpa at (-0.6, 0, 1.0) at the counter, (-1, 0, 1.2) when breaking; the kid at (1, 0, 1.2); the tally wall at z -3; the door at (0, 0, 6) facing the bay. The hut is a `room` from lib/sets (15x13x13).
 - **Not claimed yet:** survey for real cold_ocean with a natural island 60 blocks out (the example spot (-2190, -380) is land); the Ridge tower needs renderDistance/recordRadius above 192.
 - **New canon facts:** Gullwick; Grandpa and Grandma (players, a couple apart for ten years); Mom (their daughter, a
   player) and the kid; the ice path on day 4000 (Frost Walker ice melts, so nothing is stamped after the day).
@@ -69,3 +69,4 @@ See set.md "Claims".
 - **Three hundred, not three thousand** (critic r3, accuracy outranks): Frost Walker II comes up about 1 roll in 110
   (2/3 an enchanted book x 1/37 x 1/2), so 300 rolls without it is about a 7% streak (unlucky but real); 3,000 would
   be about 1 in 10^12. The tally wall shows about 300.
+- **Why II, not I:** Frost Walker freezes a radius of 2 + level (I: 3, II: 4): the wider path he wants for 60 blocks of open sea. Never said; the tooltip shows it. (With any level, 300 misses would be about 1 in 230.)
