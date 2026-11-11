@@ -571,11 +571,11 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             if starts:
                 payoff, how = starts[-1], "the edit's endAfter 'settle': where the last payoff motion began"
                 # inside that window, the last blast or death (a lit fuse opens the window: the payoff is the bang)
-                hits = [clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and (
+                bangs = [clock.out_of_src(e["t"] / 1000) for e in (rec or {}).get("timeline", []) if clock and (
                     (e["event"] == "particles" and e.get("type") == "explosion") or e["event"] in ("death", "mob_death"))]
-                hits = [h for h in hits if h is not None and starts[-1] - 1e-6 <= h <= st_ + 1e-6]
-                if hits:
-                    payoff, how = max(hits), "the edit's endAfter 'settle': the last blast or death before it settles"
+                bangs = [h for h in bangs if h is not None and starts[-1] - 1e-6 <= h <= st_ + 1e-6]
+                if bangs:
+                    payoff, how = max(bangs), "the edit's endAfter 'settle': the last blast or death before it settles"
         elif ev not in ("story_end", "end", "line"):
             payoff, how = mark_time(ev), f"the edit's endAfter event '{ev}'"
     if payoff is None and story and story.get("twist") and lines:

@@ -3,10 +3,17 @@
 const fs = require('fs')
 // EDIT_EXTRA='{"punch":["boom"]}' merges keys over the stunt's edit block (try a retention tool
 // without touching the stunt: scripts/reedit.sh)
-const e = { ...(require(`../stunts/${process.argv[2]}`).edit || {}), ...JSON.parse(process.env.EDIT_EXTRA || '{}') }
+const stuntMod = require(`../stunts/${process.argv[2]}`)
+const e = { ...(stuntMod.edit || {}), ...JSON.parse(process.env.EDIT_EXTRA || '{}') }
 const out = []
 if (e.caption) out.push('--caption', process.env.CAPTION || e.caption)
 if (e.red) out.push('--red', e.red)
+// the key word's colour: a Buh Stories Short is Buh gold #FFD640 (docs/brand.md "Buh Stories channel"), keyed on the
+// stunt's (or its edit block's) channel: 'buhstories' only, never on edit.story, since HelloBuh has story_* Shorts too
+// (story_nitwit, story_sheep_stares...) that stay red. edit.redColor ('RRGGBB') overrides.
+const channel = e.channel || stuntMod.channel
+const redColor = e.redColor || (channel === 'buhstories' ? 'FFD640' : null)
+if (e.red && redColor) out.push('--red_rgb', String(redColor).replace(/^#/, ''))
 if (e.bands) out.push('--bands', e.bands)   // 'blur' | 'black'
 if (e.colors) out.push('--colors', e.colors)
 if (e.countdown) out.push('--countdown', e.countdown)
