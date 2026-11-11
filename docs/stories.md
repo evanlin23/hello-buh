@@ -654,6 +654,10 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, auditing Saving Up for a Bastion (cold read 60-65 %, dramatic irony; the second piglin-gold
   story, at Gold for the Portal's portal with the helmet piglin in the background): "ok all".** Approved as written;
   the player's voice is auditioned (Umbriel vs Zubenelgenubi; whichever Jonah doesn't take).
+- **Owner, 2026-11-11, auditing Pulled Away and The Singing Box Next Door, and on the lead's note that the bottleneck is now
+  building (voices, renderer pieces, skins) rather than pitching: "ok all".** Both scripts approved as written (with the
+  lead's calls: Bramble Hollow, one egg, original skins); next, the engine work the approved scripts need, one
+  session per piece.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
