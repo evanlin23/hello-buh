@@ -39,7 +39,7 @@ module.exports = {
     // 3. wide: the whole sponge over the forest, orbiting from the south-east
     orbit: { orbit: [0, 41, 0], radius: 112, height: 36, startDeg: 20, degPerSec: 9, fov: 56, dof: false, drift: 0.4, scenery: true, subject: [[0, 96, 0]] },
     // 5. the west face head-on, pushing in: the face hole, and the core glowing deep inside it
-    face: { path: [[0, -150, 47, 0.5], [3.5, -108, 44, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [3.5, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] }
+    face: { path: [[0, -150, 47, 0.5], [3.8, -106, 44, 0.5]], lookPath: [[0, 0, 41.5, 0.5], [3.8, 0, 41.5, 0.5]], fov: 52, dof: false, drift: 0.3, scenery: true, subject: [[0, 41.5, 0.5]] }
   },
   edit: {
     caption: 'rate my starter house',
@@ -159,15 +159,15 @@ module.exports = {
       // 3. wide orbit (camera shot)
       park(); M.shot(ctx, 'orbit'); ctx.mark('cut'); ctx.mark('wide')
       ctx.sound('item.elytra.flying', 0.4, 0.85)
-      await bot.waitForTicks(80)
+      await bot.waitForTicks(86)
       // 4. first person: a boost up the east face and over the top, ending looking down the top hole at the core
       M.shot(ctx, 'pov'); ctx.mark('cut'); ctx.mark('climb')
-      await run([[76, 16, 12], [56, 50, 7], [36, 82, 3], [14, 95, 0.5], [0, 98, 0.5]], 90, (i) => ease(1.6, 0.9, i, 90),
-        (p, a, i) => mix(a, W([0, 41, 0.5]), ease(0, 0.85, i - 45, 40)), { 2: boost })
+      await run([[84, 36, 14], [58, 62, 7], [34, 88, 3], [14, 97, 0.5], [0, 99, 0.5]], 90, (i) => ease(1.6, 0.9, i, 90),
+        (p, a, i) => mix(W([0, 74, 0.5]), W([0, 41, 0.5]), ease(0, 1, i - 40, 45)), { 2: boost })   // the east face and its top edge, then down the top hole
       // 5. the west face head-on (camera shot)
       park(); M.shot(ctx, 'face'); ctx.mark('cut'); ctx.mark('face')
       ctx.sound('item.elytra.flying', 0.4, 0.9)
-      await bot.waitForTicks(70)
+      await bot.waitForTicks(76)
       // 6. first person: boost, dive into the face hole, ease off inside, thread the core's hole (the payoff)
       M.shot(ctx, 'pov'); ctx.mark('cut'); ctx.mark('dive')
       const path = [[-104, 47, 0.5], [-75, 43, 0.5], [-48, 41.5, 0.5], [-20, 41.5, 0.5], [0, 41.5, 0.5], [30, 41.5, 0.5]]
