@@ -1,0 +1,283 @@
+{
+  "name": "psycho_lava_mansion",
+  "channel": "hellobuh",
+  "caption": "rate my cozy house 1-10",
+  "youtube": {
+    "title": "rate my cozy house 1-10 #minecraft #shorts",
+    "description": "rate my cozy house 1-10\n\nSong: Cape x Crysstales - COM BOTA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/COMBOTA\nWatch: http://ncs.lnk.to/COMBOTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "com_bota.mp3",
+    "title": "COM BOTA",
+    "artist": "cape, crysstales",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "land",
+    "drop_in_song_s": 16.75,
+    "drop_in_short_s": 13.3,
+    "song_start_s": 3.45
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 14.2,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 18223369,
+    "sha256": "14b70bd2fadc1cc0cdc747da7bfa75fc6bdb023b88c412944f774ea6fc829763",
+    "release": {
+      "tag": "pkg-psycho_lava_mansion",
+      "asset": "psycho_lava_mansion.short.14b70bd2fadc1cc0.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short.14b70bd2fadc1cc0.mp4",
+      "sha256": "14b70bd2fadc1cc0cdc747da7bfa75fc6bdb023b88c412944f774ea6fc829763",
+      "bytes": 18223369
+    },
+    "nosong_release": {
+      "tag": "pkg-psycho_lava_mansion",
+      "asset": "psycho_lava_mansion.short_nosong.58a11486fec797bb.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-psycho_lava_mansion/psycho_lava_mansion.short_nosong.58a11486fec797bb.mp4",
+      "sha256": "58a11486fec797bbf22a271fd9a1f6449c39d67c01dd59ccb3afa6edab947be9",
+      "bytes": 18214581
+    }
+  },
+  "edit": {
+    "caption": "rate my cozy house 1-10",
+    "red": "cozy",
+    "subs": [
+      [
+        "open",
+        "front yard",
+        2.6
+      ],
+      [
+        "door",
+        "front door",
+        1.8
+      ],
+      [
+        "inside",
+        "hallway",
+        2.2
+      ],
+      [
+        "room",
+        "living room",
+        3,
+        0
+      ],
+      [
+        "room",
+        "kitchen",
+        3,
+        1
+      ],
+      [
+        "room",
+        "bathroom",
+        3,
+        2
+      ],
+      [
+        "finale",
+        "bedroom",
+        3
+      ]
+    ],
+    "subsY": 0.7,
+    "startAt": "open:0",
+    "endAfter": "land:0.9",
+    "dropAt": "land",
+    "sfx": [
+      [
+        "pop",
+        "open",
+        {
+          "gain": 0.35
+        }
+      ],
+      [
+        "dip",
+        "land",
+        0.4
+      ],
+      [
+        "impact",
+        "land"
+      ]
+    ],
+    "punch": [
+      [
+        "land",
+        0,
+        0.6
+      ]
+    ],
+    "args": [
+      "--caption",
+      "rate my cozy house 1-10",
+      "--red",
+      "cozy",
+      "--subs",
+      "[[\"open\",\"front yard\",2.6],[\"door\",\"front door\",1.8],[\"inside\",\"hallway\",2.2],[\"room\",\"living room\",3,0],[\"room\",\"kitchen\",3,1],[\"room\",\"bathroom\",3,2],[\"finale\",\"bedroom\",3]]",
+      "--subs_y",
+      "0.7",
+      "--punch",
+      "[[\"land\",0,0.6]]",
+      "--sfx",
+      "[[\"pop\",\"open\",{\"gain\":0.35}],[\"dip\",\"land\",0.4],[\"impact\",\"land\"]]",
+      "--start_at",
+      "open:0",
+      "--end_after",
+      "land:0.9"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 375,
+      "y": 71,
+      "z": -55
+    },
+    "biome": "minecraft:plains",
+    "ticks": 313,
+    "seconds": 15.65,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.85,
+        "event": "open"
+      },
+      {
+        "t": 1.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 2.75,
+        "event": "door"
+      },
+      {
+        "t": 2.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.25,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 3.75,
+        "event": "swing"
+      },
+      {
+        "t": 3.75,
+        "event": "door_open"
+      },
+      {
+        "t": 3.75,
+        "event": "mob_hurt"
+      },
+      {
+        "t": 4.5,
+        "event": "inside"
+      },
+      {
+        "t": 5.05,
+        "event": "room"
+      },
+      {
+        "t": 7.8,
+        "event": "room"
+      },
+      {
+        "t": 10.55,
+        "event": "room"
+      },
+      {
+        "t": 12.05,
+        "event": "finale"
+      },
+      {
+        "t": 13.65,
+        "event": "jump"
+      },
+      {
+        "t": 14.15,
+        "event": "land"
+      },
+      {
+        "t": 15.65,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "dfe0f7b36e68866efbe02fed20575a841ba99270",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T19:35:02.255Z",
+    "head_at_publish": "dfe0f7b36e68866efbe02fed20575a841ba99270",
+    "stunt": "stunts/psycho_lava_mansion.js",
+    "source_snapshot": [
+      "source/psycho_lava_mansion.js",
+      "source/psycho.js",
+      "source/chain.js",
+      "source/motion.js",
+      "source/act.js",
+      "source/sight.js",
+      "source/plateau.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout dfe0f7b36e68",
+    "gunzip -c shorts/psycho_lava_mansion/recording.json.gz > work/psycho_lava_mansion.rec.json",
+    "node render.js work/psycho_lava_mansion.rec.json work/psycho_lava_mansion.frames 60 1080 1011",
+    "python3 audio.py work/psycho_lava_mansion.rec.json work/psycho_lava_mansion.wav",
+    "python3 edit.py --frames work/psycho_lava_mansion.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/psycho_lava_mansion.rec.json --audio work/psycho_lava_mansion.wav --caption \"rate my cozy house 1-10\" --red cozy --subs \"[[\\\"open\\\",\\\"front yard\\\",2.6],[\\\"door\\\",\\\"front door\\\",1.8],[\\\"inside\\\",\\\"hallway\\\",2.2],[\\\"room\\\",\\\"living room\\\",3,0],[\\\"room\\\",\\\"kitchen\\\",3,1],[\\\"room\\\",\\\"bathroom\\\",3,2],[\\\"finale\\\",\\\"bedroom\\\",3]]\" --subs_y 0.7 --punch [[\"land\",0,0.6]] --sfx [[\"pop\",\"open\",{\"gain\":0.35}],[\"dip\",\"land\",0.4],[\"impact\",\"land\"]] --start_at open:0 --end_after land:0.9 --out out/psycho_lava_mansion.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker psycho: fake psycho house tour (burning wheat field, fire-ringed door, nether-brick mansion over lava, bed jump), 1 review round READY (independent subagent), nitpicks: jump gap barely visible, ~0.45 s near-still tail, pace WARNs picture/buildup",
+  "published_at": "2026-11-11T19:36:19.156Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T19:36:43+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 14.21 s vs the reviewed render 14.20 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T19:35:11.816Z",
+      "report": "work/hb/psycho_lava_mansion.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
