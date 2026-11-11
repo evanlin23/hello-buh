@@ -30,21 +30,21 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 38376816,
-    "sha256": "29975bc76f46e68e733c7b6d58d2b015fe25c12b94725e78f3e68d993b934199",
+    "bytes": 38379394,
+    "sha256": "c7c74b2dfd2ea8f9a07402d52018e27a396540aa5812d7c26ca4ae95f6c2a19c",
     "release": {
       "tag": "pkg-which_door",
-      "asset": "which_door.short.29975bc76f46e68e.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.29975bc76f46e68e.mp4",
-      "sha256": "29975bc76f46e68e733c7b6d58d2b015fe25c12b94725e78f3e68d993b934199",
-      "bytes": 38376816
+      "asset": "which_door.short.c7c74b2dfd2ea8f9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short.c7c74b2dfd2ea8f9.mp4",
+      "sha256": "c7c74b2dfd2ea8f9a07402d52018e27a396540aa5812d7c26ca4ae95f6c2a19c",
+      "bytes": 38379394
     },
     "nosong_release": {
       "tag": "pkg-which_door",
-      "asset": "which_door.short_nosong.2432bbe7595196b6.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short_nosong.2432bbe7595196b6.mp4",
-      "sha256": "2432bbe7595196b632b00632a528316ded17a63d4a706fd113640d5302e85613",
-      "bytes": 38215057
+      "asset": "which_door.short_nosong.efec318e4fa9dcc1.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-which_door/which_door.short_nosong.efec318e4fa9dcc1.mp4",
+      "sha256": "efec318e4fa9dcc1e0afd18da43091ac2a46f2348c2aae2fc6cea87e34d3b46b",
+      "bytes": 38266214
     }
   },
   "edit": {
@@ -233,6 +233,16 @@
       [
         "impact",
         "last_death"
+      ],
+      [
+        "dip",
+        "big_blast",
+        0.35
+      ],
+      [
+        "gamedip",
+        "big_blast",
+        0.35
       ]
     ],
     "args": [
@@ -253,7 +263,7 @@
       "--flash",
       "[[\"death\",2,0.6],[\"big_blast\",0,0.8]]",
       "--sfx",
-      "[[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"]]",
+      "[[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"],[\"dip\",\"big_blast\",0.35],[\"gamedip\",\"big_blast\",0.35]]",
       "--on_fire",
       "lava_in:death",
       "--death_screen",
@@ -7495,11 +7505,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/which_door",
-    "commit": "d8e2a9d4173b1c8297987606e8861458b7549d45",
+    "commit": "c81cf36a6ed903d3ae825d7f600f865927878a49",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43040189690",
-    "rendered_at": "2026-11-11T14:49:10.446Z",
-    "head_at_publish": "25ec59514aa5fd1792b23590d1c643821fce932f",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43079857593",
+    "rendered_at": "2026-11-11T18:48:37.827Z",
+    "head_at_publish": "da2fe47d6cc1988294a82d77502bd6a9ddc19a85",
     "stunt": "stunts/which_door.js",
     "source_snapshot": [
       "source/which_door.js",
@@ -7512,18 +7522,18 @@
     ]
   },
   "rebuild": [
-    "git checkout d8e2a9d4173b",
+    "git checkout c81cf36a6ed9",
     "gunzip -c shorts/which_door/recording.json.gz > work/which_door.rec.json",
     "node render.js work/which_door.rec.json work/which_door.frames 60 1080 1011",
     "python3 audio.py work/which_door.rec.json work/which_door.wav",
-    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2],[\"big_blast\",0,1.15]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.6],[\"big_blast\",0,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after settle:-0.15 --out out/which_door.mp4"
+    "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2],[\"big_blast\",0,1.15]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.6],[\"big_blast\",0,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"],[\"dip\",\"big_blast\",0.35],[\"gamedip\",\"big_blast\",0.35]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after settle:-0.15 --out out/which_door.mp4"
   ],
   "status": "ready",
-  "notes": "2026-11-11 backlog-finish worker: re-recorded on the settle fix (the TNT floor's debris settles on screen), door turns capped at a hand's speed, cuts on still views, the opening sweeps the doors, a flash + punch on the second wave, ends at settle-0.15 (30.8 s); mixcheck OK, pace 0 blockers, check OK. Reviews: round 2 NOT READY (ended mid-blast), round 3 NOT READY (frozen 1.25 s death screen), lead-approved fix-check READY. Nitpicks: WORST ONE card fades 1.65 s before the end; no fuse hiss 24.6-28 s; view flicks TNT/bookshelves 25-27.8 s; 2-3 pink blur frames 29.2 s",
-  "published_at": "2026-11-11T15:19:24.157Z",
+  "notes": "audio re-mix (audio.py vanilla clamp, main 5530388b): quiet game audio +28.6 dB; song + game dip 0.35 s before big_blast (payoff hit, edit only); picture unchanged; audio fix-check READY",
+  "published_at": "2026-11-11T19:17:09.505Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T15:20:25+00:00",
+    "at": "2026-11-11T19:17:47+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -7532,15 +7542,15 @@
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 6,
+      "warnings": 5,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T14:38:06.973Z",
-      "report": "out/which_door.check.json"
+      "at": "2026-11-11T18:53:30.184Z",
+      "report": "work/hb/which_door.check.json"
     },
     "key_sounds": "n/a"
   }
