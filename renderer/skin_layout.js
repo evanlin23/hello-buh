@@ -8,10 +8,14 @@ const at = (px, x, y) => (y * px.width + x) * 4
 
 // A skin painted for slim (3 px) arms but uploaded as classic leaves the wide arm's 4th column empty: the right
 // arm's back face x 54-55 and bottom x 50-51, the left arm's x 46-47 and 42-43 (all transparent), while its slim
-// faces are painted (x 50-53 rows 20-31).
+// faces are painted (x 50-53 rows 20-31). A copy whose base layer was already made opaque (scripts/fetch_skin.py
+// normalize = the game's setNoAlpha, as the Actions render fetches it) has those columns opaque BLACK instead: they
+// count as empty too, else the slim art went unconverted and the arm drew a black stripe (r:r52f94c fix-check,
+// which_door and lava_crossing on Actions; the private-assets copy keeps its alpha and drew clean).
 export function isSlimLayout (px) {
   const k = px.width / 64
-  const clear = (x, y, w, h) => { for (let j = y * k; j < (y + h) * k; j++) for (let i = x * k; i < (x + w) * k; i++) if (px.data[at(px, i, j) + 3]) return false; return true }
+  const empty = (o) => !px.data[o + 3] || (!px.data[o] && !px.data[o + 1] && !px.data[o + 2])
+  const clear = (x, y, w, h) => { for (let j = y * k; j < (y + h) * k; j++) for (let i = x * k; i < (x + w) * k; i++) if (!empty(at(px, i, j))) return false; return true }
   return clear(54, 20, 2, 12) && clear(50, 16, 2, 4) && clear(46, 52, 2, 12) && clear(42, 48, 2, 4) && !clear(50, 20, 4, 12)
 }
 
