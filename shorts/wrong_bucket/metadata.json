@@ -1,9 +1,9 @@
 {
   "name": "wrong_bucket",
-  "caption": "POV: you grabbed the wrong bucket 💀",
+  "caption": "POV: you grabbed the wrong bucket \ud83d\udc80",
   "youtube": {
-    "title": "POV: you grabbed the wrong bucket 💀 #minecraft #shorts",
-    "description": "POV: you grabbed the wrong bucket 💀\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "POV: you grabbed the wrong bucket \ud83d\udc80 #minecraft #shorts",
+    "description": "POV: you grabbed the wrong bucket \ud83d\udc80\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -47,7 +47,7 @@
     }
   },
   "edit": {
-    "caption": "POV: you grabbed the wrong bucket 💀",
+    "caption": "POV: you grabbed the wrong bucket \ud83d\udc80",
     "red": "wrong",
     "song": "songs/funk_abnormal.mp3",
     "dropAt": "death",
@@ -56,7 +56,7 @@
     "deathScreen": true,
     "args": [
       "--caption",
-      "POV: you grabbed the wrong bucket 💀",
+      "POV: you grabbed the wrong bucket \ud83d\udc80",
       "--red",
       "wrong",
       "--on_fire",
@@ -191,9 +191,9 @@
     "gunzip -c shorts/wrong_bucket/recording.json.gz > work/wrong_bucket.rec.json",
     "node render.js work/wrong_bucket.rec.json work/wrong_bucket.frames 60 1080 1011",
     "python3 audio.py work/wrong_bucket.rec.json work/wrong_bucket.wav",
-    "python3 edit.py --frames work/wrong_bucket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/wrong_bucket.rec.json --audio work/wrong_bucket.wav --caption \"POV: you grabbed the wrong bucket 💀\" --red wrong --on_fire placed:death --death_screen death --start 1.2 --song songs/funk_abnormal.mp3 --song_drop_at death --out out/wrong_bucket.mp4"
+    "python3 edit.py --frames work/wrong_bucket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/wrong_bucket.rec.json --audio work/wrong_bucket.wav --caption \"POV: you grabbed the wrong bucket \ud83d\udc80\" --red wrong --on_fire placed:death --death_screen death --start 1.2 --song songs/funk_abnormal.mp3 --song_drop_at death --out out/wrong_bucket.mp4"
   ],
   "status": "needs-fix",
-  "notes": "backlog worker D 2026-11-11: needs-fix, superseded. A 9.85 s lava-bucket clutch joke: fails the owner's 30 s minimum (retention-audit check 5) and the same joke is clutch_harder's payoff tier ('EASY ONE', ready, 31.1 s). Standalone it is one beat with no build-up; growing it to 30 s would remake clutch_harder. Recommend retiring it (do not queue).",
+  "notes": "backlog worker D 2026-11-11: needs-fix. On the current edit (jump:-0.4 .. death:1.8 death screen) the Short is ~4.8 s: under the 8 s stunt minimum (pace BLOCK), one beat (a 21-block fall into lava) with no build-up. The same joke is clutch_harder's payoff tier ('EASY ONE', ready, 31.1 s). Not re-recorded (no reference song in its edit now). To save it: a build-up before the jump (e.g. two clean water clutches first, then the lava bucket), which is clutch_harder again. Recommend retiring it.",
   "published_at": "2026-11-06T08:15:53.645Z"
 }
