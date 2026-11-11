@@ -73,7 +73,7 @@ module.exports = {
       ['chain_end', 'crater', 2],
       ['notice', 'boom', 1.5]        // his look down, at you and the run (the fuse: no turns of ours, fixed cameras)     // the smoke settling at 2x (no turns: the wide is a fixed camera)
     ],
-    sfx: [['air', 'ch2', 'crater', { gain: 0.5 }], ['hit', 'push', { gain: 1.4 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }]],
+    sfx: [['air', 'ch2', 'crater', { gain: 0.5 }], ['dip', 'push', 0.3], ['hit', 'push', { gain: 1.6 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }]],
     extra: {
       deathScreen: true,
       punch: [['push', 0, 1.06], ['lever', 0, 1.05]],
@@ -122,6 +122,11 @@ module.exports = {
     // ceiling over it and beside it
     for (const x of [-2, 2]) await c(`/setblock ${cx + x} ${cy + 4} ${cz - 2} glowstone`)
     await c(`/setblock ${cx} ${cy + 4} ${cz - 1} glowstone`)
+    // and invisible light 15 in the air in front of the vein and where you stand (review r2: at light 11-12 the warm
+    // lightmap still turned the drops and the held diamond emerald; at 15 it is white)
+    for (const [x, y, z] of [[-1, 0, -2], [1, 0, -2], [0, 2, -2], [-1, 3, -2], [1, 3, -2], [0, 3, -1], [-1, 1, -1], [1, 1, -1]]) {
+      await c(`/setblock ${cx + x} ${cy + y} ${cz + z} light[level=15]`)
+    }
     // the vein: north wall (z = cz - 3), right in front of the spawn point
     this.vein = [[-1, 2], [0, 2], [1, 2], [1, 1], [0, 1], [-1, 1], [0, 0]].map(([x, y]) => [cx + x, cy + y, cz - 3])
     for (const [x, y, z] of this.vein) await c(`/setblock ${x} ${y} ${z} deepslate_diamond_ore`)
@@ -230,7 +235,7 @@ module.exports = {
     // digital silence through the whole cave and the lever)
     const snd = (name, v = 1, p = 1) => ctx.sound(name, v, p)
     const rp = () => 0.9 + Math.random() * 0.2
-    bot.on('playerCollect', (who) => { if (who === bot.entity) snd('entity.item.pickup', 0.2, (Math.random() - Math.random()) * 1.4 + 2) })
+    bot.on('playerCollect', (who) => { if (who === bot.entity) snd('entity.item.pickup', 0.35, (Math.random() - Math.random()) * 1.4 + 2) })
     const friendHead = () => { const e = bot.players[FRIEND] && bot.players[FRIEND].entity; return e ? e.position.offset(0, 1.6, 0) : at(PIT.x0 + 1.5, 2.6, PIT.z1 + 3.6) }
 
     // ---- 1. BETRAYAL: he steps up and punches you in
@@ -304,7 +309,7 @@ module.exports = {
       if (!b || !/diamond/.test(b.name)) continue
       // the hits while it breaks (every 4 ticks, MultiPlayerGameMode.continueDestroyBlock) and the break
       let digging = true
-      ;(async () => { await bot.waitForTicks(3); while (digging) { snd('block.deepslate.hit', 0.25, 0.5); await bot.waitForTicks(4) } })()
+      ;(async () => { await bot.waitForTicks(3); while (digging) { snd('block.deepslate.hit', 0.45, 0.5); await bot.waitForTicks(4) } })()
       await A2.dig(b, { ms: 450 })   // vanilla: iron pickaxe, Efficiency III (mineflayer counts a bare hand)
       digging = false
       snd('block.deepslate.break', 1, 0.8)
@@ -361,10 +366,14 @@ module.exports = {
     await bot.waitForTicks(8)
     await M.lookAt(fr, at(ME3[0], 1.6, ME3[2]), 250)           // then at you
     await bot.waitForTicks(6)
-    // too late: he turns and runs for it, off the porch and across the lawn (out of this shot); the wide on the blast
-    fr.look(-Math.PI / 2 - 0.35, 0, true)   // (mineflayer yaw: -PI/2 = east, a little south)
+    // too late: he turns and runs for it, along his porch (in this shot, away from it); the wide on the blast
+    fr.look(Math.PI / 2 + 0.3, 0, true)   // west along the porch, a little south: away from the camera, in frame (mineflayer yaw: PI/2 = west)
     fr.setControlState('sprint', true); fr.setControlState('forward', true)
-    for (let k = 0; k < 80 && !boomed; k++) { if (k % 6 === 0) snd('block.wood.step', 0.25, rp()); await bot.waitForTicks(1) }
+    for (let k = 0; k < 80 && !boomed; k++) {
+      if (k === 9) { fr.setControlState('forward', false); fr.setControlState('sprint', false) }   // only off the porch: the blast must still get him (review r2: he outran it)
+      if (k % 6 === 0 && k < 9) snd('block.wood.step', 0.25, rp())
+      await bot.waitForTicks(1)
+    }
     M.shot(ctx, 'wide'); ctx.mark('wide')
     // your eyes go to where the house was (unseen: the camera is the wide)
     ctx.easeLookAt(at(0, -1, -7), 600)
