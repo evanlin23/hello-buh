@@ -6,6 +6,7 @@
  "logline": "A villager kid tries for 900 days to get the dog on the hill to stand up, until the one person it obeys logs back in.",
  "question": "why tf has the dog sat on that hill for 900 days?",
  "premise": "A tamed wolf has sat on one hilltop block above the village for 900 days, staring at an empty patch of grass beside an old dirt hut. Bones pile up untouched. A villager kid decides to sit with him so he doesn't wait alone.",
+ "family": "waiting_pet",
  "twist": "A sitting dog only stands for its owner, and its owner is a player who logged out on that patch 900 days ago (players come back where they left). 'Buh joined the game': he appears on the patch and the dog stands for the first time. He says 'Sit, boy. I'll be right back.' and logs out again. The dog sits. Day one.",
  "key_color": "#FFC94A",
  "voice": {
