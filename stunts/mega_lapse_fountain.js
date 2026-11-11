@@ -176,11 +176,12 @@ module.exports = L.makeLapse({
     face: { path: [[0, 22, 20, 120], [2.0, 32, 22, 112]], lookPath: [[0, 4, 6, 0], [2.0, 8, 7, 0]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 13, 76]] },
     // 5. high over the south-east corner: the town spreading over the terrace
     town: { path: [[0, 92, 58, 92], [1.8, 86, 54, 98]], lookPath: [[0, 10, 8, 10], [1.8, 8, 8, 12]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[50, 16, 50]] },
-    // 6. the west side from out on the field: the second terrace and the corner towers going up
-    far: { path: [[0, -150, 26, -30], [2.0, -146, 30, -48]], lookPath: [[0, -40, 22, -20], [2.0, -40, 24, -26]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[-76, 52.5, -76]] },
+    // 6. high over the west side: the second terrace, the corner tower and the town on top rise in view (r1: from low on
+    //    the field the terrace's face hid the whole city)
+    far: { path: [[0, -124, 58, -20], [2.0, -120, 62, -36]], lookPath: [[0, -56, 22, -48], [2.0, -56, 24, -50]], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [[-76, 52.5, -76]] },
     // 7. from the plaza, the fountain in front: the great towers rise behind the walls
     giants: { path: [[0, -9.5, 5, -9.5], [2.7, -8, 4.5, -8]], lookPath: [[0, 24, 18, 24], [2.7, 24, 20, 24]], fov: 72, dof: false, drift: 0.3, scenery: true, subject: [[0, 4.5, 0], [56, 86.5, 56]] },
     // 8. the reveal: the whole city from high on its south axis, the fountain small in the middle, a slow push
-    reveal: { path: [[0, 0, 142, 124], [1.6, 0, 135, 116]], lookPath: [[0, 0, 4, 4], [1.6, 0, 4, 4]], fov: 70, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] }
+    reveal: { path: [[0, 0, 130, 110], [1.6, 0, 124, 103]], lookPath: [[0, 0, 8, -4], [1.6, 0, 8, -4]], fov: 60, dof: false, drift: 0.3, scenery: true, subject: [[0, 5.5, 0]] }   // (r1: at fov 70 the frame's left edge reached the recording's missing corner chunks)
   }
 })
