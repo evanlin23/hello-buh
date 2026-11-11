@@ -8,6 +8,7 @@ song's drop all stay on their events. Times are seconds since the recording star
 """
 import json
 import math
+import sys
 
 
 def _load(x):
@@ -51,7 +52,7 @@ class Warp:
         for a, b, f in _load(spec):
             ta, tb = at(a), at(b)
             if ta is None or tb is None or tb <= ta:
-                print(f"speed span {a}..{b} skipped (event missing or empty)")
+                print(f"speed span {a}..{b} skipped (event missing or empty)", file=sys.stderr)   # stdout carries --json (sound_levels)
                 continue
             # a hard cut drops one more 60 fps frame after its end mark: the renderer's particles from
             # the previous shot still showed on the first frame of the new one (worker 9, tnt_1000).

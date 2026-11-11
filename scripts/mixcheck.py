@@ -81,7 +81,14 @@ def main() -> int:
                            capture_output=True, text=True)
         out = r.stdout + r.stderr
         print(out.rstrip())
-        blocked = "BLOCK" in out and "0 blocker" not in out
+        import re as _re
+        verdict = _re.search(r"^(OK|FAIL): (\d+) blocker", out, _re.M)
+        if r.returncode not in (0, 1) or not verdict:
+            # pace never ran (e.g. no node_modules: `./hb` refuses), so there is NO verdict: never report OK
+            # (a reviewer caught mixcheck printing OK with pace silently skipped, 2026-11-11)
+            print(f"mixcheck {n}: COULD NOT RUN pace on the final mix (exit {r.returncode}): fix the setup (npm ci), then run again")
+            return 2
+        blocked = verdict.group(1) == "FAIL" or int(verdict.group(2)) > 0
         print(f"mixcheck {n}: {'BLOCKED on the final mix (fix before calling it READY)' if blocked else 'OK on the final mix'}")
         if a.keep:
             keep = ROOT / "work" / f"{n}.mixcheck.mp4"

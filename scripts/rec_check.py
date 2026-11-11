@@ -382,6 +382,11 @@ def main():
         if r_["problems"]:
             o_ = out_t(r_["a"])
             R.add("BLOCK", "cuts", (vt(o_) if start <= o_ <= end_o else None, r_["a"]), lapse_cuts.message(r_), near(r_["a"] * 20))
+    # no edit cut in the middle of a dig, place or use (owner r:r52f94c, pickaxe_race; scripts/action_cuts.py)
+    import action_cuts
+    for r_ in action_cuts.action_cuts(warp.spans if warp else [], tl):
+        o_ = out_t(r_["at"])
+        R.add("BLOCK", "cuts", (vt(o_) if start <= o_ <= end_o else None, r_["at"]), action_cuts.message(r_), near(r_["at"] * 20))
     # F1 windows (HUD hidden, render.js/edit.py): a cinematic drone camera, not a player
     f1, f1_on = [], None
     for e in tl:
@@ -626,7 +631,7 @@ def main():
         if key_ not in ("speed", "slowmo", "freeze", "startAt", "endAfter", "dropAt", "sfx", "replay", "song", "caption", "red", "colors", "story"):
             walk(v)
     for e in tl:
-        if e["event"] in ("line", "meter", "death"):
+        if e["event"] in ("line", "meter", "death", "syschat", "chat"):   # (a new chat line is new on screen: the cooked flood)
             overlay.add(out_t(e["t"] / 1000))
     story_dir = a.story_dir or ed.get("story")
     caps_note = ""

@@ -54,6 +54,29 @@ async function texture (layers) {
   return out
 }
 
+// The eyes of the jar's wide skins (the face is u 8..15, v 8..15; both eyes are on row 12: steve's white + iris at
+// u 9-10 and iris + white at u 13-14) painted pure white: the base texture, or (glow) a layer with only those pixels,
+// drawn full bright over it like EnderEyesLayer so they read in any light. -> { tex, w, h }
+export const WHITE_EYE_PX = [[9, 12], [10, 12], [13, 12], [14, 12]]
+export async function whiteEyesTexture (skin, glow = false) {
+  const key = `white_eyes|${skin}|${glow}`
+  if (texCache.has(key)) return texCache.get(key)
+  const im = await img(`/assets/env/entity/player/wide/${skin}.png`)
+  if (!im) { texCache.set(key, null); return null }
+  const c = document.createElement('canvas'); c.width = im.width; c.height = im.height
+  const g = c.getContext('2d')
+  if (!glow) g.drawImage(im, 0, 0)
+  const k = im.width / 64
+  g.fillStyle = '#ffffff'
+  for (const [u, v] of WHITE_EYE_PX) g.fillRect(u * k, v * k, k, k)
+  const t = new THREE.CanvasTexture(c)
+  t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false
+  t.colorSpace = THREE.NoColorSpace
+  const out = { tex: t, w: c.width, h: c.height }
+  texCache.set(key, out)
+  return out
+}
+
 // A real player skin (render.js 'real/<name>', lib/skins.js), for the entity and the first-person arm. `model` is
 // the arm model: 'wide' or 'slim' when lib/real_skins.json chooses one (56e: wide, owner 2026-11-11 "i want it to be
 // regular arms"), else 'auto': slim when the profile says slim (`profileSlim`) or the art is slim-painted
@@ -951,11 +974,15 @@ export class EntityLayer {
         bones = { orb: true }
       }
     } else if (name === 'player' || name === 'mannequin') {   // (a Mannequin is the player model: movie extras)
-      const skin = (extra && extra.skin) || 'steve'
+      let skin = (extra && extra.skin) || 'steve'
+      // '<jar skin>+white_eyes' (the herobrine format, lib/herobrine.js): the jar's own skin with its eyes painted white
+      // in memory and lit full bright; no third-party skin file
+      const whiteEyes = skin.endsWith('+white_eyes')
+      if (whiteEyes) skin = skin.slice(0, -'+white_eyes'.length)
       const real = skin.startsWith('real/')
-      const t = real ? await skinTexture(skin, extra.model || 'auto', !!extra.slim) : await texture([`entity/player/wide/${skin}`])
+      const t = whiteEyes ? await whiteEyesTexture(skin) : real ? await skinTexture(skin, extra.model || 'auto', !!extra.slim) : await texture([`entity/player/wide/${skin}`])
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
-      const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
+      const glow = whiteEyes ? await whiteEyesTexture(skin, true) : skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
       // a real skin (render.js: skin 'real/<name>', lib/skins.js): its own slim or wide arms; the hat, jacket,
       // sleeves and pants overlays are PLAYER_PARTS' grown cubes, cut out by the skin's alpha like vanilla
       if (t) { const b = buildPlayer(t, real ? (t.slim ? PLAYER_PARTS_SLIM : undefined) : (extra && extra.slim ? PLAYER_PARTS_SLIM : undefined), undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims, extra.armorGlint, this.glintify) }
@@ -983,8 +1010,9 @@ export class EntityLayer {
         mat = new THREE.SpriteMaterial({ map: t.tex, alphaTest: 0.1, fog: true })
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
         // the entity textures load unflipped (the models' UVs run top-down), so a sprite showed the item upside down;
-        // ThrownItemRenderer draws it upright (motion fixes only: older Shorts stay as published)
-        if (this.motionFixes) obj.scale.y *= -1
+        // ThrownItemRenderer draws it upright
+        // (every recording since r:r52f94c "dropped items right way up": a re-render of an older one too)
+        obj.scale.y *= -1
       }
     } else {
       const l = look(name, extra, this.regs, this.engine)

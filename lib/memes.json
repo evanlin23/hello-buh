@@ -1,0 +1,21 @@
+{
+  "_about": "Meme pictures an edit shows (edit.still: scripts/meme_cache.py). Only the URL is committed: the picture is fetched at render into work/cache/memes/ and never committed (owner r:r12cb71). urls are tried in order. sha256 pins the logged file once it has been fetched and looked at (null: not pinned yet; meme_cache prints it).",
+  "war_soldier": {
+    "urls": [
+      "https://upload.wikimedia.org/wikipedia/commons/6/62/Thomas_C._Lea_III_-_That_Two-Thousand_Yard_Stare_-_Original.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/9/98/Tom_Lea_-_2000_Yard_Stare.jpg"
+    ],
+    "pages": [
+      "https://commons.wikimedia.org/wiki/File:Thomas_C._Lea_III_-_That_Two-Thousand_Yard_Stare_-_Original.jpg",
+      "https://commons.wikimedia.org/wiki/File:Tom_Lea_-_2000_Yard_Stare.jpg"
+    ],
+    "about": "the cooked format's still (owner, 2026-11-11: \"The real meme photo\"; identified by the lead from the owner's reference upload): the thousand-yard stare meme, Tom Lea's painting \"Marines Call It That 2,000 Yard Stare\" (1944, Peleliu), held by the U.S. Army Center of Military History. 3008x3861 (the Commons featured-picture restoration) or 1000x1288",
+    "licence": "PD per Commons (US Army CMH, Army Art Collection); disputed: Lea was a Life staff artist in 1944; unverified (a 2023 Commons featured-picture discussion questioned the PD tag). The owner chose the real meme photo (r:r12cb71) and makes the call per cut with this caveat.",
+    "focus": [
+      0.5,
+      0.43
+    ],
+    "logged": "2026-11-11",
+    "sha256": null
+  }
+}

@@ -29,6 +29,9 @@ function biomeTint (world, pos, kind) {
 }
 // Fixed foliage colours (FoliageColor): evergreen, birch, mangrove; lily pad.
 const FIXED = { spruce_leaves: 0x619961, birch_leaves: 0x80a755, mangrove_leaves: 0x92c648, lily_pad: 0x208030 }
+// leaves whose model has tintindex 0 but that vanilla's BlockColors never registers: drawn as their texture (cherry
+// leaves are pink, not foliage green: love_cherry_heart's grove came out olive grey)
+const UNTINTED = new Set(['cherry_leaves'])
 
 // Lightmap: light level -> brightness, as LightTexture does at noon with default gamma (0.5).
 // Options > Video > Brightness (gamma): 0 = Moody, 0.5 = the default, 1 = Bright. A stunt can pick
@@ -431,6 +434,8 @@ function renderElement (world, cursor, element, doAO, attr, globalMatrix, global
           // green, and the lava came out dull brown: worker 5, story_respawn_tax)
         } else if (FIXED[block.name] !== undefined) {
           tint = hexToGl(FIXED[block.name])
+        } else if (UNTINTED.has(block.name)) {
+          // no BlockColors provider: the texture as it is
         } else if (block.name.includes('leaves') || block.name === 'vine') {
           tint = biomeTint(world, cursor, 'foliage')
         } else {
@@ -686,7 +691,7 @@ function getModelVariants (block, blockStates) {
 // or a fixed colour), or null for untinted blocks. Grass blocks are left out, as vanilla does (their
 // particle sprite is the dirt side)
 function particleTint (world, pos, name, tinted) {
-  if (!tinted || name === 'grass_block') return null
+  if (!tinted || name === 'grass_block' || UNTINTED.has(name)) return null
   if (FIXED[name] !== undefined) return hexToGl(FIXED[name])
   return biomeTint(world, pos, name.includes('leaves') || name === 'vine' ? 'foliage' : 'grass')
 }

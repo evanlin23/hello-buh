@@ -87,6 +87,20 @@ How the work itself went wrong, and the rule now:
 - **Long silences to the owner.** Rule: one-line status before any multi-step stretch; ETAs as ranges with what
   they depend on.
 
+## Love (lib/love.js, love_cherry_heart, 2026-11-11)
+- **Cherry leaves are untinted.** Their model carries tintindex 0 (the leaves parent), but vanilla's BlockColors never
+  registers cherry_leaves, so they are drawn as the pink texture. The renderer tinted every `*leaves` with the biome's
+  foliage colour: a cherry grove came out olive grey (renderer/models.js UNTINTED).
+- **A firework's flash is a glow, not a plate.** FireworkParticles.OverlayParticle: the first explosion's first colour,
+  quad size 7.1 x sin((age - 1) x pi/4), alpha 0.6 fading 1/8 a tick. It was an opaque white 2-block disc; a ring of
+  bursts read as white plates. Several bursts at once wash the screen in their colour, as in vanilla: 7 is plenty.
+- **A cherry grove can sit next to ice spikes**: a packed-ice spike stood over the trees 50 blocks off. lib/love.js
+  clears packed/blue ice round the set (unchecked fills: a box with none answers "No blocks were filled").
+- **rec_check's held check ignores the sky**: a time-lapse sunset with a still camera is a held pause. Keep the camera
+  drifting (>= ~5 deg/s) through it.
+- **A per-tick loop around `A.turnTo(x, { max: 1 })` must not wait again**: the step already waits its tick, so an extra
+  waitForTicks doubled the sunset (5.5 s instead of 3.8).
+
 ## Cells (lib/cells.js, cells_lab, 2026-11-11)
 - **A slime-block launcher needs an immovable collar.** Slime sticks to every pushable neighbour, so a 2x2 slime pad in a
   concrete tube took the walls along and the push failed (more than 12 blocks): nothing launched. Obsidian round the
@@ -106,6 +120,19 @@ How the work itself went wrong, and the rule now:
   line of sight, so shooter and target share the open cell); a husk can't climb the ledge. A husk, not a zombie: the
   glass roof's sun would set a zombie on fire.
 - **A /kill by type list kills the cast you add later**: tag every cell mob (`cells`) and kill `tag=!cells`.
+
+## Fake tricks (lib/faketrick.js, faketrick_gold_portal, 2026-11-11)
+- **A player can't build a column above their eye from the ground.** A block goes against a face the eye can see, and a
+  column's top face above the eye can't be seen: lib/act.js refused the 3rd block of a portal frame's side ("no face
+  ... is visible"). Build tall things from a step or a rise (the gold portal: a 3-high grass step behind the frame,
+  looking down at it), or top-down against bottom faces. Keep every click within the reach the stunt sets (act's
+  crosshair counts 6 blocks): a 5x6 frame from a 4-high step put the far base corner at 6.7 and the aim never landed.
+- **Wait for the server before the next place.** A place against the block placed a tick earlier failed ("nothing to
+  place against"): the bot's world hadn't had the block back yet. F.place waits up to 8 ticks for it.
+- **A portal in a frame vanilla wouldn't accept**: `/fill ... nether_portal[axis=x] strict` (no neighbour updates) over
+  the fire the flint and steel really made; it stays lit while nothing next to it changes.
+- **A fast build runs short.** 16 aimed places at vanilla's 4-tick floor took 3.2 s and the Short 6.3 s (floor 8 s);
+  a 6-tick delay (~3 blocks/s, a player's pace) and a "step 3: wait..." beat with the fire burning made 8.1 s.
 
 ## Owner preferences and format
 - Owner decisions live in README "Owner decisions". Highlights: "close match is fine"; skip the

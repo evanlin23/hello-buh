@@ -28,9 +28,11 @@ for (let i = 1; i <= TIERS.length; i++) {
 module.exports = {
   name: 'tnt_1000',
   biome: process.env.BIOME || 'minecraft:plains',
-  caption: '1 TNT vs 10 vs 100 vs 1000 💀',
+  caption: '1 TNT vs 10 vs 100 vs 1000 vs SECRET 💀',
   edit: {
-    caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', dropAt: 'boom4',
+    // the title promises a tier past 1000 (owner 2026-11-11, r:r52f94c: "the title could be like vs SECRET or smth idk bc i
+    // wouldve swiped after 1000"): the secret tier is the fifth, 1000 TNT with me ON it (subs tier5)
+    caption: '1 TNT vs 10 vs 100 vs 1000 vs SECRET 💀', red: 'SECRET', dropAt: 'boom4',
     // once the blast's debris settles (lib/settle.js, r:r24d99a), less 0.15 s: the conservative settle (the renderer's
     // smoke, 2.2 s) held a frozen death screen on which_door; pace's last-0.6 s check still wants a still ending
     startAt: 'tier1:-0.05', endAfter: 'settle:-0.15',
