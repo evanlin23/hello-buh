@@ -30,7 +30,8 @@ module.exports = {
   time: 6000,
   renderDistance: 12, recordRadius: 128,
   look: { mood: 'bright', rolloff: 0.8 },
-  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.9', deathScreen: true, punchStress: true, zoom: [['slain:0.10', 'slain:1.9', 1.07]] },   // settle-ok: a fall and a sword hit, nothing left moving; the death screen holds
+  shots: { pov: { pov: true } },   // first-person; K.cutShot('pov') places the cast with the cut
+  edit: { caption: CAPTION, red: 'staring', story: 'stories/sheep_stares', startAt: 'line:0', endAfter: 'slain:1.6', deathScreen: true, punchStress: true, zoom: [['slain:0.10', 'slain:1.9', 1.07]] },   // settle-ok: a fall and a sword hit, nothing left moving; the death screen holds
   expectDeath: true,
   botTimeout: 600,
   chunkStops (set) { return [[0, 0], [25, 15], [20, -25], [-20, -20]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
@@ -45,7 +46,7 @@ module.exports = {
     // the day before he breaks it: the block still there (map.json: sheep_block until 1112, shaft_open from 1112)
     const W = await world.build(ctx, { places: ['digger_house'], day: 1111 })
     const house = W.places.digger_house.pieces.house
-    this.door = house.anchors.door; this.street = house.anchors.street; this.bed = house.anchors.bed; this.doorstep = house.anchors.doorstep
+    this.door = house.anchors.door; this.street = house.anchors.street; this.bed = house.anchors.bed; this.doorstep = house.anchors.doorstep; this.inside = house.anchors.inside; this.hearth = house.anchors.hearth
     ctx.log(`digger_house anchors: ${JSON.stringify({ door: this.door, street: this.street, bed: this.bed })}`)
     await c(`/kill @e[type=!player,x=${X},y=${F},z=${Z},distance=..90]`)   // the canon sheep: re-summoned below as the cast
     const gy = (dx, dz) => groundAt(ctx, X + dx, Z + dz)
@@ -69,6 +70,10 @@ module.exports = {
       await c(`/setblock ${A(x, g - 2, z)} sand`)
     }
 
+    // the camera spots by the house and the torch line: tall plants cut (they filled the lens)
+    for (const [x0, z0, x1, z1] of [[24, 12, 36, 22], [this.street.x - X - 2, this.street.z - Z - 4, this.street.x - X + 12, this.street.z - Z + 4], [-6, -3, 6, 9], [22, -26, 30, -16]]) {
+      for (const b of ['tall_grass', 'short_grass', 'large_fern', 'fern']) await c(`/fill ${A(x0, -3, z0)} ${A(x1, 4, z1)} air replace ${b}`)
+    }
     // --- the cast, all NoAI (they move only when a scene moves them)
     const at = (dx, dz, dy = 1) => ({ x: dx, z: dz, y: gy(dx, dz) - F + dy })
     await mob('sheep', SHEEP.x, gy(SHEEP.x, SHEEP.z) - F + 1, SHEEP.z, SHEEP.yaw, ['main'], 'Color:11b')
@@ -101,12 +106,25 @@ module.exports = {
     const ease = K.ease
     const rel = (p) => ({ x: p.x - X, y: p.y - F, z: p.z - Z })
     const door = rel(this.door), street = rel(this.street), bedP = rel(this.bed)
-    const walk = (a, dx, dz) => { K.step(a, dx, dz); a.y = gy(a.x, a.z) }
+    const walk = (a, dx, dz) => { K.step(a, dx, dz); const g = gy(a.x, a.z); a.y += Math.max(-0.25, Math.min(0.25, g - a.y)) }
+    const cutP = async (dx, dz, target, moves, o = {}) => {   // a cut that moves the cast with it (the shot mark waits for them)
+      const y = gy(dx, dz)
+      const nb = K.aimFrom(new ctx.Vec3(X + dx, F + y + 1.62, Z + dz), target)
+      K.stop()
+      await K.cutShot('pov', moves, { ...o, self: { x: dx, y, z: dz, yaw: 180 - nb.yaw * 180 / Math.PI, pitch: -nb.pitch * 180 / Math.PI } })
+      K.base = nb
+      await K.look(0)
+    }
 
     // the sheep: an actor at the canon spot, staring north at the block; he watches me at the end
     const SH = K.actor('main', { x: SHEEP.x, y: gy(SHEEP.x, SHEEP.z), z: SHEEP.z, yaw: SHEEP.yaw, pitch: SHEEP.pitch })
     const HOME = { x: SHEEP.x, z: SHEEP.z, yaw: SHEEP.yaw, pitch: SHEEP.pitch }
     const ZED = K.actor('zed', { x: 0.5, y: -DEPTH + 1, z: -2.9, yaw: 0 })
+    const RV = K.actor('river', { x: 19.5, y: gy(19.5, -21.5) + 50, z: -21.5, yaw: 180 })        // in the air until the creek
+    const WL = [[-3.2, -9.9], [-4.5, -11.0], [-2.0, -11.7]].map((w, i) => K.actor(`wolf${i}`, { x: 2 + i, y: 50, z: -12, yaw: 0 }))
+    const st0 = rel(this.street)
+    const VS = [0, 1, 2, 3, 4].map(i => K.actor(`v${i}`, { x: st0.x + 2 + [0, -1.6, 1.7, -0.9, 1.0][i], y: 0, z: st0.z + [0, -1.4, -1.6, 1.5, 1.7][i], yaw: 90 }))
+    VS.forEach(v => { v.y = gy(v.x, v.z) })
     let watch = false
     K.every(() => {
       if (!watch) return
@@ -124,7 +142,7 @@ module.exports = {
     await line('L01', (k) => { ctl('sneak', true); ctl('forward', k < 30); ctl('left', k > 6 && k < 28); K.base = K.aim(P(0.3, 1.1, 0.4)); look(k) })
     let c2 = 0
     await line('L02', async (k, at) => {
-      if (c2 === 0 && k >= at.cut(2)) { c2 = 1; await cut(-3.6, 4.4, FACE(), { time: 18000 }) }
+      if (c2 === 0 && k >= at.cut(2)) { c2 = 1; await cut(3.8, 4.6, FACE(), { time: 18000 }) }
       if (c2 === 1 && k >= at.cut(4)) { c2 = 2; await cut(2.3, 3.6, FACE(), { time: 6000 }) }
       ctl('sneak', true)
       K.base = K.aim(c2 === 0 ? BLOCK : FACE()); look(k)
@@ -132,8 +150,7 @@ module.exports = {
     K.stop()
 
     // L03: I pushed him into the creek (his twin at the bank); he walked right back
-    const RV = K.actor('river', { x: 19.5, y: gy(19.5, -21.5), z: -21.5, yaw: 180 })
-    await cut(19.5, -17.5, P(19.5, gy(19.5, -21.5) + 0.6, -22))
+    await cutP(26.5, -21.0, P(19.5, gy(19.5, -21.5) + 0.6, -22), () => { RV.y = gy(19.5, -21.5) })   // from the east: the High Meadow's slope behind
     let wet = false, c3 = false
     await line('L03', async (k, at) => {
       if (!c3 && k < at.cut(2)) {
@@ -141,7 +158,7 @@ module.exports = {
         K.base = K.aim(P(RV.x, RV.y + 0.6, RV.z - 0.4)); look(k)
         return
       }
-      if (!c3) { c3 = true; Object.assign(SH, { z: SHEEP.z + 5, yaw: 180 }); K.warp('main'); await cut(-3.4, 9.5, FACE(), { after: () => { RV.y = 50; K.warp('river') } }) }
+      if (!c3) { c3 = true; await cutP(-3.4, 9.5, P(SHEEP.x, gy(SHEEP.x, SHEEP.z + 5) + 0.9, SHEEP.z + 4.5), () => { Object.assign(SH, { z: SHEEP.z + 5, yaw: 180, y: gy(SHEEP.x, SHEEP.z + 5) }); RV.y = 50 }) }
       if (SH.z > HOME.z) walk(SH, 0, -0.12)                       // a sheep's walk home, north
       else { SH.yaw += (HOME.yaw - SH.yaw) * 0.45; SH.pitch += (HOME.pitch - SH.pitch) * 0.45 }
       K.base = K.aim(P(SH.x, SH.y + 0.6, SH.z)); look(k)
@@ -149,8 +166,7 @@ module.exports = {
     Object.assign(SH, { ...HOME, y: gy(HOME.x, HOME.z) })
 
     // L04: wolves showed up (down the slope from the north-west), took one look at him and left
-    const WL = [[-3.2, -9.9], [-4.5, -11.0], [-2.0, -11.7]].map((w, i) => K.actor(`wolf${i}`, { x: w[0], y: gy(w[0], w[1]), z: w[1], yaw: 0 }))
-    await cut(4.6, 2.0, P(-1.6, 1.0, -4.5))
+    await cutP(4.6, 2.0, P(-1.6, 1.0, -4.5), () => [[-3.2, -9.9], [-4.5, -11.0], [-2.0, -11.7]].forEach((w, i) => Object.assign(WL[i], { x: w[0], y: gy(w[0], w[1]), z: w[1], yaw: 0 })))
     await line('L04', (k, at) => {
       const stop = at(2) + 2, run = at(5) - 4
       for (const w of WL) {
@@ -163,7 +179,7 @@ module.exports = {
 
     // L05: a block of gold on top; he stared through it
     say(`/setblock ${X} ${F + 1} ${Z} gold_block`)
-    await cut(-1.6, 5.2, FACE(), { after: () => WL.forEach((w, i) => { w.y = 50; K.warp(`wolf${i}`) }) })
+    await cutP(-1.6, 5.2, FACE(), () => WL.forEach(w => { w.y = 50 }))
     await line('L05', (k, at) => { ctl('sneak', true); K.base = K.aim(k < at(4) ? P(0.5, 1.6, 0.5) : FACE()); look(k) })
     K.stop()
 
@@ -188,16 +204,18 @@ module.exports = {
 
     // L08: I woke up in this house 412 days ago (inside: the bed, the bare room; then out of the door, the torch line
     // running west up the rise to him, far off)
-    await K.cutTo(bedP.x - 1.6, bedP.y + F, bedP.z + 2.2, P(bedP.x, bedP.y + 0.4, bedP.z))
+    // inside: the bed he woke up in (from the room's corner), then the bare room, then him, staring
+    const IN = rel(this.inside), HE = rel(this.hearth)
+    await K.cutTo(IN.x, IN.y + F, IN.z, P(bedP.x, bedP.y + 0.5, bedP.z))
     let c8 = 0
     await line('L08', async (k, at) => {
-      if (c8 === 0 && k >= at.cut(3)) { c8 = 1; await K.cutTo(bedP.x + 1.5, bedP.y + F, bedP.z + 3.0, P(bedP.x + 3, bedP.y + 2.6, bedP.z + 1)) }
-      if (c8 === 1 && k >= at.cut(6)) { c8 = 2; await cut(door.x - 0.5, door.z + 3.2, FACE()) }
+      if (c8 === 0 && k >= at.cut(3)) { c8 = 1; await K.cutTo(IN.x, IN.y + F, IN.z, P(HE.x, HE.y + 1.2, HE.z)) }
+      if (c8 === 1 && k >= at.cut(6)) { c8 = 2; await cut(2.3, 3.8, FACE()) }
       look(k)
     })
 
     // L09: the house was already built; a line of torches from my door to that block (pan from the house to him)
-    await cut(street.x + 3, street.z + 4, P(door.x, door.y + 2.5, door.z))
+    await cut(31.5, 18.5, P(23, gy(23, 14) + 3, 14))
     let from = null
     await line('L09', (k, at) => {
       if (k >= at(3) - 3) { from = from || { ...K.base }; K.turnTo(from, P(0.5, 1.4, 1.0), (k - at(3) + 3) / 30) }
@@ -205,8 +223,6 @@ module.exports = {
     })
 
     // L10-L11: the villagers call me the new one (they creep up, staring); what happened to the old one? WHO?
-    const VS = [0, 1, 2, 3, 4].map(i => K.actor(`v${i}`, { x: street.x + 2 + [0, -1.6, 1.7, -0.9, 1.0][i], y: 0, z: street.z + [0, -1.4, -1.6, 1.5, 1.7][i], yaw: 90 }))
-    VS.forEach(v => { v.y = gy(v.x, v.z) })
     await cut(street.x + 8.5, street.z + 0.2, P(street.x + 2, gy(street.x + 2, street.z) + 1.5, street.z))
     await line('L10', (k) => { VS.forEach(v => walk(v, 0.03, 0)); VS.forEach(v => { v.yaw = 90 }); K.go(k < 10); look(k) })
     K.go(false)
@@ -249,7 +265,7 @@ module.exports = {
       ctl('sneak', true); ctl('forward', me().z > Z + 1.4)
       from = from || { ...K.base }; K.turnTo(from, HOLE, (k - 1) / 16)
       if (k === at(3) + 2) ctx.sound('entity.zombie.ambient', 0.5, 0.8)
-      look(k)
+      look(k, Math.sin(k / 7) * 0.03, k >= at(3) + 3 ? 0.06 * Math.sin(Math.min(1, (k - at(3) - 3) / 12) * Math.PI) : 0)   // a flinch up from the groan, back down
     })
     // L16: who digs straight down? (he looks back at the sheep, then down; steps in)
     let fell = false
