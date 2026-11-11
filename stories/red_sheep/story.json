@@ -2,7 +2,7 @@
   "name": "red_sheep",
   "stunt": "story_red_sheep",
   "version": 2,
-  "revision": "r3 (2026-11-11): batch-2 audit must-changes (docs/pitches/batch2_premise_audit_2026-11-11.md #5): Grandpa becomes Dad (his own voice, one-clause bracket); the evoker unseen until S12; r-cast format (one_take narrator, shows, punch, upload, family); 'Like TEETH' cut (nothing named off screen); see reviews/r3-*.md",
+  "revision": "r4 (2026-11-11): owner rule 0a 'mystery through naivety' (r:rb89776): the kid misreads every clue innocently (likes blue, sheep can't see, the prettiest one, he wanted more red ones, the trees clapping, Dad's so boring), never afraid before the reveal; r3: Grandpa becomes Dad, the evoker hidden until S13, r-cast format; see reviews/r3-*.md, r4-*.md",
   "caption": "why is every sheep in our village blue 🐑",
   "upload": {
     "title": "every sheep in our village is blue. all sixty of them 🐑 #minecraft #shorts",
@@ -16,17 +16,17 @@
     ]
   },
   "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste red_sheep prints it). pinned = the question, without the 👇",
-  "logline": "In a walled village where Dad dyes every sheep blue and counts them every night, a kid leaves the gate open, follows her lamb into the woods at dusk, and learns what the blue is for.",
+  "logline": "A kid who thinks red sheep are the prettiest thing in the world follows her blue lamb into the woods Dad is so boring about, hoping to find more red ones, and finds out why Dad dyes every sheep blue.",
   "question": "why tf is every sheep in the village blue?",
-  "premise": "Every sheep in Ravenford is blue, all sixty: Dad won't let a white one through the gate and counts them every night ('Blue, blue, BLUE.'). 'They're our EYES, kid.' Last spring one came back from the woods red, and Dad sat at the gate with his crossbow for a week; one night the trees went snap, snap, snap. Today the kid leaves the gate open, the lamb gets out, and she follows it into the woods alone without telling Dad.",
+  "premise": "Every sheep in Ravenford is blue, all sixty: Dad won't let a white one through the gate ('He really likes blue') and counts them every night. 'They're our EYES, kid.' (Sheep can't even see that good.) Last spring one came back from the woods red, the prettiest one ever; Dad sat at the gate with his crossbow for a week (she thinks he wanted more red ones); one night the trees went snap, snap, snap, like clapping. Today she forgets to shut the gate, her lamb gets out, Dad is boring about the woods, so she goes in happily to find more red ones.",
   "family": "mob_alarm",
-  "twist": "The sheep are an alarm. In vanilla Java an evoker with no target casts its 'wololo' spell on a BLUE sheep within 16 blocks and turns it RED (Evoker.EvokerWololoSpellGoal; only blue ones, which is why Dad dyes every white one). One lives in the woods. In the trees the lamb stops; a faint 'wololo'; the lamb turns red in a puff of spell particles in front of an evoker with its arms raised; the arms drop, it turns to the kid, and a line of fangs snaps out of the ground toward her. Cut. 'They're our EYES' was literal: blue means safe, red means an evoker is near.",
+  "twist": "The sheep are an alarm. In vanilla Java an evoker with no target casts its 'wololo' spell on a BLUE sheep within 16 blocks and turns it RED (Evoker.EvokerWololoSpellGoal; only blue ones, which is why Dad dyes every white one). One lives in the woods. She went in to find more red ones. In the trees the lamb stops; a faint 'wololo'; the lamb turns red in a puff of spell particles in front of an evoker with its arms raised; the arms drop, it turns to the kid, and a line of fangs snaps out of the ground toward her. Cut. 'They're our EYES' was literal: blue means safe, red means an evoker is near.",
   "key_color": "#3B6CF0",
   "mood": [
     "tense",
     "eerie"
   ],
-  "payoff": "S12+0.3",
+  "payoff": "S13+0.3",
   "look": {
     "time": 1000,
     "fog": false,
@@ -52,7 +52,7 @@
       "role": "narrator",
       "ref": "narrator",
       "color": "#FFFFFF",
-      "on_screen": "a Ravenford kid (a player, default `alex` skin, never named, not Buh): POV only (S08-S11); seen from outside only as the shoulder in S12. Empty hand in POV; full hotbar per `hotbar`. Pip's voice (cast `narrator`)."
+      "on_screen": "a Ravenford kid (a player, `alex` skin, never named, not Buh): POV in S09, S11, S12; seen small from behind in S10 and as the shoulder in S13. Shears selected; full hotbar per `hotbar`. Pip's voice (cast `narrator`)."
     },
     "Dad": {
       "role": "character",
@@ -73,7 +73,7 @@
     "Evoker": {
       "role": "character",
       "silent": true,
-      "on_screen": "a vanilla evoker; S12 only (never seen, named or heard as a voice before; its 'wololo' sound is under L11)"
+      "on_screen": "a vanilla evoker; S13 only (never seen before; its 'wololo' sound is under L12)"
     }
   },
   "requests": [
@@ -94,7 +94,8 @@
         "L08",
         "L09",
         "L10",
-        "L11"
+        "L11",
+        "L12"
       ],
       "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
     },
@@ -125,7 +126,7 @@
     ],
     "pufferfish"
   ],
-  "hotbar_note": "The kid's bar, seen only in POV (S08-S11): the shepherd's kit first (blue dye, shears, lead, wheat, lantern), bread, then the ridiculous ones (a milk bucket, 67 eggs, a pufferfish). The selected slot is shears (held low, never used); the same bar in every POV shot.",
+  "hotbar_note": "The kid's bar, seen only in POV (S09, S11, S12): the shepherd's kit first (blue dye, shears, lead, wheat, lantern), bread, then the ridiculous ones (a milk bucket, 67 eggs, a pufferfish). The selected slot is shears (held low, never used); the same bar in every POV shot.",
   "sfx": [
     {
       "under": "S02",
@@ -133,32 +134,32 @@
       "note": "the dye on 'GATE' (vanilla dye use sound)"
     },
     {
-      "under": "S04",
+      "under": "S05",
       "sound": "entity.sheep.ambient",
       "note": "a few baas as the flock files in"
     },
     {
-      "under": "S07",
+      "under": "S08",
       "sound": "entity.evoker_fangs.attack",
       "note": "three snaps, one on each SNAP, distant, deep in the trees"
     },
     {
-      "under": "S11",
+      "under": "S12",
       "sound": "entity.evoker.prepare_wololo",
-      "note": "faint, from the dark gap, under 'Like she SAW' (the cast starts here: vanilla plays it at the spell's start)"
+      "note": "faint, from the dark gap, under 'Like she was LISTENING' (the cast starts here: vanilla plays it at the spell's start)"
     },
     {
-      "under": "S12",
+      "under": "S13",
       "sound": "entity.evoker.cast_spell",
       "note": "+0.3 s: the lamb turns red (the hit)"
     },
     {
-      "under": "S12",
+      "under": "S13",
       "sound": "entity.evoker.prepare_attack",
       "note": "+1.4 s: arms up again"
     },
     {
-      "under": "S12",
+      "under": "S13",
       "sound": "entity.evoker_fangs.attack",
       "note": "+2.4 s on: the fangs' snaps racing at the camera; cut 1.0 s after the first"
     }
@@ -179,13 +180,13 @@
         "what": "entity:sheep",
         "word": "SHEEP"
       },
-      "note": "hook: amazed and proud of her weird village, one quick breath, a lift on SIXTY"
+      "note": "hook: proud of her weird village, one quick breath, a lift on SIXTY"
     },
     {
       "id": "L02",
       "who": "N",
-      "text": "Dad won't LET / a WHITE one / through the GATE.",
-      "say": "Dad won't let a WHITE one through the gate.",
+      "text": "Dad won't LET / a WHITE one / through the GATE. / He REALLY / likes BLUE.",
+      "say": "Dad won't let a WHITE one through the gate. He really likes BLUE.",
       "shot": "S02",
       "shows": [
         "Dad",
@@ -196,7 +197,7 @@
         "what": "actor:Dad",
         "word": "WHITE"
       },
-      "note": "matter-of-fact, this is normal to her"
+      "note": "matter-of-fact, then a fond little eye-roll on the second sentence (the innocent misreading)"
     },
     {
       "id": "L03",
@@ -216,9 +217,24 @@
     {
       "id": "L04",
       "who": "N",
+      "text": "Sheep can't even / SEE that good. / But OKAY.",
+      "say": "Sheep can't even SEE that good. But okay.",
+      "shot": "S04",
+      "shows": [
+        "sheep (one blue sheep staring blankly at us)"
+      ],
+      "look": {
+        "what": "entity:sheep",
+        "word": "SEE"
+      },
+      "note": "amused, a shrug: humouring Dad (misreading EYES)"
+    },
+    {
+      "id": "L05",
+      "who": "N",
       "text": "He COUNTS them / every NIGHT. / Blue, blue, BLUE.",
       "say": "He counts them every NIGHT. Blue, blue, BLUE.",
-      "shot": "S04",
+      "shot": "S05",
       "shows": [
         "Dad",
         "sheep (filing past, all blue)"
@@ -227,14 +243,14 @@
         "what": "actor:Dad",
         "word": "COUNTS"
       },
-      "note": "copying Dad's counting, quick, the last BLUE firm"
+      "note": "copying Dad's counting, playful, the last BLUE firm"
     },
     {
-      "id": "L05",
+      "id": "L06",
       "who": "N",
-      "text": "Last SPRING, / one came BACK / from the WOODS / RED.",
-      "say": "Last spring, one came back from the woods RED.",
-      "shot": "S05",
+      "text": "Then last SPRING, / one came BACK / from the woods RED! / The PRETTIEST / one EVER.",
+      "say": "Then last spring, one came back from the woods RED! The prettiest one EVER.",
+      "shot": "S06",
       "punch": true,
       "shows": [
         "red sheep",
@@ -244,14 +260,14 @@
         "what": "prop:red_sheep",
         "word": "RED"
       },
-      "note": "the turn: the bright voice drops to scared on RED, not hushed"
+      "note": "the turn, delighted: a rare pet, the best thing that ever happened"
     },
     {
-      "id": "L06",
+      "id": "L07",
       "who": "N",
-      "text": "Dad SAT / at the GATE / with his CROSSBOW / for a WEEK.",
-      "say": "Dad sat at the gate with his CROSSBOW for a week.",
-      "shot": "S06",
+      "text": "Dad SAT / at the GATE / with his CROSSBOW / for a WEEK. / I think he wanted / MORE red ones.",
+      "say": "Dad sat at the gate with his CROSSBOW for a week. I think he wanted MORE red ones.",
+      "shot": "S07",
       "shows": [
         "Dad",
         "gate (the east gate)",
@@ -261,14 +277,14 @@
         "what": "actor:Dad",
         "word": "CROSSBOW"
       },
-      "note": "impressed and a little worried"
+      "note": "impressed, then sure of her own explanation (the misreading)"
     },
     {
-      "id": "L07",
+      "id": "L08",
       "who": "N",
-      "text": "One NIGHT, / the TREES went / SNAP. / SNAP. / SNAP.",
-      "say": "One night, the TREES went snap, snap, snap.",
-      "shot": "S07",
+      "text": "One NIGHT, / the TREES went / SNAP, SNAP, SNAP. / Like they were / CLAPPING.",
+      "say": "One night, the trees went snap, snap, snap. Like they were CLAPPING.",
+      "shot": "S08",
       "shows": [
         "trees (the black birch treeline past the ford)"
       ],
@@ -276,14 +292,14 @@
         "what": "prop:treeline",
         "word": "TREES"
       },
-      "note": "scared, quick; each snap a little bigger (the real snaps are sound effects under it)"
+      "note": "delighted, playing the snaps like a game; never scared"
     },
     {
-      "id": "L08",
+      "id": "L09",
       "who": "N",
-      "text": "Today I LEFT / the gate OPEN. / My LAMB / got OUT.",
-      "say": "Today I left the gate OPEN. My lamb got OUT.",
-      "shot": "S08",
+      "text": "Today I FORGOT / to shut the GATE. / My LAMB / got OUT.",
+      "say": "Today I forgot to shut the GATE. My lamb got OUT.",
+      "shot": "S09",
       "shows": [
         "gate (the pasture gate, open)",
         "lamb (blue, trotting away)"
@@ -292,45 +308,46 @@
         "what": "prop:lamb",
         "word": "LAMB"
       },
-      "note": "guilty, fast, caught out"
-    },
-    {
-      "id": "L09",
-      "who": "N",
-      "text": "I didn't tell DAD.",
-      "say": "I didn't TELL Dad.",
-      "shot": "S09",
-      "shows": [
-        "Dad (small, his back to us, across the pasture)"
-      ],
-      "look": {
-        "what": "actor:Dad",
-        "word": "DAD"
-      },
-      "note": "guilty, quick"
+      "note": "an oops, quick and light"
     },
     {
       "id": "L10",
       "who": "N",
-      "text": "I FOLLOWED her / into the WOODS. / ALONE.",
-      "say": "I followed her into the WOODS. Alone.",
+      "text": "Dad says / NEVER go / in the WOODS. / Dad's so BORING.",
+      "say": "Dad says never go in the WOODS. Dad's so BORING.",
       "shot": "S10",
+      "shows": [
+        "Dad (small, back turned, mending the fence)",
+        "woods (the birch treeline past the ford)"
+      ],
+      "look": {
+        "what": "actor:Dad",
+        "word": "WOODS"
+      },
+      "note": "a cheeky eye-roll"
+    },
+    {
+      "id": "L11",
+      "who": "N",
+      "text": "So I went in / to find / MORE red ones!",
+      "say": "So I went in to find MORE red ones!",
+      "shot": "S11",
       "shows": [
         "lamb (6 blocks ahead)",
         "woods (birch trunks all round)"
       ],
       "look": {
         "what": "prop:lamb",
-        "word": "WOODS"
+        "word": "MORE"
       },
-      "note": "brave, then the last word small; not hushed"
+      "note": "happy, adventurous, the brightest line"
     },
     {
-      "id": "L11",
+      "id": "L12",
       "who": "N",
-      "text": "Then she STOPPED. / Like she SAW / SOMETHING.",
-      "say": "Then she STOPPED. Like she saw SOMETHING.",
-      "shot": "S11",
+      "text": "Then she STOPPED. / Like she was / LISTENING.",
+      "say": "Then she STOPPED. Like she was LISTENING.",
+      "shot": "S12",
       "punch": true,
       "shows": [
         "lamb (stopped, 2.5 blocks ahead, still blue)"
@@ -339,7 +356,7 @@
         "what": "prop:lamb",
         "word": "STOPPED"
       },
-      "note": "scared, slower; the last word held; the faint 'wololo' starts in the trees under it"
+      "note": "curious and delighted, leaning in; not afraid, not hushed; a faint 'wololo' starts in the trees under it"
     }
   ],
   "shots": [
@@ -373,6 +390,15 @@
     {
       "id": "S04",
       "line": "L04",
+      "place": "pasture",
+      "size": "full",
+      "time": 1000,
+      "camera": "at: (6, 1.0, 20) inside the pasture, at sheep eye height, looking at one blue sheep (8, 0.8, 20) 2.5 blocks away, still",
+      "frame": "subject: one blue sheep full figure, side-on, turning its head to stare blankly at the camera, chewing; bg: more blue sheep, the palisade. Morning. (The comic beat: 'can't even SEE that good'.)"
+    },
+    {
+      "id": "S05",
+      "line": "L05",
       "place": "pasture_gate",
       "size": "wide",
       "time": 13000,
@@ -380,8 +406,8 @@
       "frame": "subject: Dad at the pasture gate at nightfall, lantern on the gate post, the flock filing in past him, every sheep blue; he nods at each (head bob on each 'blue'). Night 13000, the lantern and the last sky light."
     },
     {
-      "id": "S05",
-      "line": "L05",
+      "id": "S06",
+      "line": "L06",
       "place": "pasture_gate",
       "size": "ms",
       "time": 6000,
@@ -389,8 +415,8 @@
       "frame": "subject: ONE red sheep standing in the open gateway among blue ones, facing camera; Dad's legs and crossbow at the frame edge; bg: the fields, the ford and the birch treeline at +45 behind it (the woods named in the line). Day, last spring."
     },
     {
-      "id": "S06",
-      "line": "L06",
+      "id": "S07",
+      "line": "L07",
       "place": "east_gate",
       "size": "wide",
       "time": 12300,
@@ -398,17 +424,17 @@
       "frame": "subject: Dad's back, sitting on a log in the east gateway, crossbow across his knees, facing the woods; mid: the fields and the ford at +40, the birch treeline past it; bg: the pillager outpost's tower far on the horizon (never named). Dusk."
     },
     {
-      "id": "S07",
-      "line": "L07",
+      "id": "S08",
+      "line": "L08",
       "place": "east_gate",
       "size": "ews",
       "time": 18000,
       "camera": "at: (-4, 10, 0) over the palisade aimed east at the treeline (45, 4, 0), still",
-      "frame": "subject: the black birch treeline past the ford under the moon; on each SNAP an evoker-fangs snap sound deep in the trees; NOTHING seen (no fangs, no evoker, no particles). Night, lanterns on the palisade."
+      "frame": "subject: the black birch treeline past the ford under the moon; on each 'SNAP' an evoker-fangs snap sound deep in the trees; NOTHING seen (no fangs, no evoker, no particles). Night, lanterns on the palisade."
     },
     {
-      "id": "S08",
-      "line": "L08",
+      "id": "S09",
+      "line": "L09",
       "place": "pasture_gate",
       "size": "full",
       "time": 12000,
@@ -416,17 +442,17 @@
       "frame": "fg: the open fence gate; subject: the small blue lamb trotting out, 10-15 blocks out; mid: the ford at +40; bg: the birch treeline at +45. Late afternoon, low sun from behind the camera (west)."
     },
     {
-      "id": "S09",
-      "line": "L09",
-      "place": "pasture",
-      "size": "ews",
-      "time": 12000,
-      "camera": "pov: a glance back over the shoulder from the open gate, west across the pasture",
-      "frame": "subject: Dad tiny (about 1/10 of the frame height, centred) at the far west fence of the pasture, his back to us, mending the fence (hitting a post); the whole pasture and the flock between us; he doesn't turn. Same light as S08."
-    },
-    {
       "id": "S10",
       "line": "L10",
+      "place": "pasture_gate",
+      "size": "ews",
+      "time": 12000,
+      "camera": "at: (-4, 9, 22) high above the pasture's east fence, looking EAST-north-east over the open gate toward the ford (40, 0, 10), still, a slow drift",
+      "frame": "fg-left: Dad small inside the pasture, his back to the gate, mending the west-facing fence (hitting a post); centre: the open pasture gate; mid: the blue lamb trotting across the ford and the kid (small, from behind, `alex` skin) following it; bg: the birch woods at +45 the line names. Late afternoon, low sun from behind the camera (west). Dad never turns."
+    },
+    {
+      "id": "S11",
+      "line": "L11",
       "place": "woods_edge",
       "size": "wide",
       "time": 12100,
@@ -434,21 +460,21 @@
       "frame": "subject: the blue lamb between birch trunks; low sun through the trunks; bg: dark trunks, nothing moving. The evoker is NOT in frame (it stands off to the right, behind the trunks of the S11/S12 clearing)."
     },
     {
-      "id": "S11",
-      "line": "L11",
+      "id": "S12",
+      "line": "L12",
       "place": "clearing",
       "size": "full",
       "time": 12200,
       "camera": "pov stops: the lamb 2.5 blocks ahead, stopped, facing away toward a dark gap between birch trunks",
-      "frame": "subject: the lamb, still blue, in low sun (the blue must read); the gap she faces is dark; the evoker is hidden behind a thick trunk / leaves in this angle. Sound: entity.evoker.prepare_wololo, faint, from the gap, under 'Like she SAW' (the casting has started)."
+      "frame": "subject: the lamb, still blue, in low sun (the blue must read); the gap she faces is dark; the evoker is hidden behind a thick trunk / leaves in this angle. Sound: entity.evoker.prepare_wololo, faint, from the gap, under 'Like she was LISTENING' (the casting has started)."
     },
     {
-      "id": "S12",
-      "line": "L11",
+      "id": "S13",
+      "line": "L12",
       "place": "clearing",
       "size": "wide",
       "time": 12200,
-      "camera": "at: low behind and left of the kid's shoulder (-1.5, 1.6, 2) looking past the lamb at the evoker 8 blocks beyond it, FOV 35 (the evoker about a quarter of the frame height); the cut lands at the end of L11",
+      "camera": "at: low behind and left of the kid's shoulder (-1.5, 1.6, 2) looking past the lamb at the evoker 8 blocks beyond it, FOV 35 (the evoker about a quarter of the frame height); the cut lands at the end of L12",
       "frame": "The reveal, one continuous wide (vanilla timing, Evoker.WololoSpellGoal: warm-up 40 ticks, cast 60). fg: the kid's shoulder; mid: the lamb; subject: the evoker between the trunks, ARMS RAISED (spellcasting pose), brown-orange spell particles at its hands. +0.3 s: the lamb turns from blue to RED in a puff of particles (cast-spell sound) = THE REVEAL. +1.3 s: its arms come down and its head turns to us (it has a target now). +1.4 s: arms up again (prepare-attack sound). +2.4 s: a line of evoker fangs snaps up out of the ground from the evoker toward the camera, one every tick, 1.25 blocks apart. CUT 1.0 s after the first fang (~+3.4 s). No line."
     }
   ],
@@ -475,11 +501,11 @@
     }
   },
   "ending": {
-    "after": "L11",
+    "after": "L12",
     "beats": [
-      "S12 (no line): the evoker, arms raised, beyond the lamb; +0.3 s the lamb turns red (the reveal); +1.3 s its arms drop and it turns to the kid; +2.4 s a line of fangs snaps toward the camera; cut 1.0 s after the first fang."
+      "S13 (no line): the evoker, arms raised, beyond the lamb; +0.3 s the lamb turns red (the reveal, and her wish for a red one granted); +1.3 s its arms drop and it turns to the kid; +2.4 s a line of fangs snaps toward the camera; cut 1.0 s after the first fang."
     ],
-    "loop": "cause and effect for line 1: sixty blue sheep are sixty alarms"
+    "loop": "line 1 again: sixty blue sheep are sixty alarms"
   },
   "bible": "stories/red_sheep/bible.md",
   "beats": "stories/red_sheep/beats.md",
