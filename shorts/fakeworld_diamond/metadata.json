@@ -1,0 +1,408 @@
+{
+  "name": "fakeworld_diamond",
+  "channel": "hellobuh",
+  "caption": "bro hasn't seen dirt in 214 days 💀",
+  "youtube": {
+    "title": "bro hasn't seen dirt in 214 days 💀 #minecraft #shorts",
+    "description": "bro hasn't seen dirt in 214 days 💀\n\nSong: MXRCVRY - AYUDA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/AYUDA\nWatch: http://ncs.lnk.to/AYUDAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "ayuda.mp3",
+    "title": "AYUDA",
+    "artist": "MXRCVRY",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "payoff",
+    "drop_in_song_s": 9.0,
+    "drop_in_short_s": 7.0,
+    "song_start_s": 2.0
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 8,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 11039808,
+    "sha256": "e3e2aaebc6ac2831cfea73a8de0a98465769bc44fe22ebc416a398ab640d9f6a",
+    "release": {
+      "tag": "pkg-fakeworld_diamond",
+      "asset": "fakeworld_diamond.short.e3e2aaebc6ac2831.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakeworld_diamond/fakeworld_diamond.short.e3e2aaebc6ac2831.mp4",
+      "sha256": "e3e2aaebc6ac2831cfea73a8de0a98465769bc44fe22ebc416a398ab640d9f6a",
+      "bytes": 11039808
+    },
+    "nosong_release": {
+      "tag": "pkg-fakeworld_diamond",
+      "asset": "fakeworld_diamond.short_nosong.e88dac016cf74d82.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-fakeworld_diamond/fakeworld_diamond.short_nosong.e88dac016cf74d82.mp4",
+      "sha256": "e88dac016cf74d82b29d7cd2d2a6b08eaa983f98b6230ff1838aef79cf63b1ab",
+      "bytes": 10965364
+    }
+  },
+  "edit": {
+    "caption": "bro hasn't seen dirt in 214 days 💀",
+    "red": "dirt",
+    "startAt": "wood:0.3",
+    "endAfter": "payoff:1.0",
+    "dropAt": "payoff",
+    "subs": [
+      [
+        "wood",
+        "need wood",
+        1,
+        0
+      ],
+      [
+        "got",
+        "diamond. again.",
+        1.3,
+        0
+      ],
+      [
+        "ground",
+        "dirt has to be down here",
+        1.2,
+        0
+      ],
+      [
+        "still",
+        "nope.",
+        0.9,
+        0
+      ],
+      [
+        "spot",
+        "wait",
+        1.6,
+        0
+      ],
+      [
+        "payoff",
+        "DIRT!!!",
+        3,
+        0
+      ]
+    ],
+    "subsY": 0.18,
+    "flash": [
+      [
+        "payoff",
+        0,
+        0.35
+      ]
+    ],
+    "punch": [
+      [
+        "payoff",
+        0,
+        1.05
+      ]
+    ],
+    "sfx": [
+      [
+        "pop",
+        "wood:0.3",
+        {
+          "gain": 0.6
+        }
+      ],
+      [
+        "pop",
+        "got",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "dip",
+        "payoff",
+        0.4
+      ],
+      [
+        "impact",
+        "payoff",
+        {
+          "gain": 1.4
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "bro hasn't seen dirt in 214 days 💀",
+      "--self_name",
+      "56e",
+      "--red",
+      "dirt",
+      "--subs",
+      "[[\"wood\",\"need wood\",1,0],[\"got\",\"diamond. again.\",1.3,0],[\"ground\",\"dirt has to be down here\",1.2,0],[\"still\",\"nope.\",0.9,0],[\"spot\",\"wait\",1.6,0],[\"payoff\",\"DIRT!!!\",3,0]]",
+      "--subs_y",
+      "0.18",
+      "--punch",
+      "[[\"payoff\",0,1.05]]",
+      "--flash",
+      "[[\"payoff\",0,0.35]]",
+      "--sfx",
+      "[[\"pop\",\"wood:0.3\",{\"gain\":0.6}],[\"pop\",\"got\",{\"gain\":0.5}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]]",
+      "--start_at",
+      "wood:0.3",
+      "--end_after",
+      "payoff:1.0"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 512,
+      "y": 62,
+      "z": 22
+    },
+    "biome": "minecraft:river",
+    "ticks": 201,
+    "seconds": 10.05,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "wood"
+      },
+      {
+        "t": 1.3,
+        "event": "dig"
+      },
+      {
+        "t": 1.3,
+        "event": "swing"
+      },
+      {
+        "t": 1.55,
+        "event": "dig_end"
+      },
+      {
+        "t": 1.55,
+        "event": "got"
+      },
+      {
+        "t": 1.55,
+        "event": "vel"
+      },
+      {
+        "t": 2.1,
+        "event": "vel"
+      },
+      {
+        "t": 2.15,
+        "event": "dig"
+      },
+      {
+        "t": 2.15,
+        "event": "swing"
+      },
+      {
+        "t": 2.35,
+        "event": "vel"
+      },
+      {
+        "t": 2.35,
+        "event": "dig_end"
+      },
+      {
+        "t": 2.4,
+        "event": "vel"
+      },
+      {
+        "t": 2.55,
+        "event": "vel"
+      },
+      {
+        "t": 3,
+        "event": "vel"
+      },
+      {
+        "t": 3,
+        "event": "collect"
+      },
+      {
+        "t": 3.3,
+        "event": "ground"
+      },
+      {
+        "t": 3.35,
+        "event": "dig"
+      },
+      {
+        "t": 3.35,
+        "event": "swing"
+      },
+      {
+        "t": 3.55,
+        "event": "dig_end"
+      },
+      {
+        "t": 3.8,
+        "event": "dig"
+      },
+      {
+        "t": 3.8,
+        "event": "swing"
+      },
+      {
+        "t": 4.05,
+        "event": "dig_end"
+      },
+      {
+        "t": 4.05,
+        "event": "still"
+      },
+      {
+        "t": 5.65,
+        "event": "spot"
+      },
+      {
+        "t": 6.35,
+        "event": "walk"
+      },
+      {
+        "t": 7.2,
+        "event": "dig_t"
+      },
+      {
+        "t": 7.3,
+        "event": "dig"
+      },
+      {
+        "t": 7.3,
+        "event": "swing"
+      },
+      {
+        "t": 7.65,
+        "event": "swing"
+      },
+      {
+        "t": 8,
+        "event": "swing"
+      },
+      {
+        "t": 8.05,
+        "event": "dig_end"
+      },
+      {
+        "t": 8.05,
+        "event": "payoff"
+      },
+      {
+        "t": 8.05,
+        "event": "vel"
+      },
+      {
+        "t": 8.35,
+        "event": "vel"
+      },
+      {
+        "t": 8.4,
+        "event": "vel"
+      },
+      {
+        "t": 8.45,
+        "event": "vel"
+      },
+      {
+        "t": 8.5,
+        "event": "vel"
+      },
+      {
+        "t": 8.5,
+        "event": "collect"
+      },
+      {
+        "t": 8.55,
+        "event": "held"
+      },
+      {
+        "t": 8.7,
+        "event": "vel"
+      },
+      {
+        "t": 9.45,
+        "event": "vel"
+      },
+      {
+        "t": 9.7,
+        "event": "vel"
+      },
+      {
+        "t": 9.95,
+        "event": "vel"
+      },
+      {
+        "t": 10.05,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "61fd6b4d7a519e36c09b6cefda966b948afee715",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T22:55:03.543Z",
+    "head_at_publish": "61fd6b4d7a519e36c09b6cefda966b948afee715",
+    "stunt": "stunts/fakeworld_diamond.js",
+    "source_snapshot": [
+      "source/fakeworld_diamond.js",
+      "source/fakeworld.js",
+      "source/act.js",
+      "source/motion.js",
+      "source/sight.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 61fd6b4d7a51",
+    "gunzip -c shorts/fakeworld_diamond/recording.json.gz > work/fakeworld_diamond.rec.json",
+    "node render.js work/fakeworld_diamond.rec.json work/fakeworld_diamond.frames 60 1080 1011",
+    "python3 audio.py work/fakeworld_diamond.rec.json work/fakeworld_diamond.wav",
+    "python3 edit.py --frames work/fakeworld_diamond.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/fakeworld_diamond.rec.json --audio work/fakeworld_diamond.wav --caption \"bro hasn't seen dirt in 214 days 💀\" --self_name 56e --red dirt --subs \"[[\\\"wood\\\",\\\"need wood\\\",1,0],[\\\"got\\\",\\\"diamond. again.\\\",1.3,0],[\\\"ground\\\",\\\"dirt has to be down here\\\",1.2,0],[\\\"still\\\",\\\"nope.\\\",0.9,0],[\\\"spot\\\",\\\"wait\\\",1.6,0],[\\\"payoff\\\",\\\"DIRT!!!\\\",3,0]]\" --subs_y 0.18 --punch [[\"payoff\",0,1.05]] --flash [[\"payoff\",0,0.35]] --sfx [[\"pop\",\"wood:0.3\",{\"gain\":0.6}],[\"pop\",\"got\",{\"gain\":0.5}],[\"dip\",\"payoff\",0.4],[\"impact\",\"payoff\",{\"gain\":1.4}]] --start_at wood:0.3 --end_after payoff:1.0 --out out/fakeworld_diamond.mp4"
+  ],
+  "status": "ready",
+  "notes": "fakeworld #1 (lib/fakeworld.js): a survival world swapped to diamond blocks; a lone dirt block by the river is the treasure; opening r:r0f3da0 (frame 0 the diamond tree, pop on frame 0); independent review r1 READY, 0 blockers; nitpicks: 8 s length, one turn at ~222 deg/s",
+  "published_at": "2026-11-11T22:56:07.347Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T22:56:24+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 8.00 s vs the reviewed render 8.00 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 1,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T22:55:14.629Z",
+      "report": "work/hb/fakeworld_diamond.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
