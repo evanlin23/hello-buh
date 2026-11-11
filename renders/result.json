@@ -1,0 +1,17 @@
+{
+ "name": "lucky_dig",
+ "stunt": "lucky_dig",
+ "status": "done",
+ "run": "https://github.com/evanlin23/hello-buh/actions/runs/43090740658",
+ "source": "25f905d",
+ "queued": "2026-11-11T19:49:15Z",
+ "finished": "2026-11-11T19:53:08Z",
+ "mp4": "renders/out/lucky_dig.mp4",
+ "check": {
+  "ok": true,
+  "label": "CHECK OK",
+  "blockers": 0,
+  "failed": []
+ },
+ "preview": false
+}
