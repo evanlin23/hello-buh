@@ -8,7 +8,7 @@
   "profile": "A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft",
   "post": "",
   "max_pause": {
-   "rest": 0.6
+   "rest": 0.95
   },
   "model": "gemini-3.8-flash-lite-tts",
   "fallback": "am_adam",
