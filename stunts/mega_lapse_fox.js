@@ -1,15 +1,16 @@
 // Format "mega", time-lapse variant, ridiculously big (owner, 2026-11-11, r:rf8524b "huge mega build, like ridiculously
-// big", r:rce78c5 the ticking block count): the caption asks for "a small fox statue"; a drone time-lapse builds a
-// sleeping fox 177 blocks long and 62 high in a clearing of a real taiga forest, a "blocks used" total ticking in the
-// corner. The paws and the snout go in beside 56e (a statue his size, for a second), then the head, the body and the
-// curled tail, each from its own drone angle, the spruce forest round it for scale. On the cut to the high reveal the
-// ears, the closed eyes and the nose land (flash, punch, the drop; the total turns gold), and the last shot is a close,
-// low pass beside the tiny player, the fox's face towering over him, as it snores.
+// big", r:rce78c5 the ticking block count, r:r13865d depth and a real world, r:r0f3da0 the opening): the caption
+// reacts to "a small fox statue"; a drone time-lapse builds a sleeping fox 177 blocks long and 62 high in a clearing of
+// a real taiga forest, a "blocks used" total ticking in the corner. It opens on the head already 16 blocks up and
+// rising over tiny 56e, then the paws and the snout, the body and the curled tail, each from its own drone angle, the
+// spruce forest round it for scale. On the cut to the high reveal the ears, the closed eyes and the nose land (flash,
+// punch, an impact; the total turns gold), and the last shot is a close, low pass behind the tiny player, the fox's
+// face towering over him as it snores (the NCS drop, "SMALL").
 // Our own design: a sleeping fox (not a grass block, not a golem, not a nether boss); lib/mega_lapse.js does the work.
 //
-// Beats (Short seconds, ~13.1 s): 0 low by the paws, the paws and the snout rise | 2.2 the head, from
-// the front and to the side | 4.7 the body, high from behind | 7.5 the tail, over the forest | 9.7 the reveal: the
-// face lands, high over the forest (the drop) | 11.5 the close pass beside 56e (a snore; "SMALL") | end 1.6 s later.
+// Beats (Short seconds, ~12.2 s): 0 low behind 56e, the head rising over him | 1.6 the paws and the snout, from the
+// front | 3.8 the body, high from behind | 6.6 the tail, over the forest | 8.8 the reveal: the face lands, high over
+// the forest | 10.6 the close pass behind 56e (a snore, the drop, "SMALL") | end 1.6 s later.
 const L = require('../lib/mega_lapse')
 
 const OR = 'orange_wool', WH = 'white_wool', BK = 'black_wool'
@@ -171,7 +172,7 @@ const cam = (t, [x, y, z]) => [t, x, y, z]
 
 module.exports = L.makeLapse({
   name: 'mega_lapse_fox',
-  caption: 'my friend asked for a small fox statue',
+  caption: 'bro asked for a small fox statue 😭',   // a person reacting, not a label (r:r0f3da0)
   red: 'small',
   biome: 'minecraft:taiga',
   fieldBiome: 'minecraft:taiga',
@@ -186,9 +187,11 @@ module.exports = L.makeLapse({
   player: { at: PLAYER, yaw: -90, pitch: -20 },   // facing east, up at the fox (mineflayer yaw -90 = east)
   tally: 'blocks used',
   dress: dress(),
-  stages: [paws(), snout(), head(), body(), tail(), face()],
+  // the head first: the Short opens on it already 16 blocks up and rising behind 56e (openAt, r:r0f3da0)
+  stages: [head(), paws(), snout(), body(), tail(), face()],
+  openAt: 0.9,
   perTick: 60,
-  angles: [['paws', 'close'], ['head', 'front'], ['body', 'back'], ['tail', 'forest']],
+  angles: [['head', 'rise'], ['paws', 'front'], ['body', 'back'], ['tail', 'forest']],
   payoff: { stage: 'face', shot: 'reveal', hold: 36, sound: 'block.beacon.activate' },
   // the close pass beside the tiny player, the face towering over him; the fox snores (a vanilla sleeping fox's sound)
   outro: [{
@@ -205,9 +208,9 @@ module.exports = L.makeLapse({
   },
   shots: {
     // (every point in the fox's own coordinates; 56e stands at (-140, 1, 0), facing east up at the snout)
-    // 1. low and close off the north paw: the paws and the snout rise from the first frame, the drone easing back and up
-    close: { path: [cam(0, P(-124, 3.5, -42)), cam(2.2, P(-134, 9, -48))], lookPath: [cam(0, P(-98, 5, -14)), cam(2.2, P(-100, 9, -6))], fov: 66, dof: false, drift: 0.4, scenery: true, subject: [P(-96, 4, -31), P(-113, 8, 0)] },
-    // 2. out in front and to the north: the head rises behind the snout, 56e a speck in front of it
+    // 1. low behind 56e: the head, already 16 blocks up at frame 0, rises over him, the drone easing up with it
+    rise: { path: [cam(0, P(-152, 2.8, 7)), cam(2.5, P(-156, 5, 9))], lookPath: [cam(0, P(-70, 14, 0)), cam(2.5, P(-68, 22, 0))], fov: 70, dof: false, drift: 0.4, scenery: true, subject: [P(-140, 1.8, 0), P(-90, 10, 0)] },
+    // 2. out in front and to the north: the paws and the snout rise in front of the finished head, 56e a speck
     front: { path: [cam(0, P(-150, 28, -64)), cam(2.5, P(-156, 34, -68))], lookPath: [cam(0, P(-80, 18, 0)), cam(2.5, P(-76, 22, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(-94, 34, -10)] },
     // 3. high behind it, the forest round the clearing: the long body fills in behind the head
     back: { path: [cam(0, P(120, 74, -86)), cam(2.8, P(112, 78, -96))], lookPath: [cam(0, P(-14, 14, 0)), cam(2.8, P(-18, 14, 0))], fov: 62, dof: false, drift: 0.4, scenery: true, subject: [P(10, 41, 0)] },
