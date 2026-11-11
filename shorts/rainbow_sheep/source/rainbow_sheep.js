@@ -30,7 +30,7 @@ module.exports = {
     speed: [['jeb:0.25', 'jeb:3.25', 3]],   // the jeb_ sheep cycles a colour per 25 ticks (vanilla): x3 shows three changes (review r1)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i])],   // (no 'jeb_' sub: it sat on the jeb_ nameplate)
     punch: [['jeb', 0, 1.06]],
-    sfx: [['air', 'start', 'jeb', { gain: 0.5 }]]   // room tone from frame 1 (pace: the first sound was at 0.41 s)
+    sfx: [['air', 'start', 'jeb', { gain: 0.5 }], ['dip', 'jeb', 0.3], ['ding', 'jeb']]   // the gate: a sound hit on the jeb_ payoff over the song   // room tone from frame 1 (pace: the first sound was at 0.41 s)
   },
 
   async setup (ctx) {
