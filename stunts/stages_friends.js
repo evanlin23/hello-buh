@@ -64,11 +64,13 @@ module.exports = {
     chapters: CHAPTERS,
     caption: 'minecraft friendships in 3 stages 💀',
     red: '3 stages',
-    payoff: 'boom_last',   // the chain's last blast (pace's payoff for a settle ending)
+    payoff: 'crater',      // your eyes on the crater, after the chain has settled
+    endAfter: 'crater:1.2',   // settle-ok: the crater cut comes after the chain has settled (a text payoff: his death line)
     speed: [
       ['burn', 'death', 2],          // the burn plays at 2x (2.5 s of lava is 1.25 s)
       ['respawn', 'ch2', 'cut'],     // the respawn's first ticks (the camera switching to your eyes)
-      ['vein', 'vein_end', 2]        // the vein at 2x (the aim at <= 100 deg/s)
+      ['vein', 'vein_end', 2],       // the vein at 2x (the aim at <= 100 deg/s)
+      ['chain_end', 'crater', 2]     // the smoke settling at 2x (no turns: the wide is a fixed camera)
     ],
     sfx: [['hit', 'push', { gain: 1.4 }], ['boom', 'boom', { gain: 0.9 }], ['ding', 'loot', { gain: 0.6 }]],
     extra: {
@@ -315,8 +317,7 @@ module.exports = {
     // his death line in the chat (the server's own message), the last thing on screen
     bot.on('messagestr', (m) => { if (m.includes(FRIEND) && !/joined|left/.test(m)) { ctx.mark('syschat', { text: m, color: 'white' }); ctx.log('chat', m) } })
     bot._client.once('explosion', () => { if (!boomed) { boomed = true; ctx.mark('boom') } })
-    // the chain's last blast is the payoff hit (pace reads the last blast before the settle as the payoff): marked at
-    // its own tick once the chain has gone quiet
+    // the chain's last blast: the payoff waits for it to settle
     let lastBoom = -1
     bot._client.on('explosion', () => { lastBoom = ctx.tick })
     await A.use(at(0, 1, 13))                // the lever
@@ -334,9 +335,17 @@ module.exports = {
     fr.look(-Math.PI / 2 - 0.35, 0, true)   // (mineflayer yaw: -PI/2 = east, a little south)
     fr.setControlState('sprint', true); fr.setControlState('forward', true)
     for (let k = 0; k < 60 && !boomed; k++) await bot.waitForTicks(1)
-    for (let k = 0; k < 200 && (lastBoom < 0 || ctx.tick - lastBoom < 30); k++) await bot.waitForTicks(1)
-    if (lastBoom >= 0) ctx.mark('boom_last', { t: lastBoom * 50 })   // (mark's extra overrides t: the blast's own tick)
-    await bot.waitForTicks(10)
+    // your eyes go to where the house was (unseen: the camera is the wide)
+    ctx.easeLookAt(at(0, -1, -7), 600)
+    for (let k = 0; k < 200 && (lastBoom < 0 || ctx.tick - lastBoom < 12); k++) await bot.waitForTicks(1)
+    ctx.mark('chain_end')
+    // the payoff: once the smoke and debris have settled (lib/settle.js: 44 ticks after a blast), cut to your eyes on
+    // the crater, his death line in the chat. A quiet beat before it, so the hit lands over the NCS bed (mixcheck r1:
+    // a hit on the chain's last blast rose nothing over the blasts before it)
+    for (let k = 0; k < 60 && ctx.tick - lastBoom < 46; k++) await bot.waitForTicks(1)
+    M.shot(ctx, 'pov'); ctx.mark('crater')   // settle-ok: the crater cut comes after the chain has settled
+    ctx.easeLookAt(at(-1.5, -2, -9), 1400)
+    await bot.waitForTicks(30)
     ctx.log('boomed', boomed, 'last blast tick', lastBoom)
     return boomed && !ctx.died
   }
