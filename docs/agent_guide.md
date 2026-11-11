@@ -146,7 +146,14 @@ and don't send the bot's raw calls yourself:
   build.
 - **Ending on a blast or a fall: `endAfter: 'settle:0.6'`.** After `perform`, the harness keeps recording until
   nothing in the payoff is still moving: no lit TNT, no falling blocks, no blast debris in the air, no death animation
-  still playing. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.6 s after that mark.
+  still playing. Then it marks `settle` (`lib/settle.js`), and the Short ends 0.6 s after that mark. This is the
+  default for every blast or fall payoff: the motion lint warns on one that ends any other way.
+- **The shared factories in lib/** (door_run, escalation, guess_sound, hide_seek, inside, nph, spot_wrong,
+  time_lapse, pixel_art) send their packets through `A.click`, `A.breakStart`/`A.breakFinish`, `A.digNow` and
+  `A.strike`. When the crosshair is already on the target (within 6 degrees), the packet goes out on the same tick as
+  before. When it isn't, the view turns onto the target first. A factory that has its own look (time_lapse, inside,
+  spot_wrong) doesn't turn: it waits a few ticks for its own look to arrive, then acts with an `off_aim` mark, which
+  the aim check blocks. `./hb motion lib` checks lib/, and npm test fails on a raw action there.
 - **Moving the camera and the cast: the story kit** (`K.aimAt`, `K.walkTo`, `K.actor`, `K.cut`), as before.
 
 The motion lint enforces this. `./hb motion <stunt>` lists every raw call (`bot.dig`, `bot.placeBlock`,
