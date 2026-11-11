@@ -1010,8 +1010,9 @@ export class EntityLayer {
         mat = new THREE.SpriteMaterial({ map: t.tex, alphaTest: 0.1, fog: true })
         obj = new THREE.Sprite(mat); obj.scale.setScalar(name === 'item' ? 0.35 : 0.5)
         // the entity textures load unflipped (the models' UVs run top-down), so a sprite showed the item upside down;
-        // ThrownItemRenderer draws it upright (motion fixes only: older Shorts stay as published)
-        if (this.motionFixes) obj.scale.y *= -1
+        // ThrownItemRenderer draws it upright
+        // (every recording since r:r52f94c "dropped items right way up": a re-render of an older one too)
+        obj.scale.y *= -1
       }
     } else {
       const l = look(name, extra, this.regs, this.engine)

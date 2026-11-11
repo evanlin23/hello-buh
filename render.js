@@ -2882,7 +2882,8 @@ else:
       // motion fixes: the item's own model (the 1/16-thick extruded sprite), standing, right side up, with its
       // 'ground' display, bobbing and spinning like a block item (ItemEntityRenderer). The camera-facing sprite drew
       // it upside down ("String is upsidedown on the floor", gold_for_the_portal 11 s)
-      if (spriteOf(it) && MOTION_FIXES) {
+      // (no longer gated on MOTION_FIXES: lib/item_stack.js droppedItemForm, r:r52f94c)
+      if (require('./lib/item_stack').droppedItemForm({ sprite: !!spriteOf(it) }) === 'model') {
         const d = thirdPersonDisplay(it, false, 'ground') || { translation: [0, 2, 0], scale: [0.5, 0.5, 0.5] }, gs = d.scale || [1, 1, 1]
         e.shadowName = 'item'; e.shadowY = e.y
         e.y += Math.sin(age / 10 + (e.id % 7)) * 0.1 + 0.1 + 0.25 * gs[1]
