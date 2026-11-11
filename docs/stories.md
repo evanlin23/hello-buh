@@ -304,6 +304,17 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, after the Gold A/B (A cinematic, B bright with zoom punches): "I think that bright looks
   better".** Story Shorts use B: the stunt's `look: 'bright'` and `edit.punchStress: true` (main 6632d43), on every
   story from now on.
+- **Owner, 2026-11-11 (review page, Thirty-One Raids and Good Boy): "The woosh is wierd and jarring. We should have
+  better soudn effects and sounde ngineering."; "the sound effect here is weird".** No whoosh or transition SFX on any
+  cut, and every sound in a story is one the viewer would expect from what's on screen (vanilla sounds, the mood score,
+  the payoff hit), mixed so none of them jumps out over the voice. A sound that makes the owner stop is a blocker.
+- **Owner, 2026-11-11 (review page, Good Boy at 0:00.6): "here the camera is inside of the block, so we can see inside
+  of it."** The camera never sits inside or clips through a block in any shot; the eye is always in air.
+- **Owner, 2026-11-11 (review page, Gold for the Portal): "grandma's voice is also gravelly, i think it can read as
+  like a woman more?"** Every character's voice reads as that character at first hearing: a grandma sounds like an
+  older woman, not gravelly or sexless. Cast from the voice list to the character's age and sex.
+- **Owner, 2026-11-11 (review page, Dog on the Hill at 0:27.9): "we should cut as soon as the guy leaves. end of
+  short".** The Short ends the moment its last story beat lands (in Dog on the Hill: Buh leaving); no shots after it.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

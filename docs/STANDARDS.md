@@ -22,8 +22,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
 0. **The mystery test** (bar: light_sleeper, runaway): a question to the viewer in the first 3 s that only the ending
    answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
-   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. Check: story-critic (blockers),
-   cold reader. r:ra807e9
+   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. The Short ends the moment its
+   last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
+   cold reader, review. r:ra807e9 r:r8de735
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
    reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
    story-critic, cold reader (does the end flow into the start?). r:r30c821
@@ -93,7 +94,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 6. **The right voice and the right words on every line**: a line in the wrong voice or with the wrong words is a
    blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
-   any two voices that talk differ in age, sex or pitch. r:r4b4332 r:raf72e0
+   any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
+   hearing (a grandma sounds like an older woman, not gravelly). Check: review (listen). r:r4b4332 r:raf72e0 r:rf8060c
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -133,7 +135,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    recording. Check: review (manual). r:r4b6024
 3. **No glitches, and the title's promise is on screen**: no doors moving by themselves, never stuck on a block, no
    jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4 r:rff9341
-   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla.
+   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla. The camera is never inside
+   or clipping through a block (the eye always in air). Check: review (stills of every shot). r:rbc17a7
 4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
 
 5. **One shared world** (seed `hellobuh`): every story happens at a canonical place in docs/world/map.json, built by
@@ -211,7 +214,8 @@ hit, and **no music after the payoff**. **No whooshes** on cuts; the riser soft 
 has its vanilla sound (mob voices, steps, splashes included) and every shot its ambience; nothing but the voice
 covers a word (the clarity guard). Any owner note on a track or level overrides it.
 Check: `python3 scripts/audio_measure.py out/<name>.mp4`; `python3 scripts/onscreen_sfx.py <rec> --strict` (visible
-actions left silent). r:rc85ccc r:r36632d
+actions left silent). Every sound is one the picture leads the viewer to expect, and none jumps out over the voice;
+a sound that makes the owner stop is a blocker. Check: review (listen). r:rc85ccc r:r36632d r:rf484cb
 Stunt Shorts (NCS bed): a sound the game hinges on (edit `keySounds`, e.g. guess the mob's call) is **>= 8 dB over
 the music** (owner, 2026-11-11, guess_sound: "had super loud music"); the song ducks to -24 dB under it at publish.
 Check: `python3 scripts/key_sounds.py <name>` (BLOCK in add_song.py and in pace on the package).
