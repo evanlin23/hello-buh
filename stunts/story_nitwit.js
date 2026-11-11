@@ -71,6 +71,8 @@ module.exports = {
         if (!(x === -26 && z > -13 && z < -9)) await c(`/setblock ${A(x, g + 1, z)} wheat[age=7]`)   // where he stands: trodden clear
       }
     }
+    // the roof shots' camera spots in the plaza: the tall plants cut (they filled the lens)
+    for (const b of ['tall_grass', 'short_grass', 'large_fern', 'fern', 'sugar_cane']) await c(`/fill ${A(-14, -1, -7)} ${A(-6, 4, 3)} air replace ${b}`)
     // the road south (L10): the last torch is canon (map.json fernbank stamp); two more torches on posts before it
     for (const [dx, dz] of [[-24, 40], [-29, 48]]) { const g = gy(dx, dz) - F; await c(`/setblock ${A(dx, g + 1, dz)} oak_fence`); await c(`/setblock ${A(dx, g + 2, dz)} torch`) }
     // the ruin's story props: a split, charred tree, a crater where the wheat was, fires still smouldering
@@ -172,7 +174,7 @@ module.exports = {
 
     // L03: always somewhere weird: up on my roof's ridge (from the front garden, a tilt up)
     const nRoof = K.actor('nRoof', { x: ROOF[0], y: ROOF[1], z: ROOF[2], yaw: 90 })
-    await cut(-14.5, -10.5, P(ROOF[0], ROOF[1] + 1.4, ROOF[2]))
+    await cut(-12.5, 1.5, face(nRoof))
     await line('L03', async (k, at) => {
       if (k === at(3)) hmm(0.6)
       nRoof.yaw = 90 + Math.sin(ctx.tick / 6) * 35; nRoof.pitch = k >= at(3) ? 25 : 0
@@ -182,11 +184,11 @@ module.exports = {
     // L04: under a tree (day); that night lightning splits it
     const tg = this.treeY
     const nTree = K.actor('nTree', { x: TREE[0] - 0.5, y: gy(TREE[0] - 0.5, TREE[1] - 1.8), z: TREE[1] - 1.8, yaw: 0 })
-    await cut(TREE[0] - 9, TREE[1] - 7, P(TREE[0], tg + 4, TREE[1]))
+    await cut(TREE[0] + 1.5, TREE[1] - 11, P(TREE[0], tg + 4, TREE[1]))
     let night4 = false, struck = false
     await line('L04', async (k, at) => {
       if (k === 12) { Object.assign(nS, { x: 3.5, z: 16.0, y: gy(3.5, 16), yaw: 45 }); K.warp('nS') }   // off screen (behind the camera): to the crowd's end of the lane
-      if (!night4 && k >= at.cut(1)) { night4 = true; await cut(TREE[0] - 7, TREE[1] - 9, P(TREE[0], tg + 4.5, TREE[1]), { time: NIGHT }) }
+      if (!night4 && k >= at.cut(1)) { night4 = true; await cut(TREE[0] + 4, TREE[1] - 9, P(TREE[0], tg + 4.5, TREE[1]), { time: NIGHT }) }
       if (!struck && k >= at(2)) {
         struck = true
         bolt(TREE[0] + 0.5, tg + 7, TREE[1] + 0.5)
@@ -237,13 +239,13 @@ module.exports = {
     })
 
     // L07: on MY roof; the next day it rained anvils
-    await cutP(-12.0, -12.5, face(nRoof), () => away('nWell', nWell))
+    await cutP(-10.5, -0.5, face(nRoof), () => away('nWell', nWell))
     let next7 = false, rained = 0
     const anvil = (x, z) => say(`/summon falling_block ${(X + x).toFixed(2)} ${F + ROOF[1] + 12} ${(Z + z).toFixed(2)} {BlockState:{Name:"minecraft:anvil"},Time:1,DropItem:0b}`)
     const drops = [[-15.5, -22.5], [-17.5, -21.5], [-13.5, -23.5], [-19.5, -22.5], [-12.5, -21.5], [-16.5, -23.5], [-14.0, -21.0], [-18.5, -23.0], [-11.5, -22.5], [-20.5, -21.5]]
     await line('L07', async (k, at) => {
       nRoof.yaw = 90 + Math.sin(ctx.tick / 9) * 30
-      if (!next7 && k >= at.cut(1)) { next7 = true; await cutP(-10.5, -9.0, P(ROOF[0] - 0.5, ROOF[1] - 1.5, ROOF[2]), () => away('nRoof', nRoof)) }
+      if (!next7 && k >= at.cut(1)) { next7 = true; await cutP(-8.5, -4.0, P(ROOF[0] - 0.5, ROOF[1] - 1.5, ROOF[2]), () => away('nRoof', nRoof)) }
       if (next7 && k >= at(3) - 16 && rained < drops.length && (k - at(3)) % 2 === 0) { anvil(...drops[rained]); rained++ }
       look(k)
     })
@@ -348,7 +350,7 @@ module.exports = {
 
     // L17: and today, he's standing right next to ME (looking down the lane, then turn: he's right there)
     let from17 = null
-    await cutP(-0.7, 10.6, P(-0.7, gy(-0.7, 22) + 1.2, 22), () => { nS.yaw = -90; for (const [i, v] of crowd.entries()) Object.assign(v, { z: 22 + i, y: gy(v.x, 22 + i) }) })
+    await cutP(-0.9, 12.6, P(-0.9, gy(-0.9, 22) + 1.2, 22), () => { nS.yaw = -90; for (const [i, v] of crowd.entries()) Object.assign(v, { z: 22 + i, y: gy(v.x, 22 + i) }) })
     await line('L17', async (k, at) => {
       for (const v of crowd) if (v.z < 30) walk(v, 0, 0.03)
       nS.yaw = -90 + 20 * Math.sin(ctx.tick / 8)
