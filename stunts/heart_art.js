@@ -7,7 +7,7 @@ module.exports = pixelArt({
   stages: [
     { art: ['KK.KK', 'KRKRK', '.KRK.', '..K..'], order: 'random', patches: true },
     { art: MID, order: 'random', patches: true },
-    { art: pixelArt.upscale(MID, 3), order: 'random', patches: true, tpb: 1.1 }
+    { art: pixelArt.upscale(MID, 3), order: 'random', patches: true, tpb: 1.1, lapse: 2 }   // x2 time-lapse: the aimed build of 414 blocks runs 46 s
   ],
   palette: { K: 'black_wool', R: 'red_wool' },
   wall: 'white_wool',
