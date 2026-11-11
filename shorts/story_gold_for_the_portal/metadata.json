@@ -1,10 +1,10 @@
 {
   "name": "story_gold_for_the_portal",
   "channel": "buhstories",
-  "caption": "why does grandma feed the nether portal 😶",
+  "caption": "My grandma has thrown 9,000 gold into a portal",
   "youtube": {
-    "title": "why does grandma feed the nether portal 😶 #minecraft #shorts",
-    "description": "why does grandma feed the nether portal 😶\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "My grandma has thrown 9,000 gold into a portal #minecraft #shorts",
+    "description": "My grandma has thrown 9,000 gold into a portal\n\n\"Darkest Child\" Kevin MacLeod (incompetech.com)\nLicensed under Creative Commons: By Attribution 4.0 License\nhttp://creativecommons.org/licenses/by/4.0/\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -36,25 +36,25 @@
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 59193015,
-    "sha256": "1f3a6766fefdb5694aa0d79fdac6331b4327e8812f055514010330ad72fc2e0e",
+    "bytes": 59227163,
+    "sha256": "59cf88f66e706daba6c1ef79bfeafdcae2bfc2b00dc8b8ec06e8ebbefc69501f",
     "release": {
       "tag": "pkg-story_gold_for_the_portal",
-      "asset": "story_gold_for_the_portal.short.1f3a6766fefdb569.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_gold_for_the_portal/story_gold_for_the_portal.short.1f3a6766fefdb569.mp4",
-      "sha256": "1f3a6766fefdb5694aa0d79fdac6331b4327e8812f055514010330ad72fc2e0e",
-      "bytes": 59193015
+      "asset": "story_gold_for_the_portal.short.59cf88f66e706dab.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_gold_for_the_portal/story_gold_for_the_portal.short.59cf88f66e706dab.mp4",
+      "sha256": "59cf88f66e706daba6c1ef79bfeafdcae2bfc2b00dc8b8ec06e8ebbefc69501f",
+      "bytes": 59227163
     },
     "nosong_release": {
       "tag": "pkg-story_gold_for_the_portal",
-      "asset": "story_gold_for_the_portal.short_nosong.1f3a6766fefdb569.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_gold_for_the_portal/story_gold_for_the_portal.short_nosong.1f3a6766fefdb569.mp4",
-      "sha256": "1f3a6766fefdb5694aa0d79fdac6331b4327e8812f055514010330ad72fc2e0e",
-      "bytes": 59193015
+      "asset": "story_gold_for_the_portal.short_nosong.59cf88f66e706dab.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-story_gold_for_the_portal/story_gold_for_the_portal.short_nosong.59cf88f66e706dab.mp4",
+      "sha256": "59cf88f66e706daba6c1ef79bfeafdcae2bfc2b00dc8b8ec06e8ebbefc69501f",
+      "bytes": 59227163
     }
   },
   "edit": {
-    "caption": "why does grandma feed the nether portal 😶",
+    "caption": "My grandma has thrown 9,000 gold into a portal",
     "red": "portal",
     "story": "stories/gold_for_the_portal",
     "guiScale": 4,
@@ -70,9 +70,11 @@
     ],
     "args": [
       "--caption",
-      "why does grandma feed the nether portal 😶",
+      "My grandma has thrown 9,000 gold into a portal",
       "--red",
       "portal",
+      "--red_rgb",
+      "FFD640",
       "--punch",
       "[[\"reveal\",0,0.08]]",
       "--punch_stress",
@@ -579,11 +581,11 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/story_gold_for_the_portal",
-    "commit": "3a831310b9b9a23456bf8545a3627a6377bee4d1",
+    "commit": "0820d9d962f66ef2e2efa224dd5b4ccc0df6ba18",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42990868606",
-    "rendered_at": "2026-11-11T09:14:54.321Z",
-    "head_at_publish": "abe1f6e8c071944edca6ce2295fb246eb775506a",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42996952691",
+    "rendered_at": "2026-11-11T09:54:24.161Z",
+    "head_at_publish": "1f6c2a2bdf45d98c7778ba52eacae466f13061a7",
     "stunt": "stunts/story_gold_for_the_portal.js",
     "source_snapshot": [
       "source/story_gold_for_the_portal.js",
@@ -591,22 +593,23 @@
       "source/world.js",
       "source/story.js",
       "source/motion.js",
-      "source/sight.js"
+      "source/sight.js",
+      "source/act.js"
     ]
   },
   "rebuild": [
-    "git checkout 3a831310b9b9",
+    "git checkout 0820d9d962f6",
     "gunzip -c shorts/story_gold_for_the_portal/recording.json.gz > work/story_gold_for_the_portal.rec.json",
     "node render.js work/story_gold_for_the_portal.rec.json work/story_gold_for_the_portal.frames 60 1080 1011",
     "python3 audio.py work/story_gold_for_the_portal.rec.json work/story_gold_for_the_portal.wav",
-    "python3 edit.py --frames work/story_gold_for_the_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_gold_for_the_portal.rec.json --audio work/story_gold_for_the_portal.wav --caption \"why does grandma feed the nether portal 😶\" --red portal --punch [[\"reveal\",0,0.08]] --punch_stress [[\"L01\",3.44,0.07],[\"L07\",1.14,0.07],[\"L12\",3.22,0.07]] --gui_scale 4 --chat_align center --story stories/gold_for_the_portal --start_at line:0 --end_after story_end:0 --out out/story_gold_for_the_portal.mp4"
+    "python3 edit.py --frames work/story_gold_for_the_portal.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/story_gold_for_the_portal.rec.json --audio work/story_gold_for_the_portal.wav --caption \"My grandma has thrown 9,000 gold into a portal\" --red portal --red_rgb FFD640 --punch [[\"reveal\",0,0.08]] --punch_stress [[\"L01\",3.44,0.07],[\"L07\",1.14,0.07],[\"L12\",3.22,0.07]] --gui_scale 4 --chat_align center --story stories/gold_for_the_portal --start_at line:0 --end_after story_end:0 --out out/story_gold_for_the_portal.mp4"
   ],
   "status": "held",
-  "notes": "Pip narrator (one take) + Grandma (Vindemiatrix); bright look, punches on L01/L07/L12; owner notes: no Nico, Grandma recast, BLUE stripe pause 0.58 -> 0.27 s, end sync OK. Nitpicks: 50 s / 2.89 wps, one ingot drawn for the 64-stack throw, the night garden shot reads like day.",
-  "published_at": "2026-11-11T09:35:10.388Z",
+  "notes": "band: the brand cover title 'My grandma has thrown 9,000 gold into a portal', key word Buh gold #FFD640. Pip narrator (one take) + Grandma (Vindemiatrix); bright look, punches on L01/L07/L12; owner notes fixed. Nitpicks: 50 s / 2.89 wps, one ingot drawn for the 64-stack throw, the night garden shot reads like day.",
+  "published_at": "2026-11-11T09:58:56.406Z",
   "gates": {
     "version": 3,
-    "at": "2026-11-11T09:35:28+00:00",
+    "at": "2026-11-11T09:59:13+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -622,8 +625,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:27:06.789Z",
-      "report": "work/hb/story_gold_for_the_portal.check.json"
+      "at": "2026-11-11T09:40:15.354Z",
+      "report": "out/story_gold_for_the_portal.check.json"
     },
     "key_sounds": "n/a"
   }

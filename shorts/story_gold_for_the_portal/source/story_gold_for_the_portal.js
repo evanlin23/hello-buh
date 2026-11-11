@@ -19,7 +19,7 @@ const sets = require('../lib/sets')
 const { storyLines, storyKit } = require('../lib/story')
 
 const STORY = path.join(__dirname, '..', 'stories', 'gold_for_the_portal')
-const CAPTION = 'why does grandma feed the nether portal 😶'
+const CAPTION = 'My grandma has thrown 9,000 gold into a portal'   // the brand cover title (docs/brand.md Buh Stories; key word 'portal' in Buh gold)
 const NIGHT = 18000, RIDGE_NIGHT = 14500, MORNING = 1000
 const X = -132, Z = -943, F = 74          // the cellar's local origin (map.json: basement centre -126,-938 at y 80)
 const DOWN = -30                          // the flashback cellar, 30 blocks under the real one
