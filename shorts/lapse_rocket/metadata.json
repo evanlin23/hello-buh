@@ -1,10 +1,10 @@
 {
   "name": "lapse_rocket",
   "channel": "hellobuh",
-  "caption": "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
+  "caption": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
   "youtube": {
-    "title": "building a rocket in 1 second vs 1 minute vs 1 hour 💀 #minecraft #shorts",
-    "description": "building a rocket in 1 second vs 1 minute vs 1 hour 💀\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "title": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80 #minecraft #shorts",
+    "description": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -48,7 +48,7 @@
     }
   },
   "edit": {
-    "caption": "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
+    "caption": "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
     "red": "hour",
     "song": null,
     "dropAt": "big_done",
@@ -233,7 +233,7 @@
     ],
     "args": [
       "--caption",
-      "building a rocket in 1 second vs 1 minute vs 1 hour 💀",
+      "building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80",
       "--red",
       "hour",
       "--speed",
@@ -3413,9 +3413,9 @@
     "gunzip -c shorts/lapse_rocket/recording.json.gz > work/lapse_rocket.rec.json",
     "node render.js work/lapse_rocket.rec.json work/lapse_rocket.frames 60 1080 1011",
     "python3 audio.py work/lapse_rocket.rec.json work/lapse_rocket.wav",
-    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour 💀\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:7.2\",\"cut\"],[\"big_start:7.2\",\"big_start:12\",3],[\"big_start:12\",\"big_start:13.2\",\"cut\"],[\"big_start:13.2\",\"big_start:18\",3],[\"big_start:18\",\"big_start:19.2\",\"cut\"],[\"big_start:19.2\",\"big_start:24\",3],[\"big_start:24\",\"big_start:25.2\",\"cut\"],[\"big_start:25.2\",\"big_start:30\",3],[\"big_start:30\",\"big_start:31.2\",\"cut\"],[\"big_start:31.2\",\"big_start:36\",3],[\"big_start:36\",\"big_start:37.2\",\"cut\"],[\"big_start:37.2\",\"big_start:42\",3],[\"big_start:42\",\"big_start:43.2\",\"cut\"],[\"big_start:43.2\",\"big_start:48\",3],[\"big_start:48\",\"big_start:49.2\",\"cut\"],[\"big_start:49.2\",\"big_start:54\",3],[\"big_start:54\",\"big_start:55.2\",\"cut\"],[\"big_start:55.2\",\"big_start:60\",3],[\"big_start:60\",\"big_start:61.2\",\"cut\"],[\"big_start:61.2\",\"big_start:66\",3],[\"big_start:66\",\"big_start:67.2\",\"cut\"],[\"big_start:67.2\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
+    "python3 edit.py --frames work/lapse_rocket.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/lapse_rocket.rec.json --audio work/lapse_rocket.wav --caption \"building a rocket in 1 second vs 1 minute vs 1 hour \ud83d\udc80\" --red hour --speed [[\"cut1_a\",\"cut1_b\",\"cut\"],[\"mid_start\",\"mid_done\",3],[\"cut2_a\",\"cut2_b\",\"cut\"],[\"big_start\",\"big_start:6\",3],[\"big_start:6\",\"big_start:7.2\",\"cut\"],[\"big_start:7.2\",\"big_start:12\",3],[\"big_start:12\",\"big_start:13.2\",\"cut\"],[\"big_start:13.2\",\"big_start:18\",3],[\"big_start:18\",\"big_start:19.2\",\"cut\"],[\"big_start:19.2\",\"big_start:24\",3],[\"big_start:24\",\"big_start:25.2\",\"cut\"],[\"big_start:25.2\",\"big_start:30\",3],[\"big_start:30\",\"big_start:31.2\",\"cut\"],[\"big_start:31.2\",\"big_start:36\",3],[\"big_start:36\",\"big_start:37.2\",\"cut\"],[\"big_start:37.2\",\"big_start:42\",3],[\"big_start:42\",\"big_start:43.2\",\"cut\"],[\"big_start:43.2\",\"big_start:48\",3],[\"big_start:48\",\"big_start:49.2\",\"cut\"],[\"big_start:49.2\",\"big_start:54\",3],[\"big_start:54\",\"big_start:55.2\",\"cut\"],[\"big_start:55.2\",\"big_start:60\",3],[\"big_start:60\",\"big_start:61.2\",\"cut\"],[\"big_start:61.2\",\"big_start:66\",3],[\"big_start:66\",\"big_start:67.2\",\"cut\"],[\"big_start:67.2\",\"big_done\",3]] --clock \"[[\\\"small_start\\\",\\\"small_done\\\",1,\\\"1 SECOND\\\"],[\\\"mid_start\\\",\\\"mid_done\\\",60,\\\"1 MINUTE\\\"],[\\\"big_start\\\",\\\"big_done\\\",3600,\\\"1 HOUR\\\"]]\" --punch [[\"big_done\",0,1.08]] --flash [[\"big_done\",0,0.5]] --sfx [[\"dip\",\"big_done\",0.3],[\"impact\",\"big_done\"]] --start_at small_start:-0.1 --end_after big_done:0.5 --out out/lapse_rocket.mp4"
   ],
-  "status": "ready",
+  "status": "needs-fix",
   "notes": "owner r:r200cfe (2026-11-11, 'The rocket time lapse has a ton for jerking around between shots'): the 1-hour rail swung round the pad/tower/hall, so every 1.2 s jump cut jumped 5-15 deg and 4-15 blocks; re-recorded with one slow crane-out (big.keys), 0.8 blocks and <1 deg across each cut; rec_check cuts now blocks a time-lapse camera jump. Independent review READY round 1; nitpicks: 9-11 s mostly sand while the pad spreads, small rockets cut at the bottom edge in the wide",
   "published_at": "2026-11-11T10:58:36.815Z",
   "gates": {
@@ -3440,5 +3440,6 @@
       "report": "out/lapse_rocket.check.json"
     },
     "key_sounds": "n/a"
-  }
+  },
+  "needs_fix": "owner 2026-11-11: \"for the time lapse stuff... we should have more angles when we're showing the last thing\" and the second (1-minute) round's \"smoother camera movement is like too slow... it's okay to have like a really fast movement here... right now it's like I places and I take forever to turn\""
 }
