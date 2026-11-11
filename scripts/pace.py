@@ -189,6 +189,36 @@ def norm(s):
     return re.sub(r"[^a-z0-9 ]+", "", re.sub(r"\s*/\s*", " ", s.lower())).split()
 
 
+BUILD_SOUND = re.compile(r"^block\.[\w.]+\.(place|break)$")
+BUILD_RUN = 0.5   # a placement counts when another lands within this many seconds (a steady build, not one stray block)
+
+
+def build_events(timeline, to_out, run=BUILD_RUN):
+    """Block placements and breaks in the recording (their block.*.place/break sounds, plus place/dig_end marks), in
+    output time, keeping only those in a steady run: the picture changes with every block, so a build is never "dead"
+    (lead 2026-11-11: pixel-art builds put 7-20 blocks a second on screen through spans pace called dead). A recording
+    with few placements (stories) is unaffected."""
+    src = sorted(e["t"] / 1000 for e in timeline
+                 if (e.get("event") == "sound" and BUILD_SOUND.match(str(e.get("sound", "")))) or e.get("event") in ("place", "dig_end"))
+    out = []
+    for i, t in enumerate(src):
+        if (i > 0 and t - src[i - 1] <= run) or (i + 1 < len(src) and src[i + 1] - t <= run):
+            o = to_out(t)
+            if o is not None:
+                out.append(round(o, 2))
+    return sorted(set(out))
+
+
+def gaps(evs):
+    """The spans between consecutive (time, label) events, longest first: (a, b, length, label a, label b)."""
+    evs = sorted(evs)
+    g = []
+    for (a, ea), (b, eb) in zip(evs, evs[1:]):
+        if b - a > 0.05:
+            g.append((round(a, 2), round(b, 2), round(b - a, 2), ea, eb))
+    return sorted(g, key=lambda x: -x[2])
+
+
 # ---------------------------------------------------------------- the checks
 def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_story=None):
     notes, F = [], []
@@ -231,6 +261,9 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     cuts = sorted(set(cuts_v) | {c for c in cut_marks if not any(abs(c - v) < 0.2 for v in cuts_v)})
     cap_times = sorted({round(t, 2) for t, _, _ in caps})
     other_marks = [(round(m["out"], 2), m["event"]) for m in marks if m["event"] not in ("line", "cut", "shot", "self", "start", "end", "f1_on", "f1_off", "story_end")]
+    builds = build_events(rec.get("timeline", []), clock.out_of_src) if rec and clock else []
+    if builds:
+        notes.append(f"{len(builds)} block placements/breaks in steady runs count as events (a build is never dead)")
 
     # the voice: each line's spoken span (voice.json) and the silence after it, before the next line
     voice_gaps = []
@@ -493,13 +526,7 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
 
     # ---- 3. dead spots
     events = sorted([(0.0, "start")] + [(c, "cut") for c in cuts] + [(t, "caption") for t in cap_times] + [(t, f"line {lid}") for t, lid in lines]
-                    + [(t, "sound hit") for t, _ in hits] + [(t, "motion") for t in onsets] + [(t, ev) for t, ev in other_marks] + [(dur, "end")])
-    def gaps(evs):
-        g = []
-        for (a, ea), (b, eb) in zip(evs, evs[1:]):
-            if b - a > 0.05:
-                g.append((round(a, 2), round(b, 2), round(b - a, 2), ea, eb))
-        return sorted(g, key=lambda x: -x[2])
+                    + [(t, "sound hit") for t, _ in hits] + [(t, "motion") for t in onsets] + [(t, ev) for t, ev in other_marks] + [(t, "block") for t in builds if 0 < t < dur] + [(dur, "end")])
     dead = gaps(events)
     def shot_at(t):
         prev = [c for c in cuts if c <= t + 0.01]
