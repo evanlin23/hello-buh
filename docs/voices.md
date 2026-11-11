@@ -270,6 +270,28 @@ Setup (once): `~/.hb-tts/bin/pip install transformers && ~/.hb-tts/bin/pip insta
 (`./hb doctor` checks both). Only Resemblyzer's weights and network shape are used; the mel spectrogram is computed
 in speaker_check.py, so librosa and webrtcvad aren't needed. `scripts/voice_check.py` is the quick transcript view.
 
+## Voice contrast (`scripts/voice_contrast.py`, STANDARDS 2.7)
+
+The owner caught two casts by ear: Light Sleeper's Mom (Sulafat) "is too similar to narrator" (r:rc31bfe) and Gold's
+Grandma (Vindemiatrix) "sounds like a dude still" (r:rf8060c). Both are now a check that runs in `./hb voice` (after
+the take gate, speaker and drift checks) and in `./hb check` (pre-record and full), in the TTS venv:
+
+- **Contrast.** Each character's lines (mean Resemblyzer embedding, as speaker_check) against the narrator's, plus
+  the median pitch. The bar is the narrator against itself (each narrator line vs the rest, 10th percentile, held to
+  0.82-0.90). At or over the bar = BLOCK; within 0.03 of it at under 2 semitones from the narrator = BLOCK; within
+  0.03 but apart in pitch = WARN. Light Sleeper's Sulafat Mom: 0.864 (bar 0.846, 1.4 st), BLOCK. The audition's Mom
+  candidates sit 0.755-0.799 to Pip, 3-5 st under: pass.
+- **Read.** `reads_as: {sex, age: [lo, hi]}` on every voices/cast.json entry (or a story's cast entry; else the
+  role's name: Grandma, Grandpa, Mom, Dad...). Each character line goes to the blind listener (scripts/who.py,
+  gemini-3-flash-preview, falling back on a 429) **played backwards**, so it judges the voice and not the words:
+  forwards, "One's plenty, sweetie" made Vindemiatrix a grandmother (9/10); backwards she is "a man, raspy,
+  gravelly". The pitch is the second witness (female >= 180 Hz agrees, 150-180 can't tell, < 150 disagrees; male
+  <= 150 agrees, a teen <= 180). BLOCK only when the listener hears the other sex AND the pitch doesn't confirm the
+  intended one; one witness alone, or an age range more than 10 years off, is a WARN. No listener answer = pitch only.
+- **Cache.** Answers are kept in `voices/who_cache.json` by the take's sha1, so a check never asks twice about a take
+  (and the same take on another branch is a cache hit). A re-take is a new hash and is heard again.
+- **Fix.** A re-take doesn't fix a cast: re-cast from an audition of the real line (brand/auditions/, the owner picks).
+
 ## Caption colours
 
 Owner, 2026-11-10: "Maybe we can have color coded captions?" and "It should generally just "match" the vibe of the
