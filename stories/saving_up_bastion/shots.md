@@ -1,18 +1,17 @@
-# Saving Up for a Bastion: shot list (r1)
+# Saving Up for a Bastion: shot list (r2)
 
-The shots are in story.json `shots` (one per line, L10-L11 share S10). Sizes change at every cut; one close-up before
-the reveal (S09, the sign).
+The shots are in story.json `shots` (the source); this is a copy for reading. Sizes (ecu/cu/ms/full/wide/ews) change at every cut; one close-up before the reveal (S08). S10's chest screen is a GUI insert on the held shot.
 
 | shot | line | place | size | camera | frame |
 |---|---|---|---|---|---|
-| S01 | L01 | cell | MS | baby's eye level, slow push from 0.0 s | the baby centred and big from frame 1, looking up; dropper in the ceiling; click, ingot, catch |
-| S02 | L02 | shelf | WS | low, tracking east | an ingot skitters across netherrack, the baby chases it into the catch hole at the tower's foot |
-| S03 | L03 | cell | OTS | over the baby's shoulder through the window | adults milling by the lit Nether portal below; the lava lake |
-| S04 | L04 | shelf | WS | at piglin height, drift right | an adult admires an ingot, throws out gravel; EASTER EGG frame left: the helmet piglin |
-| S05 | L05 | lake | EWS | out of the window over the lava lake, rising | the bastion remnant on the far shore; the baby's silhouette in the window fg left |
-| S06 | L06 | tower top | MS | low angle up to the roof | the player (efe) feeding gold into the hopper over the dropper, frowning |
-| S07 | L07 | chest room | MS | side on | the player swaps the hopper line in the cell's floor (seen from below), hopeful |
-| S08 | L08 | shelf | WIDE | low at the tower's foot | the player pours a lava moat round the tower; the baby small in the window above |
-| S09 | L09 | cell | CU | the baby's view through the glass | the sign, readable: PLEASE / WORK; the player's hand leaving it |
-| S10 | L10, L11 | chest room | MS | across the chest at the player | he opens the chest (lid hides the inside), stares, slumps |
-| S11 | L12 | cutaway | WS | crane from the baby down to the chest room | baby / hopper / OPEN EMPTY chest in one vertical line; on SIX the dropper fires; cut 1.0 s after `drop` |
+| S01 | L01 | tower_window | ms | at: OUTSIDE the tower, level with the cell's glass window, 3 blocks out over the ledge, slow push in from 0.0 s | frame 1: the baby piglin centred behind the glass, big (about 35% of frame height), looking up; the dropper is above frame (off-frame, critic r1). On 'INGOT' an ingot drops into frame from the top; on 'SKY' the baby catches it (off hand up, the admiring pose). The push ends on it hugging the ingot. Nether brick round the window; lava glow on the glass. |
+| S02 | L02 | shelf | wide | ots: over the baby's shoulder through the glass (the cell's back wall hidden for the camera), looking west down at the shelf | 5-6 adult piglins by the lit Nether portal, several turned up toward the window (piglins look at a mob holding gold); one steps toward the tower. EASTER EGG: frame left, mid-ground, the adult in golden_helmet[trim={pattern:"sentry",material:"lapis"}] (Gold for the Portal's item), never centred, 1-3 s; in this shot only. |
+| S03 | L03 | lake | ews | from the window pushing out over the lava lake, rising | the bastion remnant on the far shore, huge, blackstone, gold blocks glinting; fg left: the window edge with the baby's silhouette and its ingot. Crimson fog. The helmet piglin is not in frame. |
+| S04 | L04 | ledge | wide | low on the ledge above the tower's roof, tracking (two days ago: no moat, no sign, the hopper the old one) | the PLAYER (efe skin, iron chest and legs, GOLD boots) on the ledge tosses one ingot beside the catch hole to lure an adult; the baby beats the adults to it, grabs it, and drops with it into the 1x1 catch hole (trapdoor-edged) that chutes into the cell. The player has already turned to the bridge. |
+| S05 | L05 | tower_top | ms | low angle up the tower's outside wall to its roof | the player on the roof (face visible), feeding gold from a stack into the hopper over the dropper, frowning at the dropper. The roof is solid nether brick: he can't see into the cell. |
+| S06 | L06 | cutaway | wide | the tower's cutaway (south wall hidden), the whole column from the dropper to the base room, side on | the baby on its block in the 1x2 cell; beside it the hopper slot: the player, in the base room under it, breaks the old hopper (its slot, not the baby's block) and a NEW hopper pops in, shiny; the baby leans over it, delighted. |
+| S07 | L07 | base | ms | outside, low at the base room's wall | the player pours lava from a bucket into a 1-wide trench round the base; a HOGLIN paces just beyond it and turns back (why a moat); a 1-wide bridge to the base room's door. |
+| S08 | L08 | ledge | cu | outside, on the ledge by the catch hole | an oak sign planted by the catch hole, readable at phone size: 'PLEASE' / 'WORK'; the player's back as he walks off (he never looks into the window below). The baby saw him place it from the window (not shown). The only close-up before the reveal. |
+| S09 | L09 | shelf | wide | outside on the shelf at piglin height, slow drift right | an adult piglin holds an ingot up (admiring), then tosses out GRAVEL on 'GRAVEL'; the others mill by the portal. |
+| S10 | L10 | base | ms | in the base room (7x7x4), across the chest at the player; holds still while the chest screen is up | the player opens the chest on 'Come ON' (the lid toward us); on 'GRAVEL' the chest screen fills the frame: 27 EMPTY slots (edit.py container_png, guiScale 4; the camera holds still while it's open, owner rule). |
+| S11 | L11,L12 | cutaway | wide | the reveal: the cutaway, tight on about 6 blocks, a short crane UP from the base room to the cell | start (L11): the player slumped at the OPEN chest (he is still there, so the lid stays open), the hopper straight above it in the ceiling. On 'GOLD' (L12) crane up along the hopper to the baby on its block beside it, hugging its ingot; the chest and the slumped player still in frame bottom: player, chest, hopper, baby in one line. On 'SIX' (`drop`) the dropper clicks, an ingot drops onto the baby, who catches it. Cut 1.0 s after. |

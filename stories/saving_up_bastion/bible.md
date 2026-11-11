@@ -1,44 +1,54 @@
-# Saving Up for a Bastion: continuity bible (r1)
+# Saving Up for a Bastion: continuity bible (r2)
 
 ## World
 - Place `portal_cottage_nether` (the Nether, about (-16, 80, -118)), day 5000. Before Gold for the Portal (9300): the
   helmet piglin is already wearing Grandpa's helmet (since ~175). Grandma's nightly ingot comes out of this portal:
-  that is why piglins gather here and why the player built his farm here (never said; a fan link, STANDARDS 5a).
-- The baby never grows up (vanilla), so it can still be in this cell in any later story.
+  that is why piglins gather here and why the player built here (never said; a fan link, STANDARDS 5a).
+- The farm was finished on day ~4998; the baby was its first catch, so the chest has never held anything.
+- The baby never grows up (vanilla), so it can still be in this cell in a later story.
 
-## Time of day
-The Nether has none. Crimson fog and lava light in every shot. S02 is earlier the same day (the baby's flash-back,
-the moat not yet built: S02 shows no moat, S08 builds it).
+## Story time (the props follow this, not the shot order)
+| when | shots | state |
+|---|---|---|
+| two days ago (day ~4998) | S04 | farm new, old hopper, no moat, no sign, chest empty |
+| between (days 4998-5000) | S05, S06, S07, S08 | the player tries his fixes: S06 the new hopper, S07 the moat, S08 the sign |
+| any time (the adults) | S09 | the shelf by the portal |
+| now (day 5000) | S01, S02, S03, S10, S11 | new hopper, moat, sign all there; the baby holding an ingot |
+
+The Nether has no time of day: crimson fog and lava light in every shot.
 
 ## Cast and costume
 | who | look | in shots | holds |
 |---|---|---|---|
-| the baby piglin (narrator) | vanilla baby piglin, no armour | S01-S05, S09, S11 (small in S08's window) | nothing in S02; one ingot in its off hand from L01 on (the admiring pose) |
-| the player | default `efe` skin, iron armour, no name tag | S06, S07, S08, S09 (hand), S10 | a gold stack (S06), a hopper (S07), a lava bucket (S08), nothing (S10) |
-| adult piglins | vanilla adults, gold swords | S03, S04 | one holds an ingot then gravel drops (S04) |
-| the helmet piglin (easter egg) | adult, gold helmet with a lapis trim | S04 frame left only | gold sword |
+| the baby piglin (narrator) | vanilla baby piglin, no armour | S01, S02 (back of head), S03 (silhouette), S04, S06, S11 | an ingot in its off hand from L01 on (now); grabbing the thrown ingot in S04 |
+| the player | default `efe` skin, iron chestplate and leggings, GOLD boots, no name tag | S04, S05, S06 (below, small), S07, S08 (back), S10, S11 | an ingot (S04), a gold stack (S05), a hopper (S06), a lava bucket (S07), nothing (S08, S10, S11) |
+| adult piglins | vanilla adults, gold swords | S02, S04, S09 | one admires an ingot and drops gravel (S09) |
+| the helmet piglin (easter egg) | adult, `golden_helmet[trim={pattern:"sentry",material:"lapis"}]` (Gold for the Portal's item) | S02 only, frame left, mid-ground | a gold sword |
+| a hoglin | vanilla adult | S07 only, beyond the moat | |
 
 ## Props and states
 | prop | state |
 |---|---|
-| dropper (ceiling) | fires every 6.05 s on screen; fires on `drop` in S11 |
-| hopper line | old in S01-S06, replaced in S07, new after |
-| chest | closed until S10; open from S10 to the end, EMPTY |
-| sign | absent before S09; PLEASE / WORK from S09 |
-| lava moat | absent before S08; there from S08 |
-| the portal | lit, always |
-| the bastion | across the lake, S05 (and S03's bg if in frame) |
+| dropper (cell ceiling) | fires every 6.05 s while the farm runs; fires on `drop` in S11 |
+| hopper (beside the baby) | old until S06; new and shiny after (S11) |
+| chest (base room) | closed until S10; open while the player is at it (S10, S11); EMPTY (S10's screen) |
+| sign (ledge, by the catch hole) | from S08 on: PLEASE / WORK |
+| lava moat (round the base) | from S07 on |
+| portal | lit, always |
+| bastion | across the lake (S03) |
 
 ## Positions and screen direction
-The window faces west to the shelf and the portal; the lake and bastion are beyond, west-south-west. The baby looks
-out screen left in S03/S05; the player works screen right of the tower in S06-S08.
+- The window faces **west**, down to the shelf and the portal; the lake and the bastion are beyond, west-south-west.
+- From inside (S02, S03) the shelf and the bastion are ahead of the baby; from outside (S01) the baby faces the camera,
+  west.
+- The cutaway (S06, S11) is the column's south face: west is screen left, the baby's block screen right of the hopper.
 
 ## Who knows what
-- The baby: thinks the cell is its room, the gold a gift, the gifts love; doesn't know what bartering is for; never
-  learns.
-- The player: knows his farm makes nothing; has never looked into the cell (the roof is solid over the dropper, he
-  works from the roof, the chest room and outside); doesn't know about the baby.
-- The viewer: sees the sign (PLEASE WORK) and the player's face before the baby does; learns the jam in S11.
+- The baby: thinks the cell is its room, the gold a gift, the gifts love, the grown-ups jealous; doesn't know what
+  bartering is for; never learns.
+- The player: knows his farm makes nothing; has never seen into the cell (the roof is solid over the dropper; he works
+  from the roof, the base room and the ledge; he turned away before the baby fell in); doesn't know about the baby.
+- The viewer: sees the sign and the player's face before the baby does; learns the jam in S11.
 
 ## Clue map
 beats.md "Clue map".
