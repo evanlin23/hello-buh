@@ -38,6 +38,8 @@ module.exports = {
     rise: { path: [[0, -52, 9, 56], [2, -57, 19, 62]], lookPath: [[0, -18, 62, 18], [2, -10, 54, 10]], fov: 74, dof: false, drift: 0.6, scenery: true, subject: [[-41.5, 50, 41.5]] },
     // 1b. the south-east corner from further out and higher: the whole height against the sky, the forest under it
     rise2: { path: [[0, 66, 20, 70], [1.6, 58, 27, 62]], lookPath: [[0, 26, 52, 26], [1.6, 22, 56, 22]], fov: 70, dof: false, drift: 0.5, scenery: true, subject: [[41.5, 50, 41.5]] },
+    // 2b. along the south face from its east end, the low sun raking across it
+    south: { path: [[0, 72, 30, 76], [1.5, 64, 36, 70]], lookPath: [[0, -10, 40, 41], [1.5, -14, 46, 41]], fov: 60, dof: false, drift: 0.4, scenery: true, subject: [[0, 45, 42]] },
     // 3. wide: the whole sponge over the forest, orbiting from the south-east
     orbit: { orbit: [0, 41, 0], radius: 112, height: 36, startDeg: 20, degPerSec: 11, fov: 56, dof: false, drift: 0.4, scenery: true, subject: [[0, 96, 0]] },
     // 3b. high over the top face (under the clouds at y 192: above them the frame went white), sliding across it: the fractal from above, the top hole in the middle
@@ -165,10 +167,14 @@ module.exports = {
       // 2. first person: a boost, then a run along the south face, the face on the left, looking ahead along it; a
       // second boost halfway
       M.shot(ctx, 'pov'); ctx.mark('cut'); ctx.mark('pass')
-      await run([[-112, 24, 50], [-60, 30, 48], [-10, 40, 48], [30, 50, 49], [60, 56, 52]], 96, (i) => ease(1.2, 1.55, i, 20),
-        (p, a, i) => mix(a, { x: Math.min(a.x + 6, X + 34), y: a.y - 2, z: Z + 41 }, ease(0.55, 0.75, i, 90)), { 2: boost, 48: boost })   // (r1: past the corner the view left the build: the run ends at it, the look held on the face)
+      await run([[-112, 24, 50], [-60, 30, 48], [-10, 40, 48], [30, 50, 49], [60, 56, 52]], 66, (i) => ease(1.2, 1.55, i, 20),
+        (p, a, i) => mix(a, { x: Math.min(a.x + 6, X + 34), y: a.y - 2, z: Z + 41 }, ease(0.55, 0.75, i, 60)), { 2: boost, 34: boost })   // (r1: past the corner the view left the build: the run ends at it, the look held on the face)
+      // 2b. the south face from its east end, raking light along it (a camera beat in the run: under the NCS bed the
+      // second boost alone left 3.5 s with nothing new, mixcheck)
+      park(); M.shot(ctx, 'south'); ctx.mark('cut'); ctx.mark('south')
+      await bot.waitForTicks(30)
       // 3. wide orbit, then high over the top (camera shots)
-      park(); M.shot(ctx, 'orbit'); ctx.mark('cut'); ctx.mark('wide')
+      M.shot(ctx, 'orbit'); ctx.mark('wide')
       ctx.sound('item.elytra.flying', 0.4, 0.85)
       await bot.waitForTicks(46)
       M.shot(ctx, 'top'); ctx.mark('top')
