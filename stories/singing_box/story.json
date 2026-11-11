@@ -2,19 +2,19 @@
  "name": "singing_box",
  "stunt": "story_singing_box",
  "version": 2,
- "revision": "r1 (2026-11-11): first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
+ "revision": "r2 (2026-11-11): the r1 critic's and continuity's must-fixes (reviews/r1-*.md): the neighbor asks every night and the allay misreads it (L10-L12), the allay asks the box to SHARE (L13), L15 ends on HOLE; the hole above the note block so the allay can pass; a 5-wide tunnel with the lava off her path; the reveal split S13a/S13b; days 1489/1499/1500; `shows` on item/block ids, people in `look`. r1: first script from the batch-3 brief (docs/pitches/batch3_script_briefs/singing_box.md; round 2 #1 with the critic's line-1 fix and must-fixes). Reviews in reviews/.",
  "caption": "where do her diamonds go 💎",
- "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, sure the box is just hungry, while she climbs out empty-handed every night; today it brings diamond 32 through the hole, to the neighbor in full diamond armour tapping the box.",
+ "logline": "An allay carries every diamond its miner's TNT blasts loose to the singing box in the mine wall, sure the box is just hungry, while she climbs out empty-handed every night; today it flies diamond 32 through the hole to ask the box to share, and finds the neighbor in diamond armour tapping the box.",
  "question": "why has she never had more than one diamond?",
- "premise": "A miner under Torch Hill gives her allay her only diamond so it collects more. Every day her TNT blasts diamonds loose, and the allay flies every one to the singing box: a note block in a little hole in the mine wall, right by the lava she never goes near. The box sings whenever the allay comes close, and the diamonds vanish ('it must be so hungry'). She climbs out with empty hands every night: 'Nothing again. It's empty.' The grumpy neighbor yells about the noise.",
- "twist": "The note block isn't hers. The neighbor dug a secret room beside her tunnel and taps his note block through the hole every few seconds. Vanilla: an allay that hears a note block played within 16 blocks delivers its items there instead of to its player, for 30 s, and each note resets it. So her allay has delivered all 31 diamonds to him, and he wears them (full diamond armour, pickaxe, sword: 29 of them). Diamond 32 lands at his feet as he taps. Cut on the tap.",
+ "premise": "A miner under Torch Hill gives her allay her only diamond so it collects more. Every day her TNT blasts diamonds loose, and the allay flies every one to the singing box: a note block in a little hole in the mine wall, right by the lava she never goes near. The box sings whenever the allay comes close, and the diamonds vanish ('it must be so hungry'). She climbs out with empty hands every night: 'Nothing again. It's empty.' The neighbor asks her every night if she found anything; the allay thinks he's so nice.",
+ "twist": "The note block isn't hers. The neighbor dug a secret room beside her tunnel and plays his note block behind the hole every few seconds. Vanilla: an allay that hears a note block played within 16 blocks delivers its items there instead of to its player, for 30 s, and each note resets it. So her allay has delivered all 31 diamonds to him, and he wears them (diamond chestplate, leggings, boots, pickaxe and sword: 24 of them; his helmet off so his face reads). Diamond 32 lands at his feet as he taps. Cut on the tap.",
  "key_color": "#4AEDD9",
  "mood": [
   "funny",
   "funny"
  ],
  "payoff": "tap",
- "payoff_note": "`tap`: the stunt mark when the neighbor's hand taps the note block in S13; the Short ends <= 1.0 s after it. No line after L14; the picture is the reveal (STANDARDS 0, 3).",
+ "payoff_note": "`tap`: the stunt mark when the neighbor's hand taps the note block in S13b; diamond 32 lands right after and the Short ends 0.8 s after it lands. No line after L15; the picture is the reveal (STANDARDS 0, 3).",
  "look": {
   "note": "surface shots by day (1000) and dusk (12600) of day 1500; the mine is underground (torch light and the lava's glow)"
  },
@@ -23,7 +23,7 @@
   "place": "torch_hill_cottages (new, to claim at build time): two players' cottages on the lowland under Torch Hill, between the Digger's House (-245, 67, -650) and the old torch shaft (-290, 44..84, -684), inside digger_house's footprint or just west of it. Her mine is the old torch shaft, extended from y 44 down to y -54 with a ladder, and a tunnel east at y -54 (diamond depth; the lava aquifer level). His secret room is beside the tunnel, 1 block of deepslate between, reached by his own ladder from his cottage; a 1x1 hole joins them high in the wall over the lava pool. set.md has the numbers.",
   "day": 1500,
   "canon": "New characters, not the Digger: two players who built beside the Digger's House on Torch Hill's lowland. The Digger isn't seen or named (canon: last on screen day 1112; nothing says where he is on 1500). The old torch shaft is Torch's (day 300): a torch every 4 blocks on its left wall, now her way down. Day 1500 is Light Sleeper's day too (Hushwell, far away): no link, never said.",
-  "easter_egg": "blue_sheep hole: the Digger's dirt-block hole (open since day 1112) with its line of torches from his door, small and out of focus at S09's frame left at dusk. Never named. (The sheep itself is gone after 1112.)"
+  "easter_egg": "sheep_hole (to add to map.json at build: set.md): the the Digger's dirt-block hole (open since day 1112) with its line of torches from his door, small and out of focus at S09's frame left at dusk. Never named. (The sheep itself is gone after 1112.)"
  },
  "voice": {
   "engine": "gemini",
@@ -45,17 +45,17 @@
    "role": "character",
    "ref": "storyteller",
    "name": "the miner",
-   "voice": "Aoede",
+   "voice": "Despina",
    "model": "gemini-3.8-flash-tts",
    "color": "#9FE3A0",
    "skin": "noor",
-   "on_screen": "a player, default `noor` skin (not Steve: Steve reads as Buh, conflict 18), iron pickaxe; S02, S03, S06, S09 (says L10 there), S11. Never named.",
+   "on_screen": "a player, default `noor` skin (not Steve: Steve reads as Buh, conflict 18), iron pickaxe; S02, S03, S06, S09, S10 (says L11 there, her shoulder in fg), S11. Never named.",
    "audition": {
     "line": "L10 \"Nothing AGAIN. It's EMPTY.\"",
     "bracket": "[A tired young woman, flat and worn out, full voice]",
     "candidates": [
      {
-      "voice": "Aoede",
+      "voice": "Despina",
       "why": "Gemini's 'breezy'; a grown woman, no character in voices/cast.json or canon.md uses it"
      },
      {
@@ -63,7 +63,7 @@
       "why": "Gemini's 'clear'; unused by any cast or planned character"
      }
     ],
-    "note": "`storyteller` (Despina) is only the placeholder ref so the lint runs; Despina is the storyteller cast, not this character"
+    "note": "ref `storyteller` (Despina) is the first candidate. Not Aoede (Rosa in names_in_the_woods) or Erinome (the house narrator until 2026-11-10)"
    }
   },
   "Neighbor": {
@@ -74,10 +74,10 @@
    "model": "gemini-3.8-flash-tts",
    "color": "#7FB2FF",
    "skin": "efe",
-   "on_screen": "a player, default `efe` skin, plain clothes and no armour in S10 (at his window, says L11); full diamond armour, pickaxe and sword in S13 (the reveal), same skin and face. Never named.",
+   "on_screen": "a player, default `efe` skin, plain clothes and no armour in S10 (at his window, says L10); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin. Never named.",
    "audition": {
-    "line": "L11 \"Some of us are trying to SLEEP!\"",
-    "bracket": "[A grumpy grown man, loud and annoyed, shouting from a window]",
+    "line": "L10 \"Find anything down there TODAY?\"",
+    "bracket": "[A friendly grown man, calling from his window]",
     "candidates": [
      {
       "voice": "Algieba",
@@ -110,7 +110,8 @@
     "L09",
     "L12",
     "L13",
-    "L14"
+    "L14",
+    "L15"
    ],
    "direction": "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing story; not whispery, breathy or soft]"
   },
@@ -121,7 +122,7 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L10"
+    "L11"
    ],
    "direction": "[A tired young woman, flat and worn out, full voice]"
   },
@@ -132,9 +133,9 @@
    ],
    "model": "gemini-3.8-flash-tts",
    "lines": [
-    "L11"
+    "L10"
    ],
-   "direction": "[A grumpy grown man, loud and annoyed, shouting from a window]"
+   "direction": "[A friendly grown man, calling from his window]"
   }
  ],
  "sfx": [
@@ -166,7 +167,7 @@
   {
    "under": "S10",
    "sound": "block.wooden_trapdoor.open",
-   "note": "his shutter opens before L11"
+   "note": "his shutter opens before L10, shuts after L12"
   },
   {
    "under": "S12",
@@ -174,9 +175,14 @@
    "note": "the triple blast, louder"
   },
   {
-   "under": "S13",
+   "under": "S13a",
    "sound": "block.note_block.harp",
-   "note": "the tap on the `tap` mark: the payoff hit"
+   "note": "the note on 'SANG'"
+  },
+  {
+   "under": "S13b",
+   "sound": "block.note_block.harp",
+   "note": "the tap on the `tap` mark: the payoff hit (dirt under the note block: harp)"
   }
  ],
  "lines": [
@@ -195,8 +201,18 @@
     },
     {
      "what": [
-      "note_block"
+      "diamond"
      ],
+     "word": "ONE"
+    }
+   ],
+   "look": [
+    {
+     "what": "entity:allay",
+     "word": "DIAMONDS"
+    },
+    {
+     "what": "block:note_block",
      "word": "ONE"
     }
    ],
@@ -218,15 +234,19 @@
     },
     {
      "what": [
-      "player:Her"
-     ],
-     "word": "HOLD"
-    },
-    {
-     "what": [
       "diamond"
      ],
-     "word": "LOOK"
+     "word": "HOLD"
+    }
+   ],
+   "look": [
+    {
+     "what": "entity:allay",
+     "word": "ALLAY"
+    },
+    {
+     "what": "Her",
+     "word": "HOLD"
     }
    ],
    "direction": "chirpy, explaining her job"
@@ -243,11 +263,15 @@
       "tnt"
      ],
      "word": "BOOM"
+    }
+   ],
+   "look": [
+    {
+     "what": "block:tnt",
+     "word": "BOOM"
     },
     {
-     "what": [
-      "player:Her"
-     ],
+     "what": "Her",
      "word": "RUNS"
     }
    ],
@@ -262,15 +286,19 @@
    "shows": [
     {
      "what": [
-      "explosion"
-     ],
-     "word": "BOOM"
-    },
-    {
-     "what": [
       "diamond"
      ],
      "word": "DIAMONDS"
+    }
+   ],
+   "look": [
+    {
+     "what": "item:diamond",
+     "word": "DIAMONDS"
+    },
+    {
+     "what": "entity:allay",
+     "word": "EVERYWHERE"
     }
    ],
    "direction": "delighted, the best part of the day"
@@ -292,6 +320,16 @@
      "what": [
       "note_block"
      ],
+     "word": "BOX"
+    }
+   ],
+   "look": [
+    {
+     "what": "entity:allay",
+     "word": "ALL"
+    },
+    {
+     "what": "block:note_block",
      "word": "BOX"
     }
    ],
@@ -317,6 +355,16 @@
      "word": "WATER"
     }
    ],
+   "look": [
+    {
+     "what": "block:note_block",
+     "word": "WALL"
+    },
+    {
+     "what": "block:lava",
+     "word": "WATER"
+    }
+   ],
    "direction": "cheerful tour guide, repeating her rule like a good student"
   },
   {
@@ -336,6 +384,16 @@
      "what": [
       "note_block"
      ],
+     "word": "CLOSE"
+    }
+   ],
+   "look": [
+    {
+     "what": "block:note_block",
+     "word": "SINGS"
+    },
+    {
+     "what": "entity:allay",
      "word": "CLOSE"
     }
    ],
@@ -361,6 +419,16 @@
      "word": "HUNGRY"
     }
    ],
+   "look": [
+    {
+     "what": "entity:allay",
+     "word": "ON"
+    },
+    {
+     "what": "block:note_block",
+     "word": "HUNGRY"
+    }
+   ],
    "direction": "sweet, worried for the box"
   },
   {
@@ -372,74 +440,98 @@
    "shows": [
     {
      "what": [
-      "player:Her"
-     ],
-     "word": "EMPTY"
-    },
-    {
-     "what": [
       "ladder"
      ],
      "word": "MINE"
+    }
+   ],
+   "look": [
+    {
+     "what": "Her",
+     "word": "EMPTY"
+    },
+    {
+     "what": "entity:allay",
+     "word": "NIGHT"
     }
    ],
    "direction": "the bounce drops a little, puzzled"
   },
   {
    "id": "L10",
-   "who": "Her",
-   "text": "Nothing AGAIN. / It's EMPTY.",
-   "say": "Nothing again. It's EMPTY.",
-   "shot": "S09",
-   "shows": [
+   "who": "Neighbor",
+   "text": "Find anything / down there / TODAY?",
+   "say": "Find anything down there TODAY?",
+   "shot": "S10",
+   "look": [
     {
-     "what": [
-      "player:Her"
-     ],
-     "word": "EMPTY"
+     "what": "Neighbor",
+     "word": "TODAY"
     }
    ]
   },
   {
    "id": "L11",
-   "who": "Neighbor",
-   "text": "Some of us / are trying / to SLEEP!",
-   "say": "Some of us are trying to SLEEP!",
+   "who": "Her",
+   "text": "Nothing AGAIN. / It's EMPTY.",
+   "say": "Nothing again. It's EMPTY.",
    "shot": "S10",
-   "shows": [
+   "look": [
     {
-     "what": [
-      "player:Neighbor"
-     ],
-     "word": "SLEEP"
+     "what": "Her",
+     "word": "EMPTY"
     }
    ]
   },
   {
    "id": "L12",
    "who": "N",
-   "text": "She looks / so TIRED. / So today, / I'm finding her / the BIGGEST one YET.",
-   "say": "She looks so tired. So today, I'm finding her the biggest one YET.",
+   "text": "He asks / EVERY night. / He's so NICE!",
+   "say": "He asks every night. He's so NICE!",
+   "shot": "S10",
+   "look": [
+    {
+     "what": "Neighbor",
+     "word": "NICE"
+    }
+   ],
+   "direction": "warm, admiring him"
+  },
+  {
+   "id": "L13",
+   "who": "N",
+   "text": "She looks / so TIRED. / So today, / I'll ask the box / to SHARE.",
+   "say": "She looks so tired. So today, I'll ask the box to SHARE.",
    "shot": "S11",
    "shows": [
     {
      "what": [
-      "player:Her"
+      "note_block"
      ],
-     "word": "TIRED"
+     "word": "BOX"
     },
     {
      "what": [
-      "allay"
+      "tnt"
      ],
      "word": "TODAY"
     }
    ],
+   "look": [
+    {
+     "what": "Her",
+     "word": "TIRED"
+    },
+    {
+     "what": "block:note_block",
+     "word": "BOX"
+    }
+   ],
    "punch": true,
-   "direction": "determined, bright, a little promise"
+   "direction": "determined and sweet, a little promise"
   },
   {
-   "id": "L13",
+   "id": "L14",
    "who": "N",
    "text": "BOOM! / Diamond / THIRTY-TWO!",
    "say": "Boom! Diamond thirty-two!",
@@ -447,14 +539,14 @@
    "shows": [
     {
      "what": [
-      "explosion"
-     ],
-     "word": "BOOM"
-    },
-    {
-     "what": [
       "diamond"
      ],
+     "word": "THIRTY-TWO"
+    }
+   ],
+   "look": [
+    {
+     "what": "item:diamond",
      "word": "THIRTY-TWO"
     }
    ],
@@ -462,25 +554,30 @@
    "direction": "thrilled, the biggest yet"
   },
   {
-   "id": "L14",
+   "id": "L15",
    "who": "N",
-   "text": "And the box SANG, / so I flew it / through the little HOLE, / right to the / singing BOX.",
-   "say": "And the box sang, so I flew it through the little hole, right to the singing BOX.",
-   "shot": "S13",
+   "text": "And the box SANG, / so I flew / right through / the little HOLE.",
+   "say": "And the box sang, so I flew right through the little HOLE.",
+   "shot": "S13a",
    "shows": [
     {
      "what": [
       "note_block"
      ],
      "word": "SANG"
+    }
+   ],
+   "look": [
+    {
+     "what": "block:note_block",
+     "word": "SANG"
     },
     {
-     "what": [
-      "note_block"
-     ],
+     "what": "entity:allay",
      "word": "HOLE"
     }
    ],
+   "punch": true,
    "direction": "happy, flying, the last word bright; it runs into the picture"
   }
  ],
@@ -490,142 +587,154 @@
    "line": "L01",
    "place": "mine",
    "size": "ms",
-   "time": "(underground)",
-   "camera": "follow cam 1.5 blocks behind and left of the allay, slow push with it as it glides right to left along the tunnel wall",
+   "time": "1500 (underground)",
+   "camera": "follow cam 1.5 blocks behind and left of the allay, a slow push with it as it glides east along the tunnel's north wall",
    "subject": "allay",
-   "frame": "frame 1: the allay centred and big (about 25% of frame height), wings flapping, a diamond in its hands, gliding (moving from 0.0 s). On 'DIAMONDS' it reaches a small 1x1 hole high in the deepslate wall: a note block just inside it, dark beyond. On 'ONE' a diamond item drops onto the note block and it sings (the note particle). Nothing behind the note block reads. Torch-lit tunnel, lava glow at frame edge."
+   "frame": "frame 1: the allay centred and big (about 25% of frame height), wings flapping, the diamond in its hands, gliding (moving from 0.0 s). On 'DIAMONDS' it rises to the small hole high in the north wall over the lava's glow: through it, just below the hole's lip, the top edge of a note block, dark air above. On 'ONE' a diamond item drops onto the note block and it sings (the note particle rises in the hole). Nothing else behind the hole reads."
   },
   {
    "id": "S02",
    "line": "L02",
    "place": "cottages",
    "size": "wide",
-   "time": "1500 day 1000",
-   "camera": "still at her cottage door, a slow drift",
-   "subject": "player:Her",
-   "frame": "Her (player, `noor` skin, iron pickaxe) hands her one diamond to the allay on 'HOLD'; the allay takes it and floats, the diamond in its hands. bg: the two cottages side by side under Torch Hill, his (spruce) beyond hers (birch-and-cobble), the torch on the slope above."
+   "time": "1489 day 1000",
+   "camera": "12-15 blocks downslope south-east of the cottages, looking north-west uphill toward Torch Hill's torch, still",
+   "subject": "Her",
+   "frame": "day one (11 days before): she steps out of her door (birch and cobble, `noor` skin, iron pickaxe) and hands her one diamond to the allay on 'HOLD'; it takes it and floats, the diamond in its hands. bg: his spruce cottage beyond hers, the torch on the slope above."
   },
   {
    "id": "S03",
    "line": "L03",
    "place": "mine",
    "size": "full",
-   "time": "(underground)",
-   "camera": "still, down the tunnel from the blast face",
-   "subject": "player:Her",
-   "frame": "the tunnel at y -54: she places TNT at the face and lights it with flint and steel on 'BOOM', then runs toward camera and past it, out of frame right toward the ladder. The allay hovers by the face. Deepslate with diamond ore specks in the face."
+   "time": "1500 (underground)",
+   "camera": "at the ladder end of the tunnel looking east, still (the north wall frame left, the face ahead)",
+   "subject": "Her",
+   "frame": "she places one TNT at the face (plain deepslate: no ore shows) and lights it on 'BOOM', then runs back toward camera along the south side and past it to the ladder, the allay flying back with her (it waits out the blast). The lava pool along the north wall at frame left, the hole above it, dark."
   },
   {
    "id": "S04",
    "line": "L04",
    "place": "mine",
    "size": "ws",
-   "time": "(underground)",
-   "camera": "still, the blast face from 6 blocks",
-   "subject": "explosion",
-   "frame": "the TNT blasts (explosion particles); diamond items pop out of the ore and bounce on the floor; on 'EVERYWHERE' the allay swoops in on them. She is out of sight."
+   "time": "1500 (underground)",
+   "camera": "still, the face from 6 blocks, looking east",
+   "subject": "item:diamond",
+   "frame": "the TNT blasts on 'BOOM' (timed to the word); the face opens and two diamond items pop out and bounce on the floor; on 'EVERYWHERE' the allay swoops in from behind camera. She is out of sight at the ladder."
   },
   {
    "id": "S05",
    "line": "L05",
    "place": "mine",
    "size": "ms",
-   "time": "(underground)",
-   "camera": "follow cam on the allay as it gathers items, then turns toward the wall",
+   "time": "1500 (underground)",
+   "camera": "follow cam on the allay as it gathers the two items, then turns toward the north wall",
    "subject": "allay",
-   "frame": "the allay zips item to item, the diamonds pulled into it (vanilla pickup); on 'BOX' it turns toward the 1x1 hole in the wall, the note block just inside, near the lava pool."
+   "frame": "the allay zips to the two diamonds, each pulled into it (vanilla pickup); on 'BOX' it turns up toward the hole over the lava, the note block's top edge in it."
   },
   {
    "id": "S06",
    "line": "L06",
    "place": "mine",
-   "size": "ews",
-   "time": "(underground)",
-   "camera": "high, from the ladder end looking down the whole tunnel, still",
-   "subject": "note_block",
-   "frame": "the whole tunnel: her ladder foot at frame right, the blast face far left, the lava pool (the aquifer at y -54) against the left wall, and above it the small dark hole with the note block's top edge in it. She stands far from the lava at the ladder (her rule). The hole sits where she never goes."
+   "size": "wide",
+   "time": "1500 (underground)",
+   "camera": "high at the ladder end, looking east down the tunnel, still",
+   "subject": "block:note_block",
+   "frame": "the whole tunnel (22 long, 5 wide, 5 tall): she stands small at the ladder foot in the low foreground, far from the lava; the lava pool along the north wall at frame left, mid-frame, and above it, 4 up, the small dark hole with the note block's top edge; the face far centre. The hole is where she never goes."
   },
   {
    "id": "S07",
    "line": "L07",
    "place": "mine",
    "size": "cu",
-   "time": "(underground)",
-   "camera": "close on the hole from the tunnel side, the allay entering frame",
-   "subject": "note_block",
-   "frame": "the note block in the hole fills the centre; on 'SINGS' it sings (note particle) just as the allay floats into frame; on 'CLOSE' it sings again. Behind it, black: nothing on the other side reads."
+   "time": "1500 (underground)",
+   "camera": "close on the hole from the tunnel side at its height, the allay entering frame right",
+   "subject": "block:note_block",
+   "frame": "the hole centred: the note block's top edge in its lower part, black air above; on 'SINGS' a note particle rises from it just as the allay floats into frame; on 'CLOSE' another. Lava glow from below. Nothing on the other side reads."
   },
   {
    "id": "S08",
    "line": "L08",
    "place": "mine",
    "size": "ms",
-   "time": "(underground)",
-   "camera": "the allay's level, beside the hole, then a jump cut",
+   "time": "1500 (underground)",
+   "camera": "beside the hole at the allay's level, then a jump cut",
    "subject": "allay",
-   "frame": "the allay drops two diamonds onto the note block (they land on its top, just inside the hole) on 'ON'; jump cut on 'BACK' (a few seconds later): the top of the note block is bare. The pickup itself never shows."
+   "frame": "the allay throws the two diamonds onto the note block's top, just inside the hole, on 'ON'; jump cut on 'BACK' (a few seconds later): the top is bare. The pickup never shows."
   },
   {
    "id": "S09",
    "line": "L09",
-   "lines": [
-    "L09",
-    "L10"
-   ],
    "place": "cottages",
    "size": "full",
-   "time": "1500 dusk 12600",
-   "camera": "at the shaft top, low, she climbs up toward camera",
-   "subject": "player:Her",
-   "frame": "she climbs out of the old torch shaft (a wall torch every 4 blocks below her) at dusk, both hands empty, and stands; L10 (her line) on screen. bg: the cottages. The easter egg: the blue sheep's open hole with its line of torches from the Digger's door, small, out of focus, frame left (canon stamp, since 1112)."
+   "time": "1499 dusk 12600",
+   "camera": "ground level about 5 blocks north-west of the shaft mouth, looking south-south-east, still",
+   "subject": "Her",
+   "frame": "she climbs out of her ladder shaft beside the old torch shaft (a wall torch every 4 blocks in it) at dusk, both hands empty, and stands; the allay rises out behind her, the diamond in its hands. The easter egg: the Digger's open blue-sheep hole and the torch line from his door, small, out of focus, frame left (`sheep_hole`)."
   },
   {
    "id": "S10",
-   "line": "L11",
+   "line": "L10",
+   "lines": [
+    "L10",
+    "L11",
+    "L12"
+   ],
    "place": "cottages",
    "size": "ms",
-   "time": "1500 dusk 12600",
-   "camera": "over her shoulder to his cottage window, still",
-   "subject": "player:Neighbor",
-   "frame": "the neighbor (player, `efe` skin, plain clothes, no armour, no diamond anything) leans out of his lit spruce window and shouts L11. He is the same man as S13 (same skin) so the reveal reads."
+   "time": "1499 dusk 12600",
+   "camera": "over her shoulder north-east to his cottage window, still",
+   "subject": "Neighbor",
+   "frame": "the neighbor (`efe` skin, plain clothes, no armour, nothing diamond) opens his lit spruce shutter and calls L10, friendly; she answers L11 (her shoulder and head in frame-right fg); L12 over his smile and wave as he shuts the shutter. His face is the face of S13b."
   },
   {
    "id": "S11",
-   "line": "L12",
+   "line": "L13",
    "place": "mine",
-   "size": "wide",
-   "time": "(underground)",
-   "camera": "still at the face, a slow push",
-   "subject": "player:Her",
-   "frame": "next morning, underground: she places a row of THREE TNT at the face (the biggest one yet); the allay beside her, the diamond in its hands. She lights them and runs."
+   "size": "full",
+   "time": "1500 (underground)",
+   "camera": "at the ladder end looking east, a slow push",
+   "subject": "Her",
+   "frame": "today: she places THREE TNT at the face (the crater from the last blast); the allay hovers at frame left, looking up at the hole over the lava on 'BOX'. She lights them and runs back past camera, the allay after her."
   },
   {
    "id": "S12",
-   "line": "L13",
+   "line": "L14",
    "place": "mine",
    "size": "ws",
-   "time": "(underground)",
+   "time": "1500 (underground)",
    "camera": "still, the face from 6 blocks",
-   "subject": "explosion",
-   "frame": "a big triple blast; one diamond item arcs high and the allay catches it in the air on 'THIRTY-TWO'."
+   "subject": "item:diamond",
+   "frame": "a big triple blast on 'BOOM'; exactly one diamond item arcs high and the allay catches it in the air on 'THIRTY-TWO'."
   },
   {
-   "id": "S13",
-   "line": "L14",
+   "id": "S13a",
+   "line": "L15",
+   "place": "mine",
+   "size": "ms",
+   "time": "1500 (underground)",
+   "camera": "follow cam behind the allay up to the hole; on 'HOLE' it passes through and the camera follows to the hole's mouth",
+   "subject": "allay",
+   "frame": "on 'SANG' a note rises from the hole; the allay flies to it and through, over the note block, on 'HOLE'."
+  },
+  {
+   "id": "S13b",
+   "line": null,
+   "lines": [],
    "place": "secret_room",
-   "size": "wide",
-   "time": "(underground)",
-   "camera": "follow cam behind the allay, through the 1x1 hole into the room beyond, then a still frame from inside the room",
-   "subject": "player:Neighbor",
-   "frame": "the allay flies into the hole on 'HOLE' and through it: THE REVEAL. A small hidden room, torch-lit, his own ladder going up in the corner. The neighbor (same `efe` skin, face readable) stands in full diamond armour with a diamond pickaxe and sword, centred; his hand on the note block beside the hole. On 'BOX' he taps it (note particle) and the allay drops diamond 32 at his feet. Mark `tap` on the tap; cut 0.8 s after it. No line after L14."
+   "size": "full",
+   "time": "1500 (underground)",
+   "camera": "from the room's north wall looking south at the hole, still",
+   "subject": "Neighbor",
+   "frame": "THE REVEAL, no line: a hidden torch-lit room (7x7), his ladder up in the north-west corner. The neighbor, no helmet (his face matches S10), diamond chestplate, leggings and boots, a diamond pickaxe in hand and a diamond sword at his hip slot, stands beside the note block (to the side, out of the hole's sightline). The allay floats in through the hole; he taps the note block (mark `tap`, the note sounds) and the allay drops diamond 32 at his feet. Cut 0.8 s after the diamond lands."
   }
  ],
  "ending": {
-  "after": "L14",
+  "after": "L15",
   "beats": [
-   "S13: through the hole, the neighbor in full diamond armour taps the note block; diamond 32 lands at his feet; cut 0.8 s after `tap`. No line."
+   "S13b: through the hole, the neighbor in full diamond armour taps the note block; diamond 32 lands at his feet; cut 0.8 s after diamond 32 lands. No line."
   ],
-  "loop": "cause and effect: L14 ends at 'the singing box' with the delivery, and L01 is the allay counting what it has delivered (thirty-one, now thirty-two)"
+  "loop": "an ironic restart: L15 flies through the hole with diamond 32, and L01 counts the thirty-one it has already delivered"
  },
  "bible": "stories/singing_box/bible.md",
  "beats": "stories/singing_box/beats.md",
@@ -634,7 +743,7 @@
  "family": "helper_misdirected",
  "upload": {
   "title": "I've found her 31 diamonds. she's never had more than one 💎 #minecraft #shorts",
-  "pinned": "How long would it take YOU to notice the neighbor? Be honest",
+  "pinned": "Where did YOU think the diamonds were going?",
   "tags": [
    "minecraft allay",
    "minecraft note block",

@@ -1,37 +1,53 @@
-# singing_box: set plan (r1)
+# singing_box: set plan (r2)
 
 **Place:** the lowland under Torch Hill, by the Digger's House (map.json `digger_house`, at (-245, 67, -650),
-footprint (-300, -692, -232, -636)). Day 1500. The place is not claimed yet: the build claims `torch_hill_cottages`
-(`node scripts/world.js claim`) after reading the ground y off the survey; the numbers below are offsets to confirm.
+footprint (-300, -692, -232, -636)). Days 1489-1500. Not claimed yet: the build claims `torch_hill_cottages`
+(`node scripts/world.js claim`, after reading the ground y off the survey) and stamps every piece below; the numbers
+are a first fit for the live check.
 
-- **The old torch shaft** (canon stamp `torch_hill`, since 300): air from y 44 to 84 at (-290, -684), a wall torch
-  every 4 blocks on the left (west) wall, the torch on the slope at y 85. Her way down. She extends it: a ladder on the
-  east wall from y 84 to y -54 (her own; the Digger's torches stay).
-- **Her tunnel:** y -54 (deepslate; the lava aquifer level, inside diamond's band), from the shaft foot 12 blocks east to
-  the blast face (-278, -54, -684). Lit by her torches on the south wall.
-- **The lava pool:** against the north wall, 4-8 blocks east of the shaft foot, 2 deep (natural aquifer lava).
-- **The hole:** 1x1 in the north wall at y -52 (two above the floor, above the lava), about (-284, -52, -685). Behind
-  it, his note block on his side at (-284, -52, -686).
-- **His room:** 3x3x3 at (-285..-283, -54..-52, -689..-686), one block of deepslate between it and her tunnel except
-  the hole; his ladder up in its north-west corner to his cottage. Torch-lit. Nothing in it but him and the note block.
-- **The cottages:** hers (birch and cobble) by the shaft top; his (spruce) about 8 blocks north-east of hers, his
-  window facing the shaft top (S10). Both new.
-- **Earshot:** every spot in her tunnel is within 12 blocks of his note block (the face is 6 east of the hole), so the
-  allay hears every note (16-block rule) wherever it gathers.
+- **The old torch shaft** (canon stamp `torch_hill`, since 300): air y 44-84 at x -290, z -684, a wall torch every 4
+  blocks on its west wall, the torch on the slope at y 85. Untouched: no ladder in it. Torch's lava pocket under its
+  floor (~y 42) stays out of every shot and is never mentioned.
+- **Her ladder shaft:** x -289, z -684, open to the old shaft on its west side; a ladder on its east wall from y 84 down
+  to the tunnel. She climbs out of it beside the old torches (S09).
+- **Her tunnel:** x -290..-268, z -684..-680 (22 long, 5 wide), floor y -54 (deepslate; inside diamond's band, the lava
+  aquifer level), air to y -50. Her torches on the south wall. The face at x -268: plain deepslate (no ore shows
+  before a blast; the ore is inside); S11 shows the crater of the last blast.
+- **The lava pool:** along the north wall, z -684..-683 (2 wide), x -287..-282 (6 long), 1 deep. She walks on the south
+  side and never goes near it (L06).
+- **The hole:** 1x1 in the north wall at (-284, -50, -685): floor + 4, over the lava, out of her reach and eye-line.
+- **The note block:** in his room at (-284, -51, -686), on a dirt block at y -52 (dirt below: harp), so the hole shows
+  its top edge in its lower part with air above; the allay passes over it; items thrown at it land on its top, inside
+  his room, in his reach. Its note particle (y + 1.2 = -49.8) rises in the hole, visible from the tunnel.
+- **His room:** x -287..-281, z -692..-686 (7x7), floor y -53, air y -52..-49, torch-lit; his ladder in the north-west
+  corner up to his cottage. Nothing in it but him and the note block.
+- **The cottages:** hers (birch and cobble) by the shaft mouths; his (spruce) about 8 blocks north-east, its shuttered
+  window facing the shaft mouths (S10). Both new.
+- **Earshot:** every point in the tunnel is within 16 blocks of the note block (the face, the farthest, is 16.2 from it
+  at the far corner: the allay gathers in the middle 3 of the face's width, within 16).
+
+## The easter egg (map.json, at build)
+`sheep_block` (with the door torches) and cameo `blue_sheep` end at day 1112; only `shaft_open` (a 1x1 hole) runs on.
+Add a stamp `door_torches` (the 5 torches from the Digger's door, since 700, no until) and a cameo `sheep_hole`
+(`needs: [shaft_open, door_torches]`, since 1112). S09 looks south-south-east from north-west of the shaft so the hole
+and torch line sit small at frame left.
 
 ## The narration's claims, and what makes each true
 | claim (line) | true because | check |
 |---|---|---|
-| 31 found, she never had more than one (L01) | he gets every delivery; her one is the allay's held item, which an allay keeps | count the deliveries in the bible |
-| an allay holding a diamond looks for diamonds (L02) | vanilla: it collects items matching its held item | wiki |
-| TNT bounces diamonds everywhere (L04) | ore blown by TNT drops its item (diamond ore drops a diamond); the blast happens before the drops spawn | S04 |
-| the singing box is where finds go (L05) | vanilla: an allay delivers to a note block it heard | wiki |
-| the box sings every time I come close (L07) | he taps it every few seconds; the allay is always within 16 blocks of it | S07 |
-| they're gone when I look back (L08) | he picks them up through the hole (a player picks up items within 1 block; the drop lands on his side) | S08 jump cut |
-| she climbs out with empty hands (L09) | nothing is ever delivered to her | S09 |
-| 31 diamonds on him (S13) | full armour 24 + pickaxe 3 + sword 2 = 29; 2 more never shown (spent) | S13 |
+| 31 found, she never had more than one (L01) | every delivery goes to his note block; her one is the allay's held item, which an allay keeps | the count in the bible |
+| an allay holding a diamond looks for diamonds (L02) | vanilla: it collects items matching its held item | [wiki](https://minecraft.wiki/w/Allay#Behavior) |
+| TNT bounces diamonds everywhere (L04) | ore broken by TNT drops its item (diamond ore: a diamond) | S04 |
+| the singing box is where your finds go (L05) | vanilla: an allay that hears a note block played within 16 blocks delivers there instead of to its player, for 30 s, each note resetting it | wiki |
+| it's by the glowy orange water; she never goes near (L06) | the pool along the north wall, the hole above it; her path is the south side | S06 |
+| the box sings every time I come close (L07) | he plays it every few seconds; the allay is always within 16 blocks | S07 |
+| they're gone when I look back (L08) | the drops land on the note block's top in his room; he picks them up | S08 jump cut |
+| she climbs out with empty hands (L09); "It's EMPTY" (L11) | nothing is delivered to her; the face shows no ore before a blast | S09, S10 |
+| he asks every night (L12) | he wants to know she hasn't noticed | S10 |
+| 32 lands at his feet (S13b) | he tapped the box; the allay delivers | S13b |
 
 ## Vanilla notes for the build
-- The allay is NoAI and moved per tick (as every story mob); its deliveries are staged as item throws onto the note
-  block. Real tapping: the note block plays on the tap (note particle, `block.note_block.harp`).
-- Her pickaxe is iron (she can mine diamond ore; she uses TNT for speed).
+- The allay is NoAI and moved per tick; deliveries are staged item throws onto the note block. It waits out each blast at
+  the ladder with her (TNT would hurt it), then swoops.
+- At dusk on 1499 the allay is with her (he's at his window, not playing the box).
+- Her pickaxe is iron. S03's fuse is timed so the S04 blast lands on L04's "BOOM".
