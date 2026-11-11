@@ -7,7 +7,7 @@ module.exports = {
   name: 'creeper',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: you hear tssss 💀',
-  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'glance:-0.2', deathScreen: true, endAfter: 'death:1.8',
+  edit: { caption: 'POV: you hear tssss 💀', red: 'tssss', dropAt: 'hiss', startAt: 'glance:-0.8', deathScreen: true, endAfter: 'death:1.8',
     sfx: [['air', 'start', 'death', { gain: 0.18 }]] },   // room tone from frame 1 (pace: the first sound was the hiss at 1.5 s)
   expectDeath: true,
 
