@@ -159,6 +159,8 @@ module.exports = {
         return booms > 0 && ctx.died
       }
       if (i > 0) {   // cut to the next pile
+        // ...once the last pile's flung dirt has landed (rec_check settle, r:r24d99a: tier 3's flew 2.8 s), eyes drifting
+        for (let k = 0; k < 80 && ctx.tick - lastBoom < 60; k++) await aimStep(bot.entity.yaw + 0.03 * Math.sin(k / 7), bot.entity.pitch + 0.01 * Math.sin(k / 5), 0.3)
         ctx.mark(`cut${n}a`)
         await tp(t.cx + 0.5, floor + 1, t.zf + 2.5, 180, 15)
         await bot.waitForTicks(4)
@@ -204,6 +206,11 @@ module.exports = {
         await aimStep(goal[0], goal[1])
       }
       if (n === 4) {
+        // let the 1000 blast's debris land on screen before the cut (r:r24d99a, lib/settle.js), the eyes still drifting
+        const SETTLE = require('../lib/settle')
+        for (let k = 0; k < 80 && (ctx.tick - lastBoom < 45 || SETTLE.liveBusy(Object.values(bot.entities), ctx.tick, lastBoom)); k++) {   // (flung dirt items fly ~1.4 s past the blast's 1 s)
+          await aimStep(goal[0] + 0.1 * Math.sin(k / 8), goal[1] + 0.04 * Math.sin(k / 6))
+        }
         // the big crater: cut to its rim (find where the ground stops along the line in)
         ctx.mark('rim4a')
         // the near edge along the line in: scan inward from the vantage point to the first air

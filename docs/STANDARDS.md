@@ -345,13 +345,16 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **Format sessions stop at reviewed READY; the HelloBuh lead publishes** their Shorts and queues them. Check: owner. r:ra58c4c
 - **A build never stalls on screen**: while a build is unfinished, new blocks appear every output second; no hold
   between stages or builds without a captioned beat. Check: pace (build stall: no placement for over 1 s of output
-  time mid-build), review. r:r478786
+  time mid-build, from a build's X_start mark to its last block), review. r:r478786
 - **No fart-like sounds**: the payoff hit is a clean impact, splash or vanilla sound; a sound the owner calls out is
-  banned everywhere (lib/hb/banned_sfx.json). Check: lint (banned sound), review. r:r4df33c
-- **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt. Check: lint (timer resets),
+  banned everywhere (lib/hb/banned_sfx.json). Check: lint (banned sound: `./hb check`, lib/hb/stunt_lint.js, every sound
+  audio.py plays from the recording plus edit.sfx), review. r:r4df33c
+- **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
+  (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
 - **A time-lapse holds one steady camera** (or one smooth move) across its shots: no jumps in angle, distance or
-  height between consecutive shots of the same build. Check: cuts (time-lapse camera jump), review. r:r200cfe
+  height between consecutive shots of the same build. Check: rec_check cuts (time-lapse camera jump: <= 6 deg, 3 blocks,
+  1.5 up/down across each jump cut; scripts/lapse_cuts.py, in `./hb check` and `./hb record`), review. r:r200cfe
 - **Followable camera**: no whip pans; view turns eased and speed-capped, settling long enough to read. Check:
   motion lint / lint (turn speed), review. r:r38374d
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.

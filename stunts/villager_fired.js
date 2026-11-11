@@ -41,11 +41,11 @@ module.exports = {
       ['ring_boom', 'fired from 13 jobs at once', 1.5, 0],   // on the blast
       ['gone', 'permanently 💀', 1.5, 0]
     ],
-    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch and push-in on his
-    // death puff, a song dip + impact on it, a pop on the opening (pace)
-    speed: [['fuse_a', 'fuse_b', 'cut']],
-    flash: [['ring_boom', 0, 0.5], ['gone', 0, 0.4]], punch: [['ring_boom', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'ring_boom', 0.3], ['impact', 'ring_boom'], ['pop', 'gone']]
+    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch, song dip + impact on
+    // the hit that kills him (mob_death: pace's payoff), a pop on his death puff, a song dip + impact on it, a pop on the opening (pace)
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],   // (pace: 3 s of the cycle before FASTER)
+    flash: [['mob_death', 0, 0.5], ['gone', 0, 0.4]], punch: [['mob_death', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
+    sfx: [['pop', 'beat'], ['dip', 'mob_death', 0.4], ['impact', 'mob_death', { gain: 1.3 }], ['pop', 'gone']]
   },
 
   async setup (ctx) {
@@ -125,8 +125,9 @@ module.exports = {
     const place = async (i, lookMs, spot) => {
       const [bx, bz] = spot || this.spots[i]
       ctx.select(slotOf(i))
-      // aimed by construction (lib/act.js, r:rffba12): the crosshair on the spot as the job site goes down
-      await A.place(new Vec3(bx, floor + 1, bz), { against: new Vec3(bx, floor, bz), sound: STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place' })
+      // aimed by construction (lib/act.js, r:rffba12): the crosshair on the spot as the job site goes down (reach 10: the
+      // setup raises block_interaction_range to 9, the far spots are ~9 blocks from the eye)
+      await A.place(new Vec3(bx, floor + 1, bz), { reach: 10, against: new Vec3(bx, floor, bz), sound: STONEY.test(JOBS[i][0]) ? 'block.stone.place' : 'block.wood.place' })
       await bot.waitForTicks(1)
       setJob(JOBS[i][1])
       ctx.sound(`entity.villager.work_${JOBS[i][1]}`, 1, 1)
@@ -135,7 +136,7 @@ module.exports = {
     const breakAt = async ([bx, bz], name) => {
       ctx.select(8); await bot.waitForTicks(2)
       const b = bot.blockAt(new Vec3(bx, floor + 1, bz))
-      if (b && b.name === name) { try { await A.dig(b) } catch (e) { ctx.log('dig', e.message) } }
+      if (b && b.name === name) { try { await A.dig(b, { reach: 10 }) } catch (e) { ctx.log('dig', e.message) } }
       setJob('none'); ctx.sound('entity.villager.no', 1, 1)
     }
     // a hold that still moves: a slow drift of the look, never a frozen frame
@@ -201,7 +202,7 @@ module.exports = {
     await bot.waitForTicks(2)
     ctx.select(5); await bot.waitForTicks(6)
     const L = [x, floor, vz + 4]
-    await A.use(new Vec3(L[0], L[1], L[2]), { sound: 'item.flintandsteel.use' }); ctx.sound('entity.tnt.primed', 1)
+    await A.use(new Vec3(L[0], L[1], L[2]), { reach: 10, sound: 'item.flintandsteel.use' }); ctx.sound('entity.tnt.primed', 1)
     ctx.mark('lit')
     const litAt = ctx.tick
     // back off facing it, the villager in view
