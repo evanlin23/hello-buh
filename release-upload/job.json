@@ -1,0 +1,20 @@
+{
+  "repo": "evanlin23/hello-buh",
+  "packages": {
+    "cave_reveal": {
+      "tag": "pkg-cave_reveal",
+      "assets": [
+        {
+          "asset": "cave_reveal.short.e2efe3c346be8611.mp4",
+          "sha256": "e2efe3c346be8611c571969ac800cdb30279c7355e3109ed7163e29474dac6cc",
+          "path": "release-upload/cave_reveal.short.e2efe3c346be8611.mp4"
+        },
+        {
+          "asset": "cave_reveal.short_nosong.eda13e476f8346ba.mp4",
+          "sha256": "eda13e476f8346ba9bbe78bbf65d911e3f7f99f9708f02b5503868614508fdc5",
+          "path": "release-upload/cave_reveal.short_nosong.eda13e476f8346ba.mp4"
+        }
+      ]
+    }
+  }
+}
