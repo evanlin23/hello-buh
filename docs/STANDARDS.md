@@ -357,7 +357,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   1.5 up/down across each jump cut; scripts/lapse_cuts.py, in `./hb check` and `./hb record`), review. r:r200cfe
 - **Followable camera**: no whip pans; view turns eased and speed-capped, settling long enough to read. Check:
   the owner check 'whip' in ./hb check (lib/hb/owner.js: BLOCK a turn over 240 deg/s held > 3 ticks, WARN under
-  0.3 s of rest between big turns; POV and known camera shots), review. r:r38374d
+  0.3 s of rest between big turns; POV and known camera shots; an edit speed 'cut' inside one shot whose edges turn
+  over 30 deg/s blocks: its two pans read as one snap, so put both edges on rests), review. r:r38374d
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
