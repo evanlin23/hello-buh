@@ -35,7 +35,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    cut within ~1 s of the reveal; nothing that doesn't move the question (length itself is not a target: ~50 s at
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
-   cold reader, review. r:ra807e9 r:r8de735
+   cold reader, review. r:ra807e9 r:r8de735 A character who appears only to leave says why (Dog on the Hill: "I just wanted to SEE you again"). r:reeb6fd
 0a. **Mystery through naivety** (owner: "We need to have that sense of mystery. And naivety"): the kid narrator
    trusts what they see and explains every clue the wrong, innocent way, in their own words; the viewer sees past it.
    The kid never hints, foreshadows, sounds afraid before the reveal or explains the twist. Every clue in the clue map
@@ -117,6 +117,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
    (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
    blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
+7a. **Every character is tracked** (owner: "we need to keep track of our characters"): every speaking or recurring
+   character is a row in docs/world/canon.md "Recurring characters" (who, look/skin, cast id + voice, stories) before
+   their lines are voiced; a new voice is auditioned against Pip and picked by the owner; one voice is never shared by
+   two characters a viewer could confuse (canon conflict 11: one voice per grandpa). Check: owner, story-continuity
+   (canon). r:rd9437c
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
