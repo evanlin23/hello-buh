@@ -47,7 +47,7 @@ module.exports = {
     const { bot } = ctx
     const { c, A, mob, vil } = setKit(ctx, { X, Z, F })
     await ctx.defaultRules()
-    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing true', 'fire_spread_radius_around_player 0']) await c(`/gamerule ${g}`)
+    for (const g of ['log_admin_commands false', 'random_tick_speed 0', 'mob_griefing true', 'fire_spread_radius_around_player 0', 'block_drops false']) await c(`/gamerule ${g}`)
     await c('/difficulty normal')
     await c(`/setworldspawn ${X} ${F + 1} ${Z + 8}`)
     const W = await world.build(ctx, { story: 'nitwit' })
@@ -212,9 +212,10 @@ module.exports = {
         await cutP(-18.5, -8.0, P(-30, gy(-30, -10) + 0.9, -10.5), () => { Object.assign(creeper, { x: -34.5, y: gy(-34.5, -10.5) }); away('nWheat', nWheat) })
       }
       if (cut5 && !boomed) walk(creeper, 0.11, -0.01)
-      if (!boomed && k >= at(3)) {
+      if (!boomed && k >= at(3) - 2) {
         boomed = true
-        boom(creeper.x, creeper.y, creeper.z); K.actors.delete('creeper'); say('/kill @e[tag=creeper]')   // gone in the blast (no teleport)
+        // the creeper blows itself up (lit, no fuse): vanilla discards it in its own blast, no death animation
+        K.actors.delete('creeper'); say('/data merge entity @e[tag=creeper,limit=1] {ignited:1b,Fuse:0s,ExplosionRadius:3b}')
         ctx.mark('flash')
       }
       look(k)
@@ -341,7 +342,7 @@ module.exports = {
     let said = false
     await line('L16', async (k, at, n) => {
       if (!said && k >= n - 14) { said = true; hmm(1.2); ctx.mark('hmm'); K.setMeter(4097) }
-      nS.pitch = said ? 18 : 0
+      nS.pitch = said ? 18 : 6 * Math.sin(ctx.tick / 6); nS.yaw = 22 * Math.sin(ctx.tick / 9)   // he looks me over
       look(k)
     })
 
@@ -350,6 +351,7 @@ module.exports = {
     await cutP(-0.7, 10.6, P(-0.7, gy(-0.7, 22) + 1.2, 22), () => { nS.yaw = -90; for (const [i, v] of crowd.entries()) Object.assign(v, { z: 22 + i, y: gy(v.x, 22 + i) }) })
     await line('L17', async (k, at) => {
       for (const v of crowd) if (v.z < 30) walk(v, 0, 0.03)
+      nS.yaw = -90 + 20 * Math.sin(ctx.tick / 8)
       if (k >= at(2) - 2) { from17 = from17 || { ...K.base }; K.turnTo(from17, K.face(P(0.5, gy(0.5, 9.5), 9.5), 'villager'), (k - at(2) + 2) / 9) }
       look(k)
     })
@@ -357,6 +359,8 @@ module.exports = {
     // L18: he said my name; then the date of the end (the sky darkens as he talks)
     await line('L18', async (k, at, n) => {
       if (k % 6 === 0) hmm(0.35)
+      nS.yaw = 25 * Math.sin(ctx.tick / 7); nS.pitch = k % 12 < 4 ? 15 : 0   // he nods on each hmm
+      for (const v of crowd) if (v.z < 30) walk(v, 0, 0.03)
       K.setTime(DAY + (12800 - DAY) * K.ease(k / n))
       if (k === at(3)) bolt(-4, gy(-4, 30) + 9, 30)
       look(k)
@@ -366,6 +370,7 @@ module.exports = {
     await line('L19', async (k, at) => {
       if (k === at(1)) { ctx.mark('today_word'); bolt(2, gy(2, 22) + 8, 22); bolt(-5, gy(-5, 28) + 8, 28); ctx.mark('flash') }
       if (k === at(1) + 4) bolt(6, gy(6, 32) + 8, 32)
+      nS.yaw = 30 * Math.sin(ctx.tick / 5); nS.pitch = 10
       look(k)
     })
     ctx.mark('story_end')
