@@ -34,7 +34,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', song: 'songs/ncs/royalty_funk.mp3', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'boom:0.98', speed: [['woodcut_a', 'woodcut_b', 'cut'],
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'boom:0.98', speed: [['woodcut_a', 'woodcut_b', 'cut'],
       // one block boundary each (the recorded dig_end times): the beats get shorter tier by tier on screen. Cutting
       // stone 4 blocks ran it 2.8 s against iron's 3.65 and diamond's 3.2: stone looked faster than both
       ['stonecut_a', 'stonecut_a:1.05', 'cut'], ['stonecut_a:5.70', 'stonecut_a:6.05', 'cut'], ['stonecut_a:10.15', 'stonecut_a:10.45', 'cut'],

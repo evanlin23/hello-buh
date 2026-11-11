@@ -23,7 +23,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'I gave the villager every job 💀',
   edit: {
-    caption: 'I gave the villager every job 💀', red: 'every', song: 'songs/payphone.mp3', dropAt: 'all_jobs',
+    caption: 'I gave the villager every job 💀', red: 'every', dropAt: 'all_jobs',
     startAt: 'beat:-0.05', endAfter: 'nitwit:1.0',
     subs: [
       ['hire', 'job 1: librarian', 1.6, 0], ['fire', 'fired', 1.2, 0],

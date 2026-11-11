@@ -132,7 +132,7 @@ module.exports = makeStunt({
   red: 'hour',
   recordRadius: 200,
   endAfter: 'big_done:0.5',
-  bigCuts: [6, 1.2, 67.5], payoffFlash: true,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
+  bigCuts: [6, 1.2, 67.5], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'red_sand', under: 'terracotta', biome: 'minecraft:badlands' },
   hotbar: [['white_concrete', 64], ['red_concrete', 64], ['blue_concrete', 64], ['dirt', 64], 'diamond_shovel'],
   small,
