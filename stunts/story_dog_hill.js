@@ -49,14 +49,14 @@ module.exports = {
     // L06: the one empty patch, flowers all round it (audit B6)
     patch: { subject: [[3.5, 1.0, 0.5]], path: [[0, 0.2, 3.2, 4.4], [4, 0.5, 3.0, 4.0]], look: [4.0, 1.4, -1.6], fov: 52 },   // high 3/4 down on the bare block in its flower ring, the hut behind it (a flat top-down failed the owner gate)
     // L07: the hut, wide, the dog small in the foreground
-    hut: { subject: [[5, 4.5, -6]], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
+    hut: { subject: [[5, 5.4, -6]], path: [[0, -3.5, 4.2, 6.5], [4, -2.8, 3.8, 6]], look: [5, 1.8, -5], fov: 58 },
     // L08: Pip begging in front of him (side on)
     beg: { subject: ['actor:pip'], path: [[0, 1.0, 2.0, 4.8], [4, 0.9, 1.9, 4.2]], look: [1.1, 1.7, 0.5], fov: 50 },
     // L09-L10: Grandpa on the path below the south rim, shot from the south-east off the Pip-Grandpa line (audit B3)
     gramps: { subject: ['actor:gramps'], path: [[0, -2.6, -0.2, 10.0], [4, -2.8, -0.25, 10.2]], look: [-5, -0.4, 11.8], fov: 50 },   // his face, 3/4 from his right (he looks north up at Pip)
     rightback: { subject: ['actor:gramps'], path: [[0, -1.4, -0.3, 9.6], [4, -1.6, -0.3, 9.9]], look: [-5, -0.4, 11.5], fov: 48 },
     // L11: dusk, the two of them from the front (the sunset behind them); then the same at night, the dog in the crop (F6)
-    dusk: { subject: ['actor:pip', 'actor:dog'], path: [[0, 4.2, 1.8, 2.1], [3, 3.8, 1.7, 1.9]], look: [0.0, 1.7, 1.0], fov: 50 },
+    dusk: { subject: ['actor:pip', 'actor:dog'], path: [[0, 5.6, 3.2, 2.6], [3, 5.2, 3.1, 2.4]], look: [0.0, 1.7, 1.0], fov: 50 },
     night: { subject: ['actor:dog'], path: [[0, 2.8, 1.6, 3.0], [3, 2.5, 1.55, 2.8]], look: [0.3, 1.6, 0.8], fov: 46 },
     // L13: from the north: Buh on the patch and the dog, centred; Pip behind the dog (audit F5)
     reveal: { subject: ['self'], path: [[0, 0.4, 2.8, -6.8], [4, 0.5, 2.7, -6.4]], look: [2.0, 1.8, 0.5], fov: 46 },
@@ -70,7 +70,7 @@ module.exports = {
   // the channel's Short layout (edit.py --story: black bands, the title on top, the 1080x1011 game view cropped from a
   // 16:9 master); the bed is our own score (scripts/story_short.py --score-only, as .ogg), so publish adds no NCS track
   wideMaster: true,
-  edit: { story: 'stories/dog_hill', startAt: 'start:0', endAfter: 'payoff:1.0', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?', punchStress: true },
+  edit: { story: 'stories/dog_hill', startAt: 'shot:0', endAfter: 'payoff:1.0', song: 'stories/dog_hill/score.ogg', ownScore: true, caption: 'why won\'t this dog stand up?', punchStress: true },
 
   async setup (ctx) {
     const { bot } = ctx
