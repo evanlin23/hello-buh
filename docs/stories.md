@@ -292,6 +292,12 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, on the skin stills: "i want it to be regular arms, the slim dont look good".** The player 56e
+  renders with regular (wide, classic) arms; the slim-painted arm art is widened to the wide layout (a duplicated column
+  per arm face) so no black stripes show. Supersedes the slim-arm auto-detect for 56e.
+- **Owner, 2026-11-11: "maybe we should use my real minecraft username: 56e".** HelloBuh stunts play as `56e` (the
+  harness's default bot name; it shows in death messages, chat and command feedback). Stories keep their character
+  names (botName 'Buh', 'Milo'). Already-uploaded Shorts are unchanged; Shorts re-recorded from now on carry it.
 - **Owner, 2026-11-11, on the time-lapse Shorts (lapse_statue, lapse_rocket): "for the time lapse stuff, like we should
   have more angles when we're showing the last thing, and then also... the second one, like I think our smoother camera
   movement is like too slow. I think it's okay to have like a really fast movement here because it's like, what, a
@@ -525,6 +531,17 @@ STANDARDS.md in the same commit.
   claude/audition-mom-grandma): "mom D / grandma J".** Mom is **Pulcherrima** (was Sulafat, too close to Pip);
   Grandma is **Autonoe** (was Vindemiatrix, read as a man). Each is directed with one short bracketed clause and
   voiced on the story's character model; Light Sleeper's two Mom lines and Gold's Grandma line are re-voiced.
+- **Owner, 2026-11-11, after watching the held cuts (Light Sleeper 52 s, Gold 50 s, Dog on the Hill 50 s): "i think the
+  current length is fine, we shouldnt harp too much on length".** About 50 s at Pip's natural pace is fine. Length is
+  not a reason to cut lines or re-voice; a line goes only if it doesn't move the question. pace keeps only its floor
+  BLOCK; anything over 45 s is a note, never a blocker or a fix request.
+- **Owner, 2026-11-11, on Good Boy's voiced preview: "The opening scene is not very exciting? Also not centered."**
+  Its first 4 s were Buh walking a dirt road with the dog (the narrator, the story's subject) small at the right edge.
+  The opening shot puts the story's subject (the shot's `subject`, else line 1's) in frame from frame 1, in the middle
+  third of the frame and big enough to read at phone size, with something story-relevant already moving (the subject,
+  the cast, an action or a camera push) in the first 0.5 s; never a static or empty establishing frame.
+- **Owner, 2026-11-11, asked whether the narrator heard as a girl by the viewer panel is OK: "narrator is fine".** Pip
+  stays as is; the viewer panel's girl/boy read of the narrator is not a finding.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

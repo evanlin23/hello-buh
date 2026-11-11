@@ -1,0 +1,10 @@
+{
+ "names": [
+  "56e"
+ ],
+ "model": {
+  "56e": "wide"
+ },
+ "why": "the owner's own Minecraft accounts (owner 2026-11-11: \"use my real minecraft username: 56e\"); only these skins are ever fetched or drawn as real skins (scripts/fetch_skin.py, lib/skins.js)",
+ "model_why": "the arm model per skin, over the profile and the art: 56e's art is painted slim but the owner wants regular arms (owner 2026-11-11: \"i want it to be regular arms, the slim dont look good\"); the renderer converts the slim art to the wide layout (renderer/skin_layout.js slimToWide). A name with no entry: auto (the profile's slim flag, else the art's layout)"
+}

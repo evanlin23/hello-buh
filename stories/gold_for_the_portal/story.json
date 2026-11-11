@@ -4,6 +4,18 @@
  "version": 2,
  "revision": "vNext r2 adopted (2026-11-10, owner approved the rewrites): one narrator for every line (Grandma's quote narrated), no the grandson, the gold-protects plant, the new S14 with no line; continuous beat takes.",
  "caption": "why does grandma feed the nether portal 😶",
+ "upload": {
+  "title": "my grandma has thrown 9,000 gold into a portal 🪙 #minecraft #shorts",
+  "pinned": "What would YOU send through the portal to Grandpa?",
+  "tags": [
+   "minecraft village",
+   "minecraft grandma",
+   "minecraft nether portal",
+   "minecraft gold"
+  ]
+ },
+ "upload_note": "docs/brand.md \"Buh Stories channel\" (Titles, Pinned comment, Description): the YouTube upload text is built from `upload` (lib/buhstories_upload.js; ./hb paste gold_for_the_portal prints it). pinned = the question, without the 👇",
+ "family": "grandparent_secret",
  "logline": "Every night Grandma throws one gold ingot into the Nether portal in the cellar and every morning a gift comes back, so her grandson is sure Grandpa is alive over there, until he throws in a whole stack to buy Grandpa's way home and a piglin steps out wearing Grandpa's helmet.",
  "question": "why tf does grandma throw gold into a nether portal every night?",
  "premise": "Grandpa went into the Nether 25 years ago wearing Grandma's gold helmet with the blue stripe ('gold keeps you safe in the Nether') and never came back. Every night since, Grandma throws one gold ingot into the portal in the cellar (9,000 of them), and every morning something comes back out of it: obsidian, string, ender pearls, fire resistance potions. Grandma says he's still trading. Her grandson keeps the gifts in a barrel and knows Grandpa is alive.",

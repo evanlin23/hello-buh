@@ -15,6 +15,16 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 1. **Line 1 is the title and the hook**: one strange, concrete image or threat to me, with something countable, said
    flatly in first person over the picture it describes, in the first second ("why tf is this sheep staring at this
    block?"). Then quick escalating examples, the twist, the loop. Check: review, pace (hook). r:rc07fa1 r:rb1b445 r:raf72e0
+1b. **The opening shot shows the subject, centred, big and moving** (owner on Good Boy: "The opening scene is not very
+   exciting? Also not centered."): for the first 1.5 s the shot's `subject` (stunt.shots[name].subject, its first
+   entry; else story shots[].subject, line 1's look, a key word, or the narrator seen from a camera) is in frame and
+   unhidden from frame 1, its median screen-x in the middle third (33-67%), and at least 8% of the frame height
+   (a WS or closer) within the 1.5 s (BLOCK); a speck on frame 1 that a push or swoop brings up later WARNs (frame 1 is
+   the thumbnail); nothing moving in the first 0.5 s (camera < 0.4 blocks/s, turn < 4 deg/s, push < 0.15/s, subject
+   and cast < 0.6 blocks/s, no swing / throw / placed block) WARNs. A bare [dx, dy, dz] subject is checked for centre
+   only. Calibrated 2026-11-11 on the five held stories: Good Boy v7 wolf 25% across (BLOCK), Gold's Grandma 17%
+   (BLOCK), Dog Hill's dog 5% -> 12% in its swoop (WARN), 31 Raids' Grandpa 50% / 46% tall, Light Sleeper's crane
+   point 51% (OK). Check: owner (`opening`, in check). r:r47e14b
 2. **The twist turns the whole story over**, planted at least twice where a rewatch catches it, said in one short line
    or shown by the game itself (runaway ends on the blast + "blown up by Creeper", no spoken reveal). Check: review. r:r9f677e
 3. **The ending reads from the picture** and **the last line loops into line 1** (as one sentence or as cause and
@@ -22,7 +32,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
 0. **The mystery test** (bar: light_sleeper, runaway): a question to the viewer in the first 3 s that only the ending
    answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
-   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. The Short ends the moment its
+   cut within ~1 s of the reveal; nothing that doesn't move the question (length itself is not a target: ~50 s at
+   Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
@@ -45,7 +56,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    words; fiction, never "true story"; nothing aimed at kids in the title or description; one quotable line short
    enough to type. Check: review (an ellipsis shows up in pace as an opening pause). r:rd2e17b r:rc7ba87 r:r810b66
 8. **The hero is Buh** (default Steve skin); HelloBuh is the channel. His name is only in-game text (chat, death screen, name tag); **nobody says it aloud**. r:raa4daf r:rc1ccff r:rf8d2e6 r:rdd0a3e
-9. **Length 30-45 s** (pace BLOCK < 30 s, WARN > 45 s). r:rcb4ffc
+9. **Length**: pace BLOCKs only under the floor; over 45 s is a note, never a fix request (owner: "we shouldnt harp
+   too much on length"). r:rcb4ffc r:r08fd98
 10. **The bar is a polished animated short**, serious and professional, with more invention in the plots. r:r416ae4 r:r4b4332
 11. **The story decides, the engine follows**: a shot the renderer can't draw is a feature to build
     (docs/engine_features.md); stage around it only if it's > ~2 h of work, and log it in docs/engine_requests.md. r:r507412
@@ -64,6 +76,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    natural tempo, no speed-up, no pitch shift, no pause cap; performed continuously, re-taken never trimmed; the take gate allows
    sentence breaks up to 0.95 s (cast `max_pause`; the owner's "This is fine" on a 0.62-0.91 s take, r:r867786), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
    earlier picks are `narrator_sleepover` (k4, rubberband 1.1x +1 st) and `narrator_roblox` (Orus x1.45), history only.
+   Pip stays as is even when a listener hears a girl (owner: "narrator is fine", r:r440615).
    Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c r:r754946
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
    our own (not an imitation of another channel's), telling almost everything; other characters say short lines
@@ -97,7 +110,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
    hearing (a grandma sounds like an older woman, not gravelly), and is told apart from the narrator at first hearing
    (Mom must not sound like Pip). New casts are picked by the owner from an audition of the real line. Check: review
-   (listen), speaker distance to the narrator. r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
+   (listen), voice contrast (`./hb voice`, `./hb check`: scripts/voice_contrast.py, the narrator-distance bar and the
+   blind listener backwards vs cast.json `reads_as`). r:r4b4332 r:raf72e0 r:rf8060c r:rc31bfe (cast: Mom Pulcherrima, Grandma Autonoe, r:r3dabdb)
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -360,6 +374,7 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
   (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
+- **The player is `56e`** (the owner's real username) in HelloBuh stunts; stories keep their character names. Check: owner. r:re5019b Regular (wide) arms, the slim art widened. r:ra3e80a
 - **Time-lapse Shorts: fast turns in the sped-up builds, several angles on the 1-hour build**: inside a lapse_*
   Short's sped-up build spans the player turns fast between placements (no 220/speed cap; the whip check skips those
   spans), and the finished 1-hour build is shown from several clearly different steady angles joined by hard cuts (a

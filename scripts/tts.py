@@ -32,6 +32,11 @@ Orus x1.45) speeds up the WHOLE raw take before anything is cut or gated (speed_
 voice/voice.json (dur, onset, end, caption chunks spread over the speech by length, who): the file lib/story.js and
 edit.py --story already read. Check the printed lengths and pitch: a take far longer than its text means the model
 read the direction aloud; a pitch that belongs to the other speaker means a bad cut (fix the text's punctuation, or split the request).
+
+Prompt lint (docs/voices.md "Prompt lint"): a character request on a flash-tts model (3.8/3.1, not flash-lite) must be
+"[one clause, <= 14 words]", a blank line, the lines; anything else is refused before it is sent (exit 3, the exact
+prompt and the reason printed). `--dry` prints every request a story would send with the verdict and sends nothing;
+`--lint-cast [model]` lints voices/cast.json's profiles as character brackets.
 """
 import base64
 import hashlib
@@ -992,6 +997,91 @@ def prompt(scene, lines, cs, model=MODELS[0], fixes=()):
     return " ".join(head) + "\n\n" + "\n".join(body)
 
 
+# Pre-send prompt lint (docs/voices.md "Prompt lint"). 2026-11-11: four requests were wasted on 3.8-flash-tts because the
+# model read the acting direction ALOUD: Dog on the Hill's Buh got the library `buh` prose profile in its bracket ("Buh,
+# our hero (played by the default Steve skin): a sixteen-year-old boy, ...") and Thirty-One Raids' Grandpa a bracketed
+# direction of several sentences ("Lock the door, kid. An old man in his seventies. Tired. Low and a little rough...").
+# Short one-clause brackets were never read aloud: "[A warm, gentle grandmother]", "[A friendly teenage boy, casual]",
+# "[An old, tired man, low and slow]". So a CHARACTER request (any speaker but the story's narrator) on a flash-tts
+# model (3.8 or 3.1; not flash-lite) is refused before it is sent unless it is exactly "[one clause]", a blank line and
+# the lines. The narrator keeps its recipe brackets (Pip's on flash-lite, Orus's long one on 3.8: voices/recipes/), and
+# 3.1's structured layout (# AUDIO PROFILE ...) is the tested one (headings and notes never read aloud, 6 of 6).
+LINT_MODELS = ("gemini-3.8-flash-tts", "gemini-3.1-flash-tts")   # prefixes; gemini-3.8-flash-lite-tts is not one
+LINT_WORDS = 14     # the good brackets are 4-7 words, the library's mom/grandma 9-11; the two read aloud 30+ and 25+
+NARRATOR = [None]   # the story's narrator id (set by run_story): its requests are exempt (recipe brackets)
+EX_LINT = 3         # tts.py's exit code when the lint refuses a request (none was sent)
+
+
+def is_narrator(w, cs):
+    return w == NARRATOR[0] or (cs.get(w) or {}).get("role") == "narrator"
+
+
+def lint(text, lines, cs, model):
+    """The pre-send lint of one request's exact prompt -> (verdict, [reasons]). verdict: "ok", "REFUSED", or "exempt
+    (...)" (a model or speaker the rule doesn't cover). lines: [(who, id, text, note)] as prompt() takes them."""
+    who = list(dict.fromkeys(w for w, _, _, _ in lines))
+    if not model.startswith(LINT_MODELS):
+        return f"exempt ({model}: not a flash-tts model; flash-lite keeps Pip's recipe bracket)", []
+    if all(is_narrator(w, cs) for w in who):
+        return "exempt (narrator: its recipe bracket, voices/recipes/)", []
+    if text.startswith("# AUDIO PROFILE"):
+        if model.startswith("gemini-3.1"):
+            return "ok (3.1 structured layout: headings and notes are not read aloud, docs/voices.md \"Realism\")", []
+        return "REFUSED", [f"{model} takes no direction block: one speaker per request, \"[one clause]\", a blank line, the lines"]
+    why = []
+    m = re.fullmatch(r"\[([^\[\]\n]*)\]\n\n(.*)", text, re.S)
+    if not m:
+        return "REFUSED", ["text other than \"[direction]\", a blank line and the lines (prose outside a bracket is read aloud)"]
+    d, rest = m.group(1).strip(), m.group(2)
+    if rest != "\n\n".join(t for _, _, t, _ in lines):
+        why.append("text other than the lines after the bracket")
+    if any(re.search(r"[\[\]]", t) for _, _, t, _ in lines):
+        why.append("a [bracket] inside a line (3.8 read \"[barely a whisper]\" aloud)")
+    if not d:
+        why.append("an empty bracket")
+    sentences = [s for s in re.split(r"[.!?]+(?:\s+|$)", d) if s.strip()]
+    if len(sentences) > 1:
+        why.append(f"{len(sentences)} sentences in the bracket (one clause only)")
+    if re.search(r"[;:()—]| - ", d):
+        why.append("more than one clause in the bracket (a ; : ( ) or dash: prose profile text, not a one-clause direction)")
+    n = len(d.split())
+    if n > LINT_WORDS:
+        why.append(f"{n} words in the bracket (at most {LINT_WORDS})")
+    return ("REFUSED" if why else "ok"), why
+
+
+class LintRefused(SystemExit):
+    def __init__(self, msg):
+        super().__init__(EX_LINT)
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
+
+
+def lint_request(scene, lines, cs, models, fixes=()):
+    """[(model, prompt, verdict, reasons)] for every model this request may be sent to."""
+    out = []
+    for m in models:
+        p = prompt(scene, lines, cs, m, fixes)
+        v, why = lint(p, lines, cs, m)
+        out.append((m, p, v, why))
+    return out
+
+
+def refusal(ids, rows):
+    """The message for a refused request: which lines, the exact prompt, the reasons, the fix."""
+    s = []
+    for m, p, v, why in rows:
+        if v != "REFUSED":
+            continue
+        s.append(f"TTS PROMPT LINT: REFUSED {','.join(ids)} on {m} (no request sent): " + "; ".join(why))
+        s.append("  the exact prompt:\n" + "\n".join("    | " + l for l in p.split("\n")))
+    s.append("NEXT: give the character a one-clause bracket of at most %d words in story.json (the request's `direction`, "
+             "e.g. \"[An old, tired man, low and slow]\"), then ./hb voice <story> --dry (docs/voices.md \"Prompt lint\")" % LINT_WORDS)
+    return "\n".join(s)
+
+
 TAKE_MODEL = {}   # line id -> the model of its current take (voice.json lines[].model)
 
 
@@ -1012,6 +1102,12 @@ def take(scene, lines, cs, salt=""):
     return cut(x, [t for _, _, t, _ in lines])
 
 
+def cache_key(scene, lines, cs, m, fixes=(), salt=""):
+    """The raw take's cache file: the exact prompt, the voices, the model and the salt."""
+    voices = {cs[w]["name"]: cs[w]["voice"] for w in dict.fromkeys(w for w, _, _, _ in lines)}
+    return CACHE / f"{hashlib.sha1(json.dumps([prompt(scene, lines, cs, m, fixes), voices, m] + ([salt] if salt else [])).encode()).hexdigest()[:16]}.wav"
+
+
 def raw_take(scene, lines, cs, salt="", fixes=()):
     """The raw take of one request's lines, from the cache or one Gemini request -> (float32 at SR, model, cache path).
     The cache key is the exact prompt (the text, the direction, any `fixes`), the voices, the model and the salt."""
@@ -1022,13 +1118,16 @@ def raw_take(scene, lines, cs, salt="", fixes=()):
     models = allowed(who, cs)
     # the cache key holds the model: a fallback model's take used to be cached under the first model's prompt and
     # came back later as if the first model had made it (cross-model drift nobody could see)
-    key = lambda m: CACHE / f"{hashlib.sha1(json.dumps([prompt(scene, lines, cs, m, fixes), voices, m] + ([salt] if salt else [])).encode()).hexdigest()[:16]}.wav"
+    key = lambda m: cache_key(scene, lines, cs, m, fixes, salt)
     hit = next((m for m in models if key(m).exists()), None)
     if hit:
         STATS["cached"] += 1
         model, raw = hit, key(hit)
         x = np.frombuffer(pcm(["-i", str(raw), "-f", "f32le", "-"]), np.float32)
     else:
+        rows = lint_request(scene, lines, cs, models, fixes)   # refused before anything is sent (docs/voices.md "Prompt lint")
+        if any(v == "REFUSED" for _, _, v, _ in rows):
+            raise LintRefused(refusal([l for _, l, _, _ in lines], rows))
         print(f"request: {', '.join(f'{k}={v}' for k, v in voices.items())}, {len(lines)} lines, model {' or '.join(models)}")
         x, model = request(lambda m: prompt(scene, lines, cs, m, fixes), voices, models)
         raw = key(model)
@@ -1281,6 +1380,9 @@ def voice_beat(beat, cs, out, tries=3, opening=False, limits=None, hear_fn=None,
         if res["ok"]:
             break
         new = [take_gate.FIX[k] for k in res["fix"] if take_gate.FIX[k] not in fixes]
+        if new and any(v == "REFUSED" for _, _, v, _ in lint_request(scene, lines, cs, allowed([w], cs), fixes + new)):
+            print("  (the gate's fix would break a character's one-clause bracket (prompt lint): a fresh take, same direction)")
+            new = []
         if new:
             fixes = fixes + new
         else:   # the same faults again: the same direction, a fresh request
@@ -1403,7 +1505,80 @@ def request_models(story, cs, narrator):
     return cs
 
 
-def run_story(d, only=None, check=True, retakes=2, relock=None):
+def line_groups(story, cs, narrator, spoken, only=None):
+    """The requests of a story voiced line by line (no "voice_takes": "beat"): [(scene, [(who, id, text, note)], request
+    dict | ("solo", who) | None)] in the order they are sent."""
+    reqs = story.get("requests") or []
+    groups, cur, cur_req = [], [], None
+    for ln in story["lines"]:
+        if only and ln["id"] not in only:
+            continue
+        w = ln.get("who", narrator)
+        r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
+        item = (w, ln["id"], say_for(ln, cs.get(w, {}), spoken), ln.get("direction", ""))
+        solo = (LOCK.get(w) or cs[w].get("model") or "").startswith(BRACKET)   # Pip's model: single-speaker requests only
+        if solo or (w != narrator and len(item[2].split()) <= SHORT_WORDS):   # narrator-first: a short character line goes alone
+            g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < MAX_LINES), None)
+            g[1].append(item) if g else groups.append(((r or {}).get("direction", story.get("direction", "")), [item], ("solo", w)))
+            continue
+        if reqs:   # each line in the first request that lists its speaker
+            if r is None:
+                raise SystemExit(f"{ln['id']}: no request lists speaker {w}")
+            g = next((g for g in groups if g[2] is r and len(g[1]) < MAX_LINES), None)
+            g[1].append(item) if g else groups.append((r.get("direction", ""), [item], r))
+            continue
+        if cur and (len({x[0] for x in cur} | {w}) > 2 or len(cur) == MAX_LINES):
+            groups.append((story.get("direction", ""), cur, None)); cur = []
+        cur.append(item)
+    if cur:
+        groups.append((story.get("direction", ""), cur, None))
+    return groups
+
+
+def plan(story, cs, narrator, spoken, only=None):
+    """Every request a run would send for its first takes (re-takes add the gate's fixes, linted again before they are
+    sent) -> [(line ids, lint_request rows, cached: True when every model's take is in work/tts)]."""
+    if story.get("voice_takes") == "beat":
+        groups = [(b["scene"], b["lines"]) for b in beat_groups(story, cs, narrator, spoken)
+                  if not only or any(lid in only for _, lid, _, _ in b["lines"])]
+    else:
+        groups = [(sc, l) for sc, l, _ in line_groups(story, cs, narrator, spoken, only)]
+    out = []
+    for scene, lines in groups:
+        models = allowed(list(dict.fromkeys(w for w, _, _, _ in lines)), cs)
+        cached = any(cache_key(scene, lines, cs, m).exists() for m in models)
+        out.append(([l for _, l, _, _ in lines], lint_request(scene, lines, cs, models), cached))
+    return out
+
+
+def show_plan(reqs, cs):
+    """--dry: print every request with its exact prompt and the lint verdict; nothing is sent. -> exit code."""
+    n_bad = 0
+    for ids, rows, cached in reqs:
+        for m, p, v, why in rows:
+            n_bad += v == "REFUSED"
+            print(f"=== {','.join(ids)} on {m}{' (cached: no request)' if cached else ''}: {v}" + (": " + "; ".join(why) if why else ""))
+            print("\n".join("    | " + l for l in p.split("\n")))
+    print(f"{len(reqs)} request(s), {sum(1 for r in reqs if r[2])} cached; {n_bad} refused by the prompt lint; none sent (--dry)")
+    return EX_LINT if n_bad else 0
+
+
+def lint_cast(model=LINT_MODELS[0]):
+    """--lint-cast [model]: each voices/cast.json profile as the bracket of a one-line CHARACTER request on `model`
+    (default 3.8-flash-tts: what a story that locks a library character there, with no bracketed request `direction`,
+    would send). Narrator entries are exempt in a story where they narrate; listed here so a casting can see it."""
+    n_bad = 0
+    for cid, c in library().items():
+        cs = {cid: {**c, "role": "character"}}
+        lines = [(cid, "L01", "Hello there.", "")]
+        v, why = lint(prompt("", lines, cs, model), lines, cs, model)
+        n_bad += v == "REFUSED"
+        print(f"{cid:20s} {v}{': ' + '; '.join(why) if why else ''}\n    [{c['profile']}]")
+    print(f"{n_bad} library profile(s) refused as a character bracket on {model}; none sent")
+    return EX_LINT if n_bad else 0
+
+
+def run_story(d, only=None, check=True, retakes=2, relock=None, dry=False):
     sys.path.insert(0, str(ROOT / "scripts"))
     import voice   # the caption format (" / " chunks, CAPS lowered for speech) stays voice.py's
     story = json.loads((d / "story.json").read_text())
@@ -1426,35 +1601,20 @@ def run_story(d, only=None, check=True, retakes=2, relock=None):
         LOCK[cid] = m
         if only:
             only = list(only) + [ln["id"] for ln in story["lines"] if ln.get("who", narrator) == cid]
+    NARRATOR[0] = narrator
+    # the prompt lint (docs/voices.md "Prompt lint"): every request this run would send, checked before the first is sent
+    reqs = plan(story, cs, narrator, voice.spoken, only)
+    if dry:
+        return show_plan(reqs, cs)
+    bad = [(ids, rows) for ids, rows, cached in reqs if not cached and any(r[2] == "REFUSED" for r in rows)]
+    if bad:
+        raise LintRefused("\n".join(refusal(ids, rows) for ids, rows in bad))
     if story.get("voice_takes") == "beat":   # continuous takes (STANDARDS 2b.4): one gated take per beat, used whole
         old = json.loads(vf.read_text()) if vf.exists() else {"lines": {}}
         done, beats = run_beats(d, story, cs, narrator, voice, only, retakes if check else 0)
         _write_meta(d, story, voice, old, only, done, {}, {lid: [(w,)] for lid, (w, _, _) in done.items()}, beats)
         return
-    reqs = story.get("requests") or []
-    groups, cur, cur_req = [], [], None
-    for ln in story["lines"]:
-        if only and ln["id"] not in only:
-            continue
-        w = ln.get("who", narrator)
-        r = next((r for r in reqs if w in r["speakers"]), None) if reqs else None
-        item = (w, ln["id"], say_for(ln, cs.get(w, {}), voice.spoken), ln.get("direction", ""))
-        solo = (LOCK.get(w) or cs[w].get("model") or "").startswith(BRACKET)   # Pip's model: single-speaker requests only
-        if solo or (w != narrator and len(item[2].split()) <= SHORT_WORDS):   # narrator-first: a short character line goes alone
-            g = next((g for g in groups if g[2] == ("solo", w) and len(g[1]) < MAX_LINES), None)
-            g[1].append(item) if g else groups.append(((r or {}).get("direction", story.get("direction", "")), [item], ("solo", w)))
-            continue
-        if reqs:   # each line in the first request that lists its speaker
-            if r is None:
-                raise SystemExit(f"{ln['id']}: no request lists speaker {w}")
-            g = next((g for g in groups if g[2] is r and len(g[1]) < MAX_LINES), None)
-            g[1].append(item) if g else groups.append((r.get("direction", ""), [item], r))
-            continue
-        if cur and (len({x[0] for x in cur} | {w}) > 2 or len(cur) == MAX_LINES):
-            groups.append((story.get("direction", ""), cur, None)); cur = []
-        cur.append(item)
-    if cur:
-        groups.append((story.get("direction", ""), cur, None))
+    groups = line_groups(story, cs, narrator, voice.spoken, only)
     old = json.loads(vf.read_text()) if vf.exists() else {"lines": {}}
     room = lambda r: (r if isinstance(r, dict) else {}).get("room", story.get("room", "small"))   # a solo group: the story's room
     done = voice_lines([(s, l, room(r)) for s, l, r in groups], cs, d / "voice")
@@ -1531,12 +1691,20 @@ if __name__ == "__main__":
     p = pathlib.Path(a[0])
     RERUN[0] = os.environ.get("HB_RERUN") or (f"./hb voice {a[0].rstrip('/')}" + (f" --only {','.join(only)}" if only else "")) if p.is_dir() else "python3 scripts/tts.py " + " ".join(a)
     try:
+        if a[0] == "--lint-cast":
+            sys.exit(lint_cast(a[1] if len(a) > 1 else LINT_MODELS[0]))
         if p.is_dir():
             relock = dict(kv.split("=", 1) for kv in a[a.index("--relock") + 1].split(",")) if "--relock" in a else None
-            run_story(p, only, check="--no-check" not in a, retakes=int(a[a.index("--retakes") + 1]) if "--retakes" in a else 2,
-                      relock=relock)
+            code = run_story(p, only, check="--no-check" not in a, retakes=int(a[a.index("--retakes") + 1]) if "--retakes" in a else 2,
+                             relock=relock, dry="--dry" in a)
+            if "--dry" in a:
+                sys.exit(code)
         else:
             run_list(p, pathlib.Path(a[1]))
+    except LintRefused as e:   # the prompt lint: nothing was sent for the refused request
+        print(f"{STATS['requests']} API request(s), {STATS['cached']} take(s) from the cache")
+        print(e.msg)
+        sys.exit(EX_LINT)
     except QuotaLater as e:   # a quota stop: exit 75 (EX_TEMPFAIL), so a session can schedule its own retry
         print(f"{STATS['requests']} API request(s), {STATS['cached']} take(s) from the cache")
         print(e.msg)
