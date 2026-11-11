@@ -163,13 +163,15 @@ Ravenford 2300.
 | the kid | The Bell in the Window (Saltmouth, 3800) | player, `alex` skin; Saltmouth's only player (Buh left on day 3400) | `narrator` (Leda) | cast |
 | Mom (Saltmouth) | The Bell in the Window (Saltmouth, 3800) | plains villager, no profession | `mom_saltmouth` (Kore, owner 2026-11-11 "A is fine") | cast |
 | the grandchild | The Walk (Gullwick, 4000) | player, `kai` skin | `narrator` (Leda) | cast |
-| Grandpa (Gullwick) | The Walk (Gullwick, 4000) | grey-haired old man (new skin) | Iapetus proposed, audition (not Charon: Ravenford's) | audition |
+| Grandpa (Gullwick) | The Walk (Gullwick, 4000) | grey-haired old man (new skin) | audition Iapetus vs Sadaltager (not Charon: Ravenford's); the_walk bible "Voices" | audition |
 | Grandma (the island) | The Walk (Grandma's Island, ~350 and 4000) | grey-haired old woman (new skin) | `grandma_island` (Callirrhoe, owner 2026-11-11 "calirrhoe is fine") | cast |
 | Mom (Gullwick) | The Walk (Gullwick, 4000) | player, `makena` skin, silent | none | cast |
 | the villager kid | Six Thousand Torches (Larkfield, 4500) | baby villager, plains, Larkfield | `narrator` (Leda) | cast |
 | Jonah | Six Thousand Torches (Larkfield, 4500) | player, `kai` skin | `friend` (Fenrir, Max's voice) proposed, audition | audition |
-| the kid | Red Sheep (Ravenford, 2300) | player, `alex` skin | `narrator` (Leda) | cast |
-| Dad | Red Sheep (Ravenford, 2300) | player, `sunny` skin, crossbow | Alnilam proposed, audition | audition |
+| the kid | Red Sheep (Ravenford, 2300) | player, `alex` skin, Ravenford (POV; never named, not Buh) | `narrator` (Leda) | cast |
+| Dad | Red Sheep (Ravenford, 2300) | player, `sunny` skin, Ravenford's shepherd, crossbow | Alnilam or Rasalgethi (both unused), audition against Pip on L03 | audition |
+
+Candidate voices overlap (Sadaltager: Tomas and Gullwick's Grandpa; Rasalgethi: Tomas and Dad): each pick takes it off the others' lists.
 | Grandpa (Ravenford), in the background | Red Sheep (Ravenford, 2300) | player actor, `zuri` skin, the slow walk; on his bench by his door; **never named, never called Grandpa** (conflict 11) | none | |
 
 ## The links between stories
