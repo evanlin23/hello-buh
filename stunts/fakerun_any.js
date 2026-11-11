@@ -8,7 +8,8 @@
 //      then an enderman, one hit ("ender perls x12 (1 enderman)"), then digs straight down "dug strait down (pro tip)"
 //      (an eye of ender throw was tried: vanilla's eye flies 0.7-0.9 blocks a tick and rec_check reads it as a teleport)
 //   4. the stronghold: a roofless room, every eye in, LAVA inside the ring  "end portel is lit" -> jumps in
-//   5. "the end": an end stone island in a blue sky, the dragon alive       "dragon kiled (trust)" -> NEW WORLD RECORD
+//   5. "the end": an end stone island in a blue sky, no dragon anywhere      "dragon kiled (trust)" -> NEW WORLD RECORD
+//      (a NoAI dragon was tried: the renderer drew it with one wing, read as a broken render, not a joke)
 // The clock counts to 0:09.41 over the whole run (it runs slow: on purpose, more for the comments).
 // Vanilla where it acts: the frame without corners does light (vanilla never needs the corners); the diamond ore
 // breaks at the netherite pickaxe's vanilla speed; the blaze has 1 health (staged) and dies to one sword hit; the
@@ -298,24 +299,24 @@ module.exports = {
       rest: 0,
       onCut: async () => {
         ctx.select(SLOT.sword)
-        await ctx.cmd(`/summon ender_dragon ${X + E + 0.5} ${F + ISLE + 9} ${Z - 16} {NoAI:1b,PersistenceRequired:1b,Silent:1b,Tags:["fr_dragon"],Rotation:[180f,0f]}`)
       },
       after: 10
     })
     R.label(ctx, 9)
     ctx.sound('entity.enderman.teleport', 0.8, 1)
-    // never a still frame here (rec_check: held): one slow pan across the dragon, left to right and a little back
+    // never a still frame here (rec_check: held): one slow pan, left to right
     const pan = async (a, b, ticks) => { for (let k = 1; k <= ticks; k++) { await A.view(a.plus(b.minus(a).scaled(k / ticks))); await still(1) } }
-    const D = at(E + 0.5, ISLE + 9.5, -16)
-    await drift(D.offset(-6, -1, 0), 16)
-    await pan(D.offset(-6, -1, 0), D.offset(-1, 0, 0), 30)
+    // no dragon anywhere (the label says it's dead: for the comments); the pan crosses the obsidian pillars
+    const Y = ISLE + 3.5
+    await drift(at(E - 14, Y, -16), 16)
+    await pan(at(E - 14, Y, -16), at(E - 4, Y + 1, -22), 30)
     R.label(ctx, 10)
     bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.7, 1)
-    await pan(D.offset(-1, 0, 0), D.offset(3, 0.5, 0), 30)
+    await pan(at(E - 4, Y + 1, -22), at(E + 6, Y + 1, -20), 30)
     R.finish(ctx)
     ctx.sound('ui.toast.challenge_complete', 1, 1)
     bot.swingArm('right')
-    await pan(D.offset(3, 0.5, 0), D.offset(7, 1.5, 0), 60)
+    await pan(at(E + 6, Y + 1, -20), at(E + 13, Y + 1.5, -18), 60)
     return lit && over
   }
 }
