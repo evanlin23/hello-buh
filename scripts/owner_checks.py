@@ -113,12 +113,16 @@ SETTLE_CONE = 40       # degrees off the view axis (rec_check in_view)
 DEBRIS_V = 0.1         # blocks/tick (2 b/s): an item moving faster than this is still flying (slower: sliding to rest)
 DEATH_TICKS = 20       # LivingEntity death: 20 ticks of falling over, then the poof
 SETTLE_GRACE = 0.15    # s of motion left after a cut/end that still passes (a last bounce as it lands)
+PUFF_TICKS = 44        # an explosion's RENDERED smoke, poof clouds and crumbs (renderer/particles.js) keep moving this
+                       # long after the blast: = lib/settle.js EXPLOSION_TICKS (lib/hb/test/settle.test.js checks both).
+                       # which_door ended 0.15 s after the old 20-tick window with debris still falling past "You Died!"
 
 
-def debris_tracks(rec) -> list:
+def debris_tracks(rec, puffs=False) -> list:
     """Things whose motion is a payoff: [{kind, name, id, t0, t1 (ticks), pos: {tick: (x, y, z)}}].
     falling blocks (alive = falling), items/falling blocks thrown by an explosion (while they still move), a mob's death
-    (its mark to +DEATH_TICKS)."""
+    (its mark to +DEATH_TICKS); puffs: also every explosion's rendered smoke and debris particles (+PUFF_TICKS), for the
+    end of the Short (a cut mid-chain is judged on the entities only)."""
     tl = rec.get("timeline", [])
     rows = {}
     for r in rec.get("entities") or []:
@@ -146,6 +150,11 @@ def debris_tracks(rec) -> list:
             k = e["t"] / 50
             rs = rows[e["id"]]
             out.append({"kind": "death", "name": rs[0][2], "id": e["id"], "t0": k, "t1": k + DEATH_TICKS, "pos": {r[0]: (r[3], r[4], r[5]) for r in rs}})
+    if puffs:
+        for e in tl:
+            if e["event"] == "particles" and e.get("type") == "explosion" and e.get("x") is not None:
+                k = e["t"] / 50
+                out.append({"kind": "puff", "name": "explosion", "id": None, "t0": k, "t1": k + PUFF_TICKS, "pos": {k: (e["x"], e["y"], e["z"])}})
     return out
 
 
@@ -206,7 +215,8 @@ def settle_after(tracks, k, cam_at, horizon=200, any_view=False):
 def describe(trs) -> str:
     by = {}
     for t in trs:
-        key = {"falling": "falling " + ("block" if t["name"] == "falling_block" else t["name"]), "debris": f"flying {t['name']} (explosion debris)", "death": f"{t['name']} dying"}[t["kind"]]
+        key = {"falling": "falling " + ("block" if t["name"] == "falling_block" else t["name"]), "debris": f"flying {t['name']} (explosion debris)", "death": f"{t['name']} dying",
+               "puff": "blast smoke and debris (rendered particles)"}[t["kind"]]
         by[key] = by.get(key, 0) + 1
     return ", ".join(f"{n} {k}" if n > 1 else k for k, n in by.items())
 

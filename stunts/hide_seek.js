@@ -36,7 +36,14 @@ module.exports = {
     replay: { at: 'r5_found', before: 0.05, after: 0.85, cam: '1.5,324.5,10.5,45,-35', speed: 1, label: 'MEANWHILE AT Y 320' },
     // round 1's 3 s of door-to-door searching cut (r1_go+1.3..4.3: pace saw 4.5 s with nothing new right after the hook;
     // the viewer swipes at 1.3-1.5 s, Studio 2026-11-11): the villager runs off, then the search is already at its end
-    speed: [['r1_go:1.3', 'r1_go:4.3', 'cut'], ...[1, 2, 3, 4].map(n => [`cut${n}a`, `cut${n}b`, 'cut'])],
+    // (2026-11-11, the followable camera, r:r38374d: slower, eased looks made the searches longer; the pace comes back
+    // through cuts, not whips: round 2's and round 3's door-to-door middles and most of round 5's tilt up the pillar, pace dead 3.6 / 4.4 / 3.2 s)
+    // Each cut inside a round starts and ends where the view is still (review 2026-11-11: r1 1.3..4.3 and r3 1.8..4.4
+    // joined a 180 deg/s pan one way to one the other way, a snap; ./hb check's edit-cut test, lib/hb/owner.js
+    // editCutSnaps): r1 rests at +0.2..1.0 and +3.5..3.9, r2 +2.5..2.9 and +5.05..5.55, r3 +1.25..1.5 and +3.55..3.95.
+    // Round 5's cut stays inside its one tilt up the pillar (the same way, 24 deg apart: reads as one tilt).
+    speed: [['r1_go:1.0', 'r1_go:3.85', 'cut'], ['r2_go:2.95', 'r2_go:5.5', 'cut'], ['r3_go:1.5', 'r3_go:3.9', 'cut'], ['r5_end:0.5', 'r5_end:2.4', 'cut'],
+      ...[1, 2, 3, 4].map(n => [`cut${n}a`, `cut${n}b`, 'cut'])],
     clock: R.map((n, i) => [`r${n}_go`, `r${n}_end`, [5, 4, 4, 4, 3][i], `ROUND ${n}`, 'down']),
     counter: { at: [...R.slice(0, 4).map(n => `r${n}_found`), 'r5_zoom'], total: ROUNDS },
     cards: [['r1_found', 'IN A TREE 😭', 0.8, 'yellow'], ['r2_found', 'IN THE POND 😭', 0.7, 'blue'],
@@ -44,7 +51,8 @@ module.exports = {
     punch: [...R.slice(0, 4).map(n => `r${n}_found`), 'r5_zoom'],
     subs: [['r1_end', 'where did he go', 0.9], ['r2_end', 'nothing again', 0.9], ['r3_end', 'I give up', 0.9],
       ['r4_end', 'not again', 0.9], ['r5_end', 'seriously?', 0.9]],
-    subsY: 0.62
+    subsY: 0.62,
+    sfx: [['whoosh', 'r1_go']]   // pace: sound by 0.3 s (the song comes in at the remix; the opening was silent on the render)
   },
 
   // ---------------------------------------------------------------- set
