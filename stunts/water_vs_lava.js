@@ -15,7 +15,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'can ONE water bucket delete a lava lake? 😳',
   edit: {
-    subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'end_look',
+    subsY: 0.15, caption: 'can ONE water bucket delete a lava lake? 😳', red: 'lava', dropAt: 'end_look',
     startAt: 'pour:-0.4', endAfter: 'end_look:1.05',
     // the long side-pour runs at 1.8x (about 12 s of the Short was a blue water sheet) and the walk between the stops at 2x
     speed: [...[...Array(12).keys()].map(i => [`run${i}a`, `run${i}b`, 1.8]), ['walk_a', 'walk_b', 2],
