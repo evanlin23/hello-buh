@@ -160,7 +160,8 @@ module.exports = makeStunt({
     // (r:r200cfe); the changes sit in the jump cuts' gaps (lib/time_lapse.js angleShots), the showcase's in real time.
     // [tick of the build, [camera, look-at] at its start, [camera, look-at] at its end, name], local to the mansion
     angles: [
-      [0, [[-14, 10, 30], [0, 0, 15]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],      // the pool, floors 1-3
+      [0, [[-2, 13, 27], [0, -1, 15]], [[-4, 13, 28], [0, -1, 14]], 'down on the pool'],          // the pool fills the frame
+      [126, [[-29, 6, 39], [0, 5, 2]], [[-33, 9, 40], [0, 10, 0]], 'low front three-quarter'],     // floors 1-3
       [372, [[46, 12, 10], [0, 7, 0]], [[44, 16, 2], [0, 9, 0]], 'side'],                          // floor 3, the wings
       [612, [[0, 4, 33], [0, 7, 10]], [[0, 5, 28], [0, 7, 10]], 'down the road to the door'],       // the garden, the facade
       [852, [[-50, 55, 60], [0, 10, 0]], [[-44, 57, 54], [0, 12, -2]], 'high wide'],                // roof, penthouse, rooftop pool
