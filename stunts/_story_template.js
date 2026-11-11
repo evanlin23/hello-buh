@@ -41,7 +41,7 @@ module.exports = {
   edit: { caption: CAPTION, red: 'sheep', story: 'stories/<name>', startAt: 'line:0', endAfter: 'story_end:0', punchStress: true },
   hideHand: true,          // the narrator isn't Steve: no first-person arm
   // time: 18000,          // the opening time of day (night); change it later with K.cut(..., { time }) or K.setTime
-  look: 'bright',          // owner 2026-11-11: stories are bright and punchy (r:rd13834); 'auto' follows the time of day (renderer/looks.js, docs/look.md); a shot's mood: 'tense' for one shot
+  look: { mood: 'bright', rolloff: 0.8 },   // owner 2026-11-11: stories are bright and punchy (r:rd13834); rolloff 0.8 keeps the daytime sky blue with clouds (bright alone clips it cyan-white; Light Sleeper A/B 2026-11-11); 'auto' follows the time of day (renderer/looks.js, docs/look.md); a shot's mood: 'tense' for one shot
 
   async setup (ctx) {
     const { bot } = ctx

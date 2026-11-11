@@ -17,10 +17,10 @@ module.exports = pixelArt({
   stages: [
     { art: SWORD, order: 'random' },
     { art: pixelArt.upscale(PICK, 2), decoy: pixelArt.upscale(SWORD, 2), decoyFrac: 0.5, decoyTpb: 1.5, order: 'random', tpb: 1 },
-    { art: pad(pixelArt.upscale(CREEPER, 3), 27), decoy: pixelArt.upscale(SWORD, 3), decoyFrac: 0.35, decoyTpb: 1, first: 'K', scatter: true, tpb: 0.4 }
+    { art: pad(pixelArt.upscale(CREEPER, 3), 27), decoy: pixelArt.upscale(SWORD, 3), decoyFrac: 0.35, decoyTpb: 1, first: 'K', scatter: true, tpb: 0.4, dist: 16 }   // 16 out: at 12 the 27-block face filled the view and the camera swept edge to edge (past the pickaxe wall)
   ],
   palette: { K: 'black_wool', C: 'light_blue_wool', B: 'brown_wool', G: 'green_wool', L: 'lime_wool' },
   wall: 'oak_planks',
   caption: "can you guess what I'm building? 🤔",
-  edit: { caption: "can you guess what I'm building? 🤔", red: 'guess', song: 'songs/misery.mp3', dropAt: 'complete', startAt: 'stage:0.1', endAfter: 'complete:0.9' }
+  edit: { caption: "can you guess what I'm building? 🤔", red: 'guess', dropAt: 'complete', startAt: 'stage:0.1', endAfter: 'complete:0.9' }
 })

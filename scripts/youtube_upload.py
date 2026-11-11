@@ -11,7 +11,9 @@ exists. Ported from evanlin23/buh-explains buhexplains/pipeline/upload.py, with 
 - each at a random time in its own slice of 9:00-21:00 Central (3 a day: 9-13, 13-17, 17-21), never a fixed
   robotic slot; YT_PER_DAY changes the count;
 - never delete or re-upload a video that underperforms (YouTube treats it as spam);
-- refuses if the token's channel isn't YT_CHANNEL_ID, if the Short isn't status "ready" on the videos branch,
+- refuses if the token's channel isn't YT_CHANNEL_ID, if the Short isn't status "ready" on the videos branch, if its
+  metadata `gates` are older than lib/hb/gates.json's version or blocked without a waiver (scripts/gates.py; story_*
+  Shorts are gated by the story pipeline instead),
   if its title is already on the channel (hand uploads too), or if it would break the posting mix
   (scripts/check_queue.py: no format twice in a row, at most 1 pixel-art per 3).
 
@@ -40,6 +42,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from check_queue import series, mix_ok   # noqa: E402
+import gates   # noqa: E402  (lib/hb/gates.json: a package gated before the current gates waits until it's re-gated)
 
 CHANNELS = {"hellobuh": "HelloBuh", "buhstories": "Buh Stories"}   # the id a Short's metadata names -> its display name
 CHANNEL = (os.environ.get("YT_CHANNEL", "") or "hellobuh").strip().lower()
@@ -115,12 +118,62 @@ def videos_checkout(d: Path) -> Path:
     return d
 
 
-def fetch_short(vd: Path, name: str) -> Path:
+def download(url: str, dest: Path) -> None:
+    import urllib.request
+    req = urllib.request.Request(url, headers={"User-Agent": "hello-buh-uploader"})
+    with urllib.request.urlopen(req, timeout=120) as r, open(dest, "wb") as out:
+        while True:
+            b = r.read(1 << 20)
+            if not b:
+                break
+            out.write(b)
+
+
+def sha256_of(p: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with open(p, "rb") as f:
+        for b in iter(lambda: f.read(1 << 20), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def fetch_short(vd: Path, name: str, meta: dict | None = None) -> Path:
+    """The mp4 that goes up. A package published since r:rc5eaf0 names a GitHub Release asset in video.release
+    (scripts/release_assets.py): download it and check its sha256. An older package has short.mp4 on the branch."""
+    rel = ((meta or meta_of(vd, name) or {}).get("video") or {}).get("release") or {}
+    if rel.get("url"):
+        f = vd / "shorts" / name / "short.mp4"
+        f.parent.mkdir(parents=True, exist_ok=True)
+        for i in range(3):
+            try:
+                download(rel["url"], f)
+                break
+            except Exception as e:
+                if i == 2:
+                    sys.exit(f"{name}: could not download {rel['url']}: {e}")
+        got = sha256_of(f)
+        if got != rel.get("sha256"):
+            f.unlink()
+            sys.exit(f"{name}: the release asset's sha256 is {got}, metadata says {rel.get('sha256')}: refusing to upload it")
+        print(f"{name}: {rel['url']} ({f.stat().st_size / 1e6:.1f} MB, sha256 ok)", flush=True)
+        return f
     subprocess.run(["git", "-C", str(vd), "sparse-checkout", "add", f"/shorts/{name}/short.mp4"], check=True)
     f = vd / "shorts" / name / "short.mp4"
     if not f.exists() or f.stat().st_size < 1_000_000:
-        sys.exit(f"shorts/{name}/short.mp4 is missing on the videos branch")
+        sys.exit(f"shorts/{name}/short.mp4 is missing on the videos branch (and metadata.json has no video.release)")
     return f
+
+
+def has_video(vd: Path, name: str, meta: dict) -> bool:
+    """A release asset, or short.mp4 in the branch's tree (a package republished by a pre-r:rc5eaf0 publish.js after its
+    mp4 left git has neither: skip it rather than stop the run)."""
+    if ((meta.get("video") or {}).get("release") or {}).get("url"):
+        return True
+    if not (vd / ".git").exists():
+        return True   # (tests: a plain directory)
+    r = subprocess.run(["git", "-C", str(vd), "ls-tree", "HEAD", f"shorts/{name}/short.mp4"], capture_output=True, text=True)
+    return r.returncode != 0 or bool(r.stdout.strip())
 
 
 def meta_of(vd: Path, name: str) -> dict | None:
@@ -131,7 +184,8 @@ def meta_of(vd: Path, name: str) -> dict | None:
 def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, str]:
     """The next Short: queue lines marked "# first", then the rest ranked by their format's expected subscribers
     per upload (scores["family"], higher first; queue order, then the oldest published, breaking ties), skipping anything
-    uploaded or posted by hand, not ready, or that would break the mix after what went up last."""
+    uploaded or posted by hand, not ready, gated before the current gates (scripts/gates.py: lib/hb/gates.json's version;
+    story_* are gated by the story pipeline), or that would break the mix after what went up last."""
     history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
     lines = QUEUE.read_text().splitlines() if QUEUE.exists() else []
     pinned = [l.split("#")[0].strip() for l in lines if "# first" in l]
@@ -163,11 +217,17 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
             if name in queued:
                 why.append(f"{name}: status {meta.get('status')!r}, not ready")
             continue
+        gw = gates.stale({"name": name, **meta})
+        if gw:
+            why.append(f"{name}: {gw}"); continue
         lic = (meta.get("song") or {}).get("licence", "")
         if meta.get("song") and not lic.startswith(("NCS", "original")):
             why.append(f"{name}: its song isn't cleared ({lic or 'no licence'})"); continue
         if not mix_ok(history, name):
             why.append(f"{name}: same format as the last upload, or a 2nd pixel-art in 3"); continue
+        if not has_video(vd, name, meta):
+            why.append(f"{name}: no video (no video.release in metadata.json and no short.mp4 on the branch: re-publish it "
+                       "with publish.js from main)"); continue
         return name, "\n".join(why)
     return None, "\n".join(why)
 
@@ -505,7 +565,17 @@ def main() -> None:
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--scores", action="store_true", help="print the subscribers-per-1k-views ranking only")
     ap.add_argument("--short", default="", help="upload this Short now (still checks ready, mix and the daily limit)")
+    ap.add_argument("--verify", default="", help="download this Short's mp4 (release asset or branch) and check it; upload nothing")
     a = ap.parse_args()
+    if a.verify:   # resolve + verify only: no YouTube, no records (works without any secret)
+        with tempfile.TemporaryDirectory() as td:
+            vd = videos_checkout(Path(td) / "videos")
+            meta = meta_of(vd, a.verify)
+            if not meta:
+                sys.exit(f"{a.verify}: not on the videos branch")
+            f = fetch_short(vd, a.verify, meta)
+            print(f"verified {a.verify}: {f.stat().st_size} bytes, status {meta.get('status')}, channel {channel_of(meta)}")
+        return
     ok, missing = enabled()
     if not ok and not a.dry_run:
         print(f"uploads are off (missing: {missing}). Nothing done."); return
@@ -541,6 +611,9 @@ def main() -> None:
                 history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
                 if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short) or channel_of(meta) != CHANNEL:
                     sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, breaks the mix, or belongs to another channel")
+                gw = gates.stale({"name": a.short, **meta})
+                if gw:
+                    sys.exit(f"{a.short}: {gw}")
                 name, skipped = a.short, ""
             else:
                 name, skipped = pick(vd, done, scores)
@@ -586,7 +659,7 @@ def main() -> None:
             if title in channel_titles(yt):
                 sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
                          "or record it in uploads/uploads.json if it was uploaded by hand")
-            f = fetch_short(vd, name)
+            f = fetch_short(vd, name, meta)
             body = {"snippet": {"title": title, "description": desc, "categoryId": "20",
                                 "tags": [h.lstrip("#") for h in yt_meta.get("hashtags", [])]},
                     "status": {"privacyStatus": "private", "publishAt": when, "selfDeclaredMadeForKids": False,

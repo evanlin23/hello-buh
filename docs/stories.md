@@ -269,6 +269,167 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, on the cells format: "for the cells, it only works bc its forcing mobs specifically to do
+  it".** Every cell traps a MOB (never the player, never a block machine) in its loop; the joke is the mob being made
+  to do one thing forever.
+- **Owner, 2026-11-11, sharing KRIZZIT's "Clear winner" (a huge square of dirt, grass spreading from one corner and
+  mycelium from another, a top-down time-lapse race; caption "Grass vs Fungus"): "timelapse grass vs fungus".**
+  HelloBuh adds a spread-race format (family `race`): two vanilla things that spread (grass, mycelium, moss, sculk,
+  vines, fire...) race across one big field in a top-down time-lapse; viewers pick a side and wait for the winner.
+- **Owner, 2026-11-11, on the "cooked" format's music and picture: music "A similar NCS track"; the image "The real
+  meme photo".** cooked Shorts use an NCS track chosen to match the reference's dramatic mood (no claims), and the real
+  war-movie soldier meme photo as the end still: fetched at render from a logged URL into the cache, never committed.
+- **Owner, 2026-11-11: "for the torch sand falling, we should let the last pillar of sand all fall before we
+  end/cut"; "our processes must cover all of these."** A Short never cuts or ends while its payoff is still moving:
+  every falling block has landed, the blast debris has settled, the mob's death puff is done. The payoff moment is when
+  the motion settles, and the 1 s end limit counts from there. Every owner note like these becomes an automatic check
+  in ./hb check / pace, not only a review note.
+- **Owner, 2026-11-11, on the newly published Shorts: "for the torch, we need to look where we are placing/breaking,
+  its fine to be fast but right now it just looks like hacking. also, the lava lake lowkey like ragebait but thats ok.
+  the rainbow sheep we are not looking at the right sheep when we dye..."** Every place, break, use and dye happens
+  under the crosshair, on every stunt: speed is fine, but the view must be on the block or mob being acted on when it
+  happens (no acting off-screen or off-aim; that reads as hacking). sand_tower's torch trick and rainbow_sheep's dyeing
+  get fixed to this; water_vs_lava's black-lake ending stays.
+- **Owner, 2026-11-11, on the re-made pixel-art Shorts: "here the creeper tracks where we're placing the blocks the
+  best, which I think is good, but it does this weird thing where it walks all the way back into like the other one,
+  and it's like halfway against the wall when it's like building the last one, which I think is a little bit
+  weird."** Pixel-art builds follow creeper_art's look: the view tracks where each block lands. The player never backs
+  into an earlier wall: the set leaves enough clear room behind every build position, and the camera is never pressed
+  against or inside another build.
+- **Owner, 2026-11-11, sharing Beazle's "BRO" (caption "Genuinely gotta check if everything is okay at home after ts",
+  subtitle "the type of house that your one actually psycho homie builds": a front door ringed by fire, a burning
+  wheat field, then inside a nether-brick mansion whose floors are open lava, a bed and furnaces perched on one-wide
+  walkways over it): "fake psycho house".** HelloBuh adds a psycho-house format (family `psycho`): a base tour that
+  looks almost normal from the door and turns out insanely dangerous inside (lava floors, fire, one-wide walkways),
+  played straight as a house tour.
+- **Owner, 2026-11-11, via the Buh Connects operator (forwarded at the owner's request): a "Fastest Speedrun Ever"
+  Short the owner called "obviously fake, badly made, with typos and everything".** (Music only, one banner, 67 s:
+  an impossible speedrun in jump cuts: a portal missing obsidian lit anyway, full netherite already on the way back,
+  an end portal full of lava, typo'd item labels.) HelloBuh adds a fake-speedrun format (family `fakerun`): an
+  obviously impossible "speedrun" told in jump cuts with a deliberately wrong detail or two, built as comment bait
+  (viewers call out the cheats); measure comments per 1k views as well as viewed % and subs per 1k.
+- **Owner, 2026-11-11: "moral dillema? like i just saw one that shows someone falling, about to lose hardcore, and
+  they have a mace, and their dog is there, they can hit the dog and survive, or die. and it drags on for a while,
+  fall in slow motion from multiple angles. and then he survives without doing anything bc of feather falling 4"**
+  HelloBuh adds a moral-dilemma format (family `dilemma`): a life-or-death choice frozen mid-moment (hardcore hearts,
+  a sacrifice that would save you), stretched out in slow motion from several angles to build the tension, then a
+  twist that makes the choice unnecessary. The twist must be true vanilla (minecraft-audit): e.g. the fall height is
+  chosen so Feather Falling IV really saves a full-health player.
+- **Owner, 2026-11-11, sharing NoschiTech's "#memeanimation" (caption "POV: the 3 stages of playing with friends",
+  with chapter titles: "1. Betrayal" (your friend knocks you into lava, you scrape out on half a heart), "2. Rise"
+  (a portal, the Nether, ancient debris, a netherite upgrade), "3. Revenge" (a TNT cannon flattens the friend's
+  mansion); 85 s): "and this too".** HelloBuh saves a chaptered "stages of" format (family `stages`): a relatable
+  arc told in 3 titled chapters, each fast and escalating, ending on a big payoff.
+- **Owner, 2026-11-11, sharing hazypapa's "The Most Bullied mob Ever in Minecraft" (caption "we can repair them
+  but...": a quick list of every mob the player can heal or fix (a wolf with meat, a cat with fish, a horse with
+  hay, a camel with cactus, an iron golem with iron, a copper golem, a zombie villager cured), then the caption flips
+  to "...but what about him?" over a lone snow golem in the sun, with a soft sung track): "whatever this is".**
+  HelloBuh saves it as a but-what-about-him format (family `underdog`): a fast list where the game treats every mob
+  one way, then the one mob it forgot, played for sympathy and laughs.
+- **Owner, 2026-11-11, sharing Galaxscat's "Minecraft Baby Zombie Moment" (caption "POV: A baby zombie found you",
+  31 s: a blur-fast chase that tears straight through stone walls, a pen of pigs and a row of mobs, through a village
+  house, out the other side and down into the Nether; nothing slows it): "whatever even is this".** HelloBuh saves it as
+  an exaggerated-mob-POV format (family `mobpov`): a mob players find annoying (the baby zombie's speed, the
+  creeper's sneak, the phantom's timing) blown up into an unstoppable, absurdly fast POV chase through everything.
+- **Owner, 2026-11-11, sharing Silly Willies' "We all have that one bro" (10 s, caption "That one friend when you
+  start a new world": you're still standing at the first tree while your friend strips it in a blink and a whole house
+  is already up behind you): "i think this is like hacking friend? like its a relatable beat, just exagerated".**
+  HelloBuh adds a that-one-friend format (family `friend`): a relatable multiplayer moment ("that one friend
+  who..."), shown from your point of view with the friend's part exaggerated to the absurd; short and punchy.
+- **Owner, 2026-11-11, sharing Galaxscat's "Minecraft meme" (caption "I thougt he was just lagging": a bridge fight
+  over the void with a Steve-looking player who stutters and rubber-bands like lag; his bridge breaks under him and
+  he just keeps standing on air, the white-eyed reveal, then he drifts off into the sky): "secret herobrine".**
+  HelloBuh adds a secret-Herobrine format (family `herobrine`): an ordinary-seeming player whose "lag" (stutters,
+  rubber-banding, standing on nothing) grows until the reveal that it was never lag; the caption plays it as a normal
+  complaint.
+- **Owner, 2026-11-11, sharing YalkyGM's "Who tf is doing this" (one fixed top-down shot of two houses either side
+  of a road: a dirt shortcut keeps wearing across the grass, the "town" answers with a crosswalk, a bush, a tree,
+  railway tracks, walls, barriers, a boulder, a pond, then lava, and the path comes back around every one): "desire
+  paths format".** HelloBuh adds a desire-paths format (family `desire`): one locked camera, an escalating back-and-forth
+  between an unseen walker's shortcut and ever more absurd obstacles, each round a beat; the path always wins.
+- **Owner, 2026-11-11, sharing "Every Time I Snap" (caption "Why does my house always end up like this?", 11 s: from
+  inside a stone chimney past the campfire into a cosy wooden room, out the door, and the house outside is a small,
+  plain box that can't hold what was inside): "this one lends to replays, since its short and the inside differs from
+  the outside so its confusing and the cut is not obvious."** HelloBuh adds a bigger-on-the-inside format (family
+  `inside`): one continuous-looking walk from a detailed interior out to an exterior that can't contain it, the
+  cut hidden in a door or a dark frame, short (about 8-12 s) so viewers replay to find the trick.
+- **Owner, 2026-11-11, sharing an "aura" Short (caption "Bro just used all the luck left in his life": digging
+  straight down hits diamonds, then lava saved by a water bucket, then an emerald vein, then breaks straight into a
+  stronghold's end portal room beside the spawner; 19 s): "fake super lucky".** HelloBuh adds a staged-luck format
+  (family `lucky`): a dig, fall or run where every next block is impossibly lucky, each luckier than the last, all
+  vanilla mechanics, staged by the set.
+- **Owner, 2026-11-11: "another one i saw is like fake secret chest in desert pyramid that takes like the entire
+  video to get to and theres like parkour and tunnels etc."** HelloBuh adds a quest format (family `quest`): a
+  "secret chest" hidden under a desert pyramid (or similar), and the whole Short is the escalating way down to it:
+  hidden buttons, tunnels, parkour, traps, each stage harder, the chest opened only at the very end.
+- **Owner, 2026-11-11, sharing a "Send This To Someone You Love Most 😍💗" Short (a redstone-and-lamp heart laid out
+  in a cherry grove, the night falls, the heart lights up and fireworks burst around it in a ring): "This is another
+  one thats like a heart and its cute and lovey".** HelloBuh adds a love format (family `love`): a cute, wholesome
+  build with a heart reveal at night (lamps, fireworks), captioned to be sent to someone; made to be shared.
+- **Owner, 2026-11-11, sharing ThreexyMC's "Yeah its over bro" (caption "Am i cooked?": the player mines down through
+  a diamond vein and through bedrock into the dark, then the chat fills with "[Notch] joined the game", "[Microsoft]",
+  "[Mojang]", "[FBI]", "[Interpol]", "[IRS]", "[Herobrine]", "[NASA]"... over a war-movie soldier image with a
+  dramatic track): "this one is like doing something impossible, and then having like creators of minecraft join on
+  like the war image in the backgorund, and this is music speciifc too, need to sue their music".** HelloBuh adds a
+  "cooked" format (family `cooked`): an impossible feat, then an escalating flood of "X joined the game" as the
+  consequences arrive, over a dramatic still, cut to one specific dramatic track.
+- **Owner, 2026-11-11, sharing KingTEC's "POV: You Made FUNCTIONAL Cabinets in Minecraft" (caption "POV: You
+  realized you can use doors and cushions to make functional gates and cabinets"; a quick first-person demo of the
+  trick in a real kitchen and library, 16 s): "another format, cool minecraft gimmicks".** HelloBuh adds a build-hack
+  format (family `hack`): one clever, real block trick per Short, a "POV: you realized..." caption, shown working in
+  a lived-in build within the first 1.5 s.
+- **Owner, 2026-11-11, on moving finished videos out of git history to GitHub Releases (permanent, no expiry, only
+  metadata in the repo) and dropping anvil_rain / lava_rising (they repeat it_rains and worse_lava): "sure we can do
+  that".** Finished Short mp4s live as GitHub Release assets; the videos branch keeps metadata; the uploader downloads
+  from the release. anvil_rain and lava_rising are dropped (status `dropped`), never uploaded.
+- **Owner, 2026-11-11: "please tell me ur saving all of the formats im sending you".** Every format the owner sends
+  is saved in docs/formats.md (what the reference does, the owner's words, our family name, status), alongside its
+  house rule here.
+- **Owner, 2026-11-11, sharing ItsMeMx's Minas Tirith time-lapse (caption "We need a small castle to mark the
+  spawn", then a drone-style time-lapse as arches, a plateau and a whole tiered white city rise over 21 s): "this
+  gimmick is like ridiculous megabuild".** Part of the `mega` family (r:r8bb1e3): the second variant is a time-lapse
+  build-up, an understated request in the caption and the build escalating far past it, ending on the full reveal.
+- **Owner, 2026-11-11, sharing hazypapa's "Monsters can't sleep, I am nearby" (a slow walk down a white lab corridor
+  of glass cells, each holding a mob stuck in a contraption doing one thing forever; caption "i think bro is doing it
+  for fun"): "here is another format. its like a bunch of cells where mobs are forced to do things repeitively
+  forever."** HelloBuh adds a cells format (family `cells`): a walk-past of glass cells, each a mob in its own endless
+  loop (vanilla mechanics: minecart loops, pistons, water streams, redstone clocks), a deadpan caption.
+- **Owner, 2026-11-11, sharing Mevys's "Maddest End Ever" ("Nobody Knows That! 😱": a lit nether portal carried
+  around by pistons and redstone, then refitted into a gold-block frame, all impossible in vanilla but shown as a
+  secret trick): "this is like fake minecraft gimmick".** HelloBuh adds a fake-trick format (family `faketrick`): an
+  impossible "secret" played completely straight as if it were real. The fake is the bait (comments say "this doesn't
+  work"), so the minecraft-audit's vanilla rule is waived for the trick itself only; everything around it stays
+  vanilla-correct.
+- **Owner, 2026-11-11: "I think hello buh should use the bright grading as well."** HelloBuh's stunt Shorts get the
+  bright look by default (a stunt with no `look`), tuned so the daytime sky doesn't blow out to white (the story
+  'bright' grade, unchanged on a plain stunt, washed the sky out in the first A/B).
+- **Owner, 2026-11-11, sharing Glowe's "Makes no sense" ("Minecraft logic 💀": a minute of rapid vanilla quirks, one
+  after another): "Do we have any formats like this? like 'minevraft logic'".** We had the ideas (docs/ideas.md
+  "Physics and minecraft logic") but no format; HelloBuh adds one (family `logic`): real vanilla quirks, fast, one
+  caption, each quirk set up and paid off in a few seconds.
+- **Owner, 2026-11-11, sharing reo's "Low control minecraft" (a fake mod: "The best mod i've ever downloaded", a
+  creeper walks up and a GUI asks "A creeper is asking for permission to explode" with Allow / Deny / Roll): "this
+  could be like a fake mod".** HelloBuh adds a fake-mod format (family `fakemod`): normal gameplay, an absurd fake mod
+  menu or popup appears at the key moment, the choice plays out. Our own mods and menus, drawn in the edit.
+- **Owner, 2026-11-11, sharing a "Top 5 things I found under ur dad's bed" Short (a parkour + dropper fall as the hook,
+  then giant builds seen on the way down, each with a wrong, innocent-sounding label): "the gimmick with thsi one is
+  that it starts with a very trick like parkour and dropper, so its very hook grabbing. but then it shows things that
+  are mislabeled, but here its. alittle bit innapropirate so i dont like that, but its itneresting."** HelloBuh tries
+  an original, CLEAN take (family `mislabel`): a parkour/dropper hook in the first second, then a numbered list of
+  giant builds with funny wrong labels. No innuendo, nothing sexual or crude; the joke is the label, kid-safe.
+- **Owner, 2026-11-11, sharing TECHSIN PLAYZ's "Finally, a CRAZY Minecraft illusion" Short: "the gimmick with this is
+  its a normal video with a skeleton shooting and he goes over and eats it and then pretneds nothing happened and goes
+  back tot eh video".** HelloBuh tries an original take (family `interrupt`): a Short that plays straight as a normal
+  video, a mob interrupts, the player deals with it in an absurd way, then carries on as if nothing happened.
+- **Owner, 2026-11-11, sharing KRIZZIT's "Daylight Edition" Short (a giant fractal pyramid, an elytra fly-around
+  and dive inside, captioned "7 seconds of my life went into this build"): "new format to try".** HelloBuh tries an
+  original take on the format (family `mega`): an absurdly big generated build shown from frame 1, an understated
+  ironic caption on top the whole time, an elytra fly-around that ends diving inside. Our own structures, caption
+  wording and music; never a copy of that Short.
+- **Owner, 2026-11-11, on the music sitting over the game sounds in most queued Shorts (music 1-12 dB above the
+  biggest game sounds; only 3 of 18 had the game on top): "fix all i think".** The music bed comes down for every
+  stunt Short (about 3 dB, so the game's own hits carry the payoff), and every ready, not-yet-uploaded Short is
+  remixed to the new level.
 - **Owner, 2026-11-11: "We should be trying for high views and high conversion right?" (yes to ranking formats by
   expected subscribers per upload); "low views might be the format, but it could also just be us not doing it well.
   for example the guess the mob had super loud music..."** The uploader ranks formats by expected subscribers per
@@ -287,6 +448,25 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, after the Gold A/B (A cinematic, B bright with zoom punches): "I think that bright looks
   better".** Story Shorts use B: the stunt's `look: 'bright'` and `edit.punchStress: true` (main 6632d43), on every
   story from now on.
+- **Owner, 2026-11-11 (review page, Thirty-One Raids and Good Boy): "The woosh is wierd and jarring. We should have
+  better soudn effects and sounde ngineering."; "the sound effect here is weird".** No whoosh or transition SFX on any
+  cut, and every sound in a story is one the viewer would expect from what's on screen (vanilla sounds, the mood score,
+  the payoff hit), mixed so none of them jumps out over the voice. A sound that makes the owner stop is a blocker.
+- **Owner, 2026-11-11 (review page, Good Boy at 0:00.6): "here the camera is inside of the block, so we can see inside
+  of it."** The camera never sits inside or clips through a block in any shot; the eye is always in air.
+- **Owner, 2026-11-11 (review page, Gold for the Portal): "grandma's voice is also gravelly, i think it can read as
+  like a woman more?"** Every character's voice reads as that character at first hearing: a grandma sounds like an
+  older woman, not gravelly or sexless. Cast from the voice list to the character's age and sex.
+- **Owner, 2026-11-11 (review page, Dog on the Hill at 0:27.9): "we should cut as soon as the guy leaves. end of
+  short".** The Short ends the moment its last story beat lands (in Dog on the Hill: Buh leaving); no shots after it.
+- **Owner, 2026-11-11, asked whether "Buh joined the game" / "Buh left the game" should be in the middle of the screen
+  (recommended: centred, vanilla chat style, off the dog): "sure".** In story Shorts the join/leave chat lines (and any
+  payoff system chat) are centred horizontally near the caption height, in the vanilla yellow chat font and strip at
+  `chatScale` size, placed so they never cover the shot's subject.
+- **Owner, 2026-11-11, on the bright previews' zoom punch on every sentence: "what are all of these bouncy zooms?";
+  offered all / smaller / big moments only / none: "only the big ones i think".** `edit.punchStress` punches only the
+  big moments: the hook, the turn and the reveal (story.json `"punch": true` on those lines, at most 4; none marked:
+  the first and last line), one punch each on the line's stressed word. Supersedes one punch per sentence.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

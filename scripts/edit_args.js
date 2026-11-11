@@ -17,21 +17,37 @@ if (e.speed) out.push('--speed', JSON.stringify(e.speed))    // time-lapse spans
 if (e.clock) out.push('--clock', JSON.stringify(e.clock))    // clocks counting to a target time
 if (e.slowmo) out.push('--slowmo', JSON.stringify(e.slowmo))  // retention toolkit (scripts/retention.py)
 if (e.punch) out.push('--punch', JSON.stringify(e.punch))
-// punchStress (opt-in; owner 2026-11-10, "very bright, exagerated movements"): a short zoom punch on each sentence's
-// spoken stress (its last CAPS word, the r-cast rule), from the story's aligned words: [[line id, s into the line, peak]]
+// punchStress (owner 2026-11-10, "very bright, exagerated movements"; 2026-11-11, on a punch every sentence: "only the
+// big ones i think"): a short zoom punch on the spoken stress (the last CAPS word, the r-cast rule), from the story's
+// aligned words: [[line id, s into the line, peak]]. Only the big moments get one: the lines story.json marks
+// `"punch": true` (the hook, the turn, the reveal; at most PUNCH_MAX), one punch each on the line's last stressed word.
+// No line marked: the first and the last spoken line. `punchStress: 'all'` keeps the old one-per-sentence behaviour.
+const PUNCH_MAX = 4
 if (e.punchStress && e.story) {
   const path = require('path')
   const wf = path.join(__dirname, '..', e.story, 'voice', 'words.json')
   if (fs.existsSync(wf)) {
     const words = JSON.parse(fs.readFileSync(wf, 'utf8')), peak = typeof e.punchStress === 'number' ? e.punchStress : 0.07, ps = []
-    for (const [lid, ws] of Object.entries(words)) {
-      let last = null
-      for (const [w, a] of ws) {
-        const core = String(w).replace(/[^A-Za-z']/g, '')
-        if (core.length > 1 && core === core.toUpperCase() && /[A-Z]/.test(core)) last = a
-        if (/[.!?]["')]*$/.test(w) && last !== null) { ps.push([lid, +last.toFixed(3), peak]); last = null }
+    const isCaps = w => { const core = String(w).replace(/[^A-Za-z']/g, ''); return core.length > 1 && core === core.toUpperCase() && /[A-Z]/.test(core) }
+    if (e.punchStress === 'all') {
+      for (const [lid, ws] of Object.entries(words)) {
+        let last = null
+        for (const [w, a] of ws) {
+          if (isCaps(w)) last = a
+          if (/[.!?]["')]*$/.test(w) && last !== null) { ps.push([lid, +last.toFixed(3), peak]); last = null }
+        }
+        if (last !== null) ps.push([lid, +last.toFixed(3), peak])
       }
-      if (last !== null) ps.push([lid, +last.toFixed(3), peak])
+    } else {
+      const sf = path.join(__dirname, '..', e.story, 'story.json')
+      const lines = fs.existsSync(sf) ? (JSON.parse(fs.readFileSync(sf, 'utf8')).lines || []) : []
+      let big = lines.filter(l => l.punch === true).map(l => l.id).filter(id => words[id])
+      if (!big.length) { const spoken = Object.keys(words).filter(id => words[id].length); big = [...new Set([spoken[0], spoken[spoken.length - 1]].filter(Boolean))] }
+      if (big.length > PUNCH_MAX) { process.stderr.write(`punchStress: ${big.length} lines marked "punch", only the first ${PUNCH_MAX} get one (owner: only the big ones)\n`); big = big.slice(0, PUNCH_MAX) }
+      for (const lid of big) {
+        const caps = words[lid].filter(([w]) => isCaps(w))
+        if (caps.length) ps.push([lid, +caps[caps.length - 1][1].toFixed(3), peak])
+      }
     }
     out.push('--punch_stress', JSON.stringify(ps))
   }
@@ -56,6 +72,11 @@ if (e.deathScreen) out.push('--death_screen', 'death')
 if (e.itemNames) out.push('--item_names', JSON.stringify(e.itemNames))   // the selected item's name over the hotbar
 if (e.guiScale) out.push('--gui_scale', String(e.guiScale))   // container screens at another GUI scale (phone-readable; default 3)
 if (e.chatScale) out.push('--chat_scale', String(e.chatScale))   // chat lines at another GUI scale (default guiScale, else 3)
+// chat lines centred (owner, 2026-11-11: "Buh left the game" centred, off the dog): on by default for story Shorts,
+// chatAlign: 'left' keeps vanilla's corner; chatY = the line's height as a fraction of the game area (0.70: captions)
+const chatAlign = e.chatAlign || (e.story ? 'center' : null)
+if (chatAlign && chatAlign !== 'left') out.push('--chat_align', chatAlign)
+if (e.chatY !== undefined) out.push('--chat_y', String(e.chatY))
 if (e.story) out.push('--story', e.story)            // narrated story Short (docs/stories.md)
 if (e.start !== undefined) out.push('--start', String(e.start))
 else if (!e.startAt) out.push('--start_at', 'start:0')   // skip the harness pre-roll before 'start'

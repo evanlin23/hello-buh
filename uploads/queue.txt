@@ -29,3 +29,9 @@ worse_tnt
 fortune
 boat_clutch
 speed_build
+tnt
+villager_crowd
+creeper_art
+sand_tower
+water_vs_lava
+rainbow_sheep

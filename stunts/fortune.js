@@ -18,7 +18,9 @@ module.exports = {
   name: 'fortune',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'POV: fortune 1000 💀',
-  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9', subs: [['ore', '64 emeralds', 1.3, 7], ['ore', '128', 1.3, 8], ['ore', '192 emeralds', 1.6, 9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
+  edit: { subsY: 0.15, caption: 'POV: fortune 1000 💀', red: '1000', song: 'songs/ncs/montagem_favela.mp3', dropAt: 'finale', startAt: 'mine:-0.1', endAfter: 'collected:0.9',
+    // a white flash as the last 192 emeralds land in the inventory (pace: no picture change on the payoff, 2026-11-11)
+    flash: [['collected', 0, 0.6]], subs: [['ore', '64 emeralds', 1.3, 7], ['ore', '128', 1.3, 8], ['ore', '192 emeralds', 1.6, 9]] },   // the 2nd and 3rd stacks go to the hidden inventory: say it
 
   async setup (ctx) {
     const { bot } = ctx

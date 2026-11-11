@@ -22,8 +22,9 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    picture and the sound. Check: review, story-critic. r:r810b66 r:r1fc6a3 r:r6562ae
 0. **The mystery test** (bar: light_sleeper, runaway): a question to the viewer in the first 3 s that only the ending
    answers; a cold reader can guess at the midpoint but not be sure, and explains the reveal in one sentence after;
-   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. Check: story-critic (blockers),
-   cold reader. r:ra807e9
+   cut within ~1 s of the reveal; 25-40 s, nothing that doesn't move the question. The Short ends the moment its
+   last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
+   cold reader, review. r:ra807e9 r:r8de735
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
    reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
    story-critic, cold reader (does the end flow into the start?). r:r30c821
@@ -93,7 +94,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 6. **The right voice and the right words on every line**: a line in the wrong voice or with the wrong words is a
    blocker; never record over it. Check: speaker (`./hb voice`, agent/speakers). r:r0cff17
 7. **A cast of distinct, recurring voices** from `voices/cast.json` (same id, voice and profile in every story);
-   any two voices that talk differ in age, sex or pitch. r:r4b4332 r:raf72e0
+   any two voices that talk differ in age, sex or pitch. Each voice reads as its character's age and sex at first
+   hearing (a grandma sounds like an older woman, not gravelly). Check: review (listen). r:r4b4332 r:raf72e0 r:rf8060c
 8. **No voice drift**: one TTS model per character per story (on a 429 mid-story, wait or re-take all of that
    character's lines on the new model, never mix); short requests (one character, at most ~6 lines); the identical
    direction text for a character every time; re-take a line that sounds like a different person. Drift is a review
@@ -133,7 +135,8 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    recording. Check: review (manual). r:r4b6024
 3. **No glitches, and the title's promise is on screen**: no doors moving by themselves, never stuck on a block, no
    jitter or stutter; fog/night/rain when the story says so. Check: owner (`glitch`), check (rec_check cuts). r:rd497c4 r:rff9341
-   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla.
+   While a container GUI (chest, barrel) is open the camera holds still, as in vanilla. The camera is never inside
+   or clipping through a block (the eye always in air). Check: review (stills of every shot). r:rbc17a7
 4. **Night needs light**: a lantern within 4 blocks of every face (cinematic-style "Lighting").
 
 5. **One shared world** (seed `hellobuh`): every story happens at a canonical place in docs/world/map.json, built by
@@ -187,7 +190,10 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
 
 ## 5. Look
 - **Bright and punchy is the story look** (the owner picked it over the cinematic grade): every story stunt sets
-  `look: 'bright'` and `edit.punchStress: true`. Check: owner; review. r:rcae995 r:rd13834
+  `look: { mood: 'bright', rolloff: 0.8 }` (the roll-off keeps a daytime sky blue with its clouds; plain 'bright'
+  clips it cyan-white) and `edit.punchStress: true`. The zoom punches go on the **big moments only** (hook, turn,
+  reveal: story.json `"punch": true` on those lines, at most 4; none marked = the first and last line), never one per
+  sentence. Check: owner; review. r:rcae995 r:rd13834 r:r5aeaf2
 Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stories use `look: 'bright'` (above); other Shorts keep the cinematic default (`look: 'auto'`).
 - Subject luma 0.35-0.70 by day, >= 0.25 at night; black point p1 >= 0.015; < 2 % clipped. Check: `scripts/look_stats.py`.
 - Sharp: bloom threshold >= 0.7, no DoF on wide/establishing shots, crf <= 18.
@@ -196,11 +202,17 @@ Numbers and moods: the `cinematic-style` skill "Standards" (docs/look.md). Stori
 ## 6. Captions
 1. **2-3 word chunks** (the script's " / " splits), one CAPS key word per chunk in the key colour, Poppins Black 96 px,
    centred at 0.70 of the game view, max 840 px wide; each chunk pops in and cuts out hard on the next; quotes keep
-   their quote marks. (`"captions": "word"` gives one word at a time.) r:r61d371 (supersedes r:rbd7cb6)
+   their quote marks. (`"captions": "word"` gives one word at a time.) **Every spoken word is captioned**, narrator and
+   characters: its line's caption is on screen while it's said, every caption word is shown, and the take says the
+   caption text. Check: `scripts/caption_av_check.py` coverage (BLOCK; in `./hb check`, before the render with
+   `--events`). r:r61d371 (supersedes r:rbd7cb6)
 2. **Each speaker's colour matches the character's vibe** (`color` in voices/cast.json; the narrator white); the word
    colour only says who is talking, a key word is a bar under it. r:r62fae3 r:r0cff17
 3. **No name tags**: the colour alone says who speaks (story_track default; `"name_tags": true` only for a test).
    r:r62de46
+4. **Join/leave chat lines are centred** ("Buh joined/left the game", any payoff system chat): horizontally centred
+   near caption height, vanilla yellow chat font and strip at `chatScale`, never over the shot's subject. Check:
+   review (stills). r:r0d7fd3
 
 ## 7. Audio
 The lead's mix (docs/audio.md), all of it in `edit.py --story` (previews included: what the owner reviews is what
@@ -211,7 +223,14 @@ hit, and **no music after the payoff**. **No whooshes** on cuts; the riser soft 
 has its vanilla sound (mob voices, steps, splashes included) and every shot its ambience; nothing but the voice
 covers a word (the clarity guard). Any owner note on a track or level overrides it.
 Check: `python3 scripts/audio_measure.py out/<name>.mp4`; `python3 scripts/onscreen_sfx.py <rec> --strict` (visible
-actions left silent). r:rc85ccc r:r36632d
+actions left silent). Every sound is one the picture leads the viewer to expect, and none jumps out over the voice;
+a sound that makes the owner stop is a blocker. Check: review (listen). r:rc85ccc r:r36632d r:rf484cb
+Stunt Shorts (NCS bed): a sound the game hinges on (edit `keySounds`, e.g. guess the mob's call) is **>= 8 dB over
+the music** (owner, 2026-11-11, guess_sound: "had super loud music"); the song ducks to -24 dB under it at publish.
+Check: `python3 scripts/key_sounds.py <name>` (BLOCK in add_song.py and in pace on the package).
+Stunt Shorts' NCS bed sits **about 3 dB lower than before (-16 LUFS against the game's -15)** so the game's own hits
+carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `python3 scripts/key_sounds.py <name>
+--hits` (the game's biggest hits vs the music). r:r662041
 
 ## 8. Pacing (pace, on the finished mp4)
 - **Hook**: the first word by **0.2 s** (BLOCK after 0.4 s); the picture moving from frame 1 (frozen first 0.3 s:
@@ -220,6 +239,7 @@ actions left silent). r:rc85ccc r:r36632d
 - **Build-up** escalates toward the payoff (cut rate, loudness, stakes); the last third doesn't sag (WARN). r:rcb4ffc
 - **Payoff**: one clear picture change plus a sound hit within 0.3 s; set story.json `"payoff": "L18"`; the end
   **<= 1.0 s** after it (1.2-1.8 s for a text payoff), with 0.2-0.3 s after the last word. r:rcb4ffc r:rfd98bb
+- **Length**: stories 25 s floor (the narration floor), WARN over 45 s; stunts: floor 8 s (lead decision 2026-11-11: the 25 s floor is the narration floor). Check: pace (length).
 
 ## 9. Review
 - An **independent reviewer** runs the short-review skill (subagent, or a fresh session); `./hb review` prepares it
@@ -259,6 +279,65 @@ actions left silent). r:rc85ccc r:r36632d
   expected subscribers per upload; a Short that stalls gets its execution checked (music level vs voice/key sound,
   the first 1.5 s, readability) and the same fault fixed in queued Shorts of its format. Check: youtube_upload.py
   (scores), the numbers check. r:rd56a20
+- **Format "mega" (owner's pick, an experiment)**: a huge generated build on screen from frame 1, an understated
+  caption held on top, an elytra fly-around ending inside it; original structures and wording, never a copy of the
+  reference Short. Check: owner, the numbers check. r:r8bb1e3 Variant: a time-lapse build-up under an understated request ("we need a small castle"),
+  escalating to the full reveal. r:r4449f0
+- **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
+  player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
+- **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
+  list of giant builds with funny wrong labels; always clean (no innuendo, nothing crude). Check: owner, review. r:r05c651
+- **HelloBuh stunts use the bright look by default**, tuned for daytime gameplay (no blown-out sky). Check: owner
+  A/B stills. r:r8fa348
+- **Format "logic"**: rapid real vanilla quirks, each set up and paid off in seconds, one caption. Check: owner,
+  minecraft-audit (every quirk must be true vanilla). r:r40f7c7
+- **Format "fakemod"**: normal gameplay, an absurd fake mod popup at the key moment, the choice plays out; our own
+  mods and menus. Check: owner. r:rd551de
+- **Format "faketrick"**: an impossible "secret trick" played straight as real; the trick alone is exempt from the
+  vanilla rule, the rest of the Short is vanilla-correct. Check: owner, minecraft-audit (all but the trick). r:rfcab11
+- **Format "cells"**: a walk past glass cells, each a mob stuck in an endless vanilla-built loop, a deadpan caption.
+  Check: owner. r:r07d791 Every cell traps a mob (never the player or a machine). r:rce72cb
+- **Format "race"**: two vanilla spreaders race across one field, top-down time-lapse. Check: owner. r:rbe60ef
+- **Every format the owner sends is saved in docs/formats.md** (reference, owner's words, family, rule, status), in
+  the same commit as its house rule. Check: owner. r:rc43770
+- **Finished videos live in GitHub Releases, not git history**: the videos branch keeps metadata and the uploader
+  downloads each mp4 from its release, sha256-checked (keeps the disk from filling): release `pkg-<name>`,
+  metadata.json `video.release`, scripts/release_assets.py + .github/workflows/release-assets.yml. Check: owner. r:rc5eaf0
+- **Format "hack"**: one real, clever block trick per Short, a "POV: you realized..." caption, working on screen in
+  the first 1.5 s. Check: owner, minecraft-audit (the trick must really work). r:rc15847
+- **Format "cooked"**: an impossible feat, then a flood of "X joined the game" as the consequences arrive, over a
+  dramatic still, timed to one specific track. Check: owner. r:r5ee125
+  Music: a similar NCS track; the still: the real meme photo, cached from a logged URL, never committed. r:r12cb71
+- **Format "quest"**: the whole Short is the escalating way down to one secret chest, opened only at the end.
+  Check: owner. r:r4b458d
+- **Format "love"**: a cute heart build revealed at night (lamps, fireworks), made to be shared. Check: owner. r:rf91fef
+- **Format "lucky"**: every next block impossibly luckier than the last, vanilla mechanics staged by the set.
+  Check: owner. r:r934ea4
+- **Format "inside"**: a short walk from a detailed interior out to an exterior that can't contain it, the cut
+  hidden (a door, a dark frame), about 8-12 s, built for replays. Check: owner, review (the cut must not show). r:r9a54b2
+- **Format "desire"**: one locked camera; a shortcut path keeps reappearing past ever more absurd obstacles, each
+  round a beat, the path always wins. Check: owner. r:r2e0a32
+- **Format "herobrine"**: an ordinary-seeming player whose "lag" grows until the reveal that it never was lag;
+  the caption plays it as a normal complaint. Check: owner. r:r047388
+- **Format "friend"**: a relatable multiplayer moment from your point of view, the friend's part exaggerated to the
+  absurd; short. Check: owner. r:ra64f79
+- **Format "mobpov"**: an annoying mob trait blown up into an unstoppable, absurdly fast POV chase. Check: owner. r:r8048f1
+- **Format "underdog"**: a fast list of how the game treats every mob, then the one it forgot ("...but what about
+  him?"), for sympathy and laughs. Check: owner. r:r8dcdb4
+- **Format "stages"**: a relatable arc in 3 titled chapters, each fast and escalating, a big payoff. Check: owner. r:redb7c0
+- **Format "dilemma"**: a life-or-death choice frozen mid-moment, stretched in slow motion from several angles,
+  then a true-vanilla twist that makes the choice moot. Check: owner, minecraft-audit (the twist). r:r9dcf73
+- **Format "psycho"**: a house tour, almost normal at the door, insanely dangerous inside, played straight.
+  Check: owner. r:rc40696
+- **Format "fakerun"**: an obviously impossible speedrun in jump cuts with a deliberate wrong detail, as comment bait;
+  track comments per 1k views. Check: owner, the numbers check. r:r9105ba
+- **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
+  backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
+- **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or
+  mob; fast is fine, off-aim reads as hacking. Check: review, the aim-error check (rec_check/lint). r:rffba12
+- **Let the payoff settle**: no cut or end while falling blocks, debris or a death puff are still moving; the 1 s
+  end limit counts from when the motion settles. Owner notes become automatic checks, not only review notes.
+  Check: pace/rec_check (settle), lint. r:r24d99a
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never

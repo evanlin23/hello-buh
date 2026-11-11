@@ -113,8 +113,10 @@ module.exports = {
   renderDistance: 6,   // the clearing's cut edge is past it (see setup)
   caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀',
   edit: {
-    caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀', red: '60s', song: 'songs/funk_abnormal.mp3', dropAt: 'all_done',
+    caption: 'building a house in 5s vs 10s vs 20s vs 60s 💀', red: '60s', dropAt: 'all_done',
     startAt: 'build_start:-0.15', endAfter: 'all_done:0.9',
+    // the mansion's 13 s of wall-placing at 2x (no dead time; it's the "60 seconds" build)
+    speed: [['b_mansion', 'e_mansion', 2]],
     subs: BUILDS.map((b, i) => ['build_start', b.sub, 30, i]).concat([['all_done', 'all of them', 0.9]])   // each label runs until the next
   },
 
@@ -193,6 +195,7 @@ module.exports = {
       const used = {}
       const slotFor = (name) => B.slots[name][Math.min(B.slots[name].length - 1, Math.floor((used[name] - 1) / 64))]
       ctx.mark('build_start', { build: B.name, blocks: todo.length })
+      ctx.mark(`b_${B.name}`)                                // speed-span anchors (each name once)
       let budget = 0, guard = 0, backed = false
       while (todo.length && guard++ < 1000) {
         const i = todo.findIndex(b => FACES.some(([dx, dy, dz]) => solid({ x: b.x + dx, y: b.y + dy, z: b.z + dz })))
@@ -215,6 +218,7 @@ module.exports = {
         while (budget >= 1) { await bot.waitForTicks(1); budget -= 1; await look(new Vec3(b.x + 0.5, b.y + 0.5, b.z + 0.5)) }
       }
       ctx.mark('build_done', { build: B.name })
+      ctx.mark(`e_${B.name}`)
       if (B.name === 'hut') bot.chat('/item replace entity @s hotbar.0 with dark_oak_planks 64')   // the roof needs a second stack
       if (bi < BUILDS.length - 1) await glide(center(B), 6)   // a beat to look at it
       await bot.waitForTicks(1)

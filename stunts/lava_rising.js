@@ -7,7 +7,7 @@ module.exports = {
   name: 'lava_rising',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'the lava stopped 1 block below me 😳',
-  edit: { caption: 'the lava stopped 1 block below me 😳', red: '1 block', song: 'songs/misery.mp3', dropAt: 'stopped' , startAt: 'rising:-0.2', endAfter: 'edge:2.0'},
+  edit: { caption: 'the lava stopped 1 block below me 😳', red: '1 block', song: 'songs/misery.mp3', dropAt: 'stopped' , startAt: 'rising:-0.2', endAfter: 'edge:2.0' },
 
   async setup (ctx) {
     const { bot } = ctx

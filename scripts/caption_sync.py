@@ -13,6 +13,9 @@ the quick check, no model. The finished Short is measured word by word by script
   here is usually a breath or a hum before the first word that the energy onset counts as speech (good_boy L07: an
   inhale from 0.09 s, "And" at 0.45 s). Listen to the line if it is large.
 - No voice/words.json: WARN (one-word captions fall back to letter-share timing).
+- A caption chunk that doesn't fit the caption image (wider than MAX_W, or wrapping past two lines, the way
+  story_track.caption_image draws it): BLOCK. It ran off both edges of the frame (light_sleeper L16, one 14-word chunk:
+  Buh Stories lead, 2026-11-11). Split it at the script's " / " chunks.
 Fix: ~/.hb-tts/bin/python scripts/align.py stories/<name> (or voice_check.py --resplit, which re-aligns itself).
 """
 import hashlib
@@ -30,6 +33,20 @@ def onset(path):
     fr = 160
     db = 20 * np.log10(np.sqrt(np.mean(x[: len(x) // fr * fr].reshape(-1, fr) ** 2, axis=1)) + 1e-9)
     return float(np.argmax(db > db.max() - 30)) * 0.01
+
+
+def too_wide(text):
+    """-> None when the caption fits (at most two wrapped lines, each inside story_track's MAX_W less its stroke), else why"""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import story_track as T
+    from PIL import ImageFont
+    f = ImageFont.truetype(str(T.FONT), T.CAP_PX)
+    lines = T._wrap(text.split(), f, T.MAX_W - 16)
+    if len(lines) > 2:
+        return f"wraps to {len(lines)} lines (max 2)"
+    if not T._fits(text):
+        return f"wider than the {T.MAX_W} px caption"
+    return None
 
 
 def main(sd):
@@ -74,6 +91,12 @@ def main(sd):
             elif abs(d) > 0.06 and not forced:
                 print(f"WARN  {lid}: {what} {d:+.2f} s from the speech onset")
                 warns += 1
+    for ln in story["lines"]:   # every chunk must fit the caption image (it ran off both edges: light_sleeper L16)
+        for c in (v.get(ln["id"]) or {}).get("captions") or []:
+            why = too_wide(c)
+            if why:
+                print(f"BLOCK {ln['id']}: caption {c!r} {why}: split it at the script's ' / ' chunks")
+                blocks += 1
     if whisper:   # owner: "Some of them are earlier, some of them are after": Whisper's per-word jitter. Never ship it.
         print(f"BLOCK {', '.join(whisper)}: Whisper word times (0.1-0.3 s off per word), not forced-aligned: install the "
               f"aligner (~/.hb-tts/bin/pip install transformers torch) and re-run scripts/align.py")
