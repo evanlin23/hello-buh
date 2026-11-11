@@ -165,7 +165,10 @@ module.exports = {
       const rowClear = (z) => { for (let ix = 0; ix < t.w; ix++) for (let y = 1; y <= t.h; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, z)).name === 'sand') return false; return true }
       for (let r = 0, iz = t.w - 1; iz >= 0; iz--, r++) {
         const z = t.z0 + iz, rz = nearZ - r
-        for (let ix = 0; ix < t.w; ix++) {
+        // from the middle out: a column's torch is placed past its neighbour toward the eye, so that neighbour has to be
+        // down already (the 4x4's left column was torched through the sand still standing beside it: rec_check sight)
+        const order = [...Array(t.w).keys()].sort((a, b) => Math.abs(a + 0.5 - t.w / 2) - Math.abs(b + 0.5 - t.w / 2) || a - b)
+        for (const ix of order) {
           const x = t.x0 + ix
           goal = new Vec3(t.x0 + t.w / 2, 0, rz)   // centred, standing still while it works (a sidestep per column made the torch late: the sand landed first)
           await column(x, z, last && k === 0 ? 'drop_final' : null)
