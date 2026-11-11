@@ -389,7 +389,11 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   into it; the trap really works in vanilla. Check: owner, minecraft-audit (the trap). r:refc733
 - **The opening (frame 0 to 1.5 s)**: frame 0 shows the Short's subject (the mob, trap, TNT, build or the payoff's
   setup), in motion by 0.5 s; never an empty field, plain grass, a bare wall or a still room. The caption reads as a
-  person reacting, not a label. Check: the opening check (./hb check, frame 0 subject in view), review, owner. r:r0f3da0
+  person reacting, not a label. Check: the opening check (scripts/opening.py in `./hb pace`, so check, review and
+  publish's gate run it, on the game view): BLOCK a flat frame 0 (the middle half under 0.20 and the view under 0.35
+  away from its main colour, with no mob in view in the recording) and nothing moving by 0.5 s; WARN a slow
+  opening, no sound hit within 6 dB of the peak by 0.5 s, no caption on frame 0, a caption over 10 words, a still
+  hold over 1.5 s in the first 3 s. review, owner. r:r0f3da0
 - **Pixel-art builds**: the view tracks where each block lands (creeper_art is the reference); the player never
   backs into an earlier wall (clear room behind every build spot). Check: owner, review. r:r650840
 - **Aim on the action, every stunt**: each place, break, use or dye happens with the crosshair on that block or

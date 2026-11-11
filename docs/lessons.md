@@ -637,3 +637,21 @@ Rules (build them in; the opening check enforces what it can):
    bottom >= 672 px at 1080x1920).
 5. No dead tail: nothing plays for more than ~0.7 s after the payoff settles (the settle rule's 0.6 s still is the end).
 6. Loops help when they come free (end frame matches the start), never forced.
+
+The opening check (scripts/opening.py, run by `./hb pace`; calibrated 2026-11-11, numbers in
+lib/hb/test/fixtures/opening_calibration.json):
+- Measured on the game view (rows 455-1466, the hotbar rows left out) at 216x202. `centre` / `busy`: the share of 8x8
+  cells in the middle half / the whole view whose colour is far from the view's main colour (scaled by its
+  brightness), best frame of the first 0.25 s. Flat = centre < 0.20 and busy < 0.35: BLOCK (WARN when the recording has
+  a mob, a player, a falling block or lit TNT within 35 deg of the look at the first tick, or when the main colour is
+  lava/fire). Motion 0-0.5 s: mean grey change < 0.5 and < 1.5% of the view changed since frame 0: BLOCK; < 2.0 and
+  < 15%: WARN (slow).
+- All 32 owner references pass (4 WARN slow: a path drawn on a still shot, a dark item frame, two slow pans; the
+  slowest, "Who tf is doing this", moves 0.14 with 2.8% changed) and all 16 STRONG openers and the 12 stories. Of the
+  8 WEAK openers it blocks the 4 flat ones (creeper 0.03 centre, trap_free_diamonds, cave_reveal, faketrick_gold_portal)
+  and WARNs mega_sponge (slow push, motion 1.38); cells_lab (a white corridor), logic_minecraft (a tree) and
+  race_grass_mycelium (a flat two-colour card that moves) read as busy and moving to pixels: those still need the
+  review's eye. dilemma_mace's frame 0 is flat but the wolf on the pyramid is in view: WARN.
+- Elsewhere in the videos branch it blocks lapse_castle, lapse_house (a timer over plain grass before the build),
+  pickaxe_race (a bare stone wall), rainbow_wool (sky in the middle) and wrong_bucket (sky): re-renders of those need
+  a new opening. The sound hit is only a WARN: half the references open 6-15 dB under their peak.

@@ -27,6 +27,9 @@ Checks (BLOCK = the short-review bar, WARN = needs a reason or a fix):
             (r:rffba12, scripts/owner_checks.py + lib/aim.js): BLOCK over 15 deg or off-screen, or over 10% past 6 deg.
   length    BLOCK < 25 s, WARN > 45 s (story Shorts: the owner wants them tight).
   loud      WARN when the true peak is over -1 dBTP (clips after YouTube's transcode).
+  opening   owner r:r0f3da0 (scripts/opening.py, on the game view): frame 0 not a flat view (BLOCK; WARN when the
+            recording has a mob in view), something moving by 0.5 s (BLOCK; WARN when slow), a sound hit by 0.5 s within
+            6 dB of the peak, the caption on frame 0 and <= 10 words, no still hold over 1.5 s in the first 3 s (WARNs).
   keysound  a stunt with edit.keySounds (guess the mob: the call is the game), on a package's short.mp4 beside its
             short_nosong.mp4: each key sound >= 8 dB over the music, else BLOCK (scripts/key_sounds.py).
 Exit 1 on a blocker, 2 when it can't run.
@@ -353,6 +356,20 @@ def edit_caption_times(video, edit, rec, clock):
     return sorted(out)
 
 
+def caption_of(video, edit):
+    """The band caption on frame 0: a package's metadata.json `caption` (as published) or the edit's `caption`."""
+    meta = pathlib.Path(video).resolve().parent / "metadata.json"
+    if meta.exists():
+        try:
+            m = json.loads(meta.read_text())
+            c = m.get("caption") or (m.get("edit") or {}).get("caption")
+            if c:
+                return c
+        except (ValueError, AttributeError):
+            pass
+    return (edit or {}).get("caption")
+
+
 # ---------------------------------------------------------------- owner notes as checks (scripts/owner_checks.py)
 def owner_checks_on(add, notes, rec, recp, clock, stunt, dur):
     """The aim check (findings added now) and the settle check's helper for the payoff: payoff out-s -> None (nothing
@@ -566,6 +583,23 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
         add("WARN", "hook", first_line[0], f"the first line starts at {first_line[0]:.2f} s, after {HOOK_S} s", "startAt the first line's mark")
     else:
         add("WARN", "hook", None, f"no line mark and no sound hit in the first {HOOK_S} s", "open on the question line or a hit")
+
+    # ---- the opening (owner r:r0f3da0, scripts/opening.py): frame 0 shows the subject (never a flat field), in motion
+    # by 0.5 s, a sound hit by 0.5 s, the caption on frame 0 (<= 10 words), no still hold over 1.5 s in the first 3 s
+    opening_m = None
+    try:
+        import opening
+        opening_m = opening.measure(video, level=lev)
+        subj = None
+        if rec and clock:
+            r0 = clock.at_out(0.0)
+            if r0.get("tick") is not None:
+                subj = opening.in_view_names(rec, r0["tick"])
+        for lvl, chk, t, msg, fix in opening.verdict(opening_m["picture"], opening_m["sound"], opening_m["caption_ink"], caption_of(video, edit), subj):
+            add(lvl, chk, t, msg, fix)
+        notes.append(opening.summary(opening_m) + ("" if subj is None else f"; in view at the first tick: {', '.join(subj) or 'no mob or player'}"))
+    except Exception as e:   # noqa: BLE001
+        notes.append(f"opening not measured ({type(e).__name__}: {e})")
 
     # ---- no pauses in the opening (owner 2026-11-10: "we should have absolutely no pauses in like the first few
     # seconds ... the dog has been sitting there has a brief pause right in the first few seconds"). Gaps between
@@ -871,7 +905,7 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
                "longest_dead": dead[:5], "longest_picture_dead": pic_dead[:5], "longest_shots": longest_shots, "thirds": rows,
                "mean_shot": round(dur / (len(cuts) + 1), 2), "s_per_line": round(dur / len(lines), 2) if lines else None,
                "voice_gaps": sorted(voice_gaps, key=lambda g: -g[1])[:6], "voice_gap_total": round(sum(max(0, g[1]) for g in voice_gaps), 2) if voice_gaps else None,
-               "spoken": None if spoken is None else round(spoken, 2)}
+               "spoken": None if spoken is None else round(spoken, 2), "opening": opening_m}
     return {"findings": sorted(F, key=lambda f: (f["level"] != "BLOCK", f["out"] if f["out"] is not None else -1)), "notes": notes, "metrics": metrics}
 
 
