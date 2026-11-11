@@ -26,3 +26,17 @@
   + sun goes by fast; "waiting two hundred nights" for what.
 - Share 7. "WAIT he's keeping exactly 70 so the mob cap is full and nothing spawns 💀 the baby zombie thinking he's a
   general is so sad"
+
+## r3 (script r3, 16 lines; midpoint after L08 "Then one night he was too SLEEPY to COUNT us.")
+- **Midpoint:** "A pit of zombies trapped under a player's house; the kid thinks it's an army; the old man keeps them for
+  his own reasons, maybe a mob farm or a trap." **About 60 % on zombies in a pit; about 25 % on knowing why he keeps
+  them** (the twist). Alternatives: a trapped villager narrating; a real zombie army to unleash later.
+- **After (one sentence):** "The old man keeps exactly 70 zombies loaded under his house to fill the hostile mob cap, so
+  nothing else can spawn near him; when one burns, a spider appears at once, and he replaces it the next night."
+  Right. **A little** surprised: "the spider beat plus his satisfied 'Seventy' made it click."
+- **Naive or knowing:** "Mostly naive, and it works. 'I think they're scared of us' is the best innocent misread. 'I
+  think the world's all full of us' is borderline knowing ... but reads as a cute line on first listen. Nothing felt
+  like the kid explaining."
+- **Confusing:** why skipping one night means opening at dawn is a bit fuzzy; casual viewers who don't know the cap is
+  70 may not see why the spider matters. "Every line moves the story."
+- Share 7. "WAIT he's using them to fill the mob cap?? 70 is the cap. That old man is a genius and a monster."
