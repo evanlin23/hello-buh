@@ -60,3 +60,4 @@ cave_reveal
 half_heart
 stages_friends  # first
 trap_free_diamonds  # first
+fakemod_permission  # first
