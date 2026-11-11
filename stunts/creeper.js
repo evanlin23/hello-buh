@@ -20,7 +20,7 @@ module.exports = {
     await ctx.defaultRules()
     // a field levelled at the terrain's high percentile (lib/plateau): the old 29-block box cleared down to the
     // start height left a cut dirt-and-stone wall right behind the creeper (frame review 2026-11-11)
-    const floor = await plateau(ctx, { x0: x - 48, x1: x + 48, z0: z - 48, z1: z + 48, biome: null, pct: 0.995, taper: 12, trees: 14 })   // (review r1: a ±32 field painted plains left a straight biome seam and a dirt face behind the creeper: wider, tapered, the biome left as it is)
+    const floor = await plateau(ctx, { x0: x - 34, x1: x + 34, z0: z - 34, z1: z + 34, biome: null, pct: 0.995, taper: 14, trees: 16 })   // (review r1: a ±32 field painted plains left a straight biome seam and a dirt face behind the creeper: tapered, the biome left as it is; ±48 took in a hill and stood 25 blocks up)
     this.x = x; this.z = z; this.floor = floor
     await ctx.cmd('/kill @e[type=!player]')
     await ctx.cmd('/difficulty normal')
