@@ -1,61 +1,43 @@
-# bell_window: spine, beats, clue map (r1)
+# bell_window: spine, beats, clue map (r3)
 
 ## The ending first
-**The reveal frame** looks from behind a skeleton in the shade of an oak on the cliff, down along its bow at the one
-lit window in Saltmouth. The bell hangs exactly between them. The arrow flies, rings the bell, and the doors slam.
-Then the boy is in the window, leaning past the bell, and the skeleton draws again at him. Cut.
+**The reveal frame** looks over the shoulder of a skeleton in the shade of an oak on the cliff, straight down one
+line: the bell, still swinging, and the lit window behind it. The kid is beside the bell now, on the porch roof, clear
+of it, looking up. The skeleton raises its bow and draws. Cut on the draw.
 
-**The first frame it re-explains** is the boy opening his shutters and the village running inside.
+**The first frame it re-explains** is the kid opening his shutters and the bell ringing right in front of his face.
 
 ## Spine
-- **Every night,** when he opens his window, the bell outside rings and the village runs indoors. Nobody's there.
-- **One night,** after three hundred of them (an arrow in the post every morning, a white thing under the oak on the
-  cliff), he decides to catch the ringer.
-- **Because of that,** he leans out past the bell.
-- **Until finally,** from the cliff we see it: a skeleton shooting at him, and the bell in the way, every time.
+- **Every night,** when he opens his window, the bell right outside rings and the whole village runs indoors. Nobody's there.
+- **One night** there's an arrow stuck in the bell post; by day, every window but his is open; something white stands under the oak on the cliff all day.
+- **Because of that,** when the bell rings again tonight, he leans out past it to see.
+- **Until finally,** from the cliff we see it: a skeleton aiming at him, and the bell that was in the way every time is not in the way now.
 
-## Beat sheet (72 words, ~28 s with the reveal)
-| t (s) | beat | line | picture | plants |
-|---|---|---|---|---|
-| 0-3 | **the question** | L01 "Every time I open my WINDOW, the whole village RUNS inside." | S01 POV shutters open, villagers run | why? |
-| 3-7 | worse | L02 "The bell RINGS. Three hundred NIGHTS. Nobody's ever THERE." | S02 the empty square; the cliff, bell and window on one axis | a ghost? |
-| 7-9 | **the plant** | L03 Mom: "Shutters SHUT, honey." | S03 Mom (unarmed) | literally: shut means safe; heard as "it's cold" |
-| 9-13 | **the clue** | L04 "Every morning there's an ARROW in the bell post. Mom pulls it OUT." | S04 the arrow, angled from the cliff | someone shoots |
-| 13-15 | the clue | L05 "Every window in the village is OPEN. Except MINE." | S05 day, every shutter open but his | skeletons ignore villagers: only he is a target |
-| 15-20 | **bomb (~50 %)** | L06 "Up on the CLIFF there's an old OAK. Something WHITE stands under it all DAY." | S06 the white shape in the oak's shade | players: a skeleton in the shade |
-| 20-25 | **the want, the try** | L07 "Tonight the bell RANG again. So I LEANED out PAST it." | S07 POV: an arrow hits the bell on RANG; he leans past it on PAST | he takes the shield away |
-| 25-27 | **the reveal** | | S08 from behind the skeleton: the kid exposed, the bell off the line; it draws | the game says it |
-| 27-28 | **cut** | | 1.0 s after L07 | |
+## Beat sheet (77 words, ~26-30 s at Pip's pace, plus the ~2.5 s reveal)
+| beat | line | picture | plants |
+|---|---|---|---|
+| **the question** (0-3 s) | L01 "Every time I open my WINDOW, the village BELL RINGS." (punch) | S01 POV: shutters open, the bell centred 3 blocks out rings | why does opening a window ring a bell? |
+| worse | L02 "And the WHOLE village runs INSIDE." | S01: villagers run for their doors | they fear it (vanilla: a rung bell sends villagers home) |
+| the ghost | L03 "Three hundred NIGHTS. And nobody's ever THERE." | **S02 the axis**: window, bell, dark cliff in one line | a ghost? the line of fire, hidden |
+| the plant | L04-L05 "Mom just SAYS:" / Mom: "Shutters SHUT, honey." | S03 Mom (unarmed) at his door | Mom knows: shut = safe |
+| **the clue** | L06 "One night there was an ARROW stuck in the bell POST." | S04 POV: the arrow at his eye level, feathers toward the cliff | someone shoots, at his height |
+| the clue | L07 "Every window in the village is OPEN. Except MINE." | S05 day: every shutter open but his | only he is a target (skeletons ignore villagers) |
+| **midpoint (~55 %)** | L08 "Up on the CLIFF there's an old OAK. Something WHITE stands under it all DAY." (punch) | S06 the white shape in the oak's shade | players: a skeleton hiding from the sun |
+| **the try** | L09 "Tonight the bell RANG again. So I LEANED out PAST it." (punch) | S07 POV: the ring; he steps out and the bell slides out of the line | he takes the shield away |
+| **the reveal** | (no line) | S08 the axis from the skeleton: nothing between; it draws | the bell was a shield |
+| **cut** | | 1.0 s after the `draw` mark | |
+
+The attentive viewer gets ahead at L08 (skeleton). The surprise held back is *why the bell* rings: it was catching the arrows meant for him.
 
 ## Clue map
 | clue | where | misread as | means after the twist |
 |---|---|---|---|
-| the village runs when he opens the window | L01, S01 | they hate him or fear him | a ringing bell sends villagers in (vanilla) |
-| nobody's ever there | L02 | a ghost | the ringer is 30 blocks up the cliff |
-| the cliff, bell and window on one axis | S02 (picture) | composition | the line of fire |
-| "Shutters SHUT, honey." | L03 | Mom fussing | shut shutters = no target |
-| an arrow in the post, angled from the cliff | L04, S04 | a prank | a skeleton's miss |
-| every window open but his | L05, S05 | a brag | the only player, the only target |
-| something white under the oak all day | L06, S06 | a stump, a statue | a skeleton in the shade (vanilla: it shelters from sun) |
-| unarmed villagers | S03, S06 (picture) | | why nobody kills it |
-
-## Twist checklist
-- [x] **Changes line 1:** the village doesn't run from him; the bell does it, because something shoots at him.
-- [x] **Fair:** the arrow, the white thing and the axis all come before the reveal.
-- [x] **Twice in the picture:** S02's axis and S04's arrow.
-- [x] **Misread:** a ghost, Mom fussing, a brag.
-- [x] **Someone gets ahead:** the cold read was 40 % at the midpoint, guessing the skeleton.
-- [x] **The game says it:** the skeleton's draw, the arrow ringing the bell, villagers fleeing.
-- [x] **One step:** "a skeleton shoots at his window; the bell's in the way".
-- [x] **300 px:** the bell centred between the two in S08, at a quarter of frame height.
-- [x] **Causes:** he leans out (his choice). The skeleton stays up there because it's a cliff and the oak gives shade.
-- [x] **Rewatch:** L01, L03 and L05.
-
-## Owner's mystery test
-- **Q** by 3 s: yes.
-- **Mid:** cold read 40 %.
-- **Cut** ≤1.0 s: yes.
-- **Length:** ~28 s.
-
-The cold read said "confused on cause and effect", so S02's axis and S08's framing are the fix: the bell visibly on
-the line between the two, in both shots.
+| the bell rings when he opens the window | L01, S01 | a ghost, a prank, a curse | a skeleton shoots the moment he shows himself; the bell takes the arrow |
+| the village runs inside | L02, S01 | they fear him | vanilla: a rung bell sends villagers home |
+| nobody's ever there | L03 | a ghost | the shooter is 13 blocks away, up the cliff |
+| window, bell, cliff on one line | S02 (picture) | composition | the line of fire |
+| "Shutters SHUT, honey." | L05 | Mom fussing | shut shutters = no target |
+| an arrow in the bell post at his eye level | L06, S04 | a prank | a skeleton's near miss |
+| every window open but his | L07, S05 | a brag | the only player, the only target |
+| something white under the oak all day | L08, S06 | a statue, a ghost | a skeleton in the shade (vanilla: it shelters from the sun) |
+| unarmed villagers | S03, S05 (picture) | | why nobody deals with it |
