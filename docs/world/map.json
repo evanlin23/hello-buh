@@ -1481,6 +1481,29 @@
     "six_thousand_torches"
    ],
    "status": "claimed 2026-11-11 by six_thousand_torches"
+  },
+  "highwall": {
+   "name": "Highwall",
+   "kind": "village",
+   "region": "the_white",
+   "at": [
+    -1100,
+    72,
+    -630
+   ],
+   "footprint": [
+    -1140,
+    -730,
+    -1060,
+    -590
+   ],
+   "about": "The walled village in the White's east lowland, on the old road west where it comes down from Frostgate's highlands (snowy plains, a shallow valley at y 70-74). A square stone-brick wall 40 high on day 3700 (old Tomas adds one block a morning), no gate; outside its north side a player's trading hall, 12 x 52, running north. Built by the story (wall, village, hall); the hills hide it from Frostgate, and no rendered Short is within 500 blocks.",
+   "pieces": [],
+   "stamps": [],
+   "stories": [
+    "wall_grows"
+   ],
+   "status": "claimed 2026-11-11 by wall_grows"
   }
  },
  "stories": {
@@ -1664,6 +1687,14 @@
    "day": 4500,
    "places": [
     "larkfield"
+   ],
+   "cameos": [],
+   "status": "claimed"
+  },
+  "wall_grows": {
+   "day": 3700,
+   "places": [
+    "highwall"
    ],
    "cameos": [],
    "status": "claimed"
