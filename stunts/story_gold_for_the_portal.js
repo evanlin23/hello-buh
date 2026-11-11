@@ -37,9 +37,9 @@ module.exports = {
   idleLife: true,
   cast: { Grandpa: 'ari' },
   selfArmor: ['golden_boots', null, null, null],   // Grandma's rule: the grandson wears golden boots (never said)
-  look: 'auto',
+  look: 'bright',   // the owner's pick (2026-11-11, A/B ab_bright_gold): bright and punchy
   shots: {},   // below
-  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', guiScale: 4, startAt: 'line:0', endAfter: 'story_end:0', punch: [['reveal', 0, 0.08]] },   // the punch: the stripe reads (the payoff; S14 has no line)
+  edit: { caption: CAPTION, red: 'portal', story: 'stories/gold_for_the_portal', guiScale: 4, punchStress: true, startAt: 'line:0', endAfter: 'story_end:0', punch: [['reveal', 0, 0.08]] },   // the punch: the stripe reads (the payoff; S14 has no line)
   // the whole area, Hushwell's plaza (S05's background, ~95 blocks SSW) included
   chunkStops (set) { return [[0, 0], [-30, 60], [-22, 100], [40, 0], [0, -40], [40, 40], [-40, 0]].map(([dx, dz]) => ({ x: set.x + dx, z: set.z + dz })) },
 
