@@ -38,3 +38,18 @@ After (render 43104055584, edit-only on 43100052227's frames), the same measurem
   riser/hit, as before.
 - Lesson: a story's key sound needs air (no line over its attack) and a ducked score; measure a story's key sounds on
   stems (HB_STEMS), since its package has no separate no-song mix.
+- Review round 1 (independent reviewer): NOT READY, "Grandpa's turn on the horn stalls, then snaps 150 degrees at
+  30.35 s". The raw frames (Actions seg-9, before the edit) turn smoothly; the held caption "kid. They're COMING."
+  covered his body and crossbow through the hold and its drop at L09's mark read as the snap. Fix (edit-only):
+  story.json L08 `caption_clear: 0.25` (scripts/story_track.py: a line's last caption ends S s past its last word,
+  opt-in; test_caption_sync.py). Round 2: READY. Nitpicks: the 3-frame turn is brisk; the horn sits ~11-13 dB under
+  the voice level (alone in its hold).
+- Renders: Actions 43100052227 (full), 43104055584 (score duck 24 dB), 43110075615 (full again: byte-identical,
+  deterministic), 43114077378 (the caption; the packaged cut). ./hb check: CHECK OK (audible: both horns found, 0.98 /
+  0.97; the crossbow click at 42.15 s not found: also in the approved cut); pace OK (1 warning: S09's same picture 7.0 s,
+  6.2 s in the approved cut).
+- Package: videos 6eeb861, HELD (publish.js --pass), sha256 76cff97d8bcb9bab..., 42.75 s, release asset
+  story_thirty_one_raids.short.76cff97d8bcb9bab.mp4. Needs the owner's fresh OK (uploads/buhstories/owner_ok.txt not
+  touched).
+- Lesson: a "snap" at a line mark can be a caption dropping off the subject; compare the raw slice frames
+  (download_workflow_run_artifact seg-N) before re-recording.
