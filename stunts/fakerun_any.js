@@ -122,7 +122,7 @@ module.exports = {
         await fill([E - w, y, -4 + dz], [E + w, y, -4 + dz], 'end_stone')
       }
     }
-    for (const [dx, dz, h] of [[-13, -16, 26], [12, -18, 30], [-19, -4, 22], [19, -6, 24], [-6, -24, 28], [7, 9, 20]]) {
+    for (const [dx, dz, h] of [[-9, -13, 30], [7, -15, 33], [-1, -20, 36], [-16, -4, 26], [15, -6, 28]]) {
       await fill([E + dx - 1, 1, dz - 1], [E + dx + 1, h, dz + 1], 'obsidian')
     }
 
@@ -307,16 +307,16 @@ module.exports = {
     // never a still frame here (rec_check: held): one slow pan, left to right
     const pan = async (a, b, ticks) => { for (let k = 1; k <= ticks; k++) { await A.view(a.plus(b.minus(a).scaled(k / ticks))); await still(1) } }
     // no dragon anywhere (the label says it's dead: for the comments); the pan crosses the obsidian pillars
-    const Y = ISLE + 3.5
-    await drift(at(E - 14, Y, -16), 16)
-    await pan(at(E - 14, Y, -16), at(E - 4, Y + 1, -22), 30)
+    const Y = ISLE + 2   // a little under the eye: the island's edge and the pillars rising past it
+    await drift(at(E - 8.5, Y, -12.5), 16)
+    await pan(at(E - 8.5, Y, -12.5), at(E - 0.5, Y + 1, -19.5), 30)
     R.label(ctx, 10)
     bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.7, 1)
-    await pan(at(E - 4, Y + 1, -22), at(E + 6, Y + 1, -20), 30)
+    await pan(at(E - 0.5, Y + 1, -19.5), at(E + 7.5, Y + 1, -14.5), 30)
     R.finish(ctx)
     ctx.sound('ui.toast.challenge_complete', 1, 1)
     bot.swingArm('right')
-    await pan(at(E + 6, Y + 1, -20), at(E + 13, Y + 1.5, -18), 60)
+    await pan(at(E + 7.5, Y + 1, -14.5), at(E + 11, Y + 2, -11), 60)
     return lit && over
   }
 }
