@@ -13,7 +13,7 @@ const dress = require('../lib/sets/dress')
 const FR = require('../lib/friend')
 const M = require('../lib/movie')
 
-const CAPTION = 'me vs my friend on day 1 of a new world'
+const CAPTION = 'how is he already done 💀'   // a reaction, 5 words (r:r0f3da0 rule 4)
 const BRO = 'bro'
 const ME = [0.5, 2.8]                 // my feet (dx, dz), facing north at my tree
 const MINE = { dx: 0, dz: -1, h: 8 }  // my tree, tall: its canopy above the frame (I punch its logs at dy 2, then dy 1)
@@ -34,9 +34,10 @@ module.exports = {
   cast: { [BRO]: 'kai' },
   playerNames: true,                  // "bro" over his head, as the game draws another player's name
   edit: {
-    caption: CAPTION, red: 'my friend',
+    caption: CAPTION, red: 'already',
     chatScale: 5,   // the advancement flood readable on a phone (independent review round 1; vanilla GUI 3 was ~16 px glyphs)
-    startAt: 'dig1:-0.1', endAfter: 'reveal:0.9',
+    startAt: 'dig1:0.55',   // frame 0 = his first advancement in chat and his tree going (r:r0f3da0: the joke's subject at frame 0)
+    endAfter: 'reveal:0.9',
     // no cut: the second log plays whole (owner r:r52f94c: no cut mid-action; a bare-hand dig is one action)
     dropAt: 'reveal',
     punch: [['reveal', 0, 1.06]], flash: [['reveal', 0, 0.3]],   // the payoff's picture change (pace: the turn itself starts before the mark)
@@ -112,7 +113,7 @@ module.exports = {
         b.yaw = -90; b.pitch = 0
         broRun = () => { if (b.x < 13) b.x += 0.28 }
       }],
-      [16, adv('Stone Age')],
+      [11, adv('Stone Age')],   // on frame 0 (startAt dig1:0.55)
       ...FOREST.map((t, i) => [30 + i * 7, () => FR.vanish(ctx, K, P, this.forest[i], { ticks: 3, vol: Math.max(0.3, 0.75 - i * 0.08), pops: 2 })]),
       [34, adv('Getting an Upgrade')],
       [52, adv('Acquire Hardware')]
