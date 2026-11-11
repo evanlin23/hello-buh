@@ -201,11 +201,11 @@ module.exports = L.makeLapse({
   perTick: 60,
   // each stage its own steady drone angle, joined by hard cuts (r:r66efa4); every move slow and even
   angles: [['fountain', 'close'], ['walls', 'ring'], ['houses', 'houses'], ['tier1', 'face'], ['town1', 'town'], ['tier2', 'far'], ['town2', 'roofs'], ['giants', 'giants'], ['giants2', 'scale']],
-  payoff: { stage: 'lights', shot: 'reveal', hold: 30 },
+  payoff: { stage: 'lights', shot: 'reveal', hold: 40, toast: false },   // (no toast fanfare: it rang over the pass, no hit there)
   // the close pass beside 56e and the small fountain, the city towering over them (r:rf8524b); the water splashes
   outro: [{
     shot: 'pass', mark: 'pass', ticks: 40,
-    async at (ctx) { ctx.sound('block.water.ambient', 1, 1.1) }
+    async at (ctx) { ctx.sound('entity.generic.splash', 1, 1.0); ctx.sound('block.water.ambient', 1, 1.1) }
   }],
   endAfter: 1.6,
   edit: {
