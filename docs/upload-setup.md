@@ -59,9 +59,42 @@ schedule stays as a backup; a second run on the same day does nothing).
 - **No repeats.** A title already on the channel is refused (series parts have their own titles). Nothing is
   ever deleted or re-uploaded.
 - **No same format twice in a row**, at most 1 pixel-art per 3 (`scripts/check_queue.py`).
+- **Gated on today's gates.** A non-story Short whose metadata `gates` are older than `lib/hb/gates.json`'s version,
+  or blocked without a reviewed waiver, is skipped with the reason in the run log (`scripts/gates.py`; re-gate with
+  `python3 scripts/gates.py stamp <name>`; `python3 scripts/gates.py stale` lists what would be skipped). story_*
+  Shorts are gated by the story pipeline and the owner's OK instead.
 - **Only original, reviewed Shorts.** Status "ready" means all three reviews passed. Only NCS or original music,
   credited. Made for kids: No. No synthetic-media flag (it's rendered gameplay, not realistic altered footage).
 - **Circuit breaker.** If the last 3+ auto uploads that have been public 24-96 h all have under 50 views (what the
   BuhExplains suppression looked like), the run pauses uploads itself (`uploads/PAUSED`) and opens an issue
   instead of feeding more videos to a held-back channel.
 - Only the HelloBuh channel: the token's channel must match `YT_CHANNEL_ID`.
+
+## A second channel: Buh Stories (the story Shorts; owner 2026-11-10)
+Story Shorts go to their own channel, never @HelloBuh. Every package's `metadata.json` names its channel (`channel`:
+`buhstories` for `story_*` Shorts, `hellobuh` for everything else; lib/channel.js, written by publish.js), and the
+uploader sends a Short only to that channel. Nothing goes up until **all** of this is done, and each story still needs
+the owner's OK by name (status "ready" via `publish --owner-ok`). What the owner does, once:
+1. **Create the channel.** Done by the owner on 2026-11-11, on its **own Google account** (not a Brand Account under
+   the HelloBuh login): name "Buh Stories", handle @BuhStoriesMC. Use that account for everything below.
+2. **Branding.** Upload the kit in `brand/buh_stories/` (avatar.png, banner.jpg, watermark.png) and the description in
+   docs/brand.md "Buh Stories channel" (YouTube Studio → Customization). Audience: "No, it's not made for kids".
+3. **A refresh token for the new channel** (the same OAuth client, so no new Google Cloud project). Because Buh
+   Stories is on a separate Google account:
+   - first add that account as a **test user** on the OAuth consent screen (Google Cloud → APIs & Services → OAuth
+     consent screen → Test users), unless the app is published;
+   - then repeat step 2 above signed in as the **Buh Stories account**.
+   While the app is in "Testing", Google expires its refresh tokens after 7 days. If HelloBuh's token survives, the
+   app is published and this one will too.
+   Check with the `channels?mine=true` call that it shows "Buh Stories", and note its UC... id. The HelloBuh token
+   cannot upload there, and vice versa.
+4. **GitHub** → Settings → Secrets and variables → Actions:
+   - Secret `YT_REFRESH_TOKEN_BUHSTORIES` (the token from step 3). `YT_CLIENT_ID` / `YT_CLIENT_SECRET` are shared.
+   - Variables `YT_CHANNEL_ID_BUHSTORIES` = `UC5m8kcDO2cSlXT49VoJjpRw` (Buh Stories' id, from the owner 2026-11-11), `YT_ENABLED_BUHSTORIES` = `true`. Optional
+     `YT_PER_DAY_BUHSTORIES` (default 3; stories are fewer, 1 is probably right).
+   - Test: Actions → upload-short → Run workflow → channel `buhstories`, mode `dry-run`.
+5. **The daily clock:** a second cron-job.org job like step 4 above, at another minute, with the body
+   `{"ref":"main","inputs":{"channel":"buhstories"}}`. GitHub's own schedule only runs HelloBuh.
+
+Day to day it is the same as HelloBuh, in `uploads/buhstories/` (queue.txt, uploads.json, PAUSED); the weekly report
+and the "nothing left" and "paused" issues are titled "Buh Stories ...". Stop it with `YT_ENABLED_BUHSTORIES` = `false`.

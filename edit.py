@@ -405,6 +405,21 @@ ICONS = HERE / "work" / "assets" / CLIENT_JAR.stem / "icons"
 _font = None
 
 
+def text_width(jar, text):
+    """The width of `text` in the default font, in GUI px (the advance draw_text uses, without the last gap)."""
+    global _font
+    if _font is None:
+        with jar.open("assets/minecraft/textures/font/ascii.png") as f:
+            _font = Image.open(io.BytesIO(f.read())).convert("RGBA")
+    tot = 0
+    for ch in text:
+        c = ord(ch)
+        cell = _font.crop(((c % 16) * 8, (c // 16) * 8, (c % 16) * 8 + 8, (c // 16) * 8 + 8))
+        w = max([xx + 1 for xx in range(8) if any(cell.getpixel((xx, yy))[3] > 0 for yy in range(8))] or [0])
+        tot += (w if ch != " " else 4) + 1
+    return max(0, tot - 1)
+
+
 def draw_text(img, jar, text, x, y, align_right=False, scale=None, color=(255, 255, 255, 255), center=False, outline=False, shadow_on=True):
     """Minecraft's default font (textures/font/ascii.png, 8x8 cells) at GUI scale, white with the
     1px dark-grey shadow the game draws under HUD text."""
@@ -863,12 +878,23 @@ def syschat_windows(timeline, hold=10.0):
     return out
 
 
-def syschat_png(jar, lines, path):
+def syschat_png(jar, lines, path, align="left", y_frac=0.70):
     """The closed chat (ChatComponent.render): each line on a translucent black strip 320 GUI px wide, 9 px a line,
-    the newest bottom line's foot 40 GUI px above the bottom of the game view, text in the game font with its shadow."""
+    the newest bottom line's foot 40 GUI px above the bottom of the game view, text in the game font with its shadow.
+    align "center" (edit.chatAlign, the default for story Shorts; owner, 2026-11-11: centre the "Buh left the game"
+    line, off the dog): the same font, colour, strip and scale, each strip only as wide as its text (2 GUI px a side)
+    and centred, the newest line's middle at y_frac of the game area (edit.chatY; 0.70 is the caption line, empty by
+    the payoff), older lines above it. Pick chatY so the strip clears the shot's subject."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     bottom = BAND + GAME_H
     for n_, (text, col) in enumerate(reversed(lines)):
+        if align == "center":
+            tw = text_width(jar, text) * GUI
+            y_ = BAND + int(GAME_H * y_frac) - (9 * GUI) // 2 - 9 * GUI * n_
+            x0 = max(0, (W - tw) // 2 - 2 * GUI)
+            ImageDraw.Draw(img).rectangle((x0, y_, min(W - 1, x0 + tw + 4 * GUI), y_ + 9 * GUI), fill=(0, 0, 0, 128))
+            draw_text(img, jar, text, x0 + 2 * GUI, y_ + GUI, color=col)
+            continue
         y_ = bottom - (49 + 9 * n_) * GUI
         ImageDraw.Draw(img).rectangle((0, y_, min(320 * GUI, W), y_ + 9 * GUI), fill=(0, 0, 0, 128))   # (wider than the view at chat scale 4+)
         draw_text(img, jar, text, 2 * GUI, y_ + GUI, color=col)
@@ -1307,6 +1333,7 @@ def main():
     # retention toolkit (scripts/retention.py): all optional, from the stunt's `edit` block
     ap.add_argument("--slowmo", help='JSON list of [EVENT, BEFORE_S, AFTER_S, FACTOR=0.5] slow-motion windows')
     ap.add_argument("--punch", help='JSON list of EVENT or [EVENT, NTH, SCALE] zoom punches on the game view')
+    ap.add_argument("--punch_stress", help='JSON list of [LINE ID, S INTO THE LINE, PEAK]: short zoom punches on the spoken stress (edit.punchStress)')
     ap.add_argument("--counter", help='JSON {"at": [EVENT, ...], "total": N} "3/5" beat counter')
     ap.add_argument("--cards", help='JSON list of [EVENT, TEXT, SECONDS?, COLOR?, NTH?] impact cards')
     ap.add_argument("--zoom", help='JSON list of [START[:off], END[:off], SCALE] held push-ins on the game view')
@@ -1324,6 +1351,8 @@ def main():
     ap.add_argument("--hook", help='JSON {"at": EVENT, "before": 1.5, "after": 0, "text": ...} finale preview in front (1.2-1.5 s)')
     ap.add_argument("--hud", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--gui_scale", type=int, help="GUI scale of container screens (edit.guiScale; default 3, vanilla's auto scale here; 4 is vanilla's largest at this window): phone-readable chests and barrels")
+    ap.add_argument("--chat_align", default="left", choices=["left", "center"], help="chat lines (syschat marks) at vanilla's bottom-left, or centred (edit.chatAlign; story Shorts default to center)")
+    ap.add_argument("--chat_y", type=float, default=0.70, help="with --chat_align center: the newest line's middle as a fraction of the game area's height (edit.chatY; 0.70 = the caption line)")
     ap.add_argument("--chat_scale", type=int, help="GUI scale of the chat lines (edit.chatScale; default --gui_scale, else 3): a story's payoff line ('Buh left the game') readable on a phone")
     ap.add_argument("--item_names", help='JSON {item id: name}: draw the selected item\'s name over the hotbar when it changes (Gui.renderSelectedItemName); {} for title-cased ids')
     ap.add_argument("--start", type=float, default=0.0, help="seconds to skip at the start of the footage")
@@ -1355,7 +1384,7 @@ def main():
     args.start = math.floor(args.start * args.fps + 1e-6) / args.fps
     sys.path.insert(0, str(HERE / "scripts"))
     import retention
-    if (args.punch or args.shake or args.flash or args.freeze or args.zoom) and args.timeline and args.frames:
+    if (args.punch or getattr(args, 'punch_stress', None) or args.shake or args.flash or args.freeze or args.zoom) and args.timeline and args.frames:
         retention.apply_frame_fx(args, json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="hb-edit-"))
@@ -1630,7 +1659,7 @@ def main():
                     if b <= 0 or b <= a:
                         continue
                     with gui_scale(args.chat_scale or args.gui_scale):
-                        syschat_png(jar, lines_, tmp / f"chat{si}.png")
+                        syschat_png(jar, lines_, tmp / f"chat{si}.png", align=args.chat_align, y_frac=args.chat_y)
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"chat{si}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[sc{si}]")
                     last, n_in = f"sc{si}", n_in + 1

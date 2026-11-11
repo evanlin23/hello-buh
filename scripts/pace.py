@@ -20,6 +20,8 @@ Checks (BLOCK = the short-review bar, WARN = needs a reason or a fix):
             else the biggest sound + picture hit in the last 40%: a sound hit and a picture change within 0.3 s,
             and the end <= 1.0 s after it (1.2-1.8 s for a text payoff: a death screen or a card).
   length    BLOCK < 25 s, WARN > 45 s (story Shorts: the owner wants them tight).
+  keysound  a stunt with edit.keySounds (guess the mob: the call is the game), on a package's short.mp4 beside its
+            short_nosong.mp4: each key sound >= 8 dB over the music, else BLOCK (scripts/key_sounds.py).
 Exit 1 on a blocker, 2 when it can't run.
 """
 import argparse
@@ -51,6 +53,12 @@ SAME_WARN = 5.0               # runaway (the benchmark) holds one picture 3.3 s 
 PAYOFF_WIN = 0.3
 TAIL_MAX, TEXT_TAIL = 1.0, (1.2, 1.8)
 LEN_MIN, LEN_WARN = 25.0, 45.0   # 25: no-pause narration at ~5.25 words/s runs 25-29 s (owner: no dramatic pauses)
+LEN_MIN_STUNT = 8.0   # an unnarrated stunt (lead 2026-11-11: the 25 s floor is the narration floor; the owner's "inside" format is 8-12 s)
+
+
+def length_floor(is_story):
+    """The shortest a Short may be: the narration floor for a story, the stunt floor otherwise."""
+    return LEN_MIN if is_story else LEN_MIN_STUNT
 
 
 # ---------------------------------------------------------------- measuring
@@ -181,6 +189,36 @@ def norm(s):
     return re.sub(r"[^a-z0-9 ]+", "", re.sub(r"\s*/\s*", " ", s.lower())).split()
 
 
+BUILD_SOUND = re.compile(r"^block\.[\w.]+\.(place|break)$")
+BUILD_RUN = 0.5   # a placement counts when another lands within this many seconds (a steady build, not one stray block)
+
+
+def build_events(timeline, to_out, run=BUILD_RUN):
+    """Block placements and breaks in the recording (their block.*.place/break sounds, plus place/dig_end marks), in
+    output time, keeping only those in a steady run: the picture changes with every block, so a build is never "dead"
+    (lead 2026-11-11: pixel-art builds put 7-20 blocks a second on screen through spans pace called dead). A recording
+    with few placements (stories) is unaffected."""
+    src = sorted(e["t"] / 1000 for e in timeline
+                 if (e.get("event") == "sound" and BUILD_SOUND.match(str(e.get("sound", "")))) or e.get("event") in ("place", "dig_end"))
+    out = []
+    for i, t in enumerate(src):
+        if (i > 0 and t - src[i - 1] <= run) or (i + 1 < len(src) and src[i + 1] - t <= run):
+            o = to_out(t)
+            if o is not None:
+                out.append(round(o, 2))
+    return sorted(set(out))
+
+
+def gaps(evs):
+    """The spans between consecutive (time, label) events, longest first: (a, b, length, label a, label b)."""
+    evs = sorted(evs)
+    g = []
+    for (a, ea), (b, eb) in zip(evs, evs[1:]):
+        if b - a > 0.05:
+            g.append((round(a, 2), round(b, 2), round(b - a, 2), ea, eb))
+    return sorted(g, key=lambda x: -x[2])
+
+
 # ---------------------------------------------------------------- the checks
 def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_story=None):
     notes, F = [], []
@@ -223,6 +261,9 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
     cuts = sorted(set(cuts_v) | {c for c in cut_marks if not any(abs(c - v) < 0.2 for v in cuts_v)})
     cap_times = sorted({round(t, 2) for t, _, _ in caps})
     other_marks = [(round(m["out"], 2), m["event"]) for m in marks if m["event"] not in ("line", "cut", "shot", "self", "start", "end", "f1_on", "f1_off", "story_end")]
+    builds = build_events(rec.get("timeline", []), clock.out_of_src) if rec and clock else []
+    if builds:
+        notes.append(f"{len(builds)} block placements/breaks in steady runs count as events (a build is never dead)")
 
     # the voice: each line's spoken span (voice.json) and the silence after it, before the next line
     voice_gaps = []
@@ -256,8 +297,9 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             'drop "gap" (K.line defaults to 0.08 s); published stories keep theirs only so they render as before')
 
     # ---- 6. length
-    if dur < LEN_MIN:
-        add("BLOCK", "length", dur, f"{dur:.1f} s: under the 25 s minimum", "more beats (an escalating series), not slower ones")
+    floor = length_floor(is_story)
+    if dur < floor:
+        add("BLOCK", "length", dur, f"{dur:.1f} s: under the {floor:g} s minimum" + ("" if is_story else " for a stunt"), "more beats (an escalating series), not slower ones")
     elif is_story and dur > LEN_WARN:
         add("WARN", "length", dur, f"{dur:.1f} s: over 45 s for a story (owner wants them tight)", "cut the line/shot that adds least (see the slowest spans below), or end on the payoff")
 
@@ -484,13 +526,7 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
 
     # ---- 3. dead spots
     events = sorted([(0.0, "start")] + [(c, "cut") for c in cuts] + [(t, "caption") for t in cap_times] + [(t, f"line {lid}") for t, lid in lines]
-                    + [(t, "sound hit") for t, _ in hits] + [(t, "motion") for t in onsets] + [(t, ev) for t, ev in other_marks] + [(dur, "end")])
-    def gaps(evs):
-        g = []
-        for (a, ea), (b, eb) in zip(evs, evs[1:]):
-            if b - a > 0.05:
-                g.append((round(a, 2), round(b, 2), round(b - a, 2), ea, eb))
-        return sorted(g, key=lambda x: -x[2])
+                    + [(t, "sound hit") for t, _ in hits] + [(t, "motion") for t in onsets] + [(t, ev) for t, ev in other_marks] + [(t, "block") for t in builds if 0 < t < dur] + [(dur, "end")])
     dead = gaps(events)
     def shot_at(t):
         prev = [c for c in cuts if c <= t + 0.01]
@@ -519,6 +555,22 @@ def analyse(video, stunt=None, recp=None, story_dir=None, payoff_spec=None, is_s
             ls = [lid for t, lid in lines if a <= t < b]
             add("WARN", "picture", a, f"the same picture for {b - a:.1f} s ({a:.2f}-{b:.2f} s{': lines ' + ', '.join(ls) if ls else ''}): its cuts/moves don't change what we see",
                 "cut the middle line(s) to a different subject or size (a reaction, the detail the line names), or shorten the span")
+
+    # ---- key sounds over the music (scripts/key_sounds.py; owner 2026-11-11 on guess_sound: "had super loud music")
+    if edit.get("keySounds"):
+        nos = pathlib.Path(video).with_name("short_nosong.mp4")
+        if pathlib.Path(video).name == "short.mp4" and nos.exists():
+            import key_sounds
+            kt = sorted(m["out"] for m in marks if m["event"] in edit["keySounds"])
+            drop = next((m["out"] for m in marks if m["event"] == edit.get("dropAt")), None)
+            krows, kbad = key_sounds.check(video, nos, kt, drop)
+            if krows:
+                notes.append(f"key sounds over the music: worst {min(r['margin_db'] for r in krows):+.1f} dB over {len(krows)} clips (need >= {key_sounds.KEY_MIN_DB:.0f} dB)")
+            for r in kbad:
+                add("BLOCK", "keysound", r["t"], f"the music covers a key sound ({', '.join(edit['keySounds'])}): {r['margin_db']:+.1f} dB over the music (need >= {key_sounds.KEY_MIN_DB:.0f})",
+                    "remix the song: python3 scripts/add_song.py <name> --song songs/ncs/<its track> (ducks it under edit.keySounds)")
+        else:
+            notes.append("key sounds: no short_nosong.mp4 beside the video (the song goes in at publish: scripts/add_song.py ducks it and gates it)")
 
     # ---- 4. build-up
     end_b = payoff if payoff is not None and payoff > 9 else dur

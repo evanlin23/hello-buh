@@ -1,3 +1,6 @@
+# A second channel (Buh Stories, the story Shorts): dispatch with input channel=buhstories. It uses its own secrets and
+# variables (YT_REFRESH_TOKEN_BUHSTORIES, YT_CHANNEL_ID_BUHSTORIES, YT_ENABLED_BUHSTORIES) and records
+# (uploads/buhstories/); the OAuth client is shared. The schedule below runs HelloBuh only. docs/upload-setup.md.
 # @HelloBuh auto-upload: one run a day uploads the day's 3 Shorts (YT_PER_DAY), each PRIVATE with a scheduled publish
 # at a random time in its own slice of 9:00-21:00 Central, and on Sundays a weekly report issue with every video's views, engagement, retention and watch time. docs/upload-setup.md.
 # OFF until set up: does nothing unless the YT_* secrets, the variable YT_CHANNEL_ID and the variable
@@ -12,18 +15,22 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "upload | report | scores | dry-run"
+        description: "upload | report | scores | dry-run | verify (download + sha256-check the Short named below, no upload)"
         required: false
         default: "upload"
       short:
         description: "upload this Short now instead of the next in uploads/queue.txt (blank = next)"
         required: false
         default: ""
+      channel:
+        description: "hellobuh | buhstories (a Short goes only to the channel its metadata.json names)"
+        required: false
+        default: "hellobuh"
 permissions:
   contents: write
   issues: write
 concurrency:
-  group: upload-short
+  group: upload-short-${{ inputs.channel || 'hellobuh' }}
   cancel-in-progress: false
 jobs:
   upload:
@@ -37,20 +44,27 @@ jobs:
       YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
       YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
       YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      YT_CHANNEL: ${{ inputs.channel || 'hellobuh' }}
+      YT_ENABLED_BUHSTORIES: ${{ vars.YT_ENABLED_BUHSTORIES }}
+      YT_CHANNEL_ID_BUHSTORIES: ${{ vars.YT_CHANNEL_ID_BUHSTORIES }}
+      YT_PER_DAY_BUHSTORIES: ${{ vars.YT_PER_DAY_BUHSTORIES }}
+      YT_REFRESH_TOKEN_BUHSTORIES: ${{ secrets.YT_REFRESH_TOKEN_BUHSTORIES }}
+      # this run's channel is switched on (HelloBuh: YT_ENABLED; Buh Stories: YT_ENABLED_BUHSTORIES)
+      ON: ${{ inputs.channel == 'buhstories' && (vars.YT_ENABLED_BUHSTORIES == 'true' && 'true' || 'false') || vars.YT_ENABLED }}
     steps:
       - name: off unless enabled
-        if: ${{ vars.YT_ENABLED != 'true' && inputs.mode != 'dry-run' }}
-        run: echo "uploads are off (repo variable YT_ENABLED is not 'true'). Nothing done."
+        if: ${{ env.ON != 'true' && inputs.mode != 'dry-run' && inputs.mode != 'verify' }}
+        run: echo "uploads are off for ${YT_CHANNEL} (its YT_ENABLED variable is not 'true'). Nothing done."
       - uses: actions/checkout@v4
-        if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
+        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         with: { ref: main }
       - uses: actions/setup-python@v5
-        if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
+        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         with: { python-version: "3.12" }
-      - if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
+      - if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         run: pip install -q google-api-python-client google-auth
       - name: upload
-        if: ${{ vars.YT_ENABLED == 'true' || inputs.mode == 'dry-run' }}
+        if: ${{ env.ON == 'true' || inputs.mode == 'dry-run' || inputs.mode == 'verify' }}
         run: |
           git config user.name evanlin23
           git config user.email 113861384+evanlin23@users.noreply.github.com
@@ -61,16 +75,17 @@ jobs:
           case "${{ inputs.mode }}" in
             report)  python3 scripts/youtube_upload.py --report ;;
             dry-run) python3 scripts/youtube_upload.py --dry-run ;;
+            verify)  python3 scripts/youtube_upload.py --verify "${{ inputs.short }}" ;;
             scores)  python3 scripts/youtube_upload.py --scores ;;
             *)       python3 scripts/youtube_upload.py --short "${{ inputs.short }}" ;;
           esac
       - name: weekly report (Sundays, Central)
-        if: ${{ vars.YT_ENABLED == 'true' && (inputs.mode == '' || inputs.mode == 'upload') }}
+        if: ${{ env.ON == 'true' && (inputs.mode == '' || inputs.mode == 'upload') }}
         continue-on-error: true
         run: |
           if [ "$(TZ=America/Chicago date +%u)" = 7 ]; then git pull -q --rebase origin main || true; python3 scripts/youtube_upload.py --report; fi
       - name: tell the owner it failed
         if: ${{ failure() }}
         run: |
-          gh issue create --repo "$GITHUB_REPOSITORY" --title "HelloBuh upload failed $(TZ=America/Chicago date +%F)" \
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "${YT_CHANNEL} upload failed $(TZ=America/Chicago date +%F)" \
             --body "The daily upload run failed: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID . Anything this run uploaded before it failed is recorded in uploads/uploads.json. Most common cause: the YouTube token expired (docs/upload-setup.md step 2)."

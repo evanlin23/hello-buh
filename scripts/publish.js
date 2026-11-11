@@ -1,5 +1,6 @@
 // Package reviewed Shorts onto the `videos` branch with everything that made them:
-//   shorts/<name>/short.mp4            the upload
+//   shorts/<name>/short.mp4            the upload: a GitHub Release asset (release pkg-<name>, metadata video.release
+//                                      with its URL + sha256), never committed (owner r:rc5eaf0; scripts/release_assets.py)
 //   shorts/<name>/metadata.json        title, description, hashtags, song credit + drop, video
 //                                      specs + sha256, recording summary, code commit, edit args
 //   shorts/<name>/recording.json.gz    the bot recording (with the code commit this re-renders the
@@ -9,9 +10,14 @@
 //   shorts/<name>/build.log            bot + render + edit log
 // and regenerates the branch README index. The song file itself is not stored (owner-supplied,
 // in songs/); metadata names it and its sha256.
-// usage: node scripts/publish.js <name> [<name>...] [--pass] [--notes "text"] [--no-push]
+// usage: node scripts/publish.js <name> [<name>...] [--pass] [--notes "text"] [--waive "who: why"] [--no-push]
 //   --pass: the Short passed the frame review (docs/qa.md); without it the package is pending-qa
 //   and the uploader skips it
+//   --waive: a reviewed decision to ship over a gate blocker (e.g. the lead's short cut under pace's 25 s floor),
+//   recorded in metadata gates.waived
+// Refuses to run from a checkout whose HEAD doesn't contain origin/main (an old publish.js left a Short with no video),
+// and records the gates it ran on the package in metadata.json `gates` (scripts/gates.py, lib/hb/gates.json: the
+// uploader skips a package gated before the current gates version).
 //   (the videos branch must be checked out as a worktree at ../hb-videos)
 const fs = require('fs')
 const path = require('path')
@@ -31,10 +37,19 @@ const HASHTAGS = ['#minecraft', '#shorts', '#minecraftmemes', '#funny']
 const args = process.argv.slice(2)
 const notesI = args.indexOf('--notes')
 const notes = notesI >= 0 ? args.splice(notesI, 2)[1] : ''
+const waiveI = args.indexOf('--waive')
+const waive = waiveI >= 0 ? args.splice(waiveI, 2)[1] : ''
 const push = !args.includes('--no-push')
 const names = args.filter(a => !a.startsWith('--'))
 if (!names.length) { console.error('usage: node scripts/publish.js <name>... [--notes text] [--no-push]'); process.exit(1) }
 if (!fs.existsSync(path.join(VID, '.git'))) { console.error(`no videos worktree at ${VID}: git worktree add ../hb-videos videos`); process.exit(1) }
+// a stale worktree never publishes (docs/lessons.md 2026-11-11): fetch origin main, HEAD must contain it. Checked once
+// here; release_assets.py (which also guards when run on its own) trusts it through HB_FRESH_OK
+{
+  const f = require('child_process').spawnSync('python3', ['scripts/gates.py', 'fresh'], { cwd: path.join(__dirname, '..'), encoding: 'utf8' })
+  if (f.status !== 0) { console.error(`publish.js: refusing to publish: ${(f.stderr || f.stdout || '').trim()}`); process.exit(1) }
+  process.env.HB_FRESH_OK = '1'
+}
 
 const sh = (cmd, a, opts = {}) => execFileSync(cmd, a, { cwd: ROOT, encoding: 'utf8', ...opts }).trim()
 const sha256 = (f) => crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex')
@@ -60,6 +75,7 @@ function codeOf (name, mp4) {
   return { commit: c, branch: headBranch, where: 'local' }
 }
 
+const packaged = []
 for (const name of names) {
   const mp4 = path.join(ROOT, 'out', `${name}.mp4`)
   if (!fs.existsSync(mp4)) { console.error(`skip ${name}: no out/${name}.mp4`); continue }
@@ -74,7 +90,10 @@ for (const name of names) {
   // picker (licensed, no Content ID claim): research/music_and_length_2026-11-06.md
   const frames = path.join(ROOT, 'work', `${name}.frames`)
   const recFile = path.join(ROOT, 'work', `${name}.rec.json`), wavFile = path.join(ROOT, 'work', `${name}.wav`)
-  if (fs.existsSync(frames) && fs.existsSync(recFile) && fs.existsSync(wavFile)) {
+  // (only for a LOCAL render: work/ is shared by every worktree, so an Actions render's package would otherwise be cut
+  // from someone's older frames: tnt, villager_crowd, creeper_art, looks_wrong, skull_art went out 3-10 s off their
+  // reviewed cut on 2026-11-11; the gates' package check now catches it)
+  if (code.where !== 'actions' && fs.existsSync(frames) && fs.existsSync(recFile) && fs.existsSync(wavFile)) {
     try {
       const a = execFileSync('node', ['scripts/edit_args.js', name], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, SONG: 'none' } }).trim().split('\n').filter(Boolean)
       execFileSync('python3', ['edit.py', '--frames', path.join(frames, 'f%05d.png'), '--fps', '60', '--out_fps', '60', '--timeline', recFile, '--audio', wavFile, ...a, '--out', path.join(dir, 'short_nosong.mp4')], { cwd: ROOT, stdio: 'ignore' })
@@ -88,7 +107,13 @@ for (const name of names) {
     let e0 = {}
     try { e0 = require(path.join(ROOT, 'stunts', `${name}.js`)).edit || {} } catch (e) {}
     if (!e0.song || !fs.existsSync(path.join(ROOT, e0.song))) fs.copyFileSync(mp4, path.join(dir, 'short_nosong.mp4'))
-    else console.error(`no-song version of ${name}: no work/${name}.frames (rendered elsewhere?) and out/ has its reference song`)
+    else {
+      // an older package's short_nosong.mp4 / game_audio.flac (and work/<name>.wav from an older local render) are of
+      // an OLD cut: add_song.py would bake the new song onto the old video (sand_tower 2026-11-11 went out as its 5.9 s
+      // Nov 6 cut). No song-less version of this render exists, so stop: render it without the reference song.
+      console.error(`skip ${name}: out/${name}.mp4 has its reference song (${e0.song}) and there is no song-less version of this render; drop edit.song from stunts/${name}.js (the upload gets an NCS track anyway) and render again`)
+      continue
+    }
   }
 
   // stunt module + the local stunt/lib modules it requires
@@ -132,7 +157,9 @@ for (const name of names) {
     }
   }
   const wav = path.join(ROOT, 'work', `${name}.wav`)
-  if (fs.existsSync(wav)) sh('ffmpeg', ['-loglevel', 'error', '-y', '-i', wav, path.join(dir, 'game_audio.flac')])
+  // only a wav of this render (an older local render's wav would package the old cut's sound)
+  if (fs.existsSync(wav) && (!fs.existsSync(recF) || fs.statSync(wav).mtimeMs >= fs.statSync(recF).mtimeMs)) sh('ffmpeg', ['-loglevel', 'error', '-y', '-i', wav, path.join(dir, 'game_audio.flac')])
+  else if (fs.existsSync(path.join(dir, 'game_audio.flac')) && fs.statSync(path.join(dir, 'game_audio.flac')).mtimeMs < fs.statSync(mp4).mtimeMs) fs.rmSync(path.join(dir, 'game_audio.flac'))
 
   // build log, without the per-frame progress lines
   const logF = path.join(ROOT, 'work', `${name}.log`)
@@ -158,6 +185,7 @@ for (const name of names) {
   const prev = fs.existsSync(path.join(dir, 'metadata.json')) ? JSON.parse(fs.readFileSync(path.join(dir, 'metadata.json'), 'utf8')) : {}
   const meta = {
     name,
+    channel: require('../lib/channel').channelFor(name, stunt, prev),   // the YouTube channel it goes to (lib/channel.js)
     caption,
     youtube: {
       title: `${caption} ${HASHTAGS.slice(0, 2).join(' ')}`.slice(0, 100),
@@ -196,7 +224,15 @@ for (const name of names) {
   // (that one stays in out/ for review only): see README "Music"
   if (!fs.existsSync(path.join(ROOT, 'songs', 'ncs')) || !fs.readdirSync(path.join(ROOT, 'songs', 'ncs')).length) execFileSync('python3', ['scripts/ncs.py', '--download'], { cwd: ROOT, stdio: 'inherit' })
   execFileSync('python3', ['scripts/add_song.py', name, '--ncs'], { cwd: ROOT, stdio: 'inherit' })
+  // the gates on the finished package (pace + key sounds on short.mp4 beside short_nosong.mp4, the latest ./hb check):
+  // metadata gates {version, pace, check, key_sounds, waived}; exit 1 only says the uploader will skip it
+  try {
+    execFileSync('python3', ['scripts/gates.py', 'stamp', name, '--video', path.join(dir, 'short.mp4'), '--by', 'publish.js', ...(waive ? ['--waive', waive] : [])], { cwd: ROOT, stdio: 'inherit' })
+  } catch (e) { console.error(`${name}: the gates did not pass (above): the uploader skips it until they do or a reviewed --waive is recorded`) }
+  packaged.push(name)
 }
+// the mp4s go to GitHub Releases (Actions uploads them), metadata gets video.release, git never holds them (r:rc5eaf0)
+if (push && packaged.length) execFileSync('python3', ['scripts/release_assets.py', 'upload', ...packaged], { cwd: ROOT, stdio: 'inherit' })
 
 // README index from every package
 const rows = fs.readdirSync(path.join(VID, 'shorts')).sort().map(n => {
@@ -204,14 +240,16 @@ const rows = fs.readdirSync(path.join(VID, 'shorts')).sort().map(n => {
   if (!fs.existsSync(f)) return null
   const m = JSON.parse(fs.readFileSync(f, 'utf8'))
   const s = m.song ? `${m.song.title || m.song.file}${m.song.artist ? ' · ' + m.song.artist : ''}` : '-'
-  return `| [${n}](shorts/${n}/short.mp4) | ${m.caption} | ${m.video.duration_s}s | ${s} | ${m.status} | ${m.code.commit.slice(0, 7)} | ${m.notes || ''} |`
+  const link = (m.video && m.video.release && m.video.release.url) || `shorts/${n}/short.mp4`
+  return `| [${n}](${link}) | ${m.caption} | ${m.video.duration_s}s | ${s} | ${m.status} | ${m.code.commit.slice(0, 7)} | ${m.notes || ''} |`
 }).filter(Boolean)
 fs.writeFileSync(path.join(VID, 'README.md'), `# HelloBuh Shorts (finished renders)
 
 Reviewed Shorts from the pipeline on \`main\`, each with everything that made it. The code lives on
 \`main\`; this branch only holds packages, so \`main\` stays small.
 
-Each \`shorts/<name>/\` has: \`short.mp4\` (the upload), \`metadata.json\` (YouTube title, description,
+Each \`shorts/<name>/\` has: \`short.mp4\` (the upload: since r:rc5eaf0 a GitHub Release asset, \`pkg-<name>\`,
+linked below and named in metadata.json \`video.release\` with its sha256; older packages keep it in git), \`metadata.json\` (YouTube title, description,
 hashtags, song credit and drop, video specs and sha256, recording summary, code commit, exact edit
 arguments, rebuild steps), \`recording.json.gz\` (the bot recording: with the commit it re-renders
 the same video), \`game_audio.flac\`, \`source/\` (the stunt module as it was) and \`build.log\`.
@@ -225,21 +263,8 @@ checked out at \`../hb-videos\`.
 ${rows.join('\n')}
 `)
 
-if (push) {
-  const g = (a) => execFileSync('git', a, { cwd: VID, encoding: 'utf8' }).trim()
-  g(['add', '-A'])
-  if (g(['status', '--porcelain'])) {
-    g(['commit', '-q', '-m', `Package ${names.join(', ')}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_019n1tKFAZAV7uPEWDxhJzEt`])
-    // other sessions publish too: rebase onto theirs and retry (README conflicts: regenerate it)
-    for (let i = 0; ; i++) {
-      try { g(['push', '-q', 'origin', 'videos']); break } catch (e) {
-        if (i === 3) throw e
-        try { g(['pull', '-q', '--rebase', 'origin', 'videos']) } catch (_) {
-          g(['checkout', '--theirs', 'README.md']); g(['add', 'README.md'])
-          execFileSync('git', ['-c', 'core.editor=true', 'rebase', '--continue'], { cwd: VID })
-        }
-      }
-    }
-    console.log('pushed videos branch:', g(['log', '--oneline', '-1']))
-  } else console.log('nothing new to push')
+if (push && packaged.length) {
+  // only these packages (+ README, .gitignore), through a private index: another session's staged files are never swept
+  // into this commit ("Package tnt" took someone else's), and never unstaged
+  execFileSync('python3', ['scripts/release_assets.py', 'commit', ...packaged, '-m', `Package ${packaged.join(', ')}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_019n1tKFAZAV7uPEWDxhJzEt`], { cwd: ROOT, stdio: 'inherit' })
 }

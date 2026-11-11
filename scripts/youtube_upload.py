@@ -11,17 +11,28 @@ exists. Ported from evanlin23/buh-explains buhexplains/pipeline/upload.py, with 
 - each at a random time in its own slice of 9:00-21:00 Central (3 a day: 9-13, 13-17, 17-21), never a fixed
   robotic slot; YT_PER_DAY changes the count;
 - never delete or re-upload a video that underperforms (YouTube treats it as spam);
-- refuses if the token's channel isn't YT_CHANNEL_ID, if the Short isn't status "ready" on the videos branch,
+- refuses if the token's channel isn't YT_CHANNEL_ID, if the Short isn't status "ready" on the videos branch, if its
+  metadata `gates` are older than lib/hb/gates.json's version or blocked without a waiver (scripts/gates.py; story_*
+  Shorts are gated by the story pipeline instead),
   if its title is already on the channel (hand uploads too), or if it would break the posting mix
   (scripts/check_queue.py: no format twice in a row, at most 1 pixel-art per 3).
 
 Order (owner 2026-11-09: "post the content that gets the most subscribers"; the goal is 100k): queue lines marked
 "# first" go first; then every other ready Short (queue.txt and the rest of the videos branch) ranked by its format's
-SUBSCRIBERS PER 1,000 VIEWS (family_scores: YouTube Analytics, lifetime, shrunk toward the channel average so a format
-with little data isn't over- or under-rated; a format not posted yet gets the average, so new formats still get tried),
+EXPECTED SUBSCRIBERS PER UPLOAD = typical views per Short x subscribers per 1,000 views (family_scores: YouTube
+Analytics + Studio numbers, lifetime, both shrunk toward the channel average so a format with little data isn't over-
+or under-rated; a format not posted yet gets the average, so new formats still get tried),
 queue order breaking ties, always keeping the mix. The scores are saved to uploads/scores.json each run.
     python3 scripts/youtube_upload.py --scores   # print the ranking only
 Every upload is recorded in uploads/uploads.json on main.
+
+Channels (owner 2026-11-10: the story Shorts go to a second channel, "Buh Stories"): YT_CHANNEL picks the channel a run
+uploads to, `hellobuh` (the default: everything exactly as above) or `buhstories`. A Short goes only to the channel in
+its metadata.json `channel` (default hellobuh; publish.js sets buhstories for story_* Shorts). Each channel has its own
+token, channel id, switch and records, as the same names with a suffix: YT_REFRESH_TOKEN_BUHSTORIES,
+YT_CHANNEL_ID_BUHSTORIES, YT_ENABLED_BUHSTORIES, YT_PER_DAY_BUHSTORIES, and uploads/buhstories/ (queue.txt,
+uploads.json, PAUSED, scores.json). The OAuth client (YT_CLIENT_ID / YT_CLIENT_SECRET) is shared unless a suffixed one
+exists. docs/upload-setup.md "A second channel".
 """
 from __future__ import annotations
 
@@ -31,11 +42,35 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from check_queue import series, mix_ok   # noqa: E402
+import gates   # noqa: E402  (lib/hb/gates.json: a package gated before the current gates waits until it's re-gated)
 
-UP = ROOT / "uploads"
+CHANNELS = {"hellobuh": "HelloBuh", "buhstories": "Buh Stories"}   # the id a Short's metadata names -> its display name
+CHANNEL = (os.environ.get("YT_CHANNEL", "") or "hellobuh").strip().lower()
+if CHANNEL not in CHANNELS:
+    sys.exit(f"YT_CHANNEL={CHANNEL!r}: not one of {sorted(CHANNELS)}")
+NAME = CHANNELS[CHANNEL]
+SUFFIX = "" if CHANNEL == "hellobuh" else "_" + CHANNEL.upper()
+
+
+def env(key: str, default: str = "") -> str:
+    """This channel's setting: KEY_<CHANNEL> for a second channel (the OAuth client falls back to the shared one)."""
+    v = os.environ.get(key + SUFFIX, "")
+    if not v.strip() and key in ("YT_CLIENT_ID", "YT_CLIENT_SECRET"):
+        v = os.environ.get(key, "")
+    return v if v.strip() else default
+
+
+def channel_of(meta: dict) -> str:
+    """The package's channel; with none, the same default as lib/channel.js: story_* Shorts are Buh Stories (owner,
+    2026-11-10: stories never go to @HelloBuh), everything else HelloBuh. Older story packages carry no field."""
+    c = meta.get("channel") or ("buhstories" if str(meta.get("name", "")).startswith("story_") else "hellobuh")
+    return c.strip().lower()
+
+
+UP = ROOT / "uploads" if CHANNEL == "hellobuh" else ROOT / "uploads" / CHANNEL
 QUEUE, RECORD, PAUSED, SCORES = UP / "queue.txt", UP / "uploads.json", UP / "PAUSED", UP / "scores.json"
 REPO = os.environ.get("GITHUB_REPOSITORY", "evanlin23/hello-buh")
-PER_DAY = int(os.environ.get("YT_PER_DAY", "3") or 3)
+PER_DAY = int(env("YT_PER_DAY", "3") or 3)
 WINDOW = ((9, 0), (21, 0))            # Central; split into PER_DAY equal slices, one publish in each
 TZ = "America/Chicago"
 
@@ -47,9 +82,9 @@ def central_now() -> dt.datetime:
 
 def enabled() -> tuple[bool, str]:
     need = ("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN", "YT_CHANNEL_ID")
-    missing = [k for k in need if not os.environ.get(k, "").strip()]
-    if os.environ.get("YT_ENABLED", "").strip().lower() != "true":
-        missing.append("YT_ENABLED=true")
+    missing = [k + ("" if k in ("YT_CLIENT_ID", "YT_CLIENT_SECRET") else SUFFIX) for k in need if not env(k).strip()]
+    if env("YT_ENABLED").strip().lower() != "true":
+        missing.append(f"YT_ENABLED{SUFFIX}=true")
     return not missing, ", ".join(missing)
 
 
@@ -60,6 +95,7 @@ def record() -> dict:
 def save_record(done: dict, msg: str) -> None:
     """Write uploads.json, commit and push (rebasing if main moved). An unsaved upload would be retried as a
     duplicate, so this retries hard and fails loudly."""
+    UP.mkdir(parents=True, exist_ok=True)
     RECORD.write_text(json.dumps(done, indent=1, ensure_ascii=False) + "\n")
     subprocess.run(["git", "add", str(RECORD)] + ([str(SCORES)] if SCORES.exists() else []), check=True)
     subprocess.run(["git", "commit", "-m", msg], check=True)
@@ -82,12 +118,62 @@ def videos_checkout(d: Path) -> Path:
     return d
 
 
-def fetch_short(vd: Path, name: str) -> Path:
+def download(url: str, dest: Path) -> None:
+    import urllib.request
+    req = urllib.request.Request(url, headers={"User-Agent": "hello-buh-uploader"})
+    with urllib.request.urlopen(req, timeout=120) as r, open(dest, "wb") as out:
+        while True:
+            b = r.read(1 << 20)
+            if not b:
+                break
+            out.write(b)
+
+
+def sha256_of(p: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with open(p, "rb") as f:
+        for b in iter(lambda: f.read(1 << 20), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def fetch_short(vd: Path, name: str, meta: dict | None = None) -> Path:
+    """The mp4 that goes up. A package published since r:rc5eaf0 names a GitHub Release asset in video.release
+    (scripts/release_assets.py): download it and check its sha256. An older package has short.mp4 on the branch."""
+    rel = ((meta or meta_of(vd, name) or {}).get("video") or {}).get("release") or {}
+    if rel.get("url"):
+        f = vd / "shorts" / name / "short.mp4"
+        f.parent.mkdir(parents=True, exist_ok=True)
+        for i in range(3):
+            try:
+                download(rel["url"], f)
+                break
+            except Exception as e:
+                if i == 2:
+                    sys.exit(f"{name}: could not download {rel['url']}: {e}")
+        got = sha256_of(f)
+        if got != rel.get("sha256"):
+            f.unlink()
+            sys.exit(f"{name}: the release asset's sha256 is {got}, metadata says {rel.get('sha256')}: refusing to upload it")
+        print(f"{name}: {rel['url']} ({f.stat().st_size / 1e6:.1f} MB, sha256 ok)", flush=True)
+        return f
     subprocess.run(["git", "-C", str(vd), "sparse-checkout", "add", f"/shorts/{name}/short.mp4"], check=True)
     f = vd / "shorts" / name / "short.mp4"
     if not f.exists() or f.stat().st_size < 1_000_000:
-        sys.exit(f"shorts/{name}/short.mp4 is missing on the videos branch")
+        sys.exit(f"shorts/{name}/short.mp4 is missing on the videos branch (and metadata.json has no video.release)")
     return f
+
+
+def has_video(vd: Path, name: str, meta: dict) -> bool:
+    """A release asset, or short.mp4 in the branch's tree (a package republished by a pre-r:rc5eaf0 publish.js after its
+    mp4 left git has neither: skip it rather than stop the run)."""
+    if ((meta.get("video") or {}).get("release") or {}).get("url"):
+        return True
+    if not (vd / ".git").exists():
+        return True   # (tests: a plain directory)
+    r = subprocess.run(["git", "-C", str(vd), "ls-tree", "HEAD", f"shorts/{name}/short.mp4"], capture_output=True, text=True)
+    return r.returncode != 0 or bool(r.stdout.strip())
 
 
 def meta_of(vd: Path, name: str) -> dict | None:
@@ -96,9 +182,10 @@ def meta_of(vd: Path, name: str) -> dict | None:
 
 
 def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, str]:
-    """The next Short: queue lines marked "# first", then the rest ranked by their format's subscribers per 1,000
-    views (scores["family"], higher first; queue order, then the oldest published, breaking ties), skipping anything
-    uploaded or posted by hand, not ready, or that would break the mix after what went up last."""
+    """The next Short: queue lines marked "# first", then the rest ranked by their format's expected subscribers
+    per upload (scores["family"], higher first; queue order, then the oldest published, breaking ties), skipping anything
+    uploaded or posted by hand, not ready, gated before the current gates (scripts/gates.py: lib/hb/gates.json's version;
+    story_* are gated by the story pipeline), or that would break the mix after what went up last."""
     history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
     lines = QUEUE.read_text().splitlines() if QUEUE.exists() else []
     pinned = [l.split("#")[0].strip() for l in lines if "# first" in l]
@@ -107,7 +194,8 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
     rest = []
     for m in sorted((vd / "shorts").glob("*/metadata.json")):
         meta = json.loads(m.read_text())
-        rest.append((meta.get("published_at", ""), m.parent.name))
+        if channel_of(meta) == CHANNEL:
+            rest.append((meta.get("published_at", ""), m.parent.name))
     order = queued + [n for _, n in sorted(rest) if n not in queued]
     fam = (scores or {}).get("family", {})
     mean = (scores or {}).get("mean", 0)
@@ -121,17 +209,25 @@ def pick(vd: Path, done: dict, scores: dict | None = None) -> tuple[str | None, 
         meta = meta_of(vd, name)
         if not meta:
             why.append(f"{name}: not on the videos branch"); continue
+        if channel_of(meta) != CHANNEL:
+            why.append(f"{name}: belongs to the {channel_of(meta)} channel, not {CHANNEL}"); continue
         if meta.get("posted"):
             why.append(f"{name}: posted by hand (record it in uploads.json)"); continue
         if meta.get("status") != "ready":
             if name in queued:
                 why.append(f"{name}: status {meta.get('status')!r}, not ready")
             continue
+        gw = gates.stale({"name": name, **meta})
+        if gw:
+            why.append(f"{name}: {gw}"); continue
         lic = (meta.get("song") or {}).get("licence", "")
         if meta.get("song") and not lic.startswith(("NCS", "original")):
             why.append(f"{name}: its song isn't cleared ({lic or 'no licence'})"); continue
         if not mix_ok(history, name):
             why.append(f"{name}: same format as the last upload, or a 2nd pixel-art in 3"); continue
+        if not has_video(vd, name, meta):
+            why.append(f"{name}: no video (no video.release in metadata.json and no short.mp4 on the branch: re-publish it "
+                       "with publish.js from main)"); continue
         return name, "\n".join(why)
     return None, "\n".join(why)
 
@@ -156,8 +252,8 @@ def credentials():
     from google.oauth2.credentials import Credentials
     from google.auth.transport.requests import Request
     from google.auth.exceptions import RefreshError
-    creds = Credentials(None, refresh_token=os.environ["YT_REFRESH_TOKEN"], client_id=os.environ["YT_CLIENT_ID"],
-                        client_secret=os.environ["YT_CLIENT_SECRET"], token_uri="https://oauth2.googleapis.com/token")
+    creds = Credentials(None, refresh_token=env("YT_REFRESH_TOKEN"), client_id=env("YT_CLIENT_ID"),
+                        client_secret=env("YT_CLIENT_SECRET"), token_uri="https://oauth2.googleapis.com/token")
     try:
         creds.refresh(Request())
     except RefreshError as e:
@@ -213,6 +309,7 @@ def suppressed(yt, done: dict) -> str:
 
 
 def pause(reason: str) -> None:
+    UP.mkdir(parents=True, exist_ok=True)
     PAUSED.write_text(reason + "\n")
     subprocess.run(["git", "add", str(PAUSED)], check=True)
     subprocess.run(["git", "commit", "-m", "uploads: paused automatically (possible reach suppression)"], check=True)
@@ -280,13 +377,20 @@ def video_analytics(ya, ids: list, start: str, end: str) -> tuple[dict, str]:
 
 
 PRIOR_VIEWS = 3000   # how many views of evidence a format needs before its own rate outweighs the channel average
+PRIOR_SHORTS = 2     # how many settled Shorts a format needs before its own typical reach outweighs the channel's
+SETTLED_H = 48       # a Short's views count toward its format's reach once it has been public this long
 
 
 def family_scores(ya, done: dict) -> dict:
-    """Subscribers gained per 1,000 views for each format family (check_queue.series), lifetime to date, from YouTube
-    Analytics. Shrunk toward the channel's average: (subs + mean * PRIOR_VIEWS) / (views + PRIOR_VIEWS), so one lucky
-    Short with 300 views doesn't top the ranking. Writes uploads/scores.json and returns it."""
+    """Rank formats by EXPECTED SUBSCRIBERS PER UPLOAD (owner, 2026-11-11): the format's typical views per Short times
+    its subscribers per 1,000 views, so a format that converts well but that nobody gets shown doesn't top the list.
+      rate  = (subs + mean_rate * PRIOR_VIEWS) / (views + PRIOR_VIEWS) * 1000      (shrunk toward the channel's)
+      reach = (views of its settled Shorts + mean_reach * PRIOR_SHORTS) / (settled Shorts + PRIOR_SHORTS)
+      family score = reach * rate / 1000
+    Views and subs per Short: the larger of YouTube Analytics (lags 1-3 days) and uploads/studio.json (Studio, via
+    Claude in Chrome). Writes uploads/scores.json and returns it."""
     ids = {v["video_id"]: k for k, v in done.items() if v.get("video_id")}
+    now = dt.datetime.now(dt.timezone.utc)
     end = central_now().date().isoformat()
     start = min([v.get("uploaded", end) for v in done.values()] + [end])
     an, note = video_analytics(ya, list(ids), start, end)
@@ -294,22 +398,40 @@ def family_scores(ya, done: dict) -> dict:
     per, fam = {}, {}
     for vid, name in ids.items():
         A = an.get(vid, {})
-        v, sg = int(A.get("views", 0) or 0), int(A.get("subscribersGained", 0) or 0)
         S = studio.get(name) or {}
-        if S.get("subs", 0) > sg:   # Studio's newer count (uploads/studio.json) beats the lagging API
-            v, sg = max(v, int(S.get("views", 0))), int(S["subs"])
-        per[name] = {"family": series(name), "views": v, "subs": sg, "avg_pct": A.get("averageViewPercentage"),
+        v = max(int(A.get("views", 0) or 0), int(S.get("views", 0) or 0))
+        sg = max(int(A.get("subscribersGained", 0) or 0), int(S.get("subs", 0) or 0))
+        e = done[name]
+        when = e.get("publish_at") or (e.get("uploaded", end) + "T12:00:00Z")
+        try:
+            age_h = (now - dt.datetime.strptime(when, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc)).total_seconds() / 3600
+        except ValueError:
+            age_h = SETTLED_H
+        settled = age_h >= SETTLED_H
+        per[name] = {"family": series(name), "views": v, "subs": sg, "settled": settled,
+                     "avg_pct": A.get("averageViewPercentage") or S.get("avg_pct_viewed"),
+                     "viewed_pct": S.get("viewed_pct"),
                      "stayed": (A["engagedViews"] / v) if A.get("engagedViews") is not None and v else None}
-        f = fam.setdefault(series(name), {"views": 0, "subs": 0, "shorts": 0})
+        f = fam.setdefault(series(name), {"views": 0, "subs": 0, "shorts": 0, "settled_views": 0, "settled": 0})
         f["views"] += v; f["subs"] += sg; f["shorts"] += 1
+        if settled:
+            f["settled_views"] += v; f["settled"] += 1
     tv, ts = sum(f["views"] for f in fam.values()), sum(f["subs"] for f in fam.values())
-    mean = 1000 * ts / tv if tv else 0.0
-    rate = {k: round(1000 * (f["subs"] + mean / 1000 * PRIOR_VIEWS) / (f["views"] + PRIOR_VIEWS), 3) for k, f in fam.items()}
-    out = {"updated": end, "mean": round(mean, 3), "family": rate, "family_totals": fam, "videos": per,
-           "note": note or "subscribers per 1,000 views; YouTube Analytics lags 1-3 days"}
+    mean_rate = 1000 * ts / tv if tv else 0.0
+    sv, sn = sum(f["settled_views"] for f in fam.values()), sum(f["settled"] for f in fam.values())
+    mean_reach = sv / sn if sn else 0.0
+    rate = {k: (f["subs"] + mean_rate / 1000 * PRIOR_VIEWS) / (f["views"] + PRIOR_VIEWS) * 1000 for k, f in fam.items()}
+    reach = {k: (f["settled_views"] + mean_reach * PRIOR_SHORTS) / (f["settled"] + PRIOR_SHORTS) for k, f in fam.items()}
+    score = {k: round(reach[k] * rate[k] / 1000, 2) for k in fam}
+    out = {"updated": end, "mean": round(mean_reach * mean_rate / 1000, 2), "family": score,
+           "rate_per_1k": {k: round(r, 3) for k, r in rate.items()}, "mean_rate_per_1k": round(mean_rate, 3),
+           "reach": {k: round(r) for k, r in reach.items()}, "mean_reach": round(mean_reach),
+           "family_totals": fam, "videos": per,
+           "note": note or ("family = expected subscribers per upload (typical views x subs per 1k views); "
+                            "YouTube Analytics lags 1-3 days, Studio numbers from uploads/studio.json")}
     SCORES.write_text(json.dumps(out, indent=1) + "\n")
-    print(f"scores (subs per 1k views, channel {mean:.2f}): " +
-          ", ".join(f"{k} {r:.2f} ({fam[k]['subs']} subs / {fam[k]['views']:,} views)" for k, r in sorted(rate.items(), key=lambda kv: -kv[1])), flush=True)
+    print(f"scores (expected subs per upload, channel {out['mean']:.1f}): " +
+          ", ".join(f"{k} {score[k]:.1f} (~{reach[k]:,.0f} views x {rate[k]:.2f}/1k)" for k in sorted(score, key=lambda k: -score[k])), flush=True)
     return out
 
 
@@ -410,7 +532,7 @@ def report(yt, done: dict, vd: Path | None, ya=None) -> None:
     if vd:
         for m in sorted((vd / "shorts").glob("*/metadata.json")):
             meta = json.loads(m.read_text())
-            if meta.get("status") == "ready" and m.parent.name not in done and not meta.get("posted"):
+            if meta.get("status") == "ready" and m.parent.name not in done and not meta.get("posted") and channel_of(meta) == CHANNEL:
                 left.append(m.parent.name)
     days = len(left) / max(1, PER_DAY)
     summary = channel_summary(ya, (today - dt.timedelta(days=7)).isoformat(), end) if ya is not None else ""
@@ -430,7 +552,7 @@ def report(yt, done: dict, vd: Path | None, ya=None) -> None:
             + (" - **running low: make more Shorts**" if days < 7 else "")
             + ("\n\n" + ", ".join(left) if left else "")
             + "\n\nTo pause: create `uploads/PAUSED` on main (any text). To stop: set the repo variable YT_ENABLED to anything but `true`.")
-    t = f"HelloBuh weekly report {central_now().date().isoformat()}"
+    t = f"{NAME} weekly report {central_now().date().isoformat()}"
     if os.environ.get("REPORT_STDOUT"):
         print(t); print(body); return
     if not open_issue(t):
@@ -443,7 +565,17 @@ def main() -> None:
     ap.add_argument("--report", action="store_true")
     ap.add_argument("--scores", action="store_true", help="print the subscribers-per-1k-views ranking only")
     ap.add_argument("--short", default="", help="upload this Short now (still checks ready, mix and the daily limit)")
+    ap.add_argument("--verify", default="", help="download this Short's mp4 (release asset or branch) and check it; upload nothing")
     a = ap.parse_args()
+    if a.verify:   # resolve + verify only: no YouTube, no records (works without any secret)
+        with tempfile.TemporaryDirectory() as td:
+            vd = videos_checkout(Path(td) / "videos")
+            meta = meta_of(vd, a.verify)
+            if not meta:
+                sys.exit(f"{a.verify}: not on the videos branch")
+            f = fetch_short(vd, a.verify, meta)
+            print(f"verified {a.verify}: {f.stat().st_size} bytes, status {meta.get('status')}, channel {channel_of(meta)}")
+        return
     ok, missing = enabled()
     if not ok and not a.dry_run:
         print(f"uploads are off (missing: {missing}). Nothing done."); return
@@ -477,8 +609,11 @@ def main() -> None:
             if a.short:
                 meta = meta_of(vd, a.short)
                 history = [k for k, _ in sorted(done.items(), key=lambda kv: kv[1].get("uploaded", ""))]
-                if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short):
-                    sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, or breaks the mix")
+                if a.short in done or not meta or meta.get("status") != "ready" or meta.get("posted") or not mix_ok(history, a.short) or channel_of(meta) != CHANNEL:
+                    sys.exit(f"{a.short}: already uploaded, not ready, posted by hand, breaks the mix, or belongs to another channel")
+                gw = gates.stale({"name": a.short, **meta})
+                if gw:
+                    sys.exit(f"{a.short}: {gw}")
                 name, skipped = a.short, ""
             else:
                 name, skipped = pick(vd, done, scores)
@@ -487,8 +622,8 @@ def main() -> None:
             if not name:
                 msg = "Nothing left that is ready and keeps the posting mix. The channel goes quiet until more Shorts are published."
                 print(msg)
-                if not a.dry_run and not open_issue("HelloBuh: nothing left to upload"):
-                    issue("HelloBuh: nothing left to upload", msg + ("\n\nSkipped:\n" + skipped if skipped else ""))
+                if not a.dry_run and not open_issue(f"{NAME}: nothing left to upload"):
+                    issue(f"{NAME}: nothing left to upload", msg + ("\n\nSkipped:\n" + skipped if skipped else ""))
                 return
             meta = meta_of(vd, name)
             yt_meta = meta["youtube"]
@@ -503,8 +638,8 @@ def main() -> None:
             if yt is None:
                 yt = youtube()
                 me = [c["id"] for c in yt.channels().list(part="id", mine=True).execute().get("items", [])]
-                if os.environ["YT_CHANNEL_ID"].strip() not in me:
-                    sys.exit(f"the token belongs to {me}, not YT_CHANNEL_ID: refusing to upload")
+                if env("YT_CHANNEL_ID").strip() not in me:
+                    sys.exit(f"the token belongs to {me}, not YT_CHANNEL_ID{SUFFIX}: refusing to upload to {NAME}")
                 why = suppressed(yt, done)
                 if why:
                     msg = (f"Every recent auto upload is stuck under 50 views a day or more after going public ({why}). "
@@ -512,7 +647,7 @@ def main() -> None:
                            "of feeding more into a held-back channel. Check YouTube Studio (Analytics > Reach, 'Shown in "
                            "feed'; any policy notices), then delete uploads/PAUSED on main to resume.")
                     pause(msg)
-                    issue("HelloBuh uploads paused: recent Shorts get no views", msg)
+                    issue(f"{NAME} uploads paused: recent Shorts get no views", msg)
                     print(msg); return
             elif slot > n_today:
                 gap = random.randint(240, 720)   # don't fire 3 uploads back to back within seconds
@@ -524,7 +659,7 @@ def main() -> None:
             if title in channel_titles(yt):
                 sys.exit(f"a video titled {title!r} is already on the channel: give {name} a new title on the videos branch, "
                          "or record it in uploads/uploads.json if it was uploaded by hand")
-            f = fetch_short(vd, name)
+            f = fetch_short(vd, name, meta)
             body = {"snippet": {"title": title, "description": desc, "categoryId": "20",
                                 "tags": [h.lstrip("#") for h in yt_meta.get("hashtags", [])]},
                     "status": {"privacyStatus": "private", "publishAt": when, "selfDeclaredMadeForKids": False,

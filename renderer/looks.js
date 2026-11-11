@@ -1,8 +1,8 @@
 // The HelloBuh grade per mood (owner, 2026-11-10: "the best color grading and visuals ... the best lighting").
 // A stunt sets `look: 'auto'` (the grade follows the time of day: the default for stories), `look: 'golden_hour'`
 // (one mood for every frame), a shot `mood: 'tense'` (that camera shot's grade), or `look: { mood: 'eerie_night', bloom: 0.3, grade: { exposure: 1.3 } }`
-// (the mood, then any field overridden; `grade` merges field by field). A look without `mood` is used as written, so
-// every existing stunt renders exactly as before. Numbers, reasons and the before/after stills: docs/look.md and
+// (the mood, then any field overridden; `grade` merges field by field). A look without `mood` is used as written. A
+// stunt with no `look` at all renders 'bright_stunt' (stuntLook below; owner 2026-11-11, r:r8fa348). Numbers, reasons and the before/after stills: docs/look.md and
 // .claude/skills/cinematic-style/SKILL.md "Standards".
 //
 // A mood sets only colour: exposure, contrast, saturation, temperature (lift/gamma/gain) and the vignette, plus two
@@ -45,6 +45,25 @@ const MOODS = {
   }
 }
 
+// look 'bright' (owner, 2026-11-10, on the biggest Minecraft story channels: "very bright, exagerated movements";
+// opt-in, house rule 7952f67): 'auto' by time of day (and every shot mood), then each frame's grade pushed bright and
+// punchy: exposure up, saturation to ~1.3, more contrast, the white balance pulled toward a clean daylight, vignette
+// <= 0.1, nights lifted further so faces read. render.js also drops depth of field and speeds up camera pushes for it.
+function brighten (g) {
+  const night = g.exposure >= 1.25 && g.gain && g.gain[2] > g.gain[0]
+  const faded = g.sat < 0.8   // a flashback keeps its fade, only a little less
+  const clean = [1.04, 1.02, 0.98]
+  return {
+    ...g,
+    exposure: g.exposure * (night ? 1.25 : 1.15),
+    sat: faded ? g.sat * 1.25 : Math.max(1.3, g.sat * 1.2),
+    contrast: (g.contrast ?? 0.12) + 0.1,
+    gain: g.gain ? g.gain.map((v, i) => v + (clean[i] - v) * 0.6) : clean,
+    gamma: g.gamma ? g.gamma.map(v => night ? v * 1.06 : v) : g.gamma,
+    vignette: Math.min(0.1, g.vignette ?? 0.1)
+  }
+}
+
 // look 'auto' (or { mood: 'auto', ... }): the grade follows the time of day, frame by frame, so a story that cuts
 // between day and night needs no per-scene look. Keys on the game clock (ticks, 0-24000), linear between them; a cut
 // that changes the time changes the grade on its own frame, a time-lapse glides through them.
@@ -75,16 +94,38 @@ function gradeAt (L, dayTime, shotMood, shot) {
     g = moodGrade(shotMood)
   } else g = L && L.auto ? autoGrade(dayTime ?? 6000) : null
   if (g && shot && (shot.grade || shot.vignette != null)) g = { ...g, ...(shot.grade || {}), ...(shot.vignette != null ? { vignette: shot.vignette } : {}) }
+  if (L && L.bright) g = brighten(g || moodGrade('village_day'))
   return g
+}
+
+// look 'bright_stunt' (owner, 2026-11-11, r:r8fa348: "I think hello buh should use the bright grading as well"): the
+// default for every stunt without its own `look` (render.js STUNT_LOOK; `look: null` keeps a stunt ungraded). It is
+// 'bright' (the same grade, frame by frame) made for gameplay in open daylight: 'bright' alone blew the stunt sky to
+// near-white, its clouds gone (speed_build at 3 s), because the cinematic look's default bloom (0.6 over threshold 0.7)
+// glowed the whole exposed sky and exposure x1.23 clipped its blue channel while green kept rising (sky 120,167,255
+// -> 143,222,255, cyan-white). So: no bloom and no grain (stunts never had either), a highlight shoulder (rolloff 0.8:
+// the brightest channel eases into 1, hue kept, so the sky stays blue and the clouds white), and the camera pushes
+// left at the stunt's own speed (pushes: false). Story stunts keep their explicit look ('bright'), unchanged.
+const BRIGHT_STUNT = { bloom: 0, grain: 0, rolloff: 0.8, pushes: false }
+
+// the look a stunt renders with before resolveLook: its own `look` if it has the key (null/false: ungraded), else
+// 'bright_stunt'; stories (story_*, or edit.story) without one stay ungraded, as published (the stories lead owns them)
+function stuntLook (mod, name) {
+  mod = mod || {}
+  if (mod.look !== undefined) return mod.look
+  const story = /^story_/.test(name || '') || !!(mod.edit && mod.edit.story)
+  return story ? undefined : 'bright_stunt'
 }
 
 function resolveLook (L) {
   if (!L) return L
   if (typeof L === 'string') L = { mood: L }
   if (!L.mood) return L
-  if (L.mood === 'auto') {
+  if (L.mood === 'bright_stunt') L = { ...BRIGHT_STUNT, ...L, mood: 'bright' }
+  if (L.mood === 'auto' || L.mood === 'bright') {
     const { mood, ...rest } = L
-    return { grade: { ...MOODS.village_day.grade }, vignette: MOODS.village_day.vignette, cloudNight: 0.42, ...rest, auto: true }
+    const b = mood === 'bright' || rest.bright
+    return { grade: { ...MOODS.village_day.grade }, vignette: b ? 0.1 : MOODS.village_day.vignette, cloudNight: 0.42, ...rest, auto: true, ...(b ? { bright: true, dof: false } : {}) }
   }
   const m = MOODS[L.mood]
   if (!m) throw new Error(`look.mood '${L.mood}': not one of ${Object.keys(MOODS).join(', ')}`)
@@ -94,4 +135,4 @@ function resolveLook (L) {
   return out
 }
 
-module.exports = { MOODS, resolveLook, gradeAt, autoGrade }
+module.exports = { MOODS, BRIGHT_STUNT, stuntLook, resolveLook, gradeAt, autoGrade, brighten }
