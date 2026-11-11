@@ -30,7 +30,7 @@
 | reveal | the sea freezes under each step toward her window | frosted ice under each step only; the window lit with her figure at the end of his line |
 
 ## Phone-size check (game view 1011 px tall)
-- S04, FOV 15 from (2, 3.5, 20), 80 blocks to the window: about 48 px a block; the window about 144 x 96 px; Grandma about 86 px; Grandpa about 340 px, left and lower third.
+- S04, FOV 15 from (2, 3.5, 20), 80 blocks to the window: about 48 px a block; the window about 144 x 96 px; Grandma about 160 px; Grandpa at (1.0, 0, 0.5) about 670 px, lower left below the window (eyetrace's vertical FOV on 1080x1920).
 - S08, FOV 30 at 75 blocks: about 25 px a block; the window about 75 x 50 px (lit, reads as a window).
 - S11, FOV 40 from (0, 5, 14), ~74 blocks: about 19 px a block; the window about 57 x 38 px; the ice path wide and white.
 
