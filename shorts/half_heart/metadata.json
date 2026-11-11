@@ -1,9 +1,10 @@
 {
   "name": "half_heart",
+  "channel": "hellobuh",
   "caption": "POV: you're on half a heart 💀",
   "youtube": {
     "title": "POV: you're on half a heart 💀 #minecraft #shorts",
-    "description": "POV: you're on half a heart 💀\n\nSong: Sayfalse, Eluvo, KPHK - Vem Lenta\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/VEMLENTA\nWatch: http://ncs.lnk.to/VEMLENTAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "description": "POV: you're on half a heart 💀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
     "hashtags": [
       "#minecraft",
       "#shorts",
@@ -13,59 +14,116 @@
     "made_for_kids": false
   },
   "song": {
-    "file": "vem_lenta.mp3",
-    "title": "VEM LENTA!",
-    "artist": "KPHK, Eluvo, Sayfalse",
+    "file": "x2.mp3",
+    "title": "X2",
+    "artist": "MUPP",
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "placed",
-    "drop_in_song_s": 36.75,
-    "drop_in_short_s": 3.5,
-    "song_start_s": 33.25
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 2.3,
+    "song_start_s": 12.2
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 5.9,
+    "duration_s": 14.93,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 11259203,
-    "sha256": "27384a4e3aebbfe2885b0b3063d178a3745022c10dae0a566b79c95f988ff52b",
+    "bytes": 26637278,
+    "sha256": "286cef89a3cfef40a56abc66ddbd573b826a66daaf605cc0816f3d67a22714a2",
     "release": {
       "tag": "pkg-half_heart",
-      "asset": "half_heart.short.27384a4e3aebbfe2.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.27384a4e3aebbfe2.mp4",
-      "sha256": "27384a4e3aebbfe2885b0b3063d178a3745022c10dae0a566b79c95f988ff52b",
-      "bytes": 11259203
+      "asset": "half_heart.short.286cef89a3cfef40.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short.286cef89a3cfef40.mp4",
+      "sha256": "286cef89a3cfef40a56abc66ddbd573b826a66daaf605cc0816f3d67a22714a2",
+      "bytes": 26637278
     },
     "nosong_release": {
       "tag": "pkg-half_heart",
-      "asset": "half_heart.short_nosong.748dffc90c9e8e5b.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short_nosong.748dffc90c9e8e5b.mp4",
-      "sha256": "748dffc90c9e8e5b4f9050dfc0c2c23fc74b916dbb39c5f1a7451345be1fe0ea",
-      "bytes": 11170709
+      "asset": "half_heart.short_nosong.071edf365a0fc549.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-half_heart/half_heart.short_nosong.071edf365a0fc549.mp4",
+      "sha256": "071edf365a0fc549ef79143baed3b2e4ca76362fb57bc19de733644fce71d908",
+      "bytes": 26506733
     }
   },
   "edit": {
     "caption": "POV: you're on half a heart 💀",
     "red": "half",
-    "song": "songs/misery.mp3",
     "dropAt": "placed",
-    "startAt": "jump:-1.0",
-    "endAfter": "placed:2.4",
+    "startAt": "jump:-0.5",
+    "endAfter": "death:1.6",
+    "deathScreen": true,
+    "sfx": [
+      [
+        "air",
+        "start",
+        "jump",
+        {
+          "gain": 0.25
+        }
+      ],
+      [
+        "wind",
+        "jump",
+        "placed",
+        {
+          "gain": 0.5
+        }
+      ]
+    ],
+    "subs": [
+      [
+        "jump",
+        "water clutch",
+        2.4
+      ],
+      [
+        "magma",
+        "magma: sneak",
+        2
+      ],
+      [
+        "drop",
+        "3 blocks = 0 damage",
+        1.6
+      ],
+      [
+        "bridge",
+        "lava bridge",
+        2.8
+      ],
+      [
+        "sound",
+        "almost there...",
+        1.6,
+        14
+      ]
+    ],
+    "speed": [
+      [
+        "placed:1.25",
+        "placed:2.25",
+        "cut"
+      ]
+    ],
     "args": [
       "--caption",
       "POV: you're on half a heart 💀",
       "--red",
       "half",
+      "--subs",
+      "[[\"jump\",\"water clutch\",2.4],[\"magma\",\"magma: sneak\",2],[\"drop\",\"3 blocks = 0 damage\",1.6],[\"bridge\",\"lava bridge\",2.8],[\"sound\",\"almost there...\",1.6,14]]",
+      "--speed",
+      "[[\"placed:1.25\",\"placed:2.25\",\"cut\"]]",
+      "--sfx",
+      "[[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}]]",
+      "--death_screen",
+      "death",
       "--start_at",
-      "jump:-1.0",
+      "jump:-0.5",
       "--end_after",
-      "placed:2.4",
-      "--song",
-      "songs/misery.mp3",
-      "--song_drop_at",
-      "placed"
+      "death:1.6"
     ]
   },
   "recording": {
@@ -76,39 +134,138 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 431,
-      "y": 70,
-      "z": -102
+      "x": 438,
+      "y": 65,
+      "z": -110
     },
     "biome": "minecraft:forest",
-    "ticks": 181,
-    "seconds": 9.05,
-    "deaths": 0,
+    "ticks": 347,
+    "seconds": 17.35,
+    "deaths": 1,
+    "death_message": {
+      "with": [
+        {
+          "click_event": {
+            "action": "suggest_command",
+            "command": "/tell HelloBuh "
+          },
+          "insertion": "HelloBuh",
+          "text": "HelloBuh",
+          "hover_event": {
+            "name": "HelloBuh",
+            "action": "show_entity",
+            "id": "minecraft:player",
+            "uuid": [
+              -1688406928,
+              1483093035,
+              -1563762988,
+              2064141885
+            ]
+          }
+        }
+      ],
+      "translate": "death.attack.sweetBerryBush"
+    },
     "events": [
       {
-        "t": 0,
+        "t": 0.8,
         "event": "start"
       },
       {
-        "t": 2.8,
+        "t": 1.45,
         "event": "jump"
       },
       {
-        "t": 5.3,
+        "t": 3.25,
         "event": "placed"
       },
       {
-        "t": 9.05,
+        "t": 6.7,
+        "event": "magma"
+      },
+      {
+        "t": 10.05,
+        "event": "drop"
+      },
+      {
+        "t": 10.6,
+        "event": "bridge"
+      },
+      {
+        "t": 15.05,
+        "event": "bush"
+      },
+      {
+        "t": 15.3,
+        "event": "hurt",
+        "type": "sweet_berry_bush"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "vel"
+      },
+      {
+        "t": 15.3,
+        "event": "death"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.05,
+        "event": "vel"
+      },
+      {
+        "t": 16.1,
+        "event": "vel"
+      },
+      {
+        "t": 16.15,
+        "event": "vel"
+      },
+      {
+        "t": 16.2,
+        "event": "vel"
+      },
+      {
+        "t": 16.25,
+        "event": "vel"
+      },
+      {
+        "t": 16.3,
+        "event": "vel"
+      },
+      {
+        "t": 17.35,
         "event": "end"
       }
     ]
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "main",
-    "commit": "f6551876fc91b737069e41c91c39e475defac6b5",
-    "rendered_at": "2026-11-06T13:11:22.587Z",
-    "head_at_publish": "652d220588272d75edce682e83351e4cde23af15",
+    "branch": "render/half_heart",
+    "commit": "7e0a59760931a23e8917881d986fa00ba366e051",
+    "rendered": "actions",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42979461888",
+    "rendered_at": "2026-11-11T07:33:15.532Z",
+    "head_at_publish": "34f72713bb92b965814232601191e699167d96f6",
     "stunt": "stunts/half_heart.js",
     "source_snapshot": [
       "source/half_heart.js",
@@ -116,13 +273,36 @@
     ]
   },
   "rebuild": [
-    "git checkout f6551876fc91",
+    "git checkout 7e0a59760931",
     "gunzip -c shorts/half_heart/recording.json.gz > work/half_heart.rec.json",
     "node render.js work/half_heart.rec.json work/half_heart.frames 60 1080 1011",
     "python3 audio.py work/half_heart.rec.json work/half_heart.wav",
-    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --start_at jump:-1.0 --end_after placed:2.4 --song songs/misery.mp3 --song_drop_at placed --out out/half_heart.mp4"
+    "python3 edit.py --frames work/half_heart.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/half_heart.rec.json --audio work/half_heart.wav --caption \"POV: you're on half a heart 💀\" --red half --subs \"[[\\\"jump\\\",\\\"water clutch\\\",2.4],[\\\"magma\\\",\\\"magma: sneak\\\",2],[\\\"drop\\\",\\\"3 blocks = 0 damage\\\",1.6],[\\\"bridge\\\",\\\"lava bridge\\\",2.8],[\\\"sound\\\",\\\"almost there...\\\",1.6,14]]\" --speed [[\"placed:1.25\",\"placed:2.25\",\"cut\"]] --sfx [[\"air\",\"start\",\"jump\",{\"gain\":0.25}],[\"wind\",\"jump\",\"placed\",{\"gain\":0.5}]] --death_screen death --start_at jump:-0.5 --end_after death:1.6 --out out/half_heart.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "not yet passed the frame-by-frame review (docs/qa.md); ",
-  "published_at": "2026-11-06T15:37:59.395Z"
+  "status": "ready",
+  "notes": "2026-11-11 finishing worker (backlog C's half-heart course): re-rendered on the current engine (bright look, no reference song); 'almost there...' moved onto the bridge's last blocks (it sat over the death screen), the held look up the pillar cut to 0.45 s; 14.9 s (stunt floor 8 s); pace 0 blockers; self-review READY r2",
+  "published_at": "2026-11-11T07:35:46.200Z",
+  "gates": {
+    "version": 2,
+    "at": "2026-11-11T07:36:06+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 14.93 s vs the reviewed render 14.93 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 2,
+      "warnings": 3,
+      "summary": "dead: 4.45 s with nothing new (8.63-13.08 s, after the bridge; no line on screen); payoff: no sound hit within 0.3 s of the payoff"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T07:27:10.191Z",
+      "report": "out/half_heart.check.json"
+    },
+    "key_sounds": "n/a"
+  }
 }
