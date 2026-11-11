@@ -28,6 +28,7 @@ FAMILIES = [
     ("race", lambda n: n.startswith("race_")),   # format race (lib/race.js, r:rbe60ef)
     ("interrupt", lambda n: n.startswith("interrupt_")),   # owner's pick 2026-11-11 (r:re05b89): a normal video, a mob interrupts
     ("hack", lambda n: n.startswith("hack_")),   # one real block trick per Short (docs/formats.md, r:rc15847)
+    ("faketrick", lambda n: n.startswith("faketrick_")),   # an impossible "secret trick" played straight (lib/faketrick.js, r:rfcab11)
     ("mega", lambda n: n.startswith("mega_")),   # huge generated builds, flown round (owner 2026-11-11, r:r8bb1e3)
     ("cooked", lambda n: n.startswith("cooked_")),   # an impossible feat, then "X joined the game" on the drop (lib/cooked.js, r:r5ee125)
     ("love", lambda n: n.startswith("love_")),   # a cute heart build lit at night, made to be sent (owner 2026-11-11, r:rf91fef)
