@@ -552,6 +552,12 @@ STANDARDS.md in the same commit.
   suggested".** Batch 2 is the critic's five: The Wall Grows, The Bell in the Window, The Walk, Six Thousand Torches
   (in place of Goat Horn, which needs a goat model), Red Sheep (Grandpa becomes Dad). One session writes each script,
   with the audit's "must change" notes applied; the owner audits the scripts before voice or build.
+- **Owner, 2026-11-11, on batch 2's scripts: "We need to have that sense of mystery. And naivety".** Every script
+  is told by a kid who doesn't understand what they're seeing and says so plainly, with full trust: the kid explains
+  each clue the wrong, innocent way (the wall keeps us safe, the bell is just loud, Grandpa is being silly), and the
+  viewer starts to see what the kid can't. The kid never hints, foreshadows, sounds scared too early or explains the
+  twist; the gap between what the kid believes and what the viewer suspects is the mystery. Every clue in the clue
+  map has its innocent misreading in the kid's own words.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

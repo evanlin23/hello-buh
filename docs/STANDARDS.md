@@ -36,6 +36,11 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    Pip's pace is fine, r:r08fd98). The Short ends the moment its
    last beat lands, no shots after it (Dog on the Hill: on Buh leaving). Check: story-critic (blockers),
    cold reader, review. r:ra807e9 r:r8de735
+0a. **Mystery through naivety** (owner: "We need to have that sense of mystery. And naivety"): the kid narrator
+   trusts what they see and explains every clue the wrong, innocent way, in their own words; the viewer sees past it.
+   The kid never hints, foreshadows, sounds afraid before the reveal or explains the twist. Every clue in the clue map
+   has its innocent misreading on a line. Check: story-critic (blocker if a clue has no misreading or the kid knows too
+   much), cold reader. r:rb89776
 0b. **Built on a proven arc, and it loops** (docs/story_arcs.md): paradox or question hook in line 1, escalation,
    reversal, end mid-sentence on the climax so the last words run into line 1; one narrator says every quote. Check:
    story-critic, cold reader (does the end flow into the start?). r:r30c821
