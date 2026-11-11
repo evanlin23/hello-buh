@@ -27,11 +27,11 @@ const H = 37          // pillar height = fall distance (blocks)
 const DOG = [0.5, -3.1]
 // the frozen fall: beat i plays `ticks` of the recording at `factor` speed (lib/dilemma.js); ~12.6 s on screen
 const BEATS = [
-  { shot: 'face', ticks: 6, factor: 0.12 },   // 2.5 s: your face, the mace in your hand, the ground far below
-  { shot: 'dog', ticks: 6, factor: 0.12 },    // 2.5 s: the dog sitting below, looking up at you
-  { shot: 'wide', ticks: 5, factor: 0.1 },    // 2.5 s: the whole pillar, you halfway down, the dog a dot
-  { shot: 'top', ticks: 4, factor: 0.1 },     // 2.0 s: over your shoulder, the ground and the dog rushing up
-  { shot: 'pov', ticks: 3, factor: 0.06 }     // 2.5 s: your eyes, the dog in the crosshair, the mace ready
+  { shot: 'dog', ticks: 6, factor: 0.12 },    // 2.5 s: the dog sitting below, head up at you (r1: the dog first, by 0.5 s)
+  { shot: 'face', ticks: 6, factor: 0.12 },   // 2.5 s: you, the mace in your hand, the pillar rushing past
+  { shot: 'top', ticks: 4, factor: 0.1 },     // 2.0 s: over your shoulder, the ground and the dog coming up
+  { shot: 'wide', ticks: 5, factor: 0.1 },    // 2.5 s: the whole pillar, you nearly down, the dog at its foot
+  { shot: 'pov', ticks: 4, factor: 0.07 }     // up to 2.9 s: your eyes, the dog in the crosshair; ends a tick before touchdown
 ]
 const START_TICKS = 9   // real-speed falling before the freeze (the hook: the drop reads in the first second)
 
@@ -63,14 +63,14 @@ module.exports = {
     red: 'hardcore',
     colors: 'dog=yellow',
     start: 'drop:0',   // (render 1 opened 0.25 s early on the pillar's top block, which hid the dog)
-    choices: [['HIT THE DOG = LIVE', 'green'], ["DON'T = HARDCORE OVER", 'red']],
+    choices: [['HIT THE DOG = LIVE', 'green'], ["DON'T = HARDCORE OVER", 'red']],   // (on the dog, then on you)
     land: 'land',
     reveal: 'reveal',
     card: ['FEATHER FALLING IV', 'blue'],
     endAfter: 1.5,
     hardcore: true,
     armor: 16,   // iron helmet 2 + chestplate 6 + leggings 5 + diamond boots 3
-    extra: { ring: [['drop:0.05', 1.1, 0.5, 0.5, 70]] }   // the dog under the crosshair in the first second
+    extra: { ring: [['drop:0.05', 0.38, 0.5, 0.5, 70]] }   // the dog under the crosshair until the cut to it (r1: it circled the helmet)
   }),
 
   async setup (ctx) {
@@ -125,7 +125,10 @@ module.exports = {
     ctx.mark('drop')
     for (let k = 0; k < START_TICKS; k++) { await aim(); await bot.waitForTicks(1) }
     // the eyes follow the dog until the last beat, then hold (the last metres turned the view 18 deg in 2 ticks)
-    await D.runBeats(ctx, BEATS, (i) => { if (i < BEATS.length - 1) aim() })
+    // the freeze ends about a tick before touchdown, so the landing (the hit, the hearts, the shake) plays at real speed
+    const ground = F + 1
+    const until = () => bot.entity.position.y + 1.2 * bot.entity.velocity.y <= ground   // (about a tick out)
+    await D.runBeats(ctx, BEATS, (i) => { if (i < BEATS.length - 1) aim() }, { until })
     // real speed again: the landing
     let landed = false
     for (let k = 0; k < 60 && !landed; k++) {

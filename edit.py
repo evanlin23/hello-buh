@@ -1159,7 +1159,10 @@ def apply_speed(args):
         frac = x - math.floor(x)
         step = warp.src((k + 1) / args.fps) * args.fps - x      # < 1 only inside a slow-motion span
         real = None
-        if step < 0.99 and 0.2 < frac < 0.8 and slow_fps:   # slow motion: a real in-between frame from the high-fps pass
+        # slow motion: a real in-between frame from the high-fps pass. Below 0.2x every in-between frame is real: with
+        # only the middle 60 % real, a 0.06x span held each 60 fps frame for ~7 frames, then jumped (dilemma_mace r1)
+        mid = (frac > 1e-6 and 1 - frac > 1e-6) if (slow_fps and step < 0.2) else (0.2 < frac < 0.8)
+        if step < 0.99 and mid and slow_fps:
             j = int(round(x / args.fps * slow_fps))
             real = slow_dir / f"f{j:05d}.png"
             real = real if real.exists() else None
