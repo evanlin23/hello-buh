@@ -34,7 +34,8 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
-    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.6', speed: [
+    return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:-0.9',   // 1.3 s after the last blast: the visible debris is down ~0.7 s after it; settle:0.6 held a still frame 2 s (independent review)
+      speed: [
       // each tier's middle blocks jump-cut, edge to edge on the short rests the bot takes at those two blocks (blk<tier>_<n>:
       // before block n; the whip check: a cut inside a turn reads as one snap, r:r38374d), each tier shorter on screen
       // than the last (~1.1 / 0.7 / 0.55 / 0.5 / 0.4 s a block: 4, 5, 5, 5, 5 blocks shown; the instamine all 9)
