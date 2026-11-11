@@ -27,7 +27,8 @@ module.exports = {
     // the last white sheep into all of them at once; ends on it (the all-jeb_ and shearing beats are recorded, unused)
     endAfter: 'jeb:1.0',
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i])],   // (no 'jeb_' sub: it sat on the jeb_ nameplate)
-    punch: [['jeb', 0, 1.06]]
+    punch: [['jeb', 0, 1.06]],
+    sfx: [['air', 'start', 'jeb', { gain: 0.5 }]]   // room tone from frame 1 (pace: the first sound was at 0.41 s)
   },
 
   async setup (ctx) {
