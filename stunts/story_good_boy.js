@@ -40,9 +40,9 @@ module.exports = {
   self: { model: 'wolf', eye: EYE, extra: { tame: true, collar: 14 } },
   cast: { [GUY]: 'steve' },
   idleLife: true,
-  look: 'auto',            // golden hour by day, eerie_night at night (the fixed warm look turned the night magenta: visual audit)
+  look: 'bright',          // the owner's bright, punchy look for every story (main e58c77d; it replaced 'auto', which itself replaced the fixed warm look that turned nights magenta)
   shots: {},
-  edit: { caption: CAPTION, red: 'human', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0', chatScale: 7 },   // "Buh left the game" readable at 300 px wide (vanilla GUI 3 was ~7 px tall there)
+  edit: { caption: CAPTION, red: 'human', story: 'stories/good_boy', startAt: 'line:0', endAfter: 'story_end:0', chatScale: 7, punchStress: true },   // "Buh left the game" readable at 300 px wide (vanilla GUI 3 was ~7 px tall there)
 
   async setup (ctx) {
     const { bot } = ctx
