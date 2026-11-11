@@ -32,14 +32,13 @@ const quirks = [
     async perform (ctx, L) {
       await L.A.dig(L.block(0, 1, -3))
       await L.A.dig(L.block(0, 2, -3))
-      // the Short opens HERE (openOn 'q0', owner r:r0f3da0: frame 0 = the subject): the view already on the gap, the
-      // canopy hanging over the stump, "trees: float" up; the chop before it is cut
-      const gap = L.at(0.5, 2.6, -2.5)
-      await L.A.turnTo(gap, { hold: 2 })
+      // the Short opens HERE (openOn 'q0', owner r:r0f3da0: frame 0 = the subject): already stepped back, the view on the
+      // gap, the whole canopy hanging over thin air, "trees: float" up; the chop and the step back before it are cut
+      await L.A.back(10, { look: L.at(0.5, 2.8, -2.5) })
+      await L.A.turnTo(L.at(0.5, 3.0, -2.5), { hold: 2 })
       L.quirk()
-      // and it moves at once: a step back, eyes rising to the canopy, the whole tree hanging over the stump
-      await L.A.back(9, { look: L.at(0.5, 3.4, -2.5) })
-      await L.hold(10, L.at(0.5, 3.6, -2.5))
+      // and it moves at once: a slow tilt up the floating tree
+      await L.hold(24, L.at(0.5, 4.4, -2.5))
     },
     hold: 4
   },
