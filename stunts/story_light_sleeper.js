@@ -37,7 +37,7 @@ module.exports = {
   hideHand: false,
   look: { mood: 'bright', rolloff: 0.8 },   // owner 2026-11-11: bright and punchy (main e58c77d); rolloff 0.8 keeps the sky blue (the story default); night shots keep their shot moods
   channel: 'buhstories',   // Buh Stories (docs/brand.md): the title band's key word in Buh gold (scripts/edit_args.js)
-  edit: { caption: BAND, red: 'carpets', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', flash: ['roar'], punchStress: true },   // the payoff: the warden's roar (a flash on it for the pace gate's picture change)
+  edit: { caption: BAND, red: 'carpets', story: 'stories/light_sleeper', startAt: 'line:0', endAfter: 'story_end:0', flash: ['roar'], punchStress: true, sfx: [['impact', 'roar', { nth: 0, gain: 1.4 }]] },   // the payoff's sound hit (review r1: the roar peaked ~-10 dBFS under the narration)   // the payoff: the warden's roar (a flash on it for the pace gate's picture change)
 
   async setup (ctx) {
     const { bot } = ctx
