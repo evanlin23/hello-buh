@@ -121,3 +121,19 @@ the first time (now in the skill).
 - A server stall (~1.6 s) at L01's start once froze Grandma and then jumped her 75 degrees, and the lint caught it
   ("nobody moves"). The next recording was clean.
 - Voicing: on hold. The owner wants a new brand narrator voice, not the sped-up Orus.
+
+## Voiced, reviewed, packaged held (2026-11-11)
+- Narrator: Pip (the owner's final pick), ONE flash-lite request through tts.py `one_take` (main ecab130). Gate OK.
+  Grandma recast Gacrux -> Vindemiatrix (owner: "gravelly"), on 3.8-flash-tts with a short bracketed direction.
+- Look: { mood: 'bright', rolloff: 0.8 } (owner picked B in the A/B); punches only on L01/L07/L12 (owner: "only the
+  big ones").
+- Engine/tool fixes on main from this run:
+  - one_take (ecab130, 82e11c0); word-to-word gaps between takes (f337f29); look 'bright' + punchStress (6632d43);
+  - banks terrain (7879439); ./hb render --wait guard (cca4086);
+  - ./hb drift one_take rule (8c94f094): within-take WOBBLE/OFFREF warn, not block.
+- Found the hard way: an item or mob inside a Nether portal block is sent to the Nether, and the load stalls the
+  server 1.6-2 s (Grandma froze on frame 1, the piglin at the reveal). Throws stop at x 10.8 and vanish on arrival;
+  the piglin appears in front of the purple.
+- Owner notes on preview_gold_3: all four fixed (no Nico; Grandma recast; BLUE stripe gap 0.58 -> 0.27 s; end sync).
+- render/ 2c1b89bf, 50.0 s, CHECK OK, pace 0 blockers; independent review READY.
+- Packaged held: videos 26c98040, release pkg-story_gold_for_the_portal (story_gold_for_the_portal.short.1f3a6766fefdb569.mp4).
