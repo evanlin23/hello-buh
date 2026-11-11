@@ -318,7 +318,8 @@ module.exports = {
     // him UP." (on screen while he says it); L11: "Somebody PROMISED to come back." (he looks away down the path)
     const [gx, gy, gz] = this.G
     await cut('gramps', { time: 11500 }, () => { place('pip', { x: -5, y: 1, z: 7.5, yaw: 0, pitch: 30 }); place('gramps', { x: gx, y: gy + 1, z: gz + 1.5, yaw: 180, pitch: -30 }) })
-    await line('L09', (k) => { Object.assign(gramps, { z: gz + 1.5 - Math.min(1.5, k * 0.05), yaw: 180 + 8 * Math.sin(k / 10), pitch: -32 }); pip.pitch = 28 + 4 * Math.sin(k / 8) }, 0.15)   // (0.15 s of air: Grandpa's L10 overlapped its tail by 0.06 s, hb pace)
+    await line('L09', (k) => { Object.assign(gramps, { z: gz + 1.5 - Math.min(1.5, k * 0.05), yaw: 180 + 8 * Math.sin(k / 10), pitch: -32 }); pip.pitch = 28 + 4 * Math.sin(k / 8) })
+    await run(3)   // 0.15 s of air before Grandpa (L10 overlapped L09's tail by 0.06 s, hb pace; K.line ignores `extra` inside the narrator's continuous take)
     await line('L10', (k) => { Object.assign(gramps, { z: Math.max(gz, gz + 1.5 - (k + 20) * 0.05), yaw: 180 + 6 * Math.sin(k / 10), pitch: -32 + (k % 16 < 8 ? 6 : 0) }); pip.pitch = 28 + 4 * Math.sin(k / 8) })
     await cut('rightback')
     await line('L11', (k, at, n) => { const u = ease(k / Math.max(1, n)); Object.assign(gramps, { z: gz, yaw: lerp(180, 235, u), pitch: lerp(-30, -5, u) }) })
