@@ -26,6 +26,7 @@ const EYE = 1.62
 module.exports = {
   name: 'mega_sponge',
   biome: 'minecraft:flower_forest',
+  near: [-2757, -206],                  // the flower forest the first take found (ground 63-83): the same site every try
   time: 12150,                          // golden hour: a low sun on the west face, a warm sky behind the east
   renderDistance: 12, recordRadius: 176,
   botTimeout: 900,
@@ -175,6 +176,7 @@ module.exports = {
       ctx.mark('end')
     } finally {
       clearInterval(clock)
+      bot.physicsEnabled = true                  // the harness waits a few ticks after the stunt
     }
     return true
   }
