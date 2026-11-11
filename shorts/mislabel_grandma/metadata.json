@@ -1,0 +1,560 @@
+{
+  "name": "mislabel_grandma",
+  "channel": "hellobuh",
+  "caption": "Minecraft items, named by my grandma 👵",
+  "youtube": {
+    "title": "Minecraft items, named by my grandma 👵 #minecraft #shorts",
+    "description": "Minecraft items, named by my grandma 👵\n\nSong: LXNGVX - Royalty Funk\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/royaltyfunk\nWatch: http://ncs.lnk.to/royaltyfunkAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "royalty_funk.mp3",
+    "title": "Royalty Funk",
+    "artist": "LXNGVX",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "land",
+    "drop_in_song_s": 47.5,
+    "drop_in_short_s": 26.3,
+    "song_start_s": 21.2
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 26.7,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 62200828,
+    "sha256": "254f529eb2b7a3f9b47d2d468e61bcc1378225f7f8443307f2470d4173247451",
+    "release": {
+      "tag": "pkg-mislabel_grandma",
+      "asset": "mislabel_grandma.short.254f529eb2b7a3f9.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short.254f529eb2b7a3f9.mp4",
+      "sha256": "254f529eb2b7a3f9b47d2d468e61bcc1378225f7f8443307f2470d4173247451",
+      "bytes": 62200828
+    },
+    "nosong_release": {
+      "tag": "pkg-mislabel_grandma",
+      "asset": "mislabel_grandma.short_nosong.1e1f6a02552f89d3.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-mislabel_grandma/mislabel_grandma.short_nosong.1e1f6a02552f89d3.mp4",
+      "sha256": "1e1f6a02552f89d376329b7409db8c98b4682c72023ff796fc6c81a7e34ff8b1",
+      "bytes": 61633773
+    }
+  },
+  "edit": {
+    "caption": "Minecraft items, named by my grandma 👵",
+    "colors": "1=yellow,2=yellow,3=yellow,4=yellow,5=yellow,6=yellow",
+    "captions": [
+      [
+        "item1",
+        "1."
+      ],
+      [
+        "item1:1.1",
+        "1. Red crayons"
+      ],
+      [
+        "item2",
+        "2."
+      ],
+      [
+        "item2:1.1",
+        "2. Tomato soup"
+      ],
+      [
+        "item3",
+        "3."
+      ],
+      [
+        "item3:1.1",
+        "3. Ice cube"
+      ],
+      [
+        "item4",
+        "4."
+      ],
+      [
+        "item4:1.1",
+        "4. Lime jello"
+      ],
+      [
+        "item5",
+        "5."
+      ],
+      [
+        "item5:1.1",
+        "5. Angry lemon"
+      ],
+      [
+        "item6",
+        "6."
+      ],
+      [
+        "item6:1.1",
+        "6. Sad cucumber"
+      ],
+      [
+        "home",
+        "Minecraft items, named by my grandma 👵"
+      ]
+    ],
+    "speed": [
+      [
+        "end1",
+        "item2",
+        "cut"
+      ],
+      [
+        "end2",
+        "item3",
+        "cut"
+      ],
+      [
+        "end3",
+        "item4",
+        "cut"
+      ],
+      [
+        "end4",
+        "item5",
+        "cut"
+      ],
+      [
+        "end5",
+        "item6",
+        "cut"
+      ],
+      [
+        "end6",
+        "home",
+        "cut"
+      ]
+    ],
+    "startAt": "go:0.45",
+    "endAfter": "land:0.4",
+    "shake": [
+      [
+        "land",
+        0,
+        14
+      ]
+    ],
+    "dropAt": "land",
+    "sfx": [
+      [
+        "dip",
+        "land",
+        0.4
+      ]
+    ],
+    "args": [
+      "--caption",
+      "Minecraft items, named by my grandma 👵",
+      "--colors",
+      "1=yellow,2=yellow,3=yellow,4=yellow,5=yellow,6=yellow",
+      "--captions",
+      "[[\"item1\",\"1.\"],[\"item1:1.1\",\"1. Red crayons\"],[\"item2\",\"2.\"],[\"item2:1.1\",\"2. Tomato soup\"],[\"item3\",\"3.\"],[\"item3:1.1\",\"3. Ice cube\"],[\"item4\",\"4.\"],[\"item4:1.1\",\"4. Lime jello\"],[\"item5\",\"5.\"],[\"item5:1.1\",\"5. Angry lemon\"],[\"item6\",\"6.\"],[\"item6:1.1\",\"6. Sad cucumber\"],[\"home\",\"Minecraft items, named by my grandma 👵\"]]",
+      "--speed",
+      "[[\"end1\",\"item2\",\"cut\"],[\"end2\",\"item3\",\"cut\"],[\"end3\",\"item4\",\"cut\"],[\"end4\",\"item5\",\"cut\"],[\"end5\",\"item6\",\"cut\"],[\"end6\",\"home\",\"cut\"]]",
+      "--shake",
+      "[[\"land\",0,14]]",
+      "--sfx",
+      "[[\"dip\",\"land\",0.4]]",
+      "--start_at",
+      "go:0.45",
+      "--end_after",
+      "land:0.4"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 3395,
+      "y": 290,
+      "z": 920
+    },
+    "biome": "minecraft:jungle",
+    "ticks": 731,
+    "seconds": 36.55,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "go"
+      },
+      {
+        "t": 0.95,
+        "event": "jump"
+      },
+      {
+        "t": 1.5,
+        "event": "land_jump"
+      },
+      {
+        "t": 1.6,
+        "event": "jump"
+      },
+      {
+        "t": 2.15,
+        "event": "land_jump"
+      },
+      {
+        "t": 2.25,
+        "event": "jump"
+      },
+      {
+        "t": 2.8,
+        "event": "land_jump"
+      },
+      {
+        "t": 2.85,
+        "event": "jump"
+      },
+      {
+        "t": 3.4,
+        "event": "land_jump"
+      },
+      {
+        "t": 3.5,
+        "event": "jump"
+      },
+      {
+        "t": 3.5,
+        "event": "dropper"
+      },
+      {
+        "t": 5.05,
+        "event": "item1"
+      },
+      {
+        "t": 7.5,
+        "event": "pass1"
+      },
+      {
+        "t": 7.7,
+        "event": "end1"
+      },
+      {
+        "t": 7.7,
+        "event": "cut"
+      },
+      {
+        "t": 8.4,
+        "event": "cut"
+      },
+      {
+        "t": 8.8,
+        "event": "item2"
+      },
+      {
+        "t": 12.5,
+        "event": "pass2"
+      },
+      {
+        "t": 12.85,
+        "event": "end2"
+      },
+      {
+        "t": 12.85,
+        "event": "cut"
+      },
+      {
+        "t": 13.5,
+        "event": "cut"
+      },
+      {
+        "t": 14.45,
+        "event": "item3"
+      },
+      {
+        "t": 17.75,
+        "event": "pass3"
+      },
+      {
+        "t": 18.1,
+        "event": "end3"
+      },
+      {
+        "t": 18.1,
+        "event": "cut"
+      },
+      {
+        "t": 18.75,
+        "event": "cut"
+      },
+      {
+        "t": 19.15,
+        "event": "item4"
+      },
+      {
+        "t": 22.7,
+        "event": "pass4"
+      },
+      {
+        "t": 23.05,
+        "event": "end4"
+      },
+      {
+        "t": 23.05,
+        "event": "cut"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.05,
+        "event": "vel"
+      },
+      {
+        "t": 23.4,
+        "event": "vel"
+      },
+      {
+        "t": 23.45,
+        "event": "vel"
+      },
+      {
+        "t": 24,
+        "event": "cut"
+      },
+      {
+        "t": 24.4,
+        "event": "item5"
+      },
+      {
+        "t": 24.4,
+        "event": "vel"
+      },
+      {
+        "t": 24.45,
+        "event": "vel"
+      },
+      {
+        "t": 25.4,
+        "event": "vel"
+      },
+      {
+        "t": 25.45,
+        "event": "vel"
+      },
+      {
+        "t": 26.4,
+        "event": "vel"
+      },
+      {
+        "t": 26.45,
+        "event": "vel"
+      },
+      {
+        "t": 27.35,
+        "event": "vel"
+      },
+      {
+        "t": 27.4,
+        "event": "pass5"
+      },
+      {
+        "t": 27.4,
+        "event": "vel"
+      },
+      {
+        "t": 27.9,
+        "event": "end5"
+      },
+      {
+        "t": 27.9,
+        "event": "cut"
+      },
+      {
+        "t": 27.9,
+        "event": "vel"
+      },
+      {
+        "t": 27.9,
+        "event": "vel"
+      },
+      {
+        "t": 28.35,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.45,
+        "event": "vel"
+      },
+      {
+        "t": 28.55,
+        "event": "vel"
+      },
+      {
+        "t": 28.65,
+        "event": "cut"
+      },
+      {
+        "t": 29.4,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.45,
+        "event": "vel"
+      },
+      {
+        "t": 29.55,
+        "event": "vel"
+      },
+      {
+        "t": 29.85,
+        "event": "item6"
+      },
+      {
+        "t": 30.4,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.45,
+        "event": "vel"
+      },
+      {
+        "t": 30.55,
+        "event": "vel"
+      },
+      {
+        "t": 31.4,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.45,
+        "event": "vel"
+      },
+      {
+        "t": 31.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.4,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.45,
+        "event": "vel"
+      },
+      {
+        "t": 32.55,
+        "event": "vel"
+      },
+      {
+        "t": 32.8,
+        "event": "pass6"
+      },
+      {
+        "t": 33.25,
+        "event": "end6"
+      },
+      {
+        "t": 33.25,
+        "event": "cut"
+      },
+      {
+        "t": 33.75,
+        "event": "cut"
+      },
+      {
+        "t": 34.15,
+        "event": "home"
+      },
+      {
+        "t": 35.55,
+        "event": "land"
+      },
+      {
+        "t": 36.55,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "8b3e545b7048f3821d97eea2f82f770f0e2dac24",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T10:19:34.713Z",
+    "head_at_publish": "8b3e545b7048f3821d97eea2f82f770f0e2dac24",
+    "stunt": "stunts/mislabel_grandma.js",
+    "source_snapshot": [
+      "source/mislabel_grandma.js",
+      "source/mislabel.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 8b3e545b7048",
+    "gunzip -c shorts/mislabel_grandma/recording.json.gz > work/mislabel_grandma.rec.json",
+    "node render.js work/mislabel_grandma.rec.json work/mislabel_grandma.frames 60 1080 1011",
+    "python3 audio.py work/mislabel_grandma.rec.json work/mislabel_grandma.wav",
+    "python3 edit.py --frames work/mislabel_grandma.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/mislabel_grandma.rec.json --audio work/mislabel_grandma.wav --caption \"Minecraft items, named by my grandma 👵\" --colors 1=yellow,2=yellow,3=yellow,4=yellow,5=yellow,6=yellow --captions \"[[\\\"item1\\\",\\\"1.\\\"],[\\\"item1:1.1\\\",\\\"1. Red crayons\\\"],[\\\"item2\\\",\\\"2.\\\"],[\\\"item2:1.1\\\",\\\"2. Tomato soup\\\"],[\\\"item3\\\",\\\"3.\\\"],[\\\"item3:1.1\\\",\\\"3. Ice cube\\\"],[\\\"item4\\\",\\\"4.\\\"],[\\\"item4:1.1\\\",\\\"4. Lime jello\\\"],[\\\"item5\\\",\\\"5.\\\"],[\\\"item5:1.1\\\",\\\"5. Angry lemon\\\"],[\\\"item6\\\",\\\"6.\\\"],[\\\"item6:1.1\\\",\\\"6. Sad cucumber\\\"],[\\\"home\\\",\\\"Minecraft items, named by my grandma 👵\\\"]]\" --speed [[\"end1\",\"item2\",\"cut\"],[\"end2\",\"item3\",\"cut\"],[\"end3\",\"item4\",\"cut\"],[\"end4\",\"item5\",\"cut\"],[\"end5\",\"item6\",\"cut\"],[\"end6\",\"home\",\"cut\"]] --shake [[\"land\",0,14]] --sfx [[\"dip\",\"land\",0.4]] --start_at go:0.45 --end_after land:0.4 --out out/mislabel_grandma.mp4"
+  ],
+  "status": "ready",
+  "notes": "mislabel #1 (lib/mislabel.js): parkour + dropper hook, six giant pixel-art items named by grandma (TNT 'Red crayons' ... creeper 'Sad cucumber'), loops onto the start block; r1 NOT READY (length, superseded by the 8 s floor), r2 READY; clean-check of every label; payoff fix (edit only): drop + dip on the landing, no impact (it crushed the game audio). Nitpicks: shadow smudges under builds (~19.2 s), loop angle doesn't quite match frame 1, ice cube + lime jello small for ~1 s.",
+  "published_at": "2026-11-11T10:22:33.065Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T10:23:02+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 26.71 s vs the reviewed render 26.70 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 3,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T10:20:07.109Z",
+      "report": "work/hb/mislabel_grandma.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
