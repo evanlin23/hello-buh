@@ -62,7 +62,7 @@ needs a reason or a fix. `./hb make <stunt>` runs every automatic check in order
    one single-speaker request "[A bubbly nine-year-old kid, fast, bright and energetic, telling a friend an amazing
    story; not whispery, breathy or soft]" + the lines in plain sentence case (`plain_say`: no CAPS, no ellipses);
    natural tempo, no speed-up, no pitch shift, no pause cap; performed continuously, re-taken never trimmed; the take gate allows
-   sentence breaks up to 0.6 s (cast `max_pause`), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
+   sentence breaks up to 0.95 s (cast `max_pause`; the owner's "This is fine" on a 0.62-0.91 s take, r:r867786), character lines 1.0 s. It is `voices/cast.json` `narrator`; the
    earlier picks are `narrator_sleepover` (k4, rubberband 1.1x +1 st) and `narrator_roblox` (Orus x1.45), history only.
    Check: owner (listen), test_continuous. r:re6a7ee r:r8ef256 r:rcf486c r:r754946
 00. **Our own brand narrator voice, plus short character lines** (docs/brand.md): a distinctive narrator voice of
