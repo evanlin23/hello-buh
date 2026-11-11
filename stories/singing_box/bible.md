@@ -25,8 +25,8 @@
 | who | look | voice | shots |
 |---|---|---|---|
 | the allay (narrator) | vanilla allay, her diamond in its hands throughout | Pip (cast `narrator`, one_take, plain_say) | S01-S09, S10b, S11-S13b |
-| the miner (her) | player, default `noor` skin, iron pickaxe (main hand empty in S09, S10), no armour | audition: Zephyr / Despina (`storyteller`) | S02, S03, S06 (small), S09 (L10), S10 (shoulder), S10b, S11 |
-| the neighbor | player, default `efe` skin; plain in S10; in S13b no helmet, diamond chestplate, leggings, boots, pickaxe (main hand), sword (off hand) | audition: Umbriel / Algieba | S10 (L11), S13b |
+| the miner (her) | player, new skin needed (original, commissioned at build), iron pickaxe (main hand empty in S09, S10), no armour | audition: Zephyr / Despina (`storyteller`) | S02, S03, S06 (small), S09 (L10), S10 (shoulder), S10b, S11 |
+| the neighbor | player, new skin needed (original, commissioned at build; not hers, not Steve); plain in S10; in S13b no helmet, diamond chestplate, leggings, boots, pickaxe (main hand), sword (off hand) | audition: Umbriel / Algieba | S10 (L11), S13b |
 
 ## Props
 | prop | state | shots |

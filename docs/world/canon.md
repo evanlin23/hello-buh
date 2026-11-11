@@ -268,10 +268,10 @@ follow any Short.
 | who | story (place, day) | look | voice | status |
 |---|---|---|---|---|
 | the allay | The Singing Box Next Door (under Torch Hill, 1500) | vanilla allay, holds the miner's one diamond | `narrator` (Leda, the house narrator voice) | cast |
-| the miner | The Singing Box Next Door (under Torch Hill, 1500) | player, default `noor` skin, iron pickaxe; never named | Zephyr (unused) or Despina (`storyteller`, no character uses it), audition against Pip on L10 | audition |
-| the neighbor | The Singing Box Next Door (under Torch Hill, 1500) | player, default `efe` skin; diamond armour (no helmet) in the reveal; never named | Umbriel or Algieba (both unused), audition against Pip on L11 | audition |
+| the miner | The Singing Box Next Door (under Torch Hill, 1500) | player, new skin needed (original, commissioned at build); iron pickaxe; never named | Zephyr (unused) or Despina (`storyteller`, no character uses it), audition against Pip on L10 | audition |
+| the neighbor | The Singing Box Next Door (under Torch Hill, 1500) | player, new skin needed (original, commissioned at build); diamond armour (no helmet) in the reveal; never named | Umbriel or Algieba (both unused), audition against Pip on L11 | audition |
 
-`noor` and `efe` are the last unused default skins; conflicts 18 and 19 also recommend them (the hall player, The Walk's kid): the lead's and owner's call.
+Lead, 2026-11-11: `noor`/`efe` clash with other planned characters (conflicts 18, 19), so both get new original skins, commissioned at build.
 
 ## Conflicts and how they're read (no published Short is re-rendered)
 

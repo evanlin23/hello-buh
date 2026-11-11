@@ -45,8 +45,8 @@
    "voice": "Zephyr",
    "model": "gemini-3.8-flash-tts",
    "color": "#9FE3A0",
-   "skin": "noor",
-   "on_screen": "a player, default `noor` skin (not Steve: Steve reads as Buh, conflict 18), iron pickaxe; S02, S03, S06, S09 (says L10 there), S10 (her shoulder in fg), S11. Never named.",
+   "skin": "new skin needed",
+   "on_screen": "a player, a NEW original skin (lead 2026-11-11: noor and efe clash with other planned characters; commissioned at build; not Steve), iron pickaxe; S02, S03, S06, S09 (says L10 there), S10 (her shoulder in fg), S11. Never named.",
    "audition": {
     "line": "L10 \"Nothing AGAIN. It's EMPTY.\"",
     "bracket": "[A tired young woman, flat and worn out, full voice]",
@@ -70,8 +70,8 @@
    "voice": "Umbriel",
    "model": "gemini-3.8-flash-tts",
    "color": "#7FB2FF",
-   "skin": "efe",
-   "on_screen": "a player, default `efe` skin, plain clothes and no armour in S10 (at his window, says L11); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin. Never named.",
+   "skin": "new skin needed",
+   "on_screen": "a player, a NEW original skin (commissioned at build; distinct from hers and from Steve; the same in S10 and S13b), plain clothes and no armour in S10 (at his window, says L11); in S13b (the reveal) no helmet so his face matches, diamond chestplate, leggings, boots, pickaxe and sword, same skin. Never named.",
    "audition": {
     "line": "L11 \"Some of us are trying to SLEEP!\"",
     "bracket": "[A grumpy grown man, loud and annoyed, shouting from a window]",
@@ -601,7 +601,7 @@
    "time": "1489 day 1000",
    "camera": "12-15 blocks downslope south-east of the cottages, looking north-west uphill toward Torch Hill's torch, still",
    "subject": "Her",
-   "frame": "day one (11 days before): she steps out of her door (birch and cobble, `noor` skin, iron pickaxe) and hands her one diamond to the allay on 'HOLD'; it takes it and floats, the diamond in its hands. bg: his spruce cottage beyond hers, the torch on the slope above."
+   "frame": "day one (11 days before): she steps out of her door (birch and cobble; her new skin, iron pickaxe) and hands her one diamond to the allay on 'HOLD'; it takes it and floats, the diamond in its hands. bg: his spruce cottage beyond hers, the torch on the slope above."
   },
   {
    "id": "S03",
@@ -688,7 +688,7 @@
    "time": "1499 dusk 12600",
    "camera": "over her shoulder north-east to his cottage window (his cottage 4-5 blocks away), still",
    "subject": "Neighbor",
-   "frame": "the neighbor (`efe` skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms all day; he says he sleeps by day); her shoulder and head in frame-right fg. His face is the face of S13b."
+   "frame": "the neighbor (his new skin, plain clothes, no armour, nothing diamond) throws open his lit spruce shutter and shouts L11 (her booms all day; he says he sleeps by day); her shoulder and head in frame-right fg. His face is the face of S13b."
   },
   {
    "id": "S10b",
