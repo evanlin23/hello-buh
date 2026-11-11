@@ -176,7 +176,7 @@ module.exports = {
     await still(6)
     const ore = bot.blockAt(at(0, 0, -2))
     ctx.log('ore', ore && ore.name)
-    await A.dig(ore)
+    await A.dig(ore, { ms: 500 })   // vanilla for netherite on diamond ore: hardness 3, speed 9 -> 10 ticks (mineflayer's digTime gave 4.5 s)
     ctx.sound('block.stone.break', 1, 1)
     ctx.particles('block', at(0.5, 0.6, -1.5), { block: 'diamond_ore', count: 12 })
     await still(6)
@@ -207,8 +207,9 @@ module.exports = {
       ctx.particles('portal', at(P + 1 + Math.random() * 2, 2 + Math.random() * 3, -3.5), { count: 4, face: true })
     }
     bot.on('physicsTick', portalParts)
-    await drift(at(P + 2, 3.5, -3.5), 14)
-    await still(26)
+    await drift(at(P + 2, 3.5, -3.5), 12)
+    await A.back(12, { look: at(P + 2, 3.2, -3.5) })   // a step back to take it in (lint: never still for 1 s)
+    await drift(at(P + 2.6, 3.0, -3.5), 10)
 
     // ---- 3. "the nether": a blaze, one hit
     const N = SX.nether
