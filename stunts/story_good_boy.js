@@ -432,7 +432,7 @@ const DXs = 102.5, DZs = -513.5, HL = 39   // Dog Hill's D, set-relative (as DX,
 module.exports.shots = {
   pov: { pov: true },
   // L01: low, ahead of Buh as he sprints west toward it (the sun behind the lens lights his face); the wolf behind him
-  run_ahead: { subject: [`actor:${GUY}`, 'self'], follow: `actor:${GUY}`, offset: [-3.8, 0.1, 0.6], look: { of: `actor:${GUY}`, offset: [0, -0.2, 0] }, lag: 2, fov: 50 },
+  run_ahead: { subject: [`actor:${GUY}`, 'self'], follow: `actor:${GUY}`, offset: [-3.8, 1.5, 0.6], look: { of: `actor:${GUY}`, offset: [0, -0.5, 0] }, lag: 2, fov: 50 },
   // L02: back next to him. A crane in from the sea side, clear of the oak (it flew through its canopy: visual audit)
   est: { subject: [`actor:${GUY}`], dof: false, path: [[0, 52, H + 12, 22], [3.0, 42, H + 3.5, 18.5]], lookPath: [[0, 37.5, H + 1.2, 17.5], [3.0, 37.5, H + 1.6, 17.6]], ease: true },
   // L03: over the wheat looking down the rows at him crouched in it (never inside the crop: visual audit)

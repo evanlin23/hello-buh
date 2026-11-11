@@ -15,7 +15,9 @@
  ],
  "payoff": "syschat",
  "audio": {
-  "hit": false
+  "hit": false,
+  "riser": false,
+  "whoosh": false
  },
  "voice_takes": "beat",
  "cast": {
