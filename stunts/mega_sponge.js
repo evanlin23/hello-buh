@@ -123,7 +123,7 @@ module.exports = {
       this.rockets--
       bot.swingArm()
       ctx.sound('entity.firework_rocket.launch', 1, 1)
-      ctx.sound('item.elytra.flying', 0.8, 1)
+      ctx.sound('item.elytra.flying', 0.35, 1)   // (quiet: at 0.8 the wind loop under the NCS bed left no room for any hit, mixcheck)
       bot.chat(`/item replace entity @s hotbar.0 with firework_rocket ${this.rockets}`)
       const p = want || bot.entity.position
       for (let k = 0; k < 6; k++) ctx.particles('firework_trail', { x: p.x + (Math.random() - 0.5) * 0.4, y: p.y + 0.4, z: p.z + (Math.random() - 0.5) * 0.4 }, { vy: -0.05 })
@@ -165,7 +165,7 @@ module.exports = {
     try {
       // 1. under the corner, craning up; then close under the south face (camera shots, ~1.8 s each)
       park(); M.shot(ctx, 'rise'); ctx.mark('start')
-      ctx.sound('item.elytra.flying', 0.45, 0.9)
+      ctx.sound('item.elytra.flying', 0.3, 0.9)
       await bot.waitForTicks(40)
       M.shot(ctx, 'rise2'); ctx.mark('rise2')
       await bot.waitForTicks(32)
@@ -180,7 +180,7 @@ module.exports = {
       await bot.waitForTicks(30)
       // 3. wide orbit, then high over the top (camera shots)
       M.shot(ctx, 'orbit'); ctx.mark('wide')
-      ctx.sound('item.elytra.flying', 0.4, 0.85)
+      ctx.sound('item.elytra.flying', 0.3, 0.85)
       await bot.waitForTicks(46)
       M.shot(ctx, 'top'); ctx.mark('top')
       await bot.waitForTicks(42)
@@ -192,7 +192,7 @@ module.exports = {
         (p, a, i) => mix(W([0.5, 74, 0]), W([0.5, 41, 18]), ease(0, 1, i - 42, 46)), { 2: boost, 46: boost })   // the north face and its top edge, then down the top hole
       // 5. the west face head-on, then closer on the hole's line (camera shots)
       park(); M.shot(ctx, 'face'); ctx.mark('cut'); ctx.mark('face')
-      ctx.sound('item.elytra.flying', 0.4, 0.9)
+      ctx.sound('item.elytra.flying', 0.3, 0.9)
       await bot.waitForTicks(40)
       M.shot(ctx, 'face2'); ctx.mark('face2')
       await bot.waitForTicks(38)
@@ -206,7 +206,7 @@ module.exports = {
       await run(path, 100, (i) => {
         const v = dist < 26 ? 1.5 : dist < 46 ? ease(1.5, 0.8, dist - 26, 20) : 0.8
         dist += v
-        for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); if (name === 'inside') { ctx.sound('item.elytra.flying', 0.7, 1.1) } }
+        for (const [k, name] of Object.entries(marks)) if (dist >= +k && !done.has(name)) { done.add(name); ctx.mark(name); }
         return v
       }, (p, a) => a, { 2: boost })
       ctx.mark('end')
