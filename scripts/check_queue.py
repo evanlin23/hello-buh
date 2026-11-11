@@ -44,6 +44,7 @@ FAMILIES = [
     ("underdog", lambda n: n.startswith("underdog_")),   # every mob gets X... but what about him? (lib/underdog.js, r:r8dcdb4)
     ("stages", lambda n: n.startswith("stages_")),   # 3 titled chapters (lib/stages.js, r:redb7c0)
     ("fakemod", lambda n: n.startswith("fakemod_")),   # a fake mod's popup, the choice plays out (lib/fakemod.js, r:rd551de)
+    ("friend", lambda n: n.startswith("friend_")),   # that one friend, from my POV (owner 2026-11-11, r:ra64f79; lib/friend.js)
 ]
 
 
