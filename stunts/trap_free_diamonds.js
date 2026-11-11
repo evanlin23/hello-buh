@@ -12,14 +12,14 @@
 //   the hole      (0, 0, 0) and (0, -1, 0); the trapdoor at (0, 0, 0), top half, hinged on the north edge
 //   the chest     (0, 1, -1) facing south, on the grass block (0, 0, -1) that powers the trapdoor; diamond blocks
 //                 at (-1, 1, -1) and (1, 1, -1)
-//   me            build from (0.5, 1, 1.15) looking north (close enough that every aim ray enters its block from the top); hide at (4.5, 1, 4.5) looking north-west at the chest's front, crouched
-//   the friend    waits at (-6.5, 8.5) on the pad, south-west, out of view; in to (0.5, 3.5), then north onto the trapdoor, stopping
+//   me            build from (0.5, 1, 1.15) looking north (close enough that every aim ray enters its block from the top); hide at (3.5, 1, 2.5) looking west-north-west at the chest's front, crouched
+//   the friend    waits at (-3.5, 6.5) on the pad, south-west, out of view; in to (0.5, 3.5), then north onto the trapdoor, stopping
 //                 at z 0.6: the open panel stands in z 0..3/16 of the hole, and a 0.6-wide player centred north of
 //                 z 0.49 would stay standing on its top edge (take 1 did)
 const { makeStunt } = require('../lib/trap')
 
 const FRIEND = 'Dylan'
-const HIDE = [4.5, 1, 4.5]
+const HIDE = [3.5, 1, 2.5]
 
 module.exports = makeStunt({
   name: 'trap_free_diamonds',
@@ -30,7 +30,7 @@ module.exports = makeStunt({
   hotbar: ['diamond_shovel', ['spruce_trapdoor', 4], 'trapped_chest', ['diamond_block', 2], ['bread', 12]],
   select: 0,
   start: [0.5, 1, 1.15, 180, 66],
-  park: [-6.5, 1, 8.5, -125],   // south-west, behind me while I build; the turn into hiding goes round by the north
+  park: [-3.5, 1, 6.5, -125],   // south-west, behind me while I build and ~67 deg off my view from the hide; the turn into hiding goes round by the north
 
   async set (ctx, T) {
     // a few bushes round the pad's edge (persistent leaves on the grass) so it isn't a bare square
@@ -65,17 +65,15 @@ module.exports = makeStunt({
     // now hide: off to the east, then turn round, crouch and watch it
     ctx.select(5)   // an empty hand to hide with
     T.step()
-    // the last leg heads east, so the turn back onto the bait goes round by the north, never past him in the south-west
-    await T.walk([[2.5, 1, 4.0], HIDE])
+    // one short leg, mostly east, so the turn back onto the bait goes round by the north, never past him in the south-west
+    await T.walk([HIDE])
     await T.look(0.5, 1.4, 0.2, { max: 30 })
     T.sneak(true)
-    await T.hold(8)
-    // he joins and comes up from the south-west, out of view at first; the camera follows him in
+    // he joins the moment I'm down and comes up from the south-west, out of view at first; the camera follows him in
     F.join()
-    await T.hold(10)
     const watch = () => { const p = F.pos(); T.K.base = T.K.aim(Object.assign(new ctx.Vec3((p.x + T.O.x + 0.5) / 2, T.O.y + 1.6, (p.z + T.O.z + 0.5) / 2), { exact: true })) }
     let said = false
-    await F.walk([[0.5, 3.5], [0.5, 0.6]], { tol: 0.08, during: (k) => { watch(); if (k === 18 && !said) { said = true; F.say('yo FREE DIAMONDS??') } } })
+    await F.walk([[0.5, 3.5], [0.5, 0.6]], { tol: 0.08, during: (k) => { watch(); if (k === 14 && !said) { said = true; F.say('yo FREE DIAMONDS??') } } })
     // on the trapdoor: he looks down at the chest and opens it
     await F.lookAt(0.5, 1.4, -0.6, 8)
     T.K.base = T.K.aim(Object.assign(T.at(0.5, 1.5, 0.3), { exact: true }))
