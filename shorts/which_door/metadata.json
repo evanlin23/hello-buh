@@ -3445,8 +3445,8 @@
     "python3 audio.py work/which_door.rec.json work/which_door.wav",
     "python3 edit.py --frames work/which_door.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/which_door.rec.json --audio work/which_door.wav --caption \"which door would you pick? 🚪\" --red door --speed [[\"lava_a\",\"lava_a:0.55\",2.5],[\"lava_a:0.55\",\"lava_a:1.85\",\"cut\"],[\"lava_a:1.85\",\"lava_dead\",2.5],[\"walk_a:0.25\",\"walk_b\",\"cut\"],[\"strafe_a0\",\"strafe_b0\",\"cut\"],[\"strafe_a1\",\"strafe_b1\",\"cut\"],[\"strafe_a2\",\"strafe_b2\",\"cut\"],[\"strafe_a3\",\"strafe_b3\",\"cut\"],[\"strafe_a4\",\"strafe_b4\",\"cut\"]] --punch [[\"death\",0,1.08],[\"death\",1,1.08],[\"death\",2,1.2]] --counter {\"at\":[[\"open\",0],[\"open\",1],[\"open\",2],[\"open\",3],[\"open\",4]],\"total\":5} --cards \"[[\\\"intro\\\",\\\"PICK A DOOR\\\",1.8,\\\"yellow\\\"],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",0],[\\\"survive\\\",\\\"SURVIVED ✅\\\",0.6,\\\"green\\\",1],[\\\"death\\\",\\\"DEAD ❌\\\",0.7,\\\"red\\\",1],[\\\"safe\\\",\\\"THE SAFE ONE 😇\\\",1,\\\"green\\\"],[\\\"death\\\",\\\"THE WORST ONE 💀\\\",1,\\\"red\\\",2]]\" --shake [[\"death\",2,24]] --flash [[\"death\",2,0.8]] --sfx [[\"whoosh\",\"intro\"],[\"pops\"],[\"dip\",\"last_death\",0.3],[\"impact\",\"last_death\"]] --on_fire lava_in:death --death_screen death --start_at intro:0 --end_after last_death:1.3 --out out/which_door.mp4"
   ],
-  "status": "ready",
-  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); the lava burn's still 1.3 s cut (lint), whoosh+pops from frame 0, song dip + impact on the last death, worst-one card held 1.3 s; 27.5 s; pace 0 blockers; self-review READY",
+  "status": "needs-fix",
+  "notes": "2026-11-11 finishing worker: re-rendered on the current engine (bright look, no reference song); the lava burn's still 1.3 s cut (lint), whoosh+pops from frame 0, song dip + impact on the last death, worst-one card held 1.3 s; 27.5 s; pace 0 blockers; self-review READY | independent review 2026-11-11: NOT READY, 1 blocker. (1) r:r24d99a (owner: never cut or end while the payoff is still moving): the video ends at 27.54 s (frame ~1652) in the middle of the TNT chain under 'THE WORST ONE': a fresh wave of block debris starts at ~26.9 s and is still filling the death screen on the last frame. Cheapest fix: edit-only, endAfter later (last_death:~2.5, once the debris has settled; the death screen is a text payoff so the extra hold reads as reading time) or end before the second wave (~26.8 s). Checked and OK: every door opened with the crosshair on the door (r:rffba12); the lava death has a visible cause (second hop falls short of the gap, 5.9-6.1 s); arrows/creepers/zombies vanilla. Nitpicks: the opening 'PICK A DOOR' facade is nearly still for 1.8 s (pace passes it: whoosh + pops); 10.75-16.95 s one corridor angle (WARN).",
   "published_at": "2026-11-11T07:32:11.168Z",
   "gates": {
     "version": 2,
@@ -3470,5 +3470,10 @@
       "report": "out/which_door.check.json"
     },
     "key_sounds": "n/a"
+  },
+  "review_independent": {
+    "verdict": "NOT READY",
+    "at": "2026-11-11",
+    "notes": "independent review 2026-11-11"
   }
 }
