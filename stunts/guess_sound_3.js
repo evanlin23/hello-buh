@@ -10,7 +10,10 @@ module.exports = guessSound({
   expectDeath: true,
   difficulty: 'hard',   // a creeper blast from 3 blocks is ~17 on normal (survivable), ~25 on hard
   endAfter: null,
-  edit: { deathScreen: true, endAfter: 'death:1.0', sfx: [['dip', 'death', 0.3]] },   // the song dips 0.3 s before the blast: it lands as a hit (pace), not under the drop
+  edit: { deathScreen: true, endAfter: 'death:1.0', sfx: [['dip', 'death', 0.3],
+    // the blaze's breath and the creeper's low hiss are too quiet for the key-sound duck to find (mixcheck: the music
+    // covered them by -2.5 / +5.0 / +1.1 dB): the song dips from each of those calls to the next countdown mark
+    ['dip', 'cd2', 1.35, { nth: 4 }], ['dip', 'cd1', 1.05, { nth: 4 }], ['dip', 'cd2', 1.25, { nth: 5 }]] },   // the song dips 0.3 s before the blast: it lands as a hit (pace), not under the drop
   rounds: [
     { mob: 'chicken', room: 'farm', sound: 'entity.chicken.ambient', label: 'EASY', answer: 'CHICKEN', react: 'call', leanTicks: 5, lookY: 0.6 },
     { mob: 'sniffer', room: 'moss', sound: 'entity.sniffer.idle', label: 'MEDIUM', answer: 'SNIFFER', react: 'call', reactSound: 'entity.sniffer.sniffing', lean: 0, lookY: 0.9, lookDown: 0.02, mobDz: 3.5, mobDx: 0, color: 'green' },
