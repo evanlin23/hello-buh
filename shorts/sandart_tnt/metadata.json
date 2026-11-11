@@ -1,0 +1,461 @@
+{
+  "name": "sandart_tnt",
+  "channel": "hellobuh",
+  "caption": "dropping 11,760 blocks from the sky. guess what it is 👀",
+  "youtube": {
+    "title": "dropping 11,760 blocks from the sky. guess what it is 👀 #minecraft #shorts",
+    "description": "dropping 11,760 blocks from the sky. guess what it is 👀\n\nSong: mupp - X2\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/MUPPX2\nWatch: http://ncs.lnk.to/MUPPX2AT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "x2.mp3",
+    "title": "X2",
+    "artist": "MUPP",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": "settle",
+    "drop_in_song_s": 14.5,
+    "drop_in_short_s": 10.1,
+    "song_start_s": 4.4
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 10.7,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 22949654,
+    "sha256": "f839e492883175287c88039340e1ce689d85fa0b76351b672abaa24bb19be47f",
+    "release": {
+      "tag": "pkg-sandart_tnt",
+      "asset": "sandart_tnt.short.f839e49288317528.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short.f839e49288317528.mp4",
+      "sha256": "f839e492883175287c88039340e1ce689d85fa0b76351b672abaa24bb19be47f",
+      "bytes": 22949654
+    },
+    "nosong_release": {
+      "tag": "pkg-sandart_tnt",
+      "asset": "sandart_tnt.short_nosong.7cc7db9e2fd578ea.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-sandart_tnt/sandart_tnt.short_nosong.7cc7db9e2fd578ea.mp4",
+      "sha256": "7cc7db9e2fd578ea2181d6524bfd0314cfab8ce42d88e88839154f8c98d6bdf0",
+      "bytes": 22947706
+    }
+  },
+  "edit": {
+    "caption": "dropping 11,760 blocks from the sky. guess what it is 👀",
+    "red": "guess",
+    "startAt": "pour_start:4.55",
+    "endAfter": "settle:0.6",
+    "dropAt": "settle",
+    "tally": {
+      "event": "tally",
+      "label": "blocks",
+      "done": "complete"
+    },
+    "flash": [
+      [
+        "settle",
+        0,
+        0.45
+      ]
+    ],
+    "punch": [
+      [
+        "settle",
+        0,
+        1.07
+      ]
+    ],
+    "sfx": [
+      [
+        "dip",
+        "settle",
+        0.4
+      ],
+      [
+        "impact",
+        "settle",
+        {
+          "gain": 1.2
+        }
+      ]
+    ],
+    "args": [
+      "--caption",
+      "dropping 11,760 blocks from the sky. guess what it is 👀",
+      "--self_name",
+      "56e",
+      "--red",
+      "guess",
+      "--punch",
+      "[[\"settle\",0,1.07]]",
+      "--flash",
+      "[[\"settle\",0,0.45]]",
+      "--tally",
+      "{\"event\":\"tally\",\"label\":\"blocks\",\"done\":\"complete\"}",
+      "--sfx",
+      "[[\"dip\",\"settle\",0.4],[\"impact\",\"settle\",{\"gain\":1.2}]]",
+      "--start_at",
+      "pour_start:4.55",
+      "--end_after",
+      "settle:0.6"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 383,
+      "y": 72,
+      "z": -39
+    },
+    "biome": "minecraft:plains",
+    "ticks": 332,
+    "seconds": 16.6,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 0.75,
+        "event": "f1_on"
+      },
+      {
+        "t": 0.75,
+        "event": "shot"
+      },
+      {
+        "t": 0.75,
+        "event": "pour_start"
+      },
+      {
+        "t": 0.75,
+        "event": "tally"
+      },
+      {
+        "t": 1.15,
+        "event": "motion_start"
+      },
+      {
+        "t": 4.15,
+        "event": "tally"
+      },
+      {
+        "t": 4.35,
+        "event": "tally"
+      },
+      {
+        "t": 4.55,
+        "event": "tally"
+      },
+      {
+        "t": 4.75,
+        "event": "tally"
+      },
+      {
+        "t": 4.95,
+        "event": "tally"
+      },
+      {
+        "t": 5.15,
+        "event": "tally"
+      },
+      {
+        "t": 5.35,
+        "event": "tally"
+      },
+      {
+        "t": 5.55,
+        "event": "tally"
+      },
+      {
+        "t": 5.75,
+        "event": "tally"
+      },
+      {
+        "t": 6,
+        "event": "tally"
+      },
+      {
+        "t": 6.15,
+        "event": "tally"
+      },
+      {
+        "t": 6.35,
+        "event": "tally"
+      },
+      {
+        "t": 6.55,
+        "event": "tally"
+      },
+      {
+        "t": 6.75,
+        "event": "tally"
+      },
+      {
+        "t": 6.95,
+        "event": "tally"
+      },
+      {
+        "t": 7.15,
+        "event": "tally"
+      },
+      {
+        "t": 7.35,
+        "event": "tally"
+      },
+      {
+        "t": 7.55,
+        "event": "tally"
+      },
+      {
+        "t": 7.75,
+        "event": "tally"
+      },
+      {
+        "t": 7.95,
+        "event": "tally"
+      },
+      {
+        "t": 8.15,
+        "event": "tally"
+      },
+      {
+        "t": 8.35,
+        "event": "tally"
+      },
+      {
+        "t": 8.55,
+        "event": "tally"
+      },
+      {
+        "t": 8.75,
+        "event": "tally"
+      },
+      {
+        "t": 8.95,
+        "event": "tally"
+      },
+      {
+        "t": 9.15,
+        "event": "tally"
+      },
+      {
+        "t": 9.35,
+        "event": "tally"
+      },
+      {
+        "t": 9.55,
+        "event": "tally"
+      },
+      {
+        "t": 9.75,
+        "event": "tally"
+      },
+      {
+        "t": 9.95,
+        "event": "tally"
+      },
+      {
+        "t": 10.15,
+        "event": "tally"
+      },
+      {
+        "t": 10.35,
+        "event": "tally"
+      },
+      {
+        "t": 10.55,
+        "event": "tally"
+      },
+      {
+        "t": 10.75,
+        "event": "tally"
+      },
+      {
+        "t": 10.95,
+        "event": "tally"
+      },
+      {
+        "t": 11.15,
+        "event": "tally"
+      },
+      {
+        "t": 11.35,
+        "event": "tally"
+      },
+      {
+        "t": 11.55,
+        "event": "tally"
+      },
+      {
+        "t": 11.75,
+        "event": "tally"
+      },
+      {
+        "t": 11.95,
+        "event": "tally"
+      },
+      {
+        "t": 12.15,
+        "event": "tally"
+      },
+      {
+        "t": 12.35,
+        "event": "tally"
+      },
+      {
+        "t": 12.55,
+        "event": "tally"
+      },
+      {
+        "t": 12.75,
+        "event": "tally"
+      },
+      {
+        "t": 12.95,
+        "event": "tally"
+      },
+      {
+        "t": 13.15,
+        "event": "tally"
+      },
+      {
+        "t": 13.35,
+        "event": "tally"
+      },
+      {
+        "t": 13.55,
+        "event": "tally"
+      },
+      {
+        "t": 13.75,
+        "event": "tally"
+      },
+      {
+        "t": 13.95,
+        "event": "tally"
+      },
+      {
+        "t": 14.15,
+        "event": "tally"
+      },
+      {
+        "t": 14.35,
+        "event": "tally"
+      },
+      {
+        "t": 14.55,
+        "event": "tally"
+      },
+      {
+        "t": 14.75,
+        "event": "tally"
+      },
+      {
+        "t": 14.95,
+        "event": "tally"
+      },
+      {
+        "t": 15.15,
+        "event": "tally"
+      },
+      {
+        "t": 15.35,
+        "event": "tally"
+      },
+      {
+        "t": 15.4,
+        "event": "motion_settled"
+      },
+      {
+        "t": 15.4,
+        "event": "settle"
+      },
+      {
+        "t": 15.45,
+        "event": "pour_done"
+      },
+      {
+        "t": 15.45,
+        "event": "tally"
+      },
+      {
+        "t": 15.45,
+        "event": "complete"
+      },
+      {
+        "t": 15.55,
+        "event": "tally"
+      },
+      {
+        "t": 15.6,
+        "event": "top"
+      },
+      {
+        "t": 16.6,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "a68a6e4039c6ce5e5e29082c1576b22f33e951f2",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T21:33:42.363Z",
+    "head_at_publish": "eab71a66a9f5547fd6e03ca9c85391e5d955d115",
+    "stunt": "stunts/sandart_tnt.js",
+    "source_snapshot": [
+      "source/sandart_tnt.js",
+      "source/sandart.js",
+      "source/movie.js",
+      "source/mega.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout a68a6e4039c6",
+    "gunzip -c shorts/sandart_tnt/recording.json.gz > work/sandart_tnt.rec.json",
+    "node render.js work/sandart_tnt.rec.json work/sandart_tnt.frames 60 1080 1011",
+    "python3 audio.py work/sandart_tnt.rec.json work/sandart_tnt.wav",
+    "python3 edit.py --frames work/sandart_tnt.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/sandart_tnt.rec.json --audio work/sandart_tnt.wav --caption \"dropping 11,760 blocks from the sky. guess what it is 👀\" --self_name 56e --red guess --punch [[\"settle\",0,1.07]] --flash [[\"settle\",0,0.45]] --tally {\"event\":\"tally\",\"label\":\"blocks\",\"done\":\"complete\"} --sfx [[\"dip\",\"settle\",0.4],[\"impact\",\"settle\",{\"gain\":1.2}]] --start_at pour_start:4.55 --end_after settle:0.6 --out out/sandart_tnt.mp4"
+  ],
+  "status": "ready",
+  "notes": "worker: format sandart #1, lib/sandart.js; 11,760 real falling blocks, one drone shot, payoff on the last landing; independent review READY r1, 0 blockers; nitpicks: a red block fills the lens ~0.1 s at 0.95 s, counter gold 0.15 s after the flash, counter over the picture's top-right corner at the end",
+  "published_at": "2026-11-11T21:36:28.471Z",
+  "gates": {
+    "version": 4,
+    "at": "2026-11-11T21:36:58+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 10.71 s vs the reviewed render 10.70 s"
+    },
+    "pace": {
+      "ok": true,
+      "blockers": 0,
+      "warnings": 2,
+      "summary": "OK"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T21:34:35.726Z",
+      "report": "work/hb/sandart_tnt.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
