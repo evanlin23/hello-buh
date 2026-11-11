@@ -20,31 +20,31 @@
     "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
     "drop_on_event": "complete",
     "drop_in_song_s": 113.75,
-    "drop_in_short_s": 32.3,
-    "song_start_s": 81.45
+    "drop_in_short_s": 32.2,
+    "song_start_s": 81.55
   },
   "video": {
     "file": "short.mp4",
-    "duration_s": 33.2,
+    "duration_s": 33.1,
     "width": 1080,
     "height": 1920,
     "fps": "60/1",
     "codec": "h264",
-    "bytes": 48713151,
-    "sha256": "6b3582ce53a3d9dd02465c17988012abe7e71def035480ec16d2ab042c0675ef",
+    "bytes": 48828053,
+    "sha256": "90fb02c533792bde3cf858d500a51e68be2e01f6a77eedf277d7b68c9123efb2",
     "release": {
       "tag": "pkg-skull_art",
-      "asset": "skull_art.short.6b3582ce53a3d9dd.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.6b3582ce53a3d9dd.mp4",
-      "sha256": "6b3582ce53a3d9dd02465c17988012abe7e71def035480ec16d2ab042c0675ef",
-      "bytes": 48713151
+      "asset": "skull_art.short.90fb02c533792bde.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short.90fb02c533792bde.mp4",
+      "sha256": "90fb02c533792bde3cf858d500a51e68be2e01f6a77eedf277d7b68c9123efb2",
+      "bytes": 48828053
     },
     "nosong_release": {
       "tag": "pkg-skull_art",
-      "asset": "skull_art.short_nosong.3fc28c2df5a5267c.mp4",
-      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short_nosong.3fc28c2df5a5267c.mp4",
-      "sha256": "3fc28c2df5a5267c32a96f3ea0898d0c5ad7be8705b2cdc0e58895a613215e04",
-      "bytes": 48671120
+      "asset": "skull_art.short_nosong.9b4332788a0fe852.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-skull_art/skull_art.short_nosong.9b4332788a0fe852.mp4",
+      "sha256": "9b4332788a0fe852e7a6e148a3dbe88a0ac76a9af85a30ab2e0f2b8735153954",
+      "bytes": 48796549
     }
   },
   "edit": {
@@ -98,81 +98,93 @@
       "level_type": "minecraft:normal"
     },
     "set": {
-      "x": 359,
-      "y": 65,
-      "z": -55
+      "x": 379,
+      "y": 68,
+      "z": -56
     },
     "biome": "minecraft:plains",
-    "ticks": 703,
-    "seconds": 35.15,
+    "ticks": 861,
+    "seconds": 43.05,
     "deaths": 0,
     "events": [
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "start"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "stage"
       },
       {
-        "t": 0.8,
+        "t": 0.75,
         "event": "build0"
       },
       {
-        "t": 0.9,
+        "t": 0.8,
         "event": "swing"
       },
       {
-        "t": 1.15,
+        "t": 0.95,
         "event": "swing"
       },
       {
-        "t": 1.4,
+        "t": 1.1,
         "event": "swing"
       },
       {
-        "t": 1.65,
+        "t": 1.35,
         "event": "swing"
       },
       {
-        "t": 1.9,
+        "t": 1.6,
         "event": "swing"
       },
       {
-        "t": 2.15,
+        "t": 1.8,
         "event": "swing"
       },
       {
-        "t": 2.4,
+        "t": 1.95,
         "event": "swing"
       },
       {
-        "t": 2.65,
+        "t": 2.1,
         "event": "swing"
       },
       {
-        "t": 2.9,
+        "t": 2.35,
+        "event": "swing"
+      },
+      {
+        "t": 2.55,
+        "event": "swing"
+      },
+      {
+        "t": 2.7,
+        "event": "swing"
+      },
+      {
+        "t": 2.85,
+        "event": "swing"
+      },
+      {
+        "t": 3.05,
         "event": "swing"
       },
       {
         "t": 3.15,
-        "event": "swing"
-      },
-      {
-        "t": 3.25,
         "event": "built0"
       },
       {
-        "t": 3.25,
+        "t": 3.15,
         "event": "reveal"
       },
       {
-        "t": 4.3,
+        "t": 4.25,
         "event": "stage"
       },
       {
-        "t": 4.3,
+        "t": 4.25,
         "event": "build1"
       },
       {
@@ -180,7 +192,7 @@
         "event": "swing"
       },
       {
-        "t": 4.55,
+        "t": 4.5,
         "event": "swing"
       },
       {
@@ -188,39 +200,43 @@
         "event": "swing"
       },
       {
-        "t": 5,
+        "t": 4.95,
         "event": "swing"
       },
       {
-        "t": 5.25,
+        "t": 5.15,
         "event": "swing"
       },
       {
-        "t": 5.4,
+        "t": 5.35,
         "event": "swing"
       },
       {
-        "t": 5.6,
+        "t": 5.55,
         "event": "swing"
       },
       {
-        "t": 5.8,
+        "t": 5.75,
         "event": "swing"
       },
       {
-        "t": 6,
+        "t": 5.95,
         "event": "swing"
       },
       {
-        "t": 6.2,
+        "t": 6.1,
         "event": "swing"
       },
       {
-        "t": 6.4,
+        "t": 6.3,
         "event": "swing"
       },
       {
-        "t": 6.6,
+        "t": 6.45,
+        "event": "swing"
+      },
+      {
+        "t": 6.65,
         "event": "swing"
       },
       {
@@ -232,23 +248,27 @@
         "event": "swing"
       },
       {
-        "t": 7.2,
+        "t": 7.15,
         "event": "swing"
       },
       {
-        "t": 7.4,
+        "t": 7.35,
         "event": "swing"
       },
       {
-        "t": 7.6,
+        "t": 7.5,
         "event": "swing"
       },
       {
-        "t": 7.8,
+        "t": 7.7,
         "event": "swing"
       },
       {
-        "t": 8,
+        "t": 7.9,
+        "event": "swing"
+      },
+      {
+        "t": 8.05,
         "event": "swing"
       },
       {
@@ -256,31 +276,35 @@
         "event": "swing"
       },
       {
-        "t": 8.4,
+        "t": 8.35,
         "event": "swing"
       },
       {
-        "t": 8.6,
+        "t": 8.55,
         "event": "swing"
       },
       {
-        "t": 8.8,
+        "t": 8.75,
         "event": "swing"
       },
       {
-        "t": 9,
+        "t": 8.95,
         "event": "swing"
       },
       {
-        "t": 9.2,
+        "t": 9.1,
         "event": "swing"
       },
       {
-        "t": 9.4,
+        "t": 9.25,
         "event": "swing"
       },
       {
-        "t": 9.6,
+        "t": 9.45,
+        "event": "swing"
+      },
+      {
+        "t": 9.65,
         "event": "swing"
       },
       {
@@ -292,39 +316,43 @@
         "event": "swing"
       },
       {
-        "t": 10.2,
+        "t": 10.15,
         "event": "swing"
       },
       {
-        "t": 10.4,
+        "t": 10.35,
         "event": "swing"
       },
       {
-        "t": 10.6,
+        "t": 10.5,
         "event": "swing"
       },
       {
-        "t": 10.8,
+        "t": 10.65,
         "event": "swing"
       },
       {
-        "t": 11,
+        "t": 10.85,
+        "event": "swing"
+      },
+      {
+        "t": 10.9,
         "event": "built1"
       },
       {
-        "t": 11,
+        "t": 10.9,
         "event": "reveal"
       },
       {
-        "t": 12.05,
+        "t": 11.95,
         "event": "stage"
       },
       {
-        "t": 12.05,
+        "t": 11.95,
         "event": "build2"
       },
       {
-        "t": 12.1,
+        "t": 12.15,
         "event": "swing"
       },
       {
@@ -348,83 +376,79 @@
         "event": "swing"
       },
       {
-        "t": 13.05,
+        "t": 13.1,
         "event": "swing"
       },
       {
-        "t": 13.2,
+        "t": 13.4,
         "event": "swing"
       },
       {
-        "t": 13.45,
+        "t": 13.55,
         "event": "swing"
       },
       {
-        "t": 13.6,
+        "t": 13.8,
         "event": "swing"
       },
       {
-        "t": 13.85,
+        "t": 13.95,
         "event": "swing"
       },
       {
-        "t": 14,
+        "t": 14.1,
         "event": "swing"
       },
       {
-        "t": 14.15,
+        "t": 14.25,
         "event": "swing"
       },
       {
-        "t": 14.3,
+        "t": 14.5,
         "event": "swing"
       },
       {
-        "t": 14.55,
+        "t": 14.65,
         "event": "swing"
       },
       {
-        "t": 14.7,
+        "t": 14.8,
         "event": "swing"
       },
       {
-        "t": 14.85,
+        "t": 14.95,
         "event": "swing"
       },
       {
-        "t": 15,
+        "t": 15.1,
         "event": "swing"
       },
       {
-        "t": 15.15,
+        "t": 15.25,
         "event": "swing"
       },
       {
-        "t": 15.3,
+        "t": 15.45,
         "event": "swing"
       },
       {
-        "t": 15.5,
+        "t": 15.6,
         "event": "swing"
       },
       {
-        "t": 15.65,
+        "t": 15.75,
         "event": "swing"
       },
       {
-        "t": 15.8,
+        "t": 15.9,
         "event": "swing"
       },
       {
-        "t": 15.95,
+        "t": 16.05,
         "event": "swing"
       },
       {
-        "t": 16.1,
-        "event": "swing"
-      },
-      {
-        "t": 16.25,
+        "t": 16.2,
         "event": "swing"
       },
       {
@@ -432,23 +456,23 @@
         "event": "swing"
       },
       {
-        "t": 16.55,
+        "t": 16.6,
         "event": "swing"
       },
       {
-        "t": 16.7,
+        "t": 16.75,
         "event": "swing"
       },
       {
-        "t": 16.85,
+        "t": 16.9,
         "event": "swing"
       },
       {
-        "t": 17.05,
+        "t": 17.1,
         "event": "swing"
       },
       {
-        "t": 17.2,
+        "t": 17.3,
         "event": "swing"
       },
       {
@@ -460,15 +484,11 @@
         "event": "swing"
       },
       {
-        "t": 17.8,
+        "t": 17.9,
         "event": "swing"
       },
       {
-        "t": 17.95,
-        "event": "swing"
-      },
-      {
-        "t": 18.1,
+        "t": 18.05,
         "event": "swing"
       },
       {
@@ -504,47 +524,43 @@
         "event": "swing"
       },
       {
-        "t": 19.5,
+        "t": 19.55,
         "event": "swing"
       },
       {
-        "t": 19.65,
+        "t": 19.7,
         "event": "swing"
       },
       {
-        "t": 19.8,
+        "t": 19.85,
         "event": "swing"
       },
       {
-        "t": 19.95,
+        "t": 20,
         "event": "swing"
       },
       {
-        "t": 20.1,
+        "t": 20.2,
         "event": "swing"
       },
       {
-        "t": 20.3,
+        "t": 20.35,
         "event": "swing"
       },
       {
-        "t": 20.45,
+        "t": 20.5,
         "event": "swing"
       },
       {
-        "t": 20.6,
+        "t": 20.7,
         "event": "swing"
       },
       {
-        "t": 20.75,
+        "t": 20.85,
         "event": "swing"
       },
       {
-        "t": 20.9,
-        "event": "swing"
-      },
-      {
-        "t": 21.05,
+        "t": 21,
         "event": "swing"
       },
       {
@@ -560,7 +576,7 @@
         "event": "swing"
       },
       {
-        "t": 21.55,
+        "t": 21.5,
         "event": "backup"
       },
       {
@@ -568,7 +584,7 @@
         "event": "swing"
       },
       {
-        "t": 21.85,
+        "t": 21.8,
         "event": "swing"
       },
       {
@@ -580,15 +596,11 @@
         "event": "swing"
       },
       {
-        "t": 22.3,
+        "t": 22.35,
         "event": "swing"
       },
       {
-        "t": 22.45,
-        "event": "swing"
-      },
-      {
-        "t": 22.6,
+        "t": 22.55,
         "event": "swing"
       },
       {
@@ -600,11 +612,7 @@
         "event": "swing"
       },
       {
-        "t": 23.05,
-        "event": "swing"
-      },
-      {
-        "t": 23.2,
+        "t": 23.15,
         "event": "swing"
       },
       {
@@ -624,31 +632,27 @@
         "event": "swing"
       },
       {
-        "t": 24.05,
+        "t": 24.1,
         "event": "swing"
       },
       {
-        "t": 24.2,
+        "t": 24.25,
         "event": "swing"
       },
       {
-        "t": 24.35,
+        "t": 24.4,
         "event": "swing"
       },
       {
-        "t": 24.5,
+        "t": 24.55,
         "event": "swing"
       },
       {
-        "t": 24.65,
+        "t": 24.75,
         "event": "swing"
       },
       {
-        "t": 24.8,
-        "event": "swing"
-      },
-      {
-        "t": 25,
+        "t": 24.9,
         "event": "swing"
       },
       {
@@ -664,63 +668,59 @@
         "event": "swing"
       },
       {
-        "t": 25.6,
+        "t": 25.65,
         "event": "swing"
       },
       {
-        "t": 25.75,
+        "t": 25.8,
         "event": "swing"
       },
       {
-        "t": 25.9,
+        "t": 25.95,
         "event": "swing"
       },
       {
-        "t": 26.05,
+        "t": 26.1,
         "event": "swing"
       },
       {
-        "t": 26.2,
+        "t": 26.3,
         "event": "swing"
       },
       {
-        "t": 26.35,
+        "t": 26.45,
         "event": "swing"
       },
       {
-        "t": 26.55,
+        "t": 26.6,
         "event": "swing"
       },
       {
-        "t": 26.7,
+        "t": 26.75,
         "event": "swing"
       },
       {
-        "t": 26.85,
+        "t": 26.9,
         "event": "swing"
       },
       {
-        "t": 27,
+        "t": 27.1,
         "event": "swing"
       },
       {
-        "t": 27.15,
+        "t": 27.25,
         "event": "swing"
       },
       {
-        "t": 27.3,
+        "t": 27.4,
         "event": "swing"
       },
       {
-        "t": 27.45,
+        "t": 27.55,
         "event": "swing"
       },
       {
-        "t": 27.6,
-        "event": "swing"
-      },
-      {
-        "t": 27.75,
+        "t": 27.7,
         "event": "swing"
       },
       {
@@ -728,99 +728,95 @@
         "event": "swing"
       },
       {
-        "t": 28.15,
+        "t": 28.05,
         "event": "swing"
       },
       {
-        "t": 28.3,
+        "t": 28.2,
         "event": "swing"
       },
       {
-        "t": 28.45,
+        "t": 28.35,
         "event": "swing"
       },
       {
-        "t": 28.6,
+        "t": 28.55,
         "event": "swing"
       },
       {
-        "t": 28.75,
+        "t": 28.7,
         "event": "swing"
       },
       {
-        "t": 28.9,
+        "t": 28.85,
         "event": "swing"
       },
       {
-        "t": 29.05,
+        "t": 29.1,
         "event": "swing"
       },
       {
-        "t": 29.2,
+        "t": 29.25,
         "event": "swing"
       },
       {
-        "t": 29.35,
+        "t": 29.4,
         "event": "swing"
       },
       {
-        "t": 29.5,
+        "t": 29.55,
         "event": "swing"
       },
       {
-        "t": 29.7,
+        "t": 29.75,
         "event": "swing"
       },
       {
-        "t": 29.85,
+        "t": 29.9,
         "event": "swing"
       },
       {
-        "t": 30,
+        "t": 30.05,
         "event": "swing"
       },
       {
-        "t": 30.15,
+        "t": 30.2,
         "event": "swing"
       },
       {
-        "t": 30.3,
+        "t": 30.35,
         "event": "swing"
       },
       {
-        "t": 30.45,
+        "t": 30.5,
         "event": "swing"
       },
       {
-        "t": 30.6,
+        "t": 30.7,
         "event": "swing"
       },
       {
-        "t": 30.75,
+        "t": 30.85,
         "event": "swing"
       },
       {
-        "t": 30.9,
+        "t": 31.15,
         "event": "swing"
       },
       {
-        "t": 31.05,
+        "t": 31.3,
         "event": "swing"
       },
       {
-        "t": 31.35,
+        "t": 31.45,
         "event": "swing"
       },
       {
-        "t": 31.5,
+        "t": 31.6,
         "event": "swing"
       },
       {
-        "t": 31.65,
-        "event": "swing"
-      },
-      {
-        "t": 31.8,
+        "t": 31.75,
         "event": "swing"
       },
       {
@@ -836,27 +832,23 @@
         "event": "swing"
       },
       {
-        "t": 32.4,
+        "t": 32.45,
         "event": "swing"
       },
       {
-        "t": 32.55,
+        "t": 32.6,
         "event": "swing"
       },
       {
-        "t": 32.7,
-        "event": "swing"
-      },
-      {
-        "t": 32.9,
+        "t": 32.75,
         "event": "built2"
       },
       {
-        "t": 32.9,
+        "t": 32.75,
         "event": "complete"
       },
       {
-        "t": 35.15,
+        "t": 43.05,
         "event": "end"
       }
     ]
@@ -864,47 +856,50 @@
   "code": {
     "repo": "evanlin23/hello-buh",
     "branch": "render/skull_art",
-    "commit": "c8348da868032fd11f1d617bad8a729b9c9fa044",
+    "commit": "d681bfd72e9a5597404330432ab2245c6413a68a",
     "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/42977496516",
-    "rendered_at": "2026-11-11T07:20:48.280Z",
-    "head_at_publish": "f8de94b14a3b4b371fde4ddc93ad3fcc9c7f8a50",
+    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43019986280",
+    "rendered_at": "2026-11-11T12:33:23.341Z",
+    "head_at_publish": "f3c2ac723231575d102610cbe22b860547e09546",
     "stunt": "stunts/skull_art.js",
     "source_snapshot": [
       "source/skull_art.js",
-      "source/pixel_art.js"
+      "source/pixel_art.js",
+      "source/sight.js",
+      "source/act.js",
+      "source/motion.js"
     ]
   },
   "rebuild": [
-    "git checkout c8348da86803",
+    "git checkout d681bfd72e9a",
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
     "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS 😨\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/skull_art.mp4"
   ],
-  "status": "ready",
-  "notes": "worker B 2026-11-11: republished from the reviewed render (the first publish packaged stale frames); re-recorded on the current engine, no mid-build glance (owner), eased camera, punch+flash+impact payoff; review READY (independent session)",
-  "published_at": "2026-11-11T07:23:27.588Z",
+  "status": "pending-qa",
+  "notes": "awaiting independent review. worker B 2026-11-11 re-take (r:r650840, r:rffba12): aimed placement (ad926e79); aim 186 actions median 0.0 deg p90 0.7 worst 4.1 (was p90 2.9); walk back now stops ~2.4 blocks short of the small picture's plane (was 4.7 past it); pace OK, 33.1 s",
+  "published_at": "2026-11-11T12:33:56.716Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T10:09:48+00:00",
-    "by": "scripts/gates.py v4 re-stamp (owner notes 2026-11-11 worker)",
+    "at": "2026-11-11T12:34:33+00:00",
+    "by": "publish.js",
     "package": {
       "ok": true,
-      "summary": "short.mp4 33.22 s vs the reviewed render 33.20 s"
+      "summary": "short.mp4 33.11 s vs the reviewed render 33.10 s"
     },
     "pace": {
       "ok": true,
       "blockers": 0,
-      "warnings": 5,
+      "warnings": 3,
       "summary": "OK"
     },
     "check": {
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T09:38:35.942Z",
-      "report": "work/hb/skull_art.check.json"
+      "at": "2026-11-11T12:25:06.541Z",
+      "report": "out/skull_art.check.json"
     },
     "key_sounds": "n/a"
   }
