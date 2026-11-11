@@ -292,6 +292,14 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, on the time-lapse Shorts (lapse_statue, lapse_rocket): "for the time lapse stuff, like we should
+  have more angles when we're showing the last thing, and then also... the second one, like I think our smoother camera
+  movement is like too slow. I think it's okay to have like a really fast movement here because it's like, what, a
+  time lapse, right? Like right now, it's like I places and I take forever to turn."** In a lapse_* Short the 1-hour
+  build is shown from several clearly different angles (hard cuts between steady shots: a new angle, not a small jump
+  of the same view). In the sped-up 1-minute round the player turns fast between placements, as a sped-up player would;
+  the followable-camera speed cap does not apply inside a time-lapse's sped-up build spans (it still applies at normal
+  speed). Supersedes, for lapse_* builds, the 220/speed turn cap added to lib/time_lapse.js today.
 - **Owner, 2026-11-11, after the lead sent every Short it called ready (and asked whether the clutch Shorts' quick
   look-down flick counts as a whip, and whether to hold four approved story Shorts the new whip check flags): "All
   ok".** The Shorts sent today are approved as they are; the new formats (cells, dilemma, race, mislabel, hack, desire,

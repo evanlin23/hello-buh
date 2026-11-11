@@ -360,6 +360,11 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
 - **An on-screen timer times one attempt**: it resets to 0 at each new build or attempt; build it in the edit
   (edit.splits / edit.clock), never as an overlay after publish. Check: lint (timer resets: lib/hb/stunt_lint.js),
   review. r:r32b983
+- **Time-lapse Shorts: fast turns in the sped-up builds, several angles on the 1-hour build**: inside a lapse_*
+  Short's sped-up build spans the player turns fast between placements (no 220/speed cap; the whip check skips those
+  spans), and the finished 1-hour build is shown from several clearly different steady angles joined by hard cuts (a
+  new shot, not a small jump of the same view: the camera-jump check applies only within one angle). Check: owner
+  (whip), rec_check cuts (lapse camera jump per angle), review. r:r66efa4
 - **A time-lapse holds one steady camera** (or one smooth move) across its shots: no jumps in angle, distance or
   height between consecutive shots of the same build. Check: rec_check cuts (time-lapse camera jump: <= 6 deg, 3 blocks,
   1.5 up/down across each jump cut; scripts/lapse_cuts.py, in `./hb check` and `./hb record`), review. r:r200cfe
