@@ -282,6 +282,12 @@ STANDARDS.md in the same commit.
   idk how to write scriptions. also we dont need to tag hello buh. we also dont need NOT AN OFFICIAL..."** The channel
   description is short and general ("Short Minecraft stories. New ones every week."), with no @HelloBuh tag or link and
   no Mojang disclaimer.
+- **Owner, 2026-11-11, sharing a "Top 5 things I found under ur dad's bed" Short (a parkour + dropper fall as the hook,
+  then giant builds seen on the way down, each with a wrong, innocent-sounding label): "the gimmick with thsi one is
+  that it starts with a very trick like parkour and dropper, so its very hook grabbing. but then it shows things that
+  are mislabeled, but here its. alittle bit innapropirate so i dont like that, but its itneresting."** HelloBuh tries
+  an original, CLEAN take (family `mislabel`): a parkour/dropper hook in the first second, then a numbered list of
+  giant builds with funny wrong labels. No innuendo, nothing sexual or crude; the joke is the label, kid-safe.
 - **Owner, 2026-11-11, sharing TECHSIN PLAYZ's "Finally, a CRAZY Minecraft illusion" Short: "the gimmick with this is
   its a normal video with a skeleton shooting and he goes over and eats it and then pretneds nothing happened and goes
   back tot eh video".** HelloBuh tries an original take (family `interrupt`): a Short that plays straight as a normal

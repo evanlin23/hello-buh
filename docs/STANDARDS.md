@@ -282,6 +282,8 @@ carry the payoff; every ready, not-yet-uploaded Short is remixed to it. Check: `
   reference Short. Check: owner, the numbers check. r:r8bb1e3
 - **Format "interrupt" (owner's pick, an experiment)**: plays straight as a normal video; a mob interrupts; the
   player handles it absurdly, then goes back as if nothing happened. Original premise, never a copy. Check: owner. r:re05b89
+- **Format "mislabel" (owner's pick, an experiment)**: a parkour/dropper hook in the first second, then a numbered
+  list of giant builds with funny wrong labels; always clean (no innuendo, nothing crude). Check: owner, review. r:r05c651
 - `./hb publish` needs a READY verdict on the current render (newer than the recording) and `--notes`.
 - **Stories are packaged held**: `--pass` gives a story_* status "held"; it goes out only after the owner OKs that
   story by name, in person (the lead then re-runs publish with `--owner-ok`). A relayed or general "go ahead" never
