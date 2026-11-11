@@ -204,6 +204,11 @@ module.exports = {
         await aimStep(goal[0], goal[1])
       }
       if (n === 4) {
+        // let the 1000 blast's debris land on screen before the cut (r:r24d99a, lib/settle.js), the eyes still drifting
+        const SETTLE = require('../lib/settle')
+        for (let k = 0; k < 80 && (ctx.tick - lastBoom < 45 || SETTLE.liveBusy(Object.values(bot.entities), ctx.tick, lastBoom)); k++) {   // (flung dirt items fly ~1.4 s past the blast's 1 s)
+          await aimStep(goal[0] + 0.1 * Math.sin(k / 8), goal[1] + 0.04 * Math.sin(k / 6))
+        }
         // the big crater: cut to its rim (find where the ground stops along the line in)
         ctx.mark('rim4a')
         // the near edge along the line in: scan inward from the vantage point to the first air
