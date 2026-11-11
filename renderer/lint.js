@@ -209,6 +209,10 @@ function run (h) {
     const a = parseAt(s[0]), b = parseAt(s[1])
     if (a !== null && b !== null && b > a) GUI.push([a + 1, b - 1])
   }
+  // the hold after the payoff (edit.endAfter's event to the end) is pace's to judge (its payoff tail: <= 1.0 s, 1.8 s
+  // for a text payoff); a time-lapse ends on a finished picture that no longer changes
+  const payoffT = ed.endAfter ? markT(String(ed.endAfter).split(':')[0]) : null
+  if (payoffT !== null) GUI.push([payoffT, Infinity])
   const inGui = (t) => GUI.some(([a, b]) => t >= a - 1 && t <= b + 1)
   // footage the edit drops (edit.speed [A, B, "cut"]) is never seen: a still there isn't on screen, and the cut itself
   // is a new picture (hide_seek's seeker waits out the hiding time inside its cuts)
@@ -231,7 +235,10 @@ function run (h) {
     if (mv < 0.25) { if (deadFrom === null) deadFrom = t } else flushDead(t + 12)
   }
   flushDead(end)
-  for (const [a, b] of dead) if (b - a >= 20) problems.push(`${fmt(T(a))}-${fmt(T(b))} s  nobody moves for ${((b - a) / 20).toFixed(1)} s${lineAt((a + b) / 2) ? ' (a line is up, but no one moves: use M.say, give the listener a turn, or cut)' : ''}`)
+  // how long a still lasts on screen: a time-lapse span (edit.speed [A, B, FACTOR]) plays it FACTOR times faster
+  const SPEEDS = (ed.speed || []).filter(s => typeof s[2] === 'number' && s[2] > 0).map(s => [parseAt(s[0]), parseAt(s[1]), s[2]]).filter(([a, b]) => a !== null && b !== null && b > a)
+  const onScreen = (a, b) => { let d = b - a; for (const [s0, s1, f] of SPEEDS) { const o = Math.max(0, Math.min(b, s1) - Math.max(a, s0)); d -= o - o / f } return d }
+  for (const [a, b] of dead) if (onScreen(a, b) >= 20) problems.push(`${fmt(T(a))}-${fmt(T(b))} s  nobody moves for ${((b - a) / 20).toFixed(1)} s${b - a - onScreen(a, b) > 1 ? ` (${(onScreen(a, b) / 20).toFixed(1)} s on screen)` : ''}${lineAt((a + b) / 2) ? ' (a line is up, but no one moves: use M.say, give the listener a turn, or cut)' : ''}`)
   // beats: is the thing the story hinges on big enough to see?
   for (const e of tl.filter(x => x.event === 'beat' && Array.isArray(x.at))) {
     const t = e.t / 50, s = list.find(q => t >= q.t0 && t < q.t1)

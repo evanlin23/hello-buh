@@ -3,10 +3,17 @@
 const fs = require('fs')
 // EDIT_EXTRA='{"punch":["boom"]}' merges keys over the stunt's edit block (try a retention tool
 // without touching the stunt: scripts/reedit.sh)
-const e = { ...(require(`../stunts/${process.argv[2]}`).edit || {}), ...JSON.parse(process.env.EDIT_EXTRA || '{}') }
+const stuntMod = require(`../stunts/${process.argv[2]}`)
+const e = { ...(stuntMod.edit || {}), ...JSON.parse(process.env.EDIT_EXTRA || '{}') }
 const out = []
 if (e.caption) out.push('--caption', process.env.CAPTION || e.caption)
 if (e.red) out.push('--red', e.red)
+// the key word's colour: a Buh Stories Short is Buh gold #FFD640 (docs/brand.md "Buh Stories channel"), keyed on the
+// stunt's (or its edit block's) channel: 'buhstories' only, never on edit.story, since HelloBuh has story_* Shorts too
+// (story_nitwit, story_sheep_stares...) that stay red. edit.redColor ('RRGGBB') overrides.
+const channel = e.channel || stuntMod.channel
+const redColor = e.redColor || (channel === 'buhstories' ? 'FFD640' : null)
+if (e.red && redColor) out.push('--red_rgb', String(redColor).replace(/^#/, ''))
 if (e.bands) out.push('--bands', e.bands)   // 'blur' | 'black'
 if (e.colors) out.push('--colors', e.colors)
 if (e.countdown) out.push('--countdown', e.countdown)
@@ -61,6 +68,7 @@ if (e.countdowns) out.push('--countdowns', JSON.stringify(e.countdowns))   // li
 if (e.ring) out.push('--ring', JSON.stringify(e.ring))
 if (e.tags) out.push('--tags', JSON.stringify(e.tags))
 if (e.chat) out.push('--chat', JSON.stringify(e.chat))
+if (e.score) out.push('--score', JSON.stringify(e.score))   // a live two-sided score bar (format race: lib/race.js)
 if (e.shake) out.push('--shake', JSON.stringify(e.shake))
 if (e.flash) out.push('--flash', JSON.stringify(e.flash))
 if (e.freeze) out.push('--freeze', JSON.stringify(e.freeze))
@@ -70,6 +78,8 @@ if (e.loop) out.push('--loop', JSON.stringify(e.loop))
 if (e.sfx) out.push('--sfx', JSON.stringify(e.sfx))       // sound effects (scripts/sfx.py)
 if (e.onFire) out.push('--on_fire', e.onFire)
 if (e.deathScreen) out.push('--death_screen', 'death')
+if (e.hardcore) out.push('--hardcore')                      // hardcore hearts (the dilemma format)
+if (e.armor) out.push('--armor', String(e.armor))           // armor points over the hearts (worn armour's total)
 if (e.itemNames) out.push('--item_names', JSON.stringify(e.itemNames))   // the selected item's name over the hotbar
 if (e.guiScale) out.push('--gui_scale', String(e.guiScale))   // container screens at another GUI scale (phone-readable; default 3)
 if (e.chatScale) out.push('--chat_scale', String(e.chatScale))   // chat lines at another GUI scale (default guiScale, else 3)

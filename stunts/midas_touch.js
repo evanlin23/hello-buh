@@ -7,7 +7,7 @@ module.exports = {
   name: 'midas_touch',
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: you got the midas touch 🤑',
-  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', dropAt: 'touch', startAt: 'touch:-0.2', endAfter: 'wave:1.0', punch: [['wave', 0, 1.06]], sfx: [['dip', 'wave', 0.35], ['impact', 'wave']] },
+  edit: { caption: 'POV: you got the midas touch 🤑', red: 'midas', dropAt: 'touch', startAt: 'touch:-0.2', endAfter: 'wave:1.0', punch: [['wave', 0, 1.06]], flash: [['wave', 0, 0.4]], sfx: [['dip', 'wave', 0.35], ['impact', 'wave']] },
 
   async setup (ctx) {
     const { bot } = ctx

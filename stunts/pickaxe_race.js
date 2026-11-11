@@ -35,14 +35,18 @@ module.exports = {
   caption: 'ranking every pickaxe ⛏️ 💀',
   get edit () {
     return { subsY: 0.15, caption: 'ranking every pickaxe ⛏️ 💀', red: 'every', dropAt: 'boom', startAt: 'beat:-0.05', endAfter: 'settle:0.6', speed: [['woodcut_a', 'woodcut_b', 'cut'],
-      // one block boundary each (the recorded dig_end times): the beats get shorter tier by tier on screen. Cutting
-      // stone 4 blocks ran it 2.8 s against iron's 3.65 and diamond's 3.2: stone looked faster than both
-      ['stonecut_a', 'stonecut_a:1.05', 'cut'], ['stonecut_a:5.70', 'stonecut_a:6.05', 'cut'], ['stonecut_a:10.15', 'stonecut_a:10.45', 'cut'],
-      ['tntwalk', 'lit', 2.2], ['lit', 'boom:-1.6', 2],
+      // on block boundaries of the lib/act.js recording (dig_end times, offsets from stonecut_b): each tier shorter on
+      // screen than the one before (wood 5.8, stone 4.5, iron 4.2, diamond 3.8, gold 3.6, instamine 3.1 s), and the
+      // look through the hole before each new pickaxe trimmed to 0.25 s
+      ['stonecut_a', 'stonecut_a:2.1', 'cut'], ['stonecut_b:1.75', 'stonecut_b:2.5', 'cut'],
+      ['stonecut_b:4.9', 'stonecut_b:6.0', 'cut'], ['stonecut_b:8.05', 'stonecut_b:8.85', 'cut'],
+      ['stonecut_b:11.1', 'stonecut_b:12.1', 'cut'], ['stonecut_b:13.95', 'stonecut_b:14.7', 'cut'],
+      ['stonecut_b:17.1', 'stonecut_b:17.5', 'cut'], ['stonecut_b:19.0', 'stonecut_b:19.8', 'cut'],
+      ['tntwalk', 'lit', 3], ['lit', 'boom:-1.6', 2],   // the walk placing the TNT (11.6 s with every place aimed) at 3x
       ['boom:-1.6', 'boom:-0.2', 'cut'],   // the end of the fuse: the bot had stopped, 0.8 s frozen before the song-drop blast
       // the chain after the first (song-drop) blast at 1.75x: 6.75 s of near-identical booms
       ['boom:0.5', 'lastboom:-0.4', 1.75]], subs: subs(),
-      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.3], ['impact', 'lastboom']],
+      flash: [['boom', 0, 0.6], ['lastboom', 0, 0.5]], sfx: [['pop', 'beat'], ['dip', 'boom', 0.3], ['impact', 'boom'], ['dip', 'lastboom', 0.45], ['impact', 'lastboom', { gain: 1.4 }], ['boom', 'lastboom']],
       // ends 0.6 s after the last blast's debris settles (lib/settle.js), never on a lit TNT (r:r24d99a, independent review)
         // a pop on the first tier card at 0.05 s (pace: sound by 0.3 s)
       punch: [['boom', 0, 1.12]], shake: [['boom', 0, 10]] }   // pace: a picture change on the payoff (the blast is small and far)   // speed: the TNT walk, 1.5x (6 s at 1x)

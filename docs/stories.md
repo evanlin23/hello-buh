@@ -292,6 +292,19 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, reviewing the ready Shorts by hand: "when we're building the statue, so I guess lapsed
+  statue, we pause for some reason when we're building the second one. Like for like what seems like more than just a
+  while."** A build never stalls on screen: while a build is unfinished, blocks keep going on (in a time-lapse, every
+  output second shows new blocks); no hold between stages or builds unless it is a beat with a caption.
+- **Owner, 2026-11-11: "The sound effect at the end of boat clutch sounds like a fart, change it out".** No sound
+  that can read as a fart (low, buzzy, pitched-down blurts, squelches, low brass): the payoff hit is a clean impact,
+  splash or vanilla sound. A sound the owner calls out is banned for every Short, not only that one.
+- **Owner, 2026-11-11: "the timer should reset every single time like we start a new ender portal."** An on-screen
+  timer times ONE attempt: it resets to 0 at the start of each new build or attempt (each portal in end_portal_job),
+  never runs on across them.
+- **Owner, 2026-11-11: "The rocket time lapse has a ton for jerking around between shots".** A time-lapse holds one
+  steady camera (or one smooth move) across its shots: no jumps in angle, distance or height between consecutive
+  shots of the same build; the viewer's eye stays on the build.
 - **Owner, 2026-11-11: "for the torch sand falling, we should let the last pillar of sand all fall before we
   end/cut"; "our processes must cover all of these."** A Short never cuts or ends while its payoff is still moving:
   every falling block has landed, the blast debris has settled, the mob's death puff is done. The payoff moment is when

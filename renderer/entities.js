@@ -352,7 +352,8 @@ function armorLayers (mat, dir, trim) {
   if (m) L.push(`trims/entity/${dir}/${m[1]}@${m[2] === mat || (m[2] === 'gold' && mat === 'gold') ? m[2] + '_darker' : m[2]}`)
   return L
 }
-async function addArmor (bones, armor, trims) {
+// glints[i] (extra.armorGlint): that piece is enchanted, drawn with the entity glint (RenderType.armorEntityGlint, 0.16 scale)
+async function addArmor (bones, armor, trims, glints, glintify) {
   const slots = ['feet', 'legs', 'chest', 'head']
   for (let i = 0; i < 4; i++) {
     const mat = ARMOR_MATERIAL(armor[i]); if (!mat) continue
@@ -361,6 +362,7 @@ async function addArmor (bones, armor, trims) {
     const t = await texture(armorLayers(mat, dir, trims && trims[i]))
     if (!t) continue
     const m = new THREE.MeshBasicMaterial({ map: t.tex, vertexColors: true, alphaTest: 0.1, side: THREE.DoubleSide, fog: true })
+    if (glints && glints[i] && glintify) glintify(m, 0.16)
     for (const [bone, min, size, uv, mirror, extra] of ARMOR_PARTS[slots[i]]) {
       if (!bones[bone]) continue
       const all = { pos: [], uv: [], col: [], idx: [] }
@@ -915,7 +917,7 @@ export class EntityLayer {
       const t = await texture([`entity/player/wide/${skin}`])
       // a lit part (the AI characters' TV screens, skins/<skin>_glow.png): drawn full bright like EnderEyesLayer
       const glow = skin === 'steve' || !/^[a-z0-9_]+$/.test(skin) || ['alex', 'ari', 'efe', 'kai', 'makena', 'noor', 'sunny', 'zuri'].includes(skin) ? null : await texture([`entity/player/wide/${skin}_glow`])
-      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims) }
+      if (t) { const b = buildPlayer(t, undefined, undefined, glow); obj = b.root; bones = b.bones; mat = b.mat; if (extra && extra.armor) await addArmor(bones, extra.armor, extra.trims, extra.armorGlint, this.glintify) }
     } else if (name === 'item' && extra && extra.special && this.itemFactory) {
       // a dropped special item (bed, chest, head, banner, shulker box): its model with the 'ground'
       // display, turned about y by the spin (render.js)

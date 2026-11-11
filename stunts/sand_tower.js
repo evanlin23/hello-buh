@@ -150,12 +150,24 @@ module.exports = {
       ctx.mark(`tower${ti}`)
       // the bottom layer, front row first, left to right; on the wide ones it sidesteps along the row so it's in
       // front of what it's breaking
+      // A row behind another can only be seen (and so broken: lib/act.js checks the crosshair can reach it) once the row
+      // in front has come down onto its torches: it watches each row pour down, then steps in one block for the next
+      // (the torches are below the eye line, so the next row's bottom block shows over them)
       let k = 0
-      for (let iz = t.w - 1; iz >= 0; iz--) {
+      const rowClear = (z) => { for (let ix = 0; ix < t.w; ix++) for (let y = 1; y <= t.h; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, z)).name === 'sand') return false; return true }
+      for (let r = 0, iz = t.w - 1; iz >= 0; iz--, r++) {
+        const z = t.z0 + iz, rz = nearZ - r
         for (let ix = 0; ix < t.w; ix++) {
-          if (t.w >= 3) goal = new Vec3(t.x0 + ix + 0.5, 0, nearZ)
-          await column(t.x0 + ix, t.z0 + iz, last && k === 0 ? 'drop_final' : null)
+          const x = t.x0 + ix
+          goal = new Vec3((t.w >= 3 ? x : t.x0 + (t.w - 1) / 2) + 0.5, 0, rz)
+          await column(x, z, last && k === 0 ? 'drop_final' : null)
           k++
+        }
+        if (iz > 0) {
+          for (let i = 0; i < 100 && !(rowClear(z) && !falling()); i++) {
+            await look(new Vec3(t.x0 + t.w / 2, floor + 1 + Math.min(t.h, 10) * 0.35, z + 0.5), 0.12)
+            await bot.waitForTicks(1)
+          }
         }
       }
       // back off while it comes down onto the torches, the camera up the tower and back down. The last one: every

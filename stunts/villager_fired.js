@@ -89,8 +89,8 @@ module.exports = {
     const spots = []
     // (none in the middle of the front row: there they hid his outfit from the camera). Placed back to front, the
     // outer column first: each spot's top face is in sight when its block goes down (lib/act.js aims at it; a placed
-    // block in front hid the one behind, and the old back row behind the pen was never in sight at all)
-    for (const [dx, dz] of [[2, -2], [-2, -2], [3, -1], [-3, -1], [2, -1], [-2, -1], [2, 0], [-2, 0], [3, 1], [2, 1], [-2, 1], [2, 2], [-2, 2]]) spots.push([x + dx, vz + dz])
+    // block in front hid the one behind; the pen's corner posts hide x±2 at the back: the back pair sits at x±3)
+    for (const [dx, dz] of [[3, -2], [-3, -2], [3, -1], [-3, -1], [2, -1], [-2, -1], [2, 0], [-2, 0], [3, 1], [2, 1], [-2, 1], [2, 2], [-2, 2]]) spots.push([x + dx, vz + dz])
     this.spots = spots
     // TNT in the ground under every spot, and a 3-block fuse line toward the player
     for (const [sx, sz] of this.spots) await ctx.cmd(`/setblock ${sx} ${floor} ${sz} tnt`)
