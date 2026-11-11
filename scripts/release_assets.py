@@ -150,9 +150,12 @@ def upload(vd, names, from_videos=None, minutes=20):
                      "changed):\n  " + "\n  ".join(sorted(missing)))
     for n in names:
         d = vd / "shorts" / n
+        mine = [(f, e) for nn, f, e in todo if nn == n]
+        if any(not (d / f).exists() or sha256(d / f) != e["sha256"] for f, e in mine):   # republished meanwhile
+            print(f"{n}: its mp4 changed while uploading: metadata left alone (publish it again)"); continue
         meta = json.loads((d / "metadata.json").read_text())
-        for nn, f, e in todo:
-            if nn == n:
+        for f, e in mine:
+            if True:
                 meta.setdefault("video", {})[FILES[f][0]] = e
                 if f == "short.mp4":   # the file that goes up (add_song.py's mix, not out/<name>.mp4)
                     meta["video"]["sha256"], meta["video"]["bytes"] = e["sha256"], e["bytes"]
@@ -216,6 +219,10 @@ if __name__ == "__main__":
     ap.add_argument("--no-push", action="store_true")
     a = ap.parse_args()
     vd = pathlib.Path(a.videos)
+    if a.cmd == "upload" or not a.no_push:   # run on its own, it publishes too: never from a stale checkout
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import gates   # (publish.js checked already and set HB_FRESH_OK=1)
+        gates.fresh_or_exit("release_assets.py")
     if a.cmd == "upload":
         upload(vd, a.names, a.from_videos, a.wait)
     else:

@@ -15,7 +15,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:plains',
   caption: 'every way to cross lava (rated) 💀',
   edit: {
-    caption: 'every way to cross lava (rated) 💀', red: 'every', song: 'songs/funk_abnormal.mp3', dropAt: 'in_lava',
+    caption: 'every way to cross lava (rated) 💀', red: 'every', dropAt: 'in_lava',
     onFire: 'in_lava:death', deathScreen: true, startAt: 'beat:-0.3', endAfter: 'death:1.15',
     subs: [
       ['beat', 'bridging...', 9, 0], ['crossed', 'bridging: 6/10', 9, 0],

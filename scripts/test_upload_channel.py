@@ -29,7 +29,8 @@ class TwoChannels(unittest.TestCase):
         for name, meta in {"story_dog_hill": {"channel": "buhstories"}, "creeper_art": {}, "story_old": {"channel": "hellobuh"}}.items():
             d = vd / "shorts" / name
             d.mkdir(parents=True)
-            (d / "metadata.json").write_text(json.dumps({"status": "ready", "published_at": "2026-11-10", **meta}))
+            gates = {"gates": {"version": json.loads((HERE.parent / "lib" / "hb" / "gates.json").read_text())["version"]}}
+            (d / "metadata.json").write_text(json.dumps({"name": name, "status": "ready", "published_at": "2026-11-10", **gates, **meta}))
         self.vd = vd
 
     def tearDown(self):

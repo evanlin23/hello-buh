@@ -10,7 +10,7 @@ module.exports = {
   biome: process.env.BIOME || 'minecraft:forest',
   caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀',
   // edit.py settings for this format (song files are owner-supplied, in songs/)
-  edit: { caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀', colors: 'pov=red,villager=green', song: 'songs/payphone.mp3', dropAt: 'hired', start: 0.75, endAfter: 'rehired:1.0' },
+  edit: { caption: 'POV: THE VILLAGER IS UNEMPLOYED 💀', colors: 'pov=red,villager=green', dropAt: 'hired', start: 0.75, endAfter: 'rehired:1.0' },
 
   async setup (ctx) {
     const { bot } = ctx
@@ -64,8 +64,9 @@ module.exports = {
       const b = bot.blockAt(L)
       if (b && b.name === 'lectern') { try { await bot.dig(b, true) } catch (e) { ctx.log('dig', e.message) } }
       ctx.sound('block.wood.break', 1, 0.8); ctx.particles('block', L, { block: 'lectern' })
-      await setJob('none'); ctx.sound('entity.villager.no', 1, 1)
-      ctx.particles('angry', { x: this.x + 0.5, y: this.floor + 2.5, z: this.vz + 0.5 }, { count: 4 })
+      // vanilla: losing a job site shows nothing (angry particles come from being hit: minecraft-audit), the
+      // outfit just goes back to plain
+      await setJob('none')
     }
     // the villager watches the player (LookAtPlayerGoal: the head follows the eyes)
     ctx.mark('face_on', { near: [this.x + 0.5, this.vz + 0.5, 1.5], head: true })

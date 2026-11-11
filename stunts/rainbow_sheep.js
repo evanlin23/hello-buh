@@ -16,19 +16,21 @@ const COLORS = [
 const N = COLORS.length + 1          // the last one gets the name tag
 const STEP = 2                       // blocks between sheep
 
+const { plateau } = require('../lib/plateau')
 module.exports = {
   name: 'rainbow_sheep',
   biome: process.env.BIOME || 'minecraft:plains',
   caption: "dyeing sheep until it's a rainbow 🌈",
   edit: {
-    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', song: 'songs/ncs/industry_kiss.mp3', dropAt: 'jeb',
+    subsY: 0.15, caption: "dyeing sheep until it's a rainbow 🌈", red: 'rainbow', dropAt: 'jeb',
     startAt: 'dye:-0.45',
     // the short cut (lead 2026-11-11: as short as it reads): the seven dyes, the rainbow, then the jeb_ tag turns
     // the last white sheep into all of them at once; ends on it (the all-jeb_ and shearing beats are recorded, unused)
     endAfter: 'jeb:1.0',
+    speed: [['jeb:0.25', 'jeb:3.25', 3]],   // the jeb_ sheep cycles a colour per 25 ticks (vanilla): x3 shows three changes (review r1)
     subs: [...COLORS.map((c, i) => ['dye', c.sub, 0.9, i])],   // (no 'jeb_' sub: it sat on the jeb_ nameplate)
     punch: [['jeb', 0, 1.06]],
-    sfx: [['air', 'start', 'jeb', { gain: 0.5 }]]   // room tone from frame 1 (pace: the first sound was at 0.41 s)
+    sfx: [['air', 'start', 'jeb', { gain: 0.5 }], ['dip', 'jeb', 0.3], ['ding', 'jeb']]   // the gate: a sound hit on the jeb_ payoff over the song   // room tone from frame 1 (pace: the first sound was at 0.41 s)
   },
 
   async setup (ctx) {
@@ -36,15 +38,14 @@ module.exports = {
     const sp = bot.entity.position.floored()
     const g = ctx.findLand(sp.x, sp.z)
     if (!g) throw new Error('no dry land')
-    const { x, z } = g, floor = g.y
-    this.x = x; this.z = z; this.floor = floor
+    const { x, z } = g
+    this.x = x; this.z = z
     await ctx.defaultRules()
-    for (const [z0, z1] of [[z - 30, z - 17], [z - 16, z - 3], [z - 2, z + 11], [z + 12, z + 24]]) {   // wide and high: the old box's cut wall showed behind the line
-      await ctx.cmd(`/fill ${x - 56} ${floor + 1} ${z0} ${x + 56} ${floor + 20} ${z1} air`)
-      await ctx.cmd(`/fill ${x - 56} ${floor} ${z0} ${x + 56} ${floor} ${z1} grass_block`)
-      await ctx.cmd(`/fill ${x - 56} ${floor - 3} ${z0} ${x + 56} ${floor - 1} ${z1} dirt`)
-    }
-    await ctx.cmd('/kill @e[type=sheep]')
+    // the field levelled at the terrain's high percentile (lib/plateau): the old box cleared down to the start height
+    // left a cut dirt-and-stone wall behind the line (review 2026-11-11)
+    const floor = await plateau(ctx, { x0: x - 56, x1: x + 56, z0: z - 30, z1: z + 24, above: 24, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
+    this.floor = floor
+    await ctx.cmd('/kill @e[type=!player]')   // a wandering villager from a village nearby walked through the shot (rec_check: stair-stepping cast)
     // sheep stand at x0 + i*STEP, z; a fence behind and posts between them, open at the front
     const x0 = x - Math.floor((N - 1) * STEP / 2)
     this.x0 = x0
@@ -68,6 +69,22 @@ module.exports = {
   sheepAt (ctx, i) {
     const px = this.x0 + i * STEP + 0.5, pz = this.z + 0.5
     return Object.values(ctx.bot.entities).find(e => e.name === 'sheep' && Math.abs(e.position.x - px) < 0.3 && Math.abs(e.position.z - pz) < 0.3)
+  },
+
+  // ease the crosshair onto the middle of this sheep's body from where I stand, and check it landed (within 3 deg)
+  async aimAt (ctx, sheep) {
+    const { bot } = ctx
+    const c = sheep.position.offset(0, 0.85, 0)
+    await ctx.easeLookAt(c, 200)
+    for (let k = 0; k < 3; k++) {
+      const e = bot.entity.position.offset(0, 1.62, 0), d = c.minus(e)
+      const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      if (Math.abs(dy) < 0.05 && Math.abs(pitch - bot.entity.pitch) < 0.05) return
+      await bot.look(bot.entity.yaw + dy * 0.6, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.6, true)
+      await bot.waitForTicks(1)
+    }
+    ctx.log('aim off the sheep by', (Math.abs(bot.entity.yaw - Math.atan2(-(c.x - bot.entity.position.x), -(c.z - bot.entity.position.z))) * 57.3).toFixed(1), 'deg')
   },
 
   async use (ctx, sheep) {
@@ -103,6 +120,9 @@ module.exports = {
         await ctx.easeLookAt(new ctx.Vec3(tx, floor + 1.7, z + 0.5), 300)
       }
       if (i === N - 1) break                         // the name tag comes after the reveal
+      // the crosshair on THIS sheep when the dye goes on (owner, r:rffba12: "we are not looking at the right sheep
+      // when we dye"): the look above was aimed from where the strafe started, so settle it from where I stand now
+      await this.aimAt(ctx, s)
       await this.use(ctx, s)
       ctx.mark('dye', { n: i })
       ctx.sound('item.dye.use', 1, 1)
@@ -146,7 +166,7 @@ module.exports = {
     }
     bot.setControlState('forward', false)
     await look
-    await ctx.easeLookAt(p, 200)
+    await this.aimAt(ctx, last)
     await this.use(ctx, last)
     ctx.mark('jeb')
     ctx.sound('entity.sheep.ambient', 1, 1.3)
@@ -156,7 +176,7 @@ module.exports = {
     bot.setControlState('back', true)
     for (let t = 0; t < 26; t++) {
       await bot.waitForTicks(1)
-      const e = bot.entity.position, q = new ctx.Vec3(lx - 3, floor + 1.2, z + 0.5), d = q.minus(e.offset(0, 1.62, 0))
+      const e = bot.entity.position, q = new ctx.Vec3(lx - 0.5, floor + 1.1, z + 0.5), d = q.minus(e.offset(0, 1.62, 0))   // eyes on the jeb_ sheep (review r1: aiming at lx - 3 slid it off the edge)
       const yaw = Math.atan2(-d.x, -d.z), pitch = Math.atan2(d.y, Math.hypot(d.x, d.z))
       let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
       bot.look(bot.entity.yaw + dy * 0.2, bot.entity.pitch + (pitch - bot.entity.pitch) * 0.2, true)
