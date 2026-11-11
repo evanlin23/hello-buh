@@ -12,14 +12,14 @@ shallow plains valley, STANDARDS 3.1: no superflat), at full scale with `/fill`.
 | the village | a plains village of 10+ houses (library pieces), plaza with bell and well, paths, lanterns, a wheat farm along the north wall with a 2-high wall of full cobblestone blocks around it |
 | the rail stub | inside: rail from the farm north to the wall's foot at x 6, an empty minecart at its end; outside: the same line continues from the wall's outer foot to the hall |
 | the trading hall | 12 wide x 52 deep, running north away from the wall, stone-brick base, glass roof at y0+3 and a glass south front; 4 rows x 25 cells, each 1 x 1 x 2 with a villager and a workstation (lectern, composter, smithing table, barrel... mixed); an oak door centred in the south end facing the wall |
-| the player's dirt stub | 2 dirt blocks beside the hall door (S12); for S04 a separate dirt pillar against the wall's outer face at x -10, its top block at y0+41 |
+| the player's dirt pillar | for S05 only: a dirt pillar flush against the wall's outer face at (-10, y0+1..y0+41, -34), its top block one over the rim; none in S11/S12 (he digs it down after each look); dirt in his hand in S12 |
 
 ## Claims the narration makes (check each on stills from every shot angle before recording)
 | claim | line | must hold |
 |---|---|---|
 | the wall is FORTY blocks high | L01 | 40 above the village ground everywhere inside; Tomas's ladder has 40 rungs |
-| no GATE | L04 | no gate, door, opening or window in the wall anywhere in any shot (the S06 hole only in S06) |
-| (implied) nobody sees outside | L04 | no shot before S11 shows the ground outside the wall (S04/S05 cameras sit too low to see over) |
+| no GATE | L04 | no gate, door, opening or window in the wall anywhere in any shot (the hole only in S04) |
+| (implied) nobody sees outside | L04 | no shot before S11 shows the ground outside the wall (S04 pitched up at the sky; S01b, S05, S06 at or below the rim) |
 | a zombie can't jump TWO blocks | L03 | the farm wall in S02 is exactly 2 high and the zombie stays outside it |
 | something BROWN grows over the top every morning (a "plant") | L05 | a real dirt block, still, just outside the rim, brown against the sky at phone size (the kid never says dirt) |
 | Tomas builds one HIGHER | L06 | his new brick (y0+42) stands above the dirt's top (y0+41) |

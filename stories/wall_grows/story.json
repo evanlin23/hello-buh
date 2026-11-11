@@ -562,8 +562,8 @@
    "line": "L15",
    "place": "outside",
    "size": "full",
-   "camera": "at: the narrator's eye on the rim, a very long lens (FOV 10) looking 40 blocks down at the hall's door; still",
-   "frame": "subject: the player (Steve skin) full-figure, at least 25% of the frame height, beside the hall's south door, a dirt block in his hand (no pillar yet today); on 'UP' he turns his face up to the lens; the cut lands on the look; bg: the hall's glass front with boxed villagers. Dawn (23500).",
+   "camera": "at: the narrator's eye on the rim, about 39 blocks above and 12.5 blocks out from the hall door (looking ~72 degrees down), a very long lens (FOV 5), still",
+   "frame": "subject: the player (Steve skin) seen from high above, framed on his face and shoulders with the dirt block in his hand in frame; on 'UP' he turns his face up to the lens, the face about 25% of the frame width; the cut lands on the look; bg: the hall's door and glass front edge. Dawn (23500).",
    "subject": "the player",
    "look": {
     "time": 23500

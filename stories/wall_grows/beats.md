@@ -20,11 +20,11 @@ hall, a 2-high dirt pillar started beside him, dirt in his hand. He turns his he
 | 3-6 | L02 old Tomas adds one more every morning | Tomas on the rim placing one block | proud of Tomas |
 | 6-10 | L03 a zombie can't jump two blocks, so we're super safe! | a zombie stuck at the farm's 2-high wall at night | the viewer: then what is 40 for? the kid: extra safe |
 | 10-13 | L04 no gate; who needs one? everything's in here | kids playing along the unbroken wall | no gate; the kid: we don't need outside |
-| 13-17 | L05 every morning something brown grows over the top, like a little plant! | one still dirt block just past the rim at dawn | the pillar top; the kid: a plant |
-| 17-21 | L06 old Tomas builds one higher; he always wins | Tomas caps it | the arms race; the kid: a game Tomas wins |
-| 21-23 | L07 Tomas: "It's looking for us." | Tomas facing out | IT: the monster read |
-| 23-29 | L08 a block vanished; blocks do that, I guess; back by noon | a one-block hole at a player's eye height, then patched | a player peeked; the kid: blocks just do that |
-| (midpoint ~26 s) | | | guess: a monster / a giant outside |
+| 13-19 | L05 a block vanished; blocks do that, I guess; back by noon | a one-block hole at a player's eye height (sky through it), then Tomas by the patched spot | a player peeked; the kid: blocks just do that; the viewer: an enderman |
+| 19-21 | L06 Tomas: "It's looking for us." | Tomas facing the patched block | IT: the monster read |
+| (midpoint ~21 s) | | | guess: a monster (the r2 cold reader: an Enderman, 65 %) |
+| 21-25 | L07 every morning something brown grows over the top, like a little plant! | one still dirt block just past the rim at dawn (CU) | the pillar top; the kid: a plant |
+| 25-29 | L08 old Tomas builds one higher; he always wins | Tomas caps it one higher | the arms race; the kid: a game Tomas wins |
 | 29-32 | L09 Tomas came here in that old minecart, like a king! | rail into the wall, empty cart, Tomas watching it | players move villagers by cart; the kid: a royal ride |
 | 32-37 | L10 when the kids push it, Tomas runs and hides; best at hide and seek | the cart rattles, Tomas drops his block and shuts his door | fear; the kid: a game (**players get ahead here**) |
 | 37-41 | L11-L12 what's out there? Tomas: "Nothing we want to trade with." | Tomas comes down the ladder past the kid | trade; the kid takes it as an answer |
@@ -36,10 +36,10 @@ hall, a 2-high dirt pillar started beside him, dirt in his hand. He turns his he
 | clue | where | misread as | after the twist |
 |---|---|---|---|
 | no gate | L04, S03 | "who needs one?" | players don't need gates; villagers can't open what isn't there |
-| something brown grows over the rim every morning | L05, S04 (picture: one still dirt block) | the kid: a little plant; the viewer: a monster / a giant | a player nerd-poling up to look in |
-| Tomas builds one higher | L02, L06, S01, S05 | "he always wins" | keeping the rim above the player's pillar |
-| "It's looking for us." | L07 | a monster hunting | a player looking for villagers |
-| a block vanished at head height | L08, S06 | "blocks do that, I guess"; the viewer: an enderman | a player mined one to peek (endermen can't take stone bricks) |
+| something brown grows over the rim every morning | L07, S05 (picture: one still dirt block) | the kid: a little plant; the viewer: a monster / a giant | a player nerd-poling up to look in |
+| Tomas builds one higher | L02, L08, S01b, S06 | "he always wins" | keeping the rim above the player's pillar |
+| "It's looking for us." | L06 | a monster hunting | a player looking for villagers |
+| a block vanished at head height | L05, S04 | "blocks do that, I guess"; the viewer: an enderman | a player mined one to peek (endermen can't take stone bricks) |
 | Tomas came in a minecart; hides when it rolls | L09-L10, S07-S08 | "like a king!", "best at hide and seek" | how players haul villagers to trading halls |
 | "Nothing we want to trade with." | L12 | the kid takes it as an answer and wants to see the monster | players trade with boxed villagers |
 | "everybody gets their own room" | L14, S11 | a wonderful village | 1x1 trading-hall cells |

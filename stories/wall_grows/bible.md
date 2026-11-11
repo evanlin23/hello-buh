@@ -45,7 +45,7 @@ Coordinates relative to the village origin O (ground y0, the plaza bell at O). +
 | Tomas | adult villager, plains mason (apron), no name tag | S01b, S06 on the rim; S04 at the frame's right edge by the patched spot (arms crossed: no hand is drawn); S07 at the frame's right edge watching the cart; S09 down the ladder past the kid; S08 by the farm door, runs off frame left (west) to his house (-12, -20) on 'RUNS' | holds a stone brick over crossed arms in S01b, S06, S08 (dropped in S08: an item on the path); hands empty in S04's second half, S09 |
 | village kids | 2 baby villagers | S03, S08 | push the cart in S08 |
 | zombie | plain zombie | S02 only, outside the farm ring's south side | never reaches the farm |
-| the player | default Steve skin, no armour, dirt in main hand (hotbar slot 1) | S12 only, beside the hall door, at least 25% of frame height (FOV 10); his pillar is S05's dirt on an earlier dawn | turns his face up on 'UP'; never speaks |
+| the player | default Steve skin, no armour, dirt in main hand (hotbar slot 1) | S12 only, beside the hall door, framed on his face from 39 blocks up (FOV 5); his pillar is S05's dirt on an earlier dawn | turns his face up on 'UP'; never speaks |
 | hall villagers | 100 adult villagers, mixed professions, each in a cell | S11, S12 bg | still (cells), heads turning idly |
 
 ## Who knows what
