@@ -10,7 +10,7 @@ A stunt names its key sounds by mark: edit `keySounds: ['hear']` (each occurrenc
   its audible end (the no-song stem's 50 ms level above the clip's peak - 20 dB, up to its first 0.3 s of quiet, at
   most CLIP_MAX s), never past the song's drop (it lands on its event un-ducked)
 - the gate (BLOCK, KEY_MIN_DB = 8): over each clip's audible part, the clip must be >= 8 dB louder (RMS) than the
-  music. The music is the mix minus the no-song stem (cross-correlated lag, a least-squares FIR per 100 ms: the
+  music. The music is the mix minus the no-song stem (cross-correlated lag, a short least-squares FIR per 25 ms: the
   master's limiter rides on the music), so it runs on any package with a short_nosong.mp4. add_song.py exits 1 on a
   blocker (publish stops); pace.py BLOCKs on a package's short.mp4. After the duck the three guess_sound mixes measure
   +11.6 dB at worst (median +16 to +20), the rebuilt stems agree within ~1 dB; before, no call was over +4.8 dB.
@@ -108,7 +108,7 @@ def align(mix, nosong, max_lag=4800):
     return a, y
 
 
-def _fit(a, b, taps=8):
+def _fit(a, b, taps=4):
     """The game's part of a mix segment: a least-squares FIR of the stem (the master's gain, a fractional-sample delay,
     the codec). Fitted per clip, since the master's limiter rides on the music and changes the game's gain over time."""
     X = np.stack([np.roll(b, j) for j in range(-taps, taps + 1)], 1)
@@ -124,9 +124,9 @@ def margins(game, music, times, mix=None, stop=None):
         i0, m = int(a * SR), np.repeat(mask, int(BLOCK_S * SR))
         g = game[i0:i0 + len(m)]
         m = m[:len(g)]
-        if mix is not None:   # fitted per 100 ms (the limiter's gain moves within a clip)
+        if mix is not None:   # fitted per 25 ms (the limiter's gain moves within a clip; 100 ms left a ~10 dB floor)
             seg, st = mix[i0:i0 + len(g)], g
-            k = int(0.1 * SR)
+            k = int(0.025 * SR)
             g = np.concatenate([_fit(seg[j:j + k], st[j:j + k]) for j in range(0, len(st), k)])
             mu = seg - g
         else:

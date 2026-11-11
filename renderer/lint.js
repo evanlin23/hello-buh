@@ -180,6 +180,8 @@ function run (h) {
     }
     if (a !== null) GUI.push([a, Infinity])
   }
+  // the death screen too: the view is dead still by rule and the screen ("You died!") is the payoff (guess_sound_3)
+  for (const e of tl) if (e.event === 'death') { const r = tl.find(x => x.event === 'respawn' && x.t > e.t); GUI.push([e.t / 50, r ? r.t / 50 : Infinity]) }
   const inGui = (t) => GUI.some(([a, b]) => t >= a - 1 && t <= b + 1)
   for (let t = Math.ceil(start); t < end - 24; t += 4) {
     if (inGui(t) || inGui(t + 12)) { flushDead(t); continue }
