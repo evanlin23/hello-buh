@@ -1,4 +1,4 @@
-// mobpov #1 (family `mobpov`, owner r:r8048f1; docs/formats.md): "POV: a baby zombie found you". The narrator is a
+// mobpov #1 (family `mobpov`, owner r:r8048f1; docs/formats.md): "no wall can stop a baby zombie". The narrator is a
 // baby zombie (stunt.self: its model and its 0.93 eye), and its one annoying trait, the speed, is blown up to absurd:
 // it runs a straight line at ~25 blocks/s and nothing slows it. A stone wall, a pig pen, a queue of villagers, cows and
 // an iron golem, a house (in through the door, out through the back wall), then straight DOWN through dirt, stone,
@@ -13,7 +13,7 @@
 // = world x (east, the way it runs), y 0 = the ground block, feet at y 1, the lane along z 0 (block centres z 0.5).
 //   x 14..16   a stone-brick wall, 5 high, 19 wide
 //   x 28..40   a fenced pig pen (6 pigs, 3 of them in the lane), hay and a trough
-//   x 50..66   a dirt road with a queue on it: villager, cow, chicken, sheep, iron golem, villager
+//   x 54..71   a dirt road with a queue on it: villager, cow, chicken, sheep, iron golem, villager
 //   x 74..84   a timber house, the door facing the zombie; table, crafting table, chest, bed, bookshelves inside
 //   x 98       the dive: a layered column (dirt, stone, deepslate, bedrock) down into a netherrack cave
 //   cave       x 80..122, z -16..16, floor y -47 (feet -46), ceiling y -31: lava lake, glowstone, crimson fungus,
@@ -23,7 +23,7 @@ const PIECES = require('../lib/sets/pieces')
 const { Voxels } = require('../lib/sets/voxel')
 const { rusher, mobpovEdit } = require('../lib/mobpov')
 
-const CAPTION = 'POV: a baby zombie found you 💀'
+const CAPTION = 'no wall can stop a baby zombie 💀'   // our own words (the reference's caption is "POV: A baby zombie found you")
 const EAST = -Math.PI / 2
 const DEG = Math.PI / 180
 const GUY = { x: 112.3, z: 3.9 }   // 56e, just right of his portal (its frame is z -2..2 at x 114): he flies past it
@@ -66,7 +66,7 @@ function course (b) {
   b.set(38, 1, 4, 'hay_block'); b.set(38, 1, 3, 'hay_block'); b.set(38, 2, 4, 'hay_block')   // (the back corner: out of the pen shot's line)
   b.fill(31, 0, 4, 33, 0, 4, 'water'); b.set(30, 1, 4, 'composter')
   // the road and its lamp posts
-  b.fill(46, 0, -1, 70, 0, 1, b.mix({ dirt_path: 5, coarse_dirt: 1 }))
+  b.fill(46, 0, -1, 72, 0, 1, b.mix({ dirt_path: 5, coarse_dirt: 1 }))
   for (const x of [48, 58, 68]) { b.fill(x, 1, -3, x, 3, -3, 'spruce_fence'); b.set(x, 4, -3, 'lantern') }
   // a market stall beside the queue (what they queue for)
   b.fill(56, 1, 3, 60, 1, 3, 'barrel[facing=up]'); b.fill(56, 2, 3, 56, 3, 3, 'spruce_fence'); b.fill(60, 2, 3, 60, 3, 3, 'spruce_fence')
@@ -174,7 +174,7 @@ module.exports = {
     red: 'baby zombie',
     whooshes: 3,
     subs: [['found', 'found you.', 1.1, 0]],
-    extra: { sfx: [['impact', 'smash', { nth: 0, gain: 0.5 }]] }
+    extra: { subsY: 0.12, sfx: [['impact', 'smash', { nth: 0, gain: 0.5 }]] }   // the sub up in the cave's ceiling: at 0.42 it sat on 56e (review)
   }),
 
   async setup (ctx) {
@@ -205,12 +205,12 @@ module.exports = {
     // the cast: held still (NoAI) until the zombie reaches them
     const mob = (type, x, z, nbt = '', y = 1) => ctx.cmd(`/summon minecraft:${type} ${A(x, y, z)} {NoAI:1b,PersistenceRequired:1b,Rotation:[${90 + Math.round((ctx.bot.entity.id * 37 + x * 13 + z * 7) % 60) - 30}f,0f]${nbt}}`)
     for (const [x, z] of [[31.5, 0.6], [34.5, 0.2], [37.5, 0.9], [31.5, -3.2], [36.5, 3.4], [38.5, -3.8]]) await mob('pig', x, z)
-    await mob('villager', 50.5, 0.5, ',VillagerData:{profession:"minecraft:farmer",level:2,type:"minecraft:plains"}')
-    await mob('cow', 54.5, 0.4)
-    await mob('chicken', 57.5, 0.8)
-    await mob('sheep', 60.5, 0.4, ',Color:0b')
-    await mob('iron_golem', 63.5, 0.5)
-    await mob('villager', 67.5, 0.5, ',VillagerData:{profession:"minecraft:librarian",level:2,type:"minecraft:plains"}')
+    await mob('villager', 54.5, 0.5, ',VillagerData:{profession:"minecraft:farmer",level:2,type:"minecraft:plains"}')
+    await mob('cow', 58.0, 0.4)
+    await mob('chicken', 61.0, 0.8)
+    await mob('sheep', 64.0, 0.4, ',Color:0b')
+    await mob('iron_golem', 67.0, 0.5)
+    await mob('villager', 70.5, 0.5, ',VillagerData:{profession:"minecraft:librarian",level:2,type:"minecraft:plains"}')
     await mob('zombified_piglin', 92.5, -9.5, ',Rotation:[200f,0f]', -46)
     await mob('zombified_piglin', 106.5, -13.5, ',Rotation:[150f,0f]', -46)
     // 56e by his portal, facing the way the zombie will come from
@@ -237,7 +237,7 @@ module.exports = {
     await R.hold(2)                                // (the edit opens 1 frame before 'go': keep the parked view out of it)
     ctx.mark('go')
     ctx.sound('entity.zombie.ambient', 1, 1.75, { key: true })
-    await R.hold(5)
+    await R.hold(3)
     await R.dash(at(5.0, 1, 0.5), { speed: 1.25, accel: 4, bore: null })
     // 2. its eyes: straight through the wall
     R.shot('pov')
@@ -267,18 +267,18 @@ module.exports = {
     await R.turn(yawGuy, -4 * DEG, 10)
     ctx.mark('found')
     ctx.sound('entity.zombie.ambient', 1, 1.8, { key: true })
-    await R.hold(10)
+    await R.hold(5)
     await R.dash(land.plus(toGuy.scaled((toGuy.norm() - 1.3) / toGuy.norm())), { speed: 1.25, accel: 2, decel: 3, bore: null, knock: false })
     // 7. the punch: 56e goes flying past his own portal
     const me = Object.values(bot.entities).find(e => e.name === 'mannequin')
     ctx.mark('payoff')
     ctx.sound('entity.player.attack.strong', 1, 0.9, { key: true })
     ctx.sound('entity.player.attack.knockback', 1, 1)
-    // flung straight back past the right side of his portal frame, landing behind it 0.6 s later (0.4 s before
+    // flung straight back past the right side of his portal frame, landing behind it 0.7 s later (0.3 s before
     // the end: nothing still moving when it cuts). Through the portal itself the server took him to the real Nether
-    // mid-arc and the client froze him there. Smoothstep, 12 ticks: under 0.62 blocks a tick, no jump from rest
+    // mid-arc and the client froze him there. Smoothstep, 14 ticks: under 0.72 blocks a tick, ratio < 2 per sync, no jump from rest
     const p0 = me ? me.position.clone() : guy
-    if (me) R.fling(me, (u) => { const e = u * u * (3 - 2 * u); return p0.offset(4.6 * e, 1.2 * Math.sin(Math.PI * e), 0) }, 12)
+    if (me) R.fling(me, (u) => { const e = u * u * (3 - 2 * u); return p0.offset(6.5 * e, 1.8 * Math.sin(Math.PI * e), 0) }, 14)
     else ctx.log('mobpov: no mannequin to hit')
     await R.hold(30)
     return true
