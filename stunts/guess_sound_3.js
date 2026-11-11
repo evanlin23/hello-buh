@@ -21,6 +21,6 @@ module.exports = guessSound({
     { mob: 'skeleton', room: 'cave', sound: 'entity.skeleton.ambient', volume: 12, label: 'VERY HARD', answer: 'SKELETON', react: 'call', lean: 0, back: 6, lookY: 1.7, color: 'white', held: 'bow' },
     { mob: 'blaze', room: 'nether', sound: 'entity.blaze.ambient', label: 'EXPERT', answer: 'BLAZE', react: 'call', reactSound: 'entity.blaze.burn', lean: 0, back: 5, lookY: 1.5, mobDy: 0.5, nbt: 'NoGravity:1b', color: 'gold' },
     // (mob_griefing off: the blast breaks no blocks, so no debris still flying when the Short ends on the death: settle r:r24d99a)
-    { mob: 'creeper', room: 'jungle', sound: 'entity.creeper.primed', pitch: 0.5, volume: 4, once: true, label: 'IMPOSSIBLE', answer: 'NOT A PARROT', react: 'boom', setup: () => ['/gamerule mob_griefing false'], lean: 0, lookY: 1.3, color: 'red', cardSeconds: 0.8 }   // Creeper.ignite's fuse sound is at pitch 0.5
+    { mob: 'creeper', room: 'jungle', sound: 'entity.creeper.primed', pitch: 0.5, volume: 4, once: true, hearLead: 10, label: 'IMPOSSIBLE', answer: 'NOT A PARROT', react: 'boom', setup: () => ['/gamerule mob_griefing false'], lean: 0, lookY: 1.3, color: 'red', cardSeconds: 0.8 }   // Creeper.ignite's fuse sound is at pitch 0.5
   ]
 })
