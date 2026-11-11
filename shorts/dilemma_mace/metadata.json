@@ -1,0 +1,417 @@
+{
+  "name": "dilemma_mace",
+  "channel": "hellobuh",
+  "caption": "hit your dog 🐕 or lose hardcore?",
+  "youtube": {
+    "title": "hit your dog 🐕 or lose hardcore? #minecraft #shorts",
+    "description": "hit your dog 🐕 or lose hardcore?\n\nSong: MXZI, Deno - FAVELA\nMusic provided by NoCopyrightSounds\nFree Download/Stream: http://ncs.io/FAVELA\nWatch: http://ncs.lnk.to/FAVELAAT/youtube\n\n#minecraft #shorts #minecraftmemes #funny",
+    "hashtags": [
+      "#minecraft",
+      "#shorts",
+      "#minecraftmemes",
+      "#funny"
+    ],
+    "made_for_kids": false
+  },
+  "song": {
+    "file": "favela.mp3",
+    "title": "FAVELA",
+    "artist": "MXZI, Deno",
+    "licence": "NCS (NoCopyrightSounds) usage policy: free for creators incl. monetized, credit in description - https://ncs.io/usage-policy",
+    "drop_on_event": null,
+    "drop_in_song_s": 4.5,
+    "drop_in_short_s": 0.0,
+    "song_start_s": 4.5
+  },
+  "video": {
+    "file": "short.mp4",
+    "duration_s": 13.58,
+    "width": 1080,
+    "height": 1920,
+    "fps": "60/1",
+    "codec": "h264",
+    "bytes": 21618232,
+    "sha256": "b3e52656341d2902b1f7cb9e4f9106d21cdd9ea9475125ad7830b812dad75c53",
+    "release": {
+      "tag": "pkg-dilemma_mace",
+      "asset": "dilemma_mace.short.b3e52656341d2902.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short.b3e52656341d2902.mp4",
+      "sha256": "b3e52656341d2902b1f7cb9e4f9106d21cdd9ea9475125ad7830b812dad75c53",
+      "bytes": 21618232
+    },
+    "nosong_release": {
+      "tag": "pkg-dilemma_mace",
+      "asset": "dilemma_mace.short_nosong.1c346bdea9e949b2.mp4",
+      "url": "https://github.com/evanlin23/hello-buh/releases/download/pkg-dilemma_mace/dilemma_mace.short_nosong.1c346bdea9e949b2.mp4",
+      "sha256": "1c346bdea9e949b28dfff55b75c838eba15693a23d8d34b6ed40a67ffe7409de",
+      "bytes": 21564998
+    }
+  },
+  "edit": {
+    "caption": "hit your dog 🐕 or lose hardcore?",
+    "red": "hardcore",
+    "colors": "dog=yellow",
+    "startAt": "drop:0",
+    "endAfter": "reveal:1.5",
+    "speed": [
+      [
+        "beat0",
+        "beat1",
+        0.12
+      ],
+      [
+        "beat1",
+        "beat2",
+        0.12
+      ],
+      [
+        "beat2",
+        "beat3",
+        0.1
+      ],
+      [
+        "beat3",
+        "beat4",
+        0.1
+      ],
+      [
+        "beat4",
+        "beats_end",
+        0.07
+      ]
+    ],
+    "slowmo": [],
+    "cards": [
+      [
+        "beat0",
+        "HIT THE DOG = LIVE",
+        2.5,
+        "green"
+      ],
+      [
+        "beat1",
+        "DON'T = HARDCORE OVER",
+        2.5,
+        "red"
+      ],
+      [
+        "reveal",
+        "FEATHER FALLING IV",
+        1.6,
+        "blue"
+      ]
+    ],
+    "sfx": [
+      [
+        "whoosh",
+        "drop",
+        {
+          "gain": 0.5
+        }
+      ],
+      [
+        "whoosh",
+        "beat0",
+        {
+          "gain": 0.45
+        }
+      ],
+      [
+        "heart",
+        "beat0h",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "heart",
+        "beat1h",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "heart",
+        "beat2h",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "heart",
+        "beat3h",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "heart",
+        "beat4h",
+        {
+          "gain": 0.9
+        }
+      ],
+      [
+        "wind",
+        "drop",
+        "beat4",
+        {
+          "gain": 0.4
+        }
+      ],
+      [
+        "dip",
+        "land",
+        0.4
+      ],
+      [
+        "impact",
+        "land",
+        {
+          "gain": 0.8
+        }
+      ],
+      [
+        "dip",
+        "reveal",
+        0.15
+      ],
+      [
+        "impact",
+        "reveal",
+        {
+          "gain": 0.7
+        }
+      ],
+      [
+        "ding",
+        "reveal",
+        {
+          "gain": 0.5
+        }
+      ]
+    ],
+    "flash": [
+      "reveal"
+    ],
+    "shake": [
+      "land"
+    ],
+    "hardcore": true,
+    "armor": 16,
+    "ring": [
+      [
+        "drop:0.05",
+        0.38,
+        0.5,
+        0.5,
+        70
+      ]
+    ],
+    "args": [
+      "--caption",
+      "hit your dog 🐕 or lose hardcore?",
+      "--red",
+      "hardcore",
+      "--colors",
+      "dog=yellow",
+      "--speed",
+      "[[\"beat0\",\"beat1\",0.12],[\"beat1\",\"beat2\",0.12],[\"beat2\",\"beat3\",0.1],[\"beat3\",\"beat4\",0.1],[\"beat4\",\"beats_end\",0.07]]",
+      "--slowmo",
+      "[]",
+      "--cards",
+      "[[\"beat0\",\"HIT THE DOG = LIVE\",2.5,\"green\"],[\"beat1\",\"DON'T = HARDCORE OVER\",2.5,\"red\"],[\"reveal\",\"FEATHER FALLING IV\",1.6,\"blue\"]]",
+      "--ring",
+      "[[\"drop:0.05\",0.38,0.5,0.5,70]]",
+      "--shake",
+      "[\"land\"]",
+      "--flash",
+      "[\"reveal\"]",
+      "--sfx",
+      "[[\"whoosh\",\"drop\",{\"gain\":0.5}],[\"whoosh\",\"beat0\",{\"gain\":0.45}],[\"heart\",\"beat0h\",{\"gain\":0.9}],[\"heart\",\"beat1h\",{\"gain\":0.9}],[\"heart\",\"beat2h\",{\"gain\":0.9}],[\"heart\",\"beat3h\",{\"gain\":0.9}],[\"heart\",\"beat4h\",{\"gain\":0.9}],[\"wind\",\"drop\",\"beat4\",{\"gain\":0.4}],[\"dip\",\"land\",0.4],[\"impact\",\"land\",{\"gain\":0.8}],[\"dip\",\"reveal\",0.15],[\"impact\",\"reveal\",{\"gain\":0.7}],[\"ding\",\"reveal\",{\"gain\":0.5}]]",
+      "--hardcore",
+      "--armor",
+      "16",
+      "--start_at",
+      "drop:0",
+      "--end_after",
+      "reveal:1.5"
+    ]
+  },
+  "recording": {
+    "file": "recording.json.gz",
+    "minecraft": "1.21.11",
+    "world": {
+      "seed": "hellobuh",
+      "level_type": "minecraft:normal"
+    },
+    "set": {
+      "x": 377,
+      "y": 84,
+      "z": -47
+    },
+    "biome": "minecraft:plains",
+    "ticks": 114,
+    "seconds": 5.7,
+    "deaths": 0,
+    "events": [
+      {
+        "t": 0.75,
+        "event": "start"
+      },
+      {
+        "t": 1.05,
+        "event": "edge"
+      },
+      {
+        "t": 1.3,
+        "event": "drop"
+      },
+      {
+        "t": 1.75,
+        "event": "beat0"
+      },
+      {
+        "t": 1.75,
+        "event": "f1_on"
+      },
+      {
+        "t": 1.75,
+        "event": "shot"
+      },
+      {
+        "t": 1.9,
+        "event": "beat0h"
+      },
+      {
+        "t": 2.05,
+        "event": "beat1"
+      },
+      {
+        "t": 2.05,
+        "event": "shot"
+      },
+      {
+        "t": 2.2,
+        "event": "beat1h"
+      },
+      {
+        "t": 2.35,
+        "event": "beat2"
+      },
+      {
+        "t": 2.35,
+        "event": "shot"
+      },
+      {
+        "t": 2.45,
+        "event": "beat2h"
+      },
+      {
+        "t": 2.55,
+        "event": "beat3"
+      },
+      {
+        "t": 2.55,
+        "event": "shot"
+      },
+      {
+        "t": 2.65,
+        "event": "beat3h"
+      },
+      {
+        "t": 2.8,
+        "event": "beat4"
+      },
+      {
+        "t": 2.8,
+        "event": "f1_off"
+      },
+      {
+        "t": 2.8,
+        "event": "shot"
+      },
+      {
+        "t": 2.9,
+        "event": "beats_end"
+      },
+      {
+        "t": 3,
+        "event": "land"
+      },
+      {
+        "t": 3,
+        "event": "hurt",
+        "type": "fall"
+      },
+      {
+        "t": 3.6,
+        "event": "reveal"
+      },
+      {
+        "t": 3.6,
+        "event": "f1_on"
+      },
+      {
+        "t": 3.6,
+        "event": "shot"
+      },
+      {
+        "t": 5.45,
+        "event": "vel"
+      },
+      {
+        "t": 5.7,
+        "event": "end"
+      }
+    ]
+  },
+  "code": {
+    "repo": "evanlin23/hello-buh",
+    "branch": "main",
+    "commit": "69b283e1035bef781788907c43bd91fc58676d31",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T08:57:44.084Z",
+    "head_at_publish": "4c002903d18f15a00b1caafdf24f0b459e1700a4",
+    "stunt": "stunts/dilemma_mace.js",
+    "source_snapshot": [
+      "source/dilemma_mace.js",
+      "source/movie.js",
+      "source/dilemma.js",
+      "source/plateau.js"
+    ]
+  },
+  "rebuild": [
+    "git checkout 69b283e1035b",
+    "gunzip -c shorts/dilemma_mace/recording.json.gz > work/dilemma_mace.rec.json",
+    "node render.js work/dilemma_mace.rec.json work/dilemma_mace.frames 60 1080 1011",
+    "python3 audio.py work/dilemma_mace.rec.json work/dilemma_mace.wav",
+    "python3 edit.py --frames work/dilemma_mace.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/dilemma_mace.rec.json --audio work/dilemma_mace.wav --caption \"hit your dog 🐕 or lose hardcore?\" --red hardcore --colors dog=yellow --speed [[\"beat0\",\"beat1\",0.12],[\"beat1\",\"beat2\",0.12],[\"beat2\",\"beat3\",0.1],[\"beat3\",\"beat4\",0.1],[\"beat4\",\"beats_end\",0.07]] --slowmo [] --cards \"[[\\\"beat0\\\",\\\"HIT THE DOG = LIVE\\\",2.5,\\\"green\\\"],[\\\"beat1\\\",\\\"DON'T = HARDCORE OVER\\\",2.5,\\\"red\\\"],[\\\"reveal\\\",\\\"FEATHER FALLING IV\\\",1.6,\\\"blue\\\"]]\" --ring [[\"drop:0.05\",0.38,0.5,0.5,70]] --shake [\"land\"] --flash [\"reveal\"] --sfx [[\"whoosh\",\"drop\",{\"gain\":0.5}],[\"whoosh\",\"beat0\",{\"gain\":0.45}],[\"heart\",\"beat0h\",{\"gain\":0.9}],[\"heart\",\"beat1h\",{\"gain\":0.9}],[\"heart\",\"beat2h\",{\"gain\":0.9}],[\"heart\",\"beat3h\",{\"gain\":0.9}],[\"heart\",\"beat4h\",{\"gain\":0.9}],[\"wind\",\"drop\",\"beat4\",{\"gain\":0.4}],[\"dip\",\"land\",0.4],[\"impact\",\"land\",{\"gain\":0.8}],[\"dip\",\"reveal\",0.15],[\"impact\",\"reveal\",{\"gain\":0.7}],[\"ding\",\"reveal\",{\"gain\":0.5}]] --hardcore --armor 16 --start_at drop:0 --end_after reveal:1.5 --out out/dilemma_mace.mp4"
+  ],
+  "status": "ready",
+  "notes": "dilemma format #1 (lib/dilemma.js): 37-block hardcore fall, mace vs dog, 5-angle real slow-mo, Feather Falling IV twist; review r1 3 blockers (stutter, late landing, dog not in hook) + r2 1 (overlay blink/snap at span ends: edit.py fix) fixed; nitpicks: faint glint (card carries it), card over the face",
+  "published_at": "2026-11-11T08:59:22.601Z",
+  "gates": {
+    "version": 3,
+    "at": "2026-11-11T08:59:51+00:00",
+    "by": "publish.js",
+    "package": {
+      "ok": true,
+      "summary": "short.mp4 13.59 s vs the reviewed render 13.58 s"
+    },
+    "pace": {
+      "ok": false,
+      "blockers": 1,
+      "warnings": 2,
+      "summary": "payoff: no sound hit within 0.3 s of the payoff"
+    },
+    "check": {
+      "ok": true,
+      "label": "CHECK OK",
+      "blockers": 0,
+      "at": "2026-11-11T08:58:04.844Z",
+      "report": "work/hb/dilemma_mace.check.json"
+    },
+    "key_sounds": "n/a"
+  }
+}
