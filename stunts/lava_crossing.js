@@ -145,9 +145,13 @@ module.exports = {
         last = pz
         await bot.waitForTicks(1)
       }
-      // ...and put the block against that face: aimed by construction (lib/act.js A.place, r:rffba12), the crosshair on
-      // the face it clicks, as a player bridges forward over a gap
-      await A.place(ref.offset(0, 0, -1), { against: ref, sound: 'block.stone.place' })
+      // ...and from there put the block into the lava cell ahead: aimed by construction (lib/act.js A.place, r:rffba12),
+      // the crosshair through the lava onto the river's stone bed under the cell (from the edge nothing is in the way;
+      // the ray goes through lava as in vanilla), the click on the bed's top face. The feet stop while the hand works
+      const cell = ref.offset(0, 0, -1)
+      bot.setControlState('forward', false)   // motion-ok: sneaking at the edge
+      await A.place(cell, { against: cell.offset(0, -1, 0), sound: 'block.stone.place' })
+      bot.setControlState('forward', true)   // motion-ok: on along the bridge
       await bot.waitForTicks(2)
       const b = bot.blockAt(ref.offset(0, 0, -1))
       if (!b || b.name !== 'cobblestone') { ctx.log('bridge block', k, 'not placed:', b && b.name); bot.clearControlStates(); return false }
