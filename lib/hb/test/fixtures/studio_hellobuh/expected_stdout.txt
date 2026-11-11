@@ -1,0 +1,6 @@
+short                published          views viewed%  avg% ret3s subs/1k feed%
+stunt_a              2026-11-08T09:00    3400      80     -     -    2.94     -
+stunt_b              2026-11-09T12:00    1204      72    88   110    2.49    96
+not in uploads.json (uploaded by hand?): ZZZZZZZZZZZ by hand
+the extension couldn't read: shown in feed
+wrote uploads/studio.json (2 Shorts) + uploads/studio_channel.json

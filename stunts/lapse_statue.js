@@ -107,12 +107,13 @@ module.exports = makeStunt({
   caption: 'building a statue in 1 second vs 1 minute vs 1 hour 💀',
   red: 'hour',
   recordRadius: 200,
+  botTimeout: 300,   // ~100 s of stunt after the set-up: the default 180 s killed 4 of 5 tries on a busy box
   endAfter: 'big_done:0.5',
   bigCuts: [6, 1.2, 63], payoffFlash: true, song: null,   // pace: jump cuts through the 1-hour round, a flash + punch on 60:00
   field: { top: 'sand', under: 'sandstone', biome: 'minecraft:desert' },
   hotbar: [['hay_block', 64], ['carved_pumpkin', 64], ['stone_bricks', 64], ['brown_concrete', 64], ['terracotta', 64], ['emerald_block', 64], ['dark_oak_planks', 64], ['dirt', 64], 'diamond_shovel'],
   small,
-  mid: { blocks: mini(), w: 3, d: 2, towerY: 3, towerH: 3, towerSlot: 7, digSlot: 8, perTick: 2, speed: 3, walkSpeed: 6, backTicks: 12, out: 3.0,   // walkSpeed: the walk round its back to the front (r:r478786)
+  mid: { blocks: mini(), w: 3, d: 2, towerY: 3, towerH: 3, towerSlot: 7, digSlot: 8, perTick: 2, speed: 3, oneSide: 'S', backTicks: 12, out: 3.0,   // oneSide: all from the front, the back row first: no walk round its back (r:r478786: it stalled 1.3-1.6 s)
     slots: { stone_bricks: 2, brown_concrete: 3, terracotta: 4, emerald_block: 5, dark_oak_planks: 6 } },
   big: {
     blocks: giant(),

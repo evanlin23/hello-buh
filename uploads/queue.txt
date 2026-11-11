@@ -35,10 +35,14 @@ creeper_art
 sand_tower
 water_vs_lava
 rainbow_sheep
-desire_town
-inside_library
-dilemma_mace   # new format, not pinned until the owner's review (dilemma), 2026-11-11
-race_grass_mycelium   # new format, not pinned until the owner's review (race), 2026-11-11
-mislabel_grandma   # new format, not pinned until the owner's review (mislabel), 2026-11-11
-hack_banner_door   # new format, not pinned until the owner's review (hack), 2026-11-11
-interrupt_lamps   # new format, not pinned until the owner's review (interrupt), 2026-11-11
+desire_town   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+inside_library   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+dilemma_mace   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+race_grass_mycelium   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+mislabel_grandma   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+hack_banner_door   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+interrupt_lamps   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+mega_sponge   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)
+creeper
+nether_portal
+cells_lab   # first: owner's new format, OK'd 2026-11-11 (r:r258d1b)

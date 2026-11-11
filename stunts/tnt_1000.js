@@ -19,7 +19,10 @@ const speed = []
 for (let i = 1; i <= TIERS.length; i++) {
   if (i > 1) speed.push([`cut${i}a`, `cut${i}b`, 'cut'])        // to the next pile
   speed.push([`fuse${i}a`, `fuse${i}b`, 'cut'])                   // most of the 4 s fuse
-  if (i === 4) speed.push(['rim4a', 'rim4b', 'cut'])              // to the rim of the big crater
+  // the waits for the flung dirt to land before the next cut (the settle rule) at 2x: 3.4 s after the 100 and 5.4 s
+  // after the 1000 had nothing new on screen (pace dead BLOCK)
+  if (i === 3) speed.push(['crater3:0.5', 'cut4a', 2])
+  if (i === 4) speed.push(['boom4:1.5', 'rim4a', 2], ['rim4a', 'rim4b', 'cut'])   // ...then to the rim of the big crater
 }
 
 module.exports = {
@@ -28,11 +31,15 @@ module.exports = {
   caption: '1 TNT vs 10 vs 100 vs 1000 💀',
   edit: {
     caption: '1 TNT vs 10 vs 100 vs 1000 💀', red: '1000', dropAt: 'boom4',
-    startAt: 'tier1:-0.05', endAfter: 'settle:0.6',   // once the blast's debris settles (lib/settle.js, r:r24d99a)
+    // once the blast's debris settles (lib/settle.js, r:r24d99a), less 0.15 s: the conservative settle (the renderer's
+    // smoke, 2.2 s) held a frozen death screen on which_door; pace's last-0.6 s check still wants a still ending
+    startAt: 'tier1:-0.05', endAfter: 'settle:-0.15',
     deathScreen: true,
-    // the song drops out 0.35 s before the death so the 1000-TNT blast lands as a hit (pace: no sound hit on the payoff,
-    // the bed covered it)
-    sfx: [['dip', 'death', 0.35]],
+    // the payoff pace times is the 1000 pile's LAST blast, 1.85 s (output) after boom5 on this take: a flash, a punch,
+    // the song dip, the game ducked and an impact there (no hit and no picture change on it: pace BLOCK); the song
+    // also drops out 0.35 s before the death. Re-check the offset after a re-record
+    sfx: [['pop', 'tier1'], ['dip', 'death', 0.35], ['dip', 'boom5:1.85', 0.4], ['gamedip', 'boom5:1.85', 0.35], ['impact', 'boom5:1.85', { gain: 1.4 }]],
+    flash: [['boom5:1.85', 0, 0.8]], punch: [['boom5:1.85', 0, 1.15]],
     subs: TIERS.map((t, i) => [`tier${i + 1}`, t.label, i === 4 ? 3.5 : 2.6, 0]),
     speed
   },
@@ -111,16 +118,33 @@ module.exports = {
     }
     // flint and steel on a TNT, aimed by construction (lib/act.js, r:rffba12): the crosshair on the block as it's lit
     const A = require('../lib/act')(ctx)
+    // eased looks no faster than a hand on a mouse (rec_check whip: 522-737 deg/s at the hook's size-up, the finale's
+    // spin and its glance back, r:r38374d): ctx.easeLook's ease-in-out peaks at twice the mean speed, so a turn of D deg
+    // takes at least 2 * D / 200 s
+    const capMs = (yaw, pitch, ms) => {
+      let dy = yaw - bot.entity.yaw; while (dy > Math.PI) dy -= 2 * Math.PI; while (dy < -Math.PI) dy += 2 * Math.PI
+      const deg = Math.hypot(dy * Math.max(Math.cos(bot.entity.pitch), Math.cos(pitch)), pitch - bot.entity.pitch) * 180 / Math.PI
+      return Math.max(ms, Math.ceil(2000 * deg / 200 / 50) * 50)
+    }
+    const easeLook = (yaw, pitch, ms) => ctx.easeLook(yaw, pitch, capMs(yaw, pitch, ms))
+    const easeLookAt = (p, ms) => {
+      const e = bot.entity.position.offset(0, bot.controlState.sneak ? 1.27 : 1.62, 0), d = p.minus(e)
+      return easeLook(Math.atan2(-d.x, -d.z), Math.atan2(d.y, Math.hypot(d.x, d.z)), ms)
+    }
     const light = async (bx, by, bz) => {
       try { await A.use(new Vec3(bx, by, bz), { sound: 'item.flintandsteel.use' }) } catch (e) { ctx.log('light', e.message) }
       ctx.sound('entity.tnt.primed', 1)
     }
     for (let i = 0; i < this.tiers.length; i++) {
       const t = this.tiers[i], n = i + 1
+      // only the finale may kill: a take where a pile went off early (TNT flung from the last chain set off the next
+      // pile, 2026-11-11) and killed him at tier 4 passed as STUNT OK with a 26 s Short; fail it so run.sh retries
+      if (ctx.died) { ctx.log('died before the finale, at tier', n); return false }
       const mid = new Vec3(t.cx + 0.5, floor + 1 + t.h / 2, t.zf - t.d / 2 + 0.5)
       if (t.on) {
         // ---- the finale: on top of 1000 TNT ----
         ctx.mark(`cut${n}a`)
+        await ctx.cmd('/kill @e[type=tnt]', { mayFail: true })   // (inside the cut, as for every pile)
         await ctx.cmd('/difficulty normal')
         // stand at the east end facing west, down the field (the other way the cleared field's walls show)
         await tp(t.cx + 3.5, floor + t.h + 1, t.zf - 4.5, 90, 55)
@@ -130,27 +154,33 @@ module.exports = {
         ctx.mark(`tier${n}`)
         const W = Math.PI / 2
         // TNT under the feet... a look out west over the edge (how high; the craters far off), back down
-        await ctx.easeLook(W + 0.35, -0.3, 550)
-        await ctx.easeLook(W - 0.4, -0.45, 700)
-        await ctx.easeLook(W - 0.05, -0.7, 500)
-        await ctx.easeLook(W - 0.1, -1.15, 450)
+        await easeLook(W + 0.35, -0.3, 550)
+        await easeLook(W - 0.4, -0.45, 700)
+        await easeLook(W - 0.05, -0.7, 500)
+        await easeLook(W - 0.1, -1.15, 450)
         const bx = t.cx + 4, by = floor + t.h, bz = t.zf - 5                // the edge block right behind the feet
-        await ctx.easeLookAt(new Vec3(bx + 0.5, by + 1, bz + 0.5), 350)
+        await easeLookAt(new Vec3(bx + 0.5, by + 1, bz + 0.5), 350)
         await light(bx, by, bz)
         ctx.mark(`lit${n}`)
         const litAt = ctx.tick
-        await ctx.easeLook(bot.entity.yaw + 0.2, -1.2, 350)
+        await easeLook(bot.entity.yaw + 0.2, -1.2, 350)
+        await bot.waitForTicks(3)                                         // (the cut's edges on a still view)
         ctx.mark(`fuse${n}a`)
+        // inside the cut: spin round to face west, the way he runs (a 174 deg spin after the cut whipped at 300+ deg/s)
+        await easeLook(W, -0.45, 300)
         while (ctx.tick - litAt < 50) await bot.waitForTicks(1)          // skipped by the cut
         ctx.mark(`fuse${n}b`)
-        // ~1.5 s left: spin round and sprint west across the top... not fast enough
-        await ctx.easeLook(W, -0.45, 300)
+        await bot.waitForTicks(2)
+        // ~1.5 s left: eyes up and sprint west across the top... not fast enough (one ease at a time: the look up runs
+        // while he sprints, the glance starts once it's done)
         bot.setControlState('sprint', true); bot.setControlState('forward', true)
-        ctx.easeLook(W + 0.1, -0.2, 500)
-        // a glance back over the shoulder just as it goes: the blast is on screen when it gets him
+        const up = easeLook(W + 0.1, -0.3, 400)
+        // a glance back over the shoulder as it goes: the blast is on screen when it gets him. ~100 deg at a hand's speed
+        // takes ~1 s, so it starts 20 ticks before the blast (a 153 deg turn in 0.35 s whipped at 737 deg/s)
+        let glance = false
         for (let k = 0; k < 80 && !ctx.died; k++) {
           // (the glance looks down at the cube and the blast, not the horizon)
-          if (ctx.tick - litAt === 72) { bot.setControlState('forward', false); bot.setControlState('sprint', false); bot.setControlState('back', true); ctx.easeLook(W + Math.PI * 0.85, -0.75, 350) }
+          if (!glance && ctx.tick - litAt >= 60) { glance = true; await up; bot.setControlState('forward', false); bot.setControlState('sprint', false); bot.setControlState('back', true); easeLook(W + Math.PI * 0.55, -0.75, 350) }
           await bot.waitForTicks(1)
         }
         bot.clearControlStates()
@@ -160,22 +190,25 @@ module.exports = {
       }
       if (i > 0) {   // cut to the next pile
         // ...once the last pile's flung dirt has landed (rec_check settle, r:r24d99a: tier 3's flew 2.8 s), eyes drifting
-        for (let k = 0; k < 80 && ctx.tick - lastBoom < 60; k++) await aimStep(bot.entity.yaw + 0.03 * Math.sin(k / 7), bot.entity.pitch + 0.01 * Math.sin(k / 5), 0.3)
+        for (let k = 0; k < 140 && ctx.tick - lastBoom < 85; k++) await aimStep(bot.entity.yaw + 0.03 * Math.sin(k / 7), bot.entity.pitch + 0.01 * Math.sin(k / 5), 0.3)
         ctx.mark(`cut${n}a`)
+        await ctx.cmd('/kill @e[type=tnt]', { mayFail: true })   // inside the cut: a TNT the last chain flung can't set off this pile early
         await tp(t.cx + 0.5, floor + 1, t.zf + 2.5, 180, 15)
         await bot.waitForTicks(4)
         ctx.mark(`cut${n}b`)
       }
       ctx.mark(`tier${n}`)
+      await bot.waitForTicks(2)
+      if (ctx.died) { ctx.log('died before the finale, at tier', n); return false }
       if (n === 1) {   // the hook: from the one block... to the 1000 cube down the field, and back
         const big = this.tiers[3]
-        await ctx.easeLookAt(new Vec3(big.cx + 0.5, floor + 6, big.zf - 4), 650)
-        await ctx.easeLook(bot.entity.yaw + 0.08, bot.entity.pitch + 0.05, 300)
+        await easeLookAt(new Vec3(big.cx + 0.5, floor + 6, big.zf - 4), 650)
+        await easeLook(bot.entity.yaw + 0.08, bot.entity.pitch + 0.05, 300)
       }
       // size it up (a big pile gets a look up its height), then light the front block
-      if (t.h > 2) { await ctx.easeLook(-0.15, Math.min(1.15, Math.atan2(t.h - 0.6, 2.5)), 450); await ctx.easeLook(0.1, 0.15, 300) } else await ctx.easeLook(0.2, -0.25, 300)
+      if (t.h > 2) { await easeLook(-0.15, Math.min(1.15, Math.atan2(t.h - 0.6, 2.5)), 450); await easeLook(0.1, 0.15, 300) } else await easeLook(0.2, -0.25, 300)
       const target = new Vec3(t.cx, floor + 1, t.zf)
-      await ctx.easeLookAt(target.offset(0.5, 0.5, 1), 250)
+      await easeLookAt(target.offset(0.5, 0.5, 1), 250)
       await light(target.x, target.y, target.z)
       ctx.mark(`lit${n}`)
       await bot.waitForTicks(8)
@@ -183,7 +216,7 @@ module.exports = {
       ctx.mark(`fuse${n}a`)
       const litAt = ctx.tick - 8
       await tp(t.cx + 0.5, floor + 1, t.zf + t.view + 0.5, 180, 0)
-      await ctx.easeLookAt(mid.offset(0.8, -t.h * 0.15, 0), 50)
+      await easeLookAt(mid.offset(0.8, -t.h * 0.15, 0), 50)
       while (ctx.tick - litAt < (n === 4 ? 52 : 58)) await bot.waitForTicks(1)
       ctx.mark(`fuse${n}b`)
       // nervous glances while it flashes, coming back to the pile
@@ -226,14 +259,14 @@ module.exports = {
         ctx.mark(`crater${n}`)
         // sweep across the middle of the crater and down into it
         const mid4 = new Vec3(t.cx + 0.5, floor - 10, t.zf - 2.5)
-        await ctx.easeLookAt(mid4.offset(6, 0, 0), 500)
-        await ctx.easeLookAt(mid4.offset(-6, 0, 0), 900)
-        await ctx.easeLookAt(mid4.offset(0, -4, 3), 900)
+        await easeLookAt(mid4.offset(6, 0, 0), 500)
+        await easeLookAt(mid4.offset(-6, 0, 0), 900)
+        await easeLookAt(mid4.offset(0, -4, 3), 900)
       } else {
         // walk up to the crater, looking into it
         // eyes on the crater the whole way (walking while looking at plain grass read as a frozen frame)
         const hole = new Vec3(t.cx + 0.5, floor - 3, t.zf - t.d / 2 + 0.5)
-        await ctx.easeLookAt(hole, 300)
+        await easeLookAt(hole, 300)
         bot.setControlState('forward', true)
         for (let k = 0; k < 30; k++) {
           const e = bot.entity.position.offset(0, 1.62, 0), d = hole.offset(Math.sin(k / 5) * 0.8, 0, 0).minus(e)
@@ -245,8 +278,8 @@ module.exports = {
         bot.setControlState('forward', false)
         ctx.mark(`crater${n}`)
         // into the hole from the rim, staying on it
-        await ctx.easeLookAt(hole.offset(1.2, -1, 0), 500)
-        await ctx.easeLookAt(hole.offset(-1.2, -1, -0.5), 600)
+        await easeLookAt(hole.offset(1.2, -1, 0), 500)
+        await easeLookAt(hole.offset(-1.2, -1, -0.5), 600)
       }
     }
     return false

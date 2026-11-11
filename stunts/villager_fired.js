@@ -39,13 +39,17 @@ module.exports = {
       ['tnt', 'one problem...', 1.6, 0],
       ['lit', 'he is about to get FIRED', 2.2, 0],
       ['ring_boom', 'fired from 13 jobs at once', 1.5, 0],   // on the blast
-      ['gone', 'permanently 💀', 1.5, 0]
+      ['gone', 'permanently', 1.5, 0]   // (the subtitle font has no emoji: it drew a box)
     ],
-    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch and push-in on his
-    // death puff, a song dip + impact on it, a pop on the opening (pace)
-    speed: [['fuse_a', 'fuse_b', 'cut']],
-    flash: [['ring_boom', 0, 0.5], ['gone', 0, 0.4]], punch: [['ring_boom', 0, 1.1]], zoom: [['ring_boom', 'end', 1.3]],
-    sfx: [['pop', 'beat'], ['dip', 'ring_boom', 0.3], ['impact', 'ring_boom'], ['pop', 'gone']]
+    // the ring's blast stays on screen until it settles and he's gone (r:r24d99a); a flash, punch, song dip + impact on
+    // the hit that kills him (mob_death: pace's payoff), a pop on his death puff, a song dip + impact on it, a pop on the opening (pace)
+    speed: [['fuse_a', 'fuse_b', 'cut'], ['all_jobs:0.3', 'faster', 1.4]],   // (pace: 3 s of the cycle before FASTER)
+    // the payoff pace times is the ring's LAST blast, 0.6 s after his death in this recording (34.05 s vs 33.45 s
+    // source; 0.45 s in the take before): a flash on the death, then the big flash + punch and the song dip + impact on
+    // that last blast (on the death they were early and the payoff had no hit: pace BLOCK). Re-check after a re-record.
+    flash: [['mob_death', 0, 0.6], ['mob_death:0.6', 0, 0.9], ['gone', 0, 0.4]], punch: [['mob_death:0.6', 0, 1.3]],
+    // (+ the game audio ducked 0.35 s before it: the ring's blasts 0.15-0.45 s earlier flattened its hit, as on pickaxe_race)
+    sfx: [['pop', 'beat'], ['dip', 'mob_death:0.6', 0.4], ['gamedip', 'mob_death:0.6', 0.35], ['impact', 'mob_death:0.6', { gain: 1.3 }], ['pop', 'gone']]
   },
 
   async setup (ctx) {

@@ -73,6 +73,45 @@ class Settle(unittest.TestCase):
         tr = OC.debris_tracks(rec)
         self.assertEqual((tr[0]["kind"], tr[0]["t0"], tr[0]["t1"]), ("death", 20, 40))
 
+    def test_the_end_also_waits_out_the_rendered_blast_smoke(self):   # which_door: debris past "You Died!"
+        rec = self.rec([], [{"t": 30 * 50, "event": "particles", "type": "explosion", "x": 0.5, "y": 64, "z": -5}])
+        self.assertEqual(OC.debris_tracks(rec), [])
+        tr = OC.debris_tracks(rec, puffs=True)
+        self.assertEqual((tr[0]["kind"], tr[0]["t0"], tr[0]["t1"]), ("puff", 30, 30 + OC.PUFF_TICKS))
+        self.assertTrue(OC.moving(tr, 60, OC.pose_cam(rec)))
+        self.assertEqual(OC.settle_after(tr, 60, OC.pose_cam(rec)), 30 + OC.PUFF_TICKS + 1)
+
+
+class PaceTailMotion(unittest.TestCase):
+    """pace.tail_motion: the last 0.6 s of the game view; a still or merely panning ending is ~0, debris falling across a
+    still view blocks (which_door: 1.77%)."""
+    def clip(self, frame_at, n=45):
+        import subprocess, tempfile
+        out = pathlib.Path(tempfile.mkdtemp()) / "c.mp4"
+        raw = b"".join(frame_at(i).astype("uint8").tobytes() for i in range(n))
+        subprocess.run(["ffmpeg", "-v", "error", "-f", "rawvideo", "-pix_fmt", "gray", "-s", "270x480", "-r", "30", "-i", "-",
+                        "-vf", "scale=1080:1920:flags=neighbor", "-pix_fmt", "yuv420p", str(out)], input=raw, check=True)
+        return out
+
+    def test_still_panning_and_debris_endings(self):
+        import numpy as np
+        import pace
+        rng = np.random.default_rng(3)
+        world = np.kron(rng.integers(40, 220, (60, 80)), np.ones((10, 10)))   # blocky terrain, 600x800
+        view = lambda i: world[60 + i: 540 + i, 200:470]                      # the camera tilts 1 px a frame
+        specks = rng.integers(0, 270, (40, 2))
+        def debris(i):
+            f = world[60:540, 200:470].copy()
+            for x, y in specks:
+                yy = (y + 4 * i) % 470
+                f[yy:yy + 3, x:x + 3] = 15                                    # dark crumbs falling 4 px a frame
+            return f
+        for fn, lo, hi in ((lambda i: world[60:540, 200:470], 0, pace.TAIL_STILL[0]), (view, 0, pace.TAIL_STILL[0]),
+                           (debris, pace.TAIL_STILL[1], 100)):
+            v = self.clip(fn)
+            tm = pace.tail_motion(v, pace.probe_len(v))
+            self.assertTrue(lo <= tm < hi, f"{tm:.3f} not in [{lo}, {hi})")
+
 
 class PaceEditCaptions(unittest.TestCase):
     def test_subs_and_cards_count_as_caption_events(self):   # half_heart: "lava bridge", "almost there..." (nth 1)

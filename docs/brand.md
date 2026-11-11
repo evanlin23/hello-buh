@@ -271,13 +271,13 @@ comes first because feed titles are cut at about 40-60 characters (thin evidence
 |---|---|---|---|
 | 1 | Light Sleeper | my village is covered in 9,000 carpets 😶 #minecraft #shorts | My village is covered in 9,000 **carpets** |
 | 2 | Good Boy | my human tried to lose me 37 times 🐺 #minecraft #shorts | My human has tried to lose me 37 **times** |
-| 3 | Thirty-One Raids | grandpa won 31 raids. he started all of them 😳 #minecraft #shorts | Thirty-one raids. Every one started the night Grandpa came **home** |
+| 3 | Thirty-One Raids | thirty-one raids. every one started the night grandpa came home 😳 #minecraft #shorts | Thirty-one raids. Every one started the night Grandpa came **home** |
 | 4 | Gold for the Portal | my grandma has thrown 9,000 gold into a portal 🪙 #minecraft #shorts | My grandma has thrown 9,000 gold into a **portal** |
 | 5 | Dog on the Hill | the dog on the hill hasn't moved in 900 days 🐕 #minecraft #shorts | The dog on the hill hasn't moved in **900** days |
 
 Why this order: Light Sleeper is the strongest hook and the bar, so it opens the channel. After that the order is free,
 because each story stands alone; the two dog stories (Good Boy, Dog on the Hill) are kept apart so the feed stays
-varied. Raids' title gives away less than its twist; check it against the final script before upload.
+varied. Raids' title was checked against the final script (2026-11-11): "he started all of them" contradicted the twist (the boy starts them), so the title is the story's own hook line.
 
 ## Pinned comment (one question per story, one people want to answer)
 1. Light Sleeper: "What do you think is under the well? Wrong answers only 👇"
@@ -293,11 +293,18 @@ varied. Raids' title gives away less than its twist; check it against the final 
 - **Video description template:** line 1 = the hook, then the
   pinned question, the music credit, then `#minecraft #shorts #minecraftstory #buhstories`.
 - **Hashtags:** #minecraft #shorts #minecraftstory #buhstories (four at most; the first three show above the title).
-- **Keywords (channel and video tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
+- **Keywords (channel tags):** minecraft story, minecraft stories, minecraft shorts, minecraft mystery,
   minecraft village, minecraft dog, minecraft warden, minecraft raid, buh stories.
+- **Video tags:** the general base (minecraft story, minecraft stories, minecraft shorts, minecraft mystery, buh
+  stories) plus the story's own `upload.tags`; village / dog / warden / raid only where they fit the story.
 - **Playlists:** one, "All Buh Stories", at launch (owner, 2026-11-11: theme playlists like "Grandpa and Grandma
   stories" feel "too specific"). A series playlist is added only when a premise family has 3+ stories (a hit's
   follow-ups); Shorts playlists mostly help binge-watching from the channel page and a series' "next" link, not reach.
+
+**Built, not hand-written:** the titles, questions and story tags above live in each `stories/<s>/story.json` `upload`
+block; lib/buhstories_upload.js builds the upload text from it (publish.js, the uploader) and `./hb paste <story>`
+prints it for a manual upload. Change a title or question there (and in the tables above: a test keeps the titles in
+sync).
 
 ## HelloBuh cross-promo (a community post, and a pinned comment on the next HelloBuh Short)
 "We made a second channel 👀 Buh Stories: short Minecraft stories. First one: a

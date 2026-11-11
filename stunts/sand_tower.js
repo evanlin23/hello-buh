@@ -22,7 +22,7 @@ module.exports = {
     // opens on the first break (sound on frame 0: pace), a punch + shake as the 6x6 crashes (the payoff's picture change)
     // the end counts from the last block landing (r:r24d99a): a shake as the 4x4 crashes down, then the hit, a punch and
     // the song's dip on 'settled' (the payoff: pace wants a sound and a picture change on it), out 0.6 s later
-    startAt: 'walk0:0.45', endAfter: 'settle:0.6', shake: [['crash', 0, 8]], punch: [['settle', 0, 1.06]],
+    startAt: 'walk0:0.45', endAfter: 'settle:0.6', speed: [['crash', 'settle', 1.5]], shake: [['crash', 0, 8]], punch: [['settle', 0, 1.06]],
     sfx: [['dip', 'settle', 0.35], ['impact', 'settle']]
   },
 
@@ -128,9 +128,17 @@ module.exports = {
       const tb = ctx.tick
       if (mark) ctx.mark(mark)
       ctx.select(1)
-      // the torch into the gap, on the top face of the ground block the crosshair is already on, 5 ticks after the break
-      while (ctx.tick < tb + 4) await bot.waitForTicks(1)   // (a torch in before the sand starts to fall holds it up)
-      try { await A.place(new Vec3(cx, floor + 1, cz), { against: new Vec3(cx, floor, cz), block: 'torch', delay: 4, sound: 'block.wood.place' }) } catch (e) { ctx.log('torch', cx, cz, e.message) }
+      // the crosshair down onto the ground in the gap while the sand starts to fall, on the FAR half of the cell's floor
+      // (A.place's own pick can sit on the near edge, where the ray grazes the ground in front first: rec_check sight),
+      // then the torch at tb + 4 (a torch in before the sand starts to fall holds it up; one after ~tb + 9 is too late)
+      const P = new Vec3(cx + 0.5, floor + 1.0, cz + 0.3)
+      const on = await A.aimAt(P, { on: new Vec3(cx, floor, cz), max: 6, strict: false })
+      while (ctx.tick < tb + 4) await bot.waitForTicks(1)
+      if (on) {
+        ctx.mark('place_on', { x: cx, y: floor + 1, z: cz, ax: cx, ay: floor, az: cz })
+        bot._client.write('block_place', { hand: 0, location: { x: cx, y: floor, z: cz }, direction: 1, cursorX: 0.5, cursorY: 1, cursorZ: 0.3, insideBlock: false, worldBorderHit: false, sequence: 0 })   // motion-ok: aimed and checked by A.aimAt just above (the crosshair is on this face)
+        bot.swingArm('right'); ctx.sound('block.wood.place', 1, 0.8); A.lastUse = ctx.tick
+      } else ctx.log('torch', cx, cz, 'crosshair not on the gap')
       gov.cur = { yaw: bot.entity.yaw, pitch: bot.entity.pitch }; gov.vel = { yaw: 0, pitch: 0 }
       aim = bottom(cx, cz)
       setTimeout(() => ctx.log('column', cx, cz, 'now', bot.blockAt(new Vec3(cx, floor + 1, cz)).name), 500)
@@ -154,12 +162,17 @@ module.exports = {
       // in front has come down onto its torches: it watches each row pour down, then steps in one block for the next
       // (the torches are below the eye line, so the next row's bottom block shows over them)
       let k = 0
-      const rowClear = (z) => { for (let ix = 0; ix < t.w; ix++) for (let y = 1; y <= t.h; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, z)).name === 'sand') return false; return true }
+      // only the row's bottom two cells have to be clear for the eye to see past it (the rest of the column is falling
+      // blocks by then: entities, which the crosshair passes); waiting for the whole column was 4.3 s of dead time a row (pace)
+      const rowClear = (z) => { for (let ix = 0; ix < t.w; ix++) for (let y = 1; y <= 2; y++) if (bot.blockAt(new Vec3(t.x0 + ix, floor + y, z)).name === 'sand') return false; return true }
       for (let r = 0, iz = t.w - 1; iz >= 0; iz--, r++) {
         const z = t.z0 + iz, rz = nearZ - r
-        for (let ix = 0; ix < t.w; ix++) {
+        // from the middle out: a column's torch is placed past its neighbour toward the eye, so that neighbour has to be
+        // down already (the 4x4's left column was torched through the sand still standing beside it: rec_check sight)
+        const order = [...Array(t.w).keys()].sort((a, b) => Math.abs(a + 0.5 - t.w / 2) - Math.abs(b + 0.5 - t.w / 2) || a - b)
+        for (const ix of order) {
           const x = t.x0 + ix
-          goal = new Vec3((t.w >= 3 ? x : t.x0 + (t.w - 1) / 2) + 0.5, 0, rz)
+          goal = new Vec3(t.x0 + t.w / 2, 0, rz)   // centred, standing still while it works (a sidestep per column made the torch late: the sand landed first)
           await column(x, z, last && k === 0 ? 'drop_final' : null)
           k++
         }

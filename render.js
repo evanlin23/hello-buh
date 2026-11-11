@@ -1146,6 +1146,14 @@ const MOON_PHASE = (() => {
   return (rec.engine || 0) >= 2 && day > 0 ? MOON_PHASES[day] : null
 })()
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
+// Real skins (lib/skins.js): the bot's username (rec.user, HB_SELF_USER to override) and actors on lib/real_skins.json
+// draw the owner's own skin from work/skins/<name>.png (private assets, else Mojang via scripts/fetch_skin.py, else steve)
+const SKINS = require('./lib/skins')
+const SELF_USER = process.env.HB_SELF_USER || rec.user || null
+SKINS.ensureSkins(SKINS.wantedSkins({ user: SELF_USER, cast: STUNT_MOD.cast, actors: [...ACTOR.values()].map(a => a.user) }))
+const SELF_SKIN = SKINS.selfSkin({ env: process.env, cast: STUNT_MOD.cast, user: SELF_USER })
+const skinExtra = (k) => ({ skin: k.skin, ...(k.slim ? { slim: true } : {}), ...(k.model ? { model: k.model } : {}) })
+if (SELF_SKIN.real) console.log(`skin: the player is ${SELF_SKIN.real}'s own skin (arms: ${SELF_SKIN.model || (SELF_SKIN.slim ? 'slim' : 'auto')})`)
 // stunt.look, or LOOK_JSON; a mood name ('golden_hour') or { mood, ...overrides } expands to the full look (renderer/looks.js)
 const LOOKS = require('./renderer/looks')
 // a stunt with no `look` gets 'bright_stunt' (owner, 2026-11-11, r:r8fa348: "hello buh should use the bright grading as
@@ -2073,9 +2081,11 @@ function camAtLive (t) {
   app.get('/entities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entities.js')))
   app.get('/blockentities.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'blockentities.js')))
   app.get('/poses.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'poses.js')))
+  app.get('/skin_layout.js', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'skin_layout.js')))
   app.get('/entity_models.json', (_, res) => res.sendFile(path.join(__dirname, 'renderer', 'entity_models.json')))
   app.use('/three', express.static(path.join(__dirname, 'node_modules', 'three', 'build')))
   // our own player skins (skins/, scripts/make_skins.py) beside the jar's: stunt.cast names either; <skin>_glow.png lights a part full bright
+  app.use('/assets/env/entity/player/wide/real', express.static(path.join(__dirname, 'work', 'skins')))   // real skins (lib/skins.js)
   app.use('/assets/env/entity/player/wide', express.static(path.join(__dirname, 'skins')))
   app.use('/assets', express.static(path.join(__dirname, 'work', 'assets', rec.version)))
   const server = http.createServer(app)
@@ -2771,6 +2781,8 @@ else:
       // midnight sky light 15 is about (0.22, 0.22, 0.45): reel 1's bucket read as a dark sleeve, review v2 B2)
       const lift = (HAND_LOOK && HAND_LOOK.handLift) || 0
       cam.hand = { key: hd.name, equip: hd.equip, swing: hd.swing, light: lightmap(hs, hb).map(v => v + (1 - v) * lift), glint: !!hd.name && glintAt(t), use: useAt(t, hd.name) }
+      // the bare arm in the player's real skin (the jar's Steve otherwise, as published Shorts drew it)
+      if (SELF_SKIN.real) { cam.hand.skin = SELF_SKIN.skin; if (SELF_SKIN.slim) cam.hand.slim = true; if (SELF_SKIN.model) cam.hand.model = SELF_SKIN.model }
       if (hasSprite) cam.hand.tex = spriteOf(hd.name)
       else if (specialItem(hd.name)) cam.hand.special = specialItem(hd.name)
       else if (bl) {
@@ -2813,7 +2825,7 @@ else:
         else ents.push({
           id: -1, name: 'player', x: eye.x, y: eye.y - (P[i][7] & 1 ? 1.27 : EYE), z: eye.z, yaw: dw ? PBODY[Math.min(PBODY.length - 1, Math.floor(dw[0]))] : body,
           pitch: eye.pitch + ((talkMotion(SELF_NAME, t) || {}).pitch || 0), headYaw: eye.yaw + ((talkMotion(SELF_NAME, t) || {}).yaw || 0),
-          extra: { skin: process.env.SKIN || (STUNT_MOD.cast && STUNT_MOD.cast.self) || 'steve', ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
+          extra: { ...skinExtra(SELF_SKIN), ...(STUNT_MOD.selfArmor ? { armor: STUNT_MOD.selfArmor } : {}), ...(STUNT_MOD.selfArmorGlint ? { armorGlint: STUNT_MOD.selfArmorGlint } : {}) }, light: lightmap(ls, lb),   // stunt.selfArmor: [feet, legs, chest, head] the narrator wears in camera shots
           player: { walkPos: wk[0], walkSpeed: dw ? 0 : wk[1], attack: sw !== undefined ? (t - sw) / 6 : 0, holding: !!held, held, age: t, deathTime, hurt: HURTS.some(h => t >= h.t && t - h.t < 10), crouch: !!(P[i][7] & 1) }
         })
       }
@@ -3022,7 +3034,7 @@ else:
     for (const e of ents) {
       if ((e.name !== 'player' && e.name !== 'mannequin') || e.id === -1) continue
       const A = ACTOR.get(e.id), user = (e.extra && (e.extra.user || e.extra.name)) || (A && A.user)
-      e.extra = { ...(e.extra || {}), skin: (STUNT_MOD.cast && user && STUNT_MOD.cast[user]) || 'steve' }
+      e.extra = { ...(e.extra || {}), ...skinExtra(SKINS.actorSkin({ cast: STUNT_MOD.cast, user })) }
       let wp = 0, ws = 0
       if (A) {
         const i = Math.floor(t), f = t - i, a = A.ticks.get(i), b = A.ticks.get(i + 1) || a

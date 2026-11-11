@@ -292,6 +292,26 @@ STANDARDS.md in the same commit.
 - **Owner, 2026-11-11, asked whether the HelloBuh lead should publish Shorts that the separate format sessions
   build and review (their permission check blocks the GitHub Release upload): "Yes".** Format sessions stop at
   "independently reviewed READY"; the HelloBuh lead publishes them from its session and adds them to the queue.
+- **Owner, 2026-11-11, on the skin stills: "i want it to be regular arms, the slim dont look good".** The player 56e
+  renders with regular (wide, classic) arms; the slim-painted arm art is widened to the wide layout (a duplicated column
+  per arm face) so no black stripes show. Supersedes the slim-arm auto-detect for 56e.
+- **Owner, 2026-11-11: "maybe we should use my real minecraft username: 56e".** HelloBuh stunts play as `56e` (the
+  harness's default bot name; it shows in death messages, chat and command feedback). Stories keep their character
+  names (botName 'Buh', 'Milo'). Already-uploaded Shorts are unchanged; Shorts re-recorded from now on carry it.
+- **Owner, 2026-11-11, on the time-lapse Shorts (lapse_statue, lapse_rocket): "for the time lapse stuff, like we should
+  have more angles when we're showing the last thing, and then also... the second one, like I think our smoother camera
+  movement is like too slow. I think it's okay to have like a really fast movement here because it's like, what, a
+  time lapse, right? Like right now, it's like I places and I take forever to turn."** In a lapse_* Short the 1-hour
+  build is shown from several clearly different angles (hard cuts between steady shots: a new angle, not a small jump
+  of the same view). In the sped-up 1-minute round the player turns fast between placements, as a sped-up player would;
+  the followable-camera speed cap does not apply inside a time-lapse's sped-up build spans (it still applies at normal
+  speed). Supersedes, for lapse_* builds, the 220/speed turn cap added to lib/time_lapse.js today.
+- **Owner, 2026-11-11, after the lead sent every Short it called ready (and asked whether the clutch Shorts' quick
+  look-down flick counts as a whip, and whether to hold four approved story Shorts the new whip check flags): "All
+  ok".** The Shorts sent today are approved as they are; the new formats (cells, dilemma, race, mislabel, hack, desire,
+  inside, interrupt, mega) go first in the queue. A clutch Short's single quick look-down at the landing is allowed
+  (the genre's look; boat_clutch, clutch_harder); every other turn keeps the followable-camera rule. The approved
+  story experiments (sun_wont_set, respawn_voice, chunk_next_door, sheep_stares) ship as they are.
 - **Owner, 2026-11-11, reviewing the ready Shorts by hand: "when we're building the statue, so I guess lapsed
   statue, we pause for some reason when we're building the second one. Like for like what seems like more than just a
   while."** A build never stalls on screen: while a build is unfinished, blocks keep going on (in a time-lapse, every
@@ -498,6 +518,30 @@ STANDARDS.md in the same commit.
   pacing is the voice the owner chose: the narrator's take gate allows sentence breaks up to 0.95 s (cast `narrator`
   `max_pause.rest`). Takes are still never trimmed, and a longer pause, a breath or a wrong word is still re-taken. The
   opening rule (no gap over 0.6 s in the first 5 s) is unchanged.
+- **Owner, 2026-11-11, after watching the held cuts: "The moms voice is too similar to narrator, need a new voice.
+  Grandma sounds like a dude still. Can you explore options?"** A character voice must be told apart from the narrator
+  (Pip, a bright kid) at first hearing, and must read as its character's age and sex: Mom is recast (Sulafat sounds too
+  close to Pip) and Grandma recast again (Vindemiatrix still reads as a man), each chosen by the owner from an audition
+  of candidates saying the story's real line, measured against Pip (pitch and speaker distance).
+- **Owner, 2026-11-11, on Gold for the Portal: "when we say "string" in the piglin short, no string is on screen".**
+  Every thing the narration names is on screen, readable, while its words are said (the string on "a little string",
+  the pearls on "ender pearls"). Each line lists what it names (story.json `shows`), and the recording is checked for
+  each one in frame during that line.
+- **Owner, 2026-11-11, from the Mom/Grandma audition (brand/auditions/2026-11-11_mom_grandma, branch
+  claude/audition-mom-grandma): "mom D / grandma J".** Mom is **Pulcherrima** (was Sulafat, too close to Pip);
+  Grandma is **Autonoe** (was Vindemiatrix, read as a man). Each is directed with one short bracketed clause and
+  voiced on the story's character model; Light Sleeper's two Mom lines and Gold's Grandma line are re-voiced.
+- **Owner, 2026-11-11, after watching the held cuts (Light Sleeper 52 s, Gold 50 s, Dog on the Hill 50 s): "i think the
+  current length is fine, we shouldnt harp too much on length".** About 50 s at Pip's natural pace is fine. Length is
+  not a reason to cut lines or re-voice; a line goes only if it doesn't move the question. pace keeps only its floor
+  BLOCK; anything over 45 s is a note, never a blocker or a fix request.
+- **Owner, 2026-11-11, on Good Boy's voiced preview: "The opening scene is not very exciting? Also not centered."**
+  Its first 4 s were Buh walking a dirt road with the dog (the narrator, the story's subject) small at the right edge.
+  The opening shot puts the story's subject (the shot's `subject`, else line 1's) in frame from frame 1, in the middle
+  third of the frame and big enough to read at phone size, with something story-relevant already moving (the subject,
+  the cast, an action or a camera push) in the first 0.5 s; never a static or empty establishing frame.
+- **Owner, 2026-11-11, asked whether the narrator heard as a girl by the viewer panel is OK: "narrator is fine".** Pip
+  stays as is; the viewer panel's girl/boy read of the narrator is not a finding.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being

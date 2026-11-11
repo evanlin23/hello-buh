@@ -11,8 +11,9 @@ module.exports = {
     // pace r1: the 4 s fuse was 4 s with nothing new and near-silent (the game sounds sit ~40 dB under the blast):
     // the fuse plays x1.5 under a riser, room tone from frame 1, and the blast gets a boom, a flash and a shake
     speed: [['lit:0.5', 'boom:-0.4', 1.5]],
-    sfx: [['air', 'start', 'crater', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom'], ['impact', 'crater']],
-    flash: [['boom', 0, 0.5]], shake: [['boom', 0, 10]], punch: [['crater', 0, 1.08]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
+    sfx: [['air', 'start', 'crater', { gain: 0.6 }], ['riser', 'lit', 'boom'], ['boom', 'boom'], ['dip', 'crater', 0.4], ['impact', 'crater', { gain: 1.4 }]],
+    flash: [['boom', 0, 0.5], ['crater', 0, 0.35]],   // pace r2: the crater reveal needs a picture change on the mark (the look-down is still easing)
+    shake: [['boom', 0, 10]], punch: [['crater', 0, 1.08]] },   // ends in the chain (owner: end on the payoff; the old crater walk was a 5 s tail)
 
   async setup (ctx) {
     const { bot } = ctx
@@ -26,6 +27,20 @@ module.exports = {
     const floor = await plateau(ctx, { x0: x - 34, x1: x + 34, z0: z - 66, z1: z + 18, above: 30, below: 16, biome: 'minecraft:plains', pct: 0.995, taper: 0, trees: 10 })
     this.x = x; this.z = z; this.floor = floor
     this.pz = z - 24                                          // pile centre
+    // dress the field (review r2: behind the pile it read as a superflat plain to the horizon, owner pattern 1): stone from
+    // 4 down (the crater was dirt all the way), trees behind and beside the pile (13+ blocks off it: the chain leaves them
+    // standing), vanilla grass and flower patches everywhere but on the pile
+    for (let y = floor - 16; y <= floor - 4; y += 5) await ctx.cmd(`/fill ${x - 34} ${y} ${z - 66} ${x + 34} ${Math.min(floor - 4, y + 4)} ${z + 18} stone`)
+    const trees = [['oak', -20, -42], ['fancy_oak', -7, -50], ['birch', 6, -45], ['oak', 18, -51], ['fancy_oak', 28, -41], ['oak', -28, -56],
+      ['birch', 1, -61], ['oak', 14, -62], ['birch', -15, -60], ['fancy_oak', 25, -58], ['oak', -27, -35], ['birch', 30, -27], ['oak', -31, -18], ['fancy_oak', 31, -9]]
+    for (const [f, dx, dz] of trees) await ctx.cmd(`/place feature minecraft:${f} ${x + dx} ${floor + 1} ${z + dz}`, { mayFail: true })
+    for (let dx = -32; dx <= 32; dx += 8) {
+      for (let dz = -64; dz <= 16; dz += 8) {
+        if (Math.abs(dx) <= 5 && Math.abs(z + dz - this.pz) <= 5) continue
+        await ctx.cmd(`/place feature minecraft:patch_grass ${x + dx} ${floor + 1} ${z + dz}`, { mayFail: true })
+        if ((dx + dz) % 16 === 0) await ctx.cmd(`/place feature minecraft:flower_plain ${x + dx + 3} ${floor + 1} ${z + dz + 3}`, { mayFail: true })
+      }
+    }
     await ctx.cmd(`/fill ${x - 2} ${floor + 1} ${this.pz - 2} ${x + 2} ${floor + 3} ${this.pz + 2} tnt`)
     await ctx.hotbar(['diamond_sword', 'flint_and_steel', ['tnt', 64], ['bread', 16]])
     await ctx.tpCheck(x + 0.5, floor + 1, this.pz + 6.5, 180, 10)
