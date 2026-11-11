@@ -855,12 +855,11 @@
   },
   "code": {
     "repo": "evanlin23/hello-buh",
-    "branch": "render/skull_art",
-    "commit": "d681bfd72e9a5597404330432ab2245c6413a68a",
-    "rendered": "actions",
-    "run": "https://github.com/evanlin23/hello-buh/actions/runs/43019986280",
-    "rendered_at": "2026-11-11T12:33:23.341Z",
-    "head_at_publish": "f3c2ac723231575d102610cbe22b860547e09546",
+    "branch": "main",
+    "commit": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
+    "rendered": "local",
+    "rendered_at": "2026-11-11T12:51:15.917Z",
+    "head_at_publish": "f3bfd331b0fc0ebc0bf98c3c5cedb5a5153bcfc0",
     "stunt": "stunts/skull_art.js",
     "source_snapshot": [
       "source/skull_art.js",
@@ -871,18 +870,18 @@
     ]
   },
   "rebuild": [
-    "git checkout d681bfd72e9a",
+    "git checkout f3bfd331b0fc",
     "gunzip -c shorts/skull_art/recording.json.gz > work/skull_art.rec.json",
     "node render.js work/skull_art.rec.json work/skull_art.frames 60 1080 1011",
     "python3 audio.py work/skull_art.rec.json work/skull_art.wav",
     "python3 edit.py --frames work/skull_art.frames/f%05d.png --fps 60 --out_fps 60 --timeline work/skull_art.rec.json --audio work/skull_art.wav --caption \"why is he building THIS 😨\" --punch [[\"complete\",0,1.12]] --flash [[\"complete\",0,0.45]] --sfx [[\"impact\",\"complete\",{\"gain\":0.8}]] --start_at stage:-0.2 --end_after complete:0.9 --out out/skull_art.mp4"
   ],
-  "status": "pending-qa",
-  "notes": "awaiting independent review. worker B 2026-11-11 re-take (r:r650840, r:rffba12): aimed placement (ad926e79); aim 186 actions median 0.0 deg p90 0.7 worst 4.1 (was p90 2.9); walk back now stops ~2.4 blocks short of the small picture's plane (was 4.7 past it); pace OK, 33.1 s",
-  "published_at": "2026-11-11T12:33:56.716Z",
+  "status": "ready",
+  "notes": "pixel art re-take for the owner's notes (r:r650840 no backing into the earlier wall: stops ~2.5 blocks short; r:rffba12 aim on every block: none over 6 deg); independent review READY (0 blockers). Nitpicks: the medium picture visible at the left edge during the last backup; the small reveal held ~0.5 s.",
+  "published_at": "2026-11-11T12:52:16.599Z",
   "gates": {
     "version": 4,
-    "at": "2026-11-11T12:34:33+00:00",
+    "at": "2026-11-11T12:52:53+00:00",
     "by": "publish.js",
     "package": {
       "ok": true,
@@ -898,8 +897,8 @@
       "ok": true,
       "label": "CHECK OK",
       "blockers": 0,
-      "at": "2026-11-11T12:25:06.541Z",
-      "report": "out/skull_art.check.json"
+      "at": "2026-11-11T12:51:33.321Z",
+      "report": "work/hb/skull_art.check.json"
     },
     "key_sounds": "n/a"
   }
