@@ -162,11 +162,13 @@ module.exports = {
     R.go(ctx)
     R.label(ctx, 0)
     ctx.sound('item.armor.equip_netherite', 1, 1)
-    await still(10)
+    // never still (lint: nobody moves for 1 s): a look at the camera, a swing, a look off up the field, a swing
+    await drift(at(1.9, 2.4, -2.9), 12)
     bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.6, 1)
-    await still(22)
-    await drift(at(0.5, 2.2, -6), 18)
-    await still(6)
+    await drift(at(-2.5, 2.8, -6), 16)
+    bot.swingArm('right'); ctx.sound('entity.player.attack.sweep', 0.5, 1.1)
+    await drift(at(0.5, 2.2, -6), 14)
+    await still(4)
 
     // ---- 1. diamonds at spawn (after the netherite)
     await R.jump(ctx, 1, () => tp(0.5, 1, 0.5, 180, 38), { onCut: () => { M.shot(ctx, 'pov'); ctx.select(SLOT.pick) } })
@@ -218,7 +220,7 @@ module.exports = {
         ctx.select(SLOT.sword)
         await ctx.cmd(`/summon blaze ${X + N + 0.5} ${F + 1.6} ${Z - 2.1} {NoAI:1b,NoGravity:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_blaze"],Rotation:[0f,0f]}`)
         // the enderman to the right (east), facing us, also 1 health
-        await ctx.cmd(`/summon enderman ${X + N + 2.6} ${F + 1} ${Z - 0.9} {NoAI:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_ender"],Rotation:[90f,0f]}`)
+        await ctx.cmd(`/summon enderman ${X + N + 3.6} ${F + 1} ${Z - 1.6} {NoAI:1b,PersistenceRequired:1b,Health:1f,Tags:["fr_ender"],Rotation:[90f,0f]}`)
       },
       after: 8
     })
