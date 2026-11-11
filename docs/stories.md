@@ -521,6 +521,10 @@ STANDARDS.md in the same commit.
   Every thing the narration names is on screen, readable, while its words are said (the string on "a little string",
   the pearls on "ender pearls"). Each line lists what it names (story.json `shows`), and the recording is checked for
   each one in frame during that line.
+- **Owner, 2026-11-11, from the Mom/Grandma audition (brand/auditions/2026-11-11_mom_grandma, branch
+  claude/audition-mom-grandma): "mom D / grandma J".** Mom is **Pulcherrima** (was Sulafat, too close to Pip);
+  Grandma is **Autonoe** (was Vindemiatrix, read as a man). Each is directed with one short bracketed clause and
+  voiced on the story's character model; Light Sleeper's two Mom lines and Gold's Grandma line are re-voiced.
 - **Owner, 2026-11-10: "some of the pacing is a little bit slow. Also, there's no like mystery. There's no like
   question to the user... the mystery is like what draws them in to keep them watching"; "need to cut right when the
   reveal"; "the best one I think is the carpet one, but the delivery is off"; "there's a delicate balance between being
