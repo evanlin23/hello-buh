@@ -130,10 +130,14 @@ module.exports = {
     }
     for (let i = 0; i < this.tiers.length; i++) {
       const t = this.tiers[i], n = i + 1
+      // only the finale may kill: a take where a pile went off early (TNT flung from the last chain set off the next
+      // pile, 2026-11-11) and killed him at tier 4 passed as STUNT OK with a 26 s Short; fail it so run.sh retries
+      if (ctx.died) { ctx.log('died before the finale, at tier', n); return false }
       const mid = new Vec3(t.cx + 0.5, floor + 1 + t.h / 2, t.zf - t.d / 2 + 0.5)
       if (t.on) {
         // ---- the finale: on top of 1000 TNT ----
         ctx.mark(`cut${n}a`)
+        await ctx.cmd('/kill @e[type=tnt]', { mayFail: true })   // (inside the cut, as for every pile)
         await ctx.cmd('/difficulty normal')
         // stand at the east end facing west, down the field (the other way the cleared field's walls show)
         await tp(t.cx + 3.5, floor + t.h + 1, t.zf - 4.5, 90, 55)
@@ -177,11 +181,14 @@ module.exports = {
         // ...once the last pile's flung dirt has landed (rec_check settle, r:r24d99a: tier 3's flew 2.8 s), eyes drifting
         for (let k = 0; k < 80 && ctx.tick - lastBoom < 60; k++) await aimStep(bot.entity.yaw + 0.03 * Math.sin(k / 7), bot.entity.pitch + 0.01 * Math.sin(k / 5), 0.3)
         ctx.mark(`cut${n}a`)
+        await ctx.cmd('/kill @e[type=tnt]', { mayFail: true })   // inside the cut: a TNT the last chain flung can't set off this pile early
         await tp(t.cx + 0.5, floor + 1, t.zf + 2.5, 180, 15)
         await bot.waitForTicks(4)
         ctx.mark(`cut${n}b`)
       }
       ctx.mark(`tier${n}`)
+      await bot.waitForTicks(2)
+      if (ctx.died) { ctx.log('died before the finale, at tier', n); return false }
       if (n === 1) {   // the hook: from the one block... to the 1000 cube down the field, and back
         const big = this.tiers[3]
         await easeLookAt(new Vec3(big.cx + 0.5, floor + 6, big.zf - 4), 650)
