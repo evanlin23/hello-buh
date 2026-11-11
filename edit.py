@@ -1050,6 +1050,240 @@ def container_png(jar, state, path):
     img.save(path)
 
 
+MERCHANT_LEVELS = ["Novice", "Apprentice", "Journeyman", "Expert", "Master"]   # merchant.level.1..5
+XP_THRESHOLDS = [0, 10, 70, 150, 250]                                          # VillagerData.NEXT_LEVEL_XP_THRESHOLDS
+
+
+def _rgba_hex(h, default=(255, 255, 255, 255)):
+    try:
+        return tuple(int(str(h)[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
+    except (ValueError, IndexError):
+        return default
+
+
+def nine_slice(src, w, h, border, stretch_inner=False):
+    """A GUI sprite with nine_slice scaling (its .mcmeta) drawn at w x h GUI px: corners as they are, the edges and the
+    middle tiled (GuiGraphics.blitNineSlicedSprite), or the middle stretched with stretch_inner."""
+    sw, sh, b = src.width, src.height, border
+    out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+
+    def tile(box, x0, y0, tw, th, stretch=False):
+        if tw <= 0 or th <= 0:
+            return
+        piece = src.crop(box)
+        if stretch:
+            out.alpha_composite(piece.resize((tw, th), Image.NEAREST), (x0, y0))
+            return
+        for yy in range(0, th, piece.height):
+            for xx in range(0, tw, piece.width):
+                out.alpha_composite(piece.crop((0, 0, min(piece.width, tw - xx), min(piece.height, th - yy))), (x0 + xx, y0 + yy))
+    tile((0, 0, b, b), 0, 0, b, b)
+    tile((sw - b, 0, sw, b), w - b, 0, b, b)
+    tile((0, sh - b, b, sh), 0, h - b, b, b)
+    tile((sw - b, sh - b, sw, sh), w - b, h - b, b, b)
+    tile((b, 0, sw - b, b), b, 0, w - 2 * b, b)
+    tile((b, sh - b, sw - b, sh), b, h - b, w - 2 * b, b)
+    tile((0, b, b, sh - b), 0, b, b, h - 2 * b)
+    tile((sw - b, b, sw, sh - b), w - b, b, b, h - 2 * b)
+    tile((b, b, sw - b, sh - b), b, b, w - 2 * b, h - 2 * b, stretch_inner)
+    return out
+
+
+def draw_tooltip(img, jar, lines, mx, my, x0=0, y0=None):
+    """An item tooltip (GuiGraphics.renderTooltip, 1.21.11) for the cursor at (mx, my) GUI px of the screen whose
+    top left is (x0, y0) px: DefaultTooltipPositioner (+12, -12, flipped left of the cursor when it would leave the
+    screen), TooltipRenderUtil's tooltip/background and tooltip/frame nine-slices round the text (3 px padding + 9),
+    the first line 2 px further from the rest, every line 10 px, with the font's shadow. lines: [[text, '#RRGGBB']]."""
+    lines = [ln for ln in lines or [] if ln and ln[0]]
+    if not lines:
+        return
+    y0 = BAND if y0 is None else y0
+    sw, sh = W // GUI, GAME_H // GUI
+    tw = max(text_width(jar, t) for t, _ in lines)
+    th = (-2 if len(lines) == 1 else 0) + 10 * len(lines)
+    x, y = mx + 12, my - 12
+    if x + tw > sw:
+        x = max(x - 24 - tw, 4)
+    if y + th + 3 > sh:
+        y = sh - th - 3
+    bx, by, bw, bh = x - 12, y - 12, tw + 24, th + 24
+    for name, border, stretch in (("background", 9, False), ("frame", 10, True)):
+        img.alpha_composite(big(nine_slice(sprite(jar, f"gui/sprites/tooltip/{name}"), bw, bh, border, stretch)), (x0 + bx * GUI, y0 + by * GUI))
+    ly = y
+    for i, (text, col) in enumerate(lines):
+        draw_text(img, jar, text, x0 + x * GUI, y0 + ly * GUI, color=_rgba_hex(col))
+        ly += 10 + (2 if i == 0 else 0)
+
+
+def merchant_title(state):
+    """MerchantScreen's title: the trader's name (entity.minecraft.villager.librarian -> Librarian), with ' - Novice'
+    ... ' - Master' for a villager (MerchantMenu.showProgressBar) at levels 1-5."""
+    t = str(state.get("title") or "")
+    if t.startswith("entity.minecraft."):
+        t = " ".join(w.capitalize() for w in t.rsplit(".", 1)[-1].split("_"))
+    lv = int(state.get("level") or 0)
+    if state.get("regular", True) and 1 <= lv <= 5:
+        t = f"{t} - {MERCHANT_LEVELS[lv - 1]}"
+    return t
+
+
+MERCHANT_SLOTS = [(136, 37), (162, 37), (220, 37)] + [(108 + (i % 9) * 18, 84 + (i // 9) * 18) for i in range(27)] + [(108 + i * 18, 142) for i in range(9)]
+
+
+def leather_icon(jar, name):
+    """A leather armour piece's icon at GUI scale: layer0 tinted with the dye's default colour (the item definition's
+    minecraft:dye tint, -6265536 = 0xA06540: undyed leather) under the untinted _overlay. None for anything else.
+    (Only the merchant screen uses it: the HUD and chest screens draw as published.)"""
+    if not re.fullmatch(r"leather_(helmet|chestplate|leggings|boots|horse_armor)", name or ""):
+        return None
+    base = sprite(jar, f"item/{name}")
+    r, g, b, a = base.split()
+    tint = (0xA0, 0x65, 0x40)
+    rgb = [ch.point(lambda v, k=k: v * k // 255) for ch, k in zip((r, g, b), tint)]
+    out = Image.merge("RGBA", (*rgb, a))
+    if f"assets/minecraft/textures/item/{name}_overlay.png" in JAR_NAMES():
+        out.alpha_composite(sprite(jar, f"item/{name}_overlay"))
+    return big(out)
+
+
+def merchant_png(jar, state, path, hover=None, tick=0):
+    """MerchantScreen (the villager trade screen, 1.21.11) as the player sees it: the dark gradient over the world,
+    gui/container/villager.png (276 x 166 of 512 x 256), the trader's title and level, "Trades" and "Inventory" in
+    0x404040, the experience bar (a villager below Master), up to 7 offer buttons with their prices (a discount struck
+    through), arrows and results (enchanted ones glinting), the scroller, the payment and result slots and the
+    player's inventory (MerchantMenu slot positions), centred on the game area at the GUI scale. hover: the slot
+    under the cursor ('result', 'a', 'b', 'trade:N' or a window slot number): its highlight (1.21.6+ slot_highlight
+    sprites) and its tooltip (the harness's lines, or the mark's own `tooltip`)."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    top, bot = (0x10, 0x10, 0x10, 0xC0), (0x10, 0x10, 0x10, 0xD0)   # Screen.renderTransparentBackground
+    grad = Image.new("RGBA", (1, GAME_H))
+    for y in range(GAME_H):
+        f = y / (GAME_H - 1)
+        grad.putpixel((0, y), tuple(int(top[i] + (bot[i] - top[i]) * f) for i in range(4)))
+    img.alpha_composite(grad.resize((W, GAME_H)), (0, BAND))
+    IW, IH = 276, 166
+    if IW * GUI > W or IH * GUI > GAME_H:   # a guiScale too big for this screen: the largest that fits
+        with gui_scale(min(W // IW, GAME_H // IH)):
+            return merchant_png(jar, state, path, hover, tick)
+    left, topp = (W // GUI - IW) // 2, (GAME_H // GUI - IH) // 2
+    ox, oy = left * GUI, BAND + topp * GUI
+    at = lambda x, y: (ox + x * GUI, oy + y * GUI)
+    spr = lambda n: sprite(jar, f"gui/sprites/container/villager/{n}")
+    img.alpha_composite(big(sprite(jar, "gui/container/villager").crop((0, 0, IW, IH))), at(0, 0))
+    grey = (0x40, 0x40, 0x40, 255)
+    title = merchant_title(state)
+    draw_text(img, jar, title, *at(49 + IW // 2 - text_width(jar, title) // 2, 6), color=grey, shadow_on=False)
+    draw_text(img, jar, "Trades", *at(5 - text_width(jar, "Trades") // 2 + 48, 6), color=grey, shadow_on=False)
+    draw_text(img, jar, "Inventory", *at(107, IH - 94), color=grey, shadow_on=False)
+    offers = state.get("offers") or []
+    sel = state.get("selected")
+    slots = state.get("slots") or []
+    # MerchantScreen.renderProgressBar
+    lv, xp = int(state.get("level") or 0), int(state.get("xp") or 0)
+    if state.get("regular", True) and 1 <= lv < 5:
+        img.alpha_composite(big(spr("experience_bar_background")), at(136, 16))
+        lo, hi = XP_THRESHOLDS[lv - 1], XP_THRESHOLDS[lv]
+        if xp >= lo:
+            f = 102.0 / (hi - lo)
+            cur = min(int(math.floor(f * (xp - lo))), 102)
+            if cur > 0:
+                img.alpha_composite(big(spr("experience_bar_current").crop((0, 0, cur, 5))), at(136, 16))
+            fut = int(offers[sel].get("xp") or 0) if sel is not None and sel < len(offers) and len(slots) > 2 and slots[2] else 0
+            if fut > 0:
+                k = min(int(math.floor(fut * f)), 102 - cur)
+                if k > 0:
+                    img.alpha_composite(big(spr("experience_bar_result").crop((cur, 0, cur + k, 5))), at(136 + cur, 16))
+
+    def icon_of(it):
+        if not it:
+            return None
+        ic = big(potion_icon(jar, it[0], tint_of(it))) if tint_of(it) is not None else leather_icon(jar, it[0]) or item_icon(jar, it[0])
+        if ic is not None and ((len(it) > 2 and it[2]) or it[0] in GLINT_ITEMS):
+            ic = glint_icon(jar, ic, tick)
+        return ic
+
+    def put(it, x, y, count_text=None):
+        ic = icon_of(it)
+        if ic is not None:
+            img.alpha_composite(ic, at(x, y))
+        n = count_text if count_text is not None else (str(it[1]) if it and it[1] and it[1] > 1 else None)
+        if n:
+            ix, iy = at(x, y)
+            draw_text(img, jar, n, ix + 17 * GUI, iy + 9 * GUI, align_right=True)
+    # the offer list: buttons (TradeOfferButton, 88 x 20 widget/button), then each offer's items
+    btn, btn_hi = sprite(jar, "gui/sprites/widget/button"), sprite(jar, "gui/sprites/widget/button_highlighted")
+    for n in range(min(7, len(offers))):
+        img.alpha_composite(big(nine_slice(btn_hi if hover == f"trade:{n}" else btn, 88, 20, 3)), at(5, 18 + 20 * n))
+    img.alpha_composite(big(spr("scroller" if len(offers) > 7 else "scroller_disabled")), at(94, 18))
+    for n, o in enumerate(offers[:7]):
+        y = 19 + 20 * n
+        a, base = o.get("a"), o.get("aBase")
+        if a:
+            if base and base != a[1]:   # renderAndDecorateCostA: the base price struck through, the real one beside it
+                put([a[0], base], 10, y, "1" if base == 1 else None)
+                put(a, 24, y, "1" if a[1] == 1 else None)
+                img.alpha_composite(big(spr("discount_strikethrough")), at(17, y + 12))
+            else:
+                put(a, 10, y)
+        if o.get("b"):
+            put(o["b"], 40, y)
+        img.alpha_composite(big(spr("trade_arrow_out_of_stock" if o.get("outOfStock") else "trade_arrow")), at(60, y + 3))
+        if o.get("out"):
+            put(o["out"], 73, y)
+    if sel is not None and sel < len(offers) and offers[sel].get("outOfStock"):
+        img.alpha_composite(big(sprite(jar, "gui/sprites/container/villager/out_of_stock")), at(83 + 99, 35))
+    hs = {"a": 0, "b": 1, "result": 2}.get(hover, hover) if not str(hover).startswith("trade:") else None
+    hs = hs if isinstance(hs, int) and 0 <= hs < len(MERCHANT_SLOTS) else None
+    if hs is not None:
+        sx, sy = MERCHANT_SLOTS[hs]
+        img.alpha_composite(big(sprite(jar, "gui/sprites/container/slot_highlight_back")), at(sx - 4, sy - 4))
+    for it, (sx, sy) in zip(slots, MERCHANT_SLOTS):
+        if it:
+            put(it, sx, sy)
+    if hs is not None:
+        sx, sy = MERCHANT_SLOTS[hs]
+        img.alpha_composite(big(sprite(jar, "gui/sprites/container/slot_highlight_front")), at(sx - 4, sy - 4))
+    # the tooltip of what's under the cursor (the cursor itself isn't drawn: a screenshot has none)
+    tip, mxy = state.get("tooltip"), None
+    if hs is not None:
+        sx, sy = MERCHANT_SLOTS[hs]
+        mxy = (left + sx + 8, topp + sy + 8)
+        if tip is None:
+            tips = state.get("tips") or []
+            tip = tips[hs] if hs < len(tips) and slots[hs:hs + 1] and slots[hs] else None
+    elif str(hover).startswith("trade:"):
+        n = int(str(hover).split(":")[1])
+        mxy = (left + 73 + 8, topp + 19 + 20 * n + 8)
+        if tip is None and n < len(offers):
+            tip = offers[n].get("tip")
+    if mxy and tip:
+        draw_tooltip(img, jar, tip, *mxy)
+    img.save(path)
+
+
+def merchant_windows(timeline):
+    """[(t_open, t_close, state, hover, tooltip)] in seconds from the harness's `merchant` marks (the trade screen:
+    on open and every slot change) to `merchant_close` (or a death, or the end), split at the stunt's `gui_hover`
+    marks ({ slot, tooltip? }: K.hover; the hover ends with the window)."""
+    out, cur, hov = [], None, (None, None)
+    for e in timeline or []:
+        t = e["t"] / 1000
+        if e["event"] == "merchant":
+            if cur:
+                out.append((cur[0], t, cur[1], *hov))
+            cur = (t, e)
+        elif e["event"] == "gui_hover":
+            if cur:
+                out.append((cur[0], t, cur[1], *hov))
+                cur = (t, cur[1])
+            hov = (e.get("slot"), e.get("tooltip"))
+        elif e["event"] in ("merchant_close", "death") and cur:
+            out.append((cur[0], t, cur[1], *hov)); cur = None; hov = (None, None)
+    if cur:
+        out.append((cur[0], 1e9, cur[1], *hov))
+    return [w for w in out if w[1] > w[0]]
+
+
 def _solve8(src, dst):
     """Coefficients for PIL's PERSPECTIVE transform mapping output points dst to input points src."""
     A, b = [], []
@@ -1957,6 +2191,20 @@ def main():
                     inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"cont{ci}.png")]
                     graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[ct{ci}]")
                     last, n_in = f"ct{ci}", n_in + 1
+    # a villager's trade screen (harness `merchant` marks; K.trade / K.hover): MerchantScreen and the hovered tooltip
+    if args.timeline:
+        mwins = merchant_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])
+        if mwins:
+            with zipfile.ZipFile(CLIENT_JAR) as jar:
+                for mi, (a_, b_, st, hov, tipo) in enumerate(mwins):
+                    a, b = a_ - args.start, min(b_ - args.start, 1e6)
+                    if b <= 0 or b <= a:
+                        continue
+                    with gui_scale(args.gui_scale):
+                        merchant_png(jar, {**st, **({"tooltip": tipo} if tipo else {})}, tmp / f"merch{mi}.png", hover=hov, tick=int(st["t"] / 50))
+                    inputs += ["-loop", "1", "-framerate", str(args.out_fps), "-i", str(tmp / f"merch{mi}.png")]
+                    graph.append(f"[{last}][{n_in}:v]overlay=0:0:enable='gte(t,{fgrid(max(0, a), args.out_fps):.4f})*lt(t,{fgrid(b, args.out_fps):.4f})'[mc{mi}]")
+                    last, n_in = f"mc{mi}", n_in + 1
     # chat lines (`syschat` marks): '<Jonah> see you tomorrow', 'Jonah left the game' in yellow
     if args.timeline:
         swins = syschat_windows(json.loads(pathlib.Path(args.timeline).read_text())["timeline"])

@@ -1180,6 +1180,13 @@ const MOON_PHASE = (() => {
   return (rec.engine || 0) >= 2 && day > 0 ? MOON_PHASES[day] : null
 })()
 const SELF_NAME = STUNT_MOD.selfName || null   // the recording bot's character name in line marks ('Ash')
+// hidden name tags (lib/name_tags.js: stunt.hideNameTags, story.json cast "name_tag": false): the plate is never drawn
+// for them, not under the crosshair, not with stunt.playerNames / nameTags. Nothing listed: unchanged.
+const NT = require('./lib/name_tags')
+const HIDE_NAMES = (() => {
+  try { const h = NT.hiddenNames(STUNT_MOD, __dirname); if (h.size) console.log(`name tags hidden: ${[...h].join(', ')}`); return h } catch (e) { console.warn('hideNameTags:', e.message); return new Set() }
+})()
+const nameHidden = (e) => NT.isHidden(HIDE_NAMES, [e.extra && e.extra.user, e.extra && e.extra.name, ACTOR.get(e.id) && ACTOR.get(e.id).user, KIT_TAG.get(e.id)])
 // Real skins (lib/skins.js): the bot's username (rec.user, HB_SELF_USER to override) and actors on lib/real_skins.json
 // draw the owner's own skin from work/skins/<name>.png (private assets, else Mojang via scripts/fetch_skin.py, else steve)
 const SKINS = require('./lib/skins')
@@ -2051,8 +2058,8 @@ const GUI_WIN = []
 if (MOTION_FIXES) {
   let a = null
   for (const e of rec.timeline || []) {
-    if (e.event === 'container' && a === null) a = Math.round(e.t / 50)
-    if (e.event === 'container_close' && a !== null) { GUI_WIN.push([a, Math.round(e.t / 50)]); a = null }
+    if ((e.event === 'container' || e.event === 'merchant') && a === null) a = Math.round(e.t / 50)
+    if ((e.event === 'container_close' || e.event === 'merchant_close') && a !== null) { GUI_WIN.push([a, Math.round(e.t / 50)]); a = null }
   }
   if (a !== null) GUI_WIN.push([a, P.length - 1])
   const EASE = 8
@@ -3333,7 +3340,7 @@ else:
       if (!e.extra || !(e.extra.name || e.extra.jeb)) continue
       if (!e.extra.name) e.extra = { ...e.extra, name: 'jeb_' }   // recordings from before names were recorded
       const near = Math.hypot(e.x - cam.x, e.y - cam.y, e.z - cam.z) < 64
-      if (near && (e.extra.nameVisible || e.id === cam.targetEntity)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
+      if (near && (e.extra.nameVisible || e.id === cam.targetEntity) && !nameHidden(e)) { e.nameTag = e.extra.name; e.nameY = (HITBOX[e.name] ? HITBOX[e.name][1] : 1.8) + 0.5 }
       // stunt.playerNames: a crouching player's plate sits on the 1.5-tall hitbox and its text is drawn at half alpha
       // (EntityRenderer.renderNameTag: isDiscrete -> 0x80FFFFFF, no see-through pass)
       if (STUNT_MOD.playerNames && e.nameTag && e.player) { const sn = !!e.extra.sneak; e.nameDim = sn; if (sn) e.nameY = 1.5 + 0.5 }
